@@ -42,7 +42,6 @@ import com.gl.ceir.config.model.UserDepartment;
 import com.gl.ceir.config.model.UserProfile;
 import com.gl.ceir.config.model.VipList;
 import com.gl.ceir.config.model.VisaDb;
-import com.gl.ceir.config.model.VisaHistoryDb;
 import com.gl.ceir.config.model.WebActionDb;
 import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.EndUserStatus;
@@ -61,6 +60,7 @@ import com.gl.ceir.config.repository.VipListRepository;
 import com.gl.ceir.config.repository.VisaHistoryDBRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
 import com.gl.ceir.config.specificationsbuilder.SpecificationBuilder;
+import com.gl.ceir.config.transaction.EndUserTransaction;
 import com.gl.ceir.config.util.CustomMappingStrategy;
 import com.gl.ceir.config.util.DateUtil;
 import com.opencsv.CSVWriter;
@@ -98,6 +98,9 @@ public class EnduserServiceImpl {
 
 	@Autowired
 	EmailUtil emailUtil;
+	
+	@Autowired
+	EndUserTransaction endUserTransaction;
 
 	public GenricResponse endUserByNid(String nid) {
 		try {
@@ -274,7 +277,7 @@ public class EnduserServiceImpl {
 					visaDb.setVisaExpiryDate(latestVisa.getVisaExpiryDate());	
 				}
 
-				if(executeUpdateVisa(endUserDB1)) {
+				if(endUserTransaction.executeUpdateVisa(endUserDB1)) {
 					return new GenricResponse(0, GenericMessageTags.VISA_UPDATE_SUCCESS.getTag(), 
 							GenericMessageTags.VISA_UPDATE_SUCCESS.getMessage(), endUserDB.getNid());
 				}else {
@@ -290,27 +293,6 @@ public class EnduserServiceImpl {
 		}
 	}
 
-	@Transactional
-	private boolean executeUpdateVisa(EndUserDB endUserDB) {
-		boolean status = Boolean.FALSE;
-		VisaDb visaDb = endUserDB.getVisaDb().get(0);
-
-		endUserDbRepository.save(endUserDB);
-		logger.info("Visa of user have been updated succesfully." +  endUserDB);
-
-		visaHistoryDBRepository.save(new VisaHistoryDb(visaDb.getVisaType(), visaDb.getVisaNumber(), 
-				visaDb.getVisaExpiryDate(), visaDb.getEndUserDB().getId(), visaDb.getVisaFileName()));
-		logger.info("Visa of user have been updated in history." +  visaDb);
-
-		auditTrailRepository.save(new AuditTrail(endUserDB.getId(), "", 0L, 
-				"", 0L, Features.UPDATE_VISA, SubFeatures.UPDATE, ""));
-		logger.info("Consignment [" + endUserDB.getTxnId() + "] saved in audit_trail.");
-
-
-		status = Boolean.TRUE;
-		return status;
-	}
-
 	public Page<EndUserDB> filter(FilterRequest filterRequest, Integer pageNo, 
 			Integer pageSize) {
 
@@ -318,8 +300,6 @@ public class EnduserServiceImpl {
 
 		try {
 			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
-
-			// statusList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(consignmentMgmt.getFeatureId(), consignmentMgmt.getUserTypeId());
 
 			Page<EndUserDB> page = endUserDbRepository.findAll(buildSpecification(filterRequest, statusList).build(), pageable);
 
@@ -550,7 +530,7 @@ public class EnduserServiceImpl {
 				}
 
 				// Update Stock and its history.
-				if(!updateStatusWithHistory(endUserDB)){
+				if(!endUserTransaction.updateStatusWithHistory(endUserDB)){
 					logger.warn("Unable to update End userdb.");
 					return new GenricResponse(3, "Unable to update End Userdb.", updateRequest.getTxnId()); 
 				}else {
@@ -575,27 +555,6 @@ public class EnduserServiceImpl {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
-	}
-
-	@Transactional
-	private boolean updateStatusWithHistory(EndUserDB endUserDB) {
-		boolean status = Boolean.FALSE;
-
-		endUserDbRepository.save(endUserDB);
-		logger.info("End_user [" + endUserDB.getTxnId() + "] saved in end_userdb.");
-
-		/*
-		 * stockMgmtHistoryRepository.save( new StockMgmtHistoryDb(stockMgmt.getTxnId(),
-		 * stockMgmt.getStockStatus()) ); logger.info("End_user [" +
-		 * endUserDB.getTxnId() + "] saved in stock_mgmt_history_db.");
-		 */
-
-		auditTrailRepository.save(new AuditTrail(0, "", 0L, "", 0L, Features.MANAGE_USER, SubFeatures.ACCEPT_REJECT, ""));
-		logger.info("End_user [" + endUserDB.getTxnId() + "] saved in audit_trail.");
-
-		status = Boolean.TRUE;
-
-		return status;
 	}
 	
 	private void updateImeiInVipList(EndUserDB endUserDB) {

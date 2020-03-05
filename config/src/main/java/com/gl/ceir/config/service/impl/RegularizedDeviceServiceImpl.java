@@ -67,6 +67,7 @@ import com.gl.ceir.config.repository.UserProfileRepository;
 import com.gl.ceir.config.repository.UserRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
 import com.gl.ceir.config.specificationsbuilder.GenericSpecificationBuilder;
+import com.gl.ceir.config.transaction.RegularizeDeviceTransaction;
 import com.gl.ceir.config.util.DateUtil;
 import com.gl.ceir.config.util.InterpSetter;
 import com.gl.ceir.config.util.StatusSetter;
@@ -79,6 +80,9 @@ public class RegularizedDeviceServiceImpl {
 
 	private static final Logger logger = LogManager.getLogger(RegularizedDeviceServiceImpl.class);
 
+	@Autowired
+	RegularizeDeviceTransaction regularizeDeviceTransaction;
+	
 	@Autowired
 	ConsignmentRepository consignmentRepository;
 
@@ -142,7 +146,6 @@ public class RegularizedDeviceServiceImpl {
 
 		try {
 			stateList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
-			System.out.println("dialect : " + propertiesReader.dialect);
 
 			List<RegularizeDeviceDb> regularizeDeviceDbs = regularizedDeviceDbRepository.findAll(buildSpecification(filterRequest).build());
 
@@ -350,9 +353,9 @@ public class RegularizedDeviceServiceImpl {
 					// Start query execution.
 					if(Objects.isNull(endUserDB2)) {
 						// End user is not registered with CEIR system.
-						executionSuccess = executeSaveDevices(webActionDbs, endUserDB);
+						executionSuccess = regularizeDeviceTransaction.executeSaveDevices(webActionDbs, endUserDB);
 					}else {
-						executionSuccess = executeSaveDevices(webActionDbs, endUserDB.getRegularizeDeviceDbs());
+						executionSuccess = regularizeDeviceTransaction.executeSaveDevices(webActionDbs, endUserDB.getRegularizeDeviceDbs());
 					}
 
 					// Return message to the client.
@@ -387,31 +390,7 @@ public class RegularizedDeviceServiceImpl {
 		}
 	}
 
-	@Transactional
-	private boolean executeSaveDevices(List<WebActionDb> webActionDbs, EndUserDB endUserDB) {
-		boolean status = Boolean.FALSE;
-		webActionDbRepository.saveAll(webActionDbs);
-		logger.info("Batch update in web_action_db. " + webActionDbs );
-
-		endUserDbRepository.save(endUserDB);
-		logger.info("End user have been saved with its devices. " + endUserDB);
-
-		status = Boolean.TRUE;
-		return status;
-	}
-
-	@Transactional
-	private boolean executeSaveDevices(List<WebActionDb> webActionDbs, List<RegularizeDeviceDb> regularizeDeviceDbs) {
-		boolean status = Boolean.FALSE;
-		webActionDbRepository.saveAll(webActionDbs);
-		logger.info("Batch update in web_action_db. " + webActionDbs );
-
-		regularizedDeviceDbRepository.saveAll(regularizeDeviceDbs);
-		logger.info("Regularized devices have been saved. " + regularizeDeviceDbs);
-
-		status = Boolean.TRUE;
-		return status;
-	}
+	
 
 	public GenricResponse updateTaxStatus( RegularizeDeviceDb regularizeDeviceDb) {
 		try {

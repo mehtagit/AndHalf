@@ -14,8 +14,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import javax.transaction.Transactional;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,13 +35,11 @@ import com.gl.ceir.config.model.FeatureValidateReq;
 import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
-import com.gl.ceir.config.model.RawMail;
 import com.gl.ceir.config.model.ResponseCountAndQuantity;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.StateMgmtDb;
 import com.gl.ceir.config.model.StatesInterpretationDb;
 import com.gl.ceir.config.model.StockMgmt;
-import com.gl.ceir.config.model.StockMgmtHistoryDb;
 import com.gl.ceir.config.model.SystemConfigurationDb;
 import com.gl.ceir.config.model.User;
 import com.gl.ceir.config.model.UserProfile;
@@ -53,7 +49,6 @@ import com.gl.ceir.config.model.WebActionDb;
 import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.Features;
 import com.gl.ceir.config.model.constants.GenericMessageTags;
-import com.gl.ceir.config.model.constants.ReferTable;
 import com.gl.ceir.config.model.constants.SearchOperation;
 import com.gl.ceir.config.model.constants.StockStatus;
 import com.gl.ceir.config.model.constants.SubFeatures;
@@ -72,6 +67,7 @@ import com.gl.ceir.config.repository.UserProfileRepository;
 import com.gl.ceir.config.repository.UserRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
 import com.gl.ceir.config.specificationsbuilder.GenericSpecificationBuilder;
+import com.gl.ceir.config.transaction.StockTransaction;
 import com.gl.ceir.config.util.CustomMappingStrategy;
 import com.gl.ceir.config.util.HttpResponse;
 import com.gl.ceir.config.util.InterpSetter;
@@ -131,6 +127,9 @@ public class StockServiceImpl {
 
 	@Autowired 
 	UserFeignClient userFeignClient;
+	
+	@Autowired
+	StockTransaction stockTransaction;
 
 	public GenricResponse uploadStock(StockMgmt stockMgmt) {
 		boolean isStockAssignRequest = Boolean.FALSE;
@@ -224,7 +223,7 @@ public class StockServiceImpl {
 			webActionDb.setTxnId(stockMgmt.getTxnId());
 
 			if(isStockAssignRequest) {
-				if(executeRegisterStock(stockMgmt, webActionDb, user.getUserProfile(), isStockAssignRequest, isAnonymousUpload)) {
+				if(stockTransaction.executeRegisterStock(stockMgmt, webActionDb, user.getUserProfile(), isStockAssignRequest, isAnonymousUpload)) {
 					logger.info("Stock have been registered Successfully" + stockMgmt.getTxnId());
 					return new GenricResponse(0, "Stock have been registered Successfully.", stockMgmt.getTxnId());	
 				}else {
@@ -232,7 +231,7 @@ public class StockServiceImpl {
 					return new GenricResponse(1, "Stock registeration have been failed.", stockMgmt.getTxnId());
 				}
 			}else if(isAnonymousUpload) {
-				if(executeRegisterStock(stockMgmt, webActionDb, user.getUserProfile(), isStockAssignRequest, 
+				if(stockTransaction.executeRegisterStock(stockMgmt, webActionDb, user.getUserProfile(), isStockAssignRequest, 
 						isAnonymousUpload)) {
 
 					logger.info("Stock have been registered Successfully" + stockMgmt.getTxnId());
@@ -242,7 +241,7 @@ public class StockServiceImpl {
 					return new GenricResponse(1, "Stock registeration have been failed.", stockMgmt.getTxnId());
 				}
 			}else {
-				if(executeRegisterStock(stockMgmt, webActionDb)) {
+				if(stockTransaction.executeRegisterStock(stockMgmt, webActionDb)) {
 
 					logger.info("Stock have been registered Successfully" + stockMgmt.getTxnId());
 					return new GenricResponse(0, "Stock have been registered Successfully.", stockMgmt.getTxnId());	
@@ -256,117 +255,6 @@ public class StockServiceImpl {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
-	}
-
-	@Transactional(rollbackOn = Exception.class)
-	private boolean executeRegisterStock(StockMgmt stockMgmt, WebActionDb webActionDb, UserProfile userProfile,
-			boolean isStockAssignRequest, boolean isAnonymousUpload) {
-
-		boolean queryStatus = Boolean.FALSE;
-
-		logger.info("Going to save webActionDb [" + webActionDb + "]");
-		webActionDbRepository.save(webActionDb);
-		logger.info("Stock [" + stockMgmt.getTxnId() + "] saved in web_action_db.");
-
-		logger.info("Going to save Stock [" + stockMgmt + "]");
-		stockManagementRepository.save(stockMgmt);
-		logger.info("Stock [" + stockMgmt.getTxnId() + "] saved in stock_mgmt.");
-
-		auditTrailRepository.save(new AuditTrail(stockMgmt.getUser().getId(), 
-				userProfile.getUser().getUsername(), 
-				userProfile.getUser().getUsertype().getId(),
-				userProfile.getUser().getUsertype().getUsertypeName(), 
-				4, Features.STOCK, 
-				SubFeatures.UPLOAD, "", stockMgmt.getTxnId()));
-		logger.info("Stock [" + stockMgmt.getTxnId() + "] saved in audit_trail.");
-
-		if(isStockAssignRequest) {
-			User user = userRepository.getById(stockMgmt.getUserId());
-			logger.info(user);
-			Map<String, String> placeholderMap = new HashMap<String, String>();
-			placeholderMap.put("<First name>", user.getUserProfile().getFirstName());
-			placeholderMap.put("<txn_id>", stockMgmt.getTxnId());
-
-			if(emailUtil.saveNotification("ASSIGN_STOCK", 
-					userProfile, 
-					4,
-					Features.STOCK,
-					SubFeatures.ASSIGN,
-					stockMgmt.getTxnId(),
-					MailSubject.ASSIGN_STOCK.replaceAll("<XXX>", stockMgmt.getTxnId()),
-					placeholderMap,
-					stockMgmt.getRoleType(),
-					null)) {
-				logger.info("Notification have been saved.");
-			}else {
-				logger.info("Notification have been not saved.");
-			}
-		}else if(isAnonymousUpload) {
-			List<RawMail> rawMails = new ArrayList<RawMail>();
-
-			// Send notification to the CeirAdmin. 
-			/*
-			User ceirAdmin = userRepository.getByUsername("CEIRAdmin");
-			logger.info("ceirAdmin : " + ceirAdmin);
-
-			Map<String, String> placeholderMapForCeirAdmin = new HashMap<String, String>();
-			placeholderMapForCeirAdmin.put("<txn_id>", stockMgmt.getTxnId());
-
-			rawMails.add(new RawMail("MAIL_TO_CEIR_ADMIN_ON_STOCK_UPLOAD", ceirAdmin.getUserProfile(), 
-					4, Features.STOCK, SubFeatures.REGISTER, stockMgmt.getTxnId(), MailSubjects.SUBJECT, 
-					placeholderMapForCeirAdmin));
-			 */
-			// Send notification to the anonymous user if mail is provided.
-			if(Objects.nonNull(userProfile.getEmail()) && !userProfile.getEmail().isEmpty()) {
-				Map<String, String> placeholderMapForAnonymousUser = new HashMap<String, String>();
-				placeholderMapForAnonymousUser.put("<txn_id>", stockMgmt.getTxnId());
-
-				rawMails.add(new RawMail("MAIL_TO_ANONYMOUS_ON_STOCK_UPLOAD", userProfile, 
-						4, Features.STOCK, 
-						SubFeatures.REGISTER, 
-						stockMgmt.getTxnId(), 
-						MailSubject.MAIL_TO_ANONYMOUS_ON_STOCK_UPLOAD.replaceAll("<XXX>", stockMgmt.getTxnId()),  
-						placeholderMapForAnonymousUser, ReferTable.USERS, stockMgmt.getRoleType(), "End User"));
-			}
-
-			if(emailUtil.saveNotification(rawMails)) {
-				logger.info("Notifications [" + rawMails.size() + "] have been saved.");
-			}else {
-				logger.info("Notification have been not saved.");
-			}
-		}
-
-		queryStatus = Boolean.TRUE;
-		return queryStatus;
-	}
-
-	@Transactional(rollbackOn = Exception.class)
-	private boolean executeRegisterStock(StockMgmt stockMgmt, WebActionDb webActionDb) {
-
-		boolean queryStatus = Boolean.FALSE;
-
-		logger.info("Going to save webActionDb [" + webActionDb + "]");
-		webActionDbRepository.save(webActionDb);
-		logger.info("Stock [" + stockMgmt.getTxnId() + "] saved in web_action_db.");
-
-		logger.info("Going to save Stock [" + stockMgmt + "]");
-		stockManagementRepository.save(stockMgmt);
-		logger.info("Stock [" + stockMgmt.getTxnId() + "] saved in stock_mgmt.");
-
-		User user = userRepository.getById(stockMgmt.getUserId());
-		
-		auditTrailRepository.save(new AuditTrail(stockMgmt.getUser().getId(), 
-				user.getUsername(), 
-				user.getUsertype().getId(),
-				user.getUsertype().getUsertypeName(), 
-				4, 
-				Features.STOCK, 
-				SubFeatures.REGISTER, "", stockMgmt.getTxnId()));
-
-		logger.info("Stock [" + stockMgmt.getTxnId() + "] saved in audit_trail.");
-
-		queryStatus = Boolean.TRUE;
-		return queryStatus;
 	}
 
 	public List<StockMgmt> getAllData(StockMgmt stockMgmt){
@@ -575,7 +463,7 @@ public class StockServiceImpl {
 				webActionDb.setState(WebActionDbState.INIT.getCode());
 				webActionDb.setTxnId(stockMgmt.getTxnId());
 
-				if(executeDeleteStock(txnRecord, webActionDb)) {
+				if(stockTransaction.executeDeleteStock(txnRecord, webActionDb)) {
 					logger.info("Deletion of Stock is in Progress." + stockMgmt.getTxnId());
 					return new GenricResponse(0, "Deletion of Stock is in Progress.",stockMgmt.getTxnId());
 				}else {
@@ -587,23 +475,6 @@ public class StockServiceImpl {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
-	}
-
-	@Transactional
-	private boolean executeDeleteStock(StockMgmt stockMgmt, WebActionDb webActionDb) {
-		boolean queryStatus = Boolean.FALSE;
-		webActionDbRepository.save(webActionDb);
-		logger.info("Stock [" + stockMgmt.getTxnId() + "] saved in web_action_db.");
-
-		stockManagementRepository.save(stockMgmt);
-		logger.info("Stock [" + stockMgmt.getTxnId() + "] saved in stock_mgmt.");
-
-		auditTrailRepository.save(new AuditTrail(stockMgmt.getUser().getId(), "", 0L, "", 0L, 
-				Features.STOCK, SubFeatures.DELETE, "", stockMgmt.getTxnId()));
-		logger.info("Stock [" + stockMgmt.getTxnId() + "] saved in audit_trail.");
-
-		queryStatus = Boolean.TRUE;
-		return queryStatus;
 	}
 
 	public GenricResponse updateStockInfo(StockMgmt distributerManagement) {
@@ -638,7 +509,7 @@ public class StockServiceImpl {
 			webActionDb.setState(WebActionDbState.INIT.getCode());
 			webActionDb.setTxnId(distributerManagement.getTxnId());
 
-			if(executeUpdateStock(stockMgmt, webActionDb)) {
+			if(stockTransaction.executeUpdateStock(stockMgmt, webActionDb)) {
 				logger.info("Stock Update have been Successful." + stockMgmt.getTxnId());
 				return new GenricResponse(0, "Stock Update have been Successful.", distributerManagement.getTxnId());
 			}else {
@@ -648,22 +519,6 @@ public class StockServiceImpl {
 		}
 	}
 
-	@Transactional
-	private boolean executeUpdateStock(StockMgmt stockMgmt, WebActionDb webActionDb) {
-		boolean queryStatus = Boolean.FALSE;
-		webActionDbRepository.save(webActionDb);
-		logger.info("Stock [" + stockMgmt.getTxnId() + "] saved in web_action_db.");
-
-		stockManagementRepository.save(stockMgmt);
-		logger.info("Stock [" + stockMgmt.getTxnId() + "] saved in stock_mgmt.");
-
-		auditTrailRepository.save(new AuditTrail(stockMgmt.getUser().getId(), "", 0L, "", 0L, 
-				Features.STOCK, SubFeatures.UPDATE, "", stockMgmt.getTxnId()));
-		logger.info("Stock [" + stockMgmt.getTxnId() + "] saved in audit_trail.");
-
-		queryStatus = Boolean.TRUE;
-		return queryStatus;
-	}
 
 	public FileDetails getFilteredStockInFile(FilterRequest filterRequest) {
 		String fileName = null;
@@ -759,7 +614,6 @@ public class StockServiceImpl {
 			if( !stockMgmts.isEmpty() ) {
 
 				fileRecords = new ArrayList<>();
-				// List<SystemConfigListDb> customTagStatusList = configurationManagementServiceImpl.getSystemConfigListByTag(Tags.CUSTOMS_TAX_STATUS);
 
 				for( StockMgmt stockMgmt : stockMgmts ) {
 					sfm = new StockFileModel();
@@ -819,7 +673,6 @@ public class StockServiceImpl {
 				return stockManagementRepository.getStockCountAndQuantity( status );
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			//throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 			return new ResponseCountAndQuantity(0,0);
 		}
 	}
@@ -829,7 +682,7 @@ public class StockServiceImpl {
 			UserProfile userProfile = null;
 			String firstName = "";
 			User user = null;
-			Map<String, String> placeholderMap = new HashMap<String, String>();
+			Map<String, String> placeholderMap = new HashMap<>();
 			StockMgmt stockMgmt = stockManagementRepository.getByTxnId(consignmentUpdateRequest.getTxnId());
 
 			// Fetch user_profile to update user over mail/sms regarding the action.
@@ -883,11 +736,10 @@ public class StockServiceImpl {
 				}
 
 				// Update Stock and its history.
-				if(!updateStatusWithHistory(stockMgmt)){
+				if(!stockTransaction.updateStatusWithHistory(stockMgmt)){
 					logger.warn("Unable to update Stolen and recovery entity.");
 					return new GenricResponse(3, "Unable to update stock entity.", consignmentUpdateRequest.getTxnId()); 
 				}else {
-					// TODO : NOTI
 					emailUtil.saveNotification(mailTag, 
 							userProfile, 
 							consignmentUpdateRequest.getFeatureId(),
@@ -912,27 +764,6 @@ public class StockServiceImpl {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
-	}
-
-	@Transactional
-	private boolean updateStatusWithHistory(StockMgmt stockMgmt) {
-		boolean status = Boolean.FALSE;
-
-		stockManagementRepository.save(stockMgmt);
-		logger.info("Stock [" + stockMgmt.getTxnId() + "] saved in stock_mgmt.");
-
-		stockMgmtHistoryRepository.save(
-				new StockMgmtHistoryDb(stockMgmt.getTxnId(), stockMgmt.getStockStatus())
-				);
-		logger.info("Stock [" + stockMgmt.getTxnId() + "] saved in stock_mgmt_history_db.");
-
-		auditTrailRepository.save(new AuditTrail(stockMgmt.getUser().getId(), "", 0L, "",
-				0L, Features.STOCK, SubFeatures.UPDATE, "", stockMgmt.getTxnId()));
-		logger.info("Stock [" + stockMgmt.getTxnId() + "] saved in audit_trail.");
-
-		status = Boolean.TRUE;
-
-		return status;
 	}
 
 	private boolean validateUserProfileOfStock(StockMgmt stockMgmt) {

@@ -70,6 +70,7 @@ import com.gl.ceir.config.repository.StolenOrganizationUserRepository;
 import com.gl.ceir.config.repository.UserProfileRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
 import com.gl.ceir.config.specificationsbuilder.GenericSpecificationBuilder;
+import com.gl.ceir.config.transaction.StolenAndRecoveryTransaction;
 import com.gl.ceir.config.util.InterpSetter;
 import com.opencsv.CSVWriter;
 import com.opencsv.bean.StatefulBeanToCsv;
@@ -81,10 +82,10 @@ public class StolenAndRecoveryServiceImpl {
 	private static final Logger logger = LogManager.getLogger(StolenAndRecoveryServiceImpl.class);
 
 	@Autowired
-	StolenAndRecoveryRepository stolenAndRecoveryRepository;
-
-	@Autowired
 	WebActionDbRepository webActionDbRepository;
+	
+	@Autowired
+	StolenAndRecoveryRepository stolenAndRecoveryRepository;
 
 	@Autowired
 	PropertiesReader propertiesReader;
@@ -124,9 +125,9 @@ public class StolenAndRecoveryServiceImpl {
 
 	@Autowired
 	StolenOrganizationUserRepository stolenOrganizationUserRepository;
-
+	
 	@Autowired
-	AlertServiceImpl alertServiceImpl;
+	StolenAndRecoveryTransaction stolenAndRecoveryTransaction;
 
 	public GenricResponse uploadDetails(StolenandRecoveryMgmt stolenandRecoveryMgmt) {
 
@@ -147,7 +148,7 @@ public class StolenAndRecoveryServiceImpl {
 				stolenandRecoveryMgmt.getStolenOrganizationUserDB().setStolenandRecoveryMgmt(stolenandRecoveryMgmt);
 			}
 
-			if(executeUploadDetails(stolenandRecoveryMgmt, webActionDb)) {
+			if(stolenAndRecoveryTransaction.executeUploadDetails(stolenandRecoveryMgmt, webActionDb)) {
 				logger.info("Upload Successfully." +  stolenandRecoveryMgmt.getTxnId());
 				return new GenricResponse(0, "Upload Successfully.", stolenandRecoveryMgmt.getTxnId());
 			}else {
@@ -159,23 +160,6 @@ public class StolenAndRecoveryServiceImpl {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
-	}
-
-	@Transactional(rollbackOn = Exception.class)
-	private boolean executeUploadDetails(StolenandRecoveryMgmt stolenandRecoveryMgmt, WebActionDb webActionDb) {
-		boolean status = Boolean.FALSE;
-
-		if(Objects.isNull(stolenandRecoveryMgmt.getOperatorTypeId()))
-			alertServiceImpl.raiseAnAlert(Alerts.alert002, stolenandRecoveryMgmt.getUserId().intValue());
-
-		stolenAndRecoveryRepository.save(stolenandRecoveryMgmt);
-		logger.info("Saved in stolen_individual_user_db" + stolenandRecoveryMgmt);
-
-		webActionDbRepository.save(webActionDb);
-		logger.info("Saved in web_action_db " + stolenandRecoveryMgmt);
-
-		status = Boolean.TRUE;
-		return status;
 	}
 
 	@Transactional
@@ -737,11 +721,10 @@ public class StolenAndRecoveryServiceImpl {
 
 				}
 
-				if(!updateStatusWithHistory(stolenandRecoveryMgmt)) {
+				if(!stolenAndRecoveryTransaction.updateStatusWithHistory(stolenandRecoveryMgmt)) {
 					logger.warn("Unable to update Stolen and recovery entity.");
 					return new GenricResponse(3, "Unable to update Stolen and recovery entity.", consignmentUpdateRequest.getTxnId());
 				}else {
-					// TODO : NOTI
 					emailUtil.saveNotification(mailTag, 
 							userProfile, 
 							consignmentUpdateRequest.getFeatureId(),
@@ -765,18 +748,6 @@ public class StolenAndRecoveryServiceImpl {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
-	}
-
-	@Transactional
-	private boolean updateStatusWithHistory(StolenandRecoveryMgmt stolenandRecoveryMgmt) {
-		boolean status = Boolean.FALSE;
-
-		stolenAndRecoveryRepository.save(stolenandRecoveryMgmt);
-		stolenAndRecoveryHistoryMgmtRepository.save(
-				new StolenAndRecoveryHistoryMgmt(stolenandRecoveryMgmt.getTxnId(), stolenandRecoveryMgmt.getFileStatus())
-				);
-		status = Boolean.TRUE;
-		return status;
 	}
 
 	private StolenIndividualUserDB updateStolenIndividualUserDB(StolenIndividualUserDB stolenIndividualUserDBOld, 

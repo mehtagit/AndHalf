@@ -16,10 +16,13 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
+@Audited
 public class StolenandRecoveryMgmt implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -79,12 +82,15 @@ public class StolenandRecoveryMgmt implements Serializable {
 	@Column(length = 25)
 	private String dateOfRecovery;
 	
+	@NotAudited
 	@OneToOne(mappedBy = "sARm", cascade = {CascadeType.PERSIST, CascadeType.REMOVE},fetch = FetchType.LAZY)
 	SingleImeiDetails singleImeiDetails; 
 	
+	@NotAudited
 	@OneToOne(mappedBy = "stolenandRecoveryMgmt", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	StolenIndividualUserDB stolenIndividualUserDB; 
 	
+	@NotAudited
 	@OneToOne(mappedBy = "stolenandRecoveryMgmt", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	StolenOrganizationUserDB stolenOrganizationUserDB; 
 	

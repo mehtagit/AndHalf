@@ -14,10 +14,13 @@ import javax.persistence.Transient;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
+@Audited
 public class StockMgmt implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -48,6 +51,7 @@ public class StockMgmt implements Serializable {
 	private Long userId;
 
 	// @NotNull
+	@NotAudited
 	@OneToOne
 	@JoinColumn(name="local_user_id", updatable = false)
 	private User user;

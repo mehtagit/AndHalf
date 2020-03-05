@@ -13,8 +13,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import javax.transaction.Transactional;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,6 +64,7 @@ import com.gl.ceir.config.repository.UserProfileRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
 import com.gl.ceir.config.service.businesslogic.StateMachine;
 import com.gl.ceir.config.specificationsbuilder.GenericSpecificationBuilder;
+import com.gl.ceir.config.transaction.ConsignmentTransaction;
 import com.gl.ceir.config.util.CustomMappingStrategy;
 import com.gl.ceir.config.util.InterpSetter;
 import com.gl.ceir.config.util.Utility;
@@ -128,6 +127,9 @@ public class ConsignmentServiceImpl {
 	@Autowired
 	UserStaticServiceImpl userStaticServiceImpl;
 	
+	@Autowired
+	ConsignmentTransaction consignmentTransaction;
+	
 	public GenricResponse registerConsignment(ConsignmentMgmt consignmentFileRequest) {
 
 		try {
@@ -141,14 +143,11 @@ public class ConsignmentServiceImpl {
 
 			consignmentFileRequest.setConsignmentStatus(ConsignmentStatus.INIT.getCode());
 			consignmentFileRequest.setTaxPaidStatus(TaxStatus.TAX_NOT_PAID.getCode());
+			
 			// Set user for mapping.
 			consignmentFileRequest.setUser(new User().setId(importerId));
 			
-			/*
-			 * // PATCH : Don't touch this if block. if(consignmentFileRequest.getCurrency()
-			 * == 0) { consignmentFileRequest.setCurrency(null); }
-			 */
-			if(executeRegisterConsignment(consignmentFileRequest, webActionDb)) {
+			if(consignmentTransaction.executeRegisterConsignment(consignmentFileRequest, webActionDb)) {
 				return new GenricResponse(0, "Register Successfully", consignmentFileRequest.getTxnId());
 			}else {
 				return new GenricResponse(1, "Consignment Registeration failed.", consignmentFileRequest.getTxnId());
@@ -158,23 +157,6 @@ public class ConsignmentServiceImpl {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
-	}
-
-	@Transactional
-	private boolean executeRegisterConsignment(ConsignmentMgmt consignmentMgmt, WebActionDb webActionDb) {
-		boolean queryStatus = Boolean.FALSE;
-		webActionDbRepository.save(webActionDb);
-		logger.info(String.format("Consignment [{0}] saved in web_action_db.", consignmentMgmt.getTxnId()));
-
-		consignmentRepository.save(consignmentMgmt);
-		logger.info("Consignment [" + consignmentMgmt.getTxnId() + "] saved in consigment_mgmt_db.");
-
-		auditTrailRepository.save(new AuditTrail(consignmentMgmt.getUser().getId(), "", 0L, "", 0L, Features.CONSIGNMENT, 
-				SubFeatures.REGISTER, "", consignmentMgmt.getTxnId()));
-		logger.info("Consignment [" + consignmentMgmt.getTxnId() + "] saved in audit_trail.");
-
-		queryStatus = Boolean.TRUE;
-		return queryStatus;
 	}
 
 	public List<ConsignmentMgmt> getAll(Long importerId) {
@@ -340,7 +322,7 @@ public class ConsignmentServiceImpl {
 				webActionDb.setState(WebActionDbState.INIT.getCode());
 				webActionDb.setTxnId(consignmentFileRequest.getTxnId());
 
-				if(executeUpdateConsignment(consignmentInfo, webActionDb)) {
+				if(consignmentTransaction.executeUpdateConsignment(consignmentInfo, webActionDb)) {
 					return new GenricResponse(0, "Consignment Update in Processing.", consignmentFileRequest.getTxnId());
 				}else {
 					return new GenricResponse(1, "Consignment Update have been failed.", consignmentFileRequest.getTxnId());
@@ -351,23 +333,6 @@ public class ConsignmentServiceImpl {
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	} 
-
-	@Transactional
-	private boolean executeUpdateConsignment(ConsignmentMgmt consignmentMgmt, WebActionDb webActionDb) {
-		boolean queryStatus = Boolean.FALSE;
-		webActionDbRepository.save(webActionDb);
-		logger.info("Consignment [" + consignmentMgmt.getTxnId() + "] saved in web_action_db.");
-
-		consignmentRepository.save(consignmentMgmt);
-		logger.info("Consignment [" + consignmentMgmt.getTxnId() + "] updated in consigment_mgmt_db.");
-
-		auditTrailRepository.save(new AuditTrail(consignmentMgmt.getUser().getId(), "", 0L, "", 0L, 
-				Features.CONSIGNMENT, SubFeatures.UPDATE, "", consignmentMgmt.getTxnId()));
-		logger.info("Consignment [" + consignmentMgmt.getTxnId() + "] saved in audit_trail.");
-
-		queryStatus = Boolean.TRUE;
-		return queryStatus;
-	}
 
 	public GenricResponse deleteConsigmentInfo(ConsignmentMgmt consignmentRequest, String userType) {
 		try {
@@ -411,7 +376,7 @@ public class ConsignmentServiceImpl {
 			webActionDb.setState(WebActionDbState.INIT.getCode());
 			webActionDb.setTxnId(consignmentRequest.getTxnId());
 
-			if(executeDeleteConsignment(consignmentMgmt, webActionDb)) {
+			if(consignmentTransaction.executeDeleteConsignment(consignmentMgmt, webActionDb)) {
 				logger.info("Deletion of consignment is in Progress."+ consignmentRequest.getTxnId());
 				return new GenricResponse(200, "Deletion of consignment is in Progress.", consignmentRequest.getTxnId());
 			}else {
@@ -423,23 +388,6 @@ public class ConsignmentServiceImpl {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
-	}
-
-	@Transactional
-	private boolean executeDeleteConsignment(ConsignmentMgmt consignmentMgmt, WebActionDb webActionDb) {
-		boolean queryStatus = Boolean.FALSE;
-		webActionDbRepository.save(webActionDb);
-		logger.info("Consignment [" + consignmentMgmt.getTxnId() + "] saved in web_action_db.");
-
-		consignmentRepository.save(consignmentMgmt);
-		logger.info("Consignment [" + consignmentMgmt.getTxnId() + "] updated in consigment_mgmt_db.");
-
-		auditTrailRepository.save(new AuditTrail(consignmentMgmt.getUser().getId(), "", 0L, "", 0L, 
-				Features.CONSIGNMENT, SubFeatures.DELETE, "", consignmentMgmt.getTxnId()));
-		logger.info("Consignment [" + consignmentMgmt.getTxnId() + "] saved in audit_trail.");
-
-		queryStatus = Boolean.TRUE;
-		return queryStatus;
 	}
 
 	public GenricResponse updateConsignmentStatus(ConsignmentUpdateRequest consignmentUpdateRequest) {
@@ -629,7 +577,7 @@ public class ConsignmentServiceImpl {
 				}
 			}
 
-			if(executeUpdateStatusConsignment(consignmentMgmt)) {
+			if(consignmentTransaction.executeUpdateStatusConsignment(consignmentMgmt)) {
 				logger.info("Consignment status have Update SuccessFully." + consignmentUpdateRequest.getTxnId());
 				return new GenricResponse(0, "Consignment status have Update SuccessFully.", consignmentUpdateRequest.getTxnId());
 			}else {
@@ -642,20 +590,7 @@ public class ConsignmentServiceImpl {
 		}
 	}
 
-	@Transactional
-	private boolean executeUpdateStatusConsignment(ConsignmentMgmt consignmentMgmt) {
-		boolean queryStatus = Boolean.FALSE;
-
-		consignmentRepository.save(consignmentMgmt);
-		logger.info("Consignment [" + consignmentMgmt.getTxnId() + "] saved in consigment_mgmt_db.");
-
-		auditTrailRepository.save(new AuditTrail(consignmentMgmt.getUser().getId(), "", 0L, "", 0L, 
-				Features.CONSIGNMENT, SubFeatures.UPDATE, "", consignmentMgmt.getTxnId()));
-		logger.info("Consignment [" + consignmentMgmt.getTxnId() + "] saved in audit_trail.");
-
-		queryStatus = Boolean.TRUE;
-		return queryStatus;
-	}
+	
 	
 	public FileDetails getFilteredConsignmentInFileV2(FilterRequest filterRequest) {
 		String fileName = null;
