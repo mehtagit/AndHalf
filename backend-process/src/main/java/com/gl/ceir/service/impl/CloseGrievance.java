@@ -97,7 +97,7 @@ public class CloseGrievance extends BaseService{
 			}
 
 			if(processedGrievances.isEmpty()) {
-				logger.info("No grievance to close today. ["+ DateUtil.nextDate(0) +"]");
+				logger.info("No grievance to close today. [" + DateUtil.nextDate(0) + "]");
 			}else {
 				process(processedGrievances);
 			}
