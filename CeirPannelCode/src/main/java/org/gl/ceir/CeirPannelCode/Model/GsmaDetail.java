@@ -5,11 +5,12 @@ public class GsmaDetail {
 	private String bandName;
 	private Integer deviceId;
 	private String equipmentType;
-	private String imei;
-	private String imsi;
+	private Long imei;
+	private Long imsi;
 	private String modelName;
-	private String msisdn;
+	private Long msisdn;
 	private String operatingSystem;
+	private String identifierType;
 	public String getBandName() {
 		return bandName;
 	}
@@ -28,16 +29,16 @@ public class GsmaDetail {
 	public void setEquipmentType(String equipmentType) {
 		this.equipmentType = equipmentType;
 	}
-	public String getImei() {
+	public Long getImei() {
 		return imei;
 	}
-	public void setImei(String imei) {
+	public void setImei(Long imei) {
 		this.imei = imei;
 	}
-	public String getImsi() {
+	public Long getImsi() {
 		return imsi;
 	}
-	public void setImsi(String imsi) {
+	public void setImsi(Long imsi) {
 		this.imsi = imsi;
 	}
 	public String getModelName() {
@@ -46,10 +47,10 @@ public class GsmaDetail {
 	public void setModelName(String modelName) {
 		this.modelName = modelName;
 	}
-	public String getMsisdn() {
+	public Long getMsisdn() {
 		return msisdn;
 	}
-	public void setMsisdn(String msisdn) {
+	public void setMsisdn(Long msisdn) {
 		this.msisdn = msisdn;
 	}
 	public String getOperatingSystem() {
@@ -58,11 +59,19 @@ public class GsmaDetail {
 	public void setOperatingSystem(String operatingSystem) {
 		this.operatingSystem = operatingSystem;
 	}
+	public String getIdentifierType() {
+		return identifierType;
+	}
+	public void setIdentifierType(String identifierType) {
+		this.identifierType = identifierType;
+	}
 	@Override
 	public String toString() {
 		return "GsmaDetail [bandName=" + bandName + ", deviceId=" + deviceId + ", equipmentType=" + equipmentType
 				+ ", imei=" + imei + ", imsi=" + imsi + ", modelName=" + modelName + ", msisdn=" + msisdn
-				+ ", operatingSystem=" + operatingSystem + "]";
+				+ ", operatingSystem=" + operatingSystem + ", identifierType=" + identifierType + "]";
 	}
+
+	
 	
 }

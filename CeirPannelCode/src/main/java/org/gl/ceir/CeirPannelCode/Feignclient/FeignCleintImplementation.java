@@ -1,6 +1,7 @@
 package org.gl.ceir.CeirPannelCode.Feignclient;
 import java.util.List;
 
+import org.gl.ceir.CeirPannelCode.Controller.CustomerCareRequest;
 import org.gl.ceir.CeirPannelCode.Model.ActionModel;
 import org.gl.ceir.CeirPannelCode.Model.AddMoreFileModel;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentModel;
@@ -382,6 +383,13 @@ public @ResponseBody ConfigContentModel viewAdminFeign(FilterRequest filterReque
 				@PostMapping("/system/viewTag")
 				public @ResponseBody AddMoreFileModel addMoreBuutonCount(AddMoreFileModel addMoreCount);	
 				
+				
+				//************************************************ view customer Care Feign *****************************************
+
+				@PostMapping("/customer-care/record")
+				public @ResponseBody GenricResponse viewcustomerDetialsfeign(
+						@RequestParam(name = "listType", required = false) String listType,
+						@RequestBody CustomerCareRequest customerCareRequest);
 				
 
 		}

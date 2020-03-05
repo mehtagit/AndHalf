@@ -14,6 +14,7 @@
 		//sessionStorage.setItem("roleType",roleType);
 		//sessionStorage.setItem("tagId", tagId);
 		window.location.replace("./search?via=other&msisdn="+msisdn+"&imei="+imei+"&deviceIdType="+deviceIdType);
+		return false;
 	}
 	
 	$.getJSON('./getDropdownList/DEVICE_ID_TYPE', function(data) {
