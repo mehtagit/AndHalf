@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import javax.transaction.Transactional;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +24,7 @@ import com.gl.ceir.pojo.SearchCriteria;
 import com.gl.ceir.repo.GrievanceRepository;
 import com.gl.ceir.repo.UserRepository;
 import com.gl.ceir.service.BaseService;
+import com.gl.ceir.service.transaction.CloseGrievanceTransaction;
 import com.gl.ceir.specification.GenericSpecificationBuilder;
 import com.gl.ceir.util.DateUtil;
 
@@ -36,12 +35,16 @@ public class CloseGrievance extends BaseService{
 
 	List<Grievance> processedGrievances = new ArrayList<>();
 	List<RawMail> rawMails = new ArrayList<>();
+	
+	@Autowired
+	CloseGrievanceTransaction closeGrievanceTransaction;
 
 	@Autowired
 	GrievanceRepository grievanceRepository;
 
 	@Autowired
 	UserRepository userRepository;
+	
 
 	@Override
 	public void fetch() {
@@ -109,16 +112,12 @@ public class CloseGrievance extends BaseService{
 		}
 	}
 
-	@Transactional(rollbackOn = Exception.class)
 	@Override
 	public void process(Object o) {
 		@SuppressWarnings("unchecked")
 		List<Grievance> grievances = (List<Grievance>) o;
-
-		grievanceRepository.saveAll(grievances);
-		// TODO update in history
-
-		notifierWrapper.saveNotification(rawMails);
+		
+		closeGrievanceTransaction.performTransaction(grievances, rawMails);
 
 	}
 
