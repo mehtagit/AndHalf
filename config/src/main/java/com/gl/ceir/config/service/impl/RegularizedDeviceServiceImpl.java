@@ -42,6 +42,7 @@ import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.StateMgmtDb;
 import com.gl.ceir.config.model.SystemConfigListDb;
 import com.gl.ceir.config.model.SystemConfigurationDb;
+import com.gl.ceir.config.model.User;
 import com.gl.ceir.config.model.UserProfile;
 import com.gl.ceir.config.model.WebActionDb;
 import com.gl.ceir.config.model.constants.Datatype;
@@ -63,6 +64,7 @@ import com.gl.ceir.config.repository.RegularizedDeviceDbRepository;
 import com.gl.ceir.config.repository.StokeDetailsRepository;
 import com.gl.ceir.config.repository.SystemConfigurationDbRepository;
 import com.gl.ceir.config.repository.UserProfileRepository;
+import com.gl.ceir.config.repository.UserRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
 import com.gl.ceir.config.specificationsbuilder.GenericSpecificationBuilder;
 import com.gl.ceir.config.util.DateUtil;
@@ -130,6 +132,9 @@ public class RegularizedDeviceServiceImpl {
 
 	@Autowired
 	UserStaticServiceImpl userStaticServiceImpl;
+	
+	@Autowired
+	UserRepository userRepository;
 
 	private List<RegularizeDeviceDb> getAll(FilterRequest filterRequest){
 
@@ -163,6 +168,7 @@ public class RegularizedDeviceServiceImpl {
 
 	public Page<RegularizeDeviceDb> filter(FilterRequest filterRequest, Integer pageNo, Integer pageSize){
 
+		User user = null;
 		List<StateMgmtDb> stateList = null;
 		SystemConfigurationDb newYearDateRegisterDevice = systemConfigurationDbRepository.getByTag(ConfigTags.new_year_date_register_device);
 		SystemConfigurationDb gracePeriodForRegisterDevice = systemConfigurationDbRepository.getByTag(ConfigTags.grace_period_for_rgister_device);
@@ -193,10 +199,16 @@ public class RegularizedDeviceServiceImpl {
 				setInterp(regularizeDeviceDb);
 			}
 
+			user = userRepository.getById(filterRequest.getUserId());
+			
 			// Save in audit.
-			AuditTrail auditTrail = new AuditTrail(filterRequest.getUserId(), "", 0L, 
-					"", 12, Features.REGISTER_DEVICE, 
-					SubFeatures.VIEW, "");
+			AuditTrail auditTrail = new AuditTrail(filterRequest.getUserId(), 
+					user.getUsername(), 
+					Long.valueOf(filterRequest.getUserTypeId()), 
+					filterRequest.getUserType(), 
+					12, Features.REGISTER_DEVICE, 
+					SubFeatures.VIEW, 
+					"", "NA");
 			auditTrailRepository.save(auditTrail);
 			logger.info("AUDIT : View in audit_trail. " + auditTrail);
 
@@ -348,8 +360,9 @@ public class RegularizedDeviceServiceImpl {
 						logger.info("End user device registration is sucessful." + endUserDB);
 
 						// Save in audit.
-						AuditTrail auditTrail = new AuditTrail(endUserDB.getCreatorUserId(), "", 0L, 
-								"", 12, Features.REGISTER_DEVICE, 
+						AuditTrail auditTrail = new AuditTrail(endUserDB.getCreatorUserId(), endUserDB.getNid(), 
+								17L, 
+								"End User", 12, Features.REGISTER_DEVICE, 
 								SubFeatures.REGISTER, "");
 						auditTrailRepository.save(auditTrail);
 						logger.info("AUDIT : Saved in audit_trail. " + auditTrail);
