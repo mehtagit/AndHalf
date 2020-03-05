@@ -6,6 +6,7 @@ $('#langlist').on('change', function() {
 	window.location.assign("selfRegisterDevice?lang="+window.lang);			
 }); 
 
+
 $('#langlist').val(data_lang_param);
 $.i18n().locale = data_lang_param;
 var successMsg;

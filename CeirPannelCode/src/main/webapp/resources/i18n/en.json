@@ -122,5 +122,7 @@
 	"Stolen/Recovery Device Count":"Stolen/Recovery Device Count",
 	"Stolen/Recovery Device Quantity":"Stolen/Recovery Device Quantity",
 	"Block/Unblock Device Count":"Block/Unblock Device Count",
-	"Block/Unblock Device Quantity":"Block/Unblock Device Quantity"
+	"Block/Unblock Device Quantity":"Block/Unblock Device Quantity",
+	"Block/Unblock Requests":"Block/Unblock Requests",
+	"Stolen/Recovery Requests":"Stolen/Recovery Requests"
 }

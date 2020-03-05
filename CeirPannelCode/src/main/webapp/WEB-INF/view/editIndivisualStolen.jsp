@@ -218,7 +218,7 @@ select {
 														<p class="contact-label">
 															<spring:message code="registration.altcontactnumber" /> <span class="star">*</span>
 														</p>
-														<input type="tel" name="phone" id="singleStolenphone1" pattern="[0-9 + ]{1,15}" placeholder=""
+														<input type="text" name="phone" id="singleStolenphone1" pattern="[0-9 + ]{1,15}" placeholder=""
 															maxlength="15">
 														<!-- <label for="phone">Alternate Contact Number <span class="star">*</span></label> -->
 													</div>
@@ -353,7 +353,7 @@ select {
 															<p class="contact-label">
 																<spring:message code="input.contactNum" /> <span class="star">*</span>
 															</p>
-															<input type="tel" name="phone" id="singleStolenphone2" placeholder=""
+															<input type="text" name="phone" id="singleStolenphone2" placeholder=""
 																required pattern="[0-9 + ]{1,14}" title="Please enter 14 digits contact number" maxlength="14">
 															<!--  <label for="phone2">Contact Number <span class="star">*</span></label> -->
 														</div>
@@ -672,7 +672,7 @@ select {
 
 											<div class="input-field col s12 m6">
 												<!-- <p class="contact-label">Alternate Contact Number <span class="star">*</span></p> -->
-												<input type="tel" name="phone" id="bulkStolenContact"
+												<input type="text" name="phone" id="bulkStolenContact"
 													maxlength="15"> <label for="phone2">
 													<spring:message code="input.contactNum" /></label>
 											</div>
