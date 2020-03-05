@@ -25,9 +25,9 @@ import com.gl.ceir.service.BaseService;
 import com.gl.ceir.specification.GenericSpecificationBuilder;
 
 @Component
-public class ConsignmnetRevenueService extends BaseService{
+public class ConsignmentRevenueService extends BaseService{
 
-	private static final Logger logger = LogManager.getLogger(ConsignmnetRevenueService.class);
+	private static final Logger logger = LogManager.getLogger(ConsignmentRevenueService.class);
 
 	Map<Integer, CurrencyConversionDb> exchangeRateMap = null;
 

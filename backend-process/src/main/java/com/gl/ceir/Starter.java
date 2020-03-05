@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.gl.ceir.service.Service;
+import com.gl.ceir.service.impl.ConsignmentRevenueService;
 import com.gl.ceir.service.impl.DeviceTaxReminder;
 import com.gl.ceir.service.impl.VisaExpire;
 
@@ -16,6 +17,9 @@ public class Starter {
 	@Autowired
 	VisaExpire visaExpire;
 	
+	@Autowired
+	ConsignmentRevenueService consignmentRevenueService;
+	
 	public Service start(String name) {
 		
 		switch (name) {
@@ -23,6 +27,9 @@ public class Starter {
 			return deviceTaxReminder;
 		case ProcessName.VISA_EXPIRE:
 			return visaExpire;
+		case ProcessName.CONSIGNMENT_REVENUE:
+			return consignmentRevenueService;
+			
 		default:
 			return null;
 		}
