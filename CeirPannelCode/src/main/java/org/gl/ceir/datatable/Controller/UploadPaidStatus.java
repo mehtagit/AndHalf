@@ -115,7 +115,7 @@ public class UploadPaidStatus {
 					String status = contentModelList.getTaxPaidStatusInterp();
 					String origin = contentModelList.getOrigin();
 					//params for action 
-					Long imei1 = contentModelList.getFirstImei();
+					String imei1 = contentModelList.getFirstImei();
 					String action = iconState.userPaidStatusIcon(imei1);
 
 					
@@ -141,7 +141,7 @@ public class UploadPaidStatus {
 					String status = contentModelList.getStateInterp();
 					String origin = contentModelList.getOrigin();
 					//params for action 
-					Long imei1 = contentModelList.getFirstImei();
+					String imei1 = contentModelList.getFirstImei();
 					String action = iconState.adminUserPaidStatusIcon(imei1,createdOn,contentModelList.getTxnId());
 
 					Object[] data = {createdOn,nid,txnId,country,taxStatus,origin,status,action};
@@ -166,7 +166,7 @@ public class UploadPaidStatus {
 					String status = contentModelList.getStateInterp();
 					
 					//params for action 
-					Long imei1 = contentModelList.getFirstImei();
+					String imei1 = contentModelList.getFirstImei();
 					String action = iconState.deviceActivationIcon(imei1,createdOn,contentModelList.getTxnId());
 
 					Object[] data = {createdOn,txnId,nid,action};

@@ -172,7 +172,7 @@ section {
                 <div class="container" id="searchDiv">
                   <div id="profile-page" class="section">
                     <div class="row ">
-                      <form action="#" enctype="multipart/form-data">
+                      <form action="#" onsubmit="return hide()">
                         <div class="col s12 m12 l12 bx-shadow">
                           <div class="row">
                             <div class="input-field col s12 m3 l3">
@@ -190,7 +190,7 @@ section {
                               </select>
                           </div>
                             <div class="input-field col s12 m3 l3">
-                              <button type="button" class="btn"  id="submit" onclick="hide();"><spring:message code="button.submit" /></button>
+                              <button class="btn " type="submit"><spring:message code="button.submit" /></button>
                               <a onclick="clearFields()" class="btn" style="margin-left: 10px;">Clear</a>
                             </div>
                           </div>

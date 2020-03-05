@@ -367,7 +367,7 @@ function submitEndUserDeviceInfo(){
 				"fourthImei": IMEI4,
 				"multiSimStatus": deviceStatus1,
 				"nid":nationalID,
-				"origin":"SELF"
+				"origin":"Self"
 
 		}
 		regularizeDeviceDbs.push(deviceInfo);
@@ -460,7 +460,7 @@ $(document).on("keyup", "#visaNumber", function(e) {
 
 
 function fileTypeValueChanges(id) {
-	
+
 	var uploadedFileName = $("#"+id).val();
 	uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
 	//alert("file extension=="+uploadedFileName)
@@ -494,7 +494,7 @@ function fileTypeValueChanges(id) {
 		$('#fileErrormessage').text('');
 		$('#fileErrormessage').text($.i18n('imageSize'));	
 	}
-	
+
 
 
 }
@@ -541,7 +541,7 @@ function visaImageValidation() {
 		$('#visafileErrormessage').text('');
 		$('#visafileErrormessage').text($.i18n('imageSize'));	
 	}
-	
+
 
 
 }
@@ -589,7 +589,7 @@ function deptImageValidation() {
 		$('#DeptfileErrormessage').text('');
 		$('#DeptfileErrormessage').text($.i18n('imageSize'));	
 	}
-	
+
 
 
 }

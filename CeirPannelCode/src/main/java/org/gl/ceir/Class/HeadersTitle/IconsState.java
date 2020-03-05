@@ -715,7 +715,7 @@ public class IconsState {
 
 
 
-		if(("1".equals(status)) && "Approved".equals(userStatus)) {
+		if(("1".equals(status) || "8".equals(status)) && "Approved".equals(userStatus)) {
 			error="<a onclick="+errorURL+" class="+disableIconClass+"><i  class="
 					+disableErrorIcon+" aria-hidden=\"true\" title="
 					+errorIconTitle+"  ></i></a>"; 
@@ -730,21 +730,15 @@ public class IconsState {
 		}
 
 		if("7".equals(status)) {
-			delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\"><i class="
-					+disableDeletionIcon+" aria-hidden=\"true\" title="
-					+deleteIconTitle+"></i></a>";
 			reject = "<a onclick="+rejectAction+" class=\"eventNone\"><i class="+disableRejectIcon+" aria-hidden=\"true\" title="
 					+rejectIconTitle+" ></i></a>";
-			download="<a onclick="+downloadURL+"  class="+disableIconClass+"><i class="
-					+disableDownloadIcon+" aria-hidden=\"true\" title="
-					+downloadIconTitle+" ></i></a>"; 
 			error="<a onclick="+errorURL+" class="+disableIconClass+"><i  class="
 					+disableErrorIcon+" aria-hidden=\"true\" title="
 					+errorIconTitle+"  ></i></a>"; 
 
 		}
 
-		else if(("5".equals(status)  || "8".equals(status) || "9".equals(status)) && "Approved".equals(userStatus)) {
+		else if(("5".equals(status)  || "9".equals(status)) && "Approved".equals(userStatus)) {
 				delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\"><i class="
 					+disableDeletionIcon+" aria-hidden=\"true\" title="
 					+deleteIconTitle+"></i></a>";
@@ -936,7 +930,7 @@ public class IconsState {
 
 
 	/********************************** Icons for UPS **********************************/ 	
-	public String userPaidStatusIcon(Long imei1) {
+	public String userPaidStatusIcon(String imei1) {
 		executePostConstruct();
 		String payTaxAction ="taxPaid('"+imei1+"')";
 		String viewAction="viewDetails('"+imei1+"')";
@@ -958,7 +952,7 @@ public class IconsState {
 
 
 	/********************************** Icons for AdminUPS **********************************/ 	
-	public String adminUserPaidStatusIcon(Long imei1,String createdOn,String txnId) {
+	public String adminUserPaidStatusIcon(String imei1,String createdOn,String txnId) {
 		executePostConstruct();
 		String viewAction="viewDetails('"+imei1+"')";
 
@@ -1600,7 +1594,7 @@ public class IconsState {
 
 	/********************************** Icons for Device Activation **********************************/ 	
 
-	public String deviceActivationIcon(Long imei1,String createdOn,String txnId) {
+	public String deviceActivationIcon(String imei1,String createdOn,String txnId) {
 		executePostConstruct();
 		String viewAction="viewDetails('"+imei1+"')";
 		String editAction="";
