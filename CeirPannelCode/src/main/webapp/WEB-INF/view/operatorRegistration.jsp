@@ -57,7 +57,8 @@ if(statusCode==200){
 <link
 	href="${context}/resources/js/plugins/chartist-js/chartist.min.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
-
+	<link href="${context}/resources/project_css/leanOverlay.css" type="text/css"
+	rel="stylesheet" media="screen,projection">
 <!-- Country -->
 <script type="text/javascript" src="${context}/resources/js/country.js"></script>
 

@@ -967,11 +967,12 @@
                         if (typeof this.options.customPlaceholder === "function") {
                             placeholder = this.options.customPlaceholder(placeholder, this.selectedCountryData);
                         }
-                        //alert(this.selectedCountryData.dialCode);
+                       // alert(this.selectedCountryData.dialCode);
                         if(document.getElementById("singleStolenphone2").value==""){
                             document.getElementById("singleStolenphone2").value="+"+this.selectedCountryData.dialCode +" ";
                         }
                         if(document.getElementById("singleStolenphone1").value==""){
+                        	
                             document.getElementById("singleStolenphone1").value="+"+this.selectedCountryData.dialCode +" ";
                         }
                         this.telInput.setAttribute("placeholder", placeholder);
