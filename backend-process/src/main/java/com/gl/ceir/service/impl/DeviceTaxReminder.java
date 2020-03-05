@@ -20,12 +20,10 @@ import com.gl.ceir.entity.EndUserDB;
 import com.gl.ceir.entity.PolicyBreachNotification;
 import com.gl.ceir.entity.RegularizeDeviceDb;
 import com.gl.ceir.entity.SystemConfigurationDb;
-import com.gl.ceir.notifier.NotifierWrapper;
 import com.gl.ceir.pojo.RawMail;
 import com.gl.ceir.pojo.SearchCriteria;
 import com.gl.ceir.repo.PolicyBreachNotificationRepository;
 import com.gl.ceir.repo.RegularizedDeviceDbRepository;
-import com.gl.ceir.repo.SystemConfigurationDbRepository;
 import com.gl.ceir.service.BaseService;
 import com.gl.ceir.specification.GenericSpecificationBuilder;
 import com.gl.ceir.util.DateUtil;
@@ -36,19 +34,11 @@ public class DeviceTaxReminder extends BaseService{
 	private static final Logger logger = LogManager.getLogger(DeviceTaxReminder.class);
 
 	@Autowired
-	SystemConfigurationDbRepository systemConfigurationDbRepository;
-
-	@Autowired
-	AlertServiceImpl alertServiceImpl;
-
-	@Autowired
 	RegularizedDeviceDbRepository regularizedDeviceDbRepository;
 	
 	@Autowired
 	PolicyBreachNotificationRepository policyBreachNotificationRepository;
 	
-	@Autowired
-	NotifierWrapper notifierWrapper;
 
 	@Override
 	public void fetch() {

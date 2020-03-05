@@ -32,9 +32,6 @@ public class ConsignmentRevenueService extends BaseService{
 	Map<Integer, CurrencyConversionDb> exchangeRateMap = null;
 
 	@Autowired
-	SystemConfigurationDbRepository systemConfigurationDbRepository;
-
-	@Autowired
 	SystemConfigListRepository systemConfigListRepository;
 
 	@Autowired

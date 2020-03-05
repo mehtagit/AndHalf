@@ -16,7 +16,6 @@ import com.gl.ceir.entity.SystemConfigurationDb;
 import com.gl.ceir.entity.VisaDb;
 import com.gl.ceir.pojo.SearchCriteria;
 import com.gl.ceir.repo.EndUserDbRepository;
-import com.gl.ceir.repo.SystemConfigurationDbRepository;
 import com.gl.ceir.repo.VisaDbRepository;
 import com.gl.ceir.service.BaseService;
 import com.gl.ceir.specification.GenericSpecificationBuilder;
@@ -27,13 +26,7 @@ public class VisaExpire extends BaseService{
 	private static final Logger logger = LogManager.getLogger(VisaExpire.class);
 
 	@Autowired
-	SystemConfigurationDbRepository systemConfigurationDbRepository;
-
-	@Autowired
 	EndUserDbRepository endUserDbRepository;
-
-	@Autowired
-	AlertServiceImpl alertServiceImpl;
 
 	@Autowired
 	VisaDbRepository visaDbRepository;
