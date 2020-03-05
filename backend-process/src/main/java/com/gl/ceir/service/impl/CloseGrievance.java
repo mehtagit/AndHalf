@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import javax.transaction.Transactional;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,19 +18,12 @@ import com.gl.ceir.constant.ConfigTags;
 import com.gl.ceir.constant.Datatype;
 import com.gl.ceir.constant.ReferTable;
 import com.gl.ceir.constant.SearchOperation;
-import com.gl.ceir.entity.EndUserDB;
 import com.gl.ceir.entity.Grievance;
-import com.gl.ceir.entity.PolicyBreachNotification;
-import com.gl.ceir.entity.RegularizeDeviceDb;
 import com.gl.ceir.entity.SystemConfigurationDb;
 import com.gl.ceir.entity.User;
-import com.gl.ceir.notifier.NotifierWrapper;
 import com.gl.ceir.pojo.RawMail;
 import com.gl.ceir.pojo.SearchCriteria;
 import com.gl.ceir.repo.GrievanceRepository;
-import com.gl.ceir.repo.PolicyBreachNotificationRepository;
-import com.gl.ceir.repo.RegularizedDeviceDbRepository;
-import com.gl.ceir.repo.SystemConfigurationDbRepository;
 import com.gl.ceir.repo.UserRepository;
 import com.gl.ceir.service.BaseService;
 import com.gl.ceir.specification.GenericSpecificationBuilder;
@@ -114,12 +109,14 @@ public class CloseGrievance extends BaseService{
 		}
 	}
 
+	@Transactional(rollbackOn = Exception.class)
 	@Override
 	public void process(Object o) {
 		@SuppressWarnings("unchecked")
 		List<Grievance> grievances = (List<Grievance>) o;
 
 		grievanceRepository.saveAll(grievances);
+		// TODO update in history
 
 		notifierWrapper.saveNotification(rawMails);
 
