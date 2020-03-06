@@ -221,7 +221,38 @@ $(document).ready(function () {
 					"country"+id
 			);
 
+			$.getJSON('./getDropdownList/DEVICE_TYPE', function(data) {
+				var dropdownid=id-1;
+				for (i = 0; i < data.length; i++) {
+					$('<option>').val(data[i].value).text(data[i].interp)
+					.appendTo('#deviceType'+dropdownid);
 
+				}
+			});
+			$.getJSON('./getDropdownList/DEVICE_ID_TYPE', function(data) {
+				var dropdownid=id-1;
+				for (i = 0; i < data.length; i++) {
+					$('<option>').val(data[i].value).text(data[i].interp)
+					.appendTo('#deviceIdType'+dropdownid);
+
+				}
+			});
+			$.getJSON('./getDropdownList/MULTI_SIM_STATUS', function(data) {
+				var dropdownid=id-1;
+				for (i = 0; i < data.length; i++) {
+					$('<option>').val(data[i].value).text(data[i].interp)
+					.appendTo('#multipleSimStatus'+dropdownid);
+
+				}
+			});
+			$.getJSON('./getDropdownList/DEVICE_STATUS', function(data) {
+				var dropdownid=id-1;
+				for (i = 0; i < data.length; i++) {
+					$('<option>').val(data[i].value).text(data[i].interp)
+					.appendTo('#deviceStatus'+dropdownid);
+
+				}
+			});
 
 
 
