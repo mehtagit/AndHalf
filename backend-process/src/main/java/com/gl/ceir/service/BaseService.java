@@ -27,6 +27,11 @@ public abstract class BaseService implements Service{
 	public void fetchAndProcess() {
 		fetch();
 	}
+	
+	@Override
+	public void onErrorRaiseAnAlert(String alertId, Map<String, String> bodyPlaceHolderMap) {
+		alertServiceImpl.raiseAnAlert(alertId, 0, bodyPlaceHolderMap);
+	}
 
 	public PropertiesReader getPropertiesReader() {
 		return propertiesReader;

@@ -37,7 +37,7 @@ public class VisaExpire extends BaseService{
 			SystemConfigurationDb reminderDays 	= systemConfigurationDbRepository.getByTag(ConfigTags.REMINDER_DAYS);
 
 			if(Objects.isNull(reminderDays)) {
-				alertServiceImpl.raiseAnAlert(Alerts.ALERT_003, 0);
+				onErrorRaiseAnAlert(Alerts.ALERT_003, null);
 				logger.info("Alert [ALERT_003] is raised. So, doing nothing.");
 				return;
 			}
@@ -51,7 +51,7 @@ public class VisaExpire extends BaseService{
 			}
 
 		}catch (NumberFormatException e) {
-			alertServiceImpl.raiseAnAlert(Alerts.ALERT_003, 0);
+			onErrorRaiseAnAlert(Alerts.ALERT_003, null);
 		}catch (Exception e) {
 			logger.error(e.getMessage(), e);
 		}

@@ -17,6 +17,7 @@ import com.gl.ceir.constant.Datatype;
 import com.gl.ceir.constant.ReferTable;
 import com.gl.ceir.constant.SearchOperation;
 import com.gl.ceir.entity.Grievance;
+import com.gl.ceir.entity.GrievanceHistory;
 import com.gl.ceir.entity.SystemConfigurationDb;
 import com.gl.ceir.entity.User;
 import com.gl.ceir.pojo.RawMail;
@@ -34,8 +35,10 @@ public class CloseGrievance extends BaseService{
 	private static final Logger logger = LogManager.getLogger(CloseGrievance.class);
 
 	List<Grievance> processedGrievances = new ArrayList<>();
+	List<GrievanceHistory> grievanceHistories = new ArrayList<>();
+
 	List<RawMail> rawMails = new ArrayList<>();
-	
+
 	@Autowired
 	CloseGrievanceTransaction closeGrievanceTransaction;
 
@@ -44,17 +47,17 @@ public class CloseGrievance extends BaseService{
 
 	@Autowired
 	UserRepository userRepository;
-	
+
 
 	@Override
 	public void fetch() {
 		User user = null;
-		
+
 		try {
 			SystemConfigurationDb defaultPerioToCloseGrievance = systemConfigurationDbRepository.getByTag(ConfigTags.DEFAULT_PERIOD_TO_CLOSE_GRIEVANCE);
 
 			if(Objects.isNull(defaultPerioToCloseGrievance)) {
-				alertServiceImpl.raiseAnAlert(Alerts.ALERT_004, 0);
+				onErrorRaiseAnAlert(Alerts.ALERT_004, null);
 				logger.info("Alert [ALERT_004] is raised. So, doing nothing.");
 				return;
 			}
@@ -66,10 +69,19 @@ public class CloseGrievance extends BaseService{
 
 			Map<String, String> placeholderMap = new HashMap<>();
 			placeholderMap.put("<days>", defaultPerioToCloseGrievance.getValue());
-			
+
 			for(Grievance grievance : grievances) {
 				grievance.setGrievanceStatus(4); // Closed by System.
 				processedGrievances.add(grievance);
+
+				// Update in History.
+				grievanceHistories.add(new GrievanceHistory(grievance.getGrievanceId(), Long.valueOf(grievance.getUserId()), 
+						grievance.getUserType(), 
+						grievance.getGrievanceStatus(), grievance.getTxnId(), grievance.getCategoryId(), 
+						grievance.getFileName(), 
+						grievance.getRemarks(),
+						-1L, 
+						"System"));
 
 				// Save in notification.
 				user = userRepository.getById(grievance.getUserId());
@@ -91,10 +103,10 @@ public class CloseGrievance extends BaseService{
 							grievance.getUserType()));
 				}else {
 					logger.info("ALERT : No user is found for Grievance [" + grievance.getTxnId() + "]");
-					
+
 					Map<String, String> bodyPlaceHolderMap = new HashMap<>();
 					bodyPlaceHolderMap.put("<id>", Long.toString(grievance.getUserId()));
-					
+
 					alertServiceImpl.raiseAnAlert(Alerts.ALERT_005, 0, bodyPlaceHolderMap);
 				}
 			}
@@ -116,9 +128,15 @@ public class CloseGrievance extends BaseService{
 	public void process(Object o) {
 		@SuppressWarnings("unchecked")
 		List<Grievance> grievances = (List<Grievance>) o;
-		
-		closeGrievanceTransaction.performTransaction(grievances, rawMails);
 
+		try {
+			closeGrievanceTransaction.performTransaction(grievances, grievanceHistories, rawMails);
+		}catch (Exception e) {
+			logger.info(e.getMessage(), e);
+			Map<String, String> bodyPlaceholder = new HashMap<>();
+			bodyPlaceholder.put("<e>", e.getMessage());
+			onErrorRaiseAnAlert(Alerts.ALERT_006, bodyPlaceholder);	
+		}
 	}
 
 	private GenericSpecificationBuilder<Grievance> buildSpecification(String date){

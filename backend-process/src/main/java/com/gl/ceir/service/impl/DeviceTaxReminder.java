@@ -51,7 +51,7 @@ public class DeviceTaxReminder extends BaseService{
 			systemConfigMap.put(ConfigTags.SEND_NOTI_ON_DEVICE_TAX_NOT_PAID, sendNotiOnDeviceTaxNotPaid);
 
 			if(Objects.isNull(graceDays) || Objects.isNull(reminderDays)) {
-				alertServiceImpl.raiseAnAlert(Alerts.ALERT_003, 0);
+				onErrorRaiseAnAlert(Alerts.ALERT_003, null);
 				logger.info("Alert [ALERT_003] is raised. So, doing nothing.");
 				return;
 			}
@@ -66,7 +66,7 @@ public class DeviceTaxReminder extends BaseService{
 			}
 
 		}catch (NumberFormatException e) {
-			alertServiceImpl.raiseAnAlert(Alerts.ALERT_003, 0);
+			onErrorRaiseAnAlert(Alerts.ALERT_003, null);
 		}catch (Exception e) {
 			logger.error(e.getMessage(), e);
 		}

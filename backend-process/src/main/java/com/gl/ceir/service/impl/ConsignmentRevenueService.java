@@ -41,9 +41,6 @@ public class ConsignmentRevenueService extends BaseService{
 	ConsignmentRevenueDailyRepository consignmentRevenueDailyRepository;
 
 	@Autowired
-	AlertServiceImpl alertServiceImpl;
-
-	@Autowired
 	ConsignmentServiceImpl consignmentServiceImpl;
 
 	@Autowired
@@ -102,14 +99,5 @@ public class ConsignmentRevenueService extends BaseService{
 			consignmentRevenueDailyRepository.save(consignmentRevenueDailyDb);
 		}
 	}
-
-	private GenericSpecificationBuilder<RegularizeDeviceDb> buildSpecification(String reminderDate){
-		GenericSpecificationBuilder<RegularizeDeviceDb> cmsb = new GenericSpecificationBuilder<>(propertiesReader.dialect);
-
-		cmsb.with(new SearchCriteria("createdOn", reminderDate, SearchOperation.GREATER_THAN, Datatype.DATE));
-		cmsb.with(new SearchCriteria("createdOn", reminderDate, SearchOperation.LESS_THAN, Datatype.DATE));
-		cmsb.with(new SearchCriteria("taxPaidStatus", 1, SearchOperation.EQUALITY, Datatype.STRING));
-
-		return cmsb;
-	}	
+	
 }
