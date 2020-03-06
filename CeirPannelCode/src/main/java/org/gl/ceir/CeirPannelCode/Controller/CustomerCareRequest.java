@@ -4,6 +4,7 @@ public class CustomerCareRequest {
 	private String deviceIdType;
 	private String imei;
 	private String msisdn;
+	private String searchString;
 	public String getDeviceIdType() {
 		return deviceIdType;
 	}
@@ -22,9 +23,17 @@ public class CustomerCareRequest {
 	public void setMsisdn(String msisdn) {
 		this.msisdn = msisdn;
 	}
+	public String getSearchString() {
+		return searchString;
+	}
+	public void setSearchString(String searchString) {
+		this.searchString = searchString;
+	}
 	@Override
 	public String toString() {
-		return "CustomerCareRequest [deviceIdType=" + deviceIdType + ", imei=" + imei + ", msisdn=" + msisdn + "]";
+		return "CustomerCareRequest [deviceIdType=" + deviceIdType + ", imei=" + imei + ", msisdn=" + msisdn
+				+ ", searchString=" + searchString + "]";
 	}
 
+	
 }

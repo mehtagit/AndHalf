@@ -1001,9 +1001,10 @@ function exportStolenRecoveryData()
 	var info = table.page.info(); 
     var pageNo=info.page;
     var pageSize =info.length;
-	console.log("--------"+pageSize+"---------"+pageNo);
+    var featureId = window.parent.$('.navData li.active a').attr('data-featureid')
+	console.log("--------"+pageSize+"---------"+pageNo+"-------"+featureId);
 	console.log("stolenRecoveryStartDate  ="+stolenRecoveryStartDate+"  stolenRecoveryEndDate=="+stolenRecoveryEndDate+"  stolenRecoveryTxnId="+stolenRecoveryTxnId+" stolenRecoveryFileStatus ="+stolenRecoveryFileStatus+"=role="+role+" stolenRecoverySourceStatus="+stolenRecoverySourceStatus+" stolenRecoveryRequestType"+stolenRecoveryRequestType);
-	window.location.href="./exportStolenRecovery?stolenRecoveryStartDate="+stolenRecoveryStartDate+"&stolenRecoveryEndDate="+stolenRecoveryEndDate+"&stolenRecoveryTxnId="+stolenRecoveryTxnId+"&stolenRecoveryFileStatus="+stolenRecoveryFileStatus+"&stolenRecoverySourceStatus="+stolenRecoverySourceStatus+"&stolenRecoveryRequestType="+stolenRecoveryRequestType+"&pageSize="+pageSize+"&pageNo="+pageNo+"&roleType="+roleType;
+	window.location.href="./exportStolenRecovery?stolenRecoveryStartDate="+stolenRecoveryStartDate+"&stolenRecoveryEndDate="+stolenRecoveryEndDate+"&stolenRecoveryTxnId="+stolenRecoveryTxnId+"&stolenRecoveryFileStatus="+stolenRecoveryFileStatus+"&stolenRecoverySourceStatus="+stolenRecoverySourceStatus+"&stolenRecoveryRequestType="+stolenRecoveryRequestType+"&featureId="+featureId+"&pageSize="+pageSize+"&pageNo="+pageNo+"&roleType="+roleType;
 
 }
 

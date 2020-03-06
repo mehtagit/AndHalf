@@ -26,6 +26,7 @@ $(document).ready(function(){
 	getGsmaDetails();
 	stateTable();
 	deviceTable();
+	notificationTable();
 
 });
 
@@ -104,7 +105,7 @@ function stateTable(){
 		}, {
 			"data" : "featureId","defaultContent": "",render: function ( data, type, row ) {
 								if(data==0){
-									return '<i class="fa fa-eye teal-text" title="View"></i>'
+									return '<i class="fa fa-eye teal-text disable eventNone" title="View"></i>'
 								}else{
 									return '<i class="fa fa-eye teal-text" title="View"></i>'
 				}
@@ -158,7 +159,7 @@ function deviceTable(){
 		}, {
 			"data" : "featureId","defaultContent": "",render: function ( data, type, row ) {
 				if(data==0){
-					return '<i class="fa fa-eye teal-text" title="View"></i>'
+					return '<i class="fa fa-eye teal-text disable eventNone" title="View"></i>'
 				}else{
 					return '<i class="fa fa-eye teal-text" title="View"></i>'
 				}
@@ -172,7 +173,68 @@ function deviceTable(){
 	
 }
 
+function notificationTable(){
+	var filterRequest={
+			"imei" : $("body").attr("data-imei"),
+			"msisdn" : $("body").attr("data-msisdn"),
+			"deviceIdType" : $("body").attr("data-deviceIdType")
+		}
 
+if(lang=='km'){
+var langFile='./resources/i18n/khmer_datatable.json';
+}
+$.ajax({
+url: './headers?type=ccdashboardNotification',
+type: 'POST',
+dataType: "json",
+success: function(result){
+	var table=	$("#Notification-data-table").removeAttr('width').DataTable({
+		destroy:true,
+		searching : false,
+		"serverSide": true,
+		orderCellsTop : true,
+		"ordering" : false,
+		"bPaginate" : true,
+		"bFilter" : true,
+		"bInfo" : true,
+		"bSearchable" : true,
+		"oLanguage": {  
+			"sUrl": langFile  
+		},
+		ajax: {
+			url : './CCNotificationData',
+			type: 'POST',
+			dataType: "json",
+			data : function(d) {
+				d.filter = JSON.stringify(filterRequest); 
+				console.log(JSON.stringify(filterRequest));
+			}
+
+		},
+		"columns": result,
+		fixedColumns: true,
+		columnDefs: [
+            { width: 155, targets: result.length - 1 },
+           
+	]
+	});
+	
+	$('#Notification-data-table input').unbind();
+    $('#Notification-data-table input').bind('keyup', function (e) {
+        if (e.keyCode == 13) {
+            table.search(this.value).draw();
+        }
+    });
+    $('div#initialloader').delay(300).fadeOut('slow');
+},
+error: function (jqXHR, textStatus, errorThrown) {
+	console.log("error in ajax");
+}
+});
+	
+	
+	
+}
 
 
 

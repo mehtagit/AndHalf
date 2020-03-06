@@ -308,7 +308,7 @@ public class DatatableHeaders {
 			//AdminImprtertrcManageType Headers 
 			
 			else if("AdminImportertrcManageType".equals(role)) {
-				String[] headers = {"table.creationDate","table.transactionID","table.Trademark","table.country","table.TAC","table.status","table.action"};		
+				String[] headers = {"table.creationDate","table.transactionID","table.userType","table.displayName","table.Trademark","table.country","table.TAC","table.status","table.action"};		
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
@@ -357,6 +357,16 @@ public class DatatableHeaders {
 				}
 				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
 			}
+			
+			//customer Care DashBoard dataTable Headers
+			else if("ccdashboardNotification".equals(role)) {
+				String[] headers = {"table.date","table.transactionID","table.feature","table.message","table.action"};	
+				for(String header : headers) {
+					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
+				}
+				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);	
+			}
+
 			
 			//DEFAULT PORTION  
 			else {
