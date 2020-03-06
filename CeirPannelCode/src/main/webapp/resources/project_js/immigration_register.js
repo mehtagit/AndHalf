@@ -326,7 +326,7 @@ function submitImmigrationForm(){
 				"fourthImei": IMEI4,
 				"multiSimStatus": deviceStatus1,
 				"nid":nationalID,
-				"origin":"Self"
+				"origin":"Immigration"
 
 		}
 		regularizeDeviceDbs.push(deviceInfo);
