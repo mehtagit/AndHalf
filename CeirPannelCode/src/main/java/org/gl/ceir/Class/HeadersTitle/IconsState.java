@@ -930,7 +930,7 @@ public class IconsState {
 
 
 	/********************************** Icons for UPS **********************************/ 	
-	public String userPaidStatusIcon(Long imei1) {
+	public String userPaidStatusIcon(String imei1) {
 		executePostConstruct();
 		String payTaxAction ="taxPaid('"+imei1+"')";
 		String viewAction="viewDetails('"+imei1+"')";
@@ -952,7 +952,7 @@ public class IconsState {
 
 
 	/********************************** Icons for AdminUPS **********************************/ 	
-	public String adminUserPaidStatusIcon(Long imei1,String createdOn,String txnId) {
+	public String adminUserPaidStatusIcon(String imei1,String createdOn,String txnId) {
 		executePostConstruct();
 		String viewAction="viewDetails('"+imei1+"')";
 
@@ -1594,7 +1594,7 @@ public class IconsState {
 
 	/********************************** Icons for Device Activation **********************************/ 	
 
-	public String deviceActivationIcon(Long imei1,String createdOn,String txnId) {
+	public String deviceActivationIcon(String imei1,String createdOn,String txnId) {
 		executePostConstruct();
 		String viewAction="viewDetails('"+imei1+"')";
 		String editAction="";

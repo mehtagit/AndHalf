@@ -390,6 +390,7 @@ public @ResponseBody ConfigContentModel viewAdminFeign(FilterRequest filterReque
 				public @ResponseBody GenricResponse viewcustomerDetialsfeign(
 						@RequestParam(name = "listType", required = false) String listType,
 						@RequestBody CustomerCareRequest customerCareRequest);
+
 				
 
 		}

@@ -17,7 +17,7 @@
 <!DOCTYPE html>
 <html lang="en" class="no-js">
 <head>
-<title>Dashboard</title>
+<title>Upload Stock</title>
 
 <meta http-equiv='cache-control' content='no-cache'>
 <meta http-equiv='expires' content='-1'>
@@ -203,7 +203,8 @@ to {
 </style>
 
 </head>
-<body data-id="4" data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeId}"
+<body data-id="4" data-roleType="${usertype}" data-userID="${userid}"
+	data-userTypeID="${usertypeId}"
 	data-selected-roleType="${selectedUserTypeId}">
 
 
@@ -229,14 +230,15 @@ to {
 											pattern="[A-Za-z0-9]{0,15}"
 											oninput="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
 											oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
-												maxlength="15" id="supplierId" maxlength="15" /> <label
+											maxlength="15" id="supplierId" maxlength="15" /> <label
 											for="supplierId" id="SupplierIdAssignie" class="center-align"><spring:message
 												code="input.supplierID" /> </label>
 									</div>
 
 									<div class="input-field col s12 m6">
 										<input type="text" name="supplierName" id="supplierName"
-											pattern="[A-Za-z ]{0,50}" oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
+											pattern="[A-Za-z ]{0,50}"
+											oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
 											oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
 											maxlength="50" required /> <label for="supplierName"
 											id="SupplierIdAssignieName" class="center-align"><spring:message
@@ -251,7 +253,8 @@ to {
 								<div class="row myRow">
 									<div class="input-field col s12 m6">
 										<input type="text" name="quantity" id="Quantity"
-											pattern="[0-9]{0,7}" oninput="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
+											pattern="[0-9]{0,7}"
+											oninput="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
 											oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
 											maxlength="7" required /> <label for="Quantity"
 											class="center-align"><spring:message
@@ -340,8 +343,7 @@ to {
 					<div class="input-field col s12 center">
 						<a onclick="redirectToViewPage()" class="btn"><spring:message
 								code="modal.yes" /></a>
-						<button class="modal-close btn"
-							style="margin-left: 10px;">
+						<button class="modal-close btn" style="margin-left: 10px;">
 							<spring:message code="modal.no" />
 						</button>
 					</div>
@@ -381,8 +383,7 @@ to {
 					<spring:message code="fileValidationName" />
 					<br> <br>
 					<spring:message code="fileValidationFormate" />
-					<br>
-					<br>
+					<br> <br>
 					<spring:message code="fileValidationSize" />
 				</h6>
 			</div>
@@ -418,16 +419,12 @@ to {
 						<label> <input name="group1" type="radio" value="1"
 							onclick="document.getElementById('submitbtn').style.display ='block';" />
 							<span class="checkboxFont"> <spring:message
-									code="AssigneeName" /></span></label>
-							<label>
-							 <input name="group1" type="radio"
-							value="2"
+									code="AssigneeName" /></span></label> <label> <input name="group1"
+							type="radio" value="2"
 							onclick="document.getElementById('submitbtn').style.display ='block';" />
 							<span class="checkboxFont"> <spring:message
-									code="AssigneContactNumber" /></span> </label>
-									
-								<label>	<input name="group1"
-							type="radio" value="3"
+									code="AssigneContactNumber" /></span>
+						</label> <label> <input name="group1" type="radio" value="3"
 							onclick="document.getElementById('submitbtn').style.display ='block';    " />
 							<span class="checkboxFont"><spring:message
 									code="AssigneEmailID" /> </span>
@@ -457,7 +454,7 @@ to {
                 <p class="center" style="color: red;">No data found</p>
 
             </div> -->
-			<div class="row" id="assigneDetailsDiv" style="display:none">
+			<div class="row" id="assigneDetailsDiv" style="display: none">
 				<table class="responsive-table striped display"
 					id="assignee-data-table" cellspacing="0">
 				</table>
