@@ -595,7 +595,7 @@ public class ConsignmentServiceImpl {
 	public FileDetails getFilteredConsignmentInFileV2(FilterRequest filterRequest) {
 		String fileName = null;
 		Writer writer   = null;
-		//String[] columns = new String[]{"grievanceId","userId","userType","grievanceStatus","txnId","categoryId","fileName","createdOn","modifiedOn","remarks"};
+
 		ConsignmentFileModel cfm = null;
 		
 		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");

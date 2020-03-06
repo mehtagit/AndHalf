@@ -57,6 +57,7 @@ import com.gl.ceir.config.model.constants.Tags;
 import com.gl.ceir.config.model.constants.WebActionDbState;
 import com.gl.ceir.config.model.constants.WebActionDbSubFeature;
 import com.gl.ceir.config.model.constants.WebActionStatus;
+import com.gl.ceir.config.model.file.ConsignmentFileModel;
 import com.gl.ceir.config.model.file.StolenAndRecoveryFileModel;
 import com.gl.ceir.config.repository.ConsignmentRepository;
 import com.gl.ceir.config.repository.ImmegreationImeiDetailsRepository;
@@ -70,6 +71,7 @@ import com.gl.ceir.config.repository.UserProfileRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
 import com.gl.ceir.config.specificationsbuilder.GenericSpecificationBuilder;
 import com.gl.ceir.config.transaction.StolenAndRecoveryTransaction;
+import com.gl.ceir.config.util.CustomMappingStrategy;
 import com.gl.ceir.config.util.InterpSetter;
 import com.opencsv.CSVWriter;
 import com.opencsv.bean.StatefulBeanToCsv;
@@ -252,7 +254,7 @@ public class StolenAndRecoveryServiceImpl {
 
 			for(StolenandRecoveryMgmt stolenandRecoveryMgmt : stolenandRecoveryMgmts) {				
 				for(StateMgmtDb stateMgmtDb : stateInterpList) {
-					if(stolenandRecoveryMgmt.getFileStatus() == stateMgmtDb.getState()) {
+					if(stolenandRecoveryMgmt.getFileStatus().equals(stateMgmtDb.getState())) {
 						stolenandRecoveryMgmt.setStateInterp(stateMgmtDb.getInterp()); 
 						break;
 					}
@@ -271,10 +273,10 @@ public class StolenAndRecoveryServiceImpl {
 
 	private GenericSpecificationBuilder<StolenandRecoveryMgmt> buildSpecification(FilterRequest filterRequest, List<StateMgmtDb> statusList) {
 		GenericSpecificationBuilder<StolenandRecoveryMgmt> srsb = new GenericSpecificationBuilder<>(propertiesReader.dialect);
-		String CEIRADMIN = "CEIRADMIN";
+		String ceirAdmin = "CEIRADMIN";
 		String fileStatus = "fileStatus";
 
-		if(CEIRADMIN.equalsIgnoreCase(filterRequest.getUserType())) {
+		if(ceirAdmin.equalsIgnoreCase(filterRequest.getUserType())) {
 			if(Objects.nonNull(filterRequest.getUserId()))
 				srsb.orSearch(new SearchCriteria("userId", filterRequest.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));
 			else
@@ -327,7 +329,7 @@ public class StolenAndRecoveryServiceImpl {
 			}
 		}
 
-		if(CEIRADMIN.equalsIgnoreCase(filterRequest.getUserType())) {
+		if(ceirAdmin.equalsIgnoreCase(filterRequest.getUserType())) {
 			srsb.with(new SearchCriteria(fileStatus, 2, SearchOperation.EQUALITY, Datatype.STRING));
 		}else if(Objects.nonNull(filterRequest.getConsignmentStatus())) {
 			srsb.with(new SearchCriteria(fileStatus, filterRequest.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
@@ -362,10 +364,12 @@ public class StolenAndRecoveryServiceImpl {
 	public FileDetails getFilteredStolenAndRecoveryInFile(FilterRequest filterRequest) {
 		String fileName = null;
 		Writer writer   = null;
+		
 		StolenAndRecoveryFileModel srfm = null;
 
 		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
+		DateTimeFormatter dtf2  = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
+		
 		SystemConfigurationDb filepath = configurationManagementServiceImpl.findByTag(ConfigTags.file_stolen_and_recovery_dir);
 		logger.info("CONFIG : file_stolen_and_recovery_dir [" + filepath + "]");
 		SystemConfigurationDb link = configurationManagementServiceImpl.findByTag(ConfigTags.file_stock_download_link);
@@ -376,7 +380,8 @@ public class StolenAndRecoveryServiceImpl {
 		StatefulBeanToCsvBuilder<StolenAndRecoveryFileModel> builder = null;
 		StatefulBeanToCsv<StolenAndRecoveryFileModel> csvWriter = null;
 		List< StolenAndRecoveryFileModel > fileRecords = null;
-
+		CustomMappingStrategy<StolenAndRecoveryFileModel> mappingStrategy = new CustomMappingStrategy<>();
+		
 		try {
 			List<StolenandRecoveryMgmt> stolenandRecoveryMgmts = getAll(filterRequest);
 			if(filterRequest.getFeatureId() == 5) {
@@ -386,8 +391,10 @@ public class StolenAndRecoveryServiceImpl {
 			}
 
 			writer = Files.newBufferedWriter(Paths.get(filePath+fileName));
+			mappingStrategy.setType(StolenAndRecoveryFileModel.class);
+			
 			builder = new StatefulBeanToCsvBuilder<>(writer);
-			csvWriter = builder.withQuotechar(CSVWriter.NO_QUOTE_CHARACTER).build();
+			csvWriter = builder.withMappingStrategy(mappingStrategy).withSeparator(',').withQuotechar(CSVWriter.NO_QUOTE_CHARACTER).build();
 
 			if( stolenandRecoveryMgmts.isEmpty() ) {
 				csvWriter.write(new StolenAndRecoveryFileModel());
@@ -396,8 +403,6 @@ public class StolenAndRecoveryServiceImpl {
 				fileRecords = new ArrayList<>();
 				for( StolenandRecoveryMgmt stolenandRecoveryMgmt : stolenandRecoveryMgmts ) {
 					srfm = new StolenAndRecoveryFileModel();
-
-					setInterp(stolenandRecoveryMgmt);
 
 					srfm.setCreatedOn(stolenandRecoveryMgmt.getCreatedOn().format(dtf));
 					srfm.setModifiedOn( stolenandRecoveryMgmt.getModifiedOn().format(dtf));
@@ -408,6 +413,8 @@ public class StolenAndRecoveryServiceImpl {
 
 					if(stolenandRecoveryMgmt.getOperatorTypeId() == -1) {
 						srfm.setSource("Ceir Admin");
+					}else {
+						srfm.setSource(stolenandRecoveryMgmt.getOperatorTypeIdInterp());
 					}
 
 					srfm.setFileName( stolenandRecoveryMgmt.getFileName());

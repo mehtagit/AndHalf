@@ -65,8 +65,10 @@ public class CloseGrievance extends BaseService{
 			String date = DateUtil.nextDate( (Integer.parseInt(defaultPerioToCloseGrievance.getValue())) * -1);
 			logger.info("Close grievance raised on date [" + date + "] because of inactivity.");
 
+			// Read all inactive grievances for last configured number of days.
 			List<Grievance> grievances = grievanceRepository.findAll(buildSpecification(date).build());
 
+			// Map, To replace few placeholders in notification(mail) content.
 			Map<String, String> placeholderMap = new HashMap<>();
 			placeholderMap.put("<days>", defaultPerioToCloseGrievance.getValue());
 
