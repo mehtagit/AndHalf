@@ -324,10 +324,10 @@ public class StolenRecovery {
 				public String exportToExcel(@RequestParam(name="stolenRecoveryStartDate",required = false) String stolenRecoveryStartDate,@RequestParam(name="stolenRecoveryEndDate",required = false) String stolenRecoveryEndDate,
 						@RequestParam(name="stolenRecoveryTxnId",required = false) String stolenRecoveryTxnId,@RequestParam(name="stolenRecoveryFileStatus") Integer stolenRecoveryFileStatus,HttpServletRequest request,
 						HttpSession session,@RequestParam(name="pageSize") Integer pageSize,@RequestParam(name="pageNo") Integer pageNo,@RequestParam(name="roleType") String roleType,@RequestParam(name="stolenRecoverySourceStatus") Integer stolenRecoverySourceStatus
-						,@RequestParam(name="stolenRecoveryRequestType") Integer stolenRecoveryRequestType)
+						,@RequestParam(name="stolenRecoveryRequestType") Integer stolenRecoveryRequestType,@RequestParam(name="featureId") Integer featureId)
 				{
 					log.info("stolenRecoveryStartDate=="+stolenRecoveryStartDate+ " stolenRecoveryEndDate ="+stolenRecoveryEndDate+" stolenRecoveryTxnId="+stolenRecoveryTxnId+"stolenRecoveryFileStatus="+stolenRecoveryFileStatus
-							+"stolenRecoveryRequestType="+stolenRecoveryRequestType+"stolenRecoverySourceStatus  ="+stolenRecoverySourceStatus);
+							+"stolenRecoveryRequestType="+stolenRecoveryRequestType+"stolenRecoverySourceStatus  ="+stolenRecoverySourceStatus+ "featureId-->"+featureId);
 					int userId= (int) session.getAttribute("userid"); 
 					int file=1;
 					FileExportResponse fileExportResponse;
@@ -337,6 +337,7 @@ public class StolenRecovery {
 					filterRequest.setTxnId(stolenRecoveryTxnId);
 					filterRequest.setGrievanceStatus(stolenRecoveryFileStatus);
 					filterRequest.setRequestType(stolenRecoveryRequestType);
+				    filterRequest.setFeatureId(featureId);
 					filterRequest.setSourceType(stolenRecoverySourceStatus);
 					filterRequest.setUserId(userId);
 					filterRequest.setRoleType(roleType);

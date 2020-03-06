@@ -393,7 +393,13 @@ public @ResponseBody ConfigContentModel viewAdminFeign(FilterRequest filterReque
 
 				
 
-		}
+				//***************************************************CC Policy Notification Feign********************************
+
+				@RequestMapping(value="/policy-breach-notification" ,method=RequestMethod.POST) 
+				public Object ccdashBoardNotification(@RequestBody CustomerCareRequest filterRequest,
+						@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
+						@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize);
+}
 
 
 

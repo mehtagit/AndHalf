@@ -194,20 +194,8 @@ data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeI
                         <div class="col s12 m12">
                           <h4 class="header2" style="font-weight: bold; margin-top: 50px;">
                             Notification Information</h4>
-                            <table class="responsive-table striped display" id="data-table-simple" cellspacing="0">
-                            <thead>
-                              <tr>
-                                <th>Date</th>
-                                <th>Transaction ID</th>
-                                <th>Feature</th>
-                                <th>Message</th>
-                                <th>Action</th>
-                              </tr>
-                            </thead>
-
-                            <tbody>
-                             
-                            </tbody>
+                            <table class="responsive-table striped display" id="Notification-data-table" cellspacing="0">
+                          
                           </table>
                         </div>
                       </form>

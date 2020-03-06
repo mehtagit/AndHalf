@@ -1,9 +1,15 @@
+var input = document.querySelector("#phone");
+window.intlTelInput(input, {
+    utilsScript: "${context}/resources/js/utils.js",
+});
+
+
 $('#langlist').on('change', function() {
 	window.lang=$('#langlist').val() == 'km' ? 'km' : 'en';
 	var url_string = window.location.href;
 	var url = new URL(url_string);
 	var type = url.searchParams.get("type");
-	window.location.assign("selfRegisterDevice?lang="+window.lang);			
+	window.location.assign("immigration_register?lang="+window.lang);			
 }); 
 
 
@@ -16,16 +22,6 @@ $.i18n().load( {
 } ).done( function() { 
 });
 
-
-/*var input = document.querySelector("#phone1");
-window.intlTelInput(input, {
-	utilsScript: "js/utils.js",
-});
-
-var input = document.querySelector("#phone");
-window.intlTelInput(input, {
-	utilsScript: "js/utils.js",
-});*/
 
 
 $('#datepicker,#datepicker1').datepicker({
@@ -48,41 +44,6 @@ populateCountries(
 );
 
 
-
-
-function showCambodianUserForm()
-{
-	$("#askVisaDetails").css("display", "none"); 
-	$("#visaDetails").css("display", "none"); 
-	$("#nationalityDiv").css("display", "none"); 
-	$('#endUserLabelNID').text($.i18n('National ID'));
-	$('#nidType').text($.i18n('Upload ID Image'));
-
-	$("#nidPlaceHolder").attr("placeholder", $.i18n('Upload ID Image')).val("").focus().blur();
-	$('#visaDetails').find('input:text').val('');
-	$('#visaDetails').find('input:file').val('');
-	$('input[name="onVisa"]').prop('checked', false);
-
-	$("#datepicker").attr("required", false);
-	$("#visaNumber").attr("required", false);
-	$("#visaImage").attr("required", false);
-	$("#datepicker1").attr("required", false);
-	$("#visaType").attr("required", false);
-
-	$("#nationality").attr("required", false);
-	$("#departmentName").attr("required", false);
-	$("#endUserdepartmentID").attr("required", false);
-	$("#endUserDepartmentId").attr("required", false);
-	$("#visaType").attr("required", false);
-	$("#datepicker").attr("required", false);
-	$("#datepicker1").attr("required", false);
-	$("#visaImage").attr("required", false);
-
-
-
-	$("#endUserLabelNID").append('<span class="star">*</span>');
-	$("#nidType").append('<span class="star">*</span>');
-}
 
 function removeSelectVip()
 {
@@ -118,36 +79,9 @@ function showOtherUserForm()
 	$("#nidType").append('<span class="star">*</span>');
 
 
-	/*$("#departmentName").attr("required", true);
-	 $("#endUserdepartmentID").attr("required", true);
-	 $("#endUserDepartmentId").attr("required", true);
-	 $("#visaType").attr("required", true);
-	 $("#datepicker").attr("required", true);
-	 $("#datepicker1").attr("required", true);
-	 $("#visaImage").attr("required", true);*/
 
 }
 
-function showVisaDetails(){
-	$("#visaDetails").css("display", "block");
-	$("#datepicker").attr("required", true);
-	//$("#visaNumber").attr("required", true);
-	$("#visaImage").attr("required", true);
-	$("#datepicker1").attr("required", true);
-	$("#visaType").attr("required", true);
-
-}
-function hideVisaDetails(){
-	$("#visaDetails").css("display", "none");
-	$('#visaDetails').find('input:text').val('');
-	$('#visaDetails').find('input:file').val('');
-
-	$("#datepicker").attr("required", false);
-	$("#visaNumber").attr("required", false);
-	$("#visaImage").attr("required", false);
-	$("#datepicker1").attr("required", false);
-	$("#visaType").attr("required", false);
-}
 
 $.getJSON('./getDropdownList/VISA_TYPE', function(data) {
 	for (i = 0; i < data.length; i++) {
@@ -240,10 +174,8 @@ $(document).ready(function () {
 
 
 
-function submitEndUserDeviceInfo(){
+function submitImmigrationForm(){
 	var formData= new FormData();
-
-
 	var nationalID=$('#endUserNID').val();
 	var endUserNID=$('#endUserNID').val();
 	var firstName=$('#endUserfirstName').val();
@@ -403,7 +335,6 @@ function submitEndUserDeviceInfo(){
 			"doc_type_numeric":docType,
 			"docType":doc_type_numeric
 	}
-
 	formData.append('uploadnationalID', $('#uploadnationalID')[0].files[0]);
 	formData.append("request",JSON.stringify(request));
 	$.ajax({

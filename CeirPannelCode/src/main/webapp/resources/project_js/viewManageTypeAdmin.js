@@ -32,7 +32,7 @@ var userType = $("body").attr("data-roleType");
 function typeApprovedDataTable(lang){
 	if(userType=="CEIRAdmin"){
 		Datatable('headers?type=AdminImportertrcManageType&lang='+lang,'./importerAdmintrc');
-	}else if(userType=="Importer"){
+	}else if(userType=="Importer" || userType=="TRC" ){
 		Datatable('headers?type=ImporterTrcManageType&lang='+lang,'./importerAdmintrc');
 	}else{
 		Datatable('headers?type=trcManageType&lang='+lang,'./trc');

@@ -36,6 +36,7 @@ public class TrcContentModel {
 	private String frequencyRange;
 	private String productNameInterp;
 	private String modelNumberInterp;
+	private String userDisplayName;
 	private List<AttachedFile> attachedFiles; 
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 	public Integer getId() {
@@ -206,6 +207,12 @@ public class TrcContentModel {
 	public void setModelNumberInterp(String modelNumberInterp) {
 		this.modelNumberInterp = modelNumberInterp;
 	}
+	public String getUserDisplayName() {
+		return userDisplayName;
+	}
+	public void setUserDisplayName(String userDisplayName) {
+		this.userDisplayName = userDisplayName;
+	}
 	public List<AttachedFile> getAttachedFiles() {
 		return attachedFiles;
 	}
@@ -230,7 +237,9 @@ public class TrcContentModel {
 				+ ", adminStateInterp=" + adminStateInterp + ", trademark=" + trademark + ", productName=" + productName
 				+ ", modelNumber=" + modelNumber + ", manufacturerCountry=" + manufacturerCountry + ", frequencyRange="
 				+ frequencyRange + ", productNameInterp=" + productNameInterp + ", modelNumberInterp="
-				+ modelNumberInterp + ", attachedFiles=" + attachedFiles + ", additionalProperties="
-				+ additionalProperties + "]";
+				+ modelNumberInterp + ", userDisplayName=" + userDisplayName + ", attachedFiles=" + attachedFiles
+				+ ", additionalProperties=" + additionalProperties + "]";
 	}
+	
+	
 }

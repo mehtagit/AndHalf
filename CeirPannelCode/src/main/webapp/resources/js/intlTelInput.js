@@ -967,8 +967,8 @@
                         if (typeof this.options.customPlaceholder === "function") {
                             placeholder = this.options.customPlaceholder(placeholder, this.selectedCountryData);
                         }
-                        if($("#singleStolenphone1").val() =="" || $("#singleStolenphone2").val() ==""){
-                           $("#singleStolenphone1,#singleStolenphone2").val("+"+this.selectedCountryData.dialCode +" ");
+                        if($("#singleStolenphone1").val() =="" || $("#singleStolenphone2").val() =="" || $("#phone").val() ==""){
+                           $("#singleStolenphone1,#singleStolenphone2,#phone").val("+"+this.selectedCountryData.dialCode +" ");
                        }
                         
                         this.telInput.setAttribute("placeholder", placeholder);

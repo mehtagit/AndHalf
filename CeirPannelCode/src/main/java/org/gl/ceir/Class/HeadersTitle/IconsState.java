@@ -1939,6 +1939,23 @@ public class IconsState {
 		return action;
 	}
 	
+	/********************************* Icons for Custmer Care Notification *********************************/
+
+
+	public String ccNotificationIcon() {
+		executePostConstruct();
+		
+		String viewAction="";
+
+		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+				+viewIconTitle+" ></i></a>";
+		
+		
+		String action=view;
+		return action;
+
+	}
+	
 	@PostConstruct
 	public void executePostConstruct() {
 		errorIconTitle=Translator.toLocale("titles.Error_File");
