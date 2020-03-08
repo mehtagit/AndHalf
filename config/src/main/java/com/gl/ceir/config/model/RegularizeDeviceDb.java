@@ -37,41 +37,33 @@ public class RegularizeDeviceDb implements Serializable {
 	@NotNull
 	private String nid;
 	
-	@NotNull
 	private Integer deviceStatus;
 	@Transient
 	private String deviceStatusInterp;
 	
-	@NotNull
 	private Integer taxPaidStatus;
 	@Transient
 	private String taxPaidStatusInterp;
 	
-	@NotNull
 	private Integer deviceType;
 	@Transient
 	private String deviceTypeInterp;
 	
-	@NotNull
 	private Integer deviceIdType;
 	@Transient
 	private String deviceIdTypeInterp;
 	
-	@NotNull
 	private String multiSimStatus;
 	
-	@NotNull
 	private String country;
 	
 	private String deviceSerialNumber;
 	
-	@NotNull
 	private String txnId;
 	
 	// @NotNull
 	private Double price;
 	
-	@NotNull
 	private Integer currency;
 	@Transient
 	private String currencyInterp;
