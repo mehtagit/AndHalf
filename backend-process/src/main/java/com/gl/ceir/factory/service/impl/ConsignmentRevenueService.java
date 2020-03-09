@@ -1,4 +1,4 @@
-package com.gl.ceir.service.impl;
+package com.gl.ceir.factory.service.impl;
 
 import java.util.List;
 import java.util.Map;
@@ -16,12 +16,14 @@ import com.gl.ceir.entity.ConsignmentMgmt;
 import com.gl.ceir.entity.ConsignmentRevenueDailyDb;
 import com.gl.ceir.entity.CurrencyConversionDb;
 import com.gl.ceir.entity.RegularizeDeviceDb;
+import com.gl.ceir.factory.service.BaseService;
 import com.gl.ceir.pojo.SearchCriteria;
 import com.gl.ceir.repo.ConsignmentRevenueDailyRepository;
 import com.gl.ceir.repo.CurrencyConversionRepository;
 import com.gl.ceir.repo.SystemConfigListRepository;
 import com.gl.ceir.repo.SystemConfigurationDbRepository;
-import com.gl.ceir.service.BaseService;
+import com.gl.ceir.service.ConsignmentServiceImpl;
+import com.gl.ceir.service.CurrencyConversionServiceImpl;
 import com.gl.ceir.specification.GenericSpecificationBuilder;
 
 @Component

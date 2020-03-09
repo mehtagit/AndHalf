@@ -1,4 +1,4 @@
-package com.gl.ceir.service.impl;
+package com.gl.ceir.factory.service.impl;
 
 import java.util.List;
 import java.util.Objects;
@@ -14,10 +14,10 @@ import com.gl.ceir.constant.SearchOperation;
 import com.gl.ceir.entity.EndUserDB;
 import com.gl.ceir.entity.SystemConfigurationDb;
 import com.gl.ceir.entity.VisaDb;
+import com.gl.ceir.factory.service.BaseService;
 import com.gl.ceir.pojo.SearchCriteria;
 import com.gl.ceir.repo.EndUserDbRepository;
 import com.gl.ceir.repo.VisaDbRepository;
-import com.gl.ceir.service.BaseService;
 import com.gl.ceir.specification.GenericSpecificationBuilder;
 import com.gl.ceir.util.DateUtil;
 

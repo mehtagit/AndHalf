@@ -1,4 +1,4 @@
-package com.gl.ceir.service;
+package com.gl.ceir.factory.service;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,7 +9,7 @@ import com.gl.ceir.configuration.PropertiesReader;
 import com.gl.ceir.entity.SystemConfigurationDb;
 import com.gl.ceir.notifier.NotifierWrapper;
 import com.gl.ceir.repo.SystemConfigurationDbRepository;
-import com.gl.ceir.service.impl.AlertServiceImpl;
+import com.gl.ceir.service.AlertServiceImpl;
 
 public abstract class BaseService implements Service{
 

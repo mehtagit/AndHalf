@@ -1,4 +1,4 @@
-package com.gl.ceir.service.impl;
+package com.gl.ceir.factory.service.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,11 +20,11 @@ import com.gl.ceir.entity.EndUserDB;
 import com.gl.ceir.entity.PolicyBreachNotification;
 import com.gl.ceir.entity.RegularizeDeviceDb;
 import com.gl.ceir.entity.SystemConfigurationDb;
+import com.gl.ceir.factory.service.BaseService;
 import com.gl.ceir.pojo.RawMail;
 import com.gl.ceir.pojo.SearchCriteria;
 import com.gl.ceir.repo.PolicyBreachNotificationRepository;
 import com.gl.ceir.repo.RegularizedDeviceDbRepository;
-import com.gl.ceir.service.BaseService;
 import com.gl.ceir.specification.GenericSpecificationBuilder;
 import com.gl.ceir.util.DateUtil;
 

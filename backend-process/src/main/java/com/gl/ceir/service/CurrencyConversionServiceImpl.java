@@ -1,4 +1,4 @@
-package com.gl.ceir.service.impl;
+package com.gl.ceir.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;

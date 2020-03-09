@@ -11,8 +11,8 @@ import org.springframework.stereotype.Component;
 import com.gl.ceir.entity.Notification;
 import com.gl.ceir.pojo.RawMail;
 import com.gl.ceir.repo.MessageConfigurationDbRepository;
-import com.gl.ceir.service.impl.NotificationServiceImpl;
-import com.gl.ceir.service.impl.RawmailServiceImpl;
+import com.gl.ceir.service.NotificationServiceImpl;
+import com.gl.ceir.service.RawmailServiceImpl;
 
 @Component
 public class NotifierWrapper {

@@ -3,11 +3,11 @@ package com.gl.ceir;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.gl.ceir.service.Service;
-import com.gl.ceir.service.impl.CloseGrievance;
-import com.gl.ceir.service.impl.ConsignmentRevenueService;
-import com.gl.ceir.service.impl.DeviceTaxReminder;
-import com.gl.ceir.service.impl.VisaExpire;
+import com.gl.ceir.factory.service.Service;
+import com.gl.ceir.factory.service.impl.CloseGrievance;
+import com.gl.ceir.factory.service.impl.ConsignmentRevenueService;
+import com.gl.ceir.factory.service.impl.DeviceTaxReminder;
+import com.gl.ceir.factory.service.impl.VisaExpire;
 
 @Component
 public class Starter {

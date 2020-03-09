@@ -1,4 +1,4 @@
-package com.gl.ceir.service.impl;
+package com.gl.ceir.service;
 
 import java.util.Map;
 import java.util.Objects;
