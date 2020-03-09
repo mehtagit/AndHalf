@@ -194,28 +194,52 @@ public class EnduserServiceImpl {
 		}
 	}
 
-	public GenricResponse updateEndUser(EndUserDB endUserDB) {
+	@Transactional(rollbackOn = Exception.class)
+	public GenricResponse updateEndUser(EndUserDB endUserDBNew) {
 		try {
-			if(Objects.isNull(endUserDB)) {
+			if(Objects.isNull(endUserDBNew)) {
 				logger.info("Request can't be null.");
 				return new GenricResponse(2, GenericMessageTags.NULL_REQ.getTag(), 
 						GenericMessageTags.NULL_REQ.getMessage(), null);
 			}
-			String nid = endUserDB.getNid();
-			if(Objects.isNull(endUserDB)) {
+			String nid = endUserDBNew.getNid();
+			if(Objects.isNull(endUserDBNew)) {
 				logger.info("Request have nid as null.");
 				return new GenricResponse(3, GenericMessageTags.NULL_NID.getTag(), GenericMessageTags.NULL_NID.getMessage(), null);
 			}
 
-			EndUserDB endUserDB1 = endUserDbRepository.getByNid(nid);
+			EndUserDB endUserDBOld = endUserDbRepository.getByNid(nid);
+			endUserDBNew.setId(endUserDBOld.getId());
+			
+			// Visa Old
+			VisaDb visaDbOld = endUserDBOld.getVisaDb().get(0);
+			
+			// User department - Old
+			UserDepartment userDepartmentOld = endUserDBOld.getUserDepartment();
+			
+			// Visa New
+			VisaDb visaDbNew = endUserDBNew.getVisaDb().get(0);
+			visaDbNew.setId(visaDbOld.getId());
+			visaDbNew.setEndUserDB(endUserDBNew);
+			ArrayList<VisaDb> visaDbListNew = new ArrayList<>();
+			visaDbListNew.add(visaDbNew);
+			
+			// User department - New			
+			UserDepartment userDepartmentNew = endUserDBNew.getUserDepartment();
+			userDepartmentNew.setId(userDepartmentOld.getId());
+			userDepartmentNew.setEndUserDB(endUserDBNew);
 
+			// Set New objects to new end user db.
+			endUserDBNew.setVisaDb(visaDbListNew);
+			endUserDBNew.setUserDepartment(userDepartmentNew);
+			
 			// End user is not registered with CEIR system.
-			if(Objects.nonNull(endUserDB1)) {
+			if(Objects.nonNull(endUserDBOld)) {
 				logger.info(GenericMessageTags.USER_UPDATE_SUCCESS.getMessage() + "of NID [" + nid +"]");
-				// TODO update fields are pending.
-				endUserDbRepository.save(endUserDB1);
+				
+				endUserDbRepository.save(endUserDBOld);
 
-				auditTrailRepository.save(new AuditTrail(endUserDB.getId(), "", 17L,
+				auditTrailRepository.save(new AuditTrail(endUserDBOld.getId(), "", 17L,
 						"End User", 0L,Features.REGISTER_DEVICE, SubFeatures.UPDATE, ""));
 				logger.info("AUDIT : Saved update request in audit.");
 
@@ -322,9 +346,6 @@ public class EnduserServiceImpl {
 
 	private List<EndUserDB> getAll(FilterRequest filterRequest){
 		try {
-
-			// List<StateMgmtDb> statusList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
-			// logger.info("statusList " + statusList);
 
 			List<EndUserDB> endUserDBs = endUserDbRepository.findAll(buildSpecification(filterRequest, null).build(), new Sort(Sort.Direction.DESC, "modifiedOn"));
 			logger.info("endUserDBs " + endUserDBs);

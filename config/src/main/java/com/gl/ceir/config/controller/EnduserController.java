@@ -55,6 +55,18 @@ public class EnduserController {
 
 		return mapping;
 	}
+	
+	@ApiOperation(value = "Update End User.", response = GenricResponse.class)
+	@PutMapping("/end-user") 
+	public GenricResponse updateEndUser(@RequestBody EndUserDB endUserDB) {
+
+		logger.info("Update End User Db = " + endUserDB);
+
+		GenricResponse genricResponse = enduserServiceImpl.updateEndUser(endUserDB);
+
+		return genricResponse ;
+
+	}
 
 	@ApiOperation(value = "pagination View filtered consignment", response = ConsignmentMgmt.class)
 	@PostMapping("/filter/end-users")
@@ -79,11 +91,9 @@ public class EnduserController {
 		return mapping;
 	}
 
-
-
 	@ApiOperation(value = "Accept Reject end-users.", response = GenricResponse.class)
 	@PutMapping("/accept-reject/end-users") 
-	public GenricResponse updateConsigmentStatus(@RequestBody ConsignmentUpdateRequest acceptRejectRequest) {
+	public GenricResponse updateEndUserStatus(@RequestBody ConsignmentUpdateRequest acceptRejectRequest) {
 
 		logger.info("Request to accept/reject the end-user = " + acceptRejectRequest);
 
@@ -92,6 +102,8 @@ public class EnduserController {
 		return genricResponse ;
 
 	}
+	
+	
 
 
 }
