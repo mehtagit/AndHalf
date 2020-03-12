@@ -63,6 +63,8 @@ public class ProfileService {
 		log.info("userid from session:  "+userid);
 		Registration response=new Registration();             
 		response=userProfileFeignImpl.editUserProfile(userid);
+		session.removeAttribute("mainRole");
+		session.setAttribute("mainRole",response.getUserTypeId());
 		return response;  
 	}
 	

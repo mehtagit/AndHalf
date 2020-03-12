@@ -551,8 +551,8 @@ data-dismiss="modal">&times;</button> -->
 			</div>
 			<div class="input-field col s12 center">
 				<div class="input-field col s12 center">
-					<a href="./homePage" class="btn" type="submit" name="add_user"
-						id="add_user"><spring:message code="modal.yes" /></a> <a href="#"
+					<a href="JavaScript:Void(0);" class="btn" type="submit" name="add_user"
+						id="home_Link"><spring:message code="modal.yes" /></a> <a href="#"
 						class="modal-close btn" style="margin-left: 10px;"><spring:message
 							code="modal.no" /></a>
 				</div>

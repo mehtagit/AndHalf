@@ -249,6 +249,8 @@ var contextpath = "${context}";
 		src="${context}/resources/ajax/Profile.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/ajax/Password.js"></script>
+			<script type="text/javascript"
+		src="${context}/resources/ajax/Login.js"></script>
 	<!--materialize js-->
 	<!--<script type="text/javascript" src="js/materialize.js"></script>-->
 	<!-- Compiled and minified JavaScript -->
@@ -297,7 +299,7 @@ var contextpath = "${context}";
 			</div>
 			<div class="input-field col s12 center">
 				<div class="input-field col s12 center">
-					<a href="./homePage" class="btn" type="submit" name="add_user"
+					<a href="JavaScript:Void(0);" class="btn" type="submit" name="add_user"
 						id="add_user"><spring:message code="modal.ok" /></a>
 						 <%-- <a href="#"
 						class="modal-close btn" style="margin-left: 10px;"><spring:message
@@ -346,5 +348,13 @@ var contextpath = "${context}";
 		src="${context}/resources/project_js/enterKey.js"></script>
 	    	<script type="text/javascript"
 		src="${context}/resources/project_js/ValidationFileOutsidePortal.js"></script>
+		<script type="text/javascript">
+		
+		
+		$(document).ready(function() {
+			dataByTag("link_dmc_portal", "add_user", 1);
+});
+
+		</script>
 </body>
 </html>

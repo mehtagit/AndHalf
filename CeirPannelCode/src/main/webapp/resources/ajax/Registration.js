@@ -136,13 +136,14 @@ function verifyOtp(){
 				//window.location.href='#otpMessage';
 				
 				// $('#otpMessage').modal('open');
-				
+				$("#otpVerification").closeModal({ dismissible: true});
 				$.i18n().locale = $('#langlist').val();
 				$.i18n().load( {
 					'en': './resources/i18n/en.json',
 					'km': './resources/i18n/km.json'
 				}).done( function() {
-					$("#otpVerification").closeModal();
+				
+				
 					$('#otpMessage').openModal({
 				        dismissible:false
 				    });
@@ -340,11 +341,6 @@ function questionData(){
 	});
 }
 
-
-
-
-
-
 function saveRegistration(){ 
 	$("#btnSave").prop('disabled', true);
 	var obj="";
@@ -362,9 +358,18 @@ function saveRegistration(){
 		}
 	});
 
+	var data=[];
+	var $el=$("#usertypes");
+	$el.find('option:selected').each(function(){
+	    data.push($(this).val());
+	});
+	alert(data);
+	
 
 	$("#registrationForm").each(function(key, val){
 		val = $(this);
+		alert("default: "+val.find('#usertypes:selected').val());
+		alert("new: "+val.find('#usertypes option:selected').val());
 		if(val.html() !== "") {
 			obj =   
 			{       
@@ -388,7 +393,7 @@ function saveRegistration(){
 					country:val.find('#country').val(),
 					vatStatus:val.find("input[name='vatStatus']:checked").val(),
 					vatNo:val.find('#vatNo').val(),
-					roles:val.find('#usertypes:selected').val(),  
+					roles:data,  
 					password:val.find('#password').val(),  
 					rePassword:val.find('#confirm_password').val(),
 					captcha:val.find('#captcha').val(),
@@ -405,11 +410,9 @@ function saveRegistration(){
 	formData.append( 'file', $( '#file' )[0].files[0] );
 	formData.append('data',JSON.stringify(obj));
 	formData.append('vatFile',$('#vatFile')[0].files[0]);
-	
 	console.log("data=  "+formData);
 	registrationAjax(formData);
 	//$("#btnSave").prop('disabled', true);
-  
 	return false;
 }
 
