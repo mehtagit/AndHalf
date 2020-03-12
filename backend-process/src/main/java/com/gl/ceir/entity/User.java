@@ -16,11 +16,13 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.envers.Audited;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gl.ceir.util.Utility;
 
-@Entity   
+@Entity  
+@Audited
 @Table(name = "users")
 public class User {  
 

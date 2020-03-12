@@ -137,6 +137,7 @@ public class CloseGrievance extends BaseService{
 			logger.info(e.getMessage(), e);
 			Map<String, String> bodyPlaceholder = new HashMap<>();
 			bodyPlaceholder.put("<e>", e.getMessage());
+			bodyPlaceholder.put("<process_name>", "Close Grievance");
 			onErrorRaiseAnAlert(Alerts.ALERT_006, bodyPlaceholder);	
 		}
 	}
