@@ -361,11 +361,19 @@ function saveRegistration(){
 			questionData.push(obj2);
 		}
 	});
+	
+	var selected=[];
+	 $('#usertypes :selected').each(function(){
+	     selected.push($(this).val());
+	    });
+	console.log("usertypes selected: "  +selected);
+	
 
 
 	$("#registrationForm").each(function(key, val){
-		val = $(this);
+		val = $(this);	
 		if(val.html() !== "") {
+			console.log("roles: "+val.find('#usertypes option:selected').val());
 			obj =   
 			{       
 					firstName:val.find('#firstName').val(),
@@ -388,7 +396,7 @@ function saveRegistration(){
 					country:val.find('#country').val(),
 					vatStatus:val.find("input[name='vatStatus']:checked").val(),
 					vatNo:val.find('#vatNo').val(),
-					roles:val.find('#usertypes:selected').val(),  
+					roles:val.find('#usertypes option:selected').val(),  
 					password:val.find('#password').val(),  
 					rePassword:val.find('#confirm_password').val(),
 					captcha:val.find('#captcha').val(),
