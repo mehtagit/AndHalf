@@ -1,4 +1,3 @@
-
 <%
 	response.setHeader("Cache-Control", "no-cache");
 	response.setHeader("Cache-Control", "no-store");
@@ -17,7 +16,7 @@
 <!DOCTYPE html>
 <html lang="en" class="no-js">
 <head>
-<title>Dashboard</title>
+<title>Upload Stock</title>
 
 <meta http-equiv='cache-control' content='no-cache'>
 <meta http-equiv='expires' content='-1'>
@@ -74,7 +73,8 @@
 <script src="http://malsup.github.io/jquery.blockUI.js"></script>
 <script src="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json"></script>
 
-
+			<script type="text/javascript"
+		src="${context}/resources/project_js/enterKey.js"></script>
 <style>
 #snackbar {
 	visibility: hidden;
@@ -203,7 +203,8 @@ to {
 </style>
 
 </head>
-<body data-id="4" data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeId}"
+<body data-id="4" data-roleType="${usertype}" data-userID="${userid}"
+	data-userTypeID="${usertypeId}"
 	data-selected-roleType="${selectedUserTypeId}">
 
 
@@ -229,18 +230,19 @@ to {
 											pattern="[A-Za-z0-9]{0,15}"
 											oninput="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
 											oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
-												maxlength="15" id="supplierId" maxlength="15" /> <label
+											maxlength="15" id="supplierId" maxlength="15" /> <label
 											for="supplierId" id="SupplierIdAssignie" class="center-align"><spring:message
 												code="input.supplierID" /> </label>
 									</div>
 
 									<div class="input-field col s12 m6">
 										<input type="text" name="supplierName" id="supplierName"
-											pattern="[A-Za-z ]{0,50}" oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
+											pattern="[A-Za-z ]{0,50}"
+											oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
 											oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
 											maxlength="50" required /> <label for="supplierName"
 											id="SupplierIdAssignieName" class="center-align"><spring:message
-												code="input.supllierName" /><span class="star">*</span></label>
+												code="input.supllierName" /> <span class="star">*</span></label>
 									</div>
 								</div>
 								<div class="col s12 m12">
@@ -251,11 +253,12 @@ to {
 								<div class="row myRow">
 									<div class="input-field col s12 m6">
 										<input type="text" name="quantity" id="Quantity"
-											pattern="[0-9]{0,7}" oninput="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
+											pattern="[0-9]{0,7}"
+											oninput="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
 											oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
 											maxlength="7" required /> <label for="Quantity"
 											class="center-align"><spring:message
-												code="input.quantity" /><span class="star">*</span></label>
+												code="input.quantity" /> <span class="star">*</span></label>
 									</div>
 
 									<div class="input-field col s12 m6" id="invoiceNumberDiv"
@@ -298,7 +301,7 @@ to {
 									</p>
 								</div>
 
-								<span><spring:message code="input.requiredfields" /></span><span
+								<span><spring:message code="input.requiredfields" /></span> <span
 									class="star">*</span>
 
 								<div class="row" style="padding-bottom: 100px;">
@@ -340,8 +343,7 @@ to {
 					<div class="input-field col s12 center">
 						<a onclick="redirectToViewPage()" class="btn"><spring:message
 								code="modal.yes" /></a>
-						<button class="modal-close btn"
-							style="margin-left: 10px;">
+						<button class="modal-close btn" style="margin-left: 10px;">
 							<spring:message code="modal.no" />
 						</button>
 					</div>
@@ -381,8 +383,7 @@ to {
 					<spring:message code="fileValidationName" />
 					<br> <br>
 					<spring:message code="fileValidationFormate" />
-					<br>
-					<br>
+					<br> <br>
 					<spring:message code="fileValidationSize" />
 				</h6>
 			</div>
@@ -402,28 +403,24 @@ to {
 
 	<div id="searchSupplierInformation" class="modal">
 		<!-- <button class="modal-close btn-flat right" data-dismiss="modal">&times;</button> -->
-		<a class="modal-close btn-flat right">&times;</a>
+		<a class="btn-flat right" onclick="closeAssigneTable()">&times;</a>
 		<h6 class="modal-header">
 			<spring:message code="searchAssigneMessage" />
 		</h6>
 		<div class="modal-content">
 
-			<form action=""
-				<%-- onsubmit="return serchAssigneDetaiils()" --%>
-									method="POST"
-				enctype="multipart/form-data" id="registerConsignment">
 				<div class="row">
 
 					<h5 class="center">
 						<label> <input name="group1" type="radio" value="1"
 							onclick="document.getElementById('submitbtn').style.display ='block';" />
 							<span class="checkboxFont"> <spring:message
-									code="AssigneeName" /></span> <input name="group1" type="radio"
-							value="2"
+									code="AssigneeName" /></span></label> <label> <input name="group1"
+							type="radio" value="2"
 							onclick="document.getElementById('submitbtn').style.display ='block';" />
 							<span class="checkboxFont"> <spring:message
-									code="AssigneContactNumber" /></span> <input name="group1"
-							type="radio" value="3"
+									code="AssigneContactNumber" /></span>
+						</label> <label> <input name="group1" type="radio" value="3"
 							onclick="document.getElementById('submitbtn').style.display ='block';    " />
 							<span class="checkboxFont"><spring:message
 									code="AssigneEmailID" /> </span>
@@ -442,18 +439,18 @@ to {
 							placeholder="<spring:message code="AssigneSearch" />" />
 					</div>
 					<div class="input-field col s12 m2">
-						<a onclick="viewAssigneeHistory()" class="btn"><spring:message
-								code="button.submit" /></a>
+						<button type="button" onclick="viewAssigneeHistory()" id="viewAssigneeHistoryBtn" class="btn"><spring:message
+								code="button.submit" /></button>
 					</div>
 				</div>
-			</form>
+		
 			<!-- 
             <div class="row myRow" style="margin-top: 10px; display: none;" id="user123">
                 
                 <p class="center" style="color: red;">No data found</p>
 
             </div> -->
-			<div class="row">
+			<div class="row" id="assigneDetailsDiv" style="display: none">
 				<table class="responsive-table striped display"
 					id="assignee-data-table" cellspacing="0">
 				</table>
@@ -534,6 +531,7 @@ to {
 		src="${context}/resources/project_js/profileInfoTab.js" async></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/validationMsg.js"></script>
+
 	<script>
 
 var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
@@ -714,7 +712,7 @@ function fileTypeValueChanges(dd, ddd) {
 	var ext = uploadedFileName.split('.').pop();
 	
 	var fileSize = ($("#file")[0].files[0].size);
-	fileSize = (Math.round((fileSize / 1024) * 100) / 100)
+	fileSize = Math.floor(fileSize/1000) + 'KB';
    if (uploadedFileName.length > 30) {
 	   $('#fileFormateModal').openModal({
     	   dismissible:false
@@ -762,7 +760,7 @@ function assigneeTable(URL,dataUrl){
 	var formData= new FormData()
 	//var requestType =	$('input[name="group1"]:checked').val();
    	var assigneDetails=$('#assigneDetails').val();
-
+   $("#assigneDetailsDiv").css("display", "block"); 
    var request={
 		   "field":assigneDetails,
 		   "type": parseInt($('input[name="group1"]:checked').val()),
@@ -837,6 +835,27 @@ function saveAssigneDetails(assigneId,assigneName)
 	
 }
 
+$("input[type=file]").keypress(function(ev) {
+    return false;
+    //ev.preventDefault(); //works as well
+
+});
+
+
+function closeAssigneTable()
+{
+	$('#searchSupplierInformation').closeModal();
+	 $("#assigneDetailsDiv").css("display", "none");
+	
+}
+
+$(document).keyup(function(event) { 
+	
+	if (event.keyCode === 13) {
+		
+    	$("#viewAssigneeHistoryBtn").click();
+  }
+}); 
 </script>
 
 </body>

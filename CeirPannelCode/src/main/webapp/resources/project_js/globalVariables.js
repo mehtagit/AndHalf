@@ -57,3 +57,103 @@ console.log(" fileName "+fileName+" fileType  "+fileType+" txnId "+txnId+"  doc_
 		}
 	});
 }
+
+
+
+
+
+
+
+
+$("input[type=file]").keypress(function(ev) {
+	return false;
+	//ev.preventDefault(); //works as well
+
+	});
+	var featureId = window.parent.$('.navData li.active a').attr('data-featureid')
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	function isFileValid(id,hiddenVal,editInputID) {
+
+			var uploadedFileName = $("#"+id).val();
+			uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
+			var ext = uploadedFileName.split('.').pop();
+		
+			var fileSize = ($("#"+id)[0].files[0].size);
+			fileSize = (Math.round((fileSize / 1024) * 100) / 100)
+		   if (uploadedFileName.length > 30) {
+		       window.parent.$('#fileFormateModal').openModal({
+		    	   dismissible:false
+		       });
+		   } 
+			else if(ext!='csv')
+				{
+				window.parent.$('#fileFormateModal').openModal({
+					dismissible:false
+				});
+				}
+			else if(fileSize>='2000'){
+				window.parent.$('#fileFormateModal').openModal({
+					dismissible:false
+				});
+			}
+			else {
+				console.log("file formate is correct")
+				
+			}
+			
+
+		}
+	
+	
+	
+
+	function isImageValid(id) {
+		
+		var uploadedFileName = $("#"+id).val();
+		uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
+		//alert("file extension=="+uploadedFileName)
+		var ext = uploadedFileName.split('.').pop();
+
+		var fileSize = ($("#"+id)[0].files[0].size);
+		/*fileSize = (Math.round((fileSize / 100000) * 100) / 100)
+		alert("----"+fileSize);*/
+		fileSize = Math.floor(fileSize/1000) + 'KB';
+
+		//alert(uploadedFileName+"----------"+ext+"----"+fileSize)
+
+		if (uploadedFileName.length > 30) {
+			$('#fileFormateModal').openModal();
+			$('#fileErrormessage').text('');
+			$('#fileErrormessage').text($.i18n('imageMessage'));
+		} 
+		else if(ext !='png')
+		{
+			$('#fileFormateModal').openModal({
+				dismissible:false
+			});
+			$('#fileErrormessage').text('');
+			$('#fileErrormessage').text($.i18n('imageMessage'));
+
+		}
+		else if(fileSize>=100){
+			$('#fileFormateModal').openModal({
+				dismissible:false
+			});
+			$('#fileErrormessage').text('');
+			$('#fileErrormessage').text($.i18n('imageSize'));	
+		}
+		
+
+
+	}
+	
+	

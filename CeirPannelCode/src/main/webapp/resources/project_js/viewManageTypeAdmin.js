@@ -32,7 +32,7 @@ var userType = $("body").attr("data-roleType");
 function typeApprovedDataTable(lang){
 	if(userType=="CEIRAdmin"){
 		Datatable('headers?type=AdminImportertrcManageType&lang='+lang,'./importerAdmintrc');
-	}else if(userType=="Importer"){
+	}else if(userType=="Importer" || userType=="TRC" ){
 		Datatable('headers?type=ImporterTrcManageType&lang='+lang,'./importerAdmintrc');
 	}else{
 		Datatable('headers?type=trcManageType&lang='+lang,'./trc');
@@ -555,7 +555,14 @@ function setAllDropdown() {
 
 }
 
-var max_fields = 15; //maximum input boxes allowed
+$.getJSON('./addMoreFile/more_files_count', function(data) {
+	console.log(data);
+	localStorage.setItem("maxCount", data.value);
+});
+
+	//var max_fields = 2; //maximum input boxes allowed
+var max_fields =localStorage.getItem("maxCount");
+	
 var wrapper = $(".mainDiv"); //Fields wrapper
 var add_button = $(".add_field_button"); //Add button ID
 var x = 1; //initlal text box count
@@ -768,3 +775,18 @@ function clearFileName() {
 	$("#file").val('');
 	$('#fileFormateModal').closeModal();
 }
+
+function enableAddMore(){
+	$(".add_field_button").attr("disabled", false);
+}
+function enableSelectFile(){
+	$("#docTypeFile1").attr("disabled", false);
+	$("#docTypeFile1").attr("required", true);
+	$("#supportingdocumentFile").append('<span class="star">*</span>');
+}
+
+$("input[type=file]").keypress(function(ev) {
+    return false;
+    //ev.preventDefault(); //works as well
+
+});

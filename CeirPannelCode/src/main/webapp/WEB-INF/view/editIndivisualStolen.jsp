@@ -1,13 +1,21 @@
+<%
+	response.setHeader("Cache-Control", "no-cache");
+	response.setHeader("Cache-Control", "no-store");
+	response.setDateHeader("Expires", 0);
+	response.setHeader("Pragma", "no-cache");
+	/*  session.setMaxInactiveInterval(200); //200 secs
+	 session.setAttribute("usertype", null);  */
+	if (session.getAttribute("usertype") != null) {
+%>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en" class="no-js">
 <head>
-<title>Dashboard</title>
+<title>Stolen</title>
 
 <meta charset="utf-8" />
 <meta name="viewport"
@@ -17,8 +25,11 @@
 <meta content="" name="description" />
 <meta content="" name="author" />
 
+		
 <script type="text/javascript"
 	src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
+		<script type="text/javascript" src="${context}/resources/js/intlTelInput.js"></script>
+		<script type="text/javascript" src="${context}/resources/js/utils.js"></script>
 <!--   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"></script>  
  -->
 
@@ -218,7 +229,7 @@ select {
 														<p class="contact-label">
 															<spring:message code="registration.altcontactnumber" /> <span class="star">*</span>
 														</p>
-														<input type="tel" name="phone" id="singleStolenphone1" pattern="[0-9 + ]{1,15}" placeholder=""
+														<input type="text" name="phone" id="singleStolenphone1" pattern="[0-9 + ]{1,15}" placeholder=""
 															maxlength="15">
 														<!-- <label for="phone">Alternate Contact Number <span class="star">*</span></label> -->
 													</div>
@@ -304,7 +315,7 @@ select {
 													<div>
 														<div class="input-field col s12 m6"">
 															<input type="text" name="deviceBrandName" placeholder=""
-																id="singleStolendeviceBrandName" pattern="[a-zA-Z]{0,20}" required="required" title="Please enter alphabets and numbers upto 20 characters only" 
+																id="singleStolendeviceBrandName" pattern="[a-zA-Z]{0,20}"  title="Please enter alphabets and numbers upto 20 characters only" 
 																maxlength="20">
 															<label for="deviceBrandName"><spring:message code="registration.devicebrandname" /></label>
 														</div>
@@ -344,7 +355,7 @@ select {
 
 														<div class="input-field col s12 m6">
 															<input type="text" name="modalNumber" placeholder=""
-																id="singleStolenmodalNumber" pattern="[a-zA-Z0-9 ]{0,20}" required="required" 
+																id="singleStolenmodalNumber" pattern="[a-zA-Z0-9 ]{0,20}" 
 																title="Please enter alphabets and numbers upto 20 characters only" maxlength="20"> <label
 																for="modalNumber"><spring:message code="table.ModelNumber" /></label>
 														</div>
@@ -353,7 +364,7 @@ select {
 															<p class="contact-label">
 																<spring:message code="input.contactNum" /> <span class="star">*</span>
 															</p>
-															<input type="tel" name="phone" id="singleStolenphone2" placeholder=""
+															<input type="text" name="phone" id="singleStolenphone2" placeholder=""
 																required pattern="[0-9 + ]{1,14}" title="Please enter 14 digits contact number" maxlength="14">
 															<!--  <label for="phone2">Contact Number <span class="star">*</span></label> -->
 														</div>
@@ -672,7 +683,7 @@ select {
 
 											<div class="input-field col s12 m6">
 												<!-- <p class="contact-label">Alternate Contact Number <span class="star">*</span></p> -->
-												<input type="tel" name="phone" id="bulkStolenContact"
+												<input type="text" name="phone" id="bulkStolenContact"
 													maxlength="15"> <label for="phone2">
 													<spring:message code="input.contactNum" /></label>
 											</div>
@@ -822,7 +833,7 @@ select {
             <div class="row">
                 <div class="input-field col s12 center">
                     <div class="input-field col s12 center">
-                        <a  href ="./stolenRecovery" class=" btn"><spring:message code="modal.ok" /></a>
+                        <a  href ="./stolenRecovery?FeatureId=5" class=" btn"><spring:message code="modal.ok" /></a>
                     </div>
                 </div>
             </div>
@@ -890,6 +901,9 @@ src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitte
 
 <script type="text/javascript"
 src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/jquery.history.js"></script>
+	
+	<script type="text/javascript"
+		src="${context}/resources/project_js/globalVariables.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/stolenRecovery.js"></script>
 	<script type="text/javascript"
@@ -898,9 +912,6 @@ src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/j
 		<script type="text/javascript"
 		src="${context}/resources/project_js/editLawfulStolen.js"></script>
 
-	<script type="text/javascript"
-		src="${context}/resources/js/intlTelInput.js">
-		</script>
 
 	<script>
  populateCountries(
@@ -972,3 +983,15 @@ src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/j
 
 </body>
 </html>
+<%
+} else {
+
+%>
+<script language="JavaScript">
+sessionStorage.setItem("loginMsg",
+"*Session has been expired");
+window.top.location.href = "./login";
+</script>
+<%
+}
+%>

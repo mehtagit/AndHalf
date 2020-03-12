@@ -200,7 +200,9 @@
 	}
 
 		function AddPortAddress(){
-			$('#addPort').openModal();
+			$('#addPort').openModal({
+		        dismissible:false
+		    });
 			//var tagDropDown =  document.getElementById("tag");
 			//var displayName = tagDropDown.options[tagDropDown.selectedIndex].text;
 		}
@@ -224,7 +226,9 @@
 			type : 'POST',
 			success : function(data, textStatus, jqXHR) {
 					console.log(JSON.stringify(data));
-					$("#confirmField").openModal();
+					$("#confirmField").openModal({
+				        dismissible:false
+				    });
 			},
 			error : function(jqXHR, textStatus, errorThrown) {
 				console.log("error in ajax")
@@ -250,7 +254,9 @@
 				contentType : 'application/json; charset=utf-8',
 				success: function (data, textStatus, jqXHR) {
 						var result = data.data
-						$("#editPortAddressModal").openModal();
+						$("#editPortAddressModal").openModal({
+					        dismissible:false
+					    });
 						PortEditPopupData(result);
 						console.log(result)
 				},
@@ -292,7 +298,9 @@
 			
 				console.log("Updated data---->" +data)
 				$("#editPortAddressModal").closeModal();	
-				$("#updateFieldsSuccess").openModal();
+				$("#updateFieldsSuccess").openModal({
+			        dismissible:false
+			    });
 				
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
@@ -309,7 +317,9 @@
 	
 	
 	function DeletePortRecord(id){
-		$("#DeleteFieldModal").openModal();
+		$("#DeleteFieldModal").openModal({
+	        dismissible:false
+	    });
 		$("#deletePortId").val(id);
 		
 	}	
@@ -330,7 +340,9 @@
 			success : function(data, textStatus, xhr) {
 				console.log(data);
 				$("#DeleteFieldModal").closeModal();
-				$("#closeDeleteModal").openModal();
+				$("#closeDeleteModal").openModal({
+			        dismissible:false
+			    });
 				
 				$("#materialize-lean-overlay-3").css("display","none");
 			},

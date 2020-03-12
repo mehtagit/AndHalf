@@ -2,21 +2,9 @@ package org.gl.ceir.CeirPannelCode.Model;
 
 public class SingleImeiDetailsModel {
 	private String categoryInterp,createdOn,deviceIdTypeInterp,deviceTypeInterp,deviceSerialNumber,modifiedOn,multipleSimStatusInterp,remark,txnId,userType,blockingTimePeriod,blockingType;
-	private Integer category,deviceIdType,deviceType,multipleSimStatus,processState,requestType,sourceType;
-	private long  firstImei,fourthImei,secondImei,thirdImei,userId,id;
-	@Override
-	public String toString() {
-		return "SingleImeiDetailsModel [categoryInterp=" + categoryInterp + ", createdOn=" + createdOn
-				+ ", deviceIdTypeInterp=" + deviceIdTypeInterp + ", deviceTypeInterp=" + deviceTypeInterp
-				+ ", deviceSerialNumber=" + deviceSerialNumber + ", modifiedOn=" + modifiedOn
-				+ ", multipleSimStatusInterp=" + multipleSimStatusInterp + ", remark=" + remark + ", txnId=" + txnId
-				+ ", userType=" + userType + ", blockingTimePeriod=" + blockingTimePeriod + ", blockingType="
-				+ blockingType + ", category=" + category + ", deviceIdType=" + deviceIdType + ", deviceType="
-				+ deviceType + ", multipleSimStatus=" + multipleSimStatus + ", processState=" + processState
-				+ ", requestType=" + requestType + ", sourceType=" + sourceType + ", firstImei=" + firstImei
-				+ ", fourthImei=" + fourthImei + ", secondImei=" + secondImei + ", thirdImei=" + thirdImei + ", userId="
-				+ userId + ", id=" + id + "]";
-	}
+	private Integer category,deviceIdType,deviceType,multipleSimStatus,processState,requestType,sourceType,operatorTypeId;
+	private long userId,id;
+	private String firstImei,fourthImei,secondImei,thirdImei;
 	public String getCategoryInterp() {
 		return categoryInterp;
 	}
@@ -131,29 +119,11 @@ public class SingleImeiDetailsModel {
 	public void setSourceType(Integer sourceType) {
 		this.sourceType = sourceType;
 	}
-	public long getFirstImei() {
-		return firstImei;
+	public Integer getOperatorTypeId() {
+		return operatorTypeId;
 	}
-	public void setFirstImei(long firstImei) {
-		this.firstImei = firstImei;
-	}
-	public long getFourthImei() {
-		return fourthImei;
-	}
-	public void setFourthImei(long fourthImei) {
-		this.fourthImei = fourthImei;
-	}
-	public long getSecondImei() {
-		return secondImei;
-	}
-	public void setSecondImei(long secondImei) {
-		this.secondImei = secondImei;
-	}
-	public long getThirdImei() {
-		return thirdImei;
-	}
-	public void setThirdImei(long thirdImei) {
-		this.thirdImei = thirdImei;
+	public void setOperatorTypeId(Integer operatorTypeId) {
+		this.operatorTypeId = operatorTypeId;
 	}
 	public long getUserId() {
 		return userId;
@@ -167,8 +137,41 @@ public class SingleImeiDetailsModel {
 	public void setId(long id) {
 		this.id = id;
 	}
-	
-	
-	
-	
-}
+	public String getFirstImei() {
+		return firstImei;
+	}
+	public void setFirstImei(String firstImei) {
+		this.firstImei = firstImei;
+	}
+	public String getFourthImei() {
+		return fourthImei;
+	}
+	public void setFourthImei(String fourthImei) {
+		this.fourthImei = fourthImei;
+	}
+	public String getSecondImei() {
+		return secondImei;
+	}
+	public void setSecondImei(String secondImei) {
+		this.secondImei = secondImei;
+	}
+	public String getThirdImei() {
+		return thirdImei;
+	}
+	public void setThirdImei(String thirdImei) {
+		this.thirdImei = thirdImei;
+	}
+	@Override
+	public String toString() {
+		return "SingleImeiDetailsModel [categoryInterp=" + categoryInterp + ", createdOn=" + createdOn
+				+ ", deviceIdTypeInterp=" + deviceIdTypeInterp + ", deviceTypeInterp=" + deviceTypeInterp
+				+ ", deviceSerialNumber=" + deviceSerialNumber + ", modifiedOn=" + modifiedOn
+				+ ", multipleSimStatusInterp=" + multipleSimStatusInterp + ", remark=" + remark + ", txnId=" + txnId
+				+ ", userType=" + userType + ", blockingTimePeriod=" + blockingTimePeriod + ", blockingType="
+				+ blockingType + ", category=" + category + ", deviceIdType=" + deviceIdType + ", deviceType="
+				+ deviceType + ", multipleSimStatus=" + multipleSimStatus + ", processState=" + processState
+				+ ", requestType=" + requestType + ", sourceType=" + sourceType + ", operatorTypeId=" + operatorTypeId
+				+ ", userId=" + userId + ", id=" + id + ", firstImei=" + firstImei + ", fourthImei=" + fourthImei
+				+ ", secondImei=" + secondImei + ", thirdImei=" + thirdImei + "]";
+	}
+	}

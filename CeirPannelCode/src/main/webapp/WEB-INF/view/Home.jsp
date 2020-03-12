@@ -66,6 +66,10 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
     margin: auto;
     margin-top: 10px;
 }
+table.dataTable.display tbody tr:first-child td {
+    border-top: none;
+    min-width: 120px !important;
+}
 </style>
 </head>
 

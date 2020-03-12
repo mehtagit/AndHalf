@@ -124,10 +124,11 @@ public class operatorDatatableController {
 		
 		InputFields inputFields = new InputFields();
 		InputFields dateRelatedFields;
-		
-		if("greyList".equals(featureType)) {
+		boolean isGrey=featureType.indexOf("greyList") != -1 ? true : false;
+		boolean isBlack=featureType.indexOf("blackList") != -1 ? true : false;
+		if(isGrey){
 		pageElement.setPageTitle(Translator.toLocale("modal.header.title.grey"));	
-		}else if("blackList".equals(featureType)) {
+		}else if(isBlack) {
 		pageElement.setPageTitle(Translator.toLocale("modal.header.title.black"));
 		}
 		

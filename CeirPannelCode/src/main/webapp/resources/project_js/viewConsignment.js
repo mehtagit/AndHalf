@@ -44,9 +44,7 @@
 
 
 		function DeleteConsignmentRecord(txnId){
-			$("#DeleteConsignment").openModal({
-				dismissible:false
-			});
+			$("#DeleteConsignment").openModal({dismissible:false});
 			$("#transID").text(txnId);
 		}
 
@@ -890,39 +888,7 @@ function confirmantiondelete(){
 			window.location.href="./exportConsignmnet?consignmentStartDate="+consignmentStartDate+"&consignmentEndDate="+consignmentEndDate+"&consignmentTxnId="+consignmentTxnId+"&filterConsignmentStatus="+filterConsignmentStatus+"&consignmentTaxPaidStatus="+consignmentTaxPaidStatus+"&pageSize="+pageSize+"&pageNo="+pageNo;
 		}
 
-function fileTypeValueChanges() {
-			var uploadedFileName = $("#csvUploadFile").val();
-			uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
-			var ext = uploadedFileName.split('.').pop();
-		
-			var fileSize = ($("#csvUploadFile")[0].files[0].size);
-			fileSize = (Math.round((fileSize / 1024) * 100) / 100)
-		   if (uploadedFileName.length > 30) {
-		       $('#fileFormateModal').openModal({
-		    	   dismissible:false
-		       });
-		       
-		   } 
-			else if(ext!='csv')
-				{
-				$('#fileFormateModal').openModal({
-					dismissible:false
-				});
-				 
-				}
-			else if(fileSize>='2000'){
-				$('#fileFormateModal').openModal({
-					dismissible:false
-				});
-				 
-			}
-			else {
-				console.log("file formate is correct")
-				
-			}
-			
 
-		}
 
 		function clearFileName() {
 			var existingfile=$("#fileNameToBeSame").val();
@@ -1035,3 +1001,9 @@ function fileTypeValueChanges() {
 				}
 			});
 		}
+		
+		$("input[type=file]").keypress(function(ev) {
+		    return false;
+		    //ev.preventDefault(); //works as well
+
+		});

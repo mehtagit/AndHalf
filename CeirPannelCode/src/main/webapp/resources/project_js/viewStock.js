@@ -40,15 +40,15 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 	//*******************************************View Pop up data *************************************************************************************************
 	function viewUploadedStockDetails(txnId){
 
-		
-		 $('#viewStockModal').openModal({
+		var userType=$("body").attr("data-roleType");
+		$('#viewStockModal').openModal({
 	    	   dismissible:false
 	       });
 		
 		var role = currentRoleType == null ? roleType : currentRoleType;
 
 		$.ajax({
-			url : "./openStockPopup?reqType=editPage&txnId="+txnId+'&role='+role,
+			url : "./openStockPopup?reqType=editPage&txnId="+txnId+'&role='+role+'&userType='+userType+"&userId="+userId,
 			dataType : 'json',
 			contentType : 'application/json; charset=utf-8',
 			type : 'GET',
@@ -108,17 +108,17 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 	//***************************************** start edit Pop up data ***********************************************************************************************
 
 	function EditUploadedStockDetails(txnId){ 
-
 		var role = currentRoleType == null ? roleType : currentRoleType;
-
+		var userType=$("body").attr("data-roleType");
 		$.ajax({
-			url : "./openStockPopup?reqType=editPage&txnId="+txnId+'&role='+role,
+			url : "./openStockPopup?reqType=editPage&txnId="+txnId+'&role='+role+'&userType='+userType+"&userId="+userId,
 			dataType : 'json',
 			contentType : 'application/json; charset=utf-8',
 			type : 'GET',
 			success : function(data) {
 				console.log(data)
 				setEditPopupData(data) 
+				console.log(url)
 			},
 			error : function() {
 				//alert("Failed");
@@ -782,3 +782,9 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 		
 		$("#editcsvUploadFileName").val(existingfile);
 	}
+
+	$("input[type=file]").keypress(function(ev) {
+	    return false;
+	    //ev.preventDefault(); //works as well
+
+	});

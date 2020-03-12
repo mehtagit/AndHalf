@@ -1,3 +1,12 @@
+<%
+	response.setHeader("Cache-Control", "no-cache");
+	response.setHeader("Cache-Control", "no-store");
+	response.setDateHeader("Expires", 0);
+	response.setHeader("Pragma", "no-cache");
+	/*  session.setMaxInactiveInterval(200); //200 secs
+	 session.setAttribute("usertype", null);  */
+	if (session.getAttribute("usertype") != null) {
+%>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
@@ -117,33 +126,23 @@
 					
 						<input type="text" name="tag" id="viewTag" placeholder="tag" disabled hidden="hidden" > 
 				
-
-					
-					
-					<div class="input-field col s12 m6 l6">
-						<input type="text" name="policyOrder" id="viewpolicyOrder"
-							placeholder="Policy Order" disabled>
-						<label for="policyOrder"><spring:message code="table.PolicyOrder" /></label>
-					</div>	
-						
-				
 					<div class="input-field col s12 m6 l6">
 						<input type="text" name="period" id="viewPeriod"
 							placeholder="Period" disabled>
-						<label for="period"><spring:message code="table.Period" /></label>
+						<label for="period"><spring:message code="table.Period" /> <span class="star">*</span></label>
 					</div>
 
 					<div class="input-field col s12 m6">
 						<input type="text" id="viewstatus" name="status"
 							placeholder="" maxlength="20" placeholder="Status" disabled >
-						<label for="status"><spring:message code="table.status" /></label>
+						<label for="status"><spring:message code="table.status" /> <span class="star">*</span></label>
 					</div>
 				
 					
 					
 					<div class="input-field col s12 m6">
 					<textarea id="viewValue" class="materialize-textarea" placeholder="value" readonly="readonly"></textarea>
-					<label for="viewValue" class=""><spring:message code="table.Value" /></label>
+					<label for="viewValue" class=""><spring:message code="table.Value" /> <span class="star">*</span></label>
 
 					</div>
 					
@@ -179,6 +178,7 @@
 	<div id="editPolicyConfigModel" class="modal">
 		<h6 class="modal-header"><spring:message code="registration.editpolicyconfiguration" /></h6>
 		<div class="modal-content">
+		<form action="" onsubmit="return updatePolicy()">
 		<div class="row">
 			<div class="row" style="margin-top: 10px;">
 					<div class="input-field col s12 m6 l6">
@@ -189,40 +189,35 @@
 					<div class="input-field col s12 m6 l6">
 						<input type="text" name="tag" id="EditId"
 							placeholder="ID" hidden="hidden"> 
+						<input type="text" name="status" id="EditStatusValue"
+							placeholder="" hidden="hidden"> 	
 					</div>
 					
 					
 					<div class="input-field col s12 m6 l6">
-						<input type="text" name="policyOrder" id="editpolicyOrder"
-							placeholder="Policy Order" disabled>
-						<label for="policyOrder"><spring:message code="table.PolicyOrder" /></label>
-					</div>	
-						
-		
-					<div class="input-field col s12 m6 l6">
 						<input type="text" name="period" id="editPeriod"
 							placeholder="Period" disabled>
-						<label for="period"><spring:message code="table.Period" /></label>
+						<label for="period"><spring:message code="table.Period" /> <span class="star">*</span></label>
 					</div>
 
 					<div class="input-field col s12 m6" style="margin-top:22px">
 						<input type="text" id="editstatus" name="status"
 							placeholder="" maxlength="20" placeholder="Status" disabled>
-						<label for="status"><spring:message code="table.status" /></label>
+						<label for="status"><spring:message code="table.status" /> <span class="star">*</span></label>
 					</div>
 				
 					
 					
 					<div class="input-field col s12 m6">
-					<textarea id="editValue" class="materialize-textarea" placeholder="value"></textarea>
-					<label for="viewValue" class=""><spring:message code="table.Value" /></label>
+					<textarea id="editValue" class="materialize-textarea" placeholder="value" title="Please enter alphabets and numbers upto 100 characters only" maxlength="100" required="required"></textarea>
+					<label for="editValue" class=""><spring:message code="table.Value" /> <span class="star">*</span></label>
 
 					</div>
 					
 					
 					
 					<div class="input-field col s12 m6">
-					<textarea id="editdescription" class="materialize-textarea" placeholder="Description"></textarea>
+					<textarea id="editdescription" class="materialize-textarea" placeholder="Description" title="Please enter alphabets and numbers upto 200 characters only" maxlength="200"></textarea>
 					<label for="description" class=""><spring:message code="registration.description" /></label>
 
 					</div>
@@ -234,12 +229,13 @@
 
 				<div class="row input_fields_wrap">
 					<div class="col s12 m12 center" style="margin-top: 10px;">
-					<button class="btn modal-close" style="margin-left: 10px;" onclick ="updatePolicy()"><spring:message code="button.update" /></button>
-					<button class="btn modal-close" style="margin-left: 10px;"><spring:message code="button.cancel" /></button>
+					<button class="btn " type="submit"><spring:message code="button.update" /></button>
+					<button class="modal-close btn" type="button" style="margin-left: 10px;"><spring:message code="button.cancel" /></button>
 				</div>
 
 				</div>
 			</div>
+			</form>
 		</div>
 	</div>
 	<!-- Modal End -->
@@ -302,3 +298,16 @@
 		
 </body>
 </html>
+<%
+	} else {
+		/*  request.setAttribute("msg", "  *Please login first");
+		request.getRequestDispatcher("./index.jsp").forward(request, response); */
+%>
+<script language="JavaScript">
+	sessionStorage.setItem("loginMsg",
+			"*Session has been expired");
+	window.top.location.href = "./login";
+</script>
+<%
+	}
+%>

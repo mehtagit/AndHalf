@@ -6,8 +6,9 @@ var startdate=$('#startDate').val();
 var endDate=$('#endDate').val();
 
 $(document).ready(function(){
-	auditManagementDatatable();
 	pageRendering();
+	setTimeout(function(){ auditManagementDatatable(); }, 200);
+	
 	
 });
 
@@ -18,21 +19,24 @@ var role = currentRoleType == null ? roleType : currentRoleType;
 
 function auditManagementDatatable(){
 	
+	var roleDropDown =  document.getElementById("roleType");
+	var userTypeInterp = roleDropDown.options[roleDropDown.selectedIndex].text;
+	
+	var userType = $('#roleType').val()=='' ? null : userTypeInterp;
 	var filterRequest={
 			
-			"userId":parseInt(userId),
-			"featureId":parseInt(featureId),
-			"userTypeId": parseInt($("body").attr("data-userTypeID")),
-			"userType":$("body").attr("data-roleType"),
+			//"userId":parseInt(userId),
+			//"featureId":parseInt(featureId),
+			//"userTypeId": parseInt($("body").attr("data-userTypeID")),
+			"userType": userType,
 			"featureId": parseInt(featureId),
-			
 			"startDate" : $("#startDate").val(),
 			"endDate" : $("#endDate").val(),
 			"txnId" : $("#transactionID").val(),
 			"featureName" : $("#feature").val(),
-			"subFeature" : $("#subFeature").val(),
-			"userName" : $("#userName").val(),
-			"userType" : $("#roleType").val()
+			"subFeatureName" : $("#subFeature").val(),
+			"userName" : $("#userName").val()
+			
 			
 	}
 	$.ajax({
@@ -93,8 +97,8 @@ function pageRendering(){
 			for(i=0; i<date.length; i++){
 				if(date[i].type === "date"){
 					$("#auditTableDiv").append("<div class='input-field col s6 m2'>"+
-							"<div id='enddatepicker' class='input-group'>"+
-							"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off' onchange='checkDate(startDate,endDate)'>"+
+							"<div id='enddatepicker' class='input-group date'>"+
+							"<input class='form-control datepicker' onchange='checkDate(startDate,endDate)' type='text' id="+date[i].id+" autocomplete='off'>"+
 							"<label for="+date[i].id+">"+date[i].title
 							+"</label>"+
 							"<span	class='input-group-addon' style='color: #ff4081'>"+
@@ -140,9 +144,10 @@ function pageRendering(){
 
 		
 			
-		$('.datepicker').datepicker({
-				dateFormat: "yy-mm-dd"
-			});
+			$('.datepicker').datepicker({
+					dateFormat: "yy-mm-dd"
+					});
+
 		}
 	});
 	
@@ -171,7 +176,9 @@ $('.datepicker').on('mousedown',function(event){
 
 
 function viewDetails(Id){
-	$("#viewAuditModel").openModal();
+	$("#viewAuditModel").openModal({
+        dismissible:false
+    });
 	 var Id = parseInt(Id);
 	$.ajax({
 		url : './audit/view/'+Id,

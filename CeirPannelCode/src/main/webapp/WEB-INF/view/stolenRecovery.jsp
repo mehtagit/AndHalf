@@ -93,7 +93,7 @@
 
 								<a class="boton right" id="btnLink"></a>
 							</div>
-							<form action="${context}/stakeholder/record" method="post">
+							<form action="${context}/stakeholder/record" method="post" id="stolenRecoveryFormDiv">
 								<div class="col s12 m12 l12" id="consignmentTableDIv"
 									style="padding-bottom: 5px; background-color: #e2edef52;">
 									<div id="filterBtnDiv">
@@ -309,7 +309,6 @@
 				<div class="input-field col s12 m6">
 					<input type="text" name="supplierName" id="supplierNameEdit"
 						pattern="[A-Za-z]{0,50}"
-						title="Please enter alphabets  upto 50 characters only"
 						maxlength="50" placeholder="" required />
 					<label for="supplierNameEdit" class="center-align"><spring:message code="input.suppliername" /> <span class="star">*</span>
 					</label>
@@ -1314,7 +1313,7 @@ title="Please enter numbers upto 9 characters only" maxlength="9" value="" place
 <p style="color: #000; margin: 5px 0;"><spring:message code="input.UploadBulk" /> <span class="star">*</span></p>
 <div class="btn">
 <span><spring:message code="operator.file" /></span>
-<input type="file" id="editselectBulkBlockuploadFile">
+<input type="file" id="editselectBulkBlockuploadFile" onchange="fileTypeValueChanges(2)">
 </div>
 <div class="file-path-wrapper">
 <input class="file-path validate" required="required" type="text" id="editBulkBlockuploadFile" placeholder="">
@@ -1357,7 +1356,7 @@ type="submit" ><spring:message code="button.update" /></button>
             <div class="row">
                 <div class="input-field col s12 center">
                     <div class="input-field col s12 center">
-                        <a  href ="./stolenRecovery" class=" btn"><spring:message code="modal.ok" /></a>
+                        <a  href ="./stolenRecovery?FeatureId=5" class=" btn"><spring:message code="modal.ok" /></a>
                     </div>
                 </div>
             </div>
@@ -1399,7 +1398,7 @@ type="submit" ><spring:message code="button.update" /></button>
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
-                     <a class="btn modal-close" href="./stolenRecovery"><spring:message code="modal.ok" /></a>
+                     <a class="btn modal-close" href="./stolenRecovery?FeatureId=5"><spring:message code="modal.ok" /></a>
                    
                 </div>
             </div>
@@ -1444,12 +1443,28 @@ type="submit" ><spring:message code="button.update" /></button>
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
-                    <a class="btn modal-close" href="./stolenRecovery"><spring:message code="modal.ok" /></a>
+                    <a class="btn modal-close" href="./stolenRecovery?FeatureId=5"><spring:message code="modal.ok" /></a>
                 </div>
             </div>
         </div>
     </div>
 
+	<div id="fileFormateModal" class="modal">
+		<h6 class="modal-header"><spring:message code="fileValidationModalHeader" /></h6>
+		<div class="modal-content">
+			<div class="row">
+				<h6 id="fileErrormessage"><spring:message code="fileValidationName" /><br> <br> <spring:message code="fileValidationFormate" /> <br><br> <spring:message code="fileValidationSize" /> </h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<div class="input-field col s12 center">
+						<button class="modal-close waves-effect waves-light btn" onclick="clearFileName()"
+							style="margin-left: 10px;"><spring:message code="modal.ok" /></button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
@@ -1525,6 +1540,8 @@ type="submit" ><spring:message code="button.update" /></button>
 
 		<script type="text/javascript"
 		src="${context}/resources/project_js/profileInfoTab.js" async></script>
+		<script type="text/javascript"
+		src="${context}/resources/project_js/_dateFunction.js" async></script>
 </body>
 </html>
 <%
