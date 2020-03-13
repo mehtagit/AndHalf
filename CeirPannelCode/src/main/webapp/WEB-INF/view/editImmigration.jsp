@@ -437,168 +437,16 @@
 												</div>
 											</div>
 										</div>
-					<%-- 					<div class="row">
-											<div class="col s12 m12" style="margin-top: 30px;">
-												<h5>
-													<spring:message code="modal.deviceInfo" />
-												</h5>
-												<hr>
-											</div>
-											<div id="mainDeviceInformation" class="mainDeviceInformation">
-												<div id="deviceInformation" class="deviceInformation">
-													<div class="col s12 m6">
-														<label for="deviceIdType"> <spring:message
-																code="select.deviceIDType" /><span class="star">*</span></label>
-														<select class="browser-default"
-															oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-															oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-															required id="deviceIdType1">
-															<option value="" disabled selected>
-																<spring:message code="select.selectDeviceIDType" />
-															</option>
+					
 
-														</select>
-													</div>
-
-
-													<div class="col s12 m6">
-														<label for="deviceType"> <spring:message
-																code="select.multiSimStatus" /></label> <select
-															class="browser-default"
-															oninput="InvalidMsg(this,'select','<spring:message code="
-                                                            validation.selectFieldMsg" />');"
-															oninvalid="InvalidMsg(this,'select','
-                                                        <spring:message code="validation.selectFieldMsg" />');"
-															id="multipleSimStatus1">
-															<option value="" disabled selected>
-																<spring:message code="select.multiSimStatus" />
-															</option>
-
-														</select>
-													</div>
-
-													<div class="col s12 m6">
-														<label for="deviceType"> <spring:message
-																code="select.deviceType" /></label> <select
-															class="browser-default" style="height: 34px"
-															id="deviceType1"
-															oninput="InvalidMsg(this,'select','<spring:message code="
-                                                            validation.selectFieldMsg" />');"
-															oninvalid="InvalidMsg(this,'select','
-                                                        <spring:message code="validation.selectFieldMsg" />');">
-															<option value="" disabled selected>
-																<spring:message code="select.deviceType" />
-															</option>
-
-														</select>
-													</div>
-													<div class="input-field col s12 m6 l6">
-														<p
-															style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
-															<spring:message code="input.Country" />
-
-														</p>
-														<select id="country1" class="browser-default"
-															style="margin-bottom: 5px;" class="mySelect"
-															oninput="InvalidMsg(this,'select','<spring:message code="
-                                                            validation.selectFieldMsg" />');"
-															oninvalid="InvalidMsg(this,'select','
-                                                        <spring:message code="validation.selectFieldMsg" />');"
-															style="padding-left: 0;"></select>
-													</div>
-													<div class="input-field col s12 m6"
-														style="margin-top: 22px;">
-														<input type="text" id="serialNumber1"
-															pattern="[A-Za-z0-9]{0,15}" placeholder=""
-															oninput="InvalidMsg(this,'input','<spring:message code="
-                                                            validation.15character" />');"
-															oninvalid="InvalidMsg(this,'input','
-                                                        <spring:message code="validation.15character" />');"
-															maxlength="15"> <label for="serialNumber">
-															<spring:message code="input.deviceSerialNumber" />
-														</label>
-													</div>
-
-													<div class="col s12 m6">
-														<label for="taxStatus"> <spring:message
-																code="select.deviceStatus" /></label> <select
-															class="browser-default"
-															oninput="InvalidMsg(this,'select','<spring:message code="
-                                                            validation.selectFieldMsg" />');"
-															oninvalid="InvalidMsg(this,'select','
-                                                        <spring:message code="validation.selectFieldMsg" />');"
-															id="deviceStatus1">
-															<option value="" disabled="disabled" selected>
-																<spring:message code="select.selectDeviceStatus" />
-															</option>
-
-														</select>
-													</div>
-
-													<div class="col s12 m12">
-														<p>
-															<spring:message code="title.imeiMeidEsn" />
-														</p>
-													</div>
-
-													<div class="input-field col s12 m6">
-														<input type="text" id="IMEIA1" pattern="[0-9]{16,16}" placeholder=""
-															oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
-															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
-															required maxlength="16"> <label for="IMEI1">
-															<spring:message code="title.one" /> <span class="star">*</span>
-														</label>
-													</div>
-
-													<div class="input-field col s12 m6">
-														<input type="text" id="IMEIB1" pattern="[0-9]{16,16}" placeholder=""
-															oninput="InvalidMsg(this,'input','<spring:message code=" validation.1516digit" />');"
-															oninvalid="InvalidMsg(this,'input','<spring:message code=" validation.1516digit" />');"
-															
-															maxlength="16"> <label for="IMEI2"> <spring:message
-																code="title.two" /></label>
-													</div>
-													<div class="input-field col s12 m6">
-														<input type="text" id="IMEIC1" pattern="[0-9]{16,16}" placeholder=""
-															oninput="InvalidMsg(this,'input','<spring:message code=" validation.1516digit" />');"
-															oninvalid="InvalidMsg(this,'input','<spring:message code=" validation.1516digit" />');"
-															
-															maxlength="16"> <label for="IMEI1"> <spring:message
-																code="title.three" /></label>
-													</div>
-
-													<div class="input-field col s12 m6">
-														<input type="text" id="IMEID1" pattern="[0-9]{16,16}" placeholder=""
-															oninput="InvalidMsg(this,'input');"
-															oninvalid="InvalidMsg(this,'input');"
-															title="<spring:message code=" validation.1516digit" />"
-															maxlength="16"> <label for="IMEI2"> <spring:message
-																code="title.four" /></label>
-													</div>
-
-
-												</div>
-											</div>
-											<!-- <div class="input_fields_wrap_1"></div> -->
-
-											<div class="row">
-												<div class="col s12 m12">
-													<button class="btn right add_field_button"
-														style="margin-top: 5px;">
-														<span style="font-size: 20px;">+</span>
-														<spring:message code="button.addMoreDevice" />
-													</button>
-												</div>
-											</div>
-										</div> --%>
-
-
-										
+										<div class="col s12 m12">
+											<p>
+												<spring:message code="input.requiredfields" />
+												<span class="star">*</span>
+											</p>
+										</div>
 										<div class="row" style="padding-bottom: 50px;">
-										<p>
-											<spring:message code="input.requiredfields" />
-											<span class="star">*</span>
-										</p>
+										
 											<div class="input-field col s12 m12 center">
 												<button id="endUserRegisterButton" type="submit" class="btn">
 													<spring:message code="button.update" />
@@ -608,6 +456,8 @@
 														code="button.cancel" /></a>
 											</div>
 										</div>
+										
+										
 									</div>
 								</div>
 

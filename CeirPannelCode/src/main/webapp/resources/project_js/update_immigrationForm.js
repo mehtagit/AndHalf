@@ -558,7 +558,8 @@ $.ajax({
 		$('#address').val(data.data.propertyLocation);
 		$('#streetNumber').val(data.data.street);
 		$('#locality').val(data.data.locality);
-		 $('#village').val(data.data.village);
+		$('#village').val(data.data.village);
+		$('#nationality').val(data.data.nationality);
 		$('#commune').val(data.data.commune);
 		$('#endUserdistrict').val(data.data.district);
 		$('#pin').val(data.data.postalCode);
@@ -573,16 +574,21 @@ $.ajax({
 		$('input[name="selectvip"][value="' + data.data.isVip.toString() + '"]').prop("checked", true).triggerHandler('click');
 		$('input[name="onVisa"][value="' + data.data.onVisa.toString() + '"]').prop("checked", true).triggerHandler('click');
 		
+		if(data.data.isVip == 'Y'){
 		$('#departmentName').val(data.data.userDepartment['name']);
 		$('#endUserdepartmentID').val(data.data.userDepartment['departmentId']);
 		$('#endUSerNidaPlaceholder').val(data.data.userDepartment['departmentFilename']);
-
+		}
 		
+		
+
+		if(data.data.onVisa == 'Y'){
 		$('#visaType').val(data.data.visaDb[0]['visaType']);
 		$('#datepicker').val(data.data.visaDb[0]['entryDateInCountry']);
 		$('#visaNumber').val(data.data.visaDb[0]['visaNumber']);
 		$('#datepicker1').val(data.data.visaDb[0]['visaExpiryDate']);
 		$('#ensUserVisaPlaceHolder').val(data.data.visaDb[0]['visaFileName']);
+		}
 		
 	},
 	error: function (jqXHR, textStatus, errorThrown) {
