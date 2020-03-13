@@ -1,13 +1,21 @@
+<%
+	response.setHeader("Cache-Control", "no-cache");
+	response.setHeader("Cache-Control", "no-store");
+	response.setDateHeader("Expires", 0);
+	response.setHeader("Pragma", "no-cache");
+	/*  session.setMaxInactiveInterval(200); //200 secs
+	 session.setAttribute("usertype", null);  */
+	if (session.getAttribute("usertype") != null) {
+%>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en" class="no-js">
 <head>
-<title>Dashboard</title>
+<title>Stolen</title>
 
 <meta charset="utf-8" />
 <meta name="viewport"
@@ -17,8 +25,11 @@
 <meta content="" name="description" />
 <meta content="" name="author" />
 
+		
 <script type="text/javascript"
 	src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
+		<script type="text/javascript" src="${context}/resources/js/intlTelInput.js"></script>
+		<script type="text/javascript" src="${context}/resources/js/utils.js"></script>
 <!--   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"></script>  
  -->
 
@@ -890,6 +901,7 @@ src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitte
 
 <script type="text/javascript"
 src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/jquery.history.js"></script>
+	
 	<script type="text/javascript"
 		src="${context}/resources/project_js/globalVariables.js"></script>
 	<script type="text/javascript"
@@ -900,9 +912,6 @@ src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/j
 		<script type="text/javascript"
 		src="${context}/resources/project_js/editLawfulStolen.js"></script>
 
-	<script type="text/javascript"
-		src="${context}/resources/js/intlTelInput.js">
-		</script>
 
 	<script>
  populateCountries(
@@ -974,3 +983,15 @@ src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/j
 
 </body>
 </html>
+<%
+} else {
+
+%>
+<script language="JavaScript">
+sessionStorage.setItem("loginMsg",
+"*Session has been expired");
+window.top.location.href = "./login";
+</script>
+<%
+}
+%>

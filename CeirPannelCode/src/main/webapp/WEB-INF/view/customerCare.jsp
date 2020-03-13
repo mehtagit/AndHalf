@@ -111,17 +111,17 @@ data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeI
                             Device Information</h4>
                           <div class="row">
                             <div class="input-field col s12 m4 l4">
-                              <input type="text" id="MSISDN" name="MSISDN" value="">
+                              <input type="text" id="MSISDN" name="MSISDN" value="" disabled>
                               <label for="MSISDN" >MSISDN</label>
                             </div>
 
                             <div class="input-field col s12 m4 l4">
-                              <input type="text" id="IMEI" name="IMEI" value="">
+                              <input type="text" id="IMEI" name="IMEI" value="" disabled>
                               <label for="IMEI" >IMEI</label>
                             </div>
 
                             <div class="input-field col s12 m4 l4">
-                              <input type="text" id="IMSI" name="IMSI" value="">
+                              <input type="text" id="IMSI" name="IMSI" value="" disabled>
                               <label for="IMSI" >IMSI</label>
                             </div>
                           </div>
@@ -132,22 +132,22 @@ data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeI
                             TAC Information</h4>
                           <div class="row">
                             <div class="input-field col s12 m3 l3">
-                              <input type="text" id="handsetType" name="handsetType" value="">
+                              <input type="text" id="handsetType" name="handsetType" value="" disabled>
                               <label for="handsetType" >Handset Type</label>
                             </div>
 
                             <div class="input-field col s12 m3 l3">
-                              <input type="text" id="osType" name="osType" value="">
+                              <input type="text" id="osType" name="osType" value="" disabled>
                               <label for="osType" >OS Type</label>
                             </div>
 
                             <div class="input-field col s12 m3 l3">
-                              <input type="text" id="brand" name="brand" value="">
+                              <input type="text" id="brand" name="brand" value="" disabled>
                               <label for="brand" >Brand</label>
                             </div>
 
                             <div class="input-field col s12 m3 l3">
-                              <input type="text" id="modal" name="modal" value="">
+                              <input type="text" id="modal" name="modal" value="" disabled>
                               <label for="modal" >Model</label>
                             </div>
                           </div>
@@ -157,7 +157,7 @@ data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeI
                           <h4 class="header2 device-state">
                             DEVICE STATE</h4>
                           <div class="col s12 m6">
-                            <table class="responsive-table striped datatable" id="BlackListTable">
+                            <table class="responsive-table striped datatable" id="DeviceStateTable">
                               <thead>
                                 <tr>
                                   <th>State</th>
@@ -173,7 +173,7 @@ data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeI
                           </div>
 
                           <div class="col s12 m6">
-                            <table class="responsive-table striped datatable" id="BlackListTable">
+                            <table class="responsive-table striped datatable" id="DeviceTable">
                               <thead>
                                 <tr>
                                   <th>Device Found In</th>
@@ -194,20 +194,8 @@ data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeI
                         <div class="col s12 m12">
                           <h4 class="header2" style="font-weight: bold; margin-top: 50px;">
                             Notification Information</h4>
-                            <table class="responsive-table striped display" id="data-table-simple" cellspacing="0">
-                            <thead>
-                              <tr>
-                                <th>Date</th>
-                                <th>Transaction ID</th>
-                                <th>Feature</th>
-                                <th>Message</th>
-                                <th>Action</th>
-                              </tr>
-                            </thead>
-
-                            <tbody>
-                             
-                            </tbody>
+                            <table class="responsive-table striped display" id="Notification-data-table" cellspacing="0">
+                          
                           </table>
                         </div>
                       </form>

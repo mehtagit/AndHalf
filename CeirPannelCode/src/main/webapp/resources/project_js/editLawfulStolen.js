@@ -29,7 +29,9 @@ function viewIndivisualStolen()
 			$('#singleStolenlastName').val(response.stolenIndividualUserDB.lastName);
 			$('#singleStolennIDPassportNumber').val(response.stolenIndividualUserDB.nid);
 			$('#singleStolenemail').val(response.stolenIndividualUserDB.email);
+		
 			$('#singleStolenphone1').val(response.stolenIndividualUserDB.alternateContactNumber);
+			
 			$('#singleStolenaddress').val(response.stolenIndividualUserDB.propertyLocation);
 			//alert(response.stolenIndividualUserDB.street+"-----"+response.stolenIndividualUserDB.alternateContactNumber)
 			$('#singleStolenstreetNumber').val(response.stolenIndividualUserDB.street);

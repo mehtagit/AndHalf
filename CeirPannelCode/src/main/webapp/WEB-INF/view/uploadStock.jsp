@@ -1,4 +1,3 @@
-
 <%
 	response.setHeader("Cache-Control", "no-cache");
 	response.setHeader("Cache-Control", "no-store");
@@ -74,7 +73,8 @@
 <script src="http://malsup.github.io/jquery.blockUI.js"></script>
 <script src="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json"></script>
 
-
+			<script type="text/javascript"
+		src="${context}/resources/project_js/enterKey.js"></script>
 <style>
 #snackbar {
 	visibility: hidden;
@@ -409,10 +409,6 @@ to {
 		</h6>
 		<div class="modal-content">
 
-			<form action=""
-				<%-- onsubmit="return serchAssigneDetaiils()" --%>
-									method="POST"
-				enctype="multipart/form-data" id="registerConsignment">
 				<div class="row">
 
 					<h5 class="center">
@@ -443,11 +439,11 @@ to {
 							placeholder="<spring:message code="AssigneSearch" />" />
 					</div>
 					<div class="input-field col s12 m2">
-						<a onclick="viewAssigneeHistory()" class="btn"><spring:message
-								code="button.submit" /></a>
+						<button type="button" onclick="viewAssigneeHistory()" id="viewAssigneeHistoryBtn" class="btn"><spring:message
+								code="button.submit" /></button>
 					</div>
 				</div>
-			</form>
+		
 			<!-- 
             <div class="row myRow" style="margin-top: 10px; display: none;" id="user123">
                 
@@ -535,6 +531,7 @@ to {
 		src="${context}/resources/project_js/profileInfoTab.js" async></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/validationMsg.js"></script>
+
 	<script>
 
 var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
@@ -715,7 +712,7 @@ function fileTypeValueChanges(dd, ddd) {
 	var ext = uploadedFileName.split('.').pop();
 	
 	var fileSize = ($("#file")[0].files[0].size);
-	fileSize = (Math.round((fileSize / 1024) * 100) / 100)
+	fileSize = Math.floor(fileSize/1000) + 'KB';
    if (uploadedFileName.length > 30) {
 	   $('#fileFormateModal').openModal({
     	   dismissible:false
@@ -851,6 +848,14 @@ function closeAssigneTable()
 	 $("#assigneDetailsDiv").css("display", "none");
 	
 }
+
+$(document).keyup(function(event) { 
+	
+	if (event.keyCode === 13) {
+		
+    	$("#viewAssigneeHistoryBtn").click();
+  }
+}); 
 </script>
 
 </body>

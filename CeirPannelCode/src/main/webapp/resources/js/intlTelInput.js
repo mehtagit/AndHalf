@@ -967,14 +967,10 @@
                         if (typeof this.options.customPlaceholder === "function") {
                             placeholder = this.options.customPlaceholder(placeholder, this.selectedCountryData);
                         }
-                       // alert(this.selectedCountryData.dialCode);
-                        if(document.getElementById("singleStolenphone2").value==""){
-                            document.getElementById("singleStolenphone2").value="+"+this.selectedCountryData.dialCode +" ";
-                        }
-                        if(document.getElementById("singleStolenphone1").value==""){
-                        	
-                            document.getElementById("singleStolenphone1").value="+"+this.selectedCountryData.dialCode +" ";
-                        }
+                        if($("#singleStolenphone1").val() =="" || $("#singleStolenphone2").val() =="" || $("#phone").val() ==""){
+                           $("#singleStolenphone1,#singleStolenphone2,#phone").val("+"+this.selectedCountryData.dialCode +" ");
+                       }
+                        
                         this.telInput.setAttribute("placeholder", placeholder);
                     }
                 }

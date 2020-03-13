@@ -31,6 +31,7 @@ public class Registration extends UserHeader{
 	private Long[] roles;
 	private String captcha;
 	private String usertypeName;
+	private Integer userTypeId;
 	private String employeeId;
 	private String natureOfEmployment;
 	private String designation;
@@ -221,6 +222,12 @@ public class Registration extends UserHeader{
 	public void setUsertypeName(String usertypeName) {
 		this.usertypeName = usertypeName;
 	}
+	public Integer getUserTypeId() {
+		return userTypeId;
+	}
+	public void setUserTypeId(Integer userTypeId) {
+		this.userTypeId = userTypeId;
+	}
 	public String getEmployeeId() {
 		return employeeId;
 	}
@@ -367,7 +374,8 @@ public class Registration extends UserHeader{
 				+ idCardFilename + ", arrivalPort=" + arrivalPort + ", arrivalPortName=" + arrivalPortName
 				+ ", vatFilename=" + vatFilename + ", userLanguage=" + userLanguage + ", nidFilePath=" + nidFilePath
 				+ ", photoFilePath=" + photoFilePath + ", idCardFilePath=" + idCardFilePath + ", vatFilePath="
-				+ vatFilePath + ", portAddress=" + portAddress + ", portAddressName=" + portAddressName + "]";
+				+ vatFilePath + ", portAddress=" + portAddress + ", portAddressName=" + portAddressName + ""
+				+ ",userTypeId=" + userTypeId+"]";
 	}
 	
 }

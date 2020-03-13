@@ -121,8 +121,8 @@
 												</select>
 											</div>
 
-										<div class="col s12 m6 l6" hidden>
-										<select class="browser-default" required="required" id="status" >
+										<div class="col s12 m6 l6" hidden="hidden">
+										<select class="browser-default" id="status" >
 										</select>
 										</div>
 											

@@ -157,19 +157,3 @@ $("input[type=file]").keypress(function(ev) {
 	}
 	
 	
-/*	function clearFileName(id) {
-		$('#'+id).val('');
-		$("#"+id).val('');
-		$('#fileFormateModal').closeModal();
-	}*/
-/*	function clearFileName(id,hiddenVal,editInputID) {
-		//$('#mainArea').contents().find('#fileNameEdit').val()
-		var existingfile=$('#mainArea').contents().find("#"+hiddenVal).val();
-		//$('#fileNameEdit').val('');
-		$('#mainArea').contents().find("#"+id).val('');
-		$('#fileFormateModal').closeModal();
-		
-		$('#mainArea').contents().find("#"+editInputID).val(existingfile);
-	}
-
-	*/
