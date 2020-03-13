@@ -21,6 +21,7 @@ public class DeviceDuplicateDb {
 	@JsonIgnore
 	@CreationTimestamp
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
+	@Column(nullable = false, updatable = false)
 	private Date createdOn;
 
 	private Integer duplicateCount;

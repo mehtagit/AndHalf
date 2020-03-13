@@ -27,7 +27,9 @@ public class GreylistDb implements Serializable {
 	@JsonIgnore
 	@CreationTimestamp
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
+	@Column(nullable = false, updatable = false)
 	private Date createdOn;
+	
 	@JsonIgnore
 	@UpdateTimestamp
 	private Date modifiedOn;

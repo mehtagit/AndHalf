@@ -29,6 +29,7 @@ public class RegularizeDeviceDb implements Serializable {
 
 	@CreationTimestamp
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
+	@Column(nullable = false, updatable = false)
 	private LocalDateTime createdOn;
 
 	@UpdateTimestamp

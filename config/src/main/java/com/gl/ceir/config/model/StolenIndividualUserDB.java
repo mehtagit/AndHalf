@@ -89,7 +89,6 @@ public class StolenIndividualUserDB implements Serializable {
 	private Integer operator;
 	private Integer multiSimStatus;
 	private Integer multiSimStatusInterp;
-	private Integer complaintType;
 
 	// Place of device Stolen
 	private String deviceStolenPropertyLocation;
@@ -285,12 +284,6 @@ public class StolenIndividualUserDB implements Serializable {
 	public void setOperator(Integer operator) {
 		this.operator = operator;
 	}
-	public Integer getComplaintType() {
-		return complaintType;
-	}
-	public void setComplaintType(Integer complaintType) {
-		this.complaintType = complaintType;
-	}
 	public String getDeviceStolenPropertyLocation() {
 		return deviceStolenPropertyLocation;
 	}
@@ -477,8 +470,6 @@ public class StolenIndividualUserDB implements Serializable {
 		builder.append(multiSimStatus);
 		builder.append(", multiSimStatusInterp=");
 		builder.append(multiSimStatusInterp);
-		builder.append(", complaintType=");
-		builder.append(complaintType);
 		builder.append(", deviceStolenPropertyLocation=");
 		builder.append(deviceStolenPropertyLocation);
 		builder.append(", deviceStolenStreet=");

@@ -1,11 +1,12 @@
 package com.gl.ceir.config.model;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class CustomerCareDeviceState implements Serializable{
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	private String name;
 	private String date;
 	private String status;
@@ -24,7 +25,11 @@ public class CustomerCareDeviceState implements Serializable{
 		return date;
 	}
 	public void setDate(String date) {
-		this.date = date;
+		if(Objects.isNull(date)) {
+			this.date = "";
+		}else {
+			this.date = date.substring(0, 10);
+		}
 	}
 	public String getStatus() {
 		return status;
@@ -66,5 +71,5 @@ public class CustomerCareDeviceState implements Serializable{
 		builder.append("]");
 		return builder.toString();
 	}
-	
+
 }

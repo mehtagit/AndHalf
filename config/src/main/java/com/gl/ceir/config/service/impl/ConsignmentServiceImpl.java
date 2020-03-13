@@ -393,7 +393,7 @@ public class ConsignmentServiceImpl {
 	public GenricResponse updateConsignmentStatus(ConsignmentUpdateRequest consignmentUpdateRequest) {
 		try {
 			UserProfile userProfile = null;
-			Map<String, String> placeholderMap = new HashMap<String, String>();
+			Map<String, String> placeholderMap = new HashMap<>();
 			
 			ConsignmentMgmt consignmentMgmt = consignmentRepository.getByTxnId(consignmentUpdateRequest.getTxnId());
 			logger.debug("Accept/Reject Consignment : " + consignmentMgmt);
@@ -466,7 +466,7 @@ public class ConsignmentServiceImpl {
 								"Importer");
 
 					}else if(CEIRSYSTEM.equalsIgnoreCase(consignmentUpdateRequest.getRoleType())) {
-
+						
 						List<RawMail> rawMails = new LinkedList<>();
 						if(!StateMachine.isConsignmentStatetransitionAllowed(CEIRSYSTEM, consignmentMgmt.getConsignmentStatus())) {
 							logger.info("state transition is not allowed." + consignmentUpdateRequest.getTxnId());
@@ -474,11 +474,14 @@ public class ConsignmentServiceImpl {
 						}
 						consignmentMgmt.setConsignmentStatus(ConsignmentStatus.PENDING_APPROVAL_FROM_CEIR_AUTHORITY.getCode());
 						
+						UserProfile userProfile2 = userProfileRepository.getByUserId(consignmentMgmt.getUserId());
+						logger.info("userProfile2 " + userProfile2);
+						
 						placeholderMap.put("<First name>", userProfile.getFirstName());
 						placeholderMap.put("<txn_name>", consignmentMgmt.getTxnId());
 						
 						rawMails.add(new RawMail("CONSIGNMENT_PROCESS_SUCCESS_TO_IMPORTER_MAIL", 
-								consignmentMgmt.getUserId(), 
+								userProfile2, 
 								consignmentUpdateRequest.getFeatureId(), 
 								Features.CONSIGNMENT,
 								SubFeatures.ACCEPT,
@@ -501,6 +504,8 @@ public class ConsignmentServiceImpl {
 						
 						emailUtil.saveNotification(rawMails);
 
+					}else {
+						logger.info("Nothing to update for request " + consignmentUpdateRequest);
 					}
 				}
 			}else {
@@ -557,12 +562,14 @@ public class ConsignmentServiceImpl {
 						return new GenricResponse(3, "state transition is not allowed.", consignmentUpdateRequest.getTxnId());
 					}
 					consignmentMgmt.setConsignmentStatus(ConsignmentStatus.REJECTED_BY_SYSTEM.getCode());
+					UserProfile userProfile2 = userProfileRepository.getByUserId(consignmentMgmt.getUserId());
+					logger.info("userProfile2 " + userProfile2);
 					
 					placeholderMap.put("<First name>", userProfile.getFirstName());
 					placeholderMap.put("<txn_name>", consignmentMgmt.getTxnId());
 					
 					rawMails.add(new RawMail("CONSIGNMENT_PROCESS_FAILED_TO_IMPORTER_MAIL", 
-							consignmentMgmt.getUserId(), 
+							userProfile2, 
 							consignmentUpdateRequest.getFeatureId(), 
 							Features.CONSIGNMENT,
 							SubFeatures.ACCEPT,
@@ -574,6 +581,8 @@ public class ConsignmentServiceImpl {
 					
 					emailUtil.saveNotification(rawMails);
 
+				}else {
+					logger.info("Nothing to update for request " + consignmentUpdateRequest);
 				}
 			}
 

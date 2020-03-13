@@ -64,7 +64,7 @@ public class CustomerCareServiceImpl {
 			if(Objects.nonNull(imei) 
 					&& "IMEI".equalsIgnoreCase(customerCareRequest.getDeviceIdType())) {
 				return fetchDetailsOfImei(imei, listType);
-				
+
 			}else if(Objects.nonNull(customerCareRequest.getMsisdn())){
 				DeviceUsageDb deviceUsageDb = deviceUsageDbRepository.getByImei(imei);
 
@@ -153,7 +153,7 @@ public class CustomerCareServiceImpl {
 		}else {
 			list = customerCareFactory.stateList;
 		}
-		
+
 		list.stream().forEach( o -> {
 			CustomerCareTarget customerCareTarget = customerCareFactory.getObject(o);
 			if(Objects.isNull(customerCareTarget)) {

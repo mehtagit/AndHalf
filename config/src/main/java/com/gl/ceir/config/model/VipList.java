@@ -3,6 +3,7 @@ package com.gl.ceir.config.model;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 
@@ -24,6 +25,7 @@ public class VipList implements Serializable {
 
 	@CreationTimestamp
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
+	@Column(nullable = false, updatable = false)
 	private LocalDateTime createdOn;
 
 	@UpdateTimestamp

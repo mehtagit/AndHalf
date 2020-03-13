@@ -82,6 +82,8 @@ public class StolenandRecoveryMgmt implements Serializable {
 	@Column(length = 25)
 	private String dateOfRecovery;
 	
+	private Integer complaintType;
+	
 	@NotAudited
 	@OneToOne(mappedBy = "sARm", cascade = {CascadeType.PERSIST, CascadeType.REMOVE},fetch = FetchType.LAZY)
 	SingleImeiDetails singleImeiDetails; 
@@ -97,6 +99,12 @@ public class StolenandRecoveryMgmt implements Serializable {
 	@Transient
 	private String imei;
 
+	public Integer getComplaintType() {
+		return complaintType;
+	}
+	public void setComplaintType(Integer complaintType) {
+		this.complaintType = complaintType;
+	}
 	public Long getId() {
 		return id;
 	}

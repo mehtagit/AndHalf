@@ -3,6 +3,7 @@ package com.gl.ceir.config.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 
@@ -21,6 +22,7 @@ public class BlackList implements Serializable {
 	private ImeiMsisdnIdentity imeiMsisdnIdentity;
 	
 	@CreationTimestamp
+	@Column(nullable = false, updatable = false)
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private Date createdOn;
 

@@ -33,7 +33,7 @@ public class GsmaBlackList {
     private String wlan; 
     private String devicetype;
     
-    @Column(length = 30)
+    @Column(length = 30, nullable = false, updatable = false)
     private String createdOn;
 
 	public Integer getId() {

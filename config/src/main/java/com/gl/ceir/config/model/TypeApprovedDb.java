@@ -44,6 +44,7 @@ public class TypeApprovedDb {
 	@Type(type="date")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date requestDate;
+	
 	private String tac;
 	private Integer approveStatus;
 	@ColumnDefault("-1")
@@ -67,6 +68,7 @@ public class TypeApprovedDb {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
 	@CreationTimestamp
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@Column(nullable = false, updatable = false)
 	private Date createdOn;
 	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
