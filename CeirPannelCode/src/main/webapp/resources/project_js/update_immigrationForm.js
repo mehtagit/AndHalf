@@ -50,19 +50,9 @@ $('#datepicker,#datepicker1').datepicker({
 });
 
 
-populateCountries(
-		"country",
-		"state"
-);
-populateStates(
-		"country",
-		"state"
-);
-
-populateCountries(
-		"country1"
-
-);
+populateCountries("country","state");
+populateStates("country","state");
+//populateCountries("country1","state");
 
 
 
@@ -222,7 +212,7 @@ id++;
 
 
 
-function submitImmigrationForm(){
+function updateImmigrationForm(){
 	var formData= new FormData();
 	var nationalID=$('#endUserNID').val();
 	var endUserNID=$('#endUserNID').val();
@@ -383,11 +373,11 @@ function submitImmigrationForm(){
 			"doc_type_numeric":docType,
 			"docType":doc_type_numeric
 	}
-	formData.append('uploadnationalID', $('#uploadnationalID')[0].files[0]);
+	//formData.append('uploadnationalID', $('#uploadnationalID')[0].files[0]);
 	formData.append("request",JSON.stringify(request));
 	$.ajax({
-		url: './registerEndUserDevice',
-		type: 'POST',
+		url: './updateEndUserDevice',
+		type: 'PUT',
 		data: formData,
 		processData: false,
 		contentType: false,
@@ -579,3 +569,61 @@ function clearDeptName() {
 	$("#endUSerNidaPlaceholder").val('');
 	$('#visafileFormateModal').closeModal();
 }
+
+
+
+
+
+var passportNo_NID=$("body").attr("session-valuepassportNo");
+$.ajax({
+	url: './findEndUserByNid?findEndUserByNid='+passportNo_NID,
+	type: 'POST',
+	processData: false,
+	contentType: false,
+	success: function (data, textStatus, jqXHR) {
+
+		console.log("response:"+JSON.stringify(data.data));
+
+		$('#endUserfirstName').val(data.data.firstName);
+		$('#endUsermiddleName').val(data.data.middleName);
+		$('#endUserlastName').val(data.data.lastName);
+		$('#address').val(data.data.propertyLocation);
+		$('#streetNumber').val(data.data.street);
+		$('#locality').val(data.data.locality);
+		 $('#village').val(data.data.village);
+		$('#commune').val(data.data.commune);
+		$('#endUserdistrict').val(data.data.district);
+		$('#pin').val(data.data.postalCode);
+		$('#country').val(data.data.country).change();
+		$('#state').val(data.data.province);
+		$('#phone').val(data.data.phoneNo);
+		$('#endUseremailID').val(data.data.email);
+		$('#endUserNID').val(data.data.nid);
+		$('#nidPlaceHolder').val(data.data.passportFileName);
+		$('input[name="selectvip"][value="' + data.data.isVip.toString() + '"]').prop("checked", true).triggerHandler('click');
+		$('input[name="onVisa"][value="' + data.data.onVisa.toString() + '"]').prop("checked", true).triggerHandler('click');
+		
+		$('#departmentName').val(data.data.userDepartment['name']);
+		$('#endUserdepartmentID').val(data.data.userDepartment['departmentId']);
+		$('#endUSerNidaPlaceholder').val(data.data.userDepartment['departmentFilename']);
+
+		
+		$('#visaType').val(data.data.visaDb[0]['visaType']);
+		$('#datepicker').val(data.data.visaDb[0]['entryDateInCountry']);
+		$('#visaNumber').val(data.data.visaDb[0]['visaNumber']);
+		$('#datepicker1').val(data.data.visaDb[0]['visaExpiryDate']);
+		$('#ensUserVisaPlaceHolder').val(data.data.visaDb[0]['visaFileName']);
+		
+		
+		
+	},
+	error: function (jqXHR, textStatus, errorThrown) {
+		console.log("error in ajax")
+
+	}
+});
+
+
+
+
+

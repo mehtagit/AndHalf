@@ -64,9 +64,7 @@
 <link
 	href="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
-<%--  <link href="${context}/resources/js/plugins/chartist-js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection"> --%>
-<link rel="stylesheet"
-	href="${context}/resources/project_css/stolenRecovery.css">
+
 <link rel="stylesheet"
 	href="${context}/resources/project_css/iconStates.css">
 <link rel="stylesheet"
@@ -617,7 +615,7 @@
 												<button id="endUserRegisterButton" type="submit" class="btn">
 													<spring:message code="button.submit" />
 												</button>
-												<a href="./redirectToHomePage" class="btn"
+												<a href="./manageDevicesStock?FeatureId=19" class="btn"
 													style="margin-left: 10px;"> <spring:message
 														code="button.cancel" /></a>
 											</div>
