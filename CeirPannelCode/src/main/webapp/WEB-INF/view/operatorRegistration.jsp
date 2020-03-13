@@ -621,7 +621,7 @@ var contextpath = "${context}";
 		<div class="modal-content">
 			<p style="padding: 10px;" class="center" id="otpMsg"></p>
 
-			<a href="#otpVerification" class="btn modal-trigger modal-close"
+			<a href="javascript:void(0)" onclick="openOtpPopup()" class="btn"
 				style="width: 100%; margin-top: 20px; margin-bottom: 20px;"><spring:message
 					code="registration.verifyotp" /></a>
 		</div>

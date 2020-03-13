@@ -179,6 +179,8 @@ var contextpath = "${context}";
 		<div class="container">
 			<div class="section">
 				<form id="registrationForm"  onsubmit="return passwordPopup()" >
+				
+			
 					<div class="card-panel">
 						<%-- <a href="${context}/"
 							style="float: right; margin: -10px; margin-right: -20px;"><i
@@ -673,7 +675,14 @@ title="<spring:message code="validation.selectFieldMsg" />" onchange="setCustomV
 								<%-- <a href="${context}/verifyOtp" class="btn" id="btnSave"> Submit</a> --%>
 								<button class="btn"  id="btnSave" type="submit" 
 									style="margin-left: 10px;"><spring:message code="button.update" /></button>
-								<a href="./Home" class="btn" style="margin-left: 10px;"><spring:message code="modal.cancel" /></a>
+								<%String userLatestLang=(String)session.getAttribute("updatedLanguage"); 
+								%>
+								<%if(userLatestLang!=null){%>
+								
+								<a target="_parent" href="./?lang=<%=userLatestLang%>" class="btn" style="margin-left: 10px;"><spring:message code="modal.cancel" /></a>
+                                <%}else{ %>
+								<a target="_parent" href="./?lang=<%=session.getAttribute("language")%>" class="btn" style="margin-left: 10px;"><spring:message code="modal.cancel" /></a>
+                                <%} %>
 							</div>
 						</div>
 						</div>
@@ -771,8 +780,12 @@ title="<spring:message code="validation.selectFieldMsg" />" onchange="setCustomV
             <div class="row">
             
                 <div class="input-field col s12 center">
-                    <a   href="./Home" class="btn"><spring:message code="modal.ok" /></a>
-                </div>
+								<%if(userLatestLang!=null){%>
+								
+								<a target="_parent" href="./?lang=<%=userLatestLang%>" class="btn" style="margin-left: 10px;"><spring:message code="modal.cancel" /></a>
+                                <%}else{ %>
+								<a target="_parent" href="./?lang=<%=session.getAttribute("language")%>" class="btn" style="margin-left: 10px;"><spring:message code="modal.cancel" /></a>
+                                <%} %>                </div>
             </div>
         </div>
     </div>

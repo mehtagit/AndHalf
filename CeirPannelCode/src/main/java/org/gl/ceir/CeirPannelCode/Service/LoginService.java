@@ -108,6 +108,8 @@ public class LoginService {
 		HttpResponse response=userLoginFeignImpl.changeUserLanguage(languageData);
 		if(response!=null) {
 			log.info("response from controller: "+response);
+			session.removeAttribute("updatedLanguage");
+			session.setAttribute("updatedLanguage", language);
 		}
 		log.info("exit from language controller ");
 		return response;

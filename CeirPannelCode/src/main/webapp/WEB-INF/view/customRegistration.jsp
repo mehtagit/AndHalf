@@ -601,9 +601,10 @@ var contextpath = "${context}";
 				
 				<p style="padding:10px;" class="center" id="otpMsg"></p>
 			
-					<a href="#otpVerification" class="btn modal-trigger"
-                                style="width: 100%; margin-top: 20px; margin-bottom: 20px;"><spring:message code="registration.verifyotp" /></a>
-		</div>
+<a href="javascript:void(0)" onclick="openOtpPopup()" class="btn"
+				style="width: 100%; margin-top: 20px; margin-bottom: 20px;"><spring:message
+					code="registration.verifyotp" /></a>
+							</div>
 	</div>
 	
 	

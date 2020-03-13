@@ -218,7 +218,7 @@ var contextpath='${context}';
 				<div class="input-field col s11">
                     <input type="hidden" id="usernamedata">
 					<label for="password" style="color: #000; font-size: 12px;">
-						<spring:message code="registration.newpassword" /></label> <input type="password" id="password" class="password"
+						<spring:message code="registration.newpassword" /></label> <input type="password"  id="password" class="password"
 						pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$" maxlength="10" min="8"
 						
 						oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
@@ -368,7 +368,6 @@ oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:messa
 	<script type="text/javascript" src="${context}/resources/project_js/forgotPassword.js"></script>
     
     <script type="text/javascript" src="${context}/resources/ajax/Login.js"></script>
- 	<script type="text/javascript" src="${context}/resources/ajax/Password.js"></script>
 
   
 </body>

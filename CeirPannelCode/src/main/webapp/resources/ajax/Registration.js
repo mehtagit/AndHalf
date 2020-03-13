@@ -136,14 +136,14 @@ function verifyOtp(){
 				//window.location.href='#otpMessage';
 				
 				// $('#otpMessage').modal('open');
-				$("#otpVerification").closeModal({ dismissible: true});
+
+
 				$.i18n().locale = $('#langlist').val();
 				$.i18n().load( {
 					'en': './resources/i18n/en.json',
 					'km': './resources/i18n/km.json'
 				}).done( function() {
-				
-				
+					$("#otpVerification").closeModal();
 					$('#otpMessage').openModal({
 				        dismissible:false
 				    });
@@ -363,13 +363,10 @@ function saveRegistration(){
 	$el.find('option:selected').each(function(){
 	    data.push($(this).val());
 	});
-	alert(data);
 	
 
 	$("#registrationForm").each(function(key, val){
 		val = $(this);
-		alert("default: "+val.find('#usertypes:selected').val());
-		alert("new: "+val.find('#usertypes option:selected').val());
 		if(val.html() !== "") {
 			obj =   
 			{       
@@ -413,6 +410,10 @@ function saveRegistration(){
 	console.log("data=  "+formData);
 	registrationAjax(formData);
 	//$("#btnSave").prop('disabled', true);
+	/*$("#otpMsgModal").openModal({
+        dismissible:false
+    });
+	*/
 	return false;
 }
 
@@ -657,11 +658,9 @@ function openEndUserGrievancePage(reportType){
 
 function  openEndUserStockPage(reportType)
 {
-	//alert(reportType.value);
 	console.log("reportType=="+reportType.value);
 	window.location.href="./uploadAstock?reportType="+reportType.value;
 	console.log("details."+window.location.href);
-	/*alert(window.location.href);*/
 /*	$.ajax({   
 		type : 'POST',
 		url : contextpath + '/openEndUserStockPage?reportType='+reportType.value,
@@ -730,4 +729,19 @@ $('#disclamer').click(function () {
         $('#btnSave').attr('disabled', true); //disable input
     }
 });
+}
+
+function openOtpPopup(){
+	$('#otpMsgModal').closeModal();
+	$("#otpVerification").openModal({
+        dismissible:false
+    });
+}
+
+
+function openAnModal(){
+	$("#otpVerification").closeModal();
+	$('#otpMessage').openModal({
+        dismissible:false
+    });
 }

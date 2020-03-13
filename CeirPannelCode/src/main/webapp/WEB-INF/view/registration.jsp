@@ -295,7 +295,7 @@ String usertypeId="${usertypeId}";
 		<!--start container-->
 		<div class="container">
 			<div class="section registration-form">
-				<form id="registrationForm" autocomplete="off" <%-- onsubmit="return saveRegistration() --%>">
+				<form id="registrationForm" autocomplete="off" onsubmit="return saveRegistration()">
 					<div class="card-panel registration-form">
 						<%-- <a href="${context}/"
 							style="float: right; margin: -10px; margin-right: -20px;"><i
@@ -538,7 +538,7 @@ String usertypeId="${usertypeId}";
 								</div>
 
 								<div class="input-field col s12 m6 l6" style="margin-top: 22px;">
-									<input type="text" name="answer" id="answer0" pattern="[A-Za-z0-9\s]{0,50}" required="required" maxlength="50"
+									<input type="text" name="answer" class="answer" id="answer0" pattern="[A-Za-z0-9\s]{0,50}" required="required" maxlength="50"
 									oninput="InvalidMsg(this,'input','<spring:message code="validation.50alphanumeric" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50alphanumeric" />');" 
 										 required />
 									<label for="answer0"><spring:message code="registration.answer" /> <span class="star">*</span> </label>
@@ -607,7 +607,7 @@ String usertypeId="${usertypeId}";
 							<span> <spring:message code="input.requiredfields" /><span class="star">*</span></span>
 							<div class="input-field col s12 center">
 								<%-- <a href="${context}/verifyOtp" class="btn" id="btnSave"> Submit</a> --%>
-								<button disabled="disabled" class="btn" id="btnSave" onclick="saveRegistration();" type="button" style="margin-left: 10px;">
+								<button disabled="disabled" class="btn" id="btnSave" type="submit" style="margin-left: 10px;">
 									<spring:message code="button.submit" />
 								</button>
 								<a href="${context}/" class="btn" style="margin-left: 10px;"><spring:message code="registration.cancel" /></a>
@@ -644,7 +644,7 @@ String usertypeId="${usertypeId}";
 
 			<p style="padding: 10px;" class="center" id="otpMsg"></p>
 
-			<a href="#otpVerification" class="btn modal-trigger modal-close"
+			<a href="javascript:void(0)" onclick="openOtpPopup()" class="btn"
 				style="width: 100%; margin-top: 20px; margin-bottom: 20px;"><spring:message
 					code="registration.verifyotp" /></a>
 		</div>
@@ -775,7 +775,7 @@ String usertypeId="${usertypeId}";
             data-dismiss="modal">&times;</button> -->
 		<h6 class="modal-header">Enter OTP</h6>
 		<div class="modal-content">
-			<form id="verifyOtpForm" onsubmit="return verifyOtp()">
+			<form id="verifyOtpForm" onsubmit="return verifyOtp()" >
 				<p class="center" id="verifyOtpResp"></p>
 				<input type="hidden" id="userid" name="userid" value="${userId}">
 				<div class="row">
@@ -793,7 +793,7 @@ String usertypeId="${usertypeId}";
 				<a href="javascript:void(0)"
 					onclick="resendOtp(); document.getElementById('resendOtp').style.display ='block';"
 					class="right"><spring:message code="registration.resendotp" /></a>
-				<button type="submit" id="otpVerifyBtn" class="btn"
+				<button type="submit"  id="otpVerifyBtn" class="btn"
 					style="width: 100%; margin-top: 20px; margin-bottom: 20px;">
 					<spring:message code="registration.done" />
 				</button>
@@ -962,4 +962,4 @@ String usertypeId="${usertypeId}";
 else{
 %>
 <%@include file="registrationPopup.jsp" %>
-<%}%>
+<%}%>	
