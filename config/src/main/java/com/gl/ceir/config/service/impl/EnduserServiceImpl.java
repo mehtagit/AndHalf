@@ -218,42 +218,43 @@ public class EnduserServiceImpl {
 			endUserDBNew.setId(endUserDBOld.getId());
 
 			// Visa Old
-			VisaDb visaDbOld = endUserDBOld.getVisaDb().get(0);
+			if(!endUserDBOld.getVisaDb().isEmpty()) {
+				VisaDb visaDbOld = endUserDBOld.getVisaDb().get(0);
+
+				// Visa New
+				VisaDb visaDbNew = endUserDBNew.getVisaDb().get(0);
+				visaDbNew.setId(visaDbOld.getId());
+				visaDbNew.setEndUserDB(endUserDBNew);
+
+				ArrayList<VisaDb> visaDbListNew = new ArrayList<>();
+				visaDbListNew.add(visaDbNew);
+
+				// Set New objects to new end user db.
+				endUserDBNew.setVisaDb(visaDbListNew);
+			}
 
 			// User department - Old
 			UserDepartment userDepartmentOld = endUserDBOld.getUserDepartment();
 
-			// Visa New
-			VisaDb visaDbNew = endUserDBNew.getVisaDb().get(0);
-			visaDbNew.setId(visaDbOld.getId());
-			visaDbNew.setEndUserDB(endUserDBNew);
-			ArrayList<VisaDb> visaDbListNew = new ArrayList<>();
-			visaDbListNew.add(visaDbNew);
+			if(Objects.nonNull(userDepartmentOld)) {
+				// User department - New			
+				UserDepartment userDepartmentNew = endUserDBNew.getUserDepartment();
+				userDepartmentNew.setId(userDepartmentOld.getId());
+				userDepartmentNew.setEndUserDB(endUserDBNew);
 
-			// User department - New			
-			UserDepartment userDepartmentNew = endUserDBNew.getUserDepartment();
-			userDepartmentNew.setId(userDepartmentOld.getId());
-			userDepartmentNew.setEndUserDB(endUserDBNew);
-
-			// Set New objects to new end user db.
-			endUserDBNew.setVisaDb(visaDbListNew);
-			endUserDBNew.setUserDepartment(userDepartmentNew);
-
-			// End user is not registered with CEIR system.
-			if(Objects.nonNull(endUserDBOld)) {
-				logger.info(GenericMessageTags.USER_UPDATE_SUCCESS.getMessage() + "of NID [" + nid +"]");
-
-				endUserDbRepository.save(endUserDBOld);
-
-				auditTrailRepository.save(new AuditTrail(endUserDBOld.getId(), "", 17L,
-						"End User", 0L,Features.REGISTER_DEVICE, SubFeatures.UPDATE, ""));
-				logger.info("AUDIT : Saved update request in audit.");
-
-				return new GenricResponse(1, GenericMessageTags.USER_UPDATE_SUCCESS.getTag(), GenericMessageTags.USER_UPDATE_SUCCESS.getMessage(), nid);
-			}else {
-				logger.info("End User with nid [" + nid + "] does not exist.");
-				return new GenricResponse(0, "User does not exist.", "");
+				endUserDBNew.setUserDepartment(userDepartmentNew);
 			}
+
+			logger.info(GenericMessageTags.USER_UPDATE_SUCCESS.getMessage() + "of NID [" + nid +"]");
+
+			endUserDbRepository.save(endUserDBNew);
+
+			auditTrailRepository.save(new AuditTrail(endUserDBOld.getId(), "", 17L,
+					"End User", 0L,Features.REGISTER_DEVICE, SubFeatures.UPDATE, ""));
+			logger.info("AUDIT : Saved update request in audit.");
+
+			return new GenricResponse(1, GenericMessageTags.USER_UPDATE_SUCCESS.getTag(), GenericMessageTags.USER_UPDATE_SUCCESS.getMessage(), nid);
+
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException("Custom Service", e.getMessage());
