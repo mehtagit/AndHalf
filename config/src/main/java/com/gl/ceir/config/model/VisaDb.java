@@ -30,6 +30,7 @@ public class VisaDb implements Serializable {
 	private Long id;
 	
 	@CreationTimestamp
+	@Column(nullable = false, updatable = false)
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private LocalDateTime createdOn;
 

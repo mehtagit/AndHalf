@@ -34,6 +34,7 @@ public class EndUserDB implements Serializable {
 	private Long id;
 	
 	@CreationTimestamp
+	@Column(nullable = false, updatable = false)
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private LocalDateTime createdOn;
 	
@@ -364,6 +365,8 @@ public class EndUserDB implements Serializable {
 		builder.append(isVip);
 		builder.append(", passportFileName=");
 		builder.append(passportFileName);
+		builder.append(", userDepartment=");
+		builder.append(userDepartment);
 		builder.append("]");
 		return builder.toString();
 	}
