@@ -22,7 +22,8 @@ public enum GenericMessageTags {
 	INVALID_REQUEST("INVALID_REQUEST", "Invalid Request."),
 	INVALID_TXN_ID("INVALID_TXN_ID", "Txn id is not valid."),
 	FEATURE_NOT_SUPPORTED("FEATURE_NOT_SUPPORTED", "This feature is not supported."),
-	NO_DATA("NO_DATA", "No Data")
+	NO_DATA("NO_DATA", "No Data"),
+	USER_ALREADY_EXIST("USER_ALREADY_EXIST", "USER_ALREADY_EXIST");
 	;
 	
 	private String tag;

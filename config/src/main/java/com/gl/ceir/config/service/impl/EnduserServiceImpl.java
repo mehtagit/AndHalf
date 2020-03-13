@@ -98,7 +98,7 @@ public class EnduserServiceImpl {
 
 	@Autowired
 	EmailUtil emailUtil;
-	
+
 	@Autowired
 	EndUserTransaction endUserTransaction;
 
@@ -124,14 +124,20 @@ public class EnduserServiceImpl {
 	public GenricResponse saveEndUser(EndUserDB endUserDB) {
 		try {
 			List<WebActionDb> webActionDbs = new ArrayList<>();
-			// TODO if user is already registerd.
-
 
 			// End user is not registered with CEIR system.
 			if(Objects.isNull(endUserDB)) {
 				return new GenricResponse(1, GenericMessageTags.NULL_REQ.getTag(), 
 						GenericMessageTags.NULL_REQ.getMessage(), "");
 			}
+
+			// If user is already registerd.
+			EndUserDB endUserDB2 = endUserDbRepository.getByNid(endUserDB.getNid());
+			if(Objects.nonNull(endUserDB2)) {
+				return new GenricResponse(3, GenericMessageTags.USER_ALREADY_EXIST.getTag(), 
+						GenericMessageTags.USER_ALREADY_EXIST.getMessage(), "");
+			}
+
 
 			// Add department if user is VIP.
 			if("Y".equals(endUserDB.getIsVip())) {
@@ -210,20 +216,20 @@ public class EnduserServiceImpl {
 
 			EndUserDB endUserDBOld = endUserDbRepository.getByNid(nid);
 			endUserDBNew.setId(endUserDBOld.getId());
-			
+
 			// Visa Old
 			VisaDb visaDbOld = endUserDBOld.getVisaDb().get(0);
-			
+
 			// User department - Old
 			UserDepartment userDepartmentOld = endUserDBOld.getUserDepartment();
-			
+
 			// Visa New
 			VisaDb visaDbNew = endUserDBNew.getVisaDb().get(0);
 			visaDbNew.setId(visaDbOld.getId());
 			visaDbNew.setEndUserDB(endUserDBNew);
 			ArrayList<VisaDb> visaDbListNew = new ArrayList<>();
 			visaDbListNew.add(visaDbNew);
-			
+
 			// User department - New			
 			UserDepartment userDepartmentNew = endUserDBNew.getUserDepartment();
 			userDepartmentNew.setId(userDepartmentOld.getId());
@@ -232,11 +238,11 @@ public class EnduserServiceImpl {
 			// Set New objects to new end user db.
 			endUserDBNew.setVisaDb(visaDbListNew);
 			endUserDBNew.setUserDepartment(userDepartmentNew);
-			
+
 			// End user is not registered with CEIR system.
 			if(Objects.nonNull(endUserDBOld)) {
 				logger.info(GenericMessageTags.USER_UPDATE_SUCCESS.getMessage() + "of NID [" + nid +"]");
-				
+
 				endUserDbRepository.save(endUserDBOld);
 
 				auditTrailRepository.save(new AuditTrail(endUserDBOld.getId(), "", 17L,
@@ -577,7 +583,7 @@ public class EnduserServiceImpl {
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
-	
+
 	private void updateImeiInVipList(EndUserDB endUserDB) {
 		if("Y".equals(endUserDB.getIsVip())) {
 			if(endUserDB.getRegularizeDeviceDbs().isEmpty()) {
