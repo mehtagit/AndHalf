@@ -136,8 +136,7 @@
 													code="input.lastName" /> <span class="star">*</span></label>
 										</div>
 
-										<div class="input-field col s12 m6" id="nationalityDiv"
-											style="display: none">
+										<div class="input-field col s12 m6" id="nationalityDiv">
 											<input type="text" id="nationality" name="nationality"
 												pattern="[a-zA-Z]{1,25}"
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
@@ -606,11 +605,12 @@
 										</div>
 
 
+										
+										<div class="row" style="padding-bottom: 50px;">
 										<p>
 											<spring:message code="input.requiredfields" />
 											<span class="star">*</span>
 										</p>
-										<div class="row" style="padding-bottom: 50px;">
 											<div class="input-field col s12 m12 center">
 												<button id="endUserRegisterButton" type="submit" class="btn">
 													<spring:message code="button.submit" />

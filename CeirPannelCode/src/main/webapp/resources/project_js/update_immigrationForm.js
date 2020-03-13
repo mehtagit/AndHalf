@@ -273,6 +273,9 @@ function updateImmigrationForm(){
 
 
 	var visaDb=[];
+	//$('input[name="selectvip"][value="' + data.data.isVip.toString() + '"]').prop("checked", true).triggerHandler('click');
+	
+	if($('input[name="onVisa"]:checked').val() == 'Y'){
 	var visa={
 			"visaType":visaType,
 			"visaExpiryDate":visaExpirydate,
@@ -282,6 +285,12 @@ function updateImmigrationForm(){
 			"visaType": visaType
 	}
 	visaDb.push(visa);
+	}
+	else{
+		var visaDb=[];	
+	}
+	
+	
 	if(departmentFileID=="")
 	{
 		departmentFileID="";
@@ -305,49 +314,6 @@ function updateImmigrationForm(){
 	}
 
 
-
-	var fieldId=1;
-	var regularizeDeviceDbs =[];
-	$('.deviceInformation').each(function() {
-		var deviceType1=$('#deviceType'+fieldId).val();
-		var serialNumber1=$('#serialNumber'+fieldId).val();
-		var deviceIdType1=$('#deviceIdType'+fieldId).val();
-		var deviceStatus1=$('#deviceStatus'+fieldId).val();
-		var IMEI1=$('#IMEIA'+fieldId).val();
-		var IMEI2=$('#IMEIB'+fieldId).val();
-		var IMEI3=$('#IMEIC'+fieldId).val();
-		var IMEI4=$('#IMEID'+fieldId).val();
-		var deviceCountry=$('#country'+fieldId).val();
-		var multipleSimStatus1=$('#multipleSimStatus'+fieldId).val();
-
-
-
-
-		var deviceInfo=
-		{
-				"country": deviceCountry,
-
-				"deviceIdType": parseInt(deviceIdType1),
-				"deviceSerialNumber": serialNumber1,
-				"deviceStatus": parseInt(deviceStatus1),
-				"deviceType": parseInt(deviceType1),
-				"firstImei": IMEI1,
-				"secondImei": IMEI2,
-				"thirdImei": IMEI3,
-				"fourthImei": IMEI4,
-				"multiSimStatus": deviceStatus1,
-				"nid":nationalID,
-				"origin":"Immigration"
-
-		}
-		regularizeDeviceDbs.push(deviceInfo);
-		fieldId++;
-
-
-	});
-
-
-
 	var request={
 			"country": country,
 			"email": email,
@@ -360,7 +326,6 @@ function updateImmigrationForm(){
 			"propertyLocation": address,
 			"province": state,
 			"street": streetNumber,
-			"regularizeDeviceDbs":regularizeDeviceDbs,
 			"visaDb":visaDb,
 			"nationality":nationality,
 			"userDepartment":departmentDetails,
@@ -371,9 +336,12 @@ function updateImmigrationForm(){
 			"village":village,
 			"postalCode":postalcode,
 			"doc_type_numeric":docType,
-			"docType":doc_type_numeric
+			"docType":doc_type_numeric,
+			"txnId": $("#nationalID").attr("txn"),
+			"origin": $("#nationalID").attr("origin")
+			
 	}
-	//formData.append('uploadnationalID', $('#uploadnationalID')[0].files[0]);
+	formData.append('uploadnationalID', $('#uploadnationalID')[0].files[0]);
 	formData.append("request",JSON.stringify(request));
 	$.ajax({
 		url: './updateEndUserDevice',
@@ -598,6 +566,8 @@ $.ajax({
 		$('#state').val(data.data.province);
 		$('#phone').val(data.data.phoneNo);
 		$('#endUseremailID').val(data.data.email);
+		 $("#nationalID").attr("txn", data.data.txnId);
+		 $("#nationalID").attr("origin", data.data.origin);
 		$('#endUserNID').val(data.data.nid);
 		$('#nidPlaceHolder').val(data.data.passportFileName);
 		$('input[name="selectvip"][value="' + data.data.isVip.toString() + '"]').prop("checked", true).triggerHandler('click');
@@ -613,8 +583,6 @@ $.ajax({
 		$('#visaNumber').val(data.data.visaDb[0]['visaNumber']);
 		$('#datepicker1').val(data.data.visaDb[0]['visaExpiryDate']);
 		$('#ensUserVisaPlaceHolder').val(data.data.visaDb[0]['visaFileName']);
-		
-		
 		
 	},
 	error: function (jqXHR, textStatus, errorThrown) {
