@@ -15,7 +15,6 @@ public enum GenericMessageTags {
 	DISCREPENCY_IN_CONFIG("DISCREPENCY_IN_CONFIG", "Discrepancy found in configuration."),
 	USER_REGISTER_SUCCESS("USER_REGISTER_SUCCESS", "User have been registered successfully."),
 	FEATURE_NOT_ALLOWED("FEATURE_NOT_ALLOWED", "This functionality is not supported now."),
-	//----------
 	NULL_USER_DEPARTMENT ("NULL_USER_DEPARTMENT", "User Department is null for VIP."),
 	SUCCESS("SUCCESS", "Success"),
 	INVALID_STATE_TRANSTION("INVALID_STATE_TRANSTION", "Operation not allowed."),
@@ -23,7 +22,8 @@ public enum GenericMessageTags {
 	INVALID_TXN_ID("INVALID_TXN_ID", "Txn id is not valid."),
 	FEATURE_NOT_SUPPORTED("FEATURE_NOT_SUPPORTED", "This feature is not supported."),
 	NO_DATA("NO_DATA", "No Data"),
-	USER_ALREADY_EXIST("USER_ALREADY_EXIST", "USER_ALREADY_EXIST");
+	USER_ALREADY_EXIST("USER_ALREADY_EXIST", "This User is already exist.");
+	//----------
 	;
 	
 	private String tag;
