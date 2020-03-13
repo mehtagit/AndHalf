@@ -266,6 +266,7 @@ public class ConfigurationManagementServiceImpl {
 
 			mcd.setValue(messageConfigurationDb.getValue());
 			mcd.setDescription(messageConfigurationDb.getDescription());
+			mcd.setActive(0);	
 			logger.info("Persisted message data " + messageConfigurationDb);
 			messageConfigurationDbRepository.save(mcd);
 
