@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ceir.CeirCode.filtermodel.SearchAssignee;
 import com.ceir.CeirCode.model.ChangePassword;
+import com.ceir.CeirCode.model.ChangeUserStatus;
 import com.ceir.CeirCode.model.FileDetails;
 import com.ceir.CeirCode.model.FilterRequest;
 import com.ceir.CeirCode.model.SystemConfigListDb;
@@ -50,7 +51,6 @@ public class UserProfileController {
 	public ResponseEntity<?> changePassword(@RequestBody ChangePassword password){
 		return userService.changePassword(password);   
 	} 
-	
 	@ApiOperation(value = "change expriry password", response = HttpResponse.class)
 	@PostMapping("/updateExpirePassword")
 	public ResponseEntity<?> changeExpiryPassword(@RequestBody ChangePassword password){
@@ -108,14 +108,6 @@ public class UserProfileController {
 			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
 			@RequestParam(value = "file", defaultValue = "0") Integer file) {
 		Page<UserProfile> profileList=userProService.assigneeInfo(assignee,pageNo,pageSize);
-		//Iterator<UserProfile> dataIterator=profileList.getContent().iterator();
-	//	List<UploadStockAssigneModal> assigneeList = new ArrayList<UploadStockAssigneModal>();
-//		while(dataIterator.hasNext()) {
-//			UserProfile profile=dataIterator.next();
-//			UploadStockAssigneModal assigneeInfo=new UploadStockAssigneModal(profile.getUser().getUsername(),profile.getFirstName()
-//					,profile.getPhoneNo(),profile.getEmail());
-//			assigneeList.add(assigneeInfo);
-//		}
 		MappingJacksonValue mapping=new MappingJacksonValue(profileList);
 		return mapping;
 	}
@@ -138,4 +130,9 @@ public class UserProfileController {
 	public HttpResponse adminApproval(@RequestBody UserStatusRequest userData){
 		return userService.AdminApproval(userData);
 	} 
+	@ApiOperation(value = "change user status", response = HttpResponse.class)
+	@PostMapping("/changeUserStatus")
+	public ResponseEntity<?> changeUserStatus(@RequestBody ChangeUserStatus userStatus){
+		return userService.changeUserStatus(userStatus);   
+	}
 }

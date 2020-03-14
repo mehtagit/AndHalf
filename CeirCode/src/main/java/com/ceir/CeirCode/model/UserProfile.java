@@ -109,6 +109,9 @@ public class UserProfile {
 	private long[] roles;
 
 	@Transient
+	private long userTypeId;
+	
+	@Transient
 	private String usertypeName;
 	@Transient
 	private String password;    
@@ -147,6 +150,14 @@ public class UserProfile {
 	}
 	public static void setSerialVersionUID(long serialVersionUID) {
 		UserProfile.serialVersionUID = serialVersionUID;
+	}
+	
+	
+	public long getUserTypeId() {
+		return userTypeId;
+	}
+	public void setUserTypeId(long userTypeId) {
+		this.userTypeId = userTypeId;
 	}
 	public String getUsertypeName() {
 		return usertypeName;
@@ -519,7 +530,7 @@ public class UserProfile {
 				+ questionList + ", roles=" + roles + ", usertypeName=" + usertypeName + ", password=" + password
 				+ ", source=" + source + ", expiryDate=" + expiryDate + ", sourceUsername=" + sourceUsername
 				+ ", userAgent=" + userAgent + ", publicIp=" + publicIp + ", userLanguage=" + userLanguage +
-				" portAddress=" + PortAddress +" , PortAddressName=" + PortAddressName +"]";
+				" portAddress=" + PortAddress +" , PortAddressName=" + PortAddressName +", userTypeId=" + userTypeId +"]";
 	}
 	public UserProfile(String firstName, String middleName, String lastName, String propertyLocation, String street,
 			String locality, @NotNull String district, @NotNull String commune, @NotNull String village,

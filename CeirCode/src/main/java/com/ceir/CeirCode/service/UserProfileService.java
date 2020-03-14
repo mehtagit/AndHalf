@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -37,10 +38,12 @@ import com.ceir.CeirCode.model.UserProfile;
 import com.ceir.CeirCode.model.UserProfileFileModel;
 import com.ceir.CeirCode.model.constants.AssigneeType;
 import com.ceir.CeirCode.model.constants.UserStatus;
+import com.ceir.CeirCode.model.constants.UsertypeData;
 import com.ceir.CeirCode.repo.SystemConfigDbListRepository;
 import com.ceir.CeirCode.repo.UserProfileRepo;
 import com.ceir.CeirCode.repoService.SystemConfigDbRepoService;
 import com.ceir.CeirCode.repoService.UserRepoService;
+import com.mysql.cj.x.protobuf.MysqlxCrud.Collection;
 import com.opencsv.CSVWriter;
 import com.opencsv.bean.HeaderColumnNameTranslateMappingStrategy;
 import com.opencsv.bean.StatefulBeanToCsv;
@@ -132,27 +135,23 @@ public class UserProfileService {
 
 			e.printStackTrace();
 			return null;
+
 		}
 	}
 
-
-	public Page<UserProfile> assigneeInfo(SearchAssignee searchAssignee, Integer pageNo, Integer pageSize){
-		log.info("inside assignee controller");
-		log.info("assignee information: "+searchAssignee);
-		Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
-		SpecificationBuilder<UserProfile> specification=new SpecificationBuilder<UserProfile>(propertiesReader.dialect) ;
-		if(Objects.nonNull(searchAssignee.getField())) 
+    public SpecificationBuilder<UserProfile> assigneeSearchByFields(SearchAssignee searchAssignee,SpecificationBuilder<UserProfile> specification)
+    {
+    	
+    	if(Objects.nonNull(searchAssignee.getField())) 
 		{
 			if(searchAssignee.getType()!=null && searchAssignee.getType()!=0) {
 				if(searchAssignee.getField()!=null && !searchAssignee.getField().equals(""))
 				{	
 					if(searchAssignee.getType()==AssigneeType.NAME.getCode()) {
 						specification.with(new SearchCriteria("displayName", searchAssignee.getField(), SearchOperation.LIKE,Datatype.STRING));
-
 					}
 					else if(searchAssignee.getType()==AssigneeType.CONTACT.getCode()) {
 						specification.with(new SearchCriteria("phoneNo", searchAssignee.getField(),SearchOperation.EQUALITY, Datatype.STRING));
-
 					}
 					else if(searchAssignee.getType()==AssigneeType.EMAIL.getCode()) {
 						specification.with(new SearchCriteria("email", searchAssignee.getField(),SearchOperation.EQUALITY, Datatype.STRING));
@@ -160,23 +159,64 @@ public class UserProfileService {
 					else {
 
 					}
-					/*
-					 * int arr[]= {5,6};
-					 * specification.addSpecification(specification.joinWithUser(new
-					 * SearchCriteria("usertypeData",arr, SearchOperation.EQUALITY,
-					 * Datatype.INTEGER)));
-					 */		     // specification.addSpecification(specification.joinWithUser(new SearchCriteria("usertypeData",6, SearchOperation.EQUALITY, Datatype.INTEGER)));
 				}
 			}
 		}
-		return userProfileRepo.findAll(specification.build(),pageable);
-		//return userProfileRepo.findAll(specification.build());
+    	return specification;
+    	
 
+    }
+    
+	public Page<UserProfile> assigneeInfo(SearchAssignee searchAssignee, Integer pageNo, Integer pageSize){
+		log.info("inside assignee controller");
+		log.info("assignee information: "+searchAssignee);
+		Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
+		SpecificationBuilder<UserProfile> specification=new SpecificationBuilder<UserProfile>(propertiesReader.dialect) ;
+	
+		if(Objects.nonNull(searchAssignee.getUserTypeId())){
+
+			if(searchAssignee.getUserTypeId()==UsertypeData.Distributor.getCode()) {
+				ArrayList<Integer> arrays=new ArrayList<Integer>();
+				arrays.add(UsertypeData.Importer.getCode());
+				arrays.add(UsertypeData.Distributor.getCode());
+				arrays.add(UsertypeData.Manufacturer.getCode());
+				assigneeSearchByFields(searchAssignee,specification);
+				return userProfileRepo.findAll(specification.build(),pageable);
+				
+			}
+			else if(searchAssignee.getUserTypeId()==UsertypeData.Retailer.getCode()) {
+
+				ArrayList<Integer> arrays=new ArrayList<Integer>();
+				arrays.add(UsertypeData.Importer.getCode());
+				arrays.add(UsertypeData.Distributor.getCode());
+				arrays.add(UsertypeData.Retailer.getCode());				
+				arrays.add(UsertypeData.Manufacturer.getCode());
+				specification.addSpecification(specification.inQuery("usertype",arrays));
+				assigneeSearchByFields(searchAssignee,specification);
+				return userProfileRepo.findAll(specification.build(),pageable);	
+			}
+            else if(searchAssignee.getUserTypeId()==UsertypeData.Custom.getCode()) {
+				ArrayList<Integer> arrays=new ArrayList<Integer>();
+				arrays.add(UsertypeData.Distributor.getCode());
+				arrays.add(UsertypeData.Retailer.getCode());				
+				specification.addSpecification(specification.inQueryGroupBy("usertypeData",arrays));				
+				assigneeSearchByFields(searchAssignee,specification);
+				return userProfileRepo.findAll(specification.build(),pageable);
+			}
+            else {
+            	return new PageImpl<UserProfile>(new ArrayList<>(), pageable, 0);
+            }
+		}
+        else {
+        	return new PageImpl<UserProfile>(new ArrayList<>(), pageable, 0);
+        }
+		
 	}
 
 
 	public FileDetails getFilterUSerPRofileInFile(FilterRequest profileFilter, Integer pageNo, Integer pageSize) {
 		log.info("inside export user profile data into file service");
+		log.info("filter data:  "+profileFilter);
 		String fileName = null;
 		Writer writer   = null;
 		UserProfileFileModel uPFm = null;

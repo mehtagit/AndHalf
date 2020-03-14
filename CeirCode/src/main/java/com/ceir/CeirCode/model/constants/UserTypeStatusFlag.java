@@ -1,12 +1,12 @@
 package com.ceir.CeirCode.model.constants;
 
-public enum AssigneeType {
+public enum UserTypeStatusFlag {
 
-	NAME(1, "name"), CONTACT(2, "contact"),EMAIL(3, "email");
+	on(1, "on"), off(0, "off");
 	private Integer code;
 	private String description;
 
-	AssigneeType(Integer code, String description) {
+	UserTypeStatusFlag(Integer code, String description) {
 		this.code = code;
 		this.description = description; 
 	}       
@@ -20,8 +20,8 @@ public enum AssigneeType {
 	}
 	
 
-	public static AssigneeType getByCode(Integer code) {
-		for (AssigneeType approveStatus : AssigneeType.values()) {
+	public static UserTypeStatusFlag getByCode(Integer code) {
+		for (UserTypeStatusFlag approveStatus : UserTypeStatusFlag.values()) {
 			if (approveStatus.getCode() == code)
 				return approveStatus;
 		}

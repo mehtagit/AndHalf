@@ -14,7 +14,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 public class StakeholderFeature {
 	@Id       
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	private Date createdOn;
 	private Date modifiedOn;

@@ -4,6 +4,7 @@ import java.util.Objects;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
 
 public class DbFunctions {
 
@@ -12,6 +13,9 @@ public class DbFunctions {
 	private static String dateFunction;
 	private static String dateFormat;
 
+	@Value("${dateFunction}")
+	static String dateFunctionData;
+	
 	public static String getDate(String dialect) {
 		logger.debug("Get date functions for DB : " + dialect);
 
@@ -22,7 +26,9 @@ public class DbFunctions {
 		
 		if(Objects.isNull(dateFunction)) {
 			if(dialect.toLowerCase().contains("oracle")) {
-				dateFunction = "TO_DATE";
+				dateFunction=dateFunctionData;
+				//dateFunction = "TO_DATE";
+				//dateFunction = "TO_CHAR";
 			}else if (dialect.toLowerCase().contains("mysql")) {
 				dateFunction = "STR_TO_DATE";
 			}else {

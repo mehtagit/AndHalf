@@ -2,15 +2,12 @@ package com.ceir.CeirCode.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ceir.CeirCode.model.ChangeLanguage;
@@ -19,7 +16,9 @@ import com.ceir.CeirCode.model.LoginTracking;
 import com.ceir.CeirCode.model.NewPassword;
 import com.ceir.CeirCode.model.User;
 import com.ceir.CeirCode.model.UserLogin;
+import com.ceir.CeirCode.repoService.UserRepoService;
 import com.ceir.CeirCode.service.LoginService;
+import com.ceir.CeirCode.service.UserService;
 import com.ceir.CeirCode.util.HttpResponse;
 
 import io.swagger.annotations.ApiOperation;
@@ -32,6 +31,12 @@ public class LoginController{
 	@Autowired
 	LoginService loginService;
 
+	@Autowired
+	UserService userService;
+	
+	@Autowired
+	UserRepoService userRepoService;
+	
 	@ApiOperation(value = "user Login", response = HttpResponse.class)
 	@CrossOrigin
 	@PostMapping("/checkUser")     
@@ -47,7 +52,9 @@ public class LoginController{
 		loginTracking.setLoginStatus(0);
 		User user=new User();        
 		user.setId(userid);    
-		loginTracking.setUserTrack(user);  
+		loginTracking.setUserTrack(user);
+		User output=userRepoService.findByUSerId(userid);
+		userService.saveUserTrail(output, "Logout","Logout",0);
 		return loginService.sessionTracking(loginTracking);  
 	}
 	
@@ -57,9 +64,6 @@ public class LoginController{
 	public ResponseEntity<?> sessionTracking(@RequestBody ChangeLanguage languageData  ){
 		return loginService.changeLanguage(languageData);  
 	}
-	
-     
-	
 	
 	@ApiOperation(value = "forgot password", response = HttpResponse.class)
 	@CrossOrigin

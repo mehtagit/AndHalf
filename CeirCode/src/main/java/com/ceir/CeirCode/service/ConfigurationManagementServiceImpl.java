@@ -39,16 +39,16 @@ public class ConfigurationManagementServiceImpl {
 		}
 	}
 
-	public GenricResponse saveNotification(String channelType, String message, User userId, Long featureId, String featureName, String subFeature, String featureTxnId,String subject) {
-		try {
-
-			notificationRepository.save(new Notification(channelType, message, userId, featureId, featureName, subFeature, featureTxnId,subject));
-
-			return new GenricResponse(0, "Notification have been saved Sucessfully", "");
-		} catch (Exception e) {
-			logger.info("Exception found="+e.getMessage());
-			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
-		}
-	}
+//	public GenricResponse saveNotification(String channelType, String message, User userId, Long featureId, String featureName, String subFeature, String featureTxnId,String subject) {
+//		try {
+//
+//			notificationRepository.save(new Notification(channelType, message, userId, featureId, featureName, subFeature, featureTxnId,subject));
+//
+//			return new GenricResponse(0, "Notification have been saved Sucessfully", "");
+//		} catch (Exception e) {
+//			logger.info("Exception found="+e.getMessage());
+//			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+//		}
+//	}
 
 }

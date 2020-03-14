@@ -179,4 +179,5 @@ public class UserProfileSpecificationBuilder {
 			return cb.equal(userdetails.get(searchCriteria.getKey()), searchCriteria.getValue().toString());
 		}; 
 	}
+	
 }

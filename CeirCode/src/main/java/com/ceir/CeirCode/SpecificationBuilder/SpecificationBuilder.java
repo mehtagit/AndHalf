@@ -1,6 +1,7 @@
 package com.ceir.CeirCode.SpecificationBuilder;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -121,6 +122,11 @@ public class SpecificationBuilder<T> {
 						Expression<String> dateStringExpr = cb.function(DbFunctions.getDate(dialect), String.class, root.get(searchCriteria.getKey()), cb.literal(DbFunctions.getDateFormat(dialect)));
 						return cb.equal(cb.lower(dateStringExpr), searchCriteria.getValue().toString());
 					}
+					else if(SearchOperation.EQUALITY.equals(searchCriteria.getSearchOperation())
+							&& Datatype.INTEGER.equals(searchCriteria.getDatatype())) {
+						return cb.equal(root.get(searchCriteria.getKey()),searchCriteria.getValue());
+					} 
+
 					
 					else {
 						return null;
@@ -128,24 +134,28 @@ public class SpecificationBuilder<T> {
 				});
 			}
 		}catch (Exception e) {
-			// TODO: handle exception
 			logger.error(e.getMessage(), e);
 		}
 
 		return specifications;
 	}
 
-	public Specification<T> in(SearchCriteria searchCriteria, List<Integer> status){
+	public Specification<T> in(SearchCriteria searchCriteria, ArrayList<Integer> status){
 		return (root, query, cb) -> {
 			logger.info("In query save ");
-			return cb.in(root.get(searchCriteria.getKey())).value(status);
+			logger.info("key= "+searchCriteria.getKey());
+			logger.info("value = "+status.toString());
+			Join<UserProfile, User> user = root.join("user".intern());
+			//	Join<User, Userrole> user = users.join("userRole".intern());
+			//Collection<Integer> c=status;
+				return cb.in(user.get(searchCriteria.getKey())).value(status.toArray());
 		};
 	}
 	
 	public Specification<UserProfile> joinWithUser(SearchCriteria searchCriteria){
 		return (root, query, cb) -> { 
-			Join<UserProfile, User> users = root.join("user".intern());
-			Join<User, Userrole> user = users.join("userRole".intern());
+			Join<UserProfile, User> user = root.join("user".intern());
+		//	Join<User, Userrole> user = users.join("userRole".intern());
 			if(SearchOperation.GREATER_THAN.equals(searchCriteria.getSearchOperation())
 					&& Datatype.STRING.equals(searchCriteria.getDatatype())) {
 				return cb.greaterThan(user.get(searchCriteria.getKey()), searchCriteria.getValue().toString());
@@ -160,12 +170,16 @@ public class SpecificationBuilder<T> {
 			}
 			else if(SearchOperation.EQUALITY.equals(searchCriteria.getSearchOperation())
 					&& Datatype.INT.equals(searchCriteria.getDatatype())) {
-				return cb.in(user.get(searchCriteria.getKey()));
+				return cb.in(user.get(searchCriteria.getKey())).value(searchCriteria.getValue());
 			} 
 			else if(SearchOperation.EQUALITY.equals(searchCriteria.getSearchOperation())
 					&& Datatype.INTEGER.equals(searchCriteria.getDatatype())) {
-				return cb.in(user.get(searchCriteria.getKey()));
-			} 
+				return cb.in(user.get(searchCriteria.getKey())).value(searchCriteria.getValue());
+			}
+			else if(SearchOperation.EQUALITY.equals(searchCriteria.getSearchOperation())
+					&& Datatype.ARRAYLIST.equals(searchCriteria.getDatatype())) {
+				return cb.in(user.get(searchCriteria.getKey())).value(searchCriteria.getValue());
+			}
 			else if(SearchOperation.EQUALITY.equals(searchCriteria.getSearchOperation())
 					&& Datatype.LONG.equals(searchCriteria.getDatatype())) {
 				return cb.equal(user.get(searchCriteria.getKey()), (Long)searchCriteria.getValue());
@@ -173,12 +187,12 @@ public class SpecificationBuilder<T> {
 			else if(SearchOperation.GREATER_THAN.equals(searchCriteria.getSearchOperation())
 					&& Datatype.DATE.equals(searchCriteria.getDatatype())){
 				Expression<String> dateStringExpr = cb.function(DbFunctions.getDate(dialect), String.class, user.get(searchCriteria.getKey()), cb.literal(DbFunctions.getDateFormat(dialect)));
-				return cb.greaterThan(cb.lower(dateStringExpr), searchCriteria.getValue().toString());
+				return cb.greaterThanOrEqualTo(cb.lower(dateStringExpr), searchCriteria.getValue().toString());
 			}
 			else if(SearchOperation.LESS_THAN.equals(searchCriteria.getSearchOperation())
 					&& Datatype.DATE.equals(searchCriteria.getDatatype())){
 				Expression<String> dateStringExpr = cb.function(DbFunctions.getDate(dialect), String.class, user.get(searchCriteria.getKey()), cb.literal(DbFunctions.getDateFormat(dialect)));
-				return cb.lessThan(cb.lower(dateStringExpr), searchCriteria.getValue().toString());
+				return cb.lessThanOrEqualTo(cb.lower(dateStringExpr), searchCriteria.getValue().toString());
 			}
 			else if(SearchOperation.NEGATION.equals(searchCriteria.getSearchOperation())
 					&& Datatype.STRING.equals(searchCriteria.getDatatype())) {
@@ -206,4 +220,38 @@ public class SpecificationBuilder<T> {
 			return cb.equal(userRoles.get(searchCriteria.getKey()), searchCriteria.getValue().toString());
 		}; 
 	}
+	
+	public Specification<T>  inQuery(String key,List<Integer> status){
+		return (root, query, cb) -> {
+			logger.info("In query save ");
+			Join<UserProfile, User> user = root.join("user".intern());
+		//	Join<User, Userrole> user = users.join("userRole".intern());
+			//return cb.in(user.get(key)).value(status);
+			return user.get(key).in(status);
+		};
+	}
+
+	public Specification<T>  inQueryGroupBy(String key,List<Integer> status){
+		return (root, query, cb) -> {
+			logger.info("In query save ");
+			Join<UserProfile, User> user = root.join("user".intern());
+		Join<User, Userrole> userRoles = user.join("userRole".intern());
+		query.groupBy(root.get("id"));
+		//	Join<User, Userrole> user = users.join("userRole".intern());
+			//return cb.in(user.get(key)).value(status);
+			return userRoles.get(key).in(status);
+		};
+	}
+	
+//	  static Specification<User> hasRoles(List<String> roles) { 
+//	return (root,query, cb) -> { query.distinct(true); 
+//		  Join<User, Account> joinUserAccount =
+//	  root.join(User_.account); Join<Account, AccountRole> acctRolesJoin =
+//	  joinUserAccount.join(Account_.accountRoles); Join<AccountRole, Role>
+//	  rolesJoin = acctRolesJoin.join(AccountRole_.role);
+//	  
+//	  return rolesJoin.get(Role_.name).in(roles); }; }
+	 
+    
+    
 }

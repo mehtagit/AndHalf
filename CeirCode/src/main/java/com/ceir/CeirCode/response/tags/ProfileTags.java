@@ -5,6 +5,7 @@ public enum ProfileTags {
 	PRO_CPASS_LAST_3PASS_ERROR("PRO_CPASS_LAST_3PASS_ERROR", "Password should not be last 3 password"),
 	PRO_CPASS_SUCESS("PRO_CPASS_SUCESS", "User password  has been sucessfully changed"),
 	PRO_CPASS_FAIL("PRO_CPASS_FAIL", "User password failed to change"),
+	PRO_OldPass_Error("PRO_OldPass_Error", "Kindly enter the correct password"),
 	PRO_CORRECT_PASS("PRO_CORRECT_PASS","Please enter correct password"),
 	PRO_SUCESS_MSG("PRO_SUCESS_MSG","User profile data succesfully update"),
 	PRO_FAIL_MSG("PRO_FAIL_MSG","User profile data failed to update"),

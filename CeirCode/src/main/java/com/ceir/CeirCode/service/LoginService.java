@@ -18,20 +18,26 @@ import com.ceir.CeirCode.model.LoginTracking;
 import com.ceir.CeirCode.model.NewPassword;
 import com.ceir.CeirCode.model.RequestHeaders;
 import com.ceir.CeirCode.model.Securityquestion;
+import com.ceir.CeirCode.model.StateMgmtDb;
+import com.ceir.CeirCode.model.StatesInterpretationDb;
 import com.ceir.CeirCode.model.SystemConfigurationDb;
 import com.ceir.CeirCode.model.User;
 import com.ceir.CeirCode.model.UserLogin;
+import com.ceir.CeirCode.model.UserPasswordHistory;
 import com.ceir.CeirCode.model.UserSecurityquestion;
 import com.ceir.CeirCode.model.Userrole;
 import com.ceir.CeirCode.model.Usertype;
 import com.ceir.CeirCode.model.constants.UserStatus;
 import com.ceir.CeirCode.repo.LoginTrackingRepo;
+import com.ceir.CeirCode.repo.UserPasswordHistoryRepo;
 import com.ceir.CeirCode.repo.UserRepo;
 import com.ceir.CeirCode.repo.UserRoleRepo;
 import com.ceir.CeirCode.repo.UserSecurityQuestionRepo;
 import com.ceir.CeirCode.repoService.ReqHeaderRepoService;
+import com.ceir.CeirCode.repoService.StateInterupRepoService;
 import com.ceir.CeirCode.repoService.SystemConfigDbRepoService;
 import com.ceir.CeirCode.repoService.SystemConfigurationDbRepoService;
+import com.ceir.CeirCode.repoService.UserPassHistoryRepoService;
 import com.ceir.CeirCode.response.tags.ProfileTags;
 import com.ceir.CeirCode.response.tags.RegistrationTags;
 import com.ceir.CeirCode.util.HttpResponse;
@@ -50,7 +56,7 @@ public class LoginService
 	@Autowired     
 	UserSecurityQuestionRepo userSecurityQuestionRepo;
 	@Autowired
-	SystemConfigurationDbRepoService systemConfigurationRepo;
+	SystemConfigDbRepoService systemConfigurationRepo;
 	@Autowired
 	Utility utility;
 	
@@ -66,6 +72,19 @@ public class LoginService
 	@Autowired
 	SystemConfigDbRepoService systemConfigurationDbRepoImpl;
 
+	@Autowired
+	StateMgmtServiceImpl stateMgmtServiceImpl;
+	
+	@Autowired
+	StateInterupRepoService stateInterupRepoService;
+	
+	@Autowired
+	UserPassHistoryRepoService userPassHistoryRepoImpl;
+
+	@Autowired
+	UserPasswordHistoryRepo userPasswordHistoryRepo;
+	
+	
 	public ResponseEntity<?> userLogin(UserLogin userLogin)
 	{
 		try 
@@ -123,12 +142,17 @@ public class LoginService
 							period=featureService.currentPeriod(systemConfigData);			
 							log.info("current period= "+period);
 						}
-						
+					
+						StatesInterpretationDb stateInterup=stateInterupRepoService.getByFeatureIdAndState(8, UserData.getCurrentStatus());
+						String status=new String();
+						if(stateInterup.getInterp()!=null) {
+							status=stateInterup.getInterp();  	
+						}
 						LoginResponse response=new LoginResponse("user credentials are correct",200,
 								userRoles, UserData.getUsername(), UserData.getId(), UserData.getUserProfile().getFirstName(),
 								UserData.getUsertype().getUsertypeName(), UserData.getUsertype().getId(), 
-								UserStatus.getUserStatusByCode(UserData.getCurrentStatus()).getDescription(),UserData.getUserProfile().getOperatorTypeName(),
-								UserData.getUserProfile().getOperatorTypeId(), UserData.getUserLanguage(),period);  
+								status,UserData.getUserProfile().getOperatorTypeName(),
+								UserData.getUserProfile().getOperatorTypeId(), UserData.getUserLanguage(),period,UserData.getCurrentStatus());  
 						
 						log.info("login response:  "+response);
 						return new ResponseEntity<>(response,HttpStatus.OK);
@@ -258,12 +282,45 @@ public class LoginService
 		User user=userRepo.findByUsername(password.getUsername());
 		if(user!=null) 
 		{
-			userService.saveUserTrail(user, "Login","update new password",0);
-			user.setPassword(password.getPassword());
-			userRepo.save(user);
-			HttpResponse response=new HttpResponse(ProfileTags.NEW_PASS_SUC.getMessage(),200,ProfileTags.NEW_PASS_SUC.getTag());
-			log.info("response send to user:  "+response);
-			return new ResponseEntity<>(response,HttpStatus.OK);	
+//			userService.saveUserTrail(user, "Login","update new password",0);
+//			user.setPassword(password.getPassword());
+//			userRepo.save(user);
+//			HttpResponse response=new HttpResponse(ProfileTags.NEW_PASS_SUC.getMessage(),200,ProfileTags.NEW_PASS_SUC.getTag());
+//			log.info("response send to user:  "+response);
+//			return new ResponseEntity<>(response,HttpStatus.OK);	
+			
+			boolean passwordExist=userPassHistoryRepoImpl.passwordExist(password.getPassword(), user.getId());
+			if(passwordExist==true) {
+				log.info("if this password exist");
+				HttpResponse response=new HttpResponse(ProfileTags.PRO_CPASS_LAST_3PASS_ERROR.getMessage(),204,
+						ProfileTags.PRO_CPASS_LAST_3PASS_ERROR.getTag());
+				log.info("exit from change password");
+				return new ResponseEntity<>(response,HttpStatus.OK);	
+			}
+			else {
+				log.info("if this password does not exist");
+				long count=userPassHistoryRepoImpl.countByUserId(user.getId());
+				log.info("password count: "+count);
+				if(count!=0) {
+					if(count>=3) {
+						log.info("going to delete password history greater than 3");
+						UserPasswordHistory passHistory=userPassHistoryRepoImpl.getPasswordHistory(user.getId());
+						userPasswordHistoryRepo.deleteById(passHistory.getId());
+						user.setPassword(password.getPassword());
+						return userService.setNewPassword(user);
+					}
+					else {
+						log.info("if password history less than 3");
+						user.setPassword(password.getPassword());
+						return userService.setNewPassword(user);	
+					}
+				}
+				else {
+					user.setPassword(password.getPassword());
+					return userService.setNewPassword(user);	
+				}
+
+			}
 		} 
 		else 
 		{

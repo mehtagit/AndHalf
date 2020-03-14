@@ -50,7 +50,7 @@ public class NotificationUtil {
 
 
 
-	public boolean saveNotification(@NonNull String tag, UserProfile userProfileData, long featureId, String featureName, String subFeature, String featureTxnId,String subject,String otp,String channelType) {
+	public boolean saveNotification(@NonNull String tag, UserProfile userProfileData, long featureId, String featureName, String subFeature, String featureTxnId,String subject,String otp,String channelType,String referTable) {
 		try {
 			String emailBody=null;
 			MessageConfigurationDb messageDB = new MessageConfigurationDb();
@@ -66,11 +66,12 @@ public class NotificationUtil {
 			notification.setMessage(emailBody);
 			notification.setModifiedOn(LocalDateTime.now());
 			notification.setSubFeature(subFeature);
-			notification.setUserForNofication(userProfileData.getUser());
+			notification.setUserId(userProfileData.getUser().getId());
 			notification.setFeatureTxnId(featureTxnId);
 			notification.setStatus(1); 
 			notification.setSubject(subject);
 			notification.setRetryCount(0);
+			notification.setReferTable(referTable);
 			Notification output=notificationRepo.save(notification);
 			if(output!=null) {
 				logger.info("notification sucessfully saved");

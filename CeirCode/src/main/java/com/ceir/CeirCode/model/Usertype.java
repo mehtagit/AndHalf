@@ -21,7 +21,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Usertype {   
 	private static long serialVersionUID = 1L;
 	@Id 
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	private String usertypeName; 
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
@@ -44,6 +43,9 @@ public class Usertype {
 	@JsonIgnore
 	@OneToMany(mappedBy ="userTypeFeature",cascade=CascadeType.ALL,fetch = FetchType.LAZY)
 	private List<UserToStakehoderfeatureMapping> userTofeatureMapping;
+	
+	private Integer status=1;
+	
 
 	public long getId() {
 		return id; 
@@ -95,11 +97,10 @@ public class Usertype {
 	public Usertype() {
 		super();
 	}
-	
-	
-	
-	
-	
-
-
+	public Integer getStatus() {
+		return status;
+	}
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
 }

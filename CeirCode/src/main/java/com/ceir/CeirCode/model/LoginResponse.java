@@ -10,6 +10,7 @@ public class LoginResponse {
 	private String primaryRole;
 	private long primaryRoleId; 
 	private String status;
+	private Integer statusValue;
 	private String operatorTypeName;
     private Integer operatorTypeId;
 	private String userLanguage;
@@ -98,9 +99,15 @@ public class LoginResponse {
 	public LoginResponse() {
 		super();
 	}
+	public Integer getStatusValue() {
+		return statusValue;
+	}
+	public void setStatusValue(Integer statusValue) {
+		this.statusValue = statusValue;
+	}
 	public LoginResponse(String response, Integer statusCode, List<Usertype> userRoles, String username, long userId,
 			String name, String primaryRole, long primaryRoleId, String status, String operatorTypeName,
-			Integer operatorTypeId, String userLanguage,String period) {
+			Integer operatorTypeId, String userLanguage,String period,Integer statusValue) {
 		super();
 		this.response = response;
 		this.statusCode = statusCode;
@@ -115,6 +122,7 @@ public class LoginResponse {
 		this.operatorTypeId = operatorTypeId;
 		this.userLanguage = userLanguage;
 		this.period=period;
+		this.statusValue=statusValue;
 	}
 	public LoginResponse(String response, Integer statusCode, long userId) {
 		super();

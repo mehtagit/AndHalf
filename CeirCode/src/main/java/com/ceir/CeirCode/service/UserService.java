@@ -8,20 +8,22 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import com.ceir.CeirCode.model.AlertDb;
 import com.ceir.CeirCode.model.AuditTrail;
 import com.ceir.CeirCode.model.ChangePassword;
-import com.ceir.CeirCode.model.EmailDetails;
+import com.ceir.CeirCode.model.ChangeUserStatus;
 import com.ceir.CeirCode.model.MessageConfigurationDb;
 import com.ceir.CeirCode.model.Otp;
 import com.ceir.CeirCode.model.PortAddress;
 import com.ceir.CeirCode.model.QuestionPair;
 import com.ceir.CeirCode.model.RequestHeaders;
 import com.ceir.CeirCode.model.ResendOtp;
+import com.ceir.CeirCode.model.RunningAlertDb;
 import com.ceir.CeirCode.model.Securityquestion;
 import com.ceir.CeirCode.model.SystemConfigListDb;
 import com.ceir.CeirCode.model.SystemConfigurationDb;
@@ -35,6 +37,8 @@ import com.ceir.CeirCode.model.Userrole;
 import com.ceir.CeirCode.model.Usertype;
 import com.ceir.CeirCode.model.constants.ChannelType;
 import com.ceir.CeirCode.model.constants.UserStatus;
+import com.ceir.CeirCode.model.constants.UserTypeStatusFlag;
+import com.ceir.CeirCode.model.constants.UsertypeData;
 import com.ceir.CeirCode.repo.NotificationRepository;
 import com.ceir.CeirCode.repo.SecurityQuestionRepo;
 import com.ceir.CeirCode.repo.SystemConfigDbListRepository;
@@ -45,11 +49,14 @@ import com.ceir.CeirCode.repo.UserRoleRepo;
 import com.ceir.CeirCode.repo.UserSecurityQuestionRepo;
 import com.ceir.CeirCode.repo.UserTemporarydetailsRepo;
 import com.ceir.CeirCode.repo.UsertypeRepo;
+import com.ceir.CeirCode.repoService.RunningAlertRepoService;
 import com.ceir.CeirCode.repoService.AudiTrailRepoService;
 import com.ceir.CeirCode.repoService.PortAddressRepoService;
 import com.ceir.CeirCode.repoService.ReqHeaderRepoService;
+import com.ceir.CeirCode.repoService.SystemConfigDbRepoService;
 import com.ceir.CeirCode.repoService.SystemConfigurationDbRepoService;
 import com.ceir.CeirCode.repoService.UserPassHistoryRepoService;
+import com.ceir.CeirCode.repoService.UserRepoService;
 import com.ceir.CeirCode.response.UpdateProfileResponse;
 import com.ceir.CeirCode.response.tags.ProfileTags;
 import com.ceir.CeirCode.response.tags.RegistrationTags;
@@ -60,6 +67,7 @@ import com.ceir.CeirCode.util.HttpResponse;
 import com.ceir.CeirCode.util.OtpResponse;
 import com.ceir.CeirCode.util.Utility;
 import com.google.common.primitives.Longs;
+import com.sun.javafx.collections.MappingChange.Map;
 
 @Service 
 public class UserService {
@@ -85,7 +93,7 @@ public class UserService {
 	SystemConfigDbListRepository systemConfigRepo;
 
 	@Autowired
-	SystemConfigurationDbRepoService systemConfigurationRepo;
+	SystemConfigDbRepoService systemConfigurationRepo;
 
 	@Autowired
 	NotificationUtil emailUtils;
@@ -107,12 +115,21 @@ public class UserService {
 
 	@Autowired
 	AudiTrailRepoService audiTrailRepoService;
-	
+
 	@Autowired
 	ReqHeaderRepoService headerService;
-	
-    @Autowired
-    PortAddressRepoService portAddressRepoService;
+
+	@Autowired
+	PortAddressRepoService portAddressRepoService;
+
+	@Autowired
+	UserRepoService userRepoService;
+
+	@Autowired
+	SystemConfigDbRepoService systemConfigurationDbRepoImpl;
+
+	@Autowired
+	RunningAlertRepoService alertDbRepo;
 
 	public ResponseEntity<?> getUsertypeData(HttpHeaders headers){
 		try {
@@ -332,8 +349,6 @@ public class UserService {
 		log.info("user details----::::   "+userDetails); 
 		Usertype userType=usertypeRepo.findByUsertypeName(userDetails.getUsertypeName());
 
-	
-		
 		if(userType!=null) {
 			if(userDetails.getRoles()==null) {
 				long data[]= {userType.getId()}; userDetails.setRoles(data);
@@ -342,82 +357,85 @@ public class UserService {
 		long rolesOutput=roleCheck(userDetails.getRoles());
 		log.info("roles output:  "+rolesOutput);
 		if(rolesOutput > 0) {
-			List<Long> usertypeList=usertypeCheck();
-			log.info("primary usertypeId is:  "+rolesOutput);	
-			Usertype userTypeData=new Usertype();
-			userTypeData.setId(rolesOutput);  
-			User userData=new User(userDetails.getUsername(),userDetails.getPassword(),UserStatus.NEW.getCode(),null,userTypeData);  
-			userData.setUserLanguage(userDetails.getUserLanguage());
-			User userOutput=userRepo.save(userData);
-			
-			if(userOutput!=null) {
-				RequestHeaders header=new RequestHeaders(userDetails.getUserAgent(),userDetails.getPublicIp(),userOutput.getUsername());
-				headerService.saveRequestHeader(header);
-				int rolesAddStatus=saveRoles(userDetails.getRoles(),userOutput.getId());
-				saveUserTrail(userOutput,"Registration","user submit registration form",0);
-				log.info("role addition status:  "+rolesAddStatus); 
-				long userid=userOutput.getId();
-				log.info("userid= "+userid);
-				User users=new User();
-				users.setId(userid);
-				userDetails.setUser(userData);
-				
-				if(usertypeList.contains(userType.getId())) {
-					if(userDetails.getType()==0){
+				List<Long> usertypeList=usertypeCheck();
+				log.info("primary usertypeId is:  "+rolesOutput);	
+				Usertype userTypeData=new Usertype();
+				userTypeData.setId(rolesOutput);  
+				User userData=new User(userDetails.getUsername(),userDetails.getPassword(),UserStatus.NEW.getCode(),null,userTypeData);  
+				userData.setUserLanguage(userDetails.getUserLanguage());
+				User userOutput=userRepo.save(userData);
+
+				if(userOutput!=null) {
+					RequestHeaders header=new RequestHeaders(userDetails.getUserAgent(),userDetails.getPublicIp(),userOutput.getUsername());
+					headerService.saveRequestHeader(header);
+					int rolesAddStatus=saveRoles(userDetails.getRoles(),userOutput.getId());
+					saveUserTrail(userOutput,"Registration","user submit registration form",0);
+					log.info("role addition status:  "+rolesAddStatus); 
+					long userid=userOutput.getId();
+					log.info("userid= "+userid);
+					User users=new User();
+					users.setId(userid);
+					userDetails.setUser(userData);
+
+					if(usertypeList.contains(userType.getId())) {
+						if(userDetails.getType()==0){
+							String displayName=userDetails.getFirstName()+" "+userDetails.getMiddleName()+" "+userDetails.getLastName();
+							userDetails.setDisplayName(displayName);
+						}
+						else {
+							String displayName=userDetails.getCompanyName();      
+							userDetails.setDisplayName(displayName);	  
+						}
+					}
+					else {
 						String displayName=userDetails.getFirstName()+" "+userDetails.getMiddleName()+" "+userDetails.getLastName();
 						userDetails.setDisplayName(displayName);
 					}
-					else {
-						String displayName=userDetails.getCompanyName();      
-						userDetails.setDisplayName(displayName);	  
+					UserProfile output=userProfileRepo.save(userDetails);			 
+					if(output!=null) {
+						UserPasswordHistory userPassHistory=new UserPasswordHistory(userOutput,userDetails.getPassword());
+						log.info("going to save user passowrd in user_password_history table");
+						UserPasswordHistory userPasswordOtput=userPassHistoryRepoImpl.saveUserPassword(userPassHistory);
+						if(userPasswordOtput!=null) {
+							log.info("user passowrd sucessfully save");
+						}
+						User dataForProfile=new User();
+						dataForProfile.setId(userOutput.getId());
+						String phoneOtp=otpService.phoneOtp(output.getPhoneNo());
+						output.setPhoneOtp(phoneOtp);
+						userProfileRepo.save(output);
+						int outputGot=saveUserSecurityquestion(output);	
+						log.info("user security question output:  "+outputGot);
+						String emailOtp=randomDigits.getNumericString(6);
+						output.setEmailOtp(emailOtp); 
+						output.setSource("Self");
+						userProfileRepo.save(output);	
+						boolean notificationStatus =emailUtils.saveNotification("REG_VERIFY_OTP_EMAIL_MSG", output, 0,
+								"User Registration", "Registration", userOutput.getUsername(), "OTP Notification for User Registration",emailOtp,ChannelType.EMAIL,"");
+						log.info("notification save:  "+notificationStatus);
+						boolean notificationStatusForSms =emailUtils.saveNotification("REG_VERIFY_OTP_SMS_MSG", output, 0,
+								"User Registration", "Registration", userOutput.getUsername(),output.getFirstName(),phoneOtp,ChannelType.SMS,"");
+						log.info("notificationStatusForSms save:  "+notificationStatusForSms);
+					
+					  userOutput.setPreviousStatus(UserStatus.NEW.getCode());
+					  userOutput.setCurrentStatus(UserStatus.OTP_VERIFICATION_PENDING.getCode());
+					  userRepo.save(userOutput);
+					  
+
+						OtpResponse response=new OtpResponse(RegistrationTags.REG_SUCESS_RESP.getMessage(),200,userOutput.getId(),RegistrationTags.REG_SUCESS_RESP.getTag());
+						log.info("response:   "+response);
+						return new ResponseEntity<>(response,HttpStatus.OK);
+					} 
+					else { 
+						HttpResponse response=new HttpResponse(RegistrationTags.REG_PROFILE_FAIL_RESP.getMessage(),409,RegistrationTags.REG_PROFILE_FAIL_RESP.getTag());
+						return new ResponseEntity<>(response,HttpStatus.OK);
 					}
 				}
 				else {
-					String displayName=userDetails.getFirstName()+" "+userDetails.getMiddleName()+" "+userDetails.getLastName();
-					userDetails.setDisplayName(displayName);
+					HttpResponse response=new HttpResponse(RegistrationTags.REG_USER_FAIL_RESP.getMessage(),409,RegistrationTags.REG_USER_FAIL_RESP.getTag());
+					return new ResponseEntity<>(response,HttpStatus.OK);		
 				}
-				UserProfile output=userProfileRepo.save(userDetails);			 
-				if(output!=null) {
-					UserPasswordHistory userPassHistory=new UserPasswordHistory(userOutput,userDetails.getPassword());
-					log.info("going to save user passowrd in user_password_history table");
-					UserPasswordHistory userPasswordOtput=userPassHistoryRepoImpl.saveUserPassword(userPassHistory);
-					if(userPasswordOtput!=null) {
-						log.info("user passowrd sucessfully save");
-					}
-					User dataForProfile=new User();
-					dataForProfile.setId(userOutput.getId());
-					String phoneOtp=otpService.phoneOtp(output.getPhoneNo());
-					output.setPhoneOtp(phoneOtp);
-					userProfileRepo.save(output);
-					int outputGot=saveUserSecurityquestion(output);	
-					log.info("user security question output:  "+outputGot);
-					String emailOtp=randomDigits.getNumericString(6);
-					output.setEmailOtp(emailOtp); 
-					output.setSource("Self");
-					userProfileRepo.save(output);	
-					boolean notificationStatus =emailUtils.saveNotification("REG_VERIFY_OTP_EMAIL_MSG", output, 0,
-							"User Registration", "Registration", userOutput.getUsername(), "OTP Notification for User Registration",emailOtp,ChannelType.EMAIL);
-					log.info("notification save:  "+notificationStatus);
-					boolean notificationStatusForSms =emailUtils.saveNotification("REG_VERIFY_OTP_SMS_MSG", output, 0,
-							"User Registration", "Registration", userOutput.getUsername(),userOutput.getUsername(),phoneOtp,ChannelType.SMS);
-					log.info("notificationStatusForSms save:  "+notificationStatusForSms);
-					userOutput.setPreviousStatus(UserStatus.NEW.getCode());
-					userOutput.setCurrentStatus(UserStatus.OTP_VERIFICATION_PENDING.getCode());
-					userRepo.save(userOutput); 
-					
-					OtpResponse response=new OtpResponse(RegistrationTags.REG_SUCESS_RESP.getMessage(),200,userOutput.getId(),RegistrationTags.REG_SUCESS_RESP.getTag());
-					log.info("response:   "+response);
-					return new ResponseEntity<>(response,HttpStatus.OK);
-				} 
-				else { 
-					HttpResponse response=new HttpResponse(RegistrationTags.REG_PROFILE_FAIL_RESP.getMessage(),409,RegistrationTags.REG_PROFILE_FAIL_RESP.getTag());
-					return new ResponseEntity<>(response,HttpStatus.OK);
-				}
-			}
-			else {
-				HttpResponse response=new HttpResponse(RegistrationTags.REG_USER_FAIL_RESP.getMessage(),409,RegistrationTags.REG_USER_FAIL_RESP.getTag());
-				return new ResponseEntity<>(response,HttpStatus.OK);		
-			}
+			
 		}
 		else {    
 
@@ -446,13 +464,13 @@ public class UserService {
 				RequestHeaders header=new RequestHeaders(otp.getUserAgent(),otp.getPublicIp(),output.getUsername());
 				headerService.saveRequestHeader(header);
 				saveUserTrail(output,"Registration","user validate",0);
-				return validateNewUser( output,otp);
-//				if(output.getPreviousStatus()==UserStatus.APPROVED.getCode()) {
-//					return validateOldUser(output,otp);
-//				} 
-//				else {
-//					return validateNewUser( output,otp);
-//				}
+				//return validateNewUser( output,otp);
+				if(output.getPreviousStatus()==UserStatus.APPROVED.getCode()) {
+					return validateOldUser(output,otp);
+				} 
+				else {
+					return validateNewUser( output,otp);
+				}
 			}
 			else {
 				HttpResponse response=new HttpResponse(RegistrationTags.REG_WRONG_USER_ID.getMessage(),409,RegistrationTags.REG_WRONG_USER_ID.getTag());
@@ -472,7 +490,7 @@ public class UserService {
 		log.info("differnce in minuted between two times: "+diffInMinutes);
 		if(diffInMinutes<=10) {
 			if(otp.getEmailOtp().equals(details.getEmailIdOtp()) && otp.getPhoneOtp().equals(details.getMobileOtp())) {      				  
-				user.setCurrentStatus(UserStatus.PENDING_ADMIN_APPROVAL.getCode());
+				user.setCurrentStatus(UserStatus.APPROVED.getCode());
 				user.setPreviousStatus(UserStatus.OTP_VERIFICATION_PENDING.getCode());
 				log.info("going to save user status");  
 				userRepo.save(user);   
@@ -483,18 +501,18 @@ public class UserService {
 				log.info("now going to save email and phone data in profile data");
 				userProfileRepo.save(userProfileData);
 				log.info("user profile data now save");
-				HttpResponse response=new HttpResponse("Your OTP is verified! ",200); 
+				HttpResponse response=new HttpResponse(RegistrationTags.OTP_SUCESS_For_UpdateUSer.getMessage(),200,RegistrationTags.OTP_SUCESS_For_UpdateUSer.getTag()); 
 				return new ResponseEntity<>(response,HttpStatus.OK);	
 			}
-			else {
-				log.info("otp are incorrect");
-				HttpResponse response=new HttpResponse("Otp are incorrect",409);
-				return new ResponseEntity<>(response,HttpStatus.OK);	  
+			else { 
+				log.info("if otp are incorrect");
+				HttpResponse response=new HttpResponse(RegistrationTags.REG_WRONG_OTP.getMessage(),409,RegistrationTags.REG_WRONG_OTP.getTag());
+				return new ResponseEntity<>(response,HttpStatus.OK);	
 			}
 		}
 		else {
 			log.info("if Otp time is expired");
-			HttpResponse response=new HttpResponse("Otp time is expired.",409);
+			HttpResponse response=new HttpResponse(RegistrationTags.REG_EXPIRE_OTP.getMessage(),409,RegistrationTags.REG_EXPIRE_OTP.getTag());
 			return new ResponseEntity<>(response,HttpStatus.OK);	
 		}
 
@@ -514,7 +532,7 @@ public class UserService {
 				user.setCurrentStatus(UserStatus.PENDING_ADMIN_APPROVAL.getCode());     
 				User output2=userRepo.save(user); 
 				boolean notificationStatus2=emailUtils.saveNotification("REG_WAIT_USER_FOR_APPROV_STATUS", output2.getUserProfile(),
-						0, "Registration", "user phone and email details validated", output2.getUsername(),"Registration Request Notification Alert "+output.getUserProfile().getFirstName(),"",ChannelType.EMAIL);
+						0, "Registration", "user phone and email details validated", output2.getUsername(),"Registration Request Notification Alert "+output.getUserProfile().getFirstName(),"",ChannelType.EMAIL,"");
 				log.info("notification save:  "+notificationStatus2);
 				return new ResponseEntity<>(response,HttpStatus.OK);	
 			}  
@@ -540,10 +558,10 @@ public class UserService {
 		profile.setPhoneOtp(smsOtp);
 		UserProfile output=userProfileRepo.save(profile);
 		boolean notificationStatus =emailUtils.saveNotification("REG_VERIFY_OTP_EMAIL_MSG", profile, 0,
-				"User Registration", "Registration", profile.getUser().getUsername(), "Email verification resend otp",emailOtp,ChannelType.EMAIL);
+				"User Registration", "Registration", profile.getUser().getUsername(), "Email verification resend otp",emailOtp,ChannelType.EMAIL,"");
 		log.info("notification save:  "+notificationStatus);
 		boolean notificationStatusForSms =emailUtils.saveNotification("REG_VERIFY_OTP_SMS_MSG", profile, 0,
-				"User Registration", "Registration", profile.getUser().getUsername(), "Phone verification resend otp",smsOtp,ChannelType.SMS);
+				"User Registration", "Registration", profile.getUser().getUsername(), "Phone verification resend otp",smsOtp,ChannelType.SMS,"");
 		log.info("notificationStatusForSms save:  "+notificationStatusForSms);
 		if(output !=null) {
 			RequestHeaders header=new RequestHeaders(otp.getUserAgent(),otp.getPublicIp(),output.getUser().getUsername());
@@ -559,6 +577,75 @@ public class UserService {
 		}
 
 	}
+	
+	public ResponseEntity<?> checkRegistration(Integer usertypeId){
+		
+		try {
+			log.info("inside check registration method");
+			log.info("usertypeId value "+usertypeId);
+			Usertype usertype=usertypeRepo.findById(usertypeId);  
+			log.info("now going to check this usertype is available for registration or not");
+			if(usertype.getStatus()==UserTypeStatusFlag.on.getCode()) {
+				log.info("usertype is available for trgistration");
+				HashMap<Integer, String> map=new HashMap<Integer,String>();
+				map.put(UsertypeData.Importer.getCode(), "imp_user_limit");
+				map.put(UsertypeData.Distributor.getCode(), "dist_user_limit");
+				map.put(UsertypeData.Retailer.getCode(), "ret_user_limit");
+				map.put(UsertypeData.Custom.getCode(), "cus_user_limit");
+				map.put(UsertypeData.Operator.getCode(), "ope_user_limit");
+				map.put(UsertypeData.TRC.getCode(), "trc_user_limit");
+				map.put(UsertypeData.Manufacturer.getCode(), "man_user_limit");
+				map.put(UsertypeData.Lawful_Agency.getCode(), "law_user_limit");
+				map.put(UsertypeData.End_User.getCode(), "end_user_limit");
+				map.put(UsertypeData.Immigration.getCode(), "imm_user_limit");
+				map.put(UsertypeData.Customer_Care.getCode(), "customer_user_limit");
+				log.info("then going to fetch data from system configuration db by tag "+map.get(usertypeId));
+				SystemConfigurationDb systemConfigData=systemConfigurationDbRepoImpl.getDataByTag(map.get(usertypeId));
+				long userLimit=0;
+				if(systemConfigData!=null) {
+					try {
+						log.info("value got by tag= "+systemConfigData.getValue());
+						userLimit=Long.parseLong(systemConfigData.getValue());				
+					}
+					catch(Exception e) {
+						log.info(e.toString());
+					}
+
+				}
+                
+				long count=userRepoService.countByUsertypeId(usertypeId);
+				log.info("total users find by this usertype= "+count);
+				log.info("now going to compare these two above values");
+				if(count>=userLimit) {
+                    log.info("if usertype count greater than total users limit then we don't able to create new user now");
+					RunningAlertDb alertDb=new RunningAlertDb("alert001"," user creation limit is exceeded for "+usertype.getUsertypeName() +" usertype",0);
+					HttpResponse response=new HttpResponse(RegistrationTags.Reg_userlimit_exceed.getMessage(),409,RegistrationTags.Reg_userlimit_exceed.getTag());
+					alertDbRepo.saveAlertDb(alertDb);
+					return new ResponseEntity<>(response,HttpStatus.OK);
+				}
+
+				else {
+                    log.info("if usertype count less than total users limit then so happily we able to create new user now");
+					HttpResponse response=new HttpResponse(RegistrationTags.Reg_allowed.getMessage(),200,RegistrationTags.Reg_allowed.getTag());
+					return new ResponseEntity<>(response,HttpStatus.OK);			
+					
+				}
+				
+			}
+			
+			else {
+				log.info("usertype status is disable now so registration is not available as of now");
+				HttpResponse response=new HttpResponse(RegistrationTags.Reg_flag_off.getMessage(),409,RegistrationTags.Reg_flag_off.getTag());
+				return new ResponseEntity<>(response,HttpStatus.OK);			
+			}
+			
+		}
+		catch(Exception e) {
+			log.info("something wrong happened here now");
+			HttpResponse response=new HttpResponse(RegistrationTags.COMMAN_FAIL_MSG.getMessage(),500,RegistrationTags.COMMAN_FAIL_MSG.getTag());
+			return new ResponseEntity<>(response,HttpStatus.OK);	
+		}
+	}
 
 	public ResponseEntity<?> changePassword(ChangePassword password){
 		try {
@@ -568,7 +655,7 @@ public class UserService {
 			saveUserTrail(user, "Login","save new password",0);
 			return changePasswordMethod(user,password);
 		}
-	
+
 		catch(Exception e) {
 			log.info("exception occur");
 			e.printStackTrace();
@@ -577,7 +664,7 @@ public class UserService {
 		}
 	}
 
-	
+
 	public ResponseEntity<?> updateExpirePassword(ChangePassword password){
 		try {
 			log.info("inside change password controller");
@@ -587,7 +674,7 @@ public class UserService {
 			saveUserTrail(user, "Login","save new password",0);
 			return changePasswordMethod(user,password);
 		}
-	
+
 		catch(Exception e) {
 			log.info("exception occur");
 			e.printStackTrace();
@@ -598,8 +685,8 @@ public class UserService {
 		}
 	}
 
-	
-	
+
+
 	public ResponseEntity<?> changePasswordMethod(User user,ChangePassword password){
 		if(password.getOldPassword().equals(user.getPassword())) {
 			boolean passwordExist=userPassHistoryRepoImpl.passwordExist(password.getPassword(), password.getUserid());
@@ -638,9 +725,8 @@ public class UserService {
 
 		} 
 		else {
-			HttpResponse response=new HttpResponse();
-			response.setStatusCode(204);
-			response.setResponse("Kindly enter the correct password");
+			HttpResponse response=new HttpResponse(ProfileTags.PRO_OldPass_Error.getMessage(),204,
+					ProfileTags.PRO_OldPass_Error.getTag());
 			log.info("exit from change password");  
 			return new ResponseEntity<>(response,HttpStatus.OK);	
 		}  
@@ -659,7 +745,7 @@ public class UserService {
 			if(userPasswordOtput!=null) {
 				log.info("user passowrd sucessfully save");
 			}
-			boolean notificationStatus=emailUtils.saveNotification("PRO_CHANGE_PASSWORD_BY_USER", output.getUserProfile(), 0, "Profile","change Password", output.getPassword(), "Password Change Notification for "+output.getUsername(), "",ChannelType.EMAIL);	
+			boolean notificationStatus=emailUtils.saveNotification("PRO_CHANGE_PASSWORD_BY_USER", output.getUserProfile(), 0, "Profile","change Password", output.getUsername(), "Password Change Notification for "+output.getUsername(), "",ChannelType.EMAIL,"");	
 			log.info("notification save: "+notificationStatus);
 			HttpResponse response=new HttpResponse(ProfileTags.PRO_CPASS_SUCESS.getMessage(),200,ProfileTags.PRO_CPASS_SUCESS.getTag());
 			log.info("exit from change password");
@@ -671,18 +757,45 @@ public class UserService {
 			return new ResponseEntity<>(response,HttpStatus.OK);
 		}
 	}
+	
+	public ResponseEntity<?> setNewPassword(User user){
+		User output=userRepo.save(user);
+		if(output!=null) {
+			UserPasswordHistory userPassHistory=new UserPasswordHistory();
+			userPassHistory.setPassword(user.getPassword());
+			userPassHistory.setUserPassword(output);
+			userPassHistory.setCreatedOn(LocalDateTime.now());
+			userPassHistory.setModifiedOn(LocalDateTime.now());
+			log.info("going to save user passowrd in user_password_history table");
+			UserPasswordHistory userPasswordOtput=userPassHistoryRepoImpl.saveUserPassword(userPassHistory);
+			if(userPasswordOtput!=null) {
+				log.info("user passowrd sucessfully save");
+			}
+			boolean notificationStatus=emailUtils.saveNotification("FORGOT_PASSWORD_EMAIL", output.getUserProfile(), 0, "Profile","forgot Password", output.getUsername(), "Password Update Notification for "+output.getUsername(), "",ChannelType.EMAIL,"");	
+			log.info("notification save: "+notificationStatus);
+			HttpResponse response=new HttpResponse(ProfileTags.NEW_PASS_SUC.getMessage(),200,ProfileTags.NEW_PASS_SUC.getTag());
+			log.info("exit from update new password");
+			return new ResponseEntity<>(response,HttpStatus.OK);	
+		}
+		else {
+			HttpResponse response=new HttpResponse(ProfileTags.NEW_PASS_FAIL.getMessage(),500,ProfileTags.NEW_PASS_FAIL.getTag());
+			log.info("exit from  update New password");   
+			return new ResponseEntity<>(response,HttpStatus.OK);
+		}
+	}
 
 
 	public ResponseEntity<?> updateUserStatus(UserStatusRequest userStatus){
 		log.info("inside  update User status  controller");  
 		log.info(" userStatus data:  "+userStatus);      
-		log.info("get user  data by username below");  
+		log.info("get user  data by userid below");  
 		User user=userRepo.findById(userStatus.getUserId());
 		if(user!=null) {
 
 			Integer userStatus2 = UserStatus.getUserStatusByDesc(userStatus.getStatus()).getCode();
 			user.setPreviousStatus(user.getCurrentStatus()); 
-			user.setCurrentStatus(userStatus2);              
+			user.setCurrentStatus(userStatus2); 
+			user.setModifiedBy(userStatus.getUsername());
 			User output=userRepo.save(user); 
 			log.info("user data after update the status: "+output);
 			if(output!=null) {
@@ -715,7 +828,7 @@ public class UserService {
 				}
 				saveUserTrail(user, "Profile",subFeature,0);			
 				boolean notificationStatus=emailUtils.saveNotification(tag, output.getUserProfile(),0, "Profile","update user status", output.getUsername(), ""
-						+ subject, "",ChannelType.EMAIL);
+						+ subject, "",ChannelType.EMAIL,"");
 				log.info("notification save: "+notificationStatus);
 				HttpResponse response=new HttpResponse(UpdateUserStatusTags.USER_STATUS_CHANGED.getMessage(),
 						200,UpdateUserStatusTags.USER_STATUS_CHANGED.getTag());
@@ -737,6 +850,42 @@ public class UserService {
 		}
 	}
 
+
+
+	public ResponseEntity<?> changeUserStatus(ChangeUserStatus userStatus){
+		log.info("inside  chane User status  controller");  
+		log.info(" userStatus data:  "+userStatus);      
+		log.info("get user  data by userid below");  
+		User user=userRepo.findById(userStatus.getUserId());
+		if(user!=null) {
+			user.setPreviousStatus(user.getCurrentStatus()); 
+			user.setCurrentStatus(userStatus.getStatus()); 
+			user.setModifiedBy(userStatus.getUsername());
+			User output=userRepo.save(user); 
+			log.info("user data after update the status: "+output);
+			if(output!=null) {
+				saveUserTrail(user, "Registration Request","change user status",8);			
+				HttpResponse response=new HttpResponse(UpdateUserStatusTags.USER_STATUS_CHANGED.getMessage(),
+						200,UpdateUserStatusTags.USER_STATUS_CHANGED.getTag());
+				log.info("response send to user:  "+response);
+				return new ResponseEntity<>(response,HttpStatus.OK);	
+			}
+			else {
+				HttpResponse response=new HttpResponse(UpdateUserStatusTags.USER_STATUS_CHANGE_FAIL.getMessage(),
+						500,UpdateUserStatusTags.USER_STATUS_CHANGE_FAIL.getTag());
+				log.info("response send to user:  "+response);
+				return new ResponseEntity<>(response,HttpStatus.OK);	
+			} 
+		}    
+		else { 
+			HttpResponse response=new HttpResponse(UpdateUserStatusTags.USER_STATUS_WRONG_USERID.getMessage(),
+					409,UpdateUserStatusTags.USER_STATUS_WRONG_USERID.getTag());
+			log.info("response send to user:  "+response);
+			return new ResponseEntity<>(response,HttpStatus.OK);	
+		}
+	}
+
+
 	public ResponseEntity<?> editProfile(long id){
 		try {
 			log.info("inside into edit profile");     
@@ -756,9 +905,9 @@ public class UserService {
 					questionPair.setAnswer(question.getAnswer());
 					questionList.add(questionPair); 
 				}
-
 				log.info("questionList:  "+questionList);
 				user.setQuestionList(questionList);
+				user.setUserTypeId(user.getUser().getUsertype().getId());
 				List<Long> rolesId=new ArrayList<Long>();
 				log.info("now going to fetch roles of user");
 				for(Userrole userRoles:user.getUser().getUserRole()) {
@@ -804,62 +953,75 @@ public class UserService {
 			UserProfile userProfileData=userProfileRepo.findById(userProfile.getId());
 			if(userProfile.getPassword().equals(userProfileData.getUser().getPassword())) {
 				log.info("user profile data by id:  "+userProfileData); 
-				long mainRole=roleCheck(userProfile.getRoles()); 
-				if(mainRole>0) {  
+				/*
+				 * long mainRole=roleCheck(userProfile.getRoles()); if(mainRole>0) {
+				 */
 					User userData=userRepo.findByUserProfile_Id(userProfile.getId());
-					Usertype usertype=new Usertype();
-					log.info("going to update user main role = "+mainRole);
-					usertype.setId(mainRole);
-					userData.setUsertype(usertype);  
-					User UserOutput=userRepo.save(userData);   
-					log.info("UserOutput:  "+UserOutput);
+					//Usertype usertype=new Usertype();
+					//log.info("going to update user main role = "+mainRole);
+					//usertype.setId(mainRole);
+					//userData.setUsertype(userProfileData.getUser().getUsertype());  
+					//User UserOutput=userRepo.save(userData);   
+					//log.info("UserOutput:  "+UserOutput);
 					saveUserTrail(userData,"Profile","update",0);   
-					/*
-					 * if(!userProfile.getPhoneNo().equals(userProfileData.getPhoneNo()) ||
-					 * !userProfile.getEmail().equals(userProfileData.getEmail())) { String
-					 * phoneOtp=otpService.phoneOtp(userProfile.getPhoneNo()); String
-					 * emailOtpData=randomDigits.getNumericString(6);
-					 * userProfile.setUser(UserOutput); boolean notificationStatus
-					 * =emailUtils.saveNotification("PRO_VERIFY_OTP_EMAIL_MSG", userProfile, 0,
-					 * "User Profile", "update Profile", UserOutput.getUsername(),
-					 * "Edit Profile Notification "+UserOutput.getUsername(),emailOtpData,
-					 * ChannelType.EMAIL); log.info("notification save:  "+notificationStatus);
-					 * boolean notificationStatusForSms
-					 * =emailUtils.saveNotification("PRO_VERIFY_OTP__MSG", userProfile, 0,
-					 * "User Profile", "update Profile", UserOutput.getUsername(),
-					 * UserOutput.getUsername(),phoneOtp,ChannelType.SMS);
-					 * log.info("notificationStatusForSms save:  "+notificationStatusForSms);
-					 * UserTemporarydetails details=new
-					 * UserTemporarydetails(UserOutput,userProfile.getEmail(),
-					 * userProfile.getPhoneNo(),emailOtpData,phoneOtp); UserTemporarydetails
-					 * dataByProfileId=userTemporarydetailsRepo.findByUserDetails_id(UserOutput.
-					 * getId()); log.
-					 * info("temporary email and phone no profile details by user profile table id "
-					 * +userProfile.getId()); if(dataByProfileId!=null) {
-					 * details.setId(dataByProfileId.getId()); }
-					 * log.info("going to add data to user profile temporary data table");
-					 * userTemporarydetailsRepo.save(details);
-					 * log.info("after adding data to temporaray table");
-					 * userData.setPreviousStatus(UserStatus.APPROVED.getCode());
-					 * userData.setCurrentStatus(UserStatus.OTP_VERIFICATION_PENDING.getCode());
-					 * userRepo.save(userData); log.info("user data changed"); }
-					 */
+					if(!userProfile.getPhoneNo().equals(userProfileData.getPhoneNo()) ||
+							!userProfile.getEmail().equals(userProfileData.getEmail())) { 
+						String phoneOtp=otpService.phoneOtp(userProfile.getPhoneNo()); 
+						String emailOtpData=randomDigits.getNumericString(6);
+						userProfile.setUser(userData);
+						boolean notificationStatus=emailUtils.saveNotification("PRO_VERIFY_OTP_EMAIL_MSG", userProfile, 0,
+								"User Profile", "update Profile", userData.getUsername(),
+								"Edit Profile Notification "+userData.getUsername(),emailOtpData,
+								ChannelType.EMAIL,"user_temp"); 
+						log.info("notification save:  "+notificationStatus);
+						boolean notificationStatusForSms=emailUtils.saveNotification("PRO_VERIFY_OTP__MSG", userProfile, 0,
+								"User Profile", "update Profile", userData.getUsername(),
+								userProfile.getFirstName(),phoneOtp,ChannelType.SMS,"user_temp");
+						log.info("notificationStatusForSms save:  "+notificationStatusForSms);
+						UserTemporarydetails details=new UserTemporarydetails(userData,userProfile.getEmail(),userProfile.getPhoneNo(),emailOtpData,phoneOtp); 
+						UserTemporarydetails dataByProfileId=userTemporarydetailsRepo.findByUserDetails_id(userData.getId());
+						log.info("temporary email and phone no profile details by user profile table id "+userProfile.getId()); 
+						if(dataByProfileId!=null) {
+							details.setId(dataByProfileId.getId()); }
+						log.info("going to add data to user profile temporary data table");
+						userTemporarydetailsRepo.save(details);
+						log.info("after adding data to temporaray table");
+						userData.setPreviousStatus(UserStatus.APPROVED.getCode());
+						userData.setCurrentStatus(UserStatus.OTP_VERIFICATION_PENDING.getCode());
+						userRepo.save(userData); log.info("user data changed"); }
+
 					updateUserFields(userProfile,userProfileData);
-					userProfileData.setUser(UserOutput);
+					userProfileData.setUser(userData);
 					log.info("userProfile data going to update: "+userProfileData);
 					log.info("now going to save user profile data");
 					UserProfile output=userProfileRepo.save(userProfileData);
 					log.info("user profile data is save");
 					if(output!=null) { 
-
-						int rolesOutput=updateRoles(userProfile.getRoles(), output.getUser().getId());
-						log.info("user role update output:  "+rolesOutput);
+                        if(userProfile.getRoles()!=null) {
+                        	if(userProfile.getRoles().length!=0) {
+                        		int rolesOutput=updateRoles(userProfile.getRoles(), output.getUser().getId());    		
+                        		log.info("user role update output:  "+rolesOutput);
+                        	}
+                        }
+					
+				
 						log.info("if user profile table is update ");
 						log.info("going to update user  questions and answer");
-						int i=updateUserSecurityquestion(userProfile);
+						int i=updateUserSecurityquestion(userProfileData);
 						log.info("question output:  "+i); 
-								UpdateProfileResponse response=new UpdateProfileResponse(ProfileTags.PRO_SUCESS_MSG.getMessage(),200,UserStatus.getUserStatusByCode(userData.getCurrentStatus()).getDescription()
-								,output.getUser().getId(),ProfileTags.PRO_SUCESS_MSG.getTag());
+						String tag="";
+						String msg="";
+						if(userData.getCurrentStatus()==UserStatus.APPROVED.getCode()) {
+							tag=ProfileTags.PRO_SUCESS_MSG.getTag();
+							msg=ProfileTags.PRO_SUCESS_MSG.getMessage();
+						}
+						else {
+							tag=RegistrationTags.REG_SUCESS_RESP.getTag();
+							msg=RegistrationTags.REG_SUCESS_RESP.getMessage();
+				
+						}
+						UpdateProfileResponse response=new UpdateProfileResponse(msg,200,UserStatus.getUserStatusByCode(userData.getCurrentStatus()).getDescription()
+								,output.getUser().getId(),tag);
 						log.info("response send to user:  "+response); 
 						return new ResponseEntity<>(response,HttpStatus.OK);	
 					}                 
@@ -869,13 +1031,13 @@ public class UserService {
 						log.info("response send to user:  "+response);
 						return new ResponseEntity<>(response,HttpStatus.OK);	
 					}
-				}
+				/*}
 				else {
 					log.info("user profile to update");
 					HttpResponse response=new HttpResponse(RegistrationTags.REG_FAIL_ROLES_RESP.getMessage(),204,RegistrationTags.REG_FAIL_ROLES_RESP.getTag());
 					log.info("response send to user:  "+response);
 					return new ResponseEntity<>(response,HttpStatus.OK);	
-				}
+				}*/
 			}
 			else { 
 				log.info("user profile to update");
@@ -900,7 +1062,7 @@ public class UserService {
 		userProfileData.setLastName(userProfile.getLastName());
 		userProfileData.setPropertyLocation(userProfile.getPropertyLocation());
 		userProfileData.setStreet(userProfile.getStreet());
-		userProfileData.setVillage(userProfileData.getVillage());
+		userProfileData.setVillage(userProfile.getVillage());
 		userProfileData.setLocality(userProfile.getLocality());
 		userProfileData.setDistrict(userProfile.getDistrict());
 		userProfileData.setCommune(userProfile.getCommune());
@@ -908,6 +1070,7 @@ public class UserService {
 		userProfileData.setCountry(userProfile.getCountry());
 		userProfileData.setProvince(userProfile.getProvince());
 		userProfileData.setCountry(userProfile.getCountry());
+		userProfileData.setQuestionList(userProfile.getQuestionList());
 	}
 
 	public HttpResponse updateStatus(User user) {
@@ -960,10 +1123,10 @@ public class UserService {
 					}
 				}
 				if(user.getPortAddress()!=null) {
-				PortAddress portAddress=portAddressRepoService.getById(user.getPortAddress());
-				user.setPortAddressName(portAddress.getAddress());
+					PortAddress portAddress=portAddressRepoService.getById(user.getPortAddress());
+					user.setPortAddressName(portAddress.getAddress());
 				}
-				
+
 				SystemConfigurationDb filePath=systemConfigurationRepo.getDataByTag("USER_FILE_DOWNLOAD_PATH");	
 				if(filePath!=null) {
 					if(user.getNidFilename()!=null || !"null".equalsIgnoreCase(user.getNidFilename())) {
@@ -1008,8 +1171,8 @@ public class UserService {
 			if(user!=null) {
 				user.setRemark(userStatus.getRemark());
 				user.setPreviousStatus(user.getCurrentStatus());
-				user.setCurrentStatus(UserStatus.getUserStatusByDesc(userStatus.getStatus()).getCode());
-
+				user.setCurrentStatus(userStatus.getStatusValue());
+                user.setModifiedBy(userStatus.getUsername());
 				log.info("user data to update:  "+user);
 				User output=userRepo.save(user);
 				log.info("output got:  "+output);
@@ -1030,7 +1193,7 @@ public class UserService {
 					}
 					else {}
 					saveUserTrail(output,"Registration Request",subject,userStatus.getFeatureId());
-					boolean emailStatus=emailUtils.saveNotification(tag, output.getUserProfile(), userStatus.getFeatureId(), "Registration Request",status, output.getUsername(), subject,"",ChannelType.EMAIL);
+					boolean emailStatus=emailUtils.saveNotification(tag, output.getUserProfile(), userStatus.getFeatureId(), "Registration Request",status, output.getUsername(), subject,"",ChannelType.EMAIL,"");
 					log.info("emailStatus : "+emailStatus);
 					HttpResponse response=new HttpResponse();
 					response.setStatusCode(200);

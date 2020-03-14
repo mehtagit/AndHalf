@@ -2,96 +2,58 @@ package com.ceir.CeirCode.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
-import com.ceir.CeirCode.model.constants.NotificationStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
-
 @Entity
 public class Notification  implements Serializable{
-
-	private static final long serialVersionUID = 1L;
-
+	private static long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	
+	private long id;
+
 	@CreationTimestamp
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private LocalDateTime createdOn;
-	
+
 	@UpdateTimestamp
 	private LocalDateTime modifiedOn;
 
 	private String channelType;
 	@Column(length = 1000)
 	private String message;
-	
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id",nullable = false)
-    User userForNofication;
-	
+
+	private long userId;
+
 	private Long featureId;
-	
+
 	private String featureTxnId;
-	
+
 	private String featureName;
-	
+
 	private String subFeature;
-	
+
 	private Integer status;
-	
+
 	private String subject;
-	
-	private Integer retryCount=0;
-	
-	public Notification() {}
-	
-	public Notification(String channelType2, String message2, User userId, Long featureId2, String featureName2, 
-			String subFeature2, String featureTxnId2,String subject ) {
-		this.userForNofication = userId;
-		this.channelType = channelType2;
-		this.message = message2;
-		this.featureId = featureId2;
-		this.featureTxnId = featureTxnId2;
-		this.featureName = featureName2;
-		this.subFeature = subFeature2;
-		status = NotificationStatus.INIT.getCode();
-		this.subject = subject;
-	}
-	
-	
-	public Notification(Long id, LocalDateTime createdOn, LocalDateTime modifiedOn, String channelType, String message,
-			Long userId, Long featureId, String featureTxnId, String featureName, String subFeature, Integer status,
-			String subject, Integer retryCount) {
-		super();
-		this.id = id;
-		this.createdOn = createdOn;
-		this.modifiedOn = modifiedOn;
-		this.channelType = channelType;
-		this.message = message;
-		this.featureId = featureId;
-		this.featureTxnId = featureTxnId;
-		this.featureName = featureName;
-		this.subFeature = subFeature;
-		status = NotificationStatus.INIT.getCode();
-		this.subject = subject;
-		this.retryCount = retryCount;
-	}
 
+	private Integer retryCount;
+    
+	private String referTable;
+	
+      
+	public Notification() {
 
+	}
 
 
 	public Long getId() {
@@ -124,7 +86,7 @@ public class Notification  implements Serializable{
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	
+
 	public Long getFeatureId() {
 		return featureId;
 	}
@@ -155,10 +117,7 @@ public class Notification  implements Serializable{
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-	public String getSubject() {
+		public String getSubject() {
 		return subject;
 	}
 
@@ -174,21 +133,33 @@ public class Notification  implements Serializable{
 		this.retryCount = retryCount;
 	}
 
-
-	public User getUserForNofication() {
-		return userForNofication;
+	public long getUserId() {
+		return userId;
 	}
 
 
-	public void setUserForNofication(User userForNofication) {
-		this.userForNofication = userForNofication;
+	public void setUserId(long userId) {
+		this.userId = userId;
+	}
+
+
+	public void setId(long id) {
+		this.id = id;
+	}
+	
+	public String getReferTable() {
+		return referTable;
+	}
+	public void setReferTable(String referTable) {
+		this.referTable = referTable;
 	}
 
 	@Override
 	public String toString() {
 		return "Notification [id=" + id + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", channelType="
-				+ channelType + ", message=" + message + ", featureId=" + featureId + ", featureTxnId=" + featureTxnId
-				+ ", featureName=" + featureName + ", subFeature=" + subFeature + ", status=" + status + ", subject="
-				+ subject + ", retryCount=" + retryCount + "]";
+				+ channelType + ", message=" + message + ", userId=" + userId + ", featureId=" + featureId
+				+ ", featureTxnId=" + featureTxnId + ", featureName=" + featureName + ", subFeature=" + subFeature
+				+ ", status=" + status + ", subject=" + subject + ", retryCount=" + retryCount + ", referTable="
+				+ referTable + "]";
 	}
 }

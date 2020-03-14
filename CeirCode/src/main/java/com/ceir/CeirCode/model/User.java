@@ -54,10 +54,8 @@ public class User {
 	
     private String userLanguage;
     
+	private String modifiedBy;
 	
-	@JsonIgnore
-	@OneToMany(mappedBy = "userForNofication", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-	private List<Notification> notificationData;
 
 
 	@JsonIgnore
@@ -202,12 +200,7 @@ public class User {
 	public void setUserLanguage(String userLanguage) {
 		this.userLanguage = userLanguage;
 	}
-	public List<Notification> getNotificationData() {
-		return notificationData;
-	}
-	public void setNotificationData(List<Notification> notificationData) {
-		this.notificationData = notificationData;
-	}
+	
 	public List<UserPasswordHistory> getUserPasswordHistory() {
 		return userPasswordHistory;
 	}
@@ -254,6 +247,14 @@ public class User {
 	public void setStateInterp(String stateInterp) {
 		this.stateInterp = stateInterp;
 	}
+	
+	
+	public String getModifiedBy() {
+		return modifiedBy;
+	}
+	public void setModifiedBy(String modifiedBy) {
+		this.modifiedBy = modifiedBy;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -281,6 +282,8 @@ public class User {
 		builder.append(userLanguage);
 		builder.append(", stateInterp=");
 		builder.append(stateInterp);
+		builder.append(", modifiedBy=");
+		builder.append(modifiedBy);
 		builder.append("]");
 		return builder.toString();
 	}

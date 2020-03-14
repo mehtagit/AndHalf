@@ -61,7 +61,7 @@ public class UserRegistrationController {
 
 	@ApiOperation(value = "security questions list", response = HttpResponse.class)
 	@CrossOrigin
-	@PostMapping("/getSecurityQuestion") 
+	@PostMapping("/getSecurityQuestion")
 	public ResponseEntity<?> getSecurityQuestion(@RequestHeader HttpHeaders headers){
 		return userService.getSecurityQuestion(headers);
 	}                                                             
@@ -72,6 +72,14 @@ public class UserRegistrationController {
 	public ResponseEntity<?> saveUserRegistration(@RequestBody UserProfile userDetails){
 
 		return userService.userRegistration(userDetails);
+	} 
+	
+	@ApiOperation(value = "check registration status", response = HttpResponse.class)
+	@CrossOrigin
+	@PostMapping("/checkAvailability/{usertypeId}")
+	public ResponseEntity<?> checkStatus(@PathVariable("usertypeId")Integer usertypeId){
+
+		return userService.checkRegistration(usertypeId);
 	} 
 
 	@ApiOperation(value = "update email and phone status", response = HttpResponse.class)
@@ -89,4 +97,7 @@ public class UserRegistrationController {
 	{     
 		return userService.resendOtp(otp);
 	}        
+	
+	
+	
 }

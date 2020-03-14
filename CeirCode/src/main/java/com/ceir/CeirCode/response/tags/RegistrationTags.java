@@ -9,13 +9,18 @@ public enum RegistrationTags {
 	REG_WRONG_USER_ID("REG_WRONG_USER_ID","user id is wrong"),
 	COMMAN_FAIL_MSG("COMMAN_FAIL_MSG","Oops something wrong happened"),
 	OTP_SUCESS_RESP("OTP_SUCESS_RESP","Your OTP is verified! The form has been submitted for approval. You will receive an intimation on your registered e-mail with the approval status within 2 to 3 working days"),
+	OTP_SUCESS_For_UpdateUSer("Otp_Sucess_For_UpdateUSer","Your one time password is verified!"),
 	REG_WRONG_OTP("REG_WRONG_OTP", "Otp failed to verify"),
 	REG_EXPIRE_OTP("REG_EXPIRE_OTP", "Otp time is expired"),
 	REOTP_SUCESS_RESP("REOTP_SUCESS_RESP","A text message and e-mail with OTP has been sent"),
 	REG_REOTP_FAIL("REG_REOTP_FAIL", "Otp failed to resend"),
     LOGIN_WRONG_DETAILS("LOGIN_WRONG_DETAILS","Please enter the correct credentials"),
-    LOGIN_UNAUTHORIZED("LOGIN_UNAUTHORIZED","You are not allow to access this account")
-	;
+    LOGIN_UNAUTHORIZED("LOGIN_UNAUTHORIZED","You are not allow to access this account"),
+	Reg_userlimit_exceed("Reg_userlimit_exceed"," We are facing some technical difficulties. Please try after some time."),
+    Reg_flag_off("Reg_flag_off","This feature is not available as of now"),
+    Reg_allowed("Reg_allowed","Registration feature is now working")
+    ;
+	
 	
 	private String tag;
 	private String message;

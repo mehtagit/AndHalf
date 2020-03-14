@@ -88,6 +88,13 @@ public class Utility {
 		String currentDate=dateFormat.format(date);
 		return currentDate;
 	}
+	
+	public String convertToMonth(Date date) {
+		DateFormat dateFormat=new SimpleDateFormat("MMMM");
+		String currentDate=dateFormat.format(date);
+		return currentDate;
+	}
+	
 	public Date convertDateToFormat(Date date) {
 		DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd");
 		Date formattedDate = null;

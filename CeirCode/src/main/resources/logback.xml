@@ -9,16 +9,15 @@
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 		  <fileNamePattern>/home/ubuntu/CeirContent/logs4/log.%d{yyyy-MM-dd}.log</fileNamePattern>
 <!-- 		  <fileNamePattern>/home/ubuntu/CeirContent/testingLogs/log.%d{yyyy-MM-dd}.log</fileNamePattern>   -->
-		
- 	<maxHistory>60</maxHistory>
+			<maxHistory>60</maxHistory>
 		</rollingPolicy>
 	</appender>
-	<logger name="org.springframework" level="INFO">
+	<!-- <logger name="org.springframework" level="INFO">
 	</logger>
 	<logger name="com.zaxxer.hikari" level="INFO">
 	</logger>
 	<logger name="org.apache.http" level="INFO">
-	</logger>
+	</logger> -->
 	<root level="INFO">
 		<appender-ref ref="FILE" />
 	</root>

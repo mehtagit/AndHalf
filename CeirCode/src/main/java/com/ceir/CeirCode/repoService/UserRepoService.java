@@ -27,4 +27,15 @@ public class UserRepoService {
 			return null;
 		}
 	}
+	
+public long countByUsertypeId(long userTypeId) {
+		
+		try {
+			return userRepo.countByUsertype_Id(userTypeId);
+		}
+		catch(Exception e) {
+			log.info("user count failed to find by usertype id: "+userTypeId);
+			return 0;
+		}
+	}
 }
