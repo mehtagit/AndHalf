@@ -1,5 +1,4 @@
-
-<%
+u<%
 	response.setHeader("Cache-Control", "no-cache");
 	response.setHeader("Cache-Control", "no-store");
 	response.setDateHeader("Expires", 0);
@@ -82,7 +81,7 @@
 	data-selectedRoleTypeId="${selectedRoleTypeId}"
 	data-selected-roleType="${selectedUserTypeId}"
 	data-stolenselected-roleType="${stolenselectedUserTypeId}"
-	session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}"
+	session-valuepassportNo="${not empty param.passportNo ? param.passportNo : 'null'}"
 	data-period="${period}"
 	data-lang-param="${pageContext.response.locale}">
 	<section id="content">
@@ -91,10 +90,10 @@
 			<div class="section">
 				<div class="row card-panel">
 					<h6 class="fixPage-modal-header ">
-						<spring:message code="modal.header.registerdeviceforeigner" />
+						<spring:message code="modal.header.updateimmigrationform" />
 					</h6>
-					<form action="" onsubmit="return submitImmigrationForm()"
-						method="POST" enctype="multipart/form-data" novalidate>
+					<form action=""  onsubmit="return updateImmigrationForm()"
+						 enctype="multipart/form-data" >
 						<div class="col s12 m12 l12">
 							<div class="row">
 								<div class="row">
@@ -108,7 +107,7 @@
 									<div id="nationalID">
 										<div class="input-field col s12 m4">
 											<input type="text" id="endUserfirstName"
-												pattern="[a-zA-Z]{1,20}"
+												pattern="[a-zA-Z]{1,20}" placeholder=""
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 												required maxlength="20" /> <label for="firstName">
@@ -119,7 +118,7 @@
 
 										<div class="input-field col s12 m4">
 											<input type="text" id="endUsermiddleName"
-												pattern="[a-zA-Z]{1,20}"
+												pattern="[a-zA-Z]{1,20}" placeholder=""
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 												maxlength="20" /> <label for="middleName"> <spring:message
@@ -129,7 +128,7 @@
 
 										<div class="input-field col s12 m4">
 											<input type="text" id="endUserlastName"
-												pattern="[a-zA-Z]{1,20}"
+												pattern="[a-zA-Z]{1,20}" placeholder=""
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 												required maxlength="20" /> <label for="lastName"> <spring:message
@@ -138,7 +137,7 @@
 
 										<div class="input-field col s12 m6" id="nationalityDiv">
 											<input type="text" id="nationality" name="nationality"
-												pattern="[a-zA-Z]{1,25}"
+												pattern="[a-zA-Z]{1,25}" placeholder=""
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
 												maxlength="25"> <label for="nationality" class="">
@@ -147,7 +146,7 @@
 											</label>
 										</div>
 										<div class="input-field col s12 m12 l12">
-											<input type="text" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,200}"
+											<input type="text" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,200}" placeholder=""
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');"
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');"
 												required maxlength="200"
@@ -158,7 +157,7 @@
 										</div>
 
 										<div class="input-field col s12 m6 l6">
-											<input type="text" class="form-control boxBorder boxHeight"
+											<input type="text" class="form-control boxBorder boxHeight" placeholder=""
 												id="streetNumber" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,20}"
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
@@ -170,7 +169,7 @@
 
 										<div class="input-field col s12 m6 l6">
 											<input type="text" class="form-control boxBorder boxHeight"
-												pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}"
+												pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}" placeholder=""
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 												required class="form-control boxBorder boxHeight"
@@ -180,7 +179,7 @@
 										</div>
 
 										<div class="input-field col s12 m6 l6">
-											<input type="text" id="village"
+											<input type="text" id="village" placeholder=""
 												pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}"
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
@@ -190,7 +189,7 @@
 										</div>
 
 										<div class="input-field col s12 m6 l6">
-											<input type="text" id="commune" pattern="[a-zA-Z]{1,30}"
+											<input type="text" id="commune" pattern="[a-zA-Z]{1,30}" placeholder=""
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 												required maxlength="30"> <label for="commune">
@@ -199,7 +198,7 @@
 										</div>
 
 										<div class="input-field col s12 m6 l6">
-											<input type="text" id="endUserdistrict"
+											<input type="text" id="endUserdistrict" placeholder=""
 												pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}"
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
@@ -210,7 +209,7 @@
 
 										<div class="input-field col s12 m6 l6">
 											<input type="text" class="form-control boxBorder boxHeight"
-												id="pin" pattern="[0-9]{1,6}"
+												id="pin" pattern="[0-9]{1,6}" placeholder=""
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.6digit" />');"
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.6digit" />');"
 												required maxlength="6"> <label for="pin"> <spring:message
@@ -254,7 +253,7 @@
 										</div>
 
 										<div class="input-field col s12 m6">
-											<input type="email" id="endUseremailID"
+											<input type="email" id="endUseremailID" placeholder=""
 												pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
 												oninput="InvalidMsg(this,'email');"
 												oninvalid="InvalidMsg(this,'email');"
@@ -268,7 +267,7 @@
 
 										<div class="input-field col s12 m6">
 											<input type="text" id="endUserNID"
-												pattern="[A-Za-z0-9]{1,15}"
+												pattern="[A-Za-z0-9]{1,15}" placeholder=""
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
 												required maxlength="15" /> <label id="endUserLabelNID"
@@ -302,7 +301,7 @@
 													name="selectvip" value="Y" onclick="selectVip()"> <span>
 														<spring:message code="modal.yes" />
 												</span> </label> <label> <input class="with-gap" value="N"
-													type="radio" checked="checked" name="selectvip"
+													type="radio"  name="selectvip"
 													style="margin-left: 20px;" onclick="removeSelectVip()" />
 													<span> <spring:message code="modal.no" /></span>
 												</label>
@@ -311,7 +310,7 @@
 
 										<div class="row" style="display: none;" id="vipUserDiv">
 											<div class="input-field col s12 m6">
-												<input type="text" id="departmentName"
+												<input type="text" id="departmentName" placeholder=""
 													pattern="[a-zA-Z ]{1,50}"
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
@@ -323,7 +322,7 @@
 
 											<div class="input-field col s12 m6">
 												<input type="text" id="endUserdepartmentID"
-													pattern="[a-zA-Z0-9]{1,15}"
+													pattern="[a-zA-Z0-9]{1,15}" placeholder=""
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
 													required maxlength="15" /> <label for="departmentID">
@@ -348,7 +347,7 @@
 												</div>
 												<div class="file-path-wrapper">
 													<input class="file-path validate" type="text"
-														id="endUSerNidaPlaceholder"
+														id="endUSerNidaPlaceholder" 
 														placeholder="Upload Department ID Image">
 												</div>
 											</div>
@@ -363,7 +362,7 @@
 													name="onVisa" value="Y" onclick="showVisaDetails()">
 													<span> <spring:message code="modal.yes" /></span> </label> <label>
 													<input class="with-gap" type="radio" id="onVisaNo"
-													checked="checked" name="onVisa" value="N"
+													 name="onVisa" value="N"
 													style="margin-left: 20px;" onclick="hideVisaDetails()" />
 													<span> <spring:message code="modal.no" /></span>
 												</label>
@@ -385,15 +384,9 @@
 												</select>
 											</div>
 
-											<!-- <div class="input-field col s12 m6">
-                                                    <input type="text" id="bdate2" class="datepicker" name="entryDate"
-                                                        pattern="[]" title="" maxlength="20" />
-                                                    <label for="bdate2">Entry Date In Country <span
-                                                            class="star">*</span></label>
-                                                </div> -->
-
+										
 											<div class="input-field col s12 m6">
-												<input type="text" id="datepicker"
+												<input type="text" id="datepicker" placeholder=""
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.date" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.date" />');"
 													required maxlength="15" /> <label for="datepicker">
@@ -403,7 +396,7 @@
 											</div>
 
 											<div class="input-field col s12 m6">
-												<input type="text" id="visaNumber"
+												<input type="text" id="visaNumber" placeholder=""
 													pattern="[a-zA-Z0-9]{1,15}"
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
@@ -412,15 +405,10 @@
 												</label>
 											</div>
 
-											<!-- <div class="input-field col s12 m6">
-                                                    <input type="text" id="bdate" class="datepicker" name="expiryDate"
-                                                        pattern="[]" title="" maxlength="15" />
-                                                    <label for="bdate">Visa Expiry Date <span
-                                                            class="star">*</span></label>
-                                                </div> -->
+									
 
 											<div class="input-field col s12 m6">
-												<input type="text" id="datepicker1"
+												<input type="text" id="datepicker1" placeholder=""
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.date" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.date" />');"
 													required maxlength="15" /> <label for="datepicker1">
@@ -449,177 +437,27 @@
 												</div>
 											</div>
 										</div>
-										<div class="row">
-											<div class="col s12 m12" style="margin-top: 30px;">
-												<h5>
-													<spring:message code="modal.deviceInfo" />
-												</h5>
-												<hr>
-											</div>
-											<div id="mainDeviceInformation" class="mainDeviceInformation">
-												<div id="deviceInformation" class="deviceInformation">
-													<div class="col s12 m6">
-														<label for="deviceIdType"> <spring:message
-																code="select.deviceIDType" /><span class="star">*</span></label>
-														<select class="browser-default"
-															oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-															oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-															required id="deviceIdType1">
-															<option value="" disabled selected>
-																<spring:message code="select.selectDeviceIDType" />
-															</option>
+					
 
-														</select>
-													</div>
-
-
-													<div class="col s12 m6">
-														<label for="deviceType"> <spring:message
-																code="select.multiSimStatus" /></label> <select
-															class="browser-default"
-															oninput="InvalidMsg(this,'select','<spring:message code="
-                                                            validation.selectFieldMsg" />');"
-															oninvalid="InvalidMsg(this,'select','
-                                                        <spring:message code="validation.selectFieldMsg" />');"
-															id="multipleSimStatus1">
-															<option value="" disabled selected>
-																<spring:message code="select.multiSimStatus" />
-															</option>
-
-														</select>
-													</div>
-
-													<div class="col s12 m6">
-														<label for="deviceType"> <spring:message
-																code="select.deviceType" /></label> <select
-															class="browser-default" style="height: 34px"
-															id="deviceType1"
-															oninput="InvalidMsg(this,'select','<spring:message code="
-                                                            validation.selectFieldMsg" />');"
-															oninvalid="InvalidMsg(this,'select','
-                                                        <spring:message code="validation.selectFieldMsg" />');">
-															<option value="" disabled selected>
-																<spring:message code="select.deviceType" />
-															</option>
-
-														</select>
-													</div>
-													<div class="input-field col s12 m6 l6">
-														<p
-															style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
-															<spring:message code="input.Country" />
-
-														</p>
-														<select id="country1" class="browser-default"
-															style="margin-bottom: 5px;" class="mySelect"
-															oninput="InvalidMsg(this,'select','<spring:message code="
-                                                            validation.selectFieldMsg" />');"
-															oninvalid="InvalidMsg(this,'select','
-                                                        <spring:message code="validation.selectFieldMsg" />');"
-															style="padding-left: 0;"></select>
-													</div>
-													<div class="input-field col s12 m6"
-														style="margin-top: 22px;">
-														<input type="text" id="serialNumber1"
-															pattern="[A-Za-z0-9]{0,15}"
-															oninput="InvalidMsg(this,'input','<spring:message code="
-                                                            validation.15character" />');"
-															oninvalid="InvalidMsg(this,'input','
-                                                        <spring:message code="validation.15character" />');"
-															maxlength="15"> <label for="serialNumber">
-															<spring:message code="input.deviceSerialNumber" />
-														</label>
-													</div>
-
-													<div class="col s12 m6">
-														<label for="taxStatus"> <spring:message
-																code="select.deviceStatus" /></label> <select
-															class="browser-default"
-															oninput="InvalidMsg(this,'select','<spring:message code="
-                                                            validation.selectFieldMsg" />');"
-															oninvalid="InvalidMsg(this,'select','
-                                                        <spring:message code="validation.selectFieldMsg" />');"
-															id="deviceStatus1">
-															<option value="" disabled="disabled" selected>
-																<spring:message code="select.selectDeviceStatus" />
-															</option>
-
-														</select>
-													</div>
-
-													<div class="col s12 m12">
-														<p>
-															<spring:message code="title.imeiMeidEsn" />
-														</p>
-													</div>
-
-													<div class="input-field col s12 m6">
-														<input type="text" id="IMEIA1" pattern="[0-9]{16,16}"
-															oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
-															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
-															required maxlength="16"> <label for="IMEI1">
-															<spring:message code="title.one" /> <span class="star">*</span>
-														</label>
-													</div>
-
-													<div class="input-field col s12 m6">
-														<input type="text" id="IMEIB1" pattern="[0-9]{16,16}"
-															oninput="InvalidMsg(this,'input','<spring:message code=" validation.1516digit" />');"
-															oninvalid="InvalidMsg(this,'input','<spring:message code=" validation.1516digit" />');"
-															
-															maxlength="16"> <label for="IMEI2"> <spring:message
-																code="title.two" /></label>
-													</div>
-													<div class="input-field col s12 m6">
-														<input type="text" id="IMEIC1" pattern="[0-9]{16,16}"
-															oninput="InvalidMsg(this,'input','<spring:message code=" validation.1516digit" />');"
-															oninvalid="InvalidMsg(this,'input','<spring:message code=" validation.1516digit" />');"
-															
-															maxlength="16"> <label for="IMEI1"> <spring:message
-																code="title.three" /></label>
-													</div>
-
-													<div class="input-field col s12 m6">
-														<input type="text" id="IMEID1" pattern="[0-9]{16,16}"
-															oninput="InvalidMsg(this,'input');"
-															oninvalid="InvalidMsg(this,'input');"
-															title="<spring:message code=" validation.1516digit" />"
-															maxlength="16"> <label for="IMEI2"> <spring:message
-																code="title.four" /></label>
-													</div>
-
-
-												</div>
-											</div>
-											<!-- <div class="input_fields_wrap_1"></div> -->
-
-											<div class="row">
-												<div class="col s12 m12">
-													<button class="btn right add_field_button"
-														style="margin-top: 5px;">
-														<span style="font-size: 20px;">+</span>
-														<spring:message code="button.addMoreDevice" />
-													</button>
-												</div>
-											</div>
+										<div class="col s12 m12">
+											<p>
+												<spring:message code="input.requiredfields" />
+												<span class="star">*</span>
+											</p>
 										</div>
-
-
-										
 										<div class="row" style="padding-bottom: 50px;">
-										<p>
-											<spring:message code="input.requiredfields" />
-											<span class="star">*</span>
-										</p>
+										
 											<div class="input-field col s12 m12 center">
 												<button id="endUserRegisterButton" type="submit" class="btn">
-													<spring:message code="button.submit" />
+													<spring:message code="button.update" />
 												</button>
 												<a href="./manageDevicesStock?FeatureId=19" class="btn"
 													style="margin-left: 10px;"> <spring:message
 														code="button.cancel" /></a>
 											</div>
 										</div>
+										
+										
 									</div>
 								</div>
 
@@ -791,7 +629,7 @@
 	<script type="text/javascript"
 		src="${context}/resources/project_js/enterKey.js"></script>
 	<script type="text/javascript"
-		src="${context}/resources/project_js/immigration_register.js"></script>
+		src="${context}/resources/project_js/update_immigrationForm.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/validationMsg.js"></script>
 </body>

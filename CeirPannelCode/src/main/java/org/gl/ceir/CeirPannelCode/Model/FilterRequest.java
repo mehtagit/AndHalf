@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class FilterRequest {
 	public String startDate,endDate,createdOn,modifiedOn,roleType,userType,txnId,searchString,grievanceId,tag,remarks,deviceId,nid,childTag,field,interp,tagId,value,displayName,description,address,featureName,subFeatureName,userName,date,fileName,invoiceNumber,suplierName,supplierId,stateInterp;
-	private Integer userId,taxPaidStatus,consignmentStatus,featureId,userTypeId,fileStatus,requestType,sourceType,grievanceStatus,userRoleTypeId,status,asType,serviceDump,fileType,action,operatorTypeId,channel,type,deviceIdType,parentValue,id,port,currency,quantity,stockStatus;
+	private Integer pageNo, pageSize,userId,taxPaidStatus,consignmentStatus,featureId,userTypeId,fileStatus,requestType,sourceType,grievanceStatus,userRoleTypeId,status,asType,serviceDump,fileType,action,operatorTypeId,channel,type,deviceIdType,parentValue,id,port,currency,quantity,stockStatus;
 	private Double dollar,riel;
 	public String getStartDate() {
 		return startDate;
@@ -359,15 +359,27 @@ public class FilterRequest {
 				+ displayName + ", description=" + description + ", address=" + address + ", featureName=" + featureName
 				+ ", subFeatureName=" + subFeatureName + ", userName=" + userName + ", date=" + date + ", fileName="
 				+ fileName + ", invoiceNumber=" + invoiceNumber + ", suplierName=" + suplierName + ", supplierId="
-				+ supplierId + ", stateInterp=" + stateInterp + ", userId=" + userId + ", taxPaidStatus="
-				+ taxPaidStatus + ", consignmentStatus=" + consignmentStatus + ", featureId=" + featureId
-				+ ", userTypeId=" + userTypeId + ", fileStatus=" + fileStatus + ", requestType=" + requestType
-				+ ", sourceType=" + sourceType + ", grievanceStatus=" + grievanceStatus + ", userRoleTypeId="
-				+ userRoleTypeId + ", status=" + status + ", asType=" + asType + ", serviceDump=" + serviceDump
-				+ ", fileType=" + fileType + ", action=" + action + ", operatorTypeId=" + operatorTypeId + ", channel="
-				+ channel + ", type=" + type + ", deviceIdType=" + deviceIdType + ", parentValue=" + parentValue
-				+ ", id=" + id + ", port=" + port + ", currency=" + currency + ", quantity=" + quantity
+				+ supplierId + ", stateInterp=" + stateInterp + ", pageNo=" + pageNo + ", pageSize=" + pageSize
+				+ ", userId=" + userId + ", taxPaidStatus=" + taxPaidStatus + ", consignmentStatus=" + consignmentStatus
+				+ ", featureId=" + featureId + ", userTypeId=" + userTypeId + ", fileStatus=" + fileStatus
+				+ ", requestType=" + requestType + ", sourceType=" + sourceType + ", grievanceStatus=" + grievanceStatus
+				+ ", userRoleTypeId=" + userRoleTypeId + ", status=" + status + ", asType=" + asType + ", serviceDump="
+				+ serviceDump + ", fileType=" + fileType + ", action=" + action + ", operatorTypeId=" + operatorTypeId
+				+ ", channel=" + channel + ", type=" + type + ", deviceIdType=" + deviceIdType + ", parentValue="
+				+ parentValue + ", id=" + id + ", port=" + port + ", currency=" + currency + ", quantity=" + quantity
 				+ ", stockStatus=" + stockStatus + ", dollar=" + dollar + ", riel=" + riel + "]";
+	}
+	public Integer getPageNo() {
+		return pageNo;
+	}
+	public void setPageNo(Integer pageNo) {
+		this.pageNo = pageNo;
+	}
+	public Integer getPageSize() {
+		return pageSize;
+	}
+	public void setPageSize(Integer pageSize) {
+		this.pageSize = pageSize;
 	}
 	
 	
