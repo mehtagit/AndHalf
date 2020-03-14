@@ -222,14 +222,14 @@ select {
 															<input type="file" pattern="{0,30}"
 																oninput="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');"
 																oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');"
-																required placeholder="Upload Photo" onchange="isImageValid('singleStolenFile')"
+																required placeholder="" onchange="isImageValid('singleStolenFile')"
 																id="singleStolenFile">
 														</div>
 														<div class="file-path-wrapper">
 															<input class="file-path validate" type="text"
 																placeholder="<spring:message code="registration.uploadnid/passportimage" />"
 																id="singleStolenFileName"
-																title="Please upload national ID image">
+																title="">
 														</div>
 													</div>
 
@@ -552,8 +552,8 @@ select {
 														<div class="input-field col s12 m6">
 															<input type="text" name="imeiNumberTwo"
 																pattern="[0-9]{15,16}"
-																oninput="InvalidMsg(this,'input','<spring:message code=" validation.1516digit" />');"
-																oninvalid="InvalidMsg(this,'input','<spring:message code=" validation.1516digit" />');"
+																oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
+																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																
 																maxlength="16" id="singleStolenimei2"> <label
 																for="singleStolenimei12"> <spring:message
@@ -563,8 +563,8 @@ select {
 														<div class="input-field col s12 m6">
 															<input type="text" name="imeiNumberThree"
 																pattern="[0-9]{15,16}"
-																oninput="InvalidMsg(this,'input','<spring:message code=" validation.1516digit" />');"
-																oninvalid="InvalidMsg(this,'input','<spring:message code=" validation.1516digit" />');"
+																oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
+																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																
 																maxlength="16" id="singleStolenimei3"> <label
 																for="singleStolenimei3"> <spring:message code="registration.three" /></label>
@@ -573,8 +573,8 @@ select {
 														<div class="input-field col s12 m6">
 															<input type="text" name="imeiNumberFour"
 																pattern="[0-9]{15,16}"
-																oninput="InvalidMsg(this,'input','<spring:message code=" validation.1516digit" />');"
-																oninvalid="InvalidMsg(this,'input','<spring:message code=" validation.1516digit" />');"
+																oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
+																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																
 																maxlength="16" id="singleStolenimei4"> <label
 																for="singleStolenimei4"> <spring:message code="registration.four" /></label>
@@ -718,7 +718,7 @@ select {
 																<input type="file"
 																	oninput="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');"
 																	oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');"
-																	placeholder="Upload FIR" id="uploadFirSingle" onchange="isFileValid('uploadFirSingle')"> 
+																	placeholder="" id="uploadFirSingle" onchange="isImageValid('uploadFirSingle')"> 
 															</div>
 															<div class="file-path-wrapper">
 																<input class="file-path validate" type="text"
@@ -933,12 +933,12 @@ select {
 											<div class="input-field col s12 m6">
 												<!-- <p class="contact-label">Alternate Contact Number <span class="star">*</span></p> -->
 												<input type="text" name="phone" id="bulkStolenContact"
-													pattern="[0-9\s,+]{7,15}"
+													pattern="[0-9\s,+]{7,12}"
 													oninput="InvalidMsg(this,'input','<spring:message code="
 													validation.contact" />');"
 													oninvalid="InvalidMsg(this,'input','
 												<spring:message code="validation.contact" />');"
-													maxlength="15" /> <label for="phone2"> <spring:message
+													maxlength="12" /> <label for="phone2"> <spring:message
 														code="input.contactNum" /></label>
 											</div>
 
@@ -1100,7 +1100,7 @@ select {
 														required id="deviceBulkStolenFile" onchange="isFileValid('deviceBulkStolenFile')" accept=".csv">
 												</div>
 												<div class="file-path-wrapper">
-													<input class="file-path validate" type="text"
+													<input class="file-path validate" type="text" id="deviceBulkStolenFileName"
 														placeholder="<spring:message code="
 														registration.uploaddevicelist" />">
 												</div>
@@ -1176,7 +1176,7 @@ select {
 												</h6>
 												<div class="btn">
 													<span> <spring:message code="input.selectfile" /></span> <input
-														type="file"
+														type="file" onchange="isImageValid('uploadFirBulk')"
 														oninput="InvalidMsg(this,'fileType','<spring:message code="
 														validation.NoChosen" />');"
 														oninvalid="InvalidMsg(this,'fileType','
@@ -1398,7 +1398,6 @@ src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/j
 		
 		
 		function isImageValid(id) {
-			
 			var uploadedFileName = $("#"+id).val();
 			uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
 			//alert("file extension=="+uploadedFileName)
@@ -1408,16 +1407,23 @@ src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/j
 			/*fileSize = (Math.round((fileSize / 100000) * 100) / 100)
 			alert("----"+fileSize);*/
 			fileSize = Math.floor(fileSize/1000) + 'KB';
-
+           
 			//alert(uploadedFileName+"----------"+ext+"----"+fileSize)
-
+			var areEqual =ext.toLowerCase()=='png';
+			//alert(areEqual);
+			if(areEqual==true)
+				{
+				ext='PNG';
+				}
+			
 			if (uploadedFileName.length > 30) {
 				$('#fileFormateModal').openModal();
 				$('#fileErrormessage').text('');
 				$('#fileErrormessage').text($.i18n('imageMessage'));
 			} 
-			else if(ext !='png')
+			else if(ext !='PNG')
 			{
+				
 				$('#fileFormateModal').openModal({
 					dismissible:false
 				});
@@ -1432,15 +1438,12 @@ src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/j
 				$('#fileErrormessage').text('');
 				$('#fileErrormessage').text($.i18n('imageSize'));	
 			}
-			
-
-
 		}
 		
 		
 		function clearFileName() {
-			$('#singleStolenFile,#uploadFirSingle').val('');
-			$("#singleStolenFileName").val('');
+			$('#deviceBulkStolenFile,#singleStolenFile,#uploadFirSingle,#uploadFirBulk').val('');
+			$("#deviceBulkStolenFileName,#singleStolenFileName,#uploadFirSingleName,#uploadFirSingleBulkName").val('');
 			$('#fileFormateModal').closeModal();
 		}
 		

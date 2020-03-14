@@ -451,13 +451,13 @@ function submitEndUserDeviceInfo(){
 			if(data.errorCode==0){
 
 //				$('#sucessMessage').text('');
-				$('#endUserRegisterDeviceModal').openModal();
+				$('#endUserRegisterDeviceModal').openModal({dismissible:false});;
 				$('#endUsertXnId').text(data.txnId);
 				$("#endUserRegisterButton").prop('disabled', true);
 			}
 			else{
 //				$('#sucessMessage').text('');
-				$('#endUserRegisterDeviceModal').openModal();
+				$('#endUserRegisterDeviceModal').openModal({dismissible:false});;
 				$('#sucessMessageId').text('');
 				$('#sucessMessageId').text(data.message);
 			}
@@ -473,6 +473,7 @@ function submitEndUserDeviceInfo(){
 
 $(document).on("keyup", "#visaNumber", function(e) {
 	var visaNumber=$('#visaNumber').val();
+
 	if(visaNumber.length<'1' )
 	{
 		$("#datepicker1").attr("required", false);
@@ -503,13 +504,18 @@ function fileTypeValueChanges(id) {
 	fileSize = Math.floor(fileSize/1000) + 'KB';
 
 	//alert(uploadedFileName+"----------"+ext+"----"+fileSize)
-
+	var areEqual =ext.toLowerCase()=='png';
+	//alert(areEqual);
+	if(areEqual==true)
+		{
+		ext='PNG';
+		}
 	if (uploadedFileName.length > 30) {
-		$('#fileFormateModal').openModal();
+		$('#fileFormateModal').openModal({dismissible:false});;
 		$('#fileErrormessage').text('');
 		$('#fileErrormessage').text($.i18n('imageMessage'));
 	} 
-	else if(ext !='png')
+	else if(ext !='PNG')
 	{
 		$('#fileFormateModal').openModal({
 			dismissible:false
@@ -549,14 +555,19 @@ function visaImageValidation() {
 	alert("----"+fileSize);*/
 	fileSize = Math.floor(fileSize/1000);
 
-
+	var areEqual =ext.toLowerCase()=='png';
+	//alert(areEqual);
+	if(areEqual==true)
+		{
+		ext='PNG';
+		}
 
 	if (uploadedFileName.length > 30) {
 		$('#visafileFormateModal').openModal({dismissible:false});
 		$('#visafileErrormessage').text('');
 		$('#visafileErrormessage').text($.i18n('imageMessage'));
 	} 
-	else if(ext!='png')
+	else if(ext!='PNG')
 	{
 		$('#visafileFormateModal').openModal({
 			dismissible:false
@@ -597,14 +608,19 @@ function deptImageValidation() {
 	alert("----"+fileSize);*/
 	fileSize = Math.floor(fileSize/1000);
 
-
+	var areEqual =ext.toLowerCase()=='png';
+	//alert(areEqual);
+	if(areEqual==true)
+		{
+		ext='PNG';
+		}
 
 	if (uploadedFileName.length > 30) {
 		$('#DeptfileFormateModal').openModal({dismissible:false});
 		$('#DeptfileErrormessage').text('');
 		$('#DeptfileErrormessage').text($.i18n('imageMessage'));
 	} 
-	else if(ext!='png')
+	else if(ext!='PNG')
 	{
 		$('#DeptfileFormateModal').openModal({
 			dismissible:false

@@ -126,5 +126,6 @@
 	"Block/Unblock Requests":"Block/Unblock Requests",
 	"Stolen/Recovery Requests":"Stolen/Recovery Requests",
 	"country": "Country",
-	"PRO_OldPass_Error":"Kindly enter the correct password"
+	"PRO_OldPass_Error":"Kindly enter the correct password",
+	"Deletion of consignment is in Progress.":"Deletion of consignment is in Progress."
 }

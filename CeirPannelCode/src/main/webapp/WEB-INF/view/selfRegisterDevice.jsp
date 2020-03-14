@@ -85,7 +85,7 @@
 						<spring:message code="modal.header.registerdevice" />
 					</h6>
 					<form action="" onsubmit="return submitEndUserDeviceInfo()"
-						method="POST" enctype="multipart/form-data" novalidate>
+						method="POST" enctype="multipart/form-data" >
 						<div class="col s12 m12 l12">
 							<div class="row">
 								<div class="row">
@@ -278,7 +278,7 @@
 											</h6>
 											<div class="btn">
 												<span><spring:message code="input.selectfile" /> </span> <input
-													type="file" onchange="fileTypeValueChanges()"
+													type="file" onchange="fileTypeValueChanges('uploadnationalID')"
 													oninput="InvalidMsg(this,'fileType');"
 													oninvalid="InvalidMsg(this,'fileType');"
 													title="<spring:message code="validation.file" />"
@@ -311,7 +311,7 @@
 													pattern="[a-zA-Z ]{1,50}"
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
-													required maxlength="50" /> <label for="departmentName"><spring:message
+													 maxlength="50" /> <label for="departmentName"><spring:message
 														code="input.DepartmentName" /> <span class="star">*</span></label>
 											</div>
 
@@ -320,7 +320,7 @@
 													pattern="[a-zA-Z0-9]{1,15}"
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
-													required maxlength="15" /> <label for="departmentID"><spring:message
+													 maxlength="15" /> <label for="departmentID"><spring:message
 														code="input.DepartmentID" /><span class="star">*</span> </label>
 											</div>
 
@@ -335,7 +335,7 @@
 														onchange="deptImageValidation()"
 														oninput="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');"
 														oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');"
-														required id="endUserDepartmentId"
+														 id="endUserDepartmentId"
 														placeholder="Upload Department ID Image">
 												</div>
 												<div class="file-path-wrapper">
@@ -369,7 +369,7 @@
 													class="browser-default" id="visaType"
 													oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 													oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-													required style="height: 33px">
+													 style="height: 33px">
 													<option value="" disabled selected><spring:message
 															code="input.SelectVisaType" /></option>
 
@@ -387,7 +387,7 @@
 												<input type="text" id="datepicker"
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.date" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.date" />');"
-													required maxlength="15" /> <label for="datepicker"><spring:message
+													 maxlength="15" /> <label for="datepicker"><spring:message
 														code="input.EntryCountry" /> <span class="star">*</span></label>
 											</div>
 
@@ -396,7 +396,7 @@
 													pattern="[a-zA-Z0-9]{1,15}"
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
-													required maxlength="15" /> <label for="visaNumber"><spring:message
+													 maxlength="15" /> <label for="visaNumber"><spring:message
 														code="input.VisaNumber" /></label>
 											</div>
 
@@ -411,7 +411,7 @@
 												<input type="text" id="datepicker1"
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.date" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.date" />');"
-													required maxlength="15" /> <label for="datepicker1"><spring:message
+													 maxlength="15" /> <label for="datepicker1"><spring:message
 														code="input.VisaExpiry" /> <span class="star">*</span></label>
 											</div>
 
@@ -426,7 +426,7 @@
 														oninput="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');"
 														onchange="visaImageValidation()"
 														oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');"
-														required placeholder="Upload Visa Image">
+														 placeholder="Upload Visa Image">
 												</div>
 												<div class="file-path-wrapper">
 													<input class="file-path validate" type="text"

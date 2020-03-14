@@ -95,12 +95,12 @@ var lang_param =window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 					if(data.errorCode==0){
 
 					//	$('#sucessMessage').text('');
-					    $('#regularisedDevice').openModal();
+					    $('#regularisedDevice').openModal({dismissible:false});
 						$('#dynamicTxnId').text(data.txnId);
 					}
 					else{
 						//$('#sucessMessage').text('');
-						$('#regularisedDevice').openModal();
+						$('#regularisedDevice').openModal({dismissible:false});
 						$('#sucessMessage').text();
 						$('#sucessMessage').text(data.message);
 						

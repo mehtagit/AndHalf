@@ -621,8 +621,8 @@ function saveCompanyStolenRequest(){
 			"incidentVillage": deviceBulkStolenvillage,
 			"locality": deviceBulkStolenlocality ,
 			"personnelFirstName": firstName,
-			"personnelLastName": bulkStolenmiddleName,
-			"personnelMiddleName": bulkStolenlastName,
+			"personnelLastName":bulkStolenlastName ,
+			"personnelMiddleName":bulkStolenmiddleName ,
 			"phoneNo": bulkStolenContact,
 			"postalCode": bulkStolenpin,
 			"propertyLocation": bulkStolenaddress,
@@ -637,6 +637,7 @@ function saveCompanyStolenRequest(){
 			"dateOfStolen":bulkStolenDate,
 			"blockingTimePeriod":blockingTimePeriod,
 			"blockingType":blockingType,
+			"remark":deviceBulkStolenRemark,
 			"requestType":0,
 			"sourceType":6,
 			"firFileName":uploadFirBulk,
@@ -823,13 +824,11 @@ function confirmRejectInformation(){
 	setTimeout(function(){$('#confirmRejectInformation').openModal({dismissible:false});},200);
 }
 
-
-
-
-
-
-
-
+function clearFileName() {
+	$('#bulkRecoveryFile').val('');
+	$("#bulkRecoveryFileName").val('');
+	$('#fileFormateModal').closeModal();
+}
 
 
 

@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
+import org.gl.ceir.CeirPannelCode.Model.AddMoreFileModel;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentModel;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentUpdateRequest;
 import org.gl.ceir.CeirPannelCode.Model.Dropdown;
@@ -67,6 +68,11 @@ public class Consignment {
 	@Value ("${filePathforErrorFile}")
 	String filePathforErrorFile;
 	
+@Autowired
+AddMoreFileModel addMoreFileModel,urlToUpload;
+
+
+
 	
 @Autowired
 
@@ -200,11 +206,16 @@ String name=session.getAttribute("name").toString();
 log.info(" Register consignment entry point.");
 String txnNumner=utildownload.getTxnId();
 txnNumner = "C"+txnNumner;
+
+addMoreFileModel.setTag("system_upload_filepath");
+urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
+
+log.info("url to upload file=="+urlToUpload.getValue());
 log.info("Random transaction id number="+txnNumner);
 ConsignmentModel consignment = new ConsignmentModel();
 try {
 byte[] bytes = file.getBytes();
-String rootPath = filePathforUploadFile+txnNumner+"/";
+String rootPath = urlToUpload.getValue()+txnNumner+"/";
 File dir = new File(rootPath + File.separator);
 
 if (!dir.exists()) 
@@ -266,6 +277,9 @@ String name=session.getAttribute("name").toString();
 
 GenricResponse response= new GenricResponse();
 
+addMoreFileModel.setTag("system_upload_filepath");
+urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
+
 log.info("entry point in update Consignment.");
 if(file==null)
 {
@@ -288,13 +302,13 @@ consignment.setTotalPrice(totalPrice);
 else {
 log.info("file is empty or not "+file.isEmpty());
 try {
-String rootPath = filePathforUploadFile+txnId+"/";
+String rootPath = urlToUpload.getValue()+txnId+"/";
 File tmpDir = new File(rootPath+file.getOriginalFilename());
 boolean exists = tmpDir.exists();
 if(exists) {
 
 Path temp = Files.move 
-(Paths.get(filePathforUploadFile+"/"+txnId+"/"+file.getOriginalFilename()), 
+(Paths.get(urlToUpload.getValue()+"/"+txnId+"/"+file.getOriginalFilename()), 
 Paths.get(filePathforMoveFile+file.getOriginalFilename())); 
 String movedPath=filePathforMoveFile+file.getOriginalFilename();	
 
