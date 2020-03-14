@@ -131,6 +131,8 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
                 <form action="">
                  	<h6> <spring:message code="registration.thetransactionid" /><span id="registrationTxnId"> </span> <spring:message code="registration.pendingforapproval" /></h6>
                     <p><spring:message code="registration.dorequest" /></p>
+                    <input type ="text" id="sessionUserName" hidden="hidden">
+                    	
                 </form>
             </div>
             <div class="row">
@@ -173,7 +175,7 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
                         <label for="textarea1" style="margin-left: -10px;"><spring:message code="lable.reason" /></label>
                     </div>
                     <h6><spring:message code="registration.doreject" /></h6>
-                    
+                    <input type ="text" id="rejectUserName" hidden="hidden">
                 </form>
             </div>
             <div class="row">
@@ -221,7 +223,7 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
                                             </div>
                                    
                                         </div>
-                                 
+                                 		 <input type ="text" id="statusUserName" hidden="hidden" >
                                         <div class="row">
                                             <div class="input-field col s12 center" style="padding: 20px 0;">
                                                 <!-- <a href="#submitIMEI" class="btn modal-trigger">Submit</a>  -->

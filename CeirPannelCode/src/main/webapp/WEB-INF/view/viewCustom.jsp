@@ -295,5 +295,8 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
 	<script type="text/javascript"
 		src="${context}/resources/project_js/AdminRegistrationRequest.js"></script>
 		
+		<script type="text/javascript"
+		src="${context}/resources/project_js/globalVariables.js"></script>
+		
 </body>
 </html>

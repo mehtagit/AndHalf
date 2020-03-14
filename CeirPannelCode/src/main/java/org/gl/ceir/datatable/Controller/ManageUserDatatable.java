@@ -82,10 +82,10 @@ public class ManageUserDatatable {
 						String txnId = dataInsideList.getTxnId();
 						String passportNo = dataInsideList.getNid();
 						String nationality =dataInsideList.getNationality();
-						String visaExpiryDate = "";
+						//String visaExpiryDate = "";
 						String phoneNo = dataInsideList.getPhoneNo();
 						String action=iconState.manageUserIcons(id,passportNo);			   
-						Object[] finalData={createdOn,txnId,passportNo,nationality,visaExpiryDate,phoneNo,action}; 
+						Object[] finalData={createdOn,txnId,passportNo,nationality,phoneNo,action}; 
 						List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);	
@@ -127,7 +127,7 @@ public class ManageUserDatatable {
 			log.info("session value user Type=="+session.getAttribute("usertype"));
 			
 			
-			String[] names= {"HeaderButton",Translator.toLocale("table.registerUser"),"./register-user","btnLink","FilterButton", Translator.toLocale("button.filter"),"filter("+ConfigParameters.languageParam+")","submitFilter"};
+			String[] names= {"HeaderButton",Translator.toLocale("table.registerUser"),"./immigration_register","btnLink","FilterButton", Translator.toLocale("button.filter"),"filter("+ConfigParameters.languageParam+")","submitFilter"};
 				for(int i=0; i< names.length ; i++) {
 					button = new Button();
 					button.setType(names[i]);
@@ -162,9 +162,4 @@ public class ManageUserDatatable {
 		
 		
 	}
-
-
-
-
-
 }

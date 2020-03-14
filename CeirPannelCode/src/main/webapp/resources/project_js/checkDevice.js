@@ -112,17 +112,17 @@ $('#deviceIdType').on('change', function() {
 
 function isLengthValid(val){
 	var deviceIDLength=val.length;
-
-
-	if(val.match(/^[0-9a-z]+$/) && (deviceIDLength > 8)){
-		$("#DeviceID").attr("pattern","[A-F0-9]{0,11}");
+	if(!isNaN(val)){
+		$("#DeviceID").attr("pattern","[0-9]{11,11}");
+		$("#DeviceID").attr("maxlength","11");
 		$("#DeviceID").attr("oninput","InvalidMsg(this,'input','"+$.i18n('validationESN11')+"')");
 		$("#DeviceID").attr("oninvalid","InvalidMsg(this,'input','"+$.i18n('validationESN11')+"')");
-
 	}
-	else if(isNaN(val) && (deviceIDLength <= 8 )){
+	else if(typeof val == 'string' || val instanceof String){
+		$("#DeviceID").attr("maxlength","8");
+		$("#DeviceID").attr("pattern","[A-F0-9]{8,8}");
 		$("#DeviceID").attr("oninput","InvalidMsg(this,'input','"+$.i18n('validationESN8')+"')");
-		$("#DeviceID").attr("oninput","InvalidMsg(this,'input','"+$.i18n('validationESN8')+"')");
-		$("#DeviceID").attr("pattern","[0-9]{0,8}");
+		$("#DeviceID").attr("oninvalid","InvalidMsg(this,'input','"+$.i18n('validationESN8')+"')");
+
 	}
 }

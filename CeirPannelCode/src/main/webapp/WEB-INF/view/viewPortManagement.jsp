@@ -136,7 +136,7 @@
 					<div class="col s12 m6">
 					<label for="port" class="active">Port Type <span class="star">*</span></label>
                      	 <select class="browser-default" id="port" >
-                                <option value=""  selected="">Select Port Type</option>
+                                <option value=""  selected="" disabled>Select Port Type</option>
                           </select>
                         
                          <input type="text" id="id" hidden>
@@ -166,7 +166,7 @@
 				<div class="col s12 m6">
 					<label for="editport" class="active">Port Type <span class="star">*</span></label>
                      	 <select class="browser-default" id="editport" >
-                                <option value=""  selected="">Select Port Type</option>
+                                <option value=""  selected="" disabled>Select Port Type</option>
                           </select>
                         
                          <input type="text" id="editId" hidden>

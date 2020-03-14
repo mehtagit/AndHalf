@@ -95,8 +95,8 @@ public class RegistrationController {
 
 
 	@RequestMapping(value = "/registration")
-	public String registration(@RequestParam(name = "type",required =false) String usertype,Model model) {
-		return registrationService.registrationView(usertype,model);
+	public String registration(@RequestParam(name = "type",required =false) String usertype,Model model,HttpSession session) {
+		return registrationService.registrationView(usertype,model,session);
 	}
 
 	@RequestMapping(value = "/importorRegistration",method = {RequestMethod.GET})
@@ -194,5 +194,5 @@ public class RegistrationController {
 	public List<Usertype> userTypeDropdown(){ 
 		List<Usertype> response =userRegistrationFeignImpl.userRegistrationDropdown();
 		return response;          
-	} 
+	}
 }

@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html lang="en" class="no-js">
 <head>
-<title>Dashboard</title>
+<title>Block-Unblock</title>
 
 <meta charset="utf-8" />
 <meta name="viewport"

@@ -13,15 +13,36 @@
 /*----------------------------------------
     General Layout Style
   ------------------------------------------*/
-/* FIREFOX FIX OF UGLY SELECT BOXES */
-@supports (-moz-appearance:none ) {SELECT { -moz-appearance:none!important;
-	background: transparent url('../images/dropdownIcon.png') right center
-		no-repeat !important;
-	background-position: calc(100% - 5px) center !important;
-	line-height: 1;
+
+
+@supports (-moz-appearance:none ) {select.browser-default {
+    display: block;
+    outline: transparent;
+    box-shadow: none;
+   
+}
 }
 
+select::-ms-expand {
+border: none;
+background-image: $url('../images/dropdownIcon.png') !important;
+background: transparent url('../images/dropdownIcon.png') right center no-repeat !important;
+background-position: calc(100% - 5px) center !important;
+background-repeat: no-repeat;
 }
+
+
+@media (-webkit-min-device-pixel-ratio: 0) {
+select {
+-webkit-appearance: none;
+background-image: $url('../images/dropdownIcon.png') !important;
+background: transparent url('../images/dropdownIcon.png') right center no-repeat !important;
+background-position: calc(100% - 5px) center !important;
+background-repeat: no-repeat;
+}
+}
+
+
 body {
 	background-color: #f9f9f9;
 }
@@ -3026,7 +3047,8 @@ thead {
 .grievance-reply-msg {
 	max-width: 85%;
 	max-height: 50px;
-	overflow-y: scroll;
+	overflow-y: auto;
+	min-height: 1.2rem;
 }
 
 .onEditModalTitle {

@@ -17,7 +17,7 @@
 <!DOCTYPE html>
 <html lang="en" class="no-js">
 <head>
-<title>Dashboard</title>
+<title>Report Block</title>
 <meta http-equiv='cache-control' content='no-cache'>
 <meta http-equiv='expires' content='-1'>
 <meta http-equiv='pragma' content='no-cache'>
@@ -402,11 +402,11 @@ onclick="_Services._selectstartDate()"></i></span>
 		src="${context}/resources/project_js/_dateFunction.js" async></script>
 		<script type="text/javascript"
 		src="${context}/resources/project_js/profileInfoTab.js" async></script>
-		<script>
+	
 
 
 	<!--plugins.js - Some Specific JS codes for Plugin Settings-->
-	<script
+	<script>
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 	<%--   <script type="text/javascript" src="${context}/resources/js/materialize-plugins/date_picker/picker.date.js"></script>
