@@ -517,7 +517,7 @@ var path="${context}";
 			<div class="row">
 				<div class="input-field col s12 center">
 					<a href="" class="modal-close btn"
-						style="margin-left: 10px;"><spring:message code="modal.close" /></a>
+						style="margin-left: 10px;"><spring:message code="modal.ok" /></a>
 				</div>
 			</div>
 		</div>

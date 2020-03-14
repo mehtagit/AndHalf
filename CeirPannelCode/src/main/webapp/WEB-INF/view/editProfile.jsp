@@ -804,13 +804,13 @@ title="<spring:message code="validation.selectFieldMsg" />" onchange="setCustomV
                                        <input type="hidden" id="userid"  name="userid" value="${userId}">
                         <div class="row">          
                             <div class="input-field col s12 m12">
-                                <input type="text" placeholder="Enter OTP of Email" name="emailOtp" maxlength="6"
+                                <input type="text" placeholder="<spring:message code="placeholder.emailotp" />" name="emailOtp" maxlength="6"
                                  required="required" id="emailOtp" pattern="[0-9]{0,6}" 
                                   oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
-										title= "<spring:message code="validation.6digit" />" placeholder=""/ required />
+										title= "<spring:message code="validation.6digit" />" placeholder="" required />
                             </div> 
                             <div class="input-field col s12 m12">
-                                <input placeholder="Enter OTP of Phone" type="text" name="phoneOtp" maxlength="6" 
+                                <input placeholder="<spring:message code="placeholder.optphone" />" type="text" name="phoneOtp" maxlength="6" 
 										pattern="[0-9]{0,6}"
 										 oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
 										title= "<spring:message code="validation.6digit" />" 
