@@ -773,19 +773,19 @@ String usertypeId="${usertypeId}";
 	<div id="otpVerification" class="modal" style="width: 40%;">
 		<!-- <button type="button" class=" modal-action modal-close waves-effect waves-green btn-flat right"
             data-dismiss="modal">&times;</button> -->
-		<h6 class="modal-header">Enter OTP</h6>
+		<h6 class="modal-header"><spring:message code="registration.otp" /></h6>
 		<div class="modal-content">
 			<form id="verifyOtpForm" onsubmit="return verifyOtp()" >
 				<p class="center" id="verifyOtpResp"></p>
 				<input type="hidden" id="userid" name="userid" value="${userId}">
 				<div class="row">
 					<div class="input-field col s12 m12">
-						<input type="text" placeholder="Enter OTP of Email" name="emailOtp" maxlength="6" id="emailOtp"
+						<input type="text" placeholder="<spring:message code="placeholder.emailotp" />" name="emailOtp" maxlength="6" id="emailOtp"
 							pattern="[0-9]{0,6}" oninput="InvalidMsg(this,'input','<spring:message code="validation.6Character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.6Character" />');" 
 							 required  />
 					</div>
 					<div class="input-field col s12 m12">
-						<input placeholder="Enter OTP of Phone" type="text" name="phoneOtp" maxlength="6" pattern="[0-9]{0,6}"
+						<input placeholder="<spring:message code="placeholder.optphone" />" type="text" name="phoneOtp" maxlength="6" pattern="[0-9]{0,6}"
 							id="phoneOtp" oninput="InvalidMsg(this,'input','<spring:message code="validation.6Character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.6Character" />');" 
 							required  />
 					</div>
