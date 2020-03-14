@@ -1,3 +1,12 @@
+<%
+	response.setHeader("Cache-Control", "no-cache");
+	response.setHeader("Cache-Control", "no-store");
+	response.setDateHeader("Expires", 0);
+	response.setHeader("Pragma", "no-cache");
+	/*  session.setMaxInactiveInterval(200); //200 secs
+	 session.setAttribute("usertype", null); */
+	if (session.getAttribute("usertype") != null) {
+%>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
@@ -144,7 +153,7 @@ input[type='search'] {
 }
 </style>
 </head>
-<body session-value="${not empty param.NID ? param.NID : 'null'}">
+<body data-id="12" session-value="${not empty param.NID ? param.NID : 'null'}">
 
 	<!-- START CONTENT -->
 	<section id="content">
@@ -629,7 +638,7 @@ input[type='search'] {
 			<div class="row">
 				<div class="input-field col s12 center">
 					<div class="input-field col s12 center">
-						<button class="btn"><spring:message code="modal.ok" /></button>
+						<button class="btn" id="ok"><spring:message code="modal.ok" /></button>
 					</div>
 				</div>
 			</div>
@@ -750,3 +759,16 @@ input[type='search'] {
 
 </body>
 </html>
+<%
+	} else {
+		/*  request.setAttribute("msg", "  *Please login first");
+		request.getRequestDispatcher("./index.jsp").forward(request, response); */
+%>
+<script language="JavaScript">
+	sessionStorage.setItem("loginMsg",
+			"*Session has been expired");
+	window.top.location.href = "./login";
+</script>
+<%
+	}
+%>

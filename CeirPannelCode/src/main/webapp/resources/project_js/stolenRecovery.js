@@ -5,11 +5,7 @@ var role = currentRoleType == null ? roleType : currentRoleType;
 
 var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 var userType = $("body").attr("data-roleType");
-if(userType == "Operator" || userType == "CEIRAdmin" ){
-	var featureId="7";
-}else{
-	var featureId="5"; //this check is for stolen & recovery
-}
+
 
 /*window.parent.$('#langlist').on('change', function() {
 	var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
@@ -29,6 +25,7 @@ $.i18n().load( {
 
 $(document).ready(function(){
 	$('div#initialloader').fadeIn('fast');
+	console.log("featureId is---->" +featureId);
 	filterStolen();
 	pageRendering();
 });
@@ -1004,9 +1001,10 @@ function exportStolenRecoveryData()
 	var info = table.page.info(); 
     var pageNo=info.page;
     var pageSize =info.length;
-	console.log("--------"+pageSize+"---------"+pageNo);
+    var featureId = window.parent.$('.navData li.active a').attr('data-featureid')
+	console.log("--------"+pageSize+"---------"+pageNo+"-------"+featureId);
 	console.log("stolenRecoveryStartDate  ="+stolenRecoveryStartDate+"  stolenRecoveryEndDate=="+stolenRecoveryEndDate+"  stolenRecoveryTxnId="+stolenRecoveryTxnId+" stolenRecoveryFileStatus ="+stolenRecoveryFileStatus+"=role="+role+" stolenRecoverySourceStatus="+stolenRecoverySourceStatus+" stolenRecoveryRequestType"+stolenRecoveryRequestType);
-	window.location.href="./exportStolenRecovery?stolenRecoveryStartDate="+stolenRecoveryStartDate+"&stolenRecoveryEndDate="+stolenRecoveryEndDate+"&stolenRecoveryTxnId="+stolenRecoveryTxnId+"&stolenRecoveryFileStatus="+stolenRecoveryFileStatus+"&stolenRecoverySourceStatus="+stolenRecoverySourceStatus+"&stolenRecoveryRequestType="+stolenRecoveryRequestType+"&pageSize="+pageSize+"&pageNo="+pageNo+"&roleType="+roleType;
+	window.location.href="./exportStolenRecovery?stolenRecoveryStartDate="+stolenRecoveryStartDate+"&stolenRecoveryEndDate="+stolenRecoveryEndDate+"&stolenRecoveryTxnId="+stolenRecoveryTxnId+"&stolenRecoveryFileStatus="+stolenRecoveryFileStatus+"&stolenRecoverySourceStatus="+stolenRecoverySourceStatus+"&stolenRecoveryRequestType="+stolenRecoveryRequestType+"&featureId="+featureId+"&pageSize="+pageSize+"&pageNo="+pageNo+"&roleType="+roleType;
 
 }
 

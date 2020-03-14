@@ -147,7 +147,11 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}"
                
  <div class="col s12 m12">
                   <label for="replyRemark" style="margin-top: 7px"><spring:message code="input.remarks" /><span class="star">*</span></label>
-                    <textarea id="replyRemark" class="materialize-textarea" placeholder="" required="required"></textarea>
+                    <textarea id="replyRemark" class="materialize-textarea" maxlength="200" 
+oninput="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');" 
+oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');"
+ required></textarea>
+                    
                     <input type="text" style="display: none" id="grievanceUserid">
                     <!-- <h6 style="color: #000;">Upload Supporting Document </h6> -->
  
@@ -168,7 +172,9 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}"
 
 <div class="col s12 m6 l6" style="margin-top: 8px;">
 <label for="Category"><spring:message code="input.documenttype" /></label>
-<select class="browser-default" id="docTypetag1" onchange="enableSelectFile()" >
+<select class="browser-default" id="docTypetag1" onchange="enableSelectFile()"
+oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" 
+oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" >
 <option value="" disabled selected><spring:message code="select.documenttype" /> </option>
 
 </select>
@@ -178,7 +184,9 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}"
 <h6 id="supportingdocumentFile" style="color: #000;"><spring:message code="input.supportingdocument" /></h6>
 <div class="btn">
 <span><spring:message code="input.selectfile" /></span>
-<input type="file" name="files[]" id="docTypeFile1" onchange="enableAddMore()" disabled="disabled">
+<input type="file" name="files[]" id="docTypeFile1" onchange="enableAddMore()" disabled="disabled"
+oninput="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');" 
+oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');" >
 </div>
 <div class="file-path-wrapper">
 <input class="file-path validate" type="text" 
@@ -343,7 +351,8 @@ style="font-size: 20px;">+</span> <spring:message code="input.addmorefile" /></b
 		<script type="text/javascript"
 		src="${context}/resources/project_js/_dateFunction.js" async></script>
 		
-	
+	<script type="text/javascript"
+		src="${context}/resources/project_js/validationMsg.js"></script>
 </body>
 </html>
 <%

@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
+import org.gl.ceir.CeirPannelCode.Model.AddMoreFileModel;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentModel;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentUpdateRequest;
 import org.gl.ceir.CeirPannelCode.Model.Dropdown;
@@ -67,6 +68,11 @@ public class Consignment {
 	@Value ("${filePathforErrorFile}")
 	String filePathforErrorFile;
 	
+@Autowired
+AddMoreFileModel addMoreFileModel,urlToUpload;
+
+
+
 	
 @Autowired
 
@@ -200,11 +206,16 @@ String name=session.getAttribute("name").toString();
 log.info(" Register consignment entry point.");
 String txnNumner=utildownload.getTxnId();
 txnNumner = "C"+txnNumner;
+
+addMoreFileModel.setTag("system_upload_filepath");
+urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
+
+log.info("url to upload file=="+urlToUpload.getValue());
 log.info("Random transaction id number="+txnNumner);
 ConsignmentModel consignment = new ConsignmentModel();
 try {
 byte[] bytes = file.getBytes();
-String rootPath = filePathforUploadFile+txnNumner+"/";
+String rootPath = urlToUpload.getValue()+txnNumner+"/";
 File dir = new File(rootPath + File.separator);
 
 if (!dir.exists()) 
@@ -266,6 +277,9 @@ String name=session.getAttribute("name").toString();
 
 GenricResponse response= new GenricResponse();
 
+addMoreFileModel.setTag("system_upload_filepath");
+urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
+
 log.info("entry point in update Consignment.");
 if(file==null)
 {
@@ -288,13 +302,13 @@ consignment.setTotalPrice(totalPrice);
 else {
 log.info("file is empty or not "+file.isEmpty());
 try {
-String rootPath = filePathforUploadFile+txnId+"/";
+String rootPath = urlToUpload.getValue()+txnId+"/";
 File tmpDir = new File(rootPath+file.getOriginalFilename());
 boolean exists = tmpDir.exists();
 if(exists) {
 
 Path temp = Files.move 
-(Paths.get(filePathforUploadFile+"/"+txnId+"/"+file.getOriginalFilename()), 
+(Paths.get(urlToUpload.getValue()+"/"+txnId+"/"+file.getOriginalFilename()), 
 Paths.get(filePathforMoveFile+file.getOriginalFilename())); 
 String movedPath=filePathforMoveFile+file.getOriginalFilename();	
 
@@ -452,6 +466,9 @@ public @ResponseBody FileExportResponse downloadFile(@PathVariable("transactionN
 	FileExportResponse response = new FileExportResponse();	
 log.info("inside file download method"+doc_TypeTag);
 
+//AddMoreFileModel urlToUpload= new AddMoreFileModel();
+addMoreFileModel.setTag("system_upload_filepath");
+urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
 
 if (filetype.equalsIgnoreCase("actual"))
 {
@@ -459,7 +476,7 @@ if (filetype.equalsIgnoreCase("actual"))
 if (!doc_TypeTag.equals("DEFAULT"))
 {
 	log.info("doc_TypeTag_______"+doc_TypeTag);
-	String rootPath = filePathforUploadFile+txnid+"/"+doc_TypeTag+"/";
+	String rootPath = urlToUpload.getValue()+txnid+"/"+doc_TypeTag+"/";
 	File tmpDir = new File(rootPath+fileName);
 	boolean exists = tmpDir.exists();
 	if(exists) {
@@ -475,7 +492,7 @@ if (!doc_TypeTag.equals("DEFAULT"))
 }
 else if(doc_TypeTag.equalsIgnoreCase("DEFAULT")) {
 	log.info("doc_TypeTag==="+doc_TypeTag);
-	String rootPath = filePathforUploadFile+txnid+"/";
+	String rootPath = urlToUpload.getValue()+txnid+"/";
 	File tmpDir = new File(rootPath+fileName);
 	boolean exists = tmpDir.exists();
 	if(exists) {
@@ -492,7 +509,7 @@ else if(doc_TypeTag.equalsIgnoreCase("DEFAULT")) {
 }
 else if(filetype.equalsIgnoreCase("error"))
 {
-	String rootPath = filePathforErrorFile+txnid+"/"+txnid+"_error.csv";
+	String rootPath = urlToUpload.getValue()+txnid+"/"+txnid+"_error.csv";
 	File tmpDir = new File(rootPath);
 	boolean exists = tmpDir.exists();
 	if(exists) {
@@ -586,11 +603,11 @@ public String exportToExcel(@RequestParam(name="consignmentStartDate",required =
 
 
 @RequestMapping(value="/ManualFileDownload",method={org.springframework.web.bind.annotation.RequestMethod.GET}) 
-public String ManualSampleFile() throws IOException {
+public String ManualSampleFile(@RequestParam(name="userTypeId",required = false) int userTypeId) throws IOException {
 log.info("request send to the manual sample file download api=");
 
 
-FileExportResponse response=feignCleintImplementation.manualDownloadSampleFile();
+FileExportResponse response=feignCleintImplementation.manualDownloadSampleFile(userTypeId);
 log.info("response from manual sample file download file "+response);
 
 return "redirect:"+response.getUrl();

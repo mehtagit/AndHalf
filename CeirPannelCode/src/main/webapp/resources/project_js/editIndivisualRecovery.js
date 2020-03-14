@@ -96,7 +96,6 @@ function updateIndivisualRecovery()
 	var blockingType =$('.blocktypeRadio:checked').val();
 	var IndivisualRecoveryDevice=$('#bulkRecoveryDate').val();
 	var txnid=$('#existingStolenTxnId').val();
-	 
 	
 	var stolenIndividualUserDB={
 			"deviceBrandName": sigleRecoverydeviceBrandName,
@@ -109,10 +108,10 @@ function updateIndivisualRecovery()
 			"deviceStolenStreet": sigleRecoverystreetNumber,
 			"deviceStolenVillage": sigleRecoveryvillage,
 			"deviceType":sigleRecoverydeviceType,
-			"imeiEsnMeid1": parseInt(sigleRecoveryimeiNumber1),
-			"imeiEsnMeid2": parseInt(sigleRecoveryimeiNumber2),
-			"imeiEsnMeid3": parseInt(sigleRecoveryimeiNumber3),
-			"imeiEsnMeid4": parseInt(sigleRecoveryimeiNumber4),
+			"imeiEsnMeid1": sigleRecoveryimeiNumber1,
+			"imeiEsnMeid2": sigleRecoveryimeiNumber2,
+			"imeiEsnMeid3": sigleRecoveryimeiNumber3,
+			"imeiEsnMeid4": sigleRecoveryimeiNumber4,
 			"deviceStolenProvince": state1,
 			"remark": sigleRecovery,
 			"multiSimStatus":sigleRecoverydeviceSimStatus,
@@ -144,12 +143,12 @@ function updateIndivisualRecovery()
 		
 			if(response.errorCode=='0'){
 				$("#indivisualStolenButton").prop('disabled', true);
-				$('#stolenSucessPopUp').openModal();
+				$('#stolenSucessPopUp').openModal({dismissible:false});
 			
 			}
 			else{
 //				$('#sucessMessage').text('');
-				$('#indivisualStolenButton').openModal();
+				$('#indivisualStolenButton').openModal({dismissible:false});
 				$('#dynamicMessage').text('');
 				$('#dynamicMessage').text(response.message);
 			}

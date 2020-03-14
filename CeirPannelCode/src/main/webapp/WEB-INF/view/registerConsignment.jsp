@@ -250,7 +250,7 @@ section {
 											<spring:message code="input.bulkdevice" /> <span class="star">*</span>
 										</h6>
 											<div class="btn">
-												<span><spring:message code="input.selectfile" /></span> <input type="file" onchange="fileTypeValueChanges(this,'fileType')"
+												<span><spring:message code="input.selectfile" /></span> <input type="file" onchange="isFileValid('file')"
 													 name="file" id="file" accept=".csv"  
 												oninput="InvalidMsg(this,'fileType','<spring:message code="validation.file" />');" oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.file" />');"  required />
 											</div>
@@ -334,22 +334,7 @@ section {
 		</div>
 	</div>
 
-	<div id="fileFormateModal" class="modal">
-		<h6 class="modal-header"><spring:message code="fileValidationModalHeader" /></h6>
-		<div class="modal-content">
-			<div class="row">
-				<h6 id="fileErrormessage"><spring:message code="fileValidationName" /><br> <br> <spring:message code="fileValidationFormate" /> <br><br> <spring:message code="fileValidationSize" /> </h6>
-			</div>
-			<div class="row">
-				<div class="input-field col s12 center">
-					<div class="input-field col s12 center">
-						<button class="modal-close waves-effect waves-light btn" onclick="clearFileName()"
-							style="margin-left: 10px;"><spring:message code="modal.ok" /></button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+
 
 	<!--end container-->
 
@@ -425,7 +410,8 @@ section {
 		src="${context}/resources/project_js/validationMsg.js"></script>
 			<script type="text/javascript"
 		src="${context}/resources/project_js/_dateFunction.js" async></script>
-	
+		<script type="text/javascript"
+		src="${context}/resources/project_js/globalVariables.js"></script>
 </body>
 </html>
 

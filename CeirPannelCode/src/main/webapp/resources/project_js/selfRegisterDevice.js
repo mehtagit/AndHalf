@@ -6,6 +6,7 @@ $('#langlist').on('change', function() {
 	window.location.assign("selfRegisterDevice?lang="+window.lang);			
 }); 
 
+
 $('#langlist').val(data_lang_param);
 $.i18n().locale = data_lang_param;
 var successMsg;
@@ -16,7 +17,7 @@ $.i18n().load( {
 });
 
 
-var input = document.querySelector("#phone1");
+/*var input = document.querySelector("#phone1");
 window.intlTelInput(input, {
 	utilsScript: "js/utils.js",
 });
@@ -24,7 +25,7 @@ window.intlTelInput(input, {
 var input = document.querySelector("#phone");
 window.intlTelInput(input, {
 	utilsScript: "js/utils.js",
-});
+});*/
 
 
 $('#datepicker,#datepicker1').datepicker({
@@ -148,8 +149,6 @@ function hideVisaDetails(){
 	$("#visaType").attr("required", false);
 }
 
-
-
 $.getJSON('./getDropdownList/VISA_TYPE', function(data) {
 	for (i = 0; i < data.length; i++) {
 		$('<option>').val(data[i].value).text(data[i].interp)
@@ -191,6 +190,12 @@ $.getJSON('./getDropdownList/DEVICE_STATUS', function(data) {
 
 
 
+
+
+
+
+
+
 $(document).ready(function () {
 
 	$('#langlist').val(data_lang_param);
@@ -206,8 +211,8 @@ $(document).ready(function () {
 
 
 			$(wrapper).append(
-					/*  '<div style="margin-top:30px;"><div class="row"><div class="col s12 m6"><label for="deviceType">Device Type <spanclass="star">*</span></label><select class="browser-default" id='"deviceType"+id+"'><option value="" disabled selected>Device Type</option><option value='Handheld'>Handheld</option><option value='MobilePhone'>Mobile Phone/Feature phone</option><option value='Vehicle'>Vehicle</option><option value='Portable'>Portable(include PDA)</option><option value='Module'>Module</option><option value='Dongle'>Dongle</option><option value='WLAN'>WLAN Router</option><option value='Modem'>Modem</option><option value='Smartphone'>Smartphone</option><option value='Computer'>Connected Computer</option><option value='Tablet'>Tablet</option><option value='e-Book'>e-Book</option></select></div><div class='col s12 m6'><label for='deviceIdType'>Device ID Type <span class='star'>*</span></label><select class='browser-default' id='deviceIdType'><option value="" disabled selected>Select Device ID Type</option><option value='IMEI'>IMEI</option><option value='ESN'>ESN</option><option value='MEID'>MEID</option></select></div><div class='col s12 m6'><label for='deviceType'>Multiple Sim Status <span class='star'>*</span></label><select class='browser-default' id='deviceType'><option value="" disabled selected>Multiple Sim Status</option><option value='Yes'>Yes</option><option value='No'>No</option></select></div><div class='col s12 m6'><label for='country'>Country bought From <span class='star'>*</span></label><select id='country1' class='browser-default' class='mySelect' style='padding-left: 0;' required></select></div><div class='input-field col s12 m6' style='margin-top: 28px;'><input type='text' id='serialNumber1' name='serialNumber1' pattern='[0-9]' title='Please enter your device serial number first' maxlength='20'><label for='serialNumber1'>Device Serial Number <span class='star'>*</span></label></div><div class='col s12 m6'><label for='deviceType'>Tax paid Status <span class='star'>*</span></label><select class='browser-default' id='deviceType'><option value="" disabled selected>Tax paid Status</option><option value='Regularized'>Regularized</option><option value='Paid'>Paid</option><option value='NotPaid'>Not Paid</option></select></div></div><div class='row'><div class='col s12 m6' style='margin-top: -10px;'><label for='taxStatus'>Device Status <span class='star'>*</span></label><select class='browser-default' id='taxStatus'><option value='' disabled selected>Select Device Status</option><option value='New'>New</option><option value='Used'>Used</option><option value='Refurbished'>Refurbished</option></select></div><div class='input-field col s12 m6 l6'><input type='text' name='Price' id='Price' maxlength='30'><label for='Price'>Price <span class='star'>*</span></label></div><div class='col s12 m6'><label for='Currency'>Currency <span class='star'>*</span></label><select class='browser-default' id='Currency'><option value='' disabled selected>Select Currency</option><option value='Regularized'>$</option><option value='Paid'>$</option><option value="NotPaid">$</option></select></div></div><div class="row"><div class="col s12 m12"><p>IMEI/MEID/ESN</p></div><div class="input-field col s12 m6"><input type="text" id="IMEI1" name="IMEI1" pattern="[0-9]"title="Please enter minimum 15 and maximum 16 digit only"maxlength="16"><label for="IMEI1">1 <span class="star">*</span></label></div><div class="input-field col s12 m6"><input type="text" id="IMEI2" name="IMEI2" pattern="[0-9]"title="Please enter minimum 15 and maximum 16 digit only"maxlength="16"><label for="IMEI2">2</label></div><div class="input-field col s12 m6"><input type="text" id="IMEI3" name="IMEI3" pattern="[0-9]"title="Please enter minimum 15 and maximum 16 digit only"maxlength="16"><label for="IMEI3">3</label></div><div class="input-field col s12 m6"><input type="text" id="IMEI4" name="IMEI4[]" pattern="[0-9]"title="Please enter minimum 15 and maximum 16 digit only"maxlength="16"><label for="IMEI4">4</label></div></div><div style="cursor:pointer;background-color:red;' class='remove_field btn right btn-info'>Remove</div></div>'*/
-					'<div id="deviceInformation'+id+'" class="deviceInformation"><div class="row"><div class="col s12 m6"><label for="deviceType">'+$.i18n('deviceType')+' <spanclass="star">*</span></label><select class="browser-default" required id="deviceType'+id+'"><option value="" disabled selected>'+$.i18n('deviceType')+'</option></select></div><div class="col s12 m6"><label for="deviceIdType'+id+'">'+$.i18n('deviceIDType')+' <span class="star">*</span></label><select class="browser-default" required id="deviceIdType'+id+'"><option value="" disabled selected>'+$.i18n('selectDeviceIDType')+'</option></select></div><div class="col s12 m6"><label for="multipleSimStatus'+id+'">'+$.i18n('multipleSimStatus')+'<span class="star">*</span></label><select class="browser-default" required id="multipleSimStatus'+id+'"><option value="" disabled selected>'+$.i18n('multipleSimStatus')+'</option></select></div><div class="col s12 m6"><label for="deviceCountry">'+$.i18n('countryBoughtFrom')+'<span class="star">*</span></label><select id="country'+id+'"  class="browser-default" class="mySelect" style="padding-left: 0;" required></select></div><div class="input-field col s12 m6" style="margin-top: 28px;"><input type="text" id="serialNumber'+id+'" name="serialNumber'+id+'" required pattern="[A-Za-z0-9]{0,15}" title="Please enter your device serial number first" maxlength="15"><label for="serialNumber'+id+'">'+$.i18n('deviceSerialNumber')+'<span class="star">*</span></label></div></div><div class="row"><div class="col s12 m6" style="margin-top: -10px;"><label for="deviceStatus'+id+'">'+$.i18n('deviceStatus')+'<span class="star">*</span></label><select class="browser-default" required id="deviceStatus'+id+'"><option value="" disabled selected>'+$.i18n('selectDeviceStatus')+'</option></select></div></div><div class="row"><div class="col s12 m12"><p>IMEI/MEID/ESN</p></div><div class="input-field col s12 m6"><input type="text" id="IMEIA'+id+'" required name="IMEI1" pattern="[0-9]{15,16}"title="Please enter minimum 15 and maximum 16 digit only"maxlength="16"><label for="IMEIA'+id+'">1 <span class="star">*</span></label></div><div class="input-field col s12 m6"><input type="text" id="IMEIB'+id+'" name="IMEI2" pattern="[0-9]{15,16}"title="Please enter minimum 15 and maximum 16 digit only"maxlength="16"><label for="IMEIB'+id+'">2</label></div><div class="input-field col s12 m6"><input type="text" id="IMEIC'+id+'" name="IMEI3" pattern="[0-9]{15,16}"title="Please enter minimum 15 and maximum 16 digit only"maxlength="16"><label for="IMEIC'+id+'">3</label></div><div class="input-field col s12 m6"><input type="text" id="IMEID'+id+'" name="IMEI4[]" pattern="[0-9]{15,16}"title="Please enter minimum 15 and maximum 16 digit only"maxlength="16"><label for="IMEID'+id+'">4</label></div></div><div style="cursor:pointer;background-color:red;" class="remove_field btn right btn-info">'+$.i18n('remove')+'</div></div>'
+					
+					'<div id="deviceInformation'+id+'" class="deviceInformation"><div class="row"><div class="col s12 m6"><label for="deviceIdType'+id+'">'+$.i18n('deviceIDType')+' <span class="star">*</span></label><select class="browser-default" required id="deviceIdType'+id+'"><option value="" disabled selected>'+$.i18n('selectDeviceIDType')+'</option></select></div><div class="col s12 m6"><label for="multipleSimStatus'+id+'">'+$.i18n('multipleSimStatus')+'</label><select class="browser-default"  id="multipleSimStatus'+id+'"><option value="" disabled selected>'+$.i18n('multipleSimStatus')+'</option></select></div><div class="col s12 m6"><label for="deviceType">'+$.i18n('deviceType')+' </label><select class="browser-default"  id="deviceType'+id+'"><option value="" disabled selected>'+$.i18n('deviceType')+'</option></select></div><div class="col s12 m6"><label for="deviceCountry">'+$.i18n('country')+'</label><select id="country'+id+'"  class="browser-default" class="mySelect" style="padding-left: 0;" ></select></div><div class="input-field col s12 m6" style="margin-top: 28px;"><input type="text" id="serialNumber'+id+'" name="serialNumber'+id+'"  pattern="[A-Za-z0-9]{0,15}" title="Please enter your device serial number first" maxlength="15"><label for="serialNumber'+id+'">'+$.i18n('deviceSerialNumber')+'</label></div><div class="row"><div class="col s12 m6" ><label for="deviceStatus'+id+'">'+$.i18n('deviceStatus')+'</label><select class="browser-default"  style="margin-top: 5px;" id="deviceStatus'+id+'"><option value="" disabled selected>'+$.i18n('selectDeviceStatus')+'</option></select></div></div><div class="row"><div class="col s12 m12"><p>IMEI/MEID/ESN</p></div><div class="input-field col s12 m6"><input type="text" id="IMEIA'+id+'" required name="IMEI1" pattern="[0-9]{15,16}"title="Please enter minimum 15 and maximum 16 digit only"maxlength="16"><label for="IMEIA'+id+'">1 <span class="star">*</span></label></div><div class="input-field col s12 m6"><input type="text" id="IMEIB'+id+'" name="IMEI2" pattern="[0-9]{15,16}"title="Please enter minimum 15 and maximum 16 digit only"maxlength="16"><label for="IMEIB'+id+'">2</label></div><div class="input-field col s12 m6"><input type="text" id="IMEIC'+id+'" name="IMEI3" pattern="[0-9]{15,16}"title="Please enter minimum 15 and maximum 16 digit only"maxlength="16"><label for="IMEIC'+id+'">3</label></div><div class="input-field col s12 m6"><input type="text" id="IMEID'+id+'" name="IMEI4[]" pattern="[0-9]{15,16}"title="Please enter minimum 15 and maximum 16 digit only"maxlength="16"><label for="IMEID'+id+'">4</label></div></div><div style="cursor:pointer;background-color:red;" class="remove_field btn right btn-info">'+$.i18n('remove')+'</div></div>'
 
 			);  //add input box
 
@@ -215,8 +220,6 @@ $(document).ready(function () {
 			(   
 					"country"+id
 			);
-
-
 
 			$.getJSON('./getDropdownList/DEVICE_TYPE', function(data) {
 				var dropdownid=id-1;
@@ -226,9 +229,6 @@ $(document).ready(function () {
 
 				}
 			});
-
-
-
 			$.getJSON('./getDropdownList/DEVICE_ID_TYPE', function(data) {
 				var dropdownid=id-1;
 				for (i = 0; i < data.length; i++) {
@@ -237,16 +237,6 @@ $(document).ready(function () {
 
 				}
 			});
-
-			$.getJSON('./getDropdownList/CURRENCY', function(data) {
-				var dropdownid=id-1;
-				for (i = 0; i < data.length; i++) {
-					$('<option>').val(data[i].value).text(data[i].interp)
-					.appendTo('#Currency'+dropdownid);
-
-				}
-			});
-
 			$.getJSON('./getDropdownList/MULTI_SIM_STATUS', function(data) {
 				var dropdownid=id-1;
 				for (i = 0; i < data.length; i++) {
@@ -255,7 +245,6 @@ $(document).ready(function () {
 
 				}
 			});
-
 			$.getJSON('./getDropdownList/DEVICE_STATUS', function(data) {
 				var dropdownid=id-1;
 				for (i = 0; i < data.length; i++) {
@@ -264,6 +253,8 @@ $(document).ready(function () {
 
 				}
 			});
+
+
 
 
 			id++;
@@ -401,13 +392,13 @@ function submitEndUserDeviceInfo(){
 				"deviceSerialNumber": serialNumber1,
 				"deviceStatus": parseInt(deviceStatus1),
 				"deviceType": parseInt(deviceType1),
-				"firstImei": parseInt(IMEI1),
-				"secondImei": parseInt(IMEI2),
-				"thirdImei": parseInt(IMEI3),
-				"fourthImei": parseInt(IMEI4),
+				"firstImei": IMEI1,
+				"secondImei": IMEI2,
+				"thirdImei": IMEI3,
+				"fourthImei": IMEI4,
 				"multiSimStatus": deviceStatus1,
 				"nid":nationalID,
-				"origin":"SELF"
+				"origin":"Self"
 
 		}
 		regularizeDeviceDbs.push(deviceInfo);
@@ -460,13 +451,13 @@ function submitEndUserDeviceInfo(){
 			if(data.errorCode==0){
 
 //				$('#sucessMessage').text('');
-				$('#endUserRegisterDeviceModal').openModal();
+				$('#endUserRegisterDeviceModal').openModal({dismissible:false});;
 				$('#endUsertXnId').text(data.txnId);
 				$("#endUserRegisterButton").prop('disabled', true);
 			}
 			else{
 //				$('#sucessMessage').text('');
-				$('#endUserRegisterDeviceModal').openModal();
+				$('#endUserRegisterDeviceModal').openModal({dismissible:false});;
 				$('#sucessMessageId').text('');
 				$('#sucessMessageId').text(data.message);
 			}
@@ -482,6 +473,7 @@ function submitEndUserDeviceInfo(){
 
 $(document).on("keyup", "#visaNumber", function(e) {
 	var visaNumber=$('#visaNumber').val();
+
 	if(visaNumber.length<'1' )
 	{
 		$("#datepicker1").attr("required", false);
@@ -499,25 +491,31 @@ $(document).on("keyup", "#visaNumber", function(e) {
 });
 
 
-function fileTypeValueChanges(dd, ddd) {
-	var uploadedFileName = $("#uploadnationalID").val();
+function fileTypeValueChanges(id) {
+
+	var uploadedFileName = $("#"+id).val();
 	uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
 	//alert("file extension=="+uploadedFileName)
 	var ext = uploadedFileName.split('.').pop();
 
-	var fileSize = ($("#uploadnationalID")[0].files[0].size);
+	var fileSize = ($("#"+id)[0].files[0].size);
 	/*fileSize = (Math.round((fileSize / 100000) * 100) / 100)
 	alert("----"+fileSize);*/
 	fileSize = Math.floor(fileSize/1000) + 'KB';
 
-
-
+	//alert(uploadedFileName+"----------"+ext+"----"+fileSize)
+	var areEqual =ext.toLowerCase()=='png';
+	//alert(areEqual);
+	if(areEqual==true)
+		{
+		ext='PNG';
+		}
 	if (uploadedFileName.length > 30) {
-		$('#fileFormateModal').openModal();
+		$('#fileFormateModal').openModal({dismissible:false});;
 		$('#fileErrormessage').text('');
 		$('#fileErrormessage').text($.i18n('imageMessage'));
 	} 
-	else if(ext!='PNG')
+	else if(ext !='PNG')
 	{
 		$('#fileFormateModal').openModal({
 			dismissible:false
@@ -526,19 +524,14 @@ function fileTypeValueChanges(dd, ddd) {
 		$('#fileErrormessage').text($.i18n('imageMessage'));
 
 	}
-	else if(fileSize>='100'){
+	else if(fileSize>=100){
 		$('#fileFormateModal').openModal({
 			dismissible:false
 		});
 		$('#fileErrormessage').text('');
 		$('#fileErrormessage').text($.i18n('imageSize'));	
 	}
-	else {
-		$('#fileFormateModal').openModal({
-			dismissible:false
-		});
 
-	}
 
 
 }
@@ -562,7 +555,12 @@ function visaImageValidation() {
 	alert("----"+fileSize);*/
 	fileSize = Math.floor(fileSize/1000);
 
-
+	var areEqual =ext.toLowerCase()=='png';
+	//alert(areEqual);
+	if(areEqual==true)
+		{
+		ext='PNG';
+		}
 
 	if (uploadedFileName.length > 30) {
 		$('#visafileFormateModal').openModal({dismissible:false});
@@ -585,12 +583,7 @@ function visaImageValidation() {
 		$('#visafileErrormessage').text('');
 		$('#visafileErrormessage').text($.i18n('imageSize'));	
 	}
-	else {
-		$('#visafileFormateModal').openModal({
-			dismissible:false
-		});
 
-	}
 
 
 }
@@ -615,7 +608,12 @@ function deptImageValidation() {
 	alert("----"+fileSize);*/
 	fileSize = Math.floor(fileSize/1000);
 
-
+	var areEqual =ext.toLowerCase()=='png';
+	//alert(areEqual);
+	if(areEqual==true)
+		{
+		ext='PNG';
+		}
 
 	if (uploadedFileName.length > 30) {
 		$('#DeptfileFormateModal').openModal({dismissible:false});
@@ -638,7 +636,7 @@ function deptImageValidation() {
 		$('#DeptfileErrormessage').text('');
 		$('#DeptfileErrormessage').text($.i18n('imageSize'));	
 	}
-	
+
 
 
 }

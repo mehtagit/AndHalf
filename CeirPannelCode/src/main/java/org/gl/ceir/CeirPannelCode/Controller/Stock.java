@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Feignclient.UserProfileFeignImpl;
+import org.gl.ceir.CeirPannelCode.Model.AddMoreFileModel;
 import org.gl.ceir.CeirPannelCode.Model.AssigneRequestType;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentModel;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentUpdateRequest;
@@ -63,7 +64,8 @@ public class Stock {
 	UtilDownload utildownload;
 	
 	UserProfileFeignImpl userProfileFeignImpl;
-	
+	@Autowired
+	AddMoreFileModel addMoreFileModel,urlToUpload;
 	
 	
 	@RequestMapping(value={"/assignDistributor"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST})
@@ -150,7 +152,8 @@ else {
 		//String selectedUserTypeId=session.getAttribute("selectedUserTypeId").toString();
 		
 		log.info("upload stock  entry point.");
-
+		addMoreFileModel.setTag("system_upload_filepath");
+		urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
 		String txnNumner=utildownload.getTxnId();
 		txnNumner = "S"+txnNumner;
 		log.info("Random  genrated transaction number ="+txnNumner);
@@ -158,7 +161,7 @@ else {
 		StockUploadModel stockUpload= new StockUploadModel();
 		try {
 			byte[] bytes = file.getBytes();
-			String rootPath = filePathforUploadFile+txnNumner+"/";
+			String rootPath = urlToUpload.getValue()+txnNumner+"/";
 			File dir = new File(rootPath + File.separator);
 
 			if (!dir.exists()) 
@@ -229,21 +232,34 @@ else {
 	
 	// *********************************************** open register page or edit popup ******************************
 	@RequestMapping(value="/openStockPopup",method ={org.springframework.web.bind.annotation.RequestMethod.GET})
-	public @ResponseBody StockUploadModel openRegisterConsignmentPopup(@RequestParam(name="reqType") String reqType,@RequestParam(name="txnId",required = false) String txnId,@RequestParam(name="role",required = false) String role,HttpSession session)
+	public @ResponseBody StockUploadModel openRegisterConsignmentPopup(
+			@RequestParam(name="reqType") String reqType,@RequestParam(name="txnId",required = false) String txnId,
+			@RequestParam(name="role",required = false) String role,
+			@RequestParam(name="userType",required = false) String userType,
+			@RequestParam(name ="userId", required= false) Integer userId,
+			HttpSession session)
 	{
-		log.info("entry point of  fetch stock in the bases of transaction id .");
-		StockUploadModel stockUploadModel= new StockUploadModel();
+		log.info("entry point of  fetch stock in the bases of transaction id ." +userType+" userId-->" +userId+" txnId-->" +txnId);
+		//StockUploadModel stockUploadModel= new StockUploadModel();
 		StockUploadModel stockUploadModelResponse;
-		stockUploadModel.setTxnId(txnId);
-		stockUploadModel.setRoleType(role);
-		log.info("request passed to the fetch stock api="+stockUploadModel);
+		//stockUploadModel.setTxnId(txnId);
+		//stockUploadModel.setRoleType(role);
+	
+		FilterRequest filterRequest = new FilterRequest();
+		filterRequest.setTxnId(txnId);
+		filterRequest.setRoleType(role);
+		filterRequest.setUserType(userType);
+		filterRequest.setUserId(userId);		
+		
+		
+		log.info("request passed to the fetch stock api="+filterRequest);
 		if(reqType.equals("editPage")) {
-			stockUploadModelResponse=feignCleintImplementation.fetchUploadedStockByTxnId(stockUploadModel);
+			stockUploadModelResponse=feignCleintImplementation.fetchUploadedStockByTxnId(filterRequest);
 			log.info("response from fetch stock api="+stockUploadModelResponse);
 			return stockUploadModelResponse;
 		}
 		else {
-			stockUploadModelResponse=feignCleintImplementation.fetchUploadedStockByTxnId(stockUploadModel);
+			stockUploadModelResponse=feignCleintImplementation.fetchUploadedStockByTxnId(filterRequest);
 			log.info("response from fetch stock api="+stockUploadModelResponse);
 			log.info("exit point of  fetch stock api.");
 			return stockUploadModelResponse;
@@ -259,7 +275,9 @@ else {
 	@RequestParam(name="file",required = false) MultipartFile file,HttpSession session,@RequestParam(name="txnId",required = false) String txnId,@RequestParam(name="filename",required = false) String filename) {
 	log.info("entry point in update Stock * *.");
 	StockUploadModel stockUpload= new StockUploadModel();
-
+	addMoreFileModel.setTag("system_upload_filepath");
+	urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
+	
 	String roleType=String.valueOf(session.getAttribute("usertype"));
 	String userName=session.getAttribute("username").toString();
 	int userId=(int) session.getAttribute("userid"); 
@@ -282,12 +300,12 @@ else {
 	
 	try {
 		log.info("file is not blank");
-	String rootPath = filePathforUploadFile+txnId+"/";
+	String rootPath = urlToUpload.getValue()+txnId+"/";
 	File tmpDir = new File(rootPath+file.getOriginalFilename());
 	boolean exists = tmpDir.exists();
 	if(exists) {
 	Path temp = Files.move 
-	(Paths.get(filePathforUploadFile+"/"+txnId+"/"+file.getOriginalFilename()), 
+	(Paths.get(urlToUpload.getValue()+"/"+txnId+"/"+file.getOriginalFilename()), 
 	Paths.get(filePathforMoveFile+file.getOriginalFilename())); 
 
 	String movedPath=filePathforMoveFile+file.getOriginalFilename();
@@ -471,12 +489,13 @@ else {
 		public @ResponseBody StockUploadModel openEndUserStockPopup(@RequestParam(name="txnId",required = false) String txnId)
 		{
 			log.info("entry point of  fetch end user stock in the bases of transaction id .");
-			StockUploadModel stockUploadModel= new StockUploadModel();
+			//StockUploadModel stockUploadModel= new StockUploadModel();
+			FilterRequest filterRequest = new FilterRequest();
 			StockUploadModel stockUploadModelResponse;
-			stockUploadModel.setTxnId(txnId);
-			log.info("response from fetch stock api="+stockUploadModel);
-			stockUploadModel.setUserType("End User");
-				stockUploadModelResponse=feignCleintImplementation.fetchUploadedStockByTxnId(stockUploadModel);
+			filterRequest.setTxnId(txnId);
+			log.info("response from fetch stock api="+filterRequest);
+			filterRequest.setUserType("End User");
+				stockUploadModelResponse=feignCleintImplementation.fetchUploadedStockByTxnId(filterRequest);
 				log.info("response from fetch stock api="+stockUploadModelResponse);
 				log.info("exit point of  fetch stock api.");
 				return stockUploadModelResponse;

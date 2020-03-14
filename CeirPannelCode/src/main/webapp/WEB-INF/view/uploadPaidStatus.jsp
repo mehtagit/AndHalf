@@ -1,3 +1,12 @@
+<%
+	response.setHeader("Cache-Control", "no-cache");
+	response.setHeader("Cache-Control", "no-store");
+	response.setDateHeader("Expires", 0);
+	response.setHeader("Pragma", "no-cache");
+	/*  session.setMaxInactiveInterval(200); //200 secs
+	 session.setAttribute("usertype", null); */
+	if (session.getAttribute("usertype") != null) {
+%>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
@@ -6,7 +15,7 @@
 <!DOCTYPE html>
 <html lang="en" class="no-js">
 <head>
-<title>Dashboard</title>
+<title>Upload Paid Status</title>
 <meta http-equiv='cache-control' content='no-cache'>
 <meta http-equiv='expires' content='-1'>
 <meta http-equiv='pragma' content='no-cache'>
@@ -216,11 +225,11 @@ input[type='search'] {
 													</h6>
 													<div class="btn">
 														<span><spring:message code="input.selectfile" /></span> <input type="file"
-														oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');"
-														title= "<spring:message code="validation.NoChosen" />" required id="csvUploadFile" accept=".csv">
+														oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');" onchange="isImageValid('csvUploadFile')"
+														title= "<spring:message code="validation.NoChosen" />" required id="csvUploadFile" accept="*image">
 													</div>
 													<div class="file-path-wrapper">
-														<input class="file-path validate responsive-file-div"
+														<input class="file-path validate responsive-file-div" id="csvUploadFileName"
 															type="text">
 													</div>
 												</div>
@@ -232,7 +241,7 @@ input[type='search'] {
 														pattern="[A-Za-z]{0,20}"
 														oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
 														title= "<spring:message code="validation.20Character" />" required>
-													<label for="firstName" class="center-align"><spring:message code="input.firstName" /><span class="star">*</span>
+													<label for="firstName" class="center-align"><spring:message code="input.firstName" /> <span class="star">*</span>
 													</label>
 												</div>
 
@@ -249,7 +258,7 @@ input[type='search'] {
 														 pattern="[A-Za-z]{0,20}"
 														oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
 														title= "<spring:message code="validation.20Character" />" required
-														maxlength="20"> <label for="lastName"><spring:message code="input.lastName" /><span class="star">*</span>
+														maxlength="20"> <label for="lastName"><spring:message code="input.lastName" /> <span class="star">*</span>
 													</label>
 												</div>
 											</div>
@@ -274,7 +283,7 @@ input[type='search'] {
 														name="streetNumber"
 														class="form-control boxBorder boxHeight" id="streetNumber"
 														maxlength="20" required/> <label
-														for="streetNumber"> <spring:message code="input.streetNumber" /><span
+														for="streetNumber"> <spring:message code="input.streetNumber" /> <span
 														class="star">*</span>
 													</label>
 												</div>
@@ -284,7 +293,7 @@ input[type='search'] {
 														title= "<spring:message code="validation.30characters" />" name="streetNumber"
 														class="form-control boxBorder boxHeight" id="village"
 														maxlength="30" required/> <label
-														for="village"> <spring:message code="input.village" /><span
+														for="village"> <spring:message code="input.village" /> <span
 														class="star">*</span>
 													</label>
 												</div>
@@ -297,7 +306,7 @@ input[type='search'] {
 														title= "<spring:message code="validation.30characters" />"
 														class="form-control boxBorder boxHeight" id="locality"
 														maxlength="30" required/> <label
-														for="locality"> <spring:message code="input.locality" /><span class="star">*</span>
+														for="locality"> <spring:message code="input.locality" /> <span class="star">*</span>
 													</label>
 												</div>
 
@@ -307,7 +316,7 @@ input[type='search'] {
 														title= "<spring:message code="validation.30characters" />" name="streetNumber"
 														class="form-control boxBorder boxHeight" id="district"
 														maxlength="30" required> <label
-														for="district"> <spring:message code="input.district" /><span
+														for="district"> <spring:message code="input.district" /> <span
 														class="star">*</span>
 													</label>
 												</div>
@@ -317,7 +326,7 @@ input[type='search'] {
 														title= "<spring:message code="validation.30characters" />" name="streetNumber"
 														class="form-control boxBorder boxHeight" id="commune"
 														maxlength="30" required/> <label
-														for="commune"> <spring:message code="input.commune" /><span
+														for="commune"> <spring:message code="input.commune" /> <span
 														class="star">*</span>
 													</label>
 												</div>
@@ -328,14 +337,14 @@ input[type='search'] {
 														title= "<spring:message code="validation.postalcode" />" name="streetNumber"
 														class="form-control boxBorder boxHeight" id="postalcode"
 														maxlength="6" required/> <label
-														for="postalcode"> <spring:message code="input.postalCode" /><span
+														for="postalcode"> <spring:message code="input.postalCode" /> <span
 														class="star">*</span>
 													</label>
 												</div>
 												<div class="input-field col s12 m6 l6">
 													<p
 														style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
-														<spring:message code="table.country" /><span class="star">*</span>
+														<spring:message code="table.country" /> <span class="star">*</span>
 													</p>
 													<select id="country" class="browser-default"
 														class="mySelect"
@@ -364,7 +373,7 @@ input[type='search'] {
 														class="star"></span></label>
 												</div>
 
-												<div class="input-field col s12 m6 l6">
+												<div class="input-field col s12 m6 l6" style="margin-top: 18px;">
 													<input type="text" name="phone" 
 														pattern="[0-9]{10,10}"
 														oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
@@ -429,7 +438,7 @@ input[type='search'] {
 																pattern="[A-Za-z0-9]{0,15}"
 																oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
 																title= "<spring:message code="validation.15serialNo" />"required
-																maxlength="15"> <label for="serialNumber1"> <spring:message code="input.deviceSerialNumber" /><span class="star">*</span>
+																maxlength="15"> <label for="serialNumber1"> <spring:message code="input.deviceSerialNumber" /> <span class="star">*</span>
 															</label>
 														</div>
 
@@ -541,10 +550,13 @@ input[type='search'] {
 								</div>
 
 								<div id="profile-page" class="section">
+								
 									<div class="container" id="user456" style="display: none;">
+										<form action="${context}/uploadPaidStatus">
 										<div class="col s12 m12 l12" id="tableDiv"
 											style="padding-bottom: 5px; background-color: #e2edef52;">
 										</div>
+										</form>
 										<div class="row">
 											<div class="col s12 m12">
 												<table class="responsive-table striped display"
@@ -876,6 +888,22 @@ input[type='search'] {
             </div>
         </div>
     </div>
+    <div id="fileFormateModal" class="modal">
+		<h6 class="modal-header"><spring:message code="fileValidationModalHeader" /></h6>
+		<div class="modal-content">
+			<div class="row">
+				<h6 id="fileErrormessage"><spring:message code="fileValidationName" /><br> <br> <spring:message code="fileValidationFormate" /> <br><br> <spring:message code="fileValidationSize" /> </h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<div class="input-field col s12 center">
+						<button class="modal-close  btn" onclick="clearFileName()"
+							style="margin-left: 10px;"><spring:message code="modal.ok" /></button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 	
 
 	<script type="text/javascript"
@@ -937,14 +965,19 @@ input[type='search'] {
 		src="${context}/resources/project_js/_dateFunction.js" async></script>
 		<script type="text/javascript"
 		src="${context}/resources/project_js/profileInfoTab.js" async></script>
-		<script>
+	
 		
-		
-		
-		
-			
-
-
-
-</body>
+		</body>
 </html>
+<%
+} else {
+
+%>
+<script language="JavaScript">
+sessionStorage.setItem("loginMsg",
+"*Session has been expired");
+window.top.location.href = "./login";
+</script>
+<%
+}
+%>
