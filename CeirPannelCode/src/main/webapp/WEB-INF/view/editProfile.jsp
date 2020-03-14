@@ -198,7 +198,7 @@ var contextpath = "${context}";
 									<input type="text" name="firstName" id="firstName" placeholder=""
 										  pattern="[A-Za-z]{0,20}" maxlength="20"   
 					oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
-										  title= "<spring:message code="validation.20Character" />" required > <label 
+										  title= "<spring:message code="validation.20Character" />" required/ > <label 
 										class="center-align" ><spring:message code="input.firstName" /> <span class="star">*</span></label>
 								</div>
 
