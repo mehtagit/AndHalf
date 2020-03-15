@@ -20,14 +20,11 @@ import com.gl.ceir.config.model.ConsignmentMgmtHistoryDb;
 import com.gl.ceir.config.model.DeviceDbHistory;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GreylistDbHistory;
-import com.gl.ceir.config.model.MessageConfigurationHistoryDb;
 import com.gl.ceir.config.model.Notification;
-import com.gl.ceir.config.model.PolicyConfigurationDb;
 import com.gl.ceir.config.model.PolicyConfigurationHistoryDb;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.StockMgmtHistoryDb;
 import com.gl.ceir.config.model.StolenAndRecoveryHistoryMgmt;
-import com.gl.ceir.config.model.SystemConfigListDb;
 import com.gl.ceir.config.model.SystemConfigurationDb;
 import com.gl.ceir.config.model.SystemConfigurationHistoryDb;
 import com.gl.ceir.config.model.constants.Datatype;
@@ -36,7 +33,6 @@ import com.gl.ceir.config.repository.AuditTrailRepository;
 import com.gl.ceir.config.repository.BlackListTrackDetailsRepository;
 import com.gl.ceir.config.repository.ConsignmentMgmtHistoryRepository;
 import com.gl.ceir.config.repository.GreyListTrackRepository;
-import com.gl.ceir.config.repository.MessageConfigurationHistoryDbRepository;
 import com.gl.ceir.config.repository.NotificationRepository;
 import com.gl.ceir.config.repository.PolicyConfigurationHistoryDbRepository;
 import com.gl.ceir.config.repository.StockDetailsOperationRepository;
@@ -45,7 +41,6 @@ import com.gl.ceir.config.repository.StolenAndRecoveryHistoryMgmtRepository;
 import com.gl.ceir.config.repository.SystemConfigurationDbRepository;
 import com.gl.ceir.config.repository.SystemConfigurationHistoryDbRepository;
 import com.gl.ceir.config.specificationsbuilder.NotificationSpecificationBuilder;
-
 
 @Service
 public class HistoryServiceImpl {
@@ -57,9 +52,6 @@ public class HistoryServiceImpl {
 
 	@Autowired	
 	PolicyConfigurationHistoryDbRepository policyConfigurationHistoryDbRepository;
-
-	@Autowired	
-	MessageConfigurationHistoryDbRepository messageConfigurationHistoryDbRepository;
 
 	@Autowired
 	SystemConfigurationHistoryDbRepository systemConfigurationHistoryDbRepository;
@@ -101,20 +93,6 @@ public class HistoryServiceImpl {
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
-
-
-	public Page<MessageConfigurationHistoryDb> ViewAllMessageHistory(Integer pageNo, Integer pageSize){
-		try {
-			Pageable pageable = PageRequest.of(pageNo, pageSize);
-
-			return messageConfigurationHistoryDbRepository.findAll(pageable);
-		} catch (Exception e) {
-			logger.error("Not Register Consignent="+e.getMessage());
-			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
-		}
-	}
-
-
 
 	public Page<SystemConfigurationHistoryDb> ViewAllSystemHistory(Integer pageNo, Integer pageSize){
 		try {

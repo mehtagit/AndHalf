@@ -16,7 +16,6 @@ import com.gl.ceir.config.model.ConsignmentMgmtHistoryDb;
 import com.gl.ceir.config.model.DeviceDbHistory;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GreylistDbHistory;
-import com.gl.ceir.config.model.MessageConfigurationHistoryDb;
 import com.gl.ceir.config.model.Notification;
 import com.gl.ceir.config.model.PolicyConfigurationHistoryDb;
 import com.gl.ceir.config.model.StockMgmtHistoryDb;
@@ -47,21 +46,6 @@ public class HistoryController {
 		logger.info("Policy history Response="+policyDb);
 		MappingJacksonValue mapping = new MappingJacksonValue(policyDb);
 		return mapping;
-	}
-
-	@ApiOperation(value = "View All Record of Message history Db.", response = MessageConfigurationHistoryDb.class)
-	@RequestMapping(path = "/history/message", method = RequestMethod.POST)
-	public MappingJacksonValue viewMessage(@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
-			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
-
-		logger.info("Request to view Message historyDetails Page No=" + pageNo + " Pagesize=" + pageNo);
-
-		Page<MessageConfigurationHistoryDb> policyDb = historyServiceImpl.ViewAllMessageHistory(pageNo, pageSize);
-
-		logger.info("Message history Response="+policyDb);
-		MappingJacksonValue mapping = new MappingJacksonValue(policyDb);
-		return mapping;
-
 	}
 
 	@ApiOperation(value = "View All Record of System history Db.", response = SystemConfigurationHistoryDb.class)

@@ -21,7 +21,6 @@ import com.gl.ceir.config.model.AuditTrail;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.MessageConfigurationDb;
-import com.gl.ceir.config.model.MessageConfigurationHistoryDb;
 import com.gl.ceir.config.model.Notification;
 import com.gl.ceir.config.model.PolicyConfigurationDb;
 import com.gl.ceir.config.model.PolicyConfigurationHistoryDb;
@@ -35,7 +34,6 @@ import com.gl.ceir.config.model.constants.SearchOperation;
 import com.gl.ceir.config.model.constants.Tags;
 import com.gl.ceir.config.repository.AuditTrailRepository;
 import com.gl.ceir.config.repository.MessageConfigurationDbRepository;
-import com.gl.ceir.config.repository.MessageConfigurationHistoryDbRepository;
 import com.gl.ceir.config.repository.NotificationRepository;
 import com.gl.ceir.config.repository.PolicyConfigurationDbRepository;
 import com.gl.ceir.config.repository.PolicyConfigurationHistoryDbRepository;
@@ -62,9 +60,6 @@ public class ConfigurationManagementServiceImpl {
 
 	@Autowired
 	SystemConfigurationHistoryDbRepository systemConfigurationHistoryDbRepository;
-
-	@Autowired
-	MessageConfigurationHistoryDbRepository messageConfigurationHistoryDbRepository;
 
 	@Autowired
 	PolicyConfigurationHistoryDbRepository policyConfigurationHistoryDbRepository;
@@ -256,13 +251,6 @@ public class ConfigurationManagementServiceImpl {
 			if(Objects.isNull(mcd)) {
 				return new GenricResponse(15, "This id does not exist","");
 			}
-
-			MessageConfigurationHistoryDb mshb = new MessageConfigurationHistoryDb();
-			mshb.setDescription(mcd.getDescription());
-			mshb.setTag(mcd.getTag());
-			mshb.setValue(mcd.getValue());
-
-			messageConfigurationHistoryDbRepository.save(mshb);
 
 			mcd.setValue(messageConfigurationDb.getValue());
 			mcd.setDescription(messageConfigurationDb.getDescription());
