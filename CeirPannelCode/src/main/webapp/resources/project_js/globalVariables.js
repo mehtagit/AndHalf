@@ -80,7 +80,6 @@ $("input[type=file]").keypress(function(ev) {
 	
 	
 	
-	
 	function isFileValid(id,hiddenVal,editInputID) {
 
 			var uploadedFileName = $("#"+id).val();

@@ -65,7 +65,7 @@ function confirmantiondelete(){
 				success : function(data, textStatus, xhr) {
 					if(data.errorCode == 200){
 						$("#consignmentText").text('');
-						$("#consignmentText").text(data.message);
+						$("#consignmentText").text($.i18n(data.message));
 
 					}else if(data.errorCode == 0){
 						$("#consignmentText").text('');

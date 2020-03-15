@@ -268,10 +268,35 @@ function exportStolenRecoveryData()
 	var info = table.page.info(); 
 	var pageNo=info.page;
 	var pageSize =info.length;
-	console.log("--------"+pageSize+"---------"+pageNo);
-	console.log("stolenRecoveryStartDate  ="+stolenRecoveryStartDate+"  stolenRecoveryEndDate=="+stolenRecoveryEndDate+"  stolenRecoveryTxnId="+stolenRecoveryTxnId+" stolenRecoveryFileStatus ="+stolenRecoveryFileStatus+"=role="+role+" stolenRecoverySourceStatus="+stolenRecoverySourceStatus+" stolenRecoveryRequestType"+stolenRecoveryRequestType);
-	window.location.href="./exportStolenRecovery?stolenRecoveryStartDate="+stolenRecoveryStartDate+"&stolenRecoveryEndDate="+stolenRecoveryEndDate+"&stolenRecoveryTxnId="+stolenRecoveryTxnId+"&stolenRecoveryFileStatus="+stolenRecoveryFileStatus+"&stolenRecoverySourceStatus="+stolenRecoverySourceStatus+"&stolenRecoveryRequestType="+stolenRecoveryRequestType+"&pageSize="+pageSize+"&pageNo="+pageNo+"&roleType="+roleType;
 
+	var filterRequest={
+			"endDate":stolenRecoveryEndDate,
+			"startDate":stolenRecoveryStartDate,
+			"txnId":stolenRecoveryTxnId,
+			"grievanceStatus":stolenRecoveryFileStatus,
+			"sourceType":stolenRecoverySourceStatus,
+			"requestType":stolenRecoveryRequestType,
+			"featureId":featureId,
+			"roleType":roleType,
+			"pageNo":parseInt(pageNo),
+			"pageSize":parseInt(pageSize)
+			
+	}
+	console.log(JSON.stringify(filterRequest))
+	$.ajax({
+		url: './exportStolenRecovery',
+		type: 'POST',
+		dataType : 'json',
+		contentType : 'application/json; charset=utf-8',
+		data : JSON.stringify(filterRequest),
+		success: function (data, textStatus, jqXHR) {
+			  window.location.href = data.url;
+
+		},
+		error: function (jqXHR, textStatus, errorThrown) {
+			
+		}
+	});
 }
 
 

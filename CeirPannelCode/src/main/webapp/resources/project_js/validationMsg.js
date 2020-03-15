@@ -8,7 +8,7 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 		} ).done( function() { 
 		});
 		
-
+	
 		$(function(){
 			$('*').tooltip({ track: true });
 		    $('*[title]').tooltip('disable');

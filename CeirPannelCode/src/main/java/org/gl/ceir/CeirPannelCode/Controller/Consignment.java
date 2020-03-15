@@ -466,9 +466,6 @@ public @ResponseBody FileExportResponse downloadFile(@PathVariable("transactionN
 	FileExportResponse response = new FileExportResponse();	
 log.info("inside file download method"+doc_TypeTag);
 
-//AddMoreFileModel urlToUpload= new AddMoreFileModel();
-addMoreFileModel.setTag("system_upload_filepath");
-urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
 
 if (filetype.equalsIgnoreCase("actual"))
 {
@@ -476,7 +473,7 @@ if (filetype.equalsIgnoreCase("actual"))
 if (!doc_TypeTag.equals("DEFAULT"))
 {
 	log.info("doc_TypeTag_______"+doc_TypeTag);
-	String rootPath = urlToUpload.getValue()+txnid+"/"+doc_TypeTag+"/";
+	String rootPath = filePathforUploadFile+txnid+"/"+doc_TypeTag+"/";
 	File tmpDir = new File(rootPath+fileName);
 	boolean exists = tmpDir.exists();
 	if(exists) {
@@ -492,7 +489,7 @@ if (!doc_TypeTag.equals("DEFAULT"))
 }
 else if(doc_TypeTag.equalsIgnoreCase("DEFAULT")) {
 	log.info("doc_TypeTag==="+doc_TypeTag);
-	String rootPath = urlToUpload.getValue()+txnid+"/";
+	String rootPath = filePathforUploadFile+txnid+"/";
 	File tmpDir = new File(rootPath+fileName);
 	boolean exists = tmpDir.exists();
 	if(exists) {
@@ -509,7 +506,7 @@ else if(doc_TypeTag.equalsIgnoreCase("DEFAULT")) {
 }
 else if(filetype.equalsIgnoreCase("error"))
 {
-	String rootPath = urlToUpload.getValue()+txnid+"/"+txnid+"_error.csv";
+	String rootPath = filePathforErrorFile+txnid+"/"+txnid+"_error.csv";
 	File tmpDir = new File(rootPath);
 	boolean exists = tmpDir.exists();
 	if(exists) {

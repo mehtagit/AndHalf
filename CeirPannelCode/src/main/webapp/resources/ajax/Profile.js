@@ -243,13 +243,15 @@ function editProfile(){
 			$("#registrationForm #state").val(resp.province);
 			var arr=[];    
 			arr=resp.roles;
+            if(resp.userTypeId==4 || resp.userTypeId==5 || resp.userTypeId==6){
+             	$("#rolesDiv").show();
+                usertypeData2(resp.userTypeId); 	
+            }
 			for (var i = 0; i < arr.length; i++) {
 				$('#registrationForm #usertypes option[value="'+arr[i]+'"]').attr('disabled', true);
 			}
 
-
-
-
+           
 			//$("#").val(resp[i].); 
 			var questionData=resp.questionList;
 			for(var i=0;i<questionData.length;i++){
@@ -288,6 +290,12 @@ function updateProfile(){
 		}
 	});
 
+	var data=[];
+	var $el=$("#usertypes");
+	$el.find('option:selected').each(function(){
+	    data.push($(this).val());
+	});
+	
 	var password=document.getElementById("confirmPassword").value;
 	$("#registrationForm").each(function(key, val){
 		val = $(this);  
@@ -312,7 +320,7 @@ function updateProfile(){
 					companyName:val.find('#companyName').val(),
 					passportNo:val.find('#passportNo').val(),
 					country:val.find('#country').val(),
-					roles:val.find('#usertypes').val(),
+					roles:data,
 					questionList:questionData,
 					password:password
 			}    
