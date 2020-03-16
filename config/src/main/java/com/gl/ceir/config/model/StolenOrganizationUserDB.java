@@ -3,10 +3,8 @@ package com.gl.ceir.config.model;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -45,7 +43,7 @@ public class StolenOrganizationUserDB implements Serializable {
 	
 	@Column(length = 50)
 	private String fileName;
-	
+			
 	@Column(length = 50)
 	private String district;
 	
@@ -58,6 +56,7 @@ public class StolenOrganizationUserDB implements Serializable {
 	private Integer postalCode;
 	
 	private String province;
+	
 	private String country;
 	
 	// Authorize person Info.

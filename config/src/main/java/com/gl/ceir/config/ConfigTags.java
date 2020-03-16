@@ -19,7 +19,7 @@ public interface ConfigTags {
 
 	//----------------
 	String file_download_dir = "file.download-dir";
-	String file_download_link = "file.configlib.download-link";
+	String file_download_link = "file.download-link";
 
 	// User
 	String default_visa_expiration_days = "default_visa_expiration_days";

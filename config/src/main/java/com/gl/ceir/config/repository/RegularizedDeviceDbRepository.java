@@ -6,9 +6,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 
+import com.gl.ceir.config.factory.CustomerCareRepo;
 import com.gl.ceir.config.model.RegularizeDeviceDb;
 
-public interface RegularizedDeviceDbRepository extends JpaRepository<RegularizeDeviceDb, Long>, JpaSpecificationExecutor<RegularizeDeviceDb	> {
+public interface RegularizedDeviceDbRepository extends JpaRepository<RegularizeDeviceDb, Long>, 
+JpaSpecificationExecutor<RegularizeDeviceDb	>, CustomerCareRepo<RegularizeDeviceDb> {
 
 	public RegularizeDeviceDb getByDeviceSerialNumber(String serialNumber);
 

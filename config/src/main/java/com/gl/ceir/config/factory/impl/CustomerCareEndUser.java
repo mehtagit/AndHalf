@@ -28,7 +28,7 @@ public class CustomerCareEndUser implements CustomerCareTarget{
 			customerCareDeviceState.setTxnId(deviceDb.getTxnId());
 			customerCareDeviceState.setDate(deviceDb.getCreatedOn().toString());
 			customerCareDeviceState.setStatus(Constants.available);
-			customerCareDeviceState.setFeatureId(0);
+			customerCareDeviceState.setFeatureId(12);
 		}
 		else {
 			customerCareDeviceState.setDate("");

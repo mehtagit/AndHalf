@@ -21,6 +21,7 @@ import com.gl.ceir.config.factory.impl.CustomerCareTypeApprove;
 import com.gl.ceir.config.factory.impl.CustomerCareVipList;
 import com.gl.ceir.config.model.constants.Features;
 import com.gl.ceir.config.repository.ConsignmentRepository;
+import com.gl.ceir.config.repository.RegularizedDeviceDbRepository;
 import com.gl.ceir.config.repository.StockManagementRepository;
 import com.gl.ceir.config.repository.StolenAndRecoveryRepository;
 
@@ -82,6 +83,9 @@ public class CustomerCareFactory {
 
 	@Autowired
 	StolenAndRecoveryRepository stolenAndRecoveryRepository;
+	
+	@Autowired
+	RegularizedDeviceDbRepository regularizedDeviceDbRepository;
 
 	public CustomerCareTarget getObject(String name) {
 
@@ -149,6 +153,8 @@ public class CustomerCareFactory {
 			return stolenAndRecoveryRepository;
 		case 7:
 			return stolenAndRecoveryRepository;
+		case 12:
+			return regularizedDeviceDbRepository;
 		default:
 			break;
 		}
