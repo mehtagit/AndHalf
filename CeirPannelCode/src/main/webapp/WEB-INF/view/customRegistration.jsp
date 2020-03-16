@@ -211,7 +211,7 @@ var contextpath = "${context}";
 		<div class="container">
 			<div class="section registration-form">
 				<form id="registrationForm" autocomplete="off"
-					onsubmit="return saveOperatorRegistration()">
+					onsubmit="return saveCustomRegistration()">
 
 					<div class="card-panel registration-form">
 						<div class="row">
