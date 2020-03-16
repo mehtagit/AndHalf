@@ -80,7 +80,6 @@ $("input[type=file]").keypress(function(ev) {
 	
 	
 	
-	
 	function isFileValid(id,hiddenVal,editInputID) {
 
 			var uploadedFileName = $("#"+id).val();
@@ -129,13 +128,18 @@ $("input[type=file]").keypress(function(ev) {
 		fileSize = Math.floor(fileSize/1000) + 'KB';
 
 		//alert(uploadedFileName+"----------"+ext+"----"+fileSize)
-
+		var areEqual =ext.toLowerCase()=='png';
+		//alert(areEqual);
+		if(areEqual==true)
+			{
+			ext='PNG';
+			}
 		if (uploadedFileName.length > 30) {
 			$('#fileFormateModal').openModal();
 			$('#fileErrormessage').text('');
 			$('#fileErrormessage').text($.i18n('imageMessage'));
 		} 
-		else if(ext !='png')
+		else if(ext !='PNG')
 		{
 			$('#fileFormateModal').openModal({
 				dismissible:false

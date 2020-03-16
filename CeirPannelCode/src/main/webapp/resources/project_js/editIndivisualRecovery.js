@@ -96,7 +96,6 @@ function updateIndivisualRecovery()
 	var blockingType =$('.blocktypeRadio:checked').val();
 	var IndivisualRecoveryDevice=$('#bulkRecoveryDate').val();
 	var txnid=$('#existingStolenTxnId').val();
-	 
 	
 	var stolenIndividualUserDB={
 			"deviceBrandName": sigleRecoverydeviceBrandName,

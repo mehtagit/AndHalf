@@ -1,5 +1,8 @@
 package org.gl.ceir.CeirPannelCode.Model;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class AddMoreFileModel {
 
 

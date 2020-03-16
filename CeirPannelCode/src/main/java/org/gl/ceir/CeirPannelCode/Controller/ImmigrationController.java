@@ -18,4 +18,11 @@ public class ImmigrationController {
 		return mv;
 	}
 
+	@GetMapping(value="edit_immigration")
+	public ModelAndView update()
+	{
+		ModelAndView mv= new ModelAndView();
+		mv.setViewName("editImmigration");
+		return mv;
+	}
 }

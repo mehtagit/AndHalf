@@ -1,9 +1,15 @@
+var input = document.querySelector("#phone");
+window.intlTelInput(input, {
+    utilsScript: "${context}/resources/js/utils.js",
+});
+
+
 $('#langlist').on('change', function() {
 	window.lang=$('#langlist').val() == 'km' ? 'km' : 'en';
 	var url_string = window.location.href;
 	var url = new URL(url_string);
 	var type = url.searchParams.get("type");
-	window.location.assign("selfRegisterDevice?lang="+window.lang);			
+	window.location.assign("immigration_register?lang="+window.lang);			
 }); 
 
 
@@ -17,15 +23,26 @@ $.i18n().load( {
 });
 
 
-/*var input = document.querySelector("#phone1");
-window.intlTelInput(input, {
-	utilsScript: "js/utils.js",
-});
+function showVisaDetails(){
+	$("#visaDetails").css("display", "block");
+	$("#datepicker").attr("required", true);
+	//$("#visaNumber").attr("required", true);
+	$("#visaImage").attr("required", true);
+	$("#datepicker1").attr("required", true);
+	$("#visaType").attr("required", true);
 
-var input = document.querySelector("#phone");
-window.intlTelInput(input, {
-	utilsScript: "js/utils.js",
-});*/
+}
+function hideVisaDetails(){
+	$("#visaDetails").css("display", "none");
+	$('#visaDetails').find('input:text').val('');
+	$('#visaDetails').find('input:file').val('');
+
+	$("#datepicker").attr("required", false);
+	$("#visaNumber").attr("required", false);
+	$("#visaImage").attr("required", false);
+	$("#datepicker1").attr("required", false);
+	$("#visaType").attr("required", false);
+}
 
 
 $('#datepicker,#datepicker1').datepicker({
@@ -33,56 +50,11 @@ $('#datepicker,#datepicker1').datepicker({
 });
 
 
-populateCountries(
-		"country",
-		"state"
-);
-populateStates(
-		"country",
-		"state"
-);
-
-populateCountries(
-		"country1"
-
-);
+populateCountries("country","state");
+populateStates("country","state");
+//populateCountries("country1","state");
 
 
-
-
-function showCambodianUserForm()
-{
-	$("#askVisaDetails").css("display", "none"); 
-	$("#visaDetails").css("display", "none"); 
-	$("#nationalityDiv").css("display", "none"); 
-	$('#endUserLabelNID').text($.i18n('National ID'));
-	$('#nidType').text($.i18n('Upload ID Image'));
-
-	$("#nidPlaceHolder").attr("placeholder", $.i18n('Upload ID Image')).val("").focus().blur();
-	$('#visaDetails').find('input:text').val('');
-	$('#visaDetails').find('input:file').val('');
-	$('input[name="onVisa"]').prop('checked', false);
-
-	$("#datepicker").attr("required", false);
-	$("#visaNumber").attr("required", false);
-	$("#visaImage").attr("required", false);
-	$("#datepicker1").attr("required", false);
-	$("#visaType").attr("required", false);
-
-	$("#nationality").attr("required", false);
-	$("#departmentName").attr("required", false);
-	$("#endUserdepartmentID").attr("required", false);
-	$("#endUserDepartmentId").attr("required", false);
-	$("#visaType").attr("required", false);
-	$("#datepicker").attr("required", false);
-	$("#datepicker1").attr("required", false);
-	$("#visaImage").attr("required", false);
-
-
-
-	$("#endUserLabelNID").append('<span class="star">*</span>');
-	$("#nidType").append('<span class="star">*</span>');
-}
 
 function removeSelectVip()
 {
@@ -118,36 +90,9 @@ function showOtherUserForm()
 	$("#nidType").append('<span class="star">*</span>');
 
 
-	/*$("#departmentName").attr("required", true);
-	 $("#endUserdepartmentID").attr("required", true);
-	 $("#endUserDepartmentId").attr("required", true);
-	 $("#visaType").attr("required", true);
-	 $("#datepicker").attr("required", true);
-	 $("#datepicker1").attr("required", true);
-	 $("#visaImage").attr("required", true);*/
 
 }
 
-function showVisaDetails(){
-	$("#visaDetails").css("display", "block");
-	$("#datepicker").attr("required", true);
-	//$("#visaNumber").attr("required", true);
-	$("#visaImage").attr("required", true);
-	$("#datepicker1").attr("required", true);
-	$("#visaType").attr("required", true);
-
-}
-function hideVisaDetails(){
-	$("#visaDetails").css("display", "none");
-	$('#visaDetails').find('input:text').val('');
-	$('#visaDetails').find('input:file').val('');
-
-	$("#datepicker").attr("required", false);
-	$("#visaNumber").attr("required", false);
-	$("#visaImage").attr("required", false);
-	$("#datepicker1").attr("required", false);
-	$("#visaType").attr("required", false);
-}
 
 $.getJSON('./getDropdownList/VISA_TYPE', function(data) {
 	for (i = 0; i < data.length; i++) {
@@ -216,11 +161,7 @@ $(document).ready(function () {
 
 			);  //add input box
 
-			populateCountries
-			(   
-					"country"+id
-			);
-
+			
 			$.getJSON('./getDropdownList/DEVICE_TYPE', function(data) {
 				var dropdownid=id-1;
 				for (i = 0; i < data.length; i++) {
@@ -253,11 +194,11 @@ $(document).ready(function () {
 
 				}
 			});
-
-
-
-
-			id++;
+			populateCountries
+			(   
+					"country"+id
+			);
+id++;
 		}
 	});
 	$(wrapper).on("click", ".remove_field", function (e) { //user click on remove text
@@ -271,10 +212,8 @@ $(document).ready(function () {
 
 
 
-function submitEndUserDeviceInfo(){
+function updateImmigrationForm(){
 	var formData= new FormData();
-
-
 	var nationalID=$('#endUserNID').val();
 	var endUserNID=$('#endUserNID').val();
 	var firstName=$('#endUserfirstName').val();
@@ -334,6 +273,9 @@ function submitEndUserDeviceInfo(){
 
 
 	var visaDb=[];
+	//$('input[name="selectvip"][value="' + data.data.isVip.toString() + '"]').prop("checked", true).triggerHandler('click');
+	
+	if($('input[name="onVisa"]:checked').val() == 'Y'){
 	var visa={
 			"visaType":visaType,
 			"visaExpiryDate":visaExpirydate,
@@ -343,6 +285,12 @@ function submitEndUserDeviceInfo(){
 			"visaType": visaType
 	}
 	visaDb.push(visa);
+	}
+	else{
+		var visaDb=[];	
+	}
+	
+	
 	if(departmentFileID=="")
 	{
 		departmentFileID="";
@@ -366,49 +314,6 @@ function submitEndUserDeviceInfo(){
 	}
 
 
-
-	var fieldId=1;
-	var regularizeDeviceDbs =[];
-	$('.deviceInformation').each(function() {
-		var deviceType1=$('#deviceType'+fieldId).val();
-		var serialNumber1=$('#serialNumber'+fieldId).val();
-		var deviceIdType1=$('#deviceIdType'+fieldId).val();
-		var deviceStatus1=$('#deviceStatus'+fieldId).val();
-		var IMEI1=$('#IMEIA'+fieldId).val();
-		var IMEI2=$('#IMEIB'+fieldId).val();
-		var IMEI3=$('#IMEIC'+fieldId).val();
-		var IMEI4=$('#IMEID'+fieldId).val();
-		var deviceCountry=$('#country'+fieldId).val();
-		var multipleSimStatus1=$('#multipleSimStatus'+fieldId).val();
-
-
-
-
-		var deviceInfo=
-		{
-				"country": deviceCountry,
-
-				"deviceIdType": parseInt(deviceIdType1),
-				"deviceSerialNumber": serialNumber1,
-				"deviceStatus": parseInt(deviceStatus1),
-				"deviceType": parseInt(deviceType1),
-				"firstImei": IMEI1,
-				"secondImei": IMEI2,
-				"thirdImei": IMEI3,
-				"fourthImei": IMEI4,
-				"multiSimStatus": deviceStatus1,
-				"nid":nationalID,
-				"origin":"Self"
-
-		}
-		regularizeDeviceDbs.push(deviceInfo);
-		fieldId++;
-
-
-	});
-
-
-
 	var request={
 			"country": country,
 			"email": email,
@@ -421,7 +326,6 @@ function submitEndUserDeviceInfo(){
 			"propertyLocation": address,
 			"province": state,
 			"street": streetNumber,
-			"regularizeDeviceDbs":regularizeDeviceDbs,
 			"visaDb":visaDb,
 			"nationality":nationality,
 			"userDepartment":departmentDetails,
@@ -432,14 +336,16 @@ function submitEndUserDeviceInfo(){
 			"village":village,
 			"postalCode":postalcode,
 			"doc_type_numeric":docType,
-			"docType":doc_type_numeric
+			"docType":doc_type_numeric,
+			"txnId": $("#nationalID").attr("txn"),
+			"origin": $("#nationalID").attr("origin")
+			
 	}
-
 	formData.append('uploadnationalID', $('#uploadnationalID')[0].files[0]);
 	formData.append("request",JSON.stringify(request));
 	$.ajax({
-		url: './registerEndUserDevice',
-		type: 'POST',
+		url: './updateEndUserDevice',
+		type: 'PUT',
 		data: formData,
 		processData: false,
 		contentType: false,
@@ -451,13 +357,13 @@ function submitEndUserDeviceInfo(){
 			if(data.errorCode==0){
 
 //				$('#sucessMessage').text('');
-				$('#endUserRegisterDeviceModal').openModal({dismissible:false});;
+				$('#endUserRegisterDeviceModal').openModal();
 				$('#endUsertXnId').text(data.txnId);
 				$("#endUserRegisterButton").prop('disabled', true);
 			}
 			else{
 //				$('#sucessMessage').text('');
-				$('#endUserRegisterDeviceModal').openModal({dismissible:false});;
+				$('#endUserRegisterDeviceModal').openModal();
 				$('#sucessMessageId').text('');
 				$('#sucessMessageId').text(data.message);
 			}
@@ -473,7 +379,6 @@ function submitEndUserDeviceInfo(){
 
 $(document).on("keyup", "#visaNumber", function(e) {
 	var visaNumber=$('#visaNumber').val();
-
 	if(visaNumber.length<'1' )
 	{
 		$("#datepicker1").attr("required", false);
@@ -504,18 +409,13 @@ function fileTypeValueChanges(id) {
 	fileSize = Math.floor(fileSize/1000) + 'KB';
 
 	//alert(uploadedFileName+"----------"+ext+"----"+fileSize)
-	var areEqual =ext.toLowerCase()=='png';
-	//alert(areEqual);
-	if(areEqual==true)
-		{
-		ext='PNG';
-		}
+
 	if (uploadedFileName.length > 30) {
-		$('#fileFormateModal').openModal({dismissible:false});;
+		$('#fileFormateModal').openModal();
 		$('#fileErrormessage').text('');
 		$('#fileErrormessage').text($.i18n('imageMessage'));
 	} 
-	else if(ext !='PNG')
+	else if(ext !='png')
 	{
 		$('#fileFormateModal').openModal({
 			dismissible:false
@@ -555,19 +455,14 @@ function visaImageValidation() {
 	alert("----"+fileSize);*/
 	fileSize = Math.floor(fileSize/1000);
 
-	var areEqual =ext.toLowerCase()=='png';
-	//alert(areEqual);
-	if(areEqual==true)
-		{
-		ext='PNG';
-		}
+
 
 	if (uploadedFileName.length > 30) {
 		$('#visafileFormateModal').openModal({dismissible:false});
 		$('#visafileErrormessage').text('');
 		$('#visafileErrormessage').text($.i18n('imageMessage'));
 	} 
-	else if(ext!='PNG')
+	else if(ext!='png')
 	{
 		$('#visafileFormateModal').openModal({
 			dismissible:false
@@ -608,19 +503,14 @@ function deptImageValidation() {
 	alert("----"+fileSize);*/
 	fileSize = Math.floor(fileSize/1000);
 
-	var areEqual =ext.toLowerCase()=='png';
-	//alert(areEqual);
-	if(areEqual==true)
-		{
-		ext='PNG';
-		}
+
 
 	if (uploadedFileName.length > 30) {
 		$('#DeptfileFormateModal').openModal({dismissible:false});
 		$('#DeptfileErrormessage').text('');
 		$('#DeptfileErrormessage').text($.i18n('imageMessage'));
 	} 
-	else if(ext!='PNG')
+	else if(ext!='png')
 	{
 		$('#DeptfileFormateModal').openModal({
 			dismissible:false
@@ -647,3 +537,67 @@ function clearDeptName() {
 	$("#endUSerNidaPlaceholder").val('');
 	$('#visafileFormateModal').closeModal();
 }
+
+
+
+
+
+var passportNo_NID=$("body").attr("session-valuepassportNo");
+$.ajax({
+	url: './findEndUserByNid?findEndUserByNid='+passportNo_NID,
+	type: 'POST',
+	processData: false,
+	contentType: false,
+	success: function (data, textStatus, jqXHR) {
+
+		console.log("response:"+JSON.stringify(data.data));
+
+		$('#endUserfirstName').val(data.data.firstName);
+		$('#endUsermiddleName').val(data.data.middleName);
+		$('#endUserlastName').val(data.data.lastName);
+		$('#address').val(data.data.propertyLocation);
+		$('#streetNumber').val(data.data.street);
+		$('#locality').val(data.data.locality);
+		$('#village').val(data.data.village);
+		$('#nationality').val(data.data.nationality);
+		$('#commune').val(data.data.commune);
+		$('#endUserdistrict').val(data.data.district);
+		$('#pin').val(data.data.postalCode);
+		$('#country').val(data.data.country).change();
+		$('#state').val(data.data.province);
+		$('#phone').val(data.data.phoneNo);
+		$('#endUseremailID').val(data.data.email);
+		 $("#nationalID").attr("txn", data.data.txnId);
+		 $("#nationalID").attr("origin", data.data.origin);
+		$('#endUserNID').val(data.data.nid);
+		$('#nidPlaceHolder').val(data.data.passportFileName);
+		$('input[name="selectvip"][value="' + data.data.isVip.toString() + '"]').prop("checked", true).triggerHandler('click');
+		$('input[name="onVisa"][value="' + data.data.onVisa.toString() + '"]').prop("checked", true).triggerHandler('click');
+		
+		if(data.data.isVip == 'Y'){
+		$('#departmentName').val(data.data.userDepartment['name']);
+		$('#endUserdepartmentID').val(data.data.userDepartment['departmentId']);
+		$('#endUSerNidaPlaceholder').val(data.data.userDepartment['departmentFilename']);
+		}
+		
+		
+
+		if(data.data.onVisa == 'Y'){
+		$('#visaType').val(data.data.visaDb[0]['visaType']);
+		$('#datepicker').val(data.data.visaDb[0]['entryDateInCountry']);
+		$('#visaNumber').val(data.data.visaDb[0]['visaNumber']);
+		$('#datepicker1').val(data.data.visaDb[0]['visaExpiryDate']);
+		$('#ensUserVisaPlaceHolder').val(data.data.visaDb[0]['visaFileName']);
+		}
+		
+	},
+	error: function (jqXHR, textStatus, errorThrown) {
+		console.log("error in ajax")
+
+	}
+});
+
+
+
+
+
