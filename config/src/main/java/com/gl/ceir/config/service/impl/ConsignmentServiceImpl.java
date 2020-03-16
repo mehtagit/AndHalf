@@ -654,7 +654,10 @@ public class ConsignmentServiceImpl {
 					Features.CONSIGNMENT, SubFeatures.VIEW, "", "NA"));
 			logger.info("AUDIT : Saved file export request in audit.");
 			
-			return new FileDetails( fileName, filepath.getValue(), link.getValue() + fileName );
+			FileDetails fileDetails = new FileDetails( fileName, filepath.getValue(), link.getValue() + fileName );
+			logger.info(fileDetails);
+			return fileDetails;
+			
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
