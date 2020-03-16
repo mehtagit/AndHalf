@@ -227,12 +227,14 @@ public class RegularizedDeviceServiceImpl {
 		String fileName = null;
 		Writer writer   = null;
 		RegularizeDeviceFileModel rdfm = null;
+		
 		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		DateTimeFormatter dtf2  = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
 
-		SystemConfigurationDb filepath = configurationManagementServiceImpl.findByTag(ConfigTags.file_custom_regularized_dir);
-		logger.info("CONFIG : file_custom_regularized_dir [" + filepath + "]");
-		SystemConfigurationDb link = configurationManagementServiceImpl.findByTag(ConfigTags.file_custom_regularized_download_link);
-		logger.info("CONFIG : file_custom_regularized_download_link [" + link + "]");
+		SystemConfigurationDb filepath = configurationManagementServiceImpl.findByTag(ConfigTags.file_download_dir);
+		logger.info("CONFIG : file_consignment_download_dir [" + filepath + "]");
+		SystemConfigurationDb link = configurationManagementServiceImpl.findByTag(ConfigTags.file_download_link);
+		logger.info("CONFIG : file_consignment_download_link [" + link + "]");
 
 		String filePath = filepath.getValue();
 		StatefulBeanToCsvBuilder<RegularizeDeviceFileModel> builder = null;
@@ -242,7 +244,7 @@ public class RegularizedDeviceServiceImpl {
 		try {
 			List<RegularizeDeviceDb> regularizeDevices = getAll(filterRequest);
 
-			fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_RegularizeDevice.csv";
+			fileName = LocalDateTime.now().format(dtf2).replace(" ", "_") + "_RegularizeDevice.csv";
 
 			writer = Files.newBufferedWriter(Paths.get(filePath+fileName));
 			builder = new StatefulBeanToCsvBuilder<RegularizeDeviceFileModel>(writer);

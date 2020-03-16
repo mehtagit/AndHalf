@@ -610,9 +610,9 @@ public class ConsignmentServiceImpl {
 		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		DateTimeFormatter dtf2  = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
 		
-		SystemConfigurationDb filepath = configurationManagementServiceImpl.findByTag(ConfigTags.file_consignment_download_dir);
+		SystemConfigurationDb filepath = configurationManagementServiceImpl.findByTag(ConfigTags.file_download_dir);
 		logger.info("CONFIG : file_consignment_download_dir [" + filepath + "]");
-		SystemConfigurationDb link = configurationManagementServiceImpl.findByTag(ConfigTags.file_consignment_download_link);
+		SystemConfigurationDb link = configurationManagementServiceImpl.findByTag(ConfigTags.file_download_link);
 		logger.info("CONFIG : file_consignment_download_link [" + link + "]");
 		
 		StatefulBeanToCsvBuilder<ConsignmentFileModel> builder = null;

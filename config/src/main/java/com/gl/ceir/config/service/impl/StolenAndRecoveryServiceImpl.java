@@ -370,10 +370,10 @@ public class StolenAndRecoveryServiceImpl {
 		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		DateTimeFormatter dtf2  = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
 		
-		SystemConfigurationDb filepath = configurationManagementServiceImpl.findByTag(ConfigTags.file_stolen_and_recovery_dir);
-		logger.info("CONFIG : file_stolen_and_recovery_dir [" + filepath + "]");
-		SystemConfigurationDb link = configurationManagementServiceImpl.findByTag(ConfigTags.file_stock_download_link);
-		logger.info("CONFIG : file_stock_download_link [" + link + "]");
+		SystemConfigurationDb filepath = configurationManagementServiceImpl.findByTag(ConfigTags.file_download_dir);
+		logger.info("CONFIG : file_consignment_download_dir [" + filepath + "]");
+		SystemConfigurationDb link = configurationManagementServiceImpl.findByTag(ConfigTags.file_download_link);
+		logger.info("CONFIG : file_consignment_download_link [" + link + "]");
 
 		String filePath = filepath.getValue();
 
@@ -385,9 +385,9 @@ public class StolenAndRecoveryServiceImpl {
 		try {
 			List<StolenandRecoveryMgmt> stolenandRecoveryMgmts = getAll(filterRequest);
 			if(filterRequest.getFeatureId() == 5) {
-				fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_StolenAndRecovery.csv";
+				fileName = LocalDateTime.now().format(dtf2).replace(" ", "_") + "_StolenAndRecovery.csv";
 			}else {
-				fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_Block_Unblock.csv";
+				fileName = LocalDateTime.now().format(dtf2).replace(" ", "_") + "_Block_Unblock.csv";
 			}
 
 			writer = Files.newBufferedWriter(Paths.get(filePath+fileName));

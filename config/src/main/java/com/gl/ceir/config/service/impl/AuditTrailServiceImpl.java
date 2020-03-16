@@ -114,12 +114,14 @@ public class AuditTrailServiceImpl {
 		String fileName = null;
 		Writer writer   = null;
 		AuditTrailFileModel atfm = null;
+		
 		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		DateTimeFormatter dtf2  = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
 
-		SystemConfigurationDb filepath = configurationManagementServiceImpl.findByTag(ConfigTags.file_audit_trail_download_dir);
-		logger.info("CONFIG : file_audit_trail_download_dir [" + filepath + "]");
-		SystemConfigurationDb link = configurationManagementServiceImpl.findByTag(ConfigTags.file_audit_trail_download_link);
-		logger.info("CONFIG : file_audit_trail_download_link [" + link + "]");
+		SystemConfigurationDb filepath = configurationManagementServiceImpl.findByTag(ConfigTags.file_download_dir);
+		logger.info("CONFIG : file_consignment_download_dir [" + filepath + "]");
+		SystemConfigurationDb link = configurationManagementServiceImpl.findByTag(ConfigTags.file_download_link);
+		logger.info("CONFIG : file_consignment_download_link [" + link + "]");
 		
 		String filePath = filepath.getValue();
 		StatefulBeanToCsvBuilder<AuditTrailFileModel> builder = null;
@@ -130,12 +132,12 @@ public class AuditTrailServiceImpl {
 			List<AuditTrail> auditTrails = getAll(filterRequest);
 			if( !auditTrails.isEmpty() ) {
 				if(Objects.nonNull(filterRequest.getUserId()) && (filterRequest.getUserId() != -1 && filterRequest.getUserId() != 0)) {
-					fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_AuditTrails.csv";
+					fileName = LocalDateTime.now().format(dtf2).replace(" ", "_") + "_AuditTrails.csv";
 				}else {
-					fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_AuditTrails.csv";
+					fileName = LocalDateTime.now().format(dtf2).replace(" ", "_") + "_AuditTrails.csv";
 				}
 			}else {
-				fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_AuditTrails.csv";
+				fileName = LocalDateTime.now().format(dtf2).replace(" ", "_") + "_AuditTrails.csv";
 			}
 
 			writer = Files.newBufferedWriter(Paths.get(filePath+fileName));

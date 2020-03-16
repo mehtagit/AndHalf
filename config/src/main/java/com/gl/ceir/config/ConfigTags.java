@@ -17,27 +17,9 @@ public interface ConfigTags {
 	String new_year_date_register_device = "new_year_date_register_device";
 	String grace_period_for_rgister_device = "grace_period_for_rgister_device";
 
-		//----------------
-	String file_consignment_download_dir = "file_consignment_download_dir";
-	String file_consignment_download_link = "file_consignment_download_link";
-
-	String file_stock_download_dir = "file_stock_download_dir";
-	String file_stock_download_link = "file_stock_download_link";
-
-	String file_stolen_and_recovery_dir = "file_stolen_and_recovery_dir";
-	String file_stolen_and_recovery_download_link = "file_stolen_and_recovery_download_link";
-
-	String file_custom_regularized_dir = "file_custom_regularized_dir";
-	String file_custom_regularized_download_link = "file_custom_regularized_download_link"; 
-
-	String file_audit_trail_download_dir = "file_audit_trail_download_dir";
-	String file_audit_trail_download_link = "file_audit_trail_download_link";
-
-	String file_end_user_download_dir = "file_end_user_download_dir";
-	String file_end_user_download_link = "file_end_user_download_link";
-	
-	String file_system_config_list_download_dir = "file_system_config_list_download_dir";
-	String file_system_config_list_download_link = "file_system_config_list_download_link";
+	//----------------
+	String file_download_dir = "file.download-dir";
+	String file_download_link = "file.download-link";
 
 	// User
 	String default_visa_expiration_days = "default_visa_expiration_days";

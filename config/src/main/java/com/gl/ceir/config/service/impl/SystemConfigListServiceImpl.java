@@ -215,12 +215,14 @@ public class SystemConfigListServiceImpl {
 		String fileName = null;
 		Writer writer   = null;
 		SystemConfigListFileModel fileModel = null;
+		
 		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		DateTimeFormatter dtf2  = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
 
-		SystemConfigurationDb filepath = configurationManagementServiceImpl.findByTag(ConfigTags.file_system_config_list_download_dir);
-		logger.info("CONFIG : file_system_config_list_download_dir [" + filepath + "]");
-		SystemConfigurationDb link = configurationManagementServiceImpl.findByTag(ConfigTags.file_system_config_list_download_link);
-		logger.info("CONFIG : file_system_config_list_download_link [" + link + "]");
+		SystemConfigurationDb filepath = configurationManagementServiceImpl.findByTag(ConfigTags.file_download_dir);
+		logger.info("CONFIG : file_consignment_download_dir [" + filepath + "]");
+		SystemConfigurationDb link = configurationManagementServiceImpl.findByTag(ConfigTags.file_download_link);
+		logger.info("CONFIG : file_consignment_download_link [" + link + "]");
 
 		if(Objects.isNull(filepath) || Objects.isNull(link)) {
 			logger.info("CONFIG: MISSING : file_system_config_list_download_dir or file_system_config_list_download_link not found.");
@@ -235,12 +237,12 @@ public class SystemConfigListServiceImpl {
 			List<SystemConfigListDb> configListDbs = getAll(filterRequest);
 			if( !configListDbs.isEmpty() ) {
 				if(Objects.nonNull(filterRequest.getUserId()) && (filterRequest.getUserId() != -1 && filterRequest.getUserId() != 0)) {
-					fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_Config_Tag.csv";
+					fileName = LocalDateTime.now().format(dtf2).replace(" ", "_") + "_Config_Tag.csv";
 				}else {
-					fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_ConfigTag.csv";
+					fileName = LocalDateTime.now().format(dtf2).replace(" ", "_") + "_ConfigTag.csv";
 				}
 			}else {
-				fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_Configtag.csv";
+				fileName = LocalDateTime.now().format(dtf2).replace(" ", "_") + "_Configtag.csv";
 			}
 
 			writer = Files.newBufferedWriter(Paths.get(filePath+fileName));
