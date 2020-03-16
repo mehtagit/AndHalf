@@ -352,12 +352,12 @@ var contextpath = "${context}";
 									<h6 class="file-upload-heading"><spring:message code="registration.uploadnationalid" /> <span class="star">*</span></h6>
 									<div class="btn">
 										<span><spring:message code="input.selectfile" /></span>
-										<input type="file" id="NationalIdImage" placeholder="Upload National ID Image"
+										<input type="file" id="NationalIdImage" placeholder=""
 										oninput="InvalidMsg(this,'fileType','<spring:message code="validation.selectImgMsg" />');" oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.selectImgMsg" />');"
 										 required/>
 									</div>
 									<div class="file-path-wrapper">
-									<input class="file-path validate" type="text" placeholder="Upload National ID Image" />
+									<input class="file-path validate" type="text" placeholder="<spring:message code="registration.uploadnationalid" />" />
 									</div>
 								</div>
 
