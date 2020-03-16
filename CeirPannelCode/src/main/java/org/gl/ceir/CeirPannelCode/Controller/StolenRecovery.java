@@ -27,6 +27,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -320,36 +321,22 @@ public class StolenRecovery {
 			  }
 			  
 			//***************************************** Export Grievance controller *********************************
-				@RequestMapping(value="/exportStolenRecovery",method ={org.springframework.web.bind.annotation.RequestMethod.GET})
-				public String exportToExcel(@RequestParam(name="stolenRecoveryStartDate",required = false) String stolenRecoveryStartDate,@RequestParam(name="stolenRecoveryEndDate",required = false) String stolenRecoveryEndDate,
-						@RequestParam(name="stolenRecoveryTxnId",required = false) String stolenRecoveryTxnId,@RequestParam(name="stolenRecoveryFileStatus") Integer stolenRecoveryFileStatus,HttpServletRequest request,
-						HttpSession session,@RequestParam(name="pageSize") Integer pageSize,@RequestParam(name="pageNo") Integer pageNo,@RequestParam(name="roleType") String roleType,@RequestParam(name="stolenRecoverySourceStatus") Integer stolenRecoverySourceStatus
-						,@RequestParam(name="stolenRecoveryRequestType") Integer stolenRecoveryRequestType,@RequestParam(name="featureId") Integer featureId)
+				@PostMapping("exportStolenRecovery")
+				@ResponseBody
+				public FileExportResponse exportToExcel(@RequestBody FilterRequest filterRequest,HttpSession session)
 				{
-					log.info("stolenRecoveryStartDate=="+stolenRecoveryStartDate+ " stolenRecoveryEndDate ="+stolenRecoveryEndDate+" stolenRecoveryTxnId="+stolenRecoveryTxnId+"stolenRecoveryFileStatus="+stolenRecoveryFileStatus
-							+"stolenRecoveryRequestType="+stolenRecoveryRequestType+"stolenRecoverySourceStatus  ="+stolenRecoverySourceStatus+ "featureId-->"+featureId);
-					int userId= (int) session.getAttribute("userid"); 
-					int file=1;
-					FileExportResponse fileExportResponse;
-					FilterRequest filterRequest= new FilterRequest();
-					filterRequest.setStartDate(stolenRecoveryStartDate);
-					filterRequest.setEndDate(stolenRecoveryEndDate);
-					filterRequest.setTxnId(stolenRecoveryTxnId);
-					filterRequest.setGrievanceStatus(stolenRecoveryFileStatus);
-					filterRequest.setRequestType(stolenRecoveryRequestType);
-				    filterRequest.setFeatureId(featureId);
-					filterRequest.setSourceType(stolenRecoverySourceStatus);
-					filterRequest.setUserId(userId);
-					filterRequest.setRoleType(roleType);
-					log.info(" request passed to the stolen/rcovery exportTo Excel Api =="+filterRequest+" *********** pageSize"+pageSize+"  pageNo  "+pageNo);
-					Object	response= feignCleintImplementation.stolenFilter(filterRequest, pageNo, pageSize, file);
-
+					Gson gsonObject=new Gson();
+					Object response;
+					Integer file = 1;	
+					log.info("filterRequest:::::::::"+filterRequest);
+				response= feignCleintImplementation.stolenFilter(filterRequest, filterRequest.getPageNo(), filterRequest.getPageSize(), file);
+				FileExportResponse fileExportResponse;
 				   Gson gson= new Gson(); 
 				   String apiResponse = gson.toJson(response);
 				   fileExportResponse = gson.fromJson(apiResponse, FileExportResponse.class);
 				   log.info("response  from   export stolen/recovery  api="+fileExportResponse);
 					
-					return "redirect:"+fileExportResponse.getUrl();
+					return fileExportResponse;
 				}
 				
 				

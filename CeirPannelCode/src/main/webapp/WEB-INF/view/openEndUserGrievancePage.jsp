@@ -206,7 +206,7 @@ var contextpath = "${context}";
 
                                         <div class="col s12 m6 selectDropdwn">
                                             <label for="endUsercategory"><spring:message code="input.Category" /> <span class="star">*</span></label>
-                                            <select class="browser-default"  onchange="enableEndUserAddMore()"
+                                            <select class="browser-default" 
 											title="<spring:message code="validation.selectFieldMsg" />" oninput="setCustomValidity('')"  
 										oninput="InvalidMsg(this,'select');" oninvalid="InvalidMsg(this,'select');"  required   id="endUsercategory">
                                                 <option value="" disabled selected><spring:message code="input.Category" /></option>
@@ -235,18 +235,18 @@ var contextpath = "${context}";
                                     <div class="row">
                                         <div class="col s12 m6">
                                             <label for="endUserdocTypetag1"><spring:message code="input.documenttype" /></label>
-                                            <select class="browser-default" id="endUserdocTypetag1">
+                                            <select class="browser-default" id="endUserdocTypetag1" onchange="enableSelectFile()">
                                                 <option value="" disabled selected><spring:message code="select.documenttype" /></option>
                                             </select>
                                         </div>
 
                                         
                                         <div class="file-field col s12 m6">
-                                            <h6 class="upload-file-label"><spring:message code="modal.UploadSupporting" />
+                                            <h6 class="upload-file-label" id="endUserFileLabel"><spring:message code="modal.UploadSupporting" />
                                             </h6>
                                             <div class="btn">
                                                 <span><spring:message code="input.selectfile" /></span>
-                                                <input id="endUserdocTypeFile1" type="file" 
+                                                <input id="endUserdocTypeFile1" type="file"   onchange="enableEndUserAddMore()" disabled="disabled"
  												title="<spring:message code="validation.NoChosen" />" 
 						oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');" name="files[]" id="filer_input"
                                                     multiple="multiple" />
@@ -450,7 +450,7 @@ var contextpath = "${context}";
 
 <div class="col s12 m6 l6" style="margin-top: 8px;">
 <label for="Category"><spring:message code="input.documenttype" /></label>
-<select class="browser-default" id="docTypetag1" >
+<select class="browser-default" id="docTypetag1" onchange="enableReplySelectFile()" >
 <option value="" disabled selected><spring:message code="select.documenttype" /> </option>
 
 </select>
@@ -458,10 +458,10 @@ var contextpath = "${context}";
 </div>
 
 <div class="file-field col s12 m6">
-<h6 style="color: #000;"><spring:message code="input.supportingdocument" /></h6>
+<h6 id="docTypeFile1Label" style="color: #000;"><spring:message code="input.supportingdocument" /></h6>
 <div class="btn">
 <span><spring:message code="input.selectfile" /></span>
-<input type="file" name="files[]" id="docTypeFile1"  multiple>
+<input type="file" name="files[]" id="docTypeFile1" disabled="disabled" onchange="enableEndUserReplyAddMore()"  multiple>
 </div>
 <div class="file-path-wrapper">
 <input class="file-path validate" type="text" multiple
@@ -479,7 +479,7 @@ placeholder="Upload file">
 
 </div>
 <div class="col s12 m6 right">
-<button class="btn right add_field_button"><span
+<button class="btn right add_field_button" disabled="disabled"><span
 style="font-size: 20px;">+</span> <spring:message code="input.addmorefile" /></button>
 </div>
               <div class="col s12 m12">  <p>
@@ -862,7 +862,7 @@ $(endUserwrapper).on("click", ".endUser_remove_field", function (e) { //user cli
 		
 	}
 }); */
-$.getJSON('./getDropdownList/GRIEVANCE_CATEGORY', function(data) {
+$.getJSON('./getTypeDropdownList/GRIEVANCE_CATEGORY/17', function(data) {
 	for (i = 0; i < data.length; i++) {
 		console.log(data[i].interp);
 		$('<option>').val(data[i].value).text(data[i].interp).appendTo('#endUsercategory');
@@ -903,8 +903,17 @@ function  closeCancelPopUp()
 function enableEndUserAddMore(){
 	$(".endUser_add_field_button").attr("disabled", false);
 }
+
+function enableEndUserReplyAddMore(){
+	$(".add_field_button").attr("disabled", false);
+}
   
-  
+
+function enableReplySelectFile(){
+		$("#docTypeFile1").attr("disabled", false);
+		$("#docTypeFile1").attr("required", true);
+		$("#docTypeFile1Label").append('<span class="star">*</span>');
+	}
    </script>
 
     

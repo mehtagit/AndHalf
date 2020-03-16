@@ -305,8 +305,7 @@ src="${context}/resources/project_js/viewStock.js"></script>
 <script type="text/javascript"
 		src="${context}/resources/project_js/profileInfoTab.js" async></script>
 <script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
-<script type="text/javascript"
-		src="${context}/resources/project_js/validationMsg.js"></script>
+
 			<script type="text/javascript"
 		src="${context}/resources/project_js/_dateFunction.js" async></script>
 		<script type="text/javascript"
@@ -669,6 +668,8 @@ $("input[type=file]").keypress(function(ev) {
 }); */
 
 </script>
+<script type="text/javascript"
+		src="${context}/resources/project_js/validationMsg.js"></script>
 </body>
 </html>
 

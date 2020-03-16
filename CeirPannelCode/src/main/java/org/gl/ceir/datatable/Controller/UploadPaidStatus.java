@@ -216,7 +216,7 @@ public class UploadPaidStatus {
 		
 		
 		if("Immigration".equals(userType)){
-			String[] names= {"HeaderButton",Translator.toLocale("button.register"),"./register-devices","btnLink","FilterButton", Translator.toLocale("button.filter"),"filter("+ConfigParameters.languageParam+")","submitFilter"};
+			String[] names= {"HeaderButton",Translator.toLocale("button.register"),"JavaScript:void(0);","btnLink","FilterButton", Translator.toLocale("button.filter"),"filter("+ConfigParameters.languageParam+")","submitFilter"};
 			for(int i=0; i< names.length ; i++) {
 				button = new Button();
 				button.setType(names[i]);

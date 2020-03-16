@@ -17,7 +17,7 @@
 <head>
 
 
-<title>Stock</title>
+<title>Immigration</title>
 <meta http-equiv='cache-control' content='no-cache'>
 <meta http-equiv='expires' content='-1'>
 <meta http-equiv='pragma' content='no-cache'>
@@ -74,13 +74,13 @@
 <script src="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json"></script>
 <!------------------------------------------- Dragable Model---------------------------------->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-
-
-
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 </head>
-<%-- <body data-roleType="${usertype}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}"> --%>
-<body data-roleType="${usertype}" data-userTypeID="${usertypeId}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${stolenselectedUserTypeId}">
+<body data-id="19" data-roleType="${usertype}"
+	data-userTypeID="${usertypeId}" data-userID="${userid}"
+	data-selected-roleType="${selectedUserTypeId}"
+	data-stolenselected-roleType="${stolenselectedUserTypeId}">
 
 
 	<!-- START CONTENT -->
@@ -96,8 +96,7 @@
 
 								<a href="" class="boton right" id="btnLink"></a>
 							</div>
-							<form action="${context}/userManageTrail"
-								method="post">
+							<form action="${context}/userManageTrail" method="post">
 								<div class="col s12 m12 l12" id="userManageTableDiv"
 									style="padding-bottom: 5px; background-color: #e2edef52;">
 									<div id="filterBtnDiv">
@@ -120,7 +119,7 @@
 	</section>
 
 
-<!--materialize js-->
+	<!--materialize js-->
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
 	<script type="text/javascript"
@@ -148,7 +147,7 @@
 	<%-- <script type="text/javascript" src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script> --%>
 	<script type="text/javascript"
 		src="${context}/resources/js/countries.js"></script>
-	
+
 	<!-- i18n library -->
 	<script type="text/javascript"
 		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
@@ -191,12 +190,14 @@
 		src="${context}/resources/project_js/disable_inspectElement.js"></script> --%>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/manageUsers.js"></script>
-			<script type="text/javascript"
+	<script type="text/javascript"
 		src="${context}/resources/project_js/validationMsg.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/_dateFunction.js" async></script>
-			<script type="text/javascript"
+	<script type="text/javascript"
 		src="${context}/resources/project_js/profileInfoTab.js" async></script>
+			<script type="text/javascript"
+		src="${context}/resources/project_js/selfRegisterDevice.js" async></script>
 </body>
 </html>
 <%

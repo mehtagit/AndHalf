@@ -213,7 +213,7 @@ select.browser-default {
 															<input type="text" name="sigleRecoveryimeiNumber1" pattern="[0-9]{15,16}" 
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');" 
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
-														  maxlength="16" id="sigleRecoveryimeiNumber" required/> 
+														  maxlength="16" id="sigleRecoveryimeiNumber1" required/> 
 															<label for="sigleRecoveryimeiNumber1"><spring:message code="registration.one" /> <span class="star"> *</span></label>
 														</div>
 														
@@ -556,7 +556,7 @@ onclick="_Services._selectstartDate()"></i></span>
                         
                                                     <div class="input-field col s12 m6 l6">
                                                         <input type="text" name="bulkRecoverypin" class="form-control boxBorder boxHeight"
-                                                            id="bulkRecoverypin" pattern="[0-9]{0,20}" 
+                                                            id="bulkRecoverypin" pattern="[0-9]{0,6}" 
                                                              oninput="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');" 
                                                              oninvalid="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');"
                                                         required  maxlength="6">
@@ -596,7 +596,7 @@ onclick="_Services._selectstartDate()"></i></span>
 
                                                     <div class="input-field col s12 center">
                                                         <button class="btn" type="submit"><spring:message code="button.submit" /></button>
-                                                        <a href="./stolenRecovery" class="btn modal-trigger"
+                                                        <a href="./stolenRecovery?FeatureId=5" class="btn modal-trigger"
                                                             style="margin-left: 10px;"><spring:message code="modal.cancel" /></a>
                                                     </div>
                                                 </form>

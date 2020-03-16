@@ -150,7 +150,7 @@ data-roleType="${usertype}" data-userTypeID="${usertypeId}"
 										style="float: left" class="dropdownColor"><spring:message
 												code="registration.editinfo" /></span></a></li>
 								<li class="divider"></li>
-								<li><a data-target="changePassword" class="modal-trigger"><i
+								<li><a data-target="changePassword"class="modal-trigger""><i
 										class="fa fa-key dropdownColor" style="float: left"></i><span
 										style="float: left" class="dropdownColor"><spring:message
 												code="registration.changepassword" /></span></a></li>
@@ -388,10 +388,11 @@ data-roleType="${usertype}" data-userTypeID="${usertypeId}"
 
 					<div class="input-field col s11">
 						<input type="password" id="oldPassword" class="password"
-							pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
+							pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,10}$"
 							maxlength="10" min="8"
-							oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-							title= "<spring:message code="validation.minumum8length" />" required  / >
+oninput="InvalidMsg(this,'input','<spring:message code="validation.password" />');"
+ oninvalid="InvalidMsg(this,'input','<spring:message code="validation.password" />');"	title= "<spring:message code="validation.minumum8length" />" required  />	
+							
 							 <label for="oldPassword"
 							class="center-align" style="color: #000; font-size: 12px;">
 							<spring:message code="registration.oldpassword" />
@@ -415,8 +416,9 @@ data-roleType="${usertype}" data-userTypeID="${usertypeId}"
 								code="registration.newpassword" /></label> <input type="password"
 							pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
 							maxlength="10" min="8" 
-							oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-							title= "<spring:message code="validation.minumum8length" />" required  /  id="password" class="password2" />
+oninput="InvalidMsg(this,'input','<spring:message code="validation.password" />');" 
+oninvalid="InvalidMsg(this,'input','<spring:message code="validation.password" />');"		
+					title= "<spring:message code="validation.minumum8length" />" required  id="password" class="password2" />
 							<div class="input-field-addon">
 							<i class="fa fa-eye-slash teal-text toggle-password2"
 								aria-hidden="true"></i>
@@ -435,8 +437,9 @@ data-roleType="${usertype}" data-userTypeID="${usertypeId}"
 							class="password3" id="confirm_password"
 							pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
 							maxlength="10" min="8"
-							oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-							title= "<spring:message code="validation.minumum8length" />" required  / >
+oninput="InvalidMsg(this,'input','<spring:message code="validation.password" />');" 
+oninvalid="InvalidMsg(this,'input','<spring:message code="validation.password" />');"
+							title= "<spring:message code="validation.minumum8length" />" required >
 							<div class="input-field-addon">
 							<i class="fa fa-eye-slash teal-text toggle-password3"
 								aria-hidden="true"></i>
@@ -530,7 +533,13 @@ data-roleType="${usertype}" data-userTypeID="${usertypeId}"
 			</div>
 			<div class="row">
 				<div class="center">
-					<a href="javaScript:void(0)"  class="btn modal-close"><spring:message code="modal.ok" /></a>
+					
+													<%String userLatestLang=(String)session.getAttribute("updatedLanguage"); %>
+								<%if(userLatestLang!=null){%>
+								<a href="./?lang=<%=userLatestLang%>" class="btn modal-close"><spring:message code="modal.ok" /></a>
+                                <%}else{ %>
+								<a href="./?lang=<%=session.getAttribute("language")%>" class="btn modal-close"><spring:message code="modal.ok" /></a>
+                                <%} %>
 				</div>
 			</div>
 		</div>
@@ -551,8 +560,8 @@ data-dismiss="modal">&times;</button> -->
 			</div>
 			<div class="input-field col s12 center">
 				<div class="input-field col s12 center">
-					<a href="./homePage" class="btn" type="submit" name="add_user"
-						id="add_user"><spring:message code="modal.yes" /></a> <a href="#"
+					<a href="JavaScript:Void(0);" class="btn" type="submit" name="add_user"
+						id="home_Link"><spring:message code="modal.yes" /></a> <a href="#"
 						class="modal-close btn" style="margin-left: 10px;"><spring:message
 							code="modal.no" /></a>
 				</div>
@@ -631,43 +640,45 @@ data-dismiss="modal">&times;</button> -->
 	<script type="text/javascript"
 		src="${context}/resources/js/custom-script.js"></script>
 
-	<!-- i18n library -->
+			<!-- i18n library -->
 	<script type="text/javascript"
 		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/i18n.js"></script>
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.js"></script>
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/messagestore.js"></script>
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.messagestore.js"></script>
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/fallbacks.js"></script>
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.fallbacks.js"></script>
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/language.js"></script>
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.language.js"></script>
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/parser.js"></script>
-
-
-	<script type="text/javascript"
-		src="${context}/resources/i18n_library/emitter.js"></script>
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.parser.js"></script>
 
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/bidi.js"></script>
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.js"></script>
+
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/history.js"></script>
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.bidi.js"></script>
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/min.js"></script>
+		src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/jquery.history.js"></script>
 
-	<!------------------------------------------- Dragable Model---------------------------------->
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
+	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
 <script type="text/javascript"
-		src="${context}/resources/project_js/globalVariables.js"></script>
+		src="${context}/resources/project_js/backbutton.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/project_js/dragableModal.js"></script>	
+			<script type="text/javascript"
+		src="${context}/resources/project_js/enterKey.js"></script>
+	
+
 	
 		
 	<!-- ajax js -->
@@ -677,22 +688,15 @@ data-dismiss="modal">&times;</button> -->
 			<script type="text/javascript" src="${context}/resources/ajax/Login.js"></script>
 	<%-- 	<script type="text/javascript"
 		src="${context}/resources/project_js/disable_inspectElement.js"></script> --%>
-	<script type="text/javascript">
-$(document).ready(function () {
-<%String lang=(String)session.getAttribute("language");%>
-<%if(lang!=null){%>
-<%-- console.log("language="+"<%=lang%>"); --%>
-<%--  $("#langlist").val("<%=lang%>");  --%>
-<%-- document.getElementById("langlist").value="<%=lang%>"; --%>
-<%}%>
-});
-</script>
+		</script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/dashboard.js"></script>
 <script type="text/javascript"
 		src="${context}/resources/ajax/Profile.js"></script>
+
 <script type="text/javascript"
-		src="${context}/resources/project_js/profileInfoTab.js" async></script>		
+		src="${context}/resources/project_js/profileInfoTab.js" async></script>	
+	
 </body>
 
 </html>

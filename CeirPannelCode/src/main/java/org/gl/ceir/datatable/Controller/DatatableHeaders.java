@@ -278,7 +278,7 @@ public class DatatableHeaders {
 //ManageUserType Headers 
 			
 			else if("ManageUserType".equals(role)) {
-				String[] headers = {"table.RegisterDate","table.transactionID","table.PassportNumber","table.Nationality","table.VisaExpiryDate","table.LocalContactNumber","table.action"};		
+				String[] headers = {"table.RegisterDate","table.transactionID","input.nidInput","table.Nationality","table.LocalContactNumber","table.action"};		
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}

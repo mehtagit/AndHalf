@@ -225,11 +225,11 @@ input[type='search'] {
 													</h6>
 													<div class="btn">
 														<span><spring:message code="input.selectfile" /></span> <input type="file"
-														oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');"
-														title= "<spring:message code="validation.NoChosen" />" required id="csvUploadFile" accept=".csv">
+														oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');" onchange="isImageValid('csvUploadFile')"
+														title= "<spring:message code="validation.NoChosen" />" required id="csvUploadFile" accept="*image">
 													</div>
 													<div class="file-path-wrapper">
-														<input class="file-path validate responsive-file-div"
+														<input class="file-path validate responsive-file-div" id="csvUploadFileName"
 															type="text">
 													</div>
 												</div>
@@ -550,10 +550,13 @@ input[type='search'] {
 								</div>
 
 								<div id="profile-page" class="section">
+								
 									<div class="container" id="user456" style="display: none;">
+										<form action="${context}/uploadPaidStatus">
 										<div class="col s12 m12 l12" id="tableDiv"
 											style="padding-bottom: 5px; background-color: #e2edef52;">
 										</div>
+										</form>
 										<div class="row">
 											<div class="col s12 m12">
 												<table class="responsive-table striped display"
@@ -885,6 +888,22 @@ input[type='search'] {
             </div>
         </div>
     </div>
+    <div id="fileFormateModal" class="modal">
+		<h6 class="modal-header"><spring:message code="fileValidationModalHeader" /></h6>
+		<div class="modal-content">
+			<div class="row">
+				<h6 id="fileErrormessage"><spring:message code="fileValidationName" /><br> <br> <spring:message code="fileValidationFormate" /> <br><br> <spring:message code="fileValidationSize" /> </h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<div class="input-field col s12 center">
+						<button class="modal-close  btn" onclick="clearFileName()"
+							style="margin-left: 10px;"><spring:message code="modal.ok" /></button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 	
 
 	<script type="text/javascript"
