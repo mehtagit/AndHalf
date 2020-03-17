@@ -95,7 +95,12 @@ function confirmantiondelete(){
 			}
 		});
 
-		function EditConsignmentDetails(txnId){ 	
+		function EditConsignmentDetails(txnId){ 
+			$('.datepicker').datepicker({
+				dateFormat: "yy-mm-dd",
+				 minDate: 0
+			});
+			alert("ok")
 			$.ajax({
 				url : "./openRegisterConsignmentPopup?reqType=editPage&txnId="+txnId,
 				dataType : 'json',

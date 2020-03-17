@@ -65,7 +65,7 @@ public class Stock {
 	
 	UserProfileFeignImpl userProfileFeignImpl;
 	@Autowired
-	AddMoreFileModel addMoreFileModel,urlToUpload;
+	AddMoreFileModel addMoreFileModel,urlToUpload,urlToMove;
 	
 	
 	@RequestMapping(value={"/assignDistributor"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST})
@@ -277,6 +277,10 @@ else {
 	StockUploadModel stockUpload= new StockUploadModel();
 	addMoreFileModel.setTag("system_upload_filepath");
 	urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
+
+	addMoreFileModel.setTag("uploaded_file_move_path");
+	urlToMove=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
+	
 	
 	String roleType=String.valueOf(session.getAttribute("usertype"));
 	String userName=session.getAttribute("username").toString();
@@ -306,9 +310,9 @@ else {
 	if(exists) {
 	Path temp = Files.move 
 	(Paths.get(urlToUpload.getValue()+"/"+txnId+"/"+file.getOriginalFilename()), 
-	Paths.get(filePathforMoveFile+file.getOriginalFilename())); 
+	Paths.get(urlToMove.getValue()+file.getOriginalFilename())); 
 
-	String movedPath=filePathforMoveFile+file.getOriginalFilename();
+	String movedPath=urlToMove.getValue()+file.getOriginalFilename();
 	// tmpDir.renameTo(new File("/home/ubuntu/apache-tomcat-9.0.4/webapps/MovedFile/"+txnId+"/"));
 	log.info("file is already exist moved to the this "+movedPath+" path");
 	tmpDir.delete();

@@ -501,7 +501,7 @@ function fileTypeValueChanges(id) {
 	var fileSize = ($("#"+id)[0].files[0].size);
 	/*fileSize = (Math.round((fileSize / 100000) * 100) / 100)
 	alert("----"+fileSize);*/
-	fileSize = Math.floor(fileSize/1000) + 'KB';
+	fileSize = Math.floor(fileSize/1000);
 
 	//alert(uploadedFileName+"----------"+ext+"----"+fileSize)
 	var areEqual =ext.toLowerCase()=='png';
@@ -607,7 +607,7 @@ function deptImageValidation() {
 	/*fileSize = (Math.round((fileSize / 100000) * 100) / 100)
 	alert("----"+fileSize);*/
 	fileSize = Math.floor(fileSize/1000);
-
+	
 	var areEqual =ext.toLowerCase()=='png';
 	//alert(areEqual);
 	if(areEqual==true)
@@ -629,6 +629,7 @@ function deptImageValidation() {
 		$('#DeptfileErrormessage').text($.i18n('imageMessage'));
 
 	}
+	
 	else if(fileSize>='100'){
 		$('#DeptfileFormateModal').openModal({
 			dismissible:false

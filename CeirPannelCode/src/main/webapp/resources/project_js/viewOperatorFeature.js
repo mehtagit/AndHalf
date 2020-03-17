@@ -28,7 +28,7 @@ $(document).ready(function(){
 });
 
 
-if(window.location.search == "?type=greyList"){
+if(window.location.search == "?type=greyList?FeatureId=9"){
 	window.serviceDump = 0
 }else{
 	window.serviceDump = 1

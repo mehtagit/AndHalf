@@ -1,7 +1,7 @@
 var roleType = $("body").attr("data-roleType");
 var userId = $("body").attr("data-userID");
 var currentRoleType = $("body").attr("data-selected-roleType"); 
-var featureId =12;
+//var featureId =12;
 var nationalID = $("body").attr("session-value");
 // iframe
 var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
@@ -516,7 +516,8 @@ function historytable(url,dataUrl){
 					data : function(d) {
 						d.filter = JSON.stringify({						
 							"nid": nationalId,
-							"taxPaidStatus":3
+							"taxPaidStatus":3,
+								"featureId":featureId
 						}); 
 					}
 

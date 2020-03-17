@@ -44,7 +44,7 @@ function viewIndivisualStolen()
 			$('#state').val(response.stolenIndividualUserDB.province);
 			$('#singleStolendeviceBrandName').val(response.stolenIndividualUserDB.deviceBrandName);
 			//alert(response.stolenIndividualUserDB.nidFileName);
-			$('#singleStolenFileName').val(response.stolenIndividualUserDB.nidFileName);
+			$('#singleStolenFileName').val(response.fileName);
 			$('#updatesingleStolenimei1').val(response.stolenIndividualUserDB.imeiEsnMeid1);
 			$('#updatesingleStolenimei2').val(response.stolenIndividualUserDB.imeiEsnMeid2);
 			$('#updatesingleStolenimei3').val(response.stolenIndividualUserDB.imeiEsnMeid3);
@@ -58,7 +58,7 @@ function viewIndivisualStolen()
 			$('#singleStolenphone2').val(response.stolenIndividualUserDB.alternateContactNumber);
 			$('#singleStolenOperator').val(response.stolenIndividualUserDB.operator);
 			$('#singleStolenSimStatus').val(response.stolenIndividualUserDB.multiSimStatus);
-			$('#singleStolenComplaintType').val(response.stolenIndividualUserDB.complaintType);
+			$('#singleStolenComplaintType').val(response.complaintType);
 			$('#singleDeviceAddress').val(response.stolenIndividualUserDB.deviceStolenPropertyLocation);
 			$('#singleDevicestreetNumber').val(response.stolenIndividualUserDB.deviceStolenStreet);
 			$('#singleDevicevillage').val(response.stolenIndividualUserDB.deviceStolenVillage);
@@ -196,6 +196,7 @@ function updateIndivisualStolen()
 			"requestType":0,
 			"sourceType":5,
 			"firFileName":uploadFirFile,
+			"complaintType":$('#singleStolenComplaintType').val(),
 			"stolenIndividualUserDB":stolenIndividualUserDB
 	}
 	formData.append('file', $('#singleStolenFile')[0].files[0]);

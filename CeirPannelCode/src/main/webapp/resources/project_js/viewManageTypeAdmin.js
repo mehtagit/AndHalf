@@ -111,19 +111,20 @@ $.ajax({
 				"columns": result,
 				fixedColumns: true,
 				columnDefs: [
-		            { width: 142, targets: result.length - 1 },
-		            { width: 143, targets: 0 },
-		            { width: 105, targets: 2 }
+		            { width: 204, targets: result.length - 1 },
+		            { width: 121, targets: 0 }
+		          
 			]
 			});
 			
+			$('div#initialloader').delay(300).fadeOut('slow');
 			$('#ImporterAdmintypeAprroveTable input').unbind();
-		    $('#ImporterAdmintypeAprroveTable input').bind('keyup', function (e) {
-		        if (e.keyCode == 13) {
-		            table.search(this.value).draw();
-		        }
-		    });
-		    $('div#initialloader').delay(300).fadeOut('slow');
+			$('#ImporterAdmintypeAprroveTable input').bind('keyup', function (e) {
+				if (e.keyCode == 13) {
+					table.search(this.value).draw();
+				}
+
+			});
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
 			console.log("error in ajax");
@@ -200,7 +201,8 @@ function pageRendering(){
 			
 			
 			$('.datepicker').datepicker({
-				dateFormat: "yy-mm-dd"
+				dateFormat: "yy-mm-dd",
+					 maxDate: new Date()
 			});
 
 			$.getJSON('./getDropdownList/'+featureId+'/'+$("body").attr("data-userTypeID"), function(data) {
@@ -729,7 +731,7 @@ function confirmantiondelete(){
 	var tacRemark= $("#deleteTacRemark").val();
 	var id =  $("#deleteTacId").val();
 	
-	console.log("userType=="+userType+" ==remarks=="+tacRemark+"===id===" +id);
+	console.log("userType=="+userType+" ==id=="+id+"===userId===" +userId);
 	
 	/*var obj ={
 			"txnId" : txnId,
@@ -738,7 +740,7 @@ function confirmantiondelete(){
 	}*/
 
 	$.ajax({
-		url : './importerTacDelete?id='+id,
+		url : "./importerTacDelete?id="+id+"&userType="+userType+"&userId="+userId,
 		//data : JSON.stringify(obj),
 		dataType : 'json',
 		contentType : 'application/json; charset=utf-8',
