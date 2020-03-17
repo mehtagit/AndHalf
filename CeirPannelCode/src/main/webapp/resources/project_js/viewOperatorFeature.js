@@ -42,7 +42,6 @@ if(window.location.search == "?type=greyList?FeatureId=9"){
 function operatorDatatable(lang){
 
 	var fileType = $("#fileType").val();
-
 	var filterRequest={
 			"endDate":$('#endDate').val(),
 			"startDate":$('#startDate').val(),

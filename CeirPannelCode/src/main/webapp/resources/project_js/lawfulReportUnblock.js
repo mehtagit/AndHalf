@@ -50,7 +50,6 @@ var formData= new FormData();
 			"imeiEsnMeid3": parseInt(sigleRecoveryimeiNumber3),
 			"imeiEsnMeid4": parseInt(sigleRecoveryimeiNumber4),
 			"deviceStolenProvince": state1,
-			"remark": sigleRecovery,
 			"multiSimStatus":sigleRecoverydeviceSimStatus,
 			"deviceStolenCountry":country1,
 			"deviceSerialNumber":sigleRecoveryserialNumber
@@ -64,6 +63,7 @@ var formData= new FormData();
 			"blockingType":blockingType,
 			"requestType":1,
 			"sourceType":4,
+			"remark": sigleRecovery,
 			"stolenIndividualUserDB":stolenIndividualUserDB
 	}
 
@@ -135,7 +135,7 @@ function saveCompanyRecoveryRequest(){
 		    "incidentStreet": bulkRecoverystreetNumber,
 		    "incidentVillage": bulkRecoveryvillage,
 		    "incidentPropertyLocation": bulkRecoveryaddress,
-		    "remark":bulkRecoveryRemark
+		    
 		  }
 	
 	var request={
@@ -145,6 +145,7 @@ function saveCompanyRecoveryRequest(){
 			"blockingType":blockingType,
 			"requestType":1,
 			"sourceType":6,
+			 "remark":bulkRecoveryRemark,
 			"stolenOrganizationUserDB":stolenOrganizationUserDB
 	}
 

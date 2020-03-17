@@ -37,7 +37,8 @@
 		
 
 		$('.datepick').datepicker({
-			dateFormat: "yy-mm-dd"
+			dateFormat: "yy-mm-dd",
+			 maxDate: new Date()
 		});
 
 
@@ -94,7 +95,12 @@ function confirmantiondelete(){
 			}
 		});
 
-		function EditConsignmentDetails(txnId){ 	
+		function EditConsignmentDetails(txnId){ 
+			$('.datepicker').datepicker({
+				dateFormat: "yy-mm-dd",
+				 minDate: 0
+			});
+			alert("ok")
 			$.ajax({
 				url : "./openRegisterConsignmentPopup?reqType=editPage&txnId="+txnId,
 				dataType : 'json',
@@ -644,7 +650,8 @@ function confirmantiondelete(){
 					}
 
 					$('.datepicker').datepicker({
-						dateFormat: "yy-mm-dd"
+						dateFormat: "yy-mm-dd",
+						 maxDate: new Date()
 					});
 				}
 			}); 

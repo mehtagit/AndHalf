@@ -82,11 +82,18 @@ public class UploadPaidStatus {
 		Integer pageSize = Integer.parseInt(request.getParameter("length"));
 		Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize;
 		String userType = (String) session.getAttribute("usertype");
+		Integer userId = (Integer) session.getAttribute("userid");
+		Integer userTypeId = (Integer) session.getAttribute("usertypeId");
+		log.info("userId==="+userId);
+
 		log.info("userType in uploadPaidStatus" +userType);
 		Object response = null;
 		Gson gsonObject=new Gson();
 		Gson gson=new Gson();
 		FilterRequest_UserPaidStatus filterrequest = gsonObject.fromJson(filter, FilterRequest_UserPaidStatus.class);
+		filterrequest.setUserId(userId);
+		filterrequest.setUserType(userType);
+		filterrequest.setUserTypeId(userTypeId);
 		filterrequest.setSearchString(request.getParameter("search[value]"));
 		log.info("filterrequest--->"+filterrequest);
 		response = uploadPaidStatusFeignClient.view(filterrequest, pageNo, pageSize, file);

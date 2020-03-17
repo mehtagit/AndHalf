@@ -43,17 +43,17 @@ var txnid=$('#existingStolenTxnId').val();
 		$('#deviceBulkStolencommune').val(response.stolenOrganizationUserDB.incidentCommune);
 		$('#deviceBulkStolenpin').val(response.stolenOrganizationUserDB.incidentPostalCode);
 		$('#country3').val(response.stolenOrganizationUserDB.incidentCountry).change();
-
+		
+		$('#deviceBulkStolenComplaint').val(response.complaintType);
 		$('#bulkStolenofficeEmail').val(response.stolenOrganizationUserDB.email);
 		$('#bulkStolenContact').val(response.stolenOrganizationUserDB.phoneNo);
 		
 		$('#state3').val(response.stolenOrganizationUserDB.incidentProvince);
-		$('#deviceBulkStolenComplaint').val(response.complaintType);
+		$('#singleStolenComplaintType').val(response.complaintType);
 		$('#deviceBulkStolenquantity').val(response.qty);
 		$('#deviceBulkStolenRemark').val(response.remark);
 		$('#stolenFileName').val(response.fileName);
 		
-
 		$('#IndivisualStolenDate').val(response.dateOfStolen);
 		$('#uploadFirSingleName').val(response.firFileName);
 
@@ -142,6 +142,7 @@ function updateCompanyStolenDetails(){
 	var request={
 			"txnId":txnid,
 			"fileName":fileName,
+			"firFileName":uploadFirSingle,
 			"remark":deviceBulkStolenRemark,
 			"qty":deviceBulkStolenquantity,
 			"dateOfStolen":bulkStolenDate,

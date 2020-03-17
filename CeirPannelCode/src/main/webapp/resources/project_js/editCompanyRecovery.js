@@ -84,7 +84,7 @@ function updateCompanyRecoveryRequest(){
 		    "incidentStreet": bulkRecoverystreetNumber,
 		    "incidentVillage": bulkRecoveryvillage,
 		    "incidentPropertyLocation": bulkRecoveryaddress,
-		    "remark":bulkRecoveryRemark
+		    
 		  }
 	
 	var request={
@@ -96,6 +96,7 @@ function updateCompanyRecoveryRequest(){
 			"blockingType":blockingType,
 			"requestType":1,
 			"sourceType":6,
+			"remark":bulkRecoveryRemark,
 			"stolenOrganizationUserDB":stolenOrganizationUserDB
 	}
 

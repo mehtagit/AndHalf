@@ -364,7 +364,7 @@
 				<h6 id="approveConsignmnetHeading">
 					<spring:message code="modal.message.clearConsignment" />
 					<span id="displayname"></span>
-					<spring:message code="modal.message.havingTxn" />
+				<%-- 	<spring:message code="modal.message.havingTxn" /> --%>
 					( <span id="ApproveConsignmentTxnid"></span> )
 					<spring:message code="modal.message.hasBeenpaid" />
 				</h6>

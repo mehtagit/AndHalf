@@ -468,7 +468,7 @@ function saveIndivisualStolenRequest(){
 	var stolenIndividualUserDB={
 			"alternateContactNumber": singleStolenphone1,
 			"commune": singleStolencommune,
-			"complaintType": singleStolenComplaintType,
+			
 			"contactNumber": singleStolenphone2,
 			"country": country,
 			"deviceBrandName": singleStolendeviceBrandName,
@@ -516,6 +516,7 @@ function saveIndivisualStolenRequest(){
 			"requestType":0,
 			"sourceType":5,
 			"firFileName":fileFileDetails,
+			"complaintType": singleStolenComplaintType,
 			"operatorTypeId":singleStolenOperator,
 			"stolenIndividualUserDB":stolenIndividualUserDB
 	}
@@ -618,6 +619,7 @@ function saveCompanyStolenRequest(){
 			"incidentPostalCode": deviceBulkStolenpin,
 			"incidentProvince": state3,
 			"incidentStreet": deviceBulkStolenstreetNumber,
+			"incidentPropertyLocation": deviceBulkStolenaddress,
 			"incidentVillage": deviceBulkStolenvillage,
 			"locality": deviceBulkStolenlocality ,
 			"personnelFirstName": firstName,
@@ -638,6 +640,7 @@ function saveCompanyStolenRequest(){
 			"blockingTimePeriod":blockingTimePeriod,
 			"blockingType":blockingType,
 			"remark":deviceBulkStolenRemark,
+			"complaintType": deviceBulkStolenComplaint,
 			"requestType":0,
 			"sourceType":6,
 			"firFileName":uploadFirBulk,
