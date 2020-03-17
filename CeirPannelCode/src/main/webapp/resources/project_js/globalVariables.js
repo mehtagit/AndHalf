@@ -1,14 +1,5 @@
 
 /*$.getScript('../resources/project_js/CLDRPluralRuleParser.js');
-	$.getScript('../resources/i18n_library/i18n.js');
-	$.getScript('../resources/i18n_library/messagestore.js');
-	$.getScript('../resources/i18n_library/fallbacks.js');
-	$.getScript('../resources/i18n_library/language.js');
-	$.getScript('../resources/i18n_library/parser.js');
-	$.getScript('../resources/i18n_library/emitter.js');
-	$.getScript('../resources/i18n_library/bidi.js');
-	$.getScript('../resources/i18n_library/history.js');
-	$.getScript('../resources/i18n_library/min.js');
 	*/
 
 

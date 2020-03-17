@@ -37,7 +37,8 @@
 		
 
 		$('.datepick').datepicker({
-			dateFormat: "yy-mm-dd"
+			dateFormat: "yy-mm-dd",
+			 maxDate: new Date()
 		});
 
 
@@ -644,7 +645,8 @@ function confirmantiondelete(){
 					}
 
 					$('.datepicker').datepicker({
-						dateFormat: "yy-mm-dd"
+						dateFormat: "yy-mm-dd",
+						 maxDate: new Date()
 					});
 				}
 			}); 
