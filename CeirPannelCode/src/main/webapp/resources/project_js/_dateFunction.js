@@ -1,3 +1,9 @@
+//datepicker ID's to select date range
+	$( "#expectedDispatcheDateEdit,#expectedArrivaldateEdit" ).datepicker({
+			dateFormat: "yy-mm-dd"
+	    });
+
+//error message DIV's
 $('#consignmentTableDIv div:last').after('<p id="errorMsg" style="color: red;font-size: 12px;position: absolute;left: 40px;margin: 0;top: 122px;"class="left"></p>')
 $('#registrationTableDiv div:last').after('<p id="errorMsg" style="color: red;font-size: 12px;position: absolute;left: 40px;margin: 0;top: 122px;"class="left"></p>')
 $('#greivanceTableDiv div:last').after('<p id="errorMsg" style="color: red;font-size: 12px;position: absolute;left: 40px;margin: 0;top: 122px;"class="left"></p>')
@@ -11,6 +17,10 @@ $('#userManageTableDiv div:last').after('<p id="errorMsg" style="color: red;font
 $('#auditTableDiv div:last').after('<p id="errorMsg" style="color: red;font-size: 12px;position: absolute;left: 40px;margin: 0;top: 122px;"class="left"></p>')
 $('#userManageLibraryTable div:last').after('<p id="errorMsg" style="color: red;font-size: 12px;position: absolute;left: 40px;margin: 0;top: 122px;"class="left"></p>')
 
+
+
+
+		
 function myStringToDate(str) {
   var arr  = str.split("-"); // split string at slashes to make an array
   var yyyy = arr[2] - 0; // subtraction converts a string to a number
@@ -106,6 +116,7 @@ function checkDate(startDate,endDate) {
 function checkDateOnModal(startDate,endDate) {
 	var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 
+	
 	$.i18n().locale = lang;	
 	$.i18n().load( {
 		'en': '../resources/i18n/en.json',
