@@ -37,7 +37,6 @@ import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.PolicyConfigurationDb;
 import com.gl.ceir.config.model.RawMail;
 import com.gl.ceir.config.model.RegularizeDeviceDb;
-import com.gl.ceir.config.model.RegularizeDeviceHistoryDb;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.StateMgmtDb;
 import com.gl.ceir.config.model.SystemConfigListDb;
@@ -59,7 +58,6 @@ import com.gl.ceir.config.repository.AuditTrailRepository;
 import com.gl.ceir.config.repository.ConsignmentRepository;
 import com.gl.ceir.config.repository.CustomDetailsRepository;
 import com.gl.ceir.config.repository.EndUserDbRepository;
-import com.gl.ceir.config.repository.RegularizeDeviceHistoryDbRepository;
 import com.gl.ceir.config.repository.RegularizedDeviceDbRepository;
 import com.gl.ceir.config.repository.StokeDetailsRepository;
 import com.gl.ceir.config.repository.SystemConfigurationDbRepository;
@@ -103,9 +101,6 @@ public class RegularizedDeviceServiceImpl {
 
 	@Autowired
 	RegularizedDeviceDbRepository regularizedDeviceDbRepository;
-
-	@Autowired
-	RegularizeDeviceHistoryDbRepository userCustomHistoryDbRepository;
 
 	@Autowired
 	PropertiesReader propertiesReader;
@@ -483,11 +478,6 @@ public class RegularizedDeviceServiceImpl {
 			if(Objects.nonNull(regularizeDeviceDb)) {
 
 				regularizedDeviceDbRepository.deleteById(regularizeDeviceDb.getId());
-
-				userCustomHistoryDbRepository.save(new RegularizeDeviceHistoryDb(regularizeDeviceDb.getNid(), regularizeDeviceDb.getDeviceStatus(), regularizeDeviceDb.getFirstImei(), 
-						regularizeDeviceDb.getSecondImei(), regularizeDeviceDb.getThirdImei(), regularizeDeviceDb.getFourthImei(), regularizeDeviceDb.getTaxPaidStatus(),
-						regularizeDeviceDb.getDeviceType(), regularizeDeviceDb.getDeviceIdType(), regularizeDeviceDb.getMultiSimStatus(), regularizeDeviceDb.getCountry(),
-						regularizeDeviceDb.getDeviceSerialNumber()));
 
 				return new GenricResponse(0, "Device have been deleted sucessfully.", regularizeDeviceDb.getFirstImei());
 			}else {
