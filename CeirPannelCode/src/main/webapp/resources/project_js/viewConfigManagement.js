@@ -96,7 +96,10 @@ function pageRendering(){
 						$("#configTableDiv").append("<div class='input-field col s6 m2' style='margin-top: 22px;'><input type="+date[i].type+" id="+date[i].id+"><label for='parametername' class='center-align'>"+date[i].title+"</label></div>");
 						
 					}
-					
+				$( "#"+date[i].id ).datepicker({
+					dateFormat: "yy-mm-dd",
+					 maxDate: new Date()
+		        }); 
 				} 
 			
 			// dynamic dropdown portion
@@ -126,9 +129,7 @@ function pageRendering(){
 			
 			}
 			
-			$('.datepicker').datepicker({
-				dateFormat: "yy-mm-dd"
-				});
+			
 		}
 
 	}); 

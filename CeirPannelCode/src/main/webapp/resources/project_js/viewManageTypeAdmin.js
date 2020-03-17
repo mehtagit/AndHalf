@@ -163,6 +163,10 @@ function pageRendering(){
 				}else if(date[i].type === "text"){
 					$("#typeAprroveTableDiv").append("<div class='input-field col s6 m2' ><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
 				}
+				$( "#"+date[i].id ).datepicker({
+					dateFormat: "yy-mm-dd",
+					 maxDate: new Date()
+		        }); 
 			} 
 			
 			
@@ -198,13 +202,7 @@ function pageRendering(){
 				}
 			}
 	
-			
-			
-			$('.datepicker').datepicker({
-				dateFormat: "yy-mm-dd",
-					 maxDate: new Date()
-			});
-
+		
 			$.getJSON('./getDropdownList/'+featureId+'/'+$("body").attr("data-userTypeID"), function(data) {
 
 				for (i = 0; i < data.length; i++) {

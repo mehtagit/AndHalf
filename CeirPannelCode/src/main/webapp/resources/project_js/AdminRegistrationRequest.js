@@ -8,15 +8,6 @@
 
 	var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 
-/*
-	window.parent.$('#langlist').on('change', function() {
-		var langParam=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
-		var id= $("#mainArea").contents().find("body").html();
-		var roles= $("#mainArea").contents().find("body").attr("data-session-roles");
-		var type= $("#mainArea").contents().find("body").attr("data-session-type");
-		window.location.reload(true);
-			
-	}); */
 
 	$.i18n().locale = lang;	
 
@@ -138,6 +129,10 @@
 						$("#registrationTableDiv").append("<div class='input-field col s6 m2' ><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
 						
 					}
+					$( "#"+date[i].id ).datepicker({
+						dateFormat: "yy-mm-dd",
+						 maxDate: new Date()
+			        }); 
 					
 				} 
 
@@ -167,9 +162,7 @@
 				
 				}
 				
-				$('.datepicker').datepicker({
-					dateFormat: "yy-mm-dd"
-					});
+			
 			
 				cierRoletype=="CEIRAdmin"? $("#btnLink").css({display: "none"}) : $("#btnLink").css({display: "block"});
 				/*sourceType=="viaStolen" ? $("#btnLink").css({display: "none"}) : $("#btnLink").css({display: "none"});*/

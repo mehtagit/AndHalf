@@ -161,7 +161,10 @@ var featureId = 6;
 								$("#greivanceTableDiv").append("<div class='input-field col s6 m2'><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
 
 							}
-
+							$( "#"+date[i].id ).datepicker({
+								dateFormat: "yy-mm-dd",
+								 maxDate: new Date()
+					        }); 
 
 
 						} 

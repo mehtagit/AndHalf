@@ -126,6 +126,10 @@ function pageRendering(){
 				}else if(date[i].type === "text"){
 					$("#userManageTableDiv").append("<div class='input-field col s6 m2' ><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
 				}
+				$( "#"+date[i].id ).datepicker({
+					dateFormat: "yy-mm-dd",
+					 maxDate: new Date()
+		        }); 
 			} 
 		
 			$("#userManageTableDiv").append("<div class='col s3 m2 l1'><button type='button' class='btn primary botton'  id='submitFilter' /></div></div></div>");
@@ -141,9 +145,7 @@ function pageRendering(){
 				}
 			}
 			
-			$('.datepicker').datepicker({
-				dateFormat: "yy-mm-dd"
-				});
+		
 
 
 		}
