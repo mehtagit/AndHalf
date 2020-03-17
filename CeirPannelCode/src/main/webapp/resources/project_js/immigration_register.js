@@ -23,27 +23,6 @@ $.i18n().load( {
 });
 
 
-function showVisaDetails(){
-	$("#visaDetails").css("display", "block");
-	$("#datepicker").attr("required", true);
-	//$("#visaNumber").attr("required", true);
-	$("#visaImage").attr("required", true);
-	$("#datepicker1").attr("required", true);
-	$("#visaType").attr("required", true);
-
-}
-function hideVisaDetails(){
-	$("#visaDetails").css("display", "none");
-	$('#visaDetails').find('input:text').val('');
-	$('#visaDetails').find('input:file').val('');
-
-	$("#datepicker").attr("required", false);
-	$("#visaNumber").attr("required", false);
-	$("#visaImage").attr("required", false);
-	$("#datepicker1").attr("required", false);
-	$("#visaType").attr("required", false);
-}
-
 
 $('#datepicker,#datepicker1').datepicker({
 	dateFormat: "yy-mm-dd"

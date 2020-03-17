@@ -11,7 +11,6 @@
 <title>Self Register</title>
 
 
-
 <meta charset="utf-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
@@ -279,7 +278,7 @@
 											</h6>
 											<div class="btn">
 												<span><spring:message code="input.selectfile" /> </span> <input
-													type="file" onchange="fileTypeValueChanges('uploadnationalID')"
+													type="file" onchange="fileTypeValueChanges()"
 													oninput="InvalidMsg(this,'fileType');"
 													oninvalid="InvalidMsg(this,'fileType');"
 													title="<spring:message code="validation.file" />"

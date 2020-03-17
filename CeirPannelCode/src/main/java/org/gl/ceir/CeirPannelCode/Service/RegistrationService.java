@@ -15,12 +15,16 @@ import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Feignclient.UserRegistrationFeignImpl;
+import org.gl.ceir.CeirPannelCode.Model.Dropdown;
 import org.gl.ceir.CeirPannelCode.Model.Otp;
 import org.gl.ceir.CeirPannelCode.Model.OtpResponse;
 import org.gl.ceir.CeirPannelCode.Model.Registration;
 import org.gl.ceir.CeirPannelCode.Model.ResendOtp;
 import org.gl.ceir.CeirPannelCode.Model.SecurityQuestion;
+import org.gl.ceir.CeirPannelCode.Model.Tag;
 import org.gl.ceir.CeirPannelCode.Model.UserHeader;
 import org.gl.ceir.CeirPannelCode.Model.Usertype;
 import org.gl.ceir.CeirPannelCode.Util.GenerateRandomDigits;
@@ -38,8 +42,8 @@ import com.google.gson.Gson;
 @Service 
 public class RegistrationService {
 
-	@Value("${FilePath1}") 
-	String filePath; 
+//	@Value("${FilePath1}") 
+//	String filePath; 
 
 	@Autowired
 	UserRegistrationFeignImpl registrationFeignImpl;
@@ -47,6 +51,9 @@ public class RegistrationService {
 	UserRegistrationFeignImpl userRegistrationFeignImpl;
 	@Autowired
 	GenerateRandomDigits randomDigits;
+	@Autowired
+	FeignCleintImplementation feignCleintImplementation;
+
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
 	public String registrationView(String usertype,Model model,HttpSession session) {
@@ -128,11 +135,14 @@ public class RegistrationService {
 		if(registration.getCaptcha().equals(validCaptcha)) {
 			log.info("if captcha match");  
 			if(registration.getRePassword().equals(registration.getPassword())) {
+				
 				log.info("if password and confirm password match");
 				String username=randomDigits.getAlphaNumericString(4)+randomDigits.getNumericString(4)+randomDigits.getAlphaNumericString(1);
 				registration.setUsername(username);
-
-				StringBuilder combinedPath=new StringBuilder(filePath).append("/"+username);
+				Tag tagData=new Tag("user_upload_filepath");
+				Dropdown dropdown = feignCleintImplementation.dataByTag(tagData);
+				log.info("user upload file path value from db: "+dropdown.getValue());
+				StringBuilder combinedPath=new StringBuilder(dropdown.getValue()).append("/"+username);
 				String nationalIdPath=new String(combinedPath+"/NID");  
 				String photoPath=new String(combinedPath+"/photo");
 				String idCardPath=new String(combinedPath+"/IDCard");  
@@ -223,7 +233,10 @@ public class RegistrationService {
 				log.info("if password and confirm password match");
 				String username=randomDigits.getAlphaNumericString(4)+randomDigits.getNumericString(4)+randomDigits.getAlphaNumericString(1);
 				registration.setUsername(username);
-				StringBuilder combinedPath=new StringBuilder(filePath).append("/"+username);
+				Tag tagData=new Tag("user_upload_filepath");
+				Dropdown dropdown = feignCleintImplementation.dataByTag(tagData);	
+				log.info("user upload file path value from db: "+dropdown.getValue());
+				StringBuilder combinedPath=new StringBuilder(dropdown.getValue()).append("/"+username);
 				String nationalIdPath=new String(combinedPath+"/NID");  
 				String vatFilePath=new String(combinedPath+"/Vat");
 				if(registration.getVatStatus()==1) {

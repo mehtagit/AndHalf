@@ -107,6 +107,13 @@
 	right: 10px;
 	top: 10px;
 }
+.card-panel {
+margin: 0.5rem;
+}
+
+.section {
+padding-top: 0;
+}
     </style>
 
 
@@ -172,6 +179,8 @@ var contextpath = "${context}";
 		<div class="container">
 			<div class="section">
 				<form id="registrationForm"  onsubmit="return passwordPopup()" >
+				
+			
 					<div class="card-panel">
 						<%-- <a href="${context}/"
 							style="float: right; margin: -10px; margin-right: -20px;"><i
@@ -470,18 +479,16 @@ title="<spring:message code="validation.selectFieldMsg" />" onchange="setCustomV
                                 </div> --%>
                             </div>    
 								
-								<div class="input-field col s12 m6 l6">
+								<div class="input-field col s12 m6 l6" id="rolesDiv" style="display: none;">
 									<p
 										style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
 										<spring:message code="table.roleType" /> <span class="star">*</span>
 									</p> 
-									<select multiple  name="roles" id="usertypes" required="required"  >
+									<select multiple  name="roles" id="usertypes"  >
 										<option value="" disabled><spring:message code="table.roleType" /> </span></option>
-								                   
 								</select>  
 								</div>
-								
-
+							
 								<!-- <div class="input-field col s12 m6 l6">
 									<p
 										style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
@@ -668,7 +675,14 @@ title="<spring:message code="validation.selectFieldMsg" />" onchange="setCustomV
 								<%-- <a href="${context}/verifyOtp" class="btn" id="btnSave"> Submit</a> --%>
 								<button class="btn"  id="btnSave" type="submit" 
 									style="margin-left: 10px;"><spring:message code="button.update" /></button>
-								<a target="_parent" onclick="redirectToDashboard()" class="btn" style="margin-left: 10px;"><spring:message code="modal.cancel" /></a>
+								<%String userLatestLang=(String)session.getAttribute("updatedLanguage"); 
+								%>
+								<%if(userLatestLang!=null){%>
+								
+								<a target="_parent" href="./?lang=<%=userLatestLang%>" class="btn" style="margin-left: 10px;"><spring:message code="modal.cancel" /></a>
+                                <%}else{ %>
+								<a target="_parent" href="./?lang=<%=session.getAttribute("language")%>" class="btn" style="margin-left: 10px;"><spring:message code="modal.cancel" /></a>
+                                <%} %>
 							</div>
 						</div>
 						</div>
@@ -766,8 +780,12 @@ title="<spring:message code="validation.selectFieldMsg" />" onchange="setCustomV
             <div class="row">
             
                 <div class="input-field col s12 center">
-                    <a target="_parent"  href="javascript:window.location.href=window.location.href" class="btn"><spring:message code="modal.ok" /></a>
-                </div>
+								<%if(userLatestLang!=null){%>
+								
+								<a target="_parent" href="./?lang=<%=userLatestLang%>" class="btn" style="margin-left: 10px;"><spring:message code="modal.cancel" /></a>
+                                <%}else{ %>
+								<a target="_parent" href="./?lang=<%=session.getAttribute("language")%>" class="btn" style="margin-left: 10px;"><spring:message code="modal.cancel" /></a>
+                                <%} %>                </div>
             </div>
         </div>
     </div>
@@ -786,13 +804,13 @@ title="<spring:message code="validation.selectFieldMsg" />" onchange="setCustomV
                                        <input type="hidden" id="userid"  name="userid" value="${userId}">
                         <div class="row">          
                             <div class="input-field col s12 m12">
-                                <input type="text" placeholder="Enter OTP of Email" name="emailOtp" maxlength="6"
+                                <input type="text" placeholder="<spring:message code="placeholder.emailotp" />" name="emailOtp" maxlength="6"
                                  required="required" id="emailOtp" pattern="[0-9]{0,6}" 
                                   oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
-										title= "<spring:message code="validation.6digit" />" placeholder=""/ required />
+										title= "<spring:message code="validation.6digit" />" placeholder="" required />
                             </div> 
                             <div class="input-field col s12 m12">
-                                <input placeholder="Enter OTP of Phone" type="text" name="phoneOtp" maxlength="6" 
+                                <input placeholder="<spring:message code="placeholder.optphone" />" type="text" name="phoneOtp" maxlength="6" 
 										pattern="[0-9]{0,6}"
 										 oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
 										title= "<spring:message code="validation.6digit" />" 
@@ -937,7 +955,8 @@ title="<spring:message code="validation.selectFieldMsg" />" onchange="setCustomV
         //	 $("select[required]").css({position: "absolute", display: "inline", height: 0, padding: 0, width: 0});
        populateCountries("country", "state");
     
-       usertypeData();  
+       //usertypeData(); 
+       //usertypeData2(id)
        editProfile();
    	
    $('.modal').modal();

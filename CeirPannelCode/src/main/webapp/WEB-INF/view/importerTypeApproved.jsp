@@ -1,4 +1,3 @@
-
 <%
 	response.setHeader("Cache-Control", "no-cache");
 	response.setHeader("Cache-Control", "no-store");
@@ -65,7 +64,7 @@
 
 </head>
 <body data-id="21" data-roleType="${usertype}" data-userID="${userid}"
-	data-userTypeID="${usertypeId}"
+	 data-userTypeID="${usertypeId}"
 	data-selected-roleType="${selectedUserTypeId}"
 	data-stolenselected-roleType="${stolenselectedUserTypeId}">
 
@@ -77,7 +76,7 @@
 		<div class="container">
 			<div class="section">
 				<div class="row">
-					<div class="col s12 m12 l12">
+					<div class="col s12 m12 l12"> 
 						<div class="row card-panel">
 							<div class="container-fluid pageHeader">
 								<p class="PageHeading">
@@ -94,12 +93,8 @@
 
 										<div class="input-field col s12 m6 l6"
 											style="margin-top: 22px">
-											<input type="text" id="trademark" name="trademark"
-												pattern="[A-Za-z0-9 \s]{0,160}"
-												oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-												title="" maxlength="30" required> <label
-												for="trademark"><spring:message
+											<input type="text" id="trademark" name="trademark" pattern="[A-Za-z0-9 \s]{0,160}" title="Please enter alphabets and numbers upto 30 characters only" 
+												maxlength="30" required> <label for="trademark"><spring:message
 													code="registration.trademark" /> <span class="star">*</span></label>
 										</div>
 
@@ -107,10 +102,7 @@
 										<div class="col s12 m6 l6" style="margin-bottom: 5px;">
 											<label for="productName"><spring:message
 													code="registration.productname" /> <span class="star">*</span></label>
-											<select id="productname" class="browser-default"
-												onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-												oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-												required>
+											<select id="productname" class="browser-default" required>
 												<option value="" disabled selected><spring:message
 														code="registration.selectproduct" />
 												</option>
@@ -122,29 +114,24 @@
 											<div class="col s12 m6 l6">
 												<label for="modalNumber"><spring:message
 														code="registration.modelnumber" /> <span class="star">*</span></label>
-												<select id="modelNumber" class="browser-default"
-													onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-													oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-													required>
+												<select id="modelNumber" class="browser-default" required>
 													<option value="" disabled selected>
 														<spring:message code="registration.selectmodelnumber" /></option>
 
 												</select>
 											</div>
 
-											<div class="col s12 m6 l6" hidden="hidden">
-												<select class="browser-default" id="status">
-												</select>
-											</div>
-
+										<div class="col s12 m6 l6" hidden="hidden">
+										<select class="browser-default" id="status" >
+										</select>
+										</div>
+											
 											<div class="col s12 m6 l6">
-												<label><spring:message code="input.Country" /> <span
+												<label><spring:message
+														code="input.Country" /> <span
 													class="star">*</span></label> <select id="country"
 													class="browser-default" class="mySelect"
-													style="padding-left: 0;"
-													onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-													oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-													required></select>
+													style="padding-left: 0;" required="required"></select>
 											</div>
 
 
@@ -152,20 +139,14 @@
 
 										<div class="row" style="margin-top: 10px;">
 											<div class="input-field col s12 m6 l6">
-												<input type="text" id="frequencyrange"
-													oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-													maxlength="30" required> <label
-													for="frequencyrange"><spring:message
+												<input type="text" id="frequencyrange" 
+												title="Please enter alphabets and numbers upto 30 characters only"	maxlength="30" required> <label for="frequencyrange"><spring:message
 														code="registration.frequencyrange" /> <span class="star">*</span></label>
 											</div>
 											<div class="input-field col s12 m6 l6">
-												<input type="text" id="tac" pattern="[0-9]{8,8}"
-													oninput="InvalidMsg(this,'input','<spring:message code="validation.tac8" />');"
-													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.tac8" />');"
-													name="tac" maxlength="8" required="required"> <label
-													for="tac"><spring:message code="registration.tac" />
-													<span class="star">*</span></label>
+												<input type="text" id="tac" pattern="[0-9]{8,8}" title="Please enter 8 digits tac number" name="tac" maxlength="8" required="required">
+												<label for="tac"><spring:message
+														code="registration.tac" /> <span class="star">*</span></label>
 											</div>
 										</div>
 
@@ -175,8 +156,7 @@
 													<div class="col s12 m6 l6">
 														<label for="Category"><spring:message
 																code="input.documenttype" /></label> <select
-															class="browser-default" id="docTypetag1"
-															onchange="enableSelectFile()">
+															class="browser-default" id="docTypetag1" onchange="enableSelectFile()">
 															<option value="" disabled selected><spring:message
 																	code="select.documenttype" />
 															</option>
@@ -190,16 +170,12 @@
 													</div>
 
 													<div class="file-field col s12 m6">
-														<h6 id="supportingdocumentFile"
-															class="file-upload-heading">
+														<h6 id="supportingdocumentFile" class="file-upload-heading">
 															<spring:message code="input.supportingdocument" />
 														</h6>
 														<div class="btn">
 															<span><spring:message code="input.selectfile" /></span>
-															<input type="file" name="files[]" id="docTypeFile1"
-																disabled="disabled" onchange="enableAddMore()"
-																		onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-												oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');">
+															<input type="file" name="files[]" id="docTypeFile1" disabled="disabled" onchange="enableAddMore()">
 														</div>
 														<div class="file-path-wrapper">
 															<input class="file-path validate" type="text"
@@ -216,25 +192,25 @@
 
 										</div>
 										<div class="col s12 m6 right">
-											<button class="btn right add_field_button"
-												disabled="disabled">
+											<button class="btn right add_field_button" disabled="disabled">
 												<span style="font-size: 20px;">+</span>
 												<spring:message code="input.addmorefile" />
 											</button>
 										</div>
 									</div>
-								</div>
-								<span><spring:message code="input.requiredfields" /><span
-									class="star">*</span></span>
 
-								<div class="center" style="margin-top: 50px;">
-									<button class="btn" id="trcSubmitButton" type="submit">
-										<spring:message code="button.submit" />
-									</button>
-									<a href="./manageTypeDevices2" class="btn" id="Cancel"
-										style="margin-left: 10px;"><spring:message
-											code="button.cancel" /></a>
-								</div>
+									<span><spring:message code="input.requiredfields" /><span
+										class="star">*</span></span>
+
+									<div class="center" style="margin-top: 50px;">
+										<button class="btn" id="trcSubmitButton"
+											type="submit">
+											<spring:message code="button.submit" />
+										</button>
+										<a href="./manageTypeDevices2" class="btn" id="Cancel"
+											style="margin-left: 10px;"><spring:message
+												code="button.cancel" /></a>
+									</div>
 							</form>
 						</div>
 					</div>
@@ -247,54 +223,53 @@
 		<!--end container-->
 	</section>
 
-
+	
 	<div id="RegisterManageTypeDevice" class="modal">
-		<h6 class="modal-header">
-			<spring:message code="modal.header.submitTypeApprove" />
-		</h6>
+		<h6 class="modal-header"><spring:message code="modal.header.submitTypeApprove" /></h6>
 		<div class="modal-content">
 			<div class="row">
-				<h6 id="sucessMessage">
-					<spring:message code="modal.message.futureRef" />
-					<span id="transactionId"> </span>
-				</h6>
+				<h6 id="sucessMessage"><spring:message code="modal.message.futureRef"/>  <span id="transactionId"> </span></h6>
 				<input type="text" style="display: none" id="errorCode">
 			</div>
-			<div class="row">
+			 <div class="row">
 				<div class="input-field col s12 center">
-					<a href="./manageTypeDevices2" class="btn"><spring:message
-							code="modal.ok" /></a>
-				</div>
-			</div>
+                    <a href="./manageTypeDevices2" class="btn">ok</a>
+                </div>
+			</div> 
 		</div>
 	</div>
-
+	
 	<div id="fileFormateModal" class="modal">
-		<h6 class="modal-header">
-			<spring:message code="fileValidationModalHeader" />
-		</h6>
+		<h6 class="modal-header"><spring:message code="fileValidationModalHeader" /></h6>
 		<div class="modal-content">
 			<div class="row">
-				<h6 id="fileErrormessage">
-					<spring:message code="fileValidationName" />
-					<br> <br>
-					<spring:message code="fileValidationFormate" />
-					<br> <br>
-					<spring:message code="fileValidationSize" />
-				</h6>
+				<h6 id="fileErrormessage"><spring:message code="fileValidationName" /><br> <br> <spring:message code="fileValidationFormate" /> <br><br> <spring:message code="fileValidationSize" /> </h6>
 			</div>
 			<div class="row">
 				<div class="input-field col s12 center">
 					<div class="input-field col s12 center">
 						<button class=" btn" onclick="clearFileName()"
-							style="margin-left: 10px;">
-							<spring:message code="modal.ok" />
-						</button>
+							style="margin-left: 10px;"><spring:message code="modal.ok" /></button>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+
+ <!--  <div id="RegisterManageTypeDevice" class="modal">
+     <h6 class="modal-header" style="margin:0px;">Update</h6>
+        <div class="modal-content">
+            
+            <div class="row">
+                <h6 id="updateTacMessage"> Your request has been successfully saved.</h6>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <a href="./manageTypeDevices2" class="btn">ok</a>
+                </div>
+            </div>
+        </div>
+    </div> -->
 
 
 
@@ -365,16 +340,12 @@
 	<script type="text/javascript"
 		src="${context}/resources/js/countries.js"></script>
 	<script type="text/javascript"
-		src="${context}/resources/project_js/importerTypeApproved.js"></script>
-	<script type="text/javascript"
-		src="${context}/resources/project_js/validationMsg.js"></script>
-			<script type="text/javascript"
-		src="${context}/resources/project_js/_dateFunction.js" async></script>
-		<script type="text/javascript"
-		src="${context}/resources/project_js/globalVariables.js"></script>
+		src="${context}/resources/project_js/importerTypeApproved.js"></script>	
+
 	<script type="text/javascript">
-		populateCountries("country");
-	</script>
+ 
+		populateCountries("country");	
+		</script>
 </body>
 </html>
 <%
@@ -383,8 +354,10 @@
 		request.getRequestDispatcher("./index.jsp").forward(request, response);  */
 %>
 <script language="JavaScript">
-	sessionStorage.setItem("loginMsg", "*Session has been expired");
-	window.top.location.href = "./login";
+	sessionStorage.setItem("loginMsg",
+			"*Session has been expired");
+	window.top.location.href = "../login";
+	
 </script>
 <%
 	}

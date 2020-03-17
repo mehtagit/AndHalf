@@ -42,8 +42,8 @@ function typeApprovedDataTable(lang){
 
 function Datatable(Url,dataUrl){
 	var txn= (txnIdValue == 'null' && transactionIDValue == undefined)? $('#transactionID').val() : transactionIDValue;
-	var userId = userType=="CEIRAdmin" ? 0 : parseInt($("body").attr("data-userID")); 
-
+if(userType=="CEIRAdmin"){
+var userId = 0;
 		var filterRequest={
 				"endDate":$('#endDate').val(),
 				"startDate":$('#startDate').val(),
@@ -54,10 +54,26 @@ function Datatable(Url,dataUrl){
 				"userTypeId": parseInt($("body").attr("data-userTypeID")),
 				"userType":$("body").attr("data-roleType"),
 				"adminStatus" : parseInt($('#Status').val()),
-				}	
-		
+				}
+	}else{
+		var userId = parseInt($("body").attr("data-userID"))
+			var filterRequest={
+				"endDate":$('#endDate').val(),
+				"startDate":$('#startDate').val(),
+			  	"tac" : $('#tac').val(),
+			  	"txnId" : txn,
+			  	"userId":userId,
+				"featureId":parseInt(featureId),
+				"userTypeId": parseInt($("body").attr("data-userTypeID")),
+				"userType":$("body").attr("data-roleType"),
+				"status" : parseInt($('#Status').val()),
+				}
+	}
+	
+
+
 if(lang=='km'){
-	var langFile='./resources/i18n/khmer_datatable.json';
+	var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
 }
 	$.ajax({
 		url: Url,

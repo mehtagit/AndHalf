@@ -1615,13 +1615,13 @@ public class IconsState {
 	public String manageUserIcons(String id, String passportNo) { 
 		executePostConstruct();
 		String viewAction="viewDetails('"+id+"')";
-		String editAction="edit_immigration?passportNo="+passportNo+"";
+		String editAction="";
 		String ListAction = "deviceActivation?passportNo="+passportNo+"";
 		String AddAction = "";
 		// state related Code 
 		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
-		String edit="<a href="+editAction+"><i class="+editIcon+" aria-hidden=\"true\"  title="
+		String edit="<a onclick="+editAction+"><i class="+editIcon+" aria-hidden=\"true\"  title="
 				+editIconTitle+"></i></a>"; 
 		String List = "<a href="+ListAction+"><i class="+ListIcon+" aria-hidden=\"true\"  title="
 				+ListIconTittle+"></i></a>"; 

@@ -136,7 +136,8 @@ function verifyOtp(){
 				//window.location.href='#otpMessage';
 				
 				// $('#otpMessage').modal('open');
-				
+
+
 				$.i18n().locale = $('#langlist').val();
 				$.i18n().load( {
 					'en': './resources/i18n/en.json',
@@ -340,11 +341,6 @@ function questionData(){
 	});
 }
 
-
-
-
-
-
 function saveRegistration(){ 
 	$("#btnSave").prop('disabled', true);
 	var obj="";
@@ -362,6 +358,12 @@ function saveRegistration(){
 		}
 	});
 
+	var data=[];
+	var $el=$("#usertypes");
+	$el.find('option:selected').each(function(){
+	    data.push($(this).val());
+	});
+	
 
 	$("#registrationForm").each(function(key, val){
 		val = $(this);
@@ -388,7 +390,7 @@ function saveRegistration(){
 					country:val.find('#country').val(),
 					vatStatus:val.find("input[name='vatStatus']:checked").val(),
 					vatNo:val.find('#vatNo').val(),
-					roles:val.find('#usertypes:selected').val(),  
+					roles:data,  
 					password:val.find('#password').val(),  
 					rePassword:val.find('#confirm_password').val(),
 					captcha:val.find('#captcha').val(),
@@ -405,11 +407,13 @@ function saveRegistration(){
 	formData.append( 'file', $( '#file' )[0].files[0] );
 	formData.append('data',JSON.stringify(obj));
 	formData.append('vatFile',$('#vatFile')[0].files[0]);
-	
 	console.log("data=  "+formData);
 	registrationAjax(formData);
 	//$("#btnSave").prop('disabled', true);
-  
+	/*$("#otpMsgModal").openModal({
+        dismissible:false
+    });
+	*/
 	return false;
 }
 
@@ -654,11 +658,9 @@ function openEndUserGrievancePage(reportType){
 
 function  openEndUserStockPage(reportType)
 {
-	//alert(reportType.value);
 	console.log("reportType=="+reportType.value);
 	window.location.href="./uploadAstock?reportType="+reportType.value;
 	console.log("details."+window.location.href);
-	/*alert(window.location.href);*/
 /*	$.ajax({   
 		type : 'POST',
 		url : contextpath + '/openEndUserStockPage?reportType='+reportType.value,
@@ -727,4 +729,19 @@ $('#disclamer').click(function () {
         $('#btnSave').attr('disabled', true); //disable input
     }
 });
+}
+
+function openOtpPopup(){
+	$('#otpMsgModal').closeModal();
+	$("#otpVerification").openModal({
+        dismissible:false
+    });
+}
+
+
+function openAnModal(){
+	$("#otpVerification").closeModal();
+	$('#otpMessage').openModal({
+        dismissible:false
+    });
 }

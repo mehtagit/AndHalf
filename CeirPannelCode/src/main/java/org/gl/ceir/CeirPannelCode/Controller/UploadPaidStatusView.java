@@ -10,7 +10,6 @@ import java.nio.file.Paths;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.gl.ceir.CeirPannelCode.Feignclient.ImmigrationFeignImpl;
 import org.gl.ceir.CeirPannelCode.Feignclient.UploadPaidStatusFeignClient;
 import org.gl.ceir.CeirPannelCode.Feignclient.UserPaidStatusFeignClient;
 import org.gl.ceir.CeirPannelCode.Model.EndUserVisaInfo;
@@ -59,8 +58,6 @@ public class UploadPaidStatusView {
 	@Autowired
 	UploadPaidStatusFeignClient uploadPaidStatusFeignClient;
 
-	@Autowired
-	ImmigrationFeignImpl immigrationFeignImpl;
 
 
 	@GetMapping("uploadPaidStatus")
@@ -475,32 +472,9 @@ stream.close();
 		return endUserVisaInfo;
 	}
 
+}
 
 
 
 
-
-
-	
-	  @PutMapping("updateEndUserDevice")
-	  public @ResponseBody GenricResponse updateEndUserDevice(@RequestParam(name="visaImage",required = false)
-	  MultipartFile visaImage,@RequestParam(name="endUserDepartmentFile",required =
-	  false) MultipartFile endUserDepartmentFile,HttpServletRequest
-	  request,HttpSession session) {
-	  log.info("---entry point in update visa validity page");
-	  log.info("---request---"+request.getParameter("request"));
-	  
-	  String filter =request.getParameter("request");
-	  Gson gson= new Gson();
-	  log.info("before casting request in to pojo classs"+filter);
-	  
-	  EndUserVisaInfo endUservisaInfo = gson.fromJson(filter,EndUserVisaInfo.class);
-	  GenricResponse response= new GenricResponse();
-	  log.info("endUservisaInfo::::::::::"+endUservisaInfo);
-	  
-	  response=immigrationFeignImpl.RegisterEndUserDevice(endUservisaInfo);
-	 return response; 
-	  }
-	  
-	 }
 
