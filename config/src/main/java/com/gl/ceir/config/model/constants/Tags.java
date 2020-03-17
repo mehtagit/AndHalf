@@ -18,5 +18,6 @@ public interface Tags {
 	String CHANNEL = "CHANNEL";
 	String IS_ACTIVE = "IS_ACTIVE";
 	String ALERT_STATE = "ALERT_STATE";
+	String DELETE_FLAG = "DELETE_FLAG";
 		
 }

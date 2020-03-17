@@ -78,7 +78,7 @@ public class ConsignmentServiceImpl {
 	private static final Logger logger = LogManager.getLogger(ConsignmentServiceImpl.class);
 
 	private final String CEIRSYSTEM = "CEIRSYSTEM";
-	
+
 	@Autowired
 	private ConsignmentRepository consignmentRepository;
 
@@ -120,16 +120,16 @@ public class ConsignmentServiceImpl {
 
 	@Autowired
 	SystemConfigurationDbRepository systemConfigurationDbRepository;
-	
+
 	@Autowired
 	PendingTacApprovedImpl pendingTacApprovedImpl;
-	
+
 	@Autowired
 	UserStaticServiceImpl userStaticServiceImpl;
-	
+
 	@Autowired
 	ConsignmentTransaction consignmentTransaction;
-	
+
 	public GenricResponse registerConsignment(ConsignmentMgmt consignmentFileRequest) {
 
 		try {
@@ -143,10 +143,10 @@ public class ConsignmentServiceImpl {
 
 			consignmentFileRequest.setConsignmentStatus(ConsignmentStatus.INIT.getCode());
 			consignmentFileRequest.setTaxPaidStatus(TaxStatus.TAX_NOT_PAID.getCode());
-			
+
 			// Set user for mapping.
 			consignmentFileRequest.setUser(new User().setId(importerId));
-			
+
 			if(consignmentTransaction.executeRegisterConsignment(consignmentFileRequest, webActionDb)) {
 				return new GenricResponse(0, "Register Successfully", consignmentFileRequest.getTxnId());
 			}else {
@@ -260,7 +260,7 @@ public class ConsignmentServiceImpl {
 			}
 
 			ConsignmentMgmt consignmentMgmt = consignmentRepository.getByTxnId(txnId);
-			
+
 			FilterRequest filterRequest = new FilterRequest().setTxnId(consignmentMgmt.getTxnId());
 			if(pendingTacApprovedImpl.findByTxnId(filterRequest).getErrorCode() == 0) {
 				logger.info("Tac related to the consignment with txn_id [" + consignmentMgmt.getTxnId() + "] found in pending_tac_approval_db");
@@ -269,7 +269,7 @@ public class ConsignmentServiceImpl {
 				logger.info("No tac for the consignment with txn_id [" + consignmentMgmt.getTxnId() + "] is pending.");
 				consignmentMgmt.setPendingTacApprovedByCustom("N");
 			}
-			
+
 			setInterp(consignmentMgmt);
 
 			return consignmentMgmt;
@@ -300,7 +300,7 @@ public class ConsignmentServiceImpl {
 				consignmentInfo.setSupplierName(consignmentFileRequest.getSupplierName());
 				consignmentInfo.setTotalPrice(consignmentFileRequest.getTotalPrice());
 				consignmentInfo.setCurrency(consignmentFileRequest.getCurrency());
-				
+
 				// pending tac if available in pending_tac_approval_db.
 				FilterRequest filterRequest = new FilterRequest().setTxnId(consignmentFileRequest.getTxnId());
 				if(pendingTacApprovedImpl.findByTxnId(filterRequest).getErrorCode() == 0) {
@@ -353,12 +353,12 @@ public class ConsignmentServiceImpl {
 				return new GenricResponse(4, "Consignment Does not Exist",consignmentRequest.getTxnId());
 			}
 
-			if("CEIRADMIN".equalsIgnoreCase(userType))
+			if("CEIRADMIN".equalsIgnoreCase(userType)) {
 				consignmentMgmt.setConsignmentStatus(ConsignmentStatus.WITHDRAWN_BY_CEIR.getCode());
-			else if("IMPORTER".equalsIgnoreCase(userType))
+			}else if("IMPORTER".equalsIgnoreCase(userType))
 				// Check status must be Init or Rejected by system.
 				if(consignmentMgmt.getConsignmentStatus() == ConsignmentStatus.INIT.getCode() || 
-						consignmentMgmt.getConsignmentStatus() == ConsignmentStatus.REJECTED_BY_SYSTEM.getCode()) {
+				consignmentMgmt.getConsignmentStatus() == ConsignmentStatus.REJECTED_BY_SYSTEM.getCode()) {
 					consignmentMgmt.setConsignmentStatus(ConsignmentStatus.WITHDRAWN_BY_IMPORTER.getCode());	
 				}else {
 					return new GenricResponse(5, GenericMessageTags.INVALID_STATE_TRANSTION.getTag(), GenericMessageTags.INVALID_STATE_TRANSTION.getMessage(), consignmentRequest.getTxnId());
@@ -369,7 +369,8 @@ public class ConsignmentServiceImpl {
 			}
 
 			consignmentMgmt.setRemarks(consignmentRequest.getRemarks());
-
+			consignmentMgmt.setDeleteFlag(0);
+			
 			WebActionDb webActionDb = new WebActionDb();
 			webActionDb.setFeature(WebActionDbFeature.CONSIGNMENT.getName());
 			webActionDb.setSubFeature(WebActionDbSubFeature.DELETE.getName());
@@ -394,14 +395,14 @@ public class ConsignmentServiceImpl {
 		try {
 			UserProfile userProfile = null;
 			Map<String, String> placeholderMap = new HashMap<>();
-			
+
 			ConsignmentMgmt consignmentMgmt = consignmentRepository.getByTxnId(consignmentUpdateRequest.getTxnId());
 			logger.debug("Accept/Reject Consignment : " + consignmentMgmt);
 
 			// Fetch user_profile to update user over mail/sms regarding the action.
 			userProfile = userProfileRepository.getByUserId(consignmentMgmt.getUserId());
 			logger.debug("UserProfile : " + userProfile);
-			
+
 
 			// 0 - Accept, 1 - Reject
 			if(0 == consignmentUpdateRequest.getAction()) {
@@ -420,7 +421,7 @@ public class ConsignmentServiceImpl {
 
 						placeholderMap.put("<Importer first name>", userProfile.getFirstName());
 						placeholderMap.put("<txn_name>", consignmentMgmt.getTxnId());
-						
+
 						emailUtil.saveNotification("Consignment_Success_CEIRAuthority_Email_Message", 
 								userProfile, 
 								consignmentUpdateRequest.getFeatureId(),
@@ -439,7 +440,7 @@ public class ConsignmentServiceImpl {
 
 						consignmentMgmt.setConsignmentStatus(ConsignmentStatus.APPROVED.getCode());
 						consignmentMgmt.setTaxPaidStatus(TaxStatus.TAX_PAID.getCode());
-						
+
 						// Delete tac if available in pending_tac_approval_db.
 						FilterRequest filterRequest = new FilterRequest().setTxnId(consignmentMgmt.getTxnId());
 						if(pendingTacApprovedImpl.findByTxnId(filterRequest).getErrorCode() == 0) {
@@ -450,10 +451,10 @@ public class ConsignmentServiceImpl {
 							logger.info("No tac for the consignment with txn_id [" + consignmentMgmt.getTxnId() + "] is pending.");
 							consignmentMgmt.setPendingTacApprovedByCustom("N");
 						}
-						
+
 						placeholderMap.put("<Importer first name>", userProfile.getFirstName());
 						placeholderMap.put("<txn_name>", consignmentMgmt.getTxnId());
-						
+
 						emailUtil.saveNotification("Consignment_Approved_CustomImporter_Email_Message", 
 								userProfile, 
 								consignmentUpdateRequest.getFeatureId(),
@@ -466,20 +467,20 @@ public class ConsignmentServiceImpl {
 								"Importer");
 
 					}else if(CEIRSYSTEM.equalsIgnoreCase(consignmentUpdateRequest.getRoleType())) {
-						
+
 						List<RawMail> rawMails = new LinkedList<>();
 						if(!StateMachine.isConsignmentStatetransitionAllowed(CEIRSYSTEM, consignmentMgmt.getConsignmentStatus())) {
 							logger.info("state transition is not allowed." + consignmentUpdateRequest.getTxnId());
 							return new GenricResponse(3, "state transition is not allowed.", consignmentUpdateRequest.getTxnId());
 						}
 						consignmentMgmt.setConsignmentStatus(ConsignmentStatus.PENDING_APPROVAL_FROM_CEIR_AUTHORITY.getCode());
-						
+
 						UserProfile userProfile2 = userProfileRepository.getByUserId(consignmentMgmt.getUserId());
 						logger.info("userProfile2 " + userProfile2);
-						
+
 						placeholderMap.put("<First name>", userProfile.getFirstName());
 						placeholderMap.put("<txn_name>", consignmentMgmt.getTxnId());
-						
+
 						rawMails.add(new RawMail("CONSIGNMENT_PROCESS_SUCCESS_TO_IMPORTER_MAIL", 
 								userProfile2, 
 								consignmentUpdateRequest.getFeatureId(), 
@@ -490,7 +491,7 @@ public class ConsignmentServiceImpl {
 								placeholderMap, ReferTable.USERS, 
 								consignmentUpdateRequest.getRoleType(),
 								"Importer"));
-						
+
 						rawMails.add(new RawMail("CONSIGNMENT_PROCESS_SUCCESS_TO_CEIR_MAIL", 
 								userStaticServiceImpl.getCeirAdmin().getId(), 
 								consignmentUpdateRequest.getFeatureId(), 
@@ -501,7 +502,7 @@ public class ConsignmentServiceImpl {
 								placeholderMap, ReferTable.USERS, 
 								consignmentUpdateRequest.getRoleType(),
 								"CEIRAdmin"));
-						
+
 						emailUtil.saveNotification(rawMails);
 
 					}else {
@@ -520,7 +521,7 @@ public class ConsignmentServiceImpl {
 
 					placeholderMap.put("<Importer first name>", userProfile.getFirstName());
 					placeholderMap.put("<txn_name>", consignmentMgmt.getTxnId());
-					
+
 					emailUtil.saveNotification("Consignment_Reject_CEIRAuthority_Email_Message", 
 							userProfile, 
 							consignmentUpdateRequest.getFeatureId(),
@@ -543,7 +544,7 @@ public class ConsignmentServiceImpl {
 
 					placeholderMap.put("<Importer first name>", userProfile.getFirstName());
 					placeholderMap.put("<txn_name>", consignmentMgmt.getTxnId());
-					
+
 					emailUtil.saveNotification("Consignment_Rejected_Custom_Email_Message", 
 							userProfile, 
 							consignmentUpdateRequest.getFeatureId(),
@@ -554,7 +555,7 @@ public class ConsignmentServiceImpl {
 							placeholderMap, 
 							null,
 							"Importer");
-					
+
 				}else if(CEIRSYSTEM.equalsIgnoreCase(consignmentUpdateRequest.getRoleType())) {
 					List<RawMail> rawMails = new LinkedList<>();
 					if(!StateMachine.isConsignmentStatetransitionAllowed(CEIRSYSTEM, consignmentMgmt.getConsignmentStatus())) {
@@ -564,10 +565,10 @@ public class ConsignmentServiceImpl {
 					consignmentMgmt.setConsignmentStatus(ConsignmentStatus.REJECTED_BY_SYSTEM.getCode());
 					UserProfile userProfile2 = userProfileRepository.getByUserId(consignmentMgmt.getUserId());
 					logger.info("userProfile2 " + userProfile2);
-					
+
 					placeholderMap.put("<First name>", userProfile.getFirstName());
 					placeholderMap.put("<txn_name>", consignmentMgmt.getTxnId());
-					
+
 					rawMails.add(new RawMail("CONSIGNMENT_PROCESS_FAILED_TO_IMPORTER_MAIL", 
 							userProfile2, 
 							consignmentUpdateRequest.getFeatureId(), 
@@ -578,7 +579,7 @@ public class ConsignmentServiceImpl {
 							placeholderMap, ReferTable.USERS, 
 							consignmentUpdateRequest.getRoleType(),
 							"Importer"));
-					
+
 					emailUtil.saveNotification(rawMails);
 
 				}else {
@@ -599,37 +600,37 @@ public class ConsignmentServiceImpl {
 		}
 	}
 
-	
-	
+
+
 	public FileDetails getFilteredConsignmentInFileV2(FilterRequest filterRequest) {
 		String fileName = null;
 		Writer writer   = null;
 
 		ConsignmentFileModel cfm = null;
-		
+
 		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		DateTimeFormatter dtf2  = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
-		
+
 		SystemConfigurationDb filepath = configurationManagementServiceImpl.findByTag(ConfigTags.file_download_dir);
 		logger.info("CONFIG : file_consignment_download_dir [" + filepath + "]");
 		SystemConfigurationDb link = configurationManagementServiceImpl.findByTag(ConfigTags.file_download_link);
 		logger.info("CONFIG : file_consignment_download_link [" + link + "]");
-		
+
 		StatefulBeanToCsvBuilder<ConsignmentFileModel> builder = null;
 		StatefulBeanToCsv<ConsignmentFileModel> csvWriter      = null;
 		List< ConsignmentFileModel> fileRecords                = null;
 		CustomMappingStrategy<ConsignmentFileModel> mappingStrategy = new CustomMappingStrategy<>();
-		
+
 		try {
 			List<ConsignmentMgmt> consignmentMgmts = getAll(filterRequest);
-			
+
 			fileName = LocalDateTime.now().format(dtf2).replace(" ", "_") + "_Consignment.csv";
 			writer = Files.newBufferedWriter(Paths.get(filepath.getValue() + fileName));
 			mappingStrategy.setType(ConsignmentFileModel.class);
-			
+
 			builder = new StatefulBeanToCsvBuilder<>(writer);
 			csvWriter = builder.withMappingStrategy(mappingStrategy).withSeparator(',').withQuotechar(CSVWriter.NO_QUOTE_CHARACTER).build();
-			
+
 			if( !consignmentMgmts.isEmpty() ) {
 				fileRecords = new ArrayList<>();
 				for( ConsignmentMgmt consignmentMgmt : consignmentMgmts ) {
@@ -639,25 +640,25 @@ public class ConsignmentServiceImpl {
 							consignmentMgmt.getCreatedOn().format(dtf),
 							consignmentMgmt.getModifiedOn().format(dtf),
 							consignmentMgmt.getQuantity());
-					
+
 					fileRecords.add(cfm);
 				}
-				
+
 				csvWriter.write(fileRecords);
 			}else {
 				csvWriter.write( new ConsignmentFileModel());
 			}
-			
+
 			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), "", 
 					Long.valueOf(filterRequest.getUserTypeId()), filterRequest.getUserType(), 
 					Long.valueOf(filterRequest.getFeatureId()),
 					Features.CONSIGNMENT, SubFeatures.VIEW, "", "NA"));
 			logger.info("AUDIT : Saved file export request in audit.");
-			
+
 			FileDetails fileDetails = new FileDetails( fileName, filepath.getValue(), link.getValue() + fileName );
 			logger.info(fileDetails);
 			return fileDetails;
-			
+
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
@@ -695,13 +696,13 @@ public class ConsignmentServiceImpl {
 	private GenericSpecificationBuilder<ConsignmentMgmt> buildSpecification(FilterRequest consignmentMgmt, List<StateMgmtDb> statusList){
 		GenericSpecificationBuilder<ConsignmentMgmt> cmsb = new GenericSpecificationBuilder<>(propertiesReader.dialect);
 		String consignmentStatusLiteral = "consignmentStatus";
-		
+
 		if("IMPORTER".equalsIgnoreCase(consignmentMgmt.getUserType()) 
 				&& Objects.nonNull(consignmentMgmt.getUserId())) {
-			
-				cmsb.with(new SearchCriteria("userId", consignmentMgmt.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));
+
+			cmsb.with(new SearchCriteria("userId", consignmentMgmt.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));
 		}
-		
+
 		if(Objects.nonNull(consignmentMgmt.getTxnId()) && !consignmentMgmt.getTxnId().isEmpty())
 			cmsb.with(new SearchCriteria("txnId", consignmentMgmt.getTxnId(), SearchOperation.EQUALITY, Datatype.STRING));
 
@@ -768,5 +769,9 @@ public class ConsignmentServiceImpl {
 
 		if(Objects.nonNull(consignmentMgmt.getTaxPaidStatus()))
 			consignmentMgmt.setTaxInterp(interpSetter.setConfigInterp(Tags.CUSTOMS_TAX_STATUS, consignmentMgmt.getTaxPaidStatus()));
+		
+		if(Objects.nonNull(consignmentMgmt.getTaxPaidStatus()))
+			consignmentMgmt.setDeleteFlagInterp(interpSetter.setConfigInterp(Tags.DELETE_FLAG, consignmentMgmt.getDeleteFlag()));
+		
 	}
 }

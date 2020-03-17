@@ -456,7 +456,8 @@ public class StockServiceImpl {
 					txnRecord.setStockStatus(StockStatus.WITHDRAWN_BY_USER.getCode());
 
 				txnRecord.setRemarks(stockMgmt.getRemarks());
-
+				txnRecord.setDeleteFlag(0);
+				
 				WebActionDb webActionDb = new WebActionDb();
 				webActionDb.setFeature(WebActionDbFeature.STOCK.getName());
 				webActionDb.setSubFeature(WebActionDbSubFeature.DELETE.getName());

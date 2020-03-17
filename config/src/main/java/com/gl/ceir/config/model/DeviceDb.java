@@ -48,6 +48,9 @@ public class DeviceDb  implements Serializable{
 	private Integer tac;
 
 	private String period;
+	
+	private String txnId;
+	private Integer state;
 
 	public Long getId() {
 		return id;
@@ -162,6 +165,22 @@ public class DeviceDb  implements Serializable{
 
 	public void setTac(Integer tac) {
 		this.tac = tac;
+	}
+
+	public String getTxnId() {
+		return txnId;
+	}
+
+	public void setTxnId(String txnId) {
+		this.txnId = txnId;
+	}
+
+	public Integer getState() {
+		return state;
+	}
+
+	public void setState(Integer state) {
+		this.state = state;
 	}
 
 	@Override

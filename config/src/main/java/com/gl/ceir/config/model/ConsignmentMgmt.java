@@ -98,6 +98,27 @@ public class ConsignmentMgmt implements Serializable {
 	
 	@Column(length = 1)
 	private String pendingTacApprovedByCustom; // Expected values Y or N
+	
+	private Integer deleteFlag;
+	
+	@Transient
+	private String deleteFlagInterp;
+	
+	public Integer getDeleteFlag() {
+		return deleteFlag;
+	}
+
+	public void setDeleteFlag(Integer deleteFlag) {
+		this.deleteFlag = deleteFlag;
+	}
+
+	public String getDeleteFlagInterp() {
+		return deleteFlagInterp;
+	}
+
+	public void setDeleteFlagInterp(String deleteFlagInterp) {
+		this.deleteFlagInterp = deleteFlagInterp;
+	}
 
 	public Long getId() {
 		return id;

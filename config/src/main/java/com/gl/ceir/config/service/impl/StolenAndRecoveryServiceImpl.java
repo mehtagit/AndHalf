@@ -57,7 +57,6 @@ import com.gl.ceir.config.model.constants.Tags;
 import com.gl.ceir.config.model.constants.WebActionDbState;
 import com.gl.ceir.config.model.constants.WebActionDbSubFeature;
 import com.gl.ceir.config.model.constants.WebActionStatus;
-import com.gl.ceir.config.model.file.ConsignmentFileModel;
 import com.gl.ceir.config.model.file.StolenAndRecoveryFileModel;
 import com.gl.ceir.config.repository.ConsignmentRepository;
 import com.gl.ceir.config.repository.ImmegreationImeiDetailsRepository;
@@ -522,8 +521,7 @@ public class StolenAndRecoveryServiceImpl {
 					singleImeiHistoryDb.setTxnId(stolenandRecoveryMgmt.getId());
 
 					singleImeiHistoryDbRepository.save(singleImeiHistoryDb);
-					//immegreationImeiDetailsRepository.deleteById(stolenandRecoveryMgmtInfo.getSingleImeiDetails().getId());
-
+					
 				}
 
 				stolenAndRecoveryHistoryMgmtRepository.save(historyMgmt);
@@ -536,7 +534,6 @@ public class StolenAndRecoveryServiceImpl {
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
-
 
 	@Transactional
 	public GenricResponse updateRecord(StolenandRecoveryMgmt stolenandRecoveryMgmt) {
@@ -573,7 +570,6 @@ public class StolenAndRecoveryServiceImpl {
 				stolenandRecoveryMgmtInfo.setQty(stolenandRecoveryMgmt.getQty());
 				stolenandRecoveryMgmtInfo.setFileStatus(StolenStatus.INIT.getCode());
 
-
 				// Update StolenIndividualUserDB
 				if(Objects.nonNull(stolenandRecoveryMgmt.getStolenIndividualUserDB())) {
 					StolenIndividualUserDB stolenIndividualUserDB = updateStolenIndividualUserDB(
@@ -589,8 +585,6 @@ public class StolenAndRecoveryServiceImpl {
 					stolenandRecoveryMgmtInfo.setStolenIndividualUserDB(stolenIndividualUserDB);
 					stolenIndividualUserDB.setStolenandRecoveryMgmt(stolenandRecoveryMgmtInfo);
 
-					// stolenIndividualUserRepository.save(stolenIndividualUserDB);
-
 					logger.info("After object update " + stolenIndividualUserDB);
 				}
 
@@ -604,7 +598,6 @@ public class StolenAndRecoveryServiceImpl {
 					stolenandRecoveryMgmtInfo.setStolenOrganizationUserDB(stolenOrganizationUserDB);
 
 					stolenOrganizationUserDB.setStolenandRecoveryMgmt(stolenandRecoveryMgmtInfo);
-					// stolenOrganizationUserRepository.save(stolenOrganizationUserDB);
 
 					logger.info("After object update " + stolenOrganizationUserDB);
 				}
