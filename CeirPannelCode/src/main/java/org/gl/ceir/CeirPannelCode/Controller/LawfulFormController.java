@@ -9,7 +9,9 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Feignclient.UploadPaidStatusFeignClient;
+import org.gl.ceir.CeirPannelCode.Model.AddMoreFileModel;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.LawfulStolenRecovey;
 import org.gl.ceir.CeirPannelCode.Model.SingleImeiDetailsModel;
@@ -46,6 +48,14 @@ public class LawfulFormController
 
 	@Autowired
 	UploadPaidStatusFeignClient uploadPaidStatusFeignClient;
+	
+	@Autowired
+	AddMoreFileModel addMoreFileModel,urlToUpload,urlToMove;
+	
+	
+@Autowired
+
+FeignCleintImplementation feignCleintImplementation;
 
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
@@ -118,6 +128,9 @@ public class LawfulFormController
 		Gson gson= new Gson(); 
 		log.info("*********"+filter);
 		
+		addMoreFileModel.setTag("system_upload_filepath");
+		urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
+		
 		LawfulStolenRecovey lawfulIndivisualStolen  = gson.fromJson(filter, LawfulStolenRecovey.class);
 		log.info(""+lawfulIndivisualStolen.toString());
 		lawfulIndivisualStolen.setTxnId(txnNumber);
@@ -127,7 +140,7 @@ public class LawfulFormController
 
 		try {
 			byte[] bytes = file.getBytes();
-			String rootPath =filePathforUploadFile+txnNumber+"/"; 
+			String rootPath =urlToUpload.getValue()+txnNumber+"/"; 
 			File dir = new File(rootPath + File.separator);
 
 			if (!dir.exists()) dir.mkdirs();
@@ -150,7 +163,7 @@ public class LawfulFormController
 			try {
 
 				byte[] bytes = firFileName.getBytes();
-				String rootPath =filePathforUploadFile+lawfulIndivisualStolen.getTxnId()+"/"; 
+				String rootPath =urlToUpload.getValue()+lawfulIndivisualStolen.getTxnId()+"/"; 
 				File dir = new File(rootPath + File.separator);
 
 				if (!dir.exists()) dir.mkdirs();
@@ -195,6 +208,9 @@ public class LawfulFormController
 		log.info("Random transaction id number="+txnNumber);
 		String filter = request.getParameter("request");
 
+		addMoreFileModel.setTag("system_upload_filepath");
+		urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
+		
 		Gson gson= new Gson(); 
 		log.info("*********"+filter);
 		LawfulStolenRecovey lawfulIndivisualStolen  = gson.fromJson(filter, LawfulStolenRecovey.class);
@@ -206,7 +222,7 @@ public class LawfulFormController
 
 		try {
 			byte[] bytes = file.getBytes();
-			String rootPath =filePathforUploadFile+txnNumber+"/"; 
+			String rootPath =urlToUpload.getValue()+txnNumber+"/"; 
 			File dir = new File(rootPath + File.separator);
 
 			if (!dir.exists()) dir.mkdirs();
@@ -229,7 +245,7 @@ public class LawfulFormController
 			try {
 
 				byte[] bytes = firFileName.getBytes();
-				String rootPath =filePathforUploadFile+lawfulIndivisualStolen.getTxnId()+"/"; 
+				String rootPath =urlToUpload.getValue()+lawfulIndivisualStolen.getTxnId()+"/"; 
 				File dir = new File(rootPath + File.separator);
 
 				if (!dir.exists()) dir.mkdirs();
@@ -275,6 +291,10 @@ public class LawfulFormController
 		log.info("Random transaction id number="+txnNumber);
 		String filter = request.getParameter("request");
 
+		addMoreFileModel.setTag("system_upload_filepath");
+		urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
+		
+		
 		Gson gson= new Gson(); 
 		log.info("*********"+filter);
 		LawfulStolenRecovey lawfulIndivisualStolen  = gson.fromJson(filter, LawfulStolenRecovey.class);
@@ -292,7 +312,7 @@ public class LawfulFormController
 			try {
 				log.info("file is not blank");
 				byte[] bytes = file.getBytes();
-				String rootPath =filePathforUploadFile+txnNumber+"/"; 
+				String rootPath =urlToUpload.getValue()+txnNumber+"/"; 
 				File dir = new File(rootPath + File.separator);
 
 				if (!dir.exists()) dir.mkdirs();
@@ -350,6 +370,9 @@ public class LawfulFormController
 		String roletype=session.getAttribute("usertype").toString();
 		String name=session.getAttribute("name").toString();
 
+		addMoreFileModel.setTag("system_upload_filepath");
+		urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
+		
 		String filter = request.getParameter("request");
 		Gson gson= new Gson(); 
 		log.info("*********"+filter);
@@ -365,7 +388,7 @@ public class LawfulFormController
 			try {
 
 				byte[] bytes = file.getBytes();
-				String rootPath =filePathforUploadFile+lawfulIndivisualStolen.getTxnId()+"/"; 
+				String rootPath =urlToUpload.getValue()+lawfulIndivisualStolen.getTxnId()+"/"; 
 				File dir = new File(rootPath + File.separator);
 
 				if (!dir.exists()) dir.mkdirs();
@@ -391,7 +414,7 @@ public class LawfulFormController
 			try {
 
 				byte[] bytes = firFileName.getBytes();
-				String rootPath =filePathforUploadFile+lawfulIndivisualStolen.getTxnId()+"/"; 
+				String rootPath =urlToUpload.getValue()+lawfulIndivisualStolen.getTxnId()+"/"; 
 				File dir = new File(rootPath + File.separator);
 
 				if (!dir.exists()) dir.mkdirs();

@@ -519,7 +519,8 @@ function historytable(url,dataUrl){
 					data : function(d) {
 						d.filter = JSON.stringify({						
 							"nid": nationalId,
-							"taxPaidStatus":3
+							"taxPaidStatus":3,
+							"featureId":featureId
 						}); 
 					}
 

@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
+import org.gl.ceir.CeirPannelCode.Model.AddMoreFileModel;
 import org.gl.ceir.CeirPannelCode.Model.FileExportResponse;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest_UserPaidStatus;
@@ -54,6 +55,10 @@ public class StolenRecovery {
 	FeignCleintImplementation feignCleintImplementation;
 	@Autowired
 	UtilDownload utildownload;
+	
+	@Autowired
+	AddMoreFileModel addMoreFileModel,urlToUpload,urlToMove;
+	
 	
 	
 	
@@ -131,10 +136,13 @@ public class StolenRecovery {
 		    GenricResponse response= new GenricResponse();
 			String stlnTxnNumber=utildownload.getTxnId();
 			stlnTxnNumber = "L"+stlnTxnNumber;
+			addMoreFileModel.setTag("system_upload_filepath");
+			urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
+			
 			log.info("Random transaction id number="+stlnTxnNumber);
 		  	try {
 				byte[] bytes = file.getBytes();
-				String rootPath = filePathforUploadFile+stlnTxnNumber+"/";
+				String rootPath = urlToUpload.getValue()+stlnTxnNumber+"/";
 				File dir = new File(rootPath + File.separator);
 
 				if (!dir.exists()) 
@@ -185,10 +193,13 @@ public class StolenRecovery {
 		  GenricResponse response= new GenricResponse();
 			String stlnTxnNumber=utildownload.getTxnId();
 			stlnTxnNumber = "L"+stlnTxnNumber;
+			addMoreFileModel.setTag("system_upload_filepath");
+			urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
+			
 			log.info("Random transaction id number="+stlnTxnNumber);
 		  	try {
 				byte[] bytes = file.getBytes();
-				String rootPath = filePathforUploadFile+stlnTxnNumber+"/";
+				String rootPath = urlToUpload.getValue()+stlnTxnNumber+"/";
 				File dir = new File(rootPath + File.separator);
 
 				if (!dir.exists()) 
@@ -255,6 +266,13 @@ public class StolenRecovery {
 {	
 				  StolenRecoveryModel stolenRecoveryModel= new StolenRecoveryModel();
 				  GenricResponse response = new GenricResponse();
+				  addMoreFileModel.setTag("system_upload_filepath");
+					urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
+					
+					addMoreFileModel.setTag("uploaded_file_move_path");
+					urlToMove=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
+					
+					
 				  log.info(" update file stolen/recovery entry point .");
 				  log.info("Random transaction id number="+txnId);
 				  	try {
@@ -263,17 +281,17 @@ public class StolenRecovery {
 				  		}{			
 				  			
 				  			log.info("file is not null");
-				  		String rootPath = filePathforUploadFile+txnId+"/";
+				  		String rootPath = urlToUpload.getValue()+txnId+"/";
 				  		File tmpDir = new File(rootPath+file.getOriginalFilename());
 				  		boolean exists = tmpDir.exists();
 
 				  		if(exists) {
 				  			log.info("file already exist");
 				  		Path temp = Files.move 
-				  		(Paths.get(filePathforUploadFile+txnId+"/"+file.getOriginalFilename()), 
-				  		Paths.get(filePathforMoveFile+file.getOriginalFilename())); 
+				  		(Paths.get(urlToUpload.getValue()+txnId+"/"+file.getOriginalFilename()), 
+				  		Paths.get(urlToMove.getValue()+file.getOriginalFilename())); 
 
-				  		String movedPath=filePathforMoveFile+file.getOriginalFilename();
+				  		String movedPath=urlToMove.getValue()+file.getOriginalFilename();
 				  		// tmpDir.renameTo(new File("/home/ubuntu/apache-tomcat-9.0.4/webapps/MovedFile/"+txnId+"/"));
 				  		log.info("file is already exist moved to the this "+movedPath+" path");
 				  		tmpDir.delete();

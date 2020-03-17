@@ -623,7 +623,8 @@
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.contact" />');
 													"oninvalid="InvalidMsg(this,'input','<spring:message code="validation.contact" />');" 
 													maxlength="12"> <label for="phone2">
-													<spring:message code="input.contactNum" /></label>
+													<spring:message code="input.contactNum" /> <span
+													class="star">*</span></label>
 											</div>
 
 											<!-- <div class="input-field col s12 m6">
@@ -724,10 +725,10 @@
 
 											<div class="col s12 m6 l6">
 												<label><spring:message code="registration.complainttype" /> <span class="star">*</span></label> <select
-													class="browser-default" id="deviceBulkStolenComplaint" 
+													class="browser-default" id="deviceBulkStolenComplaint"  required="required"
 													oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 													oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');">
-													<option value="" disabled selected>
+													<option value="" disabled  selected>
 														<spring:message code="registration.selectcomplainttype" /></option>
 
 												</select>
@@ -746,7 +747,7 @@
 
 											<div class="file-field col s12 m6">
 												<h6 class="file-label">
-													<spring:message code="registration.uploaddevicelist" /> <span class="star">*</span>
+													<spring:message code="registration.uploaddevicelist" /> <span class="star"></span>
 												</h6>
 												<div class="btn">
 													<span><spring:message code="input.selectfile" /></span> <input type="file"

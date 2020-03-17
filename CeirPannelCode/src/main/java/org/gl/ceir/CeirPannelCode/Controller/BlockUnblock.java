@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Feignclient.GrievanceFeignClient;
+import org.gl.ceir.CeirPannelCode.Model.AddMoreFileModel;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.SingleImeiDetailsModel;
 import org.gl.ceir.CeirPannelCode.Model.StockUploadModel;
@@ -47,6 +48,10 @@ public class BlockUnblock {
 	
 	@Autowired
 	GrievanceFeignClient grievanceFeignClient;
+	
+	@Autowired
+	AddMoreFileModel addMoreFileModel,urlToUpload,urlToMove;
+	
 	
 	private final Logger log = LoggerFactory.getLogger(getClass());
 	ModelAndView mv = new ModelAndView();
@@ -188,6 +193,9 @@ public class BlockUnblock {
 		    StolenRecoveryModel stolenRecoveryModel= new StolenRecoveryModel(); 
 		    GenricResponse response= new GenricResponse();
 		    Integer operatorTypeId= (Integer) session.getAttribute("operatorTypeId"); 
+		    
+		    addMoreFileModel.setTag("system_upload_filepath");
+			urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
 		    if(operatorTypeId==null)
 		    {
 		    log.info("operator type id is null="+operatorTypeId);
@@ -201,7 +209,7 @@ public class BlockUnblock {
 			log.info("Random transaction id number="+stlnTxnNumber);
 		  	try {
 				byte[] bytes = file.getBytes();
-				String rootPath = filePathforUploadFile+stlnTxnNumber+"/";
+				String rootPath = urlToUpload.getValue()+stlnTxnNumber+"/";
 				File dir = new File(rootPath + File.separator);
 
 				if (!dir.exists()) 
@@ -262,6 +270,9 @@ public class BlockUnblock {
 			String stlnTxnNumber=utildownload.getTxnId();
 			stlnTxnNumber = "B"+stlnTxnNumber;
 			
+			addMoreFileModel.setTag("system_upload_filepath");
+			urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
+			
 			//int operatorTypeId= (int) session.getAttribute("operatorTypeId"); 
 			 Integer operatorTypeId= (Integer) session.getAttribute("operatorTypeId"); 
 			 if(operatorTypeId==null)
@@ -275,7 +286,7 @@ public class BlockUnblock {
 			log.info("Random transaction id number="+stlnTxnNumber);
 		  	try {
 				byte[] bytes = file.getBytes();
-				String rootPath = filePathforUploadFile+stlnTxnNumber+"/";
+				String rootPath = urlToUpload.getValue()+stlnTxnNumber+"/";
 				File dir = new File(rootPath + File.separator);
 
 				if (!dir.exists()) 

@@ -201,7 +201,7 @@ select {
 													<div class="file-field col s12 m6 l6"
 														style="margin-top: -8px;">
 														<h6 class="form-label">
-															<spring:message code="registration.uploadnid/passportimage" /> <span class="star">*</span>
+															<spring:message code="registration.uploadnid/passportimage" /> <span class="star"></span>
 														</h6>
 														<div class="btn">
 															<span><spring:message code="input.selectfile" /></span> <input type="file" accept="*image"
@@ -244,7 +244,7 @@ select {
 														<p class="contact-label">
 															<spring:message code="registration.altcontactnumber" /> <span class="star">*</span>
 														</p>
-														<input type="text" name="phone" id="singleStolenphone1" pattern="[0-9 + ]{1,15}" placeholder=""
+														<input type="text" name="phone" id="singleStolenphone1" required="required" pattern="[0-9 + ]{1,15}" placeholder=""
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.contact" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.contact" />');"
 															maxlength="15">
@@ -430,7 +430,7 @@ select {
 
 														<div class="col s12 m6 l6">
 															<label><spring:message code="table.Operator" /> <span class="star">*</span></label> <select
-																class="browser-default"
+																class="browser-default" required="required"
 																oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 																oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 																 id="singleStolenOperator">
@@ -445,7 +445,7 @@ select {
 														
 														<div class="col s12 m6 l6">
 															<label> <spring:message code="select.multiSimStatus" /> <span class="star"> *</span></label> <select
-																class="browser-default"
+																class="browser-default" required="required"
 																oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 																oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 																 id="singleStolenSimStatus">
