@@ -126,7 +126,6 @@ public class StolenAndRecoveryController {
 			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
 			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
 			@RequestParam(value = "file", defaultValue = "0") Integer file) {
-
 		MappingJacksonValue mapping = null;
 
 		if(file == 0) {

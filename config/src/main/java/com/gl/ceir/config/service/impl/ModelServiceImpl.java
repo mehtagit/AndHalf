@@ -15,7 +15,7 @@ import com.gl.ceir.config.repository.ModelRepository;
 
 @Service
 public class ModelServiceImpl {
-	private static final Logger logger = LogManager.getLogger(ConsignmentServiceImpl.class);
+	private static final Logger logger = LogManager.getLogger(ModelServiceImpl.class);
 
 	//private final Path fileStorageLocation;
 
