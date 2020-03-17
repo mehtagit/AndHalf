@@ -28,7 +28,7 @@ $(document).ready(function(){
 });
 
 
-if(window.location.search == "?type=greyList"){
+if(window.location.search == "?type=greyList?FeatureId=9"){
 	window.serviceDump = 0
 }else{
 	window.serviceDump = 1
@@ -42,6 +42,7 @@ if(window.location.search == "?type=greyList"){
 function operatorDatatable(lang){
 
 	var fileType = $("#fileType").val();
+
 	var filterRequest={
 			"endDate":$('#endDate').val(),
 			"startDate":$('#startDate').val(),

@@ -150,10 +150,10 @@ public class ImporterManageTypeAdmin {
 						String adminApproveStatus = String.valueOf(trcContentModelList.getAdminApproveStatus());
 						String userDisplayName = trcContentModelList.getUserDisplayName();
 						String userTypeName = trcContentModelList.getUserType();
-
-						
+							
+						log.info("approveState->"+approveState+" id-->"+trcContentModelList.getId()+" fileName1-->"+fileName1+" txnId-->"+txnId+" adminApproveStatus-->"+adminApproveStatus+" userStatus-->"+userStatus);
 						String action = iconState.trcAdminManageIcons(approveState, trcContentModelList.getId(), fileName1,
-								txnId,adminApproveStatus,userStatus);
+								txnId,userStatus);
 						Object[] data = { createdOn, txnId, userTypeName,userDisplayName,trademark, manufacturerCountry, tac, status, action };
 						List<Object> datatableList = Arrays.asList(data);
 						finalList.add(datatableList);
