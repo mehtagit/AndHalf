@@ -112,6 +112,7 @@
 
 	<section id="content">
 		<!--start container-->
+		<div id="initialloader"></div>
 		<div class="container">
 			<div class="section">
 				<div class="row">
@@ -125,7 +126,7 @@
 								<div class="row">
 								<!-- 	<div class="col s12">
 										<ul class="tabs">
-											<li class="tab col s3"><a class="active"
+											<li class="tab col s3deviceListlinkDiv"><a class="active"
 												onclick="showSingleFormDiv()">Individual</a></li>
 											<li class="tab col s3"><a onclick="showBulkFormDiv()">Company/Organisation/Government</a></li>
 										</ul>
@@ -749,8 +750,8 @@
 												<h6 class="file-label">
 													<spring:message code="registration.uploaddevicelist" /> <span class="star"></span>
 												</h6>
-												<div class="btn">
-													<span><spring:message code="input.selectfile" /></span> <input type="file"
+												<div class="btn" id="deviceListlinkDiv">
+													<span id="dviceFileText"><spring:message code="input.selectfile" /></span> <input type="file"
 													oninput="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');"
 														oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');"
 													 onchange="isFileValid('deviceBulkStolenFile')" accept=".csv"
@@ -760,6 +761,7 @@
 													<input class="file-path validate" type="text" id="stolenFileName"
 														placeholder="Upload Device List"
 														title="Please upload your photo">
+														<!-- <a href="#" id="deviceListlink" style="display: none;">Preview</a> -->
 												</div>
 											</div>
 
@@ -778,8 +780,8 @@
 															<h6 class="form-label" style="margin:0; font-size: 0.9rem;" data-original-title="" title="">
 																<spring:message code="input.UploadFIR" />
 															</h6>
-															<div class="btn" data-original-title="" title="">
-																<span data-original-title="" title="">
+															<div class="btn" id="firFileDiv" data-original-title="" title="">
+																<span data-original-title="" title="" id="firFileText">
 																	<spring:message code="input.selectfile" /></span>
 																<input type="file" oninput="InvalidMsg(this,'fileType','
 																	validation.NoChosen');" oninvalid="InvalidMsg(this,'fileType','
@@ -789,6 +791,7 @@
 																<input class="file-path validate" type="text" placeholder="
 																	input.UploadFIR" id="uploadFirSingleName" title="" data-original-title="Please upload national
 																ID image">
+																<a href="#" id="firFilePreview" class="imgPreviewLink"  style="display: none;">Preview</a>
 															</div>
 														</div>
 											<div class="input-field col s12 m6" style="margin-top: 22px;">
@@ -849,6 +852,14 @@
 							style="margin-left: 10px;"><spring:message code="modal.ok" /></button>
 					</div>
 				</div>
+			</div>
+		</div>
+	</div>
+	<div id="viewuplodedModel" class="modal" style="overflow: hidden">
+	<a href="#!" class="modal-close waves-effect waves-green btn-flat">&times;</a>
+		<div class="modal-content">
+			<div class="row">
+					<img src="" id="fileSource" width="400" height="400">
 			</div>
 		</div>
 	</div>
@@ -931,6 +942,53 @@ src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/j
 		src="${context}/resources/project_js/dragableModal.js"></script>
 
 	<script>
+	var successMsg,stolenCompany,editstolenCompany;
+	var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
+
+
+	$.i18n().locale = lang;	
+	//alert(lang)
+
+	
+	
+	$.i18n().load( {
+		'en': './resources/i18n/en.json',
+		'km': './resources/i18n/km.json'
+	}).done( function() { 
+		stolenCompany=$.i18n('stolenCompany');
+		editstolenCompany=$.i18n('editstolenCompany');
+		//alert(stolenCompany)
+		viewPageType();
+	});
+
+	function viewPageType(){
+	if($('#pageViewType').val()=='view')
+	{
+	$('#headingType').text('');
+	$('#headingType').text(stolenCompany);
+	//alert(stolenCompany)
+	$("#deviceListlinkDiv").removeClass("btn");
+	$('#deviceBulkStolenFile').attr('type','text');
+   /* $("#deviceListlinkDiv").removeClass("btn");
+	   $('#dviceFileText').text('');
+	   $('#deviceBulkStolenFile').attr('type','text');
+	   $("#deviceListlink").css("display", "block");
+	   $("#deviceBulkStolenFile").css("display", "none"); */
+	
+	$("#firFileDiv").removeClass("btn");
+   $('#firFileText').text('');
+   $('#uploadFirSingle').attr('type','text');
+   $("#firFilePreview").css("display", "block");
+   $("#uploadFirSingle").css("display", "none");
+	
+	   $("#Bulkform").find("input,select,textarea,button").prop("disabled",true);
+	}
+else{
+	$('#headingType').text('');
+	$('#headingType').text(editstolenCompany);
+	$("#Bulkform").find("input,select,textarea,button").prop("disabled",false);
+}	
+	}	
  populateCountries(
 	        "singleDevicecountry",
 	        "singleDevicestate"
@@ -977,20 +1035,10 @@ src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/j
             utilsScript: "${context}/resources/js/utils.js",
         });
         
-        window.onload = function () {
-            if($('#pageViewType').val()=='view')
-            	{
-            	$('#headingType').text('');
-            	$('#headingType').text('View  Report Stolen');
-            	  $("#Bulkform").find("input,select,textarea,button").prop("disabled",true);
-            	}
-            else{
-            	$('#headingType').text('');
-            	$('#headingType').text('Update Report Stolen');
-            	  $("#Bulkform").find("input,select,textarea,button").prop("disabled",false);
-            }
+        
+            
           
-      }    
+         
         $('.datepick').datepicker({
 			dateFormat: "yy-mm-dd"
 		});

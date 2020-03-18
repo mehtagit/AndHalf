@@ -111,7 +111,7 @@ $.ajax({
 				"columns": result,
 				fixedColumns: true,
 				columnDefs: [
-		            { width: 204, targets: result.length - 1 },
+		            { width: 158, targets: result.length - 1 },
 		            { width: 121, targets: 0 }
 		          
 			]

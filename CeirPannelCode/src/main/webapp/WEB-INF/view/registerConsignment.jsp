@@ -186,7 +186,7 @@ section {
 												for="expectedDispatcheDate" class="center-align"><spring:message code="input.dispatchdate" /> <span class="star">*</span>
 											</label> <span class="input-group-addon" style="color: #ff4081"><i
 												class="fa fa-calendar" aria-hidden="true"></i></span>
-					<p id="errorMsg" style="color: red;font-size: 12px;position: absolute;margin: 0;top: 40px;right: 0;" class="left"></p>
+					<p id="errorMsgOnModal" class="onEditModalTitle" class="left"></p>
 										</div>
 									</div>
 
@@ -376,32 +376,32 @@ section {
 	<script type="text/javascript"
 		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.js"></script>
+		src="${context}/resources/i18n_library/i18n.js"></script>
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.messagestore.js"></script>
+		src="${context}/resources/i18n_library/messagestore.js"></script>
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.fallbacks.js"></script>
+		src="${context}/resources/i18n_library/fallbacks.js"></script>
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.language.js"></script>
+		src="${context}/resources/i18n_library/language.js"></script>
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.parser.js"></script>
-
-
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.js"></script>
+		src="${context}/resources/i18n_library/parser.js"></script>
 
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.bidi.js"></script>
+		src="${context}/resources/i18n_library/emitter.js"></script>
+
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/jquery.history.js"></script>
+		src="${context}/resources/i18n_library/bidi.js"></script>
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
+		src="${context}/resources/i18n_library/history.js"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/min.js"></script>
 		<script type="text/javascript"
 		src="${context}/resources/project_js/htmlValidationi18n.js"></script>
 	<script type="text/javascript"

@@ -607,6 +607,32 @@ src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/j
 		src="${context}/resources/project_js/dragableModal.js"></script>
 		
 		<script>
+		
+		$.i18n().load( {
+			'en': './resources/i18n/en.json',
+			'km': './resources/i18n/km.json'
+		}).done( function() { 
+			recoveryIndivisual=$.i18n('recoveryIndivisual');
+			editrecoveryIndivisual=$.i18n('editrecoveryIndivisual');
+			viewPageType();
+		});
+		
+		   function viewPageType() {
+	            if($('#pageViewType').val()=='view')
+	            	{
+	            	$('#headingType').text('');
+	            	$('#headingType').text(recoveryIndivisual);
+	            	  $("#singleRecoveryDiv").find("input,select,textarea,button").prop("disabled",true);
+	            	}
+	            else{
+	            	$('#headingType').text('');
+	            	$('#headingType').text(editrecoveryIndivisual);
+	            	  $("#singleRecoveryDiv").find("input,select,textarea,button").prop("disabled",false);
+	            }
+	          
+	      }
+		
+		
 		$('.datepick').datepicker({
 			dateFormat : "yy-mm-dd"
 		});
@@ -633,20 +659,7 @@ src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/j
             "bulkRecoverystate"
         );
         
-        window.onload = function () {
-            if($('#pageViewType').val()=='view')
-            	{
-            	$('#headingType').text('');
-            	$('#headingType').text('View Report Recovery');
-            	  $("#singleRecoveryDiv").find("input,select,textarea,button").prop("disabled",true);
-            	}
-            else{
-            	$('#headingType').text('');
-            	$('#headingType').text(' Update Report Recovery');
-            	  $("#singleRecoveryDiv").find("input,select,textarea,button").prop("disabled",false);
-            }
-          
-      }
+      
 </script>
 		
 

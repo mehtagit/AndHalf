@@ -205,7 +205,7 @@ var contextpath = "${context}";
 
 							<input type="hidden" id="usertypeId" value="${usertypeId}">
 							<input type="hidden" id="usertypeName" value="<%=name%>">
-							<input type="hidden" id="type" value="2">
+							<input type="hidden" id="type" value="1">
 							<div class="row">
 								<div class="input-field col s12 m4 l4">
 									<input type="text" name="firstName" id="firstName" pattern="[A-Za-z]{3,20}" maxlength="20"
@@ -746,51 +746,31 @@ var contextpath = "${context}";
             $('.modal').modal();
             questionDataByCategory();
             operatorList();
+            $('.dropdown-trigger').dropdown();
+
+            /*  $(document).ready(function () {
+                 $('select').material_select();
+             }); */
+             var password = document.getElementById("password")
+             , confirm_password = document.getElementById("confirm_password");
+
+           function validatePassword(){
+             if(password.value != confirm_password.value) {
+             	 confirm_password.setCustomValidity("<spring:message code='registration.passnotmatch' />");
+             } else {
+               confirm_password.setCustomValidity('');
+             }
+           }
+
+           password.onchange = validatePassword;
+           confirm_password.onkeyup = validatePassword;
+        
+             populateCountries("country","state");
+             populateStates("country","state");
         });   
 
-        $('.dropdown-trigger').dropdown();
-
-       /*  $(document).ready(function () {
-            $('select').material_select();
-        }); */
-        var password = document.getElementById("password")
-        , confirm_password = document.getElementById("confirm_password");
-
-      function validatePassword(){
-        if(password.value != confirm_password.value) {
-        	 confirm_password.setCustomValidity("<spring:message code='registration.passnotmatch' />");
-        } else {
-          confirm_password.setCustomValidity('');
-        }
-      }
-
-      password.onchange = validatePassword;
-      confirm_password.onkeyup = validatePassword;
+       
    
-        populateCountries("country","state");
-        populateStates("country","state");
-   
-        function myFunction() {
-            var x = document.getElementById("mySelect").value;
-            if (x == 'Individual') {
-                document.getElementById("uploadFile").style.display = "block";
-                document.getElementById("passportNumberDiv").style.display = "block";
-                //document.getElementById("companyName").style.display = "none";
-                $('#companyName').style.display = "none";
-            } else {
-
-                document.getElementById("uploadFile").style.display = "none";
-                document.getElementById("passportNumberDiv").style.display = "none";
-            }
-
-            if (x == 'Company', 'Organization', 'Government') {
-                document.getElementById("companyName").style.display = "block";
-            } else {
-
-                document.getElementById("companyName").style.display = "none";
-            }
-        }
-      
     </script>
 
 

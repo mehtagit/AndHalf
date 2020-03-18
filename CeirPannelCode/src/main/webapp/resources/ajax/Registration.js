@@ -1,91 +1,3 @@
-$('#langlist').on('change', function() {
-	window.lang=$('#langlist').val() == 'km' ? 'km' : 'en';
-	var url_string = window.location.href;
-	var url = new URL(url_string);
-	var type = url.searchParams.get("type");
-	window.location.assign("registration?type="+type+"&lang="+window.lang);			
-	}); 
-	
-	var langParam=$('#langlist').val() == 'km' ? 'km' : 'en';
-	$.i18n().locale = langParam;
-	var successMsg;
-	$.i18n().load( {
-		'en': './resources/i18n/en.json',
-		'km': './resources/i18n/km.json'
-	} ).done( function() { 
-		successMsg=$.i18n('successMsg');
-	});
-
-	
-	
-        $(document).ready(function () {
-        	var url = new URL(window.location.href);
-    		var langParameter = url.searchParams.get("lang");
-            	$('#langlist').val(langParameter == 'km' ? 'km' : 'en');
-        	$('.modal-trigger').leanModal({
-        		dismissible: false
-        	});
-        	
-        	asTypeData();       	
-            questionDataByCategory();
-            usertypeData2("${usertypeId}");
-        }); 
-        populateCountries("country",    "state");
-        
-       $("#country").val("Cambodia");
-       
-       populateStates( "country","state" );
-       
-       
-       function validatePassword(){
-           if(password.value != confirm_password.value) {
-             confirm_password.setCustomValidity("Passwords Don't Match");
-           } else {
-             confirm_password.setCustomValidity('');
-           }
-         }
-
-     password.onchange = validatePassword;
-     confirm_password.onkeyup = validatePassword;
-
-      
-        function myFunction() {
-            var x = document.getElementById("type").value;
-            if (x == '0') {
-                document.getElementById("uploadFile").style.display = "block";
-                document.getElementById("passportNumberDiv").style.display = "block";
-                document.getElementById("companyNames").style.display = "none";
-                $("#passportNo").prop('required',true);
-                $("#companyName").prop('required',false);
-                $("#companyName").val("");
-                $("#file").prop('required',true);
-            } else {
-                document.getElementById("uploadFile").style.display = "none";
-                document.getElementById("passportNumberDiv").style.display = "none";
-                document.getElementById("companyNames").style.display = "block";
-                $("#companyName").prop('required',true);
-                $("#passportNo").prop('required',false);
-                $("#passportNo").val("");
-                $("#file").prop('required',false);
-            }
-        }
-       
-        
-        function vatChecked(){
-        	var radioValue = $("input[name='vatStatus']:checked").val();
-        	if(radioValue==1){
-        		$("#vatNo").prop('required',true);
-        		$("#vatFile").prop('required',true);
-        	}
-        	else{
-        		$("#vatNo").prop('required',false);
-        		$("#vatFile").prop('required',false);
-        		$("#vatNo").val("");
-        		$("#vatFile").val("");
-        	}
-		}
-		
-
 
 function openRegistrationPage(usertype){
 	window.location.href=contextpath+"/registration?type="+usertype;
@@ -394,7 +306,7 @@ function saveRegistration(){
 					password:val.find('#password').val(),  
 					rePassword:val.find('#confirm_password').val(),
 					captcha:val.find('#captcha').val(),
-					usertypeId:val.find('#usertypeId').val(),
+					userTypeId:val.find('#usertypeId').val(),
 					usertypeName:val.find('#usertypeName').val(),
 					questionList:questionData   
 			}    
@@ -466,22 +378,28 @@ function saveCustomRegistration(){
 					rePassword:val.find('#confirm_password').val(),
 					roles:val.find('#usertypes').val(),  
 					captcha:val.find('#captcha').val(),
-					usertypeId:val.find('#usertypeId').val(),
+					userTypeId:val.find('#usertypeId').val(),
 					usertypeName:val.find('#usertypeName').val(),
 					arrivalPort:val.find('#arrivalPort').val(),
 					questionList:questionData,
 					type:val.find('#type').val(),
 					portAddress:val.find('#portAddress option:selected').val(),
-
+					vatStatus:val.find('#vatStatus').val(),
+					vatNo:val.find('#vatNo').val(),
+					companyName:val.find('#companyName').val(),
 			}    
 		} 
 	});
 	console.log("question data:  "+JSON.stringify(obj));
 	var formData;
+	var usertypeId=$('#usertypeId').val();
 	formData = new FormData();
 	formData.append( 'NationalIdImage', $( '#NationalIdImage' )[0].files[0] );
 	formData.append( 'photo', $( '#photo' )[0].files[0] );
 	formData.append( 'idCard', $( '#idCard' )[0].files[0] );
+	if(usertypeId=="12"){
+	formData.append('vatFile',$('#vatFile')[0].files[0]);
+	}
 	formData.append('data',JSON.stringify(obj));  
 	console.log("data=  "+JSON.stringify(formData));
 	otherRegistrationAjax(formData);
@@ -539,7 +457,7 @@ function saveOperatorRegistration(){
 					rePassword:val.find('#confirm_password').val(),
 					roles:val.find('#usertypes').val(),  
 					captcha:val.find('#captcha').val(),
-					usertypeId:val.find('#usertypeId').val(),
+					userTypeId:val.find('#usertypeId').val(),
 					usertypeName:val.find('#usertypeName').val(),
 					operatorTypeId:val.find('#operatorType').val(),  
 					operatorTypeName:val.find('#operatorType option:selected').text(),
