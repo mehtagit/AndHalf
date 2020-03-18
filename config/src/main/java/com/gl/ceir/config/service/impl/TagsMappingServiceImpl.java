@@ -50,7 +50,7 @@ public class TagsMappingServiceImpl {
 	 */
 	public List<SystemConfigListDb> getByFilter(FilterRequest filterRequest) {
 		try {
-			List<SystemConfigListDb> SystemConfigListDbResult = new ArrayList<>();
+			List<SystemConfigListDb> systemConfigListDbResult = new ArrayList<>();
 
 			List<TagsMapping> tagsMappings = tagsMappingRepository.findAll(buildSpecification(filterRequest).build());
 			logger.info(tagsMappings);
@@ -63,12 +63,12 @@ public class TagsMappingServiceImpl {
 
 				for(TagsMapping tagsMapping : tagsMappings) {
 					if(systemConfigListDb.getValue() == tagsMapping.getChildValue()) {
-						SystemConfigListDbResult.add(systemConfigListDb);
+						systemConfigListDbResult.add(systemConfigListDb);
 					}
 				}
 			}
 
-			return SystemConfigListDbResult;
+			return systemConfigListDbResult;
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);

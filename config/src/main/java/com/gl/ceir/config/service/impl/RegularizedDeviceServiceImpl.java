@@ -394,7 +394,7 @@ public class RegularizedDeviceServiceImpl {
 			String tag = null;
 			String receiverUserType = null;
 			String mailSubject = null;
-			List<RawMail> rawMails = new ArrayList<>();
+			List<RawMail> rawMails = new ArrayList<>(1);
 			Map<String, String> placeholders = new HashMap<>();
 			RegularizeDeviceDb userCustomDbDetails = regularizedDeviceDbRepository.getByFirstImei(regularizeDeviceDb.getFirstImei());
 			UserProfile ceirAdminProfile = userStaticServiceImpl.getCeirAdmin().getUserProfile();
@@ -407,31 +407,24 @@ public class RegularizedDeviceServiceImpl {
 				placeholders.put("<FIRST_NAME>", ceirAdminProfile.getFirstName());
 				placeholders.put("<txn_name>", regularizeDeviceDb.getTxnId());
 
-				// Send Notifications
-				if(regularizeDeviceDb.getTaxPaidStatus() == 0) {
-					// Mail to CEIR Admin on tax update status change.
-					tag = "MAIL_TO_CEIR_ADMIN_ON_DEVICE_TAX_PAID";
-					receiverUserType = "CEIRAdmin";
-					mailSubject = MailSubject.MAIL_TO_CEIR_ADMIN_ON_DEVICE_TAX_PAID.replace("<XXX>", userCustomDbDetails.getTxnId());
-				}else {
-					tag = "MAIL_TO_CEIR_ADMIN_ON_DEVICE_TAX_NOT_PAID";	
-					receiverUserType = "CEIRAdmin";
-					mailSubject = MailSubject.MAIL_TO_CEIR_ADMIN_ON_DEVICE_TAX_NOT_PAID.replace("<XXX>", userCustomDbDetails.getTxnId());
-				}
-				rawMails.add(new RawMail(tag, 
-						ceirAdminProfile, 
-						4, 
-						Features.REGISTER_DEVICE, 
-						SubFeatures.REGISTER, 
-						regularizeDeviceDb.getTxnId(), 
-						mailSubject, 
-						placeholders,
-						ReferTable.USERS,
-						null,
-						receiverUserType));
-
-
-				emailUtil.saveNotification(rawMails);
+				/*
+				 * // Send Notifications if(regularizeDeviceDb.getTaxPaidStatus() == 0) { //
+				 * Mail to CEIR Admin on tax update status change. tag =
+				 * "MAIL_TO_CEIR_ADMIN_ON_DEVICE_TAX_PAID"; receiverUserType = "CEIRAdmin";
+				 * mailSubject =
+				 * MailSubject.MAIL_TO_CEIR_ADMIN_ON_DEVICE_TAX_PAID.replace("<XXX>",
+				 * userCustomDbDetails.getTxnId()); }else { tag =
+				 * "MAIL_TO_CEIR_ADMIN_ON_DEVICE_TAX_NOT_PAID"; receiverUserType = "CEIRAdmin";
+				 * mailSubject =
+				 * MailSubject.MAIL_TO_CEIR_ADMIN_ON_DEVICE_TAX_NOT_PAID.replace("<XXX>",
+				 * userCustomDbDetails.getTxnId()); } rawMails.add(new RawMail(tag,
+				 * ceirAdminProfile, 4, Features.REGISTER_DEVICE, SubFeatures.REGISTER,
+				 * regularizeDeviceDb.getTxnId(), mailSubject, placeholders, ReferTable.USERS,
+				 * null, receiverUserType));
+				 * 
+				 * 
+				 * emailUtil.saveNotification(rawMails);
+				 */
 
 				// Save in audit.
 				AuditTrail auditTrail = new AuditTrail(0, "", 0L, 

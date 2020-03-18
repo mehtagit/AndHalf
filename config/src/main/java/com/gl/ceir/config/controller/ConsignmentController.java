@@ -59,7 +59,7 @@ public class ConsignmentController {
 	@RequestMapping(path = "/consignment/update", method = RequestMethod.POST)
 	public GenricResponse updateConsigmentInfo(@RequestBody ConsignmentMgmt consignmentUploadRequest) {
 
-		logger.info("Update Consignment Request = " + consignmentUploadRequest.toString());
+		logger.info("Update Consignment Request = " + consignmentUploadRequest);
 
 		GenricResponse genricResponse =	consignmentServiceImpl.updateConsignment(consignmentUploadRequest);
 		logger.info("Update Consignment Response ="+genricResponse);

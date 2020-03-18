@@ -10,6 +10,7 @@ public interface MailSubject {
 	String Consignment_Approved_CustomImporter_Email_Message 	= "Consignment Clearance Notification for Transaction ID <XXX>";
 	String Consignment_Reject_CEIRAuthority_Email_Message 		= "Consignment Rejection Notification for Transaction ID <XXX>";
 	String Consignment_Rejected_Custom_Email_Message 			= "Consignment Rejection Notification for Transaction ID <XXX>";
+	String Consignment_Rejected_By_Custom_To_Ceir_Email 		= "Consignment Rejection By Customs Notification for Transaction ID <XXX>";
 
 	// Stock
 	String ASSIGN_STOCK 									= "Stock Assignment Notification for Transaction ID <XXX>";

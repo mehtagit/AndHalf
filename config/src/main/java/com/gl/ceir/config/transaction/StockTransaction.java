@@ -74,7 +74,7 @@ public class StockTransaction {
 		if(isStockAssignRequest) {
 			User user = userRepository.getById(stockMgmt.getUserId());
 			logger.info(user);
-			Map<String, String> placeholderMap = new HashMap<String, String>();
+			Map<String, String> placeholderMap = new HashMap<>();
 			placeholderMap.put("<First name>", user.getUserProfile().getFirstName());
 			placeholderMap.put("<txn_id>", stockMgmt.getTxnId());
 
@@ -84,7 +84,7 @@ public class StockTransaction {
 					Features.STOCK,
 					SubFeatures.ASSIGN,
 					stockMgmt.getTxnId(),
-					MailSubject.ASSIGN_STOCK.replaceAll("<XXX>", stockMgmt.getTxnId()),
+					MailSubject.ASSIGN_STOCK.replace("<XXX>", stockMgmt.getTxnId()),
 					placeholderMap,
 					stockMgmt.getRoleType(),
 					null)) {

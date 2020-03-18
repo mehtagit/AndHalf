@@ -555,6 +555,17 @@ public class ConsignmentServiceImpl {
 							placeholderMap, 
 							null,
 							"Importer");
+					
+					emailUtil.saveNotification("CONSIGNMENT_REJECTED_BY_CUSTOM_TO_CEIR_EMAIL", 
+							userStaticServiceImpl.getCeirAdmin().getUserProfile(), 
+							consignmentUpdateRequest.getFeatureId(),
+							Features.CONSIGNMENT,
+							SubFeatures.REJECT, 
+							consignmentUpdateRequest.getTxnId(),
+							MailSubject.Consignment_Rejected_By_Custom_To_Ceir_Email.replace("<XXX>", consignmentMgmt.getTxnId()),
+							placeholderMap, 
+							null,
+							"Importer");
 
 				}else if(CEIRSYSTEM.equalsIgnoreCase(consignmentUpdateRequest.getRoleType())) {
 					List<RawMail> rawMails = new LinkedList<>();

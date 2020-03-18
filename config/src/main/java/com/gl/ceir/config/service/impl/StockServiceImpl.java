@@ -170,7 +170,7 @@ public class StockServiceImpl {
 					return new GenricResponse(5, "User is not a distributer or retailer to assign a stock.", "");
 				}
 
-				stockMgmt.setUserId(new Long(user.getId()));
+				stockMgmt.setUserId(user.getId());
 				stockMgmt.setUser(user);
 				stockMgmt.setRoleType(secondaryRoleType);
 				isStockAssignRequest = Boolean.TRUE;
@@ -318,9 +318,8 @@ public class StockServiceImpl {
 
 				for(StateMgmtDb stateMgmtDb : statusList) {
 					if(stockMgmt.getStockStatus() == stateMgmtDb.getState()) {
-						stockMgmt.setStateInterp(stateMgmtDb.getInterp()); 
-						// break; 
-					} 
+						stockMgmt.setStateInterp(stateMgmtDb.getInterp());
+					}
 				}
 			}
 
@@ -655,13 +654,15 @@ public class StockServiceImpl {
 
 				if( Objects.nonNull(writer) )
 					writer.close();
-			} catch (IOException e) {}
+			} catch (IOException e) {
+				logger.error(e.getMessage(), e);
+			}
 		}
 	}
 
 	public ResponseCountAndQuantity getStockCountAndQuantity( long userId, Integer userTypeId, Integer featureId, String userType ) {
 		List<StateMgmtDb> featureList = null;
-		List<Integer> status = new ArrayList<Integer>();
+		List<Integer> status = new ArrayList<>();
 		try {
 			logger.info("Going to get  stock count and quantity.");
 			featureList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId( featureId, userTypeId);
@@ -713,13 +714,13 @@ public class StockServiceImpl {
 				String mailTag = null;
 				String action = null;
 				String mailSubject = null;
-				String receiverUserType = null;
+				String receiverUserType = stockMgmt.getUserType();
 
 				if(consignmentUpdateRequest.getAction() == 0) {
 					action = SubFeatures.ACCEPT;
 					mailTag = "STOCK_APPROVED_BY_CEIR_ADMIN"; 
-					receiverUserType = "Custom";
-					mailSubject = MailSubject.STOCK_APPROVED_BY_CEIR_ADMIN.replaceAll("<XXX>", stockMgmt.getTxnId());
+					
+					mailSubject = MailSubject.STOCK_APPROVED_BY_CEIR_ADMIN.replace("<XXX>", stockMgmt.getTxnId());
 
 					placeholderMap.put("<Custom first name>", firstName);
 					placeholderMap.put("<txn_name>", stockMgmt.getTxnId());
@@ -728,13 +729,58 @@ public class StockServiceImpl {
 				}else {
 					action = SubFeatures.REJECT;
 					mailTag = "STOCK_REJECT_BY_CEIR_ADMIN";
-					receiverUserType = "Custom";
-					mailSubject = MailSubject.STOCK_REJECT_BY_CEIR_ADMIN.replaceAll("<XXX>", stockMgmt.getTxnId());
+					mailSubject = MailSubject.STOCK_REJECT_BY_CEIR_ADMIN.replace("<XXX>", stockMgmt.getTxnId());
 
 					placeholderMap.put("<Custom first name>", firstName);
 					placeholderMap.put("<txn_name>", stockMgmt.getTxnId());
 
 					stockMgmt.setStockStatus(StockStatus.REJECTED_BY_CEIR_ADMIN.getCode());
+					stockMgmt.setRemarks(consignmentUpdateRequest.getRemarks());
+				}
+
+				// Update Stock and its history.
+				if(!stockTransaction.updateStatusWithHistory(stockMgmt)){
+					logger.warn("Unable to update Stolen and recovery entity.");
+					return new GenricResponse(3, "Unable to update stock entity.", consignmentUpdateRequest.getTxnId()); 
+				}else {
+					emailUtil.saveNotification(mailTag, 
+							userProfile, 
+							consignmentUpdateRequest.getFeatureId(),
+							Features.STOCK,
+							action,
+							consignmentUpdateRequest.getTxnId(),
+							mailSubject,
+							placeholderMap,
+							stockMgmt.getRoleType(),
+							receiverUserType);
+					logger.info("Notfication have been saved.");
+				}
+
+			}else if("CEIRSYSTEM".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())){
+				String mailTag = null;
+				String action = null;
+				String mailSubject = null;
+				String receiverUserType = stockMgmt.getUserType();
+
+				if(consignmentUpdateRequest.getAction() == 0) {
+					action = SubFeatures.ACCEPT;
+					mailTag = "STOCK_PROCESS_SUCCESS_TO_USER_MAIL"; 
+					
+					mailSubject = MailSubject.STOCK_PROCESS_SUCCESS_TO_USER_MAIL.replace("<XXX>", stockMgmt.getTxnId());
+
+					placeholderMap.put("<First name>", firstName);
+					placeholderMap.put("<txn_name>", stockMgmt.getTxnId());
+
+					stockMgmt.setStockStatus(StockStatus.SUCCESS.getCode());
+				}else {
+					action = SubFeatures.REJECT;
+					mailTag = "STOCK_PROCESS_FAILED_TO_USER_MAIL";
+					mailSubject = MailSubject.STOCK_PROCESS_FAILED_TO_USER_MAIL.replace("<XXX>", stockMgmt.getTxnId());
+
+					placeholderMap.put("<First name>", firstName);
+					placeholderMap.put("<txn_name>", stockMgmt.getTxnId());
+
+					stockMgmt.setStockStatus(StockStatus.ERROR.getCode());
 					stockMgmt.setRemarks(consignmentUpdateRequest.getRemarks());
 				}
 
