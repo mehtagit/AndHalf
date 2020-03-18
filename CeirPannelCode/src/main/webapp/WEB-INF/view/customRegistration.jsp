@@ -846,11 +846,17 @@ var contextpath = "${context}";
             questionDataByCategory();
             $.i18n().locale = data_lang_param;	
             	
+            
             	$.i18n().load( {
             		'en': './resources/i18n/en.json',
             		'km': './resources/i18n/km.json'
             	} ).done( function() { 
             	});
+            	
+                $('.modal-trigger').leanModal({
+             		dismissible: false
+             	});
+
                 $('.dropdown-trigger').dropdown();
                 portDropDownData("CUSTOMS_PORT","arrivalPort");
                 var password = document.getElementById("password")
