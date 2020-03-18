@@ -1,15 +1,11 @@
 var roleType = $("body").attr("data-roleType");
 var userId = $("body").attr("data-userID");
 var currentRoleType = $("body").attr("data-selected-roleType"); 
-var featureId =12;
+//var featureId =12;
 var nationalID = $("body").attr("session-value");
 // iframe
 var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
-/*		window.parent.$('#langlist').on('change', function() {
-			var lang_param=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
-		window.location.assign("./uploadPaidStatus?via=other&NID="+nationalID+"&lang="+lang_param);
-		});
- */
+
 
 // Internationalization
 $.i18n().locale = lang;
@@ -398,7 +394,8 @@ function pageButtons(url){
 			});
 
 			$('.datepicker').datepicker({
-				dateFormat: "yy-mm-dd"
+				dateFormat: "yy-mm-dd",
+				 maxDate: new Date()
 			});
 		}
 	}); 	
@@ -520,7 +517,7 @@ function historytable(url,dataUrl){
 						d.filter = JSON.stringify({						
 							"nid": nationalId,
 							"taxPaidStatus":3,
-							"featureId":featureId
+								"featureId":featureId
 						}); 
 					}
 

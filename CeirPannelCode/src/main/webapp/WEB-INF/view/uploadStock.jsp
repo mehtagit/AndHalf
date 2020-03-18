@@ -205,7 +205,7 @@ to {
 </head>
 <body data-id="4" data-roleType="${usertype}" data-userID="${userid}"
 	data-userTypeID="${usertypeId}"
-	data-selected-roleType="${selectedUserTypeId}">
+	data-selected-roleType="${selectedUserTypeId}" data-selectedRoleTypeId="${selectedRoleTypeId}">
 
 
 	<section id="content">
@@ -689,7 +689,10 @@ function redirectToViewPage()
 	 var role = currentRoleType == null ? roleType : currentRoleType;
 	 console.log(" userId="+userId+" role="+role);
 	console.log("./assignDistributor?userTypeId="+role);
-	 window.location.href = "./assignDistributor?userTypeId="+role;
+	var ssss = $("body").attr("data-selectedRoleTypeId");
+	
+	
+	 window.location.href = "./assignDistributor?userTypeId="+role+"&selectedRoleTypeId="+ssss;
 	 /*  $.ajax({
 	url : "./assignDistributor?userTypeId="+role,
 	dataType : 'json',

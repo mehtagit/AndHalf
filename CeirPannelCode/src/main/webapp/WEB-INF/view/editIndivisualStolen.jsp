@@ -112,7 +112,7 @@ select {
 
 </head>
 
-<body data-roleType="${usertype}" data-userTypeID="${usertypeId}"
+<body data-id="5" data-roleType="${usertype}" data-userTypeID="${usertypeId}"
 	data-userID="${userid}" data-operatorTypeId="${operatorTypeId}"
 	data-selected-roleType="${stolenselectedUserTypeId}"
 	data-stolenselected-roleType="${stolenselectedUserTypeId}">
@@ -203,8 +203,8 @@ select {
 														<h6 class="form-label">
 															<spring:message code="registration.uploadnid/passportimage" /> <span class="star"></span>
 														</h6>
-														<div class="btn">
-															<span><spring:message code="input.selectfile" /></span> <input type="file" accept="*image"
+														<div class="btn" id="passportImageDiv">
+															<span id="passportImageText"><spring:message code="input.selectfile" /></span> <input type="file" accept="*image"
 															oninput="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');"
 																oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');"
 																
@@ -215,6 +215,7 @@ select {
 																placeholder="<spring:message code="registration.uploadnid/passportimage" />"
 																id="singleStolenFileName" 
 																title="">
+																<a href="#" id="PassportNidLink" style="display: none;">Preview</a>
 														</div>
 													</div>
 
@@ -627,8 +628,8 @@ select {
 															<h6 class="form-label" style="margin:0; font-size: 0.9rem;" data-original-title="" title="">
 																<spring:message code="input.UploadFIR" />
 															</h6>
-															<div class="btn" data-original-title="" title="">
-																<span data-original-title="" title="">
+															<div class="btn" id="firImageDiv" data-original-title="" title="">
+																<span id="firDivText" data-original-title="" title="">
 																	<spring:message code="input.selectfile" /></span>
 																<input type="file" 
 																oninput="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');"
@@ -638,6 +639,7 @@ select {
 															<div class="file-path-wrapper" data-original-title="" title="">
 																<input class="file-path validate" type="text" placeholder="
 																	input.UploadFIR" id="uploadFirSingleName" title="" data-original-title="">
+																	<a id="firImageLink" style="display: none;">Preview</a>
 															</div>
 														</div>
 
@@ -949,7 +951,15 @@ select {
 		</div>
 	</div>
 
-
+	<div id="viewuplodedModel" class="modal" style="overflow: hidden">
+	<a href="#!" class="modal-close waves-effect waves-green btn-flat">&times;</a>
+		<div class="modal-content">
+			<div class="row">
+					<img src="" id="fileSource" width="400" height="400">
+			</div>
+		</div>
+	</div>
+	
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
 
@@ -1022,8 +1032,57 @@ src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/j
 		src="${context}/resources/project_js/validationMsg.js"></script>
 		<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
 
+
+
 	<script>
- populateCountries(
+	var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
+
+
+	$.i18n().locale = lang;	
+	//alert(lang)
+	var successMsg,stolenIndivisual;
+	
+	
+	$.i18n().load( {
+		'en': './resources/i18n/en.json',
+		'km': './resources/i18n/km.json'
+	}).done( function() { 
+		stolenIndivisual=$.i18n('stolenIndivisual');
+		editstolenIndivisual=$.i18n('editstolenIndivisual');
+		
+		
+		viewPageType();
+	});
+	
+	
+	   function viewPageType() {
+           if($('#pageViewType').val()=='view')
+           	{
+           	$('#headingType').text('');
+           	$('#headingType').text(stolenIndivisual);
+           	   $("#passportImageDiv").removeClass("btn");
+           	   $('#passportImageText').text('');
+           	   $('#singleStolenFile').attr('type','text');
+           	   $("#PassportNidLink").css("display", "block");
+           	   $("#singleStolenFile").css("display", "none");
+           	   	
+           	   $("#firImageDiv").removeClass("btn");
+           	   $('#firDivText').text('');
+           	   $('#uploadFirSingle').attr('type','text');
+           	   $("#firImageLink").css("display", "block");
+           	   $("#uploadFirSingle").css("display", "none");  
+           	  // alert(stolenIndivisual);
+           	  $("#SingleForm").find("input,select,textarea,button").prop("disabled",true);
+           	}
+           else{
+           	$('#headingType').text('');
+           	$('#headingType').text(editstolenIndivisual);
+           	  $("#SingleForm").find("input,select,textarea,button").prop("disabled",false);
+           }
+         
+     }
+	
+	populateCountries(
 	        "singleDevicecountry",
 	        "singleDevicestate"
 	    );
@@ -1069,20 +1128,7 @@ src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/j
             utilsScript: "${context}/resources/js/utils.js",
         });
         
-        window.onload = function () {
-            if($('#pageViewType').val()=='view')
-            	{
-            	$('#headingType').text('');
-            	$('#headingType').text('View Report Stolen');
-            	  $("#SingleForm").find("input,select,textarea,button").prop("disabled",true);
-            	}
-            else{
-            	$('#headingType').text('');
-            	$('#headingType').text('Update Report Stolen');
-            	  $("#SingleForm").find("input,select,textarea,button").prop("disabled",false);
-            }
-          
-      }
+     
         $('.datepick').datepicker({
 			dateFormat: "yy-mm-dd"
 		});

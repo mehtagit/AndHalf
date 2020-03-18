@@ -358,7 +358,11 @@ FeignCleintImplementation feignCleintImplementation;
 		lawfulUser.setTxnId(txnId);
 		lawfulStolenRecovery=uploadPaidStatusFeignClient.fetchSingleDevicebyTxnId(lawfulUser);
 		log.info("response from fetch lawful stolen an recovery devices  api="+lawfulStolenRecovery);
-		return lawfulStolenRecovery;
+		
+		addMoreFileModel.setTag("upload_file_link");
+        urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
+        lawfulStolenRecovery.setFileLink(urlToUpload.getValue());
+        return lawfulStolenRecovery;
 	}
 
 

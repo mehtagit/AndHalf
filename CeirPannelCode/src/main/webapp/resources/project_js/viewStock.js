@@ -722,12 +722,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 		
 		//var userTypeId = $("body").attr("data-userTypeID");
 		var selectedRoleTypeId=$("body").attr("data-selectedRoleTypeId");
-		//alert("selectedRoleTypeId="+selectedRoleTypeId);
-		//var currentSelectedRoleType=selectedRoleTypeId == null ? selectedRoleTypeId : userTypeId;
 		
-		//console.log("userType--->"+userType+"-------------userTypeId------------>"+userTypeId);
-		//console.log("roleType=="+roleType+" currentRoleType="+currentRoleType+" role="+role);
-	
 		if(isNaN(StockStatus))
 		{
 			StockStatus='';
