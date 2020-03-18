@@ -871,6 +871,20 @@ String usertypeId="${usertypeId}";
          	asTypeData();       	
              questionDataByCategory();
              usertypeData2("${usertypeId}");
+             var password = document.getElementById("password")
+             , confirm_password = document.getElementById("confirm_password");       
+             
+             function validatePassword(){
+                 if(password.value != confirm_password.value) {
+                   confirm_password.setCustomValidity($.i18n('password_mismatch'));
+                 } else {
+                   confirm_password.setCustomValidity('');
+                 }
+               }
+
+           password.onchange = validatePassword;
+           confirm_password.onkeyup = validatePassword;
+
          }); 
          populateCountries( "country",    "state");
          
@@ -878,18 +892,6 @@ String usertypeId="${usertypeId}";
         
         populateStates( "country",
                 "state" );
-        
-        
-        function validatePassword(){
-            if(password.value != confirm_password.value) {
-              confirm_password.setCustomValidity($.i18n('password_mismatch'));
-            } else {
-              confirm_password.setCustomValidity('');
-            }
-          }
-
-      password.onchange = validatePassword;
-      confirm_password.onkeyup = validatePassword;
 
        
       function myFunction() {

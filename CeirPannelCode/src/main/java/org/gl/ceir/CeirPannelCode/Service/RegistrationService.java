@@ -84,8 +84,10 @@ public class RegistrationService {
                 log.info("response got: "+response);
                 session.removeAttribute("response");
                 session.removeAttribute("statusCode");
+                session.removeAttribute("usertypeId");
                 session.setAttribute("tag",response.getTag());
                 session.setAttribute("statusCode",response.getStatusCode());
+                session.setAttribute("usertypeId",usertypeData.getId());
 			}
 			return output;
 
@@ -122,7 +124,7 @@ public class RegistrationService {
 		return mv;                
 	}                    
 
-	public OtpResponse saveOtherRegistration(String data,MultipartFile photo,MultipartFile nationalIdImage,MultipartFile idCard,HttpSession session,HttpServletRequest request) throws IOException {
+	public OtpResponse saveOtherRegistration(String data,MultipartFile photo,MultipartFile nationalIdImage,MultipartFile idCard,HttpSession session,HttpServletRequest request,MultipartFile vatFile) throws IOException {
 		Gson gson=new Gson();                       
 		Registration registration=gson.fromJson(data, Registration.class);
 		UserHeader header=getUserHeaders(request);
@@ -146,7 +148,7 @@ public class RegistrationService {
 				String nationalIdPath=new String(combinedPath+"/NID");  
 				String photoPath=new String(combinedPath+"/photo");
 				String idCardPath=new String(combinedPath+"/IDCard");  
-
+				String vatFilePath=new String(combinedPath+"/Vat");
 				if(nationalIdImage.isEmpty()==false) {
 					log.info("going to save user NationalId file");
 					log.info("file name: " +nationalIdImage.getOriginalFilename());
@@ -190,6 +192,22 @@ public class RegistrationService {
 					registration.setIdCardFilename(idCard.getOriginalFilename());
 					log.info("id card file save in server");
 				} 
+				if(registration.getUserTypeId()==12) {
+					log.info("vat file "+vatFile.getOriginalFilename());
+				if(vatFile.isEmpty()==false) {
+					log.info("file name: " +vatFile.getOriginalFilename());
+					log.info("finalPath:   "+vatFilePath);
+					log.info("path plus filename: "+vatFilePath+vatFile.getOriginalFilename());
+					File dir = new File(vatFilePath);
+					if (!dir.exists()) dir.mkdirs();
+					byte barr[]=vatFile.getBytes();
+					BufferedOutputStream bout=new BufferedOutputStream(new FileOutputStream(vatFilePath + "/" + vatFile.getOriginalFilename()));
+					bout.write(barr);
+					bout.flush();
+					bout.close();
+					registration.setVatFilename(vatFile.getOriginalFilename());
+				}
+				}
 
 				log.info("now going to call registration api");
 				OtpResponse response=userRegistrationFeignImpl.registration(registration);
