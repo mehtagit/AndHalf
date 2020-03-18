@@ -968,6 +968,7 @@ src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/j
 	$('#headingType').text(stolenCompany);
 	//alert(stolenCompany)
 	$("#deviceListlinkDiv").removeClass("btn");
+	$('#deviceBulkStolenFile').attr('type','text');
    /* $("#deviceListlinkDiv").removeClass("btn");
 	   $('#dviceFileText').text('');
 	   $('#deviceBulkStolenFile').attr('type','text');
