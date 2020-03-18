@@ -31,7 +31,6 @@ $(document).ready(function () {
 	isActive(featurID);
 	sessionStorage.removeItem("data-feature");
 	 $("#manualDownload").attr("href", "./Consignment/ManualFileDownload?userTypeId="+userTypeID);
-	 dataByTag("link_dmc_portal", "home_Link", 1);
 });   
 
 
