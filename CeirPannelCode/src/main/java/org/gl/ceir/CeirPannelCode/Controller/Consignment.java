@@ -69,7 +69,7 @@ public class Consignment {
 	String filePathforErrorFile;
 	
 @Autowired
-AddMoreFileModel addMoreFileModel,urlToUpload;
+AddMoreFileModel addMoreFileModel,urlToUpload,urlToMove;
 
 
 
@@ -280,6 +280,10 @@ GenricResponse response= new GenricResponse();
 addMoreFileModel.setTag("system_upload_filepath");
 urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
 
+addMoreFileModel.setTag("uploaded_file_move_path");
+urlToMove=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
+log.info("moved file path from api="+urlToMove.getValue());
+
 log.info("entry point in update Consignment.");
 if(file==null)
 {
@@ -309,8 +313,8 @@ if(exists) {
 
 Path temp = Files.move 
 (Paths.get(urlToUpload.getValue()+"/"+txnId+"/"+file.getOriginalFilename()), 
-Paths.get(filePathforMoveFile+file.getOriginalFilename())); 
-String movedPath=filePathforMoveFile+file.getOriginalFilename();	
+Paths.get(urlToMove.getValue()+file.getOriginalFilename())); 
+String movedPath=urlToMove.getValue()+file.getOriginalFilename();	
 
 log.info("file is already exist, moved to this "+movedPath+" path. ");
 tmpDir.delete();
@@ -602,7 +606,7 @@ public String exportToExcel(@RequestParam(name="consignmentStartDate",required =
 @RequestMapping(value="/ManualFileDownload",method={org.springframework.web.bind.annotation.RequestMethod.GET}) 
 public String ManualSampleFile(@RequestParam(name="userTypeId",required = false) int userTypeId) throws IOException {
 log.info("request send to the manual sample file download api=");
-
+log.info("userTypeId==="+userTypeId);
 
 FileExportResponse response=feignCleintImplementation.manualDownloadSampleFile(userTypeId);
 log.info("response from manual sample file download file "+response);

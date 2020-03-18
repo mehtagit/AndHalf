@@ -1,15 +1,11 @@
 var roleType = $("body").attr("data-roleType");
 var userId = $("body").attr("data-userID");
 var currentRoleType = $("body").attr("data-selected-roleType"); 
-var featureId =12;
+//var featureId =12;
 var nationalID = $("body").attr("session-value");
 // iframe
 var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
-/*		window.parent.$('#langlist').on('change', function() {
-			var lang_param=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
-		window.location.assign("./uploadPaidStatus?via=other&NID="+nationalID+"&lang="+lang_param);
-		});
- */
+
 
 // Internationalization
 $.i18n().locale = lang;
@@ -329,10 +325,14 @@ function pageButtons(url){
 							+"</label>"+
 							"<span	class='input-group-addon' style='color: #ff4081'>"+
 							"<i	class='fa fa-calendar' aria-hidden='true' style='float: right; margin-top: -37px;'>"+"</i>"+"</span>");
-
+					$( "#"+date[i].id ).datepicker({
+						dateFormat: "yy-mm-dd",
+						 maxDate: new Date()
+			        }); 
 				}else if(date[i].type === "text"){
 					$("#tableDiv").append("<div class='input-field col s6 m2'><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
 				}
+				
 			} 
 
 			// dynamic dropdown portion
@@ -397,9 +397,7 @@ function pageButtons(url){
 				}
 			});
 
-			$('.datepicker').datepicker({
-				dateFormat: "yy-mm-dd"
-			});
+			
 		}
 	}); 	
 
@@ -519,7 +517,8 @@ function historytable(url,dataUrl){
 					data : function(d) {
 						d.filter = JSON.stringify({						
 							"nid": nationalId,
-							"taxPaidStatus":3
+							"taxPaidStatus":3,
+								"featureId":featureId
 						}); 
 					}
 

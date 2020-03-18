@@ -556,7 +556,11 @@ input[type='search'] {
 										<div class="col s12 m12 l12" id="tableDiv"
 											style="padding-bottom: 5px; background-color: #e2edef52;">
 										</div>
+											<div id="filterBtnDiv"></div>
+											<p id="errorMsg" style="color: red;font-size: 12px;position: absolute;left: 40px;margin: 0;top: 122px;"class="left"></p>
 										</form>
+									
+							
 										<div class="row">
 											<div class="col s12 m12">
 												<table class="responsive-table striped display"

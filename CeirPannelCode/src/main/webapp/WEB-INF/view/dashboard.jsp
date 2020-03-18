@@ -47,6 +47,9 @@
 <link
 	href="${context}/resources/font/font-awesome/css/font-awesome.min.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+
 <script>
 var contextpath = "${context}";
 <%
@@ -55,8 +58,6 @@ String name = (String) session.getAttribute("name");
 %>
 
 </script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
 
 </head>
 <style>

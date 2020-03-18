@@ -184,7 +184,7 @@
                                                               
                                                               <div class="col s6 m6 ">
                                                                 <label for="sigleRecoverydeviceSimStatus"><spring:message code="select.multiSimStatus" /> </label>
-                                                                <select id="sigleRecoverydeviceSimStatus"
+                                                                <select id="sigleRecoverydeviceSimStatus" 
                                                                  oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" 
                                                                  oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
                                                                  class="browser-default">
@@ -282,7 +282,7 @@
                                 
                                                             <div class="input-field col s12 m6 l6">
                                                                 <input type="text" name="sigleRecoverydistrict" id="sigleRecoverydistrict" placeholder="" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}" required="required"
-                                                                    title=""
+                                                                    title="" required="required"
                                                                     oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
                                                                    oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');">
                                                                 <label for="sigleRecoverydistrict"><spring:message code="input.district" /> <span class="star">*</span></label>
@@ -290,7 +290,7 @@
                                 
                                                             <div class="input-field col s12 m6 l6">
                                                                 <input type="text" name="sigleRecoverycommune" id="sigleRecoverycommune" placeholder="" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}" required="required"
-                                                                    title=""
+                                                                    title="" required="required"
                                                                     oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
                                                                    oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');">
                                                                 <label for="sigleRecoverycommune"><spring:message code="input.commune" /> <span class="star">*</span></label>
@@ -306,7 +306,7 @@
                             
                                                             <div class="col s12 m6 l6">
                                                                 <label><spring:message code="table.country" /> <span class="star">*</span></label>
-                                                                <select id="country1" class="browser-default" class="mySelect"
+                                                                <select id="country1" class="browser-default" class="mySelect" 
                                                                 oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" 
                                                                 oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
                                                                     style="padding-left: 0;" required></select>
@@ -323,7 +323,7 @@
 
                                                             <div class="col s6 m6 ">
                                                                 <label for="sigleRecoverydeviceStatus"><spring:message code="select.deviceStatus" /> <span class="star">*</span></label>
-                                                                <select id="sigleRecoverydeviceStatus" 
+                                                                <select id="sigleRecoverydeviceStatus"  required="required"
                                                                 oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" 
                                                                 oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
                                                                  class="browser-default">
@@ -340,7 +340,7 @@
                                                                 <label for="sigleRecovery"><spring:message code="input.remarks" /> </label>
                                                             </div>
                                                             
-                                                            <div class="col s12 m6">
+                                                           <%--  <div class="col s12 m6">
 <p style="margin-top: 3px; margin-bottom: 5px"><spring:message code="operator.blocking" /></p>
 <label style="margin-right: 2%;"> <input type="radio" class="blocktypeRadio" id=""
 value="Immediate"
@@ -379,7 +379,7 @@ class="glyphicon glyphicon-calendar"
 onclick="_Services._selectstartDate()"></i></span>
 </div>
 </div>
-</div>
+</div> --%>
                                                              <div class="input-field col s12 m6">
 											<input type="text" name="deviceRecoveryDevice" placeholder=""
 												id='bulkRecoveryDate' class='form-control datepick'

@@ -45,11 +45,14 @@ public class AdminManageTypeApprove {
 	}
 	
 	@PostMapping("importerTacDelete")
-	public @ResponseBody GenricResponse deleteTac(@RequestParam(name="id",required = false ) Integer id,HttpSession session) {
+	public @ResponseBody GenricResponse deleteTac(@RequestParam(name="id",required = false ) Integer id,
+			  									  @RequestParam(name="userType",required = false ) String userType, 
+												  @RequestParam(name="userId",required = false ) Integer userId,	
+												  HttpSession session) {
 
 		log.info("enter in  delete TAC.");
-		log.info("request passed to the deleteTAC Api="+id);
-		GenricResponse response=typeApprovedFeignImpl.TypeApproveDelete(id);
+		log.info("request passed to the deleteTAC Api="+id+" userType="+userType+" userId="+userId);
+		GenricResponse response=typeApprovedFeignImpl.TypeApproveDelete(id, userType, userId);
 		log.info("response after delete Stock."+response);
 		log.info("exit point of delete stock.");
 		return response;

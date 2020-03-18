@@ -136,10 +136,14 @@ function pageRendering(){
 							+"</label>"+
 							"<span	class='input-group-addon' style='color: #ff4081'>"+
 							"<i	class='fa fa-calendar' aria-hidden='true' style='float: right; margin-top: -37px;'>"+"</i>"+"</span>");
-	
+					$( "#"+date[i].id ).datepicker({
+						dateFormat: "yy-mm-dd",
+						 maxDate: new Date()
+			        });
 				}else if(date[i].type === "text"){
 					$("#typeAprroveTableDiv").append("<div class='input-field col s6 m2' ><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
 				}
+				 
 			} 
 			
 			if(userType=="TRC"){
@@ -177,11 +181,6 @@ function pageRendering(){
 				}
 			}
 	
-			
-			
-			$('.datepicker').datepicker({
-				dateFormat: "yy-mm-dd"
-			});
 
 			$.getJSON('./getDropdownList/'+featureId+'/'+$("body").attr("data-userTypeID"), function(data) {
 

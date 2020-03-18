@@ -250,7 +250,7 @@
                                             <div id="bulkRecoveryDiv" class="col s12 m12" style="display: block">
                                                 <form action="#" style="margin-top: 30px;" onsubmit="return updateCompanyRecoveryRequest()" method="POST" enctype="multipart/form-data"  id="">
                                                     <div class="input-field col s12 m6 l6" style="margin-top: 20px;">
-                                                        <input type="text" name="bulkRecoveryquantity" class="form-control boxBorder boxHeight" placeholder=""
+                                                        <input type="text" name="bulkRecoveryquantity" required="required" class="form-control boxBorder boxHeight" placeholder=""
                                                               oninput="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');" 
                                                             oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
                                                             id="bulkRecoveryquantity" maxlength="7" pattern="[0-9]{1,7}" 
