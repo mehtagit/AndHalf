@@ -1,3 +1,4 @@
+
 <%
 	response.setHeader("Cache-Control", "no-cache");
 	response.setHeader("Cache-Control", "no-store");
@@ -79,17 +80,18 @@
 	src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
 </head>
-<body data-id="4"
-data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeId}" data-selectedRoleTypeId="${selectedRoleTypeId}"
+<body data-id="4" data-roleType="${usertype}" data-userID="${userid}"
+	data-userTypeID="${usertypeId}"
+	data-selectedRoleTypeId="${selectedRoleTypeId}"
 	data-selected-roleType="${selectedUserTypeId}"
-	 data-stolenselected-roleType="${stolenselectedUserTypeId}"
-	 session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}" 
-	 data-period="${period}">
+	data-stolenselected-roleType="${stolenselectedUserTypeId}"
+	session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}"
+	data-period="${period}">
 
 
 	<!-- START CONTENT -->
 	<section id="content">
-	<div id="initialloader"></div>
+		<div id="initialloader"></div>
 		<!--start container-->
 		<div class="container">
 			<div class="section">
@@ -103,8 +105,7 @@ data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeI
 
 							<div class="col s12 m12 l12" id="consignmentTableDIv"
 								style="padding-bottom: 5px; background-color: #e2edef52;">
-								<div id="filterBtnDiv">
-								</div>
+								<div id="filterBtnDiv"></div>
 							</div>
 
 							<table id="stockTable" class="responsive-table striped display"></table>
@@ -130,10 +131,12 @@ data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeI
 
 
 	<div id="successUpdateStockModal" class="modal">
-		<h6 class="modal-header" style="font-size: 16px;"><spring:message code="modal.header.updateStock" /></h6>
+		<h6 class="modal-header" style="font-size: 16px;">
+			<spring:message code="modal.header.updateStock" />
+		</h6>
 		<div class="modal-content">
-			
-			
+
+
 
 			<div class="row">
 				<p id="stockSucessMessage"></p>
@@ -149,48 +152,69 @@ data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeI
 	<!-- Modal End -->
 
 	<div id="editStockModal" class="modal">
-				<h6 class="modal-header"><spring:message code="modal.header.editStock" /></h6>
-				<div class="modal-content">
-	
-			
-			<form action="" onsubmit="return editUploadStock()" method="POST" enctype="multipart/form-data"  style="margin-top: 10px;">
+		<h6 class="modal-header">
+			<spring:message code="modal.header.editStock" />
+		</h6>
+		<div class="modal-content">
+
+
+			<form action="" onsubmit="return editUploadStock()" method="POST"
+				enctype="multipart/form-data" style="margin-top: 10px;">
 				<div class="row myRow">
 					<div class="input-field col s12 m6" id="editSupplierIdDiv">
 						<input type="text" name="SupplierId" id="editSupplierId"
-
-							placeholder="" pattern="[A-Za-z0-9]{0,15}" title="Please enter alphabets and numbers upto 15 characters only" maxlength="15" /> <label
-							for="editSupplierId" id="editSupplierIdLabel" class="center-align"><spring:message code="input.supplierID" /></label>
+							placeholder="" pattern="[A-Za-z0-9]{0,15}"
+					
+							maxlength="15" /> <label for="editSupplierId"
+							id="editSupplierIdLabel" class="center-align"><spring:message
+								code="input.supplierID" /></label>
 					</div>
 
 					<div class="input-field col s12 m6" id="editSupplierNameDiv">
-						<input type="text" name="SupplierName" id="editSupplierName" required="required"
-							placeholder="" pattern="[A-Za-z ]{0,50}" title="Please enter alphabets  upto 50 characters only" maxlength="50" /> <label for="editSupplierName"
-							id="editSupplierNameLabel" class="center-align"><spring:message code="input.supllierName" /> <span class="star">*</span></label></label>
+						<input type="text" name="SupplierName" id="editSupplierName"
+							placeholder="" pattern="[A-Za-z ]{0,50}" maxlength="50"
+							oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
+							oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
+							required> <label for="editSupplierName"
+							id="editSupplierNameLabel" class="center-align"><spring:message
+								code="input.supllierName" /> <span class="star">*</span></label></label>
 					</div>
 
 					<div class="input-field col s12 m6">
 						<input type="text" name="Quantity" id="editQuantity"
-							placeholder="" pattern="[0-9]{0,7}" title="Please enter numbers upto 7 characters only" maxlength="7" required /> <label
-							for="Quantity" class="center-align"><spring:message code="input.quantity" /> <span class="star">*</span></label>
+							placeholder="" pattern="[0-9]{0,7}" maxlength="7"
+							oninput="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
+							oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
+							required> <label for="Quantity" class="center-align"><spring:message
+								code="input.quantity" /> <span class="star">*</span></label>
 					</div>
 
 					<div class="input-field col s12 m6" id="editInvoiceNumberDiv">
 						<input type="text" name="InvoiceNumber" id="editInvoiceNumber"
-							placeholder="" pattern="[A-Za-z0-9]{0,15}" title="Please enter alphabets and numbers upto 15 characters only"  maxlength="15"/> <label
-							for="InvoiceNumber" class="center-align"><spring:message code="input.invoiceNumber" /></label>
+							placeholder="" pattern="[A-Za-z0-9]{0,15}"
+							
+							maxlength="15" /> <label for="InvoiceNumber" class="center-align"><spring:message
+								code="input.invoiceNumber" /></label>
 					</div>
 
 					<div class="input-field col s12 m6" style="margin-top: 22px;">
 						<input type="text" name="TransactionId" id="editTransactionId"
 							placeholder="" disabled maxlength="15" /> <label
-							for="TransactionId" class="center-align"><spring:message code="input.transactionID" /></label>
+							for="TransactionId" class="center-align"><spring:message
+								code="input.transactionID" /></label>
 					</div>
-					
+
 					<div class="file-field col s12 m6">
-					<p class="upload-file-label" style="margin-bottom: 0;"><spring:message code="modal.header.uploadBlockStock" /> <span class="star">*</span></p>
+						<p class="upload-file-label" style="margin-bottom: 0;">
+							<spring:message code="modal.header.uploadBlockStock" />
+							<span class="star">*</span>
+						</p>
 						<div class="btn">
-							<span><spring:message code="input.selectfile" /></span> <input type="file" onchange="fileTypeValueChanges()"
-								id="editcsvUploadFile" accept=".csv">
+							<span><spring:message code="input.selectfile" /></span> <input
+								type="file" onchange="fileTypeValueChanges()"
+								id="editcsvUploadFile" accept=".csv"
+								oninput="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');"
+								oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');">
 						</div>
 						<div class="file-path-wrapper">
 							<input class="file-path validate responsive-file-div"
@@ -203,20 +227,26 @@ data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeI
 
 				<div class="row myRow">
 					<p style="margin-left: 10px;">
-						<a href="./Consignment/sampleFileDownload/4"><spring:message code="input.downlaod.sample" /></a>
+						<a href="./Consignment/sampleFileDownload/4"><spring:message
+								code="input.downlaod.sample" /></a>
 					</p>
-					<p style="margin-left: 10px;"><spring:message code="input.requiredfields" /><span class="star">*</span></p>
+					<p style="margin-left: 10px;">
+						<spring:message code="input.requiredfields" />
+						<span class="star">*</span>
+					</p>
 				</div>
 
-				
+
 
 
 				<div class="row">
 					<div class="input-field col s12 center">
-						<button class="btn"
-							type="submit"><spring:message code="button.update" /></button>
+						<button class="btn" type="submit">
+							<spring:message code="button.update" />
+						</button>
 						<a onclick="closeEditModal();" class="btn" type="cancel"
-							style="margin-left: 10px;"><spring:message code="modal.cancel" /></a>
+							style="margin-left: 10px;"><spring:message
+								code="modal.cancel" /></a>
 
 
 					</div>
@@ -229,62 +259,69 @@ data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeI
 	<!-- View Stock Modal start   -->
 
 	<div id="viewStockModal" class="modal">
-		<h6 class="modal-header"><spring:message code="modal.header.viewStock" /></h6>
+		<h6 class="modal-header">
+			<spring:message code="modal.header.viewStock" />
+		</h6>
 		<div class="modal-content">
-			
-			
+
+
 			<form action="" style="margin-top: 10px;">
 
 				<div class="row myRow">
 					<div class="input-field col s12 m6" id="supplierIdDiv">
 						<input type="text" name="SupplierId" id="SupplierId"
-							placeholder="" disabled /> <label for="SupplierId" id="SupplierIdLabel"
-							class="center-align"><spring:message code="input.supplierID" /></label>
+							placeholder="" disabled /> <label for="SupplierId"
+							id="SupplierIdLabel" class="center-align"><spring:message
+								code="input.supplierID" /></label>
 					</div>
 
 					<div class="input-field col s12 m6" id="supplierNameDiv">
 						<input type="text" name="SupplierName" id="SupplierName"
-							placeholder="" disabled /> <label for="SupplierName" id="SupplierNameLabel"
-							class="center-align"><spring:message code="input.supllierName" /></label>
+							placeholder="" disabled /> <label for="SupplierName"
+							id="SupplierNameLabel" class="center-align"><spring:message
+								code="input.supllierName" /></label>
 					</div>
 
 					<div class="input-field col s12 m6">
 						<input type="text" name="Quantity" id="Quantity" placeholder=""
-							disabled /> <label for="Quantity" class="center-align"><spring:message code="input.quantity" /></label>
+							disabled /> <label for="Quantity" class="center-align"><spring:message
+								code="input.quantity" /></label>
 					</div>
 
 					<div class="input-field col s12 m6" id="invoiceNumberDiv">
 						<input type="text" name="InvoiceNumber" id="InvoiceNumber"
 							placeholder="" disabled /> <label for="InvoiceNumber"
-							class="center-align"><spring:message code="input.invoiceNumber" /></label>
+							class="center-align"><spring:message
+								code="input.invoiceNumber" /></label>
 					</div>
 
 					<div class="input-field col s12 m6">
 						<input type="text" name="TransactionId" id="TransactionId"
 							disabled placeholder="" maxlength="15" /> <label
-							for="TransactionId" class="center-align"><spring:message code="input.transactionID" /></label>
+							for="TransactionId" class="center-align"><spring:message
+								code="input.transactionID" /></label>
 					</div>
-					
-					<div class="input-field col s12 m6">
-						<label><spring:message code="modal.header.uploadBlockStock" /></label>
-							<input 
-								placeholder="" id="csvUploadFileName" type="text"
-								disabled>
-					</div>
-					<div class="input-field col s12 m6">
-					<textarea id="withdrawnRemark" class="materialize-textarea"
-						style="height: 0px;" readonly="readonly" placeholder=""></textarea>
-					<label for="remark" class=""><spring:message
-							code="input.remarks" /></label>
 
-					<!--   <input type="textarea" name="Remark" placeholder="Remark" id="remark" readonly="readonly" maxlength="15" />
+					<div class="input-field col s12 m6">
+						<label><spring:message
+								code="modal.header.uploadBlockStock" /></label> <input placeholder=""
+							id="csvUploadFileName" type="text" disabled>
+					</div>
+					<div class="input-field col s12 m6">
+						<textarea id="withdrawnRemark" class="materialize-textarea"
+							style="height: 0px;" readonly="readonly" placeholder=""></textarea>
+						<label for="remark" class=""><spring:message
+								code="input.remarks" /></label>
+
+						<!--   <input type="textarea" name="Remark" placeholder="Remark" id="remark" readonly="readonly" maxlength="15" />
                                                <label for="TransactionId" class="center-align">Remark</label> -->
-				</div>
+					</div>
 				</div>
 
 				<div class="row center" style="margin-top: 20px;">
 
-					<a onclick="closeViewModal()" class="btn" type="cancel"><spring:message code="modal.close" /></a>
+					<a onclick="closeViewModal()" class="btn" type="cancel"><spring:message
+							code="modal.close" /></a>
 				</div>
 			</form>
 		</div>
@@ -297,179 +334,253 @@ data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeI
 
 
 	<div id="DeleteStockconfirmationModal" class="modal">
-		<h6 class="modal-header"><spring:message code="modal.header.deleteStock" /></h6>
+		<h6 class="modal-header">
+			<spring:message code="modal.header.deleteStock" />
+		</h6>
 		<div class="modal-content">
 
-			
+
 			<form action="" onsubmit="return confirmantiondelete()" method="POST">
 
-			<div class="row">
-				<h6><spring:message code="modal.message.stock.widthdraw" /><span id="stockdeleteTxnId"></span></h6>
-			</div>
-			<div class="row">
-				<div class="input-field col s12 m12">
-					<textarea id="deleteStockremark" required="required" maxlength="200" class="materialize-textarea"></textarea>
-					<label for="textarea1" class=""><spring:message code="input.remarks" /> <span class="star">*</span></label>
+				<div class="row">
+					<h6>
+						<spring:message code="modal.message.stock.widthdraw" />
+						<span id="stockdeleteTxnId"></span>
+					</h6>
 				</div>
-			</div>
-			<input type="text" id="popupTransactionId" maxlength="15" hidden />
-			<div class="row">
-				<div class="input-field col s12 center">
-					<button  
-						class=" btn" type="submit"><spring:message code="modal.yes" /></button>
-					<button class="modal-close btn" type="button" style="margin-left: 10px;"><spring:message code="modal.no" /></button>
+				<div class="row">
+					<div class="input-field col s12 m12">
+						<textarea id="deleteStockremark"
+							oninput="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
+							oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
+							maxlength="200" class="materialize-textarea" required></textarea>
+						<label for="textarea1" class=""><spring:message
+								code="input.remarks" /> <span class="star">*</span></label>
+					</div>
 				</div>
-			</div>
+				<input type="text" id="popupTransactionId" maxlength="15" hidden />
+				<div class="row">
+					<div class="input-field col s12 center">
+						<button class=" btn" type="submit">
+							<spring:message code="modal.yes" />
+						</button>
+						<button class="modal-close btn" type="button"
+							style="margin-left: 10px;">
+							<spring:message code="modal.no" />
+						</button>
+					</div>
+				</div>
 			</form>
 		</div>
 	</div>
 
 	<div id="closeDeleteModal" class="modal">
-			<h6 class="modal-header"><spring:message code="modal.header.deleteStock" /></h6>
-			<div class="modal-content">
-		
-			
+		<h6 class="modal-header">
+			<spring:message code="modal.header.deleteStock" />
+		</h6>
+		<div class="modal-content">
+
+
 			<div class="row">
 
-				<h6 id="stockModalText"><spring:message code="modal.message.stockDeleted" /> </h6>
+				<h6 id="stockModalText">
+					<spring:message code="modal.message.stockDeleted" />
+				</h6>
 			</div>
 			<div class="row">
 				<div class="input-field col s12 center">
-					<a href="" class="modal-close btn"
-						style="margin-left: 10px;"><spring:message code="modal.close" /></a>
+					<a href="" class="modal-close btn" style="margin-left: 10px;"><spring:message
+							code="modal.ok" /></a>
 				</div>
 			</div>
 		</div>
 	</div>
-	
-	  <div id="markAsMultipleStolen" class="modal">
-       <h6 class="modal-header"><spring:message code="button.markAsStolen" /></h6>
-        <div class="modal-content">
 
-            
-            
-
-            <div class="row">
-                <h6><spring:message code="modal.message.txnmarked" /></h6>
-            </div>
-            <div class="row">
-                <div class="input-field col s12 center">
-                    <a onclick="openMulipleStolenPopUp()" class="modal-close modal-trigger btn"><spring:message code="modal.yes" /></a>
-                    <button class="modal-close btn" style="margin-left: 10px;"><spring:message code="modal.no" /></button>
-                </div>
-            </div>
-        </div>
-    </div>
-     <div id="markAsStolenDone" class="modal">
-                <h6 class="modal-header"><spring:message code="button.markAsStolen" /></h6>
-                    <div class="modal-content">
-
-            
-            <div class="row">
-                <h6><spring:message code="modal.message.markedasstolen" />
-                </h6>
-            </div>
-            <div class="row">
-                <div class="input-field col s12 center">
-                    <!-- <button class="modal-close btn" style="margin-left: 10px;">ok</button> -->
-                    <a onclick="redirectToViewPage()" class="btn"><spring:message code="modal.close" /></a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div id="ApproveStock" class="modal">
-        <h6 class="modal-header"><spring:message code="modal.header.approveStock" /></h6>
-        <div class="modal-content">
-            
-            <div class="row">
-                <h6 id="stockApproveMessage"><spring:message code="modal.message.stock.txnID" /><span id="approveStockTxnId"> </span><spring:message code="modal.message.hasBeenpaid" /></h6>
-                    <input type="text" id="approveStockTransactionId" style="display: none;">
-            </div>
-            <div class="row">
-                <h6 id="stockAppapprove"><spring:message code="modal.message.do.approveStock" /></h6>
-            </div>
-            <div class="row">
-                <div class="input-field col s12 center">
-                    <div class="input-field col s12 center">
-                        <button class=" modal-close modal-trigger btn"
-                             onclick="approveStockSubmit(0)"><spring:message code="modal.yes" /></button>
-                        <button class="modal-close btn" style="margin-left: 10px;"><spring:message code="modal.no" /></button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <div id="confirmApproveStockModal" class="modal">
-           <h6 class="modal-header"><spring:message code="modal.header.approveStock" /></h6>
-             <div class="modal-content">
-       
-            <div class="row">
-                <h6 id="stockApproveSucessMessage"><spring:message code="modal.message.stockUpload" /></h6>
-            </div>
-            <div class="row">
-                <div class="input-field col s12 center">
-                    <div class="input-field col s12 center">
-                        <a href="./assignDistributor" class="modal-close btn"><spring:message code="modal.ok" /></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-      <div id="RejectStockModal" class="modal">
-                    <h6 class="modal-header"><spring:message code="modal.header.rejectStock" /></h6>
-                    <div class="modal-content">
-
-            <div class="row">
-                <h6> <spring:message code="modal.message.stock.txnID" /><span id="disaproveTxnId"> </span><spring:message code="modal.message.asRejected" /></h6>
-            </div>
-            <div class="row">
-                <div class="input-field col s12 m12" style="margin-left: -10px;">
-                    <textarea id="stockDispproveRemarks" class="materialize-textarea" style="padding-left: 0;"></textarea>
-                    <label for="textarea1"><spring:message code="input.remarks" /></label>
-                </div>
-            </div>
-            <div class="row">
-                <div class="input-field col s12 center">
-                    <div class="input-field col s12 center">
-                        <button class="modal-close modal-trigger btn"
-                            onclick="disApproveStockSubmit(1)"><spring:message code="modal.yes" /></button>
-                        <button class="modal-close btn" style="margin-left: 10px;"><spring:message code="modal.no" /></button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-     <div id="confirmRejectStock" class="modal">
-                <h6 class="modal-header"><spring:message code="modal.header.rejectStock" /></h6>
-                <div class="modal-content">
-    
-            <div class="row">
-                <h6 id="stockDisapproveSucessMessage"><spring:message code="modal.message.stockRejected" /> </h6>
-            </div>
-            <div class="row">
-                <div class="input-field col s12 center">
-                    <div class="input-field col s12 center">
-                        <a href="./assignDistributor" class="modal-close btn"><spring:message code="modal.close" /></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-	
-<div id="fileFormateModal" class="modal">
-		<h6 class="modal-header"><spring:message code="fileValidationModalHeader" /></h6>
+	<div id="markAsMultipleStolen" class="modal">
+		<h6 class="modal-header">
+			<spring:message code="button.markAsStolen" />
+		</h6>
 		<div class="modal-content">
+
+
+
+
 			<div class="row">
-				<h6 id="fileErrormessage"><spring:message code="fileValidationName" /><br> <br> <spring:message code="fileValidationFormate" /> <br><br> <spring:message code="fileValidationSize" /> </h6>
+				<h6>
+					<spring:message code="modal.message.txnmarked" />
+				</h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<a onclick="openMulipleStolenPopUp()"
+						class="modal-close modal-trigger btn"><spring:message
+							code="modal.yes" /></a>
+					<button class="modal-close btn" style="margin-left: 10px;">
+						<spring:message code="modal.no" />
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="markAsStolenDone" class="modal">
+		<h6 class="modal-header">
+			<spring:message code="button.markAsStolen" />
+		</h6>
+		<div class="modal-content">
+
+
+			<div class="row">
+				<h6>
+					<spring:message code="modal.message.markedasstolen" />
+				</h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<!-- <button class="modal-close btn" style="margin-left: 10px;">ok</button> -->
+					<a onclick="redirectToViewPage()" class="btn"><spring:message
+							code="modal.close" /></a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="ApproveStock" class="modal">
+		<h6 class="modal-header">
+			<spring:message code="modal.header.approveStock" />
+		</h6>
+		<div class="modal-content">
+
+			<div class="row">
+				<h6 id="stockApproveMessage">
+					<spring:message code="modal.message.stock.txnID" />
+					<span id="approveStockTxnId"> </span>
+					<spring:message code="modal.message.hasBeenpaid" />
+				</h6>
+				<input type="text" id="approveStockTransactionId"
+					style="display: none;">
+			</div>
+			<div class="row">
+				<h6 id="stockAppapprove">
+					<spring:message code="modal.message.do.approveStock" />
+				</h6>
 			</div>
 			<div class="row">
 				<div class="input-field col s12 center">
 					<div class="input-field col s12 center">
-						<button class="modal-close waves-effect waves-light btn" onclick="clearFileName()"
-							style="margin-left: 10px;"><spring:message code="modal.ok" /></button>
+						<button class=" modal-close modal-trigger btn"
+							onclick="approveStockSubmit(0)">
+							<spring:message code="modal.yes" />
+						</button>
+						<button class="modal-close btn" style="margin-left: 10px;">
+							<spring:message code="modal.no" />
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="confirmApproveStockModal" class="modal">
+		<h6 class="modal-header">
+			<spring:message code="modal.header.approveStock" />
+		</h6>
+		<div class="modal-content">
+
+			<div class="row">
+				<h6 id="stockApproveSucessMessage">
+					<spring:message code="modal.message.stockUpload" />
+				</h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<div class="input-field col s12 center">
+						<a href="./assignDistributor" class="modal-close btn"><spring:message
+								code="modal.ok" /></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="RejectStockModal" class="modal">
+		<h6 class="modal-header">
+			<spring:message code="modal.header.rejectStock" />
+		</h6>
+		<div class="modal-content">
+
+			<div class="row">
+				<h6>
+					<spring:message code="modal.message.stock.txnID" />
+					<span id="disaproveTxnId"> </span>
+					<spring:message code="modal.message.asRejected" />
+				</h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 m12" style="margin-left: -10px;">
+					<textarea id="stockDispproveRemarks" class="materialize-textarea"
+						style="padding-left: 0;"></textarea>
+					<label for="textarea1"><spring:message code="input.remarks" /></label>
+				</div>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<div class="input-field col s12 center">
+						<button class="modal-close modal-trigger btn"
+							onclick="disApproveStockSubmit(1)">
+							<spring:message code="modal.yes" />
+						</button>
+						<button class="modal-close btn" style="margin-left: 10px;">
+							<spring:message code="modal.no" />
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="confirmRejectStock" class="modal">
+		<h6 class="modal-header">
+			<spring:message code="modal.header.rejectStock" />
+		</h6>
+		<div class="modal-content">
+
+			<div class="row">
+				<h6 id="stockDisapproveSucessMessage">
+					<spring:message code="modal.message.stockRejected" />
+				</h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<div class="input-field col s12 center">
+						<a href="./assignDistributor" class="modal-close btn"><spring:message
+								code="modal.close" /></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<div id="fileFormateModal" class="modal">
+		<h6 class="modal-header">
+			<spring:message code="fileValidationModalHeader" />
+		</h6>
+		<div class="modal-content">
+			<div class="row">
+				<h6 id="fileErrormessage">
+					<spring:message code="fileValidationName" />
+					<br> <br>
+					<spring:message code="fileValidationFormate" />
+					<br>
+					<br>
+					<spring:message code="fileValidationSize" />
+				</h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<div class="input-field col s12 center">
+						<button class="modal-close waves-effect waves-light btn"
+							onclick="clearFileName()" style="margin-left: 10px;">
+							<spring:message code="modal.ok" />
+						</button>
 					</div>
 				</div>
 			</div>
@@ -478,7 +589,7 @@ data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeI
 	<!-- Modal End -->
 	<!-- END MAIN -->
 
-<script type="text/javascript"
+	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
 
 
@@ -487,7 +598,7 @@ data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeI
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
 
-	
+
 
 	<!--plugins.js - Some Specific JS codes for Plugin Settings-->
 	<script
@@ -537,19 +648,20 @@ data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeI
 		src="${context}/resources/i18n_library/min.js"></script>
 
 
-	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
-	
+	<script type="text/javascript"
+		src="${context}/resources/project_js/globalVariables.js"></script>
+
 	<script type="text/javascript"
 		src="${context}/resources/project_js/viewStock.js"></script>
-			<script type="text/javascript"
+	<script type="text/javascript"
 		src="${context}/resources/project_js/enterKey.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/dragableModal.js"></script>
-					<script type="text/javascript"
-		src="${context}/resources/project_js/profileInfoTab.js" async></script>	
-		<script type="text/javascript"
+	<script type="text/javascript"
+		src="${context}/resources/project_js/profileInfoTab.js" async></script>
+	<script type="text/javascript"
 		src="${context}/resources/project_js/_dateFunction.js" async></script>
-		<script type="text/javascript"
+	<script type="text/javascript"
 		src="${context}/resources/project_js/validationMsg.js"></script>
 
 </body>
