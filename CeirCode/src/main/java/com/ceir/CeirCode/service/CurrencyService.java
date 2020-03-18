@@ -132,6 +132,10 @@ public class CurrencyService {
 		if(Objects.nonNull(filter.getCurrency()))
 			specification.with(new SearchCriteria("currency",filter.getCurrency(), SearchOperation.EQUALITY, Datatype.INTEGER));
 
+		if(Objects.nonNull(filter.getSearchString()) && !filter.getSearchString().isEmpty()){
+			specification.orSearch(new SearchCriteria("address", filter.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+		}
+		
 		return currencyrepo.findAll(specification.build(),pageable);
 	}
 

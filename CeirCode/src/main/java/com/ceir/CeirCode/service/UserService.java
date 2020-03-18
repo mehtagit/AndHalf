@@ -5,6 +5,9 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+
+import javax.transaction.Transactional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -344,8 +347,9 @@ public class UserService {
 			return 0;
 		}
 	};
-
-	public ResponseEntity<?> userRegistration(UserProfile userDetails)  {
+    @Transactional
+  	public ResponseEntity<?> userRegistration(UserProfile userDetails)  {
+    	try {
 		log.info("user details----::::   "+userDetails); 
 		Usertype userType=usertypeRepo.findByUsertypeName(userDetails.getUsertypeName());
 
@@ -420,9 +424,7 @@ public class UserService {
 					  userOutput.setPreviousStatus(UserStatus.NEW.getCode());
 					  userOutput.setCurrentStatus(UserStatus.OTP_VERIFICATION_PENDING.getCode());
 					  userRepo.save(userOutput);
-					  
-
-						OtpResponse response=new OtpResponse(RegistrationTags.REG_SUCESS_RESP.getMessage(),200,userOutput.getId(),RegistrationTags.REG_SUCESS_RESP.getTag());
+									OtpResponse response=new OtpResponse(RegistrationTags.REG_SUCESS_RESP.getMessage(),200,userOutput.getId(),RegistrationTags.REG_SUCESS_RESP.getTag());
 						log.info("response:   "+response);
 						return new ResponseEntity<>(response,HttpStatus.OK);
 					} 
@@ -442,6 +444,13 @@ public class UserService {
 			HttpResponse response=new HttpResponse(RegistrationTags.REG_FAIL_ROLES_RESP.getMessage(),409,RegistrationTags.REG_FAIL_ROLES_RESP.getTag());
 			return new ResponseEntity<>(response,HttpStatus.OK);
 		}
+    	}
+    	catch(Exception e) {
+    		log.info(e.getMessage());
+    		log.info(e.toString());
+			HttpResponse response=new HttpResponse(RegistrationTags.COMMAN_FAIL_MSG.getMessage(),409,RegistrationTags.COMMAN_FAIL_MSG.getTag());
+			return new ResponseEntity<>(response,HttpStatus.OK);
+    	}
 	}
 	public List<Long> usertypeCheck(){
 		List<Long> usertypeId=new ArrayList<Long>();

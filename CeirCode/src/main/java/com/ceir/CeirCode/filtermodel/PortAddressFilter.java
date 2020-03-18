@@ -5,7 +5,7 @@ public class PortAddressFilter {
 	public String  startDate;
 	public String   endDate;
 	private Integer port;
-	
+	private String searchString;
 	
 	public String getStartDate() {
 		return startDate;
@@ -28,16 +28,17 @@ public class PortAddressFilter {
 	}
 	
 	
+	public String getSearchString() {
+		return searchString;
+	}
+	public void setSearchString(String searchString) {
+		this.searchString = searchString;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("PortAddressFilter [startDate=");
-		builder.append(startDate);
-		builder.append(", endDate=");
-		builder.append(endDate);
-		builder.append(", port=");
-		builder.append(port);
-		builder.append("]");
+		builder.append("PortAddressFilter [startDate=").append(startDate).append(", endDate=").append(endDate)
+				.append(", port=").append(port).append(", searchString=").append(searchString).append("]");
 		return builder.toString();
 	} 
 	

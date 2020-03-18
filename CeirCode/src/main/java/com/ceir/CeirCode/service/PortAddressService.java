@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import com.ceir.CeirCode.Constants.Datatype;
 import com.ceir.CeirCode.Constants.SearchOperation;
+import com.ceir.CeirCode.SpecificationBuilder.GenericSpecificationBuilder;
 import com.ceir.CeirCode.SpecificationBuilder.SpecificationBuilder;
 import com.ceir.CeirCode.configuration.PropertiesReaders;
 import com.ceir.CeirCode.filtermodel.PortAddressFilter;
@@ -145,7 +146,7 @@ public class PortAddressService {
 		log.info("inside portAddress view  controller");
 		log.info("portAddressInfo : "+filter);
 		Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
-		SpecificationBuilder<PortAddress> specification=new SpecificationBuilder<PortAddress>(propertiesReader.dialect) ;
+		GenericSpecificationBuilder<PortAddress> specification=new GenericSpecificationBuilder<PortAddress>(propertiesReader.dialect) ;
 		
 		if(Objects.nonNull(filter.getPort()))
 			specification.with(new SearchCriteria("port",filter.getPort(), SearchOperation.EQUALITY, Datatype.INTEGER));
@@ -156,6 +157,9 @@ public class PortAddressService {
 
 		if(Objects.nonNull(filter.getEndDate()) && filter.getEndDate()!="")
 			specification.with(new SearchCriteria("createdOn",filter.getEndDate(), SearchOperation.LESS_THAN, Datatype.DATE));
+		if(Objects.nonNull(filter.getSearchString()) && !filter.getSearchString().isEmpty()){
+			specification.orSearch(new SearchCriteria("address", filter.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+		}
 
 
 		return portAddressRepo.findAll(specification.build(),pageable);

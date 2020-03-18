@@ -1,9 +1,12 @@
 package com.ceir.CeirCode.repo;
+import javax.transaction.Transactional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.ceir.CeirCode.model.User;
 public interface UserRepo extends JpaRepository<User, Long>{
    
+	@Transactional
 	public User  save(User u); 
 	public User findById(long id);
 	public User findByUsernameAndPassword(String username,String password);

@@ -126,8 +126,11 @@ public class SpecificationBuilder<T> {
 							&& Datatype.INTEGER.equals(searchCriteria.getDatatype())) {
 						return cb.equal(root.get(searchCriteria.getKey()),searchCriteria.getValue());
 					} 
-
 					
+					else if(SearchOperation.EQUALITY.equals(searchCriteria.getSearchOperation())
+							&& Datatype.ARRAYLIST.equals(searchCriteria.getDatatype())) {
+						return cb.in(root.get(searchCriteria.getKey()));
+					} 
 					else {
 						return null;
 					}
@@ -140,15 +143,11 @@ public class SpecificationBuilder<T> {
 		return specifications;
 	}
 
-	public Specification<T> in(SearchCriteria searchCriteria, ArrayList<Integer> status){
+	public Specification<T> in(SearchCriteria searchCriteria, ArrayList<Long> status){
 		return (root, query, cb) -> {
 			logger.info("In query save ");
 			logger.info("key= "+searchCriteria.getKey());
-			logger.info("value = "+status.toString());
-			Join<UserProfile, User> user = root.join("user".intern());
-			//	Join<User, Userrole> user = users.join("userRole".intern());
-			//Collection<Integer> c=status;
-				return cb.in(user.get(searchCriteria.getKey())).value(status.toArray());
+				return cb.in(root.get(searchCriteria.getKey())).value(status);
 		};
 	}
 	
@@ -234,9 +233,10 @@ public class SpecificationBuilder<T> {
 	public Specification<T>  inQueryGroupBy(String key,List<Integer> status){
 		return (root, query, cb) -> {
 			logger.info("In query save ");
+			//query.groupBy(root.get("firstName"));
 			Join<UserProfile, User> user = root.join("user".intern());
 		Join<User, Userrole> userRoles = user.join("userRole".intern());
-		query.groupBy(root.get("id"));
+		//query.groupBy(root.get("id"));
 		//	Join<User, Userrole> user = users.join("userRole".intern());
 			//return cb.in(user.get(key)).value(status);
 			return userRoles.get(key).in(status);

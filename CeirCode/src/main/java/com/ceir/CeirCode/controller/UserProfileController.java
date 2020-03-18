@@ -85,12 +85,14 @@ public class UserProfileController {
 		if( file == 0) {
 			Page<UserProfile> userProfileResponse  = userProService.viewAllRecord(filterRequest, pageNo, pageSize);
 			List<SystemConfigListDb> asTypeList=systemConfigRepo.getByTag("AS_TYPE");
+			if(userProfileResponse!=null) {
 			for(UserProfile profile:userProfileResponse.getContent()) {
 				for(SystemConfigListDb asType:asTypeList) {
 					if(profile.getType()==asType.getValue()) {
 						profile.setAsTypeName(asType.getInterp());
 					}
 				}
+			}
 			}
 			mapping = new MappingJacksonValue(userProfileResponse);
 			

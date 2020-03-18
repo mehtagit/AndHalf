@@ -17,6 +17,7 @@ public class FilterRequest {
 	private Integer featureId;
 	private long userId;
 	private Integer userTypeId;
+	private String searchString;
 	
 	
   
@@ -77,11 +78,22 @@ public class FilterRequest {
 	public void setUserTypeId(Integer usertypeId) {
 		this.userTypeId = usertypeId;
 	}
+	
+	public String getSearchString() {
+		return searchString;
+	}
+	public void setSearchString(String searchString) {
+		this.searchString = searchString;
+	}
 	@Override
 	public String toString() {
-		return "FilterRequest [startDate=" + startDate + ", endDate=" + endDate + ", status=" + status + ", asType="
-				+ asType + ", userRoleTypeId=" + userRoleTypeId + ", viewAllUserStatus=" + viewAllUserStatus
-				+ ", featureId=" + featureId + ", userId=" + userId + ", usertypeId=" + userTypeId + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("FilterRequest [startDate=").append(startDate).append(", endDate=").append(endDate)
+				.append(", status=").append(status).append(", asType=").append(asType).append(", userRoleTypeId=")
+				.append(userRoleTypeId).append(", viewAllUserStatus=").append(viewAllUserStatus).append(", featureId=")
+				.append(featureId).append(", userId=").append(userId).append(", userTypeId=").append(userTypeId)
+				.append(", searchString=").append(searchString).append("]");
+		return builder.toString();
 	}
 
 }

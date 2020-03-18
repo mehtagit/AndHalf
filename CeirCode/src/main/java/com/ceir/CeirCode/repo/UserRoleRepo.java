@@ -9,5 +9,6 @@ public interface UserRoleRepo extends JpaRepository<Userrole, Integer>{
 	public List<Userrole> findAll(); 
 	public List<Userrole> findByUserData_Id(long id);   
 	public Userrole findByUserData_IdAndUsertypeData_Id(long userid,long usertypeId);
+	public List<Userrole> findDistinctUserDataByUsertypeData_IdOrUsertypeData_Id(long usertyp1,long usertype2);
 }
  

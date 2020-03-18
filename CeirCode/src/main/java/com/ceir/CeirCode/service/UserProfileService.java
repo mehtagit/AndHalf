@@ -21,6 +21,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import com.ceir.CeirCode.Constants.Datatype;
 import com.ceir.CeirCode.Constants.SearchOperation;
+import com.ceir.CeirCode.SpecificationBuilder.GenericSpecificationBuilder;
 import com.ceir.CeirCode.SpecificationBuilder.SpecificationBuilder;
 import com.ceir.CeirCode.SpecificationBuilder.UserProfileSpecificationBuilder;
 import com.ceir.CeirCode.configuration.FileStorageProperties;
@@ -36,11 +37,13 @@ import com.ceir.CeirCode.model.SystemConfigurationDb;
 import com.ceir.CeirCode.model.User;
 import com.ceir.CeirCode.model.UserProfile;
 import com.ceir.CeirCode.model.UserProfileFileModel;
+import com.ceir.CeirCode.model.Userrole;
 import com.ceir.CeirCode.model.constants.AssigneeType;
 import com.ceir.CeirCode.model.constants.UserStatus;
 import com.ceir.CeirCode.model.constants.UsertypeData;
 import com.ceir.CeirCode.repo.SystemConfigDbListRepository;
 import com.ceir.CeirCode.repo.UserProfileRepo;
+import com.ceir.CeirCode.repo.UserRoleRepo;
 import com.ceir.CeirCode.repoService.SystemConfigDbRepoService;
 import com.ceir.CeirCode.repoService.UserRepoService;
 import com.mysql.cj.x.protobuf.MysqlxCrud.Collection;
@@ -77,6 +80,8 @@ public class UserProfileService {
 	@Autowired
 	StateMgmtServiceImpl stateMgmtServiceImpl;
 
+	@Autowired
+	UserRoleRepo userRoleRepo;
 
 	public Page<UserProfile>  viewAllRecord(FilterRequest filterRequest, Integer pageNo, Integer pageSize){
 		try { 
@@ -91,7 +96,7 @@ public class UserProfileService {
 			}
 			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
 
-			UserProfileSpecificationBuilder uPSB = new UserProfileSpecificationBuilder(propertiesReader.dialect);	
+			GenericSpecificationBuilder<UserProfile> uPSB = new GenericSpecificationBuilder<UserProfile>(propertiesReader.dialect);	
 
 			if(Objects.nonNull(filterRequest.getStartDate()) && filterRequest.getStartDate()!="")
 				uPSB.addSpecification(uPSB.joinWithUser(new SearchCriteria("createdOn",filterRequest.getStartDate(), SearchOperation.GREATER_THAN, Datatype.DATE)));
@@ -104,17 +109,25 @@ public class UserProfileService {
 
 			if(Objects.nonNull(filterRequest.getUserRoleTypeId()) && filterRequest.getUserRoleTypeId() !=0 && filterRequest.getUserRoleTypeId()!=-1)
 				uPSB.addSpecification(uPSB.joinWithMultiple(new SearchCriteria("id",filterRequest.getUserRoleTypeId(), SearchOperation.EQUALITY, Datatype.LONG)));
-
+			
 			if(Objects.nonNull(currentStatus) && currentStatus!=-1) 
 				uPSB.addSpecification(uPSB.joinWithUser(new SearchCriteria("currentStatus",filterRequest.getStatus(), SearchOperation.EQUALITY, Datatype.INTEGER)));
 			else  
 				uPSB.addSpecification(uPSB.joinWithUser(new SearchCriteria("currentStatus",UserStatus.PENDING_ADMIN_APPROVAL.getCode(), SearchOperation.EQUALITY, Datatype.INT)));				
 
-			log.info("uPSB specification:  "+uPSB);
+			if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
+			//uPSB.orSearchUser(new SearchCriteria("username", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+		    uPSB.orSearchUsertype(new SearchCriteria("usertypeName", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+			//uPSB.orSearch(new SearchCriteria("user.username", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+			}
+			
+
 
 			List<StateMgmtDb> statusList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
+            log.info("after fetching state mgmt data");
 
-			Page<UserProfile> page = userProfileRepo.findAll(uPSB.build(),pageable);
+			
+            Page<UserProfile> page = userProfileRepo.findAll(uPSB.build(),pageable);
 
 			for(UserProfile userProfile : page.getContent()) {
 
@@ -132,8 +145,8 @@ public class UserProfileService {
 
 		} catch (Exception e) {
 			log.info("Exception found ="+e.getMessage());
-
-			e.printStackTrace();
+			log.info(e.getClass().getMethods().toString());
+			log.info(e.toString());
 			return null;
 
 		}
@@ -156,6 +169,7 @@ public class UserProfileService {
 					else if(searchAssignee.getType()==AssigneeType.EMAIL.getCode()) {
 						specification.with(new SearchCriteria("email", searchAssignee.getField(),SearchOperation.EQUALITY, Datatype.STRING));
 					}
+					
 					else {
 
 					}
@@ -198,8 +212,15 @@ public class UserProfileService {
             else if(searchAssignee.getUserTypeId()==UsertypeData.Custom.getCode()) {
 				ArrayList<Integer> arrays=new ArrayList<Integer>();
 				arrays.add(UsertypeData.Distributor.getCode());
-				arrays.add(UsertypeData.Retailer.getCode());				
-				specification.addSpecification(specification.inQueryGroupBy("usertypeData",arrays));				
+				arrays.add(UsertypeData.Retailer.getCode());
+				List<Userrole> userData=userRoleRepo.findDistinctUserDataByUsertypeData_IdOrUsertypeData_Id(UsertypeData.Distributor.getCode(), UsertypeData.Retailer.getCode());
+				ArrayList<Long> userIds=new ArrayList<Long>();
+				for(Userrole userRoles:userData) {
+					userIds.add(userRoles.getUserData().getId());
+				}
+				//specification.addSpecification(specification.inQueryGroupBy("usertypeData",arrays));			
+				if(Objects.nonNull(userIds)) 
+				specification.in(new SearchCriteria("user", searchAssignee.getField(),SearchOperation.EQUALITY, Datatype.ARRAYLIST),userIds);
 				assigneeSearchByFields(searchAssignee,specification);
 				return userProfileRepo.findAll(specification.build(),pageable);
 			}

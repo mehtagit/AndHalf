@@ -5,6 +5,7 @@ public class CurrencyFilter {
 	public String  startDate;
 	public String   endDate;
 	private Integer currency;
+	private String searchString;
 	public String getStartDate() {
 		return startDate;
 	}
@@ -23,19 +24,17 @@ public class CurrencyFilter {
 	public void setCurrency(Integer currency) {
 		this.currency = currency;
 	}
+	public String getSearchString() {
+		return searchString;
+	}
+	public void setSearchString(String searchString) {
+		this.searchString = searchString;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("CurrencyFilter [startDate=");
-		builder.append(startDate);
-		builder.append(", endDate=");
-		builder.append(endDate);
-		builder.append(", currency=");
-		builder.append(currency);
-		builder.append("]");
+		builder.append("CurrencyFilter [startDate=").append(startDate).append(", endDate=").append(endDate)
+				.append(", currency=").append(currency).append(", searchString=").append(searchString).append("]");
 		return builder.toString();
 	}
-	
-	
-	
 }

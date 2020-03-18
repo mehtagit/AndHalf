@@ -41,5 +41,13 @@ public class SearchCriteria {
 	public void setDatatype(Datatype datatype) {
 		this.datatype = datatype;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("SearchCriteria [key=").append(key).append(", value=").append(value).append(", searchOperation=")
+				.append(searchOperation).append(", datatype=").append(datatype).append("]");
+		return builder.toString();
+	}
 	
 }
