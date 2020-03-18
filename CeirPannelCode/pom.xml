@@ -9,7 +9,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 
-	<name>jiten</name>
+	<name>vivek</name>
 	<url>http://maven.apache.org</url>
 
 	<parent>
@@ -148,7 +148,7 @@
 	</dependencyManagement>
 	<build>
 
-		<finalName>${artifactId}</finalName>
+		<finalName>vivek18march</finalName>
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
