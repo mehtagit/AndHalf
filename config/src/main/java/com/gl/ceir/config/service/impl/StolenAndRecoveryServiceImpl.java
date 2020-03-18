@@ -276,10 +276,13 @@ public class StolenAndRecoveryServiceImpl {
 		String fileStatus = "fileStatus";
 
 		if(ceirAdmin.equalsIgnoreCase(filterRequest.getUserType())) {
-			if(Objects.nonNull(filterRequest.getUserId()))
-				srsb.orSearch(new SearchCriteria("userId", filterRequest.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));
-			else
-				logger.info("Usertype in request is must when ceir admin is logged in to the system.");
+			/*
+			 * if(Objects.nonNull(filterRequest.getUserId())) srsb.orSearch(new
+			 * SearchCriteria("userId", filterRequest.getUserId(), SearchOperation.EQUALITY,
+			 * Datatype.STRING)); else logger.
+			 * info("Usertype in request is must when ceir admin is logged in to the system."
+			 * );
+			 */
 		}else if(!"Lawful Agency".equalsIgnoreCase(filterRequest.getUserType())) {
 			if(Objects.nonNull(filterRequest.getUserId()))
 				srsb.with(new SearchCriteria("userId", filterRequest.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));
@@ -335,7 +338,7 @@ public class StolenAndRecoveryServiceImpl {
 		}else {
 			if(Objects.nonNull(filterRequest.getFeatureId()) && Objects.nonNull(filterRequest.getUserTypeId())) {
 
-				List<Integer> configuredStatus = new LinkedList<Integer>();
+				List<Integer> configuredStatus = new LinkedList<>();
 				logger.debug(statusList);
 
 				if(Objects.nonNull(statusList)) {	
