@@ -65,6 +65,16 @@ function  selectVip(){
 
 }
 
+function showVisaDetails(){
+	$("#visaDetails").css("display", "block");
+	$("#datepicker").attr("required", true);
+	//$("#visaNumber").attr("required", true);
+	$("#visaImage").attr("required", true);
+	$("#datepicker1").attr("required", true);
+	$("#visaType").attr("required", true);
+
+}
+
 function showOtherUserForm()
 {
 	$('#endUserLabelNID').text($.i18n('Passport Number'));
