@@ -3152,3 +3152,15 @@ thead {
 td.dateDiv {
 	white-space: nowrap;
 }
+.nidValidationMsg
+{color: red;
+    font-size: 12px;
+    position: absolute;
+    margin: 0;
+    top: 135px;}
+    
+    .imgPreviewLink{
+position: absolute;
+top: 30px;
+right: 10px;
+}

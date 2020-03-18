@@ -152,3 +152,20 @@ $("input[type=file]").keypress(function(ev) {
 	}
 	
 	
+
+
+	function previewFile(srcFilePath,srcFileName,txnId){
+		window.filePath = srcFilePath;
+		window.fileName = srcFileName;
+		window.fileExtension = fileName.replace(/^.*\./, '');
+		window.FinalLink = filePath.concat(txnId).concat('/'+fileName);
+		console.log(FinalLink);
+		if(filePath == null || filePath == "" || filePath == undefined && fileName == null || fileName == "" || fileName == undefined ){
+			console.log("File is not Avialable")
+		}else if(fileExtension=="jpg" || fileExtension=="jpeg" || fileExtension=="png" || fileExtension=="gif" || fileExtension=="PNG" ){
+			$("#fileSource").attr("src",FinalLink);
+			$("#viewuplodedModel").openModal();
+		}else{
+			window.open(FinalLink);
+		}
+	}

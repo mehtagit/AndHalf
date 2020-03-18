@@ -2,10 +2,11 @@
  * 
  */
 
+
 $(document).ready(function() {
 	// executes when HTML-Document is loaded and DOM is ready
-
-	viewIndivisualStolen()
+	$('div#initialloader').fadeIn('fast');
+	viewIndivisualStolen();
 
 });
 
@@ -80,7 +81,10 @@ function viewIndivisualStolen()
 			$("label[for='updatesingleStolenimei2']").addClass('active');
 			$("label[for='updatesingleStolenimei3']").addClass('active');
 			$("label[for='updatesingleStolenimei4']").addClass('active');
-
+			
+			$('#PassportNidLink').attr("onclick",'previewFile("'+response.fileLink+'","'+response.fileName+'","'+response.txnId+'")');
+			$('#firImageLink').attr("onclick",'previewFile("'+response.fileLink+'","'+response.firFileName+'","'+response.txnId+'")');
+			$('div#initialloader').delay(300).fadeOut('slow');
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
 			console.log("error in ajax")
@@ -282,3 +286,4 @@ function clearFileName() {
 	$("#singleStolenFileName,#uploadFirSingleName").val('');
 	$('#fileFormateModal').closeModal();
 }
+

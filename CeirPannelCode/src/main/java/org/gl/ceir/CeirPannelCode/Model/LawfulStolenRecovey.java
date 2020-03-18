@@ -22,7 +22,7 @@ public class LawfulStolenRecovey {
 	private SingleImeiDetails singleImeiDetails;
 	private Integer sourceType;
 	private String sourceTypeInterp;
-	private String stateInterp,dateOfStolen,dateOfRecovery,firFileName,complaintType;
+	private String stateInterp,dateOfStolen,dateOfRecovery,firFileName,complaintType,fileLink;
 	private StolenIndividualUserDB stolenIndividualUserDB;
 	private StolenOrganizationUserDB stolenOrganizationUserDB;
 	private String txnId;
@@ -265,6 +265,14 @@ public class LawfulStolenRecovey {
 		this.complaintType = complaintType;
 	}
 
+	public String getFileLink() {
+		return fileLink;
+	}
+
+	public void setFileLink(String fileLink) {
+		this.fileLink = fileLink;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -318,6 +326,8 @@ public class LawfulStolenRecovey {
 		builder.append(firFileName);
 		builder.append(", complaintType=");
 		builder.append(complaintType);
+		builder.append(", fileLink=");
+		builder.append(fileLink);
 		builder.append(", stolenIndividualUserDB=");
 		builder.append(stolenIndividualUserDB);
 		builder.append(", stolenOrganizationUserDB=");
@@ -330,6 +340,7 @@ public class LawfulStolenRecovey {
 		return builder.toString();
 	}
 
+	
 
 
 

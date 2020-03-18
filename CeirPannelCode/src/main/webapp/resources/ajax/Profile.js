@@ -221,8 +221,6 @@ function editProfile(){
 			$("#registrationForm #id").val(resp.id);
 			$("#registrationForm #middleName").val(resp.middleName);
 			$("#registrationForm #lastName").val(resp.lastName);
-			$("#registrationForm #type").val(resp.type);        
-			$("#registrationForm #asTypeName").val(resp.asTypeName);
 			$("#registrationForm #email").val(resp.email); 
 			$("#registrationForm #phoneNo").val(resp.phoneNo);
 			$("#registrationForm #propertyLocation").val(resp.propertyLocation);
@@ -245,6 +243,7 @@ function editProfile(){
 			arr=resp.roles;
             if(resp.userTypeId==4 || resp.userTypeId==5 || resp.userTypeId==6){
              	$("#rolesDiv").show();
+             	$("#AsTypeDiv").show();
                 usertypeData2(resp.userTypeId); 	
             }
 			for (var i = 0; i < arr.length; i++) {

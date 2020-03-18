@@ -112,7 +112,7 @@
                                 <div class="row card-panel">
                                     <div id="reportBlockUnblock">
                                         <div class="container-fluid pageHeader">
-                                            <p class="PageHeading"> <spring:message code="registration.updatereportrecovery" /></p>
+                                            <p id="headingType" class="PageHeading"> <spring:message code="registration.updatereportrecovery" /></p>
                                         </div>
 
                                       <!--   <div class="row">
@@ -269,8 +269,8 @@
 
                                                     <div class="file-field col s12 m6">
                                                         <h6 style="margin: 2px;"><spring:message code="registration.uploadfile" /></h6>
-                                                        <div class="btn">
-                                                            <span><spring:message code="input.selectfile" /></span>
+                                                        <div class="btn" id="bulkRecoveryFileDiv">
+                                                            <span id="bulkRecoveryFileText"><spring:message code="input.selectfile" /></span>
                                                             <input type="file" onchange="isFileValid('bulkRecoveryFile')"
                                                              oninput="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');" 
                                                             oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');"
@@ -280,6 +280,7 @@
                                                         <div class="file-path-wrapper">
                                                             <input class="file-path validate" type="text" id="bulkRecoveryFileName" placeholder="<spring:message code="registration.uploadfile" />"
                                                                  title="Please upload your photo">
+                                                                 <a href="#" id="bulkRecoveryFileLink" style="display: none;">Preview</a>
                                                         </div>
                                                     </div>
                                                     
@@ -326,7 +327,7 @@ onclick="_Services._selectstartDate()"></i></span>
 </div>
 
                                                    <div class="col s12 m12">
-                                                       <a href="./Consignment/sampleFileDownload/7"><spring:message code="input.downlaod.sample" /></a>
+                                                       <a id="sampleFileDownload" href="./Consignment/sampleFileDownload/7"><spring:message code="input.downlaod.sample" /></a>
                                                    </div>
 
                                                    <div class="col s12 m12" style="margin-top: 30px;">
@@ -480,6 +481,16 @@ onclick="_Services._selectstartDate()"></i></span>
 		</div>
 	</div>
 	
+	
+	<div id="viewuplodedModel" class="modal" style="overflow: hidden">
+	<a href="#!" class="modal-close waves-effect waves-green btn-flat">&times;</a>
+		<div class="modal-content">
+			<div class="row">
+					<img src="" id="fileSource" width="400" height="400">
+			</div>
+		</div>
+	</div>
+	
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
 
@@ -547,6 +558,42 @@ src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/j
 		<script type="text/javascript"
 		src="${context}/resources/project_js/validationMsg.js"></script>
 		<script>
+		
+		
+		$.i18n().load( {
+			'en': './resources/i18n/en.json',
+			'km': './resources/i18n/km.json'
+		}).done( function() { 
+			recoveryCompany=$.i18n('recoveryCompany');
+			editrecoveryCompany=$.i18n('editrecoveryCompany');
+			
+			viewPageType()
+		});
+		
+        function viewPageType() {
+            if($('#pageViewType').val()=='view')
+            	{
+            	
+            	   $("#bulkRecoveryFileDiv").removeClass("btn");
+            	   $('#bulkRecoveryFileText').text('');
+            	   $('#bulkRecoveryFile').attr('type','text');
+            	  // $("#bulkRecoveryFileLink").css("display", "block");
+            	   $("#sampleFileDownload").css("display", "none");
+            	   $("#bulkRecoveryFile").css("display", "none");
+            	   
+            	    
+            	$('#headingType').text('');
+            	$('#headingType').text(recoveryCompany);
+            	  $("#bulkRecoveryDiv").find("input,select,textarea,button").prop("disabled",true);
+            	}
+            else{
+            	$('#headingType').text('');
+            	$('#headingType').text(editrecoveryCompany);
+            	  $("#bulkRecoveryDiv").find("input,select,textarea,button").prop("disabled",false);
+            }
+          
+      }
+		
 		$('.datepick').datepicker({
 			dateFormat : "yy-mm-dd"
 		});
@@ -575,20 +622,7 @@ src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/j
         );
         
         
-        window.onload = function () {
-            if($('#pageViewType').val()=='view')
-            	{
-            	$('#headingType').text('');
-            	$('#headingType').text('View Report Recovery');
-            	  $("#bulkRecoveryDiv").find("input,select,textarea,button").prop("disabled",true);
-            	}
-            else{
-            	$('#headingType').text('');
-            	$('#headingType').text(' Update Report Recovery');
-            	  $("#bulkRecoveryDiv").find("input,select,textarea,button").prop("disabled",false);
-            }
-          
-      }
+
 </script>
 		
 

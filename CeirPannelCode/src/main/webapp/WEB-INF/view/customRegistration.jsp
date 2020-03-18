@@ -204,7 +204,12 @@ var contextpath = "${context}";
 		src="${context}/resources/js/custom-script.js"></script>
 
 	<!-- //////////////////////////////////////////////////////////////////////////// -->
-    <%String name=request.getParameter("type");%>
+    <%String name=request.getParameter("type");
+    Integer usertypeId=(Integer)session.getAttribute("usertypeId");
+    if(usertypeId==null){
+    	usertypeId=0;
+    }
+    %>
 	<!-- START CONTENT -->
 	<section id="content" id="mainPage">
 		<!--start container-->
@@ -227,7 +232,12 @@ var contextpath = "${context}";
 							</div>
 								<input type="hidden" id="usertypeId" value="${usertypeId}">
 								<input type="hidden" id="usertypeName" value="<%=name%>">
-								<input type="hidden" id="type" value="2">
+							<%if(usertypeId==12){%>
+							<input type="hidden" id="type" value="1">
+							<%}else{ %>
+							<input type="hidden" id="type" value="2">
+							<%} %>
+								
 							<div class="row">
 								<div class="input-field col s12 m4 l4">
 									<input type="text" name="firstName" id="firstName" required="required" pattern="[A-Za-z]{3,20}" maxlength="20"
@@ -252,7 +262,14 @@ var contextpath = "${context}";
 								</div>
 
 							</div>
-
+                                <%if(usertypeId==12){%>
+								<div class="input-field col s12 m6 l6" id="companyNames" style="margin-top: 22px;">
+									<input type="text" name="companyName" id="companyName" pattern="[A-Za-z\s]+{0,50}" maxlength="50"
+									oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" required="required"
+									/>
+									<label for="companyName"><spring:message code="registration.companyName" /> <span class="star">*</span></label>
+								</div>
+								<%}%>
 											<div class="row">
 								<div class="input-field col s12 m12 l12">
 									<input type="text" maxlength="200" pattern="[A-Za-z0-9._%+-$@,/]+\.+{0,200}" name="propertyLocation"
@@ -394,7 +411,7 @@ var contextpath = "${context}";
 
 								<div class="col s12 m6 l6" style="margin-top: 3px;">
 									<label> <spring:message code="registration.natureofemployment" /> <span class="star">*</span></label>
-									<select id="natureOfEmployment" class="browser-default"onchange="myFunction()" 
+									<select id="natureOfEmployment" class="browser-default" 
 									oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" required>
 										<option value="" disabled selected><spring:message code="registration.natureofemployment" /></option>
 										<option value="Permanent"><spring:message code="registration.permanent" /></option>
@@ -448,7 +465,32 @@ var contextpath = "${context}";
 								</div>
 							</div>
 
+<%if(usertypeId==12){%>
+<div class="row">
+									<div class="input-field col s12 m6 l6"  id="vatNumberField">
+									<input type="hidden" id="vatStatus" value="1"/>
+										<input type="text" required="required" name="vatNo" maxlength="15" id="vatNo" pattern="[A-Za-z0-9]{0,15}"
+										oninput="InvalidMsg(this,'input','<spring:message code="validation.15alphanumeric" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15alphanumeric" />');" 
+										>
+										<label for="vatNo"><spring:message code="registration.vatnumber" /> <span class="star">*</span></label>
+									</div>
 
+									<div id="vatFileDiv">
+										<div class="file-field col s12 m6">
+											<p class="upload-file-label"><spring:message code="registration.vatfile" /> <span class="star">*</span></p>
+											<div class="btn">
+												<span><spring:message code="input.selectfile" /></span> <input required="required" name="file" type="file" id="vatFile" accept=".pdf"
+												oninput="InvalidMsg(this,'fileType','<spring:message code="validation.file" />');" oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.file" />');"   />
+											</div>
+											<div class="file-path-wrapper">
+												<input name="vatFile" class="file-path validate responsive-file-div" type="text"  >
+											</div>
+										</div>
+										<br> <br>
+									</div>
+								</div>
+								<%} %>
+								
 							<div class="row">
 								<div class="input-field col s12 m6 l6">
 									<input type="password" name="password" class=" password" id="password" pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,10}$"
@@ -797,6 +839,7 @@ var contextpath = "${context}";
 	
 	
         $(document).ready(function () {
+        	$('html,body').scrollTop(0);
         	checkBoxClick();
         	$('#langlist').val(data_lang_param);
             $('.modal').modal();
@@ -808,24 +851,28 @@ var contextpath = "${context}";
             		'km': './resources/i18n/km.json'
             	} ).done( function() { 
             	});
+                $('.dropdown-trigger').dropdown();
+                portDropDownData("CUSTOMS_PORT","arrivalPort");
+                var password = document.getElementById("password")
+                , confirm_password = document.getElementById("confirm_password");
+
+              function validatePassword(){
+                if(password.value != confirm_password.value) {
+                	 confirm_password.setCustomValidity("<spring:message code='registration.passnotmatch' />");
+                } else {
+                  confirm_password.setCustomValidity('');
+                }
+              }
+
+              password.onchange = validatePassword;
+              confirm_password.onkeyup = validatePassword;
+         
+              $('form').on('submit', function() {
+            	  $('html, body').animate({scrollTop:0}, 'slow');
+            	});
         });   
 
-        $('.dropdown-trigger').dropdown();
-        portDropDownData("CUSTOMS_PORT","arrivalPort");
-        var password = document.getElementById("password")
-        , confirm_password = document.getElementById("confirm_password");
-
-      function validatePassword(){
-        if(password.value != confirm_password.value) {
-        	 confirm_password.setCustomValidity("<spring:message code='registration.passnotmatch' />");
-        } else {
-          confirm_password.setCustomValidity('');
-        }
-      }
-
-      password.onchange = validatePassword;
-      confirm_password.onkeyup = validatePassword;
-    </script>
+  </script>
 
 	<script>
         populateCountries(
@@ -837,29 +884,6 @@ var contextpath = "${context}";
             "country",
             "state"
         );
-    </script>
-
-	<script>
-        function myFunction() {
-            var x = document.getElementById("mySelect").value;
-            if (x == 'Individual') {
-                document.getElementById("uploadFile").style.display = "block";
-                document.getElementById("passportNumberDiv").style.display = "block";
-                //document.getElementById("companyName").style.display = "none";
-                $('#companyName').style.display = "none";
-            } else {
-
-                document.getElementById("uploadFile").style.display = "none";
-                document.getElementById("passportNumberDiv").style.display = "none";
-            }
-
-            if (x == 'Company', 'Organization', 'Government') {
-                document.getElementById("companyName").style.display = "block";
-            } else {
-
-                document.getElementById("companyName").style.display = "none";
-            }
-        }
     </script>
 </body>
 </html>

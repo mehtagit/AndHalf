@@ -221,7 +221,7 @@ var contextpath = "${context}";
 								</div>
 
 
-<div class="input-field col s12 m6 l6">
+<div class="input-field col s12 m6 l6" style="display: none;" id="AsTypeDiv">
                                     <p style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;"><spring:message code="registration.astype" /> <span
                                             class="star">*</span></p>
                                         <input type="text" readonly="readonly" id="asTypeName" name="type"  />
