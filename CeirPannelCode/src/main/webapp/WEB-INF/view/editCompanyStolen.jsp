@@ -126,7 +126,7 @@
 								<div class="row">
 								<!-- 	<div class="col s12">
 										<ul class="tabs">
-											<li class="tab col s3"><a class="active"
+											<li class="tab col s3deviceListlinkDiv"><a class="active"
 												onclick="showSingleFormDiv()">Individual</a></li>
 											<li class="tab col s3"><a onclick="showBulkFormDiv()">Company/Organisation/Government</a></li>
 										</ul>
@@ -967,6 +967,7 @@ src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/j
 	$('#headingType').text('');
 	$('#headingType').text(stolenCompany);
 	//alert(stolenCompany)
+	$("#deviceListlinkDiv").removeClass("btn");
    /* $("#deviceListlinkDiv").removeClass("btn");
 	   $('#dviceFileText').text('');
 	   $('#deviceBulkStolenFile').attr('type','text');
