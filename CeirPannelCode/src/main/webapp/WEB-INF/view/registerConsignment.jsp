@@ -186,7 +186,7 @@ section {
 												for="expectedDispatcheDate" class="center-align"><spring:message code="input.dispatchdate" /> <span class="star">*</span>
 											</label> <span class="input-group-addon" style="color: #ff4081"><i
 												class="fa fa-calendar" aria-hidden="true"></i></span>
-					<p id="errorMsg" style="color: red;font-size: 12px;position: absolute;margin: 0;top: 40px;right: 0;" class="left"></p>
+					<p id="errorMsgOnModal" class="onEditModalTitle" class="left"></p>
 										</div>
 									</div>
 

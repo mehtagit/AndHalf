@@ -55,7 +55,7 @@ function checkDate(startDate,endDate) {
     	
 		
     if (input2.getTime() ==  input1.getTime()) {
-    	$('#errorMsg').text('');
+    	$('#errorMsgOnModal').text('');
     	$('#'+endDate.id).css('border-color', '');
     	$('#submitFilter,#consignmentSubbmitButton,#filterFieldTable').removeClass( "eventNone" );
     	
@@ -64,12 +64,12 @@ function checkDate(startDate,endDate) {
     else if(input2.getTime() <  input1.getTime()){
     	$('#'+endDate.id).css('border-color', 'red');
     	
-    	$('#errorMsg').text($.i18n(endDate.id));
+    	$('#errorMsgOnModal').text($.i18n(endDate.id));
     	$('#submitFilter,#consignmentSubbmitButton,#filterFieldTable').addClass( "eventNone" );
     	$('#consignmentSubbmitButton').addClass( "eventNone" );
     }
     else{
-    	$('#errorMsg').text('');
+    	$('#errorMsgOnModal').text('');
     	$('#'+endDate.id).css('border-color', '');
     	$('#submitFilter,#consignmentSubbmitButton').removeClass( "eventNone" );
     }
@@ -144,5 +144,7 @@ function checkDateOnModal(startDate,endDate) {
     else{
     	$('#errorMsgOnModal').text('');
     	$('#'+endDate.id).css('border-color', '');
+   	 $(':input[type="submit"]').removeClass( "eventNone" );
     }
+    
 }
