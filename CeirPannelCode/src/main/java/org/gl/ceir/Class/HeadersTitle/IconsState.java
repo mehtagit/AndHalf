@@ -1390,8 +1390,6 @@ public class IconsState {
 		// URL link 
 		String file = fileName == null ? null : fileName.replace(" ", "%20");
 
-		log.info("@@@@  "+source+"&&"+requestTypeValue);
-
 		String viewAction="";
 		String editAction="";
 		String emptyURL="JavaScript:void(0);"; 
@@ -1429,6 +1427,8 @@ public class IconsState {
 			viewAction="openStolenRecoveryPage('editCompanyRecovery','view','"+txnId+"')";
 
 		}
+	
+		
 		/*
 		 * else {
 		 * 
@@ -1455,7 +1455,15 @@ public class IconsState {
 				+deleteIconTitle+"></i></a>"; 
 		
 		
-		if(("0".equals(status)) && "Approved".equals(userStatus)) {
+		if(source.equals("4") && status.equals("0")) {
+				download="<a onclick="+downloadURL+"  class="+disableIconClass+"><i class="
+						+disableDownloadIcon+" aria-hidden=\"true\" title="
+						+downloadIconTitle+" ></i></a>";
+				error="<a onclick="+errorURL+" class="+disableIconClass+"><i class="
+						+disableErrorIcon+" aria-hidden=\"true\" title="
+						+errorIconTitle+" ></i></a>";
+				log.info("source->" +source+ "status-->" +status);
+		}else if(("0".equals(status)) && "Approved".equals(userStatus)) {
 			error="<a onclick="+errorURL+" class="+disableIconClass+"><i  class="+disableErrorIcon+" aria-hidden=\"true\" title="
 					+errorIconTitle+"  ></i></a>"; 
 		}else if(("1".equals(status) || "2".equals(status)) && "Approved".equals(userStatus)) {
@@ -1469,7 +1477,6 @@ public class IconsState {
 					+deleteIconTitle+"></i></a>"; 
 			
 		}
-		
 
 
 		if("Disable".equals(userStatus)) {
@@ -1876,8 +1883,17 @@ public class IconsState {
 		String reject = "<a onclick="+rejectAction+"><i class="
 				+rejectIcon+" aria-hidden=\"true\" title=" +rejectIconTitle+" ></i></a>";
 
-
-		if(("0".equals(status) || "1".equals(status)) && "Approved".equals(userStatus)){
+		if(source.equals("4") && status.equals("0")) {
+			download="<a onclick="+downloadURL+"  class="+disableIconClass+"><i class="
+					+disableDownloadIcon+" aria-hidden=\"true\" title="
+					+downloadIconTitle+" ></i></a>";
+			error="<a onclick="+errorURL+" class="+disableIconClass+"><i class="
+					+disableErrorIcon+" aria-hidden=\"true\" title="
+					+errorIconTitle+" ></i></a>";
+			
+			log.info("source->" +source+ "status-->" +status);
+		
+		}else if(("0".equals(status) || "1".equals(status)) && "Approved".equals(userStatus)){
 			approve = "<a onclick="+approveAction+" class=\"eventNone\"><i class="+disableApproveIcon+" aria-hidden=\"true\" title="
 					+approveIconTitle+" ></i></a>";
 			reject = "<a onclick="+rejectAction+" class=\"eventNone\"><i class="+disableRejectIcon+" aria-hidden=\"true\" title="

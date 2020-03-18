@@ -91,15 +91,16 @@ function pageRendering(){
 							+"</label>"+"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off'>"+
 							"<span	class='input-group-addon' style='color: #ff4081'>"+
 							"<i	class='fa fa-calendar' aria-hidden='true' style='float: right; margin-top: -37px;'>"+"</i>"+"</span>");
-					}
+					$( "#"+date[i].id ).datepicker({
+						dateFormat: "yy-mm-dd",
+						 maxDate: new Date()
+			        }); 	
+				}
 					else if(date[i].type === "text"){
 						$("#configTableDiv").append("<div class='input-field col s6 m2' style='margin-top: 22px;'><input type="+date[i].type+" id="+date[i].id+"><label for='parametername' class='center-align'>"+date[i].title+"</label></div>");
 						
 					}
-				$( "#"+date[i].id ).datepicker({
-					dateFormat: "yy-mm-dd",
-					 maxDate: new Date()
-		        }); 
+				
 				} 
 			
 			// dynamic dropdown portion
