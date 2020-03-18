@@ -4,7 +4,7 @@ public class FilterRequest_UserPaidStatus {
 	
 	private Integer deviceIdType,deviceType,taxPaidStatus,consignmentStatus,action,featureId,roleTypeUserId,userId,userTypeId;
 	private String createdOn,startDate,endDate,modifiedOn,nid,remarks,userType,txnId,origin,searchString;
-	  private Long imei1;
+	  private String imei1;
 	public Integer getDeviceIdType() {
 		return deviceIdType;
 	}
@@ -119,10 +119,10 @@ public class FilterRequest_UserPaidStatus {
 	public void setSearchString(String searchString) {
 		this.searchString = searchString;
 	}
-	public Long getImei1() {
+	public String getImei1() {
 		return imei1;
 	}
-	public void setImei1(Long imei1) {
+	public void setImei1(String imei1) {
 		this.imei1 = imei1;
 	}
 	@Override

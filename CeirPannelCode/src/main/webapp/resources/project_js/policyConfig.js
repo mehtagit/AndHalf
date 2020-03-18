@@ -19,8 +19,6 @@ var role = currentRoleType == null ? roleType : currentRoleType;
 function configManagementDatatable(){
 	
 	var filterRequest={
-			"endDate":$('#endDate').val(),
-			"startDate":$('#startDate').val(),
 			"userId":parseInt(userId),
 			"featureId":parseInt(featureId),
 			"userTypeId": parseInt($("body").attr("data-userTypeID")),
@@ -94,12 +92,16 @@ function pageRendering(){
 							+"</label>"+"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off'>"+
 							"<span	class='input-group-addon' style='color: #ff4081'>"+
 							"<i	class='fa fa-calendar' aria-hidden='true' style='float: right; margin-top: -37px;'>"+"</i>"+"</span>");
-					}
+					$( "#"+date[i].id ).datepicker({
+						dateFormat: "yy-mm-dd",
+						 maxDate: new Date()
+			        });	
+				}
 					else if(date[i].type === "text"){
 						$("#configTableDiv").append("<div class='input-field col s6 m2' style='margin-top: 22px;'><input type="+date[i].type+" id="+date[i].id+"><label for='parametername' class='center-align'>"+date[i].title+"</label></div>");
 						
 					}
-					
+				 
 				} 
 			
 			// dynamic dropdown portion
@@ -113,7 +115,7 @@ function pageRendering(){
 							"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
 
 							"<select id="+dropdown[i].id+" class='select2 form-control boxBorder boxHeight initialized'>"+
-							"<option value='null' disabled>"+dropdown[i].title+
+							"<option value='null'>"+dropdown[i].title+
 							"</option>"+
 							"</select>"+
 							"</div>"+
@@ -128,10 +130,7 @@ function pageRendering(){
 				$('#'+button[i].id).attr("onclick", button[i].buttonURL);
 			
 			}
-			
-			$('.datepicker').datepicker({
-				dateFormat: "yy-mm-dd"
-				});
+
 		}
 
 	}); 
@@ -187,15 +186,18 @@ function setViewPopupData(data){
 	$("#viewValue").val(data.value);
 	$("#viewPeriod").val(data.period);
 	$("#description").val(data.description);
-	$("#viewstatus").val(data.status);
+	$("#viewstatus").val(data.statusInterp);
 	$("#remarks").val(data.remark);
 	$("#viewpolicyOrder").val(data.policyOrder);
 }
 
-function updateDetails(tag){
+function updateDetails(tag,status){
 	$("#editPolicyConfigModel").openModal({
         dismissible:false
     });
+	
+	$("#EditStatusValue").val(status)
+	
 	var RequestData = {
 			"tag" : tag
 	} 
@@ -221,25 +223,28 @@ function setEditPopupData(data){
 	$("#editValue").val(data.value);
 	$("#editPeriod").val(data.period);
 	$("#editdescription").val(data.description);
-	$("#editstatus").val(data.status);
+	$("#editstatus").val(data.statusInterp);
 	$("#editremarks").val(data.remark);
 	$("#editpolicyOrder").val(data.policyOrder);
+	$("#EditStatusValue").val(data.status)
+	
 }
 
 
 function updatePolicy(){
+	
 	 var updateRequest = {
 			 "id" : parseInt($("#EditId").val()),
 			 "tag" : $("#editTag").val(),
 			 "value" : $("#editValue").val(),
 			 "period" : $("#editPeriod").val(),
 			 "description" : $("#editdescription").val(),
-			 "status" : $("#editstatus").val(),
+			 "status" : parseInt($("#EditStatusValue").val()),
 			 "remark" : $("#editremarks").val(),
-			 "policyOrder": $ ("#editviewpolicyOrder").val()
+			 "policyOrder": $("#editviewpolicyOrder").val()
 	}
 	
-	
+	console.log("updateRequest-->" +updateRequest);
 	$.ajax({
 		url : "./policy/update",
 		data :	JSON.stringify(updateRequest),
@@ -256,6 +261,7 @@ function updatePolicy(){
 		}
 	});
 	
+	return false;
 }
 
 function confirmModel(){

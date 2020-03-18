@@ -211,7 +211,8 @@
     <script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
     <!--custom-script.js - Add your own theme custom JS-->
     <script type="text/javascript" src="${context}/resources/js/custom-script.js"></script>
-    
+    			<script type="text/javascript"
+		src="${context}/resources/project_js/enterKey.js"></script>
     <script>
     function StockController(selectedUserTypeRole,selectedRoleTypeId){
     	console.log("selectedUserTypeRole=="+selectedUserTypeRole);

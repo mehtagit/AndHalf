@@ -81,7 +81,7 @@ textarea.materialize-textarea {
     width: 180px;
     margin-left: 15px;
     text-align: right;
-    margin-right: 5px;
+    padding-right: 25px;
 }
 
 .info-div {

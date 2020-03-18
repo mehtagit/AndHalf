@@ -40,15 +40,15 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 	//*******************************************View Pop up data *************************************************************************************************
 	function viewUploadedStockDetails(txnId){
 
-		
-		 $('#viewStockModal').openModal({
+		var userType=$("body").attr("data-roleType");
+		$('#viewStockModal').openModal({
 	    	   dismissible:false
 	       });
 		
 		var role = currentRoleType == null ? roleType : currentRoleType;
 
 		$.ajax({
-			url : "./openStockPopup?reqType=editPage&txnId="+txnId+'&role='+role,
+			url : "./openStockPopup?reqType=editPage&txnId="+txnId+'&role='+role+'&userType='+userType+"&userId="+userId,
 			dataType : 'json',
 			contentType : 'application/json; charset=utf-8',
 			type : 'GET',
@@ -108,17 +108,17 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 	//***************************************** start edit Pop up data ***********************************************************************************************
 
 	function EditUploadedStockDetails(txnId){ 
-
 		var role = currentRoleType == null ? roleType : currentRoleType;
-
+		var userType=$("body").attr("data-roleType");
 		$.ajax({
-			url : "./openStockPopup?reqType=editPage&txnId="+txnId+'&role='+role,
+			url : "./openStockPopup?reqType=editPage&txnId="+txnId+'&role='+role+'&userType='+userType+"&userId="+userId,
 			dataType : 'json',
 			contentType : 'application/json; charset=utf-8',
 			type : 'GET',
 			success : function(data) {
 				console.log(data)
 				setEditPopupData(data) 
+				console.log(url)
 			},
 			error : function() {
 				//alert("Failed");
@@ -430,11 +430,16 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 								+"</label>"+
 								"<span	class='input-group-addon' style='color: #ff4081'>"+
 								"<i	class='fa fa-calendar' aria-hidden='true' style='float: right; margin-top: -37px;'>"+"</i>"+"</span>");
+						$( "#"+date[i].id ).datepicker({
+							dateFormat: "yy-mm-dd",
+							 maxDate: new Date()
+				        });
 					} 
 					else if(date[i].type === "text"){
 						$("#consignmentTableDIv").append("<div class='input-field col s6 m2' ><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
 
 					}
+					 
 				}
 	//			dynamic dropdown portion
 				var dropdown=data.dropdownList;
@@ -496,9 +501,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 				}
 				
 			
-				$('.datepicker').datepicker({
-					dateFormat: "yy-mm-dd"
-					});
+				
 			}
 
 	//	$("#filterBtnDiv").append();
@@ -730,7 +733,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 	
 		if(isNaN(StockStatus))
 		{
-			StockStatus='';
+		StockStatus='';
 		console.log(" StockStatus=="+StockStatus);
 		}
 	

@@ -136,10 +136,14 @@
 									+"</label>"+
 									"<span	class='input-group-addon' style='color: #ff4081'>"+
 									"<i	class='fa fa-calendar' aria-hidden='true' style='float: right; margin-top: -37px;'>"+"</i>"+"</span>");
-
+							$( "#"+date[i].id ).datepicker({
+								dateFormat: "yy-mm-dd",
+								 maxDate: new Date()
+					        });
 						}else if(date[i].type === "text"){
 							$("#CurrencyTableDiv").append("<div class='input-field col s6 m2' ><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
 						}
+						 
 					} 
 				
 				// dynamic dropdown portion
@@ -167,19 +171,6 @@
 							$('#'+button[i].id).attr("onclick", button[i].buttonURL);
 						}
 
-					/*	for(i=0; i<button.length; i++){
-							$('#'+button[i].id).text(button[i].buttonTitle);
-							if(button[i].type === "HeaderButton"){
-								$('#'+button[i].id).attr("onclick", button[i].buttonURL);
-							}
-							
-						}*/
-
-				
-					
-				$('.datepicker').datepicker({
-						dateFormat: "yy-mm-dd"
-					});
 				}
 			}); 
 			
@@ -194,7 +185,7 @@
 		$.getJSON('./getDropdownList/CURRENCY', function(data) {
 				/ $("#expectedArrivalPort").empty(); /
 				for (i = 0; i < data.length; i++) {
-					$('<option>').val(data[i].value).text(data[i].interp).appendTo('#currencyType,#currency');
+					$('<option>').val(data[i].value).text(data[i].interp).appendTo('#currencyType,#currency,#editCurrency');
 				}
 			});
 	}
@@ -215,8 +206,8 @@
 		var request={
 					  "date":   $('#month').val(),
 					  "currency": $('#currency').val(),
-					  "riel":   $('#cambodianRiel').val(),
-					  "doller": $('#doller').val(),
+					  "riel":   parseFloat($('#cambodianRiel').val()),
+					  "dollar": parseFloat($('#dollar').val()),
 				}
 		
 		console.log("request------------->" +JSON.stringify(request))
@@ -275,6 +266,10 @@
 		$("#editCambodianRiel").val(result.riel);
 		$("#editDollar").val(result.dollar);
 		
+		$("label[for='editMonth']").addClass('active');
+		$("label[for='editCurrency']").addClass('active');
+		$("label[for='editCambodianRiel']").addClass('active');
+		$("label[for='editDollar']").addClass('active');
 	}
 	
 	
@@ -285,13 +280,15 @@
 	
 		var request ={ 
 				 "id" : parseInt($("#editId").val()),
-				 "port":   $('#editport').val(),
-				 "address": $('#editportAddress').val(),
+				 "date":   $('#editMonth').val(),
+				 "currency": $('#editCurrency').val(),
+				 "riel":   parseFloat($('#editCambodianRiel').val()),
+				 "dollar": parseFloat($('#editDollar').val()),
 		}
 		
 		console.log("request--->" +JSON.stringify(request))
 		$.ajax({
-			url: './updatePortAddress',
+			url: './updateCurrency',
 			type: 'POST',
 			data : JSON.stringify(request),
 			dataType : 'json',
@@ -299,7 +296,7 @@
 			success: function (data, textStatus, jqXHR) {
 			
 				console.log("Updated data---->" +data)
-				$("#editPortAddressModal").closeModal();	
+				$("#editCurrencyModal").closeModal();	
 				$("#updateFieldsSuccess").openModal({
 			        dismissible:false
 			    });

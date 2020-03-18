@@ -107,6 +107,13 @@
 	right: 10px;
 	top: 10px;
 }
+.card-panel {
+margin: 0.5rem;
+}
+
+.section {
+padding-top: 0;
+}
     </style>
 
 
@@ -172,6 +179,8 @@ var contextpath = "${context}";
 		<div class="container">
 			<div class="section">
 				<form id="registrationForm"  onsubmit="return passwordPopup()" >
+				
+			
 					<div class="card-panel">
 						<%-- <a href="${context}/"
 							style="float: right; margin: -10px; margin-right: -20px;"><i
@@ -188,16 +197,16 @@ var contextpath = "${context}";
 								
 									<input type="text" name="firstName" id="firstName" placeholder=""
 										  pattern="[A-Za-z]{0,20}" maxlength="20"   
-					oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
-										  title= "<spring:message code="validation.20Character" />" required/ > <label 
+					oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
+					  required > <label 
 										class="center-align" ><spring:message code="input.firstName" /> <span class="star">*</span></label>
 								</div>
 
 								<div class="input-field col s12 m4 l4">
 									<input type="text" name="middleName" placeholder=""
 										class="form-control boxBorder boxHeight" id="middleName"
-										 pattern="[A-Za-z]{0,20}" maxlength="20"  oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
-										  title= "<spring:message code="validation.20Character" />" > <label >
+										 pattern="[A-Za-z]{0,20}" maxlength="20"  oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');" 
+										 oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"> <label >
 										<spring:message code="input.middleName" /> </label>
 								</div>
 
@@ -205,8 +214,8 @@ var contextpath = "${context}";
 									<input type="text" name="lastName" placeholder=""
 										class="form-control boxBorder boxHeight" id="lastName"
 										pattern="[A-Za-z]{0,20}" maxlength="20" 
-										oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
-										 title= "<spring:message code="validation.20Character" />" required /> <label>
+								oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');" 
+										 oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');" required> <label>
 										<spring:message code="input.lastName" />  <span class="star">*</span>
 									</label>
 								</div>
@@ -228,10 +237,7 @@ var contextpath = "${context}";
                                 
                                                                 <div class="input-field col s12 m6 l6" id="passportNumberDiv" style="display: none;">
                                     <input placeholder="" type="text" name="passportNo"  readonly="readonly" class="form-control boxBorder boxHeight"
-                                      title= "<spring:message code="validation.12Character" />" 
-                                      
-									oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
-										 id="passportNo" maxlength="12"
+                                   id="passportNo" maxlength="12"
 										 pattern="[A-Za-z0-9\s]{0,12}"/>
                                     <label><spring:message code="registration.nationalid/passworardnumber" /> <span
                                             class="star">*</span></label>
@@ -279,8 +285,9 @@ var contextpath = "${context}";
 								<div class="input-field col s12 m6 l6">
 									<input type="text"   placeholder="" name="email" maxlength="320"
 										class="form-control boxBorder boxHeight" id="email"
-										oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
-										title= "<spring:message code="validation.emial" />"  pattern="[^@]+@[^@]+\.[a-zA-Z]{2,320}"  required / >
+										oninput="InvalidMsg(this,'email','<spring:message code="validation.email" />');"
+										 oninvalid="InvalidMsg(this,'email','<spring:message code="validation.email" />');"
+								 pattern="[^@]+@[^@]+\.[a-zA-Z]{2,320}"  required >
 										  <label for="email"> <spring:message code="input.email" /> <span
 										class="star">*</span></label>
 								</div>
@@ -289,8 +296,8 @@ var contextpath = "${context}";
 									<input   placeholder="" type="text"  maxlength="20"
 										class="form-control boxBorder boxHeight" id="phoneNo"
 										pattern="[0-9]{8,20}" 
-										oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
-										title= "<spring:message code="validation.contact" />" required / > <label>
+								oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');" 
+								oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');" required  > <label>
 										<spring:message code="registration.phonenumber" /> <span class="star">*</span> 
 									</label>
 								</div>
@@ -310,9 +317,11 @@ var contextpath = "${context}";
 									<input type="text" maxlength="200"
 										pattern="[A-Za-z0-9._%+-$@,/]+\.{0,200}" placeholder="" name="propertyLocation"
 										class="form-control boxBorder boxHeight"
-										oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
-										title= "<spring:message code="validation.200characters" />" 
-										id="propertyLocation" required / > <label for="propertyLocation"><spring:message code="input.address" />  <span
+										
+								oninput="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');" 
+								oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');"
+										
+										id="propertyLocation" required  > <label for="propertyLocation"><spring:message code="input.address" />  <span
 										class="star">*</span></label> 
 								</div>
 
@@ -320,8 +329,9 @@ var contextpath = "${context}";
 									<input type="text" name="street" maxlength="20"
 										class="form-control boxBorder boxHeight" id="street"
 										pattern="[A-Za-z0-9._%+-$@,/]+\.{0,20}" placeholder="" 
-										oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
-										title= "<spring:message code="validation.20Character" />" required / >
+								oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');" 
+								oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
+								required >
 									<label for="street"><spring:message code="input.streetNumber" /> <span class="star">*</span>
 									</label>
 								</div>
@@ -329,8 +339,9 @@ var contextpath = "${context}";
 									<input type="text" name="village" maxlength="30"
 										class="form-control boxBorder boxHeight" id="village"
 										pattern="[A-Za-z0-9._%+-$@,/]+\.{0,30}" placeholder="" 
-										oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
-										title= "<spring:message code="validation.30characters" />" required />
+										oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');" 
+										oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
+									required >
 									<label for="village"><spring:message code="input.village" /> <span class="star">*</span>
 									</label>
 								</div>
@@ -338,8 +349,9 @@ var contextpath = "${context}";
 									<input type="text" name="locality" maxlength="30"
 										class="form-control boxBorder boxHeight" id="locality"
 										pattern="[A-Za-z0-9._%+-$@,/]+\.{0,30}" placeholder="" 
-										oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
-										title= "<spring:message code="validation.30characters" />" required / >
+									
+										oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');" 
+										oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');" required  >
 									<label for="locality"><spring:message code="input.locality" /> <span class="star">*</span>
 									</label>
 								</div>
@@ -348,17 +360,19 @@ var contextpath = "${context}";
 									<input type="text" name="district" placeholder="" maxlength="30"
 										class="form-control boxBorder boxHeight" id="district"
 										pattern="[A-Za-z0-9._%+-$@,/]+\.{0,30}" 
-										oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
-										title= "<spring:message code="validation.30characters" />" required / >
+										
+										oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');" 
+										oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
+										 required  >
 									<label for="district"><spring:message code="input.district" /> <span class="star">*</span>
 									</label>
 								</div>
 								<div class="input-field col s12 m6 l6">
 									<input type="text" placeholder="" name="commune" maxlength="30"
 										class="form-control boxBorder boxHeight" id="commune"
-										pattern="[A-Za-z0-9._%+-$@,/]+\.{0,30}" required
-										oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
-										title= "<spring:message code="validation.30characters" />" required / >
+										pattern="[A-Za-z0-9._%+-$@,/]+\.{0,30}" 
+										oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');" 
+										oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');" required  >
 									<label for="commune"><spring:message code="input.commune" /> <span class="star">*</span>
 									</label>
 								</div>
@@ -366,8 +380,8 @@ var contextpath = "${context}";
 									<input type="text" placeholder="" name="postalCode" maxlength="6"
 										class="form-control boxBorder boxHeight" id="postalCode"
 										pattern="[A-Za-z0-9\s]{0,6}"
-										oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
-										title= "<spring:message code="validation.postalcode" />" >
+										oninput="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');" 
+										oninvalid="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');">
 									<label for="postalCode"><spring:message code="input.postalCode" /></label>
 								</div>
 								
@@ -379,7 +393,7 @@ var contextpath = "${context}";
 										<spring:message code="table.country" /> <span class="star">*</span>
 									</p>
 									<select id="country" class="browser-default" class="mySelect"
-title="<spring:message code="validation.selectFieldMsg" />" onchange="setCustomValidity('')"  oninvalid="this.setCustomValidity('<spring:message code="validation.selectFieldMsg" />')"									
+onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"								
 										style="padding-left: 0;" required></select>
 								</div>
 
@@ -389,7 +403,7 @@ title="<spring:message code="validation.selectFieldMsg" />" onchange="setCustomV
 										 <spring:message code="input.province" /> <span class="star">*</span>
 									</p>
 									<select id="state" class="browser-default" class="mySelect"
-title="<spring:message code="validation.selectFieldMsg" />" onchange="setCustomValidity('')"  oninvalid="this.setCustomValidity('<spring:message code="validation.selectFieldMsg" />')"									
+onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"									
 										style="padding-left: 0;" required></select>
 								</div>
 							</div>
@@ -470,18 +484,16 @@ title="<spring:message code="validation.selectFieldMsg" />" onchange="setCustomV
                                 </div> --%>
                             </div>    
 								
-								<div class="input-field col s12 m6 l6">
+								<div class="input-field col s12 m6 l6" id="rolesDiv" style="display: none;">
 									<p
 										style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
 										<spring:message code="table.roleType" /> <span class="star">*</span>
 									</p> 
-									<select multiple  name="roles" id="usertypes" required="required"  >
+									<select multiple  name="roles" id="usertypes"  >
 										<option value="" disabled><spring:message code="table.roleType" /> </span></option>
-								                   
 								</select>  
 								</div>
-								
-
+							
 								<!-- <div class="input-field col s12 m6 l6">
 									<p
 										style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
@@ -560,7 +572,10 @@ title="<spring:message code="validation.selectFieldMsg" />" onchange="setCustomV
 										<spring:message code="registration.securityQuestion1" /> <span class="star">*</span>
 									</p>
 									<input type="hidden"  class="id" id="id0">
-									<select class="browser-default questionId" id="questionId0" name="questionId" required>
+									<select class="browser-default questionId" id="questionId0" name="questionId"
+									oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" 
+									oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+									 required>
 									<option value="" disabled selected>
 											<spring:message code="registration.securityQuestion1" /></option> 
 									<c:forEach items="${questions}" var="question"> 
@@ -575,9 +590,9 @@ title="<spring:message code="validation.selectFieldMsg" />" onchange="setCustomV
 									<input  type="text" placeholder="" name="answer" 
 										class="form-control boxBorder boxHeight answer" id="answer0"
 										pattern="[A-Za-z0-9\s]{0,50}"
-										maxlength="50" 
-										oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
-										title= "<spring:message code="validation.50character" />" required / > <label><spring:message code="registration.answer" />
+										maxlength="50" oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" 
+										oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
+									required  > <label><spring:message code="registration.answer" />
 										<span class="star">*</span>
 									</label>
 								</div>
@@ -589,7 +604,10 @@ title="<spring:message code="validation.selectFieldMsg" />" onchange="setCustomV
 										<spring:message code="registration.securityQuestion2" /> <span class="star">*</span>
 									</p>
 									<input type="hidden"  class="id"  id="id1"/>
-									<select name="questionId" id="questionId1" class="browser-default questionId" required>
+									<select name="questionId" id="questionId1" class="browser-default questionId" 
+									oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" 
+									oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+									required>
 									<option value="" disabled selected>
 											<spring:message code="registration.securityQuestion2" /></option>
 									<c:forEach items="${questions}" var="question"> 		
@@ -605,8 +623,9 @@ title="<spring:message code="validation.selectFieldMsg" />" onchange="setCustomV
 										class="form-control boxBorder boxHeight answer" id="answer1"
 										pattern="[A-Za-z0-9\s]{0,50}"
 										maxlength="50"
-										title= "<spring:message code="validation.50character" />"
-										 required="required"> <label ><spring:message code="registration.answer" />
+										oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" 
+										oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
+										 required> <label ><spring:message code="registration.answer" />
 										<span class="star">*</span>
 									</label>
 								</div>
@@ -620,7 +639,9 @@ title="<spring:message code="validation.selectFieldMsg" />" onchange="setCustomV
 										<spring:message code="registration.securityQuestion2" /> <span class="star">*</span>
 									</p>
 								     <input type="hidden"  class="id" id="id2" />
-									<select name="questionId" id="questionId2" class="browser-default questionId" required>
+									<select name="questionId" id="questionId2" class="browser-default questionId" 
+									oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" 
+									oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" required>
 									<option value="" disabled selected>
 											<spring:message code="registration.securityQuestion2" /></option>
 									<c:forEach items="${questions}" var="question"> 		
@@ -637,8 +658,10 @@ title="<spring:message code="validation.selectFieldMsg" />" onchange="setCustomV
 										class="form-control boxBorder boxHeight answer" id="answer2"
 										title= "<spring:message code="validation.50character" />"
 										maxlength="50" 
-										 oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
-										pattern="[A-Za-z0-9\s]{0,50}" required / > <label ><spring:message code="registration.answer" />
+										pattern="[A-Za-z0-9\s]{0,50}" 
+										oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" 
+										oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
+										required > <label ><spring:message code="registration.answer" />
 										<span class="star">*</span>
 									</label>
 								</div>
@@ -668,7 +691,14 @@ title="<spring:message code="validation.selectFieldMsg" />" onchange="setCustomV
 								<%-- <a href="${context}/verifyOtp" class="btn" id="btnSave"> Submit</a> --%>
 								<button class="btn"  id="btnSave" type="submit" 
 									style="margin-left: 10px;"><spring:message code="button.update" /></button>
-								<a target="_parent" onclick="redirectToDashboard()" class="btn" style="margin-left: 10px;"><spring:message code="modal.cancel" /></a>
+								<%String userLatestLang=(String)session.getAttribute("updatedLanguage"); 
+								%>
+								<%if(userLatestLang!=null){%>
+								
+								<a target="_parent" href="./?lang=<%=userLatestLang%>" class="btn" style="margin-left: 10px;"><spring:message code="modal.cancel" /></a>
+                                <%}else{ %>
+								<a target="_parent" href="./?lang=<%=session.getAttribute("language")%>" class="btn" style="margin-left: 10px;"><spring:message code="modal.cancel" /></a>
+                                <%} %>
 							</div>
 						</div>
 						</div>
@@ -766,8 +796,12 @@ title="<spring:message code="validation.selectFieldMsg" />" onchange="setCustomV
             <div class="row">
             
                 <div class="input-field col s12 center">
-                    <a target="_parent"  href="javascript:window.location.href=window.location.href" class="btn"><spring:message code="modal.ok" /></a>
-                </div>
+								<%if(userLatestLang!=null){%>
+								
+								<a target="_parent" href="./?lang=<%=userLatestLang%>" class="btn" style="margin-left: 10px;"><spring:message code="modal.cancel" /></a>
+                                <%}else{ %>
+								<a target="_parent" href="./?lang=<%=session.getAttribute("language")%>" class="btn" style="margin-left: 10px;"><spring:message code="modal.cancel" /></a>
+                                <%} %>                </div>
             </div>
         </div>
     </div>
@@ -786,13 +820,13 @@ title="<spring:message code="validation.selectFieldMsg" />" onchange="setCustomV
                                        <input type="hidden" id="userid"  name="userid" value="${userId}">
                         <div class="row">          
                             <div class="input-field col s12 m12">
-                                <input type="text" placeholder="Enter OTP of Email" name="emailOtp" maxlength="6"
+                                <input type="text" placeholder="<spring:message code="placeholder.emailotp" />" name="emailOtp" maxlength="6"
                                  required="required" id="emailOtp" pattern="[0-9]{0,6}" 
                                   oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
-										title= "<spring:message code="validation.6digit" />" placeholder=""/ required />
+										title= "<spring:message code="validation.6digit" />" placeholder="" required />
                             </div> 
                             <div class="input-field col s12 m12">
-                                <input placeholder="Enter OTP of Phone" type="text" name="phoneOtp" maxlength="6" 
+                                <input placeholder="<spring:message code="placeholder.optphone" />" type="text" name="phoneOtp" maxlength="6" 
 										pattern="[0-9]{0,6}"
 										 oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
 										title= "<spring:message code="validation.6digit" />" 
@@ -923,7 +957,8 @@ title="<spring:message code="validation.selectFieldMsg" />" onchange="setCustomV
 		src="${context}/resources/project_js/dragableModal.js"></script>	
 			<script type="text/javascript"
 		src="${context}/resources/project_js/enterKey.js"></script>
-	 
+	 	<script type="text/javascript"
+		src="${context}/resources/project_js/validationMsg.js"></script>
     <script> 
     var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 	window.parent.$('#langlist').on('change', function() {
@@ -937,7 +972,8 @@ title="<spring:message code="validation.selectFieldMsg" />" onchange="setCustomV
         //	 $("select[required]").css({position: "absolute", display: "inline", height: 0, padding: 0, width: 0});
        populateCountries("country", "state");
     
-       usertypeData();  
+       //usertypeData(); 
+       //usertypeData2(id)
        editProfile();
    	
    $('.modal').modal();

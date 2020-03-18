@@ -250,7 +250,9 @@
                                             <div id="bulkRecoveryDiv" class="col s12 m12" style="display: block">
                                                 <form action="#" style="margin-top: 30px;" onsubmit="return updateCompanyRecoveryRequest()" method="POST" enctype="multipart/form-data"  id="">
                                                     <div class="input-field col s12 m6 l6" style="margin-top: 20px;">
-                                                        <input type="text" name="bulkRecoveryquantity" class="form-control boxBorder boxHeight" placeholder=""
+                                                        <input type="text" name="bulkRecoveryquantity" required="required" class="form-control boxBorder boxHeight" placeholder=""
+                                                              oninput="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');" 
+                                                            oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
                                                             id="bulkRecoveryquantity" maxlength="7" pattern="[0-9]{1,7}" 
                                                             title="Please enter number up to 7 digits">
                                                         <label for="bulkRecoveryquantity"><spring:message code="operator.quantity" /> <span class="star">*</span></label>
@@ -258,7 +260,10 @@
 <input type="text" id="pageViewType" value="${viewType}" style="display: none;">
 <input type="text" id="existingStolenTxnId" style="display:none" value="${stolenTxnId}" >
                                                     <div class="input-field col s12 m6">
-                                                        <textarea id="bulkRecoveryRemark" maxlength="200000" class="materialize-textarea" placeholder=""></textarea>
+                                                        <textarea id="bulkRecoveryRemark"oninput="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
+                                                          oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
+                                                          maxlength="10000"
+                                                           class="materialize-textarea" placeholder=""></textarea>
                                                         <label for="bulkRecoveryRemark"><spring:message code="input.remarks" /></label>
                                                     </div>
 
@@ -266,11 +271,15 @@
                                                         <h6 style="margin: 2px;"><spring:message code="registration.uploadfile" /></h6>
                                                         <div class="btn">
                                                             <span><spring:message code="input.selectfile" /></span>
-                                                            <input type="file" id="bulkRecoveryFile" placeholder="Upload Photo">
+                                                            <input type="file" onchange="isFileValid('bulkRecoveryFile')"
+                                                             oninput="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');" 
+                                                            oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');"
+                                                               accept=".csv"
+                                                             onchange="isFileValid('bulkRecoveryFile')" id="bulkRecoveryFile" placeholder="Upload Photo">
                                                         </div>
                                                         <div class="file-path-wrapper">
-                                                            <input class="file-path validate" type="text" id="bulkRecoveryFileName" placeholder=""
-                                                                placeholder="Upload file" title="Please upload your photo">
+                                                            <input class="file-path validate" type="text" id="bulkRecoveryFileName" placeholder="<spring:message code="registration.uploadfile" />"
+                                                                 title="Please upload your photo">
                                                         </div>
                                                     </div>
                                                     
@@ -330,59 +339,77 @@ onclick="_Services._selectstartDate()"></i></span>
                                                     <div class="input-field col s12 m12">
                                                         <input type="text" name="bulkRecoveryaddress" class="form-control boxBorder boxHeight" placeholder=""
                                                             id="bulkRecoveryaddress" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,200}" 
-                                                            title="Please enter alphabets and numbers upto 200 characters only"
+                                                            title="" oninput="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
+                                                           oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
                                                              maxlength="200" required="required">
                                                         <label for="bulkRecoveryaddress"><spring:message code="input.address" /> <span class="star">*</span></label>
                                                     </div>
                     
                                                     <div class="input-field col s12 m6 l6">
                                                         <input type="text" name="bulkRecoverystreetNumber" class="form-control boxBorder boxHeight" placeholder=""
-                                                            id="bulkRecoverystreetNumber" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,50}" title="Please enter alphabets and numbers upto 50 characters only"
-                                                             maxlength="50" required="required">
+                                                            id="bulkRecoverystreetNumber" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}" title=""
+                                                             oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
+                                                       oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
+                                                             maxlength="30" required="required">
                                                         <label for="bulkRecoverystreetNumber"><spring:message code="input.streetNumber" /> <span class="star">*</span></label>
                                                     </div>
 
                                                     <div class="input-field col s12 m6 l6">
-                                                        <input type="text" name="bulkRecoveryvillage" id="bulkRecoveryvillage" placeholder="" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,50}" title="Please enter alphabets and numbers upto 50 characters only"
-                                                             maxlength="50" required="required">
+                                                        <input type="text" name="bulkRecoveryvillage" id="bulkRecoveryvillage" placeholder="" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}" title=""
+                                                             oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
+                                                       oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
+                                                             maxlength="30" required="required">
                                                         <label for="bulkRecoveryvillage"><spring:message code="input.village" /> <span class="star">*</span></label>
                                                     </div>
                     
                                                     <div class="input-field col s12 m6 l6">
                                                         <input type="text" name="bulkRecoverylocality" class="form-control boxBorder boxHeight" placeholder=""
-                                                            id="bulkRecoverylocality" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,50}" title="Please enter alphabets and numbers upto 50 characters only"
-                                                             maxlength="50" required="required">
+                                                            id="bulkRecoverylocality" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}" title=""
+                                                             oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
+                                                       oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
+                                                             maxlength="30" required="required">
                                                         <label for="bulkRecoverylocality"> <spring:message code="input.locality" /><span class="star">*</span></label>
                                                     </div>
                         
                                                     <div class="input-field col s12 m6 l6">
-                                                        <input type="text" name="bulkRecoverydistrict" id="bulkRecoverydistrict" placeholder="" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,50}" title="Please enter alphabets and numbers upto 50 characters only"
-                                                             maxlength="50" required="required">
+                                                        <input type="text" name="bulkRecoverydistrict" id="bulkRecoverydistrict" placeholder="" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}" title=""
+                                                             oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
+                                                       oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
+                                                             maxlength="30" required="required">
                                                         <label for="bulkRecoverydistrict"><spring:message code="input.district" /> <span class="star">*</span></label>
                                                     </div>
                         
                                                     <div class="input-field col s12 m6 l6">
-                                                        <input type="text" name="bulkRecoverycommune" id="bulkRecoverycommune" placeholder="" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,50}" title="Please enter alphabets and numbers upto 50 characters only"
-                                                             maxlength="50" required="required">
+                                                        <input type="text" name="bulkRecoverycommune" id="bulkRecoverycommune" placeholder="" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}" title=""
+                                                         oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
+                                                       oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
+                                                             maxlength="30" required="required">
                                                         <label for="bulkRecoverycommune"> <spring:message code="input.commune" /><span class="star">*</span></label>
                                                     </div>
                         
                                                     <div class="input-field col s12 m6 l6">
                                                         <input type="text" name="bulkRecoverypin"  placeholder="" class="form-control boxBorder boxHeight"
-                                                            id="bulkRecoverypin" pattern="[0-9]{0,20}" title="Please enter  numbers upto 20 digits only" 
-                                                        maxlength="20" required="required">
+                                                            id="bulkRecoverypin" pattern="[0-9]{0,6}" title="" 
+                                                            oninput="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');" 
+                                                             oninvalid="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');"
+                                                        maxlength="6" required="required">
                                                         <label for="bulkRecoverypin"> <spring:message code="input.postalCode" /><span class="star">*</span></label>
                                                     </div>
                     
                                                     <div class="col s12 m6 l6">
                                                         <label><spring:message code="table.country" /> <span class="star">*</span></label>
                                                         <select id="bulkRecoverycountry" class="browser-default" class="mySelect"
+                                                        oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" 
+                                                        oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
                                                             style="padding-left: 0;" required></select>
                                                     </div>
                     
                                                     <div class="col s12 m6 l6">
                                                         <label> <spring:message code="input.province" /><span class="star">*</span></label>
-                                                        <select id="bulkRecoverystate" class="browser-default" class="mySelect" style="padding-left: 0;"
+                                                        <select id="bulkRecoverystate" 
+                                                        oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" 
+                                                        oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+                                                        class="browser-default" class="mySelect" style="padding-left: 0;"
                                                             required></select>
                                                     </div>
                                                     
@@ -403,7 +430,7 @@ onclick="_Services._selectstartDate()"></i></span>
 
                                                     <div class="input-field col s12 center">
                                                         <button class="btn" type="submit"><spring:message code="button.submit" /></button>
-                                                        <a href="./stolenRecovery" class="btn modal-trigger"
+                                                        <a href="./stolenRecovery?FeatureId=5" class="btn modal-trigger"
                                                             style="margin-left: 10px;"><spring:message code="modal.cancel" /></a>
                                                     </div>
                                                 </form>
@@ -426,7 +453,7 @@ onclick="_Services._selectstartDate()"></i></span>
             <div class="row">
                 <div class="input-field col s12 center">
                     <div class="input-field col s12 center">
-                        <a  href ="./stolenRecovery" class=" btn"><spring:message code="modal.ok" /></a>
+                        <a  href ="./stolenRecovery?FeatureId=5" class=" btn"><spring:message code="modal.ok" /></a>
                     </div>
                 </div>
             </div>
@@ -436,6 +463,23 @@ onclick="_Services._selectstartDate()"></i></span>
             </section>
 
 
+ <div id="fileFormateModal" class="modal">
+		<h6 class="modal-header"><spring:message code="fileValidationModalHeader" /></h6>
+		<div class="modal-content">
+			<div class="row">
+				<h6 id="fileErrormessage"><spring:message code="fileValidationName" /><br> <br> <spring:message code="fileValidationFormate" /> <br><br> <spring:message code="fileValidationSize" /> </h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<div class="input-field col s12 center">
+						<button class="modal-close  btn" onclick="clearFileName()"
+							style="margin-left: 10px;"><spring:message code="modal.ok" /></button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
 
@@ -499,7 +543,9 @@ src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/j
 		src="${context}/resources/project_js/editCompanyRecovery.js"></script>
 		<script type="text/javascript"
 		src="${context}/resources/project_js/lawfulStolenRecovery.js"></script>
-		
+		<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
+		<script type="text/javascript"
+		src="${context}/resources/project_js/validationMsg.js"></script>
 		<script>
 		$('.datepick').datepicker({
 			dateFormat : "yy-mm-dd"

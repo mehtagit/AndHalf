@@ -40,7 +40,7 @@
 							orderCellsTop : true,
 							"ordering" : false,
 							"bPaginate" : true,
-							"bFilter" : true,
+							"bFilter" : false,
 							"bInfo" : true,
 							"bSearchable" : true,
 					
@@ -109,11 +109,19 @@
 									
 									if(data[i].attachedFiles[j].docType==null)
 									{
-									console.log("if condition file and doctype is empty");		$("#chatMsg").append("<div class='chat-message-content clearfix'><a href='"+projectpath+"/"+data[i].attachedFiles[j].fileName+"/"+data[i].attachedFiles[j].grievanceId+"/"+data[i].attachedFiles[j].docType+"'>"+data[i].attachedFiles[j].fileName+"</a></div>");
+									console.log("if condition file and doctype is empty");	
+									//$("#chatMsg").append("<div class='chat-message-content clearfix'><a href='"+projectpath+"/"+data[i].attachedFiles[j].fileName+"/"+data[i].attachedFiles[j].grievanceId+"/"+data[i].attachedFiles[j].docType+"'>"+data[i].attachedFiles[j].fileName+"</a></div>");
 									}
 								else{
-								
-									$("#chatMsg").append("<div class='chat-message-content clearfix'> <span class='document-Type' ><b>Document Type : </b>"+data[i].attachedFiles[j].docType+"</span> <a href='"+projectpath+"/"+data[i].attachedFiles[j].fileName+"/"+data[i].attachedFiles[j].grievanceId+"/"+data[i].attachedFiles[j].docType+"'>"+data[i].attachedFiles[j].fileName+"</a></div>");
+									if(data[i].attachedFiles[j].docType=="")
+									{
+									//$("#chatMsg").append("<div class='chat-message-content clearfix'> <span class='document-Type' ><b>Document Type : </b>"+data[i].attachedFiles[j].docType+"</span> <a href='"+projectpath+"/"+data[i].attachedFiles[j].fileName+"/"+data[i].attachedFiles[j].grievanceId+"/"+data[i].attachedFiles[j].docType+"'>"+data[i].attachedFiles[j].fileName+"</a></div>");
+									}
+									else{
+									
+									fileName=data[i].attachedFiles[j].fileName.split(' ').join('%20');
+									$("#chatMsg").append("<div class='chat-message-content clearfix'> <span class='document-Type' ><b>Document Type : </b>"+data[i].attachedFiles[j].docType+"</span> <a onclick=fileDownload('"+fileName+"','actual','"+data[i].attachedFiles[j].grievanceId+"','"+data[i].attachedFiles[j].docType+"')>"+data[i].attachedFiles[j].fileName+"</a></div>");
+									}
 								}
 								}
 								$("#chatMsg").append("<div class='chat-message-content clearfix'><hr></div>");
@@ -150,13 +158,37 @@
 						$('#grievanceTxnId').text(txnId);
 						$('#grievanceUserid').val(userId);
 						var usertype = $("body").attr("data-roleType");
+						var projectpath=path+"/Consignment/dowloadFiles/actual";
 						console.log("usertype=="+usertype);
 						$("#viewPreviousMessage").empty();
 						for(var i=0; i<data.length; ++i)
 						{
 
-							$("#viewPreviousMessage").append("<div class='chat-message-content clearfix'><h6 style='float: left; font-weight: bold;' id='mesageUserType'>" +data[i].userDisplayName+" : </h6><span style='float:right;'>" + data[i].modifiedOn + "</span><h6>" + data[i].reply + "</h6></div>");
-
+							$("#viewPreviousMessage").append("<div class='chat-message-content clearfix'><h6 style='float: left; font-weight: bold; margin-top:0;' id='mesageUserType'>" +data[i].userDisplayName+" : </h6><span style='float:right;'>" + data[i].modifiedOn + "</span><h6>" + data[i].reply + "</h6></div>");
+							
+							for (var j=0 ; j<data[i].attachedFiles.length;j++)
+							{
+								if(data[i].attachedFiles[j].docType==null)
+									{
+									
+									//$("#viewPreviousMessage").append("<div class='chat-message-content clearfix'><a href='"+projectpath+"/"+data[i].attachedFiles[j].fileName+"/"+data[i].attachedFiles[j].grievanceId+"/"+data[i].attachedFiles[j].docType+"'>"+data[i].attachedFiles[j].fileName+"</a></div>");
+									}
+								else{
+								//alert(data[i].attachedFiles[j].docType);
+								if(data[i].attachedFiles[j].docType=="")
+									{
+									//$("#chatMsg").append("<div class='chat-message-content clearfix'> <span class='document-Type' ><b>Document Type : </b>"+data[i].attachedFiles[j].docType+"</span> <a href='"+projectpath+"/"+data[i].attachedFiles[j].fileName+"/"+data[i].attachedFiles[j].grievanceId+"/"+data[i].attachedFiles[j].docType+"'>"+data[i].attachedFiles[j].fileName+"</a></div>");
+									}
+								else{
+									
+									
+									fileName=data[i].attachedFiles[j].fileName.split(' ').join('%20');
+									$("#viewPreviousMessage").append("<div class='chat-message-content clearfix'> <span class='document-Type' ><b>Document Type : </b>"+data[i].attachedFiles[j].docType+"</span> <a onclick=fileDownload('"+fileName+"','actual','"+data[i].attachedFiles[j].grievanceId+"','"+data[i].attachedFiles[j].docType+"') >"+data[i].attachedFiles[j].fileName+"</a></div>");
+								}
+								}
+								
+								
+							}
 
 						}
 						if(usertype=='CEIRAdmin')
@@ -385,3 +417,13 @@
 	
 	
 	
+	function enableSelectFile(){
+		$("#endUserdocTypeFile1").attr("disabled", false);
+		$("#endUserdocTypeFile1").attr("required", true);
+		$("#endUserFileLabel").append('<span class="star">*</span>');
+	}
+	$("input[type=file]").keypress(function(ev) {
+	    return false;
+	    //ev.preventDefault(); //works as well
+
+	});

@@ -82,11 +82,18 @@ public class UploadPaidStatus {
 		Integer pageSize = Integer.parseInt(request.getParameter("length"));
 		Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize;
 		String userType = (String) session.getAttribute("usertype");
+		Integer userId = (Integer) session.getAttribute("userid");
+		Integer userTypeId = (Integer) session.getAttribute("usertypeId");
+		log.info("userId==="+userId);
+
 		log.info("userType in uploadPaidStatus" +userType);
 		Object response = null;
 		Gson gsonObject=new Gson();
 		Gson gson=new Gson();
 		FilterRequest_UserPaidStatus filterrequest = gsonObject.fromJson(filter, FilterRequest_UserPaidStatus.class);
+		filterrequest.setUserId(userId);
+		filterrequest.setUserType(userType);
+		filterrequest.setUserTypeId(userTypeId);
 		filterrequest.setSearchString(request.getParameter("search[value]"));
 		log.info("filterrequest--->"+filterrequest);
 		response = uploadPaidStatusFeignClient.view(filterrequest, pageNo, pageSize, file);
@@ -115,7 +122,7 @@ public class UploadPaidStatus {
 					String status = contentModelList.getTaxPaidStatusInterp();
 					String origin = contentModelList.getOrigin();
 					//params for action 
-					Long imei1 = contentModelList.getFirstImei();
+					String imei1 = contentModelList.getFirstImei();
 					String action = iconState.userPaidStatusIcon(imei1);
 
 					
@@ -141,7 +148,7 @@ public class UploadPaidStatus {
 					String status = contentModelList.getStateInterp();
 					String origin = contentModelList.getOrigin();
 					//params for action 
-					Long imei1 = contentModelList.getFirstImei();
+					String imei1 = contentModelList.getFirstImei();
 					String action = iconState.adminUserPaidStatusIcon(imei1,createdOn,contentModelList.getTxnId());
 
 					Object[] data = {createdOn,nid,txnId,country,taxStatus,origin,status,action};
@@ -166,7 +173,7 @@ public class UploadPaidStatus {
 					String status = contentModelList.getStateInterp();
 					
 					//params for action 
-					Long imei1 = contentModelList.getFirstImei();
+					String imei1 = contentModelList.getFirstImei();
 					String action = iconState.deviceActivationIcon(imei1,createdOn,contentModelList.getTxnId());
 
 					Object[] data = {createdOn,txnId,nid,action};
@@ -216,7 +223,7 @@ public class UploadPaidStatus {
 		
 		
 		if("Immigration".equals(userType)){
-			String[] names= {"HeaderButton",Translator.toLocale("button.register"),"./register-devices","btnLink","FilterButton", Translator.toLocale("button.filter"),"filter("+ConfigParameters.languageParam+")","submitFilter"};
+			String[] names= {"HeaderButton",Translator.toLocale("button.register"),"JavaScript:void(0);","btnLink","FilterButton", Translator.toLocale("button.filter"),"filter("+ConfigParameters.languageParam+")","submitFilter"};
 			for(int i=0; i< names.length ; i++) {
 				button = new Button();
 				button.setType(names[i]);

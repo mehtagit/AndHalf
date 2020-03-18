@@ -27,12 +27,25 @@ public class UserPaidStatusContent {
 	private Double price;
 	private Integer currency;
 	private String currencyInterp;
-	private Long firstImei;
-	private Long secondImei;
-	private Long thirdImei;
-	private Long fourthImei;
+	private String firstImei;
+	private String secondImei;
+	private String thirdImei;
+	private String fourthImei;
 	private Object endUserDB;
 	private String origin;
+	@Override
+	public String toString() {
+		return "UserPaidStatusContent [id=" + id + ", status=" + status + ", stateInterp=" + stateInterp
+				+ ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", nid=" + nid + ", deviceStatus="
+				+ deviceStatus + ", taxPaidStatus=" + taxPaidStatus + ", taxPaidStatusInterp=" + taxPaidStatusInterp
+				+ ", deviceType=" + deviceType + ", deviceTypeInterp=" + deviceTypeInterp + ", deviceIdType="
+				+ deviceIdType + ", deviceIdTypeInterp=" + deviceIdTypeInterp + ", multiSimStatus=" + multiSimStatus
+				+ ", country=" + country + ", deviceSerialNumber=" + deviceSerialNumber + ", txnId=" + txnId
+				+ ", deviceStatusInterp=" + deviceStatusInterp + ", price=" + price + ", currency=" + currency
+				+ ", currencyInterp=" + currencyInterp + ", firstImei=" + firstImei + ", secondImei=" + secondImei
+				+ ", thirdImei=" + thirdImei + ", fourthImei=" + fourthImei + ", endUserDB=" + endUserDB + ", origin="
+				+ origin + "]";
+	}
 	public Integer getId() {
 		return id;
 	}
@@ -159,28 +172,28 @@ public class UserPaidStatusContent {
 	public void setCurrencyInterp(String currencyInterp) {
 		this.currencyInterp = currencyInterp;
 	}
-	public Long getFirstImei() {
+	public String getFirstImei() {
 		return firstImei;
 	}
-	public void setFirstImei(Long firstImei) {
+	public void setFirstImei(String firstImei) {
 		this.firstImei = firstImei;
 	}
-	public Long getSecondImei() {
+	public String getSecondImei() {
 		return secondImei;
 	}
-	public void setSecondImei(Long secondImei) {
+	public void setSecondImei(String secondImei) {
 		this.secondImei = secondImei;
 	}
-	public Long getThirdImei() {
+	public String getThirdImei() {
 		return thirdImei;
 	}
-	public void setThirdImei(Long thirdImei) {
+	public void setThirdImei(String thirdImei) {
 		this.thirdImei = thirdImei;
 	}
-	public Long getFourthImei() {
+	public String getFourthImei() {
 		return fourthImei;
 	}
-	public void setFourthImei(Long fourthImei) {
+	public void setFourthImei(String fourthImei) {
 		this.fourthImei = fourthImei;
 	}
 	public Object getEndUserDB() {
@@ -195,19 +208,5 @@ public class UserPaidStatusContent {
 	public void setOrigin(String origin) {
 		this.origin = origin;
 	}
-	@Override
-	public String toString() {
-		return "UserPaidStatusContent [id=" + id + ", status=" + status + ", stateInterp=" + stateInterp
-				+ ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", nid=" + nid + ", deviceStatus="
-				+ deviceStatus + ", taxPaidStatus=" + taxPaidStatus + ", taxPaidStatusInterp=" + taxPaidStatusInterp
-				+ ", deviceType=" + deviceType + ", deviceTypeInterp=" + deviceTypeInterp + ", deviceIdType="
-				+ deviceIdType + ", deviceIdTypeInterp=" + deviceIdTypeInterp + ", multiSimStatus=" + multiSimStatus
-				+ ", country=" + country + ", deviceSerialNumber=" + deviceSerialNumber + ", txnId=" + txnId
-				+ ", deviceStatusInterp=" + deviceStatusInterp + ", price=" + price + ", currency=" + currency
-				+ ", currencyInterp=" + currencyInterp + ", firstImei=" + firstImei + ", secondImei=" + secondImei
-				+ ", thirdImei=" + thirdImei + ", fourthImei=" + fourthImei + ", endUserDB=" + endUserDB + ", origin="
-				+ origin + "]";
-	}
-
 	
 }

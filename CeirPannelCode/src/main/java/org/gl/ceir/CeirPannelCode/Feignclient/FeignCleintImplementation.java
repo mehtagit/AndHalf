@@ -1,6 +1,7 @@
 package org.gl.ceir.CeirPannelCode.Feignclient;
 import java.util.List;
 
+import org.gl.ceir.CeirPannelCode.Controller.CustomerCareRequest;
 import org.gl.ceir.CeirPannelCode.Model.ActionModel;
 import org.gl.ceir.CeirPannelCode.Model.AddMoreFileModel;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentModel;
@@ -114,7 +115,7 @@ public interface FeignCleintImplementation {
 
 	//edit stock feign  controller
 	@RequestMapping(value="/stock/view" ,method=RequestMethod.POST) 
-	public @ResponseBody StockUploadModel fetchUploadedStockByTxnId(StockUploadModel stockUploadModel) ;
+	public @ResponseBody StockUploadModel fetchUploadedStockByTxnId(FilterRequest filterRequest) ;
 
 
 
@@ -383,8 +384,22 @@ public @ResponseBody ConfigContentModel viewAdminFeign(FilterRequest filterReque
 				public @ResponseBody AddMoreFileModel addMoreBuutonCount(AddMoreFileModel addMoreCount);	
 				
 				
+				//************************************************ view customer Care Feign *****************************************
 
-		}
+				@PostMapping("/customer-care/record")
+				public @ResponseBody GenricResponse viewcustomerDetialsfeign(
+						@RequestParam(name = "listType", required = false) String listType,
+						@RequestBody CustomerCareRequest customerCareRequest);
+
+				
+
+				//***************************************************CC Policy Notification Feign********************************
+
+				@RequestMapping(value="/policy-breach-notification" ,method=RequestMethod.POST) 
+				public Object ccdashBoardNotification(@RequestBody CustomerCareRequest filterRequest,
+						@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
+						@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize);
+}
 
 
 

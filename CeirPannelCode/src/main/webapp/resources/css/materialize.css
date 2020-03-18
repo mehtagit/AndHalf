@@ -1019,7 +1019,7 @@
 }
 
 .teal-text {
-	color: #009688 !important;
+	color: #009688;
 }
 
 .teal.darken-1 {
@@ -8729,7 +8729,7 @@ uppercase
 	will-change: top, left;
 }
 
-.backdrop {
+/* .backdrop {
 	position: absolute;
 	opacity: 0;
 	display: none;
@@ -8744,7 +8744,7 @@ uppercase
 	-o-transform-origin: 50% 10%;
 	transform-origin: 50% 10%;
 	will-change: transform, opacity;
-}
+} */
 
 .btn, .btn-large, .btn-flat {
 	border: none;
@@ -10625,6 +10625,7 @@ select {
 
 select.browser-default {
 	display: block;
+	 box-shadow: none;
     /* outline: 3px solid  #fff; */
 }
 
@@ -13153,7 +13154,7 @@ footer {
 
 iframe {
 	height: 100vh;
-	padding-bottom: 50px
+	/* padding-bottom: 50px */
 }
 
 form {
@@ -13167,6 +13168,14 @@ form {
 .col.s3.m2.l1 {
 	padding: 0;
 }
+
+/* @media screen and (min-device-width: 1230px) and  (max-device-width: 1320px) {
+	.col.s3.m2.l1 {
+	padding: 0;
+	margin: 1px;
+	float: right;
+}
+} */
 
 .deviceErrorTitle {
 	color: red;
@@ -13214,12 +13223,25 @@ textarea::-webkit-scrollbar-track {
 }
 
 textarea::-webkit-scrollbar-thumb {
-  background: #444; 
+  background: #b4b1b1; 
   border-radius: 10px;
   cursor: auto;
 }
 
 textarea::-webkit-scrollbar-thumb:hover {
-  background: #555; 
+  background: #999; 
   cursor: auto;
+}
+.green-text {
+    color: #4CAF50 !important;
+    font-size: 25px !important;
+}
+.red-text {
+    color: #F44336 !important;
+    font-size: 25px !important;
+}
+
+.teal-text {
+    color: #009688;
+    font-size: 25px !important;
 }

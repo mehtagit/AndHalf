@@ -42,8 +42,8 @@ function typeApprovedDataTable(lang){
 
 function Datatable(Url,dataUrl){
 	var txn= (txnIdValue == 'null' && transactionIDValue == undefined)? $('#transactionID').val() : transactionIDValue;
-if(userType=="CEIRAdmin"){
-var userId = 0;
+	var userId = userType=="CEIRAdmin" ? 0 : parseInt($("body").attr("data-userID")); 
+
 		var filterRequest={
 				"endDate":$('#endDate').val(),
 				"startDate":$('#startDate').val(),
@@ -54,26 +54,10 @@ var userId = 0;
 				"userTypeId": parseInt($("body").attr("data-userTypeID")),
 				"userType":$("body").attr("data-roleType"),
 				"adminStatus" : parseInt($('#Status').val()),
-				}
-	}else{
-		var userId = parseInt($("body").attr("data-userID"))
-			var filterRequest={
-				"endDate":$('#endDate').val(),
-				"startDate":$('#startDate').val(),
-			  	"tac" : $('#tac').val(),
-			  	"txnId" : txn,
-			  	"userId":userId,
-				"featureId":parseInt(featureId),
-				"userTypeId": parseInt($("body").attr("data-userTypeID")),
-				"userType":$("body").attr("data-roleType"),
-				"status" : parseInt($('#Status').val()),
-				}
-	}
-	
-
-
+				}	
+		
 if(lang=='km'){
-	var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
+	var langFile='./resources/i18n/khmer_datatable.json';
 }
 	$.ajax({
 		url: Url,
@@ -152,10 +136,14 @@ function pageRendering(){
 							+"</label>"+
 							"<span	class='input-group-addon' style='color: #ff4081'>"+
 							"<i	class='fa fa-calendar' aria-hidden='true' style='float: right; margin-top: -37px;'>"+"</i>"+"</span>");
-	
+					$( "#"+date[i].id ).datepicker({
+						dateFormat: "yy-mm-dd",
+						 maxDate: new Date()
+			        });
 				}else if(date[i].type === "text"){
 					$("#typeAprroveTableDiv").append("<div class='input-field col s6 m2' ><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
 				}
+				 
 			} 
 			
 			if(userType=="TRC"){
@@ -193,11 +181,6 @@ function pageRendering(){
 				}
 			}
 	
-			
-			
-			$('.datepicker').datepicker({
-				dateFormat: "yy-mm-dd"
-			});
 
 			$.getJSON('./getDropdownList/'+featureId+'/'+$("body").attr("data-userTypeID"), function(data) {
 

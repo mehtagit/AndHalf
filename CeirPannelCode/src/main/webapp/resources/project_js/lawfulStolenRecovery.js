@@ -39,7 +39,7 @@ var userType = $("body").attr("data-roleType");
 var sourceType = localStorage.getItem("sourceType");
 
 function filterStolen(){
-	
+
 	if(userType=="Lawful Agency"){
 		Datatable('./headers?type=lawfulStolenHeaders','./stolenData?featureId='+featureId)
 	}else if(userType =="CEIRAdmin"){
@@ -116,15 +116,19 @@ function pageRendering(){
 				if(date[i].type === "date"){	
 					$("#consignmentTableDIv").append("<div class='input-field col s6 m2'>"+
 							"<div id='enddatepicker' class='input-group'>"+
-							"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off'>"+
+							"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off' onchange='checkDate(startDate,endDate)'>"+
 							"<label for="+date[i].id+">"+date[i].title
 							+"</label>"+
 							"<span	class='input-group-addon' style='color: #ff4081'>"+
 							"<i	class='fa fa-calendar' aria-hidden='true' style='float: right; margin-top: -37px;'>"+"</i>"+"</span>");
-
+					$( "#"+date[i].id ).datepicker({
+						dateFormat: "yy-mm-dd",
+						 maxDate: new Date()
+			        }); 
 				}else if(date[i].type === "text"){
 					$("#consignmentTableDIv").append("<div class='input-field col s6 m2' ><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
 				}
+				
 			} 
 
 			// dynamic dropdown portion
@@ -268,10 +272,35 @@ function exportStolenRecoveryData()
 	var info = table.page.info(); 
 	var pageNo=info.page;
 	var pageSize =info.length;
-	console.log("--------"+pageSize+"---------"+pageNo);
-	console.log("stolenRecoveryStartDate  ="+stolenRecoveryStartDate+"  stolenRecoveryEndDate=="+stolenRecoveryEndDate+"  stolenRecoveryTxnId="+stolenRecoveryTxnId+" stolenRecoveryFileStatus ="+stolenRecoveryFileStatus+"=role="+role+" stolenRecoverySourceStatus="+stolenRecoverySourceStatus+" stolenRecoveryRequestType"+stolenRecoveryRequestType);
-	window.location.href="./exportStolenRecovery?stolenRecoveryStartDate="+stolenRecoveryStartDate+"&stolenRecoveryEndDate="+stolenRecoveryEndDate+"&stolenRecoveryTxnId="+stolenRecoveryTxnId+"&stolenRecoveryFileStatus="+stolenRecoveryFileStatus+"&stolenRecoverySourceStatus="+stolenRecoverySourceStatus+"&stolenRecoveryRequestType="+stolenRecoveryRequestType+"&pageSize="+pageSize+"&pageNo="+pageNo+"&roleType="+roleType;
 
+	var filterRequest={
+			"endDate":stolenRecoveryEndDate,
+			"startDate":stolenRecoveryStartDate,
+			"txnId":stolenRecoveryTxnId,
+			"grievanceStatus":stolenRecoveryFileStatus,
+			"sourceType":stolenRecoverySourceStatus,
+			"requestType":stolenRecoveryRequestType,
+			"featureId":featureId,
+			"roleType":roleType,
+			"pageNo":parseInt(pageNo),
+			"pageSize":parseInt(pageSize)
+			
+	}
+	console.log(JSON.stringify(filterRequest))
+	$.ajax({
+		url: './exportStolenRecovery',
+		type: 'POST',
+		dataType : 'json',
+		contentType : 'application/json; charset=utf-8',
+		data : JSON.stringify(filterRequest),
+		success: function (data, textStatus, jqXHR) {
+			  window.location.href = data.url;
+
+		},
+		error: function (jqXHR, textStatus, errorThrown) {
+			
+		}
+	});
 }
 
 
@@ -284,7 +313,6 @@ function openStolenRecoveryModal()
 
 function openStolenRecoveryPage(pageType,pageView,txnId)
 {
-	console.log("###");
 	window.location.href = "./openlawfulStolenRecoveryPage?pageType="+pageType+"&pageView="+pageView+"&txnId="+txnId;
 }
 
@@ -415,7 +443,7 @@ function saveIndivisualStolenRequest(){
 
 	var singleStolendeviceIDType=$('#singleStolendeviceIDType').val();
 	var singleStolendeviceType=$('#singleStolendeviceType').val();
-	var singleStolenOperator=$('#singleStolenOperator').val();
+	var singleStolenOperator=parseInt($('#singleStolenOperator').val());
 	var singleStolenSimStatus=$('#singleStolenSimStatus').val();
 	var singleStolenComplaintType=$('#singleStolenComplaintType').val();
 	var singleStolenphone2 = $('#singleStolenphone2').val();
@@ -444,7 +472,7 @@ function saveIndivisualStolenRequest(){
 	var stolenIndividualUserDB={
 			"alternateContactNumber": singleStolenphone1,
 			"commune": singleStolencommune,
-			"complaintType": singleStolenComplaintType,
+			
 			"contactNumber": singleStolenphone2,
 			"country": country,
 			"deviceBrandName": singleStolendeviceBrandName,
@@ -472,6 +500,7 @@ function saveIndivisualStolenRequest(){
 			"middleName": singleStolenmiddleName,
 			"modelNumber":singleStolenmodalNumber,
 			"nid": singleStolennIDPassportNumber,
+
 			"operator": singleStolenOperator,
 			"phoneNo": singleStolenphone2,
 			"postalCode": singleDevicepin,
@@ -491,6 +520,8 @@ function saveIndivisualStolenRequest(){
 			"requestType":0,
 			"sourceType":5,
 			"firFileName":fileFileDetails,
+			"complaintType": singleStolenComplaintType,
+			"operatorTypeId":singleStolenOperator,
 			"stolenIndividualUserDB":stolenIndividualUserDB
 	}
 	formData.append('firFileName', $('#uploadFirSingle')[0].files[0]);
@@ -592,11 +623,12 @@ function saveCompanyStolenRequest(){
 			"incidentPostalCode": deviceBulkStolenpin,
 			"incidentProvince": state3,
 			"incidentStreet": deviceBulkStolenstreetNumber,
+			"incidentPropertyLocation": deviceBulkStolenaddress,
 			"incidentVillage": deviceBulkStolenvillage,
 			"locality": deviceBulkStolenlocality ,
 			"personnelFirstName": firstName,
-			"personnelLastName": bulkStolenmiddleName,
-			"personnelMiddleName": bulkStolenlastName,
+			"personnelLastName":bulkStolenlastName ,
+			"personnelMiddleName":bulkStolenmiddleName ,
 			"phoneNo": bulkStolenContact,
 			"postalCode": bulkStolenpin,
 			"propertyLocation": bulkStolenaddress,
@@ -611,6 +643,8 @@ function saveCompanyStolenRequest(){
 			"dateOfStolen":bulkStolenDate,
 			"blockingTimePeriod":blockingTimePeriod,
 			"blockingType":blockingType,
+			"remark":deviceBulkStolenRemark,
+			"complaintType": deviceBulkStolenComplaint,
 			"requestType":0,
 			"sourceType":6,
 			"firFileName":uploadFirBulk,
@@ -703,10 +737,105 @@ function confirmantiondelete(){
 	});
 }
 
+//------------------------------------------- Admin Approve------------------------------------------ 
+
+function deviceApprovalPopup(transactionId,requestType){
+	$('#approveInformation').openModal({dismissible:false});
+	$('#blockApproveTxnId').text(transactionId);
+	window.transactionId=transactionId;
+	window.requestType=requestType;
+}
+
+function aprroveDevice(){
+	var approveRequest={
+			"action" : 0,
+			"featureId":parseInt(featureId),
+			"requestType":parseInt(window.requestType),
+			"roleType": roleType,
+			"roleTypeUserId": parseInt($("body").attr("data-userTypeID")),
+			"txnId": window.transactionId,
+			"userId":parseInt(userId)
+	}
+
+	$.ajax({
+		url : './blockUnblockApproveReject',
+		data : JSON.stringify(approveRequest),
+		dataType : 'json',
+		'async' : false,
+		contentType : 'application/json; charset=utf-8',
+		type : 'PUT',
+		success : function(data) {
+			console.log("approveRequest----->"+JSON.stringify(approveRequest));
+			if(data.errorCode==0){
+				confirmApproveInformation();
+				console.log("inside Approve Success")
+			}
+
+		},
+		error : function() {
+			alert("Failed");
+		}
+	});
+}
+
+function confirmApproveInformation(){
+	$('#approveInformation').closeModal(); 
+	setTimeout(function(){ $('#confirmApproveInformation').openModal({dismissible:false});}, 200);
+}
 
 
+//------------------------------------------- Admin Reject------------------------------------------
 
+function userRejectPopup(transactionId,requestType){
+	$('#rejectInformation').openModal({dismissible:false});
+	$('#rejectTxnId').text(transactionId);
+	window.transactionId=transactionId;
+	window.requestType=requestType;
+}
 
+function rejectUser(){
+	var rejectRequest={
+			"action" : 1,
+			"featureId":parseInt(featureId),
+			"remarks": $("#Reason").val(),
+			"requestType":parseInt(window.requestType),
+			"roleType": roleType,
+			"roleTypeUserId": parseInt($("body").attr("data-userTypeID")),
+			"txnId": window.transactionId,
+			"userId":parseInt(userId)
+	}
+
+	$.ajax({
+		url : './blockUnblockApproveReject',
+		data : JSON.stringify(rejectRequest),
+		dataType : 'json',
+		'async' : false,
+		contentType : 'application/json; charset=utf-8',
+		type : 'PUT',
+		success : function(data) {
+			console.log("approveRequest----->"+JSON.stringify(rejectRequest));
+			if(data.errorCode==0){
+				confirmRejectInformation();
+				console.log("inside Reject Success")
+			}
+
+		},
+		error : function() {
+			alert("Failed");
+		}
+	});
+}
+
+function confirmRejectInformation(){
+	$('#rejectInformation').closeModal();
+	setTimeout(function(){$('#confirmRejectInformation').openModal({dismissible:false});},200);
+}
+
+function clearFileName() {
+	$('#bulkRecoveryFile').val('');
+	$("#bulkRecoveryFileName").val('');
+	$('#fileFormateModal').closeModal();
+}
 
 
 

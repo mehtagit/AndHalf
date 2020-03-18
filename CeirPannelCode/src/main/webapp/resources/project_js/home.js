@@ -2,7 +2,7 @@
 	var userType = $("body").attr("data-roleType");
 	var userId = $("body").attr("data-userID");
 	var featureId="3";
-	var requestType="0";
+	
 
 	var sessionLang=window.parent.$('#langlist').val() == 'en' ? 'en' : 'km';
 	$.i18n().locale = sessionLang;	
@@ -26,12 +26,15 @@
 					var id=data[i].name;
 					/*var finalID=id.replace (/\//g, "");*/
 					url= data[i].url.split("?"); 
-					$("#infoBox").append("<div class='round-circle-center-responsive'><div class='round-circle'><h6 class='right' style='width: 100px;'>"+$.i18n(data[i].name)+"</h6><p class='circle-para right'><b id='"+data[i].id+"count'></b> </p><p class='center view-div-info'><a href='"+data[i].viewName+"' onclick='isActive(\""+data[i].featureId+"\")' class=''><i class='fa fa-eye view-icon teal-text' title='view'></i></a></p><div class='icon-div center'><i class='"+data[i].icon+"' aria-hidden='true'></i></div></div>");
+					$("#infoBox").append("<div class='round-circle-center-responsive'><div class='round-circle'><h6 class='right' style='width: 105px;'>"+$.i18n(data[i].name)+"</h6><p class='circle-para right'><b id='"+data[i].id+"count'></b> </p><p class='center view-div-info'><a href='"+data[i].viewName+"' onclick='isActive(\""+data[i].featureId+"\")' class=''><i class='fa fa-eye view-icon teal-text' title='view'></i></a></p><div class='icon-div center'><i class='"+data[i].icon+"' aria-hidden='true'></i></div></div>");
 					var finalID = data[i].id;
 					var outParam = data[i].outParam;
 					if(userTypeId == 8){
 						userId = -1;
 					}
+					
+					var requestType=data[i].featureId == 5 ? "0,1" : data[i].featureId == 7 ? "2,3" : "0"; 
+					
 					$.ajax({
 						url: './'+url[0]+'?featureId='+data[i].featureId+'&userId='+userId+'&userTypeId='+userTypeId+'&requestType='+requestType+'&userType='+userType,
 						'async': false,

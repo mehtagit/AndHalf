@@ -1,3 +1,12 @@
+<%
+	response.setHeader("Cache-Control", "no-cache");
+	response.setHeader("Cache-Control", "no-store");
+	response.setDateHeader("Expires", 0);
+	response.setHeader("Pragma", "no-cache");
+	/*  session.setMaxInactiveInterval(200); //200 secs
+	 session.setAttribute("usertype", null); */
+	if (session.getAttribute("usertype") != null) {
+%>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
@@ -6,7 +15,7 @@
 <!DOCTYPE html>
 <html lang="en" class="no-js">
 <head>
-<title>Dashboard</title>
+<title>Upload Paid Status</title>
 <meta http-equiv='cache-control' content='no-cache'>
 <meta http-equiv='expires' content='-1'>
 <meta http-equiv='pragma' content='no-cache'>
@@ -216,11 +225,11 @@ input[type='search'] {
 													</h6>
 													<div class="btn">
 														<span><spring:message code="input.selectfile" /></span> <input type="file"
-														oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');"
-														title= "<spring:message code="validation.NoChosen" />" required id="csvUploadFile" accept=".csv">
+														oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');" onchange="isImageValid('csvUploadFile')"
+														title= "<spring:message code="validation.NoChosen" />" required id="csvUploadFile" accept="*image">
 													</div>
 													<div class="file-path-wrapper">
-														<input class="file-path validate responsive-file-div"
+														<input class="file-path validate responsive-file-div" id="csvUploadFileName"
 															type="text">
 													</div>
 												</div>
@@ -541,10 +550,17 @@ input[type='search'] {
 								</div>
 
 								<div id="profile-page" class="section">
+								
 									<div class="container" id="user456" style="display: none;">
+										<form action="${context}/uploadPaidStatus">
 										<div class="col s12 m12 l12" id="tableDiv"
 											style="padding-bottom: 5px; background-color: #e2edef52;">
 										</div>
+											<div id="filterBtnDiv"></div>
+											<p id="errorMsg" style="color: red;font-size: 12px;position: absolute;left: 40px;margin: 0;top: 122px;"class="left"></p>
+										</form>
+									
+							
 										<div class="row">
 											<div class="col s12 m12">
 												<table class="responsive-table striped display"
@@ -876,6 +892,22 @@ input[type='search'] {
             </div>
         </div>
     </div>
+    <div id="fileFormateModal" class="modal">
+		<h6 class="modal-header"><spring:message code="fileValidationModalHeader" /></h6>
+		<div class="modal-content">
+			<div class="row">
+				<h6 id="fileErrormessage"><spring:message code="fileValidationName" /><br> <br> <spring:message code="fileValidationFormate" /> <br><br> <spring:message code="fileValidationSize" /> </h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<div class="input-field col s12 center">
+						<button class="modal-close  btn" onclick="clearFileName()"
+							style="margin-left: 10px;"><spring:message code="modal.ok" /></button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 	
 
 	<script type="text/javascript"
@@ -937,14 +969,19 @@ input[type='search'] {
 		src="${context}/resources/project_js/_dateFunction.js" async></script>
 		<script type="text/javascript"
 		src="${context}/resources/project_js/profileInfoTab.js" async></script>
-		<script>
+	
 		
-		
-		
-		
-			
-
-
-
-</body>
+		</body>
 </html>
+<%
+} else {
+
+%>
+<script language="JavaScript">
+sessionStorage.setItem("loginMsg",
+"*Session has been expired");
+window.top.location.href = "./login";
+</script>
+<%
+}
+%>

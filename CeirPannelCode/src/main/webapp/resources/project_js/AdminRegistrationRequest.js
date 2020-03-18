@@ -8,15 +8,6 @@
 
 	var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 
-/*
-	window.parent.$('#langlist').on('change', function() {
-		var langParam=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
-		var id= $("#mainArea").contents().find("body").html();
-		var roles= $("#mainArea").contents().find("body").attr("data-session-roles");
-		var type= $("#mainArea").contents().find("body").attr("data-session-type");
-		window.location.reload(true);
-			
-	}); */
 
 	$.i18n().locale = lang;	
 
@@ -133,11 +124,16 @@
 							+"</label>"+
 							"<span	class='input-group-addon' style='color: #ff4081'>"+
 							"<i	class='fa fa-calendar' aria-hidden='true' style='float: right; margin-top: -37px;'>"+"</i>"+"</span>");
+					$( "#"+date[i].id ).datepicker({
+						dateFormat: "yy-mm-dd",
+						 maxDate: new Date()
+			        }); 
 					}
 					else if(date[i].type === "select"){
 						$("#registrationTableDiv").append("<div class='input-field col s6 m2' ><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
 						
 					}
+					
 					
 				} 
 
@@ -167,9 +163,7 @@
 				
 				}
 				
-				$('.datepicker').datepicker({
-					dateFormat: "yy-mm-dd"
-					});
+			
 			
 				cierRoletype=="CEIRAdmin"? $("#btnLink").css({display: "none"}) : $("#btnLink").css({display: "block"});
 				/*sourceType=="viaStolen" ? $("#btnLink").css({display: "none"}) : $("#btnLink").css({display: "none"});*/
@@ -280,8 +274,9 @@
 
 
 
-	function userApprovalPopup(userId,date,username){
+	function userApprovalPopup(userId,date,username,sessionUserName){
 		$("#registrationTxnId").text(username);
+		$("#sessionUserName").val(sessionUserName);
 		$('#approveInformation').openModal();
 		$("#userId").text(userId);
 		window.userID=userId;
@@ -298,7 +293,8 @@
 				"status" : "Approved",
 				"remark": $("#Reason").val(),	
 				"featureId" : parseInt(featureId),
-				"statusValue" : 3
+				"statusValue" : 3,
+				"username" : $("#sessionUserName").val()
 		}
 		
 		$.ajax({
@@ -325,10 +321,13 @@
 		$("#RegistrationId").text(userID);
 	}
 
-	function userRejectPopup(userId){
+	function userRejectPopup(userId,sessionUserName){
 		$('#rejectInformation').openModal();
 		console.log("Reject userId is---->"+userId);
 		$("#userId").text(userId)
+		$("#rejectUserName").val(sessionUserName);
+		
+		
 	}
 
 
@@ -339,7 +338,9 @@
 				"status" : "Rejected",
 				"remark": $("#Reason").val(),
 				"featureId" : parseInt(featureId),
-				"statusValue" : 4
+				"statusValue" : 4,
+				"username" : $("#rejectUserName").val()
+				
 		}
 		
 		$.ajax({
@@ -400,10 +401,10 @@
 	}
 	
 	
- function userChangeStatus(userId){
+ function userChangeStatus(userId,sessionUserName){
 	 window.userId = userId
 	 $("#statusChangemodal").openModal();
-	 
+	 $("#statusUserName").val(sessionUserName);
 	 
  }
 	
@@ -412,7 +413,9 @@
 		
 		var Request={
 				"status" : parseInt(status),
-				"userId": parseInt(window.userId)
+				"userId": parseInt(window.userId),
+				"username" : $("#statusUserName").val()
+				
 		}
 		
 		$.ajax({

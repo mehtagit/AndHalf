@@ -186,7 +186,7 @@ section {
 												for="expectedDispatcheDate" class="center-align"><spring:message code="input.dispatchdate" /> <span class="star">*</span>
 											</label> <span class="input-group-addon" style="color: #ff4081"><i
 												class="fa fa-calendar" aria-hidden="true"></i></span>
-					<p id="errorMsg" style="color: red;font-size: 12px;position: absolute;margin: 0;top: 40px;right: 0;" class="left"></p>
+					<p id="errorMsgOnModal" class="onEditModalTitle" class="left"></p>
 										</div>
 									</div>
 
@@ -405,13 +405,15 @@ section {
 		<script type="text/javascript"
 		src="${context}/resources/project_js/htmlValidationi18n.js"></script>
 	<script type="text/javascript"
-		src="${context}/resources/project_js/registerConsignment.js"></script>
+		src="${context}/resources/project_js/registerConsignment.js"></script>	
 	<script type="text/javascript"
 		src="${context}/resources/project_js/validationMsg.js"></script>
 			<script type="text/javascript"
 		src="${context}/resources/project_js/_dateFunction.js" async></script>
 		<script type="text/javascript"
 		src="${context}/resources/project_js/globalVariables.js"></script>
+					<script type="text/javascript"
+		src="${context}/resources/project_js/profileInfoTab.js" async></script>
 </body>
 </html>
 

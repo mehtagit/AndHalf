@@ -11,7 +11,9 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Feignclient.TypeApprovedFeignImpl;
+import org.gl.ceir.CeirPannelCode.Model.AddMoreFileModel;
 import org.gl.ceir.CeirPannelCode.Model.FileExportResponse;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.GrievanceModel;
@@ -62,6 +64,12 @@ public class TrcController {
 	RegisterationImpl registerationImpl;
 	@Autowired
 	UtilDownload utildownload;
+	
+	@Autowired
+	AddMoreFileModel addMoreFileModel,urlToUpload;
+	@Autowired
+	FeignCleintImplementation feignCleintImplementation;
+	
 	@RequestMapping(value=
 		{"/manageTypeDevices"},method={org.springframework.web.bind.annotation.
 				RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}
@@ -101,6 +109,9 @@ public class TrcController {
 		log.info("Random transaction id number="+txnNumber);
 		request.getParameterValues("");
 		
+		addMoreFileModel.setTag("system_upload_filepath");
+		urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
+		
 		Gson gson= new Gson(); 
 		String trcDetails=request.getParameter("multirequest");
 		
@@ -127,7 +138,7 @@ public class TrcController {
 
 			try {
 				byte[] bytes =
-						file.getBytes(); String rootPath = filePathforUploadFile+txnNumber+"/"+tagName+"/"; 
+						file.getBytes(); String rootPath = urlToUpload.getValue()+txnNumber+"/"+tagName+"/"; 
 						File dir =   new File(rootPath + File.separator);
 						if (!dir.exists()) dir.mkdirs(); // Create the file on server // Calendar now = Calendar.getInstance();
 						File serverFile = new File(rootPath+file.getOriginalFilename());
@@ -182,7 +193,9 @@ public class TrcController {
 		Integer userId= (int) session.getAttribute("userid");
 		String roletype=(String) session.getAttribute("usertype");
 		log.info(" updateRegister consignment entry point.");
-		
+
+		addMoreFileModel.setTag("system_upload_filepath");
+		urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
 		Gson gson= new Gson(); 
 		String trcDetails=request.getParameter("multirequest");
 		TRCRegisteration trcRequest = gson.fromJson(trcDetails, TRCRegisteration.class);
@@ -197,7 +210,7 @@ public class TrcController {
 			}
 			else {
 			byte[] bytes = file.getBytes();
-			String rootPath = filePathforUploadFile+trcRequest.getTxnId()+"/"+tagName+"/";
+			String rootPath = urlToUpload.getValue()+trcRequest.getTxnId()+"/"+tagName+"/";
 			File dir = new File(rootPath + File.separator);
 
 			if (!dir.exists()) 

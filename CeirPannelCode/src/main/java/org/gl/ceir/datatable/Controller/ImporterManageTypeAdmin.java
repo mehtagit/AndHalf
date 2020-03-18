@@ -109,6 +109,27 @@ public class ImporterManageTypeAdmin {
 						finalList.add(datatableList);
 						datatableResponseModel.setData(finalList);
 					}
+				}else if("TRC".equals(userType)){
+					log.info("--------in TRC Controller");
+					for(TrcContentModel trcContentModelList :trcPaginationModel.getContent()) {
+						String createdOn = trcContentModelList.getCreatedOn();
+						String trademark = trcContentModelList.getTrademark();
+						String productName = trcContentModelList.getProductNameInterp();
+						String txnId= trcContentModelList.getTxnId();
+						String modelNumber = trcContentModelList.getModelNumberInterp();
+						String manufacturerCountry = trcContentModelList.getManufacturerCountry();
+						String tac = trcContentModelList.getTac();
+						/* String status = trcContentModelList.getStateInterp(); */
+						String status = trcContentModelList.getStateInterp();
+						String fileName1= trcContentModelList.getFileName();
+						String approveState = String.valueOf(trcContentModelList.getApproveStatus());	
+						log.info("status----->" +status+"--Id--------->"+trcContentModelList.getId()+"--fileName1------->"+fileName1+"--txnId------>"+txnId);
+						String action = iconState.importalTrcManageIcons(approveState,trcContentModelList.getId(),fileName1,txnId,userStatus);
+						Object[] data = {createdOn,trademark,productName,txnId,modelNumber,manufacturerCountry,tac,status,action};
+						List<Object> datatableList = Arrays.asList(data);
+						finalList.add(datatableList);
+						datatableResponseModel.setData(finalList);
+					}
 				}else {
 					for (TrcContentModel trcContentModelList : trcPaginationModel.getContent()) {
 						log.info("inside Trc File Name" + trcContentModelList.getAttachedFiles());
@@ -127,12 +148,13 @@ public class ImporterManageTypeAdmin {
 						String approveState = String.valueOf(trcContentModelList.getApproveStatus());	
 						String txnId = trcContentModelList.getTxnId();
 						String adminApproveStatus = String.valueOf(trcContentModelList.getAdminApproveStatus());
-
-						log.info("status----->" + status + "adminState-------->"+ approveState+"--Id--------->" + trcContentModelList.getId()
-								+ "--fileName1------->" + fileName1 + "--txnId------>" + txnId);
+						String userDisplayName = trcContentModelList.getUserDisplayName();
+						String userTypeName = trcContentModelList.getUserType();
+							
+						log.info("approveState->"+approveState+" id-->"+trcContentModelList.getId()+" fileName1-->"+fileName1+" txnId-->"+txnId+" adminApproveStatus-->"+adminApproveStatus+" userStatus-->"+userStatus);
 						String action = iconState.trcAdminManageIcons(approveState, trcContentModelList.getId(), fileName1,
-								txnId,adminApproveStatus,userStatus);
-						Object[] data = { createdOn, txnId, trademark, manufacturerCountry, tac, status, action };
+								txnId,userStatus);
+						Object[] data = { createdOn, txnId, userTypeName,userDisplayName,trademark, manufacturerCountry, tac, status, action };
 						List<Object> datatableList = Arrays.asList(data);
 						finalList.add(datatableList);
 						datatableResponseModel.setData(finalList);

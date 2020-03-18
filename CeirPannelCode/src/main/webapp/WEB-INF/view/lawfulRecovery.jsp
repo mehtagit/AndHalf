@@ -213,7 +213,7 @@ select.browser-default {
 															<input type="text" name="sigleRecoveryimeiNumber1" pattern="[0-9]{15,16}" 
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');" 
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
-														  maxlength="16" id="sigleRecoveryimeiNumber" required/> 
+														  maxlength="16" id="sigleRecoveryimeiNumber1" required/> 
 															<label for="sigleRecoveryimeiNumber1"><spring:message code="registration.one" /> <span class="star"> *</span></label>
 														</div>
 														
@@ -339,7 +339,7 @@ select.browser-default {
 
 
 
-														 <div class="col s12 m6 blockingType">
+														 <%-- <div class="col s12 m6 blockingType">
 <p style="margin-top: 3px; margin-bottom: 5px"><spring:message code="operator.blocking" /></p>
 <label style="margin-right: 2%;"> <input type="radio" class="blocktypeRadio" id=""
 value="Immediate"
@@ -378,9 +378,9 @@ class="glyphicon glyphicon-calendar"
 onclick="_Services._selectstartDate()"></i></span>
 </div>
 </div>
-</div>
+</div> --%>
 
-<div class="input-field col s12 m6">
+										<div class="input-field col s12 m6">
 											<input type="text" name="deviceRecoveryDevice"
 												id='IndivisualRecoveryDevice' class='form-control datepick'
 												autocomplete='off' 
@@ -556,7 +556,7 @@ onclick="_Services._selectstartDate()"></i></span>
                         
                                                     <div class="input-field col s12 m6 l6">
                                                         <input type="text" name="bulkRecoverypin" class="form-control boxBorder boxHeight"
-                                                            id="bulkRecoverypin" pattern="[0-9]{0,20}" 
+                                                            id="bulkRecoverypin" pattern="[0-9]{0,6}" 
                                                              oninput="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');" 
                                                              oninvalid="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');"
                                                         required  maxlength="6">
@@ -573,7 +573,7 @@ onclick="_Services._selectstartDate()"></i></span>
                     
                                                     <div class="col s12 m6 l6">
                                                         <label><spring:message code="input.province" /> <span class="star"> *</span></label>
-                                                        <select id="bulkRecoverystate" required class="browser-default" class="mySelect" style="padding-left: 0;"
+                                                        <select id="bulkRecoverystate"  class="browser-default" class="mySelect" style="padding-left: 0;"
                                                       oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" 
                                                       oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
                                                         required></select>
@@ -596,7 +596,7 @@ onclick="_Services._selectstartDate()"></i></span>
 
                                                     <div class="input-field col s12 center">
                                                         <button class="btn" type="submit"><spring:message code="button.submit" /></button>
-                                                        <a href="./stolenRecovery" class="btn modal-trigger"
+                                                        <a href="./stolenRecovery?FeatureId=5" class="btn modal-trigger"
                                                             style="margin-left: 10px;"><spring:message code="modal.cancel" /></a>
                                                     </div>
                                                 </form>
@@ -615,7 +615,7 @@ onclick="_Services._selectstartDate()"></i></span>
                <div class=" col s12 m12">
                	 <h6 id="sucessMessage"> <spring:message code="input.StolenSucessMessage1"/> <span id="IndivisualStolenTxnId"></span> <spring:message code="input.StolenSucessMessage2"/></h6>
                 <div class="input-field col s12 center" style="margin:20px 0;">
-                    <a href="./stolenRecovery" class="btn" style="margin:20px 0;"><spring:message code="modal.ok"/></a>
+                    <a href="./stolenRecovery?FeatureId=5" class="btn" style="margin:20px 0;"><spring:message code="modal.ok"/></a>
                 </div>
                </div>
             </div>

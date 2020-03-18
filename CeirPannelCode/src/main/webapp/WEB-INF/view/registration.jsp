@@ -1,6 +1,13 @@
+<%
+Integer statusCode=(Integer)session.getAttribute("statusCode");
+%>
+<%
+if(statusCode==200){
+%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="context" value="${pageContext.request.contextPath}" />
@@ -470,6 +477,7 @@ String usertypeId="${usertypeId}";
 								</div>
 								<div class="col s12 m6 l6">
 									<label data-error="Please select at least one option" for="usertypes"><spring:message code="registration.roletype" /> <span class="star">*</span></label>
+									
 									<select name="roles" class="validate" id="usertypes" 
 									oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"  oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" multiple required>
 										<option value="" disabled><spring:message code="table.roleType" /></option>
@@ -530,7 +538,7 @@ String usertypeId="${usertypeId}";
 								</div>
 
 								<div class="input-field col s12 m6 l6" style="margin-top: 22px;">
-									<input type="text" name="answer" id="answer0" pattern="[A-Za-z0-9\s]{0,50}" required="required" maxlength="50"
+									<input type="text" name="answer" class="answer" id="answer0" pattern="[A-Za-z0-9\s]{0,50}" required="required" maxlength="50"
 									oninput="InvalidMsg(this,'input','<spring:message code="validation.50alphanumeric" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50alphanumeric" />');" 
 										 required />
 									<label for="answer0"><spring:message code="registration.answer" /> <span class="star">*</span> </label>
@@ -636,7 +644,7 @@ String usertypeId="${usertypeId}";
 
 			<p style="padding: 10px;" class="center" id="otpMsg"></p>
 
-			<a href="#otpVerification" class="btn modal-trigger"
+			<a href="javascript:void(0)" onclick="openOtpPopup()" class="btn"
 				style="width: 100%; margin-top: 20px; margin-bottom: 20px;"><spring:message
 					code="registration.verifyotp" /></a>
 		</div>
@@ -741,9 +749,9 @@ String usertypeId="${usertypeId}";
 
 
 	<div id="otpMessage" class="modal">
-		<button type="button"
+<!-- 		<button type="button"
 			class="modal-action modal-close waves-effect waves-green btn-flat right"
-			data-dismiss="modal">&times;</button>
+			data-dismiss="modal">&times;</button> -->
 		<h6 class="modal-header">
 			<spring:message code="registration.verifyotp" />
 		</h6>
@@ -765,19 +773,19 @@ String usertypeId="${usertypeId}";
 	<div id="otpVerification" class="modal" style="width: 40%;">
 		<!-- <button type="button" class=" modal-action modal-close waves-effect waves-green btn-flat right"
             data-dismiss="modal">&times;</button> -->
-		<h6 class="modal-header">Enter OTP</h6>
+		<h6 class="modal-header"><spring:message code="registration.otp" /></h6>
 		<div class="modal-content">
-			<form id="verifyOtpForm" onsubmit="return verifyOtp()">
+			<form id="verifyOtpForm" onsubmit="return verifyOtp()" >
 				<p class="center" id="verifyOtpResp"></p>
 				<input type="hidden" id="userid" name="userid" value="${userId}">
 				<div class="row">
 					<div class="input-field col s12 m12">
-						<input type="text" placeholder="Enter OTP of Email" name="emailOtp" maxlength="6" id="emailOtp"
+						<input type="text" placeholder="<spring:message code="placeholder.emailotp" />" name="emailOtp" maxlength="6" id="emailOtp"
 							pattern="[0-9]{0,6}" oninput="InvalidMsg(this,'input','<spring:message code="validation.6Character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.6Character" />');" 
 							 required  />
 					</div>
 					<div class="input-field col s12 m12">
-						<input placeholder="Enter OTP of Phone" type="text" name="phoneOtp" maxlength="6" pattern="[0-9]{0,6}"
+						<input placeholder="<spring:message code="placeholder.optphone" />" type="text" name="phoneOtp" maxlength="6" pattern="[0-9]{0,6}"
 							id="phoneOtp" oninput="InvalidMsg(this,'input','<spring:message code="validation.6Character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.6Character" />');" 
 							required  />
 					</div>
@@ -785,7 +793,7 @@ String usertypeId="${usertypeId}";
 				<a href="javascript:void(0)"
 					onclick="resendOtp(); document.getElementById('resendOtp').style.display ='block';"
 					class="right"><spring:message code="registration.resendotp" /></a>
-				<button type="submit" id="otpVerifyBtn" class="btn"
+				<button type="submit"  id="otpVerifyBtn" class="btn"
 					style="width: 100%; margin-top: 20px; margin-bottom: 20px;">
 					<spring:message code="registration.done" />
 				</button>
@@ -950,3 +958,8 @@ String usertypeId="${usertypeId}";
          </script>
 </body>
 </html>
+<%}
+else{
+%>
+<%@include file="registrationPopup.jsp" %>
+<%}%>	

@@ -1,15 +1,11 @@
 var roleType = $("body").attr("data-roleType");
 var userId = $("body").attr("data-userID");
 var currentRoleType = $("body").attr("data-selected-roleType"); 
-var featureId =12;
+//var featureId =12;
 var nationalID = $("body").attr("session-value");
 // iframe
 var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
-/*		window.parent.$('#langlist').on('change', function() {
-			var lang_param=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
-		window.location.assign("./uploadPaidStatus?via=other&NID="+nationalID+"&lang="+lang_param);
-		});
- */
+
 
 // Internationalization
 $.i18n().locale = lang;
@@ -324,15 +320,19 @@ function pageButtons(url){
 				if(date[i].type === "date"){
 					$("#tableDiv").append("<div class='input-field col s6 m2'>"+
 							"<div id='enddatepicker' class='input-group'>"+
-							"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off'>"+
+							"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off' onchange='checkDate(startDate,endDate)'>"+
 							"<label for="+date[i].id+">"+date[i].title
 							+"</label>"+
 							"<span	class='input-group-addon' style='color: #ff4081'>"+
 							"<i	class='fa fa-calendar' aria-hidden='true' style='float: right; margin-top: -37px;'>"+"</i>"+"</span>");
-
+					$( "#"+date[i].id ).datepicker({
+						dateFormat: "yy-mm-dd",
+						 maxDate: new Date()
+			        }); 
 				}else if(date[i].type === "text"){
 					$("#tableDiv").append("<div class='input-field col s6 m2'><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
 				}
+				
 			} 
 
 			// dynamic dropdown portion
@@ -397,9 +397,7 @@ function pageButtons(url){
 				}
 			});
 
-			$('.datepicker').datepicker({
-				dateFormat: "yy-mm-dd"
-			});
+			
 		}
 	}); 	
 
@@ -415,7 +413,7 @@ populateCountries("country");
 
 
 function deleteByImei(imei){
-	$('#deleteMsg').openModal();
+	$('#deleteMsg').openModal({dismissible:false});
 	window.imei=imei;
 }
 
@@ -428,7 +426,7 @@ function accept(){
 		type : 'DELETE',
 		success : function(data, textStatus, xhr) {
 
-			$('#confirmDeleteMsg').openModal();
+			$('#confirmDeleteMsg').openModal({dismissible:false});
 			$('#deleteMsg').closeModal();
 			/*if(data.errorCode == 200){
 					$("#responseMsg").text(data.message);
@@ -444,7 +442,7 @@ function accept(){
 
 
 	function viewDetails(imei){ 
-	$('#viewDeviceInformation').openModal();
+	$('#viewDeviceInformation').openModal({dismissible:false});
 	$.ajax({
 		url : "./deviceInfo/"+imei,
 		dataType : 'json',
@@ -519,14 +517,15 @@ function historytable(url,dataUrl){
 					data : function(d) {
 						d.filter = JSON.stringify({						
 							"nid": nationalId,
-							"taxPaidStatus":3
+							"taxPaidStatus":3,
+								"featureId":featureId
 						}); 
 					}
 
 				},
 				"columns": result
 			});
-			$('#viewBlockDevices').openModal();
+			$('#viewBlockDevices').openModal({dismissible:false});
 			$('div#initialloader').delay(300).fadeOut('slow');
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
@@ -536,7 +535,7 @@ function historytable(url,dataUrl){
 }
 
 function taxPaid(imei){
-	$('#payTaxModal').openModal();
+	$('#payTaxModal').openModal({dismissible:false});
 	window.taxIMEI=imei;
 
 }
@@ -669,12 +668,12 @@ function submitDeviceInfo(){
 			if(data.errorCode==200){
 
 //				$('#sucessMessage').text('');
-				$('#regularisedDevice').openModal();
+				$('#regularisedDevice').openModal({dismissible:false});
 				$('#dynamicTxnId').text(data.txnId);
 			}
 			else{
 //				$('#sucessMessage').text('');
-				$('#regularisedDevice').openModal();
+				$('#regularisedDevice').openModal({dismissible:false});
 				$('#dynamicTxnId').text(data.txnId);
 			}
 		},
@@ -716,7 +715,7 @@ function taxPaidStatus(){
 
 			var msg="The device status has been successfully updated";
 			$('#payTaxModal').closeModal();
-			$('#payNowTaxPayment').openModal();
+			$('#payNowTaxPayment').openModal({dismissible:false});
 			/*if(data.errorCode==200){
 					$('#taxPaidMsg').text(msg);
 
@@ -861,7 +860,7 @@ function refreshContent(){
 
 
 function deviceApprovalPopup(imei,date,txnId){
-	$('#approveInformation').openModal();
+	$('#approveInformation').openModal({dismissible:false});
 	window.imei=imei;
 	window.date=date.replace("="," ");
 	$('#approveTxnId').text(txnId);
@@ -906,12 +905,12 @@ function aprroveDevice(){
 
 function confirmApproveInformation(imei,date){
 	$('#approveInformation').closeModal(); 
-	setTimeout(function(){ $('#confirmApproveInformation').openModal();}, 200);
+	setTimeout(function(){ $('#confirmApproveInformation').openModal({dismissible:false});}, 200);
 }
 
 
 function userRejectPopup(imei,txnId){
-	$('#rejectInformation').openModal();
+	$('#rejectInformation').openModal({dismissible:false});
 	$('#disapproveTxnId').text(txnId)
 	window.imei=imei;
 }
@@ -954,5 +953,57 @@ function rejectUser(){
 
 function confirmRejectInformation(){
 	$('#rejectInformation').closeModal();
-	setTimeout(function(){$('#confirmRejectInformation').openModal();},200);
+	setTimeout(function(){$('#confirmRejectInformation').openModal({dismissible:false});},200);
+}
+
+function isImageValid(id) {
+	var uploadedFileName = $("#"+id).val();
+	uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
+	//alert("file extension=="+uploadedFileName)
+	var ext = uploadedFileName.split('.').pop();
+
+	var fileSize = ($("#"+id)[0].files[0].size);
+	/*fileSize = (Math.round((fileSize / 100000) * 100) / 100)
+	alert("----"+fileSize);*/
+	fileSize = Math.floor(fileSize/1000) + 'KB';
+   
+	//alert(uploadedFileName+"----------"+ext+"----"+fileSize)
+	var areEqual =ext.toLowerCase()=='png';
+	//alert(areEqual);
+	if(areEqual==true)
+		{
+		ext='PNG';
+		}
+	
+	if (uploadedFileName.length > 30) {
+		$('#fileFormateModal').openModal({
+			dismissible:false
+		});
+		$('#fileErrormessage').text('');
+		$('#fileErrormessage').text($.i18n('imageMessage'));
+	} 
+	else if(ext !='PNG')
+	{
+		
+		$('#fileFormateModal').openModal({
+			dismissible:false
+		});
+		$('#fileErrormessage').text('');
+		$('#fileErrormessage').text($.i18n('imageMessage'));
+
+	}
+	else if(fileSize>=100){
+		$('#fileFormateModal').openModal({
+			dismissible:false
+		});
+		$('#fileErrormessage').text('');
+		$('#fileErrormessage').text($.i18n('imageSize'));	
+	}
+}
+
+
+function clearFileName() {
+	$('#csvUploadFile').val('');
+	$("#csvUploadFileName").val('');
+	$('#fileFormateModal').closeModal();
 }

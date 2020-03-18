@@ -10,8 +10,11 @@ import java.nio.file.Paths;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
+import org.gl.ceir.CeirPannelCode.Feignclient.ImmigrationFeignImpl;
 import org.gl.ceir.CeirPannelCode.Feignclient.UploadPaidStatusFeignClient;
 import org.gl.ceir.CeirPannelCode.Feignclient.UserPaidStatusFeignClient;
+import org.gl.ceir.CeirPannelCode.Model.AddMoreFileModel;
 import org.gl.ceir.CeirPannelCode.Model.EndUserVisaInfo;
 import org.gl.ceir.CeirPannelCode.Model.FileExportResponse;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest_UserPaidStatus;
@@ -58,6 +61,16 @@ public class UploadPaidStatusView {
 	@Autowired
 	UploadPaidStatusFeignClient uploadPaidStatusFeignClient;
 
+	@Autowired
+	ImmigrationFeignImpl immigrationFeignImpl;
+
+	
+@Autowired
+AddMoreFileModel addMoreFileModel,urlToUpload,urlToMove;
+
+@Autowired
+
+FeignCleintImplementation feignCleintImplementation;
 
 
 	@GetMapping("uploadPaidStatus")
@@ -101,6 +114,9 @@ public class UploadPaidStatusView {
 		Gson gson= new Gson(); 
 
 		log.info("*********"+filter);
+		addMoreFileModel.setTag("system_upload_filepath");
+		urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
+
 
 		Register_UploadPaidStatus regularizeDeviceDbs  = gson.fromJson(filter, Register_UploadPaidStatus.class);
 		regularizeDeviceDbs.setNationality("Cambodian");
@@ -112,7 +128,7 @@ public class UploadPaidStatusView {
 		log.info(" upload status  entry point.");
 		try {
 			byte[] bytes = file.getBytes();
-		String rootPath =filePathforUploadFile+txnNumber+"/"; 
+		String rootPath =urlToUpload.getValue()+txnNumber+"/"; 
 		File dir = new File(rootPath + File.separator);
 
 		if (!dir.exists()) dir.mkdirs();
@@ -265,6 +281,11 @@ public class UploadPaidStatusView {
 		//log.info("txnid+++++++++++"+request.getParameter("request[regularizeDeviceDbs][txnId]"));
 		Gson gson= new Gson(); 
 		log.info("before casting request in to pojo classs"+filter);
+		addMoreFileModel.setTag("system_upload_filepath");
+		urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
+
+		addMoreFileModel.setTag("uploaded_file_move_path");
+		urlToMove=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
 
 		EndUserVisaInfo endUservisaInfo  = gson.fromJson(filter, EndUserVisaInfo.class);
 
@@ -291,7 +312,7 @@ public class UploadPaidStatusView {
 		else {
 			try {
 				byte[] bytes = passportImage.getBytes();
-			String rootPath =filePathforUploadFile+endUservisaInfo.getTxnId()+"/"; 
+			String rootPath =urlToUpload.getValue()+endUservisaInfo.getTxnId()+"/"; 
 			File dir = new File(rootPath + File.separator);
 
 			if (!dir.exists()) dir.mkdirs();
@@ -324,15 +345,15 @@ public class UploadPaidStatusView {
 			 */
 			
 
-String rootPath = filePathforUploadFile+endUservisaInfo.getTxnId()+"/";
+String rootPath = urlToUpload.getValue()+endUservisaInfo.getTxnId()+"/";
 File tmpDir = new File(rootPath+visaImage.getOriginalFilename());
 boolean exists = tmpDir.exists();
 if(exists) {
 
 Path temp = Files.move 
-(Paths.get(filePathforUploadFile+"/"+endUservisaInfo.getTxnId()+"/"+visaImage.getOriginalFilename()), 
-Paths.get(filePathforMoveFile+visaImage.getOriginalFilename())); 
-String movedPath=filePathforMoveFile+visaImage.getOriginalFilename();	
+(Paths.get(urlToUpload.getValue()+"/"+endUservisaInfo.getTxnId()+"/"+visaImage.getOriginalFilename()), 
+Paths.get(urlToMove.getValue()+visaImage.getOriginalFilename())); 
+String movedPath=urlToMove.getValue()+visaImage.getOriginalFilename();	
 
 log.info("file is already exist, moved to this "+movedPath+" path. ");
 tmpDir.delete();
@@ -374,6 +395,9 @@ stream.close();
 		   Gson gson= new Gson();
 		  log.info("before casting request in to pojo classs"+filter);
 		  
+		  addMoreFileModel.setTag("system_upload_filepath");
+			urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
+		  
 		  EndUserVisaInfo endUservisaInfo = gson.fromJson(filter,  EndUserVisaInfo.class);
 		  
 		  if(endUservisaInfo.getNationality().equals(""))
@@ -403,7 +427,7 @@ stream.close();
 		
 			try {
 				byte[] bytes = uploadnationalID.getBytes();
-			String rootPath =filePathforUploadFile+txnNumber+"/"; 
+			String rootPath =urlToUpload.getValue()+txnNumber+"/"; 
 			File dir = new File(rootPath + File.separator);
 
 			if (!dir.exists()) dir.mkdirs();
@@ -427,7 +451,7 @@ stream.close();
 		  
 		  try {
 			  byte[] bytes = endUserDepartmentFile.getBytes(); 
-			  String rootPath  =filePathforUploadFile+txnNumber+"/";
+			  String rootPath  =urlToUpload.getValue()+txnNumber+"/";
 			  File dir = new File(rootPath + File.separator);
 		  
 		  if (!dir.exists()) dir.mkdirs(); // Create the file on server 
@@ -447,7 +471,7 @@ stream.close();
 				 log.info("visa Image is  not blank");
 				 
 			  try { byte[] bytes = visaImage.getBytes(); String rootPath
-			  =filePathforUploadFile+txnNumber+"/"; File dir = new File(rootPath +
+			  =urlToUpload.getValue()+txnNumber+"/"; File dir = new File(rootPath +
 			  File.separator);
 			  
 			  if (!dir.exists()) dir.mkdirs(); // Create the file on server 
@@ -472,9 +496,32 @@ stream.close();
 		return endUserVisaInfo;
 	}
 
-}
 
 
 
 
+
+
+	
+	  @PutMapping("updateEndUserDevice")
+	  public @ResponseBody GenricResponse updateEndUserDevice(@RequestParam(name="visaImage",required = false)
+	  MultipartFile visaImage,@RequestParam(name="endUserDepartmentFile",required =
+	  false) MultipartFile endUserDepartmentFile,HttpServletRequest
+	  request,HttpSession session) {
+	  log.info("---entry point in update visa validity page");
+	  log.info("---request---"+request.getParameter("request"));
+	  
+	  String filter =request.getParameter("request");
+	  Gson gson= new Gson();
+	  log.info("before casting request in to pojo classs"+filter);
+	  
+	  EndUserVisaInfo endUservisaInfo = gson.fromJson(filter,EndUserVisaInfo.class);
+	  GenricResponse response= new GenricResponse();
+	  log.info("endUservisaInfo::::::::::"+endUservisaInfo);
+	  
+	  response=immigrationFeignImpl.RegisterEndUserDevice(endUservisaInfo);
+	 return response; 
+	  }
+	  
+	 }
 
