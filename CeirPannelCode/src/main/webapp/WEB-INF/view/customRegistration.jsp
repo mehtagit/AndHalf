@@ -211,7 +211,7 @@ var contextpath = "${context}";
 		<div class="container">
 			<div class="section registration-form">
 				<form id="registrationForm" autocomplete="off"
-					onsubmit="return saveOperatorRegistration()">
+					onsubmit="return saveCustomRegistration()">
 
 					<div class="card-panel registration-form">
 						<div class="row">
@@ -352,12 +352,12 @@ var contextpath = "${context}";
 									<h6 class="file-upload-heading"><spring:message code="registration.uploadnationalid" /> <span class="star">*</span></h6>
 									<div class="btn">
 										<span><spring:message code="input.selectfile" /></span>
-										<input type="file" id="NationalIdImage" placeholder="Upload National ID Image"
+										<input type="file" id="NationalIdImage" placeholder=""
 										oninput="InvalidMsg(this,'fileType','<spring:message code="validation.selectImgMsg" />');" oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.selectImgMsg" />');"
 										 required/>
 									</div>
 									<div class="file-path-wrapper">
-									<input class="file-path validate" type="text" placeholder="Upload National ID Image" />
+									<input class="file-path validate" type="text" placeholder="<spring:message code="registration.uploadnationalid" />" />
 									</div>
 								</div>
 
@@ -421,7 +421,7 @@ var contextpath = "${context}";
 
 								<div class="input-field col s12 m6 l6">
 									<input type="text" name="authorityEmail" maxlength="320"  id="authorityEmail" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,320}" 
-									oninput="InvalidMsg(this,'email');" oninvalid="InvalidMsg(this,'email');" title="<spring:message code="validation.email" />" >
+									oninput="InvalidMsg(this,'email','<spring:message code="validation.email" />');" oninvalid="InvalidMsg(this,'email','<spring:message code="validation.email" />');">
 									<label for="authorityEmail"> <spring:message code="registration.ReportingAuthorityEmailid" /></label>
 								</div>
 
