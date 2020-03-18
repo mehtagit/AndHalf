@@ -262,8 +262,10 @@ function exportTacData()
 
 
 
-function ImporterviewByID(id,actionType,projectPath){
-	
+function ImporterviewByID(id,actionType,projectPath,modalID){
+	$('#'+modalID).openModal({
+ 	   dismissible:false
+    });
 	window.projectPath = projectPath;
 	
 	
@@ -277,18 +279,13 @@ function ImporterviewByID(id,actionType,projectPath){
 			if(actionType=='view')
 				{
 				//$("#viewImporterModal").openModal();
-				$('#viewImporterModal').openModal({
-			    	   dismissible:false
-			       });
+			
 				setImporterViewPopupData(data,projectPath);
 			
 				}
 			else if(actionType=='edit')
 				{
-				//$("#importereditModal").openModal();
-				$('#importereditModal').openModal({
-			    	   dismissible:false
-			       });
+				
 				setImporterEditPopupData(data)
 				
 				}
@@ -309,8 +306,8 @@ function setImporterViewPopupData(data,projectPath){
 	$("#viewmodelName").val(data.productNameInterp);
 	$("#viewModelnumber").val(data.modelNumberInterp);
 	$("#viewManufacturercountry").val(data.manufacturerCountry);
-	$('#viewrequestDate').val(data.requestDate)
-	$('#viewFrequency').val(data.frequencyRange)
+	$('#viewrequestDate').val(data.requestDate);
+	$('#viewFrequency').val(data.frequencyRange);
 	$("#viewImportertac").val(data.tac);
 	
 	var result= data;
@@ -511,7 +508,7 @@ function updateImporterTypeDevice()
 						    	   dismissible:false
 						       });
 							$('#updateTacMessage').text('');
-							$('#updateTacMessage').text(data.message);
+							$('#updateTacMessage').text($.i18n('TYPE_APPROVE_UPDATE_SUCCESS'));
 						}
 					 
 			},

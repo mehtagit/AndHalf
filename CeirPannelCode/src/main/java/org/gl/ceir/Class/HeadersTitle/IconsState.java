@@ -1189,9 +1189,9 @@ public class IconsState {
 	public String trcAdminManageIcons(String status,Integer id,String fileName,String txnId,String userStatus) {
 		executePostConstruct();
 		String errorURL = "consignmentFileDownload('"+fileName.replace(" ", "%20")+"','error','"+txnId+"','"+defaultTagName+"')";
-		String viewAction="ImporterviewByID("+id+",'view','"+projectPath+"')";
+		String viewAction="ImporterviewByID("+id+",'view','"+projectPath+"','viewImporterModal')";
 	//	String downloadURL = "./dowloadFiles/actual/"+fileName.replace(" ", "%20")+"/"+txnId+"/"+defaultTagName+"";
-		String downloadURL = "fileDownload('"+fileName.replace(" ", "%20")+"','actual','"+txnId+"','"+defaultTagName+"')";
+		//String downloadURL = "fileDownload('"+fileName.replace(" ", "%20")+"','actual','"+txnId+"','"+defaultTagName+"')";
 		String approveAction = "openApproveTACPopUp('"+txnId+"','')";
 		String rejectAction= "openDisapproveTACPopUp('"+txnId+"','')";
 		String deleteAction = "DeleteTacRecord('"+txnId+"',"+id+")";
@@ -1201,9 +1201,7 @@ public class IconsState {
 		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
 
-		String download="<a onclick="+downloadURL+" ><i class="
-				+downloadIcon+" aria-hidden=\"true\" title="
-				+downloadIconTitle+" ></i></a>";
+		
 		String approve = "<a onclick="+approveAction+"><i class="+approveIcon+" aria-hidden=\"true\" title="
 				+approveIconTitle+" ></i></a>";   
 		String reject = "<a onclick="+rejectAction+"><i class="+rejectIcon+" aria-hidden=\"true\" title="
@@ -1222,8 +1220,7 @@ public class IconsState {
 					+errorIconTitle+" ></i></a>";
 			reject = "<a onclick=" + rejectAction + " class=\"eventNone\"><i class=" + disableRejectIcon
 					+ " aria-hidden=\"true\" title=" + rejectIconTitle + " ></i></a>";
-			download = "<a href=" + downloadURL + " ><i class=" + downloadIcon
-					+ " aria-hidden=\"true\" title=" + downloadIconTitle + " ></i></a>";
+			
 		}else if(("0".equals(status) || "1".equals(status) || "4".equals(status)) && "Approved".equals(userStatus)) {
 			error="<a onclick="+errorURL+" class=\"eventNone\"><i class="+disableErrorIcon+" aria-hidden=\"true\" title="
 					+errorIconTitle+" ></i></a>";
@@ -1247,7 +1244,7 @@ public class IconsState {
 		}
 
 
-		String action = error.concat(download).concat(view).concat(approve).concat(reject).concat(delete);
+		String action = error.concat(view).concat(approve).concat(reject).concat(delete);
 		return action;
 
 	}
@@ -1583,8 +1580,9 @@ public class IconsState {
 		// URL link 
 		//String downloadURL = "JavaScript:void(0)";
 
-		String viewAction="ImporterviewByID("+id+",'view','"+projectPath+"')";
-		String editAction= "ImporterviewByID("+id+",'edit')";
+		String viewAction="ImporterviewByID("+id+",'view','"+projectPath+"','viewImporterModal')";
+		String editAction= "ImporterviewByID("+id+",'edit','"+projectPath+"','importereditModal')";
+		
 		String deleteAction = "DeleteTacRecord('"+txnId+"',"+id+")";
 		// state related Code 
 

@@ -128,5 +128,6 @@
 	"country": "Country",
 	"PRO_OldPass_Error":"Kindly enter the correct password",
 	"Deletion of consignment is in Progress.":"Deletion of consignment is in Progress.",
-	"currentDateError":"End Date or Start Date should not be greater than today Date"
+	"currentDateError":"End Date or Start Date should not be greater than today Date",
+	"TYPE_APPROVE_UPDATE_SUCCESS" :"Type Approved data has been sucessfully update."
 }
