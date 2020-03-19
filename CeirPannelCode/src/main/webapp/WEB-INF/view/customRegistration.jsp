@@ -9,6 +9,7 @@ if(statusCode==200){
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
@@ -227,7 +228,7 @@ var contextpath = "${context}";
 									<option value="km"><spring:message code="lang.khmer" /></option>
 								</select>
 							</div>
-							<div class="col s12 m12"><h5><spring:message code="roletype.${param.type}" /> <spring:message code="select.registration" /></h5>
+							<div class="col s12 m12"><h5><spring:message  code="roletype.${fn:replace(param.type, ' ', '_')}" /> <spring:message code="select.registration" /></h5>
 							<span id="msg" style="color: red;">${msg}</span><hr>
 							</div>
 								<input type="hidden" id="usertypeId" value="${usertypeId}">
