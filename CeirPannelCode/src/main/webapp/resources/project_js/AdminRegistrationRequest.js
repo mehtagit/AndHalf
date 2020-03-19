@@ -277,7 +277,9 @@
 	function userApprovalPopup(userId,date,username,sessionUserName){
 		$("#registrationTxnId").text(username);
 		$("#sessionUserName").val(sessionUserName);
-		$('#approveInformation').openModal();
+		$('#approveInformation').openModal({
+		 	   dismissible:false
+	    });
 		$("#userId").text(userId);
 		window.userID=userId;
 		window.date=date.replace("="," ");
@@ -316,13 +318,17 @@
 
 	function confirmApproveInformation(userID,date){
 		$('#approveInformation').closeModal(); 
-		setTimeout(function(){ $('#confirmApproveInformation').openModal();}, 200);
+		setTimeout(function(){ $('#confirmApproveInformation').openModal({
+		 	   dismissible:false
+	    });}, 200);
 		$("#registrationDate").text(date);
 		$("#RegistrationId").text(userID);
 	}
 
 	function userRejectPopup(userId,sessionUserName){
-		$('#rejectInformation').openModal();
+		$('#rejectInformation').openModal({
+		 	   dismissible:false
+	    });
 		console.log("Reject userId is---->"+userId);
 		$("#userId").text(userId)
 		$("#rejectUserName").val(sessionUserName);
@@ -363,7 +369,9 @@
 
 	function confirmRejectInformation(){
 		$('#rejectInformation').closeModal();
-		$('#confirmRejectInformation').openModal();
+		$('#confirmRejectInformation').openModal({
+		 	   dismissible:false
+	    });
 	}
 
 	function exportButton(){
@@ -403,7 +411,9 @@
 	
  function userChangeStatus(userId,sessionUserName){
 	 window.userId = userId
-	 $("#statusChangemodal").openModal();
+	 $("#statusChangemodal").openModal({
+	 	   dismissible:false
+	    });
 	 $("#statusUserName").val(sessionUserName);
 	 
  }
@@ -426,7 +436,9 @@
 			type : 'POST',
 			success : function(data) {
 				console.log("Request----->"+JSON.stringify(Request));
-				$("#confirmUserStatus").openModal();
+				$("#confirmUserStatus").openModal({
+				 	   dismissible:false
+			    });
 			},
 			error : function() {
 				alert("Failed");
