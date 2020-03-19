@@ -365,18 +365,12 @@ public class EndUserDB implements Serializable {
 		builder.append(docType);
 		builder.append(", docTypeInterp=");
 		builder.append(docTypeInterp);
-		builder.append(", regularizeDeviceDbs=");
-		builder.append(regularizeDeviceDbs);
 		builder.append(", nationality=");
 		builder.append(nationality);
 		builder.append(", onVisa=");
 		builder.append(onVisa);
-		builder.append(", visaDb=");
-		builder.append(visaDb);
 		builder.append(", isVip=");
 		builder.append(isVip);
-		builder.append(", userDepartment=");
-		builder.append(userDepartment);
 		builder.append(", passportFileName=");
 		builder.append(passportFileName);
 		builder.append(", creatorUserId=");

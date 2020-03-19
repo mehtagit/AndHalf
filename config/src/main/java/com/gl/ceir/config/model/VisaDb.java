@@ -47,7 +47,6 @@ public class VisaDb implements Serializable {
 	@NotNull
 	private String visaFileName;
 	
-	@NotNull
 	private String entryDateInCountry;
 	
 	private String visaExpiryDate;
