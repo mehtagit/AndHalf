@@ -58,6 +58,9 @@ var txnid=$('#existingStolenTxnId').val();
 		$('#uploadFirSingleName').val(response.firFileName);
 
 		$("label[for='IndivisualStolenDate']").addClass('active');
+		
+		$('#firFilePreview').attr("onclick",'previewFile("'+response.fileLink+'","'+response.firFileName+'","'+response.txnId+'")');
+		//$('#deviceListlink').attr("onclick",'previewFile("'+response.fileLink+'","'+response.fileName+'","'+response.txnId+'")');
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
 			console.log("error in ajax")

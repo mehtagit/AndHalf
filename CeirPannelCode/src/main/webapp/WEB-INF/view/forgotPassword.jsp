@@ -256,8 +256,6 @@ oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:messa
 	
 	
 	<div id="submitBtnAction" class="modal">
-        <button type="button" class="modal-action modal-close waves-effect waves-green btn-flat right"
-            data-dismiss="modal">&times;</button>
         <h6 class="modal-header"><spring:message code="registration.forgotpassword" /></h6>
         <div class="modal-content">
                 <h6 id="responseMsg"></h6>

@@ -97,6 +97,8 @@ mv.setViewName("ViewStock");
 }
 else {
 	
+	log.info("selectedUserTypeId=="+selectedUserTypeId);
+	log.info("selectedRoleTypeId=="+selectedRoleTypeId);
 	session.setAttribute("selectedUserTypeId", selectedUserTypeId);
 	session.setAttribute("selectedRoleTypeId", selectedRoleTypeId);
 	mv.setViewName("ViewStock");

@@ -719,9 +719,6 @@ onchange="InvalidMsg(this,'select','<spring:message code="validation.selectField
 	<!-- Modal 1 start   -->
 
 	<div id="submitForm" class="modal">
-		<button type="button"
-			class=" modal-action modal-close waves-effect waves-green btn-flat right"
-			data-dismiss="modal">&times;</button>
 		<div class="modal-content">
 			<!-- <h4 class="header2 pb-2">User Info</h4> -->
 
@@ -752,9 +749,9 @@ onchange="InvalidMsg(this,'select','<spring:message code="validation.selectField
                         <div id="otpMsgModal" class="modal" style="width: 40%; margin-left: 30%; margin-top: 10vh;">
                             <h6 class="modal-header"><spring:message code="registration.verifyotp" /></h6>
                             <p class="center" id="otpMsg"><!-- The text and and an e-mail with OTP details has been sent to your registered Phone Number and E-Mail ID --></p>
-                                                      <a href="#otpVerification" class="btn modal-trigger modal-close"
-                                style="width: 100%; margin-top: 20px; margin-bottom: 20px;"><spring:message code="registration.verifyotp" /></a>
-
+           			<a href="javascript:void(0)" onclick="openOtpPopup()" class="btn"
+				style="width: 100%; margin-top: 20px; margin-bottom: 20px;"><spring:message
+					code="registration.verifyotp" /></a>
                         </div>
                     </div>
                 </div>
@@ -765,8 +762,6 @@ onchange="InvalidMsg(this,'select','<spring:message code="validation.selectField
     </div>
     <!-- END MAIN -->
 <div id="otpMessage" class="modal">
-        <button type="button" class="modal-action modal-close waves-effect waves-green btn-flat right"
-            data-dismiss="modal">&times;</button>
        <h6 class="modal-header"><spring:message code="registration.updateinformation" /></h6>
         <div class="modal-content">
             <!-- <h4 class="header2 pb-2">User Info</h4> -->
@@ -776,15 +771,18 @@ onchange="InvalidMsg(this,'select','<spring:message code="validation.selectField
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
-                    <a target="_parent"   href="javascript:window.location.href=window.location.href"  class="btn"><spring:message code="modal.ok" /></a>
+								<%if(userLatestLang!=null){%>
+								
+								<a target="_parent" href="./?lang=<%=userLatestLang%>" class="btn" style="margin-left: 10px;"><spring:message code="modal.ok" /></a>
+                                <%}else{ %>
+								<a target="_parent" href="./?lang=<%=session.getAttribute("language")%>" class="btn" style="margin-left: 10px;"><spring:message code="modal.ok" /></a>
+                                <%} %>                </div>
                 </div>
             </div>
         </div>
     </div>
     
     <div id="profileResponse" class="modal" style="width: 40%">
-        <button type="button" class="modal-action modal-close waves-effect waves-green btn-flat right"
-            data-dismiss="modal">&times;</button>
                             <h6 class="modal-header"><spring:message code="registration.updateinformation" /></h6>
            
         <div class="modal-content">
@@ -798,9 +796,9 @@ onchange="InvalidMsg(this,'select','<spring:message code="validation.selectField
                 <div class="input-field col s12 center">
 								<%if(userLatestLang!=null){%>
 								
-								<a target="_parent" href="./?lang=<%=userLatestLang%>" class="btn" style="margin-left: 10px;"><spring:message code="modal.cancel" /></a>
+								<a target="_parent" href="./?lang=<%=userLatestLang%>" class="btn" style="margin-left: 10px;"><spring:message code="modal.ok" /></a>
                                 <%}else{ %>
-								<a target="_parent" href="./?lang=<%=session.getAttribute("language")%>" class="btn" style="margin-left: 10px;"><spring:message code="modal.cancel" /></a>
+								<a target="_parent" href="./?lang=<%=session.getAttribute("language")%>" class="btn" style="margin-left: 10px;"><spring:message code="modal.ok" /></a>
                                 <%} %>                </div>
             </div>
         </div>
@@ -811,8 +809,6 @@ onchange="InvalidMsg(this,'select','<spring:message code="validation.selectField
     <!-- modal start -->
 
        <div id="otpVerification" class="modal" style="width: 40%;">
-        <!-- <button type="button" class=" modal-action modal-close waves-effect waves-green btn-flat right"
-            data-dismiss="modal">&times;</button> -->
                <h6 class="modal-header"><spring:message code="registration.otp" /></h6>
         <div class="modal-content">
                  <form id="verifyOtpForm" onsubmit="return verifyOtp2()">
@@ -872,9 +868,6 @@ onchange="InvalidMsg(this,'select','<spring:message code="validation.selectField
 	<!-- Modal 2 start   -->
 
 	<!-- <div id="submitActivateDeactivate" class="modal">
-		<button type="button"
-			class=" modal-action modal-close waves-effect waves-green btn-flat right"
-			data-dismiss="modal">&times;</button>
 		<div class="modal-content">
 
 			<div class="row">
@@ -898,9 +891,6 @@ onchange="InvalidMsg(this,'select','<spring:message code="validation.selectField
 	<!-- Modal 2 start   -->
 
 	<div id="cancelActivateDeactivate" class="modal">
-		<button type="button"
-			class=" modal-action modal-close waves-effect waves-green btn-flat right"
-			data-dismiss="modal">&times;</button>
 		<div class="modal-content">
 
 			<div class="row">

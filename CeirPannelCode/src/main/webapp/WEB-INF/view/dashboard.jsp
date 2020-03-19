@@ -137,7 +137,7 @@ data-roleType="${usertype}" data-userTypeID="${usertypeId}"
 								</div>
 							</div>
 						</li>
-						<li><a   data-target="goToHome" class="modal-trigger"
+						<li><a href="javascript:void(0)"  onclick="openHome();"
 							 style="color: white; cursor: pointer;"><spring:message
 									code="registration.home" /></a></li>
 						<li class="profileInfo"><a
@@ -151,18 +151,18 @@ data-roleType="${usertype}" data-userTypeID="${usertypeId}"
 										style="float: left" class="dropdownColor"><spring:message
 												code="registration.editinfo" /></span></a></li>
 								<li class="divider"></li>
-								<li><a data-target="changePassword"class="modal-trigger""><i
+								<li><a  href="javascript:void(0)" onclick="changePasswordPopup()"><i
 										class="fa fa-key dropdownColor" style="float: left"></i><span
 										style="float: left" class="dropdownColor"><spring:message
 												code="registration.changepassword" /></span></a></li>
 								<li class="divider"></li>
-								<li><a href="#manageAccount" class="modal-trigger"><i
+								<li><a onclick="manageAccountPopup();" href="javascript:void(0)"><i
 										class="mdi-action-settings dropdownColor"></i> <span
 										class="dropdownColor"> <spring:message
 												code="registration.activate/deactivateaccount" /></span></a></li>
 								<li class="divider"></li>
 
-								<li><a data-target="goToLogout" style="cursor: pointer;" class="modal-trigger" id=""><i
+								<li><a href="javascript:void(0)" onclick="openLogout()" style="cursor: pointer;"  id=""><i
 										style="float: left;"
 										class="mdi-hardware-keyboard-tab dropdownColor"></i> <span
 										class="dropdownColor"> <spring:message
@@ -350,9 +350,6 @@ data-roleType="${usertype}" data-userTypeID="${usertypeId}"
 	<!-- Modal 4 start   -->
 
 	<div id="manageAccountSubmit" class="modal">
-		<button type="button"
-			class=" modal-action modal-close waves-effect waves-green btn-flat right"
-			data-dismiss="modal">&times;</button>
 		<h6 class="modal-header">
 			<spring:message code="registration.manageaccount" />
 		</h6>

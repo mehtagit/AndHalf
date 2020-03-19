@@ -633,9 +633,6 @@ String usertypeId="${usertypeId}";
 
 	<div id="otpMsgModal" class="modal"
 		style="width: 40%; margin-left: 30%; margin-top: 10vh;">
-		<!-- <button type="button"
-			class=" modal-action modal-close waves-effect waves-green btn-flat right"
-			data-dismiss="modal">&times;</button> -->
 		<h6 class="modal-header">
 			<spring:message code="registration.verifyotp" />
 		</h6>
@@ -749,9 +746,6 @@ String usertypeId="${usertypeId}";
 
 
 	<div id="otpMessage" class="modal">
-<!-- 		<button type="button"
-			class="modal-action modal-close waves-effect waves-green btn-flat right"
-			data-dismiss="modal">&times;</button> -->
 		<h6 class="modal-header">
 			<spring:message code="registration.verifyotp" />
 		</h6>
