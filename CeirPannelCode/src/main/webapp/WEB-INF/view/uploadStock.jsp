@@ -689,23 +689,11 @@ function redirectToViewPage()
 	 var role = currentRoleType == null ? roleType : currentRoleType;
 	 console.log(" userId="+userId+" role="+role);
 	console.log("./assignDistributor?userTypeId="+role);
-	var ssss = $("body").attr("data-selectedRoleTypeId");
+	var selectedRoleTypeId = $("body").attr("data-selectedRoleTypeId");
 	
 	
-	 window.location.href = "./assignDistributor?userTypeId="+role+"&selectedRoleTypeId="+ssss;
-	 /*  $.ajax({
-	url : "./assignDistributor?userTypeId="+role,
-	dataType : 'json',
-	contentType : 'application/json; charset=utf-8',
-	type : 'GET',
-	success : function(data) {
-		console.log(data)
-		
-	},
-	error : function() {
-		alert("Failed");
-	}
-}); */
+	 window.location.href = "./assignDistributor?userTypeId="+role+"&selectedRoleTypeId="+selectedRoleTypeId;
+	
 
 }
 

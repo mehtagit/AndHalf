@@ -122,6 +122,7 @@ select {
 
 
 	<section id="content">
+		<div id="initialloader"></div>
 		<!--start container-->
 		<div class="container">
 			<div class="section">
@@ -215,7 +216,7 @@ select {
 																placeholder="<spring:message code="registration.uploadnid/passportimage" />"
 																id="singleStolenFileName" 
 																title="">
-																<a href="#" id="PassportNidLink" style="display: none;">Preview</a>
+																<a href="#" id="PassportNidLink" class="imgPreviewLink" style="display: none;">Preview</a>
 														</div>
 													</div>
 
@@ -639,7 +640,7 @@ select {
 															<div class="file-path-wrapper" data-original-title="" title="">
 																<input class="file-path validate" type="text" placeholder="
 																	input.UploadFIR" id="uploadFirSingleName" title="" data-original-title="">
-																	<a id="firImageLink" style="display: none;">Preview</a>
+																	<a id="firImageLink" class="imgPreviewLink" style="display: none;">Preview</a>
 															</div>
 														</div>
 

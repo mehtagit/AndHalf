@@ -103,10 +103,14 @@ function pageRendering(){
 							+"</label>"+
 							"<span	class='input-group-addon' style='color: #ff4081'>"+
 							"<i	class='fa fa-calendar' aria-hidden='true' style='float: right; margin-top: -37px;'>"+"</i>"+"</span>");
-
+					$( "#"+date[i].id ).datepicker({
+						dateFormat: "yy-mm-dd",
+						 maxDate: new Date()
+			        }); 
 				}else if(date[i].type === "text"){
 					$("#auditTableDiv").append("<div class='input-field col s6 m2' ><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
 				}
+				
 			} 
 		
 		// dynamic dropdown portion
@@ -134,19 +138,9 @@ function pageRendering(){
 					$('#'+button[i].id).attr("onclick", button[i].buttonURL);
 				}
 
-			/*	for(i=0; i<button.length; i++){
-					$('#'+button[i].id).text(button[i].buttonTitle);
-					if(button[i].type === "HeaderButton"){
-						$('#'+button[i].id).attr("onclick", button[i].buttonURL);
-					}
-					
-				}*/
-
-		
 			
-			$('.datepicker').datepicker({
-					dateFormat: "yy-mm-dd"
-					});
+		
+
 
 		}
 	});

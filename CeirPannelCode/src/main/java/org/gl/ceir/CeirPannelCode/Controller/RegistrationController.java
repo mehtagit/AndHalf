@@ -133,8 +133,9 @@ public class RegistrationController {
 			@RequestParam(name = "photo",required = false)MultipartFile photo,
 			@RequestParam(name = "NationalIdImage",required = false)MultipartFile nationalIdImage,
 			@RequestParam(name = "idCard",required = false)MultipartFile idCard,
+			@RequestParam(name = "vatFile",required = false)MultipartFile vatFile,
 			HttpSession session,HttpServletRequest request) throws IOException{
-		OtpResponse response =registrationService.saveOtherRegistration(data,photo,nationalIdImage,idCard,session,request);  
+		OtpResponse response =registrationService.saveOtherRegistration(data,photo,nationalIdImage,idCard,session,request,vatFile);  
 		return response;             
 	}
 

@@ -129,15 +129,13 @@
 	"PRO_OldPass_Error":"Kindly enter the correct password",
 	"Deletion of consignment is in Progress.":"Deletion of consignment is in Progress.",
 	"currentDateError":"End Date or Start Date should not be greater than today Date",
-	"stolenIndivisual":"View Indivisual Report Stolen",
+"stolenIndivisual":"View Indivisual Report Stolen",
 	"stolenCompany":"View Company Report Stolen",
 	"recoveryIndivisual":"View Indivisual Report Recovery",
 	"recoveryCompany":"View Company Report Recovery",
 	"editstolenIndivisual":"Edit Indivisual Report Stolen",
 	"editstolenCompany":"Edit Company Report Stolen",
 	"editrecoveryIndivisual":"Edit Indivisual Report Recovery",
-	"editrecoveryCompany":"Edit Company Report Recovery"
-	
-	
-	
+	"editrecoveryCompany":"Edit Company Report Recovery",
+"TYPE_APPROVE_UPDATE_SUCCESS" :"Type Approved data has been sucessfully update."
 }

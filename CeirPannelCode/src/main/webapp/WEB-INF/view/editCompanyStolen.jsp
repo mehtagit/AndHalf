@@ -112,6 +112,7 @@
 
 	<section id="content">
 		<!--start container-->
+		<div id="initialloader"></div>
 		<div class="container">
 			<div class="section">
 				<div class="row">
@@ -125,7 +126,7 @@
 								<div class="row">
 								<!-- 	<div class="col s12">
 										<ul class="tabs">
-											<li class="tab col s3"><a class="active"
+											<li class="tab col s3deviceListlinkDiv"><a class="active"
 												onclick="showSingleFormDiv()">Individual</a></li>
 											<li class="tab col s3"><a onclick="showBulkFormDiv()">Company/Organisation/Government</a></li>
 										</ul>
@@ -790,7 +791,7 @@
 																<input class="file-path validate" type="text" placeholder="
 																	input.UploadFIR" id="uploadFirSingleName" title="" data-original-title="Please upload national
 																ID image">
-																<a href="#" id="firFilePreview" style="display: none;">Preview</a>
+																<a href="#" id="firFilePreview" class="imgPreviewLink"  style="display: none;">Preview</a>
 															</div>
 														</div>
 											<div class="input-field col s12 m6" style="margin-top: 22px;">
@@ -966,6 +967,8 @@ src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/j
 	$('#headingType').text('');
 	$('#headingType').text(stolenCompany);
 	//alert(stolenCompany)
+	$("#deviceListlinkDiv").removeClass("btn");
+	$('#deviceBulkStolenFile').attr('type','text');
    /* $("#deviceListlinkDiv").removeClass("btn");
 	   $('#dviceFileText').text('');
 	   $('#deviceBulkStolenFile').attr('type','text');

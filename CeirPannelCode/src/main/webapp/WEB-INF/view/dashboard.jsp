@@ -47,6 +47,9 @@
 <link
 	href="${context}/resources/font/font-awesome/css/font-awesome.min.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+
 <script>
 var contextpath = "${context}";
 <%
@@ -55,8 +58,6 @@ String name = (String) session.getAttribute("name");
 %>
 
 </script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
 
 </head>
 <style>
@@ -560,8 +561,8 @@ data-dismiss="modal">&times;</button> -->
 			</div>
 			<div class="input-field col s12 center">
 				<div class="input-field col s12 center">
-					<a href="JavaScript:Void(0);" class="btn" type="submit" name="add_user"
-						id="home_Link"><spring:message code="modal.yes" /></a> <a href="#"
+					<a href="${context}/homePage" class="btn" type="submit" name="add_user"
+						id="home_Links"><spring:message code="modal.yes" /></a> <a href="#"
 						class="modal-close btn" style="margin-left: 10px;"><spring:message
 							code="modal.no" /></a>
 				</div>
