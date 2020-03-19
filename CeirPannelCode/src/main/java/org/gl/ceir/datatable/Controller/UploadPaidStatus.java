@@ -85,7 +85,7 @@ public class UploadPaidStatus {
 		Integer userId = (Integer) session.getAttribute("userid");
 		Integer userTypeId = (Integer) session.getAttribute("usertypeId");
 		log.info("userId==="+userId);
-
+		String userStatus = (String) session.getAttribute("userStatus");
 		log.info("userType in uploadPaidStatus" +userType);
 		Object response = null;
 		Gson gsonObject=new Gson();
@@ -99,6 +99,7 @@ public class UploadPaidStatus {
 		response = uploadPaidStatusFeignClient.view(filterrequest, pageNo, pageSize, file);
 		log.info("request passed to the filter api  ="+filterrequest);
 		String apiResponse = gson.toJson(response);
+		log.info("response filter api  ="+apiResponse);
 		//	filterrequest.setSearchString(request.getParameter("search[value]"));
 		try {
 			UserPaidStatusPaginationModel upsPaginationModel = gson.fromJson(apiResponse, UserPaidStatusPaginationModel.class);
@@ -149,7 +150,8 @@ public class UploadPaidStatus {
 					String origin = contentModelList.getOrigin();
 					//params for action 
 					String imei1 = contentModelList.getFirstImei();
-					String action = iconState.adminUserPaidStatusIcon(imei1,createdOn,contentModelList.getTxnId());
+					String deviceState = String.valueOf(contentModelList.getStatus());
+					String action = iconState.adminUserPaidStatusIcon(imei1,createdOn,contentModelList.getTxnId(),deviceState,userStatus);
 
 					Object[] data = {createdOn,nid,txnId,country,taxStatus,origin,status,action};
 
@@ -174,7 +176,8 @@ public class UploadPaidStatus {
 					
 					//params for action 
 					String imei1 = contentModelList.getFirstImei();
-					String action = iconState.deviceActivationIcon(imei1,createdOn,contentModelList.getTxnId());
+					String deviceState = String.valueOf(contentModelList.getStatus());
+					String action = iconState.deviceActivationIcon(imei1,createdOn,contentModelList.getTxnId(),deviceState,userStatus);
 
 					Object[] data = {createdOn,txnId,nid,action};
 
