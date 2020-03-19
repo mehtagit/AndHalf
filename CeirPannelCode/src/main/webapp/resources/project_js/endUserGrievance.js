@@ -8,10 +8,284 @@
 		window.location.assign("raiseAgrievance?reportType="+type+"&lang="+lang);			
 		}); 
 
+
+	
+	
 	
 	$(document).ready(function () {
 		 $('#langlist').val(data_lang_param);
+		 $.i18n().locale = data_lang_param;
+			var successMsg;
+			$.i18n().load( {
+				'en': './resources/i18n/en.json',
+				'km': './resources/i18n/km.json'
+			} ).done( function() { 
+			});
+
+		 $('.modal').modal();
 	});
+
+function saveaAonymousGrievance(){
+
+	var firstName=$('#firstName').val();
+	var middleName=$('#middleName').val();
+	var lastName=$('#lastName').val();
+	var contactNumber=$('#contactNumber').val();
+	var emailID=$('#emailID').val();
+	var category=$('#endUsercategory').val();
+	
+	var txnId=$('#endUsertransactionId').val();
+	var remark=$('#endUserRemark').val();
+	var file=$('#myInput').val();
+	var fieldId=1;
+	var fileInfo =[];
+	var formData= new FormData();
+	var fileData = [];
+	
+	var x;
+	var filename='';
+	var filediv;
+	var i=0;
+	var formData= new FormData();
+	var docTypeTagIdValue='';
+	var filename='';
+	var filesameStatus=false;
+	var documenttype=false;
+	var docTypeTag='';
+	var documentFileNameArray=[];
+	$('.endUserfileDiv').each(function() {	
+
+		
+		var x={
+		"docType":$('#endUserdocTypetag'+fieldId).val(),
+		"fileName":$('#endUserdocTypeFile'+fieldId).val().replace('C:\\fakepath\\','')
+		}
+		formData.append('files[]',$('#endUserdocTypeFile'+fieldId)[0].files[0]);
+		documentFileName=$('#endUserdocTypeFile'+fieldId).val().replace('C:\\fakepath\\','')
+		docTypeTag=$('#endUserdocTypetag'+fieldId).val();
+		
+		var fileIsSame=	documentFileNameArray.includes(documentFileName);
+		
+		var documentTypeTag=documentFileNameArray.includes(docTypeTag);
+	
+		if(filesameStatus!=true){
+			filesameStatus=	fileIsSame;
+		}
+		
+		 if(documenttype!=true)
+			{
+			documenttype=documentTypeTag;
+	
+			}
+		documentFileNameArray.push(documentFileName);
+		documentFileNameArray.push(docTypeTag);
+		
+		fileInfo.push(x);
+		fieldId++;
+		i++;
+	});
+	
+	if(filesameStatus==true)
+	{	
+	
+	$('#fileFormateModal').openModal();
+		$('#fileErrormessage').text('')
+		$('#fileErrormessage').text($.i18n('duplicateFileName'));
+	return false;
+	
+	}
+	
+	if(documenttype==true)
+	{	
+		
+	$('#fileFormateModal').openModal();
+		$('#fileErrormessage').text('')
+		$('#fileErrormessage').text($.i18n('documentTypeName'));
+	return false;
+	
+	}
+	
+	var multirequest={
+			"attachedFiles":fileInfo,
+			"txnId":txnId,
+			"categoryId":category,
+			"remarks":remark,
+			"email":emailID,
+			"firstName":firstName,
+			"lastName":lastName,
+			"middleName":middleName,
+			"phoneNo":contactNumber,
+			"featureId":6
+	}
+	
+	formData.append('fileInfo[]',JSON.stringify(fileInfo));
+	formData.append('multirequest',JSON.stringify(multirequest));
+	/*formData.append('categoryId',category);
+	formData.append('remarks',remark);
+*/
+	$.ajax({
+		url: './saveEndUserGrievance',
+		type: 'POST',
+		data: formData,
+		mimeType: 'multipart/form-data',
+		processData: false,
+		contentType: false,
+		async:false,
+		success: function (data, textStatus, jqXHR) {
+			console.log(data);
+			 $("#saveAnonymousGrieavance").prop('disabled', true);
+			var x=data;
+			var y= JSON.parse(x);
+			 $('#GrievanceMsg').openModal(); 
+			 $('#sucessMessageGrievance').text(y.txnId); 
+			
+		},
+		error: function (jqXHR, textStatus, errorThrown) {
+			/* console.log("error in ajax") */
+			 $('#exceptionMessage').openModal(); 
+		}
+	});
+return false;
+
+}
+
+
+
+var max_fields = 15; //maximum input boxes allowed
+var endUserwrapper = $(".endUsermainDiv"); //Fields wrapper
+var add_button = $(".endUser_add_field_button"); //Add button ID
+var x = 1; //initlal text box count
+var id=2;
+$(".endUser_add_field_button").click(function (e) { //on add input button click
+	e.preventDefault();
+	if (x < max_fields) { //max input box allowed
+		x++; //text box increment
+		$(endUserwrapper).append(
+				'<div id="endUserfilediv'+id+'" class="endUserfileDiv"><div class="row"><div class="file-field col s12 m6"><label for="">'+$.i18n('documenttype')+' <span class="star">*</span></label><select id="endUserdocTypetag'+id+'" required class="browser-default"> <option value="" disabled selected>'+$.i18n('selectDocumentType')+' </option></select></div> <div class="file-field col s12 m6" style="margin-top: 23px;"><div class="btn"><span>'+$.i18n('selectfile')+'</span><input id="endUserdocTypeFile'+id+'" type="file" required name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" placeholder="Upload file" type="text"></div></div><div  class="endUser_remove_field btn right btn-info">-Remove</div></div></div>'
+				/* '<div id="filediv'+id+'" class="fileDiv"><div class="row"><div class="file-field col s12 m6" style="margin-top: 23px;"><div class="btn"><span>'+$.i18n('selectfile')+'</span><input id="docTypeFile'+id+'" type="file" required name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" type="text"></div></div><div class="file-field col s12 m6"><label for="Category">'+$.i18n('documenttype')+' <span class="star">*</span></label><select id="docTypetag'+id+'" required class="browser-default"> <option value="" disabled selected>'+$.i18n('selectDocumentType')+' </option></select><select id="docTypetagValue'+id+'" style="display:none" class="browser-default"> <option value="" disabled selected>'+$.i18n('selectDocumentType')+' </option></select></div><div style="cursor:pointer;background-color:red;margin-right: 1.7%;" class="remove_field btn right btn-info">-</div></div></div>' */
+		); //add input box
+	}
+	
+	
+	/* $.getJSON('./getDropdownList/DOC_TYPE', function(data) {
+
+
+		for (i = 0; i < data.length; i++) {
+			console.log(data[i].interp);
+			var optionId=id-1;
+			$('<option>').val(data[i].tagId).text(data[i].interp).appendTo('#endUserdocTypetag'+optionId);
+			
+
+		}
+	}); */
+	var request ={
+			 "childTag": "DOC_TYPE",
+			  "featureId": 6,
+			  "parentValue":  parseInt($('#endUsercategory').val()),	
+			  "tag": "GRIEVANCE_CATEGORY",
+			  "userTypeId":17 
+		}
+
+console.log("request --->" +JSON.stringify(request));	
+ $.ajax({
+		url: './get/tags-mapping',
+		type: 'POST',
+		data : JSON.stringify(request),
+		dataType : 'json',
+		contentType : 'application/json; charset=utf-8',
+		success: function (data, textStatus, jqXHR) {
+			
+			console.log(data);
+			
+			for (i = 0; i < data.length; i++){
+				var optionId=id-1;
+				
+				$('<option>').val(data[i].tagId).text(data[i].interp).appendTo('#endUserdocTypetag'+optionId);
+				
+			}
+			
+		},
+		error: function (jqXHR, textStatus, errorThrown) {
+			console.log("error in ajax")
+		}
+	});
+ 
+	id++;
+
+});
+
+$(endUserwrapper).on("click", ".endUser_remove_field", function (e) { //user click on remove text
+e.preventDefault();
+var Iid=id-1;
+/*alert("@@@"+Iid)*/
+$('#endUserfilediv'+Iid).remove();
+$(this).parent('div').remove();
+x--;
+id--;
+
+})
+
+
+/* $.getJSON('./getDropdownList/DOC_TYPE', function(data) {
+for (i = 0; i < data.length; i++) {
+	console.log(data[i].interp);
+	$('<option>').val(data[i].tagId).text(data[i].interp).appendTo('#endUserdocTypetag1');
+	
+}
+}); */
+$.getJSON('./getTypeDropdownList/GRIEVANCE_CATEGORY/17', function(data) {
+for (i = 0; i < data.length; i++) {
+	console.log(data[i].interp);
+	$('<option>').val(data[i].value).text(data[i].interp).appendTo('#endUsercategory');
+	
+}
+});
+
+
+if($('#pageTypeValue').val()==0)
+{
+console.log("if condition ++++++++");
+$('#endUserRaiseGrievance').css("display", "block");
+$('#trackGrievanceDiv').css("display", "none");
+$('#trackGrievanceHeader').css("display", "none");
+$('#trackGrievanctableDiv').css("display", "none");
+}
+else
+{
+console.log("else condition ++++++++");
+$('#endUserRaiseGrievance').css("display", "none");
+$('#trackGrievanceDiv').css("display", "block");
+$('#trackGrievanctableDiv').css("display", "none");
+
+}
+
+
+
+function  openCancelPopUp()
+{
+ $('#cancelMessage').openModal(); 
+}
+
+function  closeCancelPopUp()
+{
+ $('#cancelMessage').closeModal();
+}
+
+function enableEndUserAddMore(){
+$(".endUser_add_field_button").attr("disabled", false);
+}
+
+function enableEndUserReplyAddMore(){
+$(".add_field_button").attr("disabled", false);
+}
+
+
+function enableReplySelectFile(){
+	$("#docTypeFile1").attr("disabled", false);
+	$("#docTypeFile1").attr("required", true);
+	$("#docTypeFile1Label").append('<span class="star">*</span>');
+}
+
 //**************************************************Grievance table**********************************************
 
 			function endUsergrivanceLibraryTable(){
@@ -103,7 +377,7 @@
 						for(var i=0; i<data.length; i++)
 						{
 							console.log("iiiiiii"+i);
-							$("#chatMsg").append("<div class='chat-message-content clearfix'><span class='chat-time' id='timeHistory'>"+data[i].modifiedOn+"</span><h5 id='userTypehistory'>"+data[i].userDisplayName+"</h5><p id='messageHistory'>"+data[i].reply+"</p></div>");
+							$("#chatMsg").append("<div class='chat-message-content clearfix'><span class='chat-time' id='timeHistory'>"+data[i].modifiedOn+"</span><h5 id='userTypehistory'>"+data[i].userDisplayName+"</h5><textarea class='materialize-textarea' id='messageHistory'>"+data[i].reply+"</textarea></div>");
 								for (var j=0 ; j<data[i].attachedFiles.length;j++)
 								{
 									
@@ -164,7 +438,7 @@
 						for(var i=0; i<data.length; ++i)
 						{
 
-							$("#viewPreviousMessage").append("<div class='chat-message-content clearfix'><h6 style='float: left; font-weight: bold; margin-top:0;' id='mesageUserType'>" +data[i].userDisplayName+" : </h6><span style='float:right;'>" + data[i].modifiedOn + "</span><h6>" + data[i].reply + "</h6></div>");
+							$("#viewPreviousMessage").append("<div class='chat-message-content clearfix'><h6 style='float: left; font-weight: bold; margin-top:0;' id='mesageUserType'>" +data[i].userDisplayName+" : </h6><span style='float:right;'>" + data[i].modifiedOn + "</span><textarea class='materialize-textarea'>" + data[i].reply + "</textarea></div>");
 							
 							for (var j=0 ; j<data[i].attachedFiles.length;j++)
 							{

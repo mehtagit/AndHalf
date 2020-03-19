@@ -170,14 +170,16 @@ var contextpath = "${context}";
                                             <div class="input-field col s12 m6">
                                                 <label for="endUser" style="color: #000;"><spring:message code="input.EmailID" /> </label>
                                                 <input type="email" id="endUseremail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" 
-												oninput="InvalidMsg(this,'email');" oninvalid="InvalidMsg(this,'email');"  
-												 title= "<spring:message code="validation.Matchformat" />"  maxlength="30" name="email"/>
+											    oninput="InvalidMsg(this,'input','<spring:message code="validation.Matchformat" />');"
+												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.Matchformat" />');" 
+												   maxlength="30" name="email"/>
                                             </div>
 
                                             <div class="input-field col s12 m6 quantity" style="margin-top: 19px;">
                                                 <label for="endUserquantity" style="color: #000;"><spring:message code="input.quantity" />  <span class="star">*</span></label>
                                                 <input type="text" id="endUserquantity" maxlength="7" name="endUserquantity" pattern=[0-9]{0,7}
-												oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
+												oninput="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
+												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');" 
 												 title= "<spring:message code="validation.7digits" />" required> </div>
 
                                             <div class="file-field col s12 m6">
@@ -186,7 +188,8 @@ var contextpath = "${context}";
                                                 <div class="btn">
                                                     <span><spring:message code="input.selectfile" /></span>
                                                     <input type="file" id="endUsercsvUploadFile" accept=".csv"  onchange="fileTypeValueChanges(this,'fileType')"
-                                                    oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');"
+                                                    oninput="InvalidMsg(this,'fileType','<spring:message code="validation.file" />');"
+												oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.file" />');" 
                                                     title="<spring:message code="validation.NoChosen" />" required />                                                    
 
                                                 </div>
@@ -489,6 +492,8 @@ var contextpath = "${context}";
     Scripts
     ================================================ -->
  <!-- jQuery Library -->
+ 
+ 
     <%-- <script type="text/javascript" src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script> --%>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
        <!-- ajax js -->
@@ -501,19 +506,55 @@ var contextpath = "${context}";
     <script type="text/javascript" src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
     <!-- chartist -->
     <script type="text/javascript" src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script>
+    
+    
 <script type="text/javascript"
 		src="${context}/resources/project_js/validationMsg.js"></script>
     <!-- data-tables -->
     <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/data-tables-script.js"></script>
+    <!-- i18n library -->
+	<script type="text/javascript"
+		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.messagestore.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.fallbacks.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.language.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.parser.js"></script>
+
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.js"></script>
+
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.bidi.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/jquery.history.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
 	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
+	
+	
     <!--plugins.js - Some Specific JS codes for Plugin Settings-->
     <script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
     <!--custom-script.js - Add your own theme custom JS-->
     <script type="text/javascript" src="${context}/resources/js/custom-script.js"></script>
         <script type="text/javascript" src="${context}/resources/project_js/endUserStock.js"></script>
  
-
+<script type="text/javascript"
+		src="${context}/resources/project_js/ValidationFileOutsidePortal.js"></script>
+		
    
 </body>
 </html>

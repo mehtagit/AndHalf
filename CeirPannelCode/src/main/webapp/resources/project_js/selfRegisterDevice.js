@@ -57,7 +57,7 @@ function showCambodianUserForm()
 	$("#nationalityDiv").css("display", "none"); 
 	$('#endUserLabelNID').text($.i18n('National ID'));
 	$('#nidType').text($.i18n('Upload ID Image'));
-
+	$("#datepicker").attr("required", false);
 	$("#nidPlaceHolder").attr("placeholder", $.i18n('Upload ID Image')).val("").focus().blur();
 	$('#visaDetails').find('input:text').val('');
 	$('#visaDetails').find('input:file').val('');
@@ -111,13 +111,14 @@ function showOtherUserForm()
 	$("#askVisaDetails").css("display", "block");
 	$("#nationalityDiv").css("display", "block");
 	$("#onVisaNo").prop("checked", true);
-	$("#nidPlaceHolder").attr("placeholder", $.i18n('Upload Passport Image ')).val("").focus().blur();
+	$("#nidPlaceHolder").attr("placeholder", $.i18n('Upload Passport Image')).val("").focus().blur();
 
 	$("#nationality").attr("required", true);
 	$("#endUserLabelNID").append('<span class="star">*</span>');
 	$("#nidType").append('<span class="star">*</span>');
-
-
+	$("#datepicker").attr("required", true);
+	
+	$("#entryCountryDiv").css("display", "block");
 	/*$("#departmentName").attr("required", true);
 	 $("#endUserdepartmentID").attr("required", true);
 	 $("#endUserDepartmentId").attr("required", true);
@@ -130,7 +131,7 @@ function showOtherUserForm()
 
 function showVisaDetails(){
 	$("#visaDetails").css("display", "block");
-	$("#datepicker").attr("required", true);
+	
 	//$("#visaNumber").attr("required", true);
 	$("#visaImage").attr("required", true);
 	$("#datepicker1").attr("required", true);
@@ -142,7 +143,7 @@ function hideVisaDetails(){
 	$('#visaDetails').find('input:text').val('');
 	$('#visaDetails').find('input:file').val('');
 
-	$("#datepicker").attr("required", false);
+	//$("#datepicker").attr("required", false);
 	$("#visaNumber").attr("required", false);
 	$("#visaImage").attr("required", false);
 	$("#datepicker1").attr("required", false);
@@ -212,7 +213,7 @@ $(document).ready(function () {
 
 			$(wrapper).append(
 					
-					'<div id="deviceInformation'+id+'" class="deviceInformation"><div class="row"><div class="col s12 m6"><label for="deviceIdType'+id+'">'+$.i18n('deviceIDType')+' <span class="star">*</span></label><select class="browser-default" required id="deviceIdType'+id+'"><option value="" disabled selected>'+$.i18n('selectDeviceIDType')+'</option></select></div><div class="col s12 m6"><label for="multipleSimStatus'+id+'">'+$.i18n('multipleSimStatus')+'</label><select class="browser-default"  id="multipleSimStatus'+id+'"><option value="" disabled selected>'+$.i18n('multipleSimStatus')+'</option></select></div><div class="col s12 m6"><label for="deviceType">'+$.i18n('deviceType')+' </label><select class="browser-default"  id="deviceType'+id+'"><option value="" disabled selected>'+$.i18n('deviceType')+'</option></select></div><div class="col s12 m6"><label for="deviceCountry">'+$.i18n('country')+'</label><select id="country'+id+'"  class="browser-default" class="mySelect" style="padding-left: 0;" ></select></div><div class="input-field col s12 m6" style="margin-top: 28px;"><input type="text" id="serialNumber'+id+'" name="serialNumber'+id+'"  pattern="[A-Za-z0-9]{0,15}" title="Please enter your device serial number first" maxlength="15"><label for="serialNumber'+id+'">'+$.i18n('deviceSerialNumber')+'</label></div><div class="row"><div class="col s12 m6" ><label for="deviceStatus'+id+'">'+$.i18n('deviceStatus')+'</label><select class="browser-default"  style="margin-top: 5px;" id="deviceStatus'+id+'"><option value="" disabled selected>'+$.i18n('selectDeviceStatus')+'</option></select></div></div><div class="row"><div class="col s12 m12"><p>IMEI/MEID/ESN</p></div><div class="input-field col s12 m6"><input type="text" id="IMEIA'+id+'" required name="IMEI1" pattern="[0-9]{15,16}"title="Please enter minimum 15 and maximum 16 digit only"maxlength="16"><label for="IMEIA'+id+'">1 <span class="star">*</span></label></div><div class="input-field col s12 m6"><input type="text" id="IMEIB'+id+'" name="IMEI2" pattern="[0-9]{15,16}"title="Please enter minimum 15 and maximum 16 digit only"maxlength="16"><label for="IMEIB'+id+'">2</label></div><div class="input-field col s12 m6"><input type="text" id="IMEIC'+id+'" name="IMEI3" pattern="[0-9]{15,16}"title="Please enter minimum 15 and maximum 16 digit only"maxlength="16"><label for="IMEIC'+id+'">3</label></div><div class="input-field col s12 m6"><input type="text" id="IMEID'+id+'" name="IMEI4[]" pattern="[0-9]{15,16}"title="Please enter minimum 15 and maximum 16 digit only"maxlength="16"><label for="IMEID'+id+'">4</label></div></div><div style="cursor:pointer;background-color:red;" class="remove_field btn right btn-info">'+$.i18n('remove')+'</div></div>'
+					'<div id="deviceInformation'+id+'" class="deviceInformation"><div class="row"><div class="col s12 m6"><label for="deviceIdType'+id+'">'+$.i18n('deviceIDType')+' <span class="star">*</span></label><select oninput="InvalidMsg(this,"select",'+$.i18n('deviceIDType')+')  oninvalid="InvalidMsg(this,"select",'+$.i18n('deviceIDType')+') class="browser-default" required id="deviceIdType'+id+'"><option value="" disabled selected>'+$.i18n('selectDeviceIDType')+'</option></select></div><div class="col s12 m6"><label for="multipleSimStatus'+id+'">'+$.i18n('multipleSimStatus')+'</label><select class="browser-default"  id="multipleSimStatus'+id+'"><option value="" disabled selected>'+$.i18n('multipleSimStatus')+'</option></select></div><div class="col s12 m6"><label for="deviceType">'+$.i18n('deviceType')+' </label><select class="browser-default"  id="deviceType'+id+'"><option value="" disabled selected>'+$.i18n('deviceType')+'</option></select></div><div class="col s12 m6"><label for="deviceCountry">'+$.i18n('country')+'</label><select id="country'+id+'"  class="browser-default" class="mySelect" style="padding-left: 0;" ></select></div><div class="input-field col s12 m6" style="margin-top: 28px;"><input type="text" id="serialNumber'+id+'" name="serialNumber'+id+'"  pattern="[A-Za-z0-9]{0,15}" title="Please enter your device serial number first" maxlength="15"><label for="serialNumber'+id+'">'+$.i18n('deviceSerialNumber')+'</label></div><div class="row"><div class="col s12 m6" ><label for="deviceStatus'+id+'">'+$.i18n('deviceStatus')+'</label><select class="browser-default"  style="margin-top: 5px;" id="deviceStatus'+id+'"><option value="" disabled selected>'+$.i18n('selectDeviceStatus')+'</option></select></div></div><div class="row"><div class="col s12 m12"><p>IMEI/MEID/ESN</p></div><div class="input-field col s12 m6"><input type="text" id="IMEIA'+id+'" required name="IMEI1" pattern="[0-9]{15,16}"title="Please enter minimum 15 and maximum 16 digit only"maxlength="16"><label for="IMEIA'+id+'">1 <span class="star">*</span></label></div><div class="input-field col s12 m6"><input type="text" id="IMEIB'+id+'" name="IMEI2" pattern="[0-9]{15,16}"title="Please enter minimum 15 and maximum 16 digit only"maxlength="16"><label for="IMEIB'+id+'">2</label></div><div class="input-field col s12 m6"><input type="text" id="IMEIC'+id+'" name="IMEI3" pattern="[0-9]{15,16}"title="Please enter minimum 15 and maximum 16 digit only"maxlength="16"><label for="IMEIC'+id+'">3</label></div><div class="input-field col s12 m6"><input type="text" id="IMEID'+id+'" name="IMEI4[]" pattern="[0-9]{15,16}"title="Please enter minimum 15 and maximum 16 digit only"maxlength="16"><label for="IMEID'+id+'">4</label></div></div><div style="cursor:pointer;background-color:red;" class="remove_field btn right btn-info">'+$.i18n('remove')+'</div></div>'
 
 			);  //add input box
 
@@ -337,7 +338,6 @@ function submitEndUserDeviceInfo(){
 	var visa={
 			"visaType":visaType,
 			"visaExpiryDate":visaExpirydate,
-			"entryDateInCountry":visaDate,
 			"visaFileName": visaImage,
 			"visaNumber": visaNumber,
 			"visaType": visaType
@@ -420,6 +420,7 @@ function submitEndUserDeviceInfo(){
 			"phoneNo": phone,
 			"propertyLocation": address,
 			"province": state,
+			"entryDateInCountry":visaDate,
 			"street": streetNumber,
 			"regularizeDeviceDbs":regularizeDeviceDbs,
 			"visaDb":visaDb,
