@@ -111,6 +111,8 @@ public class EndUserDB implements Serializable {
 	@NotNull
 	@Column(length = 20)
 	private String origin;
+	
+	private String entryDateInCountry;
 
 	public Long getId() {
 		return id;
@@ -312,6 +314,12 @@ public class EndUserDB implements Serializable {
 		this.origin = origin;
 	}
 	
+	public String getEntryDateInCountry() {
+		return entryDateInCountry;
+	}
+	public void setEntryDateInCountry(String entryDateInCountry) {
+		this.entryDateInCountry = entryDateInCountry;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -357,16 +365,30 @@ public class EndUserDB implements Serializable {
 		builder.append(docType);
 		builder.append(", docTypeInterp=");
 		builder.append(docTypeInterp);
+		builder.append(", regularizeDeviceDbs=");
+		builder.append(regularizeDeviceDbs);
 		builder.append(", nationality=");
 		builder.append(nationality);
 		builder.append(", onVisa=");
 		builder.append(onVisa);
+		builder.append(", visaDb=");
+		builder.append(visaDb);
 		builder.append(", isVip=");
 		builder.append(isVip);
-		builder.append(", passportFileName=");
-		builder.append(passportFileName);
 		builder.append(", userDepartment=");
 		builder.append(userDepartment);
+		builder.append(", passportFileName=");
+		builder.append(passportFileName);
+		builder.append(", creatorUserId=");
+		builder.append(creatorUserId);
+		builder.append(", status=");
+		builder.append(status);
+		builder.append(", remarks=");
+		builder.append(remarks);
+		builder.append(", origin=");
+		builder.append(origin);
+		builder.append(", entryDateInCountry=");
+		builder.append(entryDateInCountry);
 		builder.append("]");
 		return builder.toString();
 	}

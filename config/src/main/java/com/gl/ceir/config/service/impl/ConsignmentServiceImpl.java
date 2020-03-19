@@ -412,7 +412,7 @@ public class ConsignmentServiceImpl {
 				}else {
 
 					if("CEIRADMIN".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())){
-						if(!StateMachine.isConsignmentStatetransitionAllowed("CEIRADMIN", consignmentMgmt.getConsignmentStatus())) {
+						if(!StateMachine.isConsignmentStatetransitionAllowedWithAction("CEIRADMIN", consignmentMgmt.getConsignmentStatus(), 0)) {
 							logger.info("state transition is not allowed." + consignmentUpdateRequest.getTxnId());
 							return new GenricResponse(3, "state transition is not allowed.", consignmentUpdateRequest.getTxnId());
 						}
@@ -511,7 +511,7 @@ public class ConsignmentServiceImpl {
 				}
 			}else {
 				if("CEIRADMIN".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())){
-					if(!StateMachine.isConsignmentStatetransitionAllowed("CEIRADMIN", consignmentMgmt.getConsignmentStatus())) {
+					if(!StateMachine.isConsignmentStatetransitionAllowedWithAction("CEIRADMIN", consignmentMgmt.getConsignmentStatus(), 1)) {
 						logger.info("state transition is not allowed." + consignmentUpdateRequest.getTxnId());
 						return new GenricResponse(3, "state transition is not allowed.", consignmentUpdateRequest.getTxnId());
 					}
