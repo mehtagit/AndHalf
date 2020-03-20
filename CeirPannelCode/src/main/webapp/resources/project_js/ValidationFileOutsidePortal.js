@@ -1,4 +1,5 @@
 function InvalidMsg(textbox,type,msg) {
+
 	var element = document.getElementById(textbox.id);
 
 	if(element.validity.valueMissing){

@@ -158,9 +158,6 @@ input[type='search'] {
 	background-repeat: no-repeat;
 	color: #444;
 }
-.input-field.col.m2 {
-    margin-top: 20px;
-}
 </style>
 </head>
 <body data-id="12" data-roleType="${usertype}" data-userTypeID="${usertypeId}"
@@ -205,8 +202,9 @@ input[type='search'] {
 											<div class="col s12 m12" style="margin-top: 20px;">
 												<div class="input-field col s12 m4">
 													<input type="text" id="nationalID" pattern="[A-Za-z0-9]{1,12}" 
-													oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-													title= "<spring:message code="validation.12Character" />" required maxlength="12" name="nationalID" placeholder="" disabled="disabled" value="" /> <label for="nationalID"
+													oninput="InvalidMsg(this,'input','<spring:message code="validation.12Character" />');"
+											        oninvalid="InvalidMsg(this,'input','<spring:message code="validation.12Character" />');"
+													 required maxlength="12" name="nationalID" placeholder="" disabled="disabled" value="" /> <label for="nationalID"
 														class="center-align ml-10"><spring:message code="input.nidText" /></label>
 												</div>
 
@@ -214,8 +212,8 @@ input[type='search'] {
 															<label for="deviceType"><spring:message code="input.documenttype" /> <span
 																class="star">*</span></label> <select class="browser-default"
 																id="doc_type" 
-																oninput="InvalidMsg(this,'select');" oninvalid="InvalidMsg(this,'select');"
-																title= "<spring:message code="validation.selectFieldMsg" />" required>
+																oninput="InvalidMsg(this,'input','<spring:message code="validation.selectFieldMsg" />');"
+											                    oninvalid="InvalidMsg(this,'input','<spring:message code="validation.selectFieldMsg" />');" required>
 																<option value="" disabled selected><spring:message code="select.documenttype" /> </option>
 															</select>
 															

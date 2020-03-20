@@ -9,7 +9,15 @@ $('#langlist').on('change', function() {
 
 
 $(document).ready(function () {
-	 $('#langlist').val(data_lang_param);
+	$('#langlist').val(data_lang_param);
+	$.i18n().locale = data_lang_param;
+	var successMsg;
+	$.i18n().load( {
+		'en': './resources/i18n/en.json',
+		'km': './resources/i18n/km.json'
+	} ).done( function() { 
+	});
+
         if($('#pageTypeValue').val()==0)
         	{
         	$('#uploadPaidStatusDiv').css("display", "block");
