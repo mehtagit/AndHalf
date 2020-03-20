@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 
 import com.functionapps.dao.DeviceDbDao;
 import com.functionapps.dao.DeviceImporterDbDao;
+import com.functionapps.parser.CEIRFeatureFileFunctions;
 import com.functionapps.parser.Rule;
 import com.functionapps.pojo.DeviceDb;
 import com.functionapps.pojo.DeviceImporterDb;
@@ -19,7 +20,8 @@ public class ConsignmentDelete {
 
 		DeviceDbDao deviceDbDao = new DeviceDbDao();
 		DeviceImporterDbDao deviceImporterDbDao = new DeviceImporterDbDao();
-
+		CEIRFeatureFileFunctions ceirfunction = new CEIRFeatureFileFunctions();
+		
 		try{
 			List<DeviceDb> deviceDbs = deviceDbDao.getDeviceDbByTxnId(conn, "", txnId);
 			deviceDbDao.insertDeviceDbAud(conn, deviceDbs);
@@ -28,11 +30,12 @@ public class ConsignmentDelete {
 			List<DeviceImporterDb> deviceImporterDbs = deviceImporterDbDao.getDeviceImporterDbByTxnId(conn, "", txnId);
 			deviceImporterDbDao.insertDeviceImporterDbAud(conn, deviceImporterDbs);
 			deviceImporterDbDao.deleteDevicesFromDeviceImporterDb(conn, txnId);
-
+			ceirfunction.updateFeatureFileStatus(conn, txnId, 2, operator, sub_feature);
 			conn.commit();
 
 		}catch(Exception e){
 			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
 	}
 }
