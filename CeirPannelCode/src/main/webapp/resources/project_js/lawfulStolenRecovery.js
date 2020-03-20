@@ -704,13 +704,15 @@ function confirmantiondelete(){
 	var roleType = $("body").attr("data-roleType");
 	var userId = $("body").attr("data-userID");
 	var currentRoleType = $("body").attr("data-stolenselected-roleType"); 
+	var remarks = $("#textarea1").val();
 	var role = currentRoleType == null ? roleType : currentRoleType;
 	console.log("txnId===**"+txnId+" userId="+userId+" roleType== "+roleType+ " currentRoleType=="+currentRoleType);
 	var obj ={
 			"txnId" : txnId,
 			"roleType":role,
 			"userId":userId,
-			"id":id
+			"id":id,
+			"remark":remarks
 
 	}
 	$.ajax({
@@ -735,6 +737,7 @@ function confirmantiondelete(){
 	$("#confirmDeleteConsignment").openModal({
 		dismissible:false
 	});
+	return false;
 }
 
 //------------------------------------------- Admin Approve------------------------------------------ 

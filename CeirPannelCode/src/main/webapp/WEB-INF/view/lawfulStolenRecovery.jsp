@@ -116,24 +116,30 @@
 	</section>
 
 	<div id="DeleteConsignment" class="modal">
-		<h6 class="modal-header"><spring:message code="modal.header.delete" /></h6>
+		<h6 class="modal-header"><spring:message code="modal.header.delete" /></h6>  
+		<form action="" onsubmit=" return confirmantiondelete()" method="POST">
 		<div class="modal-content">
 	<div class="row">
 				<h6><spring:message code="modal.withdraw.messageforStolen" /> ( <span id="transID"></span>)
 				</h6>
 				<span id="setStolenRecoveyRowId" style="display: none;"></span>
+				<div class="input-field col s12 m12">
+					<textarea id="textarea1" required="required" maxlength="200"  class="materialize-textarea"></textarea>
+					<label for="textarea1"><spring:message code="input.remarks" /><span class="star">*</span></label>
+				</div>
 			</div>
 			<input type="text" id="popupTransactionId" maxlength="15" hidden />
 			<div class="row">
 				<div class="input-field col s12 center">
 					<div class="input-field col s12 center">
-						<a class="btn" onclick="confirmantiondelete()"><spring:message code="modal.ok" /></a>
+						<button class="btn" type="submit"><spring:message code="modal.ok" /></button>
 						<button class="modal-close btn" onclick="closeUpdateModal()"
 							style="margin-left: 10px;"><spring:message code="modal.no" /></button>
 					</div>
 				</div>
 			</div>
 		</div>
+		</form>
 	</div>
 
 
