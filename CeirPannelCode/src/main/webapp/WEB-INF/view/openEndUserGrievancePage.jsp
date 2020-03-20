@@ -169,54 +169,61 @@ var contextpath = "${context}";
                                 <div class="col s12 m12 l12">
                                     <div class="row">
                                         <div class="input-field col s12 m4">
-                                            <input type="text" id="firstName"  name="firstName" pattern="[a-zA-Z]{0,20}"
-											oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-												 title= "<spring:message code="validation.20Character" />" required   maxlength="20" />
+                                            <input type="text" id="firstName"  name="firstName" pattern="[a-zA-Z]{0,20}" required="required"
+											oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"/>
                                             <label for="firstName"><spring:message code="input.firstName" /> <span class="star">*</span></label>
                                         </div>
 
                                         <div class="input-field col s12 m4">
                                             <input type="text" id="middleName" name="middleName" pattern="[a-zA-Z]{0,20}"
-											oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-												 title= "<spring:message code="validation.20Character" />" maxlength="20" />
+											oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');" maxlength="20" />
                                             <label for="middleName"><spring:message code="input.middleName" /></label>
                                         </div>
 
                                         <div class="input-field col s12 m4">
                                             <input type="text" id="lastName" name="lastName" pattern="[a-zA-Z]{0,20}" 
-											oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');" 
-												 title= "<spring:message code="validation.20Character" />"  required   maxlength="20" />
+											oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
+													 required   maxlength="20" />
                                             <label for="lastName"><spring:message code="input.lastName" /> <span class="star">*</span></label>
                                         </div>
 
                                         <div class="input-field col s12 m6">
                                             <input type="text" id="contactNumber" name="contactNumber" pattern="[0-9]{10,12}"
- 													oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');" 
-												 title= "<spring:message code="validation.10digits" />"  required   maxlength="10" />
+ 													oninput="InvalidMsg(this,'input','<spring:message code="validation.10digits" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10digits" />');"
+												  required   maxlength="10" />
                                             <label for="contactNumber"><spring:message code="input.contactNum" /><span
                                                     class="star">*</span></label>
                                         </div>
 
                                         <div class="input-field col s12 m6">
                                             <input type="email" id="emailID" name="emailID" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" 
-											 oninput="InvalidMsg(this,'email');" oninvalid="InvalidMsg(this,'email');"  
-												 title= "<spring:message code="validation.emailformate" />" maxlength="30" />
+											oninput="InvalidMsg(this,'input','<spring:message code="validation.emailformate" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.emailformate" />');"
+												 maxlength="30" />
                                             <label for="emailID"><spring:message code="input.EmailID" /></label>
                                         </div>
 
                                         <div class="col s12 m6 selectDropdwn">
                                             <label for="endUsercategory"><spring:message code="input.Category" /> <span class="star">*</span></label>
                                             <select class="browser-default" 
-											title="<spring:message code="validation.selectFieldMsg" />" oninput="setCustomValidity('')"  
-										oninput="InvalidMsg(this,'select');" oninvalid="InvalidMsg(this,'select');"  required   id="endUsercategory">
+											title="<spring:message code="" />" oninput="setCustomValidity('')"  
+										            oninput="InvalidMsg(this,'input','<spring:message code="validation.selectFieldMsg" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.selectFieldMsg" />');"
+										  required   id="endUsercategory">
                                                 <option value="" disabled selected><spring:message code="input.Category" /></option>
                                             </select>
                                         </div>
 
                                         <div class="input-field col s12 m6">
                                             <textarea id="endUserRemark" 
-										oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');" 
-												 title= "<spring:message code="validation.200character" />"  required   maxlength="200" class="materialize-textarea"></textarea>
+										  oninput="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
+													
+												  required   maxlength="200" class="materialize-textarea"></textarea>
                                             <label for="endUserRemark"><spring:message code="input.Remark" /><span
                                                     class="star">*</span></label>
                                         </div>
@@ -224,8 +231,9 @@ var contextpath = "${context}";
                                         <div class="input-field col s12 m6">
                                             <input type="text" id="endUsertransactionId" name="transactionId"
                                                 pattern="[A-Z0-9]{18,18}"
-      										oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');" 
-												 title= "<spring:message code="validation.18digit" />" maxlength="18" />
+      										 oninput="InvalidMsg(this,'input','<spring:message code="validation.18digit" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.18digit" />');"
+												maxlength="18" />
                                             <label for="endUsertransactionId"><spring:message code="input.TransactionID1" /></label>
                                         </div>
 
@@ -235,7 +243,12 @@ var contextpath = "${context}";
                                     <div class="row">
                                         <div class="col s12 m6">
                                             <label for="endUserdocTypetag1"><spring:message code="input.documenttype" /></label>
-                                            <select class="browser-default" id="endUserdocTypetag1" onchange="enableSelectFile()">
+                                            
+                                            <select class="browser-default" id="endUserdocTypetag1"
+                                                     oninput="InvalidMsg(this,'input','<spring:message code="validation.18digit" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.18digit" />');"
+                                             onchange="enableSelectFile()">
+                                            
                                                 <option value="" disabled selected><spring:message code="select.documenttype" /></option>
                                             </select>
                                         </div>
@@ -247,13 +260,15 @@ var contextpath = "${context}";
                                             <div class="btn">
                                                 <span><spring:message code="input.selectfile" /></span>
                                                 <input id="endUserdocTypeFile1" type="file"   onchange="enableEndUserAddMore()" disabled="disabled"
- 												title="<spring:message code="validation.NoChosen" />" 
-						oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');" name="files[]" id="filer_input"
+ 												
+						oninput="InvalidMsg(this,'input','<spring:message code="validation.NoChosen" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.NoChosen" />');"
+						 name="files[]" id="filer_input"
                                                     multiple="multiple" />
                                             </div>
                                             <div class="file-path-wrapper">
                                                 <input class="file-path validate" type="text"
-                                                    placeholder="Upload  file">
+                                                    placeholder="<spring:message code="input.selectfile" />">
                                             </div>
                                         </div>
 
@@ -461,11 +476,15 @@ var contextpath = "${context}";
 <h6 id="docTypeFile1Label" style="color: #000;"><spring:message code="input.supportingdocument" /></h6>
 <div class="btn">
 <span><spring:message code="input.selectfile" /></span>
-<input type="file" name="files[]" id="docTypeFile1" disabled="disabled" onchange="enableEndUserReplyAddMore()"  multiple>
+<input type="file" name="files[]" id="docTypeFile1" disabled="disabled" onchange="enableEndUserReplyAddMore()" 
+oninput="InvalidMsg(this,'input','<spring:message code="validation.NoChosen" />');"
+oninvalid="InvalidMsg(this,'input','<spring:message code="validation.NoChosen" />');"
+ multiple>
+
 </div>
 <div class="file-path-wrapper">
 <input class="file-path validate" type="text" multiple
-placeholder="Upload file">
+placeholder="<spring:message code="input.selectfile" />">
 <div>
 <p id="myFiles"></p>
 </div>
@@ -631,7 +650,7 @@ var path="${context}";
     <!-- data-tables -->
     <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/data-tables-script.js"></script>
-	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
+
     <!--plugins.js - Some Specific JS codes for Plugin Settings-->
     <script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
     <!--custom-script.js - Add your own theme custom JS-->
@@ -641,281 +660,14 @@ var path="${context}";
 		src="${context}/resources/project_js/grievanceManagement.js"></script>
     <script type="text/javascript"
 		src="${context}/resources/project_js/endUserGrievance.js"></script>
-		<script type="text/javascript"
-		src="${context}/resources/project_js/validationMsg.js"></script>
+	
 			<script type="text/javascript"
 		src="${context}/resources/project_js/_dateFunction.js" async></script>
 		<script type="text/javascript"
 		src="${context}/resources/project_js/profileInfoTab.js" async></script>
-		<script>
-
-        $(document).ready(function () {
-            $('.modal').modal();
-         
-        });
-  
-    function saveaAonymousGrievance(){
-
-    	var firstName=$('#firstName').val();
-    	var middleName=$('#middleName').val();
-    	var lastName=$('#lastName').val();
-    	var contactNumber=$('#contactNumber').val();
-    	var emailID=$('#emailID').val();
-    	var category=$('#endUsercategory').val();
-    	
-    	var txnId=$('#endUsertransactionId').val();
-    	var remark=$('#endUserRemark').val();
-    	var file=$('#myInput').val();
-    	var fieldId=1;
-    	var fileInfo =[];
-    	var formData= new FormData();
-    	var fileData = [];
-    	
-    	var x;
-    	var filename='';
-    	var filediv;
-    	var i=0;
-    	var formData= new FormData();
-    	var docTypeTagIdValue='';
-    	var filename='';
-    	var filesameStatus=false;
-    	var documenttype=false;
-    	var docTypeTag='';
-    	var documentFileNameArray=[];
-    	$('.endUserfileDiv').each(function() {	
-
-    		
-    		var x={
-    		"docType":$('#endUserdocTypetag'+fieldId).val(),
-    		"fileName":$('#endUserdocTypeFile'+fieldId).val().replace('C:\\fakepath\\','')
-    		}
-    		formData.append('files[]',$('#endUserdocTypeFile'+fieldId)[0].files[0]);
-    		documentFileName=$('#endUserdocTypeFile'+fieldId).val().replace('C:\\fakepath\\','')
-    		docTypeTag=$('#endUserdocTypetag'+fieldId).val();
-    		
-    		var fileIsSame=	documentFileNameArray.includes(documentFileName);
-    		
-    		var documentTypeTag=documentFileNameArray.includes(docTypeTag);
-    	
-    		if(filesameStatus!=true){
-    			filesameStatus=	fileIsSame;
-    		}
-    		
-    		 if(documenttype!=true)
-    			{
-    			documenttype=documentTypeTag;
-    	
-    			}
-    		documentFileNameArray.push(documentFileName);
-    		documentFileNameArray.push(docTypeTag);
-    		
-    		fileInfo.push(x);
-    		fieldId++;
-    		i++;
-    	});
-    	
-    	if(filesameStatus==true)
-    	{	
-    	
-    	$('#fileFormateModal').openModal();
-    		$('#fileErrormessage').text('')
-    		$('#fileErrormessage').text($.i18n('duplicateFileName'));
-    	return false;
-    	
-    	}
-    	
-    	if(documenttype==true)
-    	{	
-    		
-    	$('#fileFormateModal').openModal();
-    		$('#fileErrormessage').text('')
-    		$('#fileErrormessage').text($.i18n('documentTypeName'));
-    	return false;
-    	
-    	}
-    	
-    	var multirequest={
-    			"attachedFiles":fileInfo,
-    			"txnId":txnId,
-    			"categoryId":category,
-    			"remarks":remark,
-    			"email":emailID,
-    			"firstName":firstName,
-    			"lastName":lastName,
-    			"middleName":middleName,
-    			"phoneNo":contactNumber,
-    			"featureId":6
-    	}
-    	
-    	formData.append('fileInfo[]',JSON.stringify(fileInfo));
-    	formData.append('multirequest',JSON.stringify(multirequest));
-    	/*formData.append('categoryId',category);
-    	formData.append('remarks',remark);
-    */
-    	$.ajax({
-    		url: './saveEndUserGrievance',
-    		type: 'POST',
-    		data: formData,
-    		mimeType: 'multipart/form-data',
-    		processData: false,
-    		contentType: false,
-    		async:false,
-    		success: function (data, textStatus, jqXHR) {
-    			console.log(data);
-    			 $("#saveAnonymousGrieavance").prop('disabled', true);
-    			var x=data;
-    			var y= JSON.parse(x);
-    			 $('#GrievanceMsg').openModal(); 
-    			 $('#sucessMessageGrievance').text(y.txnId); 
-    			
-    		},
-    		error: function (jqXHR, textStatus, errorThrown) {
-    			/* console.log("error in ajax") */
-    			 $('#exceptionMessage').openModal(); 
-    		}
-    	});
-    return false;
-
-    }
-    
-    
-    
-	var max_fields = 15; //maximum input boxes allowed
-	var endUserwrapper = $(".endUsermainDiv"); //Fields wrapper
-	var add_button = $(".endUser_add_field_button"); //Add button ID
-	var x = 1; //initlal text box count
-	var id=2;
-	$(".endUser_add_field_button").click(function (e) { //on add input button click
-		e.preventDefault();
-		if (x < max_fields) { //max input box allowed
-			x++; //text box increment
-			$(endUserwrapper).append(
-					'<div id="endUserfilediv'+id+'" class="endUserfileDiv"><div class="row"><div class="file-field col s12 m6"><label for="">'+$.i18n('documenttype')+' <span class="star">*</span></label><select id="endUserdocTypetag'+id+'" required class="browser-default"> <option value="" disabled selected>'+$.i18n('selectDocumentType')+' </option></select></div> <div class="file-field col s12 m6" style="margin-top: 23px;"><div class="btn"><span>'+$.i18n('selectfile')+'</span><input id="endUserdocTypeFile'+id+'" type="file" required name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" placeholder="Upload file" type="text"></div></div><div  class="endUser_remove_field btn right btn-info">-Remove</div></div></div>'
-					/* '<div id="filediv'+id+'" class="fileDiv"><div class="row"><div class="file-field col s12 m6" style="margin-top: 23px;"><div class="btn"><span>'+$.i18n('selectfile')+'</span><input id="docTypeFile'+id+'" type="file" required name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" type="text"></div></div><div class="file-field col s12 m6"><label for="Category">'+$.i18n('documenttype')+' <span class="star">*</span></label><select id="docTypetag'+id+'" required class="browser-default"> <option value="" disabled selected>'+$.i18n('selectDocumentType')+' </option></select><select id="docTypetagValue'+id+'" style="display:none" class="browser-default"> <option value="" disabled selected>'+$.i18n('selectDocumentType')+' </option></select></div><div style="cursor:pointer;background-color:red;margin-right: 1.7%;" class="remove_field btn right btn-info">-</div></div></div>' */
-			); //add input box
-		}
-		
-		
-		/* $.getJSON('./getDropdownList/DOC_TYPE', function(data) {
-
-
-			for (i = 0; i < data.length; i++) {
-				console.log(data[i].interp);
-				var optionId=id-1;
-				$('<option>').val(data[i].tagId).text(data[i].interp).appendTo('#endUserdocTypetag'+optionId);
-				
-
-			}
-		}); */
-		var request ={
-				 "childTag": "DOC_TYPE",
-				  "featureId": 6,
-				  "parentValue":  parseInt($('#endUsercategory').val()),	
-				  "tag": "GRIEVANCE_CATEGORY",
-				  "userTypeId":17 
-			}
-	
-	console.log("request --->" +JSON.stringify(request));	
-	 $.ajax({
-			url: './get/tags-mapping',
-			type: 'POST',
-			data : JSON.stringify(request),
-			dataType : 'json',
-			contentType : 'application/json; charset=utf-8',
-			success: function (data, textStatus, jqXHR) {
-				
-				console.log(data);
-				
-				for (i = 0; i < data.length; i++){
-					var optionId=id-1;
-					
-					$('<option>').val(data[i].tagId).text(data[i].interp).appendTo('#endUserdocTypetag'+optionId);
-					
-				}
-				
-			},
-			error: function (jqXHR, textStatus, errorThrown) {
-				console.log("error in ajax")
-			}
-		});
-	 
-		id++;
-
-	});
-
-$(endUserwrapper).on("click", ".endUser_remove_field", function (e) { //user click on remove text
- e.preventDefault();
- var Iid=id-1;
- /*alert("@@@"+Iid)*/
- $('#endUserfilediv'+Iid).remove();
- $(this).parent('div').remove();
- x--;
- id--;
-
- })
- 
- 
-/* $.getJSON('./getDropdownList/DOC_TYPE', function(data) {
-	for (i = 0; i < data.length; i++) {
-		console.log(data[i].interp);
-		$('<option>').val(data[i].tagId).text(data[i].interp).appendTo('#endUserdocTypetag1');
-		
-	}
-}); */
-$.getJSON('./getTypeDropdownList/GRIEVANCE_CATEGORY/17', function(data) {
-	for (i = 0; i < data.length; i++) {
-		console.log(data[i].interp);
-		$('<option>').val(data[i].value).text(data[i].interp).appendTo('#endUsercategory');
-		
-	}
-});
-    
-
-if($('#pageTypeValue').val()==0)
-{
-	console.log("if condition ++++++++");
-$('#endUserRaiseGrievance').css("display", "block");
-$('#trackGrievanceDiv').css("display", "none");
-$('#trackGrievanceHeader').css("display", "none");
-$('#trackGrievanctableDiv').css("display", "none");
-}
-else
-{
-console.log("else condition ++++++++");
-$('#endUserRaiseGrievance').css("display", "none");
-$('#trackGrievanceDiv').css("display", "block");
-$('#trackGrievanctableDiv').css("display", "none");
-
-}
-    
-  
-
-function  openCancelPopUp()
-{
-	 $('#cancelMessage').openModal(); 
-}
-
-function  closeCancelPopUp()
-{
-	 $('#cancelMessage').closeModal();
-}
-
-function enableEndUserAddMore(){
-	$(".endUser_add_field_button").attr("disabled", false);
-}
-
-function enableEndUserReplyAddMore(){
-	$(".add_field_button").attr("disabled", false);
-}
-  
-
-function enableReplySelectFile(){
-		$("#docTypeFile1").attr("disabled", false);
-		$("#docTypeFile1").attr("required", true);
-		$("#docTypeFile1Label").append('<span class="star">*</span>');
-	}
-   </script>
-
+	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
+<script type="text/javascript"
+		src="${context}/resources/project_js/ValidationFileOutsidePortal.js"></script>
     
 
    

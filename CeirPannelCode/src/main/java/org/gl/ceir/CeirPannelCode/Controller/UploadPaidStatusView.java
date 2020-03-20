@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -19,6 +20,7 @@ import org.gl.ceir.CeirPannelCode.Model.EndUserVisaInfo;
 import org.gl.ceir.CeirPannelCode.Model.FileExportResponse;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest_UserPaidStatus;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
+import org.gl.ceir.CeirPannelCode.Model.VisaDb;
 import org.gl.ceir.CeirPannelCode.Util.UtilDownload;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -399,7 +401,7 @@ stream.close();
 			urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
 		  
 		  EndUserVisaInfo endUservisaInfo = gson.fromJson(filter,  EndUserVisaInfo.class);
-		  
+		   List<VisaDb> visaDbaaa= endUservisaInfo.getVisaDb();
 		  if(endUservisaInfo.getNationality().equals(""))
 		  {
 			  log.info("nationality......");
@@ -414,7 +416,7 @@ stream.close();
 			  endUservisaInfo.setUserDepartment(null);
 		  }
 		  
-		  
+		  endUservisaInfo.getOnVisa();
 		  
 		  log.info("after casting request in to pojo classs"+endUservisaInfo);
 

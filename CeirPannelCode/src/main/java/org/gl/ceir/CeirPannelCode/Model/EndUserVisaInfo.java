@@ -27,7 +27,7 @@ private String onVisa;
 private String phoneNo;
 private Integer postalCode;
 private String propertyLocation;
-private String province;
+private String province,entryDateInCountry;;
 private List<UplodPaidStatusModel> regularizeDeviceDbs;
 private String street;
 private String txnId;
@@ -217,17 +217,80 @@ public String getOrigin() {
 public void setOrigin(String origin) {
 	this.origin = origin;
 }
+public String getEntryDateInCountry() {
+	return entryDateInCountry;
+}
+public void setEntryDateInCountry(String entryDateInCountry) {
+	this.entryDateInCountry = entryDateInCountry;
+}
 @Override
 public String toString() {
-	return "EndUserVisaInfo [commune=" + commune + ", country=" + country + ", createdOn=" + createdOn + ", district="
-			+ district + ", docType=" + docType + ", docTypeInterp=" + docTypeInterp + ", email=" + email
-			+ ", firstName=" + firstName + ", id=" + id + ", isVip=" + isVip + ", lastName=" + lastName + ", locality="
-			+ locality + ", middleName=" + middleName + ", modifiedOn=" + modifiedOn + ", nationality=" + nationality
-			+ ", nid=" + nid + ", onVisa=" + onVisa + ", phoneNo=" + phoneNo + ", postalCode=" + postalCode
-			+ ", propertyLocation=" + propertyLocation + ", province=" + province + ", regularizeDeviceDbs="
-			+ regularizeDeviceDbs + ", street=" + street + ", txnId=" + txnId + ", passportFileName=" + passportFileName
-			+ ", userDepartment=" + userDepartment + ", village=" + village + ", visaDb=" + visaDb
-			+ ", additionalProperties=" + additionalProperties + ", origin=" + origin + "]";
+	StringBuilder builder = new StringBuilder();
+	builder.append("EndUserVisaInfo [commune=");
+	builder.append(commune);
+	builder.append(", country=");
+	builder.append(country);
+	builder.append(", createdOn=");
+	builder.append(createdOn);
+	builder.append(", district=");
+	builder.append(district);
+	builder.append(", docType=");
+	builder.append(docType);
+	builder.append(", docTypeInterp=");
+	builder.append(docTypeInterp);
+	builder.append(", email=");
+	builder.append(email);
+	builder.append(", firstName=");
+	builder.append(firstName);
+	builder.append(", id=");
+	builder.append(id);
+	builder.append(", isVip=");
+	builder.append(isVip);
+	builder.append(", lastName=");
+	builder.append(lastName);
+	builder.append(", locality=");
+	builder.append(locality);
+	builder.append(", middleName=");
+	builder.append(middleName);
+	builder.append(", modifiedOn=");
+	builder.append(modifiedOn);
+	builder.append(", nationality=");
+	builder.append(nationality);
+	builder.append(", nid=");
+	builder.append(nid);
+	builder.append(", onVisa=");
+	builder.append(onVisa);
+	builder.append(", phoneNo=");
+	builder.append(phoneNo);
+	builder.append(", postalCode=");
+	builder.append(postalCode);
+	builder.append(", propertyLocation=");
+	builder.append(propertyLocation);
+	builder.append(", province=");
+	builder.append(province);
+	builder.append(", entryDateInCountry=");
+	builder.append(entryDateInCountry);
+	builder.append(", regularizeDeviceDbs=");
+	builder.append(regularizeDeviceDbs);
+	builder.append(", street=");
+	builder.append(street);
+	builder.append(", txnId=");
+	builder.append(txnId);
+	builder.append(", passportFileName=");
+	builder.append(passportFileName);
+	builder.append(", userDepartment=");
+	builder.append(userDepartment);
+	builder.append(", village=");
+	builder.append(village);
+	builder.append(", visaDb=");
+	builder.append(visaDb);
+	builder.append(", additionalProperties=");
+	builder.append(additionalProperties);
+	builder.append(", origin=");
+	builder.append(origin);
+	builder.append("]");
+	return builder.toString();
 }
+
 
 }

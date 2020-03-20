@@ -9,6 +9,7 @@ if(statusCode==200){
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
@@ -113,12 +114,12 @@ footer {
 	color: #444;
 }
 
-h6 {
+ h6 {
 font-size: 0.9rem;
 line-height: 110%;
 margin: 0rem 0 0.2rem 0;
 margin-top: 1px !important;
-}
+} 
 
 .file-upload-heading {
 	margin-left: 0;
@@ -227,7 +228,7 @@ var contextpath = "${context}";
 									<option value="km"><spring:message code="lang.khmer" /></option>
 								</select>
 							</div>
-							<div class="col s12 m12"><h5><spring:message code="roletype.${param.type}" /> <spring:message code="select.registration" /></h5>
+							<div class="col s12 m12"><h5><spring:message  code="roletype.${fn:replace(param.type, ' ', '_')}" /> <spring:message code="select.registration" /></h5>
 							<span id="msg" style="color: red;">${msg}</span><hr>
 							</div>
 								<input type="hidden" id="usertypeId" value="${usertypeId}">
@@ -633,22 +634,20 @@ var contextpath = "${context}";
 		</div>
 	</div> -->
 	
-	<div id="otpMsgModal" class="modal" style="width:40%;margin-left: 30%;margin-top: 10vh;">
-		<!-- <button type="button"
-			class=" modal-action modal-close waves-effect waves-green btn-flat right"
-			data-dismiss="modal">&times;</button> -->
-			<h6 class="modal-header"><spring:message code="registration.verifyotp" /></h6>
+	<div id="otpMsgModal" class="modal"
+		style="width: 40%; margin-left: 30%; margin-top: 10vh;">
+		<h6 class="modal-header">
+			<spring:message code="registration.verifyotp" />
+		</h6>
 		<div class="modal-content">
 			<!-- <h4 class="header2 pb-2">User Info</h4> -->
 
-				
-				<p style="padding:10px;" class="center" id="otpMsg"></p>
-			
-<a href="javascript:void(0)" onclick="openOtpPopup()" class="btn"
-				style="width: 100%; margin-top: 20px; margin-bottom: 20px;">
-				<spring:message code="registration.verifyotp" />
-				</a>
-							</div>
+			<p style="padding: 10px;" class="center" id="otpMsg"></p>
+
+			<a href="javascript:void(0)" onclick="openOtpPopup()" class="btn"
+				style="width: 100%; margin-top: 20px; margin-bottom: 20px;"><spring:message
+					code="registration.verifyotp" /></a>
+		</div>
 	</div>
 	
 	
@@ -732,21 +731,20 @@ var contextpath = "${context}";
 		</div>
 	</div> -->
 
-	 <div id="otpMessage" class="modal" >
-        <button type="button" class="modal-action modal-close waves-effect waves-green btn-flat right"
-            data-dismiss="modal">&times;</button>
-        <h6 class="modal-header"><spring:message code="registration.verifyotp" /></h6>
-        <div class="modal-content">
-          
-                <h6 id="otpResponse"></h6>
-            <div class="row">
-                <div class="input-field col s12 center">
-                   
-                    <a href="${context}/login" class="btn"><spring:message code="modal.ok" /></a>
-                </div>
-            </div>
-        </div>
-    </div>
+		<div id="otpMessage" class="modal">
+		<h6 class="modal-header" style="font-size: 1.15rem;">
+			<spring:message code="registration.verifyotp" />
+		</h6>
+		<div class="modal-content">
+			<h6 id="otpResponse" style="    font-size: 1.15rem;line-height: 110%;margin: .7666666667rem 0 .46rem 0!important;"></h6>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<a href="${context}/login" class="btn"><spring:message
+							code="modal.ok" /></a>
+				</div>
+			</div>
+		</div>
+	</div>
 
 
 
