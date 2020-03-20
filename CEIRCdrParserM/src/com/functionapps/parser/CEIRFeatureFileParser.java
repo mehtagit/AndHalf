@@ -149,7 +149,10 @@ public class CEIRFeatureFileParser {
 			if(operator.equalsIgnoreCase("consignment") &&(sub_feature.equalsIgnoreCase("register") || sub_feature.equalsIgnoreCase("update"))){
 				new ConsignmentInsertUpdate().process(conn,operator, sub_feature, rulelist, txn_id, operator_tag);
 			}else if(operator.equalsIgnoreCase("consignment") &&(sub_feature.equalsIgnoreCase("delete"))){
-				new ConsignmentDelete().process(conn,operator, sub_feature, rulelist, txn_id, operator_tag);
+				System.out.println("running consignment delete process.");
+				new ConsignmentDelete().process(conn, operator, sub_feature, rulelist, txn_id, operator_tag);
+			}else {
+				System.out.println("Skipping the process.");
 			}
 		}
 		catch(Exception e){
