@@ -150,7 +150,7 @@ public class CEIRParserMain {
 		String fileName = null;
 		File file       = null;
 		String log      = null;
-		int split_upload_batch_no = 1;
+		int split_upload_batch_no = 0;
 		int split_upload_batch_count = 0;
 
 		try{
@@ -159,7 +159,6 @@ public class CEIRParserMain {
 			if(my_result_set.next()){
 				parser_base_limit = my_result_set.getInt("split_upload_set_no");
 				old_sno = my_result_set.getInt("last_upload_sno");
-				split_upload_batch_no = my_result_set.getInt("split_upload_batch_no");
 			}
 //			query = "select * from "+operator+"_raw where sno>"+old_sno+" and status='Init' order by sno asc FETCH FIRST "+parser_base_limit+" ROWS WITH TIES ";
 			query = "select * from "+operator+"_raw where sno>"+old_sno+" and sno<="+(old_sno +parser_base_limit)+" and status='Init' order by sno asc ";
@@ -351,7 +350,7 @@ public class CEIRParserMain {
 
 				logger.info("Final Query to update or insert in Device DB ["+my_query+"]");
 				System.out.println("servedIMEI "+rs.getString("servedIMEI"));
-				System.out.println("Query for Device DB "+my_query);
+				System.out.println(my_query);
 //				stmt1.executeUpdate(my_query);
 				split_upload_batch_count++;
 				stmt1.addBatch(my_query);
@@ -379,7 +378,6 @@ public class CEIRParserMain {
 				logger.info("Final Executing batch file");
 
 				stmt1.executeBatch();
-				conn.commit();
 				raw_stmt.executeBatch();
 				conn.commit();
 
@@ -469,8 +467,7 @@ public class CEIRParserMain {
 			rs1=stmt.executeQuery(query);			
 			while(rs1.next()){
 				System.out.println(rs1.getString("msisdn"));
-//				if(rs1.getString("msisdn") != msisdn){
-				if(!rs1.getString("msisdn").equals(msisdn)){
+				if(rs1.getString("msisdn") != msisdn){
 					status=2;
 				}
 				else{
