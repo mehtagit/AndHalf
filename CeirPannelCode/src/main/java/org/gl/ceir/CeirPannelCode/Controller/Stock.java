@@ -499,6 +499,9 @@ else {
 			FilterRequest filterRequest = new FilterRequest();
 			StockUploadModel stockUploadModelResponse;
 			filterRequest.setTxnId(txnId);
+			filterRequest.setFeatureId(4);
+			filterRequest.setUserType("End User");
+			filterRequest.setUserId(17);
 			log.info("response from fetch stock api="+filterRequest);
 			filterRequest.setUserType("End User");
 				stockUploadModelResponse=feignCleintImplementation.fetchUploadedStockByTxnId(filterRequest);

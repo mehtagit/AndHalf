@@ -13,17 +13,7 @@ $('#langlist').on('change', function() {
 });
 			 
 			 
-			var langParam=$('#langlist').val() == 'km' ? 'km' : 'en';
-			$.i18n().locale = langParam;
-			//alert($.i18n('imageSize')+"  langParam  "+langParam);
 			
-			var successMsg;
-			$.i18n().load( {
-				'en': './resources/i18n/en.json',
-				'km': './resources/i18n/km.json'
-			} ).done( function() { 
-				successMsg=$.i18n('successMsg');
-			});
 function hide() {
             var In = $('#nidForEndUser').val()
             if (In == "black") {
@@ -81,10 +71,12 @@ function hide() {
 		                           $('#country').val(data.data.country).change().attr("disabled", true);
 		                            $('#state').val(data.data.province).attr("disabled", true);
 		                             $('#phone').val(data.data.phoneNo).prop('readonly', true);
-		                              $('#endUservisaType').val(data.data.visaDb[0].visaType).attr("disabled", true);
+		                             $('#endUserdatepicker1').val(data.data.entryDateInCountry).prop('readonly', true); 
+		                             $('#endUservisaType').val(data.data.visaDb[0].visaType).attr("disabled", true);
 		                             // $('#endUserdatepickerDiv').attr("disabled", true);
-		                               $("#endUserdatepickerDiv").css("pointer-events","none");
-		                                $('#endUserdatepicker1').val(data.data.visaDb[0].entryDateInCountry).prop('readonly', true);
+		                             console.log(data.data.visaDb[0].visaType);
+		                             $("#endUserdatepickerDiv").css("pointer-events","none");
+		                               
 		                                 $('#endUserdatepicker1').prop('readonly', true);
 		                                 $('#endUseruploadnationalID').val(data.data.endUseruploadnationalID);
 		                                  $('#endUserdatepicker').val(data.data.visaDb[0].visaExpiryDate).prop('readonly', true);
@@ -159,6 +151,15 @@ function hide() {
  
    $(document).ready(function () {
 	   $('#langlist').val(data_lang_param);
+	 //  var langParam=$('#langlist').val() == 'km' ? 'km' : 'en';
+		$.i18n().locale = data_lang_param;
+		//alert($.i18n('imageSize')+"  langParam  "+langParam);
+		
+		$.i18n().load( {
+			'en': './resources/i18n/en.json',
+			'km': './resources/i18n/km.json'
+		} ).done( function() { 
+		});
        var max_fields = 15; //maximum input boxes allowed
        var wrapper = $(".input_fields_wrap"); //Fields wrapper
        var add_button = $(".add_field_button"); //Add button ID
@@ -233,8 +234,7 @@ function hide() {
         var txnid=$('#endUserTxnId').val();
         var visa={
 				"visaType":visaType,
-				"visaExpiryDate":expiryDate,
-				"entryDateInCountry":entryDate,
+				"visaExpiryDate":expiryDate
 			}
         var passportFileName=$('#passportFileName').val();
         if(passportFileName=="")
@@ -264,7 +264,8 @@ function hide() {
         		"email":email,
         		"phoneNo":phoneNo,
         		"visaDb":visaDb,
-        		"txnId":txnid
+        		"txnId":txnid,
+        		"entryDateInCountry":entryDate
         }
        
         
@@ -282,12 +283,12 @@ function hide() {
 				console.log(JSON.stringify(data));
 				if(data.errorCode==5){
 					$('#successMsg').openModal();
-					$('#messageResponse').text(data.message);
+					$('#messageResponse').text($.i18n('VISA_UPDATE_SUCCESS'));
 				    $("#updateVisaButton").prop('disabled', true);
 				}
 				else{
 					$('#successMsg').openModal();
-					$('#messageResponse').text(data.message);
+					$('#messageResponse').text($.i18n('VISA_UPDATE_SUCCESS'));
 				    $("#updateVisaButton").prop('disabled', true);
 				}
 			},

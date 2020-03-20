@@ -603,7 +603,7 @@
 				<div class="input-field col s12 center">
 					<div class="input-field col s12 center">
 						<a href="${context}/Consignment/viewConsignment"
-							class="modal-close btn"><spring:message code="modal.close" /></a>
+							class="modal-close btn"><spring:message code="modal.ok" /></a>
 					</div>
 				</div>
 			</div>

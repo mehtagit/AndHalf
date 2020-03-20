@@ -101,7 +101,7 @@
 
                                 <div class="input-field col s12 m6 l6">
                                     <input type="text" name="nationalityInformation" id="nationalityInformation" value="${registration.nidFilename}" maxlength="20" value="file.csv" disabled="">
-                                    <label for="nationalityInformation" class="active"><spring:message code="registration.uploadNationalityInformation" /> </label>
+                                    <label for="nationalityInformation" class="active"><spring:message code="registration.UploadNationalityInformation"/> </label>
                                    <span> <a href="#" onclick="previewFile('${registration.nidFilePath}','${registration.nidFilename}')">Preview </a></span> 
                                     
                                 </div>
@@ -175,18 +175,19 @@
                                     <div class="col s12 m6 l6">
                                             <label for="vatNumber"><spring:message code="registration.vatregistration" /> </label>
                                             <div class=" boxHeight">
-                                                <input class="with-gap" name="group3" type="radio" disabled=""><spring:message code="modal.yes" />
-                                                <input class="with-gap" name="group3" type="radio" style="margin-left: 20px;" disabled=""><spring:message code="modal.no" />
+                                                <input type="text" id="vat" value="${registration.vatStatus}" hidden="hidden">
+                                                <input class="with-gap" name="group3" id="yes" type="radio"  disabled=""><spring:message code="modal.yes" />
+                                                <input class="with-gap" name="group3" id="no" type="radio" style="margin-left: 20px;" disabled=""><spring:message code="modal.no" />
                                             </div>
                                </div>
 
-                                <div class="input-field col s12 m6" id="vatNumberField">
-                                    <input type="text" name="roleType" id="roleType" value="${registration.type}" maxlength="16" placeholder="" disabled="">
+                                <div class="input-field col s12 m6" id="userTypeNameField">
+                                    <input type="text" name="roleType" id="roleType"  value="${registration['user'].usertype.usertypeName}" maxlength="16" placeholder="" disabled="">
                                     <label for="roleType" class="active"><spring:message code="table.RoleType" /> </label>
                                 </div>
 
                                 <div class="input-field col s12 m6" id="vatNumberField">
-                                    <input type="text" name="vatNumber" id="vatNumber" value="${registration.vatStatus}" maxlength="16" placeholder="" disabled="">
+                                    <input type="text" name="vatNumber" id="vatNumber" value="${registration.vatNo}" maxlength="16" placeholder="" disabled="">
                                     <label for="vatNumber" class="active"><spring:message code="registration.vatnumber" /> </label>
                                 </div>
                             </div>
@@ -266,5 +267,17 @@
 	<script type="text/javascript"
 		src="${context}/resources/project_js/AdminRegistrationRequest.js"></script>
 		
+		<script type="text/javascript">
+		var vatStatus = $('#vat').val();
+		if(vatStatus== 1){
+			$("#yes").prop("checked", true);
+		}else if(vatStatus == 0){
+			$("#no").prop("checked", true);
+			$('#vatNumberField').hide();
+		}
+		
+		
+		
+		</script>
 </body>
 </html>

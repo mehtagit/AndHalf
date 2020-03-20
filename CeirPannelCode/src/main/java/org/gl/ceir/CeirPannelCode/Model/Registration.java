@@ -2,6 +2,8 @@ package org.gl.ceir.CeirPannelCode.Model;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import org.gl.ceir.pagination.model.RegistrationUser;
+
 public class Registration extends UserHeader{
 	private long id;
 	private String firstName;
@@ -53,7 +55,7 @@ public class Registration extends UserHeader{
     private String vatFilePath;
     private Integer portAddress;
     private String portAddressName;
-
+    private RegistrationUser user;
 	public long getId() {
 		return id;
 	}
@@ -342,20 +344,23 @@ public class Registration extends UserHeader{
 	public void setVatFilePath(String vatFilePath) {
 		this.vatFilePath = vatFilePath;
 	}
-	
 	public Integer getPortAddress() {
 		return portAddress;
 	}
 	public void setPortAddress(Integer portAddress) {
 		this.portAddress = portAddress;
 	}
-	
-	
 	public String getPortAddressName() {
 		return portAddressName;
 	}
 	public void setPortAddressName(String portAddressName) {
 		this.portAddressName = portAddressName;
+	}
+	public RegistrationUser getUser() {
+		return user;
+	}
+	public void setUser(RegistrationUser user) {
+		this.user = user;
 	}
 	@Override
 	public String toString() {
@@ -366,16 +371,17 @@ public class Registration extends UserHeader{
 				+ ", postalCode=" + postalCode + ", province=" + province + ", country=" + country + ", type=" + type
 				+ ", asTypeName=" + asTypeName + ", vatStatus=" + vatStatus + ", vatNo=" + vatNo + ", questionList="
 				+ questionList + ", password=" + password + ", rePassword=" + rePassword + ", username=" + username
-				+ ", roles=" + roles + ", captcha=" + captcha + ", usertypeName=" + usertypeName + ", employeeId="
-				+ employeeId + ", natureOfEmployment=" + natureOfEmployment + ", designation=" + designation
-				+ ", authorityName=" + authorityName + ", authorityEmail=" + authorityEmail + ", authorityPhoneNo="
-				+ authorityPhoneNo + ", operatorTypeName=" + operatorTypeName + ", operatorTypeId=" + operatorTypeId
-				+ ", nidFilename=" + nidFilename + ", photoFilename=" + photoFilename + ", idCardFilename="
-				+ idCardFilename + ", arrivalPort=" + arrivalPort + ", arrivalPortName=" + arrivalPortName
-				+ ", vatFilename=" + vatFilename + ", userLanguage=" + userLanguage + ", nidFilePath=" + nidFilePath
-				+ ", photoFilePath=" + photoFilePath + ", idCardFilePath=" + idCardFilePath + ", vatFilePath="
-				+ vatFilePath + ", portAddress=" + portAddress + ", portAddressName=" + portAddressName + ""
-				+ ",userTypeId=" + userTypeId+"]";
+				+ ", roles=" + Arrays.toString(roles) + ", captcha=" + captcha + ", usertypeName=" + usertypeName
+				+ ", userTypeId=" + userTypeId + ", employeeId=" + employeeId + ", natureOfEmployment="
+				+ natureOfEmployment + ", designation=" + designation + ", authorityName=" + authorityName
+				+ ", authorityEmail=" + authorityEmail + ", authorityPhoneNo=" + authorityPhoneNo
+				+ ", operatorTypeName=" + operatorTypeName + ", operatorTypeId=" + operatorTypeId + ", nidFilename="
+				+ nidFilename + ", photoFilename=" + photoFilename + ", idCardFilename=" + idCardFilename
+				+ ", arrivalPort=" + arrivalPort + ", arrivalPortName=" + arrivalPortName + ", vatFilename="
+				+ vatFilename + ", userLanguage=" + userLanguage + ", nidFilePath=" + nidFilePath + ", photoFilePath="
+				+ photoFilePath + ", idCardFilePath=" + idCardFilePath + ", vatFilePath=" + vatFilePath
+				+ ", portAddress=" + portAddress + ", portAddressName=" + portAddressName + ", user=" + user + "]";
 	}
+
 	
 }

@@ -3164,3 +3164,13 @@ position: absolute;
 top: 30px;
 right: 10px;
 }
+
+
+
+
+label#nId {
+    width: 95%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

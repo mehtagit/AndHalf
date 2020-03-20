@@ -222,8 +222,7 @@ public class LoginService {
 			return response;
 		}
 		else {
-			HttpResponse response=new HttpResponse(); 
-			response.setResponse("Both Passwords do the match");      
+			HttpResponse response=new HttpResponse("Both Passwords do the match",500,"password_mismatch");   
 			return response;
 		}
 
@@ -239,8 +238,7 @@ public class LoginService {
 			return response; 	
 		}
 		else {    
-			HttpResponse response=new HttpResponse();             
-            response.setResponse("Both Passwords do the match");
+			HttpResponse response=new HttpResponse("Both Passwords do the match",500,"password_mismatch");   
 			return response; 
 		}
 		  

@@ -486,13 +486,21 @@ function redirectToDashboard(){
 
 
 function manageAccountPopup(){
+	document.getElementById("userStatusForm").reset();
 	$("#manageAccount").openModal({
         dismissible:false
     });
 }
 
 function changePasswordPopup(){
-	$("#changePassword").openModal({
+	//document.getElementById("changePassForm").reset();
+	$("#changePassForm #errorMsg").text("");
+	$("#changePassForm input").val("");
+	 $("#changePassForm input").attr('type', 'password');
+	  $("#changePassForm label").removeClass("active");
+	  $("#changePassForm .input-field-addon i").removeClass("fa-eye");
+	  $("#changePassForm .input-field-addon i").addClass("fa fa-eye-slash");
+	  $("#changePassword").openModal({
         dismissible:false
     });
 }

@@ -49,6 +49,7 @@ function forgotPassword(){
 	return false;
 } 
 function udapteNewPassword(){
+		$("#UpdatePassBtn").prop('disabled', true);
 	var obj="";
 	$("#changePassword").each(function(key, val){
 		val = $(this);
@@ -92,9 +93,10 @@ function udapteNewPassword(){
 					$("#changePassword #errorMsg").text($.i18n(resp.tag));
 				});
 			}
-
+			$("#UpdatePassBtn").prop('disabled', false);
 		}, 
 		error: function (xhr, ajaxOptions, thrownError) {
+			$("#UpdatePassBtn").prop('disabled', false);
 		}
 
 	});
