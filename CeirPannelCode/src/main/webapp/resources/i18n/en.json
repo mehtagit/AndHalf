@@ -139,5 +139,6 @@
 	"editrecoveryCompany":"Edit Company Report Recovery",
 "TYPE_APPROVE_UPDATE_SUCCESS" :"Type Approved data has been sucessfully update.",
 "VISA_UPDATE_SUCCESS":"Visa of user have been updated succesfully.",
-"IMEIValidationMSg":"Please enter minimum 15 and maximum 16 digit only"
+"IMEIValidationMSg":"Please enter minimum 15 and maximum 16 digit only",
+"PRO_SUCESS_OTPMSG":"OTP has been sent to your  Phone Number and E-Mail ID to verify"
 }
