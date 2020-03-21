@@ -75,7 +75,7 @@
 	"secu_ques_not_match": "Security question and answer did not match",
 	"wrong_userId": "Please enter correct User Id",
 	"Pending Registration": "Pending Registration",
-	"new_pass_sucess": "User new password has been added",
+	"new_pass_sucess": "User password has been updated",
 	"new_pass_fail": "User new password fail to update",
 	"selectFilePlaceHolder": "Upload a file",
 	"duplicateFileName": "File name should not be same",
