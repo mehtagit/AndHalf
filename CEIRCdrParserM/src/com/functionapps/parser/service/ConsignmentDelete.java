@@ -24,6 +24,7 @@ public class ConsignmentDelete {
 		
 		try{
 			List<DeviceDb> deviceDbs = deviceDbDao.getDeviceDbByTxnId(conn, "", txnId);
+			System.out.println("deviceDbs" + deviceDbs);
 			deviceDbDao.insertDeviceDbAud(conn, deviceDbs);
 			deviceDbDao.deleteDevicesFromDeviceDb(conn, txnId);
 
@@ -31,6 +32,7 @@ public class ConsignmentDelete {
 			deviceImporterDbDao.insertDeviceImporterDbAud(conn, deviceImporterDbs);
 			deviceImporterDbDao.deleteDevicesFromDeviceImporterDb(conn, txnId);
 			ceirfunction.updateFeatureFileStatus(conn, txnId, 2, operator, sub_feature);
+			// TODO hit API to update delete flag in consignment.
 			conn.commit();
 
 		}catch(Exception e){
