@@ -397,7 +397,7 @@
 											
 
 											<div class="input-field col s12 m6">
-												<input type="text" id="visaNumber" required="required"
+												<input type="text" id="visaNumber" 
 													pattern="[a-zA-Z0-9]{1,15}"
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
