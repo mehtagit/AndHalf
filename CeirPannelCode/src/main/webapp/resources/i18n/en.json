@@ -75,7 +75,7 @@
 	"secu_ques_not_match": "Security question and answer did not match",
 	"wrong_userId": "Please enter correct User Id",
 	"Pending Registration": "Pending Registration",
-	"new_pass_sucess": "User new password has been added",
+	"new_pass_sucess": "User password has been updated",
 	"new_pass_fail": "User new password fail to update",
 	"selectFilePlaceHolder": "Upload a file",
 	"duplicateFileName": "File name should not be same",
@@ -138,5 +138,6 @@
 	"editrecoveryIndivisual":"Edit Indivisual Report Recovery",
 	"editrecoveryCompany":"Edit Company Report Recovery",
 "TYPE_APPROVE_UPDATE_SUCCESS" :"Type Approved data has been sucessfully update.",
-"VISA_UPDATE_SUCCESS":"Visa of user have been updated succesfully."
+"VISA_UPDATE_SUCCESS":"Visa of user have been updated succesfully.",
+"IMEIValidationMSg":"Please enter minimum 15 and maximum 16 digit only"
 }

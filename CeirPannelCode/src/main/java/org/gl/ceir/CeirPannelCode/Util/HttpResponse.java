@@ -34,6 +34,15 @@ public String toString() {
 	return "HttpResponse [response=" + response + ", statusCode=" + statusCode + ", data=" + data + ", tag=" + tag
 			+ "]";
 }
+public HttpResponse(String response, Integer statusCode, String tag) {
+	super();
+	this.response = response;
+	this.statusCode = statusCode;
+	this.tag = tag;
+}
+public HttpResponse() {
+	super();
+}
 
 
 }
