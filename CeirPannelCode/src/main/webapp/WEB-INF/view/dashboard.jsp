@@ -290,8 +290,8 @@ data-roleType="${usertype}" data-userTypeID="${usertypeId}"
 					<p>
 						<label style="margin-right: 50px"> <input type="radio"
 							name="status" value="Deactivate" 
-							oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');"
-							title= "<spring:message code="validation.Options" />" required  / > <span>
+							oninput="InvalidMsg(this,'fileType','<spring:message code="validation.Options" />');" oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.Options" />');"
+							required > <span>
 								<spring:message code="registration.deactivate" />
 						</span></label>
 						<spring:message code="registration.permanentlydeleteportal" />
@@ -309,8 +309,8 @@ data-roleType="${usertype}" data-userTypeID="${usertypeId}"
 					<p>
 						<label style="margin-right: 67px"> <input type="radio"
 							value="Disable" name="status" 
-							oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');"
-							title= "<spring:message code="validation.Options" />" required  / > <span>
+							oninput="InvalidMsg(this,'fileType','<spring:message code="validation.Options" />');" oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.Options" />');"
+							title= "" required  / > <span>
 								<spring:message code="registration.disable" />
 						</span></label>
 						<spring:message code="registration.alltheactionwillbe" />
@@ -387,7 +387,7 @@ data-roleType="${usertype}" data-userTypeID="${usertypeId}"
 							pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,10}$"
 							maxlength="10" min="8"
 oninput="InvalidMsg(this,'input','<spring:message code="validation.password" />');"
- oninvalid="InvalidMsg(this,'input','<spring:message code="validation.password" />');"	title= "<spring:message code="validation.minumum8length" />" required  />	
+ oninvalid="InvalidMsg(this,'input','<spring:message code="validation.password" />');"	 required  />	
 							
 							 <label for="oldPassword"
 							class="center-align" style="color: #000; font-size: 12px;">
@@ -414,7 +414,7 @@ oninput="InvalidMsg(this,'input','<spring:message code="validation.password" />'
 							maxlength="10" min="8" 
 oninput="InvalidMsg(this,'input','<spring:message code="validation.password" />');" 
 oninvalid="InvalidMsg(this,'input','<spring:message code="validation.password" />');"		
-					title= "<spring:message code="validation.minumum8length" />" required  id="password" class="password2" />
+			 required  id="password" class="password2" />
 							<div class="input-field-addon">
 							<i class="fa fa-eye-slash teal-text toggle-password2"
 								aria-hidden="true"></i>

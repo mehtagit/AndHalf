@@ -15,7 +15,7 @@
 <!DOCTYPE html>
 <html lang="en" class="no-js">
 <head>
-<title>Dashboard</title>
+<title>Device Information</title>
 
 <meta charset="utf-8" />
 <meta name="viewport"
@@ -229,8 +229,8 @@ input[type='search'] {
 														<input type="text" id="serialNumber1" name="serialNumber"
 															required="required" pattern="[A-Za-z0-9]{0,15}"
 															
-															oninput="InvalidMsg(this,'select','<spring:message code="validation.15serialNo" />');"
-											        oninvalid="InvalidMsg(this,'select','<spring:message code="validation.15serialNo" />');"
+															oninput="InvalidMsg(this,'input','<spring:message code="validation.15serialNo" />');"
+											        oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15serialNo" />');"
 															title=""
 															maxlength="15"> <label for="serialNumber1"> <spring:message code="input.deviceSerialNumber" /><span class="star">*</span>
 														</label>
@@ -292,7 +292,7 @@ input[type='search'] {
 																	pattern="[0-9]{15,16}" required
 																	oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 											        oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
-																	title="Please enter minimum 15 and maximum 16 digit only"
+																
 																	maxlength="16"> <label for="IMEIA1"><spring:message code="title.one" /><span
 																	class="star">*</span></label>
 															</div>
@@ -301,7 +301,7 @@ input[type='search'] {
 																	pattern="[0-9]{15,16}"
 																	oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 											        oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
-																	title="Please enter minimum 15 and maximum 16 digit only"
+															
 																	maxlength="16"> <label for="IMEIB1"><spring:message code="title.two" /></label>
 															</div>
 
@@ -310,7 +310,7 @@ input[type='search'] {
 																	pattern="[0-9]{15,16}"
 																	oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 											        oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
-																	title="Please enter minimum 15 and maximum 16 digit only"
+																
 																	maxlength="16"> <label for="IMEIC1"><spring:message code="title.three" /></label>
 															</div>
 
