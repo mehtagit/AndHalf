@@ -99,18 +99,24 @@ FeignCleintImplementation feignCleintImplementation;
 		ModelAndView modelAndView = new ModelAndView("addDeviceInformation");
 		return modelAndView;
 	}
-	
+
 	@GetMapping("view-device-information/{imei}")
 	public ModelAndView viewDeviceInformationView(@PathVariable("imei") Long imei) {
 		log.info(" imei =="+imei);
 		ModelAndView modelAndView = new ModelAndView("viewAdddeviceInformation");
 		UserPaidStatusContent content= uploadPaidStatusFeignClient.viewByImei(imei);
 		log.info(" content =="+content);
-		modelAndView.addObject("viewInformation", content);
+
+		addMoreFileModel.setTag("upload_file_link");
+        urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
+        log.info("file link =="+urlToUpload.getValue());
+       // content.setFilePreviewLink(urlToUpload.getValue());
+		String fileLink=urlToUpload.getValue();
+		modelAndView.addObject("fileLink", fileLink);
+        modelAndView.addObject("viewInformation", content);
 		modelAndView.setViewName("viewAdddeviceInformation");
 		return modelAndView;
 	}
-
 
 
 	@PostMapping("uploadPaidStatusForm")
@@ -540,3 +546,5 @@ stream.close();
 	  
 	 }
 
+
+	
