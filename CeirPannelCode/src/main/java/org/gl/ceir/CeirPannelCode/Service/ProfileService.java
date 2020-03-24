@@ -9,6 +9,7 @@ import org.gl.ceir.CeirPannelCode.Model.Registration;
 import org.gl.ceir.CeirPannelCode.Model.UserStatus;
 import org.gl.ceir.CeirPannelCode.Response.UpdateProfileResponse;
 import org.gl.ceir.CeirPannelCode.Util.HttpResponse;
+import org.gl.ceir.pagination.model.UserManagementContent;
 import org.hibernate.validator.internal.util.privilegedactions.GetInstancesFromServiceLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -103,6 +104,17 @@ public class ProfileService {
 		log.info("userStatus data is :  "+userStatus);
 		HttpResponse response=new HttpResponse();             
 		response=userProfileFeignImpl.changeUserStatusFeign(userStatus);
+		return response;  
+	} 
+	
+	public HttpResponse changeSystemUserStatusService(UserManagementContent userManagementContent,HttpSession session) {
+		log.info("inside changeSystemUserStatus controller");
+		//Integer userid= userManagementContent.getId();
+		//log.info("userid from session:  "+userid);
+		//userManagementContent.setId(id);
+		//log.info("userStatus data is :  "+userManagementContent);
+		HttpResponse response=new HttpResponse();             
+		response=userProfileFeignImpl.changeSystemUserStatusFeign(userManagementContent);
 		return response;  
 	} 
 	

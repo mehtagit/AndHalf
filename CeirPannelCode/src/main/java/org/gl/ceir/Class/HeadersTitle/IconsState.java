@@ -2023,7 +2023,7 @@ public class IconsState {
 	public String userManagementIcons(String id, String userStatus) { 
 		executePostConstruct();
 
-		String editAction= "currencyViewByID('"+id+"')";
+		String editAction= "userChangeStatus('"+id+"')";
 
 		// state related Code 
 

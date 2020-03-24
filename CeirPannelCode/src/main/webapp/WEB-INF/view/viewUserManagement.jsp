@@ -127,9 +127,58 @@
 		<!--end container-->
 	</section>
 	
- 	
+ 	<div id="statusChangemodal" class="modal">
+               <form action="" onsubmit="return chanegeUserStatus()" method="POST"
+								enctype="multipart/form-data" id="">
+								  <div class="row" id="singleInput">
+								  <h6 class="modal-header "> Change User Type Status</h6>
+                                <div class="col s12 m12 l12">
+                                 
+								   
+                                   <div class="row">
+                                            <div class="input-field col s6 m5">
+                                                <label for="Category">Change User Type Status<span class="star"> *</span></label>
+                                            </div>
+                                            <div class="col s6 m7 selectDropdwn">
+                                                <select class="browser-default" id = "userStatus"
+                                     onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" 
+                                     oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" required>
+                                                    <option value="" disabled selected>select user type status</option>
+                                           	</select>
+                                            </div>
+                                   
+                                        </div>
+                                 		 <input type ="text" id="statusUserName" hidden="hidden" >
+                                        <div class="row">
+                                            <div class="input-field col s12 center" style="padding: 20px 0;">
+                                                <!-- <a href="#submitIMEI" class="btn modal-trigger">Submit</a>  -->
+                                                 <button class=" btn" type="submit"><spring:message code="button.submit" /></button>
+                                               	<button type="button" class="btn modal-close" style="margin-left: 10px;" title=" "><spring:message code="button.cancel" /></button>
+                                            </div>
+
+                                        </div>
+                                      
+									
+                                    </div>
+                                   </div></form>
+                    </div>  
 	
-		
+		 <div id="confirmUserStatus" class="modal">
+         <h6 class="modal-header">Change User Type Status</h6>
+          <div class="modal-content">
+            <div class="row">
+                <form action="">
+                  
+                    <h6>User Type Status Changed Successfully.</h6>
+                </form>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <a class="btn modal-close" href="./usertypeManagment"><spring:message code="modal.ok" /></a>
+                </div>
+            </div>
+        </div>
+    </div>
 	
 	
 		

@@ -120,7 +120,7 @@ public class UserManagementDatatable {
 		InputFields inputFields = new InputFields();
 		InputFields dateRelatedFields;
 		
-		pageElement.setPageTitle(Translator.toLocale("table.currencyManagement"));
+		pageElement.setPageTitle(Translator.toLocale("User Type Management"));
 		
 		List<Button> buttonList = new ArrayList<>();
 		List<InputFields> dropdownList = new ArrayList<>();
