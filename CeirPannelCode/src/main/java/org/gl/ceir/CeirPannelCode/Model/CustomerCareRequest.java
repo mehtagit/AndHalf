@@ -1,4 +1,4 @@
-package org.gl.ceir.CeirPannelCode.Controller;
+package org.gl.ceir.CeirPannelCode.Model;
 
 public class CustomerCareRequest {
 	private String deviceIdType;

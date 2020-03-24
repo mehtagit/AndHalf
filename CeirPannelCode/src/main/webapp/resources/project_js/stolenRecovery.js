@@ -275,6 +275,7 @@ function filterStolen(){
 
 
 function Datatable(url,dataUrl){
+	
 	var txn= (txnIdValue == 'null' && transactionIDValue == undefined)? $('#transactionID').val() : transactionIDValue;
 	var filterRequest={
 			"endDate":$('#endDate').val(),
@@ -948,6 +949,12 @@ function exportStolenRecoveryData()
 	var pageNo=info.page;
 	var pageSize =info.length;
 
+	if(userType=="Operator"){
+		var operatorId = parseInt($("body").attr("data-OperatorTypeId"));
+	}else{
+		var operatorId = parseInt($('#operator').val());
+	}
+	
 	var filterRequest={
 			"endDate":stolenRecoveryEndDate,
 			"startDate":stolenRecoveryStartDate,
@@ -957,7 +964,7 @@ function exportStolenRecoveryData()
 			"requestType":stolenRecoveryRequestType,
 			"featureId":featureId,
 			"roleType":roleType,
-			"operatorTypeId" : parseInt($('#operator').val()),
+			"operatorTypeId" : operatorId,
 			"pageNo":parseInt(pageNo),
 			"pageSize":parseInt(pageSize)
 			

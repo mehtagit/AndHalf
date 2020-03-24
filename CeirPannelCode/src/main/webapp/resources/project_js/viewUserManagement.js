@@ -56,7 +56,8 @@
 					"userId":parseInt(userId),
 					"featureId":parseInt(featureId),
 					"userTypeId": parseInt($("body").attr("data-userTypeID")),
-					"userType":$("body").attr("data-roleType")
+					"userType":$("body").attr("data-roleType"),
+					"id" : parseInt($("#userType").val())
 					
 			}				
 			if(lang=='km'){
@@ -157,7 +158,7 @@
 									"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
 
 									"<select id="+dropdown[i].id+" class='select2 initialized'>"+
-									"<option value=''>"+dropdown[i].title+
+									"<option value='' disabled selected>"+dropdown[i].title+
 									"</option>"+
 									"</select>"+
 									"</div>"+
@@ -184,170 +185,46 @@
 		function setAllDropdown(){
 			$.getJSON('./registrationUserType', function(data) {
 			for (i = 0; i < data.length; i++) {
-			$('<option>').val(data[i].id).text(data[i].usertypeName)
-			.appendTo('#userType');
-			}
-			});
-			}
-
-		function AddCurrencyAddress(){
-			$('#addCurrency').openModal({
-		        dismissible:false
-		    });
-			//var tagDropDown =  document.getElementById("tag");
-			//var displayName = tagDropDown.options[tagDropDown.selectedIndex].text;
-		}
-		
-	
-	/*----------------------------------- Save Field ----------------------------------------- */
-		
-	function submitPort(){
-		
-		var request={
-					  "date":   $('#month').val(),
-					  "currency": $('#currency').val(),
-					  "riel":   parseFloat($('#cambodianRiel').val()),
-					  "dollar": parseFloat($('#dollar').val()),
-				}
-		
-		console.log("request------------->" +JSON.stringify(request))
-		$.ajax({
-			url : './add-currency',
-			data : JSON.stringify(request),
-			dataType : 'json',
-			contentType : 'application/json; charset=utf-8',
-			type : 'POST',
-			success : function(data, textStatus, jqXHR) {
-					console.log(JSON.stringify(data));
-					$("#confirmField").openModal({
-				        dismissible:false
-				    });
-			},
-			error : function(jqXHR, textStatus, errorThrown) {
-				console.log("error in ajax")
+			$('<option>').val(data[i].id).text(data[i].usertypeName).appendTo('#userType');
 			}
 		});
 			
-			return false
-	}
-
-
-  
-	/*--------------------------------- Edit Model View -----------------------------------*/
-	
-	
-	function currencyViewByID(id){
-		$("#editId").val(id);
-		
-		$.ajax({
-				url: './currencyViewByID/'+id,
-				type: 'POST',
-			//data : JSON.stringify(request),
-				dataType : 'json',
-				contentType : 'application/json; charset=utf-8',
-				success: function (data, textStatus, jqXHR) {
-						var result = data.data
-						$("#editCurrencyModal").openModal({
-					        dismissible:false
-					    });
-						currencyEditPopupData(result);
-						console.log(JSON.stringify(result));
-				},
-				error: function (jqXHR, textStatus, errorThrown) {
-					console.log("error in ajax")
-				}
-			});	
+		$.getJSON('./getDropdownList/UserType_Status', function(data) {
+				for (i = 0; i < data.length; i++) {
+				$('<option>').val(data[i].value).text(data[i].interp)
+				.appendTo('#userStatus');
+			 }
+		});
 		}
-	
-	
-	function currencyEditPopupData(result){
-		$("#editMonth").val(result.date);
-		$("#editCurrency").val(result.currency);
-		$("#editCambodianRiel").val(result.riel);
-		$("#editDollar").val(result.dollar);
-		
-		$("label[for='editMonth']").addClass('active');
-		$("label[for='editCurrency']").addClass('active');
-		$("label[for='editCambodianRiel']").addClass('active');
-		$("label[for='editDollar']").addClass('active');
+
+	function userChangeStatus(id){
+		window.userId = id
+		$("#statusChangemodal").openModal({
+		 	   dismissible:false
+		    });
 	}
 	
-	
-	/*---------------------------------- Update Field-------------------------------------*/
-	
-	
-	function updateCurrency(){
-	
-		var request ={ 
-				 "id" : parseInt($("#editId").val()),
-				 "date":   $('#editMonth').val(),
-				 "currency": $('#editCurrency').val(),
-				 "riel":   parseFloat($('#editCambodianRiel').val()),
-				 "dollar": parseFloat($('#editDollar').val()),
+	function chanegeUserStatus(){
+		var Request={
+				"status" : parseInt($("#userStatus").val()),
+				"usertypeId": parseInt(window.userId)
 		}
 		
-		console.log("request--->" +JSON.stringify(request))
 		$.ajax({
-			url: './updateCurrency',
-			type: 'POST',
-			data : JSON.stringify(request),
-			dataType : 'json',
-			contentType : 'application/json; charset=utf-8',
-			success: function (data, textStatus, jqXHR) {
-			
-				console.log("Updated data---->" +data)
-				$("#editCurrencyModal").closeModal();	
-				$("#updateFieldsSuccess").openModal({
-			        dismissible:false
-			    });
-				
-			},
-			error: function (jqXHR, textStatus, errorThrown) {
-				console.log("error in ajax")
-			}
-		});	
-		
-		return false
-	}
-
-	
-	
-  /*------------------------------------ Delete Field -----------------------------------*/
-	
-	
-	function DeleteCurrency(id){
-		$("#DeleteFieldModal").openModal({
-	        dismissible:false
-	    });
-		$("#deletePortId").val(id);
-		
-	}	
-	
-	
-	
-	function confirmantiondelete(){
-		
-		var id  = parseInt($("#deletePortId").val());
-		
-		console.log(JSON.stringify(id));
-		$.ajax({
-			url : './deletePort/'+id,
-//			data : JSON.stringify(request),
+			url : './updateSystemUserTypeStatus',
+			data : JSON.stringify(Request),
 			dataType : 'json',
 			contentType : 'application/json; charset=utf-8',
 			type : 'POST',
-			success : function(data, textStatus, xhr) {
-				console.log(data);
-				$("#DeleteFieldModal").closeModal();
-				$("#closeDeleteModal").openModal({
-			        dismissible:false
+			success : function(data) {
+				console.log("Request----->"+JSON.stringify(Request));
+				$("#confirmUserStatus").openModal({
+				 	   dismissible:false
 			    });
-				
-				$("#materialize-lean-overlay-3").css("display","none");
 			},
 			error : function() {
-				console.log("Error");
+				alert("Failed");
 			}
 		});
+		return false;
 	}
-	

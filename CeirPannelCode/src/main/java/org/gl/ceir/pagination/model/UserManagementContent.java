@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 public class UserManagementContent {
 
 	private Integer id;
+	private Integer usertypeId;
 	private String usertypeName;
 	private String createdOn;
 	private String modifiedOn;
@@ -20,6 +21,12 @@ public class UserManagementContent {
 	}
 	public void setId(Integer id) {
 		this.id = id;
+	}
+	public Integer getUsertypeId() {
+		return usertypeId;
+	}
+	public void setUsertypeId(Integer usertypeId) {
+		this.usertypeId = usertypeId;
 	}
 	public String getUsertypeName() {
 		return usertypeName;
@@ -59,9 +66,9 @@ public class UserManagementContent {
 	}
 	@Override
 	public String toString() {
-		return "UserManagementContent [id=" + id + ", usertypeName=" + usertypeName + ", createdOn=" + createdOn
-				+ ", modifiedOn=" + modifiedOn + ", status=" + status + ", statusInterp=" + statusInterp
-				+ ", additionalProperties=" + additionalProperties + "]";
+		return "UserManagementContent [id=" + id + ", usertypeId=" + usertypeId + ", usertypeName=" + usertypeName
+				+ ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", status=" + status + ", statusInterp="
+				+ statusInterp + ", additionalProperties=" + additionalProperties + "]";
 	}
 	
 	

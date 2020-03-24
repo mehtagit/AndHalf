@@ -11,6 +11,7 @@ import org.gl.ceir.CeirPannelCode.Model.UploadStockAssigneModal;
 import org.gl.ceir.CeirPannelCode.Model.UserStatus;
 import org.gl.ceir.CeirPannelCode.Response.UpdateProfileResponse;
 import org.gl.ceir.CeirPannelCode.Util.HttpResponse;
+import org.gl.ceir.pagination.model.UserManagementContent;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -144,5 +145,10 @@ public interface UserProfileFeignImpl {
 		@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
 		@RequestParam(value = "file", defaultValue = "0") Integer file);
 	
+		
+	/*-------------------------- Update System user Type Management Feign ------------------------------*/	
+		
+		@PostMapping("/updateUserTypeStatus")
+		public HttpResponse changeSystemUserStatusFeign(UserManagementContent userManagementContent);
 } 
 

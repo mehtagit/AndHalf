@@ -139,5 +139,7 @@
 	"editrecoveryCompany":"Edit Company Report Recovery",
 "TYPE_APPROVE_UPDATE_SUCCESS" :"Type Approved data has been sucessfully update.",
 "VISA_UPDATE_SUCCESS":"Visa of user have been updated succesfully.",
-"IMEIValidationMSg":"Please enter minimum 15 and maximum 16 digit only"
+"IMEIValidationMSg":"Please enter minimum 15 and maximum 16 digit only",
+"duplicateImei":"IMEI is already registered in CEIR System",
+"regularisedExceeded":"Regularized Devices are exceeding the allowed count."
 }
