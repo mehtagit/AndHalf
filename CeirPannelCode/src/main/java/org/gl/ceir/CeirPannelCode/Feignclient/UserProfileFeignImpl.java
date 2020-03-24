@@ -135,7 +135,7 @@ public interface UserProfileFeignImpl {
 		@RequestMapping(value= "/currency/update" , method=RequestMethod.POST) 
 		public GenricResponse updateCurrencyFeign(@RequestBody FilterRequest filterRequest);
 		
-		/*-------------------------- view userManagement Feign ------------------------------*/
+	/*-------------------------- view userManagement Feign ------------------------------*/
 		
 		@RequestMapping(value="/usertypeData" ,method=RequestMethod.POST) 
 

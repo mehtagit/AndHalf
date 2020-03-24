@@ -874,13 +874,14 @@ public class IconsState {
 		//System.out.println("featureID::::::::::"+featureID);
 		// state related Code
 		String view=null;
+		String functionName="isActive("+featureID+")";
 		if(featureID == 3 || featureID == 4 || featureID == 6 || featureID == 7) {
-			view="<a href="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+			view="<a href="+viewAction+" onclick="+functionName+"><i class="+viewIcon+" aria-hidden=\"true\" title="
 					+viewIconTitle+" ></i></a>";
 		}
 		else {
 
-			view="<a href="+viewAction+" class="+disableIconClass+"><i class="+disableViewIcon+" aria-hidden=\"true\" title="
+			view="<a href="+viewAction+" onclick="+functionName+" class="+disableIconClass+"><i class="+disableViewIcon+" aria-hidden=\"true\" title="
 					+viewIconTitle+" ></i></a>";
 		}
 		String action=view;
