@@ -135,7 +135,14 @@ public interface UserProfileFeignImpl {
 		@RequestMapping(value= "/currency/update" , method=RequestMethod.POST) 
 		public GenricResponse updateCurrencyFeign(@RequestBody FilterRequest filterRequest);
 		
-	
+		/*-------------------------- view userManagement Feign ------------------------------*/
+		
+		@RequestMapping(value="/usertypeData" ,method=RequestMethod.POST) 
+
+		public Object viewUserTypeRequest(@RequestBody FilterRequest filterRequest,
+		@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
+		@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+		@RequestParam(value = "file", defaultValue = "0") Integer file);
 	
 } 
 

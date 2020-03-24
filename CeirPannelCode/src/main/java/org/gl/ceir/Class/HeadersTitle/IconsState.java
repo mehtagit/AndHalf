@@ -1207,9 +1207,9 @@ public class IconsState {
 	/********************************** Icons for Admin TRC Manage Type Datatable **********************************/ 
 
 
-	public String trcAdminManageIcons(String status,Integer id,String fileName,String txnId,String userStatus) {
+	public String trcAdminManageIcons(String status,Integer id,String txnId,String userStatus) {
 		executePostConstruct();
-		String errorURL = "consignmentFileDownload('"+fileName.replace(" ", "%20")+"','error','"+txnId+"','"+defaultTagName+"')";
+		String errorURL = "";
 		String viewAction="ImporterviewByID("+id+",'view','"+projectPath+"','viewImporterModal')";
 		//	String downloadURL = "./dowloadFiles/actual/"+fileName.replace(" ", "%20")+"/"+txnId+"/"+defaultTagName+"";
 		//String downloadURL = "fileDownload('"+fileName.replace(" ", "%20")+"','actual','"+txnId+"','"+defaultTagName+"')";
@@ -2013,6 +2013,26 @@ public class IconsState {
 
 
 		String action=view;
+		return action;
+
+	}
+	
+	/********************************** Icons for User Management**********************************/ 
+
+	public String userManagementIcons(String id, String userStatus) { 
+		executePostConstruct();
+
+		String editAction= "currencyViewByID('"+id+"')";
+
+		// state related Code 
+
+
+		String edit="<a onclick="+editAction+"><i class="
+				+editIcon+" aria-hidden=\"true\"  title="
+				+editIconTitle+"></i></a>"; 
+
+
+		String action=edit;
 		return action;
 
 	}

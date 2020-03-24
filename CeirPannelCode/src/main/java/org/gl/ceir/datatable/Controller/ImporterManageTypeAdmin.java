@@ -133,12 +133,14 @@ public class ImporterManageTypeAdmin {
 				}else {
 					for (TrcContentModel trcContentModelList : trcPaginationModel.getContent()) {
 						log.info("inside Trc File Name" + trcContentModelList.getAttachedFiles());
-						String fileName1 = "";
-						List<AttachedFile> list = trcContentModelList.getAttachedFiles();
-						for (AttachedFile fileList : list) {
-							fileName1 = fileList.getFileName();
-
-						}
+						
+						/*
+						 * String fileName1 = ""; List<AttachedFile> list =
+						 * trcContentModelList.getAttachedFiles(); for (AttachedFile fileList : list) {
+						 * fileName1 = fileList.getFileName();
+						 * 
+						 * }
+						 */
 
 						String createdOn = trcContentModelList.getCreatedOn();
 						String trademark = trcContentModelList.getTrademark();
@@ -151,8 +153,8 @@ public class ImporterManageTypeAdmin {
 						String userDisplayName = trcContentModelList.getUserDisplayName();
 						String userTypeName = trcContentModelList.getUserType();
 							
-						log.info("approveState->"+approveState+" id-->"+trcContentModelList.getId()+" fileName1-->"+fileName1+" txnId-->"+txnId+" adminApproveStatus-->"+adminApproveStatus+" userStatus-->"+userStatus);
-						String action = iconState.trcAdminManageIcons(approveState, trcContentModelList.getId(), fileName1,
+						log.info("approveState->"+approveState+" id-->"+trcContentModelList.getId()+" txnId-->"+txnId+" adminApproveStatus-->"+adminApproveStatus+" userStatus-->"+userStatus);
+						String action = iconState.trcAdminManageIcons(approveState, trcContentModelList.getId(),
 								txnId,userStatus);
 						Object[] data = { createdOn, txnId, userTypeName,userDisplayName,trademark, manufacturerCountry, tac, status, action };
 						List<Object> datatableList = Arrays.asList(data);
