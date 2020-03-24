@@ -155,8 +155,8 @@ section {
 									<div class="row myRow">
 										<div class="input-field col s12 m6">
 											<input type="text" name="supplierId" id="supplierId"
-												pattern="[A-Za-z0-9]{0,15}"
-												title="<spring:message code="validation.15character" />"
+												pattern="[A-Za-z0-9]{0,15}" oninput="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
+												 oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
 												maxlength="15" /> <label for="supplierId" class="center-align"><spring:message code="input.supplier" /></label>
 										</div>
 
@@ -173,7 +173,8 @@ section {
 										<div class="input-field col s12 m6">
 											<input type="text" name="consignmentNumber"
 												id="consignmentNumber" pattern="[A-Za-z0-9]{0,15}"
-												title="<spring:message code="validation.15character" />"
+												oninput="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
+												 oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
 												maxlength="15" /> <label for="consignmentNumber" class="center-align"><spring:message code="input.consignmentnumber" /></label>
 										</div>
 
@@ -214,7 +215,8 @@ section {
 									<div class="row myRow">
 										<div class="input-field col s12 m6">
 										<input type="text" name="totalPrice" id="totalPrice" pattern="[0-9]{0,7}"
-												maxlength="7" title="<spring:message code="validation.7character" />" /> <label for="totalPrice"
+												maxlength="7" oninput="InvalidMsg(this,'input','<spring:message code="validation.7character" />');"
+												 oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7character" />');"> <label for="totalPrice"
 												class="center-align"><spring:message code="input.totalprice" /></label>
 										</div>
 

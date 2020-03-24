@@ -161,7 +161,7 @@ footer {
 												<p id="errorMsgOnModal" class="deviceErrorTitle"></p>
 											</div>
 											<div class="input-field col s6 m7">
-												<input type="text" id="DeviceID"required / >
+												<input type="text" id="DeviceID" required  >
 
 											</div>
 										</div>

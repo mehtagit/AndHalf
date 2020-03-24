@@ -339,7 +339,10 @@ var path="${context}";
 									<div class="btn">
 										<span><spring:message code="input.selectfile" /></span> <input
 											type="file" name="files[]" id="docTypeFile1"
-											disabled="disabled" onchange="enableAddMore()">
+											
+											disabled="disabled" onchange="enableAddMore()"
+											onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+												oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');">
 									</div>
 									<div class="file-path-wrapper">
 										<input class="file-path validate" type="text"
