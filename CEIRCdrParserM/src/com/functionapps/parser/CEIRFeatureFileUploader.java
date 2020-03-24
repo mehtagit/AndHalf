@@ -5,6 +5,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import com.functionapps.parser.ErrorFileGenrator;
+import java.io.IOException;
+import java.util.logging.Level;
 
 
 import org.apache.log4j.Logger;
@@ -68,6 +70,8 @@ public class CEIRFeatureFileUploader {
         } catch (SQLException e) {
             logger.info("CEIRFileUploader Exception [" + e + "]");
             e.printStackTrace();
+        } catch (IOException ex) {
+            java.util.logging.Logger.getLogger(CEIRFeatureFileUploader.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }

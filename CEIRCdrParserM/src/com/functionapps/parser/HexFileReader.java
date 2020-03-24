@@ -29,6 +29,7 @@ import java.io.BufferedReader;
 //import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -650,7 +651,7 @@ public class HexFileReader {
         return result;
     }
 
-    public String[] readConvertedFeatureFile(Connection conn, String fileName, String filePath, String repName, String basePath, int raw_upload_set_no, String txn_id, String subfeature, String management_table) {
+    public String[] readConvertedFeatureFile(Connection conn, String fileName, String filePath, String repName, String basePath, int raw_upload_set_no, String txn_id, String subfeature, String management_table) throws IOException, SQLException {
         int i = 0;
         int k = 0;
         int limit = raw_upload_set_no;
@@ -780,7 +781,7 @@ public class HexFileReader {
                     int j = 1;
                     System.out.println(" DATA " + data[j - 1]);
                     Set<String> set = new HashSet<String>();
-                   
+
                     String[] arrOfFile = line.trim().split(",", 8);
                     String imeiV = arrOfFile[4];
                     if (set.add(imeiV) == false) {
@@ -796,7 +797,7 @@ public class HexFileReader {
                             fr.close();
                             break;
                         }
-                    }     // harrd Coed
+                    }
 
                     Statement stmt2 = conn.createStatement();
                     ResultSet result1 = stmt2.executeQuery(" select interp from system_config_list_db where tag = 'DEVICE_TYPE'");
@@ -804,12 +805,11 @@ public class HexFileReader {
                     try {
                         while (result1.next()) {
                             deviceType.add(result1.getString("interp"));
-                                                  }
+                        }
                     } catch (Exception e) {
-                        System.out.println("Error aat device_type " + e);
+                        System.out.println("Error at device_type " + e);
                     }
-                     stmt2.close();
-                    System.out.println("size of deviceType" + deviceType.size());
+                    stmt2.close();
 
                     if (!(deviceType.contains(data[0].trim()))) {
                         errFile.gotoErrorFile(txn_id, "    Error Code :CON_FILE_0006, Error Message:  The field value(Device Type) is not as per the specifications");                                   /////////
@@ -818,34 +818,74 @@ public class HexFileReader {
                         break;
                     }
 
-                    if (!data[1].equalsIgnoreCase("IMEI") && !data[1].equalsIgnoreCase("ESN") && !data[1].equalsIgnoreCase("MEID")) {
+                    // done
+                    Statement stmt3 = conn.createStatement();
+                    ResultSet result3 = stmt3.executeQuery(" select interp from system_config_list_db where tag = 'DEVICE_ID_TYPE' ");
+                    Set<String> deviceType3 = new HashSet<String>();
+                    try {
+                        while (result3.next()) {
+                            deviceType3.add(result3.getString("interp"));
+                        }
+                    } catch (Exception e) {
+                        System.out.println("Error at DEVICE_ID_TYPE " + e);
+                    }
+                    stmt3.close();
 
+//                    if (!data[1].equalsIgnoreCase("IMEI") && !data[1].equalsIgnoreCase("ESN") && !data[1].equalsIgnoreCase("MEID")) {
+                    if (!(deviceType3.contains(data[1].trim()))) {
                         errFile.gotoErrorFile(txn_id, "    Error Code :CON_FILE_0006, Error Message:  The field value(Device ID Type) is not as per the specifications");                                   /////////
                         failed_flag = 0;
                         fr.close();
                         break;
                     }
-                    if (!data[2].equalsIgnoreCase("Y") && !data[2].equalsIgnoreCase("N")) {
 
+                    Statement stmt4 = conn.createStatement();
+                    ResultSet result4 = stmt4.executeQuery(" select interp from system_config_list_db where tag = 'MULTI_SIM_STATUS'");
+                    Set<String> deviceType4 = new HashSet<String>();
+                    try {
+                        while (result4.next()) {
+                            deviceType4.add(result4.getString("interp"));
+                        }
+                    } catch (Exception e) {
+                        System.out.println("Error at MULTI_SIM_STATUS " + e);
+                    }
+                    stmt4.close();
+
+//                       if (!data[2].equalsIgnoreCase("Y") && !data[2].equalsIgnoreCase("N")) {
+                    if (!(deviceType4.contains(data[2].trim()))) {
                         errFile.gotoErrorFile(txn_id, "    Error Code :CON_FILE_0006, Error Message:  The field value(Multiple Sim Status) is not as per the specifications");                                   /////////
                         failed_flag = 0;
                         fr.close();
                         break;
                     }
 
-                    boolean val = validateJavaDate(data[5]);
-                    System.out.println("resss " + val);
+                    Statement stmt5 = conn.createStatement();
+                    ResultSet result5 = stmt5.executeQuery(" select interp from system_config_list_db where tag = 'DEVICE_STATUS'");
+                    Set<String> deviceType5 = new HashSet<String>();
+                    try {
+                        while (result5.next()) {
+                            deviceType5.add(result5.getString(1));
+                        }
+                    } catch (Exception e) {
+                        System.out.println("Error at DEVICE_STATUS " + e);
+                    }
+                    stmt5.close();
 
-                    if (!val) {
-                        errFile.gotoErrorFile(txn_id, "    Error Code :CON_FILE_0006, Error Message:  The field value(Device Launch Date) is not as per the specifications");                                   /////////
+//                         if (!data[6].equalsIgnoreCase("New") && !data[6].equalsIgnoreCase("Used")) {
+                    if (!(deviceType5.contains(data[6].trim()))) {
+                        errFile.gotoErrorFile(txn_id, "    Error Code :CON_FILE_006, Error Message:  The field value(Device Status ) is not as per the specifications");                                   /////////
                         failed_flag = 0;
                         fr.close();
                         break;
                     }
 
-                    if (!data[6].equalsIgnoreCase("New") && !data[6].equalsIgnoreCase("Used")) {
+//                    
 
-                        errFile.gotoErrorFile(txn_id, "    Error Code :CON_FILE_006, Error Message:  The field value(Device Status ) is not as per the specifications");                                   /////////
+                    boolean val = validateJavaDate(data[5]);
+                    System.out.println("resss " + val);
+
+                    if (!val) {
+                        errFile.gotoErrorFile(txn_id, "    Error Code :CON_FILE_0006, Error Message:  The field value(Device Launch Date) is not as per the specifications");                                   /////////
                         failed_flag = 0;
                         fr.close();
                         break;
@@ -989,7 +1029,7 @@ public class HexFileReader {
             } else {
                 CEIRFeatureFileFunctions ceirfunction = new CEIRFeatureFileFunctions();
                 ceirfunction.addFeatureFileConfigDetails(conn, "update", repName, subfeature, txn_id, fileName, "PARAM_NOT_VALID", "");
-                ceirfunction.updateFeatureFileStatus(conn, txn_id, 3, repName, subfeature);
+                ceirfunction.updateFeatureFileStatus(conn, txn_id, 3, repName, subfeature );
                 ceirfunction.updateFeatureManagementStatus(conn, txn_id, 1, management_table);
 
             }

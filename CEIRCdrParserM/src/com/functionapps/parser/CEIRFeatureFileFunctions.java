@@ -125,7 +125,13 @@ public class CEIRFeatureFileFunctions {
     public void updateFeatureFileStatus(Connection conn, String txn_id, int status, String feature, String subfeature) {
         String query = "";
         Statement stmt = null;
-        query = "update web_action_db set state=" + status + " where txn_id='" + txn_id + "' and feature='" + feature + "' and sub_feature='" + subfeature + "'";
+        int earlierState = 0 ; 
+        if (status == 1){
+            earlierState = 0 ;
+        }else{
+             earlierState = 1 ;
+        }
+        query = "update web_action_db set state=" + status + " where txn_id='" + txn_id + "' and feature='" + feature + "' and sub_feature='" + subfeature + "'   and  state = "+earlierState+"";
         logger.info("update web action db [" + query + "]");
         System.out.println("update web action db[" + query + "]");
         try {
@@ -148,7 +154,7 @@ public class CEIRFeatureFileFunctions {
         String query = "";
         Statement stmt = null;
         query = "update " + table_name + " set consignment_status=" + status + " where txn_id='" + txn_id + "'";
-        logger.info("update web action db [" + query + "]");
+        logger.info("update consignmet_mgnt [" + query + "]");
         System.out.println("update  consignment_status db[" + query + "]");
         try {
             stmt = conn.createStatement();

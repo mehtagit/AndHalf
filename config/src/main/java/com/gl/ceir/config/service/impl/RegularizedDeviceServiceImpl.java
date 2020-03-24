@@ -452,6 +452,11 @@ public class RegularizedDeviceServiceImpl {
 			}
 
 			RegularizeDeviceDb regularizeDeviceDb = regularizedDeviceDbRepository.getByFirstImei(imei);
+			
+			EndUserDB endUserDB = endUserDbRepository.getByNid(regularizeDeviceDb.getNid());
+			endUserDB.setRegularizeDeviceDbs(new ArrayList<>(1));
+			regularizeDeviceDb.setEndUserDB(endUserDB);
+			
 			setInterp(regularizeDeviceDb);
 
 			return regularizeDeviceDb;
