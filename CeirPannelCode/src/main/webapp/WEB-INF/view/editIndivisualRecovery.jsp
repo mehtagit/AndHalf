@@ -147,8 +147,11 @@
                                                         <div class="col-s12 m12">
                                                              <div class="input-field col s12 m6">
                                                                 <input type="text" name="sigleRecoverydeviceBrandName" id="sigleRecoverydeviceBrandName" placeholder="" 
-                                                                pattern="[a-zA-Z]{0,20}" 
-                                                                 title="Please enter alphabets and numbers upto 20 characters only" maxlength="20">
+                                                                pattern="[a-zA-Z]{0,30}" 
+                                                                 title="" 
+                                                                 oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');" 
+                                                                 oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
+                                                                  maxlength="30">
                                                                 <label for="sigleRecoverydeviceBrandName"><spring:message code="registration.devicebrandname" /></label>
                                                             </div>
 																<input type="text" id="pageViewType" value="${viewType}" style="display: none;">
@@ -161,28 +164,40 @@
 
                                                             <div class="col s6 m6 ">
                                                                 <label for="sigleRecoverydeviceIDType"><spring:message code="select.deviceIDType" /> <span class="star">*</span></label>
-                                                                <select id="sigleRecoverydeviceIDType" class="browser-default" required="required">
+                                                                <select id="sigleRecoverydeviceIDType" class="browser-default" 
+                                                                 oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" 
+                                                                oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+                                                                required="required">
                                                                   <option value="" disabled selected><spring:message code="select.deviceIDType" /></option>
                                                                 </select>
                                                               </div>
 
                                                               <div class="col s6 m6 ">
                                                                 <label for="sigleRecoverydeviceType"> <spring:message code="select.deviceType" /></label>
-                                                                <select class="browser-default" id="sigleRecoverydeviceType">
+                                                                <select class="browser-default"
+                                                                 oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" 
+                                                                 oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+                                                                 id="sigleRecoverydeviceType">
                                                                     <option value="" disabled selected><spring:message code="select.deviceType" /></option>
                                                                 </select>
                                                               </div> 
                                                               
                                                               <div class="col s6 m6 ">
                                                                 <label for="sigleRecoverydeviceSimStatus"><spring:message code="select.multiSimStatus" /> </label>
-                                                                <select id="sigleRecoverydeviceSimStatus" class="browser-default">
+                                                                <select id="sigleRecoverydeviceSimStatus" 
+                                                                 oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" 
+                                                                 oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+                                                                 class="browser-default">
                                                                   <option value="" disabled selected><spring:message code="select.multiSimStatus" /></option>
                                                                 </select>
                                                               </div>
 
                                                               <div class="input-field col s12 m6">
-                                                                <input type="text" name="sigleRecoveryserialNumber" id="sigleRecoveryserialNumber" placeholder="" pattern="[a-zA-Z0-9]{0,20}" 
-                                                                 title="Please enter alphabets and numbers upto 20 characters only" maxlength="20">
+                                                                <input type="text" name="sigleRecoveryserialNumber" id="sigleRecoveryserialNumber" placeholder="" pattern="[a-zA-Z0-9]{0,15}" 
+                                                                 title=""
+                                                                             oninput="InvalidMsg(this,'input','<spring:message code="validation.15serialNo" />');" 
+                                                          oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15serialNo" />');"
+                                                                  maxlength="15">
                                                                 <label for="sigleRecoveryserialNumber"><spring:message code="input.deviceSerialNumber" /></label>
                                                             </div>
                                                             
@@ -231,75 +246,101 @@
                                                             </div> -->
                                                             <div class="input-field col s12 m12">
                                                                 <input type="text" name="sigleRecoveryaddress" id="sigleRecoveryaddress" class="form-control boxBorder boxHeight" placeholder=""
-                                                                     pattern="[^[a-zA-Z0-9\s,'-]*$]{0,200}" title="Please enter alphabets and numbers upto 200 characters only" 
+                                                                     pattern="[^[a-zA-Z0-9\s,'-]*$]{0,200}" title="" 
+                                                                      oninput="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');" 
+                                                       oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');"
                                                                      maxlength="200" required="required">
                                                                 <label for="sigleRecoveryaddress"><spring:message code="input.address" /> <span class="star">*</span></label>
                                                             </div>
                             
                                                             <div class="input-field col s12 m6 l6">
                                                                 <input type="text" name="sigleRecoverystreetNumber" class="form-control boxBorder boxHeight" placeholder=""
-                                                                    id="sigleRecoverystreetNumber"  maxlength="30" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}" required="required"
-                                                                    title="Please enter alphabets and numbers upto 30 characters only">
+                                                                    id="sigleRecoverystreetNumber"  maxlength="20" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,20}" required="required"
+                                                                    title=""
+                                                                     oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');" 
+                                                                oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');">
                                                                 <label for="sigleRecoverystreetNumber"><spring:message code="input.streetNumber" /> <span class="star">*</span></label>
                                                             </div>
         
                                                             <div class="input-field col s12 m6 l6">
                                                                 <input type="text" name="sigleRecoveryvillage" id="sigleRecoveryvillage" placeholder="" maxlength="30" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}" required="required"
-                                                                    title="Please enter alphabets and numbers upto 30 characters only">
+                                                                    title=""
+                                                                    oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
+                                                                   oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
+                                                                    >
                                                                 <label for="sigleRecoveryvillage"><spring:message code="input.village" /> <span class="star">*</span></label>
                                                             </div>
                             
                                                             <div class="input-field col s12 m6 l6">
                                                                 <input type="text" name="sigleRecoverylocality" class="form-control boxBorder boxHeight" placeholder=""
                                                                     id="sigleRecoverylocality" maxlength="30" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}" required="required"
-                                                                    title="Please enter alphabets and numbers upto 30 characters only">
+                                                                    title=""
+                                                                    oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
+                                                                   oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');">
                                                                 <label for="sigleRecoverylocality"><spring:message code="input.locality" /> <span class="star">*</span></label>
                                                             </div>
                                 
                                                             <div class="input-field col s12 m6 l6">
                                                                 <input type="text" name="sigleRecoverydistrict" id="sigleRecoverydistrict" placeholder="" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}" required="required"
-                                                                    title="Please enter alphabets and numbers upto 30 characters only">
+                                                                    title="" required="required"
+                                                                    oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
+                                                                   oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');">
                                                                 <label for="sigleRecoverydistrict"><spring:message code="input.district" /> <span class="star">*</span></label>
                                                             </div>
                                 
                                                             <div class="input-field col s12 m6 l6">
                                                                 <input type="text" name="sigleRecoverycommune" id="sigleRecoverycommune" placeholder="" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}" required="required"
-                                                                    title="Please enter alphabets and numbers upto 30 characters only">
+                                                                    title="" required="required"
+                                                                    oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
+                                                                   oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');">
                                                                 <label for="sigleRecoverycommune"><spring:message code="input.commune" /> <span class="star">*</span></label>
                                                             </div>
                                 
                                                             <div class="input-field col s12 m6 l6">
                                                                 <input type="text" name="sigleRecoverypin" class="form-control boxBorder boxHeight" placeholder=""
                                                                     id="sigleRecoverypin" maxlength="20" pattern="[0-9]{0,20}" required="required"
-                                                                    title="Please enter  numbers upto 20 characters only">
+                                                                    title="" oninput="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');" 
+                                                                    oninvalid="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');">
                                                                 <label for="sigleRecoverypin"><spring:message code="input.postalCode" /> <span class="star">*</span></label>
                                                             </div>
                             
                                                             <div class="col s12 m6 l6">
                                                                 <label><spring:message code="table.country" /> <span class="star">*</span></label>
-                                                                <select id="country1" class="browser-default" class="mySelect"
+                                                                <select id="country1" class="browser-default" class="mySelect" 
+                                                                oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" 
+                                                                oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
                                                                     style="padding-left: 0;" required></select>
                                                             </div>
                             
                                                             <div class="col s12 m6 l6">
                                                                 <label> <spring:message code="input.province" /><span class="star">*</span></label>
-                                                                <select id="state1" class="browser-default" class="mySelect" style="padding-left: 0;"
+                                                                <select id="state1"
+                                                                oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" 
+                                                                oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+                                                                 class="browser-default" class="mySelect" style="padding-left: 0;"
                                                                     required></select>
                                                             </div>
 
                                                             <div class="col s6 m6 ">
                                                                 <label for="sigleRecoverydeviceStatus"><spring:message code="select.deviceStatus" /> <span class="star">*</span></label>
-                                                                <select id="sigleRecoverydeviceStatus" class="browser-default">
+                                                                <select id="sigleRecoverydeviceStatus"  required="required"
+                                                                oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" 
+                                                                oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+                                                                 class="browser-default">
                                                                   <option value="" disabled selected><spring:message code="select.deviceStatus" /></option>
                                                                 </select>
                                                               </div>
 
                                                             <div class="input-field col s12 m6">
-                                                                <textarea id="sigleRecovery" placeholder="" maxlength="20000" class="materialize-textarea"></textarea>
+                                                                <textarea id="sigleRecovery" placeholder="" 
+                                                                oninput="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');" 
+                                                                oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
+                                                         	maxlength="10000"
+                                                                 class="materialize-textarea"></textarea>
                                                                 <label for="sigleRecovery"><spring:message code="input.remarks" /> </label>
                                                             </div>
                                                             
-                                                            <div class="col s12 m6">
+                                                           <%--  <div class="col s12 m6">
 <p style="margin-top: 3px; margin-bottom: 5px"><spring:message code="operator.blocking" /></p>
 <label style="margin-right: 2%;"> <input type="radio" class="blocktypeRadio" id=""
 value="Immediate"
@@ -338,7 +379,7 @@ class="glyphicon glyphicon-calendar"
 onclick="_Services._selectstartDate()"></i></span>
 </div>
 </div>
-</div>
+</div> --%>
                                                              <div class="input-field col s12 m6">
 											<input type="text" name="deviceRecoveryDevice" placeholder=""
 												id='bulkRecoveryDate' class='form-control datepick'
@@ -359,7 +400,7 @@ onclick="_Services._selectstartDate()"></i></span>
 
                                                     <div class="input-field col s12 center">
                                                         <button class="btn" type="submit"><spring:message code="button.submit" /></button>
-                                                        <a href="./stolenRecovery" class="btn modal-trigger"
+                                                        <a href="./stolenRecovery?FeatureId=5" class="btn modal-trigger"
                                                             style="margin-left: 10px;"><spring:message code="modal.cancel" /></a>
                                                     </div>
                                                 </form>
@@ -463,7 +504,7 @@ onclick="_Services._selectstartDate()"></i></span>
 
                                                     <div class="input-field col s12 center">
                                                         <button class="btn" type="submit"><spring:message code="button.submit" /></button>
-                                                        <a href="./stolenRecovery" class="btn modal-trigger"
+                                                        <a href="./stolenRecovery?FeatureId=5" class="btn modal-trigger"
                                                             style="margin-left: 10px;"><spring:message code="modal.cancel" /></a>
                                                     </div>
                                                 </form>
@@ -560,7 +601,38 @@ src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/j
 		<script type="text/javascript"
 		src="${context}/resources/project_js/editIndivisualRecovery.js"></script>
 		
+		<script type="text/javascript"
+		src="${context}/resources/project_js/validationMsg.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/project_js/dragableModal.js"></script>
+		
 		<script>
+		
+		$.i18n().load( {
+			'en': './resources/i18n/en.json',
+			'km': './resources/i18n/km.json'
+		}).done( function() { 
+			recoveryIndivisual=$.i18n('recoveryIndivisual');
+			editrecoveryIndivisual=$.i18n('editrecoveryIndivisual');
+			viewPageType();
+		});
+		
+		   function viewPageType() {
+	            if($('#pageViewType').val()=='view')
+	            	{
+	            	$('#headingType').text('');
+	            	$('#headingType').text(recoveryIndivisual);
+	            	  $("#singleRecoveryDiv").find("input,select,textarea,button").prop("disabled",true);
+	            	}
+	            else{
+	            	$('#headingType').text('');
+	            	$('#headingType').text(editrecoveryIndivisual);
+	            	  $("#singleRecoveryDiv").find("input,select,textarea,button").prop("disabled",false);
+	            }
+	          
+	      }
+		
+		
 		$('.datepick').datepicker({
 			dateFormat : "yy-mm-dd"
 		});
@@ -587,20 +659,7 @@ src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/j
             "bulkRecoverystate"
         );
         
-        window.onload = function () {
-            if($('#pageViewType').val()=='view')
-            	{
-            	$('#headingType').text('');
-            	$('#headingType').text('View Report Recovery');
-            	  $("#singleRecoveryDiv").find("input,select,textarea,button").prop("disabled",true);
-            	}
-            else{
-            	$('#headingType').text('');
-            	$('#headingType').text(' Update Report Recovery');
-            	  $("#singleRecoveryDiv").find("input,select,textarea,button").prop("disabled",false);
-            }
-          
-      }
+      
 </script>
 		
 

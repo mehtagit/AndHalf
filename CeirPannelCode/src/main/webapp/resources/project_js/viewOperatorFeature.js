@@ -28,7 +28,7 @@ $(document).ready(function(){
 });
 
 
-if(window.location.search == "?type=greyList"){
+if(window.location.search == "?type=greyList?FeatureId=9"){
 	window.serviceDump = 0
 }else{
 	window.serviceDump = 1
@@ -134,12 +134,16 @@ function pageRendering(URL){
 									+"</label>"+
 									"<span	class='input-group-addon' style='color: #ff4081'>"+
 									"<i	class='fa fa-calendar' aria-hidden='true' style='float: right; margin-top: -37px;'>"+"</i>"+"</span>");
-		}
+				$( "#"+date[i].id ).datepicker({
+					dateFormat: "yy-mm-dd",
+					 maxDate: new Date()
+		        });
+				}
 				else if(date[i].type === "select"){
 					$("#operatorTableDiv").append("<div class='input-field col s6 m2' ><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
 					
 				}
-				
+				 
 			} 
 
 			// dynamic dropdown portion
@@ -167,10 +171,7 @@ function pageRendering(URL){
 				$('#'+button[i].id).attr("onclick", button[i].buttonURL);
 			
 			}
-			
-			$('.datepicker').datepicker({
-				dateFormat: "yy-mm-dd"
-				});
+		
 			
 			//File Type-----------dropdown
 			$.getJSON('./getDropdownList/FILE_TYPE', function(data) {

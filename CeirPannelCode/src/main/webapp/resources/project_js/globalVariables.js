@@ -1,14 +1,5 @@
 
 /*$.getScript('../resources/project_js/CLDRPluralRuleParser.js');
-	$.getScript('../resources/i18n_library/i18n.js');
-	$.getScript('../resources/i18n_library/messagestore.js');
-	$.getScript('../resources/i18n_library/fallbacks.js');
-	$.getScript('../resources/i18n_library/language.js');
-	$.getScript('../resources/i18n_library/parser.js');
-	$.getScript('../resources/i18n_library/emitter.js');
-	$.getScript('../resources/i18n_library/bidi.js');
-	$.getScript('../resources/i18n_library/history.js');
-	$.getScript('../resources/i18n_library/min.js');
 	*/
 
 
@@ -80,7 +71,6 @@ $("input[type=file]").keypress(function(ev) {
 	
 	
 	
-	
 	function isFileValid(id,hiddenVal,editInputID) {
 
 			var uploadedFileName = $("#"+id).val();
@@ -129,13 +119,18 @@ $("input[type=file]").keypress(function(ev) {
 		fileSize = Math.floor(fileSize/1000) + 'KB';
 
 		//alert(uploadedFileName+"----------"+ext+"----"+fileSize)
-
+		var areEqual =ext.toLowerCase()=='png';
+		//alert(areEqual);
+		if(areEqual==true)
+			{
+			ext='PNG';
+			}
 		if (uploadedFileName.length > 30) {
 			$('#fileFormateModal').openModal();
 			$('#fileErrormessage').text('');
 			$('#fileErrormessage').text($.i18n('imageMessage'));
 		} 
-		else if(ext !='png')
+		else if(ext !='PNG')
 		{
 			$('#fileFormateModal').openModal({
 				dismissible:false
@@ -157,3 +152,20 @@ $("input[type=file]").keypress(function(ev) {
 	}
 	
 	
+
+
+	function previewFile(srcFilePath,srcFileName,txnId){
+		window.filePath = srcFilePath;
+		window.fileName = srcFileName;
+		window.fileExtension = fileName.replace(/^.*\./, '');
+		window.FinalLink = filePath.concat(txnId).concat('/'+fileName);
+		console.log(FinalLink);
+		if(filePath == null || filePath == "" || filePath == undefined && fileName == null || fileName == "" || fileName == undefined ){
+			console.log("File is not Avialable")
+		}else if(fileExtension=="jpg" || fileExtension=="jpeg" || fileExtension=="png" || fileExtension=="gif" || fileExtension=="PNG" ){
+			$("#fileSource").attr("src",FinalLink);
+			$("#viewuplodedModel").openModal();
+		}else{
+			window.open(FinalLink);
+		}
+	}

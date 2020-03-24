@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Feignclient.UserProfileFeignImpl;
+import org.gl.ceir.CeirPannelCode.Model.AddMoreFileModel;
 import org.gl.ceir.CeirPannelCode.Model.AssigneRequestType;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentModel;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentUpdateRequest;
@@ -63,7 +64,8 @@ public class Stock {
 	UtilDownload utildownload;
 	
 	UserProfileFeignImpl userProfileFeignImpl;
-	
+	@Autowired
+	AddMoreFileModel addMoreFileModel,urlToUpload,urlToMove;
 	
 	
 	@RequestMapping(value={"/assignDistributor"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST})
@@ -95,6 +97,8 @@ mv.setViewName("ViewStock");
 }
 else {
 	
+	log.info("selectedUserTypeId=="+selectedUserTypeId);
+	log.info("selectedRoleTypeId=="+selectedRoleTypeId);
 	session.setAttribute("selectedUserTypeId", selectedUserTypeId);
 	session.setAttribute("selectedRoleTypeId", selectedRoleTypeId);
 	mv.setViewName("ViewStock");
@@ -150,7 +154,8 @@ else {
 		//String selectedUserTypeId=session.getAttribute("selectedUserTypeId").toString();
 		
 		log.info("upload stock  entry point.");
-
+		addMoreFileModel.setTag("system_upload_filepath");
+		urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
 		String txnNumner=utildownload.getTxnId();
 		txnNumner = "S"+txnNumner;
 		log.info("Random  genrated transaction number ="+txnNumner);
@@ -158,7 +163,7 @@ else {
 		StockUploadModel stockUpload= new StockUploadModel();
 		try {
 			byte[] bytes = file.getBytes();
-			String rootPath = filePathforUploadFile+txnNumner+"/";
+			String rootPath = urlToUpload.getValue()+txnNumner+"/";
 			File dir = new File(rootPath + File.separator);
 
 			if (!dir.exists()) 
@@ -272,7 +277,13 @@ else {
 	@RequestParam(name="file",required = false) MultipartFile file,HttpSession session,@RequestParam(name="txnId",required = false) String txnId,@RequestParam(name="filename",required = false) String filename) {
 	log.info("entry point in update Stock * *.");
 	StockUploadModel stockUpload= new StockUploadModel();
+	addMoreFileModel.setTag("system_upload_filepath");
+	urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
 
+	addMoreFileModel.setTag("uploaded_file_move_path");
+	urlToMove=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
+	
+	
 	String roleType=String.valueOf(session.getAttribute("usertype"));
 	String userName=session.getAttribute("username").toString();
 	int userId=(int) session.getAttribute("userid"); 
@@ -295,15 +306,15 @@ else {
 	
 	try {
 		log.info("file is not blank");
-	String rootPath = filePathforUploadFile+txnId+"/";
+	String rootPath = urlToUpload.getValue()+txnId+"/";
 	File tmpDir = new File(rootPath+file.getOriginalFilename());
 	boolean exists = tmpDir.exists();
 	if(exists) {
 	Path temp = Files.move 
-	(Paths.get(filePathforUploadFile+"/"+txnId+"/"+file.getOriginalFilename()), 
-	Paths.get(filePathforMoveFile+file.getOriginalFilename())); 
+	(Paths.get(urlToUpload.getValue()+"/"+txnId+"/"+file.getOriginalFilename()), 
+	Paths.get(urlToMove.getValue()+file.getOriginalFilename())); 
 
-	String movedPath=filePathforMoveFile+file.getOriginalFilename();
+	String movedPath=urlToMove.getValue()+file.getOriginalFilename();
 	// tmpDir.renameTo(new File("/home/ubuntu/apache-tomcat-9.0.4/webapps/MovedFile/"+txnId+"/"));
 	log.info("file is already exist moved to the this "+movedPath+" path");
 	tmpDir.delete();
@@ -488,6 +499,9 @@ else {
 			FilterRequest filterRequest = new FilterRequest();
 			StockUploadModel stockUploadModelResponse;
 			filterRequest.setTxnId(txnId);
+			filterRequest.setFeatureId(4);
+			filterRequest.setUserType("End User");
+			filterRequest.setUserId(17);
 			log.info("response from fetch stock api="+filterRequest);
 			filterRequest.setUserType("End User");
 				stockUploadModelResponse=feignCleintImplementation.fetchUploadedStockByTxnId(filterRequest);

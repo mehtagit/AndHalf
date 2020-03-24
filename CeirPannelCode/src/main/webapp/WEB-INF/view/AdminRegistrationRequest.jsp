@@ -216,8 +216,9 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
                                                 <label for="Category"> <spring:message code="select.changeUserStatus" /> <span class="star"> *</span></label>
                                             </div>
                                             <div class="col s6 m7 selectDropdwn">
-                                                <select class="browser-default" id = "userStatus" 
-	title="<spring:message code="validation.selectFieldMsg" />" required>
+                                                <select class="browser-default" id = "userStatus"
+                                     onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" 
+                                     oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" required>
                                                     <option value="" disabled selected><spring:message code="select.selectUserStatus" /></option>
                                            	</select>
                                             </div>
@@ -228,7 +229,7 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
                                             <div class="input-field col s12 center" style="padding: 20px 0;">
                                                 <!-- <a href="#submitIMEI" class="btn modal-trigger">Submit</a>  -->
                                                  <button class=" btn" type="submit"><spring:message code="button.submit" /></button>
-                                                <a href="./registrationRequest" class="btn" style="margin-left: 10px;"><spring:message code="button.cancel" /></a>
+                                               	<button type="button" class="btn modal-close" style="margin-left: 10px;" title=" "><spring:message code="button.cancel" /></button>
                                             </div>
 
                                         </div>

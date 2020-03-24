@@ -111,19 +111,20 @@ $.ajax({
 				"columns": result,
 				fixedColumns: true,
 				columnDefs: [
-		            { width: 142, targets: result.length - 1 },
-		            { width: 143, targets: 0 },
-		            { width: 105, targets: 2 }
+		            { width: 158, targets: result.length - 1 },
+		            { width: 121, targets: 0 }
+		          
 			]
 			});
 			
+			$('div#initialloader').delay(300).fadeOut('slow');
 			$('#ImporterAdmintypeAprroveTable input').unbind();
-		    $('#ImporterAdmintypeAprroveTable input').bind('keyup', function (e) {
-		        if (e.keyCode == 13) {
-		            table.search(this.value).draw();
-		        }
-		    });
-		    $('div#initialloader').delay(300).fadeOut('slow');
+			$('#ImporterAdmintypeAprroveTable input').bind('keyup', function (e) {
+				if (e.keyCode == 13) {
+					table.search(this.value).draw();
+				}
+
+			});
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
 			console.log("error in ajax");
@@ -158,10 +159,14 @@ function pageRendering(){
 							+"</label>"+
 							"<span	class='input-group-addon' style='color: #ff4081'>"+
 							"<i	class='fa fa-calendar' aria-hidden='true' style='float: right; margin-top: -37px;'>"+"</i>"+"</span>");
-	
+					$( "#"+date[i].id ).datepicker({
+						dateFormat: "yy-mm-dd",
+						 maxDate: new Date()
+			        }); 
 				}else if(date[i].type === "text"){
 					$("#typeAprroveTableDiv").append("<div class='input-field col s6 m2' ><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
 				}
+				
 			} 
 			
 			
@@ -197,12 +202,7 @@ function pageRendering(){
 				}
 			}
 	
-			
-			
-			$('.datepicker').datepicker({
-				dateFormat: "yy-mm-dd"
-			});
-
+		
 			$.getJSON('./getDropdownList/'+featureId+'/'+$("body").attr("data-userTypeID"), function(data) {
 
 				for (i = 0; i < data.length; i++) {
@@ -262,8 +262,10 @@ function exportTacData()
 
 
 
-function ImporterviewByID(id,actionType,projectPath){
-	
+function ImporterviewByID(id,actionType,projectPath,modalID){
+	$('#'+modalID).openModal({
+ 	   dismissible:false
+    });
 	window.projectPath = projectPath;
 	
 	
@@ -277,18 +279,13 @@ function ImporterviewByID(id,actionType,projectPath){
 			if(actionType=='view')
 				{
 				//$("#viewImporterModal").openModal();
-				$('#viewImporterModal').openModal({
-			    	   dismissible:false
-			       });
+			
 				setImporterViewPopupData(data,projectPath);
 			
 				}
 			else if(actionType=='edit')
 				{
-				//$("#importereditModal").openModal();
-				$('#importereditModal').openModal({
-			    	   dismissible:false
-			       });
+				
 				setImporterEditPopupData(data)
 				
 				}
@@ -309,8 +306,8 @@ function setImporterViewPopupData(data,projectPath){
 	$("#viewmodelName").val(data.productNameInterp);
 	$("#viewModelnumber").val(data.modelNumberInterp);
 	$("#viewManufacturercountry").val(data.manufacturerCountry);
-	$('#viewrequestDate').val(data.requestDate)
-	$('#viewFrequency').val(data.frequencyRange)
+	$('#viewrequestDate').val(data.requestDate);
+	$('#viewFrequency').val(data.frequencyRange);
 	$("#viewImportertac").val(data.tac);
 	
 	var result= data;
@@ -511,7 +508,7 @@ function updateImporterTypeDevice()
 						    	   dismissible:false
 						       });
 							$('#updateTacMessage').text('');
-							$('#updateTacMessage').text(data.message);
+							$('#updateTacMessage').text($.i18n('TYPE_APPROVE_UPDATE_SUCCESS'));
 						}
 					 
 			},
@@ -729,7 +726,7 @@ function confirmantiondelete(){
 	var tacRemark= $("#deleteTacRemark").val();
 	var id =  $("#deleteTacId").val();
 	
-	console.log("userType=="+userType+" ==remarks=="+tacRemark+"===id===" +id);
+	console.log("userType=="+userType+" ==id=="+id+"===userId===" +userId);
 	
 	/*var obj ={
 			"txnId" : txnId,
@@ -738,7 +735,7 @@ function confirmantiondelete(){
 	}*/
 
 	$.ajax({
-		url : './importerTacDelete?id='+id,
+		url : "./importerTacDelete?id="+id+"&userType="+userType+"&userId="+userId,
 		//data : JSON.stringify(obj),
 		dataType : 'json',
 		contentType : 'application/json; charset=utf-8',

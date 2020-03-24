@@ -47,6 +47,9 @@
 <link
 	href="${context}/resources/font/font-awesome/css/font-awesome.min.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+
 <script>
 var contextpath = "${context}";
 <%
@@ -55,8 +58,6 @@ String name = (String) session.getAttribute("name");
 %>
 
 </script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
 
 </head>
 <style>
@@ -136,7 +137,7 @@ data-roleType="${usertype}" data-userTypeID="${usertypeId}"
 								</div>
 							</div>
 						</li>
-						<li><a   data-target="goToHome" class="modal-trigger"
+						<li><a href="javascript:void(0)"  onclick="openHome();"
 							 style="color: white; cursor: pointer;"><spring:message
 									code="registration.home" /></a></li>
 						<li class="profileInfo"><a
@@ -150,18 +151,18 @@ data-roleType="${usertype}" data-userTypeID="${usertypeId}"
 										style="float: left" class="dropdownColor"><spring:message
 												code="registration.editinfo" /></span></a></li>
 								<li class="divider"></li>
-								<li><a data-target="changePassword"class="modal-trigger""><i
+								<li><a  href="javascript:void(0)" onclick="changePasswordPopup()"><i
 										class="fa fa-key dropdownColor" style="float: left"></i><span
 										style="float: left" class="dropdownColor"><spring:message
 												code="registration.changepassword" /></span></a></li>
 								<li class="divider"></li>
-								<li><a href="#manageAccount" class="modal-trigger"><i
+								<li><a onclick="manageAccountPopup();" href="javascript:void(0)"><i
 										class="mdi-action-settings dropdownColor"></i> <span
 										class="dropdownColor"> <spring:message
 												code="registration.activate/deactivateaccount" /></span></a></li>
 								<li class="divider"></li>
 
-								<li><a data-target="goToLogout" style="cursor: pointer;" class="modal-trigger" id=""><i
+								<li><a href="javascript:void(0)" onclick="openLogout()" style="cursor: pointer;"  id=""><i
 										style="float: left;"
 										class="mdi-hardware-keyboard-tab dropdownColor"></i> <span
 										class="dropdownColor"> <spring:message
@@ -289,8 +290,8 @@ data-roleType="${usertype}" data-userTypeID="${usertypeId}"
 					<p>
 						<label style="margin-right: 50px"> <input type="radio"
 							name="status" value="Deactivate" 
-							oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');"
-							title= "<spring:message code="validation.Options" />" required  / > <span>
+							oninput="InvalidMsg(this,'fileType','<spring:message code="validation.Options" />');" oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.Options" />');"
+							required > <span>
 								<spring:message code="registration.deactivate" />
 						</span></label>
 						<spring:message code="registration.permanentlydeleteportal" />
@@ -308,8 +309,8 @@ data-roleType="${usertype}" data-userTypeID="${usertypeId}"
 					<p>
 						<label style="margin-right: 67px"> <input type="radio"
 							value="Disable" name="status" 
-							oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');"
-							title= "<spring:message code="validation.Options" />" required  / > <span>
+							oninput="InvalidMsg(this,'fileType','<spring:message code="validation.Options" />');" oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.Options" />');"
+							title= "" required  / > <span>
 								<spring:message code="registration.disable" />
 						</span></label>
 						<spring:message code="registration.alltheactionwillbe" />
@@ -349,9 +350,6 @@ data-roleType="${usertype}" data-userTypeID="${usertypeId}"
 	<!-- Modal 4 start   -->
 
 	<div id="manageAccountSubmit" class="modal">
-		<button type="button"
-			class=" modal-action modal-close waves-effect waves-green btn-flat right"
-			data-dismiss="modal">&times;</button>
 		<h6 class="modal-header">
 			<spring:message code="registration.manageaccount" />
 		</h6>
@@ -376,10 +374,8 @@ data-roleType="${usertype}" data-userTypeID="${usertypeId}"
 			<spring:message code="registration.changepassword" />
 		</h6>
 		<div class="modal-content">
-			<form onsubmit="return changePassword()">
+			<form id="changePassForm" onsubmit="return changePassword()">
 				<div class="row">
-
-
 					<span style="text-align: center; color: red;" id="errorMsg"></span>
 					<div class="col s1">
 						<i class="fa fa-lock" aria-hidden="true"
@@ -391,7 +387,7 @@ data-roleType="${usertype}" data-userTypeID="${usertypeId}"
 							pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,10}$"
 							maxlength="10" min="8"
 oninput="InvalidMsg(this,'input','<spring:message code="validation.password" />');"
- oninvalid="InvalidMsg(this,'input','<spring:message code="validation.password" />');"	title= "<spring:message code="validation.minumum8length" />" required  />	
+ oninvalid="InvalidMsg(this,'input','<spring:message code="validation.password" />');"	 required  />	
 							
 							 <label for="oldPassword"
 							class="center-align" style="color: #000; font-size: 12px;">
@@ -418,7 +414,7 @@ oninput="InvalidMsg(this,'input','<spring:message code="validation.password" />'
 							maxlength="10" min="8" 
 oninput="InvalidMsg(this,'input','<spring:message code="validation.password" />');" 
 oninvalid="InvalidMsg(this,'input','<spring:message code="validation.password" />');"		
-					title= "<spring:message code="validation.minumum8length" />" required  id="password" class="password2" />
+			 required  id="password" class="password2" />
 							<div class="input-field-addon">
 							<i class="fa fa-eye-slash teal-text toggle-password2"
 								aria-hidden="true"></i>
@@ -560,8 +556,8 @@ data-dismiss="modal">&times;</button> -->
 			</div>
 			<div class="input-field col s12 center">
 				<div class="input-field col s12 center">
-					<a href="JavaScript:Void(0);" class="btn" type="submit" name="add_user"
-						id="home_Link"><spring:message code="modal.yes" /></a> <a href="#"
+					<a href="${context}/homePage" class="btn" type="submit" name="add_user"
+						id="home_Links"><spring:message code="modal.yes" /></a> <a href="#"
 						class="modal-close btn" style="margin-left: 10px;"><spring:message
 							code="modal.no" /></a>
 				</div>

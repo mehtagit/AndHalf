@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
+import org.gl.ceir.CeirPannelCode.Model.AddMoreFileModel;
 import org.gl.ceir.CeirPannelCode.Model.FileExportResponse;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest_UserPaidStatus;
@@ -27,6 +28,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -53,6 +55,10 @@ public class StolenRecovery {
 	FeignCleintImplementation feignCleintImplementation;
 	@Autowired
 	UtilDownload utildownload;
+	
+	@Autowired
+	AddMoreFileModel addMoreFileModel,urlToUpload,urlToMove;
+	
 	
 	
 	
@@ -130,10 +136,13 @@ public class StolenRecovery {
 		    GenricResponse response= new GenricResponse();
 			String stlnTxnNumber=utildownload.getTxnId();
 			stlnTxnNumber = "L"+stlnTxnNumber;
+			addMoreFileModel.setTag("system_upload_filepath");
+			urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
+			
 			log.info("Random transaction id number="+stlnTxnNumber);
 		  	try {
 				byte[] bytes = file.getBytes();
-				String rootPath = filePathforUploadFile+stlnTxnNumber+"/";
+				String rootPath = urlToUpload.getValue()+stlnTxnNumber+"/";
 				File dir = new File(rootPath + File.separator);
 
 				if (!dir.exists()) 
@@ -184,10 +193,13 @@ public class StolenRecovery {
 		  GenricResponse response= new GenricResponse();
 			String stlnTxnNumber=utildownload.getTxnId();
 			stlnTxnNumber = "L"+stlnTxnNumber;
+			addMoreFileModel.setTag("system_upload_filepath");
+			urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
+			
 			log.info("Random transaction id number="+stlnTxnNumber);
 		  	try {
 				byte[] bytes = file.getBytes();
-				String rootPath = filePathforUploadFile+stlnTxnNumber+"/";
+				String rootPath = urlToUpload.getValue()+stlnTxnNumber+"/";
 				File dir = new File(rootPath + File.separator);
 
 				if (!dir.exists()) 
@@ -254,6 +266,13 @@ public class StolenRecovery {
 {	
 				  StolenRecoveryModel stolenRecoveryModel= new StolenRecoveryModel();
 				  GenricResponse response = new GenricResponse();
+				  addMoreFileModel.setTag("system_upload_filepath");
+					urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
+					
+					addMoreFileModel.setTag("uploaded_file_move_path");
+					urlToMove=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
+					
+					
 				  log.info(" update file stolen/recovery entry point .");
 				  log.info("Random transaction id number="+txnId);
 				  	try {
@@ -262,17 +281,17 @@ public class StolenRecovery {
 				  		}{			
 				  			
 				  			log.info("file is not null");
-				  		String rootPath = filePathforUploadFile+txnId+"/";
+				  		String rootPath = urlToUpload.getValue()+txnId+"/";
 				  		File tmpDir = new File(rootPath+file.getOriginalFilename());
 				  		boolean exists = tmpDir.exists();
 
 				  		if(exists) {
 				  			log.info("file already exist");
 				  		Path temp = Files.move 
-				  		(Paths.get(filePathforUploadFile+txnId+"/"+file.getOriginalFilename()), 
-				  		Paths.get(filePathforMoveFile+file.getOriginalFilename())); 
+				  		(Paths.get(urlToUpload.getValue()+txnId+"/"+file.getOriginalFilename()), 
+				  		Paths.get(urlToMove.getValue()+file.getOriginalFilename())); 
 
-				  		String movedPath=filePathforMoveFile+file.getOriginalFilename();
+				  		String movedPath=urlToMove.getValue()+file.getOriginalFilename();
 				  		// tmpDir.renameTo(new File("/home/ubuntu/apache-tomcat-9.0.4/webapps/MovedFile/"+txnId+"/"));
 				  		log.info("file is already exist moved to the this "+movedPath+" path");
 				  		tmpDir.delete();
@@ -320,36 +339,22 @@ public class StolenRecovery {
 			  }
 			  
 			//***************************************** Export Grievance controller *********************************
-				@RequestMapping(value="/exportStolenRecovery",method ={org.springframework.web.bind.annotation.RequestMethod.GET})
-				public String exportToExcel(@RequestParam(name="stolenRecoveryStartDate",required = false) String stolenRecoveryStartDate,@RequestParam(name="stolenRecoveryEndDate",required = false) String stolenRecoveryEndDate,
-						@RequestParam(name="stolenRecoveryTxnId",required = false) String stolenRecoveryTxnId,@RequestParam(name="stolenRecoveryFileStatus") Integer stolenRecoveryFileStatus,HttpServletRequest request,
-						HttpSession session,@RequestParam(name="pageSize") Integer pageSize,@RequestParam(name="pageNo") Integer pageNo,@RequestParam(name="roleType") String roleType,@RequestParam(name="stolenRecoverySourceStatus") Integer stolenRecoverySourceStatus
-						,@RequestParam(name="stolenRecoveryRequestType") Integer stolenRecoveryRequestType,@RequestParam(name="featureId") Integer featureId)
+				@PostMapping("exportStolenRecovery")
+				@ResponseBody
+				public FileExportResponse exportToExcel(@RequestBody FilterRequest filterRequest,HttpSession session)
 				{
-					log.info("stolenRecoveryStartDate=="+stolenRecoveryStartDate+ " stolenRecoveryEndDate ="+stolenRecoveryEndDate+" stolenRecoveryTxnId="+stolenRecoveryTxnId+"stolenRecoveryFileStatus="+stolenRecoveryFileStatus
-							+"stolenRecoveryRequestType="+stolenRecoveryRequestType+"stolenRecoverySourceStatus  ="+stolenRecoverySourceStatus+ "featureId-->"+featureId);
-					int userId= (int) session.getAttribute("userid"); 
-					int file=1;
-					FileExportResponse fileExportResponse;
-					FilterRequest filterRequest= new FilterRequest();
-					filterRequest.setStartDate(stolenRecoveryStartDate);
-					filterRequest.setEndDate(stolenRecoveryEndDate);
-					filterRequest.setTxnId(stolenRecoveryTxnId);
-					filterRequest.setGrievanceStatus(stolenRecoveryFileStatus);
-					filterRequest.setRequestType(stolenRecoveryRequestType);
-				    filterRequest.setFeatureId(featureId);
-					filterRequest.setSourceType(stolenRecoverySourceStatus);
-					filterRequest.setUserId(userId);
-					filterRequest.setRoleType(roleType);
-					log.info(" request passed to the stolen/rcovery exportTo Excel Api =="+filterRequest+" *********** pageSize"+pageSize+"  pageNo  "+pageNo);
-					Object	response= feignCleintImplementation.stolenFilter(filterRequest, pageNo, pageSize, file);
-
+					Gson gsonObject=new Gson();
+					Object response;
+					Integer file = 1;	
+					log.info("filterRequest:::::::::"+filterRequest);
+				response= feignCleintImplementation.stolenFilter(filterRequest, filterRequest.getPageNo(), filterRequest.getPageSize(), file);
+				FileExportResponse fileExportResponse;
 				   Gson gson= new Gson(); 
 				   String apiResponse = gson.toJson(response);
 				   fileExportResponse = gson.fromJson(apiResponse, FileExportResponse.class);
 				   log.info("response  from   export stolen/recovery  api="+fileExportResponse);
 					
-					return "redirect:"+fileExportResponse.getUrl();
+					return fileExportResponse;
 				}
 				
 				

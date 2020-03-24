@@ -8,15 +8,6 @@
 
 	var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 
-/*
-	window.parent.$('#langlist').on('change', function() {
-		var langParam=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
-		var id= $("#mainArea").contents().find("body").html();
-		var roles= $("#mainArea").contents().find("body").attr("data-session-roles");
-		var type= $("#mainArea").contents().find("body").attr("data-session-type");
-		window.location.reload(true);
-			
-	}); */
 
 	$.i18n().locale = lang;	
 
@@ -133,11 +124,16 @@
 							+"</label>"+
 							"<span	class='input-group-addon' style='color: #ff4081'>"+
 							"<i	class='fa fa-calendar' aria-hidden='true' style='float: right; margin-top: -37px;'>"+"</i>"+"</span>");
+					$( "#"+date[i].id ).datepicker({
+						dateFormat: "yy-mm-dd",
+						 maxDate: new Date()
+			        }); 
 					}
 					else if(date[i].type === "select"){
 						$("#registrationTableDiv").append("<div class='input-field col s6 m2' ><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
 						
 					}
+					
 					
 				} 
 
@@ -167,9 +163,7 @@
 				
 				}
 				
-				$('.datepicker').datepicker({
-					dateFormat: "yy-mm-dd"
-					});
+			
 			
 				cierRoletype=="CEIRAdmin"? $("#btnLink").css({display: "none"}) : $("#btnLink").css({display: "block"});
 				/*sourceType=="viaStolen" ? $("#btnLink").css({display: "none"}) : $("#btnLink").css({display: "none"});*/
@@ -283,7 +277,9 @@
 	function userApprovalPopup(userId,date,username,sessionUserName){
 		$("#registrationTxnId").text(username);
 		$("#sessionUserName").val(sessionUserName);
-		$('#approveInformation').openModal();
+		$('#approveInformation').openModal({
+		 	   dismissible:false
+	    });
 		$("#userId").text(userId);
 		window.userID=userId;
 		window.date=date.replace("="," ");
@@ -322,13 +318,17 @@
 
 	function confirmApproveInformation(userID,date){
 		$('#approveInformation').closeModal(); 
-		setTimeout(function(){ $('#confirmApproveInformation').openModal();}, 200);
+		setTimeout(function(){ $('#confirmApproveInformation').openModal({
+		 	   dismissible:false
+	    });}, 200);
 		$("#registrationDate").text(date);
 		$("#RegistrationId").text(userID);
 	}
 
 	function userRejectPopup(userId,sessionUserName){
-		$('#rejectInformation').openModal();
+		$('#rejectInformation').openModal({
+		 	   dismissible:false
+	    });
 		console.log("Reject userId is---->"+userId);
 		$("#userId").text(userId)
 		$("#rejectUserName").val(sessionUserName);
@@ -369,7 +369,9 @@
 
 	function confirmRejectInformation(){
 		$('#rejectInformation').closeModal();
-		$('#confirmRejectInformation').openModal();
+		$('#confirmRejectInformation').openModal({
+		 	   dismissible:false
+	    });
 	}
 
 	function exportButton(){
@@ -409,7 +411,9 @@
 	
  function userChangeStatus(userId,sessionUserName){
 	 window.userId = userId
-	 $("#statusChangemodal").openModal();
+	 $("#statusChangemodal").openModal({
+	 	   dismissible:false
+	    });
 	 $("#statusUserName").val(sessionUserName);
 	 
  }
@@ -432,7 +436,9 @@
 			type : 'POST',
 			success : function(data) {
 				console.log("Request----->"+JSON.stringify(Request));
-				$("#confirmUserStatus").openModal();
+				$("#confirmUserStatus").openModal({
+				 	   dismissible:false
+			    });
 			},
 			error : function() {
 				alert("Failed");

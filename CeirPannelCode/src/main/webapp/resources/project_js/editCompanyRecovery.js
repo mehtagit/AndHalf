@@ -35,6 +35,7 @@ var txnid=$('#existingStolenTxnId').val();
 		$('#bulkRecoverycountry').val(response.stolenOrganizationUserDB.incidentCountry).change();
 		$('#bulkRecoverystate').val(response.stolenOrganizationUserDB.incidentProvince);
 		
+		//$('#bulkRecoveryFileLink').attr("onclick",'previewFile("'+response.fileLink+'","'+response.fileName+'","'+response.txnId+'")');
 		
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
@@ -84,7 +85,7 @@ function updateCompanyRecoveryRequest(){
 		    "incidentStreet": bulkRecoverystreetNumber,
 		    "incidentVillage": bulkRecoveryvillage,
 		    "incidentPropertyLocation": bulkRecoveryaddress,
-		    "remark":bulkRecoveryRemark
+		    
 		  }
 	
 	var request={
@@ -96,6 +97,7 @@ function updateCompanyRecoveryRequest(){
 			"blockingType":blockingType,
 			"requestType":1,
 			"sourceType":6,
+			"remark":bulkRecoveryRemark,
 			"stolenOrganizationUserDB":stolenOrganizationUserDB
 	}
 
@@ -116,10 +118,10 @@ function updateCompanyRecoveryRequest(){
 
 		if(response.errorCode==0){
 			$("#IndivisualUpdateStolen").prop('disabled', true);
-			$('#stolenSucessPopUp').openModal();
+			$('#stolenSucessPopUp').openModal({dismissible:false});;
 			}
 		else{
-			$('#stolenSucessPopUp').openModal();
+			$('#stolenSucessPopUp').openModal({dismissible:false});;
 			$('#dynamicMessage').text('');
 			$('#dynamicMessage').text(response.message);
 		}
@@ -131,4 +133,55 @@ function updateCompanyRecoveryRequest(){
 	});
 	return false;
 
+}
+
+
+function isImageValid(id) {
+	var uploadedFileName = $("#"+id).val();
+	uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
+	//alert("file extension=="+uploadedFileName)
+	var ext = uploadedFileName.split('.').pop();
+
+	var fileSize = ($("#"+id)[0].files[0].size);
+	/*fileSize = (Math.round((fileSize / 100000) * 100) / 100)
+	alert("----"+fileSize);*/
+	fileSize = Math.floor(fileSize/1000) + 'KB';
+   
+	//alert(uploadedFileName+"----------"+ext+"----"+fileSize)
+	var areEqual =ext.toLowerCase()=='png';
+	//alert(areEqual);
+	if(areEqual==true)
+		{
+		ext='PNG';
+		}
+	
+	if (uploadedFileName.length > 30) {
+		$('#fileFormateModal').openModal({dismissible:false});;
+		$('#fileErrormessage').text('');
+		$('#fileErrormessage').text($.i18n('imageMessage'));
+	} 
+	else if(ext !='PNG')
+	{
+		
+		$('#fileFormateModal').openModal({
+			dismissible:false
+		});
+		$('#fileErrormessage').text('');
+		$('#fileErrormessage').text($.i18n('imageMessage'));
+
+	}
+	else if(fileSize>=100){
+		$('#fileFormateModal').openModal({
+			dismissible:false
+		});
+		$('#fileErrormessage').text('');
+		$('#fileErrormessage').text($.i18n('imageSize'));	
+	}
+}
+
+
+function clearFileName() {
+	$('#bulkRecoveryFile,#uploadFirSingle').val('');
+	$("#bulkRecoveryFileName,#uploadFirSingleName").val('');
+	$('#fileFormateModal').closeModal();
 }

@@ -46,12 +46,14 @@ function confirmantiondelete(){
 	var userId = $("body").attr("data-userID");
 	var currentRoleType = $("body").attr("data-stolenselected-roleType"); 
 	var role = currentRoleType == null ? roleType : currentRoleType;
+	var remarks = $("#textarea1").val();
 	console.log("txnId===**"+txnId+" userId="+userId+" roleType== "+roleType+ " currentRoleType=="+currentRoleType);
 	var obj ={
 			"txnId" : txnId,
 			"roleType":role,
 			"userId":userId,
-			"id":id
+			"id":id,
+			"remark":remarks
 
 	}
 	$.ajax({
@@ -74,6 +76,7 @@ function confirmantiondelete(){
 	});
 	$("#DeleteConsignment").closeModal();
 	$("#confirmDeleteConsignment").openModal({dismissible:false});
+	return false;
 }
 
 
@@ -227,65 +230,6 @@ function myFunction(message) {
 	setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
 }
 
-function dispatchDateValidation(){
-	var currentDate;
-	var dispatcDate=  $('#expectedDispatcheDate').val();
-	var now=new Date();
-	if(now.getDate().toString().charAt(0) != '0'){
-		currentDate='0'+now.getDate();
-
-		/* alert("only date="+currentDate); */
-	}
-	else{
-		currentDate=now.getDate();
-	}
-	var today = now.getFullYear()+ '-' + (now.getMonth()+1)+ '-' +currentDate ;
-	//alert("today"+today);
-	console.log("dispatche="+dispatcDate);
-	console.log("todays parse date"+Date.parse(today));
-	console.log("dispatche parse date"+Date.parse(dispatcDate));
-
-
-	if(Date.parse(today)>Date.parse(dispatcDate))
-	{
-		myFunction("dispatche date should be greater then or equals to today");
-		$('#expectedDispatcheDate').val("");
-	}
-
-	//alert("current date="+today+" dispatche date="+dispatcDate)
-}
-
-function arrivalDateValidation(){
-	var currentDate;
-	var dispatcDate=  $('#expectedArrivalDate').val();
-	var now=new Date();
-	if(now.getDate().toString().charAt(0) != '0'){
-		currentDate='0'+now.getDate();
-
-		/* alert("only date="+currentDate); */
-	}
-	else{
-		currentDate=now.getDate();
-	}
-	var today = now.getFullYear()+ '-' + (now.getMonth()+1)+ '-' +currentDate ;
-	//alert("today"+today);
-	console.log("dispatche="+dispatcDate);
-	console.log("todays parse date"+Date.parse(today));
-	console.log("dispatche parse date"+Date.parse(dispatcDate));
-
-
-	if(Date.parse(today)>Date.parse(dispatcDate))
-	{
-		myFunction("Arrival date should be greater then or equals to today");
-		$('#expectedArrivalDate').val("");
-	}
-
-	//alert("current date="+today+" dispatche date="+dispatcDate)
-}
-
-
-
-
 
 $('.datepicker').on('mousedown',function(event){
 	event.preventDefault();
@@ -423,10 +367,14 @@ function pageElements(url){
 							+"</label>"+
 							"<span	class='input-group-addon' style='color: #ff4081'>"+
 							"<i	class='fa fa-calendar' aria-hidden='true' style='float: right; margin-top: -37px;'>"+"</i>"+"</span>");
-
+					$( "#"+date[i].id ).datepicker({
+						dateFormat: "yy-mm-dd",
+						 maxDate: new Date()
+			        });
 				}else if(date[i].type === "text"){
 					$("#consignmentTableDIv").append("<div class='input-field col s6 m2' ><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
 				}
+				 
 			} 
 
 			// dynamic dropdown portion
@@ -489,9 +437,7 @@ function pageElements(url){
 					}
 				}
 			}
-			$('.datepicker').datepicker({
-			    dateFormat: "yy-mm-dd"
-			    });
+	
 		}
 
 	//$("#filterBtnDiv").append();
@@ -999,12 +945,38 @@ function exportStolenRecoveryData()
 
 	var table = $('#stolenLibraryTable').DataTable();
 	var info = table.page.info(); 
-    var pageNo=info.page;
-    var pageSize =info.length;
-    var featureId = window.parent.$('.navData li.active a').attr('data-featureid')
-	console.log("--------"+pageSize+"---------"+pageNo+"-------"+featureId);
-	console.log("stolenRecoveryStartDate  ="+stolenRecoveryStartDate+"  stolenRecoveryEndDate=="+stolenRecoveryEndDate+"  stolenRecoveryTxnId="+stolenRecoveryTxnId+" stolenRecoveryFileStatus ="+stolenRecoveryFileStatus+"=role="+role+" stolenRecoverySourceStatus="+stolenRecoverySourceStatus+" stolenRecoveryRequestType"+stolenRecoveryRequestType);
-	window.location.href="./exportStolenRecovery?stolenRecoveryStartDate="+stolenRecoveryStartDate+"&stolenRecoveryEndDate="+stolenRecoveryEndDate+"&stolenRecoveryTxnId="+stolenRecoveryTxnId+"&stolenRecoveryFileStatus="+stolenRecoveryFileStatus+"&stolenRecoverySourceStatus="+stolenRecoverySourceStatus+"&stolenRecoveryRequestType="+stolenRecoveryRequestType+"&featureId="+featureId+"&pageSize="+pageSize+"&pageNo="+pageNo+"&roleType="+roleType;
+	var pageNo=info.page;
+	var pageSize =info.length;
+
+	var filterRequest={
+			"endDate":stolenRecoveryEndDate,
+			"startDate":stolenRecoveryStartDate,
+			"txnId":stolenRecoveryTxnId,
+			"grievanceStatus":stolenRecoveryFileStatus, 
+			"sourceType":stolenRecoverySourceStatus,
+			"requestType":stolenRecoveryRequestType,
+			"featureId":featureId,
+			"roleType":roleType,
+			"operatorTypeId" : parseInt($('#operator').val()),
+			"pageNo":parseInt(pageNo),
+			"pageSize":parseInt(pageSize)
+			
+	}
+	console.log(JSON.stringify(filterRequest))
+	$.ajax({
+		url: './exportStolenRecovery',
+		type: 'POST',
+		dataType : 'json',
+		contentType : 'application/json; charset=utf-8',
+		data : JSON.stringify(filterRequest),
+		success: function (data, textStatus, jqXHR) {
+			  window.location.href = data.url;
+
+		},
+		error: function (jqXHR, textStatus, errorThrown) {
+			
+		}
+	});
 
 }
 

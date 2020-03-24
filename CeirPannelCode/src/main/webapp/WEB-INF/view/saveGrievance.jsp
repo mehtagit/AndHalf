@@ -305,8 +305,7 @@ src="${context}/resources/project_js/viewStock.js"></script>
 <script type="text/javascript"
 		src="${context}/resources/project_js/profileInfoTab.js" async></script>
 <script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
-<script type="text/javascript"
-		src="${context}/resources/project_js/validationMsg.js"></script>
+
 			<script type="text/javascript"
 		src="${context}/resources/project_js/_dateFunction.js" async></script>
 		<script type="text/javascript"
@@ -527,8 +526,8 @@ $.ajax({
 		if (x < max_fields) { //max input box allowed
 				x++; //text box increment
 				$(wrapper).append(
-						'<div id="filediv'+id+'" class="fileDiv"><div class="row"><div class="file-field col s12 m6"><label for="Category">'+$.i18n('documenttype')+'</label><select id="docTypetag'+id+'"  class="browser-default"> <option value="" disabled selected>'+$.i18n('selectDocumentType')+' </option></select><select id="docTypetagValue'+id+'" style="display:none" class="browser-default"> <option value="" disabled selected>'+$.i18n('selectDocumentType')+' </option></select></div><div class="file-field col s12 m6" style="margin-top: 23px;"><div class="btn"><span>'+$.i18n('selectfile')+'</span><input id="docTypeFile'+id+'" type="file"  name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" placeholder="'+placeholderValue+'" type="text"></div></div><div style="cursor:pointer;background-color:red;margin-right: 1.7%;" class="remove_field btn right btn-info">-</div></div></div>'
-				); //add input box
+						'<div id="filediv'+id+'" class="fileDiv"><div class="row"><div class="file-field col s12 m6"><label for="Category">'+$.i18n('documenttype')+'</label><select id="docTypetag'+id+'" oninput="InvalidMsg(this,\'select\',\''+$.i18n('selectDocumentType')+'\');"  oninvalid="InvalidMsg(this,\'select\',\''+$.i18n('selectDocumentType')+'\');"  class="browser-default"> <option value="" disabled selected>'+$.i18n('selectDocumentType')+' </option></select><select id="docTypetagValue'+id+'" style="display:none" class="browser-default"> <option value="" disabled selected>'+$.i18n('selectDocumentType')+' </option></select></div><div class="file-field col s12 m6" style="margin-top: 23px;"><div class="btn"><span>'+$.i18n('selectfile')+'</span><input id="docTypeFile'+id+'" type="file" oninput="InvalidMsg(this,\'file\',\''+$.i18n('selectfile')+'\');"  oninvalid="InvalidMsg(this,\'file\',\''+$.i18n('selectfile')+'\');" name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" placeholder="'+placeholderValue+'" type="text"></div></div><div style="cursor:pointer;background-color:red;margin-right: 1.7%;" class="remove_field btn right btn-info">-</div></div></div>'
+								); //add input box
 			}
 			
 			
@@ -669,6 +668,8 @@ $("input[type=file]").keypress(function(ev) {
 }); */
 
 </script>
+<script type="text/javascript"
+		src="${context}/resources/project_js/validationMsg.js"></script>
 </body>
 </html>
 

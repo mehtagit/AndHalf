@@ -2,10 +2,11 @@
  * 
  */
 
+
 $(document).ready(function() {
 	// executes when HTML-Document is loaded and DOM is ready
-
-	viewIndivisualStolen()
+	$('div#initialloader').fadeIn('fast');
+	viewIndivisualStolen();
 
 });
 
@@ -44,7 +45,7 @@ function viewIndivisualStolen()
 			$('#state').val(response.stolenIndividualUserDB.province);
 			$('#singleStolendeviceBrandName').val(response.stolenIndividualUserDB.deviceBrandName);
 			//alert(response.stolenIndividualUserDB.nidFileName);
-			$('#singleStolenFileName').val(response.stolenIndividualUserDB.nidFileName);
+			$('#singleStolenFileName').val(response.fileName);
 			$('#updatesingleStolenimei1').val(response.stolenIndividualUserDB.imeiEsnMeid1);
 			$('#updatesingleStolenimei2').val(response.stolenIndividualUserDB.imeiEsnMeid2);
 			$('#updatesingleStolenimei3').val(response.stolenIndividualUserDB.imeiEsnMeid3);
@@ -58,7 +59,7 @@ function viewIndivisualStolen()
 			$('#singleStolenphone2').val(response.stolenIndividualUserDB.alternateContactNumber);
 			$('#singleStolenOperator').val(response.stolenIndividualUserDB.operator);
 			$('#singleStolenSimStatus').val(response.stolenIndividualUserDB.multiSimStatus);
-			$('#singleStolenComplaintType').val(response.stolenIndividualUserDB.complaintType);
+			$('#singleStolenComplaintType').val(response.complaintType);
 			$('#singleDeviceAddress').val(response.stolenIndividualUserDB.deviceStolenPropertyLocation);
 			$('#singleDevicestreetNumber').val(response.stolenIndividualUserDB.deviceStolenStreet);
 			$('#singleDevicevillage').val(response.stolenIndividualUserDB.deviceStolenVillage);
@@ -80,7 +81,10 @@ function viewIndivisualStolen()
 			$("label[for='updatesingleStolenimei2']").addClass('active');
 			$("label[for='updatesingleStolenimei3']").addClass('active');
 			$("label[for='updatesingleStolenimei4']").addClass('active');
-
+			
+			$('#PassportNidLink').attr("onclick",'previewFile("'+response.fileLink+'","'+response.fileName+'","'+response.txnId+'")');
+			$('#firImageLink').attr("onclick",'previewFile("'+response.fileLink+'","'+response.firFileName+'","'+response.txnId+'")');
+			$('div#initialloader').delay(300).fadeOut('slow');
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
 			console.log("error in ajax")
@@ -196,6 +200,7 @@ function updateIndivisualStolen()
 			"requestType":0,
 			"sourceType":5,
 			"firFileName":uploadFirFile,
+			"complaintType":$('#singleStolenComplaintType').val(),
 			"stolenIndividualUserDB":stolenIndividualUserDB
 	}
 	formData.append('file', $('#singleStolenFile')[0].files[0]);
@@ -231,4 +236,54 @@ function updateIndivisualStolen()
 }
 
 
+
+function isImageValid(id) {
+	var uploadedFileName = $("#"+id).val();
+	uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
+	//alert("file extension=="+uploadedFileName)
+	var ext = uploadedFileName.split('.').pop();
+
+	var fileSize = ($("#"+id)[0].files[0].size);
+	/*fileSize = (Math.round((fileSize / 100000) * 100) / 100)
+	alert("----"+fileSize);*/
+	fileSize = Math.floor(fileSize/1000) + 'KB';
+   
+	//alert(uploadedFileName+"----------"+ext+"----"+fileSize)
+	var areEqual =ext.toLowerCase()=='png';
+	//alert(areEqual);
+	if(areEqual==true)
+		{
+		ext='PNG';
+		}
+	
+	if (uploadedFileName.length > 30) {
+		$('#fileFormateModal').openModal();
+		$('#fileErrormessage').text('');
+		$('#fileErrormessage').text($.i18n('imageMessage'));
+	} 
+	else if(ext !='PNG')
+	{
+		
+		$('#fileFormateModal').openModal({
+			dismissible:false
+		});
+		$('#fileErrormessage').text('');
+		$('#fileErrormessage').text($.i18n('imageMessage'));
+
+	}
+	else if(fileSize>=100){
+		$('#fileFormateModal').openModal({
+			dismissible:false
+		});
+		$('#fileErrormessage').text('');
+		$('#fileErrormessage').text($.i18n('imageSize'));	
+	}
+}
+
+
+function clearFileName() {
+	$('#singleStolenFile,#uploadFirSingle').val('');
+	$("#singleStolenFileName,#uploadFirSingleName").val('');
+	$('#fileFormateModal').closeModal();
+}
 

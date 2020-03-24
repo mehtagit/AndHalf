@@ -155,8 +155,8 @@ section {
 									<div class="row myRow">
 										<div class="input-field col s12 m6">
 											<input type="text" name="supplierId" id="supplierId"
-												pattern="[A-Za-z0-9]{0,15}"
-												title="<spring:message code="validation.15character" />"
+												pattern="[A-Za-z0-9]{0,15}" oninput="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
+												 oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
 												maxlength="15" /> <label for="supplierId" class="center-align"><spring:message code="input.supplier" /></label>
 										</div>
 
@@ -173,7 +173,8 @@ section {
 										<div class="input-field col s12 m6">
 											<input type="text" name="consignmentNumber"
 												id="consignmentNumber" pattern="[A-Za-z0-9]{0,15}"
-												title="<spring:message code="validation.15character" />"
+												oninput="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
+												 oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
 												maxlength="15" /> <label for="consignmentNumber" class="center-align"><spring:message code="input.consignmentnumber" /></label>
 										</div>
 
@@ -186,7 +187,7 @@ section {
 												for="expectedDispatcheDate" class="center-align"><spring:message code="input.dispatchdate" /> <span class="star">*</span>
 											</label> <span class="input-group-addon" style="color: #ff4081"><i
 												class="fa fa-calendar" aria-hidden="true"></i></span>
-					<p id="errorMsg" style="color: red;font-size: 12px;position: absolute;margin: 0;top: 40px;right: 0;" class="left"></p>
+					<p id="errorMsgOnModal" class="onEditModalTitle" class="left"></p>
 										</div>
 									</div>
 
@@ -214,7 +215,8 @@ section {
 									<div class="row myRow">
 										<div class="input-field col s12 m6">
 										<input type="text" name="totalPrice" id="totalPrice" pattern="[0-9]{0,7}"
-												maxlength="7" title="<spring:message code="validation.7character" />" /> <label for="totalPrice"
+												maxlength="7" oninput="InvalidMsg(this,'input','<spring:message code="validation.7character" />');"
+												 oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7character" />');"> <label for="totalPrice"
 												class="center-align"><spring:message code="input.totalprice" /></label>
 										</div>
 
@@ -376,42 +378,44 @@ section {
 	<script type="text/javascript"
 		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.js"></script>
+		src="${context}/resources/i18n_library/i18n.js"></script>
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.messagestore.js"></script>
+		src="${context}/resources/i18n_library/messagestore.js"></script>
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.fallbacks.js"></script>
+		src="${context}/resources/i18n_library/fallbacks.js"></script>
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.language.js"></script>
+		src="${context}/resources/i18n_library/language.js"></script>
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.parser.js"></script>
-
-
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.js"></script>
+		src="${context}/resources/i18n_library/parser.js"></script>
 
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.bidi.js"></script>
+		src="${context}/resources/i18n_library/emitter.js"></script>
+
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/jquery.history.js"></script>
+		src="${context}/resources/i18n_library/bidi.js"></script>
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
+		src="${context}/resources/i18n_library/history.js"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/min.js"></script>
 		<script type="text/javascript"
 		src="${context}/resources/project_js/htmlValidationi18n.js"></script>
 	<script type="text/javascript"
-		src="${context}/resources/project_js/registerConsignment.js"></script>
+		src="${context}/resources/project_js/registerConsignment.js"></script>	
 	<script type="text/javascript"
 		src="${context}/resources/project_js/validationMsg.js"></script>
 			<script type="text/javascript"
 		src="${context}/resources/project_js/_dateFunction.js" async></script>
 		<script type="text/javascript"
 		src="${context}/resources/project_js/globalVariables.js"></script>
+					<script type="text/javascript"
+		src="${context}/resources/project_js/profileInfoTab.js" async></script>
 </body>
 </html>
 

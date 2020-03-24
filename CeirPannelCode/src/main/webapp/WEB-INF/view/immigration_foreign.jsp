@@ -64,9 +64,7 @@
 <link
 	href="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
-<%--  <link href="${context}/resources/js/plugins/chartist-js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection"> --%>
-<link rel="stylesheet"
-	href="${context}/resources/project_css/stolenRecovery.css">
+
 <link rel="stylesheet"
 	href="${context}/resources/project_css/iconStates.css">
 <link rel="stylesheet"
@@ -138,8 +136,7 @@
 													code="input.lastName" /> <span class="star">*</span></label>
 										</div>
 
-										<div class="input-field col s12 m6" id="nationalityDiv"
-											style="display: none">
+										<div class="input-field col s12 m6" id="nationalityDiv">
 											<input type="text" id="nationality" name="nationality"
 												pattern="[a-zA-Z]{1,25}"
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
@@ -250,7 +247,7 @@
 												<spring:message code="input.contactNum" />
 												<span class="star">*</span>
 											</p>
-											<input type="text" id="phone" pattern="[0-9 + ]{1,15}" placeholder="" maxlength="15"
+											<input type="text" id="phone" pattern="[0-9 + ]{4,15}" placeholder="" maxlength="15"
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.10digits" />');"
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10digits" />');"
 												required >
@@ -285,7 +282,7 @@
 											</h6>
 											<div class="btn">
 												<span> <spring:message code="input.selectfile" />
-												</span> <input type="file" onchange="isImageValid('uploadnationalID')"
+												</span> <input type="file" onchange="fileTypeValueChanges('uploadnationalID')"
 													oninput="InvalidMsg(this,'fileType','<spring:message code=" validation.file" />');"
 													oninvalid="InvalidMsg(this,'fileType','<spring:message code=" validation.file" />');"
 													accept="image/*" id="uploadnationalID" required>
@@ -608,16 +605,17 @@
 										</div>
 
 
+										
+										<div class="row" style="padding-bottom: 50px;">
 										<p>
 											<spring:message code="input.requiredfields" />
 											<span class="star">*</span>
 										</p>
-										<div class="row" style="padding-bottom: 50px;">
 											<div class="input-field col s12 m12 center">
 												<button id="endUserRegisterButton" type="submit" class="btn">
 													<spring:message code="button.submit" />
 												</button>
-												<a href="./redirectToHomePage" class="btn"
+												<a href="./manageDevicesStock?FeatureId=19" class="btn"
 													style="margin-left: 10px;"> <spring:message
 														code="button.cancel" /></a>
 											</div>

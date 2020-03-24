@@ -222,14 +222,14 @@ select {
 															<input type="file" pattern="{0,30}"
 																oninput="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');"
 																oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');"
-																required placeholder="Upload Photo" onchange="isImageValid('singleStolenFile')"
+																required placeholder="" onchange="isImageValid('singleStolenFile')"
 																id="singleStolenFile">
 														</div>
 														<div class="file-path-wrapper">
 															<input class="file-path validate" type="text"
 																placeholder="<spring:message code="registration.uploadnid/passportimage" />"
 																id="singleStolenFileName"
-																title="Please upload national ID image">
+																title="">
 														</div>
 													</div>
 
@@ -373,9 +373,7 @@ select {
 													</div>
 
 													<div class="col s12 m12" style="margin-top: 30px;">
-														<h5>
-															<spring:message code="modal.deviceInfo" />
-														</h5>
+														<h5><spring:message code="modal.deviceInfo" /></h5>
 														<hr>
 													</div>
 
@@ -383,30 +381,20 @@ select {
 														<div class="input-field col s12 m6">
 															<input type="text" name="deviceBrandName"
 																id="singleStolendeviceBrandName"
-																pattern="[a-zA-Z]{0,20}"
-																oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
-																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
+																pattern="[a-zA-Z]{0,20}" 
+															oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
+															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 																maxlength="20"> <label for="deviceBrandName">
 																<spring:message code="registration.devicebrandname" />
 															</label>
 														</div>
 
-														<%--			<div class="input-field col s12 m6"
-															style="margin-top: 22px;">
-															<input type="text" name="imeiNumber" pattern="[0-9]{15,16}" 
-															oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');" 
-															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
-														 maxlength="16" 	id="singleStolenimeiNumber" > <label
-																for="imeiNumber"><spring:message code="registration.imei/meid/esnnumber" /></label>
-														</div>
-														--%>
+												
 
 														<div class="col s6 m6 ">
 															<label for="deviceIDType"> <spring:message
 																	code="select.deviceIDType" /></label> <select
-																oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-																oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-																id="singleStolendeviceIDType" class="browser-default">
+															id="singleStolendeviceIDType" class="browser-default">
 																<option value="" disabled selected>
 																	<spring:message code="select.deviceIDType" />
 																</option>
@@ -416,30 +404,20 @@ select {
 														<div class="col s6 m6 ">
 															<label for="deviceType"> <spring:message
 																	code="select.deviceType" /></label> <select
-																class="browser-default" id="singleStolendeviceType"
-																oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-																oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');">
+																class="browser-default" id="singleStolendeviceType">
 																<option value="" disabled selected>
 																	<spring:message code="select.deviceType" />
 																</option>
 															</select>
 														</div>
 
-														<!-- <div class="col s6 m6 ">
-                                                                <label for="deviceStatus">Device Status <span class="star">*</span></label>
-                                                                <select id="deviceStatus" class="browser-default">
-                                                                  <option value="" disabled selected>Device Status</option>
-                                                                  <option value="New">New</option>
-                                                                  <option value="used">used</option>
-                                                                  <option value="Refurbished">Refurbished</option>
-                                                                </select>
-                                                              </div> -->
 
 														<div class="input-field col s12 m6">
 															<input type="text" name="modalNumber"
 																id="singleStolenmodalNumber" pattern="[a-zA-Z0-9]{0,30}"
-																oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
+																
+															oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
+															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 																maxlength="30"> <label for="modalNumber">
 																<spring:message code="input.modelNumber" />
 															</label>
@@ -450,17 +428,11 @@ select {
 																<spring:message code="input.contactNum" />
 																<span class="star"> *</span>
 															</p>
-															<input type="text" name="phone" id="singleStolenphone2"
-																pattern="[0-9\s,+]{7,15}"
-																oninput="InvalidMsg(this,'input','<spring:message code="validation.contact" />');"
-																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.contact" />');"
-																maxlength="15" required />
+															<input type="text" name="phone2" id="singleStolenphone2"
+																pattern="[0-9\s,+]{4,15}" maxlength="15" oninput="InvalidMsg(this,'input','<spring:message code="validation.contact" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.contact" />');" required>
 														</div>
 
-														<!-- <div class="input-field col s12 m6">
-                                                                <input type="text" name="operator" id="operator" maxlength="10">
-                                                                <label for="operator">Operator <span class="star">*</span></label>
-                                                            </div> -->
+														
 
 														<div class="col s12 m6 l6">
 															<label> <spring:message code="operator.Operator" />
@@ -552,8 +524,8 @@ select {
 														<div class="input-field col s12 m6">
 															<input type="text" name="imeiNumberTwo"
 																pattern="[0-9]{15,16}"
-																oninput="InvalidMsg(this,'input','<spring:message code=" validation.1516digit" />');"
-																oninvalid="InvalidMsg(this,'input','<spring:message code=" validation.1516digit" />');"
+																oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
+																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																
 																maxlength="16" id="singleStolenimei2"> <label
 																for="singleStolenimei12"> <spring:message
@@ -563,8 +535,8 @@ select {
 														<div class="input-field col s12 m6">
 															<input type="text" name="imeiNumberThree"
 																pattern="[0-9]{15,16}"
-																oninput="InvalidMsg(this,'input','<spring:message code=" validation.1516digit" />');"
-																oninvalid="InvalidMsg(this,'input','<spring:message code=" validation.1516digit" />');"
+																oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
+																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																
 																maxlength="16" id="singleStolenimei3"> <label
 																for="singleStolenimei3"> <spring:message code="registration.three" /></label>
@@ -573,8 +545,8 @@ select {
 														<div class="input-field col s12 m6">
 															<input type="text" name="imeiNumberFour"
 																pattern="[0-9]{15,16}"
-																oninput="InvalidMsg(this,'input','<spring:message code=" validation.1516digit" />');"
-																oninvalid="InvalidMsg(this,'input','<spring:message code=" validation.1516digit" />');"
+																oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
+																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																
 																maxlength="16" id="singleStolenimei4"> <label
 																for="singleStolenimei4"> <spring:message code="registration.four" /></label>
@@ -718,7 +690,7 @@ select {
 																<input type="file"
 																	oninput="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');"
 																	oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');"
-																	placeholder="Upload FIR" id="uploadFirSingle" onchange="isFileValid('uploadFirSingle')"> 
+																	placeholder="" id="uploadFirSingle" onchange="isImageValid('uploadFirSingle')"> 
 															</div>
 															<div class="file-path-wrapper">
 																<input class="file-path validate" type="text"
@@ -933,12 +905,12 @@ select {
 											<div class="input-field col s12 m6">
 												<!-- <p class="contact-label">Alternate Contact Number <span class="star">*</span></p> -->
 												<input type="text" name="phone" id="bulkStolenContact"
-													pattern="[0-9\s,+]{7,15}"
+													pattern="[0-9\s,+]{7,12}"
 													oninput="InvalidMsg(this,'input','<spring:message code="
 													validation.contact" />');"
 													oninvalid="InvalidMsg(this,'input','
 												<spring:message code="validation.contact" />');"
-													maxlength="15" /> <label for="phone2"> <spring:message
+													maxlength="12" /> <label for="phone2"> <spring:message
 														code="input.contactNum" /></label>
 											</div>
 
@@ -1100,7 +1072,7 @@ select {
 														required id="deviceBulkStolenFile" onchange="isFileValid('deviceBulkStolenFile')" accept=".csv">
 												</div>
 												<div class="file-path-wrapper">
-													<input class="file-path validate" type="text"
+													<input class="file-path validate" type="text" id="deviceBulkStolenFileName"
 														placeholder="<spring:message code="
 														registration.uploaddevicelist" />">
 												</div>
@@ -1161,7 +1133,10 @@ select {
 											<div class="input-field col s12 m6">
 												<input type="text" name="bulkStolenDate" id='bulkStolenDate'
 													class='form-control datepick' autocomplete='off'
-													title="<spring:message code=" validation.requiredMsg" />"
+													
+													oninput="InvalidMsg(this,'input','<spring:message code=" validation.requiredMsg" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code=" validation.requiredMsg" />');"
+													
 													required /> <label for="bulkStolenDate"
 													class="center-align"> <spring:message
 														code="operator.stolenDate" /> <span class="star">
@@ -1176,11 +1151,9 @@ select {
 												</h6>
 												<div class="btn">
 													<span> <spring:message code="input.selectfile" /></span> <input
-														type="file"
-														oninput="InvalidMsg(this,'fileType','<spring:message code="
-														validation.NoChosen" />');"
-														oninvalid="InvalidMsg(this,'fileType','
-													<spring:message code="validation.NoChosen" />');"
+														type="file" onchange="isImageValid('uploadFirBulk')"
+														oninput="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');"
+														oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');"
 														placeholder="Upload FIR" id="uploadFirBulk">
 												</div>
 												<div class="file-path-wrapper">
@@ -1195,8 +1168,7 @@ select {
 											<div class="input-field col s12 m12"
 												style="margin-top: 22px;">
 												<textarea id="deviceBulkStolenRemark"
-													oninput="InvalidMsg(this,'input','<spring:message code="
-													validation.10000characters" />');"
+													oninput="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
 													maxlength="10000" class="materialize-textarea"></textarea>
 												<label for="textarea1"> <spring:message
@@ -1356,15 +1328,15 @@ src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/j
 		populateStates("country3", "state3");
 
 		populateCountries("country");
-
-		var input2 = document.querySelector("#singleStolenphone2");
-		window.intlTelInput(input2, {
-			utilsScript : "${context}/resources/js/utils.js",
-		});
 		var input = document.querySelector("#singleStolenphone1");
 		window.intlTelInput(input, {
 			utilsScript : "${context}/resources/js/utils.js",
 		});
+		var input2 = document.querySelector("#singleStolenphone2");
+		window.intlTelInput(input2, {
+			utilsScript : "${context}/resources/js/utils.js",
+		});
+	
 
 		$('#stolenDatePeriod').datepicker({
 			dateFormat : "yy-mm-dd"
@@ -1398,7 +1370,6 @@ src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/j
 		
 		
 		function isImageValid(id) {
-			
 			var uploadedFileName = $("#"+id).val();
 			uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
 			//alert("file extension=="+uploadedFileName)
@@ -1408,16 +1379,23 @@ src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/j
 			/*fileSize = (Math.round((fileSize / 100000) * 100) / 100)
 			alert("----"+fileSize);*/
 			fileSize = Math.floor(fileSize/1000) + 'KB';
-
+           
 			//alert(uploadedFileName+"----------"+ext+"----"+fileSize)
-
+			var areEqual =ext.toLowerCase()=='png';
+			//alert(areEqual);
+			if(areEqual==true)
+				{
+				ext='PNG';
+				}
+			
 			if (uploadedFileName.length > 30) {
 				$('#fileFormateModal').openModal();
 				$('#fileErrormessage').text('');
 				$('#fileErrormessage').text($.i18n('imageMessage'));
 			} 
-			else if(ext !='png')
+			else if(ext !='PNG')
 			{
+				
 				$('#fileFormateModal').openModal({
 					dismissible:false
 				});
@@ -1432,15 +1410,12 @@ src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/j
 				$('#fileErrormessage').text('');
 				$('#fileErrormessage').text($.i18n('imageSize'));	
 			}
-			
-
-
 		}
 		
 		
 		function clearFileName() {
-			$('#singleStolenFile,#uploadFirSingle').val('');
-			$("#singleStolenFileName").val('');
+			$('#deviceBulkStolenFile,#singleStolenFile,#uploadFirSingle,#uploadFirBulk').val('');
+			$("#deviceBulkStolenFileName,#singleStolenFileName,#uploadFirSingleName,#uploadFirSingleBulkName").val('');
 			$('#fileFormateModal').closeModal();
 		}
 		

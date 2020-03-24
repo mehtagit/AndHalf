@@ -205,7 +205,7 @@ var contextpath = "${context}";
 
 							<input type="hidden" id="usertypeId" value="${usertypeId}">
 							<input type="hidden" id="usertypeName" value="<%=name%>">
-							<input type="hidden" id="type" value="2">
+							<input type="hidden" id="type" value="1">
 							<div class="row">
 								<div class="input-field col s12 m4 l4">
 									<input type="text" name="firstName" id="firstName" pattern="[A-Za-z]{3,20}" maxlength="20"
@@ -593,34 +593,30 @@ var contextpath = "${context}";
 	</div>
 
 	<!-- START MAIN -->
-
-	<div id="otpMessage" class="modal">
-		<button type="button"
-			class="modal-action modal-close waves-effect waves-green btn-flat right"
-			data-dismiss="modal">&times;</button>
-		<h6 class="modal-header">
+<div id="otpMessage" class="modal">
+		<h6 class="modal-header" style="font-size: 1.15rem;">
 			<spring:message code="registration.verifyotp" />
 		</h6>
 		<div class="modal-content">
-
-
+			<h6 id="otpResponse" style="    font-size: 1.15rem;line-height: 110%;margin: .7666666667rem 0 .46rem 0;"></h6>
 			<div class="row">
 				<div class="input-field col s12 center">
-					<h6 id="otpResponse"></h6>
 					<a href="${context}/login" class="btn"><spring:message
-							code="modal.yes" /></a>
+							code="modal.ok" /></a>
 				</div>
 			</div>
 		</div>
 	</div>
+	
 
-
-	<div id="otpMsgModal" class="modal"
+<div id="otpMsgModal" class="modal"
 		style="width: 40%; margin-left: 30%; margin-top: 10vh;">
 		<h6 class="modal-header">
 			<spring:message code="registration.verifyotp" />
 		</h6>
 		<div class="modal-content">
+			<!-- <h4 class="header2 pb-2">User Info</h4> -->
+
 			<p style="padding: 10px;" class="center" id="otpMsg"></p>
 
 			<a href="javascript:void(0)" onclick="openOtpPopup()" class="btn"
@@ -628,7 +624,6 @@ var contextpath = "${context}";
 					code="registration.verifyotp" /></a>
 		</div>
 	</div>
-
 
 
 
@@ -746,51 +741,31 @@ var contextpath = "${context}";
             $('.modal').modal();
             questionDataByCategory();
             operatorList();
+            $('.dropdown-trigger').dropdown();
+
+            /*  $(document).ready(function () {
+                 $('select').material_select();
+             }); */
+             var password = document.getElementById("password")
+             , confirm_password = document.getElementById("confirm_password");
+
+           function validatePassword(){
+             if(password.value != confirm_password.value) {
+             	 confirm_password.setCustomValidity("<spring:message code='registration.passnotmatch' />");
+             } else {
+               confirm_password.setCustomValidity('');
+             }
+           }
+
+           password.onchange = validatePassword;
+           confirm_password.onkeyup = validatePassword;
+        
+             populateCountries("country","state");
+             populateStates("country","state");
         });   
 
-        $('.dropdown-trigger').dropdown();
-
-       /*  $(document).ready(function () {
-            $('select').material_select();
-        }); */
-        var password = document.getElementById("password")
-        , confirm_password = document.getElementById("confirm_password");
-
-      function validatePassword(){
-        if(password.value != confirm_password.value) {
-        	 confirm_password.setCustomValidity("<spring:message code='registration.passnotmatch' />");
-        } else {
-          confirm_password.setCustomValidity('');
-        }
-      }
-
-      password.onchange = validatePassword;
-      confirm_password.onkeyup = validatePassword;
+       
    
-        populateCountries("country","state");
-        populateStates("country","state");
-   
-        function myFunction() {
-            var x = document.getElementById("mySelect").value;
-            if (x == 'Individual') {
-                document.getElementById("uploadFile").style.display = "block";
-                document.getElementById("passportNumberDiv").style.display = "block";
-                //document.getElementById("companyName").style.display = "none";
-                $('#companyName').style.display = "none";
-            } else {
-
-                document.getElementById("uploadFile").style.display = "none";
-                document.getElementById("passportNumberDiv").style.display = "none";
-            }
-
-            if (x == 'Company', 'Organization', 'Government') {
-                document.getElementById("companyName").style.display = "block";
-            } else {
-
-                document.getElementById("companyName").style.display = "none";
-            }
-        }
-      
     </script>
 
 

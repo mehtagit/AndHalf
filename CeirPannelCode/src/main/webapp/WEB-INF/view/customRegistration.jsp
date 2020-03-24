@@ -9,6 +9,7 @@ if(statusCode==200){
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
@@ -113,12 +114,12 @@ footer {
 	color: #444;
 }
 
-h6 {
+ h6 {
 font-size: 0.9rem;
 line-height: 110%;
 margin: 0rem 0 0.2rem 0;
 margin-top: 1px !important;
-}
+} 
 
 .file-upload-heading {
 	margin-left: 0;
@@ -204,7 +205,12 @@ var contextpath = "${context}";
 		src="${context}/resources/js/custom-script.js"></script>
 
 	<!-- //////////////////////////////////////////////////////////////////////////// -->
-    <%String name=request.getParameter("type");%>
+    <%String name=request.getParameter("type");
+    Integer usertypeId=(Integer)session.getAttribute("usertypeId");
+    if(usertypeId==null){
+    	usertypeId=0;
+    }
+    %>
 	<!-- START CONTENT -->
 	<section id="content" id="mainPage">
 		<!--start container-->
@@ -222,12 +228,17 @@ var contextpath = "${context}";
 									<option value="km"><spring:message code="lang.khmer" /></option>
 								</select>
 							</div>
-							<div class="col s12 m12"><h5><spring:message code="roletype.${param.type}" /> <spring:message code="select.registration" /></h5>
+							<div class="col s12 m12"><h5><spring:message  code="roletype.${fn:replace(param.type, ' ', '_')}" /> <spring:message code="select.registration" /></h5>
 							<span id="msg" style="color: red;">${msg}</span><hr>
 							</div>
 								<input type="hidden" id="usertypeId" value="${usertypeId}">
 								<input type="hidden" id="usertypeName" value="<%=name%>">
-								<input type="hidden" id="type" value="2">
+							<%if(usertypeId==12){%>
+							<input type="hidden" id="type" value="1">
+							<%}else{ %>
+							<input type="hidden" id="type" value="2">
+							<%} %>
+								
 							<div class="row">
 								<div class="input-field col s12 m4 l4">
 									<input type="text" name="firstName" id="firstName" required="required" pattern="[A-Za-z]{3,20}" maxlength="20"
@@ -252,7 +263,14 @@ var contextpath = "${context}";
 								</div>
 
 							</div>
-
+                                <%if(usertypeId==12){%>
+								<div class="input-field col s12 m6 l6" id="companyNames" style="margin-top: 22px;">
+									<input type="text" name="companyName" id="companyName" pattern="[A-Za-z\s]+{0,50}" maxlength="50"
+									oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" required="required"
+									/>
+									<label for="companyName"><spring:message code="registration.companyName" /> <span class="star">*</span></label>
+								</div>
+								<%}%>
 											<div class="row">
 								<div class="input-field col s12 m12 l12">
 									<input type="text" maxlength="200" pattern="[A-Za-z0-9._%+-$@,/]+\.+{0,200}" name="propertyLocation"
@@ -352,12 +370,12 @@ var contextpath = "${context}";
 									<h6 class="file-upload-heading"><spring:message code="registration.uploadnationalid" /> <span class="star">*</span></h6>
 									<div class="btn">
 										<span><spring:message code="input.selectfile" /></span>
-										<input type="file" id="NationalIdImage" placeholder="Upload National ID Image"
+										<input type="file" id="NationalIdImage" placeholder=""
 										oninput="InvalidMsg(this,'fileType','<spring:message code="validation.selectImgMsg" />');" oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.selectImgMsg" />');"
 										 required/>
 									</div>
 									<div class="file-path-wrapper">
-									<input class="file-path validate" type="text" placeholder="Upload National ID Image" />
+									<input class="file-path validate" type="text" placeholder="<spring:message code="registration.uploadnationalid" />" />
 									</div>
 								</div>
 
@@ -394,7 +412,7 @@ var contextpath = "${context}";
 
 								<div class="col s12 m6 l6" style="margin-top: 3px;">
 									<label> <spring:message code="registration.natureofemployment" /> <span class="star">*</span></label>
-									<select id="natureOfEmployment" class="browser-default"onchange="myFunction()" 
+									<select id="natureOfEmployment" class="browser-default" 
 									oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" required>
 										<option value="" disabled selected><spring:message code="registration.natureofemployment" /></option>
 										<option value="Permanent"><spring:message code="registration.permanent" /></option>
@@ -421,7 +439,7 @@ var contextpath = "${context}";
 
 								<div class="input-field col s12 m6 l6">
 									<input type="text" name="authorityEmail" maxlength="320"  id="authorityEmail" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,320}" 
-									oninput="InvalidMsg(this,'email');" oninvalid="InvalidMsg(this,'email');" title="<spring:message code="validation.email" />" >
+									oninput="InvalidMsg(this,'email','<spring:message code="validation.email" />');" oninvalid="InvalidMsg(this,'email','<spring:message code="validation.email" />');">
 									<label for="authorityEmail"> <spring:message code="registration.ReportingAuthorityEmailid" /></label>
 								</div>
 
@@ -448,7 +466,32 @@ var contextpath = "${context}";
 								</div>
 							</div>
 
+<%if(usertypeId==12){%>
+<div class="row">
+									<div class="input-field col s12 m6 l6"  id="vatNumberField">
+									<input type="hidden" id="vatStatus" value="1"/>
+										<input type="text" required="required" name="vatNo" maxlength="15" id="vatNo" pattern="[A-Za-z0-9]{0,15}"
+										oninput="InvalidMsg(this,'input','<spring:message code="validation.15alphanumeric" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15alphanumeric" />');" 
+										>
+										<label for="vatNo"><spring:message code="registration.vatnumber" /> <span class="star">*</span></label>
+									</div>
 
+									<div id="vatFileDiv">
+										<div class="file-field col s12 m6">
+											<p class="upload-file-label"><spring:message code="registration.vatfile" /> <span class="star">*</span></p>
+											<div class="btn">
+												<span><spring:message code="input.selectfile" /></span> <input required="required" name="file" type="file" id="vatFile" accept=".pdf"
+												oninput="InvalidMsg(this,'fileType','<spring:message code="validation.file" />');" oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.file" />');"   />
+											</div>
+											<div class="file-path-wrapper">
+												<input name="vatFile" class="file-path validate responsive-file-div" type="text"  >
+											</div>
+										</div>
+										<br> <br>
+									</div>
+								</div>
+								<%} %>
+								
 							<div class="row">
 								<div class="input-field col s12 m6 l6">
 									<input type="password" name="password" class=" password" id="password" pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,10}$"
@@ -591,22 +634,20 @@ var contextpath = "${context}";
 		</div>
 	</div> -->
 	
-	<div id="otpMsgModal" class="modal" style="width:40%;margin-left: 30%;margin-top: 10vh;">
-		<!-- <button type="button"
-			class=" modal-action modal-close waves-effect waves-green btn-flat right"
-			data-dismiss="modal">&times;</button> -->
-			<h6 class="modal-header"><spring:message code="registration.verifyotp" /></h6>
+	<div id="otpMsgModal" class="modal"
+		style="width: 40%; margin-left: 30%; margin-top: 10vh;">
+		<h6 class="modal-header">
+			<spring:message code="registration.verifyotp" />
+		</h6>
 		<div class="modal-content">
 			<!-- <h4 class="header2 pb-2">User Info</h4> -->
 
-				
-				<p style="padding:10px;" class="center" id="otpMsg"></p>
-			
-<a href="javascript:void(0)" onclick="openOtpPopup()" class="btn"
-				style="width: 100%; margin-top: 20px; margin-bottom: 20px;">
-				<spring:message code="registration.verifyotp" />
-				</a>
-							</div>
+			<p style="padding: 10px;" class="center" id="otpMsg"></p>
+
+			<a href="javascript:void(0)" onclick="openOtpPopup()" class="btn"
+				style="width: 100%; margin-top: 20px; margin-bottom: 20px;"><spring:message
+					code="registration.verifyotp" /></a>
+		</div>
 	</div>
 	
 	
@@ -690,21 +731,20 @@ var contextpath = "${context}";
 		</div>
 	</div> -->
 
-	 <div id="otpMessage" class="modal" >
-        <button type="button" class="modal-action modal-close waves-effect waves-green btn-flat right"
-            data-dismiss="modal">&times;</button>
-        <h6 class="modal-header"><spring:message code="registration.verifyotp" /></h6>
-        <div class="modal-content">
-          
-                <h6 id="otpResponse"></h6>
-            <div class="row">
-                <div class="input-field col s12 center">
-                   
-                    <a href="${context}/login" class="btn"><spring:message code="modal.ok" /></a>
-                </div>
-            </div>
-        </div>
-    </div>
+		<div id="otpMessage" class="modal">
+		<h6 class="modal-header" style="font-size: 1.15rem;">
+			<spring:message code="registration.verifyotp" />
+		</h6>
+		<div class="modal-content">
+			<h6 id="otpResponse" style="    font-size: 1.15rem;line-height: 110%;margin: .7666666667rem 0 .46rem 0!important;"></h6>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<a href="${context}/login" class="btn"><spring:message
+							code="modal.ok" /></a>
+				</div>
+			</div>
+		</div>
+	</div>
 
 
 
@@ -797,6 +837,7 @@ var contextpath = "${context}";
 	
 	
         $(document).ready(function () {
+        	$('html,body').scrollTop(0);
         	checkBoxClick();
         	$('#langlist').val(data_lang_param);
             $('.modal').modal();
@@ -808,24 +849,28 @@ var contextpath = "${context}";
             		'km': './resources/i18n/km.json'
             	} ).done( function() { 
             	});
+                $('.dropdown-trigger').dropdown();
+                portDropDownData("CUSTOMS_PORT","arrivalPort");
+                var password = document.getElementById("password")
+                , confirm_password = document.getElementById("confirm_password");
+
+              function validatePassword(){
+                if(password.value != confirm_password.value) {
+                	 confirm_password.setCustomValidity("<spring:message code='registration.passnotmatch' />");
+                } else {
+                  confirm_password.setCustomValidity('');
+                }
+              }
+
+              password.onchange = validatePassword;
+              confirm_password.onkeyup = validatePassword;
+         
+              $('form').on('submit', function() {
+            	  $('html, body').animate({scrollTop:0}, 'slow');
+            	});
         });   
 
-        $('.dropdown-trigger').dropdown();
-        portDropDownData("CUSTOMS_PORT","arrivalPort");
-        var password = document.getElementById("password")
-        , confirm_password = document.getElementById("confirm_password");
-
-      function validatePassword(){
-        if(password.value != confirm_password.value) {
-        	 confirm_password.setCustomValidity("<spring:message code='registration.passnotmatch' />");
-        } else {
-          confirm_password.setCustomValidity('');
-        }
-      }
-
-      password.onchange = validatePassword;
-      confirm_password.onkeyup = validatePassword;
-    </script>
+  </script>
 
 	<script>
         populateCountries(
@@ -837,29 +882,6 @@ var contextpath = "${context}";
             "country",
             "state"
         );
-    </script>
-
-	<script>
-        function myFunction() {
-            var x = document.getElementById("mySelect").value;
-            if (x == 'Individual') {
-                document.getElementById("uploadFile").style.display = "block";
-                document.getElementById("passportNumberDiv").style.display = "block";
-                //document.getElementById("companyName").style.display = "none";
-                $('#companyName').style.display = "none";
-            } else {
-
-                document.getElementById("uploadFile").style.display = "none";
-                document.getElementById("passportNumberDiv").style.display = "none";
-            }
-
-            if (x == 'Company', 'Organization', 'Government') {
-                document.getElementById("companyName").style.display = "block";
-            } else {
-
-                document.getElementById("companyName").style.display = "none";
-            }
-        }
     </script>
 </body>
 </html>

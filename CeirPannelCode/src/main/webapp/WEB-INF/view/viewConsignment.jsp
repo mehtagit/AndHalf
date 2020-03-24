@@ -364,7 +364,7 @@
 				<h6 id="approveConsignmnetHeading">
 					<spring:message code="modal.message.clearConsignment" />
 					<span id="displayname"></span>
-					<spring:message code="modal.message.havingTxn" />
+				<%-- 	<spring:message code="modal.message.havingTxn" /> --%>
 					( <span id="ApproveConsignmentTxnid"></span> )
 					<spring:message code="modal.message.hasBeenpaid" />
 				</h6>
@@ -603,7 +603,7 @@
 				<div class="input-field col s12 center">
 					<div class="input-field col s12 center">
 						<a href="${context}/Consignment/viewConsignment"
-							class="modal-close btn"><spring:message code="modal.close" /></a>
+							class="modal-close btn"><spring:message code="modal.ok" /></a>
 					</div>
 				</div>
 			</div>
@@ -710,7 +710,8 @@
 					<div class="input-field col s12 m6">
 						<input type="text" name="totalPrice" id="totalPrice" maxlength="7"
 							pattern="[0-9]{0,7}"
-							placeholder="" /> <label for="totalPrice" class="center-align"><spring:message
+							placeholder=""  oninput="InvalidMsg(this,'input','<spring:message code="validation.7character" />');"
+					 oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7character" />');"/> <label for="totalPrice" class="center-align"><spring:message
 								code="input.totalprice" /></label>
 					</div>
 

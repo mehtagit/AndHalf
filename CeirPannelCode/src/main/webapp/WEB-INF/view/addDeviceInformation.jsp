@@ -1,3 +1,12 @@
+<%
+	response.setHeader("Cache-Control", "no-cache");
+	response.setHeader("Cache-Control", "no-store");
+	response.setDateHeader("Expires", 0);
+	response.setHeader("Pragma", "no-cache");
+	/*  session.setMaxInactiveInterval(200); //200 secs
+	 session.setAttribute("usertype", null); */
+	if (session.getAttribute("usertype") != null) {
+%>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
@@ -6,7 +15,7 @@
 <!DOCTYPE html>
 <html lang="en" class="no-js">
 <head>
-<title>Dashboard</title>
+<title>Device Information</title>
 
 <meta charset="utf-8" />
 <meta name="viewport"
@@ -144,7 +153,7 @@ input[type='search'] {
 }
 </style>
 </head>
-<body session-value="${not empty param.NID ? param.NID : 'null'}">
+<body data-id="12" session-value="${not empty param.NID ? param.NID : 'null'}">
 
 	<!-- START CONTENT -->
 	<section id="content">
@@ -173,6 +182,8 @@ input[type='search'] {
 													<div class="col s12 m6">
 														<label for="deviceType1"><spring:message code="select.deviceType" /><span
 															class="star">*</span></label> <select class="browser-default"
+															oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+											                oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 															id="deviceType1" required="required">
 															<option value="" disabled selected><spring:message code="select.selectDeviceType" />
 																</option>
@@ -184,6 +195,8 @@ input[type='search'] {
 													<div class="col s12 m6">
 														<label for="deviceIdType1"><spring:message code="select.deviceIDType" /><span
 															class="star">*</span></label> <select required="required"
+															oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+											                oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 															class="browser-default" id="deviceIdType1">
 															<option value="" disabled selected><spring:message code="select.selectDeviceIDType" /></option>
 
@@ -193,6 +206,8 @@ input[type='search'] {
 													<div class="col s12 m6">
 														<label for="multipleSimStatus1"><spring:message code="select.multiSimStatus" /><span class="star">*</span>
 														</label> <select class="browser-default" required="required"
+														oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+											        oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 															id="multipleSimStatus1">
 															<option value="" disabled selected><spring:message code="select.select" />
 														</select>
@@ -201,6 +216,8 @@ input[type='search'] {
 													<div class="col s12 m6">
 														<label for="country1"><spring:message code="select.countryBoughtFrom" /><span
 															class="star">*</span></label> <select id="country1"
+															oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+											        oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 															class="browser-default" class="mySelect"
 															style="padding-left: 0;" required="required">
 															<option value="" disabled selected><spring:message code="select.countryBoughtFrom" />
@@ -211,7 +228,10 @@ input[type='search'] {
 														style="margin-top: 28px;">
 														<input type="text" id="serialNumber1" name="serialNumber"
 															required="required" pattern="[A-Za-z0-9]{0,15}"
-															title="Please enter alphabets and numbers upto 15 characters only"
+															
+															oninput="InvalidMsg(this,'input','<spring:message code="validation.15serialNo" />');"
+											        oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15serialNo" />');"
+															title=""
 															maxlength="15"> <label for="serialNumber1"> <spring:message code="input.deviceSerialNumber" /><span class="star">*</span>
 														</label>
 													</div>
@@ -219,7 +239,10 @@ input[type='search'] {
 													<div class="col s12 m6">
 														<label for="taxStatus1"><spring:message code="select.taxPaidStatus" /><span
 															class="star">*</span></label> <select class="browser-default"
-															required="required" id="taxStatus1">
+															required="required"
+															oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+											        oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+															 id="taxStatus1">
 															<option value="" disabled selected><spring:message code="select.selectTaxPaidStatus" /></option>
 
 														</select>
@@ -231,6 +254,8 @@ input[type='search'] {
 													<div class="col s12 m6" style="margin-top: -10px;">
 														<label for="deviceStatus1"><spring:message code="select.deviceStatus" /><span
 															class="star">*</span></label> <select class="browser-default"
+															oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+											        oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 															required="required" id="deviceStatus1">
 															<option value="" disabled selected><spring:message code="select.selectDeviceStatus" /></option>
 
@@ -239,6 +264,8 @@ input[type='search'] {
 
 													<div class="input-field col s12 m6 l6">
 														<input type="text" name="Price" id="Price1"
+														oninput="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
+											        oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
 															pattern="[0-9]{0,7}"  maxlength="7">
 														<label for="Price1"><spring:message code="select.price" /></label>
 													</div>
@@ -246,6 +273,8 @@ input[type='search'] {
 													<div class="col s12 m6">
 														<label for="Currency1"><spring:message code="input.currency" /><span class="star">*</span></label>
 														<select class="browser-default" id="Currency1"
+														oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+											        oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 															required="required">
 															<option value="" disabled selected><spring:message code="select.selectCurrency" /></option>
 
@@ -261,27 +290,35 @@ input[type='search'] {
 															<div class="input-field col s12 m6">
 																<input type="text" id="IMEIA1" name="IMEI1"
 																	pattern="[0-9]{15,16}" required
-																	title="Please enter minimum 15 and maximum 16 digit only"
+																	oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
+											        oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
+																
 																	maxlength="16"> <label for="IMEIA1"><spring:message code="title.one" /><span
 																	class="star">*</span></label>
 															</div>
 															<div class="input-field col s12 m6">
 																<input type="text" id="IMEIB1" name="IMEI2"
 																	pattern="[0-9]{15,16}"
-																	title="Please enter minimum 15 and maximum 16 digit only"
+																	oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
+											        oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
+															
 																	maxlength="16"> <label for="IMEIB1"><spring:message code="title.two" /></label>
 															</div>
 
 															<div class="input-field col s12 m6">
 																<input type="text" id="IMEIC1" name="IMEIC3"
 																	pattern="[0-9]{15,16}"
-																	title="Please enter minimum 15 and maximum 16 digit only"
+																	oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
+											        oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
+																
 																	maxlength="16"> <label for="IMEIC1"><spring:message code="title.three" /></label>
 															</div>
 
 															<div class="input-field col s12 m6" id="field">
 																<input type="text" id="IMEID1" name="IMEID4[]"
 																	pattern="[0-9]{15,16}"
+																	oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
+											        oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																	title="Please enter minimum 15 and maximum 16 digit only"
 																	maxlength="16" id="field0"> <label for="IMEID1"><spring:message code="title.four" /></label>
 															</div>
@@ -629,7 +666,7 @@ input[type='search'] {
 			<div class="row">
 				<div class="input-field col s12 center">
 					<div class="input-field col s12 center">
-						<button class="btn"><spring:message code="modal.ok" /></button>
+						<button class="btn" id="ok"><spring:message code="modal.ok" /></button>
 					</div>
 				</div>
 			</div>
@@ -744,9 +781,24 @@ input[type='search'] {
 		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
 	 <script type="text/javascript"
 		src="${context}/resources/project_js/addDeviceInfo.js"></script>
+		<script type="text/javascript"
+		src="${context}/resources/project_js/validationMsg.js"></script>
 	<!-- ================================================
     Scripts
     ================================================ -->
 
 </body>
 </html>
+<%
+	} else {
+		/*  request.setAttribute("msg", "  *Please login first");
+		request.getRequestDispatcher("./index.jsp").forward(request, response); */
+%>
+<script language="JavaScript">
+	sessionStorage.setItem("loginMsg",
+			"*Session has been expired");
+	window.top.location.href = "./login";
+</script>
+<%
+	}
+%>

@@ -31,10 +31,11 @@ function changePassword(){
 					'km': './resources/i18n/km.json'
 				}).done( function() {
 					$("#changePasswordMessage #cPassSucessMsg").text($.i18n(resp.tag));
+					$("#changePassword").closeModal();
 					$("#changePasswordMessage").openModal({
 				        dismissible:false
 				    });
-					$("#changePassword").closeModal();
+					
 					
 				});
 				
@@ -85,7 +86,9 @@ function updateUSerStatus(){
 					'en': './resources/i18n/en.json',
 					'km': './resources/i18n/km.json'
 				}).done( function() {
+					
 					$("#manageAccountSubmit #mgAccount").text($.i18n(resp.tag));
+					$("#manageAccount").closeModal();
 					$("#manageAccountSubmit").openModal({
 				        dismissible:false
 				    });
@@ -221,8 +224,6 @@ function editProfile(){
 			$("#registrationForm #id").val(resp.id);
 			$("#registrationForm #middleName").val(resp.middleName);
 			$("#registrationForm #lastName").val(resp.lastName);
-			$("#registrationForm #type").val(resp.type);        
-			$("#registrationForm #asTypeName").val(resp.asTypeName);
 			$("#registrationForm #email").val(resp.email); 
 			$("#registrationForm #phoneNo").val(resp.phoneNo);
 			$("#registrationForm #propertyLocation").val(resp.propertyLocation);
@@ -233,7 +234,8 @@ function editProfile(){
 			$("#registrationForm #country").val(resp.country); 
 			$("#registrationForm #postalCode").val(resp.postalCode);
 			$("#registrationForm #locality").val(resp.locality);
-
+			$("#registrationForm #asTypeName").val(resp.asTypeName);
+			$("#registrationForm #type").val(resp.type);
 			//$("#registrationForm #state").text(resp.province);
 			$("#registrationForm #companyName").val(resp.companyName);
 			$("#registrationForm #passportNo").val(resp.passportNo);
@@ -245,6 +247,7 @@ function editProfile(){
 			arr=resp.roles;
             if(resp.userTypeId==4 || resp.userTypeId==5 || resp.userTypeId==6){
              	$("#rolesDiv").show();
+             	$("#AsTypeDiv").show();
                 usertypeData2(resp.userTypeId); 	
             }
 			for (var i = 0; i < arr.length; i++) {
@@ -272,6 +275,7 @@ function editProfile(){
 
 function updateProfile(){
 	$("#passwordBtn").prop('disabled', true);
+	$("#btnSave").prop('disabled', true);
 	$('#registrationForm #usertypes option').attr('disabled', false);
 	console.log($('select#usertypes').val());
 	var obj=""; 
@@ -348,6 +352,7 @@ function updateProfile(){
 						'km': './resources/i18n/km.json'
 					}).done( function() {
 						$("#profileResponse #updateInfoMsg").text($.i18n(response.tag)); 
+						$("#passwordModal").closeModal();
 						$('#profileResponse').openModal({
 					        dismissible:false
 					    });
@@ -402,7 +407,7 @@ function updateProfile(){
 } 
 
 function passwordPopup(){
-	$("#btnSave").prop('disabled', true);
+	//$("#btnSave").prop('disabled', true);
 	$("#passwordModal").openModal({
         dismissible:false
     });
@@ -476,4 +481,38 @@ function verifyOtp2(){
 
 function redirectToDashboard(){
 	window.location.href="Home?lang="+window.parent.$('#langlist').val();
+}
+
+
+
+function manageAccountPopup(){
+	document.getElementById("userStatusForm").reset();
+	$("#manageAccount").openModal({
+        dismissible:false
+    });
+}
+
+function changePasswordPopup(){
+	//document.getElementById("changePassForm").reset();
+	$("#changePassForm #errorMsg").text("");
+	$("#changePassForm input").val("");
+	 $("#changePassForm input").attr('type', 'password');
+	  $("#changePassForm label").removeClass("active");
+	  $("#changePassForm .input-field-addon i").removeClass("fa-eye");
+	  $("#changePassForm .input-field-addon i").addClass("fa fa-eye-slash");
+	  $("#changePassword").openModal({
+        dismissible:false
+    });
+}
+
+function openLogout(){
+	$("#goToLogout").openModal({
+        dismissible:false
+    });
+}
+
+function openHome(){
+	$("#goToHome").openModal({
+        dismissible:false
+    });
 }
