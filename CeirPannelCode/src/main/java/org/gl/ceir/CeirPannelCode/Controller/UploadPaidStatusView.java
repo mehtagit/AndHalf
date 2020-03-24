@@ -22,12 +22,14 @@ import org.gl.ceir.CeirPannelCode.Model.FilterRequest_UserPaidStatus;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.VisaDb;
 import org.gl.ceir.CeirPannelCode.Util.UtilDownload;
+import org.gl.ceir.pagination.model.UserPaidStatusContent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -98,6 +100,23 @@ FeignCleintImplementation feignCleintImplementation;
 		return modelAndView;
 	}
 
+	@GetMapping("view-device-information/{imei}")
+	public ModelAndView viewDeviceInformationView(@PathVariable("imei") Long imei) {
+		log.info(" imei =="+imei);
+		ModelAndView modelAndView = new ModelAndView("viewAdddeviceInformation");
+		UserPaidStatusContent content= uploadPaidStatusFeignClient.viewByImei(imei);
+		log.info(" content =="+content);
+
+		addMoreFileModel.setTag("upload_file_link");
+        urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
+        log.info("file link =="+urlToUpload.getValue());
+       // content.setFilePreviewLink(urlToUpload.getValue());
+		String fileLink=urlToUpload.getValue();
+		modelAndView.addObject("fileLink", fileLink);
+        modelAndView.addObject("viewInformation", content);
+		modelAndView.setViewName("viewAdddeviceInformation");
+		return modelAndView;
+	}
 
 
 	@PostMapping("uploadPaidStatusForm")
@@ -527,3 +546,5 @@ stream.close();
 	  
 	 }
 
+
+	

@@ -79,7 +79,7 @@ function showCambodianUserForm()
 	$("#visaImage").attr("required", false);
 	$("#visaNumber").attr("required", false);
 
-
+	$("#entryCountryDiv").css("display", "block");
 
 	$("#endUserLabelNID").append('<span class="star">*</span>');
 	$("#nidType").append('<span class="star">*</span>');

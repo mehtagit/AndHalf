@@ -592,7 +592,8 @@ function submitDeviceInfo(){
 	var district=$('#district').val();
 	var commune=$('#commune').val();
 	var postalcode=$('#postalcode').val();
-
+	var passportFileName=$('#csvUploadFile').val()
+	    passportFileName=passportFileName.replace(/^.*[\\\/]/, '');
 	var fieldId=1;
 	var regularizeDeviceDbs =[];
 	$('.deviceInformation').each(function() {
@@ -657,7 +658,8 @@ function submitDeviceInfo(){
 			"village":village,
 			"postalCode":postalcode,
 			"doc_type_numeric":docType,
-			"docType":doc_type_numeric
+			"docType":doc_type_numeric,
+			"passportFileName":passportFileName
 
 	}
 	formData.append('file', $('#csvUploadFile')[0].files[0]);
@@ -823,7 +825,7 @@ $(document).ready(function () {
 
 
 	$(document).ready(function(){
-		$.getJSON('./getDropdownList/DOC_TYPE', function(data) {
+		$.getJSON('./getSourceTypeDropdown/DOC_TYPE/'+featureId, function(data) {
 
 			for (i = 0; i < data.length; i++) {
 				$('<option>').val(data[i].tagId).text(data[i].interp).attr("docValue",data[i].value).appendTo('#doc_type');

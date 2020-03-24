@@ -164,7 +164,7 @@ input[type='search'] {
 					<div class="col s12 m12 l12">
 						<div class="row card-panel">
 							<div class="container-fluid pageHeader">
-								<p class="PageHeading"><spring:message code="registerconsignment.header.addDeviceInformation" /></p>
+								<p class="PageHeading"><spring:message code="registerconsignment.header.viewDeviceInformation" /></p>
 								<!-- <a href="#addDevice" class="boton right modal-trigger">Add Device</a> -->
 							</div>
 							<div id="user123" class="section"> 
@@ -179,70 +179,52 @@ input[type='search'] {
 											</div>
 											<div class="col s12 m12" style="margin-top: 20px;">
 												<div class="input-field col s12 m4">
-													<input type="text" id="nationalID" pattern="[A-Za-z0-9]{1,12}" 
-													oninput="InvalidMsg(this,'input','<spring:message code="validation.12Character" />');"
-											        oninvalid="InvalidMsg(this,'input','<spring:message code="validation.12Character" />');"
-													 required maxlength="12" name="nationalID" placeholder="" disabled="disabled" value="" /> <label for="nationalID"
+													<input type="text" id="nationalID" readonly="readonly" value="${viewInformation.endUserDB.nid}"/> <label for="nationalID"
 														class="center-align ml-10"><spring:message code="input.nidText" /></label>
 												</div>
 
 													<div class="col s12 m4" style="margin-top: -10px;">
 															<label for="deviceType"><spring:message code="input.documenttype" /> <span
-																class="star"></span></label> <select class="browser-default" disabled="disabled"
-																id="doc_type" 
+																class="star"></span></label> <%-- <select class="browser-default" disabled="disabled"
+																id="doc_type" value="${viewInformation.endUserDB.nid}"
 																oninput="InvalidMsg(this,'input','<spring:message code="validation.selectFieldMsg" />');"
 											                    oninvalid="InvalidMsg(this,'input','<spring:message code="validation.selectFieldMsg" />');" required>
 																<option value="" disabled selected><spring:message code="select.documenttype" /> </option>
-															</select>
+															</select> --%>
+															<input type="text" value="" readonly="readonly">
 															
 															<!-- <input type="text" id="docTypeNymericValue" style="display: none" > -->
 														</div>	
 
 												<div class="file-field col s12 m4"
 													style="margin-top: -15px;">
-													<h6 style="color: #000;"><spring:message code="input.uploadNidProof" /> <span class="star">*</span>
+													<h6 style="color: #000;"><spring:message code="input.uploadNidProof" /> <span class="star"></span>
 													</h6>
-													<div class="">
-														 <input type="text" disabled="disabled"
-														oninput="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');"
-											oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');"
-														 onchange="isImageValid('csvUploadFile')"
-														title= "<spring:message code="validation.NoChosen" />" required id="csvUploadFile" accept="*image">
-													</div>
-													<!-- <div class="file-path-wrapper">
-														<input class="file-path validate responsive-file-div" id="csvUploadFileName"
-															type="text">
+													<!-- <div class="">
+														 <input type="text"  readonly="readonly" >
 													</div> -->
+													<div class="file-path-wrapper">
+														<input class="file-path validate responsive-file-div" id="csvUploadFileName" value="${viewInformation.endUserDB.passportFileName}"
+															type="text">
+														<a	class="imgPreviewLink" onclick="previewFile(\''${fileLink}'\',\''${viewInformation.endUserDB.passportFileName}'\',\''${viewInformation.endUserDB.txnId}'\')">Preview</a>
+													</div>
 												</div>
 											</div>
 											<div class="col s12 m12">
 												<div class="input-field col s12 m4 l4">
-													<input type="text" name="firstName" id="firstName" disabled="disabled"
-														maxlength="20" required="required"
-														pattern="[A-Za-z]{0,20}"
-														oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
-											            oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
-														 required>
+													<input type="text" readonly="readonly" value="${viewInformation.endUserDB.firstName}"	>
 													<label for="firstName" class="center-align"><spring:message code="input.firstName" /> <span class="star"></span>
 													</label>
 												</div>
 
 												<div class="input-field col s12 m4 l4">
-													<input type="text" name="middleName" id="middleName" disabled="disabled"
-														maxlength="20" pattern="[A-Za-z]{0,20}"
-														oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
-											            oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
-														>
+													<input type="text" readonly="readonly"  value="${viewInformation.endUserDB.middleName}">
 													<label for="middleName"><spring:message code="input.middleName" /></label>
 												</div>
 
 												<div class="input-field col s12 m4 l4">
-													<input type="text" name="lastName" id="lastName" disabled="disabled"
-														 pattern="[A-Za-z]{0,20}"
-														oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
-											            oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
-														title= "<spring:message code="validation.20Character" />" required
-														maxlength="20"> <label for="lastName"><spring:message code="input.lastName" /> <span class="star"></span>
+													<input type="text"readonly="readonly"  value="${viewInformation.endUserDB.lastName}"> 
+													<label for="lastName"><spring:message code="input.lastName" /> <span class="star"></span>
 													</label>
 												</div>
 											</div>
@@ -251,21 +233,15 @@ input[type='search'] {
 										<div class="row">
 											<div class="col s12 m12">
 												<div class="input-field col s12 m12 l12">
-													<input type="text" name="address" disabled="disabled"
-														pattern="[^[a-zA-Z0-9\s,'-]*$]{0,200}"
-														oninput="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');"
-											            oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');"
-														 maxlength="200" required
-														class="form-control boxBorder boxHeight" id="address">
+													<input type="text" readonly="readonly"
+														 value="${viewInformation.endUserDB.propertyLocation}" class="form-control boxBorder boxHeight" id="address">
 													<label for="address"><spring:message code="input.address" /> <span
 														class="star"></span></label>
 												</div>
 
 												<div class="input-field col s12 m6 l6">
-													<input type="text" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,20}" disabled="disabled"
-														oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-														title= "<spring:message code="validation.20Character" />"
-														name="streetNumber"
+													<input type="text" readonly="readonly"
+														value="${viewInformation.endUserDB.street}"
 														class="form-control boxBorder boxHeight" id="streetNumber"
 														maxlength="20" required/> <label
 														for="streetNumber"> <spring:message code="input.streetNumber" /> <span
@@ -273,10 +249,7 @@ input[type='search'] {
 													</label>
 												</div>
 													<div class="input-field col s12 m6 l6">
-													<input type="text" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}" disabled="disabled"
-														oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-											            oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-														name="streetNumber"
+													<input type="text" readonly="readonly" value="${viewInformation.endUserDB.village}"
 														class="form-control boxBorder boxHeight" id="village"
 														maxlength="30" required/> <label
 														for="village"> <spring:message code="input.village" /> <span
@@ -285,12 +258,8 @@ input[type='search'] {
 												</div>
 												
 
-												<div class="input-field col s12 m6 l6">
-													<input type="text" name="locality" disabled="disabled"
-														pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}"
-														oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-											            oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-														
+												<div class="input-field col s12 m6 l6"> 
+													<input type="text" readonly="readonly" value="${viewInformation.endUserDB.locality}"
 														class="form-control boxBorder boxHeight" id="locality"
 														maxlength="30" required/> <label
 														for="locality"> <spring:message code="input.locality" /> <span class="star"></span>
@@ -298,10 +267,7 @@ input[type='search'] {
 												</div>
 
 													<div class="input-field col s12 m6 l6">
-													<input type="text" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}" disabled="disabled"
-														oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-											            oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-														 name="streetNumber"
+													<input type="text" readonly="readonly" value="${viewInformation.endUserDB.district}"
 														class="form-control boxBorder boxHeight" id="district"
 														maxlength="30" required> <label
 														for="district"> <spring:message code="input.district" /> <span
@@ -309,10 +275,7 @@ input[type='search'] {
 													</label>
 												</div>
 												<div class="input-field col s12 m6 l6">
-													<input type="text" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}" disabled="disabled"
-														oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-											            oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-														 name="streetNumber"
+													<input type="text" readonly="readonly" value="${viewInformation.endUserDB.commune}"
 														class="form-control boxBorder boxHeight" id="commune"
 														maxlength="30" required/> <label
 														for="commune"> <spring:message code="input.commune" /> <span
@@ -321,12 +284,9 @@ input[type='search'] {
 												</div>
 												<div class="input-field col s12 m6 l6">
 													
-													<input type="text" pattern="[0-9]{1,6}" disabled="disabled"
-														oninput="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');"
-											            oninvalid="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');"
-														title= "<spring:message code="validation.postalcode" />" name="streetNumber"
+													<input type="text" readonly="readonly"
 														class="form-control boxBorder boxHeight" id="postalcode"
-														maxlength="6" required/> <label
+														maxlength="6"  value="${viewInformation.endUserDB.postalCode}" required/> <label
 														for="postalcode"> <spring:message code="input.postalCode" /> <span
 														class="star"></span>
 													</label>
@@ -336,12 +296,13 @@ input[type='search'] {
 														style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
 														<spring:message code="table.country" /> <span class="star"></span>
 													</p>
-													<select id="country" class="browser-default"
-														class="mySelect" disabled="disabled"
+													<%-- <select id="country" class="browser-default"
+														class="mySelect" disabled="disabled"  value="${viewInformation.endUserDB.country}"
 														oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 											            oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 														title= "<spring:message code="validation.selectFieldMsg" />"
-														 style="padding-left: 0;" required></select>
+														 style="padding-left: 0;" required></select> --%>
+														 <input type="text" readonly="readonly" value="${viewInformation.endUserDB.country}">
 												</div>
 
 												<div class="input-field col s12 m6 l6">
@@ -349,30 +310,25 @@ input[type='search'] {
 														style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
 													<spring:message code="input.province" /> <span class="star"></span>
 													</p>
-													<select id="state" class="browser-default" class="mySelect" disabled="disabled"
+													<input type="text" readonly="readonly"  value="${viewInformation.endUserDB.province}">
+												<%-- 	<select id="state" class="browser-default" class="mySelect" disabled="disabled"
 													oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 											        oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 													title= "<spring:message code="validation.selectFieldMsg" />"
-														style="padding-left: 0;" required></select>
+														style="padding-left: 0;" required></select> --%>
 												</div>
 											</div>
 
 											<div class="col s12 m12" style="margin-top: 10px;">
 												<div class="input-field col s12 m6 l6">
-														<input type="email" name="email" id="email"  disabled="disabled"
-														oninput="InvalidMsg(this,'input','<spring:message code="validation.emial" />');"
-											            oninvalid="InvalidMsg(this,'input','<spring:message code="validation.emial" />');"
-														title= "<spring:message code="validation.emial" />" maxlength="30"> <label for="email"><spring:message code="input.email" /><span
+														<input type="email" readonly="readonly"
+														 value="${viewInformation.endUserDB.email}"> <label for="email"><spring:message code="input.email" /><span
 														class="star"></span></label>
 												</div>
 
 												<div class="input-field col s12 m6 l6" style="margin-top: 18px;">
-													<input type="text" name="phone"  disabled="disabled"
-														pattern="[0-9]{10,10}"
-														oninput="InvalidMsg(this,'input','<spring:message code="validation.10digits" />');"
-											            oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10digits" />');"
-														title= "<spring:message code="validation.10digits" />" required  class="form-control boxBorder boxHeight" id="phone"
-														maxlength="10"> <label for="phone"><spring:message code="input.contactNum" /><span class="star"></span>
+													<input type="text" readonly="readonly"
+														pattern="[0-9]{10,10}"  value="${viewInformation.endUserDB.phoneNo}" > <label for="phone"><spring:message code="input.contactNum" /><span class="star"></span>
 													</label>
 												</div>
 											</div>
@@ -390,36 +346,36 @@ input[type='search'] {
 													<div class="col s12 m6">
 														<label for="deviceType1"><spring:message code="select.deviceType" /><span
 															class="star"></span></label>
-															<input type="text" value="${viewInformation.deviceTypeInterp}" disabled="disabled">
+															<input type="text" value="${viewInformation.deviceTypeInterp}" readonly="readonly">
 													</div>
 
 													<div class="col s12 m6">
 														<label for="deviceIdType1"><spring:message code="select.deviceIDType" /><span
 															class="star"></span></label> 
-															<input type="text" value="${viewInformation.deviceIdTypeInterp}" disabled="disabled">
+															<input type="text" value="${viewInformation.deviceIdTypeInterp}" readonly="readonly">
 													</div>
 
 													<div class="col s12 m6">
 														<label for="multipleSimStatus1"><spring:message code="select.multiSimStatus" /><span class="star"></span>
-														</label> <input type="text" value="${viewInformation.deviceIdTypeInterp}" disabled="disabled">
+														</label> <input type="text" value="${viewInformation.deviceIdTypeInterp}" readonly="readonly">
 													</div>
 
 													<div class="col s12 m6">
 														<label for="country1"><spring:message code="select.countryBoughtFrom" /><span
-															class="star">*</span></label> 
-															<input type="text" value="${viewInformation.country}" disabled="disabled">
+															class="star"></span></label> 
+															<input type="text" value="${viewInformation.country}" readonly="readonly">
 													</div>
 
 													<div class="input-field col s12 m6"
 														style="margin-top: 28px;">
-														<input type="text" value="${viewInformation.deviceSerialNumber}" disabled="disabled">
+														<input type="text" value="${viewInformation.deviceSerialNumber}" readonly="readonly">
 														 <label for="serialNumber1"> <spring:message code="input.deviceSerialNumber" /><span class="star"></span>
 														</label>
 													</div>
 
 													<div class="col s12 m6">
 														<label for="taxStatus1"><spring:message code="select.taxPaidStatus" /><span
-															class="star"></span></label> <input type="text" disabled="disabled" value="${viewInformation.taxPaidStatusInterp}">
+															class="star"></span></label> <input type="text" readonly="readonly" value="${viewInformation.taxPaidStatusInterp}">
 															
 													</div>
 												</div>
@@ -429,17 +385,17 @@ input[type='search'] {
 													<div class="col s12 m6" style="margin-top: -10px;">
 														<label for="deviceStatus1"><spring:message code="select.deviceStatus" /><span
 															class="star"></span></label> 
-														<input type="text" disabled="disabled" value="${viewInformation.taxPaidStatusInterp}">	
+														<input type="text" readonly="readonly" value="${viewInformation.taxPaidStatusInterp}">	
 													</div>
 
 													<div class="input-field col s12 m6 l6">
-														<input type="text" value="${viewInformation.price}" disabled="disabled">
+														<input type="text" value="${viewInformation.price}" readonly="readonly">
 														<label for="Price1"><spring:message code="select.price" /></label>
 													</div>
 
 													<div class="col s12 m6">
 														<label for="Currency1"><spring:message code="input.currency" /><span class="star"></span></label>
-														<input type="text" value="${viewInformation.currencyInterp}" disabled="disabled">
+														<input type="text" value="${viewInformation.currencyInterp}" readonly="readonly">
 													</div>
 												</div>
 											</div>
@@ -449,22 +405,22 @@ input[type='search'] {
 														<p><spring:message code="title.imeiMeidEsn" /></p>
 														<div class='row'>
 															<div class="input-field col s12 m6">
-																<input type="text" value="${viewInformation.firstImei}" disabled="disabled">
+																<input type="text" value="${viewInformation.firstImei}" readonly="readonly">
 																 <label for="IMEIA1"><spring:message code="title.one" /><span
 																	class="star"></span></label>
 															</div>
 															<div class="input-field col s12 m6">
-																<input type="text" value="${viewInformation.secondImei}" disabled="disabled">
+																<input type="text" value="${viewInformation.secondImei}" readonly="readonly">
 																 <label for="IMEIB1"><spring:message code="title.two" /></label>
 															</div>
 
 															<div class="input-field col s12 m6">
-																<input type="text" value="${viewInformation.thirdImei}" disabled="disabled">
+																<input type="text" value="${viewInformation.thirdImei}" readonly="readonly">
 																 <label for="IMEIC1"><spring:message code="title.three" /></label>
 															</div>
 
 															<div class="input-field col s12 m6" id="field">
-																<input type="text" value="${viewInformation.fourthImei}" disabled="disabled">
+																<input type="text" value="${viewInformation.fourthImei}" readonly="readonly">
 																 <label for="IMEID1"><spring:message code="title.four" /></label>
 															</div>
 														</div>
@@ -478,9 +434,9 @@ input[type='search'] {
 											style="margin-top: 5px;">
 											<span style="font-size: 20px;">+</span><spring:message code="button.addMoreDevice" />
 										</button> --%>
-										<p>
+										<%-- <p>
 											<spring:message code="input.requiredfields" /> <span class="star"></span>
-										</p>
+										</p> --%>
 									</div>
 
 									<div class="col s12 m12 center" style="margin-top: 30px;">
@@ -875,7 +831,14 @@ input[type='search'] {
 	<!-- Modal End -->
 
 
-
+<div id="viewuplodedModel" class="modal" style="overflow: hidden">
+	<a href="#!" class="modal-close waves-effect waves-green btn-flat">&times;</a>
+		<div class="modal-content">
+			<div class="row">
+					<img src="" id="fileSource" width="400" height="400">
+			</div>
+		</div>
+	</div>
 
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
@@ -924,13 +887,17 @@ input[type='search'] {
 
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
+		<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
 
 	<!-- ================================================
     Scripts
     ================================================ -->
 
 <script type="text/javascript">
-$("#viewDeviceForm").find("input,select,textarea,button").prop("disabled",false);
+$('#redirectToPage').click(function(){
+	var nationalID=$('#nationalID').val();
+	 window.location.replace("../uploadPaidStatus?via=other&NID="+nationalID);
+	});
 </script>
 </body>
 </html>
