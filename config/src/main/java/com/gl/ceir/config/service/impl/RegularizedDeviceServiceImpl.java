@@ -66,6 +66,7 @@ import com.gl.ceir.config.repository.UserRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
 import com.gl.ceir.config.specificationsbuilder.GenericSpecificationBuilder;
 import com.gl.ceir.config.transaction.RegularizeDeviceTransaction;
+import com.gl.ceir.config.util.CommonFunction;
 import com.gl.ceir.config.util.DateUtil;
 import com.gl.ceir.config.util.InterpSetter;
 import com.gl.ceir.config.util.StatusSetter;
@@ -134,6 +135,8 @@ public class RegularizedDeviceServiceImpl {
 	
 	@Autowired
 	UserRepository userRepository;
+	@Autowired
+	CommonFunction commonFunction;
 
 	private List<RegularizeDeviceDb> getAll(FilterRequest filterRequest){
 
@@ -316,7 +319,10 @@ public class RegularizedDeviceServiceImpl {
 			if(!endUserDB.getRegularizeDeviceDbs().isEmpty()) {
 				if(validateRegularizedDevicesCount(nid, endUserDB.getRegularizeDeviceDbs())) {
 					for(RegularizeDeviceDb regularizeDeviceDb : endUserDB.getRegularizeDeviceDbs()) {
-
+   // TODO     responsse 5
+						if(commonFunction.checkAllImeiOfRegularizedDevice(regularizeDeviceDb)) {
+							return new GenricResponse(5,"duplicateImei" ,"IMEI is already registered in CEIR System", "");
+						}
 						if(Objects.isNull(regularizeDeviceDb.getTaxPaidStatus())) {
 							regularizeDeviceDb.setTaxPaidStatus(TaxStatus.TAX_NOT_PAID.getCode());
 						}
@@ -452,13 +458,12 @@ public class RegularizedDeviceServiceImpl {
 			}
 
 			RegularizeDeviceDb regularizeDeviceDb = regularizedDeviceDbRepository.getByFirstImei(imei);
-			
-			EndUserDB endUserDB = endUserDbRepository.getByNid(regularizeDeviceDb.getNid());
-			endUserDB.setRegularizeDeviceDbs(new ArrayList<>(1));
-			regularizeDeviceDb.setEndUserDB(endUserDB);
-			
-			setInterp(regularizeDeviceDb);
-
+			if(Objects.nonNull(regularizeDeviceDb)) {
+				EndUserDB endUserDB = endUserDbRepository.getByNid(regularizeDeviceDb.getNid());
+				endUserDB.setRegularizeDeviceDbs(new ArrayList<>(1));
+				regularizeDeviceDb.setEndUserDB(endUserDB);
+				setInterp(regularizeDeviceDb);
+			}
 			return regularizeDeviceDb;
 
 		} catch (Exception e) {

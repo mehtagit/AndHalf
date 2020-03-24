@@ -30,7 +30,7 @@ public class GreylistDbHistory implements Serializable {
 	@JsonIgnore
 	@UpdateTimestamp
 	private Date modifiedOn;
-	private Long imei;
+	private String imei;
 	@Column(length = 15)
 	private String roleType;
 	private Long userId;
@@ -66,10 +66,10 @@ public class GreylistDbHistory implements Serializable {
 	public void setModifiedOn(Date modifiedOn) {
 		this.modifiedOn = modifiedOn;
 	}
-	public Long getImei() {
+	public String getImei() {
 		return imei;
 	}
-	public void setImei(Long imei) {
+	public void setImei(String imei) {
 		this.imei = imei;
 	}
 	public String getRoleType() {

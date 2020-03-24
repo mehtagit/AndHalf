@@ -20,7 +20,7 @@ public class CustomerCareGreylist implements CustomerCareTarget{
 	@Override
 	public CustomerCareDeviceState fetchDetailsByImei(String imei, CustomerCareDeviceState customerCareDeviceState) {
 		
-		GreylistDb greylistDb = greyListRepository.findByImei(Long.parseLong(imei));
+		GreylistDb greylistDb = greyListRepository.findByImei(imei);
 		
 		if(Objects.nonNull(greylistDb)) {
 			customerCareDeviceState.setTxnId("");

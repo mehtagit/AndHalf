@@ -26,9 +26,9 @@ public class ForeignerImeiDetails implements Serializable {
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private Date createdOn;
 	private Date updatedOn;
-	private Long firstImei;
+	private String firstImei;
 	private Long firstMsisdn;
-	private Long secondImei;
+	private String secondImei;
 	private Long secondMsidn;
 	private String passportNumber;
 	
@@ -52,11 +52,15 @@ public class ForeignerImeiDetails implements Serializable {
 	public void setUpdatedOn(Date updatedOn) {
 		this.updatedOn = updatedOn;
 	}
-	public Long getFirstImei() {
+	
+	public String getFirstImei() {
 		return firstImei;
 	}
-	public void setFirstImei(Long firstImei) {
+	public void setFirstImei(String firstImei) {
 		this.firstImei = firstImei;
+	}
+	public void setSecondImei(String secondImei) {
+		this.secondImei = secondImei;
 	}
 	public Long getFirstMsisdn() {
 		return firstMsisdn;
@@ -64,11 +68,9 @@ public class ForeignerImeiDetails implements Serializable {
 	public void setFirstMsisdn(Long firstMsisdn) {
 		this.firstMsisdn = firstMsisdn;
 	}
-	public Long getSecondImei() {
+	
+	public String getSecondImei() {
 		return secondImei;
-	}
-	public void setSecondImei(Long secondImei) {
-		this.secondImei = secondImei;
 	}
 	public Long getSecondMsidn() {
 		return secondMsidn;

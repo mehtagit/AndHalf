@@ -10,7 +10,7 @@ public interface GreyListRepository extends JpaRepository<GreylistDb, Long>,
 JpaSpecificationExecutor<GreylistDb>,
 CustomerCareRepo<GreylistDb>{
 	
-	public GreylistDb findByImei(Long imei);
-	public void deleteByImei(Long imei);
+	public GreylistDb findByImei(String imei);
+	public void deleteByImei(String imei);
  
 }

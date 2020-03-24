@@ -17,8 +17,8 @@ public interface GrievanceRepository extends JpaRepository<Grievance, Long>, Jpa
 	public List<Grievance> getGrievanceByUserId(Integer userId);
 	//public Grievance getByGrievanceTxnId(String txnId);
 	public Grievance getBygrievanceId( String grievanceId );
-	public List<Grievance> getAllGrievanceStatusNotClosed( Integer userId, Integer grievanceStatus );
-	public List<Grievance> getAllGrievanceStatusNotClosedForAdmin( Integer grievanceStatus );
+	//public List<Grievance> getAllGrievanceStatusNotClosed( Integer userId, Integer grievanceStatus );
+	//public List<Grievance> getAllGrievanceStatusNotClosedForAdmin( Integer grievanceStatus );
 	
 	@Query(value="select new com.gl.ceir.config.model.ResponseCountAndQuantity(count(g.id) as count) from Grievance g "
 			+ "where g.userId =:userId and g.grievanceStatus in (:grievanceStatus)")

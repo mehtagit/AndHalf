@@ -20,7 +20,7 @@ public class CustomerCareGsmaBlacklist implements CustomerCareTarget{
 	@Override
 	public CustomerCareDeviceState fetchDetailsByImei(String imei, CustomerCareDeviceState customerCareDeviceState) {
 		
-		GsmaBlackList blackList = blackListRepository.getByDeviceid(Long.parseLong(imei));
+		GsmaBlackList blackList = blackListRepository.getByDeviceid(imei);
 		
 		if(Objects.nonNull(blackList)) {
 			customerCareDeviceState.setTxnId("");

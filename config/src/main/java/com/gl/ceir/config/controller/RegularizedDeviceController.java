@@ -72,7 +72,6 @@ public class RegularizedDeviceController {
 	@PostMapping("/end-user-device-info")
 	public GenricResponse saveEndUserInfo(@RequestBody EndUserDB endUserDB) {
 		logger.info("Custom registeration request= " + endUserDB);
-
 		GenricResponse genricResponse = regularizedDeviceServiceImpl.saveDevices(endUserDB);
 		logger.info("Resonse send = " + genricResponse);
 		return genricResponse;

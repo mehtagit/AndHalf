@@ -33,7 +33,7 @@ public class GreylistDb implements Serializable {
 	@JsonIgnore
 	@UpdateTimestamp
 	private Date modifiedOn;
-	private Long imei;
+	private String imei;
 	@Column(length = 15)
 	private String roleType;
 	private Long userId;
@@ -134,18 +134,46 @@ public class GreylistDb implements Serializable {
 	public void setImeiEsnMeid(String imeiEsnMeid) {
 		this.imeiEsnMeid = imeiEsnMeid;
 	}
-	public Long getImei() {
+	public String getImei() {
 		return imei;
 	}
-	public void setImei(Long imei) {
+	public void setImei(String imei) {
 		this.imei = imei;
 	}
 	@Override
 	public String toString() {
-		return "GreylistDb [id=" + id + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", imei=" + imei
-				+ ", roleType=" + roleType + ", userId=" + userId + ", txnId=" + txnId + ", deviceNumber="
-				+ deviceNumber + ", deviceType=" + deviceType + ", deviceAction=" + deviceAction + ", deviceStatus="
-				+ deviceStatus + ", DeviceLaunchDate=" + DeviceLaunchDate + ", multipleSimStatus=" + multipleSimStatus
-				+ ", deviceId=" + deviceId + ", imeiEsnMeid=" + imeiEsnMeid + "]";
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append("GreylistDb [id=");
+		stringBuilder.append(id);
+		stringBuilder.append(", createdOn=");
+		stringBuilder.append(createdOn);
+		stringBuilder.append(", modifiedOn=");
+		stringBuilder.append(modifiedOn);
+		stringBuilder.append(", imei=");
+		stringBuilder.append(imei);
+		stringBuilder.append(", roleType=");
+		stringBuilder.append(roleType);
+		stringBuilder.append(", userId=");
+		stringBuilder.append(userId);
+		stringBuilder.append(", txnId=");
+		stringBuilder.append(txnId);
+		stringBuilder.append(", deviceNumber=");
+		stringBuilder.append(deviceNumber);
+		stringBuilder.append(", deviceType=");
+		stringBuilder.append(deviceType);
+		stringBuilder.append(", deviceAction=");
+		stringBuilder.append(deviceAction);
+		stringBuilder.append(", deviceStatus=");
+		stringBuilder.append(deviceStatus);
+		stringBuilder.append(", DeviceLaunchDate=");
+		stringBuilder.append(DeviceLaunchDate);
+		stringBuilder.append(", multipleSimStatus=");
+		stringBuilder.append(multipleSimStatus);
+		stringBuilder.append(", deviceId=");
+		stringBuilder.append(deviceId);
+		stringBuilder.append(", imeiEsnMeid=");
+		stringBuilder.append(imeiEsnMeid);
+		stringBuilder.append("]");
+		return stringBuilder.toString();
 	}
 }
