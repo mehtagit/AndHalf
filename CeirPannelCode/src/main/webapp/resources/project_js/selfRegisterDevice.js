@@ -79,7 +79,7 @@ function showCambodianUserForm()
 	$("#visaImage").attr("required", false);
 	$("#visaNumber").attr("required", false);
 
-	$("#datepicker").css("display", "none"); 
+	$("#entryCountryDiv").css("display", "none");
 
 	$("#endUserLabelNID").append('<span class="star">*</span>');
 	$("#nidType").append('<span class="star">*</span>');
@@ -277,8 +277,12 @@ $(document).ready(function () {
 	});
 	$(wrapper).on("click", ".remove_field", function (e) { //user click on remove text
 		e.preventDefault();
+		var Iid=id-1;
+		 /*alert("@@@"+Iid)*/
+		 $('#deviceInformation'+Iid).remove();
 		$(this).parent('div').remove();
 		x--;
+		id--;
 	})
 });
 
