@@ -114,18 +114,7 @@ $( document ).ready(function() {
 
 
 $(document).ready(function () {
-	
-	 $.getJSON('./addMoreFile/more_files_count', function(data) {
-			console.log(data);
-			
-			localStorage.setItem("maxCount", data.value);
-			
-		});
-	 
-			//var max_fields = 2; //maximum input boxes allowed
-			var max_fields =localStorage.getItem("maxCount");
-			console.log("max_fields from api="+max_fields);
-	//var max_fields = 15; //maximum input boxes allowed
+	var max_fields = 15; //maximum input boxes allowed
 	var wrapper = $(".mainDeviceInformation"); //Fields wrapper
 	var add_button = $(".add_field_button"); //Add button ID
 	var x = 1; //initlal text box count
@@ -453,7 +442,7 @@ function accept(){
 
 
 	function viewDetails(imei){ 
-	/*$('#viewDeviceInformation').openModal({dismissible:false});
+	$('#viewDeviceInformation').openModal({dismissible:false});
 	$.ajax({
 		url : "./deviceInfo/"+imei,
 		dataType : 'json',
@@ -465,9 +454,7 @@ function accept(){
 		error : function() {
 			console.log("Failed");
 		}
-	});*/
-		
-		window.location.href="./view-device-information/"+imei;
+	});
 
 
 }

@@ -373,7 +373,9 @@ select {
 													</div>
 
 													<div class="col s12 m12" style="margin-top: 30px;">
-														<h5><spring:message code="modal.deviceInfo" /></h5>
+														<h5>
+															<spring:message code="modal.deviceInfo" />
+														</h5>
 														<hr>
 													</div>
 
@@ -381,20 +383,30 @@ select {
 														<div class="input-field col s12 m6">
 															<input type="text" name="deviceBrandName"
 																id="singleStolendeviceBrandName"
-																pattern="[a-zA-Z]{0,20}" 
-															oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
-															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
+																pattern="[a-zA-Z]{0,20}"
+																oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
+																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 																maxlength="20"> <label for="deviceBrandName">
 																<spring:message code="registration.devicebrandname" />
 															</label>
 														</div>
 
-												
+														<%--			<div class="input-field col s12 m6"
+															style="margin-top: 22px;">
+															<input type="text" name="imeiNumber" pattern="[0-9]{15,16}" 
+															oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');" 
+															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
+														 maxlength="16" 	id="singleStolenimeiNumber" > <label
+																for="imeiNumber"><spring:message code="registration.imei/meid/esnnumber" /></label>
+														</div>
+														--%>
 
 														<div class="col s6 m6 ">
 															<label for="deviceIDType"> <spring:message
 																	code="select.deviceIDType" /></label> <select
-															id="singleStolendeviceIDType" class="browser-default">
+																oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+																oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+																id="singleStolendeviceIDType" class="browser-default">
 																<option value="" disabled selected>
 																	<spring:message code="select.deviceIDType" />
 																</option>
@@ -404,20 +416,30 @@ select {
 														<div class="col s6 m6 ">
 															<label for="deviceType"> <spring:message
 																	code="select.deviceType" /></label> <select
-																class="browser-default" id="singleStolendeviceType">
+																class="browser-default" id="singleStolendeviceType"
+																oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+																oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');">
 																<option value="" disabled selected>
 																	<spring:message code="select.deviceType" />
 																</option>
 															</select>
 														</div>
 
+														<!-- <div class="col s6 m6 ">
+                                                                <label for="deviceStatus">Device Status <span class="star">*</span></label>
+                                                                <select id="deviceStatus" class="browser-default">
+                                                                  <option value="" disabled selected>Device Status</option>
+                                                                  <option value="New">New</option>
+                                                                  <option value="used">used</option>
+                                                                  <option value="Refurbished">Refurbished</option>
+                                                                </select>
+                                                              </div> -->
 
 														<div class="input-field col s12 m6">
 															<input type="text" name="modalNumber"
 																id="singleStolenmodalNumber" pattern="[a-zA-Z0-9]{0,30}"
-																
-															oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
+																oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
+																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 																maxlength="30"> <label for="modalNumber">
 																<spring:message code="input.modelNumber" />
 															</label>
@@ -428,11 +450,17 @@ select {
 																<spring:message code="input.contactNum" />
 																<span class="star"> *</span>
 															</p>
-															<input type="text" name="phone2" id="singleStolenphone2"
-																pattern="[0-9\s,+]{4,15}" maxlength="15" oninput="InvalidMsg(this,'input','<spring:message code="validation.contact" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.contact" />');" required>
+															<input type="text" name="phone" id="singleStolenphone2"
+																pattern="[0-9\s,+]{7,15}"
+																oninput="InvalidMsg(this,'input','<spring:message code="validation.contact" />');"
+																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.contact" />');"
+																maxlength="15" required />
 														</div>
 
-														
+														<!-- <div class="input-field col s12 m6">
+                                                                <input type="text" name="operator" id="operator" maxlength="10">
+                                                                <label for="operator">Operator <span class="star">*</span></label>
+                                                            </div> -->
 
 														<div class="col s12 m6 l6">
 															<label> <spring:message code="operator.Operator" />
@@ -1133,10 +1161,7 @@ select {
 											<div class="input-field col s12 m6">
 												<input type="text" name="bulkStolenDate" id='bulkStolenDate'
 													class='form-control datepick' autocomplete='off'
-													
-													oninput="InvalidMsg(this,'input','<spring:message code=" validation.requiredMsg" />');"
-													oninvalid="InvalidMsg(this,'input','<spring:message code=" validation.requiredMsg" />');"
-													
+													title="<spring:message code=" validation.requiredMsg" />"
 													required /> <label for="bulkStolenDate"
 													class="center-align"> <spring:message
 														code="operator.stolenDate" /> <span class="star">
@@ -1152,8 +1177,10 @@ select {
 												<div class="btn">
 													<span> <spring:message code="input.selectfile" /></span> <input
 														type="file" onchange="isImageValid('uploadFirBulk')"
-														oninput="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');"
-														oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');"
+														oninput="InvalidMsg(this,'fileType','<spring:message code="
+														validation.NoChosen" />');"
+														oninvalid="InvalidMsg(this,'fileType','
+													<spring:message code="validation.NoChosen" />');"
 														placeholder="Upload FIR" id="uploadFirBulk">
 												</div>
 												<div class="file-path-wrapper">
@@ -1168,7 +1195,8 @@ select {
 											<div class="input-field col s12 m12"
 												style="margin-top: 22px;">
 												<textarea id="deviceBulkStolenRemark"
-													oninput="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
+													oninput="InvalidMsg(this,'input','<spring:message code="
+													validation.10000characters" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
 													maxlength="10000" class="materialize-textarea"></textarea>
 												<label for="textarea1"> <spring:message
@@ -1328,15 +1356,15 @@ src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/j
 		populateStates("country3", "state3");
 
 		populateCountries("country");
-		var input = document.querySelector("#singleStolenphone1");
-		window.intlTelInput(input, {
-			utilsScript : "${context}/resources/js/utils.js",
-		});
+
 		var input2 = document.querySelector("#singleStolenphone2");
 		window.intlTelInput(input2, {
 			utilsScript : "${context}/resources/js/utils.js",
 		});
-	
+		var input = document.querySelector("#singleStolenphone1");
+		window.intlTelInput(input, {
+			utilsScript : "${context}/resources/js/utils.js",
+		});
 
 		$('#stolenDatePeriod').datepicker({
 			dateFormat : "yy-mm-dd"

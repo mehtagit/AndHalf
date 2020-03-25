@@ -374,8 +374,10 @@ data-roleType="${usertype}" data-userTypeID="${usertypeId}"
 			<spring:message code="registration.changepassword" />
 		</h6>
 		<div class="modal-content">
-			<form id="changePassForm" onsubmit="return changePassword()">
+			<form onsubmit="return changePassword()">
 				<div class="row">
+
+
 					<span style="text-align: center; color: red;" id="errorMsg"></span>
 					<div class="col s1">
 						<i class="fa fa-lock" aria-hidden="true"

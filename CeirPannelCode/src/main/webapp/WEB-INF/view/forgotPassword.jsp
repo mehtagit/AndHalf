@@ -135,7 +135,7 @@ var contextpath='${context}';
 
                                         <div class="input-field col s12 m6 l6">
                                             <input type="text" name="username" 
-     oninput="InvalidMsg(this,'input','<spring:message code="validation.50alphanumeric" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50alphanumeric" />');"
+     oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"                                       
               title= "<spring:message code="validation.requiredMsg" />" required id="username" maxlength="10" />
                                         </div>
                                     </div>
@@ -149,7 +149,7 @@ var contextpath='${context}';
                                         <div class="input-field col s12 m6 l6">
                                             <select class="browser-default" id="questionId" 
    													title="<spring:message code="validation.selectFieldMsg" />" oninput="setCustomValidity('')"  
-												oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"  required  >
+												oninvalid="this.setCustomValidity('<spring:message code="validation.selectFieldMsg" />')"  required  >
                                                 <option value="" disabled selected><spring:message code="registration.securityquestion" /></option>
                                              </select>
                                         </div>
@@ -163,7 +163,7 @@ var contextpath='${context}';
 
                                         <div class="input-field col s12 m6 l6">
                                             <input type="text" name="answer" 
-oninput="InvalidMsg(this,'input','<spring:message code="validation.50alphanumeric" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50alphanumeric" />');"
+  oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
 												 title= "<spring:message code="validation.requiredMsg" />" required id="answer" maxlength="50" />
                                         </div>
                                     </div>
@@ -220,8 +220,8 @@ oninput="InvalidMsg(this,'input','<spring:message code="validation.50alphanumeri
 					<label for="password" style="color: #000; font-size: 12px;">
 						<spring:message code="registration.newpassword" /></label> <input type="password"  id="password" class="password"
 						pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$" maxlength="10" min="8"
-						oninput="InvalidMsg(this,'input','<spring:message code="validation.password" />');"
-						oninvalid="InvalidMsg(this,'input','<spring:message code="validation.password" />');" 
+						
+						oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
 												 title= "<spring:message code="validation.minumum8" />" required/>
 				<div class="input-field-addon">
 				<i  class="fa fa-eye-slash teal-text toggle-password" aria-hidden="true"></i>
@@ -236,18 +236,17 @@ oninput="InvalidMsg(this,'input','<spring:message code="validation.50alphanumeri
 					<label for="confirm_password" style="color: #000; font-size: 12px;">
 						<spring:message code="registration.confirmpassword" /></label> <input type="password" class="password2" id="confirm_password"
 						pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$" maxlength="10" min="8"
-						oninput="InvalidMsg(this,'input','<spring:message code="validation.password" />');"
-						oninvalid="InvalidMsg(this,'input','<spring:message code="validation.password" />');" 
+oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
 												 title= "<spring:message code="validation.minumum8" />" required/>								
-				<div class="ienput-field-addon">
+				<div class="input-field-addon">
 				<i  class="fa fa-eye-slash teal-text toggle-password2" aria-hidden="true"></i>
 											</div>					
 				</div>
 			</div>  
 			<div class="row" style="margin-top: 30px;">
 				<div class="input-field col s12 m12 l12 center">
-					<button   
-						class="btn" type="submit" id="UpdatePassBtn"
+					<button  
+						class="btn" type="submit" id="save"
 						style="width: 100%;"><spring:message code="registration.save" /></button>
 				</div>
 			</div>
@@ -301,9 +300,11 @@ oninput="InvalidMsg(this,'input','<spring:message code="validation.50alphanumeri
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
 
-<%-- <script type="text/javascript"
-		src="${context}/resources/project_js/validationMsg.js"></script> --%>
-	    
+<script type="text/javascript"
+		src="${context}/resources/project_js/validationMsg.js"></script>
+			<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
+		
+		
 	<script type="text/javascript"
 		src="${context}/resources/ajax/Registration.js"></script>
 		<!-- i18n library -->
@@ -362,17 +363,11 @@ oninput="InvalidMsg(this,'input','<spring:message code="validation.50alphanumeri
 	<script type="text/javascript"
 		src="${context}/resources/js/custom-script.js"></script>
     
-    	
-
-	<script type="text/javascript" src="${context}/resources/ajax/Login.js"></script>
-
-    			<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
+    
+    
 	<script type="text/javascript" src="${context}/resources/project_js/forgotPassword.js"></script>
-
-
-			<script type="text/javascript"
-		src="${context}/resources/project_js/ValidationFileOutsidePortal.js"></script>
-		
+    
+    <script type="text/javascript" src="${context}/resources/ajax/Login.js"></script>
 
   
 </body>

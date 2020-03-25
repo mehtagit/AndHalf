@@ -247,7 +247,7 @@
 												<spring:message code="input.contactNum" />
 												<span class="star">*</span>
 											</p>
-											<input type="text" id="phone" pattern="[0-9 + ]{4,15}" placeholder="" maxlength="15"
+											<input type="text" id="phone" pattern="[0-9 + ]{1,15}" placeholder="" maxlength="15"
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.10digits" />');"
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10digits" />');"
 												required >
@@ -282,7 +282,7 @@
 											</h6>
 											<div class="btn">
 												<span> <spring:message code="input.selectfile" />
-												</span> <input type="file" onchange="fileTypeValueChanges('uploadnationalID')"
+												</span> <input type="file" onchange="isImageValid('uploadnationalID')"
 													oninput="InvalidMsg(this,'fileType','<spring:message code=" validation.file" />');"
 													oninvalid="InvalidMsg(this,'fileType','<spring:message code=" validation.file" />');"
 													accept="image/*" id="uploadnationalID" required>
