@@ -267,7 +267,8 @@ public class IconsState {
 				+deletionIcon+" aria-hidden=\"true\"  title="
 				+deleteIconTitle+"></i></a>"; 
 
-		if("0".equals(status) || "1".equals(status) ||  "3".equals(status) || "10".equals(status)  && "Approved".equals(userStatus)) {
+		
+		if(("1".equals(status) ||  "3".equals(status) || "10".equals(status) || "6".equals(status))  && "Approved".equals(userStatus)) {
 			error="<a onclick="+errorURL+" class="+disableIconClass+"><i  class="
 					+disableErrorIcon+" aria-hidden=\"true\" title="
 					+errorIconTitle+"  ></i></a>";
@@ -278,8 +279,21 @@ public class IconsState {
 					+disableDeletionIcon+" aria-hidden=\"true\" title="
 					+deleteIconTitle+"></i></a>"; 
 		}
+		else if("0".equals(status) && "Approved".equals(userStatus)) {
+			error="<a onclick="+errorURL+" class="+disableIconClass+"><i  class="
+					+disableErrorIcon+" aria-hidden=\"true\" title="
+					+errorIconTitle+"  ></i></a>";
+			edit="<a onclick="+editAction+" class="+disableIconClass+"><i class="
+					+disableEditIcon+" aria-hidden=\"true\"  title="
+					+editIconTitle+"></i></a>"; 
+		}
+		else if("2".equals(status)  && "Approved".equals(userStatus)) {
+			download="<a onclick="+downloadURL+"  class="+disableIconClass+"><i class="
+					+disableDownloadIcon+" aria-hidden=\"true\"  title="
+					+downloadIconTitle+" ></i></a>"; 
+		}
 
-		else if("1".equals(status) || "3".equals(status) || "10".equals(status)  && "Approved".equals(userStatus)) {
+		else if("10".equals(status)  && "Approved".equals(userStatus)) {
 			edit="<a onclick="+editAction+" class="+disableIconClass+"><i class="
 					+disableEditIcon+" aria-hidden=\"true\" title="
 					+editIconTitle+"></i></a>"; 
@@ -867,7 +881,7 @@ public class IconsState {
 							featureID == 8 ? "./registrationRequest?txnID="+txnID+"" :
 								featureID == 11 ? "./manageTypeDevices?txnID="+txnID+"":
 									featureID == 12 ? "./uploadPaidStatus?via=other&txnID="+txnID+"" :
-										featureID == 21 ? "./manageTypeDevices2?txnID="+txnID+"" :"JavaScript:void(0);";
+										"JavaScript:void(0);";
 		//System.out.println("featureID::::::::::"+featureID);
 		// state related Code
 		String view=null;

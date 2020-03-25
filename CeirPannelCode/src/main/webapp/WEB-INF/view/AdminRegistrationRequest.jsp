@@ -152,7 +152,7 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
                 <form action="">
             
                     <h6><spring:message code="registration.emailregister" /> <br> <spring:message code="registration.registrationid" />  <span id="RegistrationId"></span>
-                          <spring:message code="registration.registrationdate" /><span id="registrationDate"></span>.</h6>
+                          <spring:message code="registration.registrationdate" /> <span id="registrationDate"></span>.</h6>
                    
                 </form>
             </div>

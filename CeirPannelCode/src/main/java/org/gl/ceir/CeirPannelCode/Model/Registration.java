@@ -1,6 +1,7 @@
 package org.gl.ceir.CeirPannelCode.Model;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.gl.ceir.pagination.model.RegistrationUser;
 
@@ -56,6 +57,7 @@ public class Registration extends UserHeader{
     private Integer portAddress;
     private String portAddressName;
     private RegistrationUser user;
+    private List<RoleList> rolesList = null;
 	public long getId() {
 		return id;
 	}
@@ -362,6 +364,12 @@ public class Registration extends UserHeader{
 	public void setUser(RegistrationUser user) {
 		this.user = user;
 	}
+	public List<RoleList> getRolesList() {
+		return rolesList;
+	}
+	public void setRolesList(List<RoleList> rolesList) {
+		this.rolesList = rolesList;
+	}
 	@Override
 	public String toString() {
 		return "Registration [id=" + id + ", firstName=" + firstName + ", middleName=" + middleName + ", lastName="
@@ -380,8 +388,12 @@ public class Registration extends UserHeader{
 				+ ", arrivalPort=" + arrivalPort + ", arrivalPortName=" + arrivalPortName + ", vatFilename="
 				+ vatFilename + ", userLanguage=" + userLanguage + ", nidFilePath=" + nidFilePath + ", photoFilePath="
 				+ photoFilePath + ", idCardFilePath=" + idCardFilePath + ", vatFilePath=" + vatFilePath
-				+ ", portAddress=" + portAddress + ", portAddressName=" + portAddressName + ", user=" + user + "]";
+				+ ", portAddress=" + portAddress + ", portAddressName=" + portAddressName + ", user=" + user
+				+ ", rolesList=" + rolesList + "]";
 	}
-
+	
+    
+    
+    
 	
 }
