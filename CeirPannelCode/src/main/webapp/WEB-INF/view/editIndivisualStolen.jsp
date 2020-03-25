@@ -988,7 +988,7 @@ select {
 											</div>
 
 											<div class="col s12 m12">
-												<a href=""><spring:message code="input.downlaod.sample" /></a>
+												<a href="./stolenRecovery?FeatureId=5" id="sampleFileLink"><spring:message code="input.downlaod.sample" /></a>
 											</div>
 
 											<div class="input-field col s12 center">
@@ -1182,6 +1182,7 @@ select {
 				$('#uploadFirSingle').attr('type', 'text');
 				$("#firImageLink").css("display", "block");
 				$("#uploadFirSingle").css("display", "none");
+				$("#sampleFileLink").css("display", "none");
 				// alert(stolenIndivisual);
 				$("#SingleForm").find("input,select,textarea,button").prop(
 						"disabled", true);

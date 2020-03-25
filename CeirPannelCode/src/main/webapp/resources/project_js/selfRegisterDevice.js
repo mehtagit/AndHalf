@@ -478,7 +478,7 @@ function submitEndUserDeviceInfo(){
 //				$('#sucessMessage').text('');
 				$('#endUserRegisterDeviceModal').openModal({dismissible:false});;
 				$('#sucessMessageId').text('');
-				$('#sucessMessageId').text(data.message);
+				$('#sucessMessageId').text($.i18n(data.tag));
 			}
 		},
 		error: function (jqXHR, textStatus, errorThrown) {

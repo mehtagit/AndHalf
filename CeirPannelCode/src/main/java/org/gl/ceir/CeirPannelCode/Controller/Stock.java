@@ -148,6 +148,9 @@ else {
 		GenricResponse response=null;
 		String userName=session.getAttribute("username").toString();
 		int userId= (int) session.getAttribute("userid");
+	//	Long assignerId =(Long) session.getAttribute("userid");
+		Long assignerId =((Number) userId).longValue(); 
+	//((Number) obj.get("ipInt")).longValue();
 		String name=session.getAttribute("name").toString();
 		String roletype=session.getAttribute("usertype").toString();
 		String selectedRoletype=(String) session.getAttribute("selectedUserTypeId");
@@ -197,6 +200,7 @@ else {
 		stockUpload.setUserId(userId);
 		stockUpload.setRoleType(selectedRoletype);
 		stockUpload.setUserType(roletype);
+		stockUpload.setAssignerId(assignerId);
 		log.info("stock form parameters passed to upload stock api "+stockUpload);
 		
 		try {

@@ -140,6 +140,9 @@
 	"TYPE_APPROVE_UPDATE_SUCCESS": "Type Approved data has been sucessfully update.",
 	"VISA_UPDATE_SUCCESS": "Visa of user have been updated succesfully.",
 	"IMEIValidationMSg": "Please enter minimum 15 and maximum 16 digit only",
-	"duplicateImei": "IMEI is already registered in CEIR System",
-	"regularisedExceeded": "Regularized Devices are exceeding the allowed count."
+	"DUPLICATE_IMEI":"IMEI is already registered in CEIR System",
+"REGULARISED_DEVICE_EXCEEDED":"Regularized Devices are exceeding the allowed count.",
+"DEVICE_REGISTRATION_FAILED":"End user device registration have been failed",
+"DUPLICATE_IMEI_IN_REQUEST":"Duplicate IMEI received in request",
+"USER_ALREADY_EXIST":"Passport number already exist in CEIR System"
 }
