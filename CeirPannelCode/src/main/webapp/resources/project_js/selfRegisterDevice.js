@@ -277,8 +277,12 @@ $(document).ready(function () {
 	});
 	$(wrapper).on("click", ".remove_field", function (e) { //user click on remove text
 		e.preventDefault();
+		var Iid=id-1;
+		 /*alert("@@@"+Iid)*/
+		 $('#deviceInformation'+Iid).remove();
 		$(this).parent('div').remove();
 		x--;
+		id--;
 	})
 });
 

@@ -167,8 +167,8 @@ select {
 													<h5><spring:message code="input.personalInformation" /></h5>
 												</div>
 
-												<div class="col-s12 m12">
-													<div class="input-field col s12 m4">
+											<div class="col-s12 m12">
+														<div class="input-field col s12 m4">
 														<input type="text" name="singleStolenfirstName"
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
@@ -199,16 +199,6 @@ select {
 														</label>
 													</div>
 
-													<!-- <div class="input-field col s12 m6">
-                                                                <input type="text" name="nationality" id="nationality">
-                                                                <label for="nationality">Nationality <span class="star">*</span></label>
-                                                            </div> -->
-
-													<!-- <div class="col s12 m6 l6" style="margin-top: -7px;">
-                                                                <label for="country">Nationality <span class="star">*</span></label>
-                                                                <select id="country" class="browser-default" class="mySelect"
-                                                                    style="padding-left: 0;" required></select>
-                                                            </div> -->
 
 													<div class="file-field col s12 m6 l6"
 														style="margin-top: -8px;">
@@ -258,17 +248,15 @@ select {
 														<p class="contact-label">
 															<spring:message code="registration.altcontactnumber" />
 															<span class="star"> *</span>
-														</p>
+														</p> 
 														<input type="text" name="phone" id="singleStolenphone1"
 															pattern="[0-9\s,+]{7,15}"
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.contact" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.contact" />');"
-															maxlength="15" required />
-														<!-- <label for="phone">Alternate Contact Number <span class="star">*</span></label> -->
+															maxlength="15" required>
+															
 													</div>
-													<!-- </div>
-
-                                                        <div class="col s12 m12"> -->
+													
 													<div class="input-field col s12 m12">
 														<input type="text" name="address"
 															class="form-control boxBorder boxHeight"

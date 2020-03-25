@@ -270,7 +270,7 @@ input[type='search'] {
 														<label for="Price1"><spring:message code="select.price" /></label>
 													</div>
 
-													<div class="col s12 m6">
+													<div class="col s12 m6" id="CurrencyDiv" style="display: none;">
 														<label for="Currency1"><spring:message code="input.currency" /><span class="star">*</span></label>
 														<select class="browser-default" id="Currency1"
 														oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
