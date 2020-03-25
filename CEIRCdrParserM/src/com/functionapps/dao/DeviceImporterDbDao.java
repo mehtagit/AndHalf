@@ -61,7 +61,7 @@ public class DeviceImporterDbDao {
 			stmt = conn.createStatement();
 
 			for (DeviceImporterDb deviceImporterDb : deviceImporterDbs) {
-				query = "insert into device_importer_aud (rev, revtype, created_on, device_action, device_id_type, "
+				query = "insert into device_importer_db_aud (rev, revtype, created_on, device_action, device_id_type, "
 						+ "device_launch_date, device_status," 
 						+ "device_type, imei_esn_meid, importer_date, importer_device_status, importer_txn_id,"
 						+ "manufature_date, modified_on, multiple_sim_status, period," 
