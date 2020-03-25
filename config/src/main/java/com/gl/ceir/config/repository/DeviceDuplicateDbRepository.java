@@ -12,6 +12,6 @@ JpaSpecificationExecutor<DeviceDuplicateDb> {
 
 	public DeviceDuplicateDb findByImeiMsisdnIdentityMsisdn(Long msisdn);
 
-	public DeviceDuplicateDb findByImeiMsisdnIdentityImei(Long imei);
+	public DeviceDuplicateDb findByImeiMsisdnIdentityImei(String imei);
 
 }

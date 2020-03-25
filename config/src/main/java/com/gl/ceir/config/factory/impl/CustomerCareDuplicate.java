@@ -20,7 +20,7 @@ public class CustomerCareDuplicate implements CustomerCareTarget{
 	@Override
 	public CustomerCareDeviceState fetchDetailsByImei(String imei, CustomerCareDeviceState customerCareDeviceState) {
 		
-		DeviceDuplicateDb deviceDb = deviceDuplicateDbRepository.findByImeiMsisdnIdentityImei(Long.parseLong(imei));
+		DeviceDuplicateDb deviceDb = deviceDuplicateDbRepository.findByImeiMsisdnIdentityImei(imei);
 		
 		if(Objects.nonNull(deviceDb)) {
 			customerCareDeviceState.setTxnId("");

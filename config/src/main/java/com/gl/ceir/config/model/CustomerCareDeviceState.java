@@ -25,7 +25,7 @@ public class CustomerCareDeviceState implements Serializable{
 		return date;
 	}
 	public void setDate(String date) {
-		if(Objects.isNull(date)) {
+		if(Objects.isNull(date) || date.isEmpty()) {
 			this.date = "";
 		}else {
 			this.date = date.substring(0, 10);

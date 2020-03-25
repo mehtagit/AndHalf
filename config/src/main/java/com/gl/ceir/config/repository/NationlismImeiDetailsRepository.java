@@ -21,7 +21,7 @@ public interface NationlismImeiDetailsRepository extends JpaRepository<Nationali
 	@Modifying
 	@Query(value = "update nationalism_imei_details set status=1? where passport_number=2? and first_imei=3? and second_imei=4?",
 	nativeQuery = true)
-	void updateUser(String taxPaidStatus,String passportNumber,Long firstImei,Long secondImei);
+	void updateUser(String taxPaidStatus,String passportNumber,String firstImei,String secondImei);
 
 
 

@@ -61,6 +61,7 @@ import com.gl.ceir.config.repository.VisaHistoryDBRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
 import com.gl.ceir.config.specificationsbuilder.SpecificationBuilder;
 import com.gl.ceir.config.transaction.EndUserTransaction;
+import com.gl.ceir.config.util.CommonFunction;
 import com.gl.ceir.config.util.CustomMappingStrategy;
 import com.gl.ceir.config.util.DateUtil;
 import com.opencsv.CSVWriter;
@@ -101,6 +102,9 @@ public class EnduserServiceImpl {
 
 	@Autowired
 	EndUserTransaction endUserTransaction;
+	
+	@Autowired
+	CommonFunction commonFunction;
 
 	public GenricResponse endUserByNid(String nid) {
 		try {
@@ -162,6 +166,12 @@ public class EnduserServiceImpl {
 			// Validate end user devices.
 			if(!endUserDB.getRegularizeDeviceDbs().isEmpty()){
 				for(RegularizeDeviceDb regularizeDeviceDb : endUserDB.getRegularizeDeviceDbs()) {
+					
+					//TO DO
+					if(commonFunction.checkAllImeiOfRegularizedDevice(regularizeDeviceDb)) {
+						return new GenricResponse(5,"duplicateImei", "IMEI is already registered in CEIR System", "");
+					}
+					
 					if(Objects.isNull(regularizeDeviceDb.getTaxPaidStatus())) {
 						regularizeDeviceDb.setTaxPaidStatus(TaxStatus.TAX_NOT_PAID.getCode());
 					}

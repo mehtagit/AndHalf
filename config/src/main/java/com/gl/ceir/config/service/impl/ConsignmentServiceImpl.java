@@ -395,7 +395,8 @@ public class ConsignmentServiceImpl {
 		try {
 			UserProfile userProfile = null;
 			Map<String, String> placeholderMap = new HashMap<>();
-
+			WebActionDb webActionDb = null;
+			
 			ConsignmentMgmt consignmentMgmt = consignmentRepository.getByTxnId(consignmentUpdateRequest.getTxnId());
 			logger.debug("Accept/Reject Consignment : " + consignmentMgmt);
 
@@ -432,7 +433,13 @@ public class ConsignmentServiceImpl {
 								placeholderMap, null, "Importer");
 
 					}else if("CUSTOM".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())) {
-
+						
+						webActionDb = new WebActionDb();
+						webActionDb.setFeature(WebActionDbFeature.CONSIGNMENT.getName());
+						webActionDb.setSubFeature(WebActionDbSubFeature.APPROVE.getName());
+						webActionDb.setState(WebActionDbState.INIT.getCode());
+						webActionDb.setTxnId(consignmentUpdateRequest.getTxnId());
+						
 						if(!StateMachine.isConsignmentStatetransitionAllowed("CUSTOM", consignmentMgmt.getConsignmentStatus())) {
 							logger.info("state transition is not allowed." + consignmentUpdateRequest.getTxnId());
 							return new GenricResponse(3, "state transition is not allowed.", consignmentUpdateRequest.getTxnId());
@@ -465,6 +472,16 @@ public class ConsignmentServiceImpl {
 								placeholderMap, 
 								null, 
 								"Importer");
+						emailUtil.saveNotification("Consignment_Approved_CustomCEIRAdmin_Email_Message", 
+								userStaticServiceImpl.getCeirAdmin().getUserProfile(),
+								consignmentUpdateRequest.getFeatureId(),
+								Features.CONSIGNMENT, 
+								SubFeatures.ACCEPT,
+								consignmentUpdateRequest.getTxnId(),
+								MailSubject.Consignment_Approved_CustomCEIRAdmin_Email_Message.replace("<XXX>", consignmentMgmt.getTxnId()),
+								placeholderMap, 
+								null, 
+								"CEIRAdmin");
 
 					}else if(CEIRSYSTEM.equalsIgnoreCase(consignmentUpdateRequest.getRoleType())) {
 
@@ -597,8 +614,8 @@ public class ConsignmentServiceImpl {
 					logger.info("Nothing to update for request " + consignmentUpdateRequest);
 				}
 			}
-
-			if(consignmentTransaction.executeUpdateStatusConsignment(consignmentMgmt)) {
+//TODO check if CUSTOM approved the consignment than we need to add an entry in webaction
+			if(consignmentTransaction.executeUpdateStatusConsignment(consignmentMgmt,webActionDb)) {
 				logger.info("Consignment status have Update SuccessFully." + consignmentUpdateRequest.getTxnId());
 				return new GenricResponse(0, "Consignment status have Update SuccessFully.", consignmentUpdateRequest.getTxnId());
 			}else {

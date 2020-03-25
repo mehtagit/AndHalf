@@ -14,7 +14,7 @@ public class GsmaBlackList {
     
     private Integer refcode;
     
-    private Long deviceid;
+    private String deviceid;
     private String partnerid;
     private String branchid;
     private String recordidentifier; 
@@ -52,11 +52,11 @@ public class GsmaBlackList {
 		this.refcode = refcode;
 	}
 
-	public Long getDeviceid() {
+	public String getDeviceid() {
 		return deviceid;
 	}
 
-	public void setDeviceid(Long deviceid) {
+	public void setDeviceid(String deviceid) {
 		this.deviceid = deviceid;
 	}
 

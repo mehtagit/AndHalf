@@ -10,6 +10,6 @@ import com.gl.ceir.config.model.GsmaBlackList;
 public interface GsmaBlacklistRepository extends JpaRepository<GsmaBlackList, Long>, 
 JpaSpecificationExecutor<GsmaBlackList> {
 
-	public GsmaBlackList getByDeviceid(Long imei);
+	public GsmaBlackList getByDeviceid(String imei);
 
 }

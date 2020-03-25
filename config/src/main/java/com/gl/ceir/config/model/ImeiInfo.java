@@ -2,15 +2,15 @@ package com.gl.ceir.config.model;
 
 public class ImeiInfo {
 
-	private Long firstImei;
+	private String firstImei;
 	private Long firstMsisdn;
-	private Long secondImei;
+	private String secondImei;
 	private Long secondMsidn;
 	private String status;
-	public Long getFirstImei() {
+	public String getFirstImei() {
 		return firstImei;
 	}
-	public void setFirstImei(Long firstImei) {
+	public void setFirstImei(String firstImei) {
 		this.firstImei = firstImei;
 	}
 	public Long getFirstMsisdn() {
@@ -19,10 +19,10 @@ public class ImeiInfo {
 	public void setFirstMsisdn(Long firstMsisdn) {
 		this.firstMsisdn = firstMsisdn;
 	}
-	public Long getSecondImei() {
+	public String getSecondImei() {
 		return secondImei;
 	}
-	public void setSecondImei(Long secondImei) {
+	public void setSecondImei(String secondImei) {
 		this.secondImei = secondImei;
 	}
 	public Long getSecondMsidn() {
@@ -37,8 +37,6 @@ public class ImeiInfo {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
-	
 	
 	
 	

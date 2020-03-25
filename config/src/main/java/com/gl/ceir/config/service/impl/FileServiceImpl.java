@@ -70,13 +70,13 @@ public class FileServiceImpl {
 			fileName = "";
 			break;
 		case 4:
-			fileName = "CEIRv1.0_User Manual (Importer)_v1.0.pdf";
+			fileName = "CEIR_User Manual (Importer)_v1.1.pdf";
 			break;
 		case 5:
-			fileName = "";
+			fileName = "CEIR_User Manual (Distributor)_v1.0.pdf";
 			break;
 		case 6:
-			fileName = "";
+			fileName = "CEIR_User Manual (Retailer)_v1.0.pdf";
 			break;
 		case 7:
 			fileName = "";
@@ -88,10 +88,10 @@ public class FileServiceImpl {
 			fileName = "";
 			break;
 		case 10:
-			fileName = "";
+			fileName = "CEIR_User Manual TRC_v1.0.pdf";
 			break;
 		case 12:
-			fileName = "";
+			fileName = "CEIR_User Manual (Manufacturer)_v1.0.pdf";
 			break;
 		case 13:
 			fileName = "";

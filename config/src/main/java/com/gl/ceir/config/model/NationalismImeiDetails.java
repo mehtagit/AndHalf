@@ -36,8 +36,8 @@ public class NationalismImeiDetails implements Serializable {
 
 	private String passportNumber;
 	private String status;
-	private Long firstImei;
-	private Long secondImei;
+	private String firstImei;
+	private String secondImei;
 
 	
 	public Long getId() {
@@ -70,18 +70,19 @@ public class NationalismImeiDetails implements Serializable {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	public Long getFirstImei() {
+	public String getFirstImei() {
 		return firstImei;
 	}
-	public void setFirstImei(Long firstImei) {
+	public void setFirstImei(String firstImei) {
 		this.firstImei = firstImei;
 	}
-	public Long getSecondImei() {
+	public String getSecondImei() {
 		return secondImei;
 	}
-	public void setSecondImei(Long secondImei) {
+	public void setSecondImei(String secondImei) {
 		this.secondImei = secondImei;
 	}
+	
 
 
 }

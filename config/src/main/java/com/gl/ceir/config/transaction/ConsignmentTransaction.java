@@ -1,5 +1,7 @@
 package com.gl.ceir.config.transaction;
 
+import java.util.Objects;
+
 import javax.transaction.Transactional;
 
 import org.apache.logging.log4j.LogManager;
@@ -79,9 +81,14 @@ public class ConsignmentTransaction {
 		return queryStatus;
 	}
 	
-	public boolean executeUpdateStatusConsignment(ConsignmentMgmt consignmentMgmt) {
+	public boolean executeUpdateStatusConsignment(ConsignmentMgmt consignmentMgmt, WebActionDb webActionDb) {
 		boolean queryStatus = Boolean.FALSE;
-
+		
+		if(Objects.nonNull(webActionDb)) {
+			webActionDbRepository.save(webActionDb);
+			logger.info("Consignment [" + consignmentMgmt.getTxnId() + "] saved in webaction_db.");	
+		}
+		
 		consignmentRepository.save(consignmentMgmt);
 		logger.info("Consignment [" + consignmentMgmt.getTxnId() + "] saved in consigment_mgmt_db.");
 
