@@ -184,9 +184,12 @@ section {
                               <label for="IMEI" >IMEI</label>
                             </div>
                             <div class="col s12 m3 l3">
-                              <label for="deviceIdType">Device ID Type</label>
-                              <select class="browser-default" id="deviceType" style="height: 30px">
-                                  <option value="" disabled="" selected="">Device ID Type</option>
+                              <label for="deviceIdType">Device ID Type <span class="star">*</span></label>
+                              <select class="browser-default" id="deviceType" style="height: 30px" 
+                              					onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+												oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+												required>
+                                  <option value="" disabled selected>Device ID Type</option>
                               </select>
                           </div>
                             <div class="input-field col s12 m3 l3">

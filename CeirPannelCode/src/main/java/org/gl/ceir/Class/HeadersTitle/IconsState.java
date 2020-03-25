@@ -1,10 +1,7 @@
 package org.gl.ceir.Class.HeadersTitle;
 
-import java.util.List;
-
 import javax.annotation.PostConstruct;
 
-import org.gl.ceir.CeirPannelCode.Model.ActionModel;
 import org.gl.ceir.configuration.Translator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -875,7 +872,7 @@ public class IconsState {
 		// state related Code
 		String view=null;
 		String functionName="isActive("+featureID+")";
-		if(featureID == 3 || featureID == 4 || featureID == 6 || featureID == 7) {
+		if(featureID == 3 || featureID == 4 || featureID == 6 || featureID == 7 || featureID == 21) {
 			view="<a href="+viewAction+" onclick="+functionName+"><i class="+viewIcon+" aria-hidden=\"true\" title="
 					+viewIconTitle+" ></i></a>";
 		}
@@ -2023,7 +2020,7 @@ public class IconsState {
 	public String userManagementIcons(String id, String userStatus) { 
 		executePostConstruct();
 
-		String editAction= "currencyViewByID('"+id+"')";
+		String editAction= "userChangeStatus('"+id+"')";
 
 		// state related Code 
 

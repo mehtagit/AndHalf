@@ -7,7 +7,7 @@ $('#langlist').on('change', function() {
 		var feature=$(this).contents().find("body").attr('data-id');
 		sessionStorage.setItem("data-feature", feature);
 		changeLanguage(lang);
-		sessionStorage.setItem("a", currentPageLocation);
+		sessionStorage.setItem("currentPageLocation", currentPageLocation);
 	});    
 	window.location.replace("?lang="+lang);
 }); 
@@ -15,18 +15,19 @@ $('#langlist').on('change', function() {
 
 
 var featurID=sessionStorage.getItem("data-feature") == null ? '1' : sessionStorage.getItem("data-feature");
-var intialController=sessionStorage.getItem("a") == null ? "./Home" : sessionStorage.getItem("a");
+var intialController=sessionStorage.getItem("currentPageLocation") == null ? "./Home" : sessionStorage.getItem("currentPageLocation");
 $(document).ready(function () {
 	//var DB_LANG_VALUE= sessionStorage.getItem("sessionLang") == null ? window.parent.$("body").attr("data-lang") :  sessionStorage.getItem("sessionLang");
 	$("#section").append(" <iframe name='mainArea' class='embed-responsive-item' id='mainArea' frameBorder='0' src="+intialController+" width='100%' onLoad='self.scrollTo(0,0)'></iframe>");
 	//window.parent.$("body").attr("data-lang", DB_LANG_VALUE);
 	var url = new URL(window.location.href);
 	/*sessionStorage.getItem("sessionLang")*/
-	var langParameter = url.searchParams.get("lang")== (null || 'null') ? 'en' : url.searchParams.get("lang");
+//	var langParameter = url.searchParams.get("lang")== (null || 'null') ? 'en' : url.searchParams.get("lang");
+	var langParameter = url.searchParams.get("lang")== 'km' ? 'km' : 'en';
 
 	window.parent.$('#langlist').val(langParameter); 
 	//dataByTag("copyright_footer","copyrightText",2);
-	sessionStorage.removeItem("a");
+	sessionStorage.removeItem("currentPageLocation");
 	$('div#initialloader').delay(300).fadeOut('slow'); 
 	isActive(featurID);
 	sessionStorage.removeItem("data-feature");
@@ -117,10 +118,9 @@ function isActive(feature){
 
 var url = new URL(window.location.href);
 /*sessionStorage.getItem("sessionLang")*/
-var langParameter = url.searchParams.get("lang")== (null || 'null') ? 'en' : url.searchParams.get("lang");
-
-var lang=langParameter;
-$.i18n().locale = lang;		
+//var langParameter = url.searchParams.get("lang")== (null || 'null') ? 'en' : url.searchParams.get("lang");
+var langParameter = url.searchParams.get("lang")== 'km' ? 'km' : 'en';
+$.i18n().locale = langParameter;		
 $.i18n().load( {
 	'en': './resources/i18n/en.json',
 	'km': './resources/i18n/km.json'
