@@ -66,6 +66,8 @@
 	href="${context}/resources/project_css/viewConsignment.css">
 <link rel="stylesheet"
 	href="${context}/resources/project_css/iconStates.css">
+	<link rel="stylesheet"
+	href="${context}/resources/project_css/intlTelInput.css">
 
 <link rel="stylesheet"
 	href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
@@ -75,6 +77,7 @@
   <!------------------------------------------- Dragable Model---------------------------------->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
 
 <style>
 .row {
@@ -389,12 +392,12 @@ input[type='search'] {
 												</div>
 
 												<div class="input-field col s12 m6 l6" style="margin-top: 18px;">
-													<input type="text" name="phone" 
-														pattern="[0-9]{10,10}"
+													<input type="tel" name="phone" 
+														pattern="[0-9]{10,14}"
 														oninput="InvalidMsg(this,'input','<spring:message code="validation.10digits" />');"
 											            oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10digits" />');"
 														title= "<spring:message code="validation.10digits" />" required  class="form-control boxBorder boxHeight" id="phone"
-														maxlength="10"> <label for="phone"><spring:message code="input.contactNum" /><span class="star">*</span>
+														maxlength="14"> <label for="phone"><spring:message code="input.contactNum" /><span class="star">*</span>
 													</label>
 												</div>
 											</div>
@@ -988,6 +991,9 @@ input[type='search'] {
 			<script type="text/javascript"
 		src="${context}/resources/project_js/enterKey.js"></script>
 		
+		<script type="text/javascript" src="${context}/resources/js/intlTelInput.js"></script>
+		<script type="text/javascript" src="${context}/resources/js/utils.js"></script>
+		
 	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/uploadPaidStatus.js"></script>
@@ -1000,6 +1006,15 @@ input[type='search'] {
 		<script type="text/javascript"
 		src="${context}/resources/project_js/profileInfoTab.js" async></script>
 	
+
+<script type="text/javascript">
+var input2 = document.querySelector("#phone");
+window.intlTelInput(input2, {
+	utilsScript : "${context}/resources/js/utils.js",
+});
+ 
+$("label[for='phone']").addClass('active');
+ </script>
 		
 		</body>
 </html>

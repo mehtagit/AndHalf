@@ -903,7 +903,7 @@ select {
 
 											<div class="input-field col s12 center">
 												<button class="btn modal-trigger" data-target="submitStolen"><spring:message code="button.submit" /></button>
-												<a href="./stolenRecovery?FeatureId=5" class="btn modal-trigger"
+												<a href="./stolenRecovery?FeatureId=5" id="sampleFileLink" class="btn modal-trigger"
 													style="margin-left: 10px;"><spring:message code="button.cancel" /></a>
 											</div>
 										</form>
@@ -1071,7 +1071,9 @@ src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/j
            	   $('#firDivText').text('');
            	   $('#uploadFirSingle').attr('type','text');
            	   $("#firImageLink").css("display", "block");
-           	   $("#uploadFirSingle").css("display", "none");  
+           	   $("#uploadFirSingle").css("display", "none"); 
+           	   $("#sampleFileLink").css("display", "none");
+           	   
            	  // alert(stolenIndivisual);
            	  $("#SingleForm").find("input,select,textarea,button").prop("disabled",true);
            	}

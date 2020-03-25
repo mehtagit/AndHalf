@@ -265,15 +265,16 @@ FeignCleintImplementation feignCleintImplementation;
 	public ModelAndView selfRegisterDevice(HttpSession session) {
 		ModelAndView modelAndView = new ModelAndView();
 		log.info("---entry point in enter nid page");
-		modelAndView.setViewName("nidForm");
+		modelAndView.setViewName("endUserNid");
 		log.info("---exit  point in enter nid page");
 		return modelAndView;
 	}
 	
-	@GetMapping("selfRegisterDevicePage")
-	public ModelAndView selfRegisterDevicePage(HttpSession session,@RequestParam(name="NID",required = false) String nid) {
+	@PostMapping("selfRegisterDevicePage")
+	public ModelAndView selfRegisterDevicePage(HttpSession session,@RequestParam(name="Search",required = false) String nid) {
 		ModelAndView modelAndView = new ModelAndView();
 		log.info("---entry point in self register page=="+nid);
+		modelAndView.addObject("nid", nid);
 		modelAndView.setViewName("selfRegisterDevice");
 		log.info("---exit  point in self register page");
 		return modelAndView;
