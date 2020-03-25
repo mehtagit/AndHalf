@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
@@ -193,16 +194,29 @@
                                                 <input class="with-gap" name="group3" id="no" type="radio" style="margin-left: 20px;" disabled=""><spring:message code="modal.no" />
                                             </div>
                               			 </div>
+						
 
-                                       <div class="input-field col s12 m6 l6">
-                                            <input type="text" name="roleType" disabled="" id="roleType"  value="${registration['user'].usertype.usertypeName}" maxlength="16" placeholder="">
-                                            <label for="roleType" class="active"> <spring:message code="registration.roletype"/></label>
-                                        </div>
-
-                                        <div class="input-field col s12 m6 l6" id="vatNumberField">
+                                     <div class="input-field col s12 m6 l6"  items="${registration.rolesList}" var="List"  >
+										 <c:forEach items="${registration.rolesList}" var="List" varStatus="loop">
+										 <c:out value="${registration.rolesList[loop.index]['role']}"/>
+										 <c:if test="${!loop.last}">,</c:if>
+                                         </c:forEach>  
+                                          <input type="text" name="roleType" disabled="" id="roleType"  value="${registration.rolesList[loop.index]['role']}" maxlength="16" placeholder="">
+                                   		  <label for="roleType" class="active"> <spring:message code="registration.roletype"/></label>
+                                    </div>
+										
+										
+                                        <div class="input-field col s12 m6 l6" id="vatNumberField" style="display: none;">
                                             <input type="text" name="vatNumber" disabled="" id="vatNumber"  value="${registration.vatNo}"  maxlength="16">
                                             <label for="vatNumber"><spring:message code="registration.vatnumber"/></label>
                                         </div>
+                                        
+                                        <div class="input-field col s12 m6 l6" id="uploadedvatFileDiv" style="display: none;" >
+                                       
+                                    <input type="text" name="vatFile" id="uploadedVatFile" value="${registration.vatFilename}" maxlength="20"  disabled="">
+                                    <label for="ploadedVatFile" class="active"><spring:message code="registration.uploadedVatFile"/> </label>
+                                   <span> <a href="#" onclick="previewFile('${registration.vatFilePath}','${registration.vatFilename}')">Preview </a></span> 
+                                </div>
                                     </div>
                                 </div>
                                 </div>
@@ -222,7 +236,17 @@
             </div></section>
 
 
+		<!-- Preview Modal start   -->
 
+	<div id="viewuplodedModel" class="modal" style="overflow: hidden">
+	<a href="#!" class="modal-close waves-effect waves-green btn-flat">&times;</a>
+		<div class="modal-content">
+			<div class="row">
+					<img src="" id="fileSource" width="400" height="400">
+			</div>
+		</div>
+	</div>
+	<!-- Modal End -->
 
 
 
@@ -276,10 +300,11 @@
 		var vatStatus = $('#vat').val();
 		if(vatStatus== 1){
 			$("#yes").prop("checked", true);
+			$("#uploadedvatFileDiv").css({"display":"block"});
+			$("#vatNumberField").css({"display":"block"});
 		}else if(vatStatus == 0){
 			$("#no").prop("checked", true);
 		}
-		
 	</script>
 		
 </body>

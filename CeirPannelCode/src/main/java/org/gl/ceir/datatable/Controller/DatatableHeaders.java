@@ -140,7 +140,7 @@ public class DatatableHeaders {
 
 			//AdminRegistration Headers
 			else if("adminRegistration".equals(role)) {
-				String[] headers = {"table.RequestedOn","table.lastupdatedate","table.displayName","table.AsType","table.roleType","table.status","table.action"};	
+				String[] headers = {"table.RequestedOn","table.lastupdatedate","table.displayName","table.AsType","table.userType","table.status","table.action"};	
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
