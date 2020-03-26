@@ -254,10 +254,10 @@
 												<spring:message code="input.contactNum" />
 												<span class="star">*</span>
 											</p>
-											<input type="tel" id="phone" pattern="[0-9]{1,10}"
+											<input type="tel" id="phone" pattern="[0-9]{1,14}"
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.10digits" />');"
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10digits" />');"
-												required maxlength="10">
+												required maxlength="14">
 										</div>
 
 										<div class="input-field col s12 m6">
@@ -273,7 +273,7 @@
 
 			<div class="input-field col s12 m6">
 											<input type="text" id="endUserNID"
-												pattern="[A-Za-z0-9]{1,15}"
+												pattern="[A-Za-z0-9]{1,15}" value="${nid}" readonly="readonly"
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
 												required maxlength="15" /> <label id="endUserNID"
@@ -761,6 +761,8 @@
 
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
+		<script type="text/javascript" src="${context}/resources/js/intlTelInput.js"></script>
+		<script type="text/javascript" src="${context}/resources/js/utils.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/globalVariables.js"></script>
 	<script type="text/javascript"
@@ -778,7 +780,12 @@
 		src="${context}/resources/project_js/ValidationFileOutsidePortal.js"></script>
 
 
-
+<script type="text/javascript">
+var input2 = document.querySelector("#phone");
+window.intlTelInput(input2, {
+	utilsScript : "${context}/resources/js/utils.js",
+});
+</script>
 
 </body>
 </html>

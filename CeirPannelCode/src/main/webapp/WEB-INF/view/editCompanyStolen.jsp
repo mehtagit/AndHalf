@@ -801,7 +801,8 @@
 											</div>
 
 											<div class="col s12 m12">
-												<a href=""><spring:message code="input.downlaod.sample" /></a>
+                                                        <a href="./Consignment/sampleFileDownload/7" id="editRecoverySampleFile"> <spring:message
+														code="input.downlaod.sample" /></a>
 											</div>
 
 											<div class="input-field col s12 center">
@@ -980,7 +981,7 @@ src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/j
    $('#uploadFirSingle').attr('type','text');
    $("#firFilePreview").css("display", "block");
    $("#uploadFirSingle").css("display", "none");
-	
+	$("#editRecoverySampleFile").css("display", "none");
 	   $("#Bulkform").find("input,select,textarea,button").prop("disabled",true);
 	}
 else{

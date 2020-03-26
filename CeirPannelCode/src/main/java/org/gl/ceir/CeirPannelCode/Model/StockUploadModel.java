@@ -16,14 +16,17 @@ public class StockUploadModel {
 	private String supplierId;
 	private int userId;
 	private String userType,remarks,createdOn,modifiedOn,stateInterp;
+	private Long assignerId;
 	private StockUserModel user;
-	@Override
-	public String toString() {
-		return "StockUploadModel [fileName=" + fileName + ", id=" + id + ", invoiceNumber=" + invoiceNumber
-				+ ", roleType=" + roleType + ", suplierName=" + suplierName + ", txnId=" + txnId + ", quantity="
-				+ quantity + ", stockStatus=" + stockStatus + ", supplierId=" + supplierId + ", userId=" + userId
-				+ ", userType=" + userType + ", remarks=" + remarks + ", createdOn=" + createdOn + ", modifiedOn="
-				+ modifiedOn + ", stateInterp=" + stateInterp + ", user=" + user + "]";
+	
+	
+	
+	
+	public Long getAssignerId() {
+		return assignerId;
+	}
+	public void setAssignerId(Long assignerId) {
+		this.assignerId = assignerId;
 	}
 	public String getFileName() {
 		return fileName;
@@ -120,6 +123,46 @@ public class StockUploadModel {
 	}
 	public void setUser(StockUserModel user) {
 		this.user = user;
+	}
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("StockUploadModel [fileName=");
+		builder.append(fileName);
+		builder.append(", id=");
+		builder.append(id);
+		builder.append(", invoiceNumber=");
+		builder.append(invoiceNumber);
+		builder.append(", roleType=");
+		builder.append(roleType);
+		builder.append(", suplierName=");
+		builder.append(suplierName);
+		builder.append(", txnId=");
+		builder.append(txnId);
+		builder.append(", quantity=");
+		builder.append(quantity);
+		builder.append(", stockStatus=");
+		builder.append(stockStatus);
+		builder.append(", supplierId=");
+		builder.append(supplierId);
+		builder.append(", userId=");
+		builder.append(userId);
+		builder.append(", userType=");
+		builder.append(userType);
+		builder.append(", remarks=");
+		builder.append(remarks);
+		builder.append(", createdOn=");
+		builder.append(createdOn);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
+		builder.append(", stateInterp=");
+		builder.append(stateInterp);
+		builder.append(", assignerId=");
+		builder.append(assignerId);
+		builder.append(", user=");
+		builder.append(user);
+		builder.append("]");
+		return builder.toString();
 	}
 	
 
