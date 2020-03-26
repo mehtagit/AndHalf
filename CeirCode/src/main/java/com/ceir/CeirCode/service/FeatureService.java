@@ -5,6 +5,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,8 @@ import com.ceir.CeirCode.model.SystemConfigurationDb;
 import com.ceir.CeirCode.model.User;
 import com.ceir.CeirCode.model.UserToStakehoderfeatureMapping;
 import com.ceir.CeirCode.model.Usertype;
+import com.ceir.CeirCode.model.constants.SelfRegistration;
+import com.ceir.CeirCode.repo.FeatureRepo;
 import com.ceir.CeirCode.repo.UserRepo;
 import com.ceir.CeirCode.repo.UserRoleRepo;
 import com.ceir.CeirCode.repo.UserToStakehoderfeatureMappingRepo;
@@ -22,6 +25,7 @@ import com.ceir.CeirCode.repoService.SystemConfigDbRepoService;
 import com.ceir.CeirCode.repoService.UserFeatureRepoService;
 import com.ceir.CeirCode.util.HttpResponse;
 import com.ceir.CeirCode.util.Utility;
+import com.sun.xml.internal.ws.config.metro.dev.FeatureReader;
 @Service
 public class FeatureService {
 	private final Logger log = LoggerFactory.getLogger(getClass());
@@ -43,6 +47,9 @@ public class FeatureService {
 
 	@Autowired
 	UserFeatureRepoService userFeatureRepoImpl;
+	
+	@Autowired
+	FeatureRepo featureRepo;
 	
 	public ResponseEntity<?> featureData(Integer userId){
 		try {  
@@ -142,4 +149,19 @@ public class FeatureService {
 		}
 
 	}
+	
+	
+	public ResponseEntity<?> featureData(){
+		try {
+			List<StakeholderFeature> featureData=featureRepo.findAll();
+			return new ResponseEntity<>(featureData, HttpStatus.OK);
+		}
+		catch(Exception e){
+			HttpResponse response=new HttpResponse();
+			response.setResponse("Oop something wrong happened");
+			response.setStatusCode(409);
+			return new ResponseEntity<>(response,HttpStatus.OK);
+		}
+	}
+	
 }

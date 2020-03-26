@@ -148,12 +148,12 @@ public class UserProfileSpecificationBuilder {
 			else if(SearchOperation.GREATER_THAN.equals(searchCriteria.getSearchOperation())
 					&& Datatype.DATE.equals(searchCriteria.getDatatype())){
 				Expression<String> dateStringExpr = cb.function(DbFunctions.getDate(dialect), String.class, user.get(searchCriteria.getKey()), cb.literal(DbFunctions.getDateFormat(dialect)));
-				return cb.greaterThan(cb.lower(dateStringExpr), searchCriteria.getValue().toString());
+				return cb.greaterThanOrEqualTo(cb.lower(dateStringExpr), searchCriteria.getValue().toString());
 			}
 			else if(SearchOperation.LESS_THAN.equals(searchCriteria.getSearchOperation())
 					&& Datatype.DATE.equals(searchCriteria.getDatatype())){
 				Expression<String> dateStringExpr = cb.function(DbFunctions.getDate(dialect), String.class, user.get(searchCriteria.getKey()), cb.literal(DbFunctions.getDateFormat(dialect)));
-				return cb.lessThan(cb.lower(dateStringExpr), searchCriteria.getValue().toString());
+				return cb.lessThanOrEqualTo(cb.lower(dateStringExpr), searchCriteria.getValue().toString());
 			}
 			else if(SearchOperation.NEGATION.equals(searchCriteria.getSearchOperation())
 					&& Datatype.STRING.equals(searchCriteria.getDatatype())) {

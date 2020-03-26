@@ -39,9 +39,11 @@ import com.ceir.CeirCode.model.UserTemporarydetails;
 import com.ceir.CeirCode.model.Userrole;
 import com.ceir.CeirCode.model.Usertype;
 import com.ceir.CeirCode.model.constants.ChannelType;
+import com.ceir.CeirCode.model.constants.SelfRegistration;
 import com.ceir.CeirCode.model.constants.UserStatus;
 import com.ceir.CeirCode.model.constants.UserTypeStatusFlag;
 import com.ceir.CeirCode.model.constants.UsertypeData;
+import com.ceir.CeirCode.othermodel.RolesData;
 import com.ceir.CeirCode.repo.NotificationRepository;
 import com.ceir.CeirCode.repo.SecurityQuestionRepo;
 import com.ceir.CeirCode.repo.SystemConfigDbListRepository;
@@ -137,7 +139,7 @@ public class UserService {
 	public ResponseEntity<?> getUsertypeData(HttpHeaders headers){
 		try {
 			log.info("headers:  "+headers);
-			List<Usertype> usertypeData=usertypeRepo.findAll();  
+			List<Usertype> usertypeData=usertypeRepo.findBySelfRegister(SelfRegistration.YES.getCode());  
 			return new ResponseEntity<>(usertypeData, HttpStatus.OK);
 		}
 		catch(Exception e){
@@ -1025,8 +1027,8 @@ public class UserService {
 							msg=ProfileTags.PRO_SUCESS_MSG.getMessage();
 						}
 						else {
-							tag=RegistrationTags.REG_SUCESS_RESP.getTag();
-							msg=RegistrationTags.REG_SUCESS_RESP.getMessage();
+							tag=ProfileTags.PRO_SUCESS_OTPMSG.getTag();
+							msg=ProfileTags.PRO_SUCESS_OTPMSG.getMessage();
 				
 						}
 						UpdateProfileResponse response=new UpdateProfileResponse(msg,200,UserStatus.getUserStatusByCode(userData.getCurrentStatus()).getDescription()
@@ -1118,12 +1120,18 @@ public class UserService {
 			if(user!=null) {  
 				saveUserTrail(user.getUser(), "Registration Request","view By Id",8);
 				List<Long> rolesId=new ArrayList<Long>();
+				List<RolesData> rolesList=new ArrayList<RolesData>();
 				for(Userrole userRoles:user.getUser().getUserRole()) {
 					rolesId.add(userRoles.getUsertypeData().getId());
+					rolesList.add(new RolesData(userRoles.getUserData().getId(),userRoles.getUsertypeData().getUsertypeName()));
 				}     
 				log.info("roles Ids :  "+rolesId);
+				log.info("user roles :  "+rolesList);
+				
 				long[] arr = new long[rolesId.size()]; 
 				arr = Longs.toArray(rolesId); 
+			
+				user.setRolesList(rolesList);
 				user.setRoles(arr); 
 				List<SystemConfigListDb> asTypeList=systemConfigRepo.getByTag("AS_TYPE");
 				for(SystemConfigListDb asType:asTypeList) {
@@ -1163,8 +1171,8 @@ public class UserService {
 			}
 		}
 		catch(Exception e) {
-			log.info("exception occur");
-			e.printStackTrace();
+			log.info("exception occur here");
+            log.info(e.toString());
 			HttpResponse response=new HttpResponse();
 			response.setStatusCode(409); 
 			response.setResponse("Oops something wrong happened");

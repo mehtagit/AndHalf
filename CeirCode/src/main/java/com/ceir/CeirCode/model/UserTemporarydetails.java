@@ -14,10 +14,12 @@ import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.envers.Audited;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 @Entity
+@Audited
 public class UserTemporarydetails {
 	private static long serialVersionUID = 1L;
 	@Id

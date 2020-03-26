@@ -10,9 +10,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.RelationTargetAuditMode;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
+@Audited
 public class UserToStakehoderfeatureMapping {
 
 	@Id       
@@ -22,6 +26,7 @@ public class UserToStakehoderfeatureMapping {
 	private Date modifiedOn; 
 	
 	@JsonIgnore
+	@Audited(targetAuditMode=RelationTargetAuditMode.NOT_AUDITED)
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "feature_id", nullable = false) 
 	private StakeholderFeature stakeholderFeature; 

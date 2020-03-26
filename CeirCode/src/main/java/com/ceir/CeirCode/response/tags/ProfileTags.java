@@ -8,6 +8,7 @@ public enum ProfileTags {
 	PRO_OldPass_Error("PRO_OldPass_Error", "Kindly enter the correct password"),
 	PRO_CORRECT_PASS("PRO_CORRECT_PASS","Please enter correct password"),
 	PRO_SUCESS_MSG("PRO_SUCESS_MSG","User profile data succesfully update"),
+	PRO_SUCESS_OTPMSG("PRO_SUCESS_OTPMSG","OTP has been sent to your  Phone Number and E-Mail ID to verify"),
 	PRO_FAIL_MSG("PRO_FAIL_MSG","User profile data failed to update"),
 	SEC_QUES_MATCH("secu_ques_match","security question and answer match"),
 	SECU_QUEST_NOT_MATCH("secu_ques_not_match","Security question and answer did not match"),

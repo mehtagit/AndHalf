@@ -169,7 +169,6 @@ public class UserProfileService {
 					else if(searchAssignee.getType()==AssigneeType.EMAIL.getCode()) {
 						specification.with(new SearchCriteria("email", searchAssignee.getField(),SearchOperation.EQUALITY, Datatype.STRING));
 					}
-					
 					else {
 
 					}

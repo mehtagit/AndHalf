@@ -6,7 +6,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
+import org.hibernate.envers.Audited;
 @Entity       
+@Audited
 public class UserSecurityquestion {
 	private static long serialVersionUID = 1L;
 	@Id    

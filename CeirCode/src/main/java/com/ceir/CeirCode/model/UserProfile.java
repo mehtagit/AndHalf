@@ -3,6 +3,7 @@ package com.ceir.CeirCode.model;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -19,10 +20,13 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.envers.Audited;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.ceir.CeirCode.othermodel.RolesData;
 import com.fasterxml.jackson.annotation.JsonFormat;
 @Entity 
+@Audited
 public class UserProfile {
 	private static long serialVersionUID = 1L;
 	@Id
@@ -132,6 +136,8 @@ public class UserProfile {
 	@Transient
 	private String userLanguage;
 	
+	@Transient
+	List<RolesData> rolesList;
 	
 	public long[] getRoles() {
 		return roles;
@@ -510,6 +516,15 @@ public class UserProfile {
 	public void setPortAddressName(String portAddressName) {
 		PortAddressName = portAddressName;
 	}
+	
+	
+	
+	public List<RolesData> getRolesList() {
+		return rolesList;
+	}
+	public void setRolesList(List<RolesData> rolesList) {
+		this.rolesList = rolesList;
+	}
 	@Override
 	public String toString() {
 		return "UserProfile [id=" + id + ", firstName=" + firstName + ", middleName=" + middleName + ", lastName="
@@ -530,7 +545,8 @@ public class UserProfile {
 				+ questionList + ", roles=" + roles + ", usertypeName=" + usertypeName + ", password=" + password
 				+ ", source=" + source + ", expiryDate=" + expiryDate + ", sourceUsername=" + sourceUsername
 				+ ", userAgent=" + userAgent + ", publicIp=" + publicIp + ", userLanguage=" + userLanguage +
-				" portAddress=" + PortAddress +" , PortAddressName=" + PortAddressName +", userTypeId=" + userTypeId +"]";
+				" portAddress=" + PortAddress +" , PortAddressName=" + PortAddressName +", userTypeId=" + userTypeId +""
+						+ "  RolesList="+rolesList+"]";
 	}
 	public UserProfile(String firstName, String middleName, String lastName, String propertyLocation, String street,
 			String locality, @NotNull String district, @NotNull String commune, @NotNull String village,

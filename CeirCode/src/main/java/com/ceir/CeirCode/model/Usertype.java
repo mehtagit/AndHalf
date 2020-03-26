@@ -10,14 +10,18 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.RelationTargetAuditMode;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity 
+@Audited
 public class Usertype {   
 	private static long serialVersionUID = 1L;
 	@Id 
@@ -45,7 +49,11 @@ public class Usertype {
 	private List<UserToStakehoderfeatureMapping> userTofeatureMapping;
 	
 	private Integer status=1;
+    
+	@Transient
+	private String statusInterp;
 	
+	private Integer selfRegister;
 
 	public long getId() {
 		return id; 
@@ -103,4 +111,24 @@ public class Usertype {
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
+	public String getStatusInterp() {
+		return statusInterp;
+	}
+	public void setStatusInterp(String statusInterp) {
+		this.statusInterp = statusInterp;
+	}
+	public Integer getSelfRegister() {
+		return selfRegister;
+	}
+	public void setSelfRegister(Integer selfRegister) {
+		this.selfRegister = selfRegister;
+	}
+	public Usertype(long id, String usertypeName) {
+		super();
+		this.id = id;
+		this.usertypeName = usertypeName;
+	}
+	
+	
+	
 }
