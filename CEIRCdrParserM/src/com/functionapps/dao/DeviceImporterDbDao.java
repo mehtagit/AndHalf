@@ -20,11 +20,11 @@ public class DeviceImporterDbDao {
 		ResultSet rs = null;
 		String query = null;
 
-		DeviceImporterDb deviceImporterDb = null;
 		List<DeviceImporterDb> deviceImporterDbs = new LinkedList<>();
 		try{
 			query = "select * from device_importer_db where txn_id='" + txnId + "'";
 			logger.info("Query to get File Details ["+query+"]");
+			System.out.println("Query to get File Details ["+query+"]");
 			stmt  = conn.createStatement();
 			rs = stmt.executeQuery(query);
 

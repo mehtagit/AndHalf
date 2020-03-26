@@ -1,6 +1,7 @@
 package com.functionapps.dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
@@ -13,61 +14,75 @@ import com.functionapps.util.DateUtil;
 
 public class DeviceCustomDbDao {
 	static Logger logger = Logger.getLogger(DeviceCustomDbDao.class);
-	
+	static String GENERIC_DATE_FORMAT = "dd-MM-yyyy";
+
 	public DeviceCustomDbDao(){
 
 	}
-	
+
 	public void insertDeviceCustomDb(Connection conn, List<DeviceImporterDb> deviceImporterDbs) {
 		String query = "";
-		Statement stmt = null;
+		PreparedStatement preparedStatement = null;
+		query = "insert into device_custom_db (created_on, device_action, device_id_type, "
+				+ "device_launch_date, device_status," 
+				+ "device_type, imei_esn_meid,"
+				+ "manufature_date, modified_on, multiple_sim_status, period," 
+				+ "sn_of_device, device_block_status, local_date, previous_device_status," 
+				+ "txn_id, user_id, device_state, feature_id"
+				+ ") values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		
+		System.out.println("Add device_custom_db [" + query + " ]");
+		logger.info("Add device_custom_db ["+query+"]");
+
 		try {
-			stmt = conn.createStatement();
+			System.out.println("sop2.1");
+			preparedStatement = conn.prepareStatement(query);
 
 			for (DeviceImporterDb deviceImporterDb : deviceImporterDbs) {
-				query = "insert into device_custom_db (created_on, device_action, device_id_type, "
-						+ "device_launch_date, device_status," 
-						+ "device_type, imei_esn_meid, importer_date, importer_device_status, importer_txn_id,"
-						+ "manufature_date, modified_on, multiple_sim_status, period," 
-						+ "sn_of_device, device_block_status, local_date, previous_device_status," 
-						+ "txn_id, user_id, device_state, feature_id"
-						+ ") values('"
-						+ DateUtil.nextDate(0, null) 
-						+ "','" + deviceImporterDb.getDeviceAction() + "','" + deviceImporterDb.getDeviceIdType() + "','" 
-						+ deviceImporterDb.getDeviceLaunchDate() + "','" + deviceImporterDb.getDeviceStatus() + "','" 
-						+ deviceImporterDb.getDeviceType() + "','" + deviceImporterDb.getImeiEsnMeid() + "','" 
-						+ deviceImporterDb.getManufatureDate() + "','" + deviceImporterDb.getModifiedOn() + "','"
-						+ deviceImporterDb.getMultipleSimStatus() + "','" + deviceImporterDb.getPeriod() + "','"
-						+ deviceImporterDb.getSnOfDevice() + "','" + deviceImporterDb.getDeviceStatus() + "','"
-						+ deviceImporterDb.getLocalDate() + "','" + deviceImporterDb.getPreviousDeviceStatus() + "','"
-						+ deviceImporterDb.getTxnId() + "'," + deviceImporterDb.getUserId() + ","
-						+ deviceImporterDb.getDeviceStatus() + "," + deviceImporterDb.getFeatureId()
-						+")";
-
-				System.out.println("Add device_custom_db [" + query + " ]");
-				logger.info("Add feature file Details in config DB["+query+"]");
-				stmt.addBatch(query);
+				preparedStatement.setString(1, DateUtil.nextDate(0, null));
+				preparedStatement.setString(2, deviceImporterDb.getDeviceAction());
+				preparedStatement.setString(3, deviceImporterDb.getDeviceIdType()); 
+				preparedStatement.setDate(4, DateUtil.getSqlDate(deviceImporterDb.getDeviceLaunchDate(),GENERIC_DATE_FORMAT));
+				
+				
+				preparedStatement.setString(5, deviceImporterDb.getDeviceStatus()); 
+				preparedStatement.setString(6, deviceImporterDb.getDeviceType()); 
+				preparedStatement.setString(7, deviceImporterDb.getImeiEsnMeid());
+				preparedStatement.setString(8, deviceImporterDb.getManufatureDate());
+				preparedStatement.setString(9, DateUtil.nextDate(0, null));
+				preparedStatement.setString(10, deviceImporterDb.getMultipleSimStatus());
+				preparedStatement.setString(11, deviceImporterDb.getPeriod()); 
+				preparedStatement.setString(12, deviceImporterDb.getSnOfDevice());
+				preparedStatement.setInt(13, deviceImporterDb.getDeviceState());
+				preparedStatement.setString(14, deviceImporterDb.getLocalDate());
+				preparedStatement.setLong(15, deviceImporterDb.getPreviousDeviceStatus());
+				preparedStatement.setString(16, deviceImporterDb.getTxnId()); 
+				preparedStatement.setLong(17, deviceImporterDb.getUserId());
+				preparedStatement.setInt(18, deviceImporterDb.getDeviceState());
+				preparedStatement.setInt(19, deviceImporterDb.getFeatureId());
+				System.out.println("Query"+preparedStatement);
+				preparedStatement.addBatch();
+				
 			}
 
-			stmt.executeBatch();
-			conn.commit();
+			preparedStatement.executeBatch();
 
+			System.out.println("sop2.2");
 		} catch (SQLException e) {
 			logger.error(e.getMessage(), e);
 			e.printStackTrace();
 		}
 		finally{
 			try {
-				if(Objects.nonNull(stmt))
-					stmt.close();
+				if(Objects.nonNull(preparedStatement))
+					preparedStatement.close();
 			} catch (SQLException e) {
 				logger.error(e.getMessage(), e);
 				e.printStackTrace();
 			}
 		}
 	}
-	
+
 	public int deleteDevicesFromDeviceCustomDb(Connection conn, String txnId) {
 		String query = "";
 		Statement stmt = null;

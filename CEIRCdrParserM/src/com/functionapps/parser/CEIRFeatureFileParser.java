@@ -1,19 +1,16 @@
 package com.functionapps.parser;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.PrintWriter;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import com.functionapps.constants.*;
-import com.functionapps.log.LogWriter;
-import com.functionapps.parser.service.ConsignmentDelete;
 
 import org.apache.log4j.Logger;
+
+import com.functionapps.parser.service.ApproveConsignment;
+import com.functionapps.parser.service.ConsignmentDelete;
 public class CEIRFeatureFileParser {
 	static Logger logger = Logger.getLogger(CEIRFeatureFileParser.class);
 
@@ -151,6 +148,9 @@ public class CEIRFeatureFileParser {
 			}else if(operator.equalsIgnoreCase("consignment") &&(sub_feature.equalsIgnoreCase("delete"))){
 				System.out.println("running consignment delete process.");
 				new ConsignmentDelete().process(conn, operator, sub_feature, rulelist, txn_id, operator_tag);
+			}else if(operator.equalsIgnoreCase("consignment") &&(sub_feature.equalsIgnoreCase("approve"))){
+				System.out.println("running consignment approve process.");
+				new ApproveConsignment().process(conn, operator, sub_feature, rulelist, txn_id, operator_tag);
 			}else {
 				System.out.println("Skipping the process.");
 			}

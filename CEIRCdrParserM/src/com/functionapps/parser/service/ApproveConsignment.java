@@ -20,15 +20,23 @@ public class ApproveConsignment {
 		DeviceCustomDbDao deviceCustomDbDao = new DeviceCustomDbDao();
 		DeviceImporterDbDao deviceImporterDbDao = new DeviceImporterDbDao();
 		CEIRFeatureFileFunctions ceirfunction = new CEIRFeatureFileFunctions();
-		
-		try{
 
+		try{
+			System.out.println("sop1");
 			List<DeviceImporterDb> deviceImporterDbs = deviceImporterDbDao.getDeviceImporterDbByTxnId(conn, "", txnId);
+			System.out.println(deviceImporterDbs);
+
+			System.out.println("deviceImporterDbs.size()" + deviceImporterDbs.size());
+
+			System.out.println("sop2");
 			deviceCustomDbDao.insertDeviceCustomDb(conn, deviceImporterDbs);
-		
+
+			System.out.println("sop3");
 			ceirfunction.updateFeatureFileStatus(conn, txnId, 2, operator, sub_feature);
 			// TODO hit API to update delete flag in consignment.
+
 			conn.commit();
+			conn.close();
 
 		}catch(Exception e){
 			e.printStackTrace();

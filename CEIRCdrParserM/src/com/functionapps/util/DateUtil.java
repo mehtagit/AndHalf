@@ -42,7 +42,19 @@ public class DateUtil {
 	public void compareDateWithToday() {
 		
 	}
-
+	public static java.sql.Date getSqlDate(String date,String format)
+	{
+		java.sql.Date sqlDate = null;
+		try {
+		SimpleDateFormat sdf1 = new SimpleDateFormat(format);
+		java.util.Date dateUtil = sdf1.parse(date);
+		sqlDate = new java.sql.Date(dateUtil.getTime()); 
+		}
+		catch(Exception exp){
+			exp.printStackTrace();
+		}
+		return sqlDate;
+	}
 	public static void main(String[] args) {
 		String testdate = "04-01";
 		
