@@ -1,6 +1,13 @@
 
 /*$.getScript('../resources/project_js/CLDRPluralRuleParser.js');
 	*/
+$('input').on('invalid', function(e) {
+    setTimeout(function(){
+        $('html, body').animate({scrollTop: document.documentElement.scrollTop - 15}, 0);
+       // $('html, body').animate({scrollTop: document.documentElement.scrollDown}, 0);
+    }, 0);
+});
+
 
 
 $('input,select,textArea,button').attr('title', window.webkitURL ? ' ' : '');
@@ -9,11 +16,6 @@ var data_lang_param =$("body").attr("data-lang-param") == 'km' ? 'km' : 'en';
 var langDropdownValue=$("body").attr("data-lang-param");
 var transactionIDValue= txnIdValue == 'null' ? $('#transactionID').val() : txnIdValue;
 
-$('input').on('invalid', function(e) {
-    setTimeout(function(){
-        $('html, body').animate({scrollTop: document.documentElement.scrollTop - 150 }, 0);
-    }, 0);
-});
 
 
 function fileDownload(fileName,fileType,txnId,doc_TypeTag)

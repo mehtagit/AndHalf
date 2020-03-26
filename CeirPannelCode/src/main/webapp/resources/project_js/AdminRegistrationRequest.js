@@ -282,6 +282,7 @@
 	    });
 		$("#userId").text(userId);
 		window.userID=userId;
+		window.userName = username
 		window.date=date.replace("="," ");
 	}
 
@@ -322,7 +323,7 @@
 		 	   dismissible:false
 	    });}, 200);
 		$("#registrationDate").text(date);
-		$("#RegistrationId").text(userID);
+		$("#RegistrationId").text(window.userName);
 	}
 
 	function userRejectPopup(userId,sessionUserName){
