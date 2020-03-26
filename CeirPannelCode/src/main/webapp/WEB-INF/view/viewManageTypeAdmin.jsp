@@ -191,7 +191,7 @@ var path="${context}";
 					<div id="live-chat">
 						<div class="chat">
 							<div class="chat-history">
-								<div class="chat-message clearfix" id="chatMsg"></div>
+								<div class="chat-message clearfix" id="chatMsg" style="cursor: pointer;"></div>
 								<!-- end chat-message -->
 
 
@@ -345,7 +345,7 @@ var path="${context}";
 												oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');">
 									</div>
 									<div class="file-path-wrapper">
-										<input class="file-path validate" type="text"
+										<input class="file-path validate" type="text" id="fileName"
 											placeholder="<spring:message code="grievanceFileMessage" />">
 										<div>
 											<p id="myFiles"></p>

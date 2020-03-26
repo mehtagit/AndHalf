@@ -191,10 +191,12 @@ function viewDetails(Id){
 
 function setViewPopupData(data){
 	$("#viewUserId").val(data.userId);
+	$("#viewTxnId").val(data.txnId);
 	$("#viewUserName").val(data.userName);
 	$("#viewRoleType").val(data.userType);
 	$("#viewFeature").val(data.featureName);
 	$("#viewSubFeature").val(data.subFeature);
+	
 }
 
 
