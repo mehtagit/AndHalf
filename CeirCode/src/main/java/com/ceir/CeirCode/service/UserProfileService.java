@@ -189,6 +189,7 @@ public class UserProfileService {
 		if(Objects.nonNull(searchAssignee.getUserTypeId())){
 
 			if(searchAssignee.getUserTypeId()==UsertypeData.Distributor.getCode()) {
+				specification.with(new SearchCriteria("user",UserStatus.APPROVED.getCode(),SearchOperation.EQUALITY, Datatype.INTEGER));
 				ArrayList<Integer> arrays=new ArrayList<Integer>();
 				arrays.add(UsertypeData.Importer.getCode());
 				arrays.add(UsertypeData.Distributor.getCode());
@@ -198,7 +199,7 @@ public class UserProfileService {
 				
 			}
 			else if(searchAssignee.getUserTypeId()==UsertypeData.Retailer.getCode()) {
-
+				specification.with(new SearchCriteria("user",UserStatus.APPROVED.getCode(),SearchOperation.EQUALITY, Datatype.INTEGER));
 				ArrayList<Integer> arrays=new ArrayList<Integer>();
 				arrays.add(UsertypeData.Importer.getCode());
 				arrays.add(UsertypeData.Distributor.getCode());
@@ -209,6 +210,7 @@ public class UserProfileService {
 				return userProfileRepo.findAll(specification.build(),pageable);	
 			}
             else if(searchAssignee.getUserTypeId()==UsertypeData.Custom.getCode()) {
+				specification.with(new SearchCriteria("user",UserStatus.APPROVED.getCode(),SearchOperation.EQUALITY, Datatype.INTEGER));
 				ArrayList<Integer> arrays=new ArrayList<Integer>();
 				arrays.add(UsertypeData.Distributor.getCode());
 				arrays.add(UsertypeData.Retailer.getCode());

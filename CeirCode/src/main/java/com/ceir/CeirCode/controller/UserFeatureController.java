@@ -38,16 +38,7 @@ public class UserFeatureController {
 			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize){
 		MappingJacksonValue mapping = null;
 			Page<UserToStakehoderfeatureMapping> userTypeData  =userFeatureService.viewAllUSerFeatures(filterRequest, pageNo, pageSize);
-			List<SystemConfigListDb> statusList=systemConfigRepo.getByTag("UserType_Status");
-			if(userTypeData!=null) {
-			for(UserToStakehoderfeatureMapping feature:userTypeData.getContent()) {
-				for(SystemConfigListDb status:statusList) {
-					if(feature.getPeriod()==status.getValue()) {
-						feature.setStatusInterp(status.getInterp());
-					}
-				}
-			}
-			}
+	//		List<SystemConfigListDb> statusList=systemConfigRepo.getByTag("UserType_Status");
 			mapping = new MappingJacksonValue(userTypeData);
 		return mapping;
 	}

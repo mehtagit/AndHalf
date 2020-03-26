@@ -39,6 +39,9 @@ public class UserFeatureService {
 	PropertiesReaders propertiesReader;
 	
 	@Autowired
+	UsertypeRepo userTypeRepo;
+	
+	@Autowired
 	UserToStakehoderfeatureMappingRepo userFeatureRepo;
 	public Page<UserToStakehoderfeatureMapping>  viewAllUSerFeatures(UserFeatureFilter filterRequest, Integer pageNo, Integer pageSize){
 		try { 
@@ -78,7 +81,7 @@ public class UserFeatureService {
 		log.info("get usertype  data by usertype id below"); 
 		Usertype userType=new Usertype();
 		try {
-			 userType=usertypeRepo.findById(usertypeStatus.getUsertypeId());			
+			 userType=userTypeRepo.findById(usertypeStatus.getUsertypeId());			
 		}
 		catch(Exception e) {
 			log.info(e.getMessage());
@@ -87,7 +90,7 @@ public class UserFeatureService {
 
 		if(userType!=null) {
 			userType.setStatus(usertypeStatus.getStatus());
-			Usertype output=usertypeRepo.save(userType); 
+			Usertype output=userTypeRepo.save(userType); 
 			log.info("usertype data after update the status: "+output);
 			if(output!=null) {
 				HttpResponse response=new HttpResponse(UsertypeTags.UTStatus_Update_Success.getMessage(),
