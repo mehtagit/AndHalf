@@ -485,6 +485,7 @@ select {
 																style="display: none; width: 30%; margin-right: 30%; float: right; margin-top: -15px"
 																id="calender">
 																<div id="startdatepicker" class="input-group date">
+																<p> <spring:message code="operator.blockingTypePeriod" /> </p>
 																	<input type="text" id="stolenDatePeriod"
 																		style="margin-top: -9px" /> <span
 																		class="input-group-addon" style="color: #ff4081"><i
@@ -699,11 +700,11 @@ select {
 																	code="input.Remark" /></label>
 														</div>
 													</div>
-													
+													<p> <spring:message code="input.requiredfields" />
+												<span class="star">*</span></p>
 													
 													</div>
-											<span> <spring:message code="input.requiredfields" />
-												<span class="star">*</span></span>
+											
 
 
 											<div class="input-field col s12 center">
@@ -1061,9 +1062,7 @@ select {
 														required id="deviceBulkStolenFile" onchange="isFileValid('deviceBulkStolenFile')" accept=".csv">
 												</div>
 												<div class="file-path-wrapper">
-													<input class="file-path validate" type="text" id="deviceBulkStolenFileName"
-														placeholder="<spring:message code="
-														registration.uploaddevicelist" />">
+													<input class="file-path validate" type="text" id="deviceBulkStolenFileName">
 												</div>
 											</div>
 
@@ -1147,7 +1146,7 @@ select {
 												</div>
 												<div class="file-path-wrapper">
 													<input class="file-path validate" type="text"
-														placeholder="<spring:message code=" input.UploadFIR" />"
+														
 														id="uploadFirSingleBulkName"
 														title="Please upload national ID
 													image">
@@ -1163,8 +1162,12 @@ select {
 												<label for="textarea1"> <spring:message
 														code="input.Remark" /></label>
 											</div>
+											
+											
 
 											<div class="col s12 m12">
+											<p> <spring:message code="input.requiredfields" />
+												<span class="star">*</span></p>
 												<a href="./Consignment/sampleFileDownload/7"> <spring:message
 														code="input.downlaod.sample" /></a>
 											</div>

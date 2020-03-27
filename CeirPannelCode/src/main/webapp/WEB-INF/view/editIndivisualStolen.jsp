@@ -1135,6 +1135,9 @@ select {
 	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
 <script type="text/javascript"
 		src="${context}/resources/project_js/backbutton.js"></script>
+		
+		<script type="text/javascript"
+		src="${context}/resources/project_js/lawfulStolenRecovery.js"></script>	
 	<script type="text/javascript"
 		src="${context}/resources/project_js/dragableModal.js"></script>	
 			<script type="text/javascript"
