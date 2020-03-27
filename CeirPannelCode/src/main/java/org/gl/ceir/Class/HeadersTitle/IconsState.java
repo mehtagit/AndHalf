@@ -881,6 +881,7 @@ public class IconsState {
 							featureID == 8 ? "./registrationRequest?txnID="+txnID+"" :
 								featureID == 11 ? "./manageTypeDevices?txnID="+txnID+"":
 									featureID == 12 ? "./uploadPaidStatus?via=other&txnID="+txnID+"" :
+										featureID == 12 ? "./manageTypeDevices2?txnID="+txnID+"" :
 										"JavaScript:void(0);";
 		//System.out.println("featureID::::::::::"+featureID);
 		// state related Code

@@ -991,6 +991,7 @@ input[type='search'] {
 			<script type="text/javascript"
 		src="${context}/resources/project_js/enterKey.js"></script>
 		
+	
 		<script type="text/javascript" src="${context}/resources/js/intlTelInput.js"></script>
 		<script type="text/javascript" src="${context}/resources/js/utils.js"></script>
 		
@@ -1006,8 +1007,7 @@ input[type='search'] {
 		<script type="text/javascript"
 		src="${context}/resources/project_js/profileInfoTab.js" async></script>
 	
-
-<script type="text/javascript">
+		<script type="text/javascript">
 var input2 = document.querySelector("#phone");
 window.intlTelInput(input2, {
 	utilsScript : "${context}/resources/js/utils.js",
@@ -1015,7 +1015,6 @@ window.intlTelInput(input2, {
  
 $("label[for='phone']").addClass('active');
  </script>
-		
 		</body>
 </html>
 <%

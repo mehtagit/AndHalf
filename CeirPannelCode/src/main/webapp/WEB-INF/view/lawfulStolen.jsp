@@ -168,7 +168,7 @@ select {
 												</div>
 
 											<div class="col-s12 m12">
-														<div class="input-field col s12 m4">
+													<div class="input-field col s12 m4">
 														<input type="text" name="singleStolenfirstName"
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
@@ -248,14 +248,14 @@ select {
 														<p class="contact-label">
 															<spring:message code="registration.altcontactnumber" />
 															<span class="star"> *</span>
-														</p> 
+														</p>
 														<input type="text" name="phone" id="singleStolenphone1"
 															pattern="[0-9\s,+]{7,15}"
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.contact" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.contact" />');"
 															maxlength="15" required>
 															
-													</div>
+													</div> 
 													
 													<div class="input-field col s12 m12">
 														<input type="text" name="address"
@@ -417,7 +417,7 @@ select {
 																<span class="star"> *</span>
 															</p>
 															<input type="text" name="phone2" id="singleStolenphone2"
-																pattern="[0-9\s,+]{4,15}" maxlength="15" oninput="InvalidMsg(this,'input','<spring:message code="validation.contact" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.contact" />');" required>
+																pattern="[0-9\s,+]{7,15}" maxlength="15" oninput="InvalidMsg(this,'input','<spring:message code="validation.contact" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.contact" />');" required>
 														</div>
 
 														
@@ -699,8 +699,9 @@ select {
 																	code="input.Remark" /></label>
 														</div>
 													</div>
-												</div>
-											</div>
+													
+													
+													</div>
 											<span> <spring:message code="input.requiredfields" />
 												<span class="star">*</span></span>
 
@@ -714,6 +715,8 @@ select {
 													style="margin-left: 10px;"> <spring:message
 														code="button.cancel" /></a>
 											</div>
+												</div>
+											
 										</form>
 									</div>
 
@@ -894,10 +897,8 @@ select {
 												<!-- <p class="contact-label">Alternate Contact Number <span class="star">*</span></p> -->
 												<input type="text" name="phone" id="bulkStolenContact"
 													pattern="[0-9\s,+]{7,12}"
-													oninput="InvalidMsg(this,'input','<spring:message code="
-													validation.contact" />');"
-													oninvalid="InvalidMsg(this,'input','
-												<spring:message code="validation.contact" />');"
+													oninput="InvalidMsg(this,'input','<spring:message code="validation.contact" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.contact" />');"
 													maxlength="12" /> <label for="phone2"> <spring:message
 														code="input.contactNum" /></label>
 											</div>
@@ -1257,40 +1258,46 @@ select {
 		src="${context}/resources/js/countries.js"></script>
 
 <!-- i18n library -->
-<script type="text/javascript"
-src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
-<script type="text/javascript"
-src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.js"></script>
-<script type="text/javascript"
-src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.messagestore.js"></script>
+<!-- i18n library -->
+	<script type="text/javascript"
+		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/i18n.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/messagestore.js"></script>
 
-<script type="text/javascript"
-src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.fallbacks.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/fallbacks.js"></script>
 
-<script type="text/javascript"
-src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.language.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/language.js"></script>
 
-<script type="text/javascript"
-src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.parser.js"></script>
-
-
-<script type="text/javascript"
-src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/parser.js"></script>
 
 
-<script type="text/javascript"
-src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.bidi.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/emitter.js"></script>
 
-<script type="text/javascript"
-src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/jquery.history.js"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/bidi.js"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/history.js"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/min.js"></script>
 	
+	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
+<script type="text/javascript"
+		src="${context}/resources/project_js/backbutton.js"></script>
 	<script type="text/javascript"
-		src="${context}/resources/project_js/globalVariables.js"></script>
-	<script type="text/javascript"
-		src="${context}/resources/project_js/stolenRecovery.js"></script>
-	<script type="text/javascript"
-		src="${context}/resources/project_js/lawfulStolenRecovery.js"></script>
-	<script type="text/javascript"
+		src="${context}/resources/project_js/dragableModal.js"></script>	
+			<script type="text/javascript"
+		src="${context}/resources/project_js/enterKey.js"></script>
+	
+		<script type="text/javascript"
 		src="${context}/resources/project_js/validationMsg.js"></script>
 
 	<script type="text/javascript"
@@ -1410,6 +1417,11 @@ src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/j
 		
 	
 	</script>
+
+	<script type="text/javascript"
+		src="${context}/resources/project_js/stolenRecovery.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/project_js/lawfulStolenRecovery.js"></script>
 
 </body>
 
