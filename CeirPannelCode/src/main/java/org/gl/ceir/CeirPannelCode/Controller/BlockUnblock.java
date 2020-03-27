@@ -97,7 +97,11 @@ public class BlockUnblock {
 		log.info("entry point in  save  single imei block");
 		int userId= (int) session.getAttribute("userid"); 
 		String roletype=session.getAttribute("usertype").toString();
-		Integer operatorTypeId= (Integer) session.getAttribute("operatorTypeId");
+		//Integer operatorTypeId= (Integer) session.getAttribute("operatorTypeId");
+		
+		
+		String parsedOperatorTypeId=String.valueOf(session.getAttribute("operatorTypeId"));
+		Integer operatorTypeId=  Integer.valueOf(parsedOperatorTypeId);
 		if(operatorTypeId==null)
 		{
 		log.info("operator type id is null="+operatorTypeId);
@@ -127,7 +131,21 @@ public class BlockUnblock {
 		int userId= (int) session.getAttribute("userid"); 
 		String roletype=session.getAttribute("usertype").toString();
 		String blockTxnNumber=utildownload.getTxnId();
-		Integer operatorTypeId= (Integer) session.getAttribute("operatorTypeId"); 
+		Integer operatorTypeId;
+		String parsedOperatorTypeId=String.valueOf(session.getAttribute("operatorTypeId"));
+		log.info("operatorType id is null or not ---="+parsedOperatorTypeId);
+		if(parsedOperatorTypeId.equals("null"))
+		{
+			parsedOperatorTypeId=null;
+			operatorTypeId=null;
+			//Integer operatorTypeId=  Integer.valueOf(parsedOperatorTypeId);	
+		}
+		else {
+			 operatorTypeId=  Integer.valueOf(parsedOperatorTypeId);
+		}
+		
+		log.info("operatorTypeId==="+operatorTypeId);
+		
 		if(operatorTypeId==null)
 		{
 		log.info("operator type id is null="+operatorTypeId);
@@ -158,7 +176,21 @@ public class BlockUnblock {
 		 * "B"+blockTxnNumber; log.info("Random transaction id number="+blockTxnNumber);
 		 * singleImeiDetailsModel.setTxnId(blockTxnNumber);
 		 */
-		Integer operatorTypeId= (Integer) session.getAttribute("operatorTypeId"); 
+		Integer operatorTypeId;
+		String parsedOperatorTypeId=String.valueOf(session.getAttribute("operatorTypeId"));
+		log.info("operatorType id is null or not ---="+parsedOperatorTypeId);
+		if(parsedOperatorTypeId.equals("null"))
+		{
+			parsedOperatorTypeId=null;
+			operatorTypeId=null;
+			//Integer operatorTypeId=  Integer.valueOf(parsedOperatorTypeId);	
+		}
+		else {
+			 operatorTypeId=  Integer.valueOf(parsedOperatorTypeId);
+		}
+		
+		log.info("operatorTypeId==="+operatorTypeId);
+		//Integer operatorTypeId= (Integer) session.getAttribute("operatorTypeId"); 
 		if(operatorTypeId==null)
 		{
 		log.info("operator type id is null="+operatorTypeId);
@@ -192,7 +224,21 @@ public class BlockUnblock {
 		 
 		    StolenRecoveryModel stolenRecoveryModel= new StolenRecoveryModel(); 
 		    GenricResponse response= new GenricResponse();
-		    Integer operatorTypeId= (Integer) session.getAttribute("operatorTypeId"); 
+		  //  Integer operatorTypeId= (Integer) session.getAttribute("operatorTypeId"); 
+			Integer operatorTypeId;
+			String parsedOperatorTypeId=String.valueOf(session.getAttribute("operatorTypeId"));
+			log.info("operatorType id is null or not ---="+parsedOperatorTypeId);
+			if(parsedOperatorTypeId.equals("null"))
+			{
+				parsedOperatorTypeId=null;
+				operatorTypeId=null;
+				//Integer operatorTypeId=  Integer.valueOf(parsedOperatorTypeId);	
+			}
+			else {
+				 operatorTypeId=  Integer.valueOf(parsedOperatorTypeId);
+			}
+			
+			log.info("operatorTypeId==="+operatorTypeId);
 		    
 		    addMoreFileModel.setTag("system_upload_filepath");
 			urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
@@ -274,8 +320,22 @@ public class BlockUnblock {
 			urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
 			
 			//int operatorTypeId= (int) session.getAttribute("operatorTypeId"); 
-			 Integer operatorTypeId= (Integer) session.getAttribute("operatorTypeId"); 
-			 if(operatorTypeId==null)
+			// Integer operatorTypeId= (Integer) session.getAttribute("operatorTypeId"); 
+			Integer operatorTypeId;
+			String parsedOperatorTypeId=String.valueOf(session.getAttribute("operatorTypeId"));
+			log.info("operatorType id is null or not ---="+parsedOperatorTypeId);
+			if(parsedOperatorTypeId.equals("null"))
+			{
+				parsedOperatorTypeId=null;
+				operatorTypeId=null;
+				//Integer operatorTypeId=  Integer.valueOf(parsedOperatorTypeId);	
+			}
+			else {
+				 operatorTypeId=  Integer.valueOf(parsedOperatorTypeId);
+			}
+			
+			log.info("operatorTypeId==="+operatorTypeId);
+			if(operatorTypeId==null)
 			 {
 			 log.info("operator type id is null="+operatorTypeId);
 			 operatorTypeId=-1;

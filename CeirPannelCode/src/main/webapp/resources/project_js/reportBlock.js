@@ -582,11 +582,15 @@ function setSingleDeviceViewPopUp(data,popUpType,requestType){
 		
 		if(requestType=="3")
 		{
-          
+			
+			$("#blockingTypeId").css("display", "none"); 
+			$("#editBlockTimePeriod").css("display", "none"); 
 		$('#singleBlockUnblockHeading').text($.i18n('viewBulkUnblock'));
 		}
 		else{
-			   
+			$("#blockingTypeId").css("display", "block"); 
+			$("#editBlockTimePeriod").css("display", "block"); 
+			
 		$('#singleBlockUnblockHeading').text($.i18n('viewBlockDevice'));
 		}
 		$('#viewblockImeiDevice').openModal({dismissible:false});
