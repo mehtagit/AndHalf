@@ -393,11 +393,11 @@ input[type='search'] {
 
 												<div class="input-field col s12 m6 l6" style="margin-top: 18px;">
 													<input type="tel" name="phone" 
-														pattern="[0-9]{10,14}"
+														pattern="[0-9\s,+]{7,15}"
 														oninput="InvalidMsg(this,'input','<spring:message code="validation.10digits" />');"
 											            oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10digits" />');"
 														title= "<spring:message code="validation.10digits" />" required  class="form-control boxBorder boxHeight" id="phone"
-														maxlength="14"> <label for="phone"><spring:message code="input.contactNum" /><span class="star">*</span>
+														maxlength="15"> <label for="phone"><spring:message code="input.contactNum" /><span class="star">*</span>
 													</label>
 												</div>
 											</div>

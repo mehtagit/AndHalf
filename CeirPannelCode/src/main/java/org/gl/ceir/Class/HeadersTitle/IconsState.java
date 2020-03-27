@@ -283,9 +283,6 @@ public class IconsState {
 			error="<a onclick="+errorURL+" class="+disableIconClass+"><i  class="
 					+disableErrorIcon+" aria-hidden=\"true\" title="
 					+errorIconTitle+"  ></i></a>";
-			edit="<a onclick="+editAction+" class="+disableIconClass+"><i class="
-					+disableEditIcon+" aria-hidden=\"true\"  title="
-					+editIconTitle+"></i></a>"; 
 		}
 		else if("2".equals(status)  && "Approved".equals(userStatus)) {
 			download="<a onclick="+downloadURL+"  class="+disableIconClass+"><i class="
