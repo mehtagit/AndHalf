@@ -66,6 +66,12 @@ function Datatable(url,DataUrl){
 			"userType":$("body").attr("data-roleType"),
 	}
 
+	
+	if(lang=='km'){
+		var langFile='./resources/i18n/khmer_datatable.json';
+	}
+
+	
 	$.ajax({
 		url: url,
 		type: 'POST',
@@ -81,6 +87,9 @@ function Datatable(url,DataUrl){
 				"bFilter" : true,
 				"bInfo" : true,
 				"bSearchable" : true,
+				"oLanguage": {  
+					"sUrl": langFile  
+				},
 				scrollCollapse: true,	
 				ajax: {
 					url: DataUrl,
@@ -545,11 +554,11 @@ function saveIndivisualStolenRequest(){
 				$('#IndivisualStolenTxnId').text(response.txnId)
 			}
 			else{
-//				$('#sucessMessage').text('');
+				$('#sucessMessage').text('');
 				$('#IndivisualStolenSucessPopup').openModal({
 					dismissible:false
 				});
-				$('#dynamicTxnId').text(data.txnId);
+				$('#sucessMessage').text(data.message);
 			}
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
@@ -671,11 +680,11 @@ function saveCompanyStolenRequest(){
 				$('#IndivisualStolenTxnId').text(response.txnId)
 			}
 			else{
-//				$('#sucessMessage').text('');
+				$('#sucessMessage').text('');
 				$('#regularisedDevice').openModal({
 					dismissible:false
 				});
-				$('#dynamicTxnId').text(data.txnId);
+				$('#sucessMessage').text(data.message);
 			}
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
