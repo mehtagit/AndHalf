@@ -21,9 +21,9 @@ public class DeviceCustomDbDao {
 	}
 
 	public void insertDeviceCustomDb(Connection conn, List<DeviceImporterDb> deviceImporterDbs) {
-		String query = "";
+		
 		PreparedStatement preparedStatement = null;
-		query = "insert into device_custom_db (created_on, device_action, device_id_type, "
+		String query = "insert into device_custom_db (created_on, device_action, device_id_type, "
 				+ "device_launch_date, device_status," 
 				+ "device_type, imei_esn_meid,"
 				+ "manufature_date, modified_on, multiple_sim_status, period," 
@@ -43,8 +43,6 @@ public class DeviceCustomDbDao {
 				preparedStatement.setString(2, deviceImporterDb.getDeviceAction());
 				preparedStatement.setString(3, deviceImporterDb.getDeviceIdType()); 
 				preparedStatement.setDate(4, DateUtil.getSqlDate(deviceImporterDb.getDeviceLaunchDate(),GENERIC_DATE_FORMAT));
-				
-				
 				preparedStatement.setString(5, deviceImporterDb.getDeviceStatus()); 
 				preparedStatement.setString(6, deviceImporterDb.getDeviceType()); 
 				preparedStatement.setString(7, deviceImporterDb.getImeiEsnMeid());
@@ -60,6 +58,7 @@ public class DeviceCustomDbDao {
 				preparedStatement.setLong(17, deviceImporterDb.getUserId());
 				preparedStatement.setInt(18, deviceImporterDb.getDeviceState());
 				preparedStatement.setInt(19, deviceImporterDb.getFeatureId());
+				
 				System.out.println("Query"+preparedStatement);
 				preparedStatement.addBatch();
 				
@@ -89,8 +88,8 @@ public class DeviceCustomDbDao {
 		int executeStatus = 0;
 
 		query = "delete from device_custom_db where txn_id='" + txnId + "'";	
-		logger.info("delete device_custom_db ["+query+"]");
-		System.out.println("delete device_custom_db ["+query+"]");
+		logger.info("delete device_custom_db [" + query + "]");
+		System.out.println("delete device_custom_db [" + query + "]");
 
 		try {
 			stmt = conn.createStatement();

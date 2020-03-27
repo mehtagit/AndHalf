@@ -1,6 +1,7 @@
 package com.functionapps.dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -11,10 +12,12 @@ import java.util.Objects;
 import org.apache.log4j.Logger;
 
 import com.functionapps.pojo.DeviceDb;
+import com.functionapps.util.DateUtil;
 
 public class DeviceDbDao {
 	static Logger logger = Logger.getLogger(DeviceDbDao.class);
-	
+	static String GENERIC_DATE_FORMAT = "dd-MM-yyyy";
+
 	public List<DeviceDb> getDeviceDbByTxnId(Connection conn, String managementDb, String txnId) {
 		Statement stmt = null;
 		ResultSet rs = null;
@@ -36,7 +39,7 @@ public class DeviceDbDao {
 			}
 		}
 		catch(Exception e){
-			logger.info("Exception in getFeatureMapping"+e);
+			logger.info(e.getMessage(), e);
 		}
 		finally{
 			try {
@@ -51,34 +54,44 @@ public class DeviceDbDao {
 	}
 
 	public void insertDeviceDbAud(Connection conn, List<DeviceDb> deviceDbs) {
-		String query = "";
-		Statement stmt = null;
-		
+		PreparedStatement preparedStatement = null;
+
+		String query = "insert into device_db_aud (rev, revtype, created_on, modified_on, manufature_date, device_type, "
+				+ "device_id_type, multiple_sim_status, sn_of_device, imei_esn_meid, device_launch_date, device_status, "
+				+ "device_action, tac, period, txn_id, state"
+				+ ") values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
+		System.out.println("Add device_db_aud [" + query + " ]");
+		logger.info("Add device_db_aud ["+query+"]");
+
 		try {
-			stmt = conn.createStatement();
+			System.out.println("sop2.1");
+			preparedStatement = conn.prepareStatement(query);
 
 			for (DeviceDb deviceDb : deviceDbs) {
-				query = "insert into device_db_aud (rev, revtype, created_on, modified_on, manufature_date, device_type, "
-						+ "device_id_type, "
-						+ "multiple_sim_status, sn_of_device, imei_esn_meid, device_launch_date, device_status, "
-						+ "device_action, tac, period, txn_id, state"
-						+ ") values("
-						+ deviceDb.getId() + "," + 2 + ",'" + deviceDb.getCreatedOn() 
-						+ "','" + deviceDb.getModifiedOn() + "','" + deviceDb.getManufatureDate() + "','" 
-						+ deviceDb.getDeviceType() + "','" + deviceDb.getDeviceIdType() + "','" 
-						+ deviceDb.getMultipleSimStatus() + "','" + deviceDb.getSnOfDevice()+ "','" 
-						+ deviceDb.getImeiEsnMeid() + "','" + deviceDb.getDeviceLaunchDate() + "','"
-						+ deviceDb.getDeviceStatus() + "','" + deviceDb.getDeviceAction() + "','"
-						+ deviceDb.getTac() + "','" + deviceDb.getPeriod() + "','"
-						+ deviceDb.getTxnId() + "','" + deviceDb.getState() + "','"
-						+")";
+				preparedStatement.setLong(1, deviceDb.getId());
+				preparedStatement.setInt(2, 2);
+				preparedStatement.setDate(3, DateUtil.getSqlDate(DateUtil.nextDate(0, null), GENERIC_DATE_FORMAT)); 
+				preparedStatement.setDate(4, DateUtil.getSqlDate(DateUtil.nextDate(0, null), GENERIC_DATE_FORMAT));
+				preparedStatement.setString(5, deviceDb.getManufatureDate()); 
+				preparedStatement.setString(6, deviceDb.getDeviceType()); 
+				preparedStatement.setString(7, deviceDb.getDeviceIdType());
+				preparedStatement.setString(8, deviceDb.getMultipleSimStatus());
+				preparedStatement.setString(9, deviceDb.getSnOfDevice());
+				preparedStatement.setString(10, deviceDb.getImeiEsnMeid());
+				preparedStatement.setString(11, deviceDb.getDeviceLaunchDate()); 
+				preparedStatement.setString(12, deviceDb.getDeviceStatus());
+				preparedStatement.setString(13, deviceDb.getDeviceAction());
+				preparedStatement.setInt(14, deviceDb.getTac());
+				preparedStatement.setString(15, deviceDb.getPeriod());
+				preparedStatement.setString(16, deviceDb.getTxnId()); 
+				preparedStatement.setLong(17, deviceDb.getState());
 
-				System.out.println("Add device_db_aud [" + query + " ]");
-				logger.info("Add feature file Details in config DB["+query+"]");
-				stmt.addBatch(query);
+				System.out.println("Query " + preparedStatement);
+				preparedStatement.addBatch();
 			}
 
-			stmt.executeBatch();
+			preparedStatement.executeBatch();
 			conn.commit();
 
 		} catch (SQLException e) {
@@ -87,8 +100,8 @@ public class DeviceDbDao {
 		}
 		finally{
 			try {
-				if(Objects.nonNull(stmt))
-					stmt.close();
+				if(Objects.nonNull(preparedStatement))
+					preparedStatement.close();
 			} catch (SQLException e) {
 				logger.error(e.getMessage(), e);
 				e.printStackTrace();
@@ -123,6 +136,4 @@ public class DeviceDbDao {
 		}
 		return executeStatus;
 	}
-
-	
 }

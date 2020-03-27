@@ -32,6 +32,7 @@ public class ConsignmentDelete {
 			deviceImporterDbDao.insertDeviceImporterDbAud(conn, deviceImporterDbs);
 			deviceImporterDbDao.deleteDevicesFromDeviceImporterDb(conn, txnId);
 			ceirfunction.updateFeatureFileStatus(conn, txnId, 2, operator, sub_feature);
+			
 			// TODO hit API to update delete flag in consignment.
 			conn.commit();
 
