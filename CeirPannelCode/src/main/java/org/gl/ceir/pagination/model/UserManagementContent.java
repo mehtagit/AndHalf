@@ -15,7 +15,7 @@ public class UserManagementContent {
 	private String modifiedOn;
 	private Integer status;
 	private String statusInterp;
-	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+	private String period;
 	public Integer getId() {
 		return id;
 	}
@@ -58,18 +58,20 @@ public class UserManagementContent {
 	public void setStatusInterp(String statusInterp) {
 		this.statusInterp = statusInterp;
 	}
-	public Map<String, Object> getAdditionalProperties() {
-		return additionalProperties;
+	public String getPeriod() {
+		return period;
 	}
-	public void setAdditionalProperties(Map<String, Object> additionalProperties) {
-		this.additionalProperties = additionalProperties;
+	public void setPeriod(String period) {
+		this.period = period;
 	}
 	@Override
 	public String toString() {
 		return "UserManagementContent [id=" + id + ", usertypeId=" + usertypeId + ", usertypeName=" + usertypeName
 				+ ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", status=" + status + ", statusInterp="
-				+ statusInterp + ", additionalProperties=" + additionalProperties + "]";
+				+ statusInterp + ", period=" + period + "]";
 	}
+	
+	
 	
 	
 }

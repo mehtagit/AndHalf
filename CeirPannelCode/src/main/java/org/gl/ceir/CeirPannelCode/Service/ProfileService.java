@@ -118,4 +118,14 @@ public class ProfileService {
 		return response;  
 	} 
 	
+	public HttpResponse changeSystemUserPeriodService(UserManagementContent userManagementContent,HttpSession session) {
+		log.info("inside changeSystemUserPeriodService controller");
+		//Integer userid= userManagementContent.getId();
+		//log.info("userid from session:  "+userid);
+		//userManagementContent.setId(id);
+		//log.info("userStatus data is :  "+userManagementContent);
+		HttpResponse response=new HttpResponse();             
+		response=userProfileFeignImpl.changeSystemUserStatusFeign(userManagementContent);
+		return response;  
+	} 
 }

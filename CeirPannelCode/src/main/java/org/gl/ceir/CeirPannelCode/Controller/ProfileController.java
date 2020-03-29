@@ -74,4 +74,10 @@ public class ProfileController {
 		
 	}
 	
+	@RequestMapping(value ="/updateSystemUserPeriod",method = RequestMethod.POST)
+	@ResponseBody
+	public  HttpResponse changeUserPeriodStatus(@RequestBody UserManagementContent userManagementContent,HttpSession session) {
+		return profileService.changeSystemUserPeriodService(userManagementContent,session);
+		
+	}
 }
