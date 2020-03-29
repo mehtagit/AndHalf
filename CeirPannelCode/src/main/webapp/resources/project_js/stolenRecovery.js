@@ -292,6 +292,7 @@ function Datatable(url,dataUrl){
 			"operatorTypeId" : parseInt($('#operator').val())
 	}
 
+
 	if(lang=='km'){
 		var langFile='../resources/i18n/khmer_datatable.json';
 			}

@@ -76,7 +76,7 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
                             <div class="card-panel">
                                 <div class="row">
                                     <div class="col s12 m12">
-                                    <h5><spring:message code="registration.viewcustominformation" /></h5>
+                                    <h5><spring:message code="registration.viewManufacturerInformation" /></h5>
                                     <hr>
                                     <div class="row" style="margin-top: 10px;">
                                         <div class="input-field col s12 m4 l4">
@@ -92,6 +92,11 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
                                         <div class="input-field col s12 m4 l4">
                                             <input type="text" name="lastName" id="lastName" value="${registration.lastName}" maxlength="20" disabled="" placeholder="">
                                             <label for="lastName" class="active"><spring:message code="input.lastName" /> </label>
+                                        </div>
+                                        
+                                        <div class="input-field col s12 m6 l6" id="companyName">
+                                            <input type="text" name="company" placeholder="" disabled="" id="company" value="${registration.companyName}" maxlength="30">
+                                            <label for="company" class="active"><spring:message code="input.companyName"/> </label>
                                         </div>
                                     </div>
 
@@ -223,6 +228,40 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
                                             <label for="phone" class="active"><spring:message code="input.contactNum" /> </label>
                                         </div>
                                     </div>
+                                    
+                                    <div class="row">
+                                         <div class="col s12 m6 l6">
+                                            <label for="vatNumber"><spring:message code="registration.vatregistration" /> </label>
+                                            <div class=" boxHeight">
+                                                <input type="text" id="vat" value="${registration.vatStatus}" hidden="hidden">
+                                                <input class="with-gap" name="group3" id="yes" type="radio"  disabled=""><spring:message code="modal.yes" />
+                                                <input class="with-gap" name="group3" id="no" type="radio" style="margin-left: 20px;" disabled=""><spring:message code="modal.no" />
+                                            </div>
+                              			 </div>
+						
+
+                                     <div class="input-field col s12 m6 l6"  items="${registration.rolesList}" var="List"  >
+										 <c:forEach items="${registration.rolesList}" var="List" varStatus="loop">
+										 <c:out value="${registration.rolesList[loop.index]['role']}"/>
+										 <c:if test="${!loop.last}">,</c:if>
+                                         </c:forEach>  
+                                          <input type="text" name="roleType" disabled="" id="roleType"  value="${registration.rolesList[loop.index]['role']}" maxlength="16" placeholder="">
+                                   		  <label for="roleType" class="active"> <spring:message code="registration.roletype"/></label>
+                                    </div>
+										
+										
+                                        <div class="input-field col s12 m6 l6" id="vatNumberField" style="display: none;">
+                                            <input type="text" name="vatNumber" disabled="" id="vatNumber"  value="${registration.vatNo}"  maxlength="16">
+                                            <label for="vatNumber"><spring:message code="registration.vatnumber"/></label>
+                                        </div>
+                                        
+                                        <div class="input-field col s12 m6 l6" id="uploadedvatFileDiv" style="display: none;" >
+                                       
+                                    <input type="text" name="vatFile" id="uploadedVatFile" value="${registration.vatFilename}" maxlength="20"  disabled="">
+                                    <label for="ploadedVatFile" class="active"><spring:message code="registration.uploadedVatFile"/> </label>
+                                   <span> <a href="#" onclick="previewFile('${registration.vatFilePath}','${registration.vatFilename}')">Preview </a></span> 
+                                </div>
+                                    </div>
                                 </div>
                                 </div>
 
@@ -294,6 +333,17 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
 		src="${context}/resources/js/countries.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/AdminRegistrationRequest.js"></script>
+		
+	<script type="text/javascript">
+		var vatStatus = $('#vat').val();
+		if(vatStatus== 1){
+			$("#yes").prop("checked", true);
+			$("#uploadedvatFileDiv").css({"display":"block"});
+			$("#vatNumberField").css({"display":"block"});
+		}else if(vatStatus == 0){
+			$("#no").prop("checked", true);
+		}
+	</script>	
 		
 </body>
 </html>

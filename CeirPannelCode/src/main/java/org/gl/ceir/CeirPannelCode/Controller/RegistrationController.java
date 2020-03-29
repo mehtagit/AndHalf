@@ -11,6 +11,7 @@ import org.gl.ceir.CeirPannelCode.Feignclient.FeignClientImplementation;
 import org.gl.ceir.CeirPannelCode.Feignclient.PortAddressFeign;
 import org.gl.ceir.CeirPannelCode.Feignclient.UserRegistrationFeignImpl;
 import org.gl.ceir.CeirPannelCode.Model.Dropdown;
+import org.gl.ceir.CeirPannelCode.Model.FeatureDropdown;
 import org.gl.ceir.CeirPannelCode.Model.Operator;
 import org.gl.ceir.CeirPannelCode.Model.Otp;
 import org.gl.ceir.CeirPannelCode.Model.OtpResponse;
@@ -194,6 +195,13 @@ public class RegistrationController {
 	@ResponseBody  
 	public List<Usertype> userTypeDropdown(){ 
 		List<Usertype> response =userRegistrationFeignImpl.userRegistrationDropdown();
+		return response;          
+	}
+	
+	@RequestMapping(value = "/getAllfeatures",method = {RequestMethod.POST,RequestMethod.GET})
+	@ResponseBody  
+	public List<FeatureDropdown> allFeatureDropdown(){ 
+		List<FeatureDropdown> response =userRegistrationFeignImpl.userAllFeatureDropdown();
 		return response;          
 	}
 }
