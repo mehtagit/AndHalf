@@ -25,7 +25,11 @@ public class DeviceImporterDbDao {
 
 		List<DeviceImporterDb> deviceImporterDbs = new LinkedList<>();
 		try{
-			query = "select * from device_importer_db where txn_id='" + txnId + "'";
+			query = "select id, created_on, modified_on, manufature_date, device_type, device_id_type, "
+					+ "multiple_sim_status, sn_of_device, imei_esn_meid, "
+					+ "TO_DATE(DEVICE_LAUNCH_DATE, 'DD-MM-YYYY') as launch_date, device_status, device_action, "
+					+ "user_id, txn_id, local_date, device_state, previous_device_status, period,"
+					+ "feature_id, from device_importer_db where txn_id='" + txnId + "'";
 			logger.info("Query to get File Details ["+query+"]");
 			System.out.println("Query to get File Details ["+query+"]");
 			stmt  = conn.createStatement();
@@ -35,9 +39,9 @@ public class DeviceImporterDbDao {
 				deviceImporterDbs.add(new DeviceImporterDb(rs.getLong("id"), 0L, 0, rs.getString("created_on"), rs.getString("modified_on"), 
 						rs.getString("manufature_date"), rs.getString("device_type"), rs.getString("device_id_type"), 
 						rs.getString("multiple_sim_status"), rs.getString("sn_of_device"), rs.getString("imei_esn_meid"), 
-						rs.getString("device_launch_date"), rs.getString("device_status"), rs.getString("device_action"), 
+						rs.getDate("launch_date"), rs.getString("device_status"), rs.getString("device_action"), 
 						rs.getLong("user_id"), rs.getString("txn_id"), rs.getString("local_date"), rs.getInt("device_state"), 
-						rs.getInt("previous_device_status"),rs.getString("period"), rs.getInt("feature_id"))
+						rs.getInt("previous_device_status"), rs.getString("period"), rs.getInt("feature_id"))
 						);
 			}
 		}
@@ -63,7 +67,7 @@ public class DeviceImporterDbDao {
 				+ "manufature_date, modified_on, multiple_sim_status, period," 
 				+ "sn_of_device, local_date, previous_device_status," 
 				+ "txn_id, user_id, device_state, feature_id"
-				+ ") values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+				+ ") values(device_importer_db_aud_seq.nextVal, ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		
 		PreparedStatement preparedStatement = null;
 
@@ -76,7 +80,7 @@ public class DeviceImporterDbDao {
 				preparedStatement.setString(3, DateUtil.nextDate(0, null));
 				preparedStatement.setString(4, deviceImporterDb.getDeviceAction());	 
 				preparedStatement.setString(5, deviceImporterDb.getDeviceIdType());
-				preparedStatement.setString(6, deviceImporterDb.getDeviceLaunchDate());
+				preparedStatement.setDate(6, deviceImporterDb.getDeviceLaunchDate());
 				preparedStatement.setString(7, deviceImporterDb.getDeviceStatus());
 				preparedStatement.setString(8, deviceImporterDb.getDeviceType());
 				preparedStatement.setString(9, deviceImporterDb.getImeiEsnMeid()); 
