@@ -47,7 +47,7 @@ public class CEIRFeatureFileParser {
 		ResultSet rs = null;
 		String query = null;
 		try{
-        	query = "select * from feature_file_config_db where status='Init' order by sno asc limit 1 ";
+        	query = "select * from feature_file_config_db where status='Init' order by sno asc fetch next 1 rows only";
 			stmt  = conn.createStatement();
 			logger.info("get feature file details ["+query+"] ");
 
