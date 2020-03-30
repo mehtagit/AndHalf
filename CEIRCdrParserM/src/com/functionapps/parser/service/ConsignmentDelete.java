@@ -29,7 +29,9 @@ public class ConsignmentDelete {
 			deviceDbDao.deleteDevicesFromDeviceDb(conn, txnId);
 
 			List<DeviceImporterDb> deviceImporterDbs = deviceImporterDbDao.getDeviceImporterDbByTxnId(conn, "", txnId);
+			System.out.println("deviceImporterDbs" + deviceImporterDbs);
 			deviceImporterDbDao.insertDeviceImporterDbAud(conn, deviceImporterDbs);
+			
 			deviceImporterDbDao.deleteDevicesFromDeviceImporterDb(conn, txnId);
 			ceirfunction.updateFeatureFileStatus(conn, txnId, 2, operator, sub_feature);
 			

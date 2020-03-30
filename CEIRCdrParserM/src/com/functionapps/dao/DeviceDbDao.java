@@ -30,8 +30,8 @@ public class DeviceDbDao {
 					+ "TO_DATE(DEVICE_LAUNCH_DATE, 'DD-MM-YYYY') as launch_date, device_status, device_action,"
 					+ "tac, period, txn_id, state from device_db where txn_id='" + txnId + "'";
 			
-			System.out.println("Query to get File Details ["+query+"]");
-			logger.info("Query to get File Details ["+query+"]");
+			System.out.println("Select Query on device_db ["+query+"]");
+			logger.info("Select Query on device_db ["+query+"]");
 			stmt  = conn.createStatement();
 			rs = stmt.executeQuery(query);
 			
@@ -64,10 +64,11 @@ public class DeviceDbDao {
 	public void insertDeviceDbAud(Connection conn, List<DeviceDb> deviceDbs) {
 		PreparedStatement preparedStatement = null;
 
-		String query = "insert into device_db_aud (id, rev, revtype, created_on, modified_on, manufature_date, device_type, "
+		String query = "insert into device_db_aud (id, rev, revtype, created_on, modified_on, manufature_date, "
+				+ "device_type, "
 				+ "device_id_type, multiple_sim_status, sn_of_device, imei_esn_meid, device_launch_date, device_status, "
 				+ "device_action, tac, period, txn_id, state"
-				+ ") values(DEVICE_DB_AUD_seq.nextVal,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+				+ ") values(DEVICE_DB_AUD_seq.nextVal,?,2,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 		System.out.println("Add device_db_aud [" + query + " ]");
 		logger.info("Add device_db_aud ["+query+"]");
@@ -78,22 +79,21 @@ public class DeviceDbDao {
 
 			for (DeviceDb deviceDb : deviceDbs) {
 				preparedStatement.setLong(1, deviceDb.getId());
-				preparedStatement.setInt(2, 2);
-				preparedStatement.setDate(3, DateUtil.getSqlDate(DateUtil.nextDate(0, null), GENERIC_DATE_FORMAT)); 
-				preparedStatement.setDate(4, DateUtil.getSqlDate(DateUtil.nextDate(0, null), GENERIC_DATE_FORMAT));
-				preparedStatement.setString(5, deviceDb.getManufatureDate()); 
-				preparedStatement.setString(6, deviceDb.getDeviceType()); 
-				preparedStatement.setString(7, deviceDb.getDeviceIdType());
-				preparedStatement.setString(8, deviceDb.getMultipleSimStatus());
-				preparedStatement.setString(9, deviceDb.getSnOfDevice());
-				preparedStatement.setString(10, deviceDb.getImeiEsnMeid());
-				preparedStatement.setDate(11, deviceDb.getDeviceLaunchDate()); 
-				preparedStatement.setString(12, deviceDb.getDeviceStatus());
-				preparedStatement.setString(13, deviceDb.getDeviceAction());
-				preparedStatement.setInt(14, deviceDb.getTac());
-				preparedStatement.setString(15, deviceDb.getPeriod());
-				preparedStatement.setString(16, deviceDb.getTxnId()); 
-				preparedStatement.setLong(17, deviceDb.getState());
+				preparedStatement.setDate(2, DateUtil.getSqlDate(DateUtil.nextDate(0, null), GENERIC_DATE_FORMAT)); 
+				preparedStatement.setDate(3, DateUtil.getSqlDate(DateUtil.nextDate(0, null), GENERIC_DATE_FORMAT));
+				preparedStatement.setString(4, deviceDb.getManufatureDate()); 
+				preparedStatement.setString(5, deviceDb.getDeviceType()); 
+				preparedStatement.setString(6, deviceDb.getDeviceIdType());
+				preparedStatement.setString(7, deviceDb.getMultipleSimStatus());
+				preparedStatement.setString(8, deviceDb.getSnOfDevice());
+				preparedStatement.setString(9, deviceDb.getImeiEsnMeid());
+				preparedStatement.setDate(10, deviceDb.getDeviceLaunchDate()); 
+				preparedStatement.setString(11, deviceDb.getDeviceStatus());
+				preparedStatement.setString(12, deviceDb.getDeviceAction());
+				preparedStatement.setInt(13, deviceDb.getTac());
+				preparedStatement.setString(14, deviceDb.getPeriod());
+				preparedStatement.setString(15, deviceDb.getTxnId()); 
+				preparedStatement.setLong(16, deviceDb.getState());
 
 				System.out.println("Query " + preparedStatement);
 				preparedStatement.addBatch();
@@ -129,7 +129,6 @@ public class DeviceDbDao {
 		try {
 			stmt = conn.createStatement();
 			executeStatus = stmt.executeUpdate(query);
-			conn.commit();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			logger.error(e.getMessage(), e);
