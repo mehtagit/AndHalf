@@ -3,6 +3,7 @@ package com.functionapps.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.LinkedList;
@@ -26,20 +27,24 @@ public class DeviceDbDao {
 		List<DeviceDb> deviceDbs = new LinkedList<>();
 		try{
 			query = "select * from device_db where txn_id='" + txnId + "'";
+			System.out.println("Query to get File Details ["+query+"]");
 			logger.info("Query to get File Details ["+query+"]");
 			stmt  = conn.createStatement();
 			rs = stmt.executeQuery(query);
-
+			
 			while(rs.next()){
-				deviceDbs.add(new DeviceDb(0L, 0, rs.getString("created_on"), rs.getString("modifiedOn"), 
+				System.out.println("Inside while of device_db.");
+
+				deviceDbs.add(new DeviceDb(rs.getLong("id"), 0L, 0, rs.getString("created_on"), rs.getString("modified_on"), 
 						rs.getString("manufature_date"), rs.getString("device_type"), rs.getString("device_id_type"), 
 						rs.getString("multiple_sim_status"), rs.getString("sn_of_device"), rs.getString("imei_esn_meid"), 
-						rs.getString("device_launch_date"), rs.getString("deviceStatus"), rs.getString("device_action"), 
+						rs.getString("device_launch_date"), rs.getString("device_status"), rs.getString("device_action"), 
 						rs.getInt("tac"), rs.getString("period"), rs.getString("txn_id"), rs.getInt("state")));
 			}
 		}
 		catch(Exception e){
 			logger.info(e.getMessage(), e);
+			e.printStackTrace();
 		}
 		finally{
 			try {

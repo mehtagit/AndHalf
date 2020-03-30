@@ -32,7 +32,7 @@ public class DeviceImporterDbDao {
 			rs = stmt.executeQuery(query);
 
 			while(rs.next()){
-				deviceImporterDbs.add(new DeviceImporterDb(0L, 0, rs.getString("created_on"), rs.getString("modified_on"), 
+				deviceImporterDbs.add(new DeviceImporterDb(rs.getLong("id"), 0L, 0, rs.getString("created_on"), rs.getString("modified_on"), 
 						rs.getString("manufature_date"), rs.getString("device_type"), rs.getString("device_id_type"), 
 						rs.getString("multiple_sim_status"), rs.getString("sn_of_device"), rs.getString("imei_esn_meid"), 
 						rs.getString("device_launch_date"), rs.getString("device_status"), rs.getString("device_action"), 
@@ -61,9 +61,9 @@ public class DeviceImporterDbDao {
 				+ "device_id_type, device_launch_date, device_status," 
 				+ "device_type, imei_esn_meid,"
 				+ "manufature_date, modified_on, multiple_sim_status, period," 
-				+ "sn_of_device, device_block_status, local_date, previous_device_status," 
+				+ "sn_of_device, local_date, previous_device_status," 
 				+ "txn_id, user_id, device_state, feature_id"
-				+ ") values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+				+ ") values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		
 		PreparedStatement preparedStatement = null;
 
@@ -85,13 +85,12 @@ public class DeviceImporterDbDao {
 				preparedStatement.setString(12, deviceImporterDb.getMultipleSimStatus());
 				preparedStatement.setString(13, deviceImporterDb.getPeriod());
 				preparedStatement.setString(14, deviceImporterDb.getSnOfDevice());
-				preparedStatement.setString(15, deviceImporterDb.getDeviceStatus());
-				preparedStatement.setString(16, deviceImporterDb.getLocalDate() );
-				preparedStatement.setInt(17, deviceImporterDb.getPreviousDeviceStatus()); 
-				preparedStatement.setString(18, deviceImporterDb.getTxnId());
-				preparedStatement.setLong(19, deviceImporterDb.getUserId());
-				preparedStatement.setString(20, deviceImporterDb.getDeviceStatus()); 
-				preparedStatement.setInt(21, deviceImporterDb.getFeatureId());
+				preparedStatement.setString(15, deviceImporterDb.getLocalDate() );
+				preparedStatement.setInt(16, deviceImporterDb.getPreviousDeviceStatus()); 
+				preparedStatement.setString(17, deviceImporterDb.getTxnId());
+				preparedStatement.setLong(18, deviceImporterDb.getUserId());
+				preparedStatement.setString(19, deviceImporterDb.getDeviceStatus()); 
+				preparedStatement.setInt(20, deviceImporterDb.getFeatureId());
 
 				System.out.println("Query " + preparedStatement);
 				preparedStatement.addBatch();

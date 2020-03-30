@@ -32,10 +32,11 @@ public class DeviceDb  implements Serializable{
 	public DeviceDb() {
 	}
 
-	public DeviceDb(Long rev, int revtype, String createdOn, String modifiedOn, String manufatureDate, String deviceType, 
+	public DeviceDb(Long id, Long rev, int revtype, String createdOn, String modifiedOn, String manufatureDate, String deviceType, 
 			String deviceIdType, 
 			String multipleSimStatus, String snOfDevice, String imeiEsnMeid, String deviceLaunchDate, 
 			String deviceStatus, String deviceAction, Integer tac, String period, String txnId, Integer state) {
+		this.id = id;
 		this.rev = rev;
 		this.revtype = revtype;
 		this.createdOn = createdOn;

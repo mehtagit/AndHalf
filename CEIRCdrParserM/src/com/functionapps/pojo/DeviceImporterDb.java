@@ -34,10 +34,11 @@ public class DeviceImporterDb  implements Serializable{
 		
 	}
 	
-	public DeviceImporterDb(Long rev, int revtype, String createdOn, String modifiedOn, String manufatureDate, 
+	public DeviceImporterDb(Long id, Long rev, int revtype, String createdOn, String modifiedOn, String manufatureDate, 
 			String deviceType, String deviceIdType, String multipleSimStatus, String snOfDevice, String imeiEsnMeid,
 			String deviceLaunchDate, String deviceStatus, String deviceAction, Long userId, String txnId, String localDate, 
 			Integer deviceState, Integer previousDeviceStatus, String period, Integer featureId) {
+		this.id = id;
 		this.rev = rev;
 		this.revtype = revtype;
 		this.createdOn = createdOn;
