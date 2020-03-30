@@ -1,10 +1,7 @@
 package org.gl.ceir.Class.HeadersTitle;
 
-import java.util.List;
-
 import javax.annotation.PostConstruct;
 
-import org.gl.ceir.CeirPannelCode.Model.ActionModel;
 import org.gl.ceir.configuration.Translator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -270,7 +267,8 @@ public class IconsState {
 				+deletionIcon+" aria-hidden=\"true\"  title="
 				+deleteIconTitle+"></i></a>"; 
 
-		if("0".equals(status) || "1".equals(status) ||  "3".equals(status) || "10".equals(status)  && "Approved".equals(userStatus)) {
+		
+		if(("1".equals(status) ||  "3".equals(status) || "10".equals(status) || "6".equals(status))  && "Approved".equals(userStatus)) {
 			error="<a onclick="+errorURL+" class="+disableIconClass+"><i  class="
 					+disableErrorIcon+" aria-hidden=\"true\" title="
 					+errorIconTitle+"  ></i></a>";
@@ -281,8 +279,21 @@ public class IconsState {
 					+disableDeletionIcon+" aria-hidden=\"true\" title="
 					+deleteIconTitle+"></i></a>"; 
 		}
+		else if("0".equals(status) && "Approved".equals(userStatus)) {
+			error="<a onclick="+errorURL+" class="+disableIconClass+"><i  class="
+					+disableErrorIcon+" aria-hidden=\"true\" title="
+					+errorIconTitle+"  ></i></a>";
+			edit="<a onclick="+editAction+" class="+disableIconClass+"><i class="
+					+disableEditIcon+" aria-hidden=\"true\"  title="
+					+editIconTitle+"></i></a>"; 
+		}
+		else if("2".equals(status)  && "Approved".equals(userStatus)) {
+			download="<a onclick="+downloadURL+"  class="+disableIconClass+"><i class="
+					+disableDownloadIcon+" aria-hidden=\"true\"  title="
+					+downloadIconTitle+" ></i></a>"; 
+		}
 
-		else if("1".equals(status) || "3".equals(status) || "10".equals(status)  && "Approved".equals(userStatus)) {
+		else if("10".equals(status)  && "Approved".equals(userStatus)) {
 			edit="<a onclick="+editAction+" class="+disableIconClass+"><i class="
 					+disableEditIcon+" aria-hidden=\"true\" title="
 					+editIconTitle+"></i></a>"; 
@@ -870,17 +881,19 @@ public class IconsState {
 							featureID == 8 ? "./registrationRequest?txnID="+txnID+"" :
 								featureID == 11 ? "./manageTypeDevices?txnID="+txnID+"":
 									featureID == 12 ? "./uploadPaidStatus?via=other&txnID="+txnID+"" :
+										featureID == 12 ? "./manageTypeDevices2?txnID="+txnID+"" :
 										"JavaScript:void(0);";
 		//System.out.println("featureID::::::::::"+featureID);
 		// state related Code
 		String view=null;
-		if(featureID == 3 || featureID == 4 || featureID == 6 || featureID == 7) {
-			view="<a href="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+		String functionName="isActive("+featureID+")";
+		if(featureID == 3 || featureID == 4 || featureID == 6 || featureID == 7 || featureID == 21) {
+			view="<a href="+viewAction+" onclick="+functionName+"><i class="+viewIcon+" aria-hidden=\"true\" title="
 					+viewIconTitle+" ></i></a>";
 		}
 		else {
 
-			view="<a href="+viewAction+" class="+disableIconClass+"><i class="+disableViewIcon+" aria-hidden=\"true\" title="
+			view="<a href="+viewAction+" onclick="+functionName+" class="+disableIconClass+"><i class="+disableViewIcon+" aria-hidden=\"true\" title="
 					+viewIconTitle+" ></i></a>";
 		}
 		String action=view;
@@ -1207,9 +1220,9 @@ public class IconsState {
 	/********************************** Icons for Admin TRC Manage Type Datatable **********************************/ 
 
 
-	public String trcAdminManageIcons(String status,Integer id,String fileName,String txnId,String userStatus) {
+	public String trcAdminManageIcons(String status,Integer id,String txnId,String userStatus) {
 		executePostConstruct();
-		String errorURL = "consignmentFileDownload('"+fileName.replace(" ", "%20")+"','error','"+txnId+"','"+defaultTagName+"')";
+		String errorURL = "";
 		String viewAction="ImporterviewByID("+id+",'view','"+projectPath+"','viewImporterModal')";
 		//	String downloadURL = "./dowloadFiles/actual/"+fileName.replace(" ", "%20")+"/"+txnId+"/"+defaultTagName+"";
 		//String downloadURL = "fileDownload('"+fileName.replace(" ", "%20")+"','actual','"+txnId+"','"+defaultTagName+"')";
@@ -2013,6 +2026,26 @@ public class IconsState {
 
 
 		String action=view;
+		return action;
+
+	}
+	
+	/********************************** Icons for User Management**********************************/ 
+
+	public String userManagementIcons(String id, String userStatus) { 
+		executePostConstruct();
+
+		String editAction= "userChangeStatus('"+id+"')";
+
+		// state related Code 
+
+
+		String edit="<a onclick="+editAction+"><i class="
+				+editIcon+" aria-hidden=\"true\"  title="
+				+editIconTitle+"></i></a>"; 
+
+
+		String action=edit;
 		return action;
 
 	}

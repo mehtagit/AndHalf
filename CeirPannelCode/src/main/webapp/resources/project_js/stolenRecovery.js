@@ -46,12 +46,14 @@ function confirmantiondelete(){
 	var userId = $("body").attr("data-userID");
 	var currentRoleType = $("body").attr("data-stolenselected-roleType"); 
 	var role = currentRoleType == null ? roleType : currentRoleType;
+	var remarks = $("#textarea1").val();
 	console.log("txnId===**"+txnId+" userId="+userId+" roleType== "+roleType+ " currentRoleType=="+currentRoleType);
 	var obj ={
 			"txnId" : txnId,
 			"roleType":role,
 			"userId":userId,
-			"id":id
+			"id":id,
+			"remark":remarks
 
 	}
 	$.ajax({
@@ -74,6 +76,7 @@ function confirmantiondelete(){
 	});
 	$("#DeleteConsignment").closeModal();
 	$("#confirmDeleteConsignment").openModal({dismissible:false});
+	return false;
 }
 
 
@@ -272,6 +275,7 @@ function filterStolen(){
 
 
 function Datatable(url,dataUrl){
+	
 	var txn= (txnIdValue == 'null' && transactionIDValue == undefined)? $('#transactionID').val() : transactionIDValue;
 	var filterRequest={
 			"endDate":$('#endDate').val(),
@@ -288,8 +292,9 @@ function Datatable(url,dataUrl){
 			"operatorTypeId" : parseInt($('#operator').val())
 	}
 
+
 	if(lang=='km'){
-				var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
+		var langFile='../resources/i18n/khmer_datatable.json';
 			}
 
 	$.ajax({
@@ -945,15 +950,22 @@ function exportStolenRecoveryData()
 	var pageNo=info.page;
 	var pageSize =info.length;
 
+	if(userType=="Operator"){
+		var operatorId = parseInt($("body").attr("data-OperatorTypeId"));
+	}else{
+		var operatorId = parseInt($('#operator').val());
+	}
+	
 	var filterRequest={
 			"endDate":stolenRecoveryEndDate,
 			"startDate":stolenRecoveryStartDate,
 			"txnId":stolenRecoveryTxnId,
-			"grievanceStatus":stolenRecoveryFileStatus,
+			"grievanceStatus":stolenRecoveryFileStatus, 
 			"sourceType":stolenRecoverySourceStatus,
 			"requestType":stolenRecoveryRequestType,
 			"featureId":featureId,
 			"roleType":roleType,
+			"operatorTypeId" : operatorId,
 			"pageNo":parseInt(pageNo),
 			"pageSize":parseInt(pageSize)
 			

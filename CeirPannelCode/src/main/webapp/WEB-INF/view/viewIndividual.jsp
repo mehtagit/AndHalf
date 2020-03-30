@@ -181,21 +181,36 @@
                                             </div>
                                </div>
 
-                                <div class="input-field col s12 m6" id="userTypeNameField">
+                                <%-- <div class="input-field col s12 m6" id="userTypeNameField">
                                     <input type="text" name="roleType" id="roleType"  value="${registration['user'].usertype.usertypeName}" maxlength="16" placeholder="" disabled="">
                                     <label for="roleType" class="active"><spring:message code="table.RoleType" /> </label>
-                                </div>
+                                </div> --%>
+                                
+                                <div class="input-field col s12 m6 l6"  items="${registration.rolesList}" var="List"  >
+										 <c:forEach items="${registration.rolesList}" var="List" varStatus="loop">
+									<c:out value="${registration.rolesList[loop.index]['role']}"/>
+									<c:if test="${!loop.last}">,</c:if>
+                                          </c:forEach>  
+                                          <input type="text" name="roleType" disabled="" id="roleType"  value="${registration.rolesList[loop.index]['role']}" maxlength="16" placeholder="">
+                                   		  <label for="roleType" class="active"> <spring:message code="registration.roletype"/></label>
+                                  </div>
 
-                                <div class="input-field col s12 m6" id="vatNumberField">
+                                <div class="input-field col s12 m6" id="vatNumberField" style="display: none;">
                                     <input type="text" name="vatNumber" id="vatNumber" value="${registration.vatNo}" maxlength="16" placeholder="" disabled="">
                                     <label for="vatNumber" class="active"><spring:message code="registration.vatnumber" /> </label>
+                                </div>
+                                
+                                 <div class="input-field col s12 m6 l6" id="uploadedvatFileDiv" style="display: none;" >
+                                    <input type="text" name="vatFile" id="uploadedVatFile" value="${registration.vatFilename}" maxlength="20"  disabled="">
+                                    <label for="ploadedVatFile" class="active"><spring:message code="registration.uploadedVatFile"/> </label>
+                                   <span> <a href="#" onclick="previewFile('${registration.vatFilePath}','${registration.vatFilename}')">Preview </a></span> 
                                 </div>
                             </div>
                         </div>
 
                         <div class="row">
                           	<div class="input-field col s12 center">
-                                  <a class="btn modal-close" href="./registrationRequest"><spring:message code="modal.cancel" /></a>
+                                  <a class="btn modal-close" href="./registrationRequest"><spring:message code="modal.close" /></a>
                             </div>
                         </div>
 
@@ -271,9 +286,10 @@
 		var vatStatus = $('#vat').val();
 		if(vatStatus== 1){
 			$("#yes").prop("checked", true);
+			$("#uploadedvatFileDiv").css({"display":"block"});
+			$("#vatNumberField").css({"display":"block"});
 		}else if(vatStatus == 0){
 			$("#no").prop("checked", true);
-			$('#vatNumberField').hide();
 		}
 		
 		

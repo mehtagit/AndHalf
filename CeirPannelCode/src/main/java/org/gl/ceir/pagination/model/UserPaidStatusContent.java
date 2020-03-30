@@ -3,6 +3,7 @@ package org.gl.ceir.pagination.model;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.gl.ceir.CeirPannelCode.Model.EndUserVisaInfo;
 import org.springframework.stereotype.Component;
 @Component
 public class UserPaidStatusContent {
@@ -30,24 +31,77 @@ public class UserPaidStatusContent {
 	private String firstImei;
 	private String secondImei;
 	private String thirdImei;
-	private String fourthImei;
-	private Object endUserDB;
+	private String fourthImei,filePreviewLink;
+	private EndUserVisaInfo endUserDB;
 	private String origin;
-	@Override
-	public String toString() {
-		return "UserPaidStatusContent [id=" + id + ", status=" + status + ", stateInterp=" + stateInterp
-				+ ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", nid=" + nid + ", deviceStatus="
-				+ deviceStatus + ", taxPaidStatus=" + taxPaidStatus + ", taxPaidStatusInterp=" + taxPaidStatusInterp
-				+ ", deviceType=" + deviceType + ", deviceTypeInterp=" + deviceTypeInterp + ", deviceIdType="
-				+ deviceIdType + ", deviceIdTypeInterp=" + deviceIdTypeInterp + ", multiSimStatus=" + multiSimStatus
-				+ ", country=" + country + ", deviceSerialNumber=" + deviceSerialNumber + ", txnId=" + txnId
-				+ ", deviceStatusInterp=" + deviceStatusInterp + ", price=" + price + ", currency=" + currency
-				+ ", currencyInterp=" + currencyInterp + ", firstImei=" + firstImei + ", secondImei=" + secondImei
-				+ ", thirdImei=" + thirdImei + ", fourthImei=" + fourthImei + ", endUserDB=" + endUserDB + ", origin="
-				+ origin + "]";
-	}
+	//private EndUserVisaInfo endUserDB;
+	
+	
+	
 	public Integer getId() {
 		return id;
+	}
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("UserPaidStatusContent [id=");
+		builder.append(id);
+		builder.append(", status=");
+		builder.append(status);
+		builder.append(", stateInterp=");
+		builder.append(stateInterp);
+		builder.append(", createdOn=");
+		builder.append(createdOn);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
+		builder.append(", nid=");
+		builder.append(nid);
+		builder.append(", deviceStatus=");
+		builder.append(deviceStatus);
+		builder.append(", taxPaidStatus=");
+		builder.append(taxPaidStatus);
+		builder.append(", taxPaidStatusInterp=");
+		builder.append(taxPaidStatusInterp);
+		builder.append(", deviceType=");
+		builder.append(deviceType);
+		builder.append(", deviceTypeInterp=");
+		builder.append(deviceTypeInterp);
+		builder.append(", deviceIdType=");
+		builder.append(deviceIdType);
+		builder.append(", deviceIdTypeInterp=");
+		builder.append(deviceIdTypeInterp);
+		builder.append(", multiSimStatus=");
+		builder.append(multiSimStatus);
+		builder.append(", country=");
+		builder.append(country);
+		builder.append(", deviceSerialNumber=");
+		builder.append(deviceSerialNumber);
+		builder.append(", txnId=");
+		builder.append(txnId);
+		builder.append(", deviceStatusInterp=");
+		builder.append(deviceStatusInterp);
+		builder.append(", price=");
+		builder.append(price);
+		builder.append(", currency=");
+		builder.append(currency);
+		builder.append(", currencyInterp=");
+		builder.append(currencyInterp);
+		builder.append(", firstImei=");
+		builder.append(firstImei);
+		builder.append(", secondImei=");
+		builder.append(secondImei);
+		builder.append(", thirdImei=");
+		builder.append(thirdImei);
+		builder.append(", fourthImei=");
+		builder.append(fourthImei);
+		builder.append(", filePreviewLink=");
+		builder.append(filePreviewLink);
+		builder.append(", endUserDB=");
+		builder.append(endUserDB);
+		builder.append(", origin=");
+		builder.append(origin);
+		builder.append("]");
+		return builder.toString();
 	}
 	public void setId(Integer id) {
 		this.id = id;
@@ -196,10 +250,10 @@ public class UserPaidStatusContent {
 	public void setFourthImei(String fourthImei) {
 		this.fourthImei = fourthImei;
 	}
-	public Object getEndUserDB() {
+	public EndUserVisaInfo getEndUserDB() {
 		return endUserDB;
 	}
-	public void setEndUserDB(Object endUserDB) {
+	public void setEndUserDB(EndUserVisaInfo endUserDB) {
 		this.endUserDB = endUserDB;
 	}
 	public String getOrigin() {
@@ -208,5 +262,12 @@ public class UserPaidStatusContent {
 	public void setOrigin(String origin) {
 		this.origin = origin;
 	}
+	public String getFilePreviewLink() {
+		return filePreviewLink;
+	}
+	public void setFilePreviewLink(String filePreviewLink) {
+		this.filePreviewLink = filePreviewLink;
+	}
+	
 	
 }

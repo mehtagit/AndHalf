@@ -7,6 +7,7 @@ import org.gl.ceir.CeirPannelCode.Model.UserStatus;
 import org.gl.ceir.CeirPannelCode.Response.UpdateProfileResponse;
 import org.gl.ceir.CeirPannelCode.Service.ProfileService;
 import org.gl.ceir.CeirPannelCode.Util.HttpResponse;
+import org.gl.ceir.pagination.model.UserManagementContent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -66,5 +67,17 @@ public class ProfileController {
 		
 	}
 	
+	@RequestMapping(value ="/updateSystemUserTypeStatus",method = RequestMethod.POST)
+	@ResponseBody
+	public  HttpResponse changeSystemUserTypeStatus(@RequestBody UserManagementContent userManagementContent,HttpSession session) {
+		return profileService.changeSystemUserStatusService(userManagementContent,session);
+		
+	}
 	
+	@RequestMapping(value ="/updateSystemUserPeriod",method = RequestMethod.POST)
+	@ResponseBody
+	public  HttpResponse changeUserPeriodStatus(@RequestBody UserManagementContent userManagementContent,HttpSession session) {
+		return profileService.changeSystemUserPeriodService(userManagementContent,session);
+		
+	}
 }

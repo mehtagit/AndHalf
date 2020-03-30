@@ -137,6 +137,14 @@
 						
 				
 					<div class="input-field col s12 m6 l6" >
+						<input type="text" name="TxnId" id="viewTxnId"
+							placeholder="" disabled >
+						<label for="viewTxnId"><spring:message code="table.transactionID" /></label>
+					</div>
+					
+					
+					
+					<div class="input-field col s12 m6 l6" >
 						<input type="text" name="period" id="viewRoleType"
 							placeholder="" disabled >
 						<label for="viewRoleType"><spring:message code="table.userType" /></label>

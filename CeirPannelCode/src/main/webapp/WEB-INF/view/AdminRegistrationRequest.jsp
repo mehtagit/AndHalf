@@ -151,8 +151,7 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
             <div class="row">
                 <form action="">
             
-                    <h6><spring:message code="registration.emailregister" /> <br> <spring:message code="registration.registrationid" />  <span id="RegistrationId"></span>
-                          <spring:message code="registration.registrationdate" /><span id="registrationDate"></span>.</h6>
+                    <h6><spring:message code="registration.approveEmailregister" />.</h6>
                    
                 </form>
             </div>
@@ -192,7 +191,7 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
             <div class="row">
                 <form action="">
                   
-                    <h6><spring:message code="registration.rejectionreason" /></h6>
+                    <h6><spring:message code="registration.approveEmailregister" /></h6>
                 </form>
             </div>
             <div class="row">
@@ -216,8 +215,9 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
                                                 <label for="Category"> <spring:message code="select.changeUserStatus" /> <span class="star"> *</span></label>
                                             </div>
                                             <div class="col s6 m7 selectDropdwn">
-                                                <select class="browser-default" id = "userStatus" 
-	title="<spring:message code="validation.selectFieldMsg" />" required>
+                                                <select class="browser-default" id = "userStatus"
+                                     onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" 
+                                     oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" required>
                                                     <option value="" disabled selected><spring:message code="select.selectUserStatus" /></option>
                                            	</select>
                                             </div>

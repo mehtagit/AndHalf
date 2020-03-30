@@ -388,7 +388,7 @@ onclick="_Services._selectstartDate()"></i></span>
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.requiredMsg" />');"
 												 required /> 
 												<label
-												for="deviceRecoveryDevice" class="center-align"><spring:message code="operator.recoveryDate" /> <span class="star">*</span>
+												for="IndivisualRecoveryDevice" class="center-align"><spring:message code="operator.recoveryDate" /> <span class="star">*</span>
 											</label> <span class="input-group-addon" style="color: #ff4081"><i
 												class="fa fa-calendar" aria-hidden="true"></i></span>
 										</div>
@@ -585,7 +585,7 @@ onclick="_Services._selectstartDate()"></i></span>
 												autocomplete='off' 
 												title="<spring:message code="validation.requiredMsg" />"  required /> 
 												<label
-												for="deviceRecoveryDevice" class="center-align"><spring:message code="operator.recoveryDate" /> <span class="star">*</span>
+												for="bulkRecoveryDate" class="center-align"><spring:message code="operator.recoveryDate" /> <span class="star">*</span>
 											</label> <span class="input-group-addon" style="color: #ff4081"><i
 												class="fa fa-calendar" aria-hidden="true"></i></span>
 										</div>

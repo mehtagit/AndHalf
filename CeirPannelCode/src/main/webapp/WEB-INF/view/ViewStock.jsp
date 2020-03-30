@@ -164,7 +164,8 @@
 					<div class="input-field col s12 m6" id="editSupplierIdDiv">
 						<input type="text" name="SupplierId" id="editSupplierId"
 							placeholder="" pattern="[A-Za-z0-9]{0,15}"
-					
+					oninput="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
+					oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
 							maxlength="15" /> <label for="editSupplierId"
 							id="editSupplierIdLabel" class="center-align"><spring:message
 								code="input.supplierID" /></label>
@@ -192,7 +193,8 @@
 					<div class="input-field col s12 m6" id="editInvoiceNumberDiv">
 						<input type="text" name="InvoiceNumber" id="editInvoiceNumber"
 							placeholder="" pattern="[A-Za-z0-9]{0,15}"
-							
+							oninput="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
+							oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
 							maxlength="15" /> <label for="InvoiceNumber" class="center-align"><spring:message
 								code="input.invoiceNumber" /></label>
 					</div>

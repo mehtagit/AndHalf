@@ -11,6 +11,7 @@ import org.gl.ceir.CeirPannelCode.Model.UploadStockAssigneModal;
 import org.gl.ceir.CeirPannelCode.Model.UserStatus;
 import org.gl.ceir.CeirPannelCode.Response.UpdateProfileResponse;
 import org.gl.ceir.CeirPannelCode.Util.HttpResponse;
+import org.gl.ceir.pagination.model.UserManagementContent;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -135,7 +136,36 @@ public interface UserProfileFeignImpl {
 		@RequestMapping(value= "/currency/update" , method=RequestMethod.POST) 
 		public GenricResponse updateCurrencyFeign(@RequestBody FilterRequest filterRequest);
 		
+	/*-------------------------- view userManagement Feign ------------------------------*/
+		
+		@RequestMapping(value="/usertypeData" ,method=RequestMethod.POST) 
+
+		public Object viewUserTypeRequest(@RequestBody FilterRequest filterRequest,
+		@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
+		@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+		@RequestParam(value = "file", defaultValue = "0") Integer file);
 	
+		
+	/*-------------------------- Update System user Type Management Feign ------------------------------*/	
+		
+		@PostMapping("/updateUserTypeStatus")
+		public HttpResponse changeSystemUserStatusFeign(UserManagementContent userManagementContent);
+
 	
+		
+		/*-------------------------- view userManagement Feign ------------------------------*/
+		
+		@RequestMapping(value="/userTypeFeatureData" ,method=RequestMethod.POST) 
+		public Object viewUserFeatureMappingRequest(@RequestBody FilterRequest filterRequest,
+		@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
+		@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+		@RequestParam(value = "file", defaultValue = "0") Integer file);	
+		
+	/*-------------------------- Update System user Period Feign ------------------------------*/	
+		
+		@PostMapping("/updatePeriod")
+
+		public HttpResponse changeSystemUserPeriodFeign(UserManagementContent userManagementContent);
+
 } 
 

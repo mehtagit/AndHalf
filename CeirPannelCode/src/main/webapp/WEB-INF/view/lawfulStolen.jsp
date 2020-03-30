@@ -167,7 +167,7 @@ select {
 													<h5><spring:message code="input.personalInformation" /></h5>
 												</div>
 
-												<div class="col-s12 m12">
+											<div class="col-s12 m12">
 													<div class="input-field col s12 m4">
 														<input type="text" name="singleStolenfirstName"
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
@@ -184,7 +184,7 @@ select {
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 															maxlength="20" id="singleStolenmiddleName"> <label
-															for="middleName"> <spring:message
+															for="singleStolenmiddleName"> <spring:message
 																code="input.middleName" /></label>
 													</div>
 
@@ -194,21 +194,11 @@ select {
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 															required maxlength="20" id="singleStolenlastName">
-														<label for="lastName"> <spring:message
+														<label for="singleStolenlastName"> <spring:message
 																code="input.lastName" /><span class="star"> *</span>
 														</label>
 													</div>
 
-													<!-- <div class="input-field col s12 m6">
-                                                                <input type="text" name="nationality" id="nationality">
-                                                                <label for="nationality">Nationality <span class="star">*</span></label>
-                                                            </div> -->
-
-													<!-- <div class="col s12 m6 l6" style="margin-top: -7px;">
-                                                                <label for="country">Nationality <span class="star">*</span></label>
-                                                                <select id="country" class="browser-default" class="mySelect"
-                                                                    style="padding-left: 0;" required></select>
-                                                            </div> -->
 
 													<div class="file-field col s12 m6 l6"
 														style="margin-top: -8px;">
@@ -241,7 +231,7 @@ select {
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15alphanumeric" />');"
 															required maxlength="15"
 															id="singleStolennIDPassportNumber"> <label
-															for="nIDPassportNumber"> <spring:message code="registration.nid/passportnumber" /> <span
+															for="singleStolennIDPassportNumber"> <spring:message code="registration.nid/passportnumber" /> <span
 															class="star"> *</span></label>
 													</div>
 
@@ -250,7 +240,7 @@ select {
 															pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
 															oninput="InvalidMsg(this,'email','<spring:message code="validation.emial" />');"
 															oninvalid="InvalidMsg(this,'email','<spring:message code="validation.emial" />');"
-															maxlength="30"> <label for="email"> <spring:message code="input.email" />
+															maxlength="30"> <label for="singleStolenemail"> <spring:message code="input.email" />
 														</label>
 													</div>
 
@@ -263,12 +253,10 @@ select {
 															pattern="[0-9\s,+]{7,15}"
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.contact" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.contact" />');"
-															maxlength="15" required />
-														<!-- <label for="phone">Alternate Contact Number <span class="star">*</span></label> -->
-													</div>
-													<!-- </div>
-
-                                                        <div class="col s12 m12"> -->
+															maxlength="15" required>
+															
+													</div> 
+													
 													<div class="input-field col s12 m12">
 														<input type="text" name="address"
 															class="form-control boxBorder boxHeight"
@@ -276,7 +264,7 @@ select {
 															pattern="[^[a-zA-Z0-9\s,'-]*$]{0,200}"
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');"
-															required maxlength="200"> <label for="address">
+															required maxlength="200"> <label for="singleStolenaddress">
 															<spring:message code="input.address" /> <span
 															class="star"> *</span>
 														</label>
@@ -290,7 +278,7 @@ select {
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 															required maxlength="20"> <label
-															for="streetNumber"> <spring:message
+															for="singleStolenstreetNumber"> <spring:message
 																code="input.streetNumber" /><span class="star">
 																*</span></label>
 													</div>
@@ -300,7 +288,7 @@ select {
 															pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}"
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
-															required maxlength="30"> <label for="village">
+															required maxlength="30"> <label for="singleStolenvillage">
 															<spring:message code="input.village" /> <span
 															class="star"> *</span>
 														</label>
@@ -313,7 +301,7 @@ select {
 															pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}"
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
-															required maxlength="30"> <label for="locality">
+															required maxlength="30"> <label for="singleStolenlocality">
 															<spring:message code="input.locality" /><span
 															class="star"> *</span>
 														</label>
@@ -325,7 +313,7 @@ select {
 															pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}"
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
-															required maxlength="30"> <label for="district">
+															required maxlength="30"> <label for="singleStolendistrict">
 															<spring:message code="input.district" /> <span
 															class="star"> *</span>
 														</label>
@@ -337,7 +325,7 @@ select {
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
 															required maxlength="30"> <label
-															for="commune"> <spring:message
+															for="singleStolencommune"> <spring:message
 																code="input.commune" /> <span class="star"> *</span>
 														</label>
 													</div>
@@ -348,7 +336,7 @@ select {
 															id="singleStolenpin" pattern="[0-9]{1,6}"
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');"
-															maxlength="6" required > <label for="pin">
+															maxlength="6" required > <label for="singleStolenpin">
 															<spring:message code="input.postalCode" /><span
 															class="star"> *</span>
 														</label>
@@ -373,9 +361,7 @@ select {
 													</div>
 
 													<div class="col s12 m12" style="margin-top: 30px;">
-														<h5>
-															<spring:message code="modal.deviceInfo" />
-														</h5>
+														<h5><spring:message code="modal.deviceInfo" /></h5>
 														<hr>
 													</div>
 
@@ -383,30 +369,20 @@ select {
 														<div class="input-field col s12 m6">
 															<input type="text" name="deviceBrandName"
 																id="singleStolendeviceBrandName"
-																pattern="[a-zA-Z]{0,20}"
-																oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
-																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
-																maxlength="20"> <label for="deviceBrandName">
+																pattern="[a-zA-Z]{0,20}" 
+															oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
+															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
+																maxlength="20"> <label for="singleStolendeviceBrandName">
 																<spring:message code="registration.devicebrandname" />
 															</label>
 														</div>
 
-														<%--			<div class="input-field col s12 m6"
-															style="margin-top: 22px;">
-															<input type="text" name="imeiNumber" pattern="[0-9]{15,16}" 
-															oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');" 
-															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
-														 maxlength="16" 	id="singleStolenimeiNumber" > <label
-																for="imeiNumber"><spring:message code="registration.imei/meid/esnnumber" /></label>
-														</div>
-														--%>
+												
 
 														<div class="col s6 m6 ">
 															<label for="deviceIDType"> <spring:message
 																	code="select.deviceIDType" /></label> <select
-																oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-																oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-																id="singleStolendeviceIDType" class="browser-default">
+															id="singleStolendeviceIDType" class="browser-default">
 																<option value="" disabled selected>
 																	<spring:message code="select.deviceIDType" />
 																</option>
@@ -416,31 +392,21 @@ select {
 														<div class="col s6 m6 ">
 															<label for="deviceType"> <spring:message
 																	code="select.deviceType" /></label> <select
-																class="browser-default" id="singleStolendeviceType"
-																oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-																oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');">
+																class="browser-default" id="singleStolendeviceType">
 																<option value="" disabled selected>
 																	<spring:message code="select.deviceType" />
 																</option>
 															</select>
 														</div>
 
-														<!-- <div class="col s6 m6 ">
-                                                                <label for="deviceStatus">Device Status <span class="star">*</span></label>
-                                                                <select id="deviceStatus" class="browser-default">
-                                                                  <option value="" disabled selected>Device Status</option>
-                                                                  <option value="New">New</option>
-                                                                  <option value="used">used</option>
-                                                                  <option value="Refurbished">Refurbished</option>
-                                                                </select>
-                                                              </div> -->
 
 														<div class="input-field col s12 m6">
 															<input type="text" name="modalNumber"
 																id="singleStolenmodalNumber" pattern="[a-zA-Z0-9]{0,30}"
-																oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-																maxlength="30"> <label for="modalNumber">
+																
+															oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
+															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
+																maxlength="30"> <label for="singleStolenmodalNumber">
 																<spring:message code="input.modelNumber" />
 															</label>
 														</div>
@@ -450,17 +416,11 @@ select {
 																<spring:message code="input.contactNum" />
 																<span class="star"> *</span>
 															</p>
-															<input type="text" name="phone" id="singleStolenphone2"
-																pattern="[0-9\s,+]{7,15}"
-																oninput="InvalidMsg(this,'input','<spring:message code="validation.contact" />');"
-																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.contact" />');"
-																maxlength="15" required />
+															<input type="text" name="phone2" id="singleStolenphone2"
+																pattern="[0-9\s,+]{7,15}" maxlength="15" oninput="InvalidMsg(this,'input','<spring:message code="validation.contact" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.contact" />');" required>
 														</div>
 
-														<!-- <div class="input-field col s12 m6">
-                                                                <input type="text" name="operator" id="operator" maxlength="10">
-                                                                <label for="operator">Operator <span class="star">*</span></label>
-                                                            </div> -->
+														
 
 														<div class="col s12 m6 l6">
 															<label> <spring:message code="operator.Operator" />
@@ -525,6 +485,7 @@ select {
 																style="display: none; width: 30%; margin-right: 30%; float: right; margin-top: -15px"
 																id="calender">
 																<div id="startdatepicker" class="input-group date">
+																<p> <spring:message code="operator.blockingTypePeriod" /> </p>
 																	<input type="text" id="stolenDatePeriod"
 																		style="margin-top: -9px" /> <span
 																		class="input-group-addon" style="color: #ff4081"><i
@@ -597,7 +558,7 @@ select {
 																pattern="[^[a-zA-Z0-9\s,'-]*$]{0,200}"
 																oninput="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');"
 																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');"
-																required maxlength="200"> <label for="address">
+																required maxlength="200"> <label for="singleDeviceAddress">
 																<spring:message code="input.address" /><span
 																class="star"> *</span>
 															</label>
@@ -611,7 +572,7 @@ select {
 																oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 																required maxlength="20"> <label
-																for="streetNumber"> <spring:message
+																for="singleDevicestreetNumber"> <spring:message
 																	code="input.streetNumber" /> <span class="star">
 																	*</span></label>
 														</div>
@@ -622,7 +583,7 @@ select {
 																pattern="[^[a-zA-Z0-9\s,'-]*$]{0,20}"
 																oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
 																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
-																required maxlength="30"> <label for="village">
+																required maxlength="30"> <label for="singleDevicevillage">
 																<spring:message code="input.village" /> <span
 																class="star">*</span>
 															</label>
@@ -635,7 +596,7 @@ select {
 																pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}"
 																oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
 																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
-																required maxlength="30"> <label for="locality">
+																required maxlength="30"> <label for="singleDevicelocality">
 																<spring:message code="input.locality" /> <span
 																class="star"> *</span>
 															</label>
@@ -647,7 +608,7 @@ select {
 																pattern="[A-Za-z0-9._%+-$@,/]+\.{0,30}"
 																oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
 																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
-																required maxlength="30"> <label for="district">
+																required maxlength="30"> <label for="singleDevicedistrict">
 																<spring:message code="input.district" /><span
 																class="star"> * </span>
 															</label>
@@ -659,7 +620,7 @@ select {
 																pattern="[A-Za-z0-9._%+-$@,/]+\.{0,30}"
 																oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
 																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
-																required maxlength="30"> <label for="commune">
+																required maxlength="30"> <label for="singleDevicecommune">
 																<spring:message code="input.commune" /> <span
 																class="star"> *</span>
 															</label>
@@ -671,7 +632,7 @@ select {
 																id="singleDevicepin" pattern="[0-9]{1,6}"
 																oninput="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');"
 																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');"
-																required maxlength="6"> <label for="pin">
+																required maxlength="6"> <label for="singleDevicepin">
 																<spring:message code="registration.postalcode" /><span
 																class="star"> *</span>
 															</label>
@@ -739,10 +700,11 @@ select {
 																	code="input.Remark" /></label>
 														</div>
 													</div>
-												</div>
-											</div>
-											<span> <spring:message code="input.requiredfields" />
-												<span class="star">*</span></span>
+													<p> <spring:message code="input.requiredfields" />
+												<span class="star">*</span></p>
+													
+													</div>
+											
 
 
 											<div class="input-field col s12 center">
@@ -754,6 +716,8 @@ select {
 													style="margin-left: 10px;"> <spring:message
 														code="button.cancel" /></a>
 											</div>
+												</div>
+											
 										</form>
 									</div>
 
@@ -771,7 +735,7 @@ select {
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 													required id="bulkStolencompanyName"> <label
-													for="companyName"> <spring:message
+													for="bulkStolencompanyName"> <spring:message
 														code="registration.companyName" /> <span class="star">
 														*</span></label>
 											</div>
@@ -783,7 +747,7 @@ select {
 													pattern="[^[a-zA-Z0-9\s,'-]*$]{0,200}"
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');"
-													required maxlength="200" /> <label for="address">
+													required maxlength="200" /> <label for="bulkStolenaddress">
 													<spring:message code="input.address" /> <span class="star">*</span>
 												</label>
 											</div>
@@ -795,7 +759,7 @@ select {
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 													required maxlength="20" title="Please enter street number">
-												<label for="streetNumber"> <spring:message
+												<label for="bulkStolenstreetNumber"> <spring:message
 														code="input.streetNumber" /><span class="star"> *</span></label>
 											</div>
 
@@ -804,7 +768,7 @@ select {
 													pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}"
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-													required maxlength="30"> <label for="village">
+													required maxlength="30"> <label for="bulkStolenvillage">
 													<spring:message code="input.village" /> <span class="star">
 														*</span>
 												</label>
@@ -818,7 +782,7 @@ select {
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 													required maxlength="30" title="Please enter your locality">
-												<label for="locality"> <spring:message
+												<label for="bulkStolenlocality"> <spring:message
 														code="input.locality" /> <span class="star"> *</span></label>
 											</div>
 
@@ -827,7 +791,7 @@ select {
 													pattern="[A-Za-z0-9._%+-$@,/]+\.{0,30}"
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-													required maxlength="30"> <label for="district">
+													required maxlength="30"> <label for="bulkStolendistrict">
 													<spring:message code="input.district" /> <span
 													class="star"> *</span>
 												</label>
@@ -838,7 +802,7 @@ select {
 													pattern="[A-Za-z0-9._%+-$@,/]+\.{0,30}"
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-													required maxlength="30"> <label for="commune">
+													required maxlength="30"> <label for="bulkStolencommune">
 													<spring:message code="input.commune" /> <span class="star">
 														*</span>
 												</label>
@@ -850,7 +814,7 @@ select {
 													pattern="[0-9]{0,6}"
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');"
-													required maxlength="6"> <label for="pin"> <spring:message
+													required maxlength="6"> <label for="bulkStolenpin"> <spring:message
 														code="registration.postalcode" /> <span class="star">
 														*</span>
 												</label>
@@ -912,7 +876,7 @@ select {
 													pattern="[a-zA-Z ]{1,20}"
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
-													required maxlength="20"> <label for="lastName">
+													required maxlength="20"> <label for="bulkStolenlastName">
 													<spring:message code="input.lastName" /> <span
 													class="star"> *</span>
 												</label>
@@ -926,7 +890,7 @@ select {
 													oninvalid="InvalidMsg(this,'email','
 												<spring:message code="validation.emial" />');"
 													maxlength="30" id="bulkStolenofficeEmail"> <label
-													for="officeEmail"> <spring:message
+													for="bulkStolenofficeEmail"> <spring:message
 														code="registration.officialemailid" /></label>
 											</div>
 
@@ -934,11 +898,9 @@ select {
 												<!-- <p class="contact-label">Alternate Contact Number <span class="star">*</span></p> -->
 												<input type="text" name="phone" id="bulkStolenContact"
 													pattern="[0-9\s,+]{7,12}"
-													oninput="InvalidMsg(this,'input','<spring:message code="
-													validation.contact" />');"
-													oninvalid="InvalidMsg(this,'input','
-												<spring:message code="validation.contact" />');"
-													maxlength="12" /> <label for="phone2"> <spring:message
+													oninput="InvalidMsg(this,'input','<spring:message code="validation.contact" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.contact" />');"
+													maxlength="12" /> <label for="bulkStolenContact"> <spring:message
 														code="input.contactNum" /></label>
 											</div>
 
@@ -963,7 +925,7 @@ select {
 													pattern="[^[a-zA-Z0-9\s,'-]*$]{0,200}"
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');"
-													maxlength="200" required /> <label for="address"> <spring:message
+													maxlength="200" required /> <label for="deviceBulkStolenaddress"> <spring:message
 														code="input.address" /> <span class="star"> *</span></label>
 											</div>
 
@@ -974,7 +936,7 @@ select {
 													pattern="[^[a-zA-Z0-9\s,'-]*$]{0,20}"
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
-													required maxlength="20"> <label for="streetNumber">
+													required maxlength="20"> <label for="deviceBulkStolenstreetNumber">
 													<spring:message code="input.streetNumber" /> <span
 													class="star"> *</span>
 												</label>
@@ -986,7 +948,7 @@ select {
 													pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}"
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-													required maxlength="30"> <label for="village">
+													required maxlength="30"> <label for="deviceBulkStolenvillage">
 													<spring:message code="input.village" /> <span class="star">
 														*</span>
 												</label>
@@ -999,7 +961,7 @@ select {
 													pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}"
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-													required maxlength="30"> <label for="locality">
+													required maxlength="30"> <label for="deviceBulkStolenlocality">
 													<spring:message code="input.locality" /> <span
 													class="star"> *</span>
 												</label>
@@ -1011,7 +973,7 @@ select {
 													pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}"
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-													required maxlength="30"> <label for="district">
+													required maxlength="30"> <label for="deviceBulkStolendistrict">
 													<spring:message code="input.district" /> <span
 													class="star"> *</span>
 												</label>
@@ -1023,7 +985,7 @@ select {
 													pattern="[A-Za-z0-9._%+-$@,/]+\.{0,30}"
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-													required maxlength="30"> <label for="commune">
+													required maxlength="30"> <label for="deviceBulkStolencommune">
 													<spring:message code="input.commune" /><span class="star">
 														*</span>
 												</label>
@@ -1035,7 +997,7 @@ select {
 													id="deviceBulkStolenpin" pattern="[0-9]{0,6}"
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');"
-													required maxlength="6"> <label for="pin">
+													required maxlength="6"> <label for="deviceBulkStolenpin">
 													<spring:message code="registration.postalcode" /><span
 													class="star"> *</span>
 												</label>
@@ -1082,7 +1044,7 @@ select {
 													pattern=[0-9]{1,7}
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
-													required> <label for="quantity"> <spring:message
+													required> <label for="deviceBulkStolenquantity"> <spring:message
 														code="input.quantity" /><span class="star"> *</span></label>
 											</div>
 
@@ -1100,9 +1062,7 @@ select {
 														required id="deviceBulkStolenFile" onchange="isFileValid('deviceBulkStolenFile')" accept=".csv">
 												</div>
 												<div class="file-path-wrapper">
-													<input class="file-path validate" type="text" id="deviceBulkStolenFileName"
-														placeholder="<spring:message code="
-														registration.uploaddevicelist" />">
+													<input class="file-path validate" type="text" id="deviceBulkStolenFileName">
 												</div>
 											</div>
 
@@ -1161,7 +1121,10 @@ select {
 											<div class="input-field col s12 m6">
 												<input type="text" name="bulkStolenDate" id='bulkStolenDate'
 													class='form-control datepick' autocomplete='off'
-													title="<spring:message code=" validation.requiredMsg" />"
+													
+													oninput="InvalidMsg(this,'input','<spring:message code=" validation.requiredMsg" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code=" validation.requiredMsg" />');"
+													
 													required /> <label for="bulkStolenDate"
 													class="center-align"> <spring:message
 														code="operator.stolenDate" /> <span class="star">
@@ -1177,15 +1140,13 @@ select {
 												<div class="btn">
 													<span> <spring:message code="input.selectfile" /></span> <input
 														type="file" onchange="isImageValid('uploadFirBulk')"
-														oninput="InvalidMsg(this,'fileType','<spring:message code="
-														validation.NoChosen" />');"
-														oninvalid="InvalidMsg(this,'fileType','
-													<spring:message code="validation.NoChosen" />');"
+														oninput="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');"
+														oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');"
 														placeholder="Upload FIR" id="uploadFirBulk">
 												</div>
 												<div class="file-path-wrapper">
 													<input class="file-path validate" type="text"
-														placeholder="<spring:message code=" input.UploadFIR" />"
+														
 														id="uploadFirSingleBulkName"
 														title="Please upload national ID
 													image">
@@ -1195,15 +1156,18 @@ select {
 											<div class="input-field col s12 m12"
 												style="margin-top: 22px;">
 												<textarea id="deviceBulkStolenRemark"
-													oninput="InvalidMsg(this,'input','<spring:message code="
-													validation.10000characters" />');"
+													oninput="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
 													maxlength="10000" class="materialize-textarea"></textarea>
 												<label for="textarea1"> <spring:message
 														code="input.Remark" /></label>
 											</div>
+											
+											
 
 											<div class="col s12 m12">
+											<p> <spring:message code="input.requiredfields" />
+												<span class="star">*</span></p>
 												<a href="./Consignment/sampleFileDownload/7"> <spring:message
 														code="input.downlaod.sample" /></a>
 											</div>
@@ -1297,40 +1261,46 @@ select {
 		src="${context}/resources/js/countries.js"></script>
 
 <!-- i18n library -->
-<script type="text/javascript"
-src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
-<script type="text/javascript"
-src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.js"></script>
-<script type="text/javascript"
-src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.messagestore.js"></script>
+<!-- i18n library -->
+	<script type="text/javascript"
+		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/i18n.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/messagestore.js"></script>
 
-<script type="text/javascript"
-src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.fallbacks.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/fallbacks.js"></script>
 
-<script type="text/javascript"
-src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.language.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/language.js"></script>
 
-<script type="text/javascript"
-src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.parser.js"></script>
-
-
-<script type="text/javascript"
-src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/parser.js"></script>
 
 
-<script type="text/javascript"
-src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.bidi.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/emitter.js"></script>
 
-<script type="text/javascript"
-src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/jquery.history.js"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/bidi.js"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/history.js"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/min.js"></script>
 	
+	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
+<script type="text/javascript"
+		src="${context}/resources/project_js/backbutton.js"></script>
 	<script type="text/javascript"
-		src="${context}/resources/project_js/globalVariables.js"></script>
-	<script type="text/javascript"
-		src="${context}/resources/project_js/stolenRecovery.js"></script>
-	<script type="text/javascript"
-		src="${context}/resources/project_js/lawfulStolenRecovery.js"></script>
-	<script type="text/javascript"
+		src="${context}/resources/project_js/dragableModal.js"></script>	
+			<script type="text/javascript"
+		src="${context}/resources/project_js/enterKey.js"></script>
+	
+		<script type="text/javascript"
 		src="${context}/resources/project_js/validationMsg.js"></script>
 
 	<script type="text/javascript"
@@ -1356,15 +1326,15 @@ src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/j
 		populateStates("country3", "state3");
 
 		populateCountries("country");
-
-		var input2 = document.querySelector("#singleStolenphone2");
-		window.intlTelInput(input2, {
-			utilsScript : "${context}/resources/js/utils.js",
-		});
 		var input = document.querySelector("#singleStolenphone1");
 		window.intlTelInput(input, {
 			utilsScript : "${context}/resources/js/utils.js",
 		});
+		var input2 = document.querySelector("#singleStolenphone2");
+		window.intlTelInput(input2, {
+			utilsScript : "${context}/resources/js/utils.js",
+		});
+	
 
 		$('#stolenDatePeriod').datepicker({
 			dateFormat : "yy-mm-dd"
@@ -1450,6 +1420,11 @@ src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/j
 		
 	
 	</script>
+
+	<script type="text/javascript"
+		src="${context}/resources/project_js/stolenRecovery.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/project_js/lawfulStolenRecovery.js"></script>
 
 </body>
 

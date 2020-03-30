@@ -91,6 +91,8 @@ public class AssigneeStockDatatableController {
 					String firstName = dataInsideList.getDisplayName();
 					String phoneNo = dataInsideList.getPhoneNo();
 					String email = dataInsideList.getEmail();
+					log.info("username="+username+ "firstName="+firstName+" phoneNo=="+phoneNo+" email =="+email);
+					
 					String selectAction="saveAssigneDetails('"+username+"','"+firstName.replaceAll( "\\s", "+20")+"')";
 					// log.info("Id-->"+Id+"--userStatus--->"+userStatus+"--StatusName---->"+StatusName+"--createdOn---->"+createdOn+"--id--->"+id+"--userName-->"+username);
 					String action = "<a onclick="+selectAction+">SELECT</a>";

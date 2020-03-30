@@ -265,7 +265,7 @@ var contextpath = "${context}";
 							</div>
                                 <%if(usertypeId==12){%>
 								<div class="input-field col s12 m6 l6" id="companyNames" style="margin-top: 22px;">
-									<input type="text" name="companyName" id="companyName" pattern="[A-Za-z\s]+{0,50}" maxlength="50"
+									<input type="text" name="companyName" id="companyName" pattern="[A-Za-z\s]+{10,50}" maxlength="50"
 									oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" required="required"
 									/>
 									<label for="companyName"><spring:message code="registration.companyName" /> <span class="star">*</span></label>
@@ -273,34 +273,34 @@ var contextpath = "${context}";
 								<%}%>
 											<div class="row">
 								<div class="input-field col s12 m12 l12">
-									<input type="text" maxlength="200" pattern="[A-Za-z0-9._%+-$@,/]+\.+{0,200}" name="propertyLocation"
+									<input type="text" maxlength="200" pattern="[A-Za-z0-9._%+-$@,/]+\.+{1,200}" name="propertyLocation"
 										id="propertyLocation" oninput="InvalidMsg(this,'input','<spring:message code="validation.200character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
 									 required /> 
 										<label for="propertyLocation"><spring:message code="input.address" /> <span class="star">*</span></label>
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="street" maxlength="20" id="street" pattern="[A-Za-z0-9._%+-$@,/]+\.+{0,20}"
+									<input type="text" name="street" maxlength="20" id="street" pattern="[A-Za-z0-9._%+-$@,/]+\.+{1,20}"
 									oninput="InvalidMsg(this,'input','<spring:message code="validation.address20characters" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address20characters" />');"
 										 required />
 									<label for="street"><spring:message code="input.streetNumber" /> <span class="star">*</span>
 									</label>
 								</div>
 									<div class="input-field col s12 m6 l6">
-									<input type="text" name="village" maxlength="30" id="village" pattern="[A-Za-z0-9._%+-$@,/]+\.+{0,30}"
+									<input type="text" name="village" maxlength="30" id="village" pattern="[A-Za-z0-9._%+-$@,/]+\.+{3,30}"
 									oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
 									required />
 									<label for="village"> <spring:message code="input.village" /> <span class="star">*</span></label>
 								</div>
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="locality" maxlength="30" id="locality" pattern="[A-Za-z0-9._%+-$@,/]+\.+{0,30}"
+									<input type="text" name="locality" maxlength="30" id="locality" pattern="[A-Za-z0-9._%+-$@,/]+\.+{3,30}"
 										oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
 										required />
 									<label for="locality"><spring:message code="input.locality" /> <span class="star">*</span></label>
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="district" maxlength="30" id="district" pattern="[A-Za-z0-9._%+-$@,/]+\.+{0,30}"
+									<input type="text" name="district" maxlength="30" id="district" pattern="[A-Za-z0-9._%+-$@,/]+\.+{3,30}"
 									oninput="InvalidMsg(this,'input','<spring:message code="validation.address20characters" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address20characters" />');"
 										required />
 									<label for="district"><spring:message code="input.district" /> <span class="star">*</span></label>
@@ -450,7 +450,7 @@ var contextpath = "${context}";
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="email" required="required" id="email" maxlength="320" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,320}"
+									<input type="text" name="email" required="required" id="email" maxlength="280" pattern="[^@]+@[^@]+\.[a-zA-Z]{3,280}"
 									oninput="InvalidMsg(this,'email','<spring:message code="validation.address30characters" />');" oninvalid="InvalidMsg(this,'email','<spring:message code="validation.address30characters" />');"
 										title="" required /> 
 									<label for="email"><spring:message code="input.email" /> <span class="star">*</span></label>
@@ -526,7 +526,7 @@ var contextpath = "${context}";
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="answer"class="answer" id="answer0" pattern="[A-Za-z0-9\s]+{0,50}" maxlength="50" 
+									<input type="text" name="answer"class="answer" id="answer0" pattern="[A-Za-z0-9\s]+{3,50}" maxlength="50" 
 										oninput="InvalidMsg(this,'input','<spring:message code="validation.50alphanumeric" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50alphanumeric" />');"
 										title=""  required />
 									<label><spring:message code="registration.answer" /> <span class="star">*</span>
@@ -544,7 +544,7 @@ var contextpath = "${context}";
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="answer" class="answer" id="answer1" pattern="[A-Za-z0-9\s]+{0,50}" maxlength="50"
+									<input type="text" name="answer" class="answer" id="answer1" pattern="[A-Za-z0-9\s]+{3,50}" maxlength="50"
 										oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
 										title="<spring:message code="validation.50alphanumeric" />" required /> 
 										<label> <spring:message code="registration.answer" /> <span class="star">*</span></label>
@@ -562,7 +562,7 @@ var contextpath = "${context}";
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="answer" class="answer" id="answer2" maxlength="50" pattern="[A-Za-z0-9\s]+{0,50}"
+									<input type="text" name="answer" class="answer" id="answer2" maxlength="50" pattern="[A-Za-z0-9\s]+{3,50}"
 										oninput="InvalidMsg(this,'input','<spring:message code="validation.50alphanumeric" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50alphanumeric" />');"
 										title=""	required /> 
 										<label><spring:message code="registration.answer" /> <span class="star">*</span>
@@ -785,36 +785,38 @@ var contextpath = "${context}";
     
 		
 		<!-- i18n library -->
+	<!-- i18n library -->
 	<script type="text/javascript"
 		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.js"></script>
+		src="${context}/resources/i18n_library/i18n.js"></script>
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.messagestore.js"></script>
+		src="${context}/resources/i18n_library/messagestore.js"></script>
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.fallbacks.js"></script>
+		src="${context}/resources/i18n_library/fallbacks.js"></script>
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.language.js"></script>
+		src="${context}/resources/i18n_library/language.js"></script>
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.parser.js"></script>
-
-
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.js"></script>
+		src="${context}/resources/i18n_library/parser.js"></script>
 
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.bidi.js"></script>
+		src="${context}/resources/i18n_library/emitter.js"></script>
+
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/jquery.history.js"></script>
+		src="${context}/resources/i18n_library/bidi.js"></script>
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
-	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
+		src="${context}/resources/i18n_library/history.js"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/min.js"></script>
+	
+		<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
 <script type="text/javascript"
 		src="${context}/resources/project_js/backbutton.js"></script>
 	<script type="text/javascript"

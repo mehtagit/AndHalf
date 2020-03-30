@@ -232,6 +232,11 @@ if (userType == "CEIRAdmin") {
 //**********************************************************Export Excel file************************************************************************
 function exportTacData()
 {
+	if($("body").attr("data-roleType")=="CEIRAdmin"){
+		var userId = 0;
+	}else{
+		var userId = parseInt($("body").attr("data-userID"));
+	}
 	var txn= (txnIdValue == 'null' && transactionIDValue == undefined)? $('#transactionID').val() : transactionIDValue;
 	var tacStartDate=$('#startDate').val();
 	var tacEndDate=$('#endDate').val();
@@ -241,6 +246,7 @@ function exportTacData()
 	var featureId = 21;
 	var userType = userType;
 	var userTypeId = parseInt($("body").attr("data-userTypeID"));
+	var userId = userId
 	
 	
 	console.log("tacStatus=="+tacStatus);
@@ -253,9 +259,9 @@ function exportTacData()
 	var info = table.page.info(); 
  var pageNo=info.page;
   var pageSize =info.length;
-	console.log("pageSize=="+pageSize+" tacNumber=="+tacNumber+" tacStartDate=="+tacStartDate+" tacEndDate=="+tacEndDate+" tacStatus=="+tacStatus+" txnId=="+txnId+" pageSize=="+pageSize+" pageNo=="+pageNo);
+	console.log("pageSize=="+pageSize+" tacNumber=="+tacNumber+" tacStartDate=="+tacStartDate+" tacEndDate=="+tacEndDate+" tacStatus=="+tacStatus+" txnId=="+txnId+" userId=="+userId+" pageSize=="+pageSize+" pageNo=="+pageNo);
 	
-	window.location.href="./exportTac?tacNumber="+tacNumber+"&tacStartDate="+tacStartDate+"&tacEndDate="+tacEndDate+"&tacStatus="+tacStatus+"&txnId="+txnId+"&featureId="+featureId+"&userType"+userType+"&userTypeId="+userTypeId+"&pageSize="+pageSize+"&pageNo="+pageNo;
+	window.location.href="./exportTac?tacNumber="+tacNumber+"&tacStartDate="+tacStartDate+"&tacEndDate="+tacEndDate+"&tacStatus="+tacStatus+"&txnId="+txnId+"&featureId="+featureId+"&userType"+userType+"&userTypeId="+userTypeId+"&userId="+userId+"&pageSize="+pageSize+"&pageNo="+pageNo;
 
 }
 
@@ -287,6 +293,7 @@ function ImporterviewByID(id,actionType,projectPath,modalID){
 				{
 				
 				setImporterEditPopupData(data)
+				//setUploadedFiles(data)
 				
 				}
 			
@@ -309,6 +316,7 @@ function setImporterViewPopupData(data,projectPath){
 	$('#viewrequestDate').val(data.requestDate);
 	$('#viewFrequency').val(data.frequencyRange);
 	$("#viewImportertac").val(data.tac);
+	$("#viewtxnId").val(data.txnId);
 	
 	var result= data;
 	var importerViewResponse = [];
@@ -376,10 +384,31 @@ function setImporterEditPopupData(data){
 			$('<option>').val(data[i].tagId).text(data[i].interp).appendTo(
 					'#docTypetag1');
 		}
+		
+		
+	
 	});
 
 	//$("#editImporterFileName").val(data.attachedFiles[0].fileName);
 	//$("#docTypetag1").val(data.attachedFiles[0].docType);
+}
+
+
+function setUploadedFiles(data){
+	var result = data;
+	console.log("result --->" +JSON.stringify(result));
+	var importerViewResponse = [];
+	importerViewResponse.push(result);
+	for(var i=0; i< importerViewResponse.length; i++)
+	{
+		for (var j=0 ; j < importerViewResponse[i]["attachedFiles"].length; j++){
+			alert(importerViewResponse[i].attachedFiles[j].docType+"---------"+importerViewResponse[i].attachedFiles[j].fileName)	
+			$("#docTypetag1").val(importerViewResponse[i].attachedFiles[j].docType);
+			$("#fileName").val(importerViewResponse[i].attachedFiles[j].fileName);
+		}
+	}	
+
+	
 }
 
 populateCountries

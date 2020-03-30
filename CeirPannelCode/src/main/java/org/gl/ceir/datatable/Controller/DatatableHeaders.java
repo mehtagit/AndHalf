@@ -140,7 +140,7 @@ public class DatatableHeaders {
 
 			//AdminRegistration Headers
 			else if("adminRegistration".equals(role)) {
-				String[] headers = {"table.RequestedOn","table.lastupdatedate","table.displayName","table.AsType","table.roleType","table.status","table.action"};	
+				String[] headers = {"table.RequestedOn","table.lastupdatedate","table.displayName","table.AsType","table.userType","table.status","table.action"};	
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
@@ -365,6 +365,26 @@ public class DatatableHeaders {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
 				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);	
+			}
+			
+			//user Management
+			
+			else if("userManagementHeaders".equals(role)) {
+				String[] headers = {"table.creationDate","table.lastupdatedate","table.userType","table.status","table.action"};
+				for(String header : headers) {
+					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
+				}
+				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
+			}
+			
+			//user Feature Management
+			
+			else if("userFeatureHeaders".equals(role)) {
+				String[] headers = {"table.creationDate","table.lastupdatedate","table.userType","table.feature","table.period","table.action"};
+				for(String header : headers) {
+					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
+				}
+				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
 			}
 
 			

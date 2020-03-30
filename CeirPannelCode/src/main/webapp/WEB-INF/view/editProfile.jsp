@@ -196,7 +196,7 @@ var contextpath = "${context}";
 								<input type="hidden" id="id" name="id">
 								
 									<input type="text" name="firstName" id="firstName" placeholder=""
-										  pattern="[A-Za-z]{0,20}" maxlength="20"   
+										  pattern="[A-Za-z]{3,20}" maxlength="20"   
 					oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 					  required > <label 
 										class="center-align" ><spring:message code="input.firstName" /> <span class="star">*</span></label>
@@ -205,7 +205,7 @@ var contextpath = "${context}";
 								<div class="input-field col s12 m4 l4">
 									<input type="text" name="middleName" placeholder=""
 										class="form-control boxBorder boxHeight" id="middleName"
-										 pattern="[A-Za-z]{0,20}" maxlength="20"  oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');" 
+										 pattern="[A-Za-z]{3,20}" maxlength="20"  oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');" 
 										 oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"> <label >
 										<spring:message code="input.middleName" /> </label>
 								</div>
@@ -213,7 +213,7 @@ var contextpath = "${context}";
 								<div class="input-field col s12 m4 l4">
 									<input type="text" name="lastName" placeholder=""
 										class="form-control boxBorder boxHeight" id="lastName"
-										pattern="[A-Za-z]{0,20}" maxlength="20" 
+										pattern="[A-Za-z]{3,20}" maxlength="20" 
 								oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');" 
 										 oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');" required> <label>
 										<spring:message code="input.lastName" />  <span class="star">*</span>
@@ -226,68 +226,14 @@ var contextpath = "${context}";
                                             class="star">*</span></p>
                                         <input type="text" readonly="readonly" id="asTypeName" name="type"  />
                                         <input type="hidden"  id="type" name="type"  />                         
-                                   <!--  <select name="type" class="browser-default" id="type" onchange="myFunction()" required>
-                                        <option value="" disabled selected>Type</option>
-                                        <option value="Individual"> Individual</option>
-                                        <option value="Company">Company</option>
-                                        <option value="Organization">Organization</option>
-                                        <option value="Government">Government</option>
-                                    </select> -->
                                 </div>
                                 
-                                                                <div class="input-field col s12 m6 l6" id="passportNumberDiv" style="display: none;">
-                                    <input placeholder="" type="text" name="passportNo"  readonly="readonly" class="form-control boxBorder boxHeight"
-                                   id="passportNo" maxlength="12"
-										 pattern="[A-Za-z0-9\s]{0,12}"/>
-                                    <label><spring:message code="registration.nationalid/passworardnumber" /> <span
-                                            class="star">*</span></label>
-                                </div>
-
-                                <div class="input-field col s12 m6 l6" id="companyNames" style="display: none;">
-                                    <input placeholder="" type="text" name="companyName"  
-										class="form-control boxBorder boxHeight" id="companyName"
-										 pattern="[A-Za-z\s]{0,50}"  maxlength="50"
-										 oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
-										 title= "<spring:message code="validation.50character" />" >
-                                    <label ><spring:message code="registration.companyName" /> <span class="star">*</span></label>
-                                </div>
-
-                                <div class="row myRow" style="display: none;" id="uploadFile">
-                                    <div class="col s12 m12">
-                                        <h6 class="file-upload-heading">
-                                            <spring:message code="registration.uploadNationalityInformation" /> <span class="star">*</span></h6>
-                                        <div class="file-field input-field col s12 m6"
-                                            style="margin-top: 5px; padding-left:0;">
-                                            <div class="btn">
-                                                <span><spring:message code="input.selectfile" /></span>
-                                                <input  name="file" type="file" id="csvUploadFile"
-											accept=".pfg">
-                                            </div>
-                                            <div class="file-path-wrapper">
-                                                <input class="file-path validate responsive-file-div" type="text">
-                                            </div>
-                                        </div><br><br>
-                                    </div>
-                                    <!-- <p style="margin-left: 15px;"><a href="javascript:void(0)">Download Sample Format</a></p> -->
-                                </div>
-                                
-                                
-								<!-- <div class="input-field col s12 m6 l6">
-									<input  type="text" required="required" name="passportNo"
-										class="form-control boxBorder boxHeight"
-										title="Please enter alphanumeric with special character upto 12 characters only"
-										 id="passportNumber" maxlength="12"
-										 pattern="[A-Za-z0-9\s]{0,12}"> <label for="passportNumber">National
-										ID/Passport Number <span class="star">*</span>
-									</label>
-								</div> -->
-
 								<div class="input-field col s12 m6 l6">
-									<input type="text"   placeholder="" name="email" maxlength="320"
+									<input type="text"   placeholder="" name="email" maxlength="280"
 										class="form-control boxBorder boxHeight" id="email"
 										oninput="InvalidMsg(this,'email','<spring:message code="validation.email" />');"
 										 oninvalid="InvalidMsg(this,'email','<spring:message code="validation.email" />');"
-								 pattern="[^@]+@[^@]+\.[a-zA-Z]{2,320}"  required >
+								 pattern="[^@]+@[^@]+\.[a-zA-Z]{3,280}"  required >
 										  <label for="email"> <spring:message code="input.email" /> <span
 										class="star">*</span></label>
 								</div>
@@ -301,16 +247,6 @@ var contextpath = "${context}";
 										<spring:message code="registration.phonenumber" /> <span class="star">*</span> 
 									</label>
 								</div>
-
-								<!-- <div class="input-field col s12 m6 l6">
-									<input type="text" name="companyName" required="required"
-										class="form-control boxBorder boxHeight" id="company"
-										 pattern="[A-Za-z\s]{0,50}"  maxlength="50"
-										 title="Please enter alphanumeric upto 50 characters only"
-										 > <label for="company">Company
-										Name <span class="star">*</span>
-									</label>
-								</div> -->
 							</div>
 															<div class="row">
 							<div class="input-field col s12 m12 l12">
@@ -328,7 +264,7 @@ var contextpath = "${context}";
 								<div class="input-field col s12 m6 l6">
 									<input type="text" name="street" maxlength="20"
 										class="form-control boxBorder boxHeight" id="street"
-										pattern="[A-Za-z0-9._%+-$@,/]+\.{0,20}" placeholder="" 
+										pattern="[A-Za-z0-9._%+-$@,/]+\.{1,20}" placeholder="" 
 								oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');" 
 								oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 								required >
@@ -338,7 +274,7 @@ var contextpath = "${context}";
 									<div class="input-field col s12 m6 l6">
 									<input type="text" name="village" maxlength="30"
 										class="form-control boxBorder boxHeight" id="village"
-										pattern="[A-Za-z0-9._%+-$@,/]+\.{0,30}" placeholder="" 
+										pattern="[A-Za-z0-9._%+-$@,/]+\.{3,30}" placeholder="" 
 										oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');" 
 										oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 									required >
@@ -348,7 +284,7 @@ var contextpath = "${context}";
 								<div class="input-field col s12 m6 l6">
 									<input type="text" name="locality" maxlength="30"
 										class="form-control boxBorder boxHeight" id="locality"
-										pattern="[A-Za-z0-9._%+-$@,/]+\.{0,30}" placeholder="" 
+										pattern="[A-Za-z0-9._%+-$@,/]+\.{3,30}" placeholder="" 
 									
 										oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');" 
 										oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');" required  >
@@ -359,7 +295,7 @@ var contextpath = "${context}";
 								<div class="input-field col s12 m6 l6">
 									<input type="text" name="district" placeholder="" maxlength="30"
 										class="form-control boxBorder boxHeight" id="district"
-										pattern="[A-Za-z0-9._%+-$@,/]+\.{0,30}" 
+										pattern="[A-Za-z0-9._%+-$@,/]+\.{3,30}" 
 										
 										oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');" 
 										oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
@@ -407,81 +343,9 @@ onchange="InvalidMsg(this,'select','<spring:message code="validation.selectField
 										style="padding-left: 0;" required></select>
 								</div>
 							</div>
-							<!-- <div class="row">
-								<div class="col s12 m6 l6" style="margin-bottom: 20px;">
-									<label for="vatNumber">VAT Registration <span
-										class="star">*</span></label>
-									<div class=" boxHeight">
-                                        <label><input value="1" class="with-gap" name="vatStatus" type="radio"
-                                                onclick="document.getElementById('vatNumberField').style.display = 'block';">
-                                            <span>Yes</span>
-                                        </label>
-                                        <label>
-                                            <input value="0" class="with-gap" name="vatStatus" type="radio"
-                                                style="margin-left: 20px;"
-                                                onclick="document.getElementById('vatNumberField').style.display = 'none';"
-                                                checked />
-                                            <span>No</span>
-                                        </label>
-                                    </div>
-								</div>
-
-								<div class="input-field col s12 m6 l6" style="display: none;"
-									id="vatNumberField">
-									<input type="text" name="vatNo" maxlength="15"
-										class="form-control boxBorder boxHeight" id="vatNumber"
-										pattern="[A-Za-z0-9]{0,15}"
-								title="Please enter alphanumeric upto 15 characters only"		
-										> <label for="roleType">VAT
-										Number <span class="star">*</span>
-									</label>
-								</div>
-							</div> -->
 
 							
                                <div class="row">
-                               <!--  <div class="col s12 m6 l6" style="margin-bottom: 20px;">
-                                    <label for="vatNumber">VAT Registration <span class="star">*</span></label>
-                                    <div class=" boxHeight">
-                                        <label><input class="with-gap" name="vatStatus" type="radio"
-                                                onclick="document.getElementById('vatNumberField').style.display = 'block';">
-                                            <span>Yes</span>
-                                        </label>
-                                        <label>
-                                            <input class="with-gap" name="vatStatus" type="radio"
-                                                style="margin-left: 20px;"
-                                                onclick="document.getElementById('vatNumberField').style.display = 'none';"
-                                                checked />
-                                            <span>No</span>
-                                        </label>
-                                    </div>
-                                </div> -->
-
-                               <%--  <div class="input-field col s12 m6 l6">
-                                    <p style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">Role Type <span
-                                            class="star">*</span></p>
-                               <input type="text" readonly="readonly" id="roles" name="roles"  />                                       
-                                            
-                                   <select multiple required name="roles"  >
-										<option value="" disabled>Role Type <span
-												class="star"></span></option>
-								<c:forEach items="${usertypes}" var="usertype" >
-								<c:if test="${usertype.usertypeName!='admin'}">
-								<option  value="${usertype.id}">${usertype.usertypeName}</option>
-								</c:if> 
-								</c:forEach>	
-								</select>  
-                                </div> --%>
-
-                               <%--  <div class="input-field col s12 m6 l6" style="display: none;" id="vatNumberField">
-                                    <input type="text" name="vatNo" maxlength="15"
-										class="form-control boxBorder boxHeight" id="vatNumber"
-										pattern="[A-Za-z0-9]{0,15}" 
-								oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
-								title= "<spring:message code="validation.15numbers" />" required / >
-								
-                                    <label for="vatNumber"><spring:message code="registration.vatnumber" /> <span class="star">*</span></label>
-                                </div> --%>
                             </div>    
 								
 								<div class="input-field col s12 m6 l6" id="rolesDiv" style="display: none;">
@@ -490,80 +354,14 @@ onchange="InvalidMsg(this,'select','<spring:message code="validation.selectField
 										<spring:message code="table.roleType" /> <span class="star">*</span>
 									</p> 
 									<select multiple  name="roles" id="usertypes"  >
-										<option value="" disabled><spring:message code="table.roleType" /> </span></option>
-								</select>  
+										<option value="" disabled><spring:message code="table.roleType" /></option>
+								</select>
 								</div>
 							
-								<!-- <div class="input-field col s12 m6 l6">
-									<p
-										style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
-										Type <span class="star">*</span>
-									</p>
-									<select class="browser-default" name="type" id="mySelect"
-										onchange="myFunction()" required>
-										<option value="" disabled selected>Type</option>
-										<option value="Individual">Individual</option>
-										<option value="Company">Company</option>
-										<option value="Organization">Organization</option>
-										<option value="Government">Government</option>
-									</select>
-								</div> -->
+								
 							</div>
 
-							<!-- div class="row myRow" style="display: none;" id="uploadFile">
-								<h6 class="file-upload-heading" style="margin-left: 15px;">
-									Upload Nationality Information<span class="star">*</span>
-								</h6>
-								<div class="file-field input-field col s12 m6"
-									style="margin-top: 5px;">
-									<div class="btn">
-										<span>Select File</span> <input name="file" type="file" id="csvUploadFile"
-											accept=".pfg">     
-									</div>
-									<div class="file-path-wrapper">
-										<input class="file-path validate responsive-file-div"
-											type="text">
-									</div>
-								</div>
-								<br> <br>
-								<p style="margin-left: 15px;"><a href="javascript:void(0)">Download Sample Format</a></p>
-							</div> -->
-
-							<!-- <div class="row">
-								<div class="input-field col s12 m6 l6">
-									<input type="password" name="password"
-										class="form-control boxBorder boxHeight" id="password"
-									pattern="[A-Za-z0-9\s]{0,10}" maxlength="10"
-									title="Please enter alphanumeric with special character upto 10 characters only"
-									 required="required"> <label for="password">Password
-										<span class="star">*</span>
-									</label>
-								</div>
-
-								<div class="input-field col s12 m6 l6">
-									<input type="password" name="rePassword"
-									title="Please enter alphanumeric with special character upto 10 characters only"
-										class="form-control boxBorder boxHeight" id="confirm_password"
-										pattern="[A-Za-z0-9\s]{0,10}" maxlength="10"
-                                    required="required"> <label for="rePassword">Retype
-										Password <span class="star">*</span>
-									</label>
-								</div>
-							</div> -->
-
-
-<!-- <div class="input-field col s12 m6 l6">
-									<p
-										style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
-										Country <span class="star">*</span>
-									</p>
-									<select id="country" name="country" class="browser-default" class="mySelect"
-										style="padding-left: 0;" required>
-									
-										</select>
-									<label for="country">Country <span class="star">*</span></label>
-								</div>
-							</div> -->
+						
 							
 							<div class="row securityQuestionDiv">
 								<div class="input-field col s12 m6 l6">
@@ -589,7 +387,7 @@ onchange="InvalidMsg(this,'select','<spring:message code="validation.selectField
 								<div class="input-field col s12 m6 l6">
 									<input  type="text" placeholder="" name="answer" 
 										class="form-control boxBorder boxHeight answer" id="answer0"
-										pattern="[A-Za-z0-9\s]{0,50}"
+										pattern="[A-Za-z0-9\s]{3,50}"
 										maxlength="50" oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" 
 										oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
 									required  > <label><spring:message code="registration.answer" />
@@ -621,7 +419,7 @@ onchange="InvalidMsg(this,'select','<spring:message code="validation.selectField
 								<div class="input-field col s12 m6 l6">
 									<input  type="text" placeholder="" name="answer"
 										class="form-control boxBorder boxHeight answer" id="answer1"
-										pattern="[A-Za-z0-9\s]{0,50}"
+										pattern="[A-Za-z0-9\s]{3,50}"
 										maxlength="50"
 										oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" 
 										oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
@@ -658,7 +456,7 @@ onchange="InvalidMsg(this,'select','<spring:message code="validation.selectField
 										class="form-control boxBorder boxHeight answer" id="answer2"
 										title= "<spring:message code="validation.50character" />"
 										maxlength="50" 
-										pattern="[A-Za-z0-9\s]{0,50}" 
+										pattern="[A-Za-z0-9\s]{3,50}" 
 										oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" 
 										oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
 										required > <label ><spring:message code="registration.answer" />
@@ -667,23 +465,6 @@ onchange="InvalidMsg(this,'select','<spring:message code="validation.selectField
 								</div>
 							</div>
 							
-							<%-- <div class="form-group form-actions">
-						<span class="input-icon"> 
-						<img id="captchaImage" src="${context}/captcha"><button style="background: none;border: none;outline:none;" type="button" onclick="refreshCaptcha('captchaImage')">
-						<i class="fa fa-refresh"></i></button>:
-						 <img src="${context}/captcha"" id="captchaImage">
-						 <br>
-                           <input type="button" onclick="refreshCaptcha('captchaImage')">
-							<div class="input-field col s12 m6 l12">
-									<input type="text"  name="captcha"
-										class="form-control boxBorder boxHeight"
-									 id="captcha" required="required"> 
-									<label for="address" >Enter your captcha <span
-										class="star">*</span></label>
-								</div>
-								
-						</span>  
-					</div> --%>
 					 
 						<div class="row">
 							<span> <spring:message code="input.requiredfields" /> <span class="star">*</span></span>
@@ -971,25 +752,7 @@ onchange="InvalidMsg(this,'select','<spring:message code="validation.selectField
             $('select').formSelect(); */
         }); 
        
-        function myFunction() { 
-            var x = document.getElementById("type").value;
-            if (x == 'Individual') {
-                document.getElementById("uploadFile").style.display = "block";
-                document.getElementById("passportNumberDiv").style.display = "block";
-                document.getElementById("companyNames").style.display = "none";
-                $('#companyNames').style.display = "none";
-            } else {    
-                document.getElementById("uploadFile").style.display = "none";
-                document.getElementById("passportNumberDiv").style.display = "none";
-            }
-
-            if (x == 'Company', 'Organization', 'Government') {
-                document.getElementById("companyNames").style.display = "block";
-            } else {
-
-                 document.getElementById("companyNames").style.display = "none";
-            }
-        }
+      
        	
     </script>
     

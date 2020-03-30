@@ -361,7 +361,7 @@ String usertypeId="${usertypeId}";
 								</div>
 
 								<div class="input-field col s12 m6 l6" id="companyNames" style="display: none; margin-top: 22px;">
-									<input type="text" name="companyName" id="companyName" pattern="[A-Za-z\s]+{0,50}" maxlength="50"
+									<input type="text" name="companyName" id="companyName" pattern="[A-Za-z\s]+{10,50}" maxlength="50"
 									oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
 									/>
 									<label for="companyName"><spring:message code="registration.companyName" /> <span class="star">*</span></label>
@@ -387,7 +387,7 @@ String usertypeId="${usertypeId}";
 
 
 								<div class="input-field col s12 m6 l6" style="margin-top:22px;">
-									<input type="text" name="email" maxlength="320" id="email" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,320}"
+									<input type="text" name="email" maxlength="280" id="email" pattern="[^@]+@[^@]+\.[a-zA-Z]{3,280}"
 									oninput="InvalidMsg(this,'email','<spring:message code="validation.email" />');" oninvalid="InvalidMsg(this,'email','<spring:message code="validation.email" />');"  
 									required />
 										 <label for="email"><spring:message                        
@@ -411,26 +411,26 @@ String usertypeId="${usertypeId}";
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="street" maxlength="20" id="street" pattern="[A-Za-z0-9._%+-$@,/]+\.+{0,20}"
+									<input type="text" name="street" maxlength="20" id="street" pattern="[A-Za-z0-9._%+-$@,/]+\.+{1,20}"
 									 oninput="InvalidMsg(this,'input','<spring:message code="validation.address20characters" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address20characters" />');" 
 									 required/>
 									<label for="street"><spring:message code="input.streetNumber" /> <span class="star">*</span> </label>
 								</div>
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="village" maxlength="30" id="village" pattern="[A-Za-z0-9._%+-$@,/]+\.{0,30}"
+									<input type="text" name="village" maxlength="30" id="village" pattern="[A-Za-z0-9._%+-$@,/]+\.{3,30}"
 									oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');" 
 									required/>
 									<label for="village"><spring:message code="input.village" /> <span class="star">*</span> </label>
 								</div>
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="locality" maxlength="30" id="locality" pattern="[A-Za-z0-9._%+-$@,/]+\.{0,30}"
+									<input type="text" name="locality" maxlength="30" id="locality" pattern="[A-Za-z0-9._%+-$@,/]+\.{3,30}"
 									oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');" 
 									 required/>
 									<label for="locality"><spring:message code="input.locality" /> <span class="star">*</span> </label>
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="district" maxlength="30" id="district" pattern="[A-Za-z0-9._%+-$@,/]+\.{0,30}"
+									<input type="text" name="district" maxlength="30" id="district" pattern="[A-Za-z0-9._%+-$@,/]+\.{3,30}"
 									oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');" 
 									 required/>
 									<label for="district"><spring:message code="input.district" /> <span class="star">*</span> </label>
@@ -484,8 +484,8 @@ String usertypeId="${usertypeId}";
 								</div>
 								<div class="row">
 									<div class="input-field col s12 m6 l6" style="display: none;" id="vatNumberField">
-										<input type="text" name="vatNo" maxlength="15" id="vatNo" pattern="[A-Za-z0-9]{0,15}"
-										oninput="InvalidMsg(this,'input','<spring:message code="validation.15alphanumeric" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15alphanumeric" />');" 
+										<input type="text" name="vatNo" maxlength="12" id="vatNo" pattern="[A-Za-z0-9]{9,12}"
+										oninput="InvalidMsg(this,'input','<spring:message code="validation.12Character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.12Character" />');" 
 										>
 										<label for="vatNo"><spring:message code="registration.vatnumber" /> <span class="star">*</span></label>
 									</div>
@@ -537,7 +537,7 @@ String usertypeId="${usertypeId}";
 								</div>
 
 								<div class="input-field col s12 m6 l6" style="margin-top: 22px;">
-									<input type="text" name="answer" class="answer" id="answer0" pattern="[A-Za-z0-9\s]{0,50}" required="required" maxlength="50"
+									<input type="text" name="answer" class="answer" id="answer0" pattern="[A-Za-z0-9\s]{3,50}" required="required" maxlength="50"
 									oninput="InvalidMsg(this,'input','<spring:message code="validation.50alphanumeric" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50alphanumeric" />');" 
 										 required />
 									<label for="answer0"><spring:message code="registration.answer" /> <span class="star">*</span> </label>
@@ -553,7 +553,7 @@ String usertypeId="${usertypeId}";
 								</div>
 
 								<div class="input-field col s12 m6 l6" style="margin-top: 22px;">
-									<input type="text" name="answer" class="answer" id="answer1" pattern="[A-Za-z0-9\s]{0,50}" maxlength="50"
+									<input type="text" name="answer" class="answer" id="answer1" pattern="[A-Za-z0-9\s]{3,50}" maxlength="50"
 									oninput="InvalidMsg(this,'input','<spring:message code="validation.50alphanumeric" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50alphanumeric" />');" 
 										 required /> 
 										<label for="answer1"><spring:message code="registration.answer" /> <span class="star">*</span> </label>
@@ -570,7 +570,7 @@ String usertypeId="${usertypeId}";
 								</div>
 
 								<div class="input-field col s12 m6 l6" style="margin-top: 22px;">
-									<input type="text" name="answer" class="answer" id="answer2" maxlength="50" pattern="[A-Za-z0-9\s]{0,50}"
+									<input type="text" name="answer" class="answer" id="answer2" maxlength="50" pattern="[A-Za-z0-9\s]{3,50}"
 									oninput="InvalidMsg(this,'input','<spring:message code="validation.50alphanumeric" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50alphanumeric" />');" 
 											required /> 
 										<label for="answer2"><spring:message code="registration.answer" /> <span class="star">*</span> </label>

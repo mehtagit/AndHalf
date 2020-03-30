@@ -166,7 +166,7 @@ public class RegistrationReqDatatableController {
 			pageElement.setButtonList(buttonList);
 			
 			//Dropdown items			
-			String[] selectParam= {"select",Translator.toLocale("table.AsType"),"asType","","select",Translator.toLocale("table.Role"),"role","","select",Translator.toLocale("table.status"),"recentStatus",""};
+			String[] selectParam= {"select",Translator.toLocale("table.AsType"),"asType","","select",Translator.toLocale("select.userType"),"role","","select",Translator.toLocale("table.status"),"recentStatus",""};
 			for(int i=0; i< selectParam.length; i++) {
 				inputFields= new InputFields();
 				inputFields.setType(selectParam[i]);

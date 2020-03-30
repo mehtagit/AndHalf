@@ -9,6 +9,7 @@ import org.gl.ceir.CeirPannelCode.Model.Registration;
 import org.gl.ceir.CeirPannelCode.Model.UserStatus;
 import org.gl.ceir.CeirPannelCode.Response.UpdateProfileResponse;
 import org.gl.ceir.CeirPannelCode.Util.HttpResponse;
+import org.gl.ceir.pagination.model.UserManagementContent;
 import org.hibernate.validator.internal.util.privilegedactions.GetInstancesFromServiceLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,8 +38,7 @@ public class ProfileService {
 			return response; 	
 		}
 		else {    
-			HttpResponse response=new HttpResponse();             
-            response.setResponse("Both Passwords do the match");
+			HttpResponse response=new HttpResponse("Both Passwords do the match",500,"password_mismatch");   
 			return response; 
 		}
 		  
@@ -107,4 +107,25 @@ public class ProfileService {
 		return response;  
 	} 
 	
+	public HttpResponse changeSystemUserStatusService(UserManagementContent userManagementContent,HttpSession session) {
+		log.info("inside changeSystemUserStatus controller");
+		//Integer userid= userManagementContent.getId();
+		//log.info("userid from session:  "+userid);
+		//userManagementContent.setId(id);
+		//log.info("userStatus data is :  "+userManagementContent);
+		HttpResponse response=new HttpResponse();             
+		response=userProfileFeignImpl.changeSystemUserStatusFeign(userManagementContent);
+		return response;  
+	} 
+	
+	public HttpResponse changeSystemUserPeriodService(UserManagementContent userManagementContent,HttpSession session) {
+		log.info("inside changeSystemUserPeriodService controller");
+		//Integer userid= userManagementContent.getId();
+		//log.info("userid from session:  "+userid);
+		//userManagementContent.setId(id);
+		//log.info("userStatus data is :  "+userManagementContent);
+		HttpResponse response=new HttpResponse();             
+		response=userProfileFeignImpl.changeSystemUserStatusFeign(userManagementContent);
+		return response;  
+	} 
 }
