@@ -210,7 +210,7 @@
 
                         <div class="row">
                           	<div class="input-field col s12 center">
-                                  <a class="btn modal-close" href="./registrationRequest"><spring:message code="modal.cancel" /></a>
+                                  <a class="btn modal-close" href="./registrationRequest"><spring:message code="modal.close" /></a>
                             </div>
                         </div>
 

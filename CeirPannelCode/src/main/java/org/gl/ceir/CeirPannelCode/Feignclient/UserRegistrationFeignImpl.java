@@ -1,5 +1,7 @@
 package org.gl.ceir.CeirPannelCode.Feignclient;
 import java.util.List;
+
+import org.gl.ceir.CeirPannelCode.Model.FeatureDropdown;
 import org.gl.ceir.CeirPannelCode.Model.Otp;
 import org.gl.ceir.CeirPannelCode.Model.OtpResponse;
 import org.gl.ceir.CeirPannelCode.Model.Registration;
@@ -43,5 +45,8 @@ public interface UserRegistrationFeignImpl {
 	                              
 	@PostMapping("/userRegistration/checkAvailability/{usertypeId}")                                                                                         
 	public HttpResponse checkRegistration(@PathVariable("usertypeId")Integer usertypeId); 
-                                                                          	
+     
+	@PostMapping("/getAllFeatures")                                                                                         
+	public List<FeatureDropdown> userAllFeatureDropdown(); 
+	
 }

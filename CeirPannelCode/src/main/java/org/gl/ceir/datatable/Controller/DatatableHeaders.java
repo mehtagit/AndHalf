@@ -376,6 +376,16 @@ public class DatatableHeaders {
 				}
 				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
 			}
+			
+			//user Feature Management
+			
+			else if("userFeatureHeaders".equals(role)) {
+				String[] headers = {"table.creationDate","table.lastupdatedate","table.userType","table.feature","table.period","table.action"};
+				for(String header : headers) {
+					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
+				}
+				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
+			}
 
 			
 			//DEFAULT PORTION  

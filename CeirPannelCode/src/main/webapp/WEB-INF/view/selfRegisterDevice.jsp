@@ -254,10 +254,10 @@
 												<spring:message code="input.contactNum" />
 												<span class="star">*</span>
 											</p>
-											<input type="tel" id="phone" pattern="[0-9\s,+]{7,15}"
+											<input type="tel" id="phone" pattern="[0-9]{1,14}"
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.10digits" />');"
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10digits" />');"
-												required maxlength="15">
+												required maxlength="14">
 										</div>
 
 										<div class="input-field col s12 m6">

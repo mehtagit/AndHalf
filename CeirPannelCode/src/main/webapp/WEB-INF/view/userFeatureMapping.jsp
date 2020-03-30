@@ -1,4 +1,3 @@
-
 <%
 	response.setHeader("Cache-Control", "no-cache");
 	response.setHeader("Cache-Control", "no-store");
@@ -8,19 +7,20 @@
 	 session.setAttribute("usertype", null); */
 	if (session.getAttribute("usertype") != null) {
 %>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
-<html lang="en" class="no-js">
+<html class="no-js" lang="en" dir="ltr">
 <head>
-
-
-<title>Stock</title>
+<title>Consignment</title>
 <meta http-equiv='cache-control' content='no-cache'>
 <meta http-equiv='expires' content='-1'>
 <meta http-equiv='pragma' content='no-cache'>
+<meta name="fragment" content="!">
 <meta charset="utf-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
@@ -62,7 +62,7 @@
 	type="text/css" rel="stylesheet" media="screen,projection">
 <%--  <link href="${context}/resources/js/plugins/chartist-js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection"> --%>
 <link rel="stylesheet"
-	href="${context}/resources/project_css/viewStock.css">
+	href="${context}/resources/project_css/viewConsignment.css">
 <link rel="stylesheet"
 	href="${context}/resources/project_css/iconStates.css">
 
@@ -72,22 +72,29 @@
 
 <script src="http://malsup.github.io/jquery.blockUI.js"></script>
 <script src="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json"></script>
+
 <!------------------------------------------- Dragable Model---------------------------------->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-
-	
-
-
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
 </head>
-<%-- <body data-roleType="${usertype}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}"> --%>
-<body data-roleType="${usertype}" data-userTypeID="${usertypeId}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${stolenselectedUserTypeId}">
+<body data-id="27"
+	data-roleType="${usertype}" data-userTypeID="${usertypeId}"
+	data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}"
+	data-stolenselected-roleType="${stolenselectedUserTypeId}"
+	data-selected-consignmentTxnId="${consignmentTxnId}"
+	data-selected-consignmentStatus="${consignmentStatus}"
+	session-value="en"
+	session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}">
 
+	<%-- session-value="${not empty param.NID ? param.NID : 'null'}" --%>
 
 	<!-- START CONTENT -->
 	<!-- START CONTENT -->
 	<section id="content">
+		<div id="initialloader"></div>
+
 		<!--start container-->
 		<div class="container">
 			<div class="section">
@@ -96,19 +103,16 @@
 						<div class="row card-panel">
 							<div class="container-fluid pageHeader" id="pageHeader">
 
-								<a href="" class="boton right" id="btnLink" hidden></a>
+								<a class="boton right" id="btnLink"  hidden="hidden"></a>
 							</div>
-							<form action="${context}/auditTrail"
+							<form action="${context}/userManagement"
 								method="post">
-								<div class="col s12 m12 l12" id="auditTableDiv"
+								<div class="col s12 m12 l12" id="userFeatureTableDiv"
 									style="padding-bottom: 5px; background-color: #e2edef52;">
-									<div id="filterBtnDiv">
-										<!-- 							<div class='col s12 m2 l2'><button type='submit' class='btn primary botton' id='submitFilter'></button></div>
-		 -->
-									</div>
+									<div id="filterBtnDiv"></div>
 								</div>
 							</form>
-							<table id="auditLibraryTable"
+							<table id="userFeatureLibraryTable"
 								class="responsive-table striped display"></table>
 
 						</div>
@@ -118,67 +122,68 @@
 				<div id="footerBtn"></div>
 			</div>
 		</div>
+		
+	
 		<!--end container-->
 	</section>
+	
+ 	<div id="statusChangemodal" class="modal">
+               <form action="" onsubmit="return chanegeUserPeriod()" method="POST"
+								enctype="multipart/form-data" id="">
+								  <div class="row" id="singleInput">
+								  <h6 class="modal-header "> Change User Feature Period</h6>
+                                <div class="col s12 m12 l12">
+                                 
+								   
+                                   <div class="row">
+                                            <div class="input-field col s6 m5">
+                                                <label for="Category">Change User Feature Period<span class="star"> *</span></label>
+                                            </div>
+                                            <div class="col s6 m7 selectDropdwn">
+                                                <select class="browser-default" id = "userPeriod"
+                                     onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" 
+                                     oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" required>
+                                                    <option value="" disabled selected>select Period</option>
+                                           	</select>
+                                            </div>
+                                   
+                                        </div>
+                                 		 <input type ="text" id="statusUserName" hidden="hidden" >
+                                        <div class="row">
+                                            <div class="input-field col s12 center" style="padding: 20px 0;">
+                                                <!-- <a href="#submitIMEI" class="btn modal-trigger">Submit</a>  -->
+                                                 <button class=" btn" type="submit"><spring:message code="button.submit" /></button>
+                                               	<button type="button" class="btn modal-close" style="margin-left: 10px;" title=" "><spring:message code="button.cancel" /></button>
+                                            </div>
 
-   <!-- Modal 2 start   -->
-
-	<div id="viewAuditModel" class="modal">
-		<h6 class="modal-header"><spring:message code="registration.viewauditmanagement" /></h6>
-		<div class="modal-content">
-
-			<div class="row">
-				<div class="row" style="margin-top:10px">
-					<div class="input-field col s12 m6 l6">
-						<input type="text" name="policyOrder" id="viewUserName"
-							placeholder="" disabled>
-						<label for="viewUserName"><spring:message code="table.UserName" /></label>
-					</div>	
-						
-				
-					<div class="input-field col s12 m6 l6" >
-						<input type="text" name="TxnId" id="viewTxnId"
-							placeholder="" disabled >
-						<label for="viewTxnId"><spring:message code="table.transactionID" /></label>
-					</div>
-					
-					
-					
-					<div class="input-field col s12 m6 l6" >
-						<input type="text" name="period" id="viewRoleType"
-							placeholder="" disabled >
-						<label for="viewRoleType"><spring:message code="table.userType" /></label>
-					</div>
-
-					<div class="input-field col s12 m6">
-						<input type="text" id="viewFeature" name="status"
-							placeholder="" maxlength="20" disabled>
-						<label for="viewFeature"><spring:message code="table.feature" /></label>
-					</div>
-			
-					
-					<div class="input-field col s12 m6">
-						<input type="text" id="viewSubFeature" name="status"
-							placeholder="" maxlength="20" disabled >
-						<label for="viewSubFeature"><spring:message code="table.SubFeature" /></label>
-					</div>
-					
-				</div>
-
-				
-				<div class="row input_fields_wrap">
-					<div class="col s12 m12 center" style="margin-top: 10px;">
-					<button class="btn modal-close" style="margin-left: 10px;"><spring:message code="modal.close" /></button>
-				</div>
-
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Modal End -->
-
+                                        </div>
+                                      
+									
+                                    </div>
+                                   </div></form>
+                    </div>  
+	
+		 <div id="confirmUserStatus" class="modal">
+         <h6 class="modal-header">Change User Feature Period</h6>
+          <div class="modal-content">
+            <div class="row">
+                <form action="">
+                  
+                    <h6>User feature period has Changed Successfully.</h6>
+                </form>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <a class="btn modal-close" href="./usertypeFeatureMapping"><spring:message code="modal.ok" /></a>
+                </div>
+            </div>
+        </div>
+    </div>
 	
 	
+		
+		
+		
 	
 <!--materialize js-->
 	<script type="text/javascript"
@@ -208,37 +213,36 @@
 	<%-- <script type="text/javascript" src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script> --%>
 	<script type="text/javascript"
 		src="${context}/resources/js/countries.js"></script>
-	
 	<!-- i18n library -->
 	<script type="text/javascript"
 		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/i18n.js"></script>
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.js"></script>
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/messagestore.js"></script>
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.messagestore.js"></script>
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/fallbacks.js"></script>
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.fallbacks.js"></script>
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/language.js"></script>
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.language.js"></script>
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/parser.js"></script>
-
-
-	<script type="text/javascript"
-		src="${context}/resources/i18n_library/emitter.js"></script>
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.parser.js"></script>
 
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/bidi.js"></script>
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.js"></script>
+
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/history.js"></script>
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.bidi.js"></script>
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/min.js"></script>
+		src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/jquery.history.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/globalVariables.js"></script>
 	<script type="text/javascript"
@@ -250,9 +254,7 @@
 	<%-- 		<script type="text/javascript"
 		src="${context}/resources/project_js/disable_inspectElement.js"></script> --%>
 	<script type="text/javascript"
-		src="${context}/resources/project_js/auditManagement.js"></script>
-			<script type="text/javascript"
-		src="${context}/resources/project_js/validationMsg.js"></script>
+		src="${context}/resources/project_js/userFeatureMapping.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/_dateFunction.js" async></script>
 			<script type="text/javascript"
@@ -272,3 +274,5 @@
 <%
 	}
 %>
+
+

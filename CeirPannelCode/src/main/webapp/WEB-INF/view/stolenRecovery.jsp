@@ -234,7 +234,7 @@
 				<div class="input-field col s12 center">
 					<div class="input-field col s12 center">
 					<button class="btn" type="submit"><spring:message code="modal.ok" /></button>
-					<button class="modal-close btn" onclick="closeUpdateModal()"
+					<button class="modal-close btn" onclick="closeUpdateModal()" type="button"
 							style="margin-left: 10px;"><spring:message code="modal.no" /></button>
 					</div>
 				</div>
@@ -1055,10 +1055,10 @@
                                                                 <input type="text" id="viewsingleblockCategory" name="" placeholder="" disabled="disabled">
                                                                 <label for="viewsingleblockCategory"><spring:message code="operator.category" /></label>
                                                               </div> 
-                                                             <%--  <div class="input-field col s12 m6">
+                                                              <div class="input-field col s12 m6" id="blockingTypeId">
             													<input type="text" id="viewsingleblockingType" name="" placeholder="" disabled="disabled">
                                                                 <label for="viewsingleblockingType"><spring:message code="operator.blocking" /></label>		
-                                                              </div> --%>
+                                                              </div>
                                                             
                                                         </div>
                                                         <div class="row">
@@ -1118,8 +1118,8 @@ enctype="multipart/form-data">
 <div class="row">
 <div class="col s12 m6">
 <label for="editblockdeviceType">
-<spring:message code="table.devicetype" /> <span class="star">*</span></label>
-<select class="browser-default" id="editblockdeviceType" required="required">
+<spring:message code="table.devicetype" /> <span class="star"></span></label>
+<select class="browser-default" id="editblockdeviceType" >
 <option value="" disabled selected>
 <spring:message code="table.devicetype" />
 </option>
@@ -1139,8 +1139,8 @@ enctype="multipart/form-data">
 <div class="row">
 <div class="col s12 m6">
 <label for="editblockmultipleSimStatus">
-<spring:message code="select.multiSimStatus" /> <span class="star">*</span></label>
-<select class="browser-default" id="editblockmultipleSimStatus" required="required">
+<spring:message code="select.multiSimStatus" /> <span class="star"></span></label>
+<select class="browser-default" id="editblockmultipleSimStatus" >
 <option value="" disabled selected>
 <spring:message code="select.multiSimStatus" />
 </option>
@@ -1150,15 +1150,19 @@ enctype="multipart/form-data">
 
 <div class="input-field col s12 m6">
 <input type="text" id="editsingleblockserialNumber" name="serialNumber" placeholder=""
-pattern="[A-Za-z0-9]{1,15}" required="required"
+pattern="[A-Za-z0-9]{1,15}" 
+oninput="InvalidMsg(this,'input','<spring:message code="validation.15serialNo" />');"
+oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15serialNo" />');"
 title="Please enter your device serial number first" maxlength="15">
 <label for="editsingleblockserialNumber">
-<spring:message code="input.deviceSerialNumber" /> <span class="star">*</span></label>
+<spring:message code="input.deviceSerialNumber" /> <span class="star"></span></label>
 </div>
 </div>
 <div class="row">
 <div class="input-field col s12 m6">
 <textarea id="editsingleblockremark" placeholder="" class="materialize-textarea"
+oninput="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
+oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
 required="required"></textarea>
 <label for="editsingleblockremark">
 <spring:message code="input.remarks" /> <span class="star">*</span></label>
@@ -1174,8 +1178,8 @@ required="required"></textarea>
 </select>
 </div>
 </div>
-<div class="row">
-<%-- <div class="col s12 m6">
+<div class="row" id="editBlockTimePeriod">
+<div class="col s12 m6">
 <spring:message code="operator.blocking" /> <label style="margin-right: 2%;"> <input
 type="radio" name="editbulkBlockdeviceradio" class="blocktypeRadio" id=""
 value="Immediate"
@@ -1196,12 +1200,12 @@ name="stolenBlockPeriod">
 </div>
 <div class="col s6 m6 responsiveDiv" style="display: none;" id="calender">
 <div id="startdatepicker" class="input-group date">
-<p> Blocking Time Period </p>
+<p> <spring:message code="operator.blockingTypePeriod" /> </p>
 <input type="text" id="stolenDatePeriodedit" style="margin-top: -9px" /> <span
 class="input-group-addon" style="color: #ff4081"><i class="fa fa-calendar"
 aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
 </div>
-</div> --%>
+</div>
 
 <!-- 
 <div class="input-field col s6 m6 responsiveDiv" style="display: block;" id="calender">
@@ -1239,14 +1243,18 @@ onclick="_Services._selectstartDate()"></i></span>
 <div class="input-field col s12 m6">
 <input type="text" id="editsingleblockIMEI1" name="IMEI1" placeholder=""
 pattern="[0-9]{15,16}" required="required"
-title="Please enter minimum 15 and maximum 16 digit only" maxlength="16">
+	oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
+	oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
+title="" maxlength="16">
 <label for="editsingleblockIMEI1">
 <spring:message code="title.one" /> <span class="star">*</span></label>
 </div>
 
 <div class="input-field col s12 m6">
 <input type="text" id="editsingleblockIMEI2" name="IMEI2" placeholder=""
-pattern="[0-9]{15,16}" title="Please enter minimum 15 and maximum 16 digit only"
+pattern="[0-9]{15,16}" 
+	oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
+	oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 maxlength="16">
 <label for="editsingleblockIMEI2">
 <spring:message code="title.two" /></label>
@@ -1254,7 +1262,9 @@ maxlength="16">
 
 <div class="input-field col s12 m6">
 <input type="text" id="editsingleblockIMEI3" name="IMEI3" placeholder=""
-pattern="[0-9]{15,16}" title="Please enter minimum 15 and maximum 16 digit only"
+pattern="[0-9]{15,16}" 
+oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
+	oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 maxlength="16">
 <label for="editsingleblockIMEI3">
 <spring:message code="title.three" /></label>
@@ -1262,7 +1272,9 @@ maxlength="16">
 
 <div class="input-field col s12 m6">
 <input type="text" id="editsingleblockIMEI4" name="IMEI4[]" placeholder=""
-pattern="[0-9]{15,16}" title="Please enter minimum 15 and maximum 16 digit only"
+pattern="[0-9]{15,16}" 
+oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
+	oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 maxlength="16">
 <label for="editsingleblockIMEI4">
 <spring:message code="title.four" /></label>
@@ -1310,8 +1322,10 @@ maxlength="16">
 </div>
 
 <div class="input-field col s12 m6">
-<input type="text" id="editBulkBlockquantity" required name="editBulkBlockquantity" pattern="[0-9]{1,9}"
-title="Please enter numbers upto 9 characters only" maxlength="9" value="" placeholder="" >
+<input type="text" id="editBulkBlockquantity" required name="editBulkBlockquantity" pattern="[0-9]{1,7}"
+oninput="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
+title="" maxlength="7" value="" placeholder="" >
 <label for="editBulkBlockquantity"><spring:message code="input.quantity" /> <span class="star">*</span></label>
 </div>
 
@@ -1322,7 +1336,10 @@ title="Please enter numbers upto 9 characters only" maxlength="9" value="" place
 <p style="color: #000; margin: 5px 0;"><spring:message code="input.UploadBulk" /> <span class="star">*</span></p>
 <div class="btn">
 <span><spring:message code="operator.file" /></span>
-<input type="file" id="editselectBulkBlockuploadFile" onchange="fileTypeValueChanges(2)">
+<input type="file" id="editselectBulkBlockuploadFile"
+oninput="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');"
+oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');"
+ onchange="fileTypeValueChanges(2)">
 </div>
 <div class="file-path-wrapper">
 <input class="file-path validate" required="required" type="text" id="editBulkBlockuploadFile" placeholder="">
@@ -1330,7 +1347,10 @@ title="Please enter numbers upto 9 characters only" maxlength="9" value="" place
 </div>
 
 <div class="input-field col s12 m6">
-<textarea id="editBulkBlockRemark" class="materialize-textarea" required="required" placeholder="" ></textarea>
+<textarea id="editBulkBlockRemark" class="materialize-textarea"
+oninput="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
+oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
+ required="required" placeholder="" ></textarea>
 <label for="editBulkBlockRemark"><spring:message code="input.Remark" /> <span class="star">*</span> </label>
 <!-- <input type="text" id="editBulkBlockTxnId" name="editBulkBlockTxnId" pattern="[0-9]"
 title="" maxlength="16" value="1500" disabled> -->
@@ -1551,6 +1571,9 @@ type="submit" ><spring:message code="button.update" /></button>
 		src="${context}/resources/project_js/profileInfoTab.js" async></script>
 		<script type="text/javascript"
 		src="${context}/resources/project_js/_dateFunction.js" async></script>
+		
+		<script type="text/javascript"
+		src="${context}/resources/project_js/validationMsg.js"></script>
 </body>
 </html>
 <%

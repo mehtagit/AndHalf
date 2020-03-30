@@ -256,7 +256,8 @@ public class TrcController {
 			@RequestParam(name="tacEndDate",required = false) String tacEndDate,
 			@RequestParam(name="featureId",required = false) Integer featureId,
 			@RequestParam(name="userType",required = false) String userType,
-			@RequestParam(name="userTypeId",required = false) Integer userTypeId
+			@RequestParam(name="userTypeId",required = false) Integer userTypeId,
+			@RequestParam(name="userId",required = false) Integer userId
 			)
 	{
 		log.info("tacStartDate=="+tacStartDate+ " tacStatus ="+tacStatus+" tacNumber="+tacNumber+"tacEndDate="+tacEndDate);
@@ -273,8 +274,9 @@ public class TrcController {
 		trcRequest.setFeatureId(featureId);
 		trcRequest.setUserType(userType);
 		trcRequest.setUserTypeId(userTypeId);
+		trcRequest.setUserId(userId);
 		trcRequest.setFile(file);
-		log.info(" request passed to the exportTo trcRequest Excel Api =="+trcRequest+" *********** pageSize"+pageSize+"  pageNo  "+pageNo);
+		log.info(" request passed to the exportTo trcRequest Excel Api =="+trcRequest+" *********** pageSize"+pageSize+"  pageNo  "+pageNo+" userId==" +userId);
 		Object	response= typeApprovedFeignImpl.manageTypeFeign(trcRequest, pageNo, pageSize, file);
 
 		Gson gson= new Gson(); 

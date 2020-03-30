@@ -151,8 +151,7 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
             <div class="row">
                 <form action="">
             
-                    <h6><spring:message code="registration.emailregister" /> <br> <spring:message code="registration.registrationid" />  <span id="RegistrationId"></span>
-                          <spring:message code="registration.registrationdate" /> <span id="registrationDate"></span>.</h6>
+                    <h6><spring:message code="registration.approveEmailregister" />.</h6>
                    
                 </form>
             </div>
@@ -192,7 +191,7 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
             <div class="row">
                 <form action="">
                   
-                    <h6><spring:message code="registration.rejectionreason" /></h6>
+                    <h6><spring:message code="registration.approveEmailregister" /></h6>
                 </form>
             </div>
             <div class="row">

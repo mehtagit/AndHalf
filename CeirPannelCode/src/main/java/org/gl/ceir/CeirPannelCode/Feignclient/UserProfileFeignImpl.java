@@ -150,5 +150,22 @@ public interface UserProfileFeignImpl {
 		
 		@PostMapping("/updateUserTypeStatus")
 		public HttpResponse changeSystemUserStatusFeign(UserManagementContent userManagementContent);
+
+	
+		
+		/*-------------------------- view userManagement Feign ------------------------------*/
+		
+		@RequestMapping(value="/userTypeFeatureData" ,method=RequestMethod.POST) 
+		public Object viewUserFeatureMappingRequest(@RequestBody FilterRequest filterRequest,
+		@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
+		@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+		@RequestParam(value = "file", defaultValue = "0") Integer file);	
+		
+	/*-------------------------- Update System user Period Feign ------------------------------*/	
+		
+		@PostMapping("/updatePeriod")
+
+		public HttpResponse changeSystemUserPeriodFeign(UserManagementContent userManagementContent);
+
 } 
 

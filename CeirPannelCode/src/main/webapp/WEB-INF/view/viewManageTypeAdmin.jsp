@@ -133,6 +133,12 @@ var path="${context}";
 							placeholder="" disabled=""> <label for="viewtradmark"
 							class="active"><spring:message code="input.Trademark" /></label>
 					</div>
+					
+					<div class="input-field col s12 m6 l6">
+						<input type="text" id="viewtxnId" name="transactioId"
+							placeholder="" disabled=""> <label for="viewtxnId"
+							class="active"><spring:message code="table.transactionID" /></label>
+					</div>
 
 					<div class="input-field col s12 m6 l6">
 						<input type="text" id="viewmodelName" name="modelName"
@@ -148,12 +154,7 @@ var path="${context}";
 								code="input.modelNumber" /> <span class="star"></span></label>
 					</div>
 
-					<div class="input-field col s12 m6 l6">
-						<input type="text" id="viewManufacturercountry" name="Country"
-							placeholder="" disabled=""> <label
-							for="viewManufacturercountry" class="active"><spring:message
-								code="input.Country" /></label>
-					</div>
+					
 
 
 					<!-- <div class="input-field col s12 m6 l6">
@@ -187,11 +188,18 @@ var path="${context}";
 								code="input.TAC" /></label>
 					</div>
 				</div>
+				
+				<div class="input-field col s12 m6 l6" style="width: 402px;margin-left: 1px;">
+						<input type="text" id="viewManufacturercountry" name="Country" style="padding-left: 8px;"
+							placeholder="" disabled=""> <label
+							for="viewManufacturercountry" class="active"><spring:message
+								code="input.Country" /></label>
+				</div>
 				<div class="modal-content">
 					<div id="live-chat">
 						<div class="chat">
 							<div class="chat-history">
-								<div class="chat-message clearfix" id="chatMsg"></div>
+								<div class="chat-message clearfix" id="chatMsg" style="cursor: pointer;"></div>
 								<!-- end chat-message -->
 
 
@@ -234,10 +242,12 @@ var path="${context}";
 								for="editTradmark"><spring:message
 									code="input.Trademark" /> <span class="star">*</span></label>
 						</div>
-						<input type="text" id="editImportertransactionid"
-							style="display: none"> <input type="text"
-							id="importerColumnid" style="display: none"> <input
-							type="text" id="approveStatus" style="display: none">
+						
+						<div class="input-field col s12 m6 l6">
+						<input type="text" id="editImportertransactionid" name="transactioId"
+							placeholder="" disabled=""> <label for="editImportertransactionid"
+							class="active"><spring:message code="table.transactionID" /></label>
+						</div>
 
 
 						<div class="col s12 m6 l6" style="margin-bottom: 5px;">
@@ -267,14 +277,7 @@ var path="${context}";
 							</select>
 						</div>
 
-						<div class="col s12 m6 l6">
-							<label for="country"><spring:message code="input.Country" />
-								<span class="star">*</span></label> <select id="editmanufacturercountry"
-								class="browser-default" class="mySelect"
-								onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-								oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-								required></select>
-						</div>
+						
 
 					</div>
 
@@ -288,8 +291,7 @@ var path="${context}";
                                                     <option value="MEID">MEID</option>
                                                 </select>
                                             </div> -->
-
-						<div class="input-field col s12 m6 l6">
+                      	<div class="input-field col s12 m6 l6">
 							<input type="text" id="editfrequency" name="frequency"
 								placeholder="" pattern="[A-Za-z0-9 \s]{0,160}" maxlength="30"
 								oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
@@ -297,10 +299,8 @@ var path="${context}";
 								required> <label for="editfrequency"><spring:message
 									code="input.frequency" /> <span class="star">*</span></label>
 						</div>
-
-
-
-						<div class="input-field col s12 m6 l6">
+						
+						 <div class="input-field col s12 m6 l6">
 							<input type="text" id="editImportertac" name="tac" placeholder=""
 								pattern="[0-9]{8,8}" maxlength="8"
 								oninput="InvalidMsg(this,'input','<spring:message code="validation.tac8" />');"
@@ -310,8 +310,20 @@ var path="${context}";
 						</div>
 
 
-					</div>
 
+						
+
+					</div>
+					
+						  <div class="col s12 m6 l6" style="width: 409px; margin-left: 7px;">
+							<label for="country"><spring:message code="input.Country" />
+								<span class="star">*</span></label> <select id="editmanufacturercountry"
+								class="browser-default" class="mySelect"
+								onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+								oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+								required></select>
+						</div>                    
+								
 
 					<div id="mainDiv" class="col s12 m12 mainDiv">
 						<div id="filediv" class="fileDiv">
@@ -345,7 +357,7 @@ var path="${context}";
 												oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');">
 									</div>
 									<div class="file-path-wrapper">
-										<input class="file-path validate" type="text"
+										<input class="file-path validate" type="text" id="fileName"
 											placeholder="<spring:message code="grievanceFileMessage" />">
 										<div>
 											<p id="myFiles"></p>

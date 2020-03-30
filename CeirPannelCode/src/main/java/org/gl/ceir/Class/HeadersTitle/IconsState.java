@@ -283,6 +283,9 @@ public class IconsState {
 			error="<a onclick="+errorURL+" class="+disableIconClass+"><i  class="
 					+disableErrorIcon+" aria-hidden=\"true\" title="
 					+errorIconTitle+"  ></i></a>";
+			edit="<a onclick="+editAction+" class="+disableIconClass+"><i class="
+					+disableEditIcon+" aria-hidden=\"true\"  title="
+					+editIconTitle+"></i></a>"; 
 		}
 		else if("2".equals(status)  && "Approved".equals(userStatus)) {
 			download="<a onclick="+downloadURL+"  class="+disableIconClass+"><i class="
@@ -878,6 +881,7 @@ public class IconsState {
 							featureID == 8 ? "./registrationRequest?txnID="+txnID+"" :
 								featureID == 11 ? "./manageTypeDevices?txnID="+txnID+"":
 									featureID == 12 ? "./uploadPaidStatus?via=other&txnID="+txnID+"" :
+										featureID == 12 ? "./manageTypeDevices2?txnID="+txnID+"" :
 										"JavaScript:void(0);";
 		//System.out.println("featureID::::::::::"+featureID);
 		// state related Code

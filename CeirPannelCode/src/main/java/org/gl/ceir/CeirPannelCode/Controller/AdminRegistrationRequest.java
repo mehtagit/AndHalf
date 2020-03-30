@@ -74,6 +74,9 @@ public class AdminRegistrationRequest {
 		}else if(("Importer".equals(roles) || "Distributor".equals(roles) || "Retailer".equals(roles)) && "Individual".equals(asType)){
 			log.info("-------------------->5");
 			mv.setViewName("viewIndividual");
+		}else if(("Manufacturer".equals(roles))  && "Company".equals(asType)){
+			log.info("-------------------->6");
+			mv.setViewName("viewManufacturer");
 		}
 		
 		log.info(" view trcInformation  exit point."); 
