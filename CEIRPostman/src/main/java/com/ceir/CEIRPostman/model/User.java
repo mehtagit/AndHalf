@@ -54,7 +54,18 @@ public class User {
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	UserProfile userProfile;
 
+	@JsonIgnore
+	@OneToOne(mappedBy = "userDetails", cascade = {CascadeType.PERSIST, CascadeType.REMOVE},fetch = FetchType.LAZY)
+	UserTemporarydetails userTemporarydetails; 
+	
+	
 
+	public UserTemporarydetails getUserTemporarydetails() {
+		return userTemporarydetails;
+	}
+	public void setUserTemporarydetails(UserTemporarydetails userTemporarydetails) {
+		this.userTemporarydetails = userTemporarydetails;
+	}
 	public long getId() {      
 		return id;
 	}

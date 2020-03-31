@@ -5,7 +5,7 @@
 
 	<groupId>com.ceir</groupId>
 	<artifactId>CEIRPostman</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>CEIRPostman</name>
@@ -85,12 +85,11 @@
 			<version>19.3</version>
 		</dependency>
 	</dependencies>
-	
 	<build>
-
-		<finalName>${artifactId}-${version}_SmsService</finalName>
-		<!-- <finalName>${artifactId}-${version}_EmailService</finalName> -->
-		<resources>
+		<finalName>${artifactId}-${version}_SmsService_Test</finalName>
+<!-- 		<finalName>${artifactId}-${version}_EmailService</finalName>
+ -->	
+ 	<resources>
 			<resource>
 				<directory>src/main/resources</directory>
 				<filtering>true</filtering>
@@ -104,6 +103,4 @@
 			</plugin>
 		</plugins>
 	</build>
-	
-	
 </project>

@@ -14,6 +14,10 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import com.ceir.CEIRPostman.RepositoryService.SystemConfigurationDbRepoImpl;
+import com.ceir.CEIRPostman.model.SystemConfigurationDb;
+import com.mysql.cj.log.Log;
+
 import java.io.IOException;
 
 import javax.mail.MessagingException;
@@ -29,25 +33,64 @@ public class EmailUtil {
 
 	@Autowired
 	MailSender mailSender; 
+	@Autowired
+	SystemConfigurationDbRepoImpl systemConfigRepoImpl;
 
-	public boolean sendEmail(String toAddress, String fromAddress, String subject, String msgBody) {
+	private final Logger log = LoggerFactory.getLogger(getClass());
+
+	int batchSize =1; // for example, adjust it to you needs
+	SimpleMailMessage[] messages;
+	int messageIndex = 0;
+	
+
+
+	public void setBatchSize(int batch,int noOfElements) {
+		if(noOfElements<batch) {
+			logger.info("if total mails less than batch size");
+			logger.info("message array size: "+noOfElements);
+			messages = new SimpleMailMessage[noOfElements];
+			batchSize=noOfElements;
+		}
+		else {
+			logger.info("if total mails greater than or equals to batch size");
+			messages = new SimpleMailMessage[batch];
+			batchSize=batch;
+		}
+	}
+	public boolean sendEmail(String toAddress, String fromAddress, String subject, String msgBody,int totalData,int dataRead,Integer sleep) {
 
 		SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
 		simpleMailMessage.setFrom(fromAddress);
 		simpleMailMessage.setTo(toAddress);
 		simpleMailMessage.setSubject(subject);
 		simpleMailMessage.setText(msgBody);
-
+		
 		try {
-			logger.info("going to send email");
-			mailSender.send(simpleMailMessage);
+			logger.info("adding emails into the array");
+			 messages[messageIndex++] = simpleMailMessage;
+			    if (messageIndex == batchSize) {
+			    	logger.info("if batch size equals to no of mails added into array");
+			    	logger.info("now going to send emails");
+			        mailSender.send(messages);
+			        logger.info("no of emails are sent: "+batchSize);
+			        int difference=totalData-dataRead;
+			        setBatchSize(batchSize,difference);
+			        logger.info("now batchSize is "+batchSize);
+			        messageIndex = 0;
+			    }
+			    try {
+			    	log.info("sleep time in milliseconds: "+sleep);
+					Thread.sleep(sleep);
+				}
+				catch(Exception e) {
+					log.info(e.toString());
+				}
+			return Boolean.TRUE;
 		}catch (Exception e) {
 			logger.info("error occur while send email");
 			logger.error(e.getMessage(), e);
 			return Boolean.FALSE;
 		}
-
-		return Boolean.TRUE;
 	}
 
 	public void sendEmailWithAttactment(String toAddress, String fromAddress, String subject, String msgBody, String attachment) {
