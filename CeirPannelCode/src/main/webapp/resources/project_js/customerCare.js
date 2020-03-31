@@ -10,7 +10,6 @@ var imei = $("body").attr("data-imei");
 var identifierType = $("body").attr("data-deviceIdType");
 var deviceIdType = identifierType.replace(" ","_");
 
-
 $.i18n().locale = lang;
 
 
@@ -84,6 +83,7 @@ function stateTable(){
 			'type' : 'POST',
 			"contentType" : "application/json",
 			 data : function(data) {
+				 console.log("state" +JSON.stringify(data));
 				 console.log(JSON.stringify(customerCareRequest));
 				 return JSON.stringify(customerCareRequest);
 			},
@@ -97,7 +97,7 @@ function stateTable(){
 		}, {
 			"data" : "status","defaultContent": "",render: function ( data, type, row ) {
 								if(data=="N"){
-									return '<i class="fa fa-times-circle-o red-text" title="Rejected"></i>'
+									return '<i class="fa fa-times-circle-o red-text"  title="Rejected"></i>'
 								}else{
 									return '<i class="fa fa-check-circle-o green-text" title="Approved"></i>'
 								}
@@ -138,9 +138,16 @@ function deviceTable(){
 			'type' : 'POST',
 			"contentType" : "application/json",
 			 data : function(data) {
-				 console.log(JSON.stringify(customerCareRequest));
+				 var result = data;
+				 console.log("result" +JSON.stringify(result));
+				 
+				 //console.log(JSON.stringify(customerCareRequest));
 				 return JSON.stringify(customerCareRequest);
 			},
+			dataFilter: function(response){
+				console.log("response- " +response)
+				return response;
+			}
 			
 		},
 		
@@ -150,6 +157,7 @@ function deviceTable(){
 			"data" : "date","defaultContent": ""
 		}, {
 			"data" : "status","defaultContent": "",render: function ( data, type, row ) {
+				//console.log("----------------"+data);
 				if(data=="N"){
 					return '<i class="fa fa-times-circle-o red-text" title="Rejected"></i>'
 				}else{
@@ -158,10 +166,12 @@ function deviceTable(){
 			}
 		}, {
 			"data" : "featureId","defaultContent": "",render: function ( data, type, row ) {
+				console.log(JSON.stringify(row['name']))
+				//console.log("response:::::::::::::::"+JSON.stringify($('#DeviceTable').DataTable().rows($('#DeviceTable').DataTable().row(this).index()).data()[row]));
 				if(data==0){
-					return '<i class="fa fa-eye teal-text disable eventNone" title="View"></i>'
+					return '<i class="fa fa-eye teal-text disable eventNone" onclick="setStakeHolderData(\''+row['name']+'\',\''+row['date']+'\',\''+row['featureId']+'\',\''+row['status']+'\',\''+row['txnId']+'\',\''+row['imei']+'\')" title="View"></i>'
 				}else{
-					return '<i class="fa fa-eye teal-text" title="View"></i>'
+					return '<i class="fa fa-eye teal-text" onclick="setStakeHolderData(\''+row['name']+'\',\''+row['date']+'\',\''+row['featureId']+'\',\''+row['status']+'\',\''+row['txnId']+'\',\''+row['imei']+'\')" title="View"></i>'
 				}
 
 			}
@@ -206,6 +216,7 @@ success: function(result){
 			type: 'POST',
 			dataType: "json",
 			data : function(d) {
+				console.log("d " +d);
 				d.filter = JSON.stringify(filterRequest); 
 				console.log(JSON.stringify(filterRequest));
 			}
@@ -239,3 +250,161 @@ error: function (jqXHR, textStatus, errorThrown) {
 
 
 
+
+function setStakeHolderData(name,date,featureId,status,txnId,imei)
+{
+	var formData= new FormData();	
+	console.log("name=="+name+"  date=="+date+" featureId= "+featureId+"  status="+status+ "  txnId="+txnId);
+	var customerCareRequest={
+			 "date": date,
+			  "featureId": featureId,
+			  "imei": imei,
+			  "name": name,
+			  "status": status,
+			  "txnId": txnId
+	}
+	
+	
+	
+	//alert(JSON.stringify(customerCareRequest))
+	formData.append("customerCareRequest",JSON.stringify(customerCareRequest));
+	$.ajax({
+		url: './customeCareByTxnId',
+		type: 'POST',
+		data:formData,
+		processData: false,
+		"contentType" :false,
+		success: function (data, textStatus, jqXHR) {
+		
+			var  assigneIdLabel=$.i18n('assigneIdLabel');
+			 var assigneNameLabel=$.i18n('assigneNameLabel');
+		if(name=='Importer' && featureId==3)
+		{
+			
+			$("#viewModal").openModal({
+		        dismissible:false
+		    });
+		$("#supplierId").val(data.data.supplierld);
+		$("#supplierName").val(data.data.supplierName);
+		$("#consignmentNumber").val(data.data.consignmentNumber);
+		$("#expectedDispatcheDate").val(data.data.expectedDispatcheDate);
+		$("#countryview").val(data.data.organisationCountry);
+		$("#expectedArrivaldate").val(data.data.expectedArrivaldate);
+		$("#expectedArrivalPort").val(data.data.expectedArrivalPortInterp);
+		$("#Quantity").val(data.data.quantity);
+		$("#TransactionId").val(data.data.txnId);
+		$("#remark").val(data.data.remarks);
+		$("#fileName").val(data.data.fileName); 
+		$("#viewcurrency").val(data.data.currencyInterp);
+		$("#viewtotalPrice").val(data.data.totalPrice);
+		
+		}
+		else if(name=='Importer' && featureId==4)
+			{
+			$('#viewStockModal').openModal({
+		    	   dismissible:false
+		       });
+		        $("#supplierIdDiv").css("display", "block"); 
+				$("#supplierNameDiv").css("display", "block");
+				$("#invoiceNumberDiv").css("display", "block");
+				$("#SupplierId").val(data.supplierId);
+				$("#SupplierName").val(data.suplierName);
+				$("#InvoiceNumber").val(data.invoiceNumber);
+				$("#Quantity").val(data.quantity);
+				$("#TransactionId").val(data.txnId);
+				$("#csvUploadFileName").val(data.fileName);
+				$("#withdrawnRemark").val(data.remarks);
+			}
+		
+		else if(name=='Custom' && featureId==4)
+		{
+			//alert("4");
+		$('#viewStockModal').openModal({
+	    	   dismissible:false
+	       });
+		$('#SupplierIdLabel').text('');
+		$('#SupplierIdLabel').text(assigneIdLabel);
+	
+		$('#SupplierNameLabel').text('');
+		$('#SupplierNameLabel').text(assigneNameLabel);
+		
+		$("#editSupplierIdDiv").css("display", "block"); 
+		$("#editSupplierNameDiv").css("display", "block");
+		$("#editSupplierNameDiv").css("display", "block");
+			$("#SupplierId").val(data.supplierId);
+			$("#SupplierName").val(data.suplierName);
+			$("#InvoiceNumber").val(data.invoiceNumber);
+			$("#Quantity").val(data.quantity);
+			$("#TransactionId").val(data.txnId);
+			$("#csvUploadFileName").val(data.fileName);
+			$("#withdrawnRemark").val(data.remarks);
+		}
+		
+		else if(name=='Custom' && featureId==3)
+		{
+		//	alert("3");
+			$("#viewModal").openModal({
+		        dismissible:false
+		    });
+		$("#supplierId").val(data.data.supplierld);
+		$("#supplierName").val(data.data.supplierName);
+		$("#consignmentNumber").val(data.data.consignmentNumber);
+		$("#expectedDispatcheDate").val(data.data.expectedDispatcheDate);
+		$("#countryview").val(data.data.organisationCountry);
+		$("#expectedArrivaldate").val(data.data.expectedArrivaldate);
+		$("#expectedArrivalPort").val(data.data.expectedArrivalPortInterp);
+		$("#Quantity").val(data.data.quantity);
+		$("#TransactionId").val(data.data.txnId);
+		$("#remark").val(data.data.remarks);
+		$("#fileName").val(data.data.fileName); 
+		$("#viewcurrency").val(data.data.currencyInterp);
+		$("#viewtotalPrice").val(data.data.totalPrice);
+		}
+		else if(name=='Distributor' || name=='Retailer') {
+			
+			$('#viewStockModal').openModal({
+		    	   dismissible:false
+		       });
+		        $("#supplierIdDiv").css("display", "block"); 
+				$("#supplierNameDiv").css("display", "block");
+				$("#invoiceNumberDiv").css("display", "block");
+				$("#SupplierId").val(data.supplierId);
+				$("#SupplierName").val(data.suplierName);
+				$("#InvoiceNumber").val(data.invoiceNumber);
+				$("#Quantity").val(data.quantity);
+				$("#TransactionId").val(data.txnId);
+				$("#csvUploadFileName").val(data.fileName);
+				$("#withdrawnRemark").val(data.remarks);
+			}
+		
+         else if(name=='Manufacturer') {
+			
+			$('#viewStockModal').openModal({
+		    	   dismissible:false
+		       });
+			$("#supplierIdDiv").css("display", "none"); 
+			$("#supplierNameDiv").css("display", "none");
+			$("#invoiceNumberDiv").css("display", "none");
+			
+				$("#SupplierId").val(data.supplierId);
+				$("#SupplierName").val(data.suplierName);
+				$("#InvoiceNumber").val(data.invoiceNumber);
+				$("#Quantity").val(data.quantity);
+				$("#TransactionId").val(data.txnId);
+				$("#csvUploadFileName").val(data.fileName);
+				$("#withdrawnRemark").val(data.remarks);
+			}
+		
+		}
+		
+	});
+}
+
+function closeViewModal()
+{
+$('#viewModal').closeModal();
+$('#viewStockModal').closeModal();
+
+	$(".lean-overlay").remove();
+
+}

@@ -5,6 +5,7 @@ import org.gl.ceir.CeirPannelCode.Model.ActionModel;
 import org.gl.ceir.CeirPannelCode.Model.AddMoreFileModel;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentModel;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentUpdateRequest;
+import org.gl.ceir.CeirPannelCode.Model.CustomerCareByTxnId;
 import org.gl.ceir.CeirPannelCode.Model.CustomerCareRequest;
 import org.gl.ceir.CeirPannelCode.Model.Dropdown;
 import org.gl.ceir.CeirPannelCode.Model.FileExportResponse;
@@ -399,6 +400,10 @@ public @ResponseBody ConfigContentModel viewAdminFeign(FilterRequest filterReque
 				public Object ccdashBoardNotification(@RequestBody CustomerCareRequest filterRequest,
 						@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
 						@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize);
+				
+				
+				@PostMapping("/customer-care/by-txn-id")
+				public @ResponseBody GenricResponse customerCareViaTxnId( @RequestBody CustomerCareByTxnId customerCareDeviceState);
 }
 
 

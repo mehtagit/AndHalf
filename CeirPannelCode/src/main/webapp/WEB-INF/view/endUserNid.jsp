@@ -21,7 +21,8 @@
 	src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
 <!--   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"></script>  
  -->
-
+<jsp:include page="/WEB-INF/view/endUserHeader.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/view/endUserFooter.jsp"></jsp:include>
 <!-- CORE CSS-->
 <link href="${context}/resources/css/materialize.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
@@ -263,5 +264,7 @@ section {
 		src="${context}/resources/project_js/validationMsg.js"></script>
 <script type="text/javascript"
 		src="${context}/resources/project_js/profileInfoTab.js" async></script>
+		<script type="text/javascript"
+		src="${context}/resources/project_js/ValidationFileOutsidePortal.js"></script>
 </body>
 </html>
