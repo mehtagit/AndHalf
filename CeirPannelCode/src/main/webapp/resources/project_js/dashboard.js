@@ -180,3 +180,23 @@ function InvalidMsg(textbox,type,msg) {
 		  
 	}
 	}
+
+function openEditPage(usertypeId){
+	var asTypeDropdown=$("#editLink");  
+   if(usertypeId!=0){
+	if(usertypeId==4 || usertypeId==5 || usertypeId==6){
+		//return "./editProfile";
+
+		asTypeDropdown.attr('href',contextpath+"/editProfile");
+		
+	}   
+	else{
+		asTypeDropdown.attr('href',contextpath+"/editOthersProfile");
+	}
+   }
+   else{
+	   
+	   return "";
+   }
+	
+}

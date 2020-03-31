@@ -241,9 +241,31 @@ function editProfile(){
 			$("#registrationForm #passportNo").val(resp.passportNo);
 			$("#questionId1 #country").val(resp.country);
 			$("#registrationForm #usertypes").val(resp.roles); 
+			$("#registrationForm #file").val(resp.nidFilename);
+			$("#registrationForm #filePath").val(resp.nidFilePath);
+			
+			//nidFilename
 			populateStates( "country","state" );
 			$("#registrationForm #state").val(resp.province);
 			var arr=[];    
+			var vatStatus=resp.vatStatus;
+			if(vatStatus==1){
+		  		document.getElementById("vatNumberField").style.display = "block";
+		 		document.getElementById("vatFileDiv").style.display = "block";
+		 		$("#vatYes").prop('checked',true);
+		 		$('#vatYes').attr("disabled",true);
+				$("#registrationForm #vatNo").val(resp.vatNo);
+
+		 	}
+		 	else{
+		  		$("#vatNo").val("");
+		  		$('#vatNo').attr("disabled",true);
+		 		$("#vatFile").val("");
+		 		$("#vatNos").prop('checked',true);
+		 		$("#vatNos").val("");
+		 		document.getElementById("vatNumberField").style.display = "none";
+		 		document.getElementById("vatFileDiv").style.display = "none";
+		 	}
 			arr=resp.roles;
             if(resp.userTypeId==4 || resp.userTypeId==5 || resp.userTypeId==6){
              	$("#rolesDiv").show();
@@ -253,7 +275,7 @@ function editProfile(){
 			for (var i = 0; i < arr.length; i++) {
 				$('#registrationForm #usertypes option[value="'+arr[i]+'"]').attr('disabled', true);
 			}
-
+			loadByAsType(resp);
            
 			//$("#").val(resp[i].); 
 			var questionData=resp.questionList;
@@ -273,6 +295,93 @@ function editProfile(){
 	});
 }	
 
+function editOtherProfile(){
+	$.ajax({ 
+		type : 'POST',
+		url : contextpath+'/editProfile',
+		contentType : "application/json",
+		dataType : 'html', 
+		success : function(data) { 
+			console.log(data);
+			var resp=JSON.parse(data);
+			//$("#registrationForm #firstName").val("heello");
+			$("#registrationForm #firstName").val(resp.firstName);
+			$("#registrationForm #id").val(resp.id);
+			$("#registrationForm #middleName").val(resp.middleName);
+			$("#registrationForm #lastName").val(resp.lastName);
+			$("#registrationForm #email").val(resp.email); 
+			$("#registrationForm #phoneNo").val(resp.phoneNo);
+			$("#registrationForm #propertyLocation").val(resp.propertyLocation);
+			$("#registrationForm #street").val(resp.street);
+			$("#registrationForm #village").val(resp.village);
+			$("#registrationForm #district").val(resp.district);
+			$("#registrationForm #commune").val(resp.commune);
+			$("#registrationForm #country").val(resp.country); 
+			$("#registrationForm #postalCode").val(resp.postalCode);
+			$("#registrationForm #locality").val(resp.locality);
+			$("#registrationForm #companyName").val(resp.companyName);
+			$("#registrationForm #arrivalPort").val(resp.arrivalPortName);
+			$("#registrationForm #operatorTypeName").val(resp.operatorTypeName);
+			$("#registrationForm #portAddress").val(resp.portAddressName);
+			$("#registrationForm #passportNo").val(resp.passportNo);
+			$("#questionId1 #country").val(resp.country);
+			$("#registrationForm #usertypes").val(resp.roles); 
+
+			$("#registrationForm #NationalIdImage").val(resp.nidFilename);
+			$("#registrationForm #nidFilePath").val(resp.nidFilePath);
+
+			$("#registrationForm #photo").val(resp.photoFilename);
+			$("#registrationForm #photoFilePath").val(resp.photoFilePath);
+
+			$("#registrationForm #idCard").val(resp.idCardFilename);
+			$("#registrationForm #idCardFilePath").val(resp.idCardFilePath);
+
+			$("#registrationForm #vatFile").val(resp.vatFilename);
+			$("#registrationForm #vatFilePath").val(resp.vatFilePath);
+
+			
+			$("#registrationForm #employeeId").val(resp.employeeId);
+			$("#registrationForm #natureOfEmployment").val(resp.natureOfEmployment);
+			$("#registrationForm #designation").val(resp.designation);
+			$("#registrationForm #authorityName").val(resp.authorityName);
+			$("#registrationForm #authorityEmail").val(resp.authorityEmail);
+			$("#registrationForm #authorityPhoneNo").val(resp.authorityPhoneNo);
+			//$("#registrationForm #authorityEmail").val(resp.authorityEmail);
+
+			
+			
+			//nidFilename
+			populateStates( "country","state" );
+			$("#registrationForm #state").val(resp.province);
+			var arr=[];    
+			var vatStatus=resp.vatStatus;
+			arr=resp.roles;
+            if(resp.userTypeId==4 || resp.userTypeId==5 || resp.userTypeId==6){
+             	$("#rolesDiv").show();
+             	$("#AsTypeDiv").show();
+                usertypeData2(resp.userTypeId); 	
+            }
+			for (var i = 0; i < arr.length; i++) {
+				$('#registrationForm #usertypes option[value="'+arr[i]+'"]').attr('disabled', true);
+			}
+			
+			//$("#").val(resp[i].); 
+			var questionData=resp.questionList;
+			for(var i=0;i<questionData.length;i++){
+				$("#registrationForm #questionId"+i).empty();
+				var selectData='<option value="'+questionData[i].questionId+'">'+questionData[i].question+'</option>';
+				$("#registrationForm #questionId"+i).append(selectData);
+				$("#registrationForm #answer"+i).val(questionData[i].answer);
+				$("#registrationForm #id"+i).val(questionData[i].id);
+			}  
+			questionDataByCategory2();
+
+		}, 
+		error: function (xhr, ajaxOptions, thrownError) {
+		}
+
+	});
+}
 function updateProfile(){
 	$("#passwordBtn").prop('disabled', true);
 	$("#btnSave").prop('disabled', true);
@@ -516,3 +625,57 @@ function openHome(){
         dismissible:false
     });
 }
+
+function loadByAsType(resp){
+	 var x = document.getElementById("type").value;
+     if (x == '0') {
+     	//$("input[name='vatStatus']").prop('checked',true);
+     	//vatShowHide();
+     	$("input[name='vatStatus']").attr('disabled', false);
+         document.getElementById("uploadFile").style.display = "block";
+         document.getElementById("passportNumberDiv").style.display = "block";
+         document.getElementById("companyNames").style.display = "none";
+     } else {
+     //	$("#vatYes").prop('checked',true);
+     	//vatShowHide();
+     	//$("input[name='vatStatus']").attr('disabled', true);
+    	 $("#registrationForm #vatFile").val(resp.vatFilename);
+			$("#registrationForm #vatFilePath").val(resp.vatFilePath);
+         document.getElementById("uploadFile").style.display = "none";
+         document.getElementById("passportNumberDiv").style.display = "none";
+         document.getElementById("companyNames").style.display = "block";
+        }
+}
+
+
+function vatShowHide(){
+ 	var radioValue = $("input[name='vatStatus']:checked").val();
+ 	if(radioValue==1){
+  		document.getElementById("vatNumberField").style.display = "block";
+ 		document.getElementById("vatFileDiv").style.display = "block";
+ 	}
+ 	else{
+  		$("#vatNo").val("");
+ 		$("#vatFile").val("");
+ 		$("input[name='vatFile']").val("");
+ 		document.getElementById("vatNumberField").style.display = "none";
+ 		document.getElementById("vatFileDiv").style.display = "none";
+ 	}
+ }
+
+function previewFile2(srcFilePath,srcFileName){
+	window.filePath = srcFilePath;
+	window.fileName = srcFileName;
+	window.fileExtension = fileName.replace(/^.*\./, '');
+	window.FinalLink = filePath.concat(fileName);
+	
+	if(filePath == null || filePath == "" || filePath == undefined && fileName == null || fileName == "" || fileName == undefined ){
+		console.log("File is not Avialable")
+	}else if(fileExtension=="jpg" || fileExtension=="jpeg" || fileExtension=="png" || fileExtension=="gif" ){
+		$("#fileSource").attr("src",FinalLink);
+		$("#viewuplodedModel").openModal();
+	}else{
+		window.open(FinalLink);
+	}
+}
+

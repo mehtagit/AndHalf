@@ -157,6 +157,7 @@ $("input[type=file]").keypress(function(ev) {
 
 
 	function previewFile(srcFilePath,srcFileName,txnId){
+		
 		window.filePath = srcFilePath;
 		window.fileName = srcFileName;
 		window.fileExtension = fileName.replace(/^.*\./, '');
