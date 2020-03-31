@@ -20,14 +20,6 @@ $('#userManageLibraryTable div:last').after('<p id="errorMsg" style="color: red;
 
 
 
-		
-function myStringToDate(str) {
-  var arr  = str.split("-"); // split string at slashes to make an array
-  var yyyy = arr[2] - 0; // subtraction converts a string to a number
-  var mm = arr[1] - 1; // subtract 1 because stupid JavaScript month numbering
-  var dd   = arr[0] - 0; // subtraction converts a string to a number 
-  return new Date(yyyy-mm-dd); // this gets you your date
-}
 
 function checkDate(startDate,endDate) {
 	var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
@@ -39,8 +31,8 @@ function checkDate(startDate,endDate) {
 		'km': './resources/i18n/km.json'
 	} ).done( function() { 	
 	});
-    var input1 = myStringToDate(startDate.value);
-    var input2 = myStringToDate(endDate.value);
+    var input1 = startDate.value;
+    var input2 = endDate.value;
     var currentTime = new Date()
     var month = ("0" + (currentTime.getMonth() + 1)).slice(-2)
     var day =  ("0" + (currentTime.getDate())).slice(-2)
@@ -52,18 +44,16 @@ function checkDate(startDate,endDate) {
     var searchParams = new URLSearchParams(window.location.search);
 	//alert(window.location.href+"-----------"+searchParams)    
     if(searchParams=='reqType=formPage'){
-    	
-		
-    if (input2.getTime() ==  input1.getTime()) {
+	
+    if (input2 ==  input1) {
     	$('#errorMsgOnModal').text('');
     	$('#'+endDate.id).css('border-color', '');
     	$('#submitFilter,#consignmentSubbmitButton,#filterFieldTable').removeClass( "eventNone" );
     	
     	
     } 
-    else if(input2.getTime() <  input1.getTime()){
-    	$('#'+endDate.id).css('border-color', 'red');
-    	
+    else if(input2 <  input1 && !input2==''){
+    	$('#'+endDate.id).css('border-color', 'red');  	
     	$('#errorMsgOnModal').text($.i18n(endDate.id));
     	$('#submitFilter,#consignmentSubbmitButton,#filterFieldTable').addClass( "eventNone" );
     	$('#consignmentSubbmitButton').addClass( "eventNone" );
@@ -78,15 +68,15 @@ function checkDate(startDate,endDate) {
     
     
     else{
-    	if((startDate.value <= input3) && (endDate.value <= input3)){
-    	if (input2.getTime() ==  input1.getTime()) {
+    	if((input1 <= input3) && (input2 <= input3)){
+    	if (input2 ==  input1) {
         	$('#errorMsg').text('');
         	$('#'+endDate.id).css('border-color', '');
         	$('#submitFilter,#consignmentSubbmitButton,#filterFieldTable').removeClass( "eventNone" );
         	
         	
         } 
-        else if(input2.getTime() <  input1.getTime()){
+        else if(input2 <  input1 && !input2==''){
         	$('#'+endDate.id).css('border-color', 'red');
         	
         	$('#errorMsg').text($.i18n(endDate.id));

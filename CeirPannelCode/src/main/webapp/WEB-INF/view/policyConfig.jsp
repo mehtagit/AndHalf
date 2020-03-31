@@ -4,20 +4,23 @@
 	response.setDateHeader("Expires", 0);
 	response.setHeader("Pragma", "no-cache");
 	/*  session.setMaxInactiveInterval(200); //200 secs
-	 session.setAttribute("usertype", null);  */
+	 session.setAttribute("usertype", null); */
 	if (session.getAttribute("usertype") != null) {
 %>
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
-<html lang="en" class="no-js">
+<html class="no-js" lang="en" dir="ltr">
 <head>
-<title>Dashboard</title>
-
+<title>Consignment</title>
+<meta http-equiv='cache-control' content='no-cache'>
+<meta http-equiv='expires' content='-1'>
+<meta http-equiv='pragma' content='no-cache'>
+<meta name="fragment" content="!">
 <meta charset="utf-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
@@ -44,8 +47,6 @@
 <link
 	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
-<link href="${context}/resources/css/jquery-datepicker2.css"
-	type="text/css" rel="stylesheet" media="screen,projection">
 <!-- Custome CSS-->
 <link href="${context}/resources/css/custom/custom.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
@@ -64,24 +65,36 @@
 	href="${context}/resources/project_css/viewConsignment.css">
 <link rel="stylesheet"
 	href="${context}/resources/project_css/iconStates.css">
-	
- <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
-  <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+
+<script src="http://malsup.github.io/jquery.blockUI.js"></script>
+<script src="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json"></script>
+
+<!------------------------------------------- Dragable Model---------------------------------->
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-	
-
-
 
 </head>
-<%-- <body data-roleType="${usertype}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}"> --%>
-<body data-roleType="${usertype}" data-userTypeID="${usertypeId}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${stolenselectedUserTypeId}">
+<body data-id="23"
+	data-roleType="${usertype}" data-userTypeID="${usertypeId}"
+	data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}"
+	data-stolenselected-roleType="${stolenselectedUserTypeId}"
+	data-selected-consignmentTxnId="${consignmentTxnId}"
+	data-selected-consignmentStatus="${consignmentStatus}"
+	session-value="en"
+	session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}">
 
+	<%-- session-value="${not empty param.NID ? param.NID : 'null'}" --%>
 
 	<!-- START CONTENT -->
 	<!-- START CONTENT -->
 	<section id="content">
+		<div id="initialloader"></div>
+
 		<!--start container-->
 		<div class="container">
 			<div class="section">
@@ -90,19 +103,16 @@
 						<div class="row card-panel">
 							<div class="container-fluid pageHeader" id="pageHeader">
 
-								<a href="" class="boton right" id="btnLink" hidden></a>
+								<a class="boton right" id="btnLink"></a>
 							</div>
-							<form action="${context}/policyManagement"
+							<form action="${context}/fieldManagement"
 								method="post">
-								<div class="col s12 m12 l12" id="configTableDiv"
+								<div class="col s12 m12 l12" id="FieldTableDiv"
 									style="padding-bottom: 5px; background-color: #e2edef52;">
-									<div id="filterBtnDiv">
-										<!-- 							<div class='col s12 m2 l2'><button type='submit' class='btn primary botton' id='submitFilter'></button></div>
-		 -->
-									</div>
+									<div id="filterBtnDiv"></div>
 								</div>
 							</form>
-							<table id="configLibraryTable"
+							<table id="fieldManagementLibraryTable"
 								class="responsive-table striped display"></table>
 
 						</div>
@@ -112,157 +122,166 @@
 				<div id="footerBtn"></div>
 			</div>
 		</div>
+		
+	
 		<!--end container-->
 	</section>
+	
+ 	<div id="addTags" class="modal" style="z-index: 1003; display: none; opacity: 1; transform: scaleX(1); top: 10%;">
+        <h6 class="modal-header">Add Fields</h6>
+        <div class="modal-content">
+          	<form action="" onsubmit="return submitTag()" method="post" >
+                <div class="row" style="margin-top: 10px;">
+					
+					<div class="col s12 m6">
+					<label for="tag" class="active">Field <span class="star">*</span></label>
+                        <!-- <input type="text" id="tag" name="tag" pattern="[A-Za-z]{0,30}" Placeholder=""  maxlength="15" value="" required="required" disabled> -->
+                        <select class="browser-default" id="tag" disabled>
+                                <option value="" disabled="" selected="">Select field</option>
+                          </select>
+                        
+                         <input type="text" id="displayName" hidden>
+                        
+                    </div>
+					
+					<div class="input-field col s12 m6" style="margin-top: 22px;">
+                        <input type="text" id="description" name="value"  pattern="[A-Za-z0-9 ]{0,200}" title="Please enter alphabets and numbers upto 200 characters only" maxlength="200">
+                        <label for="description" class="">Description</label>
+                    </div>
 
-   <!-- Modal 2 start   -->
+                    <div class="input-field col s12 m6" style="margin-top: 22px;">
+                        <input type="text" id="addInterp" name="interp" pattern="[A-Za-z0-9 ]{0,200}" title="Please enter alphabets and numbers upto 30 characters only" maxlength="30" required="required">
+                        <label for="addInterp" class="">Display Name <span class="star">*</span></label>
+                    </div>
 
-	<div id="viewPolicyConfigModel" class="modal">
-		<h6 class="modal-header"><spring:message code="registration.viewpolicyconfiguration" /></h6>
+                    <div class="input-field col s12 m6" style="margin-top: 22px;">
+                        <input type="text" id="tagId" name="addFieldId" pattern="[A-Za-z0-9 ]{0,200}" title="Please enter alphabets and numbers upto 30 characters only" maxlength="30" required="required">
+                        <label for="addFieldId" class="">Field ID <span class="star">*</span></label>
+                    </div>
+
+                    <div class="col s12 m12 center" style="margin-top: 20px;">
+                        <button class="btn" type="submit">Submit</button>
+                        <a href="#" class="btn modal-close" id="Cancel" style="margin-left: 10px;">Cancel</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+		
+		
+		<div id="editTags" class="modal" style="z-index: 1003; display: none; opacity: 1; transform: scaleX(1); top: 10%;">
+        <h6 class="modal-header">Edit Fields</h6>
+        <div class="modal-content">
+          	<form action="" onsubmit="return updatedTag()">
+                <div class="row" style="margin-top: 10px;">
+					
+					<div class="col s12 m6">
+					<label for="tag" class="active">Field <span class="star">*</span></label>
+                        <!-- <input type="text" id="tag" name="tag" pattern="[A-Za-z]{0,30}" Placeholder=""  maxlength="15" value="" required="required" disabled> -->
+                        <select class="browser-default" id="Edittag" disabled>
+                                <option value="" disabled="" selected="">Select field</option>
+                          </select>
+                        
+                         <input type="text" id="editdisplayName" hidden>
+                          <input type="text" id="editId" hidden>
+                    </div>
+					
+					<div class="input-field col s12 m6" style="margin-top: 22px;">
+                        <input type="text" id="editdescription" name="value" pattern="[A-Za-z0-9 ]{0,200}" title="Please enter alphabets and numbers upto 200 characters only" maxlength="200">
+                        <label for="editdescription" class="">Description</label>
+                    </div>
+
+
+                    <div class="input-field col s12 m6" style="margin-top: 22px;">
+                        <input type="text" id="editInterp" name="interp" pattern="[A-Za-z0-9 ]{0,200}" title="Please enter alphabets and numbers upto 30 characters only" maxlength="30" required="required">
+                        <label for="editInterp" class="">Display Name <span class="star">*</span></label>
+                    </div>
+
+                    <div class="input-field col s12 m6" style="margin-top: 22px;">
+                        <input type="text" id="editFieldId" name="editField" pattern="[A-Za-z0-9 ]{0,200}" title="Please enter alphabets and numbers upto 30 characters only" maxlength="30" required="required">
+                        <label for="editFieldId" class="">Field ID <span class="star">*</span></label>
+                    </div>
+
+                    <div class="col s12 m12 center" style="margin-top: 20px;">
+                        <button class="btn" type="submit">Update</button>
+                        <a href="#" class="btn modal-close" id="Cancel" style="margin-left: 10px;">Cancel</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+		
+	<div id="confirmField" class="modal">
+		<h6 class="modal-header"><spring:message code="modal.header.submitFieldRecord" /></h6>
 		<div class="modal-content">
-
 			<div class="row">
-				<div class="row" style="margin-top: 10px;">
-					
-						<input type="text" name="tag" id="viewTag" placeholder="tag" disabled hidden="hidden" > 
-				
-					<div class="input-field col s12 m6 l6">
-						<input type="text" name="period" id="viewPeriod"
-							placeholder="Period" disabled>
-						<label for="period"><spring:message code="table.Period" /> <span class="star">*</span></label>
-					</div>
-
-					<div class="input-field col s12 m6">
-						<input type="text" id="viewstatus" name="status"
-							placeholder="" maxlength="20" placeholder="Status" disabled >
-						<label for="status"><spring:message code="table.status" /> <span class="star">*</span></label>
-					</div>
-				
-					
-					
-					<div class="input-field col s12 m6">
-					<textarea id="viewValue" class="materialize-textarea" placeholder="value" readonly="readonly"></textarea>
-					<label for="viewValue" class=""><spring:message code="table.Value" /> <span class="star">*</span></label>
-
-					</div>
-					
-					
-					
-					<div class="input-field col s12 m6">
-					<textarea id="description" class="materialize-textarea" placeholder="Description" readonly="readonly"></textarea>
-					<label for="description" class=""><spring:message code="registration.description" /></label>
-
-					</div>
-				
-					
-				</div>
-
-				
-					
-
-			
-
-				<div class="row input_fields_wrap">
-					<div class="col s12 m12 center" style="margin-top: 10px;">
-					<button class="btn modal-close" style="margin-left: 10px;"><spring:message code="modal.close" /></button>
-				</div>
-
-				</div>
+				<h6 id="sucessMessage">Field Record Added Successfully</h6>
 			</div>
+			 <div class="row">
+				<div class="input-field col s12 center">
+                   <a href="" class="modal-close btn" class="btn">ok</a>
+                </div>
+			</div> 
 		</div>
 	</div>
-	<!-- Modal End -->
+	
+	
+		
+	   <!-- --------------------------------------------------------------Delete Field Modal Start --------------------------------------------------------------->
 
-	   <!-- Modal 2 start   -->
 
-	<div id="editPolicyConfigModel" class="modal">
-		<h6 class="modal-header"><spring:message code="registration.editpolicyconfiguration" /></h6>
+	<div id="DeleteFieldModal" class="modal">
+		<h6 class="modal-header"><spring:message code="modal.header.deleteField" /></h6>
 		<div class="modal-content">
-		<form action="" onsubmit="return updatePolicy()">
 		<div class="row">
-			<div class="row" style="margin-top: 10px;">
-					<div class="input-field col s12 m6 l6">
-						<input type="text" name="tag" id="editTag"
-							placeholder="tag" hidden="hidden"> 
-					</div>
-					
-					<div class="input-field col s12 m6 l6">
-						<input type="text" name="tag" id="EditId"
-							placeholder="ID" hidden="hidden"> 
-						<input type="text" name="status" id="EditStatusValue"
-							placeholder="" hidden="hidden"> 	
-					</div>
-					
-					
-					<div class="input-field col s12 m6 l6">
-						<input type="text" name="period" id="editPeriod"
-							placeholder="Period" disabled>
-						<label for="period"><spring:message code="table.Period" /> <span class="star">*</span></label>
-					</div>
-
-					<div class="input-field col s12 m6" style="margin-top:22px">
-						<input type="text" id="editstatus" name="status"
-							placeholder="" maxlength="20" placeholder="Status" disabled>
-						<label for="status"><spring:message code="table.status" /> <span class="star">*</span></label>
-					</div>
-				
-					
-					
-					<div class="input-field col s12 m6">
-					<textarea id="editValue" class="materialize-textarea" placeholder="value" title="Please enter alphabets and numbers upto 100 characters only" maxlength="100" required="required"></textarea>
-					<label for="editValue" class=""><spring:message code="table.Value" /> <span class="star">*</span></label>
-
-					</div>
-					
-					
-					
-					<div class="input-field col s12 m6">
-					<textarea id="editdescription" class="materialize-textarea" placeholder="Description" title="Please enter alphabets and numbers upto 200 characters only" maxlength="200"></textarea>
-					<label for="description" class=""><spring:message code="registration.description" /></label>
-
-					</div>
-				
-					
-				</div>
-
-				
-
-				<div class="row input_fields_wrap">
-					<div class="col s12 m12 center" style="margin-top: 10px;">
-					<button class="btn " type="submit"><spring:message code="button.update" /></button>
-					<button class="modal-close btn" type="button" style="margin-left: 10px;"><spring:message code="button.cancel" /></button>
-				</div>
-
+				<h6><spring:message code="modal.message.field.delete" /></h6>
+			</div> 
+			<input type="text" id="deleteFieldId" hidden>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<a onclick="confirmantiondelete()"
+						class="modal-close modal-trigger btn" type="submit"><spring:message code="modal.yes" /></a>
+					<button class="modal-close btn" style="margin-left: 10px;"><spring:message code="modal.no" /></button>
 				</div>
 			</div>
-			</form>
 		</div>
-	</div>
-	<!-- Modal End -->
+	</div>	
 	
-	
-		<!-- Modal 3 start   -->
-
-	<div id="confirmedUpdatedPolicy" class="modal">
-		<h6 class="modal-header"><spring:message code="registration.updatepolicymanagement" /></h6>
-		<div class="modal-content">
-
-
-
+	<div id="closeDeleteModal" class="modal">
+			<h6 class="modal-header"><spring:message code="modal.header.deleteField" /></h6>
+			<div class="modal-content">
+		
+			
 			<div class="row">
-				<h6 id="sucessMessage"> <spring:message code="registration.policyupdatedsuccessfully" /></h6>
+
+				<h6 id="tacModalText"><spring:message code="modal.message.fieldDeleted" /> </h6>
 			</div>
 			<div class="row">
 				<div class="input-field col s12 center">
-					<a href="${context}/policyManagement" class="btn"> <spring:message code="modal.ok" /></a>
+					<a href="" class="modal-close btn"
+						style="margin-left: 10px;"><spring:message code="modal.close" /></a>
 				</div>
 			</div>
 		</div>
 	</div>
-	
-	
-	
-	<!--materialize js-->
+		
+		
+		
+	<div id="updateFieldsSuccess" class="modal">
+     <h6 class="modal-header" style="margin:0px;"><spring:message code="button.update" /></h6>
+        <div class="modal-content">
+            
+            <div class="row">
+                <h6 id="updateFieldMessage"><spring:message code="input.requestupdated" /></h6>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <a href="" class="modal-close btn"><spring:message code="modal.ok" /></a>
+                </div>
+            </div>
+        </div>
+    </div>	
+<!--materialize js-->
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
 	<script type="text/javascript"
@@ -270,7 +289,7 @@
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
 
-	
+
 
 	<!--plugins.js - Some Specific JS codes for Plugin Settings-->
 	<script
@@ -280,8 +299,7 @@
     <script type="text/javascript" src="${context}/resources/js/materialize-plugins/date_picker/picker.js"></script> --%>
 	<!--custom-script.js - Add your own theme custom JS-->
 	<script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
-	<script type="text/javascript"
-		src="${context}/resources/js/Validator.js"></script>
+
 	<!--prism
     <script type="text/javascript" src="${context}/resources/resources/js/prism/prism.js"></script>-->
 	<!--scrollbar-->
@@ -291,11 +309,52 @@
 	<%-- <script type="text/javascript" src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script> --%>
 	<script type="text/javascript"
 		src="${context}/resources/js/countries.js"></script>
+	<!-- i18n library -->
 	<script type="text/javascript"
-		src="${context}/resources/project_js/policyConfig.js"></script>
+		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.messagestore.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.fallbacks.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.language.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.parser.js"></script>
+
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.js"></script>
+
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.bidi.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/jquery.history.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/project_js/globalVariables.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/project_js/backbutton.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/dragableModal.js"></script>
-		
+	<script type="text/javascript"
+		src="${context}/resources/project_js/enterKey.js"></script>
+	<%-- 		<script type="text/javascript"
+		src="${context}/resources/project_js/disable_inspectElement.js"></script> --%>
+	<script type="text/javascript"
+		src="${context}/resources/project_js/fieldManagement.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/project_js/_dateFunction.js" async></script>
+			<script type="text/javascript"
+		src="${context}/resources/project_js/profileInfoTab.js" async></script>
 </body>
 </html>
 <%
@@ -311,3 +370,5 @@
 <%
 	}
 %>
+
+
