@@ -659,7 +659,7 @@
 							class="fa fa-calendar" aria-hidden="true"></i></span>
 					</div>
 					<div class="input-field col s12 m6">
-						<!-- <p style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">Device Origination Country <span class="star">*</span></p> -->
+						<p style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;"><spring:message code="input.country" /> <span class="star">*</span></p>
 						<select id="country" name="organisationcountry"
 							class="browser-default" class="mySelect"
 							onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
@@ -680,9 +680,11 @@
 							class="fa fa-calendar" aria-hidden="true"></i></span>
 					</div>
 					<div class="input-field col s12 m6">
+					<p style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">	<spring:message code="input.arrivalport" /> <span class="star">*</span></p>
+					<%-- <label for="expectedArrivalPort"><spring:message code="input.arrivalport" /> <span class="star">*</span></label> --%>
+				
 						<select name="expectedArrivalPort" id="expectedArrivalPortEdit"
-							class="browser-default"
-						>
+							class="browser-default">
 							<option value="" disabled selected><spring:message
 									code="input.arrivalport" />*
 							</option>
@@ -810,6 +812,34 @@
 					<!-- <button class="modal-close btn" style="margin-left: 10px;">ok</button> -->
 					<a onclick="redirectToViewPage()" class="btn"><spring:message
 							code="modal.close" /></a>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div id="fileFormateModal" class="modal">
+		<h6 class="modal-header">
+			<spring:message code="fileValidationModalHeader" />
+		</h6>
+		<div class="modal-content">
+			<div class="row">
+				<h6 id="fileErrormessage">
+					<spring:message code="fileValidationName" />
+					<br> <br>
+					<spring:message code="fileValidationFormate" />
+					<br>
+					<br>
+					<spring:message code="fileValidationSize" />
+				</h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<div class="input-field col s12 center">
+						<button class="modal-close waves-effect waves-light btn"
+							onclick="clearFileName()" style="margin-left: 10px;">
+							<spring:message code="modal.ok" />
+						</button>
+					</div>
 				</div>
 			</div>
 		</div>

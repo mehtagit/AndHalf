@@ -55,6 +55,11 @@ var contextpath = "${context}";
 <%
 String usertype = (String) session.getAttribute("usertype");
 String name = (String) session.getAttribute("name");
+Integer usertypeId=(Integer)session.getAttribute("usertypeId");
+if(usertypeId==null){
+	usertypeId=0;
+}
+
 %>
 
 </script>
@@ -146,7 +151,7 @@ data-roleType="${usertype}" data-userTypeID="${usertypeId}"
 								class="mdi-action-account-circle"
 								style="color: #fff; font-size: 40px;"></i></a>
 							<ul id="profile-dropdown" class="dropdown-content">
-								<li><a href="${context}/editProfile" target="mainArea"><i
+								<li><a id="editLink" href="javascript:void(0)" target="mainArea"><i
 										class="fa fa-pencil dropdownColor" style="float: left;"></i><span
 										style="float: left" class="dropdownColor"><spring:message
 												code="registration.editinfo" /></span></a></li>
@@ -674,7 +679,6 @@ data-dismiss="modal">&times;</button> -->
 			<script type="text/javascript"
 		src="${context}/resources/project_js/enterKey.js"></script>
 	
-
 	
 		
 	<!-- ajax js -->
@@ -692,6 +696,12 @@ data-dismiss="modal">&times;</button> -->
 
 <script type="text/javascript"
 		src="${context}/resources/project_js/profileInfoTab.js" async></script>	
+
+<script type="text/javascript">
+$(document).ready(function () {
+openEditPage(<%=usertypeId%>)
+});
+</script>
 	
 </body>
 

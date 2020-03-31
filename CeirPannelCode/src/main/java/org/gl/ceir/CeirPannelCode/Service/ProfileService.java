@@ -65,7 +65,7 @@ public class ProfileService {
 		response=userProfileFeignImpl.editUserProfile(userid);
 		session.removeAttribute("mainRole");
 		session.setAttribute("mainRole",response.getUserTypeId());
-		return response;  
+		return response;
 	}
 	
 	public UpdateProfileResponse updateProfile(Registration registration,HttpSession session) {
@@ -125,7 +125,7 @@ public class ProfileService {
 		//userManagementContent.setId(id);
 		//log.info("userStatus data is :  "+userManagementContent);
 		HttpResponse response=new HttpResponse();             
-		response=userProfileFeignImpl.changeSystemUserStatusFeign(userManagementContent);
+		response=userProfileFeignImpl.changeSystemUserPeriodFeign(userManagementContent);
 		return response;  
 	} 
 }

@@ -1,13 +1,9 @@
 package org.gl.ceir.CeirPannelCode.Feignclient;
 
-import java.util.List;
-
-import org.gl.ceir.CeirPannelCode.Model.AssigneRequestType;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.Password;
 import org.gl.ceir.CeirPannelCode.Model.Registration;
-import org.gl.ceir.CeirPannelCode.Model.UploadStockAssigneModal;
 import org.gl.ceir.CeirPannelCode.Model.UserStatus;
 import org.gl.ceir.CeirPannelCode.Response.UpdateProfileResponse;
 import org.gl.ceir.CeirPannelCode.Util.HttpResponse;
@@ -26,7 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Service
 @FeignClient(url="${apiUrl1}",value = "profileUrls")
 public interface UserProfileFeignImpl {
-
+	
 	@PostMapping("/userProfile/changePassword")
 	public HttpResponse changePassword(Password password);
 	
@@ -164,7 +160,6 @@ public interface UserProfileFeignImpl {
 	/*-------------------------- Update System user Period Feign ------------------------------*/	
 		
 		@PostMapping("/updatePeriod")
-
 		public HttpResponse changeSystemUserPeriodFeign(UserManagementContent userManagementContent);
 
 } 

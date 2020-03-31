@@ -57,7 +57,9 @@
 					"featureId":parseInt(featureId),
 					"userTypeId": parseInt($("body").attr("data-userTypeID")),
 					//"userType":$("body").attr("data-roleType"),
-					"id" : parseInt($("#userType").val())
+					"id" : parseInt($("#userType").val()),
+					"feature" : parseInt($("#feature").val()),
+					"period" : parseInt($("#period").val())
 					
 			}				
 			if(lang=='km'){
@@ -189,17 +191,17 @@
 			}
 		});
 			
-			
+	/*		
 		$.getJSON('./registrationUserType', function(data) {
 				for (i = 0; i < data.length; i++) {
 				$('<option>').val(data[i].id).text(data[i].usertypeName).appendTo('#userType');
 				}
-		});	
+		});	*/
 			
 		$.getJSON('./getDropdownList/Period', function(data) {
 				for (i = 0; i < data.length; i++) {
 				$('<option>').val(data[i].value).text(data[i].interp)
-				.appendTo('#userPeriod');
+				.appendTo('#userPeriod,#period');
 			 }
 		});
 		}
@@ -212,8 +214,10 @@
 	}
 	
 	function chanegeUserPeriod(){
+
+		var period = parseInt($("#userPeriod").val());
 		var Request={
-				"period" : $("#period").val(),
+				"period" : period,
 				"id": parseInt(window.userId)
 		}
 		

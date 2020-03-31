@@ -387,7 +387,26 @@ public class DatatableHeaders {
 				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
 			}
 
+//Rule List
 			
+			else if("ruleList".equals(role)) {
+				String[] headers = {"table.creationDate","table.lastupdatedate","table.state","table.action"};
+				for(String header : headers) {
+					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
+				}
+				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
+			}
+			
+//Rule feature Mapping
+			
+		
+			else if("ruleFeatureMapping".equals(role)) {
+				String[] headers = {"table.creationDate","table.lastupdatedate","table.ruleName","table.featureName","table.userType","table.order","table.gracePeriod","table.postGracePeriod","table.moveToGracePeriod","table.moveToPostGracePeriod","table.action"};
+				for(String header : headers) {
+					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
+				}
+				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
+			}
 			//DEFAULT PORTION  
 			else {
 				String[] headers = {"table.date","table.transactionID","table.fileName","table.stockStatus","table.action"};		
