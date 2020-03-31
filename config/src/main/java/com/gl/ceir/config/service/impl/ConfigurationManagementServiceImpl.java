@@ -3,6 +3,7 @@ package com.gl.ceir.config.service.impl;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
@@ -438,8 +439,10 @@ public class ConfigurationManagementServiceImpl {
 		try {
 
 			logger.debug("getSystemConfigListByTag : " + tagId);
-
-			return getSystemConfigListDb(systemConfigListRepository.findByTag(tagId, new Sort(Sort.Direction.ASC, "listOrder")), systemConfigUserwiseRepository.findByTagIdAndUserTypeId(tagId, userTypeId));
+		
+			List<SystemConfigListDb> systemConfigListDbs = getSystemConfigListDb(systemConfigListRepository.findByTag(tagId, new Sort(Sort.Direction.ASC, "listOrder")), systemConfigUserwiseRepository.findByTagIdAndUserTypeId(tagId, userTypeId));
+			
+			return addOtherToLastPostion(systemConfigListDbs);
 
 		} catch (Exception e) {
 			logger.info(e.getMessage(), e);
@@ -452,8 +455,10 @@ public class ConfigurationManagementServiceImpl {
 
 			logger.debug("getSystemConfigListByTag : " + tagId);
 
-			return getSystemConfigListDb(systemConfigListRepository.findByTag(tagId, new Sort(Sort.Direction.ASC, "listOrder")), systemConfigUserwiseRepository.findByTagIdAndFeatureId(tagId, featureId));
+			List<SystemConfigListDb> systemConfigListDbs = getSystemConfigListDb(systemConfigListRepository.findByTag(tagId, new Sort(Sort.Direction.ASC, "listOrder")), systemConfigUserwiseRepository.findByTagIdAndFeatureId(tagId, featureId));
 
+			return addOtherToLastPostion(systemConfigListDbs);
+			
 		} catch (Exception e) {
 			logger.info(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
@@ -517,4 +522,17 @@ public class ConfigurationManagementServiceImpl {
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
+	
+	public List<SystemConfigListDb> addOtherToLastPostion(List<SystemConfigListDb> systemConfigListDbs){
+		//Others list
+		List<SystemConfigListDb> others = systemConfigListDbs.stream().filter(e -> "other".equalsIgnoreCase(e.getInterp())).collect(Collectors.toList());
+		
+		//Removed Other
+		systemConfigListDbs = systemConfigListDbs.stream().filter(e -> !"other".equalsIgnoreCase(e.getInterp())).collect(Collectors.toList());
+		//Other list appended
+		systemConfigListDbs.addAll(others);
+		
+		return systemConfigListDbs;
+	}
+	
 }
