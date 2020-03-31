@@ -25,7 +25,7 @@ public class ConsignmentDelete {
 		try{
 			List<DeviceDb> deviceDbs = deviceDbDao.getDeviceDbByTxnId(conn, "", txnId);
 			System.out.println("deviceDbs" + deviceDbs);
-			deviceDbDao.insertDeviceDbAud(conn, deviceDbs);
+			// deviceDbDao.insertDeviceDbAud(conn, deviceDbs);
 			deviceDbDao.deleteDevicesFromDeviceDb(conn, txnId);
 
 			List<DeviceImporterDb> deviceImporterDbs = deviceImporterDbDao.getDeviceImporterDbByTxnId(conn, "", txnId);
