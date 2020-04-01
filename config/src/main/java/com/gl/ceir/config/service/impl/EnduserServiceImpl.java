@@ -165,11 +165,13 @@ public class EnduserServiceImpl {
 
 			// Validate end user devices.
 			if(!endUserDB.getRegularizeDeviceDbs().isEmpty()){
+				if(commonFunction.hasDuplicateImeiInRequest(endUserDB.getRegularizeDeviceDbs())) {
+					return new GenricResponse(6,GenericMessageTags.DUPLICATE_IMEI_IN_REQUEST.getTag(),GenericMessageTags.DUPLICATE_IMEI_IN_REQUEST.getMessage(), ""); 
+				}
 				for(RegularizeDeviceDb regularizeDeviceDb : endUserDB.getRegularizeDeviceDbs()) {
-					
 					//TO DO
 					if(commonFunction.checkAllImeiOfRegularizedDevice(regularizeDeviceDb)) {
-						return new GenricResponse(5,"duplicateImei", "IMEI is already registered in CEIR System", "");
+						return new GenricResponse(5,GenericMessageTags.DUPLICATE_IMEI.getTag(),GenericMessageTags.DUPLICATE_IMEI.getMessage(),"");
 					}
 					
 					if(Objects.isNull(regularizeDeviceDb.getTaxPaidStatus())) {

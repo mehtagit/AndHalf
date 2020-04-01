@@ -84,7 +84,7 @@ public class StockTransaction {
 					Features.STOCK,
 					SubFeatures.ASSIGN,
 					stockMgmt.getTxnId(),
-					MailSubject.ASSIGN_STOCK.replace("<XXX>", stockMgmt.getTxnId()),
+					stockMgmt.getTxnId(),
 					placeholderMap,
 					stockMgmt.getRoleType(),
 					null)) {
@@ -104,7 +104,7 @@ public class StockTransaction {
 						4, Features.STOCK, 
 						SubFeatures.REGISTER, 
 						stockMgmt.getTxnId(), 
-						MailSubject.MAIL_TO_ANONYMOUS_ON_STOCK_UPLOAD.replaceAll("<XXX>", stockMgmt.getTxnId()),  
+						stockMgmt.getTxnId(),  
 						placeholderMapForAnonymousUser, ReferTable.USERS, stockMgmt.getRoleType(), "End User"));
 			}
 

@@ -12,6 +12,7 @@ public class CustomerCareDeviceState implements Serializable{
 	private String status;
 	private String txnId;
 	private Integer featureId;
+	private String imei;
 
 	public CustomerCareDeviceState() {}
 
@@ -53,6 +54,14 @@ public class CustomerCareDeviceState implements Serializable{
 
 	public void setFeatureId(Integer featureId) {
 		this.featureId = featureId;
+	}
+	
+	public String getImei() {
+		return imei;
+	}
+
+	public void setImei(String imei) {
+		this.imei = imei;
 	}
 
 	@Override

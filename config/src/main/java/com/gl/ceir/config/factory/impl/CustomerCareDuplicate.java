@@ -10,12 +10,15 @@ import com.gl.ceir.config.model.CustomerCareDeviceState;
 import com.gl.ceir.config.model.DeviceDuplicateDb;
 import com.gl.ceir.config.model.constants.Constants;
 import com.gl.ceir.config.repository.DeviceDuplicateDbRepository;
+import com.gl.ceir.config.util.CommonFunction;
 
 @Component
 public class CustomerCareDuplicate implements CustomerCareTarget{
 	
 	@Autowired
 	DeviceDuplicateDbRepository deviceDuplicateDbRepository;
+	@Autowired
+	CommonFunction commonFunction;
 	
 	@Override
 	public CustomerCareDeviceState fetchDetailsByImei(String imei, CustomerCareDeviceState customerCareDeviceState) {
@@ -32,7 +35,7 @@ public class CustomerCareDuplicate implements CustomerCareTarget{
 			customerCareDeviceState.setStatus(Constants.non_available);
 			customerCareDeviceState.setFeatureId(0);
 		}
-		
+		customerCareDeviceState.setImei(imei);
 		setName(customerCareDeviceState);
 		return customerCareDeviceState;
 	}

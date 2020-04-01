@@ -35,7 +35,6 @@ public class DeviceDb  implements Serializable{
 	@UpdateTimestamp
 	private Date modifiedOn;
 
-	private String manufatureDate;
 	private String deviceType;
 	private String deviceIdType;
 	private String multipleSimStatus;
@@ -45,7 +44,7 @@ public class DeviceDb  implements Serializable{
 	private String deviceStatus;
 	private String deviceAction;
 	
-	private Integer tac;
+	private String tac;
 
 	private String period;
 	
@@ -74,14 +73,6 @@ public class DeviceDb  implements Serializable{
 
 	public void setModifiedOn(Date modifiedOn) {
 		this.modifiedOn = modifiedOn;
-	}
-
-	public String getManufatureDate() {
-		return manufatureDate;
-	}
-
-	public void setManufatureDate(String manufatureDate) {
-		this.manufatureDate = manufatureDate;
 	}
 
 	public String getDeviceType() {
@@ -159,11 +150,11 @@ public class DeviceDb  implements Serializable{
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	public Integer getTac() {
+	public String getTac() {
 		return tac;
 	}
 
-	public void setTac(Integer tac) {
+	public void setTac(String tac) {
 		this.tac = tac;
 	}
 
@@ -192,8 +183,6 @@ public class DeviceDb  implements Serializable{
 		builder.append(createdOn);
 		builder.append(", modifiedOn=");
 		builder.append(modifiedOn);
-		builder.append(", manufatureDate=");
-		builder.append(manufatureDate);
 		builder.append(", deviceType=");
 		builder.append(deviceType);
 		builder.append(", deviceIdType=");

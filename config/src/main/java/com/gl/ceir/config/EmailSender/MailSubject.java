@@ -3,7 +3,7 @@ package com.gl.ceir.config.EmailSender;
 public interface MailSubject {
 
 	// Consignment
-	String CONSIGNMENT_PROCESS_SUCCESS_TO_IMPORTER_MAIL			= "Consignment processed successfully Notification for Transaction ID <XXX>";
+/*	String CONSIGNMENT_PROCESS_SUCCESS_TO_IMPORTER_MAIL			= "Consignment processed successfully Notification for Transaction ID <XXX>";
 	String CONSIGNMENT_PROCESS_SUCCESS_TO_CEIR_MAIL				= "Consignment processed successfully Notification for Transaction ID <XXX>";
 	String	CONSIGNMENT_PROCESS_FAILED_TO_IMPORTER_MAIL			= "Consignment processed failed Notification for Transaction ID <XXX>";
 	String Consignment_Success_CEIRAuthority_Email_Message 		= "Consignment Approval Notification for Transaction ID <XXX>";
@@ -38,5 +38,5 @@ public interface MailSubject {
 	String MAIL_TO_CEIR_ADMIN_ON_DEVICE_TAX_PAID 		= "Tax Paid Notification for Transaction ID <XXX>";
 	String MAIL_TO_CEIR_ADMIN_ON_DEVICE_TAX_NOT_PAID 	= "Tax Not Paid Notification for Transaction ID <XXX>";
 	String MAIL_TO_USER_ON_CEIR_DEVICE_APPROVAL 		= "Device Approval Notification for Transaction ID <XXX>";
-	String MAIL_TO_USER_ON_CEIR_DEVICE_DISAPPROVAL 		= "Device Rejection Notification for Transaction ID <XXX>";
+	String MAIL_TO_USER_ON_CEIR_DEVICE_DISAPPROVAL 		= "Device Rejection Notification for Transaction ID <XXX>";*/
 }

@@ -143,10 +143,10 @@ public class StolenAndRecoveryController {
 
 	@ApiOperation(value = "Delete Stolen and  Recovery Details.", response = GenricResponse.class)
 	@RequestMapping(path = "/stakeholder/Delete", method = RequestMethod.DELETE)
-	public GenricResponse deleteRecord(@RequestBody StolenandRecoveryMgmt stolenandRecoveryRequest) {
+	public GenricResponse deleteRecord(@RequestBody FilterRequest filterRequest) {
 
-		logger.info("Record Delete request = " + stolenandRecoveryRequest);
-		GenricResponse genricResponse = stolenAndRecoveryServiceImpl.deleteRecord(stolenandRecoveryRequest);
+		logger.info("Record Delete request = " + filterRequest);
+		GenricResponse genricResponse = stolenAndRecoveryServiceImpl.deleteRecord(filterRequest);
 
 		logger.info("Response send = " + genricResponse);
 

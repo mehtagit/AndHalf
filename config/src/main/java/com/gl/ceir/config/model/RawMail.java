@@ -13,14 +13,14 @@ public class RawMail implements Serializable{
 	private String featureName;
 	private String subFeature;
 	private String featureTxnId;
-	private String subject; 
+	private String txnId; 
 	private String referTable;
 	private Map<String, String> placeholders;
 	private String roleType;
 	private String receiverUserType;
 	
 	public RawMail(String tag, UserProfile userProfile, long featureId, String featureName, String subFeature,
-			String featureTxnId, String subject, Map<String, String> placeholders, String referTable, 
+			String featureTxnId, String txnId, Map<String, String> placeholders, String referTable, 
 			String roleType, String receiverUserType) {
 		super();
 		this.tag = tag;
@@ -29,7 +29,7 @@ public class RawMail implements Serializable{
 		this.featureName = featureName;
 		this.subFeature = subFeature;
 		this.featureTxnId = featureTxnId;
-		this.subject = subject;
+		this.txnId = txnId;
 		this.placeholders = placeholders;
 		this.referTable = referTable;
 		this.roleType = roleType;
@@ -37,7 +37,7 @@ public class RawMail implements Serializable{
 	}
 	
 	public RawMail(String tag, long userId, long featureId, String featureName, String subFeature,
-			String featureTxnId, String subject, Map<String, String> placeholders, String referTable,
+			String featureTxnId, String txnId, Map<String, String> placeholders, String referTable,
 			 String roleType, String receiverUserType) {
 		super();
 		this.tag = tag;
@@ -46,7 +46,7 @@ public class RawMail implements Serializable{
 		this.featureName = featureName;
 		this.subFeature = subFeature;
 		this.featureTxnId = featureTxnId;
-		this.subject = subject;
+		this.txnId = txnId;
 		this.placeholders = placeholders;
 		this.referTable = referTable;
 		this.roleType = roleType;
@@ -98,12 +98,14 @@ public class RawMail implements Serializable{
 	public void setFeatureTxnId(String featureTxnId) {
 		this.featureTxnId = featureTxnId;
 	}
-	public String getSubject() {
-		return subject;
+	public String getTxnId() {
+		return txnId;
 	}
-	public void setSubject(String subject) {
-		this.subject = subject;
+
+	public void setTxnId(String txnId) {
+		this.txnId = txnId;
 	}
+
 	public Map<String, String> getPlaceholders() {
 		return placeholders;
 	}
@@ -145,7 +147,7 @@ public class RawMail implements Serializable{
 		builder.append(", featureTxnId=");
 		builder.append(featureTxnId);
 		builder.append(", subject=");
-		builder.append(subject);
+		builder.append(txnId);
 		builder.append(", placeholders=");
 		builder.append(placeholders);
 		builder.append("]");

@@ -12,6 +12,7 @@ import com.gl.ceir.config.model.DeviceOperatorDb;
 import com.gl.ceir.config.model.constants.Constants;
 import com.gl.ceir.config.repository.DeviceLawfulDbRepository;
 import com.gl.ceir.config.repository.DeviceOperatorDbRepository;
+import com.gl.ceir.config.util.CommonFunction;
 
 @Component
 public class CustomerCareStolen implements CustomerCareTarget{
@@ -21,7 +22,8 @@ public class CustomerCareStolen implements CustomerCareTarget{
 
 	@Autowired
 	DeviceLawfulDbRepository deviceLawfulDbRepository;
-
+	@Autowired
+	CommonFunction commonFunction;
 	@Override
 	public CustomerCareDeviceState fetchDetailsByImei(String imei, CustomerCareDeviceState customerCareDeviceState) {
 
@@ -38,14 +40,14 @@ public class CustomerCareStolen implements CustomerCareTarget{
 				customerCareDeviceState.setTxnId(deviceLawfulDb.getTxnId());
 				customerCareDeviceState.setDate(deviceLawfulDb.getCreatedOn().toString());
 				customerCareDeviceState.setStatus(Constants.available);
-				customerCareDeviceState.setFeatureId(deviceLawfulDb.getFeatureId());
+				customerCareDeviceState.setFeatureId(commonFunction.getFeatureIdByTxnId(deviceLawfulDb.getTxnId()));
 			}else {
 				customerCareDeviceState.setDate("");
 				customerCareDeviceState.setStatus(Constants.non_available);
 				customerCareDeviceState.setFeatureId(0);
 			}
 		}
-
+		customerCareDeviceState.setImei(imei);
 		setName(customerCareDeviceState);
 		return customerCareDeviceState;
 	}

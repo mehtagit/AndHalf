@@ -90,7 +90,7 @@ public class EmailUtil {
 	}
 
 	public boolean saveNotification(@NonNull String tag, UserProfile userProfile, long featureId, 
-			String featureName, String subFeature, String featureTxnId, String subject, 
+			String featureName, String subFeature, String featureTxnId, String txnId, 
 			Map<String, String> placeholders, String roleType, String receiverUserType) {
 		try {
 			MessageConfigurationDb messageDB = messageConfigurationDbRepository.getByTagAndActive(tag, 0);
@@ -111,7 +111,7 @@ public class EmailUtil {
 			// Save email in notification table.
 			configurationManagementServiceImpl.saveNotification(ChannelType.EMAIL, message, 
 					userProfile.getUser().getId(), featureId, featureName, subFeature, featureTxnId, 
-					subject, 0, null, roleType, receiverUserType);
+					messageDB.getSubject().replace("<XXX>", txnId), 0, null, roleType, receiverUserType);
 
 			return Boolean.TRUE;
 		}catch (Exception e) {
@@ -126,22 +126,25 @@ public class EmailUtil {
 		if(rawMails.isEmpty()) {
 			return Boolean.TRUE;
 		}
-		
+		logger.info("List of notification need to be saved" + rawMails);
 		try {
 			for(RawMail rawMail : rawMails) {
-				String message = rawmailServiceImpl.createMailContent(rawMail);
-				if(message.isEmpty()) {
+				MessageConfigurationDb messageDb = rawmailServiceImpl.createMailContent(rawMail);
+				if(rawMail==null || messageDb.getValue().isEmpty()) {
 					continue;
 				}
-				
+				logger.info("Processing Raw Mail" + rawMail);
+				logger.info("UserProfile"+rawMail.getUserProfile());
+				logger.info("User"+rawMail.getUserProfile().getUser());
+				logger.info("UserId"+rawMail.getUserProfile().getUser().getId());
 				notifications.add(new Notification(ChannelType.EMAIL, 
-						message, 
+						messageDb.getValue(), 
 						rawMail.getUserProfile().getUser().getId(), 
 						rawMail.getFeatureId(),
 						rawMail.getFeatureName(), 
 						rawMail.getSubFeature(), 
 						rawMail.getFeatureTxnId(), 
-						rawMail.getSubject(), 
+						messageDb.getSubject().replace("<XXX>", rawMail.getTxnId()), 
 						0,
 						rawMail.getReferTable(),
 						rawMail.getRoleType(),

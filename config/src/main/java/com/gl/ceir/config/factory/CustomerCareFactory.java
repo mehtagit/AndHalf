@@ -20,10 +20,15 @@ import com.gl.ceir.config.factory.impl.CustomerCareStolen;
 import com.gl.ceir.config.factory.impl.CustomerCareTypeApprove;
 import com.gl.ceir.config.factory.impl.CustomerCareVipList;
 import com.gl.ceir.config.model.constants.Features;
+import com.gl.ceir.config.repository.BlackListRepository;
 import com.gl.ceir.config.repository.ConsignmentRepository;
+import com.gl.ceir.config.repository.DeviceDuplicateDbRepository;
+import com.gl.ceir.config.repository.GreyListRepository;
+import com.gl.ceir.config.repository.GsmaBlacklistRepository;
 import com.gl.ceir.config.repository.RegularizedDeviceDbRepository;
 import com.gl.ceir.config.repository.StockManagementRepository;
 import com.gl.ceir.config.repository.StolenAndRecoveryRepository;
+import com.gl.ceir.config.repository.TypeApproveRepository;
 
 @Component
 public class CustomerCareFactory {
@@ -86,7 +91,20 @@ public class CustomerCareFactory {
 	
 	@Autowired
 	RegularizedDeviceDbRepository regularizedDeviceDbRepository;
-
+	
+	@Autowired
+	BlackListRepository blackListRepository;
+	@Autowired
+	public GsmaBlacklistRepository gsmaBlacklistRepository;
+	
+	@Autowired
+	GreyListRepository greyListRepository;
+	@Autowired
+	DeviceDuplicateDbRepository deviceDuplicateDbRepository;
+	
+	@Autowired
+	TypeApproveRepository typeApproveRepository;
+	
 	public CustomerCareTarget getObject(String name) {
 
 		switch (name) {
@@ -125,7 +143,7 @@ public class CustomerCareFactory {
 	}
 
 	@SuppressWarnings("rawtypes")
-	public CustomerCareRepo getRepoByName(String name) {
+	public Object getRepoByName(String name) {
 
 		switch (name) {
 		case Features.CONSIGNMENT:
@@ -134,6 +152,16 @@ public class CustomerCareFactory {
 			return stockManagementRepository;
 		case Features.STOLEN_RECOVERY:
 			return stolenAndRecoveryRepository;
+		case Features.BLACK_LIST:
+			return blackListRepository;
+		case Features.GLOBAL_BLACKLIST:
+			 return gsmaBlacklistRepository;
+		case Features.GREY_LIST :
+			 return greyListRepository;
+		case Features.DUPLICATE:
+			 return deviceDuplicateDbRepository;
+		case Features.TYPE_APPROVE:
+			 return typeApproveRepository;
 		default:
 			break;
 		}

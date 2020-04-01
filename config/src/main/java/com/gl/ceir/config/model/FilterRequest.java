@@ -41,7 +41,24 @@ public class FilterRequest {
 	
 	private String imei;
 	private Long contactNumber;
+	private Integer filteredUserId;
 	
+	private String state;
+	
+	
+	
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
+	}
+	public Integer getFilteredUserId() {
+		return filteredUserId;
+	}
+	public void setFilteredUserId(Integer filteredUserId) {
+		this.filteredUserId = filteredUserId;
+	}
 	public String getSubFeatureName() {
 		return subFeatureName;
 	}

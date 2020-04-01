@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.gl.ceir.config.model.AuditTrail;
+import com.gl.ceir.config.model.ConsignmentMgmt;
 import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
@@ -74,5 +76,33 @@ public class PendingTacApprovedController {
 
 		return mapping;
 	}
-
+	
+	
+	/*
+	 * @ApiOperation(value = "pagination View filtered PendingTacApprovedDb",
+	 * response = ConsignmentMgmt.class)
+	 * 
+	 * @PostMapping("/filter/pending-tac-approveddb") public MappingJacksonValue
+	 * withPaginationConsignments(@RequestBody FilterRequest filterRequest,
+	 * 
+	 * @RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
+	 * 
+	 * @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+	 * 
+	 * @RequestParam(value = "file", defaultValue = "0") Integer file) {
+	 * 
+	 * MappingJacksonValue mapping = null; if(file == 0) {
+	 * logger.info("Request to view filtered audit trail = " + filterRequest);
+	 * Page<PendingTacApprovedDb> auditTrail =
+	 * pendingTacApprovedImpl.filterPendingTacApprovedDb(filterRequest, pageNo,
+	 * pageSize); mapping = new MappingJacksonValue(auditTrail); }else {
+	 * logger.info("Request to export filtered audit trail = " + filterRequest);
+	 * FileDetails fileDetails =
+	 * pendingTacApprovedImpl.getFilteredPendingTacApprovedDbInFile(filterRequest);
+	 * mapping = new MappingJacksonValue(fileDetails); }
+	 * 
+	 * logger.info("Response of view Request = " + mapping);
+	 * 
+	 * return mapping; }
+	 */
 }
