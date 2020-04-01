@@ -37,6 +37,9 @@ public class TagsMappingServiceImpl {
 
 	@Autowired
 	PropertiesReader propertiesReader;
+	
+	@Autowired
+	ConfigurationManagementServiceImpl configurationManagementServiceImpl;
 
 	@Autowired
 	Utility utility;
@@ -68,7 +71,7 @@ public class TagsMappingServiceImpl {
 				}
 			}
 
-			return systemConfigListDbResult;
+			return configurationManagementServiceImpl.addOtherToLastPostion(systemConfigListDbResult);
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
