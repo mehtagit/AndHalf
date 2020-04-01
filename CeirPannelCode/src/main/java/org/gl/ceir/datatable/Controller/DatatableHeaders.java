@@ -397,7 +397,7 @@ public class DatatableHeaders {
 				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
 			}
 			
-//Rule List
+//Rule feature Mapping
 			
 		
 			else if("ruleFeatureMapping".equals(role)) {

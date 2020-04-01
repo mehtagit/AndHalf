@@ -274,11 +274,9 @@ input[type='search'] {
 														<label for="Currency1"><spring:message code="input.currency" /><span class="star">*</span></label>
 														<select class="browser-default" id="Currency1"
 														oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-											        oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-															required="required">
+											            oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');">
 															<option value="" disabled selected><spring:message code="select.selectCurrency" /></option>
-
-														</select>
+														 </select>
 													</div>
 												</div>
 											</div>

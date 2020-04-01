@@ -187,18 +187,18 @@
                     </div>
 					
 					<div class="input-field col s12 m6" style="margin-top: 22px;">
-                        <input type="text" id="editdescription" name="value" pattern="[A-Za-z0-9 ]{0,200}" title="Please enter alphabets and numbers upto 200 characters only" maxlength="200">
+                        <input type="text" id="editdescription" name="value" title="Please enter alphabets and numbers upto 200 characters only" maxlength="200">
                         <label for="editdescription" class="">Description</label>
                     </div>
 
 
                     <div class="input-field col s12 m6" style="margin-top: 22px;">
-                        <input type="text" id="editInterp" name="interp" pattern="[A-Za-z0-9 ]{0,200}" title="Please enter alphabets and numbers upto 30 characters only" maxlength="30" required="required">
+                        <input type="text" id="editInterp" name="interp"  title="Please enter alphabets and numbers upto 30 characters only" maxlength="30" required="required">
                         <label for="editInterp" class="">Display Name <span class="star">*</span></label>
                     </div>
 
                     <div class="input-field col s12 m6" style="margin-top: 22px;">
-                        <input type="text" id="editFieldId" name="editField" pattern="[A-Za-z0-9 ]{0,200}" title="Please enter alphabets and numbers upto 30 characters only" maxlength="30" required="required">
+                        <input type="text" id="editFieldId" name="editField"  title="Please enter alphabets and numbers upto 30 characters only" maxlength="30" required="required">
                         <label for="editFieldId" class="">Field ID <span class="star">*</span></label>
                     </div>
 
@@ -365,7 +365,7 @@
 <script language="JavaScript">
 	sessionStorage.setItem("loginMsg",
 			"*Session has been expired");
-	window.top.location.href = "../login";
+	window.top.location.href = "./login";
 </script>
 <%
 	}

@@ -1,14 +1,9 @@
-
-/*$.getScript('../resources/project_js/CLDRPluralRuleParser.js');
-	*/
-document.addEventListener('invalid', function(e){
-$(e.target).addClass("invalid");
-   $('html, body').animate({scrollTop: $($(".invalid")[0]).offset().top - $('header').height() + 90 }, 0);
- 
-setTimeout(function() {
-$('.invalid').removeClass('invalid');
-},0);
-}, true);
+$('input').on('invalid', function(e) {
+    setTimeout(function(){
+        $('html, body').animate({scrollTop: document.documentElement.scrollTop - 15}, 0);
+       // $('html, body').animate({scrollTop: document.documentElement.scrollDown}, 0);
+    }, 0);
+});
 
 
 $('input,select,textArea,button').attr('title', window.webkitURL ? ' ' : '');

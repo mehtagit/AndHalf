@@ -5,6 +5,32 @@ public class CustomerCareRequest {
 	private String imei;
 	private String msisdn;
 	private String searchString;
+	private Integer userId;
+	private String userType;
+	private Integer userTypeId;
+	private Integer featureId;
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("CustomerCareRequest [deviceIdType=");
+		builder.append(deviceIdType);
+		builder.append(", imei=");
+		builder.append(imei);
+		builder.append(", msisdn=");
+		builder.append(msisdn);
+		builder.append(", searchString=");
+		builder.append(searchString);
+		builder.append(", userId=");
+		builder.append(userId);
+		builder.append(", userType=");
+		builder.append(userType);
+		builder.append(", userTypeId=");
+		builder.append(userTypeId);
+		builder.append(", featureId=");
+		builder.append(featureId);
+		builder.append("]");
+		return builder.toString();
+	}
 	public String getDeviceIdType() {
 		return deviceIdType;
 	}
@@ -29,11 +55,32 @@ public class CustomerCareRequest {
 	public void setSearchString(String searchString) {
 		this.searchString = searchString;
 	}
-	@Override
-	public String toString() {
-		return "CustomerCareRequest [deviceIdType=" + deviceIdType + ", imei=" + imei + ", msisdn=" + msisdn
-				+ ", searchString=" + searchString + "]";
+	public Integer getUserId() {
+		return userId;
 	}
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+	public String getUserType() {
+		return userType;
+	}
+	public void setUserType(String userType) {
+		this.userType = userType;
+	}
+	public Integer getUserTypeId() {
+		return userTypeId;
+	}
+	public void setUserTypeId(Integer userTypeId) {
+		this.userTypeId = userTypeId;
+	}
+	public Integer getFeatureId() {
+		return featureId;
+	}
+	public void setFeatureId(Integer featureId) {
+		this.featureId = featureId;
+	}
+	
 
+	
 	
 }

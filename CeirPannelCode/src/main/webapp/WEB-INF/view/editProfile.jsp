@@ -228,6 +228,32 @@ var contextpath = "${context}";
                                         <input type="hidden"  id="type" name="type"  />                         
                                 </div>
                                 
+                                <div class="input-field col s12 m6 l6" id="passportNumberDiv" style="display: none;">
+									<input placeholder="" type="text" name="passportNo" id="passportNo" readonly="readonly"
+									/>
+									<label for="passportNo"><spring:message code="registration.nationalid/passporartnumber" /> <span class="star">*</span></label>
+								</div>
+
+								<div class="input-field col s12 m6 l6" id="companyNames" style="display: none; margin-top: 22px;">
+									<input placeholder="" type="text" readonly="readonly" name="companyName" id="companyName"
+									/>
+									<label for="companyName"><spring:message code="registration.companyName" /> <span class="star">*</span></label>
+								</div>
+
+								<div class="row myRow" style="display: none;" id="uploadFile">
+									<div class="col s12 m12">
+										<h6 class="file-upload-heading"><spring:message code="registration.UploadNationalityInformation" /> <span class="star">*</span></h6>
+									<div class="input-field col s12 m6 l6">
+                                            <input type="text" name="uploadNationalId" id="file"  maxlength="30" disabled="">
+                                            <input type="hidden"  id="filePath">
+                                            
+                                <%--             <label for="uploadNationalId" class="active"><spring:message code="registration.uploadednationalid" /></label> --%>
+                                           <span> <a  href="#" onclick="previewFile2(document.getElementById('filePath').value,document.getElementById('file').value)">  <spring:message code="registration.preview" /></a> </span>   
+                                        </div>
+									</div>
+									<!-- <p style="margin-left: 15px;"><a javascript:void(0)>Download Sample Format</a></p> -->
+								</div>
+								
 								<div class="input-field col s12 m6 l6">
 									<input type="text"   placeholder="" name="email" maxlength="280"
 										class="form-control boxBorder boxHeight" id="email"
@@ -346,7 +372,15 @@ onchange="InvalidMsg(this,'select','<spring:message code="validation.selectField
 
 							
                                <div class="row">
-                            </div>    
+                            <div class="col s12 m6 l6" style="margin-bottom: 10px;">
+									<label for="vatNumber"><spring:message code="registration.vatnumber" /> <span class="star">*</span></label>
+									<div class=" boxHeight" draggable="true">
+										<label><input placeholder="" disabled="disabled"  class="with-gap vatStatus" id="vatYes" value="1" name="vatStatus" type="radio">
+											<span><spring:message code="registration.radioyes" /></span> </label> <label> 
+											<input id="vatNos" disabled="disabled" class="with-gap vatStatus" name="vatStatus" type="radio" style="margin-left: 20px;" value="0"/> <span><spring:message code="registration.radiono" /></span>
+										</label>
+									</div>
+								</div>
 								
 								<div class="input-field col s12 m6 l6" id="rolesDiv" style="display: none;">
 									<p
@@ -357,6 +391,40 @@ onchange="InvalidMsg(this,'select','<spring:message code="validation.selectField
 										<option value="" disabled><spring:message code="table.roleType" /></option>
 								</select>
 								</div>
+								
+								
+								<div class="row">
+									<div class="input-field col s12 m6 l6" style="display: none;" id="vatNumberField">
+										<input type="text" placeholder="" name="vatNo" disabled="disabled"  maxlength="12" id="vatNo" pattern="[A-Za-z0-9]{9,12}"
+										oninput="InvalidMsg(this,'input','<spring:message code="validation.12Character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.12Character" />');" 
+										>
+										<label for="vatNo"><spring:message code="registration.vatnumber" /> <span class="star">*</span></label>
+									</div>
+
+	
+							
+							
+									<div id="vatFileDiv" style="display: none;">
+										 <%-- <div class="file-field col s12 m6">
+											<p class="upload-file-label"><spring:message code="registration.vatfile" /> <span class="star">*</span></p>
+											<div class="input-field col s12 m6 l6">
+                                            <input type="text" name="uploadVatFile" id="vatFile"  maxlength="30" disabled="">
+                                            <input type="hidden"  id="vatFilePath">
+                                            
+                                            <label for="uploadNationalId" class="active"><spring:message code="registration.uploadednationalid" /></label>
+                                           <span> <a  href="#" onclick="previewFile2(document.getElementById('vatFilePath').value,document.getElementById('vatFile').value)">  <spring:message code="registration.preview" /></a> </span>   
+                                        </div>
+										</div> --%>
+										<div class="input-field col s12 m6 l6">
+							<input type="text" name="uploadVatFile" id="vatFile"  maxlength="30" disabled="">
+                                            <input type="hidden"  id="vatFilePath">
+<%-- 										<label for="vatNo"><spring:message code="registration.vatnumber" /> <span class="star">*</span></label> --%>
+									 <span> <a  href="#" onclick="previewFile2(document.getElementById('vatFilePath').value,document.getElementById('vatFile').value)">  <spring:message code="registration.preview" /></a> </span>
+									</div>
+											</div>
+								</div>
+                            </div>    
+								
 							
 								
 							</div>
@@ -516,6 +584,16 @@ onchange="InvalidMsg(this,'select','<spring:message code="validation.selectField
 		</div>
 	</div>
 	
+		<div id="viewuplodedModel" class="modal" style="overflow: hidden">
+	<a href="#!" class="modal-close waves-effect waves-green btn-flat">&times;</a>
+		<div class="modal-content">
+			<div class="row">
+					<img src="" id="fileSource" width="400" height="400">
+			</div>
+		</div>
+	</div>
+	
+	
 	  <!-- //////////////////////////////////////////////////////////////////////////// -->
 
     <!-- START MAIN -->
@@ -637,7 +715,7 @@ onchange="InvalidMsg(this,'select','<spring:message code="validation.selectField
                     <div class="row">
                         <div class="input-field col s12 center">
                             <button type="submit" id="passwordBtn" class="btn"><spring:message code="button.submit" /></button>
-                            <button class="btn modal-close" style="margin-left: 10px;"><spring:message code="button.cancel" /></button>
+                            <button type="button" class="btn modal-close" style="margin-left: 10px;"><spring:message code="button.cancel" /></button>
                         </div>
                     </div>
                     </form>
@@ -742,11 +820,10 @@ onchange="InvalidMsg(this,'select','<spring:message code="validation.selectField
         	questionDataByCategory();
         //	 $("select[required]").css({position: "absolute", display: "inline", height: 0, padding: 0, width: 0});
        populateCountries("country", "state");
-    
-       //usertypeData(); 
-       //usertypeData2(id)
+     
        editProfile();
    	
+      
    $('.modal').modal();
             /* $('.dropdown-trigger').dropdown();
             $('select').formSelect(); */
