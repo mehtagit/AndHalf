@@ -129,7 +129,6 @@ public class CEIRFeatureFileFunctions {
 		try {
 			stmt = conn.createStatement();
 			stmt.executeUpdate(query);
-			// conn.commit();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
