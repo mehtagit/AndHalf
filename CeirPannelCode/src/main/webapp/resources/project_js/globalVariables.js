@@ -1,13 +1,9 @@
-
-/*$.getScript('../resources/project_js/CLDRPluralRuleParser.js');
-	*/
 $('input').on('invalid', function(e) {
     setTimeout(function(){
         $('html, body').animate({scrollTop: document.documentElement.scrollTop - 15}, 0);
        // $('html, body').animate({scrollTop: document.documentElement.scrollDown}, 0);
     }, 0);
 });
-
 
 
 $('input,select,textArea,button').attr('title', window.webkitURL ? ' ' : '');
@@ -29,6 +25,7 @@ console.log(" fileName "+fileName+" fileType  "+fileType+" txnId "+txnId+"  doc_
 		type : 'GET',
 		success : function(data) {
 			console.log(data);
+			console.log(data.filePath);
 			if(data.url=='Not Found')
 				{
 				
@@ -37,6 +34,12 @@ console.log(" fileName "+fileName+" fileType  "+fileType+" txnId "+txnId+"  doc_
 				});
 				$('#fileErrormessage').text('')
 				$('#fileErrormessage').text($.i18n('fileNotFound'));
+				}
+			else if(data.filePath=='imageType')
+				{
+				//alert("image type");
+				$("#viewuplodedModel").openModal();
+				$("#fileSource").attr("src",data.url);
 				}
 			else{
 				console.log("file is found");

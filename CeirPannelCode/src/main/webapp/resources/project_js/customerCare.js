@@ -104,10 +104,13 @@ function stateTable(){
 			}
 		}, {
 			"data" : "featureId","defaultContent": "",render: function ( data, type, row ) {
+				console.log("data****=="+JSON.stringify(data));
+				console.log("row****=="+JSON.stringify(row));
 								if(data==0){
-									return '<i class="fa fa-eye teal-text disable eventNone" title="View"></i>'
+									return '<i class="fa fa-eye teal-text disable eventNone" onclick="setStakeHolderData(\''+row['name']+'\',\''+row['date']+'\',\''+row['featureId']+'\',\''+row['status']+'\',\''+row['txnId']+'\',\''+row['imei']+'\')" title="View"></i>'
 								}else{
-									return '<i class="fa fa-eye teal-text" title="View"></i>'
+									//alert("sss");
+									return '<i class="fa fa-eye teal-text" onclick="setStakeHolderData(\''+row['name']+'\',\''+row['date']+'\',\''+row['featureId']+'\',\''+row['status']+'\',\''+row['txnId']+'\',\''+row['imei']+'\')" title="View"></i>'
 				}
 				
 			}
@@ -158,9 +161,11 @@ function deviceTable(){
 			}
 		}, {
 			"data" : "featureId","defaultContent": "",render: function ( data, type, row ) {
-			if(data==0){
+		
+				if(data==0){
 					return '<i class="fa fa-eye teal-text disable eventNone" onclick="setStakeHolderData(\''+row['name']+'\',\''+row['date']+'\',\''+row['featureId']+'\',\''+row['status']+'\',\''+row['txnId']+'\',\''+row['imei']+'\')" title="View"></i>'
 				}else{
+					
 					return '<i class="fa fa-eye teal-text" onclick="setStakeHolderData(\''+row['name']+'\',\''+row['date']+'\',\''+row['featureId']+'\',\''+row['status']+'\',\''+row['txnId']+'\',\''+row['imei']+'\')" title="View"></i>'
 				}
 			}
@@ -298,13 +303,13 @@ function setStakeHolderData(name,date,featureId,status,txnId,imei)
 		        $("#supplierIdDiv").css("display", "block"); 
 				$("#supplierNameDiv").css("display", "block");
 				$("#invoiceNumberDiv").css("display", "block");
-				$("#SupplierId").val(data.supplierId);
-				$("#SupplierName").val(data.suplierName);
-				$("#InvoiceNumber").val(data.invoiceNumber);
-				$("#Quantity").val(data.quantity);
-				$("#TransactionId").val(data.txnId);
-				$("#csvUploadFileName").val(data.fileName);
-				$("#withdrawnRemark").val(data.remarks);
+				$("#SupplierId").val(data.data.supplierId);
+				$("#SupplierName").val(data.data.suplierName);
+				$("#InvoiceNumber").val(data.data.invoiceNumber);
+				$("#Quantity").val(data.data.quantity);
+				$("#TransactionId").val(data.data.txnId);
+				$("#csvUploadFileName").val(data.data.fileName);
+				$("#withdrawnRemark").val(data.data.remarks);
 			}
 		
 		else if(name=='Custom' && featureId==4)
@@ -322,13 +327,13 @@ function setStakeHolderData(name,date,featureId,status,txnId,imei)
 		$("#editSupplierIdDiv").css("display", "block"); 
 		$("#editSupplierNameDiv").css("display", "block");
 		$("#editSupplierNameDiv").css("display", "block");
-			$("#SupplierId").val(data.supplierId);
-			$("#SupplierName").val(data.suplierName);
-			$("#InvoiceNumber").val(data.invoiceNumber);
-			$("#Quantity").val(data.quantity);
-			$("#TransactionId").val(data.txnId);
-			$("#csvUploadFileName").val(data.fileName);
-			$("#withdrawnRemark").val(data.remarks);
+			$("#SupplierId").val(data.data.supplierId);
+			$("#SupplierName").val(data.data.suplierName);
+			$("#InvoiceNumber").val(data.data.invoiceNumber);
+			$("#Quantity").val(data.data.quantity);
+			$("#TransactionId").val(data.data.txnId);
+			$("#csvUploadFileName").val(data.data.fileName);
+			$("#withdrawnRemark").val(data.data.remarks);
 		}
 		
 		else if(name=='Custom' && featureId==3)
@@ -359,13 +364,13 @@ function setStakeHolderData(name,date,featureId,status,txnId,imei)
 		        $("#supplierIdDiv").css("display", "block"); 
 				$("#supplierNameDiv").css("display", "block");
 				$("#invoiceNumberDiv").css("display", "block");
-				$("#SupplierId").val(data.supplierId);
-				$("#SupplierName").val(data.suplierName);
-				$("#InvoiceNumber").val(data.invoiceNumber);
-				$("#Quantity").val(data.quantity);
-				$("#TransactionId").val(data.txnId);
-				$("#csvUploadFileName").val(data.fileName);
-				$("#withdrawnRemark").val(data.remarks);
+				$("#SupplierId").val(data.data.supplierId);
+				$("#SupplierName").val(data.data.suplierName);
+				$("#InvoiceNumber").val(data.data.invoiceNumber);
+				$("#Quantity").val(data.data.quantity);
+				$("#TransactionId").val(data.data.txnId);
+				$("#csvUploadFileName").val(data.data.fileName);
+				$("#withdrawnRemark").val(data.data.remarks);
 			}
 		
          else if(name=='Manufacturer') {
@@ -377,16 +382,30 @@ function setStakeHolderData(name,date,featureId,status,txnId,imei)
 			$("#supplierNameDiv").css("display", "none");
 			$("#invoiceNumberDiv").css("display", "none");
 			
-				$("#SupplierId").val(data.supplierId);
-				$("#SupplierName").val(data.suplierName);
-				$("#InvoiceNumber").val(data.invoiceNumber);
-				$("#Quantity").val(data.quantity);
-				$("#TransactionId").val(data.txnId);
-				$("#csvUploadFileName").val(data.fileName);
-				$("#withdrawnRemark").val(data.remarks);
+				$("#SupplierId").val(data.data.supplierId);
+				$("#SupplierName").val(data.data.suplierName);
+				$("#InvoiceNumber").val(data.data.invoiceNumber);
+				$("#Quantity").val(data.data.quantity);
+				$("#TransactionId").val(data.data.txnId);
+				$("#csvUploadFileName").val(data.data.fileName);
+				$("#withdrawnRemark").val(data.data.remarks);
 			}
+         else if(name=='Type Approve')
+        	 {
+        	 $("#viewtradmark").val(data.data.trademark);
+     		$("#viewmodelName").val(data.data.productNameInterp);
+     		$("#viewModelnumber").val(data.data.modelNumberInterp);
+     		$("#viewManufacturercountry").val(data.data.manufacturerCountry);
+     		$('#viewrequestDate').val(data.data.requestDate);
+     		$('#viewFrequency').val(data.data.frequencyRange);
+     		$("#viewImportertac").val(data.data.tac);
+     		$("#viewtxnId").val(data.data.txnId);
+        	 }
+		
 		
 		}
+	
+	
 		
 	});
 }
