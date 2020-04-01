@@ -45,8 +45,14 @@ public class FilterRequest {
 	
 	private String state;
 	
+	private String ruleName;
 	
-	
+	public String getRuleName() {
+		return ruleName;
+	}
+	public void setRuleName(String ruleName) {
+		this.ruleName = ruleName;
+	}
 	public String getState() {
 		return state;
 	}
