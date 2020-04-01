@@ -22,7 +22,11 @@ public enum GenericMessageTags {
 	INVALID_TXN_ID("INVALID_TXN_ID", "Txn id is not valid."),
 	FEATURE_NOT_SUPPORTED("FEATURE_NOT_SUPPORTED", "This feature is not supported."),
 	NO_DATA("NO_DATA", "No Data"),
-	USER_ALREADY_EXIST("USER_ALREADY_EXIST", "This User is already exist.");
+	USER_ALREADY_EXIST("USER_ALREADY_EXIST", "This User is already exist."),
+	DUPLICATE_IMEI("DUPLICATE_IMEI" ,"IMEI is already registered in CEIR System"),
+	REGULARISED_DEVICE_EXCEEDED("REGULARISED_DEVICE_EXCEEDED", "Regularized Devices are exceeding the allowed count."),
+	DEVICE_REGISTRATION_FAILED("DEVICE_REGISTRATION_FAILED","End user device registration have been failed."),
+	DUPLICATE_IMEI_IN_REQUEST("DUPLICATE_IMEI_IN_REQUEST" ,"Duplicate IMEI received in request");
 	//----------
 	;
 	

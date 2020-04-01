@@ -43,7 +43,7 @@ public class DeviceManufacturerDb  implements Serializable{
 	private String multipleSimStatus;
 	private String snOfDevice;
 	private String imeiEsnMeid;
-	private LocalDateTime DeviceLaunchDate;
+	private String DeviceLaunchDate;
 	private String deviceStatus;
 	private String deviceAction;
 
@@ -116,10 +116,10 @@ public class DeviceManufacturerDb  implements Serializable{
 	public void setImeiEsnMeid(String imeiEsnMeid) {
 		this.imeiEsnMeid = imeiEsnMeid;
 	}
-	public LocalDateTime getDeviceLaunchDate() {
+	public String getDeviceLaunchDate() {
 		return DeviceLaunchDate;
 	}
-	public void setDeviceLaunchDate(LocalDateTime deviceLaunchDate) {
+	public void setDeviceLaunchDate(String deviceLaunchDate) {
 		DeviceLaunchDate = deviceLaunchDate;
 	}
 	public String getDeviceStatus() {

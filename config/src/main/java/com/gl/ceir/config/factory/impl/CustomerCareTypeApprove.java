@@ -32,7 +32,7 @@ public class CustomerCareTypeApprove implements CustomerCareTarget{
 			customerCareDeviceState.setStatus(Constants.non_available);
 			customerCareDeviceState.setFeatureId(0);
 		}
-		
+		customerCareDeviceState.setImei(imei);
 		setName(customerCareDeviceState);
 		return customerCareDeviceState;
 	}

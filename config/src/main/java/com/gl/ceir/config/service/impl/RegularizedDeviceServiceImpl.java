@@ -318,10 +318,13 @@ public class RegularizedDeviceServiceImpl {
 
 			if(!endUserDB.getRegularizeDeviceDbs().isEmpty()) {
 				if(validateRegularizedDevicesCount(nid, endUserDB.getRegularizeDeviceDbs())) {
+					if(commonFunction.hasDuplicateImeiInRequest(endUserDB.getRegularizeDeviceDbs())) {
+						return new GenricResponse(6,GenericMessageTags.DUPLICATE_IMEI_IN_REQUEST.getTag(),GenericMessageTags.DUPLICATE_IMEI_IN_REQUEST.getMessage(), ""); 
+					}
 					for(RegularizeDeviceDb regularizeDeviceDb : endUserDB.getRegularizeDeviceDbs()) {
    // TODO     responsse 5
 						if(commonFunction.checkAllImeiOfRegularizedDevice(regularizeDeviceDb)) {
-							return new GenricResponse(5,"duplicateImei" ,"IMEI is already registered in CEIR System", "");
+							return new GenricResponse(5,GenericMessageTags.DUPLICATE_IMEI.getTag(),GenericMessageTags.DUPLICATE_IMEI.getMessage(), "");
 						}
 						if(Objects.isNull(regularizeDeviceDb.getTaxPaidStatus())) {
 							regularizeDeviceDb.setTaxPaidStatus(TaxStatus.TAX_NOT_PAID.getCode());
@@ -376,12 +379,12 @@ public class RegularizedDeviceServiceImpl {
 						return new GenricResponse(0, "End user device registration is sucessful.", txnId);
 					}else {
 						logger.info("End user device registration have been failed" + endUserDB);
-						return new GenricResponse(2, "End user device registration have been failed.", "");
+						return new GenricResponse(2,GenericMessageTags.DEVICE_REGISTRATION_FAILED.getTag(),GenericMessageTags.DEVICE_REGISTRATION_FAILED.getMessage(), "");
 					}
 
 				}else {
 					logger.warn("Regularized Devices are exceeding the allowed count." + endUserDB);
-					return new GenricResponse(3, "Regularized Devices are exceeding the allowed count.", "");
+					return new GenricResponse(3,GenericMessageTags.REGULARISED_DEVICE_EXCEEDED.getTag(),GenericMessageTags.REGULARISED_DEVICE_EXCEEDED.getMessage(), "");
 				}
 
 			}else {
@@ -499,7 +502,7 @@ public class RegularizedDeviceServiceImpl {
 		try {
 			String tag = null;
 			String receiverUserType = null;
-			String mailSubject = null;
+			String txnId = null;
 			EndUserDB endUserDB = null;
 			List<RawMail> rawMails = new ArrayList<>();
 			Map<String, String> placeholders = new HashMap<>();
@@ -518,12 +521,12 @@ public class RegularizedDeviceServiceImpl {
 					regularizeDeviceDb.setStatus(RegularizeDeviceStatus.APPROVED.getCode());
 					tag = "MAIL_TO_USER_ON_CEIR_DEVICE_APPROVAL";
 					receiverUserType = "End User";
-					mailSubject = MailSubject.MAIL_TO_USER_ON_CEIR_DEVICE_APPROVAL.replace("<XXX>", regularizeDeviceDb.getTxnId());
+					txnId = regularizeDeviceDb.getTxnId();
 				}else if(ceirActionRequest.getAction() == 1){
 					regularizeDeviceDb.setStatus(RegularizeDeviceStatus.REJECTED_BY_CEIR_ADMIN.getCode());
 					tag = "MAIL_TO_USER_ON_CEIR_DEVICE_DISAPPROVAL";	
 					receiverUserType = "End User";
-					mailSubject = MailSubject.MAIL_TO_USER_ON_CEIR_DEVICE_DISAPPROVAL.replace("<XXX>", regularizeDeviceDb.getTxnId());
+					txnId = regularizeDeviceDb.getTxnId();
 				}else {
 					return new GenricResponse(2, "unknown operation", "");
 				}
@@ -540,7 +543,7 @@ public class RegularizedDeviceServiceImpl {
 					Features.REGISTER_DEVICE, 
 					SubFeatures.REGISTER, 
 					regularizeDeviceDb.getTxnId(), 
-					mailSubject, 
+					txnId, 
 					placeholders,
 					ReferTable.END_USER,
 					null,

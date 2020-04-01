@@ -10,13 +10,15 @@ import com.gl.ceir.config.model.CustomerCareDeviceState;
 import com.gl.ceir.config.model.DeviceImporterDb;
 import com.gl.ceir.config.model.constants.Constants;
 import com.gl.ceir.config.repository.DeviceImporterDbRepository;
+import com.gl.ceir.config.util.CommonFunction;
 
 @Component
 public class CustomerCareImporter implements CustomerCareTarget{
 	
 	@Autowired
 	DeviceImporterDbRepository deviceImporterDbRepository;
-	
+	@Autowired
+	CommonFunction commonFunction;
 	@Override
 	public CustomerCareDeviceState fetchDetailsByImei(String imei, CustomerCareDeviceState customerCareDeviceState) {
 		
@@ -26,17 +28,16 @@ public class CustomerCareImporter implements CustomerCareTarget{
 			customerCareDeviceState.setTxnId(deviceDb.getTxnId());
 			customerCareDeviceState.setDate(deviceDb.getCreatedOn().toString());
 			customerCareDeviceState.setStatus(Constants.available);
-			customerCareDeviceState.setFeatureId(deviceDb.getFeatureId());
+			customerCareDeviceState.setFeatureId(commonFunction.getFeatureIdByTxnId(deviceDb.getTxnId()));
 		}else {
 			customerCareDeviceState.setDate("");
 			customerCareDeviceState.setStatus(Constants.non_available);
 			customerCareDeviceState.setFeatureId(0);
 		}
-		
+		customerCareDeviceState.setImei(imei);
 		setName(customerCareDeviceState);
 		return customerCareDeviceState;
 	}
-
 	@Override
 	public void setName(CustomerCareDeviceState customerCareDeviceState) {
 		customerCareDeviceState.setName("Importer");

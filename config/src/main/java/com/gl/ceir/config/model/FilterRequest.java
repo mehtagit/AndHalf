@@ -41,7 +41,14 @@ public class FilterRequest {
 	
 	private String imei;
 	private Long contactNumber;
+	private Integer filteredUserId;
 	
+	public Integer getFilteredUserId() {
+		return filteredUserId;
+	}
+	public void setFilteredUserId(Integer filteredUserId) {
+		this.filteredUserId = filteredUserId;
+	}
 	public String getSubFeatureName() {
 		return subFeatureName;
 	}

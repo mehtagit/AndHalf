@@ -33,6 +33,7 @@ public class CustomerCareBlacklist implements CustomerCareTarget{
 			customerCareDeviceState.setFeatureId(0);
 		}
 		
+		customerCareDeviceState.setImei(imei);
 		setName(customerCareDeviceState);
 		return customerCareDeviceState;
 	}

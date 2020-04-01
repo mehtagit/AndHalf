@@ -48,7 +48,7 @@ public class CustomerCareController {
 		return mapping;
 	}
 	
-	@ApiOperation(value = "View  DB's state name and txn_id.", response = GenricResponse.class)
+	@ApiOperation(value = "View Api", response = GenricResponse.class)
 	@PostMapping("/customer-care/by-txn-id")
 	public MappingJacksonValue getByTxnId(@RequestBody CustomerCareDeviceState customerCareDeviceState) {
 

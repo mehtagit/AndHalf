@@ -10,12 +10,15 @@ import com.gl.ceir.config.model.CustomerCareDeviceState;
 import com.gl.ceir.config.model.DeviceRetailerDb;
 import com.gl.ceir.config.model.constants.Constants;
 import com.gl.ceir.config.repository.DeviceRetailerDbRepository;
+import com.gl.ceir.config.util.CommonFunction;
 
 @Component
 public class CustomerCareRetailer implements CustomerCareTarget{
 	
 	@Autowired
 	DeviceRetailerDbRepository deviceRetailerDbRepository;
+	@Autowired
+	CommonFunction commonFunction;
 	
 	@Override
 	public CustomerCareDeviceState fetchDetailsByImei(String imei, CustomerCareDeviceState customerCareDeviceState) {
@@ -26,13 +29,13 @@ public class CustomerCareRetailer implements CustomerCareTarget{
 			customerCareDeviceState.setTxnId(deviceDb.getTxnId());
 			customerCareDeviceState.setDate(deviceDb.getCreatedOn().toString());
 			customerCareDeviceState.setStatus(Constants.available);
-			customerCareDeviceState.setFeatureId(deviceDb.getFeatureId());
+			customerCareDeviceState.setFeatureId(commonFunction.getFeatureIdByTxnId(deviceDb.getTxnId()));
 		}else {
 			customerCareDeviceState.setDate("");
 			customerCareDeviceState.setStatus(Constants.non_available);
 			customerCareDeviceState.setFeatureId(0);
 		}
-		
+		customerCareDeviceState.setImei(imei);
 		setName(customerCareDeviceState);
 		return customerCareDeviceState;
 	}

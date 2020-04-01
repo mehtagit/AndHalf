@@ -27,8 +27,13 @@ import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.PolicyBreachNotification;
 import com.gl.ceir.config.model.constants.GenericMessageTags;
+import com.gl.ceir.config.repository.BlackListRepository;
+import com.gl.ceir.config.repository.DeviceDuplicateDbRepository;
 import com.gl.ceir.config.repository.DeviceUsageDbRepository;
+import com.gl.ceir.config.repository.GreyListRepository;
+import com.gl.ceir.config.repository.GsmaBlacklistRepository;
 import com.gl.ceir.config.repository.PolicyBreachNotificationRepository;
+import com.gl.ceir.config.repository.TypeApproveRepository;
 import com.gl.ceir.config.util.Utility;
 
 @Service
@@ -95,8 +100,8 @@ public class CustomerCareServiceImpl {
 			}
 
 			Object objectBytxnId = null;
-			CustomerCareRepo repository = null;
-
+			//CustomerCareRepo repository = null;
+			Object repository = null;
 			// Getting repository from factory.
 			if(customerCareDeviceState.getFeatureId() == 0)
 				repository = customerCareFactory.getRepoByName(customerCareDeviceState.getName());
@@ -108,9 +113,35 @@ public class CustomerCareServiceImpl {
 				logger.info(GenericMessageTags.FEATURE_NOT_SUPPORTED.getMessage() +" txnId [" + customerCareDeviceState.getTxnId() + "]");
 				return new GenricResponse(2, GenericMessageTags.FEATURE_NOT_SUPPORTED.getTag(), GenericMessageTags.FEATURE_NOT_SUPPORTED.getMessage(), customerCareDeviceState.getTxnId());
 			}
+			if(repository instanceof CustomerCareRepo) {
+				CustomerCareRepo customerCareRepo = (CustomerCareRepo)repository;
+				objectBytxnId = customerCareRepo.getByTxnId(customerCareDeviceState.getTxnId());
+			}else {
+				if(repository instanceof BlackListRepository) {
+					BlackListRepository blackListRepository = (BlackListRepository)repository;
+					objectBytxnId = blackListRepository.findByImeiMsisdnIdentityImei(customerCareDeviceState.getImei());
+				}
+				else if(repository instanceof GreyListRepository) {
+					GreyListRepository greyListRepository = (GreyListRepository)repository;
+					objectBytxnId = greyListRepository.findByImei(customerCareDeviceState.getImei());
+				}
+				else if(repository instanceof DeviceDuplicateDbRepository) {
+					DeviceDuplicateDbRepository deviceDuplicateDbRepository = (DeviceDuplicateDbRepository)repository;
+					objectBytxnId = deviceDuplicateDbRepository.findByImeiMsisdnIdentityImei(customerCareDeviceState.getImei());
+				}
+				else if(repository instanceof GsmaBlacklistRepository) {
+					GsmaBlacklistRepository gsmaBlacklistRepository = (GsmaBlacklistRepository)repository;
+					objectBytxnId = gsmaBlacklistRepository.getByDeviceid(customerCareDeviceState.getImei());
+				}
+				else if(repository instanceof TypeApproveRepository) { TypeApproveRepository
+					typeApproveRepository = (TypeApproveRepository)repository; objectBytxnId =
+					typeApproveRepository.getByTac(customerCareDeviceState.getImei().substring(0,7)); 
+				}else {
+					logger.info(GenericMessageTags.FEATURE_NOT_SUPPORTED.getMessage() +" txnId [" + customerCareDeviceState.getTxnId() + "]");
+					return new GenricResponse(2, GenericMessageTags.FEATURE_NOT_SUPPORTED.getTag(), GenericMessageTags.FEATURE_NOT_SUPPORTED.getMessage(), customerCareDeviceState.getTxnId());
+				}
 
-			objectBytxnId = repository.getByTxnId(customerCareDeviceState.getTxnId());
-
+			}
 			if(Objects.isNull(objectBytxnId)) {
 				logger.info(GenericMessageTags.INVALID_TXN_ID.getMessage() +" txnId [" + customerCareDeviceState.getTxnId() + "]");
 				return new GenricResponse(3, GenericMessageTags.INVALID_TXN_ID.getTag(), GenericMessageTags.INVALID_TXN_ID.getMessage(), customerCareDeviceState.getTxnId());

@@ -47,6 +47,8 @@ public class MessageConfigurationDb implements Serializable {
 	@NotNull
 	private Integer active;
 	
+	private String subject;
+	
 	public Long getId() {
 		return id;
 	}
@@ -104,7 +106,12 @@ public class MessageConfigurationDb implements Serializable {
 	public void setActive(Integer active) {
 		this.active = active;
 	}
-
+	public String getSubject() {
+		return subject;
+	}
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();

@@ -713,14 +713,14 @@ public class StockServiceImpl {
 			if("CEIRADMIN".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())){
 				String mailTag = null;
 				String action = null;
-				String mailSubject = null;
+				String txnId = null;
 				String receiverUserType = stockMgmt.getUserType();
 
 				if(consignmentUpdateRequest.getAction() == 0) {
 					action = SubFeatures.ACCEPT;
 					mailTag = "STOCK_APPROVED_BY_CEIR_ADMIN"; 
 					
-					mailSubject = MailSubject.STOCK_APPROVED_BY_CEIR_ADMIN.replace("<XXX>", stockMgmt.getTxnId());
+					txnId = stockMgmt.getTxnId();
 
 					placeholderMap.put("<Custom first name>", firstName);
 					placeholderMap.put("<txn_name>", stockMgmt.getTxnId());
@@ -729,7 +729,7 @@ public class StockServiceImpl {
 				}else {
 					action = SubFeatures.REJECT;
 					mailTag = "STOCK_REJECT_BY_CEIR_ADMIN";
-					mailSubject = MailSubject.STOCK_REJECT_BY_CEIR_ADMIN.replace("<XXX>", stockMgmt.getTxnId());
+					txnId =  stockMgmt.getTxnId();
 
 					placeholderMap.put("<Custom first name>", firstName);
 					placeholderMap.put("<txn_name>", stockMgmt.getTxnId());
@@ -749,7 +749,7 @@ public class StockServiceImpl {
 							Features.STOCK,
 							action,
 							consignmentUpdateRequest.getTxnId(),
-							mailSubject,
+							txnId,
 							placeholderMap,
 							stockMgmt.getRoleType(),
 							receiverUserType);
@@ -759,14 +759,14 @@ public class StockServiceImpl {
 			}else if("CEIRSYSTEM".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())){
 				String mailTag = null;
 				String action = null;
-				String mailSubject = null;
+				String txnId = null;
 				String receiverUserType = stockMgmt.getUserType();
 
 				if(consignmentUpdateRequest.getAction() == 0) {
 					action = SubFeatures.ACCEPT;
 					mailTag = "STOCK_PROCESS_SUCCESS_TO_USER_MAIL"; 
 					
-					mailSubject = MailSubject.STOCK_PROCESS_SUCCESS_TO_USER_MAIL.replace("<XXX>", stockMgmt.getTxnId());
+					txnId = stockMgmt.getTxnId();
 
 					placeholderMap.put("<First name>", firstName);
 					placeholderMap.put("<txn_name>", stockMgmt.getTxnId());
@@ -775,7 +775,7 @@ public class StockServiceImpl {
 				}else {
 					action = SubFeatures.REJECT;
 					mailTag = "STOCK_PROCESS_FAILED_TO_USER_MAIL";
-					mailSubject = MailSubject.STOCK_PROCESS_FAILED_TO_USER_MAIL.replace("<XXX>", stockMgmt.getTxnId());
+					txnId = stockMgmt.getTxnId();
 
 					placeholderMap.put("<First name>", firstName);
 					placeholderMap.put("<txn_name>", stockMgmt.getTxnId());
@@ -795,7 +795,7 @@ public class StockServiceImpl {
 							Features.STOCK,
 							action,
 							consignmentUpdateRequest.getTxnId(),
-							mailSubject,
+							txnId,
 							placeholderMap,
 							stockMgmt.getRoleType(),
 							receiverUserType);
