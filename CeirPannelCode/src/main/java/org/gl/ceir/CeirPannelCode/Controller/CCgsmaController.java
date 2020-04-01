@@ -20,8 +20,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 
-import CeirPannelCode.Model.Register_UploadPaidStatus;
-
 @Controller
 public class CCgsmaController {
 	private final Logger log = LoggerFactory.getLogger(getClass());

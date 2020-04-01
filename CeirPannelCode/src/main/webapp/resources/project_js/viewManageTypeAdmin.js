@@ -368,6 +368,7 @@ function setImporterEditPopupData(data){
 				$('#modelNumber').val(model);
 			});
 	
+	
 	//setTimeout(function(){ $('#modelNumber').val(data.modelNumber); },200);
 	$("#editmanufacturercountry").val(data.manufacturerCountry);
 	$('#editfrequency').val(data.frequencyRange)
@@ -395,14 +396,29 @@ function setImporterEditPopupData(data){
 
 
 function setUploadedFiles(data){
+	var max_fields =localStorage.getItem("maxCount");
+	var wrapper = $(".mainDiv"); //Fields wrapper
+	var add_button = $(".add_field_button"); //Add button ID
+	var x = 1; //initlal text box count
+	var id = 2;
+	var wrapper = $(".mainDiv");
 	var result = data;
-	console.log("result --->" +JSON.stringify(result));
 	var importerViewResponse = [];
 	importerViewResponse.push(result);
 	for(var i=0; i< importerViewResponse.length; i++)
 	{
 		for (var j=0 ; j < importerViewResponse[i]["attachedFiles"].length; j++){
-			alert(importerViewResponse[i].attachedFiles[j].docType+"---------"+importerViewResponse[i].attachedFiles[j].fileName)	
+			if((importerViewResponse[i].attachedFiles[j].docType.length == 0 ) || (importerViewResponse[i].attachedFiles[j].fileName.length == 0 )){
+		
+				var placeholderValue= $.i18n('selectFilePlaceHolder');
+				if (x < max_fields) { //max input box allowed
+					x++
+				$(wrapper).append(
+				        '<div id="filediv'+id+'" class="fileDiv"><div class="row"><div class="file-field col s12 m6"><label for="Category">'+$.i18n('documenttype')+'</label><select id="docTypetag'+id+'"  class="browser-default"> <option value="" disabled selected>'+$.i18n('selectDocumentType')+' </option></select><select id="docTypetagValue'+id+'" style="display:none" class="browser-default"> <option value="" disabled selected>'+$.i18n('selectDocumentType')+' </option></select></div><div class="file-field col s12 m6" style="margin-top: 23px;"><div class="btn"><span>'+$.i18n('selectfile')+'</span><input id="docTypeFile'+id+'" type="file"  name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" placeholder="'+placeholderValue+'" type="text"></div></div>  <div style="cursor:pointer;background-color:red;margin-right: 1.7%;" class="remove_field btn right btn-info">-</div></div></div>'
+					); 
+				}
+			}
+			
 			$("#docTypetag1").val(importerViewResponse[i].attachedFiles[j].docType);
 			$("#fileName").val(importerViewResponse[i].attachedFiles[j].fileName);
 		}

@@ -143,7 +143,7 @@
                                                 <select class="browser-default" id = "userPeriod"
                                      onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" 
                                      oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" required>
-                                                    <option value="" disabled selected>select Period</option>
+                                                    <option value="" disabled selected>Select Period</option>
                                            	</select>
                                             </div>
                                    
@@ -152,7 +152,7 @@
                                         <div class="row">
                                             <div class="input-field col s12 center" style="padding: 20px 0;">
                                                 <!-- <a href="#submitIMEI" class="btn modal-trigger">Submit</a>  -->
-                                                 <button class=" btn" type="submit"><spring:message code="button.submit" /></button>
+                                                 <button class="btn" type="submit"><spring:message code="button.submit" /></button>
                                                	<button type="button" class="btn modal-close" style="margin-left: 10px;" title=" "><spring:message code="button.cancel" /></button>
                                             </div>
 
@@ -255,6 +255,8 @@
 		src="${context}/resources/project_js/disable_inspectElement.js"></script> --%>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/userFeatureMapping.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/project_js/validationMsg.js"></script>	
 	<script type="text/javascript"
 		src="${context}/resources/project_js/_dateFunction.js" async></script>
 			<script type="text/javascript"

@@ -400,7 +400,7 @@ public @ResponseBody ConfigContentModel viewAdminFeign(FilterRequest filterReque
 				public Object ccdashBoardNotification(@RequestBody CustomerCareRequest filterRequest,
 						@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
 						@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize);
-				
+
 				
 				@PostMapping("/customer-care/by-txn-id")
 				public @ResponseBody GenricResponse customerCareViaTxnId( @RequestBody CustomerCareByTxnId customerCareDeviceState);

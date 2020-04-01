@@ -1,8 +1,5 @@
 package org.gl.ceir.pagination.model;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.stereotype.Component;
 
 @Component
@@ -13,8 +10,8 @@ public class UserfeatureContent {
 	private String modifiedOn;
 	private String usertypeInterp;
 	private String featureInterp;
-	private String period;
-	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+	private Integer period;
+	private String periodInterp;
 	public Integer getId() {
 		return id;
 	}
@@ -45,25 +42,37 @@ public class UserfeatureContent {
 	public void setFeatureInterp(String featureInterp) {
 		this.featureInterp = featureInterp;
 	}
-	public String getPeriod() {
+	public Integer getPeriod() {
 		return period;
 	}
-	public void setPeriod(String period) {
+	public void setPeriod(Integer period) {
 		this.period = period;
 	}
-	public Map<String, Object> getAdditionalProperties() {
-		return additionalProperties;
+	public String getPeriodInterp() {
+		return periodInterp;
 	}
-	public void setAdditionalProperties(Map<String, Object> additionalProperties) {
-		this.additionalProperties = additionalProperties;
+	public void setPeriodInterp(String periodInterp) {
+		this.periodInterp = periodInterp;
 	}
 	@Override
 	public String toString() {
-		return "UserfeatureContent [id=" + id + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn
-				+ ", usertypeInterp=" + usertypeInterp + ", featureInterp=" + featureInterp + ", period=" + period
-				+ ", additionalProperties=" + additionalProperties + "]";
-	}
-	
-	
+		StringBuilder builder = new StringBuilder();
+		builder.append("UserfeatureContent [id=");
+		builder.append(id);
+		builder.append(", createdOn=");
+		builder.append(createdOn);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
+		builder.append(", usertypeInterp=");
+		builder.append(usertypeInterp);
+		builder.append(", featureInterp=");
+		builder.append(featureInterp);
+		builder.append(", period=");
+		builder.append(period);
+		builder.append(", periodInterp=");
+		builder.append(periodInterp);
+		builder.append("]");
+		return builder.toString();
+	} 
 	
 }

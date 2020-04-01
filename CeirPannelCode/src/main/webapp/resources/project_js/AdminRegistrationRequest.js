@@ -394,6 +394,7 @@
 
 
 	function previewFile(srcFilePath,srcFileName){
+		
 		window.filePath = srcFilePath;
 		window.fileName = srcFileName;
 		window.fileExtension = fileName.replace(/^.*\./, '');

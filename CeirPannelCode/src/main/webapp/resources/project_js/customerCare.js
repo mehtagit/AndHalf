@@ -10,6 +10,7 @@ var imei = $("body").attr("data-imei");
 var identifierType = $("body").attr("data-deviceIdType");
 var deviceIdType = identifierType.replace(" ","_");
 
+
 $.i18n().locale = lang;
 
 
@@ -83,7 +84,6 @@ function stateTable(){
 			'type' : 'POST',
 			"contentType" : "application/json",
 			 data : function(data) {
-				 console.log("state" +JSON.stringify(data));
 				 console.log(JSON.stringify(customerCareRequest));
 				 return JSON.stringify(customerCareRequest);
 			},
@@ -97,7 +97,7 @@ function stateTable(){
 		}, {
 			"data" : "status","defaultContent": "",render: function ( data, type, row ) {
 								if(data=="N"){
-									return '<i class="fa fa-times-circle-o red-text"  title="Rejected"></i>'
+									return '<i class="fa fa-times-circle-o red-text" title="Rejected"></i>'
 								}else{
 									return '<i class="fa fa-check-circle-o green-text" title="Approved"></i>'
 								}
@@ -138,16 +138,9 @@ function deviceTable(){
 			'type' : 'POST',
 			"contentType" : "application/json",
 			 data : function(data) {
-				 var result = data;
-				 console.log("result" +JSON.stringify(result));
-				 
-				 //console.log(JSON.stringify(customerCareRequest));
+				 console.log(JSON.stringify(customerCareRequest));
 				 return JSON.stringify(customerCareRequest);
 			},
-			dataFilter: function(response){
-				console.log("response- " +response)
-				return response;
-			}
 			
 		},
 		
@@ -157,7 +150,6 @@ function deviceTable(){
 			"data" : "date","defaultContent": ""
 		}, {
 			"data" : "status","defaultContent": "",render: function ( data, type, row ) {
-				//console.log("----------------"+data);
 				if(data=="N"){
 					return '<i class="fa fa-times-circle-o red-text" title="Rejected"></i>'
 				}else{
@@ -166,14 +158,11 @@ function deviceTable(){
 			}
 		}, {
 			"data" : "featureId","defaultContent": "",render: function ( data, type, row ) {
-				console.log(JSON.stringify(row['name']))
-				//console.log("response:::::::::::::::"+JSON.stringify($('#DeviceTable').DataTable().rows($('#DeviceTable').DataTable().row(this).index()).data()[row]));
-				if(data==0){
+			if(data==0){
 					return '<i class="fa fa-eye teal-text disable eventNone" onclick="setStakeHolderData(\''+row['name']+'\',\''+row['date']+'\',\''+row['featureId']+'\',\''+row['status']+'\',\''+row['txnId']+'\',\''+row['imei']+'\')" title="View"></i>'
 				}else{
 					return '<i class="fa fa-eye teal-text" onclick="setStakeHolderData(\''+row['name']+'\',\''+row['date']+'\',\''+row['featureId']+'\',\''+row['status']+'\',\''+row['txnId']+'\',\''+row['imei']+'\')" title="View"></i>'
 				}
-
 			}
 		
 		}]
@@ -187,7 +176,11 @@ function notificationTable(){
 	var filterRequest={
 			"imei" : $("body").attr("data-imei"),
 			"msisdn" : $("body").attr("data-msisdn"),
-			"deviceIdType" : $("body").attr("data-deviceIdType")
+			"deviceIdType" : $("body").attr("data-deviceIdType"),
+			"userType" : $("body").attr("data-roleType"),
+			"userId" : $("body").attr("data-userID"),
+			"featureId" : 26,
+			"userTypeId":$("body").attr("data-userTypeID"),
 		}
 
 if(lang=='km'){
@@ -216,7 +209,6 @@ success: function(result){
 			type: 'POST',
 			dataType: "json",
 			data : function(d) {
-				console.log("d " +d);
 				d.filter = JSON.stringify(filterRequest); 
 				console.log(JSON.stringify(filterRequest));
 			}
@@ -246,7 +238,6 @@ error: function (jqXHR, textStatus, errorThrown) {
 	
 	
 }
-
 
 
 
@@ -408,3 +399,4 @@ $('#viewStockModal').closeModal();
 	$(".lean-overlay").remove();
 
 }
+
