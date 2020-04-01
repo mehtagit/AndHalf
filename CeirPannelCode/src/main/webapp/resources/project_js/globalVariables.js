@@ -167,3 +167,19 @@ $("input[type=file]").keypress(function(ev) {
 			window.open(FinalLink);
 		}
 	}
+	
+	
+	
+	
+	function messageWindow(message){
+		fadetime=2000;
+		window.parent.$("#modalMessageBody").empty();
+		window.parent.$("#modalMessageBody").append(' <label id="success" style="color: red;font-size:14px;">'+message+'</label>');
+		window.parent.$('#error_Modal').openModal();
+
+		window.parent.$('#error_Modal').fadeIn().delay(fadetime).fadeOut();
+		setTimeout(function() {
+			window.parent.$('#error_Modal').closeModal();
+		}, fadetime);
+		
+	}
