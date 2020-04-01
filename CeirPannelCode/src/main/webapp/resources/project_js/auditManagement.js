@@ -21,8 +21,11 @@ function auditManagementDatatable(){
 	
 	var roleDropDown =  document.getElementById("roleType");
 	var userTypeInterp = roleDropDown.options[roleDropDown.selectedIndex].text;
-	
 	var userType = $('#roleType').val()=='' ? null : userTypeInterp;
+	
+	var feature = document.getElementById("feature");
+	var featureName = feature.options[feature.selectedIndex].text;
+	
 	var filterRequest={
 			
 			//"userId":parseInt(userId),
@@ -33,12 +36,14 @@ function auditManagementDatatable(){
 			"startDate" : $("#startDate").val(),
 			"endDate" : $("#endDate").val(),
 			"txnId" : $("#transactionID").val(),
-			"featureName" : $("#feature").val(),
+			"featureName" : featureName,
 			"subFeatureName" : $("#subFeature").val(),
 			"userName" : $("#userName").val()
 			
 			
 	}
+	
+	console.log("filterRequest-->" +JSON.stringify(filterRequest));
 	$.ajax({
 		url: 'headers?type=auditManagement',
 		type: 'POST',
@@ -155,6 +160,13 @@ function setAllDropdown(){
 		for (i = 0; i < data.length; i++) {
 			$('<option>').val(data[i].id).text(data[i].usertypeName)
 			.appendTo('#roleType');
+		}
+	});
+	
+	
+	$.getJSON('./getAllfeatures', function(data) {
+		for (i = 0; i < data.length; i++) {
+		$('<option>').val(data[i].id).text(data[i].name).appendTo('#feature');
 		}
 	});
 }

@@ -408,8 +408,9 @@ function setUploadedFiles(data){
 	for(var i=0; i< importerViewResponse.length; i++)
 	{
 		for (var j=0 ; j < importerViewResponse[i]["attachedFiles"].length; j++){
-			if((importerViewResponse[i].attachedFiles[j].docType.length == 0 ) || (importerViewResponse[i].attachedFiles[j].fileName.length == 0 )){
-		
+			
+			alert("Document Type----->"+importerViewResponse[i].attachedFiles[j].docType.length+" File Name--->"+importerViewResponse[i].attachedFiles[j].fileName.length)
+			if((importerViewResponse[i].attachedFiles[j].docType.length == 2 ) || (importerViewResponse[i].attachedFiles[j].fileName.length == 2 )){
 				var placeholderValue= $.i18n('selectFilePlaceHolder');
 				if (x < max_fields) { //max input box allowed
 					x++
@@ -417,6 +418,9 @@ function setUploadedFiles(data){
 				        '<div id="filediv'+id+'" class="fileDiv"><div class="row"><div class="file-field col s12 m6"><label for="Category">'+$.i18n('documenttype')+'</label><select id="docTypetag'+id+'"  class="browser-default"> <option value="" disabled selected>'+$.i18n('selectDocumentType')+' </option></select><select id="docTypetagValue'+id+'" style="display:none" class="browser-default"> <option value="" disabled selected>'+$.i18n('selectDocumentType')+' </option></select></div><div class="file-field col s12 m6" style="margin-top: 23px;"><div class="btn"><span>'+$.i18n('selectfile')+'</span><input id="docTypeFile'+id+'" type="file"  name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" placeholder="'+placeholderValue+'" type="text"></div></div>  <div style="cursor:pointer;background-color:red;margin-right: 1.7%;" class="remove_field btn right btn-info">-</div></div></div>'
 					); 
 				}
+			}else{
+				
+				alert("in else part")
 			}
 			
 			$("#docTypetag1").val(importerViewResponse[i].attachedFiles[j].docType);

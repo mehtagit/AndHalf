@@ -14,6 +14,8 @@ var transactionIDValue= txnIdValue == 'null' ? $('#transactionID').val() : txnId
 
 
 
+
+
 function fileDownload(fileName,fileType,txnId,doc_TypeTag)
 {
 	fileName=fileName.split("%20").join(" ");
@@ -25,6 +27,7 @@ console.log(" fileName "+fileName+" fileType  "+fileType+" txnId "+txnId+"  doc_
 		type : 'GET',
 		success : function(data) {
 			console.log(data);
+			console.log(data.filePath);
 			if(data.url=='Not Found')
 				{
 				
@@ -33,6 +36,12 @@ console.log(" fileName "+fileName+" fileType  "+fileType+" txnId "+txnId+"  doc_
 				});
 				$('#fileErrormessage').text('')
 				$('#fileErrormessage').text($.i18n('fileNotFound'));
+				}
+			else if(data.filePath=='imageType')
+				{
+				//alert("image type");
+				$("#viewuplodedModel").openModal();
+				$("#fileSource").attr("src",data.url);
 				}
 			else{
 				console.log("file is found");
@@ -166,4 +175,20 @@ $("input[type=file]").keypress(function(ev) {
 		}else{
 			window.open(FinalLink);
 		}
+	}
+	
+	
+	
+	
+	function messageWindow(message){
+		fadetime=2000;
+		window.parent.$("#modalMessageBody").empty();
+		window.parent.$("#modalMessageBody").append(' <label id="success" style="color: red;font-size:14px;">'+message+'</label>');
+		window.parent.$('#error_Modal').openModal();
+
+		window.parent.$('#error_Modal').fadeIn().delay(fadetime).fadeOut();
+		setTimeout(function() {
+			window.parent.$('#error_Modal').closeModal();
+		}, fadetime);
+		
 	}

@@ -405,6 +405,110 @@ data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeI
 			</form>
 		</div>
 	</div>
+	
+	<div id="viewImporterModal" class="modal" style="overflow-y: hidden;">
+			<h6 class="modal-header">
+				<spring:message code="input.ViewType" />
+			</h6>
+			<div class="modal-content">
+
+
+
+
+				<div class="row" style="margin-top: 10px;">
+					<div class="input-field col s12 m6 l6">
+						<input type="text" id="viewtradmark" name="tradmark"
+							placeholder="" disabled=""> <label for="viewtradmark"
+							class="active"><spring:message code="input.Trademark" /></label>
+					</div>
+					
+					<div class="input-field col s12 m6 l6">
+						<input type="text" id="viewtxnId" name="transactioId"
+							placeholder="" disabled=""> <label for="viewtxnId"
+							class="active"><spring:message code="table.transactionID" /></label>
+					</div>
+
+					<div class="input-field col s12 m6 l6">
+						<input type="text" id="viewmodelName" name="modelName"
+							placeholder="" disabled="disabled"> <label
+							for="viewmodelName" class="active"><spring:message
+								code="input.modelName" /> <span class="star"></span></label>
+					</div>
+
+					<div class="input-field col s12 m6 l6">
+						<input type="text" id="viewModelnumber" name="modelNumber"
+							placeholder="" disabled="disabled"> <label
+							for="viewModelnumber" class="active"><spring:message
+								code="input.modelNumber" /> <span class="star"></span></label>
+					</div>
+
+					
+
+
+					<!-- <div class="input-field col s12 m6 l6">
+						<input type="text" id="viewDeviceType" name="deviceType"
+							placeholder="" disabled=""> <label
+							for="deviceType" class="active">Device Type </label>
+					</div> -->
+
+
+				</div>
+
+				<!-- <div class="row" style="margin-top: 5px;">
+					<div class="input-field col s12 m6 l6">
+						<input type="text" id="viewdeviceTypeID" name="deviceType"
+							placeholder="" disabled=""> <label for="deviceType"
+							class="active">Device ID Type</label>
+					</div> -->
+
+
+				<div class="row">
+
+					<div class="input-field col s12 m6 l6">
+						<input type="text" id="viewFrequency" name="tac" placeholder=""
+							disabled=""> <label for="viewFrequency" class="active"><spring:message
+								code="input.frequency" /></label>
+					</div>
+
+					<div class="input-field col s12 m6 l6">
+						<input type="text" id="viewImportertac" name="tac" placeholder=""
+							disabled=""> <label for="tac" class="active"><spring:message
+								code="input.TAC" /></label>
+					</div>
+				</div>
+				
+				<div class="input-field col s12 m6 l6" style="width: 402px;margin-left: 1px;">
+						<input type="text" id="viewManufacturercountry" name="Country" style="padding-left: 8px;"
+							placeholder="" disabled=""> <label
+							for="viewManufacturercountry" class="active"><spring:message
+								code="input.Country" /></label>
+				</div>
+				<div class="modal-content">
+					<div id="live-chat">
+						<div class="chat">
+							<div class="chat-history">
+								<div class="chat-message clearfix" id="chatMsg" style="cursor: pointer;"></div>
+								<!-- end chat-message -->
+
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row ">
+				<div class="center  popup-btn-div" style="margin-top: 10px;">
+					<button class="modal-close btn" type="button" id="Cancel"
+						style="margin-left: 10px;">
+						<spring:message code="modal.close" />
+					</button>
+				</div>
+
+
+
+			</div>
+		</div>
+	
 
 
 

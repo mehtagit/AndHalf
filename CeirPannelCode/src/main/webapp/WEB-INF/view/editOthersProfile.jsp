@@ -818,6 +818,15 @@ var contextpath = "${context}";
 		</div>
 	</div>
 
+
+<!-- 	Error Modal -->
+	<div class="modal" id="modal212" role="dialog">
+		<div class="modal-dialog">
+			<div class="row" id="modalMessageBody"
+					style="text-align: center; color: black;"></div>
+			
+		</div>
+	</div>
 	<!-- Modal End -->
 	
 	<!-- ================================================
@@ -864,7 +873,8 @@ var contextpath = "${context}";
 		src="${context}/resources/project_js/enterKey.js"></script>
 	 	<script type="text/javascript"
 		src="${context}/resources/project_js/validationMsg.js"></script>
-		
+					    <script type="text/javascript"
+		src="${context}/resources/project_js/messageWindow.js"></script>  
 <script> 
     var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 	window.parent.$('#langlist').on('change', function() {

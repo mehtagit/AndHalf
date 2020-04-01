@@ -165,7 +165,7 @@ section {
 
 		<div class="row card-panel">
 			<div class="container-fluid pageHeader">
-				<p class="PageHeading"><spring:message code="modal.header.formList" /></p>
+				<p class="PageHeading"><spring:message code="view.Field" /></p>
 			</div>
 			<div class="row">
 				<div class="col s12 m12" style="margin-top: 20px;">

@@ -500,8 +500,10 @@ function updateProfile(){
 					'en': './resources/i18n/en.json',
 					'km': './resources/i18n/km.json'
 				}).done( function() {
-					$("#registrationForm #errorMsg").text($.i18n(response.tag));
+					//$("#registrationForm #errorMsg").text($.i18n(response.tag));
+					
 					$("#passwordModal").closeModal();
+					messageWindow($.i18n(response.tag));
 				});
 			}
 			$("#passwordBtn").prop('disabled', false);

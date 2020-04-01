@@ -86,9 +86,10 @@ public class PolicyConfigDatatable {
 					   Object period = dataInsideList.getPeriod();
 					   Object statusInterp = dataInsideList.getStatusInterp();
 					   String Status = String.valueOf(dataInsideList.getStatus());
+					   String type = String.valueOf(dataInsideList.getType());
 					   String policyOrder =String.valueOf(dataInsideList.getPolicyOrder());
 					   String userStatus = (String) session.getAttribute("userStatus");
-					   String action=iconState.policyConfigIcons(userStatus,tag,Status);			   
+					   String action=iconState.policyConfigIcons(userStatus,tag,Status,type);			   
 					   Object[] finalData={createdOn,modifiedOn,description,value,period,statusInterp,action}; 
 						List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 						finalList.add(finalDataList);
