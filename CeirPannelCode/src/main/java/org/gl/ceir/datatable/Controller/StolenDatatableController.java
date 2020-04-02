@@ -286,7 +286,7 @@ public class StolenDatatableController {
 		List<InputFields> inputTypeDateList = new ArrayList<>();
 		if(("Operator".equals(userType) ||"CEIRAdmin".equals(userType)) && !"5".equals(featureId)) {
 			pageElement.setPageTitle(Translator.toLocale("view.BlockUnblockDevices"));
-		}else if(("CEIRAdmin".equals(userType)) && "5".equals(featureId))  {
+		}else if(("CEIRAdmin".equals(userType)) || (userType.equals("Lawful Agency")) && "5".equals(featureId))  {
 			pageElement.setPageTitle(Translator.toLocale("view.StolenRecovery"));
 		}
 		else {

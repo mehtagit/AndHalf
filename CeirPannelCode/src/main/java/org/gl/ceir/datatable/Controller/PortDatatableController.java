@@ -90,13 +90,14 @@ public class PortDatatableController {
 				{
 				   String id =  String.valueOf(dataInsideList.getId());	
 				   String createdOn = dataInsideList.getCreatedOn();
+				   String modifiedOn = dataInsideList.getModifiedOn();
 				   String port = String.valueOf(dataInsideList.getPort());
 				   String address = dataInsideList.getAddress();
 				   String portInterp = dataInsideList.getPortInterp();
 				   String userStatus = (String) session.getAttribute("userStatus");	  
 				   //log.info("Id-->"+Id+"--userStatus--->"+userStatus+"--StatusName---->"+StatusName+"--createdOn---->"+createdOn+"--id--->"+id+"--userName-->"+username);
 				   String action=iconState.portManagementIcons(id);			   
-				   Object[] finalData={createdOn,portInterp,address,action}; 
+				   Object[] finalData={createdOn,modifiedOn,portInterp,address,action}; 
 				   List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 					finalList.add(finalDataList);
 					datatableResponseModel.setData(finalList);	

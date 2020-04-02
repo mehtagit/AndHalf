@@ -125,7 +125,7 @@ public class ProfileService {
 		//userManagementContent.setId(id);
 		//log.info("userStatus data is :  "+userManagementContent);
 		HttpResponse response=new HttpResponse();             
-		response=userProfileFeignImpl.changeSystemUserStatusFeign(userManagementContent);
+		response=userProfileFeignImpl.changeSystemUserPeriodFeign(userManagementContent);
 		return response;  
 	} 
 }

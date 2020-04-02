@@ -1,8 +1,5 @@
 package org.gl.ceir.pagination.model;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.stereotype.Component;
 
 @Component
@@ -15,7 +12,7 @@ public class UserManagementContent {
 	private String modifiedOn;
 	private Integer status;
 	private String statusInterp;
-	private String period;
+	private Integer period;
 	public Integer getId() {
 		return id;
 	}
@@ -58,17 +55,33 @@ public class UserManagementContent {
 	public void setStatusInterp(String statusInterp) {
 		this.statusInterp = statusInterp;
 	}
-	public String getPeriod() {
+	public Integer getPeriod() {
 		return period;
 	}
-	public void setPeriod(String period) {
+	public void setPeriod(Integer period) {
 		this.period = period;
 	}
 	@Override
 	public String toString() {
-		return "UserManagementContent [id=" + id + ", usertypeId=" + usertypeId + ", usertypeName=" + usertypeName
-				+ ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", status=" + status + ", statusInterp="
-				+ statusInterp + ", period=" + period + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("UserManagementContent [id=");
+		builder.append(id);
+		builder.append(", usertypeId=");
+		builder.append(usertypeId);
+		builder.append(", usertypeName=");
+		builder.append(usertypeName);
+		builder.append(", createdOn=");
+		builder.append(createdOn);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
+		builder.append(", status=");
+		builder.append(status);
+		builder.append(", statusInterp=");
+		builder.append(statusInterp);
+		builder.append(", period=");
+		builder.append(period);
+		builder.append("]");
+		return builder.toString();
 	}
 	
 	

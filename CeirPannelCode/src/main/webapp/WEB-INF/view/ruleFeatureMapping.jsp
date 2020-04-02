@@ -16,7 +16,7 @@
 <!DOCTYPE html>
 <html class="no-js" lang="en" dir="ltr">
 <head>
-<title>Consignment</title>
+<title>Rule List</title>
 <meta http-equiv='cache-control' content='no-cache'>
 <meta http-equiv='expires' content='-1'>
 <meta http-equiv='pragma' content='no-cache'>
@@ -79,7 +79,7 @@
 	src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
 </head>
-<body data-id="23"
+<body data-id="30"
 	data-roleType="${usertype}" data-userTypeID="${usertypeId}"
 	data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}"
 	data-stolenselected-roleType="${stolenselectedUserTypeId}"
@@ -103,16 +103,16 @@
 						<div class="row card-panel">
 							<div class="container-fluid pageHeader" id="pageHeader">
 
-								<a class="boton right" id="btnLink"></a>
+								<a class="boton right" id="btnLink" hidden="hidden"></a>
 							</div>
-							<form action="${context}/fieldManagement"
+							<form action="${context}/ruleListMav"
 								method="post">
-								<div class="col s12 m12 l12" id="PortTableDiv"
+								<div class="col s12 m12 l12" id="FieldTableDiv"
 									style="padding-bottom: 5px; background-color: #e2edef52;">
 									<div id="filterBtnDiv"></div>
 								</div>
 							</form>
-							<table id="portManagementLibraryTable"
+							<table id="table"
 								class="responsive-table striped display"></table>
 
 						</div>
@@ -126,136 +126,6 @@
 	
 		<!--end container-->
 	</section>
-	
- 	<div id="addPort" class="modal" style="z-index: 1003; display: none; opacity: 1; transform: scaleX(1); top: 10%;">
-        <h6 class="modal-header"><spring:message code="button.addport" /></h6>
-        <div class="modal-content">
-          	<form action="" onsubmit="return submitPort()" method="post" >
-                <div class="row" style="margin-top: 10px;">
-					
-					<div class="col s12 m6">
-					<label for="port" class="active">Port Type <span class="star">*</span></label>
-                     	 <select class="browser-default" id="port" >
-                                <option value=""  selected="" disabled>Select Port Type</option>
-                          </select>
-                        
-                         <input type="text" id="id" hidden>
-                    </div>
-					
-					<div class="input-field col s12 m6" style="margin-top: 22px;">
-                        <input type="text" id="portAddress" name="value"  title="Please enter alphabets and numbers upto 30 characters only" maxlength="30" required="required">
-                        <label for="portAddress" class="">Port Address <span class="star"> *</span></label>
-                    </div>
-
-					 <div class="col s12 m12 center" style="margin-top: 20px;">
-                        <button class="btn" type="submit">Submit</button>
-                        <a href="#" class="btn modal-close" id="Cancel" style="margin-left: 10px;">Cancel</a>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-		
-		
-		<div id="editPortAddressModal" class="modal" style="z-index: 1003; display: none; opacity: 1; transform: scaleX(1); top: 10%;">
-        <h6 class="modal-header">Edit Port Address</h6>
-        <div class="modal-content">
-          	<form action="" onsubmit="return updatedPort()">
-                <div class="row" style="margin-top: 10px;">
-					
-				<div class="col s12 m6">
-					<label for="editport" class="active">Port Type <span class="star">*</span></label>
-                     	 <select class="browser-default" id="editport" >
-                                <option value=""  selected="" disabled>Select Port Type</option>
-                          </select>
-                        
-                         <input type="text" id="editId" hidden>
-                    </div>
-					
-					<div class="input-field col s12 m6" style="margin-top: 22px;">
-                        <input type="text" id="editportAddress" name="value"  title="Please enter alphabets and numbers upto 30 characters only" maxlength="30" required="required">
-                        <label for="editportAddress" class="">Port Address <span class="star"> *</span></label>
-                    </div>
-
-					<div class="col s12 m12 center" style="margin-top: 20px;">
-                        <button class="btn" type="submit">Update</button>
-                        <a href="#" class="btn modal-close" id="Cancel" style="margin-left: 10px;">Cancel</a>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-		
-	<div id="confirmField" class="modal">
-		<h6 class="modal-header"><spring:message code="button.addport" /></h6>
-		<div class="modal-content">
-			<div class="row">
-				<h6 id="sucessMessage">Port Record Added Successfully</h6>
-			</div>
-			 <div class="row">
-				<div class="input-field col s12 center">
-                   <a href="" class="modal-close btn" class="btn">ok</a>
-                </div>
-			</div> 
-		</div>
-	</div>
-	
-	
-		
-	   <!-- --------------------------------------------------------------Delete Field Modal Start --------------------------------------------------------------->
-
-
-	<div id="DeleteFieldModal" class="modal">
-		<h6 class="modal-header"><spring:message code="modal.header.deletePort" /></h6>
-		<div class="modal-content">
-		<div class="row">
-				<h6><spring:message code="modal.message.Port.delete" /></h6>
-			</div> 
-			<input type="text" id="deletePortId" hidden>
-			<div class="row">
-				<div class="input-field col s12 center">
-					<a onclick="confirmantiondelete()"
-						class="modal-close modal-trigger btn" type="submit"><spring:message code="modal.yes" /></a>
-					<button class="modal-close btn" style="margin-left: 10px;"><spring:message code="modal.no" /></button>
-				</div>
-			</div>
-		</div>
-	</div>	
-	
-	<div id="closeDeleteModal" class="modal">
-			<h6 class="modal-header"><spring:message code="modal.header.deletePort" /></h6>
-			<div class="modal-content">
-		
-			
-			<div class="row">
-
-				<h6 id="tacModalText"><spring:message code="modal.message.portDeleted" /> </h6>
-			</div>
-			<div class="row">
-				<div class="input-field col s12 center">
-					<a href="" class="modal-close btn"
-						style="margin-left: 10px;"><spring:message code="modal.close" /></a>
-				</div>
-			</div>
-		</div>
-	</div>
-		
-		
-		
-	<div id="updateFieldsSuccess" class="modal">
-     <h6 class="modal-header" style="margin:0px;"><spring:message code="button.update" /></h6>
-        <div class="modal-content">
-            
-            <div class="row">
-                <h6 id="updateFieldMessage"><spring:message code="input.requestupdated" /></h6>
-            </div>
-            <div class="row">
-                <div class="input-field col s12 center">
-                    <a href="" class="modal-close btn"><spring:message code="modal.ok" /></a>
-                </div>
-            </div>
-        </div>
-    </div>	
 <!--materialize js-->
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
@@ -284,36 +154,37 @@
 	<%-- <script type="text/javascript" src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script> --%>
 	<script type="text/javascript"
 		src="${context}/resources/js/countries.js"></script>
+	
 	<!-- i18n library -->
 	<script type="text/javascript"
 		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.js"></script>
+		src="${context}/resources/i18n_library/i18n.js"></script>
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.messagestore.js"></script>
+		src="${context}/resources/i18n_library/messagestore.js"></script>
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.fallbacks.js"></script>
+		src="${context}/resources/i18n_library/fallbacks.js"></script>
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.language.js"></script>
+		src="${context}/resources/i18n_library/language.js"></script>
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.parser.js"></script>
-
-
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.js"></script>
+		src="${context}/resources/i18n_library/parser.js"></script>
 
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.bidi.js"></script>
+		src="${context}/resources/i18n_library/emitter.js"></script>
+
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/jquery.history.js"></script>
+		src="${context}/resources/i18n_library/bidi.js"></script>
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
+		src="${context}/resources/i18n_library/history.js"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/min.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/globalVariables.js"></script>
 	<script type="text/javascript"
@@ -322,14 +193,15 @@
 		src="${context}/resources/project_js/dragableModal.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/enterKey.js"></script>
-	<%-- 		<script type="text/javascript"
-		src="${context}/resources/project_js/disable_inspectElement.js"></script> --%>
-	<script type="text/javascript"
-		src="${context}/resources/project_js/viewPortManagement.js"></script>
+
+			<script type="text/javascript"
+		src="${context}/resources/project_js/validationMsg.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/_dateFunction.js" async></script>
 			<script type="text/javascript"
 		src="${context}/resources/project_js/profileInfoTab.js" async></script>
+			<script type="text/javascript"
+		src="${context}/resources/project_js/ruleFeatureMapping.js"></script>
 </body>
 </html>
 <%
@@ -340,7 +212,7 @@
 <script language="JavaScript">
 	sessionStorage.setItem("loginMsg",
 			"*Session has been expired");
-	window.top.location.href = "../login";
+	window.top.location.href = "./login";
 </script>
 <%
 	}

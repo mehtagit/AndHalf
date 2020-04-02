@@ -967,7 +967,11 @@ function exportStolenRecoveryData()
 			"roleType":roleType,
 			"operatorTypeId" : operatorId,
 			"pageNo":parseInt(pageNo),
-			"pageSize":parseInt(pageSize)
+			"pageSize":parseInt(pageSize),
+			"userTypeId": parseInt($("body").attr("data-userTypeID")),
+			"userType":$("body").attr("data-roleType"),
+			"userId" : $("body").attr("data-userID")
+			
 			
 	}
 	console.log(JSON.stringify(filterRequest))

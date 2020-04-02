@@ -85,7 +85,7 @@ public class UserFeatureDatatable {
 				   String modifiedOn = dataInsideList.getModifiedOn();
 				   String usertypeInterp = dataInsideList.getUsertypeInterp();
 				   String featureInterp = dataInsideList.getFeatureInterp();
-				   String period =dataInsideList.getPeriod();
+				   String period =dataInsideList.getPeriodInterp();
 				   String userStatus = (String) session.getAttribute("userStatus");	  
 				   String action=iconState.userManagementIcons(id,userStatus);			   
 				   Object[] finalData={createdOn,modifiedOn,usertypeInterp,featureInterp,period,action}; 
@@ -146,7 +146,7 @@ public class UserFeatureDatatable {
 			
 		
 		  //Dropdown items 
-		  String[] selectParam={"select","Select Feature","feature",""}; 
+		  String[] selectParam={"select","Select Feature","feature","","select","Select Period","period",""}; 
 		  for(int i=0; i<selectParam.length; i++) { 
 				inputFields= new InputFields();
 		  inputFields.setType(selectParam[i]); 

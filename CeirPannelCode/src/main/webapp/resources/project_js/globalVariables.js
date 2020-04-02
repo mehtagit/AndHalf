@@ -1,6 +1,3 @@
-
-/*$.getScript('../resources/project_js/CLDRPluralRuleParser.js');
-	*/
 $('input').on('invalid', function(e) {
     setTimeout(function(){
         $('html, body').animate({scrollTop: document.documentElement.scrollTop - 15}, 0);
@@ -9,12 +6,13 @@ $('input').on('invalid', function(e) {
 });
 
 
-
 $('input,select,textArea,button').attr('title', window.webkitURL ? ' ' : '');
 var txnIdValue = $("body").attr("session-valueTxnID");
 var data_lang_param =$("body").attr("data-lang-param") == 'km' ? 'km' : 'en';
 var langDropdownValue=$("body").attr("data-lang-param");
 var transactionIDValue= txnIdValue == 'null' ? $('#transactionID').val() : txnIdValue;
+
+
 
 
 
@@ -29,6 +27,7 @@ console.log(" fileName "+fileName+" fileType  "+fileType+" txnId "+txnId+"  doc_
 		type : 'GET',
 		success : function(data) {
 			console.log(data);
+			console.log(data.filePath);
 			if(data.url=='Not Found')
 				{
 				
@@ -37,6 +36,12 @@ console.log(" fileName "+fileName+" fileType  "+fileType+" txnId "+txnId+"  doc_
 				});
 				$('#fileErrormessage').text('')
 				$('#fileErrormessage').text($.i18n('fileNotFound'));
+				}
+			else if(data.filePath=='imageType')
+				{
+				//alert("image type");
+				$("#viewuplodedModel").openModal();
+				$("#fileSource").attr("src",data.url);
 				}
 			else{
 				console.log("file is found");
@@ -157,7 +162,6 @@ $("input[type=file]").keypress(function(ev) {
 
 
 	function previewFile(srcFilePath,srcFileName,txnId){
-		
 		window.filePath = srcFilePath;
 		window.fileName = srcFileName;
 		window.fileExtension = fileName.replace(/^.*\./, '');
@@ -171,4 +175,20 @@ $("input[type=file]").keypress(function(ev) {
 		}else{
 			window.open(FinalLink);
 		}
+	}
+	
+	
+	
+	
+	function messageWindow(message){
+		fadetime=2000;
+		window.parent.$("#modalMessageBody").empty();
+		window.parent.$("#modalMessageBody").append(' <label id="success" style="color: red;font-size:14px;">'+message+'</label>');
+		window.parent.$('#error_Modal').openModal();
+
+		window.parent.$('#error_Modal').fadeIn().delay(fadetime).fadeOut();
+		setTimeout(function() {
+			window.parent.$('#error_Modal').closeModal();
+		}, fadetime);
+		
 	}

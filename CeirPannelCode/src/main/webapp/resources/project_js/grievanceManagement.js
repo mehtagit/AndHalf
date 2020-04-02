@@ -551,7 +551,7 @@ var featureId = 6;
 								$('#viewGrievanceId').text('');	
 							$('#viewGrievanceId').text(grievanceId);	
 							
-							$("#chatMsg").append("<div class='chat-message-content clearfix'><span class='chat-time' id='timeHistory'>"+data[i].modifiedOn+"</span><h5 id='userTypehistory'>"+data[i].userDisplayName+"</h5><textarea class='materialize-textarea' id='messageHistory'>"+data[i].reply+"</textarea></div>");
+							$("#chatMsg").append("<div class='chat-message-content clearfix'><span class='chat-time' id='timeHistory'>"+data[i].modifiedOn+"</span><h5 id='userTypehistory'>"+data[i].userDisplayName+"</h5><textarea class='materialize-textarea' readonly id='messageHistory'>"+data[i].reply+"</textarea></div>");
 								for (var j=0 ; j<data[i].attachedFiles.length;j++)
 								{
 									if(data[i].attachedFiles[j].docType==null)
