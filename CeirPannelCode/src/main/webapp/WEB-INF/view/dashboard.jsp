@@ -61,7 +61,6 @@ if(usertypeId==null){
 }
 
 %>
-
 </script>
 
 </head>
@@ -159,6 +158,7 @@ data-roleType="${usertype}" data-userTypeID="${usertypeId}"
 								class="mdi-action-account-circle"
 								style="color: #fff; font-size: 40px;"></i></a>
 							<ul id="profile-dropdown" class="dropdown-content">
+							   <%if(usertypeId!=13){ %>
 								<li><a id="editLink" href="javascript:void(0)" target="mainArea"><i
 										class="fa fa-pencil dropdownColor" style="float: left;"></i><span
 										style="float: left" class="dropdownColor"><spring:message
@@ -174,7 +174,7 @@ data-roleType="${usertype}" data-userTypeID="${usertypeId}"
 										class="dropdownColor"> <spring:message
 												code="registration.activate/deactivateaccount" /></span></a></li>
 								<li class="divider"></li>
-
+                                <%} %>
 								<li><a href="javascript:void(0)" onclick="openLogout()" style="cursor: pointer;"  id=""><i
 										style="float: left;"
 										class="mdi-hardware-keyboard-tab dropdownColor"></i> <span
@@ -712,6 +712,13 @@ data-dismiss="modal">&times;</button> -->
 
 <script type="text/javascript">
 $(document).ready(function () {
+	<%
+	if(usertypeId==13){
+		%>
+		$("#langlist").val('en');
+		 $("#langlist").prop("disabled", true);
+		<%}%>
+	
 openEditPage(<%=usertypeId%>)
 });
 </script>
