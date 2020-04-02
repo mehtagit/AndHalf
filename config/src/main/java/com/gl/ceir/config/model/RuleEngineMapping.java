@@ -1,6 +1,7 @@
 package com.gl.ceir.config.model;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +12,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.gl.ceir.config.model.constants.RulesNames;
 
 import io.swagger.annotations.ApiModel;
@@ -26,6 +31,13 @@ public class RuleEngineMapping implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@CreationTimestamp
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
+	private LocalDateTime createdOn;
+
+	@UpdateTimestamp
+	private LocalDateTime modifiedOn;
 
 	@NotNull
 	@Column(length = 20)
@@ -55,6 +67,22 @@ public class RuleEngineMapping implements Serializable {
 	
 	@Column(length = 10)
 	private String failedRuleActionPostGrace;
+
+	public LocalDateTime getCreatedOn() {
+		return createdOn;
+	}
+
+	public void setCreatedOn(LocalDateTime createdOn) {
+		this.createdOn = createdOn;
+	}
+
+	public LocalDateTime getModifiedOn() {
+		return modifiedOn;
+	}
+
+	public void setModifiedOn(LocalDateTime modifiedOn) {
+		this.modifiedOn = modifiedOn;
+	}
 
 	public Long getId() {
 		return id;

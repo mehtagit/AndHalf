@@ -1,5 +1,13 @@
 package com.gl.ceir.config.service.impl;
 
+import java.io.IOException;
+import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import org.apache.logging.log4j.LogManager;
@@ -11,25 +19,33 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.gl.ceir.config.ConfigTags;
 import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.model.AuditTrail;
+import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.PendingTacApprovedDb;
 import com.gl.ceir.config.model.SearchCriteria;
+import com.gl.ceir.config.model.SystemConfigurationDb;
 import com.gl.ceir.config.model.User;
 import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.Features;
 import com.gl.ceir.config.model.constants.GenericMessageTags;
 import com.gl.ceir.config.model.constants.SearchOperation;
 import com.gl.ceir.config.model.constants.SubFeatures;
+import com.gl.ceir.config.model.file.AuditTrailFileModel;
+import com.gl.ceir.config.model.file.PendingTacApprovedFileModel;
 import com.gl.ceir.config.repository.AuditTrailRepository;
 import com.gl.ceir.config.repository.PendingTacApprovedRepository;
 import com.gl.ceir.config.repository.UserRepository;
 import com.gl.ceir.config.specificationsbuilder.GenericSpecificationBuilder;
 import com.gl.ceir.config.util.InterpSetter;
 import com.gl.ceir.config.util.Utility;
+import com.opencsv.CSVWriter;
+import com.opencsv.bean.StatefulBeanToCsv;
+import com.opencsv.bean.StatefulBeanToCsvBuilder;
 
 @Service
 public class PendingTacApprovedImpl {
@@ -53,6 +69,9 @@ public class PendingTacApprovedImpl {
 
 	@Autowired
 	UserRepository userRepository;
+	
+	@Autowired
+	ConfigurationManagementServiceImpl configurationManagementServiceImpl;
 
 	public GenricResponse saveSystemConfigList(PendingTacApprovedDb pendingTacApprovedDb){
 		try {
@@ -185,11 +204,17 @@ public class PendingTacApprovedImpl {
 		 * SearchCriteria("subFeature", filterRequest.getSubFeatureName(),
 		 * SearchOperation.EQUALITY, Datatype.STRING));
 		 */
-		if(Objects.nonNull(filterRequest.getUserName()) && !filterRequest.getUserName().isEmpty())
-			cmsb.with(new SearchCriteria("userName", filterRequest.getUserName(), SearchOperation.EQUALITY, Datatype.STRING));
-
+		/*
+		 * if(Objects.nonNull(filterRequest.getUserName()) &&
+		 * !filterRequest.getUserName().isEmpty()) cmsb.with(new
+		 * SearchCriteria("userName", filterRequest.getUserName(),
+		 * SearchOperation.EQUALITY, Datatype.STRING));
+		 */
 		if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
-			cmsb.orSearch(new SearchCriteria("userName", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+			/*
+			 * cmsb.orSearch(new SearchCriteria("userName", filterRequest.getSearchString(),
+			 * SearchOperation.LIKE, Datatype.STRING));
+			 */
 			cmsb.orSearch(new SearchCriteria("featureName", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 			/*
 			 * cmsb.orSearch(new SearchCriteria("subFeature",
@@ -197,5 +222,88 @@ public class PendingTacApprovedImpl {
 			 */
 		}
 		return cmsb;
+	}
+
+	public FileDetails getFilteredPendingTacApprovedDbInFile(FilterRequest filterRequest) {
+		String fileName = null;
+		Writer writer   = null;
+		PendingTacApprovedFileModel atfm = null;
+		
+		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		DateTimeFormatter dtf2  = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
+
+		SystemConfigurationDb filepath = configurationManagementServiceImpl.findByTag(ConfigTags.file_download_dir);
+		logger.info("CONFIG : file_consignment_download_dir [" + filepath + "]");
+		SystemConfigurationDb link = configurationManagementServiceImpl.findByTag(ConfigTags.file_download_link);
+		logger.info("CONFIG : file_consignment_download_link [" + link + "]");
+		
+		String filePath = filepath.getValue();
+		StatefulBeanToCsvBuilder<PendingTacApprovedFileModel> builder = null;
+		StatefulBeanToCsv<PendingTacApprovedFileModel> csvWriter = null;
+		List<PendingTacApprovedFileModel> fileRecords = null;
+
+		try {
+			List<PendingTacApprovedDb> pendingTacApprovedDbs = getAll(filterRequest);
+			if( !pendingTacApprovedDbs.isEmpty() ) {
+				if(Objects.nonNull(filterRequest.getUserId()) && (filterRequest.getUserId() != -1 && filterRequest.getUserId() != 0)) {
+					fileName = LocalDateTime.now().format(dtf2).replace(" ", "_") + "PendingTacApprovedDbs.csv";
+				}else {
+					fileName = LocalDateTime.now().format(dtf2).replace(" ", "_") + "PendingTacApprovedDbs.csv";
+				}
+			}else {
+				fileName = LocalDateTime.now().format(dtf2).replace(" ", "_") + "PendingTacApprovedDbs.csv";
+			}
+
+			writer = Files.newBufferedWriter(Paths.get(filePath+fileName));
+			builder = new StatefulBeanToCsvBuilder<>(writer);
+			csvWriter = builder.withQuotechar(CSVWriter.NO_QUOTE_CHARACTER).build();
+
+			if( !pendingTacApprovedDbs.isEmpty() ) {
+				fileRecords = new ArrayList<>(); 
+
+				
+				  for(PendingTacApprovedDb pendingTacApprovedDb : pendingTacApprovedDbs ) { 
+				  atfm = new PendingTacApprovedFileModel();
+				  
+				  atfm.setCreatedOn(pendingTacApprovedDb.getCreatedOn().toString());
+				  atfm.setTxnId(pendingTacApprovedDb.getTxnId()); 
+				  atfm.setTac(pendingTacApprovedDb.getTac());
+				  atfm.setFeatureName(pendingTacApprovedDb.getFeatureName());
+				  atfm.setUserType(pendingTacApprovedDb.getUserType());
+				  
+				  logger.debug(atfm);
+				  
+				  fileRecords.add(atfm); }
+				 
+
+				csvWriter.write(fileRecords);
+			}
+			return new FileDetails( fileName, filePath, link.getValue() + fileName ); 
+
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}finally {
+			try {
+				if( Objects.nonNull(writer) )
+					writer.close();
+			} catch (IOException e) {}
+		}
+	}
+
+	private List<PendingTacApprovedDb> getAll(FilterRequest filterRequest) {
+		try {
+			List<PendingTacApprovedDb> pendingTacApprovedDbs = pendingTacApprovedRepository.findAll( buildSpecification(filterRequest).build());
+
+			/*
+			 * for(AuditTrail auditTrail : auditTrails ) { setInterp(auditTrail); }
+			 */
+
+			return pendingTacApprovedDbs;
+
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
 	}
 }

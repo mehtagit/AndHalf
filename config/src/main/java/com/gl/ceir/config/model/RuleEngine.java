@@ -1,6 +1,7 @@
 package com.gl.ceir.config.model;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -10,8 +11,13 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.gl.ceir.config.model.constants.RulesNames;
 
 import io.swagger.annotations.ApiModel;
@@ -27,6 +33,13 @@ public class RuleEngine implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@CreationTimestamp
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
+	private LocalDateTime createdOn;
+
+	@UpdateTimestamp
+	private LocalDateTime modifiedOn;
 
 	@Enumerated(EnumType.STRING)
 	private RulesNames name;
@@ -42,12 +55,7 @@ public class RuleEngine implements Serializable {
 	@Column(length = 5)
 	private String output;
 	
-	@NotNull
-	private Date createdOn;
 	
-	@NotNull
-	private Date modifiedOn;
-
 	public Long getId() {
 		return id;
 	}
@@ -88,19 +96,19 @@ public class RuleEngine implements Serializable {
 		this.output = output;
 	}
 
-	public Date getCreatedOn() {
+	public LocalDateTime getCreatedOn() {
 		return createdOn;
 	}
 
-	public void setCreatedOn(Date createdOn) {
+	public void setCreatedOn(LocalDateTime createdOn) {
 		this.createdOn = createdOn;
 	}
 
-	public Date getModifiedOn() {
+	public LocalDateTime getModifiedOn() {
 		return modifiedOn;
 	}
 
-	public void setModifiedOn(Date modifiedOn) {
+	public void setModifiedOn(LocalDateTime modifiedOn) {
 		this.modifiedOn = modifiedOn;
 	}
 

@@ -26,11 +26,11 @@ public class CustomerCareGreylist implements CustomerCareTarget{
 			customerCareDeviceState.setTxnId("");
 			customerCareDeviceState.setDate(greylistDb.getCreatedOn().toString());
 			customerCareDeviceState.setStatus(Constants.available);
-			customerCareDeviceState.setFeatureId(0);
+			customerCareDeviceState.setFeatureId(9);
 		}else {
 			customerCareDeviceState.setDate("");
 			customerCareDeviceState.setStatus(Constants.non_available);
-			customerCareDeviceState.setFeatureId(0);
+			customerCareDeviceState.setFeatureId(9);
 		}
 		customerCareDeviceState.setImei(imei);
 		setName(customerCareDeviceState);

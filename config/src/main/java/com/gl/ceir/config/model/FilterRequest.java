@@ -43,6 +43,22 @@ public class FilterRequest {
 	private Long contactNumber;
 	private Integer filteredUserId;
 	
+	private String state;
+	
+	private String ruleName;
+	
+	public String getRuleName() {
+		return ruleName;
+	}
+	public void setRuleName(String ruleName) {
+		this.ruleName = ruleName;
+	}
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
+	}
 	public Integer getFilteredUserId() {
 		return filteredUserId;
 	}

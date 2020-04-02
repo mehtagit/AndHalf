@@ -26,11 +26,11 @@ public class CustomerCareBlacklist implements CustomerCareTarget{
 			customerCareDeviceState.setTxnId("");
 			customerCareDeviceState.setDate(blackList.getCreatedOn().toString());
 			customerCareDeviceState.setStatus(Constants.available);
-			customerCareDeviceState.setFeatureId(0);
+			customerCareDeviceState.setFeatureId(10);
 		}else {
 			customerCareDeviceState.setDate("");
 			customerCareDeviceState.setStatus(Constants.non_available);
-			customerCareDeviceState.setFeatureId(0);
+			customerCareDeviceState.setFeatureId(10);
 		}
 		
 		customerCareDeviceState.setImei(imei);
