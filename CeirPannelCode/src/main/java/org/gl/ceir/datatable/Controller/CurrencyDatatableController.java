@@ -85,13 +85,14 @@ public class CurrencyDatatableController {
 				{
 				   String id= String.valueOf(dataInsideList.getId());	
 				   String createdOn= dataInsideList.getCreatedOn();
+				   String modifiedOn = (String) dataInsideList.getModifiedOn();
 				   String month= dataInsideList.getMonth();
 				   String currency= String.valueOf(dataInsideList.getCurrencyInterp());
 				   String riel= String.valueOf(dataInsideList.getRiel());
 				   String dollar = String.valueOf(dataInsideList.getDollar());
 				   String userStatus = (String) session.getAttribute("userStatus");	  
 				   String action=iconState.currencyManagementIcons(id,userStatus);			   
-				   Object[] finalData={createdOn,month,currency,riel,dollar,action}; 
+				   Object[] finalData={createdOn,modifiedOn,month,currency,riel,dollar,action}; 
 				   List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 					finalList.add(finalDataList);
 					datatableResponseModel.setData(finalList);	

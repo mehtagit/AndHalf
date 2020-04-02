@@ -71,7 +71,15 @@ if(usertypeId==null){
 	right: 10px;
 	top: 10px;
 }
-
+div#modalMessageBody {
+    text-align: center;
+    margin-top: 12px;
+}
+div#error_Modal {
+    width: 550px;
+    height: 50px;
+    margin-top: 14%;
+}
 </style>
 <body data-lang="${language}" data-usertype="${usertype}"
 data-roleType="${usertype}" data-userTypeID="${usertypeId}"
@@ -620,7 +628,14 @@ data-dismiss="modal">&times;</button> -->
 	<!-- ================================================
     Scripts
     ================================================ -->
-
+<!-- 	Error Modal -->
+	<div class="modal" id="error_Modal" role="dialog">
+		<div class="modal-dialog">
+			<div class="row" id="modalMessageBody"
+					style="text-align: center;"></div>
+			
+		</div>
+	</div>
 
 	<!-- jQuery Library -->
 
@@ -679,8 +694,6 @@ data-dismiss="modal">&times;</button> -->
 			<script type="text/javascript"
 		src="${context}/resources/project_js/enterKey.js"></script>
 	
-	
-		
 	<!-- ajax js -->
 	
 

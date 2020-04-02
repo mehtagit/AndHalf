@@ -75,6 +75,8 @@ public class FieldDatatableController {
 				datatableResponseModel.setData(Collections.emptyList());
 			} else {
 				for (FieldContantModel dataInsideList : paginationContentList) {
+					String createdOn = (String) dataInsideList.getCreatedOn();
+					String modifiedOn = (String) dataInsideList.getModifiedOn();
 					String id = String.valueOf(dataInsideList.getId());
 					String displayName = dataInsideList.getDisplayName();
 					String tag = dataInsideList.getTag();
@@ -83,7 +85,7 @@ public class FieldDatatableController {
 					String tagId = dataInsideList.getTagId();
 
 					String action = iconState.fieldManagementIcons(id, tag, interp, tagId);
-					Object[] finalData = { displayName, interp, tagId, description, action };
+					Object[] finalData = {createdOn,modifiedOn, displayName, interp, tagId, description, action };
 					List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
 					finalList.add(finalDataList);
 					datatableResponseModel.setData(finalList);

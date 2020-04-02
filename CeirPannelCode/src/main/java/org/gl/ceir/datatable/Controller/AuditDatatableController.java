@@ -146,7 +146,7 @@ public class AuditDatatableController {
 			
 		
 		  //Dropdown items 
-			String[] selectParam={"select","User Type","roleType",""}; 
+			String[] selectParam={"select","Feature","feature","","select","User Type","roleType",""}; 
 		  for(int i=0; i<selectParam.length; i++) { 
 				inputFields= new InputFields();
 		  inputFields.setType(selectParam[i]); 
@@ -162,7 +162,7 @@ public class AuditDatatableController {
 		 
 			
 			//input type date list		
-			String[] dateParam= {"date","Start Date","startDate","","date","End Date","endDate","","text","Transaction ID","transactionID","","text","Feature","feature","","text","Sub Feature","subFeature","","text","User Name","userName",""};
+			String[] dateParam= {"date","Start Date","startDate","","date","End Date","endDate","","text","Transaction ID","transactionID","","text","Sub Feature","subFeature","","text","User Name","userName",""};
 			for(int i=0; i< dateParam.length; i++) {
 				dateRelatedFields= new InputFields();
 				dateRelatedFields.setType(dateParam[i]);

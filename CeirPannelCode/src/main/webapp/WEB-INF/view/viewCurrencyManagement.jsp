@@ -159,7 +159,7 @@
                     
                     <div class="input-field col s12 m6">
                         <input type="number" id="dollar" name=""  pattern="[0-9]{8,8}" title="Please enter numeric numbers"  maxlength="" required="required">
-                        <label for="number" class="">Dollar <span class="star"> *</span></label>
+                        <label for="number" class="">US Dollar <span class="star"> *</span></label>
                     </div>
 
 					 <div class="col s12 m12 center" style="margin-top: 20px;">
@@ -204,7 +204,7 @@
                     
                     <div class="input-field col s12 m6">
                         <input type="number" id="editDollar" name=""  pattern="[0-9]{8,8}" title="Please enter numeric numbers"  maxlength="" required="required">
-                        <label for="editDollar" class="">Dollar <span class="star"> *</span></label>
+                        <label for="editDollar" class="">US Dollar <span class="star"> *</span></label>
                     </div>
 
 					 <div class="col s12 m12 center" style="margin-top: 20px;">
