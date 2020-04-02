@@ -171,6 +171,7 @@ public class ConfigurationManagementServiceImpl {
 							));
 
 			systemConfigurationDb2.setValue(systemConfigurationDb.getValue());
+			systemConfigurationDb2.setDescription(systemConfigurationDb.getDescription());
 			systemConfigurationDbRepository.save(systemConfigurationDb2);
 
 			return new GenricResponse(0, "System configuration update Sucessfully", "");
