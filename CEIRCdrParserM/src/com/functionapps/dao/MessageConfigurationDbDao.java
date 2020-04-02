@@ -2,7 +2,9 @@ package com.functionapps.dao;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.apache.log4j.Logger;
@@ -15,13 +17,15 @@ public class MessageConfigurationDbDao {
 
 	public Optional<MessageConfigurationDb> getMessageDbTag(Connection conn, String managementDb, String tag) {
 		ResultSet rs = null;
+		Statement stmt = null;
 		String query = "select id, description, tag, value, channel, active, subject "
 				+ "from message_configuration_db where tag='" + tag + "'";
 
 		logger.info("Query ["+query+"]");
 		System.out.println("Query ["+query+"]");
 		
-		try(Statement stmt  = conn.createStatement()){
+		try{
+			stmt  = conn.createStatement();
 			rs = stmt.executeQuery(query);
 
 			if(rs.next()){
@@ -33,6 +37,15 @@ public class MessageConfigurationDbDao {
 		catch(Exception e){
 			logger.info(e.getMessage(), e);
 			e.printStackTrace();
+		}
+		finally{
+			try {
+				if(Objects.nonNull(stmt))
+					stmt.close();
+			} catch (SQLException e) {
+				logger.error(e.getMessage(), e);
+				e.printStackTrace();
+			}
 		}
 		
 		return Optional.empty();

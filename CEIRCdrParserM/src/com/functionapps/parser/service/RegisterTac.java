@@ -32,9 +32,13 @@ public class RegisterTac {
 			
 			if(typeApprovedDbOptional.isPresent()) {
 				MessageConfigurationDb messageDb = null;
+				
 				TypeApprovedDb typeApprovedDb = typeApprovedDbOptional.get();
+				typeApprovedDb.setApproveStatus(6); // Approved by CEIR Admin
+				System.out.println(typeApprovedDb);
+				
 				typeApprovalDbDao.updateTypeApprovedDb(conn, typeApprovedDb);
-				System.out.println("sop3");
+				
 				
 				// Read message
 				Optional<MessageConfigurationDb> messageDbOptional = messageConfigurationDbDao.getMessageDbTag(conn, "", "TAC_PROCESS_SUCCESFUL_MAIL_TO_USER");
