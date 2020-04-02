@@ -63,7 +63,7 @@ public class RegisterTac {
 							txnId, 
 							messageDb.getSubject().replace("<XXX>", txnId), 
 							"", //roleType
-							"" // receiverUserType
+							userWithProfile.getUsertypeName() // receiverUserType
 							);
 					
 					notificationDao.insertNotification(conn, notification);

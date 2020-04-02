@@ -19,8 +19,11 @@ public class UserWithProfileDao {
 		String query = null;
 
 		try{
-			query = "select users.id as id, user_profile.first_name as first_name "
-					+ "from users inner join user_profile on users.id=user_profile.userid "
+			query = "select users.id as id, user_profile.first_name as first_name, "
+					+ "usertype.usertype_name as usertype_name "
+					+ "from users "
+					+ "inner join user_profile on users.id=user_profile.userid "
+					+ "inner join usertype on users.usertype_id=usertype.id " 
 					+ "where users.id=" + userId;
 
 			logger.info("Query ["+query+"]");
@@ -30,7 +33,7 @@ public class UserWithProfileDao {
 			rs = stmt.executeQuery(query);
 
 			if(rs.next()){
-				return new UserWithProfile(rs.getLong("id"), rs.getString("first_name"));
+				return new UserWithProfile(rs.getLong("id"), rs.getString("first_name"), rs.getString("usertype_name"));
 			}
 		}
 		catch(Exception e){

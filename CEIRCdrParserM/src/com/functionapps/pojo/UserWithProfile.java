@@ -8,13 +8,24 @@ public class UserWithProfile  implements Serializable{
 
 	private Long id;
 	private String firstName;
+	private String usertypeName;
 
 	public UserWithProfile() {
 	}
 
-	public UserWithProfile(Long id, String firstName) {
+	public UserWithProfile(Long id, String firstName, String usertypeName) {
 		this.id = id;
 		this.firstName = firstName;
+		this.usertypeName = usertypeName;
+	}
+
+	
+	public String getUsertypeName() {
+		return usertypeName;
+	}
+
+	public void setUsertypeName(String usertypeName) {
+		this.usertypeName = usertypeName;
 	}
 
 	public Long getId() {
