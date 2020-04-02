@@ -31,6 +31,41 @@ function viewIndivisualStolen()
 			$('#singleStolennIDPassportNumber').val(response.stolenIndividualUserDB.nid);
 			$('#singleStolenemail').val(response.stolenIndividualUserDB.email);
 		
+			
+			previousVal = "";
+				function InputChangeListener()
+				{
+				  if($('#singleStolenphone1').val()
+				     != previousVal)
+				  {
+				   previousVal  = $('#singleStolenphone1').val();
+				   $('#singleStolenphone1').change();    
+				  }
+				}
+
+				setInterval(InputChangeListener, 200);
+				
+				
+				
+				
+				
+				
+				previousVal2 = "";
+				function InputChangeListener2()
+				{
+				  if($('#singleStolenphone2').val()
+				     != previousVal2)
+				  {
+				   previousVal2  = $('#singleStolenphone2').val();
+				   $('#singleStolenphone2').change();    
+				  }
+				}
+
+				setInterval(InputChangeListener2, 300);
+				
+				
+				
+				window.xop=response.stolenIndividualUserDB.alternateContactNumber;
 			$('#singleStolenphone1').val(response.stolenIndividualUserDB.alternateContactNumber);
 			
 			$('#singleStolenaddress').val(response.stolenIndividualUserDB.propertyLocation);
@@ -55,8 +90,8 @@ function viewIndivisualStolen()
 			$('#singleStolendeviceType').val(response.stolenIndividualUserDB.deviceType);
 			$('#singleStolenmodalNumber').val(response.stolenIndividualUserDB.modelNumber);
 			/*$('#singleStolenFileName').val(response.fileName);*/
-
-			$('#singleStolenphone2').val(response.stolenIndividualUserDB.alternateContactNumber);
+window.xop2=response.stolenIndividualUserDB.alternateContactNumber;
+			//$('#singleStolenphone2').val(response.stolenIndividualUserDB.alternateContactNumber);
 			$('#singleStolenOperator').val(response.stolenIndividualUserDB.operator);
 			$('#singleStolenSimStatus').val(response.stolenIndividualUserDB.multiSimStatus);
 			$('#singleStolenComplaintType').val(response.complaintType);
@@ -287,3 +322,119 @@ function clearFileName() {
 	$('#fileFormateModal').closeModal();
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var lang = window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
+
+$.i18n().locale = lang;
+//alert(lang)
+var successMsg, stolenIndivisual;
+
+$.i18n().load({
+	'en' : './resources/i18n/en.json',
+	'km' : './resources/i18n/km.json'
+}).done(function() {
+	stolenIndivisual = $.i18n('stolenIndivisual');
+	editstolenIndivisual = $.i18n('editstolenIndivisual');
+
+	viewPageType();
+});
+
+function viewPageType() {
+	if ($('#pageViewType').val() == 'view') {
+		$('#headingType').text('');
+		$('#headingType').text(stolenIndivisual);
+		$("#passportImageDiv").removeClass("btn");
+		$('#passportImageText').text('');
+		$('#singleStolenFile').attr('type', 'text');
+		$("#PassportNidLink").css("display", "block");
+		$("#singleStolenFile").css("display", "none");
+
+		$("#firImageDiv").removeClass("btn");
+		$('#firDivText').text('');
+		$('#uploadFirSingle').attr('type', 'text');
+		$("#firImageLink").css("display", "block");
+		$("#uploadFirSingle").css("display", "none");
+		$("#sampleFileLink").css("display", "none");
+		// alert(stolenIndivisual);
+		$("#SingleForm").find("input,select,textarea,button").prop(
+				"disabled", true);
+	} else {
+		$('#headingType').text('');
+		$('#headingType').text(editstolenIndivisual);
+		$("#SingleForm").find("input,select,textarea,button").prop(
+				"disabled", false);
+	}
+
+}
+
+setTimeout(function(){
+populateCountries("singleDevicecountry", "singleDevicestate");
+populateStates("singleDevicecountry", "singleDevicestate");
+
+populateCountries("country", "state");
+populateStates("country", "state");
+
+populateCountries("country2", "state2");
+populateStates("country2", "state2");
+
+populateCountries("country3", "state3");
+populateStates("country3", "state3");
+
+
+
+$('.datepick').datepicker({
+	dateFormat : "yy-mm-dd"
+});
+
+	var input = document.querySelector("#singleStolenphone1");
+	window.intlTelInput(input, {
+		utilsScript : "${context}/resources/js/utils.js",
+	});
+$('#singleStolenphone1').val(window.xop);
+}, 1000);
+
+
+
+
+
+
+
+
+
+setTimeout(function(){
+	populateCountries("singleDevicecountry", "singleDevicestate");
+	populateStates("singleDevicecountry", "singleDevicestate");
+
+	populateCountries("country", "state");
+	populateStates("country", "state");
+
+	populateCountries("country2", "state2");
+	populateStates("country2", "state2");
+
+	populateCountries("country3", "state3");
+	populateStates("country3", "state3");
+
+	
+	$('.datepick').datepicker({
+		dateFormat : "yy-mm-dd"
+	});
+
+		var input = document.querySelector("#singleStolenphone2");
+		window.intlTelInput(input, {
+			utilsScript : "${context}/resources/js/utils.js",
+		});
+	$('#singleStolenphone2').val(window.xop2);
+	}, 1000);

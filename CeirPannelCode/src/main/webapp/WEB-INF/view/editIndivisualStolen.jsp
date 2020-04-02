@@ -1150,83 +1150,14 @@ select {
 		<script type="text/javascript" src="${context}/resources/js/utils.js"></script>
 
 
-	<script>
-		var lang = window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
-
-		$.i18n().locale = lang;
-		//alert(lang)
-		var successMsg, stolenIndivisual;
-
-		$.i18n().load({
-			'en' : './resources/i18n/en.json',
-			'km' : './resources/i18n/km.json'
-		}).done(function() {
-			stolenIndivisual = $.i18n('stolenIndivisual');
-			editstolenIndivisual = $.i18n('editstolenIndivisual');
-
-			viewPageType();
-		});
-
-		function viewPageType() {
-			if ($('#pageViewType').val() == 'view') {
-				$('#headingType').text('');
-				$('#headingType').text(stolenIndivisual);
-				$("#passportImageDiv").removeClass("btn");
-				$('#passportImageText').text('');
-				$('#singleStolenFile').attr('type', 'text');
-				$("#PassportNidLink").css("display", "block");
-				$("#singleStolenFile").css("display", "none");
-
-				$("#firImageDiv").removeClass("btn");
-				$('#firDivText').text('');
-				$('#uploadFirSingle').attr('type', 'text');
-				$("#firImageLink").css("display", "block");
-				$("#uploadFirSingle").css("display", "none");
-				$("#sampleFileLink").css("display", "none");
-				// alert(stolenIndivisual);
-				$("#SingleForm").find("input,select,textarea,button").prop(
-						"disabled", true);
-			} else {
-				$('#headingType').text('');
-				$('#headingType').text(editstolenIndivisual);
-				$("#SingleForm").find("input,select,textarea,button").prop(
-						"disabled", false);
-			}
-
-		}
-
-		populateCountries("singleDevicecountry", "singleDevicestate");
-		populateStates("singleDevicecountry", "singleDevicestate");
-
-		populateCountries("country", "state");
-		populateStates("country", "state");
-
-		populateCountries("country2", "state2");
-		populateStates("country2", "state2");
-
-		populateCountries("country3", "state3");
-		populateStates("country3", "state3");
-
-		var input2 = document.querySelector("#singleStolenphone2");
-		window.intlTelInput(input2, {
-			utilsScript : "${context}/resources/js/utils.js",
-		});
-		var input = document.querySelector("#singleStolenphone1");
-		window.intlTelInput(input, {
-			utilsScript : "${context}/resources/js/utils.js",
-		});
-
-		$('.datepick').datepicker({
-			dateFormat : "yy-mm-dd"
-		});
-	</script>
-	<%-- <script type="text/javascript"
-		src="${context}/resources/project_js/stolenRecovery.js"></script>
-	<script type="text/javascript"
-		src="${context}/resources/project_js/lawfulStolenRecovery.js"></script> --%>
-
 	<script type="text/javascript"
 		src="${context}/resources/project_js/editLawfulStolen.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/project_js/lawfulStolenRecovery.js"></script>
+	<%-- <script type="text/javascript"
+		src="${context}/resources/project_js/stolenRecovery.js"></script>
+ --%>
+
 </body>
 </html>
 <%
