@@ -341,7 +341,7 @@ function editOtherProfile(){
 
 			
 			$("#registrationForm #employeeId").val(resp.employeeId);
-			$("#registrationForm #natureOfEmployment").val(resp.natureOfEmployment);
+			$("#registrationForm #natureOfEmployment").val(resp.natureOfEmploymentInterp);
 			$("#registrationForm #designation").val(resp.designation);
 			$("#registrationForm #authorityName").val(resp.authorityName);
 			$("#registrationForm #authorityEmail").val(resp.authorityEmail);

@@ -509,7 +509,22 @@ data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeI
 			</div>
 		</div>
 	
-
+<div id="InvalidTxnModal" class="modal">
+		<h6 class="modal-header"></h6>
+		<div class="modal-content">
+			<div class="row">
+				<h6 id="fileErrormessage"><spring:message code="invalidaTxnIdMsg" /> </h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<div class="input-field col s12 center">
+						<button class="modal-close btn " 
+							style="margin-left: 10px;"><spring:message code="modal.ok" /></button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 
 	<!-- END MAIN -->

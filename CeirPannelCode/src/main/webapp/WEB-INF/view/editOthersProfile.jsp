@@ -415,7 +415,13 @@ var contextpath = "${context}";
 								</div>
 
 								<div class="col s12 m6 l6" style="margin-top: 3px;">
-									<label> <spring:message code="registration.natureofemployment" /> <span class="star">*</span></label>
+									<input disabled="disabled" placeholder="" type="text" name="natureOfEmployment" id="natureOfEmployment" 
+										title=""  /> 
+									<label for="natureOfEmployment"><spring:message code="registration.natureofemployment" /> <span class="star">*</span></label>
+
+
+									<%-- <label> <spring:message code="registration.natureofemployment" /> <span class="star">*</span></label>
+
 									<select disabled="disabled" id="natureOfEmployment" class="browser-default" 
 									oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" >
 										<option value="" disabled selected><spring:message code="registration.natureofemployment" /></option>
@@ -423,7 +429,8 @@ var contextpath = "${context}";
 										<option value="Temporary"><spring:message code="registration.temporary" /></option>
 										<option value="Contract"><spring:message code="registration.contract" /></option>
 									</select>
-								</div>
+ --%>
+ 								</div>
 							</div>
 
 							<div class="row">

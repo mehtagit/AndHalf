@@ -1072,17 +1072,17 @@ select {
 													<spring:message code="operator.blocking" />
 												</p>
 												<label style="margin-right: 2%;"> <input
-													type="radio" class="blocktypeRadio" id="" value="Immediate"
+													type="radio" class="bulkblocktypeRadio" id="" value="Immediate"
 													onclick="document.getElementById('stolenCalender').style.display = 'none';"
 													name="stolenBulkBlockPeriod" checked> <spring:message
 														code="operator.immediate" />
 												</label> <label style="margin-right: 2%;"> <input
-													type="radio" class="blocktypeRadio" value="Default"
+													type="radio" class="bulkblocktypeRadio" value="Default"
 													onclick="document.getElementById('stolenCalender').style.display = 'none';"
 													name="stolenBulkBlockPeriod"> <spring:message
 														code="operator.default" />
 												</label> <label> <input type="radio" required="required"
-													value="tilldate" class="blocktypeRadio"
+													value="tilldate" class="bulkblocktypeRadio"
 													onclick="document.getElementById('stolenCalender').style.display = 'block';"
 													name="stolenBulkBlockPeriod"> <spring:message
 														code="operator.later" />
@@ -1214,6 +1214,7 @@ select {
 		<div class="modal-content">
 			<div class="row">
 				<h6 id="fileErrormessage"><spring:message code="fileValidationName" /><br> <br> <spring:message code="fileValidationFormate" /> <br><br> <spring:message code="fileValidationSize" /> </h6>
+				<input type="text" id="FilefieldId" style="display: none;">
 			</div>
 			<div class="row">
 				<div class="input-field col s12 center">
@@ -1380,6 +1381,7 @@ select {
            
 			//alert(uploadedFileName+"----------"+ext+"----"+fileSize)
 			var areEqual =ext.toLowerCase()=='png';
+			$('#FilefieldId').val(id);
 			//alert(areEqual);
 			if(areEqual==true)
 				{
@@ -1411,11 +1413,20 @@ select {
 		}
 		
 		
-		function clearFileName() {
-			$('#deviceBulkStolenFile,#singleStolenFile,#uploadFirSingle,#uploadFirBulk').val('');
-			$("#deviceBulkStolenFileName,#singleStolenFileName,#uploadFirSingleName,#uploadFirSingleBulkName").val('');
+		/* function clearFileName() {
+			var fieldId=$('#FilefieldId').val();
+			alert(fieldId);
+			if(fieldId=='singleStolenFile')
+				{
+				$('#singleStolenFileName').val('');
+				}
+			else if(fieldId=='uploadFirSingle')
+				{
+				$('#uploadFirSingleName').val('');
+				}
+		
 			$('#fileFormateModal').closeModal();
-		}
+		} */
 		
 		
 	

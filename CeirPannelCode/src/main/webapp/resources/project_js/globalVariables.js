@@ -1,6 +1,6 @@
 $('input').on('invalid', function(e) {
     setTimeout(function(){
-        $('html, body').animate({scrollTop: document.documentElement.scrollTop - 15}, 0);
+        $('html, body').animate({scrollTop: document.documentElement.scrollTop}, 0);
        // $('html, body').animate({scrollTop: document.documentElement.scrollDown}, 0);
     }, 0);
 });
@@ -83,7 +83,7 @@ $("input[type=file]").keypress(function(ev) {
 			var uploadedFileName = $("#"+id).val();
 			uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
 			var ext = uploadedFileName.split('.').pop();
-		
+			$('#FilefieldId').val(id);
 			var fileSize = ($("#"+id)[0].files[0].size);
 			fileSize = (Math.round((fileSize / 1024) * 100) / 100)
 		   if (uploadedFileName.length > 30) {
@@ -124,9 +124,10 @@ $("input[type=file]").keypress(function(ev) {
 		/*fileSize = (Math.round((fileSize / 100000) * 100) / 100)
 		alert("----"+fileSize);*/
 		fileSize = Math.floor(fileSize/1000) + 'KB';
-
+		$('#FilefieldId').val(id);
 		//alert(uploadedFileName+"----------"+ext+"----"+fileSize)
 		var areEqual =ext.toLowerCase()=='png';
+	
 		//alert(areEqual);
 		if(areEqual==true)
 			{
