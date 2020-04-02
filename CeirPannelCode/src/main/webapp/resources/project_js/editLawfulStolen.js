@@ -1,7 +1,9 @@
 /**
  * 
  */
-
+$('#stolenDatePeriodedit').datepicker({
+	dateFormat: "yy-mm-dd"
+	});
 
 $(document).ready(function() {
 	// executes when HTML-Document is loaded and DOM is ready
@@ -75,6 +77,18 @@ function viewIndivisualStolen()
 			$('#uploadFirSingleName').val(response.firFileName);
 			//$('#singleStolenFileName').val(response.firFileName);
 
+			$('input[name=editbulkBlockdeviceradio][value='+response.blockingType+']').attr('checked', true); 
+			
+			if(response.blockingType=='tilldate')
+				{
+				$("#calender").css("display", "block"); 
+				
+				$("#stolenDatePeriodedit").val(response.blockingTimePeriod);
+				}
+			else{
+				$("#calender").css("display", "none"); 
+			}
+			
 			$("label[for='IndivisualStolenDate']").addClass('active');
 			$("label[for='updatesingleStolenimei1']").addClass('active');
 			$("label[for='updatesingleStolenimei1']").addClass('active');
@@ -119,7 +133,7 @@ function updateIndivisualStolen()
 	var singleStolenpin=$('#singleStolenpin').val();
 	var country=$('#country').val();
 	var state=$('#state').val();
-	var blockingTimePeriod=$('#stolenDatePeriod').val();
+	var blockingTimePeriod=$('#stolenDatePeriodedit').val();
 	var blockingType =$('.blocktypeRadio:checked').val();
 
 	var singleStolendeviceBrandName=$('#singleStolendeviceBrandName').val();
@@ -247,7 +261,8 @@ function isImageValid(id) {
 	/*fileSize = (Math.round((fileSize / 100000) * 100) / 100)
 	alert("----"+fileSize);*/
 	fileSize = Math.floor(fileSize/1000) + 'KB';
-   
+	$('#FilefieldId').val(id);
+	//$('#existingFileName').val(uploadedFileName);
 	//alert(uploadedFileName+"----------"+ext+"----"+fileSize)
 	var areEqual =ext.toLowerCase()=='png';
 	//alert(areEqual);
@@ -282,8 +297,21 @@ function isImageValid(id) {
 
 
 function clearFileName() {
-	$('#singleStolenFile,#uploadFirSingle').val('');
-	$("#singleStolenFileName,#uploadFirSingleName").val('');
+
+	var fieldId=$('#FilefieldId').val();
+	//var existingFileName=$('#existingFileName').val();
+	//alert("existingFileName=="+existingFileName);
+	//alert(fieldId);
+	if(fieldId=='singleStolenFile')
+	{
+	$('#'+fieldId).val('');
+	$('#singleStolenFileName').val('');
+	}
+else if(fieldId=='uploadFirSingle')
+	{
+	$('#'+fieldId).val('');
+	$('#uploadFirSingleName').val('');
+	}
 	$('#fileFormateModal').closeModal();
 }
 

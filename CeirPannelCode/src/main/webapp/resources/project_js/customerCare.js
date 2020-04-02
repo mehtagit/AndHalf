@@ -272,9 +272,20 @@ function setStakeHolderData(name,date,featureId,status,txnId,imei)
 		"contentType" :false,
 		success: function (data, textStatus, jqXHR) {
 		
+			
 			var  assigneIdLabel=$.i18n('assigneIdLabel');
 			 var assigneNameLabel=$.i18n('assigneNameLabel');
-		if(name=='Importer' && featureId==3)
+	    if(data.errorCode==3)
+	    	{
+	    	console.log("invalid txn id");
+	    	$("#InvalidTxnModal").openModal({
+		        dismissible:false
+		    });
+	    	return false;
+	    	}
+	    
+	    
+	    if(name=='Importer' && featureId==3)
 		{
 			
 			$("#viewModal").openModal({

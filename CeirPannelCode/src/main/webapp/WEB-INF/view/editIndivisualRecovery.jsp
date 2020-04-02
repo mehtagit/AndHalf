@@ -399,7 +399,7 @@ onclick="_Services._selectstartDate()"></i></span>
 
 
                                                     <div class="input-field col s12 center">
-                                                        <button class="btn" type="submit"><spring:message code="button.submit" /></button>
+                                                        <button id="indivisualEditRecoveryButton"  class="btn" type="submit"><spring:message code="button.submit" /></button>
                                                         <a href="./stolenRecovery?FeatureId=5" class="btn modal-trigger"
                                                             style="margin-left: 10px;"><spring:message code="modal.cancel" /></a>
                                                     </div>
@@ -622,6 +622,9 @@ src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/j
 	            	{
 	            	$('#headingType').text('');
 	            	$('#headingType').text(recoveryIndivisual);
+	            	
+	            	 $("#indivisualEditRecoveryButton").css("display", "none");
+	          		$(".star").css("display", "none");
 	            	  $("#singleRecoveryDiv").find("input,select,textarea,button").prop("disabled",true);
 	            	}
 	            else{

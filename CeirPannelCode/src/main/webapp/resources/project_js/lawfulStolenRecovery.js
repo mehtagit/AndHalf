@@ -592,7 +592,7 @@ function saveCompanyStolenRequest(){
 	var state2=$('#state2').val();
 
 	var blockingTimePeriod=$('#stolenBulkDatePeriod').val();
-	var blockingType =$('.stolenBulkBlockPeriod:checked').val();
+	var blockingType =$('.bulkblocktypeRadio:checked').val();
 
 
 	var firstName=$('#firstName').val();
@@ -843,12 +843,42 @@ function confirmRejectInformation(){
 	setTimeout(function(){$('#confirmRejectInformation').openModal({dismissible:false});},200);
 }
 
-function clearFileName() {
+/*function clearFileName() {
+	alert("ss")
 	$('#bulkRecoveryFile').val('');
 	$("#bulkRecoveryFileName").val('');
 	$('#fileFormateModal').closeModal();
 }
+*/
 
-
+function clearFileName() {
+	var fieldId=$('#FilefieldId').val();
+	alert(fieldId);
+	if(fieldId=='singleStolenFile')
+		{
+		$('#'+fieldId).val('');
+		$('#singleStolenFileName').val('');
+		}
+	else if(fieldId=='uploadFirSingle')
+		{
+		$('#'+fieldId).val('');
+		$('#uploadFirSingleName').val('');
+		}
+	
+	
+	else if(fieldId=='deviceBulkStolenFile')
+		{
+		$('#'+fieldId).val('');
+		$('#deviceBulkStolenFileName').val('');
+		}
+	else if(fieldId=='uploadFirBulk')
+	{
+		$('#'+fieldId).val('');
+	$('#uploadFirSingleBulkName').val('');
+	}
+	
+	$('#fileFormateModal').closeModal();
+	$('#FilefieldId').val('');
+}
 
 

@@ -449,7 +449,7 @@ onclick="_Services._selectstartDate()"></i></span>
                                                         <label for="bulkRecoveryRemark"><spring:message code="input.remarks" /></label>
                                                     </div>
                                                     
-                                                    <div class="col s12 m6">
+                                                 <%--    <div class="col s12 m6">
 <p style="margin-top: 3px; margin-bottom: 5px"><spring:message code="operator.blocking" /></p>
 <label style="margin-right: 2%;"> <input type="radio" class="blocktypeRadio" id=""
 value="Immediate"
@@ -488,7 +488,7 @@ class="glyphicon glyphicon-calendar"
 onclick="_Services._selectstartDate()"></i></span>
 </div>
 </div>
-</div>
+</div> --%>
                                                     
                                                     
 
@@ -732,6 +732,13 @@ src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/j
         	});
 
 
+        function clearFileName() {
+        	$('#bulkRecoveryFileName').val('');
+        	$('#bulkRecoveryFile').val('');
+        	
+        	$('#fileFormateModal').closeModal();
+        	
+        }
 </script>
 		
 
