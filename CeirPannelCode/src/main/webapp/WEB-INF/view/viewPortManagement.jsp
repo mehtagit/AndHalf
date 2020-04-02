@@ -143,7 +143,7 @@
                     </div>
 					
 					<div class="input-field col s12 m6" style="margin-top: 22px;">
-                        <input type="text" id="portAddress" name="value"  pattern="[A-Za-z ]{0,30}" title="Please enter alphabets and numbers upto 30 characters only" maxlength="30" required="required">
+                        <input type="text" id="portAddress" name="value"  title="Please enter alphabets and numbers upto 30 characters only" maxlength="30" required="required">
                         <label for="portAddress" class="">Port Address <span class="star"> *</span></label>
                     </div>
 

@@ -1,12 +1,11 @@
 package org.gl.ceir.pagination.model;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.stereotype.Component;
 
 @Component
 public class FieldContantModel {
+	private String createdOn;
+	private String modifiedOn;
 	private Integer id;
 	private String tag;
 	private Integer value;
@@ -15,7 +14,18 @@ public class FieldContantModel {
 	private String tagId;
 	private String description;
 	private String displayName;
-	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+	public String getCreatedOn() {
+		return createdOn;
+	}
+	public void setCreatedOn(String createdOn) {
+		this.createdOn = createdOn;
+	}
+	public String getModifiedOn() {
+		return modifiedOn;
+	}
+	public void setModifiedOn(String modifiedOn) {
+		this.modifiedOn = modifiedOn;
+	}
 	public Integer getId() {
 		return id;
 	}
@@ -64,18 +74,33 @@ public class FieldContantModel {
 	public void setDisplayName(String displayName) {
 		this.displayName = displayName;
 	}
-	public Map<String, Object> getAdditionalProperties() {
-		return additionalProperties;
-	}
-	public void setAdditionalProperties(Map<String, Object> additionalProperties) {
-		this.additionalProperties = additionalProperties;
-	}
 	@Override
 	public String toString() {
-		return "FieldContantModel [id=" + id + ", tag=" + tag + ", value=" + value + ", interp=" + interp
-				+ ", listOrder=" + listOrder + ", tagId=" + tagId + ", description=" + description + ", displayName="
-				+ displayName + ", additionalProperties=" + additionalProperties + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("FieldContantModel [createdOn=");
+		builder.append(createdOn);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
+		builder.append(", id=");
+		builder.append(id);
+		builder.append(", tag=");
+		builder.append(tag);
+		builder.append(", value=");
+		builder.append(value);
+		builder.append(", interp=");
+		builder.append(interp);
+		builder.append(", listOrder=");
+		builder.append(listOrder);
+		builder.append(", tagId=");
+		builder.append(tagId);
+		builder.append(", description=");
+		builder.append(description);
+		builder.append(", displayName=");
+		builder.append(displayName);
+		builder.append("]");
+		return builder.toString();
 	}
+	
 	
 	
 	
