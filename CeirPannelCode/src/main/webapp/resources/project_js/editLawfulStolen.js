@@ -30,44 +30,44 @@ function viewIndivisualStolen()
 			$('#singleStolenlastName').val(response.stolenIndividualUserDB.lastName);
 			$('#singleStolennIDPassportNumber').val(response.stolenIndividualUserDB.nid);
 			$('#singleStolenemail').val(response.stolenIndividualUserDB.email);
-		
-			
+
+
 			previousVal = "";
-				function InputChangeListener()
+			function InputChangeListener()
+			{
+				if($('#singleStolenphone1').val()
+						!= previousVal)
 				{
-				  if($('#singleStolenphone1').val()
-				     != previousVal)
-				  {
-				   previousVal  = $('#singleStolenphone1').val();
-				   $('#singleStolenphone1').change();    
-				  }
+					previousVal  = $('#singleStolenphone1').val();
+					$('#singleStolenphone1').change();    
 				}
+			}
 
-				setInterval(InputChangeListener, 200);
-				
-				
-				
-				
-				
-				
-				previousVal2 = "";
-				function InputChangeListener2()
+			setInterval(InputChangeListener, 200);
+
+
+
+
+
+
+			previousVal2 = "";
+			function InputChangeListener2()
+			{
+				if($('#singleStolenphone2').val()
+						!= previousVal2)
 				{
-				  if($('#singleStolenphone2').val()
-				     != previousVal2)
-				  {
-				   previousVal2  = $('#singleStolenphone2').val();
-				   $('#singleStolenphone2').change();    
-				  }
+					previousVal2  = $('#singleStolenphone2').val();
+					$('#singleStolenphone2').change();    
 				}
+			}
 
-				setInterval(InputChangeListener2, 300);
-				
-				
-				
-				window.xop=response.stolenIndividualUserDB.alternateContactNumber;
+			setInterval(InputChangeListener2, 300);
+
+
+
+			window.xop=response.stolenIndividualUserDB.alternateContactNumber;
 			$('#singleStolenphone1').val(response.stolenIndividualUserDB.alternateContactNumber);
-			
+
 			$('#singleStolenaddress').val(response.stolenIndividualUserDB.propertyLocation);
 			//alert(response.stolenIndividualUserDB.street+"-----"+response.stolenIndividualUserDB.alternateContactNumber)
 			$('#singleStolenstreetNumber').val(response.stolenIndividualUserDB.street);
@@ -90,7 +90,7 @@ function viewIndivisualStolen()
 			$('#singleStolendeviceType').val(response.stolenIndividualUserDB.deviceType);
 			$('#singleStolenmodalNumber').val(response.stolenIndividualUserDB.modelNumber);
 			/*$('#singleStolenFileName').val(response.fileName);*/
-window.xop2=response.stolenIndividualUserDB.alternateContactNumber;
+			window.xop2=response.stolenIndividualUserDB.alternateContactNumber;
 			//$('#singleStolenphone2').val(response.stolenIndividualUserDB.alternateContactNumber);
 			$('#singleStolenOperator').val(response.stolenIndividualUserDB.operator);
 			$('#singleStolenSimStatus').val(response.stolenIndividualUserDB.multiSimStatus);
@@ -116,7 +116,7 @@ window.xop2=response.stolenIndividualUserDB.alternateContactNumber;
 			$("label[for='updatesingleStolenimei2']").addClass('active');
 			$("label[for='updatesingleStolenimei3']").addClass('active');
 			$("label[for='updatesingleStolenimei4']").addClass('active');
-			
+
 			$('#PassportNidLink').attr("onclick",'previewFile("'+response.fileLink+'","'+response.fileName+'","'+response.txnId+'")');
 			$('#firImageLink').attr("onclick",'previewFile("'+response.fileLink+'","'+response.firFileName+'","'+response.txnId+'")');
 			$('div#initialloader').delay(300).fadeOut('slow');
@@ -282,15 +282,15 @@ function isImageValid(id) {
 	/*fileSize = (Math.round((fileSize / 100000) * 100) / 100)
 	alert("----"+fileSize);*/
 	fileSize = Math.floor(fileSize/1000) + 'KB';
-   
+
 	//alert(uploadedFileName+"----------"+ext+"----"+fileSize)
 	var areEqual =ext.toLowerCase()=='png';
 	//alert(areEqual);
 	if(areEqual==true)
-		{
+	{
 		ext='PNG';
-		}
-	
+	}
+
 	if (uploadedFileName.length > 30) {
 		$('#fileFormateModal').openModal();
 		$('#fileErrormessage').text('');
@@ -298,7 +298,7 @@ function isImageValid(id) {
 	} 
 	else if(ext !='PNG')
 	{
-		
+
 		$('#fileFormateModal').openModal({
 			dismissible:false
 		});
@@ -381,29 +381,29 @@ function viewPageType() {
 }
 
 setTimeout(function(){
-populateCountries("singleDevicecountry", "singleDevicestate");
-populateStates("singleDevicecountry", "singleDevicestate");
+	populateCountries("singleDevicecountry", "singleDevicestate");
+	populateStates("singleDevicecountry", "singleDevicestate");
 
-populateCountries("country", "state");
-populateStates("country", "state");
+	populateCountries("country", "state");
+	populateStates("country", "state");
 
-populateCountries("country2", "state2");
-populateStates("country2", "state2");
+	populateCountries("country2", "state2");
+	populateStates("country2", "state2");
 
-populateCountries("country3", "state3");
-populateStates("country3", "state3");
+	populateCountries("country3", "state3");
+	populateStates("country3", "state3");
 
 
 
-$('.datepick').datepicker({
-	dateFormat : "yy-mm-dd"
-});
+	$('.datepick').datepicker({
+		dateFormat : "yy-mm-dd"
+	});
 
 	var input = document.querySelector("#singleStolenphone1");
 	window.intlTelInput(input, {
 		utilsScript : "${context}/resources/js/utils.js",
 	});
-$('#singleStolenphone1').val(window.xop);
+	$('#singleStolenphone1').val(window.xop);
 }, 1000);
 
 
@@ -427,14 +427,14 @@ setTimeout(function(){
 	populateCountries("country3", "state3");
 	populateStates("country3", "state3");
 
-	
+
 	$('.datepick').datepicker({
 		dateFormat : "yy-mm-dd"
 	});
 
-		var input = document.querySelector("#singleStolenphone2");
-		window.intlTelInput(input, {
-			utilsScript : "${context}/resources/js/utils.js",
-		});
+	var input = document.querySelector("#singleStolenphone2");
+	window.intlTelInput(input, {
+		utilsScript : "${context}/resources/js/utils.js",
+	});
 	$('#singleStolenphone2').val(window.xop2);
-	}, 1000);
+}, 1000);

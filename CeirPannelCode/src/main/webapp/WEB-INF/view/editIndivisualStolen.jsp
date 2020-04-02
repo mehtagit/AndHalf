@@ -988,7 +988,8 @@ select {
 											</div>
 
 											<div class="col s12 m12">
-												<a href="./stolenRecovery?FeatureId=5" id="sampleFileLink"><spring:message code="input.downlaod.sample" /></a>
+												<a href="./stolenRecovery?FeatureId=5" id="sampleFileLink"><spring:message
+														code="input.downlaod.sample" /></a>
 											</div>
 
 											<div class="input-field col s12 center">
@@ -1043,8 +1044,7 @@ select {
 					<spring:message code="fileValidationName" />
 					<br> <br>
 					<spring:message code="fileValidationFormate" />
-					<br>
-					<br>
+					<br> <br>
 					<spring:message code="fileValidationSize" />
 				</h6>
 			</div>
@@ -1131,23 +1131,25 @@ select {
 
 	<script type="text/javascript"
 		src="${context}/resources/i18n_library/min.js"></script>
-	
-	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
-<script type="text/javascript"
+
+	<script type="text/javascript"
+		src="${context}/resources/project_js/globalVariables.js"></script>
+	<script type="text/javascript"
 		src="${context}/resources/project_js/backbutton.js"></script>
 	<script type="text/javascript"
-		src="${context}/resources/project_js/dragableModal.js"></script>	
-			<script type="text/javascript"
+		src="${context}/resources/project_js/dragableModal.js"></script>
+	<script type="text/javascript"
 		src="${context}/resources/project_js/enterKey.js"></script>
-	
-		<script type="text/javascript"
+
+	<script type="text/javascript"
 		src="${context}/resources/project_js/validationMsg.js"></script>
 
 	<script type="text/javascript"
 		src="${context}/resources/project_js/profileInfoTab.js" async></script>
-		
-		<script type="text/javascript" src="${context}/resources/js/intlTelInput.js"></script>
-		<script type="text/javascript" src="${context}/resources/js/utils.js"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/js/intlTelInput.js"></script>
+	<script type="text/javascript" src="${context}/resources/js/utils.js"></script>
 
 
 	<script type="text/javascript"
@@ -1161,14 +1163,12 @@ select {
 </body>
 </html>
 <%
-} else {
-
+	} else {
 %>
 <script language="JavaScript">
-sessionStorage.setItem("loginMsg",
-"*Session has been expired");
-window.top.location.href = "./login";
+	sessionStorage.setItem("loginMsg", "*Session has been expired");
+	window.top.location.href = "./login";
 </script>
 <%
-}
+	}
 %>
