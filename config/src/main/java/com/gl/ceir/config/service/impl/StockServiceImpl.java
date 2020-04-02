@@ -409,19 +409,18 @@ public class StockServiceImpl {
 			if("End User".equalsIgnoreCase(filterRequest.getUserType())) {
 				StatesInterpretationDb statesInterpretationDb = statesInterpretaionRepository.findByFeatureIdAndState(4, stockMgmt2.getStockStatus());
 				stockMgmt2.setStateInterp(statesInterpretationDb.getInterp());
+			}else {
+				User user = userRepository.getById(filterRequest.getUserId());
+				logger.info(user);
+				
+				auditTrailRepository.save(new AuditTrail(user.getId(), 
+						user.getUsername(), 
+						user.getUsertype().getId(),
+						user.getUsertype().getUsertypeName(), 
+						4, Features.STOCK, 
+						SubFeatures.VIEW, "", filterRequest.getTxnId()));
+				logger.info("Stock [ View ][" + filterRequest.getTxnId() + "] saved in audit_trail.");
 			}
-
-			User user = userRepository.getById(filterRequest.getUserId());
-			logger.info(user);
-			
-			auditTrailRepository.save(new AuditTrail(user.getId(), 
-					user.getUsername(), 
-					user.getUsertype().getId(),
-					user.getUsertype().getUsertypeName(), 
-					4, Features.STOCK, 
-					SubFeatures.VIEW, "", filterRequest.getTxnId()));
-			logger.info("Stock [ View ][" + filterRequest.getTxnId() + "] saved in audit_trail.");
-
 			return stockMgmt2;
 
 		} catch (Exception e) {

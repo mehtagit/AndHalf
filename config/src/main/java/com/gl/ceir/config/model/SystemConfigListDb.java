@@ -13,6 +13,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.envers.Audited;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -26,11 +27,13 @@ public class SystemConfigListDb implements Serializable {
 	private Long id;
 
 	@CreationTimestamp
-	@JsonIgnore
+	//@JsonIgnore
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private Date createdOn;
 
 	@UpdateTimestamp
-	@JsonIgnore
+	//@JsonIgnore
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private Date modifiedOn;
 	
 	private String tag;
@@ -50,9 +53,8 @@ public class SystemConfigListDb implements Serializable {
 	public SystemConfigListDb() {
 	}
 	
-	public SystemConfigListDb(String tag, String description, String displayName) {
+	public SystemConfigListDb(String tag, String displayName) {
 		this.tag = tag;
-		this.description = description;
 		this.displayName = displayName;
 	}
 	

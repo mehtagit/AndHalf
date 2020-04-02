@@ -200,7 +200,7 @@ public class SystemConfigListServiceImpl {
 		try {
 			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
 
-			Page<SystemConfigListDb> page = systemConfigListRepository.findAll( buildSpecification(filterRequest).build(), pageable );
+			Page<SystemConfigListDb> page = systemConfigListRepository.findAll(buildSpecification(filterRequest).build(), pageable );
 
 			return page;
 
