@@ -9,11 +9,13 @@ import org.apache.log4j.Logger;
 import com.functionapps.dao.MessageConfigurationDbDao;
 import com.functionapps.dao.NotificationDao;
 import com.functionapps.dao.TypeApprovalDbDao;
+import com.functionapps.dao.UserWithProfileDao;
 import com.functionapps.parser.CEIRFeatureFileFunctions;
 import com.functionapps.parser.Rule;
 import com.functionapps.pojo.MessageConfigurationDb;
 import com.functionapps.pojo.Notification;
 import com.functionapps.pojo.TypeApprovedDb;
+import com.functionapps.pojo.UserWithProfile;
 
 public class RegisterTac {
 	static Logger logger = Logger.getLogger(RegisterTac.class);
@@ -25,6 +27,7 @@ public class RegisterTac {
 		TypeApprovalDbDao typeApprovalDbDao = new TypeApprovalDbDao();
 		MessageConfigurationDbDao messageConfigurationDbDao = new MessageConfigurationDbDao();
 		NotificationDao notificationDao = new NotificationDao();
+		UserWithProfileDao userWithProfileDao = new UserWithProfileDao();
 
 		try{
 			// Fetch type approved details.
@@ -34,11 +37,13 @@ public class RegisterTac {
 				MessageConfigurationDb messageDb = null;
 				
 				TypeApprovedDb typeApprovedDb = typeApprovedDbOptional.get();
-				typeApprovedDb.setApproveStatus(6); // Approved by CEIR Admin
+				typeApprovedDb.setApproveStatus(3); // Pending by CEIR Admin
 				System.out.println(typeApprovedDb);
 				
 				typeApprovalDbDao.updateTypeApprovedDb(conn, typeApprovedDb);
 				
+				// Get users Profile.
+				UserWithProfile userWithProfile = userWithProfileDao.getUserWithProfileById(conn, typeApprovedDb.getUserId());
 				
 				// Read message
 				Optional<MessageConfigurationDb> messageDbOptional = messageConfigurationDbDao.getMessageDbTag(conn, "", "TAC_PROCESS_SUCCESFUL_MAIL_TO_USER");
@@ -48,6 +53,7 @@ public class RegisterTac {
 					messageDb = messageDbOptional.get();
 					String message = messageDb.getValue().replace("<tac>", typeApprovedDb.getTac());
 					message = message.replace("<txn_name>", txnId);
+					message = message.replace("<first name>", userWithProfile.getFirstName());
 					
 					// Saving in notification
 					Notification notification = new Notification("EMAIL", message, typeApprovedDb.getUserId(), 
