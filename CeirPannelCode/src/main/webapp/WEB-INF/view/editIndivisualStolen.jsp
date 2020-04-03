@@ -565,7 +565,7 @@ name="editbulkBlockdeviceradio" class="blocktypeRadio" value="Default"
 onchange="document.getElementById('calender').style.display = 'none';"
 name="stolenBlockPeriod">
 <spring:message code="operator.default" />
-</label> <label> <input type="radio" name="editbulkBlockdeviceradio" required="required"
+</label> <label> <input type="radio" name="editbulkBlockdeviceradio" 
 value="tilldate" class="blocktypeRadio"
 onchange="document.getElementById('calender').style.display = 'block';"
 name="stolenBlockPeriod">
