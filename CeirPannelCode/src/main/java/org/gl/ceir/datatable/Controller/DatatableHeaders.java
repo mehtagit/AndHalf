@@ -407,6 +407,26 @@ public class DatatableHeaders {
 				}
 				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
 			}
+			
+			//alert Management
+			
+			else if("alertManagementHeaders".equals(role)) {
+				String[] headers = {"table.creationDate","table.lastupdatedate","table.alertId","table.featureName","table.Description"};
+				for(String header : headers) {
+					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
+				}
+				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
+			}
+			
+			//Running alert Management
+			
+			else if("runningAlertManagementHeaders".equals(role)) {
+				String[] headers = {"table.creationDate","table.lastupdatedate","table.alertId","table.status","table.Description"};
+				for(String header : headers) {
+					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
+				}
+				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
+			}
 			//DEFAULT PORTION  
 			else {
 				String[] headers = {"table.date","table.transactionID","table.fileName","table.stockStatus","table.action"};		

@@ -9,6 +9,7 @@ import org.gl.ceir.CeirPannelCode.Model.ResendOtp;
 import org.gl.ceir.CeirPannelCode.Model.SecurityQuestion;
 import org.gl.ceir.CeirPannelCode.Model.Usertype;
 import org.gl.ceir.CeirPannelCode.Util.HttpResponse;
+import org.gl.ceir.pagination.model.AlertContentModel;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -48,5 +49,8 @@ public interface UserRegistrationFeignImpl {
      
 	@PostMapping("/getAllFeatures")                                                                                         
 	public List<FeatureDropdown> userAllFeatureDropdown(); 
+	
+	@PostMapping("/alertDb/view")                                                                                         
+	public List<AlertContentModel> userAllAlertDropdown(); 
 	
 }

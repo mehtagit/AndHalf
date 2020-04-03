@@ -161,6 +161,22 @@ public interface UserProfileFeignImpl {
 		
 		@PostMapping("/updatePeriod")
 		public HttpResponse changeSystemUserPeriodFeign(UserManagementContent userManagementContent);
+		
+		/*-------------------------- view Alert Management Feign ------------------------------*/
+		
+		@RequestMapping(value="/alertDb/viewAll" ,method=RequestMethod.POST) 
+		public Object viewAlertRequest(@RequestBody FilterRequest filterRequest,
+		@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
+		@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+		@RequestParam(value = "file", defaultValue = "0") Integer file);	
+		
+/*-------------------------- view Alert Management Feign ------------------------------*/
+		
+		@RequestMapping(value="/runningAlert/viewAll" ,method=RequestMethod.POST) 
+		public Object viewRunningAlertRequest(@RequestBody FilterRequest filterRequest,
+		@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
+		@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+		@RequestParam(value = "file", defaultValue = "0") Integer file);	
 
 } 
 
