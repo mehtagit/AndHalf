@@ -103,7 +103,7 @@ var contextpath = "${context}";
 <option value="Manufacturer">Manufacturer</option>
 <option value="Lawful Agency">Lawful Agency</option>
 <option value="Immigration">Immigration</option>
-
+<option value="DRT">DRT</option>
 </select>
 </li>
 

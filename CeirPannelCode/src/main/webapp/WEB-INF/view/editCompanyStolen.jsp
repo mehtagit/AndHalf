@@ -776,8 +776,60 @@
 															</label> <span class="input-group-addon" style="color: #ff4081" data-original-title="" title=""><i class="fa fa-calendar" aria-hidden="true" data-original-title="" title=""></i></span>
 														</div>
 														
+														
+<div class="col s12 m6 blockingType">
+												<p style="margin-top: 3px; margin-bottom: 5px">
+													<spring:message code="operator.blocking" />
+												</p>
+												<label style="margin-right: 2%;"> <input
+													type="radio" class="blocktypeRadio" id="" value="Immediate"
+													onclick="document.getElementById('stolenCalender').style.display = 'none';"
+													name="stolenBulkBlockPeriod" checked> <spring:message
+														code="operator.immediate" />
+												</label> <label style="margin-right: 2%;"> <input
+													type="radio" class="blocktypeRadio" value="Default"
+													onclick="document.getElementById('stolenCalender').style.display = 'none';"
+													name="stolenBulkBlockPeriod"> <spring:message
+														code="operator.default" />
+												</label> <label> <input type="radio" required="required"
+													value="tilldate" class="blocktypeRadio"
+													onclick="document.getElementById('stolenCalender').style.display = 'block';"
+													name="stolenBulkBlockPeriod"> <spring:message
+														code="operator.later" />
+												</label>
+												<div class="col s6 m2 responsiveDiv"
+													style="display: none; width: 30%; margin-right: 30%; float: right; margin-top: -15px"
+													id="stolenCalender">
+													<div id="Stolenstartdatepicker" class="input-group date">
+														<input type="text" id="stolenBulkDatePeriod"
+															style="margin-top: -9px" /> <span
+															class="input-group-addon" style="color: #ff4081"><i
+															class="fa fa-calendar" aria-hidden="true"
+															style="float: right; margin-top: -30px;"></i></span>
+													</div>
+
+												</div>
+
+</div>
+												<div class="col s12 m2 l2"
+													style="width: 40%; display: none; float: right; margin-right: 30%;"
+													id="stolenDate">
+
+													<label for="TotalPrice" class="center-align"> <spring:message
+															code="operator.tilldate" /></label>
+													<div id="Stolenstartdatepicker" class="input-group"
+														style="margin-top: 10px;">
+
+														<input class="form-control" name="inputsaves" type="text"
+															id="startDateFilter" readonly /> <span
+															class="input-group-addon" style="color: #ff4081"><i
+															class="glyphicon glyphicon-calendar"
+															onclick="_Services._selectstartDate()"></i></span>
+													</div>
+												</div>
+														
 														<div class="file-field col s12 m6" data-original-title="" title="">
-															<h6 class="form-label" style="margin:0; font-size: 0.9rem;" data-original-title="" title="">
+															<h6 class="form-label" style="margin:8px; font-size: 0.9rem;" data-original-title="" title="">
 																<spring:message code="input.UploadFIR" />
 															</h6>
 															<div class="btn" id="firFileDiv" data-original-title="" title="">
@@ -845,6 +897,7 @@
 		<div class="modal-content">
 			<div class="row">
 				<h6 id="fileErrormessage"><spring:message code="fileValidationName" /><br> <br> <spring:message code="fileValidationFormate" /> <br><br> <spring:message code="fileValidationSize" /> </h6>
+			<input type="text" id="FilefieldId" style="display: none;">
 			</div>
 			<div class="row">
 				<div class="input-field col s12 center">
@@ -983,6 +1036,9 @@ src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/j
    $("#uploadFirSingle").css("display", "none");
 	$("#editRecoverySampleFile").css("display", "none");
 	   $("#Bulkform").find("input,select,textarea,button").prop("disabled",true);
+	   
+	   $("#companyStolenButton").css("display", "none");
+		$(".star").css("display", "none");
 	}
 else{
 	$('#headingType').text('');
@@ -1044,7 +1100,10 @@ else{
 			dateFormat: "yy-mm-dd"
 		});
 
-	
+        $('#stolenBulkDatePeriod').datepicker({
+        	dateFormat: "yy-mm-dd"
+        	});
+        
         
     </script>
 

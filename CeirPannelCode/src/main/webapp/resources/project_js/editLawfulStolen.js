@@ -1,7 +1,9 @@
 /**
  * 
  */
-
+$('#stolenDatePeriodedit').datepicker({
+	dateFormat: "yy-mm-dd"
+	});
 
 $(document).ready(function() {
 	// executes when HTML-Document is loaded and DOM is ready
@@ -30,9 +32,8 @@ function viewIndivisualStolen()
 			$('#singleStolenlastName').val(response.stolenIndividualUserDB.lastName);
 			$('#singleStolennIDPassportNumber').val(response.stolenIndividualUserDB.nid);
 			$('#singleStolenemail').val(response.stolenIndividualUserDB.email);
-
-
-			previousVal = "";
+		
+		previousVal = "";
 			function InputChangeListener()
 			{
 				if($('#singleStolenphone1').val()
@@ -66,8 +67,9 @@ function viewIndivisualStolen()
 
 
 			window.xop=response.stolenIndividualUserDB.alternateContactNumber;
-			$('#singleStolenphone1').val(response.stolenIndividualUserDB.alternateContactNumber);
-
+	
+			//$('#singleStolenphone1').val(response.stolenIndividualUserDB.alternateContactNumber);
+			
 			$('#singleStolenaddress').val(response.stolenIndividualUserDB.propertyLocation);
 			//alert(response.stolenIndividualUserDB.street+"-----"+response.stolenIndividualUserDB.alternateContactNumber)
 			$('#singleStolenstreetNumber').val(response.stolenIndividualUserDB.street);
@@ -90,7 +92,7 @@ function viewIndivisualStolen()
 			$('#singleStolendeviceType').val(response.stolenIndividualUserDB.deviceType);
 			$('#singleStolenmodalNumber').val(response.stolenIndividualUserDB.modelNumber);
 			/*$('#singleStolenFileName').val(response.fileName);*/
-			window.xop2=response.stolenIndividualUserDB.alternateContactNumber;
+window.xop2=response.stolenIndividualUserDB.alternateContactNumber;
 			//$('#singleStolenphone2').val(response.stolenIndividualUserDB.alternateContactNumber);
 			$('#singleStolenOperator').val(response.stolenIndividualUserDB.operator);
 			$('#singleStolenSimStatus').val(response.stolenIndividualUserDB.multiSimStatus);
@@ -110,13 +112,25 @@ function viewIndivisualStolen()
 			$('#uploadFirSingleName').val(response.firFileName);
 			//$('#singleStolenFileName').val(response.firFileName);
 
+			$('input[name=editbulkBlockdeviceradio][value='+response.blockingType+']').attr('checked', true); 
+			
+			if(response.blockingType=='tilldate')
+				{
+				$("#calender").css("display", "block"); 
+				
+				$("#stolenDatePeriodedit").val(response.blockingTimePeriod);
+				}
+			else{
+				$("#calender").css("display", "none"); 
+			}
+			
 			$("label[for='IndivisualStolenDate']").addClass('active');
 			$("label[for='updatesingleStolenimei1']").addClass('active');
 			$("label[for='updatesingleStolenimei1']").addClass('active');
 			$("label[for='updatesingleStolenimei2']").addClass('active');
 			$("label[for='updatesingleStolenimei3']").addClass('active');
 			$("label[for='updatesingleStolenimei4']").addClass('active');
-
+			
 			$('#PassportNidLink').attr("onclick",'previewFile("'+response.fileLink+'","'+response.fileName+'","'+response.txnId+'")');
 			$('#firImageLink').attr("onclick",'previewFile("'+response.fileLink+'","'+response.firFileName+'","'+response.txnId+'")');
 			$('div#initialloader').delay(300).fadeOut('slow');
@@ -154,7 +168,7 @@ function updateIndivisualStolen()
 	var singleStolenpin=$('#singleStolenpin').val();
 	var country=$('#country').val();
 	var state=$('#state').val();
-	var blockingTimePeriod=$('#stolenDatePeriod').val();
+	var blockingTimePeriod=$('#stolenDatePeriodedit').val();
 	var blockingType =$('.blocktypeRadio:checked').val();
 
 	var singleStolendeviceBrandName=$('#singleStolendeviceBrandName').val();
@@ -282,15 +296,16 @@ function isImageValid(id) {
 	/*fileSize = (Math.round((fileSize / 100000) * 100) / 100)
 	alert("----"+fileSize);*/
 	fileSize = Math.floor(fileSize/1000) + 'KB';
-
+	$('#FilefieldId').val(id);
+	//$('#existingFileName').val(uploadedFileName);
 	//alert(uploadedFileName+"----------"+ext+"----"+fileSize)
 	var areEqual =ext.toLowerCase()=='png';
 	//alert(areEqual);
 	if(areEqual==true)
-	{
+		{
 		ext='PNG';
-	}
-
+		}
+	
 	if (uploadedFileName.length > 30) {
 		$('#fileFormateModal').openModal();
 		$('#fileErrormessage').text('');
@@ -298,7 +313,7 @@ function isImageValid(id) {
 	} 
 	else if(ext !='PNG')
 	{
-
+		
 		$('#fileFormateModal').openModal({
 			dismissible:false
 		});
@@ -317,8 +332,21 @@ function isImageValid(id) {
 
 
 function clearFileName() {
-	$('#singleStolenFile,#uploadFirSingle').val('');
-	$("#singleStolenFileName,#uploadFirSingleName").val('');
+
+	var fieldId=$('#FilefieldId').val();
+	//var existingFileName=$('#existingFileName').val();
+	//alert("existingFileName=="+existingFileName);
+	//alert(fieldId);
+	if(fieldId=='singleStolenFile')
+	{
+	$('#'+fieldId).val('');
+	$('#singleStolenFileName').val('');
+	}
+else if(fieldId=='uploadFirSingle')
+	{
+	$('#'+fieldId).val('');
+	$('#uploadFirSingleName').val('');
+	}
 	$('#fileFormateModal').closeModal();
 }
 
@@ -438,3 +466,4 @@ setTimeout(function(){
 	});
 	$('#singleStolenphone2').val(window.xop2);
 }, 1000);
+

@@ -128,7 +128,7 @@
 	</section>
 	
  	<div id="addTags" class="modal" style="z-index: 1003; display: none; opacity: 1; transform: scaleX(1); top: 10%;">
-        <h6 class="modal-header">Add Fields</h6>
+        <h6 class="modal-header">Add New Value</h6>
         <div class="modal-content">
           	<form action="" onsubmit="return submitTag()" method="post" >
                 <div class="row" style="margin-top: 10px;">
@@ -155,8 +155,8 @@
                     </div>
 
                     <div class="input-field col s12 m6" style="margin-top: 22px;">
-                        <input type="text" id="tagId" name="addFieldId"  title="Please enter alphabets and numbers upto 30 characters only" maxlength="30" required="required">
-                        <label for="addFieldId" class="">Field ID <span class="star">*</span></label>
+                        <input type="text" id="tagId" name="addFieldId"  title="Please enter alphabets and numbers upto 30 characters only" maxlength="30">
+                        <label for="addFieldId" class="">Field ID </label>
                     </div>
 
                     <div class="col s12 m12 center" style="margin-top: 20px;">
@@ -170,7 +170,7 @@
 		
 		
 		<div id="editTags" class="modal" style="z-index: 1003; display: none; opacity: 1; transform: scaleX(1); top: 10%;">
-        <h6 class="modal-header">Edit Fields</h6>
+        <h6 class="modal-header">Edit Value</h6>
         <div class="modal-content">
           	<form action="" onsubmit="return updatedTag()">
                 <div class="row" style="margin-top: 10px;">
@@ -198,8 +198,8 @@
                     </div>
 
                     <div class="input-field col s12 m6" style="margin-top: 22px;">
-                        <input type="text" id="editFieldId" name="editField"  title="Please enter alphabets and numbers upto 30 characters only" maxlength="30" required="required">
-                        <label for="editFieldId" class="">Field ID <span class="star">*</span></label>
+                        <input type="text" id="editFieldId" name="editField"  title="Please enter alphabets and numbers upto 30 characters only" maxlength="30" >
+                        <label for="editFieldId" class="">Field ID</label>
                     </div>
 
                     <div class="col s12 m12 center" style="margin-top: 20px;">
@@ -215,7 +215,7 @@
 		<h6 class="modal-header"><spring:message code="modal.header.submitFieldRecord" /></h6>
 		<div class="modal-content">
 			<div class="row">
-				<h6 id="sucessMessage">Field Record Added Successfully</h6>
+				<h6 id="sucessMessage">New Value Added Successfully</h6>
 			</div>
 			 <div class="row">
 				<div class="input-field col s12 center">

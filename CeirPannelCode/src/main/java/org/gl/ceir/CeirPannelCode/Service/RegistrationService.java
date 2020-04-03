@@ -69,6 +69,7 @@ public class RegistrationService {
 		map.put("Custom", "customRegistration");
 		map.put("Operator", "operatorRegistration");
 		map.put("Immigration", "customRegistration");
+		map.put("DRT", "customRegistration");
 		if(usertype!=null) {
 			String output= map.get(usertype);
 			log.info("value for key: "+output);

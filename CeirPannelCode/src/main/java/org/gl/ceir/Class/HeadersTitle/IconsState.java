@@ -267,7 +267,7 @@ public class IconsState {
 				+deletionIcon+" aria-hidden=\"true\"  title="
 				+deleteIconTitle+"></i></a>"; 
 
-
+		
 		if(("1".equals(status) ||  "3".equals(status) || "10".equals(status) || "6".equals(status))  && "Approved".equals(userStatus)) {
 			error="<a onclick="+errorURL+" class="+disableIconClass+"><i  class="
 					+disableErrorIcon+" aria-hidden=\"true\" title="
@@ -882,7 +882,7 @@ public class IconsState {
 								featureID == 11 ? "./manageTypeDevices?txnID="+txnID+"":
 									featureID == 12 ? "./uploadPaidStatus?via=other&txnID="+txnID+"" :
 										featureID == 21 ? "./manageTypeDevices2?txnID="+txnID+"" :
-											"JavaScript:void(0);";
+										"JavaScript:void(0);";
 		//System.out.println("featureID::::::::::"+featureID);
 		// state related Code
 		String view=null;
@@ -982,9 +982,9 @@ public class IconsState {
 				+approveIconTitle+" ></i></a>";   
 		String reject = "<a onclick="+rejectAction+"><i class="+rejectIcon+" aria-hidden=\"true\" title="
 				+rejectIconTitle+" ></i></a>";
-
+		
 		log.info("State= "+State+" userStatus= "+userStatus);
-
+		
 		if( "2".equals(State) && "Approved".equals(userStatus)) {
 			approve = "<a onclick=" + approveAction + " class=\"eventNone\"><i class=" + disableApproveIcon
 					+ " aria-hidden=\"true\" title=" + approveIconTitle + " ></i></a>";
@@ -992,14 +992,14 @@ public class IconsState {
 			reject = "<a onclick=" + rejectAction + " class=\"eventNone\"><i class=" + disableRejectIcon
 					+ " aria-hidden=\"true\" title=" + rejectIconTitle + " ></i></a>";
 		}
-
+		
 		if("Disable".equals(userStatus)) {
 			log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
 			approve = "<a onclick=" + approveAction + " class=\"eventNone\"><i class=" + disableApproveIcon
 					+ " aria-hidden=\"true\" title=" + approveIconTitle + " ></i></a>";
 			reject = "<a onclick=" + rejectAction + " class=\"eventNone\"><i class=" + disableRejectIcon
 					+ " aria-hidden=\"true\" title=" + rejectIconTitle + " ></i></a>";
-		}
+}
 
 
 		String action = view.concat(approve).concat(reject);
@@ -1161,14 +1161,14 @@ public class IconsState {
 		executePostConstruct();
 		String editAction="updateDetails('"+tag+"')";
 		String viewAction="viewDetails('"+tag+"')";
-
+		
 		// state related Code 
 		String edit="<a onclick="+editAction+"><i class="+editIcon+" aria-hidden=\"true\"  title="
 				+editIconTitle+"></i></a>"; 
 		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
-
-
+		
+		
 		if("0".equals(type)) {
 			edit="<a onclick="+editAction+" class="+disableIconClass+"><i class="
 					+disableEditIcon+" aria-hidden=\"true\"  title="
@@ -1198,7 +1198,7 @@ public class IconsState {
 				+editIconTitle+"></i></a>"; 
 		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
-
+		
 		if("0".equals(type)) {
 			edit="<a onclick="+editAction+" class="+disableIconClass+"><i class="
 					+disableEditIcon+" aria-hidden=\"true\"  title="
@@ -1332,8 +1332,8 @@ public class IconsState {
 				+errorIconTitle+" ></i></a>";
 
 		log.info("source type--->" +source);
-
-
+		
+	
 		if(("0".equals(status) || "1".equals(status)) && "Approved".equals(userStatus)){
 			approve = "<a onclick="+approveAction+" class=\"eventNone\"><i class="+disableApproveIcon+" aria-hidden=\"true\" title="
 					+approveIconTitle+" ></i></a>";
@@ -1674,7 +1674,7 @@ public class IconsState {
 				+viewIconTitle+" ></i></a>";
 		String edit="<a onclick="+editAction+"><i class="+editIcon+" aria-hidden=\"true\"  title="
 				+editIconTitle+"></i></a>"; 
-
+		
 		String action = view.concat(edit);
 		return action;
 	}
@@ -2031,7 +2031,7 @@ public class IconsState {
 		return action;
 
 	}
-
+	
 	/********************************** Icons for User Management**********************************/ 
 
 	public String userManagementIcons(String id, String userStatus) { 

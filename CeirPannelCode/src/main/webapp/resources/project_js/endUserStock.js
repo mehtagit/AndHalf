@@ -111,6 +111,7 @@ function setViewPopupData(data){
 	$("#uploadDate").val(data.createdOn);
 	$("#viewUploadFile").val(data.fileName);
 	$("#errorFileStatus").val(data.stateInterp);
+	$('#endUserStockFileLink').attr("onclick",'fileDownload("'+data.fileName+'","actual","'+data.txnId+'","DEFAULT")');
 	console.log(data.stockStatus);
 	if(data.stockStatus=='2')
 		{

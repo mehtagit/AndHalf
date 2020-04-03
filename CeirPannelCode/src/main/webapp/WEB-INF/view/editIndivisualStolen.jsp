@@ -551,6 +551,61 @@ select {
 																for="updatesingleStolenimei4"> <spring:message
 																	code="registration.four" /></label>
 														</div>
+														
+														<div class="row" id="editBlockTimePeriod">
+<div class="col s12 m6">
+<spring:message code="operator.blocking" /> <label style="margin-right: 2%;"> <input
+type="radio" name="editbulkBlockdeviceradio" class="blocktypeRadio" id=""
+value="Immediate"
+onchange="document.getElementById('calender').style.display = 'none';"
+name="stolenBlockPeriod">
+<spring:message code="operator.immediate" />
+</label> <label style="margin-right: 2%;"> <input type="radio"
+name="editbulkBlockdeviceradio" class="blocktypeRadio" value="Default"
+onchange="document.getElementById('calender').style.display = 'none';"
+name="stolenBlockPeriod">
+<spring:message code="operator.default" />
+</label> <label> <input type="radio" name="editbulkBlockdeviceradio" required="required"
+value="tilldate" class="blocktypeRadio"
+onchange="document.getElementById('calender').style.display = 'block';"
+name="stolenBlockPeriod">
+<spring:message code="operator.later" /></label>
+
+</div>
+<div class="col s6 m6 responsiveDiv" style="display: none;" id="calender">
+<div id="startdatepicker" class="input-group date">
+<p> <spring:message code="operator.blockingTypePeriod" /> </p>
+<input type="text" id="stolenDatePeriodedit" style="margin-top: -9px" /> <span
+class="input-group-addon" style="color: #ff4081"><i class="fa fa-calendar"
+aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
+</div>
+</div>
+
+<!-- 
+<div class="input-field col s6 m6 responsiveDiv" style="display: block;" id="calender">
+<div id="startdatepicker" class="input-group date">
+<input type="text" id="stolenDatePeriodedit" placeholder="" style="margin-top: -9px" class="hasDatepicker">
+<label for="" class="active">Blocking Time Period</label>
+<p> Blocking Time Period </p>
+ <span class="input-group-addon" style="color: #ff4081">
+    
+    <i class="fa fa-calendar" aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
+</div>
+</div> -->
+
+<div class="col s12 m6 l6" style="display: none" id="stolenDate">
+
+<label for="TotalPrice" class="center-align">
+<spring:message code="operator.tilldate" /></label>
+<div id="startdatepicker" class="input-group" style="margin-top: 10px;">
+
+<input class="form-control" placeholder="" name="inputsaves" type="text" id="startDateFilter"
+readonly /> <span class="input-group-addon" style="color: #ff4081"><i
+class="glyphicon glyphicon-calendar"
+onclick="_Services._selectstartDate()"></i></span>
+</div>
+</div>
+</div>
 
 														<div class="col s12 m12" style="margin-top: 30px;">
 															<h5>
@@ -988,8 +1043,7 @@ select {
 											</div>
 
 											<div class="col s12 m12">
-												<a href="./stolenRecovery?FeatureId=5" id="sampleFileLink"><spring:message
-														code="input.downlaod.sample" /></a>
+												<a href="./stolenRecovery?FeatureId=5" id="sampleFileLink"><spring:message code="input.downlaod.sample" /></a>
 											</div>
 
 											<div class="input-field col s12 center">
@@ -1044,9 +1098,12 @@ select {
 					<spring:message code="fileValidationName" />
 					<br> <br>
 					<spring:message code="fileValidationFormate" />
-					<br> <br>
+					<br>
+					<br>
 					<spring:message code="fileValidationSize" />
 				</h6>
+				<input type="text" id="FilefieldId" style="display: none;">
+				<input type="text" id="existingFileName" style="display: none;">
 			</div>
 			<div class="row">
 				<div class="input-field col s12 center">
@@ -1131,28 +1188,25 @@ select {
 
 	<script type="text/javascript"
 		src="${context}/resources/i18n_library/min.js"></script>
-
-	<script type="text/javascript"
-		src="${context}/resources/project_js/globalVariables.js"></script>
-	<script type="text/javascript"
+	
+	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
+<script type="text/javascript"
 		src="${context}/resources/project_js/backbutton.js"></script>
 	<script type="text/javascript"
-		src="${context}/resources/project_js/dragableModal.js"></script>
-	<script type="text/javascript"
+		src="${context}/resources/project_js/dragableModal.js"></script>	
+			<script type="text/javascript"
 		src="${context}/resources/project_js/enterKey.js"></script>
-
-	<script type="text/javascript"
+	
+		<script type="text/javascript"
 		src="${context}/resources/project_js/validationMsg.js"></script>
 
 	<script type="text/javascript"
 		src="${context}/resources/project_js/profileInfoTab.js" async></script>
+		
+		<script type="text/javascript" src="${context}/resources/js/intlTelInput.js"></script>
+		<script type="text/javascript" src="${context}/resources/js/utils.js"></script>
 
-	<script type="text/javascript"
-		src="${context}/resources/js/intlTelInput.js"></script>
-	<script type="text/javascript" src="${context}/resources/js/utils.js"></script>
-
-
-	<script type="text/javascript"
+<script type="text/javascript"
 		src="${context}/resources/project_js/editLawfulStolen.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/lawfulStolenRecovery.js"></script>
@@ -1163,12 +1217,14 @@ select {
 </body>
 </html>
 <%
-	} else {
+} else {
+
 %>
 <script language="JavaScript">
-	sessionStorage.setItem("loginMsg", "*Session has been expired");
-	window.top.location.href = "./login";
+sessionStorage.setItem("loginMsg",
+"*Session has been expired");
+window.top.location.href = "./login";
 </script>
 <%
-	}
+}
 %>
