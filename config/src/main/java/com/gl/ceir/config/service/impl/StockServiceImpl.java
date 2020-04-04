@@ -31,6 +31,7 @@ import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.feign.UserFeignClient;
 import com.gl.ceir.config.model.AuditTrail;
 import com.gl.ceir.config.model.ConsignmentUpdateRequest;
+import com.gl.ceir.config.model.DashboardUsersFeatureStateMap;
 import com.gl.ceir.config.model.FeatureValidateReq;
 import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.FilterRequest;
@@ -57,6 +58,7 @@ import com.gl.ceir.config.model.constants.WebActionDbState;
 import com.gl.ceir.config.model.constants.WebActionDbSubFeature;
 import com.gl.ceir.config.model.file.StockFileModel;
 import com.gl.ceir.config.repository.AuditTrailRepository;
+import com.gl.ceir.config.repository.DashboardUsersFeatureStateMapRepository;
 import com.gl.ceir.config.repository.StatesInterpretaionRepository;
 import com.gl.ceir.config.repository.StockDetailsOperationRepository;
 import com.gl.ceir.config.repository.StockManagementRepository;
@@ -91,6 +93,9 @@ public class StockServiceImpl {
 
 	@Autowired
 	StockDetailsOperationRepository stockDetailsOperationRepository;
+	
+	@Autowired
+	DashboardUsersFeatureStateMapRepository dashboardUsersFeatureStateMapRepository; 
 
 	@Autowired
 	WebActionDbRepository webActionDbRepository;
@@ -371,12 +376,14 @@ public class StockServiceImpl {
 		}else {
 			if(Objects.nonNull(filterRequest.getFeatureId()) && Objects.nonNull(filterRequest.getUserTypeId())) {
 
+				List<DashboardUsersFeatureStateMap> dashboardUsersFeatureStateMap = dashboardUsersFeatureStateMapRepository.findByUserTypeIdAndFeatureId(filterRequest.getUserTypeId(), filterRequest.getFeatureId());
+				logger.debug(dashboardUsersFeatureStateMap);
+				
 				List<Integer> stockStatus = new LinkedList<>();
-				logger.debug(statusList);
-
-				if(Objects.nonNull(statusList)) {	
-					for(StateMgmtDb stateDb : statusList ) {
-						stockStatus.add(stateDb.getState());
+				
+				if(Objects.nonNull(dashboardUsersFeatureStateMap)) {	
+					for(DashboardUsersFeatureStateMap dashboardUsersFeatureStateMap2 : dashboardUsersFeatureStateMap ) {
+						stockStatus.add(dashboardUsersFeatureStateMap2.getState());
 					}
 
 					logger.info("Array list to add is = " + stockStatus);
