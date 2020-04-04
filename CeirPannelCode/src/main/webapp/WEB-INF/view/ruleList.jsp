@@ -123,6 +123,54 @@
 			</div>
 		</div>
 		
+		
+		
+		<div id="editModel" class="modal">
+		<h6 class="modal-header"><spring:message code="modal.EditRuleList" /></h6>
+		<div class="modal-content">
+		<form action="" onsubmit="return update()">
+			<div class="row">
+				<div class="row">
+			
+				<div class="input-field col s12 m6">
+						<input type="text" name="name" id="editName"
+							placeholder="" 	oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
+
+							maxlength="50" disabled required> <label for="totalPrice" class="center-align"><spring:message
+								code="table.name" /></label>
+					</div>
+
+
+
+
+					<div class="input-field col s12 m6">
+					<textarea id="editDescription" class="materialize-textarea" Placeholder="" placeholder=""  maxlength="200"></textarea>
+					<label for="editdescription" class=""><spring:message code="registration.description" /></label>
+
+					</div>
+
+					<div class="input-field col s12 m6">
+						<p style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;"><spring:message code="table.state" /> <span class="star">*</span></p>
+						<select id="editState" name="editState"
+							class="browser-default" class="mySelect"
+							onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+							required></select> <label for="country" class="center-align"></label>
+					</div>
+				</div>
+
+
+				<div class="row input_fields_wrap">
+					<div class="col s12 m12 center" style="margin-top: 10px;">
+					<button class="btn " type="submit" style="margin-left: 10px;"><spring:message code="button.update" /></button>
+					<button class="modal-close btn" type="button" style="margin-left: 10px;"><spring:message code="button.cancel" /></button>
+				</div>
+
+				</div>
+			</div>
+			</form>
+		</div>
+	</div>
+		
 	
 		<!--end container-->
 	</section>

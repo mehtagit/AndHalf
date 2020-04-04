@@ -390,7 +390,7 @@ public class DatatableHeaders {
 //Rule List
 			
 			else if("ruleList".equals(role)) {
-				String[] headers = {"table.creationDate","table.lastupdatedate","table.state","table.action"};
+				String[] headers = {"table.creationDate","table.lastupdatedate","table.state","table.name","table.Description","table.action"};
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}

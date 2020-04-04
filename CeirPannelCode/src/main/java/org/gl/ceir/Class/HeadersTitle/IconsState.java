@@ -2052,6 +2052,26 @@ public class IconsState {
 
 	}
 
+	
+	/********************************** Icons for Rule List**********************************/ 
+
+	public String ruleListIcons(String id) { 
+		executePostConstruct();
+
+		String editAction= "getDetailBy('"+id+"')";
+
+		// state related Code 
+
+
+		String edit="<a onclick="+editAction+"><i class="
+				+editIcon+" aria-hidden=\"true\"  title="
+				+editIconTitle+"></i></a>"; 
+
+
+		String action=edit;
+		return action;
+
+	}
 	@PostConstruct
 	public void executePostConstruct() {
 		errorIconTitle=Translator.toLocale("titles.Error_File");
