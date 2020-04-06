@@ -802,13 +802,7 @@ String usertypeId="${usertypeId}";
 
 	<!-- Modal End -->
 
-		<div class="modal" id="error_Modal_reg" role="dialog">
-		<div class="modal-dialog">
-			<div class="row" id="modalMessageBodyReg"
-					style="text-align: center;"></div>
-			
-		</div>
-	</div>
+	
 		<!-- i18n library -->
 	<script type="text/javascript"
 		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>

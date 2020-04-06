@@ -146,26 +146,7 @@
 							$('#'+button[i].id).attr("onclick", button[i].buttonURL);
 						}
 
-				
-						$.getJSON('./getAllfeatures', function(data) {
-							for (i = 0; i < data.length; i++) {
-							$('<option>').val(data[i].id).text(data[i].name).appendTo('#Feature');
-							}
-						});
-						$.getJSON('./registrationUserType', function(data) {
-							for (i = 0; i < data.length; i++) {
-								$('<option>').val(data[i].id).text(data[i].usertypeName)
-								.appendTo('#User');
-							}
-						});
-						$.getJSON('./registrationUserType', function(data) {
-							for (i = 0; i < data.length; i++) {
-								$('<option>').val(data[i].id).text(data[i].usertypeName)
-								.appendTo('#Rule');
-							}
-						});
-
-			}
+				}
 			}); 
 			
 			

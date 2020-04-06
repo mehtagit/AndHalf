@@ -21,6 +21,7 @@ import org.gl.ceir.CeirPannelCode.Model.SecurityQuestion;
 import org.gl.ceir.CeirPannelCode.Model.Usertype;
 import org.gl.ceir.CeirPannelCode.Service.RegistrationService;
 import org.gl.ceir.CeirPannelCode.Util.HttpResponse;
+import org.gl.ceir.pagination.model.AlertContentModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -202,6 +203,13 @@ public class RegistrationController {
 	@ResponseBody  
 	public List<FeatureDropdown> allFeatureDropdown(){ 
 		List<FeatureDropdown> response =userRegistrationFeignImpl.userAllFeatureDropdown();
+		return response;          
+	}
+	
+	@RequestMapping(value = "/getAllAlerts",method = {RequestMethod.POST,RequestMethod.GET})
+	@ResponseBody  
+	public List<AlertContentModel> getAlertDropdown(){ 
+		List<AlertContentModel> response =userRegistrationFeignImpl.userAllAlertDropdown();
 		return response;          
 	}
 }

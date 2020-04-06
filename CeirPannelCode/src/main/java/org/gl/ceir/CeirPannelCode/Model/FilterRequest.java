@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class FilterRequest {
-	public String startDate,endDate,createdOn,modifiedOn,roleType,userType,txnId,searchString,grievanceId,tag,remarks,deviceId,nid,childTag,field,interp,tagId,value,displayName,description,address,featureName,subFeatureName,userName,date,fileName,invoiceNumber,suplierName,supplierId,stateInterp;
+	public String startDate,endDate,createdOn,modifiedOn,roleType,userType,txnId,searchString,grievanceId,tag,remarks,deviceId,nid,childTag,field,interp,tagId,value,displayName,description,address,featureName,subFeatureName,userName,date,fileName,invoiceNumber,suplierName,supplierId,stateInterp,alertId;
 	private Integer pageNo, pageSize,userId,taxPaidStatus,consignmentStatus,featureId,userTypeId,fileStatus,requestType,sourceType,grievanceStatus,userRoleTypeId,status,asType,serviceDump,fileType,action,operatorTypeId,channel,type,deviceIdType,parentValue,id,port,currency,quantity,stockStatus,feature,period;
 	private Double dollar,riel;
 	public String getStartDate() {
@@ -186,6 +186,12 @@ public class FilterRequest {
 	}
 	public void setStateInterp(String stateInterp) {
 		this.stateInterp = stateInterp;
+	}
+	public String getAlertId() {
+		return alertId;
+	}
+	public void setAlertId(String alertId) {
+		this.alertId = alertId;
 	}
 	public Integer getPageNo() {
 		return pageNo;
@@ -436,6 +442,8 @@ public class FilterRequest {
 		builder.append(supplierId);
 		builder.append(", stateInterp=");
 		builder.append(stateInterp);
+		builder.append(", alertId=");
+		builder.append(alertId);
 		builder.append(", pageNo=");
 		builder.append(pageNo);
 		builder.append(", pageSize=");
@@ -501,10 +509,5 @@ public class FilterRequest {
 		builder.append("]");
 		return builder.toString();
 	}
-
 	
-	
-	
-	
-		
 }

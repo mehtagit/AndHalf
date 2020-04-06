@@ -193,25 +193,3 @@ $("input[type=file]").keypress(function(ev) {
 		}, fadetime);
 		
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	function errorMessageReg(message){
-		fadetime=2000;
-		window.parent.$("#modalMessageBodyReg").empty();
-		window.parent.$("#modalMessageBodyReg").append(' <label id="success" style="color: red;font-size:14px;">'+message+'</label>');
-		window.parent.$('#error_Modal_reg').openModal();
-
-		window.parent.$('#error_Modal_reg').fadeIn().delay(fadetime).fadeOut();
-		setTimeout(function() {
-			window.parent.$('#error_Modal_reg').closeModal();
-		}, fadetime);
-		
-	}

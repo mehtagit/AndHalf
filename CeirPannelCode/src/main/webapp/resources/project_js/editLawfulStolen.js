@@ -109,17 +109,16 @@ function viewIndivisualStolen()
 			$('#IndivisualStolenDate').val(response.dateOfStolen);
 			$('#uploadFirSingleName').val(response.firFileName);
 			//$('#singleStolenFileName').val(response.firFileName);
-$('input[name=editbulkBlockdeviceradio][value='+response.blockingType+']').attr('checked', true); 
+			$('input[name=editbulkBlockdeviceradio][value='+response.blockingType+']').attr('checked', true); 
 
-if(response.blockingType=='tilldate')
-{
-$("#calender").css("display", "block"); 
-
-$("#stolenDatePeriodedit").val(response.blockingTimePeriod);
-}
-else{
-$("#calender").css("display", "none"); 
-}
+			if(response.blockingType=='tilldate')
+			{
+				$("#calender").css("display", "block"); 
+				$("#stolenDatePeriodedit").val(response.blockingTimePeriod);
+			}
+			else{
+				$("#calender").css("display", "none"); 
+			}
 			$("label[for='IndivisualStolenDate']").addClass('active');
 			$("label[for='updatesingleStolenimei1']").addClass('active');
 			$("label[for='updatesingleStolenimei1']").addClass('active');
@@ -335,13 +334,13 @@ function clearFileName() {
 	//alert(fieldId);
 	if(fieldId=='singleStolenFile')
 	{
-	$('#'+fieldId).val('');
-	$('#singleStolenFileName').val('');
+		$('#'+fieldId).val('');
+		$('#singleStolenFileName').val('');
 	}
-else if(fieldId=='uploadFirSingle')
+	else if(fieldId=='uploadFirSingle')
 	{
-	$('#'+fieldId).val('');
-	$('#uploadFirSingleName').val('');
+		$('#'+fieldId).val('');
+		$('#uploadFirSingleName').val('');
 	}
 	$('#fileFormateModal').closeModal();
 }

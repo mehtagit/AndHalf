@@ -4,7 +4,7 @@
 	response.setDateHeader("Expires", 0);
 	response.setHeader("Pragma", "no-cache");
 	/*  session.setMaxInactiveInterval(200); //200 secs
-	 session.setAttribute("usertype", null); */
+	 session.setAttribute("usertype", null);  */
 	if (session.getAttribute("usertype") != null) {
 %>
 <%@ page language="java" contentType="text/html; charset=utf-8"
@@ -16,7 +16,7 @@
 <!DOCTYPE html>
 <html class="no-js" lang="en" dir="ltr">
 <head>
-<title>Rule List</title>
+<title>Consignment</title>
 <meta http-equiv='cache-control' content='no-cache'>
 <meta http-equiv='expires' content='-1'>
 <meta http-equiv='pragma' content='no-cache'>
@@ -79,7 +79,7 @@
 	src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
 </head>
-<body data-id="29"
+<body data-id="23"
 	data-roleType="${usertype}" data-userTypeID="${usertypeId}"
 	data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}"
 	data-stolenselected-roleType="${stolenselectedUserTypeId}"
@@ -105,14 +105,14 @@
 
 								<a class="boton right" id="btnLink" hidden="hidden"></a>
 							</div>
-							<form action="${context}/ruleListMav"
+							<form action="${context}/alertManagement"
 								method="post">
-								<div class="col s12 m12 l12" id="FieldTableDiv"
+								<div class="col s12 m12 l12" id="alertTableDiv"
 									style="padding-bottom: 5px; background-color: #e2edef52;">
 									<div id="filterBtnDiv"></div>
 								</div>
 							</form>
-							<table id="table"
+							<table id="alertManagementLibraryTable"
 								class="responsive-table striped display"></table>
 
 						</div>
@@ -126,6 +126,9 @@
 	
 		<!--end container-->
 	</section>
+	
+
+    </div>	
 <!--materialize js-->
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
@@ -154,37 +157,36 @@
 	<%-- <script type="text/javascript" src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script> --%>
 	<script type="text/javascript"
 		src="${context}/resources/js/countries.js"></script>
-	
 	<!-- i18n library -->
 	<script type="text/javascript"
 		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/i18n.js"></script>
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.js"></script>
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/messagestore.js"></script>
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.messagestore.js"></script>
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/fallbacks.js"></script>
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.fallbacks.js"></script>
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/language.js"></script>
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.language.js"></script>
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/parser.js"></script>
-
-
-	<script type="text/javascript"
-		src="${context}/resources/i18n_library/emitter.js"></script>
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.parser.js"></script>
 
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/bidi.js"></script>
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.js"></script>
+
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/history.js"></script>
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.bidi.js"></script>
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/min.js"></script>
+		src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/jquery.history.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/globalVariables.js"></script>
 	<script type="text/javascript"
@@ -193,15 +195,14 @@
 		src="${context}/resources/project_js/dragableModal.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/enterKey.js"></script>
-
-			<script type="text/javascript"
-		src="${context}/resources/project_js/validationMsg.js"></script>
+	<%-- 		<script type="text/javascript"
+		src="${context}/resources/project_js/disable_inspectElement.js"></script> --%>
+	<script type="text/javascript"
+		src="${context}/resources/project_js/runningAlert.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/_dateFunction.js" async></script>
 			<script type="text/javascript"
 		src="${context}/resources/project_js/profileInfoTab.js" async></script>
-			<script type="text/javascript"
-		src="${context}/resources/project_js/ruleList.js"></script>
 </body>
 </html>
 <%
