@@ -7,11 +7,12 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import com.gl.ceir.config.factory.CustomerCareRepo;
 import com.gl.ceir.config.model.ResponseCountAndQuantity;
 import com.gl.ceir.config.model.TypeApprovedDb;
 
 
-public interface TypeApproveRepository extends JpaRepository<TypeApprovedDb, Long>, JpaSpecificationExecutor<TypeApprovedDb>{
+public interface TypeApproveRepository extends JpaRepository<TypeApprovedDb, Long>, JpaSpecificationExecutor<TypeApprovedDb>, CustomerCareRepo<TypeApprovedDb>{
 
 	public TypeApprovedDb save(TypeApprovedDb typeApprovedDb);
 	public TypeApprovedDb findById(long id);

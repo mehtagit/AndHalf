@@ -29,11 +29,11 @@ public class CustomerCareDuplicate implements CustomerCareTarget{
 			customerCareDeviceState.setTxnId("");
 			customerCareDeviceState.setDate(deviceDb.getCreatedOn().toString());
 			customerCareDeviceState.setStatus(Constants.available);
-			customerCareDeviceState.setFeatureId(0);
+			customerCareDeviceState.setFeatureId(34);
 		}else {
 			customerCareDeviceState.setDate("");
 			customerCareDeviceState.setStatus(Constants.non_available);
-			customerCareDeviceState.setFeatureId(0);
+			customerCareDeviceState.setFeatureId(34);
 		}
 		customerCareDeviceState.setImei(imei);
 		setName(customerCareDeviceState);

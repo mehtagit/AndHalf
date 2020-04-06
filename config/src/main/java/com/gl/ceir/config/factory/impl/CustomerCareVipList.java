@@ -26,11 +26,11 @@ public class CustomerCareVipList implements CustomerCareTarget{
 			customerCareDeviceState.setTxnId("");
 			customerCareDeviceState.setDate(vipList.getCreatedOn().toString());
 			customerCareDeviceState.setStatus(Constants.available);
-			customerCareDeviceState.setFeatureId(0);
+			customerCareDeviceState.setFeatureId(33);
 		}else {
 			customerCareDeviceState.setDate("");
 			customerCareDeviceState.setStatus(Constants.non_available);
-			customerCareDeviceState.setFeatureId(0);
+			customerCareDeviceState.setFeatureId(33);
 		}
 		customerCareDeviceState.setImei(imei);
 		setName(customerCareDeviceState);

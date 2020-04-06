@@ -4,11 +4,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
+import com.gl.ceir.config.factory.CustomerCareRepo;
 import com.gl.ceir.config.model.GsmaBlackList;
 
 @Repository
 public interface GsmaBlacklistRepository extends JpaRepository<GsmaBlackList, Long>, 
-JpaSpecificationExecutor<GsmaBlackList> {
+JpaSpecificationExecutor<GsmaBlackList>, CustomerCareRepo<GsmaBlackList> {
 
 	public GsmaBlackList getByDeviceid(String imei);
 

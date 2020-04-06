@@ -166,11 +166,10 @@ public class ConfigurationManagementServiceImpl {
 				return new GenricResponse(15, "This Id does not exist", "");
 			}
 
-			systemConfigurationHistoryDbRepository.save(
-					new SystemConfigurationHistoryDb(systemConfigurationDb2.getTag(), systemConfigurationDb2.getValue(), systemConfigurationDb2.getDescription()
-							));
+			systemConfigurationHistoryDbRepository.save(new SystemConfigurationHistoryDb(systemConfigurationDb2.getTag(), systemConfigurationDb2.getValue(), systemConfigurationDb2.getDescription()));
 
 			systemConfigurationDb2.setValue(systemConfigurationDb.getValue());
+			systemConfigurationDb2.setDescription(systemConfigurationDb.getDescription());
 			systemConfigurationDbRepository.save(systemConfigurationDb2);
 
 			return new GenricResponse(0, "System configuration update Sucessfully", "");

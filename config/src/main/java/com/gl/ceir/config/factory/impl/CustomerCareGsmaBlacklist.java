@@ -15,22 +15,22 @@ import com.gl.ceir.config.repository.GsmaBlacklistRepository;
 public class CustomerCareGsmaBlacklist implements CustomerCareTarget{
 	
 	@Autowired
-	public GsmaBlacklistRepository blackListRepository;
+	public GsmaBlacklistRepository gsmaBlackListRepository;
 	
 	@Override
 	public CustomerCareDeviceState fetchDetailsByImei(String imei, CustomerCareDeviceState customerCareDeviceState) {
 		
-		GsmaBlackList blackList = blackListRepository.getByDeviceid(imei);
+		GsmaBlackList blackList = gsmaBlackListRepository.getByDeviceid(imei);
 		
 		if(Objects.nonNull(blackList)) {
 			customerCareDeviceState.setTxnId("");
 			customerCareDeviceState.setDate(blackList.getCreatedOn());
 			customerCareDeviceState.setStatus(Constants.available);
-			customerCareDeviceState.setFeatureId(0);
+			customerCareDeviceState.setFeatureId(36);
 		}else {
 			customerCareDeviceState.setDate("");
 			customerCareDeviceState.setStatus(Constants.non_available);
-			customerCareDeviceState.setFeatureId(0);
+			customerCareDeviceState.setFeatureId(36);
 		}
 		customerCareDeviceState.setImei(imei);
 		setName(customerCareDeviceState);

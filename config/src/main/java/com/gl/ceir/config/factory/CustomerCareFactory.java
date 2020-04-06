@@ -29,6 +29,7 @@ import com.gl.ceir.config.repository.RegularizedDeviceDbRepository;
 import com.gl.ceir.config.repository.StockManagementRepository;
 import com.gl.ceir.config.repository.StolenAndRecoveryRepository;
 import com.gl.ceir.config.repository.TypeApproveRepository;
+import com.gl.ceir.config.repository.VipListRepository;
 
 @Component
 public class CustomerCareFactory {
@@ -36,7 +37,11 @@ public class CustomerCareFactory {
 	public final List<String> deviceList = Arrays.asList("IMPORTER", "DISTRIBUTOR", "RETAILER", "CUSTOM", 
 			"MANUFACTURER", "REGULARIZE", "VIP");
 	
-	public final List<String> stateList = Arrays.asList("BLACKLIST", "GREYLIST", "DUPLICATE", "STOLEN", "GLOBAL_BLACKIST", 
+	/*
+	 * public final List<String> stateList = Arrays.asList("BLACKLIST", "GREYLIST",
+	 * "DUPLICATE", "STOLEN", "GLOBAL_BLACKIST", "TYPE_APPROVED");
+	 */
+	public final List<String> stateList = Arrays.asList("BLACKLIST", "GREYLIST", "DUPLICATE", "GLOBAL_BLACKIST", 
 			"TYPE_APPROVED");
 
 	@Autowired
@@ -99,11 +104,16 @@ public class CustomerCareFactory {
 	
 	@Autowired
 	GreyListRepository greyListRepository;
+	
 	@Autowired
 	DeviceDuplicateDbRepository deviceDuplicateDbRepository;
 	
 	@Autowired
 	TypeApproveRepository typeApproveRepository;
+	@Autowired
+	VipListRepository vipListRepository;
+	@Autowired
+	public GsmaBlacklistRepository gsmaBlackListRepository;
 	
 	public CustomerCareTarget getObject(String name) {
 
@@ -173,20 +183,30 @@ public class CustomerCareFactory {
 	public CustomerCareRepo getRepoByFeatureId(int featureId) {
 
 		switch (featureId) {
+		
 		case 3:
 			return consignmentRepository;
 		case 4:
-			return stockManagementRepository;
+			return stockManagementRepository;	
 		case 5:
 			return stolenAndRecoveryRepository;
 		case 7:
 			return stolenAndRecoveryRepository;
+		case 9:
+			return greyListRepository;
+		case 10:
+			return blackListRepository;
 		case 12:
 			return regularizedDeviceDbRepository;
-		default:
-			break;
+		case 21:
+			return typeApproveRepository;
+		case 33:
+			return vipListRepository;
+		case 34:
+			return deviceDuplicateDbRepository;
+		case 36: 
+			return gsmaBlackListRepository;
 		}
-
 		return null;
 	}
 }

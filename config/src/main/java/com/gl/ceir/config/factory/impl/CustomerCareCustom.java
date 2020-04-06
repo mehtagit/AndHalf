@@ -33,7 +33,7 @@ public class CustomerCareCustom implements CustomerCareTarget{
 		}else {
 			customerCareDeviceState.setDate("");
 			customerCareDeviceState.setStatus(Constants.non_available);
-			customerCareDeviceState.setFeatureId(0);
+			customerCareDeviceState.setFeatureId(commonFunction.getFeatureIdByTxnId(deviceDb.getTxnId()));
 		}
 		
 		customerCareDeviceState.setImei(imei);

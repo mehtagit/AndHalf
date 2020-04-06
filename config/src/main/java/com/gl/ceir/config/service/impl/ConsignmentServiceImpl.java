@@ -30,6 +30,7 @@ import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.model.AuditTrail;
 import com.gl.ceir.config.model.ConsignmentMgmt;
 import com.gl.ceir.config.model.ConsignmentUpdateRequest;
+import com.gl.ceir.config.model.DashboardUsersFeatureStateMap;
 import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
@@ -56,6 +57,7 @@ import com.gl.ceir.config.model.constants.WebActionDbSubFeature;
 import com.gl.ceir.config.model.file.ConsignmentFileModel;
 import com.gl.ceir.config.repository.AuditTrailRepository;
 import com.gl.ceir.config.repository.ConsignmentRepository;
+import com.gl.ceir.config.repository.DashboardUsersFeatureStateMapRepository;
 import com.gl.ceir.config.repository.MessageConfigurationDbRepository;
 import com.gl.ceir.config.repository.StockDetailsOperationRepository;
 import com.gl.ceir.config.repository.StokeDetailsRepository;
@@ -91,6 +93,9 @@ public class ConsignmentServiceImpl {
 
 	@Autowired
 	WebActionDbRepository webActionDbRepository;
+	
+	@Autowired
+	DashboardUsersFeatureStateMapRepository dashboardUsersFeatureStateMapRepository; 
 
 	@Autowired
 	AuditTrailRepository auditTrailRepository;
@@ -770,12 +775,14 @@ public class ConsignmentServiceImpl {
 
 			if(Objects.nonNull(consignmentMgmt.getFeatureId()) && Objects.nonNull(consignmentMgmt.getUserTypeId())) {
 
+				List<DashboardUsersFeatureStateMap> dashboardUsersFeatureStateMap = dashboardUsersFeatureStateMapRepository.findByUserTypeIdAndFeatureId(consignmentMgmt.getUserTypeId(), consignmentMgmt.getFeatureId());
+				logger.debug(dashboardUsersFeatureStateMap);
 				List<Integer> consignmentStatus = new LinkedList<>();
-				logger.debug(statusList);
+				
 
-				if(Objects.nonNull(statusList)) {	
-					for(StateMgmtDb stateDb : statusList ) {
-						consignmentStatus.add(stateDb.getState());
+				if(Objects.nonNull(dashboardUsersFeatureStateMap)) {	
+					for(DashboardUsersFeatureStateMap dashboardUsersFeatureStateMap2 : dashboardUsersFeatureStateMap ) {
+						consignmentStatus.add(dashboardUsersFeatureStateMap2.getState());
 					}
 					logger.info("Array list to add is = " + consignmentStatus);
 

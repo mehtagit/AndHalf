@@ -41,8 +41,8 @@ public class RuleEngine implements Serializable {
 	@UpdateTimestamp
 	private LocalDateTime modifiedOn;
 
-	@Enumerated(EnumType.STRING)
-	private RulesNames name;
+	// @Enumerated(EnumType.STRING)
+	private String name;
 
 	@NotNull
 	private String description;
@@ -64,11 +64,11 @@ public class RuleEngine implements Serializable {
 		this.id = id;
 	}
 
-	public RulesNames getName() {
+	public String getName() {
 		return name;
 	}
 
-	public void setName(RulesNames name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 
