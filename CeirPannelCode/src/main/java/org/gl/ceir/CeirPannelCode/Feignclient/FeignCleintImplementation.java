@@ -33,7 +33,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 
 @Service
-
 @FeignClient(url = "${feignClientPath}",value = "dsj" )
 public interface FeignCleintImplementation {
 
@@ -406,9 +405,7 @@ public @ResponseBody ConfigContentModel viewAdminFeign(FilterRequest filterReque
 				
 				@PostMapping("/customer-care/by-txn-id")
 				public @ResponseBody GenricResponse customerCareViaTxnId( @RequestBody CustomerCareByTxnId customerCareDeviceState);
-
-
-	/* Rule List Feign */
+				/* Rule List Feign */
 				@RequestMapping(value="/filter/rule-engine" ,method=RequestMethod.POST) 
 				public Object ruleListFeign(@RequestBody FilterRequest filterRequest,
 						@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
@@ -424,6 +421,7 @@ public @ResponseBody ConfigContentModel viewAdminFeign(FilterRequest filterReque
 				public GenricResponse update(@RequestBody RuleListContent ruleListContent);
 							
 }
+
 
 
 

@@ -1222,9 +1222,11 @@ public class IconsState {
 	/********************************** Icons for Admin TRC Manage Type Datatable **********************************/ 
 
 
-	public String trcAdminManageIcons(String status,Integer id,String txnId,String userStatus) {
+	public String trcAdminManageIcons(String status,Integer id,String txnId,String userStatus, String fileName) {
 		executePostConstruct();
-		String errorURL = "";
+		
+		log.info("fileName in Admin Icon-->" +fileName);
+		String errorURL = "fileDownload('"+fileName.replace(" ", "%20")+"','error','"+txnId+"','"+defaultTagName+"')";
 		String viewAction="ImporterviewByID("+id+",'view','"+projectPath+"','viewImporterModal')";
 		//	String downloadURL = "./dowloadFiles/actual/"+fileName.replace(" ", "%20")+"/"+txnId+"/"+defaultTagName+"";
 		//String downloadURL = "fileDownload('"+fileName.replace(" ", "%20")+"','actual','"+txnId+"','"+defaultTagName+"')";
@@ -1616,17 +1618,19 @@ public class IconsState {
 	/********************************** Icons for Importer TRC Datatable **********************************/ 
 
 
-	public String importalTrcManageIcons(String status,Integer id,String fileName,String txnId,String userStatus) {	
+	public String importalTrcManageIcons(String status,Integer id,String txnId,String userStatus, String fileName) {	
 		// URL link 
 		//String downloadURL = "JavaScript:void(0)";
-
+		log.info("fileName in Admin Icon-->" +fileName);
+		String errorURL = "fileDownload('"+fileName.replace(" ", "%20")+"','error','"+txnId+"','"+defaultTagName+"')";
 		String viewAction="ImporterviewByID("+id+",'view','"+projectPath+"','viewImporterModal')";
 		String editAction= "ImporterviewByID("+id+",'edit','"+projectPath+"','importereditModal')";
 
 		String deleteAction = "DeleteTacRecord('"+txnId+"',"+id+")";
 		// state related Code 
 
-
+		String error="<a onclick="+errorURL+"><i class="+errorIcon+" aria-hidden=\"true\" title="
+				+errorIconTitle+"></i></a>";
 		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
 
@@ -1640,13 +1644,21 @@ public class IconsState {
 			delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\"><i class="
 					+disableDeletionIcon+" aria-hidden=\"true\"  title="
 					+deleteIconTitle+"></i></a>";	
-		}else if(("1".equals(status) || "3".equals(status) || "4".equals(status) || "6".equals(status)) && "Approved".equals(userStatus)) {
+			error="<a onclick="+errorURL+" class=\"eventNone\"><i class="+disableErrorIcon+" aria-hidden=\"true\" title="
+					+errorIconTitle+" ></i></a>";
+		}else if("0".equals(status) && "Approved".equals(userStatus)) {
+			error="<a onclick="+errorURL+" class=\"eventNone\"><i class="+disableErrorIcon+" aria-hidden=\"true\" title="
+					+errorIconTitle+" ></i></a>";
+		}
+		else if(("1".equals(status) || "3".equals(status) || "4".equals(status) || "6".equals(status)) && "Approved".equals(userStatus)) {
 			edit="<a onclick="+editAction+" class="+disableIconClass+"><i class="
 					+disableEditIcon+" aria-hidden=\"true\"  title="
 					+editIconTitle+"></i></a>"; 
 			delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\"><i class="
 					+disableDeletionIcon+" aria-hidden=\"true\"  title="
 					+deleteIconTitle+"></i></a>";
+			error="<a onclick="+errorURL+" class=\"eventNone\"><i class="+disableErrorIcon+" aria-hidden=\"true\" title="
+					+errorIconTitle+" ></i></a>";
 		}else if("Disable".equals(userStatus)) {
 			log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
 			edit="<a onclick="+editAction+" class="+disableIconClass+"><i class="
@@ -1655,9 +1667,11 @@ public class IconsState {
 			delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\" ><i class="
 					+disableDeletionIcon+" aria-hidden=\"true\"  title="
 					+deleteIconTitle+"></i></a>"; 
+			error="<a onclick="+errorURL+" class=\"eventNone\"><i class="+disableErrorIcon+" aria-hidden=\"true\" title="
+					+errorIconTitle+" ></i></a>";
 		}
 
-		String action=view.concat(edit).concat(delete);		  
+		String action=error.concat(view).concat(edit).concat(delete);		  
 		return action;
 
 	}
@@ -2051,8 +2065,6 @@ public class IconsState {
 		return action;
 
 	}
-
-	
 	/********************************** Icons for Rule List**********************************/ 
 
 	public String ruleListIcons(String id) { 
