@@ -390,7 +390,7 @@ public class DatatableHeaders {
 //Rule List
 			
 			else if("ruleList".equals(role)) {
-				String[] headers = {"table.creationDate","table.lastupdatedate","table.state","table.action"};
+				String[] headers = {"table.creationDate","table.lastupdatedate","table.state","table.name","table.Description","table.action"};
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
@@ -402,26 +402,6 @@ public class DatatableHeaders {
 		
 			else if("ruleFeatureMapping".equals(role)) {
 				String[] headers = {"table.creationDate","table.lastupdatedate","table.ruleName","table.featureName","table.userType","table.order","table.gracePeriod","table.postGracePeriod","table.moveToGracePeriod","table.moveToPostGracePeriod","table.action"};
-				for(String header : headers) {
-					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
-				}
-				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
-			}
-			
-			//alert Management
-			
-			else if("alertManagementHeaders".equals(role)) {
-				String[] headers = {"table.creationDate","table.lastupdatedate","table.alertId","table.featureName","table.Description"};
-				for(String header : headers) {
-					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
-				}
-				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
-			}
-			
-			//Running alert Management
-			
-			else if("runningAlertManagementHeaders".equals(role)) {
-				String[] headers = {"table.creationDate","table.lastupdatedate","table.alertId","table.status","table.Description"};
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}

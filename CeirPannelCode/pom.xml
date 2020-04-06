@@ -148,7 +148,8 @@
 	</dependencyManagement>
 	<build>
 
-		<finalName>Test</finalName>
+		<finalName>jiten
+		</finalName>
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>

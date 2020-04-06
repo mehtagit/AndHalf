@@ -703,10 +703,8 @@ function fileTypeValueChanges(dd, ddd) {
 	var ext = uploadedFileName.split('.').pop();
 	
 	var fileSize = ($("#file")[0].files[0].size);
-	//fileSize = Math.floor(fileSize/1000) + 'KB';
-   	fileSize = (Math.round((fileSize / 1024) * 100) / 100);
-	if (uploadedFileName.length > 30) {
-	   
+	fileSize = Math.floor(fileSize/1000) + 'KB';
+   if (uploadedFileName.length > 30) {
 	   $('#fileFormateModal').openModal({
     	   dismissible:false
        });

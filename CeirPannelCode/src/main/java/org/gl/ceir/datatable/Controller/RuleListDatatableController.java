@@ -1,5 +1,11 @@
 package org.gl.ceir.datatable.Controller;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -9,7 +15,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
+import org.gl.ceir.CeirPannelCode.Model.ConsignmentModel;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
+import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
+import org.gl.ceir.CeirPannelCode.Model.RuleListContent;
 import org.gl.ceir.Class.HeadersTitle.DatatableResponseModel;
 import org.gl.ceir.Class.HeadersTitle.IconsState;
 import org.gl.ceir.configuration.ConfigParameters;
@@ -17,16 +26,25 @@ import org.gl.ceir.configuration.Translator;
 import org.gl.ceir.pageElement.model.Button;
 import org.gl.ceir.pageElement.model.InputFields;
 import org.gl.ceir.pageElement.model.PageElement;
+import org.gl.ceir.pagination.model.PortContentModal;
+import org.gl.ceir.pagination.model.PortPaginationModal;
 import org.gl.ceir.pagination.model.RegistrationContentModel;
 import org.gl.ceir.pagination.model.RegistrationPaginationModel;
+import org.gl.ceir.pagination.model.RuleListPaginationModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
 
@@ -46,27 +64,63 @@ public class RuleListDatatableController {
 	IconsState iconState;
 	@Autowired
 	DatatableResponseModel datatableResponseModel;
+	@Autowired
+	RuleListPaginationModel ruleListPaginationModel;
 	@PostMapping("ruleListData")
-	public ResponseEntity<?> viewUserProfileRecord(@RequestParam(name="type",required = false) String role, HttpServletRequest request,HttpSession session) {
+	public ResponseEntity<?> getData(@RequestParam(name="type",required = false) String role, HttpServletRequest request,HttpSession session) {
 
 		String userType = (String) session.getAttribute("usertype");
 		int userId=	(int) session.getAttribute("userid");
-		String sessionUserName =  (String) session.getAttribute("username");
 		int file=0;
 		// Data set on this List
 		List<List<Object>> finalList=new ArrayList<List<Object>>();
 		String filter = request.getParameter("filter");
 		Gson gsonObject=new Gson();
-		FilterRequest filterrequest = gsonObject.fromJson(filter, FilterRequest.class);
-
+		FilterRequest filterRequest = gsonObject.fromJson(filter, FilterRequest.class);
 		Integer pageSize = Integer.parseInt(request.getParameter("length"));
 		Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize ;
-		filterrequest.setSearchString(request.getParameter("search[value]"));
+		filterRequest.setSearchString(request.getParameter("search[value]"));
 		log.info("pageSize"+pageSize+"-----------pageNo---"+pageNo);
-		datatableResponseModel.setRecordsTotal(0);
-		datatableResponseModel.setRecordsFiltered(0);
+		try {
+			log.info("request send to the filter api ="+filterRequest);
+			Object response = feignCleintImplementation.ruleListFeign(filterRequest, pageNo, pageSize, file);
+			log.info("response in datatable"+response);
+			Gson gson= new Gson(); 
+			String apiResponse = gson.toJson(response);
+			ruleListPaginationModel = gson.fromJson(apiResponse, RuleListPaginationModel.class);
+			List<RuleListContent> ruleListContent = ruleListPaginationModel.getContent();
+			if(ruleListContent.isEmpty()) {
+				datatableResponseModel.setData(Collections.emptyList());
+			}
+			else {
+			for(RuleListContent dataInsideList : ruleListContent) 
+				{
+				   String id =  String.valueOf(dataInsideList.getId());	
+				   String createdOn = dataInsideList.getCreatedOn();
+				   String modifiedOn = dataInsideList.getModifiedOn();
+				   String name = dataInsideList.getName();
+				   String description = dataInsideList.getDescription();
+				   String state=dataInsideList.getState();
+				   //log.info("Id-->"+Id+"--userStatus--->"+userStatus+"--StatusName---->"+StatusName+"--createdOn---->"+createdOn+"--id--->"+id+"--userName-->"+username);
+				   String action=iconState.ruleListIcons(id);			   
+				   Object[] finalData={createdOn,modifiedOn,state,name,description,action}; 
+				   List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
+					finalList.add(finalDataList);
+					datatableResponseModel.setData(finalList);	
+					
+			}
+		}
+			//data set on ModelClass
+			datatableResponseModel.setRecordsTotal(ruleListPaginationModel.getNumberOfElements());
+			datatableResponseModel.setRecordsFiltered(ruleListPaginationModel.getTotalElements());
+			return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK); 
+	}catch(Exception e) {
+		datatableResponseModel.setRecordsTotal(null);
+		datatableResponseModel.setRecordsFiltered(null);
 		datatableResponseModel.setData(Collections.emptyList());
+		log.error(e.getMessage(),e);
 		return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK); 
+		}
 
 	}
 
@@ -139,4 +193,47 @@ public class RuleListDatatableController {
 		
 		
 	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+//********************************************** open register page or edit popup *****************************
+@GetMapping("/viewRuleListAPI/{id}")
+public @ResponseBody RuleListContent view(@PathVariable("id") Integer id)
+{
+	RuleListContent ruleListContent= new RuleListContent();
+ruleListContent=feignCleintImplementation.fetchData(id);
+log.info(" response::::"+ruleListContent);
+
+return ruleListContent;
+}
+
+
+
+
+
+
+
+//************************************************ update consignment record page********************************************************************************/
+
+@RequestMapping(value= {"/updateRuleList"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}) 
+public @ResponseBody GenricResponse updateRecord(@RequestBody RuleListContent ruleListContent) 
+{
+	log.info("request::::::"+ruleListContent);
+	//RuleListContent ruleList = new RuleListContent();
+GenricResponse response = feignCleintImplementation.update(ruleListContent);
+log.info(" response from update Consignment api="+response);
+return response;
+
+}
+
 }
