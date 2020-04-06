@@ -1,6 +1,6 @@
 $('input').on('invalid', function(e) {
     setTimeout(function(){
-        $('html, body').animate({scrollTop: document.documentElement.scrollTop - 15}, 0);
+        $('html, body').animate({scrollTop: document.documentElement.scrollTop}, 0);
        // $('html, body').animate({scrollTop: document.documentElement.scrollDown}, 0);
     }, 0);
 });
@@ -190,6 +190,28 @@ $("input[type=file]").keypress(function(ev) {
 		window.parent.$('#error_Modal').fadeIn().delay(fadetime).fadeOut();
 		setTimeout(function() {
 			window.parent.$('#error_Modal').closeModal();
+		}, fadetime);
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	function errorMessageReg(message){
+		fadetime=2000;
+		window.parent.$("#modalMessageBodyReg").empty();
+		window.parent.$("#modalMessageBodyReg").append(' <label id="success" style="color: red;font-size:14px;">'+message+'</label>');
+		window.parent.$('#error_Modal_reg').openModal();
+
+		window.parent.$('#error_Modal_reg').fadeIn().delay(fadetime).fadeOut();
+		setTimeout(function() {
+			window.parent.$('#error_Modal_reg').closeModal();
 		}, fadetime);
 		
 	}

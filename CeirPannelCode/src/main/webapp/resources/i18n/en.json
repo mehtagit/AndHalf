@@ -144,5 +144,7 @@
 "REGULARISED_DEVICE_EXCEEDED":"Regularized Devices are exceeding the allowed count.",
 "DEVICE_REGISTRATION_FAILED":"End user device registration have been failed",
 "DUPLICATE_IMEI_IN_REQUEST":"Duplicate IMEI received in request",
-"USER_ALREADY_EXIST":"Passport number already exist in CEIR System"
+"USER_ALREADY_EXIST":"Passport number already exist in CEIR System",
+"PRO_SUCESS_OTPMSG":"OTP has been sent to your  Phone Number and E-Mail ID to verify",
+"Stolen/Recovery IMEI Count":"Stolen/Recovery IMEI Count"
 }

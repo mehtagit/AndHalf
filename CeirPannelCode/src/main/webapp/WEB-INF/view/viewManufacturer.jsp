@@ -191,7 +191,7 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
                                         </div>
 
                                         <div class="input-field col s12 m6 l6">
-                                            <input type="text" name="natureOfEmployment" id="natureOfEmployment" value="${registration.natureOfEmployment}" maxlength="30" disabled="" placeholder="">
+                                            <input type="text" name="natureOfEmployment" id="natureOfEmployment" value="${registration.natureOfEmploymentInterp}" maxlength="30" disabled="" placeholder="">
                                             <label for="natureOfEmployment" class="active"><spring:message code="registration.natureofemployment" /> </label>
                                         </div>
                                     </div>

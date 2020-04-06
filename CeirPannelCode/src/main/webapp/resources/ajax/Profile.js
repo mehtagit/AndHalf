@@ -240,7 +240,7 @@ function editProfile(){
 			$("#registrationForm #companyName").val(resp.companyName);
 			$("#registrationForm #passportNo").val(resp.passportNo);
 			$("#questionId1 #country").val(resp.country);
-			$("#registrationForm #usertypes").val(resp.roles); 
+			//$("#registrationForm #usertypes").val(resp.roles); 
 			$("#registrationForm #file").val(resp.nidFilename);
 			$("#registrationForm #filePath").val(resp.nidFilePath);
 			
@@ -267,12 +267,15 @@ function editProfile(){
 		 		document.getElementById("vatFileDiv").style.display = "none";
 		 	}
 			arr=resp.roles;
+			console.log("roles"+arr);
             if(resp.userTypeId==4 || resp.userTypeId==5 || resp.userTypeId==6){
              	$("#rolesDiv").show();
              	$("#AsTypeDiv").show();
                 usertypeData2(resp.userTypeId); 	
             }
 			for (var i = 0; i < arr.length; i++) {
+				//$("#registrationForm #usertypes").val(arr[i]);
+				$('#registrationForm #usertypes option[value="'+arr[i]+'"]').attr('selected', true);
 				$('#registrationForm #usertypes option[value="'+arr[i]+'"]').attr('disabled', true);
 			}
 			loadByAsType(resp);
@@ -341,7 +344,7 @@ function editOtherProfile(){
 
 			
 			$("#registrationForm #employeeId").val(resp.employeeId);
-			$("#registrationForm #natureOfEmployment").val(resp.natureOfEmployment);
+			$("#registrationForm #natureOfEmployment").val(resp.natureOfEmploymentInterp);
 			$("#registrationForm #designation").val(resp.designation);
 			$("#registrationForm #authorityName").val(resp.authorityName);
 			$("#registrationForm #authorityEmail").val(resp.authorityEmail);

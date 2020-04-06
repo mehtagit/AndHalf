@@ -853,7 +853,7 @@ function confirmRejectInformation(){
 
 function clearFileName() {
 	var fieldId=$('#FilefieldId').val();
-	alert(fieldId);
+	
 	if(fieldId=='singleStolenFile')
 		{
 		$('#'+fieldId).val('');

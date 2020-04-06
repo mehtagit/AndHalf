@@ -414,11 +414,12 @@ var contextpath = "${context}";
 									<label> <spring:message code="registration.natureofemployment" /> <span class="star">*</span></label>
 									<select id="natureOfEmployment" class="browser-default" 
 									oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" required>
-										<option value="" disabled selected><spring:message code="registration.natureofemployment" /></option>
-										<option value="Permanent"><spring:message code="registration.permanent" /></option>
+ 										<option value="" disabled selected><spring:message code="registration.natureofemployment" /></option>
+<%--										<option value="Permanent"><spring:message code="registration.permanent" /></option>
 										<option value="Temporary"><spring:message code="registration.temporary" /></option>
 										<option value="Contract"><spring:message code="registration.contract" /></option>
-									</select>
+ --%>
+ 									</select>
 								</div>
 							</div>
 
@@ -777,7 +778,15 @@ var contextpath = "${context}";
     </div>
 
 	<!-- Modal End -->
-	
+	<!-- Modal End -->
+
+		<div class="modal" id="error_Modal_reg" role="dialog">
+		<div class="modal-dialog">
+			<div class="row" id="modalMessageBodyReg"
+					style="text-align: center;"></div>
+			
+		</div>
+	</div>
 	<!-- ================================================
     Scripts
     ================================================ -->
@@ -845,7 +854,7 @@ var contextpath = "${context}";
             $('.modal').modal();
             questionDataByCategory();
             $.i18n().locale = data_lang_param;	
-            	
+            systemConfigList('natureOfEmployment','Nature_Of_Employment');	
             	$.i18n().load( {
             		'en': './resources/i18n/en.json',
             		'km': './resources/i18n/km.json'

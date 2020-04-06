@@ -352,9 +352,9 @@ var contextpath = "${context}";
 									<select id="natureOfEmployment" class="browser-default" title="" 
 										onchange="myFunction()" oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" required>
 										<option value="" disabled selected><spring:message code="registration.natureofemployment" /></option>
-										<option value="Permanent">Permanent</option>
+									<!-- 	<option value="Permanent">Permanent</option>
 										<option value="Temporary">Temporary</option>
-										<option value="Contract">Contract</option>
+										<option value="Contract">Contract</option> -->
 									</select>
 								</div>
 							</div>
@@ -662,6 +662,15 @@ var contextpath = "${context}";
 	</div>
 
 	<!-- Modal End -->
+	<!-- Modal End -->
+
+		<div class="modal" id="error_Modal_reg" role="dialog">
+		<div class="modal-dialog">
+			<div class="row" id="modalMessageBodyReg"
+					style="text-align: center;"></div>
+			
+		</div>
+	</div>
 	<!-- ================================================
     Scripts
     ================================================ -->
@@ -740,7 +749,10 @@ var contextpath = "${context}";
 	            			
             $('.modal').modal();
             questionDataByCategory();
-            operatorList();
+            //operatorList();
+            systemConfigList('operatorType','OPERATORS');
+            systemConfigList('natureOfEmployment','Nature_Of_Employment');
+            
             $('.dropdown-trigger').dropdown();
 
             /*  $(document).ready(function () {

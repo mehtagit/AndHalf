@@ -208,15 +208,15 @@ function usertypeDropDownData(){
 	});
 }
 
-function operatorList(){ 
+function systemConfigList(id,tag){ 
 	$.ajax({
 		type : 'GET',
-		url : contextpath + '/operatorList/OPERATORS',
+		url : contextpath + '/operatorList/'+tag,
 		contentType : "application/json",
 		dataType : 'html', 
 		success : function(data) {  
 			var response=JSON.parse(data);                                    
-			var operatorType=$("#operatorType");  
+			var operatorType=$("#"+id);  
 			for(var i=0; i<response.length; i++){
 				var data2='<option value="'+response[i].value+'">'+response[i].interp+'</option>';
 				operatorType.append(data2); 
@@ -510,7 +510,8 @@ function registrationAjax(obj){
 					'en': './resources/i18n/en.json',
 					'km': './resources/i18n/km.json'
 				}).done( function() {
-					$("#registrationForm #msg").text($.i18n(respData.tag));
+					//$("#registrationForm #msg").text($.i18n(respData.tag));
+					errorMessageReg($.i18n(respData.tag));
 				});
 
 			}
@@ -556,7 +557,8 @@ function otherRegistrationAjax(obj){
 					'en': './resources/i18n/en.json',
 					'km': './resources/i18n/km.json'
 				}).done( function() {
-					$("#registrationForm #msg").text($.i18n(respData.tag));
+					//$("#registrationForm #msg").text($.i18n(respData.tag));
+					errorMessageReg($.i18n(respData.tag));
 				});
 
 			}

@@ -524,7 +524,8 @@ function updateImporterTypeDevice()
 					"userId" : $("body").attr("data-userID"),
 					"featureId" : parseInt(featureId),
 					"approveStatus" :  $("#approveStatus").val(),
-					"id": parseInt($("#importerColumnid").val())
+					"id": parseInt($("#importerColumnid").val()),
+					"userType" : $("body").attr("data-roleType")
 				}
 			
 		console.log("multirequest------------->" +JSON.stringify(multirequest))
