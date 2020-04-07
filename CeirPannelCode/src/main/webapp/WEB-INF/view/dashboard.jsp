@@ -164,17 +164,19 @@ data-roleType="${usertype}" data-userTypeID="${usertypeId}"
 										style="float: left" class="dropdownColor"><spring:message
 												code="registration.editinfo" /></span></a></li>
 								<li class="divider"></li>
-								<li><a  href="javascript:void(0)" onclick="changePasswordPopup()"><i
-										class="fa fa-key dropdownColor" style="float: left"></i><span
-										style="float: left" class="dropdownColor"><spring:message
-												code="registration.changepassword" /></span></a></li>
-								<li class="divider"></li>
 								<li><a onclick="manageAccountPopup();" href="javascript:void(0)"><i
 										class="mdi-action-settings dropdownColor"></i> <span
 										class="dropdownColor"> <spring:message
 												code="registration.activate/deactivateaccount" /></span></a></li>
 								<li class="divider"></li>
-                                <%} %>
+                            
+								 <%} %>
+								<li><a  href="javascript:void(0)" onclick="changePasswordPopup()"><i
+										class="fa fa-key dropdownColor" style="float: left"></i><span
+										style="float: left" class="dropdownColor"><spring:message
+												code="registration.changepassword" /></span></a></li>
+								<li class="divider"></li>
+							   
 								<li><a href="javascript:void(0)" onclick="openLogout()" style="cursor: pointer;"  id=""><i
 										style="float: left;"
 										class="mdi-hardware-keyboard-tab dropdownColor"></i> <span
