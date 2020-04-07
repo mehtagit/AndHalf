@@ -57,7 +57,7 @@
 					"featureId":parseInt(featureId),
 					"userTypeId": parseInt($("body").attr("data-userTypeID")),
 					"userType":$("body").attr("data-roleType"),
-					"alertId" : $("#alertId").val()
+					"alertId" : $("#alertId option:selected").text()
 					
 			}				
 			if(lang=='km'){

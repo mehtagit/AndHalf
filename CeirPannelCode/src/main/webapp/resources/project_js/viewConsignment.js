@@ -279,7 +279,7 @@ function confirmantiondelete(){
 				table('../headers?lang='+lang+'&type=consignment','../consignmentData?sessionFlag='+sessionFlag);
 			}
 
-			else if(cierRoletype=="Custom" && sourceType !="viaStolen"){
+			else if((cierRoletype=="Custom" || cierRoletype=="DRT") && sourceType !="viaStolen"){
 				table('../headers?lang='+lang+'&type=customConsignment','../consignmentData?sessionFlag='+sessionFlag);
 			}
 
@@ -599,7 +599,7 @@ function confirmantiondelete(){
 					}
 					sourceType=="viaStolen"? $("#btnLink").css({display: "none"}) : $("#btnLink").css({display: "block"});
 				
-					if(cierRoletype=="CEIRAdmin" || cierRoletype=="Custom"){ 
+					if(cierRoletype=="CEIRAdmin" || cierRoletype=="Custom" || cierRoletype=="DRT" ){ 
 						$("#btnLink").css({display: "none"}); 
 					}
 					//Consignment status-----------dropdown

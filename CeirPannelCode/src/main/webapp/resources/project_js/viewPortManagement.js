@@ -276,7 +276,7 @@
 		
 		console.log("request--->" +JSON.stringify(request))
 		$.ajax({
-			url: './updatePortAddress',
+			url: './updateAlert',
 			type: 'POST',
 			data : JSON.stringify(request),
 			dataType : 'json',

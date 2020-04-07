@@ -146,7 +146,7 @@ public class UserFeatureDatatable {
 			
 		
 		  //Dropdown items 
-		  String[] selectParam={"select","Select Feature","feature","","select","Select Period","period",""}; 
+		  String[] selectParam={"select","Select UserType","userType","","select","Select Feature","feature","","select","Select Period","period",""}; 
 		  for(int i=0; i<selectParam.length; i++) { 
 				inputFields= new InputFields();
 		  inputFields.setType(selectParam[i]); 

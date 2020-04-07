@@ -1437,7 +1437,7 @@ public class IconsState {
 		//String downloadURL = "./Consignment/dowloadFiles/actual/"+file+"/"+txnId+"/"+defaultTagName+"";
 		String downloadURL = "fileDownload('"+file+"','actual','"+txnId+"','"+defaultTagName+"')";
 		String deleteAction ="DeleteConsignmentRecord('"+txnId+"','"+id+"')";
-			
+
 		if(source.equals("5") && requestTypeValue.equals("0")) {
 			//check for Stolen/Indvisual
 
@@ -2071,6 +2071,27 @@ public class IconsState {
 		executePostConstruct();
 
 		String editAction= "getDetailBy('"+id+"')";
+
+		// state related Code 
+
+
+		String edit="<a onclick="+editAction+"><i class="
+				+editIcon+" aria-hidden=\"true\"  title="
+				+editIconTitle+"></i></a>"; 
+
+
+		String action=edit;
+		return action;
+
+	}
+	
+	
+	/********************************** Icons for alert Management**********************************/ 
+
+	public String alertManagementIcons(String id) { 
+		executePostConstruct();
+
+		String editAction= "alertViewByID('"+id+"')";
 
 		// state related Code 
 

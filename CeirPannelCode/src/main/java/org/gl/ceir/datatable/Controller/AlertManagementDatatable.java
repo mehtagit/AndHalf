@@ -88,7 +88,8 @@ public class AlertManagementDatatable {
 				   String feature = dataInsideList.getFeature();
 				   String description = dataInsideList.getDescription();
 				   String userStatus = (String) session.getAttribute("userStatus");	  
-				   Object[] finalData={createdOn,modifiedOn,alertId,feature,description}; 
+				   String action = iconState.alertManagementIcons(id);
+				   Object[] finalData={createdOn,modifiedOn,alertId,feature,description,action}; 
 				   List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 					finalList.add(finalDataList);
 					datatableResponseModel.setData(finalList);	
