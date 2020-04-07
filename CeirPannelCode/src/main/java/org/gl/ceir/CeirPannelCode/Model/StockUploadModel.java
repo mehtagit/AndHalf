@@ -14,13 +14,19 @@ public class StockUploadModel {
 	private int quantity;
 	private int stockStatus;
 	private String supplierId;
-	private int userId;
+	
 	private String userType,remarks,createdOn,modifiedOn,stateInterp;
 	private Long assignerId;
 	private StockUserModel user;
 	
 	
-	
+	private int userId,roleTypeId;
+	public int getRoleTypeId() {
+		return roleTypeId;
+	}
+	public void setRoleTypeId(int roleTypeId) {
+		this.roleTypeId = roleTypeId;
+	}
 	
 	public Long getAssignerId() {
 		return assignerId;
@@ -145,8 +151,6 @@ public class StockUploadModel {
 		builder.append(stockStatus);
 		builder.append(", supplierId=");
 		builder.append(supplierId);
-		builder.append(", userId=");
-		builder.append(userId);
 		builder.append(", userType=");
 		builder.append(userType);
 		builder.append(", remarks=");
@@ -161,6 +165,10 @@ public class StockUploadModel {
 		builder.append(assignerId);
 		builder.append(", user=");
 		builder.append(user);
+		builder.append(", userId=");
+		builder.append(userId);
+		builder.append(", roleTypeId=");
+		builder.append(roleTypeId);
 		builder.append("]");
 		return builder.toString();
 	}

@@ -40,7 +40,7 @@ var txnid=$('#existingStolenTxnId').val();
 		$('#country1').val(response.stolenIndividualUserDB.deviceStolenCountry).change();
 		$('#state1').val(response.stolenIndividualUserDB.deviceStolenProvince);
 		//$('#sigleRecoverydeviceStatus').val(response.stolenIndividualUserDB.deviceBrandName);
-		$('#sigleRecovery').val(response.stolenIndividualUserDB.remark);
+		$('#sigleRecovery').val(response.remark);
 		$('#bulkRecoveryDate').val(response.dateOfRecovery);
 		$('#sigleRecoveryimeiNumber1').val(response.stolenIndividualUserDB.imeiEsnMeid1);
 		$('#sigleRecoveryimeiNumber2').val(response.stolenIndividualUserDB.imeiEsnMeid2);
@@ -128,6 +128,7 @@ function updateIndivisualRecovery()
 			"blockingType":blockingType,
 			"requestType":1,
 			"sourceType":4,
+			"remark": sigleRecovery,
 			"stolenIndividualUserDB":stolenIndividualUserDB
 	}
 

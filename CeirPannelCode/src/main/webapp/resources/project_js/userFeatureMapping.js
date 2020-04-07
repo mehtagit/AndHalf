@@ -49,6 +49,7 @@
 		//**************************************************filter table**********************************************
 		
 		function viewDatatable(lang){
+			//var userType= $("#userType").val() == null ? $("body").attr("data-roleType") : $("body").attr("data-roleType");
 			
 			var filterRequest={
 					"endDate":$('#endDate').val(),
@@ -56,11 +57,11 @@
 					"userId":parseInt(userId),
 					"featureId":parseInt(featureId),
 					"userTypeId": parseInt($("body").attr("data-userTypeID")),
-					//"userType":$("body").attr("data-roleType"),
+					"userType": parseInt($("#userType").val()),
 					"id" : parseInt($("#userType").val()),
 					"feature" : parseInt($("#feature").val()),
 					"period" : parseInt($("#period").val())
-					
+						
 			}				
 			if(lang=='km'){
 				var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
@@ -160,7 +161,7 @@
 									"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
 
 									"<select id="+dropdown[i].id+" class='select2 initialized'>"+
-									"<option value='' disabled selected>"+dropdown[i].title+
+									"<option value='null' disabled selected>"+dropdown[i].title+
 									"</option>"+
 									"</select>"+
 									"</div>"+
@@ -191,12 +192,13 @@
 			}
 		});
 			
-	/*		
+		
 		$.getJSON('./registrationUserType', function(data) {
 				for (i = 0; i < data.length; i++) {
-				$('<option>').val(data[i].id).text(data[i].usertypeName).appendTo('#userType');
+				$('<option>').val(data[i].id).text(data[i].usertypeName).appendTo('#userType'); 
 				}
-		});	*/
+		});	
+		
 			
 		$.getJSON('./getDropdownList/Period', function(data) {
 				for (i = 0; i < data.length; i++) {

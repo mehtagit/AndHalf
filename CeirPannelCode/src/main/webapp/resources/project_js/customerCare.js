@@ -317,8 +317,8 @@ function setStakeHolderData(name,date,featureId,status,txnId,imei)
 				$("#SupplierId").val(data.data.supplierId);
 				$("#SupplierName").val(data.data.suplierName);
 				$("#InvoiceNumber").val(data.data.invoiceNumber);
-				$("#Quantity").val(data.data.quantity);
-				$("#TransactionId").val(data.data.txnId);
+				$("#StockQuantity").val(data.data.quantity);
+				$("#StockTransactionId").val(data.data.txnId);
 				$("#csvUploadFileName").val(data.data.fileName);
 				$("#withdrawnRemark").val(data.data.remarks);
 			}
@@ -341,8 +341,8 @@ function setStakeHolderData(name,date,featureId,status,txnId,imei)
 			$("#SupplierId").val(data.data.supplierId);
 			$("#SupplierName").val(data.data.suplierName);
 			$("#InvoiceNumber").val(data.data.invoiceNumber);
-			$("#Quantity").val(data.data.quantity);
-			$("#TransactionId").val(data.data.txnId);
+			$("#StockQuantity").val(data.data.quantity);
+			$("#StockTransactionId").val(data.data.txnId);
 			$("#csvUploadFileName").val(data.data.fileName);
 			$("#withdrawnRemark").val(data.data.remarks);
 		}
@@ -378,8 +378,8 @@ function setStakeHolderData(name,date,featureId,status,txnId,imei)
 				$("#SupplierId").val(data.data.supplierId);
 				$("#SupplierName").val(data.data.suplierName);
 				$("#InvoiceNumber").val(data.data.invoiceNumber);
-				$("#Quantity").val(data.data.quantity);
-				$("#TransactionId").val(data.data.txnId);
+				$("#StockQuantity").val(data.data.quantity);
+				$("#StockTransactionId").val(data.data.txnId);
 				$("#csvUploadFileName").val(data.data.fileName);
 				$("#withdrawnRemark").val(data.data.remarks);
 			}
@@ -396,8 +396,8 @@ function setStakeHolderData(name,date,featureId,status,txnId,imei)
 				$("#SupplierId").val(data.data.supplierId);
 				$("#SupplierName").val(data.data.suplierName);
 				$("#InvoiceNumber").val(data.data.invoiceNumber);
-				$("#Quantity").val(data.data.quantity);
-				$("#TransactionId").val(data.data.txnId);
+				$("#StockQuantity").val(data.data.quantity);
+				$("#StockTransactionId").val(data.data.txnId);
 				$("#csvUploadFileName").val(data.data.fileName);
 				$("#withdrawnRemark").val(data.data.remarks);
 			}
