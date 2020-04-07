@@ -1437,7 +1437,7 @@ public class IconsState {
 		//String downloadURL = "./Consignment/dowloadFiles/actual/"+file+"/"+txnId+"/"+defaultTagName+"";
 		String downloadURL = "fileDownload('"+file+"','actual','"+txnId+"','"+defaultTagName+"')";
 		String deleteAction ="DeleteConsignmentRecord('"+txnId+"','"+id+"')";
-
+			
 		if(source.equals("5") && requestTypeValue.equals("0")) {
 			//check for Stolen/Indvisual
 
@@ -1452,7 +1452,7 @@ public class IconsState {
 			viewAction="openStolenRecoveryPage('editCompanyStolen','view','"+txnId+"')";
 
 		}
-		else if(source.equals("4") && requestTypeValue.equals("1")) {
+		else if(source.equals("5") && requestTypeValue.equals("1")) {
 			//check for Recovery/single
 
 			editAction="openStolenRecoveryPage('editIndivisualRecovery','edit','"+txnId+"')";

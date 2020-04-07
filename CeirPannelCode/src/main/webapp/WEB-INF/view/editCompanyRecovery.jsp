@@ -112,7 +112,7 @@
                                 <div class="row card-panel">
                                     <div id="reportBlockUnblock">
                                         <div class="container-fluid pageHeader">
-                                            <p id="headingType" class="PageHeading"> <spring:message code="registration.updatereportrecovery" /></p>
+                                            <p id="headingType" class="PageHeading"> <spring:message code="registration.updatereportstolen" /></p>
                                         </div>
 
                                       <!--   <div class="row">

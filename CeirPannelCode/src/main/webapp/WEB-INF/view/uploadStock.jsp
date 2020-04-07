@@ -210,6 +210,7 @@ to {
 
 	<section id="content">
 		<!--start container-->
+		<div id="initialloader"></div>
 		<div class="container">
 			<div class="section">
 				<div class="row">
@@ -605,6 +606,8 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 
 				$("#SupplierIdAssignieName").append('<span class="star">*</span>'); */
 			}
+			
+			$('div#initialloader').delay(300).fadeOut('slow');
 	});
 
 
@@ -754,10 +757,12 @@ function assigneeTable(URL,dataUrl){
 	//var requestType =	$('input[name="group1"]:checked').val();
    	var assigneDetails=$('#assigneDetails').val();
    $("#assigneDetailsDiv").css("display", "block"); 
+   var selectedRoleTypeIdsss = $("body").attr("data-selectedRoleTypeId");
    var request={
 		   "field":assigneDetails,
 		   "type": parseInt($('input[name="group1"]:checked').val()),
-		   "userTypeId" : $("body").attr("data-userTypeID")
+		   "userTypeId" : $("body").attr("data-userTypeID"),
+		   "roleTypeId":selectedRoleTypeIdsss
 	}
 	
 	if(lang=='km'){
