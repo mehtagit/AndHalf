@@ -59,7 +59,7 @@ public class StateMgmtServiceImpl {
 	 */
 	public List<StateMgmtDb> getByFeatureIdAndUserTypeId(Integer featureId, Integer userTypeId) {
 		try {
-			List<StateMgmtDb> stateMgmtDbsResult = new ArrayList<StateMgmtDb>();
+			List<StateMgmtDb> stateMgmtDbsResult = new ArrayList<>();
 
 			logger.info("Going to get states by featureId and usertypeId ");
 
