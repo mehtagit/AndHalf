@@ -234,6 +234,8 @@ function filter(lang)
 	var sessionFlag=0;
 	if(roleType=="Custom"){
 		table('./headers?type=userPaidStatus&lang='+lang,'./user-paid-status-data?sessionFlag='+sessionFlag);
+	}else if(roleType=="DRT"){
+		table('./headers?type=userPaidStatus&lang='+lang,'./user-paid-status-data?sessionFlag='+sessionFlag);
 	}
 	else if(roleType == "CEIRAdmin"){
 		table('./headers?type=adminUserPaidStatus&lang='+lang,'./user-paid-status-data?sessionFlag='+sessionFlag);

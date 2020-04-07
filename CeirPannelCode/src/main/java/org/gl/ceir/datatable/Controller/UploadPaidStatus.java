@@ -107,7 +107,7 @@ public class UploadPaidStatus {
 			if(contentList.isEmpty()) {
 				datatableResponseModel.setData(Collections.emptyList());
 			}
-			else if("Custom".equals(userType)) {
+			else if("Custom".equals(userType) || "DRT".equals(userType)) {
 				log.info("in Custom Userpaid Status---" +userType);
 				
 				for(UserPaidStatusContent contentModelList : contentList) {

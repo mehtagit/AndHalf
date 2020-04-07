@@ -2084,6 +2084,27 @@ public class IconsState {
 		return action;
 
 	}
+	
+	
+	/********************************** Icons for alert Management**********************************/ 
+
+	public String alertManagementIcons(String id) { 
+		executePostConstruct();
+
+		String editAction= "alertViewByID('"+id+"')";
+
+		// state related Code 
+
+
+		String edit="<a onclick="+editAction+"><i class="
+				+editIcon+" aria-hidden=\"true\"  title="
+				+editIconTitle+"></i></a>"; 
+
+
+		String action=edit;
+		return action;
+
+	}
 	@PostConstruct
 	public void executePostConstruct() {
 		errorIconTitle=Translator.toLocale("titles.Error_File");

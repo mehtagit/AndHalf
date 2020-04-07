@@ -170,13 +170,31 @@ public interface UserProfileFeignImpl {
 		@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
 		@RequestParam(value = "file", defaultValue = "0") Integer file);	
 		
-/*-------------------------- view Alert Management Feign ------------------------------*/
+/*-------------------------- view Running Alert Management Feign ------------------------------*/
 		
 		@RequestMapping(value="/runningAlert/viewAll" ,method=RequestMethod.POST) 
 		public Object viewRunningAlertRequest(@RequestBody FilterRequest filterRequest,
 		@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
 		@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
 		@RequestParam(value = "file", defaultValue = "0") Integer file);	
+		
+/*-------------------------- view IP LOG Management Feign ------------------------------*/
+		
+		@RequestMapping(value="/viewAll" ,method=RequestMethod.POST) 
+		public Object viewIPLogRequest(@RequestBody FilterRequest filterRequest,
+		@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
+		@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+		@RequestParam(value = "file", defaultValue = "0") Integer file);	
 
+		//***************************************************View Alert Management Feign********************************
+		
+		@RequestMapping(value="/alertDb/viewById/{id}" ,method=RequestMethod.POST) 
+		public @ResponseBody GenricResponse viewAlertFeign(@PathVariable("id") Integer id);
+
+		
+		//***************************************************Update Alert Management  Feign******************************
+
+		@RequestMapping(value= "/alertDb/update" , method=RequestMethod.POST) 
+		public GenricResponse updateAlertFeign(@RequestBody FilterRequest filterRequest);
 } 
 

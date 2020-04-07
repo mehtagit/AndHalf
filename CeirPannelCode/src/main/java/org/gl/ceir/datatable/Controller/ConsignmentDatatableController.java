@@ -294,7 +294,7 @@ public class ConsignmentDatatableController {
 			}
 		
 			
-			else if("Custom".equals(userType)) {
+			else if("Custom".equals(userType) || "DRT".equals(userType)) {
 				for(ConsignmentContent dataInsideList : paginationContentList) 
 				{
 				UserModel userModel = dataInsideList.getUser();
