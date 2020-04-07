@@ -10,4 +10,10 @@ public class RuleFeatureMappingController {
 		return new ModelAndView("ruleFeatureMapping");
 		
 	}
+	
+	@GetMapping("add_ruleFeatureMav")
+	public ModelAndView save() {
+		return new ModelAndView("add_RuleFeatureMapping");
+		
+	}
 }

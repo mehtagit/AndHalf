@@ -12,7 +12,9 @@ import org.gl.ceir.CeirPannelCode.Model.FileExportResponse;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.GrievanceDropdown;
+import org.gl.ceir.CeirPannelCode.Model.NewRule;
 import org.gl.ceir.CeirPannelCode.Model.RuleListContent;
+import org.gl.ceir.CeirPannelCode.Model.RuleNameModel;
 import org.gl.ceir.CeirPannelCode.Model.StockUploadModel;
 import org.gl.ceir.CeirPannelCode.Model.StolenRecoveryModel;
 import org.gl.ceir.CeirPannelCode.Model.Tag;
@@ -22,6 +24,8 @@ import org.gl.ceir.pagination.model.MessageContentModel;
 import org.gl.ceir.pagination.model.PolicyConfigContent;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -405,6 +409,7 @@ public @ResponseBody ConfigContentModel viewAdminFeign(FilterRequest filterReque
 				
 				@PostMapping("/customer-care/by-txn-id")
 				public @ResponseBody GenricResponse customerCareViaTxnId( @RequestBody CustomerCareByTxnId customerCareDeviceState);
+			
 				/* Rule List Feign */
 				@RequestMapping(value="/filter/rule-engine" ,method=RequestMethod.POST) 
 				public Object ruleListFeign(@RequestBody FilterRequest filterRequest,
@@ -419,7 +424,29 @@ public @ResponseBody ConfigContentModel viewAdminFeign(FilterRequest filterReque
 				
 				@RequestMapping(value="rule-engine" ,method=RequestMethod.PUT) 
 				public GenricResponse update(@RequestBody RuleListContent ruleListContent);
-							
+		
+				/* Rule Feature Mapping  Feign */
+				@RequestMapping(value="/filter/rule-engine-mapping" ,method=RequestMethod.POST) 
+				public Object ruleFeatureMappingListFeign(@RequestBody FilterRequest filterRequest,
+						@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
+						@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+						@RequestParam(name = "file", defaultValue = "0" ,required = false) Integer file);
+				
+					@PostMapping("/rule-engine-mapping")
+					public NewRule save(@RequestBody NewRule newRule);
+					
+					@RequestMapping(value="/rule-engine-mapping" ,method=RequestMethod.PUT) 
+					public GenricResponse updateRuleFeatureMapping(@RequestBody NewRule newRule);
+					
+					@GetMapping("/all/rule-engine")
+					public List<RuleNameModel> getList();
+					
+					@GetMapping("/rule-engine-mapping/{id}")
+					public NewRule getObjectByID(@PathVariable("id") Integer id);
+					
+					@DeleteMapping(value="rule-engine-mapping") 
+					public @ResponseBody GenricResponse delete(NewRule newRule) ;
+
 }
 
 
