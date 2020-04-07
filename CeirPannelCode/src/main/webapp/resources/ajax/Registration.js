@@ -510,7 +510,8 @@ function registrationAjax(obj){
 					'en': './resources/i18n/en.json',
 					'km': './resources/i18n/km.json'
 				}).done( function() {
-					$("#registrationForm #msg").text($.i18n(respData.tag));
+					//$("#registrationForm #msg").text($.i18n(respData.tag));
+					errorMessageReg($.i18n(respData.tag));
 				});
 
 			}
@@ -556,7 +557,8 @@ function otherRegistrationAjax(obj){
 					'en': './resources/i18n/en.json',
 					'km': './resources/i18n/km.json'
 				}).done( function() {
-					$("#registrationForm #msg").text($.i18n(respData.tag));
+					//$("#registrationForm #msg").text($.i18n(respData.tag));
+					errorMessageReg($.i18n(respData.tag));
 				});
 
 			}

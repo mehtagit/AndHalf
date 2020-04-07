@@ -12,6 +12,7 @@ import org.gl.ceir.CeirPannelCode.Model.FileExportResponse;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.GrievanceDropdown;
+import org.gl.ceir.CeirPannelCode.Model.RuleListContent;
 import org.gl.ceir.CeirPannelCode.Model.StockUploadModel;
 import org.gl.ceir.CeirPannelCode.Model.StolenRecoveryModel;
 import org.gl.ceir.CeirPannelCode.Model.Tag;
@@ -404,7 +405,23 @@ public @ResponseBody ConfigContentModel viewAdminFeign(FilterRequest filterReque
 				
 				@PostMapping("/customer-care/by-txn-id")
 				public @ResponseBody GenricResponse customerCareViaTxnId( @RequestBody CustomerCareByTxnId customerCareDeviceState);
+				/* Rule List Feign */
+				@RequestMapping(value="/filter/rule-engine" ,method=RequestMethod.POST) 
+				public Object ruleListFeign(@RequestBody FilterRequest filterRequest,
+						@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
+						@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+						@RequestParam(name = "file", defaultValue = "0" ,required = false) Integer file);
+				
+				
+				
+				@RequestMapping(value="rule-engine/{id}" ,method=RequestMethod.GET) 
+				public RuleListContent fetchData(@PathVariable("id") Integer id);
+				
+				@RequestMapping(value="rule-engine" ,method=RequestMethod.PUT) 
+				public GenricResponse update(@RequestBody RuleListContent ruleListContent);
+							
 }
+
 
 
 

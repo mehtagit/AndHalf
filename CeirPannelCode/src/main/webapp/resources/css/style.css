@@ -3174,3 +3174,33 @@ label#nId {
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+
+
+div#modalMessageBody {
+    text-align: center;
+    margin-top: 12px;
+}
+div#error_Modal {
+    width: 550px;
+    height: 50px;
+    margin-top: 14%;
+}
+
+
+
+
+
+
+
+
+
+
+div#modalMessageBodyReg{
+    text-align: center;
+    margin-top: 12px;
+}
+div#error_Modal_reg {
+    width: 550px;
+    height: 50px;
+    margin-top: 14%;
+}

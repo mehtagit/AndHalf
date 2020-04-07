@@ -551,6 +551,61 @@ select {
 																for="updatesingleStolenimei4"> <spring:message
 																	code="registration.four" /></label>
 														</div>
+														
+														<div class="row" id="editBlockTimePeriod">
+<div class="col s12 m6">
+<spring:message code="operator.blocking" /> <label style="margin-right: 2%;"> <input
+type="radio" name="editbulkBlockdeviceradio" class="blocktypeRadio" id=""
+value="Immediate"
+onchange="document.getElementById('calender').style.display = 'none';"
+name="stolenBlockPeriod">
+<spring:message code="operator.immediate" />
+</label> <label style="margin-right: 2%;"> <input type="radio"
+name="editbulkBlockdeviceradio" class="blocktypeRadio" value="Default"
+onchange="document.getElementById('calender').style.display = 'none';"
+name="stolenBlockPeriod">
+<spring:message code="operator.default" />
+</label> <label> <input type="radio" name="editbulkBlockdeviceradio" 
+value="tilldate" class="blocktypeRadio"
+onchange="document.getElementById('calender').style.display = 'block';"
+name="stolenBlockPeriod">
+<spring:message code="operator.later" /></label>
+
+</div>
+<div class="col s6 m6 responsiveDiv" style="display: none;" id="calender">
+<div id="startdatepicker" class="input-group date">
+<p> <spring:message code="operator.blockingTypePeriod" /> </p>
+<input type="text" id="stolenDatePeriodedit" style="margin-top: -9px" /> <span
+class="input-group-addon" style="color: #ff4081"><i class="fa fa-calendar"
+aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
+</div>
+</div>
+
+<!-- 
+<div class="input-field col s6 m6 responsiveDiv" style="display: block;" id="calender">
+<div id="startdatepicker" class="input-group date">
+<input type="text" id="stolenDatePeriodedit" placeholder="" style="margin-top: -9px" class="hasDatepicker">
+<label for="" class="active">Blocking Time Period</label>
+<p> Blocking Time Period </p>
+ <span class="input-group-addon" style="color: #ff4081">
+    
+    <i class="fa fa-calendar" aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
+</div>
+</div> -->
+
+<div class="col s12 m6 l6" style="display: none" id="stolenDate">
+
+<label for="TotalPrice" class="center-align">
+<spring:message code="operator.tilldate" /></label>
+<div id="startdatepicker" class="input-group" style="margin-top: 10px;">
+
+<input class="form-control" placeholder="" name="inputsaves" type="text" id="startDateFilter"
+readonly /> <span class="input-group-addon" style="color: #ff4081"><i
+class="glyphicon glyphicon-calendar"
+onclick="_Services._selectstartDate()"></i></span>
+</div>
+</div>
+</div>
 
 														<div class="col s12 m12" style="margin-top: 30px;">
 															<h5>
@@ -1047,6 +1102,8 @@ select {
 					<br>
 					<spring:message code="fileValidationSize" />
 				</h6>
+				<input type="text" id="FilefieldId" style="display: none;">
+				<input type="text" id="existingFileName" style="display: none;">
 			</div>
 			<div class="row">
 				<div class="input-field col s12 center">
@@ -1149,84 +1206,14 @@ select {
 		<script type="text/javascript" src="${context}/resources/js/intlTelInput.js"></script>
 		<script type="text/javascript" src="${context}/resources/js/utils.js"></script>
 
-
-	<script>
-		var lang = window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
-
-		$.i18n().locale = lang;
-		//alert(lang)
-		var successMsg, stolenIndivisual;
-
-		$.i18n().load({
-			'en' : './resources/i18n/en.json',
-			'km' : './resources/i18n/km.json'
-		}).done(function() {
-			stolenIndivisual = $.i18n('stolenIndivisual');
-			editstolenIndivisual = $.i18n('editstolenIndivisual');
-
-			viewPageType();
-		});
-
-		function viewPageType() {
-			if ($('#pageViewType').val() == 'view') {
-				$('#headingType').text('');
-				$('#headingType').text(stolenIndivisual);
-				$("#passportImageDiv").removeClass("btn");
-				$('#passportImageText').text('');
-				$('#singleStolenFile').attr('type', 'text');
-				$("#PassportNidLink").css("display", "block");
-				$("#singleStolenFile").css("display", "none");
-
-				$("#firImageDiv").removeClass("btn");
-				$('#firDivText').text('');
-				$('#uploadFirSingle').attr('type', 'text');
-				$("#firImageLink").css("display", "block");
-				$("#uploadFirSingle").css("display", "none");
-				$("#sampleFileLink").css("display", "none");
-				// alert(stolenIndivisual);
-				$("#SingleForm").find("input,select,textarea,button").prop(
-						"disabled", true);
-			} else {
-				$('#headingType').text('');
-				$('#headingType').text(editstolenIndivisual);
-				$("#SingleForm").find("input,select,textarea,button").prop(
-						"disabled", false);
-			}
-
-		}
-
-		populateCountries("singleDevicecountry", "singleDevicestate");
-		populateStates("singleDevicecountry", "singleDevicestate");
-
-		populateCountries("country", "state");
-		populateStates("country", "state");
-
-		populateCountries("country2", "state2");
-		populateStates("country2", "state2");
-
-		populateCountries("country3", "state3");
-		populateStates("country3", "state3");
-
-		var input2 = document.querySelector("#singleStolenphone2");
-		window.intlTelInput(input2, {
-			utilsScript : "${context}/resources/js/utils.js",
-		});
-		var input = document.querySelector("#singleStolenphone1");
-		window.intlTelInput(input, {
-			utilsScript : "${context}/resources/js/utils.js",
-		});
-
-		$('.datepick').datepicker({
-			dateFormat : "yy-mm-dd"
-		});
-	</script>
+<script type="text/javascript"
+		src="${context}/resources/project_js/editLawfulStolen.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/project_js/lawfulStolenRecovery.js"></script>
 	<%-- <script type="text/javascript"
 		src="${context}/resources/project_js/stolenRecovery.js"></script>
-	<script type="text/javascript"
-		src="${context}/resources/project_js/lawfulStolenRecovery.js"></script> --%>
+ --%>
 
-	<script type="text/javascript"
-		src="${context}/resources/project_js/editLawfulStolen.js"></script>
 </body>
 </html>
 <%

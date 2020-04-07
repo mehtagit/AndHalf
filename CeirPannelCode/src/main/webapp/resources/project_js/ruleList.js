@@ -16,7 +16,12 @@
 			pageRendering();
 		 });
 		
-
+         $.getJSON('./getDropdownList/RULE_STATE', function(data) {
+				for (i = 0; i < data.length; i++) {
+					$('<option>').val(data[i].value).text(data[i].interp)
+					.appendTo('#editState');
+				}
+			});
          
          function filter(lang)
  		{       	
@@ -26,11 +31,12 @@
 		//**************************************************filter table**********************************************
 
 		function table(url,dataUrl){
-		var txn= (txnIdValue == 'null' && transactionIDValue == undefined)? $('#transactionID').val() : transactionIDValue;
-		
+		var state= $("#State").val() == undefined ? null : $("#State option:selected").text();
+
 			var filterRequest={
 					"endDate":$('#endDate').val(),
-					"startDate":$('#startDate').val()
+					"startDate":$('#startDate').val(),
+					  "state": state
 					
 			}
 			if(lang=='km'){
@@ -132,7 +138,7 @@
 									"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
 
 									"<select id="+dropdown[i].id+" class='select2 initialized'>"+
-									"<option value='' disabled selected>"+dropdown[i].title+
+									"<option value='null' disabled selected>"+dropdown[i].title+
 									"</option>"+
 									"</select>"+
 									"</div>"+
@@ -146,10 +152,17 @@
 							$('#'+button[i].id).attr("onclick", button[i].buttonURL);
 						}
 
+						$.getJSON('./getDropdownList/RULE_STATE', function(data) {
+							for (i = 0; i < data.length; i++) {
+								$('<option>').val(data[i].value).text(data[i].interp)
+								.appendTo('#State');
+							}
+						});
+						
 				}
+			
+	
 			}); 
-			
-			
 			
 	}
 
@@ -158,4 +171,86 @@
 
 
 
+			function getDetailBy(id){
+				$("#editModel").openModal({
+			        dismissible:false
+			    });
+				window.xid=id;
+				
+				$.ajax({
+					url : "./viewRuleListAPI/"+id,
+					dataType : 'json',
+					contentType : 'application/json; charset=utf-8',
+					type : 'GET',
+					success : function(data) {
+						setData(data);
+					},
+					error : function() {
+						alert("Failed");
+					}
+				});	
+			}
 			
+			
+			function setData(data){
+				$("#editName").val(data.name);
+				$("#editDescription").val(data.description);
+				$("#editState").val(data.state);
+			}
+			
+			
+			
+			function update(){
+
+				var name=$('#editName').val();
+				var description=$('#editDescription').val();
+				var state=$('#editState').val();
+				var ruleListContent={
+						"name":name,
+						"description":description,
+						"state":state,
+						"id":window.xid
+						
+				}
+	
+				$.ajax({
+					
+					url : "./updateRuleList",
+					data : JSON.stringify(ruleListContent),
+					dataType : 'json',
+					contentType : 'application/json; charset=utf-8',
+					type : 'POST',
+					success: function (data, textStatus, jqXHR) {
+						
+					/*	$('#updateModal').closeModal();
+
+						$('#updateConsignment').openModal({
+							dismissible:false
+						});
+						if(data.errorCode==200){
+
+
+							$('#sucessMessage').text('');
+							$('#sucessMessage').text(data.message);
+						}
+
+						else if (data.errorCode==0){
+
+							$('#sucessMessage').text('');
+							$('#sucessMessage').text(updateMsg+" "+ (data.txnId) +" "+hasBeenUpdated);
+						}
+						else 
+						{
+							$('#sucessMessage').text('');
+							$('#sucessMessage').text(data.message);
+						}
+*/
+					},
+					error: function (jqXHR, textStatus, errorThrown) {
+						
+					}
+				});
+				
+				return false;
+			}
+

@@ -4,7 +4,7 @@
 	response.setDateHeader("Expires", 0);
 	response.setHeader("Pragma", "no-cache");
 	/*  session.setMaxInactiveInterval(200); //200 secs
-	 session.setAttribute("usertype", null); */
+	 session.setAttribute("usertype", null);  */
 	if (session.getAttribute("usertype") != null) {
 %>
 <%@ page language="java" contentType="text/html; charset=utf-8"
@@ -16,7 +16,7 @@
 <!DOCTYPE html>
 <html class="no-js" lang="en" dir="ltr">
 <head>
-<title>Rule List</title>
+<title>Consignment</title>
 <meta http-equiv='cache-control' content='no-cache'>
 <meta http-equiv='expires' content='-1'>
 <meta http-equiv='pragma' content='no-cache'>
@@ -79,7 +79,7 @@
 	src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
 </head>
-<body data-id="29"
+<body data-id="23"
 	data-roleType="${usertype}" data-userTypeID="${usertypeId}"
 	data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}"
 	data-stolenselected-roleType="${stolenselectedUserTypeId}"
@@ -105,14 +105,14 @@
 
 								<a class="boton right" id="btnLink" hidden="hidden"></a>
 							</div>
-							<form action="${context}/ruleListMav"
+							<form action="${context}/alertManagement"
 								method="post">
-								<div class="col s12 m12 l12" id="FieldTableDiv"
+								<div class="col s12 m12 l12" id="alertTableDiv"
 									style="padding-bottom: 5px; background-color: #e2edef52;">
 									<div id="filterBtnDiv"></div>
 								</div>
 							</form>
-							<table id="table"
+							<table id="alertManagementLibraryTable"
 								class="responsive-table striped display"></table>
 
 						</div>
@@ -123,57 +123,12 @@
 			</div>
 		</div>
 		
-		
-		
-		<div id="editModel" class="modal">
-		<h6 class="modal-header"><spring:message code="modal.EditRuleList" /></h6>
-		<div class="modal-content">
-		<form action="" onsubmit="return update()">
-			<div class="row">
-				<div class="row">
-			
-				<div class="input-field col s12 m6">
-						<input type="text" name="name" id="editName"
-							placeholder="" 	oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
-
-							maxlength="50" disabled required> <label for="totalPrice" class="center-align"><spring:message
-								code="table.name" /></label>
-					</div>
-
-
-
-
-					<div class="input-field col s12 m6">
-					<textarea id="editDescription" class="materialize-textarea" Placeholder="" placeholder=""  maxlength="200"></textarea>
-					<label for="editdescription" class=""><spring:message code="registration.description" /></label>
-
-					</div>
-
-					<div class="input-field col s12 m6">
-						<p style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;"><spring:message code="table.state" /> <span class="star">*</span></p>
-						<select id="editState" name="editState"
-							class="browser-default" class="mySelect"
-							onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-							required></select> <label for="country" class="center-align"></label>
-					</div>
-				</div>
-
-
-				<div class="row input_fields_wrap">
-					<div class="col s12 m12 center" style="margin-top: 10px;">
-					<button class="btn " type="submit" style="margin-left: 10px;"><spring:message code="button.update" /></button>
-					<button class="modal-close btn" type="button" style="margin-left: 10px;"><spring:message code="button.cancel" /></button>
-				</div>
-
-				</div>
-			</div>
-			</form>
-		</div>
-	</div>
-		
 	
 		<!--end container-->
 	</section>
+	
+
+    </div>	
 <!--materialize js-->
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
@@ -202,37 +157,36 @@
 	<%-- <script type="text/javascript" src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script> --%>
 	<script type="text/javascript"
 		src="${context}/resources/js/countries.js"></script>
-	
 	<!-- i18n library -->
 	<script type="text/javascript"
 		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/i18n.js"></script>
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.js"></script>
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/messagestore.js"></script>
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.messagestore.js"></script>
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/fallbacks.js"></script>
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.fallbacks.js"></script>
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/language.js"></script>
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.language.js"></script>
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/parser.js"></script>
-
-
-	<script type="text/javascript"
-		src="${context}/resources/i18n_library/emitter.js"></script>
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.parser.js"></script>
 
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/bidi.js"></script>
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.js"></script>
+
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/history.js"></script>
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.bidi.js"></script>
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/min.js"></script>
+		src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/jquery.history.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/globalVariables.js"></script>
 	<script type="text/javascript"
@@ -241,15 +195,14 @@
 		src="${context}/resources/project_js/dragableModal.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/enterKey.js"></script>
-
-			<script type="text/javascript"
-		src="${context}/resources/project_js/validationMsg.js"></script>
+	<%-- 		<script type="text/javascript"
+		src="${context}/resources/project_js/disable_inspectElement.js"></script> --%>
+	<script type="text/javascript"
+		src="${context}/resources/project_js/alertManagement.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/_dateFunction.js" async></script>
 			<script type="text/javascript"
 		src="${context}/resources/project_js/profileInfoTab.js" async></script>
-			<script type="text/javascript"
-		src="${context}/resources/project_js/ruleList.js"></script>
 </body>
 </html>
 <%

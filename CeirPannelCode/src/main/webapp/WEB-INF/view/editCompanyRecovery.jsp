@@ -285,7 +285,7 @@
                                                     </div>
                                                     
                                                     
-                                                     <div class="col s12 m6">
+<%--                                                      <div class="col s12 m6">
 <p style="margin-top: 3px; margin-bottom: 5px"><spring:message code="operator.blocking" /></p>
 <label style="margin-right: 2%;"> <input type="radio" class="blocktypeRadio" id=""
 value="Immediate"
@@ -324,7 +324,7 @@ class="glyphicon glyphicon-calendar"
 onclick="_Services._selectstartDate()"></i></span>
 </div>
 </div>
-</div>
+</div> --%>
 
                                                    <div class="col s12 m12">
                                                        <a id="sampleFileDownload" href="./Consignment/sampleFileDownload/7"><spring:message code="input.downlaod.sample" /></a>
@@ -430,7 +430,7 @@ onclick="_Services._selectstartDate()"></i></span>
                                                     </div>
 
                                                     <div class="input-field col s12 center">
-                                                        <button class="btn" type="submit"><spring:message code="button.submit" /></button>
+                                                        <button class="btn" type="submit" id="editCompanyRecoveryButton"><spring:message code="button.submit" /></button>
                                                         <a href="./stolenRecovery?FeatureId=5" class="btn modal-trigger"
                                                             style="margin-left: 10px;"><spring:message code="modal.cancel" /></a>
                                                     </div>
@@ -585,6 +585,9 @@ src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/j
             	$('#headingType').text('');
             	$('#headingType').text(recoveryCompany);
             	  $("#bulkRecoveryDiv").find("input,select,textarea,button").prop("disabled",true);
+            	  
+            	  $("#editCompanyRecoveryButton").css("display", "none");
+          		$(".star").css("display", "none");
             	}
             else{
             	$('#headingType').text('');
@@ -621,7 +624,9 @@ src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/j
             "bulkRecoverystate"
         );
         
-        
+        $('#Stolenstartdatepicker').datepicker({
+        	dateFormat: "yy-mm-dd"
+        	});
 
 </script>
 		
