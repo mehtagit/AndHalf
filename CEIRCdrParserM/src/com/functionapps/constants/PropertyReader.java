@@ -3,6 +3,7 @@ package com.functionapps.constants;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Objects;
 import java.util.Properties;
 
 
@@ -10,14 +11,13 @@ import org.apache.log4j.Logger;
 
 public class PropertyReader {
 
-
 	private InputStream inputStream;
 	private static Properties prop;
 	private	final static Logger logger = Logger.getLogger(PropertyReader.class);
     private static PropertyReader reader = null;
     
-	private PropertyReader(){
-		
+	public PropertyReader(){
+		loadProperties();
 	}
 	
 	public static  PropertyReader getInstance(){
@@ -53,20 +53,14 @@ public class PropertyReader {
 	}
 
 
-	public  String getPropValue(String Key) throws IOException  {
-		
-		if(prop == null){
-			loadProperties();
-		}
+	public  String getPropValue(String key) throws IOException  {
 			
-		if(prop!=null)
-		{
-			return prop.getProperty(Key);
+		if(Objects.nonNull(prop)){
+			String value = prop.getProperty(key);
+			System.out.println("Value of property [" + key + "] is [" + value +"]");			
+			return value;
 		}  
-		else
-		{
-			/*MyCustomException.getErrorMessge("Properties File Not Loaded");*/
-			//Will be replaced by CustomException
+		else{
 			return null;
 		}
 	}
@@ -83,4 +77,4 @@ public class PropertyReader {
 			}
 		
 	}
-}
+}  

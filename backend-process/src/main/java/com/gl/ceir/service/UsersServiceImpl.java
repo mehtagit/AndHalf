@@ -50,7 +50,7 @@ public class UsersServiceImpl {
 
 		cmsb.with(new SearchCriteria("createdOn", date , SearchOperation.GREATER_THAN, Datatype.DATE));
 		cmsb.with(new SearchCriteria("createdOn", date , SearchOperation.LESS_THAN, Datatype.DATE));
-		cmsb.with(new SearchCriteria("status", 1, SearchOperation.GREATER_THAN, Datatype.STRING));
+		cmsb.with(new SearchCriteria("status", 2, SearchOperation.GREATER_THAN, Datatype.STRING));
 
 		return cmsb;
 	}

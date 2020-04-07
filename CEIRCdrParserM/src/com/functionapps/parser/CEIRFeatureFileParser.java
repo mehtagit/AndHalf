@@ -1,17 +1,22 @@
 package com.functionapps.parser;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.PrintWriter;
+import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
-
-import org.apache.log4j.Logger;
-
+import java.util.HashMap;
+import com.functionapps.constants.*;
+import com.functionapps.log.LogWriter;
 import com.functionapps.parser.service.ApproveConsignment;
 import com.functionapps.parser.service.ConsignmentDelete;
 import com.functionapps.parser.service.RegisterTac;
+import com.functionapps.parser.service.WithdrawnTac;
+
+import org.apache.log4j.Logger;
 public class CEIRFeatureFileParser {
 	static Logger logger = Logger.getLogger(CEIRFeatureFileParser.class);
 
@@ -23,9 +28,20 @@ public class CEIRFeatureFileParser {
 		String feature = null;
 		Connection conn = null;
 		conn = (Connection) new com.functionapps.db.MySQLConnection().getConnection();
-		ResultSet featurers=getFeatureFileDetails(conn);
+		CEIRFeatureFileFunctions ceirfunction = new CEIRFeatureFileFunctions();
+		ResultSet featurers = ceirfunction.getFileDetails(conn, 1);
+//		ResultSet featurers=getFeatureFileDetails(conn);
 		try {
 			if(featurers.next()){
+				ceirfunction.updateFeatureFileStatus(conn,featurers.getString("txn_id"),3,featurers.getString("feature"), featurers.getString("sub_feature"));
+				HashMap<String, String> feature_file_mapping = new HashMap<String, String>();
+				feature_file_mapping = ceirfunction.getFeatureMapping(conn,featurers.getString("feature"));
+				HashMap<String, String> feature_file_management = new HashMap<String, String>();
+				feature_file_management = ceirfunction.getFeatureFileManagement(conn,feature_file_mapping.get("mgnt_table_db"),featurers.getString("txn_id"));
+	
+				
+				String user_type = ceirfunction.getUserType(conn,feature_file_management.get("user_id"));
+
 				CEIRFeatureFileParser ceirfileparser = new CEIRFeatureFileParser();
 				feature = featurers.getString("feature");
 				ArrayList rulelist = new ArrayList<Rule>();		
@@ -48,7 +64,7 @@ public class CEIRFeatureFileParser {
 		ResultSet rs = null;
 		String query = null;
 		try{
-        	query = "select * from feature_file_config_db where status='Init' order by sno asc fetch next 1 rows only";
+        	query = "select * from feature_file_config_db where status='Init' order by sno asc limit 1 ";
 			stmt  = conn.createStatement();
 			logger.info("get feature file details ["+query+"] ");
 
@@ -60,7 +76,7 @@ public class CEIRFeatureFileParser {
 		return rs;
 	}
 
-	public String checkGraceStatus(Connection conn) {
+	String checkGraceStatus(Connection conn) {
 		String period="";
 		String query    = null;
 		ResultSet rs1    = null;
@@ -141,7 +157,6 @@ public class CEIRFeatureFileParser {
 
 	private static void addCDRInProfileWithRule(String operator, Connection conn,ArrayList<Rule> rulelist,String operator_tag,String txn_id,String sub_feature) {
 		
-		
 		Statement stmt = null;
 		try{
 			if(operator.equalsIgnoreCase("consignment") &&(sub_feature.equalsIgnoreCase("register") || sub_feature.equalsIgnoreCase("update"))){
@@ -155,6 +170,9 @@ public class CEIRFeatureFileParser {
 			}else if(operator.equalsIgnoreCase("TYPE_APPROVED") &&(sub_feature.equalsIgnoreCase("REGISTER"))){
 				System.out.println("running tac register process.");
 				new RegisterTac().process(conn, operator, sub_feature, rulelist, txn_id, operator_tag);
+			}else if(operator.equalsIgnoreCase("TYPE_APPROVED") &&(sub_feature.equalsIgnoreCase("delete"))){
+				System.out.println("running tac delete process.");
+				new WithdrawnTac().process(conn, operator, sub_feature, rulelist, txn_id, operator_tag);
 			}else {
 				System.out.println("Skipping the process.");
 			}
@@ -172,7 +190,7 @@ public class CEIRFeatureFileParser {
 		}
 	}
 
-	public String getErrorFilePath(Connection conn) {
+	String getErrorFilePath(Connection conn) {
 		String errorFilePath="";
 		String query    = null;
 		ResultSet rs1    = null;
@@ -273,15 +291,14 @@ public class CEIRFeatureFileParser {
 		}
 		return rule_details;
 	}
-	
-	public ResultSet operatorDetails(Connection conn, String operator){
+	ResultSet operatorDetails(Connection conn, String operator){
 		Statement stmt = null;
 		ResultSet rs = null;
 		String query = null;
 		try{
         	query = "select * from rep_schedule_config_db where operator='"+operator+"'";
 			stmt  = conn.createStatement();
-			return rs = stmt.executeQuery(query);
+			return rs    = stmt.executeQuery(query);
 		}
 		catch(Exception e){
 			System.out.println(""+e);
@@ -289,7 +306,7 @@ public class CEIRFeatureFileParser {
 		return rs;
 	}
 
-	public void updateLastStatuSno(Connection conn,String operator, int id,int limit) {
+	void updateLastStatuSno(Connection conn,String operator, int id,int limit) {
 		String query = null;
 		Statement stmt = null;
 		query = "update "+operator+"_raw"+" set status='Start' where sno>'"+id+"'";
@@ -311,7 +328,7 @@ public class CEIRFeatureFileParser {
 		}
 	}
 
-	 public void updateRawLastSno(Connection conn,String operator, int sno) {
+	 void updateRawLastSno(Connection conn,String operator, int sno) {
 		String query = null;
 		Statement stmt = null;
 		query = "update rep_schedule_config_db set last_upload_sno="+sno+" where operator='"+operator+"'";

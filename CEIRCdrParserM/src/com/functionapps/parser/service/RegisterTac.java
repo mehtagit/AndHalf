@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 import org.apache.log4j.Logger;
+import org.springframework.web.client.RestTemplate;
 
+import com.functionapps.constants.PropertyReader;
 import com.functionapps.dao.MessageConfigurationDbDao;
 import com.functionapps.dao.NotificationDao;
 import com.functionapps.dao.TypeApprovalDbDao;
@@ -16,9 +18,14 @@ import com.functionapps.pojo.MessageConfigurationDb;
 import com.functionapps.pojo.Notification;
 import com.functionapps.pojo.TypeApprovedDb;
 import com.functionapps.pojo.UserWithProfile;
+import com.functionapps.resttemplate.TacApiConsumer;
 
 public class RegisterTac {
 	static Logger logger = Logger.getLogger(RegisterTac.class);
+	
+	public RegisterTac() {
+		
+	}
 
 	public void process(Connection conn, String operator, String sub_feature, ArrayList<Rule> rulelist, String txnId, String operator_tag ){
 
@@ -28,6 +35,7 @@ public class RegisterTac {
 		MessageConfigurationDbDao messageConfigurationDbDao = new MessageConfigurationDbDao();
 		NotificationDao notificationDao = new NotificationDao();
 		UserWithProfileDao userWithProfileDao = new UserWithProfileDao();
+		TacApiConsumer tacApiConsumer = new TacApiConsumer();
 
 		try{
 			// Fetch type approved details.
@@ -40,7 +48,8 @@ public class RegisterTac {
 				typeApprovedDb.setApproveStatus(3); // Pending by CEIR Admin
 				System.out.println(typeApprovedDb);
 				
-				typeApprovalDbDao.updateTypeApprovedDb(conn, typeApprovedDb);
+				tacApiConsumer.updateStatus(typeApprovedDb.getTxnId(), typeApprovedDb.getUserId(), 
+						"CEIRSYSTEM", 2);
 				
 				// Get users Profile.
 				UserWithProfile userWithProfile = userWithProfileDao.getUserWithProfileById(conn, typeApprovedDb.getUserId());

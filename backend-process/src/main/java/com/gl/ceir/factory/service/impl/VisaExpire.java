@@ -79,8 +79,8 @@ public class VisaExpire extends BaseService{
 	private GenericSpecificationBuilder<VisaDb> buildSpecification(String date){
 		GenericSpecificationBuilder<VisaDb> cmsb = new GenericSpecificationBuilder<>(propertiesReader.dialect);
 
-		cmsb.with(new SearchCriteria("createdOn", date, SearchOperation.GREATER_THAN, Datatype.DATE));
-		cmsb.with(new SearchCriteria("createdOn", date, SearchOperation.LESS_THAN, Datatype.DATE));
+		cmsb.with(new SearchCriteria("visa_expiry_date", date, SearchOperation.GREATER_THAN, Datatype.DATE));
+		cmsb.with(new SearchCriteria("visa_expiry_date", date, SearchOperation.LESS_THAN, Datatype.DATE));
 
 		return cmsb;
 	}
