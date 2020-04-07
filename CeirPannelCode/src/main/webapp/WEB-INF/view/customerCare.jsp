@@ -362,8 +362,8 @@ data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeI
 					</div>
 
 					<div class="input-field col s12 m6">
-						<input type="text" name="Quantity" id="Quantity" placeholder=""
-							disabled /> <label for="Quantity" class="center-align"><spring:message
+						<input type="text" name="Quantity" id="StockQuantity" placeholder=""
+							disabled /> <label for="StockQuantity" class="center-align"><spring:message
 								code="input.quantity" /></label>
 					</div>
 
@@ -375,9 +375,9 @@ data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeI
 					</div>
 
 					<div class="input-field col s12 m6">
-						<input type="text" name="TransactionId" id="TransactionId"
-							disabled placeholder="" maxlength="15" /> <label
-							for="TransactionId" class="center-align"><spring:message
+						<input type="text" name="TransactionId" id="StockTransactionId"
+							disabled placeholder="" maxlength="18" /> <label
+							for="StockTransactionId" class="center-align"><spring:message
 								code="input.transactionID" /></label>
 					</div>
 

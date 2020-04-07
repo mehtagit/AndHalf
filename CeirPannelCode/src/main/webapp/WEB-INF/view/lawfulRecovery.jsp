@@ -144,7 +144,7 @@ select.browser-default {
                                         <div class="row">
                                             <div class="col s12">
                                                 <ul class="tabs">
-                                                    <li class="tab col s3"><a class="active" onclick="singleRecoverydiv()"><spring:message code="operator.single" /></a>
+                                                    <li class="tab col s3"><a class="active" onclick="singleRecoverydiv()"><spring:message code="input.Individual" /></a>
                                                     </li>
                                                     <li class="tab col s3"><a onclick="showBulkRecovery()"><spring:message code="registration.company/organisation/government" /></a></li>
                                                 </ul>
