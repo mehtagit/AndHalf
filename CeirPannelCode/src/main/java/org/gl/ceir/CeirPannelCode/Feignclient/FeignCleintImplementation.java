@@ -180,7 +180,7 @@ public interface FeignCleintImplementation {
 
 	//delete stolen recovery feign  controller
 	@RequestMapping(value="/stakeholder/Delete" ,method=RequestMethod.DELETE) 
-	public @ResponseBody GenricResponse deleteStolenRecovery(StolenRecoveryModel stolenRecoveryModel) ;
+	public @ResponseBody GenricResponse deleteStolenRecovery(FilterRequest stolenRecoveryModel) ;
 	/************* DROPDOWN *****************/
 
 	@RequestMapping(value="/state-mgmt/{featureId}/{userTypeId}" ,method=RequestMethod.GET) 
