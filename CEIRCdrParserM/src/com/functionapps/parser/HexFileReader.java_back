@@ -1,0 +1,705 @@
+package com.functionapps.parser;
+
+import com.functionapps.db.Query;
+import com.functionapps.zte.ZTEFields;
+
+import java.util.HashMap;
+import java.util.List;
+
+import javax.print.attribute.standard.PrinterIsAcceptingJobs;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+//import java.io.FileReader;
+//import java.io.InputStreamReader;
+//import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.sql.Connection;
+import java.sql.Statement;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public class HexFileReader {
+
+	ZTEFields zte   = new ZTEFields();
+	String[] fields = zte.zteCDRFields;
+	
+	public String getFields(){
+		String retVal      = "{\"ColumnNames\":[";
+		String columnNames = "";
+		try{
+			for( String column : fields ){
+				columnNames = columnNames + "{\"colName\":\""+column+"\"},";
+			}
+			retVal = retVal + columnNames.substring( 0, columnNames.length() - 1 ) + "]}";	
+		}catch(Exception e){
+			retVal = "{\"ColumnNames\":[{\"colName\":\"400\"},{\"colName\":\"No file found.\"}]}";
+			e.printStackTrace();
+		}
+		System.out.println(retVal);
+		return retVal;
+	}
+	
+	public boolean insertDataIntoRaw( String repName, HashMap< String, ArrayList< String > > fileData ) throws SQLException{
+		int limit       = 10000;
+		boolean result  = false;
+		String query    = null;
+		String values   = "values(";
+		Connection conn      = null;
+		PreparedStatement ps = null;
+		ResultSet rs         = null;
+		try{
+			query = "insert into "+repName+"(";
+			for( String field : fields ){
+				query  = query + field + ",";
+				values = values + "?,";
+			}
+			query = query.substring( 0, query.length() - 1 )+") "+values.substring( 0, values.length() - 1 )+")";
+			conn  = new com.functionapps.db.MySQLConnection().getConnection();
+			ps    = conn.prepareStatement( query );
+			for( int j = 0; j < fileData.get(fields[0]).size(); j++ ){
+				for( int i = 0; i < fields.length; i++ ){
+					ps.setString( i+1, fileData.get(fields[i]).get(j));
+				}
+				ps.addBatch();
+				if( (j % limit) == 0 && j != 0 ){
+					ps.executeBatch();
+					System.out.println("Data insert is ["+j+"]");
+				}else if( j == (fileData.get(fields[0]).size() - 1) ){
+					ps.executeBatch();
+					System.out.println("Remaining data inserted is ["+j+"]");
+				}
+			}
+			conn.commit();
+			result = true;
+		}catch( Exception e ){
+			System.out.println("Failed to insert data.");
+			conn.rollback();
+			e.printStackTrace();
+		}finally{
+			try{
+				if(conn != null){
+					if(rs != null)
+						rs.close();
+					if( ps != null )
+						ps.close();
+					conn.close();
+				}
+			}catch(Exception ex){}
+		}
+		return result;
+	}
+	
+	public String[] readBinaryFileUsingDIS( String fileName, String filePath, String repName ){
+		//String dumpPath = "/var/www/html/pview/upload/"+repName+"/old/UnreadCDR.csv";
+		String errorFilePath = "/var/www/html/pview/upload/"+repName+"/old/"+fileName+".error";
+		int i = 0;
+		int offset   = 0;
+		int numRead  = 0;
+		int startRow = 0;
+		int endRow   = 0;
+		int startId  = 0;
+		int endId    = 0;
+		//int limit         = 1;
+		int limit         = 10000;
+		int rowInserted   = 0;
+		String query      = null;
+		String cdrCount   = null;
+		String answerTime = null;
+		String endTime    = null;
+		String inTrkName  = null;
+		String outTrkName = null;
+		String inTrkNo    = null;
+		String outTrkNo   = null;
+		String partId     = null;
+		String billId     = null;
+		String values     = "values(";
+		boolean inTrkStatus  = false;
+		boolean outTrkStatus = false;
+		Connection conn      = null;
+		PreparedStatement ps = null;
+		PreparedStatement tempPS = null;
+		ResultSet rs         = null;
+		String cdrConsider   = null;
+		String cdrStartTime  = null;
+		String cdrEndTime    = null;
+		String data          = null;
+		String fieldName     = null;
+		File file            = null;
+		FileInputStream fis  = null;
+		DataInputStream dis  = null;
+		FileOutputStream fos = null;
+		DataOutputStream dos = null;
+		byte[] buffer        = null;
+		//String line          = null;
+		int[] fieldOffset    = null;
+		String[] result      = null;
+		FileWriter fw        = null;
+		DecimalConverter dc  = new DecimalConverter();
+		ArrayList< String > temp    = null;
+		ArrayList< String > billIds = null;
+		HashMap< String, int[] > hm = new HashMap< String, int[] >();
+		//HashMap< String, String > fieldValues = new HashMap< String, String >();
+		//HashMap< String, ArrayList< String > > result      = new HashMap< String, ArrayList< String > >();
+		//HashMap< String, ArrayList< String > > fieldValues = new HashMap< String, ArrayList< String > >();
+		try{
+			startRow = new com.functionapps.db.Query().getStartIndexFromTable(repName);
+			/****************Insert Query and prepared statement start***************/
+			query = "insert into "+repName+"(";
+			for( String field : fields ){
+				query  = query + field + ",";
+				values = values + "?,";
+			}
+			query  = query.substring( 0, query.length() - 1 )+") "+values.substring( 0, values.length() - 1 )+")";
+			conn   = new com.functionapps.db.MySQLConnection().getConnection();
+			ps     = conn.prepareStatement( query, Statement.RETURN_GENERATED_KEYS );
+			tempPS = conn.prepareStatement( "insert into zte_billid_temp(partId,billId,answerTime) values(?,?,?)", Statement.RETURN_GENERATED_KEYS );
+			/****************Insert Query and prepared statement ends***************/
+			//fw      = new FileWriter(dumpPath);
+			fos     = new FileOutputStream( new File(errorFilePath) );
+			dos     = new DataOutputStream( fos );
+			buffer  = new byte[392];
+			file    = new File(filePath);
+			fis     = new FileInputStream(file);
+			dis     = new DataInputStream( fis );
+			hm      = zte.getfieldSet();
+			billIds = new ArrayList< String >();
+			//i = dis.read( buffer );
+			while( ( offset < buffer.length ) && (numRead=dis.read(buffer, offset, buffer.length-offset)) >= 0 ){
+				endTime     = null;
+				inTrkNo     = null;
+				outTrkNo    = null;
+				inTrkName   = null;
+				outTrkName  = null;
+				answerTime  = null;
+				partId      = null;
+				billId      = null;
+				endTime     = dc.getNumberFromBCD(dc.bytesToHex(Arrays.copyOfRange( buffer, 121, 129)));
+				inTrkNo     = dc.hex2Decimal(dc.bytesToHex(Arrays.copyOfRange( buffer, 132, 134)));
+				outTrkNo    = dc.hex2Decimal(dc.bytesToHex(Arrays.copyOfRange( buffer, 177, 179)));
+				inTrkName   = dc.getStringFromByte( Arrays.copyOfRange( buffer, 357, 364) );
+				outTrkName  = dc.getStringFromByte( Arrays.copyOfRange( buffer, 364, 371) );
+				answerTime  = dc.getNumberFromBCD(dc.bytesToHex(Arrays.copyOfRange( buffer, 112, 120)));
+				partId      = dc.hex2Decimal(dc.bytesToHex(Arrays.copyOfRange( buffer, 7, 8)));
+				billId      = dc.hex2Decimal(dc.bytesToHex(Arrays.copyOfRange( buffer, 2, 6)));
+				inTrkStatus = inTrkName.substring( 0, 1).equalsIgnoreCase("I") || inTrkName.substring( 0, 1).equalsIgnoreCase("O") || inTrkName.substring( 0, 1).equalsIgnoreCase("P");
+				//outTrkStatus = outTrkName.substring( 0, 1).equalsIgnoreCase("I") || outTrkName.substring( 0, 1).equalsIgnoreCase("O") || outTrkName.substring( 0, 1).equalsIgnoreCase("P");
+				if( (partId.equals("0") || partId.equals("3")) && !endTime.equals("0") && (Integer.parseInt(inTrkNo) >= 10000 && Integer.parseInt(inTrkNo) <= 29999) && inTrkStatus){
+					if( partId.equals("3") ){
+						billIds.add(billId);
+					}
+					for( int j = 0; j < fields.length; j++ ){
+						data = null;
+						fieldOffset = new int[3];
+						fieldName   = fields[j];
+						if( !fieldName.equals("BillID") && !fieldName.equals("PartRecID") && !fieldName.equals("AnswerTime") && !fieldName.equals("cdr_condsider") && !fieldName.equals("EndTime") && !fieldName.equals("InTrkGrpNo") && !fieldName.equals("OutTrkGrpNo") && !fieldName.equals("InTrkName") && !fieldName.equals("OutTrkName") ){
+							fieldOffset = hm.get(fieldName);
+							byte[] byteData = null;
+							switch( fieldOffset[2] ){
+								case 0 : 
+									byteData = Arrays.copyOfRange( buffer, fieldOffset[0], fieldOffset[0]+fieldOffset[1]);
+									data     = dc.hex2Decimal(dc.bytesToHex(byteData)); 
+									break;
+								case 1 :
+									byteData = Arrays.copyOfRange( buffer, fieldOffset[0], fieldOffset[0]+fieldOffset[1]);
+									data     = dc.getNumberFromBCD(dc.bytesToHex(byteData));
+									break;
+								case 2 : 
+									byteData = Arrays.copyOfRange( buffer, fieldOffset[0], fieldOffset[0]+fieldOffset[1]);
+									data     = dc.getNumberFromRightBCD(dc.bytesToHex(byteData));
+									break;
+								case 3:
+									data = dc.getBitFromByte( buffer[fieldOffset[0]], fieldOffset[1]);
+									break;
+								case 4:
+									byteData = Arrays.copyOfRange( buffer, fieldOffset[0], fieldOffset[0]+fieldOffset[1]);
+									data     = dc.getStringFromByte( byteData );
+									break;
+								default : 
+									break;
+							}
+							ps.setString( j+1, data);
+						}else if( fieldName.equals("BillID") || fieldName.equals("PartRecID") || fieldName.equals("AnswerTime") || fieldName.equals("cdr_condsider") || fieldName.equals("EndTime") || fieldName.equals("InTrkGrpNo") || fieldName.equals("OutTrkGrpNo") || fieldName.equals("InTrkName") || fieldName.equals("OutTrkName") ){
+							switch( fieldName ){
+								case "EndTime" :
+									if( cdrStartTime == null )
+										cdrStartTime = endTime;
+									cdrEndTime = endTime;
+									ps.setString( j+1, endTime);
+									break;
+								case "InTrkGrpNo" :
+									ps.setString( j+1, inTrkNo);
+									break;
+								case "OutTrkGrpNo" :
+									ps.setString( j+1, outTrkNo);
+									break;
+								case "InTrkName" :
+									ps.setString( j+1, inTrkName );
+									break;
+								case "BillID" :
+									ps.setString( j+1, billId);
+									break;
+								case "PartRecID" :
+									ps.setString( j+1, partId);
+									break;
+								case "AnswerTime" :
+									ps.setString( j+1, answerTime);
+									break;
+								case "OutTrkName" :
+									ps.setString( j+1, outTrkName);
+									break;
+								default :
+									ps.setString( j+1, "Y");
+									break;
+							}
+						}
+					}
+					//System.out.println("Data insert is ["+ps.toString()+"]");
+					ps.addBatch();
+					if( ( i % limit) == 0 && i != 0 ){
+						//System.out.println("Data insert is ["+ps.toString()+"]");
+						ps.executeBatch();
+						//System.out.println("Data insert is ["+i+"]");
+					}
+					if( ps != null )
+						ps.clearParameters();
+				}else if( partId.equals("1") ){
+					tempPS.setString( 1, partId );
+					tempPS.setString( 2, billId );
+					tempPS.setString( 3, answerTime );
+					tempPS.addBatch();
+				}else{
+					dos.write(buffer);
+				}
+				i++;
+			}
+			ps.executeBatch();
+			//rowInserted = ps.getUpdateCount();
+			rs = ps.getGeneratedKeys();
+			while( rs.next() ){
+				endRow      = (int) rs.getLong(1);
+				rowInserted = endRow - startRow;
+			}
+			if( rs != null ){
+				rs.close();
+			}
+			cdrCount = String.valueOf( i );
+			if( cdrCount != null && cdrStartTime != null && cdrEndTime != null ){
+				//System.out.println("CDR start time ["+cdrStartTime+"] and CDR end time ["+cdrEndTime+"]");
+				result = new String[]{ cdrCount, cdrStartTime, cdrEndTime, String.valueOf(rowInserted), this.getTableSize( conn, repName) };
+			}else{
+				result = new String[]{ "0", "null", "null", "0", this.getTableSize( conn, repName) };
+			}
+			dos.flush();
+			//System.out.println("cdr start row is ["+startRow+"] and end row is ["+endRow+"]");
+			this.updateCDRWithPartIdThree( conn, billIds, repName, cdrStartTime, startRow, endRow );
+			startId = new Query().getStartIndexFromTable("zte_billid_temp");
+			tempPS.executeBatch();
+			rs = tempPS.getGeneratedKeys();
+			while( rs.next() ){
+				endId = (int)rs.getLong(1);
+			}
+			if( endId != 0 ){
+				this.insertSlotStartAndEndSnoId(cdrStartTime, startId, endId);
+			}
+			if( tempPS != null ){
+				tempPS.clearParameters();
+			}
+			new com.functionapps.files.FileList().moveFile(fileName, repName);
+			//System.out.println(fieldValues.toString());
+		}catch( Exception e ){
+			e.printStackTrace();
+			result = new String[]{ "0", "null", "null", "0", this.getTableSize( conn, repName) };
+		}finally{
+			try{
+				if(conn != null){
+					if(rs != null)
+						rs.close();
+					if( ps != null ){
+						ps.clearParameters();
+						ps.close();
+					}
+					if( tempPS != null ){
+						tempPS.clearParameters();
+						tempPS.close();
+					}
+					conn.close();
+				}
+				if( fis != null )
+					fis.close();
+				if( dis != null )
+					dis.close();
+				if( fos != null )
+					fos.close();
+				if( dos != null )
+					dos.close();
+				if( fw != null )
+					fw.close();
+			}catch( Exception ex ){}
+			errorFilePath = null;
+			query        = null;
+			cdrCount     = null;
+			answerTime   = null;
+			endTime      = null;
+			inTrkName    = null;
+			outTrkName   = null;
+			inTrkNo      = null;
+			outTrkNo     = null;
+			partId       = null;
+			billId       = null;
+			values       = null;
+			cdrConsider  = null;
+			cdrStartTime = null;
+			cdrEndTime   = null;
+			data         = null;
+			fieldName    = null;
+			file         = null;
+			buffer       = null;
+			fieldOffset  = null;
+			dc           = null;
+			temp         = null;
+			billIds      = null;
+			hm           = null;
+		}
+		return result;
+	}
+	
+	public String getTableSize( Connection conn, String tableName ){
+		String tableSize = null;
+		String query     = null;
+		//Connection conn  = null;
+		Statement stmt   = null;
+		ResultSet rs     = null;
+		try{
+			query = "SELECT round(sum((data_length + index_length) / 1024 / 1024 ), 4) `Size`  FROM information_schema.TABLES where table_name = '"+tableName+"'";
+			//conn  = conn.getConnection();
+			stmt  = conn.createStatement();
+			rs     = stmt.executeQuery( query );
+			
+			while( rs.next() ){
+				tableSize = rs.getString( "Size" );				
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+			tableSize = "0";
+		}finally{
+			if ( conn != null ){
+				try{
+					if ( rs != null )
+						rs.close();
+					if ( stmt != null )
+						stmt.close();
+					//conn.close();
+				}catch(Exception e){
+				}
+			}
+		}
+		return tableSize;
+	}
+	
+	public boolean updateCDRWithPartIdThree( Connection conn, ArrayList< String > billIds, String repName, String startTime, int startSno, int endSno ){
+		int i = 0;
+		boolean result       = false;
+		int eStartId         = 0;
+		int eEndId           = 0;
+		String query         = null;
+		String updateQuery   = null;
+		String tempBillID    = null;
+		Statement stmt       = null;
+		ResultSet rs         = null;
+		PreparedStatement ps = null;
+		ArrayList< Integer[] > idDetailsOfCdr  = null;
+		//HashMap< String, String > tempBillIds = null;
+		try{
+			idDetailsOfCdr = new ArrayList< Integer[] >();
+			idDetailsOfCdr = this.getBillIdDetailByCDRStartTime( conn, startTime );
+			if( idDetailsOfCdr != null ){
+				for( Object[] idDetail : idDetailsOfCdr ){
+					if( i == 0 ){
+						eStartId = (int) idDetail[0];
+						eEndId   = (int)idDetail[1];
+					}else{
+						eEndId = (int)idDetail[1];
+					}
+					i++;
+				}
+				query       = "select billID,answerTime from zte_billid_temp where sno >="+eStartId+" and sno <="+eEndId;
+				System.out.println("Query for getting all is :["+query+"]");
+				stmt        = conn.createStatement();
+				rs          = stmt.executeQuery( query );
+				updateQuery = "update "+repName+" set AnswerTime=? where PartRecID='3' and BillID=? and sno >="+startSno+" and sno <="+endSno;
+				//updateQuery = "update "+repName+" set AnswerTime=IF((select answerTime from zte_billid_temp where partID='1' and billID=?)IS NULL, AnswerTime, answerTime) where PartRecID='3' and BillID=?";
+				ps          = conn.prepareStatement(updateQuery);
+				if( rs != null ){
+					//tempBillIds = new HashMap< String, String >();
+					while( rs.next() ){
+						tempBillID = rs.getString("billID");//rs.getString("answerTime")
+						if( billIds.contains( tempBillID ) ){
+							ps.setString( 1, rs.getString("answerTime"));
+							ps.setString( 2, tempBillID);
+							//System.out.println("Update query is :["+updateQuery.toString()+"]");
+							ps.addBatch();
+						}						
+					}
+				}
+				ps.executeBatch();
+			}
+			//stmt = conn.createStatement();
+			//stmt.executeQuery("delete from zte_billid_temp where answerTime<=DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 3 HOUR)")
+			
+		}catch( Exception e ){
+			result = false;
+			e.printStackTrace();
+		}finally{
+			try{
+				if( ps != null ){
+					ps.clearParameters();
+					ps.close();
+				}
+				if( rs != null )
+					rs.close();
+				if( stmt != null )
+					stmt.close();
+			}catch( Exception ex ){}
+		}
+		return result;
+	}
+	
+	public boolean insertSlotStartAndEndSnoId( String cdrStartTime, int eStartId, int eEndId ){
+		boolean result = false;
+		try{
+			result = new com.functionapps.db.Query().insert("insert into zte_id_details(cdr_start_time,e_start_id,e_end_id) values('"+cdrStartTime+"',"+eStartId+","+eEndId+")");
+		}catch( Exception ex ){
+			result = false;
+			ex.printStackTrace();
+		}
+		return result;
+	}
+	
+	public ArrayList< Integer[] > getBillIdDetailByCDRStartTime( Connection conn, String cdrStartTime ){
+		ArrayList< Integer[] > result = null;
+		String query         = null;
+		Statement stmt       = null;
+		ResultSet rs         = null;
+		try{
+			query = "select e_start_id,e_end_id from zte_id_details where FROM_UNIXTIME(FLOOR( UNIX_TIMESTAMP(cdr_start_time)/300 ) * 300)<=FROM_UNIXTIME(FLOOR( UNIX_TIMESTAMP(DATE_SUB('"+cdrStartTime+"', INTERVAL 15 MINUTE))/300 ) * 300) and FROM_UNIXTIME(FLOOR( UNIX_TIMESTAMP(cdr_start_time)/300 ) * 300)>=FROM_UNIXTIME(FLOOR( UNIX_TIMESTAMP(DATE_SUB('"+cdrStartTime+"', INTERVAL 2 HOUR))/300 ) * 300)";
+			System.out.println("Query for getting id range is ["+query+"]");
+			stmt  = conn.createStatement();
+			rs    = stmt.executeQuery(query);
+			if( rs != null ){
+				result = new ArrayList< Integer[] >();
+				while( rs.next() ){
+					result.add( new Integer[]{ rs.getInt("e_start_id"),rs.getInt("e_end_id") } );
+				}
+			}
+		}catch( Exception ex ){
+			ex.printStackTrace();
+		}finally{
+			try{
+				if( rs != null )
+					rs.close();
+				if( stmt != null )
+					stmt.close();
+			}catch( Exception ex ){}
+		}
+		return result;
+	}
+	
+	public String getDatabaseSize( Connection conn, String dbName ){
+		String result  = null;
+		Statement stmt = null;
+		ResultSet rs   = null;
+		try{
+			stmt = conn.createStatement();
+			rs   = stmt.executeQuery("SELECT  sum(round(((data_length + index_length) / 1024 / 1024 ), 4))  as size FROM information_schema.TABLES  WHERE table_schema ='"+dbName+"'");
+			if( rs != null ){
+				while( rs.next() ){
+					result = rs.getString("size");
+				}
+			}
+		}catch( Exception e ){
+			result = "0";
+			e.printStackTrace();
+		}finally{
+			try{
+				if( rs != null )
+					rs.close();
+				if( stmt != null )
+					stmt.close();
+			}catch( Exception ex ){}
+		}
+		return result;
+	}
+	
+	/*
+	public boolean readHexdumpFile( String path, String fileName ){
+		int i = 0;
+		int lineLimit = 300;
+		char[] buffSize  = new char[392];
+		byte[] buffSize1 = new byte[392]; 
+		boolean result    = false;
+		//File file      = null;
+		BufferedReader br = null;
+		StringBuffer sb  = new StringBuffer();
+		String line = null;
+		Process newProcess = null;
+		DecimalConverter dc = new DecimalConverter();
+		try{
+			//br = new BufferedReader( new FileReader(path+fileName));
+			newProcess = Runtime.getRuntime().exec( "hexdump "+path+fileName );
+			br         = new BufferedReader( new InputStreamReader( newProcess.getInputStream() ));
+			//br = new BufferedReader( new FileInputStream(path+fileName));
+			br.read(buffSize);
+			sb.append(buffSize,2,0);
+			System.out.println(dc.hex2Decimal(sb.toString()));
+			br.close();
+		}catch( Exception e ){
+			e.printStackTrace();
+			result = false;
+		}
+		return result;
+	}
+	*/
+	
+	/*public HashMap< String, ArrayList< String > > readBinaryFileUsingDIS( String fileName, String filePath, String repName ){
+		int i = 0;
+		int offset  = 0;
+		int numRead = 0;
+		//boolean result       = false;
+		int limit       = 10000;
+		//boolean result  = false;
+		String query    = null;
+		String values   = "values(";
+		Connection conn      = null;
+		PreparedStatement ps = null;
+		ResultSet rs         = null;
+		String cdrConsider   = null;
+		String cdrStartTime  = null;
+		String drEndTime     = null;
+		String data          = null;
+		String fieldName     = null;
+		File file            = null;
+		FileInputStream fis  = null;
+		DataInputStream dis  = null;
+		byte[] buffer        = null;
+		//String line          = null;
+		int[] fieldOffset    = null;
+		DecimalConverter dc  = new DecimalConverter();
+		ArrayList< String > temp    = null; 
+		HashMap< String, int[] > hm = new HashMap< String, int[] >();
+		//HashMap< String, String > fieldValues = new HashMap< String, String >();
+		HashMap< String, ArrayList< String > > result      = new HashMap< String, ArrayList< String > >();
+		HashMap< String, ArrayList< String > > fieldValues = new HashMap< String, ArrayList< String > >();
+		try{
+			query = "insert into "+repName+"(";
+			for( String field : fields ){
+				query  = query + field + ",";
+				values = values + "?,";
+			}
+			query = query.substring( 0, query.length() - 1 )+") "+values.substring( 0, values.length() - 1 )+")";
+			conn  = new com.functionapps.db.MySQLConnection().getConnection();
+			ps    = conn.prepareStatement( query );
+			buffer = new byte[392];
+			file = new File(filePath);
+			fis  = new FileInputStream(file);
+			dis  = new DataInputStream( fis );
+			hm   = zte.getfieldSet();
+			//i = dis.read( buffer );
+			while( ( offset < buffer.length ) && (numRead=dis.read(buffer, offset, buffer.length-offset)) >= 0 ){
+				for( int j = 0; j < fields.length; j++ ){
+					data = null;
+					temp = new ArrayList< String >();
+					fieldOffset = new int[3];
+					fieldName   = fields[j];
+					if( !fieldName.equals("cdr_condsider") ){
+						fieldOffset = hm.get(fieldName);
+						byte[] byteData = null;
+						if( i != 0 ){
+							temp = fieldValues.get( fieldName );
+						}
+						switch( fieldOffset[2] ){
+							case 0 : 
+								byteData = Arrays.copyOfRange( buffer, fieldOffset[0], fieldOffset[0]+fieldOffset[1]);
+								data     = dc.hex2Decimal(dc.bytesToHex(byteData)); 
+								temp.add( data );
+								break;
+							case 1 :
+								
+								byteData = Arrays.copyOfRange( buffer, fieldOffset[0], fieldOffset[0]+fieldOffset[1]);
+								//System.out.println("FieldName:["+fieldName+"],Offset["+fieldOffset[0]+"],EndIndex["+fieldOffset[0]+fieldOffset[1]+"] and Hex ["+dc.bytesToHex(byteData)+"]");
+								data     = dc.getNumberFromBCD(dc.bytesToHex(byteData));
+								temp.add( data );
+								break;
+							case 2 : 
+								byteData = Arrays.copyOfRange( buffer, fieldOffset[0], fieldOffset[0]+fieldOffset[1]);
+								data     = dc.getNumberFromRightBCD(dc.bytesToHex(byteData));
+								temp.add( data );
+								break;
+							case 3:
+								data = dc.getBitFromByte( buffer[fieldOffset[0]], fieldOffset[1]);
+								temp.add( data );
+								//System.out.println("Original data:"+fieldOffset[1]+", Type 3 data offset:"+(int)fieldOffset[1]);
+								//System.out.println("byte:"+buffer[131]+",bits:"+Integer.toBinaryString( (int) buffer[131]));
+								break;
+							case 4:
+								byteData = Arrays.copyOfRange( buffer, fieldOffset[0], fieldOffset[0]+fieldOffset[1]);
+								data     = dc.getStringFromByte( byteData );
+								temp.add( data );
+								//System.out.println("Original data:"+fieldOffset[1]+", Type 3 data offset:"+(int)fieldOffset[1]);
+								//System.out.println("byte:"+buffer[131]+",bits:"+Integer.toBinaryString( (int) buffer[131]));
+								break;
+							default : 
+								break;
+						}
+						if( fieldName.equals("EndTime") && data != null || !data.equals("NULL") || !data.equals("0") || !data.equals("") ){
+							cdrConsider = "Y";
+							if( i == 0 ){
+								cdrStartTime = data;
+							}
+						}else{
+							cdrConsider = "N";
+						}
+						ps.setString( j+1, data);
+					}else{
+						ps.setString( j+1, data);
+						temp.add(cdrConsider);
+					}
+					if( i == 0 ){
+						fieldValues.put( fieldName, temp );
+					}
+				}
+				i++;
+			}
+			result = fieldValues;
+			new com.functionapps.files.FileList().moveFile(fileName, repName);
+			//System.out.println(fieldValues.toString());
+		}catch( Exception e ){
+			e.printStackTrace();
+			result = null;
+		}finally{
+			try{
+				if(conn != null){
+					if(rs != null)
+						rs.close();
+					if( ps != null )
+						ps.close();
+					conn.close();
+				}
+				if( fis != null )
+					fis.close();
+				if( dis != null )
+					dis.close();
+			}catch( Exception ex ){}
+		}
+		return result;
+	}*/
+	
+	 
+}

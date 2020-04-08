@@ -14,13 +14,14 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
+import org.apache.log4j.Logger;
 
 /**
  *
  * @author user
  */
 public class ErrorFileGenrator {
-
+	static Logger logger = Logger.getLogger(ErrorFileGenrator.class);
     static String url = System.getenv("ceir_db_url");
     static String username = System.getenv("ceir_db_username");
     static String password = System.getenv("ceir_db_password");
@@ -31,7 +32,7 @@ public class ErrorFileGenrator {
     static String jdbcUrlM = "jdbc:mysql://" + url + "/" + db_name;
     static String classNameM = "com.mysql.cj.jdbc.Driver";
 
-    public  void gotoErrorFile(String txn_id, String errorString) {
+    public void gotoErrorFile(String txn_id, String errorString) {
         try {
 
             String className = null;
@@ -44,7 +45,7 @@ public class ErrorFileGenrator {
                 jdbcUrl = jdbcUrlM;
             }
 
-            System.out.println("Error File init");
+            logger.info("Error File init");
 
             Class.forName(className);
             Connection conn = DriverManager.getConnection(jdbcUrl, username, password);
@@ -58,34 +59,36 @@ public class ErrorFileGenrator {
                     errorPath = resultmsdn.getString(1);
                 }
             } catch (Exception e) {
-                System.out.println("Error...errorPath." + e);
+                logger.info("Error...errorPath." + e);
             }
             conn.close();
-            System.out.println("ErrorPath.." + errorPath);
+            logger.info("ErrorPath.." + errorPath);
 
 //            String fileString = map.get("fileString");
 //            String fileName = map.get("fileName");
 //            
-            
-            System.out.println("fileString is " + errorString);
+              logger.info("fileString is " + errorString);
 
             try {
                 File file = new File(errorPath + txn_id);
                 file.mkdir();
                 String fileNameInput = errorPath + txn_id + "/" + txn_id + "_error.csv";       // 
-                System.out.println("fileNameInput...." + fileNameInput);
+                logger.info("fileNameInput...." + fileNameInput);
                 File fout = new File(fileNameInput);
-                FileOutputStream fos = new FileOutputStream(fout);
+
+                FileOutputStream fos = new FileOutputStream(fout, true);
                 BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
+
                 bw.write(errorString);
+                bw.newLine();
                 bw.close();
             } catch (Exception e) {
-                System.out.println("exception at File..." + e);
+                logger.info("exception at File..." + e);
             }
-            System.out.println("Success");
+            logger.info("Success");
 
         } catch (Exception e) {
-            System.out.println("Exception ..." + e);
+            logger.info("Exception ..." + e);
         }
     }
 

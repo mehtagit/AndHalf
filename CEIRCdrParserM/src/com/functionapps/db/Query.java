@@ -237,6 +237,7 @@ public class Query{
 		String date     = null;
 		try{
 			query = "select `date` from `"+tableName+"` order by `date` desc limit 1";
+                        System.out.println(".. getLastDateTimeFromTable .. qry is ;;"+ query);
 			conn  = new MySQLConnection().getConnection();
 			stmt  = conn.createStatement();
 			rs    = stmt.executeQuery(query);
