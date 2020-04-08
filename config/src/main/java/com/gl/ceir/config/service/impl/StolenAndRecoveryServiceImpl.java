@@ -7,8 +7,10 @@ import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.transaction.Transactional;
@@ -44,6 +46,7 @@ import com.gl.ceir.config.model.StolenOrganizationUserDB;
 import com.gl.ceir.config.model.StolenandRecoveryMgmt;
 import com.gl.ceir.config.model.SystemConfigListDb;
 import com.gl.ceir.config.model.SystemConfigurationDb;
+import com.gl.ceir.config.model.User;
 import com.gl.ceir.config.model.UserProfile;
 import com.gl.ceir.config.model.WebActionDb;
 import com.gl.ceir.config.model.constants.ConsignmentStatus;
@@ -67,6 +70,7 @@ import com.gl.ceir.config.repository.StolenAndRecoveryRepository;
 import com.gl.ceir.config.repository.StolenIndividualUserRepository;
 import com.gl.ceir.config.repository.StolenOrganizationUserRepository;
 import com.gl.ceir.config.repository.UserProfileRepository;
+import com.gl.ceir.config.repository.UserRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
 import com.gl.ceir.config.specificationsbuilder.GenericSpecificationBuilder;
 import com.gl.ceir.config.transaction.StolenAndRecoveryTransaction;
@@ -128,6 +132,9 @@ public class StolenAndRecoveryServiceImpl {
 
 	@Autowired
 	StolenAndRecoveryTransaction stolenAndRecoveryTransaction;
+	
+	@Autowired
+	UserRepository userRepository;
 
 	public GenricResponse uploadDetails(StolenandRecoveryMgmt stolenandRecoveryMgmt) {
 
@@ -685,11 +692,16 @@ public class StolenAndRecoveryServiceImpl {
 	public GenricResponse acceptReject(ConsignmentUpdateRequest consignmentUpdateRequest) {
 		try {
 			UserProfile userProfile = null;
+			Map<String, String> placeholderMap1 = null;
 			StolenandRecoveryMgmt stolenandRecoveryMgmt = stolenAndRecoveryRepository.getByTxnId(consignmentUpdateRequest.getTxnId());
 
 			// Fetch user_profile to update user over mail/sms regarding the action.
 			userProfile = userProfileRepository.getByUserId(consignmentUpdateRequest.getUserId());
+			
+			User user = userRepository.getById(consignmentUpdateRequest.getUserId());
 
+			logger.info("User is " + user);
+			
 			if(Objects.isNull(stolenandRecoveryMgmt)) {
 				String message = "TxnId Does not Exist";
 				logger.info(message + " " + consignmentUpdateRequest.getTxnId());
@@ -752,6 +764,10 @@ public class StolenAndRecoveryServiceImpl {
 					logger.warn("Unable to update Stolen and recovery entity.");
 					return new GenricResponse(3, "Unable to update Stolen and recovery entity.", consignmentUpdateRequest.getTxnId());
 				}else {
+					placeholderMap1 = new HashMap<>();
+					placeholderMap1.put("<first name>", userProfile.getFirstName());
+					placeholderMap1.put("<txn_name>", txnId);
+					
 					emailUtil.saveNotification(mailTag, 
 							userProfile, 
 							consignmentUpdateRequest.getFeatureId(),
@@ -759,9 +775,9 @@ public class StolenAndRecoveryServiceImpl {
 							action,
 							consignmentUpdateRequest.getTxnId(),
 							txnId,
-							null,
-							null,
-							null);
+							placeholderMap1,
+							"CEIRADMIN",
+							user.getUsertype().getUsertypeName());
 					logger.info("Notfication have been saved.");
 				}
 			}else if("CEIRSYSTEM".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())){
@@ -807,6 +823,10 @@ public class StolenAndRecoveryServiceImpl {
 					logger.warn("Unable to update Stolen and recovery entity.");
 					return new GenricResponse(3, "Unable to update Stolen and recovery entity.", consignmentUpdateRequest.getTxnId());
 				}else {
+					placeholderMap1 = new HashMap<>();
+					placeholderMap1.put("<first name>", userProfile.getFirstName());
+					placeholderMap1.put("<txn_name>", txnId);
+					
 					emailUtil.saveNotification(mailTag, 
 							userProfile, 
 							consignmentUpdateRequest.getFeatureId(),
@@ -814,9 +834,9 @@ public class StolenAndRecoveryServiceImpl {
 							action,
 							consignmentUpdateRequest.getTxnId(),
 							txnId,
-							null,
-							null,
-							null);
+							placeholderMap1,
+							"CEIRSYSTEM",
+							user.getUsertype().getUsertypeName());
 					logger.info("Notfication have been saved.");
 				}
 			}else {
