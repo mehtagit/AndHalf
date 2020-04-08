@@ -50,7 +50,7 @@ function confirmantiondelete(){
 	console.log("txnId===**"+txnId+" userId="+userId+" roleType== "+roleType+ " currentRoleType=="+currentRoleType);
 	var obj ={
 			"txnId" : txnId,
-			"roleType":role,
+			"userType":role,
 			"userId":userId,
 			"id":id,
 			"remark":remarks

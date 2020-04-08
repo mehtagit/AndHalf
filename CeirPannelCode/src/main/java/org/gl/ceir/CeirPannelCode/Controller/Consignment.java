@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
+import org.gl.ceir.CeirPannelCode.Feignclient.UserProfileFeignImpl;
 import org.gl.ceir.CeirPannelCode.Model.AddMoreFileModel;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentModel;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentUpdateRequest;
@@ -31,6 +32,7 @@ import org.gl.ceir.CeirPannelCode.Model.Dropdown;
 import org.gl.ceir.CeirPannelCode.Model.FileExportResponse;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
+import org.gl.ceir.CeirPannelCode.Model.PaymentRequest;
 import org.gl.ceir.CeirPannelCode.Service.ConsignmentService;
 import org.gl.ceir.CeirPannelCode.Util.UtilDownload;
 import org.slf4j.Logger;
@@ -72,7 +74,8 @@ public class Consignment {
 AddMoreFileModel addMoreFileModel,urlToUpload,urlToMove;
 
 
-
+@Autowired
+UserProfileFeignImpl userProfileFeignImpl;
 	
 @Autowired
 
@@ -622,4 +625,13 @@ log.info("response from manual sample file download file "+response);
 return "redirect:"+response.getUrl();
 
 }
+
+
+@PostMapping("/payTax") 
+public @ResponseBody GenricResponse payConsignmentTax (@RequestBody PaymentRequest paymentRequest)  {
+	log.info("request send to the payConsignmentTax api="+paymentRequest);
+	GenricResponse response= userProfileFeignImpl.consignmentTaxFeign(paymentRequest);
+	log.info("response from payConsignmentTax api "+response);
+	return response;
+}	
 }

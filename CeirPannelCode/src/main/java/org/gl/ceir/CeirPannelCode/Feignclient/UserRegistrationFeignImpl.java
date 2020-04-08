@@ -53,4 +53,7 @@ public interface UserRegistrationFeignImpl {
 	@PostMapping("/alertDb/view")                                                                                         
 	public List<AlertContentModel> userAllAlertDropdown(); 
 	
+	@PostMapping("/subFeature/view")                                                                                         
+	public List<FeatureDropdown> userSubFeatureDropdown(); 
+	
 }

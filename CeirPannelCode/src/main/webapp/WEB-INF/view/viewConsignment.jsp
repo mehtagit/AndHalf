@@ -844,6 +844,48 @@
 			</div>
 		</div>
 	</div>
+	
+	<!-- -----------------------------------------------------------------Approve DRT Consignment------------------------------------------------------------------------------ -->
+
+
+	<div id="PayDRTtaxPopup" class="modal">
+		<h6 class="modal-header">
+			<spring:message code="modal.message.taxConsignmentDRT" />
+		</h6>
+			<form action="" onsubmit="return payTaxDRT()" method="post" >
+		<div class="modal-content">
+		<div class="row">
+				<div class="row">
+					<h6>
+						<spring:message code="modal.message.taxPaidMessage" />
+					</h6>
+				</div>
+		</div>
+			<div class="row">
+			<div class="input-field col s12 m6">
+                       <input type="number" id="amount" name=""  pattern="[0-9]{8,8}" title="Please enter numeric numbers"  maxlength="" required="required">
+                        <label for="amount" class=""><spring:message code="modal.Amount" /><span class="star"> *</span></label> 
+                        	<%-- <input type="text" id="amount" name="amount" 
+								pattern="[0-9]{8,8}" maxlength="8"
+								oninput="InvalidMsg(this,'input','<spring:message code="validation.tac8" />');"
+								oninvalid="InvalidMsg(this,'input','<spring:message code="validation.tac8" />');"
+								required> <label for="amount"><spring:message
+								code="modal.Amount" /> <span class="star">*</span></label> --%>
+						                        
+            </div>
+			</div>
+				<div class="row button-div">
+				<div class="input-field col s12 center">
+					<div class="input-field col s12 center">
+						<button class="btn" type="submit"><spring:message code="modal.payNow" /></button>
+                        <a href="#" class="btn modal-close" id="Cancel" style="margin-left: 10px;"><spring:message code="modal.paylater" /></a>
+					</div>
+				</div>
+			</div>
+
+		</div>
+		</form>
+	</div>
 
 	<!--materialize js-->
 	<script type="text/javascript"

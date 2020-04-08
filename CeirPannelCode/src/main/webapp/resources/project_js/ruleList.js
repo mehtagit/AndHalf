@@ -16,12 +16,7 @@
 			pageRendering();
 		 });
 		
-         $.getJSON('./getDropdownList/RULE_STATE', function(data) {
-				for (i = 0; i < data.length; i++) {
-					$('<option>').val(data[i].value).text(data[i].interp)
-					.appendTo('#editState');
-				}
-			});
+       
          
          function filter(lang)
  		{       	
@@ -31,11 +26,9 @@
 		//**************************************************filter table**********************************************
 
 		function table(url,dataUrl){
-		var state= $("#State").val() == undefined ? null : $("#State option:selected").text();
+		var state= $("#State").val();
 
 			var filterRequest={
-					"endDate":$('#endDate').val(),
-					"startDate":$('#startDate').val(),
 					  "state": state
 					
 			}
@@ -154,8 +147,8 @@
 
 						$.getJSON('./getDropdownList/RULE_STATE', function(data) {
 							for (i = 0; i < data.length; i++) {
-								$('<option>').val(data[i].value).text(data[i].interp)
-								.appendTo('#State');
+								$('<option>').val(data[i].interp).text(data[i].interp)
+								.appendTo('#State,#editState');
 							}
 						});
 						
@@ -172,9 +165,7 @@
 
 
 			function getDetailBy(id){
-				$("#editModel").openModal({
-			        dismissible:false
-			    });
+			
 				window.xid=id;
 				
 				$.ajax({
@@ -183,19 +174,23 @@
 					contentType : 'application/json; charset=utf-8',
 					type : 'GET',
 					success : function(data) {
-						setData(data);
+						var result=JSON.stringify(data);
+						$("#editModel").openModal({
+					        dismissible:false
+					    });
+						setData(JSON.parse(result));
 					},
 					error : function() {
-						alert("Failed");
+						console.log("Failed");
 					}
 				});	
 			}
 			
 			
-			function setData(data){
-				$("#editName").val(data.name);
-				$("#editDescription").val(data.description);
-				$("#editState").val(data.state);
+			function setData(result){
+				$("#editName").val(result.name);
+				$("#editDescription").val(result.description);
+				$("#editState").val(result.state);
 			}
 			
 			
@@ -221,7 +216,10 @@
 					contentType : 'application/json; charset=utf-8',
 					type : 'POST',
 					success: function (data, textStatus, jqXHR) {
-						
+						$('#editModel').closeModal();
+						$("#updateFieldsSuccess").openModal({
+					        dismissible:false
+					    });
 					/*	$('#updateModal').closeModal();
 
 						$('#updateConsignment').openModal({

@@ -1,35 +1,11 @@
 package org.gl.ceir.CeirPannelCode.Model;
 
 public class TypeApprovedStatusModel {
-		private String adminUserType,txnId;
+		private String adminUserType,txnId,remark;
 		private Integer adminUserId,adminApproveStatus,featureId;
-		
-		
-		
-		@Override
-		public String toString() {
-			return "TypeApprovedStatusModel [adminUserType=" + adminUserType + ", txnId=" + txnId + ", adminUserId="
-					+ adminUserId + ", adminApproveStatus=" + adminApproveStatus + ", featureId=" + featureId + "]";
-		}
-		
-		
-
-		public Integer getFeatureId() {
-			return featureId;
-		}
-
-
-
-		public void setFeatureId(Integer featureId) {
-			this.featureId = featureId;
-		}
-
-
-
 		public String getAdminUserType() {
 			return adminUserType;
 		}
-		
 		public void setAdminUserType(String adminUserType) {
 			this.adminUserType = adminUserType;
 		}
@@ -38,6 +14,12 @@ public class TypeApprovedStatusModel {
 		}
 		public void setTxnId(String txnId) {
 			this.txnId = txnId;
+		}
+		public String getRemark() {
+			return remark;
+		}
+		public void setRemark(String remark) {
+			this.remark = remark;
 		}
 		public Integer getAdminUserId() {
 			return adminUserId;
@@ -51,6 +33,35 @@ public class TypeApprovedStatusModel {
 		public void setAdminApproveStatus(Integer adminApproveStatus) {
 			this.adminApproveStatus = adminApproveStatus;
 		}
+		public Integer getFeatureId() {
+			return featureId;
+		}
+		public void setFeatureId(Integer featureId) {
+			this.featureId = featureId;
+		}
+		@Override
+		public String toString() {
+			StringBuilder builder = new StringBuilder();
+			builder.append("TypeApprovedStatusModel [adminUserType=");
+			builder.append(adminUserType);
+			builder.append(", txnId=");
+			builder.append(txnId);
+			builder.append(", remark=");
+			builder.append(remark);
+			builder.append(", adminUserId=");
+			builder.append(adminUserId);
+			builder.append(", adminApproveStatus=");
+			builder.append(adminApproveStatus);
+			builder.append(", featureId=");
+			builder.append(featureId);
+			builder.append("]");
+			return builder.toString();
+		}
+		
+		
+		
+		
+		
 		
 		
 }
