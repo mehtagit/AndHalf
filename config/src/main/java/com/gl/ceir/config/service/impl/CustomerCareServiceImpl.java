@@ -20,12 +20,14 @@ import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.factory.CustomerCareFactory;
 import com.gl.ceir.config.factory.CustomerCareRepo;
 import com.gl.ceir.config.factory.CustomerCareTarget;
+import com.gl.ceir.config.model.ConsignmentMgmt;
 import com.gl.ceir.config.model.CustomerCareDeviceState;
 import com.gl.ceir.config.model.CustomerCareRequest;
 import com.gl.ceir.config.model.DeviceUsageDb;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.PolicyBreachNotification;
+import com.gl.ceir.config.model.StockMgmt;
 import com.gl.ceir.config.model.constants.GenericMessageTags;
 import com.gl.ceir.config.repository.BlackListRepository;
 import com.gl.ceir.config.repository.DeviceDuplicateDbRepository;
@@ -34,6 +36,7 @@ import com.gl.ceir.config.repository.GreyListRepository;
 import com.gl.ceir.config.repository.GsmaBlacklistRepository;
 import com.gl.ceir.config.repository.PolicyBreachNotificationRepository;
 import com.gl.ceir.config.repository.TypeApproveRepository;
+import com.gl.ceir.config.repository.VipListRepository;
 import com.gl.ceir.config.util.Utility;
 
 @Service
@@ -61,6 +64,11 @@ public class CustomerCareServiceImpl {
 
 	@Autowired
 	DeviceUsageDbRepository deviceUsageDbRepository;
+	
+	@Autowired
+	ConsignmentServiceImpl consignmentServiceImpl;
+	@Autowired
+	StockServiceImpl stockServiceImpl;
 
 	public GenricResponse getAll(CustomerCareRequest customerCareRequest, String listType) {
 		String imei = customerCareRequest.getImei();
@@ -116,6 +124,18 @@ public class CustomerCareServiceImpl {
 			if(repository instanceof CustomerCareRepo) {
 				CustomerCareRepo customerCareRepo = (CustomerCareRepo)repository;
 				objectBytxnId = customerCareRepo.getByTxnId(customerCareDeviceState.getTxnId());
+				if(objectBytxnId instanceof ConsignmentMgmt) {
+					ConsignmentMgmt consignmentObj = (ConsignmentMgmt)objectBytxnId;
+					consignmentServiceImpl.setInterp(consignmentObj);
+					objectBytxnId = consignmentObj;
+				}
+				/*else if(objectBytxnId instanceof StockMgmt) {
+					StockMgmt consignmentObj = (StockMgmt)objectBytxnId;
+				}*/
+				else {
+					logger.info("customerCareRepo.getByTxnId returned non ConsignmentMgmt");
+				}
+				
 			}else {
 				if(repository instanceof BlackListRepository) {
 					BlackListRepository blackListRepository = (BlackListRepository)repository;
@@ -134,12 +154,18 @@ public class CustomerCareServiceImpl {
 					objectBytxnId = gsmaBlacklistRepository.getByDeviceid(customerCareDeviceState.getImei());
 				}
 				else if(repository instanceof TypeApproveRepository) { TypeApproveRepository
-					typeApproveRepository = (TypeApproveRepository)repository; objectBytxnId =
-					typeApproveRepository.getByTac(customerCareDeviceState.getImei().substring(0,7)); 
-				}else {
+					typeApproveRepository = (TypeApproveRepository)repository; 
+				    objectBytxnId = typeApproveRepository.getByTac(customerCareDeviceState.getImei().substring(0,8)); 
+				}
+				else if(repository instanceof VipListRepository ) {
+					VipListRepository vipListRepository = (VipListRepository) repository;
+					objectBytxnId = vipListRepository.findByImeiMsisdnIdentityImei(customerCareDeviceState.getImei());
+				}
+				else {
 					logger.info(GenericMessageTags.FEATURE_NOT_SUPPORTED.getMessage() +" txnId [" + customerCareDeviceState.getTxnId() + "]");
 					return new GenricResponse(2, GenericMessageTags.FEATURE_NOT_SUPPORTED.getTag(), GenericMessageTags.FEATURE_NOT_SUPPORTED.getMessage(), customerCareDeviceState.getTxnId());
 				}
+		
 
 			}
 			if(Objects.isNull(objectBytxnId)) {

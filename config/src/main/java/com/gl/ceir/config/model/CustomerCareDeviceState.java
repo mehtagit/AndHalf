@@ -66,19 +66,10 @@ public class CustomerCareDeviceState implements Serializable{
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("CustomerCareDeviceState [name=");
-		builder.append(name);
-		builder.append(", date=");
-		builder.append(date);
-		builder.append(", status=");
-		builder.append(status);
-		builder.append(", txnId=");
-		builder.append(txnId);
-		builder.append(", featureId=");
-		builder.append(featureId);
-		builder.append("]");
-		return builder.toString();
+		return "CustomerCareDeviceState [name=" + name + ", date=" + date + ", status=" + status + ", txnId=" + txnId
+				+ ", featureId=" + featureId + ", imei=" + imei + "]";
 	}
+
+	
 
 }

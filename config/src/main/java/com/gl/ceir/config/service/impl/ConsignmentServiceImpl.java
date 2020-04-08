@@ -803,7 +803,7 @@ public class ConsignmentServiceImpl {
 		return cmsb;
 	}
 
-	private void setInterp(ConsignmentMgmt consignmentMgmt) {
+	public void setInterp(ConsignmentMgmt consignmentMgmt) {
 		if(Objects.nonNull(consignmentMgmt.getExpectedArrivalPort()))
 			consignmentMgmt.setExpectedArrivalPortInterp(interpSetter.setConfigInterp(Tags.CUSTOMS_PORT, consignmentMgmt.getExpectedArrivalPort()));
 

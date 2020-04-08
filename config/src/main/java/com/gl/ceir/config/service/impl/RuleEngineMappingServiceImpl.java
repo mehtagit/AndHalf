@@ -60,7 +60,8 @@ public class RuleEngineMappingServiceImpl {
 	public GenricResponse updateById(RuleEngineMapping ruleEngineMapping){
 		try {
 			RuleEngineMapping ruleEngineMappingOld =  ruleEngineMappingRepository.getById(ruleEngineMapping.getId());
-			ruleEngineMappingOld.setId(ruleEngineMappingOld.getId());
+			logger.info("ruleEngineMappingOld : " + ruleEngineMappingOld);
+			ruleEngineMapping.setId(ruleEngineMappingOld.getId());
 			
 			ruleEngineMappingRepository.save(ruleEngineMapping);
 			

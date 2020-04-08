@@ -180,7 +180,7 @@ public class CustomerCareFactory {
 	}
 	
 	@SuppressWarnings("rawtypes")
-	public CustomerCareRepo getRepoByFeatureId(int featureId) {
+	public Object getRepoByFeatureId(int featureId) {
 
 		switch (featureId) {
 		

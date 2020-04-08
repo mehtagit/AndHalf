@@ -1,5 +1,7 @@
 package com.gl.ceir.config.controller;
 
+import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +59,21 @@ public class RuleEngineController {
 		MappingJacksonValue mapping = new MappingJacksonValue(ruleEngine);
 
 		logger.info("Response to send= " + mapping);
+
+		return mapping;
+	}
+	
+	@ApiOperation(value = "All rule name", response = RuleEngine.class)
+	@GetMapping("/all/rule-engine")
+	public MappingJacksonValue getFilteredData() {
+
+		MappingJacksonValue mapping = null;
+
+		logger.info("Request to view all rule engine");
+		List<RuleEngine> ruleEngine =  ruleEngineServiceImpl.allRuleNames();
+		mapping = new MappingJacksonValue(ruleEngine);
+
+		logger.info("Response of view Request = " + mapping);
 
 		return mapping;
 	}

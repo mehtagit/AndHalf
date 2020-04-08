@@ -12,7 +12,7 @@ import com.gl.ceir.config.model.ResponseCountAndQuantity;
 import com.gl.ceir.config.model.TypeApprovedDb;
 
 
-public interface TypeApproveRepository extends JpaRepository<TypeApprovedDb, Long>, JpaSpecificationExecutor<TypeApprovedDb>, CustomerCareRepo<TypeApprovedDb>{
+public interface TypeApproveRepository extends JpaRepository<TypeApprovedDb, Long>, JpaSpecificationExecutor<TypeApprovedDb>{
 
 	public TypeApprovedDb save(TypeApprovedDb typeApprovedDb);
 	public TypeApprovedDb findById(long id);

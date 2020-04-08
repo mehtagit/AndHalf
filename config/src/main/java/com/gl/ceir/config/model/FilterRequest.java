@@ -47,6 +47,16 @@ public class FilterRequest {
 	
 	private String ruleName;
 	
+	private String remark;
+	
+	
+	
+	public String getRemark() {
+		return remark;
+	}
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
 	public String getRuleName() {
 		return ruleName;
 	}

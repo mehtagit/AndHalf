@@ -7,8 +7,10 @@ import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.transaction.Transactional;
@@ -44,6 +46,7 @@ import com.gl.ceir.config.model.StolenOrganizationUserDB;
 import com.gl.ceir.config.model.StolenandRecoveryMgmt;
 import com.gl.ceir.config.model.SystemConfigListDb;
 import com.gl.ceir.config.model.SystemConfigurationDb;
+import com.gl.ceir.config.model.User;
 import com.gl.ceir.config.model.UserProfile;
 import com.gl.ceir.config.model.WebActionDb;
 import com.gl.ceir.config.model.constants.ConsignmentStatus;
@@ -67,6 +70,7 @@ import com.gl.ceir.config.repository.StolenAndRecoveryRepository;
 import com.gl.ceir.config.repository.StolenIndividualUserRepository;
 import com.gl.ceir.config.repository.StolenOrganizationUserRepository;
 import com.gl.ceir.config.repository.UserProfileRepository;
+import com.gl.ceir.config.repository.UserRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
 import com.gl.ceir.config.specificationsbuilder.GenericSpecificationBuilder;
 import com.gl.ceir.config.transaction.StolenAndRecoveryTransaction;
@@ -128,6 +132,9 @@ public class StolenAndRecoveryServiceImpl {
 
 	@Autowired
 	StolenAndRecoveryTransaction stolenAndRecoveryTransaction;
+	
+	@Autowired
+	UserRepository userRepository;
 
 	public GenricResponse uploadDetails(StolenandRecoveryMgmt stolenandRecoveryMgmt) {
 
@@ -302,11 +309,14 @@ public class StolenAndRecoveryServiceImpl {
 			 * info("Usertype in request is must when ceir admin is logged in to the system."
 			 * );
 			 */
+			if(Objects.nonNull(filterRequest.getConsignmentStatus())) {
+				
+			}
 		}else if(!"Lawful Agency".equalsIgnoreCase(filterRequest.getUserType())) {
 			if(Objects.nonNull(filterRequest.getUserId()))
 				srsb.with(new SearchCriteria("userId", filterRequest.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));
 		}
-
+		
 		if(Objects.nonNull(filterRequest.getStartDate()) && !filterRequest.getStartDate().isEmpty())
 			srsb.with(new SearchCriteria("createdOn", filterRequest.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
 
@@ -524,24 +534,27 @@ public class StolenAndRecoveryServiceImpl {
 
 		try {
 			StolenandRecoveryMgmt stolenandRecoveryMgmtInfo = stolenAndRecoveryRepository.getById(filterRequest.getId());
-
+			if(Objects.isNull(filterRequest.getRemark())) {
+				return new GenricResponse(5,"Remarks Missing", filterRequest.getTxnId());
+			}
 			if(Objects.isNull(stolenandRecoveryMgmtInfo)) {
 				return new GenricResponse(4,"TxnId Does Not exist", filterRequest.getTxnId());
 			}else {
-				if(filterRequest.getUserType().equalsIgnoreCase("Lawful Agency") || filterRequest.getUserType().equalsIgnoreCase("Operator")) {
+				if("Lawful Agency".equalsIgnoreCase(filterRequest.getUserType()) || "Operator".equalsIgnoreCase(filterRequest.getUserType())) {
 					if(stolenandRecoveryMgmtInfo.getFileStatus()==0 || stolenandRecoveryMgmtInfo.getFileStatus()==3 || stolenandRecoveryMgmtInfo.getFileStatus()==4) {
 						//set file status =7
 						stolenandRecoveryMgmtInfo.setFileStatus(7);//withdrawn by user 
+						stolenandRecoveryMgmtInfo.setRemark(filterRequest.getRemark());
 					}
 					else {
 						return new GenricResponse(2,"State transaction not allowed", filterRequest.getTxnId());
 					}
-				}else if(filterRequest.getUserType().equalsIgnoreCase("CEIRAdmin")){
+				}else if("CEIRAdmin".equalsIgnoreCase(filterRequest.getUserType())){
 					//set file status =6
 					stolenandRecoveryMgmtInfo.setFileStatus(6);//withdrawn by CEIR Admin 
-						
+					stolenandRecoveryMgmtInfo.setRemark(filterRequest.getRemark());
 				}else {
-					return new GenricResponse(2,"Operation not allowed", filterRequest.getTxnId());
+					return new GenricResponse(3,"Operation not allowed", filterRequest.getTxnId());
 				}
 				stolenAndRecoveryRepository.save(stolenandRecoveryMgmtInfo);
 				return new GenricResponse(0,"Record Delete Sucessfully", filterRequest.getTxnId());
@@ -685,11 +698,16 @@ public class StolenAndRecoveryServiceImpl {
 	public GenricResponse acceptReject(ConsignmentUpdateRequest consignmentUpdateRequest) {
 		try {
 			UserProfile userProfile = null;
+			Map<String, String> placeholderMap1 = null;
 			StolenandRecoveryMgmt stolenandRecoveryMgmt = stolenAndRecoveryRepository.getByTxnId(consignmentUpdateRequest.getTxnId());
 
 			// Fetch user_profile to update user over mail/sms regarding the action.
 			userProfile = userProfileRepository.getByUserId(consignmentUpdateRequest.getUserId());
+			
+			User user = userRepository.getById(consignmentUpdateRequest.getUserId());
 
+			logger.info("User is " + user);
+			
 			if(Objects.isNull(stolenandRecoveryMgmt)) {
 				String message = "TxnId Does not Exist";
 				logger.info(message + " " + consignmentUpdateRequest.getTxnId());
@@ -752,6 +770,10 @@ public class StolenAndRecoveryServiceImpl {
 					logger.warn("Unable to update Stolen and recovery entity.");
 					return new GenricResponse(3, "Unable to update Stolen and recovery entity.", consignmentUpdateRequest.getTxnId());
 				}else {
+					placeholderMap1 = new HashMap<>();
+					placeholderMap1.put("<first name>", userProfile.getFirstName());
+					placeholderMap1.put("<txn_name>", txnId);
+					
 					emailUtil.saveNotification(mailTag, 
 							userProfile, 
 							consignmentUpdateRequest.getFeatureId(),
@@ -759,9 +781,68 @@ public class StolenAndRecoveryServiceImpl {
 							action,
 							consignmentUpdateRequest.getTxnId(),
 							txnId,
-							null,
-							null,
-							null);
+							placeholderMap1,
+							"CEIRADMIN",
+							user.getUsertype().getUsertypeName());
+					logger.info("Notfication have been saved.");
+				}
+			}else if("CEIRSYSTEM".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())){
+				String mailTag = null;
+				String action = null;
+				String txnId = null;
+
+				if(consignmentUpdateRequest.getAction() == 0) {
+					action = SubFeatures.ACCEPT;
+
+					if(consignmentUpdateRequest.getRequestType() == 0) {
+						mailTag = "STOLEN_PROCESSED_SUCESSFULLY";
+						txnId = stolenandRecoveryMgmt.getTxnId();
+					}else if(consignmentUpdateRequest.getRequestType() == 1){
+						mailTag = "RECOVERY_PROCESSED_SUCESSFULLY";
+						txnId =  stolenandRecoveryMgmt.getTxnId();
+					}else {
+						logger.warn("unknown request type received for stolen and recovery.");
+					}
+
+					stolenandRecoveryMgmt.setFileStatus(StolenStatus.PENDING_APPROVAL_FROM_CEIR_ADMIN.getCode());
+
+				}else {
+					action = SubFeatures.REJECT;
+
+					if(consignmentUpdateRequest.getRequestType() == 0){
+						mailTag = "STOLEN_PROCESSED_FAILED";
+						txnId =  stolenandRecoveryMgmt.getTxnId();
+					}else if(consignmentUpdateRequest.getRequestType() == 1){
+						mailTag = "RECOVERY_PROCESSED_FAILED";
+						txnId =  stolenandRecoveryMgmt.getTxnId();
+					}else {
+						logger.warn("unknown request type received for stolen and recovery.");
+						return new GenricResponse(2, "unknown request type received for stolen and recovery.", consignmentUpdateRequest.getTxnId());
+					}
+
+					stolenandRecoveryMgmt.setFileStatus(StolenStatus.REJECTED_BY_SYSTEM.getCode());
+					stolenandRecoveryMgmt.setRemark(consignmentUpdateRequest.getRemarks());
+
+				}
+
+				if(!stolenAndRecoveryTransaction.updateStatusWithHistory(stolenandRecoveryMgmt)) {
+					logger.warn("Unable to update Stolen and recovery entity.");
+					return new GenricResponse(3, "Unable to update Stolen and recovery entity.", consignmentUpdateRequest.getTxnId());
+				}else {
+					placeholderMap1 = new HashMap<>();
+					placeholderMap1.put("<first name>", userProfile.getFirstName());
+					placeholderMap1.put("<txn_name>", txnId);
+					
+					emailUtil.saveNotification(mailTag, 
+							userProfile, 
+							consignmentUpdateRequest.getFeatureId(),
+							Features.STOLEN_RECOVERY,
+							action,
+							consignmentUpdateRequest.getTxnId(),
+							txnId,
+							placeholderMap1,
+							"CEIRSYSTEM",
+							user.getUsertype().getUsertypeName());
 					logger.info("Notfication have been saved.");
 				}
 			}else {

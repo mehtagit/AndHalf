@@ -1,5 +1,6 @@
 package com.gl.ceir.config.service.impl;
 
+import java.util.List;
 import java.util.Objects;
 
 import org.apache.logging.log4j.LogManager;
@@ -80,6 +81,19 @@ public class RuleEngineServiceImpl {
 			Page<RuleEngine> page = ruleEngineRepository.findAll( buildSpecification(filterRequest).build(), pageable );
 
 			return page;
+
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
+
+	}
+	
+	public List<RuleEngine> allRuleNames() {
+
+		try {
+			
+			return ruleEngineRepository.findAll();
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);

@@ -8,7 +8,7 @@ import com.gl.ceir.config.model.BlackList;
 import com.gl.ceir.config.model.ImeiMsisdnIdentity;
 
 @Repository
-public interface BlackListRepository extends JpaRepository<BlackList, ImeiMsisdnIdentity> , CustomerCareRepo<BlackList>{
+public interface BlackListRepository extends JpaRepository<BlackList, ImeiMsisdnIdentity> {
 	
 	public BlackList findByImeiMsisdnIdentityMsisdn(Long msisdn);
 

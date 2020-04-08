@@ -7,8 +7,7 @@ import com.gl.ceir.config.factory.CustomerCareRepo;
 import com.gl.ceir.config.model.GreylistDb;
 
 public interface GreyListRepository extends JpaRepository<GreylistDb, Long>, 
-JpaSpecificationExecutor<GreylistDb>,
-CustomerCareRepo<GreylistDb>{
+JpaSpecificationExecutor<GreylistDb>{
 	
 	public GreylistDb findByImei(String imei);
 	public void deleteByImei(String imei);
