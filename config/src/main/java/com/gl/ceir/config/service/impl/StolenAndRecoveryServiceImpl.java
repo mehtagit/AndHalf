@@ -764,6 +764,61 @@ public class StolenAndRecoveryServiceImpl {
 							null);
 					logger.info("Notfication have been saved.");
 				}
+			}else if("CEIRSYSTEM".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())){
+				String mailTag = null;
+				String action = null;
+				String txnId = null;
+
+				if(consignmentUpdateRequest.getAction() == 0) {
+					action = SubFeatures.ACCEPT;
+
+					if(consignmentUpdateRequest.getRequestType() == 0) {
+						mailTag = "STOLEN_PROCESSED_SUCESSFULLY";
+						txnId = stolenandRecoveryMgmt.getTxnId();
+					}else if(consignmentUpdateRequest.getRequestType() == 1){
+						mailTag = "RECOVERY_PROCESSED_SUCESSFULLY";
+						txnId =  stolenandRecoveryMgmt.getTxnId();
+					}else {
+						logger.warn("unknown request type received for stolen and recovery.");
+					}
+
+					stolenandRecoveryMgmt.setFileStatus(StolenStatus.PENDING_APPROVAL_FROM_CEIR_ADMIN.getCode());
+
+				}else {
+					action = SubFeatures.REJECT;
+
+					if(consignmentUpdateRequest.getRequestType() == 0){
+						mailTag = "STOLEN_PROCESSED_FAILED";
+						txnId =  stolenandRecoveryMgmt.getTxnId();
+					}else if(consignmentUpdateRequest.getRequestType() == 1){
+						mailTag = "RECOVERY_PROCESSED_FAILED";
+						txnId =  stolenandRecoveryMgmt.getTxnId();
+					}else {
+						logger.warn("unknown request type received for stolen and recovery.");
+						return new GenricResponse(2, "unknown request type received for stolen and recovery.", consignmentUpdateRequest.getTxnId());
+					}
+
+					stolenandRecoveryMgmt.setFileStatus(StolenStatus.REJECTED_BY_SYSTEM.getCode());
+					stolenandRecoveryMgmt.setRemark(consignmentUpdateRequest.getRemarks());
+
+				}
+
+				if(!stolenAndRecoveryTransaction.updateStatusWithHistory(stolenandRecoveryMgmt)) {
+					logger.warn("Unable to update Stolen and recovery entity.");
+					return new GenricResponse(3, "Unable to update Stolen and recovery entity.", consignmentUpdateRequest.getTxnId());
+				}else {
+					emailUtil.saveNotification(mailTag, 
+							userProfile, 
+							consignmentUpdateRequest.getFeatureId(),
+							Features.STOLEN_RECOVERY,
+							action,
+							consignmentUpdateRequest.getTxnId(),
+							txnId,
+							null,
+							null,
+							null);
+					logger.info("Notfication have been saved.");
+				}
 			}else {
 				logger.warn("Accept/reject of Stock not allowed to you.");
 				new GenricResponse(1, "Operation not Allowed", consignmentUpdateRequest.getTxnId());
