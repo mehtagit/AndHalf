@@ -401,10 +401,10 @@ public class ConfigurationManagementServiceImpl {
 			String subFeature, String featureTxnId, String subject, int retryCount, String referTable, String roleType, String receiverUserType) {
 		try {
 
-			notificationRepository.save(new Notification(channelType, message, userId, featureId, featureName, 
+			Notification notification = notificationRepository.save(new Notification(channelType, message, userId, featureId, featureName, 
 					subFeature, featureTxnId, subject, retryCount, referTable, roleType, receiverUserType));
 
-			return new GenricResponse(0, "Notification have been saved Sucessfully", "");
+			return new GenricResponse(0, "Notification have been saved Sucessfully", Long.toString(notification.getId()));
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());

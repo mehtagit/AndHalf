@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
@@ -28,7 +29,9 @@ public class StolenIndividualUserDB implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY) 
+	// @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IND_SEQ")
+    @SequenceGenerator(sequenceName = "stolen_ind_seq", allocationSize = 1, name = "IND_SEQ")
 	private Long id;
 
 	@CreationTimestamp

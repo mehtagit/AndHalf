@@ -18,6 +18,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 
+import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.MessageConfigurationDb;
 import com.gl.ceir.config.model.Notification;
 import com.gl.ceir.config.model.RawMail;
@@ -109,9 +110,11 @@ public class EmailUtil {
 				}
 			}
 			// Save email in notification table.
-			configurationManagementServiceImpl.saveNotification(ChannelType.EMAIL, message, 
+			GenricResponse genricResponse = configurationManagementServiceImpl.saveNotification(ChannelType.EMAIL, message, 
 					userProfile.getUser().getId(), featureId, featureName, subFeature, featureTxnId, 
 					messageDB.getSubject().replace("<XXX>", txnId), 0, null, roleType, receiverUserType);
+			
+			logger.info("A new notification with id [" + genricResponse.getTxnId() + "] is saved.");
 
 			return Boolean.TRUE;
 		}catch (Exception e) {
