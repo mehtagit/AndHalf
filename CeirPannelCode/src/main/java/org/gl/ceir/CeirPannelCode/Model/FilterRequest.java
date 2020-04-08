@@ -386,6 +386,8 @@ public class FilterRequest {
 	public void setRoleTypeId(int roleTypeId) {
 		this.roleTypeId = roleTypeId;
 	}
+	
+	
 	public String getRemark() {
 		return remark;
 	}
@@ -526,6 +528,7 @@ public class FilterRequest {
 		builder.append("]");
 		return builder.toString();
 	}
+	
 	
 	
 	

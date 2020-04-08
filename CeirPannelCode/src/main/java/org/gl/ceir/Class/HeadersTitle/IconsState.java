@@ -1091,6 +1091,16 @@ public class IconsState {
 			download="<a onclick="+downloadURL+"  class="+disableIconClass+"><i class="
 					+disableDownloadIcon+" aria-hidden=\"true\" title="
 					+downloadIconTitle+" ></i></a>";
+		}else if(("7".equals(status) || "6".equals(status)) && "Approved".equals(userStatus)) {
+			error="<a onclick="+errorURL+" class="+disableIconClass+"><i class="+disableErrorIcon+" aria-hidden=\"true\" title="
+					+errorIconTitle+" ></i></a>";
+			edit="<a onclick="+editAction+" class="+disableIconClass+"><i class="
+					+disableEditIcon+" aria-hidden=\"true\"  title="
+					+editIconTitle+"></i></a>"; 
+			delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\" ><i class="
+					+disableDeletionIcon+" aria-hidden=\"true\"  title="
+					+deleteIconTitle+"></i></a>"; 
+
 		}
 
 
@@ -1505,7 +1515,7 @@ public class IconsState {
 		}else if(("0".equals(status)) && "Approved".equals(userStatus)) {
 			error="<a onclick="+errorURL+" class="+disableIconClass+"><i  class="+disableErrorIcon+" aria-hidden=\"true\" title="
 					+errorIconTitle+"  ></i></a>"; 
-		}else if(("1".equals(status) || "2".equals(status)) && "Approved".equals(userStatus)) {
+		}else if(("1".equals(status) || "2".equals(status) || "6".equals(status) || "7".equals(status)) && "Approved".equals(userStatus)) {
 			error="<a onclick="+errorURL+" class="+disableIconClass+"><i class="+disableErrorIcon+" aria-hidden=\"true\" title="
 					+errorIconTitle+" ></i></a>";
 			edit="<a onclick="+editAction+" class="+disableIconClass+"><i class="
@@ -2065,6 +2075,7 @@ public class IconsState {
 		return action;
 
 	}
+
 	/********************************** Icons for Rule List**********************************/ 
 
 	public String ruleListIcons(String id) { 
@@ -2081,6 +2092,29 @@ public class IconsState {
 
 
 		String action=edit;
+		return action;
+
+	}
+	
+	
+	/********************************** Icons for Rule Feature Mapping List**********************************/ 
+
+	public String ruleFeatureMappingIcons(String id) { 
+		executePostConstruct();
+
+		String editAction= "getDetailBy('"+id+"')";
+		String deleteAction ="DeleteByID('"+id+"')";
+		// state related Code 
+
+
+		String edit="<a onclick="+editAction+"><i class="
+				+editIcon+" aria-hidden=\"true\"  title="
+				+editIconTitle+"></i></a>"; 
+		String delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
+				+deletionIcon+" aria-hidden=\"true\"  title="
+				+deleteIconTitle+"></i></a>";
+
+		String action=edit.concat(delete);
 		return action;
 
 	}
@@ -2105,6 +2139,65 @@ public class IconsState {
 		return action;
 
 	}
+	
+	/********************************** Icons for custom **********************************/ 
+
+	public String consignmentDRTState(String fileName,String txnId ,String status,String userStatus,String displayName) {
+
+		// URL link 
+		// call post construct
+		executePostConstruct();
+		String emptyURL="JavaScript:void(0);"; 
+		//String downloadURL = "./dowloadFiles/actual/"+fileName.replace(" ", "%20")+"/"+txnId+"/"+defaultTagName+"";
+		String downloadURL = "fileDownload('"+fileName.replace(" ", "%20")+"','actual','"+txnId+"','"+defaultTagName+"')";
+		String viewAction="viewConsignmentDetails('"+txnId+"')"; 
+		String approveAction = "openDRTPopUp('" + txnId + "','"+displayName.replaceAll( " ", "+20")+ "')";
+
+		/* String escapedString = queryParser.escape(approveAction); */
+		String rejectAction = "openDisapprovePopup('"+txnId+"','"+displayName.replaceAll( " ", "+20")+"')";
+
+
+		// state related Code 
+		String download="<a onclick="+downloadURL+" ><i class="
+				+downloadIcon+" aria-hidden=\"true\"  title="
+				+downloadIconTitle+" ></i></a>"; 
+
+		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+				+viewIconTitle+" ></i></a>";
+
+		String approve = "<a onclick="+approveAction+"><i class="+approveIcon+" aria-hidden=\"true\" title="
+				+approveIconTitle+" ></i></a>";   
+
+
+		String reject = "<a onclick="+rejectAction+"><i class="+rejectIcon+" aria-hidden=\"true\" title="
+				+rejectIconTitle+" ></i></a>";
+
+		if("6".equals(status) || "7".equals(status) || "9".equals(status) && "Approved".equals(userStatus) ) {
+			approve = "<a onclick="+approveAction+" class="+disableIconClass+"><i class="+disableApproveIcon+" aria-hidden=\"true\" title="
+					+approveIconTitle+" ></i></a>";
+			reject = "<a onclick="+rejectAction+" class="+disableIconClass+"><i class="+disableRejectIcon+" aria-hidden=\"true\" title="
+					+rejectIconTitle+" ></i></a>";
+
+
+		}
+
+		else if("Disable".equals(userStatus)) {
+			log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
+			approve = "<a onclick="+approveAction+" class=\"eventNone\"><i class="+disableApproveIcon+" aria-hidden=\"true\" title="
+					+approveIconTitle+" ></i></a>";
+			reject = "<a onclick="+rejectAction+" class=\"eventNone\"><i class="+disableRejectIcon+" aria-hidden=\"true\" title="
+					+rejectIconTitle+" ></i></a>";
+			download="<a onclick="+downloadURL+"  class="+disableIconClass+"><i class="
+					+downloadIcon+" aria-hidden=\"true\"  title="
+					+downloadIconTitle+" ></i></a>"; 
+
+		}
+
+
+		String action=download.concat(view).concat(approve).concat(reject);	
+		return action;
+	}
+	
 	@PostConstruct
 	public void executePostConstruct() {
 		errorIconTitle=Translator.toLocale("titles.Error_File");

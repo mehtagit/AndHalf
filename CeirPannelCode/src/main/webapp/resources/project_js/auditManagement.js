@@ -19,12 +19,9 @@ var role = currentRoleType == null ? roleType : currentRoleType;
 
 function auditManagementDatatable(){
 	
-	var roleDropDown =  document.getElementById("roleType");
-	var userTypeInterp = roleDropDown.options[roleDropDown.selectedIndex].text;
-	var userType = $('#roleType').val()=='' ? null : userTypeInterp;
-	
-	var feature = document.getElementById("feature");
-	var featureName = feature.options[feature.selectedIndex].text;
+	var userType = $('#roleType').val() == null ? null : $("#roleType option:selected").text();
+	var featureName = $('#feature').val() == null ? null : $("#feature option:selected").text();
+	var subFeature = $('#subFeature').val() == null ? null : $("#subFeature option:selected").text();
 	
 	var filterRequest={
 			
@@ -37,7 +34,7 @@ function auditManagementDatatable(){
 			"endDate" : $("#endDate").val(),
 			"txnId" : $("#transactionID").val(),
 			"featureName" : featureName,
-			"subFeatureName" : $("#subFeature").val(),
+			"subFeatureName" : subFeature,
 			"userName" : $("#userName").val()
 			
 			
@@ -167,6 +164,12 @@ function setAllDropdown(){
 	$.getJSON('./getAllfeatures', function(data) {
 		for (i = 0; i < data.length; i++) {
 		$('<option>').val(data[i].id).text(data[i].name).appendTo('#feature');
+		}
+	});
+	
+	$.getJSON('./getsubfeatures', function(data) {
+		for (i = 0; i < data.length; i++) {
+		$('<option>').val(data[i].id).text(data[i].name).appendTo('#subFeature');
 		}
 	});
 }

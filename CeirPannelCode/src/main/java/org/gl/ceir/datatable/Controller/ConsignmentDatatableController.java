@@ -294,7 +294,7 @@ public class ConsignmentDatatableController {
 			}
 		
 			
-			else if("Custom".equals(userType) || "DRT".equals(userType)) {
+			else if("Custom".equals(userType)) {
 				for(ConsignmentContent dataInsideList : paginationContentList) 
 				{
 				UserModel userModel = dataInsideList.getUser();
@@ -334,6 +334,29 @@ public class ConsignmentDatatableController {
 				String action=iconState.adminState(dataInsideList.getFileName(), txnId, statusOfConsignment,userStatus,displayName);
 				
 				
+				String[] finalData={createdOn,txnId,displayName,consignmentStatusName,taxPaidStatusName,quantity,action}; 
+					List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
+					finalList.add(finalDataList);
+					datatableResponseModel.setData(finalList);
+				}
+			}else if("DRT".equals(userType)) {
+				for(ConsignmentContent dataInsideList : paginationContentList) 
+				{
+				UserModel userModel = dataInsideList.getUser();
+				UserProfileModel userprofileModel = userModel.getUserProfile();
+				String createdOn= dataInsideList.getCreatedOn();
+				String txnId = dataInsideList.getTxnId(); 
+				String displayName = userprofileModel.getDisplayName();
+				String statusOfConsignment = String.valueOf(dataInsideList.getConsignmentStatus());
+				String consignmentStatusName = dataInsideList.getStateInterp();
+				String taxPaidStatus= String.valueOf(dataInsideList.getTaxPaidStatus());
+				String taxPaidStatusName=dataInsideList.getTaxInterp();
+				String userStatus = (String) session.getAttribute("userStatus");
+				String quantity = String.valueOf(dataInsideList.getQuantity());
+				String action=iconState.consignmentDRTState(dataInsideList.getFileName(), txnId, statusOfConsignment,userStatus,displayName);
+				
+				
+			
 				String[] finalData={createdOn,txnId,displayName,consignmentStatusName,taxPaidStatusName,quantity,action}; 
 					List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 					finalList.add(finalDataList);

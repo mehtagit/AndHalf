@@ -81,14 +81,17 @@ FeignCleintImplementation feignCleintImplementation;
 	public ModelAndView pageView(@RequestParam(name="via", required = false) String via,@RequestParam(name="NID", required = false) String NID,HttpSession session
 			,@RequestParam(name="txnID",required = false) String txnID) {
 		ModelAndView modelAndView = new ModelAndView();
-		if(session.getAttribute("usertype").equals("CEIRAdmin") && !("other".equals(via))) {
+		if((session.getAttribute("usertype").equals("CEIRAdmin") || session.getAttribute("usertype").equals("DRT")) && !("other".equals(via))) {
 			modelAndView.setViewName("uploadPaidStatus");
+			
 		}
 		else if("other".equals(via)) {
 			modelAndView.setViewName("uploadPaidStatus");
+		
 		}
 		else {
 			modelAndView.setViewName("nidForm");
+		
 		}
 		return modelAndView;
 	}
