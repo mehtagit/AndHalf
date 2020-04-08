@@ -1,6 +1,30 @@
 /**
  * 
  */
+populateCountries("singleDevicecountry", "singleDevicestate");
+	populateStates("singleDevicecountry", "singleDevicestate");
+
+	populateCountries("country", "state");
+	populateStates("country", "state");
+	
+	
+setTimeout(function(){
+
+	$('.datepick').datepicker({
+		dateFormat : "yy-mm-dd"
+	});
+
+	$('#stolenDatePeriodedit').datepicker({
+		dateFormat : "yy-mm-dd"
+	});
+
+	var input = document.querySelector("#singleStolenphone1");
+	window.intlTelInput(input, {
+		utilsScript : "${context}/resources/js/utils.js",
+	});
+	$('#singleStolenphone1').val(window.xop);
+}, 1000);
+
 
 
 $(document).ready(function() {
@@ -9,6 +33,7 @@ $(document).ready(function() {
 	viewIndivisualStolen();
 
 });
+
 
 
 function viewIndivisualStolen()
@@ -64,7 +89,7 @@ function viewIndivisualStolen()
 			setInterval(InputChangeListener2, 300);
 
 
-
+			//	alert(response.stolenIndividualUserDB.country);
 			window.xop=response.stolenIndividualUserDB.alternateContactNumber;
 			$('#singleStolenphone1').val(response.stolenIndividualUserDB.alternateContactNumber);
 
@@ -90,8 +115,8 @@ function viewIndivisualStolen()
 			$('#singleStolendeviceType').val(response.stolenIndividualUserDB.deviceType);
 			$('#singleStolenmodalNumber').val(response.stolenIndividualUserDB.modelNumber);
 			/*$('#singleStolenFileName').val(response.fileName);*/
-			window.xop2=response.stolenIndividualUserDB.alternateContactNumber;
-			//$('#singleStolenphone2').val(response.stolenIndividualUserDB.alternateContactNumber);
+			window.xop2=response.stolenIndividualUserDB.contactNumber;
+			$('#singleStolenphone2').val(response.stolenIndividualUserDB.contactNumber);
 			$('#singleStolenOperator').val(response.stolenIndividualUserDB.operator);
 			$('#singleStolenSimStatus').val(response.stolenIndividualUserDB.multiSimStatus);
 			$('#singleStolenComplaintType').val(response.complaintType);
@@ -164,7 +189,7 @@ function updateIndivisualStolen()
 	var singleStolenpin=$('#singleStolenpin').val();
 	var country=$('#country').val();
 	var state=$('#state').val();
-	var blockingTimePeriod=$('#stolenDatePeriod').val();
+	var blockingTimePeriod=$('#stolenDatePeriodedit').val();
 	var blockingType =$('.blocktypeRadio:checked').val();
 
 
@@ -390,6 +415,9 @@ function viewPageType() {
 		$("#uploadFirSingle").css("display", "none");
 		$("#sampleFileLink").css("display", "none");
 		// alert(stolenIndivisual);
+		$("#IndivisualUpdateStolen").css("display", "none");
+   		$(".star").css("display", "none");
+		
 		$("#SingleForm").find("input,select,textarea,button").prop(
 				"disabled", true);
 	} else {
@@ -401,58 +429,34 @@ function viewPageType() {
 
 }
 
+
+
+
+
+
+
+populateCountries("country2", "state2");
+populateStates("country2", "state2");
+
+populateCountries("country3", "state3");
+populateStates("country3", "state3");
+
+
 setTimeout(function(){
-	populateCountries("singleDevicecountry", "singleDevicestate");
-	populateStates("singleDevicecountry", "singleDevicestate");
 
-	populateCountries("country", "state");
-	populateStates("country", "state");
 
-	populateCountries("country2", "state2");
-	populateStates("country2", "state2");
-
-	populateCountries("country3", "state3");
-	populateStates("country3", "state3");
-
+	
 
 
 	$('.datepick').datepicker({
 		dateFormat : "yy-mm-dd"
 	});
 
-	var input = document.querySelector("#singleStolenphone1");
-	window.intlTelInput(input, {
-		utilsScript : "${context}/resources/js/utils.js",
-	});
-	$('#singleStolenphone1').val(window.xop);
-}, 1000);
-
-
-
-
-
-
-
-
-
-setTimeout(function(){
-	populateCountries("singleDevicecountry", "singleDevicestate");
-	populateStates("singleDevicecountry", "singleDevicestate");
-
-	populateCountries("country", "state");
-	populateStates("country", "state");
-
-	populateCountries("country2", "state2");
-	populateStates("country2", "state2");
-
-	populateCountries("country3", "state3");
-	populateStates("country3", "state3");
-
-
-	$('.datepick').datepicker({
+	$('#stolenDatePeriodedit').datepicker({
 		dateFormat : "yy-mm-dd"
 	});
 
+	
 	var input = document.querySelector("#singleStolenphone2");
 	window.intlTelInput(input, {
 		utilsScript : "${context}/resources/js/utils.js",

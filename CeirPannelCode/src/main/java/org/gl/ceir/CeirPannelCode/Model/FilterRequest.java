@@ -4,9 +4,10 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class FilterRequest {
-	public String startDate,endDate,createdOn,modifiedOn,roleType,userType,txnId,searchString,grievanceId,tag,remarks,deviceId,nid,childTag,field,interp,tagId,value,displayName,description,address,featureName,subFeatureName,userName,date,fileName,invoiceNumber,suplierName,supplierId,stateInterp,alertId;
+	public String startDate,endDate,createdOn,modifiedOn,roleType,userType,txnId,searchString,grievanceId,tag,remarks,deviceId,nid,childTag,field,interp,tagId,value,displayName,description,address,featureName,subFeatureName,userName,date,fileName,invoiceNumber,suplierName,supplierId,stateInterp,alertId,remark;
 	private Integer pageNo, pageSize,userId,taxPaidStatus,consignmentStatus,featureId,userTypeId,fileStatus,requestType,sourceType,grievanceStatus,userRoleTypeId,status,asType,serviceDump,fileType,action,operatorTypeId,channel,type,deviceIdType,parentValue,id,port,currency,quantity,stockStatus,feature,period;
 	private Double dollar,riel;
+	private int roleTypeId;
 	public String getStartDate() {
 		return startDate;
 	}
@@ -379,6 +380,20 @@ public class FilterRequest {
 	public void setRiel(Double riel) {
 		this.riel = riel;
 	}
+	public int getRoleTypeId() {
+		return roleTypeId;
+	}
+	public void setRoleTypeId(int roleTypeId) {
+		this.roleTypeId = roleTypeId;
+	}
+	
+	
+	public String getRemark() {
+		return remark;
+	}
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -444,6 +459,8 @@ public class FilterRequest {
 		builder.append(stateInterp);
 		builder.append(", alertId=");
 		builder.append(alertId);
+		builder.append(", remark=");
+		builder.append(remark);
 		builder.append(", pageNo=");
 		builder.append(pageNo);
 		builder.append(", pageSize=");
@@ -506,8 +523,13 @@ public class FilterRequest {
 		builder.append(dollar);
 		builder.append(", riel=");
 		builder.append(riel);
+		builder.append(", roleTypeId=");
+		builder.append(roleTypeId);
 		builder.append("]");
 		return builder.toString();
 	}
+	
+	
+	
 	
 }

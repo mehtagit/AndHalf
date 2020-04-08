@@ -17,23 +17,21 @@ import org.gl.ceir.configuration.Translator;
 import org.gl.ceir.pageElement.model.Button;
 import org.gl.ceir.pageElement.model.InputFields;
 import org.gl.ceir.pageElement.model.PageElement;
-import org.gl.ceir.pagination.model.AlertContentModel;
-import org.gl.ceir.pagination.model.AlertPaginationModel;
-import org.gl.ceir.pagination.model.RunningAlertContent;
-import org.gl.ceir.pagination.model.RunningAlertPagination;
+import org.gl.ceir.pagination.model.IPLogContentModel;
+import org.gl.ceir.pagination.model.IPLogPaginationModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
 
 @RestController
-public class RunningAlertDatatable {
+public class IPLogManagementDatatable {
+	
 	private final Logger log = LoggerFactory.getLogger(getClass());
 	String className = "emptyClass";
 	@Autowired
@@ -49,12 +47,12 @@ public class RunningAlertDatatable {
 	@Autowired
 	UserProfileFeignImpl userProfileFeignImpl;
 	@Autowired
-	RunningAlertContent runningAlertContent;
+	IPLogContentModel iPLogContentModel;
 	@Autowired
-	RunningAlertPagination runningAlertPagination;
+	IPLogPaginationModel iPLogPaginationModel;
 	
-	@PostMapping("runningAlertManagementData")
-	public ResponseEntity<?> viewRunningAlertsRecord(@RequestParam(name="type",defaultValue = "runningAlertManagement",required = false) String role, HttpServletRequest request,HttpSession session) {
+	@PostMapping("iPLogManagementData")
+	public ResponseEntity<?> viewAlertRecord(HttpServletRequest request,HttpSession session) {
 		String userType = (String) session.getAttribute("usertype");
 		int userId=	(int) session.getAttribute("userid");
 		int file=0;
@@ -69,33 +67,36 @@ public class RunningAlertDatatable {
 		log.info("pageSize"+pageSize+"-----------pageNo---"+pageNo);
 		try {
 			log.info("request send to the filter api ="+filterrequest);
-			Object response = userProfileFeignImpl.viewRunningAlertRequest(filterrequest,pageNo,pageSize,file);
+			Object response = userProfileFeignImpl.viewIPLogRequest(filterrequest,pageNo,pageSize,file);
 			log.info("response in datatable"+response);
 			Gson gson= new Gson(); 
 			String apiResponse = gson.toJson(response);
-			runningAlertPagination = gson.fromJson(apiResponse, RunningAlertPagination.class);
-			List<RunningAlertContent> paginationContentList = runningAlertPagination.getContent();
+			iPLogPaginationModel = gson.fromJson(apiResponse, IPLogPaginationModel.class);
+			List<IPLogContentModel> paginationContentList = iPLogPaginationModel.getContent();
 			if(paginationContentList.isEmpty()) {
 				datatableResponseModel.setData(Collections.emptyList());
 			}else {
-				for(RunningAlertContent dataInsideList : paginationContentList) 
+				for(IPLogContentModel dataInsideList : paginationContentList) 
 				{
 				   String id= String.valueOf(dataInsideList.getId());	
 				   String createdOn= dataInsideList.getCreatedOn();
 				   String modifiedOn = (String) dataInsideList.getModifiedOn();
-				   String alertId = dataInsideList.getAlertId();
-				   String statusInterp= dataInsideList.getStatusInterp();
-				   String description = dataInsideList.getDescription();
+				   String username = dataInsideList.getUsername();
+				   String publicIp = dataInsideList.getPublicIp();
+				   String userAgent = dataInsideList.getUserAgent();
 				   String userStatus = (String) session.getAttribute("userStatus");	  
-				   Object[] finalData={createdOn,alertId,description,statusInterp}; 
+				   //String action = iconState.alertManagementIcons(id);
+				   Object[] finalData={createdOn,username,publicIp,userAgent}; 
 				   List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 					finalList.add(finalDataList);
 					datatableResponseModel.setData(finalList);	
+					
 			}
-		}
+				
+			}
 			//data set on ModelClass
-			datatableResponseModel.setRecordsTotal(runningAlertPagination.getNumberOfElements());
-			datatableResponseModel.setRecordsFiltered(runningAlertPagination.getTotalElements());
+			datatableResponseModel.setRecordsTotal(iPLogPaginationModel.getNumberOfElements());
+			datatableResponseModel.setRecordsFiltered(iPLogPaginationModel.getTotalElements());
 			return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK); 
 		}catch(Exception e) {
 			datatableResponseModel.setRecordsTotal(null);
@@ -105,10 +106,10 @@ public class RunningAlertDatatable {
 			return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK); 
 			
 		}
-	}
 	
+}
 	
-	@PostMapping("runningAlertManagement/pageRendering")
+	@PostMapping("logManagement/pageRendering")
 	public ResponseEntity<?> pageRendering(HttpSession session){
 
 		String userType = (String) session.getAttribute("usertype");
@@ -117,7 +118,7 @@ public class RunningAlertDatatable {
 		InputFields inputFields = new InputFields();
 		InputFields dateRelatedFields;
 		
-		pageElement.setPageTitle(Translator.toLocale("sidebar.running_Alert_Management"));
+		pageElement.setPageTitle(Translator.toLocale("sidebar.IP_Log_Management"));
 		
 		List<Button> buttonList = new ArrayList<>();
 		List<InputFields> dropdownList = new ArrayList<>();
@@ -127,7 +128,7 @@ public class RunningAlertDatatable {
 			log.info("session value user Type=="+session.getAttribute("usertype"));
 			
 			String[] names = { "HeaderButton", Translator.toLocale("button.addCurrency"), "AddCurrencyAddress()", "btnLink",
-					"FilterButton", Translator.toLocale("button.filter"),"alertFieldTable(" + ConfigParameters.languageParam + ")", "submitFilter" };
+					"FilterButton", Translator.toLocale("button.filter"),"DataTable(" + ConfigParameters.languageParam + ")", "submitFilter" };
 			for(int i=0; i< names.length ; i++) {
 				button = new Button();
 				button.setType(names[i]);
@@ -142,21 +143,15 @@ public class RunningAlertDatatable {
 			pageElement.setButtonList(buttonList);
 			
 		
-			  //Dropdown items 
-			  String[] selectParam={"select",Translator.toLocale("table.alertId"),"alertId","",}; 
-			  for(int i=0; i<selectParam.length; i++) { 
-					inputFields= new InputFields();
-			  inputFields.setType(selectParam[i]); 
-			  i++;
-			  inputFields.setTitle(selectParam[i]);
-			  i++; 
-			  inputFields.setId(selectParam[i]);
-			  i++; 
-			  inputFields.setClassName(selectParam[i]);
-			  dropdownList.add(inputFields);
-			  } 
-			pageElement.setDropdownList(dropdownList);
-		 
+		/*
+		 * //Dropdown items String[]
+		 * selectParam={"select",Translator.toLocale("table.currency"),"currencyType",""
+		 * }; for(int i=0; i<selectParam.length; i++) { inputFields= new InputFields();
+		 * inputFields.setType(selectParam[i]); i++;
+		 * inputFields.setTitle(selectParam[i]); i++; inputFields.setId(selectParam[i]);
+		 * i++; inputFields.setClassName(selectParam[i]); dropdownList.add(inputFields);
+		 * } pageElement.setDropdownList(dropdownList);
+		 */
 			
 			//input type date list		
 			String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate",""};
@@ -178,5 +173,4 @@ public class RunningAlertDatatable {
 		
 		
 	}
-	
 }

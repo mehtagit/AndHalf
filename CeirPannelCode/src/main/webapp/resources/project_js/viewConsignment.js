@@ -279,7 +279,7 @@ function confirmantiondelete(){
 				table('../headers?lang='+lang+'&type=consignment','../consignmentData?sessionFlag='+sessionFlag);
 			}
 
-			else if(cierRoletype=="Custom" && sourceType !="viaStolen"){
+			else if((cierRoletype=="Custom" || cierRoletype=="DRT") && sourceType !="viaStolen"){
 				table('../headers?lang='+lang+'&type=customConsignment','../consignmentData?sessionFlag='+sessionFlag);
 			}
 
@@ -599,7 +599,7 @@ function confirmantiondelete(){
 					}
 					sourceType=="viaStolen"? $("#btnLink").css({display: "none"}) : $("#btnLink").css({display: "block"});
 				
-					if(cierRoletype=="CEIRAdmin" || cierRoletype=="Custom"){ 
+					if(cierRoletype=="CEIRAdmin" || cierRoletype=="Custom" || cierRoletype=="DRT" ){ 
 						$("#btnLink").css({display: "none"}); 
 					}
 					//Consignment status-----------dropdown
@@ -1011,3 +1011,41 @@ function confirmantiondelete(){
 		    //ev.preventDefault(); //works as well
 
 		});
+		
+		
+		function openDRTPopUp(){
+			var userType=$("body").attr("data-roleType");
+			$('#PayDRTtaxPopup').openModal({dismissible:false});
+			$('#amount').val('');
+		}
+		
+		function payTaxDRT(){
+			
+			var request ={ 
+					 "amount" : parseFloat($("#amount").val()),
+					 "userId" : $("body").attr("data-userID")
+					 
+			}
+			
+			console.log("request--->" +JSON.stringify(request))
+			$.ajax({
+				url: './payTax',
+				type: 'POST',
+				data : JSON.stringify(request),
+				dataType : 'json',
+				contentType : 'application/json; charset=utf-8',
+				success: function (data, textStatus, jqXHR) {
+					console.log("Updated data---->" +data)
+					$("#PayDRTtaxPopup").closeModal();	
+					if(data.errorCode == 200){
+						window.open(data.data.url);
+					}
+				},
+				error: function (jqXHR, textStatus, errorThrown) {
+					console.log("error in ajax")
+				}
+			});	
+			
+			return false
+			
+		}

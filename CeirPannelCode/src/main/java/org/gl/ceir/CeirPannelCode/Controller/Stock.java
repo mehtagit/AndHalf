@@ -201,6 +201,7 @@ else {
 		stockUpload.setRoleType(selectedRoletype);
 		stockUpload.setUserType(roletype);
 		stockUpload.setAssignerId(assignerId);
+		
 		log.info("stock form parameters passed to upload stock api "+stockUpload);
 		
 		try {

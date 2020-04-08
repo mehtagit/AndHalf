@@ -317,8 +317,8 @@ function setStakeHolderData(name,date,featureId,status,txnId,imei)
 				$("#SupplierId").val(data.data.supplierId);
 				$("#SupplierName").val(data.data.suplierName);
 				$("#InvoiceNumber").val(data.data.invoiceNumber);
-				$("#Quantity").val(data.data.quantity);
-				$("#TransactionId").val(data.data.txnId);
+				$("#StockQuantity").val(data.data.quantity);
+				$("#StockTransactionId").val(data.data.txnId);
 				$("#csvUploadFileName").val(data.data.fileName);
 				$("#withdrawnRemark").val(data.data.remarks);
 			}
@@ -341,8 +341,8 @@ function setStakeHolderData(name,date,featureId,status,txnId,imei)
 			$("#SupplierId").val(data.data.supplierId);
 			$("#SupplierName").val(data.data.suplierName);
 			$("#InvoiceNumber").val(data.data.invoiceNumber);
-			$("#Quantity").val(data.data.quantity);
-			$("#TransactionId").val(data.data.txnId);
+			$("#StockQuantity").val(data.data.quantity);
+			$("#StockTransactionId").val(data.data.txnId);
 			$("#csvUploadFileName").val(data.data.fileName);
 			$("#withdrawnRemark").val(data.data.remarks);
 		}
@@ -378,8 +378,8 @@ function setStakeHolderData(name,date,featureId,status,txnId,imei)
 				$("#SupplierId").val(data.data.supplierId);
 				$("#SupplierName").val(data.data.suplierName);
 				$("#InvoiceNumber").val(data.data.invoiceNumber);
-				$("#Quantity").val(data.data.quantity);
-				$("#TransactionId").val(data.data.txnId);
+				$("#StockQuantity").val(data.data.quantity);
+				$("#StockTransactionId").val(data.data.txnId);
 				$("#csvUploadFileName").val(data.data.fileName);
 				$("#withdrawnRemark").val(data.data.remarks);
 			}
@@ -396,23 +396,58 @@ function setStakeHolderData(name,date,featureId,status,txnId,imei)
 				$("#SupplierId").val(data.data.supplierId);
 				$("#SupplierName").val(data.data.suplierName);
 				$("#InvoiceNumber").val(data.data.invoiceNumber);
-				$("#Quantity").val(data.data.quantity);
-				$("#TransactionId").val(data.data.txnId);
+				$("#StockQuantity").val(data.data.quantity);
+				$("#StockTransactionId").val(data.data.txnId);
 				$("#csvUploadFileName").val(data.data.fileName);
 				$("#withdrawnRemark").val(data.data.remarks);
 			}
          else if(name=='Type Approve')
         	 {
+        	 $('#viewImporterModal').openModal({
+		    	   dismissible:false
+		       });
         	 $("#viewtradmark").val(data.data.trademark);
      		$("#viewmodelName").val(data.data.productNameInterp);
-     		$("#viewModelnumber").val(data.data.modelNumberInterp);
+     		$("#viewModelnumber").val(data.data.modelNumber);
      		$("#viewManufacturercountry").val(data.data.manufacturerCountry);
      		$('#viewrequestDate').val(data.data.requestDate);
      		$('#viewFrequency').val(data.data.frequencyRange);
      		$("#viewImportertac").val(data.data.tac);
      		$("#viewtxnId").val(data.data.txnId);
         	 }
-		
+         else if(name=='End User')
+    	 {
+    	 $('#viewDeviceInfo').openModal({
+	    	   dismissible:false
+	       });
+    	 $("#endUserdeviceType").val(data.data.deviceTypeInterp);
+ 		$("#endUserdeviceIdType").val(data.data.deviceIdTypeInterp);
+ 		$("#endUserMultiSimStatus").val(data.data.multiSimStatus);
+ 		$("#endUserCountry").val(data.data.country);
+ 		$('#endUserSerialNumer').val(data.data.deviceSerialNumber);
+ 		$('#endUserTaxPaid').val(data.data.taxPaidStatusInterp);
+ 		$("#endUserDeviceStatus").val(data.data.deviceStatusInterp);
+ 		$("#endUserPrice").val(data.data.price);
+ 		
+ 		$('#endUserCurrency').val(data.data.currencyInterp);
+ 		$('#endUserImei1').val(data.data.firstImei);
+ 		$("#endUserImei2").val(data.data.secondImei);
+ 		$("#endUserImei3").val(data.data.thirdImei);
+ 		$("#endUserImei4").val(data.data.fourthImei);
+ 		$("#enduserTransactionId").val(data.data.txnId);
+ 		$("#enduserNid").val(data.data.nid);
+ 		
+    	 }
+
+         else if(name=='Greylist')
+    	 {
+    	 $('#greyListTableModal').openModal({
+	    	   dismissible:false
+	       });
+
+    	 greyListDataTable(data.data);
+ 		
+    	 }
 		
 		}
 	
@@ -421,6 +456,35 @@ function setStakeHolderData(name,date,featureId,status,txnId,imei)
 	});
 }
 
+
+function greyListDataTable(data){
+var tableData=[];
+tableData.push(data);
+	$('#greyListDataTable').DataTable({
+		destroy:true,
+		searching: false,
+		scrollCollapse : true,
+		dataType : 'json',
+		ordering : false,
+		bPaginate : false,
+		"data":tableData,
+		bInfo : true,
+		"columns" : [{
+			"data" : "createdOn"
+		}, {
+			"data" : "createdOn"
+		},
+		{
+			"data" : "msisdn"
+		},
+		{
+			"data" : "imei"
+		}, {
+			"data" : "imeiEsnMeid"
+		}]
+		
+	});
+}
 function closeViewModal()
 {
 $('#viewModal').closeModal();

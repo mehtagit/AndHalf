@@ -1036,7 +1036,8 @@ src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/j
    $("#uploadFirSingle").css("display", "none");
 	$("#editRecoverySampleFile").css("display", "none");
 	   $("#Bulkform").find("input,select,textarea,button").prop("disabled",true);
-	   
+	   $("#deviceBulkStolenFile").css("display", "none");
+	   $("#dviceFileText").css("display", "none");
 	   $("#companyStolenButton").css("display", "none");
 		$(".star").css("display", "none");
 	}

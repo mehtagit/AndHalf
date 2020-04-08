@@ -5,12 +5,10 @@ import javax.servlet.http.HttpSession;
 import org.gl.ceir.CeirPannelCode.Feignclient.UserProfileFeignImpl;
 import org.gl.ceir.CeirPannelCode.Model.FileExportResponse;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
-import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,51 +18,27 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 
 @Controller
-public class AlertController {
+public class RequestHeadersController {
 	@Autowired
 	UserProfileFeignImpl userProfileFeignImpl;
 		
 private final Logger log = LoggerFactory.getLogger(getClass());
 	
 	@RequestMapping(value=
-		{"/alertManagment"},method={org.springframework.web.bind.annotation.
+		{"/requestHeaders"},method={org.springframework.web.bind.annotation.
 				RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}
 			)
 	    public ModelAndView viewMessageManagement(HttpSession session) {
 		ModelAndView mv = new ModelAndView();
-		 log.info(" view Alert Management entry point."); 
-		 mv.setViewName("alertManagement");
-		log.info(" view Alert Management exit point."); 
+		 log.info(" view Request Headers entry point."); 
+		 mv.setViewName("ipLogManagement");
+		log.info(" view Request Headers exit point."); 
 		return mv; 
+	
 	}
 	
-	
-	
-	//------------------------------------- view Alert Address ----------------------------------------							
-	
-			@PostMapping("alertViewByID/{id}") 
-			public @ResponseBody GenricResponse viewAlertAddress (@PathVariable("id") Integer id)  {
-				log.info("request send to the View Alert api="+id);
-				GenricResponse response= userProfileFeignImpl.viewAlertFeign(id);
-				log.info("response from View api "+response);
-				return response;
-		}
-			
-			
-	//------------------------------------- update alert ----------------------------------------							
-			
-			@PostMapping("updateAlert") 
-			public @ResponseBody GenricResponse updateAlerts (@RequestBody FilterRequest filterRequest)  {
-				log.info("request send to the Update Alert api="+filterRequest);
-				GenricResponse response= userProfileFeignImpl.updateAlertFeign(filterRequest);
-				log.info("response from update api "+response);
-				return response;
-		}	
-				
-			
-	
-	//***************************************** Export Alert  controller *********************************
-	@PostMapping("exportAlertData")
+	//***************************************** Export IP LOG  controller *********************************
+	@PostMapping("exportLogData")
 	@ResponseBody
 	public FileExportResponse exportToExcel(@RequestBody FilterRequest filterRequest,HttpSession session)
 	{
@@ -72,7 +46,7 @@ private final Logger log = LoggerFactory.getLogger(getClass());
 		Object response;
 		Integer file = 1;	
 		log.info("filterRequest:::::::::"+filterRequest);
-	response= userProfileFeignImpl.viewAlertRequest(filterRequest, filterRequest.getPageNo(), filterRequest.getPageSize(), file);
+	response= userProfileFeignImpl.viewIPLogRequest(filterRequest, filterRequest.getPageNo(), filterRequest.getPageSize(), file);
 	FileExportResponse fileExportResponse;
 	   Gson gson= new Gson(); 
 	   String apiResponse = gson.toJson(response);
@@ -82,5 +56,5 @@ private final Logger log = LoggerFactory.getLogger(getClass());
 		return fileExportResponse;
 	}
 	
-	
+
 }

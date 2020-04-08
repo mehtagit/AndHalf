@@ -184,7 +184,7 @@ public interface FeignCleintImplementation {
 
 	//delete stolen recovery feign  controller
 	@RequestMapping(value="/stakeholder/Delete" ,method=RequestMethod.DELETE) 
-	public @ResponseBody GenricResponse deleteStolenRecovery(StolenRecoveryModel stolenRecoveryModel) ;
+	public @ResponseBody GenricResponse deleteStolenRecovery(FilterRequest stolenRecoveryModel) ;
 	/************* DROPDOWN *****************/
 
 	@RequestMapping(value="/state-mgmt/{featureId}/{userTypeId}" ,method=RequestMethod.GET) 
@@ -409,7 +409,6 @@ public @ResponseBody ConfigContentModel viewAdminFeign(FilterRequest filterReque
 				
 				@PostMapping("/customer-care/by-txn-id")
 				public @ResponseBody GenricResponse customerCareViaTxnId( @RequestBody CustomerCareByTxnId customerCareDeviceState);
-			
 				/* Rule List Feign */
 				@RequestMapping(value="/filter/rule-engine" ,method=RequestMethod.POST) 
 				public Object ruleListFeign(@RequestBody FilterRequest filterRequest,
@@ -448,7 +447,6 @@ public @ResponseBody ConfigContentModel viewAdminFeign(FilterRequest filterReque
 					public @ResponseBody GenricResponse delete(NewRule newRule) ;
 
 }
-
 
 
 

@@ -733,7 +733,8 @@ function rejectSubmit(actiontype){
 			"txnId":txnId,
 			"featureId": featureId,
 			"adminUserId":userId,
-			"adminUserType":userType
+			"adminUserType":userType,
+			"remark" : $("#stockDispproveRemarks").val()
 			
 	}
 	$.ajax({

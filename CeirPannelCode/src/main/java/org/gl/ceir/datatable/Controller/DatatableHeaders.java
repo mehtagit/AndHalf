@@ -407,11 +407,12 @@ public class DatatableHeaders {
 				}
 				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
 			}
+
 			
 			//alert Management
 			
 			else if("alertManagementHeaders".equals(role)) {
-				String[] headers = {"table.creationDate","table.lastupdatedate","table.alertId","table.featureName","table.Description"};
+				String[] headers = {"table.creationDate","table.lastupdatedate","table.alertId","table.featureName","table.Description","table.action"};
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
@@ -421,7 +422,18 @@ public class DatatableHeaders {
 			//Running alert Management
 			
 			else if("runningAlertManagementHeaders".equals(role)) {
-				String[] headers = {"table.creationDate","table.lastupdatedate","table.alertId","table.status","table.Description"};
+				String[] headers = {"table.creationDate","table.alertId","table.Description","table.status"};
+				for(String header : headers) {
+					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
+				}
+				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
+			}
+			
+			
+			//IP Log Management
+			
+			else if("ipLogManagementHeaders".equals(role)) {
+				String[] headers = {"table.creationDate","table.UserName","table.publicIp","table.userAgent"};
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}

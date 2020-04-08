@@ -496,6 +496,13 @@ var path="${context}";
 					<input type="text" id="setRejectTacTxnId" style="display: none">
 				</div>
 				<div class="row">
+				<div class="input-field col s12 m12" style="margin-left: -10px;">
+					<textarea id="stockDispproveRemarks" class="materialize-textarea"
+						style="padding-left: 0;"></textarea>
+					<label for="textarea1"><spring:message code="input.remarks" /></label>
+				</div>
+				</div>
+				<div class="row">
 					<div class="input-field col s12 center">
 						<div class="input-field col s12 center">
 							<button class="modal-close modal-trigger btn"
