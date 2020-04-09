@@ -206,3 +206,25 @@ $("input[type=file]").keypress(function(ev) {
     //ev.preventDefault(); //works as well
 
 });
+
+
+
+function selectPortAddresValue(port){ 
+	$.ajax({
+		type : 'GET',
+		url :'../byArrivalPort/'+port,
+		contentType : "application/json",
+		dataType : 'html',
+		async:false,
+		success : function(data) {
+			var portAdressData=JSON.parse(data);
+			console.log(portAdressData.length);
+			/*$("#portAddress").empty();*/
+			for (i = 0; i < data.length; i++) {
+				$('<option>').val(portAdressData[i].id).text(portAdressData[i].address).appendTo('#portAddress');
+				}
+		},      
+		error: function (xhr, ajaxOptions, thrownError) {
+		}
+	});
+}

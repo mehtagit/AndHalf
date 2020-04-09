@@ -474,9 +474,6 @@ public @ResponseBody FileExportResponse downloadFile(@PathVariable("transactionN
 log.info("inside file download method"+doc_TypeTag);
 
 
-String extension = fileName.substring(fileName.lastIndexOf("."));
-log.info("fileExtension==="+extension);
-
 if (filetype.equalsIgnoreCase("actual"))
 {
 
@@ -487,6 +484,10 @@ if (!doc_TypeTag.equals("DEFAULT"))
 	File tmpDir = new File(rootPath+fileName);
 	boolean exists = tmpDir.exists();
 	if(exists) {
+
+String extension = fileName.substring(fileName.lastIndexOf("."));
+log.info("fileExtension==="+extension);
+
 				if(extension.equalsIgnoreCase(".png") || extension.equalsIgnoreCase(".jpeg") || extension.equalsIgnoreCase(".gif") || extension.equalsIgnoreCase("jpg"))		
 				{
 					response=feignCleintImplementation.downloadFile(txnid,filetype,fileName.replace("%20", " "),doc_TypeTag);

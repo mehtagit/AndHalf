@@ -70,7 +70,7 @@ function updateCompanyRecoveryRequest(){
    /* var deviceRecoveryDate=$('#deviceRecoveryDevice').val();*/
 
 	var sigleRecoveryBlockPeriod=$('#stolenDatePeriod').val();
-	var blockingType =$('.blocktypeRadio:checked').val();
+	var blockingType ='Immediate';
 	var fileName=$('#bulkRecoveryFileName').val();
 	var txnid=$('#existingStolenTxnId').val();
 	
@@ -93,7 +93,6 @@ function updateCompanyRecoveryRequest(){
 			"fileName":fileName,
 			"dateOfRecovery":bulkRecoveryDate,
 			"qty":bulkRecoveryquantity,
-			"blockingTimePeriod":sigleRecoveryBlockPeriod,
 			"blockingType":blockingType,
 			"requestType":1,
 			"sourceType":6,

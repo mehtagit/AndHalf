@@ -1901,7 +1901,7 @@ public class IconsState {
 			viewAction="openStolenRecoveryPage('editCompanyStolen','view','"+txnId+"')";
 
 		}
-		else if(source.equals("4") && requestTypeValue.equals("1")) {
+		else if(source.equals("5") && requestTypeValue.equals("1")) {
 			//check for Recovery/single
 
 			editAction="openStolenRecoveryPage('editIndivisualRecovery','edit','"+txnId+"')";

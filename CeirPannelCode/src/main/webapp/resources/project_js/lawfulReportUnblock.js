@@ -21,16 +21,18 @@ var formData= new FormData();
 	var sigleRecoveryvillage=$('#sigleRecoveryvillage').val();
 	var sigleRecoverylocality=$('#sigleRecoverylocality').val();
 	var sigleRecoverydistrict=$('#sigleRecoverydistrict').val();
-	var sigleRecoverycommune=$('#sigleRecoverycommune').val();
+	var sigleRecoverycommune=$('#sigleRecoverycommune').val(); 
 	var sigleRecoverypin=$('#sigleRecoverypin').val();
    /* var deviceRecoveryDate=$('#deviceRecoveryDevice').val();*/
 	var sigleRecovery =$('#sigleRecovery').val();
 	var country1=$('#country1').val();
 	var state1=$('#state1').val();
-	var sigleRecoverydeviceStatus=$('#sigleRecoverydeviceStatus').val();
+	//var sigleRecoverydeviceStatus=$('#sigleRecoverydeviceStatus').val();
 	var sigleRecoveryBlockPeriod=$('#singleRecoveryDatePeriod').val();
-	var blockingType =$('.blocktypeRadio:checked').val();
+	var blockingType ='Immediate';
 	var IndivisualRecoveryDevice=$('#IndivisualRecoveryDevice').val();
+	var singleStolenmodalNumber=$('#singleRecoverymodalNumber').val();
+	var singleStolendeviceBrandName=$('#sigleRecoverydeviceBrandName').val();
 
 	 
 	
@@ -52,14 +54,15 @@ var formData= new FormData();
 			"deviceStolenProvince": state1,
 			"multiSimStatus":sigleRecoverydeviceSimStatus,
 			"deviceStolenCountry":country1,
-			"deviceSerialNumber":sigleRecoveryserialNumber
+			"deviceSerialNumber":sigleRecoveryserialNumber,
+			"modelNumber":singleStolenmodalNumber,
+			"deviceBrandName": singleStolendeviceBrandName
 			
 	}
 	
 
 	var request={
 			"dateOfRecovery":IndivisualRecoveryDevice,
-			"blockingTimePeriod":sigleRecoveryBlockPeriod,
 			"blockingType":blockingType,
 			"requestType":1,
 			"sourceType":5,
@@ -122,7 +125,7 @@ function saveCompanyRecoveryRequest(){
    /* var deviceRecoveryDate=$('#deviceRecoveryDevice').val();*/
 
 	var sigleRecoveryBlockPeriod=$('#stolenDatePeriod').val();
-	var blockingType =$('.blocktypeRadio:checked').val();
+	var blockingType ='Immediate';
 	
 	var stolenOrganizationUserDB= {
 		   
@@ -141,7 +144,6 @@ function saveCompanyRecoveryRequest(){
 	var request={
 			"dateOfRecovery":bulkRecoveryDate,
 			"qty":bulkRecoveryquantity,
-			"blockingTimePeriod":sigleRecoveryBlockPeriod,
 			"blockingType":blockingType,
 			"requestType":1,
 			"sourceType":6,

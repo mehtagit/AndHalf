@@ -366,15 +366,25 @@ select {
 													</div>
 
 													<div>
-														<div class="input-field col s12 m6">
-															<input type="text" name="deviceBrandName"
+														<div class="col s12 m6">
+															<%-- <input type="text" name="deviceBrandName"
 																id="singleStolendeviceBrandName"
 																pattern="[a-zA-Z]{0,20}" 
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 																maxlength="20"> <label for="singleStolendeviceBrandName">
 																<spring:message code="registration.devicebrandname" />
-															</label>
+															</label> --%>
+															<label for="singleStolendeviceBrandName"><spring:message
+													code="registration.productname" /> <span class="star">*</span></label>
+											<select id="singleStolendeviceBrandName" class="browser-default"
+												onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+												oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+												required>
+												<option value="" disabled selected><spring:message
+														code="registration.selectproduct" />
+												</option>
+											</select>
 														</div>
 
 												
@@ -400,15 +410,26 @@ select {
 														</div>
 
 
-														<div class="input-field col s12 m6">
-															<input type="text" name="modalNumber"
+														<div class=" col s12 m6">
+															<%-- <input type="text" name="modalNumber"
 																id="singleStolenmodalNumber" pattern="[a-zA-Z0-9]{0,30}"
 																
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 																maxlength="30"> <label for="singleStolenmodalNumber">
 																<spring:message code="input.modelNumber" />
-															</label>
+															</label> --%>
+															
+															<label for="singleStolenmodalNumber"><spring:message
+														code="registration.modelnumber" /> <span class="star">*</span></label>
+												<select id="singleStolenmodalNumber" class="browser-default"
+													onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+													oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+													required>
+													<option value="" disabled selected>
+														<spring:message code="registration.selectmodelnumber" /></option>
+
+												</select>
 														</div>
 
 														<div class="col s12 m6">
@@ -503,8 +524,8 @@ select {
 														</div>
 
 														<div class="input-field col s12 m6">
-															<input type="text" name="imeiNumber" pattern="[0-9]{15,16}" oninput="InvalidMsg(this,'input','<spring:message code=" validation.1516digit" />');"
-																oninvalid="InvalidMsg(this,'input','<spring:message code=" validation.1516digit" />');" required="required" 
+															<input type="text" name="imeiNumber" pattern="[0-9]{15,16}" oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
+																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');" required="required" 
 																maxlength="16" id="singleStolenimei1"> 
 																<label for="singleStolenimei1"><spring:message code="registration.one" /> <span class="star"> *</span> 
 																</label>
@@ -1327,7 +1348,7 @@ select {
 		populateStates("country3", "state3");
 
 		populateCountries("country");
-		var input = document.querySelector("#singleStolenphone1");
+		/* var input = document.querySelector("#singleStolenphone1");
 		window.intlTelInput(input, {
 			utilsScript : "${context}/resources/js/utils.js",
 		});
@@ -1335,7 +1356,7 @@ select {
 		window.intlTelInput(input2, {
 			utilsScript : "${context}/resources/js/utils.js",
 		});
-	
+	 */
 
 		$('#stolenDatePeriod').datepicker({
 			dateFormat : "yy-mm-dd"
