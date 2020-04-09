@@ -23,6 +23,7 @@ import com.gl.ceir.entity.SystemConfigurationDb;
 import com.gl.ceir.factory.service.BaseService;
 import com.gl.ceir.pojo.RawMail;
 import com.gl.ceir.pojo.SearchCriteria;
+import com.gl.ceir.repo.EndUserDbRepository;
 import com.gl.ceir.repo.PolicyBreachNotificationRepository;
 import com.gl.ceir.repo.RegularizedDeviceDbRepository;
 import com.gl.ceir.specification.GenericSpecificationBuilder;
@@ -39,7 +40,9 @@ public class DeviceTaxReminder extends BaseService{
 	@Autowired
 	PolicyBreachNotificationRepository policyBreachNotificationRepository;
 	
-
+	@Autowired
+	EndUserDbRepository endUserDbRepository;
+	
 	@Override
 	public void fetch() {
 
@@ -78,8 +81,11 @@ public class DeviceTaxReminder extends BaseService{
 		String policyBreachMessage = "User have not paid tax of registered device.";
 		
 		RegularizeDeviceDb regularizeDeviceDb = (RegularizeDeviceDb) o;
-		EndUserDB endUserDB = regularizeDeviceDb.getEndUserDB();
-
+		logger.info("regularizeDeviceDb : " + regularizeDeviceDb);
+		
+		EndUserDB endUserDB = endUserDbRepository.getByNid(regularizeDeviceDb.getNid());
+		logger.info("endUserDB : " + endUserDB);
+		
 		if(Objects.isNull(endUserDB)) {
 			logger.info("No end user is found associated with device of IMEI [" + regularizeDeviceDb.getFirstImei() + "]");
 		}else {

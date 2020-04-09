@@ -32,6 +32,7 @@ public class Starter {
 	@Autowired
 	FindUserReg findUserReg;
 	
+	
 	public Service start(String name) {
 		
 		switch (name) {
