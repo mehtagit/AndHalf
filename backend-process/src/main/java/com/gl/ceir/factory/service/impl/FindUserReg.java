@@ -50,7 +50,8 @@ public class FindUserReg extends BaseService{
 
 		try {			
 			List<DeviceUsageDb> deviceUsageDbs = deviceUsageServiceImpl.getDeviceUsageOfTodayHavingActionUserReg();
-
+			logger.info("deviceUsageDbs " + deviceUsageDbs);
+			
 			if(deviceUsageDbs.isEmpty()) {
 				logger.info("No User_Reg found close today. [" + DateUtil.nextDate(0) + "]");
 			}else {

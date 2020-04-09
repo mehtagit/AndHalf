@@ -34,7 +34,12 @@ public class UsersServiceImpl {
 
 	public List<User> getUserWithStatusPendingOtp(int day) {
 		try {
-			return userRepository.findAll(buildSpecification(DateUtil.nextDate(day)).build());
+			logger.info("day " + day);
+			
+			String date = DateUtil.nextDate(day);
+			logger.info("date in query : " + date);
+			
+			return userRepository.findAll(buildSpecification(date).build());
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			return new ArrayList<>(1);
@@ -50,7 +55,7 @@ public class UsersServiceImpl {
 
 		cmsb.with(new SearchCriteria("createdOn", date , SearchOperation.GREATER_THAN, Datatype.DATE));
 		cmsb.with(new SearchCriteria("createdOn", date , SearchOperation.LESS_THAN, Datatype.DATE));
-		cmsb.with(new SearchCriteria("status", 1, SearchOperation.GREATER_THAN, Datatype.STRING));
+		cmsb.with(new SearchCriteria("currentStatus", 1, SearchOperation.EQUALITY, Datatype.STRING));
 
 		return cmsb;
 	}

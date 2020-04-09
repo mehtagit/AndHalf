@@ -16,9 +16,11 @@ import com.gl.ceir.constant.ConfigTags;
 import com.gl.ceir.constant.ReferTable;
 import com.gl.ceir.entity.SystemConfigurationDb;
 import com.gl.ceir.entity.User;
+import com.gl.ceir.entity.UserProfile;
 import com.gl.ceir.factory.service.BaseService;
 import com.gl.ceir.factory.service.transaction.RemoveInCompleteUserTransaction;
 import com.gl.ceir.pojo.RawMail;
+import com.gl.ceir.repo.UserProfileRepo;
 import com.gl.ceir.service.UsersServiceImpl;
 import com.gl.ceir.util.DateUtil;
 
@@ -33,11 +35,14 @@ public class RemoveIncompleteUser extends BaseService{
 	UsersServiceImpl usersServiceImpl;
 
 	@Autowired
+	UserProfileRepo userProfileRepo;
+
+	@Autowired
 	RemoveInCompleteUserTransaction removeIncompleteUser;
 
 	@Override
 	public void fetch() {
-		
+
 		try {
 			SystemConfigurationDb removeInCompleteUserInDays = systemConfigurationDbRepository.getByTag(ConfigTags.REMOVE_IN_COMPLETE_USER_IN_DAYS);
 
@@ -49,31 +54,40 @@ public class RemoveIncompleteUser extends BaseService{
 
 			// Read all inactive grievances for last configured number of days.
 			List<User> userList = usersServiceImpl.getUserWithStatusPendingOtp((Integer.parseInt(removeInCompleteUserInDays.getValue())) * -1);
+			logger.info("Incomplete users " + userList);
 
 			List<Long> userIds = new ArrayList<>();
 			Map<String, String> placeholderMap = null;
+			UserProfile userProfile = null;
 
 			for(User user : userList) {
 
 				// Add userId to delete them.
 				userIds.add(user.getId());
 
-				// Save in notification.
-				placeholderMap = new HashMap<>();
-				placeholderMap.put("<User>", user.getUserProfile().getFirstName());
+				// Find userprofile
+				userProfile = userProfileRepo.findByUserId(user.getId());
+				logger.info(userProfile);
 
-				rawMails.add(new RawMail("Email", 
-						"MAIL_TO_USER_ON_ACCOUNT_REMOVAL_FOR_OTP_PENDING", 
-						user.getId(), 
-						8L, // Feature Id 
-						"Process",
-						"Removal",
-						user.getUsername(),
-						"Removing user With Username " + user.getUsername(), // Subject 
-						placeholderMap, 
-						ReferTable.USERS, 
-						user.getUsertype().getUsertypeName(),
-						user.getUsertype().getUsertypeName()));
+				if(Objects.nonNull(userProfile)) {
+					// Save in notification.
+					placeholderMap = new HashMap<>();
+					placeholderMap.put("<User>", userProfile.getFirstName());
+
+					rawMails.add(new RawMail("Email", 
+							"MAIL_TO_USER_ON_ACCOUNT_REMOVAL_FOR_OTP_PENDING", 
+							user.getId(), 
+							8L, // Feature Id 
+							"Process",
+							"Removal",
+							user.getUsername(),
+							"Removing user With Username " + user.getUsername(), // Subject 
+							placeholderMap, 
+							ReferTable.USERS, 
+							user.getUsertype().getUsertypeName(),
+							user.getUsertype().getUsertypeName()));
+
+				}
 
 			}
 

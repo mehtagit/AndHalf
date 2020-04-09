@@ -21,6 +21,7 @@ public class RemoveInCompleteUserTransaction {
 	@Autowired
 	NotifierWrapper notifierWrapper;
 
+	@Transactional
 	public void performTransaction(List<Long> userIds, List<RawMail> rawMails) {
 
 		for(Long id : userIds) {

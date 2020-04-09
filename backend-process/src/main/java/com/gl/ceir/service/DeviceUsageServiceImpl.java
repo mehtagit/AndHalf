@@ -34,7 +34,10 @@ public class DeviceUsageServiceImpl {
 
 	public List<DeviceUsageDb> getDeviceUsageOfTodayHavingActionUserReg() {
 		try {
-			return deviceUsageDbRepository.findAll(buildSpecification(DateUtil.nextDate(0)).build());
+			String date = DateUtil.nextDate(0);
+			logger.info("Date in query : " + date);
+			
+			return deviceUsageDbRepository.findAll(buildSpecification(date).build());
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			return new ArrayList<>(1);
@@ -46,7 +49,7 @@ public class DeviceUsageServiceImpl {
 
 		cmsb.with(new SearchCriteria("modifiedOn", date , SearchOperation.GREATER_THAN, Datatype.DATE));
 		cmsb.with(new SearchCriteria("modifiedOn", date , SearchOperation.LESS_THAN, Datatype.DATE));
-		cmsb.with(new SearchCriteria("action", "USER_REG", SearchOperation.GREATER_THAN, Datatype.STRING));
+		cmsb.with(new SearchCriteria("action", "USER_REG", SearchOperation.EQUALITY, Datatype.STRING));
 
 		return cmsb;
 	}

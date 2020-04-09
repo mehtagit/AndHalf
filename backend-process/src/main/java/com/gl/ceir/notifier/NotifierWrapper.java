@@ -24,40 +24,55 @@ public class NotifierWrapper {
 
 	@Autowired
 	MessageConfigurationDbRepository messageConfigurationDbRepository;
-	
+
 	@Autowired
 	RawmailServiceImpl rawmailServiceImpl;
 
 	public boolean saveNotification(List<RawMail> rawMails) {
 		List<Notification> notifications = new ArrayList<>();
-		
+
 		if(rawMails.isEmpty()) {
 			return Boolean.TRUE;
 		}
-		
+
 		try {
 			for(RawMail rawMail : rawMails) {
 				String message = rawmailServiceImpl.createMailContent(rawMail);
 				if(message.isEmpty()) {
 					continue;
 				}
-				
-				notifications.add(new Notification(rawMail.getChannel(), 
-						message, 
-						rawMail.getUserProfile().getUser().getId(), 
-						rawMail.getFeatureId(),
-						rawMail.getFeatureName(), 
-						rawMail.getSubFeature(), 
-						rawMail.getFeatureTxnId(), 
-						rawMail.getSubject(), 
-						0,
-						rawMail.getReferTable(),
-						rawMail.getRoleType(),
-						rawMail.getReceiverUserType()));
+
+				if("EMAIL".equalsIgnoreCase(rawMail.getChannel())) {
+					notifications.add(new Notification(rawMail.getChannel(), 
+							message, 
+							rawMail.getUserProfile().getUser().getId(), 
+							rawMail.getFeatureId(),
+							rawMail.getFeatureName(), 
+							rawMail.getSubFeature(), 
+							rawMail.getFeatureTxnId(), 
+							rawMail.getSubject(), 
+							0,
+							rawMail.getReferTable(),
+							rawMail.getRoleType(),
+							rawMail.getReceiverUserType()));
+				}else {
+					notifications.add(new Notification(rawMail.getChannel(), 
+							message, 
+							0L,
+							rawMail.getFeatureId(),
+							rawMail.getFeatureName(), 
+							rawMail.getSubFeature(), 
+							rawMail.getFeatureTxnId(), 
+							rawMail.getSubject(), 
+							0,
+							rawMail.getReferTable(),
+							rawMail.getRoleType(),
+							rawMail.getReceiverUserType()));
+				}
 			}
-			
+
 			notificationServiceImpl.saveAllNotifications(notifications);
-			
+
 			logger.info("Notification have been saved." + rawMails);
 			return Boolean.TRUE;
 		}catch (Exception e) {
