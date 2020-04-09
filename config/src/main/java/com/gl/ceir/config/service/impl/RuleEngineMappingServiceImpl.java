@@ -119,7 +119,7 @@ public class RuleEngineMappingServiceImpl {
 		if(Objects.nonNull(filterRequest.getFeatureName()))
 			cmsb.with(new SearchCriteria("featureName", filterRequest.getFeatureName(), SearchOperation.EQUALITY, Datatype.STRING));
 
-		if(Objects.nonNull(filterRequest.getFeatureName()))
+		if(Objects.nonNull(filterRequest.getUserType()))
 			cmsb.with(new SearchCriteria("userType", filterRequest.getUserType(), SearchOperation.EQUALITY, Datatype.STRING));
 		
 		return cmsb;

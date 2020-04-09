@@ -31,6 +31,7 @@ import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.model.ConsignmentMgmt;
 import com.gl.ceir.config.model.ConsignmentUpdateRequest;
+import com.gl.ceir.config.model.DashboardUsersFeatureStateMap;
 import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
@@ -62,6 +63,7 @@ import com.gl.ceir.config.model.constants.WebActionDbSubFeature;
 import com.gl.ceir.config.model.constants.WebActionStatus;
 import com.gl.ceir.config.model.file.StolenAndRecoveryFileModel;
 import com.gl.ceir.config.repository.ConsignmentRepository;
+import com.gl.ceir.config.repository.DashboardUsersFeatureStateMapRepository;
 import com.gl.ceir.config.repository.ImmegreationImeiDetailsRepository;
 import com.gl.ceir.config.repository.SingleImeiHistoryDbRepository;
 import com.gl.ceir.config.repository.StockManagementRepository;
@@ -87,6 +89,9 @@ public class StolenAndRecoveryServiceImpl {
 
 	@Autowired
 	WebActionDbRepository webActionDbRepository;
+	
+	@Autowired
+	DashboardUsersFeatureStateMapRepository dashboardUsersFeatureStateMapRepository; 
 
 	@Autowired
 	StolenAndRecoveryRepository stolenAndRecoveryRepository;
@@ -360,23 +365,19 @@ public class StolenAndRecoveryServiceImpl {
 			}
 		}
 
-		if(ceirAdmin.equalsIgnoreCase(filterRequest.getUserType())) {
-			/*
-			 * srsb.with(new SearchCriteria(fileStatus, 2, SearchOperation.EQUALITY,
-			 * Datatype.STRING)); srsb.orSearch(new SearchCriteria("userId",
-			 * filterRequest.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));
-			 */
-		}else if(Objects.nonNull(filterRequest.getConsignmentStatus())) {
+		if(Objects.nonNull(filterRequest.getConsignmentStatus())) {
 			srsb.with(new SearchCriteria(fileStatus, filterRequest.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
 		}else {
 			if(Objects.nonNull(filterRequest.getFeatureId()) && Objects.nonNull(filterRequest.getUserTypeId())) {
 
 				List<Integer> configuredStatus = new LinkedList<>();
-				logger.debug(statusList);
 
-				if(Objects.nonNull(statusList)) {	
-					for(StateMgmtDb stateDb : statusList ) {
-						configuredStatus.add(stateDb.getState());
+				List<DashboardUsersFeatureStateMap> dashboardUsersFeatureStateMap = dashboardUsersFeatureStateMapRepository.findByUserTypeIdAndFeatureId(filterRequest.getUserTypeId(), filterRequest.getFeatureId());
+				logger.debug(dashboardUsersFeatureStateMap);
+
+				if(Objects.nonNull(dashboardUsersFeatureStateMap)) {	
+					for(DashboardUsersFeatureStateMap dashboardUsersFeatureStateMap2 : dashboardUsersFeatureStateMap ) {
+						configuredStatus.add(dashboardUsersFeatureStateMap2.getState());
 					}
 					logger.info("Array list to add is = " + configuredStatus);
 
@@ -702,9 +703,9 @@ public class StolenAndRecoveryServiceImpl {
 			StolenandRecoveryMgmt stolenandRecoveryMgmt = stolenAndRecoveryRepository.getByTxnId(consignmentUpdateRequest.getTxnId());
 
 			// Fetch user_profile to update user over mail/sms regarding the action.
-			userProfile = userProfileRepository.getByUserId(consignmentUpdateRequest.getUserId());
+			userProfile = userProfileRepository.getByUserId(stolenandRecoveryMgmt.getUserId());
 			
-			User user = userRepository.getById(consignmentUpdateRequest.getUserId());
+			User user = userRepository.getById(stolenandRecoveryMgmt.getUserId());
 
 			logger.info("User is " + user);
 			
@@ -772,6 +773,7 @@ public class StolenAndRecoveryServiceImpl {
 				}else {
 					placeholderMap1 = new HashMap<>();
 					placeholderMap1.put("<first name>", userProfile.getFirstName());
+					placeholderMap1.put("<First name>", userProfile.getFirstName());
 					placeholderMap1.put("<txn_name>", txnId);
 					
 					emailUtil.saveNotification(mailTag, 
@@ -800,6 +802,12 @@ public class StolenAndRecoveryServiceImpl {
 					}else if(consignmentUpdateRequest.getRequestType() == 1){
 						mailTag = "RECOVERY_PROCESSED_SUCESSFULLY";
 						txnId =  stolenandRecoveryMgmt.getTxnId();
+					}else if(consignmentUpdateRequest.getRequestType() == 2){
+						mailTag = "BLOCK_PROCESSED_SUCESSFULLY";
+						txnId = stolenandRecoveryMgmt.getTxnId();
+					}else if(consignmentUpdateRequest.getRequestType() == 3){
+						mailTag = "UNBLOCK_PROCESSED_SUCESSFULLY";
+						txnId = stolenandRecoveryMgmt.getTxnId();
 					}else {
 						logger.warn("unknown request type received for stolen and recovery.");
 					}
@@ -815,6 +823,12 @@ public class StolenAndRecoveryServiceImpl {
 					}else if(consignmentUpdateRequest.getRequestType() == 1){
 						mailTag = "RECOVERY_PROCESSED_FAILED";
 						txnId =  stolenandRecoveryMgmt.getTxnId();
+					}else if(consignmentUpdateRequest.getRequestType() == 2){
+						mailTag = "BLOCK_PROCESSED_FAILED";
+						txnId = stolenandRecoveryMgmt.getTxnId();
+					}else if(consignmentUpdateRequest.getRequestType() == 3){
+						mailTag = "UNBLOCK_PROCESSED_FAILED";
+						txnId = stolenandRecoveryMgmt.getTxnId();
 					}else {
 						logger.warn("unknown request type received for stolen and recovery.");
 						return new GenricResponse(2, "unknown request type received for stolen and recovery.", consignmentUpdateRequest.getTxnId());
@@ -831,6 +845,7 @@ public class StolenAndRecoveryServiceImpl {
 				}else {
 					placeholderMap1 = new HashMap<>();
 					placeholderMap1.put("<first name>", userProfile.getFirstName());
+					placeholderMap1.put("<First name>", userProfile.getFirstName());
 					placeholderMap1.put("<txn_name>", txnId);
 					
 					emailUtil.saveNotification(mailTag, 
