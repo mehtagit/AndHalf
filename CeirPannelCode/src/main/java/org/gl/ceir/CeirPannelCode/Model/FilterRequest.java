@@ -8,7 +8,14 @@ public class FilterRequest {
 	private Integer pageNo, pageSize,userId,taxPaidStatus,consignmentStatus,featureId,userTypeId,fileStatus,requestType,sourceType,grievanceStatus,userRoleTypeId,status,asType,serviceDump,fileType,action,operatorTypeId,channel,type,deviceIdType,parentValue,id,port,currency,quantity,stockStatus,feature,period;
 	private Double dollar,riel;
 	private int roleTypeId;
-	private String state;
+	private String state,ruleName;
+	
+	public String getRuleName() {
+		return ruleName;
+	}
+	public void setRuleName(String ruleName) {
+		this.ruleName = ruleName;
+	}
 	public String getState() {
 		return state;
 	}
@@ -534,6 +541,8 @@ public class FilterRequest {
 		builder.append(roleTypeId);
 		builder.append(", state=");
 		builder.append(state);
+		builder.append(", ruleName=");
+		builder.append(ruleName);
 		builder.append("]");
 		return builder.toString();
 	}
