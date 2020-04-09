@@ -305,22 +305,6 @@ public class StolenAndRecoveryServiceImpl {
 		GenericSpecificationBuilder<StolenandRecoveryMgmt> srsb = new GenericSpecificationBuilder<>(propertiesReader.dialect);
 		String ceirAdmin = "CEIRADMIN";
 		String fileStatus = "fileStatus";
-
-		if(ceirAdmin.equalsIgnoreCase(filterRequest.getUserType())) {
-			/*
-			 * if(Objects.nonNull(filterRequest.getUserId())) srsb.orSearch(new
-			 * SearchCriteria("userId", filterRequest.getUserId(), SearchOperation.EQUALITY,
-			 * Datatype.STRING)); else logger.
-			 * info("Usertype in request is must when ceir admin is logged in to the system."
-			 * );
-			 */
-			if(Objects.nonNull(filterRequest.getConsignmentStatus())) {
-				
-			}
-		}else if(!"Lawful Agency".equalsIgnoreCase(filterRequest.getUserType())) {
-			if(Objects.nonNull(filterRequest.getUserId()))
-				srsb.with(new SearchCriteria("userId", filterRequest.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));
-		}
 		
 		if(Objects.nonNull(filterRequest.getStartDate()) && !filterRequest.getStartDate().isEmpty())
 			srsb.with(new SearchCriteria("createdOn", filterRequest.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
@@ -390,6 +374,24 @@ public class StolenAndRecoveryServiceImpl {
 			}
 		}
 
+		if(ceirAdmin.equalsIgnoreCase(filterRequest.getUserType())) {
+			  if(Objects.nonNull(filterRequest.getUserId())) { 
+				  logger.info("Inside ceir admin block.");
+				  srsb.or(new SearchCriteria("userId", filterRequest.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));
+			  }
+			  else 
+				  logger.info("Usertype in request is must when ceir admin is logged in to the system.");
+
+			if(Objects.nonNull(filterRequest.getConsignmentStatus())) {
+				
+			}
+		}else if(!"Lawful Agency".equalsIgnoreCase(filterRequest.getUserType())) {
+			if(Objects.nonNull(filterRequest.getUserId())) {
+				logger.info("Inside !Lawful Agency block.");
+				srsb.with(new SearchCriteria("userId", filterRequest.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));
+			}
+		}
+		
 		if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
 			srsb.orSearch(new SearchCriteria("txnId", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 		}

@@ -36,6 +36,7 @@ public class RuleEngine implements Serializable {
 	
 	@CreationTimestamp
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
+	@Column(updatable = false)
 	private LocalDateTime createdOn;
 
 	@UpdateTimestamp

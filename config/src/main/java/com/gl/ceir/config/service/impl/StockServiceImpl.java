@@ -505,7 +505,7 @@ public class StockServiceImpl {
 			stockMgmt.setTotalPrice(distributerManagement.getTotalPrice());
 
 			if(Objects.nonNull(distributerManagement.getFileName()) && !distributerManagement.getFileName().isEmpty()) {
-				stockMgmt.setStockStatus(StockStatus.PROCESSING.getCode());
+				stockMgmt.setStockStatus(StockStatus.UPLOADING.getCode());
 				stockMgmt.setFileName(distributerManagement.getFileName());
 			}
 

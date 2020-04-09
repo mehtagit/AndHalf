@@ -19,12 +19,14 @@ public class GenericSpecificationBuilder<T> {
 	private static final Logger logger = LogManager.getLogger(GenericSpecificationBuilder.class);
 
 	private final List<SearchCriteria> params;
+	private final List<SearchCriteria> orParams;
 	private final List<SearchCriteria> searchParams;
 	private final String dialect;
 	private List<Specification<T>> specifications;
 
 	public GenericSpecificationBuilder(String dialect) {
 		params = new ArrayList<>();
+		orParams = new ArrayList<>();
 		searchParams = new ArrayList<>();
 		specifications = new LinkedList<>();
 		this.dialect = dialect;
@@ -39,12 +41,19 @@ public class GenericSpecificationBuilder<T> {
 		searchParams.add(criteria);
 		return this;
 	}
+	
+	public final GenericSpecificationBuilder<T> or(SearchCriteria criteria) { 
+		orParams.add(criteria);
+		return this;
+	}
 
 	public Specification<T> build() { 
 		// convert each of SearchCriteria params to Specification and construct combined specification based on custom rules.
 		int j = 0;
 		Specification<T> finalSpecification   = null;
 		Specification<T> searchSpecification  = null;
+		Specification<T> orSpecification  = null;
+		
 		/** Specification added from addSpecification method**/
 		if(!specifications.isEmpty()) {
 			finalSpecification = Specification.where(specifications.get(0));
@@ -78,6 +87,21 @@ public class GenericSpecificationBuilder<T> {
 				finalSpecification = Specification.where(searchSpecification);
 			}
 		}
+		
+		/***If orParams list not empty***/
+		specifications = createSpecifications( orParams );
+		if( !specifications.isEmpty()) {
+			orSpecification = specifications.get(0);
+			for(int i = 1; i<specifications.size() ;i++) {
+				orSpecification = orSpecification.or(specifications.get(i));
+			}
+			if( finalSpecification != null ) {
+				finalSpecification = finalSpecification.or( orSpecification );
+			}else {//If no call of addSpecification method and empty params 
+				finalSpecification = Specification.where(orSpecification);
+			}
+		}
+		
 		return finalSpecification;
 	}
 
@@ -151,5 +175,4 @@ public class GenericSpecificationBuilder<T> {
 	public Specification<T> notIn(String key, List<String> status){
 		return (root, query, cb) -> cb.in(root.get(key)).value(status).not();
 	}
-	
 }

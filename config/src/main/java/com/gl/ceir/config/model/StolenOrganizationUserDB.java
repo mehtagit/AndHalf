@@ -28,7 +28,10 @@ public class StolenOrganizationUserDB implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	// @GeneratedValue(strategy = GenerationType.IDENTITY)
+	// Mysql
+	//@GeneratedValue(strategy = GenerationType.IDENTITY)
+	
+	// Oracle
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ORG_SEQ")
     @SequenceGenerator(sequenceName = "stolen_org_seq", allocationSize = 1, name = "ORG_SEQ")
 	private Long id;
