@@ -128,7 +128,71 @@
 	</section>
 	
 
-    </div>	
+	
+		<div id="editAlertModal" class="modal">
+		<h6 class="modal-header"><spring:message code="modal.header.editAlert" /></h6>
+		<div class="modal-content">
+		<form action="" onsubmit="return updatedAlert()">
+		<div class="row">
+			<div class="row" style="margin-top: 10px;">
+					<div class="input-field col s12 m6 l6">
+						<input type="text" name="period" id="editAlertId"
+							placeholder="Period" disabled>
+						<label for="editAlertId"><spring:message code="table.alertId" /> <span class="star">*</span></label>
+					</div>
+					
+					<input type="text" name="period" id="editId" placeholder="" disabled hidden="hidden">
+					
+					<div class="input-field col s12 m6" style="margin-top:15.5px">
+						<input type="text" id="editfeature" name="feature"
+							placeholder="" maxlength="20" placeholder="Status" disabled>
+						<label for="editfeature"><spring:message code="table.featureName" /> <span class="star">*</span></label>
+					</div>
+				
+					<div class="input-field col s12 m6">
+					<textarea id="editdescription" class="materialize-textarea" placeholder="Description" title="Please enter alphabets and numbers upto 200 characters only" maxlength="200"></textarea>
+					<label for="description" class=""><spring:message code="registration.description" /><span class="star">*</span></label>
+
+					</div>
+				
+					
+				</div>
+
+				
+
+				<div class="row input_fields_wrap">
+					<div class="col s12 m12 center" style="margin-top: 10px;">
+					<button class="btn " type="submit"><spring:message code="button.update" /></button>
+					<button class="modal-close btn" type="button" style="margin-left: 10px;"><spring:message code="button.cancel" /></button>
+				</div>
+
+				</div>
+			</div>
+			</form>
+		</div>
+	</div>
+	
+		<!-- Modal 3 start   -->
+
+	<div id="updateAlertSuccess" class="modal">
+		<h6 class="modal-header"><spring:message code="modal.header.editAlert" /></h6>
+		<div class="modal-content">
+
+
+
+			<div class="row">
+				<h6 id="sucessMessage"> <spring:message code="registration.alertEditSuccessfully" /></h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<a href="${context}/alertManagment" class="btn"> <spring:message code="modal.ok" /></a>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+  
 <!--materialize js-->
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>

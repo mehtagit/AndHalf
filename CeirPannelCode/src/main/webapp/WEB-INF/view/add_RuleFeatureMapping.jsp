@@ -170,7 +170,7 @@ section {
 						<div class="col s12 m12 l12">
 							<div class="row card-panel">
 								<form action="" onsubmit="return save()" method="POST"
-									enctype="multipart/form-data" id="register" novalidate="novalidate">
+									enctype="multipart/form-data" id="register">
 									<div class="container-fluid pageHeader">
 										<p class="PageHeading">
 											<spring:message code="button.add" />
@@ -339,30 +339,21 @@ section {
 		</div>
 	</div>
 	
-	
-
-	<div id="submitConsignment" class="modal">
-		<h6 class="modal-header">
-			<spring:message code="modal.header.submitConsignment" />
-		</h6>
-		<div class="modal-content">
-			<div class="row">
-				<h6 id="sucessMessage">
-					<spring:message code="modal.message.futureRef" />
-				</h6>
-				<input type="text" style="display: none" id="errorCode">
-			</div>
-			<div class="row">
-				<div class="input-field col s12 center">
-					<form action="${context}/Consignment/viewConsignment"
-						id="closeOkPop" method="POST">
-						<a onclick="closeConfirmation()" class="btn"><spring:message
-								code="modal.ok" /></a>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
+	<div id="successModal" class="modal">
+     <h6 class="modal-header" style="margin:0px;"><spring:message code="button.add" /></h6>
+        <div class="modal-content">
+            
+            <div class="row">
+                <h6 id="updateFieldMessage">Successfully Added New Rule FeatureMapping.</h6>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <a class="modal-close btn" href="${context}/ruleFeatureMav?FeatureId=30"><spring:message code="modal.ok" /></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
 	<div id="cancelMessage" class="modal">
 		<h6 class="modal-header">
 			<spring:message code="modal.cancelrequest" />

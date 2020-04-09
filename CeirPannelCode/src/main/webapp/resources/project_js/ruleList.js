@@ -164,10 +164,10 @@
 
 
 
-			function getDetailBy(id){
+			function getDetailBy(id,output){
 			
 				window.xid=id;
-				
+				window.xoutput=output;
 				$.ajax({
 					url : "./viewRuleListAPI/"+id,
 					dataType : 'json',
@@ -204,7 +204,8 @@
 						"name":name,
 						"description":description,
 						"state":state,
-						"id":window.xid
+						"id":window.xid,
+						"output":window.xoutput
 						
 				}
 	
@@ -220,29 +221,7 @@
 						$("#updateFieldsSuccess").openModal({
 					        dismissible:false
 					    });
-					/*	$('#updateModal').closeModal();
-
-						$('#updateConsignment').openModal({
-							dismissible:false
-						});
-						if(data.errorCode==200){
-
-
-							$('#sucessMessage').text('');
-							$('#sucessMessage').text(data.message);
-						}
-
-						else if (data.errorCode==0){
-
-							$('#sucessMessage').text('');
-							$('#sucessMessage').text(updateMsg+" "+ (data.txnId) +" "+hasBeenUpdated);
-						}
-						else 
-						{
-							$('#sucessMessage').text('');
-							$('#sucessMessage').text(data.message);
-						}
-*/
+					
 					},
 					error: function (jqXHR, textStatus, errorThrown) {
 						

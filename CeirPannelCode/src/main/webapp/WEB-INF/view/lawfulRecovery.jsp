@@ -153,12 +153,34 @@ select.browser-default {
                                                 <form action="" id="" onsubmit="return saveIndivisualRecoveryRequest()" method="POST" enctype="multipart/form-data">
                                                     <div class="row">
                                                         <div class="col-s12 m12">
-                                                             <div class="input-field col s12 m6">
-                                                                <input type="text" name="sigleRecoverydeviceBrandName" id="sigleRecoverydeviceBrandName" pattern="[a-zA-Z]{0,30}" 
+                                                             <div class="col s12 m6">
+                                                             
+                                                             <label for="sigleRecoverydeviceBrandName"><spring:message
+													code="registration.devicebrandname" /> <span class="star"></span></label>
+											<select id="sigleRecoverydeviceBrandName" class="browser-default"
+												onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+												oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');">
+												<option value="" disabled selected><spring:message
+														code="registration.selectproduct" />
+												</option></select>
+                                                               <%--  <input type="text" name="sigleRecoverydeviceBrandName" id="sigleRecoverydeviceBrandName" pattern="[a-zA-Z]{0,30}" 
                                                      oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');" 
                                                      oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
                                                                  maxlength="30">
-                                                                <label for="sigleRecoverydeviceBrandName"><spring:message code="registration.devicebrandname" /></label>
+                                                                <label for="sigleRecoverydeviceBrandName"><spring:message code="registration.devicebrandname" /></label> --%>
+                                                            </div>
+                                                             <div class="col s12 m6">
+                                                           
+                                                           <label for="singleRecoverymodalNumber"><spring:message
+														code="registration.modelnumber" /> <span id="modalNumerSpan" class="star" style="display: none;">*</span></label>
+												<select id="singleRecoverymodalNumber" class="browser-default"
+													onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+													oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+													>
+													<option value="" disabled selected>
+														<spring:message code="registration.selectmodelnumber" /></option>
+
+												</select>
                                                             </div>
 <%-- 
                                                             <div class="input-field col s12 m6" style="margin-top: 22px;">
@@ -325,7 +347,7 @@ select.browser-default {
                                                                 required></select>
                                                             </div>
 
-                                                            <div class="col s6 m6 ">
+                                                           <%--  <div class="col s6 m6 ">
                                                                 <label for="sigleRecoverydeviceStatus"><spring:message code="select.deviceStatus" /> <span class="star"> *</span></label>
                                                                 <select id="sigleRecoverydeviceStatus" class="browser-default" 
                                                                 oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" 
@@ -333,7 +355,7 @@ select.browser-default {
                                                                required >
                                                         	 <option value="" disabled selected><spring:message code="select.deviceStatus" /></option>
                                                                 </select>
-                                                              </div>
+                                                              </div> --%>
 
 
 
@@ -739,6 +761,32 @@ src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/j
         	$('#fileFormateModal').closeModal();
         	
         }
+        
+        $.getJSON('./productList', function(data) {
+        	for (i = 0; i < data.length; i++) {
+        		$('<option>').val(data[i].id).text(data[i].brand_name)
+        				.appendTo('#sigleRecoverydeviceBrandName');
+        	}
+        });
+
+        $('#sigleRecoverydeviceBrandName').on(
+        		'change',
+        		function() {
+        			$("#singleRecoverymodalNumber").attr("required", false);
+        			$("#modalNumerSpan").css("display", "none");
+        			var brand_id = $('#sigleRecoverydeviceBrandName').val();
+        			$.getJSON('./productModelList?brand_id=' + brand_id,
+        					function(data) {
+        						$("#singleRecoverymodalNumber").empty();
+        						for (i = 0; i < data.length; i++) {
+        							$('<option>').val(data[i].id).text(
+        									data[i].modelName).appendTo('#singleRecoverymodalNumber');
+        						}
+        					});
+        		});
+
+
+
 </script>
 		
 

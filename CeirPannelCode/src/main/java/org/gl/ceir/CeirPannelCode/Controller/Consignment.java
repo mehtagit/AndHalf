@@ -474,9 +474,6 @@ public @ResponseBody FileExportResponse downloadFile(@PathVariable("transactionN
 log.info("inside file download method"+doc_TypeTag);
 
 
-String extension = fileName.substring(fileName.lastIndexOf("."));
-log.info("fileExtension==="+extension);
-
 if (filetype.equalsIgnoreCase("actual"))
 {
 
@@ -487,6 +484,10 @@ if (!doc_TypeTag.equals("DEFAULT"))
 	File tmpDir = new File(rootPath+fileName);
 	boolean exists = tmpDir.exists();
 	if(exists) {
+
+String extension = fileName.substring(fileName.lastIndexOf("."));
+log.info("fileExtension==="+extension);
+
 				if(extension.equalsIgnoreCase(".png") || extension.equalsIgnoreCase(".jpeg") || extension.equalsIgnoreCase(".gif") || extension.equalsIgnoreCase("jpg"))		
 				{
 					response=feignCleintImplementation.downloadFile(txnid,filetype,fileName.replace("%20", " "),doc_TypeTag);
@@ -525,7 +526,7 @@ else if(filetype.equalsIgnoreCase("error"))
 	File tmpDir = new File(rootPath);
 	boolean exists = tmpDir.exists();
 	if(exists) {
-       log.info(" error file is exist.");
+     log.info(" error file is exist.");
 	}
 	else {
 		log.info(" error file is not exist.");
@@ -538,7 +539,8 @@ else if(filetype.equalsIgnoreCase("error"))
 
 log.info(" everything is fine for hit to api for file downloading");
 log.info("request send to the download file api= txnid("+txnid+") fileName ("+fileName+") fileType ("+filetype+")"+doc_TypeTag);
- response=feignCleintImplementation.downloadFile(txnid,filetype,fileName.replace("%20", " "),doc_TypeTag);
+response=feignCleintImplementation.downloadFile(txnid,filetype,fileName.replace("%20", " "),doc_TypeTag);
+
 log.info("response of download api="+response+"------------------"+fileName.replace("%20", " "));
 log.info("redirect:"+response.getUrl());
 //ModelAndView mv= new ModelAndView(("redirect:"+ URLEncoder.encode(response.getUrl(), "UTF-8")));

@@ -26,10 +26,9 @@
 		//**************************************************filter table**********************************************
 
 		function table(url,dataUrl){
-			var Feature= $("#Feature").val() == undefined ? null : $("#Feature option:selected").text();
-			var Rule= $("#Rule").val() == undefined ? null : $("#Rule option:selected").text();
-
-			var User= $("#User").val() == undefined ? null : $("#User option:selected").text();
+			var Feature= $("#Feature").val();
+			var Rule= $("#Rule").val();
+			var User= $("#User").val();
 
 			
 			
@@ -151,7 +150,12 @@
 					
 						for(i=0; i<button.length; i++){
 							$('#'+button[i].id).text(button[i].buttonTitle);
-							$('#'+button[i].id).attr("href", button[i].buttonURL);
+							if(button[i].type === "HeaderButton"){
+								$('#'+button[i].id).attr("href", button[i].buttonURL);
+							}
+							else{
+								$('#'+button[i].id).attr("onclick", button[i].buttonURL);
+							}
 						}
 
 				
@@ -295,29 +299,7 @@
 					$("#updateFieldsSuccess").openModal({
 				        dismissible:false
 				    });
-				/*	$('#updateModal').closeModal();
 
-					$('#updateConsignment').openModal({
-						dismissible:false
-					});
-					if(data.errorCode==200){
-
-
-						$('#sucessMessage').text('');
-						$('#sucessMessage').text(data.message);
-					}
-
-					else if (data.errorCode==0){
-
-						$('#sucessMessage').text('');
-						$('#sucessMessage').text(updateMsg+" "+ (data.txnId) +" "+hasBeenUpdated);
-					}
-					else 
-					{
-						$('#sucessMessage').text('');
-						$('#sucessMessage').text(data.message);
-					}
-*/
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
 					
