@@ -326,6 +326,12 @@ public class FilterRequest {
 		builder.append(imei);
 		builder.append(", contactNumber=");
 		builder.append(contactNumber);
+		builder.append(", filteredUserId=");
+		builder.append(filteredUserId);
+		builder.append(", state=");
+		builder.append(state);
+		builder.append(", ruleName=");
+		builder.append(ruleName);
 		builder.append("]");
 		return builder.toString();
 	}

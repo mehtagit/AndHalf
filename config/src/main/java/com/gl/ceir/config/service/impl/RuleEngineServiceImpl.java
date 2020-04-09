@@ -105,7 +105,7 @@ public class RuleEngineServiceImpl {
 	private GenericSpecificationBuilder<RuleEngine> buildSpecification(FilterRequest filterRequest){
 		GenericSpecificationBuilder<RuleEngine> cmsb = new GenericSpecificationBuilder<>(propertiesReader.dialect);
 		
-		if(Objects.nonNull(filterRequest.getStatus()))
+		if(Objects.nonNull(filterRequest.getState()))
 			cmsb.with(new SearchCriteria("state", filterRequest.getState(), SearchOperation.EQUALITY, Datatype.STRING));
 
 		return cmsb;
