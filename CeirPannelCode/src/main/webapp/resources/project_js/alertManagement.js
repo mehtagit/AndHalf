@@ -56,7 +56,8 @@
 					"userId":parseInt(userId),
 					"featureId":parseInt(featureId),
 					"userTypeId": parseInt($("body").attr("data-userTypeID")),
-					"userType":$("body").attr("data-roleType")
+					"userType":$("body").attr("data-roleType"),
+					"alertId" : $("#alertId option:selected").text()
 					
 			}				
 			if(lang=='km'){
@@ -151,7 +152,7 @@
 						 
 					} 
 				
-				/*// dynamic dropdown portion
+				// dynamic dropdown portion
 					var dropdown=data.dropdownList;
 					for(i=0; i<dropdown.length; i++){
 						var dropdownDiv=
@@ -162,15 +163,15 @@
 									"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
 
 									"<select id="+dropdown[i].id+" class='select2 initialized'>"+
-									"<option value='' selected Disabled >"+dropdown[i].title+
+									"<option value= 'null' selected Disabled >"+dropdown[i].title+
 									"</option>"+
 									"</select>"+
 									"</div>"+
 							"</div>");
-					}*/
+					}
 
 						$("#alertTableDiv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
-						$("#alertTableDiv").append("<div class=' col s3 m2 l7'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportAlertData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+						$("#alertTableDiv").append("<div class=' col s3 m2 l5'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportAlertData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 						for(i=0; i<button.length; i++){
 							$('#'+button[i].id).text(button[i].buttonTitle);
 							$('#'+button[i].id).attr("onclick", button[i].buttonURL);
@@ -179,9 +180,18 @@
 				}
 			}); 
 			
-			
+			setAllDropdown();
 		
 	}
+		
+		function setAllDropdown(){
+			$.getJSON('./getAllAlerts', function(data) {
+			for (i = 0; i < data.length; i++) {
+			$('<option>').val(data[i].id).text(data[i].alertId).appendTo('#alertId');
+			}
+		});
+			
+		}	
 
 
 
@@ -198,7 +208,7 @@
 			var info = table.page.info(); 
 			var pageNo=info.page;
 			var pageSize =info.length;
-			
+			var alertId = $('#alertId').val() == null ? null : $("#alertId option:selected").text();
 			var filterRequest={
 					"endDate":$('#endDate').val(),
 					"startDate":$('#startDate').val(),
@@ -210,7 +220,8 @@
 					"pageSize":parseInt(pageSize),
 					"userTypeId": parseInt($("body").attr("data-userTypeID")),
 					"userType":$("body").attr("data-roleType"),
-					"userId" : $("body").attr("data-userID")
+					"userId" : $("body").attr("data-userID"),
+					"alertId" : alertId
 					
 					
 			}

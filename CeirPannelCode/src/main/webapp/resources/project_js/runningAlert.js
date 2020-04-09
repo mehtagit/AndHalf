@@ -205,6 +205,7 @@
 			var info = table.page.info(); 
 			var pageNo=info.page;
 			var pageSize =info.length;
+			var alertId = $('#alertId').val() == null ? null : $("#alertId option:selected").text();
 			
 			var filterRequest={
 					"endDate":$('#endDate').val(),
@@ -218,7 +219,7 @@
 					"userTypeId": parseInt($("body").attr("data-userTypeID")),
 					"userType":$("body").attr("data-roleType"),
 					"userId" : $("body").attr("data-userID"),
-					"alertId" : $("#alertId").val()
+					"alertId" : alertId
 					
 					
 			}

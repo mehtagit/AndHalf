@@ -528,6 +528,7 @@ function saveIndivisualStolenRequest(){
 			"blockingType":blockingType,
 			"requestType":0,
 			"sourceType":5,
+			"fileName":uploadedFileName,
 			"firFileName":fileFileDetails,
 			"complaintType": singleStolenComplaintType,
 			"operatorTypeId":singleStolenOperator,
@@ -558,7 +559,7 @@ function saveIndivisualStolenRequest(){
 				$('#IndivisualStolenSucessPopup').openModal({
 					dismissible:false
 				});
-				$('#sucessMessage').text(data.message);
+				$('#sucessMessage').text(response.message);
 			}
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
@@ -684,7 +685,7 @@ function saveCompanyStolenRequest(){
 				$('#regularisedDevice').openModal({
 					dismissible:false
 				});
-				$('#sucessMessage').text(data.message);
+				$('#sucessMessage').text(response.message);
 			}
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
@@ -880,5 +881,28 @@ function clearFileName() {
 	$('#fileFormateModal').closeModal();
 	$('#FilefieldId').val('');
 }
+
+
+$.getJSON('./productList', function(data) {
+	for (i = 0; i < data.length; i++) {
+		$('<option>').val(data[i].id).text(data[i].brand_name)
+				.appendTo('#singleStolendeviceBrandName');
+	}
+});
+
+$('#singleStolendeviceBrandName').on(
+		'change',
+		function() {
+			var brand_id = $('#singleStolendeviceBrandName').val();
+			$.getJSON('./productModelList?brand_id=' + brand_id,
+					function(data) {
+						$("#singleStolenmodalNumber").empty();
+						for (i = 0; i < data.length; i++) {
+							$('<option>').val(data[i].id).text(
+									data[i].modelName).appendTo(
+									'#singleStolenmodalNumber');
+						}
+					});
+		});
 
 

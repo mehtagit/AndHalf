@@ -8,6 +8,13 @@ public class FilterRequest {
 	private Integer pageNo, pageSize,userId,taxPaidStatus,consignmentStatus,featureId,userTypeId,fileStatus,requestType,sourceType,grievanceStatus,userRoleTypeId,status,asType,serviceDump,fileType,action,operatorTypeId,channel,type,deviceIdType,parentValue,id,port,currency,quantity,stockStatus,feature,period;
 	private Double dollar,riel;
 	private int roleTypeId;
+	private String state;
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
+	}
 	public String getStartDate() {
 		return startDate;
 	}
@@ -525,6 +532,8 @@ public class FilterRequest {
 		builder.append(riel);
 		builder.append(", roleTypeId=");
 		builder.append(roleTypeId);
+		builder.append(", state=");
+		builder.append(state);
 		builder.append("]");
 		return builder.toString();
 	}
