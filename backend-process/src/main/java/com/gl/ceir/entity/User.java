@@ -17,6 +17,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gl.ceir.util.Utility;
@@ -47,15 +48,17 @@ public class User {
 	
     private Integer previousStatus;
 	
+    @NotAudited
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	UserProfile userProfile;
 	
+	@NotAudited
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "usertype_id", nullable = false) private Usertype
-	usertype;
+	@JoinColumn(name = "usertype_id", nullable = false) 
+	private Usertype usertype;
 	
 	
-	
+	@NotAudited
 	@JsonIgnore
 	@OneToMany(mappedBy = "userData", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	private List<Userrole> userRole;

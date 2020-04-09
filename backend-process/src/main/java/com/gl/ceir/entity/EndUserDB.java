@@ -77,7 +77,7 @@ public class EndUserDB implements Serializable {
 	private Integer docTypeInterp;
 
 	@NotAudited
-	@OneToMany(mappedBy = "endUserDB", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "endUserDB", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, orphanRemoval = true)
 	private List<RegularizeDeviceDb> regularizeDeviceDbs ;
 	
 	@Column(length = 50)
@@ -88,14 +88,14 @@ public class EndUserDB implements Serializable {
 	private String onVisa="N";
 	
 	@NotAudited
-	@OneToMany(mappedBy = "endUserDB", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "endUserDB", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, orphanRemoval = true)
 	private List<VisaDb> visaDb;
 	
 	@Column(length = 1)
 	private String isVip="N";
 	
 	@NotAudited
-	@OneToOne(mappedBy = "endUserDB", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = true)
+	@OneToOne(mappedBy = "endUserDB", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, optional = true, orphanRemoval = true)
 	private UserDepartment userDepartment;
 	
 	@Column(length = 50)

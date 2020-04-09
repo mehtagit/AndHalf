@@ -41,8 +41,8 @@ public class UsersServiceImpl {
 		}
 	}
 	
-	public void deleteSomeUser(List<Long> ids) {
-		userRepository.deleteUsersWithIds(ids);
+	public void deleteUserById(Long id) {
+		userRepository.deleteById(id);
 	}
 
 	private GenericSpecificationBuilder<User> buildSpecification(String date){

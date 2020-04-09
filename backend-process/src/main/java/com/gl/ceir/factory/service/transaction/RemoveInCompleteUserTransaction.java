@@ -14,17 +14,19 @@ import com.gl.ceir.service.UsersServiceImpl;
 @Component
 @Transactional(rollbackOn = Exception.class)
 public class RemoveInCompleteUserTransaction {
-	
+
 	@Autowired
 	UsersServiceImpl usersServiceImpl;
-	
+
 	@Autowired
 	NotifierWrapper notifierWrapper;
-	
+
 	public void performTransaction(List<Long> userIds, List<RawMail> rawMails) {
 
-		usersServiceImpl.deleteSomeUser(userIds);
-		
+		for(Long id : userIds) {
+			usersServiceImpl.deleteUserById(id);
+		}
+
 		notifierWrapper.saveNotification(rawMails);
 	}
 
