@@ -44,12 +44,14 @@ $(document).ready(function() {
 		type: 'GET',
 		processData: false,
 		contentType: false,
+		async:false,
 		success: function (data, textStatus, jqXHR) {
 			console.log(data)
 			for (i = 0; i < data.length; i++) {
 				$('<option>').val(data[i].id).text(data[i].brand_name)
 						.appendTo('#editsingleStolendeviceBrandName');
 			}
+			
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
 			console.log("error in ajax")
@@ -58,10 +60,11 @@ $(document).ready(function() {
 	});
 	
 	$('div#initialloader').fadeIn('fast');
-	  setTimeout(function(){ 
+	 viewIndivisualStolen();   
+	/*setTimeout(function(){ 
 	 		 
- 		  viewIndivisualStolen(); 
- 		  }, 1000);
+ 		 
+ 		  }, 1000);*/
 	
 		/*var promise = new Promise(function(resolve, reject) {
 			alert("promise");
@@ -91,8 +94,7 @@ $(document).ready(function() {
 
 function viewIndivisualStolen()
 {
-
-
+	
 	var txnid=$('#existingStolenTxnId').val();
 
 	$.ajax({
@@ -159,6 +161,8 @@ function viewIndivisualStolen()
 			$('#editsingleStolendeviceBrandName').val(response.stolenIndividualUserDB.deviceBrandName).change();
 			//alert(response.stolenIndividualUserDB.deviceBrandName);
 			$('#editsingleStolenmodalNumber').val(response.stolenIndividualUserDB.modelNumber);
+		/*	$('#editsingleStolenmodalNumber').val('6774');*/
+			/*alert($('#editsingleStolenmodalNumber').val());*/
 			$('#singleStolenFileName').val(response.fileName);
 			$('#updatesingleStolenimei1').val(response.stolenIndividualUserDB.imeiEsnMeid1);
 			$('#updatesingleStolenimei2').val(response.stolenIndividualUserDB.imeiEsnMeid2);
@@ -524,6 +528,9 @@ setTimeout(function(){
 function changeBrandValue(brand_id){
 	//alert("ss"+brand_id);
 	//var brand_id = $('#editsingleStolendeviceBrandName').val();
+	$.ajaxSetup({
+		async: false
+		});
 	$.getJSON('./productModelList?brand_id=' + brand_id,
 			function(data) {
 				$("#editsingleStolenmodalNumber").empty();

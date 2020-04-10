@@ -13,9 +13,12 @@ $(document).ready(function() {
  // executes when HTML-Document is loaded and DOM is ready
 	
 	//alert("ready");
-
+	$.ajaxSetup({
+		async: false
+		});
 	$.getJSON('./productList', function(data) {
 	 	console.log("start");
+	 
 		 console.log(data)
 	 		for (i = 0; i < data.length; i++) {
 	 			
@@ -23,21 +26,20 @@ $(document).ready(function() {
 	 					.appendTo('#editsigleRecoverydeviceBrandName');
 	 			
 	 		}
+			alert("after loop");
 		/* setBrandName();*/
 		 
 	 	})
 	 	 $('div#initialloader').fadeIn('fast');
-	 	  setTimeout(function(){ 
-	 		 
-	 		  viewIndivisualStolen(); 
-	 		  }, 1000);
+	 	    viewIndivisualStolen(); 
+	 		  
 
 	});
 
 
 function viewIndivisualStolen()
 {
-
+	alert("in view");
 	
 var txnid=$('#existingStolenTxnId').val();
 	
@@ -214,6 +216,9 @@ $('#editsigleRecoverydeviceBrandName').on(
 			var brand_id = $('#editsigleRecoverydeviceBrandName').val();
 		//	alert("ss"+brand_id);
 			console.log("ss"+brand_id);
+			$.ajaxSetup({
+				async: false
+				});
 			$.getJSON('./productModelList?brand_id=' + brand_id,
 					function(data) {
 						$("#editsingleRecoverymodalNumber").empty();
