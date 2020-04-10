@@ -15,79 +15,79 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.envers.Audited;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 @Entity
 @Audited
-public class Userrole {
+public class UserPasswordHistory {
 	private static long serialVersionUID = 1L;
-	@Id    
+	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private long id;   
+	
+	
+	@ManyToOne
+	@JoinColumn(name = "user_id", nullable = false)
+	User userPassword;
+	private String password;
 	
 	@Column(nullable =false)
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
 	@CreationTimestamp
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime createdOn;
-	
-	
+
 	@Column(nullable =false)
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
 	@UpdateTimestamp
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime modifiedOn;
+	
+	
+	public UserPasswordHistory() {
+		super();
+	}
+	
+	public UserPasswordHistory(String password) {
+		super();
+		this.password = password;
+	}
 
-	@ManyToOne 
-	@JoinColumn(name = "user_id",nullable = false) 
-	private User userData;
-	   
-	@ManyToOne 
-	@JoinColumn(name = "usertype_id",nullable = false) 
-	private Usertype usertypeData; 
-   
+	public UserPasswordHistory(User userPassword, String password) {
+		super();
+		this.userPassword = userPassword;
+		this.password = password;
+	}
 	public long getId() {
 		return id;
 	}
-
 	public void setId(long id) {
 		this.id = id;
 	}
-
-	public User getUserData() {
-		return userData;
+	public User getUserPassword() {
+		return userPassword;
 	}
-
-	public void setUserData(User userData) {
-		this.userData = userData;
+	public void setUserPassword(User userPassword) {
+		this.userPassword = userPassword;
 	}
-
-	public Usertype getUsertypeData() {
-		return usertypeData;
+	public String getPassword() {
+		return password;
 	}
-
-	public void setUsertypeData(Usertype usertypeData) {
-		this.usertypeData = usertypeData;
+	public void setPassword(String password) {
+		this.password = password;
 	}
-
-	@Override
-	public String toString() {
-		return "Userrole [id=" + id + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + "]";
-	}
-
+	
 	public LocalDateTime getCreatedOn() {
 		return createdOn;
 	}
-
 	public void setCreatedOn(LocalDateTime createdOn) {
 		this.createdOn = createdOn;
 	}
-
 	public LocalDateTime getModifiedOn() {
 		return modifiedOn;
 	}
-
 	public void setModifiedOn(LocalDateTime modifiedOn) {
 		this.modifiedOn = modifiedOn;
 	}
-
+	@Override
+	public String toString() {
+		return "UserPasswordHistory [id=" + id + ", password=" + password + ", createdOn=" + createdOn + ", modifiedOn="
+				+ modifiedOn + "]";
 	}
+}
