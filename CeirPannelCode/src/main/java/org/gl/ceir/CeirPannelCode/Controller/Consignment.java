@@ -526,7 +526,7 @@ else if(filetype.equalsIgnoreCase("error"))
 	File tmpDir = new File(rootPath);
 	boolean exists = tmpDir.exists();
 	if(exists) {
-       log.info(" error file is exist.");
+     log.info(" error file is exist.");
 	}
 	else {
 		log.info(" error file is not exist.");
@@ -539,7 +539,8 @@ else if(filetype.equalsIgnoreCase("error"))
 
 log.info(" everything is fine for hit to api for file downloading");
 log.info("request send to the download file api= txnid("+txnid+") fileName ("+fileName+") fileType ("+filetype+")"+doc_TypeTag);
- response=feignCleintImplementation.downloadFile(txnid,filetype,fileName.replace("%20", " "),doc_TypeTag);
+response=feignCleintImplementation.downloadFile(txnid,filetype,fileName.replace("%20", " "),doc_TypeTag);
+
 log.info("response of download api="+response+"------------------"+fileName.replace("%20", " "));
 log.info("redirect:"+response.getUrl());
 //ModelAndView mv= new ModelAndView(("redirect:"+ URLEncoder.encode(response.getUrl(), "UTF-8")));

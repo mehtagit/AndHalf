@@ -333,7 +333,7 @@ select {
 													<div class="input-field col s12 m6 l6">
 														<input type="text" name="pin"
 															class="form-control boxBorder boxHeight"
-															id="singleStolenpin" pattern="[0-9]{1,6}"
+															id="singleStolenpin" pattern="[0-9]{6,6}"
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');"
 															maxlength="6" required > <label for="singleStolenpin">
@@ -376,7 +376,7 @@ select {
 																<spring:message code="registration.devicebrandname" />
 															</label> --%>
 															<label for="singleStolendeviceBrandName"><spring:message
-													code="registration.productname" /> <span class="star">*</span></label>
+													code="registration.devicebrandname" /> <span class="star">*</span></label>
 											<select id="singleStolendeviceBrandName" class="browser-default"
 												onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 												oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
@@ -525,9 +525,9 @@ select {
 
 														<div class="input-field col s12 m6">
 															<input type="text" name="imeiNumber" pattern="[0-9]{15,16}" oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
-																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');" required="required" 
+																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"  
 																maxlength="16" id="singleStolenimei1"> 
-																<label for="singleStolenimei1"><spring:message code="registration.one" /> <span class="star"> *</span> 
+																<label for="singleStolenimei1"><spring:message code="registration.one" /> <span class="star"> </span> 
 																</label>
 														</div>
 
@@ -650,7 +650,7 @@ select {
 														<div class="input-field col s12 m6 l6">
 															<input type="text" name="pin"
 																class="form-control boxBorder boxHeight"
-																id="singleDevicepin" pattern="[0-9]{1,6}"
+																id="singleDevicepin" pattern="[0-9]{6,6}"
 																oninput="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');"
 																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');"
 																required maxlength="6"> <label for="singleDevicepin">
@@ -832,7 +832,7 @@ select {
 											<div class="input-field col s12 m6 l6">
 												<input type="text" name="pin"
 													class="form-control boxBorder boxHeight" id="bulkStolenpin"
-													pattern="[0-9]{0,6}"
+													pattern="[0-9]{6,6}"
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');"
 													required maxlength="6"> <label for="bulkStolenpin"> <spring:message
@@ -918,10 +918,10 @@ select {
 											<div class="input-field col s12 m6">
 												<!-- <p class="contact-label">Alternate Contact Number <span class="star">*</span></p> -->
 												<input type="text" name="phone" id="bulkStolenContact"
-													pattern="[0-9\s,+]{7,12}"
+													pattern="[0-9\s,+]{7,15}"
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.contact" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.contact" />');"
-													maxlength="12" /> <label for="bulkStolenContact"> <spring:message
+													maxlength="15" /> <label for="bulkStolenContact"> <spring:message
 														code="input.contactNum" /></label>
 											</div>
 
@@ -1015,7 +1015,7 @@ select {
 											<div class="input-field col s12 m6 l6">
 												<input type="text" name="pin"
 													class="form-control boxBorder boxHeight"
-													id="deviceBulkStolenpin" pattern="[0-9]{0,6}"
+													id="deviceBulkStolenpin" pattern="[0-9]{6,6}"
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');"
 													required maxlength="6"> <label for="deviceBulkStolenpin">

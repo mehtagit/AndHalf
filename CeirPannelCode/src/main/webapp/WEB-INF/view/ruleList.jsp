@@ -144,7 +144,7 @@
 
 
 					<div class="input-field col s12 m6">
-					<textarea id="editDescription" class="materialize-textarea" Placeholder="" placeholder=""  maxlength="200"></textarea>
+					<textarea id="editDescription" class="materialize-textarea" Placeholder="" placeholder=""  maxlength="200" style="padding-top: 8px !important;"></textarea>
 					<label for="editdescription" class=""><spring:message code="registration.description" /></label>
 
 					</div>

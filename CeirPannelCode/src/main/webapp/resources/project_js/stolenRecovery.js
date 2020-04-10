@@ -444,7 +444,11 @@ function pageElements(url){
 
 	//$("#filterBtnDiv").append();
 	}); 
-
+	
+	if($("body").attr("data-roleType")=="CEIRAdmin"){
+		$("#btnLink").css({display: "none"});
+	}
+	
 	setAllDropdowns();
 	/*if(userType=="CEIRAdmin"){
 		$("#btnLink").css({display: "none"});

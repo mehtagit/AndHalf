@@ -54,33 +54,11 @@ function save(){
 		contentType : 'application/json; charset=utf-8',
 		type : 'POST',
 		success: function (data, textStatus, jqXHR) {
-			$("#confirmField").openModal({
+			$("#successModal").openModal({
 		        dismissible:false
 		    });
 
-			/*	$('#updateModal').closeModal();
-
-			$('#updateConsignment').openModal({
-				dismissible:false
-			});
-			if(data.errorCode==200){
-
-
-				$('#sucessMessage').text('');
-				$('#sucessMessage').text(data.message);
-			}
-
-			else if (data.errorCode==0){
-
-				$('#sucessMessage').text('');
-				$('#sucessMessage').text(updateMsg+" "+ (data.txnId) +" "+hasBeenUpdated);
-			}
-			else 
-			{
-				$('#sucessMessage').text('');
-				$('#sucessMessage').text(data.message);
-			}
-			 */
+			
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
 

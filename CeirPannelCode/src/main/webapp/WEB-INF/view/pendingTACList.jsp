@@ -87,7 +87,7 @@ var path="${context}";
 
 </head>
 
-<body data-id="6" data-roleType="${usertype}" data-userTypeID="${usertypeId}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${stolenselectedUserTypeId}" 
+<body data-id="38" data-roleType="${usertype}" data-userTypeID="${usertypeId}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${stolenselectedUserTypeId}" 
 data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}"
  data-grievanceStatus="${grievanceStatus}" session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}">
 
@@ -104,17 +104,17 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}"
 						<div class="row card-panel">
 							<div class="container-fluid pageHeader" id="pageHeader">
 
-								<a href="" class="boton right" id="btnLink"></a>
+								<a href="" class="boton right" id="btnLink" hidden="hidden"></a>
 							</div>
-							<form action="${context}/Grievance/grievanceManagement"
+							<form action="${context}/pendingTacList"
 								method="post">
-								<div class="col s12 m12 l12" id="greivanceTableDiv"
+								<div class="col s12 m12 l12" id="pendingTacTableDiv"
 									style="padding-bottom: 5px; background-color: #e2edef52;">
 									<div id="filterBtnDiv">
 									</div>
 								</div>
 							</form>
-							<table id="grivanceLibraryTable"
+							<table id="pendingTACLibraryTable"
 								class="responsive-table striped display"></table>
 
 						</div>
@@ -127,167 +127,7 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}"
 		<!--end container-->
 	</section>
 	
-	<div id="replyModal" class="modal">
-        <button class="modal-close btn-flat right" onclick="cleanReplyPopUp()">&times;</button>
-             <h6 class="modal-header"><spring:message code="input.reply" /></h6>
-             <div class="modal-content">
-             <form id="replymessageForm" onsubmit="return saveGrievanceReply()" method="POST" enctype="multipart/form-data" >
-            <div class="row">
-                <div class="col s12 m12">
-                    <h6 style="font-weight: bold;"><spring:message code="input.grievID" /><span id="grievanceIdToSave"></span></h6>
-                    <span id="grievanceTxnId" style="display: none;"></span>
-                    <hr>
-                </div>
-				<input type="text" id="existingGrievanceID" style="display: none;">	
-                <div class="col s12 m12" id="viewPreviousMessage">
-                   <!--  <h6 style="float: left; font-weight: bold;" id="mesageUserType"> </h6>
-                    <h6 style="float: left;"></h6>
-                        <span style="float:right;"></span> -->
-                </div>
-               
- <div class="col s12 m12">
-                  <label for="replyRemark" style="margin-top: 7px"><spring:message code="input.remarks" /><span class="star">*</span></label>
-                    <textarea id="replyRemark" class="materialize-textarea" maxlength="200" style="min-height: 3rem"  
-oninput="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');" 
-oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');"
- required></textarea>
-                    
-                    <input type="text" style="display: none" id="grievanceUserid">
-                    <!-- <h6 style="color: #000;">Upload Supporting Document </h6> -->
- 
-                 </div>
-               <!--   <div class="file-field col s12 m12">
-                    <div class="btn"><span>Select File</span><input id="replyFile" type="file" accept=".csv" ></div>
-                    <div class="file-path-wrapper"><input class="file-path validate" type="text"
-                            placeholder="">
-                        <div>
-                            <p id="myFiles"></p>
-                        </div>
-                    </div>
-                </div> -->
-                
- <div id="mainDiv" class="mainDiv">
-<div id="filediv" class="fileDiv">
-<div class="row">
 
-<div class="col s12 m6 l6" style="margin-top: 8px;">
-<label for="Category"><spring:message code="input.documenttype" /></label>
-<select class="browser-default" id="docTypetag1" onchange="enableSelectFile()"
-oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" 
-oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" >
-<option value="" disabled selected><spring:message code="select.documenttype" /> </option>
-
-</select>
-
-</div>
-<div class="file-field col s12 m6">
-<h6 id="supportingdocumentFile" style="color: #000;"><spring:message code="input.supportingdocument" /></h6>
-<div class="btn">
-<span><spring:message code="input.selectfile" /></span>
-<input type="file" name="files[]" id="docTypeFile1" onchange="enableAddMore()" disabled="disabled"
-oninput="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');" 
-oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');" >
-</div>
-<div class="file-path-wrapper">
-<input class="file-path validate" type="text" 
-placeholder="<spring:message code="grievanceFileMessage" />">
-<div>
-<p id="myFiles"></p>
-</div>
-</div>
-</div>
-</div>
-
-
-</div>
-
-</div>
-<div class="col s12 m6 right">
-<button class="btn right add_field_button" disabled="disabled"><span
-style="font-size: 20px;">+</span> <spring:message code="input.addmorefile" /></button>
-</div>
-              <div class="col s12 m12">
-              	<p> <spring:message code="input.requiredfields" /> <span class="star">*</span></p>
-	              <p id="closeTicketCheckbox" style="display: none;">
-	               <label><span><spring:message code="modal.message.griev.closeticket" /></span><input type="checkbox" id="closeTicketCheck" /></label>
-	               </p>
-				<!-- <a href="./Consignment/sampleFileDownload/filetype=sample">Download Sample Format</a><br> -->
-				</div>
-                <div class="col s12 m12 center">
-                 <p id="closeTicketCheckbox" style="float: left; display: none;">
-                        <label>
-                            <span><spring:message code="modal.message.griev.closeticket" /></span>
-                            <input type="checkbox" id="closeTicketCheck" />
-                        </label>
-                    </p>
-                    <button class="right btn" type="submit"><spring:message code="input.reply" /></button>
-                </div>
-            </div>
-            </form>
-        </div>
-    </div>
-    
-    <div id="replyMsg" class="modal">
-    <h6 class="modal-header"><spring:message code="modal.header.grievancereply" /></h6>
-    <div class="modal-content">
-        
-        <div class="row">
-            <h6 id="showReplyResponse"><spring:message code="modal.message.grievance.reply" /><span id="replyGrievanceId"> </span> <spring:message code="modal.issuccessful" /></h6>
-        </div>
-        <div class="row">
-            <div class="input-field col s12 center">
-                <div class="input-field col s12 center">
-                    <a href="./grievanceManagement" class="modal-close btn"><spring:message code="modal.ok" /></a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div id="manageAccount" class="modal">
-<button class="modal-close btn-flat right" data-dismiss="modal">&times;</button>
-<h6 class="modal-header"><spring:message code="modal.header.grievancehistory" /></h6>
-<div class="modal-content">
-<div id="live-chat">
-<div class="chat">
-<div class="chat-history">
-<h6 ><spring:message code="input.grievID" /><span id="viewGrievanceId"></span></h6>
-<div class="chat-message clearfix" id="chatMsg">
-
-</div> <!-- end chat-message -->
-
-
-</div>
-</div>
-</div>
-</div>
-</div>  
-	
-<div id="fileFormateModal" class="modal">
-		<h6 class="modal-header"><spring:message code="fileValidationModalHeader" /></h6>
-		<div class="modal-content">
-			<div class="row">
-				<h6 id="fileErrormessage"><spring:message code="fileValidationName" /><br> <br> <spring:message code="fileValidationFormate" /> <br><br> <spring:message code="fileValidationSize" /> </h6>
-			</div>
-			<div class="row">
-				<div class="input-field col s12 center">
-					<div class="input-field col s12 center">
-						<button class=" btn" onclick="clearFileName()"
-							style="margin-left: 10px;"><spring:message code="modal.ok" /></button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	
-	<div id="viewuplodedModel" class="modal" style="overflow: hidden">
-	<a href="#!" class="modal-close waves-effect waves-green btn-flat">&times;</a>
-		<div class="modal-content">
-			<div class="row">
-					<img src="" id="fileSource" width="400" height="400">
-			</div>
-		</div>
-	</div>
 	<!--materialize js-->
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
@@ -350,7 +190,7 @@ style="font-size: 20px;">+</span> <spring:message code="input.addmorefile" /></b
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
 	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
-	<script type="text/javascript" src="${context}/resources/project_js/grievanceManagement.js"></script>
+	<script type="text/javascript" src="${context}/resources/project_js/pendingTACList.js"></script>
 		<script type="text/javascript"
 		src="${context}/resources/project_js/dragableModal.js"></script>	
 			<script type="text/javascript"

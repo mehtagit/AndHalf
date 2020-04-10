@@ -445,6 +445,15 @@ public @ResponseBody ConfigContentModel viewAdminFeign(FilterRequest filterReque
 					
 					@DeleteMapping(value="rule-engine-mapping") 
 					public @ResponseBody GenricResponse delete(NewRule newRule) ;
+					
+					
+					//***************************************************Admin Pending TAC List Feign********************************
+
+					@RequestMapping(value="/filter/pending-tac-approveddb" ,method=RequestMethod.POST) 
+					public Object pendingTACFeign(@RequestBody FilterRequest filterRequest,
+							@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
+							@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+							@RequestParam(value = "file", defaultValue = "0") Integer file) ;	
 
 }
 

@@ -156,7 +156,7 @@ select.browser-default {
                                                              <div class="col s12 m6">
                                                              
                                                              <label for="sigleRecoverydeviceBrandName"><spring:message
-													code="registration.productname" /> <span class="star"></span></label>
+													code="registration.devicebrandname" /> <span class="star"></span></label>
 											<select id="sigleRecoverydeviceBrandName" class="browser-default"
 												onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 												oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');">
@@ -235,8 +235,8 @@ select.browser-default {
 															<input type="text" name="sigleRecoveryimeiNumber1" pattern="[0-9]{15,16}" 
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');" 
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
-														  maxlength="16" id="sigleRecoveryimeiNumber1" required/> 
-															<label for="sigleRecoveryimeiNumber1"><spring:message code="registration.one" /> <span class="star"> *</span></label>
+														  maxlength="16" id="sigleRecoveryimeiNumber1" /> 
+															<label for="sigleRecoveryimeiNumber1"><spring:message code="registration.one" /> <span class="star"> </span></label>
 														</div>
 														
 														<div class="input-field col s12 m6">
@@ -324,7 +324,7 @@ select.browser-default {
                                 
                                                             <div class="input-field col s12 m6 l6">
                                                                 <input type="text" name="sigleRecoverypin" class="form-control boxBorder boxHeight"
-                                                                    id="sigleRecoverypin" maxlength="6" pattern="[0-9]{0,6}"
+                                                                    id="sigleRecoverypin" maxlength="6" pattern="[0-9]{6,6}"
                                                                     oninput="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');" 
                                                                     oninvalid="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');"
                                                               required />
@@ -578,7 +578,7 @@ onclick="_Services._selectstartDate()"></i></span>
                         
                                                     <div class="input-field col s12 m6 l6">
                                                         <input type="text" name="bulkRecoverypin" class="form-control boxBorder boxHeight"
-                                                            id="bulkRecoverypin" pattern="[0-9]{0,6}" 
+                                                            id="bulkRecoverypin" pattern="[0-9]{6,6}" 
                                                              oninput="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');" 
                                                              oninvalid="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');"
                                                         required  maxlength="6">

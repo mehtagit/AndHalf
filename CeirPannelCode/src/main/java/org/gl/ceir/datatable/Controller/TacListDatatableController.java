@@ -8,6 +8,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Feignclient.UserProfileFeignImpl;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.Class.HeadersTitle.DatatableResponseModel;
@@ -17,23 +18,21 @@ import org.gl.ceir.configuration.Translator;
 import org.gl.ceir.pageElement.model.Button;
 import org.gl.ceir.pageElement.model.InputFields;
 import org.gl.ceir.pageElement.model.PageElement;
-import org.gl.ceir.pagination.model.AlertContentModel;
-import org.gl.ceir.pagination.model.AlertPaginationModel;
-import org.gl.ceir.pagination.model.CurrencyContantModel;
-import org.gl.ceir.pagination.model.CurrencyPaginationModel;
+import org.gl.ceir.pagination.model.TacContentModel;
+import org.gl.ceir.pagination.model.TacPaginitionModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
 
 @RestController
-public class AlertManagementDatatable {
+public class TacListDatatableController {
+
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
 	String className = "emptyClass";
@@ -50,12 +49,14 @@ public class AlertManagementDatatable {
 	@Autowired
 	UserProfileFeignImpl userProfileFeignImpl;
 	@Autowired
-	AlertContentModel alertContentModel;
+	FeignCleintImplementation feignCleintImplementation;
 	@Autowired
-	AlertPaginationModel alertPaginationModel;
+	TacContentModel tacContentModel;
+	@Autowired
+	TacPaginitionModel tacPaginitionModel;
 	
-	@PostMapping("alertManagementData")
-	public ResponseEntity<?> viewAlertRecord(@RequestParam(name="type",defaultValue = "alertManagement",required = false) String role, HttpServletRequest request,HttpSession session) {
+	@PostMapping("pendingTACdata") 
+	public ResponseEntity<?> viewPendingTacList(HttpServletRequest request,HttpSession session) {
 		String userType = (String) session.getAttribute("usertype");
 		int userId=	(int) session.getAttribute("userid");
 		int file=0;
@@ -68,51 +69,50 @@ public class AlertManagementDatatable {
 		Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize ;
 		filterrequest.setSearchString(request.getParameter("search[value]"));
 		log.info("pageSize"+pageSize+"-----------pageNo---"+pageNo);
-		try {
+		try{
 			log.info("request send to the filter api ="+filterrequest);
-			Object response = userProfileFeignImpl.viewAlertRequest(filterrequest,pageNo,pageSize,file);
+			Object response = feignCleintImplementation.pendingTACFeign(filterrequest, pageNo, pageSize, file);
 			log.info("response in datatable"+response);
 			Gson gson= new Gson(); 
 			String apiResponse = gson.toJson(response);
-			alertPaginationModel = gson.fromJson(apiResponse, AlertPaginationModel.class);
-			List<AlertContentModel> paginationContentList = alertPaginationModel.getContent();
-			if(paginationContentList.isEmpty()) {
+			tacPaginitionModel = gson.fromJson(apiResponse, TacPaginitionModel.class);
+			List<TacContentModel> paginationContentList = tacPaginitionModel.getContent();
+			if(paginationContentList.isEmpty()){
 				datatableResponseModel.setData(Collections.emptyList());
+				
 			}else {
-				for(AlertContentModel dataInsideList : paginationContentList) 
+				for(TacContentModel dataInsideList : paginationContentList) 
 				{
 				   String id= String.valueOf(dataInsideList.getId());	
 				   String createdOn= dataInsideList.getCreatedOn();
-				   String modifiedOn = (String) dataInsideList.getModifiedOn();
-				   String alertId = dataInsideList.getAlertId();
-				   String feature = dataInsideList.getFeature();
-				   String description = dataInsideList.getDescription();
+				   String modifiedOn = dataInsideList.getModifiedOn();
+				   String txnId = dataInsideList.getTxnId();
+				   String tac = dataInsideList.getTac();
+				   String userTypeName = dataInsideList.getUserType();
+				   String featureName = dataInsideList.getFeatureName();
 				   String userStatus = (String) session.getAttribute("userStatus");	  
-				   String action = iconState.alertManagementIcons(id);
-				   Object[] finalData={createdOn,modifiedOn,alertId,feature,description,action}; 
+				   String action=iconState.adminPendingTacIcons(id);			   
+				   Object[] finalData={createdOn,modifiedOn,txnId,tac,userTypeName,featureName,action}; 
 				   List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 					finalList.add(finalDataList);
 					datatableResponseModel.setData(finalList);	
-					
 			}
-				
+			
 			}
-			//data set on ModelClass
-			datatableResponseModel.setRecordsTotal(alertPaginationModel.getNumberOfElements());
-			datatableResponseModel.setRecordsFiltered(alertPaginationModel.getTotalElements());
+			datatableResponseModel.setRecordsTotal(tacPaginitionModel.getNumberOfElements());
+			datatableResponseModel.setRecordsFiltered(tacPaginitionModel.getTotalElements());
 			return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK); 
-		}catch(Exception e) {
+		}catch (Exception e) {
 			datatableResponseModel.setRecordsTotal(null);
 			datatableResponseModel.setRecordsFiltered(null);
 			datatableResponseModel.setData(Collections.emptyList());
 			log.error(e.getMessage(),e);
 			return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK); 
-			
 		}
-}
+		
+	}
 	
-	
-	@PostMapping("alertManagement/pageRendering")
+	@PostMapping("pendingTAC/pageRendering")
 	public ResponseEntity<?> pageRendering(HttpSession session){
 
 		String userType = (String) session.getAttribute("usertype");
@@ -121,7 +121,7 @@ public class AlertManagementDatatable {
 		InputFields inputFields = new InputFields();
 		InputFields dateRelatedFields;
 		
-		pageElement.setPageTitle(Translator.toLocale("sidebar.Alert_Management"));
+		pageElement.setPageTitle(Translator.toLocale("sidebar.Pending_TAC_List"));
 		
 		List<Button> buttonList = new ArrayList<>();
 		List<InputFields> dropdownList = new ArrayList<>();
@@ -131,7 +131,7 @@ public class AlertManagementDatatable {
 			log.info("session value user Type=="+session.getAttribute("usertype"));
 			
 			String[] names = { "HeaderButton", Translator.toLocale("button.addCurrency"), "AddCurrencyAddress()", "btnLink",
-					"FilterButton", Translator.toLocale("button.filter"),"alertFieldTable(" + ConfigParameters.languageParam + ")", "submitFilter" };
+					"FilterButton", Translator.toLocale("button.filter"),"DataTable(" + ConfigParameters.languageParam + ")", "submitFilter" };
 			for(int i=0; i< names.length ; i++) {
 				button = new Button();
 				button.setType(names[i]);
@@ -146,25 +146,24 @@ public class AlertManagementDatatable {
 			pageElement.setButtonList(buttonList);
 			
 		
-		
-			 //Dropdown items 
-			  String[] selectParam={"select",Translator.toLocale("table.alertId"),"alertId","",}; 
-			  for(int i=0; i<selectParam.length; i++) { 
-					inputFields= new InputFields();
-			  inputFields.setType(selectParam[i]); 
-			  i++;
-			  inputFields.setTitle(selectParam[i]);
-			  i++; 
-			  inputFields.setId(selectParam[i]);
-			  i++; 
-			  inputFields.setClassName(selectParam[i]);
-			  dropdownList.add(inputFields);
-			  } 
-			pageElement.setDropdownList(dropdownList);
+		  //Dropdown items 
+		  String[] selectParam={"select",Translator.toLocale("table.feature"),"feature",""}; 
+		  for(int i=0; i<selectParam.length; i++) { 
+				inputFields= new InputFields();
+		  inputFields.setType(selectParam[i]); 
+		  i++;
+		  inputFields.setTitle(selectParam[i]);
+		  i++; 
+		  inputFields.setId(selectParam[i]);
+		  i++; 
+		  inputFields.setClassName(selectParam[i]);
+		  dropdownList.add(inputFields);
+		  } 
+		pageElement.setDropdownList(dropdownList);
 		 
 			
 			//input type date list		
-			String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate",""};
+			String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("input.transactionID"),"transactionID","","text",Translator.toLocale("table.TAC"),"tac",""};
 			for(int i=0; i< dateParam.length; i++) {
 				dateRelatedFields= new InputFields();
 				dateRelatedFields.setType(dateParam[i]);
@@ -184,7 +183,4 @@ public class AlertManagementDatatable {
 		
 	}
 	
-	
-	}
-	
-
+}

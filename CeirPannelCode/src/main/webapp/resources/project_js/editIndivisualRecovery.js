@@ -18,7 +18,6 @@ $(document).ready(function() {
 		});
 	$.getJSON('./productList', function(data) {
 	 	console.log("start");
-	 
 		 console.log(data)
 	 		for (i = 0; i < data.length; i++) {
 	 			
@@ -26,20 +25,21 @@ $(document).ready(function() {
 	 					.appendTo('#editsigleRecoverydeviceBrandName');
 	 			
 	 		}
-			alert("after loop");
 		/* setBrandName();*/
 		 
 	 	})
 	 	 $('div#initialloader').fadeIn('fast');
-	 	    viewIndivisualStolen(); 
-	 		  
+	 	  setTimeout(function(){ 
+	 		 
+	 		  viewIndivisualStolen(); 
+	 		  }, 1000);
 
 	});
 
 
 function viewIndivisualStolen()
 {
-	alert("in view");
+
 	
 var txnid=$('#existingStolenTxnId').val();
 	

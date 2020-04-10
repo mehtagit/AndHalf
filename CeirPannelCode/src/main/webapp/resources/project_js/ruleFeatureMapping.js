@@ -26,10 +26,9 @@
 		//**************************************************filter table**********************************************
 
 		function table(url,dataUrl){
-			var Feature= $("#Feature").val() == undefined ? null : $("#Feature option:selected").text();
-			var Rule= $("#Rule").val() == undefined ? null : $("#Rule option:selected").text();
-
-			var User= $("#User").val() == undefined ? null : $("#User option:selected").text();
+			var Feature= $("#Feature").val();
+			var Rule= $("#Rule").val();
+			var User= $("#User").val();
 
 			
 			
@@ -151,19 +150,24 @@
 					
 						for(i=0; i<button.length; i++){
 							$('#'+button[i].id).text(button[i].buttonTitle);
-							$('#'+button[i].id).attr("href", button[i].buttonURL);
+							if(button[i].type === "HeaderButton"){
+								$('#'+button[i].id).attr("href", button[i].buttonURL);
+							}
+							else{
+								$('#'+button[i].id).attr("onclick", button[i].buttonURL);
+							}
 						}
 
 				
 						$.getJSON('./getAllfeatures', function(data) {
 							for (i = 0; i < data.length; i++) {
-							$('<option>').val(data[i].name).text(data[i].name).appendTo('#Feature');
+							$('<option>').val(data[i].name).text(data[i].name).appendTo('#Feature,#editFeature');
 							}
 						});
 						$.getJSON('./registrationUserType', function(data) {
 							for (i = 0; i < data.length; i++) {
 								$('<option>').val(data[i].usertypeName).text(data[i].usertypeName)
-								.appendTo('#User');
+								.appendTo('#User,#editUser');
 							}
 						});
 						$.getJSON('./ruleName', function(data) {
@@ -175,17 +179,7 @@
 						
 						
 						
-						$.getJSON('./getAllfeatures', function(data) {
-							for (i = 0; i < data.length; i++) {
-							$('<option>').val(data[i].id).text(data[i].name).appendTo('#editFeature');
-							}
-						});
-						$.getJSON('./registrationUserType', function(data) {
-							for (i = 0; i < data.length; i++) {
-								$('<option>').val(data[i].id).text(data[i].usertypeName)
-								.appendTo('#editUser');
-							}
-						});
+					
 						$.getJSON('./ruleName', function(data) {
 							for (i = 0; i < data.length; i++) {
 								$('<option>').val(data[i].id).text(data[i].description)
@@ -248,7 +242,6 @@
 		
 		
 		function setData(result){
-			
 			$("#editRule").val(result.ruleOrder);
 			$("#editFeature").val(result.feature);
 			$("#editUser").val(result.userType);
@@ -295,29 +288,7 @@
 					$("#updateFieldsSuccess").openModal({
 				        dismissible:false
 				    });
-				/*	$('#updateModal').closeModal();
 
-					$('#updateConsignment').openModal({
-						dismissible:false
-					});
-					if(data.errorCode==200){
-
-
-						$('#sucessMessage').text('');
-						$('#sucessMessage').text(data.message);
-					}
-
-					else if (data.errorCode==0){
-
-						$('#sucessMessage').text('');
-						$('#sucessMessage').text(updateMsg+" "+ (data.txnId) +" "+hasBeenUpdated);
-					}
-					else 
-					{
-						$('#sucessMessage').text('');
-						$('#sucessMessage').text(data.message);
-					}
-*/
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
 					

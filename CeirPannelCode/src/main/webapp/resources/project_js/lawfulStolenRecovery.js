@@ -430,8 +430,7 @@ function saveIndivisualStolenRequest(){
 	var singleStolennIDPassportNumber=$('#singleStolennIDPassportNumber').val();
 	var singleStolenemail=$('#singleStolenemail').val();
 	var trimContactNumber1=$('#singleStolenphone1').val();
-var singleStolenphone1=	trimContactNumber1.replace(/[^A-Z0-9]/ig, "");
-	
+	var singleStolenphone1 =trimContactNumber1.replace(/[^A-Z0-9]/ig, "");
 	var singleStolenaddress=$('#singleStolenaddress').val();
 	var singleStolenstreetNumber=$('#singleStolenstreetNumber').val();
 	var singleStolenvillage=$('#singleStolenvillage').val();
@@ -458,7 +457,7 @@ var singleStolenphone1=	trimContactNumber1.replace(/[^A-Z0-9]/ig, "");
 	var singleStolenSimStatus=$('#singleStolenSimStatus').val();
 	var singleStolenComplaintType=$('#singleStolenComplaintType').val();
 	var trimContactNumber2 = $('#singleStolenphone2').val();
-	var  singleStolenphone2 =trimContactNumber2.replace(/[^A-Z0-9]/ig, "");
+	var singleStolenphone2 =trimContactNumber2.replace(/[^A-Z0-9]/ig, "");
 	var singleStolenmodalNumber= $('#singleStolenmodalNumber').val();
 
 	var singleDeviceAddress=$('#singleDeviceAddress').val();
@@ -531,7 +530,7 @@ var singleStolenphone1=	trimContactNumber1.replace(/[^A-Z0-9]/ig, "");
 			"blockingType":blockingType,
 			"requestType":0,
 			"sourceType":5,
-			"fileName":indivisualStolenfileName,
+			"fileName":uploadedFileName,
 			"firFileName":fileFileDetails,
 			"complaintType": singleStolenComplaintType,
 			"operatorTypeId":singleStolenOperator,
@@ -603,7 +602,8 @@ function saveCompanyStolenRequest(){
 	var bulkStolenmiddleName=$('#bulkStolenmiddleName').val();
 	var bulkStolenlastName=$('#bulkStolenlastName').val();
 	var bulkStolenofficeEmail=$('#bulkStolenofficeEmail').val();
-	var bulkStolenContact=$('#bulkStolenContact').val();
+	var trimbulkStolenContact=$('#bulkStolenContact').val();
+	var bulkStolenContact =trimbulkStolenContact.replace(/[^A-Z0-9]/ig, "");
 	var uploadFirBulk=$('#uploadFirBulk').val();
 
 	var deviceBulkStolenaddress=$('#deviceBulkStolenaddress').val();
