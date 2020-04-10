@@ -549,10 +549,10 @@
 											<div class="input-field col s12 m6 l6">
 												<input type="text" name="pin"
 													class="form-control boxBorder boxHeight" id="bulkStolenpin" placeholder=""
-													pattern="[0-9]{0,20}" title=""  required="required"
+													pattern="[0-9]{6,6}" title=""  required="required"
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');"
-													maxlength="20"> <label for="pin"><spring:message code="input.postalCode" />
+													maxlength="6"> <label for="pin"><spring:message code="input.postalCode" />
 													<span class="star">*</span>
 												</label>
 											</div>
@@ -701,7 +701,7 @@
 											<div class="input-field col s12 m6 l6">
 												<input type="text" name="pin" placeholder=""
 													class="form-control boxBorder boxHeight"
-													id="deviceBulkStolenpin" pattern="[0-9]{0,6}" title="" maxlength="6"
+													id="deviceBulkStolenpin" pattern="[0-9]{6,6}" title="" maxlength="6"
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');"
 													 required="required"> <label

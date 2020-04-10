@@ -344,10 +344,10 @@ select {
 													<div class="input-field col s12 m6 l6">
 														<input type="text" name="pin" placeholder=""
 															class="form-control boxBorder boxHeight"
-															id="singleStolenpin" pattern="[0-9]{1,6}"
+															id="singleStolenpin" pattern="[0-9]{6,6}"
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');"
-															title="" maxlength="20" required="required"> <label
+															title="" maxlength="6" required="required"> <label
 															for="pin"><spring:message
 																code="registration.postalcode" /> <span class="star">*</span></label>
 													</div>
@@ -712,11 +712,11 @@ onclick="_Services._selectstartDate()"></i></span>
 														<div class="input-field col s12 m6 l6">
 															<input type="text" name="pin" placeholder=""
 																class="form-control boxBorder boxHeight"
-																id="singleDevicepin" pattern="[0-9]{0,6}"
+																id="singleDevicepin" pattern="[0-9]{6,6}"
 																required="required"
 																oninput="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');"
 																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');"
-																title="" maxlength="20"> <label for="pin"><spring:message
+																title="" maxlength="6"> <label for="pin"><spring:message
 																	code="registration.postalcode" /> <span class="star">*</span></label>
 														</div>
 
@@ -876,7 +876,7 @@ onclick="_Services._selectstartDate()"></i></span>
 											<div class="input-field col s12 m6 l6">
 												<input type="text" name="pin"
 													class="form-control boxBorder boxHeight" id="bulkStolenpin"
-													maxlength="20"> <label for="pin"><spring:message
+													maxlength="6"> <label for="pin"><spring:message
 														code="registration.postalcode" /> <span class="star">*</span>
 												</label>
 											</div>
@@ -1003,7 +1003,7 @@ onclick="_Services._selectstartDate()"></i></span>
 											<div class="input-field col s12 m6 l6">
 												<input type="text" name="pin"
 													class="form-control boxBorder boxHeight"
-													id="deviceBulkStolenpin" maxlength="20"> <label
+													id="deviceBulkStolenpin" maxlength="6"> <label
 													for="pin"> <spring:message
 														code="registration.postalcode" /><span class="star">*</span></label>
 											</div>

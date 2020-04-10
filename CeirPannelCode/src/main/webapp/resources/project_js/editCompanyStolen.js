@@ -107,7 +107,8 @@ function updateCompanyStolenDetails(){
 	var bulkStolenmiddleName=$('#bulkStolenmiddleName').val();
 	var bulkStolenlastName=$('#bulkStolenlastName').val();
 	var bulkStolenofficeEmail=$('#bulkStolenofficeEmail').val();
-	var bulkStolenContact=$('#bulkStolenContact').val();
+	var trimContactNumber=$('#bulkStolenContact').val();
+	var bulkStolenContact =trimContactNumber.replace(/[^A-Z0-9]/ig, "");
 
 	
 	var deviceBulkStolenaddress=$('#deviceBulkStolenaddress').val();
