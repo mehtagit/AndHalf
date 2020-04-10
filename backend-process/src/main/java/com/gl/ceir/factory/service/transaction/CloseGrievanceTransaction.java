@@ -35,5 +35,4 @@ public class CloseGrievanceTransaction {
 
 		notifierWrapper.saveNotification(rawMails);
 	}
-
 }

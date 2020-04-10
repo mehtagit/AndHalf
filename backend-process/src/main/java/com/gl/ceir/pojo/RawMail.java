@@ -11,6 +11,7 @@ public class RawMail implements Serializable{
 	
 	private String channel;
 	private String tag;
+	private Long userId;
 	private UserProfile userProfile;
 	private long featureId;
 	private String featureName;
@@ -46,7 +47,7 @@ public class RawMail implements Serializable{
 		super();
 		this.channel = channel;
 		this.tag = tag;
-		this.userProfile = new UserProfile().setId(userId);
+		this.userId = userId;
 		this.featureId = featureId;
 		this.featureName = featureName;
 		this.subFeature = subFeature;
@@ -56,6 +57,15 @@ public class RawMail implements Serializable{
 		this.referTable = referTable;
 		this.roleType = roleType;
 		this.receiverUserType = receiverUserType;
+	}
+
+	
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 
 	public String getChannel() {
@@ -146,8 +156,8 @@ public class RawMail implements Serializable{
 		StringBuilder builder = new StringBuilder();
 		builder.append("RawMail [tag=");
 		builder.append(tag);
-		builder.append(", userProfile=");
-		builder.append(userProfile);
+		builder.append(", userId=");
+		builder.append(userId);
 		builder.append(", featureId=");
 		builder.append(featureId);
 		builder.append(", featureName=");
