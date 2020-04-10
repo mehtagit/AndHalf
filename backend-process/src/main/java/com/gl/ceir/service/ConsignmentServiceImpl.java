@@ -34,6 +34,9 @@ public class ConsignmentServiceImpl {
 
 	public List<ConsignmentMgmt> getConsignmentOfTodayWithTotalPriceGreaterThanZero() {
 		try {
+			String date = DateUtil.nextDate(-1);
+			
+			logger.info("Date in query : " + date);
 			return consignmentRepository.findAll(buildSpecification(DateUtil.nextDate(0)).build());
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);

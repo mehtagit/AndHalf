@@ -37,7 +37,10 @@ public class CurrencyConversionServiceImpl {
 
 	public List<CurrencyConversionDb> getCurrencyRateOfCurrentMonthList() {
 		try {
-			return currencyConversionRepository.findAll(buildSpecification(DateUtil.nextDate(0).substring(0, 7)).build());
+			String currentMonthYear = DateUtil.nextDate(-1).substring(0, 7);
+			logger.info("currentMonthYear : " + currentMonthYear);
+			
+			return currencyConversionRepository.findAll(buildSpecification(currentMonthYear).build());
 					
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
