@@ -38,6 +38,7 @@ public class RuleEngineMapping implements Serializable {
 	private LocalDateTime createdOn;
 
 	@UpdateTimestamp
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private LocalDateTime modifiedOn;
 
 	@NotNull
