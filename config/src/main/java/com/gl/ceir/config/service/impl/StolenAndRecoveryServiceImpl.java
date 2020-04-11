@@ -578,6 +578,10 @@ public class StolenAndRecoveryServiceImpl {
 				return new GenricResponse(4, "TxnId Does Not exist", stolenandRecoveryMgmt.getTxnId());
 			}else {
 
+				WebActionDb webActionDb = new WebActionDb(decideFeature(stolenandRecoveryMgmt.getRequestType()), 
+						SubFeatures.UPDATE, 
+						WebActionStatus.INIT.getCode(), stolenandRecoveryMgmt.getTxnId());
+				
 				StolenAndRecoveryHistoryMgmt historyMgmt = new StolenAndRecoveryHistoryMgmt();
 				historyMgmt.setBlockingTimePeriod(stolenandRecoveryMgmtInfo.getBlockingTimePeriod());
 				historyMgmt.setBlockingType(stolenandRecoveryMgmtInfo.getBlockingType());
@@ -638,6 +642,8 @@ public class StolenAndRecoveryServiceImpl {
 				logger.info("Final object StolenandRecoveryMgmt : " + stolenandRecoveryMgmtInfo);
 
 				//	StolenandRecoveryMgmt stolenandRecoveryMgmtNew = 
+				webActionDbRepository.save(webActionDb);
+				logger.info("Update request saved in web action : " + webActionDb);
 				stolenAndRecoveryRepository.save(stolenandRecoveryMgmtInfo);
 
 				return new GenricResponse(0, "Record update sucessfully", stolenandRecoveryMgmt.getTxnId());
