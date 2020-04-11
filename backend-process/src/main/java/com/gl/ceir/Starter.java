@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.gl.ceir.factory.service.Service;
+import com.gl.ceir.factory.service.impl.BlockEndUserDevice;
 import com.gl.ceir.factory.service.impl.CloseGrievance;
 import com.gl.ceir.factory.service.impl.ConsignmentRevenueService;
 import com.gl.ceir.factory.service.impl.DeviceTaxReminder;
@@ -16,25 +17,28 @@ public class Starter {
 
 	@Autowired
 	DeviceTaxReminder deviceTaxReminder;
-	
+
 	@Autowired
 	VisaExpire visaExpire;
-	
+
 	@Autowired
 	ConsignmentRevenueService consignmentRevenueService;
-	
+
 	@Autowired
 	CloseGrievance closeGrievance;
-	
+
 	@Autowired
 	RemoveIncompleteUser removeIncompleteUser; 
-	
+
 	@Autowired
 	FindUserReg findUserReg;
-	
-	
+
+	@Autowired
+	BlockEndUserDevice blockEndUserDevice;
+
+
 	public Service start(String name) {
-		
+
 		switch (name) {
 		case ProcessName.REGISTERED_DEVICE_TAX_NOT_PAID_REMINDER:
 			return deviceTaxReminder;
@@ -48,7 +52,9 @@ public class Starter {
 			return removeIncompleteUser;
 		case ProcessName.FIND_USER_REG:
 			return findUserReg;
-			
+		case ProcessName.BLOCK_END_USER_DEVICE:
+			return blockEndUserDevice;
+
 		default:
 			return null;
 		}

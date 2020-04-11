@@ -52,7 +52,8 @@ public class BlockEndUserDevice extends BaseService{
 			logger.info("Reminder will sent to user who has registered device on date [" + reminderDate + "] and not paid tax.");
 
 			List<RegularizeDeviceDb> regularizeDeviceDbs = regularizedDeviceDbRepository.findAll(buildSpecification(reminderDate).build());
-
+			logger.info(regularizeDeviceDbs);
+			
 			for(RegularizeDeviceDb regularizeDeviceDb : regularizeDeviceDbs) {
 				regularizeDeviceDb.setStatus(3); // Blocked State
 
