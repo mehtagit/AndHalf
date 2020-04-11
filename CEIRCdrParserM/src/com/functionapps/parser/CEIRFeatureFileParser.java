@@ -54,9 +54,6 @@ public class CEIRFeatureFileParser {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-		
 	}
 
 	private static ResultSet getFeatureFileDetails(Connection conn) {
@@ -83,7 +80,7 @@ public class CEIRFeatureFileParser {
 		Statement stmt  = null;
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Date currentDate = new Date();
-		Date graceDate =null;
+		Date graceDate = null;
 		try{
 			query = "select value from system_configuration_db where tag='grace_period_end_date'";
 			System.out.println("Period is "+period);

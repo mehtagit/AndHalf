@@ -5,9 +5,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 import org.apache.log4j.Logger;
-import org.springframework.web.client.RestTemplate;
 
-import com.functionapps.constants.PropertyReader;
 import com.functionapps.dao.MessageConfigurationDbDao;
 import com.functionapps.dao.NotificationDao;
 import com.functionapps.dao.TypeApprovalDbDao;
@@ -19,6 +17,7 @@ import com.functionapps.pojo.Notification;
 import com.functionapps.pojo.TypeApprovedDb;
 import com.functionapps.pojo.UserWithProfile;
 import com.functionapps.resttemplate.TacApiConsumer;
+import com.gl.Rule_engine.RuleEngineApplication;
 
 public class RegisterTac {
 	static Logger logger = Logger.getLogger(RegisterTac.class);
@@ -45,7 +44,33 @@ public class RegisterTac {
 				MessageConfigurationDb messageDb = null;
 				
 				TypeApprovedDb typeApprovedDb = typeApprovedDbOptional.get();
-				typeApprovedDb.setApproveStatus(3); // Pending by CEIR Admin
+				
+				String [] ruleArr = {"EXISTS_IN_TAC_DB",
+						"1",
+						"TAC",
+						typeApprovedDb.getTac(),
+						"0",
+						"", // file_name
+						"0",
+						"", // record_time
+						"", // operator
+						"error",
+						"", // operator_tag
+						"", // period
+						"", // servedMSISDN
+						"" // action
+						};
+				
+				String output = RuleEngineApplication.startRuleEngine(ruleArr);
+				
+				System.out.println("Rule [EXISTS_IN_TAC_DB] Execution output is [" + output + "]");
+				
+				if("yes".equalsIgnoreCase(output)) {
+					typeApprovedDb.setApproveStatus(3); // Pending by CEIR Admin
+				}else {
+					typeApprovedDb.setApproveStatus(2); // Rejected By System.
+				}
+				
 				System.out.println(typeApprovedDb);
 				
 				tacApiConsumer.updateStatus(typeApprovedDb.getTxnId(), typeApprovedDb.getUserId(), 
