@@ -987,7 +987,11 @@
                                                      <div class="input-field col s12 m6">
                                                         <textarea id="viewBulkBlockRemark" class="materialize-textarea" placeholder="kjdhdskjfhdskhfkdsjhf" disabled></textarea>
                                                         <label for="viewBulkBlockRemark"><spring:message code="input.Remark" /></label>
-                                                    </div>	
+                                                    </div>
+                                                    <div class="input-field col s12 m6" id="bulkblockingTypeId" style="display: none">
+            													<input type="text" id="viewbulkblockingType" name="" placeholder="" disabled="disabled">
+                                                                <label for="viewbulkblockingType"><spring:message code="operator.blocking" /></label>		
+                                                              </div>	
                                                     </div>
 													
                                                    
@@ -1356,6 +1360,7 @@ oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10000charac
 title="" maxlength="16" value="1500" disabled> -->
 
 </div>
+
 <input type="text" style="display:none" id="editBulkBlockrequestType">
 <input type="text" style="display:none" id="editBulkBlockTxnId">
 <!-- <div class="input-field col s12 m6" style="margin-top: 25px;">
@@ -1364,7 +1369,60 @@ title="" maxlength="16" value="1500" disabled>
 <label for="editBulkBlockTxnId">Transaction Id</label>
 <input type="text" style="display:none" id="editBulkBlockrequestType">
 </div> -->
+
+
 </div>
+													<div class="col s12 m6 blockingType" id="editBulkBlockDiv" style="display: none;">
+												<p style="margin-top: 3px; margin-bottom: 5px">
+													<spring:message code="operator.blocking" />
+												</p>
+												<label style="margin-right: 2%;"> <input
+													type="radio" class="editbulkblocktypeRadio" id="" value="Immediate"
+													onclick="document.getElementById('bulkeditcalender').style.display = 'none';"
+													name="editbulkblocktypeName" checked> <spring:message
+														code="operator.immediate" />
+												</label> <label style="margin-right: 2%;"> <input
+													type="radio" class="editbulkblocktypeRadio" value="Default"
+													onclick="document.getElementById('bulkeditcalender').style.display = 'none';"
+													name="editbulkblocktypeName"> <spring:message
+														code="operator.default" />
+												</label> <label> <input type="radio" required="required"
+													value="tilldate" class="editbulkblocktypeRadio"
+													onclick="document.getElementById('bulkeditcalender').style.display = 'block';"
+													name="editbulkblocktypeName"> <spring:message
+														code="operator.later" />
+												</label>
+												<div class="col s6 m2 responsiveDiv"
+													style="display: none; width: 30%; margin-right: 30%; float: right; margin-top: -15px"
+													id="bulkeditcalender">
+													<div id="Stolenstartdatepicker" class="input-group date">
+														<input type="text" id="editstolenBulkDatePeriod"
+															style="margin-top: -9px" /> <span
+															class="input-group-addon" style="color: #ff4081"><i
+															class="fa fa-calendar" aria-hidden="true"
+															style="float: right; margin-top: -30px;"></i></span>
+													</div>
+
+												</div>
+
+
+												<div class="col s12 m2 l2"
+													style="width: 40%; display: none; float: right; margin-right: 30%;"
+													id="stolenDate">
+
+													<label for="TotalPrice" class="center-align"> <spring:message
+															code="operator.tilldate" /></label>
+													<div id="Stolenstartdatepicker" class="input-group"
+														style="margin-top: 10px;">
+
+														<input class="form-control" name="inputsaves" type="text"
+															id="startDateFilter" readonly /> <span
+															class="input-group-addon" style="color: #ff4081"><i
+															class="glyphicon glyphicon-calendar"
+															onclick="_Services._selectstartDate()"></i></span>
+													</div>
+												</div>
+											</div>
 <p style="margin-left: 10px;"><a href="./Consignment/sampleFileDownload/7"><spring:message code="input.downlaod.sample" /></a></p>
 <div class="row">
 <div class="input-field col s12 center">
@@ -1574,6 +1632,11 @@ type="submit" ><spring:message code="button.update" /></button>
 		
 		<script type="text/javascript"
 		src="${context}/resources/project_js/validationMsg.js"></script>
+		<script type="text/javascript">
+		$('#editstolenBulkDatePeriod').datepicker({
+			dateFormat : "yy-mm-dd"
+		});
+		</script>
 </body>
 </html>
 <%

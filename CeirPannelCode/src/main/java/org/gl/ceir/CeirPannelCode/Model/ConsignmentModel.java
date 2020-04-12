@@ -28,8 +28,8 @@ private String consignmentStatus;
 private String quantity;
 private Long userId ;
 private String remarks;
-private String roleType;
-private Integer currency;
+private String roleType,portAddress;
+private Integer currency,deviceQuantity;
 
 
 
@@ -107,11 +107,6 @@ return expectedDispatcheDate;
 public void setExpectedDispatcheDate(String expectedDispatcheDate) {
 this.expectedDispatcheDate = expectedDispatcheDate;
 }
-
-	
-	
-	
-	
 public Integer getExpectedArrivalPort() {
 	return expectedArrivalPort;
 }
@@ -202,16 +197,23 @@ return roleType;
 public void setRoleType(String roleType) {
 this.roleType = roleType;
 }
-
-
-
-
-
 public Integer getCurrency() {
 	return currency;
 }
 public void setCurrency(Integer currency) {
 	this.currency = currency;
+}
+public String getPortAddress() {
+	return portAddress;
+}
+public void setPortAddress(String portAddress) {
+	this.portAddress = portAddress;
+}
+public Integer getDeviceQuantity() {
+	return deviceQuantity;
+}
+public void setDeviceQuantity(Integer deviceQuantity) {
+	this.deviceQuantity = deviceQuantity;
 }
 @Override
 public String toString() {
@@ -270,10 +272,16 @@ public String toString() {
 	builder.append(remarks);
 	builder.append(", roleType=");
 	builder.append(roleType);
+	builder.append(", portAddress=");
+	builder.append(portAddress);
 	builder.append(", currency=");
 	builder.append(currency);
+	builder.append(", deviceQuantity=");
+	builder.append(deviceQuantity);
 	builder.append("]");
 	return builder.toString();
 }
+
+
 
 }

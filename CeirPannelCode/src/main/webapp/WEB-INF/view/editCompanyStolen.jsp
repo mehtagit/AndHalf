@@ -620,12 +620,12 @@
 											<div class="input-field col s12 m6">
 												<!-- <p class="contact-label">Alternate Contact Number <span class="star">*</span></p> -->
 												<input type="tel" name="phone" id="bulkStolenContact" placeholder=""
-													required pattern="[0-9]{1,12}" title=""
+													 pattern="[0-9]{1,12}" title=""
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.contact" />');
 													"oninvalid="InvalidMsg(this,'input','<spring:message code="validation.contact" />');" 
 													maxlength="12"> <label for="phone2">
 													<spring:message code="input.contactNum" /> <span
-													class="star">*</span></label>
+													class="star"></span></label>
 											</div>
 
 											<!-- <div class="input-field col s12 m6">
@@ -840,8 +840,7 @@
 																No file Chosen ');" placeholder="Upload FIR" id="uploadFirSingle" onchange="isImageValid('uploadFirSingle')" data-original-title="" title="">
 															</div>
 															<div class="file-path-wrapper" data-original-title="" title="">
-																<input class="file-path validate" type="text" placeholder="
-																	input.UploadFIR" id="uploadFirSingleName" title="" data-original-title="Please upload national
+																<input class="file-path validate" type="text" placeholder="" id="uploadFirSingleName" title="" data-original-title="Please upload national
 																ID image">
 																<a href="#" id="firFilePreview" class="imgPreviewLink"  style="display: none;">Preview</a>
 															</div>

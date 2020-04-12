@@ -20,6 +20,9 @@ function registerConsignment() {
 	var currency = $('#currency').val();
 	var totalPrice = $('#totalPrice').val();
 	var quantity = $('#quantity').val();
+	var deviceQuantity = $('#devicequantity').val();
+	var portAddress = $('#portAddress').val();
+	
 	var formData = new FormData();
 	formData.append('file', $('#file')[0].files[0]);
 	formData.append('supplierId', supplierId);
@@ -32,6 +35,8 @@ function registerConsignment() {
 	formData.append('quantity', quantity);
 	formData.append('currency', currency);
 	formData.append('totalPrice', totalPrice);
+	formData.append('deviceQuantity', deviceQuantity);
+	formData.append('portAddress', portAddress);
 
 	$.ajax({
 		url : '../Consignment/registerConsignment',
@@ -219,7 +224,7 @@ function selectPortAddresValue(port){
 		success : function(data) {
 			var portAdressData=JSON.parse(data);
 			console.log(portAdressData.length);
-			/*$("#portAddress").empty();*/
+			$("#portAddress").empty();
 			for (i = 0; i < data.length; i++) {
 				$('<option>').val(portAdressData[i].id).text(portAdressData[i].address).appendTo('#portAddress');
 				}

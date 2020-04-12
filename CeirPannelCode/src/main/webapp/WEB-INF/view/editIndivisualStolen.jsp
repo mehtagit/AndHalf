@@ -778,8 +778,7 @@ onclick="_Services._selectstartDate()"></i></span>
 															<div class="file-path-wrapper" data-original-title=""
 																title="">
 																<input class="file-path validate" type="text"
-																	placeholder="
-																	input.UploadFIR"
+																	placeholder=""
 																	id="uploadFirSingleName" title=""
 																	data-original-title=""> <a id="firImageLink"
 																	class="imgPreviewLink" style="display: none;">Preview</a>
