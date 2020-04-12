@@ -24,7 +24,7 @@ public class CEIRFeatureFileParser {
 	 * @param args
 	 */
 	public static void main(String args[]) {
-		logger = Logger.getLogger(CEIRParserMain.class);
+		// logger = Logger.getLogger(CEIRParserMain.class);
 		String feature = null;
 		Connection conn = null;
 		conn = (Connection) new com.functionapps.db.MySQLConnection().getConnection();
@@ -39,7 +39,6 @@ public class CEIRFeatureFileParser {
 				HashMap<String, String> feature_file_management = new HashMap<String, String>();
 				feature_file_management = ceirfunction.getFeatureFileManagement(conn,feature_file_mapping.get("mgnt_table_db"),featurers.getString("txn_id"));
 	
-				
 				String user_type = ceirfunction.getUserType(conn,feature_file_management.get("user_id"));
 
 				CEIRFeatureFileParser ceirfileparser = new CEIRFeatureFileParser();
@@ -47,7 +46,7 @@ public class CEIRFeatureFileParser {
 				ArrayList rulelist = new ArrayList<Rule>();		
 				String period = ceirfileparser.checkGraceStatus(conn);
 				logger.info("Period is ["+period+"] ");
-				rulelist = ceirfileparser.getRuleDetails(feature,conn,"" ,period,"",featurers.getString("usertype_name"));				
+				rulelist = ceirfileparser.getRuleDetails(feature,conn,"" ,period,"", user_type);				
 				addCDRInProfileWithRule(feature, conn, rulelist,"",featurers.getString("txn_id"),featurers.getString("sub_feature"));				
 			}
 		} catch (SQLException e) {
