@@ -312,6 +312,8 @@ public class RegularizedDeviceServiceImpl {
 				return new GenricResponse(1, GenericMessageTags.NULL_NID.getTag(), 
 						GenericMessageTags.NULL_NID.getMessage(), 
 						"");
+			}else {
+				logger.info("Device in the request : " + endUserDB.getRegularizeDeviceDbs());
 			}
 
 			EndUserDB endUserDB2 = endUserDbRepository.getByNid(nid);
@@ -461,12 +463,14 @@ public class RegularizedDeviceServiceImpl {
 			}
 
 			RegularizeDeviceDb regularizeDeviceDb = regularizedDeviceDbRepository.getByFirstImei(imei);
+			
 			if(Objects.nonNull(regularizeDeviceDb)) {
 				EndUserDB endUserDB = endUserDbRepository.getByNid(regularizeDeviceDb.getNid());
 				endUserDB.setRegularizeDeviceDbs(new ArrayList<>(1));
 				regularizeDeviceDb.setEndUserDB(endUserDB);
 				setInterp(regularizeDeviceDb);
 			}
+			
 			return regularizeDeviceDb;
 
 		} catch (Exception e) {
@@ -508,7 +512,13 @@ public class RegularizedDeviceServiceImpl {
 			Map<String, String> placeholders = new HashMap<>();
 
 			RegularizeDeviceDb regularizeDeviceDb = regularizedDeviceDbRepository.getByFirstImei(ceirActionRequest.getImei1());
-			logger.debug("Accept/Reject regularized Devices : " + regularizeDeviceDb);
+			logger.info("Accept/Reject regularized Devices : " + regularizeDeviceDb);
+			
+			if(Objects.isNull(regularizeDeviceDb)) {
+				logger.info("No device found for IMEI : " + ceirActionRequest.getImei1());
+				return new GenricResponse(3, GenericMessageTags.NO_DEVICE_FOR_IMEI.getTag(), GenericMessageTags.NO_DEVICE_FOR_IMEI.getMessage(), 
+						ceirActionRequest.getImei1());
+			}
 
 			endUserDB = endUserDbRepository.getByNid(regularizeDeviceDb.getNid());
 			
@@ -559,9 +569,11 @@ public class RegularizedDeviceServiceImpl {
 
 	public GenricResponse getCountOfRegularizedDevicesByNid(String nid) {
 		try {
-			PolicyConfigurationDb policyConfigurationDb = configurationManagementServiceImpl.getPolicyConfigDetailsByTag(ConfigTags.max_end_user_device_count);
+			PolicyConfigurationDb policyConfigurationDb = configurationManagementServiceImpl
+					.getPolicyConfigDetailsByTag(ConfigTags.max_end_user_device_count);
 
-			return new GenricResponse(0, "", "", new Count(Long.parseLong(policyConfigurationDb.getValue()), regularizedDeviceDbRepository.countByNid(nid)));	
+			return new GenricResponse(0, "", "", new Count(Long.parseLong(policyConfigurationDb.getValue()), 
+					regularizedDeviceDbRepository.countByNidAndDeviceStatus(nid, 2)));	
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException("Custom Service", e.getMessage());
@@ -582,7 +594,8 @@ public class RegularizedDeviceServiceImpl {
 
 	private boolean validateRegularizedDevicesCount(Count count, List<RegularizeDeviceDb> regularizeDeviceDbs) {
 		try {
-			Long regularizedDeviceCount = regularizedDevicesCountByStatus(regularizeDeviceDbs, TaxStatus.REGULARIZED.getCode());
+			Long regularizedDeviceCount = regularizedDevicesCountByStatus(regularizeDeviceDbs, 
+					TaxStatus.REGULARIZED.getCode());
 			if(count.getAllowed() >= regularizedDeviceCount + count.getCurrent()) {
 				return Boolean.TRUE;
 			}else {

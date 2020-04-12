@@ -83,6 +83,8 @@ public class CeirActionRequest {
 		builder.append(txnId);
 		builder.append(", remarks=");
 		builder.append(remarks);
+		builder.append(", imei1=");
+		builder.append(imei1);
 		builder.append("]");
 		return builder.toString();
 	}

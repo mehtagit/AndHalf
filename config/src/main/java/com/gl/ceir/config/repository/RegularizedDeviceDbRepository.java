@@ -21,6 +21,8 @@ JpaSpecificationExecutor<RegularizeDeviceDb	>, CustomerCareRepo<RegularizeDevice
 	public RegularizeDeviceDb getByFirstImei(String imei1);
 
 	public Long countByNid(String nid);
+	
+	public Long countByNidAndDeviceStatus(String nid, Integer deviceStatus);
 
 	public RegularizeDeviceDb getByTxnId(String txnid);
 

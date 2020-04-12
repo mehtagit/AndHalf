@@ -124,15 +124,12 @@ public class CustomerCareServiceImpl {
 			if(repository instanceof CustomerCareRepo) {
 				CustomerCareRepo customerCareRepo = (CustomerCareRepo)repository;
 				objectBytxnId = customerCareRepo.getByTxnId(customerCareDeviceState.getTxnId());
+				
 				if(objectBytxnId instanceof ConsignmentMgmt) {
 					ConsignmentMgmt consignmentObj = (ConsignmentMgmt)objectBytxnId;
 					consignmentServiceImpl.setInterp(consignmentObj);
 					objectBytxnId = consignmentObj;
-				}
-				/*else if(objectBytxnId instanceof StockMgmt) {
-					StockMgmt consignmentObj = (StockMgmt)objectBytxnId;
-				}*/
-				else {
+				}else {
 					logger.info("customerCareRepo.getByTxnId returned non ConsignmentMgmt");
 				}
 				
