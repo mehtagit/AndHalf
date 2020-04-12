@@ -59,14 +59,16 @@ public class ConsignmentRevenueService extends BaseService{
 
 			// Read all consignments registered today and having total price greater than Zero.
 			List<ConsignmentMgmt> consignmentMgmts = consignmentServiceImpl.getConsignmentOfTodayWithTotalPriceGreaterThanZero();
-
-			// Read Exchange Rate
-			exchangeRateMap = currencyConversionServiceImpl.getCurrencyRateOfCurrentMonthMap();
-
+			logger.info("consignmentMgmts : " + consignmentMgmts);
+			
 			// Convert in Dollar and Riel.
 			if(consignmentMgmts.isEmpty()) {
 				logger.info("No valid consignment of having total price greater than zero today is found.");
 			}else {
+				// Read Exchange Rate
+				exchangeRateMap = currencyConversionServiceImpl.getCurrencyRateOfCurrentMonthMap();
+				logger.info("exchangeRateMap : " + exchangeRateMap);
+				
 				for(ConsignmentMgmt consignmentMgmt : consignmentMgmts) {
 					// Convert Revenue in Dollar and Riel and sum up.
 					consignmentRevenueDailyDb.setTotalAmountInDollar(
@@ -74,14 +76,14 @@ public class ConsignmentRevenueService extends BaseService{
 									exchangeRateMap.get(consignmentMgmt.getCurrency()).getDollarRate(), 
 									consignmentMgmt.getTotalPrice())
 							);
-					
+
 					consignmentRevenueDailyDb.setTotalAmountInRiel(
 							consignmentRevenueDailyDb.getTotalAmountInRiel() + currencyConverter.exchangeRate( 
 									exchangeRateMap.get(consignmentMgmt.getCurrency()).getReilRate(), 
 									consignmentMgmt.getTotalPrice())
 							);
 				}
-				
+
 				process(consignmentRevenueDailyDb);
 			}
 
@@ -101,5 +103,5 @@ public class ConsignmentRevenueService extends BaseService{
 			consignmentRevenueDailyRepository.save(consignmentRevenueDailyDb);
 		}
 	}
-	
+
 }

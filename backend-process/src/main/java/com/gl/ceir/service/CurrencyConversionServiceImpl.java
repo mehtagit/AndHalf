@@ -63,8 +63,7 @@ public class CurrencyConversionServiceImpl {
 	private GenericSpecificationBuilder<CurrencyConversionDb> buildSpecification(String date){
 		GenericSpecificationBuilder<CurrencyConversionDb> cmsb = new GenericSpecificationBuilder<>(propertiesReader.dialect);
 
-		cmsb.with(new SearchCriteria("monthAndYear", date , SearchOperation.GREATER_THAN, Datatype.DATE));
-		cmsb.with(new SearchCriteria("monthAndYear", date , SearchOperation.LESS_THAN, Datatype.DATE));
+		cmsb.with(new SearchCriteria("monthAndYear", date , SearchOperation.EQUALITY, Datatype.STRING));
 	
 		return cmsb;
 	}
