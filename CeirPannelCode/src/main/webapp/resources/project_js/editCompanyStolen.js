@@ -212,7 +212,7 @@ function updateCompanyStolenDetails(){
 
 function clearFileName() {
 	var fieldId=$('#FilefieldId').val();
-	//alert(fieldId);
+	
 	 if(fieldId=='deviceBulkStolenFile')
 		{
 		$('#'+fieldId).val('');

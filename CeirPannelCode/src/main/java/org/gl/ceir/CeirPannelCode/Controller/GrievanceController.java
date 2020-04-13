@@ -67,16 +67,20 @@ public class GrievanceController {
 	    public ModelAndView viewGrievance(HttpSession session,@RequestParam(name="txnID",required = false) String txnID) {
 		ModelAndView mv = new ModelAndView();
 		log.info(" view Grievance entry point."); 
+		String userName= (String) session.getAttribute("username");
+		log.info("username In Grievance------->"+userName);
 		
 		if(session.getAttribute("")!=null)
 		{
 			log.info(" user type is not blank"); 
+			mv.addObject("userName", userName);
 			mv.setViewName("grievanceManagement");
 			log.info(" view Grievance exit point."); 
 		}
 		else {
 			log.info(" user type isblank");
 			mv.setViewName("grievanceManagement");
+			mv.addObject("userName", userName);
 			log.info(" view Grievance exit point."); 
 		}
 	    

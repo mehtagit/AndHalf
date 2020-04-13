@@ -49,7 +49,6 @@ public class ProjectDropdownController {
 	@GetMapping("getDropdownList/{tag}")
 	public List<Dropdown> getTaxPaidStatus(@PathVariable("tag") String tag) {
 		List<Dropdown> dropdown = feignCleintImplementation.taxPaidStatusList(tag);
-		log.info("DROPDOWN::::::::"+dropdown);
 		return dropdown;
 	}
 	
@@ -64,12 +63,8 @@ public class ProjectDropdownController {
 	@ResponseBody
 	@GetMapping("dataByTag/{tag}/")
 	public Dropdown dataByTag(@PathVariable("tag") String tag) {
-		log.info("inside data by tag controller");
 		Tag tagData=new Tag(tag);
-		log.info("tag from form: "+tag);
 		Dropdown dropdown = feignCleintImplementation.dataByTag(tagData);
-		log.info("data by tag from api =  "+dropdown);
-		log.info("exit from data by tag controller");
 		return dropdown;
 	}
 	

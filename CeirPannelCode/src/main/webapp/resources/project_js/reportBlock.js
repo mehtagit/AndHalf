@@ -154,7 +154,9 @@ function submitBlockImei()
 		var requestType='2';
 		var roleType = $("body").attr("data-roleType");
 		var userId = $("body").attr("data-userID");
-
+		var bulkBlockingTimePeriod=$('#stolenBulkDatePeriod').val();
+		var bulkBlocktype =$('.bulkblocktypeRadio:checked').val();
+		
 		console.log("bulkBlockdeviceCategory="+bulkBlockdeviceCategory+" blockbulkquantity=="+blockbulkquantity+" blockUnblockRemark="+blockbulkRemark)
 		
 		var formData = new FormData();
@@ -166,6 +168,9 @@ function submitBlockImei()
 		formData.append('requestType', requestType);
 		formData.append('userId',userId);
 		formData.append('roleType',roleType);
+		formData.append('blockingTimePeriod',bulkBlockingTimePeriod);
+		formData.append('blockingType',bulkBlocktype);
+		
 		
 			
 
@@ -416,11 +421,12 @@ function setViewBulkPopUp(data,popUpType,requestType){
 	
 		if(requestType=="3")
 		{
-      
+			
+			$("#bulkblockingTypeId").css("display", "none");
 		$('#viewModalHeader').text($.i18n('viewBulkUnblock'));
 		}
 		else{
-			
+			$("#bulkblockingTypeId").css("display", "block");
 		$('#viewModalHeader').text($.i18n('viewBlockDevice'));
 		}
 			
@@ -430,16 +436,25 @@ function setViewBulkPopUp(data,popUpType,requestType){
 	$("#viewBulkBlockuploadFile").val(data.fileName);
 	$("#viewBulkBlockquantity").val(data.qty);
 	$("#viewBulkBlockTxnId").val(data.txnId);
+	
+	if(data.blockingType=='tilldate')
+	{
+	
+	$("#viewbulkblockingType").val("Later ( Block time period : " +data.blockingTimePeriod+" )");
+	}
+else{
+$("#viewbulkblockingType").val(data.blockingType);
+}
 	}
 	else
 	{
 		if(requestType=="3")
 		{
-			  
+			$("#editBulkBlockDiv").css("display", "none"); 
 		$('#editblockHeading').text(editUnblock);
 		}
 		else{
-			  
+			$("#editBulkBlockDiv").css("display", "block"); 
 		$('#editblockHeading').text($.i18n('editBlockDevice'));
 		}
 		
@@ -451,6 +466,16 @@ function setViewBulkPopUp(data,popUpType,requestType){
 	$("#editBulkBlockTxnId").val(data.txnId);
 	$("#editBulkBlockrequestType").val(data.requestType);
 	$("#editBulkBlockCategory").val(data.blockCategory);
+	$('input[name=editbulkblocktypeName][value='+data.blockingType+']').attr('checked', true);
+	if(data.blockingType=='tilldate')
+	{
+	$("#bulkeditcalender").css("display", "block"); 
+	
+	$("#editstolenBulkDatePeriod").val(data.blockingTimePeriod);
+	}
+else{
+	$("#bulkeditcalender").css("display", "none"); 
+}
 	
 	}
 }
@@ -467,6 +492,9 @@ var ModeType=3
 var roleType = $("body").attr("data-roleType");
 var userId = $("body").attr("data-userID");
 var formData = new FormData();
+var editbulkBlockingTimePeriod=$('#editstolenBulkDatePeriod').val();
+var editbulkBlocktype =$('.editbulkblocktypeRadio:checked').val();
+
 formData.append('file', $('#editselectBulkBlockuploadFile')[0].files[0]);
 formData.append('qty', qty);
 formData.append('blockCategory', categoryInterp);
@@ -477,6 +505,9 @@ formData.append('userId',userId);
 formData.append('roleType',roleType);
 formData.append('txnId',txnId);
 formData.append('fileName',fileName);
+formData.append('blockingTimePeriod',editbulkBlockingTimePeriod);
+formData.append('blockingType',editbulkBlocktype);
+
 $.ajax({
 	url: './updateFileTypeStolenRecovery',
 	type: 'POST',

@@ -141,7 +141,7 @@
 					
 					
 					<div class="input-field col s12 m6">
-					<textarea id="viewValue" class="materialize-textarea" placeholder="value" readonly="readonly"></textarea>
+					<textarea id="viewValue" class="materialize-textarea" placeholder="value" readonly="readonly" style="min-height:8rem"></textarea>
 					<label for="viewValue" class=""><spring:message code="table.Value" /> <span class="star">*</span></label>
 
 					</div>
@@ -149,7 +149,7 @@
 					
 					
 					<div class="input-field col s12 m6">
-					<textarea id="description" class="materialize-textarea" placeholder="Description" readonly="readonly"></textarea>
+					<textarea id="description" class="materialize-textarea" placeholder="Description" readonly="readonly" style="min-height:8rem"></textarea>
 					<label for="description" class=""><spring:message code="registration.description" /></label>
 
 					</div>
@@ -209,7 +209,7 @@
 					
 					
 					<div class="input-field col s12 m6">
-					<textarea id="editValue" class="materialize-textarea" placeholder="value" title="Please enter alphabets and numbers upto 100 characters only" maxlength="100" required="required"></textarea>
+					<textarea id="editValue" class="materialize-textarea" placeholder="value" title="Please enter alphabets and numbers upto 100 characters only" maxlength="100" required="required" style="min-height:8rem"></textarea>
 					<label for="editValue" class=""><spring:message code="table.Value" /> <span class="star">*</span></label>
 
 					</div>
@@ -217,7 +217,7 @@
 					
 					
 					<div class="input-field col s12 m6">
-					<textarea id="editdescription" class="materialize-textarea" placeholder="Description" title="Please enter alphabets and numbers upto 200 characters only" maxlength="200"></textarea>
+					<textarea id="editdescription" class="materialize-textarea" placeholder="Description" title="Please enter alphabets and numbers upto 200 characters only" maxlength="200" style="min-height:8rem"></textarea>
 					<label for="description" class=""><spring:message code="registration.description" /></label>
 
 					</div>

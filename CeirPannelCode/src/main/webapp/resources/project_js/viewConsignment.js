@@ -1049,3 +1049,23 @@ function confirmantiondelete(){
 			return false
 			
 		}
+		
+		function selectEditPortAddresValue(port){ 
+			$.ajax({
+				type : 'GET',
+				url :'../byArrivalPort/'+port,
+				contentType : "application/json",
+				dataType : 'html',
+				async:false,
+				success : function(data) {
+					var portAdressData=JSON.parse(data);
+					console.log(portAdressData.length);
+					$("#editportAddress").empty();
+					for (i = 0; i < data.length; i++) {
+						$('<option>').val(portAdressData[i].id).text(portAdressData[i].address).appendTo('#editportAddress');
+						}
+				},      
+				error: function (xhr, ajaxOptions, thrownError) {
+				}
+			});
+		}

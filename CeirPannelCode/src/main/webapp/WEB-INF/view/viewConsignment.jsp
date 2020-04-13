@@ -187,11 +187,24 @@
 						class="center-align"><spring:message
 							code="input.arrivalport" /></label>
 				</div>
+				<div class="input-field col s12 m6">
+					<!-- <label for="Name" class="center-align">Expected arrival port</label> -->
+					<input type="text" id="PortAddress" readonly="readonly"
+						placeholder=""> <label for="PortAddress"
+						class="center-align"><spring:message
+							code="input.arrivalport" /></label>
+				</div>
 
 				<div class="input-field col s12 m6">
 					<input type="text" name="Quantity" placeholder="" id="Quantity"
 						readonly="readonly" /> <label for="Quantity" class="center-align"><spring:message
 							code="input.quantity" /></label>
+				</div>
+				<div class="input-field col s12 m6">
+					<input type="text" name="quantity" id="devicequantity"
+						pattern="[0-9]{0,7}" maxlength="7"  oninput="InvalidMsg(this,'input','<spring:message code="validation.7character" />');"
+					    oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7character" />');"  required/> <label for="devicequantity"
+										class="center-align"><spring:message code="input.devicequantity" /> <span class="star">*</span></label>
 				</div>
 
 				<div class="input-field col s12 m6">
@@ -683,7 +696,7 @@
 					<p style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">	<spring:message code="input.arrivalport" /> <span class="star">*</span></p>
 					<%-- <label for="expectedArrivalPort"><spring:message code="input.arrivalport" /> <span class="star">*</span></label> --%>
 				
-						<select name="expectedArrivalPort" id="expectedArrivalPortEdit"
+						<select name="expectedArrivalPortEdit" onchange="selectEditPortAddresValue(this.value)" id="expectedArrivalPortEdit"
 							class="browser-default">
 							<option value="" disabled selected><spring:message
 									code="input.arrivalport" />*
@@ -692,6 +705,13 @@
 						</select>
 					</div>
 
+					<div class="col s12 m6 l6">
+									<label><spring:message code="registration.portAddress" /> <span class="star">*</span></label>
+									<select id="editportAddress" class="browser-default"   
+									oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" required>
+										<option value="" disabled selected><spring:message code="selectport" /></option>
+											</select>
+								</div>	
 					<div class="input-field col s12 m6">
 						<input type="text" name="quantity" id="QuantityEdit"
 							pattern="[0-9]{0,7}" placeholder=""
@@ -700,6 +720,13 @@
 							required /> <label for="Quantity" class="center-align"><spring:message
 								code="input.quantity" /><span class="star">*</span></label>
 					</div>
+					<div class="input-field col s12 m6">
+					<input type="text" name="quantity" id="deviceQuantityEdit"
+						pattern="[0-9]{0,7}" maxlength="7"  oninput="InvalidMsg(this,'input','<spring:message code="validation.7character" />');"
+					    oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7character" />');"  required/> <label for="devicequantity"
+										class="center-align"><spring:message code="input.devicequantity" /> <span class="star">*</span></label>
+				</div>
+
 
 					<div class="input-field col s12 m6">
 						<input type="text" name="txnId" id="TransactionIdEdit"

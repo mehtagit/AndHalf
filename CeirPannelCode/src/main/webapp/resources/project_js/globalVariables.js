@@ -19,7 +19,12 @@ var transactionIDValue= txnIdValue == 'null' ? $('#transactionID').val() : txnId
 function fileDownload(fileName,fileType,txnId,doc_TypeTag)
 {
 	fileName=fileName.split("%20").join(" ");
-console.log(" fileName "+fileName+" fileType  "+fileType+" txnId "+txnId+"  doc_TypeTag "+doc_TypeTag)
+	if(fileName=='')
+	{
+	fileName='blankFile';
+	}
+	console.log(" fileName "+fileName+" fileType  "+fileType+" txnId "+txnId+"  doc_TypeTag "+doc_TypeTag)
+
 	$.ajax({
 		url : "Consignment/dowloadFiles/"+fileType+'/'+fileName+'/'+txnId+'/'+doc_TypeTag,
 		dataType : 'json',
@@ -123,7 +128,7 @@ $("input[type=file]").keypress(function(ev) {
 		var fileSize = ($("#"+id)[0].files[0].size);
 		/*fileSize = (Math.round((fileSize / 100000) * 100) / 100)
 		alert("----"+fileSize);*/
-		fileSize = Math.floor(fileSize/1000) + 'KB';
+		fileSize = Math.floor(fileSize/1000);
 		$('#FilefieldId').val(id);
 		//alert(uploadedFileName+"----------"+ext+"----"+fileSize)
 		var areEqual =ext.toLowerCase()=='png';

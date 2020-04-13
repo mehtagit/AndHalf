@@ -11,7 +11,7 @@ public class StockUploadModel {
 	private String roleType;
 	private String suplierName;
 	private String txnId;
-	private int quantity;
+	private int quantity,deviceQuantity;
 	private int stockStatus;
 	private String supplierId;
 	
@@ -130,6 +130,12 @@ public class StockUploadModel {
 	public void setUser(StockUserModel user) {
 		this.user = user;
 	}
+	public int getDeviceQuantity() {
+		return deviceQuantity;
+	}
+	public void setDeviceQuantity(int deviceQuantity) {
+		this.deviceQuantity = deviceQuantity;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -147,6 +153,8 @@ public class StockUploadModel {
 		builder.append(txnId);
 		builder.append(", quantity=");
 		builder.append(quantity);
+		builder.append(", deviceQuantity=");
+		builder.append(deviceQuantity);
 		builder.append(", stockStatus=");
 		builder.append(stockStatus);
 		builder.append(", supplierId=");
@@ -173,7 +181,6 @@ public class StockUploadModel {
 		return builder.toString();
 	}
 	
-
 	
 	
 	

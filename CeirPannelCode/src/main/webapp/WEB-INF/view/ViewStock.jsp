@@ -189,6 +189,14 @@
 							required> <label for="Quantity" class="center-align"><spring:message
 								code="input.quantity" /> <span class="star">*</span></label>
 					</div>
+					<div class="input-field col s12 m6">
+											<input type="text" name="devicequantity" id="editdevicequantity"
+												pattern="[0-9]{0,7}"
+												
+												maxlength="7"  oninput="InvalidMsg(this,'input','<spring:message code="validation.7character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7character" />');"  required/> <label for="editdevicequantity"
+												class="center-align"><spring:message code="input.devicequantity" /> <span class="star">*</span></label>
+										</div>
+					
 
 					<div class="input-field col s12 m6" id="editInvoiceNumberDiv">
 						<input type="text" name="InvoiceNumber" id="editInvoiceNumber"
@@ -289,6 +297,14 @@
 							disabled /> <label for="Quantity" class="center-align"><spring:message
 								code="input.quantity" /></label>
 					</div>
+					
+					<div class="input-field col s12 m6">
+											<input type="text" name="devicequantity" id="viewdevicequantity"
+												pattern="[0-9]{0,7}"
+												
+												maxlength="7"  oninput="InvalidMsg(this,'input','<spring:message code="validation.7character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7character" />');"  required/> <label for="devicequantity"
+												class="center-align"><spring:message code="input.devicequantity" /> <span class="star">*</span></label>
+										</div>
 
 					<div class="input-field col s12 m6" id="invoiceNumberDiv">
 						<input type="text" name="InvoiceNumber" id="InvoiceNumber"

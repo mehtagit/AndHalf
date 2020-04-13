@@ -134,14 +134,14 @@
 					
 					
 					<div class="input-field col s12 m6" >
-					<textarea id="viewValue" class="materialize-textarea" readonly="readonly"></textarea>
+					<textarea id="viewValue" class="materialize-textarea" readonly="readonly" style="min-height:8rem"></textarea>
 					<label for="viewValue" class=""><spring:message code="registration.value" /> <span class="star">*</span></label>
 
 					</div>
 
 
 					<div class="input-field col s12 m6">
-					<textarea id="description" class="materialize-textarea" readonly="readonly"></textarea>
+					<textarea id="description" class="materialize-textarea" readonly="readonly" style="min-height:8rem"></textarea>
 					<label for="description" class=""><spring:message code="registration.description" /></label>
 
 					</div>
@@ -194,14 +194,14 @@
 				
 					
 					<div class="input-field col s12 m6">
-					<textarea id="editValue" class="materialize-textarea" placeholder="" title="Please enter alphabets and numbers upto 100 characters only" maxlength="100" required="required"></textarea>
+					<textarea id="editValue" class="materialize-textarea" placeholder="" title="Please enter alphabets and numbers upto 100 characters only" maxlength="100" required="required" style="min-height:8rem"></textarea>
 					<label for="editValue" class=""><spring:message code="registration.value" /> <span class="star">*</span></label>
 
 					</div>
 
 
 					<div class="input-field col s12 m6">
-					<textarea id="editdescription" class="materialize-textarea" placeholder="" title="Please enter alphabets and numbers upto 200 characters only" maxlength="200"></textarea>
+					<textarea id="editdescription" class="materialize-textarea" placeholder="" title="Please enter alphabets and numbers upto 200 characters only" maxlength="200" style="min-height:8rem"></textarea>
 					<label for="editdescription" class=""><spring:message code="registration.description" /></label>
 
 					</div>

@@ -590,15 +590,15 @@ public class IconsState {
 
 		log.info("status is--->" +status+"---userStatus---->"+userStatus);
 		//Disable reply
-		if(("0".equals(status) || "1".equals(status) || "3".equals(status)) && "Approved".equals(userStatus)) {
+		/*if(("0".equals(status) || "1".equals(status) || "3".equals(status)) && "Approved".equals(userStatus)) {
 			reply = "<a onclick="+replyAction+" class=\"eventNone\"><i class="+disableReplyIcon+" aria-hidden=\"true\" title="
 					+replyIconTitle+" ></i></a>";
 
 		}else if(("0".equals(status)) && "Approved".equals(userStatus)) {
 			view="<a onclick="+viewAction+" class=\"eventNone\"><i class="+disableViewIcon+" aria-hidden=\"true\" title="
 					+viewIconTitle+" ></i></a>";
-		}
-		else if("Disable".equals(userStatus)) {
+		}*/
+		if("Disable".equals(userStatus)) {
 			log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
 			reply = "<a onclick="+replyAction+" class=\"eventNone\"><i class="+disableReplyIcon+" aria-hidden=\"true\" title="
 					+replyIconTitle+" ></i></a>";
@@ -629,7 +629,7 @@ public class IconsState {
 
 		log.info("status is--->" +status+"---userStatus---->"+userStatus);
 		//Disable reply
-		if(("0".equals(status) || "1".equals(status) || "2".equals(status) ||"3".equals(status)) && "Approved".equals(userStatus)) {
+		/*if(("0".equals(status) || "1".equals(status) || "2".equals(status) ||"3".equals(status)) && "Approved".equals(userStatus)) {
 			reply = "<a onclick="+replyAction+" class=\"eventNone\"><i class="+disableReplyIcon+" aria-hidden=\"true\" title="
 					+replyIconTitle+" ></i></a>";
 
@@ -637,7 +637,7 @@ public class IconsState {
 			view="<a onclick="+viewAction+" class=\"eventNone\"><i class="+disableViewIcon+" aria-hidden=\"true\" title="
 					+viewIconTitle+" ></i></a>";
 		}
-		else if("Disable".equals(userStatus)) {
+*/		if("Disable".equals(userStatus)) {
 			log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
 			reply = "<a onclick="+replyAction+" class=\"eventNone\"><i class="+disableReplyIcon+" aria-hidden=\"true\" title="
 					+replyIconTitle+" ></i></a>";
@@ -664,13 +664,13 @@ public class IconsState {
 		log.info("status is--->" +status+"---userStatus---->"+userStatus);
 
 		//Disable reply
-		if(("2".equals(status) || "3".equals(status)) && "Approved".equals(userStatus))  {
+		/*if(("2".equals(status) || "3".equals(status)) && "Approved".equals(userStatus))  {
 			reply = "<a onclick="+replyAction+" class=\"eventNone\"><i class="+disableReplyIcon+" aria-hidden=\"true\" title="
 					+replyIconTitle+" ></i></a>";
 
-		}
+		}*/
 
-		else if("Disable".equals(userStatus)) {
+		if("Disable".equals(userStatus)) {
 			log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
 			reply = "<a onclick="+replyAction+" class=\"eventNone\"><i class="+disableReplyIcon+" aria-hidden=\"true\" title="
 					+replyIconTitle+" ></i></a>";
@@ -1628,11 +1628,14 @@ public class IconsState {
 		log.info("set StatusofGrievance....." +StatusofGrievance);
 
 		//Disable reply
-		if( "0".equals(StatusofGrievance) || "3".equals(StatusofGrievance)) {
-			reply = "<a onclick="+replyAction+" class=\"eventNone\"><i class="+disableReplyIcon+" aria-hidden=\"true\" title="
-					+replyIconTitle+" ></i></a>";
-
-		}
+		/*
+		 * if( "0".equals(StatusofGrievance) || "3".equals(StatusofGrievance)) { reply =
+		 * "<a onclick="+replyAction+" class=\"eventNone\"><i class="
+		 * +disableReplyIcon+" aria-hidden=\"true\" title="
+		 * +replyIconTitle+" ></i></a>";
+		 * 
+		 * }
+		 */
 		/*
 		 * //Disable reply if( "0".equals(status) || "1".equals(status) ||
 		 * "3".equals(status)) { reply =
@@ -2228,10 +2231,10 @@ public class IconsState {
 	
 	/********************************** Icons Admin Pending TAC Management**********************************/ 
 
-	public String adminPendingTacIcons(String id) { 
+	public String adminPendingTacIcons(String txnId, String id) { 
 		executePostConstruct();
 
-		String deleteAction ="DeleteByID('"+id+"')";
+		String deleteAction ="DeleteByID('"+txnId+"','"+id+"')";
 		// state related Code 
 
 		String delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="

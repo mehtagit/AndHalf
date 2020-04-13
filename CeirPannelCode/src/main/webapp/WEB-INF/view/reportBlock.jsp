@@ -315,17 +315,71 @@ onclick="_Services._selectstartDate()"></i></span>
                                                         </div>
                                                     </div>
 
-                    <div class="input-field col s12 m6" style="margin-top: 62px;">
+<div class="input-field col s12 m6" style="margin-top: 62px;">
                                                                 <textarea id="blockbulkRemark"  class="materialize-textarea" 
                                                                 oninput="InvalidMsg(this,'input','<spring:message code="validation.200character" />');" 
                                                                 oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
                                                                  maxlength="200" required /></textarea>
                                                                 <label for="blockbulkRemark"><spring:message code="input.remarks" /> <span class="star">*</span></label>
                                                             </div>
+													<div class="col s12 m6 blockingType">
+												<p style="margin-top: 3px; margin-bottom: 5px">
+													<spring:message code="operator.blocking" />
+												</p>
+												<label style="margin-right: 2%;"> <input
+													type="radio" class="bulkblocktypeRadio" id="" value="Immediate"
+													onclick="document.getElementById('stolenCalender').style.display = 'none';"
+													name="stolenBulkBlockPeriod" checked> <spring:message
+														code="operator.immediate" />
+												</label> <label style="margin-right: 2%;"> <input
+													type="radio" class="bulkblocktypeRadio" value="Default"
+													onclick="document.getElementById('stolenCalender').style.display = 'none';"
+													name="stolenBulkBlockPeriod"> <spring:message
+														code="operator.default" />
+												</label> <label> <input type="radio" required="required"
+													value="tilldate" class="bulkblocktypeRadio"
+													onclick="document.getElementById('stolenCalender').style.display = 'block';"
+													name="stolenBulkBlockPeriod"> <spring:message
+														code="operator.later" />
+												</label>
+												<div class="col s6 m2 responsiveDiv"
+													style="display: none; width: 30%; margin-right: 30%; float: right; margin-top: -15px"
+													id="stolenCalender">
+													<div id="Stolenstartdatepicker" class="input-group date">
+														<input type="text" id="stolenBulkDatePeriod"
+															style="margin-top: -9px" /> <span
+															class="input-group-addon" style="color: #ff4081"><i
+															class="fa fa-calendar" aria-hidden="true"
+															style="float: right; margin-top: -30px;"></i></span>
+													</div>
 
+												</div>
+
+
+												<div class="col s12 m2 l2"
+													style="width: 40%; display: none; float: right; margin-right: 30%;"
+													id="stolenDate">
+
+													<label for="TotalPrice" class="center-align"> <spring:message
+															code="operator.tilldate" /></label>
+													<div id="Stolenstartdatepicker" class="input-group"
+														style="margin-top: 10px;">
+
+														<input class="form-control" name="inputsaves" type="text"
+															id="startDateFilter" readonly /> <span
+															class="input-group-addon" style="color: #ff4081"><i
+															class="glyphicon glyphicon-calendar"
+															onclick="_Services._selectstartDate()"></i></span>
+													</div>
+												</div>
+											</div>
+		
+                    
+                      					
+                                            <div class="col s12 m12">
                                                     <p style="margin-left: 10px;"><a href="./Consignment/sampleFileDownload/7"><spring:message code="input.downlaod.sample" /></a></p>
                                                    <span style="margin-left: 5px;"><spring:message code="input.requiredfields" /><span class="star">*</span></span>
-
+											</div>							
                                                     <div class="input-field col s12 center">
                                                <button class="btn" type="submit" id="blockBulkSubmitButton" ><spring:message code="button.submit" /></button>
                                                         <a href="./stolenRecovery" class="btn" style="margin-left: 10px;"><spring:message code="button.cancel" /></a>
@@ -456,7 +510,11 @@ onclick="_Services._selectstartDate()"></i></span>
 		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/reportBlock.js"></script>
-		
+	<script type="text/javascript">
+	$('#stolenBulkDatePeriod').datepicker({
+		dateFormat : "yy-mm-dd"
+	});
+	</script>	
 
 </body>
 </html>

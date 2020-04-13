@@ -127,6 +127,71 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}"
 		<!--end container-->
 	</section>
 	
+	
+	<div id="DeleteTacConfirmationModal" class="modal">
+			<h6 class="modal-header">
+				<spring:message code="modal.header.deletePendingTac" />
+			</h6>
+			<div class="modal-content">
+
+
+
+				<form action="" onsubmit="return confirmantiondelete()">
+					<div class="row">
+						<h6>
+							<spring:message code="modal.message.pendingtac.delete" />
+							<span id="tacdeleteTxnId"></span>
+						</h6>
+					</div>
+					<div class="row">
+						<div class="input-field col s12 m12">
+							<textarea id="deleteTacRemark"  
+								class="materialize-textarea" 
+							oninput="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
+							oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200character" />');" required></textarea>
+							<label for="textarea1" class=""><spring:message
+									code="input.remarks" /> <span class="star">*</span> </label>
+						</div>
+					</div>
+					<input type="text" id="deleteTacId" hidden>
+					<div class="row">
+						<div class="input-field col s12 center">
+							<button type="submit" class="btn" type="submit">
+								<spring:message code="modal.yes" />
+							</button>
+							<button class="modal-close btn" type="button"
+								style="margin-left: 10px;">
+								<spring:message code="modal.no" />
+							</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		
+		
+		<div id="closeDeleteModal" class="modal">
+			<h6 class="modal-header">
+				<spring:message code="modal.header.deletePendingTac"/>
+			</h6>
+			<div class="modal-content">
+
+
+				<div class="row">
+
+					<h6 id="tacModalText">
+						<spring:message code="modal.message.PendingtacDeleted" />
+					</h6>
+				</div>
+				<div class="row">
+					<div class="input-field col s12 center">
+						<a href="" class="modal-close btn" style="margin-left: 10px;"><spring:message
+								code="modal.ok" /></a>
+					</div>
+				</div>
+			</div>
+		</div>	
+	
 
 	<!--materialize js-->
 	<script type="text/javascript"

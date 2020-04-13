@@ -192,7 +192,8 @@ public @ResponseBody GenricResponse registerConsignment(@RequestParam(name="supp
 ,@RequestParam(name="consignmentNumber",required = false) String consignmentNumber,@RequestParam(name="expectedArrivaldate",required = false) String expectedArrivalDate,
 @RequestParam(name="organisationcountry",required = false) String organisationcountry,@RequestParam(name="expectedDispatcheDate",required = false) String expectedDispatcheDate,
 @RequestParam(name="expectedArrivalPort",required = false) Integer expectedArrivalPort,@RequestParam(name="quantity",required = false) String quantity,
-@RequestParam(name="file",required = false) MultipartFile file,HttpSession session,@RequestParam(name="totalPrice",required = false) String totalPrice,@RequestParam(name="currency",required = false) Integer currency,HttpServletRequest request) {
+@RequestParam(name="file",required = false) MultipartFile file,HttpSession session,@RequestParam(name="totalPrice",required = false) String totalPrice,@RequestParam(name="currency",required = false) Integer currency,
+@RequestParam(name="portAddress",required = false) String portAddress,@RequestParam(name="deviceQuantity",required = false) Integer deviceQuantity,HttpServletRequest request) {
 
 	log.info("headers request="+request.getHeaderNames());
 	log.info("user-agent"+request.getHeader("user-agent"));
@@ -252,6 +253,8 @@ consignment.setUserId(Long.valueOf(userId));
 
 consignment.setCurrency(currency);
 consignment.setTotalPrice(totalPrice);
+consignment.setPortAddress(portAddress);
+consignment.setDeviceQuantity(deviceQuantity);
 log.info("consignment form parameters passed to register consignment api "+consignment.toString());
 GenricResponse response = feignCleintImplementation.addConsignment(consignment);
 log.info("response from register consignment api"+response.toString());
@@ -468,7 +471,7 @@ return consignmentdetails;
 @RequestMapping(value="/dowloadFiles/{filetype}/{fileName}/{transactionNumber}/{doc_TypeTag}",method={org.springframework.web.bind.annotation.RequestMethod.GET}) 
 //@RequestMapping(value="/dowloadFiles/{filetype}/{fileName}/{transactionNumber}",method={org.springframework.web.bind.annotation.RequestMethod.GET}, headers = {"content-Disposition=attachment"}) 
 
-public @ResponseBody FileExportResponse downloadFile(@PathVariable("transactionNumber") String txnid,@PathVariable("fileName") String fileName,@PathVariable("filetype") String filetype,@PathVariable(name="doc_TypeTag",required = false) String doc_TypeTag) throws IOException {
+public @ResponseBody FileExportResponse downloadFile(@PathVariable("transactionNumber") String txnid,@PathVariable(name="fileName",required = false	) String fileName,@PathVariable("filetype") String filetype,@PathVariable(name="doc_TypeTag",required = false) String doc_TypeTag) throws IOException {
 
 	FileExportResponse response = new FileExportResponse();	
 log.info("inside file download method"+doc_TypeTag);
