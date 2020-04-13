@@ -40,14 +40,19 @@
 			//**************************************************Grievance table**********************************************
 
 			function DataTable(lang){
-				//var txn= (txnIdValue == 'null' && transactionIDValue == undefined)? $('#grievanceID').val() : transactionIDValue;
+				
+				var featureName = $('#feature').val() == null ? null : $("#feature option:selected").text();
+				
 				var filterRequest={
 						"endDate":$('#endDate').val(),
 						"startDate":$('#startDate').val(),
+						"tac" : $('#tac').val(),
+						"txnId" :  $('#transactionID').val(),
+						"feature" : featureName,
 						//"userId": parseInt($("body").attr("data-userID")),
 						//"featureId":parseInt(featureId),
 						//"userTypeId": parseInt($("body").attr("data-userTypeID")),
-						//"txnId":  $('#transactionID').val(),
+						
 						//"userType":$("body").attr("data-roleType"),
 						"featureId":parseInt(featureId)
 				}
@@ -198,7 +203,42 @@
 
 
 
-
+			function  DeleteByID(txnId,id){
+				
+				$("#DeleteTacConfirmationModal").openModal({
+			        dismissible:false
+			    });
+				$("#tacdeleteTxnId").text(txnId);
+				$("#deleteTacId").val(id);
+			} 
+			
+			function confirmantiondelete(){
+				
+				var id  = parseInt($("#deleteTacId").val());
+				console.log(JSON.stringify(id));
+				
+				$.ajax({
+					url : './deletePort/'+id,
+//					data : JSON.stringify(request),
+					dataType : 'json',
+					contentType : 'application/json; charset=utf-8',
+					type : 'POST',
+					success : function(data, textStatus, xhr) {
+						console.log(data);
+						$("#DeleteTacConfirmationModal").closeModal();
+						$("#closeDeleteModal").openModal({
+					        dismissible:false
+					    });
+						
+						$("#materialize-lean-overlay-3").css("display","none");
+					},
+					error : function() {
+						console.log("Error");
+					}
+				});
+				
+				return false;
+			}
 			
 
 			

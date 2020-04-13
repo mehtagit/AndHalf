@@ -9,7 +9,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 
-	<name>Ceir10April</name>
+	<name>Ceir26march</name>
 	<url>http://maven.apache.org</url>
 
 	<parent>
@@ -148,7 +148,7 @@
 	</dependencyManagement>
 	<build>
 
-		<finalName>${name}</finalName>
+		<finalName>Test</finalName>
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>

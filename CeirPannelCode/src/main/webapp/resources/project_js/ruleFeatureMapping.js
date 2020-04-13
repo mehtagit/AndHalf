@@ -161,13 +161,13 @@
 				
 						$.getJSON('./getAllfeatures', function(data) {
 							for (i = 0; i < data.length; i++) {
-							$('<option>').val(data[i].name).text(data[i].name).appendTo('#Feature,#editFeature');
+							$('<option>').val(data[i].name).text(data[i].name).appendTo('#Feature');
 							}
 						});
 						$.getJSON('./registrationUserType', function(data) {
 							for (i = 0; i < data.length; i++) {
 								$('<option>').val(data[i].usertypeName).text(data[i].usertypeName)
-								.appendTo('#User,#editUser');
+								.appendTo('#User');
 							}
 						});
 						$.getJSON('./ruleName', function(data) {
@@ -179,7 +179,17 @@
 						
 						
 						
-					
+						$.getJSON('./getAllfeatures', function(data) {
+							for (i = 0; i < data.length; i++) {
+							$('<option>').val(data[i].name).text(data[i].name).appendTo('#editFeature');
+							}
+						});
+						$.getJSON('./registrationUserType', function(data) {
+							for (i = 0; i < data.length; i++) {
+								$('<option>').val(data[i].usertypeName).text(data[i].usertypeName)
+								.appendTo('#editUser');
+							}
+						});
 						$.getJSON('./ruleName', function(data) {
 							for (i = 0; i < data.length; i++) {
 								$('<option>').val(data[i].id).text(data[i].description)

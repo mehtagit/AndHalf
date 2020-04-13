@@ -91,7 +91,7 @@ public class TacListDatatableController {
 				   String userTypeName = dataInsideList.getUserType();
 				   String featureName = dataInsideList.getFeatureName();
 				   String userStatus = (String) session.getAttribute("userStatus");	  
-				   String action=iconState.adminPendingTacIcons(id);			   
+				   String action=iconState.adminPendingTacIcons(txnId,id);			   
 				   Object[] finalData={createdOn,modifiedOn,txnId,tac,userTypeName,featureName,action}; 
 				   List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 					finalList.add(finalDataList);

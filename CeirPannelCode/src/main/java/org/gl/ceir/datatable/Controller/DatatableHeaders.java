@@ -448,6 +448,17 @@ public class DatatableHeaders {
 				}
 				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
 			}
+			
+			
+			//Grievance Admin Headers
+			else if("adminGrievanceHeaders".equals(role)) {
+				
+				String[] headers = {"table.raiseddate","table.lastupdatedate","table.transactionID","table.displayName","table.grievanceID","table.grievancestatus","table.action"};	
+				for(String header : headers) {
+					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
+				}
+				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);	
+			}
 			//DEFAULT PORTION  
 			else {
 				String[] headers = {"table.date","table.transactionID","table.fileName","table.stockStatus","table.action"};		

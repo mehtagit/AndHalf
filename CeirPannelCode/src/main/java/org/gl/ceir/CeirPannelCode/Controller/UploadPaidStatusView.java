@@ -284,7 +284,7 @@ FeignCleintImplementation feignCleintImplementation;
 	}
 	
 	
-	@GetMapping("updateVisaValidaity")
+	@GetMapping("updateVisavalidity")
 	public ModelAndView updateVisaValidaity(HttpSession session) {
 		ModelAndView modelAndView = new ModelAndView();
 		log.info("---entry point in update visa validity page");

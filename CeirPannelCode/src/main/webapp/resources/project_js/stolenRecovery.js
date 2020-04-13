@@ -261,7 +261,7 @@ var userType = $("body").attr("data-roleType");
 var sourceType = localStorage.getItem("sourceType");
 function filterStolen(){
 	var userTypeId = $("body").attr("data-userTypeID");
-	if(userType=="Operator"){
+	if(userType=="Operator" || userType=="Operation" ){
 		Datatable('./headers?type=blockUnblock','stolenData?featureId='+featureId+'&userTypeId='+userTypeId)
 	}else if(userType =="CEIRAdmin"){
 		Datatable('./headers?type=BlockUnblockCEIRAdmin','stolenData?featureId='+featureId+'&userTypeId='+userTypeId)
