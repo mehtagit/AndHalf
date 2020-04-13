@@ -436,6 +436,9 @@ public class StolenAndRecoveryServiceImpl {
 				fileRecords = new ArrayList<>();
 				for( StolenandRecoveryMgmt stolenandRecoveryMgmt : stolenandRecoveryMgmts ) {
 					srfm = new StolenAndRecoveryFileModel();
+					if(Objects.isNull(stolenandRecoveryMgmt)) {
+						continue;
+					}
 
 					srfm.setCreatedOn(stolenandRecoveryMgmt.getCreatedOn().format(dtf));
 					srfm.setModifiedOn( stolenandRecoveryMgmt.getModifiedOn().format(dtf));
@@ -445,7 +448,9 @@ public class StolenAndRecoveryServiceImpl {
 					logger.info("Status : "+stolenandRecoveryMgmt.getStateInterp());
 					srfm.setStolenStatus(stolenandRecoveryMgmt.getStateInterp());
 
-					if(stolenandRecoveryMgmt.getOperatorTypeId() == -1) {
+					if(Objects.isNull(stolenandRecoveryMgmt.getOperatorTypeId())) {
+						srfm.setSource("");
+					}else if(stolenandRecoveryMgmt.getOperatorTypeId() == -1) {
 						srfm.setSource("Ceir Admin");
 					}else {
 						srfm.setSource(stolenandRecoveryMgmt.getOperatorTypeIdInterp());
