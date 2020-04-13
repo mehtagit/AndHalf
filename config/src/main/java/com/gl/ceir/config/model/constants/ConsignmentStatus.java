@@ -1,6 +1,6 @@
 package com.gl.ceir.config.model.constants;
 
-public enum ConsignmentStatus {
+public enum ConsignmentStatus{
 	
 	INIT(0, "INIT"), PROCESSING(1, "Processing"), REJECTED_BY_SYSTEM(2, "Rejected By System"), 
 	
@@ -12,8 +12,12 @@ public enum ConsignmentStatus {
 	
 	REJECTED_BY_CUSTOMS(7, "Rejected By Customs"), WITHDRAWN_BY_IMPORTER(8, "Withdrawn By Importer"),
 	
-	WITHDRAWN_BY_CEIR(9, "Withdrawn By CEIR"), STOLEN(10,"Stolen");
+	WITHDRAWN_BY_CEIR(9, "Withdrawn By CEIR"), REJECTED_BY_DRT (10,"Rejected by DRT "),
+	
+	PENDING_CLEARANCE_FROM_DRT (11,"Pending Clearance from DRT "),
+	STOLEN (12,"Stolen ");
 
+	
 	private int code;
 	private String desc;
 

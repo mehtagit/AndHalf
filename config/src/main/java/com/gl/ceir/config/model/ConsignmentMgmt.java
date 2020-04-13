@@ -89,8 +89,12 @@ public class ConsignmentMgmt implements Serializable {
 	
 	@Transient
 	private String taxInterp;
+	
+	public Integer portAddress;
+	
+	public Integer deviceQuantity;
 
-	// @NotNull
+	//@NotNull
 	@NotAudited
 	@OneToOne
 	@JoinColumn(name="local_user_id", updatable = false)
@@ -103,6 +107,27 @@ public class ConsignmentMgmt implements Serializable {
 	
 	@Transient
 	private String deleteFlagInterp;
+	
+	
+
+	
+	
+	public Integer getPortAddress() {
+		return portAddress;
+	}
+
+	public void setPortAddress(Integer portAddress) {
+		this.portAddress = portAddress;
+	}
+
+	public Integer getDeviceQuantity() {
+		return deviceQuantity;
+	}
+
+	public void setDeviceQuantity(Integer deviceQuantity) {
+		this.deviceQuantity = deviceQuantity;
+	}
+
 	
 	public Integer getDeleteFlag() {
 		return deleteFlag;
@@ -376,18 +401,34 @@ public class ConsignmentMgmt implements Serializable {
 		builder.append(expectedArrivaldate);
 		builder.append(", expectedArrivalPort=");
 		builder.append(expectedArrivalPort);
+		builder.append(", expectedArrivalPortInterp=");
+		builder.append(expectedArrivalPortInterp);
 		builder.append(", quantity=");
 		builder.append(quantity);
 		builder.append(", remarks=");
 		builder.append(remarks);
 		builder.append(", currency=");
 		builder.append(currency);
+		builder.append(", currencyInterp=");
+		builder.append(currencyInterp);
 		builder.append(", totalPrice=");
 		builder.append(totalPrice);
-		builder.append(", user=");
-		builder.append(user);
 		builder.append(", stateInterp=");
 		builder.append(stateInterp);
+		builder.append(", taxInterp=");
+		builder.append(taxInterp);
+		builder.append(", user=");
+		builder.append(user);
+		builder.append(", pendingTacApprovedByCustom=");
+		builder.append(pendingTacApprovedByCustom);
+		builder.append(", deleteFlag=");
+		builder.append(deleteFlag);
+		builder.append(", deleteFlagInterp=");
+		builder.append(deleteFlagInterp);
+		builder.append(", portAddress=");
+		builder.append(portAddress);
+		builder.append(", deviceQuantity=");
+		builder.append(deviceQuantity);
 		builder.append("]");
 		return builder.toString();
 	}
