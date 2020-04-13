@@ -73,34 +73,11 @@ public class StolenAndRecoveryTransaction {
 		logger.info("Saved in stolenand_recovery_mgmt_db" + stolenandRecoveryMgmt);
 
 		if(Objects.nonNull(stolenIndividualUserDB)) {
-			Long id = stolenIndividualUserRepository.maxOfId();
-			if(Objects.isNull(id)) {
-				id = 1L;
-			}else {
-				id = id + 1;
-			}
-			
-			logger.info("max of id for stolen_individual_user_db [" + id + "]");
-			
-			// stolenIndividualUserDB.setId(id);
-			
 			stolenIndividualUserRepository.save(stolenIndividualUserDB);
 			logger.info("Saved in stolen_individual_user_db" + stolenandRecoveryMgmt);
 		}
 
 		if(Objects.nonNull(stolenOrganizationUserDB)) {
-			
-			Long id = stolenOrganizationUserRepository.maxOfId();
-			
-			if(Objects.isNull(id)) {
-				id = 1L;
-			}else {
-				id = id + 1;
-			}
-			
-			logger.info("max of id for stolen_organization_user_db [" + id + "]");
-			
-			// stolenOrganizationUserDB.setId(id);
 			stolenOrganizationUserRepository.save(stolenOrganizationUserDB);
 			logger.info("Saved in stolen_organization_user_db" + stolenandRecoveryMgmt);
 		}

@@ -122,6 +122,16 @@ public class RuleEngineMappingServiceImpl {
 		if(Objects.nonNull(filterRequest.getUserType()))
 			cmsb.with(new SearchCriteria("userType", filterRequest.getUserType(), SearchOperation.EQUALITY, Datatype.STRING));
 		
+		if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
+			cmsb.orSearch(new SearchCriteria("feature", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+			cmsb.orSearch(new SearchCriteria("name", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+			cmsb.orSearch(new SearchCriteria("graceAction", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+			cmsb.orSearch(new SearchCriteria("postGraceAction", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+			cmsb.orSearch(new SearchCriteria("userType", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+			cmsb.orSearch(new SearchCriteria("failedRuleActionGrace", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+			cmsb.orSearch(new SearchCriteria("failedRuleActionPostGrace", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+		}
+		
 		return cmsb;
 	}
 
