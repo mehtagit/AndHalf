@@ -503,7 +503,7 @@ public class StockServiceImpl {
 			stockMgmt.setSuplierName(distributerManagement.getSuplierName());
 			stockMgmt.setSupplierId(distributerManagement.getSupplierId());
 			stockMgmt.setTotalPrice(distributerManagement.getTotalPrice());
-
+			stockMgmt.setDeviceQuantity(distributerManagement.getDeviceQuantity());
 			if(Objects.nonNull(distributerManagement.getFileName()) && !distributerManagement.getFileName().isEmpty()) {
 				stockMgmt.setStockStatus(StockStatus.UPLOADING.getCode());
 				stockMgmt.setFileName(distributerManagement.getFileName());
@@ -519,8 +519,8 @@ public class StockServiceImpl {
 				logger.info("Stock Update have been Successful." + stockMgmt.getTxnId());
 				return new GenricResponse(0, "Stock Update have been Successful.", distributerManagement.getTxnId());
 			}else {
-				logger.info("Deletion of Stock have been failed." + stockMgmt.getTxnId());
-				return new GenricResponse(1, "Deletion of Stock have been failed.",stockMgmt.getTxnId());
+				logger.info("Stock Update have been failed." + stockMgmt.getTxnId());
+				return new GenricResponse(1, "Stock Update have been failed.",stockMgmt.getTxnId());
 			}
 		}
 	}

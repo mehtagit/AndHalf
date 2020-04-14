@@ -83,6 +83,8 @@ public class StockMgmt implements Serializable {
 
 	@Transient
 	private String deleteFlagInterp;
+	
+	private int deviceQuantity;
 
 	public Integer getDeleteFlag() {
 		return deleteFlag;
@@ -260,6 +262,14 @@ public class StockMgmt implements Serializable {
 
 	public void setAssignerId(Long assignerId) {
 		this.assignerId = assignerId;
+	}
+	
+	public int getDeviceQuantity() {
+		return deviceQuantity;
+	}
+
+	public void setDeviceQuantity(int deviceQuantity) {
+		this.deviceQuantity = deviceQuantity;
 	}
 
 	@Override

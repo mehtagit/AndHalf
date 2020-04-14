@@ -61,6 +61,8 @@ public class StolenandRecoveryMgmt implements Serializable {
 	private Integer qty;
 
 	private String remark;
+	
+	private String rejectedRemark;
 
 	@Transient
 	private String sourceTypeInterp;
@@ -299,6 +301,12 @@ public class StolenandRecoveryMgmt implements Serializable {
 	public void setFirFileName(String firFileName) {
 		this.firFileName = firFileName;
 	}
+	public String getRejectedRemark() {
+		return rejectedRemark;
+	}
+	public void setRejectedRemark(String rejectedRemark) {
+		this.rejectedRemark = rejectedRemark;
+	}
 
 	@Override
 	public String toString() {
@@ -357,6 +365,8 @@ public class StolenandRecoveryMgmt implements Serializable {
 		builder.append(imei);
 		builder.append(", firFileName=");
 		builder.append(firFileName);
+		builder.append(", rejectedRemark=");
+		builder.append(rejectedRemark);
 		builder.append("]");
 		return builder.toString();
 	}
