@@ -2,6 +2,7 @@ package org.gl.ceir.CeirPannelCode.Feignclient;
 import java.util.List;
 
 import org.gl.ceir.CeirPannelCode.Model.FeatureDropdown;
+import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.Otp;
 import org.gl.ceir.CeirPannelCode.Model.OtpResponse;
 import org.gl.ceir.CeirPannelCode.Model.Registration;
@@ -28,8 +29,8 @@ public interface UserRegistrationFeignImpl {
 	@PostMapping("/userRegistration/usertypeIdByName/{usertype}")
 	public Usertype userypeDataByName(@PathVariable("usertype")String usertype);
 	                                  
-	@PostMapping("/userRegistration/getSecurityQuestion")
-	public List<SecurityQuestion> securityQuestionList();
+	@PostMapping("/userRegistration/getSecurityQuestion/{username}")
+	public GenricResponse securityQuestionList(@PathVariable("username")String username);
 	
 	@PostMapping("/userRegistration/registration")
 	public OtpResponse registration(@RequestBody Registration registration); 

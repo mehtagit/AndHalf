@@ -12,6 +12,7 @@ import org.gl.ceir.CeirPannelCode.Feignclient.PortAddressFeign;
 import org.gl.ceir.CeirPannelCode.Feignclient.UserRegistrationFeignImpl;
 import org.gl.ceir.CeirPannelCode.Model.Dropdown;
 import org.gl.ceir.CeirPannelCode.Model.FeatureDropdown;
+import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.Operator;
 import org.gl.ceir.CeirPannelCode.Model.Otp;
 import org.gl.ceir.CeirPannelCode.Model.OtpResponse;
@@ -151,10 +152,10 @@ public class RegistrationController {
 		return mv;      
 	} 
 
-	@RequestMapping(value = "/securityQuestionList",method = {RequestMethod.GET})
+	@RequestMapping(value = "/securityQuestionList/{username}",method = {RequestMethod.GET})
 	@ResponseBody 
-	public List<SecurityQuestion> questionList(){
-		List<SecurityQuestion> response =registrationService.securityQuestionList();
+	public GenricResponse questionList(@PathVariable("username")String username){
+		GenricResponse response =registrationService.securityQuestionList(username);
 		return response;         
 	}
 
