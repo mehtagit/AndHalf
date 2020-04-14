@@ -557,11 +557,21 @@ public class RegularizedDeviceServiceImpl {
 		}
 	}
 
-	public GenricResponse getCountOfRegularizedDevicesByNid(String nid) {
+	public GenricResponse getCountOfRegularizedDevicesByNid(String nid,Integer type) {
 		try {
-			PolicyConfigurationDb policyConfigurationDb = configurationManagementServiceImpl.getPolicyConfigDetailsByTag(ConfigTags.max_end_user_device_count);
+			if(type!=-1) {
+				String tag="";
+				if(type==0) {tag=ConfigTags.max_end_user_device_count;}
+				else {tag=ConfigTags.max_foreigner_end_user_device_count;}
+				PolicyConfigurationDb policyConfigurationDb = configurationManagementServiceImpl.getPolicyConfigDetailsByTag(tag);
 
-			return new GenricResponse(0, "", "", new Count(Long.parseLong(policyConfigurationDb.getValue()), regularizedDeviceDbRepository.countByNid(nid)));	
+				return new GenricResponse(0, "", "", new Count(Long.parseLong(policyConfigurationDb.getValue()), regularizedDeviceDbRepository.countByNid(nid)));	
+				
+			}
+			else {
+							return new GenricResponse(1,"Please enter correct type","");	
+				
+			}
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException("Custom Service", e.getMessage());
@@ -570,7 +580,7 @@ public class RegularizedDeviceServiceImpl {
 
 	private boolean validateRegularizedDevicesCount(String nid, List<RegularizeDeviceDb> regularizeDeviceDbs) {
 		try {
-			Count count = (Count) getCountOfRegularizedDevicesByNid(nid).getData();
+			Count count = (Count) getCountOfRegularizedDevicesByNid(nid, 0).getData();
 			return validateRegularizedDevicesCount(count, regularizeDeviceDbs);
 		}catch (ClassCastException e) {
 			return Boolean.FALSE;
