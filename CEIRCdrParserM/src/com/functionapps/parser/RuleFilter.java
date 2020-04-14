@@ -231,6 +231,40 @@ public class RuleFilter {
 			rule_detail.put("rule_name", null);				
 		}
 		else{
+			new LogWriter().writeFeatureEvents(myWriter, device_info.get("IMEIESNMEID"),
+					device_info.get("DeviceType"), device_info.get("MultipleSIMStatus"),device_info.get("SNofDevice"),
+					device_info.get("Devicelaunchdate"),device_info.get("DeviceStatus"),
+					device_info.get("txn_id"), device_info.get("operator"), device_info.get("file_name"), "RuleActionStart",
+					device_info.get("ruleid"), device_info.get("rule_name"), "",new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date()));				
+							
+			// Perform Action 
+				String [] my_action_arr = {device_info.get("rule_name"),
+						"2",
+						device_info.get("feature"),
+						device_info.get("IMEIESNMEID"),
+						"0",
+						device_info.get("file_name"),
+						"0",
+						"",
+						device_info.get("operator"),
+						"error",
+						device_info.get("operator_tag"),
+						device_info.get("period"),
+						"",
+						device_info.get("action"),
+						device_info.get("txn_id")
+						};
+			action_output = rea.startRuleEngine(my_action_arr);					
+			System.out.println("Rule Filter Action Output is ["+action_output+"]");
+			
+			new LogWriter().writeFeatureEvents(myWriter, device_info.get("IMEIESNMEID"),
+					device_info.get("DeviceType"), device_info.get("MultipleSIMStatus"),device_info.get("SNofDevice"),
+					device_info.get("Devicelaunchdate"),device_info.get("DeviceStatus"),
+					device_info.get("txn_id"), device_info.get("operator"), device_info.get("file_name"), "RuleActionEnd",
+					device_info.get("ruleid"), device_info.get("rule_name"), action_output,new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date()));				
+
+			
+			
 			if(device_info.get("failed_rule_aciton").equalsIgnoreCase("rule")){
 				rule_detail.put("rule_name", null);
 			}
@@ -240,37 +274,6 @@ public class RuleFilter {
 				rule_detail.put("output", "Yes");
 				rule_detail.put("rule_name", device_info.get("rule_name"));
 				rule_detail.put("rule_id", device_info.get("ruleid"));
-				new LogWriter().writeFeatureEvents(myWriter, device_info.get("IMEIESNMEID"),
-						device_info.get("DeviceType"), device_info.get("MultipleSIMStatus"),device_info.get("SNofDevice"),
-						device_info.get("Devicelaunchdate"),device_info.get("DeviceStatus"),
-						device_info.get("txn_id"), device_info.get("operator"), device_info.get("file_name"), "RuleActionStart",
-						device_info.get("ruleid"), device_info.get("rule_name"), "",new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date()));				
-								
-				// Perform Action 
-					String [] my_action_arr = {device_info.get("rule_name"),
-							"2",
-							device_info.get("feature"),
-							device_info.get("IMEIESNMEID"),
-							"0",
-							device_info.get("file_name"),
-							"0",
-							"",
-							device_info.get("operator"),
-							"error",
-							device_info.get("operator_tag"),
-							device_info.get("period"),
-							"",
-							device_info.get("action"),
-							device_info.get("txn_id")
-							};
-				action_output = rea.startRuleEngine(my_action_arr);					
-				System.out.println("Rule Filter Action Output is ["+action_output+"]");
-				
-				new LogWriter().writeFeatureEvents(myWriter, device_info.get("IMEIESNMEID"),
-						device_info.get("DeviceType"), device_info.get("MultipleSIMStatus"),device_info.get("SNofDevice"),
-						device_info.get("Devicelaunchdate"),device_info.get("DeviceStatus"),
-						device_info.get("txn_id"), device_info.get("operator"), device_info.get("file_name"), "RuleActionEnd",
-						device_info.get("ruleid"), device_info.get("rule_name"), action_output,new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date()));				
 				break;
 			}
 		}

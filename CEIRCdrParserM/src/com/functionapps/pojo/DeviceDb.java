@@ -1,6 +1,7 @@
 package com.functionapps.pojo;
 
 import java.io.Serializable;
+import java.sql.Date;
 
 public class DeviceDb  implements Serializable{
 
@@ -18,7 +19,7 @@ public class DeviceDb  implements Serializable{
 	private String multipleSimStatus;
 	private String snOfDevice;
 	private String imeiEsnMeid;
-	private String deviceLaunchDate;
+	private Date deviceLaunchDate;
 	private String deviceStatus;
 	private String deviceAction;
 
@@ -32,10 +33,11 @@ public class DeviceDb  implements Serializable{
 	public DeviceDb() {
 	}
 
-	public DeviceDb(Long rev, int revtype, String createdOn, String modifiedOn, String manufatureDate, String deviceType, 
+	public DeviceDb(Long id, Long rev, int revtype, String createdOn, String modifiedOn, String manufatureDate, String deviceType, 
 			String deviceIdType, 
-			String multipleSimStatus, String snOfDevice, String imeiEsnMeid, String deviceLaunchDate, 
+			String multipleSimStatus, String snOfDevice, String imeiEsnMeid, Date deviceLaunchDate, 
 			String deviceStatus, String deviceAction, Integer tac, String period, String txnId, Integer state) {
+		this.id = id;
 		this.rev = rev;
 		this.revtype = revtype;
 		this.createdOn = createdOn;
@@ -64,12 +66,16 @@ public class DeviceDb  implements Serializable{
 		return modifiedOn;
 	}
 
-	public String getDeviceLaunchDate() {
+	public Long getRev() {
+		return rev;
+	}
+
+	public Date getDeviceLaunchDate() {
 		return deviceLaunchDate;
 	}
 
-	public Long getRev() {
-		return rev;
+	public void setDeviceLaunchDate(Date deviceLaunchDate) {
+		this.deviceLaunchDate = deviceLaunchDate;
 	}
 
 	public void setRev(Long rev) {
@@ -90,10 +96,6 @@ public class DeviceDb  implements Serializable{
 
 	public void setModifiedOn(String modifiedOn) {
 		this.modifiedOn = modifiedOn;
-	}
-
-	public void setDeviceLaunchDate(String deviceLaunchDate) {
-		this.deviceLaunchDate = deviceLaunchDate;
 	}
 
 	public Long getId() {

@@ -11,12 +11,12 @@ import org.apache.log4j.Logger;
 public class CEIRFeatureFileFunctions {
 	Logger logger = Logger.getLogger(CEIRFeatureFileFunctions.class);
 
-	public ResultSet getFileDetails(Connection conn) {
+	public ResultSet getFileDetails(Connection conn, int state) {
 		Statement stmt = null;
 		ResultSet rs = null;
 		String query = null;
 		try{
-        	query = "select * from web_action_db where state=0 and feature='consignment' order by id desc limit 1";
+        	query = "select * from web_action_db where state="+state+" and feature='TYPE_APPROVED' order by id desc ";
         	logger.info("Query to get File Details ["+query+"]");
         	stmt  = conn.createStatement();
 			return rs    = stmt.executeQuery(query);
@@ -146,9 +146,9 @@ public class CEIRFeatureFileFunctions {
 	public void updateFeatureManagementStatus(Connection conn, String txn_id,int status,String table_name) {
 		String query = "";
 		Statement stmt = null;
-		query = "update "+table_name+" set consignment_status="+status+" where txn_id='"+txn_id+"'";			
-		logger.info("update web action db ["+query+"]");
-		System.out.println("update web action db["+query+"]");
+		query = "update "+table_name+" set status="+status+" where txn_id='"+txn_id+"'";			
+		logger.info("update management db status ["+query+"]");
+		System.out.println("update management db status["+query+"]");
 		try {
 			stmt = conn.createStatement();
 			stmt.executeUpdate(query);
@@ -184,6 +184,29 @@ public class CEIRFeatureFileFunctions {
 			e.printStackTrace();
 		}		
 		return user_type;
+	}
+
+	public void updateFeatureManagementDeleteStatus(Connection conn, String txn_id,int status,String table_name) {
+		String query = "";
+		Statement stmt = null;
+		query = "update "+table_name+" set delete_status="+status+" where txn_id='"+txn_id+"'";			
+		logger.info("update delete status ["+query+"]");
+		System.out.println("update delete status ["+query+"]");
+		try {
+			stmt = conn.createStatement();
+			stmt.executeUpdate(query);
+			conn.commit();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		finally{
+			try {
+				stmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
 	}
 	
 }
