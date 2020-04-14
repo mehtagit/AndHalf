@@ -58,6 +58,8 @@ public class StolenandRecoveryMgmt implements Serializable {
 	private String blockingType;
 	private String blockingTimePeriod;
 	private Integer sourceType;
+	
+	@Column(name = "quantity")
 	private Integer qty;
 
 	private String remark;

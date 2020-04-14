@@ -24,13 +24,14 @@ import org.springframework.stereotype.Service;
 
 import com.gl.ceir.config.ConfigTags;
 import com.gl.ceir.config.EmailSender.EmailUtil;
-import com.gl.ceir.config.EmailSender.MailSubject;
 import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
+import com.gl.ceir.config.feign.UserFeignClient;
 import com.gl.ceir.config.model.AuditTrail;
 import com.gl.ceir.config.model.ConsignmentMgmt;
 import com.gl.ceir.config.model.ConsignmentUpdateRequest;
 import com.gl.ceir.config.model.DashboardUsersFeatureStateMap;
+import com.gl.ceir.config.model.FeatureValidateReq;
 import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
@@ -69,6 +70,7 @@ import com.gl.ceir.config.service.businesslogic.StateMachine;
 import com.gl.ceir.config.specificationsbuilder.GenericSpecificationBuilder;
 import com.gl.ceir.config.transaction.ConsignmentTransaction;
 import com.gl.ceir.config.util.CustomMappingStrategy;
+import com.gl.ceir.config.util.HttpResponse;
 import com.gl.ceir.config.util.InterpSetter;
 import com.gl.ceir.config.util.Utility;
 import com.opencsv.CSVWriter;
@@ -139,6 +141,9 @@ public class ConsignmentServiceImpl {
 	@Autowired
 	UserRepository userRepository;
 
+	
+	@Autowired
+	UserFeignClient userFeignClient;
 	public GenricResponse registerConsignment(ConsignmentMgmt consignmentFileRequest) {
 
 		try {
@@ -309,7 +314,9 @@ public class ConsignmentServiceImpl {
 				consignmentInfo.setSupplierName(consignmentFileRequest.getSupplierName());
 				consignmentInfo.setTotalPrice(consignmentFileRequest.getTotalPrice());
 				consignmentInfo.setCurrency(consignmentFileRequest.getCurrency());
-
+				consignmentInfo.setPortAddress(consignmentFileRequest.getPortAddress());
+				consignmentInfo.setDeviceQuantity(consignmentFileRequest.getDeviceQuantity());
+				
 				// pending tac if available in pending_tac_approval_db.
 				FilterRequest filterRequest = new FilterRequest().setTxnId(consignmentFileRequest.getTxnId());
 				if(pendingTacApprovedImpl.findByTxnId(filterRequest).getErrorCode() == 0) {
@@ -427,8 +434,19 @@ public class ConsignmentServiceImpl {
 							logger.info("state transition is not allowed." + consignmentUpdateRequest.getTxnId());
 							return new GenricResponse(3, "state transition is not allowed.", consignmentUpdateRequest.getTxnId());
 						}
-
-						consignmentMgmt.setConsignmentStatus(ConsignmentStatus.PENDING_APPROVAL_FROM_CUSTOMS.getCode());
+						Integer nextStatus;
+						// Check if this feature is supported in current period.
+						GenricResponse response = userFeignClient.usertypeStatus(7);
+						logger.info("FEIGN : response for validatePeriod " + response);
+						if(response.getErrorCode() == 200) {
+							nextStatus=ConsignmentStatus.PENDING_APPROVAL_FROM_CUSTOMS.getCode();
+						}
+						else {
+							nextStatus=ConsignmentStatus.APPROVED.getCode();
+						}
+						
+						logger.info("nextStatus:"+nextStatus);
+						consignmentMgmt.setConsignmentStatus(nextStatus);
 
 						placeholderMap.put("<Importer first name>", userProfile.getFirstName());
 						placeholderMap.put("<txn_name>", consignmentMgmt.getTxnId());
@@ -568,6 +586,24 @@ public class ConsignmentServiceImpl {
 						return new GenricResponse(3, "state transition is not allowed.", consignmentUpdateRequest.getTxnId());
 					}
 
+					
+					Integer nextStatus;
+					// Check if this feature is supported in current period.
+					GenricResponse response = userFeignClient.usertypeStatus(21);
+					logger.info("FEIGN : response for validatePeriod " + response);
+					if(response.getErrorCode() == 200) {
+						nextStatus=ConsignmentStatus.PENDING_CLEARANCE_FROM_DRT.getCode();
+					}
+					else {
+						nextStatus=ConsignmentStatus.APPROVED.getCode();
+					}
+					
+					logger.info("nextStatus:"+nextStatus);
+					consignmentMgmt.setConsignmentStatus(nextStatus);
+
+					
+					
+					
 					consignmentMgmt.setConsignmentStatus(ConsignmentStatus.REJECTED_BY_CUSTOMS.getCode());
 					consignmentMgmt.setRemarks(consignmentUpdateRequest.getRemarks());
 

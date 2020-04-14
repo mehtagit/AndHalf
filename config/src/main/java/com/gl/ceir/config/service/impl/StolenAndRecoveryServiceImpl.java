@@ -441,6 +441,9 @@ public class StolenAndRecoveryServiceImpl {
 				fileRecords = new ArrayList<>();
 				for( StolenandRecoveryMgmt stolenandRecoveryMgmt : stolenandRecoveryMgmts ) {
 					srfm = new StolenAndRecoveryFileModel();
+					if(Objects.isNull(stolenandRecoveryMgmt)) {
+						continue;
+					}
 
 					srfm.setCreatedOn(stolenandRecoveryMgmt.getCreatedOn().format(dtf));
 					srfm.setModifiedOn( stolenandRecoveryMgmt.getModifiedOn().format(dtf));
@@ -450,7 +453,9 @@ public class StolenAndRecoveryServiceImpl {
 					logger.info("Status : "+stolenandRecoveryMgmt.getStateInterp());
 					srfm.setStolenStatus(stolenandRecoveryMgmt.getStateInterp());
 
-					if(stolenandRecoveryMgmt.getOperatorTypeId() == -1) {
+					if(Objects.isNull(stolenandRecoveryMgmt.getOperatorTypeId())) {
+						srfm.setSource("");
+					}else if(stolenandRecoveryMgmt.getOperatorTypeId() == -1) {
 						srfm.setSource("Ceir Admin");
 					}else {
 						srfm.setSource(stolenandRecoveryMgmt.getOperatorTypeIdInterp());
@@ -578,6 +583,10 @@ public class StolenAndRecoveryServiceImpl {
 				return new GenricResponse(4, "TxnId Does Not exist", stolenandRecoveryMgmt.getTxnId());
 			}else {
 
+				WebActionDb webActionDb = new WebActionDb(decideFeature(stolenandRecoveryMgmt.getRequestType()), 
+						SubFeatures.UPDATE, 
+						WebActionStatus.INIT.getCode(), stolenandRecoveryMgmt.getTxnId());
+				
 				StolenAndRecoveryHistoryMgmt historyMgmt = new StolenAndRecoveryHistoryMgmt();
 				historyMgmt.setBlockingTimePeriod(stolenandRecoveryMgmtInfo.getBlockingTimePeriod());
 				historyMgmt.setBlockingType(stolenandRecoveryMgmtInfo.getBlockingType());
@@ -638,6 +647,8 @@ public class StolenAndRecoveryServiceImpl {
 				logger.info("Final object StolenandRecoveryMgmt : " + stolenandRecoveryMgmtInfo);
 
 				//	StolenandRecoveryMgmt stolenandRecoveryMgmtNew = 
+				webActionDbRepository.save(webActionDb);
+				logger.info("Update request saved in web action : " + webActionDb);
 				stolenAndRecoveryRepository.save(stolenandRecoveryMgmtInfo);
 
 				return new GenricResponse(0, "Record update sucessfully", stolenandRecoveryMgmt.getTxnId());
@@ -837,7 +848,7 @@ public class StolenAndRecoveryServiceImpl {
 					}
 
 					stolenandRecoveryMgmt.setFileStatus(StolenStatus.REJECTED_BY_SYSTEM.getCode());
-					stolenandRecoveryMgmt.setRemark(consignmentUpdateRequest.getRemarks());
+					stolenandRecoveryMgmt.setRejectedRemark(consignmentUpdateRequest.getRemarks());
 
 				}
 
