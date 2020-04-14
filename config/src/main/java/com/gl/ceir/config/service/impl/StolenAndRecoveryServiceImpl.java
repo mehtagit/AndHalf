@@ -776,7 +776,7 @@ public class StolenAndRecoveryServiceImpl {
 					}
 
 					stolenandRecoveryMgmt.setFileStatus(StolenStatus.REJECTED_BY_CEIR_ADMIN.getCode());
-					stolenandRecoveryMgmt.setRemark(consignmentUpdateRequest.getRemarks());
+					stolenandRecoveryMgmt.setRejectedRemark(consignmentUpdateRequest.getRemarks());
 
 				}
 
