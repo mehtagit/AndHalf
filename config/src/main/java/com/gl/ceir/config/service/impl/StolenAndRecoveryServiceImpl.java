@@ -187,7 +187,7 @@ public class StolenAndRecoveryServiceImpl {
 			}
 
 			WebActionDb webActionDb = new WebActionDb();
-			webActionDb.setFeature(Features.STOLEN_RECOVERY);
+			webActionDb.setFeature(decideFeature(stolenandRecoveryDetails.getRequestType()));
 			webActionDb.setSubFeature(WebActionDbSubFeature.UPLOAD.getName());
 			webActionDb.setTxnId(stolenandRecoveryDetails.getTxnId());
 			webActionDb.setState(WebActionDbState.INIT.getCode());
@@ -518,7 +518,7 @@ public class StolenAndRecoveryServiceImpl {
 
 				WebActionDb webActionDb = new WebActionDb();
 				webActionDb.setState(0);
-				webActionDb.setFeature(Integer.toString(request.getRequestType()));				
+				webActionDb.setFeature(decideFeature(request.getRequestType()));				
 				webActionDb.setSubFeature("Upload");
 				webActionDb.setData(request.getTxnId());
 
