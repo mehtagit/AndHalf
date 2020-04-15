@@ -11,6 +11,7 @@ import org.gl.ceir.CeirPannelCode.Model.ForgotPassword;
 import org.gl.ceir.CeirPannelCode.Model.Password;
 import org.gl.ceir.CeirPannelCode.Model.User;
 import org.gl.ceir.CeirPannelCode.Response.LoginResponse;
+import org.gl.ceir.CeirPannelCode.Response.UpdateProfileResponse;
 import org.gl.ceir.CeirPannelCode.Service.LoginService;
 import org.gl.ceir.CeirPannelCode.Util.HttpResponse;
 import org.slf4j.Logger;
@@ -83,7 +84,7 @@ public class LoginController {
 
 	@RequestMapping(value = "forgotPasswordRequest",method = RequestMethod.POST)
 	@ResponseBody 
-	public  HttpResponse forgotPasswordRequest(@RequestBody ForgotPassword forgotPassword) {
+	public  UpdateProfileResponse forgotPasswordRequest(@RequestBody ForgotPassword forgotPassword) {
 		return loginService.forgotPasswordRequest(forgotPassword);
 	} 
 
