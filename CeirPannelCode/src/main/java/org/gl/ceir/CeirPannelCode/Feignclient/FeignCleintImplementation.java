@@ -234,7 +234,7 @@ public interface FeignCleintImplementation {
 		
 				//edit stock feign  controller
 				@RequestMapping(value="/stolen-and-recovery/by-txnId" ,method=RequestMethod.POST) 
-				public @ResponseBody StolenRecoveryModel fetchBulkDeviceByTxnId(StolenRecoveryModel stolenRecoveryModel) ;
+				public @ResponseBody Object fetchBulkDeviceByTxnId(StolenRecoveryModel stolenRecoveryModel) ;
 
 				
 				//***************************************************Admin System message Management Feign********************************

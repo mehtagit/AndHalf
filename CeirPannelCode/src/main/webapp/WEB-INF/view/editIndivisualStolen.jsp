@@ -794,6 +794,16 @@ onclick="_Services._selectstartDate()"></i></span>
 															<label for="textarea1"><spring:message
 																	code="input.remarks" /> </label>
 														</div>
+														
+															<div class="input-field col s12 m12" style="display: none;" id="singleDeviceRejectRemarkDiv">
+															<textarea id="singleDeviceRejectRemark" maxlength="10000"
+																placeholder=""
+																oninput="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
+																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
+																class="materialize-textarea"></textarea>
+															<label for="textarea1"><spring:message
+																	code="input.remarksRejected" /> </label>
+														</div>
 													</div>
 												</div>
 											</div>

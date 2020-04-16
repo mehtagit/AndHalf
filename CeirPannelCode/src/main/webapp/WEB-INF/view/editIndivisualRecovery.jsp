@@ -372,6 +372,14 @@
                                                                  class="materialize-textarea"></textarea>
                                                                 <label for="sigleRecovery"><spring:message code="input.remarks" /> </label>
                                                             </div>
+                                                            <div class="input-field col s12 m6" style="display: none;" id="sigleRecoveryRejectDiv">
+                                                                <textarea id="sigleRecoveryReject" placeholder="" 
+                                                                oninput="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');" 
+                                                                oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
+                                                         	maxlength="10000"
+                                                                 class="materialize-textarea"></textarea>
+                                                                <label for="sigleRecovery"><spring:message code="input.remarksRejected" /> </label>
+                                                            </div>
                                                             
                                                            <%--  <div class="col s12 m6">
 <p style="margin-top: 3px; margin-bottom: 5px"><spring:message code="operator.blocking" /></p>
@@ -659,8 +667,11 @@ src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/j
 	            	 $("#indivisualEditRecoveryButton").css("display", "none");
 	          		$(".star").css("display", "none");
 	            	  $("#singleRecoveryDiv").find("input,select,textarea,button").prop("disabled",true);
+	            	  $("#sigleRecoveryRejectDiv").css("display", "block");
+	            	  
 	            	}
 	            else{
+	            	  $("#sigleRecoveryRejectDiv").css("display", "none");
 	            	$('#headingType').text('');
 	            	$('#headingType').text(editrecoveryIndivisual);
 	            	  $("#singleRecoveryDiv").find("input,select,textarea,button").prop("disabled",false);

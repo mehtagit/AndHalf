@@ -210,17 +210,40 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
                                 <div class="col s12 m12 l12">
                                  
 								   
-                                   <div class="row">
-                                            <div class="input-field col s6 m5">
-                                                <label for="Category"> <spring:message code="select.changeUserStatus" /> <span class="star"> *</span></label>
-                                            </div>
-                                            <div class="col s6 m7 selectDropdwn">
-                                                <select class="browser-default" id = "userStatus"
-                                     onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" 
-                                     oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" required>
-                                                    <option value="" disabled selected><spring:message code="select.selectUserStatus" /></option>
-                                           	</select>
-                                            </div>
+                                   <div class="row"  style="margin-top: 10px">
+                                        	<div class="col s12 m6 l6" style="margin-bottom: 5px;">
+											<label for="userStatus"><spring:message
+													code="select.changeUserStatus" /> <span class="star">*</span></label>
+											<select id="userStatus" class="browser-default"
+												onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+												oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+												required>
+												<option value="" disabled selected><spring:message
+														code="select.selectUserStatus" />
+												</option>
+											</select>
+										</div> 
+                                       		
+                                       
+										
+									<div class="input-field col s12 m6" style="margin-top: 22px;">
+										<input type="text" name="refererence" id="refererenceId"
+							placeholder="" oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
+							maxlength="50"/> <label for="refererenceId"
+							class="center-align"><spring:message
+								code="input.refId" /> </label>
+								</div>		
+                                            
+                   		  
+								<div class="input-field col s12 m12">
+							<textarea id="changeStatusRemark" style="min-height: 8rem;" 
+								class="materialize-textarea" 
+							oninput="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
+							oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200character" />');" required></textarea>
+							<label for="textarea1" class=""><spring:message
+									code="input.remarks" /> <span class="star">*</span> </label>
+								</div>
+						
                                    
                                         </div>
                                  		 <input type ="text" id="statusUserName" hidden="hidden" >
@@ -333,6 +356,8 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
 		src="${context}/resources/project_js/_dateFunction.js" async></script>	
 		<script type="text/javascript"
 		src="${context}/resources/project_js/profileInfoTab.js" async></script>
+		<script type="text/javascript"
+		src="${context}/resources/project_js/validationMsg.js"></script>
 			
 		
 </body>

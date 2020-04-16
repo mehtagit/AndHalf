@@ -850,7 +850,15 @@
 													class="materialize-textarea"></textarea>
 												<label for="textarea1"><spring:message code="input.remarks" /></label>
 											</div>
-
+											<div class="input-field col s12 m12" style="display: none;" id="bulkDeviceRejectRemarkDiv">
+															<textarea id="bulkDeviceRejectRemark" maxlength="10000"
+																placeholder=""
+																oninput="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
+																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
+																class="materialize-textarea"></textarea>
+															<label for="textarea1"><spring:message
+																	code="input.remarksRejected" /> </label>
+														</div>
 											<div class="col s12 m12">
                                                         <a href="./Consignment/sampleFileDownload/7" id="editRecoverySampleFile"> <spring:message
 														code="input.downlaod.sample" /></a>
@@ -1039,11 +1047,15 @@ src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/j
 	   $("#dviceFileText").css("display", "none");
 	   $("#companyStolenButton").css("display", "none");
 		$(".star").css("display", "none");
+		
+		
+		$("#bulkDeviceRejectRemarkDiv").css("display", "block");
 	}
 else{
 	$('#headingType').text('');
 	$('#headingType').text(editstolenCompany);
 	$("#Bulkform").find("input,select,textarea,button").prop("disabled",false);
+	$("#bulkDeviceRejectRemarkDiv").css("display", "none");
 }	
 	}	
  populateCountries(

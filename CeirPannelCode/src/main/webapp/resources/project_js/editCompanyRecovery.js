@@ -34,6 +34,7 @@ var txnid=$('#existingStolenTxnId').val();
 		$('#bulkRecoverypin').val(response.stolenOrganizationUserDB.incidentPostalCode);
 		$('#bulkRecoverycountry').val(response.stolenOrganizationUserDB.incidentCountry).change();
 		$('#bulkRecoverystate').val(response.stolenOrganizationUserDB.incidentProvince);
+		$('#bulkRecoveryRemarkReject').val(response.rejectedRemark);
 		
 		//$('#bulkRecoveryFileLink').attr("onclick",'previewFile("'+response.fileLink+'","'+response.fileName+'","'+response.txnId+'")');
 		

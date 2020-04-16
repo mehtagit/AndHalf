@@ -45,7 +45,9 @@
 				"featureId":parseInt(featureId),
 				"userTypeId": parseInt($("body").attr("data-userTypeID")),
 				"userType":$("body").attr("data-roleType"),
-				
+				"email" : $('#emailID').val(),
+				"phoneNo" : $('#phone').val(),
+				"username" : $('#userName').val(),
 		}
 		
 		if(lang=='km'){
@@ -129,14 +131,14 @@
 						 maxDate: new Date()
 			        }); 
 					}
-					else if(date[i].type === "select"){
-						$("#registrationTableDiv").append("<div class='input-field col s6 m2' ><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
+					else if(date[i].type === "text"){
+						$("#registrationTableDiv").append("<div class='input-field col s6 m2' ><input type="+date[i].type+" id="+date[i].id+" maxlength='60' /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
 						
 					}
 					
 					
 				} 
-
+				
 				// dynamic dropdown portion
 				var dropdown=data.dropdownList;
 				for(i=0; i<dropdown.length; i++){
@@ -426,9 +428,14 @@
 		var Request={
 				"status" : parseInt(status),
 				"userId": parseInt(window.userId),
-				"username" : $("#statusUserName").val()
+				"username" : $("#statusUserName").val(),
+				"referenceId" : $("#refererenceId").val(),
+				"remark" : $("#changeStatusRemark").val()
 				
 		}
+		
+		
+		console.log("Request-->"+JSON.stringify(Request));
 		
 		$.ajax({
 			url : './adminChangeRequest',

@@ -7,6 +7,27 @@ public class UserStatus {
 	private Integer featureId;
 	private Integer statusValue;
 	private String username;
+	private String referenceId;
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("UserStatus [status=");
+		builder.append(status);
+		builder.append(", userId=");
+		builder.append(userId);
+		builder.append(", remark=");
+		builder.append(remark);
+		builder.append(", featureId=");
+		builder.append(featureId);
+		builder.append(", statusValue=");
+		builder.append(statusValue);
+		builder.append(", username=");
+		builder.append(username);
+		builder.append(", referenceId=");
+		builder.append(referenceId);
+		builder.append("]");
+		return builder.toString();
+	}
 	public String getStatus() {
 		return status;
 	}
@@ -43,10 +64,11 @@ public class UserStatus {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	@Override
-	public String toString() {
-		return "UserStatus [status=" + status + ", userId=" + userId + ", remark=" + remark + ", featureId=" + featureId
-				+ ", statusValue=" + statusValue + ", username=" + username + "]";
+	public String getReferenceId() {
+		return referenceId;
+	}
+	public void setReferenceId(String referenceId) {
+		this.referenceId = referenceId;
 	}
 	
 	

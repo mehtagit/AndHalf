@@ -56,7 +56,7 @@ var txnid=$('#existingStolenTxnId').val();
 		
 		$('#IndivisualStolenDate').val(response.dateOfStolen);
 		$('#uploadFirSingleName').val(response.firFileName);
-
+		$('#bulkDeviceRejectRemark').val(response.rejectedRemark);
 		$("label[for='IndivisualStolenDate']").addClass('active');
 		
 		$('input[name=stolenBulkBlockPeriod][value='+response.blockingType+']').attr('checked', true); 

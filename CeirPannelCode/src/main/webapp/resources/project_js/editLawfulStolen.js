@@ -160,7 +160,7 @@ function viewIndivisualStolen()
 			$('#editsingleStolendeviceBrandName').val(response.stolenIndividualUserDB.deviceBrandName).change();
 			//alert(response.stolenIndividualUserDB.deviceBrandName);
 			$('#editsingleStolenmodalNumber').val(response.stolenIndividualUserDB.modelNumber);
-			$('#singleStolenFileName').val(response.fileName);
+			$('#singleStolenFileName').val(response.nidFileName);
 			$('#updatesingleStolenimei1').val(response.stolenIndividualUserDB.imeiEsnMeid1);
 			$('#updatesingleStolenimei2').val(response.stolenIndividualUserDB.imeiEsnMeid2);
 			$('#updatesingleStolenimei3').val(response.stolenIndividualUserDB.imeiEsnMeid3);
@@ -188,6 +188,7 @@ function viewIndivisualStolen()
 			$('#singleDeviceRemark').val(response.stolenIndividualUserDB.remark);
 			$('#IndivisualStolenDate').val(response.dateOfStolen);
 			$('#uploadFirSingleName').val(response.firFileName);
+			$("#singleDeviceRejectRemark").val(response.rejectedRemark);
 			//$('#singleStolenFileName').val(response.firFileName);
 			
 			
@@ -319,11 +320,12 @@ function updateIndivisualStolen()
 			"remark": singleDeviceRemark,
 			"street": singleStolenstreetNumber,
 			"village":singleStolenvillage,
+			"nidFileName":indivisualStolenfileName
 
 	}
 	var request={
 			"txnId":txnid,
-			"fileName":indivisualStolenfileName,
+			"qty":1,
 			"dateOfStolen":IndivisualStolenDate,
 			"blockingTimePeriod":blockingTimePeriod,
 			"blockingType":blockingType,
@@ -477,10 +479,13 @@ function viewPageType() {
 		$("#IndivisualUpdateStolen").css("display", "none");
    		$(".star").css("display", "none");
 		
+   		
+   		$("#singleDeviceRejectRemarkDiv").css("display", "block");
 		$("#SingleForm").find("input,select,textarea,button").prop(
 				"disabled", true);
 	} else {
 		$('#headingType').text('');
+		$("#singleDeviceRejectRemarkDiv").css("display", "none");
 		$('#headingType').text(editstolenIndivisual);
 		$("#SingleForm").find("input,select,textarea,button").prop(
 				"disabled", false);

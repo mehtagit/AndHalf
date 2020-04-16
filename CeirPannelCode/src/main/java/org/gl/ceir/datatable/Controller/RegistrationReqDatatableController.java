@@ -106,10 +106,14 @@ public class RegistrationReqDatatableController {
 				   String roles =  (String) dataInsideList.getUser().getUsertype().getUsertypeName();
 				   String StatusName = dataInsideList.getUser().getStateInterp();
 				   String status =  String.valueOf(dataInsideList.getUser().getCurrentStatus());
+				   String email = dataInsideList.getEmail();
+				   String phoneNo = dataInsideList.getPhoneNo();
+				   
+				   
 				   String userStatus = (String) session.getAttribute("userStatus");	  
 				   //log.info("Id-->"+Id+"--userStatus--->"+userStatus+"--StatusName---->"+StatusName+"--createdOn---->"+createdOn+"--id--->"+id+"--userName-->"+username);
 				   String action=iconState.adminRegistrationRequest(Id,userStatus,StatusName,createdOn,roles,type,id,username,status,sessionUserName);			   
-				   Object[] finalData={createdOn,modifiedOn,username,type,roles,StatusName,action}; 
+				   Object[] finalData={createdOn,modifiedOn,username,email,phoneNo,type,roles,StatusName,action}; 
 
 				   List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 					finalList.add(finalDataList);
@@ -181,7 +185,7 @@ public class RegistrationReqDatatableController {
 			pageElement.setDropdownList(dropdownList);
 			
 			//input type date list		
-			String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","", "text",Translator.toLocale("input.transactionID"),"transactionID","","text",Translator.toLocale("input.grievID"),"grievanceID","" };
+			String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("table.email"),"emailID","","text",Translator.toLocale("table.phone"),"phone","","text",Translator.toLocale("input.displayName"),"userName",""};
 			for(int i=0; i< dateParam.length; i++) {
 				dateRelatedFields= new InputFields();
 				dateRelatedFields.setType(dateParam[i]);

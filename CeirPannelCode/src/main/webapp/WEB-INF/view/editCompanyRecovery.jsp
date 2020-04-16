@@ -266,6 +266,14 @@
                                                            class="materialize-textarea" placeholder=""></textarea>
                                                         <label for="bulkRecoveryRemark"><spring:message code="input.remarks" /></label>
                                                     </div>
+                                                    
+                                                    <div class="input-field col s12 m6" style="display: none;" id="bulkRecoveryRemarkRejectDiv">
+                                                        <textarea id="bulkRecoveryRemarkReject"oninput="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
+                                                          oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
+                                                          maxlength="10000"
+                                                           class="materialize-textarea" placeholder=""></textarea>
+                                                        <label for="bulkRecoveryRemarkReject"><spring:message code="input.remarksRejected" /></label>
+                                                    </div>
 
                                                     <div class="file-field col s12 m6">
                                                         <h6 style="margin: 2px;"><spring:message code="registration.uploadfile" /></h6>
@@ -588,8 +596,11 @@ src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/j
             	  
             	  $("#editCompanyRecoveryButton").css("display", "none");
           		$(".star").css("display", "none");
+          		 $("#bulkRecoveryRemarkRejectDiv").css("display", "block");
+          		
             	}
             else{
+            	$("#bulkRecoveryRemarkRejectDiv").css("display", "none");
             	$('#headingType').text('');
             	$('#headingType').text(editrecoveryCompany);
             	  $("#bulkRecoveryDiv").find("input,select,textarea,button").prop("disabled",false);
