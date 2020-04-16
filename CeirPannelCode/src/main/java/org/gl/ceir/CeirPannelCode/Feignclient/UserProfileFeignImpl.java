@@ -5,6 +5,7 @@ import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.Password;
 import org.gl.ceir.CeirPannelCode.Model.PaymentRequest;
 import org.gl.ceir.CeirPannelCode.Model.Registration;
+import org.gl.ceir.CeirPannelCode.Model.SLAfilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.UserStatus;
 import org.gl.ceir.CeirPannelCode.Response.UpdateProfileResponse;
 import org.gl.ceir.CeirPannelCode.Util.HttpResponse;
@@ -202,5 +203,13 @@ public interface UserProfileFeignImpl {
 
 		@RequestMapping(value= "/payment/url" , method=RequestMethod.POST) 
 		public GenricResponse consignmentTaxFeign(@RequestBody PaymentRequest paymentRequest);
+
+/*-------------------------- view SLA Management Feign ------------------------------*/
+		
+		@RequestMapping(value="/sla/viewAll" ,method=RequestMethod.POST) 
+		public Object viewSLARequest(@RequestBody SLAfilterRequest filterRequest,
+		@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
+		@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+		@RequestParam(value = "file", defaultValue = "0") Integer file);	
 } 
 
