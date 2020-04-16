@@ -12,7 +12,21 @@ public class ConsignmentUpdateRequest {
 	private Integer featureId;
 	private Integer requestType;
 	private String nid;
-	
+	private String userName;
+	public Integer getUserTypeId() {
+		return userTypeId;
+	}
+	public void setUserTypeId(Integer userTypeId) {
+		this.userTypeId = userTypeId;
+	}
+
+	private Integer userTypeId;
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 	public int getAction() {
 		return action;
 	}
@@ -79,6 +93,8 @@ public class ConsignmentUpdateRequest {
 		StringBuilder builder = new StringBuilder();
 		builder.append("ConsignmentUpdateRequest [action=");
 		builder.append(action);
+		builder.append(", userType=");
+		builder.append(userType);
 		builder.append(", roleType=");
 		builder.append(roleType);
 		builder.append(", userId=");
@@ -89,6 +105,16 @@ public class ConsignmentUpdateRequest {
 		builder.append(txnId);
 		builder.append(", remarks=");
 		builder.append(remarks);
+		builder.append(", featureId=");
+		builder.append(featureId);
+		builder.append(", requestType=");
+		builder.append(requestType);
+		builder.append(", nid=");
+		builder.append(nid);
+		builder.append(", userName=");
+		builder.append(userName);
+		builder.append(", userTypeId=");
+		builder.append(userTypeId);
 		builder.append("]");
 		return builder.toString();
 	}
