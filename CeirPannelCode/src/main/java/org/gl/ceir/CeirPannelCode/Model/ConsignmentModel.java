@@ -32,9 +32,47 @@ private String roleType;
 private Integer currency;
 
 
+public String userName;
 
+private String userType;
+
+private Integer featureId;
+
+private Integer userTypeId;
+private Long roleTypeUserId;
+
+public Long getRoleTypeUserId() {
+	return roleTypeUserId;
+}
+public void setRoleTypeUserId(Long roleTypeUserId) {
+	this.roleTypeUserId = roleTypeUserId;
+}
 public String getPendingTacApprovedByCustom() {
 	return pendingTacApprovedByCustom;
+}
+public String getUserName() {
+	return userName;
+}
+public void setUserName(String userName) {
+	this.userName = userName;
+}
+public String getUserType() {
+	return userType;
+}
+public void setUserType(String userType) {
+	this.userType = userType;
+}
+public Integer getFeatureId() {
+	return featureId;
+}
+public void setFeatureId(Integer featureId) {
+	this.featureId = featureId;
+}
+public Integer getUserTypeId() {
+	return userTypeId;
+}
+public void setUserTypeId(Integer userTypeId) {
+	this.userTypeId = userTypeId;
 }
 public void setPendingTacApprovedByCustom(String pendingTacApprovedByCustom) {
 	this.pendingTacApprovedByCustom = pendingTacApprovedByCustom;
@@ -272,6 +310,16 @@ public String toString() {
 	builder.append(roleType);
 	builder.append(", currency=");
 	builder.append(currency);
+	builder.append(", userName=");
+	builder.append(userName);
+	builder.append(", userType=");
+	builder.append(userType);
+	builder.append(", featureId=");
+	builder.append(featureId);
+	builder.append(", userTypeId=");
+	builder.append(userTypeId);
+	builder.append(", roleTypeUserId=");
+	builder.append(roleTypeUserId);
 	builder.append("]");
 	return builder.toString();
 }

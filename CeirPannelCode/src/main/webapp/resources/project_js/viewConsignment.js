@@ -50,7 +50,13 @@ function confirmantiondelete(){
 			var remarks = $("#textarea1").val();
 			var obj ={
 					"txnId" : txnId,
-					"remarks" : remarks
+					"remarks" : remarks,
+					"userId":parseInt(userId),
+							"featureId":parseInt(featureId),
+							"userTypeId": parseInt($("body").attr("data-userTypeID")),
+							"userType":$("body").attr("data-roleType"),
+							"userName":$("body").attr("data-username"),
+
 			}
 			$.ajax({
 				url : "./deleteConsignment",
@@ -312,8 +318,11 @@ function confirmantiondelete(){
 					"userId":parseInt(userId),
 					"featureId":parseInt(featureId),
 					"userTypeId": parseInt($("body").attr("data-userTypeID")),
-					"txnId":txn,
-					"userType":$("body").attr("data-roleType")
+					"userType":$("body").attr("data-roleType"),
+					"userName":$("body").attr("data-username"),
+					"txnId":txn
+					 
+					
 			}
 			if(lang=='km'){
 				var langFile='../resources/i18n/khmer_datatable.json';
@@ -404,6 +413,10 @@ function confirmantiondelete(){
 			formData.append('filename',filename);
 			formData.append('currency',currency);
 			formData.append('totalPrice',totalPrice);
+			formData.append('featureId', parseInt(featureId));
+			formData.append('userTypeId', parseInt($("body").attr("data-userTypeID")));
+			formData.append('userType', $("body").attr("data-roleType"));
+			formData.append('userName', $("body").attr("data-username"));
 			$.ajax({
 				url: './updateRegisterConsignment',
 				type: 'POST',
@@ -721,7 +734,11 @@ function confirmantiondelete(){
 			var approveRequest={
 					"action": actiontype,
 					"txnId":txnId,
-					"featureId":3
+					"userId":parseInt(userId),
+					"featureId":parseInt(featureId),
+					"roleTypeUserId": parseInt($("body").attr("data-userTypeID")),
+					"userType":$("body").attr("data-roleType"),
+					"userName":$("body").attr("data-username"),
 			}
 			$.ajax({
 				url : "./updateConsignmentStatus",
@@ -770,7 +787,11 @@ function confirmantiondelete(){
 					"action": actiontype,
 					"txnId":txnId,
 					"remarks":Remark,
-					"featureId":3
+					"userId":parseInt(userId),
+					"featureId":parseInt(featureId),
+					"roleTypeUserId": parseInt($("body").attr("data-userTypeID")),
+					"userType":$("body").attr("data-roleType"),
+					"userName":$("body").attr("data-username"),
 			}
 			$.ajax({
 				url : "./updateConsignmentStatus",

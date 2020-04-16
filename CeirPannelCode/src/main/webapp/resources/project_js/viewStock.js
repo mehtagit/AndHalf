@@ -255,7 +255,12 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 		var obj ={
 				"txnId" : txnId,
 				"userType":role,
-				"remarks":stockRemark
+				"remarks":stockRemark,
+				"userId":parseInt(userId),
+				"featureId":parseInt(featureId),
+				"userTypeId": parseInt($("body").attr("data-userTypeID")),
+				"userType":$("body").attr("data-roleType"),
+				"userName":$("body").attr("data-username")
 		}
 
 		$.ajax({

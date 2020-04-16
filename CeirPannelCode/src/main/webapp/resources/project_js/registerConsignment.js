@@ -32,6 +32,10 @@ function registerConsignment() {
 	formData.append('quantity', quantity);
 	formData.append('currency', currency);
 	formData.append('totalPrice', totalPrice);
+	formData.append('featureId', parseInt(featureId));
+	formData.append('userTypeId', parseInt($("body").attr("data-userTypeID")));
+	formData.append('userType', $("body").attr("data-roleType"));
+	formData.append('userName', $("body").attr("data-username"));
 
 	$.ajax({
 		url : '../Consignment/registerConsignment',

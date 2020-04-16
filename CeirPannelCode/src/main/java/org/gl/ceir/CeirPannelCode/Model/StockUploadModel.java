@@ -21,6 +21,7 @@ public class StockUploadModel {
 	
 	
 	private int userId,roleTypeId;
+	
 	public int getRoleTypeId() {
 		return roleTypeId;
 	}

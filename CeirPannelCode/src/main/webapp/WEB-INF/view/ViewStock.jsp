@@ -86,7 +86,7 @@
 	data-selected-roleType="${selectedUserTypeId}"
 	data-stolenselected-roleType="${stolenselectedUserTypeId}"
 	session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}"
-	data-period="${period}">
+	data-period="${period}" data-username="${username}">
 
 
 	<!-- START CONTENT -->

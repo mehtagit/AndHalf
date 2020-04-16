@@ -192,7 +192,11 @@ public @ResponseBody GenricResponse registerConsignment(@RequestParam(name="supp
 ,@RequestParam(name="consignmentNumber",required = false) String consignmentNumber,@RequestParam(name="expectedArrivaldate",required = false) String expectedArrivalDate,
 @RequestParam(name="organisationcountry",required = false) String organisationcountry,@RequestParam(name="expectedDispatcheDate",required = false) String expectedDispatcheDate,
 @RequestParam(name="expectedArrivalPort",required = false) Integer expectedArrivalPort,@RequestParam(name="quantity",required = false) String quantity,
-@RequestParam(name="file",required = false) MultipartFile file,HttpSession session,@RequestParam(name="totalPrice",required = false) String totalPrice,@RequestParam(name="currency",required = false) Integer currency,HttpServletRequest request) {
+@RequestParam(name="file",required = false) MultipartFile file,HttpSession session,@RequestParam(name="totalPrice",required = false) String totalPrice,@RequestParam(name="currency",required = false) Integer currency,
+@RequestParam(name="userType",required = false) String userType,
+@RequestParam(name="userTypeId",required = false) Integer userTypeId,
+@RequestParam(name="featureId",required = false) Integer featureId,HttpServletRequest request) {
+
 
 	log.info("headers request="+request.getHeaderNames());
 	log.info("user-agent"+request.getHeader("user-agent"));
@@ -249,7 +253,10 @@ consignment.setQuantity(quantity);
 consignment.setTxnId(txnNumner);
 consignment.setFileName(file.getOriginalFilename());
 consignment.setUserId(Long.valueOf(userId));
-
+consignment.setUserName(userName);
+consignment.setFeatureId(featureId);
+consignment.setUserType(userType);
+consignment.setUserTypeId(userTypeId);
 consignment.setCurrency(currency);
 consignment.setTotalPrice(totalPrice);
 log.info("consignment form parameters passed to register consignment api "+consignment.toString());
@@ -270,7 +277,10 @@ public @ResponseBody GenricResponse openconsignmentRecordPage(@RequestParam(name
 @RequestParam(name="organisationcountry",required = false) String organisationcountry,@RequestParam(name="expectedDispatcheDate",required = false) String expectedDispatcheDate,
 @RequestParam(name="expectedArrivalPort",required = false) Integer expectedArrivalPort,@RequestParam(name="quantity",required = false) String quantity, HttpSession session,
 @RequestParam(name="file",required = false) MultipartFile file,@RequestParam(name="filename",required = false) String filename,@RequestParam(name="txnId",required = false) String txnId,
-@RequestParam(name="totalPrice",required = false) String totalPrice,@RequestParam(name="currency",required = false) Integer currency) 
+@RequestParam(name="totalPrice",required = false) String totalPrice,@RequestParam(name="currency",required = false) Integer currency,
+@RequestParam(name="userType",required = false) String userType,
+@RequestParam(name="userTypeId",required = false) Integer userTypeId,
+@RequestParam(name="featureId",required = false) Integer featureId) 
 {
 ConsignmentModel consignment = new ConsignmentModel();
 
@@ -303,7 +313,10 @@ consignment.setFileName(filename);
 consignment.setUserId(Long.valueOf(userId));
 consignment.setCurrency(currency);
 consignment.setTotalPrice(totalPrice);
-
+consignment.setUserName(userName);
+consignment.setFeatureId(featureId);
+consignment.setUserType(userType);
+consignment.setUserTypeId(userTypeId);
 
 }
 else {
@@ -400,6 +413,10 @@ request.setRoleTypeUserId((int) session.getAttribute("usertypeId"));
 request.setUserId((int) session.getAttribute("userid"));
 request.setRemarks(consignmentUpdateRequest.getRemarks());
 request.setTxnId(consignmentUpdateRequest.getTxnId());
+request.setFeatureId(consignmentUpdateRequest.getFeatureId());
+request.setUserName(consignmentUpdateRequest.getUserName());
+request.setUserType(consignmentUpdateRequest.getUserType());
+request.setUserTypeId(consignmentUpdateRequest.getUserTypeId());
 request.setFeatureId(consignmentUpdateRequest.getFeatureId());
 log.info(" request passed to the update consignment status="+request);
 GenricResponse response=feignCleintImplementation.updateConsignmentStatus(request);
