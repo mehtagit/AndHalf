@@ -4,24 +4,11 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class FilterRequest {
-	public String startDate,endDate,createdOn,modifiedOn,roleType,userType,txnId,searchString,grievanceId,tag,remarks,deviceId,nid,childTag,field,interp,tagId,value,displayName,description,address,featureName,subFeatureName,userName,date,fileName,invoiceNumber,suplierName,supplierId,stateInterp,alertId,remark;
+	public String startDate,endDate,createdOn,modifiedOn,roleType,userType,txnId,searchString,grievanceId,tag,remarks,deviceId,nid,childTag,field,interp,tagId,value,displayName,description,address,featureName,subFeatureName,userName,date,fileName,invoiceNumber,suplierName,supplierId,stateInterp,alertId,remark,email,phoneNo;
 	private Integer pageNo, pageSize,userId,taxPaidStatus,consignmentStatus,featureId,userTypeId,fileStatus,requestType,sourceType,grievanceStatus,userRoleTypeId,status,asType,serviceDump,fileType,action,operatorTypeId,channel,type,deviceIdType,parentValue,id,port,currency,quantity,stockStatus,feature,period;
 	private Double dollar,riel;
 	private int roleTypeId;
 	private String state,ruleName;
-	
-	public String getRuleName() {
-		return ruleName;
-	}
-	public void setRuleName(String ruleName) {
-		this.ruleName = ruleName;
-	}
-	public String getState() {
-		return state;
-	}
-	public void setState(String state) {
-		this.state = state;
-	}
 	public String getStartDate() {
 		return startDate;
 	}
@@ -207,6 +194,24 @@ public class FilterRequest {
 	}
 	public void setAlertId(String alertId) {
 		this.alertId = alertId;
+	}
+	public String getRemark() {
+		return remark;
+	}
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getPhoneNo() {
+		return phoneNo;
+	}
+	public void setPhoneNo(String phoneNo) {
+		this.phoneNo = phoneNo;
 	}
 	public Integer getPageNo() {
 		return pageNo;
@@ -400,13 +405,17 @@ public class FilterRequest {
 	public void setRoleTypeId(int roleTypeId) {
 		this.roleTypeId = roleTypeId;
 	}
-	
-	
-	public String getRemark() {
-		return remark;
+	public String getState() {
+		return state;
 	}
-	public void setRemark(String remark) {
-		this.remark = remark;
+	public void setState(String state) {
+		this.state = state;
+	}
+	public String getRuleName() {
+		return ruleName;
+	}
+	public void setRuleName(String ruleName) {
+		this.ruleName = ruleName;
 	}
 	@Override
 	public String toString() {
@@ -475,6 +484,10 @@ public class FilterRequest {
 		builder.append(alertId);
 		builder.append(", remark=");
 		builder.append(remark);
+		builder.append(", email=");
+		builder.append(email);
+		builder.append(", phoneNo=");
+		builder.append(phoneNo);
 		builder.append(", pageNo=");
 		builder.append(pageNo);
 		builder.append(", pageSize=");
@@ -546,6 +559,8 @@ public class FilterRequest {
 		builder.append("]");
 		return builder.toString();
 	}
+	
+	
 	
 	
 	
