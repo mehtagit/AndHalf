@@ -526,11 +526,11 @@ function saveIndivisualStolenRequest(){
 
 	var request={
 			"dateOfStolen":IndivisualStolenDate,
+			"qty":1,
 			"blockingTimePeriod":blockingTimePeriod,
 			"blockingType":blockingType,
 			"requestType":0,
 			"sourceType":5,
-			"fileName":uploadedFileName,
 			"firFileName":fileFileDetails,
 			"complaintType": singleStolenComplaintType,
 			"operatorTypeId":singleStolenOperator,
@@ -827,7 +827,7 @@ function rejectUser(){
 		dataType : 'json',
 		'async' : false,
 		contentType : 'application/json; charset=utf-8',
-		type : 'PUT',
+		type : 'POST',
 		success : function(data) {
 			console.log("approveRequest----->"+JSON.stringify(rejectRequest));
 			if(data.errorCode==0){
@@ -840,6 +840,8 @@ function rejectUser(){
 			alert("Failed");
 		}
 	});
+	
+	return false;
 }
 
 function confirmRejectInformation(){

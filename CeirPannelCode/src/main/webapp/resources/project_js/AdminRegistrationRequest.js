@@ -47,7 +47,7 @@
 				"userType":$("body").attr("data-roleType"),
 				"email" : $('#emailID').val(),
 				"phoneNo" : $('#phone').val(),
-				"displayName" : $('#userName').val(),
+				"username" : $('#userName').val(),
 		}
 		
 		if(lang=='km'){
@@ -132,7 +132,7 @@
 			        }); 
 					}
 					else if(date[i].type === "text"){
-						$("#registrationTableDiv").append("<div class='input-field col s6 m2' ><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
+						$("#registrationTableDiv").append("<div class='input-field col s6 m2' ><input type="+date[i].type+" id="+date[i].id+" maxlength='60' /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
 						
 					}
 					

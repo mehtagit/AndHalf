@@ -423,7 +423,7 @@ public class BlockUnblock {
 	 */
 		
 		@RequestMapping(value="/openbulkView",method ={org.springframework.web.bind.annotation.RequestMethod.GET})
-		public @ResponseBody StolenRecoveryModel openBulkFile(@RequestParam(name="reqType") String reqType,@RequestParam(name="txnId",required = false) String txnId,@RequestParam(name="singleDeivce",required = false) String singleDeivce,HttpSession session)
+		public @ResponseBody Object openBulkFile(@RequestParam(name="reqType") String reqType,@RequestParam(name="txnId",required = false) String txnId,@RequestParam(name="singleDeivce",required = false) String singleDeivce,HttpSession session)
 		{
 			log.info("entry point of  fetch block/unclock devices in the bases of transaction id .");
 			StolenRecoveryModel viewbulkDevices= new StolenRecoveryModel();
@@ -435,9 +435,9 @@ public class BlockUnblock {
 			viewbulkDevices.setRoleType(roletype);
 			
 			log.info("request passed to the fetch Device api="+viewbulkDevices);
-			stolenRecoveryModel=feignCleintImplementation.fetchBulkDeviceByTxnId(viewbulkDevices);
+			Object ds=feignCleintImplementation.fetchBulkDeviceByTxnId(viewbulkDevices);
 			//log.info("response from fetch stock api="+stockUploadModelResponse);
-				return stolenRecoveryModel;
+				return ds;
 		}
 		
 //******************************************************* fetch singleImei details through txnId************************************************************		

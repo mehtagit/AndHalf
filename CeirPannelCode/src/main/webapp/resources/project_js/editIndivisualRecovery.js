@@ -73,6 +73,7 @@ var txnid=$('#existingStolenTxnId').val();
 		$('#state1').val(response.stolenIndividualUserDB.deviceStolenProvince);
 		//$('#sigleRecoverydeviceStatus').val(response.stolenIndividualUserDB.deviceBrandName);
 		$('#sigleRecovery').val(response.remark);
+		$('#sigleRecoveryReject').val(response.rejectedRemark);
 		$('#bulkRecoveryDate').val(response.dateOfRecovery);
 		$('#sigleRecoveryimeiNumber1').val(response.stolenIndividualUserDB.imeiEsnMeid1);
 		$('#sigleRecoveryimeiNumber2').val(response.stolenIndividualUserDB.imeiEsnMeid2);

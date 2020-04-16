@@ -11,7 +11,7 @@ public class StolenRecoveryModel {
 	private int id;
 	private int requestType;
 	private String roleType;
-	private String  txnId,remark;
+	private String  txnId,remark,rejectedRemark;
 	private int userId;
 	private Integer operatorTypeId;
 	private int sourceType,category;
@@ -273,6 +273,20 @@ public class StolenRecoveryModel {
 
 
 
+	public String getRejectedRemark() {
+		return rejectedRemark;
+	}
+
+
+
+
+	public void setRejectedRemark(String rejectedRemark) {
+		this.rejectedRemark = rejectedRemark;
+	}
+
+
+
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -294,6 +308,8 @@ public class StolenRecoveryModel {
 		builder.append(txnId);
 		builder.append(", remark=");
 		builder.append(remark);
+		builder.append(", rejectedRemark=");
+		builder.append(rejectedRemark);
 		builder.append(", userId=");
 		builder.append(userId);
 		builder.append(", operatorTypeId=");
@@ -315,9 +331,9 @@ public class StolenRecoveryModel {
 		builder.append("]");
 		return builder.toString();
 	}
-	
-	
-	
-	
+
+
+
+
 	
 }

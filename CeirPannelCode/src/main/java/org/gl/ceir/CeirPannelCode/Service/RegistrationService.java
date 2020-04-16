@@ -19,6 +19,7 @@ import javax.servlet.http.HttpSession;
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Feignclient.UserRegistrationFeignImpl;
 import org.gl.ceir.CeirPannelCode.Model.Dropdown;
+import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.Otp;
 import org.gl.ceir.CeirPannelCode.Model.OtpResponse;
 import org.gl.ceir.CeirPannelCode.Model.Registration;
@@ -346,10 +347,10 @@ public class RegistrationService {
 		return response;
 	}
 
-	public List<SecurityQuestion> securityQuestionList(){
+	public GenricResponse securityQuestionList(String username){
 		log.info("inside security question controller");
-		List<SecurityQuestion> questionList =userRegistrationFeignImpl.securityQuestionList();
-		return questionList; 
+		GenricResponse response =userRegistrationFeignImpl.securityQuestionList(username);
+		return response; 
 	}
 	public HttpResponse resendOtp(Integer id,HttpServletRequest request) {
 		log.info("inside resend otp controller");

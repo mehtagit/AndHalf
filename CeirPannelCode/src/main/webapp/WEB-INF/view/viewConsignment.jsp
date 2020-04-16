@@ -127,7 +127,7 @@
 
 	<!--viewModal Modal start   -->
 
-	<div id="viewModal" class="modal-form" style="overflow-y: hidden;">
+	<div id="viewModal" class="modal-form">
 		<h6 class="modal-header">
 			<spring:message code="modal.header.viewConsignment" />
 		</h6>
@@ -624,7 +624,7 @@
 	</div>
 
 	<!-- Update Modal Start -->
-		<div id="updateModal" class="modal-form" style="overflow-y: hidden;">
+		<div id="updateModal" class="modal-form">
 		<h6 class="modal-header">
 			<spring:message code="modal.header.editConsignment" />
 		</h6>

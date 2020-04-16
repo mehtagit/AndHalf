@@ -1067,7 +1067,7 @@ function rejectUser(){
 		dataType : 'json',
 		'async' : false,
 		contentType : 'application/json; charset=utf-8',
-		type : 'PUT',
+		type : 'POST',
 		success : function(data) {
 			console.log("approveRequest----->"+JSON.stringify(rejectRequest));
 			if(data.errorCode==0){
@@ -1080,6 +1080,7 @@ function rejectUser(){
 			alert("Failed");
 		}
 	});
+	return false;
 }
 
 function confirmRejectInformation(){
