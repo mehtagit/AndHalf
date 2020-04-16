@@ -1,7 +1,7 @@
 function forgotPassword(){
 	$("#forgotPasswordBtn").prop('disabled', true);
 	var obj="";
-	var username=document.getElementById("username").value;
+	//var username=document.getElementById("username").value;
 	$("#forgotPassword").each(function(key, val){
 		val = $(this);
 		if(val.html() !== "") {
@@ -21,17 +21,18 @@ function forgotPassword(){
 		dataType : 'html',
 		data : JSON.stringify(obj),
 		success : function(data) {
+			console.log("response: "+data);
 			var resp=JSON.parse(data);
+			$("#otpVerification #userid").val(resp.userId);
+	//		$('#content').addClass('lean-overlay');
+			$("#otpMsg").text($.i18n(resp.tag));
 			if(resp.statusCode=='200'){
-				$("#usernamedata").val(username);
-				$('#changePassword').openModal({
-			        dismissible:false
-			    });
+				$('#otpMsgModal').openModal({
+					dismissible : false
+				});
 			}      
 			else{
 				$.i18n().locale = $('#langlist').val();
-	
-			//	$("#forgotPassword #errorMsg").text(resp.response);
 				$.i18n().load( {
 					'en': './resources/i18n/en.json',
 					'km': './resources/i18n/km.json'

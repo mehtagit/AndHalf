@@ -261,7 +261,7 @@ public class UploadPaidStatus {
 		
 
 		//Dropdown items			
-		String[] selectParam= {"select",Translator.toLocale("select.deviceIDType"),"deviceIDType","","select",Translator.toLocale("select.deviceType"),"deviceTypeFilter","","select",Translator.toLocale("select.taxPaidStatus"),"taxPaidStatus",""};
+		String[] selectParam= {"select",Translator.toLocale("input.Status"),"Status","","select",Translator.toLocale("select.taxPaidStatus"),"taxPaidStatus",""};
 		for(int i=0; i< selectParam.length; i++) {
 			inputFields= new InputFields();
 			inputFields.setType(selectParam[i]);

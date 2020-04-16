@@ -22,6 +22,7 @@ import org.gl.ceir.CeirPannelCode.Model.Tag;
 import org.gl.ceir.CeirPannelCode.Model.User;
 import org.gl.ceir.CeirPannelCode.Model.UserHeader;
 import org.gl.ceir.CeirPannelCode.Response.LoginResponse;
+import org.gl.ceir.CeirPannelCode.Response.UpdateProfileResponse;
 import org.gl.ceir.CeirPannelCode.Util.HttpResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -205,10 +206,10 @@ public class LoginService {
 		}
 	}
 
-	public HttpResponse forgotPasswordRequest(ForgotPassword password) {
+	public UpdateProfileResponse forgotPasswordRequest(ForgotPassword password) {
 		log.info("inside forgot password controller");
 		log.info("password data is:  "+password);
-		HttpResponse response=new HttpResponse();           
+		UpdateProfileResponse response=new UpdateProfileResponse();           
 		response=userLoginFeignImpl.ForgotPassword(password);
 		return response;
 	}  

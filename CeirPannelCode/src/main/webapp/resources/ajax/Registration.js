@@ -82,6 +82,70 @@ function verifyOtp() {
 	});
 	return false;
 }
+
+function verifyOtp2() {
+	$("#otpVerifyBtn").prop('disabled', true);
+	var username=document.getElementById("username").value;
+	var obj = "";
+	$("#verifyOtpForm").each(function(key, val) {
+		val = $(this);
+		if (val.html() !== "") {
+			obj = {
+				phoneOtp : val.find('#phoneOtp').val(),
+				emailOtp : val.find('#emailOtp').val(),
+				userid : val.find('#userid').val(),
+				forgotPassword : '1'
+			}
+		}
+	});
+	$.ajax({
+		type : 'POST',
+		url : contextpath + '/verifyOtp',
+		contentType : "application/json",
+		dataType : 'html',
+		data : JSON.stringify(obj),
+		success : function(data) {
+			console.log(data);
+			var resp = JSON.parse(data);
+			if (resp.statusCode == "200") {
+				// window.location.href='#otpMessage';
+
+				// $('#otpMessage').modal('open');
+
+				$.i18n().locale = $('#langlist').val();
+				$.i18n().load({
+					'en' : './resources/i18n/en.json',
+					'km' : './resources/i18n/km.json'
+				}).done(function() {
+					$("#otpVerification").closeModal();
+					$("#usernamedata").val(username);
+					$('#changePassword').openModal({
+				        dismissible:false
+				    });
+				});
+
+			} else {
+
+				$.i18n().locale = $('#langlist').val();
+				$.i18n().load({
+					'en' : './resources/i18n/en.json',
+					'km' : './resources/i18n/km.json'
+				}).done(
+						function() {
+							$("#otpVerification #verifyOtpResp").text(
+									$.i18n(resp.tag));
+						});
+			}
+			$("#otpVerifyBtn").prop('disabled', false);
+		},
+		error : function(xhr, ajaxOptions, thrownError) {
+			$("#otpVerifyBtn").prop('disabled', false);
+		}
+
+	});
+	return false;
+}
+
 function resendOtp() {
 	var id = document.getElementById("userid").value;
 	$.ajax({
