@@ -187,9 +187,12 @@ public class RegularizedDeviceServiceImpl {
 			logger.info("dialect : " + propertiesReader.dialect);
 
 			Page<RegularizeDeviceDb> page = regularizedDeviceDbRepository.findAll(buildSpecification(filterRequest).build(), pageable);
-
+            
 			for(RegularizeDeviceDb regularizeDeviceDb : page.getContent()) {
-
+				if(Objects.nonNull(regularizeDeviceDb.getEndUserDB())) {
+					regularizeDeviceDb.setNationality(regularizeDeviceDb.getEndUserDB().getNationality());
+					logger.info("nationality= "+regularizeDeviceDb.getEndUserDB().getNationality());
+				}
 				for(StateMgmtDb stateMgmtDb : stateList) {
 					if(regularizeDeviceDb.getStatus() == stateMgmtDb.getState()) {
 						regularizeDeviceDb.setStateInterp(stateMgmtDb.getInterp()); 
@@ -204,6 +207,7 @@ public class RegularizedDeviceServiceImpl {
 
 			// Save in audit.
 			String username="";
+			 int userId=0;
 			if(Objects.nonNull(filterRequest.getUserType()))
 			{
 
@@ -214,11 +218,13 @@ public class RegularizedDeviceServiceImpl {
 				else {
 
 					user = userRepository.getById(filterRequest.getUserId());
-					username=user.getUsername();					
+					username=user.getUsername();
+					userId=filterRequest.getUserId();
 				}
 			}
-
-			AuditTrail auditTrail = new AuditTrail(filterRequest.getUserId(), 
+         
+          
+			AuditTrail auditTrail = new AuditTrail(userId, 
 					username, 
 					Long.valueOf(filterRequest.getUserTypeId()), 
 					filterRequest.getUserType(), 
@@ -331,8 +337,14 @@ public class RegularizedDeviceServiceImpl {
 
 			EndUserDB endUserDB2 = endUserDbRepository.getByNid(nid);
 			Integer type=null;
-			
-			if(endUserDB.getNationality().equalsIgnoreCase("Cambodian")) {
+			if(Objects.isNull(endUserDB.getNationality())) {
+				logger.info(GenericMessageTags.NULL_Natinality);
+				return new GenricResponse(1, GenericMessageTags.NULL_Natinality.getTag(), 
+						GenericMessageTags.NULL_Natinality.getMessage(), 
+						"");
+			}
+			logger.info("nationality= "+endUserDB.getNationality());
+			if("Cambodian".equalsIgnoreCase(endUserDB.getNationality())) {
 				type=1;
 			}
 			else {
@@ -345,6 +357,12 @@ public class RegularizedDeviceServiceImpl {
 					}
 					for(RegularizeDeviceDb regularizeDeviceDb : endUserDB.getRegularizeDeviceDbs()) {
 						// TODO     responsse 5
+						if(Objects.isNull(endUserDB2)) {
+						regularizeDeviceDb.setEndUserDB(endUserDB);
+						}
+						else {
+							regularizeDeviceDb.setEndUserDB(endUserDB2);	
+						}
 						if(commonFunction.checkAllImeiOfRegularizedDevice(regularizeDeviceDb)) {
 							return new GenricResponse(5,GenericMessageTags.DUPLICATE_IMEI.getTag(),GenericMessageTags.DUPLICATE_IMEI.getMessage(), "");
 						}
