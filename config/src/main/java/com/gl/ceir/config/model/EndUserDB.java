@@ -114,6 +114,8 @@ public class EndUserDB implements Serializable {
 	
 	private String entryDateInCountry;
 
+	@Transient
+	
 	public Long getId() {
 		return id;
 	}
