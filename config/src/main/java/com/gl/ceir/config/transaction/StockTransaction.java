@@ -155,9 +155,11 @@ public class StockTransaction {
 		stockManagementRepository.save(stockMgmt);
 		logger.info("Stock [" + stockMgmt.getTxnId() + "] saved in stock_mgmt.");
 
-		auditTrailRepository.save(new AuditTrail(stockMgmt.getUser().getId(), "", 0L, "", 0L, 
-				Features.STOCK, SubFeatures.DELETE, "", stockMgmt.getTxnId()));
-		logger.info("Stock [" + stockMgmt.getTxnId() + "] saved in audit_trail.");
+		/*
+		 * auditTrailRepository.save(new AuditTrail(stockMgmt.getUser().getId(), "", 0L,
+		 * "", 0L, Features.STOCK, SubFeatures.DELETE, "", stockMgmt.getTxnId()));
+		 * logger.info("Stock [" + stockMgmt.getTxnId() + "] saved in audit_trail.");
+		 */
 
 		queryStatus = Boolean.TRUE;
 		return queryStatus;

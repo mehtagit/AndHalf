@@ -179,6 +179,8 @@ public class StockServiceImpl {
 				stockMgmt.setUser(user);
 				stockMgmt.setRoleType(secondaryRoleType);
 				isStockAssignRequest = Boolean.TRUE;
+				
+				addInAuditTrail(stockMgmt.getUserId(), stockMgmt.getTxnId(), SubFeatures.UPLOAD);
 
 			}else if("End User".equalsIgnoreCase(stockMgmt.getUserType())){
 				// Check if this feature is supported in current period.
@@ -217,6 +219,7 @@ public class StockServiceImpl {
 					logger.info("Invalid request for stock registeration.", stockMgmt.getTxnId());
 					return new GenricResponse(3, "Invalid request for stock registeration.", stockMgmt.getTxnId());
 				}
+				addInAuditTrail(user.getId(), stockMgmt.getTxnId(), SubFeatures.UPLOAD);
 			}else {
 				stockMgmt.setUser(new User().setId(new Long(stockMgmt.getUserId())));
 			}
@@ -255,6 +258,8 @@ public class StockServiceImpl {
 					return new GenricResponse(1, "Stock registeration have been failed.", stockMgmt.getTxnId());
 				}
 			}
+			
+			
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
@@ -293,13 +298,18 @@ public class StockServiceImpl {
 					} 
 				}
 			}
-
-			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), "", 
-					Long.valueOf(filterRequest.getUserTypeId()), filterRequest.getUserType(), 
-					Long.valueOf(filterRequest.getFeatureId()),
-					Features.CONSIGNMENT, SubFeatures.VIEW, "", "NA"));
 			
-			logger.info("AUDIT : Saved view request in audit.");
+			
+
+			/*
+			 * auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), "",
+			 * Long.valueOf(filterRequest.getUserTypeId()), filterRequest.getUserType(),
+			 * Long.valueOf(filterRequest.getFeatureId()), Features.STOCK, SubFeatures.VIEW,
+			 * "", "NA"));
+			 * 
+			 * logger.info("AUDIT : Saved view request in audit.");
+			 */
+			addInAuditTrail(Long.valueOf(filterRequest.getUserId()), "NA", SubFeatures.VIEW_ALL);
 			
 			return page;
 
@@ -420,14 +430,15 @@ public class StockServiceImpl {
 				User user = userRepository.getById(filterRequest.getUserId());
 				logger.info(user);
 				
-				auditTrailRepository.save(new AuditTrail(user.getId(), 
-						user.getUsername(), 
-						user.getUsertype().getId(),
-						user.getUsertype().getUsertypeName(), 
-						4, Features.STOCK, 
-						SubFeatures.VIEW, "", filterRequest.getTxnId()));
-				logger.info("Stock [ View ][" + filterRequest.getTxnId() + "] saved in audit_trail.");
+				/*
+				 * auditTrailRepository.save(new AuditTrail(user.getId(), user.getUsername(),
+				 * user.getUsertype().getId(), user.getUsertype().getUsertypeName(), 4,
+				 * Features.STOCK, SubFeatures.VIEW, "", filterRequest.getTxnId()));
+				 * logger.info("Stock [ View ][" + filterRequest.getTxnId() +
+				 * "] saved in audit_trail.");
+				 */
 			}
+			addInAuditTrail(Long.valueOf(filterRequest.getUserId()), filterRequest.getTxnId(), SubFeatures.VIEW_ALL);
 			return stockMgmt2;
 
 		} catch (Exception e) {
@@ -436,45 +447,46 @@ public class StockServiceImpl {
 		}
 	}
 
-	public GenricResponse deleteStockDetailes(StockMgmt stockMgmt, String userType) {
+	public GenricResponse deleteStockDetailes(ConsignmentUpdateRequest deleteObj) {
 		try {
 
-			if(Objects.isNull(stockMgmt.getTxnId())) {
+			if(Objects.isNull(deleteObj.getTxnId())) {
 				logger.info("TxnId is null in the request.");
-				return new GenricResponse(1001, "TxnId is null in the request.", stockMgmt.getTxnId());
+				return new GenricResponse(1001, "TxnId is null in the request.", deleteObj.getTxnId());
 			}
 
-			if(Objects.isNull(userType)) {
+			if(Objects.isNull(deleteObj.getUserType())) {
 				logger.info("userType is null in the request.");
-				return new GenricResponse(1002, "Usertype is null in the request.", stockMgmt.getTxnId());
+				return new GenricResponse(1002, "Usertype is null in the request.", deleteObj.getTxnId());
 			}
 
-			StockMgmt txnRecord	= stockManagementRepository.getByTxnId(stockMgmt.getTxnId());
+			StockMgmt txnRecord	= stockManagementRepository.getByTxnId(deleteObj.getTxnId());
 
 			if(Objects.isNull(txnRecord)) {
-				return new GenricResponse(1000, "No record found against this transactionId.", stockMgmt.getTxnId());
+				return new GenricResponse(1000, "No record found against this transactionId.", deleteObj.getTxnId());
 			}else {
 
-				if("CEIRADMIN".equalsIgnoreCase(userType))
+				if("CEIRADMIN".equalsIgnoreCase(deleteObj.getUserType()))
 					txnRecord.setStockStatus(StockStatus.WITHDRAWN_BY_CEIR_ADMIN.getCode());
 				else
 					txnRecord.setStockStatus(StockStatus.WITHDRAWN_BY_USER.getCode());
 
-				txnRecord.setRemarks(stockMgmt.getRemarks());
+				txnRecord.setRemarks(deleteObj.getRemarks());
 				txnRecord.setDeleteFlag(0);
 				
 				WebActionDb webActionDb = new WebActionDb();
 				webActionDb.setFeature(WebActionDbFeature.STOCK.getName());
 				webActionDb.setSubFeature(WebActionDbSubFeature.DELETE.getName());
 				webActionDb.setState(WebActionDbState.INIT.getCode());
-				webActionDb.setTxnId(stockMgmt.getTxnId());
-
+				webActionDb.setTxnId(deleteObj.getTxnId());
+				
+				addInAuditTrail(Long.valueOf(deleteObj.getUserId()), deleteObj.getTxnId(), SubFeatures.DELETE);
 				if(stockTransaction.executeDeleteStock(txnRecord, webActionDb)) {
-					logger.info("Deletion of Stock is in Progress." + stockMgmt.getTxnId());
-					return new GenricResponse(0, "Deletion of Stock is in Progress.",stockMgmt.getTxnId());
+					logger.info("Deletion of Stock is in Progress." + deleteObj.getTxnId());
+					return new GenricResponse(0, "Deletion of Stock is in Progress.",deleteObj.getTxnId());
 				}else {
-					logger.info("Deletion of Stock have been failed." + stockMgmt.getTxnId());
-					return new GenricResponse(1, "Deletion of Stock have been failed.",stockMgmt.getTxnId());
+					logger.info("Deletion of Stock have been failed." + deleteObj.getTxnId());
+					return new GenricResponse(1, "Deletion of Stock have been failed.",deleteObj.getTxnId());
 				}
 			}
 		} catch (Exception e) {
@@ -514,7 +526,9 @@ public class StockServiceImpl {
 			webActionDb.setSubFeature(WebActionDbSubFeature.UPDATE.getName());
 			webActionDb.setState(WebActionDbState.INIT.getCode());
 			webActionDb.setTxnId(distributerManagement.getTxnId());
-
+			
+			addInAuditTrail(stockMgmt.getUserId(), stockMgmt.getTxnId(), SubFeatures.UPDATE);
+			
 			if(stockTransaction.executeUpdateStock(stockMgmt, webActionDb)) {
 				logger.info("Stock Update have been Successful." + stockMgmt.getTxnId());
 				return new GenricResponse(0, "Stock Update have been Successful.", distributerManagement.getTxnId());
@@ -644,12 +658,14 @@ public class StockServiceImpl {
 				csvWriter.write( new StockFileModel());
 			}
 
-			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), "", 
-					Long.valueOf(filterRequest.getUserTypeId()), filterRequest.getUserType(), 
-					Long.valueOf(filterRequest.getFeatureId()),
-					Features.STOCK, SubFeatures.VIEW, "", "NA"));
-			logger.info("AUDIT : Saved file export request in audit.");
-
+			/*
+			 * auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), "",
+			 * Long.valueOf(filterRequest.getUserTypeId()), filterRequest.getUserType(),
+			 * Long.valueOf(filterRequest.getFeatureId()), Features.STOCK, SubFeatures.VIEW,
+			 * "", "NA")); logger.info("AUDIT : Saved file export request in audit.");
+			 */
+			addInAuditTrail(Long.valueOf(filterRequest.getUserId()), "NA", SubFeatures.EXPORT);
+			
 			return new FileDetails( fileName, filePath, link.getValue() + fileName ); 
 
 		} catch (Exception e) {
@@ -837,5 +853,31 @@ public class StockServiceImpl {
 			return com.gl.ceir.config.model.constants.Usertype.RETAILER.getName();
 		else
 			return null;
+	}
+	
+	private void addInAuditTrail(Long userId, String txnId, String subFeatureName) {
+		
+		User requestUser = null;
+		try {
+			requestUser = userRepository.getById(userId);
+		} catch (Exception e) {
+			logger.error("Error while fetching user information for user id = "+userId);
+		}
+		if(Objects.nonNull(requestUser)) {
+		logger.info("Inserting in audit table for feature = "+Features.STOCK+"and Subfeature"+subFeatureName);
+		auditTrailRepository.save(new AuditTrail(
+				requestUser.getId(),
+				requestUser.getUsername(), 
+				requestUser.getUsertype().getId(),
+				requestUser.getUsertype().getUsertypeName(),
+				4,
+				Features.STOCK,
+				subFeatureName,
+				"", 
+				txnId));
+		}else {
+			logger.error("Could not find the user information");
+		}
+		
 	}
 }

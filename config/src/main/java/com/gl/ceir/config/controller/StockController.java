@@ -115,11 +115,10 @@ public class StockController {
 
 	@ApiOperation(value = "Delete Retailer And Distributer Record of TxnId.", response = GenricResponse.class)
 	@RequestMapping(path = "/stock/delete", method = RequestMethod.POST)
-	public GenricResponse deleteStachHolderData(@RequestBody StockMgmt stockMgmt,
-			@RequestParam(value = "userType", required = false) String userType) {
+	public GenricResponse deleteStachHolderData(@RequestBody ConsignmentUpdateRequest deleteObj) {
 
-		logger.info("Stock Withdraw Request = " + stockMgmt + " for usertype : " + userType);
-		GenricResponse genricResponse =	stackholderServiceImpl.deleteStockDetailes(stockMgmt, userType);
+		logger.info("Stock Withdraw Request Of Txn_ID = " + deleteObj.getTxnId() + " for usertype : " + deleteObj.getUserType());
+		GenricResponse genricResponse =	stackholderServiceImpl.deleteStockDetailes(deleteObj);
 
 		logger.info("Response to Delete ="+genricResponse.toString());
 		return genricResponse;

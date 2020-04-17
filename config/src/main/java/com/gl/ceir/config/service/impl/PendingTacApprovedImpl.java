@@ -69,7 +69,7 @@ public class PendingTacApprovedImpl {
 
 	@Autowired
 	UserRepository userRepository;
-	
+
 	@Autowired
 	ConfigurationManagementServiceImpl configurationManagementServiceImpl;
 
@@ -171,64 +171,44 @@ public class PendingTacApprovedImpl {
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
-	
+
 	private GenericSpecificationBuilder<PendingTacApprovedDb> buildSpecification(FilterRequest filterRequest){
 		GenericSpecificationBuilder<PendingTacApprovedDb> cmsb = new GenericSpecificationBuilder<>(propertiesReader.dialect);
 
-		/*
-		 * //if (!"SystemAdmin".equalsIgnoreCase(filterRequest.getUserType())) {
-		 * if(Objects.nonNull(filterRequest.getUserId())) cmsb.with(new
-		 * SearchCriteria("userId", filterRequest.getUserId(), SearchOperation.EQUALITY,
-		 * Datatype.STRING)); //}
-		 */		if(Objects.nonNull(filterRequest.getUserId())) {
-			cmsb.with(new SearchCriteria("userId", filterRequest.getFilteredUserId(), SearchOperation.EQUALITY, Datatype.STRING));
-	}
-		if(Objects.nonNull(filterRequest.getStartDate()) && !filterRequest.getStartDate().isEmpty())
-			cmsb.with(new SearchCriteria("createdOn", filterRequest.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
+		 if(Objects.nonNull(filterRequest.getUserId())) {
+			 cmsb.with(new SearchCriteria("userId", filterRequest.getFilteredUserId(), SearchOperation.EQUALITY, Datatype.STRING));
+		 }
+		 if(Objects.nonNull(filterRequest.getStartDate()) && !filterRequest.getStartDate().isEmpty())
+			 cmsb.with(new SearchCriteria("createdOn", filterRequest.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
 
-		if(Objects.nonNull(filterRequest.getEndDate()) && !filterRequest.getEndDate().isEmpty())
-			cmsb.with(new SearchCriteria("createdOn", filterRequest.getEndDate() , SearchOperation.LESS_THAN, Datatype.DATE));
+		 if(Objects.nonNull(filterRequest.getEndDate()) && !filterRequest.getEndDate().isEmpty())
+			 cmsb.with(new SearchCriteria("createdOn", filterRequest.getEndDate() , SearchOperation.LESS_THAN, Datatype.DATE));
 
-		if(Objects.nonNull(filterRequest.getTxnId()) && !filterRequest.getTxnId().isEmpty())
-			cmsb.with(new SearchCriteria("txnId", filterRequest.getTxnId(), SearchOperation.EQUALITY, Datatype.STRING));
-		
-		if(Objects.nonNull(filterRequest.getFeatureName()) && !filterRequest.getFeatureName().isEmpty())
-			cmsb.with(new SearchCriteria("featureName", filterRequest.getFeatureName(), SearchOperation.EQUALITY, Datatype.STRING));
+		 if(Objects.nonNull(filterRequest.getTxnId()) && !filterRequest.getTxnId().isEmpty())
+			 cmsb.with(new SearchCriteria("txnId", filterRequest.getTxnId(), SearchOperation.EQUALITY, Datatype.STRING));
 
-		if(Objects.nonNull(filterRequest.getUserType()) && !filterRequest.getUserType().isEmpty())
-			cmsb.with(new SearchCriteria("userType", filterRequest.getUserType(), SearchOperation.EQUALITY, Datatype.STRING));
+		 if(Objects.nonNull(filterRequest.getFeatureName()) && !filterRequest.getFeatureName().isEmpty())
+			 cmsb.with(new SearchCriteria("featureName", filterRequest.getFeatureName(), SearchOperation.EQUALITY, Datatype.STRING));
 
-		/*
-		 * if(Objects.nonNull(filterRequest.getSubFeatureName()) &&
-		 * !filterRequest.getSubFeatureName().isEmpty()) cmsb.with(new
-		 * SearchCriteria("subFeature", filterRequest.getSubFeatureName(),
-		 * SearchOperation.EQUALITY, Datatype.STRING));
-		 */
-		/*
-		 * if(Objects.nonNull(filterRequest.getUserName()) &&
-		 * !filterRequest.getUserName().isEmpty()) cmsb.with(new
-		 * SearchCriteria("userName", filterRequest.getUserName(),
-		 * SearchOperation.EQUALITY, Datatype.STRING));
-		 */
-		if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
-			/*
-			 * cmsb.orSearch(new SearchCriteria("userName", filterRequest.getSearchString(),
-			 * SearchOperation.LIKE, Datatype.STRING));
-			 */
-			cmsb.orSearch(new SearchCriteria("featureName", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
-			/*
-			 * cmsb.orSearch(new SearchCriteria("subFeature",
-			 * filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
-			 */
-		}
-		return cmsb;
+		 if(Objects.nonNull(filterRequest.getUserType()) && !filterRequest.getUserType().isEmpty())
+			 cmsb.with(new SearchCriteria("userType", filterRequest.getUserType(), SearchOperation.EQUALITY, Datatype.STRING));
+		 if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
+
+			 cmsb.orSearch(new SearchCriteria("userType", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+
+			 cmsb.orSearch(new SearchCriteria("featureName", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+
+			 cmsb.orSearch(new SearchCriteria("txnId", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+			 
+		 }
+		 return cmsb;
 	}
 
 	public FileDetails getFilteredPendingTacApprovedDbInFile(FilterRequest filterRequest) {
 		String fileName = null;
 		Writer writer   = null;
 		PendingTacApprovedFileModel atfm = null;
-		
+
 		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		DateTimeFormatter dtf2  = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
 
@@ -236,7 +216,7 @@ public class PendingTacApprovedImpl {
 		logger.info("CONFIG : file_consignment_download_dir [" + filepath + "]");
 		SystemConfigurationDb link = configurationManagementServiceImpl.findByTag(ConfigTags.file_download_link);
 		logger.info("CONFIG : file_consignment_download_link [" + link + "]");
-		
+
 		String filePath = filepath.getValue();
 		StatefulBeanToCsvBuilder<PendingTacApprovedFileModel> builder = null;
 		StatefulBeanToCsv<PendingTacApprovedFileModel> csvWriter = null;
@@ -261,20 +241,20 @@ public class PendingTacApprovedImpl {
 			if( !pendingTacApprovedDbs.isEmpty() ) {
 				fileRecords = new ArrayList<>(); 
 
-				
-				  for(PendingTacApprovedDb pendingTacApprovedDb : pendingTacApprovedDbs ) { 
-				  atfm = new PendingTacApprovedFileModel();
-				  
-				  atfm.setCreatedOn(pendingTacApprovedDb.getCreatedOn().toString());
-				  atfm.setTxnId(pendingTacApprovedDb.getTxnId()); 
-				  atfm.setTac(pendingTacApprovedDb.getTac());
-				  atfm.setFeatureName(pendingTacApprovedDb.getFeatureName());
-				  atfm.setUserType(pendingTacApprovedDb.getUserType());
-				  
-				  logger.debug(atfm);
-				  
-				  fileRecords.add(atfm); }
-				 
+
+				for(PendingTacApprovedDb pendingTacApprovedDb : pendingTacApprovedDbs ) { 
+					atfm = new PendingTacApprovedFileModel();
+
+					atfm.setCreatedOn(pendingTacApprovedDb.getCreatedOn().toString());
+					atfm.setTxnId(pendingTacApprovedDb.getTxnId()); 
+					atfm.setTac(pendingTacApprovedDb.getTac());
+					atfm.setFeatureName(pendingTacApprovedDb.getFeatureName());
+					atfm.setUserType(pendingTacApprovedDb.getUserType());
+
+					logger.debug(atfm);
+
+					fileRecords.add(atfm); }
+
 
 				csvWriter.write(fileRecords);
 			}

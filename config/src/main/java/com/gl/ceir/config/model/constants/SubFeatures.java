@@ -11,6 +11,7 @@ public interface SubFeatures {
 	String DELETE = "Delete";
 	String FILTER = "Filter";
 	String VIEW = "View";
+	String VIEW_ALL = "View All";
 	String ASSIGN = "Assign";
 	String EXPORT = "Export";
 	String ACCEPT_REJECT = "Accept_Reject";

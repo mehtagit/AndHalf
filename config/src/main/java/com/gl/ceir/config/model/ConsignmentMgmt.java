@@ -94,6 +94,80 @@ public class ConsignmentMgmt implements Serializable {
 	
 	public Integer deviceQuantity;
 
+	@Column(name="custom_id")
+	public Long customID;
+	
+	@Column(name="ceir_admin_id")
+	public Long ceirAdminID;
+	
+	@Column(name="drt_id")
+	public Long drtID;
+	
+	@Transient
+	public String userName;
+	@Transient
+	private String userType;
+	@Transient
+	private Integer featureId;
+	@Transient
+	private Integer userTypeId;
+	
+	public String getUserType() {
+		return userType;
+	}
+
+	public void setUserType(String userType) {
+		this.userType = userType;
+	}
+
+	public Integer getFeatureId() {
+		return featureId;
+	}
+
+	public void setFeatureId(Integer featureId) {
+		this.featureId = featureId;
+	}
+
+	public Integer getUserTypeId() {
+		return userTypeId;
+	}
+
+	public void setUserTypeId(Integer userTypeId) {
+		this.userTypeId = userTypeId;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public Long getCustomID() {
+		return customID;
+	}
+
+	public void setCustomID(Long customID) {
+		this.customID = customID;
+	}
+
+	public Long getCeirAdminID() {
+		return ceirAdminID;
+	}
+
+	public void setCeirAdminID(Long ceirAdminID) {
+		this.ceirAdminID = ceirAdminID;
+	}
+
+	public Long getDrtID() {
+		return drtID;
+	}
+
+	public void setDrtID(Long drtID) {
+		this.drtID = drtID;
+	}
+
 	//@NotNull
 	@NotAudited
 	@OneToOne
@@ -417,6 +491,24 @@ public class ConsignmentMgmt implements Serializable {
 		builder.append(stateInterp);
 		builder.append(", taxInterp=");
 		builder.append(taxInterp);
+		builder.append(", portAddress=");
+		builder.append(portAddress);
+		builder.append(", deviceQuantity=");
+		builder.append(deviceQuantity);
+		builder.append(", customID=");
+		builder.append(customID);
+		builder.append(", ceirAdminID=");
+		builder.append(ceirAdminID);
+		builder.append(", drtID=");
+		builder.append(drtID);
+		builder.append(", userName=");
+		builder.append(userName);
+		builder.append(", userType=");
+		builder.append(userType);
+		builder.append(", featureId=");
+		builder.append(featureId);
+		builder.append(", userTypeId=");
+		builder.append(userTypeId);
 		builder.append(", user=");
 		builder.append(user);
 		builder.append(", pendingTacApprovedByCustom=");
@@ -425,10 +517,6 @@ public class ConsignmentMgmt implements Serializable {
 		builder.append(deleteFlag);
 		builder.append(", deleteFlagInterp=");
 		builder.append(deleteFlagInterp);
-		builder.append(", portAddress=");
-		builder.append(portAddress);
-		builder.append(", deviceQuantity=");
-		builder.append(deviceQuantity);
 		builder.append("]");
 		return builder.toString();
 	}

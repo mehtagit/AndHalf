@@ -41,7 +41,9 @@ public class ConsignmentTransaction {
 		consignmentRepository.save(consignmentMgmt);
 		logger.info("Consignment [" + consignmentMgmt.getTxnId() + "] saved in consigment_mgmt_db.");
 
-		auditTrailRepository.save(new AuditTrail(consignmentMgmt.getUser().getId(), "", 0L, "", 0L, Features.CONSIGNMENT, 
+		auditTrailRepository.save(new AuditTrail(consignmentMgmt.getUser().getId(), consignmentMgmt.getUserName(), 
+				Long.valueOf(consignmentMgmt.getUserTypeId()), consignmentMgmt.getUserType(), Long.valueOf(consignmentMgmt.getFeatureId())
+				, Features.CONSIGNMENT, 
 				SubFeatures.REGISTER, "", consignmentMgmt.getTxnId()));
 		logger.info("Consignment [" + consignmentMgmt.getTxnId() + "] saved in audit_trail.");
 
@@ -56,8 +58,11 @@ public class ConsignmentTransaction {
 
 		consignmentRepository.save(consignmentMgmt);
 		logger.info("Consignment [" + consignmentMgmt.getTxnId() + "] updated in consigment_mgmt_db.");
-
-		auditTrailRepository.save(new AuditTrail(consignmentMgmt.getUser().getId(), "", 0L, "", 0L, 
+logger.info("request:"+consignmentMgmt +":::::usertypeid::::::::"+consignmentMgmt.getUserTypeId());
+		auditTrailRepository.save(new AuditTrail(consignmentMgmt.getUser().getId(),consignmentMgmt.getUserName(),
+				Long.valueOf(consignmentMgmt.getUserTypeId()), 
+				consignmentMgmt.getUserType(),
+				Long.valueOf(consignmentMgmt.getFeatureId()),
 				Features.CONSIGNMENT, SubFeatures.UPDATE, "", consignmentMgmt.getTxnId()));
 		logger.info("Consignment [" + consignmentMgmt.getTxnId() + "] saved in audit_trail.");
 
@@ -73,7 +78,7 @@ public class ConsignmentTransaction {
 		consignmentRepository.save(consignmentMgmt);
 		logger.info("Consignment [" + consignmentMgmt.getTxnId() + "] updated in consigment_mgmt_db.");
 
-		auditTrailRepository.save(new AuditTrail(consignmentMgmt.getUser().getId(), "", 0L, "", 0L, 
+		auditTrailRepository.save(new AuditTrail(consignmentMgmt.getUser().getId(), consignmentMgmt.getUserName(), Long.valueOf(consignmentMgmt.getUserTypeId()), consignmentMgmt.getUserType(), Long.valueOf(consignmentMgmt.getFeatureId()), 
 				Features.CONSIGNMENT, SubFeatures.DELETE, "", consignmentMgmt.getTxnId()));
 		logger.info("Consignment [" + consignmentMgmt.getTxnId() + "] saved in audit_trail.");
 
@@ -83,7 +88,7 @@ public class ConsignmentTransaction {
 	
 	public boolean executeUpdateStatusConsignment(ConsignmentMgmt consignmentMgmt, WebActionDb webActionDb) {
 		boolean queryStatus = Boolean.FALSE;
-		
+		logger.info("consignmentMgmt:::::"+consignmentMgmt);
 		if(Objects.nonNull(webActionDb)) {
 			webActionDbRepository.save(webActionDb);
 			logger.info("Consignment [" + consignmentMgmt.getTxnId() + "] saved in webaction_db.");	
@@ -92,8 +97,15 @@ public class ConsignmentTransaction {
 		consignmentRepository.save(consignmentMgmt);
 		logger.info("Consignment [" + consignmentMgmt.getTxnId() + "] saved in consigment_mgmt_db.");
 
-		auditTrailRepository.save(new AuditTrail(consignmentMgmt.getUser().getId(), "", 0L, "", 0L, 
-				Features.CONSIGNMENT, SubFeatures.UPDATE, "", consignmentMgmt.getTxnId()));
+		
+		  auditTrailRepository.save(new AuditTrail(consignmentMgmt.getUser().getId(),
+		  consignmentMgmt.getUserName(), Long.valueOf(consignmentMgmt.getUserTypeId()),
+		  consignmentMgmt.getUserType(), Long.valueOf(consignmentMgmt.getFeatureId()),
+		  Features.CONSIGNMENT, SubFeatures.UPDATE, "", consignmentMgmt.getTxnId()));
+		 
+		
+		//auditTrailRepository.save(new AuditTrail(consignmentMgmt.getUser().getId(), "", 0L, "", 0L,Features.CONSIGNMENT, SubFeatures.UPDATE, "", consignmentMgmt.getTxnId()));
+		
 		logger.info("Consignment [" + consignmentMgmt.getTxnId() + "] saved in audit_trail.");
 
 		queryStatus = Boolean.TRUE;
