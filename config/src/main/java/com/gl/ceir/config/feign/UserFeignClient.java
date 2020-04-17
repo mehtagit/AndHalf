@@ -18,5 +18,9 @@ public interface UserFeignClient {
 	
 	@PostMapping(value="/usertypeStatus/{usertypeId}")
 	public GenricResponse usertypeStatus(@PathVariable("usertypeId") Integer usertypeId) ;
+	
+	
+	@PostMapping("/nameById/{id}")
+	public GenricResponse nameById(@PathVariable("id") Integer id);
 
 }

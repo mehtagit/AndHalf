@@ -102,6 +102,48 @@ public class ConsignmentMgmt implements Serializable {
 	
 	@Column(name="drt_id")
 	public Long drtID;
+	
+	@Transient
+	public String userName;
+	@Transient
+	private String userType;
+	@Transient
+	private Integer featureId;
+	@Transient
+	private Integer userTypeId;
+	
+	public String getUserType() {
+		return userType;
+	}
+
+	public void setUserType(String userType) {
+		this.userType = userType;
+	}
+
+	public Integer getFeatureId() {
+		return featureId;
+	}
+
+	public void setFeatureId(Integer featureId) {
+		this.featureId = featureId;
+	}
+
+	public Integer getUserTypeId() {
+		return userTypeId;
+	}
+
+	public void setUserTypeId(Integer userTypeId) {
+		this.userTypeId = userTypeId;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
 	public Long getCustomID() {
 		return customID;
 	}
@@ -459,6 +501,14 @@ public class ConsignmentMgmt implements Serializable {
 		builder.append(ceirAdminID);
 		builder.append(", drtID=");
 		builder.append(drtID);
+		builder.append(", userName=");
+		builder.append(userName);
+		builder.append(", userType=");
+		builder.append(userType);
+		builder.append(", featureId=");
+		builder.append(featureId);
+		builder.append(", userTypeId=");
+		builder.append(userTypeId);
 		builder.append(", user=");
 		builder.append(user);
 		builder.append(", pendingTacApprovedByCustom=");
