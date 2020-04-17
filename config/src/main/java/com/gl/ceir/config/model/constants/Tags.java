@@ -19,5 +19,5 @@ public interface Tags {
 	String IS_ACTIVE = "IS_ACTIVE";
 	String ALERT_STATE = "ALERT_STATE";
 	String DELETE_FLAG = "DELETE_FLAG";
-		
+	String MULTI_SIM_STATUS = "MULTI_SIM_STATUS";
 }

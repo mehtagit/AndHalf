@@ -3,7 +3,7 @@ package com.gl.ceir.config.model.constants;
 public interface Features {
 
 	String CONSIGNMENT = "Consignment";
-	String STOCK = "Stock";
+	String STOCK = "Stock Management";
 	String STOLEN_RECOVERY = "Stolen"; //customerCareStolen
 	String GRIEVANCE = "Grievance";
 	String REGISTER_DEVICE = "Register Device";

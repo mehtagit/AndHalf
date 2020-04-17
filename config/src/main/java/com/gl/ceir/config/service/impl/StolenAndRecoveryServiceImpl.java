@@ -187,7 +187,7 @@ public class StolenAndRecoveryServiceImpl {
 			}
 
 			WebActionDb webActionDb = new WebActionDb();
-			webActionDb.setFeature(Features.STOLEN_RECOVERY);
+			webActionDb.setFeature(decideFeature(stolenandRecoveryDetails.getRequestType()));
 			webActionDb.setSubFeature(WebActionDbSubFeature.UPLOAD.getName());
 			webActionDb.setTxnId(stolenandRecoveryDetails.getTxnId());
 			webActionDb.setState(WebActionDbState.INIT.getCode());
@@ -518,7 +518,7 @@ public class StolenAndRecoveryServiceImpl {
 
 				WebActionDb webActionDb = new WebActionDb();
 				webActionDb.setState(0);
-				webActionDb.setFeature(Integer.toString(request.getRequestType()));				
+				webActionDb.setFeature(decideFeature(request.getRequestType()));				
 				webActionDb.setSubFeature("Upload");
 				webActionDb.setData(request.getTxnId());
 
@@ -913,6 +913,20 @@ public class StolenAndRecoveryServiceImpl {
 
 		if(Objects.nonNull(stolenandRecoveryMgmt.getBlockCategory()))
 			stolenandRecoveryMgmt.setBlockCategoryInterp(interpSetter.setConfigInterp(Tags.BLOCK_CATEGORY, stolenandRecoveryMgmt.getBlockCategory()));
+		
+		if( Objects.nonNull( stolenandRecoveryMgmt.getSingleImeiDetails() ) ){
+			if( Objects.nonNull( stolenandRecoveryMgmt.getSingleImeiDetails().getMultipleSimStatus() ) )
+			stolenandRecoveryMgmt.getSingleImeiDetails().setMultipleSimStatusInterp(interpSetter.setConfigInterp(Tags.MULTI_SIM_STATUS, stolenandRecoveryMgmt.getSingleImeiDetails().getMultipleSimStatus()));
+			
+			if(Objects.nonNull(stolenandRecoveryMgmt.getSingleImeiDetails().getDeviceType()))
+				stolenandRecoveryMgmt.getSingleImeiDetails().setDeviceTypeInterp(interpSetter.setConfigInterp(Tags.DEVICE_TYPE, stolenandRecoveryMgmt.getSingleImeiDetails().getDeviceType()));
+			
+			if(Objects.nonNull(stolenandRecoveryMgmt.getSingleImeiDetails().getDeviceIdType()))
+				stolenandRecoveryMgmt.getSingleImeiDetails().setDeviceIdTypeInterp(interpSetter.setConfigInterp(Tags.DEVICE_ID_TYPE, stolenandRecoveryMgmt.getSingleImeiDetails().getDeviceIdType()));
+			
+			if(Objects.nonNull(stolenandRecoveryMgmt.getSingleImeiDetails().getCategory()))
+				stolenandRecoveryMgmt.getSingleImeiDetails().setCategoryInterp(interpSetter.setConfigInterp(Tags.BLOCK_CATEGORY, stolenandRecoveryMgmt.getSingleImeiDetails().getCategory()));
+		}
 	}
 
 	private String decideFeature(int requestType) {
@@ -944,6 +958,6 @@ public class StolenAndRecoveryServiceImpl {
 		if(Objects.nonNull(imei4))
 			count++;
 
-		return count;
+		return count==0? 1:count;
 	}
 }
