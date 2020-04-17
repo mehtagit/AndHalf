@@ -21,6 +21,7 @@ import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.StackholderPolicyMapping;
 import com.gl.ceir.config.model.StolenandRecoveryMgmt;
+import com.gl.ceir.config.repository.AuditTrailRepository;
 import com.gl.ceir.config.service.impl.DeviceSnapShotServiceImpl;
 import com.gl.ceir.config.service.impl.StackholderPolicyMappingServiceImpl;
 import com.gl.ceir.config.service.impl.StolenAndRecoveryServiceImpl;
@@ -41,6 +42,9 @@ public class StolenAndRecoveryController {
 
 	@Autowired
 	Utility utility;
+	
+	@Autowired
+	AuditTrailRepository auditTrailRepository;
 
 	@ApiOperation(value = "Upload Recovery Details.", response = GenricResponse.class)
 	@RequestMapping(path = "/stakeholder/Recovery", method = RequestMethod.POST)

@@ -913,6 +913,20 @@ public class StolenAndRecoveryServiceImpl {
 
 		if(Objects.nonNull(stolenandRecoveryMgmt.getBlockCategory()))
 			stolenandRecoveryMgmt.setBlockCategoryInterp(interpSetter.setConfigInterp(Tags.BLOCK_CATEGORY, stolenandRecoveryMgmt.getBlockCategory()));
+		
+		if( Objects.nonNull( stolenandRecoveryMgmt.getSingleImeiDetails() ) ){
+			if( Objects.nonNull( stolenandRecoveryMgmt.getSingleImeiDetails().getMultipleSimStatus() ) )
+			stolenandRecoveryMgmt.getSingleImeiDetails().setMultipleSimStatusInterp(interpSetter.setConfigInterp(Tags.MULTI_SIM_STATUS, stolenandRecoveryMgmt.getSingleImeiDetails().getMultipleSimStatus()));
+			
+			if(Objects.nonNull(stolenandRecoveryMgmt.getSingleImeiDetails().getDeviceType()))
+				stolenandRecoveryMgmt.getSingleImeiDetails().setDeviceTypeInterp(interpSetter.setConfigInterp(Tags.DEVICE_TYPE, stolenandRecoveryMgmt.getSingleImeiDetails().getDeviceType()));
+			
+			if(Objects.nonNull(stolenandRecoveryMgmt.getSingleImeiDetails().getDeviceIdType()))
+				stolenandRecoveryMgmt.getSingleImeiDetails().setDeviceIdTypeInterp(interpSetter.setConfigInterp(Tags.DEVICE_ID_TYPE, stolenandRecoveryMgmt.getSingleImeiDetails().getDeviceIdType()));
+			
+			if(Objects.nonNull(stolenandRecoveryMgmt.getSingleImeiDetails().getCategory()))
+				stolenandRecoveryMgmt.getSingleImeiDetails().setCategoryInterp(interpSetter.setConfigInterp(Tags.BLOCK_CATEGORY, stolenandRecoveryMgmt.getSingleImeiDetails().getCategory()));
+		}
 	}
 
 	private String decideFeature(int requestType) {
@@ -944,6 +958,6 @@ public class StolenAndRecoveryServiceImpl {
 		if(Objects.nonNull(imei4))
 			count++;
 
-		return count;
+		return count==0? 1:count;
 	}
 }

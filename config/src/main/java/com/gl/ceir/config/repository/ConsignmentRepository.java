@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import com.gl.ceir.config.factory.CustomerCareRepo;
 import com.gl.ceir.config.model.ConsignmentMgmt;
 import com.gl.ceir.config.model.ResponseCountAndQuantity;
+import com.gl.ceir.config.model.Usertype;
 
 import io.lettuce.core.dynamic.annotation.Param;
 
@@ -34,4 +35,5 @@ JpaSpecificationExecutor<ConsignmentMgmt>, CustomerCareRepo<ConsignmentMgmt>{
 			+ "where c.consignmentStatus in (:consignmentStatus)")
 	public ResponseCountAndQuantity getConsignmentCountAndQuantity( @Param("consignmentStatus") List< Integer > consignmentStatus);
 
+	public Usertype getById(Integer userId);
 }

@@ -146,6 +146,7 @@ public class ConsignmentController {
 
 	}
 
+	// for approve 
 	@ApiOperation(value = "Update Consignment Status.", response = GenricResponse.class)
 	@RequestMapping(path = "update/consigmentStatus", method = RequestMethod.PUT)
 	public GenricResponse updateConsigmentStatus(@RequestBody ConsignmentUpdateRequest consignmentUpdateRequest) {
