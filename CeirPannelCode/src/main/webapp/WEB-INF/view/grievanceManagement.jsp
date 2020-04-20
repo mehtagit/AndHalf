@@ -88,7 +88,7 @@ var path="${context}";
 </head>
 
 <body data-id="6" data-roleType="${usertype}" data-userTypeID="${usertypeId}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${stolenselectedUserTypeId}" 
-data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}"
+data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}" data-userName="${userName}"		
  data-grievanceStatus="${grievanceStatus}" session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}">
 
 
@@ -147,7 +147,7 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}"
                
  <div class="col s12 m12">
                   <label for="replyRemark" style="margin-top: 7px"><spring:message code="input.remarks" /><span class="star">*</span></label>
-                    <textarea id="replyRemark" class="materialize-textarea" maxlength="200" 
+                    <textarea id="replyRemark" class="materialize-textarea" maxlength="200" style="min-height: 8rem"  
 oninput="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');" 
 oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');"
  required></textarea>

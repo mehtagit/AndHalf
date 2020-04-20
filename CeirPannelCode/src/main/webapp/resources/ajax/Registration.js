@@ -671,7 +671,7 @@ function selfRegisterDevice() {
 	window.location.href = "./selfRegisterDevice";
 }
 function updateVisaValidity() {
-	window.location.href = "./updateVisaValidaity";
+	window.location.href = "./updateVisavalidity";
 }
 
 function getByPort(port) {

@@ -133,7 +133,7 @@
 				<div class="input-field col s12 center">
 					<div class="input-field col s12 center">
 						<button class="btn" type="submit"><spring:message code="modal.ok" /></button>
-						<button class="modal-close btn" onclick="closeUpdateModal()"
+						<button type="button" class="modal-close btn" onclick="closeUpdateModal()"
 							style="margin-left: 10px;"><spring:message code="modal.no" /></button>
 					</div>
 				</div>
@@ -251,24 +251,29 @@
         <div id="rejectInformation" class="modal">
            <h6 class="modal-header"><spring:message code="modal.header.reject" /></h6>
             <div class="modal-content">
+                <form action="" onsubmit=" return rejectUser()" method="POST">
             <div class="row">
              <h6><spring:message code="modal.rejectRequest" /><span id="rejectTxnId"></span> ?</h6>
-                <form action="">
+            
                 
                     <div class="input-field" style="margin-top: 30px;">
-                        <textarea id="Reason" class="materialize-textarea"></textarea>
-                        <label for="textarea1" style="margin-left: -10px;"><spring:message code="lable.reason" /></label>
+                        <textarea id="Reason" class="materialize-textarea" 
+                        oninput="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
+						oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
+                        required="required"></textarea>
+                        <label for="textarea1" style="margin-left: -10px;"><spring:message code="lable.reason" /><span class="star">*</span></label>
                     </div>
                    
                     
-                </form>
+            
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
-                    <a onclick="rejectUser()" class="btn modal-close modal-trigger"><spring:message code="modal.yes" /></a>
-                    <button class="btn modal-close" style="margin-left: 10px;"><spring:message code="modal.no" /></button>
+                    <button  class="btn" type="submit"><spring:message code="modal.yes" /></button>
+                    <button class="btn modal-close" type="button" style="margin-left: 10px;"><spring:message code="modal.no" /></button>
                 </div>
             </div>
+                </form>
         </div>
     </div>
   

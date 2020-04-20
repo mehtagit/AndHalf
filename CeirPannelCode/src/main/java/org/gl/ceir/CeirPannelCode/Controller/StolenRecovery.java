@@ -241,10 +241,12 @@ public class StolenRecovery {
 // ***************************************** delete stolen recovery controller **************************************************************
 
 		@RequestMapping(value= {"/stolenRecoveryDelete"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}) 
-		public @ResponseBody GenricResponse deleteStock(@RequestBody StolenRecoveryModel stolenRecoveryModel,HttpSession session) {
-
-			log.info("enter in  delete stolenRecovery.");
+		public @ResponseBody GenricResponse deleteStock(@RequestBody FilterRequest stolenRecoveryModel,HttpSession session) {
+			String roletype=session.getAttribute("usertype").toString();
+			log.info("enter in  delete stolenRecovery.==");
+			stolenRecoveryModel.setUserType(roletype);
 			log.info("request passed to the delete stolenRecovery Api="+stolenRecoveryModel);
+			
 			GenricResponse response=feignCleintImplementation.deleteStolenRecovery(stolenRecoveryModel);
 			log.info("response after delete stolenRecovery."+response);
 			log.info("exit point of delete stolenRecovery.");
@@ -364,7 +366,7 @@ public class StolenRecovery {
 				//******************************* Block Unblock Approve/Reject Devices ********************************
 				
 				
-				@PutMapping("blockUnblockApproveReject") 
+				@PostMapping("blockUnblockApproveReject") 
 				public @ResponseBody GenricResponse approveRejectDevice (@RequestBody FilterRequest FilterRequest)  {
 					log.info("request send to the approveRejectDevice api="+FilterRequest);
 					GenricResponse response= feignCleintImplementation.approveRejectFeign(FilterRequest);

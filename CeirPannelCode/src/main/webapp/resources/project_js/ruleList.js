@@ -16,12 +16,7 @@
 			pageRendering();
 		 });
 		
-         $.getJSON('./getDropdownList/RULE_STATE', function(data) {
-				for (i = 0; i < data.length; i++) {
-					$('<option>').val(data[i].value).text(data[i].interp)
-					.appendTo('#editState');
-				}
-			});
+       
          
          function filter(lang)
  		{       	
@@ -31,11 +26,9 @@
 		//**************************************************filter table**********************************************
 
 		function table(url,dataUrl){
-		var state= $("#State").val() == undefined ? null : $("#State option:selected").text();
+		var state= $("#State").val();
 
 			var filterRequest={
-					"endDate":$('#endDate').val(),
-					"startDate":$('#startDate').val(),
 					  "state": state
 					
 			}
@@ -154,8 +147,8 @@
 
 						$.getJSON('./getDropdownList/RULE_STATE', function(data) {
 							for (i = 0; i < data.length; i++) {
-								$('<option>').val(data[i].value).text(data[i].interp)
-								.appendTo('#State');
+								$('<option>').val(data[i].interp).text(data[i].interp)
+								.appendTo('#State,#editState');
 							}
 						});
 						
@@ -171,31 +164,33 @@
 
 
 
-			function getDetailBy(id){
-				$("#editModel").openModal({
-			        dismissible:false
-			    });
+			function getDetailBy(id,output){
+			
 				window.xid=id;
-				
+				window.xoutput=output;
 				$.ajax({
 					url : "./viewRuleListAPI/"+id,
 					dataType : 'json',
 					contentType : 'application/json; charset=utf-8',
 					type : 'GET',
 					success : function(data) {
-						setData(data);
+						var result=JSON.stringify(data);
+						$("#editModel").openModal({
+					        dismissible:false
+					    });
+						setData(JSON.parse(result));
 					},
 					error : function() {
-						alert("Failed");
+						console.log("Failed");
 					}
 				});	
 			}
 			
 			
-			function setData(data){
-				$("#editName").val(data.name);
-				$("#editDescription").val(data.description);
-				$("#editState").val(data.state);
+			function setData(result){
+				$("#editName").val(result.name);
+				$("#editDescription").val(result.description);
+				$("#editState").val(result.state);
 			}
 			
 			
@@ -209,7 +204,8 @@
 						"name":name,
 						"description":description,
 						"state":state,
-						"id":window.xid
+						"id":window.xid,
+						"output":window.xoutput
 						
 				}
 	
@@ -221,30 +217,11 @@
 					contentType : 'application/json; charset=utf-8',
 					type : 'POST',
 					success: function (data, textStatus, jqXHR) {
-						
-					/*	$('#updateModal').closeModal();
-
-						$('#updateConsignment').openModal({
-							dismissible:false
-						});
-						if(data.errorCode==200){
-
-
-							$('#sucessMessage').text('');
-							$('#sucessMessage').text(data.message);
-						}
-
-						else if (data.errorCode==0){
-
-							$('#sucessMessage').text('');
-							$('#sucessMessage').text(updateMsg+" "+ (data.txnId) +" "+hasBeenUpdated);
-						}
-						else 
-						{
-							$('#sucessMessage').text('');
-							$('#sucessMessage').text(data.message);
-						}
-*/
+						$('#editModel').closeModal();
+						$("#updateFieldsSuccess").openModal({
+					        dismissible:false
+					    });
+					
 					},
 					error: function (jqXHR, textStatus, errorThrown) {
 						

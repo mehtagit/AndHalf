@@ -122,12 +122,13 @@ public class UploadPaidStatus {
 					String country = contentModelList.getCountry();
 					String status = contentModelList.getTaxPaidStatusInterp();
 					String origin = contentModelList.getOrigin();
+					String nationality=contentModelList.getNationality();
 					//params for action 
 					String imei1 = contentModelList.getFirstImei();
 					String action = iconState.userPaidStatusIcon(imei1);
 
 					
-					Object[] data = {createdOn,nid,txnId,country,status,origin,action};
+					Object[] data = {createdOn,nid,txnId,country,nationality,status,origin,action};
 
 					List<Object> datatableList = Arrays.asList(data);
 					finalList.add(datatableList);
@@ -148,12 +149,13 @@ public class UploadPaidStatus {
 					String taxStatus = contentModelList.getTaxPaidStatusInterp();
 					String status = contentModelList.getStateInterp();
 					String origin = contentModelList.getOrigin();
+					String nationality=contentModelList.getNationality();
 					//params for action 
 					String imei1 = contentModelList.getFirstImei();
 					String deviceState = String.valueOf(contentModelList.getStatus());
 					String action = iconState.adminUserPaidStatusIcon(imei1,createdOn,contentModelList.getTxnId(),deviceState,userStatus);
 
-					Object[] data = {createdOn,nid,txnId,country,taxStatus,origin,status,action};
+					Object[] data = {createdOn,nid,txnId,country,nationality,taxStatus,origin,status,action};
 
 					List<Object> datatableList = Arrays.asList(data);
 					finalList.add(datatableList);
@@ -259,7 +261,7 @@ public class UploadPaidStatus {
 		
 
 		//Dropdown items			
-		String[] selectParam= {"select",Translator.toLocale("select.deviceIDType"),"deviceIDType","","select",Translator.toLocale("select.deviceType"),"deviceTypeFilter","","select",Translator.toLocale("select.taxPaidStatus"),"taxPaidStatus",""};
+		String[] selectParam= {"select",Translator.toLocale("input.Status"),"Status","","select",Translator.toLocale("select.taxPaidStatus"),"taxPaidStatus",""};
 		for(int i=0; i< selectParam.length; i++) {
 			inputFields= new InputFields();
 			inputFields.setType(selectParam[i]);

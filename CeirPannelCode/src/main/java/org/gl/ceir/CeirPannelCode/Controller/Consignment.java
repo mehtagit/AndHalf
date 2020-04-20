@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
+import org.gl.ceir.CeirPannelCode.Feignclient.UserProfileFeignImpl;
 import org.gl.ceir.CeirPannelCode.Model.AddMoreFileModel;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentModel;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentUpdateRequest;
@@ -31,6 +32,7 @@ import org.gl.ceir.CeirPannelCode.Model.Dropdown;
 import org.gl.ceir.CeirPannelCode.Model.FileExportResponse;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
+import org.gl.ceir.CeirPannelCode.Model.PaymentRequest;
 import org.gl.ceir.CeirPannelCode.Service.ConsignmentService;
 import org.gl.ceir.CeirPannelCode.Util.UtilDownload;
 import org.slf4j.Logger;
@@ -72,7 +74,8 @@ public class Consignment {
 AddMoreFileModel addMoreFileModel,urlToUpload,urlToMove;
 
 
-
+@Autowired
+UserProfileFeignImpl userProfileFeignImpl;
 	
 @Autowired
 
@@ -189,7 +192,8 @@ public @ResponseBody GenricResponse registerConsignment(@RequestParam(name="supp
 ,@RequestParam(name="consignmentNumber",required = false) String consignmentNumber,@RequestParam(name="expectedArrivaldate",required = false) String expectedArrivalDate,
 @RequestParam(name="organisationcountry",required = false) String organisationcountry,@RequestParam(name="expectedDispatcheDate",required = false) String expectedDispatcheDate,
 @RequestParam(name="expectedArrivalPort",required = false) Integer expectedArrivalPort,@RequestParam(name="quantity",required = false) String quantity,
-@RequestParam(name="file",required = false) MultipartFile file,HttpSession session,@RequestParam(name="totalPrice",required = false) String totalPrice,@RequestParam(name="currency",required = false) Integer currency,HttpServletRequest request) {
+@RequestParam(name="file",required = false) MultipartFile file,HttpSession session,@RequestParam(name="totalPrice",required = false) String totalPrice,@RequestParam(name="currency",required = false) Integer currency,
+@RequestParam(name="portAddress",required = false) String portAddress,@RequestParam(name="deviceQuantity",required = false) Integer deviceQuantity,HttpServletRequest request) {
 
 	log.info("headers request="+request.getHeaderNames());
 	log.info("user-agent"+request.getHeader("user-agent"));
@@ -249,6 +253,8 @@ consignment.setUserId(Long.valueOf(userId));
 
 consignment.setCurrency(currency);
 consignment.setTotalPrice(totalPrice);
+consignment.setPortAddress(portAddress);
+consignment.setDeviceQuantity(deviceQuantity);
 log.info("consignment form parameters passed to register consignment api "+consignment.toString());
 GenricResponse response = feignCleintImplementation.addConsignment(consignment);
 log.info("response from register consignment api"+response.toString());
@@ -465,14 +471,11 @@ return consignmentdetails;
 @RequestMapping(value="/dowloadFiles/{filetype}/{fileName}/{transactionNumber}/{doc_TypeTag}",method={org.springframework.web.bind.annotation.RequestMethod.GET}) 
 //@RequestMapping(value="/dowloadFiles/{filetype}/{fileName}/{transactionNumber}",method={org.springframework.web.bind.annotation.RequestMethod.GET}, headers = {"content-Disposition=attachment"}) 
 
-public @ResponseBody FileExportResponse downloadFile(@PathVariable("transactionNumber") String txnid,@PathVariable("fileName") String fileName,@PathVariable("filetype") String filetype,@PathVariable(name="doc_TypeTag",required = false) String doc_TypeTag) throws IOException {
+public @ResponseBody FileExportResponse downloadFile(@PathVariable("transactionNumber") String txnid,@PathVariable(name="fileName",required = false	) String fileName,@PathVariable("filetype") String filetype,@PathVariable(name="doc_TypeTag",required = false) String doc_TypeTag) throws IOException {
 
 	FileExportResponse response = new FileExportResponse();	
 log.info("inside file download method"+doc_TypeTag);
 
-
-String extension = fileName.substring(fileName.lastIndexOf("."));
-log.info("fileExtension==="+extension);
 
 if (filetype.equalsIgnoreCase("actual"))
 {
@@ -484,6 +487,10 @@ if (!doc_TypeTag.equals("DEFAULT"))
 	File tmpDir = new File(rootPath+fileName);
 	boolean exists = tmpDir.exists();
 	if(exists) {
+
+String extension = fileName.substring(fileName.lastIndexOf("."));
+log.info("fileExtension==="+extension);
+
 				if(extension.equalsIgnoreCase(".png") || extension.equalsIgnoreCase(".jpeg") || extension.equalsIgnoreCase(".gif") || extension.equalsIgnoreCase("jpg"))		
 				{
 					response=feignCleintImplementation.downloadFile(txnid,filetype,fileName.replace("%20", " "),doc_TypeTag);
@@ -522,7 +529,7 @@ else if(filetype.equalsIgnoreCase("error"))
 	File tmpDir = new File(rootPath);
 	boolean exists = tmpDir.exists();
 	if(exists) {
-       log.info(" error file is exist.");
+     log.info(" error file is exist.");
 	}
 	else {
 		log.info(" error file is not exist.");
@@ -535,7 +542,8 @@ else if(filetype.equalsIgnoreCase("error"))
 
 log.info(" everything is fine for hit to api for file downloading");
 log.info("request send to the download file api= txnid("+txnid+") fileName ("+fileName+") fileType ("+filetype+")"+doc_TypeTag);
- response=feignCleintImplementation.downloadFile(txnid,filetype,fileName.replace("%20", " "),doc_TypeTag);
+response=feignCleintImplementation.downloadFile(txnid,filetype,fileName.replace("%20", " "),doc_TypeTag);
+
 log.info("response of download api="+response+"------------------"+fileName.replace("%20", " "));
 log.info("redirect:"+response.getUrl());
 //ModelAndView mv= new ModelAndView(("redirect:"+ URLEncoder.encode(response.getUrl(), "UTF-8")));
@@ -622,4 +630,13 @@ log.info("response from manual sample file download file "+response);
 return "redirect:"+response.getUrl();
 
 }
+
+
+@PostMapping("/payTax") 
+public @ResponseBody GenricResponse payConsignmentTax (@RequestBody PaymentRequest paymentRequest)  {
+	log.info("request send to the payConsignmentTax api="+paymentRequest);
+	GenricResponse response= userProfileFeignImpl.consignmentTaxFeign(paymentRequest);
+	log.info("response from payConsignmentTax api "+response);
+	return response;
+}	
 }

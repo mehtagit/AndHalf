@@ -144,7 +144,7 @@
 
 
 					<div class="input-field col s12 m6">
-					<textarea id="editDescription" class="materialize-textarea" Placeholder="" placeholder=""  maxlength="200"></textarea>
+					<textarea id="editDescription" class="materialize-textarea" Placeholder="" placeholder=""  maxlength="200" style="padding-top: 8px !important;"></textarea>
 					<label for="editdescription" class=""><spring:message code="registration.description" /></label>
 
 					</div>
@@ -171,6 +171,21 @@
 		</div>
 	</div>
 		
+		
+				<div id="updateFieldsSuccess" class="modal">
+     <h6 class="modal-header" style="margin:0px;"><spring:message code="button.update" /></h6>
+        <div class="modal-content">
+            
+            <div class="row">
+                <h6 id="updateFieldMessage"><spring:message code="input.requestupdated" /></h6>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <a href="" class="modal-close btn"><spring:message code="modal.ok" /></a>
+                </div>
+            </div>
+        </div>
+    </div>
 	
 		<!--end container-->
 	</section>

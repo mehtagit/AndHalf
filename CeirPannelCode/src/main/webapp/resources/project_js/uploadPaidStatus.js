@@ -249,7 +249,7 @@ function table(url,dataUrl){
 	var txnIdValue = $("body").attr("session-valueTxnID");
 	var txn= (txnIdValue == 'null' && transactionIDValue == undefined)? $('#transactionID').val() : transactionIDValue;
 	var request={
-			"origin":"CUSTOMS",
+			"origin":"customs",
 			"endDate":$('#endDate').val(),
 			"startDate":$('#startDate').val(),
 			"taxPaidStatus":parseInt($('#taxPaidStatus').val()),
@@ -601,22 +601,98 @@ function submitDeviceInfo(){
 	var postalcode=$('#postalcode').val();
 	var passportFileName=$('#csvUploadFile').val()
 	    passportFileName=passportFileName.replace(/^.*[\\\/]/, '');
-	var fieldId=1;
-	var regularizeDeviceDbs =[];
-	$('.deviceInformation').each(function() {
-		var deviceType1=$('#deviceType'+fieldId).val();
-		var serialNumber1=$('#serialNumber'+fieldId).val();
-		var deviceIdType1=$('#deviceIdType'+fieldId).val();
-		var taxStatus1=$('#taxStatus'+fieldId).val();
-		var deviceStatus1=$('#deviceStatus'+fieldId).val();
-		var Price1=$('#Price'+fieldId).val();
-		var Currency1=$('#Currency'+fieldId).val();
-		var IMEI1=$('#IMEIA'+fieldId).val();
-		var IMEI2=$('#IMEIB'+fieldId).val();
-		var IMEI3=$('#IMEIC'+fieldId).val();
-		var IMEI4=$('#IMEID'+fieldId).val();
-		var deviceCountry=$('#country'+fieldId).val();
-		var multipleSimStatus1=$('#multipleSimStatus1'+fieldId).val();
+
+
+
+//***************************************************************************************************************************************************************
+		var nationality=$('#nationality').val();
+		var departmentName=$('#departmentName').val();
+		var departmentFileID=$('#endUserDepartmentId').val();
+		var departmentID=$('#endUserdepartmentID').val();
+		
+		var isVip=$('input[name="selectvip"]:checked').val();
+		var onVisa=$('input[name="onVisa"]:checked').val();
+
+		
+		if(onVisa==undefined){
+			onVisa='N';
+		}
+		var visaType=$('#visaType').val();
+		var visaDate=$('#datepicker').val();
+		var visaNumber=$('#visaNumber').val();
+		var visaExpirydate=$('#datepicker1').val();
+		var visaImage=$('#visaImage').val();
+
+		if(visaNumber=="")
+		{
+			visaNumber=null;
+		}
+
+		if(visaImage==""){
+			visaImage="";
+
+		}
+		else if(visaImage==undefined){
+			visaImage="";
+
+		}
+		else{
+			visaImage=$('#visaImage').val().replace('C:\\fakepath\\','');
+			formData.append('visaImage', $('#visaImage')[0].files[0]);
+
+		}
+
+
+		var visaDb=[];
+		var visa={
+				"visaType":visaType,
+				"visaExpiryDate":visaExpirydate,
+				"visaFileName": visaImage,
+				"visaNumber": visaNumber,
+				"visaType": visaType
+		}
+		visaDb.push(visa);
+		if(departmentFileID=="")
+		{
+			departmentFileID="";
+
+
+		}
+		else if(departmentFileID==undefined){
+			departmentFileID="";
+
+		}
+		else{
+			departmentFileID=$('#endUserDepartmentId').val().replace('C:\\fakepath\\','');
+			formData.append('endUserDepartmentFile', $('#endUserDepartmentId')[0].files[0]); 
+
+		}
+		var departmentDetails={
+
+				"departmentId": departmentID,
+				"name": departmentName,
+				"departmentFilename":departmentFileID
+		}
+
+
+
+	//************************************************************************************************************************************
+		var fieldId=1;
+		var regularizeDeviceDbs =[];
+		$('.deviceInformation').each(function() {
+			var deviceType1=$('#deviceType'+fieldId).val();
+			var serialNumber1=$('#serialNumber'+fieldId).val();
+			var deviceIdType1=$('#deviceIdType'+fieldId).val();
+			var taxStatus1=$('#taxStatus'+fieldId).val();
+			var deviceStatus1=$('#deviceStatus'+fieldId).val();
+			var Price1=$('#Price'+fieldId).val();
+			var Currency1=$('#Currency'+fieldId).val();
+			var IMEI1=$('#IMEIA'+fieldId).val();
+			var IMEI2=$('#IMEIB'+fieldId).val();
+			var IMEI3=$('#IMEIC'+fieldId).val();
+			var IMEI4=$('#IMEID'+fieldId).val();
+			var deviceCountry=$('#country'+fieldId).val();
+			var multipleSimStatus1=$('#multipleSimStatus1'+fieldId).val();
 
 
 		var deviceInfo=
@@ -635,8 +711,7 @@ function submitDeviceInfo(){
 				"price": parseFloat(Price1),
 				"taxPaidStatus": parseInt(taxStatus1),
 				"nid":nationalId,
-				"txnId":"",
-				"origin":"CUSTOMS"
+				"origin":"customs"
 
 		}
 		regularizeDeviceDbs.push(deviceInfo);
@@ -660,6 +735,12 @@ function submitDeviceInfo(){
 			"province": state,
 			"street": streetNumber,
 			"regularizeDeviceDbs":regularizeDeviceDbs,
+			"isVip":isVip,
+			"onVisa":onVisa,
+			"userDepartment":departmentDetails,
+			"visaDb":visaDb,
+			"entryDateInCountry":visaDate,
+			"nationality":nationality,
 			"district":district,
 			"commune":commune,
 			"village":village,
@@ -669,12 +750,13 @@ function submitDeviceInfo(){
 			"passportFileName":passportFileName
 
 	}
-	formData.append('file', $('#csvUploadFile')[0].files[0]);
+	formData.append('uploadnationalID', $('#csvUploadFile')[0].files[0]);
+	formData.append("sourceType",'custom');
 	formData.append("request",JSON.stringify(request));
-
+	
 
 	$.ajax({
-		url: './uploadPaidStatusForm',
+		url: './registerEndUserDevice',
 		type: 'POST',
 		data: formData,
 		processData: false,
@@ -911,7 +993,7 @@ function aprroveDevice(){
 		dataType : 'json',
 		'async' : false,
 		contentType : 'application/json; charset=utf-8',
-		type : 'PUT',
+		type : 'POST',
 		success : function(data) {
 
 			if(data.errorCode==0){
@@ -943,6 +1025,7 @@ function userRejectPopup(imei,txnId){
 
 
 function rejectUser(){
+	
 	var rejectRequest={
 			"action" : 1,
 			"imei1": window.imei,
@@ -959,7 +1042,7 @@ function rejectUser(){
 		dataType : 'json',
 		'async' : false,
 		contentType : 'application/json; charset=utf-8',
-		type : 'PUT',
+		type : 'POST',
 		success : function(data) {
 
 			if(data.errorCode==0){
@@ -972,6 +1055,7 @@ function rejectUser(){
 			console.log("Failed");
 		}
 	});
+	return false;
 }
 
 
@@ -990,7 +1074,7 @@ function isImageValid(id) {
 	var fileSize = ($("#"+id)[0].files[0].size);
 	/*fileSize = (Math.round((fileSize / 100000) * 100) / 100)
 	alert("----"+fileSize);*/
-	fileSize = Math.floor(fileSize/1000) + 'KB';
+	fileSize = Math.floor(fileSize/1000);
    
 	//alert(uploadedFileName+"----------"+ext+"----"+fileSize)
 	var areEqual =ext.toLowerCase()=='png';
@@ -1079,3 +1163,205 @@ $(document).on("keyup", "#Price1", function(e) {
 
 	}
 }
+ 
+ 
+ 
+ function showOtherUserForm()
+ {
+ 	$('#endUserLabelNID').text($.i18n('Passport Number'));
+ 	$('#nidType').text($.i18n('Upload Passport Image'));
+ 	$("#askVisaDetails").css("display", "block");
+ 	$("#nationalityDiv").css("display", "block");
+ 	$("#onVisaNo").prop("checked", true);
+ 	$("#nidPlaceHolder").attr("placeholder", $.i18n('Upload Passport Image')).val("").focus().blur();
+
+ 	$("#nationality").attr("required", true);
+ 	$("#endUserLabelNID").append('<span class="star">*</span>');
+ 	$("#nidType").append('<span class="star">*</span>');
+ 	$("#datepicker").attr("required", true);
+ 	
+ 	$("#entryCountryDiv").css("display", "block");
+ 	/*$("#departmentName").attr("required", true);
+ 	 $("#endUserdepartmentID").attr("required", true);
+ 	 $("#endUserDepartmentId").attr("required", true);
+ 	 $("#visaType").attr("required", true);
+ 	 $("#datepicker").attr("required", true);
+ 	 $("#datepicker1").attr("required", true);
+ 	 $("#visaImage").attr("required", true);*/
+
+ }
+
+ function showVisaDetails(){
+ 	$("#visaDetails").css("display", "block");
+ 	
+ 	$("#visaNumber").attr("required", true);
+ 	$("#visaImage").attr("required", true);
+ 	$("#datepicker1").attr("required", true);
+ 	$("#visaType").attr("required", true);
+
+ }
+ function hideVisaDetails(){
+ 	$("#visaDetails").css("display", "none");
+ 	$('#visaDetails').find('input:text').val('');
+ 	$('#visaDetails').find('input:file').val('');
+
+ 	//$("#datepicker").attr("required", false);
+ 	$("#visaNumber").attr("required", false);
+ 	$("#visaImage").attr("required", false);
+ 	$("#datepicker1").attr("required", false);
+ 	$("#visaType").attr("required", false);
+ }
+ function showCambodianUserForm()
+ {
+ 	$("#askVisaDetails").css("display", "none"); 
+ 	$("#visaDetails").css("display", "none"); 
+ 	$("#nationalityDiv").css("display", "none"); 
+ 	$('#endUserLabelNID').text($.i18n('National ID'));
+ 	$('#nidType').text($.i18n('Upload ID Image'));
+ 	$("#datepicker").attr("required", false);
+ 	$("#nidPlaceHolder").attr("placeholder", $.i18n('Upload ID Image')).val("").focus().blur();
+ 	$('#visaDetails').find('input:text').val('');
+ 	$('#visaDetails').find('input:file').val('');
+ 	$('input[name="onVisa"]').prop('checked', false);
+
+ 	$("#datepicker").attr("required", false);
+ 	$("#visaNumber").attr("required", false);
+ 	$("#visaImage").attr("required", false);
+ 	$("#datepicker1").attr("required", false);
+ 	$("#visaType").attr("required", false);
+
+ 	$("#nationality").attr("required", false);
+ 	$("#departmentName").attr("required", false);
+ 	$("#endUserdepartmentID").attr("required", false);
+ 	$("#endUserDepartmentId").attr("required", false);
+ 	$("#visaType").attr("required", false);
+ 	$("#datepicker").attr("required", false);
+ 	$("#datepicker1").attr("required", false);
+ 	$("#visaImage").attr("required", false);
+ 	$("#visaNumber").attr("required", false);
+
+ 	$("#entryCountryDiv").css("display", "none");
+
+ 	$("#endUserLabelNID").append('<span class="star">*</span>');
+ 	$("#nidType").append('<span class="star">*</span>');
+ }
+
+ function removeSelectVip()
+ {
+ 	$("#vipUserDiv").css("display", "none");	
+ 	$('#vipUserDiv').find('input:text').val('');
+ 	$('#vipUserDiv').find('input:file').val('');
+
+ 	$("#departmentName").removeAttr('required');
+ 	$("#endUserdepartmentID").removeAttr('required');
+ 	$("#endUserDepartmentId").removeAttr('required');
+ }
+
+ function  selectVip(){
+
+ 	$("#vipUserDiv").css("display", "block");
+ 	$("#departmentName").attr("required", true);
+ 	$("#endUserdepartmentID").attr("required", true);
+ 	$("#endUserDepartmentId").attr("required", true);
+
+ }
+ 
+ function deptImageValidation() {
+		var uploadedFileName = $("#endUserDepartmentId").val();
+		uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
+		//alert("file extension=="+uploadedFileName)
+		var ext = uploadedFileName.split('.').pop();
+
+		var fileSize = ($("#endUserDepartmentId")[0].files[0].size);
+		/*fileSize = (Math.round((fileSize / 100000) * 100) / 100)
+		alert("----"+fileSize);*/
+		fileSize = Math.floor(fileSize/1000);
+		
+		var areEqual =ext.toLowerCase()=='png';
+		//alert(areEqual);
+		if(areEqual==true)
+			{
+			ext='PNG';
+			}
+
+		if (uploadedFileName.length > 30) {
+			$('#DeptfileFormateModal').openModal({dismissible:false});
+			$('#DeptfileErrormessage').text('');
+			$('#DeptfileErrormessage').text($.i18n('imageMessage'));
+		} 
+		else if(ext!='PNG')
+		{
+			$('#DeptfileFormateModal').openModal({
+				dismissible:false
+			});
+			$('#DeptfileErrormessage').text('');
+			$('#DeptfileErrormessage').text($.i18n('imageMessage'));
+
+		}
+		
+		else if(fileSize>='100'){
+			$('#DeptfileFormateModal').openModal({
+				dismissible:false
+			});
+			$('#DeptfileErrormessage').text('');
+			$('#DeptfileErrormessage').text($.i18n('imageSize'));	
+		}
+
+
+
+	}
+ function visaImageValidation() {
+		var uploadedFileName = $("#visaImage").val();
+		uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
+		//alert("file extension=="+uploadedFileName)
+		var ext = uploadedFileName.split('.').pop();
+
+		var fileSize = ($("#visaImage")[0].files[0].size);
+		/*fileSize = (Math.round((fileSize / 100000) * 100) / 100)
+		alert("----"+fileSize);*/
+		fileSize = Math.floor(fileSize/1000);
+
+		var areEqual =ext.toLowerCase()=='png';
+		//alert(areEqual);
+		if(areEqual==true)
+			{
+			ext='PNG';
+			}
+
+		if (uploadedFileName.length > 30) {
+			$('#visafileFormateModal').openModal({dismissible:false});
+			$('#visafileErrormessage').text('');
+			$('#visafileErrormessage').text($.i18n('imageMessage'));
+		} 
+		else if(ext!='PNG')
+		{
+			$('#visafileFormateModal').openModal({
+				dismissible:false
+			});
+			$('#visafileErrormessage').text('');
+			$('#visafileErrormessage').text($.i18n('imageMessage'));
+
+		}
+		else if(fileSize>='100'){
+			$('#visafileFormateModal').openModal({
+				dismissible:false
+			});
+			$('#visafileErrormessage').text('');
+			$('#visafileErrormessage').text($.i18n('imageSize'));	
+		}
+
+
+
+	}
+
+ $.getJSON('./getDropdownList/VISA_TYPE', function(data) {
+		for (i = 0; i < data.length; i++) {
+			$('<option>').val(data[i].value).text(data[i].interp)
+			.appendTo('#visaType');
+
+		}
+	});
+ 
+ $('#datepicker,#datepicker1').datepicker({
+		dateFormat: "yy-mm-dd"
+	});

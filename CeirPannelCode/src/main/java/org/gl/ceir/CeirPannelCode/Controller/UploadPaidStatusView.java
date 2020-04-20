@@ -81,14 +81,17 @@ FeignCleintImplementation feignCleintImplementation;
 	public ModelAndView pageView(@RequestParam(name="via", required = false) String via,@RequestParam(name="NID", required = false) String NID,HttpSession session
 			,@RequestParam(name="txnID",required = false) String txnID) {
 		ModelAndView modelAndView = new ModelAndView();
-		if(session.getAttribute("usertype").equals("CEIRAdmin") && !("other".equals(via))) {
+		if((session.getAttribute("usertype").equals("CEIRAdmin") || session.getAttribute("usertype").equals("DRT")) && !("other".equals(via))) {
 			modelAndView.setViewName("uploadPaidStatus");
+			
 		}
 		else if("other".equals(via)) {
 			modelAndView.setViewName("uploadPaidStatus");
+		
 		}
 		else {
 			modelAndView.setViewName("nidForm");
+		
 		}
 		return modelAndView;
 	}
@@ -235,7 +238,7 @@ FeignCleintImplementation feignCleintImplementation;
 	
 	//********************************************Admin Approve/Reject Controller******************************************
 	
-	@PutMapping("approveRejectDevice") 
+	@PostMapping("approveRejectDevice") 
 	public @ResponseBody GenricResponse approveRejectDevice (@RequestBody FilterRequest_UserPaidStatus filterRequestuserpaidStatus)  {
 		log.info("request send to the approveRejectDevice api="+filterRequestuserpaidStatus);
 		GenricResponse response= uploadPaidStatusFeignClient.approveRejectFeign(filterRequestuserpaidStatus);
@@ -281,8 +284,8 @@ FeignCleintImplementation feignCleintImplementation;
 	}
 	
 	
-	@GetMapping("updateVisaValidaity")
-	public ModelAndView updateVisaValidaity(HttpSession session) {
+	@GetMapping("updateVisavalidity")
+	public ModelAndView updateVisavalidity(HttpSession session) {
 		ModelAndView modelAndView = new ModelAndView();
 		log.info("---entry point in update visa validity page");
 		modelAndView.setViewName("endUserUpdateVisaValidity");
@@ -416,12 +419,18 @@ stream.close();
 	
 	
 	@PostMapping("registerEndUserDevice")
-	public @ResponseBody GenricResponse registerEndUserDevice(@RequestParam(name="visaImage",required = false) MultipartFile visaImage,@RequestParam(name="endUserDepartmentFile",required = false) MultipartFile endUserDepartmentFile,@RequestParam(name="uploadnationalID",required = false) MultipartFile uploadnationalID,HttpServletRequest request,HttpSession session) {
+	public @ResponseBody GenricResponse registerEndUserDevice(@RequestParam(name="visaImage",required = false) MultipartFile visaImage,@RequestParam(name="sourceType",required = false) String sourceType,@RequestParam(name="endUserDepartmentFile",required = false) MultipartFile endUserDepartmentFile,@RequestParam(name="uploadnationalID",required = false) MultipartFile uploadnationalID,HttpServletRequest request,HttpSession session) {
 		log.info("---entry point in update visa validity page");
 		log.info("---request---"+request.getParameter("request"));
-       
-		
-		  String txnNumber="A" + utildownload.getTxnId();
+		String txnNumber="";
+		if (sourceType.equalsIgnoreCase("custom"))
+		{
+			txnNumber="R" + utildownload.getTxnId();
+		}
+		else {
+			txnNumber="A" + utildownload.getTxnId();
+		}
+		  
 		  log.info("Random transaction id number="+txnNumber);
 		   String filter = request.getParameter("request");
 		   Gson gson= new Gson();
@@ -454,9 +463,13 @@ stream.close();
 		  endUservisaInfo.setPassportFileName(uploadnationalID.getOriginalFilename());
 			for(int i =0; i<endUservisaInfo.getRegularizeDeviceDbs().size();i++) {
 				endUservisaInfo.getRegularizeDeviceDbs().get(i).setTxnId(txnNumber);
-				endUservisaInfo.getRegularizeDeviceDbs().get(i).setCurrency("-1");
+				if (sourceType.equalsIgnoreCase("enduser"))
+				{
+					endUservisaInfo.getRegularizeDeviceDbs().get(i).setCurrency("-1");
+				}
+				
 			}
-		
+			if(uploadnationalID!=null) { 
 			try {
 				byte[] bytes = uploadnationalID.getBytes();
 			String rootPath =urlToUpload.getValue()+txnNumber+"/"; 
@@ -474,6 +487,7 @@ stream.close();
 			catch (Exception e) {
 				// TODO: handle exception
 				e.printStackTrace();
+			}
 			}
 		  
 		  log.info(""+endUservisaInfo); 

@@ -71,7 +71,7 @@ public class StolenDatatableController {
 		Gson gsonObject=new Gson();	
 		Integer exportFile=0;
 		FilterRequest filterrequest = gsonObject.fromJson(filter, FilterRequest.class);
-		log.info("flter request=="+filterrequest);
+		log.info("filter request=="+filterrequest);
 		Integer pageSize = Integer.parseInt(request.getParameter("length"));
 		Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize;
 		filterrequest.setSearchString(request.getParameter("search[value]"));
@@ -108,6 +108,8 @@ public class StolenDatatableController {
 						List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);
+						log.info("-1");
+						
 					}
 				}else if("Operator".equals(userType)) {
 					log.info("in Opertator Controler-----" +userType);
@@ -128,11 +130,12 @@ public class StolenDatatableController {
 						int id = dataInsideList.getId();
 						if(dataInsideList.getQty()==null) {
 							quantity = "";
-							log.info("inside if");
+							
 						}else {
 							quantity = String.valueOf(dataInsideList.getQty());
-							log.info("inside else");
-						}  
+							
+						} 
+						log.info("0");
 						String userStatus = (String) session.getAttribute("userStatus");
 						String action = iconState.blockUnblockState(dataInsideList.getFileName(), dataInsideList.getTxnId(),
 								statusOfStolen, userStatus,requestType,id,dataInsideList.getQty(),dataInsideList.getSourceType());
@@ -157,14 +160,15 @@ public class StolenDatatableController {
 						int id = dataInsideList.getId();
 						if(dataInsideList.getQty()==null) {
 							quantity = "";
-							log.info("inside if");
+							
 						}else {
 							quantity = String.valueOf(dataInsideList.getQty());
-							log.info("inside else");
+							
 						} 
 						String userStatus = (String) session.getAttribute("userStatus");
+						log.info("1");
 						String action = iconState.adminBlockUnblock(dataInsideList.getFileName(), dataInsideList.getTxnId(),
-								fileStatus, userStatus,requestType,id,dataInsideList.getQty(),dataInsideList.getSourceType());
+								fileStatus, userStatus,requestType,id,dataInsideList.getQty(),dataInsideList.getSourceType(),operator);
 						Object[] finalData = {createdOn,txnId,operator,requestTypeName,source,stolenStatusName,quantity,action};
 						List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
 						finalList.add(finalDataList);
@@ -184,11 +188,10 @@ public class StolenDatatableController {
 						int id = dataInsideList.getId();
 						if(dataInsideList.getQty()==null) {
 							quantity = "";
-							log.info("inside if");
 						}else {
 							quantity = String.valueOf(dataInsideList.getQty());
-							log.info("inside else");
 						} 
+						log.info("2");
 						String userStatus = (String) session.getAttribute("userStatus");
 						String action = iconState.StolenlawfulAgency(dataInsideList.getFileName(), dataInsideList.getTxnId(),
 								statusOfStolen, userStatus,requestType,id,dataInsideList.getQty(),dataInsideList.getSourceType(),requestTypeValue);
@@ -198,7 +201,7 @@ public class StolenDatatableController {
 						datatableResponseModel.setData(finalList);
 					}
 				}else if(("5".equals(featureId)) && "CEIRAdmin".equals(userType)) {
-					log.info("in CEIR Lawful Agency featureId---"+featureId+"--" +userType);
+					log.info("in CEIR AdminStolen recovery featureId---"+featureId+"--" +userType);
 					for (StolenContent dataInsideList : paginationContentList) {
 						String createdOn = dataInsideList.getCreatedOn();
 						String txnId = dataInsideList.getTxnId();
@@ -211,11 +214,12 @@ public class StolenDatatableController {
 						int id = dataInsideList.getId();
 						if(dataInsideList.getQty()==null) {
 							quantity = "";
-							log.info("inside if");
+							
 						}else {
 							quantity = String.valueOf(dataInsideList.getQty());
-							log.info("inside else");
-						} 
+							
+						}
+						log.info("3");
 						String userStatus = (String) session.getAttribute("userStatus");
 						String action = iconState.AdminStolenlawfulAgency(dataInsideList.getFileName(), dataInsideList.getTxnId(),
 								statusOfStolen, userStatus,requestType,id,dataInsideList.getQty(),dataInsideList.getSourceType(),requestTypeValue);
@@ -224,8 +228,38 @@ public class StolenDatatableController {
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);
 					}
-				}
-				else {
+				}else if("Operation".equals(userType)) {
+					log.info("in Operation Controler-------->" +userType);
+					for (StolenContent dataInsideList : paginationContentList) {
+						String createdOn = dataInsideList.getCreatedOn();
+						String txnId = dataInsideList.getTxnId();
+						String operator = dataInsideList.getOperatorTypeIdInterp();
+						String fileName = dataInsideList.getRequestType();
+						String statusOfStolen = String.valueOf(dataInsideList.getFileStatus());
+						String stolenStatusName = dataInsideList.getStateInterp();
+						String source =dataInsideList.getSourceTypeInterp();
+						String requestType = dataInsideList.getRequestType(); 
+						String requestTypeName = dataInsideList.getRequestTypeInterp();
+						int id = dataInsideList.getId();
+						if(dataInsideList.getQty()==null) {
+							quantity = "";
+							
+						}else {
+							quantity = String.valueOf(dataInsideList.getQty());
+							
+						}
+						log.info("4");
+						log.info("in Operation usertype------------>" +userType);
+						String userStatus = (String) session.getAttribute("userStatus");
+						String action = iconState.blockUnblockState(dataInsideList.getFileName(), dataInsideList.getTxnId(),
+								statusOfStolen, userStatus,requestType,id,dataInsideList.getQty(),dataInsideList.getSourceType());
+						Object[] finalData = {createdOn,txnId,requestTypeName,source,stolenStatusName,quantity,action};
+						List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
+						finalList.add(finalDataList);
+						datatableResponseModel.setData(finalList);
+					}
+			
+				}else {
 					for (StolenContent dataInsideList : paginationContentList) {
 						String createdOn = dataInsideList.getCreatedOn();
 						String txnId = dataInsideList.getTxnId();
@@ -239,12 +273,14 @@ public class StolenDatatableController {
 						int id = dataInsideList.getId();
 						if(dataInsideList.getQty()==null) {
 							quantity = "";
-							log.info("inside if");
+							
 						}else {
 							quantity = String.valueOf(dataInsideList.getQty());
-							log.info("inside else");
+							
 						} 
 						String userStatus = (String) session.getAttribute("userStatus");
+						log.info("5");
+						log.info("in ELSE condition");
 						String action = iconState.stolenState(dataInsideList.getFileName(), dataInsideList.getTxnId(),
 								statusOfStolen, userStatus,requestType,id,dataInsideList.getQty());
 						Object[] finalData = { createdOn,txnId,fileName, stolenStatusName,source, requestTypeName,quantity, action };
@@ -294,7 +330,7 @@ public class StolenDatatableController {
 		}
 		//This Block is for Operator & Admin Upper Filter/Button Forms------------------------------------------------
 		
-		if("Operator".equals(userType) || "CEIRAdmin".equals(userType) && !"5".equals(featureId)) {
+		if("Operator".equals(userType) || "CEIRAdmin".equals(userType) || "Operation".equals(userType) && !"5".equals(featureId)) {
 			String[] names = { "HeaderButton", Translator.toLocale("button.ReportBlock/Unblock"), "./selectblockUnblockPage",
 					"btnLink", "FilterButton",Translator.toLocale("button.filter"), "filterStolen("+ConfigParameters.languageParam+")", "submitFilter" };
 			for (int i = 0; i < names.length; i++) {

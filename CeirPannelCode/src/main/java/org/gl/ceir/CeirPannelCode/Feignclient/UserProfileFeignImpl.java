@@ -3,6 +3,7 @@ package org.gl.ceir.CeirPannelCode.Feignclient;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.Password;
+import org.gl.ceir.CeirPannelCode.Model.PaymentRequest;
 import org.gl.ceir.CeirPannelCode.Model.Registration;
 import org.gl.ceir.CeirPannelCode.Model.UserStatus;
 import org.gl.ceir.CeirPannelCode.Response.UpdateProfileResponse;
@@ -196,5 +197,10 @@ public interface UserProfileFeignImpl {
 
 		@RequestMapping(value= "/alertDb/update" , method=RequestMethod.POST) 
 		public GenricResponse updateAlertFeign(@RequestBody FilterRequest filterRequest);
+		
+		//***************************************************consignment Tax Pay Feign********************************
+
+		@RequestMapping(value= "/payment/url" , method=RequestMethod.POST) 
+		public GenricResponse consignmentTaxFeign(@RequestBody PaymentRequest paymentRequest);
 } 
 

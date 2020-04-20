@@ -456,6 +456,7 @@ function submitEndUserDeviceInfo(){
 
 	formData.append('uploadnationalID', $('#uploadnationalID')[0].files[0]);
 	formData.append("request",JSON.stringify(request));
+	formData.append("sourceType",'enduser');
 	$.ajax({
 		url: './registerEndUserDevice',
 		type: 'POST',

@@ -1,6 +1,16 @@
 /**
  * 
  */
+
+
+
+
+/*$('#singleStolendeviceBrandName').on(
+		'change',
+		function() {
+		
+		});*/
+
 populateCountries("singleDevicecountry", "singleDevicestate");
 	populateStates("singleDevicecountry", "singleDevicestate");
 
@@ -18,10 +28,10 @@ setTimeout(function(){
 		dateFormat : "yy-mm-dd"
 	});
 
-	var input = document.querySelector("#singleStolenphone1");
+	/*var input = document.querySelector("#singleStolenphone1");
 	window.intlTelInput(input, {
 		utilsScript : "${context}/resources/js/utils.js",
-	});
+	});*/
 	$('#singleStolenphone1').val(window.xop);
 }, 1000);
 
@@ -29,10 +39,54 @@ setTimeout(function(){
 
 $(document).ready(function() {
 	// executes when HTML-Document is loaded and DOM is ready
-	$('div#initialloader').fadeIn('fast');
-	viewIndivisualStolen();
+	$.ajax({
+		url: './productList',
+		type: 'GET',
+		processData: false,
+		contentType: false,
+		async:false,
+		success: function (data, textStatus, jqXHR) {
+			console.log(data)
+			for (i = 0; i < data.length; i++) {
+				$('<option>').val(data[i].id).text(data[i].brand_name)
+						.appendTo('#editsingleStolendeviceBrandName');
+			}
+		},
+		error: function (jqXHR, textStatus, errorThrown) {
+			console.log("error in ajax")
 
+		}
+	});
+	
+	$('div#initialloader').fadeIn('fast');
+	  setTimeout(function(){ 
+	 		 
+ 		  viewIndivisualStolen(); 
+ 		  }, 1000);
+	
+		/*var promise = new Promise(function(resolve, reject) {
+			alert("promise");
+			$.getJSON('./productList', function(data) {
+				console.log(data)
+				
+				for (i = 0; i < data.length; i++) {
+					$('<option>').val(data[i].id).text(data[i].brand_name)
+							.appendTo('#editsingleStolendeviceBrandName');
+				}
+			});
+		resolve();	
+		});
+
+		promise.then(function() {
+			alert("then");
+			$('div#initialloader').fadeIn('fast');
+			 setTimeout(function(){ viewIndivisualStolen(); }, 5000);
+			viewIndivisualStolen();
+		});*/
+		
+	
 });
+
 
 
 
@@ -70,7 +124,7 @@ function viewIndivisualStolen()
 
 			setInterval(InputChangeListener, 200);
 
-
+			
 
 
 
@@ -103,9 +157,10 @@ function viewIndivisualStolen()
 			$('#singleStolenpin').val(response.stolenIndividualUserDB.postalCode);
 			$('#country').val(response.stolenIndividualUserDB.country).change();
 			$('#state').val(response.stolenIndividualUserDB.province);
-			$('#singleStolendeviceBrandName').val(response.stolenIndividualUserDB.deviceBrandName);
-			//alert(response.stolenIndividualUserDB.nidFileName);
-			$('#singleStolenFileName').val(response.fileName);
+			$('#editsingleStolendeviceBrandName').val(response.stolenIndividualUserDB.deviceBrandName).change();
+			//alert(response.stolenIndividualUserDB.deviceBrandName);
+			$('#editsingleStolenmodalNumber').val(response.stolenIndividualUserDB.modelNumber);
+			$('#singleStolenFileName').val(response.nidFileName);
 			$('#updatesingleStolenimei1').val(response.stolenIndividualUserDB.imeiEsnMeid1);
 			$('#updatesingleStolenimei2').val(response.stolenIndividualUserDB.imeiEsnMeid2);
 			$('#updatesingleStolenimei3').val(response.stolenIndividualUserDB.imeiEsnMeid3);
@@ -113,7 +168,7 @@ function viewIndivisualStolen()
 
 			$('#singleStolendeviceIDType').val(response.stolenIndividualUserDB.deviceIdType);
 			$('#singleStolendeviceType').val(response.stolenIndividualUserDB.deviceType);
-			$('#singleStolenmodalNumber').val(response.stolenIndividualUserDB.modelNumber);
+			$('#editsingleStolenmodalNumber').val(response.stolenIndividualUserDB.modelNumber);
 			/*$('#singleStolenFileName').val(response.fileName);*/
 			window.xop2=response.stolenIndividualUserDB.contactNumber;
 			$('#singleStolenphone2').val(response.stolenIndividualUserDB.contactNumber);
@@ -133,7 +188,10 @@ function viewIndivisualStolen()
 			$('#singleDeviceRemark').val(response.stolenIndividualUserDB.remark);
 			$('#IndivisualStolenDate').val(response.dateOfStolen);
 			$('#uploadFirSingleName').val(response.firFileName);
+			$("#singleDeviceRejectRemark").val(response.rejectedRemark);
 			//$('#singleStolenFileName').val(response.firFileName);
+			
+			
 $('input[name=editbulkBlockdeviceradio][value='+response.blockingType+']').attr('checked', true); 
 
 if(response.blockingType=='tilldate')
@@ -179,7 +237,8 @@ function updateIndivisualStolen()
 	var singleStolenlastName=$('#singleStolenlastName').val();
 	var singleStolennIDPassportNumber=$('#singleStolennIDPassportNumber').val();
 	var singleStolenemail=$('#singleStolenemail').val();
-	var singleStolenphone1=$('#singleStolenphone1').val();
+	var trimContactNumber1=$('#singleStolenphone1').val();
+	var singleStolenphone1 =trimContactNumber1.replace(/[^A-Z0-9]/ig, "");
 	var singleStolenaddress=$('#singleStolenaddress').val();
 	var singleStolenstreetNumber=$('#singleStolenstreetNumber').val();
 	var singleStolenvillage=$('#singleStolenvillage').val();
@@ -193,7 +252,7 @@ function updateIndivisualStolen()
 	var blockingType =$('.blocktypeRadio:checked').val();
 
 
-	var singleStolendeviceBrandName=$('#singleStolendeviceBrandName').val();
+	var singleStolendeviceBrandName=$('#editsingleStolendeviceBrandName').val();
 	var updatesingleStolenimei1=$('#updatesingleStolenimei1').val();
 	var updatesingleStolenimei2=$('#updatesingleStolenimei2').val();
 	var updatesingleStolenimei3=$('#updatesingleStolenimei3').val();
@@ -204,8 +263,9 @@ function updateIndivisualStolen()
 	var singleStolenOperator=$('#singleStolenOperator').val();
 	var singleStolenSimStatus=$('#singleStolenSimStatus').val();
 	var singleStolenComplaintType=$('#singleStolenComplaintType').val();
-	var singleStolenphone2 = $('#singleStolenphone2').val();
-	var singleStolenmodalNumber= $('#singleStolenmodalNumber').val();
+	var trimContactNumber2 = $('#singleStolenphone2').val();
+	var singleStolenphone2 =trimContactNumber2.replace(/[^A-Z0-9]/ig, "");
+	var singleStolenmodalNumber= $('#editsingleStolenmodalNumber').val();
 
 	var singleDeviceAddress=$('#singleDeviceAddress').val();
 	var singleDevicestreetNumber=$('#singleDevicestreetNumber').val();
@@ -260,11 +320,12 @@ function updateIndivisualStolen()
 			"remark": singleDeviceRemark,
 			"street": singleStolenstreetNumber,
 			"village":singleStolenvillage,
+			"nidFileName":indivisualStolenfileName
 
 	}
 	var request={
 			"txnId":txnid,
-			"fileName":indivisualStolenfileName,
+			"qty":1,
 			"dateOfStolen":IndivisualStolenDate,
 			"blockingTimePeriod":blockingTimePeriod,
 			"blockingType":blockingType,
@@ -418,10 +479,13 @@ function viewPageType() {
 		$("#IndivisualUpdateStolen").css("display", "none");
    		$(".star").css("display", "none");
 		
+   		
+   		$("#singleDeviceRejectRemarkDiv").css("display", "block");
 		$("#SingleForm").find("input,select,textarea,button").prop(
 				"disabled", true);
 	} else {
 		$('#headingType').text('');
+		$("#singleDeviceRejectRemarkDiv").css("display", "none");
 		$('#headingType').text(editstolenIndivisual);
 		$("#SingleForm").find("input,select,textarea,button").prop(
 				"disabled", false);
@@ -457,9 +521,27 @@ setTimeout(function(){
 	});
 
 	
-	var input = document.querySelector("#singleStolenphone2");
+	/*var input = document.querySelector("#singleStolenphone2");
 	window.intlTelInput(input, {
 		utilsScript : "${context}/resources/js/utils.js",
-	});
+	});*/
 	$('#singleStolenphone2').val(window.xop2);
 }, 1000);
+
+
+function changeBrandValue(brand_id){
+	//alert("ss"+brand_id);
+	//var brand_id = $('#editsingleStolendeviceBrandName').val();
+	$.ajaxSetup({
+		async: false
+		});
+	$.getJSON('./productModelList?brand_id=' + brand_id,
+			function(data) {
+				$("#editsingleStolenmodalNumber").empty();
+				for (i = 0; i < data.length; i++) {
+					$('<option>').val(data[i].id).text(
+							data[i].modelName).appendTo(
+							'#editsingleStolenmodalNumber');
+				}
+			});
+}

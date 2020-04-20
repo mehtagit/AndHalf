@@ -26,13 +26,20 @@
 		//**************************************************filter table**********************************************
 
 		function table(url,dataUrl){
-		var txn= (txnIdValue == 'null' && transactionIDValue == undefined)? $('#transactionID').val() : transactionIDValue;
-		
-			var filterRequest={
-					"endDate":$('#endDate').val(),
-					"startDate":$('#startDate').val()
-					
-			}
+			var Feature= $("#Feature").val();
+			var Rule= $("#Rule").val();
+			var User= $("#User").val();
+
+			
+			
+		var filterRequest={
+				  
+				  "featureName": Feature,
+				  
+				  "ruleName": Rule,
+				  
+				  "userType": User
+				}
 			if(lang=='km'){
 				var langFile='./resources/i18n/khmer_datatable.json';
 			}
@@ -132,7 +139,7 @@
 									"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
 
 									"<select id="+dropdown[i].id+" class='select2 initialized'>"+
-									"<option value='' disabled selected>"+dropdown[i].title+
+									"<option value='null' disabled selected>"+dropdown[i].title+
 									"</option>"+
 									"</select>"+
 									"</div>"+
@@ -140,30 +147,75 @@
 					}
 
 						$("#FieldTableDiv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
-						//$("#FieldTableDiv").append("<div class=' col s3 m2 l7'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportConsignmentData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+					
 						for(i=0; i<button.length; i++){
 							$('#'+button[i].id).text(button[i].buttonTitle);
-							$('#'+button[i].id).attr("onclick", button[i].buttonURL);
+							if(button[i].type === "HeaderButton"){
+								$('#'+button[i].id).attr("href", button[i].buttonURL);
+							}
+							else{
+								$('#'+button[i].id).attr("onclick", button[i].buttonURL);
+							}
 						}
 
 				
 						$.getJSON('./getAllfeatures', function(data) {
 							for (i = 0; i < data.length; i++) {
-							$('<option>').val(data[i].id).text(data[i].name).appendTo('#Feature');
+							$('<option>').val(data[i].name).text(data[i].name).appendTo('#Feature');
 							}
 						});
 						$.getJSON('./registrationUserType', function(data) {
 							for (i = 0; i < data.length; i++) {
-								$('<option>').val(data[i].id).text(data[i].usertypeName)
+								$('<option>').val(data[i].usertypeName).text(data[i].usertypeName)
 								.appendTo('#User');
 							}
 						});
-						$.getJSON('./registrationUserType', function(data) {
+						$.getJSON('./ruleName', function(data) {
 							for (i = 0; i < data.length; i++) {
-								$('<option>').val(data[i].id).text(data[i].usertypeName)
+								$('<option>').val(data[i].description).text(data[i].description)
 								.appendTo('#Rule');
 							}
 						});
+						
+						
+						
+						$.getJSON('./getAllfeatures', function(data) {
+							for (i = 0; i < data.length; i++) {
+							$('<option>').val(data[i].name).text(data[i].name).appendTo('#editFeature');
+							}
+						});
+						$.getJSON('./registrationUserType', function(data) {
+							for (i = 0; i < data.length; i++) {
+								$('<option>').val(data[i].usertypeName).text(data[i].usertypeName)
+								.appendTo('#editUser');
+							}
+						});
+						$.getJSON('./ruleName', function(data) {
+							for (i = 0; i < data.length; i++) {
+								$('<option>').val(data[i].id).text(data[i].description)
+								.appendTo('#editRule');
+							}
+						});
+						
+						
+						
+						
+						$.getJSON('./getDropdownList/PERIOD_ACTION', function(data) {
+							for (i = 0; i < data.length; i++) {
+								$('<option>').val(data[i].interp).text(data[i].interp)
+								.appendTo('#GracePeriod,#PostGracePeriod');
+							}
+						});
+
+
+						$.getJSON('./getDropdownList/MOVE_TO_NEXT', function(data) {
+							for (i = 0; i < data.length; i++) {
+								$('<option>').val(data[i].interp).text(data[i].interp)
+								.appendTo('#MoveToGracePeriod,#MoveToPostGracePeriod');
+							}
+						});
+						
+						
 
 			}
 			}); 
@@ -175,6 +227,120 @@
 
 
 
-
-
+		function getDetailBy(id){
 			
+			window.xid=id;
+			
+			$.ajax({
+				url : "./getBy/"+id,
+				dataType : 'json',
+				contentType : 'application/json; charset=utf-8',
+				type : 'GET',
+				success : function(data) {
+					var result=JSON.stringify(data);
+					
+					$("#editModel").openModal({
+				        dismissible:false
+				    });
+					setData(JSON.parse(result));
+				},
+				error : function() {
+					//alert("Failed");
+				}
+			});	
+		}
+		
+		
+		function setData(result){
+			$("#editRule").val(result.ruleOrder);
+			$("#editFeature").val(result.feature);
+			$("#editUser").val(result.userType);
+			$("#order").val(result.ruleOrder);
+			$("#GracePeriod").val(result.graceAction);
+			$("#PostGracePeriod").val(result.postGraceAction);
+			$("#MoveToGracePeriod").val(result.failedRuleActionGrace);
+			$("#MoveToPostGracePeriod").val(result.failedRuleActionPostGrace);
+			
+		}
+		
+		
+	
+		
+		
+		
+		
+		
+		function update(){
+
+			var name=$('#editName').val();
+			var description=$('#editDescription').val();
+			var state=$('#editState').val();
+			var newRule={
+					  "failedRuleActionGrace": $("#MoveToGracePeriod").val(),
+					  "failedRuleActionPostGrace": $("#MoveToPostGracePeriod").val(),
+					  "feature": $("#editFeature").val(),
+					  "graceAction": $("#GracePeriod").val(),
+					  "id": parseInt(window.xid),
+					  "name": $("#editRule").val(),
+					  "postGraceAction": $("#PostGracePeriod").val(),
+					  "ruleOrder":parseInt($("#order").val()),
+					  "userType": $("#editUser").val()
+					}
+			$.ajax({
+				
+				url : "./updateRuleMapping",
+				data : JSON.stringify(newRule),
+				dataType : 'json',
+				contentType : 'application/json; charset=utf-8',
+				type : 'POST',
+				success: function (data, textStatus, jqXHR) {
+					$('#editModel').closeModal();
+					$("#updateFieldsSuccess").openModal({
+				        dismissible:false
+				    });
+
+				},
+				error: function (jqXHR, textStatus, errorThrown) {
+					
+				}
+			});
+			
+			return false;
+		}
+
+
+		
+		function DeleteByID(id){
+			window.id=id;
+			
+			$("#DeleteFieldModal").openModal({
+		        dismissible:false
+		    });
+			
+		}
+		function deleteModal(){
+			var newRule ={
+					"id" : parseInt(window.id)
+			}
+			$.ajax({
+				url : "./deleteRuleMapping",
+				data : JSON.stringify(newRule),
+				dataType : 'json',
+				contentType : 'application/json; charset=utf-8',
+				type : 'POST',
+				success : function(data, textStatus, xhr) {
+					$("#DeleteFieldModal").closeModal();
+					$("#closeDeleteModal").openModal({
+				        dismissible:false
+				    });
+				},
+				error : function() {
+					
+				}
+			});
+		
+			
+			return false;
+			
+			
+		}

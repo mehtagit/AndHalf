@@ -127,7 +127,7 @@
 
 	<!--viewModal Modal start   -->
 
-	<div id="viewModal" class="modal-form" style="overflow-y: hidden;">
+	<div id="viewModal" class="modal-form">
 		<h6 class="modal-header">
 			<spring:message code="modal.header.viewConsignment" />
 		</h6>
@@ -187,11 +187,24 @@
 						class="center-align"><spring:message
 							code="input.arrivalport" /></label>
 				</div>
+				<div class="input-field col s12 m6">
+					<!-- <label for="Name" class="center-align">Expected arrival port</label> -->
+					<input type="text" id="PortAddress" readonly="readonly"
+						placeholder=""> <label for="PortAddress"
+						class="center-align"><spring:message
+							code="input.arrivalport" /></label>
+				</div>
 
 				<div class="input-field col s12 m6">
 					<input type="text" name="Quantity" placeholder="" id="Quantity"
 						readonly="readonly" /> <label for="Quantity" class="center-align"><spring:message
 							code="input.quantity" /></label>
+				</div>
+				<div class="input-field col s12 m6">
+					<input type="text" name="quantity" id="devicequantity"
+						pattern="[0-9]{0,7}" maxlength="7"  oninput="InvalidMsg(this,'input','<spring:message code="validation.7character" />');"
+					    oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7character" />');"  required/> <label for="devicequantity"
+										class="center-align"><spring:message code="input.devicequantity" /> <span class="star">*</span></label>
 				</div>
 
 				<div class="input-field col s12 m6">
@@ -611,7 +624,7 @@
 	</div>
 
 	<!-- Update Modal Start -->
-		<div id="updateModal" class="modal-form" style="overflow-y: hidden;">
+		<div id="updateModal" class="modal-form">
 		<h6 class="modal-header">
 			<spring:message code="modal.header.editConsignment" />
 		</h6>
@@ -683,7 +696,7 @@
 					<p style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">	<spring:message code="input.arrivalport" /> <span class="star">*</span></p>
 					<%-- <label for="expectedArrivalPort"><spring:message code="input.arrivalport" /> <span class="star">*</span></label> --%>
 				
-						<select name="expectedArrivalPort" id="expectedArrivalPortEdit"
+						<select name="expectedArrivalPortEdit" onchange="selectEditPortAddresValue(this.value)" id="expectedArrivalPortEdit"
 							class="browser-default">
 							<option value="" disabled selected><spring:message
 									code="input.arrivalport" />*
@@ -692,6 +705,13 @@
 						</select>
 					</div>
 
+					<div class="col s12 m6 l6">
+									<label><spring:message code="registration.portAddress" /> <span class="star">*</span></label>
+									<select id="editportAddress" class="browser-default"   
+									oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" required>
+										<option value="" disabled selected><spring:message code="selectport" /></option>
+											</select>
+								</div>	
 					<div class="input-field col s12 m6">
 						<input type="text" name="quantity" id="QuantityEdit"
 							pattern="[0-9]{0,7}" placeholder=""
@@ -700,6 +720,13 @@
 							required /> <label for="Quantity" class="center-align"><spring:message
 								code="input.quantity" /><span class="star">*</span></label>
 					</div>
+					<div class="input-field col s12 m6">
+					<input type="text" name="quantity" id="deviceQuantityEdit"
+						pattern="[0-9]{0,7}" maxlength="7"  oninput="InvalidMsg(this,'input','<spring:message code="validation.7character" />');"
+					    oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7character" />');"  required/> <label for="devicequantity"
+										class="center-align"><spring:message code="input.devicequantity" /> <span class="star">*</span></label>
+				</div>
+
 
 					<div class="input-field col s12 m6">
 						<input type="text" name="txnId" id="TransactionIdEdit"
@@ -843,6 +870,48 @@
 				</div>
 			</div>
 		</div>
+	</div>
+	
+	<!-- -----------------------------------------------------------------Approve DRT Consignment------------------------------------------------------------------------------ -->
+
+
+	<div id="PayDRTtaxPopup" class="modal">
+		<h6 class="modal-header">
+			<spring:message code="modal.message.taxConsignmentDRT" />
+		</h6>
+			<form action="" onsubmit="return payTaxDRT()" method="post" >
+		<div class="modal-content">
+		<div class="row">
+				<div class="row">
+					<h6>
+						<spring:message code="modal.message.taxPaidMessage" />
+					</h6>
+				</div>
+		</div>
+			<div class="row">
+			<div class="input-field col s12 m6">
+                       <input type="number" id="amount" name=""  pattern="[0-9]{8,8}" title="Please enter numeric numbers"  maxlength="" required="required">
+                        <label for="amount" class=""><spring:message code="modal.Amount" /><span class="star"> *</span></label> 
+                        	<%-- <input type="text" id="amount" name="amount" 
+								pattern="[0-9]{8,8}" maxlength="8"
+								oninput="InvalidMsg(this,'input','<spring:message code="validation.tac8" />');"
+								oninvalid="InvalidMsg(this,'input','<spring:message code="validation.tac8" />');"
+								required> <label for="amount"><spring:message
+								code="modal.Amount" /> <span class="star">*</span></label> --%>
+						                        
+            </div>
+			</div>
+				<div class="row button-div">
+				<div class="input-field col s12 center">
+					<div class="input-field col s12 center">
+						<button class="btn" type="submit"><spring:message code="modal.payNow" /></button>
+                        <a href="#" class="btn modal-close" id="Cancel" style="margin-left: 10px;"><spring:message code="modal.paylater" /></a>
+					</div>
+				</div>
+			</div>
+
+		</div>
+		</form>
 	</div>
 
 	<!--materialize js-->

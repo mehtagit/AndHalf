@@ -429,7 +429,8 @@ function saveIndivisualStolenRequest(){
 	var singleStolenlastName=$('#singleStolenlastName').val();
 	var singleStolennIDPassportNumber=$('#singleStolennIDPassportNumber').val();
 	var singleStolenemail=$('#singleStolenemail').val();
-	var singleStolenphone1=$('#singleStolenphone1').val();
+	var trimContactNumber1=$('#singleStolenphone1').val();
+	var singleStolenphone1 =trimContactNumber1.replace(/[^A-Z0-9]/ig, "");
 	var singleStolenaddress=$('#singleStolenaddress').val();
 	var singleStolenstreetNumber=$('#singleStolenstreetNumber').val();
 	var singleStolenvillage=$('#singleStolenvillage').val();
@@ -455,7 +456,8 @@ function saveIndivisualStolenRequest(){
 	var singleStolenOperator=parseInt($('#singleStolenOperator').val());
 	var singleStolenSimStatus=$('#singleStolenSimStatus').val();
 	var singleStolenComplaintType=$('#singleStolenComplaintType').val();
-	var singleStolenphone2 = $('#singleStolenphone2').val();
+	var trimContactNumber2 = $('#singleStolenphone2').val();
+	var singleStolenphone2 =trimContactNumber2.replace(/[^A-Z0-9]/ig, "");
 	var singleStolenmodalNumber= $('#singleStolenmodalNumber').val();
 
 	var singleDeviceAddress=$('#singleDeviceAddress').val();
@@ -524,6 +526,7 @@ function saveIndivisualStolenRequest(){
 
 	var request={
 			"dateOfStolen":IndivisualStolenDate,
+			"qty":1,
 			"blockingTimePeriod":blockingTimePeriod,
 			"blockingType":blockingType,
 			"requestType":0,
@@ -558,7 +561,7 @@ function saveIndivisualStolenRequest(){
 				$('#IndivisualStolenSucessPopup').openModal({
 					dismissible:false
 				});
-				$('#sucessMessage').text(data.message);
+				$('#sucessMessage').text(response.message);
 			}
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
@@ -599,7 +602,8 @@ function saveCompanyStolenRequest(){
 	var bulkStolenmiddleName=$('#bulkStolenmiddleName').val();
 	var bulkStolenlastName=$('#bulkStolenlastName').val();
 	var bulkStolenofficeEmail=$('#bulkStolenofficeEmail').val();
-	var bulkStolenContact=$('#bulkStolenContact').val();
+	var trimbulkStolenContact=$('#bulkStolenContact').val();
+	var bulkStolenContact =trimbulkStolenContact.replace(/[^A-Z0-9]/ig, "");
 	var uploadFirBulk=$('#uploadFirBulk').val();
 
 	var deviceBulkStolenaddress=$('#deviceBulkStolenaddress').val();
@@ -684,7 +688,7 @@ function saveCompanyStolenRequest(){
 				$('#regularisedDevice').openModal({
 					dismissible:false
 				});
-				$('#sucessMessage').text(data.message);
+				$('#sucessMessage').text(response.message);
 			}
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
@@ -823,7 +827,7 @@ function rejectUser(){
 		dataType : 'json',
 		'async' : false,
 		contentType : 'application/json; charset=utf-8',
-		type : 'PUT',
+		type : 'POST',
 		success : function(data) {
 			console.log("approveRequest----->"+JSON.stringify(rejectRequest));
 			if(data.errorCode==0){
@@ -836,6 +840,8 @@ function rejectUser(){
 			alert("Failed");
 		}
 	});
+	
+	return false;
 }
 
 function confirmRejectInformation(){
@@ -880,5 +886,28 @@ function clearFileName() {
 	$('#fileFormateModal').closeModal();
 	$('#FilefieldId').val('');
 }
+
+
+$.getJSON('./productList', function(data) {
+	for (i = 0; i < data.length; i++) {
+		$('<option>').val(data[i].id).text(data[i].brand_name)
+				.appendTo('#singleStolendeviceBrandName');
+	}
+});
+
+$('#singleStolendeviceBrandName').on(
+		'change',
+		function() {
+			var brand_id = $('#singleStolendeviceBrandName').val();
+			$.getJSON('./productModelList?brand_id=' + brand_id,
+					function(data) {
+						$("#singleStolenmodalNumber").empty();
+						for (i = 0; i < data.length; i++) {
+							$('<option>').val(data[i].id).text(
+									data[i].modelName).appendTo(
+									'#singleStolenmodalNumber');
+						}
+					});
+		});
 
 

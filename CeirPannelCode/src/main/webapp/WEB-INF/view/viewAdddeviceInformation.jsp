@@ -206,7 +206,7 @@ input[type='search'] {
 													<div class="file-path-wrapper">
 														<input class="file-path validate responsive-file-div" id="csvUploadFileName" value="${viewInformation.endUserDB.passportFileName}"
 															type="text">
-														<a	class="imgPreviewLink" onclick="previewFile(\''${fileLink}'\',\''${viewInformation.endUserDB.passportFileName}'\',\''${viewInformation.endUserDB.txnId}'\')">Preview</a>
+														<a	class="imgPreviewLink" onclick="previewFile('${fileLink}','${viewInformation.endUserDB.passportFileName}','${viewInformation.endUserDB.txnId}')">Preview</a>
 													</div>
 												</div>
 											</div>
@@ -332,6 +332,154 @@ input[type='search'] {
 													</label>
 												</div>
 											</div>
+											
+											<div class="col s12 m12" style="height: 4rem;">
+											<label for="nationality"><spring:message
+													code="input.VIP" /> </label>
+											<div class=" boxHeight">
+												 <c:choose>
+												<c:when test = "${viewInformation.endUserDB.isVip=='Y'}">
+												<label>
+												 
+												<input class="with-gap" type="radio" name="selectvip" value="Y" readonly="readonly" checked="checked">
+												 <span><spring:message code="modal.yes" /></span>
+												
+												  </label>
+												  
+												  <label> 
+												  <input class="with-gap" value="N" type="radio" name="selectvip" readonly="readonly" style="margin-left: 20px;" /> 
+												  <span><spring:message code="modal.no" /></span>
+												</label>
+												  </c:when>
+												 <c:otherwise>
+												 <label>
+												 
+												<input class="with-gap" type="radio" name="selectvip" readonly="readonly" value="Y"  >
+												 <span><spring:message code="modal.yes" /></span>
+												
+												  </label>
+												  <label> 
+												  <input class="with-gap" value="N" type="radio" readonly="readonly" checked="checked"
+													name="selectvip" style="margin-left: 20px;" /> <span><spring:message code="modal.no" /></span>
+												</label>
+												</c:otherwise>
+												</c:choose>
+											</div>
+										</div>
+										<div class="row" style="display: none;" id="vipUserDiv">
+											<div class="input-field col s12 m6">
+												<input type="text" id="departmentName" value="${viewInformation.endUserDB.userDepartment.name}"/> 
+												<label for="departmentName"><spring:message
+														code="input.DepartmentName" /> <span class="star">*</span></label>
+											</div>
+
+											<div class="input-field col s12 m6">
+												<input type="text" id="endUserdepartmentID" value="${viewInformation.endUserDB.userDepartment.departmentId}" />
+												 <label for="endUserdepartmentID"><spring:message
+														code="input.DepartmentID" /><span class="star">*</span> </label>
+											</div>
+
+											<div class="file-field input-field col s12 m6 l6">
+												 <h6 style="color: #000;">
+													<spring:message code="input.UploadIDImage" />
+													<span class="star">*</span>
+												</h6>
+											<%--	<div class="btn">
+													<span><spring:message code="operator.file" /></span> <input
+														type="file" accept="image/*"
+														onchange="deptImageValidation()"
+														oninput="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');"
+														oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');"
+														 id="endUserDepartmentId" 
+														placeholder="">
+												</div> --%>
+												<div class="file-path-wrapper">
+													<input class="file-path validate" type="text" value="${viewInformation.endUserDB.userDepartment.departmentFilename}"
+													  id="endUSerNidaPlaceholder">
+														
+												</div>
+											</div>
+										</div>
+										
+								<div class="col s12 m12" style="height: 4rem; display: block "id="askVisaDetails">
+											<label for="nationality"><spring:message
+													code="input.AddVisa" /> <span class="star">*</span></label>
+											<div class=" boxHeight">
+												<c:choose>
+												<c:when test = "${viewInformation.endUserDB.onVisa=='Y'}">
+												<label><input class="with-gap" type="radio"
+													name="onVisa" value="Y" checked="checked">
+													<span><spring:message code="modal.yes" /></span> </label> <label>
+													<input class="with-gap" type="radio" id="onVisaNo"
+													 name="onVisa" value="N"
+													style="margin-left: 20px;" />
+													<span><spring:message code="modal.no" /></span>
+												</label>
+												</c:when>
+												<c:otherwise>
+												<label><input class="with-gap" type="radio"
+													name="onVisa" value="Y">
+													<span><spring:message code="modal.yes" /></span> </label>
+													 <label>
+													<input class="with-gap" type="radio" id="onVisaNo"
+													checked="checked" name="onVisa" value="N"
+													style="margin-left: 20px;"  />
+													<span><spring:message code="modal.no" /></span>
+												</label>
+												</c:otherwise>
+												</c:choose>
+											</div>
+										</div>
+
+										<div class="row" id="visaDetails" style="display: none;">
+											<c:forEach items="${viewInformation.endUserDB.visaDb}" var="list">
+											<div class="col s12 m6">
+												<label for="visaType"><spring:message
+														code="input.VisaType" /> <span class="star"></span></label> 
+					                           <input type="text" value="">
+											</div>
+
+											
+											<div class="input-field col s12 m6">
+												<input type="text" id="visaNumber" value="${list.visaNumber}" /> <label for="visaNumber"><spring:message
+														code="input.VisaNumber" /> <span class="star"></span></label>
+											</div>
+
+											<!-- <div class="input-field col s12 m6">
+                                                    <input type="text" id="bdate" class="datepicker" name="expiryDate"
+                                                        pattern="[]" title="" maxlength="15" />
+                                                    <label for="bdate">Visa Expiry Date <span
+                                                            class="star">*</span></label>
+                                                </div> -->
+
+											<div class="input-field col s12 m6">
+												<input type="text" id="datepicker1" value="${list.visaExpiryDate}" > <label for="datepicker1"><spring:message
+														code="input.VisaExpiry" /> <span class="star"></span></label>
+											</div>
+
+											<div class="file-field input-field col s12 m6">
+												<h6 style="color: #000;">
+													<spring:message code="input.UploadVisa" />
+													<span class="star"></span>
+												</h6>
+												<%-- <div class="btn">
+													<span><spring:message code="operator.file" /></span> <input
+														type="file" id="visaImage" accept="image/*"
+														oninput="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');"
+														onchange="visaImageValidation()"
+														oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');"
+														 placeholder="">
+												</div> --%>
+												<div class="file-path-wrapper">
+													<input class="file-path validate" type="text" value="${list.visaFileName}" 
+														id="ensUserVisaPlaceHolder">
+													
+														
+														
+												</div>
+											</div>
+											</c:forEach>
+										</div>
 										</div>
 									
 									<div id="mainDeviceInformation" class="mainDeviceInformation">
@@ -898,6 +1046,19 @@ $('#redirectToPage').click(function(){
 	var nationalID=$('#nationalID').val();
 	 window.location.replace("../uploadPaidStatus?via=other&NID="+nationalID);
 	});
+	
+var selectvip=$("input[name='selectvip']:checked").val()
+var onVisa=$("input[name='onVisa']:checked").val()
+if(selectvip=="Y")
+	{
+	$("#vipUserDiv").css("display", "block"); 
+	}
+if(onVisa=='Y')
+	{
+	
+
+	$("#visaDetails").css("display", "block"); 
+	}	
 </script>
 </body>
 </html>

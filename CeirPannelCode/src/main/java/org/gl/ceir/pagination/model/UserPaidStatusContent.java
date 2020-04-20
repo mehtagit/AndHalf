@@ -33,7 +33,7 @@ public class UserPaidStatusContent {
 	private String thirdImei;
 	private String fourthImei,filePreviewLink;
 	private EndUserVisaInfo endUserDB;
-	private String origin;
+	private String origin,nationality;
 	//private EndUserVisaInfo endUserDB;
 	
 	
@@ -41,68 +41,7 @@ public class UserPaidStatusContent {
 	public Integer getId() {
 		return id;
 	}
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("UserPaidStatusContent [id=");
-		builder.append(id);
-		builder.append(", status=");
-		builder.append(status);
-		builder.append(", stateInterp=");
-		builder.append(stateInterp);
-		builder.append(", createdOn=");
-		builder.append(createdOn);
-		builder.append(", modifiedOn=");
-		builder.append(modifiedOn);
-		builder.append(", nid=");
-		builder.append(nid);
-		builder.append(", deviceStatus=");
-		builder.append(deviceStatus);
-		builder.append(", taxPaidStatus=");
-		builder.append(taxPaidStatus);
-		builder.append(", taxPaidStatusInterp=");
-		builder.append(taxPaidStatusInterp);
-		builder.append(", deviceType=");
-		builder.append(deviceType);
-		builder.append(", deviceTypeInterp=");
-		builder.append(deviceTypeInterp);
-		builder.append(", deviceIdType=");
-		builder.append(deviceIdType);
-		builder.append(", deviceIdTypeInterp=");
-		builder.append(deviceIdTypeInterp);
-		builder.append(", multiSimStatus=");
-		builder.append(multiSimStatus);
-		builder.append(", country=");
-		builder.append(country);
-		builder.append(", deviceSerialNumber=");
-		builder.append(deviceSerialNumber);
-		builder.append(", txnId=");
-		builder.append(txnId);
-		builder.append(", deviceStatusInterp=");
-		builder.append(deviceStatusInterp);
-		builder.append(", price=");
-		builder.append(price);
-		builder.append(", currency=");
-		builder.append(currency);
-		builder.append(", currencyInterp=");
-		builder.append(currencyInterp);
-		builder.append(", firstImei=");
-		builder.append(firstImei);
-		builder.append(", secondImei=");
-		builder.append(secondImei);
-		builder.append(", thirdImei=");
-		builder.append(thirdImei);
-		builder.append(", fourthImei=");
-		builder.append(fourthImei);
-		builder.append(", filePreviewLink=");
-		builder.append(filePreviewLink);
-		builder.append(", endUserDB=");
-		builder.append(endUserDB);
-		builder.append(", origin=");
-		builder.append(origin);
-		builder.append("]");
-		return builder.toString();
-	}
+	
 	public void setId(Integer id) {
 		this.id = id;
 	}
@@ -268,6 +207,79 @@ public class UserPaidStatusContent {
 	public void setFilePreviewLink(String filePreviewLink) {
 		this.filePreviewLink = filePreviewLink;
 	}
-	
+
+	public String getNationality() {
+		return nationality;
+	}
+
+	public void setNationality(String nationality) {
+		this.nationality = nationality;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("UserPaidStatusContent [id=");
+		builder.append(id);
+		builder.append(", status=");
+		builder.append(status);
+		builder.append(", stateInterp=");
+		builder.append(stateInterp);
+		builder.append(", createdOn=");
+		builder.append(createdOn);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
+		builder.append(", nid=");
+		builder.append(nid);
+		builder.append(", deviceStatus=");
+		builder.append(deviceStatus);
+		builder.append(", taxPaidStatus=");
+		builder.append(taxPaidStatus);
+		builder.append(", taxPaidStatusInterp=");
+		builder.append(taxPaidStatusInterp);
+		builder.append(", deviceType=");
+		builder.append(deviceType);
+		builder.append(", deviceTypeInterp=");
+		builder.append(deviceTypeInterp);
+		builder.append(", deviceIdType=");
+		builder.append(deviceIdType);
+		builder.append(", deviceIdTypeInterp=");
+		builder.append(deviceIdTypeInterp);
+		builder.append(", multiSimStatus=");
+		builder.append(multiSimStatus);
+		builder.append(", country=");
+		builder.append(country);
+		builder.append(", deviceSerialNumber=");
+		builder.append(deviceSerialNumber);
+		builder.append(", txnId=");
+		builder.append(txnId);
+		builder.append(", deviceStatusInterp=");
+		builder.append(deviceStatusInterp);
+		builder.append(", price=");
+		builder.append(price);
+		builder.append(", currency=");
+		builder.append(currency);
+		builder.append(", currencyInterp=");
+		builder.append(currencyInterp);
+		builder.append(", firstImei=");
+		builder.append(firstImei);
+		builder.append(", secondImei=");
+		builder.append(secondImei);
+		builder.append(", thirdImei=");
+		builder.append(thirdImei);
+		builder.append(", fourthImei=");
+		builder.append(fourthImei);
+		builder.append(", filePreviewLink=");
+		builder.append(filePreviewLink);
+		builder.append(", endUserDB=");
+		builder.append(endUserDB);
+		builder.append(", origin=");
+		builder.append(origin);
+		builder.append(", nationality=");
+		builder.append(nationality);
+		builder.append("]");
+		return builder.toString();
+	}
+
 	
 }

@@ -60,7 +60,7 @@ var lang_param =window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 					      "taxPaidStatus": parseInt(taxStatus1),
 					      "nid":nationalID,
 					      "txnId":"",
-					      "origin":"CUSTOMS"
+					      "origin":"customs"
 				}
 				regularizeDeviceDbs.push(deviceInfo);  
 				fieldId++;

@@ -50,7 +50,7 @@ function confirmantiondelete(){
 	console.log("txnId===**"+txnId+" userId="+userId+" roleType== "+roleType+ " currentRoleType=="+currentRoleType);
 	var obj ={
 			"txnId" : txnId,
-			"roleType":role,
+			"userType":role,
 			"userId":userId,
 			"id":id,
 			"remark":remarks
@@ -261,7 +261,7 @@ var userType = $("body").attr("data-roleType");
 var sourceType = localStorage.getItem("sourceType");
 function filterStolen(){
 	var userTypeId = $("body").attr("data-userTypeID");
-	if(userType=="Operator"){
+	if(userType=="Operator" || userType=="Operation" ){
 		Datatable('./headers?type=blockUnblock','stolenData?featureId='+featureId+'&userTypeId='+userTypeId)
 	}else if(userType =="CEIRAdmin"){
 		Datatable('./headers?type=BlockUnblockCEIRAdmin','stolenData?featureId='+featureId+'&userTypeId='+userTypeId)
@@ -444,7 +444,11 @@ function pageElements(url){
 
 	//$("#filterBtnDiv").append();
 	}); 
-
+	
+	if($("body").attr("data-roleType")=="CEIRAdmin"){
+		$("#btnLink").css({display: "none"});
+	}
+	
 	setAllDropdowns();
 	/*if(userType=="CEIRAdmin"){
 		$("#btnLink").css({display: "none"});
@@ -1063,7 +1067,7 @@ function rejectUser(){
 		dataType : 'json',
 		'async' : false,
 		contentType : 'application/json; charset=utf-8',
-		type : 'PUT',
+		type : 'POST',
 		success : function(data) {
 			console.log("approveRequest----->"+JSON.stringify(rejectRequest));
 			if(data.errorCode==0){
@@ -1076,6 +1080,7 @@ function rejectUser(){
 			alert("Failed");
 		}
 	});
+	return false;
 }
 
 function confirmRejectInformation(){

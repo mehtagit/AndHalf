@@ -56,7 +56,7 @@ var txnid=$('#existingStolenTxnId').val();
 		
 		$('#IndivisualStolenDate').val(response.dateOfStolen);
 		$('#uploadFirSingleName').val(response.firFileName);
-
+		$('#bulkDeviceRejectRemark').val(response.rejectedRemark);
 		$("label[for='IndivisualStolenDate']").addClass('active');
 		
 		$('input[name=stolenBulkBlockPeriod][value='+response.blockingType+']').attr('checked', true); 
@@ -107,7 +107,8 @@ function updateCompanyStolenDetails(){
 	var bulkStolenmiddleName=$('#bulkStolenmiddleName').val();
 	var bulkStolenlastName=$('#bulkStolenlastName').val();
 	var bulkStolenofficeEmail=$('#bulkStolenofficeEmail').val();
-	var bulkStolenContact=$('#bulkStolenContact').val();
+	var trimContactNumber=$('#bulkStolenContact').val();
+	var bulkStolenContact =trimContactNumber.replace(/[^A-Z0-9]/ig, "");
 
 	
 	var deviceBulkStolenaddress=$('#deviceBulkStolenaddress').val();
@@ -211,7 +212,7 @@ function updateCompanyStolenDetails(){
 
 function clearFileName() {
 	var fieldId=$('#FilefieldId').val();
-	//alert(fieldId);
+	
 	 if(fieldId=='deviceBulkStolenFile')
 		{
 		$('#'+fieldId).val('');

@@ -3,13 +3,13 @@
 	var url_string = window.location.href;
 	var url = new URL(url_string);
 	var type = url.searchParams.get("type");
-	window.location.assign("updateVisaValidaity?lang="+lang);			
+	window.location.assign("updateVisavalidity?lang="+lang);			
 	});   */
 
 
 $('#langlist').on('change', function() {
 	var lang=$('#langlist').val() == 'km' ? 'km' : 'en';
-	window.location.assign("updateVisaValidaity?lang="+lang);	
+	window.location.assign("updateVisavalidity?lang="+lang);	
 });
 			 
 			 

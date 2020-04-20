@@ -142,17 +142,50 @@
                                                 </ul>
                                             </div> -->
                                             <div id="singleRecoveryDiv" class="col s12" style="margin-top: 30px; display: block">
-                                               <form action="" id="SingleImeiBlockform" onsubmit="return updateIndivisualRecovery()" method="POST" enctype="multipart/form-data">
+                                               <form 	="" id="SingleImeiBlockform" onsubmit="return updateIndivisualRecovery()" method="POST" enctype="multipart/form-data">
                                                     <div class="row">
                                                         <div class="col-s12 m12">
-                                                             <div class="input-field col s12 m6">
-                                                                <input type="text" name="sigleRecoverydeviceBrandName" id="sigleRecoverydeviceBrandName" placeholder="" 
+                                                             <div class=" col s12 m6">
+                                                                <%-- <input type="text" name="sigleRecoverydeviceBrandName" id="sigleRecoverydeviceBrandName" placeholder="" 
                                                                 pattern="[a-zA-Z]{0,30}" 
                                                                  title="" 
                                                                  oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');" 
                                                                  oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
                                                                   maxlength="30">
-                                                                <label for="sigleRecoverydeviceBrandName"><spring:message code="registration.devicebrandname" /></label>
+                                                                <label for="sigleRecoverydeviceBrandName"><spring:message code="registration.devicebrandname" /></label> --%>
+                                                              
+                                                              <label for="editsigleRecoverydeviceBrandName"><spring:message
+													code="registration.devicebrandname" /> <span class="star"></span></label>
+											<select id="editsigleRecoverydeviceBrandName" class="browser-default"
+												
+												oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+												oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');">
+												<option value="" disabled selected><spring:message
+														code="registration.selectproduct" />
+												</option></select>  
+                                                     <input type="text" id="selectedBrandName" style="display: none;">           
+                                                            </div>
+                                                            
+                                                            <div class=" col s12 m6">
+                                                                <%-- <input type="text" name="sigleRecoverydeviceBrandName" id="sigleRecoverydeviceBrandName" placeholder="" 
+                                                                pattern="[a-zA-Z]{0,30}" 
+                                                                 title="" 
+                                                                 oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');" 
+                                                                 oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
+                                                                  maxlength="30">
+                                                                <label for="sigleRecoverydeviceBrandName"><spring:message code="registration.devicebrandname" /></label> --%>
+                                                              
+                                                               <label for="editsingleRecoverymodalNumber"><spring:message
+														code="registration.modelnumber" /> <span id="modalNumerSpan" class="star" style="display: none;">*</span></label>
+												<select id="editsingleRecoverymodalNumber" class="browser-default"
+													onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+													oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+													>
+													<option value="" disabled selected>
+														<spring:message code="registration.selectmodelnumber" /></option>
+
+												</select>
+                                                                
                                                             </div>
 																<input type="text" id="pageViewType" value="${viewType}" style="display: none;">
 																<input type="text" id="existingStolenTxnId" style="display:none" value="${stolenTxnId}" >
@@ -209,8 +242,8 @@
 															<input type="text" name="sigleRecoveryimeiNumber1" pattern="[0-9]{15,16}" 
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');" 
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
-														  maxlength="16" id="sigleRecoveryimeiNumber1" required/> 
-															<label for="sigleRecoveryimeiNumber1"><spring:message code="registration.one" /> <span class="star"> *</span></label>
+														  maxlength="16" id="sigleRecoveryimeiNumber1"/> 
+															<label for="sigleRecoveryimeiNumber1"><spring:message code="registration.one" /> <span class="star"> </span></label>
 														</div>
 														
 														<div class="input-field col s12 m6">
@@ -298,7 +331,7 @@
                                 
                                                             <div class="input-field col s12 m6 l6">
                                                                 <input type="text" name="sigleRecoverypin" class="form-control boxBorder boxHeight" placeholder=""
-                                                                    id="sigleRecoverypin" maxlength="20" pattern="[0-9]{0,20}" required="required"
+                                                                    id="sigleRecoverypin" maxlength="6" pattern="[0-9]{6,6}" required="required"
                                                                     title="" oninput="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');" 
                                                                     oninvalid="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');">
                                                                 <label for="sigleRecoverypin"><spring:message code="input.postalCode" /> <span class="star">*</span></label>
@@ -321,7 +354,7 @@
                                                                     required></select>
                                                             </div>
 
-                                                            <div class="col s6 m6 ">
+                                                           <%--  <div class="col s6 m6 ">
                                                                 <label for="sigleRecoverydeviceStatus"><spring:message code="select.deviceStatus" /> <span class="star">*</span></label>
                                                                 <select id="sigleRecoverydeviceStatus"  required="required"
                                                                 oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" 
@@ -329,7 +362,7 @@
                                                                  class="browser-default">
                                                                   <option value="" disabled selected><spring:message code="select.deviceStatus" /></option>
                                                                 </select>
-                                                              </div>
+                                                              </div> --%>
 
                                                             <div class="input-field col s12 m6">
                                                                 <textarea id="sigleRecovery" placeholder="" 
@@ -338,6 +371,14 @@
                                                          	maxlength="10000"
                                                                  class="materialize-textarea"></textarea>
                                                                 <label for="sigleRecovery"><spring:message code="input.remarks" /> </label>
+                                                            </div>
+                                                            <div class="input-field col s12 m6" style="display: none;" id="sigleRecoveryRejectDiv">
+                                                                <textarea id="sigleRecoveryReject" placeholder="" 
+                                                                oninput="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');" 
+                                                                oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
+                                                         	maxlength="10000"
+                                                                 class="materialize-textarea"></textarea>
+                                                                <label for="sigleRecovery"><spring:message code="input.remarksRejected" /> </label>
                                                             </div>
                                                             
                                                            <%--  <div class="col s12 m6">
@@ -482,7 +523,7 @@ onclick="_Services._selectstartDate()"></i></span>
                         
                                                     <div class="input-field col s12 m6 l6">
                                                         <input type="text" name="bulkRecoverypin" class="form-control boxBorder boxHeight"
-                                                            id="bulkRecoverypin" maxlength="20">
+                                                            id="bulkRecoverypin" maxlength="6">
                                                         <label for="bulkRecoverypin"> <spring:message code="input.postalCode" /><span class="star">*</span></label>
                                                     </div>
                     
@@ -626,8 +667,11 @@ src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/j
 	            	 $("#indivisualEditRecoveryButton").css("display", "none");
 	          		$(".star").css("display", "none");
 	            	  $("#singleRecoveryDiv").find("input,select,textarea,button").prop("disabled",true);
+	            	  $("#sigleRecoveryRejectDiv").css("display", "block");
+	            	  
 	            	}
 	            else{
+	            	  $("#sigleRecoveryRejectDiv").css("display", "none");
 	            	$('#headingType').text('');
 	            	$('#headingType').text(editrecoveryIndivisual);
 	            	  $("#singleRecoveryDiv").find("input,select,textarea,button").prop("disabled",false);
@@ -661,7 +705,8 @@ src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/j
             "bulkRecoverycountry",
             "bulkRecoverystate"
         );
-        
+       
+       
       
 </script>
 		

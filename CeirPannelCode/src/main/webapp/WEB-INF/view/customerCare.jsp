@@ -525,8 +525,267 @@ data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeI
 			</div>
 		</div>
 	</div>
+	
+	
+	<div id="viewImporterModal" class="modal" >
+			<h6 class="modal-header">
+				<spring:message code="input.ViewType" />
+			</h6>
+			<div class="modal-content">
 
 
+
+
+				<div class="row" style="margin-top: 10px;">
+					<div class="input-field col s12 m6 l6">
+						<input type="text" id="viewtradmark" name="tradmark"
+							placeholder="" disabled=""> <label for="viewtradmark"
+							class="active"><spring:message code="input.Trademark" /></label>
+					</div>
+					
+					<div class="input-field col s12 m6 l6">
+						<input type="text" id="viewtxnId" name="transactioId"
+							placeholder="" disabled=""> <label for="viewtxnId"
+							class="active"><spring:message code="table.transactionID" /></label>
+					</div>
+
+					<div class="input-field col s12 m6 l6">
+						<input type="text" id="viewmodelName" name="modelName"
+							placeholder="" disabled="disabled"> <label
+							for="viewmodelName" class="active"><spring:message
+								code="input.modelName" /> <span class="star"></span></label>
+					</div>
+
+					<div class="input-field col s12 m6 l6">
+						<input type="text" id="viewModelnumber" name="modelNumber"
+							placeholder="" disabled="disabled"> <label
+							for="viewModelnumber" class="active"><spring:message
+								code="input.modelNumber" /> <span class="star"></span></label>
+					</div>
+
+					
+
+
+					<!-- <div class="input-field col s12 m6 l6">
+						<input type="text" id="viewDeviceType" name="deviceType"
+							placeholder="" disabled=""> <label
+							for="deviceType" class="active">Device Type </label>
+					</div> -->
+
+
+				</div>
+
+				<!-- <div class="row" style="margin-top: 5px;">
+					<div class="input-field col s12 m6 l6">
+						<input type="text" id="viewdeviceTypeID" name="deviceType"
+							placeholder="" disabled=""> <label for="deviceType"
+							class="active">Device ID Type</label>
+					</div> -->
+
+
+				<div class="row">
+
+					<div class="input-field col s12 m6 l6">
+						<input type="text" id="viewFrequency" name="tac" placeholder=""
+							disabled=""> <label for="viewFrequency" class="active"><spring:message
+								code="input.frequency" /></label>
+					</div>
+
+					<div class="input-field col s12 m6 l6">
+						<input type="text" id="viewImportertac" name="tac" placeholder=""
+							disabled=""> <label for="tac" class="active"><spring:message
+								code="input.TAC" /></label>
+					</div>
+				</div>
+				
+				<div class="input-field col s12 m6 l6" style="width: 402px;margin-left: 1px;">
+						<input type="text" id="viewManufacturercountry" name="Country" style="padding-left: 8px;"
+							placeholder="" disabled=""> <label
+							for="viewManufacturercountry" class="active"><spring:message
+								code="input.Country" /></label>
+				</div>
+				<div class="modal-content">
+					<div id="live-chat">
+						<div class="chat">
+							<div class="chat-history">
+								<div class="chat-message clearfix" id="chatMsg" style="cursor: pointer;"></div>
+								<!-- end chat-message -->
+
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row ">
+				<div class="center  popup-btn-div" style="margin-top: 10px;">
+					<button class="modal-close btn" type="button" id="Cancel"
+						style="margin-left: 10px;">
+						<spring:message code="modal.close" />
+					</button>
+				</div>
+
+
+
+			</div>
+		</div>
+	
+	
+	
+	<div id="viewDeviceInfo" class="modal">
+	<h6 class="modal-header">
+				                                          <spring:message code="modal.deviceInfo" />
+			                                            </h6>
+										<div id="mainDeviceInformation" class="mainDeviceInformation">
+										<div id="deviceInformation" class="deviceInformation">
+											<div class="row">
+												<div class="col s12 m12">
+													<div class="col s12 m12" style="margin-top: 30px;">
+														
+														<%-- <h5><spring:message code="modal.deviceInfo" /></h5> --%>
+														
+													</div>
+
+													<div class="col s12 m6">
+														<label class="moveLabelUp" for="endUserdeviceType"><spring:message code="select.deviceType" /><span
+															class="star"></span></label>
+															<input type="text" value=""  readonly="readonly" id="endUserdeviceType">
+													</div>
+
+													<div class="col s12 m6">
+														<label class="moveLabelUp" for="endUserdeviceIdType"><spring:message code="select.deviceIDType" /><span
+															class="star"></span></label> 
+															<input type="text" value=""  readonly="readonly" id="endUserdeviceIdType">
+													</div>
+
+													<div class="col s12 m6">
+														<label class="moveLabelUp" for="endUserMultiSimStatus"><spring:message code="select.multiSimStatus" /><span class="star"></span>
+														</label> <input type="text" value=""  readonly="readonly" id="endUserMultiSimStatus">
+													</div>
+
+													<div class="col s12 m6">
+														<label for="endUserCountry"><spring:message code="select.countryBoughtFrom" /><span
+															class="star"></span></label> 
+															<input type="text" value="" class="moveLabelUp" readonly="readonly" id="endUserCountry">
+													</div>
+
+													<div class=" col s12 m6">
+														 <label for="endUserSerialNumer" class="center-align"> <spring:message code="input.deviceSerialNumber" /><span class="star"></span>
+														</label>
+														<input type="text" value="" name="endUserSerialNumer"  readonly="readonly" id="endUserSerialNumer">
+														
+													</div>
+
+													<div class="col s12 m6">
+														<label class="moveLabelUp" for="endUserTaxPaid"><spring:message code="select.taxPaidStatus" /><span
+															class="star"></span></label> <input type="text"  readonly="readonly" value="" id="endUserTaxPaid">
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col s12 m12">
+													<div class="col s12 m6">
+														<label class="moveLabelUp" for="endUserDeviceStatus"><spring:message code="select.deviceStatus" /><span
+															class="star"></span></label> 
+														<input type="text" readonly="readonly" value=""  id="endUserDeviceStatus">	
+													</div>
+
+													<div class=" col s12 m6 l6">
+													<label class="moveLabelUp" for="endUserPrice"><spring:message code="select.price" /></label>
+														<input  type="text" value="" readonly="readonly"  id="endUserPrice">
+														
+													</div>
+
+													<div class="col s12 m6">
+														<label class="moveLabelUp" for="endUserCurrency"><spring:message code="input.currency" /><span class="star"></span></label>
+														<input type="text" value=""  readonly="readonly" id="endUserCurrency">
+													</div>
+													<div class="col s12 m6">
+													<label class="moveLabelUp" for="enduserTransactionId" class="center-align"><spring:message code="input.transactionID" /></label>
+													<input type="text"   name="enduserTransactionId" id="enduserTransactionId"
+							                        disabled placeholder="" maxlength="18" /> 
+								</div>
+								<div class="col s12 m6">
+												<label for="enduserNid"
+														class="center-align ml-10"><spring:message code="input.nidText" /></label>	
+													<input type="text"   name="enduserTransactionId" id="enduserNid"
+							                        disabled placeholder="" maxlength="18" /> 
+								</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col s12 m12">
+													<div class='col s12 m12 input_fields_wrap'>
+														<p><spring:message code="title.imeiMeidEsn" /></p>
+														<div class='row'>
+															<div class=" col s12 m6">
+																
+																 <label class="moveLabelUp" for="endUserImei1"><spring:message code="title.one" /><span
+																	class="star"></span></label>
+															<input type="text" value=""   readonly="readonly" id="endUserImei1">
+															</div>
+															<div class=" col s12 m6">
+																
+																 <label class="moveLabelUp" for="endUserImei2"><spring:message code="title.two" /></label>
+															<input type="text" value="" readonly="readonly" id="endUserImei2">
+															</div>
+
+															<div class=" col s12 m6">
+																
+																 <label class="moveLabelUp" for="endUserImei3"><spring:message code="title.three" /></label>
+															<input type="text" value=""  readonly="readonly" id="endUserImei3" > 
+															</div>
+
+															<div class=" col s12 m6" id="field">
+																
+																 <label class="moveLabelUp" for="endUserImei4"><spring:message code="title.four" /></label>
+															<input type="text" value=""  readonly="readonly" id="endUserImei4">
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											
+											<div class="row ">
+				<div class="center  popup-btn-div" style="margin-top: 10px;">
+					<button class="modal-close btn" type="button" id="Cancel"
+						style="margin-left: 10px;">
+						<spring:message code="modal.close" />
+					</button>
+				</div>
+				</div>
+										</div>
+									</div>
+</div>
+
+
+<div id="greyListTableModal" class="modal">
+ <button type="button"
+			class=" modal-action modal-close  btn-flat right"
+			data-dismiss="modal">&times;</button>
+		<h6 class="modal-header">Device Details</h6>
+		<div class="modal-content">
+			<div class="row">
+				<%-- <h6 id="fileErrormessage"><spring:message code="invalidaTxnIdMsg" /> </h6> --%>
+			</div>
+			<div class="row">
+				<table id="greyListDataTable" style="margin-top: 10px">
+				<thead>
+				<tr>
+				<th>Created On</th>
+				<th>Updated On</th>
+				<th>MSISDN</th>
+				<th>IMEI</th>
+				<th>IMSI</th>
+				</tr>
+				</thead>
+				<tbody >
+				
+				</tbody >
+				</table>
+			</div>
+		</div>
+	</div>
 	<!-- END MAIN -->
 <script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
