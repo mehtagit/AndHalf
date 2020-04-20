@@ -401,7 +401,7 @@ public class DatatableHeaders {
 			
 		
 			else if("ruleFeatureMapping".equals(role)) {
-				String[] headers = {"table.creationDate","table.lastupdatedate","table.ruleName","table.featureName","table.userType","table.order","table.gracePeriod","table.postGracePeriod","table.moveToGracePeriod","table.moveToPostGracePeriod","table.action"};
+				String[] headers = {"table.creationDate","table.lastupdatedate","table.ruleName","table.featureName","table.userType","table.order","table.gracePeriod","table.postGracePeriod","table.moveToGracePeriod","table.moveToPostGracePeriod","table.expectedOutput","table.action"};
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}

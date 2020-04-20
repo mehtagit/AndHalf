@@ -228,7 +228,6 @@
 				type : 'GET',
 				success : function(data) {
 					var result=JSON.stringify(data);
-					
 					$("#editModel").openModal({
 				        dismissible:false
 				    });
@@ -242,6 +241,7 @@
 		
 		
 		function setData(result){
+		
 			$("#editRule").val(result.ruleOrder);
 			$("#editFeature").val(result.feature);
 			$("#editUser").val(result.userType);
@@ -250,7 +250,7 @@
 			$("#PostGracePeriod").val(result.postGraceAction);
 			$("#MoveToGracePeriod").val(result.failedRuleActionGrace);
 			$("#MoveToPostGracePeriod").val(result.failedRuleActionPostGrace);
-			
+			$("#editOutput").val(result.output);
 		}
 		
 		
@@ -274,7 +274,8 @@
 					  "name": $("#editRule").val(),
 					  "postGraceAction": $("#PostGracePeriod").val(),
 					  "ruleOrder":parseInt($("#order").val()),
-					  "userType": $("#editUser").val()
+					  "userType": $("#editUser").val(),
+					  "output":  $("#editOutput").val()
 					}
 			$.ajax({
 				
