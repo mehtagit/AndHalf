@@ -71,7 +71,7 @@ public class RegularizeDeviceTransaction {
 		boolean status = Boolean.FALSE;
 		webActionDbRepository.saveAll(webActionDbs);
 		logger.info("Batch update in web_action_db. " + webActionDbs );
-
+		
 		regularizedDeviceDbRepository.saveAll(regularizeDeviceDbs);
 		logger.info("Regularized devices have been saved. " + regularizeDeviceDbs);
 

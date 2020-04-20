@@ -3,6 +3,7 @@ package com.gl.ceir.config.model.constants;
 public enum GenericMessageTags {
 
 	NULL_VISA ("NULL_VISA", "Request visa update should not be null."),
+	NULL_Natinality ("NULL_Natinality", "Nationality should not be null."),
 	EMPTY_VISA ("EMPTY_VISA", "Request visa update should not be empty."),
 	NULL_NID ("NULL_NID", "Null NID is not allowed for the request."),
 	VISA_UPDATE_NOT_ALLOWED ("VISA_UPDATE_NOT_ALLOWED", "You have not provided visa information at the time of registeration."),

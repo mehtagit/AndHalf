@@ -3,8 +3,10 @@ package com.gl.ceir.config.model;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,6 +20,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.envers.Audited;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Audited
@@ -91,13 +94,18 @@ public class RegularizeDeviceDb implements Serializable {
 	@Transient
 	private String stateInterp;
 	
-	@ManyToOne 
+	@JsonIgnore
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "userId") 
 	private EndUserDB endUserDB;
 	
 	@NotNull
 	@Column(length = 20)
 	private String origin;
+	
+	@Transient
+	private String nationality;
+	
 	
 	private long creatorUserId;
 	@Transient
@@ -346,6 +354,14 @@ public class RegularizeDeviceDb implements Serializable {
 		this.creatorUserId = creatorUserId;
 	}
 
+	public String getNationality() {
+		return nationality;
+	}
+
+	public void setNationality(String nationality) {
+		this.nationality = nationality;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -403,6 +419,8 @@ public class RegularizeDeviceDb implements Serializable {
 		builder.append(status);
 		builder.append(", endUserDB=");
 		builder.append(endUserDB);
+		builder.append(", nationality=");
+		builder.append(nationality);
 		builder.append("]");
 		return builder.toString();
 	}
