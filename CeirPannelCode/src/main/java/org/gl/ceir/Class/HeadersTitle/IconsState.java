@@ -54,7 +54,7 @@ public class IconsState {
 	String disableReplyIcon="\"fa fa-reply reply-icon disable\""; 
 	String disableApproveIcon = "\"fa fa-check-circle-o approve-icon disable\"";
 	String disableRejectIcon = "\"fa fa-user-times reject-icon disable\"";
-	String disablePayTaxICon =  "\"fa fa-money pay-tax-icon disable\"";
+	String disablePayTaxIcon =  "\"fa fa-money pay-tax-icon disable\"";
 	String defaultTagName="DEFAULT";
 
 	public String state(String fileName,String txnId ,String status,String userStatus) {
@@ -946,13 +946,13 @@ public class IconsState {
 
 
 	/********************************** Icons for UPS **********************************/ 	
-	public String userPaidStatusIcon(String imei1, String taxStatus, String userStatus) {
+	public String userPaidStatusIcon(String imei1, String taxStatus, String status, String userStatus) {
 		executePostConstruct();
 		String payTaxAction ="taxPaid('"+imei1+"')";
 		String viewAction="viewDetails('"+imei1+"')";
 		String deleteAction= "deleteByImei('"+imei1+"')";
 		
-		log.info("taxStatus-->" +taxStatus);
+		log.info("taxStatus-->" +taxStatus+" statusInterp----->" +status);
 		
 		String taxPaid="<a onclick="+payTaxAction+"><i class="
 				+payTaxIcon+" aria-hidden=\"true\" title="
@@ -964,13 +964,34 @@ public class IconsState {
 				+deletionIcon+" aria-hidden=\"true\" title="
 				+deleteIconTitle+"></i></a>";
 		
+		if(("0".equals(status) || "2".equals(status))  && "Approved".equals(userStatus)) {
+			taxPaid="<a onclick="+payTaxAction+"  class=\"waves-effect waves-light modal-trigger eventNone\" ><i class="
+					+disablePayTaxIcon+" aria-hidden=\"true\" title="
+					+payTaxIconTitle+"></i></a>";
+			delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\" ><i class="
+					+disableDeletionIcon+" aria-hidden=\"true\"  title="
+					+deleteIconTitle+"></i></a>"; 
+		}else if("1".equals(status)  && "Approved".equals(userStatus)) {
+			taxPaid="<a onclick="+payTaxAction+"  class=\"waves-effect waves-light modal-trigger eventNone\" ><i class="
+					+disablePayTaxIcon+" aria-hidden=\"true\" title="
+					+payTaxIconTitle+"></i></a>";
+		}
 		
 		if(("0".equals(taxStatus) || "2".equals(taxStatus)) && "Approved".equals(userStatus)) {
-			taxPaid="<a onclick="+payTaxAction+"><i class="
-					+disablePayTaxICon+" aria-hidden=\"true\" title="
+			taxPaid="<a onclick="+payTaxAction+"  class=\"waves-effect waves-light modal-trigger eventNone\" ><i class="
+					+disablePayTaxIcon+" aria-hidden=\"true\" title="
 					+payTaxIconTitle+"></i></a>";
 		}	
 		
+		if("Disable".equals(userStatus)) {
+			log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
+			taxPaid="<a onclick="+payTaxAction+"  class=\"waves-effect waves-light modal-trigger eventNone\" ><i class="
+					+disablePayTaxIcon+" aria-hidden=\"true\" title="
+					+payTaxIconTitle+"></i></a>";
+			delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\" ><i class="
+					+disableDeletionIcon+" aria-hidden=\"true\"  title="
+					+deleteIconTitle+"></i></a>"; 
+}
 		
 		
 		String action = taxPaid.concat(view).concat(delete);
@@ -1747,6 +1768,20 @@ public class IconsState {
 		String delete="<a onclick="+deleteAction+"><i class="
 				+deletionIcon+" aria-hidden=\"true\" title="
 				+deleteIconTitle+"></i></a>";
+		
+		
+		if(("0".equals(State) || "1".equals(State) || "2".equals(State))  && "Approved".equals(userStatus)) {
+			delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\" ><i class="
+					+disableDeletionIcon+" aria-hidden=\"true\"  title="
+					+deleteIconTitle+"></i></a>"; 
+		}
+		
+		if("Disable".equals(userStatus)) {
+			log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
+			delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\" ><i class="
+					+disableDeletionIcon+" aria-hidden=\"true\"  title="
+					+deleteIconTitle+"></i></a>"; 
+}
 		
 		String action = view.concat(delete);
 		return action;
