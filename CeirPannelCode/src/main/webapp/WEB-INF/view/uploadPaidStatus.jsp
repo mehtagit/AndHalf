@@ -152,6 +152,11 @@ select:disabled {
 	color: #444;
 }
 
+
+.disable {
+    color: grey;
+}
+
 /* .btn-info {
             margin-right: 1%;
         } */
