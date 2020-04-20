@@ -227,11 +227,13 @@ function defaultDeviceForm(){
         
       
         var allowed =parseInt(localStorage.getItem("allowed")); 
+        
         $(add_button).click(function (e) { //on add input button click
             e.preventDefault();
             var incrementedCurrent =parseInt(localStorage.getItem("incrementedCurrent"));
             
             console.log("&&&&&&&&&&&"+incrementedCurrent);
+           
             if (x < max_fields) { //max input box allowed
                 x++; //text box increment
                

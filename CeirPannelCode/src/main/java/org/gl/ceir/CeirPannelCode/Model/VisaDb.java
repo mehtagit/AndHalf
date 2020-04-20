@@ -10,29 +10,10 @@ private String createdOn;
 
 private String modifiedOn;
 private String visaExpiryDate;
-private String visaNumber,visaFileName;
+private String visaNumber,visaFileName,visaTypeInterp;
 private Integer visaType;
 private Map<String, Object> additionalProperties = new HashMap<String, Object>();
-@Override
-public String toString() {
-	StringBuilder builder = new StringBuilder();
-	builder.append("VisaDb [createdOn=");
-	builder.append(createdOn);
-	builder.append(", modifiedOn=");
-	builder.append(modifiedOn);
-	builder.append(", visaExpiryDate=");
-	builder.append(visaExpiryDate);
-	builder.append(", visaNumber=");
-	builder.append(visaNumber);
-	builder.append(", visaFileName=");
-	builder.append(visaFileName);
-	builder.append(", visaType=");
-	builder.append(visaType);
-	builder.append(", additionalProperties=");
-	builder.append(additionalProperties);
-	builder.append("]");
-	return builder.toString();
-}
+
 public String getCreatedOn() {
 	return createdOn;
 }
@@ -74,6 +55,36 @@ public Map<String, Object> getAdditionalProperties() {
 }
 public void setAdditionalProperties(Map<String, Object> additionalProperties) {
 	this.additionalProperties = additionalProperties;
+}
+
+
+public String getVisaTypeInterp() {
+	return visaTypeInterp;
+}
+public void setVisaTypeInterp(String visaTypeInterp) {
+	this.visaTypeInterp = visaTypeInterp;
+}
+@Override
+public String toString() {
+	StringBuilder builder = new StringBuilder();
+	builder.append("VisaDb [createdOn=");
+	builder.append(createdOn);
+	builder.append(", modifiedOn=");
+	builder.append(modifiedOn);
+	builder.append(", visaExpiryDate=");
+	builder.append(visaExpiryDate);
+	builder.append(", visaNumber=");
+	builder.append(visaNumber);
+	builder.append(", visaFileName=");
+	builder.append(visaFileName);
+	builder.append(", visaTypeInterp=");
+	builder.append(visaTypeInterp);
+	builder.append(", visaType=");
+	builder.append(visaType);
+	builder.append(", additionalProperties=");
+	builder.append(additionalProperties);
+	builder.append("]");
+	return builder.toString();
 }
 
 

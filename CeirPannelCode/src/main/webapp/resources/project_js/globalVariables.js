@@ -167,11 +167,22 @@ $("input[type=file]").keypress(function(ev) {
 	
 
 
-	function previewFile(srcFilePath,srcFileName,txnId){
+	function previewFile(srcFilePath,srcFileName,txnId,doctype){
+		console.log("doctype=="+doctype)
 		window.filePath = srcFilePath;
 		window.fileName = srcFileName;
 		window.fileExtension = fileName.replace(/^.*\./, '');
-		window.FinalLink = filePath.concat(txnId).concat('/'+fileName);
+		if(doctype=='')
+			{
+			window.FinalLink = filePath.concat(txnId).concat('/'+fileName);
+			}
+		else if(doctype==undefined)
+			{
+			window.FinalLink = filePath.concat(txnId).concat('/'+fileName);
+			}else{
+				window.FinalLink = filePath.concat(txnId).concat('/'+doctype).concat('/'+fileName);
+			}
+		
 		console.log(FinalLink);
 		if(filePath == null || filePath == "" || filePath == undefined && fileName == null || fileName == "" || fileName == undefined ){
 			console.log("File is not Avialable")

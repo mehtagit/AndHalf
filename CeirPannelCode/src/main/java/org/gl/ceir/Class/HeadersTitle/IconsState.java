@@ -965,6 +965,8 @@ public class IconsState {
 		String action = taxPaid.concat(view).concat(delete);
 		return action;
 	}
+	
+	
 
 
 	/********************************** Icons for AdminUPS **********************************/ 	
@@ -1728,14 +1730,16 @@ public class IconsState {
 		executePostConstruct();
 		String viewAction="viewDetails('"+imei1+"')";
 		String editAction="";
-
-
+		String deleteAction= "deleteByImei('"+imei1+"')";	
+		
 		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
 		String edit="<a onclick="+editAction+"><i class="+editIcon+" aria-hidden=\"true\"  title="
 				+editIconTitle+"></i></a>"; 
-		
-		String action = view.concat(edit);
+		String delete="<a onclick="+deleteAction+"><i class="
+				+deletionIcon+" aria-hidden=\"true\" title="
+				+deleteIconTitle+"></i></a>";
+		String action = view.concat(delete);
 		return action;
 	}
 
@@ -2244,6 +2248,28 @@ public class IconsState {
 		return action;
 
 	}
+
+	/********************************** Icons End userRegister device**********************************/
+	public String endUserPaidStatusIcon(String imei1) {
+		executePostConstruct();
+		/* String payTaxAction ="taxPaid('"+imei1+"')"; */
+		String viewAction="viewDetails('"+imei1+"')";
+		String deleteAction= "deleteByImei('"+imei1+"')";
+
+		/*
+		 * String taxPaid="<a onclick="+payTaxAction+"><i class="
+		 * +payTaxIcon+" aria-hidden=\"true\" title=" +payTaxIconTitle+"></i></a>";
+		 */
+		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+				+viewIconTitle+" ></i></a>";
+
+		String delete="<a onclick="+deleteAction+"><i class="
+				+deletionIcon+" aria-hidden=\"true\" title="
+				+deleteIconTitle+"></i></a>";
+
+		String action = view.concat(delete);
+		return action;
+	}
 	
 	@PostConstruct
 	public void executePostConstruct() {
@@ -2263,3 +2289,6 @@ public class IconsState {
 
 
 }
+
+
+

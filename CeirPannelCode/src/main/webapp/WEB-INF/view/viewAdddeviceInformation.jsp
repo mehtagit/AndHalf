@@ -191,7 +191,7 @@ input[type='search'] {
 											                    oninvalid="InvalidMsg(this,'input','<spring:message code="validation.selectFieldMsg" />');" required>
 																<option value="" disabled selected><spring:message code="select.documenttype" /> </option>
 															</select> --%>
-															<input type="text" value="" readonly="readonly">
+															<input type="text" value="${viewInformation.endUserDB.docTypeInterp}" readonly="readonly">
 															
 															<!-- <input type="text" id="docTypeNymericValue" style="display: none" > -->
 														</div>	
@@ -206,7 +206,7 @@ input[type='search'] {
 													<div class="file-path-wrapper">
 														<input class="file-path validate responsive-file-div" id="csvUploadFileName" value="${viewInformation.endUserDB.passportFileName}"
 															type="text">
-														<a	class="imgPreviewLink" onclick="previewFile('${fileLink}','${viewInformation.endUserDB.passportFileName}','${viewInformation.endUserDB.txnId}')">Preview</a>
+														<a	class="imgPreviewLink" onclick="previewFile('${fileLink}','${viewInformation.endUserDB.passportFileName}','${viewInformation.endUserDB.txnId}','${viewInformation.endUserDB.docTypeInterp}')">Preview</a>
 													</div>
 												</div>
 											</div>
@@ -396,7 +396,7 @@ input[type='search'] {
 												<div class="file-path-wrapper">
 													<input class="file-path validate" type="text" value="${viewInformation.endUserDB.userDepartment.departmentFilename}"
 													  id="endUSerNidaPlaceholder">
-														
+													<a	class="imgPreviewLink" onclick="previewFile('${fileLink}','${viewInformation.endUserDB.userDepartment.departmentFilename}','${viewInformation.endUserDB.txnId}')">Preview</a>	
 												</div>
 											</div>
 										</div>
@@ -436,7 +436,7 @@ input[type='search'] {
 											<div class="col s12 m6">
 												<label for="visaType"><spring:message
 														code="input.VisaType" /> <span class="star"></span></label> 
-					                           <input type="text" value="">
+					                           <input type="text" value="${list.visaTypeInterp}">
 											</div>
 
 											
@@ -473,7 +473,7 @@ input[type='search'] {
 												<div class="file-path-wrapper">
 													<input class="file-path validate" type="text" value="${list.visaFileName}" 
 														id="ensUserVisaPlaceHolder">
-													
+													<a	class="imgPreviewLink" onclick="previewFile('${fileLink}','${list.visaFileName}','${viewInformation.endUserDB.txnId}')">Preview</a>
 														
 														
 												</div>
@@ -533,9 +533,10 @@ input[type='search'] {
 													<div class="col s12 m6" style="margin-top: -10px;">
 														<label for="deviceStatus1"><spring:message code="select.deviceStatus" /><span
 															class="star"></span></label> 
-														<input type="text" readonly="readonly" value="${viewInformation.taxPaidStatusInterp}">	
+														<input type="text" readonly="readonly" value="${viewInformation.deviceStatusInterp}">	
 													</div>
-
+                                                      <c:choose>
+												<c:when test = "${viewInformation.endUserDB.onVisa=='N'}">
 													<div class="input-field col s12 m6 l6">
 														<input type="text" value="${viewInformation.price}" readonly="readonly">
 														<label for="Price1"><spring:message code="select.price" /></label>
@@ -545,6 +546,11 @@ input[type='search'] {
 														<label for="Currency1"><spring:message code="input.currency" /><span class="star"></span></label>
 														<input type="text" value="${viewInformation.currencyInterp}" readonly="readonly">
 													</div>
+													</c:when>
+													<c:otherwise>
+													
+													</c:otherwise>
+													</c:choose>
 												</div>
 											</div>
 											<div class="row">
