@@ -18,12 +18,15 @@
             <PatternLayout   pattern="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n" />
         </Console>
     </Appenders>
+    
     <Loggers>
-        <Logger name="com.gl.ceir.config" level="debug" additivity="true">
+        <Logger name="com.gl.ceir.config" level="debug" additivity="false">
             <appender-ref ref="fileLogger" level="debug" />
         </Logger>
+    
         <Root level="debug" additivity="false">
-            <appender-ref ref="console" />
+            <!-- <appender-ref ref="console" /> -->
+            <appender-ref ref="RollingFile" />
         </Root>
     </Loggers>
 </Configuration>
