@@ -1,5 +1,5 @@
 
-			var featureId = 38;
+			var featureId = 40;
 			var cierRoletype = sessionStorage.getItem("cierRoletype");
 
 			var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
@@ -44,17 +44,10 @@
 				var featureName = $('#feature').val() == null ? null : $("#feature option:selected").text();
 				
 				var filterRequest={
-						"endDate":$('#endDate').val(),
-						"startDate":$('#startDate').val(),
-						"tac" : $('#tac').val(),
-						"txnId" :  $('#transactionID').val(),
-						"feature" : featureName,
-						//"userId": parseInt($("body").attr("data-userID")),
-						//"featureId":parseInt(featureId),
-						//"userTypeId": parseInt($("body").attr("data-userTypeID")),
-						
-						//"userType":$("body").attr("data-roleType"),
-						"featureId":parseInt(featureId)
+						//"endDate":$('#endDate').val(),
+						//"startDate":$('#startDate').val(),
+						"feature" : parseInt($('#feature').val()),
+						"usertype" : $('#userType').val(),
 				}
 				
 				if(lang=='km'){
@@ -62,12 +55,12 @@
 					}
 
 				$.ajax({
-					url: 'headers?type=pendingTACHeaders&lang='+lang,
+					url: 'headers?type=slaTableHeaders&lang='+lang,
 					type: 'POST',
 					dataType: "json",
 					success: function(result){
 						
-						var table=	$("#pendingTACLibraryTable").DataTable({
+						var table=	$("#slaLibraryTable").DataTable({
 							destroy:true,
 							"serverSide": true,
 							orderCellsTop : true,
@@ -80,7 +73,7 @@
 									"sUrl": langFile  
 								},
 							ajax: {
-								url : 'pendingTACdata',
+								url : 'slaData',
 								type: 'POST',
 								dataType: "json",
 								data : function(d) {
@@ -92,8 +85,8 @@
 							"columns": result
 						});
 						$('div#initialloader').delay(300).fadeOut('slow');
-						$('#pendingTACLibraryTable input').unbind();
-						$('#pendingTACLibraryTable input').bind('keyup', function (e) {
+						$('#slaLibraryTable input').unbind();
+						$('#slaLibraryTable input').bind('keyup', function (e) {
 							if (e.keyCode == 13) {
 								table.search(this.value).draw();
 							}
@@ -112,7 +105,7 @@
 
 			function pageRendering(){
 				$.ajax({
-					url: 'pendingTAC/pageRendering',
+					url: 'sla/pageRendering',
 					type: 'POST',
 					dataType: "json",
 					success: function(data){
@@ -124,9 +117,9 @@
 						var button=data.buttonList;
 
 						var date=data.inputTypeDateList;
-						for(i=0; i<date.length; i++){
+						/*for(i=0; i<date.length; i++){
 							if(date[i].type === "date"){
-								$("#pendingTacTableDiv").append("<div class='input-field col s6 m2'>"+
+								$("#slaTableDiv").append("<div class='input-field col s6 m2'>"+
 										"<div id='enddatepicker' class='input-group date'>"+
 										"<input class='form-control datepicker' type='text' onchange='checkDate(startDate,endDate)' id="+date[i].id+" autocomplete='off'>"+
 										"<label for="+date[i].id+">"+date[i].title
@@ -139,16 +132,16 @@
 						        });
 								}
 							else if(date[i].type === "text"){
-								$("#pendingTacTableDiv").append("<div class='input-field col s6 m2'><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
+								$("#slaTableDiv").append("<div class='input-field col s6 m2'><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
 
 							}
-						} 
+						} */
 
 						// dynamic dropdown portion
-					/*	var dropdown=data.dropdownList;
+						var dropdown=data.dropdownList;
 						for(i=0; i<dropdown.length; i++){
 							var dropdownDiv=
-								$("#pendingTacTableDiv").append("<div class='col s6 m2 l2 selectDropdwn'>"+
+								$("#slaTableDiv").append("<div class='col s6 m2 l2 selectDropdwn'>"+
 										
 										"<div class='select-wrapper select2 form-control boxBorder boxHeight initialized'>"+
 										"<span class='caret'>"+"</span>"+
@@ -161,9 +154,9 @@
 										"</div>"+
 								"</div>");
 						}
-*/
-						$("#pendingTacTableDiv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'></div>");
-						$("#pendingTacTableDiv").append("<div class=' col s3 m2 l1'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+
+						$("#slaTableDiv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'></div>");
+						$("#slaTableDiv").append("<div class=' col s3 m2 l1'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 
 						for(i=0; i<button.length; i++){
 							$('#'+button[i].id).text(button[i].buttonTitle);
@@ -199,76 +192,42 @@
 				}
 			});
 				
-		}
-
-
-
-			function  DeleteByID(txnId,id){
-				
-				$("#DeleteTacConfirmationModal").openModal({
-			        dismissible:false
-			    });
-				$("#tacdeleteTxnId").text(txnId);
-				$("#deleteTacId").val(id);
-			} 
-			
-			function confirmantiondelete(){
-				var id  = parseInt($("#deleteTacId").val());
-				var deleteRequest = {
-						"id" : id,
-						"remark" : $("#deleteTacRemark").val() 
-				}
-				console.log(JSON.stringify(deleteRequest));
-				
-				$.ajax({
-					url : './pending-tac-approved',
-					data : JSON.stringify(deleteRequest),
-					dataType : 'json',
-					contentType : 'application/json; charset=utf-8',
-					type : 'DELETE',
-					success : function(data, textStatus, xhr) {
-						console.log(data);
-						$("#DeleteTacConfirmationModal").closeModal();
-						$("#closeDeleteModal").openModal({
-					        dismissible:false
-					    });
-						
-						$("#materialize-lean-overlay-3").css("display","none");
-					},
-					error : function() {
-						console.log("Error");
+				$.getJSON('./registrationUserType', function(data) {
+					for (i = 0; i < data.length; i++) {
+						$('<option>').val(data[i].id).text(data[i].usertypeName)
+						.appendTo('#userType');
 					}
 				});
 				
-				return false;
-			}
-			
-			
+		}
+
+
 			//**********************************************************Export Excel file************************************************************************
-			
 			function exportData()
 			{
 				var roleType = $("body").attr("data-roleType");
 				var currentRoleType = $("body").attr("data-stolenselected-roleType");
-				var table = $('#pendingTACLibraryTable').DataTable();
+				var table = $('#slaLibraryTable').DataTable();
 				var info = table.page.info(); 
-				var featureName = $('#feature').val() == null ? null : $("#feature option:selected").text();
 				var pageNo=info.page;
 				var pageSize =info.length;
 				
 				var filterRequest={
 						"endDate":$('#endDate').val(),
 						"startDate":$('#startDate').val(),
-						"tac" : $('#tac').val(),
-						"txnId" :  $('#transactionID').val(),
-						"feature" : featureName,
-						"featureId":parseInt(featureId),
+						"feature" : parseInt($('#feature').val()),
+						"usertype" : $('#userType').val(),
 						"pageNo":parseInt(pageNo),
-						"pageSize":parseInt(pageSize)
+						"pageSize":parseInt(pageSize),
+						
+						/*"userId":parseInt(userId),
+						"featureId":parseInt(featureId),
+						"userTypeId": parseInt($("body").attr("data-userTypeID")),
+						"userType":$("body").attr("data-roleType")*/
 				}
 				console.log(JSON.stringify(filterRequest))
 				$.ajax({
-					url: './exportPendingTacData',
+					url: './exportSlaData',
 					type: 'POST',
 					dataType : 'json',
 					contentType : 'application/json; charset=utf-8',

@@ -3,6 +3,7 @@ package org.gl.ceir.CeirPannelCode.Controller;
 import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
+import org.gl.ceir.CeirPannelCode.Model.FileExportResponse;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.pagination.model.ConfigContentModel;
 import org.gl.ceir.pagination.model.MessageContentModel;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.google.gson.Gson;
 
 @Controller
 public class SystemConfigController {
@@ -57,5 +60,25 @@ public class SystemConfigController {
 		
 	}
 	
+	
+	
+	
+	@PostMapping("exportSystemConfigData")
+	@ResponseBody
+	public FileExportResponse exportToExcel(@RequestBody FilterRequest filterRequest,HttpSession session)
+	{
+		Gson gsonObject=new Gson();
+		Object response;
+		Integer file = 1;	
+		log.info("filterRequest:::::::::"+filterRequest);
+		response= feignCleintImplementation.adminConfigFeign(filterRequest, filterRequest.getPageNo(), filterRequest.getPageSize(), file);
+		FileExportResponse fileExportResponse;
+		Gson gson= new Gson(); 
+		String apiResponse = gson.toJson(response);
+		fileExportResponse = gson.fromJson(apiResponse, FileExportResponse.class);
+		log.info("response from system Management Export  api="+fileExportResponse);
+
+		return fileExportResponse;
+	}		
 	
 }

@@ -1,7 +1,5 @@
 package org.gl.ceir.CeirPannelCode.Model;
 
-import java.util.List;
-
 public class StockUploadModel {
 	
 	
@@ -11,16 +9,23 @@ public class StockUploadModel {
 	private String roleType;
 	private String suplierName;
 	private String txnId;
-	private int quantity,deviceQuantity;
+	private int quantity;
 	private int stockStatus;
 	private String supplierId;
-	
+	private Integer deviceQuantity;
+	public Integer getDeviceQuantity() {
+		return deviceQuantity;
+	}
+	public void setDeviceQuantity(Integer deviceQuantity) {
+		this.deviceQuantity = deviceQuantity;
+	}
 	private String userType,remarks,createdOn,modifiedOn,stateInterp;
 	private Long assignerId;
 	private StockUserModel user;
 	
 	
 	private int userId,roleTypeId;
+	
 	public int getRoleTypeId() {
 		return roleTypeId;
 	}
@@ -130,12 +135,6 @@ public class StockUploadModel {
 	public void setUser(StockUserModel user) {
 		this.user = user;
 	}
-	public int getDeviceQuantity() {
-		return deviceQuantity;
-	}
-	public void setDeviceQuantity(int deviceQuantity) {
-		this.deviceQuantity = deviceQuantity;
-	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -153,12 +152,12 @@ public class StockUploadModel {
 		builder.append(txnId);
 		builder.append(", quantity=");
 		builder.append(quantity);
-		builder.append(", deviceQuantity=");
-		builder.append(deviceQuantity);
 		builder.append(", stockStatus=");
 		builder.append(stockStatus);
 		builder.append(", supplierId=");
 		builder.append(supplierId);
+		builder.append(", deviceQuantity=");
+		builder.append(deviceQuantity);
 		builder.append(", userType=");
 		builder.append(userType);
 		builder.append(", remarks=");
@@ -180,7 +179,9 @@ public class StockUploadModel {
 		builder.append("]");
 		return builder.toString();
 	}
+
 	
+
 	
 	
 	

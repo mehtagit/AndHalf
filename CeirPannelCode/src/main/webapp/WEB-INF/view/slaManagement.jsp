@@ -106,15 +106,15 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}"
 
 								<a href="" class="boton right" id="btnLink" hidden="hidden"></a>
 							</div>
-							<form action="${context}/pendingTacList"
+							<form action="${context}/slaManagement"
 								method="post">
-								<div class="col s12 m12 l12" id="pendingTacTableDiv"
+								<div class="col s12 m12 l12" id="slaTableDiv"
 									style="padding-bottom: 5px; background-color: #e2edef52;">
 									<div id="filterBtnDiv">
 									</div>
 								</div>
 							</form>
-							<table id="pendingTACLibraryTable"
+							<table id="slaLibraryTable"
 								class="responsive-table striped display"></table>
 
 						</div>
@@ -255,7 +255,7 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}"
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
 	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
-	<script type="text/javascript" src="${context}/resources/project_js/pendingTACList.js"></script>
+	<script type="text/javascript" src="${context}/resources/project_js/slaManagement.js"></script>
 		<script type="text/javascript"
 		src="${context}/resources/project_js/dragableModal.js"></script>	
 			<script type="text/javascript"
