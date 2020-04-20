@@ -35,14 +35,14 @@ import com.gl.ceir.config.repository.VipListRepository;
 public class CustomerCareFactory {
 
 	public final List<String> deviceList = Arrays.asList("IMPORTER", "DISTRIBUTOR", "RETAILER", "CUSTOM", 
-			"MANUFACTURER", "REGULARIZE", "VIP");
+			"MANUFACTURER", "REGULARIZE");
 	
 	/*
 	 * public final List<String> stateList = Arrays.asList("BLACKLIST", "GREYLIST",
 	 * "DUPLICATE", "STOLEN", "GLOBAL_BLACKIST", "TYPE_APPROVED");
 	 */
 	public final List<String> stateList = Arrays.asList("BLACKLIST", "GREYLIST", "DUPLICATE", "GLOBAL_BLACKIST", 
-			"TYPE_APPROVED");
+			"TYPE_APPROVED", "VIP");
 
 	@Autowired
 	CustomerCareImporter customerCareImporter;

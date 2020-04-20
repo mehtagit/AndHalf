@@ -112,6 +112,13 @@ public class EnduserServiceImpl {
 
 			// End user is not registered with CEIR system.
 			if(Objects.nonNull(endUserDB)) {
+				List<RegularizeDeviceDb> regulaizedList=new ArrayList<RegularizeDeviceDb>();
+				if(Objects.nonNull(endUserDB.getRegularizeDeviceDbs()))
+				for(RegularizeDeviceDb regularizeData:endUserDB.getRegularizeDeviceDbs()) {
+					regularizeData.setEndUserDB(new EndUserDB());
+					regulaizedList.add(regularizeData);
+				}
+				endUserDB.setRegularizeDeviceDbs(regulaizedList);
 				logger.info("End User with nid [" + nid + "] does exist.");
 				return new GenricResponse(1, "End User does exist.", nid, endUserDB);
 			}else {
@@ -169,6 +176,8 @@ public class EnduserServiceImpl {
 					return new GenricResponse(6,GenericMessageTags.DUPLICATE_IMEI_IN_REQUEST.getTag(),GenericMessageTags.DUPLICATE_IMEI_IN_REQUEST.getMessage(), ""); 
 				}
 				for(RegularizeDeviceDb regularizeDeviceDb : endUserDB.getRegularizeDeviceDbs()) {
+					
+					regularizeDeviceDb.setEndUserDB(endUserDB);
 					//TO DO
 					if(commonFunction.checkAllImeiOfRegularizedDevice(regularizeDeviceDb)) {
 						return new GenricResponse(5,GenericMessageTags.DUPLICATE_IMEI.getTag(),GenericMessageTags.DUPLICATE_IMEI.getMessage(),"");
@@ -191,7 +200,7 @@ public class EnduserServiceImpl {
 							regularizeDeviceDb.getTxnId()));
 				}
 
-				logger.info(endUserDB.getRegularizeDeviceDbs());
+				logger.info("regularize devices: "+endUserDB.getRegularizeDeviceDbs());
 			}
 
 			endUserDB = endUserDbRepository.save(endUserDB);
@@ -348,6 +357,15 @@ public class EnduserServiceImpl {
 
 			for(EndUserDB endUserDB : page.getContent()) {
 				setInterp(endUserDB);
+				if(Objects.nonNull(endUserDB.getRegularizeDeviceDbs())) {
+					List<RegularizeDeviceDb> regulaizedList=new ArrayList<RegularizeDeviceDb>();
+					if(Objects.nonNull(endUserDB.getRegularizeDeviceDbs()))
+					for(RegularizeDeviceDb regularizeData:endUserDB.getRegularizeDeviceDbs()) {
+						regularizeData.setEndUserDB(new EndUserDB());
+						regulaizedList.add(regularizeData);
+					}
+					endUserDB.setRegularizeDeviceDbs(regulaizedList);
+				}
 			}
 
 			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), "", 

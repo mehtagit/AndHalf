@@ -27,6 +27,7 @@ import com.gl.ceir.config.model.DeviceUsageDb;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.PolicyBreachNotification;
+import com.gl.ceir.config.model.RegularizeDeviceDb;
 import com.gl.ceir.config.model.StockMgmt;
 import com.gl.ceir.config.model.constants.GenericMessageTags;
 import com.gl.ceir.config.repository.BlackListRepository;
@@ -69,6 +70,9 @@ public class CustomerCareServiceImpl {
 	ConsignmentServiceImpl consignmentServiceImpl;
 	@Autowired
 	StockServiceImpl stockServiceImpl;
+	
+	@Autowired
+	RegularizedDeviceServiceImpl regularizedDeviceServiceImpl;
 
 	public GenricResponse getAll(CustomerCareRequest customerCareRequest, String listType) {
 		String imei = customerCareRequest.getImei();
@@ -128,6 +132,10 @@ public class CustomerCareServiceImpl {
 					ConsignmentMgmt consignmentObj = (ConsignmentMgmt)objectBytxnId;
 					consignmentServiceImpl.setInterp(consignmentObj);
 					objectBytxnId = consignmentObj;
+				}else if(objectBytxnId instanceof RegularizeDeviceDb) {
+					RegularizeDeviceDb regularizeDeviceDb = (RegularizeDeviceDb)objectBytxnId;
+					regularizedDeviceServiceImpl.setInterp(regularizeDeviceDb);
+					objectBytxnId = regularizeDeviceDb;
 				}
 				/*else if(objectBytxnId instanceof StockMgmt) {
 					StockMgmt consignmentObj = (StockMgmt)objectBytxnId;
@@ -140,6 +148,7 @@ public class CustomerCareServiceImpl {
 				if(repository instanceof BlackListRepository) {
 					BlackListRepository blackListRepository = (BlackListRepository)repository;
 					objectBytxnId = blackListRepository.findByImeiMsisdnIdentityImei(customerCareDeviceState.getImei());
+					logger.info("Black List Data "+objectBytxnId);
 				}
 				else if(repository instanceof GreyListRepository) {
 					GreyListRepository greyListRepository = (GreyListRepository)repository;
@@ -172,6 +181,7 @@ public class CustomerCareServiceImpl {
 				logger.info(GenericMessageTags.INVALID_TXN_ID.getMessage() +" txnId [" + customerCareDeviceState.getTxnId() + "]");
 				return new GenricResponse(3, GenericMessageTags.INVALID_TXN_ID.getTag(), GenericMessageTags.INVALID_TXN_ID.getMessage(), customerCareDeviceState.getTxnId());
 			}else {
+			
 				return new GenricResponse(0, GenericMessageTags.SUCCESS.getMessage(), "",  objectBytxnId);
 			}
 

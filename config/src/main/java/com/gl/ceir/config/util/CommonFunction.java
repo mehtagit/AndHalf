@@ -68,7 +68,6 @@ public class CommonFunction {
 	
 	public int getFeatureIdByTxnId(String txnId) {
 		if(Objects.isNull(txnId)) {
-			//TODO enter log 
 			return 0;
 		}else {
 			if(txnId.startsWith("C")) {

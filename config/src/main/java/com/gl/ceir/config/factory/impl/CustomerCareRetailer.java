@@ -31,9 +31,9 @@ public class CustomerCareRetailer implements CustomerCareTarget{
 			customerCareDeviceState.setStatus(Constants.available);
 			customerCareDeviceState.setFeatureId(commonFunction.getFeatureIdByTxnId(deviceDb.getTxnId()));
 		}else {
-			customerCareDeviceState.setDate("");
+			//customerCareDeviceState.setDate("");
 			customerCareDeviceState.setStatus(Constants.non_available);
-			customerCareDeviceState.setFeatureId(commonFunction.getFeatureIdByTxnId(deviceDb.getTxnId()));
+			//customerCareDeviceState.setFeatureId(commonFunction.getFeatureIdByTxnId(deviceDb.getTxnId()));
 		}
 		customerCareDeviceState.setImei(imei);
 		setName(customerCareDeviceState);

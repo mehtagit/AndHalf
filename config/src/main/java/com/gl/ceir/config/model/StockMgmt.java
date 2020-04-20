@@ -85,6 +85,17 @@ public class StockMgmt implements Serializable {
 	private String deleteFlagInterp;
 	
 	private int deviceQuantity;
+	
+	private Long ceirAdminId;
+	
+
+	public Long getCeirAdminId() {
+		return ceirAdminId;
+	}
+
+	public void setCeirAdminId(Long ceirAdminId) {
+		this.ceirAdminId = ceirAdminId;
+	}
 
 	public Integer getDeleteFlag() {
 		return deleteFlag;

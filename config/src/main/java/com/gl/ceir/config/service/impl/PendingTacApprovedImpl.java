@@ -175,9 +175,6 @@ public class PendingTacApprovedImpl {
 	private GenericSpecificationBuilder<PendingTacApprovedDb> buildSpecification(FilterRequest filterRequest){
 		GenericSpecificationBuilder<PendingTacApprovedDb> cmsb = new GenericSpecificationBuilder<>(propertiesReader.dialect);
 
-		 if(Objects.nonNull(filterRequest.getUserId())) {
-			 cmsb.with(new SearchCriteria("userId", filterRequest.getFilteredUserId(), SearchOperation.EQUALITY, Datatype.STRING));
-		 }
 		 if(Objects.nonNull(filterRequest.getStartDate()) && !filterRequest.getStartDate().isEmpty())
 			 cmsb.with(new SearchCriteria("createdOn", filterRequest.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
 
@@ -186,19 +183,15 @@ public class PendingTacApprovedImpl {
 
 		 if(Objects.nonNull(filterRequest.getTxnId()) && !filterRequest.getTxnId().isEmpty())
 			 cmsb.with(new SearchCriteria("txnId", filterRequest.getTxnId(), SearchOperation.EQUALITY, Datatype.STRING));
-
-		 if(Objects.nonNull(filterRequest.getFeatureName()) && !filterRequest.getFeatureName().isEmpty())
-			 cmsb.with(new SearchCriteria("featureName", filterRequest.getFeatureName(), SearchOperation.EQUALITY, Datatype.STRING));
-
-		 if(Objects.nonNull(filterRequest.getUserType()) && !filterRequest.getUserType().isEmpty())
-			 cmsb.with(new SearchCriteria("userType", filterRequest.getUserType(), SearchOperation.EQUALITY, Datatype.STRING));
+		 
+		 if(Objects.nonNull(filterRequest.getTac()) && !filterRequest.getTac().isEmpty())
+			 cmsb.with(new SearchCriteria("tac", filterRequest.getTac(), SearchOperation.EQUALITY, Datatype.STRING));
+		 
 		 if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
-
-			 cmsb.orSearch(new SearchCriteria("userType", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
-
-			 cmsb.orSearch(new SearchCriteria("featureName", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
-
+			 
 			 cmsb.orSearch(new SearchCriteria("txnId", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+			 
+			 cmsb.orSearch(new SearchCriteria("tac", filterRequest.getTac(), SearchOperation.LIKE, Datatype.STRING));
 			 
 		 }
 		 return cmsb;

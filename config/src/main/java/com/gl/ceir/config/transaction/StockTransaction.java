@@ -63,12 +63,13 @@ public class StockTransaction {
 		stockManagementRepository.save(stockMgmt);
 		logger.info("Stock [" + stockMgmt.getTxnId() + "] saved in stock_mgmt.");
 
-		auditTrailRepository.save(new AuditTrail(stockMgmt.getUser().getId(), 
-				userProfile.getUser().getUsername(), 
-				userProfile.getUser().getUsertype().getId(),
-				userProfile.getUser().getUsertype().getUsertypeName(), 
-				4, Features.STOCK, 
-				SubFeatures.UPLOAD, "", stockMgmt.getTxnId()));
+		/*
+		 * auditTrailRepository.save(new AuditTrail(stockMgmt.getUser().getId(),
+		 * userProfile.getUser().getUsername(),
+		 * userProfile.getUser().getUsertype().getId(),
+		 * userProfile.getUser().getUsertype().getUsertypeName(), 4, Features.STOCK,
+		 * SubFeatures.UPLOAD, "", stockMgmt.getTxnId()));
+		 */
 		logger.info("Stock [" + stockMgmt.getTxnId() + "] saved in audit_trail.");
 
 		if(isStockAssignRequest) {
@@ -173,10 +174,11 @@ public class StockTransaction {
 		stockManagementRepository.save(stockMgmt);
 		logger.info("Stock [" + stockMgmt.getTxnId() + "] saved in stock_mgmt.");
 
-		auditTrailRepository.save(new AuditTrail(stockMgmt.getUser().getId(), "", 0L, "", 0L, 
-				Features.STOCK, SubFeatures.UPDATE, "", stockMgmt.getTxnId()));
-		logger.info("Stock [" + stockMgmt.getTxnId() + "] saved in audit_trail.");
-
+		/*
+		 * auditTrailRepository.save(new AuditTrail(stockMgmt.getUser().getId(), "", 0L,
+		 * "", 0L, Features.STOCK, SubFeatures.UPDATE, "", stockMgmt.getTxnId()));
+		 * logger.info("Stock [" + stockMgmt.getTxnId() + "] saved in audit_trail.");
+		 */
 		queryStatus = Boolean.TRUE;
 		return queryStatus;
 	}
@@ -187,9 +189,11 @@ public class StockTransaction {
 		stockManagementRepository.save(stockMgmt);
 		logger.info("Stock [" + stockMgmt.getTxnId() + "] saved in stock_mgmt.");
 
-		auditTrailRepository.save(new AuditTrail(stockMgmt.getUser().getId(), "", 0L, "",
-				0L, Features.STOCK, SubFeatures.UPDATE, "", stockMgmt.getTxnId()));
-		logger.info("Stock [" + stockMgmt.getTxnId() + "] saved in audit_trail.");
+		/*
+		 * auditTrailRepository.save(new AuditTrail(stockMgmt.getUser().getId(), "", 0L,
+		 * "", 0L, Features.STOCK, SubFeatures.UPDATE, "", stockMgmt.getTxnId()));
+		 * logger.info("Stock [" + stockMgmt.getTxnId() + "] saved in audit_trail.");
+		 */
 
 		status = Boolean.TRUE;
 

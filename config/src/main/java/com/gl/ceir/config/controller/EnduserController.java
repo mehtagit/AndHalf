@@ -49,6 +49,7 @@ public class EnduserController {
 
 		MappingJacksonValue mapping = null;
 		logger.info("Request to save end users = " + endUserDB);
+		logger.info("regularze data: "+endUserDB.getRegularizeDeviceDbs().toString());
 		GenricResponse genricResponse = enduserServiceImpl.saveEndUser(endUserDB);
 		logger.info("Response of save end users = " + endUserDB);
 		mapping = new MappingJacksonValue(genricResponse);

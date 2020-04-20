@@ -22,6 +22,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gl.ceir.config.ConfigTags;
 import com.gl.ceir.config.EmailSender.EmailUtil;
 import com.gl.ceir.config.EmailSender.MailSubject;
@@ -43,6 +44,7 @@ import com.gl.ceir.config.model.SystemConfigListDb;
 import com.gl.ceir.config.model.SystemConfigurationDb;
 import com.gl.ceir.config.model.User;
 import com.gl.ceir.config.model.UserProfile;
+import com.gl.ceir.config.model.VisaDb;
 import com.gl.ceir.config.model.WebActionDb;
 import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.Features;
@@ -189,20 +191,25 @@ public class RegularizedDeviceServiceImpl {
 			Page<RegularizeDeviceDb> page = regularizedDeviceDbRepository.findAll(buildSpecification(filterRequest).build(), pageable);
             
 			for(RegularizeDeviceDb regularizeDeviceDb : page.getContent()) {
-				if(Objects.nonNull(regularizeDeviceDb.getEndUserDB())) {
-					regularizeDeviceDb.setNationality(regularizeDeviceDb.getEndUserDB().getNationality());
-					logger.info("nationality= "+regularizeDeviceDb.getEndUserDB().getNationality());
-				}
+				
 				for(StateMgmtDb stateMgmtDb : stateList) {
 					if(regularizeDeviceDb.getStatus() == stateMgmtDb.getState()) {
 						regularizeDeviceDb.setStateInterp(stateMgmtDb.getInterp()); 
 						break; 
 					} 
 				}
+				
+				if(Objects.nonNull(regularizeDeviceDb.getEndUserDB())) {
+					regularizeDeviceDb.setNationality(regularizeDeviceDb.getEndUserDB().getNationality());
+					EndUserDB endUser=regularizeDeviceDb.getEndUserDB();
+					endUser.setRegularizeDeviceDbs(new ArrayList<>(1));
+					//logger.info("nationality= "+regularizeDeviceDb.getEndUserDB().getNationality());
+					regularizeDeviceDb.setEndUserDB(endUser);
+				}
+				
 
 				setInterp(regularizeDeviceDb);
 			}
-
 
 
 			// Save in audit.
@@ -222,8 +229,8 @@ public class RegularizedDeviceServiceImpl {
 					userId=filterRequest.getUserId();
 				}
 			}
+        
          
-          
 			AuditTrail auditTrail = new AuditTrail(userId, 
 					username, 
 					Long.valueOf(filterRequest.getUserTypeId()), 
@@ -233,7 +240,6 @@ public class RegularizedDeviceServiceImpl {
 					"", "NA");
 			auditTrailRepository.save(auditTrail);
 			logger.info("AUDIT : View in audit_trail. " + auditTrail);
-
 			return page;
 
 		} catch (Exception e) {
@@ -337,32 +343,34 @@ public class RegularizedDeviceServiceImpl {
 
 			EndUserDB endUserDB2 = endUserDbRepository.getByNid(nid);
 			Integer type=null;
-			if(Objects.isNull(endUserDB.getNationality())) {
-				logger.info(GenericMessageTags.NULL_Natinality);
-				return new GenricResponse(1, GenericMessageTags.NULL_Natinality.getTag(), 
-						GenericMessageTags.NULL_Natinality.getMessage(), 
-						"");
-			}
+			
+			
 			logger.info("nationality= "+endUserDB.getNationality());
-			if("Cambodian".equalsIgnoreCase(endUserDB.getNationality())) {
-				type=1;
+			if(Objects.nonNull(endUserDB2)) {
+				if("Cambodian".equalsIgnoreCase(endUserDB.getNationality())) {
+					type=1;
+				}
+				else {
+					type=2;
+				}	
 			}
-			else {
-				type=2;
-			}
+			
+			
 			if(!endUserDB.getRegularizeDeviceDbs().isEmpty()) {
 				if(validateRegularizedDevicesCount(nid, endUserDB.getRegularizeDeviceDbs(),type)) {
-					if(commonFunction.hasDuplicateImeiInRequest(endUserDB.getRegularizeDeviceDbs())) {
-						return new GenricResponse(6,GenericMessageTags.DUPLICATE_IMEI_IN_REQUEST.getTag(),GenericMessageTags.DUPLICATE_IMEI_IN_REQUEST.getMessage(), ""); 
-					}
 					for(RegularizeDeviceDb regularizeDeviceDb : endUserDB.getRegularizeDeviceDbs()) {
 						// TODO     responsse 5
 						if(Objects.isNull(endUserDB2)) {
-						regularizeDeviceDb.setEndUserDB(endUserDB);
-						}
-						else {
-							regularizeDeviceDb.setEndUserDB(endUserDB2);	
-						}
+							regularizeDeviceDb.setEndUserDB(endUserDB);
+							}
+							else {
+								regularizeDeviceDb.setEndUserDB(endUserDB2);	
+							}
+						
+					if(commonFunction.hasDuplicateImeiInRequest(endUserDB.getRegularizeDeviceDbs())) {
+						return new GenricResponse(6,GenericMessageTags.DUPLICATE_IMEI_IN_REQUEST.getTag(),GenericMessageTags.DUPLICATE_IMEI_IN_REQUEST.getMessage(), ""); 
+					}
+					
 						if(commonFunction.checkAllImeiOfRegularizedDevice(regularizeDeviceDb)) {
 							return new GenricResponse(5,GenericMessageTags.DUPLICATE_IMEI.getTag(),GenericMessageTags.DUPLICATE_IMEI.getMessage(), "");
 						}
@@ -499,12 +507,33 @@ public class RegularizedDeviceServiceImpl {
 			if(Objects.isNull(imei)) {
 				throw new IllegalArgumentException();
 			}
+			RegularizeDeviceDb regularizeDeviceDb=new RegularizeDeviceDb();
+			try {
+				 regularizeDeviceDb = regularizedDeviceDbRepository.getByFirstImei(imei);				
+			}
+			catch(Exception e) {
+				logger.info(e.toString());
+				return null;
+			}
 
-			RegularizeDeviceDb regularizeDeviceDb = regularizedDeviceDbRepository.getByFirstImei(imei);
 			if(Objects.nonNull(regularizeDeviceDb)) {
 				EndUserDB endUserDB = endUserDbRepository.getByNid(regularizeDeviceDb.getNid());
+				//EndUserDB endUserDB =regularizeDeviceDb.getEndUserDB();
 				endUserDB.setRegularizeDeviceDbs(new ArrayList<>(1));
+				if(Objects.nonNull(endUserDB.getDocType())) {
+					endUserDB.setDocTypeInterp(interpSetter.setConfigInterp(Tags.DOC_TYPE, endUserDB.getDocType()));	
+				}
+				if(Objects.nonNull(endUserDB.getVisaDb())) {
+					List<VisaDb> visaList=new ArrayList<VisaDb>();
+					for(VisaDb visa:endUserDB.getVisaDb()) {
+						visa.setVisaTypeInterp(interpSetter.setConfigInterp(Tags.VISA_TYPE, visa.getVisaType()));	
+						visaList.add(visa);
+					}
+					endUserDB.setVisaDb(visaList);
+				}
+				//VISA_TYPE
 				regularizeDeviceDb.setEndUserDB(endUserDB);
+				
 				setInterp(regularizeDeviceDb);
 			}
 			return regularizeDeviceDb;
@@ -697,7 +726,7 @@ public class RegularizedDeviceServiceImpl {
 		return specificationBuilder;
 	}
 
-	private void setInterp(RegularizeDeviceDb regularizeDeviceDb) {
+	public void setInterp(RegularizeDeviceDb regularizeDeviceDb) {
 		if(Objects.nonNull(regularizeDeviceDb.getTaxPaidStatus()))
 			regularizeDeviceDb.setTaxPaidStatusInterp(interpSetter.setConfigInterp(Tags.CUSTOMS_TAX_STATUS, regularizeDeviceDb.getTaxPaidStatus()));
 
@@ -712,6 +741,11 @@ public class RegularizedDeviceServiceImpl {
 
 		if(Objects.nonNull(regularizeDeviceDb.getCurrency()))
 			regularizeDeviceDb.setCurrencyInterp(interpSetter.setConfigInterp(Tags.CURRENCY, regularizeDeviceDb.getCurrency(), 0, 1));
+		
+		if(Objects.nonNull(regularizeDeviceDb.getMultiSimStatus()))
+			regularizeDeviceDb.setMultiSimStatusInterp(interpSetter.setConfigInterp(Tags.MULTI_SIM_STATUS, regularizeDeviceDb.getDeviceIdType()));
+
+		
 	}
 
 }

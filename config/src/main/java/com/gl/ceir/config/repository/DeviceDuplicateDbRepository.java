@@ -1,5 +1,7 @@
 package com.gl.ceir.config.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
@@ -12,6 +14,6 @@ JpaSpecificationExecutor<DeviceDuplicateDb> {
 
 	public DeviceDuplicateDb findByImeiMsisdnIdentityMsisdn(Long msisdn);
 
-	public DeviceDuplicateDb findByImeiMsisdnIdentityImei(String imei);
+	public List<DeviceDuplicateDb> findByImeiMsisdnIdentityImei(String imei);
 
 }

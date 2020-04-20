@@ -26,9 +26,9 @@ import org.springframework.stereotype.Service;
 
 import com.gl.ceir.config.ConfigTags;
 import com.gl.ceir.config.EmailSender.EmailUtil;
-import com.gl.ceir.config.EmailSender.MailSubject;
 import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
+import com.gl.ceir.config.model.AuditTrail;
 import com.gl.ceir.config.model.ConsignmentMgmt;
 import com.gl.ceir.config.model.ConsignmentUpdateRequest;
 import com.gl.ceir.config.model.DashboardUsersFeatureStateMap;
@@ -38,7 +38,6 @@ import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.ResponseCountAndQuantity;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.SingleImeiDetails;
-import com.gl.ceir.config.model.SingleImeiHistoryDb;
 import com.gl.ceir.config.model.StateMgmtDb;
 import com.gl.ceir.config.model.StockMgmt;
 import com.gl.ceir.config.model.StolenAndRecoveryHistoryMgmt;
@@ -62,6 +61,7 @@ import com.gl.ceir.config.model.constants.WebActionDbState;
 import com.gl.ceir.config.model.constants.WebActionDbSubFeature;
 import com.gl.ceir.config.model.constants.WebActionStatus;
 import com.gl.ceir.config.model.file.StolenAndRecoveryFileModel;
+import com.gl.ceir.config.repository.AuditTrailRepository;
 import com.gl.ceir.config.repository.ConsignmentRepository;
 import com.gl.ceir.config.repository.DashboardUsersFeatureStateMapRepository;
 import com.gl.ceir.config.repository.ImmegreationImeiDetailsRepository;
@@ -140,6 +140,9 @@ public class StolenAndRecoveryServiceImpl {
 	
 	@Autowired
 	UserRepository userRepository;
+	
+	@Autowired
+	AuditTrailRepository auditTrailRepository;
 
 	public GenricResponse uploadDetails(StolenandRecoveryMgmt stolenandRecoveryMgmt) {
 
@@ -162,6 +165,7 @@ public class StolenAndRecoveryServiceImpl {
 
 			if(stolenAndRecoveryTransaction.executeUploadDetails(stolenandRecoveryMgmt, webActionDb)) {
 				logger.info("Upload Successfully." +  stolenandRecoveryMgmt.getTxnId());
+				//TODO
 				return new GenricResponse(0, "Upload Successfully.", stolenandRecoveryMgmt.getTxnId());
 			}else {
 				logger.info("Upload have been failed." + stolenandRecoveryMgmt.getTxnId());
@@ -960,4 +964,29 @@ public class StolenAndRecoveryServiceImpl {
 
 		return count==0? 1:count;
 	}
+	
+	private void addInAuditTrail(Long userId, String txnId, String subFeatureId,Integer featureId) {	
+		User requestUser = null;
+		try {
+			requestUser = userRepository.getById(userId);
+		} catch (Exception e) {
+			logger.error("Error while fetching user information for user id = "+userId);
+		}
+		if(Objects.nonNull(requestUser)) {
+		logger.info("Inserting in audit table for feature = "+Features.STOCK+"and Subfeature =");
+		auditTrailRepository.save(new AuditTrail(
+				requestUser.getId(),
+				requestUser.getUsername(), 
+				requestUser.getUsertype().getId(),
+				requestUser.getUsertype().getUsertypeName(),
+				4,
+				Features.STOCK,
+				"subfeature",
+				"", 
+				txnId));
+		}else {
+			logger.error("Could not find the user information");
+		}		
+}
+	
 }
