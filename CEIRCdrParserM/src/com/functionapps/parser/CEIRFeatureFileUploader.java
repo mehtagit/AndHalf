@@ -12,7 +12,7 @@ public class CEIRFeatureFileUploader {
 	/**
 	 * @param args
 	 */
-	static Logger logger = Logger.getLogger(CEIRFeatureFileUploader.class);
+	// static Logger logger = Logger.getLogger(CEIRFeatureFileUploader.class);
 
 	public static void main(String[] args) {
 		System.out.println("Process Started");
@@ -85,7 +85,6 @@ public class CEIRFeatureFileUploader {
 			raw_upload_set_no=1;
 
 		} catch (SQLException e) {
-			logger.info("CEIRFileUploader Exception ["+e+"]");
 			System.out.println("Exception");
 			e.printStackTrace();
 		}

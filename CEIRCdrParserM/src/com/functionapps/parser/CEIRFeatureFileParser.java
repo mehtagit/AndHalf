@@ -142,10 +142,8 @@ public class CEIRFeatureFileParser {
 				rs1.close();
 			} catch (SQLException e) {
 				logger.info("check Grace Status  ["+e+"]");
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
 		}
 		return operator_tag;
 
@@ -180,7 +178,6 @@ public class CEIRFeatureFileParser {
 			try {
 				conn.close();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
