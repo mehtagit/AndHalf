@@ -98,8 +98,8 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 		$("#TransactionId").val(data.txnId);
 		$("#csvUploadFileName").val(data.fileName);
 		$("#withdrawnRemark").val(data.remarks);
-		$("#viewdevicequantity").val(data.deviceQuantity);
-		$("label[for='devicequantity']").addClass('active');
+
+
 	}
 
 
@@ -162,8 +162,6 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 		$("#editTransactionId").val(data.txnId);
 		$("#editcsvUploadFileName").val(data.fileName);
 		$("#existingFileName").val(data.fileName);
-		$("#editdevicequantity").val(data.deviceQuantity);
-		$("label[for='editdevicequantity']").addClass('active');
 		
 
 	} 
@@ -180,8 +178,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 		var txnId=$('#editTransactionId').val();
 		var quantity=$('#editQuantity').val();
 		var InvoiceNumber=$('#editInvoiceNumber').val();
-		var editdevicequantity=$('#editdevicequantity').val();
-		
+
 		console.log(supplierName,supplierName,filename,txnId,quantity,InvoiceNumber);
 
 		var formData= new FormData();
@@ -191,7 +188,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 		formData.append('quantity',quantity);
 		formData.append('txnId',txnId);
 		formData.append('filename',filename);
-		formData.append('deviceQuantity',editdevicequantity);
+
 		formData.append('invoiceNumber',InvoiceNumber);
 
 		console.log(JSON.stringify(formData));
@@ -258,7 +255,12 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 		var obj ={
 				"txnId" : txnId,
 				"userType":role,
-				"remarks":stockRemark
+				"remarks":stockRemark,
+				"userId":parseInt(userId),
+				"featureId":parseInt(featureId),
+				"userTypeId": parseInt($("body").attr("data-userTypeID")),
+				"userType":$("body").attr("data-roleType"),
+				"userName":$("body").attr("data-username")
 		}
 
 		$.ajax({

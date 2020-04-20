@@ -120,15 +120,16 @@ public class UploadPaidStatus {
 					String currency = contentModelList.getCurrencyInterp() == null ? "" : contentModelList.getCurrencyInterp();
 					String price = currency.concat(String.valueOf(contentModelList.getPrice()));
 					String country = contentModelList.getCountry();
-					String status = contentModelList.getTaxPaidStatusInterp();
+					String taxStatus = contentModelList.getTaxPaidStatusInterp();
 					String origin = contentModelList.getOrigin();
 					String nationality=contentModelList.getNationality();
+					String statusInterp = contentModelList.getStateInterp();
 					//params for action 
 					String imei1 = contentModelList.getFirstImei();
-					String action = iconState.userPaidStatusIcon(imei1);
+					String action = iconState.userPaidStatusIcon(imei1,taxStatus,userStatus);
 
 					
-					Object[] data = {createdOn,nid,txnId,country,nationality,status,origin,action};
+					Object[] data = {createdOn,nid,txnId,country,nationality,taxStatus,origin,statusInterp,action};
 
 					List<Object> datatableList = Arrays.asList(data);
 					finalList.add(datatableList);
@@ -175,13 +176,43 @@ public class UploadPaidStatus {
 					String country = contentModelList.getCountry();
 					String taxStatus = contentModelList.getTaxPaidStatusInterp();
 					String status = contentModelList.getStateInterp();
-					
+					String origin = contentModelList.getOrigin();
+					String nationality=contentModelList.getNationality();
+					String statusInterp = contentModelList.getStateInterp();
 					//params for action 
 					String imei1 = contentModelList.getFirstImei();
 					String deviceState = String.valueOf(contentModelList.getStatus());
 					String action = iconState.deviceActivationIcon(imei1,createdOn,contentModelList.getTxnId(),deviceState,userStatus);
 
-					Object[] data = {createdOn,txnId,nid,action};
+					Object[] data = {createdOn,nid,txnId,country,nationality,taxStatus,origin,status,action};
+
+					List<Object> datatableList = Arrays.asList(data);
+					finalList.add(datatableList);
+					datatableResponseModel.setData(finalList);
+				}
+			}else  {
+				
+				
+				for(UserPaidStatusContent contentModelList : contentList) {
+					String nid = contentModelList.getNid();
+					String txnId = contentModelList.getTxnId();
+					//Integer sno = contentModelList.getId();
+					String createdOn = contentModelList.getCreatedOn();
+					String deviceIDInterp = contentModelList.getDeviceIdTypeInterp();
+					//String deviceTypeInterp = contentModelList.getDeviceTypeInterp();
+					String currency = contentModelList.getCurrencyInterp() == null ? "" : contentModelList.getCurrencyInterp();
+					String price = currency.concat(String.valueOf(contentModelList.getPrice()));
+					String country = contentModelList.getCountry();
+					String status = contentModelList.getTaxPaidStatusInterp();
+					String origin = contentModelList.getOrigin();
+					String nationality=contentModelList.getNationality();
+					String statusInterp = contentModelList.getStateInterp();
+					//params for action 
+					String imei1 = contentModelList.getFirstImei();
+					String action = iconState.endUserPaidStatusIcon(imei1);
+					log.info("in end user data table controller  Status---");
+					
+					Object[] data = {createdOn,nid,txnId,country,nationality,status,origin,statusInterp,action};
 
 					List<Object> datatableList = Arrays.asList(data);
 					finalList.add(datatableList);
@@ -261,7 +292,7 @@ public class UploadPaidStatus {
 		
 
 		//Dropdown items			
-		String[] selectParam= {"select",Translator.toLocale("input.Status"),"Status","","select",Translator.toLocale("select.taxPaidStatus"),"taxPaidStatus",""};
+		String[] selectParam= {"select",Translator.toLocale("input.Status"),"recordStatus","","select",Translator.toLocale("select.taxPaidStatus"),"taxPaidStatus",""};
 		for(int i=0; i< selectParam.length; i++) {
 			inputFields= new InputFields();
 			inputFields.setType(selectParam[i]);

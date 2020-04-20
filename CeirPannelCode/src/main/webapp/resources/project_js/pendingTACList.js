@@ -213,16 +213,19 @@
 			} 
 			
 			function confirmantiondelete(){
-				
 				var id  = parseInt($("#deleteTacId").val());
-				console.log(JSON.stringify(id));
+				var deleteRequest = {
+						"id" : id,
+						"remark" : $("#deleteTacRemark").val() 
+				}
+				console.log(JSON.stringify(deleteRequest));
 				
 				$.ajax({
-					url : './deletePort/'+id,
-//					data : JSON.stringify(request),
+					url : './pending-tac-approved',
+					data : JSON.stringify(deleteRequest),
 					dataType : 'json',
 					contentType : 'application/json; charset=utf-8',
-					type : 'POST',
+					type : 'DELETE',
 					success : function(data, textStatus, xhr) {
 						console.log(data);
 						$("#DeleteTacConfirmationModal").closeModal();
@@ -238,6 +241,47 @@
 				});
 				
 				return false;
+			}
+			
+			
+			//**********************************************************Export Excel file************************************************************************
+			
+			function exportData()
+			{
+				var roleType = $("body").attr("data-roleType");
+				var currentRoleType = $("body").attr("data-stolenselected-roleType");
+				var table = $('#pendingTACLibraryTable').DataTable();
+				var info = table.page.info(); 
+				var featureName = $('#feature').val() == null ? null : $("#feature option:selected").text();
+				var pageNo=info.page;
+				var pageSize =info.length;
+				
+				var filterRequest={
+						"endDate":$('#endDate').val(),
+						"startDate":$('#startDate').val(),
+						"tac" : $('#tac').val(),
+						"txnId" :  $('#transactionID').val(),
+						"feature" : featureName,
+						"featureId":parseInt(featureId),
+						"pageNo":parseInt(pageNo),
+						"pageSize":parseInt(pageSize)
+				}
+				console.log(JSON.stringify(filterRequest))
+				$.ajax({
+					url: './exportPendingTacData',
+					type: 'POST',
+					dataType : 'json',
+					contentType : 'application/json; charset=utf-8',
+					data : JSON.stringify(filterRequest),
+					success: function (data, textStatus, jqXHR) {
+						  window.location.href = data.url;
+
+					},
+					error: function (jqXHR, textStatus, errorThrown) {
+						
+					}
+				});
+			
 			}
 			
 

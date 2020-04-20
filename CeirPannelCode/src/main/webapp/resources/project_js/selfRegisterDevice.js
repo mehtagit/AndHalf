@@ -192,13 +192,317 @@ $.getJSON('./getDropdownList/DEVICE_STATUS', function(data) {
 
 
 
+$(document).ready(function () {
+
+	$( document ).ready(function() {
+		
+		var In = $("body").attr("session-value");
+		if(In.length > 0 && In !='null' ){
+		
+			$.ajax({
+				url : "./paid-status/"+In,
+				dataType : 'json',
+				contentType : 'application/json; charset=utf-8',
+				type : 'GET',
+				success : function(data) {
+                   
+                    sessionStorage.setItem("nationalId", In);
+                    localStorage.setItem("nationalId", In);
+					if (data.errorCode == 1) {
+					
+						$("#user123").css("display", "none");
+						$("#user456").css("display", "block");
+						$("#addbutton").css("display", "block");
+						$("#submitbtn").css("display", "none");
+						/*$('div#initialloader').fadeIn('fast');*/
+						pageRendering(data_lang_param);
+						filter(data_lang_param);
+					} 
+					else if (data.errorCode == 0 && In == 'null') {
+						$("#user123").css("display", "none");
+						$("#user456").css("display", "block");
+						$("#addbutton").css("display", "block");
+						$("#submitbtn").css("display", "none");
+						$('div#initialloader').delay(300).fadeOut('slow');
+					} 
+					else
+					{
+						$("#user123").css("display", "block");
+						$("#user456").css("display", "none");
+						$("#addbutton").css("display", "none");
+						$("#submitbtn").css("display", "none");	
+						$('div#initialloader').delay(300).fadeOut('slow');
+					}
+					$('#nationalID').val(In);
+					//regularizedCount();
+				},
+				error : function() {
+					console.log("Failed");
+				}
+			}); 
+				
+			
+
+
+		}
+		else{
+			alert("block 2");
+			//sessionStorage.setItem("admin","CEIRAdmin");
+			$.ajax({
+				url : "./paid-status/"+In,
+				dataType : 'json',
+				contentType : 'application/json; charset=utf-8',
+				type : 'GET',
+				success : function(data) {
+
+					//	sessionStorage.removeItem('nationalId');
+
+					if (data.errorCode == 1) {
+						$("#user123").css("display", "none");
+						$("#user456").css("display", "block");
+						$("#addbutton").css("display", "block");
+						$("#submitbtn").css("display", "none");
+						pageRendering(data_lang_param);
+						filter(data_lang_param);
+					} 
+					else if (data.errorCode == 0 && In == 'null') {
+						$("#user123").css("display", "none");
+						$("#user456").css("display", "block");
+						$("#addbutton").css("display", "block");
+						$("#submitbtn").css("display", "none");
+						$('div#initialloader').delay(300).fadeOut('slow');
+					} 
+					else
+					{
+						$("#user123").css("display", "block");
+						$("#user456").css("display", "none");
+						$("#addbutton").css("display", "none");
+						$("#submitbtn").css("display", "none");
+						$('div#initialloader').delay(300).fadeOut('slow');
+					}
+					//regularizedCount();
+				},
+				error : function() {
+					console.log("Failed");
+				}
+			}); 
+			
+
+			$("#btnLink").css({display: "none"});
+
+
+		}
 
 
 
+	});
 
+	
+});
+
+
+function pageRendering(lang){
+	pageButtons('./upload-paid-status/pageRendering?type=userPaidStatus&lang='+lang);
+
+	localStorage.removeItem('sourceType');
+
+}
+
+
+function pageButtons(url){
+	$.ajax({
+		url: url,
+		type: 'POST',
+		dataType: "json",
+		success: function(data){
+			data.userStatus == "Disable" ? $('#btnLink').addClass( "eventNone" ) : $('#btnLink').removeClass( "eventNone" );
+
+			var elem='<p class="PageHeading">'+data.pageTitle+'</p>';		
+			$("#pageHeader").append(elem);
+			var button=data.buttonList;
+
+
+
+			var date=data.inputTypeDateList;
+			for(i=0; i<date.length; i++){
+				if(date[i].type === "date"){
+					$("#tableDiv").append("<div class='input-field col s6 m2'>"+
+							"<div id='enddatepicker' class='input-group'>"+
+							"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off' onchange='checkDate(startDate,endDate)'>"+
+							"<label for="+date[i].id+">"+date[i].title
+							+"</label>"+
+							"<span	class='input-group-addon' style='color: #ff4081'>"+
+							"<i	class='fa fa-calendar' aria-hidden='true' style='float: right; margin-top: -37px;'>"+"</i>"+"</span>");
+					$( "#"+date[i].id ).datepicker({
+						dateFormat: "yy-mm-dd",
+						 maxDate: new Date()
+			        }); 
+				}else if(date[i].type === "text"){
+					$("#tableDiv").append("<div class='input-field col s6 m2'><input type="+date[i].type+" id="+date[i].id+" /><label for="+date[i].id+" id="+date[i].id+">"+date[i].title+"</label></div>");
+				}
+				
+			} 
+
+			// dynamic dropdown portion
+			var dropdown=data.dropdownList;
+			for(i=0; i<dropdown.length; i++){
+				var dropdownDiv=
+					$("#tableDiv").append("<div class='col s6 m2 selectDropdwn'>"+
+
+							"<div class='select-wrapper select2  initialized'>"+
+							"<span class='caret'>"+"</span>"+
+							"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
+
+							"<select id="+dropdown[i].id+" class='select-wrapper select2  initialized'>"+
+							"<option value=''>"+dropdown[i].title+
+							"</option>"+
+							"</select>"+
+							"</div>"+
+					"</div>");
+			}
+
+
+
+			$("#tableDiv").append("<div class='col s3 m2 l1'><button type='button' class='btn primary botton'  id='submitFilter' /></div></div></div>");
+			$("#tableDiv").append("<div class='col s3 m2 l1'><a href='JavaScript:void(0)' onclick='exportpaidStatus()' type='button' class='export-to-excel right'>"+$.i18n('Export')+" <i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+
+			for(i=0; i<button.length; i++){
+				$('#'+button[i].id).text(button[i].buttonTitle);
+				if(button[i].type === "HeaderButton"){
+					$('#'+button[i].id).attr("href", button[i].buttonURL);
+					$('#'+button[i].id).attr("href", "./add-device-information?NID="+$("body").attr("session-value")+"");
+				}
+				else{
+					$('#'+button[i].id).attr("onclick", button[i].buttonURL);
+				}
+			}
+
+
+			//Tax paid status-----------dropdown
+
+			$.getJSON('./getDropdownList/CUSTOMS_TAX_STATUS', function(data) {
+				for (i = 0; i < data.length; i++) {
+					//console.log(data[i].value);
+					$('<option>').val(data[i].value).text(data[i].interp)
+					.appendTo('#taxPaidStatus');
+				}
+			});
+			
+			//Stolen Status-----------dropdown
+			$.getJSON('./getDropdownList/12/17', function(data) {
+				console.log("___data");
+				console.log(data);
+				for (i = 0; i < data.length; i++) {
+					$('<option>').val(data[i].state).text(data[i].interp)
+					.appendTo('#recordStatus'); 
+				}
+			});
+
+
+			$.getJSON('./getDropdownList/DEVICE_TYPE', function(data) {
+				for (i = 0; i < data.length; i++) {
+					$('<option>').val(data[i].value).text(data[i].interp)
+					.appendTo('#deviceTypeFilter');
+				}
+			});
+
+
+			$.getJSON('./getDropdownList/DEVICE_ID_TYPE', function(data) {
+				for (i = 0; i < data.length; i++) {
+					$('<option>').val(data[i].value).text(data[i].interp)
+					.appendTo('#deviceIDType');
+				}
+			});
+
+			
+		}
+	}); 	
+
+	if(sessionStorage.getItem("admin")=="CEIRAdmin"){
+		$("#btnLink").css({display: "none"});
+	}
+}
+
+
+var sourceType =localStorage.getItem("sourceType");
+function filter(lang)
+{       
+var sessionFlag=0;
+table('./headers?type=userPaidStatus&lang='+lang,'./user-paid-status-data?sessionFlag='+sessionFlag);
+	
+}
+var nationalId =$("body").attr("session-value") =='null' ? null : $("body").attr("session-value");
+function table(url,dataUrl){
+	var txnIdValue = $("body").attr("session-valueTxnID");
+	var txn= (txnIdValue == 'null' && transactionIDValue == undefined)? $('#transactionID').val() : transactionIDValue;
+	var request={
+			"origin":"self",
+			"endDate":$('#endDate').val(),
+			"startDate":$('#startDate').val(),
+			"taxPaidStatus":parseInt($('#taxPaidStatus').val()),
+			"featureId":parseInt(12),
+			"userTypeId": parseInt(17),
+			"userType":"End User",
+			"status":parseInt($('#recordStatus').val()),
+			"txnId":txn,
+			"userId":330,
+			"consignmentStatus": null,
+			"nid": nationalId == null ? $('#nId').val() : nationalId
+	}
+
+
+	if(data_lang_param=='km'){
+		var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
+	}
+	$.ajax({
+		url: url,
+		type: 'POST',
+		dataType: "json",
+		success: function(result){
+			var table=	$("#data-table-simple").DataTable({
+				destroy:true,
+				"serverSide": true,
+				orderCellsTop : true,
+				"ordering" : false,
+				"bPaginate" : true,
+				"bFilter" : true,
+				"bInfo" : true,
+				"bSearchable" : true,
+				"oLanguage": {  
+					"sUrl": langFile  
+				},
+				ajax: {
+					url : dataUrl,
+					type: 'POST',
+					dataType: "json",
+					data : function(d) {
+						d.filter = JSON.stringify(request); 
+
+					}
+
+				},
+				"columns": result
+			});
+			$('div#initialloader').delay(300).fadeOut('slow');
+		},
+		error: function (jqXHR, textStatus, errorThrown) {
+			console.log("error in ajax");
+		}
+	});
+}
 
 
 $(document).ready(function () {
+	
+	$.getJSON('./getSourceTypeDropdown/DOC_TYPE/12', function(data) {
+
+		for (i = 0; i < data.length; i++) {
+			$('<option>').val(data[i].tagId).text(data[i].interp).attr("docValue",data[i].value).appendTo('#doc_type');
+
+		}
+	});
+	
+	
 
 	$.getJSON('./addMoreFile/more_files_count', function(data) {
 		console.log(data);
@@ -308,8 +612,8 @@ function submitEndUserDeviceInfo(){
 	var email=$('#endUseremailID').val();
 	var phone=$('#phone').val();
 	var state=$('#state').val();
-	var docType=$('#doc_type').val();
-	var doc_type_numeric=$("#doc_type option:selected").attr("docValue");
+	var docType =$('#doc_type').val();
+	var  doc_type_numeric =$("#doc_type option:selected").attr("docValue");
 	var district=$('#endUserdistrict').val();
 	var commune=$('#commune').val();
 	var postalcode=$('#pin').val();
@@ -450,13 +754,14 @@ function submitEndUserDeviceInfo(){
 			"commune":commune,
 			"village":village,
 			"postalCode":postalcode,
-			"doc_type_numeric":docType,
-			"docType":doc_type_numeric
+			"docType":doc_type_numeric 
 	}
 
 	formData.append('uploadnationalID', $('#uploadnationalID')[0].files[0]);
 	formData.append("request",JSON.stringify(request));
 	formData.append("sourceType",'enduser');
+	formData.append("docType",docType);
+	
 	$.ajax({
 		url: './registerEndUserDevice',
 		type: 'POST',
@@ -667,4 +972,92 @@ function clearDeptName() {
 	$('#endUserDepartmentId').val('');
 	$("#endUSerNidaPlaceholder").val('');
 	$('#visafileFormateModal').closeModal();
+}
+
+
+
+function viewDeviceHistory() {
+	historytable("./headers?type=userPaidStatus","./user-paid-status-data");
+};
+
+
+
+function historytable(url,dataUrl){
+
+	if(data_lang_param=='km'){
+		var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
+	}
+	$.ajax({
+		url: url,
+		type: 'POST',
+		dataType: "json",
+		success: function(result){
+			var table=	$("#data-table-history").DataTable({
+				destroy:true,
+				"serverSide": true,
+				orderCellsTop : true,
+				"ordering" : false,
+				"bPaginate" : true,
+				"bFilter" : true,
+				"bInfo" : true,
+				"bSearchable" : true,
+				"oLanguage": {  
+					"sUrl": langFile  
+				},
+				ajax: {
+					url : dataUrl,
+					type: 'POST',
+					dataType: "json",
+					data : function(d) {
+						d.filter = JSON.stringify({						
+							"nid": nationalId,
+							"taxPaidStatus":3,
+								"featureId":12
+						}); 
+					}
+
+				},
+				"columns": result
+			});
+			$('#viewBlockDevices').openModal({dismissible:false});
+			$('div#initialloader').delay(300).fadeOut('slow');
+		},
+		error: function (jqXHR, textStatus, errorThrown) {
+			console.log("error in ajax");
+		}
+	});
+}
+function deleteByImei(imei){
+	$('#deleteMsg').openModal({dismissible:false});
+	window.imei=imei;
+}
+
+function accept(){
+
+	$.ajax({
+		url : "./delete/"+window.imei,
+		dataType : 'json',
+		contentType : 'application/json; charset=utf-8',
+		type : 'DELETE',
+		success : function(data, textStatus, xhr) {
+
+			$('#confirmDeleteMsg').openModal({dismissible:false});
+			$('#deleteMsg').closeModal();
+			/*if(data.errorCode == 200){
+					$("#responseMsg").text(data.message);
+				}else if(data.errorCode == 0){
+					$("#responseMsg").text(data.message);
+				}*/
+		},
+		error : function() {
+			console.log("Error");
+		}
+	});
+}
+
+function viewDetails(imei){ 
+		
+		window.location.href="./view-device-information/"+imei;
+
+
 }

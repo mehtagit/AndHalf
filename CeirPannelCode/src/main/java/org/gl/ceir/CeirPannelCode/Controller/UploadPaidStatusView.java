@@ -99,6 +99,7 @@ FeignCleintImplementation feignCleintImplementation;
 
 	@GetMapping("add-device-information")
 	public ModelAndView deviceInformationView() {
+		log.info("enter in add device page.");
 		ModelAndView modelAndView = new ModelAndView("addDeviceInformation");
 		return modelAndView;
 	}
@@ -197,6 +198,7 @@ FeignCleintImplementation feignCleintImplementation;
 			@RequestParam(name="txnId",required = false) String txnId,
 			@RequestParam(name="pageSize") Integer pageSize,
 			@RequestParam(name="pageNo") Integer pageNo,
+			@RequestParam(name="status", required = false) Integer status,
 			HttpServletRequest request,
 			HttpSession session)
 	{
@@ -214,6 +216,7 @@ FeignCleintImplementation feignCleintImplementation;
 		filterRequestuserpaidStatus.setNid(nid);
 		filterRequestuserpaidStatus.setTxnId(txnId);
 		filterRequestuserpaidStatus.setUserId(userId);
+		filterRequestuserpaidStatus.setStatus(status); 
 		log.info(" request passed to the exportTo Excel Api =="+filterRequestuserpaidStatus+" *********** pageSize"+pageSize+"  pageNo  "+pageNo);
 		Object response = userPaidStatusFeignClient.consignmentFilter(filterRequestuserpaidStatus, pageNo, pageSize, file);
 		Gson gson= new Gson(); 
@@ -227,9 +230,9 @@ FeignCleintImplementation feignCleintImplementation;
 
 	//***********************************************cuurency controller *************************************************
 	@RequestMapping(value="/countByNid",method={org.springframework.web.bind.annotation.RequestMethod.GET}) 
-	public @ResponseBody GenricResponse countByNid(@RequestParam(name="nid", required = false) String nId)  {
-		log.info("request send to the currency  api="+nId);
-		GenricResponse response= uploadPaidStatusFeignClient.countByNid(nId);
+	public @ResponseBody GenricResponse countByNid(@RequestParam(name="nid", required = false) String nId,@RequestParam(name="nationType", required = false) int nationType)  {
+		log.info("request send to the currency  api="+nId+"  nationType   =="+nationType);
+		GenricResponse response= uploadPaidStatusFeignClient.countByNid(nId,nationType);
 		log.info("response from currency api "+response);
 		return response;
 
@@ -274,10 +277,10 @@ FeignCleintImplementation feignCleintImplementation;
 	}
 	
 	@PostMapping("selfRegisterDevicePage")
-	public ModelAndView selfRegisterDevicePage(HttpSession session,@RequestParam(name="Search",required = false) String nid) {
+	public ModelAndView selfRegisterDevicePage(HttpSession session,@RequestParam(name="Search",required = false) String Search) {
 		ModelAndView modelAndView = new ModelAndView();
-		log.info("---entry point in self register page=="+nid);
-		modelAndView.addObject("nid", nid);
+		log.info("---entry point in self register page=="+Search);
+		modelAndView.addObject("nid", Search);
 		modelAndView.setViewName("selfRegisterDevice");
 		log.info("---exit  point in self register page");
 		return modelAndView;
@@ -419,13 +422,18 @@ stream.close();
 	
 	
 	@PostMapping("registerEndUserDevice")
-	public @ResponseBody GenricResponse registerEndUserDevice(@RequestParam(name="visaImage",required = false) MultipartFile visaImage,@RequestParam(name="sourceType",required = false) String sourceType,@RequestParam(name="endUserDepartmentFile",required = false) MultipartFile endUserDepartmentFile,@RequestParam(name="uploadnationalID",required = false) MultipartFile uploadnationalID,HttpServletRequest request,HttpSession session) {
+	public @ResponseBody GenricResponse registerEndUserDevice(@RequestParam(name="visaImage",required = false) MultipartFile visaImage,@RequestParam(name="sourceType",required = false) String sourceType,
+			@RequestParam(name="endUserDepartmentFile",required = false) MultipartFile endUserDepartmentFile,@RequestParam(name="uploadnationalID",required = false) MultipartFile uploadnationalID,
+			HttpServletRequest request,HttpSession session,@RequestParam(name="docType",required = false) String docType) {
 		log.info("---entry point in update visa validity page");
 		log.info("---request---"+request.getParameter("request"));
 		String txnNumber="";
 		if (sourceType.equalsIgnoreCase("custom"))
 		{
 			txnNumber="R" + utildownload.getTxnId();
+		}
+		else if(sourceType.equalsIgnoreCase("Immigration")) {
+			txnNumber="I" + utildownload.getTxnId();
 		}
 		else {
 			txnNumber="A" + utildownload.getTxnId();
@@ -472,7 +480,7 @@ stream.close();
 			if(uploadnationalID!=null) { 
 			try {
 				byte[] bytes = uploadnationalID.getBytes();
-			String rootPath =urlToUpload.getValue()+txnNumber+"/"; 
+			String rootPath =urlToUpload.getValue()+txnNumber+"/"+docType+"/"; 
 			File dir = new File(rootPath + File.separator);
 
 			if (!dir.exists()) dir.mkdirs();

@@ -526,7 +526,6 @@ function saveIndivisualStolenRequest(){
 
 	var request={
 			"dateOfStolen":IndivisualStolenDate,
-			"qty":1,
 			"blockingTimePeriod":blockingTimePeriod,
 			"blockingType":blockingType,
 			"requestType":0,
