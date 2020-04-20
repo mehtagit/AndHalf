@@ -1,5 +1,6 @@
 package com.gl.ceir.config.factory.impl;
 
+import java.util.List;
 import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,11 +24,11 @@ public class CustomerCareDuplicate implements CustomerCareTarget{
 	@Override
 	public CustomerCareDeviceState fetchDetailsByImei(String imei, CustomerCareDeviceState customerCareDeviceState) {
 		
-		DeviceDuplicateDb deviceDb = deviceDuplicateDbRepository.findByImeiMsisdnIdentityImei(imei);
+		List<DeviceDuplicateDb> deviceDbList = deviceDuplicateDbRepository.findByImeiMsisdnIdentityImei(imei);
 		
-		if(Objects.nonNull(deviceDb)) {
+		if(!deviceDbList.isEmpty()) {
 			customerCareDeviceState.setTxnId("");
-			customerCareDeviceState.setDate(deviceDb.getCreatedOn().toString());
+			customerCareDeviceState.setDate(deviceDbList.get(0).getCreatedOn().toString());
 			customerCareDeviceState.setStatus(Constants.available);
 			customerCareDeviceState.setFeatureId(34);
 		}else {

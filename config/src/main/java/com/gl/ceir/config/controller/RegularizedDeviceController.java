@@ -104,11 +104,11 @@ public class RegularizedDeviceController {
 	}
 
 	@ApiOperation(value = "Count of regularized devices for end user.", response = GenricResponse.class)
-	@PostMapping("/end-user-device-info/count-by-nid/{nid}")
-	public GenricResponse countOfRegularizedDevicesByNid(@PathVariable("nid") String nid) {
+	@PostMapping("/end-user-device-info/count-by-nid/{nid}/{type}")
+	public GenricResponse countOfRegularizedDevicesByNid(@PathVariable("nid") String nid,@PathVariable("type")Integer type) {
 		logger.info("Request to get the count of regularized devices for end user = " + nid);
 
-		GenricResponse genricResponse = regularizedDeviceServiceImpl.getCountOfRegularizedDevicesByNid(nid);
+		GenricResponse genricResponse = regularizedDeviceServiceImpl.getCountOfRegularizedDevicesByNid(nid,type);
 		logger.info("Resonse send = " + genricResponse);
 		return genricResponse;
 

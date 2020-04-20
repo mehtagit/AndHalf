@@ -100,6 +100,16 @@ public class RegularizeDeviceDb implements Serializable {
 	private String origin;
 	
 	private long creatorUserId;
+	@Transient
+	private String multiSimStatusInterp;
+	
+	public String getMultiSimStatusInterp() {
+		return multiSimStatusInterp;
+	}
+
+	public void setMultiSimStatusInterp(String multiSimStatusInterp) {
+		this.multiSimStatusInterp = multiSimStatusInterp;
+	}
 
 	public Long getId() {
 		return id;

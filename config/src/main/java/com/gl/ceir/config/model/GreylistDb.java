@@ -32,11 +32,12 @@ public class GreylistDb implements Serializable {
 	
 	@JsonIgnore
 	@UpdateTimestamp
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private Date modifiedOn;
 	private String imei;
 	@Column(length = 15)
 	private String roleType;
-	private Long userId;
+	private String userId;
 	@Column(length = 20)
 	private String txnId;
 	private String deviceNumber;
@@ -47,6 +48,14 @@ public class GreylistDb implements Serializable {
 	private String multipleSimStatus;
 	private String  deviceId;
 	private String imeiEsnMeid;
+	private Date expiryDate;
+	private String mode;
+	private String requestType;
+	private String userType;
+	private Integer complainType;
+	private String modeType;
+	
+	
 
 
 	public Long getId() {
@@ -80,10 +89,10 @@ public class GreylistDb implements Serializable {
 	public void setRoleType(String roleType) {
 		this.roleType = roleType;
 	}
-	public Long getUserId() {
+	public String getUserId() {
 		return userId;
 	}
-	public void setUserId(Long userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 	public String getDeviceNumber() {
@@ -139,6 +148,44 @@ public class GreylistDb implements Serializable {
 	}
 	public void setImei(String imei) {
 		this.imei = imei;
+	}
+	
+	
+	public Date getExpiryDate() {
+		return expiryDate;
+	}
+	public void setExpiryDate(Date expiryDate) {
+		this.expiryDate = expiryDate;
+	}
+	public String getMode() {
+		return mode;
+	}
+	public void setMode(String mode) {
+		this.mode = mode;
+	}
+	public String getRequestType() {
+		return requestType;
+	}
+	public void setRequestType(String requestType) {
+		this.requestType = requestType;
+	}
+	public String getUserType() {
+		return userType;
+	}
+	public void setUserType(String userType) {
+		this.userType = userType;
+	}
+	public Integer getComplainType() {
+		return complainType;
+	}
+	public void setComplainType(Integer complainType) {
+		this.complainType = complainType;
+	}
+	public String getModeType() {
+		return modeType;
+	}
+	public void setModeType(String modeType) {
+		this.modeType = modeType;
 	}
 	@Override
 	public String toString() {

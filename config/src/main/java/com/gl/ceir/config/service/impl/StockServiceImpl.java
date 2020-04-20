@@ -309,7 +309,15 @@ public class StockServiceImpl {
 			 * 
 			 * logger.info("AUDIT : Saved view request in audit.");
 			 */
-			addInAuditTrail(Long.valueOf(filterRequest.getUserId()), "NA", SubFeatures.VIEW_ALL);
+			if(Objects.isNull(filterRequest.getTxnId())) {
+			
+				addInAuditTrail(Long.valueOf(filterRequest.getUserId()), "NA", SubFeatures.VIEW_ALL);
+			
+			}else {
+				
+				addInAuditTrail(Long.valueOf(filterRequest.getUserId()), filterRequest.getTxnId(), SubFeatures.FILTER);
+				
+			}
 			
 			return page;
 
@@ -758,6 +766,7 @@ public class StockServiceImpl {
 
 					stockMgmt.setStockStatus(StockStatus.REJECTED_BY_CEIR_ADMIN.getCode());
 					stockMgmt.setRemarks(consignmentUpdateRequest.getRemarks());
+					stockMgmt.setCeirAdminId(consignmentUpdateRequest.getUserId());
 				}
 
 				// Update Stock and its history.
@@ -765,6 +774,7 @@ public class StockServiceImpl {
 					logger.warn("Unable to update Stolen and recovery entity.");
 					return new GenricResponse(3, "Unable to update stock entity.", consignmentUpdateRequest.getTxnId()); 
 				}else {
+					addInAuditTrail(Long.valueOf(consignmentUpdateRequest.getUserId()), consignmentUpdateRequest.getTxnId(), SubFeatures.ACCEPT_REJECT);
 					emailUtil.saveNotification(mailTag, 
 							userProfile, 
 							consignmentUpdateRequest.getFeatureId(),
@@ -804,6 +814,7 @@ public class StockServiceImpl {
 
 					stockMgmt.setStockStatus(StockStatus.ERROR.getCode());
 					stockMgmt.setRemarks(consignmentUpdateRequest.getRemarks());
+					stockMgmt.setCeirAdminId(consignmentUpdateRequest.getUserId());
 				}
 
 				// Update Stock and its history.
@@ -811,6 +822,7 @@ public class StockServiceImpl {
 					logger.warn("Unable to update Stolen and recovery entity.");
 					return new GenricResponse(3, "Unable to update stock entity.", consignmentUpdateRequest.getTxnId()); 
 				}else {
+					addInAuditTrail(Long.valueOf(consignmentUpdateRequest.getUserId()), consignmentUpdateRequest.getTxnId(), SubFeatures.ACCEPT_REJECT);
 					emailUtil.saveNotification(mailTag, 
 							userProfile, 
 							consignmentUpdateRequest.getFeatureId(),

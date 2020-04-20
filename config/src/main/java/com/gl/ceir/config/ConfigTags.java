@@ -26,5 +26,5 @@ public interface ConfigTags {
 
 	// Policy
 	String max_end_user_device_count = "max_end_user_device_count";
-
+    String max_foreigner_end_user_device_count="max_foreigner_end_user_device_count";
 }

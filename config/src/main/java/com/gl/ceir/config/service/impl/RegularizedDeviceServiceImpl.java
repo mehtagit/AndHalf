@@ -81,7 +81,7 @@ public class RegularizedDeviceServiceImpl {
 
 	@Autowired
 	RegularizeDeviceTransaction regularizeDeviceTransaction;
-	
+
 	@Autowired
 	ConsignmentRepository consignmentRepository;
 
@@ -132,7 +132,7 @@ public class RegularizedDeviceServiceImpl {
 
 	@Autowired
 	UserStaticServiceImpl userStaticServiceImpl;
-	
+
 	@Autowired
 	UserRepository userRepository;
 	@Autowired
@@ -200,11 +200,26 @@ public class RegularizedDeviceServiceImpl {
 				setInterp(regularizeDeviceDb);
 			}
 
-			user = userRepository.getById(filterRequest.getUserId());
-			
+
+
 			// Save in audit.
+			String username="";
+			if(Objects.nonNull(filterRequest.getUserType()))
+			{
+
+				if("End User".equalsIgnoreCase(filterRequest.getUserType())){
+					logger.info("usertype is end user so setting username is empty");
+					username="";
+				}	
+				else {
+
+					user = userRepository.getById(filterRequest.getUserId());
+					username=user.getUsername();					
+				}
+			}
+
 			AuditTrail auditTrail = new AuditTrail(filterRequest.getUserId(), 
-					user.getUsername(), 
+					username, 
 					Long.valueOf(filterRequest.getUserTypeId()), 
 					filterRequest.getUserType(), 
 					12, Features.REGISTER_DEVICE, 
@@ -225,7 +240,7 @@ public class RegularizedDeviceServiceImpl {
 		String fileName = null;
 		Writer writer   = null;
 		RegularizeDeviceFileModel rdfm = null;
-		
+
 		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		DateTimeFormatter dtf2  = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
 
@@ -315,14 +330,21 @@ public class RegularizedDeviceServiceImpl {
 			}
 
 			EndUserDB endUserDB2 = endUserDbRepository.getByNid(nid);
-
+			Integer type=null;
+			
+			if(endUserDB.getNationality().equalsIgnoreCase("Cambodian")) {
+				type=1;
+			}
+			else {
+				type=2;
+			}
 			if(!endUserDB.getRegularizeDeviceDbs().isEmpty()) {
-				if(validateRegularizedDevicesCount(nid, endUserDB.getRegularizeDeviceDbs())) {
+				if(validateRegularizedDevicesCount(nid, endUserDB.getRegularizeDeviceDbs(),type)) {
 					if(commonFunction.hasDuplicateImeiInRequest(endUserDB.getRegularizeDeviceDbs())) {
 						return new GenricResponse(6,GenericMessageTags.DUPLICATE_IMEI_IN_REQUEST.getTag(),GenericMessageTags.DUPLICATE_IMEI_IN_REQUEST.getMessage(), ""); 
 					}
 					for(RegularizeDeviceDb regularizeDeviceDb : endUserDB.getRegularizeDeviceDbs()) {
-   // TODO     responsse 5
+						// TODO     responsse 5
 						if(commonFunction.checkAllImeiOfRegularizedDevice(regularizeDeviceDb)) {
 							return new GenricResponse(5,GenericMessageTags.DUPLICATE_IMEI.getTag(),GenericMessageTags.DUPLICATE_IMEI.getMessage(), "");
 						}
@@ -396,7 +418,7 @@ public class RegularizedDeviceServiceImpl {
 		}
 	}
 
-	
+
 
 	public GenricResponse updateTaxStatus( RegularizeDeviceDb regularizeDeviceDb) {
 		try {
@@ -511,7 +533,7 @@ public class RegularizedDeviceServiceImpl {
 			logger.debug("Accept/Reject regularized Devices : " + regularizeDeviceDb);
 
 			endUserDB = endUserDbRepository.getByNid(regularizeDeviceDb.getNid());
-			
+
 			placeholders.put("<FIRST_NAME>", endUserDB.getFirstName());
 			placeholders.put("<txn_name>", regularizeDeviceDb.getTxnId());
 
@@ -548,7 +570,7 @@ public class RegularizedDeviceServiceImpl {
 					ReferTable.END_USER,
 					null,
 					receiverUserType));
-			
+
 			return new GenricResponse(0, "Device Update SuccessFully.", ceirActionRequest.getTxnId());
 
 		} catch (Exception e) {
@@ -557,20 +579,36 @@ public class RegularizedDeviceServiceImpl {
 		}
 	}
 
-	public GenricResponse getCountOfRegularizedDevicesByNid(String nid) {
+	public GenricResponse getCountOfRegularizedDevicesByNid(String nid,Integer type) {
 		try {
-			PolicyConfigurationDb policyConfigurationDb = configurationManagementServiceImpl.getPolicyConfigDetailsByTag(ConfigTags.max_end_user_device_count);
+			if(Objects.nonNull(type)) {
+				String tag="";
+				if(type==1) 
+				{
+					tag=ConfigTags.max_end_user_device_count;
 
-			return new GenricResponse(0, "", "", new Count(Long.parseLong(policyConfigurationDb.getValue()), regularizedDeviceDbRepository.countByNid(nid)));	
+				}
+				else {
+					tag=ConfigTags.max_foreigner_end_user_device_count;
+				}
+				PolicyConfigurationDb policyConfigurationDb = configurationManagementServiceImpl.getPolicyConfigDetailsByTag(tag);
+
+				return new GenricResponse(0, "", "", new Count(Long.parseLong(policyConfigurationDb.getValue()), regularizedDeviceDbRepository.countByNidAndDeviceStatus(nid,2)));	
+
+			}
+			else {
+				return new GenricResponse(1,"Please enter correct type","");	
+
+			}
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException("Custom Service", e.getMessage());
 		}
 	}
 
-	private boolean validateRegularizedDevicesCount(String nid, List<RegularizeDeviceDb> regularizeDeviceDbs) {
+	private boolean validateRegularizedDevicesCount(String nid, List<RegularizeDeviceDb> regularizeDeviceDbs,Integer type) {
 		try {
-			Count count = (Count) getCountOfRegularizedDevicesByNid(nid).getData();
+			Count count = (Count) getCountOfRegularizedDevicesByNid(nid, type).getData();
 			return validateRegularizedDevicesCount(count, regularizeDeviceDbs);
 		}catch (ClassCastException e) {
 			return Boolean.FALSE;
@@ -641,7 +679,7 @@ public class RegularizedDeviceServiceImpl {
 		return specificationBuilder;
 	}
 
-	private void setInterp(RegularizeDeviceDb regularizeDeviceDb) {
+	public void setInterp(RegularizeDeviceDb regularizeDeviceDb) {
 		if(Objects.nonNull(regularizeDeviceDb.getTaxPaidStatus()))
 			regularizeDeviceDb.setTaxPaidStatusInterp(interpSetter.setConfigInterp(Tags.CUSTOMS_TAX_STATUS, regularizeDeviceDb.getTaxPaidStatus()));
 
@@ -656,6 +694,10 @@ public class RegularizedDeviceServiceImpl {
 
 		if(Objects.nonNull(regularizeDeviceDb.getCurrency()))
 			regularizeDeviceDb.setCurrencyInterp(interpSetter.setConfigInterp(Tags.CURRENCY, regularizeDeviceDb.getCurrency(), 0, 1));
+		
+		if(Objects.nonNull(regularizeDeviceDb.getMultiSimStatus()))
+			regularizeDeviceDb.setMultiSimStatusInterp(interpSetter.setConfigInterp(Tags.MULTI_SIM_STATUS, regularizeDeviceDb.getDeviceIdType()));
+
 	}
 
 }
