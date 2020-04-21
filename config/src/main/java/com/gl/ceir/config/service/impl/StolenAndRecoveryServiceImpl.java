@@ -166,6 +166,7 @@ public class StolenAndRecoveryServiceImpl {
 			if(stolenAndRecoveryTransaction.executeUploadDetails(stolenandRecoveryMgmt, webActionDb)) {
 				logger.info("Upload Successfully." +  stolenandRecoveryMgmt.getTxnId());
 				//TODO
+				//addInAuditTrail(userId, stolenandRecoveryMgmt.getTxnId(), subFeatureId, featureId);
 				return new GenricResponse(0, "Upload Successfully.", stolenandRecoveryMgmt.getTxnId());
 			}else {
 				logger.info("Upload have been failed." + stolenandRecoveryMgmt.getTxnId());

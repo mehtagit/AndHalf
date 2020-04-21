@@ -73,7 +73,7 @@ public class RegularizedDeviceController {
 	public GenricResponse saveEndUserInfo(@RequestBody EndUserDB endUserDB) {
 		logger.info("Custom registeration request= " + endUserDB);
 		GenricResponse genricResponse = regularizedDeviceServiceImpl.saveDevices(endUserDB);
-		logger.info("Resonse send = " + genricResponse);
+		//logger.info("Resonse send = " + genricResponse);
 		return genricResponse;
 
 	}
@@ -86,7 +86,7 @@ public class RegularizedDeviceController {
 
 		GenricResponse response = regularizedDeviceServiceImpl.updateTaxStatus(userCustomDb);
 
-		logger.info("Response send to user = " + response);
+		//logger.info("Response send to user = " + response);
 		return response;
 
 	}
@@ -99,7 +99,7 @@ public class RegularizedDeviceController {
 		
 		GenricResponse response = regularizedDeviceServiceImpl.deleteCustomInfo(imei);
 		
-		logger.info("Response send to user="+response);
+		//logger.info("Response send to user="+response);
 		return response;
 	}
 
@@ -109,7 +109,7 @@ public class RegularizedDeviceController {
 		logger.info("Request to get the count of regularized devices for end user = " + nid);
 
 		GenricResponse genricResponse = regularizedDeviceServiceImpl.getCountOfRegularizedDevicesByNid(nid,type);
-		logger.info("Resonse send = " + genricResponse);
+		//logger.info("Resonse send = " + genricResponse);
 		return genricResponse;
 
 	}

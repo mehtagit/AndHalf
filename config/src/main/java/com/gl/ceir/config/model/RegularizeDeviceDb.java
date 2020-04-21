@@ -95,7 +95,7 @@ public class RegularizeDeviceDb implements Serializable {
 	private String stateInterp;
 	
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "userId") 
 	private EndUserDB endUserDB;
 	

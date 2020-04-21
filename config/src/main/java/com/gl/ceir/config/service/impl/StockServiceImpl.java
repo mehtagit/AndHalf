@@ -180,7 +180,7 @@ public class StockServiceImpl {
 				stockMgmt.setRoleType(secondaryRoleType);
 				isStockAssignRequest = Boolean.TRUE;
 				
-				addInAuditTrail(stockMgmt.getUserId(), stockMgmt.getTxnId(), SubFeatures.UPLOAD, stockMgmt.getRoleType());
+				addInAuditTrail(stockMgmt.getAssignerId(), stockMgmt.getTxnId(), SubFeatures.ASSIGN, "Custom");
 
 			}else if("End User".equalsIgnoreCase(stockMgmt.getUserType())){
 				// Check if this feature is supported in current period.
@@ -865,6 +865,10 @@ public class StockServiceImpl {
 		User requestUser = null;
 		try {
 			requestUser = userRepository.getById(userId);
+			if(requestUser.getUsertype().getId() ==17) {
+				requestUser.getUsertype().setUsertypeName("End User");
+			}
+			logger.info("User Details"+requestUser);
 		} catch (Exception e) {
 			logger.error("Error while fetching user information for user id = "+userId);
 		}
