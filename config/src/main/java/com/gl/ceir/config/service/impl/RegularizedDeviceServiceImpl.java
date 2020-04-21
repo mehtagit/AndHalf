@@ -330,6 +330,7 @@ public class RegularizedDeviceServiceImpl {
 	@Transactional
 	public GenricResponse saveDevices(EndUserDB endUserDB) {
 		try {
+			
 			String txnId = null;
 			List<WebActionDb> webActionDbs = new ArrayList<>();
 			String nid = endUserDB.getNid();
@@ -345,7 +346,7 @@ public class RegularizedDeviceServiceImpl {
 			Integer type=null;
 			
 			
-			logger.info("nationality= "+endUserDB.getNationality());
+			logger.info("nationality= "+endUserDB2.getNationality());
 			if(Objects.nonNull(endUserDB2)) {
 				if("Cambodian".equalsIgnoreCase(endUserDB2.getNationality())) {
 					type=1;
@@ -379,7 +380,7 @@ public class RegularizedDeviceServiceImpl {
 						}
 
 						if(Objects.isNull(regularizeDeviceDb.getStatus())) {
-							regularizeDeviceDb.setStatus(RegularizeDeviceStatus.PENDING_APPROVAL_FROM_CEIR_ADMIN.getCode());
+							regularizeDeviceDb.setStatus(RegularizeDeviceStatus.New.getCode());
 						}
 
 						if(Objects.isNull(regularizeDeviceDb.getTxnId())) {
@@ -628,6 +629,7 @@ public class RegularizedDeviceServiceImpl {
 
 	public GenricResponse getCountOfRegularizedDevicesByNid(String nid,Integer type) {
 		try {
+			logger.info("nid: "+nid + "type: "+type);
 			if(Objects.nonNull(type)) {
 				String tag="";
 				if(type==1) 
@@ -640,7 +642,7 @@ public class RegularizedDeviceServiceImpl {
 				}
 				PolicyConfigurationDb policyConfigurationDb = configurationManagementServiceImpl.getPolicyConfigDetailsByTag(tag);
 
-				return new GenricResponse(0, "", "", new Count(Long.parseLong(policyConfigurationDb.getValue()), regularizedDeviceDbRepository.countByNidAndDeviceStatus(nid,2)));	
+				return new GenricResponse(0, "", "", new Count(Long.parseLong(policyConfigurationDb.getValue()), regularizedDeviceDbRepository.countByNidAndTaxPaidStatus(nid,2)));	
 
 			}
 			else {
@@ -710,8 +712,8 @@ public class RegularizedDeviceServiceImpl {
 		if(Objects.nonNull(filterRequest.getTaxPaidStatus()))
 			specificationBuilder.with(new SearchCriteria("taxPaidStatus", filterRequest.getTaxPaidStatus(), SearchOperation.EQUALITY, Datatype.STRING));
 
-		if(Objects.nonNull(filterRequest.getConsignmentStatus())) {
-			specificationBuilder.with(new SearchCriteria("status", filterRequest.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
+		if(Objects.nonNull(filterRequest.getStatus())) {
+			specificationBuilder.with(new SearchCriteria("status", filterRequest.getStatus(), SearchOperation.EQUALITY, Datatype.INT));
 		}
 
 		if(Objects.nonNull(filterRequest.getTxnId()) && !filterRequest.getTxnId().isEmpty()) {

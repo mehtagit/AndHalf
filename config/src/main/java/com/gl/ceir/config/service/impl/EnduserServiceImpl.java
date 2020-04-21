@@ -188,7 +188,7 @@ public class EnduserServiceImpl {
 					}
 
 					if(Objects.isNull(regularizeDeviceDb.getStatus())) {
-						regularizeDeviceDb.setStatus(RegularizeDeviceStatus.PENDING_APPROVAL_FROM_CEIR_ADMIN.getCode());
+						regularizeDeviceDb.setStatus(RegularizeDeviceStatus.New.getCode());
 					}
 
 					if(Objects.isNull(endUserDB.getOrigin())) {
