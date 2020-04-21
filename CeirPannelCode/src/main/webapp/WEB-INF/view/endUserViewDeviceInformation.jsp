@@ -1,12 +1,3 @@
-<%
-	response.setHeader("Cache-Control", "no-cache");
-	response.setHeader("Cache-Control", "no-store");
-	response.setDateHeader("Expires", 0);
-	response.setHeader("Pragma", "no-cache");
-	/*  session.setMaxInactiveInterval(200); //200 secs
-	 session.setAttribute("usertype", null); */
-	if (session.getAttribute("usertype") != null) {
-%>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
@@ -24,7 +15,8 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta content="" name="description" />
 <meta content="" name="author" />
-
+<jsp:include page="/WEB-INF/view/endUserHeader.jsp" ></jsp:include>
+<jsp:include page="/WEB-INF/view/endUserFooter.jsp" ></jsp:include>
 <script type="text/javascript"
 	src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
 <!--   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"></script>  
@@ -63,12 +55,19 @@
 	href="${context}/resources/project_css/viewConsignment.css">
 <link rel="stylesheet"
 	href="${context}/resources/project_css/iconStates.css">
+	<link rel="stylesheet"
+	href="${context}/resources/project_css/intlTelInput.css">
 
 <link rel="stylesheet"
 	href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
 <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
 
 <script src="http://malsup.github.io/jquery.blockUI.js"></script>
+  <!------------------------------------------- Dragable Model---------------------------------->
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+
 <style>
 .row {
 	margin-bottom: 0;
@@ -153,7 +152,8 @@ input[type='search'] {
 }
 </style>
 </head>
-<body data-id="12" session-value="${not empty param.NID ? param.NID : 'null'}">
+<body data-lang-param="${pageContext.response.locale}"
+ session-value="${not empty param.Search ? param.Search : 'null'}">
 
 	<!-- START CONTENT -->
 	<section id="content">
@@ -162,7 +162,7 @@ input[type='search'] {
 			<div class="section">
 				<div class="row">
 					<div class="col s12 m12 l12">
-						<div class="row card-panel">
+						<div class="row card-panel register-device-responsive-page" style="margin: auto;margin-top: 5vh;">
 							<div class="container-fluid pageHeader">
 								<p class="PageHeading"><spring:message code="registerconsignment.header.viewDeviceInformation" /></p>
 								<!-- <a href="#addDevice" class="boton right modal-trigger">Add Device</a> -->
@@ -228,7 +228,7 @@ input[type='search'] {
 													</label>
 												</div>
 												
-												<div class="input-field col s12 m6" id="nationalityDiv"
+															<div class="input-field col s12 m6" id="nationalityDiv"
 											style="display: block">
 											<input type="text" id="nationality" readonly="readonly" name="nationality" value="${viewInformation.endUserDB.nationality}"> <label for="nationality" class=""><spring:message
 													code="input.Nationality" /></label>
@@ -613,7 +613,7 @@ input[type='search'] {
 										</p> --%>
 									</div>
 
-									<div class="col s12 m12 center" style="margin-top: 30px;">
+									<div class="col s12 m12 center" style="margin-top: 30px; padding-bottom: 50px;">
 										<%-- <button class="btn " type="submit"> <spring:message code="button.submit" /></button> --%>
 										<button type='button' class="btn" id="redirectToPage" 
 												style="margin-left: 10px;"><spring:message code="button.cancel" /></button>
@@ -1088,18 +1088,3 @@ if(onVisa=='Y')
 </script>
 </body>
 </html>
-<%
-	} else {
-		/*  request.setAttribute("msg", "  *Please login first");
-		request.getRequestDispatcher("./index.jsp").forward(request, response); */
-%>
-<script language="JavaScript">
-	sessionStorage.setItem("loginMsg",
-			"*Session has been expired");
-	window.top.location.href = "./login";
-	
-	
-</script>
-<%
-	}
-%>

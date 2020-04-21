@@ -633,6 +633,38 @@ input[type='search'] {
 
 														</select>
 													</div>
+													
+													<div class="col s12 m6" style="    margin-right: 2px;">
+															<label for="taxStatus1"><spring:message code="select.taxPaidStatus" /> <span
+																class="star">*</span></label> <select class="browser-default"
+																oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+											        oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+																required="required" id="taxStatus1">
+																<option value="" disabled selected><spring:message code="select.selectTaxPaidStatus" /></option>
+
+															</select>
+														</div>
+													
+													<div class="input-field col s12 m6 l6" id="priceDiv" style="margin-top: 27px;         margin-left: -2px;">
+															<input type="text" name="Price" id="Price1"
+																pattern="[0-9]{0,7}" 
+															oninput="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
+											            oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
+																title= "<spring:message code="validation.7digits" />" maxlength="7">
+															<label for="Price1"><spring:message code="select.price" /></label>
+														</div>
+
+														<div class="col s12 m6" id="CurrencyDiv" style="display: none;    margin-left: -1px;">
+															<label for="Currency1"><spring:message code="input.currency" /> <span
+																class="star">*</span></label> <select class="browser-default"
+																id="Currency1" 
+																oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+											        oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+																title= "<spring:message code="validation.selectFieldMsg" />" > 
+																<option value="" disabled selected><spring:message code="select.selectCurrency" /></option>
+
+															</select>
+														</div>
 
 													<div class="col s12 m12">
 														<p>
@@ -743,7 +775,7 @@ input[type='search'] {
 
 												</table>
 
-												<a href="Javascript:void(0);" onclick="viewDeviceHistory()"><spring:message code="modal.header.viewBlockDevices" /></a>
+												<a href="Javascript:void(0);" onclick="viewDeviceHistory()" style="display: none"><spring:message code="modal.header.viewBlockDevices" /></a>
 											</div>
 										</div>
 									</div>
