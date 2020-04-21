@@ -347,7 +347,7 @@ public class RegularizedDeviceServiceImpl {
 			
 			logger.info("nationality= "+endUserDB.getNationality());
 			if(Objects.nonNull(endUserDB2)) {
-				if("Cambodian".equalsIgnoreCase(endUserDB.getNationality())) {
+				if("Cambodian".equalsIgnoreCase(endUserDB2.getNationality())) {
 					type=1;
 				}
 				else {
@@ -521,7 +521,7 @@ public class RegularizedDeviceServiceImpl {
 				//EndUserDB endUserDB =regularizeDeviceDb.getEndUserDB();
 				endUserDB.setRegularizeDeviceDbs(new ArrayList<>(1));
 				if(Objects.nonNull(endUserDB.getDocType())) {
-					endUserDB.setDocTypeInterp(interpSetter.setConfigInterp(Tags.DOC_TYPE, endUserDB.getDocType()));	
+					endUserDB.setDocTypeInterp(interpSetter.setTagId(Tags.DOC_TYPE, endUserDB.getDocType()));	
 				}
 				if(Objects.nonNull(endUserDB.getVisaDb())) {
 					List<VisaDb> visaList=new ArrayList<VisaDb>();

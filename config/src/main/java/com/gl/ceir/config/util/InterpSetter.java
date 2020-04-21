@@ -33,6 +33,21 @@ public final class InterpSetter {
 			return "";
 		}
 	}
+	
+	
+	public String setTagId(String tag, Integer value) {
+		try {
+			if(Objects.isNull(value)) {
+				return "";	
+			}
+
+			List<SystemConfigListDb> systemConfigListDbs = configurationManagementServiceImpl.getSystemConfigListByTag(tag);
+			return systemConfigListDbs.stream().filter(o -> o.getValue() == value).findAny().get().getTagId();
+
+		}catch (Exception e) {
+			return "";
+		}
+	}
 
 	public String setConfigInterp(String tag, int value, int start, int end) {
 		try {
