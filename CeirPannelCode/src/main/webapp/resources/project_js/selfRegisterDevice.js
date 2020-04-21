@@ -427,8 +427,8 @@ function pageButtons(url){
 var sourceType =localStorage.getItem("sourceType");
 function filter(lang)
 {       
-var sessionFlag=0;
-table('./headers?type=userPaidStatus&lang='+lang,'./user-paid-status-data?sessionFlag='+sessionFlag);
+
+table('./headers?type=userPaidStatus&lang='+lang,'./user-paid-status-data');
 	
 }
 var nationalId =$("body").attr("session-value") =='null' ? null : $("body").attr("session-value");
@@ -445,7 +445,7 @@ function table(url,dataUrl){
 			"userType":"End User",
 			"status":parseInt($('#recordStatus').val()),
 			"txnId":txn,
-			"userId":330,
+			//"userId":356,
 			"consignmentStatus": null,
 			"nid": nationalId == null ? $('#nId').val() : nationalId
 	}

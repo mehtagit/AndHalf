@@ -216,7 +216,9 @@
 				var id  = parseInt($("#deleteTacId").val());
 				var deleteRequest = {
 						"id" : id,
-						"remark" : $("#deleteTacRemark").val() 
+						"txnId" : $("#tacdeleteTxnId").text(),
+						"remark" : $("#deleteTacRemark").val(),
+						"userId" : parseInt($("body").attr("data-userID"))
 				}
 				console.log(JSON.stringify(deleteRequest));
 				

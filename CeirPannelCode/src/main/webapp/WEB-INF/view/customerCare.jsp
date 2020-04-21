@@ -81,6 +81,10 @@
  #starColor {
             color: red;
         }
+        
+.disable {
+    color: grey;
+}    
 </style>
 
 </head>
