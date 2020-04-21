@@ -22,8 +22,8 @@
 
 			<fileNamePattern>/home/ubuntu/CeirContent/logs/log.%d{yyyy-MM-dd}.log
 			</fileNamePattern>
-	<!-- 		<fileNamePattern>/home/ceirapp/ceir/gui/logs/log.%d{yyyy-MM-dd}.log</fileNamePattern>
-			<maxHistory>60</maxHistory> -->
+<!-- 			<fileNamePattern>/home/ceirapp/ceir/gui/logs/log.%d{yyyy-MM-dd}.log</fileNamePattern>
+ -->			<maxHistory>60</maxHistory>
 		</rollingPolicy>
 
 	</appender>

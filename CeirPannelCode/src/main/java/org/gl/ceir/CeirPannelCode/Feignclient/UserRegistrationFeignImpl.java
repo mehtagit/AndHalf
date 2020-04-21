@@ -32,6 +32,10 @@ public interface UserRegistrationFeignImpl {
 	@PostMapping("/userRegistration/getSecurityQuestion/{username}")
 	public GenricResponse securityQuestionList(@PathVariable("username")String username);
 	
+	@PostMapping("/userRegistration/getAllSecurityQuestion")
+	public List<SecurityQuestion> getAllSecurityQuestion();
+
+	
 	@PostMapping("/userRegistration/registration")
 	public OtpResponse registration(@RequestBody Registration registration); 
 	                                          

@@ -348,8 +348,14 @@ public class RegistrationService {
 	}
 
 	public GenricResponse securityQuestionList(String username){
-		log.info("inside security question controller");
+		log.info("inside security question controller and username: "+username);
 		GenricResponse response =userRegistrationFeignImpl.securityQuestionList(username);
+		return response; 
+	}
+	
+	public List<SecurityQuestion> allSecurityQuestionList(){
+		log.info("inside security question controller");
+		List<SecurityQuestion> response =userRegistrationFeignImpl.getAllSecurityQuestion();
 		return response; 
 	}
 	public HttpResponse resendOtp(Integer id,HttpServletRequest request) {
