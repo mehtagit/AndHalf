@@ -29,6 +29,7 @@ import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.PolicyBreachNotification;
 import com.gl.ceir.config.model.RegularizeDeviceDb;
 import com.gl.ceir.config.model.StockMgmt;
+import com.gl.ceir.config.model.TypeApprovedDb;
 import com.gl.ceir.config.model.constants.GenericMessageTags;
 import com.gl.ceir.config.repository.BlackListRepository;
 import com.gl.ceir.config.repository.DeviceDuplicateDbRepository;
@@ -73,6 +74,9 @@ public class CustomerCareServiceImpl {
 	
 	@Autowired
 	RegularizedDeviceServiceImpl regularizedDeviceServiceImpl;
+	
+	@Autowired
+	TypeApprovedDbServiceImpl typeApprovedDbServiceImpl;
 
 	public GenricResponse getAll(CustomerCareRequest customerCareRequest, String listType) {
 		String imei = customerCareRequest.getImei();
@@ -136,8 +140,7 @@ public class CustomerCareServiceImpl {
 					RegularizeDeviceDb regularizeDeviceDb = (RegularizeDeviceDb)objectBytxnId;
 					regularizedDeviceServiceImpl.setInterp(regularizeDeviceDb);
 					objectBytxnId = regularizeDeviceDb;
-				}
-				else {
+				}else {
 					logger.info("customerCareRepo.getByTxnId returned non ConsignmentMgmt");
 				}
 				
@@ -159,9 +162,13 @@ public class CustomerCareServiceImpl {
 					GsmaBlacklistRepository gsmaBlacklistRepository = (GsmaBlacklistRepository)repository;
 					objectBytxnId = gsmaBlacklistRepository.getByDeviceid(customerCareDeviceState.getImei());
 				}
-				else if(repository instanceof TypeApproveRepository) { TypeApproveRepository
-					typeApproveRepository = (TypeApproveRepository)repository; 
-				    objectBytxnId = typeApproveRepository.getByTac(customerCareDeviceState.getImei().substring(0,8)); 
+				else if(repository instanceof TypeApproveRepository) { 
+					TypeApproveRepository typeApproveRepository = (TypeApproveRepository)repository; 
+				    objectBytxnId = typeApproveRepository.getByTac(customerCareDeviceState.getImei().substring(0,8));
+				    TypeApprovedDb typeApprovedDb = (TypeApprovedDb)objectBytxnId;
+					typeApprovedDbServiceImpl.setBrandInterp(typeApprovedDb);
+					typeApprovedDbServiceImpl.setModelInterp(typeApprovedDb);
+					objectBytxnId = typeApprovedDb;
 				}
 				else if(repository instanceof VipListRepository ) {
 					VipListRepository vipListRepository = (VipListRepository) repository;
