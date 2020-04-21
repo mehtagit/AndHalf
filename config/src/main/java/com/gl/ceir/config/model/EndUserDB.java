@@ -22,6 +22,7 @@ import org.hibernate.envers.Audited;
 import org.hibernate.envers.NotAudited;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Audited
@@ -75,10 +76,10 @@ public class EndUserDB implements Serializable {
 	
 	private Integer docType;
 	@Transient
-	private Integer docTypeInterp;
+	private String docTypeInterp;
 
 	@NotAudited
-	@OneToMany(mappedBy = "endUserDB", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "endUserDB",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	private List<RegularizeDeviceDb> regularizeDeviceDbs ;
 	
 	@Column(length = 50)
@@ -204,6 +205,8 @@ public class EndUserDB implements Serializable {
 	public void setPhoneNo(String phoneNo) {
 		this.phoneNo = phoneNo;
 	}
+	
+	
 	public List<RegularizeDeviceDb> getRegularizeDeviceDbs() {
 		return regularizeDeviceDbs;
 	}
@@ -243,10 +246,10 @@ public class EndUserDB implements Serializable {
 	public void setDocType(Integer docType) {
 		this.docType = docType;
 	}
-	public Integer getDocTypeInterp() {
+	public String getDocTypeInterp() {
 		return docTypeInterp;
 	}
-	public void setDocTypeInterp(Integer docTypeInterp) {
+	public void setDocTypeInterp(String docTypeInterp) {
 		this.docTypeInterp = docTypeInterp;
 	}
 	public String getNationality() {

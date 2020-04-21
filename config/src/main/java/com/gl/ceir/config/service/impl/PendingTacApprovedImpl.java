@@ -18,6 +18,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.gl.ceir.config.ConfigTags;
 import com.gl.ceir.config.configuration.PropertiesReader;
@@ -35,12 +36,12 @@ import com.gl.ceir.config.model.constants.Features;
 import com.gl.ceir.config.model.constants.GenericMessageTags;
 import com.gl.ceir.config.model.constants.SearchOperation;
 import com.gl.ceir.config.model.constants.SubFeatures;
-import com.gl.ceir.config.model.file.AuditTrailFileModel;
 import com.gl.ceir.config.model.file.PendingTacApprovedFileModel;
 import com.gl.ceir.config.repository.AuditTrailRepository;
 import com.gl.ceir.config.repository.PendingTacApprovedRepository;
 import com.gl.ceir.config.repository.UserRepository;
 import com.gl.ceir.config.specificationsbuilder.GenericSpecificationBuilder;
+import com.gl.ceir.config.util.CustomMappingStrategy;
 import com.gl.ceir.config.util.InterpSetter;
 import com.gl.ceir.config.util.Utility;
 import com.opencsv.CSVWriter;
@@ -124,7 +125,8 @@ public class PendingTacApprovedImpl {
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
-
+	
+	@Transactional
 	public GenricResponse deletePendingApproval(FilterRequest filterRequest){
 		try {
 			if(Objects.isNull(filterRequest.getUserId())) {
@@ -138,6 +140,9 @@ public class PendingTacApprovedImpl {
 			logger.info("AUDIT : Delete Tags list saved in audit_trail.");
 
 			if(Objects.nonNull(filterRequest.getTxnId())) {
+				PendingTacApprovedDb pendingTacApproveDb = pendingTacApprovedRepository.getByTxnId(filterRequest.getTxnId());
+				pendingTacApproveDb.setRemark(filterRequest.getRemark());
+				pendingTacApprovedRepository.saveAndFlush(pendingTacApproveDb);
 				pendingTacApprovedRepository.deleteByTxnId(filterRequest.getTxnId());
 				return new GenricResponse(0, "Deleted Successully.", "", "");
 			}else if(Objects.nonNull(filterRequest.getTac()) && Objects.nonNull(filterRequest.getImporterId())){
@@ -198,8 +203,10 @@ public class PendingTacApprovedImpl {
 	}
 
 	public FileDetails getFilteredPendingTacApprovedDbInFile(FilterRequest filterRequest) {
+		logger.info("method executed");
 		String fileName = null;
 		Writer writer   = null;
+		
 		PendingTacApprovedFileModel atfm = null;
 
 		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -211,12 +218,17 @@ public class PendingTacApprovedImpl {
 		logger.info("CONFIG : file_consignment_download_link [" + link + "]");
 
 		String filePath = filepath.getValue();
+		
 		StatefulBeanToCsvBuilder<PendingTacApprovedFileModel> builder = null;
 		StatefulBeanToCsv<PendingTacApprovedFileModel> csvWriter = null;
 		List<PendingTacApprovedFileModel> fileRecords = null;
+		CustomMappingStrategy<PendingTacApprovedFileModel> mappingStrategy = new CustomMappingStrategy<>();
 
 		try {
+			logger.info("going to fetch the data");
 			List<PendingTacApprovedDb> pendingTacApprovedDbs = getAll(filterRequest);
+			
+			logger.info("Data:"+pendingTacApprovedDbs);
 			if( !pendingTacApprovedDbs.isEmpty() ) {
 				if(Objects.nonNull(filterRequest.getUserId()) && (filterRequest.getUserId() != -1 && filterRequest.getUserId() != 0)) {
 					fileName = LocalDateTime.now().format(dtf2).replace(" ", "_") + "PendingTacApprovedDbs.csv";
@@ -228,29 +240,33 @@ public class PendingTacApprovedImpl {
 			}
 
 			writer = Files.newBufferedWriter(Paths.get(filePath+fileName));
+			mappingStrategy.setType(PendingTacApprovedFileModel.class);
+			
 			builder = new StatefulBeanToCsvBuilder<>(writer);
-			csvWriter = builder.withQuotechar(CSVWriter.NO_QUOTE_CHARACTER).build();
+			csvWriter = builder.withMappingStrategy(mappingStrategy).withSeparator(',').withQuotechar(CSVWriter.NO_QUOTE_CHARACTER).build();
 
 			if( !pendingTacApprovedDbs.isEmpty() ) {
 				fileRecords = new ArrayList<>(); 
-
-
 				for(PendingTacApprovedDb pendingTacApprovedDb : pendingTacApprovedDbs ) { 
 					atfm = new PendingTacApprovedFileModel();
-
-					atfm.setCreatedOn(pendingTacApprovedDb.getCreatedOn().toString());
+					if(Objects.isNull(pendingTacApprovedDb)) {
+						continue;
+					}
+					
+					atfm.setCreatedOn(pendingTacApprovedDb.getCreatedOn().format(dtf));
+					atfm.setModifiedOn(pendingTacApprovedDb.getModifiedOn().format(dtf));
 					atfm.setTxnId(pendingTacApprovedDb.getTxnId()); 
 					atfm.setTac(pendingTacApprovedDb.getTac());
-					atfm.setFeatureName(pendingTacApprovedDb.getFeatureName());
 					atfm.setUserType(pendingTacApprovedDb.getUserType());
+					atfm.setFeatureName(pendingTacApprovedDb.getFeatureName());
 
 					logger.debug(atfm);
 
-					fileRecords.add(atfm); }
-
-
+					fileRecords.add(atfm);
+					}
 				csvWriter.write(fileRecords);
 			}
+			logger.info("returning file object");
 			return new FileDetails( fileName, filePath, link.getValue() + fileName ); 
 
 		} catch (Exception e) {
@@ -266,7 +282,7 @@ public class PendingTacApprovedImpl {
 
 	private List<PendingTacApprovedDb> getAll(FilterRequest filterRequest) {
 		try {
-			List<PendingTacApprovedDb> pendingTacApprovedDbs = pendingTacApprovedRepository.findAll( buildSpecification(filterRequest).build());
+			List<PendingTacApprovedDb> pendingTacApprovedDbs = pendingTacApprovedRepository.findAll(buildSpecification(filterRequest).build());
 
 			/*
 			 * for(AuditTrail auditTrail : auditTrails ) { setInterp(auditTrail); }

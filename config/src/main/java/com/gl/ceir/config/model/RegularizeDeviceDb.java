@@ -94,8 +94,8 @@ public class RegularizeDeviceDb implements Serializable {
 	@Transient
 	private String stateInterp;
 	
-	@JsonIgnore
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "userId") 
 	private EndUserDB endUserDB;
 	
@@ -214,7 +214,8 @@ public class RegularizeDeviceDb implements Serializable {
 	public void setTxnId(String txnId) {
 		this.txnId = txnId;
 	}
-
+	
+	
 	public EndUserDB getEndUserDB() {
 		return endUserDB;
 	}
@@ -417,8 +418,6 @@ public class RegularizeDeviceDb implements Serializable {
 		builder.append(origin);
 		builder.append(", status=");
 		builder.append(status);
-		builder.append(", endUserDB=");
-		builder.append(endUserDB);
 		builder.append(", nationality=");
 		builder.append(nationality);
 		builder.append("]");

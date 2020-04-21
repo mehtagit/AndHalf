@@ -32,24 +32,24 @@ import com.gl.ceir.config.repository.WebActionDbRepository;
 @Component
 @Transactional(rollbackOn = Exception.class)
 public class StockTransaction {
-	
+
 	private static final Logger logger = LogManager.getLogger(StockTransaction.class);
-	
+
 	@Autowired
 	WebActionDbRepository webActionDbRepository;
-	
+
 	@Autowired
 	AuditTrailRepository auditTrailRepository;
 
 	@Autowired
 	StockManagementRepository stockManagementRepository;
-	
+
 	@Autowired
 	UserRepository userRepository;
-	
+
 	@Autowired	
 	EmailUtil emailUtil;
-	
+
 	public boolean executeRegisterStock(StockMgmt stockMgmt, WebActionDb webActionDb, UserProfile userProfile,
 			boolean isStockAssignRequest, boolean isAnonymousUpload) {
 
@@ -120,34 +120,32 @@ public class StockTransaction {
 		return queryStatus;
 	}
 
-	public boolean executeRegisterStock(StockMgmt stockMgmt, WebActionDb webActionDb) {
+
+	public boolean executeRegisterStock(StockMgmt stockMgmt, WebActionDb
+			webActionDb) {
 
 		boolean queryStatus = Boolean.FALSE;
 
 		logger.info("Going to save webActionDb [" + webActionDb + "]");
-		webActionDbRepository.save(webActionDb);
-		logger.info("Stock [" + stockMgmt.getTxnId() + "] saved in web_action_db.");
+		webActionDbRepository.save(webActionDb); logger.info("Stock [" +
+				stockMgmt.getTxnId() + "] saved in web_action_db.");
 
 		logger.info("Going to save Stock [" + stockMgmt + "]");
-		stockManagementRepository.save(stockMgmt);
-		logger.info("Stock [" + stockMgmt.getTxnId() + "] saved in stock_mgmt.");
+		stockManagementRepository.save(stockMgmt); logger.info("Stock [" +
+				stockMgmt.getTxnId() + "] saved in stock_mgmt.");
 
 		User user = userRepository.getById(stockMgmt.getUserId());
-		
-		auditTrailRepository.save(new AuditTrail(stockMgmt.getUser().getId(), 
-				user.getUsername(), 
-				user.getUsertype().getId(),
-				user.getUsertype().getUsertypeName(), 
-				4, 
-				Features.STOCK, 
-				SubFeatures.REGISTER, "", stockMgmt.getTxnId()));
+
+		auditTrailRepository.save(new AuditTrail(stockMgmt.getUser().getId(),
+				user.getUsername(), user.getUsertype().getId(),
+				user.getUsertype().getUsertypeName(), 4, Features.STOCK,
+				SubFeatures.REGISTER, "", stockMgmt.getTxnId(),stockMgmt.getRoleType()));
 
 		logger.info("Stock [" + stockMgmt.getTxnId() + "] saved in audit_trail.");
 
-		queryStatus = Boolean.TRUE;
-		return queryStatus;
-	}
-	
+		queryStatus = Boolean.TRUE; return queryStatus; }
+
+
 	public boolean executeDeleteStock(StockMgmt stockMgmt, WebActionDb webActionDb) {
 		boolean queryStatus = Boolean.FALSE;
 		webActionDbRepository.save(webActionDb);
@@ -182,7 +180,7 @@ public class StockTransaction {
 		queryStatus = Boolean.TRUE;
 		return queryStatus;
 	}
-	
+
 	public boolean updateStatusWithHistory(StockMgmt stockMgmt) {
 		boolean status = Boolean.FALSE;
 

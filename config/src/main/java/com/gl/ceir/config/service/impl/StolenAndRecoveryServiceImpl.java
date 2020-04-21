@@ -466,12 +466,9 @@ public class StolenAndRecoveryServiceImpl {
 					}
 
 					srfm.setFileName( stolenandRecoveryMgmt.getFileName());
-
 					logger.debug(srfm);
-
 					fileRecords.add(srfm);
 				}
-
 				csvWriter.write(fileRecords);
 			}
 			return new FileDetails( fileName, filePath, link.getValue() + fileName ); 

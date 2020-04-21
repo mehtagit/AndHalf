@@ -46,10 +46,23 @@ public class PendingTacApprovedDb implements Serializable {
 	private String userType;
 	
 	private Long userId;
+	private String remark;
+	
 	
 	public PendingTacApprovedDb() {
 
 	}
+
+	
+	public String getRemark() {
+		return remark;
+	}
+
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+
 
 	public Long getId() {
 		return id;

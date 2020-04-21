@@ -180,7 +180,7 @@ public class StockServiceImpl {
 				stockMgmt.setRoleType(secondaryRoleType);
 				isStockAssignRequest = Boolean.TRUE;
 				
-				addInAuditTrail(stockMgmt.getUserId(), stockMgmt.getTxnId(), SubFeatures.UPLOAD);
+				addInAuditTrail(stockMgmt.getUserId(), stockMgmt.getTxnId(), SubFeatures.UPLOAD, stockMgmt.getRoleType());
 
 			}else if("End User".equalsIgnoreCase(stockMgmt.getUserType())){
 				// Check if this feature is supported in current period.
@@ -219,7 +219,7 @@ public class StockServiceImpl {
 					logger.info("Invalid request for stock registeration.", stockMgmt.getTxnId());
 					return new GenricResponse(3, "Invalid request for stock registeration.", stockMgmt.getTxnId());
 				}
-				addInAuditTrail(user.getId(), stockMgmt.getTxnId(), SubFeatures.UPLOAD);
+				addInAuditTrail(user.getId(), stockMgmt.getTxnId(), SubFeatures.UPLOAD,stockMgmt.getRoleType());
 			}else {
 				stockMgmt.setUser(new User().setId(new Long(stockMgmt.getUserId())));
 			}
@@ -311,11 +311,11 @@ public class StockServiceImpl {
 			 */
 			if(Objects.isNull(filterRequest.getTxnId())) {
 			
-				addInAuditTrail(Long.valueOf(filterRequest.getUserId()), "NA", SubFeatures.VIEW_ALL);
+				addInAuditTrail(Long.valueOf(filterRequest.getUserId()), "NA", SubFeatures.VIEW_ALL,filterRequest.getRoleType());
 			
 			}else {
 				
-				addInAuditTrail(Long.valueOf(filterRequest.getUserId()), filterRequest.getTxnId(), SubFeatures.FILTER);
+				addInAuditTrail(Long.valueOf(filterRequest.getUserId()), filterRequest.getTxnId(), SubFeatures.FILTER,filterRequest.getRoleType());
 				
 			}
 			
@@ -446,7 +446,7 @@ public class StockServiceImpl {
 				 * "] saved in audit_trail.");
 				 */
 			}
-			addInAuditTrail(Long.valueOf(filterRequest.getUserId()), filterRequest.getTxnId(), SubFeatures.VIEW_ALL);
+			addInAuditTrail(Long.valueOf(filterRequest.getUserId()), filterRequest.getTxnId(), SubFeatures.VIEW_ALL,filterRequest.getRoleType());
 			return stockMgmt2;
 
 		} catch (Exception e) {
@@ -488,7 +488,7 @@ public class StockServiceImpl {
 				webActionDb.setState(WebActionDbState.INIT.getCode());
 				webActionDb.setTxnId(deleteObj.getTxnId());
 				
-				addInAuditTrail(Long.valueOf(deleteObj.getUserId()), deleteObj.getTxnId(), SubFeatures.DELETE);
+				addInAuditTrail(Long.valueOf(deleteObj.getUserId()), deleteObj.getTxnId(), SubFeatures.DELETE,deleteObj.getRoleType());
 				if(stockTransaction.executeDeleteStock(txnRecord, webActionDb)) {
 					logger.info("Deletion of Stock is in Progress." + deleteObj.getTxnId());
 					return new GenricResponse(0, "Deletion of Stock is in Progress.",deleteObj.getTxnId());
@@ -535,7 +535,7 @@ public class StockServiceImpl {
 			webActionDb.setState(WebActionDbState.INIT.getCode());
 			webActionDb.setTxnId(distributerManagement.getTxnId());
 			
-			addInAuditTrail(stockMgmt.getUserId(), stockMgmt.getTxnId(), SubFeatures.UPDATE);
+			addInAuditTrail(stockMgmt.getUserId(), stockMgmt.getTxnId(), SubFeatures.UPDATE, stockMgmt.getRoleType());
 			
 			if(stockTransaction.executeUpdateStock(stockMgmt, webActionDb)) {
 				logger.info("Stock Update have been Successful." + stockMgmt.getTxnId());
@@ -665,14 +665,7 @@ public class StockServiceImpl {
 			}else {
 				csvWriter.write( new StockFileModel());
 			}
-
-			/*
-			 * auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), "",
-			 * Long.valueOf(filterRequest.getUserTypeId()), filterRequest.getUserType(),
-			 * Long.valueOf(filterRequest.getFeatureId()), Features.STOCK, SubFeatures.VIEW,
-			 * "", "NA")); logger.info("AUDIT : Saved file export request in audit.");
-			 */
-			addInAuditTrail(Long.valueOf(filterRequest.getUserId()), "NA", SubFeatures.EXPORT);
+			addInAuditTrail(Long.valueOf(filterRequest.getUserId()), "NA", SubFeatures.EXPORT,filterRequest.getRoleType());
 			
 			return new FileDetails( fileName, filePath, link.getValue() + fileName ); 
 
@@ -774,7 +767,7 @@ public class StockServiceImpl {
 					logger.warn("Unable to update Stolen and recovery entity.");
 					return new GenricResponse(3, "Unable to update stock entity.", consignmentUpdateRequest.getTxnId()); 
 				}else {
-					addInAuditTrail(Long.valueOf(consignmentUpdateRequest.getUserId()), consignmentUpdateRequest.getTxnId(), SubFeatures.ACCEPT_REJECT);
+					addInAuditTrail(Long.valueOf(consignmentUpdateRequest.getUserId()), consignmentUpdateRequest.getTxnId(), action, consignmentUpdateRequest.getRoleType());
 					emailUtil.saveNotification(mailTag, 
 							userProfile, 
 							consignmentUpdateRequest.getFeatureId(),
@@ -822,7 +815,7 @@ public class StockServiceImpl {
 					logger.warn("Unable to update Stolen and recovery entity.");
 					return new GenricResponse(3, "Unable to update stock entity.", consignmentUpdateRequest.getTxnId()); 
 				}else {
-					addInAuditTrail(Long.valueOf(consignmentUpdateRequest.getUserId()), consignmentUpdateRequest.getTxnId(), SubFeatures.ACCEPT_REJECT);
+					addInAuditTrail(Long.valueOf(consignmentUpdateRequest.getUserId()), consignmentUpdateRequest.getTxnId(), action, consignmentUpdateRequest.getRoleType());
 					emailUtil.saveNotification(mailTag, 
 							userProfile, 
 							consignmentUpdateRequest.getFeatureId(),
@@ -867,7 +860,7 @@ public class StockServiceImpl {
 			return null;
 	}
 	
-	private void addInAuditTrail(Long userId, String txnId, String subFeatureName) {
+	private void addInAuditTrail(Long userId, String txnId, String subFeatureName, String roleType) {
 		
 		User requestUser = null;
 		try {
@@ -886,7 +879,8 @@ public class StockServiceImpl {
 				Features.STOCK,
 				subFeatureName,
 				"", 
-				txnId));
+				txnId,
+				roleType));
 		}else {
 			logger.error("Could not find the user information");
 		}

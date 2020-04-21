@@ -85,10 +85,10 @@ public class PendingTacApprovedController {
 	  @RequestParam(value = "file", defaultValue = "0") Integer file) {
 	  
 	  MappingJacksonValue mapping = null; if(file == 0) {
-	  logger.info("Request to view filtered audit trail = " + filterRequest);
+	  logger.info("Request to view filtered PendingTacApprovedDb = " + filterRequest);
 	  Page<PendingTacApprovedDb> auditTrail = pendingTacApprovedImpl.filterPendingTacApprovedDb(filterRequest, pageNo, pageSize);
 	  mapping = new MappingJacksonValue(auditTrail); }else {
-	  logger.info("Request to export filtered audit trail = " + filterRequest);
+	  logger.info("Request to export filtered PendingTacApprovedDb = " + filterRequest);
 	  FileDetails fileDetails = pendingTacApprovedImpl.getFilteredPendingTacApprovedDbInFile(filterRequest);
 	  mapping = new MappingJacksonValue(fileDetails); }
 	  

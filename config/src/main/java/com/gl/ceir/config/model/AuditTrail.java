@@ -39,6 +39,7 @@ public class AuditTrail implements Serializable {
 	private String featureName;
 	private String subFeature;
 	private String jSessionId;
+	private String roleType;
 	@Column(length = 20)
 	private String txnId;
 	
@@ -57,7 +58,6 @@ public class AuditTrail implements Serializable {
 		this.subFeature = subFeature;
 		this.jSessionId = jSessionId;
 	}
-	
 	public AuditTrail(long userId, String userName, Long userTypeId, String userType, long featureId, 
 			String featureName, String subFeature, String jSessionId, String txnId) {
 		this.userId = userId;
@@ -70,6 +70,21 @@ public class AuditTrail implements Serializable {
 		this.jSessionId = jSessionId;
 		this.txnId = txnId;
 	}
+	
+	public AuditTrail(long userId, String userName, Long userTypeId, String userType, long featureId, 
+			String featureName, String subFeature, String jSessionId, String txnId,String roleType) {
+		this.userId = userId;
+		this.userName = userName;
+		this.userTypeId = userTypeId;
+		this.userType = userType;
+		this.featureId = featureId;
+		this.featureName = featureName;
+		this.subFeature = subFeature;
+		this.jSessionId = jSessionId;
+		this.txnId = txnId;
+		this.roleType = roleType;
+	}
+	
 	
 	public Long getId() {
 		return id;
@@ -146,6 +161,13 @@ public class AuditTrail implements Serializable {
 
 	public void setTxnId(String txnId) {
 		this.txnId = txnId;
+	}
+	public String getRoleType() {
+		return roleType;
+	}
+
+	public void setRoleType(String roleType) {
+		this.roleType = roleType;
 	}
 
 	@Override

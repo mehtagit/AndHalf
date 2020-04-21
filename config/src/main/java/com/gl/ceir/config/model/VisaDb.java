@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -51,6 +52,8 @@ public class VisaDb implements Serializable {
 	
 	private String visaExpiryDate;
 	
+	@Transient
+	private String visaTypeInterp;
 	@ManyToOne
 	@JoinColumn(name = "userId")
 	@JsonIgnore
@@ -138,6 +141,15 @@ public class VisaDb implements Serializable {
 
 	public void setVisaFileName(String visaFileName) {
 		this.visaFileName = visaFileName;
+	}
+
+	
+	public String getVisaTypeInterp() {
+		return visaTypeInterp;
+	}
+
+	public void setVisaTypeInterp(String visaTypeInterp) {
+		this.visaTypeInterp = visaTypeInterp;
 	}
 
 	@Override
