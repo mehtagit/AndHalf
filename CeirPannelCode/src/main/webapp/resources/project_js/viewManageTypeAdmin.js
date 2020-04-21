@@ -734,7 +734,7 @@ function rejectSubmit(actiontype){
 			"featureId": featureId,
 			"adminUserId":userId,
 			"adminUserType":userType,
-			"remark" : $("#stockDispproveRemarks").val()
+			"remark" : $("#rejectTrcRemark").val()
 			
 	}
 	$.ajax({
@@ -759,6 +759,8 @@ function rejectSubmit(actiontype){
 			alert("Failed");
 		}
 	});
+	
+	return false;
 }
 
 

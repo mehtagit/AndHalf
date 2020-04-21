@@ -8,9 +8,10 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Feignclient.UserProfileFeignImpl;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
+import org.gl.ceir.CeirPannelCode.Model.SLAContentModel;
+import org.gl.ceir.CeirPannelCode.Model.SLAfilterRequest;
 import org.gl.ceir.Class.HeadersTitle.DatatableResponseModel;
 import org.gl.ceir.Class.HeadersTitle.IconsState;
 import org.gl.ceir.configuration.ConfigParameters;
@@ -18,8 +19,7 @@ import org.gl.ceir.configuration.Translator;
 import org.gl.ceir.pageElement.model.Button;
 import org.gl.ceir.pageElement.model.InputFields;
 import org.gl.ceir.pageElement.model.PageElement;
-import org.gl.ceir.pagination.model.TacContentModel;
-import org.gl.ceir.pagination.model.TacPaginitionModel;
+import org.gl.ceir.pagination.model.SLAPaginationModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,9 +31,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.gson.Gson;
 
 @RestController
-public class TacListDatatableController {
-
-
+public class SLADatatableController {
+		
 	private final Logger log = LoggerFactory.getLogger(getClass());
 	String className = "emptyClass";
 	@Autowired
@@ -49,13 +48,11 @@ public class TacListDatatableController {
 	@Autowired
 	UserProfileFeignImpl userProfileFeignImpl;
 	@Autowired
-	FeignCleintImplementation feignCleintImplementation;
+	SLAContentModel slaContentModel;
 	@Autowired
-	TacContentModel tacContentModel;
-	@Autowired
-	TacPaginitionModel tacPaginitionModel;
+	SLAPaginationModel slaPaginationModel;
 	
-	@PostMapping("pendingTACdata") 
+	@PostMapping("slaData") 
 	public ResponseEntity<?> viewPendingTacList(HttpServletRequest request,HttpSession session) {
 		String userType = (String) session.getAttribute("usertype");
 		int userId=	(int) session.getAttribute("userid");
@@ -64,55 +61,58 @@ public class TacListDatatableController {
 		List<List<Object>> finalList=new ArrayList<List<Object>>();
 		String filter = request.getParameter("filter");
 		Gson gsonObject=new Gson();
-		FilterRequest filterrequest = gsonObject.fromJson(filter, FilterRequest.class);
+		SLAfilterRequest filterRequest = gsonObject.fromJson(filter, SLAfilterRequest.class);
 		Integer pageSize = Integer.parseInt(request.getParameter("length"));
 		Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize ;
-		filterrequest.setSearchString(request.getParameter("search[value]"));
-		log.info("pageSize"+pageSize+"-----------pageNo---"+pageNo);
-		try{
-			log.info("request send to the filter api ="+filterrequest);
-			Object response = feignCleintImplementation.pendingTACFeign(filterrequest, pageNo, pageSize, file);
+		filterRequest.setSearchString(request.getParameter("search[value]"));
+		
+		try {
+			log.info("request send to the filter api ="+filterRequest);
+			Object response = userProfileFeignImpl.viewSLARequest(filterRequest, pageNo, pageSize, file);
 			log.info("response in datatable"+response);
 			Gson gson= new Gson(); 
 			String apiResponse = gson.toJson(response);
-			tacPaginitionModel = gson.fromJson(apiResponse, TacPaginitionModel.class);
-			List<TacContentModel> paginationContentList = tacPaginitionModel.getContent();
+			slaPaginationModel = gson.fromJson(apiResponse, SLAPaginationModel.class);
+			List<SLAContentModel> paginationContentList = slaPaginationModel.getContent();
+			
 			if(paginationContentList.isEmpty()){
 				datatableResponseModel.setData(Collections.emptyList());
 				
 			}else {
-				for(TacContentModel dataInsideList : paginationContentList) 
+				for(SLAContentModel dataInsideList : paginationContentList) 
 				{
 				   String id= String.valueOf(dataInsideList.getId());	
 				   String createdOn= dataInsideList.getCreatedOn();
-				   String modifiedOn = dataInsideList.getModifiedOn();
+				   String userName = dataInsideList.getUsername();
 				   String txnId = dataInsideList.getTxnId();
-				   String tac = dataInsideList.getTac();
-				   String userTypeName = dataInsideList.getUserType();
+				   String userTypeName = dataInsideList.getUsertype();
 				   String featureName = dataInsideList.getFeatureName();
+				   String Status = dataInsideList.getStateInterp();
 				   String userStatus = (String) session.getAttribute("userStatus");	  
-				   String action=iconState.adminPendingTacIcons(txnId,id);			   
-				   Object[] finalData={createdOn,modifiedOn,txnId,tac,action}; 
+				   Object[] finalData={createdOn,userName,txnId,userTypeName,featureName,Status}; 
 				   List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 					finalList.add(finalDataList);
 					datatableResponseModel.setData(finalList);	
 			}
-			
+				
 			}
-			datatableResponseModel.setRecordsTotal(tacPaginitionModel.getNumberOfElements());
-			datatableResponseModel.setRecordsFiltered(tacPaginitionModel.getTotalElements());
+			datatableResponseModel.setRecordsTotal(slaPaginationModel.getNumberOfElements());
+			datatableResponseModel.setRecordsFiltered(slaPaginationModel.getTotalElements());
 			return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK); 
+			
 		}catch (Exception e) {
 			datatableResponseModel.setRecordsTotal(null);
 			datatableResponseModel.setRecordsFiltered(null);
 			datatableResponseModel.setData(Collections.emptyList());
 			log.error(e.getMessage(),e);
 			return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK); 
+			
 		}
-		
 	}
 	
-	@PostMapping("pendingTAC/pageRendering")
+	
+	
+	@PostMapping("sla/pageRendering")
 	public ResponseEntity<?> pageRendering(HttpSession session){
 
 		String userType = (String) session.getAttribute("usertype");
@@ -121,7 +121,7 @@ public class TacListDatatableController {
 		InputFields inputFields = new InputFields();
 		InputFields dateRelatedFields;
 		
-		pageElement.setPageTitle(Translator.toLocale("sidebar.Pending_TAC_List"));
+		pageElement.setPageTitle(Translator.toLocale("sidebar.SLA_Management"));
 		
 		List<Button> buttonList = new ArrayList<>();
 		List<InputFields> dropdownList = new ArrayList<>();
@@ -146,19 +146,24 @@ public class TacListDatatableController {
 			pageElement.setButtonList(buttonList);
 			
 		
-		/*
-		 * //Dropdown items String[]
-		 * selectParam={"select",Translator.toLocale("table.feature"),"feature",""};
-		 * for(int i=0; i<selectParam.length; i++) { inputFields= new InputFields();
-		 * inputFields.setType(selectParam[i]); i++;
-		 * inputFields.setTitle(selectParam[i]); i++; inputFields.setId(selectParam[i]);
-		 * i++; inputFields.setClassName(selectParam[i]); dropdownList.add(inputFields);
-		 * } pageElement.setDropdownList(dropdownList);
-		 */
+			//Dropdown items 
+			  String[] selectParam={"select",Translator.toLocale("table.userType"),"userType","","select","Feature","feature",""}; 
+			  for(int i=0; i<selectParam.length; i++) { 
+					inputFields= new InputFields();
+			  inputFields.setType(selectParam[i]); 
+			  i++;
+			  inputFields.setTitle(selectParam[i]);
+			  i++; 
+			  inputFields.setId(selectParam[i]);
+			  i++; 
+			  inputFields.setClassName(selectParam[i]);
+			  dropdownList.add(inputFields);
+			  } 
+			pageElement.setDropdownList(dropdownList);
 		 
 			
 			//input type date list		
-			String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("input.transactionID"),"transactionID","","text",Translator.toLocale("table.TAC"),"tac",""};
+			String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate",""};
 			for(int i=0; i< dateParam.length; i++) {
 				dateRelatedFields= new InputFields();
 				dateRelatedFields.setType(dateParam[i]);
@@ -177,5 +182,7 @@ public class TacListDatatableController {
 		
 		
 	}
+	
+	
 	
 }

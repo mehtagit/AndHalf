@@ -96,7 +96,7 @@ public class DatatableHeaders {
 
 			//customStock Headers
 			else if("customStockHeaders".equals(role)) {
-				String[] headers = {"table.date","table.assignto","table.transactionID","table.fileName","table.stockStatus","table.quantity","table.action"};	
+				String[] headers = {"table.date","table.assignto","table.transactionID","table.fileName","table.stockStatus","input.quantity","input.devicequantity","table.action"};	
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
@@ -106,7 +106,7 @@ public class DatatableHeaders {
 
 			//AdminStock Headers
 			else if("adminStockHeaders".equals(role)) {
-				String[] headers = {"table.date","table.transactionID","table.displayName","table.roleType","table.fileName","table.stockStatus","table.quantity","table.action"};	
+				String[] headers = {"table.date","table.transactionID","table.displayName","table.roleType","table.fileName","table.stockStatus","input.quantity","input.devicequantity","table.action"};	
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
@@ -167,7 +167,7 @@ public class DatatableHeaders {
 
 			//DEFAULT PORTION  
 			else if("userPaidStatus".equals(role)) {
-				String[] headers = {"table.date","table.nid","table.transactionID","table.country","input.Nationality","table.status","table.origin","table.action"};		
+				String[] headers = {"table.date","table.nid","table.transactionID","table.country","input.Nationality","table.taxPaidStatus","table.origin","table.status","table.action"};		
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
@@ -442,7 +442,7 @@ public class DatatableHeaders {
 			
 			//Pending TAC List
 			else if("pendingTACHeaders".equals(role)) {
-				String[] headers = {"table.creationDate","table.lastupdatedate","table.transactionID","table.TAC","table.userType","table.feature","table.action"};
+				String[] headers = {"table.creationDate","table.lastupdatedate","table.transactionID","table.TAC","table.action"};
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
@@ -458,6 +458,16 @@ public class DatatableHeaders {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
 				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);	
+			}
+			
+			//SLA Table List
+			
+			else if("slaTableHeaders".equals(role)) {
+				String[] headers = {"table.creationDate","table.UserName","table.transactionID","table.userType","table.featureName","table.status"};
+				for(String header : headers) {
+					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
+				}
+				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
 			}
 			
 			

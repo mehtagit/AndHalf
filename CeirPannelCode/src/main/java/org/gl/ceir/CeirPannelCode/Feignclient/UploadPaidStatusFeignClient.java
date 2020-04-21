@@ -46,8 +46,8 @@ public interface UploadPaidStatusFeignClient {
 	public @ResponseBody UserPaidStatusContent viewByImei(@PathVariable("imei") Long imei);
 	
 
-	@PostMapping("/end-user-device-info/count-by-nid/{nid}")
-	public @ResponseBody GenricResponse countByNid(@PathVariable("nid") String  nid);
+	@PostMapping("/end-user-device-info/count-by-nid/{nid}/{type}")
+	public @ResponseBody GenricResponse countByNid(@PathVariable("nid") String  nid,@PathVariable("type") int nationType);
 	
 	
 	@PutMapping("/accept-reject/end-user-device")

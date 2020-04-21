@@ -152,6 +152,11 @@ select:disabled {
 	color: #444;
 }
 
+
+.disable {
+    color: grey;
+}
+
 /* .btn-info {
             margin-right: 1%;
         } */
@@ -205,7 +210,7 @@ input[type='search'] {
 											<div class="col s12 m12">
 										<label for="nationality"><spring:message
 												code="input.Nationality" /> <span class="star">*</span></label>
-										<div class=" boxHeight">
+										<div class=" boxHeight" id="chooseUserOption">
 											<label><input class="with-gap"
 												name="selectUSerViseForm" type="radio"
 												onclick="showCambodianUserForm()" checked> <span><spring:message
@@ -221,8 +226,8 @@ input[type='search'] {
 													<input type="text" id="nationalID" pattern="[A-Za-z0-9]{1,12}" 
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.12Character" />');"
 											        oninvalid="InvalidMsg(this,'input','<spring:message code="validation.12Character" />');"
-													 required maxlength="12" name="nationalID" placeholder="" disabled="disabled" value="" /> <label for="nationalID"
-														class="center-align ml-10"><spring:message code="input.nidText" /></label>
+													 required maxlength="12" name="nationalID" placeholder="" disabled="disabled" value="" /> <label for="nationalID" id="nidLabelName"
+														class="center-align ml-10"><spring:message code="input.nidText" /> <span class="star">*</span> </label>
 												</div>
 
 													<div class="col s12 m4" style="margin-top: -10px;">
@@ -239,7 +244,7 @@ input[type='search'] {
 
 												<div class="file-field col s12 m4"
 													style="margin-top: -15px;">
-													<h6 style="color: #000;"><spring:message code="input.uploadNidProof" /> <span class="star">*</span>
+													<h6 style="color: #000;" id="uploadNidImage"><spring:message code="input.uploadNidProof" /> <span class="star">*</span>
 													</h6>
 													<div class="btn">
 														<span><spring:message code="input.selectfile" /></span> <input type="file"
@@ -664,7 +669,7 @@ input[type='search'] {
 															</select>
 														</div>
 
-														<div class="input-field col s12 m6 l6">
+														<div class="input-field col s12 m6 l6" id="priceDiv">
 															<input type="text" name="Price" id="Price1"
 																pattern="[0-9]{0,7}" 
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
@@ -733,6 +738,9 @@ input[type='search'] {
 														</div>
 													</div>
 												</div>
+										
+											</div>
+										</div>
 										<div class="col s12 m12">
 											<button class="btn right add_field_button"
 												style="margin-top: 5px;">
@@ -742,9 +750,6 @@ input[type='search'] {
 												 <spring:message code="input.requiredfields" /> <span class="star">*</span>
 											</p>
 										</div>
-											</div>
-										</div>
-
 										<div class="col s12 m12 center" style="margin-top: 30px;">
 											<button class="btn " id="uploadPaidStatusbutton" type="submit"><spring:message code="button.submit" /></button>
 											<a  href='./uploadPaidStatus?FeatureId=12' class="btn"
@@ -774,7 +779,7 @@ input[type='search'] {
 
 												</table>
 
-												<a href="Javascript:void(0);" onclick="viewDeviceHistory()"><spring:message code="modal.header.viewBlockDevices" /></a>
+												<a href="Javascript:void(0);" onclick="viewDeviceHistory()" style="display: none"><spring:message code="modal.header.viewBlockDevices" /></a>
 											</div>
 										</div>
 									</div>
@@ -1121,6 +1126,60 @@ input[type='search'] {
 		</div>
 	</div>
 	
+		<div id="visafileFormateModal" class="modal">
+		<h6 class="modal-header">
+			<spring:message code="fileValidationModalHeader" />
+		</h6>
+		<div class="modal-content">
+			<div class="row">
+				<h6 id="visafileErrormessage">
+					<spring:message code="fileValidationName" />
+					<br> <br>
+					<spring:message code="fileValidationFormate" />
+					<br>
+					<br>
+					<spring:message code="fileValidationSize" />
+				</h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<div class="input-field col s12 center">
+						<button class="modal-close  btn" onclick="clearVisaName()"
+							style="margin-left: 10px;">
+							<spring:message code="modal.ok" />
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="DeptfileFormateModal" class="modal">
+		<h6 class="modal-header">
+			<spring:message code="fileValidationModalHeader" />
+		</h6>
+		<div class="modal-content">
+			<div class="row">
+				<h6 id="DeptfileErrormessage">
+					<spring:message code="fileValidationName" />
+					<br> <br>
+					<spring:message code="fileValidationFormate" />
+					<br>
+					<br>
+					<spring:message code="fileValidationSize" />
+				</h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<div class="input-field col s12 center">
+						<button class="modal-close  btn" onclick="clearDeptName()"
+							style="margin-left: 10px;">
+							<spring:message code="modal.ok" />
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>

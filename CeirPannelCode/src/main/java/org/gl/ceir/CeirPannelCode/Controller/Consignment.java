@@ -193,7 +193,10 @@ public @ResponseBody GenricResponse registerConsignment(@RequestParam(name="supp
 @RequestParam(name="organisationcountry",required = false) String organisationcountry,@RequestParam(name="expectedDispatcheDate",required = false) String expectedDispatcheDate,
 @RequestParam(name="expectedArrivalPort",required = false) Integer expectedArrivalPort,@RequestParam(name="quantity",required = false) String quantity,
 @RequestParam(name="file",required = false) MultipartFile file,HttpSession session,@RequestParam(name="totalPrice",required = false) String totalPrice,@RequestParam(name="currency",required = false) Integer currency,
-@RequestParam(name="portAddress",required = false) String portAddress,@RequestParam(name="deviceQuantity",required = false) Integer deviceQuantity,HttpServletRequest request) {
+@RequestParam(name="userType",required = false) String userType,
+@RequestParam(name="userTypeId",required = false) Integer userTypeId,
+@RequestParam(name="featureId",required = false) Integer featureId,HttpServletRequest request) {
+
 
 	log.info("headers request="+request.getHeaderNames());
 	log.info("user-agent"+request.getHeader("user-agent"));
@@ -250,11 +253,12 @@ consignment.setQuantity(quantity);
 consignment.setTxnId(txnNumner);
 consignment.setFileName(file.getOriginalFilename());
 consignment.setUserId(Long.valueOf(userId));
-
+consignment.setUserName(userName);
+consignment.setFeatureId(featureId);
+consignment.setUserType(userType);
+consignment.setUserTypeId(userTypeId);
 consignment.setCurrency(currency);
 consignment.setTotalPrice(totalPrice);
-consignment.setPortAddress(portAddress);
-consignment.setDeviceQuantity(deviceQuantity);
 log.info("consignment form parameters passed to register consignment api "+consignment.toString());
 GenricResponse response = feignCleintImplementation.addConsignment(consignment);
 log.info("response from register consignment api"+response.toString());
@@ -273,7 +277,10 @@ public @ResponseBody GenricResponse openconsignmentRecordPage(@RequestParam(name
 @RequestParam(name="organisationcountry",required = false) String organisationcountry,@RequestParam(name="expectedDispatcheDate",required = false) String expectedDispatcheDate,
 @RequestParam(name="expectedArrivalPort",required = false) Integer expectedArrivalPort,@RequestParam(name="quantity",required = false) String quantity, HttpSession session,
 @RequestParam(name="file",required = false) MultipartFile file,@RequestParam(name="filename",required = false) String filename,@RequestParam(name="txnId",required = false) String txnId,
-@RequestParam(name="totalPrice",required = false) String totalPrice,@RequestParam(name="currency",required = false) Integer currency) 
+@RequestParam(name="totalPrice",required = false) String totalPrice,@RequestParam(name="currency",required = false) Integer currency,
+@RequestParam(name="userType",required = false) String userType,
+@RequestParam(name="userTypeId",required = false) Integer userTypeId,
+@RequestParam(name="featureId",required = false) Integer featureId) 
 {
 ConsignmentModel consignment = new ConsignmentModel();
 
@@ -306,7 +313,10 @@ consignment.setFileName(filename);
 consignment.setUserId(Long.valueOf(userId));
 consignment.setCurrency(currency);
 consignment.setTotalPrice(totalPrice);
-
+consignment.setUserName(userName);
+consignment.setFeatureId(featureId);
+consignment.setUserType(userType);
+consignment.setUserTypeId(userTypeId);
 
 }
 else {
@@ -404,6 +414,10 @@ request.setUserId((int) session.getAttribute("userid"));
 request.setRemarks(consignmentUpdateRequest.getRemarks());
 request.setTxnId(consignmentUpdateRequest.getTxnId());
 request.setFeatureId(consignmentUpdateRequest.getFeatureId());
+request.setUserName(consignmentUpdateRequest.getUserName());
+request.setUserType(consignmentUpdateRequest.getUserType());
+request.setUserTypeId(consignmentUpdateRequest.getUserTypeId());
+request.setFeatureId(consignmentUpdateRequest.getFeatureId());
 log.info(" request passed to the update consignment status="+request);
 GenricResponse response=feignCleintImplementation.updateConsignmentStatus(request);
 log.info("response after update consignment status="+response);
@@ -471,7 +485,7 @@ return consignmentdetails;
 @RequestMapping(value="/dowloadFiles/{filetype}/{fileName}/{transactionNumber}/{doc_TypeTag}",method={org.springframework.web.bind.annotation.RequestMethod.GET}) 
 //@RequestMapping(value="/dowloadFiles/{filetype}/{fileName}/{transactionNumber}",method={org.springframework.web.bind.annotation.RequestMethod.GET}, headers = {"content-Disposition=attachment"}) 
 
-public @ResponseBody FileExportResponse downloadFile(@PathVariable("transactionNumber") String txnid,@PathVariable(name="fileName",required = false	) String fileName,@PathVariable("filetype") String filetype,@PathVariable(name="doc_TypeTag",required = false) String doc_TypeTag) throws IOException {
+public @ResponseBody FileExportResponse downloadFile(@PathVariable("transactionNumber") String txnid,@PathVariable("fileName") String fileName,@PathVariable("filetype") String filetype,@PathVariable(name="doc_TypeTag",required = false) String doc_TypeTag) throws IOException {
 
 	FileExportResponse response = new FileExportResponse();	
 log.info("inside file download method"+doc_TypeTag);

@@ -129,7 +129,12 @@ section {
 </style>
 
 </head>
-<body data-id="3">
+<body data-id="3" data-roleType="${usertype}" data-userTypeID="${usertypeId}"
+	data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}"
+	data-stolenselected-roleType="${stolenselectedUserTypeId}"
+	data-selected-consignmentTxnId="${consignmentTxnId}"
+	data-selected-consignmentStatus="${consignmentStatus}"
+	data-username="${username}">
 	<!-- START MAIN -->
 
 	<!-- START WRAPPER -->
@@ -227,33 +232,17 @@ section {
 												maxlength="7"  oninput="InvalidMsg(this,'input','<spring:message code="validation.7character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7character" />');"  required/> <label for="quantity"
 												class="center-align"><spring:message code="input.quantity" /> <span class="star">*</span></label>
 										</div>
-										
-										<div class="input-field col s12 m6">
-											<input type="text" name="quantity" id="devicequantity"
-												pattern="[0-9]{0,7}"
-												
-												maxlength="7"  oninput="InvalidMsg(this,'input','<spring:message code="validation.7character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7character" />');"  required/> <label for="devicequantity"
-												class="center-align"><spring:message code="input.devicequantity" /> <span class="star">*</span></label>
-										</div>
 
 
 										<div class=" col s12 m6">
 											
 												<label for="expectedArrivalPort"><spring:message code="input.arrivalport" /> <span class="star">*</span></label>
-											<select class="browser-default" id="expectedArrivalPort" onchange="selectPortAddresValue(this.value)" oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" required
+											<select class="browser-default" id="expectedArrivalPort"  oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" required
 												 name="expectedArrivalPort" >
 												<%-- <spring:message code="input.arrivalport" /> --%>
 												<option value="" disabled selected> <spring:message code="input.arrivalport" /></option>
 											</select>
 										</div>
-										
-										<div class="col s12 m6 l6">
-									<label><spring:message code="registration.portAddress" /> <span class="star">*</span></label>
-									<select id="portAddress" class="browser-default"   
-									oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" required>
-										<option value="" disabled selected><spring:message code="selectport" /></option>
-											</select>
-								</div>	
 
 										<div class="col s12 m6" id="currencyDiv">
 											<label for="currency"><spring:message code="input.currency" /> <span class="star">*</span></label>
