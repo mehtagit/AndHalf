@@ -984,12 +984,17 @@ $(document).ready(function () {
 
 
 function regularizedCount(nationType){
-	console.log("----"+nationType)
+	console.log("----"+nationType+"  roleType=="+roleType)
 	var allowed='';
-	if(nationType==undefined)
+	if(nationType==undefined && roleType=='Custom')
 		{
+		console.log("if condition for regulaised");
 		nationType=1;
 		}
+	else if(nationType==undefined && roleType=='Immigration'){
+		console.log("else  condition for regulaised");
+		nationType=2;
+	}
 	var nid= nationalId == 'null' ? null : nationalId;
 	$.ajax({
 		url: './countByNid?nid='+nid+"&nationType="+nationType,

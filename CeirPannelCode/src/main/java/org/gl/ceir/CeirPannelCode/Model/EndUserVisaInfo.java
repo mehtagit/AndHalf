@@ -12,7 +12,7 @@ private String country;
 private String createdOn;
 private String district;
 private Integer docType;
-private Integer docTypeInterp;
+private String docTypeInterp;
 private String email;
 private String firstName;
 private Integer id;
@@ -67,10 +67,12 @@ public Integer getDocType() {
 public void setDocType(Integer docType) {
 	this.docType = docType;
 }
-public Integer getDocTypeInterp() {
+
+
+public String getDocTypeInterp() {
 	return docTypeInterp;
 }
-public void setDocTypeInterp(Integer docTypeInterp) {
+public void setDocTypeInterp(String docTypeInterp) {
 	this.docTypeInterp = docTypeInterp;
 }
 public String getEmail() {

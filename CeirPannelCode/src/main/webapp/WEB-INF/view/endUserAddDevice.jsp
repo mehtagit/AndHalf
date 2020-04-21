@@ -1,12 +1,4 @@
-<%
-	response.setHeader("Cache-Control", "no-cache");
-	response.setHeader("Cache-Control", "no-store");
-	response.setDateHeader("Expires", 0);
-	response.setHeader("Pragma", "no-cache");
-	/*  session.setMaxInactiveInterval(200); //200 secs
-	 session.setAttribute("usertype", null); */
-	if (session.getAttribute("usertype") != null) {
-%>
+
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
@@ -15,7 +7,10 @@
 <!DOCTYPE html>
 <html lang="en" class="no-js">
 <head>
-<title>Device Information</title>
+<title>Upload Paid Status</title>
+<meta http-equiv='cache-control' content='no-cache'>
+<meta http-equiv='expires' content='-1'>
+<meta http-equiv='pragma' content='no-cache'>
 
 <meta charset="utf-8" />
 <meta name="viewport"
@@ -24,6 +19,8 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta content="" name="description" />
 <meta content="" name="author" />
+<jsp:include page="/WEB-INF/view/endUserHeader.jsp" ></jsp:include>
+<jsp:include page="/WEB-INF/view/endUserFooter.jsp" ></jsp:include>
 
 <script type="text/javascript"
 	src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
@@ -63,12 +60,19 @@
 	href="${context}/resources/project_css/viewConsignment.css">
 <link rel="stylesheet"
 	href="${context}/resources/project_css/iconStates.css">
+	<link rel="stylesheet"
+	href="${context}/resources/project_css/intlTelInput.css">
 
 <link rel="stylesheet"
 	href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
 <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
 
 <script src="http://malsup.github.io/jquery.blockUI.js"></script>
+  <!------------------------------------------- Dragable Model---------------------------------->
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+
 <style>
 .row {
 	margin-bottom: 0;
@@ -162,7 +166,7 @@ input[type='search'] {
 			<div class="section">
 				<div class="row">
 					<div class="col s12 m12 l12">
-						<div class="row card-panel">
+						<div class="row card-panel register-device-responsive-page" style="margin: 5vh auto auto; display: block;" >
 							<div class="container-fluid pageHeader">
 								<p class="PageHeading"><spring:message code="registerconsignment.header.addDeviceInformation" /></p>
 								<!-- <a href="#addDevice" class="boton right modal-trigger">Add Device</a> -->
@@ -336,7 +340,7 @@ input[type='search'] {
 										</p>
 									</div>
 
-									<div class="col s12 m12 center" style="margin-top: 30px;">
+									<div class="col s12 m12 center" style="margin-top: 30px; padding-bottom: 50px;">
 										<button class="btn " type="submit"> <spring:message code="button.submit" /></button>
 										<button type='button' class="btn" id="redirectToPage" 
 												style="margin-left: 10px;"><spring:message code="button.cancel" /></button>
@@ -351,309 +355,7 @@ input[type='search'] {
 		</div>
 		<!--end container-->
 	</section>
-	<!-- END CONTENT -->
-	</div>
-	<!-- END WRAPPER -->
-
-	</div>
-	<!-- END MAIN -->
-
-
-
-	<!-- //////////////////////////////////////////////////////////////////////////// -->
-
-	<!-- START FOOTER -->
-	<!-- <footer class="page-footer"
-		style="position: fixed; bottom: 0; width: 100%;">
-		<div class="footer-copyright">
-			<div class="container">
-				<span class="right">Copyright Ã‚Â© 2018 Sterlite Technologies
-					Ltd, All rights reserved.</span>
-			</div>
-		</div>
-	</footer> -->
-	<!-- END FOOTER -->
-
-	<!-- Modal 2 start   -->
-
-	<div id="payNowTaxPayment" class="modal">
-		<div class="modal-content">
-			<h6 class="modal-header"><spring:message code="registerconsignment.header.addDeviceInformation" /></h6>
-			<div class="row">
-				<h6><spring:message code="modal.regularizedDevice" /></h6>
-			</div>
-			<div class="row">
-				<div class="input-field col s12 center">
-					<div class="input-field col s12 center">
-						<button class="modal-close btn"><spring:message code="modal.ok" /></button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Modal End -->
-
-	<!-- Modal 2 start   -->
-
-	<div id="needToPayTax" class="modal">
-		<div class="modal-content">
-			<h6 class="modal-header"><spring:message code="modal.payTaxInfo" /></h6>
-			<div class="row">
-				<h6><spring:message code="modal.needTaxPay" /></h6>
-			</div>
-			<div class="row">
-				<div class="input-field col s12 center">
-					<div class="input-field col s12 center">
-						<button class="modal-close btn"> <spring:message code="button.payNow" /></button>
-						<button class="modal-close btn" style="margin-left: 10px;"><spring:message code="button.payLater" /></button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Modal End -->
-
-	<!-- Pay Tax Modal start   -->
-
-	<div id="payTaxModal" class="modal">
-		<div class="modal-content">
-			<h6 class="modal-header"><spring:message code="modal.payTaxInfo" /></h6>
-			<div class="row">
-				<h6> <spring:message code="modal.taxHasBeenPaid" /></h6>
-			</div>
-			<div class="row">
-				<div class="input-field col s12 center">
-					<div class="input-field col s12 center">
-						<button class="modal-close modal-trigger btn"
-							data-target="payNowTaxPayment"><spring:message code="modal.yes" /></button>
-						<button class="modal-close btn" style="margin-left: 10px;"><spring:message code="modal.no" /></button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Pay Tax Modal End -->
-
 	
-	
-	<!-- Modal 2 start   -->
-
-	<div id="addDevice" class="modal">
-		<div class="modal-content">
-			<h6 class="modal-header"><spring:message code="button.adddevice" /></h6>
-			<div class="row">
-				<div class="row">
-
-					<div class="col s12 m6">
-						<label for="deviceType"><spring:message code="select.deviceType" /><span class="star">*</span></label>
-						<select class="browser-default" id="deviceType">
-							<option value="" disabled selected><spring:message code="select.deviceType" /></option>
-							<option value="Handheld">Handheld</option>
-							<option value="MobilePhone">Mobile Phone/Feature phone</option>
-							<option value="Vehicle">Vehicle</option>
-							<option value="Portable">Portable(include PDA)</option>
-							<option value="Module">Module</option>
-							<option value="Dongle">Dongle</option>
-							<option value="WLAN">WLAN Router</option>
-							<option value="Modem">Modem</option>
-							<option value="Smartphone">Smartphone</option>
-							<option value="Computer">Connected Computer</option>
-							<option value="Tablet">Tablet</option>
-							<option value="e-Book">e-Book</option>
-						</select>
-					</div>
-
-					<div class="col s12 m6">
-						<label for="deviceType"><spring:message code="select.multiSimStatus" /> <span
-							class="star">*</span></label> <select class="browser-default"
-							id="deviceType">
-							<option value="" disabled selected><spring:message code="select.multiSimStatus" /></option>
-							<option value="Yes">Yes</option>
-							<option value="No">No</option>
-						</select>
-					</div>
-
-					<div class="col s12 m6">
-						<label for="country"><spring:message code="select.countryBoughtFrom" /> <span
-							class="star">*</span></label> <select id="country"
-							class="browser-default" class="mySelect" style="padding-left: 0;"
-							required></select>
-					</div>
-
-					<div class="input-field col s12 m6" style="margin-top: 25px;">
-						<input type="text" id="serialNumber" name="serialNumber"
-							pattern="[0-9]"
-							title="Please enter your device serial number first"
-							maxlength="20"> <label for="serialNumber"><spring:message code="input.deviceSerialNumber" /><span class="star">*</span>
-						</label>
-					</div>
-
-					<div class="col s12 m6">
-						<label for="deviceType"><spring:message code="select.taxPaidStatus" /><span class="star">*</span></label>
-						<select class="browser-default" id="deviceType">
-							<option value="" disabled selected><spring:message code="select.taxPaidStatus" /></option>
-							<option value="Regularized">Regularized</option>
-							<option value="Paid">Paid</option>
-							<option value="NotPaid">Not Paid </option>
-						</select>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col s12 m12">
-						<p style="margin-bottom: 0;"><spring:message code="title.imeiMeidEsn" /></p>
-					</div>
-					<div class="input-field col s12 m6">
-						<input type="text" id="IMEI1" name="IMEI1" pattern="[0-9]"
-							title="Please enter minimum 15 and maximum 16 digit only"
-							maxlength="16"> <label for="IMEI1"><spring:message code="title.one" /><span
-							class="star">*</span></label>
-					</div>
-
-					<div class="input-field col s12 m6">
-						<input type="text" id="IMEI2" name="IMEI2" pattern="[0-9]"
-							title="Please enter minimum 15 and maximum 16 digit only"
-							maxlength="16"> <label for="IMEI2"><spring:message code="title.two" /></label>
-					</div>
-
-					<div class="input-field col s12 m6">
-						<input type="text" id="IMEI3" name="IMEI3" pattern="[0-9]"
-							title="Please enter minimum 15 and maximum 16 digit only"
-							maxlength="16"> <label for="IMEI3"><spring:message code="title.three" /></label>
-					</div>
-
-					<div class="input-field col s12 m6">
-						<input type="text" id="IMEI4" name="IMEI4[]" pattern="[0-9]"
-							title="Please enter minimum 15 and maximum 16 digit only"
-							maxlength="16"> <label for="IMEI4"><spring:message code="title.four" /></label>
-					</div>
-
-					<div class="col s12 m12">
-						<p><spring:message code="input.requiredfields" /><span class="star">*</span>
-						</p>
-					</div>
-
-					<div class="col s12 m12 center" style="margin-top: 10px;">
-						<button class="btn modal-trigger modal-close"
-							data-target="submitMsg"><spring:message code="button.submit" /></button>
-						<button class="btn modal-trigger modal-close"
-							data-target="cancelMsg" style="margin-left: 10px;"><spring:message code="button.cancel" /></button>
-					</div>
-
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Modal End -->
-
-	<!-- Modal 2 start   -->
-
-	<div id="viewDeviceInformation" class="modal">
-		<div class="modal-content">
-			<h6 class="modal-header"><spring:message code="modal.viewDeviceInfo" /></h6>
-			<div class="row">
-				<div class="row">
-
-					<div class="col s12 m6">
-						<label for="deviceType"><spring:message code="select.deviceType" /><span class="star">*</span></label>
-						<select class="browser-default" id="deviceType" disabled>
-							<option value="MobilePhone"><spring:message code="select.mobileFeature" /></option>
-						</select>
-					</div>
-
-					<div class="col s12 m6">
-						<label for="deviceType"><spring:message code="select.multiSimStatus" /><span
-							class="star">*</span></label> <select class="browser-default"
-							id="deviceType" disabled>
-							<option value="Yes">Yes</option>
-						</select>
-					</div>
-
-					<div class="col s12 m6" style="margin-top: 3px;">
-						<label for="country"><spring:message code="select.countryBoughtFrom" /><span
-							class="star">*</span></label> <input type="text" id="country"
-							name="country" placeholder="" disabled>
-					</div>
-
-					<div class="input-field col s12 m6" style="margin-top: 25px;">
-						<input type="text" id="serialNumber" name="serialNumber"
-							pattern="[0-9]"
-							title="Please enter your device serial number first"
-							maxlength="20" placeholder="" disabled> <label
-							for="serialNumber"><spring:message code="input.deviceSerialNumber" /><span
-							class="star">*</span></label>
-					</div>
-
-					<div class="col s12 m6">
-						<label for="deviceType"> <spring:message code="select.taxPaidStatus" /><span class="star">*</span></label>
-						<select class="browser-default" id="deviceType" disabled>
-							<option value="Regularized"> <spring:message code="select.regularized" /></option>
-						</select>
-					</div>
-				</div>
-				<div class="row input_fields_wrap">
-					<div class="col s12 m12">
-						<p style="margin-bottom: 0;"><spring:message code="title.imeiMeidEsn" /></p>
-					</div>
-					<div class="input-field col s12 m6">
-						<input type="text" id="IMEI1" name="IMEI1" pattern="[0-9]"
-							title="Please enter minimum 15 and maximum 16 digit only"
-							maxlength="16" placeholder="" disabled> <label
-							for="IMEI1"><spring:message code="title.one" /><span class="star">*</span></label>
-					</div>
-
-					<div class="input-field col s12 m6">
-						<input type="text" id="IMEI2" name="IMEI2" pattern="[0-9]"
-							title="Please enter minimum 15 and maximum 16 digit only"
-							maxlength="16" placeholder="" disabled>
-						<label for="IMEI2"><spring:message code="title.two" /></label>
-					</div>
-
-					<div class="input-field col s12 m6">
-						<input type="text" id="IMEI3" name="IMEI3" pattern="[0-9]"
-							title="Please enter minimum 15 and maximum 16 digit only"
-							maxlength="16"> <label for="IMEI3"><spring:message code="title.three" /></label>
-					</div>
-
-					<div class="input-field col s12 m6">
-						<input type="text" id="IMEI4" name="IMEI4[]" pattern="[0-9]"
-							title="Please enter minimum 15 and maximum 16 digit only"
-							maxlength="16"> <label for="IMEI4"><spring:message code="title.four" /></label>
-					</div>
-
-					<div class="col s12 m12 center" style="margin-top: 10px;">
-						<button class="btn modal-close" style="margin-left: 10px;"><spring:message code="modal.close" /></button>
-					</div>
-
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Modal End -->
-
-	<!-- Modal start   -->
-
-	<div id="cancelMsg" class="modal">
-		<h6 class="modal-header"><spring:message code="modal.cancelrequest" /></h6>
-		<div class="modal-content">
-
-			<div class="row">
-				<h6><spring:message code="modal.dataWillBeLost" /></h6>
-			</div>
-			<div class="row">
-				<div class="input-field col s12 center">
-					<div class="input-field col s12 center">
-						<!-- <button class="modal-close btn">yes</button> -->
-						<a href="./uploadPaidStatus" class="btn"><spring:message code="modal.yes" /></a>
-						<button class="modal-close btn" style="margin-left: 10px;"><spring:message code="modal.no" /></button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Modal End -->
-
-	<!-- Modal start   -->
-
 	<div id="regularisedDevice" class="modal">
 		<h6 class="modal-header"><spring:message code="modal.uploadPaidDevice" /></h6>
 		<div class="modal-content">
@@ -670,66 +372,7 @@ input[type='search'] {
 			</div>
 		</div>
 	</div>
-
-	<div id="deleteMsg" class="modal">
-		<h6 class="modal-header"><spring:message code="modal.header.delete" /></h6>
-		<div class="modal-content">
-
-			<div class="row">
-				<h6><spring:message code="modal.deleteDeviceInfo" /></h6>
-			</div>
-			<div class="row">
-				<div class="input-field col s12 center">
-					<button class="modal-close modal-trigger btn"
-						data-target="confirmDeleteMsg"><spring:message code="modal.yes" /></button>
-					<button class="modal-close btn" style="margin-left: 10px;"><spring:message code="modal.no" /></button>
-				</div>
-			</div>
-		</div>
-	</div>
 	<!-- Modal End -->
-
-	<!-- Modal start   -->
-
-	<div id="confirmDeleteMsg" class="modal">
-		<h6 class="modal-header"> <spring:message code="modal.header.delete" /></h6>
-		<div class="modal-content">
-
-			<div class="row">
-				<h6><spring:message code="modal.deviceInfoDeleted" /></h6>
-			</div>
-			<div class="row">
-				<div class="input-field col s12 center">
-					<button class="modal-close btn"><spring:message code="modal.ok" /></button>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Modal End -->
-
-	<!-- Modal start   -->
-
-	<div id="submitMsg" class="modal">
-		<h6 class="modal-header"> <spring:message code="modal.submitRequest" /></h6>
-		<div class="modal-content">
-
-			<div class="row">
-				<h6><spring:message code="modal.requestSubmit" /></h6>
-			</div>
-			<div class="row">
-				<div class="input-field col s12 center">
-					<div class="input-field col s12 center">
-						<button class="modal-close btn"><spring:message code="modal.ok" /></button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Modal End -->
-
-
-
-
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
 	<script type="text/javascript"
@@ -743,10 +386,8 @@ input[type='search'] {
 		src="${context}/resources/js/Validator.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-
 	<script type="text/javascript"
 		src="${context}/resources/js/countries.js"></script>
-		
 	<!-- i18n library -->
 	<script type="text/javascript"
 		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
@@ -777,26 +418,34 @@ input[type='search'] {
 
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
-	 <script type="text/javascript"
-		src="${context}/resources/project_js/addDeviceInfo.js"></script>
-		<script type="text/javascript"
-		src="${context}/resources/project_js/validationMsg.js"></script>
-	<!-- ================================================
-    Scripts
-    ================================================ -->
+		<script type="text/javascript" src="${context}/resources/js/intlTelInput.js"></script>
+		<script type="text/javascript" src="${context}/resources/js/utils.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/project_js/endUserAddDevice.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/project_js/globalVariables.js"></script>
+	
+	<script type="text/javascript"
+		src="${context}/resources/project_js/dragableModal.js"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/project_js/enterKey.js"></script>
+
+	<%-- 	<script type="text/javascript"
+		src="${context}/resources/js/intlTelInput.js"></script> --%>
+
+	<script type="text/javascript"
+		src="${context}/resources/project_js/ValidationFileOutsidePortal.js"></script>
+		
+
+
+<script type="text/javascript">
+var input2 = document.querySelector("#phone");
+window.intlTelInput(input2, {
+	utilsScript : "${context}/resources/js/utils.js",
+});
+</script>
 
 </body>
 </html>
-<%
-	} else {
-		/*  request.setAttribute("msg", "  *Please login first");
-		request.getRequestDispatcher("./index.jsp").forward(request, response); */
-%>
-<script language="JavaScript">
-	sessionStorage.setItem("loginMsg",
-			"*Session has been expired");
-	window.top.location.href = "./login";
-</script>
-<%
-	}
-%>
+	

@@ -98,14 +98,25 @@ FeignCleintImplementation feignCleintImplementation;
 
 
 	@GetMapping("add-device-information")
-	public ModelAndView deviceInformationView() {
+	public ModelAndView deviceInformationView(HttpSession session) {
 		log.info("enter in add device page.");
-		ModelAndView modelAndView = new ModelAndView("addDeviceInformation");
+		String userType=(String) session.getAttribute("usertype");
+		ModelAndView modelAndView = new ModelAndView();
+		log.info("userType==="+userType);
+		if(userType!=null)
+		{
+			modelAndView.setViewName("addDeviceInformation");		
+		}
+		else 
+		{
+			modelAndView.setViewName("endUserAddDevice");
+		}
+		
 		return modelAndView;
 	}
 
 	@GetMapping("view-device-information/{imei}")
-	public ModelAndView viewDeviceInformationView(@PathVariable("imei") Long imei) {
+	public ModelAndView viewDeviceInformationView(@PathVariable("imei") Long imei,HttpSession session) {
 		log.info(" imei =="+imei);
 		ModelAndView modelAndView = new ModelAndView("viewAdddeviceInformation");
 		UserPaidStatusContent content= uploadPaidStatusFeignClient.viewByImei(imei);
@@ -118,19 +129,37 @@ FeignCleintImplementation feignCleintImplementation;
 		String fileLink=urlToUpload.getValue();
 		modelAndView.addObject("fileLink", fileLink);
         modelAndView.addObject("viewInformation", content);
-		modelAndView.setViewName("viewAdddeviceInformation");
+        
+        String userType=(String) session.getAttribute("usertype");
+        if(userType!=null) {
+        	modelAndView.setViewName("viewAdddeviceInformation");	
+        }
+        else {
+        	modelAndView.setViewName("endUserViewDeviceInformation");
+        }
 		return modelAndView;
 	}
 
 
 	@PostMapping("uploadPaidStatusForm")
-	public @ResponseBody GenricResponse register(@RequestParam(name="file",required = false) MultipartFile file,HttpServletRequest request,HttpSession session) {
+	public @ResponseBody GenricResponse register(@RequestParam(name="file",required = false) MultipartFile file,HttpServletRequest request,HttpSession session,
+			@RequestParam(name="sourceType") String source) {
 		log.info("-inside controller register-approved-device-------request---------");
 		// log.info(""+request.getParameter("file"));
 		String userName=session.getAttribute("username").toString();
 		String userId= session.getAttribute("userid").toString();
 		String name=session.getAttribute("name").toString();
-		String txnNumber="R" + utildownload.getTxnId();
+		String txnNumber="";
+		if (source.equalsIgnoreCase("Custom"))
+			
+		{
+			 txnNumber="R" + utildownload.getTxnId();	
+		}
+		else if(source.equalsIgnoreCase("Immigration"))
+		{
+			 txnNumber="I" + utildownload.getTxnId();
+		}
+		
 		log.info("Random transaction id number="+txnNumber);
 		//request.setAttribute("txnId", txnNumber);
 		//request.setAttribute("request[regularizeDeviceDbs][txnId]",txnNumber);
@@ -277,7 +306,7 @@ FeignCleintImplementation feignCleintImplementation;
 	}
 	
 	@PostMapping("selfRegisterDevicePage")
-	public ModelAndView selfRegisterDevicePage(HttpSession session,@RequestParam(name="Search",required = false) String Search) {
+	public ModelAndView selfRegisterDevicePage(@RequestParam(name="Search",required = false) String Search) {
 		ModelAndView modelAndView = new ModelAndView();
 		log.info("---entry point in self register page=="+Search);
 		modelAndView.addObject("nid", Search);
@@ -577,7 +606,50 @@ stream.close();
 	 return response; 
 	  }
 	  
-	 }
+	 
+	  @PostMapping("endUseruploadPaidStatusForm")
+		public @ResponseBody GenricResponse endUseruploadPaidStatusForm(HttpServletRequest request,HttpSession session) {
+			log.info("-inside end user  controller  add -device-------request---------");
+			
+			String txnNumber="A" + utildownload.getTxnId();	
+			log.info("Random transaction id number="+txnNumber);
+			//request.setAttribute("txnId", txnNumber);
+			//request.setAttribute("request[regularizeDeviceDbs][txnId]",txnNumber);
+			String filter = request.getParameter("request");
+			//log.info("txnid+++++++++++"+request.getParameter("request[regularizeDeviceDbs][txnId]"));
+			Gson gson= new Gson(); 
+
+			log.info("*********"+filter);
+			addMoreFileModel.setTag("system_upload_filepath");
+			urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
 
 
-	
+			Register_UploadPaidStatus regularizeDeviceDbs  = gson.fromJson(filter, Register_UploadPaidStatus.class);
+			regularizeDeviceDbs.setNationality("Cambodian");
+			for(int i =0; i<regularizeDeviceDbs.getRegularizeDeviceDbs().size();i++) {
+				regularizeDeviceDbs.getRegularizeDeviceDbs().get(i).setTxnId(txnNumber);
+			}
+
+			log.info(""+regularizeDeviceDbs.toString());
+			log.info(" upload status  entry point.");
+			
+			log.info("request passed to the save regularizeDeviceDbs api"+regularizeDeviceDbs);
+			GenricResponse response = null;
+			try {
+				response = userPaidStatusFeignClient.uploadPaidUser(regularizeDeviceDbs);
+				//GenricResponse response = null;
+				log.info("---------response--------"+response);
+			}
+			catch (Exception e) {
+				// TODO: handle exception
+				log.info("exception in upload paid stat error"+e);
+				e.printStackTrace();
+
+			}
+			return response;
+		}
+
+}
+
+
+		
