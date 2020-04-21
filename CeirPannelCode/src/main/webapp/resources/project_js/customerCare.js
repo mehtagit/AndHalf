@@ -446,6 +446,15 @@ function setStakeHolderData(name,date,featureId,status,txnId,imei)
     	 greyListDataTable(data.data);
  		
     	 }
+         else if(name=='VIP')
+    	 {
+    	 $('#greyListTableModal').openModal({
+	    	   dismissible:false
+	       });
+
+    	 greyListDataTable(data.data);
+ 		
+    	 }
 		
 		}
 	

@@ -130,7 +130,7 @@ public class UploadPaidStatus {
 					String status = String.valueOf(contentModelList.getStatus());
 					//params for action 
 					String imei1 = contentModelList.getFirstImei();
-					String action = iconState.userPaidStatusIcon(imei1,taxStatus,status,userStatus);
+					String action = iconState.userPaidStatusIcon(imei1,taxStatus,status,userStatus,txnId);
 
 					
 					Object[] data = {createdOn,nid,txnId,country,nationality,taxStatusInterp,origin,statusInterp,action};
@@ -215,7 +215,8 @@ public class UploadPaidStatus {
 					String statusInterp = contentModelList.getStateInterp();
 					//params for action 
 					String imei1 = contentModelList.getFirstImei();
-					String action = iconState.endUserPaidStatusIcon(imei1);
+					String deviceState = String.valueOf(contentModelList.getStatus());
+					String action = iconState.endUserPaidStatusIcon(imei1,userStatus,deviceState,txnId);
 					log.info("in end user data table controller  Status---");
 					
 					Object[] data = {createdOn,nid,txnId,country,nationality,status,origin,statusInterp,action};
