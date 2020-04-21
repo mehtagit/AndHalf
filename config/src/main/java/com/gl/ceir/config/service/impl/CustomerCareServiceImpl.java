@@ -112,7 +112,7 @@ public class CustomerCareServiceImpl {
 			}
 
 			Object objectBytxnId = null;
-			//CustomerCareRepo repository = null;
+			
 			Object repository = null;
 			// Getting repository from factory.
 			if(customerCareDeviceState.getFeatureId() == 0)
@@ -137,9 +137,6 @@ public class CustomerCareServiceImpl {
 					regularizedDeviceServiceImpl.setInterp(regularizeDeviceDb);
 					objectBytxnId = regularizeDeviceDb;
 				}
-				/*else if(objectBytxnId instanceof StockMgmt) {
-					StockMgmt consignmentObj = (StockMgmt)objectBytxnId;
-				}*/
 				else {
 					logger.info("customerCareRepo.getByTxnId returned non ConsignmentMgmt");
 				}
@@ -147,7 +144,7 @@ public class CustomerCareServiceImpl {
 			}else {
 				if(repository instanceof BlackListRepository) {
 					BlackListRepository blackListRepository = (BlackListRepository)repository;
-					objectBytxnId = blackListRepository.findByImeiMsisdnIdentityImei(customerCareDeviceState.getImei());
+					objectBytxnId = blackListRepository.findByImei(customerCareDeviceState.getImei());
 					logger.info("Black List Data "+objectBytxnId);
 				}
 				else if(repository instanceof GreyListRepository) {

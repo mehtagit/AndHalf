@@ -47,7 +47,6 @@ public class BlackListServiceImpl implements BlackListService {
 
 	@Override
 	public BlackList get(Long id) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -77,7 +76,7 @@ public class BlackListServiceImpl implements BlackListService {
 	public BlackList getByMsisdn(Long msisdn) {
 
 		try {
-			return blackListRepository.findByImeiMsisdnIdentityMsisdn(msisdn);
+			return blackListRepository.findByMsisdn(msisdn);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
@@ -88,44 +87,10 @@ public class BlackListServiceImpl implements BlackListService {
 	public BlackList getByImei(String imei) {
 
 		try {
-			return blackListRepository.findByImeiMsisdnIdentityImei(imei);
+			return blackListRepository.findByImei(imei);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
-		}
-	}
-
-	@Override
-	public BlackList getByMsisdnAndImei(ImeiMsisdnIdentity imeiMsisdnIdentity) {
-		logger.info("Going to get Black List Devices by " + imeiMsisdnIdentity);
-		try {
-			if (imeiMsisdnIdentity.getMsisdn() == null && imeiMsisdnIdentity.getImei() == null) {
-				return null;
-			} else if (imeiMsisdnIdentity.getMsisdn() != null && imeiMsisdnIdentity.getImei() != null) {
-				return blackListRepository.findById(imeiMsisdnIdentity).orElseThrow(
-						() -> new ResourceNotFoundException("Black Device", "imeiMsisdnIdentity", imeiMsisdnIdentity));
-			} else if (imeiMsisdnIdentity.getMsisdn() != null) {
-				return getByMsisdn(imeiMsisdnIdentity.getMsisdn());
-			} else {
-				return getByImei(imeiMsisdnIdentity.getImei());
-			}
-
-		} catch (ResourceNotFoundException e) {
-			throw e;
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
-		}
-	}
-
-	@Override
-	public void deleteByMsisdnAndImei(ImeiMsisdnIdentity imeiMsisdnIdentity) {
-		logger.info("Going to delete Black List Device by " + imeiMsisdnIdentity);
-		if (imeiMsisdnIdentity.getMsisdn() != null && imeiMsisdnIdentity.getImei() != null) {
-			blackListRepository.deleteById(imeiMsisdnIdentity);
-		} else {
-			logger.info("Not Deleted " + imeiMsisdnIdentity);
-			return;
 		}
 	}
 
@@ -133,6 +98,18 @@ public class BlackListServiceImpl implements BlackListService {
 	public BlackList get(String id) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public BlackList getByMsisdnAndImei(ImeiMsisdnIdentity imeiMsisdnIdentity) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void deleteByMsisdnAndImei(ImeiMsisdnIdentity imeiMsisdnIdentity) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
