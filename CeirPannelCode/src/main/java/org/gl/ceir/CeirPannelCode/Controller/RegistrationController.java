@@ -159,6 +159,14 @@ public class RegistrationController {
 		return response;         
 	}
 
+	
+	@RequestMapping(value = "/allSecurityQuestionList/",method = {RequestMethod.GET})
+	@ResponseBody 
+	public List<SecurityQuestion> allSecurityQuestionList(){
+		List<SecurityQuestion> response =registrationService.allSecurityQuestionList();
+		return response;         
+	}
+	
 	@RequestMapping(value = "/verifyOtp",method = {RequestMethod.POST})
 	@ResponseBody
 	public HttpResponse verifyOtp(@RequestBody Otp otp,HttpServletRequest request){
