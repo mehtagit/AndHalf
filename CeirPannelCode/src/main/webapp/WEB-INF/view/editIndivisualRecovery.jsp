@@ -242,8 +242,8 @@
 															<input type="text" name="sigleRecoveryimeiNumber1" pattern="[0-9]{15,16}" 
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');" 
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
-														  maxlength="16" id="sigleRecoveryimeiNumber1" required/> 
-															<label for="sigleRecoveryimeiNumber1"><spring:message code="registration.one" /> <span class="star"> *</span></label>
+														  maxlength="16" id="sigleRecoveryimeiNumber1"/> 
+															<label for="sigleRecoveryimeiNumber1"><spring:message code="registration.one" /> <span class="star"> </span></label>
 														</div>
 														
 														<div class="input-field col s12 m6">
@@ -331,7 +331,7 @@
                                 
                                                             <div class="input-field col s12 m6 l6">
                                                                 <input type="text" name="sigleRecoverypin" class="form-control boxBorder boxHeight" placeholder=""
-                                                                    id="sigleRecoverypin" maxlength="20" pattern="[0-9]{0,20}" required="required"
+                                                                    id="sigleRecoverypin" maxlength="6" pattern="[0-9]{6,6}" required="required"
                                                                     title="" oninput="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');" 
                                                                     oninvalid="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');">
                                                                 <label for="sigleRecoverypin"><spring:message code="input.postalCode" /> <span class="star">*</span></label>
@@ -371,6 +371,14 @@
                                                          	maxlength="10000"
                                                                  class="materialize-textarea"></textarea>
                                                                 <label for="sigleRecovery"><spring:message code="input.remarks" /> </label>
+                                                            </div>
+                                                            <div class="input-field col s12 m6" style="display: none;" id="sigleRecoveryRejectDiv">
+                                                                <textarea id="sigleRecoveryReject" placeholder="" 
+                                                                oninput="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');" 
+                                                                oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
+                                                         	maxlength="10000"
+                                                                 class="materialize-textarea"></textarea>
+                                                                <label for="sigleRecovery"><spring:message code="input.remarksRejected" /> </label>
                                                             </div>
                                                             
                                                            <%--  <div class="col s12 m6">
@@ -515,7 +523,7 @@ onclick="_Services._selectstartDate()"></i></span>
                         
                                                     <div class="input-field col s12 m6 l6">
                                                         <input type="text" name="bulkRecoverypin" class="form-control boxBorder boxHeight"
-                                                            id="bulkRecoverypin" maxlength="20">
+                                                            id="bulkRecoverypin" maxlength="6">
                                                         <label for="bulkRecoverypin"> <spring:message code="input.postalCode" /><span class="star">*</span></label>
                                                     </div>
                     
@@ -659,8 +667,11 @@ src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/j
 	            	 $("#indivisualEditRecoveryButton").css("display", "none");
 	          		$(".star").css("display", "none");
 	            	  $("#singleRecoveryDiv").find("input,select,textarea,button").prop("disabled",true);
+	            	  $("#sigleRecoveryRejectDiv").css("display", "block");
+	            	  
 	            	}
 	            else{
+	            	  $("#sigleRecoveryRejectDiv").css("display", "none");
 	            	$('#headingType').text('');
 	            	$('#headingType').text(editrecoveryIndivisual);
 	            	  $("#singleRecoveryDiv").find("input,select,textarea,button").prop("disabled",false);

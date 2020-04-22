@@ -261,7 +261,13 @@ to {
 											class="center-align"><spring:message
 												code="input.quantity" /> <span class="star">*</span></label>
 									</div>
-
+									<div class="input-field col s12 m6">
+											<input type="text" name="devicequantity" id="devicequantity"
+												pattern="[0-9]{0,7}"
+												
+												maxlength="7"  oninput="InvalidMsg(this,'input','<spring:message code="validation.7character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7character" />');"  required/> <label for="devicequantity"
+												class="center-align"><spring:message code="input.devicequantity" /> <span class="star">*</span></label>
+										</div>
 									<div class="input-field col s12 m6" id="invoiceNumberDiv"
 										style="display: none">
 										<input type="text" name="invoiceNumber" id="invoiceNumber"
@@ -617,6 +623,7 @@ function uploadStock(){
 	 var supplierName=$('#supplierName').val();
 	 var invoiceNumber=$('#invoiceNumber').val();
 	var quantity=$('#Quantity').val();
+	var deviceQuantity=$('#devicequantity').val();
 	 
 	 console.log("supplierId="+supplierId+" supplierName="+supplierName+" InvoiceNumber="+invoiceNumber+" quantity="+quantity)
 	 var formData= new FormData();
@@ -625,6 +632,7 @@ function uploadStock(){
 	 	formData.append('supplierName',supplierName);
 	 	formData.append('invoiceNumber',invoiceNumber);
 	 	formData.append('quantity',quantity);
+		formData.append('deviceQuantity',deviceQuantity);
 	 	
 	 $.ajax({
 		url: './uploadStock',

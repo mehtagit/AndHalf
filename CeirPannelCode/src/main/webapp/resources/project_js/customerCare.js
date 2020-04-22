@@ -104,9 +104,7 @@ function stateTable(){
 			}
 		}, {
 			"data" : "featureId","defaultContent": "",render: function ( data, type, row ) {
-				console.log("data****=="+JSON.stringify(data));
-				console.log("row****=="+JSON.stringify(row));
-								if(data==0){
+								if(row['status']=="N"){
 									return '<i class="fa fa-eye teal-text disable eventNone" onclick="setStakeHolderData(\''+row['name']+'\',\''+row['date']+'\',\''+row['featureId']+'\',\''+row['status']+'\',\''+row['txnId']+'\',\''+row['imei']+'\')" title="View"></i>'
 								}else{
 									//alert("sss");
@@ -161,8 +159,7 @@ function deviceTable(){
 			}
 		}, {
 			"data" : "featureId","defaultContent": "",render: function ( data, type, row ) {
-		
-				if(data==0){
+				if(row['status']=="N"){
 					return '<i class="fa fa-eye teal-text disable eventNone" onclick="setStakeHolderData(\''+row['name']+'\',\''+row['date']+'\',\''+row['featureId']+'\',\''+row['status']+'\',\''+row['txnId']+'\',\''+row['imei']+'\')" title="View"></i>'
 				}else{
 					
@@ -406,9 +403,10 @@ function setStakeHolderData(name,date,featureId,status,txnId,imei)
         	 $('#viewImporterModal').openModal({
 		    	   dismissible:false
 		       });
+        	
         	 $("#viewtradmark").val(data.data.trademark);
      		$("#viewmodelName").val(data.data.productNameInterp);
-     		$("#viewModelnumber").val(data.data.modelNumber);
+     		$("#viewModelnumber").val(data.data.modelNumberInterp);
      		$("#viewManufacturercountry").val(data.data.manufacturerCountry);
      		$('#viewrequestDate').val(data.data.requestDate);
      		$('#viewFrequency').val(data.data.frequencyRange);
@@ -420,9 +418,9 @@ function setStakeHolderData(name,date,featureId,status,txnId,imei)
     	 $('#viewDeviceInfo').openModal({
 	    	   dismissible:false
 	       });
-    	 $("#endUserdeviceType").val(data.data.deviceTypeInterp);
+    	$("#endUserdeviceType").val(data.data.deviceTypeInterp);
  		$("#endUserdeviceIdType").val(data.data.deviceIdTypeInterp);
- 		$("#endUserMultiSimStatus").val(data.data.multiSimStatus);
+ 		$("#endUserMultiSimStatus").val(data.data.multiSimStatusInterp);
  		$("#endUserCountry").val(data.data.country);
  		$('#endUserSerialNumer').val(data.data.deviceSerialNumber);
  		$('#endUserTaxPaid').val(data.data.taxPaidStatusInterp);
@@ -440,6 +438,15 @@ function setStakeHolderData(name,date,featureId,status,txnId,imei)
     	 }
 
          else if(name=='Greylist')
+    	 {
+    	 $('#greyListTableModal').openModal({
+	    	   dismissible:false
+	       });
+
+    	 greyListDataTable(data.data);
+ 		
+    	 }
+         else if(name=='VIP')
     	 {
     	 $('#greyListTableModal').openModal({
 	    	   dismissible:false
@@ -470,17 +477,17 @@ tableData.push(data);
 		"data":tableData,
 		bInfo : true,
 		"columns" : [{
-			"data" : "createdOn"
+			"data" : "createdOn","defaultContent": ""
 		}, {
-			"data" : "createdOn"
+			"data" : "createdOn", "defaultContent": ""
 		},
 		{
-			"data" : "msisdn"
+			"data" : "msisdn","defaultContent": ""
 		},
 		{
-			"data" : "imei"
+			"data" : "imei","defaultContent": ""
 		}, {
-			"data" : "imeiEsnMeid"
+			"data" : "imeiEsnMeid","defaultContent": ""
 		}]
 		
 	});

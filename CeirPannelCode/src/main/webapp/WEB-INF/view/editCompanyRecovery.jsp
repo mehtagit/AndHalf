@@ -205,7 +205,7 @@
                                 
                                                             <div class="input-field col s12 m6 l6">
                                                                 <input type="text" name="sigleRecoverypin" class="form-control boxBorder boxHeight"
-                                                                    id="sigleRecoverypin" maxlength="20">
+                                                                    id="sigleRecoverypin" maxlength="6">
                                                                 <label for="sigleRecoverypin"><spring:message code="input.postalCode" /> <span class="star">*</span></label>
                                                             </div>
                             
@@ -265,6 +265,14 @@
                                                           maxlength="10000"
                                                            class="materialize-textarea" placeholder=""></textarea>
                                                         <label for="bulkRecoveryRemark"><spring:message code="input.remarks" /></label>
+                                                    </div>
+                                                    
+                                                    <div class="input-field col s12 m6" style="display: none;" id="bulkRecoveryRemarkRejectDiv">
+                                                        <textarea id="bulkRecoveryRemarkReject"oninput="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
+                                                          oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
+                                                          maxlength="10000"
+                                                           class="materialize-textarea" placeholder=""></textarea>
+                                                        <label for="bulkRecoveryRemarkReject"><spring:message code="input.remarksRejected" /></label>
                                                     </div>
 
                                                     <div class="file-field col s12 m6">
@@ -390,7 +398,7 @@ onclick="_Services._selectstartDate()"></i></span>
                         
                                                     <div class="input-field col s12 m6 l6">
                                                         <input type="text" name="bulkRecoverypin"  placeholder="" class="form-control boxBorder boxHeight"
-                                                            id="bulkRecoverypin" pattern="[0-9]{0,6}" title="" 
+                                                            id="bulkRecoverypin" pattern="[0-9]{6,6}" title="" 
                                                             oninput="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');" 
                                                              oninvalid="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');"
                                                         maxlength="6" required="required">
@@ -588,8 +596,11 @@ src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/j
             	  
             	  $("#editCompanyRecoveryButton").css("display", "none");
           		$(".star").css("display", "none");
+          		 $("#bulkRecoveryRemarkRejectDiv").css("display", "block");
+          		
             	}
             else{
+            	$("#bulkRecoveryRemarkRejectDiv").css("display", "none");
             	$('#headingType').text('');
             	$('#headingType').text(editrecoveryCompany);
             	  $("#bulkRecoveryDiv").find("input,select,textarea,button").prop("disabled",false);

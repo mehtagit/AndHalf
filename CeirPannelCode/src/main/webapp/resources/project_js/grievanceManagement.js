@@ -36,15 +36,23 @@ var featureId = 6;
 			var taxStatus=$('#taxPaidStatus').val();
 			var consignmentStatus=$('#filterConsignmentStatus').val();
 			var userId = $("body").attr("data-userID");
-
+			var userName = $("body").attr("data-userName");
+			
 			/*localStorage.setItem("grievancePageSource", "viaGriebva");*/
 
-
+			function grievanceDataTable(lang){
+				if(cierRoletype=="CEIRAdmin"){
+					DataTable('headers?type=adminGrievanceHeaders&lang='+lang ,'grievanceData');
+				}else{
+					DataTable('headers?type=grievanceHeaders&lang='+lang,'grievanceData');
+				}
+				
+			}	
 
 
 			//**************************************************Grievance table**********************************************
 
-			function grievanceDataTable(lang){
+			function DataTable(Url,dataUrl){
 				var txn= (txnIdValue == 'null' && transactionIDValue == undefined)? $('#grievanceID').val() : transactionIDValue;
 	
 				var grievancePageSource =localStorage.getItem("grievancePageSource");
@@ -86,7 +94,7 @@ var featureId = 6;
 					}
 
 				$.ajax({
-					url: 'headers?type=grievanceHeaders&lang='+lang,
+					url: Url,
 					type: 'POST',
 					dataType: "json",
 					success: function(result){
@@ -103,7 +111,7 @@ var featureId = 6;
 									"sUrl": langFile  
 								},
 							ajax: {
-								url : 'grievanceData?grievanceSessionUsesFlag='+grievanceSessionUsesFlag,
+								url : dataUrl,
 								type: 'POST',
 								dataType: "json",
 								data : function(d) {
@@ -334,7 +342,7 @@ var featureId = 6;
 						for(var i=0; i<data.length; ++i)
 						{
 
-							$("#viewPreviousMessage").append("<div class='chat-message-content clearfix'><h6 style='float: left; font-weight: bold;' class='grievance-reply-msg' id='mesageUserType'>" +data[i].userDisplayName+" : </h6><span style='float:right;'>" + data[i].modifiedOn + "</span><textarea class='materialize-textarea' style='min-height: 3rem'>" + data[i].reply + "</textarea></div>");
+							$("#viewPreviousMessage").append("<div class='chat-message-content clearfix'><h6 style='float: left; font-weight: bold;' class='grievance-reply-msg' id='mesageUserType'>" +data[i].userDisplayName+" : </h6><span style='float:right;'>" + data[i].modifiedOn + "</span><textarea class='materialize-textarea' style='min-height: 8rem'>" + data[i].reply + "</textarea></div>");
 							for (var j=0 ; j<data[i].attachedFiles.length;j++)
 							{
 								if(data[i].attachedFiles[j].docType==null)
@@ -550,8 +558,8 @@ var featureId = 6;
 						{
 								$('#viewGrievanceId').text('');	
 							$('#viewGrievanceId').text(grievanceId);	
-							
-							$("#chatMsg").append("<div class='chat-message-content clearfix'><span class='chat-time' id='timeHistory'>"+data[i].modifiedOn+"</span><h5 id='userTypehistory'>"+data[i].userDisplayName+"</h5><textarea class='materialize-textarea' style='min-height: 3rem' readonly id='messageHistory'>"+data[i].reply+"</textarea></div>");
+							console.log("view Data--->" +JSON.stringify(data));
+							$("#chatMsg").append("<div class='chat-message-content clearfix'><span class='chat-time' id='timeHistory'>"+data[i].modifiedOn+"</span><h5 id='userTypehistory'>"+data[i].userDisplayName+"</h5><textarea class='materialize-textarea' style='min-height: 8rem' readonly id='messageHistory'>"+data[i].reply+"</textarea></div>");
 								for (var j=0 ; j<data[i].attachedFiles.length;j++)
 								{
 									if(data[i].attachedFiles[j].docType==null)

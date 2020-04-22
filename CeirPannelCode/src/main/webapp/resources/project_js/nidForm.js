@@ -12,7 +12,7 @@
 	var featureId =12;
    
    
-    	
+  
 
 	function hide() {
 		var In = $('#Search').val();
@@ -41,7 +41,7 @@
 
 					}
 				});*/
-			window.location.replace("./selfRegisterDevicePage?NID="+In);
+				window.location.replace("./selfRegisterDevicePage?NID="+In);
 			}
 	    	
 	    	}
@@ -56,5 +56,15 @@
 			}
 	    	
 		 }
+		 else if(roleType=='Immigration')
+			 {
+			 if(In.length == 0){
+					console.log("please field input");
+				}else{
+					
+				window.location.replace("./uploadPaidStatus?via=other&NID="+In);
+				}
+			 }
+
 		
 	}

@@ -366,7 +366,7 @@ public class StolenRecovery {
 				//******************************* Block Unblock Approve/Reject Devices ********************************
 				
 				
-				@PutMapping("blockUnblockApproveReject") 
+				@PostMapping("blockUnblockApproveReject") 
 				public @ResponseBody GenricResponse approveRejectDevice (@RequestBody FilterRequest FilterRequest)  {
 					log.info("request send to the approveRejectDevice api="+FilterRequest);
 					GenricResponse response= feignCleintImplementation.approveRejectFeign(FilterRequest);

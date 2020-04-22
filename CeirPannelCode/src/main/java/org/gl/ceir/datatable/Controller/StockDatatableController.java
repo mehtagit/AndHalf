@@ -95,7 +95,8 @@ public class StockDatatableController {
 						String statusOfStock = String.valueOf(dataInsideList.getStockStatus());
 						String stockStatusName=dataInsideList.getStateInterp();
 						String quantity = String.valueOf(dataInsideList.getQuantity());
-						Object[] finalData={checboxes,date,txnId,file,stockStatusName,quantity}; 
+						String deviceQuantity= String.valueOf(dataInsideList.getDeviceQuantity());
+						Object[] finalData={checboxes,date,txnId,file,stockStatusName,quantity,deviceQuantity}; 
 						List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);
@@ -111,8 +112,9 @@ public class StockDatatableController {
 						String stockStatusName=dataInsideList.getStateInterp();
 						String userStatus = (String) session.getAttribute("userStatus");
 						String quantity = String.valueOf(dataInsideList.getQuantity());
+						String deviceQuantity= String.valueOf(dataInsideList.getDeviceQuantity());
 						String action = iconState.stockState(file,txnId,statusOfStock,userStatus);
-						Object[] finalData={date,txnId,file,stockStatusName,quantity,action}; 
+						Object[] finalData={date,txnId,file,stockStatusName,quantity,deviceQuantity,action}; 
 						List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);
@@ -134,8 +136,9 @@ public class StockDatatableController {
 						String stockStatusName=dataInsideList.getStateInterp();
 						String userStatus = (String) session.getAttribute("userStatus");
 						String quantity = String.valueOf(dataInsideList.getQuantity());
+						String deviceQuantity= String.valueOf(dataInsideList.getDeviceQuantity());
 						String action = iconState.customStockState(file,txnId,statusOfStock,userStatus);
-						Object[] finalData={date,assignedTo,txnId,file,stockStatusName,quantity,action}; 
+						Object[] finalData={date,assignedTo,txnId,file,stockStatusName,quantity,deviceQuantity,action}; 
 						List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);
@@ -156,8 +159,9 @@ public class StockDatatableController {
 						String stockStatusName=dataInsideList.getStateInterp();
 						String userStatus = (String) session.getAttribute("userStatus");
 						String quantity = String.valueOf(dataInsideList.getQuantity());
+						String deviceQuantity= String.valueOf(dataInsideList.getDeviceQuantity());
 						String action = iconState.adminStockState(file,txnId,statusOfStock,userStatus);
-						Object[] finalData={date,txnId,displayName,roll,file,stockStatusName,quantity,action}; 
+						Object[] finalData={date,txnId,displayName,roll,file,stockStatusName,quantity,deviceQuantity,action}; 
 						List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);
@@ -173,8 +177,9 @@ public class StockDatatableController {
 						String stockStatusName=dataInsideList.getStateInterp();
 						String userStatus = (String) session.getAttribute("userStatus");
 						String quantity = String.valueOf(dataInsideList.getQuantity());
+						String deviceQuantity= String.valueOf(dataInsideList.getDeviceQuantity());
 						String action = iconState.stockState(file,txnId,statusOfStock,userStatus);
-						Object[] finalData={date,txnId,file,stockStatusName,quantity,action}; 
+						Object[] finalData={date,txnId,file,stockStatusName,quantity,deviceQuantity,action}; 
 						List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);
@@ -191,8 +196,9 @@ public class StockDatatableController {
 						String stockStatusName=dataInsideList.getStateInterp();
 						String userStatus = (String) session.getAttribute("userStatus");
 						String quantity = String.valueOf(dataInsideList.getQuantity());
+						String deviceQuantity= String.valueOf(dataInsideList.getDeviceQuantity());
 						String action = iconState.stockState(file,txnId,statusOfStock,userStatus);
-						Object[] finalData={date,txnId,file,stockStatusName,quantity,action}; 
+						Object[] finalData={date,txnId,file,stockStatusName,quantity,deviceQuantity,action}; 
 						List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);
@@ -209,8 +215,9 @@ public class StockDatatableController {
 						String stockStatusName=dataInsideList.getStateInterp();
 						String userStatus = (String) session.getAttribute("userStatus");
 						String quantity = String.valueOf(dataInsideList.getQuantity());
+						String deviceQuantity= String.valueOf(dataInsideList.getDeviceQuantity());
 						String action = iconState.stockState(file,txnId,statusOfStock,userStatus);
-						Object[] finalData={date,txnId,file,stockStatusName,quantity,action}; 
+						Object[] finalData={date,txnId,file,stockStatusName,quantity,deviceQuantity,action}; 
 						List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);

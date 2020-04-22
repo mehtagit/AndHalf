@@ -3,6 +3,7 @@ public class Otp extends UserHeader{
 	private String phoneOtp;
 	private String emailOtp;
 	private Integer userid;
+	private int forgotPassword;
 	public String getPhoneOtp() {
 		return phoneOtp;
 	} 
@@ -21,9 +22,26 @@ public class Otp extends UserHeader{
 	public void setUserid(Integer userid) {
 		this.userid = userid;
 	}
+	
+	public int getForgotPassword() {
+		return forgotPassword;
+	}
+	public void setForgotPassword(int forgotPassword) {
+		this.forgotPassword = forgotPassword;
+	}
 	@Override
 	public String toString() {
-		return "Otp [phoneOtp=" + phoneOtp + ", emailOtp=" + emailOtp + ", userid=" + userid + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("Otp [phoneOtp=");
+		builder.append(phoneOtp);
+		builder.append(", emailOtp=");
+		builder.append(emailOtp);
+		builder.append(", userid=");
+		builder.append(userid);
+		builder.append(", forgotPassword=");
+		builder.append(forgotPassword);
+		builder.append("]");
+		return builder.toString();
 	}
 	
 }

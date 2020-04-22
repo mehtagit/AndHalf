@@ -549,10 +549,10 @@
 											<div class="input-field col s12 m6 l6">
 												<input type="text" name="pin"
 													class="form-control boxBorder boxHeight" id="bulkStolenpin" placeholder=""
-													pattern="[0-9]{0,20}" title=""  required="required"
+													pattern="[0-9]{6,6}" title=""  required="required"
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');"
-													maxlength="20"> <label for="pin"><spring:message code="input.postalCode" />
+													maxlength="6"> <label for="pin"><spring:message code="input.postalCode" />
 													<span class="star">*</span>
 												</label>
 											</div>
@@ -620,12 +620,12 @@
 											<div class="input-field col s12 m6">
 												<!-- <p class="contact-label">Alternate Contact Number <span class="star">*</span></p> -->
 												<input type="tel" name="phone" id="bulkStolenContact" placeholder=""
-													required pattern="[0-9]{1,12}" title=""
+													 pattern="[0-9]{1,12}" title=""
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.contact" />');
 													"oninvalid="InvalidMsg(this,'input','<spring:message code="validation.contact" />');" 
 													maxlength="12"> <label for="phone2">
 													<spring:message code="input.contactNum" /> <span
-													class="star">*</span></label>
+													class="star"></span></label>
 											</div>
 
 											<!-- <div class="input-field col s12 m6">
@@ -701,7 +701,7 @@
 											<div class="input-field col s12 m6 l6">
 												<input type="text" name="pin" placeholder=""
 													class="form-control boxBorder boxHeight"
-													id="deviceBulkStolenpin" pattern="[0-9]{0,6}" title="" maxlength="6"
+													id="deviceBulkStolenpin" pattern="[0-9]{6,6}" title="" maxlength="6"
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');"
 													 required="required"> <label
@@ -840,8 +840,7 @@
 																No file Chosen ');" placeholder="Upload FIR" id="uploadFirSingle" onchange="isImageValid('uploadFirSingle')" data-original-title="" title="">
 															</div>
 															<div class="file-path-wrapper" data-original-title="" title="">
-																<input class="file-path validate" type="text" placeholder="
-																	input.UploadFIR" id="uploadFirSingleName" title="" data-original-title="Please upload national
+																<input class="file-path validate" type="text" placeholder="" id="uploadFirSingleName" title="" data-original-title="Please upload national
 																ID image">
 																<a href="#" id="firFilePreview" class="imgPreviewLink"  style="display: none;">Preview</a>
 															</div>
@@ -851,7 +850,15 @@
 													class="materialize-textarea"></textarea>
 												<label for="textarea1"><spring:message code="input.remarks" /></label>
 											</div>
-
+											<div class="input-field col s12 m12" style="display: none;" id="bulkDeviceRejectRemarkDiv">
+															<textarea id="bulkDeviceRejectRemark" maxlength="10000"
+																placeholder=""
+																oninput="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
+																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
+																class="materialize-textarea"></textarea>
+															<label for="textarea1"><spring:message
+																	code="input.remarksRejected" /> </label>
+														</div>
 											<div class="col s12 m12">
                                                         <a href="./Consignment/sampleFileDownload/7" id="editRecoverySampleFile"> <spring:message
 														code="input.downlaod.sample" /></a>
@@ -1040,11 +1047,15 @@ src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/j
 	   $("#dviceFileText").css("display", "none");
 	   $("#companyStolenButton").css("display", "none");
 		$(".star").css("display", "none");
+		
+		
+		$("#bulkDeviceRejectRemarkDiv").css("display", "block");
 	}
 else{
 	$('#headingType').text('');
 	$('#headingType').text(editstolenCompany);
 	$("#Bulkform").find("input,select,textarea,button").prop("disabled",false);
+	$("#bulkDeviceRejectRemarkDiv").css("display", "none");
 }	
 	}	
  populateCountries(

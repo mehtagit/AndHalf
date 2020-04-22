@@ -6,9 +6,7 @@ import java.io.FileOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -16,16 +14,11 @@ import javax.servlet.http.HttpSession;
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Feignclient.UserProfileFeignImpl;
 import org.gl.ceir.CeirPannelCode.Model.AddMoreFileModel;
-import org.gl.ceir.CeirPannelCode.Model.AssigneRequestType;
-import org.gl.ceir.CeirPannelCode.Model.ConsignmentModel;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentUpdateRequest;
 import org.gl.ceir.CeirPannelCode.Model.FileExportResponse;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
-import org.gl.ceir.CeirPannelCode.Model.LawfulStolenRecovey;
 import org.gl.ceir.CeirPannelCode.Model.StockUploadModel;
-import org.gl.ceir.CeirPannelCode.Model.TRCRegisteration;
-import org.gl.ceir.CeirPannelCode.Model.UploadStockAssigneModal;
 import org.gl.ceir.CeirPannelCode.Model.Usertype;
 import org.gl.ceir.CeirPannelCode.Util.UtilDownload;
 import org.slf4j.Logger;
@@ -42,8 +35,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
-
-import CeirPannelCode.Model.Register_UploadPaidStatus;
 
 
 
@@ -70,7 +61,7 @@ public class Stock {
 	
 	@RequestMapping(value={"/assignDistributor"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST})
 	public ModelAndView  viewStock( HttpSession session , @RequestParam(name="userTypeId",required=false) String selectedUserTypeId,@RequestParam(name="selectedRoleTypeId",required=false) Integer selectedRoleTypeId 
-			,@RequestParam(name="txnID",required = false) String txnID) {
+			,@RequestParam(name="txnID",required = false) String txnID ) {
 ModelAndView mv = new ModelAndView();
 
 
@@ -144,7 +135,7 @@ else {
 	@RequestMapping(value= {"/uploadStock"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}) 
 	public @ResponseBody GenricResponse registerConsignment(@RequestParam(name="supplierId",required = false) String supplierId,@RequestParam(name="supplierName",required = false) String supplierName
 			,@RequestParam(name="invoiceNumber",required = false) String invoiceNumber,@RequestParam(name="quantity",required = false) int quantity,
-			@RequestParam(name="file",required = false) MultipartFile file,HttpSession session) {
+			@RequestParam(name="file",required = false) MultipartFile file,HttpSession session,@RequestParam(name="deviceQuantity",required = false) int deviceQuantity) {
 		GenricResponse response=null;
 		String userName=session.getAttribute("username").toString();
 		int userId= (int) session.getAttribute("userid");
@@ -201,7 +192,7 @@ else {
 		stockUpload.setRoleType(selectedRoletype);
 		stockUpload.setUserType(roletype);
 		stockUpload.setAssignerId(assignerId);
-		
+		stockUpload.setDeviceQuantity(deviceQuantity);
 		log.info("stock form parameters passed to upload stock api "+stockUpload);
 		
 		try {
@@ -279,7 +270,8 @@ else {
 	@RequestMapping(value= {"/updateUploadedStock"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}) 
 	public @ResponseBody GenricResponse openconsignmentRecordPage(@RequestParam(name="supplierId",required = false) String supplierId,@RequestParam(name="supplierName",required = false) String supplierName
 	,@RequestParam(name="invoiceNumber",required = false) String invoiceNumber,@RequestParam(name="quantity",required = false) int quantity,
-	@RequestParam(name="file",required = false) MultipartFile file,HttpSession session,@RequestParam(name="txnId",required = false) String txnId,@RequestParam(name="filename",required = false) String filename) {
+	@RequestParam(name="file",required = false) MultipartFile file,HttpSession session,@RequestParam(name="txnId",required = false) String txnId,@RequestParam(name="filename",required = false) String filename
+	,@RequestParam(name="deviceQuantity",required = false) Integer deviceQuantity) {
 	log.info("entry point in update Stock * *.");
 	StockUploadModel stockUpload= new StockUploadModel();
 	addMoreFileModel.setTag("system_upload_filepath");
@@ -306,6 +298,7 @@ else {
 	stockUpload.setUserId(userId);
 	stockUpload.setRoleType(selectedRoletype);
 	stockUpload.setUserType(roleType);
+	stockUpload.setDeviceQuantity(deviceQuantity);
 	}
 	else {
 	
@@ -355,6 +348,7 @@ else {
 	stockUpload.setUserId(userId);
 	stockUpload.setRoleType(selectedRoletype);
 	stockUpload.setUserType(roleType);
+	stockUpload.setDeviceQuantity(deviceQuantity);
 }
 	log.info("Request passed to the update register consignment="+stockUpload);
 	response = feignCleintImplementation.updateStock(stockUpload);

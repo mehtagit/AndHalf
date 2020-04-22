@@ -34,6 +34,7 @@ var txnid=$('#existingStolenTxnId').val();
 		$('#bulkRecoverypin').val(response.stolenOrganizationUserDB.incidentPostalCode);
 		$('#bulkRecoverycountry').val(response.stolenOrganizationUserDB.incidentCountry).change();
 		$('#bulkRecoverystate').val(response.stolenOrganizationUserDB.incidentProvince);
+		$('#bulkRecoveryRemarkReject').val(response.rejectedRemark);
 		
 		//$('#bulkRecoveryFileLink').attr("onclick",'previewFile("'+response.fileLink+'","'+response.fileName+'","'+response.txnId+'")');
 		
@@ -144,7 +145,7 @@ function isImageValid(id) {
 	var fileSize = ($("#"+id)[0].files[0].size);
 	/*fileSize = (Math.round((fileSize / 100000) * 100) / 100)
 	alert("----"+fileSize);*/
-	fileSize = Math.floor(fileSize/1000) + 'KB';
+	fileSize = Math.floor(fileSize/1000);
    
 	//alert(uploadedFileName+"----------"+ext+"----"+fileSize)
 	var areEqual =ext.toLowerCase()=='png';

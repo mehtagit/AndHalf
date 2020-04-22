@@ -13,7 +13,9 @@ $(document).ready(function() {
  // executes when HTML-Document is loaded and DOM is ready
 	
 	//alert("ready");
-
+	$.ajaxSetup({
+		async: false
+		});
 	$.getJSON('./productList', function(data) {
 	 	console.log("start");
 		 console.log(data)
@@ -71,6 +73,7 @@ var txnid=$('#existingStolenTxnId').val();
 		$('#state1').val(response.stolenIndividualUserDB.deviceStolenProvince);
 		//$('#sigleRecoverydeviceStatus').val(response.stolenIndividualUserDB.deviceBrandName);
 		$('#sigleRecovery').val(response.remark);
+		$('#sigleRecoveryReject').val(response.rejectedRemark);
 		$('#bulkRecoveryDate').val(response.dateOfRecovery);
 		$('#sigleRecoveryimeiNumber1').val(response.stolenIndividualUserDB.imeiEsnMeid1);
 		$('#sigleRecoveryimeiNumber2').val(response.stolenIndividualUserDB.imeiEsnMeid2);
@@ -214,6 +217,9 @@ $('#editsigleRecoverydeviceBrandName').on(
 			var brand_id = $('#editsigleRecoverydeviceBrandName').val();
 		//	alert("ss"+brand_id);
 			console.log("ss"+brand_id);
+			$.ajaxSetup({
+				async: false
+				});
 			$.getJSON('./productModelList?brand_id=' + brand_id,
 					function(data) {
 						$("#editsingleRecoverymodalNumber").empty();

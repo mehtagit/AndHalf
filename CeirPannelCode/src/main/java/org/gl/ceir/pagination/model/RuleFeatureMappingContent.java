@@ -15,13 +15,6 @@ public class RuleFeatureMappingContent {
 	private String userType;
 	private String failedRuleActionGrace;
 	private String failedRuleActionPostGrace;
-	private String output;
-	public String getOutput() {
-		return output;
-	}
-	public void setOutput(String output) {
-		this.output = output;
-	}
 	public Integer getId() {
 		return id;
 	}
@@ -113,8 +106,6 @@ public class RuleFeatureMappingContent {
 		builder.append(failedRuleActionGrace);
 		builder.append(", failedRuleActionPostGrace=");
 		builder.append(failedRuleActionPostGrace);
-		builder.append(", output=");
-		builder.append(output);
 		builder.append("]");
 		return builder.toString();
 	}

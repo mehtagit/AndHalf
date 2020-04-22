@@ -41,7 +41,7 @@
     <link href="${context}/resources/js/plugins/prism/prism.css" type="text/css" rel="stylesheet" media="screen,projection">
     <link href="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.css" type="text/css" rel="stylesheet"
         media="screen,projection">
-    <link href="${context}/resources/js/plugins/chartist-js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection">
+ <%--    <link href="${context}/resources/js/plugins/chartist-js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection"> --%>
 
     <style>
         .boton {
@@ -270,25 +270,77 @@ oninput="InvalidMsg(this,'input','<spring:message code="validation.50alphanumeri
         </div>
     </div>
 
-    <%-- <div id="submitBtnAction" class="modal">
-        <button type="button" class=" modal-action modal-close waves-effect waves-green btn-flat right"
-          data-dismiss="modal">&times;</button>
-        <div class="modal-content">
-        <h6 class="modal-header">Forgot Password</h6>
-          <div class="row">
-            <h6 id="responseMsg"></h6>
-          </div>
-          <div class="row">
-            <div class="input-field col s12 center">
-              <div class="input-field col s12 center">
-                  <a href="${context}/login" class="btn" style="margin-left: 10px;">ok</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div> --%>
+   	<!-- modal start -->
+
+	<div id="otpVerification" class="modal" style="width: 40%;">
+		<!-- <button type="button" class=" modal-action modal-close waves-effect waves-green btn-flat right"
+            data-dismiss="modal">&times;</button> -->
+		<h6 class="modal-header"><spring:message code="registration.otp" /></h6>
+		<div class="modal-content">
+			<form id="verifyOtpForm" onsubmit="return verifyOtp2()" >
+				<p class="center" id="verifyOtpResp"></p>
+				<input type="hidden" id="userid" name="userid" value="${userId}">
+				<div class="row">
+					<div class="input-field col s12 m12">
+						<input type="text" placeholder="<spring:message code="placeholder.emailotp" />" name="emailOtp" maxlength="6" id="emailOtp"
+							pattern="[0-9]{0,6}" oninput="InvalidMsg(this,'input','<spring:message code="validation.6Character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.6Character" />');" 
+							 required  />
+					</div>
+					<div class="input-field col s12 m12">
+						<input placeholder="<spring:message code="placeholder.optphone" />" type="text" name="phoneOtp" maxlength="6" pattern="[0-9]{0,6}"
+							id="phoneOtp" oninput="InvalidMsg(this,'input','<spring:message code="validation.6Character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.6Character" />');" 
+							required  />
+					</div>
+				</div>
+				<a href="javascript:void(0)"
+					onclick="resendOtp(); document.getElementById('resendOtp').style.display ='block';"
+					class="right"><spring:message code="registration.resendotp" /></a>
+				<button type="submit"  id="otpVerifyBtn" class="btn"
+					style="width: 100%; margin-top: 20px; margin-bottom: 20px;">
+					<spring:message code="registration.done" />
+				</button>
+			</form>
+		</div>
+	</div>
+	
+	
+	<div id="otpMsgModal" class="modal"
+		style="width: 40%; margin-left: 30%; margin-top: 10vh;">
+		<!-- <button type="button"
+			class=" modal-action modal-close waves-effect waves-green btn-flat right"
+			data-dismiss="modal">&times;</button> -->
+		<h6 class="modal-header">
+			<spring:message code="registration.verifyotp" />
+		</h6>
+		<div class="modal-content">
+			<!-- <h4 class="header2 pb-2">User Info</h4> -->
+
+			<p style="padding: 10px;" class="center" id="otpMsg"></p>
+
+			<a href="javascript:void(0)" onclick="openOtpPopup()" class="btn"
+				style="width: 100%; margin-top: 20px; margin-bottom: 20px;"><spring:message
+					code="registration.verifyotp" /></a>
+		</div>
+	</div>
      <!--  Modal End -->
     
+    <div id="otpMessage2" class="modal">
+<!-- 		<button type="button"
+			class="modal-action modal-close waves-effect waves-green btn-flat right"
+			data-dismiss="modal">&times;</button> -->
+		<h6 class="modal-header">
+			<spring:message code="registration.verifyotp" />
+		</h6>
+		<div class="modal-content">
+			<h6 id="otpResponse"></h6>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<a href="${context}/login" class="btn"><spring:message
+							code="modal.ok" /></a>
+				</div>
+			</div>
+		</div>
+	</div>
 
 
 	<!-- ================================================
@@ -301,6 +353,10 @@ oninput="InvalidMsg(this,'input','<spring:message code="validation.50alphanumeri
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
 
+<script>
+
+
+</script>
 <%-- <script type="text/javascript"
 		src="${context}/resources/project_js/validationMsg.js"></script> --%>
 	    

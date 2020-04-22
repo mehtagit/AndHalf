@@ -161,13 +161,13 @@
 				
 						$.getJSON('./getAllfeatures', function(data) {
 							for (i = 0; i < data.length; i++) {
-							$('<option>').val(data[i].name).text(data[i].name).appendTo('#Feature,#editFeature');
+							$('<option>').val(data[i].name).text(data[i].name).appendTo('#Feature');
 							}
 						});
 						$.getJSON('./registrationUserType', function(data) {
 							for (i = 0; i < data.length; i++) {
 								$('<option>').val(data[i].usertypeName).text(data[i].usertypeName)
-								.appendTo('#User,#editUser');
+								.appendTo('#User');
 							}
 						});
 						$.getJSON('./ruleName', function(data) {
@@ -179,7 +179,17 @@
 						
 						
 						
-					
+						$.getJSON('./getAllfeatures', function(data) {
+							for (i = 0; i < data.length; i++) {
+							$('<option>').val(data[i].name).text(data[i].name).appendTo('#editFeature');
+							}
+						});
+						$.getJSON('./registrationUserType', function(data) {
+							for (i = 0; i < data.length; i++) {
+								$('<option>').val(data[i].usertypeName).text(data[i].usertypeName)
+								.appendTo('#editUser');
+							}
+						});
 						$.getJSON('./ruleName', function(data) {
 							for (i = 0; i < data.length; i++) {
 								$('<option>').val(data[i].id).text(data[i].description)
@@ -228,6 +238,7 @@
 				type : 'GET',
 				success : function(data) {
 					var result=JSON.stringify(data);
+					
 					$("#editModel").openModal({
 				        dismissible:false
 				    });
@@ -241,7 +252,6 @@
 		
 		
 		function setData(result){
-		
 			$("#editRule").val(result.ruleOrder);
 			$("#editFeature").val(result.feature);
 			$("#editUser").val(result.userType);
@@ -250,7 +260,7 @@
 			$("#PostGracePeriod").val(result.postGraceAction);
 			$("#MoveToGracePeriod").val(result.failedRuleActionGrace);
 			$("#MoveToPostGracePeriod").val(result.failedRuleActionPostGrace);
-			$("#editOutput").val(result.output);
+			
 		}
 		
 		
@@ -274,8 +284,7 @@
 					  "name": $("#editRule").val(),
 					  "postGraceAction": $("#PostGracePeriod").val(),
 					  "ruleOrder":parseInt($("#order").val()),
-					  "userType": $("#editUser").val(),
-					  "output":  $("#editOutput").val()
+					  "userType": $("#editUser").val()
 					}
 			$.ajax({
 				

@@ -44,6 +44,7 @@ $(document).ready(function() {
 		type: 'GET',
 		processData: false,
 		contentType: false,
+		async:false,
 		success: function (data, textStatus, jqXHR) {
 			console.log(data)
 			for (i = 0; i < data.length; i++) {
@@ -159,7 +160,7 @@ function viewIndivisualStolen()
 			$('#editsingleStolendeviceBrandName').val(response.stolenIndividualUserDB.deviceBrandName).change();
 			//alert(response.stolenIndividualUserDB.deviceBrandName);
 			$('#editsingleStolenmodalNumber').val(response.stolenIndividualUserDB.modelNumber);
-			$('#singleStolenFileName').val(response.fileName);
+			$('#singleStolenFileName').val(response.nidFileName);
 			$('#updatesingleStolenimei1').val(response.stolenIndividualUserDB.imeiEsnMeid1);
 			$('#updatesingleStolenimei2').val(response.stolenIndividualUserDB.imeiEsnMeid2);
 			$('#updatesingleStolenimei3').val(response.stolenIndividualUserDB.imeiEsnMeid3);
@@ -187,6 +188,7 @@ function viewIndivisualStolen()
 			$('#singleDeviceRemark').val(response.stolenIndividualUserDB.remark);
 			$('#IndivisualStolenDate').val(response.dateOfStolen);
 			$('#uploadFirSingleName').val(response.firFileName);
+			$("#singleDeviceRejectRemark").val(response.rejectedRemark);
 			//$('#singleStolenFileName').val(response.firFileName);
 			
 			
@@ -235,7 +237,8 @@ function updateIndivisualStolen()
 	var singleStolenlastName=$('#singleStolenlastName').val();
 	var singleStolennIDPassportNumber=$('#singleStolennIDPassportNumber').val();
 	var singleStolenemail=$('#singleStolenemail').val();
-	var singleStolenphone1=$('#singleStolenphone1').val();
+	var trimContactNumber1=$('#singleStolenphone1').val();
+	var singleStolenphone1 =trimContactNumber1.replace(/[^A-Z0-9]/ig, "");
 	var singleStolenaddress=$('#singleStolenaddress').val();
 	var singleStolenstreetNumber=$('#singleStolenstreetNumber').val();
 	var singleStolenvillage=$('#singleStolenvillage').val();
@@ -260,7 +263,8 @@ function updateIndivisualStolen()
 	var singleStolenOperator=$('#singleStolenOperator').val();
 	var singleStolenSimStatus=$('#singleStolenSimStatus').val();
 	var singleStolenComplaintType=$('#singleStolenComplaintType').val();
-	var singleStolenphone2 = $('#singleStolenphone2').val();
+	var trimContactNumber2 = $('#singleStolenphone2').val();
+	var singleStolenphone2 =trimContactNumber2.replace(/[^A-Z0-9]/ig, "");
 	var singleStolenmodalNumber= $('#editsingleStolenmodalNumber').val();
 
 	var singleDeviceAddress=$('#singleDeviceAddress').val();
@@ -316,11 +320,12 @@ function updateIndivisualStolen()
 			"remark": singleDeviceRemark,
 			"street": singleStolenstreetNumber,
 			"village":singleStolenvillage,
+			"nidFileName":indivisualStolenfileName
 
 	}
 	var request={
 			"txnId":txnid,
-			"fileName":indivisualStolenfileName,
+			"qty":1,
 			"dateOfStolen":IndivisualStolenDate,
 			"blockingTimePeriod":blockingTimePeriod,
 			"blockingType":blockingType,
@@ -474,10 +479,13 @@ function viewPageType() {
 		$("#IndivisualUpdateStolen").css("display", "none");
    		$(".star").css("display", "none");
 		
+   		
+   		$("#singleDeviceRejectRemarkDiv").css("display", "block");
 		$("#SingleForm").find("input,select,textarea,button").prop(
 				"disabled", true);
 	} else {
 		$('#headingType').text('');
+		$("#singleDeviceRejectRemarkDiv").css("display", "none");
 		$('#headingType').text(editstolenIndivisual);
 		$("#SingleForm").find("input,select,textarea,button").prop(
 				"disabled", false);
@@ -524,6 +532,9 @@ setTimeout(function(){
 function changeBrandValue(brand_id){
 	//alert("ss"+brand_id);
 	//var brand_id = $('#editsingleStolendeviceBrandName').val();
+	$.ajaxSetup({
+		async: false
+		});
 	$.getJSON('./productModelList?brand_id=' + brand_id,
 			function(data) {
 				$("#editsingleStolenmodalNumber").empty();

@@ -479,15 +479,7 @@ var path="${context}";
 				<spring:message code="input.TACstatus" />
 			</h6>
 			<div class="modal-content">
-
-
-				<div class="row">
-					<!-- <h6>
-					The tax against the consignment with <span id="ManufacturerName"></span>
-					having Transaction ID : ( <span id="TACnumber"></span>
-					) has been successfully paid.
-				</h6> -->
-				</div>
+				<form action="" onsubmit="return rejectSubmit(0)">
 				<div class="row">
 					<h6>
 						<spring:message code="input.rejectTAC" />
@@ -496,15 +488,18 @@ var path="${context}";
 					<input type="text" id="setRejectTacTxnId" style="display: none">
 				</div>
 				<div class="row">
-				<div class="input-field col s12 m12" style="margin-left: -10px;">
-					<textarea id="stockDispproveRemarks" class="materialize-textarea"
-						style="padding-left: 0;"></textarea>
-					<label for="textarea1"><spring:message code="input.remarks" /></label>
-				</div>
-				</div>
+						<div class="input-field col s12 m12">
+							<textarea id="rejectTrcRemark"  
+								class="materialize-textarea" 
+							oninput="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
+							oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200character" />');" style="min-height: 8rem;" required></textarea>
+							<label for="textarea1" class=""><spring:message
+									code="input.remarks" /> <span class="star">*</span> </label>
+						</div>
+					</div>
 				<div class="row">
 					<div class="input-field col s12 center">
-						<div class="input-field col s12 center">
+						<%-- <div class="input-field col s12 center">
 							<button class="modal-close modal-trigger btn"
 								onclick="rejectSubmit(0)">
 								<spring:message code="modal.yes" />
@@ -512,9 +507,20 @@ var path="${context}";
 							<button class="modal-close btn" style="margin-left: 10px;">
 								<spring:message code="modal.no" />
 							</button>
+						</div> --%>
+						<div class="input-field col s12 center">
+							<button type="submit" class="btn" type="submit">
+								<spring:message code="modal.yes" />
+							</button>
+							<button class="modal-close btn" type="button"
+								style="margin-left: 10px;">
+								<spring:message code="modal.no" />
+							</button>
 						</div>
+						
 					</div>
 				</div>
+				</form>
 			</div>
 		</div>
 
@@ -562,7 +568,7 @@ var path="${context}";
 							<textarea id="deleteTacRemark"  
 								class="materialize-textarea" 
 							oninput="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
-							oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200character" />');" required></textarea>
+							oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200character" />');" style="min-height: 8rem;" required></textarea>
 							<label for="textarea1" class=""><spring:message
 									code="input.remarks" /> <span class="star">*</span> </label>
 						</div>

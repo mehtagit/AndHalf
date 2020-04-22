@@ -20,8 +20,20 @@ var lang=data_lang_param;
 		});
 
 				//$('.modal').openModal();
-				questionData();
+		$("body").on("keyup", "input#username", function (e) {
+			var _this =$(this).val();
+			if(_this.length>3){
+				questionData(_this);
+				if(e.which===8){
+					questionData(_this);
+							}
+			}
+				});
+				
 			});
+
+			
+		
 			
 			var password = document.getElementById("password");
 			var confirm_password = document.getElementById("confirm_password");

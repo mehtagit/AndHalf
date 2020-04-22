@@ -59,7 +59,7 @@ function Datatable(url,DataUrl){
 			"consignmentStatus":parseInt($('#status').val()),
 			"requestType":parseInt($('#requestType').val()),
 			"sourceType":parseInt($('#sourceStatus').val()),
-			//"roleType": role,
+			"roleType": role,
 			"userId": userId,
 			"featureId":featureId,
 			"userTypeId": parseInt($("body").attr("data-userTypeID")),
@@ -429,7 +429,8 @@ function saveIndivisualStolenRequest(){
 	var singleStolenlastName=$('#singleStolenlastName').val();
 	var singleStolennIDPassportNumber=$('#singleStolennIDPassportNumber').val();
 	var singleStolenemail=$('#singleStolenemail').val();
-	var singleStolenphone1=$('#singleStolenphone1').val();
+	var trimContactNumber1=$('#singleStolenphone1').val();
+	var singleStolenphone1 =trimContactNumber1.replace(/[^A-Z0-9]/ig, "");
 	var singleStolenaddress=$('#singleStolenaddress').val();
 	var singleStolenstreetNumber=$('#singleStolenstreetNumber').val();
 	var singleStolenvillage=$('#singleStolenvillage').val();
@@ -455,7 +456,8 @@ function saveIndivisualStolenRequest(){
 	var singleStolenOperator=parseInt($('#singleStolenOperator').val());
 	var singleStolenSimStatus=$('#singleStolenSimStatus').val();
 	var singleStolenComplaintType=$('#singleStolenComplaintType').val();
-	var singleStolenphone2 = $('#singleStolenphone2').val();
+	var trimContactNumber2 = $('#singleStolenphone2').val();
+	var singleStolenphone2 =trimContactNumber2.replace(/[^A-Z0-9]/ig, "");
 	var singleStolenmodalNumber= $('#singleStolenmodalNumber').val();
 
 	var singleDeviceAddress=$('#singleDeviceAddress').val();
@@ -528,7 +530,6 @@ function saveIndivisualStolenRequest(){
 			"blockingType":blockingType,
 			"requestType":0,
 			"sourceType":5,
-			"fileName":uploadedFileName,
 			"firFileName":fileFileDetails,
 			"complaintType": singleStolenComplaintType,
 			"operatorTypeId":singleStolenOperator,
@@ -600,7 +601,8 @@ function saveCompanyStolenRequest(){
 	var bulkStolenmiddleName=$('#bulkStolenmiddleName').val();
 	var bulkStolenlastName=$('#bulkStolenlastName').val();
 	var bulkStolenofficeEmail=$('#bulkStolenofficeEmail').val();
-	var bulkStolenContact=$('#bulkStolenContact').val();
+	var trimbulkStolenContact=$('#bulkStolenContact').val();
+	var bulkStolenContact =trimbulkStolenContact.replace(/[^A-Z0-9]/ig, "");
 	var uploadFirBulk=$('#uploadFirBulk').val();
 
 	var deviceBulkStolenaddress=$('#deviceBulkStolenaddress').val();
@@ -824,7 +826,7 @@ function rejectUser(){
 		dataType : 'json',
 		'async' : false,
 		contentType : 'application/json; charset=utf-8',
-		type : 'PUT',
+		type : 'POST',
 		success : function(data) {
 			console.log("approveRequest----->"+JSON.stringify(rejectRequest));
 			if(data.errorCode==0){
@@ -837,6 +839,8 @@ function rejectUser(){
 			alert("Failed");
 		}
 	});
+	
+	return false;
 }
 
 function confirmRejectInformation(){

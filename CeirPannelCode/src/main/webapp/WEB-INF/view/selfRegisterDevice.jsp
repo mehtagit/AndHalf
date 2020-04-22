@@ -1,28 +1,31 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
+
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en" class="no-js">
 <head>
-<title>Self Register</title>
-
+<title>Upload Paid Status</title>
+<meta http-equiv='cache-control' content='no-cache'>
+<meta http-equiv='expires' content='-1'>
+<meta http-equiv='pragma' content='no-cache'>
 
 <meta charset="utf-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta content="" name="description" />
+<meta content="" name="author" />
+<jsp:include page="/WEB-INF/view/endUserHeader.jsp" ></jsp:include>
+<jsp:include page="/WEB-INF/view/endUserFooter.jsp" ></jsp:include>
 
 <script type="text/javascript"
 	src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
 <!--   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"></script>  
  -->
-<jsp:include page="/WEB-INF/view/endUserHeader.jsp"></jsp:include>
-<jsp:include page="/WEB-INF/view/endUserFooter.jsp"></jsp:include>
 
 <!-- CORE CSS-->
 <link href="${context}/resources/css/materialize.css" type="text/css"
@@ -57,34 +60,125 @@
 	href="${context}/resources/project_css/viewConsignment.css">
 <link rel="stylesheet"
 	href="${context}/resources/project_css/iconStates.css">
+	<link rel="stylesheet"
+	href="${context}/resources/project_css/intlTelInput.css">
 
 <link rel="stylesheet"
 	href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
 <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
 
 <script src="http://malsup.github.io/jquery.blockUI.js"></script>
-<!------------------------------------------- Dragable Model---------------------------------->
+  <!------------------------------------------- Dragable Model---------------------------------->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
-<link rel="stylesheet"
-	href="${context}/resources/project_css/intlTelInput.css">
 
 <style>
+.row {
+	margin-bottom: 0;
+	margin-top: 0;
+}
+
+input[type=text] {
+	height: 35px;
+	margin: 0 0 5px 0;
+}
+
+.checkboxFont {
+	font-size: 16px;
+	margin-right: 10px;
+}
+
+textarea.materialize-textarea {
+	padding: 0;
+	padding-left: 10px;
+}
+
+.btn-flat {
+	height: auto;
+}
+
+select option {
+	color: #444;
+}
+
+#filterFileStatus {
+	color: #444;
+}
+
+.dropdown-content li>a, .dropdown-content li>span {
+	color: #444;
+}
+
+.welcomeMsg {
+	padding-bottom: 50px !important;
+	line-height: 1.5 !important;
+	text-align: center;
+}
+
+.pay-tax-icon {
+	font-size: 20px;
+	color: #2e568b;
+	margin: 0 7px;
+}
+
+.row {
+	margin-top: 5px;
+}
+
+.section {
+	padding-top: 0 !important;
+}
+
+label {
+	font-size: 0.8rem;
+}
+
+input[type=text]:disabled+label {
+	color: #444;
+}
+
+input::placeholder {
+	color: #444;
+}
+
+select:disabled {
+	color: #444;
+}
+
+/* .btn-info {
+            margin-right: 1%;
+        } */
+input[type='search'] {
+	background-image: url(images/search-512.jpg);
+	background-position: 97% 7px;
+	background-repeat: no-repeat;
+	color: #444;
+}
 </style>
 </head>
-<body data-lang-param="${pageContext.response.locale}">
+<body data-lang-param="${pageContext.response.locale}"
+ session-value="${not empty param.Search ? param.Search : 'null'}">
+
+	<!-- START CONTENT -->
 	<section id="content">
+			<div id="initialloader"></div>
 		<!--start container-->
 		<div class="container">
 			<div class="section">
-				<div class="row card-panel register-device-responsive-page"
-					style="margin: auto; margin-top: 5vh;">
-					<h6 class="fixPage-modal-header ">
+				<div class="">
+					<div class="col s12 m12 l12" id="emptyTable">
+						<div class="row card-panel">
+
+							
+
+							<div class="row card-panel register-device-responsive-page" style="margin: auto;margin-top: 5vh;" id="user123" class="section" style="display: none;">
+								<h6 class="fixPage-modal-header ">
 						<spring:message code="modal.header.registerdevice" />
 					</h6>
-					<form action="" onsubmit="return submitEndUserDeviceInfo()"
+
+								<div >
+									<form action="" onsubmit="return submitEndUserDeviceInfo()"
 						method="POST" enctype="multipart/form-data" >
 						<div class="col s12 m12 l12">
 							<div class="row">
@@ -280,7 +374,18 @@
 												for="NID"><spring:message
 													code="registration.nationalid/passporartnumber" /> <span class="star">*</span></label>
 										</div>
-										<div class="file-field col s12 m6" style="margin-top: -8px;">
+										<div class="col s12 m6" style="margin-top: -10px;">
+															<label for="deviceType"><spring:message code="input.documenttype" /> <span
+																class="star">*</span></label> <select class="browser-default"
+																id="doc_type" 
+																oninput="InvalidMsg(this,'input','<spring:message code="validation.selectFieldMsg" />');"
+											                    oninvalid="InvalidMsg(this,'input','<spring:message code="validation.selectFieldMsg" />');" required>
+																<option value="" disabled selected><spring:message code="select.documenttype" /> </option>
+															</select>
+															
+															<!-- <input type="text" id="docTypeNymericValue" style="display: none" > -->
+														</div>	
+										<div class="file-field col s12 m6" style="margin-top: -8px; margin-right: 1%">
 											<h6 style="font-size: 12px;" id="nidType">
 												<spring:message code="input.IDImage" />
 												<span class="star">*</span>
@@ -528,6 +633,38 @@
 
 														</select>
 													</div>
+													
+													<div class="col s12 m6" style="    margin-right: 2px;">
+															<label for="taxStatus1"><spring:message code="select.taxPaidStatus" /> <span
+																class="star">*</span></label> <select class="browser-default"
+																oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+											        oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+																required="required" id="taxStatus1">
+																<option value="" disabled selected><spring:message code="select.selectTaxPaidStatus" /></option>
+
+															</select>
+														</div>
+													
+													<div class="input-field col s12 m6 l6" id="priceDiv" style="margin-top: 27px;         margin-left: -2px;">
+															<input type="text" name="Price" id="Price1"
+																pattern="[0-9]{0,7}" 
+															oninput="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
+											            oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
+																title= "<spring:message code="validation.7digits" />" maxlength="7">
+															<label for="Price1"><spring:message code="select.price" /></label>
+														</div>
+
+														<div class="col s12 m6" id="CurrencyDiv" style="display: none;    margin-left: -1px;">
+															<label for="Currency1"><spring:message code="input.currency" /> <span
+																class="star">*</span></label> <select class="browser-default"
+																id="Currency1" 
+																oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+											        oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+																title= "<spring:message code="validation.selectFieldMsg" />" > 
+																<option value="" disabled selected><spring:message code="select.selectCurrency" /></option>
+
+															</select>
+														</div>
 
 													<div class="col s12 m12">
 														<p>
@@ -603,9 +740,55 @@
 									</div>
 								</div>
 
-			</div></div></form></div></div></div>
+			</div></div></form>
+								</div>
+
+								
+							</div>
+							<div class="container" id="user456" style="display: none;">
+							<div class="row card-panel">
+							<%-- <h6 class="fixPage-modal-header ">
+						<spring:message code="modal.header.registerdevice" />
+					</h6> --%>
+					<div class="container-fluid pageHeader" id="pageHeader">
+							<%-- <h6 class="fixPage-modal-header ">
+						<spring:message code="modal.header.registerdevice" />
+					</h6> --%>
+								<a href="" class="boton right" id="btnLink"></a>
+							</div>
+							<div id="profile-page" class="section">
+								
+									
+										<form action="${context}/uploadPaidStatus">
+										<div class="col s12 m12 l12" id="tableDiv"
+											style="padding-bottom: 5px; background-color: #e2edef52;">
+										</div>
+											<div id="filterBtnDiv"></div>
+											<p id="errorMsg" style="color: red;font-size: 12px;position: absolute;left: 40px;margin: 0;top: 122px;"class="left"></p>
+										</form>
+									
+							
+										<div class="row">
+											<div class="col s12 m12">
+												<table class="responsive-table striped display"
+													id="data-table-simple" cellspacing="0">
+
+												</table>
+
+												<a href="Javascript:void(0);" onclick="viewDeviceHistory()" style="display: none"><spring:message code="modal.header.viewBlockDevices" /></a>
+											</div>
+										</div>
+									</div>
+								</div></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 		<!--end container-->
-		<div id="endUserRegisterDeviceModal" class="modal">
+	</section>
+	
+	<div id="endUserRegisterDeviceModal" class="modal">
 			<h6 class="modal-header">
 				<spring:message code="modal.header.registerdevice" />
 			</h6>
@@ -715,7 +898,55 @@
 			</div>
 		</div>
 	</div>
+<div id="viewBlockDevices" class="modal" style="width: 75%;">
+		<button type="button"
+			class=" modal-action modal-close btn-flat right"
+			data-dismiss="modal">&times;</button>
+		<h6 class="modal-header"><spring:message code="modal.header.viewBlockDevices" /></h6>
+		
+		<div class="modal-content">
 
+			<div class="row">
+				<table class="responsive-table striped display"
+					id="data-table-history" cellspacing="0">
+				</table>
+			</div>
+		</div>
+	</div>
+	
+	<div id="deleteMsg" class="modal">
+		<h6 class="modal-header"><spring:message code="modal.header.delete" /></h6>
+		<div class="modal-content">
+
+			<div class="row">
+				<h6><spring:message code="modal.deleteDeviceInfo" /></h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<button class="btn" onclick="accept()"><spring:message code="modal.yes" /></button>
+					<button class="modal-close btn" style="margin-left: 10px;"><spring:message code="modal.no" /></button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="confirmDeleteMsg" class="modal">
+		<h6 class="modal-header"><spring:message code="modal.header.delete" /></h6>
+		<div class="modal-content">
+
+			<div class="row">
+				<h6 id="responseMsg"><spring:message code="modal.deviceInfoDeleted" /></h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<button class="btn" onclick="refreshContent();"><spring:message code="modal.ok" /></button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<form action="viewDeviceInformation" method="post" id="viewDeviceForm">
+	<input type="text" id="viewbyImei" name="viewbyImei">
+	</form>
+	
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
 	<script type="text/javascript"
@@ -789,3 +1020,4 @@ window.intlTelInput(input2, {
 
 </body>
 </html>
+	

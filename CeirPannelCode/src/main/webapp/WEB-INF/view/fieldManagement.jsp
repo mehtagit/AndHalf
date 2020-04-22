@@ -144,20 +144,24 @@
                         
                     </div>
 					
-					<div class="input-field col s12 m6" style="margin-top: 22px;">
-                        <input type="text" id="description" name="value"   title="Please enter alphabets and numbers upto 200 characters only" maxlength="200">
-                        <label for="description" class="">Description</label>
+					
+					
+					 <div class="input-field col s12 m6" style="margin-top: 22px;">
+                        <input type="text" id="tagId" name="addFieldId"  title="Please enter alphabets and numbers upto 30 characters only" maxlength="30">
+                        <label for="addFieldId" class="">Field ID </label>
                     </div>
-
+					
                     <div class="input-field col s12 m6" style="margin-top: 22px;">
                         <input type="text" id="addInterp" name="interp" title="Please enter alphabets and numbers upto 30 characters only" maxlength="30" required="required">
                         <label for="addInterp" class="">Display Name <span class="star">*</span></label>
                     </div>
-
-                    <div class="input-field col s12 m6" style="margin-top: 22px;">
-                        <input type="text" id="tagId" name="addFieldId"  title="Please enter alphabets and numbers upto 30 characters only" maxlength="30">
-                        <label for="addFieldId" class="">Field ID </label>
+						
+					<div class="input-field col s12 m6" style="margin-top: 22px;">
+                        <input type="text" id="description" name="value"   title="Please enter alphabets and numbers upto 200 characters only" maxlength="200" style="min-height:8rem">
+                        <label for="description" class="">Description</label>
                     </div>
+						
+                   
 
                     <div class="col s12 m12 center" style="margin-top: 20px;">
                         <button class="btn" type="submit">Submit</button>
@@ -186,21 +190,23 @@
                           <input type="text" id="editId" hidden>
                     </div>
 					
-					<div class="input-field col s12 m6" style="margin-top: 22px;">
-                        <input type="text" id="editdescription" name="value" title="Please enter alphabets and numbers upto 200 characters only" maxlength="200">
-                        <label for="editdescription" class="">Description</label>
+					
+                    <div class="input-field col s12 m6" style="margin-top: 22px;">
+                        <input type="text" id="editFieldId" name="editField"  title="Please enter alphabets and numbers upto 30 characters only" maxlength="30" >
+                        <label for="editFieldId" class="">Field ID</label>
                     </div>
-
+					
 
                     <div class="input-field col s12 m6" style="margin-top: 22px;">
                         <input type="text" id="editInterp" name="interp"  title="Please enter alphabets and numbers upto 30 characters only" maxlength="30" required="required">
                         <label for="editInterp" class="">Display Name <span class="star">*</span></label>
                     </div>
-
-                    <div class="input-field col s12 m6" style="margin-top: 22px;">
-                        <input type="text" id="editFieldId" name="editField"  title="Please enter alphabets and numbers upto 30 characters only" maxlength="30" >
-                        <label for="editFieldId" class="">Field ID</label>
+					
+					<div class="input-field col s12 m6" style="margin-top: 22px;">
+                        <input type="text" id="editdescription" name="value" title="Please enter alphabets and numbers upto 200 characters only" maxlength="200" style="min-height:8rem">
+                        <label for="editdescription" class="">Description</label>
                     </div>
+					
 
                     <div class="col s12 m12 center" style="margin-top: 20px;">
                         <button class="btn" type="submit">Update</button>

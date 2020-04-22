@@ -124,6 +124,7 @@ function pageRendering(){
 			
 			
 			$("#configTableDiv").append("<div class='col s12 m2 l2'><button class='btn primary botton' type='button' id='submitFilter'></button></div>");
+			$("#configTableDiv").append("<div class=' col s3 m2 l8'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportData()'>Export<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 			for(i=0; i<button.length; i++){
 				$('#'+button[i].id).text(button[i].buttonTitle);
 				$('#'+button[i].id).attr("onclick", button[i].buttonURL);
@@ -251,3 +252,49 @@ setTimeout(function(){$('#confirmedUpdatedSystem').openModal({
     dismissible:false
 });},200);
 }
+
+
+function exportData()
+{
+	alert("called")	
+	var roleType = $("body").attr("data-roleType");
+	var currentRoleType = $("body").attr("data-stolenselected-roleType");
+	var table = $('#configLibraryTable').DataTable();
+	var info = table.page.info(); 
+	var pageNo=info.page;
+	var pageSize =info.length;
+
+	var filterRequest={
+			"endDate":$('#endDate').val(),
+			"startDate":$('#startDate').val(),
+			"userId":parseInt($("body").attr("data-userID")),
+			"featureId":parseInt(featureId),
+			"userTypeId": parseInt($("body").attr("data-userTypeID")),
+			"userType":$("body").attr("data-roleType"),
+			"tag":$('#parametername').val(),
+			"type" : parseInt($('#type').val()),
+			"pageNo":parseInt(pageNo),
+			"pageSize":parseInt(pageSize)
+	}
+	console.log(JSON.stringify(filterRequest))
+	$.ajax({
+		url: './exportSystemConfigData',
+		type: 'POST',
+		dataType : 'json',
+		contentType : 'application/json; charset=utf-8',
+		data : JSON.stringify(filterRequest),
+		success: function (data, textStatus, jqXHR) {
+			window.location.href = data.url;
+
+		},
+		error: function (jqXHR, textStatus, errorThrown) {
+
+		}
+	});
+
+}
+
+
+
+
+

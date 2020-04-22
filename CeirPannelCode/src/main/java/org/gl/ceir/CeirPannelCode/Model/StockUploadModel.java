@@ -1,7 +1,5 @@
 package org.gl.ceir.CeirPannelCode.Model;
 
-import java.util.List;
-
 public class StockUploadModel {
 	
 	
@@ -14,7 +12,13 @@ public class StockUploadModel {
 	private int quantity;
 	private int stockStatus;
 	private String supplierId;
-	
+	private Integer deviceQuantity;
+	public Integer getDeviceQuantity() {
+		return deviceQuantity;
+	}
+	public void setDeviceQuantity(Integer deviceQuantity) {
+		this.deviceQuantity = deviceQuantity;
+	}
 	private String userType,remarks,createdOn,modifiedOn,stateInterp;
 	private Long assignerId;
 	private StockUserModel user;
@@ -152,6 +156,8 @@ public class StockUploadModel {
 		builder.append(stockStatus);
 		builder.append(", supplierId=");
 		builder.append(supplierId);
+		builder.append(", deviceQuantity=");
+		builder.append(deviceQuantity);
 		builder.append(", userType=");
 		builder.append(userType);
 		builder.append(", remarks=");
@@ -173,6 +179,7 @@ public class StockUploadModel {
 		builder.append("]");
 		return builder.toString();
 	}
+
 	
 
 	

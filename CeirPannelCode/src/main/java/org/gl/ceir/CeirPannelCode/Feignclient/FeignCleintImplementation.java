@@ -234,7 +234,7 @@ public interface FeignCleintImplementation {
 		
 				//edit stock feign  controller
 				@RequestMapping(value="/stolen-and-recovery/by-txnId" ,method=RequestMethod.POST) 
-				public @ResponseBody StolenRecoveryModel fetchBulkDeviceByTxnId(StolenRecoveryModel stolenRecoveryModel) ;
+				public @ResponseBody Object fetchBulkDeviceByTxnId(StolenRecoveryModel stolenRecoveryModel) ;
 
 				
 				//***************************************************Admin System message Management Feign********************************
@@ -445,8 +445,24 @@ public @ResponseBody ConfigContentModel viewAdminFeign(FilterRequest filterReque
 					
 					@DeleteMapping(value="rule-engine-mapping") 
 					public @ResponseBody GenricResponse delete(NewRule newRule) ;
+					
+					
+					//***************************************************Admin Pending TAC List Feign********************************
 
-}
+					@RequestMapping(value="/filter/pending-tac-approveddb" ,method=RequestMethod.POST) 
+					public Object pendingTACFeign(@RequestBody FilterRequest filterRequest,
+							@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
+							@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+							@RequestParam(value = "file", defaultValue = "0") Integer file) ;	
+					
+					
+					//****************************************Pending TAC List Delete Feign********************************
+					
+					@RequestMapping(value="/pending-tac-approved" ,method=RequestMethod.DELETE) 
+					public @ResponseBody GenricResponse deletePendingTac(@RequestBody FilterRequest filterRequest);
+					
+					
+}					
 
 
 

@@ -152,6 +152,11 @@ select:disabled {
 	color: #444;
 }
 
+
+.disable {
+    color: grey;
+}
+
 /* .btn-info {
             margin-right: 1%;
         } */
@@ -202,13 +207,27 @@ input[type='search'] {
 													<hr>
 												</div>
 											</div>
+											<div class="col s12 m12">
+										<label for="nationality"><spring:message
+												code="input.Nationality" /> <span class="star">*</span></label>
+										<div class=" boxHeight" id="chooseUserOption">
+											<label><input class="with-gap"
+												name="selectUSerViseForm" type="radio"
+												onclick="showCambodianUserForm()" checked> <span><spring:message
+														code="input.Cambodian" /></span> </label> <label> <input
+												class="with-gap" type="radio" name="selectUSerViseForm"
+												style="margin-left: 20px;" onclick="showOtherUserForm()" />
+												<span><spring:message code="input.Other" /></span>
+											</label>
+										</div>
+									</div>
 											<div class="col s12 m12" style="margin-top: 20px;">
 												<div class="input-field col s12 m4">
 													<input type="text" id="nationalID" pattern="[A-Za-z0-9]{1,12}" 
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.12Character" />');"
 											        oninvalid="InvalidMsg(this,'input','<spring:message code="validation.12Character" />');"
-													 required maxlength="12" name="nationalID" placeholder="" disabled="disabled" value="" /> <label for="nationalID"
-														class="center-align ml-10"><spring:message code="input.nidText" /></label>
+													 required maxlength="12" name="nationalID" placeholder="" disabled="disabled" value="" /> <label for="nationalID" id="nidLabelName"
+														class="center-align ml-10"><spring:message code="input.nidText" /> <span class="star">*</span> </label>
 												</div>
 
 													<div class="col s12 m4" style="margin-top: -10px;">
@@ -225,7 +244,7 @@ input[type='search'] {
 
 												<div class="file-field col s12 m4"
 													style="margin-top: -15px;">
-													<h6 style="color: #000;"><spring:message code="input.uploadNidProof" /> <span class="star">*</span>
+													<h6 style="color: #000;" id="uploadNidImage"><spring:message code="input.uploadNidProof" /> <span class="star">*</span>
 													</h6>
 													<div class="btn">
 														<span><spring:message code="input.selectfile" /></span> <input type="file"
@@ -270,6 +289,22 @@ input[type='search'] {
 														maxlength="20"> <label for="lastName"><spring:message code="input.lastName" /> <span class="star">*</span>
 													</label>
 												</div>
+												<div class="input-field col s12 m6" id="nationalityDiv"
+											style="display: none">
+											<input type="text" id="nationality" name="nationality"
+												pattern="[a-zA-Z]{1,25}" oninput="InvalidMsg(this,'input');"
+												oninput="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
+												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
+												title="" maxlength="25"> <label for="nationality" class=""><spring:message
+													code="input.Nationality" /> <span class="star">*</span></label>
+										</div>
+										<div class="input-field col s12 m6" id="entryCountryDiv" style="display: none;">
+												<input type="text" id="datepicker"
+													oninput="InvalidMsg(this,'input','<spring:message code="validation.date" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.date" />');"
+													 maxlength="15" /> <label for="datepicker"><spring:message
+														code="input.EntryCountry" /> <span class="star">*</span></label>
+									</div>
 											</div>
 										</div>
 
@@ -401,6 +436,149 @@ input[type='search'] {
 													</label>
 												</div>
 											</div>
+																					<div class="col s12 m12" style="height: 4rem;">
+											<label for="nationality"><spring:message
+													code="input.VIP" /> </label>
+											<div class=" boxHeight">
+												<label><input class="with-gap" type="radio"
+													name="selectvip" value="Y" onclick="selectVip()"> <span><spring:message
+															code="modal.yes" /></span> </label> <label> <input
+													class="with-gap" value="N" type="radio" checked="checked"
+													name="selectvip" style="margin-left: 20px;"
+													onclick="removeSelectVip()" /> <span><spring:message
+															code="modal.no" /></span>
+												</label>
+											</div>
+										</div>
+
+										<div class="row" style="display: none;" id="vipUserDiv">
+											<div class="input-field col s12 m6">
+												<input type="text" id="departmentName"
+													pattern="[a-zA-Z ]{1,50}"
+													oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
+													 maxlength="50" /> <label for="departmentName"><spring:message
+														code="input.DepartmentName" /> <span class="star">*</span></label>
+											</div>
+
+											<div class="input-field col s12 m6">
+												<input type="text" id="endUserdepartmentID"
+													pattern="[a-zA-Z0-9]{1,15}"
+													oninput="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
+													 maxlength="15" /> <label for="endUserdepartmentID"><spring:message
+														code="input.DepartmentID" /><span class="star">*</span> </label>
+											</div>
+
+											<div class="file-field input-field col s12 m6 l6">
+												<h6 style="color: #000;">
+													<spring:message code="input.UploadIDImage" />
+													<span class="star">*</span>
+												</h6>
+												<div class="btn">
+													<span><spring:message code="operator.file" /></span> <input
+														type="file" accept="image/*"
+														onchange="deptImageValidation()"
+														oninput="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');"
+														oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');"
+														 id="endUserDepartmentId" 
+														placeholder="">
+												</div>
+												<div class="file-path-wrapper">
+													<input class="file-path validate" type="text"
+														id="endUSerNidaPlaceholder"
+														placeholder="<spring:message code="validation.deptPlaceholder" />">
+														
+												</div>
+											</div>
+										</div>
+
+										<div class="col s12 m12" style="height: 4rem; display: none"
+											id="askVisaDetails">
+											<label for="nationality"><spring:message
+													code="input.AddVisa" /> <span class="star">*</span></label>
+											<div class=" boxHeight">
+												<label><input class="with-gap" type="radio"
+													name="onVisa" value="Y" onclick="showVisaDetails()">
+													<span><spring:message code="modal.yes" /></span> </label> <label>
+													<input class="with-gap" type="radio" id="onVisaNo"
+													checked="checked" name="onVisa" value="N"
+													style="margin-left: 20px;" onclick="hideVisaDetails()" />
+													<span><spring:message code="modal.no" /></span>
+												</label>
+											</div>
+										</div>
+
+										<div class="row" id="visaDetails" style="display: none;">
+											<div class="col s12 m6">
+												<label for="visaType"><spring:message
+														code="input.VisaType" /> <span class="star">*</span></label> <select
+													class="browser-default" id="visaType"
+													oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+													oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+													 style="height: 33px">
+													<option value="" disabled selected><spring:message
+															code="input.SelectVisaType" /></option>
+
+												</select>
+											</div>
+
+											<!-- <div class="input-field col s12 m6">
+                                                    <input type="text" id="bdate2" class="datepicker" name="entryDate"
+                                                        pattern="[]" title="" maxlength="20" />
+                                                    <label for="bdate2">Entry Date In Country <span
+                                                            class="star">*</span></label>
+                                                </div> -->
+
+											
+
+											<div class="input-field col s12 m6">
+												<input type="text" id="visaNumber" 
+													pattern="[a-zA-Z0-9]{1,15}"
+													oninput="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
+													 maxlength="15" /> <label for="visaNumber"><spring:message
+														code="input.VisaNumber" /> <span class="star">*</span></label>
+											</div>
+
+											<!-- <div class="input-field col s12 m6">
+                                                    <input type="text" id="bdate" class="datepicker" name="expiryDate"
+                                                        pattern="[]" title="" maxlength="15" />
+                                                    <label for="bdate">Visa Expiry Date <span
+                                                            class="star">*</span></label>
+                                                </div> -->
+
+											<div class="input-field col s12 m6">
+												<input type="text" id="datepicker1"
+													oninput="InvalidMsg(this,'input','<spring:message code="validation.date" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.date" />');"
+													 maxlength="15" /> <label for="datepicker1"><spring:message
+														code="input.VisaExpiry" /> <span class="star">*</span></label>
+											</div>
+
+											<div class="file-field input-field col s12 m6">
+												<h6 style="color: #000;">
+													<spring:message code="input.UploadVisa" />
+													<span class="star">*</span>
+												</h6>
+												<div class="btn">
+													<span><spring:message code="operator.file" /></span> <input
+														type="file" id="visaImage" accept="image/*"
+														oninput="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');"
+														onchange="visaImageValidation()"
+														oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');"
+														 placeholder="">
+												</div>
+												<div class="file-path-wrapper">
+													<input class="file-path validate" type="text"
+														id="ensUserVisaPlaceHolder"
+														placeholder="<spring:message code="validation.visaPlaceholder" />">
+													
+														
+														
+												</div>
+											</div>
+										</div>
 										</div>
 										<div id="mainDeviceInformation" class="mainDeviceInformation">
 											<div id="deviceInformation" class="deviceInformation">
@@ -491,7 +669,7 @@ input[type='search'] {
 															</select>
 														</div>
 
-														<div class="input-field col s12 m6 l6">
+														<div class="input-field col s12 m6 l6" id="priceDiv">
 															<input type="text" name="Price" id="Price1"
 																pattern="[0-9]{0,7}" 
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
@@ -560,6 +738,9 @@ input[type='search'] {
 														</div>
 													</div>
 												</div>
+										
+											</div>
+										</div>
 										<div class="col s12 m12">
 											<button class="btn right add_field_button"
 												style="margin-top: 5px;">
@@ -569,9 +750,6 @@ input[type='search'] {
 												 <spring:message code="input.requiredfields" /> <span class="star">*</span>
 											</p>
 										</div>
-											</div>
-										</div>
-
 										<div class="col s12 m12 center" style="margin-top: 30px;">
 											<button class="btn " id="uploadPaidStatusbutton" type="submit"><spring:message code="button.submit" /></button>
 											<a  href='./uploadPaidStatus?FeatureId=12' class="btn"
@@ -601,7 +779,7 @@ input[type='search'] {
 
 												</table>
 
-												<a href="Javascript:void(0);" onclick="viewDeviceHistory()"><spring:message code="modal.header.viewBlockDevices" /></a>
+												<a href="Javascript:void(0);" onclick="viewDeviceHistory()" style="display: none"><spring:message code="modal.header.viewBlockDevices" /></a>
 											</div>
 										</div>
 									</div>
@@ -888,24 +1066,30 @@ input[type='search'] {
     <div id="rejectInformation" class="modal">
            <h6 class="modal-header"><spring:message code="modal.header.reject" /></h6>
             <div class="modal-content">
+             <form action="" onsubmit=" return rejectUser()" method="POST">
             <div class="row">
              <h6><spring:message code="modal.rejectRequest" /><span id="disapproveTxnId"></span> ?</h6>
-                <form action="">
+               
                 
                     <div class="input-field" style="margin-top: 30px;">
-                        <textarea id="Reason" class="materialize-textarea"></textarea>
-                        <label for="Reason" style="margin-left: -10px;"><spring:message code="lable.reason" /></label>
+                        <textarea id="Reason" class="materialize-textarea" name="Reason"
+                        oninput="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
+						oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
+                         required="required"></textarea>
+                        <label for="Reason" style="margin-left: -10px;"><spring:message code="lable.reason" /><span
+												class="star">*</span></label>
                     </div>
                    
                     
-                </form>
+                
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
-                    <a onclick="rejectUser()" class="btn modal-close modal-trigger"><spring:message code="modal.yes" /></a>
-                    <button class="btn modal-close" style="margin-left: 10px;"><spring:message code="modal.no" /></button>
+                    <button type="submit" class="btn"><spring:message code="modal.yes" /></button>
+                    <button class="btn modal-close" type="button"  style="margin-left: 10px;"><spring:message code="modal.no" /></button>
                 </div>
             </div>
+            </form>
         </div>
     </div>
   
@@ -942,6 +1126,60 @@ input[type='search'] {
 		</div>
 	</div>
 	
+		<div id="visafileFormateModal" class="modal">
+		<h6 class="modal-header">
+			<spring:message code="fileValidationModalHeader" />
+		</h6>
+		<div class="modal-content">
+			<div class="row">
+				<h6 id="visafileErrormessage">
+					<spring:message code="fileValidationName" />
+					<br> <br>
+					<spring:message code="fileValidationFormate" />
+					<br>
+					<br>
+					<spring:message code="fileValidationSize" />
+				</h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<div class="input-field col s12 center">
+						<button class="modal-close  btn" onclick="clearVisaName()"
+							style="margin-left: 10px;">
+							<spring:message code="modal.ok" />
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="DeptfileFormateModal" class="modal">
+		<h6 class="modal-header">
+			<spring:message code="fileValidationModalHeader" />
+		</h6>
+		<div class="modal-content">
+			<div class="row">
+				<h6 id="DeptfileErrormessage">
+					<spring:message code="fileValidationName" />
+					<br> <br>
+					<spring:message code="fileValidationFormate" />
+					<br>
+					<br>
+					<spring:message code="fileValidationSize" />
+				</h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<div class="input-field col s12 center">
+						<button class="modal-close  btn" onclick="clearDeptName()"
+							style="margin-left: 10px;">
+							<spring:message code="modal.ok" />
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
@@ -1014,6 +1252,8 @@ window.intlTelInput(input2, {
 });
  
 $("label[for='phone']").addClass('active');
+
+
  </script>
 		</body>
 </html>
