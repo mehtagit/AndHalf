@@ -184,6 +184,8 @@ public class RegularizedDeviceServiceImpl {
 
 			}
 
+			
+
 			stateList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
 			logger.info(stateList);
 			logger.info("dialect : " + propertiesReader.dialect);
@@ -698,8 +700,25 @@ public class RegularizedDeviceServiceImpl {
 			specificationBuilder.with(new SearchCriteria("nid", filterRequest.getNid(), SearchOperation.EQUALITY, Datatype.STRING));
 
 		if(Objects.nonNull(filterRequest.getStartDate()) && !filterRequest.getStartDate().isEmpty())
-			specificationBuilder.with(new SearchCriteria("createdOn", filterRequest.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
+ 			specificationBuilder.with(new SearchCriteria("createdO[EmailService.javan", filterRequest.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
+        
+			if(Objects.nonNull(filterRequest.getUserTypeId())) {
+            if(filterRequest.getUserTypeId()==18)		
+            {
+     			specificationBuilder.with(new SearchCriteria("origin","Immigration" , SearchOperation.EQUALITY, Datatype.STRING));
+            }
+            else if(filterRequest.getUserTypeId()==17)		
+            {
+     			specificationBuilder.with(new SearchCriteria("origin", "Self" , SearchOperation.EQUALITY, Datatype.STRING));
+            }
 
+            else {
+           	 
+            }
+
+		}
+
+		
 		if(Objects.nonNull(filterRequest.getEndDate()) && !filterRequest.getEndDate().isEmpty())
 			specificationBuilder.with(new SearchCriteria("createdOn", filterRequest.getEndDate() , SearchOperation.LESS_THAN, Datatype.DATE));
 
@@ -714,6 +733,19 @@ public class RegularizedDeviceServiceImpl {
 
 		if(Objects.nonNull(filterRequest.getStatus())) {
 			specificationBuilder.with(new SearchCriteria("status", filterRequest.getStatus(), SearchOperation.EQUALITY, Datatype.INT));
+		}
+		else {
+			if(Objects.nonNull(filterRequest.getUserTypeId())) {
+				
+             if(filterRequest.getUserTypeId()==8)		
+             {
+     			specificationBuilder.with(new SearchCriteria("status",RegularizeDeviceStatus.PENDING_APPROVAL_FROM_CEIR_ADMIN.getCode(), SearchOperation.EQUALITY, Datatype.INT));
+             }
+             else {
+            	 
+             }
+			}
+			
 		}
 
 		if(Objects.nonNull(filterRequest.getTxnId()) && !filterRequest.getTxnId().isEmpty()) {
