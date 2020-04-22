@@ -347,6 +347,10 @@ input[type='search'] {
 									</div>
 
 								</form>
+								
+								<form action="selfRegisterDevicePage" method="post" id="cancelAddDeviceForm">
+								<input type="text" id="nationalIdForCancel" name="Search">
+								</form>
 							</div>
 						</div>
 					</div>

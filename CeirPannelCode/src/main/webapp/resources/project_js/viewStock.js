@@ -98,6 +98,7 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 		$("#TransactionId").val(data.txnId);
 		$("#csvUploadFileName").val(data.fileName);
 		$("#withdrawnRemark").val(data.remarks);
+		$("#viewdevicequantity").val(data.deviceQuantity);
 
 
 	}
@@ -162,6 +163,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 		$("#editTransactionId").val(data.txnId);
 		$("#editcsvUploadFileName").val(data.fileName);
 		$("#existingFileName").val(data.fileName);
+		$("#editdevicequantity").val(data.deviceQuantity);
 		
 
 	} 

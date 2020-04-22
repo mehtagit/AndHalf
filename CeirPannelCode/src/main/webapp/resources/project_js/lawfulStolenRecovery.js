@@ -59,7 +59,7 @@ function Datatable(url,DataUrl){
 			"consignmentStatus":parseInt($('#status').val()),
 			"requestType":parseInt($('#requestType').val()),
 			"sourceType":parseInt($('#sourceStatus').val()),
-			//"roleType": role,
+			"roleType": role,
 			"userId": userId,
 			"featureId":featureId,
 			"userTypeId": parseInt($("body").attr("data-userTypeID")),

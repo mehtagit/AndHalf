@@ -943,6 +943,10 @@ input[type='search'] {
 			</div>
 		</div>
 	</div>
+	<form action="viewDeviceInformation" method="post" id="viewDeviceForm">
+	<input type="text" id="viewbyImei" name="viewbyImei">
+	</form>
+	
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
 	<script type="text/javascript"
