@@ -103,7 +103,6 @@ public class CustomerCareServiceImpl {
 					&& "IMEI".equalsIgnoreCase(customerCareRequest.getDeviceIdType())
 					&& Objects.nonNull(customerCareRequest.getMsisdn())) {
 
-				//
 				DeviceUsageDb deviceUsageDb = deviceUsageDbRepository.getByImeiAndMsisdn(imei, msisdn);
 				if(Objects.isNull(deviceUsageDb)) {
 					DeviceDuplicateDb deviceDuplicateDb = deviceDuplicateDbRepository.findByImeiMsisdnIdentityImeiAndImeiMsisdnIdentityMsisdn(imei, msisdn);
@@ -118,7 +117,7 @@ public class CustomerCareServiceImpl {
 					return fetchDetailsOfImei(imei, msisdn, listType);	
 				}
 
-				// When only imei is available in request.
+			// When only imei is available in request.
 			}else if(Objects.nonNull(imei) 
 					&& "IMEI".equalsIgnoreCase(customerCareRequest.getDeviceIdType())
 					&& Objects.isNull(customerCareRequest.getMsisdn())){
