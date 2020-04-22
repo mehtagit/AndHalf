@@ -89,25 +89,25 @@ public class CustomerCareServiceImpl {
 	public GenricResponse getAll(CustomerCareRequest customerCareRequest, String listType) {
 		Long msisdn = null;
 		String imei = customerCareRequest.getImei();
-		
+
 		try {
 			msisdn = Long.parseLong(customerCareRequest.getMsisdn());
 		}catch (NumberFormatException e) {
 			logger.error("Msisdn is not cast into the long.[" + customerCareRequest.getMsisdn() + "]");
 		}
-		
+
 		try {
-			
+
 			// When imei and msisdn both are available in request.
 			if(Objects.nonNull(imei) 
 					&& "IMEI".equalsIgnoreCase(customerCareRequest.getDeviceIdType())
 					&& Objects.nonNull(customerCareRequest.getMsisdn())) {
-				
+
 				//
 				DeviceUsageDb deviceUsageDb = deviceUsageDbRepository.getByImeiAndMsisdn(imei, msisdn);
 				if(Objects.isNull(deviceUsageDb)) {
 					DeviceDuplicateDb deviceDuplicateDb = deviceDuplicateDbRepository.findByImeiMsisdnIdentityImeiAndImeiMsisdnIdentityMsisdn(imei, msisdn);
-					
+
 					if(Objects.isNull(deviceDuplicateDb)) {
 						return new GenricResponse(10, GenericMessageTags.INVALID_TUPLE_FOR_IMEI_AND_MSISDN.getTag(), 
 								GenericMessageTags.INVALID_TUPLE_FOR_IMEI_AND_MSISDN.getMessage(), "");
@@ -117,25 +117,44 @@ public class CustomerCareServiceImpl {
 				}else {
 					return fetchDetailsOfImei(imei, msisdn, listType);	
 				}
-			
-			// When only imei is available in request.
+
+				// When only imei is available in request.
 			}else if(Objects.nonNull(imei) 
 					&& "IMEI".equalsIgnoreCase(customerCareRequest.getDeviceIdType())
 					&& Objects.isNull(customerCareRequest.getMsisdn())){
 				List<DeviceDuplicateDb> deviceDuplicateDbs = deviceDuplicateDbRepository.findByImeiMsisdnIdentityImei(imei);
-				if(deviceDuplicateDbs.isEmpty()) {
-					
-				}else if(deviceDuplicateDbs) {
-					
-				}
-				
-			}else if(Objects.nonNull(customerCareRequest.getMsisdn())){
-				DeviceUsageDb deviceUsageDb = deviceUsageDbRepository.getByImei(imei);
 
-				if(Objects.isNull(deviceUsageDb)) {
-					return new GenricResponse(2, GenericMessageTags.NO_DATA.getTag(), GenericMessageTags.NO_DATA.getMessage(), null);
+				if(deviceDuplicateDbs.isEmpty()) {
+					DeviceUsageDb deviceUsageDb = deviceUsageDbRepository.getByImei(imei);	
+					if(Objects.nonNull(deviceUsageDb)) {
+						return fetchDetailsOfImei(imei, deviceUsageDb.getMsisdn(), listType);
+					}else {
+						return new GenricResponse(10, GenericMessageTags.INVALID_TUPLE_FOR_IMEI_AND_MSISDN.getTag(), 
+								GenericMessageTags.INVALID_TUPLE_FOR_IMEI_AND_MSISDN.getMessage(), "");
+					}
+				}else if(deviceDuplicateDbs.size() == 1) {
+					return fetchDetailsOfImei(imei, deviceDuplicateDbs.get(0).getImeiMsisdnIdentity().getMsisdn(), listType);
 				}else {
-					return fetchDetailsOfImei(deviceUsageDb.getImei(), msisdn, listType);
+					return new GenricResponse(3, "", "", deviceDuplicateDbs);
+				}
+
+			// When only msisdn is available in request.
+			}else if(Objects.nonNull(customerCareRequest.getMsisdn())){
+				msisdn = Long.parseLong(customerCareRequest.getMsisdn());
+				List<DeviceDuplicateDb> deviceDuplicateDbs = deviceDuplicateDbRepository.findByImeiMsisdnIdentityMsisdn(msisdn);
+
+				if(deviceDuplicateDbs.isEmpty()) {
+					DeviceUsageDb deviceUsageDb = deviceUsageDbRepository.getByMsisdn(msisdn);	
+					if(Objects.nonNull(deviceUsageDb)) {
+						return fetchDetailsOfImei(deviceUsageDb.getImei(), msisdn, listType);
+					}else {
+						return new GenricResponse(10, GenericMessageTags.INVALID_TUPLE_FOR_IMEI_AND_MSISDN.getTag(), 
+								GenericMessageTags.INVALID_TUPLE_FOR_IMEI_AND_MSISDN.getMessage(), "");
+					}
+				}else if(deviceDuplicateDbs.size() == 1) {
+					return fetchDetailsOfImei(deviceDuplicateDbs.get(0).getImeiMsisdnIdentity().getImei(), msisdn, listType);
+				}else {
+					return new GenricResponse(3, "", "", deviceDuplicateDbs);
 				}
 			}else {
 				return new GenricResponse(1, GenericMessageTags.INVALID_REQUEST.getMessage(), "", null);
@@ -221,7 +240,7 @@ public class CustomerCareServiceImpl {
 					return new GenricResponse(2, GenericMessageTags.FEATURE_NOT_SUPPORTED.getTag(), GenericMessageTags.FEATURE_NOT_SUPPORTED.getMessage(), customerCareDeviceState.getTxnId());
 				}
 			}
-			
+
 			if(Objects.isNull(objectBytxnId)) {
 				logger.info(GenericMessageTags.INVALID_TXN_ID.getMessage() +" txnId [" + customerCareDeviceState.getTxnId() + "]");
 				return new GenricResponse(3, GenericMessageTags.INVALID_TXN_ID.getTag(), GenericMessageTags.INVALID_TXN_ID.getMessage(), customerCareDeviceState.getTxnId());

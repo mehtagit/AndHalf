@@ -12,6 +12,8 @@ JpaSpecificationExecutor<DeviceUsageDb> {
 	
 	public DeviceUsageDb getByImei(String imei);
 	
+	public DeviceUsageDb getByMsisdn(Long msisdn);
+	
 	public DeviceUsageDb getByImeiAndMsisdn(String imei, Long msisdn);
 
 }
