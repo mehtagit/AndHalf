@@ -28,11 +28,11 @@ import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.PolicyBreachNotification;
 import com.gl.ceir.config.model.RegularizeDeviceDb;
-import com.gl.ceir.config.model.StockMgmt;
 import com.gl.ceir.config.model.TypeApprovedDb;
 import com.gl.ceir.config.model.constants.GenericMessageTags;
 import com.gl.ceir.config.repository.BlackListRepository;
 import com.gl.ceir.config.repository.DeviceDuplicateDbRepository;
+import com.gl.ceir.config.repository.DeviceNullDbRepository;
 import com.gl.ceir.config.repository.DeviceUsageDbRepository;
 import com.gl.ceir.config.repository.GreyListRepository;
 import com.gl.ceir.config.repository.GsmaBlacklistRepository;
@@ -68,7 +68,14 @@ public class CustomerCareServiceImpl {
 	DeviceUsageDbRepository deviceUsageDbRepository;
 	
 	@Autowired
+	DeviceDuplicateDbRepository deviceDuplicateDbRepository;
+	
+	@Autowired
+	DeviceNullDbRepository deviceNullDbRepository;
+	
+	@Autowired
 	ConsignmentServiceImpl consignmentServiceImpl;
+	
 	@Autowired
 	StockServiceImpl stockServiceImpl;
 	
