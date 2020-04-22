@@ -11,18 +11,20 @@ public class HttpURLConnectionExample {
 
 	private static final String POST_PARAMS = "";
 
-	private static void sendGET(String url) throws IOException {
+	public static String sendGET(String url) throws IOException {
 		URL obj = new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 		con.setRequestMethod("GET");
 
 		int responseCode = con.getResponseCode();
+		StringBuffer response = new StringBuffer();
+		
 		System.out.println("GET Response Code :: " + responseCode);
+		
 		if (responseCode == HttpURLConnection.HTTP_OK) { // success
 			BufferedReader in = new BufferedReader(new InputStreamReader(
 					con.getInputStream()));
 			String inputLine;
-			StringBuffer response = new StringBuffer();
 
 			while ((inputLine = in.readLine()) != null) {
 				response.append(inputLine);
@@ -34,10 +36,12 @@ public class HttpURLConnectionExample {
 		} else {
 			System.out.println("GET request not worked");
 		}
+		
+		return response.toString();
 
 	}
 
-	private static void sendPOST(String url) throws IOException {
+	public static String sendPOST(String url) throws IOException {
 		URL obj = new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
@@ -50,7 +54,8 @@ public class HttpURLConnectionExample {
 		os.flush();
 		os.close();
 		// For POST only - END
-
+		
+		StringBuffer response = new StringBuffer();
 		int responseCode = con.getResponseCode();
 		System.out.println("POST Response Code :: " + responseCode);
 
@@ -58,7 +63,6 @@ public class HttpURLConnectionExample {
 			BufferedReader in = new BufferedReader(new InputStreamReader(
 					con.getInputStream()));
 			String inputLine;
-			StringBuffer response = new StringBuffer();
 
 			while ((inputLine = in.readLine()) != null) {
 				response.append(inputLine);
@@ -67,9 +71,12 @@ public class HttpURLConnectionExample {
 
 			// print result
 			System.out.println(response.toString());
+			
 		} else {
 			System.out.println("POST request not worked");
 		}
+		
+		return response.toString();
 	}
 
 	public static void main(String[] args) {
@@ -82,7 +89,7 @@ public class HttpURLConnectionExample {
 			String uri = "http://172.24.2.65:9502/CEIR/TypeApproved/delete" 
 					+ "?txnId=" + txnId + "&"
 					+ "userId=" + userId + "&"
-					+ "UserType=" + userType + "&"
+					+ "userType=" + userType + "&"
 					+ "deleteFlag=" + deleteFlag;
 
 			sendPOST(uri);
