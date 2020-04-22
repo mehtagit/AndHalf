@@ -40,7 +40,7 @@ public class CEIRFeatureFileUploader {
 		if (!basePath.endsWith("/")) {
 			basePath += "/";
 		}
-		logger.info(" file basePath "+ basePath);
+		logger.info("Files basePath "+ basePath);
 		ErrorFileGenrator errFile = new ErrorFileGenrator();
 		//   errFile.gotoErrorFile(basePath, basePath);
 
