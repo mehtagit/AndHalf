@@ -11,5 +11,7 @@ public interface DeviceUsageDbRepository extends JpaRepository<DeviceUsageDb, Lo
 JpaSpecificationExecutor<DeviceUsageDb> {
 	
 	public DeviceUsageDb getByImei(String imei);
+	
+	public DeviceUsageDb getByImeiAndMsisdn(String imei, Long msisdn);
 
 }

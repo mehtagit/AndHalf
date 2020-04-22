@@ -21,7 +21,7 @@ public class DeviceUsageDb  implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private Long imei;
+	private String imei;
 	
 	private Long msisdn;
 
@@ -71,11 +71,11 @@ public class DeviceUsageDb  implements Serializable{
 	@Column(length = 10)
 	private String tac;
 
-	public Long getImei() {
+	public String getImei() {
 		return imei;
 	}
 
-	public void setImei(Long imei) {
+	public void setImei(String imei) {
 		this.imei = imei;
 	}
 

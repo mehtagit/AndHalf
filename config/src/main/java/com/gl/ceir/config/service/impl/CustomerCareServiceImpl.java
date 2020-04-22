@@ -23,6 +23,7 @@ import com.gl.ceir.config.factory.CustomerCareTarget;
 import com.gl.ceir.config.model.ConsignmentMgmt;
 import com.gl.ceir.config.model.CustomerCareDeviceState;
 import com.gl.ceir.config.model.CustomerCareRequest;
+import com.gl.ceir.config.model.DeviceDuplicateDb;
 import com.gl.ceir.config.model.DeviceUsageDb;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
@@ -66,40 +67,75 @@ public class CustomerCareServiceImpl {
 
 	@Autowired
 	DeviceUsageDbRepository deviceUsageDbRepository;
-	
+
 	@Autowired
 	DeviceDuplicateDbRepository deviceDuplicateDbRepository;
-	
+
 	@Autowired
 	DeviceNullDbRepository deviceNullDbRepository;
-	
+
 	@Autowired
 	ConsignmentServiceImpl consignmentServiceImpl;
-	
+
 	@Autowired
 	StockServiceImpl stockServiceImpl;
-	
+
 	@Autowired
 	RegularizedDeviceServiceImpl regularizedDeviceServiceImpl;
-	
+
 	@Autowired
 	TypeApprovedDbServiceImpl typeApprovedDbServiceImpl;
 
 	public GenricResponse getAll(CustomerCareRequest customerCareRequest, String listType) {
+		Long msisdn = null;
 		String imei = customerCareRequest.getImei();
-
+		
 		try {
+			msisdn = Long.parseLong(customerCareRequest.getMsisdn());
+		}catch (NumberFormatException e) {
+			logger.error("Msisdn is not cast into the long.[" + customerCareRequest.getMsisdn() + "]");
+		}
+		
+		try {
+			
+			// When imei and msisdn both are available in request.
 			if(Objects.nonNull(imei) 
-					&& "IMEI".equalsIgnoreCase(customerCareRequest.getDeviceIdType())) {
-				return fetchDetailsOfImei(imei, listType);
-
+					&& "IMEI".equalsIgnoreCase(customerCareRequest.getDeviceIdType())
+					&& Objects.nonNull(customerCareRequest.getMsisdn())) {
+				
+				//
+				DeviceUsageDb deviceUsageDb = deviceUsageDbRepository.getByImeiAndMsisdn(imei, msisdn);
+				if(Objects.isNull(deviceUsageDb)) {
+					DeviceDuplicateDb deviceDuplicateDb = deviceDuplicateDbRepository.findByImeiMsisdnIdentityImeiAndImeiMsisdnIdentityMsisdn(imei, msisdn);
+					
+					if(Objects.isNull(deviceDuplicateDb)) {
+						return new GenricResponse(10, GenericMessageTags.INVALID_TUPLE_FOR_IMEI_AND_MSISDN.getTag(), 
+								GenericMessageTags.INVALID_TUPLE_FOR_IMEI_AND_MSISDN.getMessage(), "");
+					}else {
+						return fetchDetailsOfImei(imei, msisdn, listType);
+					}
+				}else {
+					return fetchDetailsOfImei(imei, msisdn, listType);	
+				}
+			
+			// When only imei is available in request.
+			}else if(Objects.nonNull(imei) 
+					&& "IMEI".equalsIgnoreCase(customerCareRequest.getDeviceIdType())
+					&& Objects.isNull(customerCareRequest.getMsisdn())){
+				List<DeviceDuplicateDb> deviceDuplicateDbs = deviceDuplicateDbRepository.findByImeiMsisdnIdentityImei(imei);
+				if(deviceDuplicateDbs.isEmpty()) {
+					
+				}else if(deviceDuplicateDbs) {
+					
+				}
+				
 			}else if(Objects.nonNull(customerCareRequest.getMsisdn())){
 				DeviceUsageDb deviceUsageDb = deviceUsageDbRepository.getByImei(imei);
 
 				if(Objects.isNull(deviceUsageDb)) {
 					return new GenricResponse(2, GenericMessageTags.NO_DATA.getTag(), GenericMessageTags.NO_DATA.getMessage(), null);
 				}else {
-					return fetchDetailsOfImei(Long.toString(deviceUsageDb.getImei()), listType);
+					return fetchDetailsOfImei(deviceUsageDb.getImei(), msisdn, listType);
 				}
 			}else {
 				return new GenricResponse(1, GenericMessageTags.INVALID_REQUEST.getMessage(), "", null);
@@ -123,7 +159,7 @@ public class CustomerCareServiceImpl {
 			}
 
 			Object objectBytxnId = null;
-			
+
 			Object repository = null;
 			// Getting repository from factory.
 			if(customerCareDeviceState.getFeatureId() == 0)
@@ -150,7 +186,6 @@ public class CustomerCareServiceImpl {
 				}else {
 					logger.info("customerCareRepo.getByTxnId returned non ConsignmentMgmt");
 				}
-				
 			}else {
 				if(repository instanceof BlackListRepository) {
 					BlackListRepository blackListRepository = (BlackListRepository)repository;
@@ -171,8 +206,8 @@ public class CustomerCareServiceImpl {
 				}
 				else if(repository instanceof TypeApproveRepository) { 
 					TypeApproveRepository typeApproveRepository = (TypeApproveRepository)repository; 
-				    objectBytxnId = typeApproveRepository.getByTac(customerCareDeviceState.getImei().substring(0,8));
-				    TypeApprovedDb typeApprovedDb = (TypeApprovedDb)objectBytxnId;
+					objectBytxnId = typeApproveRepository.getByTac(customerCareDeviceState.getImei().substring(0,8));
+					TypeApprovedDb typeApprovedDb = (TypeApprovedDb)objectBytxnId;
 					typeApprovedDbServiceImpl.setBrandInterp(typeApprovedDb);
 					typeApprovedDbServiceImpl.setModelInterp(typeApprovedDb);
 					objectBytxnId = typeApprovedDb;
@@ -185,14 +220,13 @@ public class CustomerCareServiceImpl {
 					logger.info(GenericMessageTags.FEATURE_NOT_SUPPORTED.getMessage() +" txnId [" + customerCareDeviceState.getTxnId() + "]");
 					return new GenricResponse(2, GenericMessageTags.FEATURE_NOT_SUPPORTED.getTag(), GenericMessageTags.FEATURE_NOT_SUPPORTED.getMessage(), customerCareDeviceState.getTxnId());
 				}
-		
-
 			}
+			
 			if(Objects.isNull(objectBytxnId)) {
 				logger.info(GenericMessageTags.INVALID_TXN_ID.getMessage() +" txnId [" + customerCareDeviceState.getTxnId() + "]");
 				return new GenricResponse(3, GenericMessageTags.INVALID_TXN_ID.getTag(), GenericMessageTags.INVALID_TXN_ID.getMessage(), customerCareDeviceState.getTxnId());
 			}else {
-			
+
 				return new GenricResponse(0, GenericMessageTags.SUCCESS.getMessage(), "",  objectBytxnId);
 			}
 
@@ -222,7 +256,7 @@ public class CustomerCareServiceImpl {
 		}
 	}
 
-	private GenricResponse fetchDetailsOfImei(String imei, String listType) {
+	private GenricResponse fetchDetailsOfImei(String imei, Long msisdn, String listType) {
 		List<String> list = null;
 		List<CustomerCareDeviceState> customerCareDeviceStates = new LinkedList<>();
 
@@ -240,7 +274,10 @@ public class CustomerCareServiceImpl {
 			}
 
 			try {
-				customerCareDeviceStates.add(customerCareTarget.fetchDetailsByImei(imei, new CustomerCareDeviceState()));
+				CustomerCareDeviceState customerCareDeviceState = new CustomerCareDeviceState();
+				customerCareDeviceState.setMsisdn(msisdn);
+
+				customerCareDeviceStates.add(customerCareTarget.fetchDetailsByImei(imei, customerCareDeviceState));
 			}catch (Exception e) {
 				logger.error("Db [" + o + "] have some issue in fetching data for imei [" + imei + "]", e);
 			}
