@@ -114,6 +114,7 @@ FeignCleintImplementation feignCleintImplementation;
 		
 		return modelAndView;
 	}
+	
 
 	@GetMapping("view-device-information/{imei}")
 	public ModelAndView viewDeviceInformationView(@PathVariable("imei") Long imei,HttpSession session) {
@@ -306,11 +307,22 @@ FeignCleintImplementation feignCleintImplementation;
 	}
 	
 	@PostMapping("selfRegisterDevicePage")
-	public ModelAndView selfRegisterDevicePage(@RequestParam(name="Search",required = false) String Search) {
+	public ModelAndView selfRegisterDevicePage(@RequestParam(name="Search",required = false) String Search,@RequestParam(name="sourceType",required = false) String sourceType) {
 		ModelAndView modelAndView = new ModelAndView();
-		log.info("---entry point in self register page=="+Search);
+		log.info("---entry point in self register page=="+Search+"  sourceType   =="+sourceType);
 		modelAndView.addObject("nid", Search);
-		modelAndView.setViewName("selfRegisterDevice");
+		if(sourceType!=null)
+		{
+			log.info("enter in  sourceType=."+sourceType);
+			modelAndView.setViewName("selfRegisterDevice");	
+		}
+		else if(Search!=null )  {
+			log.info("enter in self register source type is null   page.");
+			modelAndView.setViewName("selfRegisterDevice");
+		}
+		else {
+		modelAndView.setViewName("endUserNid");
+		}
 		log.info("---exit  point in self register page");
 		return modelAndView;
 	}
@@ -649,7 +661,33 @@ stream.close();
 			return response;
 		}
 
+
+@GetMapping("EndUser_AddDevices")
+public ModelAndView  endUserdeviceInformationView() {
+	log.info("enter end user add device page.");
+	ModelAndView modelAndView = new ModelAndView();
+	modelAndView.setViewName("endUserAddDevice");
+	
+	
+	return modelAndView;
+}		
+@PostMapping("viewDeviceInformation")
+public ModelAndView viewDeviceInformation(@RequestParam(name="viewbyImei",required = true) Long imei) {
+	log.info(" imei in end user  =="+imei);
+	ModelAndView modelAndView = new ModelAndView("viewAdddeviceInformation");
+	UserPaidStatusContent content= uploadPaidStatusFeignClient.viewByImei(imei);
+	log.info(" content =="+content);
+
+	addMoreFileModel.setTag("upload_file_link");
+    urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
+    log.info("file link =="+urlToUpload.getValue());
+   // content.setFilePreviewLink(urlToUpload.getValue());
+	String fileLink=urlToUpload.getValue();
+	modelAndView.addObject("fileLink", fileLink);
+    modelAndView.addObject("viewInformation", content);
+    modelAndView.setViewName("endUserViewDeviceInformation");
+    
+	return modelAndView;
+}
 }
 
-
-		

@@ -15,11 +15,14 @@ $.i18n().load( {
 	'km': './resources/i18n/km.json'
 } ).done( function() { 
 });
-var nationalID = $("body").attr("session-value");
+var nationalID = sessionStorage.getItem("nationalId");
 
 
 $('#ok,#redirectToPage').click(function(){
-	 window.location.replace("./selfRegisterDevicePage?NID="+nationalID);
+	
+	$('#nationalIdForCancel').val(nationalID);
+	 document.getElementById("cancelAddDeviceForm").submit();
+	 /*window.location.replace("./selfRegisterDevicePage?NID="+nationalID);*/
 	});
 
 function redirectToPage(){

@@ -41,7 +41,7 @@
 
 					}
 				});*/
-			window.location.replace("./selfRegisterDevicePage?NID="+In);
+				window.location.replace("./selfRegisterDevicePage?NID="+In);
 			}
 	    	
 	    	}

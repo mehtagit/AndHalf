@@ -556,7 +556,7 @@ input[type='search'] {
 														<input type="text" readonly="readonly" value="${viewInformation.deviceStatusInterp}">	
 													</div>
                                                       <c:choose>
-												<c:when test = "${viewInformation.endUserDB.onVisa=='N'}">
+												<c:when test = "${viewInformation.endUserDB.nationality=='Cambodian'}">
 													<div class="input-field col s12 m6 l6">
 														<input type="text" value="${viewInformation.price}" readonly="readonly">
 														<label for="Price1"><spring:message code="select.price" /></label>
@@ -568,7 +568,15 @@ input[type='search'] {
 													</div>
 													</c:when>
 													<c:otherwise>
-													
+										              <div class="input-field col s12 m6 l6" style="display: none">
+														<input type="text" value="${viewInformation.price}" readonly="readonly">
+														<label for="Price1"><spring:message code="select.price" /></label>
+													</div>
+
+													<div class="col s12 m6" style="display: none">
+														<label for="Currency1"><spring:message code="input.currency" /><span class="star"></span></label>
+														<input type="text" value="${viewInformation.currencyInterp}" readonly="readonly">
+													</div>													
 													</c:otherwise>
 													</c:choose>
 												</div>
@@ -1014,6 +1022,10 @@ input[type='search'] {
 		</div>
 	</div>
 
+                            <form action="selfRegisterDevicePage" method="post" id="cancelAddDeviceForm">
+								<input type="text" id="nationalIdForCancel" name="Search">
+							</form>
+
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
 	<script type="text/javascript"
@@ -1068,10 +1080,16 @@ input[type='search'] {
     ================================================ -->
 
 <script type="text/javascript">
+var nationalID = sessionStorage.getItem("nationalId");
+
+
 $('#redirectToPage').click(function(){
-	var nationalID=$('#nationalID').val();
-	 window.location.replace("../uploadPaidStatus?via=other&NID="+nationalID);
+	
+	$('#nationalIdForCancel').val(nationalID);
+	 document.getElementById("cancelAddDeviceForm").submit();
+	 /*window.location.replace("./selfRegisterDevicePage?NID="+nationalID);*/
 	});
+
 	
 var selectvip=$("input[name='selectvip']:checked").val()
 var onVisa=$("input[name='onVisa']:checked").val()
