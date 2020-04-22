@@ -14,8 +14,6 @@ public class LogWriter {
 	final String logPath  = "/home/ceirapp/ceir_parser/logs/";        // change in log4j.properties file
 	
 										///home/ceirapp/GSMA/CEIRParser.log
-	//final String fileName = "RowLog.csv";
-	
 	public boolean writeLog( String cdrFileName, String fileSize, String cdrCount, String parserStartTime, String parserEndTime, String cdrStartTime, String cdrEndTime, String successCount, String failCount, String dbInsertCount, String dbSize  ){
 		boolean result  = false;
 		PrintWriter pw  = null;
@@ -74,6 +72,17 @@ public class LogWriter {
 		}catch( Exception e ){
 			e.printStackTrace();
 		}
+	}
+	
+	public void logWrite(FileWriter pw, String logString ) {
+		try{
+			pw.write(logString);
+			pw.flush();
+		}catch( Exception e ){
+			e.printStackTrace();
+		}
+			
+		
 	}
 
 }

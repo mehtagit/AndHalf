@@ -49,13 +49,11 @@ public class ParserMain {
 	        try {
 	        	conn = new com.functionapps.db.MySQLConnection().getConnection();
 	        	CEIRParserMain ceir_parser_main = new CEIRParserMain();
-
 	        	ResultSet my_result_set= ceir_parser_main.operatorDetails(  conn,  tableName);
 				if(my_result_set.next()){
 					raw_upload_set_no = my_result_set.getInt("raw_upload_set_no");
 				}
 
-	        	
 	        	
 	        	basePath = hfr.getFilePath(conn,"mediation_ftp_path");
 	        	if(!basePath.endsWith("/")){

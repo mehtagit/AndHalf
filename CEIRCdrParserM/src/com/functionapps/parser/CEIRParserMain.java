@@ -121,19 +121,15 @@ public class CEIRParserMain {
 		String query = null;
 		ResultSet rs = null;
 		Statement stmt = null;
-		String table_name = null;
-		String query_type = null;
+		
 		Statement raw_stmt = null;
 		String raw_query = null;
-
-		String imei = null;
-		String msisdn = null;
-		String update_my_record = null;
+		
 		int output = 0;
 		String my_query = null;
 		Statement stmt1=null;
 		HashMap<String, String> my_rule_detail;
-		String failed_rule = null;
+		
 		String failed_rule_name="";
 		String failed_rule_id = "";
 		String action = "";
@@ -155,6 +151,7 @@ public class CEIRParserMain {
 			if(my_result_set.next()){
 				parser_base_limit = my_result_set.getInt("split_upload_set_no");
 				old_sno = my_result_set.getInt("last_upload_sno");
+                                split_upload_batch_no = my_result_set.getInt("split_upload_batch_no");
 			}
 //			query = "select * from "+operator+"_raw where sno>"+old_sno+" and status='Init' order by sno asc FETCH FIRST "+parser_base_limit+" ROWS WITH TIES ";
 			query = "select * from "+operator+"_raw where sno>"+old_sno+" and sno<="+(old_sno +parser_base_limit)+" and status='Init' order by sno asc ";
@@ -185,8 +182,6 @@ public class CEIRParserMain {
 			else{
 				myWriter = new FileWriter(file);				
 			}
-			
-			
 			
 			
 			while(rs.next()){
@@ -342,7 +337,7 @@ public class CEIRParserMain {
 //				logger.info(my_query);
 ////				stmt1.addBatch(my_query);
 //				stmt1.executeUpdate(my_query);
-//				conn.commit();
+//				 // conn.commit();
 //				updateRawData(conn, operator,rs.getString("sno"),"Complete");
 
 				logger.info("Final Query to update or insert in Device DB ["+my_query+"]");
@@ -360,12 +355,10 @@ public class CEIRParserMain {
 					logger.info("Executing batch file");
 					stmt1.executeBatch();
 					raw_stmt.executeBatch();
-					conn.commit();
+					 // conn.commit();
 					split_upload_batch_count=0;
 				}
 
-				
-				
 				update_sno = Integer.parseInt(rs.getString("sno"));
 //				stmt1.close();
 				
@@ -376,7 +369,7 @@ public class CEIRParserMain {
 
 				stmt1.executeBatch();
 				raw_stmt.executeBatch();
-				conn.commit();
+				 // conn.commit();
 
 			}
 		}
@@ -407,7 +400,7 @@ public class CEIRParserMain {
 		try {
 			stmt = conn.createStatement();
 			stmt.executeUpdate(query);
-			conn.commit();
+			 // conn.commit();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
@@ -526,9 +519,7 @@ public class CEIRParserMain {
 		ResultSet rs1    = null;
 		Statement stmt  = null;
 		try{
-//			query = "select seq_no from rep_schedule where rep_name = '"+operator+"'";
-//			query = "select a.id as rule_id,a.name as rule_name,a.output as output,b.grace_action, b.post_grace_action from rule_engine a, rule_engine_mapping b where  a.name=b.name  and a.state='FULL' and b.feature='CDR' order by b.rule_order asc";
-			query = "select a.id as rule_id,a.name as rule_name,a.output as output,b.grace_action, b.post_grace_action, b.failed_rule_action_grace, b.failed_rule_action_post_grace from rule_engine a, rule_engine_mapping b where  a.name=b.name  and a.state='FULL' and b.feature='CDR' order by b.rule_order asc";
+                    query = "select a.id as rule_id,a.name as rule_name,b.output as output,b.grace_action, b.post_grace_action, b.failed_rule_action_grace, b.failed_rule_action_post_grace from rule_engine a, rule_engine_mapping b where  a.name=b.name  and a.state='FULL' and b.feature='CDR' order by b.rule_order asc";
 
 			logger.info("Query is "+query);
 			stmt  = conn.createStatement();
@@ -539,7 +530,6 @@ public class CEIRParserMain {
 					if(operator_tag.equalsIgnoreCase("GSM")){
 //						Rule rule = new Rule(rs1.getString("rule_name"),rs1.getString("output"),rs1.getString("rule_id"),period, rs1.getString(period+"_action"));
 						Rule rule = new Rule(rs1.getString("rule_name"),rs1.getString("output"),rs1.getString("rule_id"),period, rs1.getString(period+"_action"),rs1.getString("failed_rule_action_"+period));
-
 						rule_details.add(rule);						
 					}
 				}
@@ -589,7 +579,7 @@ public class CEIRParserMain {
 		try {
 			stmt = conn.createStatement();
 			stmt.executeUpdate(query);
-			conn.commit();
+			 // conn.commit();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -611,7 +601,7 @@ public class CEIRParserMain {
 		try {
 			stmt = conn.createStatement();
 			stmt.executeUpdate(query);
-			conn.commit();
+			 // conn.commit();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}	

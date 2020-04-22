@@ -158,7 +158,7 @@ public class Query{
 			stmt = conn.createStatement();
 			numOfEffRec = stmt.executeUpdate( query );
 			if( numOfEffRec > 0 ){
-				conn.commit();
+				 // conn.commit();
 				System.out.println( "Data inserted successfully..." );
 				retVal = true;
 			}else{
