@@ -265,33 +265,57 @@ public class CustomerCareServiceImpl {
 	}
 
 	private GenricResponse imeiAndMsisdnAvailableInRequest(String imei, Long msisdn, String listType) {
+		logger.info("IMEI and MSISDN both are available in the request. imei [" + imei + "] msisdn [" + msisdn + "]");
+
 		DeviceUsageDb deviceUsageDb = deviceUsageDbRepository.getByImeiAndMsisdn(imei, msisdn);
+		logger.debug(deviceUsageDb);
+
 		if(Objects.isNull(deviceUsageDb)) {
+			logger.info("IMEI and MSISDN not found in device_usage_db. So, Check in device_duplicate DB. imei [" + imei + "] msisdn [" + msisdn + "]");
+
 			DeviceDuplicateDb deviceDuplicateDb = deviceDuplicateDbRepository.findByImeiMsisdnIdentityImeiAndImeiMsisdnIdentityMsisdn(imei, msisdn);
+			logger.debug(deviceDuplicateDb);
 
 			if(Objects.isNull(deviceDuplicateDb)) {
+				logger.info("IMEI and MSISDN are invalid tuple. So, returning error code[10] imei [" + imei + "] msisdn [" + msisdn + "]");
 				return new GenricResponse(10, GenericMessageTags.INVALID_TUPLE_FOR_IMEI_AND_MSISDN.getTag(), 
 						GenericMessageTags.INVALID_TUPLE_FOR_IMEI_AND_MSISDN.getMessage(), "");
 			}else {
+				logger.info("IMEI and MSISDN are valid tuple. imei [" + imei + "] msisdn [" + msisdn + "]");
 				return fetchDetailsOfImei(imei, msisdn, listType);
 			}
 		}else {
+			logger.info("IMEI and MSISDN are valid tuple. imei [" + imei + "] msisdn [" + msisdn + "]");
 			return fetchDetailsOfImei(imei, msisdn, listType);	
 		}
 	}
 
 	private GenricResponse onlyImeiAvailableInRequest(String imei, String listType) {
+		logger.info("Only IMEI is available in the request. imei [" + imei + "]");
+
 		List<DeviceDuplicateDb> deviceDuplicateDbs = deviceDuplicateDbRepository.findByImeiMsisdnIdentityImei(imei);
+		logger.debug(deviceDuplicateDbs);
 
 		if(deviceDuplicateDbs.isEmpty()) {
+			logger.info("IMEI not found in device_duplicate_db. So, Check in device_usage_db. imei [" + imei + "]");
+
 			DeviceUsageDb deviceUsageDb = deviceUsageDbRepository.getByImei(imei);	
+			logger.debug(deviceUsageDb);
+
 			if(Objects.nonNull(deviceUsageDb)) {
-				return fetchDetailsOfImei(imei, deviceUsageDb.getMsisdn(), listType);
+				Long msisdn = deviceUsageDb.getMsisdn();
+				logger.info("Found a valid msisdn[" + msisdn + "] in device_usage_db for imei[" + imei + "]");
+
+				return fetchDetailsOfImei(imei, msisdn, listType);
 			}else {
-				return new GenricResponse(10, GenericMessageTags.INVALID_TUPLE_FOR_IMEI_AND_MSISDN.getTag(), 
-						GenericMessageTags.INVALID_TUPLE_FOR_IMEI_AND_MSISDN.getMessage(), "");
+				logger.info("IMEI is invalid. So, returning error code[10] imei [" + imei + "]");
+				return new GenricResponse(12, GenericMessageTags.INVALID_IMEI.getTag(), 
+						GenericMessageTags.INVALID_IMEI.getMessage(), "");
 			}
 		}else if(deviceDuplicateDbs.size() == 1) {
+			Long msisdn = deviceDuplicateDbs.get(0).getImeiMsisdnIdentity().getMsisdn();
+			logger.info("Found a valid msisdn[" + msisdn + "] in device_duplicate_db for imei[" + imei + "]");
+
 			return fetchDetailsOfImei(imei, deviceDuplicateDbs.get(0).getImeiMsisdnIdentity().getMsisdn(), listType);
 		}else {
 			return new GenricResponse(3, "", "", deviceDuplicateDbs);
@@ -300,11 +324,16 @@ public class CustomerCareServiceImpl {
 	}
 
 	private GenricResponse onlyMsisdnAvailableInRequest(Long msisdn, String listType) {
+		logger.info("Only MSISDN is available in the request. msisdn [" + msisdn + "]");
 
 		List<DeviceDuplicateDb> deviceDuplicateDbs = deviceDuplicateDbRepository.findByImeiMsisdnIdentityMsisdn(msisdn);
+		logger.debug(deviceDuplicateDbs);
 
 		if(deviceDuplicateDbs.isEmpty()) {
+			//logger.info();
 			DeviceUsageDb deviceUsageDb = deviceUsageDbRepository.getByMsisdn(msisdn);	
+			logger.debug(deviceUsageDb);
+			
 			if(Objects.nonNull(deviceUsageDb)) {
 				return fetchDetailsOfImei(deviceUsageDb.getImei(), msisdn, listType);
 			}else {

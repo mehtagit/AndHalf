@@ -158,7 +158,7 @@ public class Query{
 			stmt = conn.createStatement();
 			numOfEffRec = stmt.executeUpdate( query );
 			if( numOfEffRec > 0 ){
-				conn.commit();
+				 // conn.commit();
 				System.out.println( "Data inserted successfully..." );
 				retVal = true;
 			}else{
@@ -237,6 +237,7 @@ public class Query{
 		String date     = null;
 		try{
 			query = "select `date` from `"+tableName+"` order by `date` desc limit 1";
+                        System.out.println(".. getLastDateTimeFromTable .. qry is ;;"+ query);
 			conn  = new MySQLConnection().getConnection();
 			stmt  = conn.createStatement();
 			rs    = stmt.executeQuery(query);

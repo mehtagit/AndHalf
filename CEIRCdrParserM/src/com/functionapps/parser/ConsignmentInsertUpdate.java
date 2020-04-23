@@ -18,7 +18,7 @@ import com.functionapps.log.LogWriter;
 public class ConsignmentInsertUpdate {
 	static Logger logger = Logger.getLogger(ConsignmentInsertUpdate.class);
 
-	void process(Connection conn,String operator,String sub_feature,ArrayList<Rule> rulelist,String txn_id,String operator_tag ){
+	 public  void process(Connection conn,String operator,String sub_feature,   ArrayList<Rule> rulelist,String txn_id,  String operator_tag,   String usertype_name){
 		String fileName = null;
 		File file       = null;
 		final String logPath  = "./";
@@ -82,7 +82,7 @@ public class ConsignmentInsertUpdate {
 
 			period = ceirfileparser.checkGraceStatus(conn);
 			HashMap<String, String> feature_file_mapping = new HashMap<String, String>();
-			feature_file_mapping = ceirfunction.getFeatureMapping(conn,operator);
+			feature_file_mapping = ceirfunction.getFeatureMapping(conn, operator, usertype_name);
 			HashMap<String, String> feature_file_management = new HashMap<String, String>();
 			feature_file_management = ceirfunction.getFeatureFileManagement(conn,feature_file_mapping.get("mgnt_table_db"),txn_id);
 			while(rs.next()){

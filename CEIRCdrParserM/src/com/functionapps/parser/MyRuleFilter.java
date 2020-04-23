@@ -8,10 +8,13 @@ import java.util.HashMap;
 
 import javax.print.attribute.IntegerSyntax;
 
+import org.apache.log4j.Logger;
+
 import com.mysql.jdbc.Connection;
 
 public class MyRuleFilter {
 
+	Logger logger = Logger.getLogger(MyRuleFilter.class);
 	public HashMap getMyRule(Connection conn,HashMap<String, String> device_info, ArrayList<Rule> rulelist){
 		HashMap<String, String> rule_detail = new HashMap<String, String>();
 		for (Rule rule : rulelist) {
@@ -22,8 +25,8 @@ public class MyRuleFilter {
 			device_info.put("action", rule.action);
 			rule_detail = checkMyRule(conn ,device_info);
 			if(rule_detail.get("rule_name") != null ){
-				System.out.println("Rule Detials"+rule_detail+rule_detail.get("rule_name"));
-				System.out.println("Breaking the Rules");
+				logger.info("Rule Detials"+rule_detail+rule_detail.get("rule_name"));
+				logger.info("Breaking the Rules");
 				break;
 			}
 		}
@@ -36,7 +39,7 @@ public class MyRuleFilter {
 		Statement stmt = null;
 
 		if(device_info.get("rule_name").equalsIgnoreCase("LBD")){
-			System.out.println("Checking LBD");
+			logger.info("Checking LBD");
 			String query = "select lawful_device_status from device_db where imei_esn_meid='"+device_info.get("servedIMEI")+"';";
 			try {
 				stmt=conn.createStatement();
@@ -49,7 +52,7 @@ public class MyRuleFilter {
 						ResultSet rs1 = null;
 						Statement stmt1 = null;
 						String insertQuery = "insert into";
-						System.out.println("Going to Insert into history table");
+						logger.info("Going to Insert into history table");
 					}
 				}
 			} catch (SQLException e) {
@@ -59,13 +62,13 @@ public class MyRuleFilter {
 		}
 		else if(device_info.get("rule_name").equalsIgnoreCase("IMEI_LENGTH")){
 			if(device_info.get("servedIMEI").length()==15 ||device_info.get("servedIMEI").length()==16){
-				System.out.println("Getting Valid Length"+device_info.get("servedIMEI"));
+				logger.info("Getting Valid Length"+device_info.get("servedIMEI"));
 			}
 			else{
 				my_rule_details.put("rule_name", device_info.get("rule_name"));
 				my_rule_details.put("rule_id", device_info.get("rule_id"));
 				String insertQuery = "Insert into device_invalid_db ()";
-				System.out.println("Invalid Length"+device_info.get("servedIMEI"));
+				logger.info("Invalid Length"+device_info.get("servedIMEI"));
 			}
 		}
 		
