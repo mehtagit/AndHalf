@@ -460,6 +460,28 @@ public class GrievanceController {
 						 log.info("save grievance  exit point.");
 						 return response;
 					}
-
+					
+					
+					//***************************************** open Search UserName *********************************
+					@RequestMapping(value="/searchUserNameForm",method ={org.springframework.web.bind.annotation.RequestMethod.GET})
+					public ModelAndView openSearchUsernameForm()
+					{
+						ModelAndView mv= new ModelAndView();
+						log.info("open Search userName Grievance form");
+						mv.setViewName("searchUserName");
+						return mv;
+				}
+					
+					//***************************************** open Customer Care Grievance Form *********************************
+					
+					@RequestMapping(value={"/raiseCCgrievance"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST})
+				    public  ModelAndView openCCGrievancePage() 
+				{
+					ModelAndView mv = new ModelAndView();
+					log.info(" view CC user Grievance entry point.");
+					mv.setViewName("CCRaiseGrievance");
+					log.info(" view CC user Grievance exit point."); 
+					return mv; 
+				}
 }
 

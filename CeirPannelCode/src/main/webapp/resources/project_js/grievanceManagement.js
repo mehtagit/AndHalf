@@ -41,7 +41,7 @@ var featureId = 6;
 			/*localStorage.setItem("grievancePageSource", "viaGriebva");*/
 
 			function grievanceDataTable(lang){
-				if(cierRoletype=="CEIRAdmin"){
+				if(cierRoletype=="CEIRAdmin" || cierRoletype=="Customer Care"){
 					DataTable('headers?type=adminGrievanceHeaders&lang='+lang ,'grievanceData');
 				}else{
 					DataTable('headers?type=grievanceHeaders&lang='+lang,'grievanceData');
@@ -252,9 +252,20 @@ var featureId = 6;
 					}
 
 				}); 
+				
+				setAllDropdown();
 			};
+			
+			
+		function setAllDropdown(){
+			$.getJSON('./registrationUserType', function(data) {
+				for (i = 0; i < data.length; i++) {
+					$('<option>').val(data[i].id).text(data[i].usertypeName)
+					.appendTo('#userType');
+				}
+			});
 
-
+		}
 
 
 			function myFunction(message) {

@@ -2427,6 +2427,37 @@ public class IconsState {
 		
 	}
 	
+	
+	/********************************* Icons for Grievance Customer grievance *********************************/ 
+
+	public String customerCareGrievanceState(String fileName,String txnId ,String grievanceId,String status,String userStatus,int userId) {
+		executePostConstruct();
+		String replyAction = "grievanceReply('"+userId+"','"+grievanceId+"','"+txnId+"')";
+		String viewAction = "viewGrievanceHistory('"+grievanceId+"')";
+
+		// state related Code 
+		String reply = "<a onclick="+replyAction+"><i class="+replyIcon+" aria-hidden=\"true\" title="
+				+replyIconTitle+" ></i></a>";
+		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+				+viewIconTitle+" ></i></a>";
+
+		
+		reply = "<a onclick="+replyAction+" class=\"eventNone\"><i class="+disableReplyIcon+" aria-hidden=\"true\" title="
+					+replyIconTitle+" ></i></a>";
+
+	
+
+		if("Disable".equals(userStatus)) {
+			log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
+			reply = "<a onclick="+replyAction+" class=\"eventNone\"><i class="+disableReplyIcon+" aria-hidden=\"true\" title="
+					+replyIconTitle+" ></i></a>";
+		}
+
+
+		String action=reply.concat(view);
+		return action;
+	}
+	
 	@PostConstruct
 	public void executePostConstruct() {
 		errorIconTitle=Translator.toLocale("titles.Error_File");
