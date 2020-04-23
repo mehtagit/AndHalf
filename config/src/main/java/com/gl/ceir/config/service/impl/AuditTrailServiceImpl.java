@@ -96,7 +96,9 @@ public class AuditTrailServiceImpl {
 			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
 
 			Page<AuditTrail> page = auditTrailRepository.findAll( buildSpecification(filterRequest).build(), pageable );
-
+			
+			logger.info("response data "+page.getContent());
+			
 			for(AuditTrail auditTrail : page.getContent()) {
 				setInterp(auditTrail);
 			}

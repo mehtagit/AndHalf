@@ -30,10 +30,6 @@ import com.gl.ceir.config.model.constants.TypeApprovedStatus;
 @Entity
 public class TypeApprovedDb {
 
-	 //private final DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-			 
-			 
-	//private static long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;

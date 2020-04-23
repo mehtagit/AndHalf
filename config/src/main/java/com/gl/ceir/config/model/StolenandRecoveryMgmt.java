@@ -108,13 +108,13 @@ public class StolenandRecoveryMgmt implements Serializable {
 	@Transient
 	private String deleteFlagInterp;
 	
-	private Integer ceirAdminId;
+	private Long ceirAdminId;
 
-	public Integer getCeirAdminId() {
+	public Long getCeirAdminId() {
 		return ceirAdminId;
 	}
 
-	public void setCeirAdminId(Integer ceirAdminId) {
+	public void setCeirAdminId(Long ceirAdminId) {
 		this.ceirAdminId = ceirAdminId;
 	}
 

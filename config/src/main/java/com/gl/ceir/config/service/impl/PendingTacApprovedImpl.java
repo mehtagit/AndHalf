@@ -126,7 +126,7 @@ public class PendingTacApprovedImpl {
 		}
 	}
 	
-	@Transactional
+	//@Transactional
 	public GenricResponse deletePendingApproval(FilterRequest filterRequest){
 		try {
 			if(Objects.isNull(filterRequest.getUserId())) {
