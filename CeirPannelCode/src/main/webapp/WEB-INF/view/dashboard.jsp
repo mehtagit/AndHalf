@@ -60,6 +60,11 @@ if(usertypeId==null){
 	usertypeId=0;
 }
 
+Integer selfRegister=(Integer)session.getAttribute("selfRegister");
+if(selfRegister==null){
+	selfRegister=0;
+}
+
 %>
 </script>
 
@@ -158,7 +163,7 @@ data-roleType="${usertype}" data-userTypeID="${usertypeId}"
 								class="mdi-action-account-circle"
 								style="color: #fff; font-size: 40px;"></i></a>
 							<ul id="profile-dropdown" class="dropdown-content">
-							   <%if(usertypeId!=13){ %>
+							   <%if(selfRegister!=0){ %>
 								<li><a id="editLink" href="javascript:void(0)" target="mainArea"><i
 										class="fa fa-pencil dropdownColor" style="float: left;"></i><span
 										style="float: left" class="dropdownColor"><spring:message

@@ -117,7 +117,7 @@ function updateUSerStatus(){
 function questionDataByCategory2(){ 
 	$.ajax({
 		type : 'GET',
-		url : contextpath + '/securityQuestionList/',
+		url : contextpath + '/allSecurityQuestionList/',
 		contentType : "application/json",
 		dataType : 'html', 
 		success : function(data) {
@@ -171,7 +171,7 @@ function questionDataByCategory2(){
 function questionDataByCategory(){ 
 	$.ajax({
 		type : 'GET',
-		url : contextpath + '/securityQuestionList/',
+		url : contextpath + '/allSecurityQuestionList/',
 		contentType : "application/json",
 		dataType : 'html', 
 		success : function(data) {

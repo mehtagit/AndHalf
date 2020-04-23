@@ -49,12 +49,14 @@ function confirmantiondelete(){
 	var remarks = $("#textarea1").val();
 	console.log("txnId===**"+txnId+" userId="+userId+" roleType== "+roleType+ " currentRoleType=="+currentRoleType);
 	var obj ={
-			"featureId":featureId,
 			"txnId" : txnId,
 			"userType":role,
+			"roleType":role,
 			"userId":userId,
+			"featureId":featureId,
 			"id":id,
 			"remark":remarks
+			
 
 	}
 	$.ajax({

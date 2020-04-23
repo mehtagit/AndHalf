@@ -97,7 +97,7 @@ function viewIndivisualStolen()
 	var txnid=$('#existingStolenTxnId').val();
 
 	$.ajax({
-		url: './openStolenAndRecoveryPage?txnId='+txnid,
+		url: './openStolenAndRecoveryPage?txnId='+txnid+"&requestType=0",
 		type: 'POST',
 		processData: false,
 		contentType: false,
@@ -172,7 +172,13 @@ function viewIndivisualStolen()
 			/*$('#singleStolenFileName').val(response.fileName);*/
 			window.xop2=response.stolenIndividualUserDB.contactNumber;
 			$('#singleStolenphone2').val(response.stolenIndividualUserDB.contactNumber);
+			$('#singleStolenphone3').val(response.stolenIndividualUserDB.contactNumber2);
+			$('#singleStolenphone4').val(response.stolenIndividualUserDB.contactNumber3);
+			$('#singleStolenphone5').val(response.stolenIndividualUserDB.contactNumber4);
 			$('#singleStolenOperator').val(response.stolenIndividualUserDB.operator);
+			$('#singleStolenOperator3').val(response.stolenIndividualUserDB.operator2);
+			$('#singleStolenOperator4').val(response.stolenIndividualUserDB.operator3);
+			$('#singleStolenOperator5').val(response.stolenIndividualUserDB.operator4);
 			$('#singleStolenSimStatus').val(response.stolenIndividualUserDB.multiSimStatus);
 			$('#singleStolenComplaintType').val(response.complaintType);
 			$('#singleDeviceAddress').val(response.stolenIndividualUserDB.deviceStolenPropertyLocation);
@@ -281,11 +287,28 @@ function updateIndivisualStolen()
 	var txnid=$('#existingStolenTxnId').val();
 	var indivisualStolenfileName=$('#singleStolenFileName').val();
 	var uploadFirFile=$('#uploadFirSingleName').val();
+	
+	
+	var singleStolenOperator2=parseInt($('#singleStolenOperator3').val());
+	var singleStolenOperator3=parseInt($('#singleStolenOperator4').val());
+	var singleStolenOperator4=parseInt($('#singleStolenOperator5').val());
+	var trimContactNumber3 = $('#singleStolenphone3').val();
+	var singleStolenphone3 =trimContactNumber3.replace(/[^A-Z0-9]/ig, "");
+	
+	var trimContactNumber4 = $('#singleStolenphone4').val();
+	var singleStolenphone4 =trimContactNumber4.replace(/[^A-Z0-9]/ig, "");
+	
+	var trimContactNumber5 = $('#singleStolenphone5').val();
+	var singleStolenphone5 =trimContactNumber5.replace(/[^A-Z0-9]/ig, "");
+	
 	var stolenIndividualUserDB={
 			"alternateContactNumber": singleStolenphone1,
 			"commune": singleStolencommune,
 			"complaintType": singleStolenComplaintType,
 			"contactNumber": singleStolenphone2,
+			"contactNumber2": singleStolenphone3,
+			"contactNumber3": singleStolenphone4,
+			"contactNumber4": singleStolenphone5,
 			"country": country,
 			"deviceBrandName": singleStolendeviceBrandName,
 			"deviceIdType": singleStolendeviceIDType,
@@ -313,6 +336,9 @@ function updateIndivisualStolen()
 			"modelNumber":singleStolenmodalNumber,
 			"nid": singleStolennIDPassportNumber,
 			"operator": singleStolenOperator,
+			"operator2": singleStolenOperator2,
+			"operator3": singleStolenOperator3,
+			"operator4": singleStolenOperator4,
 			"phoneNo": singleStolenphone2,
 			"postalCode": singleDevicepin,
 			"propertyLocation": singleStolenaddress,

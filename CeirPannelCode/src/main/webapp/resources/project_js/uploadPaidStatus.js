@@ -295,7 +295,7 @@ function table(url,dataUrl){
 	var txnIdValue = $("body").attr("session-valueTxnID");
 	var txn= (txnIdValue == 'null' && transactionIDValue == undefined)? $('#transactionID').val() : transactionIDValue;
 	var request={
-			"origin":"customs",
+			"origin":$("body").attr("data-roleType"),
 			"endDate":$('#endDate').val(),
 			"startDate":$('#startDate').val(),
 			"taxPaidStatus":parseInt($('#taxPaidStatus').val()),
