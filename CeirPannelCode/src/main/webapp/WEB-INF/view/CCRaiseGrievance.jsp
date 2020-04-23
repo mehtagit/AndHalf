@@ -18,8 +18,7 @@
 
     <link href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.min.css" type="text/css" rel="stylesheet"
         media="screen,projection">
-<jsp:include page="/WEB-INF/view/endUserHeader.jsp" ></jsp:include>
-<jsp:include page="/WEB-INF/view/endUserFooter.jsp" ></jsp:include>
+
     <!-- Favicons-->
     <!--<link rel="icon" href="images/favicon/favicon-32x32.png" sizes="32x32">-->
     <!-- Favicons-->
@@ -163,7 +162,7 @@ var contextpath = "${context}";
                 <div class="container" style="padding-bottom: 70px; margin-top:10vh;" >
                     <div class="section">
                         <div class="row card-panel responsive-page" id="endUserRaiseGrievance" style="display: none">
-                            <h6 class="fixPage-modal-header "><spring:message code="modal.Grievance" /></h6>
+                            <h6 class="fixPage-modal-header "><spring:message code="view.griev" /></h6>
                             <form onsubmit="return saveaAonymousGrievance()" method="POST" enctype="multipart/form-data" id="saveGrievance">
                              <input type="text" id="pageTypeValue" value="${reportType}" style="display: none;">
                                 <div class="col s12 m12 l12">
@@ -378,7 +377,7 @@ var contextpath = "${context}";
             <div class="row">
                 <div class="input-field col s12 center">
                     <div class="input-field col s12 center">
-                        <a href="./redirectToHomePage" class="btn"><spring:message code="modal.yes" /></a>
+                        <a href="./grievanceManagement" class="btn"><spring:message code="modal.yes" /></a>
                         <button class="btn" onclick="closeCancelPopUp()" style="margin-left: 10px;"><spring:message code="modal.no" /></button>
                     </div>
                 </div>
@@ -659,7 +658,7 @@ var path="${context}";
     <script type="text/javascript"
 		src="${context}/resources/project_js/grievanceManagement.js"></script>
     <script type="text/javascript"
-		src="${context}/resources/project_js/endUserGrievance.js"></script>
+		src="${context}/resources/project_js/CCRaiseGrievance.js"></script>
 	
 			<script type="text/javascript"
 		src="${context}/resources/project_js/_dateFunction.js" async></script>

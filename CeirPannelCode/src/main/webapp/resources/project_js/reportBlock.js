@@ -383,12 +383,12 @@ var singleImeiBlockDetail={
 
 //*******************************************View Pop up data *************************************************************************************************
 function viewDeviceDetails(txnId,popUpType,requestType){
-
+console.log("requestType=="+requestType)
 	
 	var role = currentRoleType == null ? roleType : currentRoleType;
 	console.log("popUpType=="+popUpType);
 	$.ajax({
-		url : "./openbulkView?reqType=editPage&txnId="+txnId+'&modeType=singleDeivce',
+		url : "./openbulkView?reqType="+requestType+"&txnId="+txnId+'&modeType=singleDeivce',
 		dataType : 'json',
 		contentType : 'application/json; charset=utf-8',
 		type : 'GET',
@@ -549,7 +549,7 @@ function viewblockImeiDevice(txnId,popUpType,requestType)
 	
 	$.ajax({
 		/*url : "./openSingleImeiForm?reqType=editPage&txnId="+txnId+'&modeType=singleDeivce',*/
-		url : "./openbulkView?reqType=editPage&txnId="+txnId+'&modeType=singleDeivce',
+		url : "./openbulkView?reqType="+requestType+"&txnId="+txnId+'&modeType=singleDeivce',
 		dataType : 'json',
 		contentType : 'application/json; charset=utf-8',
 		type : 'GET',
