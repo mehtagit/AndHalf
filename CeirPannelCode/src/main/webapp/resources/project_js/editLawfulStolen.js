@@ -64,6 +64,8 @@ $(document).ready(function() {
  		  viewIndivisualStolen(); 
  		  }, 1000);
 	
+	  
+	  
 		/*var promise = new Promise(function(resolve, reject) {
 			alert("promise");
 			$.getJSON('./productList', function(data) {
@@ -160,7 +162,7 @@ function viewIndivisualStolen()
 			$('#editsingleStolendeviceBrandName').val(response.stolenIndividualUserDB.deviceBrandName).change();
 			//alert(response.stolenIndividualUserDB.deviceBrandName);
 			$('#editsingleStolenmodalNumber').val(response.stolenIndividualUserDB.modelNumber);
-			$('#singleStolenFileName').val(response.nidFileName);
+			$('#singleStolenFileName').val(response.stolenIndividualUserDB.nidFileName);
 			$('#updatesingleStolenimei1').val(response.stolenIndividualUserDB.imeiEsnMeid1);
 			$('#updatesingleStolenimei2').val(response.stolenIndividualUserDB.imeiEsnMeid2);
 			$('#updatesingleStolenimei3').val(response.stolenIndividualUserDB.imeiEsnMeid3);
@@ -216,9 +218,15 @@ $("#calender").css("display", "none");
 			$("label[for='updatesingleStolenimei3']").addClass('active');
 			$("label[for='updatesingleStolenimei4']").addClass('active');
 
-			$('#PassportNidLink').attr("onclick",'previewFile("'+response.fileLink+'","'+response.fileName+'","'+response.txnId+'")');
+			$('#PassportNidLink').attr("onclick",'previewFile("'+response.fileLink+'","'+response.stolenIndividualUserDB.nidFileName+'","'+response.txnId+'")');
 			$('#firImageLink').attr("onclick",'previewFile("'+response.fileLink+'","'+response.firFileName+'","'+response.txnId+'")');
 			$('div#initialloader').delay(300).fadeOut('slow');
+			
+			if ($('#pageViewType').val() == 'edit') {
+				setOpertorTypeMandaotry();
+			}
+			
+				
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
 			console.log("error in ajax")
@@ -509,6 +517,9 @@ function viewPageType() {
    		$("#singleDeviceRejectRemarkDiv").css("display", "block");
 		$("#SingleForm").find("input,select,textarea,button").prop(
 				"disabled", true);
+		  $("#operator3span").css("display", "none");
+		  $("#operator4span").css("display", "none");
+		  $("#operator5span").css("display", "none");
 	} else {
 		$('#headingType').text('');
 		$("#singleDeviceRejectRemarkDiv").css("display", "none");
@@ -570,4 +581,29 @@ function changeBrandValue(brand_id){
 							'#editsingleStolenmodalNumber');
 				}
 			});
+}
+
+
+
+
+function setOpertorTypeMandaotry()
+{
+	var mobilenumber2=$("#singleStolenphone3").val();
+	 var mobilenumber3=$("#singleStolenphone4").val();
+	 var mobilenumber4=$("#singleStolenphone5").val();
+	 
+	  if(mobilenumber2>1)
+		  {
+		  $("#operator3span").css("display", "block");
+		  }
+
+	  if(mobilenumber3>1)
+		  {
+		  $("#operator4span").css("display", "block");
+		  }
+	
+	  if(mobilenumber4>1)
+		  {
+		  $("#operator5span").css("display", "block");
+		  }	
 }
