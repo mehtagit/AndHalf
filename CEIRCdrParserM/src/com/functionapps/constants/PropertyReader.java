@@ -13,7 +13,7 @@ public class PropertyReader {
 
 	private InputStream inputStream;
 	private static Properties prop;
-	private	final static Logger logger = Logger.getLogger(PropertyReader.class);
+	 static Logger logger = Logger.getLogger(PropertyReader.class);
     private static PropertyReader reader = null;
     
 	public PropertyReader(){

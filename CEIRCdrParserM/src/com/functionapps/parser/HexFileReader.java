@@ -1,7 +1,6 @@
 package com.functionapps.parser;
 
 import com.functionapps.db.Query;
-import static com.functionapps.parser.CEIRFeatureFileUploader.logger;
 import com.functionapps.zte.ZTEFields;
 
 import java.util.HashMap;

@@ -1,7 +1,4 @@
 package com.functionapps.parser.service;
-
-
-
 import java.io.File;
 import java.io.FileWriter;
 import java.sql.Connection;
@@ -13,7 +10,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import com.functionapps.parser.ErrorFileGenrator;
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
+import java.util.logging.Logger;
 
 import com.functionapps.log.LogWriter;
 import com.functionapps.parser.CEIRFeatureFileFunctions;
@@ -22,7 +20,7 @@ import com.functionapps.parser.Rule;
 import com.functionapps.parser.RuleFilter;
 
 public class ConsignmentInsertUpdate {
-	static Logger logger = Logger.getLogger(ConsignmentInsertUpdate.class);
+	static Logger logger = Logger.getLogger("ConsignmentInsertUpdate");
 //                                                                                            
   public  void process(Connection conn,String operator,String sub_feature,   ArrayList<Rule> rulelist,String txn_id,  String operator_tag,   String usertype_name) {
 
@@ -343,14 +341,14 @@ try {
 
 
 } catch (Exception e) {
-  logger.error("Error.." + e);
+  logger.info("Error.." + e);
 } finally {
   try {
 
-      conn.close();
+//      conn.close();
   } catch (Exception e) {
       // TODO Auto-generated catch block
-      logger.error("Error.." + e);
+      logger.info("Error.." + e);
   }
 }
 }

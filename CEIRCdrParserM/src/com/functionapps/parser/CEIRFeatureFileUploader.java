@@ -2,27 +2,17 @@ package com.functionapps.parser;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.HashMap;
-import com.functionapps.parser.ErrorFileGenrator;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.logging.Level;
-
 import org.apache.log4j.Logger;
+
 
 public class CEIRFeatureFileUploader {
 
-    /**
-     * @param args
-     */
     static Logger logger = Logger.getLogger(CEIRFeatureFileUploader.class);
-
+    
     public static void main(String[] args) {
-        logger = Logger.getLogger(CEIRFeatureFileUploader.class);
-        //		String main_type = args[0];
-
         logger.info(" ");
         logger.info(" ");
         logger.info(" ");
@@ -30,6 +20,7 @@ public class CEIRFeatureFileUploader {
         CEIRFeatureFileFunctions ceirfunction = new CEIRFeatureFileFunctions();
         ResultSet file_details = ceirfunction.getFileDetails(conn, 1);  //select * from web_action_db limit 1 
 
+        
         HexFileReader hfr = new HexFileReader();
         String basePath = "";
         String complete_file_path = "";
@@ -74,7 +65,7 @@ public class CEIRFeatureFileUploader {
                 logger.info("*****" + user_type);
                 ceirfunction.updateFeatureFileStatus(conn, file_details.getString("txn_id"), 1, file_details.getString("feature"), file_details.getString("sub_feature"));  //update web_action_db set state
                 ceirfunction.updateFeatureManagementStatus(conn, file_details.getString("txn_id"), 1, feature_file_mapping.get("mgnt_table_db"), file_details.getString("feature"));  //update " + mgmt table set _status= 1 (processsing)  // only for cons dstock
-              
+
 //                ResultSet my_result_set = ceir_parser_main.operatorDetails(conn, file_details.getString("feature"));     //select * from rep_schedule_config_db
 //                if (my_result_set.next()) {
 //                    raw_upload_set_no = my_result_set.getInt("raw_upload_set_no");
@@ -91,10 +82,9 @@ public class CEIRFeatureFileUploader {
 //                    logger.info("File not exists.... ");
 //                    hfr.readFeatureWithoutFile(conn, file_details.getString("feature"), raw_upload_set_no, file_details.getString("txn_id"), file_details.getString("sub_feature"), feature_file_mapping.get("mgnt_table_db"), user_type);
 //                }
-
                 if (feature_file_management.get("file_name") != null) {
                     ResultSet my_result_set = ceir_parser_main.operatorDetails(conn, file_details.getString("feature"));
-                    System.out.println("my_result_set " + my_result_set);
+                    logger.info("my_result_set " + my_result_set);
 
                     if (my_result_set.next()) {
                         raw_upload_set_no = my_result_set.getInt("raw_upload_set_no");
@@ -102,23 +92,23 @@ public class CEIRFeatureFileUploader {
                     complete_file_path = basePath + file_details.getString("txn_id") + "/" + feature_file_management.get("file_name");
                     System.out.println("Complete file name " + complete_file_path);
                     logger.info("Complete file name is.... " + complete_file_path);
-                    
+
                     if (file_details.getString("sub_feature").equalsIgnoreCase("delete")) {
                         ceirfunction.updateFeatureManagementDeleteStatus(conn, file_details.getString("txn_id"), 1, feature_file_mapping.get("mgnt_table_db"));
                     } else {
                         ceirfunction.updateFeatureManagementStatus(conn, file_details.getString("txn_id"), 1, feature_file_mapping.get("mgnt_table_db"));
-                        rawDataResult = hfr.readConvertedFeatureFile(conn, feature_file_management.get("file_name"), complete_file_path, file_details.getString("feature"), basePath, raw_upload_set_no, file_details.getString("txn_id"), file_details.getString("sub_feature"), feature_file_mapping.get("mgnt_table_db")  , user_type);
-  //                    rawDataResult = hfr.readConvertedFeatureFile(conn, feature_file_management.get("file_name"), complete_file_path, file_details.getString("feature"), basePath, raw_upload_set_no, file_details.getString("txn_id"), file_details.getString("sub_feature"), feature_file_mapping.get("mgnt_table_db"), user_type);
+                        rawDataResult = hfr.readConvertedFeatureFile(conn, feature_file_management.get("file_name"), complete_file_path, file_details.getString("feature"), basePath, raw_upload_set_no, file_details.getString("txn_id"), file_details.getString("sub_feature"), feature_file_mapping.get("mgnt_table_db"), user_type);
+                        //                    rawDataResult = hfr.readConvertedFeatureFile(conn, feature_file_management.get("file_name"), complete_file_path, file_details.getString("feature"), basePath, raw_upload_set_no, file_details.getString("txn_id"), file_details.getString("sub_feature"), feature_file_mapping.get("mgnt_table_db"), user_type);
 
                     }
                 } else {
                     if (file_details.getString("feature").equalsIgnoreCase("TYPE_APPROVED") && file_details.getString("sub_feature").equalsIgnoreCase("register")) {
                         ceirfunction.updateFeatureManagementStatus(conn, file_details.getString("txn_id"), 1, feature_file_mapping.get("mgnt_table_db"));
                     }
-                            hfr.readFeatureWithoutFile(conn, file_details.getString("feature"), raw_upload_set_no, file_details.getString("txn_id"), file_details.getString("sub_feature"), feature_file_mapping.get("mgnt_table_db"), user_type);
-                } 
+                    hfr.readFeatureWithoutFile(conn, file_details.getString("feature"), raw_upload_set_no, file_details.getString("txn_id"), file_details.getString("sub_feature"), feature_file_mapping.get("mgnt_table_db"), user_type);
                 }
-             raw_upload_set_no = 1;
+            }
+            raw_upload_set_no = 1;
         } catch (Exception e) {
             logger.info("CEIRFileUploader  Finished with Exception [" + e + "]");
             e.printStackTrace();

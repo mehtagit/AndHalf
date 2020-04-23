@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+
 public class LogWriter {
 	
 	final String logPath  = "/home/ceirapp/ceir_parser/logs/";        // change in log4j.properties file

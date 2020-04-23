@@ -10,12 +10,15 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import com.functionapps.parser.service.*;
+import com.functionapps.parser.service.ApproveConsignment;
+import com.functionapps.parser.service.ConsignmentDelete;
+import com.functionapps.parser.service.ConsignmentInsertUpdate;
+import com.functionapps.parser.service.RegisterTac;
+import com.functionapps.parser.service.WithdrawnTac;
 
 import org.apache.log4j.Logger;
 
 import com.functionapps.constants.*;
-import com.functionapps.log.LogWriter;
 
 public class CEIRFeatureFileParser {
 
@@ -49,12 +52,11 @@ public class CEIRFeatureFileParser {
 //    }
 
      public static  void main(String args[]) {
-		// logger = Logger.getLogger(CEIRParserMain.class);
 		String feature = null;
 		Connection conn = null;
 		conn = (Connection) new com.functionapps.db.MySQLConnection().getConnection();
 		CEIRFeatureFileFunctions ceirfunction = new CEIRFeatureFileFunctions();
-		ResultSet featurers = ceirfunction.getFileDetails(conn, 0);
+		ResultSet featurers = ceirfunction.getFileDetails(conn, 2);
 //		ResultSet featurers=getFeatureFileDetails(conn);
 		try {
 			if(featurers.next()){
@@ -525,8 +527,8 @@ public class CEIRFeatureFileParser {
  public static  void addCDRInProfileWithRule(String operator, Connection conn,ArrayList<Rule> rulelist,String operator_tag,String txn_id,String sub_feature , String usertype_name) {
 		
 		Statement stmt = null;
-		try{
-			if(operator.equalsIgnoreCase("consignment") &&(sub_feature.equalsIgnoreCase("register") || sub_feature.equalsIgnoreCase("update"))){
+		try{  
+			if((sub_feature.equalsIgnoreCase("register") || sub_feature.equalsIgnoreCase("update") ||  sub_feature.equalsIgnoreCase("UPLOAD")    )){
 				new ConsignmentInsertUpdate().process(conn,operator, sub_feature, rulelist, txn_id, operator_tag  ,usertype_name);
 			}else if(operator.equalsIgnoreCase("consignment") &&(sub_feature.equalsIgnoreCase("delete"))){
 				System.out.println("running consignment delete process.");
@@ -543,6 +545,11 @@ public class CEIRFeatureFileParser {
 			}else {
 				System.out.println("Skipping the process.");
 			}
+                        
+                        CEIRFeatureFileFunctions ceirfunction = new CEIRFeatureFileFunctions();
+		        ceirfunction.updateFeatureFileStatus(conn,txn_id,4,operator,sub_feature );
+				
+                        
 		}
 		catch(Exception e){
 			e.printStackTrace();

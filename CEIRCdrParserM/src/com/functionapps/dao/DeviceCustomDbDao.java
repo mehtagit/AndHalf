@@ -42,7 +42,7 @@ public class DeviceCustomDbDao {
 				preparedStatement.setString(1, DateUtil.nextDate(0, null));
 				preparedStatement.setString(2, deviceImporterDb.getDeviceAction());
 				preparedStatement.setString(3, deviceImporterDb.getDeviceIdType()); 
-				preparedStatement.setDate(4, deviceImporterDb.getDeviceLaunchDate());
+				preparedStatement.setString(4, deviceImporterDb.getDeviceLaunchDate());
 				preparedStatement.setString(5, deviceImporterDb.getDeviceStatus()); 
 				preparedStatement.setString(6, deviceImporterDb.getDeviceType()); 
 				preparedStatement.setString(7, deviceImporterDb.getImeiEsnMeid());

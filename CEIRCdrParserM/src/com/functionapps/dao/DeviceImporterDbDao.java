@@ -42,15 +42,15 @@ public class DeviceImporterDbDao {
 				System.out.println(rs.getFetchSize());
 			}
 			
-			while(rs.next()){
-				deviceImporterDbs.add(new DeviceImporterDb(rs.getLong("id"), 0L, 0, rs.getString("created_on"), rs.getString("modified_on"), 
-						rs.getString("manufature_date"), rs.getString("device_type"), rs.getString("device_id_type"), 
-						rs.getString("multiple_sim_status"), rs.getString("sn_of_device"), rs.getString("imei_esn_meid"), 
-						rs.getDate("launch_date"), rs.getString("device_status"), rs.getString("device_action"), 
-						rs.getLong("user_id"), rs.getString("txn_id"), rs.getString("local_date"), rs.getInt("device_state"), 
-						rs.getInt("previous_device_status"), rs.getString("period"), rs.getInt("feature_id"))
-						);
-			}
+//			while(rs.next()){
+//				deviceImporterDbs.add(new DeviceImporterDb(rs.getLong("id"), 0L, 0, rs.getString("created_on"), rs.getString("modified_on"), 
+//						rs.getString("manufature_date"), rs.getString("device_type"), rs.getString("device_id_type"), 
+//						rs.getString("multiple_sim_status"), rs.getString("sn_of_device"), rs.getString("imei_esn_meid"), 
+//						rs.getDate("launch_date"), rs.getString("device_status"), rs.getString("device_action"), 
+//						rs.getLong("user_id"), rs.getString("txn_id"), rs.getString("local_date"), rs.getInt("device_state"), 
+//						rs.getInt("previous_device_status"), rs.getString("period"), rs.getInt("feature_id"))
+//						);
+//			}
 		}
 		catch(Exception e){
 			logger.info("Exception in getFeatureMapping"+e);
@@ -91,7 +91,7 @@ public class DeviceImporterDbDao {
 				preparedStatement.setInt(2, 2);
 				preparedStatement.setString(3, deviceImporterDb.getDeviceAction());	 
 				preparedStatement.setString(4, deviceImporterDb.getDeviceIdType());
-				preparedStatement.setDate(5, deviceImporterDb.getDeviceLaunchDate());
+				preparedStatement.setString(5, deviceImporterDb.getDeviceLaunchDate());
 				preparedStatement.setString(6, deviceImporterDb.getDeviceStatus());
 				preparedStatement.setString(7, deviceImporterDb.getDeviceType());
 				preparedStatement.setString(8, deviceImporterDb.getImeiEsnMeid()); 

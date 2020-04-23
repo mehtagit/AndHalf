@@ -35,15 +35,15 @@ public class DeviceDbDao {
 			stmt  = conn.createStatement();
 			rs = stmt.executeQuery(query);
 			
-			while(rs.next()){
-				System.out.println("Inside while of device_db.");
-
-				deviceDbs.add(new DeviceDb(rs.getLong("id"), 0L, 0, rs.getString("created_on"), rs.getString("modified_on"), 
-						rs.getString("manufature_date"), rs.getString("device_type"), rs.getString("device_id_type"), 
-						rs.getString("multiple_sim_status"), rs.getString("sn_of_device"), rs.getString("imei_esn_meid"), 
-						rs.getDate("launch_date"), rs.getString("device_status"), rs.getString("device_action"), 
-						rs.getInt("tac"), rs.getString("period"), rs.getString("txn_id"), rs.getInt("state")));
-			}
+//			while(rs.next()){
+//				System.out.println("Inside while of device_db.");
+//
+//				deviceDbs.add(new DeviceDb(rs.getLong("id"), 0L, 0, rs.getString("created_on"), rs.getString("modified_on"), 
+//						rs.getString("manufature_date"), rs.getString("device_type"), rs.getString("device_id_type"), 
+//						rs.getString("multiple_sim_status"), rs.getString("sn_of_device"), rs.getString("imei_esn_meid"), 
+//						rs.getDate("launch_date"), rs.getString("device_status"), rs.getString("device_action"), 
+//						rs.getInt("tac"), rs.getString("period"), rs.getString("txn_id"), rs.getInt("state")));
+//			}
 		}
 		catch(Exception e){
 			logger.info(e.getMessage(), e);
@@ -87,7 +87,7 @@ public class DeviceDbDao {
 				preparedStatement.setString(7, deviceDb.getMultipleSimStatus());
 				preparedStatement.setString(8, deviceDb.getSnOfDevice());
 				preparedStatement.setString(9, deviceDb.getImeiEsnMeid());
-				preparedStatement.setDate(10, deviceDb.getDeviceLaunchDate()); 
+				preparedStatement.setString(10, deviceDb.getDeviceLaunchDate()); 
 				preparedStatement.setString(11, deviceDb.getDeviceStatus());
 				preparedStatement.setString(12, deviceDb.getDeviceAction());
 				preparedStatement.setInt(13, deviceDb.getTac());

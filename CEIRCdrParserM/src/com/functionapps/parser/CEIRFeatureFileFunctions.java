@@ -270,7 +270,7 @@ public class CEIRFeatureFileFunctions {
         return user_type;
     }
 
-    void consignmentUpdateViaApi(Connection conn, String txn_id, int ConsigAction, HashMap<String, String> map,
+    public void consignmentUpdateViaApi(Connection conn, String txn_id, int ConsigAction, HashMap<String, String> map,
             String feature, int StlnAction) {
         logger.info("consignmentUpdateViaApi.. ");
         ResultSet rs1 = null;
