@@ -28,7 +28,7 @@ public class CEIRFeatureFileUploader {
         logger.info(" ");
         Connection conn = new com.functionapps.db.MySQLConnection().getConnection();
         CEIRFeatureFileFunctions ceirfunction = new CEIRFeatureFileFunctions();
-        ResultSet file_details = ceirfunction.getFileDetails(conn);  //select * from web_action_db limit 1 
+        ResultSet file_details = ceirfunction.getFileDetails(conn, 1);  //select * from web_action_db limit 1 
 
         HexFileReader hfr = new HexFileReader();
         String basePath = "";
@@ -41,7 +41,7 @@ public class CEIRFeatureFileUploader {
             basePath += "/";
         }
         logger.info(" file basePath " + basePath);
-        try {                                             //   NOTE main_type = file_details.getString("feature")
+        try {
             while (file_details.next()) {
                 logger.info("base path is " + basePath);
                 logger.info(" file_details.getString FEATURE.." + file_details.getString("feature"));   // add usertype name 
@@ -62,13 +62,10 @@ public class CEIRFeatureFileUploader {
                 logger.info(",,,,,,,,,,,");
                 HashMap<String, String> feature_file_management = new HashMap<String, String>();
                 feature_file_management = ceirfunction.getFeatureFileManagement(conn, feature_file_mapping.get("mgnt_table_db"), file_details.getString("txn_id"));   //select * from " + management_db + " 
-
-                if (  file_details.getString("feature").equalsIgnoreCase("Register")     &&     !(feature_file_management.get("modified_on").equals(feature_file_management.get("created_on")))  ) {
-                 ceirfunction.updateFeatureFileStatus(conn, file_details.getString("txn_id"), 3,  file_details.getString("feature"), file_details.getString("sub_feature")); // update web_action_db                // set
-                ceirfunction.updateFeatureManagementStatus(conn, file_details.getString("txn_id"), 2, feature_file_mapping.get("mgnt_table_db"),  file_details.getString("feature"));
-           
-                     logger.info("  It is regsiter and different dates,, means it is modified  so we remove it");
-                    
+                if (file_details.getString("feature").equalsIgnoreCase("Register") && !(feature_file_management.get("modified_on").equals(feature_file_management.get("created_on")))) {
+                    ceirfunction.updateFeatureFileStatus(conn, file_details.getString("txn_id"), 4, file_details.getString("feature"), file_details.getString("sub_feature")); // update web_action_db                // set
+                    ceirfunction.updateFeatureManagementStatus(conn, file_details.getString("txn_id"), 2, feature_file_mapping.get("mgnt_table_db"), file_details.getString("feature"));
+                    logger.info("  It is regsiter and different dates,, means it is modified  so we remove it");
                     break;
                 }
 
@@ -77,39 +74,55 @@ public class CEIRFeatureFileUploader {
                 logger.info("*****" + user_type);
                 ceirfunction.updateFeatureFileStatus(conn, file_details.getString("txn_id"), 1, file_details.getString("feature"), file_details.getString("sub_feature"));  //update web_action_db set state
                 ceirfunction.updateFeatureManagementStatus(conn, file_details.getString("txn_id"), 1, feature_file_mapping.get("mgnt_table_db"), file_details.getString("feature"));  //update " + mgmt table set _status= 1 (processsing)  // only for cons dstock
-                ResultSet my_result_set = ceir_parser_main.operatorDetails(conn, file_details.getString("feature"));     //select * from rep_schedule_config_db
-                if (my_result_set.next()) {
-                    raw_upload_set_no = my_result_set.getInt("raw_upload_set_no");
-                }
-                logger.info("raw_upload_set_no >>>>>>" + raw_upload_set_no);
-                complete_file_path = basePath + file_details.getString("txn_id") + "/" + feature_file_management.get("file_name");
-                logger.info("Complete file name is.... " + complete_file_path);
-                File uplodedfile = new File(complete_file_path);
-                logger.info("File exist Type.... " + uplodedfile.exists());
-                if (uplodedfile.exists()) {
-                    logger.info("File Exists.... ");
-                    rawDataResult = hfr.readConvertedFeatureFile(conn, feature_file_management.get("file_name"), complete_file_path, file_details.getString("feature"), basePath, raw_upload_set_no, file_details.getString("txn_id"), file_details.getString("sub_feature"), feature_file_mapping.get("mgnt_table_db"), user_type);
-                } else {
-                    logger.info("File not exists.... ");
-                    hfr.readFeatureWithoutFile(conn, file_details.getString("feature"), raw_upload_set_no, file_details.getString("txn_id"), file_details.getString("sub_feature"), feature_file_mapping.get("mgnt_table_db"), user_type);
-                }
+              
+//                ResultSet my_result_set = ceir_parser_main.operatorDetails(conn, file_details.getString("feature"));     //select * from rep_schedule_config_db
+//                if (my_result_set.next()) {
+//                    raw_upload_set_no = my_result_set.getInt("raw_upload_set_no");
+//                }
+//                logger.info("raw_upload_set_no >>>>>>" + raw_upload_set_no);
+//                complete_file_path = basePath + file_details.getString("txn_id") + "/" + feature_file_management.get("file_name");
+//                logger.info("Complete file name is.... " + complete_file_path);
+//                File uplodedfile = new File(complete_file_path);
+//                logger.info("File exist Type.... " + uplodedfile.exists());
+//                if (uplodedfile.exists()) {
+//                    logger.info("File Exists.... ");
+//                    rawDataResult = hfr.readConvertedFeatureFile(conn, feature_file_management.get("file_name"), complete_file_path, file_details.getString("feature"), basePath, raw_upload_set_no, file_details.getString("txn_id"), file_details.getString("sub_feature"), feature_file_mapping.get("mgnt_table_db"), user_type);
+//                } else {
+//                    logger.info("File not exists.... ");
+//                    hfr.readFeatureWithoutFile(conn, file_details.getString("feature"), raw_upload_set_no, file_details.getString("txn_id"), file_details.getString("sub_feature"), feature_file_mapping.get("mgnt_table_db"), user_type);
+//                }
 
                 if (feature_file_management.get("file_name") != null) {
-                    logger.info("   feature_file_management.get(\"file_name\") != null  ");
-                } else {
-                    logger.info(" ELSE of  feature_file_management.get(\"file_name\") != null  ");
-                }
-            }
-            raw_upload_set_no = 1;
+                    ResultSet my_result_set = ceir_parser_main.operatorDetails(conn, file_details.getString("feature"));
+                    System.out.println("my_result_set " + my_result_set);
 
-            logger.info("  **********************CEIRFileUploader Finished ******************");
-        } catch (SQLException e) {
+                    if (my_result_set.next()) {
+                        raw_upload_set_no = my_result_set.getInt("raw_upload_set_no");
+                    }
+                    complete_file_path = basePath + file_details.getString("txn_id") + "/" + feature_file_management.get("file_name");
+                    System.out.println("Complete file name " + complete_file_path);
+                    logger.info("Complete file name is.... " + complete_file_path);
+                    
+                    if (file_details.getString("sub_feature").equalsIgnoreCase("delete")) {
+                        ceirfunction.updateFeatureManagementDeleteStatus(conn, file_details.getString("txn_id"), 1, feature_file_mapping.get("mgnt_table_db"));
+                    } else {
+                        ceirfunction.updateFeatureManagementStatus(conn, file_details.getString("txn_id"), 1, feature_file_mapping.get("mgnt_table_db"));
+                        rawDataResult = hfr.readConvertedFeatureFile(conn, feature_file_management.get("file_name"), complete_file_path, file_details.getString("feature"), basePath, raw_upload_set_no, file_details.getString("txn_id"), file_details.getString("sub_feature"), feature_file_mapping.get("mgnt_table_db")  , user_type);
+  //                    rawDataResult = hfr.readConvertedFeatureFile(conn, feature_file_management.get("file_name"), complete_file_path, file_details.getString("feature"), basePath, raw_upload_set_no, file_details.getString("txn_id"), file_details.getString("sub_feature"), feature_file_mapping.get("mgnt_table_db"), user_type);
+
+                    }
+                } else {
+                    if (file_details.getString("feature").equalsIgnoreCase("TYPE_APPROVED") && file_details.getString("sub_feature").equalsIgnoreCase("register")) {
+                        ceirfunction.updateFeatureManagementStatus(conn, file_details.getString("txn_id"), 1, feature_file_mapping.get("mgnt_table_db"));
+                    }
+                            hfr.readFeatureWithoutFile(conn, file_details.getString("feature"), raw_upload_set_no, file_details.getString("txn_id"), file_details.getString("sub_feature"), feature_file_mapping.get("mgnt_table_db"), user_type);
+                } 
+                }
+             raw_upload_set_no = 1;
+        } catch (Exception e) {
             logger.info("CEIRFileUploader  Finished with Exception [" + e + "]");
             e.printStackTrace();
-        } catch (IOException ex) {
-            java.util.logging.Logger.getLogger(CEIRFeatureFileUploader.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
-
 }

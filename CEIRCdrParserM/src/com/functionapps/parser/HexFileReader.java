@@ -1118,10 +1118,13 @@ public class HexFileReader {
                 }
 
                 // conn.commit();
+                 CEIRFeatureFileFunctions ceirfunction = new CEIRFeatureFileFunctions();
+                 ceirfunction.updateFeatureFileStatus(conn, txn_id, 2, main_type, subfeature); // update web_action_db                // set
+               
             } else {
                 CEIRFeatureFileFunctions ceirfunction = new CEIRFeatureFileFunctions();
                 ceirfunction.addFeatureFileConfigDetails(conn, "update", main_type, subfeature, txn_id, fileName, "PARAM_NOT_VALID", "");
-                ceirfunction.updateFeatureFileStatus(conn, txn_id, 3, main_type, subfeature); // update web_action_db                // set
+                ceirfunction.updateFeatureFileStatus(conn, txn_id, 4, main_type, subfeature); // update web_action_db                // set
                 ceirfunction.updateFeatureManagementStatus(conn, txn_id, 2, management_table, main_type);
             }
 
