@@ -188,6 +188,14 @@
 						class="center-align"><spring:message
 							code="input.arrivalport" /></label>
 				</div>
+				
+				
+				
+				<div class="col s12 m6">
+				<label><spring:message code="registration.portAddress" /> <span class="star"></span></label>
+					<input type="text" id="portAddress" readonly="readonly" placeholder="" style="height: 2.1em;">
+								</div>	
+								
 
 				<div class="input-field col s12 m6">
 					<input type="text" name="Quantity" placeholder="" id="Quantity"
@@ -203,15 +211,15 @@
 				</div>
 
 
-				<div class="input-field col s12 m6">
-					<input type="text" name="totalPrice" placeholder=""
-						disabled="disabled" id="viewtotalPrice" maxlength="7" />
-					<label for="totalPrice" class="center-align"><spring:message
-							code="input.totalprice" /></label>
+<div class="input-field col s12 m6">
+					<input type="text" name="deviceQty" placeholder=""
+						disabled="disabled" id="deviceQty" maxlength="7" />
+					<label for="deviceQty" class="center-align"><spring:message
+							code="input.deviceQty" /></label>
 				</div>
+				
 
-			
-				<div class="input-field col s12 m6">
+<div class="input-field col s12 m6">
 					<textarea id="remark" class="materialize-textarea"
 						style="height: 0px;" readonly="readonly" placeholder=""></textarea>
 					<label for="remark" class=""><spring:message
@@ -220,14 +228,22 @@
 					<!--   <input type="textarea" name="Remark" placeholder="Remark" id="remark" readonly="readonly" maxlength="15" />
                                                <label for="TransactionId" class="center-align">Remark</label> -->
 				</div>
+				
+				
+				<div class="input-field col s12 m6">
+					<input type="text" name="totalPrice" placeholder=""
+						disabled="disabled" id="viewtotalPrice" maxlength="7" />
+					<label for="totalPrice" class="center-align"><spring:message
+							code="input.totalprice" /></label>
+				</div>
+
+			
+				
 					<div class="col s12 m6" id="viewCurrencyDiv">
 					<label for="Currency"><spring:message code="input.currency" /></label>
-					<select id="viewcurrency" class="browser-default"
-						disabled="disabled">
-						<option value="" disabled selected><spring:message
-								code="input.currency" /></option>
-
-					</select>
+					<input type="text" name="viewcurrency" placeholder=""
+						disabled="disabled" id="viewcurrency" maxlength="7" style="height:4.3vh;"/>
+					
 					<!-- <input type="text" id="viewcurrency" placeholder="" disabled="disabled"> -->
 					<input type="text" id="viewhideCurrency" style="display: none;">
 				</div>
@@ -685,27 +701,42 @@
 					<%-- <label for="expectedArrivalPort"><spring:message code="input.arrivalport" /> <span class="star">*</span></label> --%>
 				
 						<select name="expectedArrivalPort" id="expectedArrivalPortEdit"
-							class="browser-default">
+							class="browser-default" onchange="getByPort(this.value)">
 							<option value="" disabled selected><spring:message
 									code="input.arrivalport" />*
 							</option>
 
 						</select>
 					</div>
+					
+					
+						
+						<div class="input-field col s12 m6">
+									<label style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;"><spring:message code="registration.portAddress" /> <span class="star">*</span></label>
+									<select id="editPortAddress" class="browser-default"  
+									oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" required>
+										<option value="" disabled selected><spring:message code="selectport" /></option>
+											</select>
+								</div>	
+								
+								
+					
+					
+					
 
 					<div class="input-field col s12 m6">
 						<input type="text" name="quantity" id="QuantityEdit"
 							pattern="[0-9]{0,7}" placeholder=""
 							
 							maxlength="7" oninput="InvalidMsg(this,'input','<spring:message code="validation.7character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7character" />');" 
-							required /> <label for="Quantity" class="center-align"><spring:message
+							required /> <label for="Quantity" class="center-align" style="margin-top: 5px;"><spring:message
 								code="input.quantity" /><span class="star">*</span></label>
 					</div>
 
 					<div class="input-field col s12 m6">
 						<input type="text" name="txnId" id="TransactionIdEdit"
 							placeholder="Transaction ID" value="" readonly maxlength="15" />
-						<label for="TransactionId" class="center-align"><spring:message
+						<label for="TransactionId" class="center-align" style="margin-top: 5px;"><spring:message
 								code="input.transactionID" /></label>
 					</div>
 
@@ -718,7 +749,11 @@
 								code="input.totalprice" /></label>
 					</div>
 
-                     <div class="file-field input-field col s12 m6"
+
+   
+					
+					
+             <div class="file-field input-field col s12 m6"
 						style="margin-top: 5px;">
 						<h6 class="file-upload-heading" style="margin-top: -5px;">
 							<spring:message code="input.bulkdevice" />
@@ -734,18 +769,20 @@
 								id="fileNameEdit" type="text">
 						</div>
 					</div>
-					<input type="text" id="fileNameToBeSame" style="display: none;">
+
 					<div class="col s12 m6" id="currencyDiv">
+						<input type="text" id="fileNameToBeSame" style="display: none;">
 						<label for="Currency"><spring:message
 								code="input.currency" /></label> <select id="currency"
-							class="browser-default">
+							class="browser-default" style="height: 4.6vh;">
 							<option value="" disabled selected><spring:message
 									code="input.currency" /></option>
 
 						</select> <input type="text" id="hideCurrency" style="display: none;">
 					</div>
-
 					
+				
+				
 				</div>
 
 

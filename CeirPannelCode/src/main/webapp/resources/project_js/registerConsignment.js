@@ -36,6 +36,7 @@ function registerConsignment() {
 	formData.append('userTypeId', parseInt($("body").attr("data-userTypeID")));
 	formData.append('userType', $("body").attr("data-roleType"));
 	formData.append('userName', $("body").attr("data-username"));
+	formData.append('portAddress', parseInt($('#portAddress').val()));
 
 	$.ajax({
 		url : '../Consignment/registerConsignment',
@@ -210,3 +211,30 @@ $("input[type=file]").keypress(function(ev) {
     //ev.preventDefault(); //works as well
 
 });
+
+
+
+function getByPort(port) {
+	$
+			.ajax({
+				type : 'GET',
+				url : '../byArrivalPort/' + port,
+				contentType : "application/json",
+				dataType : 'html',
+				async : false,
+				success : function(data) {
+					var response = JSON.parse(data);
+					var asTypeDropdown = $("#portAddress");
+					asTypeDropdown.empty();
+					var header = "<option value='' disabled selected>Select address</option>";
+					asTypeDropdown.append(header);
+					for (var i = 0; i < response.length; i++) {
+						var data2 = '<option value="' + response[i].id + '">'
+								+ response[i].address + '</option>';
+						asTypeDropdown.append(data2);
+					}
+				},
+				error : function(xhr, ajaxOptions, thrownError) {
+				}
+			});
+}

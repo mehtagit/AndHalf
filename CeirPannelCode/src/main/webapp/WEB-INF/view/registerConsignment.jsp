@@ -126,6 +126,13 @@ textarea.materialize-textarea {
 section {
 	margin-top: 10px;
 }
+
+input#expectedArrivaldate {
+    height: 6vh;
+}
+input#quantity {
+    height: 7vh;
+}
 </style>
 
 </head>
@@ -217,41 +224,40 @@ section {
 										</div>
 									</div>
 
-									<div class="row myRow">
-										<div class="input-field col s12 m6">
-										<input type="text" name="totalPrice" id="totalPrice" pattern="[0-9]{0,7}"
-												maxlength="7" oninput="InvalidMsg(this,'input','<spring:message code="validation.7character" />');"
-												 oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7character" />');"> <label for="totalPrice"
-												class="center-align"><spring:message code="input.totalprice" /></label>
-										</div>
-
-										<div class="input-field col s12 m6">
-											<input type="text" name="quantity" id="quantity"
-												pattern="[0-9]{0,7}"
-												
-												maxlength="7"  oninput="InvalidMsg(this,'input','<spring:message code="validation.7character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7character" />');"  required/> <label for="quantity"
-												class="center-align"><spring:message code="input.quantity" /> <span class="star">*</span></label>
-										</div>
-
-
+								
+						
+								<div class="row myRow">
 										<div class=" col s12 m6">
 											
 												<label for="expectedArrivalPort"><spring:message code="input.arrivalport" /> <span class="star">*</span></label>
-											<select class="browser-default" id="expectedArrivalPort"  oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" required
+											<select class="browser-default" id="expectedArrivalPort"  onchange="getByPort(this.value)" oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" required
 												 name="expectedArrivalPort" >
 												<%-- <spring:message code="input.arrivalport" /> --%>
 												<option value="" disabled selected> <spring:message code="input.arrivalport" /></option>
 											</select>
 										</div>
-
-										<div class="col s12 m6" id="currencyDiv">
-											<label for="currency"><spring:message code="input.currency" /> <span class="star">*</span></label>
-											<select class="browser-default" id="currency"  oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"  oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" name="currency" >
-												<option value=""  selected><spring:message code="input.currency" /></option>
-									
+										
+								<div class="col s12 m6">
+									<label><spring:message code="registration.portAddress" /> <span class="star">*</span></label>
+									<select id="portAddress" class="browser-default"  
+									oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" required>
+										<option value="" disabled selected><spring:message code="selectport" /></option>
 											</select>
+								</div>	
+									</div>
+									
+										
+						
+									<div class="row myRow">
+										<div class="input-field col s12 m6">
+											<input type="text" name="quantity" id="quantity"
+												pattern="[0-9]{0,7}"
+												
+												maxlength="7"  oninput="InvalidMsg(this,'input','<spring:message code="validation.7character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7character" />');"  required/> 
+												<label for="quantity" class="center-align" style="margin-top: 5px;"><spring:message code="input.quantity" /> <span class="star">*</span></label>
 										</div>
-											<div class="file-field col s12 m6"
+										
+									<div class="file-field col s12 m6"
 											style="margin-top: 5px;">
 					<h6 class="file-upload-heading" >
 											<spring:message code="input.bulkdevice" /> <span class="star">*</span>
@@ -265,9 +271,29 @@ section {
 												<input class="file-path validate responsive-file-div" id="fileName"
 													type="text">
 											</div>
+										</div>	
+									</div>			
+									
+								
+								
+									<div class="row myRow">
+									<div class="input-field col s12 m6">
+										<input type="text" name="totalPrice" id="totalPrice" pattern="[0-9]{0,7}"
+												maxlength="7" oninput="InvalidMsg(this,'input','<spring:message code="validation.7character" />');"
+												 oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7character" />');"> 
+												 <label for="totalPrice" class="center-align"><spring:message code="input.totalprice" /></label>
 										</div>
-									</div>
-
+										
+										<div class="col s12 m6" id="currencyDiv" style="display: none;" >
+											<label for="currency"><spring:message code="input.currency" /> <span class="star">*</span></label>
+											<select class="browser-default" id="currency"  oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"  oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" name="currency" 
+											style="height: 2.2rem !important;">
+												<option value=""  selected><spring:message code="input.currency" /></option>
+									
+											</select>
+										</div>
+									</div>	
+									
 
 									<div class="row myRow">
 										

@@ -27,7 +27,7 @@ public class DatatableHeaders {
 
 			// CONSIGNMENT DATATABLE HEADERS			
 			if("consignment".equals(role)) {
-				String[] headers = {"table.creationDate","table.transactionID","table.suppliername","table.consignmentStatus","table.taxPaidStatus","table.quantity","table.action"};		
+				String[] headers = {"table.creationDate","table.transactionID","table.suppliername","table.consignmentStatus","table.taxPaidStatus","input.quantity","input.deviceQty","table.action"};		
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
@@ -49,7 +49,7 @@ public class DatatableHeaders {
 
 			//CUSTOM DATATABLE HEADERS
 			else if("customConsignment".equals(role)) {
-				String[] headers = {"table.creationDate","table.transactionID","table.importerCompanyName","table.consignmentStatus","table.taxPaidStatus","table.quantity","table.action"};		
+				String[] headers = {"table.creationDate","table.transactionID","table.importerCompanyName","table.consignmentStatus","table.taxPaidStatus","input.quantity","input.deviceQty","table.action"};		
 				for(String header : headers) {
 					log.info("Translator.toLocale(header)----"+Translator.toLocale(header));
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
@@ -60,7 +60,7 @@ public class DatatableHeaders {
 
 			//Admin DATATABLE HEADERS
 			else if("adminConsignment".equals(role)) {
-				String[] headers = {"table.submissiondate","table.transactionID","table.importerCompanyName","table.consignmentStatus","table.taxPaidStatus","table.quantity","table.action"};		
+				String[] headers = {"table.submissiondate","table.transactionID","table.importerCompanyName","table.consignmentStatus","table.taxPaidStatus","input.quantity","input.deviceQty","table.action"};		
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
@@ -401,7 +401,7 @@ public class DatatableHeaders {
 			
 		
 			else if("ruleFeatureMapping".equals(role)) {
-				String[] headers = {"table.creationDate","table.lastupdatedate","table.ruleName","table.featureName","table.userType","table.order","table.gracePeriod","table.postGracePeriod","table.moveToGracePeriod","table.moveToPostGracePeriod","table.action"};
+				String[] headers = {"table.creationDate","table.lastupdatedate","table.ruleName","table.featureName","table.userType","table.order","table.gracePeriod","table.postGracePeriod","table.moveToGracePeriod","table.moveToPostGracePeriod","table.expectedOutput","table.action"};
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
