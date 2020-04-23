@@ -418,7 +418,25 @@ public class RegularizedDeviceServiceImpl {
 					// Return message to the client.
 					if(executionSuccess) {
 						logger.info("End user device registration is sucessful." + endUserDB);
+						String mailTag = "END_USER_NEW_DEVICE_ADD";
+						List<RawMail> rawMails = new ArrayList<>();
+						Map<String, String> placeholderMap = new HashMap<String, String>();
 
+						// Mail to End user. 
+						if(Objects.nonNull(endUserDB2)) {
+							if(Objects.nonNull(endUserDB2.getEmail()) && !endUserDB2.getEmail().isEmpty()) {
+								placeholderMap.put("<First name>", endUserDB2.getFirstName());
+								rawMails.add(new RawMail(mailTag, endUserDB2.getId(), Long.valueOf(12), 
+										Features.REGISTER_DEVICE, SubFeatures.REGISTER, endUserDB2.getTxnId(), 
+										"SUBJECT", placeholderMap, ReferTable.END_USER, null, "End User"));
+								emailUtil.saveNotification(rawMails);	
+								
+							}
+							else {
+								logger.info("this end user don't have any email");
+							}
+						}
+						
 						// Save in audit.
 						AuditTrail auditTrail = new AuditTrail(endUserDB.getCreatorUserId(), endUserDB.getNid(), 
 								17L, 
@@ -586,6 +604,7 @@ public class RegularizedDeviceServiceImpl {
 
 			placeholders.put("<FIRST_NAME>", endUserDB.getFirstName());
 			placeholders.put("<txn_name>", regularizeDeviceDb.getTxnId());
+			placeholders.put("<First name>", endUserDB.getFirstName());
 
 			if("CEIRADMIN".equalsIgnoreCase(ceirActionRequest.getUserType())){
 
@@ -609,18 +628,27 @@ public class RegularizedDeviceServiceImpl {
 			regularizedDeviceDbRepository.save(regularizeDeviceDb);
 
 			// Send Notifications
-			rawMails.add(new RawMail(tag, 
-					endUserDB.getId(), 
-					4, 
-					Features.REGISTER_DEVICE, 
-					SubFeatures.REGISTER, 
-					regularizeDeviceDb.getTxnId(), 
-					txnId, 
-					placeholders,
-					ReferTable.END_USER,
-					null,
-					receiverUserType));
-
+			if(Objects.nonNull(endUserDB)) {
+				if(Objects.nonNull(endUserDB.getEmail()) && !endUserDB.getEmail().isEmpty()) {
+					rawMails.add(new RawMail(tag, 
+							endUserDB.getId(), 
+							4, 
+							Features.REGISTER_DEVICE, 
+							SubFeatures.ACCEPT_REJECT, 
+							regularizeDeviceDb.getTxnId(), 
+							txnId, 
+							placeholders,
+							ReferTable.END_USER,
+							null,
+							receiverUserType));
+					emailUtil.saveNotification(rawMails);	
+					
+				}
+				else {
+					logger.info("this end user don't have any email");
+				}
+			}
+			
 			return new GenricResponse(0, "Device Update SuccessFully.", ceirActionRequest.getTxnId());
 
 		} catch (Exception e) {
@@ -657,7 +685,7 @@ public class RegularizedDeviceServiceImpl {
 		}
 	}
 
-	private boolean validateRegularizedDevicesCount(String nid, List<RegularizeDeviceDb> regularizeDeviceDbs,Integer type) {
+	public boolean validateRegularizedDevicesCount(String nid, List<RegularizeDeviceDb> regularizeDeviceDbs,Integer type) {
 		try {
 			Count count = (Count) getCountOfRegularizedDevicesByNid(nid, type).getData();
 			return validateRegularizedDevicesCount(count, regularizeDeviceDbs);
