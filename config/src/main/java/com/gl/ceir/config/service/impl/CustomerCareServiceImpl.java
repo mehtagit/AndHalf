@@ -24,6 +24,7 @@ import com.gl.ceir.config.model.ConsignmentMgmt;
 import com.gl.ceir.config.model.CustomerCareDeviceState;
 import com.gl.ceir.config.model.CustomerCareRequest;
 import com.gl.ceir.config.model.DeviceDuplicateDb;
+import com.gl.ceir.config.model.DeviceNullDb;
 import com.gl.ceir.config.model.DeviceUsageDb;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
@@ -99,62 +100,20 @@ public class CustomerCareServiceImpl {
 		try {
 
 			// When imei and msisdn both are available in request.
-			if(Objects.nonNull(imei) 
-					&& "IMEI".equalsIgnoreCase(customerCareRequest.getDeviceIdType())
+			if(Objects.nonNull(imei) && "IMEI".equalsIgnoreCase(customerCareRequest.getDeviceIdType())
 					&& Objects.nonNull(customerCareRequest.getMsisdn())) {
 
-				DeviceUsageDb deviceUsageDb = deviceUsageDbRepository.getByImeiAndMsisdn(imei, msisdn);
-				if(Objects.isNull(deviceUsageDb)) {
-					DeviceDuplicateDb deviceDuplicateDb = deviceDuplicateDbRepository.findByImeiMsisdnIdentityImeiAndImeiMsisdnIdentityMsisdn(imei, msisdn);
+				return imeiAndMsisdnAvailableInRequest(imei, msisdn, listType);
 
-					if(Objects.isNull(deviceDuplicateDb)) {
-						return new GenricResponse(10, GenericMessageTags.INVALID_TUPLE_FOR_IMEI_AND_MSISDN.getTag(), 
-								GenericMessageTags.INVALID_TUPLE_FOR_IMEI_AND_MSISDN.getMessage(), "");
-					}else {
-						return fetchDetailsOfImei(imei, msisdn, listType);
-					}
-				}else {
-					return fetchDetailsOfImei(imei, msisdn, listType);	
-				}
-
-			// When only imei is available in request.
-			}else if(Objects.nonNull(imei) 
-					&& "IMEI".equalsIgnoreCase(customerCareRequest.getDeviceIdType())
+				// When only imei is available in request.
+			}else if(Objects.nonNull(imei) && "IMEI".equalsIgnoreCase(customerCareRequest.getDeviceIdType())
 					&& Objects.isNull(customerCareRequest.getMsisdn())){
-				List<DeviceDuplicateDb> deviceDuplicateDbs = deviceDuplicateDbRepository.findByImeiMsisdnIdentityImei(imei);
 
-				if(deviceDuplicateDbs.isEmpty()) {
-					DeviceUsageDb deviceUsageDb = deviceUsageDbRepository.getByImei(imei);	
-					if(Objects.nonNull(deviceUsageDb)) {
-						return fetchDetailsOfImei(imei, deviceUsageDb.getMsisdn(), listType);
-					}else {
-						return new GenricResponse(10, GenericMessageTags.INVALID_TUPLE_FOR_IMEI_AND_MSISDN.getTag(), 
-								GenericMessageTags.INVALID_TUPLE_FOR_IMEI_AND_MSISDN.getMessage(), "");
-					}
-				}else if(deviceDuplicateDbs.size() == 1) {
-					return fetchDetailsOfImei(imei, deviceDuplicateDbs.get(0).getImeiMsisdnIdentity().getMsisdn(), listType);
-				}else {
-					return new GenricResponse(3, "", "", deviceDuplicateDbs);
-				}
+				return onlyImeiAvailableInRequest(imei, listType);
 
-			// When only msisdn is available in request.
+				// When only msisdn is available in request.
 			}else if(Objects.nonNull(customerCareRequest.getMsisdn())){
-				msisdn = Long.parseLong(customerCareRequest.getMsisdn());
-				List<DeviceDuplicateDb> deviceDuplicateDbs = deviceDuplicateDbRepository.findByImeiMsisdnIdentityMsisdn(msisdn);
-
-				if(deviceDuplicateDbs.isEmpty()) {
-					DeviceUsageDb deviceUsageDb = deviceUsageDbRepository.getByMsisdn(msisdn);	
-					if(Objects.nonNull(deviceUsageDb)) {
-						return fetchDetailsOfImei(deviceUsageDb.getImei(), msisdn, listType);
-					}else {
-						return new GenricResponse(10, GenericMessageTags.INVALID_TUPLE_FOR_IMEI_AND_MSISDN.getTag(), 
-								GenericMessageTags.INVALID_TUPLE_FOR_IMEI_AND_MSISDN.getMessage(), "");
-					}
-				}else if(deviceDuplicateDbs.size() == 1) {
-					return fetchDetailsOfImei(deviceDuplicateDbs.get(0).getImeiMsisdnIdentity().getImei(), msisdn, listType);
-				}else {
-					return new GenricResponse(3, "", "", deviceDuplicateDbs);
-				}
+				return onlyMsisdnAvailableInRequest(msisdn, listType);
 			}else {
 				return new GenricResponse(1, GenericMessageTags.INVALID_REQUEST.getMessage(), "", null);
 			}
@@ -304,5 +263,64 @@ public class CustomerCareServiceImpl {
 		return new GenricResponse(0, GenericMessageTags.SUCCESS.getMessage(), "", customerCareDeviceStates);
 
 	}
-}
 
+	private GenricResponse imeiAndMsisdnAvailableInRequest(String imei, Long msisdn, String listType) {
+		DeviceUsageDb deviceUsageDb = deviceUsageDbRepository.getByImeiAndMsisdn(imei, msisdn);
+		if(Objects.isNull(deviceUsageDb)) {
+			DeviceDuplicateDb deviceDuplicateDb = deviceDuplicateDbRepository.findByImeiMsisdnIdentityImeiAndImeiMsisdnIdentityMsisdn(imei, msisdn);
+
+			if(Objects.isNull(deviceDuplicateDb)) {
+				return new GenricResponse(10, GenericMessageTags.INVALID_TUPLE_FOR_IMEI_AND_MSISDN.getTag(), 
+						GenericMessageTags.INVALID_TUPLE_FOR_IMEI_AND_MSISDN.getMessage(), "");
+			}else {
+				return fetchDetailsOfImei(imei, msisdn, listType);
+			}
+		}else {
+			return fetchDetailsOfImei(imei, msisdn, listType);	
+		}
+	}
+
+	private GenricResponse onlyImeiAvailableInRequest(String imei, String listType) {
+		List<DeviceDuplicateDb> deviceDuplicateDbs = deviceDuplicateDbRepository.findByImeiMsisdnIdentityImei(imei);
+
+		if(deviceDuplicateDbs.isEmpty()) {
+			DeviceUsageDb deviceUsageDb = deviceUsageDbRepository.getByImei(imei);	
+			if(Objects.nonNull(deviceUsageDb)) {
+				return fetchDetailsOfImei(imei, deviceUsageDb.getMsisdn(), listType);
+			}else {
+				return new GenricResponse(10, GenericMessageTags.INVALID_TUPLE_FOR_IMEI_AND_MSISDN.getTag(), 
+						GenericMessageTags.INVALID_TUPLE_FOR_IMEI_AND_MSISDN.getMessage(), "");
+			}
+		}else if(deviceDuplicateDbs.size() == 1) {
+			return fetchDetailsOfImei(imei, deviceDuplicateDbs.get(0).getImeiMsisdnIdentity().getMsisdn(), listType);
+		}else {
+			return new GenricResponse(3, "", "", deviceDuplicateDbs);
+		}
+
+	}
+
+	private GenricResponse onlyMsisdnAvailableInRequest(Long msisdn, String listType) {
+
+		List<DeviceDuplicateDb> deviceDuplicateDbs = deviceDuplicateDbRepository.findByImeiMsisdnIdentityMsisdn(msisdn);
+
+		if(deviceDuplicateDbs.isEmpty()) {
+			DeviceUsageDb deviceUsageDb = deviceUsageDbRepository.getByMsisdn(msisdn);	
+			if(Objects.nonNull(deviceUsageDb)) {
+				return fetchDetailsOfImei(deviceUsageDb.getImei(), msisdn, listType);
+			}else {
+				DeviceNullDb deviceNullDb = deviceNullDbRepository.findByMsisdn(msisdn);
+				if(Objects.nonNull(deviceNullDb)) {
+					return new GenricResponse(11, GenericMessageTags.NO_IMEI_FOR_MSISDN.getTag(), 
+							GenericMessageTags.NO_IMEI_FOR_MSISDN.getMessage(), "");
+				}else {
+					return new GenricResponse(10, GenericMessageTags.INVALID_TUPLE_FOR_IMEI_AND_MSISDN.getTag(), 
+							GenericMessageTags.INVALID_TUPLE_FOR_IMEI_AND_MSISDN.getMessage(), "");
+				}
+			}
+		}else if(deviceDuplicateDbs.size() == 1) {
+			return fetchDetailsOfImei(deviceDuplicateDbs.get(0).getImeiMsisdnIdentity().getImei(), msisdn, listType);
+		}else {
+			return new GenricResponse(3, "", "", deviceDuplicateDbs);
+		}
+	}
+}

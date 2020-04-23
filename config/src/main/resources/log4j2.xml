@@ -30,10 +30,12 @@
 			<appender-ref ref="fileLogger" level="debug" />
 		</Logger>
 
-		<logger name="org.hibernate">
-			<level value="info" />
-			<appender-ref ref="rolling-file" />
-		</logger>
+		<Logger name="org.hibernate">
+			<level value="ALL" />
+			<appender-ref ref="FILE" />
+		</Logger>
+		
+		<Logger name="org.hibernate.SQL" level="debug" />
 
 		<Root level="debug" additivity="false">
 			<!-- <appender-ref ref="console" /> -->
