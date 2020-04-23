@@ -1,8 +1,6 @@
 package com.gl.ceir.config.service.impl;
 
-import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import com.gl.ceir.config.model.CheckDevice;
 import com.gl.ceir.config.model.CheckDeviceReponse;

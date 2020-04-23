@@ -92,6 +92,17 @@ public class ConsignmentMgmt implements Serializable {
 	
 	public Integer portAddress;
 	
+	@Transient
+	private String portAddressInterp;
+	
+	public String getPortAddressInterp() {
+		return portAddressInterp;
+	}
+
+	public void setPortAddressInterp(String portAddressInterp) {
+		this.portAddressInterp = portAddressInterp;
+	}
+
 	public Integer deviceQuantity;
 
 	@Column(name="custom_id")
@@ -493,6 +504,8 @@ public class ConsignmentMgmt implements Serializable {
 		builder.append(taxInterp);
 		builder.append(", portAddress=");
 		builder.append(portAddress);
+		builder.append(", portAddressInterp=");
+		builder.append(portAddressInterp);
 		builder.append(", deviceQuantity=");
 		builder.append(deviceQuantity);
 		builder.append(", customID=");

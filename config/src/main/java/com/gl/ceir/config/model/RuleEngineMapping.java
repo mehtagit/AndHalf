@@ -70,6 +70,17 @@ public class RuleEngineMapping implements Serializable {
 	@Column(length = 10)
 	private String failedRuleActionPostGrace;
 
+	@Column(length = 1)
+	private String output;
+	
+	public String getOutput() {
+		return output;
+	}
+
+	public void setOutput(String output) {
+		this.output = output;
+	}
+
 	public LocalDateTime getCreatedOn() {
 		return createdOn;
 	}
@@ -169,6 +180,10 @@ public class RuleEngineMapping implements Serializable {
 		StringBuilder builder = new StringBuilder();
 		builder.append("RuleEngineMapping [id=");
 		builder.append(id);
+		builder.append(", createdOn=");
+		builder.append(createdOn);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
 		builder.append(", feature=");
 		builder.append(feature);
 		builder.append(", name=");
@@ -181,6 +196,12 @@ public class RuleEngineMapping implements Serializable {
 		builder.append(ruleOrder);
 		builder.append(", userType=");
 		builder.append(userType);
+		builder.append(", failedRuleActionGrace=");
+		builder.append(failedRuleActionGrace);
+		builder.append(", failedRuleActionPostGrace=");
+		builder.append(failedRuleActionPostGrace);
+		builder.append(", output=");
+		builder.append(output);
 		builder.append("]");
 		return builder.toString();
 	}

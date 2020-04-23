@@ -27,6 +27,8 @@ import com.gl.ceir.config.EmailSender.EmailUtil;
 import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.feign.UserFeignClient;
+import com.gl.ceir.config.genericresponse.GenricResponse_Class;
+import com.gl.ceir.config.genericresponse.DataClass;
 import com.gl.ceir.config.model.AuditTrail;
 import com.gl.ceir.config.model.ConsignmentMgmt;
 import com.gl.ceir.config.model.ConsignmentUpdateRequest;
@@ -71,6 +73,7 @@ import com.gl.ceir.config.transaction.ConsignmentTransaction;
 import com.gl.ceir.config.util.CustomMappingStrategy;
 import com.gl.ceir.config.util.InterpSetter;
 import com.gl.ceir.config.util.Utility;
+import com.google.gson.Gson;
 import com.opencsv.CSVWriter;
 import com.opencsv.bean.StatefulBeanToCsv;
 import com.opencsv.bean.StatefulBeanToCsvBuilder;
@@ -142,6 +145,7 @@ public class ConsignmentServiceImpl {
 
 	@Autowired
 	UserFeignClient userFeignClient;
+
 	public GenricResponse registerConsignment(ConsignmentMgmt consignmentFileRequest) {
 
 		try {
@@ -250,7 +254,7 @@ public class ConsignmentServiceImpl {
 				setInterp(consignmentMgmt2);
 			}
 
-			
+
 			/*
 			 * GenricResponse response = userFeignClient.nameById(3); Object
 			 * objectResponse=response.getData(); Gson gson= new Gson(); String apiResponse
@@ -258,7 +262,7 @@ public class ConsignmentServiceImpl {
 			 * gson.fromJson(apiResponse, GenericResponseObject.class);
 			 * logger.info("name::::::::::"+genericResponseObject.getName());
 			 */
-			
+
 			auditTrailRepository.save(new AuditTrail(consignmentMgmt.getUserId(), consignmentMgmt.getUserName(), 
 					Long.valueOf(consignmentMgmt.getUserTypeId()), consignmentMgmt.getUserType(), Long.valueOf(consignmentMgmt.getFeatureId()),
 					Features.CONSIGNMENT, SubFeatures.VIEW, "", "NA"));
@@ -379,13 +383,13 @@ public class ConsignmentServiceImpl {
 				logger.info("Consignment Does not Exist" + consignmentUpdateRequest.getTxnId());
 				return new GenricResponse(4, "Consignment Does not Exist",consignmentUpdateRequest.getTxnId());
 			}
-			
+
 			if("CEIRADMIN".equalsIgnoreCase(consignmentUpdateRequest.getUserType())) {
 				consignmentMgmt.setConsignmentStatus(ConsignmentStatus.WITHDRAWN_BY_CEIR.getCode());
 			}else if("IMPORTER".equalsIgnoreCase(consignmentUpdateRequest.getUserType())) {
 				// Check status must be Init or Rejected by system.
 				if(consignmentMgmt.getConsignmentStatus() == ConsignmentStatus.INIT.getCode() || 
-				consignmentMgmt.getConsignmentStatus() == ConsignmentStatus.REJECTED_BY_SYSTEM.getCode()) {
+						consignmentMgmt.getConsignmentStatus() == ConsignmentStatus.REJECTED_BY_SYSTEM.getCode()) {
 					consignmentMgmt.setConsignmentStatus(ConsignmentStatus.WITHDRAWN_BY_IMPORTER.getCode());	
 				}else {
 					return new GenricResponse(5, GenericMessageTags.INVALID_STATE_TRANSTION.getTag(), GenericMessageTags.INVALID_STATE_TRANSTION.getMessage(), consignmentUpdateRequest.getTxnId());
@@ -402,7 +406,7 @@ public class ConsignmentServiceImpl {
 			consignmentMgmt.setFeatureId(consignmentUpdateRequest.getFeatureId());
 			consignmentMgmt.setUserName(consignmentUpdateRequest.getUserName());
 			consignmentMgmt.setUserType(consignmentUpdateRequest.getUserType());
-						
+
 			WebActionDb webActionDb = new WebActionDb();
 			webActionDb.setFeature(WebActionDbFeature.CONSIGNMENT.getName());
 			webActionDb.setSubFeature(WebActionDbSubFeature.DELETE.getName());
@@ -432,9 +436,9 @@ public class ConsignmentServiceImpl {
 			ConsignmentMgmt consignmentMgmt = consignmentRepository.getByTxnId(consignmentUpdateRequest.getTxnId());
 			logger.debug("Accept/Reject Consignment : " + consignmentMgmt);
 
-			
-			
-			
+
+
+
 			// Fetch user_profile to update user over mail/sms regarding the action.
 			userProfile = userProfileRepository.getByUserId(consignmentMgmt.getUserId());
 			logger.debug("UserProfile : " + userProfile);
@@ -455,10 +459,9 @@ public class ConsignmentServiceImpl {
 						}
 						Integer nextStatus;
 						// Check if this feature is supported in current period.
-						//GenricResponse response = userFeignClient.usertypeStatus(7);
-						
-						
-						GenricResponse response=mockFeignResponse();
+						GenricResponse_Class response = userFeignClient.usertypeStatus(7);
+
+						//GenricResponse response=mockFeignResponse();
 						logger.info("FEIGN : response for validatePeriod " + response);
 						if(response.getErrorCode() == 200) {
 							nextStatus=ConsignmentStatus.PENDING_APPROVAL_FROM_CUSTOMS.getCode();
@@ -469,11 +472,11 @@ public class ConsignmentServiceImpl {
 
 						logger.info("nextStatus:"+nextStatus);
 						consignmentMgmt.setConsignmentStatus(nextStatus);
-						
+
 						consignmentMgmt.setCeirAdminID(consignmentUpdateRequest.getUserId());
-						
-					
-						
+
+
+
 						placeholderMap.put("<Importer first name>", userProfile.getFirstName());
 						placeholderMap.put("<txn_name>", consignmentMgmt.getTxnId());
 
@@ -485,7 +488,7 @@ public class ConsignmentServiceImpl {
 								consignmentUpdateRequest.getTxnId(),
 								consignmentMgmt.getTxnId(),
 								placeholderMap, null, "Importer");
-						
+
 
 					}else if("CUSTOM".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())) {
 
@@ -503,8 +506,8 @@ public class ConsignmentServiceImpl {
 						consignmentMgmt.setConsignmentStatus(ConsignmentStatus.APPROVED.getCode());
 						consignmentMgmt.setTaxPaidStatus(TaxStatus.TAX_PAID.getCode());
 						consignmentMgmt.setCustomID(consignmentUpdateRequest.getUserId());
-						
-						
+
+
 						// Delete tac if available in pending_tac_approval_db.
 						FilterRequest filterRequest = new FilterRequest().setTxnId(consignmentMgmt.getTxnId());
 						if(pendingTacApprovedImpl.findByTxnId(filterRequest).getErrorCode() == 0) {
@@ -548,8 +551,8 @@ public class ConsignmentServiceImpl {
 							return new GenricResponse(3, "state transition is not allowed.", consignmentUpdateRequest.getTxnId());
 						}
 						consignmentMgmt.setConsignmentStatus(ConsignmentStatus.PENDING_APPROVAL_FROM_CEIR_AUTHORITY.getCode());
-						
-						
+
+
 						//consignmentMgmt.setCustomID(consignmentUpdateRequest.getUserId());
 						UserProfile userProfile2 = new UserProfile();
 						User user2 = userRepository.getById(consignmentMgmt.getUserId()); 
@@ -586,7 +589,7 @@ public class ConsignmentServiceImpl {
 					}
 					else if("DRT".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())) {
 
-						
+
 
 						if(!StateMachine.isConsignmentStatetransitionAllowed("DRT", consignmentMgmt.getConsignmentStatus())) {
 							logger.info("state transition is not allowed." + consignmentUpdateRequest.getTxnId());
@@ -596,7 +599,7 @@ public class ConsignmentServiceImpl {
 						consignmentMgmt.setConsignmentStatus(ConsignmentStatus.APPROVED.getCode());	
 						consignmentMgmt.setDrtID(consignmentUpdateRequest.getUserId());
 
-						
+
 						placeholderMap.put("<Importer first name>", userProfile.getFirstName());
 						placeholderMap.put("<txn_name>", consignmentMgmt.getTxnId());
 
@@ -636,9 +639,9 @@ public class ConsignmentServiceImpl {
 					consignmentMgmt.setConsignmentStatus(ConsignmentStatus.REJECTED_BY_CEIR_AUTHORITY.getCode());
 					consignmentMgmt.setRemarks(consignmentUpdateRequest.getRemarks());
 					consignmentMgmt.setCeirAdminID(consignmentUpdateRequest.getUserId());
-					
-				
-					
+
+
+
 					placeholderMap.put("<Importer first name>", userProfile.getFirstName());
 					placeholderMap.put("<txn_name>", consignmentMgmt.getTxnId());
 
@@ -659,11 +662,12 @@ public class ConsignmentServiceImpl {
 						return new GenricResponse(3, "state transition is not allowed.", consignmentUpdateRequest.getTxnId());
 					}
 
-					
+
 					Integer nextStatus;
 					// Check if this feature is supported in current period.
-					//GenricResponse response = userFeignClient.usertypeStatus(21);
-					GenricResponse response=mockFeignResponse();
+					GenricResponse_Class response = userFeignClient.usertypeStatus(21);
+					
+					//GenricResponse response=mockFeignResponse();
 					logger.info("FEIGN : response for validatePeriod " + response);
 					if(response.getErrorCode() == 200) {
 						nextStatus=ConsignmentStatus.PENDING_CLEARANCE_FROM_DRT.getCode();
@@ -681,8 +685,8 @@ public class ConsignmentServiceImpl {
 					consignmentMgmt.setConsignmentStatus(ConsignmentStatus.REJECTED_BY_CUSTOMS.getCode());
 					consignmentMgmt.setRemarks(consignmentUpdateRequest.getRemarks());
 
-		
-					
+
+
 					placeholderMap.put("<Importer first name>", userProfile.getFirstName());
 					placeholderMap.put("<txn_name>", consignmentMgmt.getTxnId());
 
@@ -715,9 +719,9 @@ public class ConsignmentServiceImpl {
 						return new GenricResponse(3, "state transition is not allowed.", consignmentUpdateRequest.getTxnId());
 					}
 					consignmentMgmt.setConsignmentStatus(ConsignmentStatus.REJECTED_BY_SYSTEM.getCode());
-					
-				
-					
+
+
+
 					UserProfile userProfile2 = new UserProfile();
 					User user2 = userRepository.getById(consignmentMgmt.getUserId()); 
 					userProfile2.setUser(user2);
@@ -739,7 +743,7 @@ public class ConsignmentServiceImpl {
 					emailUtil.saveNotification(rawMails);
 
 				}
-				
+
 				else if("DRT".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())) {
 					/*
 					 * if(!StateMachine.isConsignmentStatetransitionAllowed("CUSTOM",
@@ -752,8 +756,8 @@ public class ConsignmentServiceImpl {
 
 					Integer nextStatus;
 					// Check if this feature is supported in current period.
-					//GenricResponse response = userFeignClient.usertypeStatus(21);
-					GenricResponse response=mockFeignResponse();
+					GenricResponse_Class response = userFeignClient.usertypeStatus(21);
+					//GenricResponse response=mockFeignResponse();
 					logger.info("FEIGN : response for validatePeriod " + response);
 					if(response.getErrorCode() == 200) {
 						nextStatus=ConsignmentStatus.REJECTED_BY_DRT.getCode();
@@ -761,7 +765,7 @@ public class ConsignmentServiceImpl {
 					else {
 						logger.info("Operation not allowed." + consignmentUpdateRequest.getTxnId());
 						return new GenricResponse(5, "Operation not allowed.", consignmentUpdateRequest.getTxnId());
-			
+
 					}
 
 					logger.info("nextStatus:"+nextStatus);
@@ -769,7 +773,7 @@ public class ConsignmentServiceImpl {
 					consignmentMgmt.setDrtID(consignmentUpdateRequest.getUserId());
 					consignmentMgmt.setRemarks(consignmentUpdateRequest.getRemarks());
 
-					
+
 					placeholderMap.put("<Importer first name>", userProfile.getFirstName());
 					placeholderMap.put("<txn_name>", consignmentMgmt.getTxnId());
 
@@ -805,8 +809,8 @@ public class ConsignmentServiceImpl {
 			consignmentMgmt.setUserType(consignmentUpdateRequest.getRoleType());
 			consignmentMgmt.setUserTypeId(consignmentUpdateRequest.getRoleTypeUserId().intValue());
 			consignmentMgmt.setFeatureId(consignmentUpdateRequest.getFeatureId());
-			
-			
+
+
 			if(consignmentTransaction.executeUpdateStatusConsignment(consignmentMgmt,webActionDb)) {
 				logger.info("Consignment status have Update SuccessFully." + consignmentUpdateRequest.getTxnId());
 				return new GenricResponse(0, "Consignment status have Update SuccessFully.", consignmentUpdateRequest.getTxnId());
@@ -983,6 +987,7 @@ public class ConsignmentServiceImpl {
 	}
 
 	public void setInterp(ConsignmentMgmt consignmentMgmt) {
+
 		if(Objects.nonNull(consignmentMgmt.getExpectedArrivalPort()))
 			consignmentMgmt.setExpectedArrivalPortInterp(interpSetter.setConfigInterp(Tags.CUSTOMS_PORT, consignmentMgmt.getExpectedArrivalPort()));
 
@@ -995,8 +1000,16 @@ public class ConsignmentServiceImpl {
 		if(Objects.nonNull(consignmentMgmt.getTaxPaidStatus()))
 			consignmentMgmt.setDeleteFlagInterp(interpSetter.setConfigInterp(Tags.DELETE_FLAG, consignmentMgmt.getDeleteFlag()));
 
+		if(Objects.nonNull(consignmentMgmt.getPortAddress())) {
+			GenricResponse_Class portResponse=userFeignClient.portAddressInterp(consignmentMgmt.getPortAddress());
+			logger.info("genericResponse::::::"+new Gson().toJson(portResponse));
+			DataClass dataClass = portResponse.getData();
+			consignmentMgmt.setPortAddressInterp(dataClass.getAddress());
+
+		}
+
 	}
-	
+
 	private GenricResponse mockFeignResponse() {
 		return new GenricResponse(200);	
 	}
