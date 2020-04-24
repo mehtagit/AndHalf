@@ -14,7 +14,7 @@ function viewIndivisualStolen()
 var txnid=$('#existingStolenTxnId').val();
 	
 	$.ajax({
-		url: './openStolenAndRecoveryPage?txnId='+txnid,
+		url: './openStolenAndRecoveryPage?txnId='+txnid+"&requestType=0",
 		type: 'POST',
 		processData: false,
 		contentType: false,

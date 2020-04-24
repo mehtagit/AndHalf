@@ -51,9 +51,12 @@ function confirmantiondelete(){
 	var obj ={
 			"txnId" : txnId,
 			"userType":role,
+			"roleType":role,
 			"userId":userId,
+			"featureId":featureId,
 			"id":id,
 			"remark":remarks
+			
 
 	}
 	$.ajax({

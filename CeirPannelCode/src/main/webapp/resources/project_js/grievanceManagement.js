@@ -41,7 +41,7 @@ var featureId = 6;
 			/*localStorage.setItem("grievancePageSource", "viaGriebva");*/
 
 			function grievanceDataTable(lang){
-				if(cierRoletype=="CEIRAdmin"){
+				if(cierRoletype=="CEIRAdmin" || cierRoletype=="Customer Care"){
 					DataTable('headers?type=adminGrievanceHeaders&lang='+lang ,'grievanceData');
 				}else{
 					DataTable('headers?type=grievanceHeaders&lang='+lang,'grievanceData');
@@ -73,7 +73,9 @@ var featureId = 6;
 					grievanceSessionUsesFlag=0;
 				}
 				localStorage.removeItem('grievancePageSource');
-			
+				
+				var userType = $('#userType').val() == null ? $("body").attr("data-roleType") : $("#userType option:selected").text(); 
+				
 				var filterRequest={
 						"grievanceStatus":grievanceStatus,
 						"endDate":$('#endDate').val(),
@@ -85,10 +87,10 @@ var featureId = 6;
 						"userTypeId": parseInt($("body").attr("data-userTypeID")),
 						"txnId":  $('#transactionID').val(),
 						"grievanceId":txn,
-						"userType":$("body").attr("data-roleType"),
-
+						"userType" : userType,
+						"userDisplayName" : $('#userName').val()
 				}
-
+				
 				if(lang=='km'){
 						var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
 					}
@@ -186,7 +188,7 @@ var featureId = 6;
 										"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
 
 										"<select id="+dropdown[i].id+"  class='select-wrapper select2  initialized'>"+
-										"<option value='-1'>"+dropdown[i].title+
+										"<option value='null'>"+dropdown[i].title+
 										"</option>"+
 										"</select>"+
 										"</div>"+
@@ -252,9 +254,20 @@ var featureId = 6;
 					}
 
 				}); 
+				
+				setAllDropdown();
 			};
+			
+			
+		function setAllDropdown(){
+			$.getJSON('./registrationUserType', function(data) {
+				for (i = 0; i < data.length; i++) {
+					$('<option>').val(data[i].id).text(data[i].usertypeName)
+					.appendTo('#userType');
+				}
+			});
 
-
+		}
 
 
 			function myFunction(message) {

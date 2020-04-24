@@ -81,16 +81,17 @@ public class AuditDatatableController {
 				{
 				  String id = String.valueOf(dataInsideList.getId());	
 				  String createdOn = dataInsideList.getCreatedOn();
-				  String modifiedOn = dataInsideList.getModifiedOn();
+				 // String modifiedOn = dataInsideList.getModifiedOn();
 				  String txnId = dataInsideList.getTxnId();
 				  String getuserId = String.valueOf(dataInsideList.getUserId());
 				  String userName = dataInsideList.getUserName();
 				  String userTypeName = dataInsideList.getUserType();
+				  String roleType = dataInsideList.getRoleType();
 				  String featureName = dataInsideList.getFeatureName();
 				  String subFeature = dataInsideList.getSubFeature();
 				   String userStatus = (String) session.getAttribute("userStatus");
-				   String action=iconState.auditManagementIcons(userStatus,getuserId,id);			   
-				   Object[] finalData={createdOn,txnId,userName,userTypeName,featureName,subFeature,action}; 
+				   String action=iconState.auditManagementIcons(userStatus,getuserId,id);		
+				   Object[] finalData={createdOn,txnId,userName,userTypeName,roleType,featureName,subFeature,action}; 
 				   List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 				   finalList.add(finalDataList);
 				   datatableResponseModel.setData(finalList);	
@@ -146,7 +147,7 @@ public class AuditDatatableController {
 			
 		
 		  //Dropdown items 
-			String[] selectParam={"select","User Type","roleType","","select","Feature","feature","","select","Sub Feature","subFeature",""}; 
+			String[] selectParam={"select","User Type","userType","","select","Role Type","roleType","","select","Feature","feature","","select","Sub Feature","subFeature",""}; 
 		  for(int i=0; i<selectParam.length; i++) { 
 				inputFields= new InputFields();
 		  inputFields.setType(selectParam[i]); 

@@ -437,13 +437,13 @@ function setStakeHolderData(name,date,featureId,status,txnId,imei)
  		
     	 }
 
-         else if(name=='Greylist')
+         else if(name=='Duplicate')
     	 {
     	 $('#greyListTableModal').openModal({
 	    	   dismissible:false
 	       });
 
-    	 greyListDataTable(data.data);
+    	 duplicateData(data.data);
  		
     	 }
          else if(name=='VIP')
@@ -455,7 +455,42 @@ function setStakeHolderData(name,date,featureId,status,txnId,imei)
     	 greyListDataTable(data.data);
  		
     	 }
-		
+         else if(name=="Blacklist")
+		{
+        	 $('#blockDeviceHeader').text('');
+        	 $('#blockDeviceHeader').text('Block Device Details');
+        	 $('#blockListModal').openModal({
+  	    	   dismissible:false
+  	       });	 
+        	 $("#blockedUserType").val(data.data.userType);
+       		$("#blockedUserName").val(data.data.userId);
+       		$("#blockedDate").val(data.data.createdOn);
+       		$("#blockExpiryDate").val(data.data.expiryDate);
+       		$("#blockeModeType").val(data.data.modeType);
+       		$("#complaintType").val(data.data.complainType);
+       		
+       		
+		}
+         else if(name=="Greylist"){
+        	 $('#blockDeviceHeader').text('');
+        	 $('#blockDeviceHeader').text('Grey Device Details');
+        	 $('#blockListModal').openModal({
+  	    	   dismissible:false
+  	       });
+        	 
+        	$("#blockedUserType").val(data.data.userType);
+      		$("#blockedUserName").val(data.data.userId);
+      		$("#blockedDate").val(data.data.createdOn);
+      		$("#blockExpiryDate").val(data.data.expiryDate);
+       		$("#blockeModeType").val(data.data.modeType);
+       		$("#complaintType").val(data.data.complainType);
+         }
+	    
+	    
+         else if(featureId=="36")
+        	 {
+        	 
+        	 }
 		}
 	
 	
@@ -466,7 +501,9 @@ function setStakeHolderData(name,date,featureId,status,txnId,imei)
 
 function greyListDataTable(data){
 var tableData=[];
+
 tableData.push(data);
+
 	$('#greyListDataTable').DataTable({
 		destroy:true,
 		searching: false,
@@ -482,16 +519,42 @@ tableData.push(data);
 			"data" : "createdOn", "defaultContent": ""
 		},
 		{
-			"data" : "msisdn","defaultContent": ""
+			"data" : "imeiMsisdnIdentity.msisdn","defaultContent": ""
 		},
 		{
-			"data" : "imei","defaultContent": ""
+			"data" : "imeiMsisdnIdentity.imei","defaultContent": ""
 		}, {
 			"data" : "imeiEsnMeid","defaultContent": ""
 		}]
 		
 	});
 }
+function duplicateData(data){
+	$('#greyListDataTable').DataTable({
+			destroy:true,
+			searching: false,
+			scrollCollapse : true,
+			dataType : 'json',
+			ordering : false,
+			bPaginate : false,
+			"data":data,
+			bInfo : true,
+			"columns" : [{
+				"data" : "createdOn","defaultContent": ""
+			}, {
+				"data" : "createdOn", "defaultContent": ""
+			},
+			{
+				"data" : "imeiMsisdnIdentity.msisdn","defaultContent": ""
+			},
+			{
+				"data" : "imeiMsisdnIdentity.imei","defaultContent": ""
+			}, {
+				"data" : "imsi","defaultContent": ""
+			}]
+			
+		});
+	}
 function closeViewModal()
 {
 $('#viewModal').closeModal();

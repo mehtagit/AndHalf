@@ -185,7 +185,7 @@ public class RegistrationReqDatatableController {
 			pageElement.setDropdownList(dropdownList);
 			
 			//input type date list		
-			String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("table.email"),"emailID","","text",Translator.toLocale("table.phone"),"phone","","text",Translator.toLocale("input.displayName"),"userName",""};
+			String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("table.email"),"emailID","","text",Translator.toLocale("table.phone"),"phone","","text",Translator.toLocale("table.UserName"),"userName",""};
 			for(int i=0; i< dateParam.length; i++) {
 				dateRelatedFields= new InputFields();
 				dateRelatedFields.setType(dateParam[i]);

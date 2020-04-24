@@ -60,10 +60,10 @@ public class ProfileController {
 		
 	}
 	
-	@RequestMapping(value = "viewProfile/{id}",method = RequestMethod.POST)
+	@RequestMapping(value = "viewProfile/{id}/{userId}",method = RequestMethod.POST)
 	@ResponseBody 
-	public  Registration ViewAdminUserService(HttpSession session, @PathVariable ("id") long id) {
-	return profileService.ViewAdminUserService(session, id);
+	public  Registration ViewAdminUserService(HttpSession session, @PathVariable ("id") long id,@PathVariable("userId") Integer userId) {
+	return profileService.ViewAdminUserService(session, id, userId);
 
 	} 
 	

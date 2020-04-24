@@ -294,7 +294,6 @@ var nationalId =$("body").attr("session-value") =='null' ? null : $("body").attr
 function table(url,dataUrl){
 	var txnIdValue = $("body").attr("session-valueTxnID");
 	var txn= (txnIdValue == 'null' && transactionIDValue == undefined)? $('#transactionID').val() : transactionIDValue;
-	
 	var request={
 			"origin":$("body").attr("data-roleType"),
 			"endDate":$('#endDate').val(),
@@ -404,7 +403,7 @@ function pageButtons(url){
 							"<span class='caret'>"+"</span>"+
 							"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
 
-							"<select id="+dropdown[i].id+" class='select-wrapper select2  initialized'>"+
+							"<select id="+dropdown[i].id+" class='select-wrapper select2  initialized' style='height: 2.4rem;'>"+
 							"<option value=''>"+dropdown[i].title+
 							"</option>"+
 							"</select>"+

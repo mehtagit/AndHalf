@@ -5,7 +5,7 @@ public class StolenIndividualUserDB {
 	private String alternateContactNumber;
 	private String commune;
 	private Integer complaintType;
-	private String contactNumber;
+	private String contactNumber,contactNumber2,contactNumber3,contactNumber4;
 	private String country;
 	private String createdOn;
 	private String deviceBrandName;
@@ -31,7 +31,7 @@ public class StolenIndividualUserDB {
 	private String modelNumber;
 	private String modifiedOn;
 	private String nid;
-	private Integer operator;
+	private Integer operator,operator2,operator3,operator4;
 	private String phoneNo;
 	private Integer postalCode;
 	private String propertyLocation;
@@ -309,25 +309,150 @@ public class StolenIndividualUserDB {
 	public void setNidFileName(String nidFileName) {
 		this.nidFileName = nidFileName;
 	}
+	public String getContactNumber2() {
+		return contactNumber2;
+	}
+	public void setContactNumber2(String contactNumber2) {
+		this.contactNumber2 = contactNumber2;
+	}
+	public String getContactNumber3() {
+		return contactNumber3;
+	}
+	public void setContactNumber3(String contactNumber3) {
+		this.contactNumber3 = contactNumber3;
+	}
+	public String getContactNumber4() {
+		return contactNumber4;
+	}
+	public void setContactNumber4(String contactNumber4) {
+		this.contactNumber4 = contactNumber4;
+	}
+	public Integer getOperator2() {
+		return operator2;
+	}
+	public void setOperator2(Integer operator2) {
+		this.operator2 = operator2;
+	}
+	public Integer getOperator3() {
+		return operator3;
+	}
+	public void setOperator3(Integer operator3) {
+		this.operator3 = operator3;
+	}
+	public Integer getOperator4() {
+		return operator4;
+	}
+	public void setOperator4(Integer operator4) {
+		this.operator4 = operator4;
+	}
 	@Override
 	public String toString() {
-		return "StolenIndividualUserDB [alternateContactNumber=" + alternateContactNumber + ", commune=" + commune
-				+ ", complaintType=" + complaintType + ", contactNumber=" + contactNumber + ", country=" + country
-				+ ", createdOn=" + createdOn + ", deviceBrandName=" + deviceBrandName + ", deviceIdType=" + deviceIdType
-				+ ", deviceStolenCommune=" + deviceStolenCommune + ", deviceStolenDistrict=" + deviceStolenDistrict
-				+ ", deviceStolenLocality=" + deviceStolenLocality + ", deviceStolenPostalCode="
-				+ deviceStolenPostalCode + ", deviceStolenPropertyLocation=" + deviceStolenPropertyLocation
-				+ ", deviceStolenStreet=" + deviceStolenStreet + ", deviceStolenVillage=" + deviceStolenVillage
-				+ ", deviceType=" + deviceType + ", district=" + district + ", docType=" + docType + ", docTypeInterp="
-				+ docTypeInterp + ", email=" + email + ", firstName=" + firstName + ", id=" + id + ", imeiEsnMeid1="
-				+ imeiEsnMeid1 + ", imeiEsnMeid2=" + imeiEsnMeid2 + ", imeiEsnMeid3=" + imeiEsnMeid3 + ", imeiEsnMeid4="
-				+ imeiEsnMeid4 + ", lastName=" + lastName + ", locality=" + locality + ", middleName=" + middleName
-				+ ", modelNumber=" + modelNumber + ", modifiedOn=" + modifiedOn + ", nid=" + nid + ", operator="
-				+ operator + ", phoneNo=" + phoneNo + ", postalCode=" + postalCode + ", propertyLocation="
-				+ propertyLocation + ", province=" + province + ", remark=" + remark + ", street=" + street
-				+ ", village=" + village + ", multiSimStatus=" + multiSimStatus + ", deviceSerialNumber="
-				+ deviceSerialNumber + ", deviceStolenCountry=" + deviceStolenCountry + ", deviceStolenProvince="
-				+ deviceStolenProvince + ", nidFileName=" + nidFileName + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("StolenIndividualUserDB [alternateContactNumber=");
+		builder.append(alternateContactNumber);
+		builder.append(", commune=");
+		builder.append(commune);
+		builder.append(", complaintType=");
+		builder.append(complaintType);
+		builder.append(", contactNumber=");
+		builder.append(contactNumber);
+		builder.append(", contactNumber2=");
+		builder.append(contactNumber2);
+		builder.append(", contactNumber3=");
+		builder.append(contactNumber3);
+		builder.append(", contactNumber4=");
+		builder.append(contactNumber4);
+		builder.append(", country=");
+		builder.append(country);
+		builder.append(", createdOn=");
+		builder.append(createdOn);
+		builder.append(", deviceBrandName=");
+		builder.append(deviceBrandName);
+		builder.append(", deviceIdType=");
+		builder.append(deviceIdType);
+		builder.append(", deviceStolenCommune=");
+		builder.append(deviceStolenCommune);
+		builder.append(", deviceStolenDistrict=");
+		builder.append(deviceStolenDistrict);
+		builder.append(", deviceStolenLocality=");
+		builder.append(deviceStolenLocality);
+		builder.append(", deviceStolenPostalCode=");
+		builder.append(deviceStolenPostalCode);
+		builder.append(", deviceStolenPropertyLocation=");
+		builder.append(deviceStolenPropertyLocation);
+		builder.append(", deviceStolenStreet=");
+		builder.append(deviceStolenStreet);
+		builder.append(", deviceStolenVillage=");
+		builder.append(deviceStolenVillage);
+		builder.append(", deviceType=");
+		builder.append(deviceType);
+		builder.append(", district=");
+		builder.append(district);
+		builder.append(", docType=");
+		builder.append(docType);
+		builder.append(", docTypeInterp=");
+		builder.append(docTypeInterp);
+		builder.append(", email=");
+		builder.append(email);
+		builder.append(", firstName=");
+		builder.append(firstName);
+		builder.append(", id=");
+		builder.append(id);
+		builder.append(", imeiEsnMeid1=");
+		builder.append(imeiEsnMeid1);
+		builder.append(", imeiEsnMeid2=");
+		builder.append(imeiEsnMeid2);
+		builder.append(", imeiEsnMeid3=");
+		builder.append(imeiEsnMeid3);
+		builder.append(", imeiEsnMeid4=");
+		builder.append(imeiEsnMeid4);
+		builder.append(", lastName=");
+		builder.append(lastName);
+		builder.append(", locality=");
+		builder.append(locality);
+		builder.append(", middleName=");
+		builder.append(middleName);
+		builder.append(", modelNumber=");
+		builder.append(modelNumber);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
+		builder.append(", nid=");
+		builder.append(nid);
+		builder.append(", operator=");
+		builder.append(operator);
+		builder.append(", operator2=");
+		builder.append(operator2);
+		builder.append(", operator3=");
+		builder.append(operator3);
+		builder.append(", operator4=");
+		builder.append(operator4);
+		builder.append(", phoneNo=");
+		builder.append(phoneNo);
+		builder.append(", postalCode=");
+		builder.append(postalCode);
+		builder.append(", propertyLocation=");
+		builder.append(propertyLocation);
+		builder.append(", province=");
+		builder.append(province);
+		builder.append(", remark=");
+		builder.append(remark);
+		builder.append(", street=");
+		builder.append(street);
+		builder.append(", village=");
+		builder.append(village);
+		builder.append(", multiSimStatus=");
+		builder.append(multiSimStatus);
+		builder.append(", deviceSerialNumber=");
+		builder.append(deviceSerialNumber);
+		builder.append(", deviceStolenCountry=");
+		builder.append(deviceStolenCountry);
+		builder.append(", deviceStolenProvince=");
+		builder.append(deviceStolenProvince);
+		builder.append(", nidFileName=");
+		builder.append(nidFileName);
+		builder.append("]");
+		return builder.toString();
 	}
+	
 	
 }

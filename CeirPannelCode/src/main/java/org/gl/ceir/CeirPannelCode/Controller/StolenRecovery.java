@@ -347,9 +347,11 @@ public class StolenRecovery {
 				@ResponseBody
 				public FileExportResponse exportToExcel(@RequestBody FilterRequest filterRequest,HttpSession session)
 				{
+					Integer userId= (Integer) session.getAttribute("userid");
 					Gson gsonObject=new Gson();
 					Object response;
 					Integer file = 1;	
+					filterRequest.setUserId(userId);
 					log.info("filterRequest:::::::::"+filterRequest);
 				response= feignCleintImplementation.stolenFilter(filterRequest, filterRequest.getPageNo(), filterRequest.getPageSize(), file);
 				FileExportResponse fileExportResponse;

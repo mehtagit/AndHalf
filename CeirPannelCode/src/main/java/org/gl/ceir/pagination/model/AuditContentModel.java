@@ -1,8 +1,5 @@
 package org.gl.ceir.pagination.model;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.stereotype.Component;
 
 @Component
@@ -20,7 +17,7 @@ public class AuditContentModel {
 	private String subFeature;
 	private String jSessionId;
 	private String txnId;
-	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+	private String roleType;
 	public Integer getId() {
 		return id;
 	}
@@ -93,20 +90,43 @@ public class AuditContentModel {
 	public void setTxnId(String txnId) {
 		this.txnId = txnId;
 	}
-	public Map<String, Object> getAdditionalProperties() {
-		return additionalProperties;
+	public String getRoleType() {
+		return roleType;
 	}
-	public void setAdditionalProperties(Map<String, Object> additionalProperties) {
-		this.additionalProperties = additionalProperties;
+	public void setRoleType(String roleType) {
+		this.roleType = roleType;
 	}
 	@Override
 	public String toString() {
-		return "AuditContentModel [id=" + id + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", userId="
-				+ userId + ", userName=" + userName + ", userTypeId=" + userTypeId + ", userType=" + userType
-				+ ", featureId=" + featureId + ", featureName=" + featureName + ", subFeature=" + subFeature
-				+ ", jSessionId=" + jSessionId + ", txnId=" + txnId + ", additionalProperties=" + additionalProperties
-				+ "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("AuditContentModel [id=");
+		builder.append(id);
+		builder.append(", createdOn=");
+		builder.append(createdOn);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
+		builder.append(", userId=");
+		builder.append(userId);
+		builder.append(", userName=");
+		builder.append(userName);
+		builder.append(", userTypeId=");
+		builder.append(userTypeId);
+		builder.append(", userType=");
+		builder.append(userType);
+		builder.append(", featureId=");
+		builder.append(featureId);
+		builder.append(", featureName=");
+		builder.append(featureName);
+		builder.append(", subFeature=");
+		builder.append(subFeature);
+		builder.append(", jSessionId=");
+		builder.append(jSessionId);
+		builder.append(", txnId=");
+		builder.append(txnId);
+		builder.append(", roleType=");
+		builder.append(roleType);
+		builder.append("]");
+		return builder.toString();
 	}
-	
 	
 }

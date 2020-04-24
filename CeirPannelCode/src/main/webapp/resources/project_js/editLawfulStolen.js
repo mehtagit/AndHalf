@@ -64,6 +64,8 @@ $(document).ready(function() {
  		  viewIndivisualStolen(); 
  		  }, 1000);
 	
+	  
+	  
 		/*var promise = new Promise(function(resolve, reject) {
 			alert("promise");
 			$.getJSON('./productList', function(data) {
@@ -97,7 +99,7 @@ function viewIndivisualStolen()
 	var txnid=$('#existingStolenTxnId').val();
 
 	$.ajax({
-		url: './openStolenAndRecoveryPage?txnId='+txnid,
+		url: './openStolenAndRecoveryPage?txnId='+txnid+"&requestType=0",
 		type: 'POST',
 		processData: false,
 		contentType: false,
@@ -160,7 +162,7 @@ function viewIndivisualStolen()
 			$('#editsingleStolendeviceBrandName').val(response.stolenIndividualUserDB.deviceBrandName).change();
 			//alert(response.stolenIndividualUserDB.deviceBrandName);
 			$('#editsingleStolenmodalNumber').val(response.stolenIndividualUserDB.modelNumber);
-			$('#singleStolenFileName').val(response.nidFileName);
+			$('#singleStolenFileName').val(response.stolenIndividualUserDB.nidFileName);
 			$('#updatesingleStolenimei1').val(response.stolenIndividualUserDB.imeiEsnMeid1);
 			$('#updatesingleStolenimei2').val(response.stolenIndividualUserDB.imeiEsnMeid2);
 			$('#updatesingleStolenimei3').val(response.stolenIndividualUserDB.imeiEsnMeid3);
@@ -172,7 +174,13 @@ function viewIndivisualStolen()
 			/*$('#singleStolenFileName').val(response.fileName);*/
 			window.xop2=response.stolenIndividualUserDB.contactNumber;
 			$('#singleStolenphone2').val(response.stolenIndividualUserDB.contactNumber);
+			$('#singleStolenphone3').val(response.stolenIndividualUserDB.contactNumber2);
+			$('#singleStolenphone4').val(response.stolenIndividualUserDB.contactNumber3);
+			$('#singleStolenphone5').val(response.stolenIndividualUserDB.contactNumber4);
 			$('#singleStolenOperator').val(response.stolenIndividualUserDB.operator);
+			$('#singleStolenOperator3').val(response.stolenIndividualUserDB.operator2);
+			$('#singleStolenOperator4').val(response.stolenIndividualUserDB.operator3);
+			$('#singleStolenOperator5').val(response.stolenIndividualUserDB.operator4);
 			$('#singleStolenSimStatus').val(response.stolenIndividualUserDB.multiSimStatus);
 			$('#singleStolenComplaintType').val(response.complaintType);
 			$('#singleDeviceAddress').val(response.stolenIndividualUserDB.deviceStolenPropertyLocation);
@@ -210,9 +218,15 @@ $("#calender").css("display", "none");
 			$("label[for='updatesingleStolenimei3']").addClass('active');
 			$("label[for='updatesingleStolenimei4']").addClass('active');
 
-			$('#PassportNidLink').attr("onclick",'previewFile("'+response.fileLink+'","'+response.fileName+'","'+response.txnId+'")');
+			$('#PassportNidLink').attr("onclick",'previewFile("'+response.fileLink+'","'+response.stolenIndividualUserDB.nidFileName+'","'+response.txnId+'")');
 			$('#firImageLink').attr("onclick",'previewFile("'+response.fileLink+'","'+response.firFileName+'","'+response.txnId+'")');
 			$('div#initialloader').delay(300).fadeOut('slow');
+			
+			if ($('#pageViewType').val() == 'edit') {
+				setOpertorTypeMandaotry();
+			}
+			
+				
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
 			console.log("error in ajax")
@@ -281,11 +295,28 @@ function updateIndivisualStolen()
 	var txnid=$('#existingStolenTxnId').val();
 	var indivisualStolenfileName=$('#singleStolenFileName').val();
 	var uploadFirFile=$('#uploadFirSingleName').val();
+	
+	
+	var singleStolenOperator2=parseInt($('#singleStolenOperator3').val());
+	var singleStolenOperator3=parseInt($('#singleStolenOperator4').val());
+	var singleStolenOperator4=parseInt($('#singleStolenOperator5').val());
+	var trimContactNumber3 = $('#singleStolenphone3').val();
+	var singleStolenphone3 =trimContactNumber3.replace(/[^A-Z0-9]/ig, "");
+	
+	var trimContactNumber4 = $('#singleStolenphone4').val();
+	var singleStolenphone4 =trimContactNumber4.replace(/[^A-Z0-9]/ig, "");
+	
+	var trimContactNumber5 = $('#singleStolenphone5').val();
+	var singleStolenphone5 =trimContactNumber5.replace(/[^A-Z0-9]/ig, "");
+	
 	var stolenIndividualUserDB={
 			"alternateContactNumber": singleStolenphone1,
 			"commune": singleStolencommune,
 			"complaintType": singleStolenComplaintType,
 			"contactNumber": singleStolenphone2,
+			"contactNumber2": singleStolenphone3,
+			"contactNumber3": singleStolenphone4,
+			"contactNumber4": singleStolenphone5,
 			"country": country,
 			"deviceBrandName": singleStolendeviceBrandName,
 			"deviceIdType": singleStolendeviceIDType,
@@ -313,6 +344,9 @@ function updateIndivisualStolen()
 			"modelNumber":singleStolenmodalNumber,
 			"nid": singleStolennIDPassportNumber,
 			"operator": singleStolenOperator,
+			"operator2": singleStolenOperator2,
+			"operator3": singleStolenOperator3,
+			"operator4": singleStolenOperator4,
 			"phoneNo": singleStolenphone2,
 			"postalCode": singleDevicepin,
 			"propertyLocation": singleStolenaddress,
@@ -483,6 +517,9 @@ function viewPageType() {
    		$("#singleDeviceRejectRemarkDiv").css("display", "block");
 		$("#SingleForm").find("input,select,textarea,button").prop(
 				"disabled", true);
+		  $("#operator3span").css("display", "none");
+		  $("#operator4span").css("display", "none");
+		  $("#operator5span").css("display", "none");
 	} else {
 		$('#headingType').text('');
 		$("#singleDeviceRejectRemarkDiv").css("display", "none");
@@ -544,4 +581,29 @@ function changeBrandValue(brand_id){
 							'#editsingleStolenmodalNumber');
 				}
 			});
+}
+
+
+
+
+function setOpertorTypeMandaotry()
+{
+	var mobilenumber2=$("#singleStolenphone3").val();
+	 var mobilenumber3=$("#singleStolenphone4").val();
+	 var mobilenumber4=$("#singleStolenphone5").val();
+	 
+	  if(mobilenumber2>1)
+		  {
+		  $("#operator3span").css("display", "block");
+		  }
+
+	  if(mobilenumber3>1)
+		  {
+		  $("#operator4span").css("display", "block");
+		  }
+	
+	  if(mobilenumber4>1)
+		  {
+		  $("#operator5span").css("display", "block");
+		  }	
 }

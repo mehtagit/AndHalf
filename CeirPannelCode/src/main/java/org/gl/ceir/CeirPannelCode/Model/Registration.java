@@ -59,6 +59,7 @@ public class Registration extends UserHeader{
     private RegistrationUser user;
     private String natureOfEmploymentInterp;
     private List<RoleList> rolesList = null;
+    private Integer userId;
 	public long getId() {
 		return id;
 	}
@@ -377,6 +378,12 @@ public class Registration extends UserHeader{
 	public void setRolesList(List<RoleList> rolesList) {
 		this.rolesList = rolesList;
 	}
+	public Integer getUserId() {
+		return userId;
+	}
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -486,12 +493,11 @@ public class Registration extends UserHeader{
 		builder.append(natureOfEmploymentInterp);
 		builder.append(", rolesList=");
 		builder.append(rolesList);
+		builder.append(", userId=");
+		builder.append(userId);
 		builder.append("]");
 		return builder.toString();
 	}
-	
     
     
-    
-	
 }

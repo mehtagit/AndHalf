@@ -161,13 +161,13 @@
 				
 						$.getJSON('./getAllfeatures', function(data) {
 							for (i = 0; i < data.length; i++) {
-							$('<option>').val(data[i].name).text(data[i].name).appendTo('#Feature');
+							$('<option>').val(data[i].name).text(data[i].name).appendTo('#Feature,#editFeature');
 							}
 						});
 						$.getJSON('./registrationUserType', function(data) {
 							for (i = 0; i < data.length; i++) {
 								$('<option>').val(data[i].usertypeName).text(data[i].usertypeName)
-								.appendTo('#User');
+								.appendTo('#User,#editUser');
 							}
 						});
 						$.getJSON('./ruleName', function(data) {
@@ -179,17 +179,7 @@
 						
 						
 						
-						$.getJSON('./getAllfeatures', function(data) {
-							for (i = 0; i < data.length; i++) {
-							$('<option>').val(data[i].name).text(data[i].name).appendTo('#editFeature');
-							}
-						});
-						$.getJSON('./registrationUserType', function(data) {
-							for (i = 0; i < data.length; i++) {
-								$('<option>').val(data[i].usertypeName).text(data[i].usertypeName)
-								.appendTo('#editUser');
-							}
-						});
+					
 						$.getJSON('./ruleName', function(data) {
 							for (i = 0; i < data.length; i++) {
 								$('<option>').val(data[i].id).text(data[i].description)
@@ -238,10 +228,10 @@
 				type : 'GET',
 				success : function(data) {
 					var result=JSON.stringify(data);
-					
 					$("#editModel").openModal({
 				        dismissible:false
 				    });
+					
 					setData(JSON.parse(result));
 				},
 				error : function() {
@@ -252,7 +242,8 @@
 		
 		
 		function setData(result){
-			$("#editRule").val(result.ruleOrder);
+		
+			$("#editRule").val(result.name);
 			$("#editFeature").val(result.feature);
 			$("#editUser").val(result.userType);
 			$("#order").val(result.ruleOrder);
@@ -260,7 +251,7 @@
 			$("#PostGracePeriod").val(result.postGraceAction);
 			$("#MoveToGracePeriod").val(result.failedRuleActionGrace);
 			$("#MoveToPostGracePeriod").val(result.failedRuleActionPostGrace);
-			
+			$("#editOutput").val(result.output);
 		}
 		
 		
@@ -284,7 +275,8 @@
 					  "name": $("#editRule").val(),
 					  "postGraceAction": $("#PostGracePeriod").val(),
 					  "ruleOrder":parseInt($("#order").val()),
-					  "userType": $("#editUser").val()
+					  "userType": $("#editUser").val(),
+					  "output":  $("#editOutput").val()
 					}
 			$.ajax({
 				
