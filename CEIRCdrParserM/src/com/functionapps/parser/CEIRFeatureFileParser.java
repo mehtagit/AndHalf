@@ -18,8 +18,6 @@ import com.functionapps.parser.service.WithdrawnTac;
 
 import org.apache.log4j.Logger;
 
-import com.functionapps.constants.*;
-
 public class CEIRFeatureFileParser {
 
     public static  Logger logger = Logger.getLogger(CEIRFeatureFileParser.class);
@@ -145,7 +143,6 @@ public class CEIRFeatureFileParser {
         String query = null;
         ResultSet rs1 = null;
         Statement stmt = null;
-
         try {
             query = "select * from system_config_list_db where tag='OPERATORS' and interp='" + operator + "'";
             logger.info("Query is " + query);
