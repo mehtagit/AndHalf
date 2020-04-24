@@ -35,15 +35,24 @@ public class DeviceDbDao {
 			stmt  = conn.createStatement();
 			rs = stmt.executeQuery(query);
 			
-//			while(rs.next()){
-//				System.out.println("Inside while of device_db.");
+			while(rs.next()){
+				System.out.println("Inside while of device_db.");
 //
 //				deviceDbs.add(new DeviceDb(rs.getLong("id"), 0L, 0, rs.getString("created_on"), rs.getString("modified_on"), 
 //						rs.getString("manufature_date"), rs.getString("device_type"), rs.getString("device_id_type"), 
 //						rs.getString("multiple_sim_status"), rs.getString("sn_of_device"), rs.getString("imei_esn_meid"), 
 //						rs.getDate("launch_date"), rs.getString("device_status"), rs.getString("device_action"), 
 //						rs.getInt("tac"), rs.getString("period"), rs.getString("txn_id"), rs.getInt("state")));
-//			}
+			
+			
+			deviceDbs.add(new DeviceDb(rs.getLong("id"), 0, rs.getString("created_on"), rs.getString("modified_on"), 
+					rs.getString("manufature_date"), rs.getString("device_type"), rs.getString("device_id_type"), 
+					rs.getString("multiple_sim_status"), rs.getString("sn_of_device"), rs.getString("imei_esn_meid"), 
+					rs.getString("launch_date"), rs.getString("device_status"), rs.getString("device_action"), 
+					rs.getInt("tac"), rs.getString("period"), rs.getString("txn_id"), rs.getInt("state")));
+			
+			}
+			
 		}
 		catch(Exception e){
 			logger.info(e.getMessage(), e);

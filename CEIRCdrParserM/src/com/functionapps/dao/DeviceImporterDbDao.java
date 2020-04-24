@@ -42,7 +42,9 @@ public class DeviceImporterDbDao {
 				System.out.println(rs.getFetchSize());
 			}
 			
-//			while(rs.next()){
+			while(rs.next()){
+			
+			
 //				deviceImporterDbs.add(new DeviceImporterDb(rs.getLong("id"), 0L, 0, rs.getString("created_on"), rs.getString("modified_on"), 
 //						rs.getString("manufature_date"), rs.getString("device_type"), rs.getString("device_id_type"), 
 //						rs.getString("multiple_sim_status"), rs.getString("sn_of_device"), rs.getString("imei_esn_meid"), 
@@ -50,7 +52,18 @@ public class DeviceImporterDbDao {
 //						rs.getLong("user_id"), rs.getString("txn_id"), rs.getString("local_date"), rs.getInt("device_state"), 
 //						rs.getInt("previous_device_status"), rs.getString("period"), rs.getInt("feature_id"))
 //						);
-//			}
+			
+				deviceImporterDbs.add(new DeviceImporterDb(rs.getLong("id"), 0, rs.getString("created_on"),
+						rs.getString("modified_on"),  rs.getString("manufature_date"),
+						rs.getString("device_type"),  rs.getString("device_id_type"),
+						rs.getString("multiple_sim_status"),  rs.getString("sn_of_device"),
+						rs.getString("imei_esn_meid"),  rs.getString("launch_date"),
+						rs.getString("device_status"),  rs.getString("device_action"),
+						rs.getLong("user_id"), rs.getString("txn_id"), rs.getString("local_date"),
+						rs.getInt("device_state"), rs.getInt("previous_device_status"),
+						rs.getString("period"), rs.getInt("feature_id")) ); 
+			
+			}
 		}
 		catch(Exception e){
 			logger.info("Exception in getFeatureMapping"+e);

@@ -109,7 +109,7 @@ try {
   CEIRFeatureFileFunctions ceirfunction = new CEIRFeatureFileFunctions();
   period = cEIRFeatureFileParser.checkGraceStatus(conn);
   HashMap<String, String> feature_file_mapping = new HashMap<String, String>();
-  feature_file_mapping = ceirfunction.getFeatureMapping(conn, operator, usertype_name); // select * from
+  feature_file_mapping = ceirfunction.getFeatureMapping(conn, operator, usertype_name); // select * from 
   // feature_mapping_db
   HashMap<String, String> feature_file_management = new HashMap<String, String>();
   feature_file_management = ceirfunction.getFeatureFileManagement(conn,
