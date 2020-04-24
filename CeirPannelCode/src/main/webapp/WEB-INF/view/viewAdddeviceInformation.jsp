@@ -234,7 +234,7 @@ input[type='search'] {
 													code="input.Nationality" /></label>
 										</div>
 										<c:choose>
-												<c:when test = "${viewInformation.endUserDB.nationality='Cambodian'}">
+												<c:when test = "${viewInformation.endUserDB.nationality=='Cambodian'}">
 										<div class="input-field col s12 m6" id="entryCountryDiv" style="display: none;">
 												<input type="text" readonly="readonly" id="datepicker" value="${viewInformation.endUserDB.entryDateInCountry}" /> <label for="datepicker"><spring:message
 														code="input.EntryCountry" /> <span class="star">*</span></label>

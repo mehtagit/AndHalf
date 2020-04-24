@@ -294,8 +294,9 @@ var nationalId =$("body").attr("session-value") =='null' ? null : $("body").attr
 function table(url,dataUrl){
 	var txnIdValue = $("body").attr("session-valueTxnID");
 	var txn= (txnIdValue == 'null' && transactionIDValue == undefined)? $('#transactionID').val() : transactionIDValue;
+	
 	var request={
-			"origin":"customs",
+			"origin":$("body").attr("data-roleType"),
 			"endDate":$('#endDate').val(),
 			"startDate":$('#startDate').val(),
 			"taxPaidStatus":parseInt($('#taxPaidStatus').val()),
@@ -990,12 +991,19 @@ function regularizedCount(nationType){
 		{
 		console.log("if condition for regulaised");
 		nationType=1;
+		var nid= nationalId == 'null' ? null : nationalId;
 		}
 	else if(nationType==undefined && roleType=='Immigration'){
 		console.log("else  condition for regulaised");
 		nationType=2;
+		var nid= nationalId == 'null' ? null : nationalId;
 	}
-	var nid= nationalId == 'null' ? null : nationalId;
+	else{
+		console.log("else  condition for CEIR admin");
+		nationType=1;
+		var nid= '';
+	}
+	
 	$.ajax({
 		url: './countByNid?nid='+nid+"&nationType="+nationType,
 		type: 'GET',

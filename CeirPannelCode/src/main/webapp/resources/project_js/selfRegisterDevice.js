@@ -488,8 +488,8 @@ function pageButtons(url){
 			for(i=0; i<button.length; i++){
 				$('#'+button[i].id).text(button[i].buttonTitle);
 				if(button[i].type === "HeaderButton"){
-					$('#'+button[i].id).attr("href", button[i].buttonURL);
-					$('#'+button[i].id).attr("href", "./add-device-information?NID="+$("body").attr("session-value")+"");
+					//$('#'+button[i].id).attr("href", button[i].buttonURL);
+					$('#'+button[i].id).attr("href", "./EndUser_AddDevices");
 				}
 				else{
 					$('#'+button[i].id).attr("onclick", button[i].buttonURL);
@@ -1222,8 +1222,9 @@ function accept(){
 }
 
 function viewDetails(imei){ 
-		
-		window.location.href="./view-device-information/"+imei;
+		$('#viewbyImei').val(imei);
+		$('#viewDeviceForm').submit();
+		/*window.location.href="./view-device-information/"+imei;*/
 
 
 }
