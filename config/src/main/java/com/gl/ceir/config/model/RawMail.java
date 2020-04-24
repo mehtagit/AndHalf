@@ -41,7 +41,11 @@ public class RawMail implements Serializable{
 			 String roleType, String receiverUserType) {
 		super();
 		this.tag = tag;
-		this.userProfile = new UserProfile().setId(userId);
+		User user=new User();
+		user.setId(userId);
+		UserProfile profile=new UserProfile();
+		profile.setUser(user);
+		this.userProfile = profile;
 		this.featureId = featureId;
 		this.featureName = featureName;
 		this.subFeature = subFeature;

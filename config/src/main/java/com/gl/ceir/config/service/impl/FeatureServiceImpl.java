@@ -5,9 +5,8 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.gl.ceir.config.controller.ConsignmentController;
 import com.gl.ceir.config.feign.UserFeignClient;
-import com.gl.ceir.config.model.GenricResponse;
+import com.gl.ceir.config.genericresponse.GenricResponse_Class;
 
 @Service
 public class FeatureServiceImpl {
@@ -16,9 +15,9 @@ public class FeatureServiceImpl {
 	@Autowired
 	UserFeignClient userFeignClient;
 
-	public  GenricResponse responseNameById(int id) {
+	public  GenricResponse_Class responseNameById(int id) {
 		try {
-			GenricResponse response = userFeignClient.nameById(id);
+			GenricResponse_Class response = userFeignClient.nameById(id);
 			return response;
 		}
 		catch(Exception e) {

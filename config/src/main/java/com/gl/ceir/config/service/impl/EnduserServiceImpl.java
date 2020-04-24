@@ -106,6 +106,9 @@ public class EnduserServiceImpl {
 	@Autowired
 	CommonFunction commonFunction;
 
+	@Autowired
+	RegularizedDeviceServiceImpl regularizedService;
+	
 	public GenricResponse endUserByNid(String nid) {
 		try {
 			EndUserDB endUserDB = endUserDbRepository.getByNid(nid);
@@ -165,6 +168,19 @@ public class EnduserServiceImpl {
 				}
 			}
 
+Integer type=null;
+			
+			
+			logger.info("nationality= "+endUserDB.getNationality());
+			if(Objects.nonNull(endUserDB)) {
+				if("Cambodian".equalsIgnoreCase(endUserDB.getNationality())) {
+					type=1;
+				}
+				else {
+					type=2;
+				}	
+			}
+			
 			// Validate and set visa expiry date as per default rule.
 			GenricResponse response = setVisaExpiryDate(endUserDB);
 			if(response.getErrorCode() != 0) 
@@ -172,6 +188,17 @@ public class EnduserServiceImpl {
 
 			// Validate end user devices.
 			if(!endUserDB.getRegularizeDeviceDbs().isEmpty()){
+				
+				logger.info("nationality= "+endUserDB.getNationality());
+				if(Objects.nonNull(endUserDB)) {
+					if("Cambodian".equalsIgnoreCase(endUserDB.getNationality())) {
+						type=1;
+					}
+					else {
+						type=2;
+					}	
+				}
+				if(regularizedService.validateRegularizedDevicesCount(endUserDB.getNid(), endUserDB.getRegularizeDeviceDbs(),type)) {
 				if(commonFunction.hasDuplicateImeiInRequest(endUserDB.getRegularizeDeviceDbs())) {
 					return new GenricResponse(6,GenericMessageTags.DUPLICATE_IMEI_IN_REQUEST.getTag(),GenericMessageTags.DUPLICATE_IMEI_IN_REQUEST.getMessage(), ""); 
 				}
@@ -201,9 +228,33 @@ public class EnduserServiceImpl {
 				}
 
 				logger.info("regularize devices: "+endUserDB.getRegularizeDeviceDbs());
+			}else {
+				logger.warn("Regularized Devices are exceeding the allowed count." + endUserDB);
+				return new GenricResponse(3,GenericMessageTags.REGULARISED_DEVICE_EXCEEDED.getTag(),GenericMessageTags.REGULARISED_DEVICE_EXCEEDED.getMessage(), "");
+			}
 			}
 
 			endUserDB = endUserDbRepository.save(endUserDB);
+			if(Objects.nonNull(endUserDB)){
+				
+				if(Objects.nonNull(endUserDB.getEmail()) && !endUserDB.getEmail().isEmpty() ) {
+					List<RawMail> rawMails = new ArrayList<>();
+					String mailTag = "END_USER_REGISTER";
+					Map<String, String> placeholderMap = new HashMap<String, String>();
+					placeholderMap.put("<First name>", endUserDB.getFirstName());
+					// Mail to End user.
+					rawMails.add(new RawMail(mailTag, endUserDB.getId(), Long.valueOf(12), 
+							Features.REGISTER_DEVICE, SubFeatures.REGISTER, endUserDB.getTxnId(), 
+							"SUBJECT", placeholderMap, ReferTable.END_USER, null, "End User"));
+
+					emailUtil.saveNotification(rawMails);
+					
+				}
+				else {
+					logger.info("this end user don't have any email");
+				}
+				
+			}
 			logger.info(GenericMessageTags.USER_REGISTER_SUCCESS.getMessage() + " with nid [" + endUserDB.getNid() + "]");
 
 			webActionDbRepository.saveAll(webActionDbs);
@@ -593,12 +644,11 @@ public class EnduserServiceImpl {
 					return new GenricResponse(3, "Unable to update End Userdb.", updateRequest.getTxnId()); 
 				}else {
 					List<RawMail> rawMails = new ArrayList<>();
-
-					// Mail to End user.
+					mailTag="END_USER_REGISTER";
+					// Mail to End user. 
 					rawMails.add(new RawMail(mailTag, endUserDB.getId(), Long.valueOf(updateRequest.getFeatureId()), 
 							Features.MANAGE_USER, SubFeatures.ACCEPT_REJECT, updateRequest.getTxnId(), 
-							"SUBJECT", placeholderMap, ReferTable.END_USER, null, "END_USER_REJECT_BY_CEIR_ADMIN"));
-
+							"SUBJECT", placeholderMap, ReferTable.END_USER, null, "END USER"));
 					emailUtil.saveNotification(rawMails);
 				}
 

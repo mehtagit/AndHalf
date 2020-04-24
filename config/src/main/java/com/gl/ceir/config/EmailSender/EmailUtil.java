@@ -137,9 +137,6 @@ public class EmailUtil {
 					continue;
 				}
 				logger.info("Processing Raw Mail" + rawMail);
-				logger.info("UserProfile"+rawMail.getUserProfile());
-				logger.info("User"+rawMail.getUserProfile().getUser());
-				logger.info("UserId"+rawMail.getUserProfile().getUser().getId());
 				notifications.add(new Notification(ChannelType.EMAIL, 
 						messageDb.getValue(), 
 						rawMail.getUserProfile().getUser().getId(), 
