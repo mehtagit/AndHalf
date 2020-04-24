@@ -133,14 +133,16 @@ public class GrievanceDatatableController {
 						String createdOn = dataInsideList.getCreatedOn();
 						String modifiedOn = dataInsideList.getModifiedOn();
 						String txnId = dataInsideList.getTxnId();
-						String userDisplayName = dataInsideList.getUserDisplayName();
+						//String userDisplayName = dataInsideList.getUserDisplayName();
+						String userName = dataInsideList.getUserDisplayName();
+						String userTypeName = dataInsideList.getUserType();
 						String grievanceId = String.valueOf(dataInsideList.getGrievanceId());
 						String StatusofGrievance = String.valueOf(dataInsideList.getGrievanceStatus());
 						String grievanceStatus = dataInsideList.getStateInterp();
 						String userStatus = (String) session.getAttribute("userStatus");
 						String action = iconState.adminGrievanceState(dataInsideList.getFileName(), txnId, grievanceId,
 						StatusofGrievance, userStatus, userId);
-						Object[] finalData = { createdOn, modifiedOn, txnId, userDisplayName, grievanceId, grievanceStatus, action };
+						Object[] finalData = { createdOn, modifiedOn, txnId, userName, userTypeName, grievanceId, grievanceStatus, action };
 						List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);
@@ -255,6 +257,26 @@ public class GrievanceDatatableController {
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);
 					}
+				}else if (userType.equals("Customer Care")) {
+					log.info("<><><><> in Customer Care Controller");
+					for (GrievanceContentModel dataInsideList : paginationContentList) {
+						String createdOn = dataInsideList.getCreatedOn();
+						String modifiedOn = dataInsideList.getModifiedOn();
+						String txnId = dataInsideList.getTxnId();
+						//String userDisplayName = dataInsideList.getUserDisplayName();
+						String userName = "";
+						String userTypeName = dataInsideList.getUserType();
+						String grievanceId = String.valueOf(dataInsideList.getGrievanceId());
+						String StatusofGrievance = String.valueOf(dataInsideList.getGrievanceStatus());
+						String grievanceStatus = dataInsideList.getStateInterp();
+						String userStatus = (String) session.getAttribute("userStatus");
+						String action = iconState.customerCareGrievanceState(dataInsideList.getFileName(), txnId, grievanceId,
+						StatusofGrievance, userStatus, userId);
+						Object[] finalData = { createdOn, modifiedOn, txnId, userName, userTypeName, grievanceId, grievanceStatus, action };
+						List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
+						finalList.add(finalDataList);
+						datatableResponseModel.setData(finalList);
+					}
 				}
 			}
 			// data set on ModelClass
@@ -291,50 +313,108 @@ public class GrievanceDatatableController {
 		log.info("USER STATUS:::::::::" + userStatus);
 		log.info("session value user Type==" + session.getAttribute("usertype"));
 
-		String[] names = { "HeaderButton", Translator.toLocale("button.reportGriev"), "./openGrievanceForm?reqType=formPage", "btnLink",
-				"FilterButton", Translator.toLocale("button.filter"), "grievanceDataTable("+ConfigParameters.languageParam+")", "submitFilter" };
-		for (int i = 0; i < names.length; i++) {
-			button = new Button();
-			button.setType(names[i]);
-			i++;
-			button.setButtonTitle(names[i]);
-			i++;
-			button.setButtonURL(names[i]);
-			i++;
-			button.setId(names[i]);
-			buttonList.add(button);
-		}
-		pageElement.setButtonList(buttonList);
+		
+		if(userType.equals("Customer Care")) {
+			String[] names = { "HeaderButton", Translator.toLocale("button.reportGriev"), "./searchUserNameForm", "btnLink",
+					"FilterButton", Translator.toLocale("button.filter"), "grievanceDataTable("+ConfigParameters.languageParam+")", "submitFilter" };
+			for (int i = 0; i < names.length; i++) {
+				button = new Button();
+				button.setType(names[i]);
+				i++;
+				button.setButtonTitle(names[i]);
+				i++;
+				button.setButtonURL(names[i]);
+				i++;
+				button.setId(names[i]);
+				buttonList.add(button);
+			}
+			pageElement.setButtonList(buttonList);
+			
+		}else {
+			String[] names = { "HeaderButton", Translator.toLocale("button.reportGriev"), "./openGrievanceForm?reqType=formPage", "btnLink",
+					"FilterButton", Translator.toLocale("button.filter"), "grievanceDataTable("+ConfigParameters.languageParam+")", "submitFilter" };
+			for (int i = 0; i < names.length; i++) {
+				button = new Button();
+				button.setType(names[i]);
+				i++;
+				button.setButtonTitle(names[i]);
+				i++;
+				button.setButtonURL(names[i]);
+				i++;
+				button.setId(names[i]);
+				buttonList.add(button);
+			}
+			pageElement.setButtonList(buttonList);
+			
+		} 
+		
+		if("CEIRAdmin".equals(userType) || userType.equals("Customer Care")) {
+			// Dropdown items
+			String[] selectParam = {"select", Translator.toLocale("table.userType"), "userType", "","select", Translator.toLocale("button.grievStatus"), "recentStatus", "" };
+			for (int i = 0; i < selectParam.length; i++) {
+				inputFields = new InputFields();
+				inputFields.setType(selectParam[i]);
+				i++;
+				inputFields.setTitle(selectParam[i]);
+				i++;
+				inputFields.setId(selectParam[i]);
+				i++;
+				inputFields.setClassName(selectParam[i]);
+				dropdownList.add(inputFields);
+			}
+			pageElement.setDropdownList(dropdownList);
 
-		// Dropdown items
-		String[] selectParam = { "select", Translator.toLocale("button.grievStatus"), "recentStatus", "" };
-		for (int i = 0; i < selectParam.length; i++) {
-			inputFields = new InputFields();
-			inputFields.setType(selectParam[i]);
-			i++;
-			inputFields.setTitle(selectParam[i]);
-			i++;
-			inputFields.setId(selectParam[i]);
-			i++;
-			inputFields.setClassName(selectParam[i]);
-			dropdownList.add(inputFields);
-		}
-		pageElement.setDropdownList(dropdownList);
+			// input type date list
+			String[] dateParam = { "date", Translator.toLocale("input.startDate"), "startDate", "", "date", Translator.toLocale("input.endDate"), "endDate", "", "text",
+					Translator.toLocale("input.transactionID"), "transactionID", "", "text",Translator.toLocale("table.grievanceID"), "grievanceID", "","text",Translator.toLocale("table.UserName"), "userName", "" };
+			for (int i = 0; i < dateParam.length; i++) {
+				dateRelatedFields = new InputFields();
+				dateRelatedFields.setType(dateParam[i]);
+				i++;
+				dateRelatedFields.setTitle(dateParam[i]);
+				i++;
+				dateRelatedFields.setId(dateParam[i]);
+				i++;
+				dateRelatedFields.setClassName(dateParam[i]);
+				inputTypeDateList.add(dateRelatedFields);
+			}
+			
+		
+		
+		}else {
+			// Dropdown items
+			String[] selectParam = { "select", Translator.toLocale("button.grievStatus"), "recentStatus", "" };
+			for (int i = 0; i < selectParam.length; i++) {
+				inputFields = new InputFields();
+				inputFields.setType(selectParam[i]);
+				i++;
+				inputFields.setTitle(selectParam[i]);
+				i++;
+				inputFields.setId(selectParam[i]);
+				i++;
+				inputFields.setClassName(selectParam[i]);
+				dropdownList.add(inputFields);
+			}
+			pageElement.setDropdownList(dropdownList);
 
-		// input type date list
-		String[] dateParam = { "date", Translator.toLocale("input.startDate"), "startDate", "", "date", Translator.toLocale("input.endDate"), "endDate", "", "text",
-				Translator.toLocale("input.transactionID"), "transactionID", "", "text",Translator.toLocale("table.grievanceID"), "grievanceID", "" };
-		for (int i = 0; i < dateParam.length; i++) {
-			dateRelatedFields = new InputFields();
-			dateRelatedFields.setType(dateParam[i]);
-			i++;
-			dateRelatedFields.setTitle(dateParam[i]);
-			i++;
-			dateRelatedFields.setId(dateParam[i]);
-			i++;
-			dateRelatedFields.setClassName(dateParam[i]);
-			inputTypeDateList.add(dateRelatedFields);
+			// input type date list
+			String[] dateParam = { "date", Translator.toLocale("input.startDate"), "startDate", "", "date", Translator.toLocale("input.endDate"), "endDate", "", "text",
+					Translator.toLocale("input.transactionID"), "transactionID", "", "text",Translator.toLocale("table.grievanceID"), "grievanceID", "" };
+			for (int i = 0; i < dateParam.length; i++) {
+				dateRelatedFields = new InputFields();
+				dateRelatedFields.setType(dateParam[i]);
+				i++;
+				dateRelatedFields.setTitle(dateParam[i]);
+				i++;
+				dateRelatedFields.setId(dateParam[i]);
+				i++;
+				dateRelatedFields.setClassName(dateParam[i]);
+				inputTypeDateList.add(dateRelatedFields);
+			}
+			
 		}
+		
+		
 
 		pageElement.setInputTypeDateList(inputTypeDateList);
 		pageElement.setUserStatus(userStatus);

@@ -59,7 +59,7 @@ function Datatable(url,DataUrl){
 			"consignmentStatus":parseInt($('#status').val()),
 			"requestType":parseInt($('#requestType').val()),
 			"sourceType":parseInt($('#sourceStatus').val()),
-			"roleType": role,
+			"roleType": roleType,
 			"userId": userId,
 			"featureId":featureId,
 			"userTypeId": parseInt($("body").attr("data-userTypeID")),
@@ -398,7 +398,7 @@ $.getJSON('./getDropdownList/OPERATORS', function(data) {
 
 	for (i = 0; i < data.length; i++) {
 		$('<option>').val(data[i].value).text(data[i].interp)
-		.appendTo('#singleStolenOperator');
+		.appendTo('#singleStolenOperator,#singleStolenOperator3,#singleStolenOperator4,#singleStolenOperator5');
 	}
 });
 
@@ -454,10 +454,24 @@ function saveIndivisualStolenRequest(){
 	var singleStolendeviceIDType=$('#singleStolendeviceIDType').val();
 	var singleStolendeviceType=$('#singleStolendeviceType').val();
 	var singleStolenOperator=parseInt($('#singleStolenOperator').val());
+	var singleStolenOperator2=parseInt($('#singleStolenOperator3').val());
+	var singleStolenOperator3=parseInt($('#singleStolenOperator4').val());
+	var singleStolenOperator4=parseInt($('#singleStolenOperator5').val());
+	
 	var singleStolenSimStatus=$('#singleStolenSimStatus').val();
 	var singleStolenComplaintType=$('#singleStolenComplaintType').val();
 	var trimContactNumber2 = $('#singleStolenphone2').val();
 	var singleStolenphone2 =trimContactNumber2.replace(/[^A-Z0-9]/ig, "");
+
+	var trimContactNumber3 = $('#singleStolenphone3').val();
+	var singleStolenphone3 =trimContactNumber3.replace(/[^A-Z0-9]/ig, "");
+	
+	var trimContactNumber4 = $('#singleStolenphone4').val();
+	var singleStolenphone4 =trimContactNumber4.replace(/[^A-Z0-9]/ig, "");
+	
+	var trimContactNumber5 = $('#singleStolenphone5').val();
+	var singleStolenphone5 =trimContactNumber5.replace(/[^A-Z0-9]/ig, "");
+	
 	var singleStolenmodalNumber= $('#singleStolenmodalNumber').val();
 
 	var singleDeviceAddress=$('#singleDeviceAddress').val();
@@ -485,6 +499,9 @@ function saveIndivisualStolenRequest(){
 			"commune": singleStolencommune,
 			
 			"contactNumber": singleStolenphone2,
+			"contactNumber2": singleStolenphone3,
+			"contactNumber3": singleStolenphone4,
+			"contactNumber4": singleStolenphone5,
 			"country": country,
 			"deviceBrandName": singleStolendeviceBrandName,
 			"deviceIdType": singleStolendeviceIDType,
@@ -513,6 +530,9 @@ function saveIndivisualStolenRequest(){
 			"nid": singleStolennIDPassportNumber,
 
 			"operator": singleStolenOperator,
+			"operator2": singleStolenOperator2,
+			"operator3": singleStolenOperator3,
+			"operator4": singleStolenOperator4,
 			"phoneNo": singleStolenphone2,
 			"postalCode": singleDevicepin,
 			"propertyLocation": singleStolenaddress,
@@ -721,8 +741,9 @@ function confirmantiondelete(){
 	console.log("txnId===**"+txnId+" userId="+userId+" roleType== "+roleType+ " currentRoleType=="+currentRoleType);
 	var obj ={
 			"txnId" : txnId,
-			"roleType":role,
+			"roleType":roleType,
 			"userId":userId,
+			"featureId":featureId,
 			"id":id,
 			"remark":remarks
 
@@ -910,3 +931,48 @@ $('#singleStolendeviceBrandName').on(
 		});
 
 
+
+
+$(document).on("keyup", "#singleStolenphone3", function(e) {
+	var mobilenumber=$('#singleStolenphone3').val();
+	console.log(" 2 mobilenumber=="+mobilenumber);
+	if(mobilenumber.length<'1' )
+	{$("#singleStolenOperator3").attr("required", false);  
+	$("#operator3span").css("display", "none");
+	}
+	else
+	{
+		
+		$("#operator3span").css("display", "block");
+		$('#singleStolenOperator3').prop('required',true);
+	}
+});
+
+
+$(document).on("keyup", "#singleStolenphone4", function(e) {
+	var mobilenumber=$('#singleStolenphone4').val();
+	console.log(" 3  mobilenumber=="+mobilenumber);
+	if(mobilenumber.length<'1' )
+	{$("#singleStolenOperator4").attr("required", false);  	$("#operator4span").css("display", "none"); 
+	}
+	else
+	{
+		
+		$("#operator4span").css("display", "block");
+	    $('#singleStolenOperator4').prop('required',true);
+	}
+});
+
+
+$(document).on("keyup", "#singleStolenphone5", function(e) {
+	var mobilenumber=$('#singleStolenphone5').val();
+	console.log(" 4 mobilenumber=="+mobilenumber);
+	if(mobilenumber.length<'1' )
+	{$("#singleStolenOperator5").attr("required", false);   	$("#operator5span").css("display", "none");
+	}
+	else
+	{
+		$("#operator5span").css("display", "block");
+		$('#singleStolenOperator5').prop('required',true);
+	}
+});

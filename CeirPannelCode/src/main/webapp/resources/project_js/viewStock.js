@@ -99,7 +99,7 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 		$("#csvUploadFileName").val(data.fileName);
 		$("#withdrawnRemark").val(data.remarks);
 		$("#viewdevicequantity").val(data.deviceQuantity);
-
+		$("label[for='viewdevicequantity']").addClass('active');
 
 	}
 
@@ -164,7 +164,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 		$("#editcsvUploadFileName").val(data.fileName);
 		$("#existingFileName").val(data.fileName);
 		$("#editdevicequantity").val(data.deviceQuantity);
-		
+		$("label[for='editdevicequantity']").addClass('active');
 
 	} 
 
@@ -180,7 +180,8 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 		var txnId=$('#editTransactionId').val();
 		var quantity=$('#editQuantity').val();
 		var InvoiceNumber=$('#editInvoiceNumber').val();
-
+		var editdevicequantity=$('#editdevicequantity').val();
+		
 		console.log(supplierName,supplierName,filename,txnId,quantity,InvoiceNumber);
 
 		var formData= new FormData();
@@ -192,7 +193,8 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 		formData.append('filename',filename);
 
 		formData.append('invoiceNumber',InvoiceNumber);
-
+		formData.append('deviceQuantity',editdevicequantity);
+		
 		console.log(JSON.stringify(formData));
 		console.log("*********");
 

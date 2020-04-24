@@ -1,6 +1,7 @@
 package org.gl.ceir.CeirPannelCode.Model;
 
 public class UserStatus {
+	private Integer id;
 	private String status;
 	private Integer userId;
 	private String remark;
@@ -8,25 +9,11 @@ public class UserStatus {
 	private Integer statusValue;
 	private String username;
 	private String referenceId;
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("UserStatus [status=");
-		builder.append(status);
-		builder.append(", userId=");
-		builder.append(userId);
-		builder.append(", remark=");
-		builder.append(remark);
-		builder.append(", featureId=");
-		builder.append(featureId);
-		builder.append(", statusValue=");
-		builder.append(statusValue);
-		builder.append(", username=");
-		builder.append(username);
-		builder.append(", referenceId=");
-		builder.append(referenceId);
-		builder.append("]");
-		return builder.toString();
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
 	}
 	public String getStatus() {
 		return status;
@@ -69,6 +56,26 @@ public class UserStatus {
 	}
 	public void setReferenceId(String referenceId) {
 		this.referenceId = referenceId;
+	}
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("UserStatus [status=");
+		builder.append(status);
+		builder.append(", userId=");
+		builder.append(userId);
+		builder.append(", remark=");
+		builder.append(remark);
+		builder.append(", featureId=");
+		builder.append(featureId);
+		builder.append(", statusValue=");
+		builder.append(statusValue);
+		builder.append(", username=");
+		builder.append(username);
+		builder.append(", referenceId=");
+		builder.append(referenceId);
+		builder.append("]");
+		return builder.toString();
 	}
 	
 	

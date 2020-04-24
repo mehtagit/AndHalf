@@ -140,7 +140,7 @@ public class DatatableHeaders {
 
 			//AdminRegistration Headers
 			else if("adminRegistration".equals(role)) {
-				String[] headers = {"table.RequestedOn","table.lastupdatedate","table.displayName","table.email","table.phone","table.AsType","table.userType","table.status","table.action"};	
+				String[] headers = {"table.RequestedOn","table.lastupdatedate","table.UserName","table.email","table.phone","table.AsType","table.userType","table.status","table.action"};	
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
@@ -269,7 +269,7 @@ public class DatatableHeaders {
 //auditManagement Headers 
 			
 			else if("auditManagement".equals(role)) {
-				String[] headers = {"table.creationDate","table.transactionID","table.UserName","table.userType","table.feature","table.SubFeature","table.action"};		
+				String[] headers = {"table.creationDate","table.transactionID","table.UserName","table.userType","table.roleType","table.feature","table.SubFeature","table.action"};		
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
@@ -408,6 +408,7 @@ public class DatatableHeaders {
 				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
 			}
 
+
 			
 			//alert Management
 			
@@ -453,7 +454,7 @@ public class DatatableHeaders {
 			//Grievance Admin Headers
 			else if("adminGrievanceHeaders".equals(role)) {
 				
-				String[] headers = {"table.raiseddate","table.lastupdatedate","table.transactionID","table.displayName","table.grievanceID","table.grievancestatus","table.action"};	
+				String[] headers = {"table.raiseddate","table.lastupdatedate","table.transactionID","table.UserName","table.userType","table.grievanceID","table.grievancestatus","table.action"};	
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}

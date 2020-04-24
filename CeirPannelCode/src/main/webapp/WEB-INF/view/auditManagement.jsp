@@ -145,11 +145,18 @@
 					
 					
 					<div class="input-field col s12 m6 l6" >
-						<input type="text" name="period" id="viewRoleType"
+						<input type="text" name="period" id="viewUserType"
 							placeholder="" disabled >
-						<label for="viewRoleType"><spring:message code="table.userType" /></label>
+						<label for="viewUserType"><spring:message code="table.userType" /></label>
 					</div>
-
+					
+					<div class="input-field col s12 m6 l6" >
+						<input type="text" name="RoleType" id="viewRoleType"
+							placeholder="" disabled >
+						<label for="viewRoleType"><spring:message code="table.roleType" /></label>
+					</div>
+					
+						
 					<div class="input-field col s12 m6">
 						<input type="text" id="viewFeature" name="status"
 							placeholder="" maxlength="20" disabled>

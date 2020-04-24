@@ -19,10 +19,10 @@ var role = currentRoleType == null ? roleType : currentRoleType;
 
 function auditManagementDatatable(){
 	
-	var userType = $('#roleType').val() == null ? null : $("#roleType option:selected").text();
+	var userType = $('#userType').val() == null ? null : $("#userType option:selected").text();
 	var featureName = $('#feature').val() == null ? null : $("#feature option:selected").text();
 	var subFeature = $('#subFeature').val() == null ? null : $("#subFeature option:selected").text();
-	
+	var roleType = $('#roleType').val() == null ? null : $("#roleType option:selected").text();
 	var filterRequest={
 			
 			//"userId":parseInt(userId),
@@ -35,7 +35,8 @@ function auditManagementDatatable(){
 			"txnId" : $("#transactionID").val(),
 			"featureName" : featureName,
 			"subFeatureName" : subFeature,
-			"userName" : $("#userName").val()
+			"userName" : $("#userName").val(),
+			"roleType" : roleType
 			
 			
 	}
@@ -156,6 +157,13 @@ function setAllDropdown(){
 	$.getJSON('./registrationUserType', function(data) {
 		for (i = 0; i < data.length; i++) {
 			$('<option>').val(data[i].id).text(data[i].usertypeName)
+			.appendTo('#userType');
+		}
+	});
+	
+	$.getJSON('./registrationUserType', function(data) {
+		for (i = 0; i < data.length; i++) {
+			$('<option>').val(data[i].id).text(data[i].usertypeName)
 			.appendTo('#roleType');
 		}
 	});
@@ -208,7 +216,8 @@ function setViewPopupData(data){
 	$("#viewUserId").val(data.userId);
 	$("#viewTxnId").val(data.txnId);
 	$("#viewUserName").val(data.userName);
-	$("#viewRoleType").val(data.userType);
+	$("#viewUserType").val(data.userType);
+	$("#viewRoleType").val(data.roleType);
 	$("#viewFeature").val(data.featureName);
 	$("#viewSubFeature").val(data.subFeature);
 	

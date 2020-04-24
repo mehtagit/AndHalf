@@ -43,8 +43,8 @@ public class IconsState {
 	String approveIconTitle=null;
 	String rejectIconTitle=null;
 	String payTaxIconTitle =null;
-	String ListIconTitle = null;
-	String plusIconTitle = null;
+	String ListIconTittle = null;
+	String plusIconTittle = null;
 	String historyTitle = null;
 
 	String disableErrorIcon="\"fa fa-exclamation-circle error-icon disable\""; 
@@ -92,7 +92,6 @@ public class IconsState {
 
 		String history="<a onclick="+historyAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+historyIcon+" aria-hidden=\"true\"  title="
 				+historyTitle+"></i></a>";
-
 
 		if(("0".equals(status)) && "Approved".equals(userStatus)) {
 			error="<a onclick="+errorURL+" class="+disableIconClass+"><i  class="
@@ -519,6 +518,8 @@ public class IconsState {
 				+deleteIconTitle+"></i></a>";
 
 
+
+
 		String history="<a onclick="+historyAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+historyIcon+" aria-hidden=\"true\"  title="
 				+historyTitle+"></i></a>";
 
@@ -809,16 +810,16 @@ public class IconsState {
 
 	/********************************** Icons for AdminRegistrationRequest **********************************/ 
 
-	public String adminRegistrationRequest(String userId ,String userStatus,String AdminCurrentStatus,String createdOn,String roles, String type,String id,String username,String status,String sessionUserName) {
+	public String adminRegistrationRequest(String Id ,String userStatus,String AdminCurrentStatus,String createdOn,String roles, String type,String id,String username,String status,String sessionUserName) {
 		executePostConstruct();
 		log.info("username-->" +username+" sessionUserName--->" +sessionUserName);
 		// URL link 
 		String emptyURL="JavaScript:void(0);"; 
-		String approveAction = "userApprovalPopup("+userId+",'"+createdOn.replace(" ", "=")+"','"+username+"','"+sessionUserName+"')";
+		String approveAction = "userApprovalPopup("+Id+",'"+createdOn.replace(" ", "=")+"','"+username+"','"+sessionUserName+"')";
 
 		String viewAction="trcInformation?id="+id+"&roles="+roles.replace(" ", "=")+"&type="+type;
-		String rejectAction = "userRejectPopup("+userId+",'"+sessionUserName+"')";
-		String editAction="userChangeStatus('"+userId+"','"+sessionUserName+"')";
+		String rejectAction = "userRejectPopup("+Id+",'"+sessionUserName+"')";
+		String editAction="roleStatusChange('"+Id+"','"+sessionUserName+"')";
 
 
 		log.info("status---->"+status+"---------AdminCurrentStatus------>"+AdminCurrentStatus+" userStatus----------->" +userStatus);
@@ -1889,9 +1890,9 @@ public class IconsState {
 		String edit="<a href="+editAction+"><i class="+editIcon+" aria-hidden=\"true\"  title="
 				+editIconTitle+"></i></a>"; 
 		String List = "<a href="+ListAction+"><i class="+ListIcon+" aria-hidden=\"true\"  title="
-				+ListIconTitle+"></i></a>"; 
+				+ListIconTittle+"></i></a>"; 
 		String Add = "<a onclick="+AddAction+"><i class="+plusIcon+" aria-hidden=\"true\"  title="
-				+plusIconTitle+"></i></a>"; 
+				+plusIconTittle+"></i></a>"; 
 
 		String action = view.concat(edit).concat(List).concat(Add);
 		return action;
@@ -2323,7 +2324,7 @@ public class IconsState {
 		/* String escapedString = queryParser.escape(approveAction); */
 		String rejectAction = "openDisapprovePopup('"+txnId+"','"+displayName.replaceAll( " ", "+20")+"')";
 
-		String historyAction ="historyRecord('"+txnId+"')";
+
 		// state related Code 
 		String download="<a onclick="+downloadURL+" ><i class="
 				+downloadIcon+" aria-hidden=\"true\"  title="
@@ -2339,8 +2340,6 @@ public class IconsState {
 		String reject = "<a onclick="+rejectAction+"><i class="+rejectIcon+" aria-hidden=\"true\" title="
 				+rejectIconTitle+" ></i></a>";
 
-		String history="<a onclick="+historyAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+historyIcon+" aria-hidden=\"true\"  title="
-				+historyTitle+"></i></a>";
 		if("6".equals(status) || "7".equals(status) || "9".equals(status) && "Approved".equals(userStatus) ) {
 			approve = "<a onclick="+approveAction+" class="+disableIconClass+"><i class="+disableApproveIcon+" aria-hidden=\"true\" title="
 					+approveIconTitle+" ></i></a>";
@@ -2363,7 +2362,7 @@ public class IconsState {
 		}
 
 
-		String action=download.concat(view).concat(approve).concat(reject).concat(history);	
+		String action=download.concat(view).concat(approve).concat(reject);	
 		return action;
 	}
 	
@@ -2439,6 +2438,37 @@ public class IconsState {
 		
 	}
 	
+	
+	/********************************* Icons for Grievance Customer grievance *********************************/ 
+
+	public String customerCareGrievanceState(String fileName,String txnId ,String grievanceId,String status,String userStatus,int userId) {
+		executePostConstruct();
+		String replyAction = "grievanceReply('"+userId+"','"+grievanceId+"','"+txnId+"')";
+		String viewAction = "viewGrievanceHistory('"+grievanceId+"')";
+
+		// state related Code 
+		String reply = "<a onclick="+replyAction+"><i class="+replyIcon+" aria-hidden=\"true\" title="
+				+replyIconTitle+" ></i></a>";
+		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+				+viewIconTitle+" ></i></a>";
+
+		
+		reply = "<a onclick="+replyAction+" class=\"eventNone\"><i class="+disableReplyIcon+" aria-hidden=\"true\" title="
+					+replyIconTitle+" ></i></a>";
+
+	
+
+		if("Disable".equals(userStatus)) {
+			log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
+			reply = "<a onclick="+replyAction+" class=\"eventNone\"><i class="+disableReplyIcon+" aria-hidden=\"true\" title="
+					+replyIconTitle+" ></i></a>";
+		}
+
+
+		String action=reply.concat(view);
+		return action;
+	}
+	
 	@PostConstruct
 	public void executePostConstruct() {
 		errorIconTitle=Translator.toLocale("titles.Error_File");
@@ -2450,8 +2480,8 @@ public class IconsState {
 		approveIconTitle=Translator.toLocale("titles.Approve");
 		rejectIconTitle=Translator.toLocale("titles.Reject");
 		payTaxIconTitle =Translator.toLocale("titles.Pay_Tax");
-		ListIconTitle = Translator.toLocale("titles.List");
-		plusIconTitle = Translator.toLocale("titles.Add_device");
+		ListIconTittle = Translator.toLocale("titles.List");
+		plusIconTittle = Translator.toLocale("titles.Add_device");
 		historyTitle=Translator.toLocale("titles.history");
 	}
 

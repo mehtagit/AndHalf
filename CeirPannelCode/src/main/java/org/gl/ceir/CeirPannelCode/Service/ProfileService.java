@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Service
 public class ProfileService {
@@ -82,17 +83,18 @@ public class ProfileService {
 		Integer userid= userStatus.getUserId();
 		log.info("userid from session:  "+userid);
 		userStatus.setUserId(userid); 
+		userStatus.setId(id);
 		log.info("userStatus data is :  "+userStatus);
 		HttpResponse response=new HttpResponse();             
 		response=userProfileFeignImpl.adminUserApproval(userStatus);
 		return response;  
 	} 
 	
-	public Registration ViewAdminUserService(HttpSession session, long id) {
-		log.info("inside View AdminStatus controller-------------->"+id);
+	public Registration ViewAdminUserService(HttpSession session, long id,Integer userId) {
+		log.info("inside View AdminStatus controller---------"+userId+"----->"+id);
 		Integer userid=(Integer)session.getAttribute("userid");
 		Registration response=new Registration();             
-		response=userProfileFeignImpl.ViewAdminUser(id);
+		response=userProfileFeignImpl.ViewAdminUser(id, userId);
 		return response; 
 	}
 	
@@ -101,6 +103,7 @@ public class ProfileService {
 		Integer userid= userStatus.getUserId();
 		log.info("userid from session:  "+userid);
 		userStatus.setUserId(userid); 
+		userStatus.setId(id);
 		log.info("userStatus data is :  "+userStatus);
 		HttpResponse response=new HttpResponse();             
 		response=userProfileFeignImpl.changeUserStatusFeign(userStatus);

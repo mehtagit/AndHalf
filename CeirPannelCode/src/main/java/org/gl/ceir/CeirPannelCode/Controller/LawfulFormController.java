@@ -348,15 +348,23 @@ FeignCleintImplementation feignCleintImplementation;
 
 
 	@RequestMapping(value="/openStolenAndRecoveryPage",method ={org.springframework.web.bind.annotation.RequestMethod.POST})
-	public @ResponseBody LawfulStolenRecovey openSingleImeiForm(@RequestParam(name="txnId",required = false) String txnId,HttpSession session)
+	public @ResponseBody LawfulStolenRecovey openSingleImeiForm(@RequestParam(name="txnId",required = false) String txnId,HttpSession session,
+			@RequestParam(name="requestType") int requestType)
 	{
 		log.info("entry point of  fetch lawful stolen an recovery devices in the bases of transaction id .");
-
+		Integer userId= (Integer) session.getAttribute("userid");
+		String roletype=session.getAttribute("usertype").toString();
+		
 		LawfulStolenRecovey lawfulStolenRecovery= new LawfulStolenRecovey();
 		LawfulStolenRecovey lawfulUser= new LawfulStolenRecovey();
-		log.info("request passed to the fetch Device api="+txnId);
+		
 		lawfulUser.setTxnId(txnId);
+		lawfulUser.setRequestType(requestType);
+		lawfulUser.setRoleType(roletype);
+		lawfulUser.setUserId(userId);
+		log.info("request passed to the fetch Device api="+lawfulUser);
 		lawfulStolenRecovery=uploadPaidStatusFeignClient.fetchSingleDevicebyTxnId(lawfulUser);
+		
 		log.info("response from fetch lawful stolen an recovery devices  api="+lawfulStolenRecovery);
 		
 		addMoreFileModel.setTag("upload_file_link");

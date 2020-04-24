@@ -158,6 +158,7 @@ public class BlockUnblock {
 		singleImeiDetailsModel.setTxnId(blockTxnNumber);
 		singleImeiDetailsModel.setUserId(userId);
 		singleImeiDetailsModel.setUserType(roletype);
+		singleImeiDetailsModel.setRoleType(roletype);
 		singleImeiDetailsModel.setOperatorTypeId(operatorTypeId);
 		log.info("request send to the save signle Imei block devices="+singleImeiDetailsModel);
 		response= grievanceFeignClient.singleImeiBlockDevices(singleImeiDetailsModel);
@@ -200,6 +201,7 @@ public class BlockUnblock {
 	    log.info("operaot type id=="+operatorTypeId);
 		singleImeiDetailsModel.setUserId(userId);
 		singleImeiDetailsModel.setUserType(roletype);
+		singleImeiDetailsModel.setRoleType(roletype);
 		singleImeiDetailsModel.setOperatorTypeId(operatorTypeId);
 		log.info("request send to the upate signle Imei block devices="+singleImeiDetailsModel);
 		response= grievanceFeignClient.updateSingleImeiBlockDevices(singleImeiDetailsModel);
@@ -423,16 +425,16 @@ public class BlockUnblock {
 	 */
 		
 		@RequestMapping(value="/openbulkView",method ={org.springframework.web.bind.annotation.RequestMethod.GET})
-		public @ResponseBody Object openBulkFile(@RequestParam(name="reqType") String reqType,@RequestParam(name="txnId",required = false) String txnId,@RequestParam(name="singleDeivce",required = false) String singleDeivce,HttpSession session)
+		public @ResponseBody Object openBulkFile(@RequestParam(name="reqType") Integer reqType,@RequestParam(name="txnId",required = false) String txnId,@RequestParam(name="singleDeivce",required = false) String singleDeivce,HttpSession session)
 		{
 			log.info("entry point of  fetch block/unclock devices in the bases of transaction id .");
 			StolenRecoveryModel viewbulkDevices= new StolenRecoveryModel();
 			int userId= (int) session.getAttribute("userid"); 
 			String roletype=session.getAttribute("usertype").toString();
-			StolenRecoveryModel stolenRecoveryModel;
 			viewbulkDevices.setTxnId(txnId);
 			viewbulkDevices.setUserId(userId);
 			viewbulkDevices.setRoleType(roletype);
+			viewbulkDevices.setRequestType(reqType);
 			
 			log.info("request passed to the fetch Device api="+viewbulkDevices);
 			Object ds=feignCleintImplementation.fetchBulkDeviceByTxnId(viewbulkDevices);
