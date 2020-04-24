@@ -136,10 +136,12 @@ public class StockTransaction {
 
 		User user = userRepository.getById(stockMgmt.getUserId());
 
-		auditTrailRepository.save(new AuditTrail(stockMgmt.getUser().getId(),
-				user.getUsername(), user.getUsertype().getId(),
-				user.getUsertype().getUsertypeName(), 4, Features.STOCK,
-				SubFeatures.REGISTER, "", stockMgmt.getTxnId(),stockMgmt.getRoleType()));
+		/*
+		 * auditTrailRepository.save(new AuditTrail(stockMgmt.getUser().getId(),
+		 * user.getUsername(), user.getUsertype().getId(),
+		 * user.getUsertype().getUsertypeName(), 4, Features.STOCK, SubFeatures.UPLOAD,
+		 * "", stockMgmt.getTxnId(),stockMgmt.getRoleType()));
+		 */
 
 		logger.info("Stock [" + stockMgmt.getTxnId() + "] saved in audit_trail.");
 

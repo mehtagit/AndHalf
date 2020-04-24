@@ -125,8 +125,27 @@ public class PendingTacApprovedImpl {
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
-	
-	//@Transactional
+
+
+	@Transactional
+	public boolean updatePendingApproval(FilterRequest filterRequest){
+		try {
+			
+			PendingTacApprovedDb pendingTacApproveDb = pendingTacApprovedRepository.getByTxnId(filterRequest.getTxnId());
+			pendingTacApproveDb.setRemark(filterRequest.getRemark());
+			
+			logger.info("[Trying to update PendingTacApprovedDb] | Model ["+pendingTacApproveDb+"]");
+			pendingTacApprovedRepository.save(pendingTacApproveDb);
+			logger.info("[Updation of PendingTacApprovedDb is successful]  | Model ["+pendingTacApproveDb+"]");
+			return true;
+		} catch (Exception e) {
+			logger.error("[Error while updating PendingTacApprovedDb] | Model ["+filterRequest+"] | Error ["+e+"]");
+			return false;
+		}
+	}
+
+
+	@Transactional
 	public GenricResponse deletePendingApproval(FilterRequest filterRequest){
 		try {
 			if(Objects.isNull(filterRequest.getUserId())) {
@@ -140,16 +159,14 @@ public class PendingTacApprovedImpl {
 			logger.info("AUDIT : Delete Tags list saved in audit_trail.");
 
 			if(Objects.nonNull(filterRequest.getTxnId())) {
-				PendingTacApprovedDb pendingTacApproveDb = pendingTacApprovedRepository.getByTxnId(filterRequest.getTxnId());
-				pendingTacApproveDb.setRemark(filterRequest.getRemark());
-				pendingTacApprovedRepository.saveAndFlush(pendingTacApproveDb);
+				//pendingTacApprovedRepository.save(pendingTacApproveDb);
 				pendingTacApprovedRepository.deleteByTxnId(filterRequest.getTxnId());
 				return new GenricResponse(0, "Deleted Successully.", "", "");
 			}else if(Objects.nonNull(filterRequest.getTac()) && Objects.nonNull(filterRequest.getImporterId())){
 				pendingTacApprovedRepository.deleteByTacAndUserId(filterRequest.getTac(), filterRequest.getImporterId());
 				return new GenricResponse(0, "Deleted Successully.", "", "");
 			}else {
-				return new GenricResponse(1, "No Deletion Allowed.", "", "");
+				return new GenricResponse(3, "No Deletion Allowed.", "", "");
 			}
 
 		} catch (Exception e) {
@@ -180,33 +197,33 @@ public class PendingTacApprovedImpl {
 	private GenericSpecificationBuilder<PendingTacApprovedDb> buildSpecification(FilterRequest filterRequest){
 		GenericSpecificationBuilder<PendingTacApprovedDb> cmsb = new GenericSpecificationBuilder<>(propertiesReader.dialect);
 
-		 if(Objects.nonNull(filterRequest.getStartDate()) && !filterRequest.getStartDate().isEmpty())
-			 cmsb.with(new SearchCriteria("createdOn", filterRequest.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
+		if(Objects.nonNull(filterRequest.getStartDate()) && !filterRequest.getStartDate().isEmpty())
+			cmsb.with(new SearchCriteria("createdOn", filterRequest.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
 
-		 if(Objects.nonNull(filterRequest.getEndDate()) && !filterRequest.getEndDate().isEmpty())
-			 cmsb.with(new SearchCriteria("createdOn", filterRequest.getEndDate() , SearchOperation.LESS_THAN, Datatype.DATE));
+		if(Objects.nonNull(filterRequest.getEndDate()) && !filterRequest.getEndDate().isEmpty())
+			cmsb.with(new SearchCriteria("createdOn", filterRequest.getEndDate() , SearchOperation.LESS_THAN, Datatype.DATE));
 
-		 if(Objects.nonNull(filterRequest.getTxnId()) && !filterRequest.getTxnId().isEmpty())
-			 cmsb.with(new SearchCriteria("txnId", filterRequest.getTxnId(), SearchOperation.EQUALITY, Datatype.STRING));
-		 
-		 if(Objects.nonNull(filterRequest.getTac()) && !filterRequest.getTac().isEmpty())
-			 cmsb.with(new SearchCriteria("tac", filterRequest.getTac(), SearchOperation.EQUALITY, Datatype.STRING));
-		 
-		 if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
-			 
-			 cmsb.orSearch(new SearchCriteria("txnId", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
-			 
-			 cmsb.orSearch(new SearchCriteria("tac", filterRequest.getTac(), SearchOperation.LIKE, Datatype.STRING));
-			 
-		 }
-		 return cmsb;
+		if(Objects.nonNull(filterRequest.getTxnId()) && !filterRequest.getTxnId().isEmpty())
+			cmsb.with(new SearchCriteria("txnId", filterRequest.getTxnId(), SearchOperation.EQUALITY, Datatype.STRING));
+
+		if(Objects.nonNull(filterRequest.getTac()) && !filterRequest.getTac().isEmpty())
+			cmsb.with(new SearchCriteria("tac", filterRequest.getTac(), SearchOperation.EQUALITY, Datatype.STRING));
+
+		if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
+
+			cmsb.orSearch(new SearchCriteria("txnId", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+
+			cmsb.orSearch(new SearchCriteria("tac", filterRequest.getTac(), SearchOperation.LIKE, Datatype.STRING));
+
+		}
+		return cmsb;
 	}
 
 	public FileDetails getFilteredPendingTacApprovedDbInFile(FilterRequest filterRequest) {
 		logger.info("method executed");
 		String fileName = null;
 		Writer writer   = null;
-		
+
 		PendingTacApprovedFileModel atfm = null;
 
 		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -218,7 +235,7 @@ public class PendingTacApprovedImpl {
 		logger.info("CONFIG : file_consignment_download_link [" + link + "]");
 
 		String filePath = filepath.getValue();
-		
+
 		StatefulBeanToCsvBuilder<PendingTacApprovedFileModel> builder = null;
 		StatefulBeanToCsv<PendingTacApprovedFileModel> csvWriter = null;
 		List<PendingTacApprovedFileModel> fileRecords = null;
@@ -227,7 +244,7 @@ public class PendingTacApprovedImpl {
 		try {
 			logger.info("going to fetch the data");
 			List<PendingTacApprovedDb> pendingTacApprovedDbs = getAll(filterRequest);
-			
+
 			logger.info("Data:"+pendingTacApprovedDbs);
 			if( !pendingTacApprovedDbs.isEmpty() ) {
 				if(Objects.nonNull(filterRequest.getUserId()) && (filterRequest.getUserId() != -1 && filterRequest.getUserId() != 0)) {
@@ -241,7 +258,7 @@ public class PendingTacApprovedImpl {
 
 			writer = Files.newBufferedWriter(Paths.get(filePath+fileName));
 			mappingStrategy.setType(PendingTacApprovedFileModel.class);
-			
+
 			builder = new StatefulBeanToCsvBuilder<>(writer);
 			csvWriter = builder.withMappingStrategy(mappingStrategy).withSeparator(',').withQuotechar(CSVWriter.NO_QUOTE_CHARACTER).build();
 
@@ -252,7 +269,7 @@ public class PendingTacApprovedImpl {
 					if(Objects.isNull(pendingTacApprovedDb)) {
 						continue;
 					}
-					
+
 					atfm.setCreatedOn(pendingTacApprovedDb.getCreatedOn().format(dtf));
 					atfm.setModifiedOn(pendingTacApprovedDb.getModifiedOn().format(dtf));
 					atfm.setTxnId(pendingTacApprovedDb.getTxnId()); 
@@ -263,7 +280,7 @@ public class PendingTacApprovedImpl {
 					logger.debug(atfm);
 
 					fileRecords.add(atfm);
-					}
+				}
 				csvWriter.write(fileRecords);
 			}
 			logger.info("returning file object");

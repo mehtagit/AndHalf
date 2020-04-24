@@ -22,6 +22,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.gl.ceir.config.ConfigTags;
 import com.gl.ceir.config.EmailSender.EmailUtil;
@@ -222,6 +223,7 @@ public class StockServiceImpl {
 				addInAuditTrail(user.getId(), stockMgmt.getTxnId(), SubFeatures.UPLOAD,stockMgmt.getRoleType());
 			}else {
 				stockMgmt.setUser(new User().setId(new Long(stockMgmt.getUserId())));
+				addInAuditTrail(stockMgmt.getId(), stockMgmt.getTxnId(), SubFeatures.UPLOAD,stockMgmt.getRoleType());
 			}
 
 			WebActionDb webActionDb = new WebActionDb();
@@ -446,7 +448,7 @@ public class StockServiceImpl {
 				 * "] saved in audit_trail.");
 				 */
 			}
-			addInAuditTrail(Long.valueOf(filterRequest.getUserId()), filterRequest.getTxnId(), SubFeatures.VIEW_ALL,filterRequest.getRoleType());
+			addInAuditTrail(Long.valueOf(filterRequest.getUserId()), filterRequest.getTxnId(), SubFeatures.VIEW,filterRequest.getRoleType());
 			return stockMgmt2;
 
 		} catch (Exception e) {
