@@ -121,7 +121,12 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
-
+	 <dependency>
+	  <groupId>com.gl</groupId>
+	  <artifactId>Rule_engine</artifactId>
+	  <version>0.0.1-SNAPSHOT</version>
+	  <type>jar</type>
+	 </dependency>
 	</dependencies>
 
 	<dependencyManagement>

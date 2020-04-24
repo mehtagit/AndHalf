@@ -21,7 +21,7 @@ public class CheckImeiController {
 	private static final Logger logger = LogManager.getLogger(GsmaValueController.class);
 
 	@Autowired
-	CheckImeiServiceImpl    checkImeiServiceImpl;
+	CheckImeiServiceImpl checkImeiServiceImpl;
 
 	@ApiOperation(value = "Validate Imei", response = CheckImeiMess.class)
 	@PostMapping(path = "cc/CheckImeI")
