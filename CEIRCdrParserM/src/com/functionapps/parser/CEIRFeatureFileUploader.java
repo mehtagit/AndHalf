@@ -18,7 +18,7 @@ public class CEIRFeatureFileUploader {
         logger.info(" ");
         Connection conn = new com.functionapps.db.MySQLConnection().getConnection();
         CEIRFeatureFileFunctions ceirfunction = new CEIRFeatureFileFunctions();
-        ResultSet file_details = ceirfunction.getFileDetails(conn, 1);  //select * from web_action_db limit 1 
+        ResultSet file_details = ceirfunction.getFileDetails(conn, 0);  //select * from web_action_db limit 1 
 
         
         HexFileReader hfr = new HexFileReader();

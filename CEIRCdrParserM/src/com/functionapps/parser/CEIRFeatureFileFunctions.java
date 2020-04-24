@@ -48,11 +48,14 @@ public class CEIRFeatureFileFunctions {
 		Statement stmt = null;
 		ResultSet rs = null;
 		String query = null;
-                
+                String limiter = " limit 1 ";
+        if (conn.toString().contains("oracle")) {
+            limiter = " fetch next 1 rows only ";
+        }
                 
 		try{
 //        	query = "select * from web_action_db where state="+state+" and feature='TYPE_APPROVED' order by id desc ";
-			query = "select * from web_action_db where state="+state+"  order by id desc ";
+			query = "select * from web_action_db where state="+state+"  order by id asc " + limiter + "  ";
 			logger.info("Query to get File Details ["+query+"]");
         	stmt  = conn.createStatement();
 			return rs    = stmt.executeQuery(query);
