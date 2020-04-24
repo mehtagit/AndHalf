@@ -134,7 +134,7 @@ public class GrievanceDatatableController {
 						String modifiedOn = dataInsideList.getModifiedOn();
 						String txnId = dataInsideList.getTxnId();
 						//String userDisplayName = dataInsideList.getUserDisplayName();
-						String userName = "";
+						String userName = dataInsideList.getUserDisplayName();
 						String userTypeName = dataInsideList.getUserType();
 						String grievanceId = String.valueOf(dataInsideList.getGrievanceId());
 						String StatusofGrievance = String.valueOf(dataInsideList.getGrievanceStatus());

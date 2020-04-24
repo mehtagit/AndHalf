@@ -208,8 +208,7 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
 								  <div class="row" id="singleInput">
 								  <h6 class="modal-header "> <spring:message code="registration.changeUserStatus" /></h6>
                                 <div class="col s12 m12 l12">
-                                 
-								   
+                   	   
                                    <div class="row"  style="margin-top: 10px">
                                         	<div class="col s12 m6 l6" style="margin-bottom: 5px;">
 											<label for="userStatus"><spring:message
@@ -278,7 +277,89 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
         </div>
     </div>
     
+    	<div id="statusRoleChange" class="modal">
+           <h6 class="modal-header"><spring:message code="table.RegistrationRequest" /></h6>
+           <div class="modal-content">
+            <div class="row">
+              
+                   <h5 class="center">
+						<label> <input name="group1" type="radio" value="1"
+							onclick="userChangeStatus('status');"/>
+							<span class="checkboxFont"> <spring:message code="registration.changeUserStatus" /></span></label>
+									
+						 <label> <input name="group1" type="radio" value="2"
+							onclick="userChangeStatus('roleType')"/>
+							<span class="checkboxFont"> <spring:message code="changeRoleType" /></span>
+						</label> 
+					</h5>
+							  
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <button class="btn modal-close" onclick = "resetButtons()"style="margin-left: 10px;"><spring:message code="button.cancel" /></button>
+                </div>
+            </div>
+        </div>
+    </div>
     
+    
+    <div id="roleTypeChangemodal" class="modal">
+               <form action="" onsubmit="return chanegeUserStatus()" method="POST"
+								enctype="multipart/form-data" id="">
+								  <div class="row" id="singleInput">
+								  <h6 class="modal-header "> <spring:message code="changeRoleType" /></h6>
+                                <div class="col s12 m12 l12">
+                   	   
+                                   <div class="row"  style="margin-top: 10px">
+                                        	<div class="col s12 m6 l6" style="margin-bottom: 5px;">
+											<label for="userStatus"><spring:message
+													code="select.changeUserStatus" /> <span class="star">*</span></label>
+											<select id="userStatus" class="browser-default"
+												onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+												oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+												required>
+												<option value="" disabled selected><spring:message
+														code="select.selectUserStatus" />
+												</option>
+											</select>
+										</div> 
+                                       		
+                                       
+										
+									<div class="input-field col s12 m6" style="margin-top: 22px;">
+										<input type="text" name="refererence" id="refererenceId"
+							placeholder="" oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
+							maxlength="50"/> <label for="refererenceId"
+							class="center-align"><spring:message
+								code="input.refId" /> </label>
+								</div>		
+                                            
+                   		  
+								<div class="input-field col s12 m12">
+							<textarea id="changeStatusRemark" style="min-height: 8rem;" 
+								class="materialize-textarea" 
+							oninput="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
+							oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200character" />');" required></textarea>
+							<label for="textarea1" class=""><spring:message
+									code="input.remarks" /> <span class="star">*</span> </label>
+								</div>
+						
+                                   
+                                        </div>
+                                 		 <input type ="text" id="statusUserName" hidden="hidden" >
+                                        <div class="row">
+                                            <div class="input-field col s12 center" style="padding: 20px 0;">
+                                                <!-- <a href="#submitIMEI" class="btn modal-trigger">Submit</a>  -->
+                                                 <button class=" btn" type="submit"><spring:message code="button.submit" /></button>
+                                               	<button type="button" class="btn modal-close" style="margin-left: 10px;" title=" "><spring:message code="button.cancel" /></button>
+                                            </div>
+
+                                        </div>
+                                      
+									
+                                    </div>
+                                   </div></form>
+                    </div>           
 
     
 	

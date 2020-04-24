@@ -44,7 +44,8 @@ function save(){
 			"name": $('#Rule').val(),
 			"postGraceAction": $('#PostGracePeriod').val(),
 			"ruleOrder":parseInt($('#order').val()),
-			"userType":$('#User').val()
+			"userType":$('#User').val(),
+			"output": $('#output').val()
 	}
 	$.ajax({
 

@@ -55,8 +55,8 @@ public interface UserProfileFeignImpl {
 	@PostMapping("/userProfile/adminApproval")
 	public HttpResponse adminUserApproval(UserStatus userStatus);
 	
-	@PostMapping("/userProfile/viewProfile/{id}")
-	public Registration ViewAdminUser(@PathVariable("id") long id);
+	@PostMapping("/userProfile/viewProfile/{id}/{userId}")
+	public Registration ViewAdminUser(@PathVariable("id") long id, @PathVariable("userId") Integer userId);
 	
 	
 	@RequestMapping(value="/userProfile/searchAssignee" ,method=RequestMethod.POST)

@@ -790,6 +790,69 @@ data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeI
 			</div>
 		</div>
 	</div>
+	
+	 	<div id="blockListModal" class="modal">
+		<h6 class="modal-header" id="blockDeviceHeader">Block Device Details
+			<%-- <spring:message code="modal.header.viewStock" /> --%>
+		</h6>
+		<div class="modal-content">
+
+
+			<form action="" style="margin-top: 10px;">
+
+				<div class="row myRow">
+					<div class="input-field col s12 m6" id="">
+						<input type="text" name="SupplierId" id="blockedUserType"
+							placeholder="" disabled /> <label for="blockedUserType"
+							id="" class="center-align"><%-- <spring:message
+								code="input.supplierID" /> --%>User Type</label>
+					</div>
+
+					<div class="input-field col s12 m6" id="">
+						<input type="text" name="SupplierName" id="blockedUserName"
+							placeholder="" disabled /> <label for="blockedUserName"
+							id="SupplierNameLabel" class="center-align"><%-- <spring:message
+								code="input.supllierName" /> --%>User Name</label>
+					</div>
+
+					<div class="input-field col s12 m6">
+						<input type="text" name="Quantity" id="blockedDate" placeholder=""
+							disabled /> <label for="blockedDate" class="center-align"><%-- <spring:message
+								code="input.quantity" /> --%>Date </label>
+					</div>
+
+					<div class="input-field col s12 m6" id="blockExpiryDate">
+						<input type="text" name="InvoiceNumber" id=""
+							placeholder="" disabled /> <label for="blockExpiryDate"
+							class="center-align"><%-- <spring:message
+								code="input.invoiceNumber" /> --%> Expiry Date</label>
+					</div>
+					<div class="input-field col s12 m6" id="">
+						<input type="text" name="SupplierName" id="blockeModeType"
+							placeholder="" disabled /> <label for="blockeModeType"
+							id="SupplierNameLabel" class="center-align"><%-- <spring:message
+								code="input.supllierName" /> --%>Mode Type</label>
+					</div>
+
+					<div class="input-field col s12 m6">
+						<input type="text" name="Quantity" id="complaintType" placeholder=""
+							disabled /> <label for="complaintType" class="center-align"><%-- <spring:message
+								code="input.quantity" /> --%>Complaint Type </label>
+					</div>
+
+					
+
+				
+				</div>
+
+				<div class="row center" style="margin-top: 20px;">
+
+					<button class="modal-close btn" type="button"><spring:message
+							code="modal.close" /></button>
+				</div>
+			</form>
+		</div>
+	</div>
 	<!-- END MAIN -->
 <script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>

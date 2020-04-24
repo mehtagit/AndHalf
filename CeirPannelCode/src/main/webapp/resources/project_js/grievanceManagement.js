@@ -73,7 +73,9 @@ var featureId = 6;
 					grievanceSessionUsesFlag=0;
 				}
 				localStorage.removeItem('grievancePageSource');
-			
+				
+				var userType = $('#userType').val() == null ? $("body").attr("data-roleType") : $("#userType option:selected").text(); 
+				
 				var filterRequest={
 						"grievanceStatus":grievanceStatus,
 						"endDate":$('#endDate').val(),
@@ -85,10 +87,10 @@ var featureId = 6;
 						"userTypeId": parseInt($("body").attr("data-userTypeID")),
 						"txnId":  $('#transactionID').val(),
 						"grievanceId":txn,
-						"userType":$("body").attr("data-roleType"),
-
+						"userType" : userType,
+						"userDisplayName" : $('#userName').val()
 				}
-
+				
 				if(lang=='km'){
 						var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
 					}
@@ -186,7 +188,7 @@ var featureId = 6;
 										"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
 
 										"<select id="+dropdown[i].id+"  class='select-wrapper select2  initialized'>"+
-										"<option value='-1'>"+dropdown[i].title+
+										"<option value='null'>"+dropdown[i].title+
 										"</option>"+
 										"</select>"+
 										"</div>"+

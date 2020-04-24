@@ -29,26 +29,202 @@ private String quantity;
 private Long userId ;
 private String remarks;
 private String roleType;
-private Integer currency;
+private Integer currency,portAddress;
+private String portAddressInterp,currencyInterp;
 
-
+public String getCurrencyInterp() {
+	return currencyInterp;
+}
+public void setCurrencyInterp(String currencyInterp) {
+	this.currencyInterp = currencyInterp;
+}
 public String userName;
 
 private String userType;
 
 private Integer featureId;
-
+private int deviceQuantity;
 private Integer userTypeId;
 private Long roleTypeUserId;
-
-public Long getRoleTypeUserId() {
-	return roleTypeUserId;
+public int getId() {
+	return id;
 }
-public void setRoleTypeUserId(Long roleTypeUserId) {
-	this.roleTypeUserId = roleTypeUserId;
+public void setId(int id) {
+	this.id = id;
+}
+public String getSupplierId() {
+	return supplierId;
+}
+public void setSupplierId(String supplierId) {
+	this.supplierId = supplierId;
+}
+public String getSupplierName() {
+	return supplierName;
+}
+public void setSupplierName(String supplierName) {
+	this.supplierName = supplierName;
+}
+public String getTaxPaidStatus() {
+	return taxPaidStatus;
+}
+public void setTaxPaidStatus(String taxPaidStatus) {
+	this.taxPaidStatus = taxPaidStatus;
+}
+public String getCreatedOn() {
+	return createdOn;
+}
+public void setCreatedOn(String createdOn) {
+	this.createdOn = createdOn;
+}
+public String getModifiedOn() {
+	return modifiedOn;
+}
+public void setModifiedOn(String modifiedOn) {
+	this.modifiedOn = modifiedOn;
+}
+public int getImporterId() {
+	return importerId;
+}
+public void setImporterId(int importerId) {
+	this.importerId = importerId;
+}
+public String getConsignmentNumber() {
+	return consignmentNumber;
+}
+public void setConsignmentNumber(String consignmentNumber) {
+	this.consignmentNumber = consignmentNumber;
+}
+public String getExpectedArrivalDate() {
+	return expectedArrivalDate;
+}
+public void setExpectedArrivalDate(String expectedArrivalDate) {
+	this.expectedArrivalDate = expectedArrivalDate;
+}
+public String getExpectedArrivaldate() {
+	return expectedArrivaldate;
+}
+public void setExpectedArrivaldate(String expectedArrivaldate) {
+	this.expectedArrivaldate = expectedArrivaldate;
+}
+public String getExpectedDispatcheDate() {
+	return expectedDispatcheDate;
+}
+public void setExpectedDispatcheDate(String expectedDispatcheDate) {
+	this.expectedDispatcheDate = expectedDispatcheDate;
+}
+public Integer getExpectedArrivalPort() {
+	return expectedArrivalPort;
+}
+public void setExpectedArrivalPort(Integer expectedArrivalPort) {
+	this.expectedArrivalPort = expectedArrivalPort;
+}
+public String getOrganisationcountry() {
+	return organisationcountry;
+}
+public void setOrganisationcountry(String organisationcountry) {
+	this.organisationcountry = organisationcountry;
+}
+public String getExpectedArrivalPortInterp() {
+	return expectedArrivalPortInterp;
+}
+public void setExpectedArrivalPortInterp(String expectedArrivalPortInterp) {
+	this.expectedArrivalPortInterp = expectedArrivalPortInterp;
 }
 public String getPendingTacApprovedByCustom() {
 	return pendingTacApprovedByCustom;
+}
+public void setPendingTacApprovedByCustom(String pendingTacApprovedByCustom) {
+	this.pendingTacApprovedByCustom = pendingTacApprovedByCustom;
+}
+public String getOrganisationCountry() {
+	return organisationCountry;
+}
+public void setOrganisationCountry(String organisationCountry) {
+	this.organisationCountry = organisationCountry;
+}
+public MultipartFile getFile() {
+	return file;
+}
+public void setFile(MultipartFile file) {
+	this.file = file;
+}
+public String getTxnId() {
+	return txnId;
+}
+public void setTxnId(String txnId) {
+	this.txnId = txnId;
+}
+public String getImporterName() {
+	return importerName;
+}
+public void setImporterName(String importerName) {
+	this.importerName = importerName;
+}
+public String getTotalPrice() {
+	return totalPrice;
+}
+public void setTotalPrice(String totalPrice) {
+	this.totalPrice = totalPrice;
+}
+public String getFileName() {
+	return fileName;
+}
+public void setFileName(String fileName) {
+	this.fileName = fileName;
+}
+public String getFileStatus() {
+	return fileStatus;
+}
+public void setFileStatus(String fileStatus) {
+	this.fileStatus = fileStatus;
+}
+public String getConsignmentStatus() {
+	return consignmentStatus;
+}
+public void setConsignmentStatus(String consignmentStatus) {
+	this.consignmentStatus = consignmentStatus;
+}
+public String getQuantity() {
+	return quantity;
+}
+public void setQuantity(String quantity) {
+	this.quantity = quantity;
+}
+public Long getUserId() {
+	return userId;
+}
+public void setUserId(Long userId) {
+	this.userId = userId;
+}
+public String getRemarks() {
+	return remarks;
+}
+public void setRemarks(String remarks) {
+	this.remarks = remarks;
+}
+public String getRoleType() {
+	return roleType;
+}
+public void setRoleType(String roleType) {
+	this.roleType = roleType;
+}
+public Integer getCurrency() {
+	return currency;
+}
+public void setCurrency(Integer currency) {
+	this.currency = currency;
+}
+public Integer getPortAddress() {
+	return portAddress;
+}
+public void setPortAddress(Integer portAddress) {
+	this.portAddress = portAddress;
+}
+public String getPortAddressInterp() {
+	return portAddressInterp;
+}
+public void setPortAddressInterp(String portAddressInterp) {
+	this.portAddressInterp = portAddressInterp;
 }
 public String getUserName() {
 	return userName;
@@ -68,188 +244,23 @@ public Integer getFeatureId() {
 public void setFeatureId(Integer featureId) {
 	this.featureId = featureId;
 }
+public int getDeviceQuantity() {
+	return deviceQuantity;
+}
+public void setDeviceQuantity(int deviceQuantity) {
+	this.deviceQuantity = deviceQuantity;
+}
 public Integer getUserTypeId() {
 	return userTypeId;
 }
 public void setUserTypeId(Integer userTypeId) {
 	this.userTypeId = userTypeId;
 }
-public void setPendingTacApprovedByCustom(String pendingTacApprovedByCustom) {
-	this.pendingTacApprovedByCustom = pendingTacApprovedByCustom;
+public Long getRoleTypeUserId() {
+	return roleTypeUserId;
 }
-public int getId() {
-return id;
-}
-public void setId(int id) {
-this.id = id;
-}
-public String getSupplierId() {
-return supplierId;
-}
-public void setSupplierId(String supplierId) {
-this.supplierId = supplierId;
-}
-public String getSupplierName() {
-return supplierName;
-}
-public void setSupplierName(String supplierName) {
-this.supplierName = supplierName;
-}
-
-
-public String getCreatedOn() {
-return createdOn;
-}
-public void setCreatedOn(String createdOn) {
-this.createdOn = createdOn;
-}
-public String getModifiedOn() {
-return modifiedOn;
-}
-public void setModifiedOn(String modifiedOn) {
-this.modifiedOn = modifiedOn;
-}
-public int getImporterId() {
-return importerId;
-}
-public String getTaxPaidStatus() {
-	return taxPaidStatus;
-}
-public void setTaxPaidStatus(String taxPaidStatus) {
-	this.taxPaidStatus = taxPaidStatus;
-}
-public void setImporterId(int importerId) {
-this.importerId = importerId;
-}
-public String getConsignmentNumber() {
-return consignmentNumber;
-}
-public void setConsignmentNumber(String consignmentNumber) {
-this.consignmentNumber = consignmentNumber;
-}
-public String getExpectedArrivalDate() {
-return expectedArrivalDate;
-}
-public void setExpectedArrivalDate(String expectedArrivalDate) {
-this.expectedArrivalDate = expectedArrivalDate;
-}
-public String getExpectedArrivaldate() {
-return expectedArrivaldate;
-}
-public void setExpectedArrivaldate(String expectedArrivaldate) {
-this.expectedArrivaldate = expectedArrivaldate;
-}
-public String getExpectedDispatcheDate() {
-return expectedDispatcheDate;
-}
-public void setExpectedDispatcheDate(String expectedDispatcheDate) {
-this.expectedDispatcheDate = expectedDispatcheDate;
-}
-
-	
-	
-	
-	
-public Integer getExpectedArrivalPort() {
-	return expectedArrivalPort;
-}
-public void setExpectedArrivalPort(Integer expectedArrivalPort) {
-	this.expectedArrivalPort = expectedArrivalPort;
-}
-public String getExpectedArrivalPortInterp() {
-	return expectedArrivalPortInterp;
-}
-public void setExpectedArrivalPortInterp(String expectedArrivalPortInterp) {
-	this.expectedArrivalPortInterp = expectedArrivalPortInterp;
-}
-public String getOrganisationcountry() {
-return organisationcountry;
-}
-public void setOrganisationcountry(String organisationcountry) {
-this.organisationcountry = organisationcountry;
-}
-public String getOrganisationCountry() {
-return organisationCountry;
-}
-public void setOrganisationCountry(String organisationCountry) {
-this.organisationCountry = organisationCountry;
-}
-public MultipartFile getFile() {
-return file;
-}
-public void setFile(MultipartFile file) {
-this.file = file;
-}
-public String getTxnId() {
-return txnId;
-}
-public void setTxnId(String txnId) {
-this.txnId = txnId;
-}
-public String getImporterName() {
-return importerName;
-}
-public void setImporterName(String importerName) {
-this.importerName = importerName;
-}
-public String getTotalPrice() {
-return totalPrice;
-}
-public void setTotalPrice(String totalPrice) {
-this.totalPrice = totalPrice;
-}
-public String getFileName() {
-return fileName;
-}
-public void setFileName(String fileName) {
-this.fileName = fileName;
-}
-public String getFileStatus() {
-return fileStatus;
-}
-public void setFileStatus(String fileStatus) {
-this.fileStatus = fileStatus;
-}
-public String getConsignmentStatus() {
-return consignmentStatus;
-}
-public void setConsignmentStatus(String consignmentStatus) {
-this.consignmentStatus = consignmentStatus;
-}
-public String getQuantity() {
-return quantity;
-}
-public void setQuantity(String quantity) {
-this.quantity = quantity;
-}
-public Long getUserId() {
-return userId;
-}
-public void setUserId(Long userId) {
-this.userId = userId;
-}
-public String getRemarks() {
-return remarks;
-}
-public void setRemarks(String remarks) {
-this.remarks = remarks;
-}
-public String getRoleType() {
-return roleType;
-}
-public void setRoleType(String roleType) {
-this.roleType = roleType;
-}
-
-
-
-
-
-public Integer getCurrency() {
-	return currency;
-}
-public void setCurrency(Integer currency) {
-	this.currency = currency;
+public void setRoleTypeUserId(Long roleTypeUserId) {
+	this.roleTypeUserId = roleTypeUserId;
 }
 @Override
 public String toString() {
@@ -310,12 +321,20 @@ public String toString() {
 	builder.append(roleType);
 	builder.append(", currency=");
 	builder.append(currency);
+	builder.append(", portAddress=");
+	builder.append(portAddress);
+	builder.append(", portAddressInterp=");
+	builder.append(portAddressInterp);
+	builder.append(", currencyInterp=");
+	builder.append(currencyInterp);
 	builder.append(", userName=");
 	builder.append(userName);
 	builder.append(", userType=");
 	builder.append(userType);
 	builder.append(", featureId=");
 	builder.append(featureId);
+	builder.append(", deviceQuantity=");
+	builder.append(deviceQuantity);
 	builder.append(", userTypeId=");
 	builder.append(userTypeId);
 	builder.append(", roleTypeUserId=");

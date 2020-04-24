@@ -11,6 +11,13 @@ public class NewRule {
 	private String postGraceAction;
 	private Integer ruleOrder;
 	private String userType;
+	private String output;
+	public String getOutput() {
+		return output;
+	}
+	public void setOutput(String output) {
+		this.output = output;
+	}
 	public String getFailedRuleActionGrace() {
 		return failedRuleActionGrace;
 	}
@@ -41,6 +48,8 @@ public class NewRule {
 		builder.append(ruleOrder);
 		builder.append(", userType=");
 		builder.append(userType);
+		builder.append(", output=");
+		builder.append(output);
 		builder.append("]");
 		return builder.toString();
 	}

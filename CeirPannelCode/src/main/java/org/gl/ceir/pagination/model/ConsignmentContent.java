@@ -28,6 +28,20 @@ public class ConsignmentContent {
 	private UserModel user;
 	private String supplierld;
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+	private int deviceQuantity;
+	private String portAddressInterp;
+	public String getPortAddressInterp() {
+		return portAddressInterp;
+	}
+	public void setPortAddressInterp(String portAddressInterp) {
+		this.portAddressInterp = portAddressInterp;
+	}
+	public int getDeviceQuantity() {
+		return deviceQuantity;
+	}
+	public void setDeviceQuantity(int deviceQuantity) {
+		this.deviceQuantity = deviceQuantity;
+	}
 	public Integer getId() {
 		return id;
 	}
@@ -180,16 +194,63 @@ public class ConsignmentContent {
 	}
 	@Override
 	public String toString() {
-		return "ConsignmentContent [id=" + id + ", supplierId=" + supplierId + ", supplierName=" + supplierName
-				+ ", consignmentNumber=" + consignmentNumber + ", taxPaidStatus=" + taxPaidStatus + ", createdOn="
-				+ createdOn + ", modifiedOn=" + modifiedOn + ", userId=" + userId + ", txnId=" + txnId + ", fileName="
-				+ fileName + ", consignmentStatus=" + consignmentStatus + ", previousConsignmentStatus="
-				+ previousConsignmentStatus + ", organisationCountry=" + organisationCountry
-				+ ", expectedDispatcheDate=" + expectedDispatcheDate + ", expectedArrivaldate=" + expectedArrivaldate
-				+ ", expectedArrivalPort=" + expectedArrivalPort + ", quantity=" + quantity + ", remarks=" + remarks
-				+ ", currency=" + currency + ", totalPrice=" + totalPrice + ", stateInterp=" + stateInterp
-				+ ", taxInterp=" + taxInterp + ", user=" + user + ", supplierld=" + supplierld
-				+ ", additionalProperties=" + additionalProperties + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("ConsignmentContent [id=");
+		builder.append(id);
+		builder.append(", supplierId=");
+		builder.append(supplierId);
+		builder.append(", supplierName=");
+		builder.append(supplierName);
+		builder.append(", consignmentNumber=");
+		builder.append(consignmentNumber);
+		builder.append(", taxPaidStatus=");
+		builder.append(taxPaidStatus);
+		builder.append(", createdOn=");
+		builder.append(createdOn);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
+		builder.append(", userId=");
+		builder.append(userId);
+		builder.append(", txnId=");
+		builder.append(txnId);
+		builder.append(", fileName=");
+		builder.append(fileName);
+		builder.append(", consignmentStatus=");
+		builder.append(consignmentStatus);
+		builder.append(", previousConsignmentStatus=");
+		builder.append(previousConsignmentStatus);
+		builder.append(", organisationCountry=");
+		builder.append(organisationCountry);
+		builder.append(", expectedDispatcheDate=");
+		builder.append(expectedDispatcheDate);
+		builder.append(", expectedArrivaldate=");
+		builder.append(expectedArrivaldate);
+		builder.append(", expectedArrivalPort=");
+		builder.append(expectedArrivalPort);
+		builder.append(", quantity=");
+		builder.append(quantity);
+		builder.append(", remarks=");
+		builder.append(remarks);
+		builder.append(", currency=");
+		builder.append(currency);
+		builder.append(", totalPrice=");
+		builder.append(totalPrice);
+		builder.append(", stateInterp=");
+		builder.append(stateInterp);
+		builder.append(", taxInterp=");
+		builder.append(taxInterp);
+		builder.append(", user=");
+		builder.append(user);
+		builder.append(", supplierld=");
+		builder.append(supplierld);
+		builder.append(", additionalProperties=");
+		builder.append(additionalProperties);
+		builder.append(", deviceQuantity=");
+		builder.append(deviceQuantity);
+		builder.append(", portAddressInterp=");
+		builder.append(portAddressInterp);
+		builder.append("]");
+		return builder.toString();
 	}
 	
 }

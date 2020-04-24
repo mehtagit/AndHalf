@@ -469,7 +469,7 @@ select {
 
 														<div class="col s12 m6 l6">
 															<label id="operatorLabel3"> <spring:message code="operator.Operator2" />
-																<span class="star" id="operator3span" style="display: none;margin-top: -18px;margin-left: 54px;">*</span></label> 
+																<span class="star" id="operator3span" style="display: none;margin-top: -18px;margin-left: 59px;">*</span></label> 
 																<select class="browser-default" id="singleStolenOperator3"
 																oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 																oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');">
@@ -491,7 +491,7 @@ select {
 
 														<div class="col s12 m6 l6">
 															<label id="operatorLabel4"> <spring:message code="operator.Operator3" />
-																<span class="star" id="operator4span" style="display: none;margin-top: -18px;margin-left: 54px;">*</span></label> <select
+																<span class="star" id="operator4span" style="display: none;margin-top: -18px;margin-left: 59px;">*</span></label> <select
 																class="browser-default" id="singleStolenOperator4"
 																oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 																oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');">
@@ -513,7 +513,7 @@ select {
 
 														<div class="col s12 m6 l6">
 															<label id="operatorLabel3"> <spring:message code="operator.Operator4" />
-																<span class="star" id="operator5span" style="display: none;margin-top: -18px;margin-left: 54px;"> *</span></label> <select
+																<span class="star" id="operator5span" style="display: none;margin-top: -18px;margin-left: 59px;"> *</span></label> <select
 																class="browser-default" id="singleStolenOperator5"
 																oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 																oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');">
