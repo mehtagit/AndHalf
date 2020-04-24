@@ -46,8 +46,9 @@ public class FieldValidationServiceImpl implements FieldValidationService {
 			    		  validationOutput.getInvalidFields().put(name, "Validation Failed with regex ["+regex+"]");
 		    		  }
 		    	  }else {
-		    		  validationOutput.setIsValid(Boolean.FALSE);
-		    		  validationOutput.getInvalidFields().put(name, "Could not found in table [ field_validation ]");
+		    		  continue;
+		    		  //validationOutput.setIsValid(Boolean.FALSE);
+		    		 // validationOutput.getInvalidFields().put(name, "Could not found in table [ field_validation ]");
 		    	  }
 		      } catch (IllegalArgumentException e) {
 		    	  logger.error("IllegalArgumentException while validating ["+object+"] Exception = ["+e+"]");
