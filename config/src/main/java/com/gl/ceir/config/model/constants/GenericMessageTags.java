@@ -29,7 +29,8 @@ public enum GenericMessageTags {
 	DEVICE_REGISTRATION_FAILED("DEVICE_REGISTRATION_FAILED","End user device registration have been failed."),
 	DUPLICATE_IMEI_IN_REQUEST("DUPLICATE_IMEI_IN_REQUEST" ,"Duplicate IMEI received in request"),
 	INVALID_TUPLE_FOR_IMEI_AND_MSISDN("INVALID_TUPLE_FOR_IMEI_AND_MSISDN", "This combination of imei and msisdn is invalid."),
-	NO_IMEI_FOR_MSISDN("NO_IMEI_FOR_MSISDN", "No imei is attached with the msisdn");
+	NO_IMEI_FOR_MSISDN("NO_IMEI_FOR_MSISDN", "No imei is attached with the msisdn"),
+	INVALID_IMEI("INVALID_IMEI", "IMEI is invalid."),;
 	
 	private String tag;
 	private String message;
