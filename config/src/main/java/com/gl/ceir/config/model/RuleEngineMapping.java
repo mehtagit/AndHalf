@@ -31,9 +31,9 @@ public class RuleEngineMapping implements Serializable {
 	@Column(length = 20)
 	private String feature;
 
-	@NotNull
-	@Enumerated(EnumType.STRING)
-	private RulesNames name;
+
+    @Column
+	private String name;
 	
 	@NotNull
 	@Column(length = 20)
@@ -50,11 +50,19 @@ public class RuleEngineMapping implements Serializable {
 	@Column(length = 20)
 	private String userType;
 	
-	@Column(length = 10)
-	private String failedRuleActionGrace;
 	
-	@Column(length = 10)
-	private String failedRuleActionPostGrace;
+	@Column(length = 20)
+	private String output;
+	
+	
+
+	public String getOutput() {
+		return output;
+	}
+
+	public void setOutput(String output) {
+		this.output = output;
+	}
 
 	public Long getId() {
 		return id;
@@ -64,11 +72,11 @@ public class RuleEngineMapping implements Serializable {
 		this.id = id;
 	}
 
-	public RulesNames getName() {
+	public String getName() {
 		return name;
 	}
 
-	public void setName(RulesNames name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 
@@ -116,22 +124,6 @@ public class RuleEngineMapping implements Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
-	}
-
-	public String getFailedRuleActionGrace() {
-		return failedRuleActionGrace;
-	}
-
-	public void setFailedRuleActionGrace(String failedRuleActionGrace) {
-		this.failedRuleActionGrace = failedRuleActionGrace;
-	}
-
-	public String getFailedRuleActionPostGrace() {
-		return failedRuleActionPostGrace;
-	}
-
-	public void setFailedRuleActionPostGrace(String failedRuleActionPostGrace) {
-		this.failedRuleActionPostGrace = failedRuleActionPostGrace;
 	}
 
 	@Override

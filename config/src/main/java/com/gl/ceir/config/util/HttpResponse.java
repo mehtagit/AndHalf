@@ -1,12 +1,9 @@
 package com.gl.ceir.config.util;
 import com.gl.ceir.config.model.User;
-
 public class HttpResponse {
-	
 	private String response;
 	private Integer statusCode;
 	private User user;
-	
 	public String getResponse() {
 		return response;
 	}
@@ -25,18 +22,13 @@ public class HttpResponse {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("HttpResponse [response=");
-		builder.append(response);
-		builder.append(", statusCode=");
-		builder.append(statusCode);
-		builder.append(", user=");
-		builder.append(user);
-		builder.append("]");
-		return builder.toString();
+		return "HttpResponse [response=" + response + ", statusCode=" + statusCode + "]";
 	}
+	
+
+
+
 
 }

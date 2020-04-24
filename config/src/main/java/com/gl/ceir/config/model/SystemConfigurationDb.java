@@ -8,17 +8,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Transient;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.envers.Audited;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
-@Audited
 public class SystemConfigurationDb implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -35,19 +32,12 @@ public class SystemConfigurationDb implements Serializable {
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private Date modifiedOn;
 	
-	@NotNull
-	@NotBlank
 	private String tag;
 	
-	@NotNull
-	@NotBlank
 	private String value;
 	
-	@NotNull
-	@NotBlank
 	private String description;
 	
-	@NotNull
 	private Integer type; // have two values USER/SYSTEM.
 	@Transient
 	private String typeInterp;
@@ -57,29 +47,6 @@ public class SystemConfigurationDb implements Serializable {
 	@NotNull
 	private Integer active;
 	
-	private String featureName;
-	private String userType;
-	
-	
-	public Integer getActive() {
-		return active;
-	}
-	public void setActive(Integer active) {
-		this.active = active;
-	}
-	public String getFeatureName() {
-		return featureName;
-	}
-	public void setFeatureName(String featureName) {
-		this.featureName = featureName;
-	}
-	
-	public String getUserType() {
-		return userType;
-	}
-	public void setUserType(String userType) {
-		this.userType = userType;
-	}
 	public Long getId() {
 		return id;
 	}
@@ -137,7 +104,6 @@ public class SystemConfigurationDb implements Serializable {
 	public void setTypeInterp(String typeInterp) {
 		this.typeInterp = typeInterp;
 	}
-	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -159,13 +125,8 @@ public class SystemConfigurationDb implements Serializable {
 		builder.append(typeInterp);
 		builder.append(", remark=");
 		builder.append(remark);
-		builder.append(", active=");
-		builder.append(active);
-		builder.append(", featureName=");
-		builder.append(featureName);
-		builder.append(", userType=");
-		builder.append(userType);
 		builder.append("]");
 		return builder.toString();
 	}
+
 }

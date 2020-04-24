@@ -83,7 +83,7 @@ public class WhiteListServiceImpl implements WhiteListService {
 	}
 
 	@Override
-	public WhiteList getByImei(String imei) {
+	public WhiteList getByImei(Long imei) {
 		try {
 			return whiteListRepository.findByImeiMsisdnIdentityImei(imei);
 		} catch (Exception e) {
@@ -124,12 +124,6 @@ public class WhiteListServiceImpl implements WhiteListService {
 			logger.info("Not Deleted " + imeiMsisdnIdentity);
 			return;
 		}
-	}
-
-	@Override
-	public WhiteList get(String id) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }

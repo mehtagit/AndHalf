@@ -8,9 +8,12 @@ import javax.validation.constraints.NotNull;
 @Embeddable
 public class ImeiMsisdnIdentity implements Serializable {
 
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
 	@NotNull
-	private String imei;
+	private Long imei;
 	@NotNull
 	private Long msisdn;
 
@@ -18,21 +21,17 @@ public class ImeiMsisdnIdentity implements Serializable {
 
 	}
 
-	public ImeiMsisdnIdentity(String imei, Long msisdn) {
+	public ImeiMsisdnIdentity(Long imei, Long msisdn) {
 		this.imei = imei;
 		this.msisdn = msisdn;
 	}
 
-	public String getImei() {
+	public Long getImei() {
 		return imei;
 	}
 
-	public void setImei(String imei) {
+	public void setImei(Long imei) {
 		this.imei = imei;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
 	}
 
 	public Long getMsisdn() {

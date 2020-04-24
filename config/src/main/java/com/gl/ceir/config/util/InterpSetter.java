@@ -20,7 +20,7 @@ public final class InterpSetter {
 	@Autowired
 	StateMgmtServiceImpl stateMgmtServiceImpl;
 
-	public String setConfigInterp(String tag, Integer value) {
+	public String setConfigInterp(String tag, int value) {
 		try {
 			if(Objects.isNull(value)) {
 				return "";	

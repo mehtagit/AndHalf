@@ -11,18 +11,17 @@ import javax.persistence.Id;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.envers.Audited;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Audited
 public class SystemConfigListDb implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@JsonIgnore
 	private Long id;
 
 	@CreationTimestamp
@@ -33,28 +32,15 @@ public class SystemConfigListDb implements Serializable {
 	@JsonIgnore
 	private Date modifiedOn;
 	
+	@JsonIgnore
 	private String tag;
 	
 	private Integer value;
 	
 	private String interp;
 	
-	private Integer listOrder;
-	
 	@Column(length = 10)
 	private String tagId;
-	
-	private String description;
-	private String displayName;
-	
-	public SystemConfigListDb() {
-	}
-	
-	public SystemConfigListDb(String tag, String description, String displayName) {
-		this.tag = tag;
-		this.description = description;
-		this.displayName = displayName;
-	}
 	
 	public Long getId() {
 		return id;
@@ -101,25 +87,6 @@ public class SystemConfigListDb implements Serializable {
 	public void setTagId(String tagId) {
 		this.tagId = tagId;
 	}
-	public Integer getListOrder() {
-		return listOrder;
-	}
-	public void setListOrder(Integer listOrder) {
-		this.listOrder = listOrder;
-	}
-	public String getDescription() {
-		return description;
-	}
-	public void setDescription(String description) {
-		this.description = description;
-	}
-	public String getDisplayName() {
-		return displayName;
-	}
-	public void setDisplayName(String displayName) {
-		this.displayName = displayName;
-	}
-	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -135,8 +102,6 @@ public class SystemConfigListDb implements Serializable {
 		builder.append(value);
 		builder.append(", interp=");
 		builder.append(interp);
-		builder.append(", listOrder=");
-		builder.append(listOrder);
 		builder.append(", tagId=");
 		builder.append(tagId);
 		builder.append("]");

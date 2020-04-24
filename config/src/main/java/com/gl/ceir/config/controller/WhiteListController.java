@@ -26,7 +26,7 @@ public class WhiteListController {
 	@ApiOperation(value = "View available White List Device ", response = WhiteList.class)
 	@RequestMapping(path = "/WhiteList/", method = RequestMethod.GET)
 	public MappingJacksonValue getByMsisdnAndImei(@RequestParam(required = false) Long msisdn,
-			@RequestParam(required = false) String imei) {
+			@RequestParam(required = false) Long imei) {
 		ImeiMsisdnIdentity imeiMsisdnIdentity = new ImeiMsisdnIdentity();
 		imeiMsisdnIdentity.setMsisdn(msisdn);
 		imeiMsisdnIdentity.setImei(imei);

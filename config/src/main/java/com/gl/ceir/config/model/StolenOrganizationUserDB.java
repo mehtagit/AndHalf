@@ -5,30 +5,25 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
-import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.envers.Audited;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Audited
-public class StolenOrganizationUserDB implements Serializable {
+@PrimaryKeyJoinColumn(name = "id")
+public class StolenOrganizationUserDB extends StolenandRecoveryMgmt implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	/*
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	*/
 	
 	@CreationTimestamp
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
@@ -37,28 +32,29 @@ public class StolenOrganizationUserDB implements Serializable {
 	@UpdateTimestamp
 	private LocalDateTime modifiedOn;
 
+	
 	private String username;
 	private String companyName;  
 	private String propertyLocation;
 	private String street;
 	private String locality;
 	
-	@Column(length = 50)
-	private String fileName;
-			
+	@NotNull
 	@Column(length = 50)
 	private String district;
 	
+	@NotNull
 	@Column(length = 50)
 	private String commune;
 	
+	@NotNull
 	@Column(length = 50)
 	private String village;
 	
+	@NotNull
 	private Integer postalCode;
 	
 	private String province;
-	
 	private String country;
 	
 	// Authorize person Info.
@@ -69,7 +65,6 @@ public class StolenOrganizationUserDB implements Serializable {
 	private String phoneNo;
 	
 	// Place of device stolen.
-	private String incidentPropertyLocation;
 	private String incidentStreet;
 	private String incidentLocality;
 	
@@ -90,15 +85,6 @@ public class StolenOrganizationUserDB implements Serializable {
 	
 	private String incidentProvince;
 	private String incidentCountry;
-	
-	@Lob
-	// @Basic(fetch = FetchType.LAZY)
-	private String remark;
-	
-	@OneToOne
-	@JoinColumn(name = "stolen_id")
-	@JsonIgnore
-	StolenandRecoveryMgmt stolenandRecoveryMgmt;
 	
 	public LocalDateTime getCreatedOn() {
 		return createdOn;
@@ -258,37 +244,6 @@ public class StolenOrganizationUserDB implements Serializable {
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
-	}
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
-	public StolenandRecoveryMgmt getStolenandRecoveryMgmt() {
-		return stolenandRecoveryMgmt;
-	}
-	public void setStolenandRecoveryMgmt(StolenandRecoveryMgmt stolenandRecoveryMgmt) {
-		this.stolenandRecoveryMgmt = stolenandRecoveryMgmt;
-	}
-	public String getFileName() {
-		return fileName;
-	}
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
-	}
-	public String getRemark() {
-		return remark;
-	}
-	public void setRemark(String remark) {
-		this.remark = remark;
-	}
-	
-	public String getIncidentPropertyLocation() {
-		return incidentPropertyLocation;
-	}
-	public void setIncidentPropertyLocation(String incidentPropertyLocation) {
-		this.incidentPropertyLocation = incidentPropertyLocation;
 	}
 	@Override
 	public String toString() {

@@ -45,10 +45,10 @@ public class SpecificationBuilder<T> {
 		// convert each of SearchCriteria params to Specification and construct combined specification based on custom rules.
 
 		Specification<T> finalSpecification = null;
+
 		Specification<T> searchSpecification  = null;
 		List<Specification<T>> specifications = createSpecifications( params );
 
-		logger.info("length on params : " + specifications.size());
 		if(!specifications.isEmpty()) {
 			finalSpecification = Specification.where(specifications.get(0));
 
@@ -56,9 +56,7 @@ public class SpecificationBuilder<T> {
 				finalSpecification = finalSpecification.and(specifications.get(i));
 			}
 		}
-		
-		logger.info("length on AND : " + specifications.size());
-		
+
 		if( !searchParams.isEmpty() ) {
 			specifications = createSpecifications( searchParams );
 			if( !specifications.isEmpty()) {
@@ -72,8 +70,6 @@ public class SpecificationBuilder<T> {
 			}
 		}
 
-		logger.info("length on OR : " + specifications.size());
-		
 		return finalSpecification;
 	}
 
@@ -84,7 +80,7 @@ public class SpecificationBuilder<T> {
 	private List<Specification<T>> createSpecifications(List<SearchCriteria> criterias){
 
 		try {
-			for(SearchCriteria searchCriteria : criterias) {
+			for(SearchCriteria searchCriteria : params) {
 				specifications.add((root, query, cb)-> {
 					if(SearchOperation.GREATER_THAN.equals(searchCriteria.getSearchOperation())
 							&& Datatype.STRING.equals(searchCriteria.getDatatype())) {
@@ -115,11 +111,6 @@ public class SpecificationBuilder<T> {
 						return cb.equal(cb.lower(dateStringExpr), searchCriteria.getValue().toString());
 					}
 					
-					else if(SearchOperation.LIKE.equals(searchCriteria.getSearchOperation())
-							&& Datatype.STRING.equals(searchCriteria.getDatatype())) {
-						return cb.like(root.get(searchCriteria.getKey()), searchCriteria.getValue().toString());
-					}
-					
 					else {
 						return null;
 					}
@@ -137,14 +128,6 @@ public class SpecificationBuilder<T> {
 		return (root, query, cb) -> {
 			logger.info("In query save ");
 			return cb.in(root.get(key)).value(status);
-		};
-	}
-	
-	public Specification<T> notIn(String key, List<String> status){
-		return (root, query, cb) -> {
-			logger.info("In query save ");
-			return cb.in(root.get(key)).value(status)
-					.not();
 		};
 	}
 

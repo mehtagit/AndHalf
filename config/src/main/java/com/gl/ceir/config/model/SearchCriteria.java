@@ -11,6 +11,7 @@ public class SearchCriteria {
 	private Datatype datatype;
 
 	public SearchCriteria(String key, Object value, SearchOperation searchOperation, Datatype datatype) {
+		// TODO Auto-generated constructor stub
 		this.key = key;
 		this.value = value;
 		this.searchOperation = searchOperation;

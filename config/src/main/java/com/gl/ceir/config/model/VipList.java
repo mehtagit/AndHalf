@@ -1,18 +1,16 @@
 package com.gl.ceir.config.model;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
-import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
- 
+
+// CR(imei,msisdn)UD 
 @Entity
 public class VipList implements Serializable {
 	/**
@@ -23,45 +21,10 @@ public class VipList implements Serializable {
 	@EmbeddedId
 	private ImeiMsisdnIdentity imeiMsisdnIdentity;
 
-	@CreationTimestamp
-	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
-	@Column(nullable = false, updatable = false)
-	private LocalDateTime createdOn;
-
-	@UpdateTimestamp
-	private LocalDateTime modifiedOn;
-	
 	@JsonIgnore
 	private String requestedBy;
-	
 	@JsonIgnore
 	private String approvedBy;
-	
-	public VipList() {}
-	
-	public VipList(String imei, Long msisdn) {
-		this.imeiMsisdnIdentity = new ImeiMsisdnIdentity(imei, msisdn);
-	}
-
-	public LocalDateTime getCreatedOn() {
-		return createdOn;
-	}
-
-	public void setCreatedOn(LocalDateTime createdOn) {
-		this.createdOn = createdOn;
-	}
-
-	public LocalDateTime getModifiedOn() {
-		return modifiedOn;
-	}
-
-	public void setModifiedOn(LocalDateTime modifiedOn) {
-		this.modifiedOn = modifiedOn;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
 
 	public ImeiMsisdnIdentity getImeiMsisdnIdentity() {
 		return imeiMsisdnIdentity;

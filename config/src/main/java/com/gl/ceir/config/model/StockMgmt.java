@@ -14,16 +14,14 @@ import javax.persistence.Transient;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.envers.Audited;
-import org.hibernate.envers.NotAudited;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
-@Audited
 public class StockMgmt implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,7 +49,6 @@ public class StockMgmt implements Serializable {
 	private Long userId;
 
 	// @NotNull
-	@NotAudited
 	@OneToOne
 	@JoinColumn(name="local_user_id", updatable = false)
 	private User user;
@@ -59,7 +56,7 @@ public class StockMgmt implements Serializable {
 	@Column(length = 15)
 	private String roleType;
 
-	private int quantity;
+	private int  quantity;
 
 	@Column(length = 3)
 	private int stockStatus;
@@ -74,31 +71,8 @@ public class StockMgmt implements Serializable {
 
 	private String remarks;
 
-	private Long assignerId;
-
 	@Transient
 	private String stateInterp; 
-
-	private Integer deleteFlag;
-
-	@Transient
-	private String deleteFlagInterp;
-
-	public Integer getDeleteFlag() {
-		return deleteFlag;
-	}
-
-	public void setDeleteFlag(Integer deleteFlag) {
-		this.deleteFlag = deleteFlag;
-	}
-
-	public String getDeleteFlagInterp() {
-		return deleteFlagInterp;
-	}
-
-	public void setDeleteFlagInterp(String deleteFlagInterp) {
-		this.deleteFlagInterp = deleteFlagInterp;
-	}
 
 	public Long getId() {
 		return id;
@@ -252,14 +226,6 @@ public class StockMgmt implements Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
-	}
-
-	public Long getAssignerId() {
-		return assignerId;
-	}
-
-	public void setAssignerId(Long assignerId) {
-		this.assignerId = assignerId;
 	}
 
 	@Override

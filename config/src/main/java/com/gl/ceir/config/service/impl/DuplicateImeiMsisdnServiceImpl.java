@@ -137,10 +137,4 @@ public class DuplicateImeiMsisdnServiceImpl implements DuplicateImeiMsisdnServic
 		return duplicateImeiMsisdnRepository.saveAll(duplicateImeiMsisdns);
 	}
 
-	@Override
-	public DuplicateImeiMsisdn get(String id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

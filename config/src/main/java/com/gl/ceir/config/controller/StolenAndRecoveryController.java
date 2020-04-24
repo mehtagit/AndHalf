@@ -1,7 +1,6 @@
 package com.gl.ceir.config.controller;
 
 import java.util.List;
-import java.util.Objects;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.model.ConsignmentUpdateRequest;
 import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.FilterRequest;
@@ -35,6 +35,9 @@ public class StolenAndRecoveryController {
 
 	@Autowired
 	StolenAndRecoveryServiceImpl stolenAndRecoveryServiceImpl;
+
+	@Autowired
+	FileStorageProperties fileStorageProperties;
 
 	@Autowired
 	StackholderPolicyMappingServiceImpl stackholderPolicyMappingServiceImpl;
@@ -123,7 +126,6 @@ public class StolenAndRecoveryController {
 			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
 			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
 			@RequestParam(value = "file", defaultValue = "0") Integer file) {
-
 		MappingJacksonValue mapping = null;
 
 		if(file == 0) {
@@ -145,7 +147,7 @@ public class StolenAndRecoveryController {
 	@RequestMapping(path = "/stakeholder/Delete", method = RequestMethod.DELETE)
 	public GenricResponse deleteRecord(@RequestBody StolenandRecoveryMgmt stolenandRecoveryRequest) {
 
-		logger.info("Record Delete request = " + stolenandRecoveryRequest);
+		logger.info("Record Delete request ="+stolenandRecoveryRequest);
 		GenricResponse genricResponse = stolenAndRecoveryServiceImpl.deleteRecord(stolenandRecoveryRequest);
 
 		logger.info("Response send = " + genricResponse);
@@ -160,7 +162,7 @@ public class StolenAndRecoveryController {
 
 		StackholderPolicyMapping mapping = new StackholderPolicyMapping();
 		mapping.setListType("BlackList");
-		if(Objects.isNull(stolenandRecoveryRequest.getBlockingType()) || 
+		if(stolenandRecoveryRequest.getBlockingType() == null || 
 				stolenandRecoveryRequest.getBlockingType().equalsIgnoreCase("Default") ||
 				stolenandRecoveryRequest.getBlockingType().isEmpty()) {
 

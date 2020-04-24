@@ -30,7 +30,7 @@ public class BlackListController {
 	@ApiOperation(value = "View available Black List Device ", response = BlackList.class)
 	@RequestMapping(path = "/BlackList/", method = RequestMethod.GET)
 	public MappingJacksonValue getByMsisdnAndImei(@RequestParam(required = false) Long msisdn,
-			@RequestParam(required = false) String imei) {
+			@RequestParam(required = false) Long imei) {
 		ImeiMsisdnIdentity imeiMsisdnIdentity = new ImeiMsisdnIdentity();
 		imeiMsisdnIdentity.setMsisdn(msisdn);
 		imeiMsisdnIdentity.setImei(imei);

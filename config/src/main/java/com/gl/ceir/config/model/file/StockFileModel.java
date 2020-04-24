@@ -5,33 +5,29 @@ import com.opencsv.bean.CsvBindByPosition;
 
 public class StockFileModel {
 		
-	@CsvBindByName(column = "Created On")
-	@CsvBindByPosition(position = 0)
-	private String createdOn;
-	
 	@CsvBindByName(column = "Txn Id")
 	@CsvBindByPosition(position = 1)
 	private String txnId;
 
+	@CsvBindByName(column = "Status")
+	@CsvBindByPosition(position = 4)
+	private String stockStatus;
+	
+	@CsvBindByName(column = "Supplier Name")
+	@CsvBindByPosition(position = 5)
+	private String supplierName;
+	
 	@CsvBindByName(column = "File Name")
 	@CsvBindByPosition(position = 2)
 	private String fileName;
 	
-	@CsvBindByName(column = "Quantity")
-	@CsvBindByPosition(position = 3)
-	private Integer quantity;
+	@CsvBindByName(column = "Created On")
+	@CsvBindByPosition(position = 0)
+	private String createdOn;
 
 	@CsvBindByName(column = "Modified On")
-	@CsvBindByPosition(position = 4)
+	@CsvBindByPosition(position = 3)
 	private String modifiedOn;
-	
-	@CsvBindByName(column = "Status")
-	@CsvBindByPosition(position = 5)
-	private String stockStatus;
-	
-	@CsvBindByName(column = "Supplier Name")
-	@CsvBindByPosition(position = 6)
-	private String supplierName;
 
 	public String getStockStatus() {
 		return stockStatus;
@@ -63,14 +59,6 @@ public class StockFileModel {
 
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
-	}
-	
-	public Integer getQuantity() {
-		return quantity;
-	}
-
-	public void setQuantity(Integer quantity) {
-		this.quantity = quantity;
 	}
 
 	public String getCreatedOn() {

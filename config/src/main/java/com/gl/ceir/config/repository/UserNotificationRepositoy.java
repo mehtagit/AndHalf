@@ -10,7 +10,7 @@ public interface UserNotificationRepositoy extends JpaRepository<UserNotificatio
 
 	public List<UserNotification> findByMsisdn(Long msisdn);
 
-	public List<UserNotification> findByImei(String imei);
+	public List<UserNotification> findByImei(Long imei);
 
-	public List<UserNotification> findByMsisdnAndImei(Long msisdn, String imei);
+	public List<UserNotification> findByMsisdnAndImei(Long msisdn, Long imei);
 }

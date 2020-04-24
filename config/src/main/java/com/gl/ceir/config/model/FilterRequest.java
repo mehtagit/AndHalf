@@ -2,82 +2,32 @@ package com.gl.ceir.config.model;
 
 public class FilterRequest {
 
-	private Long id;
-	private Integer userId;
-	private Long importerId;
-	private String nid;
+	public Integer userId;
+	public String nid;
 	private String txnId;
-	private String startDate;
-	private String endDate;
+	public String startDate;
+	public String endDate;
 	private Integer consignmentStatus;
 	private String roleType;
 	private Integer requestType;
 	private Integer sourceType;
 	private String userType;
 	private Integer featureId;
-	private String featureName;
-	private String subFeatureName;
-	private String userName;
 	private Integer userTypeId;
 	private String searchString;
 
-	private Integer taxPaidStatus;
+	public Integer taxPaidStatus;
 	private Integer deviceIdType;
 	private Integer deviceType;
 	private Integer type;
 	private Integer channel;
 
+	private String tag;
 	private Integer status;
 
 	private Integer operatorTypeId;
 	private String origin;
-	
-	private String tac;
-	
-	// Mapping for parent child tags.
-	private String tag;
-	private String childTag;
-	private Integer parentValue;
-	
-	private String imei;
-	private Long contactNumber;
-	
-	public String getSubFeatureName() {
-		return subFeatureName;
-	}
-	public void setSubFeatureName(String subFeatureName) {
-		this.subFeatureName = subFeatureName;
-	}
-	public String getUserName() {
-		return userName;
-	}
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-	public String getFeatureName() {
-		return featureName;
-	}
-	public void setFeatureName(String featureName) {
-		this.featureName = featureName;
-	}
-	public String getImei() {
-		return imei;
-	}
-	public void setImei(String imei) {
-		this.imei = imei;
-	}
-	public Long getContactNumber() {
-		return contactNumber;
-	}
-	public void setContactNumber(Long contactNumber) {
-		this.contactNumber = contactNumber;
-	}
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
+
 	public Integer getUserId() {
 		return userId;
 	}
@@ -94,9 +44,8 @@ public class FilterRequest {
 	public String getTxnId() {
 		return txnId;
 	}
-	public FilterRequest setTxnId(String txnId) {
+	public void setTxnId(String txnId) {
 		this.txnId = txnId;
-		return this;
 	}
 	public String getStartDate() {
 		return startDate;
@@ -128,6 +77,7 @@ public class FilterRequest {
 	public void setRoleType(String roleType) {
 		this.roleType = roleType;
 	}
+
 	public Integer getConsignmentStatus() {
 		return consignmentStatus;
 	}
@@ -170,6 +120,7 @@ public class FilterRequest {
 	public void setDeviceIdType(Integer deviceIdType) {
 		this.deviceIdType = deviceIdType;
 	}
+
 	public Integer getDeviceType() {
 		return deviceType;
 	}
@@ -212,39 +163,12 @@ public class FilterRequest {
 	public void setOrigin(String origin) {
 		this.origin = origin;
 	}
-	public String getChildTag() {
-		return childTag;
-	}
-	public void setChildTag(String childTag) {
-		this.childTag = childTag;
-	}
-	public Integer getParentValue() {
-		return parentValue;
-	}
-	public void setParentValue(Integer parentValue) {
-		this.parentValue = parentValue;
-	}
-	public String getTac() {
-		return tac;
-	}
-	public void setTac(String tac) {
-		this.tac = tac;
-	}
-	public Long getImporterId() {
-		return importerId;
-	}
-	public void setImporterId(Long importerId) {
-		this.importerId = importerId;
-	}
+	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("FilterRequest [id=");
-		builder.append(id);
-		builder.append(", userId=");
+		builder.append("FilterRequest [userId=");
 		builder.append(userId);
-		builder.append(", importerId=");
-		builder.append(importerId);
 		builder.append(", nid=");
 		builder.append(nid);
 		builder.append(", txnId=");
@@ -265,12 +189,6 @@ public class FilterRequest {
 		builder.append(userType);
 		builder.append(", featureId=");
 		builder.append(featureId);
-		builder.append(", featureName=");
-		builder.append(featureName);
-		builder.append(", subFeatureName=");
-		builder.append(subFeatureName);
-		builder.append(", userName=");
-		builder.append(userName);
 		builder.append(", userTypeId=");
 		builder.append(userTypeId);
 		builder.append(", searchString=");
@@ -285,28 +203,16 @@ public class FilterRequest {
 		builder.append(type);
 		builder.append(", channel=");
 		builder.append(channel);
+		builder.append(", tag=");
+		builder.append(tag);
 		builder.append(", status=");
 		builder.append(status);
 		builder.append(", operatorTypeId=");
 		builder.append(operatorTypeId);
-		builder.append(", origin=");
-		builder.append(origin);
-		builder.append(", tac=");
-		builder.append(tac);
-		builder.append(", tag=");
-		builder.append(tag);
-		builder.append(", childTag=");
-		builder.append(childTag);
-		builder.append(", parentValue=");
-		builder.append(parentValue);
-		builder.append(", imei=");
-		builder.append(imei);
-		builder.append(", contactNumber=");
-		builder.append(contactNumber);
 		builder.append("]");
 		return builder.toString();
 	}
-	
+
 }
 
 

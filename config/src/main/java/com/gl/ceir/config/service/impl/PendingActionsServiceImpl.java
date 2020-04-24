@@ -119,7 +119,7 @@ public class PendingActionsServiceImpl implements PendingActionsService {
 	}
 
 	@Override
-	public PendingActions getByImei(String imei) {
+	public PendingActions getByImei(Long imei) {
 		try {
 			PendingActions pendingActions = pendingActionsRepositoy.findByImei(imei);
 			if (pendingActions == null)

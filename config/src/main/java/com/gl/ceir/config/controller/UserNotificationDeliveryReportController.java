@@ -40,7 +40,7 @@ public class UserNotificationDeliveryReportController {
 	@ApiOperation(value = "View UserNotificationDeliveryReport by Msisdn or/and IMEI / Ticket Id", response = UserNotification.class)
 	@RequestMapping(path = "/UserNotificationDeliveryReport/", method = RequestMethod.GET)
 	public MappingJacksonValue getByMsisdnAndImei(@RequestParam(required = false) Long msisdn,
-			@RequestParam(required = false) String imei, @RequestParam(required = false) String ticketId) {
+			@RequestParam(required = false) Long imei, @RequestParam(required = false) String ticketId) {
 		if (ticketId == null || "".equals(ticketId)) {
 			ImeiMsisdnIdentity imeiMsisdnIdentity = new ImeiMsisdnIdentity();
 			imeiMsisdnIdentity.setMsisdn(msisdn);

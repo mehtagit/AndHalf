@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import com.gl.ceir.config.ConfigTags;
 import com.gl.ceir.config.EmailSender.EmailUtil;
+import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.model.AuditTrail;
@@ -32,7 +33,7 @@ import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.SearchOperation;
 import com.gl.ceir.config.model.file.AuditTrailFileModel;
 import com.gl.ceir.config.repository.AuditTrailRepository;
-import com.gl.ceir.config.specificationsbuilder.GenericSpecificationBuilder;
+import com.gl.ceir.config.specificationsbuilder.SpecificationBuilder;
 import com.gl.ceir.config.util.InterpSetter;
 import com.gl.ceir.config.util.Utility;
 import com.opencsv.CSVWriter;
@@ -43,6 +44,9 @@ import com.opencsv.bean.StatefulBeanToCsvBuilder;
 public class AuditTrailServiceImpl {
 
 	private static final Logger logger = LogManager.getLogger(AuditTrailServiceImpl.class);
+
+	@Autowired
+	FileStorageProperties fileStorageProperties;
 
 	@Autowired
 	AuditTrailRepository auditTrailRepository;
@@ -114,14 +118,12 @@ public class AuditTrailServiceImpl {
 		String fileName = null;
 		Writer writer   = null;
 		AuditTrailFileModel atfm = null;
-		
 		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-		DateTimeFormatter dtf2  = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
 
-		SystemConfigurationDb filepath = configurationManagementServiceImpl.findByTag(ConfigTags.file_download_dir);
-		logger.info("CONFIG : file_consignment_download_dir [" + filepath + "]");
-		SystemConfigurationDb link = configurationManagementServiceImpl.findByTag(ConfigTags.file_download_link);
-		logger.info("CONFIG : file_consignment_download_link [" + link + "]");
+		SystemConfigurationDb filepath = configurationManagementServiceImpl.findByTag(ConfigTags.file_audit_trail_download_dir);
+		logger.info("CONFIG : file_audit_trail_download_dir [" + filepath + "]");
+		SystemConfigurationDb link = configurationManagementServiceImpl.findByTag(ConfigTags.file_audit_trail_download_link);
+		logger.info("CONFIG : file_audit_trail_download_link [" + link + "]");
 		
 		String filePath = filepath.getValue();
 		StatefulBeanToCsvBuilder<AuditTrailFileModel> builder = null;
@@ -132,16 +134,16 @@ public class AuditTrailServiceImpl {
 			List<AuditTrail> auditTrails = getAll(filterRequest);
 			if( !auditTrails.isEmpty() ) {
 				if(Objects.nonNull(filterRequest.getUserId()) && (filterRequest.getUserId() != -1 && filterRequest.getUserId() != 0)) {
-					fileName = LocalDateTime.now().format(dtf2).replace(" ", "_") + "_AuditTrails.csv";
+					fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_AuditTrails.csv";
 				}else {
-					fileName = LocalDateTime.now().format(dtf2).replace(" ", "_") + "_AuditTrails.csv";
+					fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_AuditTrails.csv";
 				}
 			}else {
-				fileName = LocalDateTime.now().format(dtf2).replace(" ", "_") + "_AuditTrails.csv";
+				fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_AuditTrails.csv";
 			}
 
 			writer = Files.newBufferedWriter(Paths.get(filePath+fileName));
-			builder = new StatefulBeanToCsvBuilder<>(writer);
+			builder = new StatefulBeanToCsvBuilder<AuditTrailFileModel>(writer);
 			csvWriter = builder.withQuotechar(CSVWriter.NO_QUOTE_CHARACTER).build();
 
 			if( !auditTrails.isEmpty() ) {
@@ -150,9 +152,7 @@ public class AuditTrailServiceImpl {
 				for(AuditTrail auditTrail : auditTrails ) {
 					atfm = new AuditTrailFileModel();
 
-					atfm.setCreatedOn(auditTrail.getCreatedOn().toString());
-					atfm.setTxnId(auditTrail.getTxnId());
-					atfm.setRoleType("");
+					atfm.setUserId(auditTrail.getUserId());
 					atfm.setFeatureName(auditTrail.getFeatureName());
 					atfm.setSubFeatureName(auditTrail.getSubFeature());
 
@@ -176,35 +176,14 @@ public class AuditTrailServiceImpl {
 		}
 	}
 
-	private GenericSpecificationBuilder<AuditTrail> buildSpecification(FilterRequest filterRequest){
-		GenericSpecificationBuilder<AuditTrail> cmsb = new GenericSpecificationBuilder<>(propertiesReader.dialect);
+	private SpecificationBuilder<AuditTrail> buildSpecification(FilterRequest filterRequest){
+		SpecificationBuilder<AuditTrail> cmsb = new SpecificationBuilder<>(propertiesReader.dialect);
 
 		if (!"SystemAdmin".equalsIgnoreCase(filterRequest.getUserType())) {
 			if(Objects.nonNull(filterRequest.getUserId()))
 				cmsb.with(new SearchCriteria("userId", filterRequest.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));
 		}
 		
-		if(Objects.nonNull(filterRequest.getStartDate()) && !filterRequest.getStartDate().isEmpty())
-			cmsb.with(new SearchCriteria("createdOn", filterRequest.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
-
-		if(Objects.nonNull(filterRequest.getEndDate()) && !filterRequest.getEndDate().isEmpty())
-			cmsb.with(new SearchCriteria("createdOn", filterRequest.getEndDate() , SearchOperation.LESS_THAN, Datatype.DATE));
-
-		if(Objects.nonNull(filterRequest.getTxnId()) && !filterRequest.getTxnId().isEmpty())
-			cmsb.with(new SearchCriteria("txnId", filterRequest.getTxnId(), SearchOperation.EQUALITY, Datatype.STRING));
-		
-		if(Objects.nonNull(filterRequest.getFeatureName()) && !filterRequest.getFeatureName().isEmpty())
-			cmsb.with(new SearchCriteria("featureName", filterRequest.getFeatureName(), SearchOperation.EQUALITY, Datatype.STRING));
-
-		if(Objects.nonNull(filterRequest.getUserType()) && !filterRequest.getUserType().isEmpty())
-			cmsb.with(new SearchCriteria("userType", filterRequest.getUserType(), SearchOperation.EQUALITY, Datatype.STRING));
-
-		if(Objects.nonNull(filterRequest.getSubFeatureName()) && !filterRequest.getSubFeatureName().isEmpty())
-			cmsb.with(new SearchCriteria("subFeature", filterRequest.getSubFeatureName(), SearchOperation.EQUALITY, Datatype.STRING));
-
-		if(Objects.nonNull(filterRequest.getUserName()) && !filterRequest.getUserName().isEmpty())
-			cmsb.with(new SearchCriteria("userName", filterRequest.getUserName(), SearchOperation.EQUALITY, Datatype.STRING));
-
 		if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
 			cmsb.orSearch(new SearchCriteria("userName", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 			cmsb.orSearch(new SearchCriteria("featureName", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));

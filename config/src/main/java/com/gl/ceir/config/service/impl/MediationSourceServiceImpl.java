@@ -47,9 +47,9 @@ public class MediationSourceServiceImpl implements MediationSourceService {
 	public MediationSource get(Long id) {
 
 		try {
-			return mediationSourceRepository.findById(id)
+			MediationSource mediationSource = mediationSourceRepository.findById(id)
 					.orElseThrow(() -> new ResourceNotFoundException("Mediation Source", "id", id));
-			
+			return mediationSource;
 		} catch (ResourceNotFoundException e) {
 			throw e;
 		} catch (Exception e) {
@@ -79,12 +79,6 @@ public class MediationSourceServiceImpl implements MediationSourceService {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
-	}
-
-	@Override
-	public MediationSource get(String id) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }

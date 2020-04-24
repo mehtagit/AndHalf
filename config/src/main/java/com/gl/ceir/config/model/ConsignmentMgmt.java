@@ -15,13 +15,10 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.envers.Audited;
-import org.hibernate.envers.NotAudited;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
-@Audited
 public class ConsignmentMgmt implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -56,6 +53,8 @@ public class ConsignmentMgmt implements Serializable {
 	private String txnId;
 
 	private String fileName;
+	
+	
 
 	@Column(length = 3)
 	private int consignmentStatus;
@@ -91,34 +90,9 @@ public class ConsignmentMgmt implements Serializable {
 	private String taxInterp;
 
 	// @NotNull
-	@NotAudited
 	@OneToOne
 	@JoinColumn(name="local_user_id", updatable = false)
 	private User user;
-	
-	@Column(length = 1)
-	private String pendingTacApprovedByCustom; // Expected values Y or N
-	
-	private Integer deleteFlag;
-	
-	@Transient
-	private String deleteFlagInterp;
-	
-	public Integer getDeleteFlag() {
-		return deleteFlag;
-	}
-
-	public void setDeleteFlag(Integer deleteFlag) {
-		this.deleteFlag = deleteFlag;
-	}
-
-	public String getDeleteFlagInterp() {
-		return deleteFlagInterp;
-	}
-
-	public void setDeleteFlagInterp(String deleteFlagInterp) {
-		this.deleteFlagInterp = deleteFlagInterp;
-	}
 
 	public Long getId() {
 		return id;
@@ -271,10 +245,13 @@ public class ConsignmentMgmt implements Serializable {
 		return this;
 	}
 
-	public Integer getCurrency() {
+	public int getCurrency() {
 		return currency;
 	}
 
+	public void setCurrency(int currency) {
+		this.currency = currency;
+	}
 
 	public Double getTotalPrice() {
 		return totalPrice;
@@ -331,14 +308,6 @@ public class ConsignmentMgmt implements Serializable {
 
 	public void setCurrency(Integer currency) {
 		this.currency = currency;
-	}
-
-	public String getPendingTacApprovedByCustom() {
-		return pendingTacApprovedByCustom;
-	}
-
-	public void setPendingTacApprovedByCustom(String pendingTacApprovedByCustom) {
-		this.pendingTacApprovedByCustom = pendingTacApprovedByCustom;
 	}
 
 	@Override

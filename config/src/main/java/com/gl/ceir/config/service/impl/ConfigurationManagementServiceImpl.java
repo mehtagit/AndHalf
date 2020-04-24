@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.gl.ceir.config.configuration.PropertiesReader;
@@ -21,6 +20,7 @@ import com.gl.ceir.config.model.AuditTrail;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.MessageConfigurationDb;
+import com.gl.ceir.config.model.MessageConfigurationHistoryDb;
 import com.gl.ceir.config.model.Notification;
 import com.gl.ceir.config.model.PolicyConfigurationDb;
 import com.gl.ceir.config.model.PolicyConfigurationHistoryDb;
@@ -34,6 +34,7 @@ import com.gl.ceir.config.model.constants.SearchOperation;
 import com.gl.ceir.config.model.constants.Tags;
 import com.gl.ceir.config.repository.AuditTrailRepository;
 import com.gl.ceir.config.repository.MessageConfigurationDbRepository;
+import com.gl.ceir.config.repository.MessageConfigurationHistoryDbRepository;
 import com.gl.ceir.config.repository.NotificationRepository;
 import com.gl.ceir.config.repository.PolicyConfigurationDbRepository;
 import com.gl.ceir.config.repository.PolicyConfigurationHistoryDbRepository;
@@ -41,7 +42,7 @@ import com.gl.ceir.config.repository.SystemConfigListRepository;
 import com.gl.ceir.config.repository.SystemConfigUserwiseRepository;
 import com.gl.ceir.config.repository.SystemConfigurationDbRepository;
 import com.gl.ceir.config.repository.SystemConfigurationHistoryDbRepository;
-import com.gl.ceir.config.specificationsbuilder.GenericSpecificationBuilder;
+import com.gl.ceir.config.specificationsbuilder.SpecificationBuilder;
 import com.gl.ceir.config.util.InterpSetter;
 
 @Service
@@ -60,6 +61,9 @@ public class ConfigurationManagementServiceImpl {
 
 	@Autowired
 	SystemConfigurationHistoryDbRepository systemConfigurationHistoryDbRepository;
+
+	@Autowired
+	MessageConfigurationHistoryDbRepository messageConfigurationHistoryDbRepository;
 
 	@Autowired
 	PolicyConfigurationHistoryDbRepository policyConfigurationHistoryDbRepository;
@@ -95,27 +99,13 @@ public class ConfigurationManagementServiceImpl {
 		try {
 
 			Pageable pageable = PageRequest.of(pageNo, pageSize);
-			GenericSpecificationBuilder<SystemConfigurationDb> sb = new GenericSpecificationBuilder<SystemConfigurationDb>(propertiesReader.dialect);
+			SpecificationBuilder<SystemConfigurationDb> sb = new SpecificationBuilder<SystemConfigurationDb>(propertiesReader.dialect);
 
 			if(Objects.nonNull(filterRequest.getTag()))
 				sb.with(new SearchCriteria("tag", filterRequest.getTag(), SearchOperation.EQUALITY, Datatype.STRING));
 
 			if(Objects.nonNull(filterRequest.getType()))
 				sb.with(new SearchCriteria("type", filterRequest.getType(), SearchOperation.EQUALITY, Datatype.STRING));
-
-			if(Objects.nonNull(filterRequest.getFeatureName()))
-				sb.with(new SearchCriteria("featureName", filterRequest.getFeatureName(), SearchOperation.EQUALITY, Datatype.STRING));
-
-			/*
-			 * if(Objects.nonNull(filterRequest.getUserType())) sb.with(new
-			 * SearchCriteria("userType", filterRequest.getUserType(),
-			 * SearchOperation.EQUALITY, Datatype.STRING));
-			 */
-
-			if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
-				sb.orSearch(new SearchCriteria("description", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
-				sb.orSearch(new SearchCriteria("value", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
-			}
 
 			Page<SystemConfigurationDb> page = systemConfigurationDbRepository.findAll(sb.build(), pageable);
 
@@ -132,15 +122,13 @@ public class ConfigurationManagementServiceImpl {
 
 	public SystemConfigurationDb findByTag(SystemConfigurationDb systemConfigurationDb){
 		try {
-			SystemConfigurationDb systemConfigurationDb2 = systemConfigurationDbRepository.getByTag(systemConfigurationDb.getTag());
-			systemConfigurationDb2.setTypeInterp(interpSetter.setConfigInterp(Tags.CONFIG_TYPE, systemConfigurationDb2.getType()));
-			return systemConfigurationDb2;
+			return systemConfigurationDbRepository.getByTag(systemConfigurationDb.getTag());
 		} catch (Exception e) {
 			logger.info("Exception found="+e.getMessage());
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
-
+	
 	public SystemConfigurationDb findByTag(String tag){
 		try {
 			return systemConfigurationDbRepository.getByTag(tag);
@@ -197,18 +185,13 @@ public class ConfigurationManagementServiceImpl {
 		try {
 
 			Pageable pageable = PageRequest.of(pageNo, pageSize);
-			GenericSpecificationBuilder<MessageConfigurationDb> sb = new GenericSpecificationBuilder<>(propertiesReader.dialect);
+			SpecificationBuilder<MessageConfigurationDb> sb = new SpecificationBuilder<>(propertiesReader.dialect);
 
 			if(Objects.nonNull(filterRequest.getTag()))
 				sb.with(new SearchCriteria("tag", filterRequest.getTag(), SearchOperation.EQUALITY, Datatype.STRING));
 
 			if(Objects.nonNull(filterRequest.getChannel()))
 				sb.with(new SearchCriteria("channel", filterRequest.getChannel(), SearchOperation.EQUALITY, Datatype.STRING));
-
-			if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
-				sb.orSearch(new SearchCriteria("description", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
-				sb.orSearch(new SearchCriteria("value", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
-			}
 
 			Page<MessageConfigurationDb> page = messageConfigurationDbRepository.findAll(sb.build(), pageable);
 
@@ -227,10 +210,7 @@ public class ConfigurationManagementServiceImpl {
 	public MessageConfigurationDb getMessageConfigDetailsByTag(MessageConfigurationDb messageConfigurationDb){
 		try {
 
-			MessageConfigurationDb messageConfigurationDb2 = messageConfigurationDbRepository.getByTag(messageConfigurationDb.getTag());
-			messageConfigurationDb2.setChannelInterp(interpSetter.setConfigInterp(Tags.CHANNEL, messageConfigurationDb2.getChannel()));
-
-			return messageConfigurationDb2;
+			return messageConfigurationDbRepository.getByTag(messageConfigurationDb.getTag());
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
@@ -252,9 +232,14 @@ public class ConfigurationManagementServiceImpl {
 				return new GenricResponse(15, "This id does not exist","");
 			}
 
+			MessageConfigurationHistoryDb mshb = new MessageConfigurationHistoryDb();
+			mshb.setDescription(mcd.getDescription());
+			mshb.setTag(mcd.getTag());
+			mshb.setValue(mcd.getValue());
+
+			messageConfigurationHistoryDbRepository.save(mshb);
+
 			mcd.setValue(messageConfigurationDb.getValue());
-			mcd.setDescription(messageConfigurationDb.getDescription());
-			mcd.setActive(0);	
 			logger.info("Persisted message data " + messageConfigurationDb);
 			messageConfigurationDbRepository.save(mcd);
 
@@ -270,9 +255,7 @@ public class ConfigurationManagementServiceImpl {
 	public PolicyConfigurationDb getPolicyConfigDetailsByTag(PolicyConfigurationDb messageConfigurationDb){
 		try {
 
-			PolicyConfigurationDb policyConfigurationDb = policyConfigurationDbRepository.getByTag(messageConfigurationDb.getTag());
-			policyConfigurationDb.setStatusInterp(interpSetter.setConfigInterp(Tags.IS_ACTIVE, policyConfigurationDb.getStatus()));
-			return policyConfigurationDb;
+			return policyConfigurationDbRepository.getByTag(messageConfigurationDb.getTag());
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
@@ -295,21 +278,13 @@ public class ConfigurationManagementServiceImpl {
 		try {
 
 			Pageable pageable = PageRequest.of(pageNo, pageSize);
-			GenericSpecificationBuilder<PolicyConfigurationDb> sb = new GenericSpecificationBuilder<>(propertiesReader.dialect);
+			SpecificationBuilder<PolicyConfigurationDb> sb = new SpecificationBuilder<>(propertiesReader.dialect);
 
 			if(Objects.nonNull(filterRequest.getTag()))
 				sb.with(new SearchCriteria("tag", filterRequest.getTag(), SearchOperation.EQUALITY, Datatype.STRING));
 
 			if(Objects.nonNull(filterRequest.getStatus()))
 				sb.with(new SearchCriteria("status", filterRequest.getStatus(), SearchOperation.EQUALITY, Datatype.STRING));
-
-			if(Objects.nonNull(filterRequest.getType()))
-				sb.with(new SearchCriteria("type", filterRequest.getType(), SearchOperation.EQUALITY, Datatype.STRING));
-			
-			if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
-				sb.orSearch(new SearchCriteria("description", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
-				sb.orSearch(new SearchCriteria("value", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
-			}
 
 			Page<PolicyConfigurationDb> page = policyConfigurationDbRepository.findAll(sb.build(), pageable);
 
@@ -396,25 +371,13 @@ public class ConfigurationManagementServiceImpl {
 	}
 
 	public GenricResponse saveNotification(String channelType, String message, Long userId, Long featureId, String featureName, 
-			String subFeature, String featureTxnId, String subject, int retryCount, String referTable, String roleType, String receiverUserType) {
+			String subFeature, String featureTxnId, String subject, int retryCount) {
 		try {
 
 			notificationRepository.save(new Notification(channelType, message, userId, featureId, featureName, 
-					subFeature, featureTxnId, subject, retryCount, referTable, roleType, receiverUserType));
+					subFeature, featureTxnId, subject, retryCount));
 
 			return new GenricResponse(0, "Notification have been saved Sucessfully", "");
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
-		}
-	}
-
-	public GenricResponse saveAllNotifications(List<Notification> notifications) {
-		try {
-
-			List<Notification> notifications2 = notificationRepository.saveAll(notifications);
-
-			return new GenricResponse(0, "Notification have been saved Sucessfully", "", notifications2);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
@@ -426,7 +389,7 @@ public class ConfigurationManagementServiceImpl {
 
 			logger.debug("getSystemConfigListByTag : " + tag);
 
-			return systemConfigListRepository.findByTag(tag, new Sort(Sort.Direction.ASC, "listOrder"));
+			return systemConfigListRepository.findByTag(tag);
 
 		} catch (Exception e) {
 			logger.info(e.getMessage(), e);
@@ -439,7 +402,7 @@ public class ConfigurationManagementServiceImpl {
 
 			logger.debug("getSystemConfigListByTag : " + tagId);
 
-			return getSystemConfigListDb(systemConfigListRepository.findByTag(tagId, new Sort(Sort.Direction.ASC, "listOrder")), systemConfigUserwiseRepository.findByTagIdAndUserTypeId(tagId, userTypeId));
+			return getSystemConfigListDb(systemConfigListRepository.findByTag(tagId), systemConfigUserwiseRepository.findByTagIdAndUserTypeId(tagId, userTypeId));
 
 		} catch (Exception e) {
 			logger.info(e.getMessage(), e);
@@ -452,7 +415,7 @@ public class ConfigurationManagementServiceImpl {
 
 			logger.debug("getSystemConfigListByTag : " + tagId);
 
-			return getSystemConfigListDb(systemConfigListRepository.findByTag(tagId, new Sort(Sort.Direction.ASC, "listOrder")), systemConfigUserwiseRepository.findByTagIdAndFeatureId(tagId, featureId));
+			return getSystemConfigListDb(systemConfigListRepository.findByTag(tagId), systemConfigUserwiseRepository.findByTagIdAndFeatureId(tagId, featureId));
 
 		} catch (Exception e) {
 			logger.info(e.getMessage(), e);
@@ -490,7 +453,7 @@ public class ConfigurationManagementServiceImpl {
 
 		return new GenricResponse(0, "","");
 	}
-
+	
 	public SystemConfigurationDb saveSystemConfiguration(SystemConfigurationDb systemConfigurationDb){
 		try {
 			return systemConfigurationDbRepository.save(systemConfigurationDb);
@@ -499,7 +462,7 @@ public class ConfigurationManagementServiceImpl {
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
-
+	
 	public MessageConfigurationDb saveMessageConfiguration(MessageConfigurationDb messageConfigurationDb){
 		try {
 			return messageConfigurationDbRepository.save(messageConfigurationDb);
@@ -508,7 +471,7 @@ public class ConfigurationManagementServiceImpl {
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
-
+	
 	public PolicyConfigurationDb savePolicyConfiguration(PolicyConfigurationDb policyConfigurationDb){
 		try {
 			return policyConfigurationDbRepository.save(policyConfigurationDb);

@@ -50,23 +50,13 @@ public class Notification  implements Serializable{
 	private String subject;
 
 	private Integer retryCount;
-	
-	@Column(length = 10)
-	private String referTable;
-	
-	@Column(length = 20)
-	private String roleType;
-	
-	@Column(length = 50)
-	private String receiverUserType;
 
 	public Notification() {
 
 	}
 
 	public Notification(String channelType, String message, Long userId, Long featureId, String featureName, 
-			String subFeature, String featureTxnId, String subject, Integer retryCount, String referTable,
-			String roleType, String receiverUserType) {
+			String subFeature, String featureTxnId, String subject, Integer retryCount) {
 		this.channelType = channelType;
 		this.message = message;
 		this.userId = userId;
@@ -77,18 +67,6 @@ public class Notification  implements Serializable{
 		status = NotificationStatus.INIT.getCode();
 		this.subject = subject;
 		this.retryCount = retryCount;
-		this.referTable = referTable;
-		this.roleType = roleType;
-		this.receiverUserType = receiverUserType;
-	}
-
-
-	public String getReceiverUserType() {
-		return receiverUserType;
-	}
-
-	public void setReceiverUserType(String receiverUserType) {
-		this.receiverUserType = receiverUserType;
 	}
 
 	public Long getId() {
@@ -175,22 +153,6 @@ public class Notification  implements Serializable{
 
 	public void setRetryCount(Integer retryCount) {
 		this.retryCount = retryCount;
-	}
-	
-	public String getReferTable() {
-		return referTable;
-	}
-
-	public void setReferTable(String referTable) {
-		this.referTable = referTable;
-	}
-
-	public String getRoleType() {
-		return roleType;
-	}
-
-	public void setRoleType(String roleType) {
-		this.roleType = roleType;
 	}
 
 	@Override

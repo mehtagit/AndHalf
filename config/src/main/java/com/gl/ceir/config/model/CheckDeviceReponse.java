@@ -6,6 +6,8 @@ public class CheckDeviceReponse {
 	private String brandName;
 	private String modelName;
 	private String status;
+        
+        
 	public String getTacNumber() {
 		return tacNumber;
 	}

@@ -145,10 +145,4 @@ public class ActionParametersServiceImpl implements ActionParametersService {
 		return mapOfActionsAndActionParameters;
 	}
 
-	@Override
-	public ActionParameters get(String id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

@@ -82,10 +82,4 @@ public class SmsAccountServiceImpl implements SmsAccountService {
 		}
 	}
 
-	@Override
-	public SmsAccount get(String id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

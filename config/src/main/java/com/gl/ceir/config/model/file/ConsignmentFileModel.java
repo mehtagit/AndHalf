@@ -20,14 +20,11 @@ public class ConsignmentFileModel {
 	@CsvBindByName(column = "File Name")
 	@CsvBindByPosition(position = 4)
 	private String fileName;
-	@CsvBindByName(column = "Quantity")
-	@CsvBindByPosition(position = 5)
-	private Integer quantity;
 	@CsvBindByName(column = "Create On")
-	@CsvBindByPosition(position = 6)
+	@CsvBindByPosition(position = 5)
 	private String createdOn;
 	@CsvBindByName(column = "Modified On")
-	@CsvBindByPosition(position = 7)
+	@CsvBindByPosition(position = 6)
 	private String modifiedOn;
 
 	public ConsignmentFileModel() {
@@ -35,7 +32,7 @@ public class ConsignmentFileModel {
 	}
 
 	public ConsignmentFileModel(String consignmentStatus, String txnId, String supplierName, 
-			String taxPaidStatus, String fileName, String createdOn, String modifiedOn, Integer quantity) {
+			String taxPaidStatus, String fileName, String createdOn, String modifiedOn) {
 		this.consignmentStatus = consignmentStatus;
 		this.txnId = txnId;
 		this.supplierName = supplierName;
@@ -43,7 +40,6 @@ public class ConsignmentFileModel {
 		this.fileName = fileName;
 		this.createdOn = createdOn;
 		this.modifiedOn = modifiedOn;
-		this.quantity = quantity;
 	}
 
 	public String getConsignmentStatus() {
@@ -100,14 +96,6 @@ public class ConsignmentFileModel {
 
 	public void setModifiedOn(String modifiedOn) {
 		this.modifiedOn = modifiedOn;
-	}
-
-	public Integer getQuantity() {
-		return quantity;
-	}
-
-	public void setQuantity(Integer quantity) {
-		this.quantity = quantity;
 	}
 
 	@Override

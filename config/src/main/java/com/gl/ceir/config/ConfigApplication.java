@@ -6,13 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.ApplicationContext;
-import org.springframework.data.envers.repository.support.EnversRevisionRepositoryFactoryBean;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
+import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.model.DeviceSnapShot;
 import com.gl.ceir.config.model.DuplicateImeiMsisdn;
 import com.gl.ceir.config.model.ImeiMsisdnIdentity;
@@ -20,11 +19,10 @@ import com.gl.ceir.config.model.constants.ImeiStatus;
 import com.gl.ceir.config.service.DeviceSnapShotService;
 
 @SpringBootApplication
+@EnableConfigurationProperties({ FileStorageProperties.class })
+@EnableJpaAuditing
 @EnableAutoConfiguration
 @EnableCaching
-@EnableFeignClients
-@EnableJpaAuditing
-@EnableJpaRepositories(repositoryFactoryBeanClass = EnversRevisionRepositoryFactoryBean.class) 
 public class ConfigApplication {
 
 	public static void main(String[] args) {
@@ -44,7 +42,7 @@ public class ConfigApplication {
 
 	private static DeviceSnapShot convertRequestToDeviceSnapShot() {
 		DeviceSnapShot deviceSnapShot = new DeviceSnapShot();
-		deviceSnapShot.setImei("898989");
+		deviceSnapShot.setImei(898989L);
 		// deviceSnapShot.setFailedRuleId(request.getFailRule().getId().toString());
 		// deviceSnapShot.setFailedRuleName(request.getFailRule().getName());
 		deviceSnapShot.setDuplicateImeiMsisdns(new ArrayList<>());
@@ -55,7 +53,7 @@ public class ConfigApplication {
 
 	private static DuplicateImeiMsisdn convertToDuplicateImeiMsisdn() {
 		DuplicateImeiMsisdn duplicateImeiMsisdn = new DuplicateImeiMsisdn();
-		duplicateImeiMsisdn.setImeiMsisdnIdentity(new ImeiMsisdnIdentity("898989", 9090909L));
+		duplicateImeiMsisdn.setImeiMsisdnIdentity(new ImeiMsisdnIdentity(898989L, 9090909L));
 		duplicateImeiMsisdn.setFileName("file");
 
 		duplicateImeiMsisdn.setImeiStatus(ImeiStatus.AUTO_REGULARIZED);

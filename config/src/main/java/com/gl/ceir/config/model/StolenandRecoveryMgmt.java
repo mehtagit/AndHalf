@@ -4,25 +4,24 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.envers.Audited;
-import org.hibernate.envers.NotAudited;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
-@Audited
+@Inheritance(strategy = InheritanceType.JOINED)
 public class StolenandRecoveryMgmt implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -31,101 +30,46 @@ public class StolenandRecoveryMgmt implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private Long userId;
-
-	@Column(length = 50)
 	private String fileName;
-
-	@Column(length = 50)
-	private String firFileName;
-
 	private Integer fileStatus;
-	@NotNull
+	@NotNull	
 	private String txnId;
-
 	@CreationTimestamp
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private LocalDateTime createdOn;
-
-	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	@UpdateTimestamp
 	private LocalDateTime modifiedOn;
-
 	private Integer requestType;
 	@Transient
 	private String requestTypeInterp;
-
 	private String roleType;
 	private String blockingType;
 	private String blockingTimePeriod;
 	private Integer sourceType;
 	private Integer qty;
-
+	
 	private String remark;
-
+	
 	@Transient
 	private String sourceTypeInterp;
-
+	
 	@Transient
 	private String stateInterp;
-
+	
 	private Integer operatorTypeId;
 	@Transient
 	private String operatorTypeIdInterp;
-
+	
 	private Integer blockCategory;
 	@Transient
 	private String blockCategoryInterp;
-
-	@Column(length = 25)
-	private String dateOfStolen;
-
-	@Column(length = 25)
-	private String dateOfRecovery;
-
-	private Integer complaintType;
-
-	@NotAudited
+	
 	@OneToOne(mappedBy = "sARm", cascade = {CascadeType.PERSIST, CascadeType.REMOVE},fetch = FetchType.LAZY)
-	SingleImeiDetails singleImeiDetails; 
-
-	@NotAudited
-	@OneToOne(mappedBy = "stolenandRecoveryMgmt", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	StolenIndividualUserDB stolenIndividualUserDB; 
-
-	@NotAudited
-	@OneToOne(mappedBy = "stolenandRecoveryMgmt", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	StolenOrganizationUserDB stolenOrganizationUserDB; 
-
+	SingleImeiDetails singleImeiDetails;  
+	
 	@Transient
-	private String imei;
+	private Long imei;
 
-	private Integer deleteFlag;
-
-	@Transient
-	private String deleteFlagInterp;
-
-	public Integer getDeleteFlag() {
-		return deleteFlag;
-	}
-
-	public void setDeleteFlag(Integer deleteFlag) {
-		this.deleteFlag = deleteFlag;
-	}
-
-	public String getDeleteFlagInterp() {
-		return deleteFlagInterp;
-	}
-
-	public void setDeleteFlagInterp(String deleteFlagInterp) {
-		this.deleteFlagInterp = deleteFlagInterp;
-	}
-
-	public Integer getComplaintType() {
-		return complaintType;
-	}
-	public void setComplaintType(Integer complaintType) {
-		this.complaintType = complaintType;
-	}
 	public Long getId() {
 		return id;
 	}
@@ -204,10 +148,10 @@ public class StolenandRecoveryMgmt implements Serializable {
 	public void setSingleImeiDetails(SingleImeiDetails singleImeiDetails) {
 		this.singleImeiDetails = singleImeiDetails;
 	}
-	public String getImei() {
+	public Long getImei() {
 		return imei;
 	}
-	public void setImei(String imei) {
+	public void setImei(Long imei) {
 		this.imei = imei;
 	}
 	public String getRequestTypeInterp() {
@@ -255,7 +199,7 @@ public class StolenandRecoveryMgmt implements Serializable {
 	public void setOperatorTypeIdInterp(String operatorTypeIdInterp) {
 		this.operatorTypeIdInterp = operatorTypeIdInterp;
 	}
-
+	
 	public Integer getBlockCategory() {
 		return blockCategory;
 	}
@@ -268,38 +212,6 @@ public class StolenandRecoveryMgmt implements Serializable {
 	public void setBlockCategoryInterp(String blockCategoryInterp) {
 		this.blockCategoryInterp = blockCategoryInterp;
 	}
-
-	public StolenIndividualUserDB getStolenIndividualUserDB() {
-		return stolenIndividualUserDB;
-	}
-	public void setStolenIndividualUserDB(StolenIndividualUserDB stolenIndividualUserDB) {
-		this.stolenIndividualUserDB = stolenIndividualUserDB;
-	}
-	public StolenOrganizationUserDB getStolenOrganizationUserDB() {
-		return stolenOrganizationUserDB;
-	}
-	public void setStolenOrganizationUserDB(StolenOrganizationUserDB stolenOrganizationUserDB) {
-		this.stolenOrganizationUserDB = stolenOrganizationUserDB;
-	}
-	public String getDateOfStolen() {
-		return dateOfStolen;
-	}
-	public void setDateOfStolen(String dateOfStolen) {
-		this.dateOfStolen = dateOfStolen;
-	}
-	public String getDateOfRecovery() {
-		return dateOfRecovery;
-	}
-	public void setDateOfRecovery(String dateOfRecovery) {
-		this.dateOfRecovery = dateOfRecovery;
-	}
-	public String getFirFileName() {
-		return firFileName;
-	}
-	public void setFirFileName(String firFileName) {
-		this.firFileName = firFileName;
-	}
-
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -331,37 +243,16 @@ public class StolenandRecoveryMgmt implements Serializable {
 		builder.append(sourceType);
 		builder.append(", qty=");
 		builder.append(qty);
-		builder.append(", remark=");
-		builder.append(remark);
 		builder.append(", sourceTypeInterp=");
 		builder.append(sourceTypeInterp);
 		builder.append(", stateInterp=");
 		builder.append(stateInterp);
-		builder.append(", operatorTypeId=");
-		builder.append(operatorTypeId);
-		builder.append(", operatorTypeIdInterp=");
-		builder.append(operatorTypeIdInterp);
-		builder.append(", blockCategory=");
-		builder.append(blockCategory);
-		builder.append(", blockCategoryInterp=");
-		builder.append(blockCategoryInterp);
-		builder.append(", dateOfStolen=");
-		builder.append(dateOfStolen);
-		builder.append(", dateOfRecovery=");
-		builder.append(dateOfRecovery);
 		builder.append(", singleImeiDetails=");
 		builder.append(singleImeiDetails);
-		builder.append(", stolenIndividualUserDB=");
-		builder.append(stolenOrganizationUserDB);
 		builder.append(", imei=");
 		builder.append(imei);
-		builder.append(", firFileName=");
-		builder.append(firFileName);
 		builder.append("]");
 		return builder.toString();
 	}
-
-
-
 
 }

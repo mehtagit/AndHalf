@@ -10,7 +10,6 @@ import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -39,7 +38,7 @@ public class ConfigurationController {
 
 
 	@ApiOperation(value = "System Config view All Data", response = SystemConfigurationDb.class)
-	@PostMapping("/system/viewAll")
+	@RequestMapping(path = "/system/viewAll", method = RequestMethod.POST)
 	public MappingJacksonValue findSystemDetails() {
 
 		logger.info("Request to get system all details");
@@ -134,7 +133,7 @@ public class ConfigurationController {
 	}
 
 	@ApiOperation(value = "Message Config view  Data by Tag", response = MessageConfigurationDb.class)
-	@PostMapping("/message/viewTag")
+	@RequestMapping(path = "/message/viewTag", method = RequestMethod.POST)
 	public MappingJacksonValue findMessageDetailsByTag(@RequestBody MessageConfigurationDb messageConfigurationDb) {
 
 		logger.info("Details Get by Message config="+messageConfigurationDb);
@@ -149,7 +148,7 @@ public class ConfigurationController {
 	}
 
 	@ApiOperation(value = "Message Config update Data using id", response = GenricResponse.class)
-	@PutMapping("/message/update")
+	@RequestMapping(path = "/message/update", method = RequestMethod.PUT)
 	public GenricResponse updateMessage(@RequestBody MessageConfigurationDb messageConfigurationDb) {
 
 		logger.info("Update message config request="+messageConfigurationDb);
@@ -162,7 +161,7 @@ public class ConfigurationController {
 	}
 
 	@ApiOperation(value = "Policy Config view  Data by Tag", response = PolicyConfigurationDb.class)
-	@PostMapping("/policy/viewTag")
+	@RequestMapping(path = "/policy/viewTag", method = RequestMethod.POST)
 	public MappingJacksonValue findPolicyDetailsByTag(@RequestBody PolicyConfigurationDb messageConfigurationDb) {
 
 		logger.info("Details Get by Message config="+messageConfigurationDb);
@@ -193,7 +192,7 @@ public class ConfigurationController {
 	}
 
 	@ApiOperation(value = "Policy Config view All Data ", response = PolicyConfigurationDb.class)
-	@PostMapping("/policy/viewAll")
+	@RequestMapping(path = "/policy/viewAll", method = RequestMethod.POST)
 	public MappingJacksonValue findPolicyDetails() {
 
 		logger.info("Details Get by Message config");

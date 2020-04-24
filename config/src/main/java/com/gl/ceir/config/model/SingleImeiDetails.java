@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 public class SingleImeiDetails implements Serializable {
 
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -51,13 +52,13 @@ public class SingleImeiDetails implements Serializable {
 	
 	private Integer category;
 	
-	private String firstImei;
+	private Long firstImei;
 	
-	private String secondImei;
+	private Long secondImei;
 	
-	private String thirdImei;
+	private Long thirdImei;
 	
-	private String fourthImei;
+	private Long fourthImei;
 	
 	private long userId;
 	
@@ -194,33 +195,29 @@ public class SingleImeiDetails implements Serializable {
 	public void setUserType(String userType) {
 		this.userType = userType;
 	}
-	
-	public String getFirstImei() {
+	public Long getFirstImei() {
 		return firstImei;
 	}
-	public void setFirstImei(String firstImei) {
+	public void setFirstImei(Long firstImei) {
 		this.firstImei = firstImei;
 	}
-	public String getSecondImei() {
+	public Long getSecondImei() {
 		return secondImei;
 	}
-	public void setSecondImei(String secondImei) {
+	public void setSecondImei(Long secondImei) {
 		this.secondImei = secondImei;
 	}
-	public String getThirdImei() {
+	public Long getThirdImei() {
 		return thirdImei;
 	}
-	public void setThirdImei(String thirdImei) {
+	public void setThirdImei(Long thirdImei) {
 		this.thirdImei = thirdImei;
 	}
-	public String getFourthImei() {
+	public Long getFourthImei() {
 		return fourthImei;
 	}
-	public void setFourthImei(String fourthImei) {
+	public void setFourthImei(Long fourthImei) {
 		this.fourthImei = fourthImei;
-	}
-	public static long getSerialversionuid() {
-		return serialVersionUID;
 	}
 	public String getTxnId() {
 		return txnId;

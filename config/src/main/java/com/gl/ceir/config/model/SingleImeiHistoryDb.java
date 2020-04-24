@@ -13,7 +13,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 public class SingleImeiHistoryDb implements Serializable {
-	
+
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -24,18 +25,10 @@ public class SingleImeiHistoryDb implements Serializable {
 	@UpdateTimestamp
 	private Date modifiedOn;
 	private int processState;
-	public String imei;
+	public Long imei;
 	public Long txnId;
 
-	public String getImei() {
-		return imei;
-	}
-	public void setImei(String imei) {
-		this.imei = imei;
-	}
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
+
 	public Long getId() {
 		return id;
 	}
@@ -55,7 +48,12 @@ public class SingleImeiHistoryDb implements Serializable {
 	public void setProcessState(int processState) {
 		this.processState = processState;
 	}
-
+	public Long getImei() {
+		return imei;
+	}
+	public void setImei(Long imei) {
+		this.imei = imei;
+	}
 	public Date getModifiedOn() {
 		return modifiedOn;
 	}

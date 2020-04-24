@@ -1,60 +1,31 @@
 package com.gl.ceir.config.model;
 
 import java.io.Serializable;
-import java.util.Date;
 
-import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import io.swagger.annotations.ApiModel;
+
+@ApiModel
 @Entity
 public class BlackList implements Serializable {
-	
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
-	
 	@EmbeddedId
 	private ImeiMsisdnIdentity imeiMsisdnIdentity;
-	
-	@CreationTimestamp
-	@Column(nullable = false, updatable = false)
-	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
-	private Date createdOn;
-
-	@JsonIgnore
-	@UpdateTimestamp
-	private Date modifiedOn;
 
 	@JsonIgnore
 	private String requestedBy;
-	
 	@JsonIgnore
 	private String approvedBy;
-
-	public Date getCreatedOn() {
-		return createdOn;
-	}
-
-	public void setCreatedOn(Date createdOn) {
-		this.createdOn = createdOn;
-	}
-
-	public Date getModifiedOn() {
-		return modifiedOn;
-	}
-
-	public void setModifiedOn(Date modifiedOn) {
-		this.modifiedOn = modifiedOn;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
 
 	public ImeiMsisdnIdentity getImeiMsisdnIdentity() {
 		return imeiMsisdnIdentity;

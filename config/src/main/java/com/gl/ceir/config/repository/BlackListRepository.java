@@ -5,11 +5,10 @@ import org.springframework.stereotype.Repository;
 
 import com.gl.ceir.config.model.BlackList;
 import com.gl.ceir.config.model.ImeiMsisdnIdentity;
-
+import com.gl.ceir.config.model.VipList;
 @Repository
-public interface BlackListRepository extends JpaRepository<BlackList, ImeiMsisdnIdentity>{
-	
+public interface BlackListRepository extends JpaRepository<BlackList, ImeiMsisdnIdentity> {
 	public BlackList findByImeiMsisdnIdentityMsisdn(Long msisdn);
 
-	public BlackList findByImeiMsisdnIdentityImei(String imei);
+	public BlackList findByImeiMsisdnIdentityImei(Long imei);
 }

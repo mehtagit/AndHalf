@@ -34,18 +34,4 @@ public class FileDetails {
 	public void setUrl(String url) {
 		this.url = url;
 	}
-
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("FileDetails [fileName=");
-		builder.append(fileName);
-		builder.append(", filePath=");
-		builder.append(filePath);
-		builder.append(", url=");
-		builder.append(url);
-		builder.append("]");
-		return builder.toString();
-	}
-	
 }

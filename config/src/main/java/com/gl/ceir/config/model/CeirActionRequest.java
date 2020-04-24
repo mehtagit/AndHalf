@@ -16,7 +16,7 @@ public class CeirActionRequest {
 	
 	private Integer featureId;
 	
-	private String imei1;
+	private Long imei1;
 	
 	public int getAction() {
 		return action;
@@ -61,13 +61,14 @@ public class CeirActionRequest {
 	public void setFeatureId(Integer featureId) {
 		this.featureId = featureId;
 	}
-	public String getImei1() {
+	
+	
+	public Long getImei1() {
 		return imei1;
 	}
-	public void setImei1(String imei1) {
+	public void setImei1(Long imei1) {
 		this.imei1 = imei1;
 	}
-	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();

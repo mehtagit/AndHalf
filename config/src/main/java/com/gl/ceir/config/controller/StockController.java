@@ -48,12 +48,10 @@ public class StockController {
 	@RequestMapping(path = "/Stock/update", method = RequestMethod.POST)
 	public GenricResponse updateStockInfo( @RequestBody StockMgmt stockMgmt){
 
-		logger.info("Stock Update Request = " + stockMgmt);
+		logger.info("Stock Update Request = " + stockMgmt.toString());
 
 		GenricResponse genricResponse =	stackholderServiceImpl.updateStockInfo(stockMgmt);
 
-		logger.info("Stock Update Response = " + genricResponse);
-		
 		return genricResponse;
 
 	}
@@ -99,15 +97,15 @@ public class StockController {
 
 	@ApiOperation(value = "View Retailer And Distributer Record of TxnId.", response = StockMgmt.class)
 	@RequestMapping(path = "/stock/view", method = RequestMethod.POST)
-	public MappingJacksonValue view(@RequestBody FilterRequest filterRequest) {
+	public MappingJacksonValue view(@RequestBody StockMgmt stockMgmt) {
 
-		logger.info("Stock View Request = " + filterRequest);
+		logger.info("Stock View Request = " + stockMgmt.toString());
 
-		StockMgmt response	= stackholderServiceImpl.view(filterRequest);
+		StockMgmt response	= stackholderServiceImpl.view(stockMgmt);
 
 		MappingJacksonValue mapping = new MappingJacksonValue(response);
 
-		logger.info("Resposne view for txnId [ " + filterRequest.getTxnId() + " ]" + response);
+		logger.info("Resposne view for txnId [ " +stockMgmt.getTxnId() + " ]" + response);
 
 		return mapping;
 
@@ -125,6 +123,13 @@ public class StockController {
 		return genricResponse;
 
 	}
+
+	/*@ApiOperation(value = "Get total count and quantity.", response = ResponseCountAndQuantity.class)
+	@RequestMapping(path = "/stock/countAndQuantity", method = RequestMethod.POST)
+	public MappingJacksonValue getConsignmentCountAndQuantity( @RequestBody RequestCountAndQuantityWithLongUserId request ) {
+		ResponseCountAndQuantity response = stackholderServiceImpl.getStockCountAndQuantity( request );
+		return new MappingJacksonValue(response);
+	}*/
 
 	@ApiOperation(value = "Accept Reject Stock.", response = GenricResponse.class)
 	@RequestMapping(path = "accept-reject/stock", method = RequestMethod.PUT)

@@ -83,10 +83,4 @@ public class ScriptServiceImpl implements ScriptService {
 
 	}
 
-	@Override
-	public Script get(String id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

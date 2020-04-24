@@ -74,10 +74,4 @@ public class PendingActionsStatesServiceImpl implements PendingActionsStatesServ
 			return true;
 	}
 
-	@Override
-	public PendingActionStates get(String id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

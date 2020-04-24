@@ -15,7 +15,7 @@ public class DateUtil {
 
 	private final static String NUMERIC_STRING = "0123456789";
 
-	public static String nextDate(int nextdateDay, String format) {
+	public static String newDate(int nextdateDay, String format) {
 		if(Objects.isNull(format)) {
 			format = "yyyy-MM-dd";
 		}
@@ -52,8 +52,7 @@ public class DateUtil {
 	public static void main(String[] args) {
 		String testdate = "04-01";
 		
-		System.out.println("DateUtil.nextDate(27, \"yyyy-MM-dd\") " + DateUtil.nextDate(-27, "yyyy-MM-dd"));
-		String currentYear = DateUtil.nextDate(0, "yyyy-MM-dd").split("-")[0];
+		String currentYear = DateUtil.newDate(0, "yyyy-MM-dd").split("-")[0];
 		String finalDate = currentYear + "-" + testdate;
 		System.out.println("finalDate :" + finalDate);
 		

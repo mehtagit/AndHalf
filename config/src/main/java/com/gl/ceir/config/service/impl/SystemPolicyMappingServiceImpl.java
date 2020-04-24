@@ -57,10 +57,4 @@ public class SystemPolicyMappingServiceImpl implements SystemPolicyMappingServic
 		return systemPolicyMappingRepository.findByPeriodOrderByPriority(period);
 	}
 
-	@Override
-	public SystemPolicyMapping get(String id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }
