@@ -32,10 +32,12 @@ public class DeviceNullDb  implements Serializable{
 	@JsonIgnore
 	@CreationTimestamp
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
+	@Column(updatable = false)
 	private Date createdOn;
 
 	@JsonIgnore
 	@UpdateTimestamp
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private Date updatedOn;
 
 	@Column(name = "create_filename", length = 50)
@@ -48,7 +50,7 @@ public class DeviceNullDb  implements Serializable{
 	private Integer recordType;
 	
 	@Column(name = "system_type", length = 100)
-	private Integer systemType;
+	private String systemType;
 
 	public Long getMsisdn() {
 		return msisdn;
@@ -106,11 +108,11 @@ public class DeviceNullDb  implements Serializable{
 		this.recordType = recordType;
 	}
 
-	public Integer getSystemType() {
+	public String getSystemType() {
 		return systemType;
 	}
 
-	public void setSystemType(Integer systemType) {
+	public void setSystemType(String systemType) {
 		this.systemType = systemType;
 	}
 
