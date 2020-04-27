@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class FilterRequest {
-	public String startDate,endDate,createdOn,modifiedOn,roleType,userType,txnId,searchString,grievanceId,tag,remarks,deviceId,nid,childTag,field,interp,tagId,value,displayName,description,address,featureName,subFeatureName,userName,date,fileName,invoiceNumber,suplierName,supplierId,stateInterp,alertId,remark,email,phoneNo,username,tac,userDisplayName;
+	public String startDate,endDate,createdOn,modifiedOn,roleType,userType,txnId,searchString,grievanceId,tag,remarks,deviceId,nid,childTag,field,interp,tagId,value,displayName,description,address,featureName,subFeatureName,userName,date,fileName,invoiceNumber,suplierName,supplierId,stateInterp,alertId,remark,email,phoneNo,username,tac,userDisplayName,filterUserName,FilterUserType;
 	private Integer pageNo, pageSize,userId,taxPaidStatus,consignmentStatus,featureId,userTypeId,fileStatus,requestType,sourceType,grievanceStatus,userRoleTypeId,status,asType,serviceDump,fileType,action,operatorTypeId,channel,type,deviceIdType,parentValue,id,port,currency,quantity,stockStatus,feature,period;
 	private Double dollar,riel;
 	private int roleTypeId;
@@ -230,6 +230,18 @@ public class FilterRequest {
 	}
 	public void setUserDisplayName(String userDisplayName) {
 		this.userDisplayName = userDisplayName;
+	}
+	public String getFilterUserName() {
+		return filterUserName;
+	}
+	public void setFilterUserName(String filterUserName) {
+		this.filterUserName = filterUserName;
+	}
+	public String getFilterUserType() {
+		return FilterUserType;
+	}
+	public void setFilterUserType(String filterUserType) {
+		FilterUserType = filterUserType;
 	}
 	public Integer getPageNo() {
 		return pageNo;
@@ -512,6 +524,10 @@ public class FilterRequest {
 		builder.append(tac);
 		builder.append(", userDisplayName=");
 		builder.append(userDisplayName);
+		builder.append(", filterUserName=");
+		builder.append(filterUserName);
+		builder.append(", FilterUserType=");
+		builder.append(FilterUserType);
 		builder.append(", pageNo=");
 		builder.append(pageNo);
 		builder.append(", pageSize=");

@@ -228,7 +228,7 @@ function confirmantiondelete(){
 			$("#viewhideCurrency").val(data.currency);
 			$("#portAddress").val(data.portAddressInterp);
 			$("#viewcurrency").val(data.currencyInterp);
-			$('#deviceQty').val(data.deviceQuantity);
+			$('#deviceQuantity').val(data.deviceQuantity);
 		}
 
 		function setEditPopupData(data){
@@ -262,7 +262,9 @@ function confirmantiondelete(){
 			$("#currency").val(data.currency);
 			$("#totalPrice").val(totalPrice);
 			$("#hideCurrency").val(data.currency);
-
+			$('#editDeviceQuantity').val(data.deviceQuantity);
+			
+			$("label[for='editDeviceQuantity']").addClass('active');			
 
 		} 
 
@@ -420,6 +422,7 @@ function confirmantiondelete(){
 			formData.append('userType', $("body").attr("data-roleType"));
 			formData.append('userName', $("body").attr("data-username"));
 			formData.append('portAddress', parseInt($('#editPortAddress').val()));
+			formData.append('deviceQuantity', parseInt($('#editDeviceQuantity').val()));	
 			$.ajax({
 				url: './updateRegisterConsignment',
 				type: 'POST',

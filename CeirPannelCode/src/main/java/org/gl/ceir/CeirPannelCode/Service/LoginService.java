@@ -21,6 +21,7 @@ import org.gl.ceir.CeirPannelCode.Model.Password;
 import org.gl.ceir.CeirPannelCode.Model.Tag;
 import org.gl.ceir.CeirPannelCode.Model.User;
 import org.gl.ceir.CeirPannelCode.Model.UserHeader;
+import org.gl.ceir.CeirPannelCode.Model.UserStatus;
 import org.gl.ceir.CeirPannelCode.Response.LoginResponse;
 import org.gl.ceir.CeirPannelCode.Response.UpdateProfileResponse;
 import org.gl.ceir.CeirPannelCode.Util.HttpResponse;
@@ -244,6 +245,15 @@ public class LoginService {
 			return response; 
 		}
 		  
+	} 
+	
+	
+	public LoginResponse searchUserDetailService(UserStatus userStatus, HttpSession session, HttpServletRequest request) {
+		log.info(" data send to searchUserDetail :  "+userStatus);
+		//LoginResponse response=new LoginResponse();           
+		LoginResponse response=userLoginFeignImpl.searchUserDetailFeign(userStatus);
+		log.info(" response searchUserDetail :  "+response);
+		return response;
 	} 
 	
 }

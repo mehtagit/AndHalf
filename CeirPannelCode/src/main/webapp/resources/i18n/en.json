@@ -147,6 +147,6 @@
 "USER_ALREADY_EXIST":"Passport number already exist in CEIR System",
 "PRO_SUCESS_OTPMSG":"OTP has been sent to your  Phone Number and E-Mail ID to verify",
 "Stolen/Recovery IMEI Count":"Stolen/Recovery IMEI Count",
-   "Email_Exist":"Email already exists in the system",
+"Email_Exist":"Email already exists in the system",
     "Phone_Exist":"Phone Number already exists in the system"
 }
