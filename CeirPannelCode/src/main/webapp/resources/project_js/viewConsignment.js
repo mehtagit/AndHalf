@@ -109,9 +109,7 @@ function confirmantiondelete(){
 
 					/*	$("#expectedArrivalPortEdit").empty();*/
 
-
 					ConsignmentCurrency();
-
 					setEditPopupData(data) ;
 				},
 				error : function() {
@@ -168,7 +166,8 @@ function confirmantiondelete(){
 						//$('<option>').val(data[i]).channnelName.text(data[i]).channnelName.appendTo('#channelId');
 						$('#viewcurrency').append(html);	
 					}
-					$('#viewcurrency').val($("#viewhideCurrency").val()); 
+					
+					//$('#viewcurrency').val($("#viewhideCurrency").val()); 
 
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
@@ -224,11 +223,12 @@ function confirmantiondelete(){
 			$("#TransactionId").val(data.txnId);
 			$("#remark").val(data.remarks);
 			$("#fileName").val(data.fileName); 
-			$("#viewcurrency").val(data.currency);
+			//$("#viewcurrency").val(data.currency);
 			$("#viewtotalPrice").val(totalPrice);
 			$("#viewhideCurrency").val(data.currency);
-
-
+			$("#portAddress").val(data.portAddressInterp);
+			$("#viewcurrency").val(data.currencyInterp);
+			$('#deviceQuantity').val(data.deviceQuantity);
 		}
 
 		function setEditPopupData(data){
@@ -251,16 +251,20 @@ function confirmantiondelete(){
 			$("#expectedDispatcheDateEdit").val(data.expectedDispatcheDate);
 			$('#country').val(data.organisationCountry);
 			$("#expectedArrivaldateEdit").val(data.expectedArrivaldate);
-			$("#expectedArrivalPortEdit").val(data.expectedArrivalPort);
+			$("#expectedArrivalPortEdit").val(data.expectedArrivalPort).change();
 			$("#QuantityEdit").val(data.quantity);
 			$("#TransactionIdEdit").val(data.txnId);
 			$("#fileNameEdit").val(data.fileName);
 			$("#fileNameToBeSame").val(data.fileName);
 			
+			$("#editPortAddress").val(data.portAddress);
+			
 			$("#currency").val(data.currency);
 			$("#totalPrice").val(totalPrice);
 			$("#hideCurrency").val(data.currency);
-
+			$('#editDeviceQuantity').val(data.deviceQuantity);
+			
+			$("label[for='editDeviceQuantity']").addClass('active');			
 
 		} 
 
@@ -417,6 +421,8 @@ function confirmantiondelete(){
 			formData.append('userTypeId', parseInt($("body").attr("data-userTypeID")));
 			formData.append('userType', $("body").attr("data-roleType"));
 			formData.append('userName', $("body").attr("data-username"));
+			formData.append('portAddress', parseInt($('#editPortAddress').val()));
+			formData.append('deviceQuantity', parseInt($('#editDeviceQuantity').val()));	
 			$.ajax({
 				url: './updateRegisterConsignment',
 				type: 'POST',
@@ -1069,4 +1075,35 @@ function confirmantiondelete(){
 			
 			return false
 			
+		}
+		
+		
+		
+		
+		
+		
+		
+		function getByPort(port) {
+			$
+					.ajax({
+						type : 'GET',
+						url : '../byArrivalPort/' + port,
+						contentType : "application/json",
+						dataType : 'html',
+						async : false,
+						success : function(data) {
+							var response = JSON.parse(data);
+							var asTypeDropdown = $("#editPortAddress");
+							asTypeDropdown.empty();
+							var header = "<option value='' disabled selected>Select address</option>";
+							asTypeDropdown.append(header);
+							for (var i = 0; i < response.length; i++) {
+								var data2 = '<option value="' + response[i].id + '">'
+										+ response[i].address + '</option>';
+								asTypeDropdown.append(data2);
+							}
+						},
+						error : function(xhr, ajaxOptions, thrownError) {
+						}
+					});
 		}

@@ -32,7 +32,7 @@ public class IconsState {
 	String payTaxIcon = "\"fa fa-money pay-tax-icon\"";
 	String ListIcon =  "\"fa fa-list list-icon\"";
 	String plusIcon = "\"fa fa-plus-square download-icon\"";
-
+	String historyIcon = "\"fa fa-history download-icon\"";
 	// icon title  
 	String errorIconTitle= null;
 	String downloadIconTitle=null;
@@ -45,6 +45,7 @@ public class IconsState {
 	String payTaxIconTitle =null;
 	String ListIconTittle = null;
 	String plusIconTittle = null;
+	String historyTitle = null;
 
 	String disableErrorIcon="\"fa fa-exclamation-circle error-icon disable\""; 
 	String disableDownloadIcon="\"fa fa-download download-icon disable\""; 
@@ -67,6 +68,7 @@ public class IconsState {
 		String viewAction="viewConsignmentDetails('"+txnId+"')"; 
 		String editAction="EditConsignmentDetails('"+txnId+"')";
 		String deleteAction ="DeleteConsignmentRecord('"+txnId+"')";
+		String historyAction ="historyRecord('"+txnId+"')";
 		log.info("downloadURL::::::::::::::"+downloadURL);
 
 		// state related Code 
@@ -88,6 +90,8 @@ public class IconsState {
 				+replyIconTitle+"></i></a>";
 
 
+		String history="<a onclick="+historyAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+historyIcon+" aria-hidden=\"true\"  title="
+				+historyTitle+"></i></a>";
 
 		if(("0".equals(status)) && "Approved".equals(userStatus)) {
 			error="<a onclick="+errorURL+" class="+disableIconClass+"><i  class="
@@ -140,7 +144,7 @@ public class IconsState {
 					+deleteIconTitle+"></i></a>"; 			
 		}
 
-		String action=error.concat(download).concat(view).concat(edit).concat(delete);		  
+		String action=error.concat(download).concat(view).concat(edit).concat(delete).concat(history);		  
 		return action;
 
 	}
@@ -426,7 +430,7 @@ public class IconsState {
 
 		/* String escapedString = queryParser.escape(approveAction); */
 		String rejectAction = "openDisapprovePopup('"+txnId+"','"+displayName.replaceAll( " ", "+20")+"')";
-
+		String historyAction ="historyRecord('"+txnId+"')";
 
 		// state related Code 
 		String download="<a onclick="+downloadURL+" ><i class="
@@ -443,6 +447,8 @@ public class IconsState {
 		String reject = "<a onclick="+rejectAction+"><i class="+rejectIcon+" aria-hidden=\"true\" title="
 				+rejectIconTitle+" ></i></a>";
 
+		String history="<a onclick="+historyAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+historyIcon+" aria-hidden=\"true\"  title="
+				+historyTitle+"></i></a>";
 		if("6".equals(status) || "7".equals(status) || "9".equals(status) && "Approved".equals(userStatus) ) {
 			approve = "<a onclick="+approveAction+" class="+disableIconClass+"><i class="+disableApproveIcon+" aria-hidden=\"true\" title="
 					+approveIconTitle+" ></i></a>";
@@ -465,7 +471,7 @@ public class IconsState {
 		}
 
 
-		String action=download.concat(view).concat(approve).concat(reject);	
+		String action=download.concat(view).concat(approve).concat(reject).concat(history);	
 		return action;
 	}
 
@@ -485,7 +491,7 @@ public class IconsState {
 		String rejectAction = "openDisapprovePopup('"+txnId+"','"+companyName.replaceAll( " ", "+20")+"')";
 
 		String deleteAction ="DeleteConsignmentRecord('"+txnId+"')";
-
+		String historyAction ="historyRecord('"+txnId+"')";
 
 		log.info("<><><><>status<><><><><>"+status+"<><><><><>userStatus<><><><><>"+userStatus);
 
@@ -511,6 +517,11 @@ public class IconsState {
 		String delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+deletionIcon+" aria-hidden=\"true\"  title="
 				+deleteIconTitle+"></i></a>";
 
+
+
+
+		String history="<a onclick="+historyAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+historyIcon+" aria-hidden=\"true\"  title="
+				+historyTitle+"></i></a>";
 
 
 		//Disable View
@@ -571,7 +582,7 @@ public class IconsState {
 		}
 
 
-		String action=error.concat(download).concat(view).concat(approve).concat(reject).concat(delete);	
+		String action=error.concat(download).concat(view).concat(approve).concat(reject).concat(delete).concat(history);	
 		return action;
 	}
 
@@ -799,16 +810,16 @@ public class IconsState {
 
 	/********************************** Icons for AdminRegistrationRequest **********************************/ 
 
-	public String adminRegistrationRequest(String userId ,String userStatus,String AdminCurrentStatus,String createdOn,String roles, String type,String id,String username,String status,String sessionUserName) {
+	public String adminRegistrationRequest(String Id ,String userStatus,String AdminCurrentStatus,String createdOn,String roles, String type,String id,String username,String status,String sessionUserName) {
 		executePostConstruct();
 		log.info("username-->" +username+" sessionUserName--->" +sessionUserName);
 		// URL link 
 		String emptyURL="JavaScript:void(0);"; 
-		String approveAction = "userApprovalPopup("+userId+",'"+createdOn.replace(" ", "=")+"','"+username+"','"+sessionUserName+"')";
+		String approveAction = "userApprovalPopup("+Id+",'"+createdOn.replace(" ", "=")+"','"+username+"','"+sessionUserName+"')";
 
 		String viewAction="trcInformation?id="+id+"&roles="+roles.replace(" ", "=")+"&type="+type;
-		String rejectAction = "userRejectPopup("+userId+",'"+sessionUserName+"')";
-		String editAction="userChangeStatus('"+userId+"','"+sessionUserName+"')";
+		String rejectAction = "userRejectPopup("+Id+",'"+sessionUserName+"')";
+		String editAction="roleStatusChange('"+Id+"','"+sessionUserName+"')";
 
 
 		log.info("status---->"+status+"---------AdminCurrentStatus------>"+AdminCurrentStatus+" userStatus----------->" +userStatus);
@@ -2471,6 +2482,7 @@ public class IconsState {
 		payTaxIconTitle =Translator.toLocale("titles.Pay_Tax");
 		ListIconTittle = Translator.toLocale("titles.List");
 		plusIconTittle = Translator.toLocale("titles.Add_device");
+		historyTitle=Translator.toLocale("titles.history");
 	}
 
 

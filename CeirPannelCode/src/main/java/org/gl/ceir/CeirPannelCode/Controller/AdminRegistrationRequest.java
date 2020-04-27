@@ -42,17 +42,18 @@ public class AdminRegistrationRequest {
 				RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}
 			)
 	    public ModelAndView viewAdminUser(HttpSession session,@RequestParam(name="id") int id, @RequestParam(name="roles") String roles,@RequestParam(name="type") String asType) {
+		int userId=	(int) session.getAttribute("userid");
 		ModelAndView mv = new ModelAndView();
 		
-		log.info("ID------------>"+id+"--------- Roles------------->"+roles+"--------type------>"+asType);
+		log.info("ID----->"+id+"----- Roles----->"+roles+"----type------>"+asType+"----userId---->"+userId);
 		
 		roles = roles.replace("=", " ");
 		
-		Registration registration = userProfileFeignImpl.ViewAdminUser(id);
+		Registration registration = userProfileFeignImpl.ViewAdminUser(id, userId);
 		log.info("View registration API Response--------------->" +registration);
 		mv.addObject("registration", registration);
 		
-		log.info(" view trcInformation entry point."+registration+"---ID-----"+id); 
+		
 		
 	
 		if("TRC".equals(roles)) {

@@ -160,7 +160,7 @@ var contextpath = "${context}";
          <!-- START CONTENT -->
             <section id="content">
                 <!--start container-->
-                <div class="container" style="padding-bottom: 70px; margin-top:10vh;" >
+                <div class="container" style="padding-bottom: 70px; margin-top:5.5vh;" >
                     <div class="section">
                         <div class="row card-panel responsive-page" id="endUserRaiseGrievance" style="display: none">
                             <h6 class="fixPage-modal-header "><spring:message code="modal.Grievance" /></h6>
@@ -218,17 +218,8 @@ var contextpath = "${context}";
                                             </select>
                                         </div>
 
-                                        <div class="input-field col s12 m6">
-                                            <textarea id="endUserRemark" 
-										  oninput="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
-													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
-													
-												  required   maxlength="200" class="materialize-textarea"></textarea>
-                                            <label for="endUserRemark"><spring:message code="input.Remark" /><span
-                                                    class="star">*</span></label>
-                                        </div>
-
-                                        <div class="input-field col s12 m6">
+                                       
+                                       <div class="input-field col s12 m6" style="margin-top: 22px;">
                                             <input type="text" id="endUsertransactionId" name="transactionId"
                                                 pattern="[A-Z0-9]{18,18}"
       										 oninput="InvalidMsg(this,'input','<spring:message code="validation.18digit" />');"
@@ -236,8 +227,19 @@ var contextpath = "${context}";
 												maxlength="18" />
                                             <label for="endUsertransactionId"><spring:message code="input.TransactionID1" /></label>
                                         </div>
+                                       
+                                       
+                                        <div class="input-field col s12 m6">
+                                            <textarea id="endUserRemark" 
+										  oninput="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
+													
+												  required   maxlength="200" class="materialize-textarea" style= "min-height: 8rem;"></textarea>
+                                            <label for="endUserRemark"><spring:message code="input.Remark" /><span
+                                                    class="star">*</span></label>
+                                        </div>
 
-                                    </div>
+								</div>
 									<div id="endUsermainDiv" class="endUsermainDiv">
 									<div id="endUserfilediv" class="endUserfileDiv">	
                                     <div class="row">

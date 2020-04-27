@@ -195,6 +195,8 @@ public @ResponseBody GenricResponse registerConsignment(@RequestParam(name="supp
 @RequestParam(name="file",required = false) MultipartFile file,HttpSession session,@RequestParam(name="totalPrice",required = false) String totalPrice,@RequestParam(name="currency",required = false) Integer currency,
 @RequestParam(name="userType",required = false) String userType,
 @RequestParam(name="userTypeId",required = false) Integer userTypeId,
+@RequestParam(name="portAddress",required = false) Integer portAddress,
+@RequestParam(name="deviceQuantity",required = false) Integer deviceQuantity,
 @RequestParam(name="featureId",required = false) Integer featureId,HttpServletRequest request) {
 
 
@@ -259,6 +261,8 @@ consignment.setUserType(userType);
 consignment.setUserTypeId(userTypeId);
 consignment.setCurrency(currency);
 consignment.setTotalPrice(totalPrice);
+consignment.setPortAddress(portAddress);
+consignment.setDeviceQuantity(deviceQuantity);
 log.info("consignment form parameters passed to register consignment api "+consignment.toString());
 GenricResponse response = feignCleintImplementation.addConsignment(consignment);
 log.info("response from register consignment api"+response.toString());
@@ -280,7 +284,9 @@ public @ResponseBody GenricResponse openconsignmentRecordPage(@RequestParam(name
 @RequestParam(name="totalPrice",required = false) String totalPrice,@RequestParam(name="currency",required = false) Integer currency,
 @RequestParam(name="userType",required = false) String userType,
 @RequestParam(name="userTypeId",required = false) Integer userTypeId,
-@RequestParam(name="featureId",required = false) Integer featureId) 
+@RequestParam(name="portAddress",required = false) Integer portAddress,
+@RequestParam(name="featureId",required = false) Integer featureId,
+@RequestParam(name="deviceQuantity",required = false) Integer deviceQuantity) 
 {
 ConsignmentModel consignment = new ConsignmentModel();
 
@@ -317,7 +323,8 @@ consignment.setUserName(userName);
 consignment.setFeatureId(featureId);
 consignment.setUserType(userType);
 consignment.setUserTypeId(userTypeId);
-
+consignment.setPortAddress(portAddress);
+consignment.setDeviceQuantity(deviceQuantity);
 }
 else {
 log.info("file is empty or not "+file.isEmpty());
@@ -367,7 +374,7 @@ consignment.setTxnId(txnId);
 consignment.setFileName(filename);
 consignment.setUserId(Long.valueOf(userId));
 consignment.setCurrency(currency);
-
+consignment.setPortAddress(portAddress);
 consignment.setTotalPrice(totalPrice);
 }
 

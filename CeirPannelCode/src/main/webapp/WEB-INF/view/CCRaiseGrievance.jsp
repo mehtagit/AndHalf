@@ -94,7 +94,7 @@
         }
 
         .card-panel {
-            width: 50%;
+            
             margin-top: 5vh;
         }
 
@@ -159,10 +159,10 @@ var contextpath = "${context}";
          <!-- START CONTENT -->
             <section id="content">
                 <!--start container-->
-                <div class="container" style="padding-bottom: 70px; margin-top:10vh;" >
+                <div class="container" style="padding-bottom: 70px;" >
                     <div class="section">
-                        <div class="row card-panel responsive-page" id="endUserRaiseGrievance" style="display: none">
-                            <h6 class="fixPage-modal-header "><spring:message code="view.griev" /></h6>
+                        <div class="row card-panel  responsive-page" id="endUserRaiseGrievance" style="display: none">
+                            <h6 class="fixPage-modal-header "><spring:message code="modal.header.reportGrievance" /></h6>
                             <form onsubmit="return saveaAonymousGrievance()" method="POST" enctype="multipart/form-data" id="saveGrievance">
                              <input type="text" id="pageTypeValue" value="${reportType}" style="display: none;">
                                 <div class="col s12 m12 l12">
@@ -217,17 +217,8 @@ var contextpath = "${context}";
                                             </select>
                                         </div>
 
-                                        <div class="input-field col s12 m6">
-                                            <textarea id="endUserRemark" 
-										  oninput="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
-													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
-													
-												  required   maxlength="200" class="materialize-textarea"></textarea>
-                                            <label for="endUserRemark"><spring:message code="input.Remark" /><span
-                                                    class="star">*</span></label>
-                                        </div>
-
-                                        <div class="input-field col s12 m6">
+                                        
+                                        <div class="input-field col s12 m6" style="margin-top: 23px;">
                                             <input type="text" id="endUsertransactionId" name="transactionId"
                                                 pattern="[A-Z0-9]{18,18}"
       										 oninput="InvalidMsg(this,'input','<spring:message code="validation.18digit" />');"
@@ -235,6 +226,19 @@ var contextpath = "${context}";
 												maxlength="18" />
                                             <label for="endUsertransactionId"><spring:message code="input.TransactionID1" /></label>
                                         </div>
+                                        
+                                        
+                                        <div class="input-field col s12 m6">
+                                            <textarea id="endUserRemark" 
+										  oninput="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
+													
+												  required   maxlength="200" class="materialize-textarea" style= "min-height: 8rem;"></textarea>
+                                            <label for="endUserRemark"><spring:message code="input.Remark" /><span
+                                                    class="star">*</span></label>
+                                        </div>
+
+                                        
 
                                     </div>
 									<div id="endUsermainDiv" class="endUsermainDiv">
@@ -295,56 +299,8 @@ var contextpath = "${context}";
                                 </div>
                             </form>
                         </div>
-                        
-                        
-                           <div class="row card-panel track-grievance-responsive-page" id="trackGrievanceHeader" >
-                              
-                     <!--        <a href="./redirectToHomePage" class="modal-close btn-flat modal-btn right" data-dismiss="modal">&times;</a> -->
-                            <h6 class="fixPage-modal-header "><spring:message code="modal.TrackGrievance" /></h6>
-                           <div id="trackGrievanceDiv" style="display: none;">
-                            <div class="col s12 m12 l12">
-                                <form action="" onsubmit="return endUsergrivanceLibraryTable()" method="POST" enctype="multipart/form-data" id="saveGrievance">
-                                    <div class="row" id="singleInput">
-                                        <!-- <h6>Track Grievance</h6>
-                                        <hr> -->
-                                        <div class="row">
-                                            <div class="input-field col s6 m6 l5">
-                                                <label for="trackGrievanceId"><spring:message code="modal.PleaseGrievanceID" /><span class="star">*</span> :</label>
-                                            </div>
-                                            <div class="input-field col s6 m6 l6">
-                                                <input type="text" id="trackGrievanceId"  name="trackGrievanceId" pattern="[A-Za-z0-9]{18,18}" 
-													oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-												 title= "<spring:message code="validation.18characters" />" required    maxlength="18">
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="input-field col s12 center">
-                                                <button class="btn" type="submit" ><spring:message code="button.submit" /></button>
-                                                <a href="./redirectToHomePage" class="btn modal-trigger" style="margin-left: 10px;"><spring:message code="button.cancel" /></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                                </div>
-                               
-                            </div>
-                            
-                               
-                        </div>
-                            <div class="row card-panel track-grievance-responsive-page" id="trackGrievanctableDiv" style="display: none" >
-                              
-                           <!--  <a href="./redirectToHomePage" class="modal-close btn-flat modal-btn right" data-dismiss="modal">&times;</a> -->
-                            <h6 class="fixPage-modal-header "><spring:message code="modal.TrackGrievance" /></h6>
-                          
-                        <table id="endUsergrivanceLibraryTable" style="display: none"
-								class="responsive-table striped display"></table>
-								  <div class="input-field col s12 m12 l12 center">
-                                           
-                                            <a href="./redirectToHomePage" class="btn modal-trigger"
-                                                style="margin-left: 10px;"><spring:message code="button.cancel" /></a>
-                                        </div>
-                    
-                </div>
+				
+				  
                 
 								</div></div>
                 <!--end container-->
@@ -414,7 +370,7 @@ var contextpath = "${context}";
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
-                    <a href="./redirectToHomePage" class="btn"><spring:message code="modal.ok" /></a>
+                    <a href="./grievanceManagement" class="btn"><spring:message code="modal.ok" /></a>
                 </div>
             </div>
         </div>

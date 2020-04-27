@@ -133,7 +133,7 @@
 			</h6>
 			<div class="modal-content">
 				<form action="" onsubmit="return update()" method="POST"
-					enctype="multipart/form-data" id="register" novalidate="novalidate">
+					enctype="multipart/form-data" id="register">
 
 					<div class="row myRow">
 						<div class=" col s12 m6">
@@ -244,6 +244,24 @@
 						</div>
 					</div>
 
+
+
+<div class="row myRow">
+						<div class=" col s12 m6">
+							<p style="margin: 0; font-size: 12px;">
+								<spring:message code="table.expectedOutput" />
+								<span class="star">*</span>
+							</p>
+							<select id="editOutput" name="editOutput"
+								class="browser-default" class="mySelect"
+								onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+								oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+								style="padding-left: 0;" required>
+								<option value="Y"> Yes</option>
+									<option value="N"> No</option>
+								</select>
+						</div>
+	</div>
 
 
 

@@ -246,10 +246,10 @@ var contextpath = "${context}";
 									</label>
 								</div>
 	<%if(usertypeId==9){ %>
-								
+								 
 									<div class="input-field col s12 m6 l6">
 									<input disabled="disabled" placeholder="" type="text" name="operatorTypeName" id="operatorTypeName"/>
-									<label for="operatorTypeName"><spring:message code="registration.type" /> <span class="star">*</span></label>
+									<label for="operatorTypeName"><spring:message code="input.OperatorType" /> <span class="star">*</span></label>
 								</div>
 <% }%>
 							</div>

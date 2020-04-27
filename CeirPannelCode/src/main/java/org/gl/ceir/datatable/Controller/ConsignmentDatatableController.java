@@ -264,6 +264,7 @@ public class ConsignmentDatatableController {
 			//	String taxPaidStatus= String.valueOf(dataInsideList.getTaxPaidStatus());
 				String taxPaidStatusName=dataInsideList.getTaxInterp();
 				String quantity = String.valueOf(dataInsideList.getQuantity());
+				//String deviceQuantity=String.valueOf(dataInsideList.getDeviceQuantity());
 				Object[] finalData={checboxes,createdOn,txnId,supplierName,consignmentStatusName,taxPaidStatusName,quantity}; 
 					List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 					finalList.add(finalDataList);
@@ -284,9 +285,10 @@ public class ConsignmentDatatableController {
 				String taxPaidStatusName=dataInsideList.getTaxInterp();
 				String userStatus = (String) session.getAttribute("userStatus");
 				String quantity = String.valueOf(dataInsideList.getQuantity());
+				String deviceQuantity=String.valueOf(dataInsideList.getDeviceQuantity());
 				String action=iconState.state(dataInsideList.getFileName(), txnId, statusOfConsignment,userStatus);
 				
-				Object[] finalData={createdOn,txnId,supplierName,consignmentStatusName,taxPaidStatusName,quantity,action}; 
+				Object[] finalData={createdOn,txnId,supplierName,consignmentStatusName,taxPaidStatusName,quantity,deviceQuantity,action}; 
 					List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 					finalList.add(finalDataList);
 					datatableResponseModel.setData(finalList);
@@ -308,11 +310,12 @@ public class ConsignmentDatatableController {
 				String taxPaidStatusName=dataInsideList.getTaxInterp();
 				String userStatus = (String) session.getAttribute("userStatus");
 				String quantity = String.valueOf(dataInsideList.getQuantity());
+				String deviceQuantity=String.valueOf(dataInsideList.getDeviceQuantity());
 				String action=iconState.customState(dataInsideList.getFileName(), txnId, statusOfConsignment,userStatus,displayName);
 				
 				
 			
-				String[] finalData={createdOn,txnId,displayName,consignmentStatusName,taxPaidStatusName,quantity,action}; 
+				String[] finalData={createdOn,txnId,displayName,consignmentStatusName,taxPaidStatusName,quantity,deviceQuantity,action}; 
 					List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 					finalList.add(finalDataList);
 					datatableResponseModel.setData(finalList);
@@ -331,10 +334,11 @@ public class ConsignmentDatatableController {
 				String taxPaidStatusName=dataInsideList.getTaxInterp();
 				String userStatus = (String) session.getAttribute("userStatus");
 				String quantity = String.valueOf(dataInsideList.getQuantity());
+				String deviceQuantity=String.valueOf(dataInsideList.getDeviceQuantity());
 				String action=iconState.adminState(dataInsideList.getFileName(), txnId, statusOfConsignment,userStatus,displayName);
 				
 				
-				String[] finalData={createdOn,txnId,displayName,consignmentStatusName,taxPaidStatusName,quantity,action}; 
+				String[] finalData={createdOn,txnId,displayName,consignmentStatusName,taxPaidStatusName,quantity,deviceQuantity,action}; 
 					List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 					finalList.add(finalDataList);
 					datatableResponseModel.setData(finalList);
@@ -353,11 +357,12 @@ public class ConsignmentDatatableController {
 				String taxPaidStatusName=dataInsideList.getTaxInterp();
 				String userStatus = (String) session.getAttribute("userStatus");
 				String quantity = String.valueOf(dataInsideList.getQuantity());
+				String deviceQuantity=String.valueOf(dataInsideList.getDeviceQuantity());
 				String action=iconState.consignmentDRTState(dataInsideList.getFileName(), txnId, statusOfConsignment,userStatus,displayName);
 				
 				
 			
-				String[] finalData={createdOn,txnId,displayName,consignmentStatusName,taxPaidStatusName,quantity,action}; 
+				String[] finalData={createdOn,txnId,displayName,consignmentStatusName,taxPaidStatusName,quantity,deviceQuantity,action}; 
 					List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 					finalList.add(finalDataList);
 					datatableResponseModel.setData(finalList);

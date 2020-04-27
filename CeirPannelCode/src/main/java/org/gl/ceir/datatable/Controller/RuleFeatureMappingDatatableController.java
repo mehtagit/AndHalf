@@ -103,9 +103,11 @@ public class RuleFeatureMappingDatatableController {
 					String postGracePeriod=dataInsideList.getPostGraceAction();
 					String moveToGrace=dataInsideList.getFailedRuleActionGrace();
 					String moveToPostGrace=dataInsideList.getFailedRuleActionPostGrace();
+					String output=dataInsideList.getOutput( )== null ?  null : dataInsideList.getOutput().equals("Y") ? "Yes" : "No";
+					
 					//log.info("Id-->"+Id+"--userStatus--->"+userStatus+"--StatusName---->"+StatusName+"--createdOn---->"+createdOn+"--id--->"+id+"--userName-->"+username);
 					String action=iconState.ruleFeatureMappingIcons(id);			   
-					Object[] finalData={createdOn,modifiedOn,name,feature,user,ruleOrder,gracePeriod,postGracePeriod,moveToGrace,moveToPostGrace,action}; 
+					Object[] finalData={createdOn,modifiedOn,name,feature,user,ruleOrder,gracePeriod,postGracePeriod,moveToGrace,moveToPostGrace,output,action}; 
 					List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 					finalList.add(finalDataList);
 					datatableResponseModel.setData(finalList);	

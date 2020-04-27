@@ -276,14 +276,14 @@
 
 
 
-	function userApprovalPopup(userId,date,username,sessionUserName){
+	function userApprovalPopup(Id,date,username,sessionUserName){
 		$("#registrationTxnId").text(username);
 		$("#sessionUserName").val(sessionUserName);
 		$('#approveInformation').openModal({
 		 	   dismissible:false
 	    });
-		$("#userId").text(userId);
-		window.userID=userId;
+		$("#userId").text(Id);
+		window.ID=Id;
 		window.userName = username
 		window.date=date.replace("="," ");
 	}
@@ -292,14 +292,15 @@
 
 
 	function aprroveUser(){
-		var userid= $("#userId").text();
+		var id= $("#userId").text();
 		var approveRequest={
-				"userId": parseInt(userid),
+				"id": parseInt(id),
 				"status" : "Approved",
 				"remark": $("#Reason").val(),	
 				"featureId" : parseInt(featureId),
 				"statusValue" : 3,
-				"username" : $("#sessionUserName").val()
+				"username" : $("#sessionUserName").val(),
+				"userId" : parseInt(userId)
 		}
 		
 		$.ajax({
@@ -311,7 +312,7 @@
 			type : 'POST',
 			success : function(data) {
 				console.log("approveRequest----->"+JSON.stringify(approveRequest));
-				confirmApproveInformation(window.userID,window.date);
+				confirmApproveInformation(window.ID,window.date);
 			},
 			error : function() {
 				alert("Failed");
@@ -319,7 +320,7 @@
 		});
 	}
 
-	function confirmApproveInformation(userID,date){
+	function confirmApproveInformation(ID,date){
 		$('#approveInformation').closeModal(); 
 		setTimeout(function(){ $('#confirmApproveInformation').openModal({
 		 	   dismissible:false
@@ -328,12 +329,12 @@
 		$("#RegistrationId").text(window.userName);
 	}
 
-	function userRejectPopup(userId,sessionUserName){
+	function userRejectPopup(Id,sessionUserName){
 		$('#rejectInformation').openModal({
 		 	   dismissible:false
 	    });
-		console.log("Reject userId is---->"+userId);
-		$("#userId").text(userId)
+		console.log("Reject userId is---->"+Id);
+		$("#userId").text(Id)
 		$("#rejectUserName").val(sessionUserName);
 		
 		
@@ -341,14 +342,15 @@
 
 
 	function rejectUser(userId){
-		var userid= $("#userId").text();
+		var id= $("#userId").text();
 		var rejectRequest={
-				"userId": parseInt(userid),
+				"id": parseInt(id),
 				"status" : "Rejected",
 				"remark": $("#Reason").val(),
 				"featureId" : parseInt(featureId),
 				"statusValue" : 4,
-				"username" : $("#rejectUserName").val()
+				"username" : $("#rejectUserName").val(),
+				"userId" : parseInt($("body").attr("data-userID"))
 				
 		}
 		
@@ -412,29 +414,39 @@
 		}
 	}
 	
+
+function roleStatusChange(Id,sessionUserName){
+	    window.Id = Id,
+	    window.sessionUserName = sessionUserName,
+	    $("#statusRoleChange").openModal({
+		 	   dismissible:false
+		    });
+		 
+	}
+	 	
 	
- function userChangeStatus(userId,sessionUserName){
-	 window.userId = userId
-	 $("#statusChangemodal").openModal({
-	 	   dismissible:false
-	    });
-	 $("#statusUserName").val(sessionUserName);
-	 
- }
+function userChangeStatus(entity){
+	if (entity == "status"){
+		 $("#statusChangemodal").openModal({
+		 	   dismissible:false
+		    });
+	}else{
+		$("#roleTypeChangemodal").openModal({
+		 	   dismissible:false
+		    });
+	}
+}
 	
  function chanegeUserStatus(){
-		var status= $("#userStatus").val();
-		
+	 	var status= $("#userStatus").val();
 		var Request={
 				"status" : parseInt(status),
-				"userId": parseInt(window.userId),
-				"username" : $("#statusUserName").val(),
+				"id": parseInt(window.Id),
+				"username" : window.sessionUserName,
 				"referenceId" : $("#refererenceId").val(),
-				"remark" : $("#changeStatusRemark").val()
-				
+				"remark" : $("#changeStatusRemark").val(),
+				"userId" : parseInt(userId)
 		}
-		
-		
 		console.log("Request-->"+JSON.stringify(Request));
 		
 		$.ajax({
@@ -455,4 +467,10 @@
 		});
 	 return false
  }	
+ 
+ 
+ function resetButtons(){
+	 $('input[name=group1]').attr('checked',false);
+ }
 	
+

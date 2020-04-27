@@ -38,6 +38,7 @@ var featureId = 6;
 			var userId = $("body").attr("data-userID");
 			var userName = $("body").attr("data-userName");
 			
+			
 			/*localStorage.setItem("grievancePageSource", "viaGriebva");*/
 
 			function grievanceDataTable(lang){
@@ -73,7 +74,11 @@ var featureId = 6;
 					grievanceSessionUsesFlag=0;
 				}
 				localStorage.removeItem('grievancePageSource');
-			
+				
+				var FilterUserType = $('#userType').val()==null || $('#userType').val()==undefined ? null : $("#userType option:selected").text();
+				
+				
+				
 				var filterRequest={
 						"grievanceStatus":grievanceStatus,
 						"endDate":$('#endDate').val(),
@@ -85,10 +90,11 @@ var featureId = 6;
 						"userTypeId": parseInt($("body").attr("data-userTypeID")),
 						"txnId":  $('#transactionID').val(),
 						"grievanceId":txn,
-						"userType":$("body").attr("data-roleType"),
-
+						"userType" : $("body").attr("data-roleType"),
+						"filterUserName" : $('#userName').val(),
+						"FilterUserType" : FilterUserType
 				}
-
+				
 				if(lang=='km'){
 						var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
 					}
@@ -186,7 +192,7 @@ var featureId = 6;
 										"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
 
 										"<select id="+dropdown[i].id+"  class='select-wrapper select2  initialized'>"+
-										"<option value='-1'>"+dropdown[i].title+
+										"<option value='-1' disabled selected>"+dropdown[i].title+
 										"</option>"+
 										"</select>"+
 										"</div>"+
@@ -570,7 +576,17 @@ var featureId = 6;
 								$('#viewGrievanceId').text('');	
 							$('#viewGrievanceId').text(grievanceId);	
 							console.log("view Data--->" +JSON.stringify(data));
-							$("#chatMsg").append("<div class='chat-message-content clearfix'><span class='chat-time' id='timeHistory'>"+data[i].modifiedOn+"</span><h5 id='userTypehistory'>"+data[i].userDisplayName+"</h5><textarea class='materialize-textarea' style='min-height: 8rem' readonly id='messageHistory'>"+data[i].reply+"</textarea></div>");
+							if($("body").attr("data-roleType")!="CEIRAdmin"){
+								$("#chatMsg").append("<div class='chat-message-content clearfix'><span class='chat-time' id='timeHistory'>"+data[i].modifiedOn+"</span><h5 id='userTypehistory'>"+data[i].userDisplayName+"</h5><textarea class='materialize-textarea' style='min-height: 8rem' readonly id='messageHistory'>"+data[i].reply+"</textarea></div>");
+							}else{
+								if(data[i].userDisplayName!="User"){
+									$("#chatMsg").append("<div class='chat-message-content clearfix'><span class='chat-time' id='timeHistory'>"+data[i].modifiedOn+"</span><h5 id='userTypehistory'>"+data[i].userDisplayName+" followed with user name "+data[i].username+"</h5><textarea class='materialize-textarea' style='min-height: 8rem' readonly id='messageHistory'>"+data[i].reply+"</textarea></div>");
+								}else{
+									$("#chatMsg").append("<div class='chat-message-content clearfix'><span class='chat-time' id='timeHistory'>"+data[i].modifiedOn+"</span><h5 id='userTypehistory'>"+data[i].userDisplayName+"</h5><textarea class='materialize-textarea' style='min-height: 8rem' readonly id='messageHistory'>"+data[i].reply+"</textarea></div>");
+								}
+								
+							}
+							
 								for (var j=0 ; j<data[i].attachedFiles.length;j++)
 								{
 									if(data[i].attachedFiles[j].docType==null)
