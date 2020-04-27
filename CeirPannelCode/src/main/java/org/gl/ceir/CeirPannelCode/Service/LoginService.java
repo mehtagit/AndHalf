@@ -137,9 +137,6 @@ public class LoginService {
 	public ModelAndView logout(HttpSession session){
 		log.info("inside logout controller");
 		Integer userid=(Integer)session.getAttribute("userid");
-		if(userid!=null) {
-			userLoginFeignImpl.sessionTracking(userid);
-		}
 		sessionRemoveCode( userid, session);
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("msg","you have been logged out successfully");
