@@ -242,10 +242,11 @@ Integer type=null;
 					String mailTag = "END_USER_REGISTER";
 					Map<String, String> placeholderMap = new HashMap<String, String>();
 					placeholderMap.put("<First name>", endUserDB.getFirstName());
+					placeholderMap.put("<txn_id>", endUserDB.getTxnId());
 					// Mail to End user.
 					rawMails.add(new RawMail(mailTag, endUserDB.getId(), Long.valueOf(12), 
 							Features.REGISTER_DEVICE, SubFeatures.REGISTER, endUserDB.getTxnId(), 
-							"SUBJECT", placeholderMap, ReferTable.END_USER, null, "End User"));
+							endUserDB.getTxnId(), placeholderMap, ReferTable.END_USER, null, "End User"));
 
 					emailUtil.saveNotification(rawMails);
 					

@@ -14,6 +14,7 @@ import java.util.Objects;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.hibernate.mapping.Array;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -426,9 +427,10 @@ public class RegularizedDeviceServiceImpl {
 						if(Objects.nonNull(endUserDB2)) {
 							if(Objects.nonNull(endUserDB2.getEmail()) && !endUserDB2.getEmail().isEmpty()) {
 								placeholderMap.put("<First name>", endUserDB2.getFirstName());
+								placeholderMap.put("<txn_id>", endUserDB2.getTxnId());
 								rawMails.add(new RawMail(mailTag, endUserDB2.getId(), Long.valueOf(12), 
 										Features.REGISTER_DEVICE, SubFeatures.REGISTER, endUserDB2.getTxnId(), 
-										"SUBJECT", placeholderMap, ReferTable.END_USER, null, "End User"));
+										endUserDB2.getTxnId(), placeholderMap, ReferTable.END_USER, null, "End User"));
 								emailUtil.saveNotification(rawMails);	
 								
 							}
@@ -483,7 +485,7 @@ public class RegularizedDeviceServiceImpl {
 				regularizedDeviceDbRepository.save(userCustomDbDetails);
 
 				placeholders.put("<FIRST_NAME>", ceirAdminProfile.getFirstName());
-				placeholders.put("<txn_name>", regularizeDeviceDb.getTxnId());
+				placeholders.put("<txn_id>", regularizeDeviceDb.getTxnId());
 
 				/*
 				 * // Send Notifications if(regularizeDeviceDb.getTaxPaidStatus() == 0) { //
@@ -603,51 +605,122 @@ public class RegularizedDeviceServiceImpl {
 			endUserDB = endUserDbRepository.getByNid(regularizeDeviceDb.getNid());
 
 			placeholders.put("<FIRST_NAME>", endUserDB.getFirstName());
-			placeholders.put("<txn_name>", regularizeDeviceDb.getTxnId());
+			placeholders.put("<txn_id>", regularizeDeviceDb.getTxnId());
 			placeholders.put("<First name>", endUserDB.getFirstName());
 
 			if("CEIRADMIN".equalsIgnoreCase(ceirActionRequest.getUserType())){
-
+                String sufeature="";
 				if(ceirActionRequest.getAction() == 0) {
 					regularizeDeviceDb.setStatus(RegularizeDeviceStatus.APPROVED.getCode());
 					tag = "MAIL_TO_USER_ON_CEIR_DEVICE_APPROVAL";
 					receiverUserType = "End User";
+					sufeature=SubFeatures.ACCEPT;
+					//feature=
 					txnId = regularizeDeviceDb.getTxnId();
 				}else if(ceirActionRequest.getAction() == 1){
 					regularizeDeviceDb.setStatus(RegularizeDeviceStatus.REJECTED_BY_CEIR_ADMIN.getCode());
 					tag = "MAIL_TO_USER_ON_CEIR_DEVICE_DISAPPROVAL";	
 					receiverUserType = "End User";
 					txnId = regularizeDeviceDb.getTxnId();
+					sufeature=SubFeatures.REJECT;
 				}else {
 					return new GenricResponse(2, "unknown operation", "");
 				}
-			}else {
+				// Send Notifications
+				if(Objects.nonNull(endUserDB)) {
+					if(Objects.nonNull(endUserDB.getEmail()) && !endUserDB.getEmail().isEmpty()) {
+						rawMails.add(new RawMail(tag, 
+								endUserDB.getId(), 
+								4, 
+								Features.REGISTER_DEVICE, 
+								sufeature, 
+								regularizeDeviceDb.getTxnId(), 
+								regularizeDeviceDb.getTxnId(), 
+								placeholders,
+								ReferTable.END_USER,
+								null,
+								receiverUserType));
+						emailUtil.saveNotification(rawMails);	
+						
+					}
+					else {
+						logger.info("this end user don't have any email");
+					}
+				}
+			}
+			else if("CEIRSYSTEM".equalsIgnoreCase(ceirActionRequest.getUserType())){
+				if(ceirActionRequest.getAction() == 0) {
+					regularizeDeviceDb.setStatus(RegularizeDeviceStatus.PENDING_APPROVAL_FROM_CEIR_ADMIN.getCode());
+					tag = "MAIL_TO_USER_ON_CEIR_DEVICE_APPROVAL";
+					txnId = regularizeDeviceDb.getTxnId();
+                    List<User> user= new ArrayList<User>();
+                    user=userStaticServiceImpl.getUserbyUsertypeId(8);
+					UserProfile ceirUserProfile = new UserProfile();
+					ceirUserProfile.setUser(userStaticServiceImpl.getCeirAdmin());
+					
+					if(Objects.nonNull(endUserDB.getEmail()) && !endUserDB.getEmail().isEmpty()) {
+						rawMails.add(new RawMail("Reg_Device_Process_success_To_EndUser", 
+								endUserDB.getId(), 
+								4, 
+								Features.REGISTER_DEVICE, 
+								SubFeatures.SYSTEM_ACCEPT, 
+								regularizeDeviceDb.getTxnId(), 
+								regularizeDeviceDb.getTxnId(), 
+								placeholders,
+								ReferTable.END_USER,
+								null,
+								"End User"));
+					}
+for(User userData:user) {
+	
+	rawMails.add(new RawMail("Reg_Device_Process_success_mail_To_CEIRAdmin", 
+			userData.getId(), 
+			4, 
+			Features.REGISTER_DEVICE, 
+			SubFeatures.SYSTEM_ACCEPT, 
+			regularizeDeviceDb.getTxnId(), 
+			regularizeDeviceDb.getTxnId(), 
+			placeholders,
+			ReferTable.USERS,
+			null,
+			"CEIRAdmin"));
+					}
+					
+
+					emailUtil.saveNotification(rawMails);	
+					
+				}else if(ceirActionRequest.getAction() == 1){
+					regularizeDeviceDb.setStatus(RegularizeDeviceStatus.Rejected_By_System.getCode());
+					tag = "MAIL_TO_USER_ON_CEIR_DEVICE_DISAPPROVAL";	
+					receiverUserType = "End User";
+					txnId = regularizeDeviceDb.getTxnId();
+					
+					if(Objects.nonNull(endUserDB.getEmail()) && !endUserDB.getEmail().isEmpty()) {
+						rawMails.add(new RawMail("Reg_Device_Process_Fail_To_EndUser", 
+								endUserDB.getId(), 
+								4, 
+								Features.REGISTER_DEVICE, 
+								SubFeatures.SYSTEM_REJECT, 
+								regularizeDeviceDb.getTxnId(), 
+								regularizeDeviceDb.getTxnId(), 
+								placeholders,
+								ReferTable.END_USER,
+								null,
+								receiverUserType));
+						emailUtil.saveNotification(rawMails);	
+						
+					}
+				}else {
+					return new GenricResponse(2, "unknown operation", "");
+				}
+			}
+			else {
 				return new GenricResponse(1, "You are not allowed to do this operation.", "");
 			}
 
 			regularizedDeviceDbRepository.save(regularizeDeviceDb);
 
-			// Send Notifications
-			if(Objects.nonNull(endUserDB)) {
-				if(Objects.nonNull(endUserDB.getEmail()) && !endUserDB.getEmail().isEmpty()) {
-					rawMails.add(new RawMail(tag, 
-							endUserDB.getId(), 
-							4, 
-							Features.REGISTER_DEVICE, 
-							SubFeatures.ACCEPT_REJECT, 
-							regularizeDeviceDb.getTxnId(), 
-							txnId, 
-							placeholders,
-							ReferTable.END_USER,
-							null,
-							receiverUserType));
-					emailUtil.saveNotification(rawMails);	
-					
-				}
-				else {
-					logger.info("this end user don't have any email");
-				}
-			}
+			
 			
 			return new GenricResponse(0, "Device Update SuccessFully.", ceirActionRequest.getTxnId());
 

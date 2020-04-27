@@ -1,5 +1,7 @@
 package com.gl.ceir.config.service.impl;
 
+import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,5 +20,9 @@ public class UserStaticServiceImpl {
 
 	public User getCeirAdmin() {
 		return userRepository.getByUsername("CEIRAdmin");
+	}
+	
+	public List<User> getUserbyUsertypeId(long usertypeId) {
+		return userRepository.getByUsertype_Id(usertypeId);
 	}
 }
