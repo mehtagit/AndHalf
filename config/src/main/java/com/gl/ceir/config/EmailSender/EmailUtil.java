@@ -18,6 +18,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 
+import com.gl.ceir.config.model.Email;
 import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.MessageConfigurationDb;
 import com.gl.ceir.config.model.Notification;
@@ -132,19 +133,21 @@ public class EmailUtil {
 		logger.info("List of notification need to be saved" + rawMails);
 		try {
 			for(RawMail rawMail : rawMails) {
-				MessageConfigurationDb messageDb = rawmailServiceImpl.createMailContent(rawMail);
-				if(rawMail==null || messageDb.getValue().isEmpty()) {
+				Email emailContent = rawmailServiceImpl.createMailContent(rawMail);
+				if(rawMail==null || emailContent.getBody().isEmpty()) {
 					continue;
 				}
 				logger.info("Processing Raw Mail" + rawMail);
+				String subject=emailContent.getSubject();
+				logger.info("mail subject :  "+subject);
 				notifications.add(new Notification(ChannelType.EMAIL, 
-						messageDb.getValue(), 
+						emailContent.getBody(), 
 						rawMail.getUserProfile().getUser().getId(), 
 						rawMail.getFeatureId(),
 						rawMail.getFeatureName(), 
 						rawMail.getSubFeature(), 
 						rawMail.getFeatureTxnId(), 
-						messageDb.getSubject().replace("<XXX>", rawMail.getTxnId()), 
+						subject.replaceAll("<XXX>", rawMail.getTxnId()), 
 						0,
 						rawMail.getReferTable(),
 						rawMail.getRoleType(),

@@ -3,6 +3,8 @@ package com.gl.ceir.config.model.constants;
 public interface SubFeatures {
 
 	String ACCEPT = "Accept";
+	String SYSTEM_ACCEPT="SYSTEM_ACCEPT";
+	String SYSTEM_REJECT="SYSTEM_REJECT";
 	String REJECT = "Reject";
 	String REPLY = "Reply";
 	String CLOSED = "Closed";
@@ -14,6 +16,6 @@ public interface SubFeatures {
 	String VIEW_ALL = "View All";
 	String ASSIGN = "Assign";
 	String EXPORT = "Export";
-	String ACCEPT_REJECT = "Accept_Reject";
+	String ACCEPT_REJECT="Accept_Reject";
 	String UPLOAD = "Upload";
 }

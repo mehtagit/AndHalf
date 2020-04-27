@@ -8,6 +8,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.gl.ceir.config.model.Email;
 import com.gl.ceir.config.model.MessageConfigurationDb;
 import com.gl.ceir.config.model.RawMail;
 import com.gl.ceir.config.repository.MessageConfigurationDbRepository;
@@ -20,11 +21,11 @@ public class RawmailServiceImpl {
 	@Autowired
 	MessageConfigurationDbRepository messageConfigurationDbRepository;
 
-	public MessageConfigurationDb createMailContent(RawMail rawMail) {
+	public Email createMailContent(RawMail rawMail) {
 		return createMailContent(rawMail.getTag(), rawMail.getPlaceholders());
 	}
 	
-	public MessageConfigurationDb createMailContent(String tag, Map<String, String> placeholders) {
+	public Email createMailContent(String tag, Map<String, String> placeholders) {
 		String message = "";
 		MessageConfigurationDb messageDB = messageConfigurationDbRepository.getByTagAndActive(tag, 0);
 		logger.info("Message for tag [" + tag + "] " + messageDB);
@@ -43,7 +44,7 @@ public class RawmailServiceImpl {
 				message = message.replaceAll(entry.getKey(), entry.getValue());
 			}
 		}
-		messageDB.setValue(message);
-		return messageDB;
+		Email emailContent=new Email(message,messageDB.getSubject());
+		return emailContent;
 	}
 }
