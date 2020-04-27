@@ -51,14 +51,7 @@ public class DeviceDbDao {
 					rs.getString("launch_date"), rs.getString("device_status"), rs.getString("device_action"), 
 					rs.getInt("tac"), rs.getString("period"), rs.getString("txn_id"), rs.getInt("state")));
 			
-			
-			
-			
 			}
-			
-			
-			
-			
 			
 		}
 		catch(Exception e){
