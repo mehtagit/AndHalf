@@ -422,6 +422,7 @@ function confirmantiondelete(){
 			formData.append('userType', $("body").attr("data-roleType"));
 			formData.append('userName', $("body").attr("data-username"));
 			formData.append('portAddress', parseInt($('#editPortAddress').val()));
+			formData.append('deviceQuantity', parseInt($('#editDeviceQuantity').val()));	
 			$.ajax({
 				url: './updateRegisterConsignment',
 				type: 'POST',
