@@ -1,5 +1,6 @@
 package com.ceir.CEIRPostman.RepositoryService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -24,7 +25,7 @@ public class NotificationRepoImpl {
 		}
 		catch(Exception e) {
 			log.info(e.toString());
-            return null;
+            return new ArrayList<Notification>();
 		}
 	}
 }

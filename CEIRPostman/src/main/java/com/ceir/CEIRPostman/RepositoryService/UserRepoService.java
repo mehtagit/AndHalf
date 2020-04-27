@@ -17,13 +17,13 @@ public class UserRepoService {
 	
 	public User getById(long id) {
 		try {
-			log.info("going to fetch end user data by Id"+id);
+			log.info("going to fetch  user data by Id"+id);
 			return userRepo.findById(id);
 			
 		}
 		catch(Exception e) {
-			log.info("going to fetch end user data by Id"+id);
-			return null;
+			log.info("exception occurs when search data for user table by id"+id);
+			return new User();
 		}
 	}
 

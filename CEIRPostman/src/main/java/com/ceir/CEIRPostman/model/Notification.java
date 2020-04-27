@@ -1,25 +1,25 @@
 package com.ceir.CEIRPostman.model;
-
 import java.io.Serializable;
 import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 public class Notification  implements Serializable{
-	private static long serialVersionUID = 1L;
+
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private Long id;
 
 	@CreationTimestamp
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
@@ -29,10 +29,11 @@ public class Notification  implements Serializable{
 	private LocalDateTime modifiedOn;
 
 	private String channelType;
+
 	@Column(length = 1000)
 	private String message;
 
-	private long userId;
+	private Long userId;
 
 	private Long featureId;
 
@@ -47,14 +48,46 @@ public class Notification  implements Serializable{
 	private String subject;
 
 	private Integer retryCount;
-    
+	
+	@Column(length = 10)
 	private String referTable;
 	
-      
+	@Column(length = 20)
+	private String roleType;
+	
+	@Column(length = 50)
+	private String receiverUserType;
+
 	public Notification() {
 
 	}
 
+	public Notification(String channelType, String message, Long userId, Long featureId, String featureName, 
+			String subFeature, String featureTxnId, String subject, Integer retryCount, String referTable,
+			String roleType, String receiverUserType) {
+		this.channelType = channelType;
+		this.message = message;
+		this.userId = userId;
+		this.featureId = featureId;
+		this.featureName = featureName;
+		this.subFeature = subFeature;
+		this.featureTxnId = featureTxnId;
+		this.status=status;
+		this.subject = subject;
+		this.retryCount = retryCount;
+		this.referTable = referTable;
+		this.roleType = roleType;
+		this.receiverUserType = receiverUserType;
+	}
+
+
+	public String getReceiverUserType() {
+		return receiverUserType;
+	}
+
+	public void setReceiverUserType(String receiverUserType) {
+		this.receiverUserType = receiverUserType;
+	}
 
 	public Long getId() {
 		return id;
@@ -86,7 +119,12 @@ public class Notification  implements Serializable{
 	public void setMessage(String message) {
 		this.message = message;
 	}
-
+	public Long getUserId() {
+		return userId;
+	}
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
 	public Long getFeatureId() {
 		return featureId;
 	}
@@ -117,7 +155,11 @@ public class Notification  implements Serializable{
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
-		public String getSubject() {
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public String getSubject() {
 		return subject;
 	}
 
@@ -132,34 +174,48 @@ public class Notification  implements Serializable{
 	public void setRetryCount(Integer retryCount) {
 		this.retryCount = retryCount;
 	}
-
-	public long getUserId() {
-		return userId;
-	}
-
-
-	public void setUserId(long userId) {
-		this.userId = userId;
-	}
-
-
-	public void setId(long id) {
-		this.id = id;
-	}
 	
 	public String getReferTable() {
 		return referTable;
 	}
+
 	public void setReferTable(String referTable) {
 		this.referTable = referTable;
 	}
 
+	public String getRoleType() {
+		return roleType;
+	}
+
+	public void setRoleType(String roleType) {
+		this.roleType = roleType;
+	}
+
 	@Override
 	public String toString() {
-		return "Notification [id=" + id + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", channelType="
-				+ channelType + ", message=" + message + ", userId=" + userId + ", featureId=" + featureId
-				+ ", featureTxnId=" + featureTxnId + ", featureName=" + featureName + ", subFeature=" + subFeature
-				+ ", status=" + status + ", subject=" + subject + ", retryCount=" + retryCount + ", referTable="
-				+ referTable + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("Notification [id=");
+		builder.append(id);
+		builder.append(", createdOn=");
+		builder.append(createdOn);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
+		builder.append(", channelType=");
+		builder.append(channelType);
+		builder.append(", message=");
+		builder.append(message);
+		builder.append(", userId=");
+		builder.append(userId);
+		builder.append(", featureId=");
+		builder.append(featureId);
+		builder.append(", featureTxnId=");
+		builder.append(featureTxnId);
+		builder.append(", featureName=");
+		builder.append(featureName);
+		builder.append(", subFeature=");
+		builder.append(subFeature);
+		builder.append("]");
+		return builder.toString();
 	}
+
 }

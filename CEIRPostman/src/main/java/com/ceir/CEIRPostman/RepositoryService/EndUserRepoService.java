@@ -5,8 +5,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ceir.CEIRPostman.Repository.EndUserRepo;
 import com.ceir.CEIRPostman.model.EndUserDB;
-import com.ceir.CEIRPostman.model.EndUserRepo;
 @Service
 public class EndUserRepoService {
 
@@ -23,7 +23,7 @@ public class EndUserRepoService {
 		}
 		catch(Exception e) {
 			log.info("fail to fetch end user data by id"+id);
-		   return null;
+		   return new EndUserDB();
 		}
 	}
 	

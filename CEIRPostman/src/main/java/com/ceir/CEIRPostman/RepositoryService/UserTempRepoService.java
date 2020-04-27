@@ -23,9 +23,9 @@ public class UserTempRepoService {
 			  return userTempRepo.findByUserDetails_id(id);
 		}
 		catch(Exception e) {
-			log.info("fail to fetch user temporary details by user id ");
+			log.info("fail to fetch user temporary details by user id "+id);
 			log.info(e.toString());
-			return null;
+			return new UserTemporarydetails();
 		}
 	}
 }
