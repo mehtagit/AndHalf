@@ -541,7 +541,6 @@ public class ConsignmentServiceImpl {
 								"CEIRAdmin");
 
 					}else if(CEIRSYSTEM.equalsIgnoreCase(consignmentUpdateRequest.getRoleType())) {
-
 						List<RawMail> rawMails = new LinkedList<>();
 						if(!StateMachine.isConsignmentStatetransitionAllowed(CEIRSYSTEM, consignmentMgmt.getConsignmentStatus())) {
 							logger.info("state transition is not allowed." + consignmentUpdateRequest.getTxnId());
@@ -737,7 +736,6 @@ public class ConsignmentServiceImpl {
 							"Importer"));
 
 					emailUtil.saveNotification(rawMails);
-
 				}
 				
 				else if("DRT".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())) {
@@ -748,8 +746,6 @@ public class ConsignmentServiceImpl {
 					 * consignmentUpdateRequest.getTxnId()); return new GenricResponse(3,
 					 * "state transition is not allowed.", consignmentUpdateRequest.getTxnId()); }
 					 */
-
-
 					Integer nextStatus;
 					// Check if this feature is supported in current period.
 					//GenricResponse response = userFeignClient.usertypeStatus(21);
