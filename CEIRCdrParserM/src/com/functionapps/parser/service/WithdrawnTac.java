@@ -13,9 +13,7 @@ public class WithdrawnTac {
 	static Logger logger = Logger.getLogger(WithdrawnTac.class);
 
 	public WithdrawnTac() {
-
 	}
-
 	public void process(Connection conn, String operator, String sub_feature, ArrayList<Rule> rulelist, String txnId, String operator_tag ){
 
 		CEIRFeatureFileFunctions ceirfunction = new CEIRFeatureFileFunctions();
@@ -26,7 +24,7 @@ public class WithdrawnTac {
 			ceirfunction.updateFeatureFileStatus(conn, txnId, 2, operator, sub_feature);	
 
 			conn.commit();
-//			c onn.close();
+//			c o nn.close();
 		}catch(Exception e){
 			e.printStackTrace();
 			logger.error(e.getMessage(), e);

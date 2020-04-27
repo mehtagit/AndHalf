@@ -938,7 +938,6 @@ public class HexFileReader {
                         if (!val) {
 //							errFile.gotoErrorFile(txn_id, " " + line.toString() + "    Error Code :CON_FILE_0006, Error Message:  The field value(Device Launch Date) is not as per the specifications");                                   /////////
                             errorString += "  Error Code :CON_FILE_0006, Error Message:  The field value(Device Launch Date) is not as per the specifications,";
-
                             failed_flag = 0;
 
                         }
@@ -977,7 +976,7 @@ public class HexFileReader {
                 if (failed_flag != 0) {
                     logger.info("  Quantity  provided doesnot matched with Data  in File  ");
                     errFile.gotoErrorFile(txn_id,
-                            "    Error Code :CON_FILE_0010, Error Message: Quantity  provided doesnot matched with Lines in File    "); /////////
+                            "    Error Code :CON_FILE_0010, Error Message:  IMEI/ESN/MEID Quantity  does not match with the  count of data records in the uploaded file   "); 
                     failed_flag = 0;
                 }
             }
@@ -986,7 +985,7 @@ public class HexFileReader {
                 logger.info("   Devce Qntity Error method started ");
                 if (failed_flag != 0) {
                     logger.info(" Device Quantity   doesnot matched with unique serial number  in File  ");
-                    errFile.gotoErrorFile(txn_id, "    Error Code :CON_FILE_0011, Error Message: Device Quantity   doesnot matched with unique serial number  in File    "); /////////
+                    errFile.gotoErrorFile(txn_id, "    Error Code :CON_FILE_0011, Error Message: Device Quantity does not match with the  count of unique serial number in the uploaded file  "); 
                     failed_flag = 0;
                 }
             }
