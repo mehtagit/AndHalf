@@ -36,7 +36,7 @@ public class ApproveConsignment {
 			// TODO hit API to update delete flag in consignment.
 
 			conn.commit();
-			conn.close();
+//			c onn.close();
 
 		}catch(Exception e){
 			e.printStackTrace();

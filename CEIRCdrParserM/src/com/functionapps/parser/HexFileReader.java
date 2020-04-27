@@ -114,7 +114,7 @@ public class HexFileReader {
                     if (ps != null) {
                         ps.close();
                     }
-                    conn.close();
+//                    c onn.close();
                 }
             } catch (Exception ex) {
             }
@@ -1374,7 +1374,7 @@ public class HexFileReader {
                         temPS.clearParameters();
                         temPS.close();
                     }
-                    // conn.close();
+                    // c onn.close();
                 }
                 if (fis != null) {
                     fis.close();
@@ -1629,7 +1629,7 @@ public class HexFileReader {
                     if (stmt != null) {
                         stmt.close();
                     }
-                    // conn.close();
+                    // c onn.close();
                 } catch (Exception e) {
                 }
             }
@@ -1665,7 +1665,7 @@ public class HexFileReader {
                     if (stmt != null) {
                         stmt.close();
                     }
-                    // conn.close();
+                    // c onn.close();
                 } catch (Exception e) {
                 }
             }
@@ -1958,7 +1958,7 @@ public class HexFileReader {
         } finally {
             try {
                 // conn.commit();
-                conn.close();
+//                c onn.close();
             } catch (Exception ex) {
                 logger.info("  Error  is  + " + ex);
             }
@@ -2546,7 +2546,7 @@ public class HexFileReader {
  * com.functionapps.files.FileList().moveFile(fileName, repName);
  * //logger.info(fieldValues.toString()); }catch( Exception e ){
  * e.printStackTrace(); result = null; }finally{ try{ if(conn != null){ if(rs !=
- * null) rs.close(); if( ps != null ) ps.close(); conn.close(); } if( fis !=
+ * null) rs.close(); if( ps != null ) ps.close(); c onn.close(); } if( fis !=
  * null ) fis.close(); if( dis != null ) dis.close(); }catch( Exception ex ){} }
  * return result; }
  */

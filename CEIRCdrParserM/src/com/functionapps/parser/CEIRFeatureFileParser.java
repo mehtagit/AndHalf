@@ -74,6 +74,7 @@ public class CEIRFeatureFileParser {
 				rulelist = ceirfileparser.getRuleDetails(feature,conn,"" ,period,"", user_type);				
 				addCDRInProfileWithRule(feature, conn, rulelist,"",featurers.getString("txn_id"),featurers.getString("sub_feature") , user_type);				
 			}
+                        conn.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -513,7 +514,7 @@ public class CEIRFeatureFileParser {
 //        } finally {
 //            try {
 //
-//                conn.close();
+//                c onn.close();
 //            } catch (SQLException e) {
 //                // TODO Auto-generated catch block
 //                logger.error("Error.." + e);
@@ -553,8 +554,7 @@ public class CEIRFeatureFileParser {
 		}
 		finally{
 			try {
-				conn.close();
-			} catch (SQLException e) {
+			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}

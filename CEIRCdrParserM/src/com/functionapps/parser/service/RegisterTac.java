@@ -113,7 +113,7 @@ public class RegisterTac {
 				System.out.println("Txn_id [" + txnId + "] is is not present in type_approved_db.");
 			}
 			conn.commit();
-			conn.close();
+//			c onn.close();
 		}catch(Exception e){
 			e.printStackTrace();
 			logger.error(e.getMessage(), e);
