@@ -90,7 +90,7 @@ public class CEIRFeatureFileFunctions {
 
         try {
             query = "select * from feature_mapping_db where  feature='" + feature + "'  " + addQuery + "    " + limiter
-                    + "   "; //
+                    + "   "; 
             logger.info("Query to get  (tFILEFUNCTIONgetFeatureMapping) File Details [" + query + "]");
 
             stmt = conn.createStatement();
@@ -387,35 +387,34 @@ public class CEIRFeatureFileFunctions {
         return con;
     }
 
-	public void updateFeatureManagementStatus(Connection conn, String txn_id,int status,String table_name) {
-		String query = "";
-		Statement stmt = null;
-		query = "update "+table_name+" set status="+status+" where txn_id='"+txn_id+"'";			
-		logger.info("update management db status ["+query+"]");
-		System.out.println("update management db status["+query+"]");
-		try {
-			stmt = conn.createStatement();
-			stmt.executeUpdate(query);
-			conn.commit();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		finally{
-			try {
-				stmt.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		
-	}
+//	public void pdateFeatureManagementStatus(Connection conn, String txn_id,int status,String table_name) {
+//		String query = "";
+//		Statement stmt = null;
+//		query = "update "+table_name+" set status="+status+" where txn_id='"+txn_id+"'";			
+//		logger.info("update management db status ["+query+"]");
+//		System.out.println("update management db status["+query+"]");
+//		try {
+//			stmt = conn.createStatement();
+//			stmt.executeUpdate(query);
+//			conn.commit();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		finally{
+//			try {
+//				stmt.close();
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//		}
+//		
+//	}
     
-    
-	
+        
 	public void updateFeatureManagementDeleteStatus(Connection conn, String txn_id,int status,String table_name) {
 		String query = "";
 		Statement stmt = null;
-		query = "update "+table_name+" set delete_status="+status+" where txn_id='"+txn_id+"'";			
+		query = "update "+table_name+" set delete_status ="+status+" where txn_id='"+txn_id+"'";			
 		logger.info("update delete status ["+query+"]");
 		System.out.println("update delete status ["+query+"]");
 		try {

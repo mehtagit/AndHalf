@@ -347,7 +347,7 @@ public class HexFileReader {
     }
 
     public String[] readConvertedCSVFile(Connection conn, String fileName, String filePath, String repName,
-            String basePath, int raw_upload_set_no ) {
+            String basePath, int raw_upload_set_no) {
         // String errorFilePath =
         // "D:\\lokesh\\CEIR\\"+repName+"/old/"+fileName+".error";
         // String errorFilePath = filePath+fileName+".error";
@@ -472,11 +472,11 @@ public class HexFileReader {
             int fail_my_batch = 0;
             int pass_my_batch = 0;
             int my_batch_count = raw_upload_set_no;
-            String  toDate = " ? ";
-             if (conn.toString().contains("oracle")) {
-            toDate = " TO_DATE(?,'yyyy/mm/dd hh24:mi:ss') ";
-        }
-            
+            String toDate = " ? ";
+            if (conn.toString().contains("oracle")) {
+                toDate = " TO_DATE(?,'yyyy/mm/dd hh24:mi:ss') ";
+            }
+
             while ((line = br.readLine()) != null) {
                 data = line.split(",", -1);
                 if (k == 0) {
@@ -498,15 +498,15 @@ public class HexFileReader {
                         }
                         if (my_column_count == myfilelist.size()) {
 
-                            query = query +    "operator" + "," + "file_name" + "," + "record_time" + ","  + "status" + "," ;
-                            values = values + "?,?, "+toDate+" ,'Init',";
+                            query = query + "operator" + "," + "file_name" + "," + "record_time" + "," + "status" + ",";
+                            values = values + "?,?, " + toDate + " ,'Init',";
                             query = query.substring(0, query.length() - 1) + ") "
                                     + values.substring(0, values.length() - 1) + ")";
 
                             ps = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 
-                            failquery = failquery + "operator" + "," + "file_name" + "," + "record_time" + ","  + "status" + ","          ;
-                            failvalues = failvalues + "?,?, "+toDate+",'Error',";
+                            failquery = failquery + "operator" + "," + "file_name" + "," + "record_time" + "," + "status" + ",";
+                            failvalues = failvalues + "?,?, " + toDate + ",'Error',";
                             failquery = failquery.substring(0, failquery.length() - 1) + ") "
                                     + failvalues.substring(0, failvalues.length() - 1) + ")";
 
@@ -581,12 +581,11 @@ public class HexFileReader {
             }
             rowInserted = ps.getUpdateCount();
             rs = ps.getGeneratedKeys();
-           
 
             if (rs != null) {
                 rs.close();
             }
-         
+
             new com.functionapps.files.FileList().moveFile(fileName, repName, basePath, "file");
 
             if (cdrCount != null && cdrStartTime != null && cdrEndTime != null) {
@@ -612,7 +611,7 @@ public class HexFileReader {
                         ps.clearParameters();
                         ps.close();
                     }
-                   
+
                 }
                 if (fis != null) {
                     fis.close();
@@ -625,9 +624,9 @@ public class HexFileReader {
                 }
             } catch (Exception ex) {
             }
-             query = null;
+            query = null;
             cdrCount = null;
-             endTime = null;
+            endTime = null;
             inTrkName = null;
             outTrkName = null;
             inTrkNo = null;
@@ -646,9 +645,7 @@ public class HexFileReader {
         return result;
     }
 
-    public String[] readConvertedFeatureFile(Connection conn, String fileName, String filePath, String main_type,
-            String basePath, int raw_upload_set_no, String txn_id, String subfeature, String management_table,
-            String usertype_name) throws IOException, SQLException {
+    public String[] readConvertedFeatureFile(Connection conn, String fileName, String filePath, String main_type, String basePath, int raw_upload_set_no, String txn_id, String subfeature, String management_table, String usertype_name) throws IOException, SQLException {
 
         int i = 0;
         int k = 0;
@@ -1117,9 +1114,9 @@ public class HexFileReader {
                 }
 
                 // conn.commit();
-                 CEIRFeatureFileFunctions ceirfunction = new CEIRFeatureFileFunctions();
-                 ceirfunction.updateFeatureFileStatus(conn, txn_id, 2, main_type, subfeature); // update web_action_db                // set
-               
+                CEIRFeatureFileFunctions ceirfunction = new CEIRFeatureFileFunctions();
+                ceirfunction.updateFeatureFileStatus(conn, txn_id, 2, main_type, subfeature); // update web_action_db                // set
+
             } else {
                 CEIRFeatureFileFunctions ceirfunction = new CEIRFeatureFileFunctions();
                 ceirfunction.addFeatureFileConfigDetails(conn, "update", main_type, subfeature, txn_id, fileName, "PARAM_NOT_VALID", "");
@@ -2172,8 +2169,7 @@ public class HexFileReader {
                 }
                 if (map.get("request_type").equals("0")) {
                     qury = " select " + stln_imei
-                            + "    as imei_esn_meid , model_number, device_brand_name, contact_number from stolen_individual_userdb where stolen_id  ="
-                            + id + " ";
+                            + "    as imei_esn_meid , model_number, device_brand_name, contact_number from stolen_individual_userdb where stolen_id  ="                            + id + " ";
                     ty = "STOLEN";
                 }
                 stmt = conn.createStatement();
@@ -2198,11 +2194,11 @@ public class HexFileReader {
                     logger.info("start..stolenFlowStartSingleExtended...." + i);
                     stolenFlowStartSingleExtended(conn, map);
                 }
-                if (i != 1 && !(map.get("imei_esn_meid") == null || map.get("imei_esn_meid").trim() == ""
-                        || map.get("imei_esn_meid").trim().equals("") || map.get("imei_esn_meid").equals("0"))) {
-                    logger.info(
-                            "start..stolenFlowStartSingleExtended.  having  imei..i.e.." + map.get("imei_esn_meid"));
+                if (i != 1 && !(map.get("imei_esn_meid") == null || map.get("imei_esn_meid").trim() == "" || map.get("imei_esn_meid").trim().equals("") || map.get("imei_esn_meid").equals("0"))) {
+                    logger.info("start..stolenFlowStartSingleExtended.  having  imei..i.e.." + map.get("imei_esn_meid"));
                     stolenFlowStartSingleExtended(conn, map);
+                } else {
+                    // break;
                 }
             }
         } catch (Exception e) {
@@ -2220,11 +2216,25 @@ public class HexFileReader {
             }
             if (map.get("imei_esn_meid") == null) {
                 logger.info(" Action for Null IMEI Started.......");
+
                 String imei = getImeiWithMsisdn(conn, map);
                 logger.info("GETTED IMEI is " + imei);
                 map.put("imei_esn_meid", imei);
                 logger.info("Going to  insert into Raw  after getting imei...... ");
                 insertinRawtable(conn, map);
+
+                for (int i = 2; i <= 4; i++) {
+                    String msisdnothr = getOtherContactsImei(conn, i, map);
+                    if (msisdnothr != null || msisdnothr.trim() == "" || msisdnothr.equals("") || msisdnothr.equals("0")) {
+                        logger.info(" new msisdnothr ...." + msisdnothr);
+                        map.put("contact_number", msisdnothr);
+                        imei = getImeiWithMsisdn(conn, map);
+                        map.put("imei_esn_meid", imei);
+                        logger.info("Going to  insert into Raw  after getting imei...... ");
+                        insertinRawtable(conn, map);
+                    }
+                }
+
             } else {
                 logger.info("Going to insert in RAW with imei..... " + map.get("imei_esn_meid"));
                 insertinRawtable(conn, map);
@@ -2243,8 +2253,7 @@ public class HexFileReader {
         String imei = "";
         String txn_id = map.get("txn_id");
         String lawful_stolen_usage_db_num_days_qury = " select value from  system_configuration_db  where tag  = 'lawful_stolen_usage_db_num_days'";
-        logger.info(
-                " getImeiMsisdn ,,,lawful_stolen_usage_db_num_days_qury,,, " + lawful_stolen_usage_db_num_days_qury);
+        logger.info(" getImeiMsisdn ,,,lawful_stolen_usage_db_num_days_qury,,, " + lawful_stolen_usage_db_num_days_qury);
         Statement stmt8 = conn.createStatement();
         ResultSet resultDay = stmt8.executeQuery(lawful_stolen_usage_db_num_days_qury);
         int days = 0;
@@ -2433,6 +2442,31 @@ public class HexFileReader {
         ceirfunction.updateFeatureFileStatus(conn, txn_id, 3, feature, subfeature); // update web_action_db set
         ceirfunction.updateFeatureManagementStatus(conn, txn_id, 2, management_table, tblName);
 
+    }
+
+    public String getOtherContactsImei(Connection conn, int i, Map<String, String> map) {
+        String cntctNo = null;
+        
+        ResultSet resultmsdn = null;
+        String qury = " select contact_number" + i + "  from stolen_individual_userdb where txn_id = '" + map.get("id") + "'    ";
+        logger.info("getOtherContactsImei qury :"+ qury);
+        try {
+            Statement stmt = conn.createStatement();
+            resultmsdn = stmt.executeQuery(qury);
+            try {
+                while (resultmsdn.next()) {
+                    cntctNo = resultmsdn.getString("contact_number");
+                }
+                logger.info("Result at getOtherContactsImei  "+ cntctNo);
+            } catch (Exception e) {
+                logger.info("Error..getOtherContactsImei.." + e);
+            }
+            stmt.close();
+            
+        } catch (Exception e) {
+              logger.info("Error..getOtherContactsImei ..2.." + e);
+        }
+        return cntctNo;
     }
 
 }
