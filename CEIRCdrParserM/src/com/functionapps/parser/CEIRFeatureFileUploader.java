@@ -5,6 +5,8 @@ import java.sql.ResultSet;
 import java.util.HashMap;
 
 import java.io.File;
+import java.sql.SQLException;
+import java.util.logging.Level;
 import org.apache.log4j.Logger;
 
 public class CEIRFeatureFileUploader {
@@ -88,7 +90,7 @@ public class CEIRFeatureFileUploader {
                 ceirfunction.updateFeatureFileStatus(conn, file_details.getString("txn_id"), 2, file_details.getString("feature"), file_details.getString("sub_feature")); // update web_action_db    
             }
             raw_upload_set_no = 1;
-            conn.close();
+            
         } catch (Exception e) {
             logger.info("CEIRFileUploader  Finished with Exception [" + e + "]");
             e.printStackTrace();
@@ -98,6 +100,12 @@ public class CEIRFeatureFileUploader {
                 }
             } catch (Exception ex) {
                 logger.info(" [" + ex + "]");
+            }finally{
+                try {
+                    conn.close();
+                } catch (SQLException ex) {
+                    java.util.logging.Logger.getLogger(CEIRFeatureFileUploader.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
     }
