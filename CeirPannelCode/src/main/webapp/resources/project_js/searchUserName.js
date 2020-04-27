@@ -3,44 +3,46 @@
 			var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 			window.location.assign("./uploadPaidStatus?lang="+lang);
 		}); */
-		
-		
+	
 	$('#btnLink').css({"display":"none"});	
 	var roleType = $("body").attr("data-roleType");
 	var userId = $("body").attr("data-userID");
 	var roleType = $("body").attr("data-roleType"); 
-	var featureId =12;
-   
-   
-  
-
+	
 	function hide() {
 		var In = $('#Search').val();
-		//sessionStorage.setItem("roleType",roleType);
-		sessionStorage.setItem("userName", In);
-		
 		if(In.length == 0){
 				console.log("please field input");
 		}else{
-				
-				/*$.ajax({
-					url: './selfRegisterDevicePage?NID='+In,
+			var searchRequest={
+					"username" : $('#Search').val()
+			}
+			console.log("searchRequest--->" +JSON.stringify(searchRequest));
+				$.ajax({
+					url: './searchUser',
 					type: 'POST',
-					processData: false,
-					contentType: false,
+					data : JSON.stringify(searchRequest),
+					dataType : 'json',
+					contentType : 'application/json; charset=utf-8',
 					success: function (data, textStatus, jqXHR) {
-						console.log("111111111");
+						if(data.statusCode==200){
+							var name = data.name;
+							var userId = data.userId;
+							sessionStorage.setItem("userName", name);
+							sessionStorage.setItem("userId", userId);
+							window.location.href = "./openGrievanceForm?reqType=formPage";
+						}else{
+							window.location.href = "./raiseCCgrievance";
+						}
 					},
 					error: function (jqXHR, textStatus, errorThrown) {
 						console.log("error in ajax")
 
 					}
-				});*/
-				//window.location.replace("./selfRegisterDevicePage?NID="+In);
-				window.location.href = "./raiseCCgrievance";
+				});
 				
-				$("#submitbtn").css("display", "none");
-				$("#endUserRaiseGrievance").css("display", "block");
+				//$("#submitbtn").css("display", "none");
+				//$("#endUserRaiseGrievance").css("display", "block");
 			}
 	    	
 	}

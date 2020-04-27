@@ -229,7 +229,7 @@ var contextpath = "${context}";
 									<label for="lastName"><spring:message code="input.lastName" /> <span class="star">*</span> </label>
 								</div>
 								<div class="col s12 m6 l6">
-									<label><spring:message code="registration.type" /> <span class="star">*</span></label> 
+									<label><spring:message code="input.OperatorType" /> <span class="star">*</span></label> 
 									<select class="browser-default" id="operatorType" title="" 
 										onchange="myFunction()" oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" required>
 										<option value="" disabled selected><spring:message code="select.select" /></option>
