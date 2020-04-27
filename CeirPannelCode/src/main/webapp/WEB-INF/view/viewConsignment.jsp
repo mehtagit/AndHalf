@@ -212,9 +212,9 @@
 
 
 <div class="input-field col s12 m6">
-					<input type="text" name="deviceQty" placeholder=""
-						disabled="disabled" id="deviceQty" maxlength="7" />
-					<label for="deviceQty" class="center-align"><spring:message
+					<input type="text" name="deviceQuantity" placeholder=""
+						disabled="disabled" id="deviceQuantity" maxlength="7" />
+					<label for="deviceQuantity" class="center-align"><spring:message
 							code="input.deviceQty" /></label>
 				</div>
 				
@@ -741,18 +741,21 @@
 					</div>
 
 
-					<div class="input-field col s12 m6">
-						<input type="text" name="totalPrice" id="totalPrice" maxlength="7"
-							pattern="[0-9]{0,7}"
-							placeholder=""  oninput="InvalidMsg(this,'input','<spring:message code="validation.7character" />');"
-					 oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7character" />');"/> <label for="totalPrice" class="center-align"><spring:message
-								code="input.totalprice" /></label>
-					</div>
 
 
-   
-					
-					
+							
+										<div class="input-field col s12 m6">
+											<input type="text" name="editDeviceQuantity" id="editDeviceQuantity"
+												pattern="[0-9]{0,7}"
+												
+												maxlength="7"  oninput="InvalidMsg(this,'input','<spring:message code="validation.7character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7character" />');"  required/> 
+												<label for="editDeviceQuantity" class="center-align" style="margin-top: 5px;"><spring:message code="input.deviceQty" /> <span class="star">*</span></label>
+										</div>
+										
+										
+										
+										
+										
              <div class="file-field input-field col s12 m6"
 						style="margin-top: 5px;">
 						<h6 class="file-upload-heading" style="margin-top: -5px;">
@@ -770,6 +773,16 @@
 						</div>
 					</div>
 
+
+
+					<div class="input-field col s12 m6">
+						<input type="text" name="totalPrice" id="totalPrice" maxlength="7"
+							pattern="[0-9]{0,7}"
+							placeholder=""  oninput="InvalidMsg(this,'input','<spring:message code="validation.7character" />');"
+					 oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7character" />');"/> <label for="totalPrice" class="center-align"><spring:message
+								code="input.totalprice" /></label>
+					</div>
+					
 					<div class="col s12 m6" id="currencyDiv">
 						<input type="text" id="fileNameToBeSame" style="display: none;">
 						<label for="Currency"><spring:message

@@ -37,6 +37,7 @@ function registerConsignment() {
 	formData.append('userType', $("body").attr("data-roleType"));
 	formData.append('userName', $("body").attr("data-username"));
 	formData.append('portAddress', parseInt($('#portAddress').val()));
+	formData.append('deviceQuantity', parseInt($('#deviceQuantity').val()));	
 
 	$.ajax({
 		url : '../Consignment/registerConsignment',
