@@ -29,15 +29,16 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Audited
 @Table(name = "stolen_organization_userdb")
-@Profile("dev")
-public class StolenOrganizationUserDB implements Serializable {
+@Profile("!dev")
+public class StolenOrganizationUserDBOra implements Serializable {
 
-	private static final Logger logger = LogManager.getLogger(StolenOrganizationUserDB.class);
+	private static final Logger logger = LogManager.getLogger(StolenOrganizationUserDBOra.class);
 	
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ORG_SEQ")
+    @SequenceGenerator(sequenceName = "stolen_org_seq", allocationSize = 1, name = "ORG_SEQ")
 	private Long id;
 	
 	@CreationTimestamp
@@ -361,7 +362,7 @@ public class StolenOrganizationUserDB implements Serializable {
 	
 	@PostConstruct
 	public void printBeanName() {
-		logger.info("StolenOrganizationUserDB");
+		logger.info("StolenOrganizationUserDBOra");
 	}
 	
 }

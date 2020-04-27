@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
@@ -25,20 +26,20 @@ import org.springframework.context.annotation.Profile;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.gl.ceir.config.controller.ConsignmentController;
 
 @Audited
 @Entity
 @Table(name = "stolen_individual_userdb")
-@Profile("dev")
-public class StolenIndividualUserDB implements Serializable {
+@Profile("!dev")
+public class StolenIndividualUserDBOra implements Serializable {
 
-	private static final Logger logger = LogManager.getLogger(StolenIndividualUserDB.class);
-
+	private static final Logger logger = LogManager.getLogger(StolenIndividualUserDBOra.class);
+	
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IND_SEQ")
+    @SequenceGenerator(sequenceName = "stolen_ind_seq", allocationSize = 1, name = "IND_SEQ")
 	private Long id;
 
 	@CreationTimestamp
@@ -511,7 +512,7 @@ public class StolenIndividualUserDB implements Serializable {
 	
 	@PostConstruct
 	public void printBeanName() {
-		logger.info("StolenIndividualUserDB");
+		logger.info("StolenIndividualUserDBOra");
 	}
 
 }
