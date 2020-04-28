@@ -86,7 +86,7 @@ public class HexFileReader {
                     logger.info("Remaining data inserted is [" + j + "]");
                 }
             }
-            // conn.commit();
+             conn.commit();
             result = true;
         } catch (Exception e) {
             logger.info("Failed to insert data.");
@@ -1085,7 +1085,7 @@ public class HexFileReader {
                         if (pass_my_batch == my_batch_count) {
                             logger.info("Executing Pass Batch File");
                             ps.executeBatch();
-                            // conn.commit();
+                            conn.commit();
                             pass_my_batch = 0;
                         }
                     }
@@ -1101,7 +1101,7 @@ public class HexFileReader {
                     rs.close();
                 }
 
-                // conn.commit();
+                 conn.commit();
             } else {
                 CEIRFeatureFileFunctions ceirfunction = new CEIRFeatureFileFunctions();
           //     ceirfunction.addFeatureFileConfigDetails(conn, "update", main_type, subfeature, txn_id, fileName, "PARAM_NOT_VALID", "");
@@ -1333,7 +1333,7 @@ public class HexFileReader {
             } else {
                 result = new String[]{"0", "null", "null", "0", this.getTableSize(conn, repName), "0", "0"};
             }
-            // conn.commit();
+            conn.commit();
         } catch (Exception e) {
             e.printStackTrace();
             try {
@@ -1596,7 +1596,7 @@ public class HexFileReader {
 
             stmt = conn.createStatement();
             logger.info("update count are " + stmt.executeUpdate(query));
-            // conn.commit();
+            conn.commit();
 
             // rs = stmt.executeQuery(query);
             // while( rs.next() ){
@@ -1714,7 +1714,7 @@ public class HexFileReader {
                 ps.executeBatch();
             }
             if (conn != null) {
-                // conn.commit();
+                conn.commit();
             }
             // stmt = conn.createStatement();
             // stmt.executeQuery("delete from zte_billid_temp where

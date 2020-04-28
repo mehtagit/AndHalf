@@ -24,7 +24,7 @@ public class WithdrawnTac {
 			ceirfunction.updateFeatureFileStatus(conn, txnId, 2, operator, sub_feature);	
 
 			conn.commit();
-//			c o nn.close();
+//			conn.close();
 		}catch(Exception e){
 			e.printStackTrace();
 			logger.error(e.getMessage(), e);

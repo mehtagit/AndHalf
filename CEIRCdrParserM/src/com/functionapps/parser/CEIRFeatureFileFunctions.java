@@ -172,7 +172,7 @@ public class CEIRFeatureFileFunctions {
         } finally {
             try {
                 stmt.close();
-                // conn.commit();
+                 conn.commit();
             } catch (Exception e) {
                 logger.info("errror" + e);
             }
@@ -202,7 +202,7 @@ public class CEIRFeatureFileFunctions {
         } finally {
             try {
                 stmt.close();
-                // conn.commit();
+                conn.commit();
             } catch (Exception e) {
                 logger.info("Error at updateFeatureFileStatus.." + e);
             }
@@ -229,7 +229,7 @@ public class CEIRFeatureFileFunctions {
         } finally {
             try {
                 stmt.close();
-                // conn.commit();
+                conn.commit();
             } catch (Exception e) {
                 logger.info("Error at updateFeatureManagementStatus.." + e);
             }
@@ -273,7 +273,7 @@ public class CEIRFeatureFileFunctions {
         return user_type;
     }
 
-    public void consignmentUpdateViaApi(Connection conn, String txn_id, int ConsigAction, HashMap<String, String> map,
+    public void UpdateStatusViaApi(Connection conn, String txn_id, int ConsigAction, HashMap<String, String> map,
             String feature, int StlnAction) {
         logger.info("consignmentUpdateViaApi.. ");
         ResultSet rs1 = null;

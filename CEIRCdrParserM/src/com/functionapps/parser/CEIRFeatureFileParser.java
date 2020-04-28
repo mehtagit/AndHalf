@@ -1,13 +1,8 @@
 package com.functionapps.parser;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.PrintWriter;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import com.functionapps.parser.service.ApproveConsignment;
@@ -714,7 +709,7 @@ public class CEIRFeatureFileParser {
             while (rs1.next()) {
                 rslt = rs1.getString(1);
             }
-            // conn.commit();
+            conn.commit();
             if (rslt.equalsIgnoreCase("Custom")) {
                 logger.info("IT is  Custom");
                 rst = 1;
@@ -741,7 +736,7 @@ public class CEIRFeatureFileParser {
         try {
             stmt = conn.createStatement();
             stmt.executeUpdate(query);
-            // conn.commit();
+             conn.commit();
         } catch (SQLException e) {
             logger.error("Error.." + e);
         } finally {
@@ -827,7 +822,7 @@ public class CEIRFeatureFileParser {
         try {
             stmt = conn.createStatement();
             stmt.executeUpdate(query);
-            // conn.commit();
+             conn.commit();
         } catch (SQLException e) {
             logger.error("Error.." + e);
         } finally {
@@ -848,7 +843,7 @@ public class CEIRFeatureFileParser {
         try {
             stmt = conn.createStatement();
             stmt.executeUpdate(query);
-            // conn.commit();
+            conn.commit();
         } catch (SQLException e) {
             logger.error("Error.." + e);
         } finally {
@@ -874,7 +869,7 @@ public class CEIRFeatureFileParser {
             while (rs.next()) {
                 rsslt = rs.getInt("cnt");
             }
-            // conn.commit();
+            conn.commit();
         } catch (SQLException e) {
             logger.error("Error.." + e);
         } finally {

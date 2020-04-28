@@ -74,7 +74,7 @@ public class FeatureForSingleStolenBlock {
 
         } finally {
             try {
-                // conn.commit();
+               conn.commit();
 //                c onn.close();
             } catch (Exception ex) {
                 logger.info("  Error  is  + " + ex);
@@ -305,7 +305,7 @@ public class FeatureForSingleStolenBlock {
                     logger.info("Error..getImedn.." + e);
                 }
                 stmt.close();
-                // conn.commit();
+                 conn.commit();
                 if (i == 1) {
                     logger.info("start..stolenFlowStartSingleExtended...." + i);
                     stolenFlowStartSingleExtended(conn, map ,i);
@@ -529,7 +529,7 @@ public class FeatureForSingleStolenBlock {
             stmt = conn.createStatement();
             stmt.executeUpdate(query);
             stmt.close();
-            // conn.commit();
+             conn.commit();
 
         } catch (Exception e) {
             logger.info(" Error  " + e);
@@ -556,14 +556,14 @@ public class FeatureForSingleStolenBlock {
         String cntctNo = null;
 
         ResultSet resultmsdn = null;
-        String qury = " select contact_number" + i + "  from stolen_individual_userdb where txn_id = '" + map.get("id") + "'    ";
+        String qury = " select contact_number" + i + "  as  cantctNo from stolen_individual_userdb where stolen_id  = '" + map.get("id") + "'    ";
         logger.info("getOtherContactsImei qury :" + qury);
         try {
             Statement stmt = conn.createStatement();
             resultmsdn = stmt.executeQuery(qury);
             try {
                 while (resultmsdn.next()) {
-                    cntctNo = resultmsdn.getString("contact_number");
+                    cntctNo = resultmsdn.getString("cantctNo");
                 }
                 logger.info("Result at getOtherContactsImei  " + cntctNo);
             } catch (Exception e) {

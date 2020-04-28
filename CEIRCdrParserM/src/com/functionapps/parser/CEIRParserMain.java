@@ -355,7 +355,7 @@ public class CEIRParserMain {
 					logger.info("Executing batch file");
 					stmt1.executeBatch();
 					raw_stmt.executeBatch();
-					 // conn.commit();
+					  conn.commit();
 					split_upload_batch_count=0;
 				}
 
@@ -369,7 +369,7 @@ public class CEIRParserMain {
 
 				stmt1.executeBatch();
 				raw_stmt.executeBatch();
-				 // conn.commit();
+				 conn.commit();
 
 			}
 		}
@@ -400,7 +400,7 @@ public class CEIRParserMain {
 		try {
 			stmt = conn.createStatement();
 			stmt.executeUpdate(query);
-			 // conn.commit();
+			 conn.commit();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
@@ -579,7 +579,7 @@ public class CEIRParserMain {
 		try {
 			stmt = conn.createStatement();
 			stmt.executeUpdate(query);
-			 // conn.commit();
+			  conn.commit();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -601,7 +601,7 @@ public class CEIRParserMain {
 		try {
 			stmt = conn.createStatement();
 			stmt.executeUpdate(query);
-			 // conn.commit();
+			 conn.commit();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}	

@@ -26,7 +26,7 @@ public class MySQLConnection {
         try {
             Class.forName(JDBC_DRIVER);
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
-            conn.setAutoCommit(true);
+            conn.setAutoCommit(false);
             System.out.println("Connnection created successfully" + conn);
             return conn;
         } catch (Exception e) {
