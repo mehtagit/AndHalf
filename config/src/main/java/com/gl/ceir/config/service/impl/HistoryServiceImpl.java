@@ -223,6 +223,8 @@ public class HistoryServiceImpl {
 					nsb.with(new SearchCriteria("userId", filterRequest.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));
 			}
 
+			nsb.with(new SearchCriteria("referTable", "END_USER", SearchOperation.NEGATION, Datatype.STRING));
+			
 			return notificationRepository.findAll(nsb.build(), pageable);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
