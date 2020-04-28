@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.functionapps.dao.ConsignmentMgmtDao;
 import com.functionapps.dao.DeviceDbDao;
 import com.functionapps.dao.DeviceImporterDbDao;
 import com.functionapps.parser.CEIRFeatureFileFunctions;
@@ -20,24 +21,27 @@ public class ConsignmentDelete {
 
 		DeviceDbDao deviceDbDao = new DeviceDbDao();
 		DeviceImporterDbDao deviceImporterDbDao = new DeviceImporterDbDao();
+		ConsignmentMgmtDao consignmentMgmtDao = new ConsignmentMgmtDao();
 		CEIRFeatureFileFunctions ceirfunction = new CEIRFeatureFileFunctions();
+		
 		
 		try{
 			List<DeviceDb> deviceDbs = deviceDbDao.getDeviceDbByTxnId(conn, "", txnId);
 			System.out.println("deviceDbs" + deviceDbs);
-			// deviceDbDao.insertDeviceDbAud(conn, deviceDbs);
+			logger.info("deviceDbs" + deviceDbs);
+			deviceDbDao.insertDeviceDbAud(conn, deviceDbs);
 			deviceDbDao.deleteDevicesFromDeviceDb(conn, txnId);
-
+			
 			List<DeviceImporterDb> deviceImporterDbs = deviceImporterDbDao.getDeviceImporterDbByTxnId(conn, "", txnId);
 			System.out.println("deviceImporterDbs" + deviceImporterDbs);
+			logger.info("deviceImporterDbs" + deviceImporterDbs);
 			deviceImporterDbDao.insertDeviceImporterDbAud(conn, deviceImporterDbs);
 			
 			deviceImporterDbDao.deleteDevicesFromDeviceImporterDb(conn, txnId);
 			ceirfunction.updateFeatureFileStatus(conn, txnId, 2, operator, sub_feature);
 			
-			// TODO hit API to update delete flag in consignment.
-			conn.commit();
-
+			consignmentMgmtDao.updateDeviceImporterDbAud(conn, txnId, 2);
+			
 		}catch(Exception e){
 			e.printStackTrace();
 			logger.error(e.getMessage(), e);

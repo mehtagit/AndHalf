@@ -16,7 +16,6 @@ public class CEIRFeatureFileUploader {
     public static void main(String[] args) {
         logger.info(" ");
         logger.info(" ");
-        logger.info(" ");
         Connection conn = new com.functionapps.db.MySQLConnection().getConnection();
         CEIRFeatureFileFunctions ceirfunction = new CEIRFeatureFileFunctions();
         ResultSet file_details = ceirfunction.getFileDetails(conn, 0);  //select * from web_action_db limit 1 

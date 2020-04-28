@@ -21,8 +21,6 @@ import com.functionapps.parser.RuleFilter;
 public class ConsignmentInsertUpdate {
 
     static Logger logger = Logger.getLogger(ConsignmentInsertUpdate.class);
-//                                                                                            
-
     public void process(Connection conn, String operator, String sub_feature, ArrayList<Rule> rulelist, String txn_id, String operator_tag, String usertype_name) {
 
         ErrorFileGenrator errFile = new ErrorFileGenrator();

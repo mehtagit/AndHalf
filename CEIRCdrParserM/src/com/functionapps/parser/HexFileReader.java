@@ -86,7 +86,7 @@ public class HexFileReader {
                     logger.info("Remaining data inserted is [" + j + "]");
                 }
             }
-             conn.commit();
+            conn.commit();
             result = true;
         } catch (Exception e) {
             logger.info("Failed to insert data.");
@@ -1101,10 +1101,10 @@ public class HexFileReader {
                     rs.close();
                 }
 
-                 conn.commit();
+                conn.commit();
             } else {
                 CEIRFeatureFileFunctions ceirfunction = new CEIRFeatureFileFunctions();
-          //     ceirfunction.addFeatureFileConfigDetails(conn, "update", main_type, subfeature, txn_id, fileName, "PARAM_NOT_VALID", "");
+                //     ceirfunction.addFeatureFileConfigDetails(conn, "update", main_type, subfeature, txn_id, fileName, "PARAM_NOT_VALID", "");
                 ceirfunction.updateFeatureFileStatus(conn, txn_id, 4, main_type, subfeature); // update web_action_db  
                 ceirfunction.updateFeatureManagementStatus(conn, txn_id, 2, management_table, main_type);
             }

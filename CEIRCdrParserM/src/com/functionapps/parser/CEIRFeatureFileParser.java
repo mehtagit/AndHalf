@@ -10,47 +10,45 @@ import com.functionapps.parser.service.ConsignmentDelete;
 import com.functionapps.parser.service.ConsignmentInsertUpdate;
 import com.functionapps.parser.service.RegisterTac;
 import com.functionapps.parser.service.WithdrawnTac;
-
 import org.apache.log4j.Logger;
 
 public class CEIRFeatureFileParser {
 
-    public static  Logger logger = Logger.getLogger(CEIRFeatureFileParser.class);
+    public static Logger logger = Logger.getLogger(CEIRFeatureFileParser.class);
 
-
-     public static  void main(String args[]) {
-		String feature = null;
-		Connection conn = null;
-		conn = (Connection) new com.functionapps.db.MySQLConnection().getConnection();
-		CEIRFeatureFileFunctions ceirfunction = new CEIRFeatureFileFunctions();
-		ResultSet featurers = ceirfunction.getFileDetails(conn, 2);     //select * from web_action_db 
+    public static void main(String args[]) {
+        logger.info("  ");
+        logger.info("  ");
+        String feature = null;
+        Connection conn = null;
+        conn = (Connection) new com.functionapps.db.MySQLConnection().getConnection();
+        CEIRFeatureFileFunctions ceirfunction = new CEIRFeatureFileFunctions();
+        ResultSet featurers = ceirfunction.getFileDetails(conn, 2);     //select * from web_action_db 
 //		ResultSet featurers=getFeatureFileDetails(conn);
-		try {
-			if(featurers.next()){
-				ceirfunction.updateFeatureFileStatus(conn,featurers.getString("txn_id"),3,featurers.getString("feature"), featurers.getString("sub_feature"));  // update web_action
-				HashMap<String, String> feature_file_mapping = new HashMap<String, String>();
-				feature_file_mapping = ceirfunction.getFeatureMapping(conn,featurers.getString("feature") , "NOUSER");
-				HashMap<String, String> feature_file_management = new HashMap<String, String>();
-				feature_file_management = ceirfunction.getFeatureFileManagement(conn,feature_file_mapping.get("mgnt_table_db"),featurers.getString("txn_id"));   //  select * from " + management_db 
-				String user_type = ceirfunction.getUserType(conn,feature_file_management.get("user_id"),featurers.getString("feature"),featurers.getString("txn_id")  );
-				CEIRFeatureFileParser ceirfileparser = new CEIRFeatureFileParser();
-				feature = featurers.getString("feature");
-				ArrayList rulelist = new ArrayList<Rule>();		
-				String period = ceirfileparser.checkGraceStatus(conn);
-				logger.info("Period is ["+period+"] ");
-				rulelist = ceirfileparser.getRuleDetails(feature,conn,"" ,period,"", user_type);				
-				addCDRInProfileWithRule(feature, conn, rulelist,"",featurers.getString("txn_id"),featurers.getString("sub_feature") , user_type);				
-			}
-                        conn.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-    
-    
-    
-     public static  ResultSet getFeatureFileDetails(Connection conn) {
+        try {
+            if (featurers.next()) {
+                ceirfunction.updateFeatureFileStatus(conn, featurers.getString("txn_id"), 3, featurers.getString("feature"), featurers.getString("sub_feature"));  // update web_action
+                HashMap<String, String> feature_file_mapping = new HashMap<String, String>();
+                feature_file_mapping = ceirfunction.getFeatureMapping(conn, featurers.getString("feature"), "NOUSER");
+                HashMap<String, String> feature_file_management = new HashMap<String, String>();
+                feature_file_management = ceirfunction.getFeatureFileManagement(conn, feature_file_mapping.get("mgnt_table_db"), featurers.getString("txn_id"));   //  select * from " + management_db 
+                String user_type = ceirfunction.getUserType(conn, feature_file_management.get("user_id"), featurers.getString("feature"), featurers.getString("txn_id"));
+                CEIRFeatureFileParser ceirfileparser = new CEIRFeatureFileParser();
+                feature = featurers.getString("feature");
+                ArrayList rulelist = new ArrayList<Rule>();
+                String period = ceirfileparser.checkGraceStatus(conn);
+                logger.info("Period is [" + period + "] ");
+                rulelist = ceirfileparser.getRuleDetails(feature, conn, "", period, "", user_type);
+                addCDRInProfileWithRule(feature, conn, rulelist, "", featurers.getString("txn_id"), featurers.getString("sub_feature"), user_type);
+            }
+            conn.close();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+    public static ResultSet getFeatureFileDetails(Connection conn) {
         Statement stmt = null;
         ResultSet rs = null;
         String query = null;
@@ -69,7 +67,7 @@ public class CEIRFeatureFileParser {
         return rs;
     }
 
-     public static  String checkGraceStatus(Connection conn) {
+    public static String checkGraceStatus(Connection conn) {
         String period = "";
         String query = null;
         ResultSet rs1 = null;
@@ -106,7 +104,7 @@ public class CEIRFeatureFileParser {
         return period;
     }
 
-     public static  String getOperatorTag(Connection conn, String operator) {
+    public static String getOperatorTag(Connection conn, String operator) {
         String operator_tag = "";
         String query = null;
         ResultSet rs1 = null;
@@ -135,57 +133,43 @@ public class CEIRFeatureFileParser {
 
     }
 
-     
-     
-     
-     
-     
-     
+    public static void addCDRInProfileWithRule(String operator, Connection conn, ArrayList<Rule> rulelist, String operator_tag, String txn_id, String sub_feature, String usertype_name) {
 
- public static  void addCDRInProfileWithRule(String operator, Connection conn,ArrayList<Rule> rulelist,String operator_tag,String txn_id,String sub_feature , String usertype_name) {
-		
-		Statement stmt = null;
-		try{  
-			if((sub_feature.equalsIgnoreCase("register") || sub_feature.equalsIgnoreCase("update") ||  sub_feature.equalsIgnoreCase("UPLOAD")    )){
-				new ConsignmentInsertUpdate().process(conn,operator, sub_feature, rulelist, txn_id, operator_tag  ,usertype_name);
-			}else if(operator.equalsIgnoreCase("consignment") &&(sub_feature.equalsIgnoreCase("delete"))){
-				System.out.println("running consignment delete process.");
-				new ConsignmentDelete().process(conn, operator, sub_feature, rulelist, txn_id, operator_tag);
-			}else if(operator.equalsIgnoreCase("consignment") &&(sub_feature.equalsIgnoreCase("approve"))){
-				System.out.println("running consignment approve process.");
-				new ApproveConsignment().process(conn, operator, sub_feature, rulelist, txn_id, operator_tag);
-			}else if(operator.equalsIgnoreCase("TYPE_APPROVED") &&(sub_feature.equalsIgnoreCase("REGISTER"))){
-				System.out.println("running tac register process.");
-				new RegisterTac().process(conn, operator, sub_feature, rulelist, txn_id, operator_tag);
-			}else if(operator.equalsIgnoreCase("TYPE_APPROVED") &&(sub_feature.equalsIgnoreCase("delete"))){
-				System.out.println("running tac delete process.");
-				new WithdrawnTac().process(conn, operator, sub_feature, rulelist, txn_id, operator_tag);
-			}else {
-				System.out.println("Skipping the process.");
-			}
-                        
-                        CEIRFeatureFileFunctions ceirfunction = new CEIRFeatureFileFunctions();
-		        ceirfunction.updateFeatureFileStatus(conn,txn_id,4,operator,sub_feature );
-				
-                        
-		}
-		catch(Exception e){
-			e.printStackTrace();
-		}
-		finally{
-			try {
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-	}
-    
-    
-    
-    
-    
-     public static  HashMap<String, String> getStolenRecvryDetails(Connection conn, String txn_id) {
+        Statement stmt = null;
+        try {
+            if ((sub_feature.equalsIgnoreCase("register") || sub_feature.equalsIgnoreCase("update") || sub_feature.equalsIgnoreCase("UPLOAD"))) {
+                new ConsignmentInsertUpdate().process(conn, operator, sub_feature, rulelist, txn_id, operator_tag, usertype_name);
+            } else if (operator.equalsIgnoreCase("consignment") && (sub_feature.equalsIgnoreCase("delete"))) {
+                System.out.println("running consignment delete process.");
+                new ConsignmentDelete().process(conn, operator, sub_feature, rulelist, txn_id, operator_tag);
+            } else if (operator.equalsIgnoreCase("consignment") && (sub_feature.equalsIgnoreCase("approve"))) {
+                System.out.println("running consignment approve process.");
+                new ApproveConsignment().process(conn, operator, sub_feature, rulelist, txn_id, operator_tag);
+            } else if (operator.equalsIgnoreCase("TYPE_APPROVED") && (sub_feature.equalsIgnoreCase("REGISTER"))) {
+                System.out.println("running tac register process.");
+                new RegisterTac().process(conn, operator, sub_feature, rulelist, txn_id, operator_tag);
+            } else if (operator.equalsIgnoreCase("TYPE_APPROVED") && (sub_feature.equalsIgnoreCase("delete"))) {
+                System.out.println("running tac delete process.");
+                new WithdrawnTac().process(conn, operator, sub_feature, rulelist, txn_id, operator_tag);
+            } else {
+                System.out.println("Skipping the process.");
+            }
+
+            CEIRFeatureFileFunctions ceirfunction = new CEIRFeatureFileFunctions();
+            ceirfunction.updateFeatureFileStatus(conn, txn_id, 4, operator, sub_feature);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static HashMap<String, String> getStolenRecvryDetails(Connection conn, String txn_id) {
         HashMap<String, String> map = new HashMap<String, String>();
         String errorFilePath = "";
         String query = null;
@@ -289,7 +273,7 @@ public class CEIRFeatureFileParser {
 
     }
 
-    public static  String getErrorFilePath(Connection conn) {
+    public static String getErrorFilePath(Connection conn) {
         String errorFilePath = "";
         String query = null;
         ResultSet rs1 = null;
@@ -320,7 +304,7 @@ public class CEIRFeatureFileParser {
 
     }
 
-     public static  int getCustomData(Connection conn, String txn_id) {
+    public static int getCustomData(Connection conn, String txn_id) {
         String query = null;
         Statement stmt = null;
         ResultSet rs1 = null;
@@ -353,7 +337,7 @@ public class CEIRFeatureFileParser {
         return rst;
     }
 
-     public static  void updateRawData(Connection conn, String operator, String id, String status) {
+    public static void updateRawData(Connection conn, String operator, String id, String status) {
         String query = null;
         Statement stmt = null;
         query = "update " + operator + "_raw" + " set status='" + status + "' where sno='" + id + "'";
@@ -361,7 +345,7 @@ public class CEIRFeatureFileParser {
         try {
             stmt = conn.createStatement();
             stmt.executeUpdate(query);
-             conn.commit();
+            conn.commit();
         } catch (SQLException e) {
             logger.error("Error.." + e);
         } finally {
@@ -375,7 +359,7 @@ public class CEIRFeatureFileParser {
 
     }
 
-     public static  ArrayList getRuleDetails(String operator, Connection conn, String operator_tag, String period,            String feature, String usertype_name) {
+    public static ArrayList getRuleDetails(String operator, Connection conn, String operator_tag, String period, String feature, String usertype_name) {
         ArrayList rule_details = new ArrayList<Rule>();
         String query = null;
         ResultSet rs1 = null;
@@ -424,8 +408,8 @@ public class CEIRFeatureFileParser {
         }
         return rule_details;
     }
-   
-    public static  ResultSet operatorDetails(Connection conn, String operator) {
+
+    public static ResultSet operatorDetails(Connection conn, String operator) {
         Statement stmt = null;
         ResultSet rs = null;
         String query = null;
@@ -439,7 +423,7 @@ public class CEIRFeatureFileParser {
         return rs;
     }
 
-     public static  void updateLastStatuSno(Connection conn, String operator, int id, int limit) {
+    public static void updateLastStatuSno(Connection conn, String operator, int id, int limit) {
         String query = null;
         Statement stmt = null;
         query = "update " + operator + "_raw" + " set status='Start' where sno>'" + id + "'"; //
@@ -447,7 +431,7 @@ public class CEIRFeatureFileParser {
         try {
             stmt = conn.createStatement();
             stmt.executeUpdate(query);
-             conn.commit();
+            conn.commit();
         } catch (SQLException e) {
             logger.error("Error.." + e);
         } finally {
@@ -460,7 +444,7 @@ public class CEIRFeatureFileParser {
         }
     }
 
-     public static  void updateRawLastSno(Connection conn, String operator, int sno) {
+    public static void updateRawLastSno(Connection conn, String operator, int sno) {
         String query = null;
         Statement stmt = null;
         query = "update rep_schedule_config_db set last_upload_sno=" + sno + " where operator='" + operator + "'";
@@ -481,7 +465,7 @@ public class CEIRFeatureFileParser {
         }
     }
 
-    public static  int imeiCountfromRawTable(Connection conn, String txn_id, String operator) {
+    public static int imeiCountfromRawTable(Connection conn, String txn_id, String operator) {
         int rsslt = 0;
         String query = null;
         Statement stmt = null;
@@ -510,8 +494,6 @@ public class CEIRFeatureFileParser {
     }
 
 }
-
-
 
 //     public static  void addCDRInProfileWithRule(String operator, Connection conn, ArrayList<Rule> rulelist,
 //            String operator_tag, String txn_id, String sub_feature, String usertype_name) {
@@ -866,10 +848,6 @@ public class CEIRFeatureFileParser {
 //            }
 //        }
 //    }
-     
-     
-     
-     
 //    public public static  void main(String args[]) {
 //
 //        logger.info(" ");
