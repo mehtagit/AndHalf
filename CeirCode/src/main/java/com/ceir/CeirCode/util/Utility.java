@@ -82,6 +82,13 @@ public class Utility {
 		String currentDate=dateFormat.format(date);
 		return currentDate;
 	}
+	
+	public static String currentTime() {
+		DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		Date date=new Date();
+		String currentDate=dateFormat.format(date);
+		return currentDate;
+	}
 
 	public String convertToDateformat(Date date) {
 		DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd");
@@ -91,6 +98,12 @@ public class Utility {
 	
 	public String convertToMonth(Date date) {
 		DateFormat dateFormat=new SimpleDateFormat("MMMM");
+		String currentDate=dateFormat.format(date);
+		return currentDate;
+	}
+	
+	public String convertToYear(Date date) {
+		DateFormat dateFormat=new SimpleDateFormat("yyyy");
 		String currentDate=dateFormat.format(date);
 		return currentDate;
 	}
@@ -211,5 +224,24 @@ public class Utility {
         String time2=date.format(aFormatter);
         log.info("otp insertion date time: "+time2);
         return  getDifferenceMinutes(time2,currentime);
+	}
+	
+	public String currentDateTimeInSeconds() {
+		DateFormat dateFormat=new SimpleDateFormat("yyyyMMddHHmmss");
+		Date date=new Date();
+		String currentDate=dateFormat.format(date);
+		return currentDate;
+	}
+	
+	public String converedtlocalTime(LocalDateTime time) {
+		try {
+		DateTimeFormatter aFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"); 
+		String date = time.format(aFormatter);
+		return date;
+		}
+		catch(Exception e) {
+			log.info(e.toString());
+			return null;
+		}
 	}
 }

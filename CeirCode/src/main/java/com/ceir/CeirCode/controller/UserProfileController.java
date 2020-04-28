@@ -84,7 +84,8 @@ public class UserProfileController {
 			if(userProfileResponse!=null) {
 			for(UserProfile profile:userProfileResponse.getContent()) {
 				for(SystemConfigListDb asType:asTypeList) {
-					if(profile.getType()==asType.getValue()) {
+					Integer value=asType.getValue();
+					if(profile.getType()==value) {
 						profile.setAsTypeName(asType.getInterp());
 					}
 				}
@@ -93,7 +94,7 @@ public class UserProfileController {
 			mapping = new MappingJacksonValue(userProfileResponse);
 			
 		}else {
-			FileDetails fileDetails = userProService.getFilterUSerPRofileInFile(filterRequest, pageNo, pageSize);
+			FileDetails fileDetails = userProService.getFilterUSerPRofileInFile(filterRequest);
 			mapping = new MappingJacksonValue(fileDetails);
 		}
 		return mapping;
@@ -118,9 +119,9 @@ public class UserProfileController {
 	}
 
 	@ApiOperation(value = "user profile data by  id", response = HttpResponse.class)
-	@PostMapping("/viewProfile/{id}") 
-	public ResponseEntity<?> viewProfile(@PathVariable("id") long id){
-		return userService.profileDataById(id);
+	@PostMapping("/viewProfile/{id}/{userId}") 
+	public ResponseEntity<?> viewProfile(@PathVariable("id") long id,@PathVariable("userId") long userId){
+		return userService.profileDataById(id,userId); 
 	} 
 
 	@ApiOperation(value = "admin approve user", response = HttpResponse.class)

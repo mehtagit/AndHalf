@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import com.ceir.CeirCode.Constants.Datatype;
 import com.ceir.CeirCode.Constants.SearchOperation;
+import com.ceir.CeirCode.SpecificationBuilder.GenericSpecificationBuilder;
 import com.ceir.CeirCode.SpecificationBuilder.SpecificationBuilder;
 import com.ceir.CeirCode.configuration.PropertiesReaders;
 import com.ceir.CeirCode.filtermodel.CurrencyFilter;
@@ -114,7 +115,6 @@ public class CurrencyService {
 			GenricResponse response=new GenricResponse(500,CurrencyTags.Curr_Wrong_Id.getMessage(),CurrencyTags.Curr_Wrong_Id.getTag());
 			return  new ResponseEntity<>(response,HttpStatus.OK);
 		}
-
 	}
 
 
@@ -122,7 +122,7 @@ public class CurrencyService {
 		log.info("inside currency view  controller");
 		log.info("portAddressInfo : "+filter);
 		Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
-		SpecificationBuilder<Currency> specification=new SpecificationBuilder<Currency>(propertiesReader.dialect) ;
+		GenericSpecificationBuilder<Currency> specification=new GenericSpecificationBuilder<Currency>(propertiesReader.dialect) ;
 		if(Objects.nonNull(filter.getStartDate()) && filter.getStartDate()!="")
 			specification.with(new SearchCriteria("createdOn",filter.getStartDate(), SearchOperation.GREATER_THAN, Datatype.DATE));
 
@@ -131,13 +131,12 @@ public class CurrencyService {
 
 		if(Objects.nonNull(filter.getCurrency()))
 			specification.with(new SearchCriteria("currency",filter.getCurrency(), SearchOperation.EQUALITY, Datatype.INTEGER));
-
-		if(Objects.nonNull(filter.getSearchString()) && !filter.getSearchString().isEmpty()){
-			specification.orSearch(new SearchCriteria("address", filter.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
-		}
 		
+		if(Objects.nonNull(filter.getSearchString()) && !filter.getSearchString().isEmpty()){
+			specification.orSearch(new SearchCriteria("dollar", filter.getSearchString(), SearchOperation.LIKE, Datatype.DOUBLE));
+			specification.orSearch(new SearchCriteria("riel", filter.getSearchString(), SearchOperation.LIKE, Datatype.DOUBLE));
+
+		}
 		return currencyrepo.findAll(specification.build(),pageable);
 	}
-
-
 }

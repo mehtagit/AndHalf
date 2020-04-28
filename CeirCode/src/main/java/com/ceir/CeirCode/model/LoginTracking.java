@@ -1,5 +1,8 @@
 package com.ceir.CeirCode.model;
+import java.time.LocalDateTime;
 import java.util.Date;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -9,6 +12,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 @Entity 
 @Audited
 public class LoginTracking {
@@ -16,12 +22,17 @@ public class LoginTracking {
 	@Id       
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
+	
+	@Column(nullable =false)
 	@CreationTimestamp
-	private Date createdOn;
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
+	private LocalDateTime createdOn;
 	private Integer loginStatus;
+
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name="user_id",nullable = false)
 	private User userTrack;        
+	
 	
 	public long getId() { 
 		return id;
@@ -29,12 +40,7 @@ public class LoginTracking {
 	public void setId(long id) {
 		this.id = id;
 	}
-	public Date getCreatedOn() {
-		return createdOn;
-	}
-	public void setCreatedOn(Date createdOn) {
-		this.createdOn = createdOn;
-	}
+	
 	
 	public Integer getLoginStatus() {
 		return loginStatus;
@@ -58,7 +64,10 @@ public class LoginTracking {
 		this.userTrack = userTrack;
 	}
 
-	public LoginTracking(Integer loginStatus, User userTrack,Date createdOn) {
+	public void setCreatedOn(LocalDateTime createdOn) {
+		this.createdOn = createdOn;
+	}
+	public LoginTracking(Integer loginStatus, User userTrack,LocalDateTime createdOn) {
 		super();
 		this.loginStatus = loginStatus;
 		this.userTrack = userTrack;

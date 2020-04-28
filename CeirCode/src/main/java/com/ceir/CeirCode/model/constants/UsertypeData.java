@@ -7,7 +7,9 @@ public enum UsertypeData {
 	Custom(7, "Custom"),CEIRAdmin(8, "CEIRAdmin"),Operator(9, "Operator"),
 	TRC(10, "TRC"),Manufacturer(12, "Manufacturer"),SystemAdmin(13, "SystemAdmin"),
 	Lawful_Agency(14, "Lawful Agency"),End_User(17, "End User"),Immigration(18, "Immigration"),
-	Anonymous(19, "Anonymous"),Customer_Care(20, "Customer Care");
+	Anonymous(19, "Anonymous"),Customer_Care(20, "Customer Care"),DRT(21, "DRT"),
+	Operation(22,"Operation")
+	;
 	private Integer code;
 	private String description;
 

@@ -14,7 +14,9 @@ public class LoginResponse {
 	private String operatorTypeName;
     private Integer operatorTypeId;
 	private String userLanguage;
+	private String password;
 	private String period;
+	private Integer selfRegister;
 	
 	public String getStatus() {
 		return status;
@@ -105,9 +107,24 @@ public class LoginResponse {
 	public void setStatusValue(Integer statusValue) {
 		this.statusValue = statusValue;
 	}
+	
+	
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
+	public Integer getSelfRegister() {
+		return selfRegister;
+	}
+	public void setSelfRegister(Integer selfRegister) {
+		this.selfRegister = selfRegister;
+	}
 	public LoginResponse(String response, Integer statusCode, List<Usertype> userRoles, String username, long userId,
 			String name, String primaryRole, long primaryRoleId, String status, String operatorTypeName,
-			Integer operatorTypeId, String userLanguage,String period,Integer statusValue) {
+			Integer operatorTypeId, String userLanguage,String period,Integer statusValue,Integer selfRegister) {
 		super();
 		this.response = response;
 		this.statusCode = statusCode;
@@ -123,6 +140,7 @@ public class LoginResponse {
 		this.userLanguage = userLanguage;
 		this.period=period;
 		this.statusValue=statusValue;
+		this.selfRegister=selfRegister;
 	}
 	public LoginResponse(String response, Integer statusCode, long userId) {
 		super();
@@ -130,12 +148,63 @@ public class LoginResponse {
 		this.statusCode = statusCode;
 		this.userId = userId;
 	}
+	
+	
+	public LoginResponse(String response, Integer statusCode, List<Usertype> userRoles, String username, long userId,
+			String name, String primaryRole, long primaryRoleId, String status, String operatorTypeName,
+			Integer operatorTypeId, String userLanguage,String period,Integer statusValue,String password) {
+		super();
+		this.response = response;
+		this.statusCode = statusCode;
+		this.userRoles = userRoles;
+		this.username = username;
+		this.userId = userId;
+		this.name = name;
+		this.primaryRole = primaryRole;
+		this.primaryRoleId = primaryRoleId;
+		this.status = status;
+		this.statusValue = statusValue;
+		this.operatorTypeName = operatorTypeName;
+		this.operatorTypeId = operatorTypeId;
+		this.userLanguage = userLanguage;
+		this.password = password;
+		this.period = period;
+	}
 	@Override
 	public String toString() {
-		return "LoginResponse [response=" + response + ", statusCode=" + statusCode + ", userRoles=" + userRoles
-				+ ", username=" + username + ", userId=" + userId + ", name=" + name + ", primaryRole=" + primaryRole
-				+ ", primaryRoleId=" + primaryRoleId + ", status=" + status + ", operatorTypeName=" + operatorTypeName
-				+ ", operatorTypeId=" + operatorTypeId + ", userLanguage=" + userLanguage + ", period=" + period + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("LoginResponse [response=");
+		builder.append(response);
+		builder.append(", statusCode=");
+		builder.append(statusCode);
+		builder.append(", userRoles=");
+		builder.append(userRoles);
+		builder.append(", username=");
+		builder.append(username);
+		builder.append(", userId=");
+		builder.append(userId);
+		builder.append(", name=");
+		builder.append(name);
+		builder.append(", primaryRole=");
+		builder.append(primaryRole);
+		builder.append(", primaryRoleId=");
+		builder.append(primaryRoleId);
+		builder.append(", status=");
+		builder.append(status);
+		builder.append(", statusValue=");
+		builder.append(statusValue);
+		builder.append(", operatorTypeName=");
+		builder.append(operatorTypeName);
+		builder.append(", operatorTypeId=");
+		builder.append(operatorTypeId);
+		builder.append(", userLanguage=");
+		builder.append(userLanguage);
+		builder.append(", password=");
+		builder.append(password);
+		builder.append(", period=");
+		builder.append(period);
+		builder.append("]");
+		return builder.toString();
 	}
 	
 	

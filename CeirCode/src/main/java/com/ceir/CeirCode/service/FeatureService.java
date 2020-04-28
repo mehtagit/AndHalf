@@ -15,12 +15,14 @@ import com.ceir.CeirCode.model.SystemConfigurationDb;
 import com.ceir.CeirCode.model.User;
 import com.ceir.CeirCode.model.UserToStakehoderfeatureMapping;
 import com.ceir.CeirCode.model.Usertype;
+import com.ceir.CeirCode.model.constants.Period;
 import com.ceir.CeirCode.repo.FeatureRepo;
 import com.ceir.CeirCode.repo.UserRepo;
 import com.ceir.CeirCode.repo.UserRoleRepo;
 import com.ceir.CeirCode.repo.UserToStakehoderfeatureMappingRepo;
 import com.ceir.CeirCode.repoService.SystemConfigDbRepoService;
 import com.ceir.CeirCode.repoService.UserFeatureRepoService;
+import com.ceir.CeirCode.response.GenricResponse;
 import com.ceir.CeirCode.util.HttpResponse;
 import com.ceir.CeirCode.util.Utility;
 @Service
@@ -50,15 +52,16 @@ public class FeatureService {
 	
 	public ResponseEntity<?> featureData(Integer userId){
 		try {  
+			log.info("user id is: "+userId);
 			User userData=userRepo.findById(userId);
 			List<StakeholderFeature> featureList=new ArrayList<StakeholderFeature>();
 			Usertype usertypeData=userData.getUsertype();
 			SystemConfigurationDb systemConfigData=systemConfigurationDbRepoImpl.getDataByTag("GRACE_PERIOD_END_DATE");
-			String period=new String();
+			Integer period=null;
 			List<UserToStakehoderfeatureMapping> data=new ArrayList<UserToStakehoderfeatureMapping>();
 			if(systemConfigData!=null) {
 				period=currentPeriod(systemConfigData);
-				data=userFeatureRepo.findByUserTypeFeature_IdAndPeriodOrPeriodAndUserTypeFeature_IdOrderByCreatedOnAsc(usertypeData.getId(),"BOTH",period,usertypeData.getId());
+				data=userFeatureRepo.findByUserTypeFeature_IdAndPeriodOrPeriodAndUserTypeFeature_IdOrderByCreatedOnAsc(usertypeData.getId(),Period.Both.getCode(),period,usertypeData.getId());
 			}
 			else {
 				data=userFeatureRepo.findByUserTypeFeature_IdOrderByCreatedOnAsc(usertypeData.getId());			
@@ -87,6 +90,8 @@ public class FeatureService {
 		}   
 		catch(Exception e) {
 			e.printStackTrace();
+			log.info("exception found");
+			log.info(e.toString());
 			HttpResponse response=new HttpResponse();
 			response.setStatusCode(409); 
 			response.setResponse("Oops something wrong happened");
@@ -94,18 +99,18 @@ public class FeatureService {
 		}
 	}
 
-	public String currentPeriod(SystemConfigurationDb systemConfigData) {
+	public Integer currentPeriod(SystemConfigurationDb systemConfigData) {
 		Date currentDate=utility.currentOnlyDate();
 		log.info("currentDate: "+currentDate);
-		String period=new String();
+		Integer period;
 		try {
 			Date GracePeriodEndDate=utility.stringToDate(systemConfigData.getValue());
 			log.info("GracePeriodEndDate: "+GracePeriodEndDate);
 			if(currentDate.after(GracePeriodEndDate)) {
-				period="POST_GRACE";
+				period=Period.Post_Grace.getCode();
 			}
 			else {
-				period="GRACE";
+				period=Period.Grace.getCode();
 			}
 			return period;
 		}
@@ -115,7 +120,7 @@ public class FeatureService {
 		}
 	}
 	public HttpResponse periodValidation(PeriodValidate periodValidate) {
-		String currentPeriod=new String();
+		Integer currentPeriod = null;
 		SystemConfigurationDb systemConfigData=systemConfigurationDbRepoImpl.getDataByTag("GRACE_PERIOD_END_DATE");
 		if(systemConfigData!=null) {
 			currentPeriod=currentPeriod(systemConfigData);			
@@ -126,13 +131,13 @@ public class FeatureService {
 		if(userFeature!=null) 
 		{
 			log.info("period in feature"+userFeature.getPeriod());
-			if("Both".equalsIgnoreCase(userFeature.getPeriod())) 
+			if(Period.Both.getCode()==userFeature.getPeriod())
 			{
 				return new HttpResponse("this functinality is supported ",200);									
 			}
 			else 
 			{
-				if(currentPeriod.equalsIgnoreCase(userFeature.getPeriod())) {
+				if(currentPeriod==userFeature.getPeriod()) {
 					return new HttpResponse("this functinality is supported ",200);									
 				}
 				else {
@@ -151,6 +156,7 @@ public class FeatureService {
 	public ResponseEntity<?> featureData(){
 		try {
 			List<StakeholderFeature> featureData=featureRepo.findAll();
+			featureData.sort((f1,f2)->f1.getName().compareTo(f2.getName()));
 			return new ResponseEntity<>(featureData, HttpStatus.OK);
 		}
 		catch(Exception e){
@@ -160,5 +166,42 @@ public class FeatureService {
 			return new ResponseEntity<>(response,HttpStatus.OK);
 		}
 	}
+	
+	public List<StakeholderFeature> featureAllData(){
+		try {
+			List<StakeholderFeature> featureData=featureRepo.findAll();
+			featureData.sort((f1,f2)->f1.getName().compareTo(f2.getName()));
+			return featureData;
+		}
+		catch(Exception e){
+			HttpResponse response=new HttpResponse();
+			response.setResponse("Oop something wrong happened");
+			response.setStatusCode(409);
+			return new ArrayList<StakeholderFeature>();
+		}
+	}
+	
+	public GenricResponse featureNameById(long id){
+		try {
+			log.info("feature id: "+id);
+			StakeholderFeature feature=featureRepo.findById(id);
+			if(feature!=null) {
+				GenricResponse response=new GenricResponse(200,"feature data is found","",feature);
+				return response;
+			}
+			else {
+				GenricResponse response=new GenricResponse(403,"feature Id is wrong","");		
+				return response;
+			}
+		}
+		catch(Exception e){
+			log.info(e.getMessage());
+			log.info(e.toString());
+			GenricResponse response=new GenricResponse(409,"Oops! something wrong happened","");		
+			return response;
+		}
+	}
+	
+	
 	
 }

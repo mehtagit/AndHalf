@@ -49,7 +49,13 @@ public class UserRegistrationController {
 	public ResponseEntity<?> getUsertypes(@RequestHeader HttpHeaders headers){
 		return userService.getUsertypeData(headers);
 	}
-	
+
+	@ApiOperation(value = "internal usertypes data", response = HttpResponse.class)
+	@CrossOrigin
+	@PostMapping("/getInternalUsertypes") 
+	public ResponseEntity<?> getInternalUsertypes(){
+		return userService.getInternalUsertype();
+	}
 	@ApiOperation(value = "usertypes data", response = HttpResponse.class)
 	@CrossOrigin
 	@PostMapping("/usertypeIdByName/{usertype}") 
@@ -61,11 +67,21 @@ public class UserRegistrationController {
 
 	@ApiOperation(value = "security questions list", response = HttpResponse.class)
 	@CrossOrigin
-	@PostMapping("/getSecurityQuestion")
-	public ResponseEntity<?> getSecurityQuestion(@RequestHeader HttpHeaders headers){
-		return userService.getSecurityQuestion(headers);
+	@PostMapping("/getSecurityQuestion/{username}")
+	public ResponseEntity<?> getSecurityQuestion(@PathVariable("username")String username){
+		return userService.getSecurityQuestion(username);
 	}                                                             
 
+	
+	@ApiOperation(value = "security questions list", response = HttpResponse.class)
+	@CrossOrigin
+	@PostMapping("/getAllSecurityQuestion")
+	public ResponseEntity<?> getSecurityQuestion(){
+		return userService.getSecurityQuestion2();
+	}                                                             
+
+	
+	
 	@ApiOperation(value = "user registration .", response = HttpResponse.class)
 	@CrossOrigin
 	@PostMapping("/registration")

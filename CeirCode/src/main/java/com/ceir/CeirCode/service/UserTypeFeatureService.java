@@ -17,20 +17,22 @@ import com.ceir.CeirCode.Constants.Datatype;
 import com.ceir.CeirCode.Constants.SearchOperation;
 import com.ceir.CeirCode.SpecificationBuilder.GenericSpecificationBuilder;
 import com.ceir.CeirCode.configuration.PropertiesReaders;
-import com.ceir.CeirCode.filtermodel.UserFeatureFilter;
+import com.ceir.CeirCode.filtermodel.UserTypeFeatureFilter;
 import com.ceir.CeirCode.filtermodel.UsertypeFilter;
 import com.ceir.CeirCode.model.SearchCriteria;
 import com.ceir.CeirCode.model.UserToStakehoderfeatureMapping;
 import com.ceir.CeirCode.model.Usertype;
+import com.ceir.CeirCode.othermodel.ChangePeriod;
 import com.ceir.CeirCode.othermodel.ChangeUsertypeStatus;
 import com.ceir.CeirCode.repo.FeatureRepo;
 import com.ceir.CeirCode.repo.UserToStakehoderfeatureMappingRepo;
 import com.ceir.CeirCode.repo.UsertypeRepo;
+import com.ceir.CeirCode.response.tags.UserTypeFeatureTags;
 import com.ceir.CeirCode.response.tags.UsertypeTags;
 import com.ceir.CeirCode.util.HttpResponse;
 
 @Service
-public class UserFeatureService {
+public class UserTypeFeatureService {
 
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
@@ -42,8 +44,8 @@ public class UserFeatureService {
 	UsertypeRepo userTypeRepo;
 	
 	@Autowired
-	UserToStakehoderfeatureMappingRepo userFeatureRepo;
-	public Page<UserToStakehoderfeatureMapping>  viewAllUSerFeatures(UserFeatureFilter filterRequest, Integer pageNo, Integer pageSize){
+	UserToStakehoderfeatureMappingRepo userTypeFeatureRepo;
+	public Page<UserToStakehoderfeatureMapping>  viewAllUserTypeFeatures(UserTypeFeatureFilter filterRequest, Integer pageNo, Integer pageSize){
 		try { 
 			log.info("filter data:  "+filterRequest);
 			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
@@ -61,10 +63,16 @@ public class UserFeatureService {
 			if(Objects.nonNull(filterRequest.getUserType()) && filterRequest.getUserType()!=-1)
 				uPSB.with(new SearchCriteria("userTypeFeature",filterRequest.getUserType(), SearchOperation.EQUALITY, Datatype.INTEGER));
 
+			if(Objects.nonNull(filterRequest.getPeriod()) && filterRequest.getPeriod()!=-1)
+				uPSB.with(new SearchCriteria("period",filterRequest.getPeriod(), SearchOperation.EQUALITY, Datatype.INTEGER));
+
 			if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
-			uPSB.orSearch(new SearchCriteria("period", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
-			}
-			return  userFeatureRepo.findAll(uPSB.build(),pageable);
+				//uPSB.orSearchUser(new SearchCriteria("username", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+			    uPSB.orSearchUsertypeMapToFeature(new SearchCriteria("usertypeName", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+//			    uPSB.orSearchFeature(new SearchCriteria("name", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+				}
+			
+			return  userTypeFeatureRepo.findAll(uPSB.build(),pageable);
 
 		} catch (Exception e) {
 			log.info("Exception found ="+e.getMessage());
@@ -74,41 +82,40 @@ public class UserFeatureService {
 
 		}
 	}
-	
-	public ResponseEntity<?> changeUserTypeStatus(ChangeUsertypeStatus usertypeStatus){
-		log.info("inside  change Usertype status  controller");  
-		log.info(" usetypeStatus data:  "+usertypeStatus);      
-		log.info("get usertype  data by usertype id below"); 
-		Usertype userType=new Usertype();
+	 
+	public ResponseEntity<?> changePeriod(ChangePeriod userPeriod){
+		log.info("inside  change userPeriod   controller");  
+		log.info(" userPeriod data:  "+userPeriod);      
+		log.info("get userTypeFeature  data by  id below"); 
+		UserToStakehoderfeatureMapping featureMapping=new UserToStakehoderfeatureMapping();
 		try {
-			 userType=userTypeRepo.findById(usertypeStatus.getUsertypeId());			
+			featureMapping=userTypeFeatureRepo.findById(userPeriod.getId());		
 		}
 		catch(Exception e) {
 			log.info(e.getMessage());
 			log.info(e.toString());
 		}
 
-		if(userType!=null) {
-			userType.setStatus(usertypeStatus.getStatus());
-			Usertype output=userTypeRepo.save(userType); 
-			log.info("usertype data after update the status: "+output);
+		if(featureMapping!=null) {
+			featureMapping.setPeriod(userPeriod.getPeriod());
+			UserToStakehoderfeatureMapping output=userTypeFeatureRepo.save(featureMapping); 
 			if(output!=null) {
-				HttpResponse response=new HttpResponse(UsertypeTags.UTStatus_Update_Success.getMessage(),
-						200,UsertypeTags.UTStatus_Update_Success.getTag());
-				log.info("response send to usertype:  "+response);
+				HttpResponse response=new HttpResponse(UserTypeFeatureTags.UTFPeriod_Update_Success.getMessage(),
+						200,UserTypeFeatureTags.UTFPeriod_Update_Success.getTag());
+				log.info("response send:  "+response);
 				return new ResponseEntity<>(response,HttpStatus.OK);	
 			}
 			else {
-				HttpResponse response=new HttpResponse(UsertypeTags.UTStatus_Update_Fail.getMessage(),
-						500,UsertypeTags.UTStatus_Update_Fail.getTag());
-				log.info("response send to user:  "+response);
+				HttpResponse response=new HttpResponse(UserTypeFeatureTags.UTFPeriod_Update_Fail.getMessage(),
+						500,UserTypeFeatureTags.UTFPeriod_Update_Fail.getTag());
+				log.info("response send"+response);
 				return new ResponseEntity<>(response,HttpStatus.OK);	
 			} 
 		}    
 		else { 
-			HttpResponse response=new HttpResponse(UsertypeTags.Wrong_usertypeId.getMessage(),
-					409,UsertypeTags.Wrong_usertypeId.getTag());
-			log.info("response send to user:  "+response);
+			HttpResponse response=new HttpResponse(UserTypeFeatureTags.Wrong_userTypeFeatureId.getMessage(),
+					409,UserTypeFeatureTags.Wrong_userTypeFeatureId.getTag());
+			log.info("response send"+response);
 			return new ResponseEntity<>(response,HttpStatus.OK);	
 		}
 	}

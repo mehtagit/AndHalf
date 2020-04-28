@@ -18,7 +18,9 @@ public class FilterRequest {
 	private long userId;
 	private Integer userTypeId;
 	private String searchString;
-	
+	private String email;
+	private String phoneNo;
+	private String username;
 	
   
 	public String getStartDate() {
@@ -85,14 +87,55 @@ public class FilterRequest {
 	public void setSearchString(String searchString) {
 		this.searchString = searchString;
 	}
+	
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getPhoneNo() {
+		return phoneNo;
+	}
+	public void setPhoneNo(String phoneNo) {
+		this.phoneNo = phoneNo;
+	}
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("FilterRequest [startDate=").append(startDate).append(", endDate=").append(endDate)
-				.append(", status=").append(status).append(", asType=").append(asType).append(", userRoleTypeId=")
-				.append(userRoleTypeId).append(", viewAllUserStatus=").append(viewAllUserStatus).append(", featureId=")
-				.append(featureId).append(", userId=").append(userId).append(", userTypeId=").append(userTypeId)
-				.append(", searchString=").append(searchString).append("]");
+		builder.append("FilterRequest [startDate=");
+		builder.append(startDate);
+		builder.append(", endDate=");
+		builder.append(endDate);
+		builder.append(", status=");
+		builder.append(status);
+		builder.append(", asType=");
+		builder.append(asType);
+		builder.append(", userRoleTypeId=");
+		builder.append(userRoleTypeId);
+		builder.append(", viewAllUserStatus=");
+		builder.append(viewAllUserStatus);
+		builder.append(", featureId=");
+		builder.append(featureId);
+		builder.append(", userId=");
+		builder.append(userId);
+		builder.append(", userTypeId=");
+		builder.append(userTypeId);
+		builder.append(", searchString=");
+		builder.append(searchString);
+		builder.append(", email=");
+		builder.append(email);
+		builder.append(", phoneNo=");
+		builder.append(phoneNo);
+		builder.append(", username=");
+		builder.append(username);
+		builder.append("]");
 		return builder.toString();
 	}
 

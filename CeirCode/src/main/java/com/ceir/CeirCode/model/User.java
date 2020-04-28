@@ -18,8 +18,10 @@ import javax.persistence.Transient;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 import org.hibernate.envers.RelationTargetAuditMode;
 import org.springframework.format.annotation.DateTimeFormat;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
@@ -34,16 +36,19 @@ public class User {
 	@JsonIgnore
 	private String password;
 
+	@Column(nullable =false)
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
 	@CreationTimestamp
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime createdOn;
 	
+	@Column(nullable =false)
 	@JsonIgnore
 	@CreationTimestamp
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime passwordDate;
 	
+	@Column(nullable =false)
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
 	@UpdateTimestamp
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -58,15 +63,18 @@ public class User {
     private String userLanguage;
     
 	private String modifiedBy;
+ 	
+    private String referenceId;
+    
+    private String approvedBy;
 	
-
-
+	@NotAudited
 	@JsonIgnore
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	UserProfile userProfile;
 
 
-
+	@NotAudited
 	@JsonIgnore
 	@OneToOne(mappedBy = "userDetails", cascade = {CascadeType.PERSIST, CascadeType.REMOVE},fetch = FetchType.LAZY)
 	UserTemporarydetails userTemporarydetails;  
@@ -74,23 +82,36 @@ public class User {
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "usertype_id", nullable = false)
 	private Usertype usertype;
-
+  
+    @NotAudited
 	@JsonIgnore
 	@OneToMany(mappedBy = "userTrack",cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	List<LoginTracking> loginTracking;
 
+    @NotAudited
 	@JsonIgnore
 	@OneToMany(mappedBy = "userData", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	private List<Userrole> userRole; 
 
+    @NotAudited
+	@JsonIgnore
+	@OneToMany(mappedBy = "userPayment", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	private List<UserPayment> userPayments; 
+    
+    @NotAudited
 	@JsonIgnore
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	private List<UserSecurityquestion> userSecurityquestion;
 
+    @NotAudited
 	@JsonIgnore
 	@OneToMany(mappedBy = "userPassword",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	private List<UserPasswordHistory> userPasswordHistory;
 
+	@NotAudited
+	@OneToMany(mappedBy = "userSlaReport", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<SlaReport> SlaReport;
+	
 	@Transient
     private String stateInterp;
 	public long getId() {      
@@ -226,6 +247,32 @@ public class User {
 	
 	
 	
+	public User(String username, String password, Integer currentStatus,String remark, UserProfile userProfile, Usertype usertype,List<Userrole> role) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.currentStatus = currentStatus;
+		this.remark=remark;
+		this.userProfile = userProfile;
+		this.usertype = usertype;
+		this.userRole=role;
+	}
+	public User(long id,String username, String password, Integer currentStatus,String remark, UserProfile userProfile, Usertype usertype,List<Userrole> role) {
+		super();
+		this.id=id;
+		this.username = username;
+		this.password = password;
+		this.currentStatus = currentStatus;
+		this.remark=remark;
+		this.userProfile = userProfile;
+		this.usertype = usertype;
+		this.userRole=role;
+	}
+	
+	public User(long id) {
+		super();
+		this.id = id;
+	}
 	public User(Integer currentStatus, Integer previousStatus) {
 		super();
 		this.currentStatus = currentStatus;
@@ -256,6 +303,32 @@ public class User {
 	}
 	public void setModifiedBy(String modifiedBy) {
 		this.modifiedBy = modifiedBy;
+	}
+	
+	public List<UserPayment> getUserPayments() {
+		return userPayments;
+	}
+	public void setUserPayments(List<UserPayment> userPayments) {
+		this.userPayments = userPayments;
+	}
+	public List<SlaReport> getSlaReport() {
+		return SlaReport;
+	}
+	public void setSlaReport(List<SlaReport> slaReport) {
+		SlaReport = slaReport;
+	}
+	
+	public String getReferenceId() {
+		return referenceId;
+	}
+	public void setReferenceId(String referenceId) {
+		this.referenceId = referenceId;
+	}
+	public String getApprovedBy() {
+		return approvedBy;
+	}
+	public void setApprovedBy(String approvedBy) {
+		this.approvedBy = approvedBy;
 	}
 	@Override
 	public String toString() {

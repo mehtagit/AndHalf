@@ -85,7 +85,8 @@ public class PortAddressService {
 		if(output!=null) {
 			List<SystemConfigListDb> asTypeList=systemConfigDbRepoService.getDataByTag("CUSTOMS_PORT");	
 					for(SystemConfigListDb asType:asTypeList) {
-				if(output.getPort()==asType.getValue()) {
+						Integer value=asType.getValue();
+				if(output.getPort()==value) {
 					output.setPortInterp(asType.getInterp());
 				}
 				

@@ -1,12 +1,13 @@
 package com.ceir.CeirCode.filtermodel;
 
-public class UserFeatureFilter {
+public class UserTypeFeatureFilter {
+	
 	public String  startDate;
 	public String   endDate;
 	private Integer userType;
 	private Integer feature;
 	private String searchString;
-	private String period;
+	private Integer period;
 	
 	
 	public String getStartDate() {
@@ -39,11 +40,19 @@ public class UserFeatureFilter {
 	public void setSearchString(String searchString) {
 		this.searchString = searchString;
 	}
-	public String getPeriod() {
+	public Integer getPeriod() {
 		return period;
 	}
-	public void setPeriod(String period) {
+	public void setPeriod(Integer period) {
 		this.period = period;
+	}
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("UserTypeFeatureFilter [startDate=").append(startDate).append(", endDate=").append(endDate)
+				.append(", userType=").append(userType).append(", feature=").append(feature).append(", searchString=")
+				.append(searchString).append(", period=").append(period).append("]");
+		return builder.toString();
 	}
 	
 	

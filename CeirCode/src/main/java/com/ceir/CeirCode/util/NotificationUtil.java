@@ -1,6 +1,7 @@
 package com.ceir.CeirCode.util;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -52,11 +53,13 @@ public class NotificationUtil {
 
 	public boolean saveNotification(@NonNull String tag, UserProfile userProfileData, long featureId, String featureName, String subFeature, String featureTxnId,String subject,String otp,String channelType,String referTable) {
 		try {
-			String emailBody=null;
+			String emailBody="";
 			MessageConfigurationDb messageDB = new MessageConfigurationDb();
+		
 			messageDB = messageConfigurationDbRepository.getByTag(tag);
-			logger.info("messageDB data by tag: "+messageDB);
-			emailBody=userService.emailContent(messageDB, userProfileData, otp);
+				logger.info("messageDB data by tag: "+messageDB);
+				emailBody=userService.emailContent(messageDB, userProfileData, otp);		
+		
 			logger.info("email body=  "+emailBody);
 			Notification notification=new Notification();
 			notification.setChannelType(channelType);
@@ -72,6 +75,17 @@ public class NotificationUtil {
 			notification.setSubject(subject);
 			notification.setRetryCount(0);
 			notification.setReferTable(referTable);
+			String receiverType="";
+			if(userProfileData.getUser().getUsertype().getId()==7 ) {
+				receiverType="Custom";
+			}
+			else if(userProfileData.getUser().getUsertype().getId()==10 ) {
+				receiverType="TRC";
+			}
+			else {
+				
+			}
+			notification.setReceiverUserType(receiverType);
 			Notification output=notificationRepo.save(notification);
 			if(output!=null) {
 				logger.info("notification sucessfully saved");

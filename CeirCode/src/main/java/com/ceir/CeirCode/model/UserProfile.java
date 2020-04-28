@@ -1,9 +1,7 @@
 package com.ceir.CeirCode.model;
 
-import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -43,15 +41,12 @@ public class UserProfile {
 	private String street;
 	private String locality;
 
-	@NotNull
 	@Column(length = 50)
 	private String district;
 
-	@NotNull
 	@Column(length = 50)
 	private String commune;
 
-	@NotNull
 	@Column(length = 50)
 	private String village;
 
@@ -71,11 +66,13 @@ public class UserProfile {
 	private String arrivalPortName;
 	@Transient
 	private String asTypeName;
+	@Column(nullable =false)
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
 	@CreationTimestamp
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime createdOn;
 
+	@Column(nullable =false)
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
 	@UpdateTimestamp
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -84,7 +81,9 @@ public class UserProfile {
 	private String emailOtp;
 	private String displayName;
 	private String employeeId;
-	private String natureOfEmployment;
+	private Integer natureOfEmployment;
+	@Transient
+	private String natureOfEmploymentInterp;
 	private String designation;
 	private String authorityName;
 	private String authorityEmail;
@@ -122,7 +121,8 @@ public class UserProfile {
 
 	@OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL, optional = false)
 	@JoinColumn(name = "userid", nullable = false)
-	private User user;  
+    private User user;  
+	
     private String source;
 	@Type(type="date")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -326,10 +326,10 @@ public class UserProfile {
 	public void setEmployeeId(String employeeId) {
 		this.employeeId = employeeId;
 	}
-	public String getNatureOfEmployment() {
+	public Integer getNatureOfEmployment() {
 		return natureOfEmployment;
 	}
-	public void setNatureOfEmployment(String natureOfEmployment) {
+	public void setNatureOfEmployment(Integer natureOfEmployment) {
 		this.natureOfEmployment = natureOfEmployment;
 	}
 	public String getDesignation() {
@@ -525,6 +525,13 @@ public class UserProfile {
 	public void setRolesList(List<RolesData> rolesList) {
 		this.rolesList = rolesList;
 	}
+	
+	public String getNatureOfEmploymentInterp() {
+		return natureOfEmploymentInterp;
+	}
+	public void setNatureOfEmploymentInterp(String natureOfEmploymentInterp) {
+		this.natureOfEmploymentInterp = natureOfEmploymentInterp;
+	}
 	@Override
 	public String toString() {
 		return "UserProfile [id=" + id + ", firstName=" + firstName + ", middleName=" + middleName + ", lastName="
@@ -569,6 +576,24 @@ public class UserProfile {
 	}
 	public UserProfile() {
 		super();
+	}
+	public UserProfile(String firstName, String middleName, String lastName, String email, String phoneNo) {
+		super();
+		this.firstName = firstName;
+		this.middleName = middleName;
+		this.lastName = lastName;
+		this.email = email;
+		this.phoneNo = phoneNo;
+	}
+	
+	public UserProfile(String firstName, String middleName, String lastName, String email, String phoneNo,String displayName) {
+		super();
+		this.firstName = firstName;
+		this.middleName = middleName;
+		this.lastName = lastName;
+		this.email = email;
+		this.phoneNo = phoneNo;
+		this.displayName=displayName;
 	}
 
 

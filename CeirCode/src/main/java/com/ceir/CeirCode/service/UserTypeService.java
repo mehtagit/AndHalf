@@ -1,5 +1,6 @@
 package com.ceir.CeirCode.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -19,11 +20,18 @@ import com.ceir.CeirCode.SpecificationBuilder.GenericSpecificationBuilder;
 import com.ceir.CeirCode.configuration.PropertiesReaders;
 import com.ceir.CeirCode.filtermodel.UsertypeFilter;
 import com.ceir.CeirCode.model.ChangeUserStatus;
+import com.ceir.CeirCode.model.RunningAlertDb;
 import com.ceir.CeirCode.model.SearchCriteria;
+import com.ceir.CeirCode.model.SystemConfigurationDb;
 import com.ceir.CeirCode.model.User;
 import com.ceir.CeirCode.model.Usertype;
+import com.ceir.CeirCode.model.constants.AlertStatus;
+import com.ceir.CeirCode.model.constants.UserTypeStatusFlag;
+import com.ceir.CeirCode.model.constants.UsertypeData;
 import com.ceir.CeirCode.othermodel.ChangeUsertypeStatus;
 import com.ceir.CeirCode.repo.UsertypeRepo;
+import com.ceir.CeirCode.response.GenricResponse;
+import com.ceir.CeirCode.response.tags.RegistrationTags;
 import com.ceir.CeirCode.response.tags.UpdateUserStatusTags;
 import com.ceir.CeirCode.response.tags.UsertypeTags;
 import com.ceir.CeirCode.util.HttpResponse;
@@ -106,4 +114,32 @@ public class UserTypeService {
 			return new ResponseEntity<>(response,HttpStatus.OK);	
 		}
 	}
+	
+	
+public ResponseEntity<?> checkUsertypeStatus(long usertypeId){
+		
+		try {
+			log.info("inside check usertype status");
+			log.info("usertypeId value "+usertypeId);
+			Usertype usertype=usertypeRepo.findById(usertypeId);  
+			if(usertype.getStatus()==UserTypeStatusFlag.on.getCode()) {
+				log.info("usertype is enable");
+				GenricResponse response=new GenricResponse(200,UsertypeTags.UTStatus_Enable.getMessage(),UsertypeTags.UTStatus_Enable.getTag());
+				return new ResponseEntity<>(response,HttpStatus.OK);			
+			}
+			
+			else {
+				log.info("usertype status is disable now ");
+				GenricResponse response=new GenricResponse(409,UsertypeTags.UTStatus_Disable.getMessage(),UsertypeTags.UTStatus_Disable.getTag());
+				return new ResponseEntity<>(response,HttpStatus.OK);			
+			}
+			
+		}
+		catch(Exception e) {
+			log.info("something wrong happened here now");
+			HttpResponse response=new HttpResponse(RegistrationTags.COMMAN_FAIL_MSG.getMessage(),500,RegistrationTags.COMMAN_FAIL_MSG.getTag());
+			return new ResponseEntity<>(response,HttpStatus.OK);	
+		}
+	}
+	
 }

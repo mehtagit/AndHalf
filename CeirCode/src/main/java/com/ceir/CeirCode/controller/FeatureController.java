@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ceir.CeirCode.model.PeriodValidate;
+import com.ceir.CeirCode.model.StakeholderFeature;
+import com.ceir.CeirCode.response.GenricResponse;
 import com.ceir.CeirCode.service.FeatureService;
 import com.ceir.CeirCode.util.HttpResponse;
 import io.swagger.annotations.ApiOperation;
@@ -39,12 +41,20 @@ public class FeatureController{
 	} 
 
 
-	@ApiOperation(value = "all features", response = HttpResponse.class)
+	@ApiOperation(value = "all features", response = StakeholderFeature.class)
 	@CrossOrigin
 	@PostMapping("/getAllFeatures") 
 	public ResponseEntity<?> featureData(){
 		return featureService.featureData();
 	}
+	
+	@ApiOperation(value = "feature name by Id", response = GenricResponse.class)
+	@CrossOrigin
+	@PostMapping("/nameById/{id}") 
+	public GenricResponse featureNameById(@PathVariable("id")long id){
+		return featureService.featureNameById(id);
+	}
+	
 
 
 

@@ -43,18 +43,23 @@ public class LoginController{
 	public ResponseEntity<?> userLogin(@RequestBody UserLogin user){
 		return loginService.userLogin(user); 
 	}  
+	
+	
+
+	@ApiOperation(value = "user test Login", response = HttpResponse.class)
+	@CrossOrigin
+	@PostMapping("/testLogin")     
+	public ResponseEntity<?> testLogin(@RequestBody UserLogin user){
+		return loginService.testUserLogin(user); 
+	}
 
 	@ApiOperation(value = "user session", response = HttpResponse.class)
 	@CrossOrigin
 	@PostMapping("/sessionTracking/{userid}")     
 	public ResponseEntity<?> sessionTracking(@PathVariable("userid") long userid  ){
-		LoginTracking loginTracking=new LoginTracking();
-		loginTracking.setLoginStatus(0);
-		User user=new User();        
-		user.setId(userid);    
-		loginTracking.setUserTrack(user);
+		log.info("inside sessionTracking controller and userId is: "+userid);
 		User output=userRepoService.findByUSerId(userid);
-		userService.saveUserTrail(output, "Logout","Logout",0);
+		LoginTracking loginTracking=new LoginTracking(0,output);
 		return loginService.sessionTracking(loginTracking);  
 	}
 	

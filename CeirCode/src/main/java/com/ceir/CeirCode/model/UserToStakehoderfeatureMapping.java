@@ -1,7 +1,8 @@
 package com.ceir.CeirCode.model;
+import java.time.LocalDateTime;
 
-import java.util.Date;
-
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -9,11 +10,25 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 import org.hibernate.envers.RelationTargetAuditMode;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Audited
@@ -22,21 +37,41 @@ public class UserToStakehoderfeatureMapping {
 	@Id       
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	private Date createdOn;
-	private Date modifiedOn; 
 	
+	@Column(nullable =false)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
+	@CreationTimestamp
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	private LocalDateTime createdOn;
+	
+	@Column(nullable =false)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
+	@UpdateTimestamp
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	private LocalDateTime modifiedOn;
+
 	@JsonIgnore
-	@Audited(targetAuditMode=RelationTargetAuditMode.NOT_AUDITED)
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@NotAudited
+	@ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL, optional = false)
 	@JoinColumn(name = "feature_id", nullable = false) 
 	private StakeholderFeature stakeholderFeature; 
 	
 	@JsonIgnore
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL, optional = false)
 	@JoinColumn(name = "usertype_id", nullable = false) 
 	private Usertype userTypeFeature; 
 
-	private String period;
+	
+	@Transient
+	private String usertypeInterp;
+	
+	@Transient
+	private String featureInterp;
+	
+	@Transient
+	private String periodInterp;
+	
+	private Integer period;
 	 
 	public long getId() {
 		return id;
@@ -46,20 +81,12 @@ public class UserToStakehoderfeatureMapping {
 		this.id = id;
 	}
 
-	public Date getCreatedOn() {
+	public LocalDateTime getCreatedOn() {
 		return createdOn;
 	}
 
-	public void setCreatedOn(Date createdOn) {
+	public void setCreatedOn(LocalDateTime createdOn) {
 		this.createdOn = createdOn;
-	}
-
-	public Date getModifiedOn() {
-		return modifiedOn;
-	}
-
-	public void setModifiedOn(Date modifiedOn) {
-		this.modifiedOn = modifiedOn;
 	}
 
 	public StakeholderFeature getStakeholderFeature() {
@@ -78,23 +105,46 @@ public class UserToStakehoderfeatureMapping {
 		this.userTypeFeature = userTypeFeature;
 	}
 	
+	public LocalDateTime getModifiedOn() {
+		return modifiedOn;
+	}
 
-	public String getPeriod() {
+	public void setModifiedOn(LocalDateTime modifiedOn) {
+		this.modifiedOn = modifiedOn;
+	}
+
+	public Integer getPeriod() {
 		return period;
 	}
 
-	public void setPeriod(String period) {
+	public void setPeriod(Integer period) {
 		this.period = period;
 	}
 
-	@Override
-	public String toString() {
-		return "UserToStakehoderfeatureMapping [id=" + id + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn
-				+ "]";
+	public String getUsertypeInterp() {
+		return usertypeInterp;
 	}
 
+	public void setUsertypeInterp(String usertypeInterp) {
+		this.usertypeInterp = usertypeInterp;
+	}
+
+	public String getFeatureInterp() {
+		return featureInterp;
+	}
+
+	public void setFeatureInterp(String featureInterp) {
+		this.featureInterp = featureInterp;
+	}
+
+	public String getPeriodInterp() {
+		return periodInterp;
+	}
+
+	public void setPeriodInterp(String periodInterp) {
+		this.periodInterp = periodInterp;
+	}
+	
 	
 
-	
-	
 }

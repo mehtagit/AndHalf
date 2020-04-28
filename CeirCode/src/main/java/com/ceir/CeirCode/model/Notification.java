@@ -20,11 +20,11 @@ public class Notification  implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-
+	@Column(nullable =false)
 	@CreationTimestamp
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private LocalDateTime createdOn;
-
+	@Column(nullable =false)
 	@UpdateTimestamp
 	private LocalDateTime modifiedOn;
 
@@ -49,7 +49,12 @@ public class Notification  implements Serializable{
 	private Integer retryCount;
     
 	private String referTable;
-	
+
+	@Column(length = 50)
+	private String receiverUserType;
+
+
+
       
 	public Notification() {
 
@@ -154,12 +159,59 @@ public class Notification  implements Serializable{
 		this.referTable = referTable;
 	}
 
+	public static long getSerialVersionUID() {
+		return serialVersionUID;
+	}
+
+	public static void setSerialVersionUID(long serialVersionUID) {
+		Notification.serialVersionUID = serialVersionUID;
+	}
+
+
+	public String getReceiverUserType() {
+		return receiverUserType;
+	}
+
+
+	public void setReceiverUserType(String receiverUserType) {
+		this.receiverUserType = receiverUserType;
+	}
+
+
 	@Override
 	public String toString() {
-		return "Notification [id=" + id + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", channelType="
-				+ channelType + ", message=" + message + ", userId=" + userId + ", featureId=" + featureId
-				+ ", featureTxnId=" + featureTxnId + ", featureName=" + featureName + ", subFeature=" + subFeature
-				+ ", status=" + status + ", subject=" + subject + ", retryCount=" + retryCount + ", referTable="
-				+ referTable + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("Notification [id=");
+		builder.append(id);
+		builder.append(", createdOn=");
+		builder.append(createdOn);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
+		builder.append(", channelType=");
+		builder.append(channelType);
+		builder.append(", message=");
+		builder.append(message);
+		builder.append(", userId=");
+		builder.append(userId);
+		builder.append(", featureId=");
+		builder.append(featureId);
+		builder.append(", featureTxnId=");
+		builder.append(featureTxnId);
+		builder.append(", featureName=");
+		builder.append(featureName);
+		builder.append(", subFeature=");
+		builder.append(subFeature);
+		builder.append(", status=");
+		builder.append(status);
+		builder.append(", subject=");
+		builder.append(subject);
+		builder.append(", retryCount=");
+		builder.append(retryCount);
+		builder.append(", referTable=");
+		builder.append(referTable);
+		builder.append(", receiverUserType=");
+		builder.append(receiverUserType);
+		builder.append("]");
+		return builder.toString();
 	}
 }

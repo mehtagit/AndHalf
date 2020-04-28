@@ -3,6 +3,7 @@ package com.ceir.CeirCode.model;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,16 +17,19 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @Entity
 public class AuditTrail implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	private static long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@Column(nullable =false)
 	@CreationTimestamp
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private LocalDateTime createdOn;
+
 	
+	@Column(nullable =false)
 	@UpdateTimestamp
 	private LocalDateTime modifiedOn;
 	private Long userId;
@@ -36,12 +40,13 @@ public class AuditTrail implements Serializable {
 	private String featureName;
 	private String subFeature;
 	private String jSessionId;
+	private String  txnId;
 	
 	public AuditTrail() {
 
 	}
 	
-	public AuditTrail(long userId, String userName, long userTypeId, String userType, long featureId, String featureName, String subFeature, String jSessionId) {
+	public AuditTrail(long userId, String userName, long userTypeId, String userType, long featureId, String featureName, String subFeature, String jSessionId,String txnId) {
 		this.userId = userId;
 		this.userName = userName;
 		this.userTypeId = userTypeId;
@@ -50,6 +55,7 @@ public class AuditTrail implements Serializable {
 		this.featureName = featureName;
 		this.subFeature = subFeature;
 		this.jSessionId = jSessionId;
+		this.txnId=txnId;
 	}
 	
 	public Long getId() {
@@ -122,8 +128,21 @@ public class AuditTrail implements Serializable {
 		this.jSessionId = jSessionId;
 	}
 	
+	
+	public String getTxnId() {
+		return txnId;
+	}
+
+	public void setTxnId(String txnId) {
+		this.txnId = txnId;
+	}
+
+	public static void setSerialversionuid(long serialversionuid) {
+		serialVersionUID = serialversionuid;
+	}
+
 	public AuditTrail(Long userId, String userName, Long userTypeId, String userType, Long featureId,
-			String featureName, String subFeature, String jSessionId) {
+			String featureName, String subFeature, String jSessionId,String txnId) {
 		super();
 		this.userId = userId;
 		this.userName = userName;
@@ -133,11 +152,38 @@ public class AuditTrail implements Serializable {
 		this.featureName = featureName;
 		this.subFeature = subFeature;
 		this.jSessionId = jSessionId;
+		this.txnId=txnId;
 	}
 
 	@Override
 	public String toString() {
-		return "AuditTrail []";
+		StringBuilder builder = new StringBuilder();
+		builder.append("AuditTrail [id=");
+		builder.append(id);
+		builder.append(", createdOn=");
+		builder.append(createdOn);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
+		builder.append(", userId=");
+		builder.append(userId);
+		builder.append(", userName=");
+		builder.append(userName);
+		builder.append(", userTypeId=");
+		builder.append(userTypeId);
+		builder.append(", userType=");
+		builder.append(userType);
+		builder.append(", featureId=");
+		builder.append(featureId);
+		builder.append(", featureName=");
+		builder.append(featureName);
+		builder.append(", subFeature=");
+		builder.append(subFeature);
+		builder.append(", jSessionId=");
+		builder.append(jSessionId);
+		builder.append(", txnId=");
+		builder.append(txnId);
+		builder.append("]");
+		return builder.toString();
 	}
 	
 }

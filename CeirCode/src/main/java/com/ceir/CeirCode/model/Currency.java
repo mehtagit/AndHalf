@@ -1,15 +1,14 @@
 package com.ceir.CeirCode.model;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Transient;
-
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -24,11 +23,13 @@ public class Currency {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
+	@Column(nullable =false)
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
 	@CreationTimestamp
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime createdOn;
 	
+	@Column(nullable =false)
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
 	@UpdateTimestamp
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -41,6 +42,8 @@ public class Currency {
 	@Transient
 	private String month;
 	
+	@Transient
+	private String year;
 	
 	private Integer currency;
 	private double riel;
@@ -112,6 +115,12 @@ public class Currency {
 		this.month = month;
 	}
 	
+	public String getYear() {
+		return year;
+	}
+	public void setYear(String year) {
+		this.year = year;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -125,6 +134,8 @@ public class Currency {
 		builder.append(date);
 		builder.append(", month=");
 		builder.append(month);
+		builder.append(", year=");
+		builder.append(year);
 		builder.append(", currency=");
 		builder.append(currency);
 		builder.append(", riel=");
@@ -136,4 +147,5 @@ public class Currency {
 		builder.append("]");
 		return builder.toString();
 	}
+	
 }

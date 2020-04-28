@@ -3,7 +3,9 @@ public enum UsertypeTags {
 
 	UTStatus_Update_Success("Usertype_Update_Success", "Usertype status sucessfully update"),
 	UTStatus_Update_Fail("Usertype_Update_Fail","Usertype status failed to update"),
-	Wrong_usertypeId("Wrong_usertypeId","UserType id is incorrect");
+	Wrong_usertypeId("Wrong_usertypeId","This UserType Id is wrong"),
+	UTStatus_Enable("UTStatus_Enable","This UserType is enabled"),
+	UTStatus_Disable("UTStatus_Disable","This UserType is disabled");
 	private String tag;
 	private String message;
 

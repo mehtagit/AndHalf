@@ -1,30 +1,46 @@
 package com.ceir.CeirCode.model;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import org.hibernate.envers.Audited;
-import org.hibernate.envers.RelationTargetAuditMode;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.envers.NotAudited;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class StakeholderFeature {
+	
+	private static long serialVersionUID = 1L;
 	@Id       
 	private long id;
-	private Date createdOn;
-	private Date modifiedOn;
+	
+	@Column(nullable =false)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
+	@CreationTimestamp
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	private LocalDateTime createdOn;
+	
+	@Column(nullable =false)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
+	@UpdateTimestamp
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	private LocalDateTime modifiedOn;
     private String category;
     private String name;
     private String logo;
     private String link;
     
+    @NotAudited
     @JsonIgnore
     @OneToMany(mappedBy ="stakeholderFeature",cascade=CascadeType.ALL,fetch = FetchType.LAZY)
     private List<UserToStakehoderfeatureMapping> UserTofeatureMapping;
@@ -35,16 +51,17 @@ public class StakeholderFeature {
 	public void setId(long id) {
 		this.id = id;
 	}
-	public Date getCreatedOn() {
+
+	public LocalDateTime getCreatedOn() {
 		return createdOn;
 	}
-	public void setCreatedOn(Date createdOn) {
+	public void setCreatedOn(LocalDateTime createdOn) {
 		this.createdOn = createdOn;
 	}
-	public Date getModifiedOn() {
+	public LocalDateTime getModifiedOn() {
 		return modifiedOn;
 	}
-	public void setModifiedOn(Date modifiedOn) {
+	public void setModifiedOn(LocalDateTime modifiedOn) {
 		this.modifiedOn = modifiedOn;
 	}
 	public String getCategory() {
@@ -59,7 +76,7 @@ public class StakeholderFeature {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+	@JsonIgnore
 	public List<UserToStakehoderfeatureMapping> getUserTofeatureMapping() {
 		return UserTofeatureMapping;
 	}
@@ -79,12 +96,6 @@ public class StakeholderFeature {
 	public void setLink(String link) {
 		this.link = link;
 	}
-	@Override
-	public String toString() {
-		return "StakeholderFeature [id=" + id + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn
-				+ ", category=" + category + ", name=" + name + ", logo=" + logo + ", link=" + link + "]";
-	}
-	
-	
 	
 }
+

@@ -62,14 +62,17 @@ public class CurrencyController {
 			List<SystemConfigListDb> currencyList=systemConfigRepo.getByTag("CURRENCY");
 			for(Currency currency:portAddressData.getContent()) {
 				for(SystemConfigListDb systemConfig:currencyList) {
-					if(currency.getCurrency()==systemConfig.getValue()) {
+					Integer value=systemConfig.getValue();
+					if(currency.getCurrency()==value) {
 						currency.setCurrencyInterp(systemConfig.getInterp());
 					}
 				}
 				if(currency.getDate()!=null) {
 				String month=utility.convertToMonth(currency.getDate());
 				currency.setMonth(month);
-				}
+				String year=utility.convertToYear(currency.getDate());
+				currency.setYear(year);
+				} 
 			}
 			
 			mapping = new MappingJacksonValue(portAddressData);

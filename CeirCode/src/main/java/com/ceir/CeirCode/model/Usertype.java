@@ -3,19 +3,17 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.envers.Audited;
-import org.hibernate.envers.RelationTargetAuditMode;
+import org.hibernate.envers.NotAudited;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -23,27 +21,34 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity 
 @Audited
 public class Usertype {   
-	private static long serialVersionUID = 1L;
+
 	@Id 
 	private long id;
 	private String usertypeName; 
+	
+	@Column(nullable =false)
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
 	@CreationTimestamp
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date createdOn;
+	
+	@Column(nullable =false)
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
 	@UpdateTimestamp
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date modifiedOn;
 
+	@NotAudited
 	@JsonIgnore 
 	@OneToMany(mappedBy = "usertype", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	private List<User> user;
- 
+	
+	@NotAudited
 	@JsonIgnore 
 	@OneToMany(mappedBy = "usertypeData", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	private List<Userrole> userRole;    
 
+	@NotAudited
 	@JsonIgnore
 	@OneToMany(mappedBy ="userTypeFeature",cascade=CascadeType.ALL,fetch = FetchType.LAZY)
 	private List<UserToStakehoderfeatureMapping> userTofeatureMapping;
@@ -128,6 +133,7 @@ public class Usertype {
 		this.id = id;
 		this.usertypeName = usertypeName;
 	}
+	
 	
 	
 	

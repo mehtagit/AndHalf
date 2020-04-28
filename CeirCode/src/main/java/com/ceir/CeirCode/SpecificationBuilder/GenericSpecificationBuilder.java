@@ -16,7 +16,9 @@ import com.ceir.CeirCode.Constants.SearchOperation;
 import com.ceir.CeirCode.model.SearchCriteria;
 import com.ceir.CeirCode.model.User;
 import com.ceir.CeirCode.model.UserProfile;
+import com.ceir.CeirCode.model.UserToStakehoderfeatureMapping;
 import com.ceir.CeirCode.model.Usertype;
+import com.ceir.CeirCode.model.StakeholderFeature;
 import com.ceir.CeirCode.util.DbFunctions;
 
 
@@ -26,7 +28,9 @@ public class GenericSpecificationBuilder<T> {
 	private final List<SearchCriteria> params;
 	private final List<SearchCriteria> searchParams;
 	private final List<SearchCriteria> searchParamsUsertype;
+	private final List<SearchCriteria> paramsFeatureUsertype;
 	private final List<SearchCriteria> searchParamsUser;
+	private final List<SearchCriteria> searchParamsFeature;
 	private final String dialect;
 	private List<Specification<T>> specifications;
 
@@ -35,6 +39,8 @@ public class GenericSpecificationBuilder<T> {
 		searchParams = new ArrayList<>();
 		searchParamsUsertype = new ArrayList<>();
 		searchParamsUser = new ArrayList<>();
+		paramsFeatureUsertype=new ArrayList<>();
+		searchParamsFeature=new ArrayList<>();		
 		specifications = new LinkedList<>();
 		this.dialect = dialect;
 	}
@@ -56,6 +62,15 @@ public class GenericSpecificationBuilder<T> {
 
 	public final GenericSpecificationBuilder<T> orSearchUser(SearchCriteria criteria) { 
 		searchParamsUser.add(criteria);
+		return this;
+	}
+	
+	public final GenericSpecificationBuilder<T> orSearchUsertypeMapToFeature(SearchCriteria criteria) { 
+		paramsFeatureUsertype.add(criteria);
+		return this;
+	}
+	public final GenericSpecificationBuilder<T> orSearchFeature(SearchCriteria criteria) { 
+		searchParamsFeature.add(criteria);
 		return this;
 	}
 
@@ -130,6 +145,33 @@ public class GenericSpecificationBuilder<T> {
 				finalSpecification = Specification.where(searchSpecification);
 			}
 		}
+
+		specifications = joinFeatureWithUserTypeOr(paramsFeatureUsertype);
+		if( !specifications.isEmpty()) {
+			searchSpecification = specifications.get(0);
+			for(int i = 1; i<specifications.size() ;i++) {
+				searchSpecification = searchSpecification.or(specifications.get(i));
+			}
+			if( finalSpecification != null ) {
+				finalSpecification = finalSpecification.and( searchSpecification );
+			}else {//If no call of addSpecification method and empty params 
+				finalSpecification = Specification.where(searchSpecification);
+			}
+		}
+		
+		specifications = joinWithFeature(searchParamsFeature);
+		if( !specifications.isEmpty()) {
+			searchSpecification = specifications.get(0);
+			for(int i = 1; i<specifications.size() ;i++) {
+				searchSpecification = searchSpecification.or(specifications.get(i));
+			}
+			if( finalSpecification != null ) {
+				finalSpecification = finalSpecification.and( searchSpecification );
+			}else {//If no call of addSpecification method and empty params 
+				finalSpecification = Specification.where(searchSpecification);
+			}
+		}
+		
 		return finalSpecification;
 	}
 
@@ -167,6 +209,14 @@ public class GenericSpecificationBuilder<T> {
 							&& Datatype.LONG.equals(searchCriteria.getDatatype())) {
 						return cb.equal(root.get(searchCriteria.getKey()), (Long)searchCriteria.getValue());
 					}
+					else if(SearchOperation.EQUALITY.equals(searchCriteria.getSearchOperation())
+							&& Datatype.DOUBLE.equals(searchCriteria.getDatatype())) {
+						return cb.equal(root.get(searchCriteria.getKey()), (Double)searchCriteria.getValue());
+					}
+					else if(SearchOperation.EQUALITY.equals(searchCriteria.getSearchOperation())
+							&& Datatype.DOUBLE.equals(searchCriteria.getDatatype())) {
+						return cb.equal(root.get(searchCriteria.getKey()), (Double)searchCriteria.getValue());
+					}
 					else if(SearchOperation.GREATER_THAN.equals(searchCriteria.getSearchOperation())
 							&& Datatype.DATE.equals(searchCriteria.getDatatype())){
 						Expression<String> dateStringExpr = cb.function(DbFunctions.getDate(dialect), String.class, root.get(searchCriteria.getKey()), cb.literal(DbFunctions.getDateFormat(dialect)));
@@ -189,8 +239,12 @@ public class GenericSpecificationBuilder<T> {
 						return cb.notEqual(root.get(searchCriteria.getKey()), (Long)searchCriteria.getValue());
 					}else if(SearchOperation.LIKE.equals(searchCriteria.getSearchOperation())
 							&& Datatype.STRING.equals(searchCriteria.getDatatype())) {
-						return cb.like(root.get(searchCriteria.getKey()), "%"+(String)searchCriteria.getValue()+"%");
-					}else {
+						return cb.like(root.get(searchCriteria.getKey()), "%"+(String)searchCriteria.getValue().toString()+"%");
+					}else if(SearchOperation.LIKE.equals(searchCriteria.getSearchOperation())
+							&& Datatype.DOUBLE.equals(searchCriteria.getDatatype())) {
+						return cb.like(root.get(searchCriteria.getKey()), "%"+(Double.parseDouble(searchCriteria.getValue().toString()))+"%");
+					}
+						else {
 						return null;
 					}
 				});
@@ -257,6 +311,60 @@ public class GenericSpecificationBuilder<T> {
 		};
 	}
 
+	public Specification<User> joinWithUserType(SearchCriteria searchCriteria){
+		logger.info("inside join with usertype and data is: "+searchCriteria);
+		return (root, query, cb) -> { 
+			Join<User, Usertype> user = root.join("usertype".intern());
+			if(SearchOperation.GREATER_THAN.equals(searchCriteria.getSearchOperation())
+					&& Datatype.STRING.equals(searchCriteria.getDatatype())) {
+				return cb.greaterThan(user.get(searchCriteria.getKey()), searchCriteria.getValue().toString());
+			}
+			else if(SearchOperation.LESS_THAN.equals(searchCriteria.getSearchOperation())
+					&& Datatype.STRING.equals(searchCriteria.getDatatype())) {
+				return cb.lessThan(user.get(searchCriteria.getKey()), searchCriteria.getValue().toString());
+			}
+			else if(SearchOperation.EQUALITY.equals(searchCriteria.getSearchOperation())
+					&& Datatype.STRING.equals(searchCriteria.getDatatype())) {
+				return cb.equal(user.get(searchCriteria.getKey()), searchCriteria.getValue().toString());
+			}
+			else if(SearchOperation.EQUALITY.equals(searchCriteria.getSearchOperation())
+					&& Datatype.INT.equals(searchCriteria.getDatatype())) {
+				return cb.equal(user.get(searchCriteria.getKey()), (int)searchCriteria.getValue());
+			} 
+			else if(SearchOperation.EQUALITY.equals(searchCriteria.getSearchOperation())
+					&& Datatype.INTEGER.equals(searchCriteria.getDatatype())) {
+				return cb.equal(user.get(searchCriteria.getKey()),searchCriteria.getValue());
+			} 
+			else if(SearchOperation.EQUALITY.equals(searchCriteria.getSearchOperation())
+					&& Datatype.LONG.equals(searchCriteria.getDatatype())) {
+				return cb.equal(user.get(searchCriteria.getKey()), (Long)searchCriteria.getValue());
+			}
+			else if(SearchOperation.GREATER_THAN.equals(searchCriteria.getSearchOperation())
+					&& Datatype.DATE.equals(searchCriteria.getDatatype())){
+				Expression<String> dateStringExpr = cb.function(DbFunctions.getDate(dialect), String.class, user.get(searchCriteria.getKey()), cb.literal(DbFunctions.getDateFormat(dialect)));
+				return cb.greaterThanOrEqualTo(cb.lower(dateStringExpr), searchCriteria.getValue().toString());
+			}
+			else if(SearchOperation.LESS_THAN.equals(searchCriteria.getSearchOperation())
+					&& Datatype.DATE.equals(searchCriteria.getDatatype())){
+				Expression<String> dateStringExpr = cb.function(DbFunctions.getDate(dialect), String.class, user.get(searchCriteria.getKey()), cb.literal(DbFunctions.getDateFormat(dialect)));
+				return cb.lessThanOrEqualTo(cb.lower(dateStringExpr), searchCriteria.getValue().toString());
+			}
+			else if(SearchOperation.NEGATION.equals(searchCriteria.getSearchOperation())
+					&& Datatype.STRING.equals(searchCriteria.getDatatype())) {
+				return cb.notEqual(user.get(searchCriteria.getKey()), searchCriteria.getValue().toString());
+			}
+			else if(SearchOperation.NEGATION.equals(searchCriteria.getSearchOperation())
+					&& Datatype.INT.equals(searchCriteria.getDatatype())) {
+				return cb.notEqual(user.get(searchCriteria.getKey()), (Integer)searchCriteria.getValue());
+			}else if(SearchOperation.NEGATION.equals(searchCriteria.getSearchOperation())
+					&& Datatype.LONG.equals(searchCriteria.getDatatype())) {
+				return cb.notEqual(user.get(searchCriteria.getKey()), (Long)searchCriteria.getValue());
+			}else {
+				return null;
+			}
+
+		};
+	}
 	public Specification<UserProfile> joinWithMultiple(SearchCriteria searchCriteria){
 		return (root, query, cb) -> {
 			Join<UserProfile, User> addresses = root.join("user".intern());
@@ -312,6 +420,82 @@ public class GenericSpecificationBuilder<T> {
 				logger.error(e.getMessage(), e);
 			}
 			return specifications;
+		}
+		
+		
+		private List<Specification<T>> joinFeatureWithUserTypeOr( List<SearchCriteria> criterias){
+			List<Specification<T>> specifications = new ArrayList<Specification<T>>();
+			try {
+				for(SearchCriteria searchCriteria : criterias) {
+					specifications.add((root, query, cb)-> {
+		logger.info("inside join with usertype  and data is: "+searchCriteria);
+		Join<UserToStakehoderfeatureMapping, Usertype> usertype = root.join("userTypeFeature".intern());
+			if(SearchOperation.LIKE.equals(searchCriteria.getSearchOperation())
+					&& Datatype.STRING.equals(searchCriteria.getDatatype())) {
+				return cb.like(usertype.get(searchCriteria.getKey()), "%"+(String)searchCriteria.getValue()+"%");
+			}
+			else {
+				return null;
+			}
+
+					});
+				}
+			}catch (Exception e) {
+				logger.error(e.getMessage(), e);
+			}
+			return specifications;
+		}
+		
+		private List<Specification<T>> joinWithFeature( List<SearchCriteria> criterias){
+			List<Specification<T>> specifications = new ArrayList<Specification<T>>();
+			try {
+				for(SearchCriteria searchCriteria : criterias) {
+					specifications.add((root, query, cb)-> {
+		logger.info("inside join with  feature and data is: "+searchCriteria);
+		Join<UserToStakehoderfeatureMapping, StakeholderFeature> usertype = root.join("stakeholderFeature".intern());
+			if(SearchOperation.LIKE.equals(searchCriteria.getSearchOperation())
+					&& Datatype.STRING.equals(searchCriteria.getDatatype())) {
+				return cb.like(usertype.get(searchCriteria.getKey()), "%"+(String)searchCriteria.getValue()+"%");
+			}
+			else {
+				return null;
+			}
+
+					});
+				}
+			}catch (Exception e) {
+				logger.error(e.getMessage(), e);
+			}
+			return specifications;
+		}
+		
+		public Specification<T>  inQuery(String key,List<Integer> status){
+			return (root, query, cb) -> {
+				logger.info("In query save ");
+				Join<UserProfile, User> user = root.join("user".intern());
+			//	Join<User, Userrole> user = users.join("userRole".intern());
+				//return cb.in(user.get(key)).value(status);
+				return user.get(key).in(status);
+			};
+		}
+		
+//		public Specification<T> in(SearchCriteria searchCriteria, ArrayList<Long> status){
+//			return (root, query, cb) -> {
+//				logger.info("inside In query save ");
+//				logger.info("key= "+searchCriteria.getKey());
+//					//return cb.in(root.get(searchCriteria.getKey())).value(status);
+//					return root.get(searchCriteria.getKey()).in(status);
+//			};
+//		}
+		
+		public Specification<T>  in(String key,List<Long> status){
+			return (root, query, cb) -> {
+				logger.info("In query save ");
+				//Join<UserProfile, User> user = root.join("user".intern());
+			//	Join<User, Userrole> user = users.join("userRole".intern());
+				//return cb.in(user.get(key)).value(status);
+				return root.get(key).in(status);
+			};
 		}
 	
 	

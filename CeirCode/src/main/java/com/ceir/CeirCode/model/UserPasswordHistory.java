@@ -2,6 +2,7 @@ package com.ceir.CeirCode.model;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,15 +22,20 @@ public class UserPasswordHistory {
 	private static long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;    
+	private long id;   
+	
+	
 	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = false)
 	User userPassword;
 	private String password;
+	
+	@Column(nullable =false)
 	@CreationTimestamp
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime createdOn;
 
+	@Column(nullable =false)
 	@UpdateTimestamp
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime modifiedOn;

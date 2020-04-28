@@ -5,6 +5,7 @@ public class SearchAssignee {
 	private Integer type;
 	private String field;
 	private Integer userTypeId;
+	private int roleTypeId;
 	public Integer getType() {
 		return type;
 	}
@@ -18,11 +19,18 @@ public class SearchAssignee {
 		this.field = field;
 	}
 	
-	public Integer getUserTypeId() {
+	public int getUserTypeId() {
 		return userTypeId;
 	}
 	public void setUserTypeId(Integer userTypeId) {
 		this.userTypeId = userTypeId;
+	}
+	
+	public long getRoleTypeId() {
+		return roleTypeId;
+	}
+	public void setRoleTypeId(int roleTypeId) {
+		this.roleTypeId = roleTypeId;
 	}
 	@Override
 	public String toString() {
@@ -33,11 +41,9 @@ public class SearchAssignee {
 		builder.append(field);
 		builder.append(", userTypeId=");
 		builder.append(userTypeId);
+		builder.append(", roleTypeId=");
+		builder.append(roleTypeId);
 		builder.append("]");
 		return builder.toString();
 	}
-	
-  	
-		
-	
 }

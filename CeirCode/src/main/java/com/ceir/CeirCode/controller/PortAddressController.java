@@ -75,7 +75,8 @@ public class PortAddressController {
 				List<SystemConfigListDb> portList=systemConfigDbRepoService.getDataByTag("CUSTOMS_PORT");
 				for(PortAddress portAddress:portAddressData.getContent()) {
 					for(SystemConfigListDb asType:portList) {
-						if(portAddress.getPort()==asType.getValue()) {
+						Integer value=asType.getValue();
+						if(portAddress.getPort()==value) {
 							portAddress.setPortInterp(asType.getInterp());
 						}
 					}

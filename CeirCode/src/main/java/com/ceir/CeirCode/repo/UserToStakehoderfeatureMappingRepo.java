@@ -9,6 +9,6 @@ import com.ceir.CeirCode.model.Usertype;
 public interface UserToStakehoderfeatureMappingRepo extends JpaRepository<UserToStakehoderfeatureMapping, Long>,JpaSpecificationExecutor<UserToStakehoderfeatureMapping>{
 	public List<UserToStakehoderfeatureMapping> findByUserTypeFeature_IdOrderByCreatedOnAsc(long id);
 	public UserToStakehoderfeatureMapping findById(long id);
-	public List<UserToStakehoderfeatureMapping> findByUserTypeFeature_IdAndPeriodOrPeriodAndUserTypeFeature_IdOrderByCreatedOnAsc(long id,String period1,String period2,long id2);
+	public List<UserToStakehoderfeatureMapping> findByUserTypeFeature_IdAndPeriodOrPeriodAndUserTypeFeature_IdOrderByCreatedOnAsc(long id,Integer period1,Integer period2,long id2);
     public UserToStakehoderfeatureMapping findByUserTypeFeature_IdAndStakeholderFeature_Id(long usertypeId,long featureId);
 }    

@@ -51,6 +51,7 @@ public class SpecificationBuilder<T> {
 	public Specification<T> build() { 
 		// convert each of SearchCriteria params to Specification and construct combined specification based on custom rules.
 
+		
 		Specification<T> finalSpecification = null;
 
 		Specification<T> searchSpecification  = null;
@@ -147,7 +148,8 @@ public class SpecificationBuilder<T> {
 		return (root, query, cb) -> {
 			logger.info("In query save ");
 			logger.info("key= "+searchCriteria.getKey());
-				return cb.in(root.get(searchCriteria.getKey())).value(status);
+				//return cb.in(root.get(searchCriteria.getKey())).value(status);
+				return root.get(searchCriteria.getKey()).in(status);
 		};
 	}
 	
@@ -169,12 +171,16 @@ public class SpecificationBuilder<T> {
 			}
 			else if(SearchOperation.EQUALITY.equals(searchCriteria.getSearchOperation())
 					&& Datatype.INT.equals(searchCriteria.getDatatype())) {
-				return cb.in(user.get(searchCriteria.getKey())).value(searchCriteria.getValue());
-			} 
+				return cb.equal(user.get(searchCriteria.getKey()), (int)searchCriteria.getValue());
+			}
+			else if(SearchOperation.EQUALITY.equals(searchCriteria.getSearchOperation())
+					&& Datatype.LONG.equals(searchCriteria.getDatatype())) {
+				return cb.equal(user.get(searchCriteria.getKey()), (long)searchCriteria.getValue());
+			}
 			else if(SearchOperation.EQUALITY.equals(searchCriteria.getSearchOperation())
 					&& Datatype.INTEGER.equals(searchCriteria.getDatatype())) {
-				return cb.in(user.get(searchCriteria.getKey())).value(searchCriteria.getValue());
-			}
+				return cb.equal(user.get(searchCriteria.getKey()),searchCriteria.getValue());
+			} 
 			else if(SearchOperation.EQUALITY.equals(searchCriteria.getSearchOperation())
 					&& Datatype.ARRAYLIST.equals(searchCriteria.getDatatype())) {
 				return cb.in(user.get(searchCriteria.getKey())).value(searchCriteria.getValue());

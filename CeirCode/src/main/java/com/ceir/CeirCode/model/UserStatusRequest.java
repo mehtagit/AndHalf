@@ -6,6 +6,7 @@ public class UserStatusRequest {
 	private String remark;
 	private long featureId;
 	private String username;
+	private long id;
 	
 	public Integer getUserId() {
 		return userId;
@@ -43,6 +44,12 @@ public class UserStatusRequest {
 	public void setUsername(String username) {
 		this.username = username;
 	}
+	public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -58,7 +65,10 @@ public class UserStatusRequest {
 		builder.append(featureId);
 		builder.append(", username=");
 		builder.append(username);
+		builder.append(", id=");
+		builder.append(id);
 		builder.append("]");
 		return builder.toString();
 	}
+	
 }

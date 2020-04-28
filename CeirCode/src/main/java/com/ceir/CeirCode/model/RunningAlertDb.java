@@ -2,18 +2,16 @@ package com.ceir.CeirCode.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -25,12 +23,16 @@ public class RunningAlertDb implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+	@Column(nullable =false)
 	@CreationTimestamp
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private LocalDateTime createdOn;
 
+	@Column(nullable =false)
 	@UpdateTimestamp
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private LocalDateTime modifiedOn;
 
 	private Integer userId;
@@ -39,18 +41,25 @@ public class RunningAlertDb implements Serializable {
 	private String alertId;
 	private String description;
 	private Integer status;
-	
-	
+	@Transient
+	private String statusInterp;
+	private String username;
 	
 	public RunningAlertDb() {
 		super();
 	}
+	
+	
 	public RunningAlertDb(String alertId, String description, Integer status) {
 		super();
+
 		this.alertId = alertId;
 		this.description = description;
 		this.status = status;
+		
 	}
+
+
 	public Long getId() {
 		return id;
 	}
@@ -97,6 +106,24 @@ public class RunningAlertDb implements Serializable {
 		return serialVersionUID;
 	}
 	
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	
+	
+	public String getStatusInterp() {
+		return statusInterp;
+	}
+
+
+	public void setStatusInterp(String statusInterp) {
+		this.statusInterp = statusInterp;
+	}
+
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -114,7 +141,13 @@ public class RunningAlertDb implements Serializable {
 		builder.append(description);
 		builder.append(", status=");
 		builder.append(status);
+		builder.append(", statusInterp=");
+		builder.append(statusInterp);
+		builder.append(", username=");
+		builder.append(username);
 		builder.append("]");
 		return builder.toString();
 	}
+	
+	
 }

@@ -8,6 +8,7 @@ public interface UserProfileRepo extends JpaRepository<UserProfile, Long> ,JpaSp
 	public UserProfile findByUser_Id(long id);                            
     public UserProfile findByPhoneNo(String phoneNo);
     public UserProfile findByEmail(String email);
-    
+	public boolean existsByEmail(String email);
+	public boolean existsByPhoneNo(String phoneNo);
 
 } 

@@ -18,7 +18,9 @@ public enum RegistrationTags {
     LOGIN_UNAUTHORIZED("LOGIN_UNAUTHORIZED","You are not allow to access this account"),
 	Reg_userlimit_exceed("Reg_userlimit_exceed"," We are facing some technical difficulties. Please try after some time."),
     Reg_flag_off("Reg_flag_off","This feature is not available as of now"),
-    Reg_allowed("Reg_allowed","Registration feature is now working")
+    Reg_allowed("Reg_allowed","Registration feature is now working"),
+    Email_Exist("Email_Exist","Email already exist in the system"),
+    Phone_Exist("Phone_Exist","Phone Number already exist in the system")
     ;
 	
 	
