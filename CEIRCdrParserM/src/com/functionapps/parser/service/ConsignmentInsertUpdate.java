@@ -419,7 +419,7 @@ public class ConsignmentInsertUpdate {
             stmt1.close();
             stmt2.close();
             stmt3.close();
-
+conn.commit();
         } catch (Exception e) {
 
         }

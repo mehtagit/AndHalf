@@ -24,19 +24,19 @@ import org.apache.log4j.Logger;
  * @author user
  */
 public class FeatureForSingleStolenBlock {
-    
-     Logger logger = Logger.getLogger(FeatureForSingleStolenBlock.class);
-    
-    public void readFeatureWithoutFile(Connection conn, String feature, int raw_upload_set_no, String txn_id,            String sub_feature, String mgnt_table_db, String user_type) {
+
+    Logger logger = Logger.getLogger(FeatureForSingleStolenBlock.class);
+
+    public void readFeatureWithoutFile(Connection conn, String feature, int raw_upload_set_no, String txn_id, String sub_feature, String mgnt_table_db, String user_type) {
 
         Statement stmt = null; // stolenand_recovery_mgmt
         Statement stmt1 = null;
         Map<String, String> map = new HashMap<String, String>();
         try {
-              CEIRFeatureFileFunctions ceirfunction = new CEIRFeatureFileFunctions();
-              ceirfunction.updateFeatureManagementStatus(conn, txn_id, 1, mgnt_table_db, feature);
-              ceirfunction.updateFeatureFileStatus(conn,txn_id, 2, feature, sub_feature); // update web_action_db    
-             
+            CEIRFeatureFileFunctions ceirfunction = new CEIRFeatureFileFunctions();
+            ceirfunction.updateFeatureManagementStatus(conn, txn_id, 1, mgnt_table_db, feature);
+            ceirfunction.updateFeatureFileStatus(conn, txn_id, 2, feature, sub_feature); // update web_action_db    
+
             map.put("feature", feature);
             // map.put("raw_upload_set_no", (String)raw_upload_set_no);
             map.put("sub_feature", sub_feature);
@@ -74,7 +74,7 @@ public class FeatureForSingleStolenBlock {
 
         } finally {
             try {
-               conn.commit();
+                conn.commit();
 //                c onn.close();
             } catch (Exception ex) {
                 logger.info("  Error  is  + " + ex);
@@ -280,7 +280,7 @@ public class FeatureForSingleStolenBlock {
 
                 if (map.get("request_type").equals("2")) {
                     qury = "select " + sing_imei
-                            + "    as   imei_esn_meid , second_imei  as model_number,third_imei  as device_brand_name,  fourth_imei  as contact_number from single_imei_details where txn_id ='"                            + txn_id + "'   ";
+                            + "    as   imei_esn_meid , second_imei  as model_number,third_imei  as device_brand_name,  fourth_imei  as contact_number from single_imei_details where txn_id ='" + txn_id + "'   ";
                     ty = "BLOCK";
                 }
                 if (map.get("request_type").equals("0")) {
@@ -305,14 +305,14 @@ public class FeatureForSingleStolenBlock {
                     logger.info("Error..getImedn.." + e);
                 }
                 stmt.close();
-                 conn.commit();
+                conn.commit();
                 if (i == 1) {
                     logger.info("start..stolenFlowStartSingleExtended...." + i);
-                    stolenFlowStartSingleExtended(conn, map ,i);
+                    stolenFlowStartSingleExtended(conn, map, i);
                 }
                 if (i != 1 && !(map.get("imei_esn_meid") == null || map.get("imei_esn_meid").trim() == "" || map.get("imei_esn_meid").trim().equals("") || map.get("imei_esn_meid").equals("0"))) {
                     logger.info("start..stolenFlowStartSingleExtended.  having  imei..i.e.." + map.get("imei_esn_meid"));
-                    stolenFlowStartSingleExtended(conn, map , i);
+                    stolenFlowStartSingleExtended(conn, map, i);
                 } else {
                     // break;
                 }
@@ -323,7 +323,7 @@ public class FeatureForSingleStolenBlock {
 
     }
 
-    void stolenFlowStartSingleExtended(Connection conn, Map<String, String> map ,int ii) {
+    void stolenFlowStartSingleExtended(Connection conn, Map<String, String> map, int ii) {
         try {
             for (Map.Entry<String, String> entry : map.entrySet()) {
                 String key = entry.getKey();
@@ -337,8 +337,9 @@ public class FeatureForSingleStolenBlock {
                 logger.info("GETTED IMEI is " + imei);
                 map.put("imei_esn_meid", imei);
                 logger.info("Going to  insert into Raw  after getting imei...... ");
-                if(imei == null){
-                insertinRawtable(conn, map);  }
+                if (imei == null) {
+                    insertinRawtable(conn, map);
+                }
 
                 for (int i = 2; i <= 4; i++) {
                     String msisdnothr = getOtherContactsImei(conn, i, map);
@@ -348,8 +349,9 @@ public class FeatureForSingleStolenBlock {
                         imei = getImeiWithMsisdn(conn, map);
                         map.put("imei_esn_meid", imei);
                         logger.info("Going to  insert into Raw after getting imei...... ");
-                         if(imei == null){
-                        insertinRawtable(conn, map);  }
+                        if (imei == null) {
+                            insertinRawtable(conn, map);
+                        }
                     }
                 }
 
@@ -473,7 +475,7 @@ public class FeatureForSingleStolenBlock {
                     imei = (String) lstGsma.get(0);
                 } else {
                     logger.info(" List Size  in Gsma_tac_db is not valid");
-                    String fileString = strTacs   + "...... NO SIMILAR  Model And Brand Name  FOUND IN Gsma_tac_Db SCHEMA ";
+                    String fileString = strTacs + "...... NO SIMILAR  Model And Brand Name  FOUND IN Gsma_tac_Db SCHEMA ";
                     errFile.gotoErrorFile(txn_id, fileString);
                     failstatusUpdator(conn, map);
 
@@ -529,7 +531,7 @@ public class FeatureForSingleStolenBlock {
             stmt = conn.createStatement();
             stmt.executeUpdate(query);
             stmt.close();
-             conn.commit();
+            conn.commit();
 
         } catch (Exception e) {
             logger.info(" Error  " + e);
@@ -538,7 +540,7 @@ public class FeatureForSingleStolenBlock {
     }
 
     void failstatusUpdator(Connection conn, Map<String, String> map) {
-        String tblName = (map.get("feature").equalsIgnoreCase("Stolen")                || map.get("feature").equalsIgnoreCase("Recovery") || map.get("feature").equalsIgnoreCase("Block")                || map.get("feature").equalsIgnoreCase("Unblock")) ? "file" : map.get("feature");
+        String tblName = (map.get("feature").equalsIgnoreCase("Stolen") || map.get("feature").equalsIgnoreCase("Recovery") || map.get("feature").equalsIgnoreCase("Block") || map.get("feature").equalsIgnoreCase("Unblock")) ? "file" : map.get("feature");
         String subfeature = map.get("sub_feature");
         String txn_id = map.get("txn_id");
         String feature = map.get("feature");
@@ -576,6 +578,5 @@ public class FeatureForSingleStolenBlock {
         }
         return cntctNo;
     }
-    
-    
+
 }

@@ -42,37 +42,29 @@ public class CEIRFeatureFileFunctions {
 //        return rs;
 //
 //    }
-
-    
     public ResultSet getFileDetails(Connection conn, int state) {
-		Statement stmt = null;
-		ResultSet rs = null;
-		String query = null;
-                String limiter = " limit 1 ";
+        Statement stmt = null;
+        ResultSet rs = null;
+        String query = null;
+        String limiter = " limit 1 ";
         if (conn.toString().contains("oracle")) {
             limiter = " fetch next 1 rows only ";
         }
-                
-		try{
-//        	query = "select * from web_action_db where state="+state+" and feature='TYPE_APPROVED' order by id desc ";
-			query = "select * from web_action_db where state="+state+"  order by id asc " + limiter + "  ";
-			logger.info("Query to get File Details ["+query+"]");
-        	stmt  = conn.createStatement();
-			return rs    = stmt.executeQuery(query);
-		}
-		catch(Exception e){
-        	logger.info("Exception in getFileDetails["+e+"]");
-			System.out.println(""+e);
-		}
-		return rs;
 
-	}
-    
-    
-    
-    
-    
-    
+        try {
+//        	query = "select * from web_action_db where state="+state+" and feature='TYPE_APPROVED' order by id desc ";
+            query = "select * from web_action_db where state=" + state + "  order by id asc " + limiter + "  ";
+            logger.info("Query to get File Details [" + query + "]");
+            stmt = conn.createStatement();
+            return rs = stmt.executeQuery(query);
+        } catch (Exception e) {
+            logger.info("Exception in getFileDetails[" + e + "]");
+            System.out.println("" + e);
+        }
+        return rs;
+
+    }
+
     public HashMap<String, String> getFeatureMapping(Connection conn, String feature, String usertype_name) {
         HashMap<String, String> feature_mapping = new HashMap<String, String>();
         Statement stmt = null;
@@ -90,7 +82,7 @@ public class CEIRFeatureFileFunctions {
 
         try {
             query = "select * from feature_mapping_db where  feature='" + feature + "'  " + addQuery + "    " + limiter
-                    + "   "; 
+                    + "   ";
             logger.info("Query to get  (tFILEFUNCTIONgetFeatureMapping) File Details [" + query + "]");
 
             stmt = conn.createStatement();
@@ -172,7 +164,7 @@ public class CEIRFeatureFileFunctions {
         } finally {
             try {
                 stmt.close();
-                 conn.commit();
+                conn.commit();
             } catch (Exception e) {
                 logger.info("errror" + e);
             }
@@ -202,7 +194,7 @@ public class CEIRFeatureFileFunctions {
         } finally {
             try {
                 stmt.close();
-                conn.commit();
+                
             } catch (Exception e) {
                 logger.info("Error at updateFeatureFileStatus.." + e);
             }
@@ -273,9 +265,8 @@ public class CEIRFeatureFileFunctions {
         return user_type;
     }
 
-    public void UpdateStatusViaApi(Connection conn, String txn_id, int ConsigAction, HashMap<String, String> map,
-            String feature, int StlnAction) {
-        logger.info("consignmentUpdateViaApi.. ");
+    public void UpdateStatusViaApi(Connection conn, String txn_id, int ConsigAction, HashMap<String, String> map, String feature, int StlnAction) {
+        logger.info("UpdateStatusViaApi.. ");
         ResultSet rs1 = null;
         Statement stmt = null;
         String tag = null;
@@ -287,82 +278,90 @@ public class CEIRFeatureFileFunctions {
         // String txn_id = map.get("txn_id");;
         String userId = "";
 
-        if ((feature.equalsIgnoreCase("stolen") || feature.equalsIgnoreCase("recovery")
-                || feature.equalsIgnoreCase("block") || feature.equalsIgnoreCase("unblock"))) {
-            featureId = (map.get("request_type").equals("0") || map.get("request_type").equals("1")) ? "5" : "7";
-            requestType = map.get("request_type");
-            apiURI = "stolen-recovery_mailURI";
-            userId = map.get("user_id");
+        if (feature.equalsIgnoreCase("stock")) {
+            updateFeatureManagementStatus(conn, txn_id, (ConsigAction == 1 ? 2 : 3), "stock", "stock");
 
-            payload = " {\n" + "\"action\":" + StlnAction + ",\n" + "\"featureId\":" + featureId + ",\n"
-                    + "\"remarks\":\"DONE\",\n" + "\"requestType\":" + requestType + ",\n"
-                    + "\"roleType\":\"CEIRSYSTEM\",\n" + "\"roleTypeUserId\":0,\n" + "\"txnId\":\"" + txn_id + "\",\n"
-                    + "\"userId\":" + userId + ",\n" + "\"userType\": \"CEIRSYSTEM\"\n" + "}  ";
-        }
+        } else {
 
-        if (feature.equalsIgnoreCase("consignment")) {
-            apiURI = "mail_api_path";
-            payload = "{  \"action\":    " + ConsigAction
-                    + "    ,  \"requestType\": 0,  \"roleType\": \"CEIRSYSTEM\",  \"txnId\": \"" + txn_id
-                    + "\"  ,\"featureId\" : 3 }";
+            if ((feature.equalsIgnoreCase("stolen") || feature.equalsIgnoreCase("recovery")
+                    || feature.equalsIgnoreCase("block") || feature.equalsIgnoreCase("unblock"))) {
+                featureId = (map.get("request_type").equals("0") || map.get("request_type").equals("1")) ? "5" : "7";
+                requestType = map.get("request_type");
+                apiURI = "stolen-recovery_mailURI";
+                userId = map.get("user_id");
 
-        }
-
-        String query = "select value from system_configuration_db where tag='" + apiURI + "'";
-
-        try {
-
-            logger.info("Query is " + query);
-            logger.info("............" + payload);
-            stmt = conn.createStatement();
-            rs1 = stmt.executeQuery(query);
-            while (rs1.next()) {
-                tag = rs1.getString("value");
+                payload = " {\n" + "\"action\":" + StlnAction + ",\n" + "\"featureId\":" + featureId + ",\n"
+                        + "\"remarks\":\"DONE\",\n" + "\"requestType\":" + requestType + ",\n"
+                        + "\"roleType\":\"CEIRSYSTEM\",\n" + "\"roleTypeUserId\":0,\n" + "\"txnId\":\"" + txn_id + "\",\n"
+                        + "\"userId\":" + userId + ",\n" + "\"userType\": \"CEIRSYSTEM\"\n" + "}  ";
             }
-            ;
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        } finally {
+
+            if (feature.equalsIgnoreCase("consignment")) {
+                apiURI = "mail_api_path";
+                payload = "{  \"action\":    " + ConsigAction
+                        + "    ,  \"requestType\": 0,  \"roleType\": \"CEIRSYSTEM\",  \"txnId\": \"" + txn_id
+                        + "\"  ,\"featureId\" : 3 }";
+
+            }
+
+            String query = "select value from system_configuration_db where tag='" + apiURI + "'";
+
             try {
-                stmt.close();
+
+                logger.info("Query is " + query);
+                logger.info("............" + payload  + "  |||   at  StlnRcvryBlckUnBlck  : 0 - Accept; 1 -Reject "    );
+                logger.info("............");
+                stmt = conn.createStatement();
+                rs1 = stmt.executeQuery(query);
+                while (rs1.next()) {
+                    tag = rs1.getString("value");
+                }
                 ;
-            } catch (Exception e) {
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            } finally {
+                try {
+                    stmt.close();
+                    ;
+                } catch (Exception e) {
+                    logger.info("errror" + e);
+                }
+            }
+            logger.info("mail_api_path_ url is " + tag);
+
+            String result = null;
+            try {
+
+                URL url = new URL(tag);
+                HttpURLConnection hurl = (HttpURLConnection) url.openConnection();
+                hurl.setRequestMethod("PUT");
+                hurl.setDoOutput(true);
+                hurl.setRequestProperty("Content-Type", "application/json");
+                hurl.setRequestProperty("Accept", "application/json");
+
+                // String payload = "{ \"action\": " + action + " , \"requestType\": 0,
+                // \"roleType\": \"CEIRSYSTEM\", \"txnId\": \"" + txn_id + "\" ,\"featureId\" :
+                // 3 }";
+                OutputStreamWriter osw = new OutputStreamWriter(hurl.getOutputStream());
+                osw.write(payload);
+                osw.flush();
+                osw.close();
+
+                logger.info("DatA Putted");
+                hurl.connect();
+                BufferedReader in = new BufferedReader(new InputStreamReader(hurl.getInputStream()));
+                String temp = null;
+                StringBuilder sb = new StringBuilder();
+                while ((temp = in.readLine()) != null) {
+                    sb.append(temp).append(" ");
+                }
+                result = sb.toString();
+                in.close();
+                logger.info("OUTPUT result is .." + result);
+            } catch (IOException e) {
                 logger.info("errror" + e);
+
             }
-        }
-        logger.info("mail_api_path_ url is " + tag);
-
-        String result = null;
-        try {
-
-            URL url = new URL(tag);
-            HttpURLConnection hurl = (HttpURLConnection) url.openConnection();
-            hurl.setRequestMethod("PUT");
-            hurl.setDoOutput(true);
-            hurl.setRequestProperty("Content-Type", "application/json");
-            hurl.setRequestProperty("Accept", "application/json");
-
-            // String payload = "{ \"action\": " + action + " , \"requestType\": 0,
-            // \"roleType\": \"CEIRSYSTEM\", \"txnId\": \"" + txn_id + "\" ,\"featureId\" :
-            // 3 }";
-            OutputStreamWriter osw = new OutputStreamWriter(hurl.getOutputStream());
-            osw.write(payload);
-            osw.flush();
-            osw.close();
-
-            logger.info("DatA Putted");
-            hurl.connect();
-            BufferedReader in = new BufferedReader(new InputStreamReader(hurl.getInputStream()));
-            String temp = null;
-            StringBuilder sb = new StringBuilder();
-            while ((temp = in.readLine()) != null) {
-                sb.append(temp).append(" ");
-            }
-            result = sb.toString();
-            in.close();
-            logger.info("OUTPUT result is .." + result);
-        } catch (IOException e) {
-            logger.info("errror" + e);
 
         }
 
@@ -387,55 +386,28 @@ public class CEIRFeatureFileFunctions {
         return con;
     }
 
-//	public void pdateFeatureManagementStatus(Connection conn, String txn_id,int status,String table_name) {
-//		String query = "";
-//		Statement stmt = null;
-//		query = "update "+table_name+" set status="+status+" where txn_id='"+txn_id+"'";			
-//		logger.info("update management db status ["+query+"]");
-//		System.out.println("update management db status["+query+"]");
-//		try {
-//			stmt = conn.createStatement();
-//			stmt.executeUpdate(query);
-//			conn.commit();
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		finally{
-//			try {
-//				stmt.close();
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
-//		}
-//		
-//	}
-    
-        
-	public void updateFeatureManagementDeleteStatus(Connection conn, String txn_id,int status,String table_name) {
-		String query = "";
-		Statement stmt = null;
-		query = "update "+table_name+" set delete_status ="+status+" where txn_id='"+txn_id+"'";			
-		logger.info("update delete status ["+query+"]");
-		System.out.println("update delete status ["+query+"]");
-		try {
-			stmt = conn.createStatement();
-			stmt.executeUpdate(query);
-			conn.commit();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		finally{
-			try {
-				stmt.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		
-	}
-    
-    
-    
+    public void updateFeatureManagementDeleteStatus(Connection conn, String txn_id, int status, String table_name) {
+        String query = "";
+        Statement stmt = null;
+        query = "update " + table_name + " set delete_status =" + status + " where txn_id='" + txn_id + "'";
+        logger.info("update delete status [" + query + "]");
+        System.out.println("update delete status [" + query + "]");
+        try {
+            stmt = conn.createStatement();
+            stmt.executeUpdate(query);
+            conn.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                stmt.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
 }
 
 //        try {
@@ -469,3 +441,28 @@ public class CEIRFeatureFileFunctions {
 //            out.writeBytes(reqbody);
 //            out.flush();
 //            out.close();
+
+
+
+//	public void pdateFeatureManagementStatus(Connection conn, String txn_id,int status,String table_name) {
+//		String query = "";
+//		Statement stmt = null;
+//		query = "update "+table_name+" set status="+status+" where txn_id='"+txn_id+"'";			
+//		logger.info("update management db status ["+query+"]");
+//		System.out.println("update management db status["+query+"]");
+//		try {
+//			stmt = conn.createStatement();
+//			stmt.executeUpdate(query);
+//			conn.commit();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		finally{
+//			try {
+//				stmt.close();
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//		}
+//		
+//	}

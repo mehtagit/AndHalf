@@ -1,16 +1,13 @@
 package com.functionapps.parser;
 
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-import java.io.PrintWriter;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import com.functionapps.constants.*;
 import com.functionapps.log.LogWriter;
 
 import org.apache.log4j.Logger;
@@ -21,6 +18,7 @@ public class CEIRParserMain {
 	 * @param args
 	 */
 	public static void main(String args[]) {
+            
 		logger = Logger.getLogger(CEIRParserMain.class);
 		String operator = args[0];
 		Connection conn = null;
@@ -554,18 +552,18 @@ public class CEIRParserMain {
 		return rule_details;
 	}
 	static ResultSet operatorDetails(Connection conn, String operator){
+//              logger.info("operatorDetails...>");
 		Statement stmt = null;
 		ResultSet rs = null;
 		String query = null;
 		try{
         	query = "select * from rep_schedule_config_db where operator='"+operator+"'";
-			stmt  = conn.createStatement();
+              	stmt  = conn.createStatement();
 			return rs    = stmt.executeQuery(query);
-			
-		}
-		
+			}
+	
 		catch(Exception e){
-			logger.info(""+e);
+			logger.info("  Error operatorDetails::"+e);
 		}
 		return rs;
 	}
