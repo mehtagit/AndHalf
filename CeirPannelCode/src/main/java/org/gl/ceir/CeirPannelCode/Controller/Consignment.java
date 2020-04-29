@@ -17,21 +17,28 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.ListIterator;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.gl.ceir.CeirPannelCode.Feignclient.DBTablesFeignClient;
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Feignclient.UserProfileFeignImpl;
 import org.gl.ceir.CeirPannelCode.Model.AddMoreFileModel;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentModel;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentUpdateRequest;
+import org.gl.ceir.CeirPannelCode.Model.DBrowDataModel;
+import org.gl.ceir.CeirPannelCode.Model.DbListDataHeaders;
 import org.gl.ceir.CeirPannelCode.Model.Dropdown;
 import org.gl.ceir.CeirPannelCode.Model.FileExportResponse;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
+import org.gl.ceir.CeirPannelCode.Model.MapDatatableResponse;
 import org.gl.ceir.CeirPannelCode.Model.PaymentRequest;
 import org.gl.ceir.CeirPannelCode.Service.ConsignmentService;
 import org.gl.ceir.CeirPannelCode.Util.UtilDownload;
@@ -82,10 +89,10 @@ UserProfileFeignImpl userProfileFeignImpl;
 FeignCleintImplementation feignCleintImplementation;
 @Autowired
 UtilDownload utildownload;
-/*
-* @Autowired ConsignmentService consignmentService;
-*/
-
+@Autowired
+DBTablesFeignClient dBTablesFeignClient;
+@Autowired
+DBrowDataModel dBrowDataModel;
 private final Logger log = LoggerFactory.getLogger(getClass());
 
 
@@ -197,7 +204,8 @@ public @ResponseBody GenricResponse registerConsignment(@RequestParam(name="supp
 @RequestParam(name="userTypeId",required = false) Integer userTypeId,
 @RequestParam(name="portAddress",required = false) Integer portAddress,
 @RequestParam(name="deviceQuantity",required = false) Integer deviceQuantity,
-@RequestParam(name="featureId",required = false) Integer featureId,HttpServletRequest request) {
+@RequestParam(name="featureId",required = false) Integer featureId,
+@RequestParam(name="roleType",required = false) String roleType,HttpServletRequest request) {
 
 
 	log.info("headers request="+request.getHeaderNames());
@@ -263,6 +271,7 @@ consignment.setCurrency(currency);
 consignment.setTotalPrice(totalPrice);
 consignment.setPortAddress(portAddress);
 consignment.setDeviceQuantity(deviceQuantity);
+consignment.setRoleType(roleType);
 log.info("consignment form parameters passed to register consignment api "+consignment.toString());
 GenricResponse response = feignCleintImplementation.addConsignment(consignment);
 log.info("response from register consignment api"+response.toString());
@@ -286,7 +295,8 @@ public @ResponseBody GenricResponse openconsignmentRecordPage(@RequestParam(name
 @RequestParam(name="userTypeId",required = false) Integer userTypeId,
 @RequestParam(name="portAddress",required = false) Integer portAddress,
 @RequestParam(name="featureId",required = false) Integer featureId,
-@RequestParam(name="deviceQuantity",required = false) Integer deviceQuantity) 
+@RequestParam(name="deviceQuantity",required = false) Integer deviceQuantity,
+@RequestParam(name="roleType",required = false) String roleType) 
 {
 ConsignmentModel consignment = new ConsignmentModel();
 
@@ -325,6 +335,7 @@ consignment.setUserType(userType);
 consignment.setUserTypeId(userTypeId);
 consignment.setPortAddress(portAddress);
 consignment.setDeviceQuantity(deviceQuantity);
+consignment.setRoleType(roleType);
 }
 else {
 log.info("file is empty or not "+file.isEmpty());
@@ -425,6 +436,7 @@ request.setUserName(consignmentUpdateRequest.getUserName());
 request.setUserType(consignmentUpdateRequest.getUserType());
 request.setUserTypeId(consignmentUpdateRequest.getUserTypeId());
 request.setFeatureId(consignmentUpdateRequest.getFeatureId());
+request.setRoleType(consignmentUpdateRequest.getRoleType());
 log.info(" request passed to the update consignment status="+request);
 GenricResponse response=feignCleintImplementation.updateConsignmentStatus(request);
 log.info("response after update consignment status="+response);
@@ -627,6 +639,7 @@ public String exportToExcel(@RequestParam(name="consignmentStartDate",required =
 	filterRequest.setUserType(userType);
 	filterRequest.setUserTypeId(usertypeId);
 	filterRequest.setFeatureId(3);
+	filterRequest.setRoleType(userType);
 	log.info(" request passed to the exportTo Excel Api =="+filterRequest+" *********** pageSize"+pageSize+"  pageNo  "+pageNo);
 	Object	response= feignCleintImplementation.consignmentFilter(filterRequest, pageNo, pageSize, file);
 
@@ -660,4 +673,54 @@ public @ResponseBody GenricResponse payConsignmentTax (@RequestBody PaymentReque
 	log.info("response from payConsignmentTax api "+response);
 	return response;
 }	
+
+
+// consignment History 
+
+@PostMapping("consignment-history")
+public ResponseEntity<?> viewHistory(HttpServletRequest request) {
+	List<List<Object>> finalList = new ArrayList<List<Object>>();
+	List<List<String>> mul = new ArrayList<List<String>>();
+	String filter = request.getParameter("filter");
+	MapDatatableResponse map = new MapDatatableResponse();
+	Gson gsonObject = new Gson();
+	DBrowDataModel filterRequest = gsonObject.fromJson(filter, DBrowDataModel.class);
+	try {
+		log.info("request passed to API:::::::::" + filter);
+		Object response = dBTablesFeignClient.historyConsignmentFeign(filterRequest);
+		Gson gson = new Gson();
+		String apiResponse = gson.toJson(response);
+		log.info("apiResponse ::::::::::::::" + apiResponse);
+		DBrowDataModel dBrowDataModel = gson.fromJson(apiResponse, DBrowDataModel.class);
+		log.info("response::::::" + dBrowDataModel);
+
+		List<String> columnList = dBrowDataModel.getColumns();
+		List<Map<String, String>> rowData = dBrowDataModel.getRowData();
+		List<DbListDataHeaders> headers = new ArrayList<>();
+
+		if (columnList.isEmpty()) {
+			dBrowDataModel.setColumns(Collections.emptyList());
+		} else {
+			List<String> list = dBrowDataModel.getColumns();
+			ListIterator<String> iterator = list.listIterator();
+			String columnName = null;
+			while (iterator.hasNext()) {
+				columnName = iterator.next();
+				headers.add(new DbListDataHeaders(columnName, columnName));
+			}
+
+			map.setColumns(headers);
+			map.setData(rowData);
+
+		}
+		return new ResponseEntity<>(map, HttpStatus.OK);
+
+	} catch (Exception e) {
+		log.error(e.getMessage(), e);
+		dBrowDataModel.setColumns(Collections.emptyList());
+		return new ResponseEntity<>(HttpStatus.OK);
+
+	}
+}
+
 }

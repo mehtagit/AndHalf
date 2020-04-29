@@ -56,6 +56,7 @@ function confirmantiondelete(){
 							"userTypeId": parseInt($("body").attr("data-userTypeID")),
 							"userType":$("body").attr("data-roleType"),
 							"userName":$("body").attr("data-username"),
+							"roleType":$("body").attr("data-roleType")
 
 			}
 			$.ajax({
@@ -324,7 +325,8 @@ function confirmantiondelete(){
 					"userTypeId": parseInt($("body").attr("data-userTypeID")),
 					"userType":$("body").attr("data-roleType"),
 					"userName":$("body").attr("data-username"),
-					"txnId":txn
+					"txnId":txn,
+					"roleType":$("body").attr("data-roleType")
 					 
 					
 			}
@@ -363,13 +365,17 @@ function confirmantiondelete(){
 					});
 
 					$('div#initialloader').delay(300).fadeOut('slow');
-						$('#consignmentLibraryTable input').unbind();
-						$('#consignmentLibraryTable input').bind('keyup', function (e) {
-							if (e.keyCode == 13) {
-								table.search(this.value).draw();
-							}
-
-						});
+						
+						   $('.dataTables_filter input')
+					       .off().on('keyup', function(event) {
+					    	   if(event.keyCode == 8 && !textBox.val() || event.keyCode == 46 && !textBox.val() || event.keyCode == 83 && !textBox.val()) {
+						    
+						            }
+					    		if (event.keyCode === 13) {
+					    			 table.search(this.value.trim(), false, false).draw();
+					    		}
+					          
+					       });
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
 					
@@ -422,6 +428,8 @@ function confirmantiondelete(){
 			formData.append('userType', $("body").attr("data-roleType"));
 			formData.append('userName', $("body").attr("data-username"));
 			formData.append('portAddress', parseInt($('#editPortAddress').val()));
+			formData.append('deviceQuantity', parseInt($('#editDeviceQuantity').val()));
+			formData.append('roleType', $("body").attr("data-roleType"));
 			$.ajax({
 				url: './updateRegisterConsignment',
 				type: 'POST',
@@ -744,6 +752,7 @@ function confirmantiondelete(){
 					"roleTypeUserId": parseInt($("body").attr("data-userTypeID")),
 					"userType":$("body").attr("data-roleType"),
 					"userName":$("body").attr("data-username"),
+					"roleType":$("body").attr("data-roleType")
 			}
 			$.ajax({
 				url : "./updateConsignmentStatus",
@@ -797,6 +806,7 @@ function confirmantiondelete(){
 					"roleTypeUserId": parseInt($("body").attr("data-userTypeID")),
 					"userType":$("body").attr("data-roleType"),
 					"userName":$("body").attr("data-username"),
+					"roleType":$("body").attr("data-roleType")
 			}
 			$.ajax({
 				url : "./updateConsignmentStatus",
@@ -1105,4 +1115,60 @@ function confirmantiondelete(){
 						error : function(xhr, ajaxOptions, thrownError) {
 						}
 					});
+		}
+		
+		
+		
+		
+		
+		function historyRecord(txnID){
+			
+			$("#tableOnModal").openModal({dismissible:false});
+			 var filter =[];
+			 var formData= new FormData();
+			 var filterRequest={
+					"tableName": "consignment_mgmt_aud",
+					"dbName" : "ceirconfig",
+					"txnId":txnID
+			}
+			formData.append("filter",JSON.stringify(filterRequest));	
+			if(lang=='km'){
+				var langFile='../resources/i18n/khmer_datatable.json';
+			}
+			$.ajax({
+				url: 'consignment-history',
+				type: 'POST',
+				data: formData,
+				processData: false,
+				contentType: false,
+				success: function(result){
+					var dataObject = eval(result);
+					//alert(JSON.stringify(dataObject.data))
+					$('#data-table-history').dataTable({
+						 "order" : [[1, "asc"]],
+						 destroy:true,
+						"serverSide": false,
+						 orderCellsTop : true,
+						"ordering" : false,
+						"bPaginate" : true,
+						"bFilter" : true,
+						"bInfo" : true,
+						"bSearchable" : true,
+						 "data": dataObject.data,
+						 "columns": dataObject.columns
+					
+				    });
+					$('div#initialloader').delay(300).fadeOut('slow');
+			}
+				
+	});
+		
+			$('.datepicker').on('mousedown',function(event){
+			event.preventDefault();
+		});
+
+			
+			
+			
+			
 		}
