@@ -51,12 +51,14 @@ public class CEIRFeatureFileUploader {
                 logger.info(",,,,,,,,,,,");
                 HashMap<String, String> feature_file_management = new HashMap<String, String>();
                 feature_file_management = ceirfunction.getFeatureFileManagement(conn, feature_file_mapping.get("mgnt_table_db"), file_details.getString("txn_id"));   //select * from " + management_db + " 
+               
                 if (file_details.getString("feature").equalsIgnoreCase("Register") && !(feature_file_management.get("modified_on").equals(feature_file_management.get("created_on")))) {
                     ceirfunction.updateFeatureFileStatus(conn, file_details.getString("txn_id"), 4, file_details.getString("feature"), file_details.getString("sub_feature")); // update web_action_db           
                     ceirfunction.updateFeatureManagementStatus(conn, file_details.getString("txn_id"), 2, feature_file_mapping.get("mgnt_table_db"), file_details.getString("feature"));
                     logger.info("  It is regsiter and different dates,, means it is modified  so we remove it");
                     break;
                 }
+                
                 String user_type = ceirfunction.getUserType(conn, feature_file_management.get("user_id"), file_details.getString("feature").toUpperCase(), file_details.getString("txn_id"));      //   usertype_name from users a, usertype b
                 //  ceirfunction.addFeatureFileConfigDetails(conn, "insert", file_details.getString("feature"), file_details.getString("sub_feature"), file_details.getString("txn_id"), feature_file_management.get("file_name"), "Init", user_type);     //insert into feature_file_config_db 
                 logger.info("*****" + user_type);

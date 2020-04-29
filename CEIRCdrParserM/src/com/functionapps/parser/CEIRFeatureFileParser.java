@@ -144,7 +144,7 @@ public class CEIRFeatureFileParser {
                 new ConsignmentDelete().process(conn, operator, sub_feature, rulelist, txn_id, operator_tag);
             } else if (operator.equalsIgnoreCase("consignment") && (sub_feature.equalsIgnoreCase("approve"))) {
                 System.out.println("running consignment approve process.");
-                new ApproveConsignment().process(conn, operator, sub_feature, rulelist, txn_id, operator_tag);
+                new ApproveConsignment().process(conn, operator, sub_feature, rulelist, txn_id, operator_tag ,usertype_name);
             } else if (operator.equalsIgnoreCase("TYPE_APPROVED") && (sub_feature.equalsIgnoreCase("REGISTER"))) {
                 System.out.println("running tac register process.");
                 new RegisterTac().process(conn, operator, sub_feature, rulelist, txn_id, operator_tag);

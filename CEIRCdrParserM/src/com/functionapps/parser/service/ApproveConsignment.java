@@ -15,7 +15,7 @@ import com.functionapps.pojo.DeviceImporterDb;
 public class ApproveConsignment {
 	static Logger logger = Logger.getLogger(ApproveConsignment.class);
 
-	public void process(Connection conn, String operator, String sub_feature, ArrayList<Rule> rulelist, String txnId, String operator_tag ){
+	public void process(Connection conn, String operator, String sub_feature, ArrayList<Rule> rulelist, String txnId, String operator_tag , String usertype_name){
 
 		DeviceCustomDbDao deviceCustomDbDao = new DeviceCustomDbDao();
 		DeviceImporterDbDao deviceImporterDbDao = new DeviceImporterDbDao();
