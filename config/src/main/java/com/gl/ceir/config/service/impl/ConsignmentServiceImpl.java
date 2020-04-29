@@ -941,19 +941,22 @@ public class ConsignmentServiceImpl {
 			cmsb.with(new SearchCriteria("taxPaidStatus", consignmentMgmt.getTaxPaidStatus(), SearchOperation.EQUALITY, Datatype.STRING));
 
 		// Status handling.
-		if("CEIRADMIN".equalsIgnoreCase(consignmentMgmt.getUserType())) {
-			if(Objects.isNull(consignmentMgmt.getConsignmentStatus()))
-				cmsb.with(new SearchCriteria(consignmentStatusLiteral, 3, SearchOperation.EQUALITY, Datatype.STRING));
-			else {
-				cmsb.with(new SearchCriteria(consignmentStatusLiteral, consignmentMgmt.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
-			}
-		}else if("Custom".equalsIgnoreCase(consignmentMgmt.getUserType())) {
-			if(Objects.isNull(consignmentMgmt.getConsignmentStatus()))
-				cmsb.with(new SearchCriteria(consignmentStatusLiteral, 5, SearchOperation.EQUALITY, Datatype.STRING));
-			else {
-				cmsb.with(new SearchCriteria(consignmentStatusLiteral, consignmentMgmt.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
-			}
-		}else if(Objects.nonNull(consignmentMgmt.getConsignmentStatus())) {
+		/*
+		 * if("CEIRADMIN".equalsIgnoreCase(consignmentMgmt.getUserType())) {
+		 * if(Objects.isNull(consignmentMgmt.getConsignmentStatus())) cmsb.with(new
+		 * SearchCriteria(consignmentStatusLiteral, 3, SearchOperation.EQUALITY,
+		 * Datatype.STRING)); else { cmsb.with(new
+		 * SearchCriteria(consignmentStatusLiteral,
+		 * consignmentMgmt.getConsignmentStatus(), SearchOperation.EQUALITY,
+		 * Datatype.STRING)); } }else
+		 * if("Custom".equalsIgnoreCase(consignmentMgmt.getUserType())) {
+		 * if(Objects.isNull(consignmentMgmt.getConsignmentStatus())) cmsb.with(new
+		 * SearchCriteria(consignmentStatusLiteral, 5, SearchOperation.EQUALITY,
+		 * Datatype.STRING)); else { cmsb.with(new
+		 * SearchCriteria(consignmentStatusLiteral,
+		 * consignmentMgmt.getConsignmentStatus(), SearchOperation.EQUALITY,
+		 * Datatype.STRING)); } }else
+		 */ if(Objects.nonNull(consignmentMgmt.getConsignmentStatus())) {
 			cmsb.with(new SearchCriteria("consignmentStatus", consignmentMgmt.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
 		}else {
 

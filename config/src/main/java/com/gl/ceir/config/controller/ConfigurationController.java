@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gl.ceir.config.model.AuditTrail;
+import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.MessageConfigurationDb;
@@ -52,21 +53,28 @@ public class ConfigurationController {
 
 		return mapping;
 	}
-	
+
 	@ApiOperation(value = "Paginated view of System Config.", response = SystemConfigurationDb.class)
 	@PostMapping("/filter/system-configuration")
 	public MappingJacksonValue paginatedViewOfSystemConfig(@RequestBody FilterRequest filterRequest,
 			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
 			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
 			@RequestParam(value = "file", defaultValue = "0") Integer file) {
-
+		MappingJacksonValue mapping = null;
 		logger.info("Paginated view of System Config " + filterRequest);
+		if(file == 0) {
+			Page<SystemConfigurationDb> page = configurationManagementServiceImpl.filterSystemConfiguration(filterRequest, pageNo, pageSize);
+			mapping = new MappingJacksonValue(page);
+			logger.info("Response to send = " + page);
 
-		Page<SystemConfigurationDb> page = configurationManagementServiceImpl.filterSystemConfiguration(filterRequest, pageNo, pageSize);
+		}
+		else {
+			FileDetails fileDetails = configurationManagementServiceImpl.exportFile_System(filterRequest);
+			mapping = new MappingJacksonValue(fileDetails);
+			logger.info("Response to send fileDetails:::::::::::" + fileDetails);
+		}
 
-		MappingJacksonValue mapping = new MappingJacksonValue(page);
 
-		logger.info("Response to send = " + page);
 
 		return mapping;
 	}
@@ -121,14 +129,20 @@ public class ConfigurationController {
 			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
 			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
 			@RequestParam(value = "file", defaultValue = "0") Integer file) {
-
+		MappingJacksonValue mapping = null;
 		logger.info("Paginated view of Message Config " + filterRequest);
+		if(file  == 0) {
+			Page<MessageConfigurationDb>  page = configurationManagementServiceImpl.filterMessageConfiguration(filterRequest, pageNo, pageSize);
+			mapping = new MappingJacksonValue(page);
+			logger.info("Response to send = " + page);
 
-		Page<MessageConfigurationDb>  page = configurationManagementServiceImpl.filterMessageConfiguration(filterRequest, pageNo, pageSize);
+		}
+		else {
+			FileDetails fileDetails = configurationManagementServiceImpl.exportFile_Message(filterRequest);
+			mapping = new MappingJacksonValue(fileDetails);
+			logger.info("Response to send fileDetails:::::::::::" + fileDetails);
 
-		MappingJacksonValue mapping = new MappingJacksonValue(page);
-
-		logger.info("Response to send = " + page);
+		}
 
 		return mapping;
 	}
@@ -173,7 +187,7 @@ public class ConfigurationController {
 
 		return mapping;
 	}
-	
+
 	@ApiOperation(value = "Paginated view of policy Config.", response = SystemConfigurationDb.class)
 	@PostMapping("/filter/policy-configuration")
 	public MappingJacksonValue paginatedViewOfPolicyConfig(@RequestBody FilterRequest filterRequest,
@@ -261,7 +275,7 @@ public class ConfigurationController {
 
 		return mapping;
 	}
-	
+
 	@ApiOperation(value = "System Config List DB - by-tag-and-usertype", response = SystemConfigListDb.class)
 	@GetMapping("/system-config-list/by-tag-and-usertype/{tagId}/{userTypeId}")
 	public MappingJacksonValue findSystemConfigListByTagAndUserType(@PathVariable("tagId") String tagId, 
@@ -277,7 +291,7 @@ public class ConfigurationController {
 
 		return mapping;
 	}
-	
+
 	@ApiOperation(value = "System Config List DB - by-tag-and-featureid", response = SystemConfigListDb.class)
 	@GetMapping("/system-config-list/by-tag-and-featureid/{tagId}/{featureId}")
 	public MappingJacksonValue findSystemConfigListByTagAndfeatureId(@PathVariable("tagId") String tagId, 
@@ -293,7 +307,7 @@ public class ConfigurationController {
 
 		return mapping;
 	}
-	
+
 	@ApiOperation(value = "Save || System Config", response = SystemConfigurationDb.class)
 	@RequestMapping(path = "/system/", method = RequestMethod.POST)
 	public MappingJacksonValue saveSystemConfiguration(@RequestBody SystemConfigurationDb systemConfigurationDb) {
@@ -308,7 +322,7 @@ public class ConfigurationController {
 
 		return mapping;
 	}
-	
+
 	@ApiOperation(value = "Save || Message Config", response = MessageConfigurationDb.class)
 	@RequestMapping(path = "/message/", method = RequestMethod.POST)
 	public MappingJacksonValue saveMessageConfiguration(@RequestBody MessageConfigurationDb messageConfigurationDb) {
@@ -323,7 +337,7 @@ public class ConfigurationController {
 
 		return mapping;
 	}
-	
+
 	@ApiOperation(value = "Save || Policy Config", response = MessageConfigurationDb.class)
 	@RequestMapping(path = "/policy/", method = RequestMethod.POST)
 	public MappingJacksonValue savePolicyConfiguration(@RequestBody PolicyConfigurationDb policyConfigurationDb) {
@@ -338,5 +352,5 @@ public class ConfigurationController {
 
 		return mapping;
 	}
-	
+
 }

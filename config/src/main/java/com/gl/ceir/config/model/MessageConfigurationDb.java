@@ -1,6 +1,7 @@
 package com.gl.ceir.config.model;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -29,11 +30,11 @@ public class MessageConfigurationDb implements Serializable {
 
 	@CreationTimestamp
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
-	private Date createdOn;
+	private LocalDateTime createdOn;
 
 	@UpdateTimestamp
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
-	private Date modifiedOn;
+	private LocalDateTime modifiedOn;
 	private String tag;
 	
 	@Column(length = 1000)
@@ -48,70 +49,91 @@ public class MessageConfigurationDb implements Serializable {
 	private Integer active;
 	
 	private String subject;
-	
+
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public Date getCreatedOn() {
+
+	public LocalDateTime getCreatedOn() {
 		return createdOn;
 	}
-	public void setCreatedOn(Date createdOn) {
+
+	public void setCreatedOn(LocalDateTime createdOn) {
 		this.createdOn = createdOn;
 	}
-	public Date getModifiedOn() {
+
+	public LocalDateTime getModifiedOn() {
 		return modifiedOn;
 	}
-	public void setModifiedOn(Date modifiedOn) {
+
+	public void setModifiedOn(LocalDateTime modifiedOn) {
 		this.modifiedOn = modifiedOn;
 	}
+
 	public String getTag() {
 		return tag;
 	}
+
 	public void setTag(String tag) {
 		this.tag = tag;
 	}
+
 	public String getValue() {
 		return value;
 	}
+
 	public void setValue(String value) {
 		this.value = value;
 	}
+
 	public String getDescription() {
 		return description;
 	}
+
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
 	public Integer getChannel() {
 		return channel;
 	}
+
 	public void setChannel(Integer channel) {
 		this.channel = channel;
 	}
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
+
 	public String getChannelInterp() {
 		return channelInterp;
 	}
+
 	public void setChannelInterp(String channelInterp) {
 		this.channelInterp = channelInterp;
 	}
+
 	public Integer getActive() {
 		return active;
 	}
+
 	public void setActive(Integer active) {
 		this.active = active;
 	}
+
 	public String getSubject() {
 		return subject;
 	}
+
 	public void setSubject(String subject) {
 		this.subject = subject;
 	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -131,8 +153,13 @@ public class MessageConfigurationDb implements Serializable {
 		builder.append(channel);
 		builder.append(", channelInterp=");
 		builder.append(channelInterp);
+		builder.append(", active=");
+		builder.append(active);
+		builder.append(", subject=");
+		builder.append(subject);
 		builder.append("]");
 		return builder.toString();
 	}
+	
 	
 }

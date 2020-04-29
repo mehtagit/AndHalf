@@ -1,5 +1,12 @@
 package com.gl.ceir.config.service.impl;
 
+import java.io.IOException;
+import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -16,9 +23,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.gl.ceir.config.ConfigTags;
 import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
+import com.gl.ceir.config.genericresponse.DataClass;
+import com.gl.ceir.config.genericresponse.GenricResponse_Class;
 import com.gl.ceir.config.model.AuditTrail;
+import com.gl.ceir.config.model.ConsignmentMgmt;
+import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.MessageConfigurationDb;
@@ -26,14 +38,21 @@ import com.gl.ceir.config.model.Notification;
 import com.gl.ceir.config.model.PolicyConfigurationDb;
 import com.gl.ceir.config.model.PolicyConfigurationHistoryDb;
 import com.gl.ceir.config.model.SearchCriteria;
+import com.gl.ceir.config.model.StateMgmtDb;
 import com.gl.ceir.config.model.SystemConfigListDb;
 import com.gl.ceir.config.model.SystemConfigUserwiseDb;
 import com.gl.ceir.config.model.SystemConfigurationDb;
 import com.gl.ceir.config.model.SystemConfigurationHistoryDb;
 import com.gl.ceir.config.model.constants.Datatype;
+import com.gl.ceir.config.model.constants.Features;
 import com.gl.ceir.config.model.constants.SearchOperation;
+import com.gl.ceir.config.model.constants.SubFeatures;
 import com.gl.ceir.config.model.constants.Tags;
+import com.gl.ceir.config.model.file.ConsignmentFileModel;
+import com.gl.ceir.config.model.file.MessageMgtFileModel;
+import com.gl.ceir.config.model.file.SystemMgtFileModel;
 import com.gl.ceir.config.repository.AuditTrailRepository;
+import com.gl.ceir.config.repository.ConfigurationManagementRepository;
 import com.gl.ceir.config.repository.MessageConfigurationDbRepository;
 import com.gl.ceir.config.repository.NotificationRepository;
 import com.gl.ceir.config.repository.PolicyConfigurationDbRepository;
@@ -43,7 +62,12 @@ import com.gl.ceir.config.repository.SystemConfigUserwiseRepository;
 import com.gl.ceir.config.repository.SystemConfigurationDbRepository;
 import com.gl.ceir.config.repository.SystemConfigurationHistoryDbRepository;
 import com.gl.ceir.config.specificationsbuilder.GenericSpecificationBuilder;
+import com.gl.ceir.config.util.CustomMappingStrategy;
 import com.gl.ceir.config.util.InterpSetter;
+import com.google.gson.Gson;
+import com.opencsv.CSVWriter;
+import com.opencsv.bean.StatefulBeanToCsv;
+import com.opencsv.bean.StatefulBeanToCsvBuilder;
 
 @Service
 public class ConfigurationManagementServiceImpl {
@@ -83,6 +107,12 @@ public class ConfigurationManagementServiceImpl {
 	@Autowired
 	InterpSetter interpSetter;
 
+	@Autowired
+	ConfigurationManagementServiceImpl configurationManagementServiceImpl;
+
+	@Autowired
+	StateMgmtServiceImpl stateMgmtServiceImpl;
+	
 	public List<SystemConfigurationDb> getAllInfo(){
 		try {
 			return systemConfigurationDbRepository.findAll();
@@ -197,20 +227,7 @@ public class ConfigurationManagementServiceImpl {
 		try {
 
 			Pageable pageable = PageRequest.of(pageNo, pageSize);
-			GenericSpecificationBuilder<MessageConfigurationDb> sb = new GenericSpecificationBuilder<>(propertiesReader.dialect);
-
-			if(Objects.nonNull(filterRequest.getTag()))
-				sb.with(new SearchCriteria("tag", filterRequest.getTag(), SearchOperation.EQUALITY, Datatype.STRING));
-
-			if(Objects.nonNull(filterRequest.getChannel()))
-				sb.with(new SearchCriteria("channel", filterRequest.getChannel(), SearchOperation.EQUALITY, Datatype.STRING));
-
-			if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
-				sb.orSearch(new SearchCriteria("description", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
-				sb.orSearch(new SearchCriteria("value", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
-			}
-
-			Page<MessageConfigurationDb> page = messageConfigurationDbRepository.findAll(sb.build(), pageable);
+			Page<MessageConfigurationDb> page = messageConfigurationDbRepository.findAll(buildSpecification(filterRequest).build(), pageable);
 
 			for(MessageConfigurationDb messageConfigurationDb : page.getContent()) {	
 				messageConfigurationDb.setChannelInterp(interpSetter.setConfigInterp(Tags.CHANNEL, messageConfigurationDb.getChannel()));
@@ -305,7 +322,7 @@ public class ConfigurationManagementServiceImpl {
 
 			if(Objects.nonNull(filterRequest.getType()))
 				sb.with(new SearchCriteria("type", filterRequest.getType(), SearchOperation.EQUALITY, Datatype.STRING));
-			
+
 			if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
 				sb.orSearch(new SearchCriteria("description", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 				sb.orSearch(new SearchCriteria("value", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
@@ -438,9 +455,9 @@ public class ConfigurationManagementServiceImpl {
 		try {
 
 			logger.debug("getSystemConfigListByTag : " + tagId);
-		
+
 			List<SystemConfigListDb> systemConfigListDbs = getSystemConfigListDb(systemConfigListRepository.findByTag(tagId, new Sort(Sort.Direction.ASC, "listOrder")), systemConfigUserwiseRepository.findByTagIdAndUserTypeId(tagId, userTypeId));
-			
+
 			return addOtherToLastPostion(systemConfigListDbs);
 
 		} catch (Exception e) {
@@ -457,7 +474,7 @@ public class ConfigurationManagementServiceImpl {
 			List<SystemConfigListDb> systemConfigListDbs = getSystemConfigListDb(systemConfigListRepository.findByTag(tagId, new Sort(Sort.Direction.ASC, "listOrder")), systemConfigUserwiseRepository.findByTagIdAndFeatureId(tagId, featureId));
 
 			return addOtherToLastPostion(systemConfigListDbs);
-			
+
 		} catch (Exception e) {
 			logger.info(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
@@ -521,17 +538,242 @@ public class ConfigurationManagementServiceImpl {
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
-	
+
 	public List<SystemConfigListDb> addOtherToLastPostion(List<SystemConfigListDb> systemConfigListDbs){
 		//Others list
 		List<SystemConfigListDb> others = systemConfigListDbs.stream().filter(e -> "other".equalsIgnoreCase(e.getInterp())).collect(Collectors.toList());
-		
+
 		//Removed Other
 		systemConfigListDbs = systemConfigListDbs.stream().filter(e -> !"other".equalsIgnoreCase(e.getInterp())).collect(Collectors.toList());
 		//Other list appended
 		systemConfigListDbs.addAll(others);
-		
+
 		return systemConfigListDbs;
 	}
+
+
 	
+	
+	
+	private GenericSpecificationBuilder<MessageConfigurationDb> buildSpecification(FilterRequest filterRequest){
+	GenericSpecificationBuilder<MessageConfigurationDb> sb = new GenericSpecificationBuilder<>(propertiesReader.dialect);
+
+	if(Objects.nonNull(filterRequest.getTag()))
+		sb.with(new SearchCriteria("tag", filterRequest.getTag(), SearchOperation.EQUALITY, Datatype.STRING));
+
+	if(Objects.nonNull(filterRequest.getChannel()))
+		sb.with(new SearchCriteria("channel", filterRequest.getChannel(), SearchOperation.EQUALITY, Datatype.STRING));
+
+	if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
+		sb.orSearch(new SearchCriteria("description", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+		sb.orSearch(new SearchCriteria("value", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+	}
+	return sb;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	public void setInterp(MessageConfigurationDb messageConfigurationDb) {
+		if(Objects.nonNull(messageConfigurationDb.getChannel())) {
+		messageConfigurationDb.setChannelInterp(interpSetter.setConfigInterp(Tags.CHANNEL, messageConfigurationDb.getChannel()));
+		}	
+	}	
+	
+	
+	
+	
+	private List<MessageConfigurationDb> getAll(FilterRequest filterRequest){
+		try {
+			List<MessageConfigurationDb> list = messageConfigurationDbRepository.findAll(buildSpecification(filterRequest).build(), new Sort(Sort.Direction.DESC, "modifiedOn"));
+			logger.info("consignmentMgmts " + list);
+
+			for(MessageConfigurationDb messageConfigurationDb : list) {
+			setInterp(messageConfigurationDb);
+			}
+
+			logger.info("MessageConfigurationDb list : " + list);
+			return list;
+
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
+	}
+	
+	
+	
+	
+	/*************************************** Export File for System Mgt ********************************
+	 *************************************************************************************************/
+	
+	public FileDetails exportFile_System(FilterRequest filterRequest) {
+		String fileName = null;
+		Writer writer   = null;
+
+		SystemMgtFileModel fileModel = null;
+
+		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		DateTimeFormatter dtf2  = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
+
+
+		SystemConfigurationDb filepath =configurationManagementServiceImpl.findByTag(ConfigTags.file_download_dir);
+		logger.info("CONFIG : file_systemMgt_download_dir [" + filepath + "]");
+		SystemConfigurationDb link =configurationManagementServiceImpl.findByTag(ConfigTags.file_download_link);
+		logger.info("CONFIG : file_systemMgt_download_link [" + link + "]");
+
+		StatefulBeanToCsvBuilder<SystemMgtFileModel> builder = null;
+		StatefulBeanToCsv<SystemMgtFileModel> csvWriter      = null;
+		List< SystemMgtFileModel> fileRecords                = null;
+		CustomMappingStrategy<SystemMgtFileModel> mappingStrategy = new CustomMappingStrategy<>();
+
+		try {
+			List<SystemConfigurationDb> systemConfigurationDBList = systemConfigurationDbRepository.getByType(filterRequest.getType());
+			logger.info("systemConfigurationDBList:::::::::::::::::::"+systemConfigurationDBList);
+			fileName = LocalDateTime.now().format(dtf2).replace(" ", "_") + "_SystemMgt.csv";
+			writer = Files.newBufferedWriter(Paths.get(filepath.getValue() + fileName));
+			mappingStrategy.setType(SystemMgtFileModel.class);
+
+			builder = new StatefulBeanToCsvBuilder<>(writer);
+			csvWriter = builder.withMappingStrategy(mappingStrategy).withSeparator(',').withQuotechar(CSVWriter.NO_QUOTE_CHARACTER).build();
+
+			if( !systemConfigurationDBList.isEmpty() ) {
+				fileRecords = new ArrayList<>();
+				for( SystemConfigurationDb systemConfigurationDB : systemConfigurationDBList ) {
+
+					LocalDateTime creation = systemConfigurationDB.getCreatedOn() == null ? LocalDateTime.now() : systemConfigurationDB.getCreatedOn();
+					LocalDateTime modified = systemConfigurationDB.getModifiedOn() == null ? LocalDateTime.now() : systemConfigurationDB.getModifiedOn();
+					
+					logger.info("size of arraylist:::::"+systemConfigurationDBList.size());
+					fileModel = new SystemMgtFileModel(
+							creation.format(dtf), 
+							modified.format(dtf), 
+							systemConfigurationDB.getDescription() == null ? "NA" : systemConfigurationDB.getDescription(),
+							systemConfigurationDB.getValue() == null ? "NA" : systemConfigurationDB.getValue(), 
+									systemConfigurationDB.getUserType() == null ? "NA" : systemConfigurationDB.getUserType());
+					fileRecords.add(fileModel);
+				}
+
+				csvWriter.write(fileRecords);
+			}else {
+				csvWriter.write( new SystemMgtFileModel());
+			}
+
+			/*
+			 * auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), "",
+			 * Long.valueOf(filterRequest.getUserTypeId()), filterRequest.getUserType(),
+			 * Long.valueOf(filterRequest.getFeatureId()), Features.CONSIGNMENT,
+			 * SubFeatures.VIEW, "", "NA",filterRequest.getRoleType()));
+			 * logger.info("AUDIT : Saved file export request in audit.");
+			 */
+			FileDetails fileDetails = new FileDetails( fileName, filepath.getValue(), link.getValue() + fileName );
+			logger.info(fileDetails);
+			return fileDetails;
+
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}finally {
+			try {
+
+				if( writer != null )
+					writer.close();
+			} catch (IOException e) {}
+		}
+
+	}
+	
+	
+	
+	
+	
+	/*************************************** Export File for Message Mgt ********************************
+	 *************************************************************************************************/
+	
+	public FileDetails exportFile_Message(FilterRequest filterRequest) {
+		String fileName = null;
+		Writer writer   = null;
+
+		MessageMgtFileModel fileModel = null;
+
+		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		DateTimeFormatter dtf2  = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
+
+
+		SystemConfigurationDb filepath =configurationManagementServiceImpl.findByTag(ConfigTags.file_download_dir);
+		logger.info("CONFIG : file_messageMgt_download_dir [" + filepath + "]");
+		SystemConfigurationDb link =configurationManagementServiceImpl.findByTag(ConfigTags.file_download_link);
+		logger.info("CONFIG : file_messageMgt_download_link [" + link + "]");
+
+		StatefulBeanToCsvBuilder<MessageMgtFileModel> builder = null;
+		StatefulBeanToCsv<MessageMgtFileModel> csvWriter      = null;
+		List< MessageMgtFileModel> fileRecords                = null;
+		CustomMappingStrategy<MessageMgtFileModel> mappingStrategy = new CustomMappingStrategy<>();
+
+		try {
+			List<MessageConfigurationDb> messageConfigurationDbList = getAll(filterRequest);
+			logger.info("systemConfigurationDBList:::::::::::::::::::"+messageConfigurationDbList);
+			fileName = LocalDateTime.now().format(dtf2).replace(" ", "_") + "_MessageMgt.csv";
+			writer = Files.newBufferedWriter(Paths.get(filepath.getValue() + fileName));
+			mappingStrategy.setType(MessageMgtFileModel.class);
+
+			builder = new StatefulBeanToCsvBuilder<>(writer);
+			csvWriter = builder.withMappingStrategy(mappingStrategy).withSeparator(',').withQuotechar(CSVWriter.NO_QUOTE_CHARACTER).build();
+
+			if( !messageConfigurationDbList.isEmpty() ) {
+				fileRecords = new ArrayList<>();
+				for( MessageConfigurationDb messageConfigurationDb : messageConfigurationDbList ) {
+
+					
+					LocalDateTime creation = messageConfigurationDb.getCreatedOn() == null ? LocalDateTime.now() : messageConfigurationDb.getCreatedOn();
+					LocalDateTime modified = messageConfigurationDb.getModifiedOn() == null ? LocalDateTime.now() : messageConfigurationDb.getModifiedOn();
+					
+					
+					logger.info("size of arraylist:::::"+messageConfigurationDbList.size());
+					fileModel = new MessageMgtFileModel(creation.format(dtf), 
+							modified.format(dtf), 
+							messageConfigurationDb.getDescription() == null ? "NA" : messageConfigurationDb.getDescription(),
+							messageConfigurationDb.getValue() == null ? "NA" : messageConfigurationDb.getValue(),
+							messageConfigurationDb.getChannelInterp() == null ? "NA" : messageConfigurationDb.getChannelInterp());
+					fileRecords.add(fileModel);
+				}
+
+			
+				
+				csvWriter.write(fileRecords);
+			}else {
+				csvWriter.write( new MessageMgtFileModel());
+			}
+
+			/*
+			 * auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), "",
+			 * Long.valueOf(filterRequest.getUserTypeId()), filterRequest.getUserType(),
+			 * Long.valueOf(filterRequest.getFeatureId()), Features.CONSIGNMENT,
+			 * SubFeatures.VIEW, "", "NA",filterRequest.getRoleType()));
+			 * logger.info("AUDIT : Saved file export request in audit.");
+			 */
+			FileDetails fileDetails = new FileDetails( fileName, filepath.getValue(), link.getValue() + fileName );
+			logger.info(fileDetails);
+			return fileDetails;
+
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}finally {
+			try {
+
+				if( writer != null )
+					writer.close();
+			} catch (IOException e) {}
+		}
+
+	}
+	
+	
+	
+
 }
