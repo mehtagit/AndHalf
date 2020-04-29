@@ -72,11 +72,21 @@ public class CEIRFeatureFileUploader {
                     complete_file_path = basePath + file_details.getString("txn_id") + "/" + feature_file_management.get("file_name");
                     System.out.println("Complete file name " + complete_file_path);
                     logger.info("Complete file name is.... " + complete_file_path);
-                    if (file_details.getString("sub_feature").equalsIgnoreCase("delete")) {
+                    if (file_details.getString("sub_feature").equalsIgnoreCase("delete")  || file_details.getString("sub_feature").equalsIgnoreCase("approve")) {
                         ceirfunction.updateFeatureFileStatus(conn, file_details.getString("txn_id"), 2, file_details.getString("feature"), file_details.getString("sub_feature")); // update web_action_db               
-                    } else {
-                        rawDataResult = hfr.readConvertedFeatureFile(conn, feature_file_management.get("file_name"), complete_file_path, file_details.getString("feature"), basePath, raw_upload_set_no, file_details.getString("txn_id"), file_details.getString("sub_feature"), feature_file_mapping.get("mgnt_table_db"), user_type);
+                    } 
+//                     if (file_details.getString("sub_feature").equalsIgnoreCase("delete")) {
+//                        ceirfunction.updateFeatureFileStatus(conn, file_details.getString("txn_id"), 2, file_details.getString("feature"), file_details.getString("sub_feature")); // update web_action_db               
+//                    } 
+                    
+                    
+                     if (file_details.getString("sub_feature").equalsIgnoreCase("register")    ||  file_details.getString("sub_feature").equalsIgnoreCase("update")  ) {
+                       logger.info("Sub State :.... " + file_details.getString("sub_feature")   + " Only Web action State to be update ");
+                         rawDataResult = hfr.readConvertedFeatureFile(conn, feature_file_management.get("file_name"), complete_file_path, file_details.getString("feature"), basePath, raw_upload_set_no, file_details.getString("txn_id"), file_details.getString("sub_feature"), feature_file_mapping.get("mgnt_table_db"), user_type);
                     }
+                     
+                     
+                     
                 } else {
                     logger.info("No File Found.. ");
                     if (file_details.getString("feature").equalsIgnoreCase("TYPE_APPROVED") && file_details.getString("sub_feature").equalsIgnoreCase("register")) {
