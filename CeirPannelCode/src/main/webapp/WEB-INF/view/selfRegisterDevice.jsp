@@ -600,7 +600,7 @@ input[type='search'] {
 													<div class="input-field col s12 m6 l6">
 														<p
 															style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
-															<spring:message code="input.Country" />
+															<spring:message code="select.countryBoughtFrom" />
 															
 														</p>
 														<select id="country1" class="browser-default"
@@ -722,14 +722,19 @@ input[type='search'] {
 											</div>
 										</div>
 
-
+										<p>
+					      <label style="color: black!important;">
+					        <input name="disclamer" id="disclamer" type="checkbox" 	oninput="InvalidMsg(this,'checkbox','<spring:message code="validation.checkbox" />');" oninvalid="InvalidMsg(this,'checkbox','<spring:message code="validation.checkbox" />');" required />
+					        <span> <span class="star">*</span> <spring:message code="registration.certifyMsg" /></span>
+					      </label>
+					    </p>	
 										<p>
 											<spring:message code="input.requiredfields" />
 											<span class="star">*</span>
 										</p>
 										<div class="row" style="padding-bottom: 50px;">
 											<div class="input-field col s12 m12 center">
-												<button id="endUserRegisterButton" type="submit" class="btn">
+												<button id="endUserRegisterButton" type="submit" disabled="disabled" class="btn">
 													<spring:message code="button.submit" />
 												</button>
 												<a href="./redirectToHomePage" class="btn"

@@ -204,7 +204,7 @@ input[type='search'] {
 														 <input type="text"  readonly="readonly" >
 													</div> -->
 													<div class="file-path-wrapper">
-														<input class="file-path validate responsive-file-div" id="csvUploadFileName" value="${viewInformation.endUserDB.passportFileName}"
+														<input class="file-path validate responsive-file-div" id="csvUploadFileName" readonly="readonly" value="${viewInformation.endUserDB.passportFileName}"
 															type="text">
 														<a	class="imgPreviewLink" onclick="previewFile('${fileLink}','${viewInformation.endUserDB.passportFileName}','${viewInformation.endUserDB.txnId}','${viewInformation.endUserDB.docTypeInterp}')">Preview</a>
 													</div>
@@ -218,8 +218,8 @@ input[type='search'] {
 												</div>
 
 												<div class="input-field col s12 m4 l4">
-													<input type="text" readonly="readonly"  value="${viewInformation.endUserDB.middleName}">
-													<label for="middleName"><spring:message code="input.middleName" /></label>
+													<input type="text" readonly="readonly" id="middleName" value="${viewInformation.endUserDB.middleName}">
+													<label for="middleName" class="active"><spring:message code="input.middleName" /></label>
 												</div>
 
 												<div class="input-field col s12 m4 l4">
@@ -242,7 +242,7 @@ input[type='search'] {
 									</c:when>
 									<c:otherwise>
 									<div class="input-field col s12 m6" id="entryCountryDiv" style="display: block;">
-												<input type="text" readonly="readonly" id="datepicker" value="${viewInformation.endUserDB.entryDateInCountry}" /> <label for="datepicker"><spring:message
+												<input type="text" readonly="readonly" class="active" id="datepicker" value="${viewInformation.endUserDB.entryDateInCountry}" /> <label for="datepicker"><spring:message
 														code="input.EntryCountry" /> <span class="star"></span></label>
 									</div>
 									</c:otherwise>
@@ -341,7 +341,7 @@ input[type='search'] {
 
 											<div class="col s12 m12" style="margin-top: 10px;">
 												<div class="input-field col s12 m6 l6">
-														<input type="email" readonly="readonly"
+														<input type="email" readonly="readonly" id="email"
 														 value="${viewInformation.endUserDB.email}"> <label for="email"><spring:message code="input.email" /><span
 														class="star"></span></label>
 												</div>
@@ -558,12 +558,12 @@ input[type='search'] {
                                                       <c:choose>
 												<c:when test = "${viewInformation.endUserDB.onVisa=='N'}">
 													<div class="input-field col s12 m6 l6">
-														<input type="text" value="${viewInformation.price}" readonly="readonly">
+														<input type="text" id="Price1" value="${viewInformation.price}" readonly="readonly">
 														<label for="Price1"><spring:message code="select.price" /></label>
 													</div>
 
 													<div class="col s12 m6">
-														<label for="Currency1"><spring:message code="input.currency" /><span class="star"></span></label>
+														<label for="Currency1" class="active"><spring:message code="input.currency" /><span class="star"></span></label>
 														<input type="text" value="${viewInformation.currencyInterp}" readonly="readonly">
 													</div>
 													</c:when>
@@ -1084,7 +1084,15 @@ if(onVisa=='Y')
 	
 
 	$("#visaDetails").css("display", "block"); 
-	}	
+	}
+/* 	
+$("label[for='middleName']").addClass('active');
+$("label[for='datepicker']").addClass('active');
+$("label[for='email']").addClass('active');
+$("label[for='Price1']").addClass('active');
+ */
+
+
 </script>
 </body>
 </html>

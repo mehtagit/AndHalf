@@ -968,26 +968,34 @@
                                                             title="" maxlength="16" value="1500" disabled>
                                                         <label for="viewBulkBlockquantity"><spring:message code="input.quantity" /></label>
                                                     </div>
-														</div>	
-                                                    <div class="row">
-
+                                                    
+                                                    <div class="input-field col s12 m6" style="margin-top: 25px;">
+                                                        <input type="text" id="viewBulkBlockDevicequantity" name="quantity" pattern="[0-9]"
+                                                            title="" maxlength="16" value="1500" disabled>
+                                                        <label for="viewBulkBlockquantity"><spring:message code="input.devicequantity" /></label>
+                                                    </div>
+                                                    
                                                     <div class="input-field col s12 m6" style="margin-top: 25px;">
                                                         <input type="text" id="viewBulkBlockuploadFile" name="uploadFile" pattern="[0-9]"
                                                             title="" maxlength="16" value="file.csv" disabled>
                                                         <label for="viewBulkBlockuploadFile"><spring:message code="input.UploadBulk" /></label>
                                                     </div>
+														</div>	
+                                                    <div class="row">
+
 													
 													<div class="input-field col s12 m6" style="margin-top: 25px;">
                                                         <input type="text" id="viewBulkBlockTxnId" name="viewBulkBlockTxnId" pattern="[0-9]"
                                                             title="" maxlength="16" value="1500" disabled>
                                                         <label for="viewBulkBulkTxnId"><spring:message code="input.TransactionID1" /></label>
+                                                    </div>
+                                                    <div class="input-field col s12 m6">
+                                                        <textarea id="viewBulkBlockRemark" class="materialize-textarea" placeholder="kjdhdskjfhdskhfkdsjhf" disabled></textarea>
+                                                        <label for="viewBulkBlockRemark"><spring:message code="input.Remark" /></label>
                                                     </div>		
                                                     </div>
                                                     <div class="row">
-                                                     <div class="input-field col s12 m6">
-                                                        <textarea id="viewBulkBlockRemark" class="materialize-textarea" placeholder="kjdhdskjfhdskhfkdsjhf" disabled></textarea>
-                                                        <label for="viewBulkBlockRemark"><spring:message code="input.Remark" /></label>
-                                                    </div>
+                                                     
                                                     <div class="input-field col s12 m6" id="bulkblockingTypeId" style="display: none">
             													<input type="text" id="viewbulkblockingType" name="" placeholder="" disabled="disabled">
                                                                 <label for="viewbulkblockingType"><spring:message code="operator.blocking" /></label>		
@@ -1346,6 +1354,13 @@ title="" maxlength="7" value="" placeholder="" >
 <label for="editBulkBlockquantity"><spring:message code="input.quantity" /> <span class="star">*</span></label>
 </div>
 
+<div class="input-field col s12 m6">
+<input type="text" id="editBulkBlockDevicequantity" required name="editBulkBlockDevicequantity" pattern="[0-9]{1,7}"
+oninput="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
+title="" maxlength="7" value="" placeholder="" >
+<label for="editBulkBlockDevicequantity"><spring:message code="input.devicequantity" /> <span class="star">*</span></label>
+</div>
 
 </div>
 <div class="row">
@@ -1395,7 +1410,7 @@ title="" maxlength="16" value="1500" disabled>
 													name="editbulkblocktypeName" checked> <spring:message
 														code="operator.immediate" />
 												</label> <label style="margin-right: 2%;"> <input
-													type="radio" class="editbulkblocktypeRadio" value="Default"
+													type="radio" class="editbulkblocktypeRadio" value="Default" id="editbulkblocktypeRadioId"
 													onclick="document.getElementById('bulkeditcalender').style.display = 'none';"
 													name="editbulkblocktypeName"> <spring:message
 														code="operator.default" />

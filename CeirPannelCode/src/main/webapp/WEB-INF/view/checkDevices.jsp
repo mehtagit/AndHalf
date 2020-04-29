@@ -192,8 +192,8 @@ footer {
 
 									<p style="margin-left: 10px;">
 										<spring:message code="registration.theimeinumber" />
-										<span id="validImeiNumber"> </span> is
-										<spring:message code="registration.valid" />
+										<span id="validImeiNumber"> </span>
+										<spring:message code="registration.valid" /> <i class="fa fa-check-circle-o green-text" style="margin-left: 23px;" title="Approved"></i>
 									</p>
 									<div class="input-field col s6 m4">
 										<label for="validTac"><spring:message

@@ -185,10 +185,10 @@ input[type='search'] {
 
 													<div class="col s12 m6">
 														<label for="deviceType1"><spring:message code="select.deviceType" /><span
-															class="star">*</span></label> <select class="browser-default"
+															class="star"></span></label> <select class="browser-default"
 															oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 											                oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-															id="deviceType1" required="required">
+															id="deviceType1">
 															<option value="" disabled selected><spring:message code="select.selectDeviceType" />
 																</option>
 
@@ -208,8 +208,8 @@ input[type='search'] {
 													</div>
 
 													<div class="col s12 m6">
-														<label for="multipleSimStatus1"><spring:message code="select.multiSimStatus" /><span class="star">*</span>
-														</label> <select class="browser-default" required="required"
+														<label for="multipleSimStatus1"><spring:message code="select.multiSimStatus" /><span class="star"></span>
+														</label> <select class="browser-default"
 														oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 											        oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 															id="multipleSimStatus1">
@@ -219,11 +219,11 @@ input[type='search'] {
 
 													<div class="col s12 m6">
 														<label for="country1"><spring:message code="select.countryBoughtFrom" /><span
-															class="star">*</span></label> <select id="country1"
+															class="star"></span></label> <select id="country1"
 															oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 											        oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 															class="browser-default" class="mySelect"
-															style="padding-left: 0;" required="required">
+															style="padding-left: 0;" >
 															<option value="" disabled selected><spring:message code="select.countryBoughtFrom" />
 														</select>
 													</div>
@@ -231,12 +231,12 @@ input[type='search'] {
 													<div class="input-field col s12 m6"
 														style="margin-top: 28px;">
 														<input type="text" id="serialNumber1" name="serialNumber"
-															required="required" pattern="[A-Za-z0-9]{0,15}"
+															 pattern="[A-Za-z0-9]{0,15}"
 															
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.15serialNo" />');"
 											        oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15serialNo" />');"
 															title=""
-															maxlength="15"> <label for="serialNumber1"> <spring:message code="input.deviceSerialNumber" /><span class="star">*</span>
+															maxlength="15"> <label for="serialNumber1"> <spring:message code="input.deviceSerialNumber" /><span class="star"></span>
 														</label>
 													</div>
 
@@ -257,10 +257,10 @@ input[type='search'] {
 												<div class="col s12 m12">
 													<div class="col s12 m6" style="margin-top: -10px;">
 														<label for="deviceStatus1"><spring:message code="select.deviceStatus" /><span
-															class="star">*</span></label> <select class="browser-default"
+															class="star"></span></label> <select class="browser-default"
 															oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 											        oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-															required="required" id="deviceStatus1">
+															id="deviceStatus1">
 															<option value="" disabled selected><spring:message code="select.selectDeviceStatus" /></option>
 
 														</select>
@@ -361,7 +361,7 @@ input[type='search'] {
 	</section>
 	
 	<div id="regularisedDevice" class="modal">
-		<h6 class="modal-header"><spring:message code="modal.uploadPaidDevice" /></h6>
+		<h6 class="modal-header"><spring:message code="modal.header.registerdevice" /></h6>
 		<div class="modal-content">
 			<div class="row">
 				<h6 id="sucessMessage"><spring:message code="modal.message.futureRef" />  <span id="dynamicTxnId"></span>

@@ -484,7 +484,7 @@ select {
 																<span class="star"></span>
 															</p>
 															<input type="text" name="phone2" id="singleStolenphone4"
-																pattern="[0-9\s,+]{7,15}" maxlength="15" oninput="InvalidMsg(this,'input','<spring:message code="validation.contact" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.contact" />');" required>
+																pattern="[0-9\s,+]{7,15}" maxlength="15" oninput="InvalidMsg(this,'input','<spring:message code="validation.contact" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.contact" />');">
 														</div>
 
 														
@@ -556,12 +556,12 @@ select {
 																<spring:message code="operator.blocking" />
 															</p>
 															<label style="margin-right: 2%;"> <input
-																type="radio" class="blocktypeRadio" id=""
+																type="radio" class="blocktypeRadio" 
 																value="Immediate"
 																onclick="document.getElementById('calender').style.display = 'none';"
 																name="stolenBlockPeriod" checked> <spring:message code="operator.immediate" />
 															</label> <label style="margin-right: 2%;"> <input
-																type="radio" class="blocktypeRadio" value="Default"
+																type="radio" class="blocktypeRadio" value="Default" id="defaultDatePeriod" title=""
 																onclick="document.getElementById('calender').style.display = 'none';"
 																name="stolenBlockPeriod"> <spring:message code="operator.default" />
 															</label> <label> <input type="radio" required="required"
@@ -1135,6 +1135,26 @@ select {
 													required> <label for="deviceBulkStolenquantity"> <spring:message
 														code="input.quantity" /><span class="star"> *</span></label>
 											</div>
+											
+											<div class="input-field col s12 m6 l6"
+												style="margin-top: 22px;">
+												<input type="text" name="devicequantity"
+													class="form-control boxBorder boxHeight" 
+													id="devicequantity" maxlength="7"
+													pattern=[0-9]{1,7}
+													oninput="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
+													required> <label for="devicequantity"> <spring:message
+														code="input.devicequantity" /><span class="star"> *</span></label>
+											</div>
+											
+											<%-- <div class="input-field col s12 m6">
+											<input type="text" name="devicequantity" id="devicequantity"
+												pattern="[0-9]{0,7}"
+												
+												maxlength="7"  oninput="InvalidMsg(this,'input','<spring:message code="validation.7character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7character" />');"  required/> <label for="devicequantity"
+												class="center-align"><spring:message code="input.devicequantity" /> <span class="star">*</span></label>
+										</div> --%>
 
 
 											<div class="file-field col s12 m6">
@@ -1154,18 +1174,18 @@ select {
 												</div>
 											</div>
 
-
+												
 											<div class="col s12 m6 blockingType">
 												<p style="margin-top: 3px; margin-bottom: 5px">
 													<spring:message code="operator.blocking" />
 												</p>
 												<label style="margin-right: 2%;"> <input
-													type="radio" class="bulkblocktypeRadio" id="" value="Immediate"
+													type="radio" class="bulkblocktypeRadio" value="Immediate"
 													onclick="document.getElementById('stolenCalender').style.display = 'none';"
 													name="stolenBulkBlockPeriod" checked> <spring:message
 														code="operator.immediate" />
 												</label> <label style="margin-right: 2%;"> <input
-													type="radio" class="bulkblocktypeRadio" value="Default"
+													type="radio" class="bulkblocktypeRadio" value="Default"  id="bulkDefaultPeiod" title=""
 													onclick="document.getElementById('stolenCalender').style.display = 'none';"
 													name="stolenBulkBlockPeriod"> <spring:message
 														code="operator.default" />

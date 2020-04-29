@@ -627,7 +627,8 @@
 													<spring:message code="input.contactNum" /> <span
 													class="star"></span></label>
 											</div>
-
+												
+												
 											<!-- <div class="input-field col s12 m6">
                                                         <input type="text" name="totalQuantity" id="totalQuantity">
                                                         <label for="totalQuantity">Total Device Quantity </label>
@@ -745,6 +746,18 @@
 													title=""> <label
 													for="quantity"><spring:message code="input.quantity" /> <span class="star">*</span></label>
 											</div>
+											
+											<div class="input-field col s12 m6 l6"
+												style="margin-top: 22px;">
+												<input type="text" name="devicequantity"
+													class="form-control boxBorder boxHeight" 
+													id="devicequantity" maxlength="7"
+													pattern=[0-9]{1,7}
+													oninput="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
+													required> <label for="devicequantity"> <spring:message
+														code="input.devicequantity" /><span class="star"> *</span></label>
+											</div>
 
 											<div class="file-field col s12 m6">
 												<h6 class="file-label">
@@ -782,12 +795,12 @@
 													<spring:message code="operator.blocking" />
 												</p>
 												<label style="margin-right: 2%;"> <input
-													type="radio" class="blocktypeRadio" id="" value="Immediate"
+													type="radio" class="blocktypeRadio"  value="Immediate"
 													onclick="document.getElementById('stolenCalender').style.display = 'none';"
 													name="stolenBulkBlockPeriod" checked> <spring:message
 														code="operator.immediate" />
 												</label> <label style="margin-right: 2%;"> <input
-													type="radio" class="blocktypeRadio" value="Default"
+													type="radio" class="blocktypeRadio" value="Default" id="editBulkDefaultPeriod" title=""
 													onclick="document.getElementById('stolenCalender').style.display = 'none';"
 													name="stolenBulkBlockPeriod"> <spring:message
 														code="operator.default" />

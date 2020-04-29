@@ -219,7 +219,7 @@ public class BlockUnblock {
 			  @RequestParam(name="file",required = false) MultipartFile file,@RequestParam(name="requestType",required = false) int requestType,
 			  @RequestParam(name="roleType",required = false) String roleType,  @RequestParam(name="sourceType",required = false) Integer sourceType,
 			  @RequestParam(name="userId",required = false) Integer userId,@RequestParam(name="qty",required = false) Integer qty,
-	
+			  @RequestParam(name="deviceQuantity",required = false) Integer deviceQuantity,
 			  @RequestParam(name="blockCategory",required = false) Integer deviceCategory,@RequestParam(name="remark",required = false) String remark, HttpSession session)
  {	
 		  log.info(" file stolen entry point .");
@@ -290,7 +290,7 @@ public class BlockUnblock {
 			stolenRecoveryModel.setOperatorTypeId(operatorTypeId);
 			stolenRecoveryModel.setBlockCategory(deviceCategory);
 			stolenRecoveryModel.setRoleType(roletype);
-
+			stolenRecoveryModel.setDeviceQuantity(deviceQuantity);
 			log.info("request passed to the file stolen api ="+stolenRecoveryModel);
 			response=feignCleintImplementation.fileStolen(stolenRecoveryModel);
 			log.info("respondse from file stolen api="+response);
@@ -307,7 +307,7 @@ public class BlockUnblock {
 	  public @ResponseBody GenricResponse fileTypeRecovery( @RequestParam(name="file",required = false) MultipartFile file,@RequestParam(name="requestType",required = false) int requestType,
 			  @RequestParam(name="roleType",required = false) String roleType,  @RequestParam(name="sourceType",required = false) Integer sourceType,
 			  @RequestParam(name="userId",required = false) Integer userId,@RequestParam(name="qty",required = false) Integer qty,
-			 
+			  @RequestParam(name="deviceQuantity",required = false) Integer deviceQuantity,
 			  @RequestParam(name="blockCategory",required = false) Integer blockCategory,@RequestParam(name="remark",required = false) String remark,HttpSession session
 			  )
 	  {	
@@ -380,6 +380,7 @@ public class BlockUnblock {
 			//stolenRecoveryModel.setDeviceCaegory(deviceCaegory);
 			stolenRecoveryModel.setBlockCategory(blockCategory);
 			stolenRecoveryModel.setOperatorTypeId(operatorTypeId);
+			stolenRecoveryModel.setDeviceQuantity(deviceQuantity);
 			log.info("request sent to fileRecovery api ="+stolenRecoveryModel);
 			response=feignCleintImplementation.fileRecovery(stolenRecoveryModel);
 			log.info("request sent to file Recovery api ="+response);

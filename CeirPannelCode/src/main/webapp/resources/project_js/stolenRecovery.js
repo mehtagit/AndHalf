@@ -161,6 +161,7 @@ function editRegisterConsignment(){
 	var organisationcountry=$('#country').val();
 	var filename=$('#fileNameEdit').val();
 	var txnId=$('#TransactionIdEdit').val();
+
 	var quantity=$('#QuantityEdit').val();
 	console.log(supplierName,consignmentNumber,expectedArrivalDate,txnId,filename)
 

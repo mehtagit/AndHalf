@@ -277,6 +277,13 @@ aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
                                                         <label for="unblockbulkquantity"><spring:message code="input.quantity" /> <span class="star"> *</span></label>
                                                     </div>
                                                     
+                                                    <div class="input-field col s12 m6 " style="margin-top: 22px;">
+                                                        <input type="text" id="unblockbulkDevicequantity" name="unblockbulkDevicequantity" pattern="[0-9]{1,7}" 
+                                                        oninput="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');" 
+                                                        oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
+                                                        required maxlength="7">
+                                                        <label for="unblockbulkDevicequantity"><spring:message code="input.devicequantity" /> <span class="star"> *</span></label>
+                                                    </div>
                                                     
                                                     <div class="file-field input-field col s12 m6" style="margin-top: 21px;">
                                                         <p style="color: #000;"><spring:message code="operator.upload" /> <span class="star"> *</span></p>

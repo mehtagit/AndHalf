@@ -14,7 +14,7 @@ public class LawfulStolenRecovey {
 	private String modifiedOn;
 	private Integer operatorTypeId;
 	private String operatorTypeIdInterp;
-	private Integer qty,quantity;
+	private Integer qty,quantity,deviceQuantity;
 	private String remark,rejectedRemark;
 	private Integer requestType;
 	private String requestTypeInterp;
@@ -289,6 +289,16 @@ public class LawfulStolenRecovey {
 		this.quantity = quantity;
 	}
 
+	
+	
+	public Integer getDeviceQuantity() {
+		return deviceQuantity;
+	}
+
+	public void setDeviceQuantity(Integer deviceQuantity) {
+		this.deviceQuantity = deviceQuantity;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -320,6 +330,8 @@ public class LawfulStolenRecovey {
 		builder.append(qty);
 		builder.append(", quantity=");
 		builder.append(quantity);
+		builder.append(", deviceQuantity=");
+		builder.append(deviceQuantity);
 		builder.append(", remark=");
 		builder.append(remark);
 		builder.append(", rejectedRemark=");
@@ -361,6 +373,5 @@ public class LawfulStolenRecovey {
 	}
 
 	
-
 
 }
