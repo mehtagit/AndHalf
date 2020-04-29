@@ -50,7 +50,6 @@ public class FilterRequest {
 	private String remark;
 	
 	
-	
 	public String getRemark() {
 		return remark;
 	}

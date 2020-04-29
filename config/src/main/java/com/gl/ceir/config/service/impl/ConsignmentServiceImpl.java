@@ -265,7 +265,7 @@ public class ConsignmentServiceImpl {
 
 			auditTrailRepository.save(new AuditTrail(consignmentMgmt.getUserId(), consignmentMgmt.getUserName(), 
 					Long.valueOf(consignmentMgmt.getUserTypeId()), consignmentMgmt.getUserType(), Long.valueOf(consignmentMgmt.getFeatureId()),
-					Features.CONSIGNMENT, SubFeatures.VIEW, "", "NA"));
+					Features.CONSIGNMENT, SubFeatures.VIEW, "", "NA",consignmentMgmt.getRoleType()));
 			logger.info("AUDIT : Saved view request in audit.");
 			return page;
 
@@ -332,6 +332,7 @@ public class ConsignmentServiceImpl {
 				consignmentInfo.setUserType(consignmentFileRequest.getUserType());
 				consignmentInfo.setUserTypeId(consignmentFileRequest.getUserTypeId());
 				consignmentInfo.setFeatureId(consignmentFileRequest.getFeatureId());
+				consignmentInfo.setRoleType(consignmentFileRequest.getRoleType());
 				// pending tac if available in pending_tac_approval_db.
 				FilterRequest filterRequest = new FilterRequest().setTxnId(consignmentFileRequest.getTxnId());
 				if(pendingTacApprovedImpl.findByTxnId(filterRequest).getErrorCode() == 0) {
@@ -406,7 +407,7 @@ public class ConsignmentServiceImpl {
 			consignmentMgmt.setFeatureId(consignmentUpdateRequest.getFeatureId());
 			consignmentMgmt.setUserName(consignmentUpdateRequest.getUserName());
 			consignmentMgmt.setUserType(consignmentUpdateRequest.getUserType());
-
+			consignmentMgmt.setRoleType(consignmentUpdateRequest.getRoleType());
 			WebActionDb webActionDb = new WebActionDb();
 			webActionDb.setFeature(WebActionDbFeature.CONSIGNMENT.getName());
 			webActionDb.setSubFeature(WebActionDbSubFeature.DELETE.getName());
@@ -809,7 +810,7 @@ public class ConsignmentServiceImpl {
 			consignmentMgmt.setUserType(consignmentUpdateRequest.getRoleType());
 			consignmentMgmt.setUserTypeId(consignmentUpdateRequest.getRoleTypeUserId().intValue());
 			consignmentMgmt.setFeatureId(consignmentUpdateRequest.getFeatureId());
-
+			consignmentMgmt.setRoleType(consignmentUpdateRequest.getRoleType());
 
 			if(consignmentTransaction.executeUpdateStatusConsignment(consignmentMgmt,webActionDb)) {
 				logger.info("Consignment status have Update SuccessFully." + consignmentUpdateRequest.getTxnId());
@@ -876,7 +877,7 @@ public class ConsignmentServiceImpl {
 			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), "", 
 					Long.valueOf(filterRequest.getUserTypeId()), filterRequest.getUserType(), 
 					Long.valueOf(filterRequest.getFeatureId()),
-					Features.CONSIGNMENT, SubFeatures.VIEW, "", "NA"));
+					Features.CONSIGNMENT, SubFeatures.VIEW, "", "NA",filterRequest.getRoleType()));
 			logger.info("AUDIT : Saved file export request in audit.");
 
 			FileDetails fileDetails = new FileDetails( fileName, filepath.getValue(), link.getValue() + fileName );
@@ -981,6 +982,9 @@ public class ConsignmentServiceImpl {
 
 		if(Objects.nonNull(consignmentMgmt.getSearchString()) && !consignmentMgmt.getSearchString().isEmpty()){
 			cmsb.orSearch(new SearchCriteria("txnId", consignmentMgmt.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+			cmsb.orSearch(new SearchCriteria("supplierName", consignmentMgmt.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+			cmsb.orSearch(new SearchCriteria("organisationCountry", consignmentMgmt.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+			cmsb.orSearch(new SearchCriteria("quantity", consignmentMgmt.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 		}
 
 		return cmsb;
