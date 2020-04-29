@@ -67,8 +67,18 @@ public class PendingTacApprovedController {
 	public MappingJacksonValue deleteValue(@RequestBody FilterRequest filterRequest) {
 
 		logger.info("Delete pending-tac-approved " + filterRequest);
+		GenricResponse uniqueTags = null;
+		if(pendingTacApprovedImpl.updatePendingApproval(filterRequest)) {
 
-		GenricResponse uniqueTags = pendingTacApprovedImpl.deletePendingApproval(filterRequest);
+			uniqueTags = pendingTacApprovedImpl.deletePendingApproval(filterRequest);
+		
+		}else{
+		
+			uniqueTags = new GenricResponse(2, "Error while updating.", "", "");
+		
+		}
+		
+	//	GenricResponse uniqueTags = pendingTacApprovedImpl.deletePendingApproval(filterRequest);
 
 		MappingJacksonValue mapping = new MappingJacksonValue(uniqueTags);
 

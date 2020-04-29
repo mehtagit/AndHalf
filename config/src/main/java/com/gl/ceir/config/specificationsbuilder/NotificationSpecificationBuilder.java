@@ -102,6 +102,10 @@ public class NotificationSpecificationBuilder {
 							&& Datatype.STRING.equals(searchCriteria.getDatatype())) {
 						return cb.equal(root.get(searchCriteria.getKey()), searchCriteria.getValue().toString());
 					}
+					else if(SearchOperation.NEGATION.equals(searchCriteria.getSearchOperation())
+							&& Datatype.STRING.equals(searchCriteria.getDatatype())) {
+						return cb.notEqual(root.get(searchCriteria.getKey()), searchCriteria.getValue().toString());
+					}
 					else if(SearchOperation.GREATER_THAN.equals(searchCriteria.getSearchOperation())
 							&& Datatype.DATE.equals(searchCriteria.getDatatype())){
 						Expression<String> dateStringExpr = cb.function(DbFunctions.getDate(dialect), String.class, root.get(searchCriteria.getKey()), cb.literal(DbFunctions.getDateFormat(dialect)));

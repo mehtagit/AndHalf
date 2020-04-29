@@ -13,6 +13,7 @@ public class CustomerCareDeviceState implements Serializable{
 	private String txnId;
 	private Integer featureId;
 	private String imei;
+	private Long msisdn;
 
 	public CustomerCareDeviceState() {}
 
@@ -63,13 +64,35 @@ public class CustomerCareDeviceState implements Serializable{
 	public void setImei(String imei) {
 		this.imei = imei;
 	}
+	
+
+	public Long getMsisdn() {
+		return msisdn;
+	}
+
+	public void setMsisdn(Long msisdn) {
+		this.msisdn = msisdn;
+	}
 
 	@Override
 	public String toString() {
-		return "CustomerCareDeviceState [name=" + name + ", date=" + date + ", status=" + status + ", txnId=" + txnId
-				+ ", featureId=" + featureId + ", imei=" + imei + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("CustomerCareDeviceState [name=");
+		builder.append(name);
+		builder.append(", date=");
+		builder.append(date);
+		builder.append(", status=");
+		builder.append(status);
+		builder.append(", txnId=");
+		builder.append(txnId);
+		builder.append(", featureId=");
+		builder.append(featureId);
+		builder.append(", imei=");
+		builder.append(imei);
+		builder.append(", msisdn=");
+		builder.append(msisdn);
+		builder.append("]");
+		return builder.toString();
 	}
-
-	
 
 }

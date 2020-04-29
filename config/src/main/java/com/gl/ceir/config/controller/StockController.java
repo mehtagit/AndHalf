@@ -18,6 +18,8 @@ import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.StockMgmt;
+import com.gl.ceir.config.model.ValidationOutput;
+import com.gl.ceir.config.service.impl.FieldValidationServiceImpl;
 import com.gl.ceir.config.service.impl.StockServiceImpl;
 
 import io.swagger.annotations.ApiOperation;
@@ -29,18 +31,27 @@ public class StockController {
 
 	@Autowired
 	StockServiceImpl stackholderServiceImpl;
+	
+	@Autowired
+	FieldValidationServiceImpl fieldValidationServiceImpl;
+	
+	//new GenricResponse(5, "Failed to validate fields", "", data);
 
 	@ApiOperation(value = "Add Retailer And Distributer Info.", response = GenricResponse.class)
 	@RequestMapping(path = "/Stock/upload", method = RequestMethod.POST)
 	public GenricResponse uploadStock(@RequestBody StockMgmt stockMgmt){
 
-		logger.info("Upload Stock Request =" + stockMgmt);
+		ValidationOutput validationOutput = fieldValidationServiceImpl.validateFieldsByObject(stockMgmt);
+		if(validationOutput.getIsValid()) {
+			logger.info("Upload Stock Request =" + stockMgmt);
+			
+			GenricResponse genricResponse =	stackholderServiceImpl.uploadStock(stockMgmt);
 
-		GenricResponse genricResponse =	stackholderServiceImpl.uploadStock(stockMgmt);
-
-		logger.info("Upload Stock Response ="+genricResponse.toString());
-
-		return genricResponse;
+			logger.info("Upload Stock Response ="+genricResponse.toString());
+			return genricResponse;
+		}else {
+			return new GenricResponse(5, "Failed to validate fields", "", validationOutput.getInvalidFields());
+		}
 
 	}
 
