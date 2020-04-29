@@ -23,4 +23,8 @@ public interface DBTablesFeignClient {
 	public Object DBRowDetailsFeign(@RequestBody DBrowDataModel filterRequest);
 	
 		
+	
+	@RequestMapping(value= "/db/table/data/V2" , method=RequestMethod.POST) 
+	public Object historyConsignmentFeign(@RequestBody DBrowDataModel filterRequest);
+	
 }

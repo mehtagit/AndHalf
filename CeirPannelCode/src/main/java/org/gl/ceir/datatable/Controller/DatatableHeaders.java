@@ -199,7 +199,7 @@ public class DatatableHeaders {
 
 			//adminUserPaidStatus Headers 
 			else if("blockUnblock".equals(role)) {
-				String[] headers = {"table.date","table.transactionID","table.requestType","input.mode","table.status","table.quantity","table.action"};		
+				String[] headers = {"table.date","table.transactionID","table.requestType","input.mode","table.status","input.quantity","input.devicequantity","table.action"};		
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
@@ -229,7 +229,7 @@ public class DatatableHeaders {
 			//adminPolicyManagement Headers 
 			
 			else if("adminPolicyManagement".equals(role)) {
-				String[] headers = {"table.creationDate","table.lastupdatedate","table.Description","table.Value","table.Period","table.status","table.action"};		
+				String[] headers = {"table.creationDate","table.lastupdatedate","table.Description","table.Value","table.Type","table.Period","table.status","table.action"};		
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
@@ -249,7 +249,7 @@ public class DatatableHeaders {
 //BlockUnblockCEIRAdmin Headers 
 			
 			else if("BlockUnblockCEIRAdmin".equals(role)) {
-				String[] headers = {"table.date","table.transactionID","table.Operator","table.requestType","table.Mode","table.status","table.quantity","table.action"};		
+				String[] headers = {"table.date","table.transactionID","table.Operator","table.requestType","table.Mode","table.status","input.quantity","input.devicequantity","table.action"};		
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
@@ -260,7 +260,7 @@ public class DatatableHeaders {
 //lawfulStolenHeaders Headers 
 			
 			else if("lawfulStolenHeaders".equals(role)) {
-				String[] headers = {"table.requestdate","table.transactionID","table.BlockType","table.requestType","table.Mode","table.status","table.quantity","table.action"};		
+				String[] headers = {"table.requestdate","table.transactionID","table.BlockType","table.requestType","table.Mode","table.status","input.quantity","input.devicequantity","table.action"};		
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
@@ -351,7 +351,7 @@ public class DatatableHeaders {
 			//Currency Management
 			
 			else if("currencyHeaders".equals(role)) {
-				String[] headers = {"table.creationDate","table.lastupdatedate","table.month","table.currency","table.cambodian","table.doller","table.action"};
+				String[] headers = {"table.creationDate","table.lastupdatedate","table.month","table.year","table.currency","table.cambodian","table.doller","table.action"};
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
@@ -454,7 +454,7 @@ public class DatatableHeaders {
 			//Grievance Admin Headers
 			else if("adminGrievanceHeaders".equals(role)) {
 				
-				String[] headers = {"table.raiseddate","table.lastupdatedate","table.transactionID","table.UserName","table.userType","table.grievanceID","table.grievancestatus","table.action"};	
+				String[] headers = {"table.raiseddate","table.lastupdatedate","table.transactionID","table.UserName","table.userType","table.grievanceID","table.raisedBy","table.grievancestatus","table.action"};	
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
@@ -471,6 +471,16 @@ public class DatatableHeaders {
 				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
 			}
 			
+			
+			//User Management
+			
+			else if("userTableHeaders".equals(role)) {
+				String[] headers = {"table.creationDate","table.lastupdatedate","table.UserName","table.userType","table.action"};
+				for(String header : headers) {
+					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
+				}
+				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
+			}
 			
 			//DEFAULT PORTION  
 			else {

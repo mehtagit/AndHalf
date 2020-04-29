@@ -155,7 +155,9 @@ var contextpath = "${context}";
 </script>
 
 </head>
-<body data-lang-param="${pageContext.response.locale}">
+<body data-lang-param="${pageContext.response.locale} " data-roleType="${usertype}" data-userTypeID="${usertypeId}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${stolenselectedUserTypeId}" 
+data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}" data-userName="${userName}"		
+ data-grievanceStatus="${grievanceStatus}" session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}">">
          <!-- START CONTENT -->
             <section id="content">
                 <!--start container-->
@@ -194,7 +196,7 @@ var contextpath = "${context}";
  													oninput="InvalidMsg(this,'input','<spring:message code="validation.10digits" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10digits" />');"
 												  required   maxlength="10" />
-                                            <label for="contactNumber"><spring:message code="input.contactNum" /><span
+                                            <label for="contactNumber"><spring:message code="input.contact" /><span
                                                     class="star">*</span></label>
                                         </div>
 
@@ -203,7 +205,7 @@ var contextpath = "${context}";
 											oninput="InvalidMsg(this,'input','<spring:message code="validation.emailformate" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.emailformate" />');"
 												required maxlength="30" />
-                                            <label for="emailID"><spring:message code="input.EmailID" /><span class="star">*</span></label>
+                                            <label for="emailID"><spring:message code="input.EmailID" /> <span class="star"> *</span></label>
                                         </div>
 
                                         <div class="col s12 m6 selectDropdwn">
@@ -213,7 +215,7 @@ var contextpath = "${context}";
 										            oninput="InvalidMsg(this,'input','<spring:message code="validation.selectFieldMsg" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.selectFieldMsg" />');"
 										  required   id="endUsercategory">
-                                                <option value="" disabled selected><spring:message code="input.Category" /></option>
+                                                <option value="" disabled selected><spring:message code="input.SelectCategory" /></option>
                                             </select>
                                         </div>
 

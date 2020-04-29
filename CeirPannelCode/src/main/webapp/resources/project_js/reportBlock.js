@@ -45,6 +45,24 @@
 				console.log('#blockdeviceIdType');
 			}
 		});
+		
+		var RequestData = {
+				"tag" : "GREY_TO_BLACK_MOVE_PERIOD_IN_DAY"
+		}
+		$.ajax({
+			url : "./system/viewTag",
+			data :	JSON.stringify(RequestData),
+			dataType : 'json',
+			contentType : 'application/json; charset=utf-8',
+			type : 'POST',
+			success : function(data) {
+				console.log(data.value);
+				$('#defaultPeriodId,#bulkblocktypeRadioId,#editbulkblocktypeRadioId').attr('title', data.value+' Days');
+			},
+			error : function() {
+				console.log("Failed");
+			}
+		});
 	
 		$.getJSON('./getTypeDropdownList/BLOCK_CATEGORY/'+$("body").attr("data-userTypeID"), function(data) {
 			
@@ -156,7 +174,7 @@ function submitBlockImei()
 		var userId = $("body").attr("data-userID");
 		var bulkBlockingTimePeriod=$('#stolenBulkDatePeriod').val();
 		var bulkBlocktype =$('.bulkblocktypeRadio:checked').val();
-		
+		 var deviceQuantity=$('#blockbulkDeviceQuantity').val();
 		console.log("bulkBlockdeviceCategory="+bulkBlockdeviceCategory+" blockbulkquantity=="+blockbulkquantity+" blockUnblockRemark="+blockbulkRemark)
 		
 		var formData = new FormData();
@@ -170,7 +188,7 @@ function submitBlockImei()
 		formData.append('roleType',roleType);
 		formData.append('blockingTimePeriod',bulkBlockingTimePeriod);
 		formData.append('blockingType',bulkBlocktype);
-		
+		formData.append('deviceQuantity',deviceQuantity);
 		
 			
 
@@ -208,6 +226,7 @@ function submitUnBlockImei()
 		var requestType='3';
 		var roleType = $("body").attr("data-roleType");
 		var userId = $("body").attr("data-userID");
+		var deviceQuantity=$('#unblockbulkDevicequantity').val();
 
 		//console.log("bulkBlockdeviceCategory="+bulkBlockdeviceCategory+" blockbulkquantity=="+blockbulkquantity+" blockUnblockRemark="+blockUnblockRemark)
 		var formData = new FormData();
@@ -219,6 +238,8 @@ function submitUnBlockImei()
 		formData.append('requestType', requestType);
 		formData.append('userId',userId);
 		formData.append('roleType',roleType);
+		formData.append('deviceQuantity',deviceQuantity);
+		
 
 $.ajax({
 			url: './reportUnblockBulkFile',
@@ -280,7 +301,8 @@ var singleImeiBlockDetail={
 		'sourceType':4,
 		'blockingTimePeriod':blockingTimePeriod,
 		'blockingType':blockingType,
-		'category':category
+		'category':category,
+		'deviceQuantity':1
 		
 		
 }
@@ -348,7 +370,8 @@ var singleImeiBlockDetail={
 		'sourceType':4,
 		'blockingTimePeriod':blockingTimePeriod,
 		'blockingType':blockingType,
-		'category':category
+		'category':category,
+		'deviceQuantity':1
 	
 }
 		
@@ -435,6 +458,7 @@ function setViewBulkPopUp(data,popUpType,requestType){
 	$("#viewBulkBlockRemark").val(data.remark);
 	$("#viewBulkBlockuploadFile").val(data.fileName);
 	$("#viewBulkBlockquantity").val(data.qty);
+	$("#viewBulkBlockDevicequantity").val(data.deviceQuantity);
 	$("#viewBulkBlockTxnId").val(data.txnId);
 	$("#viewBulkBlockRemarkReject").val(data.rejectedRemark);
 	$("#viewBulkBlockRemarkRejectDiv").css("display", "block");
@@ -464,6 +488,7 @@ $("#viewbulkblockingType").val(data.blockingType);
 	$("#editBulkBlockRemark").val(data.remark);
 	$("#editBulkBlockuploadFile").val(data.fileName);
 	$("#editBulkBlockquantity").val(data.qty);
+	$("#editBulkBlockDevicequantity").val(data.deviceQuantity);
 	$("#editBulkBlockTxnId").val(data.txnId);
 	$("#editBulkBlockrequestType").val(data.requestType);
 	$("#editBulkBlockCategory").val(data.blockCategory);
@@ -495,9 +520,10 @@ var userId = $("body").attr("data-userID");
 var formData = new FormData();
 var editbulkBlockingTimePeriod=$('#editstolenBulkDatePeriod').val();
 var editbulkBlocktype =$('.editbulkblocktypeRadio:checked').val();
-
+var devicequantity = $("#editBulkBlockDevicequantity").val();
 formData.append('file', $('#editselectBulkBlockuploadFile')[0].files[0]);
 formData.append('qty', qty);
+formData.append('deviceQuantity',devicequantity);
 formData.append('blockCategory', categoryInterp);
 formData.append('remark', remark);
 formData.append('sourceType', ModeType);

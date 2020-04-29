@@ -22,6 +22,7 @@ var txnid=$('#existingStolenTxnId').val();
 		success: function (response, textStatus, jqXHR) {
 		console.log(response)
 		$('#bulkRecoveryquantity').val(response.qty);
+		$('#devicequantity').val(response.deviceQuantity);
 		$('#bulkRecoveryRemark').val(response.remark);
 		$('#bulkRecoveryFileName').val(response.fileName);
 		$('#bulkRecoveryDate').val(response.dateOfRecovery);
@@ -74,6 +75,7 @@ function updateCompanyRecoveryRequest(){
 	var blockingType ='Immediate';
 	var fileName=$('#bulkRecoveryFileName').val();
 	var txnid=$('#existingStolenTxnId').val();
+	var bulkDevicequantity=$('#devicequantity').val();
 	
 	var stolenOrganizationUserDB= {
 		   
@@ -94,6 +96,7 @@ function updateCompanyRecoveryRequest(){
 			"fileName":fileName,
 			"dateOfRecovery":bulkRecoveryDate,
 			"qty":bulkRecoveryquantity,
+			"deviceQuantity":bulkDevicequantity,
 			"blockingType":blockingType,
 			"requestType":1,
 			"sourceType":6,

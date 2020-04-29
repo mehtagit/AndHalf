@@ -159,6 +159,7 @@ function updateIndivisualRecovery()
 			"txnId":txnid,
 			"dateOfRecovery":IndivisualRecoveryDevice,
 			"blockingType":blockingType,
+			"deviceQuantity":1,
 			"requestType":1,
 			"sourceType":4,
 			"remark": sigleRecovery,

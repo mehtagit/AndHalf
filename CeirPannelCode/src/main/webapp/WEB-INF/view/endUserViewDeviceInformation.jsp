@@ -180,7 +180,7 @@ input[type='search'] {
 											<div class="col s12 m12" style="margin-top: 20px;">
 												<div class="input-field col s12 m4">
 													<input type="text" id="nationalID" readonly="readonly" value="${viewInformation.endUserDB.nid}"/> <label for="nationalID"
-														class="center-align ml-10"><spring:message code="input.nidText" /></label>
+														class="center-align ml-10"><spring:message code="view.nidText" /></label>
 												</div>
 
 													<div class="col s12 m4" style="margin-top: -10px;">
@@ -198,7 +198,7 @@ input[type='search'] {
 
 												<div class="file-field col s12 m4"
 													style="margin-top: -15px;">
-													<h6 style="color: #000;"><spring:message code="input.uploadNidProof" /> <span class="star"></span>
+													<h6 style="color: #000;"><spring:message code="view.uploadNidProof" /> <span class="star"></span>
 													</h6>
 													<!-- <div class="">
 														 <input type="text"  readonly="readonly" >
@@ -218,8 +218,8 @@ input[type='search'] {
 												</div>
 
 												<div class="input-field col s12 m4 l4">
-													<input type="text" readonly="readonly"  value="${viewInformation.endUserDB.middleName}">
-													<label for="middleName"><spring:message code="input.middleName" /></label>
+													<input type="text" readonly="readonly" id="middleName"  value="${viewInformation.endUserDB.middleName}">
+													<label for="middleName" class="active"><spring:message code="input.middleName" /></label>
 												</div>
 
 												<div class="input-field col s12 m4 l4">
@@ -234,7 +234,7 @@ input[type='search'] {
 													code="input.Nationality" /></label>
 										</div>
 										<c:choose>
-												<c:when test = "${viewInformation.endUserDB.nationality='Cambodian'}">
+												<c:when test = "${viewInformation.endUserDB.nationality=='Cambodian'}">
 										<div class="input-field col s12 m6" id="entryCountryDiv" style="display: none;">
 												<input type="text" readonly="readonly" id="datepicker" value="${viewInformation.endUserDB.entryDateInCountry}" /> <label for="datepicker"><spring:message
 														code="input.EntryCountry" /> <span class="star">*</span></label>
@@ -342,7 +342,7 @@ input[type='search'] {
 											<div class="col s12 m12" style="margin-top: 10px;">
 												<div class="input-field col s12 m6 l6">
 														<input type="email" readonly="readonly"
-														 value="${viewInformation.endUserDB.email}"> <label for="email"><spring:message code="input.email" /><span
+														 value="${viewInformation.endUserDB.email}"> <label for="email" class="active"><spring:message code="input.email" /><span
 														class="star"></span></label>
 												</div>
 
@@ -559,16 +559,16 @@ input[type='search'] {
 												<c:when test = "${viewInformation.endUserDB.nationality=='Cambodian'}">
 													<div class="input-field col s12 m6 l6">
 														<input type="text" value="${viewInformation.price}" readonly="readonly">
-														<label for="Price1"><spring:message code="select.price" /></label>
+														<label for="Price1" class="active"><spring:message code="select.price" /></label>
 													</div>
 
-													<div class="col s12 m6">
-														<label for="Currency1"><spring:message code="input.currency" /><span class="star"></span></label>
-														<input type="text" value="${viewInformation.currencyInterp}" readonly="readonly">
-													</div>
+													
 													</c:when>
+													
+													
+													
 													<c:otherwise>
-										              <div class="input-field col s12 m6 l6" style="display: none">
+										              <div class="input-field col s12 m6 l6" style="display: block">
 														<input type="text" value="${viewInformation.price}" readonly="readonly">
 														<label for="Price1"><spring:message code="select.price" /></label>
 													</div>
@@ -580,6 +580,21 @@ input[type='search'] {
 													</c:otherwise>
 													</c:choose>
 												</div>
+												
+												 <c:choose>
+												<c:when test = "${viewInformation.price==null}">
+												<div class="col s12 m6" style="display: none">
+														<label for="Currency1"><spring:message code="input.currency" /><span class="star"></span></label>
+														<input type="text" value="${viewInformation.currencyInterp}" readonly="readonly">
+													</div>	
+													</c:when>
+													<c:otherwise>
+													<div class="col s12 m6" style="display: block">
+														<label for="Currency1"><spring:message code="input.currency" /><span class="star"></span></label>
+														<input type="text" value="${viewInformation.currencyInterp}" readonly="readonly">
+													</div>	
+													</c:otherwise>
+													</c:choose>
 											</div>
 											<div class="row">
 												<div class="col s12 m12">
@@ -624,7 +639,7 @@ input[type='search'] {
 									<div class="col s12 m12 center" style="margin-top: 30px; padding-bottom: 50px;">
 										<%-- <button class="btn " type="submit"> <spring:message code="button.submit" /></button> --%>
 										<button type='button' class="btn" id="redirectToPage" 
-												style="margin-left: 10px;"><spring:message code="button.cancel" /></button>
+												style="margin-left: 10px;"><spring:message code="modal.close=Close" /></button>
 									</div>
 
 								</form>
@@ -1080,6 +1095,7 @@ input[type='search'] {
     ================================================ -->
 
 <script type="text/javascript">
+/* window.location.reload(true) */
 var nationalID = sessionStorage.getItem("nationalId");
 
 
@@ -1103,6 +1119,14 @@ if(onVisa=='Y')
 
 	$("#visaDetails").css("display", "block"); 
 	}	
+	var asdad=$('#middleName').val();
+	
+
+$("label[for='middleName']").addClass('active');
+$("label[for='datepicker']").addClass('active');
+$("label[for='email']").addClass('active');
+$("label[for='Price1']").addClass('active');
+
 </script>
 </body>
 </html>

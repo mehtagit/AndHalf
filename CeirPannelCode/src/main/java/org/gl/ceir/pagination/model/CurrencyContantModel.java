@@ -17,7 +17,7 @@ public class CurrencyContantModel {
 	private Double dollar;
 	private String currencyInterp;
 	private String month;
-	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+	private String year;
 	public Integer getId() {
 		return id;
 	}
@@ -72,17 +72,38 @@ public class CurrencyContantModel {
 	public void setMonth(String month) {
 		this.month = month;
 	}
-	public Map<String, Object> getAdditionalProperties() {
-		return additionalProperties;
+	public String getYear() {
+		return year;
 	}
-	public void setAdditionalProperties(Map<String, Object> additionalProperties) {
-		this.additionalProperties = additionalProperties;
+	public void setYear(String year) {
+		this.year = year;
 	}
 	@Override
 	public String toString() {
-		return "CurrencyContantModel [id=" + id + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", date="
-				+ date + ", currency=" + currency + ", riel=" + riel + ", dollar=" + dollar + ", currencyInterp="
-				+ currencyInterp + ", month=" + month + ", additionalProperties=" + additionalProperties + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("CurrencyContantModel [id=");
+		builder.append(id);
+		builder.append(", createdOn=");
+		builder.append(createdOn);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
+		builder.append(", date=");
+		builder.append(date);
+		builder.append(", currency=");
+		builder.append(currency);
+		builder.append(", riel=");
+		builder.append(riel);
+		builder.append(", dollar=");
+		builder.append(dollar);
+		builder.append(", currencyInterp=");
+		builder.append(currencyInterp);
+		builder.append(", month=");
+		builder.append(month);
+		builder.append(", year=");
+		builder.append(year);
+		builder.append("]");
+		return builder.toString();
 	}
 	
+		
 }

@@ -344,11 +344,11 @@ $.i18n().load( {
 
 
 if(sessionStorage.getItem("cierRoletype")=="Customer Care"){
-	window.raisedBy = "customer care"; 
+	window.raisedBy = "Customer Care"; 
 	window.name = sessionStorage.getItem("userName");
 	window.userId = sessionStorage.getItem("userId");
 }else{
-	window.raisedBy = "self";
+	window.raisedBy = "Self";
 	window.name = $("body").attr("data-roleType");
 	window.userId = $("body").attr("data-userID");
 }
@@ -441,7 +441,10 @@ function saveGrievance(){
 			"featureId":6,
 			"raisedBy" : window.raisedBy,
 			"userId" : window.userId,
-			"userType" :  window.name
+			"userType" :  window.name,
+			"raisedByUserId" : parseInt($("body").attr("data-userID")), 
+			"raisedByUserType" : $("body").attr("data-roleType"),
+			"userTypeId" :  $("body").attr("data-userTypeID")
 		}
 	
 	formData.append('fileInfo[]',JSON.stringify(fileInfo));

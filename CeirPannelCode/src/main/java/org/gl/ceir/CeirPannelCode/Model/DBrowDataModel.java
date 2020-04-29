@@ -10,6 +10,28 @@ public class DBrowDataModel {
 	private String tableName;
 	private List<String> columns;
 	private List<Map<String, String>> rowData;
+	
+	private String endDate,startDate,txnId;
+		  
+		  
+	public String getEndDate() {
+		return endDate;
+	}
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
+	}
+	public String getStartDate() {
+		return startDate;
+	}
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+	public String getTxnId() {
+		return txnId;
+	}
+	public void setTxnId(String txnId) {
+		this.txnId = txnId;
+	}
 	public String getDbName() {
 		return dbName;
 	}
@@ -45,6 +67,12 @@ public class DBrowDataModel {
 		builder.append(columns);
 		builder.append(", rowData=");
 		builder.append(rowData);
+		builder.append(", endDate=");
+		builder.append(endDate);
+		builder.append(", startDate=");
+		builder.append(startDate);
+		builder.append(", txnId=");
+		builder.append(txnId);
 		builder.append("]");
 		return builder.toString();
 	}

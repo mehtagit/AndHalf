@@ -26,10 +26,15 @@
 	});
 
 	/*if(sessionStorage.getItem("cierRoletype")=="Customer Care"){
-		window.roleType = "Customer Care"; 
+		window.raisedBy = "Customer Care";  
+		alert("window.raisedBy1------->" +window.raisedBy);
 	}else{
-		window.roleType = "End User";
+		window.raisedBy = "Self";
+		alert("window.raisedBy2------->" +window.raisedBy);
 	}*/
+	
+	/*alert("userId-->" +$("body").attr("data-userID"));
+	alert("usertype-->" +$("body").attr("data-roleType"));*/
 	
 function saveaAonymousGrievance(){
 
@@ -122,7 +127,11 @@ function saveaAonymousGrievance(){
 			"middleName":middleName,
 			"phoneNo":contactNumber,
 			"featureId":6,
-			"userType" : "Customer Care"
+			"raisedBy" : "Customer Care",
+			"raisedByUserId" : parseInt($("body").attr("data-userID")), 
+			"raisedByUserType" : $("body").attr("data-roleType"),
+			"userTypeId" :  $("body").attr("data-userTypeID")
+			//"userType" : "Customer Care"
 	}
 	
 	formData.append('fileInfo[]',JSON.stringify(fileInfo));

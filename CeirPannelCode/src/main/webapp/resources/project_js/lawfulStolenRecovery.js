@@ -419,6 +419,23 @@ $.getJSON('./getDropdownList/DEVICE_STATUS', function(data) {
 	}
 });
 
+var RequestData = {
+		"tag" : "GREY_TO_BLACK_MOVE_PERIOD_IN_DAY"
+}
+$.ajax({
+	url : "./system/viewTag",
+	data :	JSON.stringify(RequestData),
+	dataType : 'json',
+	contentType : 'application/json; charset=utf-8',
+	type : 'POST',
+	success : function(data) {
+		console.log(data.value);
+		$('#defaultDatePeriod,#bulkDefaultPeiod,#editIndivisualDefaultPeriod,#editBulkDefaultPeriod').attr('title', data.value+' Days');
+	},
+	error : function() {
+		console.log("Failed");
+	}
+});
 
 
 function saveIndivisualStolenRequest(){
@@ -497,7 +514,6 @@ function saveIndivisualStolenRequest(){
 	var stolenIndividualUserDB={
 			"alternateContactNumber": singleStolenphone1,
 			"commune": singleStolencommune,
-			
 			"contactNumber": singleStolenphone2,
 			"contactNumber2": singleStolenphone3,
 			"contactNumber3": singleStolenphone4,
@@ -528,7 +544,6 @@ function saveIndivisualStolenRequest(){
 			"middleName": singleStolenmiddleName,
 			"modelNumber":singleStolenmodalNumber,
 			"nid": singleStolennIDPassportNumber,
-
 			"operator": singleStolenOperator,
 			"operator2": singleStolenOperator2,
 			"operator3": singleStolenOperator3,
@@ -550,6 +565,7 @@ function saveIndivisualStolenRequest(){
 			"blockingType":blockingType,
 			"requestType":0,
 			"sourceType":5,
+			"deviceQuantity":1,
 			"firFileName":fileFileDetails,
 			"complaintType": singleStolenComplaintType,
 			"operatorTypeId":singleStolenOperator,
@@ -638,6 +654,7 @@ function saveCompanyStolenRequest(){
 	var deviceBulkStolenquantity=$('#deviceBulkStolenquantity').val();
 	var deviceBulkStolenRemark=$('#deviceBulkStolenRemark').val();
 	var bulkStolenDate=$('#bulkStolenDate').val();
+	var bulkDevicequantity=$('#devicequantity').val();
 
 	var uploadFirBulk=$('#uploadFirBulk').val();
 	uploadFirBulk=uploadFirBulk.replace(/^.*[\\\/]/, '');
@@ -672,6 +689,7 @@ function saveCompanyStolenRequest(){
 
 	var request={
 			"qty":deviceBulkStolenquantity,
+			"deviceQuantity":bulkDevicequantity,
 			"dateOfStolen":bulkStolenDate,
 			"blockingTimePeriod":blockingTimePeriod,
 			"blockingType":blockingType,

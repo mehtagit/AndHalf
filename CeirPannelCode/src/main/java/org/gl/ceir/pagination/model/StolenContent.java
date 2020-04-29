@@ -25,7 +25,7 @@ public class StolenContent {
 	private String requestTypeInterp;
 	private String sourceTypeInterp;
 	private String operatorTypeIdInterp;
-	private Integer qty;
+	private Integer qty,deviceQuantity;
 	public Integer getId() {
 		return id;
 	}
@@ -146,16 +146,61 @@ public class StolenContent {
 	public void setQty(Integer qty) {
 		this.qty = qty;
 	}
+	public Integer getDeviceQuantity() {
+		return deviceQuantity;
+	}
+	public void setDeviceQuantity(Integer deviceQuantity) {
+		this.deviceQuantity = deviceQuantity;
+	}
 	@Override
 	public String toString() {
-		return "StolenContent [id=" + id + ", userId=" + userId + ", fileName=" + fileName + ", fileStatus="
-				+ fileStatus + ", txnId=" + txnId + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn
-				+ ", requestType=" + requestType + ", source=" + source + ", roleType=" + roleType + ", blockingType="
-				+ blockingType + ", blockingTimePeriod=" + blockingTimePeriod + ", sourceType=" + sourceType
-				+ ", additionalProperties=" + additionalProperties + ", stateInterp=" + stateInterp + ", taxInterp="
-				+ taxInterp + ", requestTypeInterp=" + requestTypeInterp + ", sourceTypeInterp=" + sourceTypeInterp
-				+ ", operatorTypeIdInterp=" + operatorTypeIdInterp + ", qty=" + qty + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("StolenContent [id=");
+		builder.append(id);
+		builder.append(", userId=");
+		builder.append(userId);
+		builder.append(", fileName=");
+		builder.append(fileName);
+		builder.append(", fileStatus=");
+		builder.append(fileStatus);
+		builder.append(", txnId=");
+		builder.append(txnId);
+		builder.append(", createdOn=");
+		builder.append(createdOn);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
+		builder.append(", requestType=");
+		builder.append(requestType);
+		builder.append(", source=");
+		builder.append(source);
+		builder.append(", roleType=");
+		builder.append(roleType);
+		builder.append(", blockingType=");
+		builder.append(blockingType);
+		builder.append(", blockingTimePeriod=");
+		builder.append(blockingTimePeriod);
+		builder.append(", sourceType=");
+		builder.append(sourceType);
+		builder.append(", additionalProperties=");
+		builder.append(additionalProperties);
+		builder.append(", stateInterp=");
+		builder.append(stateInterp);
+		builder.append(", taxInterp=");
+		builder.append(taxInterp);
+		builder.append(", requestTypeInterp=");
+		builder.append(requestTypeInterp);
+		builder.append(", sourceTypeInterp=");
+		builder.append(sourceTypeInterp);
+		builder.append(", operatorTypeIdInterp=");
+		builder.append(operatorTypeIdInterp);
+		builder.append(", qty=");
+		builder.append(qty);
+		builder.append(", deviceQuantity=");
+		builder.append(deviceQuantity);
+		builder.append("]");
+		return builder.toString();
 	}
+
 	
 	
 }
