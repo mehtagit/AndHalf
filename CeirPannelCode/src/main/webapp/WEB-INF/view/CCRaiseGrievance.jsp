@@ -155,14 +155,16 @@ var contextpath = "${context}";
 </script>
 
 </head>
-<body data-lang-param="${pageContext.response.locale}">
+<body data-lang-param="${pageContext.response.locale} " data-roleType="${usertype}" data-userTypeID="${usertypeId}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${stolenselectedUserTypeId}" 
+data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}" data-userName="${userName}"		
+ data-grievanceStatus="${grievanceStatus}" session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}">">
          <!-- START CONTENT -->
             <section id="content">
                 <!--start container-->
                 <div class="container" style="padding-bottom: 70px;" >
                     <div class="section">
                         <div class="row card-panel  responsive-page" id="endUserRaiseGrievance" style="display: none">
-                            <h6 class="fixPage-modal-header "><spring:message code="view.griev" /></h6>
+                            <h6 class="fixPage-modal-header "><spring:message code="modal.header.reportGrievance" /></h6>
                             <form onsubmit="return saveaAonymousGrievance()" method="POST" enctype="multipart/form-data" id="saveGrievance">
                              <input type="text" id="pageTypeValue" value="${reportType}" style="display: none;">
                                 <div class="col s12 m12 l12">
@@ -194,7 +196,7 @@ var contextpath = "${context}";
  													oninput="InvalidMsg(this,'input','<spring:message code="validation.10digits" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10digits" />');"
 												  required   maxlength="10" />
-                                            <label for="contactNumber"><spring:message code="input.contactNum" /><span
+                                            <label for="contactNumber"><spring:message code="input.contact" /><span
                                                     class="star">*</span></label>
                                         </div>
 
@@ -203,7 +205,7 @@ var contextpath = "${context}";
 											oninput="InvalidMsg(this,'input','<spring:message code="validation.emailformate" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.emailformate" />');"
 												required maxlength="30" />
-                                            <label for="emailID"><spring:message code="input.EmailID" /><span class="star">*</span></label>
+                                            <label for="emailID"><spring:message code="input.EmailID" /> <span class="star"> *</span></label>
                                         </div>
 
                                         <div class="col s12 m6 selectDropdwn">
@@ -213,7 +215,7 @@ var contextpath = "${context}";
 										            oninput="InvalidMsg(this,'input','<spring:message code="validation.selectFieldMsg" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.selectFieldMsg" />');"
 										  required   id="endUsercategory">
-                                                <option value="" disabled selected><spring:message code="input.Category" /></option>
+                                                <option value="" disabled selected><spring:message code="input.SelectCategory" /></option>
                                             </select>
                                         </div>
 
@@ -299,56 +301,8 @@ var contextpath = "${context}";
                                 </div>
                             </form>
                         </div>
-                        
-                        
-                           <div class="row card-panel track-grievance-responsive-page" id="trackGrievanceHeader" >
-                              
-                     <!--        <a href="./redirectToHomePage" class="modal-close btn-flat modal-btn right" data-dismiss="modal">&times;</a> -->
-                            <h6 class="fixPage-modal-header "><spring:message code="modal.TrackGrievance" /></h6>
-                           <div id="trackGrievanceDiv" style="display: none;">
-                            <div class="col s12 m12 l12">
-                                <form action="" onsubmit="return endUsergrivanceLibraryTable()" method="POST" enctype="multipart/form-data" id="saveGrievance">
-                                    <div class="row" id="singleInput">
-                                        <!-- <h6>Track Grievance</h6>
-                                        <hr> -->
-                                        <div class="row">
-                                            <div class="input-field col s6 m6 l5">
-                                                <label for="trackGrievanceId"><spring:message code="modal.PleaseGrievanceID" /><span class="star">*</span> :</label>
-                                            </div>
-                                            <div class="input-field col s6 m6 l6">
-                                                <input type="text" id="trackGrievanceId"  name="trackGrievanceId" pattern="[A-Za-z0-9]{18,18}" 
-													oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-												 title= "<spring:message code="validation.18characters" />" required    maxlength="18">
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="input-field col s12 center">
-                                                <button class="btn" type="submit" ><spring:message code="button.submit" /></button>
-                                                <a href="./redirectToHomePage" class="btn modal-trigger" style="margin-left: 10px;"><spring:message code="button.cancel" /></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                                </div>
-                               
-                            </div>
-                            
-                               
-                        </div>
-                            <div class="row card-panel track-grievance-responsive-page" id="trackGrievanctableDiv" style="display: none" >
-                              
-                           <!--  <a href="./redirectToHomePage" class="modal-close btn-flat modal-btn right" data-dismiss="modal">&times;</a> -->
-                            <h6 class="fixPage-modal-header "><spring:message code="modal.TrackGrievance" /></h6>
-                          
-                        <table id="endUsergrivanceLibraryTable" style="display: none"
-								class="responsive-table striped display"></table>
-								  <div class="input-field col s12 m12 l12 center">
-                                           
-                                            <a href="./redirectToHomePage" class="btn modal-trigger"
-                                                style="margin-left: 10px;"><spring:message code="button.cancel" /></a>
-                                        </div>
-                    
-                </div>
+				
+				  
                 
 								</div></div>
                 <!--end container-->
@@ -418,7 +372,7 @@ var contextpath = "${context}";
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
-                    <a href="./redirectToHomePage" class="btn"><spring:message code="modal.ok" /></a>
+                    <a href="./grievanceManagement" class="btn"><spring:message code="modal.ok" /></a>
                 </div>
             </div>
         </div>

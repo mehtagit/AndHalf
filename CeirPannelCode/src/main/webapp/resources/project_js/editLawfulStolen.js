@@ -360,6 +360,7 @@ function updateIndivisualStolen()
 	var request={
 			"txnId":txnid,
 			"qty":1,
+			"deviceQuantity":1,
 			"dateOfStolen":IndivisualStolenDate,
 			"blockingTimePeriod":blockingTimePeriod,
 			"blockingType":blockingType,

@@ -38,6 +38,7 @@ var featureId = 6;
 			var userId = $("body").attr("data-userID");
 			var userName = $("body").attr("data-userName");
 			
+			
 			/*localStorage.setItem("grievancePageSource", "viaGriebva");*/
 
 			function grievanceDataTable(lang){
@@ -49,7 +50,15 @@ var featureId = 6;
 				
 			}	
 
-
+			if($("body").attr("data-roleType")=="Customer Care"){
+				window.raisedBy = "Customer Care";
+				window.userId = null;
+			}else{
+				window.raisedBy = null;
+				window.userId = parseInt($("body").attr("data-userID"));
+			}
+			
+			
 			//**************************************************Grievance table**********************************************
 
 			function DataTable(Url,dataUrl){
@@ -74,7 +83,9 @@ var featureId = 6;
 				}
 				localStorage.removeItem('grievancePageSource');
 				
-				var userType = $('#userType').val() == null ? $("body").attr("data-roleType") : $("#userType option:selected").text(); 
+				var FilterUserType = $('#userType').val()==null || $('#userType').val()==undefined ? null : $("#userType option:selected").text();
+				
+				
 				
 				var filterRequest={
 						"grievanceStatus":grievanceStatus,
@@ -82,13 +93,16 @@ var featureId = 6;
 						"startDate":$('#startDate').val(),
 						"recentStatus":parseInt($('#recentStatus').val()),
 						/*"userId": parseInt($("body").attr("data-userTypeID") == 8 ? 0 : parseInt(userId)),*/
-						"userId": parseInt($("body").attr("data-userID")),
 						"featureId":parseInt(featureId),
 						"userTypeId": parseInt($("body").attr("data-userTypeID")),
 						"txnId":  $('#transactionID').val(),
 						"grievanceId":txn,
-						"userType" : userType,
-						"userDisplayName" : $('#userName').val()
+						"userType" : $("body").attr("data-roleType"),
+						"filterUserName" : $('#userName').val(),
+						"FilterUserType" : FilterUserType,
+						"userId": window.userId,
+						"raisedBy" : window.raisedBy
+								 
 				}
 				
 				if(lang=='km'){
@@ -188,7 +202,7 @@ var featureId = 6;
 										"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
 
 										"<select id="+dropdown[i].id+"  class='select-wrapper select2  initialized'>"+
-										"<option value='null'>"+dropdown[i].title+
+										"<option value='-1' disabled selected>"+dropdown[i].title+
 										"</option>"+
 										"</select>"+
 										"</div>"+
@@ -572,7 +586,17 @@ var featureId = 6;
 								$('#viewGrievanceId').text('');	
 							$('#viewGrievanceId').text(grievanceId);	
 							console.log("view Data--->" +JSON.stringify(data));
-							$("#chatMsg").append("<div class='chat-message-content clearfix'><span class='chat-time' id='timeHistory'>"+data[i].modifiedOn+"</span><h5 id='userTypehistory'>"+data[i].userDisplayName+"</h5><textarea class='materialize-textarea' style='min-height: 8rem' readonly id='messageHistory'>"+data[i].reply+"</textarea></div>");
+							if($("body").attr("data-roleType")!="CEIRAdmin"){
+								$("#chatMsg").append("<div class='chat-message-content clearfix'><span class='chat-time' id='timeHistory'>"+data[i].modifiedOn+"</span><h5 id='userTypehistory'>"+data[i].userDisplayName+"</h5><textarea class='materialize-textarea' style='min-height: 8rem' readonly id='messageHistory'>"+data[i].reply+"</textarea></div>");
+							}else{
+								if(data[i].userDisplayName!="User"){
+									$("#chatMsg").append("<div class='chat-message-content clearfix'><span class='chat-time' id='timeHistory'>"+data[i].modifiedOn+"</span><h5 id='userTypehistory'>"+data[i].userDisplayName+" ("+data[i].username+")</h5><textarea class='materialize-textarea' style='min-height: 8rem' readonly id='messageHistory'>"+data[i].reply+"</textarea></div>");
+								}else{
+									$("#chatMsg").append("<div class='chat-message-content clearfix'><span class='chat-time' id='timeHistory'>"+data[i].modifiedOn+"</span><h5 id='userTypehistory'>"+data[i].userDisplayName+"</h5><textarea class='materialize-textarea' style='min-height: 8rem' readonly id='messageHistory'>"+data[i].reply+"</textarea></div>");
+								}
+								
+							}
+							
 								for (var j=0 ; j<data[i].attachedFiles.length;j++)
 								{
 									if(data[i].attachedFiles[j].docType==null)

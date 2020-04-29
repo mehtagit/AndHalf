@@ -8,7 +8,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-
 import org.gl.ceir.CeirPannelCode.Feignclient.UserProfileFeignImpl;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.Class.HeadersTitle.DatatableResponseModel;
@@ -20,8 +19,9 @@ import org.gl.ceir.pageElement.model.InputFields;
 import org.gl.ceir.pageElement.model.PageElement;
 import org.gl.ceir.pagination.model.CurrencyContantModel;
 import org.gl.ceir.pagination.model.CurrencyPaginationModel;
-import org.gl.ceir.pagination.model.PortContentModal;
-import org.gl.ceir.pagination.model.PortPaginationModal;
+import org.gl.ceir.pagination.model.SystemUserContent;
+import org.gl.ceir.pagination.model.SystemUserPagination;
+import org.gl.ceir.pagination.model.SystemUsertype;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +34,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.gson.Gson;
 
 @RestController
-public class CurrencyDatatableController {
-		
+public class SytemUserDatatableController {
 	private final Logger log = LoggerFactory.getLogger(getClass());
 	String className = "emptyClass";
 	@Autowired
@@ -51,12 +50,15 @@ public class CurrencyDatatableController {
 	@Autowired
 	UserProfileFeignImpl userProfileFeignImpl;
 	@Autowired
-	CurrencyContantModel currencyContantModel;
+	SystemUsertype systemUsertype;
 	@Autowired
-	CurrencyPaginationModel currencyPaginationModel;
+	SystemUserContent systemUserContent;
+	@Autowired
+	SystemUserPagination systemUserPagination;
 	
-	@PostMapping("currencyManagementData")
-	public ResponseEntity<?> viewCurrencyRecord(@RequestParam(name="type",defaultValue = "currencyManagement",required = false) String role, HttpServletRequest request,HttpSession session) {
+
+	@PostMapping("UserManagementData")
+	public ResponseEntity<?> viewUserManagementRecord(HttpServletRequest request,HttpSession session) {
 		String userType = (String) session.getAttribute("usertype");
 		int userId=	(int) session.getAttribute("userid");
 		int file=0;
@@ -68,56 +70,48 @@ public class CurrencyDatatableController {
 		Integer pageSize = Integer.parseInt(request.getParameter("length"));
 		Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize ;
 		filterrequest.setSearchString(request.getParameter("search[value]"));
-		log.info("pageSize"+pageSize+"-----------pageNo---"+pageNo);
+		log.info("pageSize"+pageSize+"-----------pageNo---"+pageNo);		
 		try {
 			log.info("request send to the filter api ="+filterrequest);
-			Object response = userProfileFeignImpl.viewCurrencyRequest(filterrequest,pageNo,pageSize,file);
+			Object response = userProfileFeignImpl.viewSystemUserManagementRequest(filterrequest,pageNo,pageSize,file);
 			log.info("response in datatable"+response);
 			Gson gson= new Gson(); 
 			String apiResponse = gson.toJson(response);
-			currencyPaginationModel = gson.fromJson(apiResponse, CurrencyPaginationModel.class);
-			List<CurrencyContantModel> paginationContentList = currencyPaginationModel.getContent();
+			systemUserPagination = gson.fromJson(apiResponse, SystemUserPagination.class);
+			List<SystemUserContent> paginationContentList = systemUserPagination.getContent();
 			if(paginationContentList.isEmpty()) {
 				datatableResponseModel.setData(Collections.emptyList());
-			}
-			else {
-			for(CurrencyContantModel dataInsideList : paginationContentList) 
+			}else{
+				for(SystemUserContent dataInsideList : paginationContentList) 
 				{
 				   String id= String.valueOf(dataInsideList.getId());	
-				   String createdOn= dataInsideList.getCreatedOn();
-				   String modifiedOn = (String) dataInsideList.getModifiedOn();
-				   String month= dataInsideList.getMonth();
-				   String year = dataInsideList.getYear();
-				   String currency= String.valueOf(dataInsideList.getCurrencyInterp());
-				   String riel= String.valueOf(dataInsideList.getRiel());
-				   String dollar = String.valueOf(dataInsideList.getDollar());
-				   String userStatus = (String) session.getAttribute("userStatus");	  
-				   String action=iconState.currencyManagementIcons(id,userStatus);			   
-				   Object[] finalData={createdOn,modifiedOn,month,year,currency,riel,dollar,action}; 
+				   String createdOn = dataInsideList.getCreatedOn();
+				   String modifiedOn = dataInsideList.getModifiedOn();
+				   String userName = dataInsideList.getUsername();
+				   String userTypeName = "";
+				   String action=iconState.userSystemManagementIcons(id,userType);			   
+				   Object[] finalData={createdOn,modifiedOn,userName,userTypeName,action}; 
 				   List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
-					finalList.add(finalDataList);
-					datatableResponseModel.setData(finalList);	
-					
+				   finalList.add(finalDataList);
+				   datatableResponseModel.setData(finalList);	
+				}
 			}
-		}
 			//data set on ModelClass
-			datatableResponseModel.setRecordsTotal(currencyPaginationModel.getNumberOfElements());
-			datatableResponseModel.setRecordsFiltered(currencyPaginationModel.getTotalElements());
+			datatableResponseModel.setRecordsTotal(systemUserPagination.getNumberOfElements());
+			datatableResponseModel.setRecordsFiltered(systemUserPagination.getTotalElements());
 			return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK); 
-	}catch(Exception e) {
-		datatableResponseModel.setRecordsTotal(null);
-		datatableResponseModel.setRecordsFiltered(null);
-		datatableResponseModel.setData(Collections.emptyList());
-		log.error(e.getMessage(),e);
-		return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK); 
+		}catch(Exception e) {
+			datatableResponseModel.setRecordsTotal(null);
+			datatableResponseModel.setRecordsFiltered(null);
+			datatableResponseModel.setData(Collections.emptyList());
+			log.error(e.getMessage(),e);
+			return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK); 
 		}
 	}
 	
 	
-
-
-	@PostMapping("currencyManagement/pageRendering")
-	public ResponseEntity<?> pageRendering(@RequestParam(name="type",defaultValue = "currencyManagement",required = false) String role,HttpSession session){
+	@PostMapping("systemUser/pageRendering")
+	public ResponseEntity<?> pageRendering(HttpSession session){
 
 		String userType = (String) session.getAttribute("usertype");
 		String userStatus = (String) session.getAttribute("userStatus");
@@ -125,7 +119,7 @@ public class CurrencyDatatableController {
 		InputFields inputFields = new InputFields();
 		InputFields dateRelatedFields;
 		
-		pageElement.setPageTitle(Translator.toLocale("table.currencyManagement"));
+		pageElement.setPageTitle(Translator.toLocale("sidebar.User_Management"));
 		
 		List<Button> buttonList = new ArrayList<>();
 		List<InputFields> dropdownList = new ArrayList<>();
@@ -134,8 +128,8 @@ public class CurrencyDatatableController {
 			log.info("USER STATUS:::::::::"+userStatus);
 			log.info("session value user Type=="+session.getAttribute("usertype"));
 			
-			String[] names = { "HeaderButton", Translator.toLocale("button.addCurrency"), "AddCurrencyAddress()", "btnLink",
-					"FilterButton", Translator.toLocale("button.filter"),"currencyFieldTable(" + ConfigParameters.languageParam + ")", "submitFilter" };
+			String[] names = { "HeaderButton", Translator.toLocale("button.addUser"), "AddCurrencyAddress()", "btnLink",
+					"FilterButton", Translator.toLocale("button.filter"),"DataTable(" + ConfigParameters.languageParam + ")", "submitFilter" };
 			for(int i=0; i< names.length ; i++) {
 				button = new Button();
 				button.setType(names[i]);
@@ -151,7 +145,7 @@ public class CurrencyDatatableController {
 			
 		
 		  //Dropdown items 
-		  String[] selectParam={"select",Translator.toLocale("table.currency"),"currencyType","","select",Translator.toLocale("table.year"),"year",""}; 
+		  String[] selectParam={"select",Translator.toLocale("table.userType"),"userType",""}; 
 		  for(int i=0; i<selectParam.length; i++) { 
 				inputFields= new InputFields();
 		  inputFields.setType(selectParam[i]); 
@@ -167,7 +161,7 @@ public class CurrencyDatatableController {
 		 
 			
 			//input type date list		
-			String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate",""};
+			String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("table.UserName"),"userName",""};
 			for(int i=0; i< dateParam.length; i++) {
 				dateRelatedFields= new InputFields();
 				dateRelatedFields.setType(dateParam[i]);
@@ -186,6 +180,5 @@ public class CurrencyDatatableController {
 		
 		
 	}
-	
 	
 }

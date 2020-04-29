@@ -221,4 +221,11 @@ public class RegistrationController {
 		List<AlertContentModel> response =userRegistrationFeignImpl.userAllAlertDropdown();
 		return response;          
 	}
+	
+	@RequestMapping(value = "/getsubfeatures",method = {RequestMethod.POST,RequestMethod.GET})
+	@ResponseBody  
+	public List <FeatureDropdown> allSubFeatureDropdown(){ 
+		List<FeatureDropdown> response =userRegistrationFeignImpl.userAllSubFeatureDropdown();
+		return response;          
+	}
 }

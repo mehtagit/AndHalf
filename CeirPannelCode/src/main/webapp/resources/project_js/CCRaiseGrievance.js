@@ -25,6 +25,17 @@
 		 $('.modal').modal();
 	});
 
+	/*if(sessionStorage.getItem("cierRoletype")=="Customer Care"){
+		window.raisedBy = "Customer Care";  
+		alert("window.raisedBy1------->" +window.raisedBy);
+	}else{
+		window.raisedBy = "Self";
+		alert("window.raisedBy2------->" +window.raisedBy);
+	}*/
+	
+	/*alert("userId-->" +$("body").attr("data-userID"));
+	alert("usertype-->" +$("body").attr("data-roleType"));*/
+	
 function saveaAonymousGrievance(){
 
 	var firstName=$('#firstName').val();
@@ -115,7 +126,12 @@ function saveaAonymousGrievance(){
 			"lastName":lastName,
 			"middleName":middleName,
 			"phoneNo":contactNumber,
-			"featureId":6
+			"featureId":6,
+			"raisedBy" : "Customer Care",
+			"raisedByUserId" : parseInt($("body").attr("data-userID")), 
+			"raisedByUserType" : $("body").attr("data-roleType"),
+			"userTypeId" :  $("body").attr("data-userTypeID")
+			//"userType" : "Customer Care"
 	}
 	
 	formData.append('fileInfo[]',JSON.stringify(fileInfo));
@@ -296,76 +312,10 @@ function enableReplySelectFile(){
 	$("#docTypeFile1Label").append('<span class="star">*</span>');
 }
 
-//**************************************************Grievance table**********************************************
 
-			function endUsergrivanceLibraryTable(){
-						var filterRequest={
-						        "featureId":parseInt(featureId),
-						        "grievanceId":$('#trackGrievanceId').val(),
-						        "grievanceStatus":-1
-				      }
-						$('#endUsergrivanceLibraryTable').css("display", "block");
-						$('#trackGrievanceDiv').css("display", "none");
-						$('#trackGrievanctableDiv').css("display", "block");
-						$('#trackGrievanceHeader').css("display", "none");
-						
-				
-				$.ajax({
-					url: 'headers?type=grievanceHeaders',
-					type: 'POST',
-					dataType: "json",
-					success: function(result){
-						
-						/*console.log("Url-------" +url+"--------"+ "dataUrl-------" +dataUrl);*/
-						var table=	$("#endUsergrivanceLibraryTable").DataTable({
-							destroy:true,
-							bAutoWidth: false,
-							"serverSide": true,
-							orderCellsTop : true,
-							"ordering" : false,
-							"bPaginate" : true,
-							"bFilter" : false,
-							"bInfo" : true,
-							"bSearchable" : true,
-					
-							ajax: {
-								url : 'grievanceData',
-								type: 'POST',
-								dataType: "json",
-								data : function(d) {
-									d.filter = JSON.stringify(filterRequest); 
-									console.log(JSON.stringify(filterRequest));
-									
-								}
-
-							},
-						
-							"columns": result,
-							fixedColumns: true,
-							columnDefs: [
-					            { width: 137, targets: result.length - 1 },
-					            { width: 280, targets: 4 },
-					            { width: 155, targets: 2 },
-					            
-					        ]
-						});
-						$('div#initialloader').delay(300).fadeOut('slow');
-					},
-					error: function (jqXHR, textStatus, errorThrown) {
-						console.log("error in ajax");
-					}
-				});
-				
-				return false;
-			}
-			
 
 			function endUserviewGrievanceHistory(grievanceId,projectPath,userId)
 			{
-
-
-
-
 				console.log(projectPath+path);
 				$.ajax({
 					url: './endUserViewGrievance?recordLimit=2&grievanceId='+grievanceId+"&userId="+userId,
@@ -423,8 +373,6 @@ function enableReplySelectFile(){
 			
 			function endUserGrievanceReply(userId,grievanceId,txnId)
 			{
-				
-
 				$.ajax({
 					url: './endUserViewGrievance?recordLimit=2&grievanceId='+grievanceId+"&userId="+userId,
 					type: 'GET',

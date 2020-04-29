@@ -20,7 +20,7 @@ public class PolicyConfigContent {
 	private Integer type;
 	private Integer policyOrder;
 	private String statusInterp;
-	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+	private String typeInterp;
 	public Integer getId() {
 		return id;
 	}
@@ -93,18 +93,43 @@ public class PolicyConfigContent {
 	public void setStatusInterp(String statusInterp) {
 		this.statusInterp = statusInterp;
 	}
-	public Map<String, Object> getAdditionalProperties() {
-		return additionalProperties;
+	public String getTypeInterp() {
+		return typeInterp;
 	}
-	public void setAdditionalProperties(Map<String, Object> additionalProperties) {
-		this.additionalProperties = additionalProperties;
+	public void setTypeInterp(String typeInterp) {
+		this.typeInterp = typeInterp;
 	}
 	@Override
 	public String toString() {
-		return "PolicyConfigContent [id=" + id + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", tag="
-				+ tag + ", value=" + value + ", description=" + description + ", period=" + period + ", status="
-				+ status + ", remark=" + remark + ", type=" + type + ", policyOrder=" + policyOrder + ", statusInterp="
-				+ statusInterp + ", additionalProperties=" + additionalProperties + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("PolicyConfigContent [id=");
+		builder.append(id);
+		builder.append(", createdOn=");
+		builder.append(createdOn);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
+		builder.append(", tag=");
+		builder.append(tag);
+		builder.append(", value=");
+		builder.append(value);
+		builder.append(", description=");
+		builder.append(description);
+		builder.append(", period=");
+		builder.append(period);
+		builder.append(", status=");
+		builder.append(status);
+		builder.append(", remark=");
+		builder.append(remark);
+		builder.append(", type=");
+		builder.append(type);
+		builder.append(", policyOrder=");
+		builder.append(policyOrder);
+		builder.append(", statusInterp=");
+		builder.append(statusInterp);
+		builder.append(", typeInterp=");
+		builder.append(typeInterp);
+		builder.append("]");
+		return builder.toString();
 	}
 	
 	

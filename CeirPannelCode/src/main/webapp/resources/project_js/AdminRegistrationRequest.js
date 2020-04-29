@@ -203,7 +203,7 @@
 			$('<option>').val(data[i].value).text(data[i].interp)
 			.appendTo('#asType');
 			}
-			});
+		});
 		
 	}
 
@@ -415,13 +415,29 @@
 	}
 	
 
-function roleStatusChange(Id,sessionUserName){
+function roleStatusChange(Id,sessionUserName, userTypeId){
+		
 	    window.Id = Id,
 	    window.sessionUserName = sessionUserName,
+	    //window.userTypeId = userTypeId, 
+	    
+	    $.getJSON('./getTypeDropdownList/ROLE_TYPE/' +userTypeId, function(data) {
+			for (i = 0; i < data.length; i++) {
+			$('<option>').val(data[i].value).text(data[i].interp)
+			.appendTo('#userRoleType');
+			}
+		});
+		
+	    
 	    $("#statusRoleChange").openModal({
 		 	   dismissible:false
 		    });
-		 
+		
+	    if(userTypeId == "4" || userTypeId == "5" || userTypeId == "6"){
+	    	$('input[name=group2]').attr("disabled", false);
+	    }else{
+	    	$('input[name=group2]').attr("disabled",true);
+	    }
 	}
 	 	
 	
@@ -471,6 +487,7 @@ function userChangeStatus(entity){
  
  function resetButtons(){
 	 $('input[name=group1]').attr('checked',false);
+	 $('input[name=group2]').attr('checked',false);
  }
 	
 

@@ -810,7 +810,7 @@ public class IconsState {
 
 	/********************************** Icons for AdminRegistrationRequest **********************************/ 
 
-	public String adminRegistrationRequest(String Id ,String userStatus,String AdminCurrentStatus,String createdOn,String roles, String type,String id,String username,String status,String sessionUserName) {
+	public String adminRegistrationRequest(String Id ,String userStatus,String AdminCurrentStatus,String createdOn,String roles, String type,String id,String username,String status,String sessionUserName,String userTypeId) {
 		executePostConstruct();
 		log.info("username-->" +username+" sessionUserName--->" +sessionUserName);
 		// URL link 
@@ -819,7 +819,7 @@ public class IconsState {
 
 		String viewAction="trcInformation?id="+id+"&roles="+roles.replace(" ", "=")+"&type="+type;
 		String rejectAction = "userRejectPopup("+Id+",'"+sessionUserName+"')";
-		String editAction="roleStatusChange('"+Id+"','"+sessionUserName+"')";
+		String editAction="roleStatusChange('"+Id+"','"+sessionUserName+"','"+userTypeId+"')";
 
 
 		log.info("status---->"+status+"---------AdminCurrentStatus------>"+AdminCurrentStatus+" userStatus----------->" +userStatus);
@@ -2467,6 +2467,33 @@ public class IconsState {
 
 		String action=reply.concat(view);
 		return action;
+	}
+	
+	/********************************** Icons System User Management**********************************/
+	
+	public String userSystemManagementIcons(String id, String userStatus) { 
+		executePostConstruct();
+
+		String editAction= "currencyViewByID('"+id+"')";
+		String viewAction="viewDetails()";
+		String deleteAction= "deleteByImei()";
+
+		// state related Code 
+
+
+		String edit="<a onclick="+editAction+"><i class="
+				+editIcon+" aria-hidden=\"true\"  title="
+				+editIconTitle+"></i></a>"; 
+		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+				+viewIconTitle+" ></i></a>";
+		String delete="<a onclick="+deleteAction+"><i class="
+				+deletionIcon+" aria-hidden=\"true\" title="
+				+deleteIconTitle+"></i></a>";
+
+
+		String action=view.concat(edit).concat(delete);
+		return action;
+
 	}
 	
 	@PostConstruct

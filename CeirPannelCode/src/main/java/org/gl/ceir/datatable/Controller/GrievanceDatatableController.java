@@ -139,10 +139,11 @@ public class GrievanceDatatableController {
 						String grievanceId = String.valueOf(dataInsideList.getGrievanceId());
 						String StatusofGrievance = String.valueOf(dataInsideList.getGrievanceStatus());
 						String grievanceStatus = dataInsideList.getStateInterp();
+						String raisedBy = dataInsideList.getRaisedBy();
 						String userStatus = (String) session.getAttribute("userStatus");
 						String action = iconState.adminGrievanceState(dataInsideList.getFileName(), txnId, grievanceId,
 						StatusofGrievance, userStatus, userId);
-						Object[] finalData = { createdOn, modifiedOn, txnId, userName, userTypeName, grievanceId, grievanceStatus, action };
+						Object[] finalData = { createdOn, modifiedOn, txnId, userName, userTypeName, grievanceId, raisedBy, grievanceStatus, action };
 						List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);
@@ -264,15 +265,16 @@ public class GrievanceDatatableController {
 						String modifiedOn = dataInsideList.getModifiedOn();
 						String txnId = dataInsideList.getTxnId();
 						//String userDisplayName = dataInsideList.getUserDisplayName();
-						String userName = "";
+						String userName = dataInsideList.getUserDisplayName();
 						String userTypeName = dataInsideList.getUserType();
 						String grievanceId = String.valueOf(dataInsideList.getGrievanceId());
+						String raisedBy = dataInsideList.getRaisedBy();
 						String StatusofGrievance = String.valueOf(dataInsideList.getGrievanceStatus());
 						String grievanceStatus = dataInsideList.getStateInterp();
 						String userStatus = (String) session.getAttribute("userStatus");
 						String action = iconState.customerCareGrievanceState(dataInsideList.getFileName(), txnId, grievanceId,
 						StatusofGrievance, userStatus, userId);
-						Object[] finalData = { createdOn, modifiedOn, txnId, userName, userTypeName, grievanceId, grievanceStatus, action };
+						Object[] finalData = { createdOn, modifiedOn, txnId, userName, userTypeName, grievanceId, raisedBy, grievanceStatus, action };
 						List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);

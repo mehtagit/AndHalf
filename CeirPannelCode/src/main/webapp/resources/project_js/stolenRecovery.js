@@ -161,6 +161,7 @@ function editRegisterConsignment(){
 	var organisationcountry=$('#country').val();
 	var filename=$('#fileNameEdit').val();
 	var txnId=$('#TransactionIdEdit').val();
+
 	var quantity=$('#QuantityEdit').val();
 	console.log(supplierName,consignmentNumber,expectedArrivalDate,txnId,filename)
 
@@ -232,6 +233,8 @@ function myFunction(message) {
 	$('#errorMessage').html(message);
 	setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
 }
+
+
 
 
 $('.datepicker').on('mousedown',function(event){

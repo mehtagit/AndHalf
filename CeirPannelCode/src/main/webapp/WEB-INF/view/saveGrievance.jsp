@@ -86,6 +86,7 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}"
 
 
 
+
 <section id="content">
 <!--start container-->
 <div class="container">
@@ -182,7 +183,7 @@ oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200characte
 <div class="center" style="margin-top: 50px;">
 <button class="btn" id="saveGrievancesubmitButton"
 type="submit" ><spring:message code="button.submit" /></button>
-<a href="./grievanceManagement" class="btn" id="Cancel"
+<a onclick="openCancelPopUp()" class="btn" id="Cancel"
 style="margin-left: 10px;"><spring:message code="button.cancel" /></a>
 </div>
 </form>
@@ -237,6 +238,25 @@ class="btn"
 			</div>
 		</div>
 	</div>
+	
+	 <!-- cancel Modal start   -->
+
+    <div id="cancelMessage" class= " full-screen-modal modal" >
+         <h6 class="modal-header"><spring:message code="button.cancel" /></h6>
+        <div class="modal-content">
+           <div class="row">
+                <h6><spring:message code="modal.message" /></h6>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <div class="input-field col s12 center">
+                        <a href="./grievanceManagement" class="btn"><spring:message code="modal.yes" /></a>
+                        <button class="btn" onclick="closeCancelPopUp()" style="margin-left: 10px;"><spring:message code="modal.no" /></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 <!--materialize js-->
 <script type="text/javascript"
@@ -322,6 +342,17 @@ $.i18n().load( {
 	'km': './resources/i18n/km.json'
 } ).done( function() { console.log("done")});
 
+
+if(sessionStorage.getItem("cierRoletype")=="Customer Care"){
+	window.raisedBy = "Customer Care"; 
+	window.name = sessionStorage.getItem("userName");
+	window.userId = sessionStorage.getItem("userId");
+}else{
+	window.raisedBy = "Self";
+	window.name = $("body").attr("data-roleType");
+	window.userId = $("body").attr("data-userID");
+}
+
 function saveGrievance(){
 	var category=$('#category').val();
 	var txnId=$('#TransactionId').val();
@@ -342,6 +373,7 @@ function saveGrievance(){
 	var filesameStatus=false;
 	var documenttype=false;
 	var docTypeTag='';
+	
 	$('.fileDiv').each(function() {	
 
 		
@@ -399,13 +431,20 @@ function saveGrievance(){
 	return false;
 	
 	}
-		
+	
+	
 	var multirequest={
 			"attachedFiles":fileInfo,
 			"txnId":txnId,
 			"categoryId":category,
 			"remarks":remark,
-			"featureId":6
+			"featureId":6,
+			"raisedBy" : window.raisedBy,
+			"userId" : window.userId,
+			"userType" :  window.name,
+			"raisedByUserId" : parseInt($("body").attr("data-userID")), 
+			"raisedByUserType" : $("body").attr("data-roleType"),
+			"userTypeId" :  $("body").attr("data-userTypeID")
 		}
 	
 	formData.append('fileInfo[]',JSON.stringify(fileInfo));
@@ -662,6 +701,12 @@ $("input[type=file]").keypress(function(ev) {
     //ev.preventDefault(); //works as well
 
 });
+
+function  openCancelPopUp()
+{
+ $('#cancelMessage').openModal(); 
+}
+
 /* $( document ).ready(function() {
 	var ccc=addMoreFileCount();
 	alert(ccc);

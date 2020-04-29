@@ -4,6 +4,7 @@ import org.gl.ceir.CeirPannelCode.Model.ChangeLanguage;
 import org.gl.ceir.CeirPannelCode.Model.ForgotPassword;
 import org.gl.ceir.CeirPannelCode.Model.Password;
 import org.gl.ceir.CeirPannelCode.Model.User;
+import org.gl.ceir.CeirPannelCode.Model.UserStatus;
 import org.gl.ceir.CeirPannelCode.Response.LoginResponse;
 import org.gl.ceir.CeirPannelCode.Response.UpdateProfileResponse;
 import org.gl.ceir.CeirPannelCode.Util.HttpResponse;
@@ -30,5 +31,7 @@ public interface UserLoginFeignImpl {
 	@PostMapping("/Login/updateNewPassword")
 	public HttpResponse updateNewPassword(Password forgotPassword);
 	
+	@PostMapping("/Login/testLogin") 
+	public LoginResponse searchUserDetailFeign(UserStatus userStatus);
 }
 

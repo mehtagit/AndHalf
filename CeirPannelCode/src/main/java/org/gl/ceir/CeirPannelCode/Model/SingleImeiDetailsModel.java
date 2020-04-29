@@ -2,7 +2,7 @@ package org.gl.ceir.CeirPannelCode.Model;
 
 public class SingleImeiDetailsModel {
 	private String categoryInterp,createdOn,deviceIdTypeInterp,deviceTypeInterp,deviceSerialNumber,modifiedOn,multipleSimStatusInterp,remark,txnId,userType,blockingTimePeriod,blockingType,rejectedRemark,roleType;
-	private Integer category,deviceIdType,deviceType,multipleSimStatus,processState,requestType,sourceType,operatorTypeId;
+	private Integer category,deviceIdType,deviceType,multipleSimStatus,processState,requestType,sourceType,operatorTypeId,deviceQuantity;
 	private long userId,id;
 	private String firstImei,fourthImei,secondImei,thirdImei;
 	public String getCategoryInterp() {
@@ -173,6 +173,12 @@ public class SingleImeiDetailsModel {
 	public void setRoleType(String roleType) {
 		this.roleType = roleType;
 	}
+	public Integer getDeviceQuantity() {
+		return deviceQuantity;
+	}
+	public void setDeviceQuantity(Integer deviceQuantity) {
+		this.deviceQuantity = deviceQuantity;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -220,6 +226,8 @@ public class SingleImeiDetailsModel {
 		builder.append(sourceType);
 		builder.append(", operatorTypeId=");
 		builder.append(operatorTypeId);
+		builder.append(", deviceQuantity=");
+		builder.append(deviceQuantity);
 		builder.append(", userId=");
 		builder.append(userId);
 		builder.append(", id=");
@@ -235,6 +243,7 @@ public class SingleImeiDetailsModel {
 		builder.append("]");
 		return builder.toString();
 	}
+	
 	
 	
 	}

@@ -645,13 +645,13 @@ select {
 														<div class="row" id="editBlockTimePeriod">
 <div class="col s12 m6">
 <spring:message code="operator.blocking" /> <label style="margin-right: 2%;"> <input
-type="radio" name="editbulkBlockdeviceradio" class="blocktypeRadio" id=""
+type="radio" name="editbulkBlockdeviceradio" class="blocktypeRadio" 
 value="Immediate"
 onchange="document.getElementById('calender').style.display = 'none';"
 name="stolenBlockPeriod">
 <spring:message code="operator.immediate" />
 </label> <label style="margin-right: 2%;"> <input type="radio"
-name="editbulkBlockdeviceradio" class="blocktypeRadio" value="Default"
+name="editbulkBlockdeviceradio" class="blocktypeRadio" value="Default" id="editIndivisualDefaultPeriod" title=""
 onchange="document.getElementById('calender').style.display = 'none';"
 name="stolenBlockPeriod">
 <spring:message code="operator.default" />

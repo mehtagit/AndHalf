@@ -250,7 +250,7 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
                                             <div class="input-field col s12 center" style="padding: 20px 0;">
                                                 <!-- <a href="#submitIMEI" class="btn modal-trigger">Submit</a>  -->
                                                  <button class=" btn" type="submit"><spring:message code="button.submit" /></button>
-                                               	<button type="button" class="btn modal-close" style="margin-left: 10px;" title=" "><spring:message code="button.cancel" /></button>
+                                               	<button type="button" onclick = "resetButtons()" class="btn modal-close" style="margin-left: 10px;" title=" "><spring:message code="button.cancel" /></button>
                                             </div>
 
                                         </div>
@@ -283,11 +283,11 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
             <div class="row">
               
                    <h5 class="center">
-						<label> <input name="group1" type="radio" value="1"
+						<label> <input name="group1" type="radio" value="0"
 							onclick="userChangeStatus('status');"/>
 							<span class="checkboxFont"> <spring:message code="registration.changeUserStatus" /></span></label>
 									
-						 <label> <input name="group1" type="radio" value="2"
+						 <label> <input name="group2" type="radio" value="1"
 							onclick="userChangeStatus('roleType')"/>
 							<span class="checkboxFont"> <spring:message code="changeRoleType" /></span>
 						</label> 
@@ -313,13 +313,13 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
                                    <div class="row"  style="margin-top: 10px">
                                         	<div class="col s12 m6 l6" style="margin-bottom: 5px;">
 											<label for="userStatus"><spring:message
-													code="select.changeUserStatus" /> <span class="star">*</span></label>
-											<select id="userStatus" class="browser-default"
+													code="changeRoleType" /> <span class="star">*</span></label>
+											<select id="userRoleType" class="browser-default"
 												onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 												oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 												required>
 												<option value="" disabled selected><spring:message
-														code="select.selectUserStatus" />
+														code="select.changeUserRole" />
 												</option>
 											</select>
 										</div> 
@@ -351,7 +351,7 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
                                             <div class="input-field col s12 center" style="padding: 20px 0;">
                                                 <!-- <a href="#submitIMEI" class="btn modal-trigger">Submit</a>  -->
                                                  <button class=" btn" type="submit"><spring:message code="button.submit" /></button>
-                                               	<button type="button" class="btn modal-close" style="margin-left: 10px;" title=" "><spring:message code="button.cancel" /></button>
+                                               	<button type="button" onclick = "resetButtons()" class="btn modal-close" style="margin-left: 10px;" title=" "><spring:message code="button.cancel" /></button>
                                             </div>
 
                                         </div>

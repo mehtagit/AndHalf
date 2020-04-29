@@ -64,6 +64,7 @@ var formData= new FormData();
 	var request={
 			"dateOfRecovery":IndivisualRecoveryDevice,
 			"blockingType":blockingType,
+			"deviceQuantity":1,
 			"requestType":1,
 			"sourceType":5,
 			"remark": sigleRecovery,
@@ -126,7 +127,7 @@ function saveCompanyRecoveryRequest(){
 
 	var sigleRecoveryBlockPeriod=$('#stolenDatePeriod').val();
 	var blockingType ='Immediate';
-	
+	var bulkDevicequantity=$('#recoveryDevicequantity').val();
 	var stolenOrganizationUserDB= {
 		   
 		    "incidentCommune": bulkRecoverycommune,
@@ -144,6 +145,7 @@ function saveCompanyRecoveryRequest(){
 	var request={
 			"dateOfRecovery":bulkRecoveryDate,
 			"qty":bulkRecoveryquantity,
+			"deviceQuantity":bulkDevicequantity,
 			"blockingType":blockingType,
 			"requestType":1,
 			"sourceType":6,
