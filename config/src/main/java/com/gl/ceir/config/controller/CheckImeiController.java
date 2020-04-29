@@ -27,7 +27,7 @@ public class CheckImeiController {
 	@PostMapping(path = "cc/CheckImeI")
 	public MappingJacksonValue CheckImeiValues(@RequestBody CheckImeiValuesEntity checkImeiValuesEntity  ) {
 
-              String user_type  = checkImeiValuesEntity.getUser_type(); 
+              String user_type  = checkImeiValuesEntity.getUser_type().trim(); 
               String feature  = checkImeiValuesEntity.getFeature().trim().replaceAll(" ", "");
               Long imei = checkImeiValuesEntity.getImei();
               Long imei_type  = checkImeiValuesEntity.getImei_type();
@@ -37,11 +37,11 @@ public class CheckImeiController {
 		MappingJacksonValue mapping = null;
 		String rulePass =  	checkImeiServiceImpl.getResult( user_type,feature ,  imei,  imei_type);
 		if(rulePass.equalsIgnoreCase("true")) {
-			cImsg.setImeiError("NA");
-			cImsg.setImeiOutput("Pass");
+			cImsg.setErrorMessage("NA");
+			cImsg.setStatus("Pass");
 		}else {
-			cImsg.setImeiError(rulePass);
-			 cImsg.setImeiOutput("Fail");	
+			cImsg.setErrorMessage(rulePass);
+			 cImsg.setStatus("Fail");	
 		}
 		mapping = new MappingJacksonValue(cImsg);
 		logger.info("Response of View =" + mapping);
