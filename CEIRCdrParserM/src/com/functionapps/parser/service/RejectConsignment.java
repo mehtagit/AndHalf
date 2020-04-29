@@ -10,7 +10,8 @@ import com.functionapps.parser.Rule;
 public class RejectConsignment {
 	static Logger logger = Logger.getLogger(RejectConsignment.class);
 
-	public void process(Connection conn, String operator, String sub_feature, ArrayList<Rule> rulelist, String txnId, String operator_tag ){
-		new ConsignmentDelete().process(conn, operator, sub_feature, rulelist, txnId, operator_tag);
+	public void process(Connection conn, String operator, String sub_feature, ArrayList<Rule> rulelist, String txnId, 
+			String operator_tag, String usertypeName ){
+		new ConsignmentDelete().process(conn, operator, sub_feature, rulelist, txnId, operator_tag, usertypeName);
 	}
 }

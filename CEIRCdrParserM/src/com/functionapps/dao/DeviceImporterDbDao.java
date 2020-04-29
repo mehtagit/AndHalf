@@ -11,6 +11,7 @@ import java.util.Objects;
 
 import org.apache.log4j.Logger;
 
+import com.functionapps.pojo.DeviceCustomDb;
 import com.functionapps.pojo.DeviceImporterDb;
 import com.functionapps.util.DateUtil;
 import com.functionapps.util.Util;
@@ -19,7 +20,7 @@ public class DeviceImporterDbDao {
 	static Logger logger = Logger.getLogger(DeviceImporterDbDao.class);
 	static String GENERIC_DATE_FORMAT = "dd-MM-yyyy";
 
-	public List<DeviceImporterDb> getDeviceImporterDbByTxnId(Connection conn, String managementDb, String txnId) {
+	public List<DeviceImporterDb> getDeviceImporterDbByTxnId(Connection conn, String txnId) {
 		Statement stmt = null;
 		ResultSet rs = null;
 		String query = null;
@@ -33,8 +34,9 @@ public class DeviceImporterDbDao {
 					+ "user_id, txn_id, local_date, device_state, previous_device_status, period,"
 					+ "feature_id from device_importer_db where txn_id='" + txnId + "'";
 
-			logger.info("Query to get File Details ["+query+"]");
-			System.out.println("Query to get File Details ["+query+"]");
+			logger.info("Query ["+query+"]");
+			System.out.println("Query ["+query+"]");
+			
 			stmt  = conn.createStatement();
 			rs = stmt.executeQuery(query);
 
@@ -54,7 +56,7 @@ public class DeviceImporterDbDao {
 			}
 		}
 		catch(Exception e){
-			logger.info("Exception in getFeatureMapping"+e);
+			logger.error(e.getMessage(), e);
 			e.printStackTrace();
 		}
 		finally{

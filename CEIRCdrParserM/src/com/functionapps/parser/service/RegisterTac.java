@@ -26,7 +26,8 @@ public class RegisterTac {
 		
 	}
 
-	public void process(Connection conn, String operator, String sub_feature, ArrayList<Rule> rulelist, String txnId, String operator_tag ){
+	public void process(Connection conn, String operator, String sub_feature, ArrayList<Rule> rulelist, String txnId, 
+			String operator_tag, String usertypeName){
 
 		CEIRFeatureFileFunctions ceirfunction = new CEIRFeatureFileFunctions();
 		
@@ -112,8 +113,7 @@ public class RegisterTac {
 				logger.info("Txn_id [" + txnId + "] is is not present in type_approved_db.");
 				System.out.println("Txn_id [" + txnId + "] is is not present in type_approved_db.");
 			}
-			conn.commit();
-			conn.close();
+
 		}catch(Exception e){
 			e.printStackTrace();
 			logger.error(e.getMessage(), e);

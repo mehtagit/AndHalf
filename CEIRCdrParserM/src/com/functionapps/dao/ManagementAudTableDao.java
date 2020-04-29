@@ -1,0 +1,123 @@
+package com.functionapps.dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.List;
+import java.util.Objects;
+
+import org.apache.log4j.Logger;
+
+import com.functionapps.pojo.ManagementDb;
+import com.functionapps.util.Util;
+
+public class ManagementAudTableDao {
+	static Logger logger = Logger.getLogger(ManagementAudTableDao.class);
+	
+	public void insertManagementDbAud(Connection conn, List<ManagementDb> managementDbs, String tableName, String sequenceName) {
+		boolean isOracle = conn.toString().contains("oracle");
+		String dateFunction = Util.defaultDate(isOracle);
+
+		String query = "insert into " + tableName + " (id,rev, revtype, created_on, device_action, device_id_type, "
+				+ "device_launch_date, device_status, device_type, imei_esn_meid, modified_on, multiple_sim_status," 
+				+ "sn_of_device, previous_device_status, txn_id, user_id, device_state) values(";
+
+		if (isOracle) {
+			query = query + sequenceName +".nextVal,";
+		}else {
+			query = query + (getMaxIdDeviceImporterAud(conn, tableName) + 1) +",";
+		}
+
+		query = query + "?,?," + dateFunction + ",?,?,?,?,?,?," + dateFunction + ",?,?,?,?,?,?)";
+
+		PreparedStatement preparedStatement = null;
+
+		System.out.println("Add device_importer_db_aud [" + query + " ]");
+		logger.info("Add device_importer_db_aud ["+query+"]");
+
+		try {
+			preparedStatement = conn.prepareStatement(query);
+
+			for (ManagementDb managementDb : managementDbs) {
+				preparedStatement.setLong(1, managementDb.getRev());
+				preparedStatement.setInt(2, 2);
+				preparedStatement.setString(3, managementDb.getDeviceAction());	 
+				preparedStatement.setString(4, managementDb.getDeviceIdType());
+				preparedStatement.setString(5, managementDb.getDeviceLaunchDate());
+				preparedStatement.setString(6, managementDb.getDeviceStatus());
+				preparedStatement.setString(7, managementDb.getDeviceType());
+				preparedStatement.setString(8, managementDb.getImeiEsnMeid()); 
+				preparedStatement.setString(9, managementDb.getMultipleSimStatus());
+				preparedStatement.setString(10, managementDb.getSnOfDevice());
+				preparedStatement.setInt(11, managementDb.getPreviousDeviceStatus()); 
+				preparedStatement.setString(12, managementDb.getTxnId());
+				preparedStatement.setLong(13, managementDb.getUserId());
+				preparedStatement.setInt(14, managementDb.getDeviceState()); 
+				
+				System.out.println("Query " + preparedStatement);
+				preparedStatement.addBatch();
+			}
+
+			preparedStatement.executeBatch();
+
+			System.out.println("Inserted in " + tableName + " succesfully.");
+			logger.info("Inserted in " + tableName + " succesfully.");
+
+		} catch (SQLException e) {
+			logger.error(e.getMessage(), e);
+			e.printStackTrace();
+		}
+		finally{
+			try {
+				if(Objects.nonNull(preparedStatement))
+					preparedStatement.close();
+			} catch (SQLException e) {
+				logger.error(e.getMessage(), e);
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public Long getMaxIdDeviceImporterAud(Connection conn, String tableName) {
+		Statement stmt = null;
+		ResultSet rs = null;
+		String query = null;
+		Long max = null;
+
+		try{
+			query = "select max(id) as max from " + tableName;
+
+			logger.info("Query ["+query+"]");
+			System.out.println("Query ["+query+"]");
+			stmt  = conn.createStatement();
+			rs = stmt.executeQuery(query);
+
+			if(rs.next()){
+				max = rs.getLong("max");
+			}else {
+				max = 0L;
+			}
+			
+			logger.info("Next Id in device_importer_db_aud[" + max + "]");
+			return max;
+ 		}
+		catch(Exception e){
+			logger.info("Exception in getFeatureMapping"+e);
+			e.printStackTrace();
+			return 0L;
+		}
+		finally{
+			try {
+				if(rs!=null)
+					rs.close();
+				if(stmt!=null)
+					stmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}			
+		}
+	}
+	
+}
