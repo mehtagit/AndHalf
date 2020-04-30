@@ -6,7 +6,7 @@
 		var consignmentStatus=$('#filterConsignmentStatus').val();
 		var userId = $("body").attr("data-userID");
 		var userType=$("body").attr("data-roleType");
-		var featureId="25";
+		var featureId="41";
 		var rejectedMsg,consignmentApproved,errorMsg,havingTxnID,updateMsg,hasBeenUpdated;
 		var consignmentDeleted,deleteInProgress;
 		var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
@@ -30,7 +30,7 @@
 
          $(window).load(function(){
 			$('div#initialloader').fadeIn('fast');
-			currencyFieldTable(lang);
+			DataTable(lang);
 			sessionStorage.removeItem("session-value");
 			pageRendering();
 			
@@ -48,7 +48,7 @@
 		
 		//**************************************************filter table**********************************************
 		
-		function currencyFieldTable(lang){
+		function DataTable(lang){
 			
 			var filterRequest={
 					"endDate":$('#endDate').val(),
@@ -57,19 +57,18 @@
 					"featureId":parseInt(featureId),
 					"userTypeId": parseInt($("body").attr("data-userTypeID")),
 					"userType":$("body").attr("data-roleType"),
-					"currency" : parseInt($("#currencyType").val()),
-					"year" : parseInt($('#year').val()),
+					"currency" : parseInt($("#currencyType").val())
 			}				
 			if(lang=='km'){
 				var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
 			}
 			$.ajax({
-				url: 'headers?type=currencyHeaders&lang='+lang,
+				url: 'headers?type=userTableHeaders&lang='+lang,
 				/*	headers: {"Accept-Language": "en"},*/
 				type: 'POST',
 				dataType: "json",
 				success: function(result){
-					var table=	$("#currencyManagementLibraryTable").DataTable({
+					var table=	$("#userLibrarayTableDiv").DataTable({
 						destroy:true,
 						"serverSide": true,
 						orderCellsTop : true,
@@ -82,7 +81,7 @@
 							"sUrl": langFile  
 						},
 						ajax: {
-							url : 'currencyManagementData',
+							url : 'UserManagementData',
 							type: 'POST',
 							dataType: "json",
 							data : function(d) {
@@ -94,8 +93,8 @@
 					});
 
 					$('div#initialloader').delay(300).fadeOut('slow');
-						$('#currencyManagementLibraryTable input').unbind();
-						$('#currencyManagementLibraryTable input').bind('keyup', function (e) {
+						$('#userLibrarayTableDiv input').unbind();
+						$('#userLibrarayTableDiv input').bind('keyup', function (e) {
 							if (e.keyCode == 13) {
 								table.search(this.value).draw();
 							}
@@ -118,7 +117,7 @@
 
 		function pageRendering(){
 			$.ajax({
-				url: 'currencyManagement/pageRendering',
+				url: 'systemUser/pageRendering',
 				type: 'POST',
 				dataType: "json",
 				success: function(data){
@@ -130,7 +129,7 @@
 					var date=data.inputTypeDateList;
 					for(i=0; i<date.length; i++){
 						if(date[i].type === "date"){
-							$("#CurrencyTableDiv").append("<div class='input-field col s6 m2'>"+
+							$("#userTableDiv").append("<div class='input-field col s6 m2'>"+
 									"<div id='enddatepicker' class='input-group'>"+
 									"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off' onchange='checkDate(startDate,endDate)'>"+
 									"<label for="+date[i].id+">"+date[i].title
@@ -142,7 +141,7 @@
 								 maxDate: new Date()
 					        });
 						}else if(date[i].type === "text"){
-							$("#CurrencyTableDiv").append("<div class='input-field col s6 m2' ><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
+							$("#userTableDiv").append("<div class='input-field col s6 m2' ><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
 						}
 						 
 					} 
@@ -151,7 +150,7 @@
 					var dropdown=data.dropdownList;
 					for(i=0; i<dropdown.length; i++){
 						var dropdownDiv=
-							$("#CurrencyTableDiv").append("<div class='col s6 m2 selectDropdwn'>"+
+							$("#userTableDiv").append("<div class='col s6 m2 selectDropdwn'>"+
 								
 									"<div class='select-wrapper select2  initialized'>"+
 									"<span class='caret'>"+"</span>"+
@@ -165,8 +164,8 @@
 							"</div>");
 					}
 
-						$("#CurrencyTableDiv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
-						//$("#CurrencyTableDiv").append("<div class=' col s3 m2 l7'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportConsignmentData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+						$("#userTableDiv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
+						//$("#userTableDiv").append("<div class=' col s3 m2 l7'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportConsignmentData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 						for(i=0; i<button.length; i++){
 							$('#'+button[i].id).text(button[i].buttonTitle);
 							$('#'+button[i].id).attr("onclick", button[i].buttonURL);
@@ -183,16 +182,10 @@
 
 		
 	function setDropdown(){
-		$.getJSON('./getDropdownList/CURRENCY', function(data) {
-				/ $("#expectedArrivalPort").empty(); /
-				for (i = 0; i < data.length; i++) {
-					$('<option>').val(data[i].value).text(data[i].interp).appendTo('#currencyType,#currency,#editCurrency');
-				}
-			});
-	
-		$.getJSON('./getDropdownList/Year', function(data) {
+		$.getJSON('./registrationUserType?type=1', function(data) {
 			for (i = 0; i < data.length; i++) {
-				$('<option>').val(data[i].value).text(data[i].interp).appendTo('#year');
+				$('<option>').val(data[i].id).text(data[i].usertypeName)
+				.appendTo('#userType');
 			}
 		});
 	}

@@ -195,7 +195,7 @@ var contextpath = "${context}";
  													oninput="InvalidMsg(this,'input','<spring:message code="validation.10digits" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10digits" />');"
 												  required   maxlength="10" />
-                                            <label for="contactNumber"><spring:message code="input.contactNum" /><span
+                                            <label for="contactNumber"><spring:message code="input.contact" /><span
                                                     class="star">*</span></label>
                                         </div>
 
@@ -204,7 +204,7 @@ var contextpath = "${context}";
 											oninput="InvalidMsg(this,'input','<spring:message code="validation.emailformate" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.emailformate" />');"
 												required maxlength="30" />
-                                            <label for="emailID"><spring:message code="input.EmailID" /><span class="star">*</span></label>
+                                            <label for="emailID"><spring:message code="input.EmailID" /> <span class="star"> *</span></label>
                                         </div>
 
                                         <div class="col s12 m6 selectDropdwn">
@@ -214,7 +214,7 @@ var contextpath = "${context}";
 										            oninput="InvalidMsg(this,'input','<spring:message code="validation.selectFieldMsg" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.selectFieldMsg" />');"
 										  required   id="endUsercategory">
-                                                <option value="" disabled selected><spring:message code="input.Category" /></option>
+                                                <option value="" disabled selected><spring:message code="input.SelectCategory" /></option>
                                             </select>
                                         </div>
 
@@ -344,7 +344,7 @@ var contextpath = "${context}";
 								  <div class="input-field col s12 m12 l12 center">
                                            
                                             <a href="./redirectToHomePage" class="btn modal-trigger"
-                                                style="margin-left: 10px;"><spring:message code="button.cancel" /></a>
+                                                style="margin-left: 10px;"><spring:message code="modal.close" /></a>
                                         </div>
                     
                 </div>

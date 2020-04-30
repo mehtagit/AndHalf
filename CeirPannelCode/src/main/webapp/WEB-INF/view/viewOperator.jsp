@@ -209,6 +209,11 @@
                                                 <input type="text" name="phone" id="phone" maxlength="10" value="${registration.phoneNo}" disabled="" placeholder="">
                                                 <label for="phone" class="active"><spring:message code="input.contactNum" /> </label>
                                             </div>
+                                            
+                                            <div class="input-field col s12 m6">
+                                    			<input type="text" name="approvedBy" id="approvedBy" value="${registration.user.approvedBy}" maxlength="16" placeholder="" disabled="">
+                                    			<label for="approvedBy" class="active"><spring:message code="registration.approedBy" /> </label>
+                                			</div>
                                         </div>
                                     </div>
                                 </div>

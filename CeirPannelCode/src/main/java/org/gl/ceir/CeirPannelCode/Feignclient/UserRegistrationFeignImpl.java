@@ -46,7 +46,7 @@ public interface UserRegistrationFeignImpl {
 	public HttpResponse otpResend(@RequestBody ResendOtp otp); 
 	
 	@PostMapping("/userRegistration/getUsertypes")                                                                                         
-	public List<Usertype> userRegistrationDropdown(); 
+	public List<Usertype> userRegistrationDropdown(@RequestParam(name="type",required = false) Integer type); 
 	
 	                              
 	@PostMapping("/userRegistration/checkAvailability/{usertypeId}")                                                                                         
@@ -56,6 +56,9 @@ public interface UserRegistrationFeignImpl {
 	public List<FeatureDropdown> userAllFeatureDropdown(); 
 	
 	@PostMapping("/alertDb/view")                                                                                         
-	public List<AlertContentModel> userAllAlertDropdown(); 
+	public List<AlertContentModel> userAllAlertDropdown();
+	
+	@PostMapping("/subFeature/view")                                                                                         
+	public List<FeatureDropdown> userAllSubFeatureDropdown();
 	
 }

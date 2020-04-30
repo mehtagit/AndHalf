@@ -203,7 +203,7 @@
 			$('<option>').val(data[i].value).text(data[i].interp)
 			.appendTo('#asType');
 			}
-			});
+		});
 		
 	}
 
@@ -415,16 +415,58 @@
 	}
 	
 
-function roleStatusChange(Id,sessionUserName){
+function roleStatusChange(Id,sessionUserName, userTypeId){
+		
 	    window.Id = Id,
 	    window.sessionUserName = sessionUserName,
+	    //window.userTypeId = userTypeId, 
+	    
+	    
+	   usertypeData2(userTypeId);
+	    
 	    $("#statusRoleChange").openModal({
 		 	   dismissible:false
 		    });
-		 
+		
+	    if(userTypeId == "4" || userTypeId == "5" || userTypeId == "6"){
+	    	$('input[name=group2]').attr("disabled", false);
+	    }else{
+	    	$('input[name=group2]').attr("disabled",true);
+	    }
 	}
 	 	
-	
+
+
+function usertypeData2(id) {
+	$.ajax({
+		type : 'GET',
+		url :  './getTypeDropdownList/ROLE_TYPE/' + id,
+		contentType : "application/json",
+		dataType : 'html',
+		async : false,
+		success : function(data) {
+			var response = JSON.parse(data);
+			var usertypeDropdown = $("#usertypes");
+			for (var i = 0; i < response.length; i++) {
+				var data2 = '<option value="' + response[i].value + '">'
+						+ response[i].interp + '</option>';
+				usertypeDropdown.append(data2);
+
+			}
+			usertypeDropdown.val(id);
+			$('#usertypes option[value="' + id + '"]').attr('disabled', true);
+			setTimeout(function() {
+				$('.dropdown-trigger').dropdown();
+				$('select').formSelect();
+			}, 2000);
+		},
+		error : function(xhr, ajaxOptions, thrownError) {
+		}
+	});
+}
+
+
+
 function userChangeStatus(entity){
 	if (entity == "status"){
 		 $("#statusChangemodal").openModal({
@@ -471,6 +513,7 @@ function userChangeStatus(entity){
  
  function resetButtons(){
 	 $('input[name=group1]').attr('checked',false);
+	 $('input[name=group2]').attr('checked',false);
  }
 	
 

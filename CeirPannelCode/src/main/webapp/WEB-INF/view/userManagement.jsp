@@ -105,14 +105,14 @@
 
 								<a class="boton right" id="btnLink"></a>
 							</div>
-							<form action="${context}/currencyManagement"
+							<form action="${context}/userManagement"
 								method="post">
-								<div class="col s12 m12 l12" id="CurrencyTableDiv"
+								<div class="col s12 m12 l12" id="userTableDiv"
 									style="padding-bottom: 5px; background-color: #e2edef52;">
 									<div id="filterBtnDiv"></div>
 								</div>
 							</form>
-							<table id="currencyManagementLibraryTable"
+							<table id="userLibrarayTableDiv"
 								class="responsive-table striped display"></table>
 
 						</div>
@@ -355,7 +355,7 @@
 	<%-- 		<script type="text/javascript"
 		src="${context}/resources/project_js/disable_inspectElement.js"></script> --%>
 	<script type="text/javascript"
-		src="${context}/resources/project_js/viewCurrencyManagement.js"></script>
+		src="${context}/resources/project_js/userManagement.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/_dateFunction.js" async></script>
 			<script type="text/javascript"

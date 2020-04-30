@@ -204,8 +204,8 @@ input[type='search'] {
 													</div>
 
 													<div class="col s12 m6">
-														<label for="multipleSimStatus1"><spring:message code="select.multiSimStatus" /><span class="star">*</span>
-														</label> <select class="browser-default" required="required"
+														<label for="multipleSimStatus1"><spring:message code="select.multiSimStatus" /><span class="star"></span>
+														</label> <select class="browser-default" 
 														oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 											        oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 															id="multipleSimStatus1">

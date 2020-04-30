@@ -689,5 +689,15 @@ public ModelAndView viewDeviceInformation(@RequestParam(name="viewbyImei",requir
     
 	return modelAndView;
 }
+
+@PostMapping("approveVisaUpdateRequest") 
+public @ResponseBody GenricResponse approveVisaUpdateRequest (@RequestBody FilterRequest_UserPaidStatus filterRequestuserpaidStatus)  {
+	log.info("request send to the approveRejectDevice api="+filterRequestuserpaidStatus);
+	GenricResponse response= uploadPaidStatusFeignClient.approveRejectFeign(filterRequestuserpaidStatus);
+
+	log.info("response from currency api "+response);
+	return response;
+
+	}
 }
 

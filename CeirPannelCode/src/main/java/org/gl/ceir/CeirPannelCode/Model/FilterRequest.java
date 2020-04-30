@@ -4,8 +4,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class FilterRequest {
-	public String startDate,endDate,createdOn,modifiedOn,roleType,userType,txnId,searchString,grievanceId,tag,remarks,deviceId,nid,childTag,field,interp,tagId,value,displayName,description,address,featureName,subFeatureName,userName,date,fileName,invoiceNumber,suplierName,supplierId,stateInterp,alertId,remark,email,phoneNo,username,tac,userDisplayName,filterUserName,FilterUserType;
-	private Integer pageNo, pageSize,userId,taxPaidStatus,consignmentStatus,featureId,userTypeId,fileStatus,requestType,sourceType,grievanceStatus,userRoleTypeId,status,asType,serviceDump,fileType,action,operatorTypeId,channel,type,deviceIdType,parentValue,id,port,currency,quantity,stockStatus,feature,period;
+	public String startDate,endDate,createdOn,modifiedOn,roleType,userType,txnId,searchString,grievanceId,tag,remarks,deviceId,nid,childTag,field,interp,tagId,value,displayName,description,address,featureName,subFeatureName,userName,date,fileName,invoiceNumber,suplierName,supplierId,stateInterp,alertId,remark,email,phoneNo,username,tac,userDisplayName,filterUserName,FilterUserType,raisedBy;
+	private Integer pageNo, pageSize,userId,taxPaidStatus,consignmentStatus,featureId,userTypeId,fileStatus,requestType,sourceType,grievanceStatus,userRoleTypeId,status,asType,serviceDump,fileType,action,operatorTypeId,channel,type,deviceIdType,parentValue,id,port,currency,quantity,stockStatus,feature,period,year;
 	private Double dollar,riel;
 	private int roleTypeId;
 	private String state,ruleName;
@@ -243,6 +243,12 @@ public class FilterRequest {
 	public void setFilterUserType(String filterUserType) {
 		FilterUserType = filterUserType;
 	}
+	public String getRaisedBy() {
+		return raisedBy;
+	}
+	public void setRaisedBy(String raisedBy) {
+		this.raisedBy = raisedBy;
+	}
 	public Integer getPageNo() {
 		return pageNo;
 	}
@@ -417,6 +423,12 @@ public class FilterRequest {
 	public void setPeriod(Integer period) {
 		this.period = period;
 	}
+	public Integer getYear() {
+		return year;
+	}
+	public void setYear(Integer year) {
+		this.year = year;
+	}
 	public Double getDollar() {
 		return dollar;
 	}
@@ -528,6 +540,8 @@ public class FilterRequest {
 		builder.append(filterUserName);
 		builder.append(", FilterUserType=");
 		builder.append(FilterUserType);
+		builder.append(", raisedBy=");
+		builder.append(raisedBy);
 		builder.append(", pageNo=");
 		builder.append(pageNo);
 		builder.append(", pageSize=");
@@ -586,6 +600,8 @@ public class FilterRequest {
 		builder.append(feature);
 		builder.append(", period=");
 		builder.append(period);
+		builder.append(", year=");
+		builder.append(year);
 		builder.append(", dollar=");
 		builder.append(dollar);
 		builder.append(", riel=");
@@ -599,7 +615,6 @@ public class FilterRequest {
 		builder.append("]");
 		return builder.toString();
 	}
-	
 	
 	
 }

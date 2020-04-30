@@ -198,7 +198,7 @@ value="Immediate"
 onclick="document.getElementById('calender').style.display = 'none';"
 name="stolenBlockPeriod" checked><spring:message code="operator.immediate" />
 </label> <label style="margin-right: 2%;"> <input type="radio" class="blocktypeRadio"
-value="Default"
+value="Default" title="" id="defaultPeriodId"
 onclick="document.getElementById('calender').style.display = 'none';"
 name="stolenBlockPeriod"><spring:message code="operator.default" />
 </label> <label> <input type="radio" required="required" value="tilldate" class="blocktypeRadio"
@@ -300,8 +300,15 @@ onclick="_Services._selectstartDate()"></i></span>
                                                       required   maxlength="7" >
                                                         <label for="blockbulkquantity"><spring:message code="input.quantity" /> <span class="star">*</span></label>
                                                     </div>
+                                                    <div class="input-field col s12 m6" style="margin-top: 22px;">
+                                                        <input type="text" id="blockbulkDeviceQuantity" name="blockbulkDeviceQuantity" pattern="[0-9]{1-7}" 
+                                                        oninput="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');" 
+                                                        oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
+                                                      required   maxlength="7" >
+                                                        <label for="blockbulkDeviceQuantity"><spring:message code="input.devicequantity" /> <span class="star">*</span></label>
+                                                    </div>
                                                     
-                                                    <div class="file-field input-field col s12 m6" style="margin-top: 21px;">
+                                                    <div class="file-field input-field col s12 m6" style="margin-top: -7px;">
                                                         <p style="color: #000;"><spring:message code="operator.upload" /> <span class="star">*</span></p>
                                                         <div class="btn">
                                                             <span><spring:message code="operator.file" /></span>
@@ -315,7 +322,7 @@ onclick="_Services._selectstartDate()"></i></span>
                                                         </div>
                                                     </div>
 
-<div class="input-field col s12 m6" style="margin-top: 62px;">
+<div class="input-field col s12 m6" style="margin-top: 0px;">
                                                                 <textarea id="blockbulkRemark"  class="materialize-textarea" 
                                                                 oninput="InvalidMsg(this,'input','<spring:message code="validation.200character" />');" 
                                                                 oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
@@ -332,7 +339,7 @@ onclick="_Services._selectstartDate()"></i></span>
 													name="stolenBulkBlockPeriod" checked> <spring:message
 														code="operator.immediate" />
 												</label> <label style="margin-right: 2%;"> <input
-													type="radio" class="bulkblocktypeRadio" value="Default"
+													type="radio" class="bulkblocktypeRadio" value="Default" id="bulkblocktypeRadioId"
 													onclick="document.getElementById('stolenCalender').style.display = 'none';"
 													name="stolenBulkBlockPeriod"> <spring:message
 														code="operator.default" />

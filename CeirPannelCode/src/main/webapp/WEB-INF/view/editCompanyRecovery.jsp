@@ -257,6 +257,20 @@
                                                             title="Please enter number up to 7 digits">
                                                         <label for="bulkRecoveryquantity"><spring:message code="operator.quantity" /> <span class="star">*</span></label>
                                                     </div>
+                                                    
+                                            <div class="col s12 m6 l6"
+												style="margin-top: -2px;">
+												<label for="devicequantity" id="devicequantityLabel" class="active"> <spring:message
+														code="input.devicequantity" /><span class="star">*</span></label>
+												<input type="text" name="devicequantity"
+													class="form-control boxBorder boxHeight" 
+													id="devicequantity" maxlength="7"
+													pattern=[0-9]{1,7}
+													oninput="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
+													required> 
+											</div>
+											
 <input type="text" id="pageViewType" value="${viewType}" style="display: none;">
 <input type="text" id="existingStolenTxnId" style="display:none" value="${stolenTxnId}" >
                                                     <div class="input-field col s12 m6">
@@ -639,6 +653,7 @@ src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/j
         	dateFormat: "yy-mm-dd"
         	});
 
+        $("label[for='devicequantity']").addClass('active');
 </script>
 		
 

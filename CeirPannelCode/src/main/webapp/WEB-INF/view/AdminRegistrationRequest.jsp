@@ -33,6 +33,7 @@
  -->
 
 <!-- CORE CSS-->
+
 <link href="${context}/resources/css/materialize.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
 <link href="${context}/resources/css/style.css" type="text/css"
@@ -67,13 +68,28 @@
 	href="${context}/resources/project_css/iconStates.css">
 	
  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+ 
   <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
    <!------------------------------------------- Dragable Model---------------------------------->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script> 
+
+
+
+ 
+ 
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"> -->
+
+
+
+   
 	
 
 
+<script>
+var contextpath = "${context}";
+</script>
 
 </head>
 <%-- <body data-roleType="${usertype}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}"> --%>
@@ -250,7 +266,7 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
                                             <div class="input-field col s12 center" style="padding: 20px 0;">
                                                 <!-- <a href="#submitIMEI" class="btn modal-trigger">Submit</a>  -->
                                                  <button class=" btn" type="submit"><spring:message code="button.submit" /></button>
-                                               	<button type="button" class="btn modal-close" style="margin-left: 10px;" title=" "><spring:message code="button.cancel" /></button>
+                                               	<button type="button" onclick = "resetButtons()" class="btn modal-close" style="margin-left: 10px;" title=" "><spring:message code="button.cancel" /></button>
                                             </div>
 
                                         </div>
@@ -283,11 +299,11 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
             <div class="row">
               
                    <h5 class="center">
-						<label> <input name="group1" type="radio" value="1"
+						<label> <input name="group1" type="radio" value="0"
 							onclick="userChangeStatus('status');"/>
 							<span class="checkboxFont"> <spring:message code="registration.changeUserStatus" /></span></label>
 									
-						 <label> <input name="group1" type="radio" value="2"
+						 <label> <input name="group2" type="radio" value="1"
 							onclick="userChangeStatus('roleType')"/>
 							<span class="checkboxFont"> <spring:message code="changeRoleType" /></span>
 						</label> 
@@ -311,18 +327,30 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
                                 <div class="col s12 m12 l12">
                    	   
                                    <div class="row"  style="margin-top: 10px">
-                                        	<div class="col s12 m6 l6" style="margin-bottom: 5px;">
+                                        	
+                               <div class="input-field col s12 m6 l6" id="rolesDiv">
+									<p
+										style="margin-top: -15px; font-size: 12px;">
+										<spring:message code="table.roleType" /> <span class="star">*</span>
+									</p> 
+									<select multiple  name="roles" id="usertypes"  >
+										<option value="" disabled><spring:message code="table.roleType" /></option>
+									</select>
+								</div>
+                                        	
+                                        	
+                                        <%-- <div class="col s12 m6 l6" style="margin-bottom: 5px;">
 											<label for="userStatus"><spring:message
-													code="select.changeUserStatus" /> <span class="star">*</span></label>
-											<select id="userStatus" class="browser-default"
+													code="changeRoleType" /> <span class="star">*</span></label>
+											<select id="userRoleType" class="browser-default"
 												onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 												oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 												required>
 												<option value="" disabled selected><spring:message
-														code="select.selectUserStatus" />
+														code="select.changeUserRole" />
 												</option>
 											</select>
-										</div> 
+										</div> --%> 
                                        		
                                        
 										
@@ -351,7 +379,7 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
                                             <div class="input-field col s12 center" style="padding: 20px 0;">
                                                 <!-- <a href="#submitIMEI" class="btn modal-trigger">Submit</a>  -->
                                                  <button class=" btn" type="submit"><spring:message code="button.submit" /></button>
-                                               	<button type="button" class="btn modal-close" style="margin-left: 10px;" title=" "><spring:message code="button.cancel" /></button>
+                                               	<button type="button" onclick = "resetButtons()" class="btn modal-close" style="margin-left: 10px;" title=" "><spring:message code="button.cancel" /></button>
                                             </div>
 
                                         </div>

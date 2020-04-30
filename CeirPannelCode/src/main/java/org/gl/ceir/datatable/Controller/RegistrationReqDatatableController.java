@@ -102,6 +102,7 @@ public class RegistrationReqDatatableController {
 				   String Id =   String.valueOf(dataInsideList.getUser().getId());
 				   String username =  dataInsideList.getUser().getUsername();
 				   String id =  String.valueOf(dataInsideList.getId());
+				   String userTypeId = String.valueOf(dataInsideList.getUser().getUsertype().getId());
 				   String type = dataInsideList.getAsTypeName();
 				   String roles =  (String) dataInsideList.getUser().getUsertype().getUsertypeName();
 				   String StatusName = dataInsideList.getUser().getStateInterp();
@@ -112,7 +113,7 @@ public class RegistrationReqDatatableController {
 				   
 				   String userStatus = (String) session.getAttribute("userStatus");	  
 				   //log.info("Id-->"+Id+"--userStatus--->"+userStatus+"--StatusName---->"+StatusName+"--createdOn---->"+createdOn+"--id--->"+id+"--userName-->"+username);
-				   String action=iconState.adminRegistrationRequest(Id,userStatus,StatusName,createdOn,roles,type,id,username,status,sessionUserName);			   
+				   String action=iconState.adminRegistrationRequest(Id,userStatus,StatusName,createdOn,roles,type,id,username,status,sessionUserName,userTypeId);			   
 				   Object[] finalData={createdOn,modifiedOn,username,email,phoneNo,type,roles,StatusName,action}; 
 
 				   List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));

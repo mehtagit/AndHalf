@@ -127,6 +127,7 @@ public class StolenDatatableController {
 						String source =dataInsideList.getSourceTypeInterp();
 						String requestType = dataInsideList.getRequestType(); 
 						String requestTypeName = dataInsideList.getRequestTypeInterp();
+						String deviceQuantity=String.valueOf(dataInsideList.getDeviceQuantity());
 						int id = dataInsideList.getId();
 						if(dataInsideList.getQty()==null) {
 							quantity = "";
@@ -139,7 +140,7 @@ public class StolenDatatableController {
 						String userStatus = (String) session.getAttribute("userStatus");
 						String action = iconState.blockUnblockState(dataInsideList.getFileName(), dataInsideList.getTxnId(),
 								statusOfStolen, userStatus,requestType,id,dataInsideList.getQty(),dataInsideList.getSourceType());
-						Object[] finalData = {createdOn,txnId,requestTypeName,source,stolenStatusName,quantity,action};
+						Object[] finalData = {createdOn,txnId,requestTypeName,source,stolenStatusName,quantity,deviceQuantity,action};
 						List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);
@@ -156,6 +157,7 @@ public class StolenDatatableController {
 						String stolenStatusName = dataInsideList.getStateInterp();
 						String source =dataInsideList.getSourceTypeInterp();
 						String requestType = dataInsideList.getRequestType(); 
+						String deviceQuantity=String.valueOf(dataInsideList.getDeviceQuantity());
 						String requestTypeName = dataInsideList.getRequestTypeInterp();
 						int id = dataInsideList.getId();
 						if(dataInsideList.getQty()==null) {
@@ -169,7 +171,7 @@ public class StolenDatatableController {
 						log.info("1");
 						String action = iconState.adminBlockUnblock(dataInsideList.getFileName(), dataInsideList.getTxnId(),
 								fileStatus, userStatus,requestType,id,dataInsideList.getQty(),dataInsideList.getSourceType(),operator);
-						Object[] finalData = {createdOn,txnId,operator,requestTypeName,source,stolenStatusName,quantity,action};
+						Object[] finalData = {createdOn,txnId,operator,requestTypeName,source,stolenStatusName,quantity,deviceQuantity,action};
 						List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);
@@ -185,6 +187,7 @@ public class StolenDatatableController {
 						String mode= dataInsideList.getSourceTypeInterp();
 						String stolenStatusName = dataInsideList.getStateInterp();
 						String statusOfStolen = String.valueOf(dataInsideList.getFileStatus());
+						String deviceQuantity=String.valueOf(dataInsideList.getDeviceQuantity());
 						int id = dataInsideList.getId();
 						if(dataInsideList.getQty()==null) {
 							quantity = "";
@@ -195,7 +198,7 @@ public class StolenDatatableController {
 						String userStatus = (String) session.getAttribute("userStatus");
 						String action = iconState.StolenlawfulAgency(dataInsideList.getFileName(), dataInsideList.getTxnId(),
 								statusOfStolen, userStatus,requestType,id,dataInsideList.getQty(),dataInsideList.getSourceType(),requestTypeValue);
-						Object[] finalData = {createdOn,txnId,BlockType,requestType,mode,stolenStatusName,quantity,action};
+						Object[] finalData = {createdOn,txnId,BlockType,requestType,mode,stolenStatusName,quantity,deviceQuantity,action};
 						List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);
@@ -210,6 +213,7 @@ public class StolenDatatableController {
 						String requestTypeValue = dataInsideList.getRequestType();
 						String mode= dataInsideList.getSourceTypeInterp();
 						String stolenStatusName = dataInsideList.getStateInterp();
+						String deviceQuantity=String.valueOf(dataInsideList.getDeviceQuantity());
 						String statusOfStolen = String.valueOf(dataInsideList.getFileStatus());
 						int id = dataInsideList.getId();
 						if(dataInsideList.getQty()==null) {
@@ -223,7 +227,7 @@ public class StolenDatatableController {
 						String userStatus = (String) session.getAttribute("userStatus");
 						String action = iconState.AdminStolenlawfulAgency(dataInsideList.getFileName(), dataInsideList.getTxnId(),
 								statusOfStolen, userStatus,requestType,id,dataInsideList.getQty(),dataInsideList.getSourceType(),requestTypeValue);
-						Object[] finalData = {createdOn,txnId,BlockType,requestType,mode,stolenStatusName,quantity,action};
+						Object[] finalData = {createdOn,txnId,BlockType,requestType,mode,stolenStatusName,quantity,deviceQuantity,action};
 						List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);
@@ -240,6 +244,7 @@ public class StolenDatatableController {
 						String source =dataInsideList.getSourceTypeInterp();
 						String requestType = dataInsideList.getRequestType(); 
 						String requestTypeName = dataInsideList.getRequestTypeInterp();
+						String deviceQuantity=String.valueOf(dataInsideList.getDeviceQuantity());
 						int id = dataInsideList.getId();
 						if(dataInsideList.getQty()==null) {
 							quantity = "";
@@ -253,7 +258,7 @@ public class StolenDatatableController {
 						String userStatus = (String) session.getAttribute("userStatus");
 						String action = iconState.blockUnblockState(dataInsideList.getFileName(), dataInsideList.getTxnId(),
 								statusOfStolen, userStatus,requestType,id,dataInsideList.getQty(),dataInsideList.getSourceType());
-						Object[] finalData = {createdOn,txnId,requestTypeName,source,stolenStatusName,quantity,action};
+						Object[] finalData = {createdOn,txnId,requestTypeName,source,stolenStatusName,quantity,deviceQuantity,action};
 						List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);

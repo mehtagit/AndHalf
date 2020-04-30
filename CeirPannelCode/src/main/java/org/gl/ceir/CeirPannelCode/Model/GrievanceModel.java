@@ -15,7 +15,8 @@ private String remarks;
 private String txnId;
 private String userType;
 private String reply;
-private String userDisplayName,email,firstName,lastName,middleName,phoneNo,raisedBy,username;
+private String userDisplayName,email,firstName,lastName,middleName,phoneNo,raisedBy,username,raisedByUserType;
+private Integer raisedByUserId,userTypeId;
 private GrievanceMessageModal grievance;
 private List<MultipleFileModel> attachedFiles;
 public int getId() {
@@ -144,6 +145,24 @@ public String getUsername() {
 public void setUsername(String username) {
 	this.username = username;
 }
+public String getRaisedByUserType() {
+	return raisedByUserType;
+}
+public void setRaisedByUserType(String raisedByUserType) {
+	this.raisedByUserType = raisedByUserType;
+}
+public Integer getRaisedByUserId() {
+	return raisedByUserId;
+}
+public void setRaisedByUserId(Integer raisedByUserId) {
+	this.raisedByUserId = raisedByUserId;
+}
+public Integer getUserTypeId() {
+	return userTypeId;
+}
+public void setUserTypeId(Integer userTypeId) {
+	this.userTypeId = userTypeId;
+}
 public GrievanceMessageModal getGrievance() {
 	return grievance;
 }
@@ -201,6 +220,12 @@ public String toString() {
 	builder.append(raisedBy);
 	builder.append(", username=");
 	builder.append(username);
+	builder.append(", raisedByUserType=");
+	builder.append(raisedByUserType);
+	builder.append(", raisedByUserId=");
+	builder.append(raisedByUserId);
+	builder.append(", userTypeId=");
+	builder.append(userTypeId);
 	builder.append(", grievance=");
 	builder.append(grievance);
 	builder.append(", attachedFiles=");

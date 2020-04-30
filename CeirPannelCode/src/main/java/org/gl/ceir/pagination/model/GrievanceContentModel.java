@@ -16,6 +16,7 @@ public class GrievanceContentModel {
 	private String remarks;
 	private String stateInterp;
 	private String userDisplayName;
+	private String raisedBy;
 	public String getGrievanceId() {
 		return grievanceId;
 	}
@@ -88,6 +89,12 @@ public class GrievanceContentModel {
 	public void setUserDisplayName(String userDisplayName) {
 		this.userDisplayName = userDisplayName;
 	}
+	public String getRaisedBy() {
+		return raisedBy;
+	}
+	public void setRaisedBy(String raisedBy) {
+		this.raisedBy = raisedBy;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -115,9 +122,10 @@ public class GrievanceContentModel {
 		builder.append(stateInterp);
 		builder.append(", userDisplayName=");
 		builder.append(userDisplayName);
+		builder.append(", raisedBy=");
+		builder.append(raisedBy);
 		builder.append("]");
 		return builder.toString();
 	}
-	  
-	
+
 }

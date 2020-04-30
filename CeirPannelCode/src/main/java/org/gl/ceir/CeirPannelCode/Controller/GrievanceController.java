@@ -402,7 +402,7 @@ public class GrievanceController {
 						urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
 						GrievanceModel grievanceRequest  = gson.fromJson(grievanceDetails, GrievanceModel.class);
 						//grievanceRequest.setUserId(userId);
-						//grievanceRequest.setUserType("End User");
+						grievanceRequest.setUserType("End User");
 						grievanceRequest.setGrievanceId(grevnceId);
 
 						for (int i=0;i<grievanceRequest.getAttachedFiles().size();i++) {
