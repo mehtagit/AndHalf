@@ -3,8 +3,8 @@ package com.gl.ceir.config.model.file;
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvBindByPosition;
 
-public class SystemMgtFileModel {
-	
+public class MessageMgtFileModel {
+
 	@CsvBindByName(column = "Create On")
 	@CsvBindByPosition(position = 0)
 	private String createdOn;
@@ -21,16 +21,16 @@ public class SystemMgtFileModel {
 	@CsvBindByPosition(position = 3)
 	private String value;
 	
-	@CsvBindByName(column = "Type")
+
+	@CsvBindByName(column = "Channel")
 	@CsvBindByPosition(position = 4)
 	private String userType;
 
-	public SystemMgtFileModel() {
+	public MessageMgtFileModel() {
 		
 	}
 	
-	
-	public SystemMgtFileModel(String createdOn, String modifiedOn, String description, String value, String userType) {
+	public MessageMgtFileModel(String createdOn, String modifiedOn, String description, String value, String userType) {
 		super();
 		this.createdOn = createdOn;
 		this.modifiedOn = modifiedOn;
@@ -39,61 +39,50 @@ public class SystemMgtFileModel {
 		this.userType = userType;
 	}
 
-
 	public String getCreatedOn() {
 		return createdOn;
 	}
-
 
 	public void setCreatedOn(String createdOn) {
 		this.createdOn = createdOn;
 	}
 
-
 	public String getModifiedOn() {
 		return modifiedOn;
 	}
-
 
 	public void setModifiedOn(String modifiedOn) {
 		this.modifiedOn = modifiedOn;
 	}
 
-
 	public String getDescription() {
 		return description;
 	}
-
 
 	public void setDescription(String description) {
 		this.description = description;
 	}
 
-
 	public String getValue() {
 		return value;
 	}
-
 
 	public void setValue(String value) {
 		this.value = value;
 	}
 
-
 	public String getUserType() {
 		return userType;
 	}
-
 
 	public void setUserType(String userType) {
 		this.userType = userType;
 	}
 
-
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("SystemMgtFileModel [createdOn=");
+		builder.append("MessageMgtFileModel [createdOn=");
 		builder.append(createdOn);
 		builder.append(", modifiedOn=");
 		builder.append(modifiedOn);
@@ -106,6 +95,5 @@ public class SystemMgtFileModel {
 		builder.append("]");
 		return builder.toString();
 	}
-
-
+	
 }

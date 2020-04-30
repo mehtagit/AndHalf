@@ -624,7 +624,8 @@ public class StolenAndRecoveryServiceImpl {
 				stolenandRecoveryMgmtInfo.setRemark(stolenandRecoveryMgmt.getRemark());
 				stolenandRecoveryMgmtInfo.setQty(stolenandRecoveryMgmt.getQty());
 				stolenandRecoveryMgmtInfo.setFileStatus(StolenStatus.INIT.getCode());
-
+				stolenandRecoveryMgmtInfo.setDeviceQuantity(stolenandRecoveryMgmt.getDeviceQuantity());
+				
 				// Update StolenIndividualUserDB
 				if(Objects.nonNull(stolenandRecoveryMgmt.getStolenIndividualUserDB())) {
 					StolenIndividualUserDB stolenIndividualUserDB = updateStolenIndividualUserDB(

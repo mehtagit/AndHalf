@@ -809,7 +809,7 @@ public class StockServiceImpl {
 
 					stockMgmt.setStockStatus(StockStatus.ERROR.getCode());
 					stockMgmt.setRemarks(consignmentUpdateRequest.getRemarks());
-					stockMgmt.setCeirAdminId(consignmentUpdateRequest.getUserId());
+					//stockMgmt.setCeirAdminId(consignmentUpdateRequest.getUserId());
 				}
 
 				// Update Stock and its history.

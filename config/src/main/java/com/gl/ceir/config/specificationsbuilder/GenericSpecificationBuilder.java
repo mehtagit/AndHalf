@@ -36,7 +36,7 @@ public class GenericSpecificationBuilder<T> {
 		params.add(criteria);
 		return this;
 	}
-
+	
 	public final GenericSpecificationBuilder<T> orSearch(SearchCriteria criteria) { 
 		searchParams.add(criteria);
 		return this;
@@ -53,7 +53,6 @@ public class GenericSpecificationBuilder<T> {
 		Specification<T> finalSpecification   = null;
 		Specification<T> searchSpecification  = null;
 		Specification<T> orSpecification  = null;
-		
 		/** Specification added from addSpecification method**/
 		if(!specifications.isEmpty()) {
 			finalSpecification = Specification.where(specifications.get(0));
@@ -83,11 +82,10 @@ public class GenericSpecificationBuilder<T> {
 			}
 			if( finalSpecification != null ) {
 				finalSpecification = finalSpecification.and( searchSpecification );
-			}else {//If no call of addSpecification method
+			}else {//If no call of addSpecification method and empty params 
 				finalSpecification = Specification.where(searchSpecification);
 			}
 		}
-		
 		/***If orParams list not empty***/
 		specifications = createSpecifications( orParams );
 		if( !specifications.isEmpty()) {
@@ -101,19 +99,19 @@ public class GenericSpecificationBuilder<T> {
 				finalSpecification = Specification.where(orSpecification);
 			}
 		}
-		
 		return finalSpecification;
 	}
 
 	public void addSpecification(Specification<T> specification) { 
 		specifications.add(specification);
 	}
-
+	
 	private List<Specification<T>> createSpecifications( List<SearchCriteria> criterias){
-		List<Specification<T>> specifications = new ArrayList<>();
+		List<Specification<T>> specifications = new ArrayList<Specification<T>>();
 		try {
 			for(SearchCriteria searchCriteria : criterias) {
 				specifications.add((root, query, cb)-> {
+					// Path<Tuple> tuple = root.<Tuple>get(searchCriteria);
 					if(SearchOperation.GREATER_THAN.equals(searchCriteria.getSearchOperation())
 							&& Datatype.STRING.equals(searchCriteria.getDatatype())) {
 						return cb.greaterThan(root.get(searchCriteria.getKey()), searchCriteria.getValue().toString());
@@ -156,7 +154,14 @@ public class GenericSpecificationBuilder<T> {
 						return cb.notEqual(root.get(searchCriteria.getKey()), (Long)searchCriteria.getValue());
 					}else if(SearchOperation.LIKE.equals(searchCriteria.getSearchOperation())
 							&& Datatype.STRING.equals(searchCriteria.getDatatype())) {
-						return cb.like(root.get(searchCriteria.getKey()), "%"+(String)searchCriteria.getValue()+"%");
+						if( searchCriteria.getKey().contains("-")) {
+							//logger.info("Search Criteria join key:["+searchCriteria.getKey()+"]");
+							String[] key = (searchCriteria.getKey()).split("-");
+							return cb.like(cb.lower(root.join(key[0]).get(key[1]).as( String.class )),
+									"%"+((String)searchCriteria.getValue()).toLowerCase()+"%");
+						}else {
+							return cb.like(cb.lower(root.get(searchCriteria.getKey()).as( String.class )), "%"+((String)searchCriteria.getValue()).toLowerCase()+"%");
+						}
 					}else {
 						return null;
 					}
@@ -167,7 +172,7 @@ public class GenericSpecificationBuilder<T> {
 		}
 		return specifications;
 	}
-
+	
 	public Specification<T> in(String key, List<Integer> status){
 		return (root, query, cb) ->  cb.in(root.get(key)).value(status);
 	}
