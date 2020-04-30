@@ -747,16 +747,17 @@
 													for="quantity"><spring:message code="input.quantity" /> <span class="star">*</span></label>
 											</div>
 											
-											<div class="input-field col s12 m6 l6"
-												style="margin-top: 22px;">
+											<div class="col s12 m6 l6"
+												style="margin-top: 5px;">
+												<label for="devicequantity" class="active" id="deviceQuantityLabel"> <spring:message
+														code="input.devicequantity" /><span class="star"> *</span></label>
 												<input type="text" name="devicequantity"
 													class="form-control boxBorder boxHeight" 
 													id="devicequantity" maxlength="7"
 													pattern=[0-9]{1,7}
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
-													required> <label for="devicequantity"> <spring:message
-														code="input.devicequantity" /><span class="star"> *</span></label>
+													required> 
 											</div>
 
 											<div class="file-field col s12 m6">
@@ -1018,8 +1019,8 @@ src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/j
 	<script>
 	var successMsg,stolenCompany,editstolenCompany;
 	var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
-
-
+	
+	$("label[for='devicequantity']").addClass('active');
 	$.i18n().locale = lang;	
 	//alert(lang)
 
