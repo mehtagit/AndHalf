@@ -411,8 +411,13 @@ var contextpath = "${context}";
 									    <input placeholder="" type="text" name="idCard" id="idCard"  disabled="">
                                             <input type="hidden"  id="idCardFilePath">
                            <span> <a  href="#"  onclick="previewFile2(document.getElementById('idCardFilePath').value,document.getElementById('idCard').value)">  <spring:message code="registration.preview" /></a> </span>                     
+								<%if(usertypeId==9){ %>
+									<label for="passportNo"><spring:message code="operator.uploadidcard" /> <span class="star">*</span></label> 
+							<%} else{%>
 									<label for="passportNo"><spring:message code="registration.uploadidcard" /> <span class="star">*</span></label> 
+<%} %>
 								</div>
+								
 
 								<div class="col s12 m6 l6" style="margin-top: 3px;">
 									<input disabled="disabled" placeholder="" type="text" name="natureOfEmployment" id="natureOfEmployment" 
@@ -447,15 +452,13 @@ var contextpath = "${context}";
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input disabled="disabled" placeholder="" type="text" name="authorityEmail"   id="authorityEmail" 
-									>
-									<label for="authorityEmail"> <spring:message code="registration.ReportingAuthorityEmailid" /></label>
+									<input disabled="disabled"  placeholder="" type="text" name="authorityEmail"   id="authorityEmail" >
+									<label for="authorityEmail"> <spring:message code="registration.ReportingAuthorityEmailid" /><span class="star">*</span></label>
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input disabled="disabled" placeholder="" type="tel" name="authorityPhoneNo" id="authorityPhoneNo" 
-					>
-									<label for="authorityPhoneNo"> <spring:message code="registration.reportingauthoritycontactnumber" /></label>
+									<input disabled="disabled"  placeholder="" type="tel" name="authorityPhoneNo" id="authorityPhoneNo" >
+									<label for="authorityPhoneNo"> <spring:message code="registration.reportingauthoritycontactnumber" /><span class="star">*</span></label>
 								</div>
 
 								<div class="input-field col s12 m6 l6">

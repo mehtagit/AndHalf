@@ -266,18 +266,18 @@ function editProfile(){
 		 		document.getElementById("vatNumberField").style.display = "none";
 		 		document.getElementById("vatFileDiv").style.display = "none";
 		 	}
-			arr=resp.roles;
-			console.log("roles"+arr);
+			//arr=resp.roles;
+			//console.log("roles"+arr);
             if(resp.userTypeId==4 || resp.userTypeId==5 || resp.userTypeId==6){
              	$("#rolesDiv").show();
              	$("#AsTypeDiv").show();
-                usertypeData2(resp.userTypeId); 	
+             //   usertypeData2(resp.userTypeId); 	
             }
-			for (var i = 0; i < arr.length; i++) {
-				//$("#registrationForm #usertypes").val(arr[i]);
-				$('#registrationForm #usertypes option[value="'+arr[i]+'"]').attr('selected', true);
-				$('#registrationForm #usertypes option[value="'+arr[i]+'"]').attr('disabled', true);
-			}
+//			for (var i = 0; i < arr.length; i++) {
+//				//$("#registrationForm #usertypes").val(arr[i]);
+//				$('#registrationForm #usertypes option[value="'+arr[i]+'"]').attr('selected', true);
+//				$('#registrationForm #usertypes option[value="'+arr[i]+'"]').attr('disabled', true);
+//			}
 			loadByAsType(resp);
            
 			//$("#").val(resp[i].); 
@@ -406,11 +406,11 @@ function updateProfile(){
 		}
 	});
 
-	var data=[];
-	var $el=$("#usertypes");
-	$el.find('option:selected').each(function(){
-	    data.push($(this).val());
-	});
+//	var data=[];
+//	var $el=$("#usertypes");
+//	$el.find('option:selected').each(function(){
+//	    data.push($(this).val());
+//	});
 	
 	var password=document.getElementById("confirmPassword").value;
 	$("#registrationForm").each(function(key, val){
@@ -436,7 +436,6 @@ function updateProfile(){
 					companyName:val.find('#companyName').val(),
 					passportNo:val.find('#passportNo').val(),
 					country:val.find('#country').val(),
-					roles:data,
 					questionList:questionData,
 					password:password
 			}    
