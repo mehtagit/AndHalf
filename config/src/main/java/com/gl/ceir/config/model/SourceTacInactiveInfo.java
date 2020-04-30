@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
@@ -22,7 +23,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Audited
-public class SourceTacInfo implements Serializable {
+@Table(name = "source_tac_inactive_info")
+public class SourceTacInactiveInfo implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -48,7 +50,7 @@ public class SourceTacInfo implements Serializable {
 	@NotNull
 	private Integer recordCount;
 	
-	public SourceTacInfo() {
+	public SourceTacInactiveInfo() {
 		// TODO Auto-generated constructor stub
 	}
 
