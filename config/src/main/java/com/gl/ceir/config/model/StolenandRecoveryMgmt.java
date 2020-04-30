@@ -109,6 +109,8 @@ public class StolenandRecoveryMgmt implements Serializable {
 	private String deleteFlagInterp;
 	
 	private Long ceirAdminId;
+	
+	private Integer deviceQuantity;
 
 	public Long getCeirAdminId() {
 		return ceirAdminId;
@@ -318,6 +320,14 @@ public class StolenandRecoveryMgmt implements Serializable {
 	}
 	public void setRejectedRemark(String rejectedRemark) {
 		this.rejectedRemark = rejectedRemark;
+	}
+
+	public Integer getDeviceQuantity() {
+		return deviceQuantity;
+	}
+
+	public void setDeviceQuantity(Integer deviceQuantity) {
+		this.deviceQuantity = deviceQuantity;
 	}
 
 	@Override
