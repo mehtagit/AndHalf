@@ -596,6 +596,13 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 
 			}
 		});
+		
+		$.getJSON('./registrationUserType', function(data) {
+			for (i = 0; i < data.length; i++) {
+				$('<option>').val(data[i].id).text(data[i].usertypeName)
+				.appendTo('#userType');
+			}
+		});
 	}
 
 	function ApproveStock(txnId)

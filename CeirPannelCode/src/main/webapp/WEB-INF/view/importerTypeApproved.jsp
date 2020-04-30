@@ -106,7 +106,7 @@
 
 										<div class="col s12 m6 l6" style="margin-bottom: 5px;">
 											<label for="productName"><spring:message
-													code="registration.productname" /> <span class="star">*</span></label>
+													code="table.ProductName" /> <span class="star">*</span></label>
 											<select id="productname" class="browser-default"
 												onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 												oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"

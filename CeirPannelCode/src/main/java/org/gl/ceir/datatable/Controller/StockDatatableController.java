@@ -252,63 +252,7 @@ public class StockDatatableController {
 		List<InputFields> dropdownList = new ArrayList<>();
 		List<InputFields> inputTypeDateList = new ArrayList<>();
 
-		if("viaStock".equals(sourceType)){
-			log.info("sourceType render---1------" +sourceType);	
-			String[] names= {"HeaderButton",Translator.toLocale("button.uploadStock"),"./openUploadStock?reqType=formPage","btnLink", "FilterButton",Translator.toLocale("button.filter"),"filter("+ConfigParameters.languageParam+")","submitFilter"};
-
-			for(int i=0; i< names.length ; i++) {
-				button = new Button();
-				button.setType(names[i]);
-				i++;
-				button.setButtonTitle(names[i]);
-				i++;
-				button.setButtonURL(names[i]);
-				i++;
-				button.setId(names[i]);
-				buttonList.add(button);
-			}
-
-			String[] footerBtn= {"FooterButton", Translator.toLocale("button.markAsStolen"),"markedstolen()","markedstolen","FooterButton", Translator.toLocale("button.cancel"),"redirectToViewPage()","cancel"};
-			for(int i=0; i< footerBtn.length ; i++) {
-				button = new Button();
-				button.setType(footerBtn[i]);
-				i++;
-				button.setButtonTitle(footerBtn[i]);
-				i++;
-				button.setButtonURL(footerBtn[i]);
-				i++;
-				button.setId(footerBtn[i]);
-				buttonList.add(button);
-			}	
-			//Dropdown items	
-			String[] selectParam= {"select",Translator.toLocale("select.stockStatus"),"StockStatus",""};
-			for(int i=0; i< selectParam.length; i++) {
-				inputFields= new InputFields();
-				inputFields.setType(selectParam[i]);
-				i++;
-				inputFields.setTitle(selectParam[i]);
-				i++;
-				inputFields.setId(selectParam[i]);
-				i++;
-				inputFields.setClassName(selectParam[i]);
-				dropdownList.add(inputFields);
-			}
-
-
-			//input type date list	
-			String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("input.transactionID"),"transactionID",""};
-			for(int i=0; i< dateParam.length; i++) {
-				dateRelatedFields= new InputFields();
-				dateRelatedFields.setType(dateParam[i]);
-				i++;
-				dateRelatedFields.setTitle(dateParam[i]);
-				i++;
-				dateRelatedFields.setId(dateParam[i]);
-				i++;
-				dateRelatedFields.setClassName(dateParam[i]);
-				inputTypeDateList.add(dateRelatedFields);
-			}
-		}else {
+		
 			log.info("sourceType render---2------" +sourceType);	
 			if("Custom".equals(userType)) {
 				String[] names= {"HeaderButton",Translator.toLocale("button.assignStock"),"./openUploadStock?reqType=formPage","btnLink", "FilterButton",Translator.toLocale("button.filter"),"filter("+ConfigParameters.languageParam+")","submitFilter"};
@@ -338,36 +282,70 @@ public class StockDatatableController {
 					buttonList.add(button);
 				}
 			}
+			
+			if("CEIRAdmin".equals(userType)) {
+				//Dropdown items	
+				String[] selectParam= {"select",Translator.toLocale("select.stockStatus"),"StockStatus","","select",Translator.toLocale("table.userType"),"userType",""};
+				for(int i=0; i< selectParam.length; i++) {
+					inputFields= new InputFields();
+					inputFields.setType(selectParam[i]);
+					i++;
+					inputFields.setTitle(selectParam[i]);
+					i++;
+					inputFields.setId(selectParam[i]);
+					i++;
+					inputFields.setClassName(selectParam[i]);
+					dropdownList.add(inputFields);
+				}
 
-			//Dropdown items	
-			String[] selectParam= {"select",Translator.toLocale("select.stockStatus"),"StockStatus",""};
-			for(int i=0; i< selectParam.length; i++) {
-				inputFields= new InputFields();
-				inputFields.setType(selectParam[i]);
-				i++;
-				inputFields.setTitle(selectParam[i]);
-				i++;
-				inputFields.setId(selectParam[i]);
-				i++;
-				inputFields.setClassName(selectParam[i]);
-				dropdownList.add(inputFields);
+						
+				//input type date list	
+				String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("input.transactionID"),"transactionID","","text",Translator.toLocale("table.importerCompanyName"),"name",""};
+				for(int i=0; i< dateParam.length; i++) {
+					dateRelatedFields= new InputFields();
+					dateRelatedFields.setType(dateParam[i]);
+					i++;
+					dateRelatedFields.setTitle(dateParam[i]);
+					i++;
+					dateRelatedFields.setId(dateParam[i]);
+					i++;
+					dateRelatedFields.setClassName(dateParam[i]);
+					inputTypeDateList.add(dateRelatedFields); 
+				}
+			}else {
+				//Dropdown items	
+				String[] selectParam= {"select",Translator.toLocale("select.stockStatus"),"StockStatus",""};
+				for(int i=0; i< selectParam.length; i++) {
+					inputFields= new InputFields();
+					inputFields.setType(selectParam[i]);
+					i++;
+					inputFields.setTitle(selectParam[i]);
+					i++;
+					inputFields.setId(selectParam[i]);
+					i++;
+					inputFields.setClassName(selectParam[i]);
+					dropdownList.add(inputFields);
+				}
+
+						
+				//input type date list	
+				String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("input.transactionID"),"transactionID",""};
+				for(int i=0; i< dateParam.length; i++) {
+					dateRelatedFields= new InputFields();
+					dateRelatedFields.setType(dateParam[i]);
+					i++;
+					dateRelatedFields.setTitle(dateParam[i]);
+					i++;
+					dateRelatedFields.setId(dateParam[i]);
+					i++;
+					dateRelatedFields.setClassName(dateParam[i]);
+					inputTypeDateList.add(dateRelatedFields); 
+				}
+				
 			}
-
-
-			//input type date list	
-			String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("input.transactionID"),"transactionID",""};
-			for(int i=0; i< dateParam.length; i++) {
-				dateRelatedFields= new InputFields();
-				dateRelatedFields.setType(dateParam[i]);
-				i++;
-				dateRelatedFields.setTitle(dateParam[i]);
-				i++;
-				dateRelatedFields.setId(dateParam[i]);
-				i++;
-				dateRelatedFields.setClassName(dateParam[i]);
-				inputTypeDateList.add(dateRelatedFields); 
-			}
-		}
+			
+		
+		
 		String userTypeRole=(String)session.getAttribute("selectedUserTypeId");
 		pageElement.setPageTitle(Translator.toLocale("view.stockMgt")+" "+Translator.toLocale("roletype."+userTypeRole));
 		pageElement.setButtonList(buttonList);

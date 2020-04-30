@@ -201,8 +201,7 @@ function pageRendering(){
 					$('#'+button[i].id).attr("onclick", button[i].buttonURL);
 				}
 			}
-	
-		
+			
 			$.getJSON('./getDropdownList/'+featureId+'/'+$("body").attr("data-userTypeID"), function(data) {
 
 				for (i = 0; i < data.length; i++) {
@@ -210,10 +209,22 @@ function pageRendering(){
 					.appendTo('#Status');
 				}
 			});
+			 
+			$.getJSON('./registrationUserType', function(data) {
+				for (i = 0; i < data.length; i++) {
+					$('<option>').val(data[i].id).text(data[i].usertypeName)
+					.appendTo('#userType');
+				}
+			});
+			
+			
 		}
 		
 	}); 
+	
+	
 }
+
 
 
 if (userType == "CEIRAdmin") {
