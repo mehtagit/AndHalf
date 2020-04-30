@@ -83,7 +83,6 @@ public class ProfileService {
 		Integer userid= userStatus.getUserId();
 		Integer id= userStatus.getId();
 		log.info("userid from session:  "+userid);
-		userStatus.setId(id);
 		userStatus.setUserId(userid); 
 		userStatus.setId(id);
 		log.info("userStatus data is :  "+userStatus);
@@ -103,6 +102,7 @@ public class ProfileService {
 	public HttpResponse changeUserStatusService(UserStatus userStatus,HttpSession session) {
 		log.info("inside changeUserStatus controller");
 		Integer userid= userStatus.getUserId();
+		Integer id= userStatus.getId();
 		log.info("userid from session:  "+userid);
 		userStatus.setUserId(userid); 
 		userStatus.setId(id);
