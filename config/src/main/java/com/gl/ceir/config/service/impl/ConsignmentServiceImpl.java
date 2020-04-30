@@ -21,6 +21,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.gl.ceir.config.ConfigTags;
 import com.gl.ceir.config.EmailSender.EmailUtil;
@@ -36,6 +37,7 @@ import com.gl.ceir.config.model.DashboardUsersFeatureStateMap;
 import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
+import com.gl.ceir.config.model.PendingTacApprovedDb;
 import com.gl.ceir.config.model.RawMail;
 import com.gl.ceir.config.model.ResponseCountAndQuantity;
 import com.gl.ceir.config.model.SearchCriteria;
@@ -366,6 +368,7 @@ public class ConsignmentServiceImpl {
 		}
 	} 
 
+@Transactional
 	public GenricResponse deleteConsigmentInfo(ConsignmentUpdateRequest consignmentUpdateRequest) {
 		try {
 			if(Objects.isNull(consignmentUpdateRequest.getTxnId())) {
@@ -806,12 +809,14 @@ public class ConsignmentServiceImpl {
 				}
 			}
 			//TODO check if CUSTOM approved the consignment than we need to add an entry in webaction
-			consignmentMgmt.setUserName(consignmentUpdateRequest.getUserName());
-			consignmentMgmt.setUserType(consignmentUpdateRequest.getRoleType());
-			consignmentMgmt.setUserTypeId(consignmentUpdateRequest.getRoleTypeUserId().intValue());
-			consignmentMgmt.setFeatureId(consignmentUpdateRequest.getFeatureId());
-			consignmentMgmt.setRoleType(consignmentUpdateRequest.getRoleType());
-
+			/*
+			 * consignmentMgmt.setUserName(consignmentUpdateRequest.getUserName());
+			 * consignmentMgmt.setUserType(consignmentUpdateRequest.getRoleType());
+			 * consignmentMgmt.setUserTypeId(consignmentUpdateRequest.getRoleTypeUserId().
+			 * intValue());
+			 * consignmentMgmt.setFeatureId(consignmentUpdateRequest.getFeatureId());
+			 * consignmentMgmt.setRoleType(consignmentUpdateRequest.getRoleType());
+			 */
 			if(consignmentTransaction.executeUpdateStatusConsignment(consignmentMgmt,webActionDb)) {
 				logger.info("Consignment status have Update SuccessFully." + consignmentUpdateRequest.getTxnId());
 				return new GenricResponse(0, "Consignment status have Update SuccessFully.", consignmentUpdateRequest.getTxnId());
@@ -1019,6 +1024,24 @@ public class ConsignmentServiceImpl {
 
 	private GenricResponse mockFeignResponse() {
 		return new GenricResponse(200);	
+	}
+
+
+	@Transactional
+	public boolean updatePendingApproval(ConsignmentUpdateRequest consignmentUpdateRequest){
+		try {
+			
+			ConsignmentMgmt consignmentInfo = consignmentRepository.getByTxnId(consignmentUpdateRequest.getTxnId());
+			consignmentInfo.setRemarks(consignmentUpdateRequest.getRemarks());
+			
+			logger.info("[Trying to update ConsignmentMgmt] | Model ["+consignmentUpdateRequest+"]");
+			consignmentRepository.save(consignmentInfo);
+			logger.info("[Updation of Consignment is successful]  | Model ["+consignmentInfo+"]");
+			return true;
+		} catch (Exception e) {
+			logger.error("[Error while updating ConsignmentMgmt] | Model ["+consignmentUpdateRequest+"] | Error ["+e+"]");
+			return false;
+		}
 	}
 }
 
