@@ -211,5 +211,13 @@ public interface UserProfileFeignImpl {
 		@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
 		@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
 		@RequestParam(value = "file", defaultValue = "0") Integer file);	
+		
+		/*-------------------------- view user Management Feign ------------------------------*/
+		
+		@RequestMapping(value="/userMgmt/view" ,method=RequestMethod.POST) 
+		public Object viewSystemUserManagementRequest(@RequestBody FilterRequest filterRequest,
+		@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
+		@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+		@RequestParam(value = "file", defaultValue = "0") Integer file);
 } 
 

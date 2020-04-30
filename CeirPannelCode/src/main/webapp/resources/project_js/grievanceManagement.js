@@ -50,7 +50,15 @@ var featureId = 6;
 				
 			}	
 
-
+			if($("body").attr("data-roleType")=="Customer Care"){
+				window.raisedBy = "Customer Care";
+				window.userId = null;
+			}else{
+				window.raisedBy = null;
+				window.userId = parseInt($("body").attr("data-userID"));
+			}
+			
+			
 			//**************************************************Grievance table**********************************************
 
 			function DataTable(Url,dataUrl){
@@ -85,14 +93,16 @@ var featureId = 6;
 						"startDate":$('#startDate').val(),
 						"recentStatus":parseInt($('#recentStatus').val()),
 						/*"userId": parseInt($("body").attr("data-userTypeID") == 8 ? 0 : parseInt(userId)),*/
-						"userId": parseInt($("body").attr("data-userID")),
 						"featureId":parseInt(featureId),
 						"userTypeId": parseInt($("body").attr("data-userTypeID")),
 						"txnId":  $('#transactionID').val(),
 						"grievanceId":txn,
 						"userType" : $("body").attr("data-roleType"),
 						"filterUserName" : $('#userName').val(),
-						"FilterUserType" : FilterUserType
+						"FilterUserType" : FilterUserType,
+						"userId": window.userId,
+						"raisedBy" : window.raisedBy
+								 
 				}
 				
 				if(lang=='km'){
@@ -580,7 +590,7 @@ var featureId = 6;
 								$("#chatMsg").append("<div class='chat-message-content clearfix'><span class='chat-time' id='timeHistory'>"+data[i].modifiedOn+"</span><h5 id='userTypehistory'>"+data[i].userDisplayName+"</h5><textarea class='materialize-textarea' style='min-height: 8rem' readonly id='messageHistory'>"+data[i].reply+"</textarea></div>");
 							}else{
 								if(data[i].userDisplayName!="User"){
-									$("#chatMsg").append("<div class='chat-message-content clearfix'><span class='chat-time' id='timeHistory'>"+data[i].modifiedOn+"</span><h5 id='userTypehistory'>"+data[i].userDisplayName+" followed with user name "+data[i].username+"</h5><textarea class='materialize-textarea' style='min-height: 8rem' readonly id='messageHistory'>"+data[i].reply+"</textarea></div>");
+									$("#chatMsg").append("<div class='chat-message-content clearfix'><span class='chat-time' id='timeHistory'>"+data[i].modifiedOn+"</span><h5 id='userTypehistory'>"+data[i].userDisplayName+" ("+data[i].username+")</h5><textarea class='materialize-textarea' style='min-height: 8rem' readonly id='messageHistory'>"+data[i].reply+"</textarea></div>");
 								}else{
 									$("#chatMsg").append("<div class='chat-message-content clearfix'><span class='chat-time' id='timeHistory'>"+data[i].modifiedOn+"</span><h5 id='userTypehistory'>"+data[i].userDisplayName+"</h5><textarea class='materialize-textarea' style='min-height: 8rem' readonly id='messageHistory'>"+data[i].reply+"</textarea></div>");
 								}

@@ -747,16 +747,17 @@
 													for="quantity"><spring:message code="input.quantity" /> <span class="star">*</span></label>
 											</div>
 											
-											<div class="input-field col s12 m6 l6"
-												style="margin-top: 22px;">
+											<div class="col s12 m6 l6"
+												style="margin-top: 5px;">
+												<label for="devicequantity" class="active" id="deviceQuantityLabel"> <spring:message
+														code="input.devicequantity" /><span class="star"> *</span></label>
 												<input type="text" name="devicequantity"
 													class="form-control boxBorder boxHeight" 
 													id="devicequantity" maxlength="7"
 													pattern=[0-9]{1,7}
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
-													required> <label for="devicequantity"> <spring:message
-														code="input.devicequantity" /><span class="star"> *</span></label>
+													required> 
 											</div>
 
 											<div class="file-field col s12 m6">
@@ -841,7 +842,7 @@
 													</div>
 												</div>
 														
-														<div class="file-field col s12 m6" data-original-title="" title="">
+														<div class="file-field col s12 m6" data-original-title="" title="" style="margin-right: 2px;">
 															<h6 class="form-label" style="margin:8px; font-size: 0.9rem;" data-original-title="" title="">
 																<spring:message code="input.UploadFIR" />
 															</h6>
@@ -858,7 +859,7 @@
 																<a href="#" id="firFilePreview" class="imgPreviewLink"  style="display: none;">Preview</a>
 															</div>
 														</div>
-											<div class="input-field col s12 m6" style="margin-top: 22px;">
+											<div class="input-field col s12 m6" style="margin-top: 22px;margin-right: -2px;">
 												<textarea id="deviceBulkStolenRemark" placeholder=""
 													class="materialize-textarea"></textarea>
 												<label for="textarea1"><spring:message code="input.remarks" /></label>
@@ -1018,8 +1019,8 @@ src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/j
 	<script>
 	var successMsg,stolenCompany,editstolenCompany;
 	var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
-
-
+	
+	$("label[for='devicequantity']").addClass('active');
 	$.i18n().locale = lang;	
 	//alert(lang)
 

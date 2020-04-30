@@ -235,6 +235,8 @@ function myFunction(message) {
 }
 
 
+
+
 $('.datepicker').on('mousedown',function(event){
 	event.preventDefault();
 });

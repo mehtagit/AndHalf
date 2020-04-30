@@ -1,23 +1,23 @@
 package org.gl.ceir.pagination.model;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.stereotype.Component;
+
 @Component
-public class RegistrationUser {
+public class SystemUserContent {
 	private Integer id;
 	private String username;
 	private String createdOn;
 	private String modifiedOn;
 	private Integer currentStatus;
 	private Integer previousStatus;
-	private String stateInterp;
+	private String remark;
+	private Integer parentId;
+	private Object userLanguage;
+	private String modifiedBy;
 	private String referenceId;
 	private String approvedBy;
-	private RegistrationUserType usertype;
-	private RegistrationHandler hibernateLazyInitializer;
-	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+	private SystemUsertype systemUsertype;
+	private String stateInterp;
 	public Integer getId() {
 		return id;
 	}
@@ -54,11 +54,29 @@ public class RegistrationUser {
 	public void setPreviousStatus(Integer previousStatus) {
 		this.previousStatus = previousStatus;
 	}
-	public String getStateInterp() {
-		return stateInterp;
+	public String getRemark() {
+		return remark;
 	}
-	public void setStateInterp(String stateInterp) {
-		this.stateInterp = stateInterp;
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+	public Integer getParentId() {
+		return parentId;
+	}
+	public void setParentId(Integer parentId) {
+		this.parentId = parentId;
+	}
+	public Object getUserLanguage() {
+		return userLanguage;
+	}
+	public void setUserLanguage(Object userLanguage) {
+		this.userLanguage = userLanguage;
+	}
+	public String getModifiedBy() {
+		return modifiedBy;
+	}
+	public void setModifiedBy(String modifiedBy) {
+		this.modifiedBy = modifiedBy;
 	}
 	public String getReferenceId() {
 		return referenceId;
@@ -72,28 +90,22 @@ public class RegistrationUser {
 	public void setApprovedBy(String approvedBy) {
 		this.approvedBy = approvedBy;
 	}
-	public RegistrationUserType getUsertype() {
-		return usertype;
+	public SystemUsertype getSystemUsertype() {
+		return systemUsertype;
 	}
-	public void setUsertype(RegistrationUserType usertype) {
-		this.usertype = usertype;
+	public void setSystemUsertype(SystemUsertype systemUsertype) {
+		this.systemUsertype = systemUsertype;
 	}
-	public RegistrationHandler getHibernateLazyInitializer() {
-		return hibernateLazyInitializer;
+	public String getStateInterp() {
+		return stateInterp;
 	}
-	public void setHibernateLazyInitializer(RegistrationHandler hibernateLazyInitializer) {
-		this.hibernateLazyInitializer = hibernateLazyInitializer;
-	}
-	public Map<String, Object> getAdditionalProperties() {
-		return additionalProperties;
-	}
-	public void setAdditionalProperties(Map<String, Object> additionalProperties) {
-		this.additionalProperties = additionalProperties;
+	public void setStateInterp(String stateInterp) {
+		this.stateInterp = stateInterp;
 	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("RegistrationUser [id=");
+		builder.append("SystemUserContent [id=");
 		builder.append(id);
 		builder.append(", username=");
 		builder.append(username);
@@ -105,21 +117,26 @@ public class RegistrationUser {
 		builder.append(currentStatus);
 		builder.append(", previousStatus=");
 		builder.append(previousStatus);
-		builder.append(", stateInterp=");
-		builder.append(stateInterp);
+		builder.append(", remark=");
+		builder.append(remark);
+		builder.append(", parentId=");
+		builder.append(parentId);
+		builder.append(", userLanguage=");
+		builder.append(userLanguage);
+		builder.append(", modifiedBy=");
+		builder.append(modifiedBy);
 		builder.append(", referenceId=");
 		builder.append(referenceId);
 		builder.append(", approvedBy=");
 		builder.append(approvedBy);
-		builder.append(", usertype=");
-		builder.append(usertype);
-		builder.append(", hibernateLazyInitializer=");
-		builder.append(hibernateLazyInitializer);
-		builder.append(", additionalProperties=");
-		builder.append(additionalProperties);
+		builder.append(", systemUsertype=");
+		builder.append(systemUsertype);
+		builder.append(", stateInterp=");
+		builder.append(stateInterp);
 		builder.append("]");
 		return builder.toString();
 	}
 	
-		
+	
+	
 }

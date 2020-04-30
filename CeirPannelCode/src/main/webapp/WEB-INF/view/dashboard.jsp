@@ -154,8 +154,8 @@ data-roleType="${usertype}" data-userTypeID="${usertypeId}"
 								</div>
 							</div>
 						</li>
-						<li><a href="javascript:void(0)"  onclick="openHome();"
-							 style="color: white; cursor: pointer;"><spring:message
+						<li><a href="javascript:void(0)"  
+							 style="color:rgba(0, 0, 0, 0.3);; cursor: pointer;"><spring:message
 									code="registration.home" /></a></li>
 						<li class="profileInfo"><a
 							class="btn-flat dropdown-button waves-effect waves-light white-text profile-btn"

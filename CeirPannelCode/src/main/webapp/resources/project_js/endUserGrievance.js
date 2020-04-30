@@ -116,7 +116,8 @@ function saveaAonymousGrievance(){
 			"middleName":middleName,
 			"phoneNo":contactNumber,
 			"featureId":6,
-			"userType" : "End User"
+			"raisedBy" : "Self" 
+			//"userType" : "End User"
 	}
 	
 	formData.append('fileInfo[]',JSON.stringify(fileInfo));

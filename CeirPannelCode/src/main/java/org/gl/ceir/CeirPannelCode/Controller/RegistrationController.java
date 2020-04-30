@@ -203,8 +203,8 @@ public class RegistrationController {
 
 	@RequestMapping(value = "/registrationUserType",method = {RequestMethod.POST,RequestMethod.GET})
 	@ResponseBody  
-	public List<Usertype> userTypeDropdown(){ 
-		List<Usertype> response =userRegistrationFeignImpl.userRegistrationDropdown();
+	public List<Usertype> userTypeDropdown(@RequestParam(name="type",required = false) Integer type){ 
+		List<Usertype> response =userRegistrationFeignImpl.userRegistrationDropdown(type);
 		return response;          
 	}
 	
@@ -219,6 +219,13 @@ public class RegistrationController {
 	@ResponseBody  
 	public List<AlertContentModel> getAlertDropdown(){ 
 		List<AlertContentModel> response =userRegistrationFeignImpl.userAllAlertDropdown();
+		return response;          
+	}
+	
+	@RequestMapping(value = "/getsubfeatures",method = {RequestMethod.POST,RequestMethod.GET})
+	@ResponseBody  
+	public List <FeatureDropdown> allSubFeatureDropdown(){ 
+		List<FeatureDropdown> response =userRegistrationFeignImpl.userAllSubFeatureDropdown();
 		return response;          
 	}
 }

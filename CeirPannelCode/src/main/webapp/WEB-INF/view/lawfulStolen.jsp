@@ -1241,8 +1241,8 @@ select {
 													class="fa fa-calendar" aria-hidden="true"></i></span>
 											</div>
 
-											<div class="file-field col s12 m6 l6">
-												<h6 class="form-label" style="margin: 0; font-size: 0.9rem;">
+											<div class="file-field col s12 m6 l6" style="    margin-right: 1px;">
+												<h6 class="form-label" style="margin: 0;margin-bottom: 10px; font-size: 0.9rem;">
 													<spring:message code="input.UploadFIR" />
 												</h6>
 												<div class="btn">

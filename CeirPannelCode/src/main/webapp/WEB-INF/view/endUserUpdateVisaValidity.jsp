@@ -171,6 +171,24 @@
 											    maxlength="20" /> <label for="endUserlastName"><spring:message
 													code="input.lastName" /> <span class="star"></span></label>
 										</div>
+										<div class="col s12 m6" id="nationalityDiv"
+											style="display: block">
+											<label for="nationality" class="active"><spring:message
+													code="input.Nationality" /> <span class="star"></span></label>
+											<input type="text" id="nationality" name="nationality"
+												pattern="[a-zA-Z]{1,25}" oninput="InvalidMsg(this,'input');"
+												oninput="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
+												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
+												title="" maxlength="25">
+										</div>
+										<div class="col s12 m6" id="entryCountryDiv" style="display: block;">
+										<label for="datepicker" class="active"><spring:message
+														code="input.EntryCountry" /> <span class="star"></span></label>
+												<input type="text" id="datepicker"
+													oninput="InvalidMsg(this,'input','<spring:message code="validation.date" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.date" />');"
+													 maxlength="15" /> 
+									</div>
 
 										<div class="input-field col s12 m12 l12">
 											<input type="text" placeholder="" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,200}"
@@ -564,7 +582,29 @@
 		</div>
 	</div>
 
+	<div id="errorModal" class="modal">
+		<h6 class="modal-header">
+			<spring:message code="input.UpdateVisaValidity" />
+		</h6>
+		<div class="modal-content">
 
+			<div class="row">
+				<h6 id="errorMessage">
+					<spring:message code="passportNotExist" />
+				</h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<div class="input-field col s12 center">
+						<!-- <a href="homePage" class="btn">Yes</a> -->
+						<button class="modal-close btn" style="margin-left: 10px;">
+							<spring:message code="modal.ok" />
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
 	<script type="text/javascript"
