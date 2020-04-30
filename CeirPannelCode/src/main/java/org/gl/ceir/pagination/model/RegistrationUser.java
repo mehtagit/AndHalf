@@ -13,23 +13,11 @@ public class RegistrationUser {
 	private Integer currentStatus;
 	private Integer previousStatus;
 	private String stateInterp;
+	private String referenceId;
+	private String approvedBy;
 	private RegistrationUserType usertype;
 	private RegistrationHandler hibernateLazyInitializer;
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
-	
-	@Override
-	public String toString() {
-		return "RegistrationUser [id=" + id + ", username=" + username + ", createdOn=" + createdOn + ", modifiedOn="
-				+ modifiedOn + ", currentStatus=" + currentStatus + ", previousStatus=" + previousStatus
-				+ ", stateInterp=" + stateInterp + ", usertype=" + usertype + ", hibernateLazyInitializer="
-				+ hibernateLazyInitializer + ", additionalProperties=" + additionalProperties + "]";
-	}
-	public String getStateInterp() {
-		return stateInterp;
-	}
-	public void setStateInterp(String stateInterp) {
-		this.stateInterp = stateInterp;
-	}
 	public Integer getId() {
 		return id;
 	}
@@ -66,6 +54,24 @@ public class RegistrationUser {
 	public void setPreviousStatus(Integer previousStatus) {
 		this.previousStatus = previousStatus;
 	}
+	public String getStateInterp() {
+		return stateInterp;
+	}
+	public void setStateInterp(String stateInterp) {
+		this.stateInterp = stateInterp;
+	}
+	public String getReferenceId() {
+		return referenceId;
+	}
+	public void setReferenceId(String referenceId) {
+		this.referenceId = referenceId;
+	}
+	public String getApprovedBy() {
+		return approvedBy;
+	}
+	public void setApprovedBy(String approvedBy) {
+		this.approvedBy = approvedBy;
+	}
 	public RegistrationUserType getUsertype() {
 		return usertype;
 	}
@@ -84,6 +90,36 @@ public class RegistrationUser {
 	public void setAdditionalProperties(Map<String, Object> additionalProperties) {
 		this.additionalProperties = additionalProperties;
 	}
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("RegistrationUser [id=");
+		builder.append(id);
+		builder.append(", username=");
+		builder.append(username);
+		builder.append(", createdOn=");
+		builder.append(createdOn);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
+		builder.append(", currentStatus=");
+		builder.append(currentStatus);
+		builder.append(", previousStatus=");
+		builder.append(previousStatus);
+		builder.append(", stateInterp=");
+		builder.append(stateInterp);
+		builder.append(", referenceId=");
+		builder.append(referenceId);
+		builder.append(", approvedBy=");
+		builder.append(approvedBy);
+		builder.append(", usertype=");
+		builder.append(usertype);
+		builder.append(", hibernateLazyInitializer=");
+		builder.append(hibernateLazyInitializer);
+		builder.append(", additionalProperties=");
+		builder.append(additionalProperties);
+		builder.append("]");
+		return builder.toString();
+	}
 	
-	
+		
 }

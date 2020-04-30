@@ -182,12 +182,12 @@
 
 		
 	function setDropdown(){
-		$.getJSON('./getDropdownList/CURRENCY', function(data) {
-				/ $("#expectedArrivalPort").empty(); /
-				for (i = 0; i < data.length; i++) {
-					$('<option>').val(data[i].value).text(data[i].interp).appendTo('#currencyType,#currency,#editCurrency');
-				}
-			});
+		$.getJSON('./registrationUserType?type=1', function(data) {
+			for (i = 0; i < data.length; i++) {
+				$('<option>').val(data[i].id).text(data[i].usertypeName)
+				.appendTo('#userType');
+			}
+		});
 	}
 
 		function AddCurrencyAddress(){

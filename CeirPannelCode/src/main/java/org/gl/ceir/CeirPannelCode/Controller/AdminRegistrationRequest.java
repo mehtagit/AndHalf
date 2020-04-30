@@ -53,7 +53,7 @@ public class AdminRegistrationRequest {
 		log.info("View registration API Response--------------->" +registration);
 		mv.addObject("registration", registration);
 		
-		
+		log.info(" Approved By----->" +registration.getUser().getApprovedBy());
 		
 	
 		if("TRC".equals(roles)) {
