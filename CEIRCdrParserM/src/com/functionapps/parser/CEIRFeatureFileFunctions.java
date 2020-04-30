@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 
 import java.sql.Statement;
 import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 
@@ -62,7 +63,6 @@ public class CEIRFeatureFileFunctions {
             System.out.println("" + e);
         }
         return rs;
-
     }
 
     public HashMap<String, String> getFeatureMapping(Connection conn, String feature, String usertype_name) {
@@ -235,8 +235,7 @@ public class CEIRFeatureFileFunctions {
         Statement stmt = null;
         ResultSet rs = null;
 
-        query = "select b.usertype_name as usertype_name from users a, usertype b where a.usertype_id=b.id and a.id='"
-                + user_id + "'";
+        query = "select b.usertype_name as usertype_name from users a, usertype b where a.usertype_id=b.id and a.id='" + user_id + "'";
 
         if (main_type.toLowerCase().equals("stock")) {
             query = "select  role_type  as usertype_name from stock_mgmt  where txn_id = '" + txn_id + "'"; // hardcodeed
@@ -404,6 +403,28 @@ public class CEIRFeatureFileFunctions {
             }
         }
 
+    }
+
+    public Map getUserRoleType(Connection conn, String txn_id) {
+        Statement stmt = null;
+        ResultSet rs = null;
+        String query = null;
+        HashMap<String, String> map = new HashMap<String, String>();
+
+        try {
+            query = "select role_type , user_type  from stock_mgmt where  txn_id = '" + txn_id + "'   ";
+            logger.info("Query to get getUserRoleType [" + query + "]");
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                map.put("user_type", rs.getString("user_type"));
+                map.put("role_type", rs.getString("role_type"));
+            }
+        } catch (Exception e) {
+            logger.info("Exception in getFileDetails[" + e + "]");
+            System.out.println("" + e);
+        }
+        return map;
     }
 
 }
