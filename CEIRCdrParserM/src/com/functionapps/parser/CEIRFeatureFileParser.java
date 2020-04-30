@@ -19,6 +19,7 @@ public class CEIRFeatureFileParser {
     public static void main(String args[]) {
         logger.info("  ");
         logger.info("  ");
+        logger.info(" CEIRFeatureFileParser.class ");
         String feature = null;
         Connection conn = null;
         conn = (Connection) new com.functionapps.db.MySQLConnection().getConnection();
