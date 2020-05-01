@@ -362,7 +362,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 				"txnId":txn,
 				"consignmentStatus":parseInt($('#StockStatus').val()),
 				"displayName" : $('#name').val(),
-				"roleType" : $('#userType').val()
+				"filteredUserType" : $('#userType').val()
 		}
 		if(lang=='km'){
 			var langFile='./resources/i18n/khmer_datatable.json';
@@ -463,7 +463,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 								"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
 
 								"<select id="+dropdown[i].id+" class='select-wrapper select2  initialized'>"+
-								"<option>"+dropdown[i].title+
+								"<option value=null disabled selected>"+dropdown[i].title+
 								"</option>"+
 								"</select>"+
 								"</div>"+
