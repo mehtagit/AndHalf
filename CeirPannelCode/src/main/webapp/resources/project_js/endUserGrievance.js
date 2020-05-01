@@ -302,7 +302,7 @@ function enableReplySelectFile(){
 
 			function endUsergrivanceLibraryTable(){
 						var filterRequest={
-						        "featureId":parseInt(featureId),
+						        "featureId": 6,
 						        "grievanceId":$('#trackGrievanceId').val(),
 						        "grievanceStatus":-1
 				      }
@@ -389,7 +389,7 @@ function enableReplySelectFile(){
 						for(var i=0; i<data.length; i++)
 						{
 							console.log("iiiiiii"+i);
-							$("#chatMsg").append("<div class='chat-message-content clearfix'><span class='chat-time' id='timeHistory'>"+data[i].modifiedOn+"</span><h5 id='userTypehistory'>"+data[i].userDisplayName+"</h5><textarea class='materialize-textarea' id='messageHistory'>"+data[i].reply+"</textarea></div>");
+							$("#chatMsg").append("<div class='chat-message-content clearfix'><span class='chat-time' id='timeHistory'>"+data[i].modifiedOn+"</span><h5 id='userTypehistory'>"+data[i].userDisplayName+"</h5><textarea class='materialize-textarea' style='min-height: 8rem' id='messageHistory'>"+data[i].reply+"</textarea></div>");
 								for (var j=0 ; j<data[i].attachedFiles.length;j++)
 								{
 									
@@ -450,7 +450,7 @@ function enableReplySelectFile(){
 						for(var i=0; i<data.length; ++i)
 						{
 
-							$("#viewPreviousMessage").append("<div class='chat-message-content clearfix'><h6 style='float: left; font-weight: bold; margin-top:0;' id='mesageUserType'>" +data[i].userDisplayName+" : </h6><span style='float:right;'>" + data[i].modifiedOn + "</span><textarea class='materialize-textarea'>" + data[i].reply + "</textarea></div>");
+							$("#viewPreviousMessage").append("<div class='chat-message-content clearfix'><h6 style='float: left; font-weight: bold; margin-top:0;' id='mesageUserType'>" +data[i].userDisplayName+" : </h6><span style='float:right;'>" + data[i].modifiedOn + "</span><textarea class='materialize-textarea' style='min-height: 8rem'>" + data[i].reply + "</textarea></div>");
 							
 							for (var j=0 ; j<data[i].attachedFiles.length;j++)
 							{

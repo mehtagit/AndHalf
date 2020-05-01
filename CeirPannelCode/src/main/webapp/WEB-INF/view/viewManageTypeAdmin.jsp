@@ -252,7 +252,7 @@ var path="${context}";
 
 						<div class="col s12 m6 l6" style="margin-bottom: 5px;">
 							<label for="productName"><spring:message
-									code="registration.productname" /> <span class="star">*</span></label>
+									code="table.ProductName" /> <span class="star">*</span></label>
 							<select id="productname" class="browser-default"
 								onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 								oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
@@ -646,6 +646,22 @@ var path="${context}";
 		<div class="modal-content">
 			<div class="row">
 					<img src="" id="fileSource" width="400" height="400">
+			</div>
+		</div>
+	</div>
+	
+	<div id="tableOnModal" class="modal">
+		<button type="button"
+			class=" modal-action modal-close waves-effect waves-green btn-flat right"
+			data-dismiss="modal">&times;</button>
+		<h6 class="modal-header"><spring:message code="modal.header.viewHistory" /></h6>
+		
+		<div class="modal-content">
+
+			<div class="row">
+				<table class="responsive-table striped display"
+					id="data-table-history" cellspacing="0">
+				</table>
 			</div>
 		</div>
 	</div>

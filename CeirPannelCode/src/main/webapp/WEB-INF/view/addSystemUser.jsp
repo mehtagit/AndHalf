@@ -81,7 +81,7 @@
 						<div class="row card-panel">
 							<div class="container-fluid pageHeader">
 								<p class="PageHeading">
-									<spring:message code="modal.header.typeApproved" />
+									<spring:message code="table.registerUser" />
 								</p>
 							</div>
 
@@ -231,7 +231,7 @@
 									<button class="btn" id="trcSubmitButton" type="submit">
 										<spring:message code="button.submit" />
 									</button>
-									<a href="./manageTypeDevices2" class="btn" id="Cancel"
+									<a href="./usertypeManagment" class="btn" id="Cancel"
 										style="margin-left: 10px;"><spring:message
 											code="button.cancel" /></a>
 								</div>
@@ -365,7 +365,7 @@
 	<script type="text/javascript"
 		src="${context}/resources/js/countries.js"></script>
 	<script type="text/javascript"
-		src="${context}/resources/project_js/importerTypeApproved.js"></script>
+		src="${context}/resources/project_js/addSystemUser.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/validationMsg.js"></script>
 			<script type="text/javascript"

@@ -37,8 +37,10 @@ function uploadEndUserStock()
 	 var endUsercsvUploadFile=$('#endUsercsvUploadFile').val();
 	 var endUseremail=$('#endUseremail').val();
 	 var endUserquantity=$('#endUserquantity').val();
+	 var endUserDevicequantity= $('#endUserDevicequantity').val();
 	 var request={
 		  "quantity": endUserquantity,
+		  "deviceQuantity":endUserDevicequantity,
 		   "userType": "End User",
 		   "user": {
 		       "userProfile": {

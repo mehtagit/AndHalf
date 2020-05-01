@@ -1181,6 +1181,22 @@ input[type='search'] {
 		</div>
 	</div>
 
+<div id="tableOnModal" class="modal">
+		<button type="button"
+			class=" modal-action modal-close waves-effect waves-green btn-flat right"
+			data-dismiss="modal">&times;</button>
+		<h6 class="modal-header"><spring:message code="modal.header.viewHistory" /></h6>
+		
+		<div class="modal-content">
+
+			<div class="row">
+				<table class="responsive-table striped display"
+					id="data-table-history2" cellspacing="0">
+				</table>
+			</div>
+		</div>
+	</div>
+	
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
 	<script type="text/javascript"
@@ -1246,11 +1262,11 @@ input[type='search'] {
 		src="${context}/resources/project_js/profileInfoTab.js" async></script>
 	
 		<script type="text/javascript">
-var input2 = document.querySelector("#phone");
+/* var input2 = document.querySelector("#phone");
 window.intlTelInput(input2, {
 	utilsScript : "${context}/resources/js/utils.js",
 });
- 
+  */
 $("label[for='phone']").addClass('active');
 
 

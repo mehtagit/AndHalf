@@ -791,6 +791,33 @@ data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeI
 		</div>
 	</div>
 	
+	
+	<div id="globalBlackListTableModal" class="modal">
+ <button type="button"
+			class=" modal-action modal-close  btn-flat right"
+			data-dismiss="modal">&times;</button>
+		<h6 class="modal-header">Device Details</h6>
+		<div class="modal-content">
+			<div class="row">
+				<%-- <h6 id="fileErrormessage"><spring:message code="invalidaTxnIdMsg" /> </h6> --%>
+			</div>
+			<div class="row">
+				<table id="globalBlackListDataTable" style="margin-top: 10px">
+				<thead>
+				<tr>
+				<th>Created On</th>
+				<th>Black List Status</th>
+				<th>Grey List Status</th>
+				</tr>
+				</thead>
+				<tbody >
+				
+				</tbody >
+				</table>
+			</div>
+		</div>
+	</div>
+	
 	 	<div id="blockListModal" class="modal">
 		<h6 class="modal-header" id="blockDeviceHeader">Block Device Details
 			<%-- <spring:message code="modal.header.viewStock" /> --%>

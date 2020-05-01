@@ -181,6 +181,13 @@ var contextpath = "${context}";
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');" 
 												 title= "<spring:message code="validation.7digits" />" required> </div>
+												 
+											<div class="input-field col s12 m6 quantity" style="margin-top: 19px;">
+                                                <label for="endUserDevicequantity" style="color: #000;"><spring:message code="input.devicequantity" />  <span class="star">*</span></label>
+                                                <input type="text" id="endUserDevicequantity" maxlength="7" name="endUserDevicequantity" pattern=[0-9]{0,7}
+												oninput="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
+												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');" 
+												 title= "<spring:message code="validation.7digits" />" required> </div>	 
 
                                             <div class="file-field col s12 m6">
                                                 <h6 style="margin-top: 15px;"><spring:message code="registration.uploadfile" /> <span

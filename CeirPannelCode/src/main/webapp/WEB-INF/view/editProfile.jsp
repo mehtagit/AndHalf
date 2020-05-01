@@ -336,7 +336,7 @@ onchange="InvalidMsg(this,'select','<spring:message code="validation.selectField
 									</div>
 								</div>
 								
-								<div class="input-field col s12 m6 l6" id="rolesDiv" style="display: none;">
+							<%-- 	<div class="input-field col s12 m6 l6" id="rolesDiv" style="display: none;">
 									<p
 										style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
 										<spring:message code="table.roleType" /> <span class="star">*</span>
@@ -344,7 +344,7 @@ onchange="InvalidMsg(this,'select','<spring:message code="validation.selectField
 									<select multiple  name="roles" id="usertypes"  >
 										<option value="" disabled><spring:message code="table.roleType" /></option>
 								</select>
-								</div>
+								</div> --%>
 								
 								
 								<div class="row">

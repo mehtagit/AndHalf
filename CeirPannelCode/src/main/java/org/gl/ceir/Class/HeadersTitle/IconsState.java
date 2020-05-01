@@ -163,7 +163,7 @@ public class IconsState {
 		String viewAction="viewUploadedStockDetails('"+txnId+"')"; 
 		String editAction="EditUploadedStockDetails('"+txnId+"')";
 		String deleteAction ="DeleteStockRecord('"+txnId+"')";
-
+		String historyAction ="historyRecord('"+txnId+"')";
 		// state related Code 
 		String error="<a onclick="+errorURL+"><i class="+errorIcon+" aria-hidden=\"true\" title="
 				+errorIconTitle+" ></i></a>";
@@ -182,6 +182,9 @@ public class IconsState {
 				+deletionIcon+" aria-hidden=\"true\"  title="
 				+replyIconTitle+"></i></a>";
 
+		String history="<a onclick="+historyAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+historyIcon+" aria-hidden=\"true\"  title="
+				+historyTitle+"></i></a>";
+		
 		if(("0".equals(status))  && "Approved".equals(userStatus)) {
 			error="<a onclick="+errorURL+" class="+disableIconClass+"><i  class="
 					+disableErrorIcon+" aria-hidden=\"true\" title="
@@ -237,7 +240,7 @@ public class IconsState {
 					+disableDeletionIcon+" aria-hidden=\"true\"  title="
 					+deleteIconTitle+"></i></a>"; 			
 		}
-		String action=error.concat(download).concat(view).concat(edit).concat(delete);
+		String action=error.concat(download).concat(view).concat(edit).concat(delete).concat(history);
 		return action;
 	}
 
@@ -271,6 +274,9 @@ public class IconsState {
 				+deletionIcon+" aria-hidden=\"true\"  title="
 				+deleteIconTitle+"></i></a>"; 
 
+		String historyAction ="historyRecord('"+txnId+"')";
+		String history="<a onclick="+historyAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+historyIcon+" aria-hidden=\"true\"  title="
+				+historyTitle+"></i></a>";
 		
 		if(("1".equals(status) ||  "3".equals(status) || "10".equals(status) || "6".equals(status))  && "Approved".equals(userStatus)) {
 			error="<a onclick="+errorURL+" class="+disableIconClass+"><i  class="
@@ -327,7 +333,7 @@ public class IconsState {
 					+disableDeletionIcon+" aria-hidden=\"true\"  title="
 					+deleteIconTitle+"></i></a>"; 			
 		}
-		String action=error.concat(download).concat(view).concat(edit).concat(delete);
+		String action=error.concat(download).concat(view).concat(edit).concat(delete).concat(history);
 		return action;
 	}
 
@@ -713,6 +719,9 @@ public class IconsState {
 		String deleteAction ="DeleteStockRecord('"+txnId+"')";
 		// state related Code 
 
+		String historyAction ="historyRecord('"+txnId+"')";
+		String history="<a onclick="+historyAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+historyIcon+" aria-hidden=\"true\"  title="
+				+historyTitle+"></i></a>";
 		String download="<a onclick="+downloadURL+" ><i class="
 				+downloadIcon+" aria-hidden=\"true\" title="
 				+downloadIconTitle+" ></i></a>"; 
@@ -800,7 +809,7 @@ public class IconsState {
 
 		}
 
-		String action=download.concat(error).concat(view).concat(approve).concat(reject).concat(delete);	
+		String action=download.concat(error).concat(view).concat(approve).concat(reject).concat(delete).concat(history);	
 		return action;
 
 	}
@@ -964,6 +973,11 @@ public class IconsState {
 		String viewAction="viewDetails('"+imei1+"')";
 		String deleteAction= "deleteByImei('"+imei1+"')";
 		
+
+        String historyAction ="historyRecord('"+txnId+"')";
+        String history="<a onclick="+historyAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+historyIcon+" aria-hidden=\"true\"  title="
+				+historyTitle+"></i></a>";
+		
 		log.info("taxStatus-->" +taxStatus+" statusInterp----->" +status);
 		
 		String taxPaid="<a onclick="+payTaxAction+"><i class="
@@ -1037,7 +1051,7 @@ public class IconsState {
 }
 		
 		
-		String action = error.concat(taxPaid).concat(view).concat(delete);
+		String action = error.concat(taxPaid).concat(view).concat(delete).concat(history);
 		return action;
 	}
 
@@ -1062,7 +1076,10 @@ public class IconsState {
 				+deleteIconTitle+"></i></a>";
 		
 		log.info("State= "+State+" userStatus= "+userStatus);
-		
+
+        String historyAction ="historyRecord('"+txnId+"')";
+        String history="<a onclick="+historyAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+historyIcon+" aria-hidden=\"true\"  title="
+				+historyTitle+"></i></a>";
 		if("6".equals(State) && "Approved".equals(userStatus)) {
 			approve = "<a onclick=" + approveAction + " class=\"eventNone\"><i class=" + disableApproveIcon
 					+ " aria-hidden=\"true\" title=" + approveIconTitle + " ></i></a>";
@@ -1092,7 +1109,7 @@ public class IconsState {
 }
 
 
-		String action = view.concat(approve).concat(reject).concat(delete);
+		String action = view.concat(approve).concat(reject).concat(delete).concat(history);
 		return action;
 	}
 
@@ -1141,6 +1158,9 @@ public class IconsState {
 		String deleteAction ="DeleteConsignmentRecord('"+txnId+"','"+id+"')";
 
 
+        String historyAction ="historyRecord('"+txnId+"')";
+        String history="<a onclick="+historyAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+historyIcon+" aria-hidden=\"true\"  title="
+				+historyTitle+"></i></a>";
 		if(source.equals("3")) {
 			editAction="viewDeviceDetails('"+txnId+"','edit','"+requestType+"')";
 			viewAction="viewDeviceDetails('"+txnId+"','view','"+requestType+"')";
@@ -1224,7 +1244,7 @@ public class IconsState {
 		 */
 
 
-		String action=error.concat(download).concat(view).concat(edit).concat(delete);
+		String action=error.concat(download).concat(view).concat(edit).concat(delete).concat(history);
 		return action;
 
 	}
@@ -1346,6 +1366,9 @@ public class IconsState {
 		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
 
+        String historyAction ="historyRecord('"+txnId+"')";
+        String history="<a onclick="+historyAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+historyIcon+" aria-hidden=\"true\"  title="
+				+historyTitle+"></i></a>";
 
 		String approve = "<a onclick="+approveAction+"><i class="+approveIcon+" aria-hidden=\"true\" title="
 				+approveIconTitle+" ></i></a>";   
@@ -1389,7 +1412,7 @@ public class IconsState {
 		}
 
 
-		String action = error.concat(view).concat(approve).concat(reject).concat(delete);
+		String action = error.concat(view).concat(approve).concat(reject).concat(delete).concat(history);
 		return action;
 
 	}
@@ -1410,6 +1433,9 @@ public class IconsState {
 		String deleteAction ="DeleteConsignmentRecord('"+txnId+"','"+id+"')";
 
 
+        String historyAction ="historyRecord('"+txnId+"')";
+        String history="<a onclick="+historyAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+historyIcon+" aria-hidden=\"true\"  title="
+				+historyTitle+"></i></a>";
 		log.info("============actionResponse=======" + status);
 		if(source.equals("3")) {
 			editAction="viewDeviceDetails('"+txnId+"','edit','"+requestType+"')";
@@ -1536,7 +1562,7 @@ public class IconsState {
 		}
 
 
-		String action = error.concat(download).concat(view).concat(approve).concat(reject).concat(edit).concat(delete);
+		String action = error.concat(download).concat(view).concat(approve).concat(reject).concat(edit).concat(delete).concat(history);
 		return action;
 	}	
 
@@ -1557,7 +1583,10 @@ public class IconsState {
 		//String downloadURL = "./Consignment/dowloadFiles/actual/"+file+"/"+txnId+"/"+defaultTagName+"";
 		String downloadURL = "fileDownload('"+file+"','actual','"+txnId+"','"+defaultTagName+"')";
 		String deleteAction ="DeleteConsignmentRecord('"+txnId+"','"+id+"')";
-
+		String historyAction ="historyRecord('"+txnId+"')";
+		String history="<a onclick="+historyAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+historyIcon+" aria-hidden=\"true\"  title="
+						+historyTitle+"></i></a>";
+		
 		if(source.equals("5") && requestTypeValue.equals("0")) {
 			//check for Stolen/Indvisual
 
@@ -1667,7 +1696,7 @@ public class IconsState {
 		
 		
 
-		String action=error.concat(download).concat(view).concat(edit).concat(delete);	
+		String action=error.concat(download).concat(view).concat(edit).concat(delete).concat(history);	
 		return action;
 
 	}
@@ -1765,6 +1794,8 @@ public class IconsState {
 		String deleteAction = "DeleteTacRecord('"+txnId+"',"+id+")";
 		// state related Code 
 
+		String historyAction ="historyRecord('"+txnId+"')";
+
 		String error="<a onclick="+errorURL+"><i class="+errorIcon+" aria-hidden=\"true\" title="
 				+errorIconTitle+"></i></a>";
 		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
@@ -1776,6 +1807,10 @@ public class IconsState {
 		String delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
 				+deletionIcon+" aria-hidden=\"true\"  title="
 				+deleteIconTitle+"></i></a>";
+		
+		String history="<a onclick="+historyAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+historyIcon+" aria-hidden=\"true\"  title="
+				+historyTitle+"></i></a>";
+		
 		if(("7".equals(status) || "8".equals(status)) && "Approved".equals(userStatus)) {
 			delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\"><i class="
 					+disableDeletionIcon+" aria-hidden=\"true\"  title="
@@ -1807,7 +1842,7 @@ public class IconsState {
 					+errorIconTitle+" ></i></a>";
 		}
 
-		String action=error.concat(view).concat(edit).concat(delete);		  
+		String action=error.concat(view).concat(edit).concat(delete).concat(history);		  
 		return action;
 
 	}
@@ -1828,6 +1863,11 @@ public class IconsState {
 		String error="<a onclick="+errorURL+"><i class="+errorIcon+" aria-hidden=\"true\" title="
 				+errorIconTitle+"></i></a>";
 		
+
+         String historyAction ="historyRecord('"+txnId+"')";
+         String history="<a onclick="+historyAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+historyIcon+" aria-hidden=\"true\"  title="
+				+historyTitle+"></i></a>";
+
 		if(("3".equals(status) || "6".equals(status) || "7".equals(status))  && "Approved".equals(userStatus)) {
 			delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\" ><i class="
 					+disableDeletionIcon+" aria-hidden=\"true\"  title="
@@ -1872,7 +1912,7 @@ public class IconsState {
 					+deleteIconTitle+"></i></a>"; 
 }
 		
-		String action = error.concat(view).concat(delete);
+		String action = error.concat(view).concat(delete).concat(history);
 		return action;
 	}
 
@@ -2059,6 +2099,9 @@ public class IconsState {
 		String downloadURL = "fileDownload('"+file+"','actual','"+txnId+"','"+defaultTagName+"')";
 		String deleteAction ="DeleteConsignmentRecord('"+txnId+"','"+id+"')";
 
+       String historyAction ="historyRecord('"+txnId+"')";
+       String history="<a onclick="+historyAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+historyIcon+" aria-hidden=\"true\"  title="
+				+historyTitle+"></i></a>";
 		if(source.equals("5") && requestTypeValue.equals("0")) {
 			//check for Stolen/Indvisual
 			viewAction="openStolenRecoveryPage('editIndivisualsStolen','view','"+txnId+"')";
@@ -2203,7 +2246,7 @@ public class IconsState {
 
 
 		//String action=error.concat(download).concat(view).concat(edit).concat(delete);	
-		String action = error.concat(download).concat(view).concat(approve).concat(reject).concat(delete);
+		String action = error.concat(download).concat(view).concat(approve).concat(reject).concat(delete).concat(history);
 		return action;
 	}
 
@@ -2397,6 +2440,12 @@ public class IconsState {
 		String error="<a onclick="+errorURL+"><i class="+errorIcon+" aria-hidden=\"true\" title="
 				+errorIconTitle+"></i></a>";
 		
+		
+
+        String historyAction ="historyRecord('"+txnId+"')";
+        String history="<a onclick="+historyAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+historyIcon+" aria-hidden=\"true\"  title="
+				+historyTitle+"></i></a>";
+
 		if(("3".equals(status) || "6".equals(status) || "7".equals(status))) {
 			delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\" ><i class="
 					+disableDeletionIcon+" aria-hidden=\"true\"  title="
@@ -2433,7 +2482,7 @@ public class IconsState {
 			
 		}
 		
-		String action = error.concat(view).concat(delete);
+		String action = error.concat(view).concat(delete).concat(history);
 		return action;
 		
 	}

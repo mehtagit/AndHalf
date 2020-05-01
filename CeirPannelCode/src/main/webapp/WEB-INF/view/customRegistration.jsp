@@ -439,15 +439,15 @@ var contextpath = "${context}";
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="authorityEmail" maxlength="320"  id="authorityEmail" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,320}" 
+									<input type="text" name="authorityEmail" required="required" maxlength="320"  id="authorityEmail" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,320}" 
 									oninput="InvalidMsg(this,'email','<spring:message code="validation.email" />');" oninvalid="InvalidMsg(this,'email','<spring:message code="validation.email" />');">
-									<label for="authorityEmail"> <spring:message code="registration.ReportingAuthorityEmailid" /></label>
+									<label for="authorityEmail"> <spring:message code="registration.ReportingAuthorityEmailid"/><span class="star">*</span></label>
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="tel" name="authorityPhoneNo" id="authorityPhoneNo" maxlength="15" pattern="[0-9]{7,15}"
+									<input type="tel" name="authorityPhoneNo" required="required" id="authorityPhoneNo" maxlength="15" pattern="[0-9]{7,15}"
 									oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');" title="<spring:message code="validation.contact" />"	>
-									<label for="authorityPhoneNo"> <spring:message code="registration.reportingauthoritycontactnumber" /></label>
+									<label for="authorityPhoneNo"> <spring:message code="registration.reportingauthoritycontactnumber" /><span class="star">*</span></label>
 								</div>
 
 								<div class="input-field col s12 m6 l6">

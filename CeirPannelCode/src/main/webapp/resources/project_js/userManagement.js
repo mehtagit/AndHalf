@@ -168,7 +168,12 @@
 						//$("#userTableDiv").append("<div class=' col s3 m2 l7'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportConsignmentData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 						for(i=0; i<button.length; i++){
 							$('#'+button[i].id).text(button[i].buttonTitle);
-							$('#'+button[i].id).attr("onclick", button[i].buttonURL);
+							if(button[i].type === "HeaderButton"){
+								$('#'+button[i].id).attr("href", button[i].buttonURL);
+							}
+							else{
+								$('#'+button[i].id).attr("onclick", button[i].buttonURL);
+							}
 						}
 
 				}
