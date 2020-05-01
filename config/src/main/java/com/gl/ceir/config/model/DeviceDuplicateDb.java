@@ -47,6 +47,7 @@ public class DeviceDuplicateDb {
 	
 	@JsonIgnore
 	@UpdateTimestamp
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private Date modifiedOn;    
 	
 	private Integer recordType; 

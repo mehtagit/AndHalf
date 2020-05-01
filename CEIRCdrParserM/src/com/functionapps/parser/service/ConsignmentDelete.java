@@ -10,6 +10,7 @@ import com.functionapps.dao.ConsignmentMgmtDao;
 import com.functionapps.dao.DeviceCustomDbDao;
 import com.functionapps.dao.DeviceDbDao;
 import com.functionapps.dao.DeviceImporterDbDao;
+import com.functionapps.dao.SourceTacInactiveInfoDao;
 import com.functionapps.parser.Rule;
 import com.functionapps.pojo.DeviceCustomDb;
 import com.functionapps.pojo.DeviceDb;
@@ -25,6 +26,7 @@ public class ConsignmentDelete {
 		DeviceImporterDbDao deviceImporterDbDao = new DeviceImporterDbDao();
 		ConsignmentMgmtDao consignmentMgmtDao = new ConsignmentMgmtDao();
 		DeviceCustomDbDao deviceCustomDbDao = new DeviceCustomDbDao();
+		SourceTacInactiveInfoDao sourceTacInactiveInfoDao = new SourceTacInactiveInfoDao();
 		
 		try{
 			List<DeviceDb> deviceDbs = deviceDbDao.getDeviceDbByTxnId(conn, "", txnId);
@@ -41,6 +43,8 @@ public class ConsignmentDelete {
 			logger.info("deviceCustomDbs" + deviceCustomDbs);
 			deviceCustomDbDao.insertDeviceCustomDbAud(conn, deviceCustomDbs);
 			deviceCustomDbDao.deleteDevicesFromDeviceCustomDb(conn, txnId);
+			
+			sourceTacInactiveInfoDao.deleteFromSourceTacInactiveInfo(conn, txnId);
 			
 			consignmentMgmtDao.updateConsignmentMgmtDeleteFlag(conn, txnId, 2);
 			

@@ -3,15 +3,18 @@ package com.functionapps.parser.service;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.apache.log4j.Logger;
 
 import com.functionapps.constants.Usertypes;
 import com.functionapps.dao.ManagementAudTableDao;
 import com.functionapps.dao.ManagementTableDao;
+import com.functionapps.dao.StockMgmtDao;
 import com.functionapps.parser.Rule;
 import com.functionapps.pojo.ManagementDb;
 import com.functionapps.pojo.ManagementTable;
+import com.functionapps.pojo.StockMgmt;
 
 
 public class StockDelete {
@@ -25,9 +28,14 @@ public class StockDelete {
 		
 		ManagementTableDao managementTableDao = new ManagementTableDao();
 		ManagementAudTableDao managementAudTableDao = new ManagementAudTableDao();
+		StockMgmtDao stockMgmtDao = new StockMgmtDao();
 
+		StockMgmt stockMgmt =  stockMgmtDao.getStockByTxnId(conn, txnId);
+		System.out.println(stockMgmt);
+		logger.debug(stockMgmt);
+		
 		try{
-			List<ManagementTable> managementTables = getTableNameByUserType(usertypeName, roleType);
+			List<ManagementTable> managementTables = getTableNameByUserType(usertypeName, stockMgmt.getRoleType());
 			System.out.println(managementTables);
 			logger.debug(managementTables);
 
@@ -46,9 +54,7 @@ public class StockDelete {
 					managementAudTableDao.insertManagementDbAud(conn, managementDbs, managementTable.getAudName(), managementTable.getAudSequenceName());
 
 					managementTableDao.deleteDevicesFromManagementDb(conn, txnId, managementTable.getName());
-
 				}
-
 			}
 
 			managementTableDao.updateMgmtDeleteFlag(conn, "stock_mgmt", txnId, 2);
@@ -66,7 +72,7 @@ public class StockDelete {
 			managementTables.add(new ManagementTable("device_importer_db", "device_importer_db_aud", "device_importer_db_aud_seq"));
 		}
 		else if(Usertypes.DISTRIBUTOR.equalsIgnoreCase(userType)) {
-			managementTables.add(new ManagementTable("device_distributor_db", "device_distributor_db_aud", ""));
+			managementTables.add(new ManagementTable("device_distributer_db", "device_distributer_db_aud", ""));
 		}
 		else if(Usertypes.RETAIILER.equalsIgnoreCase(userType)) {
 			managementTables.add(new ManagementTable("device_retailer_db", "device_retailer_db_aud", ""));

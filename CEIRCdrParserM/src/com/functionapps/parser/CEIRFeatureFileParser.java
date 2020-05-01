@@ -14,6 +14,7 @@ import com.functionapps.parser.service.ApproveConsignment;
 import com.functionapps.parser.service.ConsignmentDelete;
 import com.functionapps.parser.service.ConsignmentInsertUpdate;
 import com.functionapps.parser.service.RegisterTac;
+import com.functionapps.parser.service.StockDelete;
 import com.functionapps.parser.service.WithdrawnTac;
 
 import org.apache.log4j.Logger;
@@ -540,14 +541,16 @@ public class CEIRFeatureFileParser {
 			}else if(operator.equalsIgnoreCase("TYPE_APPROVED") &&(sub_feature.equalsIgnoreCase("delete"))){
 				System.out.println("running tac delete process.");
 				new WithdrawnTac().process(conn, operator, sub_feature, rulelist, txn_id, operator_tag, usertype_name);
+			}else if(operator.equalsIgnoreCase("STOCK") &&(sub_feature.equalsIgnoreCase("DELETE"))){
+				System.out.println("running stock delete process.");
+				new StockDelete().process(conn, operator, sub_feature, rulelist, txn_id, operator_tag, usertype_name, "");
 			}else {
 				System.out.println("Skipping the process.");
 			}
 
 			CEIRFeatureFileFunctions ceirfunction = new CEIRFeatureFileFunctions();
 			ceirfunction.updateFeatureFileStatus(conn,txn_id,4,operator,sub_feature );
-
-			conn.commit();
+			
 			conn.close();
 		}
 		catch(Exception e){

@@ -18,12 +18,11 @@ public class ManagementDb  implements Serializable{
 	private String snOfDevice;
 	private String imeiEsnMeid;
 	private String deviceLaunchDate;
-	private String deviceStatus;
 	private String deviceAction;
 
 	private Long userId;
 	private String txnId;
-	private Integer deviceState;
+	private String deviceStatus;
 	private Integer previousDeviceStatus;
 	private String period;
 	
@@ -33,8 +32,8 @@ public class ManagementDb  implements Serializable{
 	
 	public ManagementDb(Long rev, int revtype, String createdOn, String modifiedOn, 
 			String deviceType, String deviceIdType, String multipleSimStatus, String snOfDevice, String imeiEsnMeid,
-			String deviceLaunchDate, String deviceStatus, String deviceAction, Long userId, String txnId, 
-			Integer deviceState, Integer previousDeviceStatus, String period) {
+			String deviceLaunchDate, String deviceAction, Long userId, String txnId, 
+			String deviceStatus, Integer previousDeviceStatus, String period) {
 		this.rev = rev;
 		this.revtype = revtype;
 		this.createdOn = createdOn;
@@ -45,11 +44,10 @@ public class ManagementDb  implements Serializable{
 		this.snOfDevice = snOfDevice;
 		this.imeiEsnMeid = imeiEsnMeid;
 		this.deviceLaunchDate = deviceLaunchDate;
-		this.deviceStatus = deviceStatus;
 		this.deviceAction = deviceAction;
 		this.userId = userId;
 		this.txnId = txnId;
-		this.deviceState = deviceState;
+		this.deviceStatus = deviceStatus;
 		this.previousDeviceStatus = previousDeviceStatus;
 		this.period = period;
 	}
@@ -134,14 +132,6 @@ public class ManagementDb  implements Serializable{
 		this.imeiEsnMeid = imeiEsnMeid;
 	}
 
-	public String getDeviceStatus() {
-		return deviceStatus;
-	}
-
-	public void setDeviceStatus(String deviceStatus) {
-		this.deviceStatus = deviceStatus;
-	}
-
 	public String getDeviceAction() {
 		return deviceAction;
 	}
@@ -174,12 +164,12 @@ public class ManagementDb  implements Serializable{
 		this.deviceLaunchDate = deviceLaunchDate;
 	}
 
-	public Integer getDeviceState() {
-		return deviceState;
+	public String getDeviceStatus() {
+		return deviceStatus;
 	}
 
-	public void setDeviceState(Integer deviceState) {
-		this.deviceState = deviceState;
+	public void setDeviceStatus(String deviceStatus) {
+		this.deviceStatus = deviceStatus;
 	}
 
 	public Integer getPreviousDeviceStatus() {
@@ -227,16 +217,14 @@ public class ManagementDb  implements Serializable{
 		builder.append(imeiEsnMeid);
 		builder.append(", deviceLaunchDate=");
 		builder.append(deviceLaunchDate);
-		builder.append(", deviceStatus=");
-		builder.append(deviceStatus);
 		builder.append(", deviceAction=");
 		builder.append(deviceAction);
 		builder.append(", userId=");
 		builder.append(userId);
 		builder.append(", txnId=");
 		builder.append(txnId);
-		builder.append(", deviceState=");
-		builder.append(deviceState);
+		builder.append(", deviceStatus=");
+		builder.append(deviceStatus);
 		builder.append(", previousDeviceStatus=");
 		builder.append(previousDeviceStatus);
 		builder.append(", period=");
