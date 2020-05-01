@@ -336,9 +336,9 @@ var contextpath = "${context}";
 								</div>
 
 								<div class="file-field col s12 m6 l6">
-								<h6 class="file-label"><spring:message code="registration.uploadidcard" /> <span class="star">*</span></h6>
+								<h6 class="file-label"><spring:message code="operator.uploadidcard" /> <span class="star">*</span></h6>
 									<div class="btn">
-										<span><spring:message code="registration.uploadidcard" /></span>
+										<span><spring:message code="operator.uploadidcard" /></span>
 										<input id="idCard" type="file" placeholder="" oninput="InvalidMsg(this,'fileType','<spring:message code="validation.file" />');" oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.file" />');"
 										 title="" required />
 									</div>
@@ -374,15 +374,14 @@ var contextpath = "${context}";
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="authorityEmail" maxlength="280" id="authorityEmail" pattern="[^@]+@[^@]+\.[a-zA-Z]{3,280}"
+									<input type="text" name="authorityEmail" required="required" maxlength="280" id="authorityEmail" pattern="[^@]+@[^@]+\.[a-zA-Z]{3,280}"
 									oninput="InvalidMsg(this,'email','<spring:message code="validation.email" />');" oninvalid="InvalidMsg(this,'email','<spring:message code="validation.email" />');" title=""> 
-										<label for="authorityEmail"><spring:message code="registration.ReportingAuthorityEmailid" /></label>
+										<label for="authorityEmail"><spring:message code="registration.ReportingAuthorityEmailid" /><span class="star">*</span></label>
 								</div>
-
 								<div class="input-field col s12 m6 l6">
-									<input type="tel" name="authorityPhoneNo" id="authorityPhoneNo" maxlength="15" pattern="[0-9]{7,15}"
+									<input type="tel" name="authorityPhoneNo" required="required" id="authorityPhoneNo" maxlength="15" pattern="[0-9]{7,15}"
 										oninput="InvalidMsg(this,'input','<spring:message code="validation.contact" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.contact" />');" title="">
-									<label for="authorityPhoneNo"><spring:message code="registration.reportingauthoritycontactnumber" /></label>
+									<label for="authorityPhoneNo"><spring:message code="registration.reportingauthoritycontactnumber" /><span class="star">*</span></label>
 								</div>
 
 								<div class="input-field col s12 m6 l6">

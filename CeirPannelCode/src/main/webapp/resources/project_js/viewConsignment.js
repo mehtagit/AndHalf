@@ -1127,6 +1127,13 @@ function confirmantiondelete(){
 			 var filter =[];
 			 var formData= new FormData();
 			 var filterRequest={
+					 "columns": [
+						    "revtype","consignment_number","created_on","currency","expected_arrival_port","expected_arrivaldate","expected_dispatche_date",
+						    "file_name","modified_on","organisation_country","consignment_status","quantity","remarks","supplier_id","supplier_name","tax_paid_status",
+						    "total_price","txn_id","user_id","pending_tac_approved_by_custom","delete_flag","ceir_admin_id","custom_id","device_quantity",
+						    "port_address"
+						    
+						  ],
 					"tableName": "consignment_mgmt_aud",
 					"dbName" : "ceirconfig",
 					"txnId":txnID
@@ -1153,6 +1160,7 @@ function confirmantiondelete(){
 						"bPaginate" : true,
 						"bFilter" : true,
 						"bInfo" : true,
+						"scrollX": true,
 						"bSearchable" : true,
 						 "data": dataObject.data,
 						 "columns": dataObject.columns

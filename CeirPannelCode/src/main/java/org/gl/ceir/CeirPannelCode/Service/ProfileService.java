@@ -83,8 +83,8 @@ public class ProfileService {
 		Integer userid= userStatus.getUserId();
 		Integer id= userStatus.getId();
 		log.info("userid from session:  "+userid);
-		userStatus.setUserId(userid); 
 		userStatus.setId(id);
+		userStatus.setUserId(userid); 
 		log.info("userStatus data is :  "+userStatus);
 		HttpResponse response=new HttpResponse();             
 		response=userProfileFeignImpl.adminUserApproval(userStatus);

@@ -329,7 +329,13 @@ function hide() {
        fileSize = Math.floor(fileSize/1000);
                         
                       
-         
+       var areEqual =ext.toLowerCase()=='png';
+   	//alert(areEqual);
+   	if(areEqual==true)
+   		{
+   		ext='PNG';
+   		}
+   	
         if (uploadedFileName.length > 30) {
            $('#visafileFormateModal').openModal({
 	    	   dismissible:false
