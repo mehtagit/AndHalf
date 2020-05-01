@@ -16,6 +16,11 @@ public class CeirActionRequest {
 	
 	private Integer featureId;
 	
+	private String username;
+	
+	private long id;
+	
+	
 	private String imei1;
 	
 	public int getAction() {
@@ -67,11 +72,26 @@ public class CeirActionRequest {
 	public void setImei1(String imei1) {
 		this.imei1 = imei1;
 	}
+
 	
+	
+	public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
+	}
+	
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("ConsignmentUpdateRequest [action=");
+		builder.append("CeirActionRequest [action=");
 		builder.append(action);
 		builder.append(", userType=");
 		builder.append(userType);
@@ -83,6 +103,14 @@ public class CeirActionRequest {
 		builder.append(txnId);
 		builder.append(", remarks=");
 		builder.append(remarks);
+		builder.append(", featureId=");
+		builder.append(featureId);
+		builder.append(", username=");
+		builder.append(username);
+		builder.append(", id=");
+		builder.append(id);
+		builder.append(", imei1=");
+		builder.append(imei1);
 		builder.append("]");
 		return builder.toString();
 	}

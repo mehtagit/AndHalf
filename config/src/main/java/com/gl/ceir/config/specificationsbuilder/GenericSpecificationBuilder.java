@@ -156,7 +156,7 @@ public class GenericSpecificationBuilder<T> {
 						return cb.notEqual(root.get(searchCriteria.getKey()), (Long)searchCriteria.getValue());
 					}else if(SearchOperation.LIKE.equals(searchCriteria.getSearchOperation())
 							&& Datatype.STRING.equals(searchCriteria.getDatatype())) {
-						return cb.like(root.get(searchCriteria.getKey()), "%"+(String)searchCriteria.getValue()+"%");
+						return cb.like(cb.lower(root.get(searchCriteria.getKey()).as( String.class )), "%"+((String)searchCriteria.getValue()).toLowerCase()+"%");
 					}else {
 						return null;
 					}

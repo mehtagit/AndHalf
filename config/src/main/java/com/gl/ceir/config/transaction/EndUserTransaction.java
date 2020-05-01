@@ -9,10 +9,12 @@ import org.springframework.stereotype.Component;
 
 import com.gl.ceir.config.model.AuditTrail;
 import com.gl.ceir.config.model.EndUserDB;
+import com.gl.ceir.config.model.VisaUpdateDb;
 import com.gl.ceir.config.model.constants.Features;
 import com.gl.ceir.config.model.constants.SubFeatures;
 import com.gl.ceir.config.repository.AuditTrailRepository;
 import com.gl.ceir.config.repository.EndUserDbRepository;
+import com.gl.ceir.config.repository.UpdateVisaRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
 
 @Component
@@ -30,6 +32,9 @@ public class EndUserTransaction {
 	@Autowired
 	EndUserDbRepository endUserDbRepository;
 	
+	@Autowired
+	UpdateVisaRepository updateVisaRepository;
+	
 	public boolean executeUpdateVisa(EndUserDB endUserDB) {
 		boolean status = Boolean.FALSE;
 
@@ -43,6 +48,19 @@ public class EndUserTransaction {
 
 
 		status = Boolean.TRUE;
+		return status;
+	}
+	
+	public boolean addUpdateVisaRequest(VisaUpdateDb visaUpdateDb,EndUserDB endUserdb) {
+		boolean status = Boolean.FALSE;
+
+		updateVisaRepository.save(visaUpdateDb);
+		logger.info("update Visa request of user have been updated succesfully.");
+		auditTrailRepository.save(new AuditTrail(endUserdb.getId(), "", 17L, 
+				"End User", 43L, Features.UPDATE_VISA, SubFeatures.REQUEST, ""));
+		logger.info("VisaUpdate [" + endUserdb.getTxnId() + "] saved in audit_trail.");
+		status = Boolean.TRUE;
+		
 		return status;
 	}
 	

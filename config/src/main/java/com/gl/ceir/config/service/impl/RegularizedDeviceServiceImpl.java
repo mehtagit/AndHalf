@@ -598,7 +598,10 @@ public class RegularizedDeviceServiceImpl {
 			EndUserDB endUserDB = null;
 			List<RawMail> rawMails = new ArrayList<>();
 			Map<String, String> placeholders = new HashMap<>();
-
+            long userTypeId=0;
+            long userId=0;
+            String subFeature="";
+            String username="";
 			RegularizeDeviceDb regularizeDeviceDb = regularizedDeviceDbRepository.getByFirstImei(ceirActionRequest.getImei1());
 			logger.debug("Accept/Reject regularized Devices : " + regularizeDeviceDb);
 
@@ -608,13 +611,17 @@ public class RegularizedDeviceServiceImpl {
 			placeholders.put("<txn_id>", regularizeDeviceDb.getTxnId());
 			placeholders.put("<First name>", endUserDB.getFirstName());
 
+			userId=endUserDB.getId();
 			if("CEIRADMIN".equalsIgnoreCase(ceirActionRequest.getUserType())){
-                String sufeature="";
+				userTypeId=8;
+                if(Objects.nonNull(ceirActionRequest.getUsername())) {
+                	username=ceirActionRequest.getUsername();
+                }
 				if(ceirActionRequest.getAction() == 0) {
 					regularizeDeviceDb.setStatus(RegularizeDeviceStatus.APPROVED.getCode());
 					tag = "MAIL_TO_USER_ON_CEIR_DEVICE_APPROVAL";
 					receiverUserType = "End User";
-					sufeature=SubFeatures.ACCEPT;
+					subFeature=SubFeatures.ACCEPT;
 					//feature=
 					txnId = regularizeDeviceDb.getTxnId();
 				}else if(ceirActionRequest.getAction() == 1){
@@ -622,7 +629,7 @@ public class RegularizedDeviceServiceImpl {
 					tag = "MAIL_TO_USER_ON_CEIR_DEVICE_DISAPPROVAL";	
 					receiverUserType = "End User";
 					txnId = regularizeDeviceDb.getTxnId();
-					sufeature=SubFeatures.REJECT;
+					subFeature=SubFeatures.REJECT;
 				}else {
 					return new GenricResponse(2, "unknown operation", "");
 				}
@@ -633,7 +640,7 @@ public class RegularizedDeviceServiceImpl {
 								endUserDB.getId(), 
 								4, 
 								Features.REGISTER_DEVICE, 
-								sufeature, 
+								subFeature, 
 								regularizeDeviceDb.getTxnId(), 
 								regularizeDeviceDb.getTxnId(), 
 								placeholders,
@@ -649,6 +656,7 @@ public class RegularizedDeviceServiceImpl {
 				}
 			}
 			else if("CEIRSYSTEM".equalsIgnoreCase(ceirActionRequest.getUserType())){
+				userTypeId=0;
 				if(ceirActionRequest.getAction() == 0) {
 					regularizeDeviceDb.setStatus(RegularizeDeviceStatus.PENDING_APPROVAL_FROM_CEIR_ADMIN.getCode());
 					tag = "MAIL_TO_USER_ON_CEIR_DEVICE_APPROVAL";
@@ -657,7 +665,8 @@ public class RegularizedDeviceServiceImpl {
                     user=userStaticServiceImpl.getUserbyUsertypeId(8);
 					UserProfile ceirUserProfile = new UserProfile();
 					ceirUserProfile.setUser(userStaticServiceImpl.getCeirAdmin());
-					
+					userId=endUserDB.getId();	
+					subFeature=SubFeatures.SYSTEM_ACCEPT;
 					if(Objects.nonNull(endUserDB.getEmail()) && !endUserDB.getEmail().isEmpty()) {
 						rawMails.add(new RawMail("Reg_Device_Process_success_To_EndUser", 
 								endUserDB.getId(), 
@@ -694,8 +703,9 @@ for(User userData:user) {
 					tag = "MAIL_TO_USER_ON_CEIR_DEVICE_DISAPPROVAL";	
 					receiverUserType = "End User";
 					txnId = regularizeDeviceDb.getTxnId();
-					
+					subFeature=SubFeatures.SYSTEM_REJECT;
 					if(Objects.nonNull(endUserDB.getEmail()) && !endUserDB.getEmail().isEmpty()) {
+						if(Objects.nonNull(endUserDB.getEmail()) && !endUserDB.getEmail().isEmpty()) {
 						rawMails.add(new RawMail("Reg_Device_Process_Fail_To_EndUser", 
 								endUserDB.getId(), 
 								4, 
@@ -708,15 +718,20 @@ for(User userData:user) {
 								null,
 								receiverUserType));
 						emailUtil.saveNotification(rawMails);	
-						
+						}
 					}
 				}else {
 					return new GenricResponse(2, "unknown operation", "");
 				}
 			}
 			else {
+				userTypeId=0;
+				userId=0;
+				subFeature="";
 				return new GenricResponse(1, "You are not allowed to do this operation.", "");
 			}
+			auditTrailRepository.save(new AuditTrail(userId, username, userTypeId,
+					ceirActionRequest.getUserType(), 12,Features.REGISTER_DEVICE, subFeature, "", txnId));
 
 			regularizedDeviceDbRepository.save(regularizeDeviceDb);
 

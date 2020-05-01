@@ -15,5 +15,6 @@ JpaRepository<EndUserDB, Long>, JpaSpecificationExecutor<EndUserDB> {
 	public EndUserDB getByTxnId(String txnId);
 
 	public EndUserDB getByNid(String nid);
+	public EndUserDB getById(long id);
 	
 }
