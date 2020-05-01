@@ -87,6 +87,7 @@ public class DatatableHeaders {
 
 			//stockHeaders
 			else if("stockHeaders".equals(role)) {
+				
 				String[] headers = {"table.creationDate","table.transactionID","table.fileName","table.status","input.quantity","input.devicequantity","table.action"};
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
@@ -128,7 +129,7 @@ public class DatatableHeaders {
 			//Grievance Headers
 			else if("grievanceHeaders".equals(role)) {
 				
-				String[] headers = {"table.raiseddate","table.lastupdatedate","table.transactionID","table.grievanceID","table.grievancestatus","table.action"};	
+				String[] headers = {"table.creationDate","table.lastupdatedate","table.transactionID","table.grievanceID","table.status","table.action"};	
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
@@ -454,7 +455,7 @@ public class DatatableHeaders {
 			//Grievance Admin Headers
 			else if("adminGrievanceHeaders".equals(role)) {
 				
-				String[] headers = {"table.raiseddate","table.lastupdatedate","table.transactionID","table.UserName","table.userType","table.grievanceID","table.raisedBy","table.grievancestatus","table.action"};	
+				String[] headers = {"table.creationDate","table.lastupdatedate","table.transactionID","table.UserName","table.userType","table.grievanceID","table.raisedBy","table.status","table.action"};	
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}

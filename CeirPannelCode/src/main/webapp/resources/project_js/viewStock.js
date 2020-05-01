@@ -360,7 +360,9 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 				"featureId":featureId,
 				"userTypeId":$("body").attr("data-userTypeID"),
 				"txnId":txn,
-				"consignmentStatus":parseInt($('#StockStatus').val())
+				"consignmentStatus":parseInt($('#StockStatus').val()),
+				"displayName" : $('#name').val(),
+				"roleType" : $('#userType').val()
 		}
 		if(lang=='km'){
 			var langFile='./resources/i18n/khmer_datatable.json';
