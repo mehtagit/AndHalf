@@ -611,8 +611,8 @@ public class RegularizedDeviceServiceImpl {
 			placeholders.put("<txn_id>", regularizeDeviceDb.getTxnId());
 			placeholders.put("<First name>", endUserDB.getFirstName());
 
-			userId=endUserDB.getId();
 			if("CEIRADMIN".equalsIgnoreCase(ceirActionRequest.getUserType())){
+			userId=ceirActionRequest.getUserId();
 				userTypeId=8;
                 if(Objects.nonNull(ceirActionRequest.getUsername())) {
                 	username=ceirActionRequest.getUsername();
@@ -665,7 +665,7 @@ public class RegularizedDeviceServiceImpl {
                     user=userStaticServiceImpl.getUserbyUsertypeId(8);
 					UserProfile ceirUserProfile = new UserProfile();
 					ceirUserProfile.setUser(userStaticServiceImpl.getCeirAdmin());
-					userId=endUserDB.getId();	
+					
 					subFeature=SubFeatures.SYSTEM_ACCEPT;
 					if(Objects.nonNull(endUserDB.getEmail()) && !endUserDB.getEmail().isEmpty()) {
 						rawMails.add(new RawMail("Reg_Device_Process_success_To_EndUser", 

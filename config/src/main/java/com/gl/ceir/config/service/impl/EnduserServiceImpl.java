@@ -894,7 +894,6 @@ for(User userData:user) {
 
 					emailUtil.saveNotification(rawMails);	
 					txnId = endUserDB.getTxnId();
-					userId=ceirActionRequest.getUserId();
 					
 				}else if(ceirActionRequest.getAction() == 1){
                     				
@@ -917,7 +916,6 @@ for(User userData:user) {
 								receiverUserType));
 						emailUtil.saveNotification(rawMails);	
 						txnId = endUserDB.getTxnId();
-						userId=ceirActionRequest.getUserId();
 						
 					}
 				}else {
