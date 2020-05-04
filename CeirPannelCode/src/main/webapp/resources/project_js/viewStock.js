@@ -809,7 +809,6 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 	    //ev.preventDefault(); //works as well
 
 	});
-	
 	 function historyRecord(txnID){
 			console.log("txn id=="+txnID)
 			$("#tableOnModal").openModal({dismissible:false});

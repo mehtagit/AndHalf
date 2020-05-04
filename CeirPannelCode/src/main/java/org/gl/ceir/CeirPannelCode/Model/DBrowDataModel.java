@@ -12,26 +12,7 @@ public class DBrowDataModel {
 	private List<Map<String, String>> rowData;
 	
 	private String endDate,startDate,txnId;
-		  
-		  
-	public String getEndDate() {
-		return endDate;
-	}
-	public void setEndDate(String endDate) {
-		this.endDate = endDate;
-	}
-	public String getStartDate() {
-		return startDate;
-	}
-	public void setStartDate(String startDate) {
-		this.startDate = startDate;
-	}
-	public String getTxnId() {
-		return txnId;
-	}
-	public void setTxnId(String txnId) {
-		this.txnId = txnId;
-	}
+	private Integer reportnameId;
 	public String getDbName() {
 		return dbName;
 	}
@@ -56,6 +37,30 @@ public class DBrowDataModel {
 	public void setRowData(List<Map<String, String>> rowData) {
 		this.rowData = rowData;
 	}
+	public String getEndDate() {
+		return endDate;
+	}
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
+	}
+	public String getStartDate() {
+		return startDate;
+	}
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+	public String getTxnId() {
+		return txnId;
+	}
+	public void setTxnId(String txnId) {
+		this.txnId = txnId;
+	}
+	public Integer getReportnameId() {
+		return reportnameId;
+	}
+	public void setReportnameId(Integer reportnameId) {
+		this.reportnameId = reportnameId;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -73,14 +78,12 @@ public class DBrowDataModel {
 		builder.append(startDate);
 		builder.append(", txnId=");
 		builder.append(txnId);
+		builder.append(", reportnameId=");
+		builder.append(reportnameId);
 		builder.append("]");
 		return builder.toString();
 	}
-	
-	
-	
-	
-	
-	
-	
+		  
+		  
+		
 }
