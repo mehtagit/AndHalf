@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 @Entity   
 public class GsmaTacDb {    
@@ -25,7 +26,10 @@ public class GsmaTacDb {
 	@Column
 	private String statusMessage;
 	private String deviceId;
+	
+	@Column(name="band_name")
 	private String brandName;
+	
 	private String modelName;
 	private String internalModelName;
 	private String marketingName; 
@@ -43,6 +47,15 @@ public class GsmaTacDb {
 	private String deviceCertifybody; 
 	private String radioInterface;
 	private String operatingSystem;
+	
+	@Transient
+	private Long imei;
+	@Transient
+	private Long imsi;
+	@Transient
+	private Long msisdn;
+	@Transient
+	private  String identifierType;
 	
 	public int getId() {
 		return id;
@@ -187,6 +200,31 @@ public class GsmaTacDb {
 	}
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+	
+	public Long getImei() {
+		return imei;
+	}
+	public void setImei(Long imei) {
+		this.imei = imei;
+	}
+	public Long getImsi() {
+		return imsi;
+	}
+	public void setImsi(Long imsi) {
+		this.imsi = imsi;
+	}
+	public Long getMsisdn() {
+		return msisdn;
+	}
+	public void setMsisdn(Long msisdn) {
+		this.msisdn = msisdn;
+	}
+	public String getIdentifierType() {
+		return identifierType;
+	}
+	public void setIdentifierType(String identifierType) {
+		this.identifierType = identifierType;
 	}
 	@Override
 	public String toString() {
