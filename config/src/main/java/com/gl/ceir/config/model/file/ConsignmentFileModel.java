@@ -20,7 +20,7 @@ public class ConsignmentFileModel {
 	@CsvBindByName(column = "File Name")
 	@CsvBindByPosition(position = 4)
 	private String fileName;
-	@CsvBindByName(column = "Quantity")
+	@CsvBindByName(column = "IMEI Quantity")
 	@CsvBindByPosition(position = 5)
 	private Integer quantity;
 	@CsvBindByName(column = "Create On")
@@ -30,12 +30,15 @@ public class ConsignmentFileModel {
 	@CsvBindByPosition(position = 7)
 	private String modifiedOn;
 
+	@CsvBindByName(column = "Device Quantity")
+	@CsvBindByPosition(position = 8)
+	private Integer deviceQuantity;
 	public ConsignmentFileModel() {
 		// TODO Auto-generated constructor stub
 	}
 
 	public ConsignmentFileModel(String consignmentStatus, String txnId, String supplierName, 
-			String taxPaidStatus, String fileName, String createdOn, String modifiedOn, Integer quantity) {
+			String taxPaidStatus, String fileName, String createdOn, String modifiedOn, Integer quantity,Integer deviceQuantity) {
 		this.consignmentStatus = consignmentStatus;
 		this.txnId = txnId;
 		this.supplierName = supplierName;
@@ -44,6 +47,7 @@ public class ConsignmentFileModel {
 		this.createdOn = createdOn;
 		this.modifiedOn = modifiedOn;
 		this.quantity = quantity;
+		this.deviceQuantity=deviceQuantity;
 	}
 
 	public String getConsignmentStatus() {
@@ -112,25 +116,35 @@ public class ConsignmentFileModel {
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder()
-				.append("ConsignmentFileModel [")
-				.append("consignmentStatus=")
-				.append(consignmentStatus)
-				.append(", txnId=")
-				.append(txnId)
-				.append(", supplierName=")
-				.append(supplierName)
-				.append(", taxPaidStatus=")
-				.append(taxPaidStatus)
-				.append(", fileName=")
-				.append(fileName)
-				.append(", createdOn=")
-				.append(createdOn)
-				.append(", modifiedOn=")
-				.append(modifiedOn)
-				.append("]");
-
+		StringBuilder builder = new StringBuilder();
+		builder.append("ConsignmentFileModel [txnId=");
+		builder.append(txnId);
+		builder.append(", consignmentStatus=");
+		builder.append(consignmentStatus);
+		builder.append(", supplierName=");
+		builder.append(supplierName);
+		builder.append(", taxPaidStatus=");
+		builder.append(taxPaidStatus);
+		builder.append(", fileName=");
+		builder.append(fileName);
+		builder.append(", quantity=");
+		builder.append(quantity);
+		builder.append(", createdOn=");
+		builder.append(createdOn);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
+		builder.append(", deviceQuantity=");
+		builder.append(deviceQuantity);
+		builder.append("]");
 		return builder.toString();
+	}
+
+	public Integer getDeviceQuantity() {
+		return deviceQuantity;
+	}
+
+	public void setDeviceQuantity(Integer deviceQuantity) {
+		this.deviceQuantity = deviceQuantity;
 	}
 
 }
