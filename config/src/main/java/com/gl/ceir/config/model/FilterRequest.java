@@ -49,7 +49,7 @@ public class FilterRequest {
 	
 	private String remark;
 	
-	
+	private String displayName;
 	public String getRemark() {
 		return remark;
 	}
@@ -341,8 +341,18 @@ public class FilterRequest {
 		builder.append(state);
 		builder.append(", ruleName=");
 		builder.append(ruleName);
+		builder.append(", remark=");
+		builder.append(remark);
+		builder.append(", displayName=");
+		builder.append(displayName);
 		builder.append("]");
 		return builder.toString();
+	}
+	public String getDisplayName() {
+		return displayName;
+	}
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
 	}
 	
 }

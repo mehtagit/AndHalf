@@ -16,4 +16,5 @@ public interface Features {
 	String DUPLICATE = "Duplicate"; //customerCareDuplicate
 	String GLOBAL_BLACKLIST = "Global Black List";//customerCareGsmaBlacklist
 	String TYPE_APPROVE = "Type Approve"; //customerCareTypeApprove
+	String UPDATE_VISA_Request = "Update Visa Request";
 }

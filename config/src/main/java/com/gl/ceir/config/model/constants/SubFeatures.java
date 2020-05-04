@@ -18,4 +18,5 @@ public interface SubFeatures {
 	String EXPORT = "Export";
 	String ACCEPT_REJECT="Accept_Reject";
 	String UPLOAD = "Upload";
+	String REQUEST="Request";
 }

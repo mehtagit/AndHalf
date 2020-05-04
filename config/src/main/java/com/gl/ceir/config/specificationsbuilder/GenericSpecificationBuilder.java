@@ -36,7 +36,7 @@ public class GenericSpecificationBuilder<T> {
 		params.add(criteria);
 		return this;
 	}
-	
+
 	public final GenericSpecificationBuilder<T> orSearch(SearchCriteria criteria) { 
 		searchParams.add(criteria);
 		return this;
@@ -53,6 +53,7 @@ public class GenericSpecificationBuilder<T> {
 		Specification<T> finalSpecification   = null;
 		Specification<T> searchSpecification  = null;
 		Specification<T> orSpecification  = null;
+		
 		/** Specification added from addSpecification method**/
 		if(!specifications.isEmpty()) {
 			finalSpecification = Specification.where(specifications.get(0));
@@ -82,10 +83,11 @@ public class GenericSpecificationBuilder<T> {
 			}
 			if( finalSpecification != null ) {
 				finalSpecification = finalSpecification.and( searchSpecification );
-			}else {//If no call of addSpecification method and empty params 
+			}else {//If no call of addSpecification method
 				finalSpecification = Specification.where(searchSpecification);
 			}
 		}
+		
 		/***If orParams list not empty***/
 		specifications = createSpecifications( orParams );
 		if( !specifications.isEmpty()) {
@@ -99,15 +101,16 @@ public class GenericSpecificationBuilder<T> {
 				finalSpecification = Specification.where(orSpecification);
 			}
 		}
+		
 		return finalSpecification;
 	}
 
 	public void addSpecification(Specification<T> specification) { 
 		specifications.add(specification);
 	}
-	
+
 	private List<Specification<T>> createSpecifications( List<SearchCriteria> criterias){
-		List<Specification<T>> specifications = new ArrayList<Specification<T>>();
+		List<Specification<T>> specifications = new ArrayList<>();
 		try {
 			for(SearchCriteria searchCriteria : criterias) {
 				specifications.add((root, query, cb)-> {
@@ -172,7 +175,7 @@ public class GenericSpecificationBuilder<T> {
 		}
 		return specifications;
 	}
-	
+
 	public Specification<T> in(String key, List<Integer> status){
 		return (root, query, cb) ->  cb.in(root.get(key)).value(status);
 	}
