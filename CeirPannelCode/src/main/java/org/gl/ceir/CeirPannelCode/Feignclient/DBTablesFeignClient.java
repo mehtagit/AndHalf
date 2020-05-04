@@ -1,7 +1,10 @@
 package org.gl.ceir.CeirPannelCode.Feignclient;
 
+import java.util.List;
+
 import org.gl.ceir.CeirPannelCode.Model.DBTableModel;
 import org.gl.ceir.CeirPannelCode.Model.DBrowDataModel;
+import org.gl.ceir.CeirPannelCode.Model.ReportResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -27,4 +30,11 @@ public interface DBTablesFeignClient {
 	@RequestMapping(value= "/db/table/data/V2" , method=RequestMethod.POST) 
 	public Object historyConsignmentFeign(@RequestBody DBrowDataModel filterRequest);
 	
+	
+	@RequestMapping(value="/report/list",method=RequestMethod.POST) 
+	public List<ReportResponse> getAllReports();
+	
+	
+	@RequestMapping(value= "/report/data" , method=RequestMethod.POST) 
+	public Object ReportDetailsFeign(@RequestBody DBrowDataModel filterRequest);
 }

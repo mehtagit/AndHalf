@@ -1561,9 +1561,4 @@ $(document).on("keyup", "#Price1", function(e) {
 		$('.datepicker').on('mousedown',function(event){
 		event.preventDefault();
 	});
-
-		
-		
-		
-		
-	}
+}

@@ -2,6 +2,8 @@ package org.gl.ceir.CeirPannelCode.Feignclient;
 
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
+import org.gl.ceir.CeirPannelCode.Model.NewRule;
+import org.gl.ceir.CeirPannelCode.Model.NewSystemUser;
 import org.gl.ceir.CeirPannelCode.Model.Password;
 import org.gl.ceir.CeirPannelCode.Model.PaymentRequest;
 import org.gl.ceir.CeirPannelCode.Model.Registration;
@@ -219,5 +221,28 @@ public interface UserProfileFeignImpl {
 		@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
 		@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
 		@RequestParam(value = "file", defaultValue = "0") Integer file);
+		
+/*-------------------------- view Visa Update Feign ------------------------------*/
+		
+		@RequestMapping(value="/visa/view" ,method=RequestMethod.POST) 
+		public Object viewVisaRequest(@RequestBody FilterRequest filterRequest,
+		@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
+		@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+		@RequestParam(value = "file", defaultValue = "0") Integer file);
+		
+	/*----------------------- Add System user feign ---------------------------*/
+		
+		@PostMapping("/userMgmt/save")
+		public NewSystemUser saveSystemUser(@RequestBody NewSystemUser newSystemUser);		
+		
+		//***************************************************View user Feign********************************
+		
+		@RequestMapping(value="/userMgmt/getById/{id}" ,method=RequestMethod.POST) 
+		public @ResponseBody GenricResponse viewUserFeign(@PathVariable ("id") Integer id);	
+		
+		//***************************************************Update user Feign********************************
+
+		@RequestMapping(value= "/userMgmt/update", method=RequestMethod.POST) 
+		public GenricResponse updateUserFeign(@RequestBody NewSystemUser newSystemUser);
 } 
 

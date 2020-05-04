@@ -337,7 +337,7 @@ public class StolenDatatableController {
 		
 		if("Operator".equals(userType) || "CEIRAdmin".equals(userType) || "Operation".equals(userType) && !"5".equals(featureId)) {
 			String[] names = { "HeaderButton", Translator.toLocale("button.ReportBlock/Unblock"), "./selectblockUnblockPage",
-					"btnLink", "FilterButton",Translator.toLocale("button.filter"), "filterStolen("+ConfigParameters.languageParam+")", "submitFilter" };
+					"btnLink", "FilterButton",Translator.toLocale("button.filter"), "filterStolen("+ConfigParameters.languageParam+",\"filter\")", "submitFilter" };
 			for (int i = 0; i < names.length; i++) {
 				button = new Button();
 
@@ -408,7 +408,7 @@ public class StolenDatatableController {
 			//This Block is for all other Stolen Upper Filter/Button Forms------------------------------------------------
 			
 			String[] names = { "HeaderButton", Translator.toLocale("button.repoertStolen/Recovery"), "openStolenRecoveryModal()",
-					"btnLink", "FilterButton", Translator.toLocale("button.filter"), "filterStolen("+ConfigParameters.languageParam+")", "submitFilter" };
+					"btnLink", "FilterButton", Translator.toLocale("button.filter"), "filterStolen("+ConfigParameters.languageParam+",\"filter\")", "submitFilter" };
 			for (int i = 0; i < names.length; i++) {
 				button = new Button();
 

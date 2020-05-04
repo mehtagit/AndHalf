@@ -61,8 +61,7 @@
 <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
 
 <script src="http://malsup.github.io/jquery.blockUI.js"></script>
-<script src="http://malsup.github.io/jquery.blockUI.js"></script>
-<script src="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json"></script>
+
 
 <style>
 .row {
@@ -164,51 +163,28 @@ section {
 	<!-- START CONTENT -->
 	<section id="content">
 
- <div class="card-panel" style="    height: 156px;">
-                <div class="container-fluid pageHeader">
-                  <p class="PageHeading">Search</p>
-                  <!-- <a href="createConsignment.html" class="boton right">Register Consignment</a> -->
-                </div>
-
-                <div class="container" id="searchDiv">
-                  <div id="profile-page" class="section">
-                    <div class="row ">
-                      <form action="#" onsubmit="return hide()">
-                        <div class="col s12 m12 l12 bx-shadow">
-                          <div class="row">
-                           
-                            
-                            <div class="col s12 m3 l3">
-                              <label for="deviceIdType">Device ID Type <span class="star">*</span></label>
-                              <select class="browser-default" id="deviceType" style="height: 30px" 
-                              					
-												required>
-                                  <option value="" disabled selected>Device ID Type</option>
-                              </select>
-                          </div>
-                            
-                            <div class="input-field col s12 m3 l3">
-                              <input type="text" name="IMEI" id="imei" maxlength="16" pattern="[0-9\s]{15,16}" value="" required/>
-                              <p id="errorMsgOnModal" class="deviceErrorTitle"></p>
-                              <label for="IMEI" >IMEI<span class="star">*</span></label>
-                            </div>
-                            
-                             <div class="input-field col s12 m3 l3">
-                              <input type="text" id="msisdn" name="MSISDN" maxlength="15" pattern="[0-9\s]{15}" value="">
-                              <label for="MSISDN" >MSISDN</label>
-                            </div>
-                            
-                            <div class="input-field col s12 m3 l3">
-                              <button class="btn " type="submit"><spring:message code="button.submit" /></button>
-                              <a onclick="clearFields()" class="btn" style="margin-left: 10px;">Clear</a>
-                            </div>
-                          </div>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-                </div>
-        </div>
+		<div class="row card-panel">
+			<div class="container-fluid pageHeader">
+				<p class="PageHeading">Report</p>
+			</div>
+			<div class="row">
+				<div class="col s12 m12" style="margin-top: 20px;">
+					<div id="submitbtn">
+						<div class="input-field col s12 m1">
+							<label for="Search" class="center-align ml-10"><spring:message code="sidebar.Report" /></label>
+						</div>
+						<div class="input-field col s7 m4">
+                                <select class="browser-default" id="tableId" required="">
+                                <option value="" disabled="" selected="">Select Report</option>
+                                 </select>
+                         </div>
+						<div class="input-field col s12 m2 l2">
+							<button type="button" class="btn"  id="submit" onclick="hide();"><spring:message code="button.submit" /></button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</section>
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
@@ -225,35 +201,9 @@ section {
 		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/js/countries.js"></script>
-		<!-- i18n library -->
-	<script type="text/javascript"
-		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
-	<script type="text/javascript"
-		src="${context}/resources/i18n_library/i18n.js"></script>
-	<script type="text/javascript"
-		src="${context}/resources/i18n_library/messagestore.js"></script>
-
-	<script type="text/javascript"
-		src="${context}/resources/i18n_library/fallbacks.js"></script>
-
-	<script type="text/javascript"
-		src="${context}/resources/i18n_library/language.js"></script>
-
-	<script type="text/javascript"
-		src="${context}/resources/i18n_library/parser.js"></script>
-
-
-	<script type="text/javascript"
-		src="${context}/resources/i18n_library/emitter.js"></script>
-
-
-	<script type="text/javascript"
-		src="${context}/resources/i18n_library/bidi.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/enterKey.js"></script>
 	<script type="text/javascript"
-		src="${context}/resources/project_js/customerSearch.js"></script>
-		<script type="text/javascript"
-		src="${context}/resources/project_js/validationMsg.js"></script>
+		src="${context}/resources/project_js/selectReport.js"></script>
 </body>
 </html>

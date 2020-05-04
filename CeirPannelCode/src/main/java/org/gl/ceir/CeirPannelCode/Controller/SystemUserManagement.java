@@ -26,9 +26,4 @@ public class SystemUserManagement {
 		return mv; 
 	}
 	
-	@GetMapping("register-user-form")
-	public ModelAndView save() {
-		return new ModelAndView("addSystemUser");
-		
-	}
 }

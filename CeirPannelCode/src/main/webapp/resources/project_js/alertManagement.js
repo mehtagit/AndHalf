@@ -50,6 +50,8 @@
 		
 		function alertFieldTable(lang){
 			
+			var alertId = $('#alertId').val() == null ? null : $("#alertId option:selected").text();
+			
 			var filterRequest={
 					"endDate":$('#endDate').val(),
 					"startDate":$('#startDate').val(),
@@ -57,7 +59,7 @@
 					"featureId":parseInt(featureId),
 					"userTypeId": parseInt($("body").attr("data-userTypeID")),
 					"userType":$("body").attr("data-roleType"),
-					"alertId" : $("#alertId option:selected").text()
+					"alertId" : alertId
 					
 			}				
 			if(lang=='km'){

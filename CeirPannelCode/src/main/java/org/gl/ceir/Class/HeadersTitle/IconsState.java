@@ -309,6 +309,18 @@ public class IconsState {
 					+editIconTitle+"></i></a>"; 
 
 		}
+		else if("4".equals(status) || "8".equals(status)   && "Approved".equals(userStatus)) {
+			error="<a onclick="+errorURL+" class="+disableIconClass+"><i  class="
+					+disableErrorIcon+" aria-hidden=\"true\" title="
+					+errorIconTitle+"  ></i></a>";
+			edit="<a onclick="+editAction+" class="+disableIconClass+"><i class="
+					+disableEditIcon+" aria-hidden=\"true\"  title="
+					+editIconTitle+"></i></a>"; 
+			delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\"><i class="
+					+disableDeletionIcon+" aria-hidden=\"true\"  title="
+					+deleteIconTitle+"></i></a>";
+
+		}
 		else if("7".equals(status) && "Approved".equals(userStatus)) {
 			error="<a onclick="+errorURL+" class="+disableIconClass+"><i  class="
 					+disableErrorIcon+" aria-hidden=\"true\" title="
@@ -2523,8 +2535,8 @@ public class IconsState {
 	public String userSystemManagementIcons(String id, String userStatus) { 
 		executePostConstruct();
 
-		String editAction= "currencyViewByID('"+id+"')";
-		String viewAction="viewDetails()";
+		String editAction= "viewDetails("+id+",'Edit')";
+		String viewAction="viewDetails("+id+",'View')";
 		String deleteAction= "deleteByImei()";
 
 		// state related Code 
@@ -2541,6 +2553,37 @@ public class IconsState {
 
 
 		String action=view.concat(edit).concat(delete);
+		return action;
+
+	}
+	
+	/********************************** Icons for Admin Visa Update Datatable **********************************/ 
+
+
+	public String visaUpdateAdminIcons(String status,String id) {	
+		executePostConstruct();
+		String viewAction="viewByID("+id+",'view','"+projectPath+"')";
+		//	String downloadURL = "./dowloadFiles/actual/"+fileName.replace(" ", "%20")+"/"+txnId+"/"+defaultTagName+"";
+		//String downloadURL = "fileDownload('"+fileName.replace(" ", "%20")+"','actual','"+txnId+"','"+defaultTagName+"')";
+		String approveAction = "";
+		String rejectAction= "";
+
+
+		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+				+viewIconTitle+" ></i></a>";
+
+		/*
+		 * String download="<a onclick="+downloadURL+" ><i class="
+		 * +downloadIcon+" aria-hidden=\"true\" title=" +downloadIconTitle+" ></i></a>";
+		 */
+		String approve = "<a onclick="+approveAction+"><i class="+approveIcon+" aria-hidden=\"true\" title="
+				+approveIconTitle+" ></i></a>";   
+		String reject = "<a onclick="+rejectAction+"><i class="+rejectIcon+" aria-hidden=\"true\" title="
+				+rejectIconTitle+" ></i></a>";
+
+
+
+		String action = view.concat(approve).concat(reject);
 		return action;
 
 	}

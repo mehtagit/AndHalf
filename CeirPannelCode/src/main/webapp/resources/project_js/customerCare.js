@@ -175,6 +175,7 @@ function deviceTable(){
 }
 
 function notificationTable(){
+	
 	var filterRequest={
 			"imei" : $("body").attr("data-imei"),
 			"msisdn" : $("body").attr("data-msisdn"),

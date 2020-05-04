@@ -102,8 +102,12 @@ $('#deviceIdType').on('change', function() {
 		$('#errorMsgOnModal').text($.i18n('MEIDMsg'));
 		break;
 	case 2:
+		$('#DeviceID').val('');
+		$("#DeviceID").attr("pattern","[0-9]{8,11}");
 		$("#DeviceID").attr("onkeyup","isLengthValid(this.value)");
-		$("#DeviceID").attr("maxlength","11");
+		$("#DeviceID").attr("maxlength","11");	
+		$("#DeviceID").attr("oninput","InvalidMsg(this,'input','"+$.i18n('validationESN11')+"')");
+		$("#DeviceID").attr("oninvalid","InvalidMsg(this,'input','"+$.i18n('validationESN11')+"')");
 		$('#errorMsgOnModal').text($.i18n('ESNMsg'));
 		break;
 	}

@@ -127,95 +127,248 @@
 		<!--end container-->
 	</section>
 	
- 	<div id="addCurrency" class="modal" style="z-index: 1003; display: none; opacity: 1; transform: scaleX(1); top: 10%;">
-        <h6 class="modal-header">Add Exchange Rate </h6>
-        <div class="modal-content">
-          	<form action="" onsubmit="return submitPort()" method="post" >
-                <div class="row" style="margin-top: 10px;">
-					
-					<div class="input-field col s12 m6" style="margin-top: 22px;">
-						<input type="text" name="month"
-						id='month' class='form-control datepick'
-						autocomplete='off'  required /> 
-						<label for="month" class="center-align">Month <span class="star">*</span>
-						</label> <span class="input-group-addon" style="color: #ff4081"><i
-												class="fa fa-calendar" aria-hidden="true"></i></span>
-					
-					</div>
-					
-					<div class="col s12 m6">
-					<label for="port" class="active">Currency<span class="star">*</span></label>
-                     	 <select class="browser-default" id="currency" style="margin-bottom: 5px;" required="required">
-                                <option value=""  selected="" disabled>Select Currency</option>
-                          </select>
-                        
-                         <input type="text" id="id" hidden>
-                    </div>
-					
-					<div class="input-field col s12 m6">
-                        <input type="number" id="cambodianRiel" name=""  pattern="[0-9]" title="Please enter numeric numbers"  maxlength="" required="required">
-                        <label for="cambodianRiel" class="">Cambodian Riel <span class="star"> *</span></label>
-                    </div>
-                    
-                    <div class="input-field col s12 m6">
-                        <input type="number" id="dollar" name=""  pattern="[0-9]{8,8}" title="Please enter numeric numbers"  maxlength="" required="required">
-                        <label for="number" class="">US Dollar <span class="star"> *</span></label>
-                    </div>
+ 	 <div id="ViewModel" class="modal">
+			<h6 class="modal-header">
+				View User
+			</h6>
+			<div class="modal-content">
+				<form action="" onsubmit="return update()" method="POST"
+					enctype="multipart/form-data" id="register">
 
-					 <div class="col s12 m12 center" style="margin-top: 20px;">
-                        <button class="btn" type="submit">Submit</button>
-                        <a href="#" class="btn modal-close" id="Cancel" style="margin-left: 10px;">Cancel</a>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-		
-		
-		 	<div id="editCurrencyModal" class="modal" style="z-index: 1003; display: none; opacity: 1; transform: scaleX(1); top: 10%;">
-        <h6 class="modal-header">Edit Exchange Rate</h6>
-        <div class="modal-content">
-          	<form action="" onsubmit="return updateCurrency()" method="post" >
-                <div class="row" style="margin-top: 10px;">
-					
-					<div class="input-field col s12 m6" style="margin-top: 22px;">
-						<input type="text" name="month"
-						id='editMonth' class='form-control datepick'
-						autocomplete='off'  required disabled="disabled" /> 
-						<label for="editMonth" class="center-align">Month <span class="star">*</span>
-						</label> <span class="input-group-addon" style="color: #ff4081"><i
-												class="fa fa-calendar" aria-hidden="true"></i></span>
-					
-					</div>
-					
-					<div class="col s12 m6">
-					<label for="port" class="active">Currency<span class="star">*</span></label>
-                     	 <select class="browser-default" id="editCurrency" style="margin-bottom: 5px;" required="required">
-                                <option value=""  selected="" disabled>Select Currency</option>
-                          </select>
-                        
-                         <input type="text" id="editId" hidden>
-                    </div>
-					
-					<div class="input-field col s12 m6">
-                        <input type="number" id="editCambodianRiel" name=""  pattern="[0-9]{8,8}" title="Please enter numeric numbers"  maxlength="" required="required">
-                        <label for="editCambodianRiel" class="">Cambodian Riel <span class="star"> *</span></label>
-                    </div>
-                    
-                    <div class="input-field col s12 m6">
-                        <input type="number" id="editDollar" name=""  pattern="[0-9]{8,8}" title="Please enter numeric numbers"  maxlength="" required="required">
-                        <label for="editDollar" class="">US Dollar <span class="star"> *</span></label>
-                    </div>
+					<div class="row" style="margin-top: 10px;">
+						<div class="input-field col s12 m4">
+                                            <input type="text" id="viewfirstName"  name="firstName" pattern="[a-zA-Z]{0,20}" required="required" disabled
+											oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"  >
+                                            <label for="viewfirstName"><spring:message code="input.firstName" /> <span class="star">*</span></label>
+                                        </div>
 
-					 <div class="col s12 m12 center" style="margin-top: 20px;">
-                        <button class="btn" type="submit">Submit</button>
-                        <a href="#" class="btn modal-close" id="Cancel" style="margin-left: 10px;">Cancel</a>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
+                                        <div class="input-field col s12 m4">
+                                            <input type="text" id="viewmiddleName" name="middleName" pattern="[a-zA-Z]{0,20}" disabled
+											oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');" maxlength="20" />
+                                            <label for="viewmiddleName"><spring:message code="input.middleName" /></label>
+                                        </div>
+										
+										<div class="input-field col s12 m4">
+                                            <input type="text" id="viewlastName" name="lastName" pattern="[a-zA-Z]{0,20}"  disabled
+											oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
+													 required   maxlength="20" />
+                                            <label for="viewlastName"><spring:message code="input.lastName" /> <span class="star">*</span></label>
+                                        </div>
+						
+						
+						
+					</div>
+
+					<div class="row myRow">
+								 <div class="input-field col s12 m6">
+                                            <input type="text" id="viewcontactNumber" name="contactNumber" pattern="[0-9]{10,12}" disabled
+ 													oninput="InvalidMsg(this,'input','<spring:message code="validation.10digits" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10digits" />');"
+												  required   maxlength="10" />
+                                            <label for="viewcontactNumber"><spring:message code="input.contact" /><span
+                                                    class="star">*</span></label>
+                                        </div>
+
+                                        <div class="input-field col s12 m6">
+                                            <input type="email" id="viewemailID" name="emailID" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"  disabled
+											oninput="InvalidMsg(this,'input','<spring:message code="validation.emailformate" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.emailformate" />');"
+												required maxlength="30" />
+                                            <label for="viewemailID"><spring:message code="input.EmailID" /> <span class="star"> *</span></label>
+                                        </div>
+
+							</div>			
+
+					<div class="row myRow">
+							 	<div class="input-field col s12 m6" style="margin-top: 23px;">
+                                            <input type="text" id="viewPassword" name="password" disabled
+                                               pattern="[a-zA-Z]{0,20}" required maxlength="18" />
+                                            <label for="viewPassword"><spring:message code="registration.password" /><span class="star"> *</span></label>
+                                        </div>
+                                        
+                                        <div class="input-field col s12 m6" style="margin-top: 23px;">
+                                            <input type="text" id="viewconfirmPassword" name="confirmPassword" disabled
+                                               pattern="[a-zA-Z]{0,20}" required maxlength="18" />
+                                            <label for="viewconfirmPassword"><spring:message code="registration.retypepassword"/><span class="star"> *</span></label>
+                                        </div>
+						</div>
+
+
+
+					<div class="row myRow">
+							
+							<div class="input-field col s12 m6" style="margin-top: 23px;">
+                                            <input type="text" id="viewuserName" name="userName" disabled
+                                               pattern="[a-zA-Z]{0,20}" required maxlength="18" />
+                                            <label for="viewuserName"><spring:message code="registration.username"/><span class="star"> *</span></label>
+                              </div>
+							
+						  <div class="input-field col s12 m6" style="margin-top: 23px;">
+                                            <input type="text" id="viewuserType" name="userType" disabled
+                                               pattern="[a-zA-Z]{0,20}" required maxlength="18" />
+                                            <label for="viewuserType"><spring:message code="table.userType"/><span class="star"> *</span></label>
+                            </div>
+                                        
+                                   
+						</div>
+						
+						<div class="row myRow">
+						
+						     <div class="input-field col s12 m6">
+                                            <textarea id="viewuserRemark" 
+										  oninput="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
+													
+												  required   maxlength="200" class="materialize-textarea" style= "min-height: 8rem;"></textarea>
+                                            <label for="viewuserRemark"><spring:message code="input.Remark" /><span
+                                                    class="star">*</span></label>
+                                        </div>
+						
+						</div>
+
+		<div class="row">
+						<div class="input-field col s12 center">
+							<button class="modal-close btn" type="button"
+								style="margin-left: 10px;">
+								<spring:message code="modal.close" />
+							</button>
+
+
+						</div>
+
+					</div>
+				</form>
+			</div>
+		</div>
 		
+		
+		
+		<div id="editModel" class="modal">
+			<h6 class="modal-header">
+				<spring:message code="Edit User" />
+			</h6>
+			<div class="modal-content">
+				<form action="" onsubmit="return update()" method="POST"
+					enctype="multipart/form-data" id="register">
+
+					<div class="row myRow">
+						<div class="input-field col s12 m4">
+                                            <input type="text" id="editfirstName"  name="firstName" pattern="[a-zA-Z]{0,20}" required="required"
+											oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');" disabled
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"/>
+                                            <label for="editfirstName"><spring:message code="input.firstName" /> <span class="star">*</span></label>
+                                        </div>
+										
+										<input type="text" id="editId" hidden="hidden">
+                                       
+                                        <div class="input-field col s12 m4">
+                                            <input type="text" id="editmiddleName" name="middleName" pattern="[a-zA-Z]{0,20}" disabled
+											oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');" maxlength="20" />
+                                            <label for="editmiddleName"><spring:message code="input.middleName" /></label>
+                                        </div>
+										
+										<div class="input-field col s12 m4">
+                                            <input type="text" id="editlastName" name="lastName" pattern="[a-zA-Z]{0,20}" disabled
+											oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
+													 required   maxlength="20" />
+                                            <label for="editlastName"><spring:message code="input.lastName" /> <span class="star">*</span></label>
+                                        </div>
+						
+						
+						
+					</div>
+
+					<div class="row myRow">
+								 <div class="input-field col s12 m6">
+                                            <input type="text" id="editcontactNumber" name="contactNumber" pattern="[0-9]{10,12}" disabled
+ 													oninput="InvalidMsg(this,'input','<spring:message code="validation.10digits" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10digits" />');"
+												  required   maxlength="10" />
+                                            <label for="editcontactNumber"><spring:message code="input.contact" /><span
+                                                    class="star">*</span></label>
+                                        </div>
+
+                                        <div class="input-field col s12 m6">
+                                            <input type="email" id="editemailID" name="emailID" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"  disabled
+											oninput="InvalidMsg(this,'input','<spring:message code="validation.emailformate" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.emailformate" />');"
+												required maxlength="30" />
+                                            <label for="editemailID"><spring:message code="input.EmailID" /> <span class="star"> *</span></label>
+                                        </div>
+
+							</div>			
+
+					<div class="row myRow">
+							 	<div class="input-field col s12 m6" style="margin-top: 23px;">
+                                            <input type="text" id="editPassword" name="password" disabled
+                                               pattern="[a-zA-Z]{0,20}" required maxlength="18" />
+                                            <label for="editPassword"><spring:message code="registration.password" /><span class="star"> *</span></label>
+                                        </div>
+                                        
+                                        <div class="input-field col s12 m6" style="margin-top: 23px;">
+                                            <input type="text" id="EditconfirmPassword" name="confirmPassword" disabled
+                                               pattern="[a-zA-Z]{0,20}" required maxlength="18" />
+                                            <label for="EditconfirmPassword"><spring:message code="registration.retypepassword"/><span class="star"> *</span></label>
+                                        </div>
+						</div>
+						
+						<div class="row myRow">
+				 				
+                                   <div class="input-field col s12 m6" style="margin-top: 38px;">
+                                            <input type="text" id="edituserName" name="userName" disabled
+                                               pattern="[a-zA-Z]{0,20}" required maxlength="18" />
+                                            <label for="edituserName"><spring:message code="registration.username"/><span class="star"> *</span></label>
+                              </div>
+                                   <div class="col s12 m6 selectDropdwn">         
+                                <label for="edituserType"><spring:message code="table.userType" /> <span class="star">*</span></label>
+                                            <select class="browser-default" 
+											title="<spring:message code="" />" oninput="setCustomValidity('')"  
+										            oninput="InvalidMsg(this,'input','<spring:message code="validation.selectFieldMsg" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.selectFieldMsg" />');"
+										  required   id="edituserType">
+                                                <option value=""  selected><spring:message code="select.usertype" /></option>
+                                            </select>
+                                        </div>
+                                        
+                                        
+						</div>
+						
+						 <div class="row myRow">
+						 
+						 <div class="input-field col s12 m6">
+                                            <textarea id="edituserRemark" 
+										  oninput="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
+													
+												  required   maxlength="200" class="materialize-textarea" style= "min-height: 8rem;"></textarea>
+                                            <label for="edituserRemark"><spring:message code="input.Remark" /><span
+                                                    class="star">*</span></label>
+                                        </div>
+						 </div>
+
+		<div class="row">
+						<div class="input-field col s12 center">
+
+							<button class="btn " type="submit" style="margin-left: 10px;">
+								<spring:message code="button.update" />
+							</button>
+							<button class="modal-close btn" type="button"
+								style="margin-left: 10px;">
+								<spring:message code="button.cancel" />
+							</button>
+
+
+						</div>
+
+					</div>
+				</form>
+			</div>
+		</div>
 	<div id="confirmField" class="modal">
 		<h6 class="modal-header">Add Exchange Rate</h6>
 		<div class="modal-content">

@@ -8,7 +8,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
+import org.gl.ceir.CeirPannelCode.Feignclient.UserProfileFeignImpl;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.Class.HeadersTitle.DatatableResponseModel;
 import org.gl.ceir.Class.HeadersTitle.IconsState;
@@ -17,103 +17,103 @@ import org.gl.ceir.configuration.Translator;
 import org.gl.ceir.pageElement.model.Button;
 import org.gl.ceir.pageElement.model.InputFields;
 import org.gl.ceir.pageElement.model.PageElement;
-import org.gl.ceir.pagination.model.AuditContentModel;
-import org.gl.ceir.pagination.model.AuditPaginationModel;
-import org.gl.ceir.pagination.model.PolicyConfigContent;
-import org.gl.ceir.pagination.model.PolicyConfigPagination;
+import org.gl.ceir.pagination.model.TacContentModel;
+import org.gl.ceir.pagination.model.TacPaginitionModel;
+import org.gl.ceir.pagination.model.VisaContentModel;
+import org.gl.ceir.pagination.model.VisaContentPaginationModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
 
 @RestController
-public class AuditDatatableController {
+public class VisaUpdateDatableController {
 	private final Logger log = LoggerFactory.getLogger(getClass());
+	String className = "emptyClass";
 	@Autowired
-	IconsState iconState;
+	Translator Translator;
+	@Autowired
+	DatatableResponseModel datatableResponseModel;
 	@Autowired
 	PageElement pageElement;
 	@Autowired
 	Button button;
 	@Autowired
-	DatatableResponseModel datatableResponseModel;
+	IconsState iconState;
 	@Autowired
-	FeignCleintImplementation feignCleintImplementation;
+	UserProfileFeignImpl userProfileFeignImpl;	
 	@Autowired
-	AuditContentModel auditContentModel;
+	VisaContentModel visaContentModel;
 	@Autowired
-	AuditPaginationModel auditPaginationModel;
-	@Autowired
-	Translator Translator;
+	VisaContentPaginationModel visaContentPaginationModel;
 	
-	@PostMapping("auditManagementData")
-	public ResponseEntity<?> viewAuditManagement(@RequestParam(name="type",defaultValue = "AuditManagement",required = false) String role, HttpServletRequest request,HttpSession session) {
+	
+	@PostMapping("visaUpdatedata") 
+	public ResponseEntity<?> viewPendingTacList(HttpServletRequest request,HttpSession session) {
 		String userType = (String) session.getAttribute("usertype");
 		int userId=	(int) session.getAttribute("userid");
+		int file=0;
 		// Data set on this List
 		List<List<Object>> finalList=new ArrayList<List<Object>>();
 		String filter = request.getParameter("filter");
 		Gson gsonObject=new Gson();
 		FilterRequest filterrequest = gsonObject.fromJson(filter, FilterRequest.class);
-		Integer file = 0;
 		Integer pageSize = Integer.parseInt(request.getParameter("length"));
 		Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize ;
 		filterrequest.setSearchString(request.getParameter("search[value]"));
 		log.info("pageSize"+pageSize+"-----------pageNo---"+pageNo);
-		try {
+		try{
 			log.info("request send to the filter api ="+filterrequest);
-			Object response = feignCleintImplementation.auditManagementFeign(filterrequest, pageNo, pageSize, file);
+			Object response = userProfileFeignImpl.viewVisaRequest(filterrequest, pageNo, pageSize, file);
 			log.info("response in datatable"+response);
 			Gson gson= new Gson(); 
 			String apiResponse = gson.toJson(response);
-			auditPaginationModel = gson.fromJson(apiResponse, AuditPaginationModel.class);
-			List<AuditContentModel> paginationContentList = auditPaginationModel.getContent();
-			if(paginationContentList.isEmpty()) {
+			visaContentPaginationModel = gson.fromJson(apiResponse, VisaContentPaginationModel.class);
+			List<VisaContentModel> paginationContentList = visaContentPaginationModel.getContent();
+			if(paginationContentList.isEmpty()){
 				datatableResponseModel.setData(Collections.emptyList());
+				
 			}else {
-				for(AuditContentModel dataInsideList : paginationContentList) 
+				for(VisaContentModel dataInsideList : paginationContentList) 
 				{
-				  String id = String.valueOf(dataInsideList.getId());	
-				  String createdOn = dataInsideList.getCreatedOn();
-				 // String modifiedOn = dataInsideList.getModifiedOn();
-				  String txnId = dataInsideList.getTxnId();
-				  String getuserId = String.valueOf(dataInsideList.getUserId());
-				  String userName = dataInsideList.getUserName();
-				  String userTypeName = dataInsideList.getUserType();
-				  String roleType = dataInsideList.getRoleType();
-				  String featureName = dataInsideList.getFeatureName();
-				  String subFeature = dataInsideList.getSubFeature();
-				   String userStatus = (String) session.getAttribute("userStatus");
-				   String action=iconState.auditManagementIcons(userStatus,getuserId,id);		
-				   Object[] finalData={createdOn,txnId,userName,userTypeName,roleType,featureName,subFeature,action}; 
+				   String id= String.valueOf(dataInsideList.getId());	
+				   String createdOn= dataInsideList.getCreatedOn();
+				   String modifiedOn = dataInsideList.getModifiedOn();
+				   String visaTypeInterp = dataInsideList.getVisaTypeInterp();
+				   String visaNumber = dataInsideList.getVisaNumber();
+				   String visaFileName = dataInsideList.getVisaFileName();
+				   String visaExpiryDate = dataInsideList.getVisaExpiryDate();
+				   String stateInterp = (String) dataInsideList.getStateInterp();
+				   String Status = String.valueOf(dataInsideList.getStatus());
+				   String userStatus = (String) session.getAttribute("userStatus");	  
+				   String action=iconState.visaUpdateAdminIcons(Status,id);			   
+				   Object[] finalData={createdOn,modifiedOn,visaTypeInterp,visaNumber,visaFileName,visaExpiryDate,stateInterp,action}; 
 				   List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
-				   finalList.add(finalDataList);
-				   datatableResponseModel.setData(finalList);	
+					finalList.add(finalDataList);
+					datatableResponseModel.setData(finalList);	
 			}
-			}
-			//data set on ModelClass
-			datatableResponseModel.setRecordsTotal(auditPaginationModel.getNumberOfElements());
-			datatableResponseModel.setRecordsFiltered(auditPaginationModel.getTotalElements());
-			return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK); 
 			
-		}catch(Exception e) {
+			}
+			datatableResponseModel.setRecordsTotal(visaContentPaginationModel.getNumberOfElements());
+			datatableResponseModel.setRecordsFiltered(visaContentPaginationModel.getTotalElements());
+			return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK); 
+		}catch (Exception e) {
 			datatableResponseModel.setRecordsTotal(null);
 			datatableResponseModel.setRecordsFiltered(null);
 			datatableResponseModel.setData(Collections.emptyList());
 			log.error(e.getMessage(),e);
 			return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK); 
 		}
+		
 	}
 	
-	
-	@PostMapping("audit/pageRendering")
-	public ResponseEntity<?> pageRendering(@RequestParam(name="type",defaultValue = "Config",required = false) String role,HttpSession session){
+	@PostMapping("visaUpdatedata/pageRendering")
+	public ResponseEntity<?> pageRendering(HttpSession session){
 
 		String userType = (String) session.getAttribute("usertype");
 		String userStatus = (String) session.getAttribute("userStatus");
@@ -121,7 +121,7 @@ public class AuditDatatableController {
 		InputFields inputFields = new InputFields();
 		InputFields dateRelatedFields;
 		
-		pageElement.setPageTitle("Audit Management");
+		pageElement.setPageTitle(Translator.toLocale("sidebar.Update_Visa"));
 		
 		List<Button> buttonList = new ArrayList<>();
 		List<InputFields> dropdownList = new ArrayList<>();
@@ -131,7 +131,7 @@ public class AuditDatatableController {
 			log.info("session value user Type=="+session.getAttribute("usertype"));
 			
 			String[] names = { "HeaderButton", Translator.toLocale("button.addCurrency"), "AddCurrencyAddress()", "btnLink",
-					"FilterButton", Translator.toLocale("button.filter"),"auditManagementDatatable(" + ConfigParameters.languageParam + ")", "submitFilter" };
+					"FilterButton", Translator.toLocale("button.filter"),"DataTable(" + ConfigParameters.languageParam + ")", "submitFilter" };
 			for(int i=0; i< names.length ; i++) {
 				button = new Button();
 				button.setType(names[i]);
@@ -146,24 +146,25 @@ public class AuditDatatableController {
 			pageElement.setButtonList(buttonList);
 			
 		
-		  //Dropdown items 
-			String[] selectParam={"select","User Type","userType","","select","Role Type","roleType","","select","Feature","feature",""}; 
-		  for(int i=0; i<selectParam.length; i++) { 
-				inputFields= new InputFields();
-		  inputFields.setType(selectParam[i]); 
-		  i++;
-		  inputFields.setTitle(selectParam[i]);
-		  i++; 
-		  inputFields.setId(selectParam[i]);
-		  i++; 
-		  inputFields.setClassName(selectParam[i]);
-		  dropdownList.add(inputFields);
-		  } 
-		pageElement.setDropdownList(dropdownList);
+		
+			//Dropdown items 
+			  String[] selectParam={"select",Translator.toLocale("input.Status"),"status","",}; 
+			  for(int i=0; i<selectParam.length; i++) { 
+					inputFields= new InputFields();
+			  inputFields.setType(selectParam[i]); 
+			  i++;
+			  inputFields.setTitle(selectParam[i]);
+			  i++; 
+			  inputFields.setId(selectParam[i]);
+			  i++; 
+			  inputFields.setClassName(selectParam[i]);
+			  dropdownList.add(inputFields);
+			  } 
+			pageElement.setDropdownList(dropdownList);
 		 
 			
 			//input type date list		
-			String[] dateParam= {"date","Start Date","startDate","","date","End Date","endDate","","text","Transaction ID","transactionID","","text","User Name","userName",""};
+			String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate",""};
 			for(int i=0; i< dateParam.length; i++) {
 				dateRelatedFields= new InputFields();
 				dateRelatedFields.setType(dateParam[i]);
@@ -176,13 +177,10 @@ public class AuditDatatableController {
 				inputTypeDateList.add(dateRelatedFields);
 			}
 			
-			
 			pageElement.setInputTypeDateList(inputTypeDateList);
 			pageElement.setUserStatus(userStatus);
 			return new ResponseEntity<>(pageElement, HttpStatus.OK); 
 		
 		
 	}
-	
-	
 }

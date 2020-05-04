@@ -483,6 +483,16 @@ public class DatatableHeaders {
 				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
 			}
 			
+			//Visa Headers
+			else if("adminVisaHeaders".equals(role)) {
+				
+				String[] headers = {"table.creationDate","table.lastupdatedate","table.visaType","input.VisaNumber","table.fileName","table.visaExpiry", "table.status","table.action"};	
+				for(String header : headers) {
+					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
+				}
+				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);	
+			}
+			
 			//DEFAULT PORTION  
 			else {
 				String[] headers = {"table.date","table.transactionID","table.fileName","table.status","table.action"};    

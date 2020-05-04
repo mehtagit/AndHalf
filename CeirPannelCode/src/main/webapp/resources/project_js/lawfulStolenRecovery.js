@@ -38,12 +38,12 @@ $('.datepicker').on('mousedown',function(event){
 var userType = $("body").attr("data-roleType");
 var sourceType = localStorage.getItem("sourceType");
 
-function filterStolen(){
-
+function filterStolen(ss,sourceTypeFiler){
+	console.log(" ****** sourceType ="+sourceTypeFiler);
 	if(userType=="Lawful Agency"){
-		Datatable('./headers?type=lawfulStolenHeaders','./stolenData?featureId='+featureId)
+		Datatable('./headers?type=lawfulStolenHeaders','./stolenData?featureId='+featureId,sourceTypeFiler)
 	}else if(userType =="CEIRAdmin"){
-		Datatable('./headers?type=lawfulStolenHeaders','./stolenData?featureId='+featureId)
+		Datatable('./headers?type=lawfulStolenHeaders','./stolenData?featureId='+featureId,sourceTypeFiler)
 	}
 	localStorage.removeItem('sourceType');
 }
@@ -51,19 +51,31 @@ function filterStolen(){
 
 
 
-function Datatable(url,DataUrl){
+function Datatable(url,DataUrl,sourceTypeFiler){
+	console.log(" == sourceType ="+sourceTypeFiler);
+	var requestType='';
+	var userType=$("body").attr("data-roleType");
+	if (sourceTypeFiler=="filter")
+		{
+		
+		requestType = parseInt($('#requestType').val())
+		}
+	else{
+		requestType = parseInt($("body").attr("data-requestType"));
+	  }
+	console.log("=== requestType======"+requestType)
 	var filterRequest={
 			"endDate":$('#endDate').val(),
 			"startDate":$('#startDate').val(),
 			"txnId":$('#transactionID').val(),
 			"consignmentStatus":parseInt($('#status').val()),
-			"requestType":parseInt($('#requestType').val()),
+			"requestType":requestType ,
 			"sourceType":parseInt($('#sourceStatus').val()),
 			"roleType": roleType,
 			"userId": userId,
 			"featureId":featureId,
 			"userTypeId": parseInt($("body").attr("data-userTypeID")),
-			"userType":$("body").attr("data-roleType"),
+			"userType":userType ,
 	}
 
 	
