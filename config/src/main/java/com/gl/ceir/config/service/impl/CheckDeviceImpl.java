@@ -1,22 +1,64 @@
 package com.gl.ceir.config.service.impl;
+import java.util.Objects;
 
-import org.springframework.http.converter.json.MappingJacksonValue;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
+import com.gl.ceir.config.feign.CheckDeviceFeign;
 import com.gl.ceir.config.model.CheckDevice;
 import com.gl.ceir.config.model.CheckDeviceReponse;
+import com.gl.ceir.config.model.CheckImeiResponse;
 import com.gl.ceir.config.model.GenricResponse;
+import com.gl.ceir.config.model.ImeiValidate;
 @Service
 public class CheckDeviceImpl {
 
+	@Autowired
+	CheckDeviceFeign checkDeviceFeign;
+	
+	private static final Logger logger = LogManager.getLogger(CheckDeviceImpl.class);
+	
 	public GenricResponse checkDevices( CheckDevice checkDevice) {
-		   CheckDeviceReponse checkDeviceResponse=new CheckDeviceReponse();
-	        checkDeviceResponse.setBrandName("Redmi");
-	        checkDeviceResponse.setModelName("Ac11");
-	        checkDeviceResponse.setTacNumber("476433753");
-	        Object data=checkDeviceResponse;
-	        GenricResponse response=new GenricResponse(200,"The IMEI number is valid","",data);
-	        return response;
+		logger.info("inside check device and daa given: "+checkDevice);
+		    ImeiValidate imeiValidate=new ImeiValidate("CheckImei",checkDevice.getDeviceIdType(),
+	        		"default",checkDevice.getDeviceId());
+	        try {
+	        	logger.info("now going to call check imei api");
+		        CheckImeiResponse resp=checkDeviceFeign.checkImei(imeiValidate);
+		        if(Objects.nonNull(resp)) {
+		        	logger.info("response got : "+resp);
+		        	if("Pass".equalsIgnoreCase(resp.getStatus()))
+		        	{
+		        		logger.info("imei found so calling imei data api");
+		        		CheckDeviceReponse data=checkDeviceFeign.imeiValues(checkDevice.getDeviceId());
+		        		logger.info("imei data api called");
+		    	        GenricResponse response=new GenricResponse(200,resp.getStatus(),"",data);
+		    	        return response;
+		        	}
+		        	else {
+				        GenricResponse response=new GenricResponse(409,resp.getErrorMessage(),"");
+				        
+				        return response;
+		        		
+		        	}
+		        }
+		        else {
+			        GenricResponse response=new GenricResponse(500,"Oops Somthing wrong happened","");
+			        
+			        return response;
+		        	
+		        }
+	        }
+	        catch(Exception e)
+	        {
+	        	logger.info("error occurs");
+	        	logger.info(e.toString());
+		        GenricResponse response=new GenricResponse(500,"Oops Somthing wrong happened","");
+		        return response;
+
+	        }
+
 	}
 }
