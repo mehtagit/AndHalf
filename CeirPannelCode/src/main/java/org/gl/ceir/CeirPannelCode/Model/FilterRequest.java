@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class FilterRequest {
-	public String startDate,endDate,createdOn,modifiedOn,roleType,userType,txnId,searchString,grievanceId,tag,remarks,deviceId,nid,childTag,field,interp,tagId,value,displayName,description,address,featureName,subFeatureName,userName,date,fileName,invoiceNumber,suplierName,supplierId,stateInterp,alertId,remark,email,phoneNo,username,tac,userDisplayName,filterUserName,FilterUserType,raisedBy;
+	public String startDate,endDate,createdOn,modifiedOn,roleType,userType,txnId,searchString,grievanceId,tag,remarks,deviceId,nid,childTag,field,interp,tagId,value,displayName,description,address,featureName,subFeatureName,userName,date,fileName,invoiceNumber,suplierName,supplierId,stateInterp,alertId,remark,email,phoneNo,username,tac,userDisplayName,filterUserName,FilterUserType,raisedBy,filteredUserType;
 	private Integer pageNo, pageSize,userId,taxPaidStatus,consignmentStatus,featureId,userTypeId,fileStatus,requestType,sourceType,grievanceStatus,userRoleTypeId,status,asType,serviceDump,fileType,action,operatorTypeId,channel,type,deviceIdType,parentValue,id,port,currency,quantity,stockStatus,feature,period,year;
 	private Double dollar,riel;
 	private int roleTypeId;
@@ -248,6 +248,12 @@ public class FilterRequest {
 	}
 	public void setRaisedBy(String raisedBy) {
 		this.raisedBy = raisedBy;
+	}
+	public String getFilteredUserType() {
+		return filteredUserType;
+	}
+	public void setFilteredUserType(String filteredUserType) {
+		this.filteredUserType = filteredUserType;
 	}
 	public Integer getPageNo() {
 		return pageNo;
@@ -542,6 +548,8 @@ public class FilterRequest {
 		builder.append(FilterUserType);
 		builder.append(", raisedBy=");
 		builder.append(raisedBy);
+		builder.append(", filteredUserType=");
+		builder.append(filteredUserType);
 		builder.append(", pageNo=");
 		builder.append(pageNo);
 		builder.append(", pageSize=");
@@ -615,6 +623,7 @@ public class FilterRequest {
 		builder.append("]");
 		return builder.toString();
 	}
+	
 	
 	
 }

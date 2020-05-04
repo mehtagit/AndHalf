@@ -360,7 +360,9 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 				"featureId":featureId,
 				"userTypeId":$("body").attr("data-userTypeID"),
 				"txnId":txn,
-				"consignmentStatus":parseInt($('#StockStatus').val())
+				"consignmentStatus":parseInt($('#StockStatus').val()),
+				"displayName" : $('#name').val(),
+				"filteredUserType" : $('#userType').val()
 		}
 		if(lang=='km'){
 			var langFile='./resources/i18n/khmer_datatable.json';
@@ -461,7 +463,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 								"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
 
 								"<select id="+dropdown[i].id+" class='select-wrapper select2  initialized'>"+
-								"<option>"+dropdown[i].title+
+								"<option value=null disabled selected>"+dropdown[i].title+
 								"</option>"+
 								"</select>"+
 								"</div>"+
@@ -594,6 +596,13 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 				$('<option>').val(data[i].state).text(data[i].interp)
 				.appendTo('#StockStatus');
 
+			}
+		});
+		
+		$.getJSON('./registrationUserType', function(data) {
+			for (i = 0; i < data.length; i++) {
+				$('<option>').val(data[i].id).text(data[i].usertypeName)
+				.appendTo('#userType');
 			}
 		});
 	}
@@ -800,3 +809,50 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 	    //ev.preventDefault(); //works as well
 
 	});
+	 function historyRecord(txnID){
+			console.log("txn id=="+txnID)
+			$("#tableOnModal").openModal({dismissible:false});
+			 var filter =[];
+			 var formData= new FormData();
+			 var filterRequest={
+					"tableName": "stock_mgmt_aud",
+					"dbName" : "ceirconfig",
+					"txnId":txnID
+			}
+			formData.append("filter",JSON.stringify(filterRequest));	
+			if(lang=='km'){
+				var langFile='../resources/i18n/khmer_datatable.json';
+			}
+
+			$.ajax({
+				url: 'Consignment/consignment-history',
+				type: 'POST',
+				data: formData,
+				processData: false,
+				contentType: false,
+				success: function(result){
+					var dataObject = eval(result);
+					$('#data-table-history').dataTable({
+						 "order" : [[1, "asc"]],
+						 destroy:true,
+						"serverSide": false,
+						 orderCellsTop : true,
+						"ordering" : false,
+						"bPaginate" : true,
+						"bFilter" : true,
+						"scrollX": true,
+						"bInfo" : true,
+						"bSearchable" : true,
+						 "data": dataObject.data,
+						 "columns": dataObject.columns
+					
+				    });
+					$('div#initialloader').delay(300).fadeOut('slow');
+			}
+				
+	});
+		
+			$('.datepicker').on('mousedown',function(event){
+			event.preventDefault();
+		});
+	}

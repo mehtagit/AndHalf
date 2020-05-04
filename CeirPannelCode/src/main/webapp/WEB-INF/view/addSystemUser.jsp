@@ -164,8 +164,8 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}" data-u
                 <div class="container" style="padding-bottom: 70px;" >
                     <div class="section">
                         <div class="row card-panel  responsive-page" id="endUserRaiseGrievance" style="display: none">
-                            <h6 class="fixPage-modal-header "><spring:message code="modal.header.reportGrievance" /></h6>
-                            <form onsubmit="return saveaAonymousGrievance()" method="POST" enctype="multipart/form-data" id="saveGrievance">
+                            <h6 class="fixPage-modal-header "><spring:message code="table.registerUser" /></h6>
+                            <form onsubmit="return SaveSystemUser()" method="POST" enctype="multipart/form-data" id="saveGrievance">
                              <input type="text" id="pageTypeValue" value="${reportType}" style="display: none;">
                                 <div class="col s12 m12 l12">
                                     <div class="row">
@@ -208,88 +208,44 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}" data-u
                                             <label for="emailID"><spring:message code="input.EmailID" /> <span class="star"> *</span></label>
                                         </div>
 
-                                        <div class="col s12 m6 selectDropdwn">
-                                            <label for="endUsercategory"><spring:message code="input.Category" /> <span class="star">*</span></label>
+                                       	<div class="input-field col s12 m6" style="margin-top: 23px;">
+                                            <input type="text" id="password" name="password"
+                                               pattern="[a-zA-Z]{0,20}" required maxlength="18" />
+                                            <label for="password"><spring:message code="registration.password" /><span class="star"> *</span></label>
+                                        </div>
+                                        
+                                        <div class="input-field col s12 m6" style="margin-top: 23px;">
+                                            <input type="text" id="confirmPassword" name="confirmPassword"
+                                               pattern="[a-zA-Z]{0,20}" required maxlength="18" />
+                                            <label for="confirmPassword"><spring:message code="registration.retypepassword"/><span class="star"> *</span></label>
+                                        </div>
+                                        
+                                         <div class="col s12 m6 selectDropdwn">
+                                            <label for="userType"><spring:message code="table.userType" /> <span class="star">*</span></label>
                                             <select class="browser-default" 
 											title="<spring:message code="" />" oninput="setCustomValidity('')"  
 										            oninput="InvalidMsg(this,'input','<spring:message code="validation.selectFieldMsg" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.selectFieldMsg" />');"
-										  required   id="endUsercategory">
-                                                <option value="" disabled selected><spring:message code="input.SelectCategory" /></option>
+										  required   id="userType">
+                                                <option value="" disabled selected><spring:message code="select.usertype" /></option>
                                             </select>
                                         </div>
-
-                                        
-                                        <div class="input-field col s12 m6" style="margin-top: 23px;">
-                                            <input type="text" id="endUsertransactionId" name="transactionId"
-                                                pattern="[A-Z0-9]{18,18}"
-      										 oninput="InvalidMsg(this,'input','<spring:message code="validation.18digit" />');"
-													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.18digit" />');"
-												maxlength="18" />
-                                            <label for="endUsertransactionId"><spring:message code="input.TransactionID1" /></label>
-                                        </div>
-                                        
                                         
                                         <div class="input-field col s12 m6">
-                                            <textarea id="endUserRemark" 
+                                            <textarea id="userRemark" 
 										  oninput="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
 													
 												  required   maxlength="200" class="materialize-textarea" style= "min-height: 8rem;"></textarea>
-                                            <label for="endUserRemark"><spring:message code="input.Remark" /><span
+                                            <label for="userRemark"><spring:message code="input.Remark" /><span
                                                     class="star">*</span></label>
                                         </div>
 
                                         
 
                                     </div>
-									<div id="endUsermainDiv" class="endUsermainDiv">
-									<div id="endUserfilediv" class="endUserfileDiv">	
-                                    <div class="row">
-                                        <div class="col s12 m6">
-                                            <label for="endUserdocTypetag1"><spring:message code="input.documenttype" /></label>
-                                            
-                                            <select class="browser-default" id="endUserdocTypetag1"
-                                                     oninput="InvalidMsg(this,'input','<spring:message code="validation.18digit" />');"
-													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.18digit" />');"
-                                             onchange="enableSelectFile()">
-                                            
-                                                <option value="" disabled selected><spring:message code="select.documenttype" /></option>
-                                            </select>
-                                        </div>
-
-                                        
-                                        <div class="file-field col s12 m6">
-                                            <h6 class="upload-file-label" id="endUserFileLabel"><spring:message code="modal.UploadSupporting" />
-                                            </h6>
-                                            <div class="btn">
-                                                <span><spring:message code="input.selectfile" /></span>
-                                                <input id="endUserdocTypeFile1" type="file"   onchange="enableEndUserAddMore()" disabled="disabled"
- 												
-						oninput="InvalidMsg(this,'input','<spring:message code="validation.NoChosen" />');"
-													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.NoChosen" />');"
-						 name="files[]" id="filer_input"
-                                                    multiple="multiple" />
-                                            </div>
-                                            <div class="file-path-wrapper">
-                                                <input class="file-path validate" type="text"
-                                                    placeholder="<spring:message code="input.selectfile" />">
-                                            </div>
-                                        </div>
-
-                                        <div class="input_fields_wrap"></div>
-
-                                      
-                                       
-                                    </div>
-									</div>
-									</div>	
-
-                                      <div class="col s12 m6 right">
-                                            <button class="btn right endUser_add_field_button" disabled="disabled"><span
-                                                    style="font-size: 20px;">+</span><spring:message code="input.addmorefile" /></button>
-                                        </div>
-                                         <p><spring:message code="input.requiredfields" /> <span class="star">*</span></p>
+										
+							    <p><spring:message code="input.requiredfields" /> <span class="star">*</span></p>
                                     <div class="row" style="margin-top: 30px;">
                                         <div class="input-field col s12 m12 l12 center">
                                             <button class="btn" id="saveAnonymousGrieavance" type="submit"><spring:message code="button.submit" /></button>
@@ -309,20 +265,11 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}" data-u
             </section>
             <!-- END CONTENT -->
 
-
-
- 
-    <!-- END FOOTER -->
-
-    <!-- Grievance Modal start   -->
-
-    <!-- Grievance Modal End -->
-
-    <!-- Otp Modal start   -->
+	
+	
 
 
 
-    <!-- Otp Modal End -->
 
     <!-- cancel Modal start   -->
 
@@ -335,7 +282,7 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}" data-u
             <div class="row">
                 <div class="input-field col s12 center">
                     <div class="input-field col s12 center">
-                        <a href="./grievanceManagement" class="btn"><spring:message code="modal.yes" /></a>
+                        <a href="./userManagement" class="btn"><spring:message code="modal.yes" /></a>
                         <button class="btn" onclick="closeCancelPopUp()" style="margin-left: 10px;"><spring:message code="modal.no" /></button>
                     </div>
                 </div>
@@ -379,164 +326,10 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}" data-u
     </div>
     <!-- cancel Modal End -->
 
-	<div id="replyModal" class="full-screen-modal modal" >
-        <button class="modal-close btn-flat right" onclick="cleanReplyPopUp()">&times;</button>
-             <h6 class="modal-header"><spring:message code="input.reply" /></h6>
-             <div class="modal-content">
-             <form id="replymessageForm" onsubmit="return saveGrievanceReply()" method="POST" enctype="multipart/form-data" >
-            <div class="row">
-                <div class="col s12 m12">
-                    <h6 style="font-weight: bold;"><spring:message code="input.grievID" /><span id="grievanceIdToSave"></span></h6>
-                    <span id="grievanceTxnId" style="display: none;"></span>
-                    <hr>
-                </div>
-
-                <div class="col s12 m12" id="viewPreviousMessage">
-                   <!--  <h6 style="float: left; font-weight: bold;" id="mesageUserType"> </h6>
-                    <h6 style="float: left;"></h6>
-                        <span style="float:right;"></span> -->
-                </div>
-               <input type="text" id="grievanceSelectedCategory" style="display: none">
- 
-               <div class="col s12 m12">
-                  <label for="replyRemark" style="margin-top: 7px"><spring:message code="input.remarks" /><span class="star">*</span></label>
-                    <textarea id="replyRemark" class="materialize-textarea" 
-                    oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-                    title= "<spring:message code="validation.200characters" />" required maxlength="200" placeholder=""></textarea>
-                    <input type="text" style="display: none" id="grievanceUserid">
-                    <!-- <h6 style="color: #000;">Upload Supporting Document </h6> -->
-                </div>
-               <!--   <div class="file-field col s12 m12">
-                    <div class="btn"><span>Select File</span><input id="replyFile" type="file" accept=".csv" ></div>
-                    <div class="file-path-wrapper"><input class="file-path validate" type="text"
-                            placeholder="">
-                        <div>
-                            <p id="myFiles"></p>
-                        </div>
-                    </div>
-                </div> -->
-                
- <div id="mainDiv" class="mainDiv">
-<div id="filediv" class="fileDiv">
-<div class="row">
-
-<div class="col s12 m6 l6" style="margin-top: 8px;">
-<label for="Category"><spring:message code="input.documenttype" /></label>
-<select class="browser-default" id="docTypetag1" onchange="enableReplySelectFile()" >
-<option value="" disabled selected><spring:message code="select.documenttype" /> </option>
-
-</select>
-
-</div>
-
-<div class="file-field col s12 m6">
-<h6 id="docTypeFile1Label" style="color: #000;"><spring:message code="input.supportingdocument" /></h6>
-<div class="btn">
-<span><spring:message code="input.selectfile" /></span>
-<input type="file" name="files[]" id="docTypeFile1" disabled="disabled" onchange="enableEndUserReplyAddMore()" 
-oninput="InvalidMsg(this,'input','<spring:message code="validation.NoChosen" />');"
-oninvalid="InvalidMsg(this,'input','<spring:message code="validation.NoChosen" />');"
- multiple>
-
-</div>
-<div class="file-path-wrapper">
-<input class="file-path validate" type="text" multiple
-placeholder="<spring:message code="input.selectfile" />">
-<div>
-<p id="myFiles"></p>
-</div>
-</div>
-</div>
-
-</div>
 
 
-</div>
-
-</div>
-<div class="col s12 m6 right">
-<button class="btn right add_field_button" disabled="disabled"><span
-style="font-size: 20px;">+</span> <spring:message code="input.addmorefile" /></button>
-</div>
-              <div class="col s12 m12">  <p>
-              <p id="closeTicketCheckbox" style="float: left; display: none;">
-                        <label>
-                            <span><spring:message code="modal.message.griev.closeticket" /></span>
-                            <input type="checkbox" id="closeTicketCheck" />
-                        </label>
-                    </p> <br>
-				<!-- <a href="./Consignment/sampleFileDownload/filetype=sample">Download Sample Format</a><br> -->
-			
-
-			<span> <spring:message code="input.requiredfields" /> <span class="star">*</span></span>
-			
-                </div>
-                <div class="col s12 m12 center">
-                 <p id="closeTicketCheckbox" style="float: left; display: none;">
-                        <label>
-                            <span><spring:message code="modal.message.griev.closeticket" /></span>
-                            <input type="checkbox" id="closeTicketCheck" />
-                        </label>
-                    </p>
-                    <button class="right btn" type="submit"><spring:message code="input.reply" /></button>
-                </div>
-            </div>
-            </form>
-        </div>
-    </div>
-
- <div id="replyMsg" class="full-screen-modal modal">
-    <h6 class="modal-header"><spring:message code="modal.header.grievancereply" /></h6>
-    <div class="modal-content">
-        
-        <div class="row">
-            <h6 id="showReplyResponse"><spring:message code="modal.message.grievance.reply" /><span id="replyGrievanceId"> </span> <spring:message code="modal.issuccessful" /></h6>
-        </div>
-        <div class="row">
-            <div class="input-field col s12 center">
-                <div class="input-field col s12 center">
-                    <a href="./redirectToHomePage" class="modal-close btn"><spring:message code="modal.ok" /></a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-  <div id="errorModal" class=" full-screen-modal modal">
-         <h6 class="modal-header"><spring:message code="input.CheckStock" /></h6>
-        <div class="modal-content">
-           
-            <div class="row">
-                <h6 id=""><spring:message code="input.notTransactionId" />
-                </h6>
-            </div>
-            <div class="row">
-                <div class="input-field col s12 center">
-                    <div class="input-field col s12 center">
-                        <!-- <a href="homePage" class="btn">Yes</a> -->
-                        <button class="modal-close btn" style="margin-left: 10px;"><spring:message code="modal.ok" /></button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <div id="manageAccount" class=" full-screen-modal modal">
-<button class="modal-close btn-flat right" data-dismiss="modal">&times;</button>
-<h6 class="modal-header"><spring:message code="modal.header.grievancehistory" /></h6>
-<div class="modal-content">
-<div id="live-chat">
-<div class="chat">
-<div class="chat-history">
-<div class="chat-message clearfix" id="chatMsg">
-
-</div> <!-- end chat-message -->
 
 
-</div>
-</div>
-</div>
-</div>
-</div> 
 <div id="fileFormateModal" class="modal">
 		<h6 class="modal-header"><spring:message code="fileValidationModalHeader" /></h6>
 		<div class="modal-content">
@@ -616,7 +409,7 @@ var path="${context}";
     <script type="text/javascript"
 		src="${context}/resources/project_js/grievanceManagement.js"></script>
     <script type="text/javascript"
-		src="${context}/resources/project_js/CCRaiseGrievance.js"></script>
+		src="${context}/resources/project_js/addSystemUser.js"></script>
 	
 			<script type="text/javascript"
 		src="${context}/resources/project_js/_dateFunction.js" async></script>

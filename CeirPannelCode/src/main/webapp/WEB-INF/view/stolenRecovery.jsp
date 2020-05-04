@@ -76,7 +76,7 @@
 	data-userID="${userid}" data-operatorTypeId="${operatorTypeId}"
 	data-selected-roleType="${stolenselectedUserTypeId}"
 	data-stolenselected-roleType="${stolenselectedUserTypeId}"
-	data-OperatorTypeId="${operatorTypeId}"		
+	data-OperatorTypeId="${operatorTypeId}" data-requestType="${requestType}"		
 		 session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}">
 
 
@@ -1584,7 +1584,21 @@ type="submit" ><spring:message code="button.update" /></button>
 			</div>
 		</div>
 	</div>
+<div id="tableOnModal" class="modal">
+		<button type="button"
+			class=" modal-action modal-close waves-effect waves-green btn-flat right"
+			data-dismiss="modal">&times;</button>
+		<h6 class="modal-header"><spring:message code="modal.header.viewHistory" /></h6>
+		
+		<div class="modal-content">
 
+			<div class="row">
+				<table class="responsive-table striped display"
+					id="data-table-history2" cellspacing="0">
+				</table>
+			</div>
+		</div>
+	</div>
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
 

@@ -175,6 +175,7 @@ function deviceTable(){
 }
 
 function notificationTable(){
+	
 	var filterRequest={
 			"imei" : $("body").attr("data-imei"),
 			"msisdn" : $("body").attr("data-msisdn"),
@@ -489,7 +490,11 @@ function setStakeHolderData(name,date,featureId,status,txnId,imei)
 	    
          else if(featureId=="36")
         	 {
-        	 
+        	 $('#globalBlackListTableModal').openModal({
+  	    	   dismissible:false
+  	       });
+
+        	 globalBlackListDataTable(data.data);
         	 }
 		}
 	
@@ -564,3 +569,29 @@ $('#viewStockModal').closeModal();
 
 }
 
+
+function globalBlackListDataTable(data){
+	var tableData=[];
+
+	tableData.push(data);
+
+		$('#globalBlackListDataTable').DataTable({
+			destroy:true,
+			searching: false,
+			scrollCollapse : true,
+			dataType : 'json',
+			ordering : false,
+			bPaginate : false,
+			"data":tableData,
+			bInfo : true,
+			"columns" : [{
+				"data" : "createdOn","defaultContent": ""
+			}, {
+				"data" : "blackliststatus", "defaultContent": ""
+			},
+			{
+				"data" : "greyliststatus","defaultContent": ""
+			}]
+			
+		});
+	}

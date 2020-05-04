@@ -387,6 +387,12 @@ consignment.setUserId(Long.valueOf(userId));
 consignment.setCurrency(currency);
 consignment.setPortAddress(portAddress);
 consignment.setTotalPrice(totalPrice);
+consignment.setFeatureId(featureId);
+consignment.setUserType(userType);
+consignment.setUserTypeId(userTypeId);
+consignment.setPortAddress(portAddress);
+consignment.setDeviceQuantity(deviceQuantity);
+consignment.setRoleType(roleType);
 }
 
 log.info("Request passed to the update register consignment="+consignment.toString());
