@@ -147,12 +147,12 @@ data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeI
 
                             <div class="input-field col s12 m3 l3">
                               <input type="text" id="brand" name="brand" value="" disabled>
-                              <label for="brand" >Brand</label>
+                              <label for="brand" >Brand Name</label>
                             </div>
 
                             <div class="input-field col s12 m3 l3">
                               <input type="text" id="modal" name="modal" value="" disabled>
-                              <label for="modal" >Model</label>
+                              <label for="modal" >Model Number</label>
                             </div>
                           </div>
                         </div>

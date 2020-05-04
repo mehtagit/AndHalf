@@ -265,35 +265,48 @@ populateCountries
 
 var userType = $("body").attr("data-roleType");
 var sourceType = localStorage.getItem("sourceType");
-function filterStolen(){
+function filterStolen(language,sourceTypeFilter){
 	var userTypeId = $("body").attr("data-userTypeID");
 	if(userType=="Operator" || userType=="Operation" ){
-		Datatable('./headers?type=blockUnblock','stolenData?featureId='+featureId+'&userTypeId='+userTypeId)
+		Datatable('./headers?type=blockUnblock','stolenData?featureId='+featureId+'&userTypeId='+userTypeId,sourceTypeFilter)
 	}else if(userType =="CEIRAdmin"){
-		Datatable('./headers?type=BlockUnblockCEIRAdmin','stolenData?featureId='+featureId+'&userTypeId='+userTypeId)
+		Datatable('./headers?type=BlockUnblockCEIRAdmin','stolenData?featureId='+featureId+'&userTypeId='+userTypeId,sourceTypeFilter)
 	}else if(sourceType !="viaExistingRecovery"){
-		Datatable('./headers?type=stolen','stolenData')
+		Datatable('./headers?type=stolen','stolenData',sourceTypeFilter)
 	}else if(sourceType =="viaExistingRecovery" ){
-		Datatable('./headers?type=stolenCheckHeaders', 'stolenData?sourceType=viaExistingRecovery')
+		Datatable('./headers?type=stolenCheckHeaders', 'stolenData?sourceType=viaExistingRecovery',sourceTypeFilter)
 	}
 	localStorage.removeItem('sourceType');
 }  
 
 
-function Datatable(url,dataUrl){
+function Datatable(url,dataUrl,sourceTypeFiler){
+	
+	console.log(" == sourceType ="+sourceTypeFiler);
+	var requestType='';
+	var userType=$("body").attr("data-roleType");
+	if (sourceTypeFiler=="filter")
+		{
+		
+		requestType = parseInt($('#requestType').val())
+		}
+	else{
+		requestType = parseInt($("body").attr("data-requestType"));
+	  }
+	console.log("=== requestType======"+requestType)
 	var txn= (txnIdValue == 'null' && transactionIDValue == undefined)? $('#transactionID').val() : transactionIDValue;
 	var filterRequest={
 			"endDate":$('#endDate').val(),
 			"startDate":$('#startDate').val(),
 			"txnId": txn,
 			"consignmentStatus":parseInt($('#status').val()),
-			"requestType":parseInt($('#requestType').val()),
+			"requestType":requestType,
 			"sourceType":parseInt($('#sourceStatus').val()),
 			"roleType": role,
 			"userId": userId,
 			"featureId":featureId,
 			"userTypeId": parseInt($("body").attr("data-userTypeID")),
-			"userType":$("body").attr("data-roleType"),
+			"userType":userType,
 			"operatorTypeId" : parseInt($('#operator').val())
 	}
 
