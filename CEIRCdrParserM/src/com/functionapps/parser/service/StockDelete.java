@@ -35,7 +35,7 @@ public class StockDelete {
 		logger.debug(stockMgmt);
 		
 		try{
-			List<ManagementTable> managementTables = getTableNameByUserType(usertypeName, stockMgmt.getRoleType());
+			List<ManagementTable> managementTables = getTableNameByUserType(stockMgmt.getUserType(), stockMgmt.getRoleType());
 			System.out.println(managementTables);
 			logger.debug(managementTables);
 
