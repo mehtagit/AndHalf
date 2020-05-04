@@ -1,7 +1,8 @@
 //var lang=$('#langlist').val() == 'km' ? 'km' : 'en';
 var tag;
 function changePassword(){
-	$("#changePassBtn").prop('disabled', true);
+	alert("hello");
+	$("#changePassForm #changePassBtn").prop('disabled', true);
 	var obj="";
 	$("#changePassword").each(function(key, val){
 		val = $(this);
@@ -52,10 +53,10 @@ function changePassword(){
 				});
 				
 			}
-			$("#changePassBtn").prop('disabled', false);
+			$("#changePassForm #changePassBtn").prop('disabled', false);
 		},  
 		error: function (xhr, ajaxOptions, thrownError) {
-			$("#changePassBtn").prop('disabled', false);
+			$("#changePassForm #changePassBtn").prop('disabled', false);
 		} 
 
 	});

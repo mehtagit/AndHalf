@@ -49,7 +49,6 @@
 	type="text/css" rel="stylesheet" media="screen,projection">
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
-
 <script>
 var contextpath = "${context}";
 <%
@@ -154,9 +153,9 @@ data-roleType="${usertype}" data-userTypeID="${usertypeId}"
 								</div>
 							</div>
 						</li>
-						<li><a href="javascript:void(0)"  
+<%-- 						<li><a href="javascript:void(0)"  
 							 style="color:rgba(0, 0, 0, 0.3);; cursor: pointer;"><spring:message
-									code="registration.home" /></a></li>
+									code="registration.home" /></a></li> --%>
 						<li class="profileInfo"><a
 							class="btn-flat dropdown-button waves-effect waves-light white-text profile-btn"
 							href="#" data-activates="profile-dropdown" style="height: 40px;"><i
@@ -394,7 +393,7 @@ data-roleType="${usertype}" data-userTypeID="${usertypeId}"
 			<spring:message code="registration.changepassword" />
 		</h6>
 		<div class="modal-content">
-			<form id="changePassForm" onsubmit="return changePassword()">
+			<form id="changePassForm" onsubmit="return changePassword();">
 				<div class="row">
 					<span style="text-align: center; color: red;" id="errorMsg"></span>
 					<div class="col s1">
@@ -464,9 +463,13 @@ oninvalid="InvalidMsg(this,'input','<spring:message code="validation.password" /
 				</div>
 				<div class="row" style="margin-top: 30px;">
 					<div class="input-field col s12 center">
-						<button class="btn" id="updateStatusBtn">
+						<%-- <button class="btn" type="submit" id="changePassBtn">
 							<spring:message code="button.submit" />
-						</button>
+						</button> --%>
+							<button  class="btn" id="changePassBtn" 
+							type="submit" style="margin-left: 10px;">
+									<spring:message code="button.submit" />
+								</button>
 						<button type="button" class="btn modal-close"
 							style="margin-left: 10px;">
 							<spring:message code="modal.cancel" />
