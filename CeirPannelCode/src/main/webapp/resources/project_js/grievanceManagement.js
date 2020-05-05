@@ -83,7 +83,7 @@ var featureId = 6;
 				}
 				localStorage.removeItem('grievancePageSource');
 				
-				var FilterUserType = $('#userType').val()==null || $('#userType').val()==undefined ? null : $("#userType option:selected").text();
+				var FilterUserType = $('#userType').val()=='-1' || $('#userType').val()==undefined ? null : $("#userType option:selected").text();
 				
 				
 				
@@ -202,7 +202,7 @@ var featureId = 6;
 										"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
 
 										"<select id="+dropdown[i].id+"  class='select-wrapper select2  initialized'>"+
-										"<option value='-1' disabled selected>"+dropdown[i].title+
+										"<option value='-1' selected>"+dropdown[i].title+
 										"</option>"+
 										"</select>"+
 										"</div>"+
@@ -369,7 +369,7 @@ var featureId = 6;
 						for(var i=0; i<data.length; ++i)
 						{
 
-							$("#viewPreviousMessage").append("<div class='chat-message-content clearfix'><h6 style='float: left; font-weight: bold;' class='grievance-reply-msg' id='mesageUserType'>" +data[i].userDisplayName+" : </h6><span style='float:right;'>" + data[i].modifiedOn + "</span><textarea class='materialize-textarea' style='min-height: 8rem'>" + data[i].reply + "</textarea></div>");
+							$("#viewPreviousMessage").append("<div class='chat-message-content clearfix'><h6 style='float: left; font-weight: bold;' class='grievance-reply-msg' id='mesageUserType'>" +data[i].userDisplayName+" : </h6><span style='float:right;'>" + data[i].modifiedOn + "</span><textarea class='materialize-textarea' readonly style='min-height: 8rem'>" + data[i].reply + "</textarea></div>");
 							for (var j=0 ; j<data[i].attachedFiles.length;j++)
 							{
 								if(data[i].attachedFiles[j].docType==null)

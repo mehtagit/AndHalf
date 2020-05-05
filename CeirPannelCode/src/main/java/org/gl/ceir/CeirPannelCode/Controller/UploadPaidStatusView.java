@@ -359,6 +359,8 @@ FeignCleintImplementation feignCleintImplementation;
 		String filter = request.getParameter("request");
 		//log.info("txnid+++++++++++"+request.getParameter("request[regularizeDeviceDbs][txnId]"));
 		Gson gson= new Gson(); 
+		  String txnNumber="A" + utildownload.getTxnId();	
+			log.info("Random transaction id number="+txnNumber);
 		log.info("before casting request in to pojo classs"+filter);
 		addMoreFileModel.setTag("system_upload_filepath");
 		urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
@@ -372,7 +374,7 @@ FeignCleintImplementation feignCleintImplementation;
 		log.info("device db size--"+endUservisaInfo.getVisaDb().size());
 		  for(int i =0; i<endUservisaInfo.getVisaDb().size();i++) {
 		  //regularizeDeviceDbs.getRegularizeDeviceDbs().get(i).setTxnId(txnNumber);
-		  endUservisaInfo.setTxnId(endUservisaInfo.getTxnId());
+		  endUservisaInfo.setTxnId(txnNumber);
 		 // endUservisaInfo.getRegularizeDeviceDbs().get(i).setTxnId(txnNumber);
 		  endUservisaInfo.getVisaDb().get(i).setVisaFileName((visaImage.getOriginalFilename()));
 		  log.info("file name to be set in varivable="+endUservisaInfo.getVisaDb().get(i).getVisaFileName());
@@ -391,7 +393,7 @@ FeignCleintImplementation feignCleintImplementation;
 		else {
 			try {
 				byte[] bytes = passportImage.getBytes();
-			String rootPath =urlToUpload.getValue()+endUservisaInfo.getTxnId()+"/"; 
+			String rootPath =urlToUpload.getValue()+txnNumber+"/"; 
 			File dir = new File(rootPath + File.separator);
 
 			if (!dir.exists()) dir.mkdirs();
@@ -424,7 +426,7 @@ FeignCleintImplementation feignCleintImplementation;
 			 */
 			
 
-String rootPath = urlToUpload.getValue()+endUservisaInfo.getTxnId()+"/";
+String rootPath = urlToUpload.getValue()+txnNumber+"/";
 File tmpDir = new File(rootPath+visaImage.getOriginalFilename());
 boolean exists = tmpDir.exists();
 if(exists) {
@@ -456,6 +458,7 @@ stream.close();
 		endUserVisaInfo=	uploadPaidStatusFeignClient.updateEndUSerVisaDetailsby(endUservisaInfo);
 		log.info("Response from fetchVisaDetailsbyPassport api== "+endUserVisaInfo);
 		log.info("---exit  point in update visa validity page");
+		endUserVisaInfo.setTxnId(txnNumber);
 		return endUserVisaInfo;
 	}
 	
@@ -605,7 +608,7 @@ stream.close();
 	  request,HttpSession session) {
 	  log.info("---entry point in update visa validity page");
 	  log.info("---request---"+request.getParameter("request"));
-	  
+
 	  String filter =request.getParameter("request");
 	  Gson gson= new Gson();
 	  log.info("before casting request in to pojo classs"+filter);
@@ -689,5 +692,15 @@ public ModelAndView viewDeviceInformation(@RequestParam(name="viewbyImei",requir
     
 	return modelAndView;
 }
+
+@PostMapping("approveVisaUpdateRequest") 
+public @ResponseBody GenricResponse approveVisaUpdateRequest (@RequestBody FilterRequest_UserPaidStatus filterRequestuserpaidStatus)  {
+	log.info("request send to the approveRejectDevice api="+filterRequestuserpaidStatus);
+	GenricResponse response= uploadPaidStatusFeignClient.approveRejectFeign(filterRequestuserpaidStatus);
+
+	log.info("response from currency api "+response);
+	return response;
+
+	}
 }
 

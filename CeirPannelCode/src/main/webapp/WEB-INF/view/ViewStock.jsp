@@ -606,7 +606,21 @@
 	</div>
 	<!-- Modal End -->
 	<!-- END MAIN -->
+<div id="tableOnModal" class="modal">
+		<button type="button"
+			class=" modal-action modal-close waves-effect waves-green btn-flat right"
+			data-dismiss="modal">&times;</button>
+		<h6 class="modal-header"><spring:message code="modal.header.viewHistory" /></h6>
+		
+		<div class="modal-content">
 
+			<div class="row">
+				<table class="responsive-table striped display"
+					id="data-table-history" cellspacing="0">
+				</table>
+			</div>
+		</div>
+	</div>
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
 

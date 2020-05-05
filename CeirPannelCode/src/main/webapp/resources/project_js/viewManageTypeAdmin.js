@@ -201,8 +201,7 @@ function pageRendering(){
 					$('#'+button[i].id).attr("onclick", button[i].buttonURL);
 				}
 			}
-	
-		
+			
 			$.getJSON('./getDropdownList/'+featureId+'/'+$("body").attr("data-userTypeID"), function(data) {
 
 				for (i = 0; i < data.length; i++) {
@@ -210,10 +209,22 @@ function pageRendering(){
 					.appendTo('#Status');
 				}
 			});
+			 
+			$.getJSON('./registrationUserType', function(data) {
+				for (i = 0; i < data.length; i++) {
+					$('<option>').val(data[i].id).text(data[i].usertypeName)
+					.appendTo('#userType');
+				}
+			});
+			
+			
 		}
 		
 	}); 
+	
+	
 }
+
 
 
 if (userType == "CEIRAdmin") {
@@ -840,3 +851,64 @@ $("input[type=file]").keypress(function(ev) {
     //ev.preventDefault(); //works as well
 
 });
+
+function historyRecord(txnID){
+	console.log("txn id=="+txnID)
+	$("#tableOnModal").openModal({dismissible:false});
+	 var filter =[];
+	 var formData= new FormData();
+	 var filterRequest={
+			 
+			 "columns": [
+				    "created_on","modified_on","txn_id","user_type","approve_status","trademark","product_name","model_number","manufacturer_country","frequency_range","tac","file_name",
+				    "remark",
+				    "id","rev","admin_approve_status","admin_remark","admin_user_id","admin_user_type","approve_disapprove_date","feature_id","country","manufacturer_id",
+				    "manufacturer_name","request_date", "user_id","delete_flag"
+				    ],
+			"tableName": "type_approved_db_aud",
+			"dbName" : "ceirconfig",
+			"txnId":txnID
+	}
+	formData.append("filter",JSON.stringify(filterRequest));	
+	if(lang=='km'){
+		var langFile='../resources/i18n/khmer_datatable.json';
+	}
+	console.log("22");
+	$.ajax({
+		url: 'Consignment/consignment-history',
+		type: 'POST',
+		data: formData,
+		processData: false,
+		contentType: false,
+		success: function(result){
+			var dataObject = eval(result);
+			//alert(JSON.stringify(dataObject.data))
+			$('#data-table-history').dataTable({
+				 "order" : [[1, "asc"]],
+				 destroy:true,
+				"serverSide": false,
+				 orderCellsTop : true,
+				"ordering" : false,
+				"bPaginate" : true,
+				"bFilter" : true,
+				"bInfo" : true,
+				"scrollX": true,
+				"bSearchable" : true,
+				 "data": dataObject.data,
+				 "columns": dataObject.columns
+			
+		    });
+			$('div#initialloader').delay(300).fadeOut('slow');
+	}
+		
+});
+
+	$('.datepicker').on('mousedown',function(event){
+	event.preventDefault();
+});
+
+	
+	
+	
+	
+}

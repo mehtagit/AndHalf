@@ -707,6 +707,10 @@ function  openCancelPopUp()
  $('#cancelMessage').openModal(); 
 }
 
+function  closeCancelPopUp()
+{
+ $('#cancelMessage').closeModal();
+}
 /* $( document ).ready(function() {
 	var ccc=addMoreFileCount();
 	alert(ccc);

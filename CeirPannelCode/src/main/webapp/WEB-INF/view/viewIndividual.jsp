@@ -205,6 +205,11 @@
                                     <label for="ploadedVatFile" class="active"><spring:message code="registration.uploadedVatFile"/> </label>
                                    <span> <a href="#" onclick="previewFile('${registration.vatFilePath}','${registration.vatFilename}')">Preview </a></span> 
                                 </div>
+                                
+                                 <div class="input-field col s12 m6">
+                                    <input type="text" name="approvedBy" id="approvedBy" value="${registration.user.approvedBy}" maxlength="16" placeholder="" disabled="">
+                                    <label for="approvedBy" class="active"><spring:message code="registration.approedBy" /> </label>
+                                </div>
                             </div>
                         </div>
 

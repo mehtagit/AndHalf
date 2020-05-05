@@ -203,8 +203,8 @@ public class RegistrationController {
 
 	@RequestMapping(value = "/registrationUserType",method = {RequestMethod.POST,RequestMethod.GET})
 	@ResponseBody  
-	public List<Usertype> userTypeDropdown(){ 
-		List<Usertype> response =userRegistrationFeignImpl.userRegistrationDropdown();
+	public List<Usertype> userTypeDropdown(@RequestParam(name="type",required = false) Integer type){ 
+		List<Usertype> response =userRegistrationFeignImpl.userRegistrationDropdown(type);
 		return response;          
 	}
 	

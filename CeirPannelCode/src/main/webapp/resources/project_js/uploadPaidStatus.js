@@ -1514,3 +1514,57 @@ $(document).on("keyup", "#Price1", function(e) {
 		$("#ensUserVisaPlaceHolder").val('');
 		$('#visafileFormateModal').closeModal();
 	}
+ 
+ function historyRecord(txnID){
+		console.log("txn id=="+txnID)
+		$("#tableOnModal").openModal({dismissible:false});
+		 var filter =[];
+		 var formData= new FormData();
+		 var filterRequest={
+				 
+				 "columns": [
+					    "created_on","modified_on","txn_id","status","nid","device_type","device_id_type","multi_sim_status","country","device_serial_number","tax_paid_status","device_status","price",
+					    "currency","first_imei","second_imei","third_imei","fourth_imei","origin","remark",
+					    "id", "user_id","creator_user_id"
+					    ],
+				"tableName": "regularize_device_db_aud",
+				"dbName" : "ceirconfig",
+				"txnId":txnID
+		}
+		formData.append("filter",JSON.stringify(filterRequest));	
+		if(lang=='km'){
+			var langFile='../resources/i18n/khmer_datatable.json';
+		}
+
+		$.ajax({
+			url: 'Consignment/consignment-history',
+			type: 'POST',
+			data: formData,
+			processData: false,
+			contentType: false,
+			success: function(result){
+				var dataObject = eval(result);
+				$('#data-table-history2').dataTable({
+					 "order" : [[1, "asc"]],
+					 destroy:true,
+					"serverSide": false,
+					 orderCellsTop : true,
+					"ordering" : false,
+					"bPaginate" : true,
+					"bFilter" : true,
+					"scrollX": true,
+					"bInfo" : true,
+					"bSearchable" : true,
+					 "data": dataObject.data,
+					 "columns": dataObject.columns
+				
+			    });
+				$('div#initialloader').delay(300).fadeOut('slow');
+		}
+			
+});
+	
+		$('.datepicker').on('mousedown',function(event){
+		event.preventDefault();
+	});
+}

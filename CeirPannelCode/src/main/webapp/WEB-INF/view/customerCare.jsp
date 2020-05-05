@@ -112,7 +112,7 @@ data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeI
                       <form action="">
                         <div class="col s12 m12 l12">
                           <h4 class="header2 device-info">
-                            Device Information</h4>
+                            Device Information <i class="fa fa-eye teal-text view-icon" aria-hidden="true" title="View"></i> </h4>
                           <div class="row">
                             <div class="input-field col s12 m4 l4">
                               <input type="text" id="MSISDN" name="MSISDN" value="" disabled>
@@ -147,12 +147,12 @@ data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeI
 
                             <div class="input-field col s12 m3 l3">
                               <input type="text" id="brand" name="brand" value="" disabled>
-                              <label for="brand" >Brand</label>
+                              <label for="brand" >Brand Name</label>
                             </div>
 
                             <div class="input-field col s12 m3 l3">
                               <input type="text" id="modal" name="modal" value="" disabled>
-                              <label for="modal" >Model</label>
+                              <label for="modal" >Model Number</label>
                             </div>
                           </div>
                         </div>
@@ -781,6 +781,33 @@ data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeI
 				<th>MSISDN</th>
 				<th>IMEI</th>
 				<th>IMSI</th>
+				</tr>
+				</thead>
+				<tbody >
+				
+				</tbody >
+				</table>
+			</div>
+		</div>
+	</div>
+	
+	
+	<div id="globalBlackListTableModal" class="modal">
+ <button type="button"
+			class=" modal-action modal-close  btn-flat right"
+			data-dismiss="modal">&times;</button>
+		<h6 class="modal-header">Device Details</h6>
+		<div class="modal-content">
+			<div class="row">
+				<%-- <h6 id="fileErrormessage"><spring:message code="invalidaTxnIdMsg" /> </h6> --%>
+			</div>
+			<div class="row">
+				<table id="globalBlackListDataTable" style="margin-top: 10px">
+				<thead>
+				<tr>
+				<th>Created On</th>
+				<th>Black List Status</th>
+				<th>Grey List Status</th>
 				</tr>
 				</thead>
 				<tbody >

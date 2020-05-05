@@ -157,7 +157,7 @@
 									"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
 
 									"<select id="+dropdown[i].id+" class='select2 initialized'>"+
-									"<option value='' selected Disabled >"+dropdown[i].title+
+									"<option value='' selected >"+dropdown[i].title+
 									"</option>"+
 									"</select>"+
 									"</div>"+
@@ -168,7 +168,12 @@
 						//$("#userTableDiv").append("<div class=' col s3 m2 l7'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportConsignmentData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 						for(i=0; i<button.length; i++){
 							$('#'+button[i].id).text(button[i].buttonTitle);
-							$('#'+button[i].id).attr("onclick", button[i].buttonURL);
+							if(button[i].type === "HeaderButton"){
+								$('#'+button[i].id).attr("href", button[i].buttonURL);
+							}
+							else{
+								$('#'+button[i].id).attr("onclick", button[i].buttonURL);
+							}
 						}
 
 				}
@@ -182,120 +187,130 @@
 
 		
 	function setDropdown(){
-		$.getJSON('./getDropdownList/CURRENCY', function(data) {
-				/ $("#expectedArrivalPort").empty(); /
-				for (i = 0; i < data.length; i++) {
-					$('<option>').val(data[i].value).text(data[i].interp).appendTo('#currencyType,#currency,#editCurrency');
-				}
-			});
-	}
-
-		function AddCurrencyAddress(){
-			$('#addCurrency').openModal({
-		        dismissible:false
-		    });
-			//var tagDropDown =  document.getElementById("tag");
-			//var displayName = tagDropDown.options[tagDropDown.selectedIndex].text;
-		}
-		
-	
-	/*----------------------------------- Save Field ----------------------------------------- */
-		
-	function submitPort(){
-		
-		var request={
-					  "date":   $('#month').val(),
-					  "currency": $('#currency').val(),
-					  "riel":   parseFloat($('#cambodianRiel').val()),
-					  "dollar": parseFloat($('#dollar').val()),
-				}
-		
-		console.log("request------------->" +JSON.stringify(request))
-		$.ajax({
-			url : './add-currency',
-			data : JSON.stringify(request),
-			dataType : 'json',
-			contentType : 'application/json; charset=utf-8',
-			type : 'POST',
-			success : function(data, textStatus, jqXHR) {
-					console.log(JSON.stringify(data));
-					$("#confirmField").openModal({
-				        dismissible:false
-				    });
-			},
-			error : function(jqXHR, textStatus, errorThrown) {
-				console.log("error in ajax")
+		$.getJSON('./registrationUserType?type=1', function(data) {
+			for (i = 0; i < data.length; i++) {
+				$('<option>').val(data[i].id).text(data[i].usertypeName)
+				.appendTo('#userType','#edituserType');
 			}
 		});
-			
-			return false
 	}
 
-
-  
-	/*--------------------------------- Edit Model View -----------------------------------*/
 	
-	
-	function currencyViewByID(id){
-		$("#editId").val(id);
-		
+	function viewDetails(id,action){
 		$.ajax({
-				url: './currencyViewByID/'+id,
-				type: 'POST',
-			//data : JSON.stringify(request),
-				dataType : 'json',
-				contentType : 'application/json; charset=utf-8',
-				success: function (data, textStatus, jqXHR) {
-						var result = data.data
-						$("#editCurrencyModal").openModal({
+			url: './viewUser/'+id,
+			type: 'POST',
+		   //data : JSON.stringify(request),
+			dataType : 'json',
+			contentType : 'application/json; charset=utf-8',
+			success: function (data, textStatus, jqXHR) {
+					var result = data.data;
+					if(action == "View"){
+						$("#ViewModel").openModal({
 					        dismissible:false
 					    });
-						currencyEditPopupData(result);
-						console.log(JSON.stringify(result));
-				},
-				error: function (jqXHR, textStatus, errorThrown) {
-					console.log("error in ajax")
-				}
-			});	
-		}
-	
-	
-	function currencyEditPopupData(result){
-		$("#editMonth").val(result.date);
-		$("#editCurrency").val(result.currency);
-		$("#editCambodianRiel").val(result.riel);
-		$("#editDollar").val(result.dollar);
+						viewPopupData(result);
+					}else{
+						$("#editModel").openModal({
+					        dismissible:false
+					    });
+						editPopupData(result);
+					}
+					
+					console.log(JSON.stringify(result));
+			},
+			error: function (jqXHR, textStatus, errorThrown) {
+				console.log("error in ajax")
+			}
+		});	
+	}
+	 
+	 
+	function viewPopupData(result){
+		$("#viewfirstName").val(result.firstName);
+		$("#viewmiddleName").val(result.middleName);
+		$("#viewlastName").val(result.lastName);
+		$("#viewcontactNumber").val(result.phoneNo);
+		$("#viewemailID").val(result.email);
+		$("#viewPassword").val(result.password);
+		$("#viewconfirmPassword").val(result.password);
+		$("#viewuserType").val(result.userType);
+		$("#viewuserName").val(result.username);
+		$("#viewuserRemark").val(result.remarks);
 		
-		$("label[for='editMonth']").addClass('active');
-		$("label[for='editCurrency']").addClass('active');
-		$("label[for='editCambodianRiel']").addClass('active');
-		$("label[for='editDollar']").addClass('active');
+		
+		$("label[for='viewfirstName']").addClass('active');
+		$("label[for='viewmiddleName']").addClass('active');
+		$("label[for='viewlastName']").addClass('active');
+		$("label[for='viewcontactNumber']").addClass('active');
+		$("label[for='viewemailID']").addClass('active');
+		$("label[for='viewPassword']").addClass('active');
+		$("label[for='viewconfirmPassword']").addClass('active');
+		$("label[for='viewuserType']").addClass('active');
+		$("label[for='viewuserRemark']").addClass('active');
+		$("label[for='viewuserName']").addClass('active');
+		
+		
 	}
 	
 	
+	function editPopupData(result){
+		
+		$.getJSON('./registrationUserType?type=1', function(data) {
+			$('#edituserType').empty();
+			for (i = 0; i < data.length; i++) {
+				$('<option>').val(data[i].id).text(data[i].usertypeName)
+				.appendTo('#edituserType');
+			}
+			$("#edituserType").val(result.userTypeId);
+		});
+		
+		$("#editId").val(result.id);
+		$("#editfirstName").val(result.firstName);
+		$("#editmiddleName").val(result.middleName);
+		$("#editlastName").val(result.lastName);
+		$("#editcontactNumber").val(result.phoneNo);
+		$("#editemailID").val(result.email);
+		$("#editPassword").val(result.password);
+		$("#EditconfirmPassword").val(result.password);
+		$("#edituserName").val(result.username);
+		$("#edituserRemark").val(result.remarks);
+		
+		
+		$("label[for='editfirstName']").addClass('active');
+		$("label[for='editmiddleName']").addClass('active');
+		$("label[for='editlastName']").addClass('active');
+		$("label[for='editcontactNumber']").addClass('active');
+		$("label[for='editemailID']").addClass('active');
+		$("label[for='editPassword']").addClass('active');
+		$("label[for='EditconfirmPassword']").addClass('active');
+		$("label[for='edituserName']").addClass('active');
+		$("label[for='edituserType']").addClass('active');
+		$("label[for='edituserRemark']").addClass('active');
+		
+	}
+
 	/*---------------------------------- Update Field-------------------------------------*/
 	
 	
-	function updateCurrency(){
+	function update(){
 	
 		var request ={ 
 				 "id" : parseInt($("#editId").val()),
-				 "date":   $('#editMonth').val(),
-				 "currency": $('#editCurrency').val(),
-				 "riel":   parseFloat($('#editCambodianRiel').val()),
-				 "dollar": parseFloat($('#editDollar').val()),
+		 "userTypeId" : $("#edituserType").val(),
+				
 		}
 		
 		console.log("request--->" +JSON.stringify(request))
 		$.ajax({
-			url: './updateCurrency',
+			url: './updateUser',
 			type: 'POST',
 			data : JSON.stringify(request),
 			dataType : 'json',
 			contentType : 'application/json; charset=utf-8',
 			success: function (data, textStatus, jqXHR) {
-			
 				console.log("Updated data---->" +data)
+				
 				$("#editCurrencyModal").closeModal();	
 				$("#updateFieldsSuccess").openModal({
 			        dismissible:false
@@ -315,39 +330,37 @@
   /*------------------------------------ Delete Field -----------------------------------*/
 	
 	
-	function DeleteCurrency(id){
+
+	function DeleteByID(id){
+		
+		window.id=parseInt(id);
+		
+		
+		
 		$("#DeleteFieldModal").openModal({
 	        dismissible:false
 	    });
-		$("#deletePortId").val(id);
 		
-	}	
+	}
 	
-	
-	
-	function confirmantiondelete(){
+	function deleteModal(){
 		
-		var id  = parseInt($("#deletePortId").val());
-		
-		console.log(JSON.stringify(id));
 		$.ajax({
-			url : './deletePort/'+id,
-//			data : JSON.stringify(request),
+			url: './deleteSystemUserType/'+window.id,
+			//data : JSON.stringify(request),
 			dataType : 'json',
 			contentType : 'application/json; charset=utf-8',
 			type : 'POST',
 			success : function(data, textStatus, xhr) {
-				console.log(data);
 				$("#DeleteFieldModal").closeModal();
 				$("#closeDeleteModal").openModal({
 			        dismissible:false
 			    });
-				
-				$("#materialize-lean-overlay-3").css("display","none");
 			},
 			error : function() {
-				console.log("Error");
+				
 			}
 		});
-	}
 	
+		return false;
+	}

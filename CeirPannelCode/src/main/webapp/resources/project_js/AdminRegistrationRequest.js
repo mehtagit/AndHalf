@@ -421,13 +421,8 @@ function roleStatusChange(Id,sessionUserName, userTypeId){
 	    window.sessionUserName = sessionUserName,
 	    //window.userTypeId = userTypeId, 
 	    
-	    $.getJSON('./getTypeDropdownList/ROLE_TYPE/' +userTypeId, function(data) {
-			for (i = 0; i < data.length; i++) {
-			$('<option>').val(data[i].value).text(data[i].interp)
-			.appendTo('#userRoleType');
-			}
-		});
-		
+	    
+	   usertypeData2(userTypeId);
 	    
 	    $("#statusRoleChange").openModal({
 		 	   dismissible:false
@@ -440,7 +435,38 @@ function roleStatusChange(Id,sessionUserName, userTypeId){
 	    }
 	}
 	 	
-	
+
+
+function usertypeData2(id) {
+	$.ajax({
+		type : 'GET',
+		url :  './getTypeDropdownList/ROLE_TYPE/' + id,
+		contentType : "application/json",
+		dataType : 'html',
+		async : false,
+		success : function(data) {
+			var response = JSON.parse(data);
+			var usertypeDropdown = $("#usertypes");
+			for (var i = 0; i < response.length; i++) {
+				var data2 = '<option value="' + response[i].value + '">'
+						+ response[i].interp + '</option>';
+				usertypeDropdown.append(data2);
+
+			}
+			usertypeDropdown.val(id);
+			$('#usertypes option[value="' + id + '"]').attr('disabled', true);
+			setTimeout(function() {
+				$('.dropdown-trigger').dropdown();
+				$('select').formSelect();
+			}, 2000);
+		},
+		error : function(xhr, ajaxOptions, thrownError) {
+		}
+	});
+}
+
+
+
 function userChangeStatus(entity){
 	if (entity == "status"){
 		 $("#statusChangemodal").openModal({

@@ -33,6 +33,7 @@
  -->
 
 <!-- CORE CSS-->
+
 <link href="${context}/resources/css/materialize.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
 <link href="${context}/resources/css/style.css" type="text/css"
@@ -67,13 +68,28 @@
 	href="${context}/resources/project_css/iconStates.css">
 	
  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+ 
   <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
    <!------------------------------------------- Dragable Model---------------------------------->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script> 
+
+
+
+ 
+ 
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"> -->
+
+
+
+   
 	
 
 
+<script>
+var contextpath = "${context}";
+</script>
 
 </head>
 <%-- <body data-roleType="${usertype}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}"> --%>
@@ -311,7 +327,19 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
                                 <div class="col s12 m12 l12">
                    	   
                                    <div class="row"  style="margin-top: 10px">
-                                        	<div class="col s12 m6 l6" style="margin-bottom: 5px;">
+                                        	
+                               <div class="input-field col s12 m6 l6" id="rolesDiv">
+									<p
+										style="margin-top: -15px; font-size: 12px;">
+										<spring:message code="table.roleType" /> <span class="star">*</span>
+									</p> 
+									<select multiple  name="roles" id="usertypes"  >
+										<option value="" disabled><spring:message code="table.roleType" /></option>
+									</select>
+								</div>
+                                        	
+                                        	
+                                        <%-- <div class="col s12 m6 l6" style="margin-bottom: 5px;">
 											<label for="userStatus"><spring:message
 													code="changeRoleType" /> <span class="star">*</span></label>
 											<select id="userRoleType" class="browser-default"
@@ -322,7 +350,7 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
 														code="select.changeUserRole" />
 												</option>
 											</select>
-										</div> 
+										</div> --%> 
                                        		
                                        
 										

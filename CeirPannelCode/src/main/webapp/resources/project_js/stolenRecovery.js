@@ -265,35 +265,48 @@ populateCountries
 
 var userType = $("body").attr("data-roleType");
 var sourceType = localStorage.getItem("sourceType");
-function filterStolen(){
+function filterStolen(language,sourceTypeFilter){
 	var userTypeId = $("body").attr("data-userTypeID");
 	if(userType=="Operator" || userType=="Operation" ){
-		Datatable('./headers?type=blockUnblock','stolenData?featureId='+featureId+'&userTypeId='+userTypeId)
+		Datatable('./headers?type=blockUnblock','stolenData?featureId='+featureId+'&userTypeId='+userTypeId,sourceTypeFilter)
 	}else if(userType =="CEIRAdmin"){
-		Datatable('./headers?type=BlockUnblockCEIRAdmin','stolenData?featureId='+featureId+'&userTypeId='+userTypeId)
+		Datatable('./headers?type=BlockUnblockCEIRAdmin','stolenData?featureId='+featureId+'&userTypeId='+userTypeId,sourceTypeFilter)
 	}else if(sourceType !="viaExistingRecovery"){
-		Datatable('./headers?type=stolen','stolenData')
+		Datatable('./headers?type=stolen','stolenData',sourceTypeFilter)
 	}else if(sourceType =="viaExistingRecovery" ){
-		Datatable('./headers?type=stolenCheckHeaders', 'stolenData?sourceType=viaExistingRecovery')
+		Datatable('./headers?type=stolenCheckHeaders', 'stolenData?sourceType=viaExistingRecovery',sourceTypeFilter)
 	}
 	localStorage.removeItem('sourceType');
 }  
 
 
-function Datatable(url,dataUrl){
+function Datatable(url,dataUrl,sourceTypeFiler){
+	
+	console.log(" == sourceType ="+sourceTypeFiler);
+	var requestType='';
+	var userType=$("body").attr("data-roleType");
+	if (sourceTypeFiler=="filter")
+		{
+		
+		requestType = parseInt($('#requestType').val())
+		}
+	else{
+		requestType = parseInt($("body").attr("data-requestType"));
+	  }
+	console.log("=== requestType======"+requestType)
 	var txn= (txnIdValue == 'null' && transactionIDValue == undefined)? $('#transactionID').val() : transactionIDValue;
 	var filterRequest={
 			"endDate":$('#endDate').val(),
 			"startDate":$('#startDate').val(),
 			"txnId": txn,
 			"consignmentStatus":parseInt($('#status').val()),
-			"requestType":parseInt($('#requestType').val()),
+			"requestType":requestType,
 			"sourceType":parseInt($('#sourceStatus').val()),
 			"roleType": role,
 			"userId": userId,
 			"featureId":featureId,
 			"userTypeId": parseInt($("body").attr("data-userTypeID")),
-			"userType":$("body").attr("data-roleType"),
+			"userType":userType,
 			"operatorTypeId" : parseInt($('#operator').val())
 	}
 
@@ -1100,4 +1113,67 @@ $("input[type=file]").keypress(function(ev) {
     return false;
     //ev.preventDefault(); //works as well
 
-});	
+});
+
+
+
+
+function historyRecord(txnID){
+	console.log("txn id=="+txnID)
+	$("#tableOnModal").openModal({dismissible:false});
+	 var filter =[];
+	 var formData= new FormData();
+	 var filterRequest={
+			 
+			 "columns": [
+				    "created_on","modified_on","txn_id","role_type","operator_type_id","request_type","source_type","file_status","complaint_type","file_name","fir_file_name",
+				    "block_category","blocking_type","blocking_time_period","quantity","device_quantity","remark","rejected_remark","date_of_recovery","date_of_stolen",
+				     "id","rev","user_id","ceir_admin_id"
+				    ],
+			"tableName": "stolenand_recovery_mgmt_aud",
+			"dbName" : "ceirconfig",
+			"txnId":txnID
+	}
+	formData.append("filter",JSON.stringify(filterRequest));	
+	if(lang=='km'){
+		var langFile='../resources/i18n/khmer_datatable.json';
+	}
+	console.log("22");
+	$.ajax({
+		url: 'Consignment/consignment-history',
+		type: 'POST',
+		data: formData,
+		processData: false,
+		contentType: false,
+		success: function(result){
+			var dataObject = eval(result);
+			//alert(JSON.stringify(dataObject.data))
+			$('#data-table-history2').dataTable({
+				 "order" : [[1, "asc"]],
+				 destroy:true,
+				"serverSide": false,
+				 orderCellsTop : true,
+				"ordering" : false,
+				"bPaginate" : true,
+				"bFilter" : true,
+				"bInfo" : true,
+				"scrollX": true,
+				"bSearchable" : true,
+				 "data": dataObject.data,
+				 "columns": dataObject.columns
+			
+		    });
+			$('div#initialloader').delay(300).fadeOut('slow');
+	}
+		
+});
+
+	$('.datepicker').on('mousedown',function(event){
+	event.preventDefault();
+});
+
+	
+	
+	
+	
+}

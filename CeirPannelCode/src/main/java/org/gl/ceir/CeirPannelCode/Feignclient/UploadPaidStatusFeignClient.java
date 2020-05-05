@@ -74,5 +74,8 @@ public interface UploadPaidStatusFeignClient {
 	@RequestMapping(value="/stakeholder/update",method=RequestMethod.PUT) 
 	public GenricResponse updateIndivisualStolen(LawfulStolenRecovey lawfulStolen );
 
+	
+	@PutMapping("/accept-reject/end-user-visa")
+	public @ResponseBody GenricResponse updateVisaRequest(FilterRequest_UserPaidStatus filterRequest);
 
 }

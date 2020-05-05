@@ -1121,12 +1121,18 @@ function confirmantiondelete(){
 		
 		
 		
+		
 		function historyRecord(txnID){
 			
 			$("#tableOnModal").openModal({dismissible:false});
 			 var filter =[];
 			 var formData= new FormData();
 			 var filterRequest={
+					 "columns": [
+						    "created_on","modified_on","txn_id","consignment_status","supplier_id","supplier_name","consignment_number","expected_dispatche_date","expected_arrivaldate","organisation_country",
+						    "expected_arrival_port","port_address","quantity","device_quantity","remarks","total_price","currency",
+						    "file_name","tax_paid_status","revtype","user_id","pending_tac_approved_by_custom","delete_flag","ceir_admin_id","custom_id"
+						    ],
 					"tableName": "consignment_mgmt_aud",
 					"dbName" : "ceirconfig",
 					"txnId":txnID
@@ -1153,6 +1159,7 @@ function confirmantiondelete(){
 						"bPaginate" : true,
 						"bFilter" : true,
 						"bInfo" : true,
+						"scrollX": true,
 						"bSearchable" : true,
 						 "data": dataObject.data,
 						 "columns": dataObject.columns

@@ -38,12 +38,12 @@ $('.datepicker').on('mousedown',function(event){
 var userType = $("body").attr("data-roleType");
 var sourceType = localStorage.getItem("sourceType");
 
-function filterStolen(){
-
+function filterStolen(ss,sourceTypeFiler){
+	console.log(" ****** sourceType ="+sourceTypeFiler);
 	if(userType=="Lawful Agency"){
-		Datatable('./headers?type=lawfulStolenHeaders','./stolenData?featureId='+featureId)
+		Datatable('./headers?type=lawfulStolenHeaders','./stolenData?featureId='+featureId,sourceTypeFiler)
 	}else if(userType =="CEIRAdmin"){
-		Datatable('./headers?type=lawfulStolenHeaders','./stolenData?featureId='+featureId)
+		Datatable('./headers?type=lawfulStolenHeaders','./stolenData?featureId='+featureId,sourceTypeFiler)
 	}
 	localStorage.removeItem('sourceType');
 }
@@ -51,19 +51,31 @@ function filterStolen(){
 
 
 
-function Datatable(url,DataUrl){
+function Datatable(url,DataUrl,sourceTypeFiler){
+	console.log(" == sourceType ="+sourceTypeFiler);
+	var requestType='';
+	var userType=$("body").attr("data-roleType");
+	if (sourceTypeFiler=="filter")
+		{
+		
+		requestType = parseInt($('#requestType').val())
+		}
+	else{
+		requestType = parseInt($("body").attr("data-requestType"));
+	  }
+	console.log("=== requestType======"+requestType)
 	var filterRequest={
 			"endDate":$('#endDate').val(),
 			"startDate":$('#startDate').val(),
 			"txnId":$('#transactionID').val(),
 			"consignmentStatus":parseInt($('#status').val()),
-			"requestType":parseInt($('#requestType').val()),
+			"requestType":requestType ,
 			"sourceType":parseInt($('#sourceStatus').val()),
 			"roleType": roleType,
 			"userId": userId,
 			"featureId":featureId,
 			"userTypeId": parseInt($("body").attr("data-userTypeID")),
-			"userType":$("body").attr("data-roleType"),
+			"userType":userType ,
 	}
 
 	
@@ -994,3 +1006,62 @@ $(document).on("keyup", "#singleStolenphone5", function(e) {
 		$('#singleStolenOperator5').prop('required',true);
 	}
 });
+
+function historyRecord(txnID){
+	console.log("txn id=="+txnID)
+	$("#tableOnModal").openModal({dismissible:false});
+	 var filter =[];
+	 var formData= new FormData();
+	 var filterRequest={
+			 "columns": [
+				    "created_on","modified_on","txn_id","role_type","operator_type_id","request_type","source_type","file_status","complaint_type","file_name","fir_file_name",
+				    "block_category","blocking_type","blocking_time_period","quantity","device_quantity","remark","rejected_remark","date_of_recovery","date_of_stolen",
+				     "id","rev","user_id","ceir_admin_id"
+				    ],
+			"tableName": "stolenand_recovery_mgmt_aud",
+			"dbName" : "ceirconfig",
+			"txnId":txnID
+	}
+	formData.append("filter",JSON.stringify(filterRequest));	
+	if(lang=='km'){
+		var langFile='../resources/i18n/khmer_datatable.json';
+	}
+	console.log("22");
+	$.ajax({
+		url: 'Consignment/consignment-history',
+		type: 'POST',
+		data: formData,
+		processData: false,
+		contentType: false,
+		success: function(result){
+			var dataObject = eval(result);
+			//alert(JSON.stringify(dataObject.data))
+			$('#data-table-history').dataTable({
+				 "order" : [[1, "asc"]],
+				 destroy:true,
+				"serverSide": false,
+				 orderCellsTop : true,
+				"ordering" : false,
+				"bPaginate" : true,
+				"bFilter" : true,
+				"bInfo" : true,
+				"scrollX": true,
+				"bSearchable" : true,
+				 "data": dataObject.data,
+				 "columns": dataObject.columns
+			
+		    });
+			$('div#initialloader').delay(300).fadeOut('slow');
+	}
+		
+});
+
+	$('.datepicker').on('mousedown',function(event){
+	event.preventDefault();
+});
+
+	
+	
+	
+	
+}

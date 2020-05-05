@@ -128,7 +128,7 @@ public class SytemUserDatatableController {
 			log.info("USER STATUS:::::::::"+userStatus);
 			log.info("session value user Type=="+session.getAttribute("usertype"));
 			
-			String[] names = { "HeaderButton", Translator.toLocale("button.addUser"), "AddCurrencyAddress()", "btnLink",
+			String[] names = { "HeaderButton", Translator.toLocale("table.registerUser"), "./register-user-form", "btnLink",
 					"FilterButton", Translator.toLocale("button.filter"),"DataTable(" + ConfigParameters.languageParam + ")", "submitFilter" };
 			for(int i=0; i< names.length ; i++) {
 				button = new Button();
