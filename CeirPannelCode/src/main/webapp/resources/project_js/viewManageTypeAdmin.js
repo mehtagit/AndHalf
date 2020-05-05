@@ -858,6 +858,13 @@ function historyRecord(txnID){
 	 var filter =[];
 	 var formData= new FormData();
 	 var filterRequest={
+			 
+			 "columns": [
+				    "created_on","modified_on","txn_id","user_type","approve_status","trademark","product_name","model_number","manufacturer_country","frequency_range","tac","file_name",
+				    "remark",
+				    "id","rev","admin_approve_status","admin_remark","admin_user_id","admin_user_type","approve_disapprove_date","feature_id","country","manufacturer_id",
+				    "manufacturer_name","request_date", "user_id","delete_flag"
+				    ],
 			"tableName": "type_approved_db_aud",
 			"dbName" : "ceirconfig",
 			"txnId":txnID

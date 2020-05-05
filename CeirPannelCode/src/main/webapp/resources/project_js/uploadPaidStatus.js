@@ -1521,6 +1521,12 @@ $(document).on("keyup", "#Price1", function(e) {
 		 var filter =[];
 		 var formData= new FormData();
 		 var filterRequest={
+				 
+				 "columns": [
+					    "created_on","modified_on","txn_id","status","nid","device_type","device_id_type","multi_sim_status","country","device_serial_number","tax_paid_status","device_status","price",
+					    "currency","first_imei","second_imei","third_imei","fourth_imei","origin","remark",
+					    "id", "user_id","creator_user_id"
+					    ],
 				"tableName": "regularize_device_db_aud",
 				"dbName" : "ceirconfig",
 				"txnId":txnID

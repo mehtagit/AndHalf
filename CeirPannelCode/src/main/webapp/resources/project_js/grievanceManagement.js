@@ -53,9 +53,11 @@ var featureId = 6;
 			if($("body").attr("data-roleType")=="Customer Care"){
 				window.raisedBy = "Customer Care";
 				window.userId = null;
+				
 			}else{
 				window.raisedBy = null;
 				window.userId = parseInt($("body").attr("data-userID"));
+				
 			}
 			
 			
@@ -202,7 +204,7 @@ var featureId = 6;
 										"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
 
 										"<select id="+dropdown[i].id+"  class='select-wrapper select2  initialized'>"+
-										"<option value='-1' disabled selected>"+dropdown[i].title+
+										"<option value='-1'  selected>"+dropdown[i].title+
 										"</option>"+
 										"</select>"+
 										"</div>"+

@@ -16,7 +16,9 @@ $('#langlist').on('change', function() {
 
 var featurID=sessionStorage.getItem("data-feature") == null ? '1' : sessionStorage.getItem("data-feature");
 var intialController=sessionStorage.getItem("currentPageLocation") == null ? "./Home" : sessionStorage.getItem("currentPageLocation");
+
 $(document).ready(function () {
+	
 	//var DB_LANG_VALUE= sessionStorage.getItem("sessionLang") == null ? window.parent.$("body").attr("data-lang") :  sessionStorage.getItem("sessionLang");
 	$("#section").append(" <iframe name='mainArea' class='embed-responsive-item' id='mainArea' frameBorder='0' src="+intialController+" width='100%' onLoad='self.scrollTo(0,0)'></iframe>");
 	//window.parent.$("body").attr("data-lang", DB_LANG_VALUE);

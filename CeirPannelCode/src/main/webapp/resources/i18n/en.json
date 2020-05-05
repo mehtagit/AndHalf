@@ -149,5 +149,6 @@
 "Stolen/Recovery IMEI Count":"Stolen/Recovery IMEI Count",
 "Email_Exist":"Email already exists in the system",
     "Phone_Exist":"Phone Number already exists in the system",
-    "VISA_UPDATE_NOT_ALLOWED":"This passport number is not registered with CEIR system. Kindly register your device first."
+    "VISA_UPDATE_NOT_ALLOWED":"This passport number is not registered with CEIR system. Kindly register your device first.",
+    "visaUpdatesuccessMsg": "Your visa has been successfully updated. The Transaction ID for future reference is "
 }

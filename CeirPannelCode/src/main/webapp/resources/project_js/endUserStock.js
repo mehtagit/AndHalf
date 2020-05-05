@@ -114,12 +114,13 @@ function setViewPopupData(data){
 	$("#viewUploadFile").val(data.fileName);
 	$("#errorFileStatus").val(data.stateInterp);
 	$('#endUserStockFileLink').attr("onclick",'fileDownload("'+data.fileName+'","actual","'+data.txnId+'","DEFAULT")');
+	$('#errorFileStock').attr("onclick",'fileDownload("blank","error","'+data.txnId+'","DEFAULT")');
 	console.log(data.stockStatus);
 	if(data.stockStatus=='2')
 		{
 		console.log("if condition");
 		$('#errorFileStatusDiv').css("display", "block");
-    	$("#errorFileName").val(data.fileName);
+    	$("#errorFileName").val(data.txnId+'_error.csv');
     	$('#updateEndUserStockOK').css("display", "none");
     	$('#updateEndUserStock').css("display", "block");
     	}
