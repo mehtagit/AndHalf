@@ -82,7 +82,6 @@ public class Notification  implements Serializable{
 		this.receiverUserType = receiverUserType;
 	}
 
-
 	public String getReceiverUserType() {
 		return receiverUserType;
 	}

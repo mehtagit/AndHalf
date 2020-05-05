@@ -505,7 +505,7 @@ public class ConsignmentServiceImpl {
 							return new GenricResponse(3, "state transition is not allowed.", consignmentUpdateRequest.getTxnId());
 						}
 
-					
+
 						consignmentMgmt.setConsignmentStatus(ConsignmentStatus.APPROVED.getCode());				
 						consignmentMgmt.setTaxPaidStatus(TaxStatus.TAX_PAID.getCode());
 						consignmentMgmt.setCustomID(consignmentUpdateRequest.getUserId());
@@ -553,10 +553,12 @@ public class ConsignmentServiceImpl {
 							logger.info("state transition is not allowed." + consignmentUpdateRequest.getTxnId());
 							return new GenricResponse(3, "state transition is not allowed.", consignmentUpdateRequest.getTxnId());
 						}
-						consignmentMgmt.setConsignmentStatus(ConsignmentStatus.PENDING_APPROVAL_FROM_CEIR_AUTHORITY.getCode());
+						if(consignmentMgmt.getConsignmentStatus() == ConsignmentStatus.INIT.getCode()) {
+							consignmentMgmt.setConsignmentStatus(ConsignmentStatus.PROCESSING.getCode());
+						}else {
+							consignmentMgmt.setConsignmentStatus(ConsignmentStatus.PENDING_APPROVAL_FROM_CEIR_AUTHORITY.getCode());
+						}
 
-
-						//consignmentMgmt.setCustomID(consignmentUpdateRequest.getUserId());
 						UserProfile userProfile2 = new UserProfile();
 						User user2 = userRepository.getById(consignmentMgmt.getUserId()); 
 						userProfile2.setUser(user2);
@@ -862,7 +864,7 @@ public class ConsignmentServiceImpl {
 							consignmentMgmt.getCreatedOn().format(dtf),
 							consignmentMgmt.getModifiedOn().format(dtf),
 							consignmentMgmt.getQuantity(),consignmentMgmt.getDeviceQuantity());
-							
+
 					fileRecords.add(cfm);
 				}
 
@@ -989,7 +991,6 @@ public class ConsignmentServiceImpl {
 			 cmsb.orSearch(new SearchCriteria("supplierName", consignmentMgmt.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 			 cmsb.orSearch(new SearchCriteria("organisationCountry", consignmentMgmt.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 			 cmsb.orSearch(new SearchCriteria("quantity", consignmentMgmt.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
-
 			 cmsb.orSearch(new SearchCriteria("expectedArrivaldate", consignmentMgmt.getSearchString(), SearchOperation.EQUALITY, Datatype.DATE));
 			 cmsb.orSearch(new SearchCriteria("expectedDispatcheDate", consignmentMgmt.getSearchString(), SearchOperation.EQUALITY, Datatype.DATE));		
 			 cmsb.orSearch(new SearchCriteria("totalPrice", consignmentMgmt.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
@@ -999,10 +1000,6 @@ public class ConsignmentServiceImpl {
 			 cmsb.orSearch(new SearchCriteria("customID",consignmentMgmt.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 			 cmsb.orSearch(new SearchCriteria("ceirAdminID",consignmentMgmt.getSearchString(), SearchOperation.LIKE, Datatype.STRING)); 
 			 cmsb.orSearch(new SearchCriteria("drtID",consignmentMgmt.getSearchString(), SearchOperation.LIKE,Datatype.STRING));
-
-			 /*	cmsb.orSearch(new SearchCriteria("localUserId",consignmentMgmt.getSearchString(), SearchOperation.EQUALITY,Datatype.STRING));
-			cmsb.orSearch(new SearchCriteria("pendingTacApprovedByCustom",consignmentMgmt.getSearchString(), SearchOperation.EQUALITY, Datatype.STRING)); 
-			  */	
 		 }
 
 		 return cmsb;
@@ -1023,7 +1020,7 @@ public class ConsignmentServiceImpl {
 			consignmentMgmt.setDeleteFlagInterp(interpSetter.setConfigInterp(Tags.DELETE_FLAG, consignmentMgmt.getDeleteFlag()));
 
 		if(Objects.nonNull(consignmentMgmt.getPortAddress())) {
-			GenricResponse_Class portResponse=userFeignClient.portAddressInterp(consignmentMgmt.getPortAddress());
+			GenricResponse_Class portResponse = userFeignClient.portAddressInterp(consignmentMgmt.getPortAddress());
 			logger.info("genericResponse::::::"+new Gson().toJson(portResponse));
 			DataClass dataClass = portResponse.getData();
 			consignmentMgmt.setPortAddressInterp(dataClass.getAddress());
@@ -1054,5 +1051,3 @@ public class ConsignmentServiceImpl {
 		}
 	}
 }
-
-

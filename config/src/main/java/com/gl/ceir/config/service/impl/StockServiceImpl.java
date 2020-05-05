@@ -37,6 +37,7 @@ import com.gl.ceir.config.model.FeatureValidateReq;
 import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
+import com.gl.ceir.config.model.Notification;
 import com.gl.ceir.config.model.ResponseCountAndQuantity;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.StateMgmtDb;
@@ -779,7 +780,8 @@ public class StockServiceImpl {
 							txnId,
 							placeholderMap,
 							stockMgmt.getRoleType(),
-							receiverUserType);
+							receiverUserType,
+							"Users");
 					logger.info("Notfication have been saved.");
 				}
 
@@ -809,7 +811,6 @@ public class StockServiceImpl {
 
 					stockMgmt.setStockStatus(StockStatus.ERROR.getCode());
 					stockMgmt.setRemarks(consignmentUpdateRequest.getRemarks());
-					//stockMgmt.setCeirAdminId(consignmentUpdateRequest.getUserId());
 				}
 
 				// Update Stock and its history.
@@ -817,7 +818,7 @@ public class StockServiceImpl {
 					logger.warn("Unable to update Stolen and recovery entity.");
 					return new GenricResponse(3, "Unable to update stock entity.", consignmentUpdateRequest.getTxnId()); 
 				}else {
-					addInAuditTrail(Long.valueOf(consignmentUpdateRequest.getUserId()), consignmentUpdateRequest.getTxnId(), action, consignmentUpdateRequest.getRoleType());
+
 					emailUtil.saveNotification(mailTag, 
 							userProfile, 
 							consignmentUpdateRequest.getFeatureId(),
@@ -827,8 +828,13 @@ public class StockServiceImpl {
 							txnId,
 							placeholderMap,
 							stockMgmt.getRoleType(),
-							receiverUserType);
+							receiverUserType,
+							"Users");
 					logger.info("Notfication have been saved.");
+					
+					logger.info(consignmentUpdateRequest);
+					addInAuditTrail(Long.valueOf(consignmentUpdateRequest.getUserId()), 
+							consignmentUpdateRequest.getTxnId(), action, consignmentUpdateRequest.getRoleType());
 				}
 
 			}else {
