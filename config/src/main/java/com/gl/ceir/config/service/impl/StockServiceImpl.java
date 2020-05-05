@@ -748,8 +748,8 @@ public class StockServiceImpl {
 					
 					txnId = stockMgmt.getTxnId();
 
-					placeholderMap.put("<Custom first name>", firstName);
-					placeholderMap.put("<txn_name>", stockMgmt.getTxnId());
+					placeholderMap.put("<First name>", firstName);
+					placeholderMap.put("<Txn id>", stockMgmt.getTxnId());
 
 					stockMgmt.setStockStatus(StockStatus.APPROVED_BY_CEIR_ADMIN.getCode());
 				}else {
@@ -757,8 +757,8 @@ public class StockServiceImpl {
 					mailTag = "STOCK_REJECT_BY_CEIR_ADMIN";
 					txnId =  stockMgmt.getTxnId();
 
-					placeholderMap.put("<Custom first name>", firstName);
-					placeholderMap.put("<txn_name>", stockMgmt.getTxnId());
+					placeholderMap.put("<First name>", firstName);
+					placeholderMap.put("<Txn id>", stockMgmt.getTxnId());
 
 					stockMgmt.setStockStatus(StockStatus.REJECTED_BY_CEIR_ADMIN.getCode());
 					stockMgmt.setRemarks(consignmentUpdateRequest.getRemarks());
@@ -798,7 +798,7 @@ public class StockServiceImpl {
 					txnId = stockMgmt.getTxnId();
 
 					placeholderMap.put("<First name>", firstName);
-					placeholderMap.put("<txn_name>", stockMgmt.getTxnId());
+					placeholderMap.put("<Txn id>", stockMgmt.getTxnId());
 
 					stockMgmt.setStockStatus(StockStatus.SUCCESS.getCode());
 				}else {
@@ -807,7 +807,7 @@ public class StockServiceImpl {
 					txnId = stockMgmt.getTxnId();
 
 					placeholderMap.put("<First name>", firstName);
-					placeholderMap.put("<txn_name>", stockMgmt.getTxnId());
+					placeholderMap.put("<Txn id>", stockMgmt.getTxnId());
 
 					stockMgmt.setStockStatus(StockStatus.ERROR.getCode());
 					stockMgmt.setRemarks(consignmentUpdateRequest.getRemarks());

@@ -88,8 +88,8 @@ public class CloseGrievance extends BaseService{
 				// Save in notification.
 				user = userRepository.getById(grievance.getUserId());
 				if(Objects.nonNull(user)) {
-					placeholderMap.put("<User>", user.getUserProfile().getFirstName());
-					placeholderMap.put("<txn_id>", grievance.getTxnId());
+					placeholderMap.put("<First name>", user.getUserProfile().getFirstName());
+					placeholderMap.put("<Txn id>", grievance.getTxnId());
 
 					rawMails.add(new RawMail("Email", 
 							"MAIL_TO_USER_ON_GRIEVANCE_CLOSURE", 

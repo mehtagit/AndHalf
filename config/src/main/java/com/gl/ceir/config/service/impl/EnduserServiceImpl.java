@@ -275,7 +275,7 @@ Integer type=null;
 					String mailTag = "END_USER_REGISTER";
 					Map<String, String> placeholderMap = new HashMap<String, String>();
 					placeholderMap.put("<First name>", endUserDB.getFirstName());
-					placeholderMap.put("<txn_id>", endUserDB.getTxnId());
+					placeholderMap.put("<Txn id>", endUserDB.getTxnId());
 					// Mail to End user.
 					rawMails.add(new RawMail(mailTag, endUserDB.getId(), Long.valueOf(12), 
 							Features.REGISTER_DEVICE, SubFeatures.REGISTER, endUserDB.getTxnId(), 
@@ -419,7 +419,7 @@ Integer type=null;
 				List<RawMail> rawMails = new ArrayList<>();
 				Map<String, String> placeholderMap = new HashMap<String, String>();
 				placeholderMap.put("<First name>", endUserDB1.getFirstName());
-				placeholderMap.put("<txn_id>", endUserDB1.getTxnId());
+				placeholderMap.put("<Txn id>", endUserDB1.getTxnId());
 				rawMails.add(new RawMail(mailTag, endUserDB1.getId(), Long.valueOf(12), 
 						Features.UPDATE_VISA, SubFeatures.REQUEST, endUserDB1.getTxnId(), 
 						endUserDB1.getTxnId(), placeholderMap, ReferTable.END_USER, null, "End User"));
@@ -782,8 +782,7 @@ Integer type=null;
 			}
 			
 			
-			placeholders.put("<FIRST_NAME>", endUserDB.getFirstName());
-			placeholders.put("<txn_id>", endUserDB.getTxnId());
+			placeholders.put("<Txn id>", endUserDB.getTxnId());
 			placeholders.put("<First name>", endUserDB.getFirstName());
 			String sufeature="";
 			if("CEIRADMIN".equalsIgnoreCase(ceirActionRequest.getUserType())){

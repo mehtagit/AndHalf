@@ -800,9 +800,9 @@ public class StolenAndRecoveryServiceImpl {
 					return new GenricResponse(3, "Unable to update Stolen and recovery entity.", consignmentUpdateRequest.getTxnId());
 				}else {
 					placeholderMap1 = new HashMap<>();
-					placeholderMap1.put("<first name>", userProfile.getFirstName());
+
 					placeholderMap1.put("<First name>", userProfile.getFirstName());
-					placeholderMap1.put("<txn_name>", txnId);
+					placeholderMap1.put("<Txn id>", txnId);
 
 					emailUtil.saveNotification(mailTag, 
 							userProfile, 
@@ -873,9 +873,8 @@ public class StolenAndRecoveryServiceImpl {
 					return new GenricResponse(3, "Unable to update Stolen and recovery entity.", consignmentUpdateRequest.getTxnId());
 				}else {
 					placeholderMap1 = new HashMap<>();
-					placeholderMap1.put("<first name>", userProfile.getFirstName());
 					placeholderMap1.put("<First name>", userProfile.getFirstName());
-					placeholderMap1.put("<txn_name>", txnId);
+					placeholderMap1.put("<Txn id>", txnId);
 
 					emailUtil.saveNotification(mailTag, 
 							userProfile, 
