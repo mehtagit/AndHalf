@@ -153,7 +153,8 @@ data-roleType="${usertype}" data-userTypeID="${usertypeId}"
 								</div>
 							</div>
 						</li>
-<%-- 						<li><a href="javascript:void(0)"  
+<%-- 						<li>
+                             <a href="javascript:void(0)"  
 							 style="color:rgba(0, 0, 0, 0.3);; cursor: pointer;"><spring:message
 									code="registration.home" /></a></li> --%>
 						<li class="profileInfo"><a
