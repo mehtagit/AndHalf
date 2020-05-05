@@ -49,10 +49,8 @@ public class User {
 	UserProfile userProfile;
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "usertype_id", nullable = false) private Usertype
-	usertype;
-	
-	
+	@JoinColumn(name = "usertype_id", nullable = false) 
+	public Usertype usertype;
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "userData", cascade = CascadeType.ALL,fetch = FetchType.LAZY)

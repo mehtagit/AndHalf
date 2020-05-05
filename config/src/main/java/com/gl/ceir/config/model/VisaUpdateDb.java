@@ -58,13 +58,15 @@ public class VisaUpdateDb {
 
 	private long userId;
 	
+	private String txnId;
+	
 	
 	public VisaUpdateDb() {
 		super();
 	}
 
 	public VisaUpdateDb(@NotNull Integer visaType, String visaNumber, @NotNull String visaFileName,
-			String entryDateInCountry, String visaExpiryDate, Integer status,long userId) {
+			String entryDateInCountry, String visaExpiryDate, Integer status,long userId,String txnId) {
 		super();
 		this.visaType = visaType;
 		this.visaNumber = visaNumber;
@@ -73,6 +75,7 @@ public class VisaUpdateDb {
 		this.visaExpiryDate = visaExpiryDate;
 		this.status = status;
 		this.userId=userId;
+		this.txnId=txnId;
 	}
 
 	public static long getSerialversionuid() {
@@ -180,6 +183,16 @@ public class VisaUpdateDb {
 		this.stateInterp = stateInterp;
 	}
 
+	
+
+	public String getTxnId() {
+		return txnId;
+	}
+
+	public void setTxnId(String txnId) {
+		this.txnId = txnId;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -207,6 +220,8 @@ public class VisaUpdateDb {
 		builder.append(stateInterp);
 		builder.append(", userId=");
 		builder.append(userId);
+		builder.append(", txnId=");
+		builder.append(txnId);
 		builder.append("]");
 		return builder.toString();
 	}
