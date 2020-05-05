@@ -4,6 +4,7 @@ import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.NewRule;
 import org.gl.ceir.CeirPannelCode.Model.NewSystemUser;
+import org.gl.ceir.CeirPannelCode.Model.OtpResponse;
 import org.gl.ceir.CeirPannelCode.Model.Password;
 import org.gl.ceir.CeirPannelCode.Model.PaymentRequest;
 import org.gl.ceir.CeirPannelCode.Model.Registration;
@@ -233,7 +234,7 @@ public interface UserProfileFeignImpl {
 	/*----------------------- Add System user feign ---------------------------*/
 		
 		@PostMapping("/userMgmt/save")
-		public NewSystemUser saveSystemUser(@RequestBody NewSystemUser newSystemUser);		
+		public GenricResponse saveSystemUser(@RequestBody NewSystemUser newSystemUser);		
 		
 		//***************************************************View user Feign********************************
 		
@@ -244,5 +245,10 @@ public interface UserProfileFeignImpl {
 
 		@RequestMapping(value= "/userMgmt/update", method=RequestMethod.POST) 
 		public GenricResponse updateUserFeign(@RequestBody NewSystemUser newSystemUser);
+		
+		//***************************************************Delete user Feign********************************
+		
+		@RequestMapping(value="/userMgmt/delete/{id}" ,method=RequestMethod.POST) 
+		public @ResponseBody GenricResponse deleteUserFeign(@PathVariable("id") Integer id);
 } 
 

@@ -1121,6 +1121,7 @@ function confirmantiondelete(){
 		
 		
 		
+		
 		function historyRecord(txnID){
 			
 			$("#tableOnModal").openModal({dismissible:false});

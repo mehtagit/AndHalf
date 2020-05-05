@@ -7,6 +7,7 @@ public class NewSystemUser {
 	private String lastName;
 	private String middleName;
 	private String password;
+	private String  rePassword;
 	private String phoneNo;
 	private String remarks;
 	private String userType;
@@ -47,6 +48,12 @@ public class NewSystemUser {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public String getRePassword() {
+		return rePassword;
+	}
+	public void setRePassword(String rePassword) {
+		this.rePassword = rePassword;
 	}
 	public String getPhoneNo() {
 		return phoneNo;
@@ -93,6 +100,8 @@ public class NewSystemUser {
 		builder.append(middleName);
 		builder.append(", password=");
 		builder.append(password);
+		builder.append(", rePassword=");
+		builder.append(rePassword);
 		builder.append(", phoneNo=");
 		builder.append(phoneNo);
 		builder.append(", remarks=");

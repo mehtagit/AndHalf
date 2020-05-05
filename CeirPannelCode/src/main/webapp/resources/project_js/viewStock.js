@@ -463,7 +463,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 								"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
 
 								"<select id="+dropdown[i].id+" class='select-wrapper select2  initialized'>"+
-								"<option value=null  selected>"+dropdown[i].title+
+								"<option value=null>"+dropdown[i].title+
 								"</option>"+
 								"</select>"+
 								"</div>"+
@@ -809,7 +809,9 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 	    //ev.preventDefault(); //works as well
 
 	});
-	 function historyRecord(txnID){
+
+	
+	function historyRecord(txnID){
 			console.log("txn id=="+txnID)
 			$("#tableOnModal").openModal({dismissible:false});
 			 var filter =[];

@@ -36,26 +36,43 @@ function SaveSystemUser(){
 				"phoneNo": $('#contactNumber').val(),
 				"email": $('#emailID').val(),
 				"password": $('#password').val(),
-				"password":$('#confirmPassword').val(),
+				"rePassword":$('#confirmPassword').val(),
 				"userTypeId":parseInt($('#userType').val()),
 				"remarks": $('#userRemark').val()
 		}
+	
 		$.ajax({
-
 			url : "./saveNewSystemUser",
 			data : JSON.stringify(newUser),
 			dataType : 'json',
 			contentType : 'application/json; charset=utf-8',
 			type : 'POST',
 			success: function (data, textStatus, jqXHR) {
-				$("#successModal").openModal({
-			        dismissible:false
-			    });
+				if(data.errorCode == 200){
+					$("#successModal").openModal({
+				        dismissible:false
+				    });
+					console.log(JSON.stringify(data))
+					$('#newUserId').text(data.username);
+				}
+				else {
+						$.i18n().locale = window.parent.$('#langlist').val();
+						$.i18n().load({
+							'en' : './resources/i18n/en.json',
+							'km' : './resources/i18n/km.json'
+						}).done(function() {
+							// $("#registrationForm #msg").text($.i18n(respData.tag));
+							errorModal($.i18n(data.tag));
+						});
+
+					}
+				
+				
 
 				
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
-
+				
 			}
 		});
 
@@ -122,7 +139,18 @@ function enableReplySelectFile(){
 			
 			
 			
-		
+function errorModal(message){
+	fadetime=2000;
+	$("#modalMessageBodyReg").empty();
+	$("#modalMessageBodyReg").append(' <label id="success" style="color: red;font-size:14px;">'+message+'</label>');
+	$('#error_Modal_reg').openModal();
+
+	$('#error_Modal_reg').fadeIn().delay(fadetime).fadeOut();
+	setTimeout(function() {
+		$('#error_Modal_reg').closeModal();
+	}, fadetime);
+	
+}
 			
 
 	

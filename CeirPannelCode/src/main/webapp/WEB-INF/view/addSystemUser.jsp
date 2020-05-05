@@ -265,7 +265,24 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}" data-u
             </section>
             <!-- END CONTENT -->
 
-	
+	   <div id="successModal" class= " full-screen-modal modal" >
+         <h6 class="modal-header"><spring:message code="table.registerUser" /></h6>
+        <div class="modal-content">
+           <div class="row">
+               <h6 id="sucessMessage">
+					<spring:message code="modal.user.futureRef" />
+					<span id="newUserId"> </span>
+				</h6>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <div class="input-field col s12 center">
+                        <a href="./userManagement" class="btn"><spring:message code="modal.close" /></a>
+                   	 </div>
+                </div>
+            </div>
+        </div>
+    </div>
 	
 
 
@@ -346,6 +363,14 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}" data-u
 			</div>
 		</div>
 	</div>
+	
+	<div class="modal" id="error_Modal_reg" role="dialog">
+		<div class="modal-dialog">
+			<div class="row" id="modalMessageBodyReg"
+					style="text-align: center;"></div>
+			
+		</div>
+	</div>
     <!-- ================================================
     Scripts
     ================================================ -->
@@ -405,19 +430,20 @@ var path="${context}";
     <script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
     <!--custom-script.js - Add your own theme custom JS-->
     <script type="text/javascript" src="${context}/resources/js/custom-script.js"></script>
-    
+    	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
     <script type="text/javascript"
 		src="${context}/resources/project_js/grievanceManagement.js"></script>
-    <script type="text/javascript"
-		src="${context}/resources/project_js/addSystemUser.js"></script>
+    
 	
 			<script type="text/javascript"
 		src="${context}/resources/project_js/_dateFunction.js" async></script>
 		<script type="text/javascript"
 		src="${context}/resources/project_js/profileInfoTab.js" async></script>
-	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
+
 <script type="text/javascript"
 		src="${context}/resources/project_js/ValidationFileOutsidePortal.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/project_js/addSystemUser.js"></script>	
     
 
    

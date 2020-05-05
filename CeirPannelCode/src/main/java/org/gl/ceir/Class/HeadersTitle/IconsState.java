@@ -2537,7 +2537,7 @@ public class IconsState {
 
 		String editAction= "viewDetails("+id+",'Edit')";
 		String viewAction="viewDetails("+id+",'View')";
-		String deleteAction= "deleteByImei()";
+		String deleteAction= "DeleteByID('"+id+"')";
 
 		// state related Code 
 
