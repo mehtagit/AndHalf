@@ -22,11 +22,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.gl.ceir.config.ConfigTags;
 import com.gl.ceir.config.EmailSender.EmailUtil;
-import com.gl.ceir.config.EmailSender.MailSubject;
 import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.feign.UserFeignClient;
@@ -37,7 +35,6 @@ import com.gl.ceir.config.model.FeatureValidateReq;
 import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
-import com.gl.ceir.config.model.Notification;
 import com.gl.ceir.config.model.ResponseCountAndQuantity;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.StateMgmtDb;
@@ -71,6 +68,7 @@ import com.gl.ceir.config.repository.UserProfileRepository;
 import com.gl.ceir.config.repository.UserRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
 import com.gl.ceir.config.specificationsbuilder.GenericSpecificationBuilder;
+import com.gl.ceir.config.specificationsbuilder.Joiner;
 import com.gl.ceir.config.transaction.StockTransaction;
 import com.gl.ceir.config.util.CustomMappingStrategy;
 import com.gl.ceir.config.util.HttpResponse;
@@ -95,7 +93,7 @@ public class StockServiceImpl {
 
 	@Autowired
 	StockDetailsOperationRepository stockDetailsOperationRepository;
-	
+
 	@Autowired
 	DashboardUsersFeatureStateMapRepository dashboardUsersFeatureStateMapRepository; 
 
@@ -134,7 +132,7 @@ public class StockServiceImpl {
 
 	@Autowired 
 	UserFeignClient userFeignClient;
-	
+
 	@Autowired
 	StockTransaction stockTransaction;
 
@@ -181,7 +179,7 @@ public class StockServiceImpl {
 				stockMgmt.setUser(user);
 				stockMgmt.setRoleType(secondaryRoleType);
 				isStockAssignRequest = Boolean.TRUE;
-				
+
 				addInAuditTrail(stockMgmt.getAssignerId(), stockMgmt.getTxnId(), SubFeatures.ASSIGN, "Custom");
 
 			}else if("End User".equalsIgnoreCase(stockMgmt.getUserType())){
@@ -261,8 +259,8 @@ public class StockServiceImpl {
 					return new GenricResponse(1, "Stock registeration have been failed.", stockMgmt.getTxnId());
 				}
 			}
-			
-			
+
+
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
@@ -301,8 +299,8 @@ public class StockServiceImpl {
 					} 
 				}
 			}
-			
-			
+
+
 
 			/*
 			 * auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), "",
@@ -313,15 +311,15 @@ public class StockServiceImpl {
 			 * logger.info("AUDIT : Saved view request in audit.");
 			 */
 			if(Objects.isNull(filterRequest.getTxnId())) {
-			
+
 				addInAuditTrail(Long.valueOf(filterRequest.getUserId()), "NA", SubFeatures.VIEW_ALL,filterRequest.getRoleType());
-			
+
 			}else {
-				
+
 				addInAuditTrail(Long.valueOf(filterRequest.getUserId()), filterRequest.getTxnId(), SubFeatures.FILTER,filterRequest.getRoleType());
-				
+
 			}
-			
+
 			return page;
 
 		} catch (Exception e) {
@@ -359,6 +357,7 @@ public class StockServiceImpl {
 
 	private GenericSpecificationBuilder<StockMgmt> buildSpecification(FilterRequest filterRequest, List<StateMgmtDb> statusList){
 		GenericSpecificationBuilder<StockMgmt> specificationBuilder = new GenericSpecificationBuilder<>(propertiesReader.dialect);
+		Joiner<StockMgmt> joiner = new Joiner<>();
 
 		if("Importer".equalsIgnoreCase(filterRequest.getUserType()) || 
 				"Distributor".equalsIgnoreCase(filterRequest.getUserType()) || 
@@ -399,9 +398,9 @@ public class StockServiceImpl {
 
 				List<DashboardUsersFeatureStateMap> dashboardUsersFeatureStateMap = dashboardUsersFeatureStateMapRepository.findByUserTypeIdAndFeatureId(filterRequest.getUserTypeId(), filterRequest.getFeatureId());
 				logger.debug(dashboardUsersFeatureStateMap);
-				
+
 				List<Integer> stockStatus = new LinkedList<>();
-				
+
 				if(Objects.nonNull(dashboardUsersFeatureStateMap)) {	
 					for(DashboardUsersFeatureStateMap dashboardUsersFeatureStateMap2 : dashboardUsersFeatureStateMap ) {
 						stockStatus.add(dashboardUsersFeatureStateMap2.getState());
@@ -417,6 +416,12 @@ public class StockServiceImpl {
 			}
 		}
 
+		/*
+		 * if(Objects.nonNull(filterRequest.getFilteredUserType()))
+		 * specificationBuilder.addSpecification(joiner .joinToUsersAndUsertype(new
+		 * SearchCriteria("usertype", filterRequest.getFilteredUserType(),
+		 * SearchOperation.EQUALITY, Datatype.STRING)));
+		 */
 		if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
 			specificationBuilder.orSearch(new SearchCriteria("txnId", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 		}
@@ -440,7 +445,7 @@ public class StockServiceImpl {
 			}else {
 				User user = userRepository.getById(filterRequest.getUserId());
 				logger.info(user);
-				
+
 				/*
 				 * auditTrailRepository.save(new AuditTrail(user.getId(), user.getUsername(),
 				 * user.getUsertype().getId(), user.getUsertype().getUsertypeName(), 4,
@@ -484,13 +489,13 @@ public class StockServiceImpl {
 
 				txnRecord.setRemarks(deleteObj.getRemarks());
 				txnRecord.setDeleteFlag(0);
-				
+
 				WebActionDb webActionDb = new WebActionDb();
 				webActionDb.setFeature(WebActionDbFeature.STOCK.getName());
 				webActionDb.setSubFeature(WebActionDbSubFeature.DELETE.getName());
 				webActionDb.setState(WebActionDbState.INIT.getCode());
 				webActionDb.setTxnId(deleteObj.getTxnId());
-				
+
 				addInAuditTrail(Long.valueOf(deleteObj.getUserId()), deleteObj.getTxnId(), SubFeatures.DELETE,deleteObj.getRoleType());
 				if(stockTransaction.executeDeleteStock(txnRecord, webActionDb)) {
 					logger.info("Deletion of Stock is in Progress." + deleteObj.getTxnId());
@@ -537,9 +542,9 @@ public class StockServiceImpl {
 			webActionDb.setSubFeature(WebActionDbSubFeature.UPDATE.getName());
 			webActionDb.setState(WebActionDbState.INIT.getCode());
 			webActionDb.setTxnId(distributerManagement.getTxnId());
-			
+
 			addInAuditTrail(stockMgmt.getUserId(), stockMgmt.getTxnId(), SubFeatures.UPDATE, stockMgmt.getRoleType());
-			
+
 			if(stockTransaction.executeUpdateStock(stockMgmt, webActionDb)) {
 				logger.info("Stock Update have been Successful." + stockMgmt.getTxnId());
 				return new GenricResponse(0, "Stock Update have been Successful.", distributerManagement.getTxnId());
@@ -619,7 +624,7 @@ public class StockServiceImpl {
 
 		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		DateTimeFormatter dtf2  = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
-		
+
 		SystemConfigurationDb filepath = configurationManagementServiceImpl.findByTag(ConfigTags.file_download_dir);
 		logger.info("CONFIG : file_consignment_download_dir [" + filepath + "]");
 		SystemConfigurationDb link = configurationManagementServiceImpl.findByTag(ConfigTags.file_download_link);
@@ -669,7 +674,7 @@ public class StockServiceImpl {
 				csvWriter.write( new StockFileModel());
 			}
 			addInAuditTrail(Long.valueOf(filterRequest.getUserId()), "NA", SubFeatures.EXPORT,filterRequest.getRoleType());
-			
+
 			return new FileDetails( fileName, filePath, link.getValue() + fileName ); 
 
 		} catch (Exception e) {
@@ -745,7 +750,7 @@ public class StockServiceImpl {
 				if(consignmentUpdateRequest.getAction() == 0) {
 					action = SubFeatures.ACCEPT;
 					mailTag = "STOCK_APPROVED_BY_CEIR_ADMIN"; 
-					
+
 					txnId = stockMgmt.getTxnId();
 
 					placeholderMap.put("<First name>", firstName);
@@ -794,7 +799,7 @@ public class StockServiceImpl {
 				if(consignmentUpdateRequest.getAction() == 0) {
 					action = SubFeatures.ACCEPT;
 					mailTag = "STOCK_PROCESS_SUCCESS_TO_USER_MAIL"; 
-					
+
 					txnId = stockMgmt.getTxnId();
 
 					placeholderMap.put("<First name>", firstName);
@@ -831,7 +836,7 @@ public class StockServiceImpl {
 							receiverUserType,
 							"Users");
 					logger.info("Notfication have been saved.");
-					
+
 					logger.info(consignmentUpdateRequest);
 					addInAuditTrail(Long.valueOf(consignmentUpdateRequest.getUserId()), 
 							consignmentUpdateRequest.getTxnId(), action, consignmentUpdateRequest.getRoleType());
@@ -867,9 +872,9 @@ public class StockServiceImpl {
 		else
 			return null;
 	}
-	
+
 	private void addInAuditTrail(Long userId, String txnId, String subFeatureName, String roleType) {
-		
+
 		User requestUser = null;
 		try {
 			requestUser = userRepository.getById(userId);
@@ -881,21 +886,21 @@ public class StockServiceImpl {
 			logger.error("Error while fetching user information for user id = "+userId);
 		}
 		if(Objects.nonNull(requestUser)) {
-		logger.info("Inserting in audit table for feature = "+Features.STOCK+"and Subfeature"+subFeatureName);
-		auditTrailRepository.save(new AuditTrail(
-				requestUser.getId(),
-				requestUser.getUsername(), 
-				requestUser.getUsertype().getId(),
-				requestUser.getUsertype().getUsertypeName(),
-				4,
-				Features.STOCK,
-				subFeatureName,
-				"", 
-				txnId,
-				roleType));
+			logger.info("Inserting in audit table for feature = "+Features.STOCK+"and Subfeature"+subFeatureName);
+			auditTrailRepository.save(new AuditTrail(
+					requestUser.getId(),
+					requestUser.getUsername(), 
+					requestUser.getUsertype().getId(),
+					requestUser.getUsertype().getUsertypeName(),
+					4,
+					Features.STOCK,
+					subFeatureName,
+					"", 
+					txnId,
+					roleType));
 		}else {
 			logger.error("Could not find the user information");
 		}
-		
+
 	}
 }

@@ -83,39 +83,30 @@ public class ConsignmentMgmt implements Serializable {
 	private String currencyInterp;
 
 	private Double totalPrice;
-	
+
 	@Transient
 	private String stateInterp;
-	
+
 	@Transient
 	private String taxInterp;
-	
+
 	public Integer portAddress;
-	
+
 	@Transient
 	private String portAddressInterp;
-	
-	
-	public String getPortAddressInterp() {
-		return portAddressInterp;
-	}
-
-	public void setPortAddressInterp(String portAddressInterp) {
-		this.portAddressInterp = portAddressInterp;
-	}
 
 	@Column(name="device_quantity")
 	public Integer deviceQuantity;
 
 	@Column(name="custom_id")
 	public Long customID;
-	
+
 	@Column(name="ceir_admin_id")
 	public Long ceirAdminID;
-	
+
 	@Column(name="drt_id")
 	public Long drtID;
-	
+
 	@Transient
 	public String userName;
 	@Transient
@@ -124,10 +115,24 @@ public class ConsignmentMgmt implements Serializable {
 	private Integer featureId;
 	@Transient
 	private Integer userTypeId;
-	
+
 	@Transient
 	private String roleType;
 	
+	//@NotNull
+	@NotAudited
+	@OneToOne
+	@JoinColumn(name="local_user_id", updatable = false)
+	private User user;
+
+	@Column(length = 1)
+	private String pendingTacApprovedByCustom; // Expected values Y or N
+
+	private Integer deleteFlag;
+
+	@Transient
+	private String deleteFlagInterp;	
+
 	public String getRoleType() {
 		return roleType;
 	}
@@ -142,6 +147,14 @@ public class ConsignmentMgmt implements Serializable {
 
 	public void setUserType(String userType) {
 		this.userType = userType;
+	}
+
+	public String getPortAddressInterp() {
+		return portAddressInterp;
+	}
+
+	public void setPortAddressInterp(String portAddressInterp) {
+		this.portAddressInterp = portAddressInterp;
 	}
 
 	public Integer getFeatureId() {
@@ -192,24 +205,6 @@ public class ConsignmentMgmt implements Serializable {
 		this.drtID = drtID;
 	}
 
-	//@NotNull
-	@NotAudited
-	@OneToOne
-	@JoinColumn(name="local_user_id", updatable = false)
-	private User user;
-	
-	@Column(length = 1)
-	private String pendingTacApprovedByCustom; // Expected values Y or N
-	
-	private Integer deleteFlag;
-	
-	@Transient
-	private String deleteFlagInterp;
-	
-	
-
-	
-	
 	public Integer getPortAddress() {
 		return portAddress;
 	}
@@ -226,7 +221,7 @@ public class ConsignmentMgmt implements Serializable {
 		this.deviceQuantity = deviceQuantity;
 	}
 
-	
+
 	public Integer getDeleteFlag() {
 		return deleteFlag;
 	}
@@ -548,5 +543,5 @@ public class ConsignmentMgmt implements Serializable {
 		builder.append("]");
 		return builder.toString();
 	}
-	
+
 }
