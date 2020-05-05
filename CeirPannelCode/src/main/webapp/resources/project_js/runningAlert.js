@@ -50,6 +50,7 @@
 		
 		function alertFieldTable(lang){
 			
+			var alertId = $("#alertId").val() == 'null' ? null : $("#alertId option:selected").text();
 			var filterRequest={
 					"endDate":$('#endDate').val(),
 					"startDate":$('#startDate').val(),
@@ -57,7 +58,7 @@
 					"featureId":parseInt(featureId),
 					"userTypeId": parseInt($("body").attr("data-userTypeID")),
 					"userType":$("body").attr("data-roleType"),
-					"alertId" : $("#alertId option:selected").text()
+					"alertId" : alertId
 					
 			}				
 			if(lang=='km'){
@@ -163,7 +164,7 @@
 									"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
 
 									"<select id="+dropdown[i].id+" class='select2 initialized'>"+
-									"<option value='' selected Disabled >"+dropdown[i].title+
+									"<option value=null selected>"+dropdown[i].title+
 									"</option>"+
 									"</select>"+
 									"</div>"+

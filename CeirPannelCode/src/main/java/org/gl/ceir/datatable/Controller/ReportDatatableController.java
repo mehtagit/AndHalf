@@ -50,13 +50,13 @@ public class ReportDatatableController {
 	
 	@PostMapping("dbReportData")
 	public ResponseEntity<?> viewReportTable(HttpServletRequest request, HttpSession session) {
-		//List<List<Object>> finalList = new ArrayList<List<Object>>();
-		//List<List<String>> mul = new ArrayList<List<String>>();
 		
 		String filter = request.getParameter("filter");
 		MapDatatableResponse map = new MapDatatableResponse();
 		Gson gsonObject = new Gson();
 		DBrowDataModel filterrequest = gsonObject.fromJson(filter, DBrowDataModel.class);
+		//Integer pageSize = Integer.parseInt(request.getParameter("length"));
+		//Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize ;
 		try {
 			log.info("request passed to API:::::::::" + filter);
 			Object response = dBTablesFeignClient.ReportDetailsFeign(filterrequest);
@@ -64,44 +64,27 @@ public class ReportDatatableController {
 			String apiResponse = gson.toJson(response);
 			log.info("apiResponse ::::::::::::::" + apiResponse);
 			
-			DBReportDataModel dBrowDataModel = gson.fromJson(apiResponse, DBReportDataModel.class);
-			log.info("response::::::" + dBrowDataModel);
+			reportPaginationModel = gson.fromJson(apiResponse, ReportPaginationModel.class);
+			log.info("response::::::" + reportPaginationModel);
 			
-			List<DBReportDataModel> paginationContentList = reportPaginationModel.getContent();
+			DBReportDataModel paginationContentList = reportPaginationModel.getContent();
 			log.info("paginationContentList----------->" +paginationContentList);
 			
+			List<String> columnList = paginationContentList.getColumns();
+			List<Map<String,String>> rowData = paginationContentList.getRowData();
 			List<DbListDataHeaders> dataTableInputs = new ArrayList<>();
-			List<Map<String, String>> rowData = new ArrayList<Map<String,String>>();  
 			
-			int i = 0;
-			/*
-			 * for( DBReportDataModel reportData : paginationContentList){ if(i==0) {
-			 * for(String key: reportData.getRowData().keySet()){
-			 * 
-			 * dataTableInputs.add(new DbListDataHeaders(key, key)); } }
-			 * rowData.add(reportData.getRowData()); i++; }
-			 */
-			
-			  
-			
-			/*
-			 * List<String> columnList = dBrowDataModel.getColumns();
-			 * List<Map<String,String>> rowData = dBrowDataModel.getRowData();
-			 * List<DbListDataHeaders> dataTableInputs = new ArrayList<>();
-			 */
-			 
-
-			/*if (columnList.isEmpty()) {
-				dBrowDataModel.setColumns(Collections.emptyList());
+			if (columnList.isEmpty()) {
+				paginationContentList.setColumns(Collections.emptyList());
 			} else {
-				List<String> list = dBrowDataModel.getColumns();
+				List<String> list = paginationContentList.getColumns();
 				ListIterator<String> iterator = list.listIterator();
 				String columnName = null;
 				while (iterator.hasNext()) {
 					columnName = iterator.next();
 					dataTableInputs.add(new DbListDataHeaders(columnName, columnName));
 				}
-			}*/	
+			}
 				
 			map.setColumns(dataTableInputs);
 			map.setData(rowData);

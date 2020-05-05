@@ -112,7 +112,7 @@ data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeI
                       <form action="">
                         <div class="col s12 m12 l12">
                           <h4 class="header2 device-info">
-                            Device Information</h4>
+                            Device Information <i class="fa fa-eye teal-text view-icon" aria-hidden="true" title="View"></i> </h4>
                           <div class="row">
                             <div class="input-field col s12 m4 l4">
                               <input type="text" id="MSISDN" name="MSISDN" value="" disabled>

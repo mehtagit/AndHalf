@@ -182,7 +182,7 @@
 
 							</div>			
 
-					<div class="row myRow">
+					<%-- <div class="row myRow">
 							 	<div class="input-field col s12 m6" style="margin-top: 23px;">
                                             <input type="text" id="viewPassword" name="password" disabled
                                                pattern="[a-zA-Z]{0,20}" required maxlength="18" />
@@ -194,9 +194,7 @@
                                                pattern="[a-zA-Z]{0,20}" required maxlength="18" />
                                             <label for="viewconfirmPassword"><spring:message code="registration.retypepassword"/><span class="star"> *</span></label>
                                         </div>
-						</div>
-
-
+						</div> --%>
 
 					<div class="row myRow">
 							
@@ -254,7 +252,7 @@
 				<form action="" onsubmit="return update()" method="POST"
 					enctype="multipart/form-data" id="register">
 
-					<div class="row myRow">
+					<div class="row" style="margin-top: 10px;">
 						<div class="input-field col s12 m4">
                                             <input type="text" id="editfirstName"  name="firstName" pattern="[a-zA-Z]{0,20}" required="required"
 											oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');" disabled
@@ -303,7 +301,7 @@
 
 							</div>			
 
-					<div class="row myRow">
+					<%-- <div class="row myRow">
 							 	<div class="input-field col s12 m6" style="margin-top: 23px;">
                                             <input type="text" id="editPassword" name="password" disabled
                                                pattern="[a-zA-Z]{0,20}" required maxlength="18" />
@@ -315,7 +313,7 @@
                                                pattern="[a-zA-Z]{0,20}" required maxlength="18" />
                                             <label for="EditconfirmPassword"><spring:message code="registration.retypepassword"/><span class="star"> *</span></label>
                                         </div>
-						</div>
+						</div> --%>
 						
 						<div class="row myRow">
 				 				
@@ -384,44 +382,8 @@
 	</div>
 	
 	
-		
-	   <!-- --------------------------------------------------------------Delete Field Modal Start --------------------------------------------------------------->
-
-
-	<div id="DeleteFieldModal" class="modal">
-		<h6 class="modal-header"><spring:message code="modal.header.deletePort" /></h6>
-		<div class="modal-content">
-		<div class="row">
-				<h6><spring:message code="modal.message.Port.delete" /></h6>
-			</div> 
-			<input type="text" id="deletePortId" hidden>
-			<div class="row">
-				<div class="input-field col s12 center">
-					<a onclick="confirmantiondelete()"
-						class="modal-close modal-trigger btn" type="submit"><spring:message code="modal.yes" /></a>
-					<button class="modal-close btn" style="margin-left: 10px;"><spring:message code="modal.no" /></button>
-				</div>
-			</div>
-		</div>
-	</div>	
 	
-	<div id="closeDeleteModal" class="modal">
-			<h6 class="modal-header"><spring:message code="modal.header.deletePort" /></h6>
-			<div class="modal-content">
-		
-			
-			<div class="row">
-
-				<h6 id="tacModalText"><spring:message code="modal.message.portDeleted" /> </h6>
-			</div>
-			<div class="row">
-				<div class="input-field col s12 center">
-					<a href="" class="modal-close btn"
-						style="margin-left: 10px;"><spring:message code="modal.close" /></a>
-				</div>
-			</div>
-		</div>
-	</div>
+	
 		
 		
 		
@@ -439,6 +401,43 @@
             </div>
         </div>
     </div>	
+    
+    
+        <div id="DeleteFieldModal" class="modal">
+		<h6 class="modal-header"><spring:message code="modal.header.deleteSystemUser" /></h6>
+		<div class="modal-content">
+		<div class="row">
+				<h6><spring:message code="modal.message.User.delete" /></h6>
+			</div> 
+			<div class="row">
+				<div class="input-field col s12 center">
+					<a onclick="deleteModal()"
+						class="modal-close modal-trigger btn" type="submit"><spring:message code="modal.yes" /></a>
+					<button class="modal-close btn" style="margin-left: 10px;"><spring:message code="modal.no" /></button>
+				</div>
+			</div>
+		</div>
+	</div>	
+
+
+
+<div id="closeDeleteModal" class="modal">
+			<h6 class="modal-header"><spring:message code="modal.header.deleteSystemUser" /></h6>
+			<div class="modal-content">
+		
+			
+			<div class="row">
+
+				<h6 id="tacModalText"><spring:message code="modal.message.userDeleted"/> </h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<a href="" class="modal-close btn"
+						style="margin-left: 10px;"><spring:message code="modal.ok" /></a>
+				</div>
+			</div>
+		</div>
+	</div>
 <!--materialize js-->
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>

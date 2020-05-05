@@ -4,9 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 public class MapDatatableResponse {
-
-
-	
 	private List<DbListDataHeaders> columns;
 	private List<Map<String, String>> data;
 	public List<DbListDataHeaders> getColumns() {

@@ -79,10 +79,9 @@
 						"bFilter" : true,
 						"bInfo" : true,
 						"bSearchable" : true,
-						 "data": dataObject.data,
-						 "columns": dataObject.columns
-					
-				    });
+						"data": dataObject.data,
+						"columns": dataObject.columns
+					});
 					$('div#initialloader').delay(300).fadeOut('slow');
 			}
 				
