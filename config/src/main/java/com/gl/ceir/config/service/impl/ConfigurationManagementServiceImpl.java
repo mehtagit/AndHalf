@@ -425,7 +425,7 @@ public class ConfigurationManagementServiceImpl {
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
-
+	
 	public GenricResponse saveAllNotifications(List<Notification> notifications) {
 		try {
 
