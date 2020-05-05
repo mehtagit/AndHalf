@@ -2,24 +2,16 @@ package com.ceir.CeirCode.service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
-
 import javax.transaction.Transactional;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
-import com.ceir.CeirCode.model.AlertDb;
 import com.ceir.CeirCode.model.AuditTrail;
 import com.ceir.CeirCode.model.ChangePassword;
 import com.ceir.CeirCode.model.ChangeUserStatus;
@@ -63,9 +55,9 @@ import com.ceir.CeirCode.repoService.AudiTrailRepoService;
 import com.ceir.CeirCode.repoService.PortAddressRepoService;
 import com.ceir.CeirCode.repoService.ReqHeaderRepoService;
 import com.ceir.CeirCode.repoService.SystemConfigDbRepoService;
-import com.ceir.CeirCode.repoService.SystemConfigurationDbRepoService;
 import com.ceir.CeirCode.repoService.UserPassHistoryRepoService;
 import com.ceir.CeirCode.repoService.UserRepoService;
+import com.ceir.CeirCode.repoService.UserRoleRepoService;
 import com.ceir.CeirCode.response.GenricResponse;
 import com.ceir.CeirCode.response.UpdateProfileResponse;
 import com.ceir.CeirCode.response.tags.ProfileTags;
@@ -140,11 +132,30 @@ public class UserService {
 	@Autowired
 	RunningAlertRepoService alertDbRepo;
 
-	public ResponseEntity<?> getUsertypeData(HttpHeaders headers){
+	@Autowired
+	UserRoleRepoService userRoleRepoService;
+
+
+	public ResponseEntity<?> getUsertypeData(int type){
 		try {
-			log.info("headers:  "+headers);
-			List<Usertype> usertypeData=usertypeRepo.findBySelfRegister(SelfRegistration.YES.getCode());
-			usertypeData.sort((u1,u2)->u1.getUsertypeName().compareTo(u2.getUsertypeName()));
+			log.info("type= "+type);
+			List<Usertype> usertypeData=new ArrayList<Usertype>();
+			if(type==0) {
+				usertypeData=usertypeRepo.findBySelfRegister(SelfRegistration.YES.getCode());
+			}
+			else if(type==1)
+			{
+				usertypeData=usertypeRepo.findBySelfRegister(SelfRegistration.NO.getCode());
+				usertypeData.sort((u1,u2)->u1.getUsertypeName().compareTo(u2.getUsertypeName()));
+
+			}
+			else if(type==2)
+			{
+				usertypeData=usertypeRepo.findAll();
+				usertypeData.sort((u1,u2)->u1.getUsertypeName().compareTo(u2.getUsertypeName()));
+			}
+			else
+			{}
 			return new ResponseEntity<>(usertypeData, HttpStatus.OK);
 		}
 		catch(Exception e){
@@ -154,9 +165,10 @@ public class UserService {
 			return new ResponseEntity<>(response,HttpStatus.OK);
 		}
 	}
-	
+
 	public ResponseEntity<?> getInternalUsertype(){
 		try {
+
 			List<Usertype> usertypeData=usertypeRepo.findBySelfRegister(SelfRegistration.NO.getCode());
 			usertypeData.sort((u1,u2)->u1.getUsertypeName().compareTo(u2.getUsertypeName()));
 			return new ResponseEntity<>(usertypeData, HttpStatus.OK);
@@ -200,11 +212,11 @@ public class UserService {
 			if(user!=null) {
 				List<Securityquestion> securityQuestionList=new ArrayList<Securityquestion>();
 				if(user.getUserSecurityquestion().isEmpty()==false) {
-				for(UserSecurityquestion securityQues:user.getUserSecurityquestion()) {
-					Securityquestion ques=new Securityquestion(securityQues.getSecurityQuestion().getId(),
-							securityQues.getSecurityQuestion().getQuestion(),securityQues.getSecurityQuestion().getCategory());
-					securityQuestionList.add(ques);
-				}
+					for(UserSecurityquestion securityQues:user.getUserSecurityquestion()) {
+						Securityquestion ques=new Securityquestion(securityQues.getSecurityQuestion().getId(),
+								securityQues.getSecurityQuestion().getQuestion(),securityQues.getSecurityQuestion().getCategory());
+						securityQuestionList.add(ques);
+					}
 				}
 				GenricResponse response=new GenricResponse(200,"data is found","",securityQuestionList);
 				return new ResponseEntity<>(response,HttpStatus.OK);
@@ -214,20 +226,20 @@ public class UserService {
 				return new ResponseEntity<>(response,HttpStatus.OK);
 			}
 
-	
+
 		}
 		catch(Exception e) {
 			GenricResponse response=new GenricResponse(409,RegistrationTags.COMMAN_FAIL_MSG.getTag(),RegistrationTags.COMMAN_FAIL_MSG.getMessage(),"");
 			return new ResponseEntity<>(response,HttpStatus.OK);
 		}
 	}
-	
+
 	public ResponseEntity<?> getSecurityQuestion2(){
-	
+
 		try {
-		       List<Securityquestion> securityQuestionList=securityQuestionRepo.findAll();
-				return new ResponseEntity<>(securityQuestionList,HttpStatus.OK);
-	
+			List<Securityquestion> securityQuestionList=securityQuestionRepo.findAll();
+			return new ResponseEntity<>(securityQuestionList,HttpStatus.OK);
+
 		}
 		catch(Exception e) {
 			HttpResponse response=new HttpResponse(RegistrationTags.COMMAN_FAIL_MSG.getMessage(),409,RegistrationTags.COMMAN_FAIL_MSG.getTag());
@@ -352,55 +364,55 @@ public class UserService {
 			roles.add(5l);
 			roles.add(6l);
 			if(roles.contains(mainRole)) {
-			if(usertypes.length==1) {
-				long usertypeId = 0;
-				for(long id:usertypes) {
-					usertypeId=id;
-				}
-				return	usertypeId;
-			}
-			
-			else if(usertypes.length>1){
-				Arrays.sort(usertypes);
-				long usertypeArray1[]={4,5,6};
-				long usertypeArray2[]={4,5};
-				long usertypeArray3[]={4,6};
-				long usertypeArray4[]={5,6};  
-				Arrays.sort(usertypeArray3);
-				log.info("usertype array1= "+Arrays.toString(usertypeArray1));
-				log.info("usertype array2= "+Arrays.toString(usertypeArray2));
-				log.info("usertype array3= "+Arrays.toString(usertypeArray3));
-				log.info("usertype array4= "+Arrays.toString(usertypeArray4));
-				boolean b=Arrays.equals(usertypes, usertypeArray4);
-				log.info("if roles are DR:  "+b);
-				if(Arrays.equals(usertypes, usertypeArray1)) {
-					log.info("if roles are IDR");
-					return 4;
-				}
-				else if(Arrays.equals(usertypes, usertypeArray2)) {
-					log.info("if roles are ID");
-					return 4;
-				}
-				else if(Arrays.equals(usertypes, usertypeArray3)) {
-					log.info("if roles are IR");
-					return 4;
-				} 
-				else if(Arrays.equals(usertypes, usertypeArray4)) {
-					log.info("if roles are DR");
-					return 5;
-				}
-				else {
-					log.info("if role set not found");
-					return 0;
-
+				if(usertypes.length==1) {
+					long usertypeId = 0;
+					for(long id:usertypes) {
+						usertypeId=id;
+					}
+					return	usertypeId;
 				}
 
+				else if(usertypes.length>1){
+					Arrays.sort(usertypes);
+					long usertypeArray1[]={4,5,6};
+					long usertypeArray2[]={4,5};
+					long usertypeArray3[]={4,6};
+					long usertypeArray4[]={5,6};  
+					Arrays.sort(usertypeArray3);
+					log.info("usertype array1= "+Arrays.toString(usertypeArray1));
+					log.info("usertype array2= "+Arrays.toString(usertypeArray2));
+					log.info("usertype array3= "+Arrays.toString(usertypeArray3));
+					log.info("usertype array4= "+Arrays.toString(usertypeArray4));
+					boolean b=Arrays.equals(usertypes, usertypeArray4);
+					log.info("if roles are DR:  "+b);
+					if(Arrays.equals(usertypes, usertypeArray1)) {
+						log.info("if roles are IDR");
+						return 4;
+					}
+					else if(Arrays.equals(usertypes, usertypeArray2)) {
+						log.info("if roles are ID");
+						return 4;
+					}
+					else if(Arrays.equals(usertypes, usertypeArray3)) {
+						log.info("if roles are IR");
+						return 4;
+					} 
+					else if(Arrays.equals(usertypes, usertypeArray4)) {
+						log.info("if roles are DR");
+						return 5;
+					}
+					else {
+						log.info("if role set not found");
+						return 0;
 
-			}
-			return 0;
+					}
+
+
+				}
+				return 0;
 			}
 			else {
-				
+
 				return mainRole;
 			}
 		}
@@ -459,36 +471,35 @@ public class UserService {
 			return 0;
 		}
 	};
-    @Transactional(rollbackOn = Exception.class)
-  	public ResponseEntity<?> userRegistration(UserProfile userDetails)  {
-    	try {
-		log.info("user details----::::   "+userDetails); 
-		Usertype userType=usertypeRepo.findByUsertypeName(userDetails.getUsertypeName());
-
-		if(userType!=null) {
-			if(userDetails.getRoles()==null) {
-				long data[]= {userType.getId()}; userDetails.setRoles(data);
+	@Transactional(rollbackOn = Exception.class)
+	public ResponseEntity<?> userRegistration(UserProfile userDetails)  {
+		try {
+			log.info("user details----::::   "+userDetails); 
+			Usertype userType=usertypeRepo.findByUsertypeName(userDetails.getUsertypeName());
+			if(userType!=null) {
+				if(userDetails.getRoles()==null) {
+					long data[]= {userType.getId()}; userDetails.setRoles(data);
+				}
 			}
-		}
-		long rolesOutput=roleCheck(userDetails.getRoles());
-		boolean emailExist=userProfileRepo.existsByEmail(userDetails.getEmail());
-		if(emailExist) {
-		
-			HttpResponse response=new HttpResponse(RegistrationTags.Email_Exist.getMessage(),409,RegistrationTags.Email_Exist.getTag());
-			return new ResponseEntity<>(response,HttpStatus.OK);
-		}
+			long rolesOutput=roleCheck(userDetails.getRoles());
+			boolean emailExist=userProfileRepo.existsByEmail(userDetails.getEmail());
+			if(emailExist) {
 
-		boolean phoneExist=userProfileRepo.existsByPhoneNo(userDetails.getPhoneNo());
-		if(phoneExist) {
-			
-			HttpResponse response=new HttpResponse(RegistrationTags.Phone_Exist.getMessage(),409,RegistrationTags.Phone_Exist.getTag());
-			return new ResponseEntity<>(response,HttpStatus.OK);
-		}
-		
+				HttpResponse response=new HttpResponse(RegistrationTags.Email_Exist.getMessage(),409,RegistrationTags.Email_Exist.getTag());
+				return new ResponseEntity<>(response,HttpStatus.OK);
+			}
 
-		
-		log.info("roles output:  "+rolesOutput);
-		if(rolesOutput > 0) {
+			boolean phoneExist=userProfileRepo.existsByPhoneNo(userDetails.getPhoneNo());
+			if(phoneExist) {
+
+				HttpResponse response=new HttpResponse(RegistrationTags.Phone_Exist.getMessage(),409,RegistrationTags.Phone_Exist.getTag());
+				return new ResponseEntity<>(response,HttpStatus.OK);
+			}
+
+
+
+			log.info("roles output:  "+rolesOutput);
+			if(rolesOutput > 0) {
 				List<Long> usertypeList=usertypeCheck();
 				log.info("primary usertypeId is:  "+rolesOutput);	
 				Usertype userTypeData=new Usertype();
@@ -513,19 +524,19 @@ public class UserService {
 					if(usertypeList.contains(userType.getId())) {
 						if(userDetails.getType()==0){
 							String displayName="";
-							 if(Objects.nonNull(userDetails.getMiddleName())) {
-						    	 displayName=userDetails.getFirstName()+" "+userDetails.getMiddleName()+" "+userDetails.getLastName();
-						    	    	
-						    }
-						    else {
-						    	
-						    	 displayName=userDetails.getFirstName()+" "+userDetails.getLastName();
+							if(Objects.nonNull(userDetails.getMiddleName())) {
+								displayName=userDetails.getFirstName()+" "+userDetails.getMiddleName()+" "+userDetails.getLastName();
 
-						    }
+							}
+							else {
+
+								displayName=userDetails.getFirstName()+" "+userDetails.getLastName();
+
+							}
 							userDetails.setDisplayName(displayName);
 						}
 						else {
-					 		String displayName=userDetails.getCompanyName();      
+							String displayName=userDetails.getCompanyName();      
 							userDetails.setDisplayName(displayName);	  
 						}
 					}
@@ -558,11 +569,11 @@ public class UserService {
 						boolean notificationStatusForSms =emailUtils.saveNotification("REG_VERIFY_OTP_SMS_MSG", output, 0,
 								"User Registration", "Registration", userOutput.getUsername(),output.getFirstName(),phoneOtp,ChannelType.SMS,"");
 						log.info("notificationStatusForSms save:  "+notificationStatusForSms);
-					
-					  userOutput.setPreviousStatus(UserStatus.NEW.getCode());
-					  userOutput.setCurrentStatus(UserStatus.OTP_VERIFICATION_PENDING.getCode());
-					  userRepo.save(userOutput);
-									OtpResponse response=new OtpResponse(RegistrationTags.REG_SUCESS_RESP.getMessage(),200,userOutput.getId(),RegistrationTags.REG_SUCESS_RESP.getTag());
+
+						userOutput.setPreviousStatus(UserStatus.NEW.getCode());
+						userOutput.setCurrentStatus(UserStatus.OTP_VERIFICATION_PENDING.getCode());
+						userRepo.save(userOutput);
+						OtpResponse response=new OtpResponse(RegistrationTags.REG_SUCESS_RESP.getMessage(),200,userOutput.getId(),RegistrationTags.REG_SUCESS_RESP.getTag());
 						log.info("response:   "+response);
 						return new ResponseEntity<>(response,HttpStatus.OK);
 					} 
@@ -575,20 +586,20 @@ public class UserService {
 					HttpResponse response=new HttpResponse(RegistrationTags.REG_USER_FAIL_RESP.getMessage(),409,RegistrationTags.REG_USER_FAIL_RESP.getTag());
 					return new ResponseEntity<>(response,HttpStatus.OK);		
 				}
-			
-		}
-		else {    
 
-			HttpResponse response=new HttpResponse(RegistrationTags.REG_FAIL_ROLES_RESP.getMessage(),409,RegistrationTags.REG_FAIL_ROLES_RESP.getTag());
-			return new ResponseEntity<>(response,HttpStatus.OK);
+			}
+			else {    
+
+				HttpResponse response=new HttpResponse(RegistrationTags.REG_FAIL_ROLES_RESP.getMessage(),409,RegistrationTags.REG_FAIL_ROLES_RESP.getTag());
+				return new ResponseEntity<>(response,HttpStatus.OK);
+			}
 		}
-    	}
-    	catch(Exception e) {
-    		log.info(e.getMessage());
-    		log.info(e.toString());
+		catch(Exception e) {
+			log.info(e.getMessage());
+			log.info(e.toString());
 			HttpResponse response=new HttpResponse(RegistrationTags.COMMAN_FAIL_MSG.getMessage(),409,RegistrationTags.COMMAN_FAIL_MSG.getTag());
 			return new ResponseEntity<>(response,HttpStatus.OK);
-    	}
+		}
 	}
 	public List<Long> usertypeCheck(){
 		List<Long> usertypeId=new ArrayList<Long>();
@@ -619,7 +630,7 @@ public class UserService {
 					else {
 						return validateOldUser(output,otp);
 					}
-				
+
 				} 
 				else {
 					return validateNewUser( output,otp);
@@ -684,7 +695,7 @@ public class UserService {
 				HttpResponse response=new HttpResponse(RegistrationTags.OTP_SUCESS_RESP.getMessage(),200,RegistrationTags.OTP_SUCESS_RESP.getTag()); 
 				User user=userRepo.findById(output.getId());
 				user.setPreviousStatus(UserStatus.OTP_VERIFICATION_PENDING.getCode());
-		
+
 				if(otp.getForgotPassword()==1) {
 					user.setCurrentStatus(UserStatus.APPROVED.getCode());     					
 				}
@@ -693,7 +704,7 @@ public class UserService {
 					boolean notificationStatus2=emailUtils.saveNotification("REG_WAIT_USER_FOR_APPROV_STATUS", user.getUserProfile(),
 							0, "Registration", "user phone and email details validated", user.getUsername(),"Registration Request Notification Alert "+output.getUserProfile().getFirstName(),"",ChannelType.EMAIL,"");
 					log.info("notification save:  "+notificationStatus2);
-		
+
 				}
 
 				userRepo.save(user); 
@@ -740,9 +751,9 @@ public class UserService {
 		}
 
 	}
-	
+
 	public ResponseEntity<?> checkRegistration(Integer usertypeId){
-		
+
 		try {
 			log.info("inside check registration method");
 			log.info("usertypeId value "+usertypeId);
@@ -763,7 +774,7 @@ public class UserService {
 				map.put(UsertypeData.Immigration.getCode(), "imm_user_limit");
 				map.put(UsertypeData.Customer_Care.getCode(), "customer_user_limit");
 				map.put(UsertypeData.DRT.getCode(), "drt_user_limit");
-				
+
 				log.info("then going to fetch data from system configuration db by tag "+map.get(usertypeId));
 				SystemConfigurationDb systemConfigData=systemConfigurationDbRepoImpl.getDataByTag(map.get(usertypeId));
 				long userLimit=0;
@@ -779,31 +790,31 @@ public class UserService {
 					}
 
 				}
-                
+
 				long count=userRepoService.countByUsertypeId(usertypeId);
 				log.info("total users find by this usertype= "+count);
 				log.info("now going to compare these two above values");
 				if(count>=userLimit) {
-                    log.info("if usertype count greater than total users limit then we don't able to create new user now");
+					log.info("if usertype count greater than total users limit then we don't able to create new user now");
 					HttpResponse response=new HttpResponse(RegistrationTags.Reg_userlimit_exceed.getMessage(),409,RegistrationTags.Reg_userlimit_exceed.getTag());
 					return new ResponseEntity<>(response,HttpStatus.OK);
 				}
 
 				else {
-                    log.info("if usertype count less than total users limit then so happily we able to create new user now");
+					log.info("if usertype count less than total users limit then so happily we able to create new user now");
 					HttpResponse response=new HttpResponse(RegistrationTags.Reg_allowed.getMessage(),200,RegistrationTags.Reg_allowed.getTag());
 					return new ResponseEntity<>(response,HttpStatus.OK);			
-					
+
 				}
-				
+
 			}
-			
+
 			else {
 				log.info("usertype status is disable now so registration is not available as of now");
 				HttpResponse response=new HttpResponse(RegistrationTags.Reg_flag_off.getMessage(),409,RegistrationTags.Reg_flag_off.getTag());
 				return new ResponseEntity<>(response,HttpStatus.OK);			
 			}
-			
+
 		}
 		catch(Exception e) {
 			log.info("something wrong happened here now");
@@ -922,7 +933,7 @@ public class UserService {
 			return new ResponseEntity<>(response,HttpStatus.OK);
 		}
 	}
-	
+
 	public ResponseEntity<?> setNewPassword(User user){
 		User output=userRepo.save(user);
 		if(output!=null) {
@@ -1018,37 +1029,99 @@ public class UserService {
 
 
 	public ResponseEntity<?> changeUserStatus(ChangeUserStatus userStatus){
-		log.info("inside  chane User status  controller");  
+		log.info("inside  chane User status  controller");
 		log.info(" userStatus data:  "+userStatus);      
 		log.info("get user  data by userid below");  
 		User user=userRepo.findById(userStatus.getId());
 		if(user!=null) {
-			user.setPreviousStatus(user.getCurrentStatus()); 
-			user.setCurrentStatus(userStatus.getStatus()); 
-			user.setRemark(userStatus.getRemark());
-			user.setReferenceId(userStatus.getReferenceId());
-			user.setModifiedBy(userStatus.getUsername());
-			User output=userRepo.save(user); 
-			User userData=userRepo.findById(userStatus.getUserId());
-			if(userData!=null)
-			{
-				saveUserTrail(userData, "Registration Request","change user status",8);				
+			if(userStatus.getAction()==0) {
+				User userData=userRepo.findById(userStatus.getUserId());
+				if(userData!=null)
+				{
+					saveUserTrail(userData, "Registration Request","change user status",8);				
+				}
+				user.setPreviousStatus(user.getCurrentStatus()); 
+				user.setCurrentStatus(userStatus.getStatus()); 
+				user.setRemark(userStatus.getRemark());
+				user.setReferenceId(userStatus.getReferenceId());
+				user.setModifiedBy(userData.getUsername());
+				User output=userRepo.save(user); 
+
+				log.info("user data after update the status: "+output);
+				if(output!=null) {
+					HttpResponse response=new HttpResponse(UpdateUserStatusTags.USER_STATUS_CHANGED.getMessage(),
+							200,UpdateUserStatusTags.USER_STATUS_CHANGED.getTag());
+					return new ResponseEntity<>(response,HttpStatus.OK);	
+				}
+				else {
+					HttpResponse response=new HttpResponse(UpdateUserStatusTags.USER_STATUS_CHANGE_FAIL.getMessage(),
+							500,UpdateUserStatusTags.USER_STATUS_CHANGE_FAIL.getTag());
+					return new ResponseEntity<>(response,HttpStatus.OK);	
+				}
 			}
-			
-			log.info("user data after update the status: "+output);
-			if(output!=null) {
-	
-				HttpResponse response=new HttpResponse(UpdateUserStatusTags.USER_STATUS_CHANGED.getMessage(),
-						200,UpdateUserStatusTags.USER_STATUS_CHANGED.getTag());
-				log.info("response send to user:  "+response);
-				return new ResponseEntity<>(response,HttpStatus.OK);	
+			else if(userStatus.getAction()==1) {
+				User userData=userRepo.findById(userStatus.getUserId());
+				List<Long> usertypeList=new ArrayList<Long>();
+				usertypeList.add(4l);
+				usertypeList.add(5l);
+				usertypeList.add(6l);
+				if(usertypeList.contains(userStatus.getUsertype()))		    
+				{	
+
+					if(userData!=null)
+					{
+						saveUserTrail(userData, "Registration Request","change user status",8);				
+					}
+
+					List<Userrole> rolesList=new ArrayList<Userrole>();
+					for(int i=0;i<userStatus.getRoles().length;i++) {
+						boolean existsData=false;
+						existsData=userRoleRepoService.existsByUerIdAndUsertypeId(userStatus.getId(), userStatus.getRoles()[i]);		    		    		
+						log.info("existsData for this usertypeID "+userStatus.getRoles()[i]+" and user id "+userStatus.getId()+"in userrole table: "+existsData);
+						if(!existsData) {
+							User users=new User(userStatus.getId());
+							Usertype usertype=new Usertype(userStatus.getRoles()[i]);
+							Userrole roles=new Userrole(users,usertype);
+							rolesList.add(roles);
+						}
+						else {}
+					}
+
+					if(rolesList.isEmpty()==true) {
+						HttpResponse response=new HttpResponse(UpdateUserStatusTags.Roles_Exist.getMessage(),
+								200,UpdateUserStatusTags.Roles_Exist.getTag());
+						return new ResponseEntity<>(response,HttpStatus.OK);
+					}
+					else {
+						List<Userrole> rolesOutput=userRoleRepoService.saveRoleList(rolesList);
+						if(rolesOutput.isEmpty()==false) {
+							HttpResponse response=new HttpResponse(UpdateUserStatusTags.Roles_Updated.getMessage(),
+									200,UpdateUserStatusTags.Roles_Updated.getTag());
+							return new ResponseEntity<>(response,HttpStatus.OK);
+						}
+						else {
+							HttpResponse response=new HttpResponse(RegistrationTags.COMMAN_FAIL_MSG.getMessage(),
+									200,RegistrationTags.COMMAN_FAIL_MSG.getTag());
+							return new ResponseEntity<>(response,HttpStatus.OK);
+						}
+					}
+				}
+				else {
+					HttpResponse response= new HttpResponse(RegistrationTags.Change_Role_Not_Allowed.getMessage(),409,
+							RegistrationTags.Change_Role_Not_Allowed.getTag());
+					return new ResponseEntity<>(response,HttpStatus.OK);	
+
+				}
 			}
+
 			else {
-				HttpResponse response=new HttpResponse(UpdateUserStatusTags.USER_STATUS_CHANGE_FAIL.getMessage(),
-						500,UpdateUserStatusTags.USER_STATUS_CHANGE_FAIL.getTag());
-				log.info("response send to user:  "+response);
+				HttpResponse response= new HttpResponse(RegistrationTags.Invalid_Action.getMessage(),409,
+						RegistrationTags.Invalid_Action.getTag());
 				return new ResponseEntity<>(response,HttpStatus.OK);	
-			} 
+			}
+
+
+
 		}    
 		else { 
 			HttpResponse response=new HttpResponse(UpdateUserStatusTags.USER_STATUS_WRONG_USERID.getMessage(),
@@ -1104,7 +1177,7 @@ public class UserService {
 						user.setArrivalPortName(port.getInterp());
 					}
 				}
-			
+
 				List<SystemConfigListDb> nature_Of_Employment=systemConfigRepo.getByTag("Nature_Of_Employment");
 				for(SystemConfigListDb emplomentType:nature_Of_Employment) {
 					Integer value=emplomentType.getValue();
@@ -1112,7 +1185,7 @@ public class UserService {
 						user.setNatureOfEmploymentInterp(emplomentType.getInterp());
 					}
 				}
-				
+
 				if(user.getPortAddress()!=null) {
 					PortAddress portAddress=portAddressRepoService.getById(user.getPortAddress());
 					user.setPortAddressName(portAddress.getAddress());
@@ -1132,7 +1205,7 @@ public class UserService {
 					if(user.getVatFilename()!=null || !"null".equalsIgnoreCase(user.getVatFilename())) {
 						user.setVatFilePath(filePath.getValue()+"/"+user.getUser().getUsername()+"/Vat/");					
 					}
-			}
+				}
 				log.info("All data now fetched");
 				return new ResponseEntity<>(user,HttpStatus.OK);	
 			}
@@ -1181,8 +1254,8 @@ public class UserService {
 		userData.setCurrentStatus(UserStatus.OTP_VERIFICATION_PENDING.getCode());
 		userRepo.save(userData); log.info("user data changed");
 	}
-	
-	
+
+
 	public ResponseEntity<?> updateProfile(UserProfile userProfile){
 		try {
 			log.info("inside into update user profile");     
@@ -1193,90 +1266,90 @@ public class UserService {
 				/*
 				 * long mainRole=roleCheck(userProfile.getRoles()); if(mainRole>0) {
 				 */
-					User userData=userRepo.findByUserProfile_Id(userProfile.getId());
-					saveUserTrail(userData,"Profile","update",0);   
-					boolean emailExist=userProfileRepo.existsByEmail(userProfile.getEmail());
-					boolean phoneExist=userProfileRepo.existsByPhoneNo(userProfile.getPhoneNo());
-					if(!userProfile.getPhoneNo().equals(userProfileData.getPhoneNo()) &&
-							!userProfile.getEmail().equals(userProfileData.getEmail())) { 
-						
-						if(emailExist) {
-						
-							HttpResponse response=new HttpResponse(RegistrationTags.Email_Exist.getMessage(),409,RegistrationTags.Email_Exist.getTag());
-							return new ResponseEntity<>(response,HttpStatus.OK);
-						}
+				User userData=userRepo.findByUserProfile_Id(userProfile.getId());
+				saveUserTrail(userData,"Profile","update",0);   
+				boolean emailExist=userProfileRepo.existsByEmail(userProfile.getEmail());
+				boolean phoneExist=userProfileRepo.existsByPhoneNo(userProfile.getPhoneNo());
+				if(!userProfile.getPhoneNo().equals(userProfileData.getPhoneNo()) &&
+						!userProfile.getEmail().equals(userProfileData.getEmail())) { 
 
+					if(emailExist) {
 
-						if(phoneExist) {
-							
-							HttpResponse response=new HttpResponse(RegistrationTags.Phone_Exist.getMessage(),409,RegistrationTags.Phone_Exist.getTag());
-							return new ResponseEntity<>(response,HttpStatus.OK);
-						}
-						setEmailAndPhoneDetails(userProfile,userData);
-					}
-					
-					else if(!userProfile.getPhoneNo().equals(userProfileData.getPhoneNo()) &&
-							userProfile.getEmail().equals(userProfileData.getEmail())) { 
-						if(phoneExist) {
-							
-							HttpResponse response=new HttpResponse(RegistrationTags.Phone_Exist.getMessage(),409,RegistrationTags.Phone_Exist.getTag());
-							return new ResponseEntity<>(response,HttpStatus.OK);
-						}
-						setEmailAndPhoneDetails(userProfile,userData);
-						 
-					}
-					else	if(userProfile.getPhoneNo().equals(userProfileData.getPhoneNo()) &&
-							!userProfile.getEmail().equals(userProfileData.getEmail())) { 
-						if(emailExist) {
-						
-							HttpResponse response=new HttpResponse(RegistrationTags.Email_Exist.getMessage(),409,RegistrationTags.Email_Exist.getTag());
-							return new ResponseEntity<>(response,HttpStatus.OK);
-						}
-						setEmailAndPhoneDetails(userProfile,userData);
-					
+						HttpResponse response=new HttpResponse(RegistrationTags.Email_Exist.getMessage(),409,RegistrationTags.Email_Exist.getTag());
+						return new ResponseEntity<>(response,HttpStatus.OK);
 					}
 
-					updateUserFields(userProfile,userProfileData);
-					userProfileData.setUser(userData);
-					log.info("userProfile data going to update: "+userProfileData);
-					log.info("now going to save user profile data");
-					UserProfile output=userProfileRepo.save(userProfileData);
-					log.info("user profile data is save");
-					if(output!=null) { 
-                        if(userProfile.getRoles()!=null) {
-                        	if(userProfile.getRoles().length!=0) {
-                        		int rolesOutput=updateRoles(userProfile.getRoles(), output.getUser().getId());    		
-                        		log.info("user role update output:  "+rolesOutput);
-                        	}
-                        }
-					
-				
-						log.info("if user profile table is update ");
-						log.info("going to update user  questions and answer");
-						int i=updateUserSecurityquestion(userProfileData);
-						log.info("question output:  "+i); 
-						String tag="";
-						String msg="";
-						if(userData.getCurrentStatus()==UserStatus.APPROVED.getCode()) {
-							tag=ProfileTags.PRO_SUCESS_MSG.getTag();
-							msg=ProfileTags.PRO_SUCESS_MSG.getMessage();
-						}
-						else {
-							tag=ProfileTags.PRO_SUCESS_OTPMSG.getTag();
-							msg=ProfileTags.PRO_SUCESS_OTPMSG.getMessage();
-				
-						}
-						UpdateProfileResponse response=new UpdateProfileResponse(msg,200,UserStatus.getUserStatusByCode(userData.getCurrentStatus()).getDescription()
-								,output.getUser().getId(),tag);
-						log.info("response send to user:  "+response); 
-						return new ResponseEntity<>(response,HttpStatus.OK);	
-					}                 
+
+					if(phoneExist) {
+
+						HttpResponse response=new HttpResponse(RegistrationTags.Phone_Exist.getMessage(),409,RegistrationTags.Phone_Exist.getTag());
+						return new ResponseEntity<>(response,HttpStatus.OK);
+					}
+					setEmailAndPhoneDetails(userProfile,userData);
+				}
+
+				else if(!userProfile.getPhoneNo().equals(userProfileData.getPhoneNo()) &&
+						userProfile.getEmail().equals(userProfileData.getEmail())) { 
+					if(phoneExist) {
+
+						HttpResponse response=new HttpResponse(RegistrationTags.Phone_Exist.getMessage(),409,RegistrationTags.Phone_Exist.getTag());
+						return new ResponseEntity<>(response,HttpStatus.OK);
+					}
+					setEmailAndPhoneDetails(userProfile,userData);
+
+				}
+				else	if(userProfile.getPhoneNo().equals(userProfileData.getPhoneNo()) &&
+						!userProfile.getEmail().equals(userProfileData.getEmail())) { 
+					if(emailExist) {
+
+						HttpResponse response=new HttpResponse(RegistrationTags.Email_Exist.getMessage(),409,RegistrationTags.Email_Exist.getTag());
+						return new ResponseEntity<>(response,HttpStatus.OK);
+					}
+					setEmailAndPhoneDetails(userProfile,userData);
+
+				}
+
+				updateUserFields(userProfile,userProfileData);
+				userProfileData.setUser(userData);
+				log.info("userProfile data going to update: "+userProfileData);
+				log.info("now going to save user profile data");
+				UserProfile output=userProfileRepo.save(userProfileData);
+				log.info("user profile data is save");
+				if(output!=null) { 
+					//                        if(userProfile.getRoles()!=null) {
+					//                        	if(userProfile.getRoles().length!=0) {
+					//                        		int rolesOutput=updateRoles(userProfile.getRoles(), output.getUser().getId());    		
+					//                        		log.info("user role update output:  "+rolesOutput);
+					//                        	}
+					//                        }
+
+
+					log.info("if user profile table is update ");
+					log.info("going to update user  questions and answer");
+					int i=updateUserSecurityquestion(userProfileData);
+					log.info("question output:  "+i); 
+					String tag="";
+					String msg="";
+					if(userData.getCurrentStatus()==UserStatus.APPROVED.getCode()) {
+						tag=ProfileTags.PRO_SUCESS_MSG.getTag();
+						msg=ProfileTags.PRO_SUCESS_MSG.getMessage();
+					}
 					else {
-						log.info("user profile to update");
-						HttpResponse response=new HttpResponse(ProfileTags.PRO_FAIL_MSG.getMessage(),204,ProfileTags.PRO_FAIL_MSG.getTag());
-						log.info("response send to user:  "+response);
-						return new ResponseEntity<>(response,HttpStatus.OK);	
+						tag=ProfileTags.PRO_SUCESS_OTPMSG.getTag();
+						msg=ProfileTags.PRO_SUCESS_OTPMSG.getMessage();
+
 					}
+					UpdateProfileResponse response=new UpdateProfileResponse(msg,200,UserStatus.getUserStatusByCode(userData.getCurrentStatus()).getDescription()
+							,output.getUser().getId(),tag);
+					log.info("response send to user:  "+response); 
+					return new ResponseEntity<>(response,HttpStatus.OK);	
+				}                 
+				else {
+					log.info("user profile to update");
+					HttpResponse response=new HttpResponse(ProfileTags.PRO_FAIL_MSG.getMessage(),204,ProfileTags.PRO_FAIL_MSG.getTag());
+					log.info("response send to user:  "+response);
+					return new ResponseEntity<>(response,HttpStatus.OK);	
+				}
 				/*}
 				else {
 					log.info("user profile to update");
@@ -1367,10 +1440,10 @@ public class UserService {
 				}     
 				log.info("roles Ids :  "+rolesId);
 				log.info("user roles :  "+rolesList);
-				
+
 				long[] arr = new long[rolesId.size()]; 
 				arr = Longs.toArray(rolesId); 
-			
+
 				user.setRolesList(rolesList);
 				user.setRoles(arr); 
 				List<SystemConfigListDb> asTypeList=systemConfigRepo.getByTag("AS_TYPE");
@@ -1398,7 +1471,9 @@ public class UserService {
 					PortAddress portAddress=portAddressRepoService.getById(user.getPortAddress());
 					user.setPortAddressName(portAddress.getAddress());
 				}
-
+				if(Objects.nonNull(user.getUser().getApprovedBy())) {
+					user.setApprovedBy(user.getUser().getApprovedBy());
+				}
 				SystemConfigurationDb filePath=systemConfigurationRepo.getDataByTag("USER_FILE_DOWNLOAD_PATH");	
 				if(filePath!=null) {
 					if(user.getNidFilename()!=null || !"null".equalsIgnoreCase(user.getNidFilename())) {
@@ -1427,7 +1502,7 @@ public class UserService {
 		}
 		catch(Exception e) {
 			log.info("exception occur here");
-            log.info(e.toString());
+			log.info(e.toString());
 			HttpResponse response=new HttpResponse();
 			response.setStatusCode(409); 
 			response.setResponse("Oops something wrong happened");
@@ -1441,11 +1516,11 @@ public class UserService {
 			log.info("inside admin approval controller");
 			User user=userRepo.findById(userStatus.getId());
 			if(user!=null) {
-				user.setApprovedBy(user.getUsername());
+				User userData=userRepo.findById(userStatus.getUserId());
+				user.setApprovedBy(userData.getUsername());
 				user.setRemark(userStatus.getRemark());
 				user.setPreviousStatus(user.getCurrentStatus());
 				user.setCurrentStatus(userStatus.getStatusValue());
-                user.setModifiedBy(userStatus.getUsername());
 				log.info("user data to update:  "+user);
 				User output=userRepo.save(user);
 				log.info("output got:  "+output);
@@ -1468,7 +1543,6 @@ public class UserService {
 						status="Reject";
 					}
 					else {}
-					User userData=userRepo.findById(userStatus.getUserId());
 					if(userData!=null) {
 						saveUserTrail(userData,"Registration Request",feature,userStatus.getFeatureId());
 					}
@@ -1479,7 +1553,7 @@ public class UserService {
 					response.setResponse("user status has been update");
 					return response;
 				}
-				
+
 				else {
 					HttpResponse response=new HttpResponse();
 					response.setStatusCode(204);
@@ -1564,6 +1638,27 @@ public class UserService {
 		try {
 			AuditTrail auditTrail=new AuditTrail(user.getId(), user.getUsername(),
 					user.getUsertype().getId(),user.getUsertype().getUsertypeName(), featureId,
+					feature, subFeature,"0","NA");
+			log.info("going to save audit trail");
+			AuditTrail output=audiTrailRepoService.saveAuditTrail(auditTrail);
+			if(output!=null) {
+				log.info("audit trail sucessfully save");
+			}
+			else {
+				log.info("user trail fails to save");
+			}
+			return 1;
+		}
+		catch(Exception e) {
+			log.info(e.toString());
+			return 0;
+		}
+	}
+
+	public int saveUserTrail(long userId,String username,String userType,long userTypeId,String feature ,String subFeature,long featureId) {
+		try {
+			AuditTrail auditTrail=new AuditTrail(userId, username,
+					userTypeId,userType, featureId,
 					feature, subFeature,"0","NA");
 			log.info("going to save audit trail");
 			AuditTrail output=audiTrailRepoService.saveAuditTrail(auditTrail);

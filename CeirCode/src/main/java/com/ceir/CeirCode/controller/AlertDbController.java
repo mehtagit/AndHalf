@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ceir.CeirCode.filtermodel.AlertDbFilter;
 import com.ceir.CeirCode.model.AlertDb;
+import com.ceir.CeirCode.model.AllRequest;
 import com.ceir.CeirCode.model.FileDetails;
 import com.ceir.CeirCode.model.FilterRequest;
 import com.ceir.CeirCode.model.PortAddress;
@@ -66,9 +67,9 @@ public class AlertDbController {
 	}
 
 	@ApiOperation(value="view alert d by id")
-	@PostMapping("/viewById/{id}")
-	public ResponseEntity<?> viewById(@PathVariable("id")long id){
-		return alertDbService.findById(id);
+	@PostMapping("/viewById")
+	public ResponseEntity<?> viewById(@RequestBody AllRequest request){
+		return alertDbService.findById(request);
 	}
 
 	@ApiOperation(value="update alert db")

@@ -94,8 +94,9 @@ public class UserMgmtService {
 		if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
 			uPSB.orSearchUsertype(new SearchCriteria("username", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 		}
-
 		uPSB.addSpecification(uPSB.joinWithUserType(new SearchCriteria("selfRegister",0, SearchOperation.EQUALITY, Datatype.INT)));
+		uPSB.with(new SearchCriteria("currentStatus",3, SearchOperation.EQUALITY, Datatype.INT));
+
 		return uPSB;
 	}
 

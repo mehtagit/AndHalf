@@ -20,7 +20,9 @@ public enum RegistrationTags {
     Reg_flag_off("Reg_flag_off","This feature is not available as of now"),
     Reg_allowed("Reg_allowed","Registration feature is now working"),
     Email_Exist("Email_Exist","Email already exist in the system"),
-    Phone_Exist("Phone_Exist","Phone Number already exist in the system")
+    Phone_Exist("Phone_Exist","Phone Number already exist in the system"),
+    Change_Role_Not_Allowed("Change_Role_Not_Allowed","Change Role feature for this usertype is not available"),
+    Invalid_Action("Invalid_Action","This is invalid action");
     ;
 	
 	

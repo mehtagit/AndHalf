@@ -17,6 +17,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import com.ceir.CeirCode.Constants.Datatype;
 import com.ceir.CeirCode.Constants.SearchOperation;
@@ -110,7 +111,11 @@ public class UserProfileService {
 
 		if(Objects.nonNull(filterRequest.getPhoneNo()) && !filterRequest.getPhoneNo().isEmpty())
 			uPSB.with(new SearchCriteria("phoneNo",filterRequest.getPhoneNo(), SearchOperation.EQUALITY, Datatype.STRING));
-
+//		
+//		uPSB.addSpecification((Specification<UserProfile>)(root, query, cb)-> {
+//			return cb.equal(root.join("user").get("username"), filterRequest.getPhoneNo());
+//			});
+		
 		
 		if(Objects.nonNull(filterRequest.getUserRoleTypeId()) && filterRequest.getUserRoleTypeId() !=0 && filterRequest.getUserRoleTypeId()!=-1)
 			uPSB.addSpecification(uPSB.joinWithMultiple(new SearchCriteria("id",filterRequest.getUserRoleTypeId(), SearchOperation.EQUALITY, Datatype.LONG)));

@@ -237,10 +237,12 @@ public class GenericSpecificationBuilder<T> {
 					}else if(SearchOperation.NEGATION.equals(searchCriteria.getSearchOperation())
 							&& Datatype.LONG.equals(searchCriteria.getDatatype())) {
 						return cb.notEqual(root.get(searchCriteria.getKey()), (Long)searchCriteria.getValue());
-					}else if(SearchOperation.LIKE.equals(searchCriteria.getSearchOperation())
+					}
+					else if(SearchOperation.LIKE.equals(searchCriteria.getSearchOperation())
 							&& Datatype.STRING.equals(searchCriteria.getDatatype())) {
-						return cb.like(root.get(searchCriteria.getKey()), "%"+(String)searchCriteria.getValue().toString()+"%");
-					}else if(SearchOperation.LIKE.equals(searchCriteria.getSearchOperation())
+						return cb.like(cb.lower(root.get(searchCriteria.getKey()).as( String.class )), "%"+((String)searchCriteria.getValue()).toLowerCase()+"%");
+					}
+					else if(SearchOperation.LIKE.equals(searchCriteria.getSearchOperation())
 							&& Datatype.DOUBLE.equals(searchCriteria.getDatatype())) {
 						return cb.like(root.get(searchCriteria.getKey()), "%"+(Double.parseDouble(searchCriteria.getValue().toString()))+"%");
 					}

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.ceir.CeirCode.model.Otp;
 import com.ceir.CeirCode.model.ResendOtp;
@@ -46,16 +47,17 @@ public class UserRegistrationController {
 	@ApiOperation(value = "usertypes data", response = HttpResponse.class)
 	@CrossOrigin
 	@PostMapping("/getUsertypes") 
-	public ResponseEntity<?> getUsertypes(@RequestHeader HttpHeaders headers){
-		return userService.getUsertypeData(headers);
+	public ResponseEntity<?> getUsertypes(@RequestParam(defaultValue ="0",required = false,name = "type")int type){
+		return userService.getUsertypeData(type);
 	}
 
-	@ApiOperation(value = "internal usertypes data", response = HttpResponse.class)
-	@CrossOrigin
-	@PostMapping("/getInternalUsertypes") 
-	public ResponseEntity<?> getInternalUsertypes(){
-		return userService.getInternalUsertype();
-	}
+//	@ApiOperation(value = "internal usertypes data", response = HttpResponse.class)
+//	@CrossOrigin
+//	@PostMapping("/getInternalUsertypes") 
+//	public ResponseEntity<?> getInternalUsertypes(){
+//		return userService.getInternalUsertype();
+//	} 
+	
 	@ApiOperation(value = "usertypes data", response = HttpResponse.class)
 	@CrossOrigin
 	@PostMapping("/usertypeIdByName/{usertype}") 

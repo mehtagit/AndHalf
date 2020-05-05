@@ -108,6 +108,7 @@ public class User {
 	@OneToMany(mappedBy = "userPassword",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	private List<UserPasswordHistory> userPasswordHistory;
 
+    @JsonIgnore
 	@NotAudited
 	@OneToMany(mappedBy = "userSlaReport", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<SlaReport> SlaReport;
@@ -311,6 +312,7 @@ public class User {
 	public void setUserPayments(List<UserPayment> userPayments) {
 		this.userPayments = userPayments;
 	}
+	@JsonIgnore
 	public List<SlaReport> getSlaReport() {
 		return SlaReport;
 	}
@@ -355,10 +357,14 @@ public class User {
 		builder.append(parentId);
 		builder.append(", userLanguage=");
 		builder.append(userLanguage);
-		builder.append(", stateInterp=");
-		builder.append(stateInterp);
 		builder.append(", modifiedBy=");
 		builder.append(modifiedBy);
+		builder.append(", referenceId=");
+		builder.append(referenceId);
+		builder.append(", approvedBy=");
+		builder.append(approvedBy);
+		builder.append(", stateInterp=");
+		builder.append(stateInterp);
 		builder.append("]");
 		return builder.toString();
 	}

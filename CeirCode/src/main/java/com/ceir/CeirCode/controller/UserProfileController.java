@@ -1,4 +1,5 @@
 package com.ceir.CeirCode.controller;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,10 +23,13 @@ import com.ceir.CeirCode.model.SystemConfigListDb;
 import com.ceir.CeirCode.model.User;
 import com.ceir.CeirCode.model.UserProfile;
 import com.ceir.CeirCode.model.UserStatusRequest;
+import com.ceir.CeirCode.model.Userrole;
 import com.ceir.CeirCode.repo.SystemConfigDbListRepository;
+import com.ceir.CeirCode.repoService.UserRoleRepoService;
 import com.ceir.CeirCode.service.UserProfileService;
 import com.ceir.CeirCode.service.UserService;
 import com.ceir.CeirCode.util.HttpResponse;
+import com.google.common.primitives.Longs;
 
 import io.swagger.annotations.ApiOperation;
 @RestController
@@ -41,6 +45,9 @@ public class UserProfileController {
 
 	@Autowired 
 	UserProfileService userProService;
+	
+	@Autowired
+	UserRoleRepoService userRoleRepoService;
 	
 	@ApiOperation(value = "change password", response = HttpResponse.class)
 	@PostMapping("/changePassword")
@@ -88,6 +95,18 @@ public class UserProfileController {
 					if(profile.getType()==value) {
 						profile.setAsTypeName(asType.getInterp());
 					}
+					List<Userrole> userRoles=userRoleRepoService.findByUserId(profile.getUser().getId());
+					if(userRoles.isEmpty()==false)
+					{
+						List<Long> rolesId=new ArrayList<Long>();
+						for(Userrole role:userRoles) {
+							rolesId.add(role.getUsertypeData().getId());
+						}     
+						long[] arr = new long[rolesId.size()]; 
+						arr = Longs.toArray(rolesId); 
+						profile.setRoles(arr); 
+					}
+					
 				}
 			}
 			}

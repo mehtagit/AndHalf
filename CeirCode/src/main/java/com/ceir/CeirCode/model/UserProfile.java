@@ -139,6 +139,9 @@ public class UserProfile {
 	@Transient
 	List<RolesData> rolesList;
 	
+	@Transient
+	private String approvedBy;
+	
 	public long[] getRoles() {
 		return roles;
 	}
@@ -531,6 +534,13 @@ public class UserProfile {
 	}
 	public void setNatureOfEmploymentInterp(String natureOfEmploymentInterp) {
 		this.natureOfEmploymentInterp = natureOfEmploymentInterp;
+	}
+	
+	public String getApprovedBy() {
+		return approvedBy;
+	}
+	public void setApprovedBy(String approvedBy) {
+		this.approvedBy = approvedBy;
 	}
 	@Override
 	public String toString() {
