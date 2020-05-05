@@ -10,7 +10,7 @@ public class StateMachine {
 		}else if("CUSTOM".equalsIgnoreCase(userType)) {
 			return ConsignmentStatus.PENDING_APPROVAL_FROM_CUSTOMS.getCode() == currentStatus;
 		}else if("CEIRSYSTEM".equalsIgnoreCase(userType)) {
-			return ConsignmentStatus.PROCESSING.getCode() == currentStatus;
+			return ConsignmentStatus.PROCESSING.getCode() == currentStatus || ConsignmentStatus.INIT.getCode() == currentStatus;
 		}
 		else if("DRT".equalsIgnoreCase(userType)) {
 			return ConsignmentStatus.PENDING_CLEARANCE_FROM_DRT.getCode() == currentStatus;

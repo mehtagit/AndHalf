@@ -141,7 +141,7 @@ public class EnduserServiceImpl {
 	@Autowired
 	Utility utility;
 	
-	
+ 
 	public GenricResponse endUserByNid(String nid) {
 		try {
 			EndUserDB endUserDB = endUserDbRepository.getByNid(nid);

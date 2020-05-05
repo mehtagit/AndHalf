@@ -95,6 +95,7 @@ public class ConsignmentMgmt implements Serializable {
 	@Transient
 	private String portAddressInterp;
 	
+	
 	public String getPortAddressInterp() {
 		return portAddressInterp;
 	}
@@ -103,6 +104,7 @@ public class ConsignmentMgmt implements Serializable {
 		this.portAddressInterp = portAddressInterp;
 	}
 
+	@Column(name="device_quantity")
 	public Integer deviceQuantity;
 
 	@Column(name="custom_id")
@@ -123,6 +125,17 @@ public class ConsignmentMgmt implements Serializable {
 	@Transient
 	private Integer userTypeId;
 	
+	@Transient
+	private String roleType;
+	
+	public String getRoleType() {
+		return roleType;
+	}
+
+	public void setRoleType(String roleType) {
+		this.roleType = roleType;
+	}
+
 	public String getUserType() {
 		return userType;
 	}
@@ -522,6 +535,8 @@ public class ConsignmentMgmt implements Serializable {
 		builder.append(featureId);
 		builder.append(", userTypeId=");
 		builder.append(userTypeId);
+		builder.append(", roleType=");
+		builder.append(roleType);
 		builder.append(", user=");
 		builder.append(user);
 		builder.append(", pendingTacApprovedByCustom=");

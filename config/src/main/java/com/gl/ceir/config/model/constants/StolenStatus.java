@@ -4,8 +4,8 @@ public enum StolenStatus {
 	
 	INIT(0, "INIT"), 
 	PROCESSING(1, "Processing"), 
-	PENDING_APPROVAL_FROM_CEIR_ADMIN(2, "Pending Approval From CEIR Admin"), 
-	REJECTED_BY_SYSTEM(3, "Error"),
+	PENDING_APPROVAL_FROM_CEIR_ADMIN(3, "Pending Approval From CEIR Admin"), 
+	REJECTED_BY_SYSTEM(2, "Error"),
 	REJECTED_BY_CEIR_ADMIN(4, "Rejected CEIR Admin"),
 	APPROVED_BY_CEIR_ADMIN(5, "Approved CEIR Admin");
 

@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 
 import com.gl.ceir.config.factory.CustomerCareRepo;
 import com.gl.ceir.config.model.ConsignmentMgmt;
+import com.gl.ceir.config.model.ConsignmentUpdateRequest;
+import com.gl.ceir.config.model.PendingTacApprovedDb;
 import com.gl.ceir.config.model.ResponseCountAndQuantity;
 import com.gl.ceir.config.model.Usertype;
 
@@ -36,4 +38,6 @@ JpaSpecificationExecutor<ConsignmentMgmt>, CustomerCareRepo<ConsignmentMgmt>{
 	public ResponseCountAndQuantity getConsignmentCountAndQuantity( @Param("consignmentStatus") List< Integer > consignmentStatus);
 
 	public Usertype getById(Integer userId);
+	
+	//public ConsignmentMgmt updateStatusBeforeDelete(ConsignmentMgmt consignmentMgmt);
 }

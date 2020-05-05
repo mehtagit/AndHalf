@@ -1,7 +1,7 @@
 package com.gl.ceir.config.model;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,13 +27,14 @@ public class SystemConfigurationDb implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+
 	@CreationTimestamp
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
-	private Date createdOn;
+	private LocalDateTime createdOn;
 
 	@UpdateTimestamp
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
-	private Date modifiedOn;
+	private LocalDateTime modifiedOn;
 	
 	@NotNull
 	@NotBlank
@@ -59,43 +60,22 @@ public class SystemConfigurationDb implements Serializable {
 	
 	private String featureName;
 	private String userType;
-	
-	
-	public Integer getActive() {
-		return active;
-	}
-	public void setActive(Integer active) {
-		this.active = active;
-	}
-	public String getFeatureName() {
-		return featureName;
-	}
-	public void setFeatureName(String featureName) {
-		this.featureName = featureName;
-	}
-	
-	public String getUserType() {
-		return userType;
-	}
-	public void setUserType(String userType) {
-		this.userType = userType;
-	}
 	public Long getId() {
 		return id;
 	}
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public Date getCreatedOn() {
+	public LocalDateTime getCreatedOn() {
 		return createdOn;
 	}
-	public void setCreatedOn(Date createdOn) {
+	public void setCreatedOn(LocalDateTime createdOn) {
 		this.createdOn = createdOn;
 	}
-	public Date getModifiedOn() {
+	public LocalDateTime getModifiedOn() {
 		return modifiedOn;
 	}
-	public void setModifiedOn(Date modifiedOn) {
+	public void setModifiedOn(LocalDateTime modifiedOn) {
 		this.modifiedOn = modifiedOn;
 	}
 	public String getTag() {
@@ -122,22 +102,39 @@ public class SystemConfigurationDb implements Serializable {
 	public void setType(Integer type) {
 		this.type = type;
 	}
-	public String getRemark() {
-		return remark;
-	}
-	public void setRemark(String remark) {
-		this.remark = remark;
-	}
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
 	public String getTypeInterp() {
 		return typeInterp;
 	}
 	public void setTypeInterp(String typeInterp) {
 		this.typeInterp = typeInterp;
 	}
-	
+	public String getRemark() {
+		return remark;
+	}
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+	public Integer getActive() {
+		return active;
+	}
+	public void setActive(Integer active) {
+		this.active = active;
+	}
+	public String getFeatureName() {
+		return featureName;
+	}
+	public void setFeatureName(String featureName) {
+		this.featureName = featureName;
+	}
+	public String getUserType() {
+		return userType;
+	}
+	public void setUserType(String userType) {
+		this.userType = userType;
+	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -168,4 +165,8 @@ public class SystemConfigurationDb implements Serializable {
 		builder.append("]");
 		return builder.toString();
 	}
+	
+	
+
+
 }

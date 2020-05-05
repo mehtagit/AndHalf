@@ -1,5 +1,7 @@
 package com.gl.ceir.config.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
@@ -12,5 +14,6 @@ public interface SystemConfigurationDbRepository extends JpaRepository<SystemCon
 
 	public SystemConfigurationDb getById(Long id);
 
+	public List<SystemConfigurationDb> getByType(Integer type);
 
 }

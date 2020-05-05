@@ -73,8 +73,6 @@ public class CeirActionRequest {
 		this.imei1 = imei1;
 	}
 
-	
-	
 	public long getId() {
 		return id;
 	}
