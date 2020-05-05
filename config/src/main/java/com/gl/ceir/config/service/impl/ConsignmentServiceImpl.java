@@ -858,14 +858,17 @@ public class ConsignmentServiceImpl {
 			if( !consignmentMgmts.isEmpty() ) {
 				fileRecords = new ArrayList<>();
 				for( ConsignmentMgmt consignmentMgmt : consignmentMgmts ) {
-					cfm = new ConsignmentFileModel(consignmentMgmt.getStateInterp(), 
-							consignmentMgmt.getTxnId(), 
-							consignmentMgmt.getSupplierName(), consignmentMgmt.getTaxInterp(), consignmentMgmt.getFileName(), 
+					cfm = new ConsignmentFileModel(
 							consignmentMgmt.getCreatedOn().format(dtf),
 							consignmentMgmt.getModifiedOn().format(dtf),
-							consignmentMgmt.getQuantity(),consignmentMgmt.getDeviceQuantity());
-
-					fileRecords.add(cfm);
+							consignmentMgmt.getTxnId(),
+							consignmentMgmt.getSupplierName(),
+							consignmentMgmt.getStateInterp(), 
+							consignmentMgmt.getTaxInterp(), 
+							consignmentMgmt.getQuantity(),
+							consignmentMgmt.getDeviceQuantity(),
+							consignmentMgmt.getFileName());
+							fileRecords.add(cfm);
 				}
 
 				csvWriter.write(fileRecords);

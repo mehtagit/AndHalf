@@ -140,12 +140,12 @@ public class ConsignmentController {
 		GenricResponse genricResponse=null;
 		if(consignmentServiceImpl.updatePendingApproval(consignmentUpdateRequest)) {	
 			genricResponse =	consignmentServiceImpl.deleteConsigmentInfo(consignmentUpdateRequest);
-		logger.info("Response of Delete Request="+genricResponse);
+			logger.info("Response of Delete Request="+genricResponse);
 		}
 		else {
 			new GenricResponse(1, "Error during update status before deleting", consignmentUpdateRequest.getTxnId());
 		}
-	
+
 
 		return genricResponse;
 
