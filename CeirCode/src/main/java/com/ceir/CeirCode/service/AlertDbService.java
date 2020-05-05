@@ -92,12 +92,6 @@ public class AlertDbService {
 	
 	
 	private GenericSpecificationBuilder<AlertDb> buildSpecification(AlertDbFilter filterRequest){
-		if(filterRequest.getUserId()!=0) {
-		User user=userRepoService.findByUSerId(filterRequest.getUserId());
-		if(user!=null) {
-			userService.saveUserTrail(user, "Alert db", "View", filterRequest.getFeatureId());
-		}
-		}
 		GenericSpecificationBuilder<AlertDb> uPSB = new GenericSpecificationBuilder<AlertDb>(propertiesReader.dialect);	
 
 		if(Objects.nonNull(filterRequest.getStartDate()) && filterRequest.getStartDate()!="")
@@ -170,10 +164,6 @@ public class AlertDbService {
 		SystemConfigurationDb alertDbDowlonadDir=systemConfigurationDbRepoImpl.getDataByTag("Alertdb_Download_Dir");
 		SystemConfigurationDb alertDbDowlonadLink=systemConfigurationDbRepoImpl.getDataByTag("Alertdb_Download_link");
 		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-		User user=userRepoService.findByUSerId(alertAbFilter.getUserId());
-		if(user!=null) {
-			userService.saveUserTrail(user, "Alert db", "Export", alertAbFilter.getFeatureId());
-		}
 		String filePath  = alertDbDowlonadDir.getValue();
 		log.info("filePath:  "+filePath);
 		StatefulBeanToCsvBuilder<AlertDbFile> builder = null;
@@ -270,8 +260,8 @@ public class AlertDbService {
 		log.info("given data:  "+alertDb);
 		RequestHeaders header=new RequestHeaders(alertDb.getUserAgent(),alertDb.getPublicIp(),alertDb.getUsername());
 		headerService.saveRequestHeader(header);
-		userService.saveUserTrail(alertDb.getId(),alertDb.getUsername(),
-				alertDb.getUserType(),alertDb.getUserTypeId(),Features.Alert_Management,SubFeatures.VIEW,alertDb.getFeatureId());
+		userService.saveUserTrail(alertDb.getUserId(),alertDb.getUsername(),
+				alertDb.getUserType(),alertDb.getUserTypeId(),Features.Alert_Management,SubFeatures.UPDATE,alertDb.getFeatureId());
 		AlertDb data=alertRepoService.getById(alertDb.getId());
 		if(data!=null) {
 		data.setDescription(alertDb.getDescription());

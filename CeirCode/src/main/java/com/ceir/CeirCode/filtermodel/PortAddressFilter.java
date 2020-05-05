@@ -1,6 +1,8 @@
 package com.ceir.CeirCode.filtermodel;
 
-public class PortAddressFilter {
+import com.ceir.CeirCode.model.AllRequest;
+
+public class PortAddressFilter  extends AllRequest{
 
 	public String  startDate;
 	public String   endDate;
@@ -37,8 +39,17 @@ public class PortAddressFilter {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("PortAddressFilter [startDate=").append(startDate).append(", endDate=").append(endDate)
-				.append(", port=").append(port).append(", searchString=").append(searchString).append("]");
+		builder.append("PortAddressFilter [startDate=");
+		builder.append(startDate);
+		builder.append(", endDate=");
+		builder.append(endDate);
+		builder.append(", port=");
+		builder.append(port);
+		builder.append(", searchString=");
+		builder.append(searchString);
+		builder.append(", toString()=");
+		builder.append(super.toString());
+		builder.append("]");
 		return builder.toString();
 	} 
 	

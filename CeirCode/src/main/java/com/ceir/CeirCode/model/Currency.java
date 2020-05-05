@@ -16,8 +16,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 @Entity
-public class Currency {
-
+public class Currency  extends AllRequest{
+ 
 	private static long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -144,6 +144,8 @@ public class Currency {
 		builder.append(dollar);
 		builder.append(", currencyInterp=");
 		builder.append(currencyInterp);
+		builder.append(", toString()=");
+		builder.append(super.toString());
 		builder.append("]");
 		return builder.toString();
 	}

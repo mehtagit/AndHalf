@@ -19,12 +19,15 @@ import com.ceir.CeirCode.SpecificationBuilder.GenericSpecificationBuilder;
 import com.ceir.CeirCode.SpecificationBuilder.SpecificationBuilder;
 import com.ceir.CeirCode.configuration.PropertiesReaders;
 import com.ceir.CeirCode.filtermodel.CurrencyFilter;
-import com.ceir.CeirCode.filtermodel.PortAddressFilter;
+import com.ceir.CeirCode.model.AllRequest;
 import com.ceir.CeirCode.model.Currency;
-import com.ceir.CeirCode.model.PortAddress;
+import com.ceir.CeirCode.model.RequestHeaders;
 import com.ceir.CeirCode.model.SearchCriteria;
+import com.ceir.CeirCode.model.constants.Features;
+import com.ceir.CeirCode.model.constants.SubFeatures;
 import com.ceir.CeirCode.repo.CurrencyRepo;
 import com.ceir.CeirCode.repoService.CurrencyRepoService;
+import com.ceir.CeirCode.repoService.ReqHeaderRepoService;
 import com.ceir.CeirCode.response.GenricResponse;
 import com.ceir.CeirCode.response.tags.CurrencyTags;
 import com.ceir.CeirCode.response.tags.PortAddsTags;
@@ -48,10 +51,21 @@ public class CurrencyService {
 	@Autowired
 	Utility utility;
 
+	@Autowired
+	ReqHeaderRepoService headerService;
+
+	@Autowired
+	UserService userService;
+
 
 	public ResponseEntity<?> saveCurrency(Currency currency){
 		log.info("inside save Currency controller");
 		log.info("currency data going to save:  "+currency);
+		RequestHeaders header=new RequestHeaders(currency.getUserAgent(),currency.getPublicIp(),currency.getUsername());
+		headerService.saveRequestHeader(header);
+		userService.saveUserTrail(currency.getUserId(),currency.getUsername(),
+				currency.getUserType(),currency.getUserTypeId(),Features.Exchange_Rate_Management,SubFeatures.SAVE,currency.getFeatureId());
+
 		log.info("exist by data= "+currencyrepo.existsByDate(currency.getDate()));
 		boolean monthExist=currencyrepo.existsByDate(currency.getDate());
 		if(monthExist==true) {
@@ -73,10 +87,14 @@ public class CurrencyService {
 
 	}
 
-	public ResponseEntity<?> viewById(long id){
+	public ResponseEntity<?> viewById(AllRequest request){
 		log.info("inside view by Id Currency controller");
-		Currency output=currencyRepoService.getById(id);
-
+		log.info("data given : "+request);
+		Currency output=currencyRepoService.getById(request.getDataId());
+		RequestHeaders header=new RequestHeaders(request.getUserAgent(),request.getPublicIp(),request.getUsername());
+		headerService.saveRequestHeader(header);
+		userService.saveUserTrail(request.getUserId(),request.getUsername(),
+				request.getUserType(),request.getUserTypeId(),Features.Exchange_Rate_Management,SubFeatures.VIEW,request.getFeatureId());
 		if(output!=null) {
 			if(output.getDate()!=null) {
 				String month=utility.convertToMonth(output.getDate());
@@ -96,6 +114,11 @@ public class CurrencyService {
 	public ResponseEntity<?> updateCurrency(Currency currency){
 		log.info("inside update Currency controller");
 		log.info("currency data going to update:  "+currency);
+		RequestHeaders header=new RequestHeaders(currency.getUserAgent(),currency.getPublicIp(),currency.getUsername());
+		headerService.saveRequestHeader(header);
+		userService.saveUserTrail(currency.getUserId(),currency.getUsername(),
+				currency.getUserType(),currency.getUserTypeId(),Features.Exchange_Rate_Management,SubFeatures.UPDATE,currency.getFeatureId());
+
 		Currency data=currencyRepoService.getById(currency.getId());
 		if(data!=null) {
 			currency.setCreatedOn(data.getCreatedOn());
@@ -117,10 +140,15 @@ public class CurrencyService {
 		}
 	}
 
-
+ 
 	public Page<Currency> currencyData(CurrencyFilter filter, Integer pageNo, Integer pageSize){
 		log.info("inside currency view  controller");
-		log.info("portAddressInfo : "+filter);
+		log.info("currencyInfo : "+filter);
+		RequestHeaders header=new RequestHeaders(filter.getUserAgent(),filter.getPublicIp(),filter.getUsername());
+		headerService.saveRequestHeader(header);
+		userService.saveUserTrail(filter.getUserId(),filter.getUsername(),
+				filter.getUserType(),filter.getUserTypeId(),Features.Exchange_Rate_Management,SubFeatures.VIEW_ALL,filter.getFeatureId());
+
 		Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
 		GenericSpecificationBuilder<Currency> specification=new GenericSpecificationBuilder<Currency>(propertiesReader.dialect) ;
 		if(Objects.nonNull(filter.getStartDate()) && filter.getStartDate()!="")
@@ -138,7 +166,6 @@ public class CurrencyService {
 		if(Objects.nonNull(filter.getSearchString()) && !filter.getSearchString().isEmpty()){
 			specification.orSearch(new SearchCriteria("dollar", filter.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 			specification.orSearch(new SearchCriteria("riel", filter.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
-
 		}
 		return currencyrepo.findAll(specification.build(),pageable);
 	}

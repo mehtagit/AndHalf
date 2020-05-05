@@ -23,8 +23,10 @@ import com.ceir.CeirCode.Constants.SearchOperation;
 import com.ceir.CeirCode.SpecificationBuilder.GenericSpecificationBuilder;
 import com.ceir.CeirCode.configuration.PropertiesReaders;
 import com.ceir.CeirCode.filtermodel.UserMgmtFilter;
+import com.ceir.CeirCode.model.AllRequest;
 import com.ceir.CeirCode.model.FilterRequest;
 import com.ceir.CeirCode.model.PortAddress;
+import com.ceir.CeirCode.model.RequestHeaders;
 import com.ceir.CeirCode.model.RunningAlertDb;
 import com.ceir.CeirCode.model.SearchCriteria;
 import com.ceir.CeirCode.model.StateMgmtDb;
@@ -36,11 +38,14 @@ import com.ceir.CeirCode.model.UserProfile;
 import com.ceir.CeirCode.model.Userrole;
 import com.ceir.CeirCode.model.Usertype;
 import com.ceir.CeirCode.model.constants.AlertStatus;
+import com.ceir.CeirCode.model.constants.Features;
+import com.ceir.CeirCode.model.constants.SubFeatures;
 import com.ceir.CeirCode.model.constants.UserStatus;
 import com.ceir.CeirCode.model.constants.UsertypeData;
 import com.ceir.CeirCode.repo.UserProfileRepo;
 import com.ceir.CeirCode.repo.UserRepo;
 import com.ceir.CeirCode.repo.UsertypeRepo;
+import com.ceir.CeirCode.repoService.ReqHeaderRepoService;
 import com.ceir.CeirCode.repoService.RunningAlertRepoService;
 import com.ceir.CeirCode.repoService.SystemConfigDbRepoService;
 import com.ceir.CeirCode.repoService.UserRepoService;
@@ -72,6 +77,13 @@ public class UserMgmtService {
 	
 	@Autowired
 	RunningAlertRepoService alertDbRepo;
+	
+	@Autowired
+	ReqHeaderRepoService headerService;
+
+	@Autowired
+	UserService userService;
+
 
 	
 	private final Logger log = LoggerFactory.getLogger(getClass());
@@ -114,11 +126,16 @@ public class UserMgmtService {
 		}
 	}
 
-	public Page<User>  viewAllRecord(UserMgmtFilter filterRequest, Integer pageNo, Integer pageSize){
+	public Page<User>  viewAllRecord(UserMgmtFilter details, Integer pageNo, Integer pageSize){
 		try { 
-			log.info("filter data:  "+filterRequest);
+			log.info("filter data:  "+details);
+			RequestHeaders header=new RequestHeaders(details.getUserAgent(),details.getPublicIp(),details.getUsername());
+			headerService.saveRequestHeader(header);
+			userService.saveUserTrail(details.getUserId(),details.getUsername(),
+					details.getUserType(),details.getUserTypeId(),Features.User_Management,SubFeatures.VIEW_ALL,details.getFeatureId());
+
 			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
-			Page<User> page = userRepo.findAll( buildSpecification(filterRequest).build(), pageable );
+			Page<User> page = userRepo.findAll( buildSpecification(details).build(), pageable );
 			return page;
 
 		} catch (Exception e) {
@@ -134,6 +151,12 @@ public class UserMgmtService {
 	{
 		Usertype userType=new Usertype(details.getUserTypeId());
 		String displayName="";
+		log.info("data: "+details);
+		RequestHeaders header=new RequestHeaders(details.getUserAgent(),details.getPublicIp(),details.getUsername());
+		headerService.saveRequestHeader(header);
+		userService.saveUserTrail(details.getUserId(),details.getUsername(),
+				details.getUserType(),details.getUserTypeId(),Features.User_Management,SubFeatures.SAVE,details.getFeatureId());
+
 	    if(Objects.nonNull(details.getMiddleName())) {
 	    	 displayName=details.getFirstName()+" "+details.getMiddleName()+" "+details.getLastName();
 	    	    	
@@ -226,6 +249,12 @@ public class UserMgmtService {
 	}	
 		public GenricResponse updateUser(UserDetails details)
 		{
+			log.info("data: "+details);
+			RequestHeaders header=new RequestHeaders(details.getUserAgent(),details.getPublicIp(),details.getUsername());
+			headerService.saveRequestHeader(header);
+			userService.saveUserTrail(details.getUserId(),details.getUsername(),
+					details.getUserType(),details.getUserTypeId(),Features.User_Management,SubFeatures.UPDATE,details.getFeatureId());
+
 			Usertype userType=new Usertype(details.getUserTypeId());
 			List<Userrole> role=new ArrayList<Userrole>();
 			User userData=new User();
@@ -274,10 +303,16 @@ public class UserMgmtService {
 	}
 	
 		@Transactional
-		public GenricResponse deleteById(long id)
+		public GenricResponse deleteById(AllRequest details)
 		{
 			try {
-	                userRepo.deleteById(id);
+				log.info("data: "+details);
+				RequestHeaders header=new RequestHeaders(details.getUserAgent(),details.getPublicIp(),details.getUsername());
+				headerService.saveRequestHeader(header);
+				userService.saveUserTrail(details.getUserId(),details.getUsername(),
+						details.getUserType(),details.getUserTypeId(),Features.User_Management,SubFeatures.DELETE,details.getFeatureId());
+
+	                userRepo.deleteById(details.getDataId());
 					GenricResponse response=new GenricResponse(200,"User Successfuly delete","");
 					return response;
 			}
@@ -292,19 +327,22 @@ public class UserMgmtService {
 			
 	}
 		
-		public GenricResponse viewById(long id){
+		public GenricResponse viewById(AllRequest request){
 			log.info("inside view by address port controller");
+			log.info("data: "+request);
+			RequestHeaders header=new RequestHeaders(request.getUserAgent(),request.getPublicIp(),request.getUsername());
+			headerService.saveRequestHeader(header);
+			userService.saveUserTrail(request.getUserId(),request.getUsername(),
+					request.getUserType(),request.getUserTypeId(),Features.User_Management,SubFeatures.VIEW,request.getFeatureId());
 			User output=new User();
 			try {
-				 output=userRepo.findById(id);
+				 output=userRepo.findById(request.getDataId());
 		}
 		catch(Exception e) {
 			log.info("Exception occure");
 			log.info(e.toString());
 			GenricResponse response=new GenricResponse(500,"user id is wrong","");
 			return  response;
-
-           
 		}
 		
 			if(output!=null) {
@@ -312,7 +350,7 @@ public class UserMgmtService {
 			   UserDetails details=new UserDetails(output.getUserProfile().getFirstName(),
 					   output.getUserProfile().getMiddleName(), output.getUserProfile().getLastName(),
 					   output.getUserProfile().getPhoneNo(), output.getUserProfile().getEmail(),
-					   usertype.getUsertypeName(), output.getUsername(), id, output.getUsertype().getId(), output.getRemark());
+					   usertype.getUsertypeName(), output.getUsername(), request.getDataId(), output.getUsertype().getId(), output.getRemark());
 				GenricResponse response=new GenricResponse(200,"","",details);		
 			
 				return  response;

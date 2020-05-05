@@ -15,7 +15,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 @Entity
-public class PortAddress {
+public class PortAddress extends AllRequest{
 
 	private static long serialVersionUID = 1L;
 	@Id
@@ -103,8 +103,11 @@ public class PortAddress {
 		builder.append(port);
 		builder.append(", portInterp=");
 		builder.append(portInterp);
+		builder.append(", toString()=");
+		builder.append(super.toString());
 		builder.append("]");
 		return builder.toString();
 	}
+	
 	
 }

@@ -1,6 +1,8 @@
 package com.ceir.CeirCode.filtermodel;
 
-public class UsertypeFilter {
+import com.ceir.CeirCode.model.AllRequest;
+
+public class UsertypeFilter extends AllRequest{
 	public String  startDate;
 	public String   endDate;
 	private Integer id;
@@ -39,12 +41,25 @@ public class UsertypeFilter {
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
+	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("UsertypeFilter [startDate=").append(startDate).append(", endDate=").append(endDate)
-				.append(", id=").append(id).append(", searchString=").append(searchString).append(", status=")
-				.append(status).append("]");
+		builder.append("UsertypeFilter [startDate=");
+		builder.append(startDate);
+		builder.append(", endDate=");
+		builder.append(endDate);
+		builder.append(", id=");
+		builder.append(id);
+		builder.append(", searchString=");
+		builder.append(searchString);
+		builder.append(", status=");
+		builder.append(status);
+		builder.append(", toString()=");
+		builder.append(super.toString());
+		builder.append("]");
 		return builder.toString();
 	}
+
 }
+

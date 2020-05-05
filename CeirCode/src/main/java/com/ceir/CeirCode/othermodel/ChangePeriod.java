@@ -1,16 +1,12 @@
 package com.ceir.CeirCode.othermodel;
 
-public class ChangePeriod {
+import com.ceir.CeirCode.model.AllRequest;
+
+public class ChangePeriod extends AllRequest{
 
 
-	private long id;
 	private Integer period;
-	public long getId() {
-		return id;
-	}
-	public void setId(long id) {
-		this.id = id;
-	}
+
 	public Integer getPeriod() {
 		return period;
 	}
@@ -20,7 +16,25 @@ public class ChangePeriod {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("ChangeUSerFeature [id=").append(id).append(", period=").append(period).append("]");
+		builder.append("ChangePeriod [period=");
+		builder.append(period);
+		builder.append(", getUsername()=");
+		builder.append(getUsername());
+		builder.append(", getUserTypeId()=");
+		builder.append(getUserTypeId());
+		builder.append(", getUserId()=");
+		builder.append(getUserId());
+		builder.append(", getUserType()=");
+		builder.append(getUserType());
+		builder.append(", getUserAgent()=");
+		builder.append(getUserAgent());
+		builder.append(", getPublicIp()=");
+		builder.append(getPublicIp());
+		builder.append(", getFeatureId()=");
+		builder.append(getFeatureId());
+		builder.append(", getDataId()=");
+		builder.append(getDataId());
+		builder.append("]");
 		return builder.toString();
 	}
 	

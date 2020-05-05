@@ -1,6 +1,8 @@
 package com.ceir.CeirCode.filtermodel;
 
-public class CurrencyFilter {
+import com.ceir.CeirCode.model.AllRequest;
+
+public class CurrencyFilter extends AllRequest{
 
 	public String  startDate;
 	public String   endDate;
@@ -53,9 +55,12 @@ public class CurrencyFilter {
 		builder.append(searchString);
 		builder.append(", year=");
 		builder.append(year);
+		builder.append(", toString()=");
+		builder.append(super.toString());
 		builder.append("]");
 		return builder.toString();
 	}
+	
 	
 }
 

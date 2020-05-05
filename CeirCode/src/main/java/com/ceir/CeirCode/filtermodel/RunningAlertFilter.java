@@ -1,6 +1,8 @@
 package com.ceir.CeirCode.filtermodel;
 
-public class RunningAlertFilter {
+import com.ceir.CeirCode.model.AllRequest;
+
+public class RunningAlertFilter extends AllRequest{
 
 	
 	public String  startDate;
@@ -8,9 +10,6 @@ public class RunningAlertFilter {
 	private String alertId;
 	private String searchString;
 	private Integer status;
-	private long userId;
-	private Integer userTypeId;
-	private Integer featureId;
 
 	public String getStartDate() {
 		return startDate;
@@ -42,25 +41,6 @@ public class RunningAlertFilter {
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
-	
-	public long getUserId() {
-		return userId;
-	}
-	public void setUserId(long userId) {
-		this.userId = userId;
-	}
-	public Integer getUserTypeId() {
-		return userTypeId;
-	}
-	public void setUserTypeId(Integer userTypeId) {
-		this.userTypeId = userTypeId;
-	}
-	public Integer getFeatureId() {
-		return featureId;
-	}
-	public void setFeatureId(Integer featureId) {
-		this.featureId = featureId;
-	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -74,16 +54,12 @@ public class RunningAlertFilter {
 		builder.append(searchString);
 		builder.append(", status=");
 		builder.append(status);
-		builder.append(", userId=");
-		builder.append(userId);
-		builder.append(", userTypeId=");
-		builder.append(userTypeId);
-		builder.append(", featureId=");
-		builder.append(featureId);
+		builder.append(", toString()=");
+		builder.append(super.toString());
 		builder.append("]");
 		return builder.toString();
 	}
-
+	
 	
 	
 

@@ -1,6 +1,6 @@
 package com.ceir.CeirCode.model;
 
-public class UserDetails {
+public class UserDetails extends AllRequest{
 
 	private String firstName;
 	private String middleName;
@@ -119,8 +119,9 @@ public class UserDetails {
 		builder.append(userType);
 		builder.append(", remarks=");
 		builder.append(remarks);
+		builder.append(", toString()=");
+		builder.append(super.toString());
 		builder.append("]");
 		return builder.toString();
 	}
-	
 }

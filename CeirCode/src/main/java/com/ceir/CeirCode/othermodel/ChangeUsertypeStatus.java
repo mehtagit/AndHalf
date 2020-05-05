@@ -1,6 +1,8 @@
 package com.ceir.CeirCode.othermodel;
 
-public class ChangeUsertypeStatus {
+import com.ceir.CeirCode.model.AllRequest;
+
+public class ChangeUsertypeStatus extends AllRequest{
 
 	private long usertypeId;
 	private Integer status;
@@ -19,8 +21,27 @@ public class ChangeUsertypeStatus {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("ChangeUsertypeStatus [usertypeId=").append(usertypeId).append(", status=").append(status)
-				.append("]");
+		builder.append("ChangeUsertypeStatus [usertypeId=");
+		builder.append(usertypeId);
+		builder.append(", status=");
+		builder.append(status);
+		builder.append(", getUsername()=");
+		builder.append(getUsername());
+		builder.append(", getUserTypeId()=");
+		builder.append(getUserTypeId());
+		builder.append(", getUserId()=");
+		builder.append(getUserId());
+		builder.append(", getUserType()=");
+		builder.append(getUserType());
+		builder.append(", getUserAgent()=");
+		builder.append(getUserAgent());
+		builder.append(", getPublicIp()=");
+		builder.append(getPublicIp());
+		builder.append(", getFeatureId()=");
+		builder.append(getFeatureId());
+		builder.append(", getDataId()=");
+		builder.append(getDataId());
+		builder.append("]");
 		return builder.toString();
 	}
 	

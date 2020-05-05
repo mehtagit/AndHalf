@@ -20,11 +20,16 @@ import com.ceir.CeirCode.SpecificationBuilder.GenericSpecificationBuilder;
 import com.ceir.CeirCode.SpecificationBuilder.SpecificationBuilder;
 import com.ceir.CeirCode.configuration.PropertiesReaders;
 import com.ceir.CeirCode.filtermodel.PortAddressFilter;
+import com.ceir.CeirCode.model.AllRequest;
 import com.ceir.CeirCode.model.PortAddress;
+import com.ceir.CeirCode.model.RequestHeaders;
 import com.ceir.CeirCode.model.SearchCriteria;
 import com.ceir.CeirCode.model.SystemConfigListDb;
+import com.ceir.CeirCode.model.constants.Features;
+import com.ceir.CeirCode.model.constants.SubFeatures;
 import com.ceir.CeirCode.repo.PortAddressRepo;
 import com.ceir.CeirCode.repoService.PortAddressRepoService;
+import com.ceir.CeirCode.repoService.ReqHeaderRepoService;
 import com.ceir.CeirCode.repoService.SystemConfigDbRepoService;
 import com.ceir.CeirCode.repoService.SystemConfigurationDbRepoService;
 import com.ceir.CeirCode.response.GenricResponse;
@@ -48,7 +53,11 @@ public class PortAddressService {
 	@Autowired
 	SystemConfigurationDbRepoService systemConfigDbRepoService;
 
-	
+	@Autowired
+	ReqHeaderRepoService headerService;
+
+	@Autowired
+	UserService userService;
 	
 	public ResponseEntity<?> getDataByPort(Integer port){
 		log.info("inside getDataByPort controller");
@@ -66,8 +75,14 @@ public class PortAddressService {
 		}
 	}
 	public ResponseEntity<?> saveAddressPort(PortAddress portAddress){
-		log.info("inside save address port controller");
+		log.info("inside save address port controller and data is portAddress");
+		log.info("port data: "+portAddress);
+		RequestHeaders header=new RequestHeaders(portAddress.getUserAgent(),portAddress.getPublicIp(),portAddress.getUsername());
+		headerService.saveRequestHeader(header);
+		userService.saveUserTrail(portAddress.getUserId(),portAddress.getUsername(),
+				portAddress.getUserType(),portAddress.getUserTypeId(),Features.Port_Management,SubFeatures.SAVE,portAddress.getFeatureId());
 		PortAddress output=portService.save(portAddress);
+
 		if(output!=null) {
 			GenricResponse response=new GenricResponse(200,PortAddsTags.PAdd_Save_Sucess.getMessage(),PortAddsTags.PAdd_Save_Sucess.getTag());
 			return  new ResponseEntity<>(response,HttpStatus.OK);
@@ -79,9 +94,14 @@ public class PortAddressService {
 
 	}
 	
-	public ResponseEntity<?> viewById(long id){
+	public ResponseEntity<?> viewById(AllRequest request){
 		log.info("inside view by address port controller");
-		PortAddress output=portService.getById(id);
+		log.info("data given : "+request);
+		RequestHeaders header=new RequestHeaders(request.getUserAgent(),request.getPublicIp(),request.getUsername());
+		headerService.saveRequestHeader(header);
+		userService.saveUserTrail(request.getUserId(),request.getUsername(),
+				request.getUserType(),request.getUserTypeId(),Features.Port_Management,SubFeatures.VIEW,request.getFeatureId());
+		PortAddress output=portService.getById(request.getDataId());
 		if(output!=null) {
 			List<SystemConfigListDb> asTypeList=systemConfigDbRepoService.getDataByTag("CUSTOMS_PORT");	
 					for(SystemConfigListDb asType:asTypeList) {
@@ -106,6 +126,11 @@ public class PortAddressService {
 	public ResponseEntity<?> updateAddressPort(PortAddress portAddress){
 		log.info("inside update address port controller");
 		log.info("address port data "+portAddress);
+		RequestHeaders header=new RequestHeaders(portAddress.getUserAgent(),portAddress.getPublicIp(),portAddress.getUsername());
+		headerService.saveRequestHeader(header);
+		userService.saveUserTrail(portAddress.getUserId(),portAddress.getUsername(),
+				portAddress.getUserType(),portAddress.getUserTypeId(),Features.Port_Management,SubFeatures.UPDATE,portAddress.getFeatureId());
+
 		PortAddress data=portService.getById(portAddress.getId());
 		if(data!=null) {
 			portAddress.setCreatedOn(data.getCreatedOn());
@@ -128,9 +153,14 @@ public class PortAddressService {
 
 	}
 	
-	public ResponseEntity<?> deleteAddressPort(long id){
+	public ResponseEntity<?> deleteAddressPort(AllRequest request){
 		log.info("inside save address port controller");
-		int output=portService.deleteById(id);
+		RequestHeaders header=new RequestHeaders(request.getUserAgent(),request.getPublicIp(),request.getUsername());
+		headerService.saveRequestHeader(header);
+		userService.saveUserTrail(request.getUserId(),request.getUsername(),
+				request.getUserType(),request.getUserTypeId(),Features.Port_Management,SubFeatures.DELETE,request.getFeatureId());
+
+		int output=portService.deleteById(request.getDataId());
 		if(output==1) {
 			GenricResponse response=new GenricResponse(200,PortAddsTags.PAdd_Del_Sucess.getMessage(),PortAddsTags.PAdd_Save_Sucess.getTag());
 			return  new ResponseEntity<>(response,HttpStatus.OK);
@@ -146,6 +176,11 @@ public class PortAddressService {
 	public Page<PortAddress> portAddressInfo(PortAddressFilter filter, Integer pageNo, Integer pageSize){
 		log.info("inside portAddress view  controller");
 		log.info("portAddressInfo : "+filter);
+		RequestHeaders header=new RequestHeaders(filter.getUserAgent(),filter.getPublicIp(),filter.getUsername());
+		headerService.saveRequestHeader(header);
+		userService.saveUserTrail(filter.getUserId(),filter.getUsername(),
+				filter.getUserType(),filter.getUserTypeId(),Features.Port_Management,SubFeatures.VIEW_ALL,filter.getFeatureId());
+
 		Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
 		GenericSpecificationBuilder<PortAddress> specification=new GenericSpecificationBuilder<PortAddress>(propertiesReader.dialect) ;
 		

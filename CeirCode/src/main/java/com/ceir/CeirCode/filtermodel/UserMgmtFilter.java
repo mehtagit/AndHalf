@@ -1,6 +1,8 @@
 package com.ceir.CeirCode.filtermodel;
 
-public class UserMgmtFilter {
+import com.ceir.CeirCode.model.AllRequest;
+
+public class UserMgmtFilter extends AllRequest{
 
 	public String  startDate;
 	public String   endDate;
@@ -43,6 +45,8 @@ public class UserMgmtFilter {
 		builder.append(usertypeId);
 		builder.append(", searchString=");
 		builder.append(searchString);
+		builder.append(", toString()=");
+		builder.append(super.toString());
 		builder.append("]");
 		return builder.toString();
 	}

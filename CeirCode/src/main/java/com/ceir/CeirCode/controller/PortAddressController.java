@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ceir.CeirCode.filtermodel.PortAddressFilter;
+import com.ceir.CeirCode.model.AllRequest;
 import com.ceir.CeirCode.model.FileDetails;
 import com.ceir.CeirCode.model.FilterRequest;
 import com.ceir.CeirCode.model.PortAddress;
@@ -57,13 +58,13 @@ public class PortAddressController {
 	}
 	
 	@ApiOperation(value="delete port Address")
-	@PostMapping("/delete/{id}")
-	public ResponseEntity<?> deleteAddressPort(@PathVariable("id")long id){
-		return portAddressService.deleteAddressPort(id);
+	@PostMapping("/delete")
+	public ResponseEntity<?> deleteAddressPort(@RequestBody AllRequest request){
+		return portAddressService.deleteAddressPort(request);
 	}
 	
 	@ApiOperation(value = "port address data.", response = PortAddress.class)
-	@PostMapping("/view") 
+	@PostMapping("/view")
 	public MappingJacksonValue view(@RequestBody PortAddressFilter filter,
 			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
 			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
@@ -86,9 +87,9 @@ public class PortAddressController {
 	}
 	
 	@ApiOperation(value="view port Address by id")
-	@PostMapping("/viewById/{id}")
-	public ResponseEntity<?> viewById(@PathVariable("id")long id){
-		return portAddressService.viewById(id);
+	@PostMapping("/viewById")
+	public ResponseEntity<?> viewById(@RequestBody AllRequest request){
+		return portAddressService.viewById(request);
 	}
 	
 	

@@ -44,22 +44,8 @@ public class AlertDbFilter extends AllRequest{
 		builder.append(alertId);
 		builder.append(", searchString=");
 		builder.append(searchString);
-		builder.append(", getUsername()=");
-		builder.append(getUsername());
-		builder.append(", getUserTypeId()=");
-		builder.append(getUserTypeId());
-		builder.append(", getUserId()=");
-		builder.append(getUserId());
-		builder.append(", getUserType()=");
-		builder.append(getUserType());
-		builder.append(", getUserAgent()=");
-		builder.append(getUserAgent());
-		builder.append(", getPublicIp()=");
-		builder.append(getPublicIp());
-		builder.append(", getFeatureId()=");
-		builder.append(getFeatureId());
-		builder.append(", getDataId()=");
-		builder.append(getDataId());
+		builder.append(", toString()=");
+		builder.append(super.toString());
 		builder.append("]");
 		return builder.toString();
 	}

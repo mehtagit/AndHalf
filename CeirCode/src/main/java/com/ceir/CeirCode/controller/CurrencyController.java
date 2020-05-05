@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.ceir.CeirCode.filtermodel.CurrencyFilter;
+import com.ceir.CeirCode.model.AllRequest;
 import com.ceir.CeirCode.model.Currency;
 import com.ceir.CeirCode.model.SystemConfigListDb;
 import com.ceir.CeirCode.repo.SystemConfigDbListRepository;
@@ -80,8 +81,8 @@ public class CurrencyController {
 	}
 	
 	@ApiOperation(value="view currency by id")
-	@PostMapping("/viewById/{id}")
-	public ResponseEntity<?> viewById(@PathVariable("id")long id){
-		return currencyService.viewById(id);
+	@PostMapping("/viewById")
+	public ResponseEntity<?> viewById(@RequestBody AllRequest request ){
+		return currencyService.viewById(request);
 	}
 }

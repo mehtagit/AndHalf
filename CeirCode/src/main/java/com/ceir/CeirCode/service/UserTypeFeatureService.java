@@ -19,14 +19,18 @@ import com.ceir.CeirCode.SpecificationBuilder.GenericSpecificationBuilder;
 import com.ceir.CeirCode.configuration.PropertiesReaders;
 import com.ceir.CeirCode.filtermodel.UserTypeFeatureFilter;
 import com.ceir.CeirCode.filtermodel.UsertypeFilter;
+import com.ceir.CeirCode.model.RequestHeaders;
 import com.ceir.CeirCode.model.SearchCriteria;
 import com.ceir.CeirCode.model.UserToStakehoderfeatureMapping;
 import com.ceir.CeirCode.model.Usertype;
+import com.ceir.CeirCode.model.constants.Features;
+import com.ceir.CeirCode.model.constants.SubFeatures;
 import com.ceir.CeirCode.othermodel.ChangePeriod;
 import com.ceir.CeirCode.othermodel.ChangeUsertypeStatus;
 import com.ceir.CeirCode.repo.FeatureRepo;
 import com.ceir.CeirCode.repo.UserToStakehoderfeatureMappingRepo;
 import com.ceir.CeirCode.repo.UsertypeRepo;
+import com.ceir.CeirCode.repoService.ReqHeaderRepoService;
 import com.ceir.CeirCode.response.tags.UserTypeFeatureTags;
 import com.ceir.CeirCode.response.tags.UsertypeTags;
 import com.ceir.CeirCode.util.HttpResponse;
@@ -45,9 +49,22 @@ public class UserTypeFeatureService {
 	
 	@Autowired
 	UserToStakehoderfeatureMappingRepo userTypeFeatureRepo;
+	
+	@Autowired
+	ReqHeaderRepoService headerService;
+
+	@Autowired
+	UserService userService;
+
+	
 	public Page<UserToStakehoderfeatureMapping>  viewAllUserTypeFeatures(UserTypeFeatureFilter filterRequest, Integer pageNo, Integer pageSize){
 		try { 
 			log.info("filter data:  "+filterRequest);
+			RequestHeaders header=new RequestHeaders(filterRequest.getUserAgent(),filterRequest.getPublicIp(),filterRequest.getUsername());
+			headerService.saveRequestHeader(header);
+			userService.saveUserTrail(filterRequest.getUserId(),filterRequest.getUsername(),
+					filterRequest.getUserType(),filterRequest.getUserTypeId(),Features.User_feature_mapping,SubFeatures.VIEW_ALL,filterRequest.getFeatureId());
+
 			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
 			GenericSpecificationBuilder<UserToStakehoderfeatureMapping> uPSB = new GenericSpecificationBuilder<UserToStakehoderfeatureMapping>(propertiesReader.dialect);	
 			if(Objects.nonNull(filterRequest.getStartDate()) && filterRequest.getStartDate()!="")
@@ -58,9 +75,8 @@ public class UserTypeFeatureService {
 
 			if(Objects.nonNull(filterRequest.getFeature()) && filterRequest.getFeature()!=-1)
 				uPSB.with(new SearchCriteria("stakeholderFeature",filterRequest.getFeature(), SearchOperation.EQUALITY, Datatype.INTEGER));
-
 			
-			if(Objects.nonNull(filterRequest.getUserType()) && filterRequest.getUserType()!=-1)
+			if(Objects.nonNull(filterRequest.getUserType()) && filterRequest.getUsertypeId()!=-1)
 				uPSB.with(new SearchCriteria("userTypeFeature",filterRequest.getUserType(), SearchOperation.EQUALITY, Datatype.INTEGER));
 
 			if(Objects.nonNull(filterRequest.getPeriod()) && filterRequest.getPeriod()!=-1)
@@ -88,8 +104,13 @@ public class UserTypeFeatureService {
 		log.info(" userPeriod data:  "+userPeriod);      
 		log.info("get userTypeFeature  data by  id below"); 
 		UserToStakehoderfeatureMapping featureMapping=new UserToStakehoderfeatureMapping();
+		RequestHeaders header=new RequestHeaders(userPeriod.getUserAgent(),userPeriod.getPublicIp(),userPeriod.getUsername());
+		headerService.saveRequestHeader(header);
+		userService.saveUserTrail(userPeriod.getUserId(),userPeriod.getUsername(),
+				userPeriod.getUserType(),userPeriod.getUserTypeId(),Features.User_feature_mapping,SubFeatures.UPDATE,userPeriod.getFeatureId());
+
 		try {
-			featureMapping=userTypeFeatureRepo.findById(userPeriod.getId());		
+			featureMapping=userTypeFeatureRepo.findById(userPeriod.getDataId());		
 		}
 		catch(Exception e) {
 			log.info(e.getMessage());

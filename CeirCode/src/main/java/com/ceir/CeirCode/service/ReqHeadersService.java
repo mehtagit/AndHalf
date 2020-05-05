@@ -36,6 +36,8 @@ import com.ceir.CeirCode.model.RequestHeaders;
 import com.ceir.CeirCode.model.SearchCriteria;
 import com.ceir.CeirCode.model.SystemConfigurationDb;
 import com.ceir.CeirCode.model.User;
+import com.ceir.CeirCode.model.constants.Features;
+import com.ceir.CeirCode.model.constants.SubFeatures;
 import com.ceir.CeirCode.repo.ReqHeadersRepo;
 import com.ceir.CeirCode.repo.SystemConfigDbListRepository;
 import com.ceir.CeirCode.repoService.ReqHeaderRepoService;
@@ -132,6 +134,12 @@ public class ReqHeadersService {
 	
 	public Page<RequestHeaders>  viewAllHeadersData(ReqHeaderFilter filterRequest, Integer pageNo, Integer pageSize){
 		try { 
+            log.info("filter data: "+filterRequest);
+			RequestHeaders header=new RequestHeaders(filterRequest.getUserAgent(),filterRequest.getPublicIp(),filterRequest.getUsername());
+			headerService.saveRequestHeader(header);
+			userService.saveUserTrail(filterRequest.getUserId(),filterRequest.getUsername(),
+					filterRequest.getUserType(),filterRequest.getUserTypeId(),Features.IP_Log_Management,SubFeatures.VIEW_ALL,filterRequest.getFeatureId());
+
 			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
 			Page<RequestHeaders> page = reqHeaderRepo.findAll( buildSpecification(filterRequest).build(), pageable );
 			return page;
@@ -144,18 +152,23 @@ public class ReqHeadersService {
 	}
 
 
-	public FileDetails getHeadersInFile(ReqHeaderFilter alertAbFilter, Integer pageNo, Integer pageSize) {
+	public FileDetails getHeadersInFile(ReqHeaderFilter filterRequest, Integer pageNo, Integer pageSize) {
 		log.info("inside export request headers data into file service");
-		log.info("filter data:  "+alertAbFilter);
+		log.info("filter data:  "+filterRequest);
+		RequestHeaders header=new RequestHeaders(filterRequest.getUserAgent(),filterRequest.getPublicIp(),filterRequest.getUsername());
+		headerService.saveRequestHeader(header);
+		userService.saveUserTrail(filterRequest.getUserId(),filterRequest.getUsername(),
+				filterRequest.getUserType(),filterRequest.getUserTypeId(),Features.IP_Log_Management,SubFeatures.EXPORT,filterRequest.getFeatureId());
+
 		String fileName = null;
 		Writer writer   = null;
 		ReqHeaderFile adFm = null;
 		SystemConfigurationDb alertDbDowlonadDir=systemConfigurationDbRepoImpl.getDataByTag("reqHeader_Download_Dir");
 		SystemConfigurationDb alertDbDowlonadLink=systemConfigurationDbRepoImpl.getDataByTag("reqHeader_Download_link");
 		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-		User user=userRepoService.findByUSerId(alertAbFilter.getUserId());
+		User user=userRepoService.findByUSerId(filterRequest.getUserId());
 		if(user!=null) {
-			userService.saveUserTrail(user, "Alert db", "Export", alertAbFilter.getFeatureId());
+			userService.saveUserTrail(user, "Alert db", "Export", filterRequest.getFeatureId());
 		}
 		String filePath  = alertDbDowlonadDir.getValue();
 		log.info("filePath:  "+filePath);
@@ -164,7 +177,7 @@ public class ReqHeadersService {
 		List<ReqHeaderFile> fileRecords       = null;
 		//HeaderColumnNameTranslateMappingStrategy<UserProfileFileModel> mapStrategy = null;
 		try {
-			List<RequestHeaders> alertDbData = this.getAll(alertAbFilter);
+			List<RequestHeaders> alertDbData = this.getAll(filterRequest);
 			//if( alertDbData.getSize()> 0 ) {
 				fileName = LocalDateTime.now().format(dtf).replace(" ", "_")+"_IPLog.csv";
 			

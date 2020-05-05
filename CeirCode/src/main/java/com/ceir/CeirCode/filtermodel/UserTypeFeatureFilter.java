@@ -1,14 +1,15 @@
 package com.ceir.CeirCode.filtermodel;
 
-public class UserTypeFeatureFilter {
+import com.ceir.CeirCode.model.AllRequest;
+
+public class UserTypeFeatureFilter extends AllRequest{
 	
 	public String  startDate;
 	public String   endDate;
-	private Integer userType;
+	private Integer usertypeId;
 	private Integer feature;
 	private String searchString;
 	private Integer period;
-	
 	
 	public String getStartDate() {
 		return startDate;
@@ -22,11 +23,11 @@ public class UserTypeFeatureFilter {
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
-	public Integer getUserType() {
-		return userType;
+	public Integer getUsertypeId() {
+		return usertypeId;
 	}
-	public void setUserType(Integer userType) {
-		this.userType = userType;
+	public void setUsertypeId(Integer usertypeId) {
+		this.usertypeId = usertypeId;
 	}
 	public Integer getFeature() {
 		return feature;
@@ -49,12 +50,23 @@ public class UserTypeFeatureFilter {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("UserTypeFeatureFilter [startDate=").append(startDate).append(", endDate=").append(endDate)
-				.append(", userType=").append(userType).append(", feature=").append(feature).append(", searchString=")
-				.append(searchString).append(", period=").append(period).append("]");
+		builder.append("UserTypeFeatureFilter [startDate=");
+		builder.append(startDate);
+		builder.append(", endDate=");
+		builder.append(endDate);
+		builder.append(", usertypeId=");
+		builder.append(usertypeId);
+		builder.append(", feature=");
+		builder.append(feature);
+		builder.append(", searchString=");
+		builder.append(searchString);
+		builder.append(", period=");
+		builder.append(period);
+		builder.append(", toString()=");
+		builder.append(super.toString());
+		builder.append("]");
 		return builder.toString();
 	}
 	
 	
-
 }

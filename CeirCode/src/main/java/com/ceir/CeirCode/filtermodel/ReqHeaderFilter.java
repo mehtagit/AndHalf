@@ -1,13 +1,12 @@
 package com.ceir.CeirCode.filtermodel;
 
-public class ReqHeaderFilter {
+import com.ceir.CeirCode.model.AllRequest;
+
+public class ReqHeaderFilter extends AllRequest{
 
 	public String  startDate;
 	public String   endDate;
 	private String searchString;
-	private long userId;
-	private Integer userTypeId;
-	private Integer featureId;
 	public String getStartDate() {
 		return startDate;
 	}
@@ -26,24 +25,6 @@ public class ReqHeaderFilter {
 	public void setSearchString(String searchString) {
 		this.searchString = searchString;
 	}
-	public long getUserId() {
-		return userId;
-	}
-	public void setUserId(long userId) {
-		this.userId = userId;
-	}
-	public Integer getUserTypeId() {
-		return userTypeId;
-	}
-	public void setUserTypeId(Integer userTypeId) {
-		this.userTypeId = userTypeId;
-	}
-	public Integer getFeatureId() {
-		return featureId;
-	}
-	public void setFeatureId(Integer featureId) {
-		this.featureId = featureId;
-	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -53,17 +34,12 @@ public class ReqHeaderFilter {
 		builder.append(endDate);
 		builder.append(", searchString=");
 		builder.append(searchString);
-		builder.append(", userId=");
-		builder.append(userId);
-		builder.append(", userTypeId=");
-		builder.append(userTypeId);
-		builder.append(", featureId=");
-		builder.append(featureId);
+		builder.append(", toString()=");
+		builder.append(super.toString());
 		builder.append("]");
 		return builder.toString();
 	}
- 
-	
+		
 	
 	
 }

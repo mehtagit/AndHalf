@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.ceir.CeirCode.filtermodel.UserMgmtFilter;
+import com.ceir.CeirCode.model.AllRequest;
 import com.ceir.CeirCode.model.PortAddress;
 import com.ceir.CeirCode.model.User;
 import com.ceir.CeirCode.model.UserDetails;
@@ -32,9 +33,9 @@ public class UserManagement {
 	
 	
 	@ApiOperation(value = "get user by id", response = HttpResponse.class)
-	@PostMapping("/getById/{id}")
-	public GenricResponse findDataByPort(@PathVariable("id") long id){
-		return userService.viewById(id);
+	@PostMapping("/getById")
+	public GenricResponse findDataByPort(@RequestBody AllRequest request){
+		return userService.viewById(request);
 	}
 	
 	@ApiOperation(value="save user")
@@ -51,9 +52,9 @@ public class UserManagement {
 
 	
 	@ApiOperation(value="delete by id")
-	@PostMapping("/delete/{id}")
-	public GenricResponse deleteUserById(@PathVariable("id")long id){
-		return userService.deleteById(id);
+	@PostMapping("/delete")
+	public GenricResponse deleteUserById(@RequestBody AllRequest request){
+		return userService.deleteById(request);
 	}
 	
 	@ApiOperation(value = "user data.", response = User.class)

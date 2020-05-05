@@ -20,16 +20,20 @@ import com.ceir.CeirCode.SpecificationBuilder.GenericSpecificationBuilder;
 import com.ceir.CeirCode.configuration.PropertiesReaders;
 import com.ceir.CeirCode.filtermodel.UsertypeFilter;
 import com.ceir.CeirCode.model.ChangeUserStatus;
+import com.ceir.CeirCode.model.RequestHeaders;
 import com.ceir.CeirCode.model.RunningAlertDb;
 import com.ceir.CeirCode.model.SearchCriteria;
 import com.ceir.CeirCode.model.SystemConfigurationDb;
 import com.ceir.CeirCode.model.User;
 import com.ceir.CeirCode.model.Usertype;
 import com.ceir.CeirCode.model.constants.AlertStatus;
+import com.ceir.CeirCode.model.constants.Features;
+import com.ceir.CeirCode.model.constants.SubFeatures;
 import com.ceir.CeirCode.model.constants.UserTypeStatusFlag;
 import com.ceir.CeirCode.model.constants.UsertypeData;
 import com.ceir.CeirCode.othermodel.ChangeUsertypeStatus;
 import com.ceir.CeirCode.repo.UsertypeRepo;
+import com.ceir.CeirCode.repoService.ReqHeaderRepoService;
 import com.ceir.CeirCode.response.GenricResponse;
 import com.ceir.CeirCode.response.tags.RegistrationTags;
 import com.ceir.CeirCode.response.tags.UpdateUserStatusTags;
@@ -45,10 +49,22 @@ public class UserTypeService {
 	PropertiesReaders propertiesReader;
 	
 	@Autowired
+	ReqHeaderRepoService headerService;
+
+	@Autowired
+	UserService userService;
+
+	
+	@Autowired
 	UsertypeRepo usertypeRepo;
 	public Page<Usertype>  viewAllUserytypes(UsertypeFilter filterRequest, Integer pageNo, Integer pageSize){
 		try { 
 			log.info("filter data:  "+filterRequest);
+			RequestHeaders header=new RequestHeaders(filterRequest.getUserAgent(),filterRequest.getPublicIp(),filterRequest.getUsername());
+			headerService.saveRequestHeader(header);
+			userService.saveUserTrail(filterRequest.getUserId(),filterRequest.getUsername(),
+					filterRequest.getUserType(),filterRequest.getUserTypeId(),Features.User_Type_Management,SubFeatures.VIEW_ALL,filterRequest.getFeatureId());
+			
 			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
 			GenericSpecificationBuilder<Usertype> uPSB = new GenericSpecificationBuilder<Usertype>(propertiesReader.dialect);	
 			if(Objects.nonNull(filterRequest.getStartDate()) && filterRequest.getStartDate()!="")
@@ -83,6 +99,10 @@ public class UserTypeService {
 		log.info("get usertype  data by usertype id below"); 
 		Usertype userType=new Usertype();
 		try {
+			RequestHeaders header=new RequestHeaders(usertypeStatus.getUserAgent(),usertypeStatus.getPublicIp(),usertypeStatus.getUsername());
+			headerService.saveRequestHeader(header);
+			userService.saveUserTrail(usertypeStatus.getUserId(),usertypeStatus.getUsername(),
+					usertypeStatus.getUserType(),usertypeStatus.getUserTypeId(),Features.User_Type_Management,SubFeatures.UPDATE,usertypeStatus.getFeatureId());
 			 userType=usertypeRepo.findById(usertypeStatus.getUsertypeId());			
 		}
 		catch(Exception e) {

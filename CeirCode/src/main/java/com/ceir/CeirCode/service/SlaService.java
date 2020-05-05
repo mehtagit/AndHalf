@@ -27,13 +27,17 @@ import com.ceir.CeirCode.exceptions.ResourceServicesException;
 import com.ceir.CeirCode.filemodel.SlaFile;
 import com.ceir.CeirCode.filtermodel.SlaFilter;
 import com.ceir.CeirCode.model.FileDetails;
+import com.ceir.CeirCode.model.RequestHeaders;
 import com.ceir.CeirCode.model.SearchCriteria;
 import com.ceir.CeirCode.model.SlaReport;
 import com.ceir.CeirCode.model.StakeholderFeature;
 import com.ceir.CeirCode.model.SystemConfigurationDb;
 import com.ceir.CeirCode.model.User;
+import com.ceir.CeirCode.model.constants.Features;
+import com.ceir.CeirCode.model.constants.SubFeatures;
 import com.ceir.CeirCode.repo.SlaRepo;
 import com.ceir.CeirCode.repo.SystemConfigDbListRepository;
+import com.ceir.CeirCode.repoService.ReqHeaderRepoService;
 import com.ceir.CeirCode.repoService.SlaRepoService;
 import com.ceir.CeirCode.repoService.SystemConfigDbRepoService;
 import com.ceir.CeirCode.repoService.UserRepoService;
@@ -74,13 +78,11 @@ public class SlaService {
 	@Autowired
 	FeatureService featureService;
 	
+	@Autowired
+	ReqHeaderRepoService headerService;
+	
 	private GenericSpecificationBuilder<SlaReport> buildSpecification(SlaFilter filterRequest){
-		if(filterRequest.getUserId()!=0) {
-		User user=userRepoService.findByUSerId(filterRequest.getUserId());
-		if(user!=null) {
-			userService.saveUserTrail(user, "Alert db", "View", filterRequest.getFeatureId());
-		}
-		}
+		
 		GenericSpecificationBuilder<SlaReport> uPSB = new GenericSpecificationBuilder<SlaReport>(propertiesReader.dialect);	
 
 		if(Objects.nonNull(filterRequest.getStartDate()) && filterRequest.getStartDate()!="")
@@ -125,6 +127,11 @@ public class SlaService {
 	public Page<SlaReport>  viewAllSlaData(SlaFilter filterRequest, Integer pageNo, Integer pageSize){
 		try { 
 			log.info("filter data:  "+filterRequest);
+			RequestHeaders header=new RequestHeaders(filterRequest.getUserAgent(),filterRequest.getPublicIp(),filterRequest.getUsername());
+			headerService.saveRequestHeader(header);
+			userService.saveUserTrail(filterRequest.getUserId(),filterRequest.getUsername(),
+					filterRequest.getUserType(),filterRequest.getUserTypeId(),Features.SLA_Management,SubFeatures.VIEW_ALL,filterRequest.getFeatureId());
+
 			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
             Page<SlaReport> page=slaRepo.findAll(buildSpecification(filterRequest).build(),pageable);
 			return page;
@@ -139,18 +146,24 @@ public class SlaService {
 	}
 
 
-	public FileDetails getSlaInFile(SlaFilter alertAbFilter) {
+	public FileDetails getSlaInFile(SlaFilter filterRequest) {
 		log.info("inside export sla data into file service");
-		log.info("filter data:  "+alertAbFilter);
+		log.info("filter data:  "+filterRequest);
+		log.info("filter data:  "+filterRequest);
+		RequestHeaders header=new RequestHeaders(filterRequest.getUserAgent(),filterRequest.getPublicIp(),filterRequest.getUsername());
+		headerService.saveRequestHeader(header);
+		userService.saveUserTrail(filterRequest.getUserId(),filterRequest.getUsername(),
+				filterRequest.getUserType(),filterRequest.getUserTypeId(),Features.SLA_Management,SubFeatures.EXPORT,filterRequest.getFeatureId());
+
 		String fileName = null;
 		Writer writer   = null;
 		SlaFile slFm = null;
 		SystemConfigurationDb alertDbDowlonadDir=systemConfigurationDbRepoImpl.getDataByTag("Sla_Download_Dir");
 		SystemConfigurationDb alertDbDowlonadLink=systemConfigurationDbRepoImpl.getDataByTag("Sla_Download_link");
 		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-		User user=userRepoService.findByUSerId(alertAbFilter.getUserId());
+		User user=userRepoService.findByUSerId(filterRequest.getUserId());
 		if(user!=null) {
-			userService.saveUserTrail(user, "Alert db", "Export", alertAbFilter.getFeatureId());
+			userService.saveUserTrail(user, "Alert db", "Export", filterRequest.getFeatureId());
 		}
 		String filePath  = alertDbDowlonadDir.getValue();
 		log.info("filePath:  "+filePath);
@@ -159,7 +172,7 @@ public class SlaService {
 		List<SlaFile> fileRecords       = null;
 		//HeaderColumnNameTranslateMappingStrategy<UserProfileFileModel> mapStrategy = null;
 		try {
-			List<SlaReport> slaData = getAll(alertAbFilter);
+			List<SlaReport> slaData = getAll(filterRequest);
 			//if( alertDbData.getSize()> 0 ) {
 				fileName = LocalDateTime.now().format(dtf).replace(" ", "_")+"_slaReport.csv";
 			
