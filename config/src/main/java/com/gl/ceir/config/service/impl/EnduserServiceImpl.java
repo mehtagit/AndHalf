@@ -414,7 +414,7 @@ Integer type=null;
 					VisaDb OldVisa=visaDbs.get(0);
 		 		VisaUpdateDb visaUpdateDb=new VisaUpdateDb(OldVisa.getVisaType(), OldVisa.getVisaNumber(),
 						latestVisa.getVisaFileName(), OldVisa.getEntryDateInCountry(), latestVisa.getVisaExpiryDate(),
-						0,endUserDB1.getId()); 
+						0,endUserDB1.getId(),endUserDB.getTxnId()); 
 				String mailTag = "Update_Visa_Request";
 				List<RawMail> rawMails = new ArrayList<>();
 				Map<String, String> placeholderMap = new HashMap<String, String>();
