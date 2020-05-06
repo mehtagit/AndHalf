@@ -353,7 +353,7 @@ input[type='search'] {
 												</div>
 												<div class="input-field col s12 m6 l6" style="margin-top: 18px;margin-right: 1px;">
 													<input type="text" readonly="readonly"
-														pattern="[0-9]{10,10}"  <%-- value="${viewInformation.data.rejectedRemark}" --%> > <label for="textarea1" class="active"><spring:message
+														pattern="[0-9]{10,10}"  value="${viewInformation.data.rejectedRemark}" > <label for="textarea1" class="active"><spring:message
 																	code="input.remarksRejected" /> </label>
 												</div>
 											</div>

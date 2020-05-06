@@ -296,11 +296,11 @@
 			
 
 
-			function deviceApprovalPopup(visaId,endUserId){
+			function deviceApprovalPopup(visaId,endUserId,txnId){
 				$('#approveInformation').openModal({dismissible:false});
 				window.visaId=visaId;
 				window.endUserId=endUserId;
-				//$('#approveTxnId').text(txnId);
+				$('#approveTxnId').text(txnId);
 			}   
 
 
@@ -343,9 +343,9 @@
 
 
 
-			function userRejectPopup(visaId,endUserId){
+			function userRejectPopup(visaId,endUserId,txnId){
 				$('#rejectInformation').openModal({dismissible:false});
-				//$('#disapproveTxnId').text(txnId)
+				$('#disapproveTxnId').text(txnId)
 				window.visaId=visaId;
 				window.endUserId=endUserId;
 			}

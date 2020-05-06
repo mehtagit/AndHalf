@@ -2564,8 +2564,8 @@ public class IconsState {
 		executePostConstruct();
 		String viewAction="viewDetails('"+id+"','"+endUserId+"')";
 
-		String approveAction ="deviceApprovalPopup('"+id+"','"+endUserId+"')";
-		String rejectAction= "userRejectPopup('"+id+"','"+endUserId+"')";
+		String approveAction ="deviceApprovalPopup('"+id+"','"+endUserId+"','"+txnid+"')";
+		String rejectAction= "userRejectPopup('"+id+"','"+endUserId+"','"+txnid+"')";
 
 
 		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
