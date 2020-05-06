@@ -86,12 +86,18 @@ public class PortAddressController {
 			return mapping;		
 	}
 	
-	@ApiOperation(value="view port Address by id")
-	@PostMapping("/viewById")
-	public ResponseEntity<?> viewById(@RequestBody AllRequest request){
-		return portAddressService.viewById(request);
+	@ApiOperation(value="view port Address data  by id, Audi trail entry here")
+	@PostMapping("/viewDataById")
+	public ResponseEntity<?> viewByPortId(@RequestBody AllRequest request){
+		return portAddressService.viewPortById(request);
 	}
 	
+	@ApiOperation(value="view port Address by id , without audi trail entry")
+	@PostMapping("/viewById/{id}")
+	public ResponseEntity<?> viewById(@PathVariable("id")long id){
+		return portAddressService.viewById(id);
+	}
+
 	
 	
 	

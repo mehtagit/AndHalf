@@ -94,7 +94,32 @@ public class PortAddressService {
 
 	}
 	
-	public ResponseEntity<?> viewById(AllRequest request){
+	public ResponseEntity<?> viewById(long id){
+		log.info("inside view by address port controller");
+		log.info("id given : "+id);
+		PortAddress output=portService.getById(id);
+		if(output!=null) {
+			List<SystemConfigListDb> asTypeList=systemConfigDbRepoService.getDataByTag("CUSTOMS_PORT");	
+					for(SystemConfigListDb asType:asTypeList) {
+						Integer value=asType.getValue();
+				if(output.getPort()==value) {
+					output.setPortInterp(asType.getInterp());
+				}
+				
+					}
+					GenricResponse response=new GenricResponse(200,"","",output);		
+		
+			return  new ResponseEntity<>(response,HttpStatus.OK);
+		}
+		else {
+			GenricResponse response=new GenricResponse(500,PortAddsTags.PAdd_Data_By_Id_Fail.getMessage(),PortAddsTags.PAdd_Data_By_Id_Fail.getTag());
+			return  new ResponseEntity<>(response,HttpStatus.OK);
+		}
+
+	}
+
+	
+	public ResponseEntity<?> viewPortById(AllRequest request){
 		log.info("inside view by address port controller");
 		log.info("data given : "+request);
 		RequestHeaders header=new RequestHeaders(request.getUserAgent(),request.getPublicIp(),request.getUsername());
@@ -121,7 +146,6 @@ public class PortAddressService {
 		}
 
 	}
-	
 	
 	public ResponseEntity<?> updateAddressPort(PortAddress portAddress){
 		log.info("inside update address port controller");
