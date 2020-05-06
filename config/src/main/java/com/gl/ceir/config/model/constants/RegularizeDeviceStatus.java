@@ -8,7 +8,8 @@ public enum RegularizeDeviceStatus {
 	Withdrawn_By_User(4, "Withdrawn By User"), 
 	APPROVED(6, "Approved"),
 	REJECTED_BY_CEIR_ADMIN(7, "Rejected by CEIR Admin"), 
-	WithDrawn_BY_CEIR_ADMIN(8, "Withdrawn By CEIR Admin");
+	WithDrawn_BY_CEIR_ADMIN(8, "Withdrawn By CEIR Admin")
+	;
 
 	private int code;
 	private String desc;

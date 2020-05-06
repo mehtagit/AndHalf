@@ -14,6 +14,7 @@ public class FilterRequest {
 	private Integer requestType;
 	private Integer sourceType;
 	private String userType;
+	private String filteredUserType;
 	private Integer featureId;
 	private String featureName;
 	private String subFeatureName;
@@ -50,6 +51,14 @@ public class FilterRequest {
 	private String remark;
 	
 	private String displayName;
+	
+	public String getFilteredUserType() {
+		return filteredUserType;
+	}
+	
+	public void setFilteredUserType(String filteredUserType) {
+		this.filteredUserType = filteredUserType;
+	}
 	public String getRemark() {
 		return remark;
 	}
@@ -268,6 +277,14 @@ public class FilterRequest {
 	public void setImporterId(Long importerId) {
 		this.importerId = importerId;
 	}
+
+	public String getDisplayName() {
+		return displayName;
+	}
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -295,6 +312,8 @@ public class FilterRequest {
 		builder.append(sourceType);
 		builder.append(", userType=");
 		builder.append(userType);
+		builder.append(", filteredUserType=");
+		builder.append(filteredUserType);
 		builder.append(", featureId=");
 		builder.append(featureId);
 		builder.append(", featureName=");
@@ -347,12 +366,6 @@ public class FilterRequest {
 		builder.append(displayName);
 		builder.append("]");
 		return builder.toString();
-	}
-	public String getDisplayName() {
-		return displayName;
-	}
-	public void setDisplayName(String displayName) {
-		this.displayName = displayName;
 	}
 	
 }

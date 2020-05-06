@@ -1,5 +1,8 @@
 package com.gl.ceir.config.service.impl;
 
+import java.util.Map;
+import java.util.Objects;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +50,27 @@ public class AlertServiceImpl {
 		}catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
+	}
+	
+	public GenricResponse raiseAnAlert(String alertId, int userId, Map<String, String> bodyPlaceHolderMap) {
+
+		try {
+			AlertDb alertDb = alertDbRepository.getByAlertId(alertId);
+			
+			// Replace Placeholders from bodyPlaceHolderMap.
+			if(Objects.nonNull(bodyPlaceHolderMap)) {
+				for (Map.Entry<String, String> entry : bodyPlaceHolderMap.entrySet()) {
+					logger.info("Placeholder key : " + entry.getKey() + " value : " + entry.getValue());
+					alertDb.setDescription(alertDb.getDescription().replaceAll(entry.getKey(), entry.getValue()));
+				}
+			}
+			
+			runningAlertDbRepository.save(new RunningAlertDb(userId, alertId, alertDb.getDescription(), 0));
+			return new GenricResponse(0);
+		}catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			return new GenricResponse(1);
 		}
 	}
 

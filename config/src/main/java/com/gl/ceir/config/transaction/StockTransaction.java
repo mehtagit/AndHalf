@@ -77,7 +77,7 @@ public class StockTransaction {
 			logger.info(user);
 			Map<String, String> placeholderMap = new HashMap<>();
 			placeholderMap.put("<First name>", user.getUserProfile().getFirstName());
-			placeholderMap.put("<txn_id>", stockMgmt.getTxnId());
+			placeholderMap.put("<Txn id>", stockMgmt.getTxnId());
 
 			if(emailUtil.saveNotification("ASSIGN_STOCK", 
 					userProfile, 
@@ -99,7 +99,7 @@ public class StockTransaction {
 			// Send notification to the anonymous user if mail is provided.
 			if(Objects.nonNull(userProfile.getEmail()) && !userProfile.getEmail().isEmpty()) {
 				Map<String, String> placeholderMapForAnonymousUser = new HashMap<String, String>();
-				placeholderMapForAnonymousUser.put("<txn_id>", stockMgmt.getTxnId());
+				placeholderMapForAnonymousUser.put("<Txn id>", stockMgmt.getTxnId());
 
 				rawMails.add(new RawMail("MAIL_TO_ANONYMOUS_ON_STOCK_UPLOAD", userProfile, 
 						4, Features.STOCK, 
