@@ -603,15 +603,20 @@ public class RegularizedDeviceServiceImpl {
             long userId=0;
             String subFeature="";
             String username="";
-			RegularizeDeviceDb regularizeDeviceDb = regularizedDeviceDbRepository.getByFirstImei(ceirActionRequest.getImei1());
-			logger.debug("Accept/Reject regularized Devices : " + regularizeDeviceDb);
-
-			endUserDB = endUserDbRepository.getByNid(regularizeDeviceDb.getNid());
-
-			placeholders.put("<Txn id>", regularizeDeviceDb.getTxnId());
-			placeholders.put("<First name>", endUserDB.getFirstName());
+			RegularizeDeviceDb regularizeDeviceDb =new RegularizeDeviceDb();
 
 			if("CEIRADMIN".equalsIgnoreCase(ceirActionRequest.getUserType())){
+				regularizeDeviceDb=regularizedDeviceDbRepository.getByFirstImei(ceirActionRequest.getImei1());
+				logger.debug("Accept/Reject regularized Devices : " + regularizeDeviceDb);
+	            if(Objects.nonNull(regularizeDeviceDb))
+	            {
+	            	return new GenricResponse(1, "First imei is incorrect", "");            	
+	            }
+				endUserDB = endUserDbRepository.getByNid(regularizeDeviceDb.getNid());
+
+				placeholders.put("<Txn id>", regularizeDeviceDb.getTxnId());
+				placeholders.put("<First name>", endUserDB.getFirstName());
+
 			userId=ceirActionRequest.getUserId();
 				userTypeId=8;
                 if(Objects.nonNull(ceirActionRequest.getUsername())) {
@@ -656,6 +661,17 @@ public class RegularizedDeviceServiceImpl {
 				}
 			}
 			else if("CEIRSYSTEM".equalsIgnoreCase(ceirActionRequest.getUserType())){
+				regularizeDeviceDb=regularizedDeviceDbRepository.getByTxnId(ceirActionRequest.getTxnId());
+				logger.debug("Accept/Reject regularized Devices : " + regularizeDeviceDb);
+	            if(Objects.nonNull(regularizeDeviceDb))
+	            {
+	            	return new GenricResponse(1, "transaction id is incorrect", "");            	
+	            }
+				endUserDB = endUserDbRepository.getByNid(regularizeDeviceDb.getNid());
+
+				placeholders.put("<Txn id>", regularizeDeviceDb.getTxnId());
+				placeholders.put("<First name>", endUserDB.getFirstName());
+
 				userTypeId=0;
 				if(ceirActionRequest.getAction() == 0) {
 					regularizeDeviceDb.setStatus(RegularizeDeviceStatus.PENDING_APPROVAL_FROM_CEIR_ADMIN.getCode());
