@@ -6,7 +6,7 @@
 	<groupId>com.ceir</groupId>
 	<artifactId>CeirCode</artifactId>
 <!-- 	<version>0.0.9-SNAPSHOT</version> -->
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>CeirCode</name>
@@ -206,9 +206,9 @@
 	</dependencies> 
 	<build>
 
-<!-- 		<finalName>${artifactId}-${version}</finalName> -->
+		<finalName>${artifactId}-${version}</finalName>
 
- 		<finalName>${artifactId}-${version}_Test</finalName>
+ <!-- 		<finalName>${artifactId}-${version}_Test</finalName> -->
 
 		<resources>
 			<resource>

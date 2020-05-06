@@ -92,12 +92,6 @@ public class AlertDbService {
 	
 	
 	private GenericSpecificationBuilder<AlertDb> buildSpecification(AlertDbFilter filterRequest){
-		if(filterRequest.getUserId()!=0) {
-		User user=userRepoService.findByUSerId(filterRequest.getUserId());
-		if(user!=null) {
-			userService.saveUserTrail(user, "Alert db", "View", filterRequest.getFeatureId());
-		}
-		}
 		GenericSpecificationBuilder<AlertDb> uPSB = new GenericSpecificationBuilder<AlertDb>(propertiesReader.dialect);	
 
 		if(Objects.nonNull(filterRequest.getStartDate()) && filterRequest.getStartDate()!="")
@@ -138,10 +132,6 @@ public class AlertDbService {
 	public Page<AlertDb>  viewAllAlertData(AlertDbFilter filterRequest, Integer pageNo, Integer pageSize){
 		try { 
 			log.info("filter data:  "+filterRequest);
-			RequestHeaders header=new RequestHeaders(filterRequest.getUserAgent(),filterRequest.getPublicIp(),filterRequest.getUsername());
-			headerService.saveRequestHeader(header);
-			userService.saveUserTrail(filterRequest.getUserId(),filterRequest.getUsername(),
-					filterRequest.getUserType(),filterRequest.getUserTypeId(),Features.Alert_Management,SubFeatures.VIEW_ALL,filterRequest.getFeatureId());
 			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
             Page<AlertDb> page=alertDbRepo.findAll(buildSpecification(filterRequest).build(),pageable);
 			return page;
@@ -159,21 +149,13 @@ public class AlertDbService {
 	public FileDetails getAlertDbInFile(AlertDbFilter alertAbFilter) {
 		log.info("inside export alert db data into file service");
 		log.info("filter data:  "+alertAbFilter);
-		RequestHeaders header=new RequestHeaders(alertAbFilter.getUserAgent(),alertAbFilter.getPublicIp(),alertAbFilter.getUsername());
-		headerService.saveRequestHeader(header);
-		userService.saveUserTrail(alertAbFilter.getUserId(),alertAbFilter.getUsername(),
-				alertAbFilter.getUserType(),alertAbFilter.getUserTypeId(),Features.Alert_Management,SubFeatures.EXPORT,alertAbFilter.getFeatureId());
-
-		String fileName = null;
+			String fileName = null;
 		Writer writer   = null;
 		AlertDbFile adFm = null;
 		SystemConfigurationDb alertDbDowlonadDir=systemConfigurationDbRepoImpl.getDataByTag("Alertdb_Download_Dir");
 		SystemConfigurationDb alertDbDowlonadLink=systemConfigurationDbRepoImpl.getDataByTag("Alertdb_Download_link");
 		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-		User user=userRepoService.findByUSerId(alertAbFilter.getUserId());
-		if(user!=null) {
-			userService.saveUserTrail(user, "Alert db", "Export", alertAbFilter.getFeatureId());
-		}
+		
 		String filePath  = alertDbDowlonadDir.getValue();
 		log.info("filePath:  "+filePath);
 		StatefulBeanToCsvBuilder<AlertDbFile> builder = null;
@@ -236,15 +218,10 @@ public class AlertDbService {
 		}
 	}
 	
-	public ResponseEntity<?> findById(AllRequest request){
+	public ResponseEntity<?> findById(long id){
 		try {
-			log.info("given data:  "+request);
-			RequestHeaders header=new RequestHeaders(request.getUserAgent(),request.getPublicIp(),request.getUsername());
-			headerService.saveRequestHeader(header);
-			userService.saveUserTrail(request.getUserId(),request.getUsername(),
-					request.getUserType(),request.getUserTypeId(),Features.Alert_Management,SubFeatures.VIEW,request.getFeatureId());
-
-			AlertDb alertDb=alertDbRepo.findById(request.getDataId());
+			log.info("given data:  "+id);
+					AlertDb alertDb=alertDbRepo.findById(id);
 			if(alertDb!=null) {
 				GenricResponse response=new GenricResponse(200,"","",alertDb);		
 				return new ResponseEntity<>(response, HttpStatus.OK);
@@ -268,10 +245,6 @@ public class AlertDbService {
 	public ResponseEntity<?> updateAlertDb(AlertDb alertDb){
 		log.info("inside update alertDb controller");
 		log.info("given data:  "+alertDb);
-		RequestHeaders header=new RequestHeaders(alertDb.getUserAgent(),alertDb.getPublicIp(),alertDb.getUsername());
-		headerService.saveRequestHeader(header);
-		userService.saveUserTrail(alertDb.getId(),alertDb.getUsername(),
-				alertDb.getUserType(),alertDb.getUserTypeId(),Features.Alert_Management,SubFeatures.VIEW,alertDb.getFeatureId());
 		AlertDb data=alertRepoService.getById(alertDb.getId());
 		if(data!=null) {
 		data.setDescription(alertDb.getDescription());

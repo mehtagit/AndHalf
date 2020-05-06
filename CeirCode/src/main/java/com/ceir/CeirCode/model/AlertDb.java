@@ -21,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class AlertDb  extends AllRequest {
+public class AlertDb {
 
 	public AlertDb() {
 		super();

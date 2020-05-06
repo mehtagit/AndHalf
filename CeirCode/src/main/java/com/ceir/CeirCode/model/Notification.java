@@ -46,9 +46,9 @@ public class Notification  implements Serializable{
 
 	private String subject;
 
-	private Integer retryCount;
+	private Integer retryCount; 
     
-	private String referTable;
+	private String referTable="users";
 
 	@Column(length = 50)
 	private String receiverUserType;
