@@ -32,6 +32,18 @@ public class StockFileModel {
 	@CsvBindByName(column = "Supplier Name")
 	@CsvBindByPosition(position = 6)
 	private String supplierName;
+	
+	@CsvBindByName(column = "Device Quantity")
+	@CsvBindByPosition(position = 7)
+	private Integer deviceQuantity;
+
+	public Integer getDeviceQuantity() {
+		return deviceQuantity;
+	}
+
+	public void setDeviceQuantity(Integer deviceQuantity) {
+		this.deviceQuantity = deviceQuantity;
+	}
 
 	public String getStockStatus() {
 		return stockStatus;
