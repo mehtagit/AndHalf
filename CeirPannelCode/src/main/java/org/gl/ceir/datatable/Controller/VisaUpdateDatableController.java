@@ -93,7 +93,7 @@ public class VisaUpdateDatableController {
 				   String Status = String.valueOf(dataInsideList.getStatus());
 				   String txnid=dataInsideList.getTxnId();
 				   Integer endUserId=dataInsideList.getUserId();
-				   String passportNumber=dataInsideList.getPassportNumber();
+				   String passportNumber=dataInsideList.getNid();
 				   String userStatus = (String) session.getAttribute("userStatus");	  
 				   String action=iconState.visaUpdateAdminIcons(Status,id,endUserId,txnid);			   
 				   Object[] finalData={createdOn,modifiedOn,txnid,passportNumber,visaTypeInterp,visaNumber,visaFileName,visaExpiryDate,stateInterp,action}; 
