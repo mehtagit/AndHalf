@@ -40,10 +40,15 @@ public class StakeholderFeature {
     private String logo;
     private String link;
     
-    @NotAudited
-    @JsonIgnore
-    @OneToMany(mappedBy ="stakeholderFeature",cascade=CascadeType.ALL,fetch = FetchType.LAZY)
-    private List<UserToStakehoderfeatureMapping> UserTofeatureMapping;
+	/*
+	 * @NotAudited
+	 * 
+	 * @JsonIgnore
+	 * 
+	 * @OneToMany(mappedBy ="stakeholderFeature",cascade=CascadeType.ALL,fetch =
+	 * FetchType.LAZY) private List<UserToStakehoderfeatureMapping>
+	 * UserTofeatureMapping;
+	 */
     
 	public long getId() {
 		return id;
@@ -76,13 +81,12 @@ public class StakeholderFeature {
 	public void setName(String name) {
 		this.name = name;
 	}
-	@JsonIgnore
-	public List<UserToStakehoderfeatureMapping> getUserTofeatureMapping() {
-		return UserTofeatureMapping;
-	}
-	public void setUserTofeatureMapping(List<UserToStakehoderfeatureMapping> userTofeatureMapping) {
-		UserTofeatureMapping = userTofeatureMapping;
-	}
+	/*
+	 * @JsonIgnore public List<UserToStakehoderfeatureMapping>
+	 * getUserTofeatureMapping() { return UserTofeatureMapping; } public void
+	 * setUserTofeatureMapping(List<UserToStakehoderfeatureMapping>
+	 * userTofeatureMapping) { UserTofeatureMapping = userTofeatureMapping; }
+	 */
 	
 	public String getLogo() {
 		return logo;
