@@ -427,7 +427,7 @@ public class RegularizedDeviceServiceImpl {
 						if(Objects.nonNull(endUserDB2)) {
 							if(Objects.nonNull(endUserDB2.getEmail()) && !endUserDB2.getEmail().isEmpty()) {
 								placeholderMap.put("<First name>", endUserDB2.getFirstName());
-								placeholderMap.put("<txn_id>", endUserDB2.getTxnId());
+								placeholderMap.put("<Txn id>", endUserDB2.getTxnId());
 								rawMails.add(new RawMail(mailTag, endUserDB2.getId(), Long.valueOf(12), 
 										Features.REGISTER_DEVICE, SubFeatures.REGISTER, endUserDB2.getTxnId(), 
 										endUserDB2.getTxnId(), placeholderMap, ReferTable.END_USER, null, "End User"));
@@ -484,9 +484,10 @@ public class RegularizedDeviceServiceImpl {
 				userCustomDbDetails.setTaxPaidStatus(regularizeDeviceDb.getTaxPaidStatus());
 				regularizedDeviceDbRepository.save(userCustomDbDetails);
 
-				placeholders.put("<FIRST_NAME>", ceirAdminProfile.getFirstName());
-				placeholders.put("<txn_id>", regularizeDeviceDb.getTxnId());
-
+				/*
+				 * placeholders.put("<FIRST_NAME>", ceirAdminProfile.getFirstName());
+				 * placeholders.put("<txn_id>", regularizeDeviceDb.getTxnId());
+				 */
 				/*
 				 * // Send Notifications if(regularizeDeviceDb.getTaxPaidStatus() == 0) { //
 				 * Mail to CEIR Admin on tax update status change. tag =
@@ -607,8 +608,7 @@ public class RegularizedDeviceServiceImpl {
 
 			endUserDB = endUserDbRepository.getByNid(regularizeDeviceDb.getNid());
 
-			placeholders.put("<FIRST_NAME>", endUserDB.getFirstName());
-			placeholders.put("<txn_id>", regularizeDeviceDb.getTxnId());
+			placeholders.put("<Txn id>", regularizeDeviceDb.getTxnId());
 			placeholders.put("<First name>", endUserDB.getFirstName());
 
 			if("CEIRADMIN".equalsIgnoreCase(ceirActionRequest.getUserType())){

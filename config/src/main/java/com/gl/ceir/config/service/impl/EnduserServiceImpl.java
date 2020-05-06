@@ -275,7 +275,7 @@ Integer type=null;
 					String mailTag = "END_USER_REGISTER";
 					Map<String, String> placeholderMap = new HashMap<String, String>();
 					placeholderMap.put("<First name>", endUserDB.getFirstName());
-					placeholderMap.put("<txn_id>", endUserDB.getTxnId());
+					placeholderMap.put("<Txn id>", endUserDB.getTxnId());
 					// Mail to End user.
 					rawMails.add(new RawMail(mailTag, endUserDB.getId(), Long.valueOf(12), 
 							Features.REGISTER_DEVICE, SubFeatures.REGISTER, endUserDB.getTxnId(), 
@@ -411,28 +411,29 @@ Integer type=null;
 					// Update expiry date of latest Visa
 //					VisaDb visaDb = visaDbs.get(visaDbs.size() - 1);
 	//				visaDb.setVisaExpiryDate(latestVisa.getVisaExpiryDate());	
+
 					VisaDb OldVisa=visaDbs.get(0);
-		 		VisaUpdateDb visaUpdateDb=new VisaUpdateDb(OldVisa.getVisaType(), OldVisa.getVisaNumber(),
-						latestVisa.getVisaFileName(), OldVisa.getEntryDateInCountry(), latestVisa.getVisaExpiryDate(),
-						0,endUserDB1.getId()); 
-				String mailTag = "Update_Visa_Request";
-				List<RawMail> rawMails = new ArrayList<>();
-				Map<String, String> placeholderMap = new HashMap<String, String>();
-				placeholderMap.put("<First name>", endUserDB1.getFirstName());
-				placeholderMap.put("<txn_id>", endUserDB1.getTxnId());
-				rawMails.add(new RawMail(mailTag, endUserDB1.getId(), Long.valueOf(12), 
-						Features.UPDATE_VISA, SubFeatures.REQUEST, endUserDB1.getTxnId(), 
-						endUserDB1.getTxnId(), placeholderMap, ReferTable.END_USER, null, "End User"));
-				emailUtil.saveNotification(rawMails);
-				VisaUpdateDb visaDb=updateVisaRepository.findByUserId(endUserDB1.getId());
-                 		
-				if(visaDb!=null) { 
-					visaUpdateDb.setId(visaDb.getId());
-					visaUpdateDb.setCreatedOn(visaDb.getCreatedOn());
-					
-				}
-				else {
-					
+			 		VisaUpdateDb visaUpdateDb=new VisaUpdateDb(OldVisa.getVisaType(), OldVisa.getVisaNumber(),
+							latestVisa.getVisaFileName(), OldVisa.getEntryDateInCountry(), latestVisa.getVisaExpiryDate(),
+							0,endUserDB1.getId(),endUserDB.getTxnId()); 
+					String mailTag = "Update_Visa_Request";
+					List<RawMail> rawMails = new ArrayList<>();
+					Map<String, String> placeholderMap = new HashMap<String, String>();
+					placeholderMap.put("<First name>", endUserDB1.getFirstName());
+					placeholderMap.put("<txn_id>", endUserDB1.getTxnId());
+					rawMails.add(new RawMail(mailTag, endUserDB1.getId(), Long.valueOf(12), 
+							Features.UPDATE_VISA, SubFeatures.REQUEST, endUserDB1.getTxnId(), 
+							endUserDB1.getTxnId(), placeholderMap, ReferTable.END_USER, null, "End User"));
+					emailUtil.saveNotification(rawMails);
+					VisaUpdateDb visaDb=updateVisaRepository.findByUserId(endUserDB1.getId());
+	                 		
+					if(visaDb!=null) { 
+						visaUpdateDb.setId(visaDb.getId());
+						visaUpdateDb.setCreatedOn(visaDb.getCreatedOn());
+						
+					}
+					else {
+						
 				}
 						if(endUserTransaction.addUpdateVisaRequest(visaUpdateDb, endUserDB1)) {
 							return new GenricResponse(0, GenericMessageTags.VISA_UPDATE_REQUEST_SUCCESS.getTag(), 
@@ -782,8 +783,7 @@ Integer type=null;
 			}
 			
 			
-			placeholders.put("<FIRST_NAME>", endUserDB.getFirstName());
-			placeholders.put("<txn_id>", endUserDB.getTxnId());
+			placeholders.put("<Txn id>", endUserDB.getTxnId());
 			placeholders.put("<First name>", endUserDB.getFirstName());
 			String sufeature="";
 			if("CEIRADMIN".equalsIgnoreCase(ceirActionRequest.getUserType())){

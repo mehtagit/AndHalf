@@ -480,8 +480,8 @@ public class ConsignmentServiceImpl {
 						logger.info("nextStatus:"+nextStatus);
 						consignmentMgmt.setConsignmentStatus(nextStatus);
 						consignmentMgmt.setCeirAdminID(consignmentUpdateRequest.getUserId());
-						placeholderMap.put("<Importer first name>", userProfile.getFirstName());
-						placeholderMap.put("<txn_name>", consignmentMgmt.getTxnId());
+						placeholderMap.put("<First name>", userProfile.getFirstName());
+						placeholderMap.put("<Txn id>", consignmentMgmt.getTxnId());
 
 						emailUtil.saveNotification("Consignment_Success_CEIRAuthority_Email_Message", 
 								userProfile, 
@@ -521,8 +521,8 @@ public class ConsignmentServiceImpl {
 							consignmentMgmt.setPendingTacApprovedByCustom("N");
 						}
 
-						placeholderMap.put("<Importer first name>", userProfile.getFirstName());
-						placeholderMap.put("<txn_name>", consignmentMgmt.getTxnId());
+						placeholderMap.put("<First name>", userProfile.getFirstName());
+						placeholderMap.put("<Txn id>", consignmentMgmt.getTxnId());
 
 						emailUtil.saveNotification("Consignment_Approved_CustomImporter_Email_Message", 
 								userProfile, 
@@ -565,7 +565,7 @@ public class ConsignmentServiceImpl {
 						logger.info("userProfile2 " + userProfile2);
 
 						placeholderMap.put("<First name>", userProfile.getFirstName());
-						placeholderMap.put("<txn_name>", consignmentMgmt.getTxnId()); 
+						placeholderMap.put("<Txn id>", consignmentMgmt.getTxnId()); 
 
 						rawMails.add(new RawMail("CONSIGNMENT_PROCESS_SUCCESS_TO_IMPORTER_MAIL", 
 								userProfile2, 
@@ -613,8 +613,8 @@ public class ConsignmentServiceImpl {
 						consignmentMgmt.setDrtID(consignmentUpdateRequest.getUserId());
 
 
-						placeholderMap.put("<Importer first name>", userProfile.getFirstName());
-						placeholderMap.put("<txn_name>", consignmentMgmt.getTxnId());
+						placeholderMap.put("<First name>", userProfile.getFirstName());
+						placeholderMap.put("<Txn id>", consignmentMgmt.getTxnId());
 
 						emailUtil.saveNotification("Consignment_Approved_DRTImporter_Email_Message", 
 								userProfile, 
@@ -654,8 +654,8 @@ public class ConsignmentServiceImpl {
 					consignmentMgmt.setRemarks(consignmentUpdateRequest.getRemarks());
 					consignmentMgmt.setCeirAdminID(consignmentUpdateRequest.getUserId());
 
-					placeholderMap.put("<Importer first name>", userProfile.getFirstName());
-					placeholderMap.put("<txn_name>", consignmentMgmt.getTxnId());
+					placeholderMap.put("<First name>", userProfile.getFirstName());
+					placeholderMap.put("<Txn id>", consignmentMgmt.getTxnId());
 
 					emailUtil.saveNotification("Consignment_Reject_CEIRAuthority_Email_Message", 
 							userProfile, 
@@ -695,8 +695,8 @@ public class ConsignmentServiceImpl {
 					consignmentMgmt.setConsignmentStatus(ConsignmentStatus.REJECTED_BY_CUSTOMS.getCode());
 					consignmentMgmt.setRemarks(consignmentUpdateRequest.getRemarks());
 
-					placeholderMap.put("<Importer first name>", userProfile.getFirstName());
-					placeholderMap.put("<txn_name>", consignmentMgmt.getTxnId());
+					placeholderMap.put("<First name>", userProfile.getFirstName());
+					placeholderMap.put("<Txn id>", consignmentMgmt.getTxnId());
 
 					emailUtil.saveNotification("Consignment_Rejected_Custom_Email_Message", 
 							userProfile, 
@@ -734,7 +734,7 @@ public class ConsignmentServiceImpl {
 					userProfile2.setUser(user2);
 					logger.info("userProfile2 " + userProfile2);
 					placeholderMap.put("<First name>", userProfile.getFirstName());
-					placeholderMap.put("<txn_name>", consignmentMgmt.getTxnId());
+					placeholderMap.put("<Txn id>", consignmentMgmt.getTxnId());
 
 					rawMails.add(new RawMail("CONSIGNMENT_PROCESS_FAILED_TO_IMPORTER_MAIL", 
 							userProfile2, 
@@ -772,8 +772,8 @@ public class ConsignmentServiceImpl {
 					consignmentMgmt.setRemarks(consignmentUpdateRequest.getRemarks());
 
 
-					placeholderMap.put("<Importer first name>", userProfile.getFirstName());
-					placeholderMap.put("<txn_name>", consignmentMgmt.getTxnId());
+					placeholderMap.put("<First name>", userProfile.getFirstName());
+					placeholderMap.put("<Txn id>", consignmentMgmt.getTxnId());
 
 					emailUtil.saveNotification("'Consignment_Rejected_DRT_Email_Message ", 
 							userProfile, 
@@ -1054,3 +1054,5 @@ public class ConsignmentServiceImpl {
 		}
 	}
 }
+
+

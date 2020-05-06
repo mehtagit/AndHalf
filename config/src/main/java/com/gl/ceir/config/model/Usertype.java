@@ -37,7 +37,7 @@ public class Usertype {
 
 	@JsonIgnore 
 	@OneToMany(mappedBy = "usertype", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-	private List<User> user;
+	List<User> user;
  
 	@JsonIgnore 
 	@OneToMany(mappedBy = "usertypeData", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
