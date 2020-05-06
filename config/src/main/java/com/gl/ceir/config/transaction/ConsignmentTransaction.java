@@ -2,6 +2,7 @@ package com.gl.ceir.config.transaction;
 
 import java.util.Objects;
 
+import javax.persistence.Transient;
 import javax.transaction.Transactional;
 
 import org.apache.logging.log4j.LogManager;
@@ -96,17 +97,29 @@ public class ConsignmentTransaction {
 
 		consignmentRepository.save(consignmentMgmt);
 		logger.info("Consignment [" + consignmentMgmt.getTxnId() + "] saved in consigment_mgmt_db.");
-
-		/*
-		 * auditTrailRepository.save(new AuditTrail(consignmentMgmt.getUser().getId(),
-		 * consignmentMgmt.getUserName(), Long.valueOf(consignmentMgmt.getUserTypeId()),
-		 * consignmentMgmt.getUserType(), Long.valueOf(consignmentMgmt.getFeatureId()),
-		 * Features.CONSIGNMENT, SubFeatures.UPDATE, "",
-		 * consignmentMgmt.getTxnId(),consignmentMgmt.getRoleType()));
+/*
+		 auditTrailRepository.save(new AuditTrail(consignmentMgmt.getUser().getId(),
+				 consignmentMgmt.getUser().getUsername(),Long.valueOf(consignmentMgmt.getUser().getUserTypeID()),
+				 consignmentMgmt.getUser().getUsertype().getUsertypeName(), Long.valueOf(consignmentMgmt.getFeatureId()),
+		  Features.CONSIGNMENT, SubFeatures.UPDATE, "",
+		  consignmentMgmt.getTxnId(),consignmentMgmt.getRoleType()));
+		 
+		 
+		  userID------->userName-------->usertTypeID-------->userTypeName
 		 */
-
+	
 		auditTrailRepository.save(new AuditTrail(consignmentMgmt.getUser().getId(), "", 0L, "", 0L,Features.CONSIGNMENT, SubFeatures.UPDATE, "", consignmentMgmt.getTxnId()));
 
+		logger.info("request before pass to ID:::"+consignmentMgmt.getUser().getId());
+		logger.info("request before pass to consignmentMgmt.getUser().getUsertype().getUsertypeName():::"+consignmentMgmt.getUser().getUsertype().getUsertypeName());
+		logger.info("request consignmentMgmt.getUser().getUsername():::"+consignmentMgmt.getUser().getUsername());
+		logger.info("request Long.valueOf(consignmentMgmt.getUser().getUsertype().getId()):::"+Long.valueOf(consignmentMgmt.getUser().getUsertype().getId()));
+		logger.info("request Long.valueOf(consignmentMgmt.getFeatureId()):::"+Long.valueOf(consignmentMgmt.getFeatureId()));
+		logger.info("request consignmentMgmt.getTxnId():::"+consignmentMgmt.getTxnId());
+		logger.info("request consignmentMgmt.getRoleType():::"+consignmentMgmt.getRoleType());	
+		
+
+				
 		logger.info("Consignment [" + consignmentMgmt.getTxnId() + "] saved in audit_trail.");
 
 		queryStatus = Boolean.TRUE;

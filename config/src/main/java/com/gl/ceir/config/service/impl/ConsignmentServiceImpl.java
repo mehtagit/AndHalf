@@ -811,6 +811,8 @@ public class ConsignmentServiceImpl {
 			 * consignmentMgmt.setFeatureId(consignmentUpdateRequest.getFeatureId());
 			 * consignmentMgmt.setRoleType(consignmentUpdateRequest.getRoleType());
 			 */
+			consignmentMgmt.setFeatureId(consignmentUpdateRequest.getFeatureId());
+			 consignmentMgmt.setRoleType(consignmentUpdateRequest.getRoleType());
 			if(consignmentTransaction.executeUpdateStatusConsignment(consignmentMgmt,webActionDb)) {
 				logger.info("Consignment status have Update SuccessFully." + consignmentUpdateRequest.getTxnId());
 				return new GenricResponse(0, "Consignment status have Update SuccessFully.", consignmentUpdateRequest.getTxnId());
