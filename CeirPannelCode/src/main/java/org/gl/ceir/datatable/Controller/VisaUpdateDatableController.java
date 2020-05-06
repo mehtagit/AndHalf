@@ -8,6 +8,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Feignclient.UserProfileFeignImpl;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.Class.HeadersTitle.DatatableResponseModel;
@@ -46,7 +47,7 @@ public class VisaUpdateDatableController {
 	@Autowired
 	IconsState iconState;
 	@Autowired
-	UserProfileFeignImpl userProfileFeignImpl;	
+	FeignCleintImplementation feignCleintImplementation;
 	@Autowired
 	VisaContentModel visaContentModel;
 	@Autowired
@@ -69,7 +70,7 @@ public class VisaUpdateDatableController {
 		log.info("pageSize"+pageSize+"-----------pageNo---"+pageNo);
 		try{
 			log.info("request send to the filter api ="+filterrequest);
-			Object response = userProfileFeignImpl.viewVisaRequest(filterrequest, pageNo, pageSize, file);
+			Object response = feignCleintImplementation.viewVisaRequest(filterrequest, pageNo, pageSize, file);
 			log.info("response in datatable"+response);
 			Gson gson= new Gson(); 
 			String apiResponse = gson.toJson(response);
@@ -90,9 +91,12 @@ public class VisaUpdateDatableController {
 				   String visaExpiryDate = dataInsideList.getVisaExpiryDate();
 				   String stateInterp = (String) dataInsideList.getStateInterp();
 				   String Status = String.valueOf(dataInsideList.getStatus());
+				   String txnid=dataInsideList.getTxnId();
+				   Integer endUserId=dataInsideList.getUserId();
+				   String passportNumber=dataInsideList.getPassportNumber();
 				   String userStatus = (String) session.getAttribute("userStatus");	  
-				   String action=iconState.visaUpdateAdminIcons(Status,id);			   
-				   Object[] finalData={createdOn,modifiedOn,visaTypeInterp,visaNumber,visaFileName,visaExpiryDate,stateInterp,action}; 
+				   String action=iconState.visaUpdateAdminIcons(Status,id,endUserId,txnid);			   
+				   Object[] finalData={createdOn,modifiedOn,txnid,passportNumber,visaTypeInterp,visaNumber,visaFileName,visaExpiryDate,stateInterp,action}; 
 				   List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 					finalList.add(finalDataList);
 					datatableResponseModel.setData(finalList);	
@@ -164,7 +168,7 @@ public class VisaUpdateDatableController {
 		 
 			
 			//input type date list		
-			String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate",""};
+			String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("table.transactionID"),"visaTxnId",""};
 			for(int i=0; i< dateParam.length; i++) {
 				dateRelatedFields= new InputFields();
 				dateRelatedFields.setType(dateParam[i]);
