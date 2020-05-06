@@ -66,8 +66,6 @@ public class AllRequest{
 	public void setFeatureId(long featureId) {
 		this.featureId = featureId;
 	}
-	
-	
 	public long getDataId() {
 		return dataId;
 	}
@@ -96,5 +94,4 @@ public class AllRequest{
 		builder.append("]");
 		return builder.toString();
 	}
-	
 }
