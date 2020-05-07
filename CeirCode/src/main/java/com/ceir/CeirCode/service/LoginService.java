@@ -394,11 +394,11 @@ public class LoginService
 				boolean notificationStatus=emailUtils.saveNotification("PRO_VERIFY_OTP_EMAIL_MSG", userData.getUserProfile(), 0,
 						"User Login", "Forgot Password", userData.getUsername(),
 						"Forgot Password Notification "+userData.getUsername(),emailOtpData,
-						ChannelType.EMAIL,"users"); 
+						ChannelType.EMAIL,"users",0); 
 				log.info("notification save:  "+notificationStatus);
 				boolean notificationStatusForSms=emailUtils.saveNotification("PRO_VERIFY_OTP__MSG", userData.getUserProfile(), 0,
 						"User Login", "forgot Password", userData.getUsername(),
-						userData.getUserProfile().getFirstName(),phoneOtp,ChannelType.SMS,"users");
+						userData.getUserProfile().getFirstName(),phoneOtp,ChannelType.SMS,"users",0);
 				log.info("notificationStatusForSms save:  "+notificationStatusForSms);
 				userData.setPreviousStatus(UserStatus.APPROVED.getCode());
 				userData.setCurrentStatus(UserStatus.OTP_VERIFICATION_PENDING.getCode());

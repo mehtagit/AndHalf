@@ -51,7 +51,7 @@ public class NotificationUtil {
 
 
 
-	public boolean saveNotification(@NonNull String tag, UserProfile userProfileData, long featureId, String featureName, String subFeature, String featureTxnId,String subject,String otp,String channelType,String referTable) {
+	public boolean saveNotification(@NonNull String tag, UserProfile userProfileData, long featureId, String featureName, String subFeature, String featureTxnId,String subject,String otp,String channelType,String referTable,int authorityStatus) {
 		try {
 			String emailBody="";
 			MessageConfigurationDb messageDB = new MessageConfigurationDb();
@@ -75,6 +75,7 @@ public class NotificationUtil {
 			notification.setSubject(subject);
 			notification.setRetryCount(0);
 			notification.setReferTable(referTable);
+			notification.setAuthorityStatus(authorityStatus);
 			String receiverType="";
 			if(userProfileData.getUser().getUsertype().getId()==7 ) {
 				receiverType="Custom";
