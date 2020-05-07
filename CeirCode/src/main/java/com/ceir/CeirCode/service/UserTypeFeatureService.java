@@ -76,8 +76,8 @@ public class UserTypeFeatureService {
 			if(Objects.nonNull(filterRequest.getFeature()) && filterRequest.getFeature()!=-1)
 				uPSB.with(new SearchCriteria("stakeholderFeature",filterRequest.getFeature(), SearchOperation.EQUALITY, Datatype.INTEGER));
 			
-			if(Objects.nonNull(filterRequest.getUserType()) && filterRequest.getUsertypeId()!=-1)
-				uPSB.with(new SearchCriteria("userTypeFeature",filterRequest.getUserType(), SearchOperation.EQUALITY, Datatype.INTEGER));
+			if(Objects.nonNull(filterRequest.getUsertypeId()) && filterRequest.getUsertypeId()!=-1)
+				uPSB.with(new SearchCriteria("userTypeFeature",filterRequest.getUsertypeId(), SearchOperation.EQUALITY, Datatype.INTEGER));
 
 			if(Objects.nonNull(filterRequest.getPeriod()) && filterRequest.getPeriod()!=-1)
 				uPSB.with(new SearchCriteria("period",filterRequest.getPeriod(), SearchOperation.EQUALITY, Datatype.INTEGER));
