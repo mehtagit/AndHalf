@@ -56,7 +56,8 @@
 					"userId":parseInt(userId),
 					"featureId":parseInt(featureId),
 					"userTypeId": parseInt($("body").attr("data-userTypeID")),
-					"userType":$("body").attr("data-roleType")
+					"userType":$("body").attr("data-roleType"),
+					"username" : $("body").attr("data-selected-username")
 					
 			}				
 			if(lang=='km'){
@@ -202,15 +203,13 @@
 			var filterRequest={
 					"endDate":$('#endDate').val(),
 					"startDate":$('#startDate').val(),
-					"userId":parseInt(userId),
 					"featureId":parseInt(featureId),
-					"userTypeId": parseInt($("body").attr("data-userTypeID")),
-					"userType":$("body").attr("data-roleType"),
 					"pageNo":parseInt(pageNo),
 					"pageSize":parseInt(pageSize),
 					"userTypeId": parseInt($("body").attr("data-userTypeID")),
 					"userType":$("body").attr("data-roleType"),
-					"userId" : $("body").attr("data-userID")
+					"userId" : parseInt($("body").attr("data-userID")),
+					"username" : $("body").attr("data-selected-username")
 					
 					
 			}

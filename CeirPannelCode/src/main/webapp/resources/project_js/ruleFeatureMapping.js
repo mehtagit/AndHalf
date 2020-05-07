@@ -182,7 +182,7 @@
 					
 						$.getJSON('./ruleName', function(data) {
 							for (i = 0; i < data.length; i++) {
-								$('<option>').val(data[i].id).text(data[i].description)
+								$('<option>').val(data[i].description).text(data[i].description)
 								.appendTo('#editRule');
 							}
 						});

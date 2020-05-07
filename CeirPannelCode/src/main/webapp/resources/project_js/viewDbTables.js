@@ -55,7 +55,12 @@
 			 var formData= new FormData();
 			 var filterRequest={
 					"tableName": tableName,
-					"dbName" : "ceirconfig" 
+					"dbName" : "ceirconfig",
+					"featureId":parseInt(featureId),
+					"userTypeId": parseInt($("body").attr("data-userTypeID")),
+					"userType":$("body").attr("data-roleType"),
+					"username" : $("body").attr("data-selected-username"),
+					"userId" : parseInt($("body").attr("data-userID")) 
 			}
 			formData.append("filter",JSON.stringify(filterRequest));	
 			if(lang=='km'){

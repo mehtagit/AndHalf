@@ -18,8 +18,10 @@ import org.gl.ceir.CeirPannelCode.Feignclient.UserPaidStatusFeignClient;
 import org.gl.ceir.CeirPannelCode.Model.AddMoreFileModel;
 import org.gl.ceir.CeirPannelCode.Model.EndUserVisaInfo;
 import org.gl.ceir.CeirPannelCode.Model.FileExportResponse;
+import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest_UserPaidStatus;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
+import org.gl.ceir.CeirPannelCode.Model.UpdateVisaModel;
 import org.gl.ceir.CeirPannelCode.Model.VisaDb;
 import org.gl.ceir.CeirPannelCode.Util.UtilDownload;
 import org.gl.ceir.pagination.model.UserPaidStatusContent;
@@ -695,12 +697,45 @@ public ModelAndView viewDeviceInformation(@RequestParam(name="viewbyImei",requir
 
 @PostMapping("approveVisaUpdateRequest") 
 public @ResponseBody GenricResponse approveVisaUpdateRequest (@RequestBody FilterRequest_UserPaidStatus filterRequestuserpaidStatus)  {
-	log.info("request send to the approveRejectDevice api="+filterRequestuserpaidStatus);
-	GenricResponse response= uploadPaidStatusFeignClient.approveRejectFeign(filterRequestuserpaidStatus);
+	log.info("request send to the approveReject visa  api="+filterRequestuserpaidStatus);
+	GenricResponse response= uploadPaidStatusFeignClient.updateVisaRequest(filterRequestuserpaidStatus);
 
-	log.info("response from currency api "+response);
+	log.info("response from approveReject visa "+response);
 	return response;
 
 	}
+@GetMapping("view-visa-information/{visaId}/{endUserId}")
+public ModelAndView viewVisaInformationView(@PathVariable("visaId") Integer visaId,@PathVariable("endUserId") Integer endUserId,HttpSession session) {
+	
+	ModelAndView modelAndView = new ModelAndView();
+	FilterRequest filter= new FilterRequest();
+	Integer userId= (int) session.getAttribute("userid");
+	
+	String userType=(String) session.getAttribute("usertype");
+	Integer userTypeId=(int) session.getAttribute("usertypeId");
+	
+	filter.setId(endUserId);
+	filter.setUserType(userType);
+	filter.setUserTypeId(userTypeId);
+	filter.setUserId(userId);
+	
+	log.info("request passed to the view visa details .."+filter);
+	UpdateVisaModel content= uploadPaidStatusFeignClient.viewVisaDetails(filter);
+	log.info(" reponse from view visa details api. =="+content);
+
+	addMoreFileModel.setTag("upload_file_link");
+    urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
+    log.info("file link =="+urlToUpload.getValue());
+   // content.setFilePreviewLink(urlToUpload.getValue());
+	String fileLink=urlToUpload.getValue();
+	modelAndView.addObject("fileLink", fileLink);
+    modelAndView.addObject("viewInformation", content);
+    modelAndView.setViewName("viewVisaInformation");	
+    
+    	
+    
+	return modelAndView;
 }
+}
+
 

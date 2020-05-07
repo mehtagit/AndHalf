@@ -43,11 +43,19 @@
 				
 				var featureName = $('#feature').val() == null ? null : $("#feature option:selected").text();
 				
+				//var usertype = $('#userType').val() == null ? null : $("#userType option:selected").text(); 
+				
 				var filterRequest={
 						//"endDate":$('#endDate').val(),
 						//"startDate":$('#startDate').val(),
 						"feature" : parseInt($('#feature').val()),
-						"usertype" : $('#userType').val(),
+						"usertype" : parseInt($('#userType').val()),
+						"username" : $("body").attr("data-selected-username"),
+						"featureId":parseInt(featureId),
+						"userTypeId": parseInt($("body").attr("data-userTypeID")),
+						"userType":$("body").attr("data-roleType"),
+						"userId" : parseInt($("body").attr("data-userID"))
+						
 				}
 				
 				if(lang=='km'){
@@ -148,7 +156,7 @@
 										"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
 
 										"<select id="+dropdown[i].id+"  class='select-wrapper select2  initialized'>"+
-										"<option value='-1'>"+dropdown[i].title+
+										"<option value=null>"+dropdown[i].title+
 										"</option>"+
 										"</select>"+
 										"</div>"+

@@ -12,7 +12,7 @@ public class VisaContentModel {
 	private String visaFileName;
 	private Object entryDateInCountry;
 	private String visaExpiryDate;
-	private String visaTypeInterp;
+	private String visaTypeInterp,txnId,nid;
 	private Integer status;
 	private Object stateInterp;
 	private Integer userId;
@@ -88,6 +88,18 @@ public class VisaContentModel {
 	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
+	public String getTxnId() {
+		return txnId;
+	}
+	public void setTxnId(String txnId) {
+		this.txnId = txnId;
+	}
+	public String getNid() {
+		return nid;
+	}
+	public void setNid(String nid) {
+		this.nid = nid;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -109,6 +121,10 @@ public class VisaContentModel {
 		builder.append(visaExpiryDate);
 		builder.append(", visaTypeInterp=");
 		builder.append(visaTypeInterp);
+		builder.append(", txnId=");
+		builder.append(txnId);
+		builder.append(", nid=");
+		builder.append(nid);
 		builder.append(", status=");
 		builder.append(status);
 		builder.append(", stateInterp=");
@@ -118,6 +134,8 @@ public class VisaContentModel {
 		builder.append("]");
 		return builder.toString();
 	}
+	
+	
 	
 	
 }

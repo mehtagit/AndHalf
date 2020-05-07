@@ -33,7 +33,7 @@ private String street;
 private String txnId;
 private String passportFileName;
 private UserDepartment userDepartment;
-private String village;
+private String village,rejectedRemark;
 private List<VisaDb> visaDb;
 private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 private String origin;
@@ -225,6 +225,12 @@ public String getEntryDateInCountry() {
 public void setEntryDateInCountry(String entryDateInCountry) {
 	this.entryDateInCountry = entryDateInCountry;
 }
+public String getRejectedRemark() {
+	return rejectedRemark;
+}
+public void setRejectedRemark(String rejectedRemark) {
+	this.rejectedRemark = rejectedRemark;
+}
 @Override
 public String toString() {
 	StringBuilder builder = new StringBuilder();
@@ -284,6 +290,8 @@ public String toString() {
 	builder.append(userDepartment);
 	builder.append(", village=");
 	builder.append(village);
+	builder.append(", rejectedRemark=");
+	builder.append(rejectedRemark);
 	builder.append(", visaDb=");
 	builder.append(visaDb);
 	builder.append(", additionalProperties=");
@@ -293,6 +301,8 @@ public String toString() {
 	builder.append("]");
 	return builder.toString();
 }
+
+
 
 
 }
