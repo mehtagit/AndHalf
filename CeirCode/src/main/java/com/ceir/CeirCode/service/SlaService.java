@@ -127,8 +127,8 @@ public class SlaService {
 	public Page<SlaReport>  viewAllSlaData(SlaFilter filterRequest, Integer pageNo, Integer pageSize){
 		try { 
 			log.info("filter data:  "+filterRequest);
-			RequestHeaders header=new RequestHeaders(filterRequest.getUserAgent(),filterRequest.getPublicIp(),filterRequest.getUsername());
-			headerService.saveRequestHeader(header);
+//			RequestHeaders header=new RequestHeaders(filterRequest.getUserAgent(),filterRequest.getPublicIp(),filterRequest.getUsername());
+//			headerService.saveRequestHeader(header);
 			userService.saveUserTrail(filterRequest.getUserId(),filterRequest.getUsername(),
 					filterRequest.getUserType(),filterRequest.getUserTypeId(),Features.SLA_Management,SubFeatures.VIEW_ALL,filterRequest.getFeatureId());
 
@@ -150,8 +150,8 @@ public class SlaService {
 		log.info("inside export sla data into file service");
 		log.info("filter data:  "+filterRequest);
 		log.info("filter data:  "+filterRequest);
-		RequestHeaders header=new RequestHeaders(filterRequest.getUserAgent(),filterRequest.getPublicIp(),filterRequest.getUsername());
-		headerService.saveRequestHeader(header);
+//		RequestHeaders header=new RequestHeaders(filterRequest.getUserAgent(),filterRequest.getPublicIp(),filterRequest.getUsername());
+//		headerService.saveRequestHeader(header);
 		userService.saveUserTrail(filterRequest.getUserId(),filterRequest.getUsername(),
 				filterRequest.getUserType(),filterRequest.getUserTypeId(),Features.SLA_Management,SubFeatures.EXPORT,filterRequest.getFeatureId());
 

@@ -60,8 +60,8 @@ public class UserTypeService {
 	public Page<Usertype>  viewAllUserytypes(UsertypeFilter filterRequest, Integer pageNo, Integer pageSize){
 		try { 
 			log.info("filter data:  "+filterRequest);
-			RequestHeaders header=new RequestHeaders(filterRequest.getUserAgent(),filterRequest.getPublicIp(),filterRequest.getUsername());
-			headerService.saveRequestHeader(header);
+//			RequestHeaders header=new RequestHeaders(filterRequest.getUserAgent(),filterRequest.getPublicIp(),filterRequest.getUsername());
+//			headerService.saveRequestHeader(header);
 			userService.saveUserTrail(filterRequest.getUserId(),filterRequest.getUsername(),
 					filterRequest.getUserType(),filterRequest.getUserTypeId(),Features.User_Type_Management,SubFeatures.VIEW_ALL,filterRequest.getFeatureId());
 			
@@ -99,8 +99,8 @@ public class UserTypeService {
 		log.info("get usertype  data by usertype id below"); 
 		Usertype userType=new Usertype();
 		try {
-			RequestHeaders header=new RequestHeaders(usertypeStatus.getUserAgent(),usertypeStatus.getPublicIp(),usertypeStatus.getUsername());
-			headerService.saveRequestHeader(header);
+//			RequestHeaders header=new RequestHeaders(usertypeStatus.getUserAgent(),usertypeStatus.getPublicIp(),usertypeStatus.getUsername());
+//			headerService.saveRequestHeader(header);
 			userService.saveUserTrail(usertypeStatus.getUserId(),usertypeStatus.getUsername(),
 					usertypeStatus.getUserType(),usertypeStatus.getUserTypeId(),Features.User_Type_Management,SubFeatures.UPDATE,usertypeStatus.getFeatureId());
 			 userType=usertypeRepo.findById(usertypeStatus.getUsertypeId());			

@@ -16,14 +16,16 @@ public class AllRequest{
 	private long userId;
 	@Transient
 	private long featureId;
+	
 	@Transient
 	private String userType;
 	
-	@Transient
-	private String userAgent;
+//	@Transient
+//	private String userAgent;
+//	
+//	@Transient
+//	private String publicIp;
 	
-	@Transient
-	private String publicIp;
 	public String getUsername() {
 		return username;
 	}
@@ -48,18 +50,18 @@ public class AllRequest{
 	public void setUserType(String userType) {
 		this.userType = userType;
 	}
-	public String getUserAgent() {
-		return userAgent;
-	}
-	public void setUserAgent(String userAgent) {
-		this.userAgent = userAgent;
-	}
-	public String getPublicIp() {
-		return publicIp;
-	}
-	public void setPublicIp(String publicIp) {
-		this.publicIp = publicIp;
-	}
+//	public String getUserAgent() {
+//		return userAgent;
+//	}
+//	public void setUserAgent(String userAgent) {
+//		this.userAgent = userAgent;
+//	}
+//	public String getPublicIp() {
+//		return publicIp;
+//	}
+//	public void setPublicIp(String publicIp) {
+//		this.publicIp = publicIp;
+//	}
 	public long getFeatureId() {
 		return featureId;
 	}
@@ -89,10 +91,6 @@ public class AllRequest{
 		builder.append(featureId);
 		builder.append(", userType=");
 		builder.append(userType);
-		builder.append(", userAgent=");
-		builder.append(userAgent);
-		builder.append(", publicIp=");
-		builder.append(publicIp);
 		builder.append("]");
 		return builder.toString();
 	}

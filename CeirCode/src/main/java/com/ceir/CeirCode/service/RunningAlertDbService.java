@@ -126,8 +126,8 @@ public class RunningAlertDbService {
 	public Page<RunningAlertDb>  viewRunningAlertData(RunningAlertFilter filterRequest, Integer pageNo, Integer pageSize){
 		try { 
 			log.info("filter data:  "+filterRequest);
-			RequestHeaders header=new RequestHeaders(filterRequest.getUserAgent(),filterRequest.getPublicIp(),filterRequest.getUsername());
-			headerService.saveRequestHeader(header);
+//			RequestHeaders header=new RequestHeaders(filterRequest.getUserAgent(),filterRequest.getPublicIp(),filterRequest.getUsername());
+//			headerService.saveRequestHeader(header);
 			userService.saveUserTrail(filterRequest.getUserId(),filterRequest.getUsername(),
 					filterRequest.getUserType(),filterRequest.getUserTypeId(),Features.Running_Alert_Management,SubFeatures.VIEW_ALL,filterRequest.getFeatureId());
 			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
@@ -147,8 +147,8 @@ public class RunningAlertDbService {
 	public FileDetails getRunningAlertInFile(RunningAlertFilter runAlertFilter) {
 		log.info("inside export running alert db data into file service");
 		log.info("filter data:  "+runAlertFilter);
-		RequestHeaders header=new RequestHeaders(runAlertFilter.getUserAgent(),runAlertFilter.getPublicIp(),runAlertFilter.getUsername());
-		headerService.saveRequestHeader(header);
+//		RequestHeaders header=new RequestHeaders(runAlertFilter.getUserAgent(),runAlertFilter.getPublicIp(),runAlertFilter.getUsername());
+//		headerService.saveRequestHeader(header);
 		userService.saveUserTrail(runAlertFilter.getUserId(),runAlertFilter.getUsername(),
 				runAlertFilter.getUserType(),runAlertFilter.getUserTypeId(),Features.Running_Alert_Management,SubFeatures.EXPORT,runAlertFilter.getFeatureId());
 

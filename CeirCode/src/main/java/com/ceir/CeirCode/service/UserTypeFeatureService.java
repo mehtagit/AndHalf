@@ -60,8 +60,8 @@ public class UserTypeFeatureService {
 	public Page<UserToStakehoderfeatureMapping>  viewAllUserTypeFeatures(UserTypeFeatureFilter filterRequest, Integer pageNo, Integer pageSize){
 		try { 
 			log.info("filter data:  "+filterRequest);
-			RequestHeaders header=new RequestHeaders(filterRequest.getUserAgent(),filterRequest.getPublicIp(),filterRequest.getUsername());
-			headerService.saveRequestHeader(header);
+//			RequestHeaders header=new RequestHeaders(filterRequest.getUserAgent(),filterRequest.getPublicIp(),filterRequest.getUsername());
+//			headerService.saveRequestHeader(header);
 			userService.saveUserTrail(filterRequest.getUserId(),filterRequest.getUsername(),
 					filterRequest.getUserType(),filterRequest.getUserTypeId(),Features.User_feature_mapping,SubFeatures.VIEW_ALL,filterRequest.getFeatureId());
 
@@ -104,8 +104,8 @@ public class UserTypeFeatureService {
 		log.info(" userPeriod data:  "+userPeriod);      
 		log.info("get userTypeFeature  data by  id below"); 
 		UserToStakehoderfeatureMapping featureMapping=new UserToStakehoderfeatureMapping();
-		RequestHeaders header=new RequestHeaders(userPeriod.getUserAgent(),userPeriod.getPublicIp(),userPeriod.getUsername());
-		headerService.saveRequestHeader(header);
+//		RequestHeaders header=new RequestHeaders(userPeriod.getUserAgent(),userPeriod.getPublicIp(),userPeriod.getUsername());
+//		headerService.saveRequestHeader(header);
 		userService.saveUserTrail(userPeriod.getUserId(),userPeriod.getUsername(),
 				userPeriod.getUserType(),userPeriod.getUserTypeId(),Features.User_feature_mapping,SubFeatures.UPDATE,userPeriod.getFeatureId());
 

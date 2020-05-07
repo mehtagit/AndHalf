@@ -77,8 +77,8 @@ public class PortAddressService {
 	public ResponseEntity<?> saveAddressPort(PortAddress portAddress){
 		log.info("inside save address port controller and data is portAddress");
 		log.info("port data: "+portAddress);
-		RequestHeaders header=new RequestHeaders(portAddress.getUserAgent(),portAddress.getPublicIp(),portAddress.getUsername());
-		headerService.saveRequestHeader(header);
+//		RequestHeaders header=new RequestHeaders(portAddress.getUserAgent(),portAddress.getPublicIp(),portAddress.getUsername());
+//		headerService.saveRequestHeader(header);
 		userService.saveUserTrail(portAddress.getUserId(),portAddress.getUsername(),
 				portAddress.getUserType(),portAddress.getUserTypeId(),Features.Port_Management,SubFeatures.SAVE,portAddress.getFeatureId());
 		PortAddress output=portService.save(portAddress);
@@ -122,8 +122,8 @@ public class PortAddressService {
 	public ResponseEntity<?> viewPortById(AllRequest request){
 		log.info("inside view by address port controller");
 		log.info("data given : "+request);
-		RequestHeaders header=new RequestHeaders(request.getUserAgent(),request.getPublicIp(),request.getUsername());
-		headerService.saveRequestHeader(header);
+//		RequestHeaders header=new RequestHeaders(request.getUserAgent(),request.getPublicIp(),request.getUsername());
+//		headerService.saveRequestHeader(header);
 		userService.saveUserTrail(request.getUserId(),request.getUsername(),
 				request.getUserType(),request.getUserTypeId(),Features.Port_Management,SubFeatures.VIEW,request.getFeatureId());
 		PortAddress output=portService.getById(request.getDataId());
@@ -150,8 +150,8 @@ public class PortAddressService {
 	public ResponseEntity<?> updateAddressPort(PortAddress portAddress){
 		log.info("inside update address port controller");
 		log.info("address port data "+portAddress);
-		RequestHeaders header=new RequestHeaders(portAddress.getUserAgent(),portAddress.getPublicIp(),portAddress.getUsername());
-		headerService.saveRequestHeader(header);
+//		RequestHeaders header=new RequestHeaders(portAddress.getUserAgent(),portAddress.getPublicIp(),portAddress.getUsername());
+//		headerService.saveRequestHeader(header);
 		userService.saveUserTrail(portAddress.getUserId(),portAddress.getUsername(),
 				portAddress.getUserType(),portAddress.getUserTypeId(),Features.Port_Management,SubFeatures.UPDATE,portAddress.getFeatureId());
 
@@ -179,8 +179,8 @@ public class PortAddressService {
 	
 	public ResponseEntity<?> deleteAddressPort(AllRequest request){
 		log.info("inside save address port controller");
-		RequestHeaders header=new RequestHeaders(request.getUserAgent(),request.getPublicIp(),request.getUsername());
-		headerService.saveRequestHeader(header);
+//		RequestHeaders header=new RequestHeaders(request.getUserAgent(),request.getPublicIp(),request.getUsername());
+//		headerService.saveRequestHeader(header);
 		userService.saveUserTrail(request.getUserId(),request.getUsername(),
 				request.getUserType(),request.getUserTypeId(),Features.Port_Management,SubFeatures.DELETE,request.getFeatureId());
 
@@ -200,8 +200,8 @@ public class PortAddressService {
 	public Page<PortAddress> portAddressInfo(PortAddressFilter filter, Integer pageNo, Integer pageSize){
 		log.info("inside portAddress view  controller");
 		log.info("portAddressInfo : "+filter);
-		RequestHeaders header=new RequestHeaders(filter.getUserAgent(),filter.getPublicIp(),filter.getUsername());
-		headerService.saveRequestHeader(header);
+//		RequestHeaders header=new RequestHeaders(filter.getUserAgent(),filter.getPublicIp(),filter.getUsername());
+//		headerService.saveRequestHeader(header);
 		userService.saveUserTrail(filter.getUserId(),filter.getUsername(),
 				filter.getUserType(),filter.getUserTypeId(),Features.Port_Management,SubFeatures.VIEW_ALL,filter.getFeatureId());
 

@@ -132,8 +132,8 @@ public class AlertDbService {
 	public Page<AlertDb>  viewAllAlertData(AlertDbFilter filterRequest, Integer pageNo, Integer pageSize){
 		try { 
 			log.info("filter data:  "+filterRequest);
-			RequestHeaders header=new RequestHeaders(filterRequest.getUserAgent(),filterRequest.getPublicIp(),filterRequest.getUsername());
-			headerService.saveRequestHeader(header);
+			//RequestHeaders header=new RequestHeaders(filterRequest.getUserAgent(),filterRequest.getPublicIp(),filterRequest.getUsername());
+			//headerService.saveRequestHeader(header);
 			userService.saveUserTrail(filterRequest.getUserId(),filterRequest.getUsername(),
 					filterRequest.getUserType(),filterRequest.getUserTypeId(),Features.Alert_Management,SubFeatures.VIEW_ALL,filterRequest.getFeatureId());
 			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
@@ -153,8 +153,8 @@ public class AlertDbService {
 	public FileDetails getAlertDbInFile(AlertDbFilter alertAbFilter) {
 		log.info("inside export alert db data into file service");
 		log.info("filter data:  "+alertAbFilter);
-		RequestHeaders header=new RequestHeaders(alertAbFilter.getUserAgent(),alertAbFilter.getPublicIp(),alertAbFilter.getUsername());
-		headerService.saveRequestHeader(header);
+//		RequestHeaders header=new RequestHeaders(alertAbFilter.getUserAgent(),alertAbFilter.getPublicIp(),alertAbFilter.getUsername());
+//		headerService.saveRequestHeader(header);
 		userService.saveUserTrail(alertAbFilter.getUserId(),alertAbFilter.getUsername(),
 				alertAbFilter.getUserType(),alertAbFilter.getUserTypeId(),Features.Alert_Management,SubFeatures.EXPORT,alertAbFilter.getFeatureId());
 
@@ -229,8 +229,8 @@ public class AlertDbService {
 	public ResponseEntity<?> findById(AllRequest request){
 		try {
 			log.info("given data:  "+request);
-			RequestHeaders header=new RequestHeaders(request.getUserAgent(),request.getPublicIp(),request.getUsername());
-			headerService.saveRequestHeader(header);
+//			RequestHeaders header=new RequestHeaders(request.getUserAgent(),request.getPublicIp(),request.getUsername());
+//			headerService.saveRequestHeader(header);
 			userService.saveUserTrail(request.getUserId(),request.getUsername(),
 					request.getUserType(),request.getUserTypeId(),Features.Alert_Management,SubFeatures.VIEW,request.getFeatureId());
 
@@ -258,8 +258,8 @@ public class AlertDbService {
 	public ResponseEntity<?> updateAlertDb(AlertDb alertDb){
 		log.info("inside update alertDb controller");
 		log.info("given data:  "+alertDb);
-		RequestHeaders header=new RequestHeaders(alertDb.getUserAgent(),alertDb.getPublicIp(),alertDb.getUsername());
-		headerService.saveRequestHeader(header);
+//		RequestHeaders header=new RequestHeaders(alertDb.getUserAgent(),alertDb.getPublicIp(),alertDb.getUsername());
+//		headerService.saveRequestHeader(header);
 		userService.saveUserTrail(alertDb.getUserId(),alertDb.getUsername(),
 				alertDb.getUserType(),alertDb.getUserTypeId(),Features.Alert_Management,SubFeatures.UPDATE,alertDb.getFeatureId());
 		AlertDb data=alertRepoService.getById(alertDb.getId());

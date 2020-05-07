@@ -135,8 +135,8 @@ public class ReqHeadersService {
 	public Page<RequestHeaders>  viewAllHeadersData(ReqHeaderFilter filterRequest, Integer pageNo, Integer pageSize){
 		try { 
             log.info("filter data: "+filterRequest);
-			RequestHeaders header=new RequestHeaders(filterRequest.getUserAgent(),filterRequest.getPublicIp(),filterRequest.getUsername());
-			headerService.saveRequestHeader(header);
+//			RequestHeaders header=new RequestHeaders(filterRequest.getUserAgent(),filterRequest.getPublicIp(),filterRequest.getUsername());
+//			headerService.saveRequestHeader(header);
 			userService.saveUserTrail(filterRequest.getUserId(),filterRequest.getUsername(),
 					filterRequest.getUserType(),filterRequest.getUserTypeId(),Features.IP_Log_Management,SubFeatures.VIEW_ALL,filterRequest.getFeatureId());
 
@@ -155,8 +155,8 @@ public class ReqHeadersService {
 	public FileDetails getHeadersInFile(ReqHeaderFilter filterRequest, Integer pageNo, Integer pageSize) {
 		log.info("inside export request headers data into file service");
 		log.info("filter data:  "+filterRequest);
-		RequestHeaders header=new RequestHeaders(filterRequest.getUserAgent(),filterRequest.getPublicIp(),filterRequest.getUsername());
-		headerService.saveRequestHeader(header);
+//		RequestHeaders header=new RequestHeaders(filterRequest.getUserAgent(),filterRequest.getPublicIp(),filterRequest.getUsername());
+//		headerService.saveRequestHeader(header);
 		userService.saveUserTrail(filterRequest.getUserId(),filterRequest.getUsername(),
 				filterRequest.getUserType(),filterRequest.getUserTypeId(),Features.IP_Log_Management,SubFeatures.EXPORT,filterRequest.getFeatureId());
 

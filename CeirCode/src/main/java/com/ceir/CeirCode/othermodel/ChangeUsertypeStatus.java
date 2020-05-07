@@ -18,6 +18,8 @@ public class ChangeUsertypeStatus extends AllRequest{
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
+	
+	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -25,22 +27,8 @@ public class ChangeUsertypeStatus extends AllRequest{
 		builder.append(usertypeId);
 		builder.append(", status=");
 		builder.append(status);
-		builder.append(", getUsername()=");
-		builder.append(getUsername());
-		builder.append(", getUserTypeId()=");
-		builder.append(getUserTypeId());
-		builder.append(", getUserId()=");
-		builder.append(getUserId());
-		builder.append(", getUserType()=");
-		builder.append(getUserType());
-		builder.append(", getUserAgent()=");
-		builder.append(getUserAgent());
-		builder.append(", getPublicIp()=");
-		builder.append(getPublicIp());
-		builder.append(", getFeatureId()=");
-		builder.append(getFeatureId());
-		builder.append(", getDataId()=");
-		builder.append(getDataId());
+		builder.append(", toString()=");
+		builder.append(super.toString());
 		builder.append("]");
 		return builder.toString();
 	}

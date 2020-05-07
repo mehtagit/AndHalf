@@ -129,8 +129,8 @@ public class UserMgmtService {
 	public Page<User>  viewAllRecord(UserMgmtFilter details, Integer pageNo, Integer pageSize){
 		try { 
 			log.info("filter data:  "+details);
-			RequestHeaders header=new RequestHeaders(details.getUserAgent(),details.getPublicIp(),details.getUsername());
-			headerService.saveRequestHeader(header);
+//			RequestHeaders header=new RequestHeaders(details.getUserAgent(),details.getPublicIp(),details.getUsername());
+//			headerService.saveRequestHeader(header);
 			userService.saveUserTrail(details.getUserId(),details.getUsername(),
 					details.getUserType(),details.getUserTypeId(),Features.User_Management,SubFeatures.VIEW_ALL,details.getFeatureId());
 
@@ -152,8 +152,8 @@ public class UserMgmtService {
 		Usertype userType=new Usertype(details.getUserTypeId());
 		String displayName="";
 		log.info("data: "+details);
-		RequestHeaders header=new RequestHeaders(details.getUserAgent(),details.getPublicIp(),details.getUsername());
-		headerService.saveRequestHeader(header);
+//		RequestHeaders header=new RequestHeaders(details.getUserAgent(),details.getPublicIp(),details.getUsername());
+//		headerService.saveRequestHeader(header);
 		userService.saveUserTrail(details.getUserId(),details.getUsername(),
 				details.getUserType(),details.getUserTypeId(),Features.User_Management,SubFeatures.SAVE,details.getFeatureId());
 
@@ -250,8 +250,8 @@ public class UserMgmtService {
 		public GenricResponse updateUser(UserDetails details)
 		{
 			log.info("data: "+details);
-			RequestHeaders header=new RequestHeaders(details.getUserAgent(),details.getPublicIp(),details.getUsername());
-			headerService.saveRequestHeader(header);
+//			RequestHeaders header=new RequestHeaders(details.getUserAgent(),details.getPublicIp(),details.getUsername());
+//			headerService.saveRequestHeader(header);
 			userService.saveUserTrail(details.getUserId(),details.getUsername(),
 					details.getUserType(),details.getUserTypeId(),Features.User_Management,SubFeatures.UPDATE,details.getFeatureId());
 
@@ -307,8 +307,8 @@ public class UserMgmtService {
 		{
 			try {
 				log.info("data: "+details);
-				RequestHeaders header=new RequestHeaders(details.getUserAgent(),details.getPublicIp(),details.getUsername());
-				headerService.saveRequestHeader(header);
+//				RequestHeaders header=new RequestHeaders(details.getUserAgent(),details.getPublicIp(),details.getUsername());
+//				headerService.saveRequestHeader(header);
 				userService.saveUserTrail(details.getUserId(),details.getUsername(),
 						details.getUserType(),details.getUserTypeId(),Features.User_Management,SubFeatures.DELETE,details.getFeatureId());
 
@@ -330,8 +330,8 @@ public class UserMgmtService {
 		public GenricResponse viewById(AllRequest request){
 			log.info("inside view by address port controller");
 			log.info("data: "+request);
-			RequestHeaders header=new RequestHeaders(request.getUserAgent(),request.getPublicIp(),request.getUsername());
-			headerService.saveRequestHeader(header);
+//			RequestHeaders header=new RequestHeaders(request.getUserAgent(),request.getPublicIp(),request.getUsername());
+//			headerService.saveRequestHeader(header);
 			userService.saveUserTrail(request.getUserId(),request.getUsername(),
 					request.getUserType(),request.getUserTypeId(),Features.User_Management,SubFeatures.VIEW,request.getFeatureId());
 			User output=new User();

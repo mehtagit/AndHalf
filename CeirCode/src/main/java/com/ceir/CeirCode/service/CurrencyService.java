@@ -61,8 +61,8 @@ public class CurrencyService {
 	public ResponseEntity<?> saveCurrency(Currency currency){
 		log.info("inside save Currency controller");
 		log.info("currency data going to save:  "+currency);
-		RequestHeaders header=new RequestHeaders(currency.getUserAgent(),currency.getPublicIp(),currency.getUsername());
-		headerService.saveRequestHeader(header);
+//		RequestHeaders header=new RequestHeaders(currency.getUserAgent(),currency.getPublicIp(),currency.getUsername());
+//		headerService.saveRequestHeader(header);
 		userService.saveUserTrail(currency.getUserId(),currency.getUsername(),
 				currency.getUserType(),currency.getUserTypeId(),Features.Exchange_Rate_Management,SubFeatures.SAVE,currency.getFeatureId());
 
@@ -91,8 +91,8 @@ public class CurrencyService {
 		log.info("inside view by Id Currency controller");
 		log.info("data given : "+request);
 		Currency output=currencyRepoService.getById(request.getDataId());
-		RequestHeaders header=new RequestHeaders(request.getUserAgent(),request.getPublicIp(),request.getUsername());
-		headerService.saveRequestHeader(header);
+//		RequestHeaders header=new RequestHeaders(request.getUserAgent(),request.getPublicIp(),request.getUsername());
+//		headerService.saveRequestHeader(header);
 		userService.saveUserTrail(request.getUserId(),request.getUsername(),
 				request.getUserType(),request.getUserTypeId(),Features.Exchange_Rate_Management,SubFeatures.VIEW,request.getFeatureId());
 		if(output!=null) {
@@ -114,8 +114,8 @@ public class CurrencyService {
 	public ResponseEntity<?> updateCurrency(Currency currency){
 		log.info("inside update Currency controller");
 		log.info("currency data going to update:  "+currency);
-		RequestHeaders header=new RequestHeaders(currency.getUserAgent(),currency.getPublicIp(),currency.getUsername());
-		headerService.saveRequestHeader(header);
+//		RequestHeaders header=new RequestHeaders(currency.getUserAgent(),currency.getPublicIp(),currency.getUsername());
+//		headerService.saveRequestHeader(header);
 		userService.saveUserTrail(currency.getUserId(),currency.getUsername(),
 				currency.getUserType(),currency.getUserTypeId(),Features.Exchange_Rate_Management,SubFeatures.UPDATE,currency.getFeatureId());
 
@@ -144,8 +144,8 @@ public class CurrencyService {
 	public Page<Currency> currencyData(CurrencyFilter filter, Integer pageNo, Integer pageSize){
 		log.info("inside currency view  controller");
 		log.info("currencyInfo : "+filter);
-		RequestHeaders header=new RequestHeaders(filter.getUserAgent(),filter.getPublicIp(),filter.getUsername());
-		headerService.saveRequestHeader(header);
+//		RequestHeaders header=new RequestHeaders(filter.getUserAgent(),filter.getPublicIp(),filter.getUsername());
+//		headerService.saveRequestHeader(header);
 		userService.saveUserTrail(filter.getUserId(),filter.getUsername(),
 				filter.getUserType(),filter.getUserTypeId(),Features.Exchange_Rate_Management,SubFeatures.VIEW_ALL,filter.getFeatureId());
 
