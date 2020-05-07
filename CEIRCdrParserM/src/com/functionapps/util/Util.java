@@ -8,4 +8,14 @@ public class Util {
 		else
 			return "now()";
 	}
+        
+//         String dateNow = "";
+//                    if (conn.toString().contains("oracle")) {
+//                        dateNow = new SimpleDateFormat("dd-MMM-YY").format(new Date());
+//                    } else {
+//                        dateNow = new SimpleDateFormat("YYYY-MM-dd").format(new Date());
+//                    }
+        
+        
+        
 }

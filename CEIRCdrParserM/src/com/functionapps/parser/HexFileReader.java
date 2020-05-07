@@ -335,11 +335,7 @@ public class HexFileReader {
 
     public String[] readConvertedCSVFile(Connection conn, String fileName, String filePath, String repName,
             String basePath, int raw_upload_set_no) {
-        // String errorFilePath =
-        // "D:\\lokesh\\CEIR\\"+repName+"/old/"+fileName+".error";
-        // String errorFilePath = filePath+fileName+".error";
         String cdrCount = null;
-        // String answerTime = null;
         String endTime = null;
         String inTrkName = null;
         String outTrkName = null;
@@ -401,57 +397,29 @@ public class HexFileReader {
 
         try {
             fieldList = new ArrayList<String>();
-            logger.info(
-                    "NOTEEEEEEEEE  (readConvertedCSVFile)>>>>>>>>>>  main_type, txn_id  is hard coded   but usertype_name is not used ****************************");
+            logger.info("NOTEEEEEEEEE  (readConvertedCSVFile)>>>>>>>>>>  main_type, txn_id     but usertype_name is not used ****************************");
             String main_type = "";
             String txn_id = "";
             String usertype_name = "";
-
-            // String usertype_name = getUserTypeName(conn, main_type, txn_id); // get
-            // usertypr .. importor/ ditributer /
             ArrayList<CDRColumn> myfilelist = getCDRFields(conn, "CDR", usertype_name);
             logger.info("file list size is " + myfilelist.size());
             // fieldList = Arrays.asList(fields);
             logger.info("File name is [" + fileName + "]");
 
-            logger.info("File Name is " + fileName);
             date = new Date();
             actF = new SimpleDateFormat("yyyyMMddHHmmss"); // actF = new SimpleDateFormat("yyyyMMddHHmmss");
             sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            // sdf = new SimpleDateFormat("yyyy/mm/dd hh24:mi:ss");
+
             String[] fileArray = fileName.split("_");
             updatetime = sdf.format(actF.parse(fileArray[fileArray.length - 2]));
 
-            // fw = new FileWriter(errorFilePath);
             file = new File(filePath);
             fr = new FileReader(file);
             br = new BufferedReader(fr);
-            // startTime = sdf.format(Calendar.getInstance().getTime());
-            // startRow = new com.functionapps.db.Query().getStartIndexFromTable(conn,
-            // repName);
-            /**
-             * **************Insert Query and prepared statement
-             * start**************
-             */
+
             query = "insert into " + repName + "_raw" + "(";
             failquery = "insert into " + repName + "_error" + "(";
-            // for( String field : fields ){
-            // query = query + field + ",";
-            // values = values + "?,";
-            // }
-            // query = query.substring( 0, query.length() - 1 )+") "+values.substring( 0,
-            // values.length() - 1 )+")";
-            // logger.info("query is "+query);
 
-            // conn = new com.functionapps.db.MySQLConnection().getConnection();
-            // ps = conn.prepareStatement( query, Statement.RETURN_GENERATED_KEYS );
-            // temPS = conn.prepareStatement( "insert into
-            // zte_billid_temp(partId,billId,answerTime) values(?,?,?)",
-            // Statement.RETURN_GENERATED_KEYS );
-            /**
-             * **************Insert Query and prepared statement
-             * ends**************
-             */
             hm = zte.getfieldSet();
             billIds = new ArrayList<String>();
 
@@ -467,7 +435,7 @@ public class HexFileReader {
             while ((line = br.readLine()) != null) {
                 data = line.split(",", -1);
                 if (k == 0) {
-                    logger.info(" data length is " + data.length + " fileld List size is " + myfilelist.size());
+                    logger.info(" data length in file is " + data.length + ".. field List(DB) size is " + myfilelist.size());
                     if (data.length == myfilelist.size()) {
                         logger.info("Configured Column name and File Headers are matched");
                         int my_column_count = 0;
@@ -559,9 +527,12 @@ public class HexFileReader {
                     logger.info("Executing Fail Batch File");
                     failed_ps.executeBatch();
                     pass_my_batch = 0;
+
                 }
             }
             ps.executeBatch();
+            conn.commit();
+
             failed_ps.executeBatch();
             if (fr != null) {
                 fr.close();
@@ -578,6 +549,7 @@ public class HexFileReader {
             if (cdrCount != null && cdrStartTime != null && cdrEndTime != null) {
             } else {
             }
+
         } catch (Exception e) {
             logger.info("Exception [" + e + "]");
             e.printStackTrace();
@@ -983,7 +955,8 @@ public class HexFileReader {
             if (failed_flag == 1) {
                 CEIRFeatureFileFunctions ceirfunction = new CEIRFeatureFileFunctions();
                 ceirfunction.updateFeatureFileStatus(conn, txn_id, 2, main_type, subfeature); // update web_action_db 
-                ceirfunction.updateFeatureManagementStatus(conn, txn_id, 1, management_table, main_type);      // 1 for processing
+                 ceirfunction.UpdateStatusViaApi(conn, txn_id, 0,    main_type ); 
+           //     ceirfunction.updateFeatureManagementStatus(conn, txn_id, 1, management_table, main_type);      // 1 for processing
                 String error_file_path = CEIRFeatureFileParser.getErrorFilePath(conn) + txn_id + "/" + txn_id + "_error.csv";
                 File errorfile = new File(error_file_path);
                 if (errorfile.exists()) {     // in case of no error   ,,  file is deleted
@@ -1100,13 +1073,13 @@ public class HexFileReader {
                 if (rs != null) {
                     rs.close();
                 }
-
                 conn.commit();
             } else {
                 CEIRFeatureFileFunctions ceirfunction = new CEIRFeatureFileFunctions();
                 //     ceirfunction.addFeatureFileConfigDetails(conn, "update", main_type, subfeature, txn_id, fileName, "PARAM_NOT_VALID", "");
                 ceirfunction.updateFeatureFileStatus(conn, txn_id, 4, main_type, subfeature); // update web_action_db  
-                ceirfunction.updateFeatureManagementStatus(conn, txn_id, 2, management_table, main_type);
+                ceirfunction.UpdateStatusViaApi(conn, txn_id, 1,   main_type );    // working for cons, 
+//                ceirfunction.updateFeatureManagementStatus(conn, txn_id, 2, management_table, main_type);
             }
 
         } catch (Exception e) {
@@ -1216,8 +1189,7 @@ public class HexFileReader {
         logger.info("in file reader");
         try {
             fieldList = new ArrayList<String>();
-            logger.info(
-                    "NOTEEEEEEEEE  (readConvertedCSVFileBack)>>>>>>>>>>  main_type, txn_id  is hard coded   but usertype_name is not used ****************************");
+            logger.info("NOTEEEEEEEEE  (readConvertedCSVFileBack)>>>>>>>>>>  main_type, txn_id  is hard coded   but usertype_name is not used ****************************");
             String main_type = "";
             String txn_id = "";
             String usertype_name = "";
@@ -1225,7 +1197,7 @@ public class HexFileReader {
             // String usertype_name = getUserTypeName(conn, main_type, txn_id); // get
             // usertypr .. importor/ ditributer /
             ArrayList filelist = getCDRFields(conn, "CDR", usertype_name);
-
+            logger.info("array list " + filelist.toString());
             fieldList = Arrays.asList(fields);
 
             date = new Date();
@@ -1406,13 +1378,13 @@ public class HexFileReader {
             Statement stmto = conn.createStatement();
 
             ResultSet rs0 = stmto.executeQuery("select count(*)  from static_rule_engine_mapping where feature='"
-                    + feature + "' and   user_type =  '" + usertype_name + "'  ");
+                    + feature + "' and   user_type =  '" + usertype_name + "'  order by id asc ");
             while (rs0.next()) {
                 rs0Count = rs0.getInt(1);
             }
         } catch (Exception e) {
         }
-        logger.info("  count for st_RUl_eng_ma with feat and NOT default is .." + rs0Count);
+        logger.info("  ...... .." + rs0Count);
 
         if (rs0Count == 0) {
             qry = "  and user_type =  'default'  ";
@@ -1424,19 +1396,13 @@ public class HexFileReader {
         Statement stmt = null;
         ResultSet rs = null;
         try {
-            query = "select * from static_rule_engine_mapping where feature='" + feature + "'   " + qry + "     "; /// usertype
-            /// can
-            /// be
-            /// null
-            /// in
-            /// case
-            /// of
+            query = "select * from static_rule_engine_mapping where feature='" + feature + "'   " + qry + "   order by id asc    "; /// usertype
+
             stmt = conn.createStatement();
             rs = stmt.executeQuery(query);
             logger.info("Query is for static rule_engine_mapping (get CDRFields) ..." + query);
             while (rs.next()) {
-                CDRColumn cdrColumn = new CDRColumn(rs.getString("name"), rs.getString(period + "_type"),
-                        rs.getString("post_grace_type"));
+                CDRColumn cdrColumn = new CDRColumn(rs.getString("name"), rs.getString(period + "_type"), rs.getString("post_grace_type"));
                 columnDetails.add(cdrColumn);
             }
         } catch (Exception ex) {
@@ -1905,7 +1871,7 @@ public class HexFileReader {
 //        Map<String, String> map = new HashMap<String, String>();
 //        try {
 //              CEIRFeatureFileFunctions ceirfunction = new CEIRFeatureFileFunctions();
-//              ceirfunction.updateFeatureManagementStatus(conn, txn_id, 1, mgnt_table_db, feature);
+//              ceirfunction.u pdateFeatureManagementStatus(conn, txn_id, 1, mgnt_table_db, feature);
 //              ceirfunction.updateFeatureFileStatus(conn,txn_id, 2, feature, sub_feature); // update web_action_db    
 //             
 //            map.put("feature", feature);
@@ -2418,7 +2384,7 @@ public class HexFileReader {
 //        logger.info("main_type Is .." + feature);
 ////        ceirfunction.addFeatureFileConfigDetails(conn, "update", feature, subfeature, txn_id, fileName,   "PARAM_NOT_VALID", "");
 //        ceirfunction.updateFeatureFileStatus(conn, txn_id, 4, feature, subfeature); // update web_action_db set
-//        ceirfunction.updateFeatureManagementStatus(conn, txn_id, 2, management_table, tblName);
+//        ceirfunction.u pdateFeatureManagementStatus(conn, txn_id, 2, management_table, tblName);
 //
 //    }
 //

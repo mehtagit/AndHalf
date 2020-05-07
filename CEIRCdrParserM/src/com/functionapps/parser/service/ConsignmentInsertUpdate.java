@@ -186,8 +186,8 @@ public class ConsignmentInsertUpdate {
                 logger.info("File path is.. " + error_file_path + " , IF Error file exists .. " + errorfile.exists());
                 if (errorfile.exists()) {
                     ceirfunction.updateFeatureFileStatus(conn, txn_id, 4, operator, sub_feature); // update web_action_db
-                    ceirfunction.UpdateStatusViaApi(conn, txn_id, 1, stolnRcvryDetails, operator, 1);
-                    ceirfunction.updateFeatureManagementStatus(conn, txn_id, 2, feature_file_mapping.get("mgnt_table_db"), operator); // 2 - pending approval , 3 -reject by                   // sys
+                    ceirfunction.UpdateStatusViaApi(conn, txn_id, 1,  operator);
+//                    ceirfunction.updateFeatureManagementStatus(conn, txn_id, 2, feature_file_mapping.get("mgnt_table_db"), operator); // 2 - pending approval , 3 -reject by                   // sys
                //     ceirfunction.addFeatureFileConfigDetails(conn, "update", operator, sub_feature, txn_id, "", "REJECTED_BY_SYSTEM", "");
                 } else {
                     rrslt = cEIRFeatureFileParser.getCustomData(conn, txn_id); // select user_type from stock_mgmt where txn_id
@@ -322,7 +322,7 @@ public class ConsignmentInsertUpdate {
                     stmt5.close();
 
                     logger.info("stmts closed");
-                    ceirfunction.UpdateStatusViaApi(conn, txn_id, 0, stolnRcvryDetails, operator, 0);
+                    ceirfunction.UpdateStatusViaApi(conn, txn_id, 0,  operator);
 //          ceirfunction.updateFeatureManagementStatus(conn, txn_id, 3, feature_file_mapping.get("mgnt_table_db"), operator);
                 }
                 raw_stmt = conn.createStatement();

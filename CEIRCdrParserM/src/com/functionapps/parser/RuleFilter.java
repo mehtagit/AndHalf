@@ -100,7 +100,7 @@ public class RuleFilter {
                     device_info.get("operator"), device_info.get("file_name"), device_info.get("record_time"), "RuleCheckStart",
                     device_info.get("ruleid"), device_info.get("rule_name"), "", new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date()));
 
-            RuleEngineApplication rea = new RuleEngineApplication();
+//            RuleEngineApplication rea = new RuleEngineApplication();
             //		String arr[] ={'1','2'};
             String[] my_arr = {device_info.get("rule_name"),
                 "1",
@@ -117,7 +117,7 @@ public class RuleFilter {
                 device_info.get("servedMSISDN"),
                 device_info.get("action")
             };
-            output = rea.startRuleEngine(my_arr);
+            output = RuleEngineApplication.startRuleEngine(my_arr);
             System.out.println("Rule Execute output is [" + output + "]");
             new LogWriter().writeEvents(myWriter, device_info.get("servedIMEI"),
                     device_info.get("recordType"), device_info.get("servedIMSI"), device_info.get("servedMSISDN"),
@@ -158,7 +158,7 @@ public class RuleFilter {
                         device_info.get("servedMSISDN"),
                         device_info.get("action")
                     };
-                    action_output = rea.startRuleEngine(my_action_arr);
+                    action_output = RuleEngineApplication.startRuleEngine(my_action_arr);
                     System.out.println("Rule Filter Action Output is [" + action_output + "]");
 
                     new LogWriter().writeEvents(myWriter, device_info.get("servedIMEI"),
@@ -201,7 +201,7 @@ public class RuleFilter {
                     device_info.get("Devicelaunchdate"), device_info.get("DeviceStatus"),
                     device_info.get("txn_id"), device_info.get("operator"), device_info.get("file_name"), "RuleCheckStart",
                     device_info.get("ruleid"), device_info.get("rule_name"), "", new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date()));
-            RuleEngineApplication rea = new RuleEngineApplication();
+//            RuleEngineApplication rea = new RuleEngineApplication();
 
             String fileArray = device_info.get("DeviceType") + "," + device_info.get("DeviceIdType") + "," + device_info.get("MultipleSIMStatus") + "," + device_info.get("SNofDevice") + "," + device_info.get("IMEIESNMEID") + "," + device_info.get("Devicelaunchdate") + "," + device_info.get("DeviceStatus") + "";
 
@@ -223,8 +223,10 @@ public class RuleFilter {
                 device_info.get("txn_id"),
                 fileArray
             };
-            logger.info(" Rule Execution Start...." + Arrays.toString(my_arr));
-            output = rea.startRuleEngine(my_arr);
+            logger.info(" ******************Rule Execution Start...." + Arrays.toString(my_arr));
+            output = RuleEngineApplication.startRuleEngine(my_arr);
+            logger.info("Rule Execute OUTPUT is [" + output + "], Database Output--" + device_info.get("output"));
+
             new LogWriter().writeFeatureEvents(myWriter, device_info.get("IMEIESNMEID"),
                     device_info.get("DeviceType"), device_info.get("MultipleSIMStatus"), device_info.get("SNofDevice"),
                     device_info.get("Devicelaunchdate"), device_info.get("DeviceStatus"),
@@ -260,8 +262,8 @@ public class RuleFilter {
                     device_info.get("txn_id"),
                     fileArray
                 };
-                logger.info(" Rule Action Start...." + Arrays.toString(my_action_arr));
-                action_output = rea.startRuleEngine(my_action_arr);
+                logger.info(" *******************Rule Action Start*****************...." + Arrays.toString(my_action_arr));
+                action_output = RuleEngineApplication.startRuleEngine(my_action_arr);
                 errorFlag = 1;
                 System.out.println("Rule Filter Action Output is [" + action_output + "]");
 

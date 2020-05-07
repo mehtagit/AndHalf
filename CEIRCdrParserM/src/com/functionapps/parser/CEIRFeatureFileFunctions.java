@@ -264,12 +264,11 @@ public class CEIRFeatureFileFunctions {
         return user_type;
     }
 
-    public void UpdateStatusViaApi(Connection conn, String txn_id, int ConsigAction, HashMap<String, String> map, String feature, int StlnAction) {
-        logger.info("UpdateStatusViaApi.. ");
+    public void UpdateStatusViaApi(Connection conn, String txn_id, int Action, String feature) {
+        logger.info("UpdateStatusViaApi..  : 0 - Accept; 1 -Reject  ");
         ResultSet rs1 = null;
         Statement stmt = null;
         String tag = null;
-
         String apiURI = null;
         String responseBody = null;
         String featureId = "";
@@ -277,30 +276,46 @@ public class CEIRFeatureFileFunctions {
         // String txn_id = map.get("txn_id");;
         String userId = "";
 
+        if (feature.equalsIgnoreCase("Register Device")) {
+            apiURI = "RegisterDevice_api_URI";
+            responseBody = "{\n"
+                    + "\"action\": " + Action + "   ,\n"
+                    + "\"txnId\": \"" + txn_id + "\",\n"
+                    + "\"userType\": \"CEIRSYSTEM\"\n"
+                    + "}";
+        }
+        if (feature.equalsIgnoreCase("Update Visa")) {
+            apiURI = "VisaUpdate_api_URI";
+            responseBody = "{\n"
+                    + "\"action\": " + Action + "   ,\n"
+                    + "\"txnId\": \"" + txn_id + "\",\n"
+                    + "\"userType\": \"CEIRSYSTEM\"\n"
+                    + "}";
+        }
         if (feature.equalsIgnoreCase("stock")) {
             apiURI = "stock_api_URI";
-            responseBody = "{  \"action\": " + ConsigAction + " ,  \"remarks\":\"0Accept\",  \"roleType\": \"CEIRSystem\",  \"txnId\": \"" + txn_id + "\"  ,\"featureId\" : 6 }";
+            responseBody = "{  \"action\": " + Action + " ,  \"remarks\":\"0Accept\",  \"roleType\": \"CEIRSystem\",  \"txnId\": \"" + txn_id + "\"  ,\"featureId\" : 6 }";
+        }
+        if (feature.equalsIgnoreCase("consignment")) {
+            apiURI = "mail_api_path";
+            responseBody = "{  \"action\":    " + Action
+                    + "    ,  \"requestType\": 0,  \"roleType\": \"CEIRSYSTEM\",  \"txnId\": \"" + txn_id
+                    + "\"  ,\"featureId\" : 3 }";
+
         }
 
         if ((feature.equalsIgnoreCase("stolen") || feature.equalsIgnoreCase("recovery")
                 || feature.equalsIgnoreCase("block") || feature.equalsIgnoreCase("unblock"))) {
+            apiURI = "stolen-recovery_mailURI";
+            HashMap<String, String> map = CEIRFeatureFileParser.getStolenRecvryDetails(conn, txn_id);
             featureId = (map.get("request_type").equals("0") || map.get("request_type").equals("1")) ? "5" : "7";
             requestType = map.get("request_type");
-            apiURI = "stolen-recovery_mailURI";
             userId = map.get("user_id");
 
-            responseBody = " {\n" + "\"action\":" + StlnAction + ",\n" + "\"featureId\":" + featureId + ",\n"
+            responseBody = " {\n" + "\"action\":" + Action + ",\n" + "\"featureId\":" + featureId + ",\n"
                     + "\"remarks\":\"DONE\",\n" + "\"requestType\":" + requestType + ",\n"
                     + "\"roleType\":\"CEIRSYSTEM\",\n" + "\"roleTypeUserId\":0,\n" + "\"txnId\":\"" + txn_id + "\",\n"
                     + "\"userId\":" + userId + ",\n" + "\"userType\": \"CEIRSYSTEM\"\n" + "}  ";
-        }
-
-        if (feature.equalsIgnoreCase("consignment")) {
-            apiURI = "mail_api_path";
-            responseBody = "{  \"action\":    " + ConsigAction
-                    + "    ,  \"requestType\": 0,  \"roleType\": \"CEIRSYSTEM\",  \"txnId\": \"" + txn_id
-                    + "\"  ,\"featureId\" : 3 }";
-
         }
 
         String query = "select value from system_configuration_db where tag='" + apiURI + "'";
@@ -308,7 +323,7 @@ public class CEIRFeatureFileFunctions {
         try {
 
             logger.info("Query is " + query);
-            logger.info("............" + responseBody + "  |||   at  StlnRcvryBlckUnBlck  : 0 - Accept; 1 -Reject ");
+            logger.info("............\n    " + responseBody + " ");
             logger.info("............");
             stmt = conn.createStatement();
             rs1 = stmt.executeQuery(query);
@@ -425,6 +440,15 @@ public class CEIRFeatureFileFunctions {
             System.out.println("" + e);
         }
         return map;
+    }
+
+    void RegisterVisaUpdateApi(String string) {
+
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private HashMap<String, String> getOtherStolenRecoveryDetails(Connection conn, String txn_id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

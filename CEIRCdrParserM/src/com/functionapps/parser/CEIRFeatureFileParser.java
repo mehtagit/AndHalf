@@ -24,23 +24,30 @@ public class CEIRFeatureFileParser {
         Connection conn = null;
         conn = (Connection) new com.functionapps.db.MySQLConnection().getConnection();
         CEIRFeatureFileFunctions ceirfunction = new CEIRFeatureFileFunctions();
+        CEIRFeatureFileParser ceirfileparser = new CEIRFeatureFileParser();
         ResultSet featurers = ceirfunction.getFileDetails(conn, 2);     //select * from web_action_db 
 //		ResultSet featurers=getFeatureFileDetails(conn);
         try {
             if (featurers.next()) {
-                ceirfunction.updateFeatureFileStatus(conn, featurers.getString("txn_id"), 3, featurers.getString("feature"), featurers.getString("sub_feature"));  // update web_action
-                HashMap<String, String> feature_file_mapping = new HashMap<String, String>();
-                feature_file_mapping = ceirfunction.getFeatureMapping(conn, featurers.getString("feature"), "NOUSER");
-                HashMap<String, String> feature_file_management = new HashMap<String, String>();
-                feature_file_management = ceirfunction.getFeatureFileManagement(conn, feature_file_mapping.get("mgnt_table_db"), featurers.getString("txn_id"));   //  select * from " + management_db 
-                String user_type = ceirfunction.getUserType(conn, feature_file_management.get("user_id"), featurers.getString("feature"), featurers.getString("txn_id"));
-                CEIRFeatureFileParser ceirfileparser = new CEIRFeatureFileParser();
-                feature = featurers.getString("feature");
-                ArrayList rulelist = new ArrayList<Rule>();
-                String period = ceirfileparser.checkGraceStatus(conn);
-                logger.info("Period is [" + period + "] ");
-                rulelist = ceirfileparser.getRuleDetails(feature, conn, "", period, "", user_type);
-                addCDRInProfileWithRule(feature, conn, rulelist, "", featurers.getString("txn_id"), featurers.getString("sub_feature"), user_type);
+                  ceirfunction.updateFeatureFileStatus(conn, featurers.getString("txn_id"), 3, featurers.getString("feature"), featurers.getString("sub_feature"));  // update web_action
+                if (featurers.getString("feature").equalsIgnoreCase("Register Device") || featurers.getString("feature").equalsIgnoreCase("Update Visa")) {
+                    logger.info(" Feature  Register Device / Visa Update. ");
+                    ceirfunction.UpdateStatusViaApi(conn, featurers.getString("txn_id"), 0, featurers.getString("feature"));
+                    ceirfunction.updateFeatureFileStatus(conn, featurers.getString("txn_id"), 4, featurers.getString("feature"), featurers.getString("sub_feature"));  // update web_action
+                } else {
+                    HashMap<String, String> feature_file_mapping = new HashMap<String, String>();
+                    feature_file_mapping = ceirfunction.getFeatureMapping(conn, featurers.getString("feature"), "NOUSER");
+                    HashMap<String, String> feature_file_management = new HashMap<String, String>();
+                    feature_file_management = ceirfunction.getFeatureFileManagement(conn, feature_file_mapping.get("mgnt_table_db"), featurers.getString("txn_id"));   //  select * from " + management_db 
+                    String user_type = ceirfunction.getUserType(conn, feature_file_management.get("user_id"), featurers.getString("feature"), featurers.getString("txn_id"));
+
+                    feature = featurers.getString("feature");
+                    ArrayList rulelist = new ArrayList<Rule>();
+                    String period = ceirfileparser.checkGraceStatus(conn);
+                    logger.info("Period is [" + period + "] ");
+                    rulelist = ceirfileparser.getRuleDetails(feature, conn, "", period, "", user_type);
+                    addCDRInProfileWithRule(feature, conn, rulelist, "", featurers.getString("txn_id"), featurers.getString("sub_feature"), user_type);
+                }
             }
             conn.close();
         } catch (SQLException e) {
@@ -145,7 +152,7 @@ public class CEIRFeatureFileParser {
                 new ConsignmentDelete().process(conn, operator, sub_feature, rulelist, txn_id, operator_tag);
             } else if (operator.equalsIgnoreCase("consignment") && (sub_feature.equalsIgnoreCase("approve"))) {
                 System.out.println("running consignment approve process.");
-                new ApproveConsignment().process(conn, operator, sub_feature, rulelist, txn_id, operator_tag ,usertype_name);
+                new ApproveConsignment().process(conn, operator, sub_feature, rulelist, txn_id, operator_tag, usertype_name);
             } else if (operator.equalsIgnoreCase("TYPE_APPROVED") && (sub_feature.equalsIgnoreCase("REGISTER"))) {
                 System.out.println("running tac register process.");
                 new RegisterTac().process(conn, operator, sub_feature, rulelist, txn_id, operator_tag);
@@ -367,7 +374,7 @@ public class CEIRFeatureFileParser {
         Statement stmt = null;
         try {
             query = "select a.id as rule_id,a.name as rule_name,b.output as output,b.grace_action, b.post_grace_action, b.failed_rule_action_grace, b.failed_rule_action_post_grace from rule_engine a, rule_engine_mapping b where  a.name=b.name  and a.state='FULL' and b.feature='"
-                    + operator + "' and b.user_type='" + usertype_name + "' order by b.rule_order asc";
+                    + operator + "' and b.user_type='" + usertype_name + "'  and  b." + period + "_action !='NA'       order by b.rule_order asc";
 
             logger.info("Query is  (getRuleDetails) " + query);
             stmt = conn.createStatement();

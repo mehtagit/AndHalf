@@ -61,35 +61,21 @@ public class ParserMain {
 	        	}
 
 	        	filePath = basePath+"/"+args[0]+"/";
-//		        logger.info("File Path is "+filePath);
-
+		        logger.info("File Path is "+filePath);
 	        	System.out.println("File Path is "+basePath);
-				logger.info("Base Path is ["+basePath+"]");
-
-	        	//FileList fl = new FileList();
-	        	//fileName  = new FileList().getFileName(tableName);
-	        	//calendar  = Calendar.getInstance();
-	        	//startTime = sdf.format( Calendar.getInstance().getTime() );
-	        	//startRow = new Query().getStartIndexFromTable( tableName );
-
 	        	remainFileList  = new FileList().remaingFileList( args[0],filePath );
 	        	System.out.println("	Remain file size is "+remainFileList.size());
 	        	for(int k=0;k<remainFileList.size();k++){
-//	        	while( remainFileList.size() != 0 ){	
-	        		
 	        		if( remainFileList.size() > 0 ){
 		    			for( int i = 0; i < remainFileList.size(); i++ ){
 				        	startTime = sdf.format( Calendar.getInstance().getTime() );
 				        	data = remainFileList.get(i)[0].split("_");				        	
-//				    		serial_no = data[data.length-1].substring(0,data[data.length-1].length()-4);
-//				    		serial_no = data[data.length-1];
-//				        	previousSequence = hfr.getPreviousFileCount( args[1], conn );
-//				        	if(Integer.parseInt(serial_no)== Integer.parseInt(previousSequence)+1){
+
 				        	if(true){
 
 				        		if( remainFileList.get(i)[1] != null ){
-					            	System.out.println("first stage");
-//							        logger.info("File Name is "+remainFileList.get(i)[0]);
+				        			logger.info("first stage");
+							        logger.info("File Name is "+remainFileList.get(i)[0]);
 
 					            	rawDataResult = hfr.readConvertedCSVFile(conn ,remainFileList.get(i)[0], remainFileList.get(i)[1], args[0],basePath,raw_upload_set_no);
 //					            	hfr.updateNextCount( args[1], conn ,Integer.parseInt(serial_no));
@@ -114,46 +100,16 @@ public class ParserMain {
 	    			}
 	        		remainFileList  = new FileList().remaingFileList( args[0] ,filePath);
 	        	}
-//				fileList               = new FileList().fileList( args[0] );
-//	        	for( int i = 0; i < fileList.size(); i++ ){
-//		        	startTime = sdf.format( Calendar.getInstance().getTime() );
-//		            //System.out.println( "file name is ["+fileList.get(i)[1]+"]+");
-//		            if( fileList.get(i)[1] != null ){
-//			       //     hfr.readBinaryFileUsingDIS( fileList.get(i)[0], fileList.get(i)[1], tableName );
-//		            }
-//	        	}
+
 	        	fileList = null;
-//	        	hfr.sortAllFile( args[1], filePath );
-            	//endTime       = sdf.format( Calendar.getInstance().getTime() );
-//    			fileList      = new FileList().fileList( args[0] );
-//    			if( fileList.size() > 0 ){
-//	    			for( int i = 0; i < fileList.size(); i++ ){
-//			        	startTime = sdf.format( Calendar.getInstance().getTime() );
-//			            if( fileList.get(i)[1] != null ){
-//			            	rawDataResult = hfr.readConvertedCSVFile( conn, fileList.get(i)[0], fileList.get(i)[1], args[0],basePath,raw_upload_set_no);
-//			            	endTime = sdf.format( Calendar.getInstance().getTime() );
-//				            if( rawDataResult != null ){
-//				            	if( rawDataResult[1] != null && rawDataResult[2] != null ){
-//				            		result  = logWriter.writeLog( fileList.get(i)[0], fileList.get(i)[2], rawDataResult[0], startTime, endTime, rawDataResult[1], rawDataResult[2], rawDataResult[5], rawDataResult[6],rawDataResult[3], rawDataResult[4]);
-//				            	}else{
-//				            		break;
-//				            	}
-//				            }else{
-//				            	result = logWriter.writeLog( fileList.get(i)[0], fileList.get(i)[2],"0", startTime, endTime, "null", "null", "0", "0","0",rawDataResult[4]);
-//				            	break;
-//				            }
-//			            }
-//		        	}
-//    			}else{
-//    				System.out.println("No sorted file found");
-//    				System.exit(0);
-//    			}
+
 	         }catch (Exception e){
 	        	e.printStackTrace();
 	            System.out.println("No record found from file ["+fileList.get(0)[1]+"]");
 	        }finally{
 	        	try{
 	        		if( conn != null ){
+                                    conn.commit();
 	        			conn.close();
 	        		}
 	        	}catch( Exception ex ){}
@@ -162,16 +118,7 @@ public class ParserMain {
 		
 			
 		}
-//		if( requestType.equalsIgnoreCase("test")){
-//			try{
-//				new HexFileReader().getFields( );
-//			}catch( Exception e ){
-//				e.printStackTrace();
-//			}	
-//		}
-//		else if(requestType.equalsIgnoreCase("update")){}else{
-//			System.out.println("No request supported");
-//		}
+
 		    
 	}
 	
@@ -183,3 +130,83 @@ public class ParserMain {
 	
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+//FileList fl = new FileList();
+//fileName  = new FileList().getFileName(tableName);
+//calendar  = Calendar.getInstance();
+//startTime = sdf.format( Calendar.getInstance().getTime() );
+//startRow = new Query().getStartIndexFromTable( tableName );
+
+
+
+
+//serial_no = data[data.length-1].substring(0,data[data.length-1].length()-4);
+//serial_no = data[data.length-1];
+//previousSequence = hfr.getPreviousFileCount( args[1], conn );
+//if(Integer.parseInt(serial_no)== Integer.parseInt(previousSequence)+1){
+
+
+
+//fileList               = new FileList().fileList( args[0] );
+//for( int i = 0; i < fileList.size(); i++ ){
+//	startTime = sdf.format( Calendar.getInstance().getTime() );
+//    //System.out.println( "file name is ["+fileList.get(i)[1]+"]+");
+//    if( fileList.get(i)[1] != null ){
+//   //     hfr.readBinaryFileUsingDIS( fileList.get(i)[0], fileList.get(i)[1], tableName );
+//    }
+//}
+
+
+
+//hfr.sortAllFile( args[1], filePath );
+//endTime       = sdf.format( Calendar.getInstance().getTime() );
+//fileList      = new FileList().fileList( args[0] );
+//if( fileList.size() > 0 ){
+//	for( int i = 0; i < fileList.size(); i++ ){
+//    	startTime = sdf.format( Calendar.getInstance().getTime() );
+//        if( fileList.get(i)[1] != null ){
+//        	rawDataResult = hfr.readConvertedCSVFile( conn, fileList.get(i)[0], fileList.get(i)[1], args[0],basePath,raw_upload_set_no);
+//        	endTime = sdf.format( Calendar.getInstance().getTime() );
+//            if( rawDataResult != null ){
+//            	if( rawDataResult[1] != null && rawDataResult[2] != null ){
+//            		result  = logWriter.writeLog( fileList.get(i)[0], fileList.get(i)[2], rawDataResult[0], startTime, endTime, rawDataResult[1], rawDataResult[2], rawDataResult[5], rawDataResult[6],rawDataResult[3], rawDataResult[4]);
+//            	}else{
+//            		break;
+//            	}
+//            }else{
+//            	result = logWriter.writeLog( fileList.get(i)[0], fileList.get(i)[2],"0", startTime, endTime, "null", "null", "0", "0","0",rawDataResult[4]);
+//            	break;
+//            }
+//        }
+//	}
+//}else{
+//	System.out.println("No sorted file found");
+//	System.exit(0);
+//}
+
+
+
+
+
+
+//if( requestType.equalsIgnoreCase("test")){
+//try{
+//	new HexFileReader().getFields( );
+//}catch( Exception e ){
+//	e.printStackTrace();
+//}	
+//}
+//else if(requestType.equalsIgnoreCase("update")){}else{
+//System.out.println("No request supported");
+//}

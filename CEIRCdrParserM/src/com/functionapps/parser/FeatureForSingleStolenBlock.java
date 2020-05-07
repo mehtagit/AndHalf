@@ -34,6 +34,8 @@ public class FeatureForSingleStolenBlock {
         Map<String, String> map = new HashMap<String, String>();
         try {
             CEIRFeatureFileFunctions ceirfunction = new CEIRFeatureFileFunctions();
+            logger.info("  readFeatureWithoutFile ") ;
+              ceirfunction.UpdateStatusViaApi(conn, txn_id, 1, feature);
             ceirfunction.updateFeatureManagementStatus(conn, txn_id, 1, mgnt_table_db, feature);
             ceirfunction.updateFeatureFileStatus(conn, txn_id, 2, feature, sub_feature); // update web_action_db    
 
