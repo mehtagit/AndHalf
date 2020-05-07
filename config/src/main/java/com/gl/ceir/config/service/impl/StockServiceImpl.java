@@ -231,10 +231,10 @@ public class StockServiceImpl {
 					logger.info("Invalid request for stock registeration.", stockMgmt.getTxnId());
 					return new GenricResponse(3, "Invalid request for stock registeration.", stockMgmt.getTxnId());
 				}
-				addInAuditTrail(user.getId(), stockMgmt.getTxnId(), SubFeatures.UPLOAD,stockMgmt.getRoleType());
+				addInAuditTrail(user.getId(), stockMgmt.getTxnId(), SubFeatures.UPLOAD, stockMgmt.getRoleType());
 			}else {
 				stockMgmt.setUser(new User().setId(new Long(stockMgmt.getUserId())));
-				addInAuditTrail(stockMgmt.getId(), stockMgmt.getTxnId(), SubFeatures.UPLOAD,stockMgmt.getRoleType());
+				addInAuditTrail(stockMgmt.getUserId(), stockMgmt.getTxnId(), SubFeatures.UPLOAD,stockMgmt.getRoleType());
 			}
 
 			WebActionDb webActionDb = new WebActionDb();
