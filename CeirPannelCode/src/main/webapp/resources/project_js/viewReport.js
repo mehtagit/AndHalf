@@ -6,7 +6,7 @@
 		var consignmentStatus=$('#filterConsignmentStatus').val();
 		var userId = $("body").attr("data-userID");
 		var userType=$("body").attr("data-roleType");
-		var featureId="39";
+		var featureId="42";
 		var rejectedMsg,consignmentApproved,errorMsg,havingTxnID,updateMsg,hasBeenUpdated;
 		var consignmentDeleted,deleteInProgress;
 		var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
@@ -54,7 +54,12 @@
 			 var filter =[];
 			 var formData= new FormData();
 			 var filterRequest={
-					"reportnameId" : parseInt(reportnameId)
+					"reportnameId" : parseInt(reportnameId),
+					"featureId":parseInt(featureId),
+					"userTypeId": parseInt($("body").attr("data-userTypeID")),
+					"userType":$("body").attr("data-roleType"),
+					"username" : $("body").attr("data-selected-username"),
+					"userId" : parseInt($("body").attr("data-userID")) 
 			}
 			formData.append("filter",JSON.stringify(filterRequest));	
 			if(lang=='km'){

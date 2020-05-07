@@ -1,5 +1,7 @@
 package org.gl.ceir.CeirPannelCode.Model;
 
+import java.util.List;
+
 public class UserStatus {
 	private Integer id;
 	private String status;
@@ -9,6 +11,9 @@ public class UserStatus {
 	private Integer statusValue;
 	private String username;
 	private String referenceId;
+	private String action;
+	private List<Integer> roles ;
+	private String usertype;
 	public Integer getId() {
 		return id;
 	}
@@ -57,10 +62,30 @@ public class UserStatus {
 	public void setReferenceId(String referenceId) {
 		this.referenceId = referenceId;
 	}
+	public String getAction() {
+		return action;
+	}
+	public void setAction(String action) {
+		this.action = action;
+	}
+	public List<Integer> getRoles() {
+		return roles;
+	}
+	public void setRoles(List<Integer> roles) {
+		this.roles = roles;
+	}
+	public String getUsertype() {
+		return usertype;
+	}
+	public void setUsertype(String usertype) {
+		this.usertype = usertype;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("UserStatus [status=");
+		builder.append("UserStatus [id=");
+		builder.append(id);
+		builder.append(", status=");
 		builder.append(status);
 		builder.append(", userId=");
 		builder.append(userId);
@@ -74,9 +99,14 @@ public class UserStatus {
 		builder.append(username);
 		builder.append(", referenceId=");
 		builder.append(referenceId);
+		builder.append(", action=");
+		builder.append(action);
+		builder.append(", roles=");
+		builder.append(roles);
+		builder.append(", usertype=");
+		builder.append(usertype);
 		builder.append("]");
 		return builder.toString();
 	}
-	
 	
 }

@@ -79,7 +79,7 @@ public interface UploadPaidStatusFeignClient {
 	
 	@PutMapping("/accept-reject/end-user-visa")
 	public @ResponseBody GenricResponse updateVisaRequest(FilterRequest_UserPaidStatus filterRequest);
-
+	
 
 	@PostMapping("/visa/viewById")
 	public @ResponseBody UpdateVisaModel viewVisaDetails(FilterRequest filterRequest);

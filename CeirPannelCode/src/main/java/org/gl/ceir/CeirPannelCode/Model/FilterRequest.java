@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class FilterRequest {
 	public String startDate,endDate,createdOn,modifiedOn,roleType,userType,txnId,searchString,grievanceId,tag,remarks,deviceId,nid,childTag,field,interp,tagId,value,displayName,description,address,featureName,subFeatureName,userName,date,fileName,invoiceNumber,suplierName,supplierId,stateInterp,alertId,remark,email,phoneNo,username,tac,userDisplayName,filterUserName,FilterUserType,raisedBy,filteredUserType;
-	private Integer pageNo, pageSize,userId,taxPaidStatus,consignmentStatus,featureId,userTypeId,fileStatus,requestType,sourceType,grievanceStatus,userRoleTypeId,status,asType,serviceDump,fileType,action,operatorTypeId,channel,type,deviceIdType,parentValue,id,port,currency,quantity,stockStatus,feature,period,year;
+	private Integer pageNo, pageSize,userId,taxPaidStatus,consignmentStatus,featureId,userTypeId,fileStatus,requestType,sourceType,grievanceStatus,userRoleTypeId,status,asType,serviceDump,fileType,action,operatorTypeId,channel,type,deviceIdType,parentValue,id,port,currency,quantity,stockStatus,feature,period,year,dataId;
 	private Double dollar,riel;
 	private int roleTypeId;
 	private String state,ruleName;
@@ -435,6 +435,12 @@ public class FilterRequest {
 	public void setYear(Integer year) {
 		this.year = year;
 	}
+	public Integer getDataId() {
+		return dataId;
+	}
+	public void setDataId(Integer dataId) {
+		this.dataId = dataId;
+	}
 	public Double getDollar() {
 		return dollar;
 	}
@@ -610,6 +616,8 @@ public class FilterRequest {
 		builder.append(period);
 		builder.append(", year=");
 		builder.append(year);
+		builder.append(", dataId=");
+		builder.append(dataId);
 		builder.append(", dollar=");
 		builder.append(dollar);
 		builder.append(", riel=");
@@ -623,6 +631,7 @@ public class FilterRequest {
 		builder.append("]");
 		return builder.toString();
 	}
+	
 	
 	
 	

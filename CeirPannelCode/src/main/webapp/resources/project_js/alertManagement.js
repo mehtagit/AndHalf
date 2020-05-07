@@ -214,16 +214,14 @@
 			var filterRequest={
 					"endDate":$('#endDate').val(),
 					"startDate":$('#startDate').val(),
-					"userId":parseInt(userId),
 					"featureId":parseInt(featureId),
 					"userTypeId": parseInt($("body").attr("data-userTypeID")),
 					"userType":$("body").attr("data-roleType"),
 					"pageNo":parseInt(pageNo),
 					"pageSize":parseInt(pageSize),
-					"userTypeId": parseInt($("body").attr("data-userTypeID")),
-					"userType":$("body").attr("data-roleType"),
-					"userId" : $("body").attr("data-userID"),
-					"alertId" : alertId
+					"userId" : parseInt($("body").attr("data-userID")),
+					"alertId" : alertId,
+					"username" : $("body").attr("data-selected-username")
 					
 					
 			}
@@ -247,12 +245,22 @@
 			
 		
 		function alertViewByID(id){
-			$("#editId").val(id);
+			
+			var request = {
+				"dataId" :  parseInt(id),	
+				"featureId":parseInt(featureId),
+				"userId" :  parseInt($("body").attr("data-userID")),
+			   "userType":  $("body").attr("data-roleType"),
+			 "userTypeId" : parseInt($("body").attr("data-userTypeID")),
+			   "username" : $("body").attr("data-selected-username"),
+			}
+			
+			console.log("request--------->" +JSON.stringify(request));
 			
 			$.ajax({
-					url: './alertViewByID/'+id,
+					url: './alertViewByID',
 					type: 'POST',
-				//	data : JSON.stringify(request),
+					data : JSON.stringify(request),
 					dataType : 'json',
 					contentType : 'application/json; charset=utf-8',
 					success: function (data, textStatus, jqXHR) {
@@ -287,9 +295,15 @@
 		function updatedAlert(){
 		
 			var request ={ 
-					 "id" : parseInt($("#editId").val()),
+					 "dataId" : parseInt($("#editId").val()),
 					 "alertId":  $('#editAlertId').val(),
 					 "description": $('#editdescription').val(),
+					 "featureId": parseInt(featureId),
+					 "userId" : parseInt($("body").attr("data-userID")),
+					 "userType":$("body").attr("data-roleType"),
+					 "userTypeId": parseInt($("body").attr("data-userTypeID")),
+					 "username" : $("body").attr("data-selected-username"),
+					 
 			}
 			
 			console.log("request--->" +JSON.stringify(request))

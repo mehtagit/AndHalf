@@ -191,10 +191,10 @@ public interface UserProfileFeignImpl {
 		@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
 		@RequestParam(value = "file", defaultValue = "0") Integer file);	
 
-		//***************************************************View Alert Management Feign********************************
+		//***************************************************View Alert by Id Management Feign********************************
 		
-		@RequestMapping(value="/alertDb/viewById/{id}" ,method=RequestMethod.POST) 
-		public @ResponseBody GenricResponse viewAlertFeign(@PathVariable("id") Integer id);
+		@RequestMapping(value="/alertDb/viewById" ,method=RequestMethod.POST) 
+		public @ResponseBody GenricResponse viewAlertFeign(@RequestBody FilterRequest filterRequest);
 
 		
 		//***************************************************Update Alert Management  Feign******************************
@@ -223,6 +223,13 @@ public interface UserProfileFeignImpl {
 		@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
 		@RequestParam(value = "file", defaultValue = "0") Integer file);
 		
+/*-------------------------- view Visa Update Feign ------------------------------*/
+		
+		@RequestMapping(value="/visa/view" ,method=RequestMethod.POST) 
+		public Object viewVisaRequest(@RequestBody FilterRequest filterRequest,
+		@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
+		@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+		@RequestParam(value = "file", defaultValue = "0") Integer file);
 		
 	/*----------------------- Add System user feign ---------------------------*/
 		

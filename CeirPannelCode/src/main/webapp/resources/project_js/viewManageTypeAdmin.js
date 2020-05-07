@@ -47,7 +47,7 @@ function typeApprovedDataTable(lang){
 function Datatable(Url,dataUrl){
 	var txn= (txnIdValue == 'null' && transactionIDValue == undefined)? $('#transactionID').val() : transactionIDValue;
 
-			
+	var FilterUserType = $('#userType').val()=='-1' || $('#userType').val()==undefined ? null : $("#userType option:selected").text();		
 	if (userType == "CEIRAdmin") {
 		var userId = 0;
 		var filterRequest = {
@@ -60,6 +60,7 @@ function Datatable(Url,dataUrl){
 			"userTypeId" : parseInt($("body").attr("data-userTypeID")),
 			"userType" : $("body").attr("data-roleType"),
 			"status" : parseInt($('#Status').val()),
+			"FilterUserType" : FilterUserType
 		}
 	} else {
 		var userId = parseInt($("body").attr("data-userID"))
@@ -181,7 +182,7 @@ function pageRendering(){
 								"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
 
 								"<select id="+dropdown[i].id+" class='select2 initialized'>"+
-								"<option>"+dropdown[i].title+
+								"<option value='-1' >"+dropdown[i].title+
 								"</option>"+
 								"</select>"+
 								"</div>"+

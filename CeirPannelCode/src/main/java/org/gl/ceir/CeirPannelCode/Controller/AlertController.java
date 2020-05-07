@@ -42,10 +42,10 @@ private final Logger log = LoggerFactory.getLogger(getClass());
 	
 	//------------------------------------- view Alert Address ----------------------------------------							
 	
-			@PostMapping("alertViewByID/{id}") 
-			public @ResponseBody GenricResponse viewAlertAddress (@PathVariable("id") Integer id)  {
-				log.info("request send to the View Alert api="+id);
-				GenricResponse response= userProfileFeignImpl.viewAlertFeign(id);
+			@PostMapping("alertViewByID") 
+			public @ResponseBody GenricResponse viewAlertAddress (@RequestBody FilterRequest filterRequest)  {
+				log.info("request send to the View Alert api="+filterRequest);
+				GenricResponse response= userProfileFeignImpl.viewAlertFeign(filterRequest);
 				log.info("response from View api "+response);
 				return response;
 		}

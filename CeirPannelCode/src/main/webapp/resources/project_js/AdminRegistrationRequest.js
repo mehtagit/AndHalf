@@ -419,7 +419,7 @@ function roleStatusChange(Id,sessionUserName, userTypeId){
 		
 	    window.Id = Id,
 	    window.sessionUserName = sessionUserName,
-	    //window.userTypeId = userTypeId, 
+	    window.userTypeId = userTypeId, 
 	    
 	    
 	   usertypeData2(userTypeId);
@@ -479,15 +479,32 @@ function userChangeStatus(entity){
 	}
 }
 	
- function chanegeUserStatus(){
+ function chanegeUserStatus(changeType){
+	 	var action;
+	 	if (changeType == "status" ){
+	 		action = 0; 
+	 	}else{
+	 		action = 1;
+	 	}
+	 	//var fileData = [];
+	 	//var selectedRoleType = $('#usertypes').val();
+	 	//var RoleType=fileData.push(selectedRoleType);
+	 	
+	 	var RoleType = $('#usertypes').val();
 	 	var status= $("#userStatus").val();
-		var Request={
+	 	
+	 	var Request={
+				"action" : action,
 				"status" : parseInt(status),
 				"id": parseInt(window.Id),
 				"username" : window.sessionUserName,
 				"referenceId" : $("#refererenceId").val(),
 				"remark" : $("#changeStatusRemark").val(),
-				"userId" : parseInt(userId)
+				"userId" : parseInt(userId),
+				"roles"  : [parseInt(RoleType)],
+				"usertype": parseInt(window.userTypeId)
+				
+				
 		}
 		console.log("Request-->"+JSON.stringify(Request));
 		

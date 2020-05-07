@@ -219,7 +219,7 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
     </div>
     
     		<div id="statusChangemodal" class="modal">
-               <form action="" onsubmit="return chanegeUserStatus()" method="POST"
+               <form action="" onsubmit="return chanegeUserStatus('status')" method="POST"
 								enctype="multipart/form-data" id="">
 								  <div class="row" id="singleInput">
 								  <h6 class="modal-header "> <spring:message code="registration.changeUserStatus" /></h6>
@@ -320,7 +320,7 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
     
     
     <div id="roleTypeChangemodal" class="modal">
-               <form action="" onsubmit="return chanegeUserStatus()" method="POST"
+               <form action="" onsubmit="return chanegeUserStatus('role')" method="POST"
 								enctype="multipart/form-data" id="">
 								  <div class="row" id="singleInput">
 								  <h6 class="modal-header "> <spring:message code="changeRoleType" /></h6>
@@ -328,21 +328,18 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
                    	   
                                    <div class="row"  style="margin-top: 10px">
                                         	
-                               <div class="input-field col s12 m6 l6" id="rolesDiv">
-									<p
-										style="margin-top: -15px; font-size: 12px;">
-										<spring:message code="table.roleType" /> <span class="star">*</span>
-									</p> 
-									<select multiple  name="roles" id="usertypes"  >
+                              <%--  <div class="input-field col s12 m6 l6" id="rolesDiv">
+									<p><spring:message code="table.roleType" /> <span class="star">*</span></p> 
+									<select multiple  name="roles" id="usertypes" >
 										<option value="" disabled><spring:message code="table.roleType" /></option>
 									</select>
-								</div>
+								</div>  --%>
                                         	
                                         	
-                                        <%-- <div class="col s12 m6 l6" style="margin-bottom: 5px;">
-											<label for="userStatus"><spring:message
+                                        <div class="col s12 m6 l6" style="margin-bottom: 5px;">
+											<label for="usertypes"><spring:message
 													code="changeRoleType" /> <span class="star">*</span></label>
-											<select id="userRoleType" class="browser-default"
+											<select id="usertypes" class="browser-default"
 												onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 												oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 												required>
@@ -350,7 +347,7 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
 														code="select.changeUserRole" />
 												</option>
 											</select>
-										</div> --%> 
+										</div> 
                                        		
                                        
 										

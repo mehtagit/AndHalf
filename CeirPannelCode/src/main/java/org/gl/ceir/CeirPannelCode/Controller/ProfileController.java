@@ -67,12 +67,7 @@ public class ProfileController {
 
 	} 
 	
-	@RequestMapping(value ="/adminChangeRequest",method = RequestMethod.POST)
-	@ResponseBody
-	public  HttpResponse changeUserStatus(@RequestBody UserStatus userStatus,HttpSession session) {
-		return profileService.changeUserStatusService(userStatus,session);
-		
-	}
+	
 	
 	@RequestMapping(value ="/updateSystemUserTypeStatus",method = RequestMethod.POST)
 	@ResponseBody
