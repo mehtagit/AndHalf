@@ -2,7 +2,7 @@ package com.ceir.CeirCode.filtermodel;
 
 import com.ceir.CeirCode.model.AllRequest;
 
-public class AlertDbFilter {
+public class AlertDbFilter extends AllRequest{
 
 	public String  startDate;
 	public String   endDate;
@@ -44,7 +44,10 @@ public class AlertDbFilter {
 		builder.append(alertId);
 		builder.append(", searchString=");
 		builder.append(searchString);
+		builder.append(", toString()=");
+		builder.append(super.toString());
 		builder.append("]");
 		return builder.toString();
 	}
+	
 }

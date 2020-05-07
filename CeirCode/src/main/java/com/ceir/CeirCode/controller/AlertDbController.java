@@ -66,11 +66,8 @@ public class AlertDbController {
 		return alertDbService.getAlertData();
 	}
 
-	@ApiOperation(value="view alert d by id")
-	@PostMapping("/viewById/{id}")
-	public ResponseEntity<?> viewById(@PathVariable("id")long id){
-		return alertDbService.findById(id);
-	}
+
+	
 
 	@ApiOperation(value="update alert db")
 	@PostMapping("/update")

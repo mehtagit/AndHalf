@@ -1,14 +1,13 @@
 package com.ceir.CeirCode.filtermodel;
 
-public class SlaFilter {
+import com.ceir.CeirCode.model.AllRequest;
+
+public class SlaFilter extends AllRequest{
 	public String  startDate;
 	public String  endDate;
 	private String searchString;
-	private Integer userTypeId;
-	private Integer featureId;
-	private Integer usertype;
-	private long userId;
-	private Integer feature;
+	private long feature;
+	private long usertype;
 	
 	public String getStartDate() {
 		return startDate;
@@ -28,37 +27,18 @@ public class SlaFilter {
 	public void setSearchString(String searchString) {
 		this.searchString = searchString;
 	}
-	public Integer getUserTypeId() {
-		return userTypeId;
-	}
-	public void setUserTypeId(Integer userTypeId) {
-		this.userTypeId = userTypeId;
-	}
-	public Integer getFeatureId() {
-		return featureId;
-	}
-	public void setFeatureId(Integer featureId) {
-		this.featureId = featureId;
-	}
-	public Integer getUsertype() {
-		return usertype;
-	}
-	public void setUsertype(Integer usertype) {
-		this.usertype = usertype;
-	}
 	
-	public long getUserId() {
-		return userId;
-	}
-	public void setUserId(long userId) {
-		this.userId = userId;
-	}
-	
-	public Integer getFeature() {
+	public long getFeature() {
 		return feature;
 	}
-	public void setFeature(Integer feature) {
+	public void setFeature(long feature) {
 		this.feature = feature;
+	}
+	public long getUsertype() {
+		return usertype;
+	}
+	public void setUsertype(long usertype) {
+		this.usertype = usertype;
 	}
 	@Override
 	public String toString() {
@@ -69,16 +49,12 @@ public class SlaFilter {
 		builder.append(endDate);
 		builder.append(", searchString=");
 		builder.append(searchString);
-		builder.append(", userTypeId=");
-		builder.append(userTypeId);
-		builder.append(", featureId=");
-		builder.append(featureId);
-		builder.append(", usertype=");
-		builder.append(usertype);
-		builder.append(", userId=");
-		builder.append(userId);
 		builder.append(", feature=");
 		builder.append(feature);
+		builder.append(", usertype=");
+		builder.append(usertype);
+		builder.append(", toString()=");
+		builder.append(super.toString());
 		builder.append("]");
 		return builder.toString();
 	}
