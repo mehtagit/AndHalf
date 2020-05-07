@@ -28,8 +28,8 @@ import com.gl.ceir.config.EmailSender.EmailUtil;
 import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.feign.UserFeignClient;
-import com.gl.ceir.config.genericresponse.GenricResponse_Class;
 import com.gl.ceir.config.genericresponse.DataClass;
+import com.gl.ceir.config.genericresponse.GenricResponse_Class;
 import com.gl.ceir.config.model.AuditTrail;
 import com.gl.ceir.config.model.ConsignmentMgmt;
 import com.gl.ceir.config.model.ConsignmentUpdateRequest;
@@ -37,7 +37,6 @@ import com.gl.ceir.config.model.DashboardUsersFeatureStateMap;
 import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
-import com.gl.ceir.config.model.PendingTacApprovedDb;
 import com.gl.ceir.config.model.RawMail;
 import com.gl.ceir.config.model.ResponseCountAndQuantity;
 import com.gl.ceir.config.model.SearchCriteria;
@@ -144,17 +143,19 @@ public class ConsignmentServiceImpl {
 	@Autowired
 	UserRepository userRepository;
 
-
 	@Autowired
 	UserFeignClient userFeignClient;
+	
+	@Autowired
+	StakeholderfeatureServiceImpl stakeholderfeatureServiceImpl;
 
 	public GenricResponse registerConsignment(ConsignmentMgmt consignmentFileRequest) {
 
 		try {
 			Long importerId = Long.valueOf(consignmentFileRequest.getUserId());
-
+			
 			WebActionDb webActionDb = new WebActionDb();
-			webActionDb.setFeature(WebActionDbFeature.CONSIGNMENT.getName());
+			webActionDb.setFeature(stakeholderfeatureServiceImpl.getFeatureNameById(3L));
 			webActionDb.setSubFeature(WebActionDbSubFeature.CONSIGNMENT_REGISTER.getName());
 			webActionDb.setState(WebActionDbState.INIT.getCode());
 			webActionDb.setTxnId(consignmentFileRequest.getTxnId());
@@ -351,7 +352,7 @@ public class ConsignmentServiceImpl {
 				}
 
 				WebActionDb webActionDb = new WebActionDb();
-				webActionDb.setFeature(WebActionDbFeature.CONSIGNMENT.getName());
+				webActionDb.setFeature(stakeholderfeatureServiceImpl.getFeatureNameById(3L));
 				webActionDb.setSubFeature(WebActionDbSubFeature.UPDATE.getName());
 				webActionDb.setState(WebActionDbState.INIT.getCode());
 				webActionDb.setTxnId(consignmentFileRequest.getTxnId());
@@ -411,8 +412,9 @@ public class ConsignmentServiceImpl {
 			consignmentMgmt.setUserName(consignmentUpdateRequest.getUserName());
 			consignmentMgmt.setUserType(consignmentUpdateRequest.getUserType());
 			consignmentMgmt.setRoleType(consignmentUpdateRequest.getRoleType());
+			
 			WebActionDb webActionDb = new WebActionDb();
-			webActionDb.setFeature(WebActionDbFeature.CONSIGNMENT.getName());
+			webActionDb.setFeature(stakeholderfeatureServiceImpl.getFeatureNameById(3L));
 			webActionDb.setSubFeature(WebActionDbSubFeature.DELETE.getName());
 			webActionDb.setState(WebActionDbState.INIT.getCode());
 			webActionDb.setTxnId(consignmentUpdateRequest.getTxnId());
@@ -494,12 +496,15 @@ public class ConsignmentServiceImpl {
 					}
 
 					else if("CUSTOM".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())) {
+						
 						webActionDb = new WebActionDb();
-						webActionDb.setFeature(WebActionDbFeature.CONSIGNMENT.getName());
-						webActionDb.setSubFeature(WebActionDbSubFeature.APPROVE.getName());
+						webActionDb.setFeature(stakeholderfeatureServiceImpl.getFeatureNameById(3L));
+						webActionDb.setSubFeature(stakeholderfeatureServiceImpl.getFeatureNameById(3L));
 						webActionDb.setState(WebActionDbState.INIT.getCode());
 						webActionDb.setTxnId(consignmentUpdateRequest.getTxnId());
+						
 						consignmentMgmt.setCustomID(consignmentUpdateRequest.getUserId());
+						
 						if(!StateMachine.isConsignmentStatetransitionAllowed("CUSTOM", consignmentMgmt.getConsignmentStatus())) {
 							logger.info("state transition is not allowed." + consignmentUpdateRequest.getTxnId());
 							return new GenricResponse(3, "state transition is not allowed.", consignmentUpdateRequest.getTxnId());

@@ -135,6 +135,9 @@ public class StockServiceImpl {
 
 	@Autowired
 	StockTransaction stockTransaction;
+	
+	@Autowired
+	StakeholderfeatureServiceImpl stakeholderfeatureServiceImpl;
 
 	public GenricResponse uploadStock(StockMgmt stockMgmt) {
 		boolean isStockAssignRequest = Boolean.FALSE;
@@ -226,7 +229,7 @@ public class StockServiceImpl {
 			}
 
 			WebActionDb webActionDb = new WebActionDb();
-			webActionDb.setFeature(WebActionDbFeature.STOCK.getName());
+			webActionDb.setFeature(stakeholderfeatureServiceImpl.getFeatureNameById(4L));
 			webActionDb.setSubFeature(WebActionDbSubFeature.UPLOAD.getName());
 			webActionDb.setState(WebActionDbState.INIT.getCode());
 			webActionDb.setTxnId(stockMgmt.getTxnId());
@@ -357,8 +360,7 @@ public class StockServiceImpl {
 
 	private GenericSpecificationBuilder<StockMgmt> buildSpecification(FilterRequest filterRequest, List<StateMgmtDb> statusList){
 		GenericSpecificationBuilder<StockMgmt> specificationBuilder = new GenericSpecificationBuilder<>(propertiesReader.dialect);
-		Joiner<StockMgmt> joiner = new Joiner<>();
-
+		
 		if("Importer".equalsIgnoreCase(filterRequest.getUserType()) || 
 				"Distributor".equalsIgnoreCase(filterRequest.getUserType()) || 
 				"Retailer".equalsIgnoreCase(filterRequest.getUserType()) || 
@@ -383,6 +385,9 @@ public class StockServiceImpl {
 
 		if(Objects.nonNull(filterRequest.getUserType()) && "Custom".equalsIgnoreCase(filterRequest.getUserType()))
 			specificationBuilder.with(new SearchCriteria("userType", filterRequest.getUserType(), SearchOperation.EQUALITY, Datatype.STRING));
+
+		if(Objects.nonNull(filterRequest.getFilteredUserType()) && !filterRequest.getFilteredUserType().isEmpty())
+			specificationBuilder.with(new SearchCriteria("userType", filterRequest.getFilteredUserType(), SearchOperation.EQUALITY, Datatype.STRING));
 
 		// Status handling.
 		if("CEIRADMIN".equalsIgnoreCase(filterRequest.getUserType())) {
@@ -416,12 +421,7 @@ public class StockServiceImpl {
 			}
 		}
 
-		/*
-		 * if(Objects.nonNull(filterRequest.getFilteredUserType()))
-		 * specificationBuilder.addSpecification(joiner .joinToUsersAndUsertype(new
-		 * SearchCriteria("usertype", filterRequest.getFilteredUserType(),
-		 * SearchOperation.EQUALITY, Datatype.STRING)));
-		 */
+	
 		if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
 			specificationBuilder.orSearch(new SearchCriteria("txnId", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 		}
@@ -491,7 +491,7 @@ public class StockServiceImpl {
 				txnRecord.setDeleteFlag(0);
 
 				WebActionDb webActionDb = new WebActionDb();
-				webActionDb.setFeature(WebActionDbFeature.STOCK.getName());
+				webActionDb.setFeature(stakeholderfeatureServiceImpl.getFeatureNameById(4L));
 				webActionDb.setSubFeature(WebActionDbSubFeature.DELETE.getName());
 				webActionDb.setState(WebActionDbState.INIT.getCode());
 				webActionDb.setTxnId(deleteObj.getTxnId());
@@ -538,7 +538,7 @@ public class StockServiceImpl {
 			}
 
 			WebActionDb webActionDb = new WebActionDb();
-			webActionDb.setFeature(WebActionDbFeature.STOCK.getName());
+			webActionDb.setFeature(stakeholderfeatureServiceImpl.getFeatureNameById(4L));
 			webActionDb.setSubFeature(WebActionDbSubFeature.UPDATE.getName());
 			webActionDb.setState(WebActionDbState.INIT.getCode());
 			webActionDb.setTxnId(distributerManagement.getTxnId());
@@ -644,7 +644,7 @@ public class StockServiceImpl {
 			writer = Files.newBufferedWriter(Paths.get(filePath+fileName));
 			mappingStrategy.setType(StockFileModel.class);
 
-			builder = new StatefulBeanToCsvBuilder<StockFileModel>(writer);
+			builder = new StatefulBeanToCsvBuilder<>(writer);
 			csvWriter = builder.withMappingStrategy(mappingStrategy)
 					.withSeparator(',')
 					.withQuotechar(CSVWriter.NO_QUOTE_CHARACTER).build();
@@ -663,6 +663,7 @@ public class StockServiceImpl {
 					sfm.setFileName( stockMgmt.getFileName());
 					sfm.setSupplierName(stockMgmt.getSuplierName());
 					sfm.setQuantity(stockMgmt.getQuantity());
+					sfm.setDeviceQuantity(stockMgmt.getDeviceQuantity());
 
 					logger.debug(sfm);
 

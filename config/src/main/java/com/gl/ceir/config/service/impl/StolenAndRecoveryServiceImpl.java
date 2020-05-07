@@ -142,6 +142,9 @@ public class StolenAndRecoveryServiceImpl {
 
 	@Autowired
 	AuditTrailRepository auditTrailRepository;
+	
+	@Autowired
+	StakeholderfeatureServiceImpl stakeholderfeatureServiceImpl;
 
 	public GenricResponse uploadDetails(StolenandRecoveryMgmt stolenandRecoveryMgmt) {
 
@@ -473,6 +476,8 @@ public class StolenAndRecoveryServiceImpl {
 					}
 
 					srfm.setFileName( stolenandRecoveryMgmt.getFileName());
+					srfm.setDeviceQuantity(stolenandRecoveryMgmt.getDeviceQuantity());
+					
 					logger.debug(srfm);
 					fileRecords.add(srfm);
 				}
@@ -948,16 +953,20 @@ public class StolenAndRecoveryServiceImpl {
 	private String decideFeature(int requestType) {
 		switch (requestType) {
 		case 0:
-			return "Stolen";
+			return decideFeature(5L);
 		case 1:
-			return "Recovery";
+			return decideFeature(5L);
 		case 2:
-			return "Block";
+			return decideFeature(7L);
 		case 3:
-			return "Unblock";
+			return decideFeature(7L);
 		default:
 			return null;
 		}
+	}
+	
+	private String decideFeature(Long id) {
+		return stakeholderfeatureServiceImpl.getFeatureNameById(id);
 	}
 
 	private int countImeiForIndividual(Long imei1, Long imei2, Long imei3, Long imei4) {
