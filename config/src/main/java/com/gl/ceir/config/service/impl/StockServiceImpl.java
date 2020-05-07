@@ -14,6 +14,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import javax.annotation.PostConstruct;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +48,7 @@ import com.gl.ceir.config.model.UserProfile;
 import com.gl.ceir.config.model.Userrole;
 import com.gl.ceir.config.model.Usertype;
 import com.gl.ceir.config.model.WebActionDb;
+import com.gl.ceir.config.model.constants.Alerts;
 import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.Features;
 import com.gl.ceir.config.model.constants.GenericMessageTags;
@@ -82,6 +85,9 @@ public class StockServiceImpl {
 
 	private static final Logger logger = LogManager.getLogger(StockServiceImpl.class);
 
+	// This is set with @postconstruct
+	private String featureName;
+	
 	@Autowired
 	StokeDetailsRepository stokeDetailsRepository;
 
@@ -138,6 +144,9 @@ public class StockServiceImpl {
 	
 	@Autowired
 	StakeholderfeatureServiceImpl stakeholderfeatureServiceImpl;
+	
+	@Autowired
+	AlertServiceImpl alertServiceImpl;
 
 	public GenricResponse uploadStock(StockMgmt stockMgmt) {
 		boolean isStockAssignRequest = Boolean.FALSE;
@@ -229,7 +238,8 @@ public class StockServiceImpl {
 			}
 
 			WebActionDb webActionDb = new WebActionDb();
-			webActionDb.setFeature(stakeholderfeatureServiceImpl.getFeatureNameById(4L));
+			webActionDb.setFeature(WebActionDbFeature.STOCK.getName());
+			//webActionDb.setFeature(stakeholderfeatureServiceImpl.getFeatureNameById(4L));
 			webActionDb.setSubFeature(WebActionDbSubFeature.UPLOAD.getName());
 			webActionDb.setState(WebActionDbState.INIT.getCode());
 			webActionDb.setTxnId(stockMgmt.getTxnId());
@@ -262,11 +272,14 @@ public class StockServiceImpl {
 					return new GenricResponse(1, "Stock registeration have been failed.", stockMgmt.getTxnId());
 				}
 			}
-
-
-
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
+			
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", featureName);
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.REGISTER);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, stockMgmt.getUserId().intValue(), bodyPlaceHolderMap);
+			
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
@@ -491,7 +504,8 @@ public class StockServiceImpl {
 				txnRecord.setDeleteFlag(0);
 
 				WebActionDb webActionDb = new WebActionDb();
-				webActionDb.setFeature(stakeholderfeatureServiceImpl.getFeatureNameById(4L));
+				webActionDb.setFeature(WebActionDbFeature.STOCK.getName());
+				// webActionDb.setFeature(stakeholderfeatureServiceImpl.getFeatureNameById(4L));
 				webActionDb.setSubFeature(WebActionDbSubFeature.DELETE.getName());
 				webActionDb.setState(WebActionDbState.INIT.getCode());
 				webActionDb.setTxnId(deleteObj.getTxnId());
@@ -538,7 +552,8 @@ public class StockServiceImpl {
 			}
 
 			WebActionDb webActionDb = new WebActionDb();
-			webActionDb.setFeature(stakeholderfeatureServiceImpl.getFeatureNameById(4L));
+			webActionDb.setFeature(WebActionDbFeature.STOCK.getName());
+			// webActionDb.setFeature(stakeholderfeatureServiceImpl.getFeatureNameById(4L));
 			webActionDb.setSubFeature(WebActionDbSubFeature.UPDATE.getName());
 			webActionDb.setState(WebActionDbState.INIT.getCode());
 			webActionDb.setTxnId(distributerManagement.getTxnId());
@@ -903,5 +918,10 @@ public class StockServiceImpl {
 			logger.error("Could not find the user information");
 		}
 
+	}
+	
+	@PostConstruct
+	public void setFeatureName() {
+		featureName = stakeholderfeatureServiceImpl.getFeatureNameById(4L);
 	}
 }
