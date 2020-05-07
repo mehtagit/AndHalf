@@ -700,9 +700,18 @@ public class UserService {
 					user.setCurrentStatus(UserStatus.APPROVED.getCode());     					
 				}
 				else {
-					user.setCurrentStatus(UserStatus.PENDING_ADMIN_APPROVAL.getCode());     
+					user.setCurrentStatus(UserStatus.PENDING_ADMIN_APPROVAL.getCode());  
+					List<Long> usertypes = new ArrayList<Long>();
+					usertypes.add(4l);
+					usertypes.add(5l);
+					usertypes.add(6l);
+					int authorityStatus=0;
+					if(!usertypes.contains(user.getUsertype().getId()))
+					{
+						authorityStatus=1;
+					}
 					boolean notificationStatus2=emailUtils.saveNotification("REG_WAIT_USER_FOR_APPROV_STATUS", user.getUserProfile(),
-							0, "Registration", "user phone and email details validated", user.getUsername(),"Registration Request Notification Alert "+output.getUserProfile().getFirstName(),"",ChannelType.EMAIL,"users",1);
+							0, "Registration", "user phone and email details validated", user.getUsername(),"Registration Request Notification Alert "+output.getUserProfile().getFirstName(),"",ChannelType.EMAIL,"users",authorityStatus);
 					log.info("notification save:  "+notificationStatus2);
 
 				}
@@ -921,7 +930,17 @@ public class UserService {
 			if(userPasswordOtput!=null) {
 				log.info("user passowrd sucessfully save");
 			}
-			boolean notificationStatus=emailUtils.saveNotification("PRO_CHANGE_PASSWORD_BY_USER", output.getUserProfile(), 0, "Profile","change Password", output.getUsername(), "Password Change Notification for "+output.getUsername(), "",ChannelType.EMAIL,"users",1);	
+			List<Long> usertypes = new ArrayList<Long>();
+			usertypes.add(4l);
+			usertypes.add(5l);
+			usertypes.add(6l);
+			int authorityStatus=0;
+			if(!usertypes.contains(user.getUsertype().getId()))
+			{
+				authorityStatus=1;
+			}
+			
+			boolean notificationStatus=emailUtils.saveNotification("PRO_CHANGE_PASSWORD_BY_USER", output.getUserProfile(), 0, "Profile","change Password", output.getUsername(), "Password Change Notification for "+output.getUsername(), "",ChannelType.EMAIL,"users",authorityStatus);	
 			log.info("notification save: "+notificationStatus);
 			HttpResponse response=new HttpResponse(ProfileTags.PRO_CPASS_SUCESS.getMessage(),200,ProfileTags.PRO_CPASS_SUCESS.getTag());
 			log.info("exit from change password");
@@ -947,7 +966,17 @@ public class UserService {
 			if(userPasswordOtput!=null) {
 				log.info("user passowrd sucessfully save");
 			}
-			boolean notificationStatus=emailUtils.saveNotification("FORGOT_PASSWORD_EMAIL", output.getUserProfile(), 0, "Profile","forgot Password", output.getUsername(), "Password Update Notification for "+output.getUsername(), "",ChannelType.EMAIL,"users",1);	
+			List<Long> usertypes = new ArrayList<Long>();
+			usertypes.add(4l);
+			usertypes.add(5l);
+			usertypes.add(6l);
+			int authorityStatus=0;
+			if(!usertypes.contains(output.getUsertype().getId()))
+			{
+				authorityStatus=1;
+			}
+
+			boolean notificationStatus=emailUtils.saveNotification("FORGOT_PASSWORD_EMAIL", output.getUserProfile(), 0, "Profile","forgot Password", output.getUsername(), "Password Update Notification for "+output.getUsername(), "",ChannelType.EMAIL,"users",authorityStatus);	
 			log.info("notification save: "+notificationStatus);
 			HttpResponse response=new HttpResponse(ProfileTags.NEW_PASS_SUC.getMessage(),200,ProfileTags.NEW_PASS_SUC.getTag());
 			log.info("exit from update new password");
@@ -967,7 +996,6 @@ public class UserService {
 		log.info("get user  data by userid below");  
 		User user=userRepo.findById(userStatus.getUserId());
 		if(user!=null) {
-
 			Integer userStatus2 = UserStatus.getUserStatusByDesc(userStatus.getStatus()).getCode();
 			user.setPreviousStatus(user.getCurrentStatus()); 
 			user.setCurrentStatus(userStatus2); 
@@ -1002,9 +1030,18 @@ public class UserService {
 					log.info("current user status id "+ output.getCurrentStatus() );
 					subFeature="";
 				}
-				saveUserTrail(user, "Profile",subFeature,0);			
+				saveUserTrail(user, "Profile",subFeature,0);	
+				List<Long> usertypes = new ArrayList<Long>();
+				usertypes.add(4l);
+				usertypes.add(5l);
+				usertypes.add(6l);
+				int authorityStatus=0;
+				if(!usertypes.contains(output.getUsertype().getId()))
+				{
+					authorityStatus=1;
+				}
 				boolean notificationStatus=emailUtils.saveNotification(tag, output.getUserProfile(),0, "Profile","update user status", output.getUsername(), ""
-						+ subject, "",ChannelType.EMAIL,"users",1);
+						+ subject, "",ChannelType.EMAIL,"users",authorityStatus);
 				log.info("notification save: "+notificationStatus);
 				HttpResponse response=new HttpResponse(UpdateUserStatusTags.USER_STATUS_CHANGED.getMessage(),
 						200,UpdateUserStatusTags.USER_STATUS_CHANGED.getTag());
@@ -1546,7 +1583,18 @@ public class UserService {
 					if(userData!=null) {
 						saveUserTrail(userData,"Registration Request",feature,userStatus.getFeatureId());
 					}
-					boolean emailStatus=emailUtils.saveNotification(tag, output.getUserProfile(), userStatus.getFeatureId(), "Registration Request",status, output.getUsername(), subject,"",ChannelType.EMAIL,"users",1);
+					List<Long> usertypes = new ArrayList<Long>();
+					usertypes.add(4l);
+					usertypes.add(5l);
+					usertypes.add(6l);
+					int authorityStatus=0;
+					if(!usertypes.contains(user.getUsertype().getId()))
+					{
+						authorityStatus=1;
+					}
+					log.info("usertype: "+user.getUsertype().getId());
+                    log.info("authorityStatus: "+authorityStatus);
+					boolean emailStatus=emailUtils.saveNotification(tag, output.getUserProfile(), userStatus.getFeatureId(), "Registration Request",status, output.getUsername(), subject,"",ChannelType.EMAIL,"users",authorityStatus);
 					log.info("emailStatus : "+emailStatus);
 					HttpResponse response=new HttpResponse();
 					response.setStatusCode(200);

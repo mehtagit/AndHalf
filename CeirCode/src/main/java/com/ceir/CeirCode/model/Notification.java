@@ -53,18 +53,18 @@ public class Notification  implements Serializable{
 	@Column(length = 50)
 	private String receiverUserType;
 	
-	private int authorityStatus;
+	private Integer authorityStatus;
 	
 	
 
 
       
-	public int getAuthorityStatus() {
+	public Integer getAuthorityStatus() {
 		return authorityStatus;
 	}
 
 
-	public void setAuthorityStatus(int authorityStatus) {
+	public void setAuthorityStatus(Integer authorityStatus) {
 		this.authorityStatus = authorityStatus;
 	}
 
