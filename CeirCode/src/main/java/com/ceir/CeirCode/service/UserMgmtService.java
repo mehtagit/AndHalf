@@ -88,7 +88,7 @@ public class UserMgmtService {
 		if(Objects.nonNull(filterRequest.getStartDate()) && filterRequest.getStartDate()!="")
 			uPSB.with(new SearchCriteria("createdOn",filterRequest.getStartDate(), SearchOperation.GREATER_THAN, Datatype.DATE));
 		if(Objects.nonNull(filterRequest.getEndDate()) && filterRequest.getEndDate()!="")
-			uPSB.with(new SearchCriteria("createdOn",filterRequest.getStartDate(), SearchOperation.LESS_THAN, Datatype.DATE));
+			uPSB.with(new SearchCriteria("createdOn",filterRequest.getEndDate(), SearchOperation.LESS_THAN, Datatype.DATE));
 		if(Objects.nonNull(filterRequest.getUsertypeId()) && filterRequest.getUsertypeId()!=-1)
 			uPSB.with(new SearchCriteria("usertype",filterRequest.getUsertypeId(), SearchOperation.EQUALITY, Datatype.INT));
 		if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
