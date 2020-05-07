@@ -608,7 +608,7 @@ public class RegularizedDeviceServiceImpl {
 			if("CEIRADMIN".equalsIgnoreCase(ceirActionRequest.getUserType())){
 				regularizeDeviceDb=regularizedDeviceDbRepository.getByFirstImei(ceirActionRequest.getImei1());
 				logger.debug("Accept/Reject regularized Devices : " + regularizeDeviceDb);
-	            if(Objects.nonNull(regularizeDeviceDb))
+	            if(Objects.isNull(regularizeDeviceDb))
 	            {
 	            	return new GenricResponse(1, "First imei is incorrect", "");            	
 	            }
@@ -663,7 +663,7 @@ public class RegularizedDeviceServiceImpl {
 			else if("CEIRSYSTEM".equalsIgnoreCase(ceirActionRequest.getUserType())){
 				regularizeDeviceDb=regularizedDeviceDbRepository.getByTxnId(ceirActionRequest.getTxnId());
 				logger.debug("Accept/Reject regularized Devices : " + regularizeDeviceDb);
-	            if(Objects.nonNull(regularizeDeviceDb))
+	            if(Objects.isNull(regularizeDeviceDb))
 	            {
 	            	return new GenricResponse(1, "transaction id is incorrect", "");            	
 	            }
