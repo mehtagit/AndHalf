@@ -24,9 +24,9 @@ public class MailConfig {
         mailSender.setPort(Integer.valueOf( systemConfigurationDbRepository.getByTag("Email_Port").getValue() ));
           
         mailSender.setUsername(systemConfigurationDbRepository.getByTag("Email_Username").getValue());
-     //   mailSender.setPassword(systemConfigurationDbRepository.getByTag("Email_Password").getValue());
+ //       mailSender.setPassword(systemConfigurationDbRepository.getByTag("Email_Password").getValue());
        mailSender.setPassword("");  
-        //Properties props = mailSender.getJavaMailProperties();
+//        Properties props = mailSender.getJavaMailProperties();
 //        props.put("mail.transport.protocol", "smtp");
 //        props.put("mail.smtp.auth", "false");
 //        props.put("mail.smtp.starttls.enable", "true");

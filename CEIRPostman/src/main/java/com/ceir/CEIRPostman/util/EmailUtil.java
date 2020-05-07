@@ -53,20 +53,27 @@ public class EmailUtil {
 	@Autowired
 	RunningAlertRepoService alertDbRepo;
 
-
-
 	public void setBatchSize(int batch,int noOfElements) {
 		if(noOfElements<batch) {
 			logger.info("if total mails less than batch size");
 			logger.info("message array size: "+noOfElements);
 			messages = new SimpleMailMessage[noOfElements];
 			batchSize=noOfElements;
+			log.info("batch size: "+batchSize);
+			log.info("msg array size: "+messages);
 		}
 		else {
 			logger.info("if total mails greater than or equals to batch size");
 			messages = new SimpleMailMessage[batch];
 			batchSize=batch;
+			log.info("batch size: "+batchSize);
 		}
+	}
+	
+	public void increaseBatchSize() {
+		batchSize=batchSize+1;
+		log.info("batch size now: "+batchSize);
+		messages = new SimpleMailMessage[batchSize];
 	}
 	public boolean emailValidator(String email) {
 		boolean isValid=false;
@@ -90,7 +97,6 @@ public class EmailUtil {
 		simpleMailMessage.setTo(toAddress);
 		simpleMailMessage.setSubject(subject);
 		simpleMailMessage.setText(msgBody);
-		
 		try {
 			logger.info("adding emails into the array");
 			 messages[messageIndex++] = simpleMailMessage;
@@ -109,22 +115,14 @@ public class EmailUtil {
 			    	catch(MailSendException  send ) {
 			    		log.info("inside email send exception");
 				        logger.info("if emails fail to send: "+batchSize);
+				        log.info(send.toString());
 				        int difference=totalData-dataRead;
 				        setBatchSize(batchSize,difference);
-			//	        logger.info("now batchSize is "+batchSize);
 				        messageIndex = 0;
 						RunningAlertDb alertDb=new RunningAlertDb("alert009","error occurs while sending email",0);
 						alertDbRepo.saveAlertDb(alertDb);
 						logger.info("error occur while send email");
-						logger.info(send.getMessage());
-						logger.info(send.toString());
-						logger.info(send.getFailedMessages().toString());
-						Map<Object, Exception> data=send.getFailedMessages();
-						log.info("data: "+data.toString());
-						log.info("To email:  "+data.containsKey("SimpleMailMessageSimpleMailMessage"));
-						
-						//SimpleMailMessage mes=(SimpleMailMessage) data;
-	
+			
 						return Boolean.FALSE;
 			    	}
 			    	catch(MailException  send ) {
@@ -153,7 +151,8 @@ public class EmailUtil {
 			return Boolean.TRUE;
 		}catch (Exception e) {
 			logger.info("error occur");
-			logger.error(e.getMessage(), e);
+			logger.error(e.getMessage());
+			logger.info(e.toString());
 			return Boolean.FALSE;
 		}
 	}
