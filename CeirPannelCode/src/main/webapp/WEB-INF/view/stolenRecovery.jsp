@@ -1229,9 +1229,11 @@ name="stolenBlockPeriod">
 <spring:message code="operator.later" /></label>
 
 </div>
-<div class="col s6 m6 responsiveDiv" style="display: none;" id="calender">
+<div class="input-field col s6 m6 responsiveDiv" style="display: none;" id="calender">
 <div id="startdatepicker" class="input-group date">
-<p> <spring:message code="operator.blockingTypePeriod" /> </p>
+<%-- <p> <spring:message code="operator.blockingTypePeriod" /> </p> --%>
+	<label for="stolenDatePeriodedit"><spring:message code="operator.blockingTypePeriod" /> <span class="star"> </span> 
+																</label>
 <input type="text" id="stolenDatePeriodedit" style="margin-top: -9px" /> <span
 class="input-group-addon" style="color: #ff4081"><i class="fa fa-calendar"
 aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
@@ -1426,10 +1428,12 @@ title="" maxlength="16" value="1500" disabled>
 													name="editbulkblocktypeName"> <spring:message
 														code="operator.later" />
 												</label>
-												<div class="col s6 m2 responsiveDiv"
+												<div class="input-field col s6 m2 responsiveDiv"
 													style="display: none; width: 30%; margin-right: 30%; float: right; margin-top: -15px"
 													id="bulkeditcalender">
 													<div id="Stolenstartdatepicker" class="input-group date">
+														<label for="editstolenBulkDatePeriod"><spring:message code="operator.blockingTypePeriod" /> <span class="star"> </span> 
+																</label>
 														<input type="text" id="editstolenBulkDatePeriod"
 															style="margin-top: -9px" /> <span
 															class="input-group-addon" style="color: #ff4081"><i
