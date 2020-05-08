@@ -1,5 +1,7 @@
 package com.gl.ceir.config.model;
+
 import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,16 +9,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
+
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.envers.Audited;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-
 @Entity
-@Audited
 public class VisaUpdateDb {
- 
+
 	private static long serialVersionUID = 1L;
 
 	@Id
@@ -56,27 +58,13 @@ public class VisaUpdateDb {
 
 	private long userId;
 	
-	private String txnId;
 	
-	private String remark;
-	 
-	private String nid;
-	
-	
-	public String getRemark() {
-		return remark;
-	}
-
-	public void setRemark(String remark) {
-		this.remark = remark;
-	}
-
 	public VisaUpdateDb() {
 		super();
 	}
 
 	public VisaUpdateDb(@NotNull Integer visaType, String visaNumber, @NotNull String visaFileName,
-			String entryDateInCountry, String visaExpiryDate, Integer status,long userId,String txnId,String nid) {
+			String entryDateInCountry, String visaExpiryDate, Integer status,long userId) {
 		super();
 		this.visaType = visaType;
 		this.visaNumber = visaNumber;
@@ -85,8 +73,6 @@ public class VisaUpdateDb {
 		this.visaExpiryDate = visaExpiryDate;
 		this.status = status;
 		this.userId=userId;
-		this.txnId=txnId;
-		this.nid=nid;
 	}
 
 	public static long getSerialversionuid() {
@@ -194,23 +180,6 @@ public class VisaUpdateDb {
 		this.stateInterp = stateInterp;
 	}
 
-	public String getTxnId() {
-		return txnId;
-	}
-
-	public void setTxnId(String txnId) {
-		this.txnId = txnId;
-	}
-
-
-	public String getNid() {
-		return nid;
-	}
-
-	public void setNid(String nid) {
-		this.nid = nid;
-	}
-
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -238,15 +207,8 @@ public class VisaUpdateDb {
 		builder.append(stateInterp);
 		builder.append(", userId=");
 		builder.append(userId);
-		builder.append(", txnId=");
-		builder.append(txnId);
-		builder.append(", remark=");
-		builder.append(remark);
-		builder.append(", nid=");
-		builder.append(nid);
 		builder.append("]");
 		return builder.toString();
 	}
-	
 	
 }

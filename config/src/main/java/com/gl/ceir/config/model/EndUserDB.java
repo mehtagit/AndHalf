@@ -20,7 +20,6 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.NotAudited;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -116,16 +115,6 @@ public class EndUserDB implements Serializable {
 	
 	private String entryDateInCountry;
 
-	@Transient
-	private String rejectedRemark;
-	
-	
-	public String getRejectedRemark() {
-		return rejectedRemark;
-	}
-	public void setRejectedRemark(String rejectedRemark) {
-		this.rejectedRemark = rejectedRemark;
-	}
 	public Long getId() {
 		return id;
 	}
@@ -334,7 +323,6 @@ public class EndUserDB implements Serializable {
 	public void setEntryDateInCountry(String entryDateInCountry) {
 		this.entryDateInCountry = entryDateInCountry;
 	}
-	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -398,8 +386,6 @@ public class EndUserDB implements Serializable {
 		builder.append(origin);
 		builder.append(", entryDateInCountry=");
 		builder.append(entryDateInCountry);
-		builder.append(", rejectedRemark=");
-		builder.append(rejectedRemark);
 		builder.append("]");
 		return builder.toString();
 	}

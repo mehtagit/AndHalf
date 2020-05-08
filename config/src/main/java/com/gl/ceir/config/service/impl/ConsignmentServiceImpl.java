@@ -816,8 +816,6 @@ public class ConsignmentServiceImpl {
 			 * consignmentMgmt.setFeatureId(consignmentUpdateRequest.getFeatureId());
 			 * consignmentMgmt.setRoleType(consignmentUpdateRequest.getRoleType());
 			 */
-			consignmentMgmt.setFeatureId(consignmentUpdateRequest.getFeatureId());
-			 consignmentMgmt.setRoleType(consignmentUpdateRequest.getRoleType());
 			if(consignmentTransaction.executeUpdateStatusConsignment(consignmentMgmt,webActionDb)) {
 				logger.info("Consignment status have Update SuccessFully." + consignmentUpdateRequest.getTxnId());
 				return new GenricResponse(0, "Consignment status have Update SuccessFully.", consignmentUpdateRequest.getTxnId());
@@ -865,17 +863,14 @@ public class ConsignmentServiceImpl {
 			if( !consignmentMgmts.isEmpty() ) {
 				fileRecords = new ArrayList<>();
 				for( ConsignmentMgmt consignmentMgmt : consignmentMgmts ) {
-					cfm = new ConsignmentFileModel(
+					cfm = new ConsignmentFileModel(consignmentMgmt.getStateInterp(), 
+							consignmentMgmt.getTxnId(), 
+							consignmentMgmt.getSupplierName(), consignmentMgmt.getTaxInterp(), consignmentMgmt.getFileName(), 
 							consignmentMgmt.getCreatedOn().format(dtf),
 							consignmentMgmt.getModifiedOn().format(dtf),
-							consignmentMgmt.getTxnId(),
-							consignmentMgmt.getSupplierName(),
-							consignmentMgmt.getStateInterp(), 
-							consignmentMgmt.getTaxInterp(), 
-							consignmentMgmt.getQuantity(),
-							consignmentMgmt.getDeviceQuantity(),
-							consignmentMgmt.getFileName());
-							fileRecords.add(cfm);
+							consignmentMgmt.getQuantity(),consignmentMgmt.getDeviceQuantity());
+
+					fileRecords.add(cfm);
 				}
 
 				csvWriter.write(fileRecords);

@@ -36,8 +36,6 @@ public class VisaDb implements Serializable {
 	private LocalDateTime createdOn;
 
 	@UpdateTimestamp
-	@Column(nullable = false, updatable = false)
-	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private LocalDateTime modifiedOn;
 
 	@NotNull

@@ -1,7 +1,5 @@
 package com.gl.ceir.config.transaction;
 
-import java.util.List;
-
 import javax.transaction.Transactional;
 
 import org.apache.logging.log4j.LogManager;
@@ -12,7 +10,6 @@ import org.springframework.stereotype.Component;
 import com.gl.ceir.config.model.AuditTrail;
 import com.gl.ceir.config.model.EndUserDB;
 import com.gl.ceir.config.model.VisaUpdateDb;
-import com.gl.ceir.config.model.WebActionDb;
 import com.gl.ceir.config.model.constants.Features;
 import com.gl.ceir.config.model.constants.SubFeatures;
 import com.gl.ceir.config.repository.AuditTrailRepository;
@@ -54,10 +51,8 @@ public class EndUserTransaction {
 		return status;
 	}
 	
-	public boolean addUpdateVisaRequest(VisaUpdateDb visaUpdateDb,EndUserDB endUserdb,WebActionDb webActionDb) {
+	public boolean addUpdateVisaRequest(VisaUpdateDb visaUpdateDb,EndUserDB endUserdb) {
 		boolean status = Boolean.FALSE;
-		webActionDbRepository.save(webActionDb);
-		logger.info(" addition in web_action_db. " + webActionDb );
 
 		updateVisaRepository.save(visaUpdateDb);
 		logger.info("update Visa request of user have been updated succesfully.");

@@ -37,10 +37,6 @@ public class VipList implements Serializable {
 	@JsonIgnore
 	private String approvedBy;
 	
-	private String txnId;
-	private String remark;
-
-	
 	public VipList() {}
 	
 	public VipList(String imei, Long msisdn) {
@@ -90,23 +86,5 @@ public class VipList implements Serializable {
 	public void setApprovedBy(String approvedBy) {
 		this.approvedBy = approvedBy;
 	}
-
-	public String getTxnId() {
-		return txnId;
-	}
-
-	public void setTxnId(String txnId) {
-		this.txnId = txnId;
-	}
-
-	public String getRemark() {
-		return remark;
-	}
-
-	public void setRemark(String remark) {
-		this.remark = remark;
-	}
-	
-	
 
 }
