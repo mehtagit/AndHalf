@@ -41,17 +41,18 @@ public class StockController {
 	@RequestMapping(path = "/Stock/upload", method = RequestMethod.POST)
 	public GenricResponse uploadStock(@RequestBody StockMgmt stockMgmt){
 
-		ValidationOutput validationOutput = fieldValidationServiceImpl.validateFieldsByObject(stockMgmt);
-		if(validationOutput.getIsValid()) {
+		/*ValidationOutput validationOutput = fieldValidationServiceImpl.validateFieldsByObject(stockMgmt);
+		if(validationOutput.getIsValid()) {*/
 			logger.info("Upload Stock Request =" + stockMgmt);
 			
 			GenricResponse genricResponse =	stackholderServiceImpl.uploadStock(stockMgmt);
 
 			logger.info("Upload Stock Response ="+genricResponse.toString());
 			return genricResponse;
-		}else {
-			return new GenricResponse(5, "Failed to validate fields", "", validationOutput.getInvalidFields());
-		}
+		/*
+		 * }else { return new GenricResponse(5, "Failed to validate fields", "",
+		 * validationOutput.getInvalidFields()); }
+		 */
 
 	}
 
