@@ -19,10 +19,10 @@ var role = currentRoleType == null ? roleType : currentRoleType;
 
 function auditManagementDatatable(){
 	
-	var userType = $('#userType').val() == null ? null : $("#userType option:selected").text();
-	var featureName = $('#feature').val() == null ? null : $("#feature option:selected").text();
-	var subFeature = $('#subFeature').val() == null ? null : $("#subFeature option:selected").text();
-	var roleType = $('#roleType').val() == null ? null : $("#roleType option:selected").text();
+	var userType = $('#userType').val() == 'null' ? null : $("#userType option:selected").text();
+	var featureName = $('#feature').val() == 'null' ? null : $("#feature option:selected").text();
+	var subFeature = $('#subFeature').val() == 'null' ? null : $("#subFeature option:selected").text();
+	var roleType = $('#roleType').val() == 'null' ? null : $("#roleType option:selected").text();
 	var filterRequest={
 			
 			//"userId":parseInt(userId),
@@ -127,7 +127,7 @@ function pageRendering(){
 							"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
 
 							"<select id="+dropdown[i].id+" class='select2 initialized'>"+
-							"<option value='' disabled selected>"+dropdown[i].title+
+							"<option value=null selected>"+dropdown[i].title+
 							"</option>"+
 							"</select>"+
 							"</div>"+

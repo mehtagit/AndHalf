@@ -57,7 +57,8 @@
 					"featureId":parseInt(featureId),
 					"userTypeId": parseInt($("body").attr("data-userTypeID")),
 					"userType":$("body").attr("data-roleType"),
-					"id" : parseInt($("#userType").val())
+					"id" : parseInt($("#userType").val()),
+					"username" : $("body").attr("data-selected-username")
 					
 			}				
 			if(lang=='km'){
@@ -207,7 +208,12 @@
 	function chanegeUserStatus(){
 		var Request={
 				"status" : parseInt($("#userStatus").val()),
-				"usertypeId": parseInt(window.userId)
+				"usertypeId": parseInt(window.userId),
+				"userId":parseInt(userId),
+				"featureId":parseInt(featureId),
+				"userTypeId": parseInt($("body").attr("data-userTypeID")),
+				"userType":$("body").attr("data-roleType"),
+				"username" : $("body").attr("data-selected-username")
 		}
 		
 		$.ajax({

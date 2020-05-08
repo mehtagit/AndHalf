@@ -210,13 +210,13 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}" data-u
 
                                        	<div class="input-field col s12 m6" style="margin-top: 23px;">
                                             <input type="text" id="password" name="password"
-                                               pattern="[a-zA-Z]{0,20}" required maxlength="18" />
+                                              pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&amp;])[A-Za-z\d@$!%*#?&amp;]{8,10}$" min="8" maxlength="10" oninput="InvalidMsg(this,'input','Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 and maximum of 10 length');" oninvalid="InvalidMsg(this,'input','Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 and maximum of 10 length');" required />
                                             <label for="password"><spring:message code="registration.password" /><span class="star"> *</span></label>
                                         </div>
                                         
                                         <div class="input-field col s12 m6" style="margin-top: 23px;">
                                             <input type="text" id="confirmPassword" name="confirmPassword"
-                                               pattern="[a-zA-Z]{0,20}" required maxlength="18" />
+                                              pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&amp;])[A-Za-z\d@$!%*#?&amp;]{8,10}$" min="8" maxlength="10" oninput="InvalidMsg(this,'input','Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 and maximum of 10 length');" oninvalid="InvalidMsg(this,'input','Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 and maximum of 10 length');" required />
                                             <label for="confirmPassword"><spring:message code="registration.retypepassword"/><span class="star"> *</span></label>
                                         </div>
                                         

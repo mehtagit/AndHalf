@@ -52,10 +52,10 @@ public class PortController {
 	
 	//------------------------------------- view Port Address ----------------------------------------							
 	
-		@PostMapping("portViewByID/{id}") 
-		public @ResponseBody GenricResponse viewPortAddress (@PathVariable("id") Integer id)  {
-			log.info("request send to the View Port api="+id);
-			GenricResponse response= userProfileFeignImpl.viewPortFeign(id);
+		@PostMapping("portViewByID") 
+		public @ResponseBody GenricResponse viewPortAddress (@RequestBody FilterRequest filterRequest)  {
+			log.info("request send to the View Port api="+filterRequest);
+			GenricResponse response= userProfileFeignImpl.viewPortFeign(filterRequest);
 			log.info("response from add View api "+response);
 			return response;
 	}
@@ -74,10 +74,10 @@ public class PortController {
 	
 	//------------------------------------- delete Port Address ----------------------------------------	
 	
-		@PostMapping ("deletePort/{id}")
-		public @ResponseBody GenricResponse deletePortAddress(@PathVariable("id") Integer id) {
-			log.info("request send to the Delete PORT api="+id);
-			GenricResponse response= userProfileFeignImpl.deletePortFeign(id);
+		@PostMapping ("deletePort")
+		public @ResponseBody GenricResponse deletePortAddress(@RequestBody FilterRequest filterRequest) {
+			log.info("request send to the Delete PORT api="+filterRequest);
+			GenricResponse response= userProfileFeignImpl.deletePortFeign(filterRequest);
 			log.info("response after delete PORT."+response);
 			return response;
 

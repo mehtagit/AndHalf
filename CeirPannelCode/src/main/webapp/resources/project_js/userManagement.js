@@ -55,9 +55,10 @@
 					"startDate":$('#startDate').val(),
 					"userId":parseInt(userId),
 					"featureId":parseInt(featureId),
+					"usertypeId" : parseInt($('#userType').val()),
 					"userTypeId": parseInt($("body").attr("data-userTypeID")),
 					"userType":$("body").attr("data-roleType"),
-					"currency" : parseInt($("#currencyType").val())
+					"username" : $("body").attr("data-selected-username"),
 			}				
 			if(lang=='km'){
 				var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
@@ -197,10 +198,20 @@
 
 	
 	function viewDetails(id,action){
+	
+	var request = {	
+		"dataId":parseInt(id), 
+		"userId":parseInt(userId),
+		"featureId":parseInt(featureId),
+		"userTypeId": parseInt($("body").attr("data-userTypeID")),
+		"userType":$("body").attr("data-roleType"),
+		"username" : $("body").attr("data-selected-username")
+	}
+	
 		$.ajax({
-			url: './viewUser/'+id,
+			url: './viewUser',
 			type: 'POST',
-		   //data : JSON.stringify(request),
+		    data : JSON.stringify(request),
 			dataType : 'json',
 			contentType : 'application/json; charset=utf-8',
 			success: function (data, textStatus, jqXHR) {
@@ -262,7 +273,7 @@
 				$('<option>').val(data[i].id).text(data[i].usertypeName)
 				.appendTo('#edituserType');
 			}
-			$("#edituserType").val(result.userTypeId);
+			$("#edituserType").val(result.usertypeId);
 		});
 		
 		$("#editId").val(result.id);
@@ -294,11 +305,14 @@
 	
 	
 	function update(){
-	
 		var request ={ 
-				 "id" : parseInt($("#editId").val()),
-		 "userTypeId" : $("#edituserType").val(),
-				
+				"dataId" : parseInt($("#editId").val()),
+				"userId":parseInt(userId),
+				"featureId":parseInt(featureId),
+				"userTypeId": parseInt($("body").attr("data-userTypeID")),
+				"usertypeId" :  parseInt($("#edituserType").val()),
+				"userType":$("body").attr("data-roleType"),
+				"username" : $("body").attr("data-selected-username")
 		}
 		
 		console.log("request--->" +JSON.stringify(request))
@@ -345,9 +359,18 @@
 	
 	function deleteModal(){
 		
+		var request ={ 
+				"dataId" : parseInt(window.id),
+				"userId":parseInt(userId),
+				"featureId":parseInt(featureId),
+				"userTypeId": parseInt($("body").attr("data-userTypeID")),
+				"userType":$("body").attr("data-roleType"),
+				"username" : $("body").attr("data-selected-username")
+		}
+		
 		$.ajax({
-			url: './deleteSystemUserType/'+window.id,
-			//data : JSON.stringify(request),
+			url: './deleteSystemUserType',
+			data : JSON.stringify(request),
 			dataType : 'json',
 			contentType : 'application/json; charset=utf-8',
 			type : 'POST',

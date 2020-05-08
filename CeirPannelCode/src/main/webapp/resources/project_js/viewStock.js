@@ -346,11 +346,12 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 	var featureId="4";
 	var userTypeId = $("body").attr("data-userTypeID");
 
-
+	
 
 
 	function Datatable(url,dataUrl) {
 		var txn= (txnIdValue == 'null' && transactionIDValue == undefined)? $('#transactionID').val() : transactionIDValue;
+		var userType = $('#userType').val() == null ? null : $("#userType option:selected").text();
 		var jsonObj = {
 				"endDate":$('#endDate').val(),
 				"startDate":$('#startDate').val(),
@@ -362,7 +363,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 				"txnId":txn,
 				"consignmentStatus":parseInt($('#StockStatus').val()),
 				"displayName" : $('#name').val(),
-				"filteredUserType" : $('#userType').val()
+				"filteredUserType" : userType
 		}
 		if(lang=='km'){
 			var langFile='./resources/i18n/khmer_datatable.json';
@@ -427,6 +428,8 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 			type: 'POST',
 			dataType: "json",
 			success: function(data){
+				data.userStatus == "Disable" ? $('#btnLink').addClass( "eventNone" ) : $('#btnLink').removeClass( "eventNone" );
+				
 				var elem='<p class="PageHeading">'+data.pageTitle+'</p>';
 				$("#pageHeader").append(elem);
 				var button=data.buttonList;

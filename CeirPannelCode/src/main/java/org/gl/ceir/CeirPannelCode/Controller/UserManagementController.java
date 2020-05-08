@@ -81,10 +81,10 @@ public class UserManagementController {
 	
 	//------------------------------------- view User ----------------------------------------							
 	
-	@PostMapping("viewUser/{id}") 
-	public @ResponseBody GenricResponse viewUser (@PathVariable ("id") Integer id )  {
-		log.info("request send to the viewUser api="+id);
-		GenricResponse response= userProfileFeignImpl.viewUserFeign(id);
+	@PostMapping("viewUser") 
+	public @ResponseBody GenricResponse viewUser (@RequestBody NewSystemUser newSystemUser)  {
+		log.info("request send to the viewUser api="+newSystemUser);
+		GenricResponse response= userProfileFeignImpl.viewUserFeign(newSystemUser);
 		log.info("response from viewUser api "+response);
 		return response;
 	}
@@ -102,9 +102,9 @@ public class UserManagementController {
 
 	//------------------------------------- Delete User ----------------------------------------			
 			
-	@PostMapping("deleteSystemUserType/{id}")
-	public @ResponseBody GenricResponse delete(@PathVariable ("id") Integer id) {
-		GenricResponse response=userProfileFeignImpl.deleteUserFeign(id);
+	@PostMapping("deleteSystemUserType")
+	public @ResponseBody GenricResponse delete(@RequestBody NewSystemUser newSystemUser) {
+		GenricResponse response=userProfileFeignImpl.deleteUserFeign(newSystemUser);
 		return response;
 
 	}

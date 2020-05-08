@@ -293,12 +293,12 @@ var contextpath = "${context}";
 									</label>
 								</div>
 								<div class="input-field col s12 m6 l6">
-									<input type="text" placeholder="" name="postalCode" maxlength="6"
+									<input required="required" type="text" placeholder="" name="postalCode" maxlength="6"
 										class="form-control boxBorder boxHeight" id="postalCode"
 										pattern="[A-Za-z0-9\s]{0,6}"
 										oninput="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');" 
 										oninvalid="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');">
-									<label for="postalCode"><spring:message code="input.postalCode" /></label>
+									<label for="postalCode"><spring:message code="input.postalCode" /><span class="star">*</span></label>
 								</div>
 								
 								

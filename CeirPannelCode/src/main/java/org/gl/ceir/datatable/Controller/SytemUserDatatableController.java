@@ -17,18 +17,15 @@ import org.gl.ceir.configuration.Translator;
 import org.gl.ceir.pageElement.model.Button;
 import org.gl.ceir.pageElement.model.InputFields;
 import org.gl.ceir.pageElement.model.PageElement;
-import org.gl.ceir.pagination.model.CurrencyContantModel;
-import org.gl.ceir.pagination.model.CurrencyPaginationModel;
 import org.gl.ceir.pagination.model.SystemUserContent;
 import org.gl.ceir.pagination.model.SystemUserPagination;
-import org.gl.ceir.pagination.model.SystemUsertype;
+import org.gl.ceir.pagination.model.Usertype;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
@@ -50,7 +47,7 @@ public class SytemUserDatatableController {
 	@Autowired
 	UserProfileFeignImpl userProfileFeignImpl;
 	@Autowired
-	SystemUsertype systemUsertype;
+	Usertype usertype; 
 	@Autowired
 	SystemUserContent systemUserContent;
 	@Autowired
@@ -88,7 +85,7 @@ public class SytemUserDatatableController {
 				   String createdOn = dataInsideList.getCreatedOn();
 				   String modifiedOn = dataInsideList.getModifiedOn();
 				   String userName = dataInsideList.getUsername();
-				   String userTypeName = "";
+				   String userTypeName = dataInsideList.getUsertype().getUsertypeName();
 				   String action=iconState.userSystemManagementIcons(id,userType);			   
 				   Object[] finalData={createdOn,modifiedOn,userName,userTypeName,action}; 
 				   List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
@@ -161,7 +158,7 @@ public class SytemUserDatatableController {
 		 
 			
 			//input type date list		
-			String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("table.UserName"),"userName",""};
+			String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate",""};
 			for(int i=0; i< dateParam.length; i++) {
 				dateRelatedFields= new InputFields();
 				dateRelatedFields.setType(dateParam[i]);

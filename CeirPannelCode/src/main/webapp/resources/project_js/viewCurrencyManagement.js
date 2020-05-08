@@ -53,12 +53,13 @@
 			var filterRequest={
 					"endDate":$('#endDate').val(),
 					"startDate":$('#startDate').val(),
+					"currency" : parseInt($("#currencyType").val()),
+					"year" : parseInt($('#year').val()),
 					"userId":parseInt(userId),
 					"featureId":parseInt(featureId),
 					"userTypeId": parseInt($("body").attr("data-userTypeID")),
 					"userType":$("body").attr("data-roleType"),
-					"currency" : parseInt($("#currencyType").val()),
-					"year" : parseInt($('#year').val()),
+					"username" : $("body").attr("data-selected-username")
 			}				
 			if(lang=='km'){
 				var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
@@ -211,11 +212,16 @@
 	function submitPort(){
 		
 		var request={
-					  "date":   $('#month').val(),
-					  "currency": $('#currency').val(),
-					  "riel":   parseFloat($('#cambodianRiel').val()),
-					  "dollar": parseFloat($('#dollar').val()),
-				}
+				"date":   $('#month').val(),
+				"currency": $('#currency').val(),
+				"riel":   parseFloat($('#cambodianRiel').val()),
+				"dollar": parseFloat($('#dollar').val()),
+				"userId":parseInt(userId),
+				"featureId":parseInt(featureId),
+				"userTypeId": parseInt($("body").attr("data-userTypeID")),
+				"userType":$("body").attr("data-roleType"),
+				"username" : $("body").attr("data-selected-username")
+		}
 		
 		console.log("request------------->" +JSON.stringify(request))
 		$.ajax({
@@ -246,10 +252,19 @@
 	function currencyViewByID(id){
 		$("#editId").val(id);
 		
+		var request ={
+				"dataId" :  parseInt(id),
+				"userId": parseInt(userId),
+				"featureId":parseInt(featureId),
+				"userTypeId": parseInt($("body").attr("data-userTypeID")),
+				"userType":$("body").attr("data-roleType"),
+				"username" : $("body").attr("data-selected-username")
+		}
+		
 		$.ajax({
-				url: './currencyViewByID/'+id,
+				url: './currencyViewByID',
 				type: 'POST',
-			//data : JSON.stringify(request),
+				data : JSON.stringify(request),
 				dataType : 'json',
 				contentType : 'application/json; charset=utf-8',
 				success: function (data, textStatus, jqXHR) {
@@ -286,11 +301,16 @@
 	function updateCurrency(){
 	
 		var request ={ 
-				 "id" : parseInt($("#editId").val()),
-				 "date":   $('#editMonth').val(),
-				 "currency": $('#editCurrency').val(),
-				 "riel":   parseFloat($('#editCambodianRiel').val()),
-				 "dollar": parseFloat($('#editDollar').val()),
+				"id" : parseInt($("#editId").val()),
+				"date":   $('#editMonth').val(),
+				"currency": $('#editCurrency').val(),
+				"riel":   parseFloat($('#editCambodianRiel').val()),
+				"dollar": parseFloat($('#editDollar').val()),
+				"userId":parseInt(userId),
+				"featureId":parseInt(featureId),
+				"userTypeId": parseInt($("body").attr("data-userTypeID")),
+				"userType":$("body").attr("data-roleType"),
+				"username" : $("body").attr("data-selected-username")
 		}
 		
 		console.log("request--->" +JSON.stringify(request))

@@ -411,9 +411,8 @@
 				 var formData= new FormData();
 				 var filterRequest={
 						 "columns": [
-							    "created_on","modified_on","txn_id","status","nid","device_type","device_id_type","multi_sim_status","country","device_serial_number","tax_paid_status","device_status","price",
-							    "currency","first_imei","second_imei","third_imei","fourth_imei","origin","remark",
-							    "id", "user_id","creator_user_id"
+							    "created_on","modified_on","txn_id","status","nid","visa_type","visa_number","visa_expiry_date","visa_file_name","entry_date_in_country","remark","user_id","id",
+							    "rev"
 							    ],
 						"tableName": "visa_update_db_aud",
 						"dbName" : "ceirconfig",

@@ -313,9 +313,9 @@ var contextpath = "${context}";
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="postalCode" maxlength="6" id="postalCode" pattern="[0-9\s]{6}"
+									<input type="text" required="required" name="postalCode" maxlength="6" id="postalCode" pattern="[0-9\s]{6}"
 									oninput="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');" title="">
-									<label for="postalCode"><spring:message code="input.postalCode" /></label>
+									<label for="postalCode"><spring:message code="input.postalCode" /><span class="star">*</span></label>
 								</div>
 								
 								

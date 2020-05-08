@@ -51,10 +51,10 @@ public class CurrencyController {
 	
 	//------------------------------------- view Currency ----------------------------------------							
 	
-		@PostMapping("currencyViewByID/{id}") 
-		public @ResponseBody GenricResponse viewCurrency (@PathVariable ("id") Integer id )  {
-			log.info("request send to the View currency api="+id);
-			GenricResponse response= userProfileFeignImpl.viewCurrencyFeign(id);
+		@PostMapping("currencyViewByID") 
+		public @ResponseBody GenricResponse viewCurrency (@RequestBody FilterRequest filterRequest )  {
+			log.info("request send to the View currency api="+filterRequest);
+			GenricResponse response= userProfileFeignImpl.viewCurrencyFeign(filterRequest);
 			log.info("response from Currency api "+response);
 			return response;
 	}

@@ -37,8 +37,13 @@ function SaveSystemUser(){
 				"email": $('#emailID').val(),
 				"password": $('#password').val(),
 				"rePassword":$('#confirmPassword').val(),
-				"userTypeId":parseInt($('#userType').val()),
-				"remarks": $('#userRemark').val()
+				"remarks": $('#userRemark').val(),
+				"usertypeId" : parseInt($('#userType').val()),
+				"userTypeId": parseInt($("body").attr("data-userTypeID")),
+				"userId":  parseInt($("body").attr("data-userID")),
+				"featureId":41,
+				"userType":$("body").attr("data-roleType"),
+				"username" : $("body").attr("data-userName")
 		}
 	
 		$.ajax({

@@ -70,6 +70,12 @@
  <!------------------------------------------- Dragable Model---------------------------------->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script> 
+
+<style type="text/css">
+.dataTables_scrollBody {
+    height: 100px !important;
+}
+</style>
 </head>
 
 <body data-id="7" data-roleType="${usertype}" data-userTypeID="${usertypeId}"
