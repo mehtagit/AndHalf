@@ -49,6 +49,7 @@ import com.gl.ceir.config.model.Userrole;
 import com.gl.ceir.config.model.Usertype;
 import com.gl.ceir.config.model.WebActionDb;
 import com.gl.ceir.config.model.constants.Alerts;
+import com.gl.ceir.config.model.constants.ConsignmentStatus;
 import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.Features;
 import com.gl.ceir.config.model.constants.GenericMessageTags;
@@ -70,6 +71,7 @@ import com.gl.ceir.config.repository.UserProfileRepo;
 import com.gl.ceir.config.repository.UserProfileRepository;
 import com.gl.ceir.config.repository.UserRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
+import com.gl.ceir.config.service.businesslogic.StateMachine;
 import com.gl.ceir.config.specificationsbuilder.GenericSpecificationBuilder;
 import com.gl.ceir.config.specificationsbuilder.Joiner;
 import com.gl.ceir.config.transaction.StockTransaction;
@@ -291,6 +293,12 @@ public class StockServiceImpl {
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
+			
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", featureName);
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.VIEW);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, 0, bodyPlaceHolderMap);
+			
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
@@ -340,6 +348,12 @@ public class StockServiceImpl {
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
+			
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", featureName);
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.VIEW_ALL);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, filterRequest.getUserId(), bodyPlaceHolderMap);
+			
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
@@ -367,6 +381,12 @@ public class StockServiceImpl {
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
+			
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", featureName);
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.VIEW_ALL);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, filterRequest.getUserId(), bodyPlaceHolderMap);
+			
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
@@ -472,6 +492,12 @@ public class StockServiceImpl {
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
+			
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", featureName);
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.VIEW);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, filterRequest.getUserId(), bodyPlaceHolderMap);
+			
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
@@ -521,6 +547,12 @@ public class StockServiceImpl {
 			}
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
+			
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", featureName);
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.DELETE);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, 0, bodyPlaceHolderMap);
+			
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
@@ -622,6 +654,12 @@ public class StockServiceImpl {
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
+			
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", featureName);
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.EXPORT);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, filterRequest.getUserId(), bodyPlaceHolderMap);
+			
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}finally {
 			try {
@@ -695,6 +733,12 @@ public class StockServiceImpl {
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
+			
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", featureName);
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.EXPORT);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, filterRequest.getUserId(), bodyPlaceHolderMap);
+			
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}finally {
 			try {
@@ -811,6 +855,11 @@ public class StockServiceImpl {
 				String action = null;
 				String txnId = null;
 				String receiverUserType = stockMgmt.getUserType();
+				
+				if(!StateMachine.isStockStatetransitionAllowed("CEIRSYSTEM", stockMgmt.getStockStatus())) {
+					logger.info("state transition is not allowed." + consignmentUpdateRequest.getTxnId());
+					return new GenricResponse(3, "state transition is not allowed.", consignmentUpdateRequest.getTxnId());
+				}
 
 				if(consignmentUpdateRequest.getAction() == 0) {
 					action = SubFeatures.ACCEPT;
@@ -820,8 +869,13 @@ public class StockServiceImpl {
 
 					placeholderMap.put("<First name>", firstName);
 					placeholderMap.put("<Txn id>", stockMgmt.getTxnId());
+					
+					if(stockMgmt.getStockStatus() == StockStatus.UPLOADING.getCode()) {
+						stockMgmt.setStockStatus(StockStatus.PROCESSING.getCode());
+					}else {
+						stockMgmt.setStockStatus(StockStatus.SUCCESS.getCode());
+					}
 
-					stockMgmt.setStockStatus(StockStatus.SUCCESS.getCode());
 				}else {
 					action = SubFeatures.REJECT;
 					mailTag = "STOCK_PROCESS_FAILED_TO_USER_MAIL";
@@ -853,7 +907,7 @@ public class StockServiceImpl {
 							"Users");
 					logger.info("Notfication have been saved.");
 
-					logger.info(consignmentUpdateRequest);
+					logger.debug(consignmentUpdateRequest);
 					/*
 					 * addInAuditTrail(Long.valueOf(consignmentUpdateRequest.getUserId()),
 					 * consignmentUpdateRequest.getTxnId(), action,
@@ -863,6 +917,12 @@ public class StockServiceImpl {
 
 			}else {
 				logger.warn("Accept/reject of Stock not allowed to you.");
+				
+				Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+				bodyPlaceHolderMap.put("<feature>", featureName);
+				bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.ACCEPT_REJECT);
+				alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, 0, bodyPlaceHolderMap);
+				
 				new GenricResponse(1, "Operation not Allowed", consignmentUpdateRequest.getTxnId());
 			}
 
@@ -897,7 +957,7 @@ public class StockServiceImpl {
 		User requestUser = null;
 		try {
 			requestUser = userRepository.getById(userId);
-			if(requestUser.getUsertype().getId() ==17) {
+			if(requestUser.getUsertype().getId() == 17) {
 				requestUser.getUsertype().setUsertypeName("End User");
 			}
 			logger.info("User Details"+requestUser);

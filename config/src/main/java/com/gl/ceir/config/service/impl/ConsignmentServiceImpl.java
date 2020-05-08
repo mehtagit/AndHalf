@@ -235,10 +235,10 @@ public class ConsignmentServiceImpl {
 		try {
 
 			List<StateMgmtDb> statusList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
-			logger.info("statusList " + statusList);
+			logger.debug("statusList " + statusList);
 
 			List<ConsignmentMgmt> consignmentMgmts = consignmentRepository.findAll(buildSpecification(filterRequest, statusList).build(), new Sort(Sort.Direction.DESC, "modifiedOn"));
-			logger.info("consignmentMgmts " + consignmentMgmts);
+			logger.debug("consignmentMgmts " + consignmentMgmts);
 
 			for(ConsignmentMgmt consignmentMgmt2 : consignmentMgmts) {
 
@@ -252,7 +252,7 @@ public class ConsignmentServiceImpl {
 				setInterp(consignmentMgmt2);
 			}
 
-			logger.info("ConsignmentMgmt : " + consignmentMgmts);
+			logger.debug("ConsignmentMgmt : " + consignmentMgmts);
 			return consignmentMgmts;
 
 		} catch (Exception e) {
