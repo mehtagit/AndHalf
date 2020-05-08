@@ -1160,6 +1160,7 @@ function confirmantiondelete(){
 						"bFilter" : true,
 						"bInfo" : true,
 						"scrollX": true,
+						"scrolly": true,
 						"bSearchable" : true,
 						 "data": dataObject.data,
 						 "columns": dataObject.columns
