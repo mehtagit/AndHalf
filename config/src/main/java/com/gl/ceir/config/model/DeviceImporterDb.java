@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -25,7 +26,11 @@ public class DeviceImporterDb  implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	//@GeneratedValue(strategy = GenerationType.IDENTITY)
+
+	// Oracle
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IND_SEQ")
+	@SequenceGenerator(sequenceName = "device_importer_seq", allocationSize = 1, name = "IND_SEQ")
 	private Long id;
 
 	@JsonIgnore
@@ -56,7 +61,7 @@ public class DeviceImporterDb  implements Serializable{
 	private Integer previousDeviceStatus;
 	private String period;
 	private Integer featureId;
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -111,7 +116,7 @@ public class DeviceImporterDb  implements Serializable{
 	public void setImeiEsnMeid(String imeiEsnMeid) {
 		this.imeiEsnMeid = imeiEsnMeid;
 	}
-	
+
 	public String getDeviceLaunchDate() {
 		return deviceLaunchDate;
 	}
@@ -130,7 +135,7 @@ public class DeviceImporterDb  implements Serializable{
 	public void setDeviceAction(String deviceAction) {
 		this.deviceAction = deviceAction;
 	}
-	
+
 	public Long getUserId() {
 		return userId;
 	}
@@ -149,7 +154,7 @@ public class DeviceImporterDb  implements Serializable{
 	public void setLocalDate(LocalDateTime localDate) {
 		this.localDate = localDate;
 	}
-	
+
 	public Integer getDeviceState() {
 		return deviceState;
 	}
@@ -177,7 +182,7 @@ public class DeviceImporterDb  implements Serializable{
 	public void setFeatureId(Integer featureId) {
 		this.featureId = featureId;
 	}
-	
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -222,5 +227,5 @@ public class DeviceImporterDb  implements Serializable{
 		builder.append("]");
 		return builder.toString();
 	}	
-	
+
 }

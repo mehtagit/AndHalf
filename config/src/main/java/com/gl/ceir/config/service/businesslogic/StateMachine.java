@@ -1,6 +1,8 @@
 package com.gl.ceir.config.service.businesslogic;
 
 import com.gl.ceir.config.model.constants.ConsignmentStatus;
+import com.gl.ceir.config.model.constants.StockStatus;
+import com.gl.ceir.config.model.constants.StolenStatus;
 
 public class StateMachine {
 
@@ -14,7 +16,7 @@ public class StateMachine {
 		}
 		else if("DRT".equalsIgnoreCase(userType)) {
 			return ConsignmentStatus.PENDING_CLEARANCE_FROM_DRT.getCode() == currentStatus;
-		
+
 		}
 		return Boolean.FALSE;
 	}
@@ -43,4 +45,21 @@ public class StateMachine {
 		return Boolean.FALSE;
 	}
 
+	public static boolean isStockStatetransitionAllowed(String userType, int currentStatus) {
+		if("CEIRSYSTEM".equalsIgnoreCase(userType)) {
+			return StockStatus.UPLOADING.getCode() == currentStatus || StockStatus.PROCESSING.getCode() == currentStatus;
+		}
+		else {
+			return Boolean.FALSE;
+		}
+	}
+	
+	public static boolean isStolenStatetransitionAllowed(String userType, int currentStatus) {
+		if("CEIRSYSTEM".equalsIgnoreCase(userType)) {
+			return StolenStatus.INIT.getCode() == currentStatus || StolenStatus.PROCESSING.getCode() == currentStatus;
+		}
+		else {
+			return Boolean.FALSE;
+		}
+	}
 }
