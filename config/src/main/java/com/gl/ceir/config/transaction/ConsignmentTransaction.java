@@ -115,13 +115,12 @@ public class ConsignmentTransaction {
 					Long.valueOf(consignmentMgmt.getFeatureId()),
 					Features.CONSIGNMENT, SubFeatures.UPDATE, "",
 					consignmentMgmt.getTxnId(),consignmentMgmt.getRoleType()));
-			//auditTrailRepository.save(new AuditTrail(consignmentMgmt.getUser().getId(), "", 0L, "", 0L,Features.CONSIGNMENT, SubFeatures.UPDATE, "", consignmentMgmt.getTxnId()));
+					//auditTrailRepository.save(new AuditTrail(consignmentMgmt.getUser().getId(), "", 0L, "", 0L,Features.CONSIGNMENT, SubFeatures.UPDATE, "", consignmentMgmt.getTxnId()));
+					logger.info("Consignment [" + consignmentMgmt.getTxnId() + "] saved in audit_trail.");
 			
 		}
 				
-		logger.info("Consignment [" + consignmentMgmt.getTxnId() + "] saved in audit_trail.");
-
-		queryStatus = Boolean.TRUE;
+	queryStatus = Boolean.TRUE;
 		return queryStatus;
 	}
 }

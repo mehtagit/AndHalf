@@ -953,13 +953,17 @@ public class StolenAndRecoveryServiceImpl {
 	private String decideFeature(int requestType) {
 		switch (requestType) {
 		case 0:
-			return decideFeature(5L);
+			return "Stolen";
+			//return decideFeature(5L);
 		case 1:
-			return decideFeature(5L);
+			return "Recovery";
+			// return decideFeature(5L);
 		case 2:
-			return decideFeature(7L);
+			return "Block";
+			//return decideFeature(7L);
 		case 3:
-			return decideFeature(7L);
+			return "Unblock";
+			// return decideFeature(7L);
 		default:
 			return null;
 		}
