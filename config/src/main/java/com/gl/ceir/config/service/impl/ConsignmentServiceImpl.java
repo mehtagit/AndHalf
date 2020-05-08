@@ -151,10 +151,10 @@ public class ConsignmentServiceImpl {
 
 	@Autowired
 	UserFeignClient userFeignClient;
-	
+
 	@Autowired
 	StakeholderfeatureServiceImpl stakeholderfeatureServiceImpl;
-	
+		
 	@Autowired
 	AlertServiceImpl alertServiceImpl;
 
@@ -162,7 +162,7 @@ public class ConsignmentServiceImpl {
 
 		try {
 			Long importerId = Long.valueOf(consignmentFileRequest.getUserId());
-			
+
 			WebActionDb webActionDb = new WebActionDb();
 			webActionDb.setFeature(WebActionDbFeature.CONSIGNMENT.getName());
 			// webActionDb.setFeature(stakeholderfeatureServiceImpl.getFeatureNameById(3L));
@@ -466,7 +466,7 @@ public class ConsignmentServiceImpl {
 			consignmentMgmt.setUserName(consignmentUpdateRequest.getUserName());
 			consignmentMgmt.setUserType(consignmentUpdateRequest.getUserType());
 			consignmentMgmt.setRoleType(consignmentUpdateRequest.getRoleType());
-			
+
 			WebActionDb webActionDb = new WebActionDb();
 			webActionDb.setFeature(WebActionDbFeature.CONSIGNMENT.getName());
 			//webActionDb.setFeature(stakeholderfeatureServiceImpl.getFeatureNameById(3L));
@@ -557,18 +557,21 @@ public class ConsignmentServiceImpl {
 					}
 
 					else if("CUSTOM".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())) {
-						
+
 						webActionDb = new WebActionDb();
 						webActionDb.setFeature(WebActionDbFeature.CONSIGNMENT.getName());
 						// webActionDb.setSubFeature(stakeholderfeatureServiceImpl.getFeatureNameById(3L));
 						webActionDb.setSubFeature(WebActionDbSubFeature.APPROVE.getName());
 						webActionDb.setState(WebActionDbState.INIT.getCode());
 						webActionDb.setTxnId(consignmentUpdateRequest.getTxnId());
-						
+
+					//	consignmentMgmt.setCustomID(consignmentUpdateRequest.getUserId());
+
 						if(!StateMachine.isConsignmentStatetransitionAllowed("CUSTOM", consignmentMgmt.getConsignmentStatus())) {
 							logger.info("state transition is not allowed." + consignmentUpdateRequest.getTxnId());
 							return new GenricResponse(3, "state transition is not allowed.", consignmentUpdateRequest.getTxnId());
 						}
+
 
 						consignmentMgmt.setConsignmentStatus(ConsignmentStatus.APPROVED.getCode());				
 						consignmentMgmt.setTaxPaidStatus(TaxStatus.TAX_PAID.getCode());
@@ -867,16 +870,9 @@ public class ConsignmentServiceImpl {
 				}
 			}
 			//TODO check if CUSTOM approved the consignment than we need to add an entry in webaction
-			/*
-			 * consignmentMgmt.setUserName(consignmentUpdateRequest.getUserName());
-			 * consignmentMgmt.setUserType(consignmentUpdateRequest.getRoleType());
-			 * consignmentMgmt.setUserTypeId(consignmentUpdateRequest.getRoleTypeUserId().
-			 * intValue());
-			 * consignmentMgmt.setFeatureId(consignmentUpdateRequest.getFeatureId());
-			 * consignmentMgmt.setRoleType(consignmentUpdateRequest.getRoleType());
-			 */
+
 			consignmentMgmt.setFeatureId(consignmentUpdateRequest.getFeatureId());
-			 consignmentMgmt.setRoleType(consignmentUpdateRequest.getRoleType());
+			consignmentMgmt.setRoleType(consignmentUpdateRequest.getRoleType());
 			if(consignmentTransaction.executeUpdateStatusConsignment(consignmentMgmt,webActionDb)) {
 				logger.info("Consignment status have Update SuccessFully." + consignmentUpdateRequest.getTxnId());
 				return new GenricResponse(0, "Consignment status have Update SuccessFully.", consignmentUpdateRequest.getTxnId());
@@ -940,7 +936,7 @@ public class ConsignmentServiceImpl {
 							consignmentMgmt.getQuantity(),
 							consignmentMgmt.getDeviceQuantity(),
 							consignmentMgmt.getFileName());
-							fileRecords.add(cfm);
+					fileRecords.add(cfm);
 				}
 
 				csvWriter.write(fileRecords);
@@ -1075,12 +1071,10 @@ public class ConsignmentServiceImpl {
 			 cmsb.orSearch(new SearchCriteria("expectedArrivaldate", consignmentMgmt.getSearchString(), SearchOperation.EQUALITY, Datatype.DATE));
 			 cmsb.orSearch(new SearchCriteria("expectedDispatcheDate", consignmentMgmt.getSearchString(), SearchOperation.EQUALITY, Datatype.DATE));		
 			 cmsb.orSearch(new SearchCriteria("totalPrice", consignmentMgmt.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
-			 cmsb.orSearch(new SearchCriteria("remarks",consignmentMgmt.getSearchString(), SearchOperation.LIKE,Datatype.STRING)); 
-			 cmsb.orSearch(new SearchCriteria("userId",consignmentMgmt.getSearchString(), SearchOperation.LIKE, Datatype.STRING)); 
 			 cmsb.orSearch(new SearchCriteria("deviceQuantity",consignmentMgmt.getSearchString(), SearchOperation.LIKE,Datatype.STRING));
-			 cmsb.orSearch(new SearchCriteria("customID",consignmentMgmt.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
-			 cmsb.orSearch(new SearchCriteria("ceirAdminID",consignmentMgmt.getSearchString(), SearchOperation.LIKE, Datatype.STRING)); 
-			 cmsb.orSearch(new SearchCriteria("drtID",consignmentMgmt.getSearchString(), SearchOperation.LIKE,Datatype.STRING));
+			 cmsb.orSearch(new SearchCriteria("consignmentNumber",consignmentMgmt.getSearchString(), SearchOperation.LIKE, Datatype.STRING)); 
+			 cmsb.orSearch(new SearchCriteria("supplierId",consignmentMgmt.getSearchString(), SearchOperation.LIKE,Datatype.STRING));
+
 		 }
 
 		 return cmsb;

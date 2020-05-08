@@ -893,7 +893,7 @@ public class StolenAndRecoveryServiceImpl {
 							user.getUsertype().getUsertypeName());
 					logger.info("Notfication have been saved.");
 				}
-				addInAuditTrail(Long.valueOf(stolenandRecoveryMgmt.getUserId()), stolenandRecoveryMgmt.getTxnId(), action, stolenandRecoveryMgmt.getRoleType(),stolenandRecoveryMgmt.getRequestType(),0);
+		
 			}else {
 				logger.warn("Accept/reject of Stock not allowed to you.");
 				new GenricResponse(1, "Operation not Allowed", consignmentUpdateRequest.getTxnId());

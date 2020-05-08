@@ -854,8 +854,11 @@ public class StockServiceImpl {
 					logger.info("Notfication have been saved.");
 
 					logger.info(consignmentUpdateRequest);
-					addInAuditTrail(Long.valueOf(consignmentUpdateRequest.getUserId()), 
-							consignmentUpdateRequest.getTxnId(), action, consignmentUpdateRequest.getRoleType());
+					/*
+					 * addInAuditTrail(Long.valueOf(consignmentUpdateRequest.getUserId()),
+					 * consignmentUpdateRequest.getTxnId(), action,
+					 * consignmentUpdateRequest.getRoleType());
+					 */
 				}
 
 			}else {
