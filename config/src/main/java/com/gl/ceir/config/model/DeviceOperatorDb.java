@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -23,7 +24,11 @@ public class DeviceOperatorDb  implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	//@GeneratedValue(strategy = GenerationType.IDENTITY)
+
+	// Oracle
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DEV_OPE_SEQ")
+	@SequenceGenerator(sequenceName = "device_operator_seq", allocationSize = 1, name = "DEV_OPE_SEQ")
 	private Long id;
 
 	@JsonIgnore
@@ -52,7 +57,7 @@ public class DeviceOperatorDb  implements Serializable{
 	private Integer previousDeviceStatus;
 	private String period;
 	private Integer featureId;
-	
+
 	public Integer getFeatureId() {
 		return featureId;
 	}
@@ -149,7 +154,7 @@ public class DeviceOperatorDb  implements Serializable{
 	public void setLocalDate(LocalDateTime localDate) {
 		this.localDate = localDate;
 	}
-	
+
 	public Integer getDeviceState() {
 		return deviceState;
 	}
@@ -215,5 +220,5 @@ public class DeviceOperatorDb  implements Serializable{
 		builder.append("]");
 		return builder.toString();
 	}	
-		
+
 }
