@@ -309,12 +309,34 @@ public class RegularizedDeviceServiceImpl {
 				csvWriter.write(fileRecords);
 			}
 
-			// Save in audit.
-			AuditTrail auditTrail = new AuditTrail(filterRequest.getUserId(), "", 0L, 
-					"", 12, Features.REGISTER_DEVICE, 
-					SubFeatures.EXPORT, "");
+		User user=new User();
+			String username="";
+			 int userId=0;
+			if(Objects.nonNull(filterRequest.getUserType()))
+			{
+
+				if("End User".equalsIgnoreCase(filterRequest.getUserType())){
+					logger.info("usertype is end user so setting username is empty");
+					username="";
+				}	
+				else {
+
+					user = userRepository.getById(filterRequest.getUserId());
+					username=user.getUsername();
+					userId=filterRequest.getUserId();
+				}
+			}
+       
+        
+			AuditTrail auditTrail = new AuditTrail(userId, 
+					username, 
+					Long.valueOf(filterRequest.getUserTypeId()), 
+					filterRequest.getUserType(), 
+					12, Features.REGISTER_DEVICE, 
+					SubFeatures.EXPORT, 
+					"", "NA");
 			auditTrailRepository.save(auditTrail);
-			logger.info("AUDIT : Export in audit_trail. " + auditTrail);
+			logger.info("AUDIT : export in audit_trail. ");
 
 			return new FileDetails(fileName, filePath, link.getValue() + fileName ); 
 
@@ -816,7 +838,7 @@ for(User userData:user) {
 			specificationBuilder.with(new SearchCriteria("nid", filterRequest.getNid(), SearchOperation.EQUALITY, Datatype.STRING));
 
 		if(Objects.nonNull(filterRequest.getStartDate()) && !filterRequest.getStartDate().isEmpty())
- 			specificationBuilder.with(new SearchCriteria("createdO[EmailService.javan", filterRequest.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
+ 			specificationBuilder.with(new SearchCriteria("createdOn", filterRequest.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
         
 			if(Objects.nonNull(filterRequest.getUserTypeId())) {
             if(filterRequest.getUserTypeId()==18)		
