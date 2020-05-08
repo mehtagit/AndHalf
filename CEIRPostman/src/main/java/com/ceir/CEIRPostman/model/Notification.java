@@ -57,6 +57,8 @@ public class Notification  implements Serializable{
 	
 	@Column(length = 50)
 	private String receiverUserType;
+	
+	private Integer authorityStatus;
 
 	public Notification() {
 
@@ -191,6 +193,14 @@ public class Notification  implements Serializable{
 		this.roleType = roleType;
 	}
 
+	public Integer getAuthorityStatus() {
+		return authorityStatus;
+	}
+
+	public void setAuthorityStatus(Integer authorityStatus) {
+		this.authorityStatus = authorityStatus;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -214,6 +224,20 @@ public class Notification  implements Serializable{
 		builder.append(featureName);
 		builder.append(", subFeature=");
 		builder.append(subFeature);
+		builder.append(", status=");
+		builder.append(status);
+		builder.append(", subject=");
+		builder.append(subject);
+		builder.append(", retryCount=");
+		builder.append(retryCount);
+		builder.append(", referTable=");
+		builder.append(referTable);
+		builder.append(", roleType=");
+		builder.append(roleType);
+		builder.append(", receiverUserType=");
+		builder.append(receiverUserType);
+		builder.append(", authorityStatus=");
+		builder.append(authorityStatus);
 		builder.append("]");
 		return builder.toString();
 	}

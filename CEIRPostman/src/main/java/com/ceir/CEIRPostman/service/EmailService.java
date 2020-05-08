@@ -141,30 +141,57 @@ public class EmailService implements Runnable {
 								log.info("refer Table: " + notification.getReferTable());
 								if ("END_USER".equalsIgnoreCase(notification.getReferTable())) {
 									EndUserDB endUser = endUserRepoService.getById(notification.getUserId());
-									toEmail = endUser.getEmail();
+									if(Objects.nonNull(endUser)) {
+										if(Objects.nonNull(endUser.getEmail()))
+										{
+											toEmail = endUser.getEmail();		
+										}
+										
+									
+									}
+									else {
+										log.info("no data found for this userid: "+notification.getUserId()+" in end user table");
+									}
+									
 								} else if ("user_temp".equalsIgnoreCase(notification.getReferTable())) {
 									UserTemporarydetails details = userTempRepoService
 											.getUserTempByUserId(notification.getUserId());
-									if (details != null) {
-										toEmail = details.getEmailId();
+									if(Objects.nonNull(details))
+									{
+										if (Objects.nonNull(details.getEmailId())) {
+											toEmail = details.getEmailId();
+										}	
 									}
-								} else {
+									else {
+										log.info("no data found for this userid: "+notification.getUserId()+" in UserTemporarydetails  table");
+										
+									}
 									
+								} else {
 									User user = userRepoService.getById(notification.getUserId());
-									toEmail = user.getUserProfile().getEmail();
-									List<Long> usertypes = new ArrayList<Long>();
-									usertypes.add(4l);
-									usertypes.add(5l);
-									usertypes.add(6l);
-									if (!usertypes.contains(user.getUsertype().getId()) && user.getCurrentStatus()!= 2) {
-										if (Objects.nonNull(user.getUserProfile().getAuthorityEmail())
-												&& authorityStatusValue == 1) {
-											authorityEmail = user.getUserProfile().getAuthorityEmail();
-											log.info("authorityEmail:  "+authorityEmail);
-											emailUtil.increaseBatchSize();
+									if(Objects.nonNull(user))
+									{
+										if(Objects.nonNull(user.getUserProfile().getEmail())){
+											toEmail = user.getUserProfile().getEmail();	
 										}
+										
 									}
-
+									else {
+										log.info("no data found for this userid: "+notification.getUserId()+" in users  table");
+										
+									}
+									
+									if(Objects.nonNull(notification.getAuthorityStatus())) {
+										log.info("authority status: "+notification.getAuthorityStatus());
+										if(notification.getAuthorityStatus()==1) {
+											if (Objects.nonNull(user.getUserProfile().getAuthorityEmail())
+													&& authorityStatusValue == 1) {
+												authorityEmail = user.getUserProfile().getAuthorityEmail();
+												log.info("authorityEmail:  "+authorityEmail);
+												emailUtil.increaseBatchSize();
+											}
+										}	
+									}
 								}
 							} else {
 								User user = userRepoService.getById(notification.getUserId());
@@ -173,7 +200,9 @@ public class EmailService implements Runnable {
 								usertypes.add(4l);
 								usertypes.add(5l);
 								usertypes.add(6l);
-								if (!usertypes.contains(user.getUsertype().getId()) && user.getCurrentStatus()!= 2) {
+								if(Objects.nonNull(notification.getAuthorityStatus())) {
+									log.info("authority status: "+notification.getAuthorityStatus());
+								if(notification.getAuthorityStatus()==1) {
 									if (Objects.nonNull(user.getUserProfile().getAuthorityEmail())
 											&& authorityStatusValue == 1) {
 										authorityEmail = user.getUserProfile().getAuthorityEmail();
@@ -181,6 +210,8 @@ public class EmailService implements Runnable {
 										emailUtil.increaseBatchSize();
 									}
 								}
+								}
+								
 							}
 
 							boolean emailStatus = false;
@@ -203,8 +234,6 @@ public class EmailService implements Runnable {
 										totalMailNotsent++;
 									}
 
-									if (authorityStatusValue == 1) {
-										log.info("authority email sending is on");
 										if (authorityEmail != null && !authorityEmail.isEmpty()) {
 
 											if (emailUtil.emailValidator(toEmail)) {
@@ -233,7 +262,6 @@ public class EmailService implements Runnable {
 												}
 											}
 
-										}
 									}
 
 								} else {
