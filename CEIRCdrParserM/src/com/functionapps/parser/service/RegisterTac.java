@@ -62,16 +62,17 @@ public class RegisterTac {
 						"" // action
 						};
 				
-				String output = RuleEngineApplication.startRuleEngine(ruleArr);
-				
-				System.out.println("Rule [EXISTS_IN_TAC_DB] Execution output is [" + output + "]");
-				
-				if("yes".equalsIgnoreCase(output)) {
-					typeApprovedDb.setApproveStatus(3); // Pending by CEIR Admin
-				}else {
-					typeApprovedDb.setApproveStatus(2); // Rejected By System.
-				}
-				
+				/*
+				 * String output = RuleEngineApplication.startRuleEngine(ruleArr);
+				 * 
+				 * System.out.println("Rule [EXISTS_IN_TAC_DB] Execution output is [" + output +
+				 * "]");
+				 * 
+				 * if("yes".equalsIgnoreCase(output)) { typeApprovedDb.setApproveStatus(3); //
+				 * Pending by CEIR Admin }else { typeApprovedDb.setApproveStatus(2); // Rejected
+				 * By System. }
+				 */
+				typeApprovedDb.setApproveStatus(3)
 				System.out.println(typeApprovedDb);
 				
 				tacApiConsumer.updateStatus(typeApprovedDb.getTxnId(), typeApprovedDb.getUserId(), 
