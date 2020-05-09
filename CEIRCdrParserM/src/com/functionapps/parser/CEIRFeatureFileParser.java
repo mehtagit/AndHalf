@@ -159,7 +159,10 @@ public class CEIRFeatureFileParser {
             } else if (operator.equalsIgnoreCase("TYPE_APPROVED") && (sub_feature.equalsIgnoreCase("delete"))) {
                 System.out.println("running tac delete process.");
                 new WithdrawnTac().process(conn, operator, sub_feature, rulelist, txn_id, operator_tag);
-            } else {
+            }else if(operator.equalsIgnoreCase("STOCK") &&(sub_feature.equalsIgnoreCase("DELETE"))){
+				System.out.println("running stock delete process.");
+				new StockDelete().process(conn, operator, sub_feature, rulelist, txn_id, operator_tag, usertype_name, "");
+			} else {
                 System.out.println("Skipping the process.");
             }
 

@@ -26,7 +26,8 @@ public class RegisterTac {
 		
 	}
 
-	public void process(Connection conn, String operator, String sub_feature, ArrayList<Rule> rulelist, String txnId, String operator_tag ){
+	public void process(Connection conn, String operator, String sub_feature, ArrayList<Rule> rulelist, String txnId, 
+			String operator_tag, String usertypeName){
 
 		CEIRFeatureFileFunctions ceirfunction = new CEIRFeatureFileFunctions();
 		
@@ -61,16 +62,17 @@ public class RegisterTac {
 						"" // action
 						};
 				
-				String output = RuleEngineApplication.startRuleEngine(ruleArr);
-				
-				System.out.println("Rule [EXISTS_IN_TAC_DB] Execution output is [" + output + "]");
-				
-				if("yes".equalsIgnoreCase(output)) {
-					typeApprovedDb.setApproveStatus(3); // Pending by CEIR Admin
-				}else {
-					typeApprovedDb.setApproveStatus(2); // Rejected By System.
-				}
-				
+				/*
+				 * String output = RuleEngineApplication.startRuleEngine(ruleArr);
+				 * 
+				 * System.out.println("Rule [EXISTS_IN_TAC_DB] Execution output is [" + output +
+				 * "]");
+				 * 
+				 * if("yes".equalsIgnoreCase(output)) { typeApprovedDb.setApproveStatus(3); //
+				 * Pending by CEIR Admin }else { typeApprovedDb.setApproveStatus(2); // Rejected
+				 * By System. }
+				 */
+				typeApprovedDb.setApproveStatus(3)
 				System.out.println(typeApprovedDb);
 				
 				tacApiConsumer.updateStatus(typeApprovedDb.getTxnId(), typeApprovedDb.getUserId(), 
@@ -112,8 +114,7 @@ public class RegisterTac {
 				logger.info("Txn_id [" + txnId + "] is is not present in type_approved_db.");
 				System.out.println("Txn_id [" + txnId + "] is is not present in type_approved_db.");
 			}
-			conn.commit();
-//			c onn.close();
+
 		}catch(Exception e){
 			e.printStackTrace();
 			logger.error(e.getMessage(), e);

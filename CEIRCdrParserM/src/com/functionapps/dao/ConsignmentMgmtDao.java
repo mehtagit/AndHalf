@@ -19,7 +19,7 @@ public class ConsignmentMgmtDao {
 	static Logger logger = Logger.getLogger(ConsignmentMgmtDao.class);
 	static String GENERIC_DATE_FORMAT = "dd-MM-yyyy";
 
-	public void updateDeviceImporterDbAud(Connection conn, String txnId, int deleteFlag) {
+	public void updateConsignmentMgmtDeleteFlag(Connection conn, String txnId, int deleteFlag) {
 		boolean isOracle = conn.toString().contains("oracle");
 		String dateFunction = Util.defaultDate(isOracle);
 
