@@ -19,7 +19,7 @@ import com.gl.ceir.config.service.FieldValidationService;
 @Service
 public class FieldValidationServiceImpl implements FieldValidationService {
 	
-	private static final Logger logger = LogManager.getLogger(FieldValidationServiceImpl.class);
+	private static final Logger logger = LogManager.getLogger(CustomerCareController.class);
 	
 	@Autowired
 	FieldValidationRepository fieldValidationRepository;

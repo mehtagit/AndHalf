@@ -49,6 +49,7 @@ import com.gl.ceir.config.model.SystemConfigurationDb;
 import com.gl.ceir.config.model.User;
 import com.gl.ceir.config.model.UserProfile;
 import com.gl.ceir.config.model.WebActionDb;
+import com.gl.ceir.config.model.constants.Alerts;
 import com.gl.ceir.config.model.constants.ConsignmentStatus;
 import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.SearchOperation;
@@ -73,6 +74,7 @@ import com.gl.ceir.config.repository.StolenOrganizationUserRepository;
 import com.gl.ceir.config.repository.UserProfileRepository;
 import com.gl.ceir.config.repository.UserRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
+import com.gl.ceir.config.service.businesslogic.StateMachine;
 import com.gl.ceir.config.specificationsbuilder.GenericSpecificationBuilder;
 import com.gl.ceir.config.transaction.StolenAndRecoveryTransaction;
 import com.gl.ceir.config.util.CustomMappingStrategy;
@@ -142,9 +144,12 @@ public class StolenAndRecoveryServiceImpl {
 
 	@Autowired
 	AuditTrailRepository auditTrailRepository;
-	
+
 	@Autowired
 	StakeholderfeatureServiceImpl stakeholderfeatureServiceImpl;
+
+	@Autowired
+	AlertServiceImpl alertServiceImpl;
 
 	public GenricResponse uploadDetails(StolenandRecoveryMgmt stolenandRecoveryMgmt) {
 
@@ -176,6 +181,12 @@ public class StolenAndRecoveryServiceImpl {
 
 		}catch (Exception e) {
 			logger.error(e.getMessage(), e);
+
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", decideFeature(5L));
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.REGISTER);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, stolenandRecoveryMgmt.getUserId().intValue(), bodyPlaceHolderMap);
+
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
@@ -208,6 +219,12 @@ public class StolenAndRecoveryServiceImpl {
 
 		}catch (Exception e) {
 			logger.error(e.getMessage(), e);
+
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", decideFeature(5L));
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.REGISTER);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, stolenandRecoveryDetails.getUserId().intValue(), bodyPlaceHolderMap);
+
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 
@@ -256,8 +273,13 @@ public class StolenAndRecoveryServiceImpl {
 			return stolenandRecoveryMgmtPage;
 
 		} catch (Exception e) {
-
 			logger.error(e.getMessage(), e);
+
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", decideFeature(5L));
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.VIEW_ALL);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, filterRequest.getUserId(), bodyPlaceHolderMap);
+
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}	
 	}
@@ -272,17 +294,8 @@ public class StolenAndRecoveryServiceImpl {
 
 			List<StolenandRecoveryMgmt> stolenandRecoveryMgmts = stolenAndRecoveryRepository.findAll(buildSpecification(filterRequest, statusList).build());
 			stateInterpList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
-			//stateInterpList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
 			logger.info(stateInterpList);
 
-			/*
-			 * for(StolenandRecoveryMgmt stolenandRecoveryMgmt : stolenandRecoveryMgmts) {
-			 * for(StateMgmtDb stateMgmtDb : stateInterpList) {
-			 * if(stolenandRecoveryMgmt.getFileStatus().equals(stateMgmtDb.getState())) {
-			 * stolenandRecoveryMgmt.setStateInterp(stateMgmtDb.getInterp()); break; } }
-			 * 
-			 * setInterp(stolenandRecoveryMgmt); }
-			 */
 			for(StolenandRecoveryMgmt stolenandRecoveryMgmt : stolenandRecoveryMgmts) {				
 				for(StateMgmtDb stateMgmtDb : stateInterpList) {
 					if(stolenandRecoveryMgmt.getFileStatus() == stateMgmtDb.getState()) {
@@ -308,6 +321,12 @@ public class StolenAndRecoveryServiceImpl {
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
+
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", decideFeature(5L));
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.VIEW_ALL);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, filterRequest.getUserId(), bodyPlaceHolderMap);
+
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}	
 	}
@@ -477,7 +496,7 @@ public class StolenAndRecoveryServiceImpl {
 
 					srfm.setFileName( stolenandRecoveryMgmt.getFileName());
 					srfm.setDeviceQuantity(stolenandRecoveryMgmt.getDeviceQuantity());
-					
+
 					logger.debug(srfm);
 					fileRecords.add(srfm);
 				}
@@ -488,6 +507,12 @@ public class StolenAndRecoveryServiceImpl {
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
+
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", decideFeature(5L));
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.EXPORT);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, filterRequest.getUserId(), bodyPlaceHolderMap);
+
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}finally {
 			try {
@@ -537,10 +562,8 @@ public class StolenAndRecoveryServiceImpl {
 				webActionDb.setData(request.getTxnId());
 
 				webActionDbRepository.save(webActionDb);
-				while(bool) {
-					addInAuditTrail(request.getUserId(), request.getTxnId(), SubFeatures.UPLOAD, request.getRoleType(),request.getRequestType(),0);
-					bool=false;
-				}
+				addInAuditTrail(request.getUserId(), request.getTxnId(), SubFeatures.UPLOAD, request.getRoleType(),request.getRequestType(),0);
+
 			}
 
 			stolenAndRecoveryRepository.saveAll(stolenandRecoveryMgmt);
@@ -549,10 +572,15 @@ public class StolenAndRecoveryServiceImpl {
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
+			
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", decideFeature(5L));
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.VIEW_ALL);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, 0, bodyPlaceHolderMap);
+			
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
-
 
 	@Transactional
 	public GenricResponse deleteRecord(FilterRequest filterRequest) {
@@ -587,6 +615,12 @@ public class StolenAndRecoveryServiceImpl {
 			}
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
+			
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", decideFeature(5L));
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.DELETE);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, filterRequest.getUserId(), bodyPlaceHolderMap);
+			
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
@@ -630,7 +664,7 @@ public class StolenAndRecoveryServiceImpl {
 				stolenandRecoveryMgmtInfo.setQty(stolenandRecoveryMgmt.getQty());
 				stolenandRecoveryMgmtInfo.setFileStatus(StolenStatus.INIT.getCode());
 				stolenandRecoveryMgmtInfo.setDeviceQuantity(stolenandRecoveryMgmt.getDeviceQuantity());
-				
+
 				// Update StolenIndividualUserDB
 				if(Objects.nonNull(stolenandRecoveryMgmt.getStolenIndividualUserDB())) {
 					StolenIndividualUserDB stolenIndividualUserDB = updateStolenIndividualUserDB(
@@ -675,6 +709,12 @@ public class StolenAndRecoveryServiceImpl {
 		}catch (Exception e) {
 
 			logger.error(e.getMessage(), e);
+			
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", decideFeature(5L));
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.UPDATE);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, 0, bodyPlaceHolderMap);
+			
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
@@ -698,6 +738,7 @@ public class StolenAndRecoveryServiceImpl {
 
 			StolenandRecoveryMgmt stolenandRecoveryMgmt2 = stolenAndRecoveryRepository.getByTxnId(stolenandRecoveryMgmt.getTxnId());
 			setInterp(stolenandRecoveryMgmt2);
+			
 			addInAuditTrail(Long.valueOf(stolenandRecoveryMgmt.getUserId()), stolenandRecoveryMgmt.getTxnId(), SubFeatures.VIEW, stolenandRecoveryMgmt.getRoleType(),stolenandRecoveryMgmt.getRequestType(),0);
 			return stolenandRecoveryMgmt2;
 		} catch (Exception e) {
@@ -708,7 +749,7 @@ public class StolenAndRecoveryServiceImpl {
 
 	public ResponseCountAndQuantity getStolenAndRecoveryCount( long userId, Integer userTypeId, Integer featureId, String requestType, String userType ) {
 		List<StateMgmtDb> featureList = null;
-		List<Integer> status = new ArrayList<Integer>();
+		List<Integer> status = new ArrayList<>();
 		try {
 			logger.info("Going to get StolenAndRecovery count.");
 			featureList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId( featureId, userTypeId);
@@ -723,7 +764,7 @@ public class StolenAndRecoveryServiceImpl {
 				return stolenAndRecoveryRepository.getStolenandRecoveryCount( status, Integer.valueOf(requestType));
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			//throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+			
 			return new ResponseCountAndQuantity(0,0);
 		}
 	}
@@ -826,6 +867,10 @@ public class StolenAndRecoveryServiceImpl {
 				String mailTag = null;
 				String action = null;
 				String txnId = null;
+				if(!StateMachine.isStolenStatetransitionAllowed("CEIRSYSTEM", stolenandRecoveryMgmt.getFileStatus())) {
+					logger.info("state transition is not allowed." + consignmentUpdateRequest.getTxnId());
+					return new GenricResponse(3, "state transition is not allowed.", consignmentUpdateRequest.getTxnId());
+				}
 
 				if(consignmentUpdateRequest.getAction() == 0) {
 					action = SubFeatures.ACCEPT;
@@ -846,7 +891,11 @@ public class StolenAndRecoveryServiceImpl {
 						logger.warn("unknown request type received for stolen and recovery.");
 					}
 
-					stolenandRecoveryMgmt.setFileStatus(StolenStatus.PENDING_APPROVAL_FROM_CEIR_ADMIN.getCode());
+					if(stolenandRecoveryMgmt.getFileStatus() == StolenStatus.INIT.getCode()) {
+						stolenandRecoveryMgmt.setFileStatus(StolenStatus.PROCESSING.getCode());
+					}else {
+						stolenandRecoveryMgmt.setFileStatus(StolenStatus.PENDING_APPROVAL_FROM_CEIR_ADMIN.getCode());
+					}					
 
 				}else {
 					action = SubFeatures.REJECT;
@@ -893,7 +942,7 @@ public class StolenAndRecoveryServiceImpl {
 							user.getUsertype().getUsertypeName());
 					logger.info("Notfication have been saved.");
 				}
-				addInAuditTrail(Long.valueOf(stolenandRecoveryMgmt.getUserId()), stolenandRecoveryMgmt.getTxnId(), action, stolenandRecoveryMgmt.getRoleType(),stolenandRecoveryMgmt.getRequestType(),0);
+
 			}else {
 				logger.warn("Accept/reject of Stock not allowed to you.");
 				new GenricResponse(1, "Operation not Allowed", consignmentUpdateRequest.getTxnId());
@@ -903,6 +952,12 @@ public class StolenAndRecoveryServiceImpl {
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
+			
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", decideFeature(5L));
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.ACCEPT_REJECT);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, 0, bodyPlaceHolderMap);
+			
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
@@ -953,18 +1008,22 @@ public class StolenAndRecoveryServiceImpl {
 	private String decideFeature(int requestType) {
 		switch (requestType) {
 		case 0:
-			return decideFeature(5L);
+			return "Stolen";
+			//return decideFeature(5L);
 		case 1:
-			return decideFeature(5L);
+			return "Recovery";
+			// return decideFeature(5L);
 		case 2:
-			return decideFeature(7L);
+			return "Block";
+			//return decideFeature(7L);
 		case 3:
-			return decideFeature(7L);
+			return "Unblock";
+			// return decideFeature(7L);
 		default:
 			return null;
 		}
 	}
-	
+
 	private String decideFeature(Long id) {
 		return stakeholderfeatureServiceImpl.getFeatureNameById(id);
 	}

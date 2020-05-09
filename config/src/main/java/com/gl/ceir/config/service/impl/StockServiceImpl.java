@@ -14,6 +14,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import javax.annotation.PostConstruct;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +48,8 @@ import com.gl.ceir.config.model.UserProfile;
 import com.gl.ceir.config.model.Userrole;
 import com.gl.ceir.config.model.Usertype;
 import com.gl.ceir.config.model.WebActionDb;
+import com.gl.ceir.config.model.constants.Alerts;
+import com.gl.ceir.config.model.constants.ConsignmentStatus;
 import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.Features;
 import com.gl.ceir.config.model.constants.GenericMessageTags;
@@ -67,6 +71,7 @@ import com.gl.ceir.config.repository.UserProfileRepo;
 import com.gl.ceir.config.repository.UserProfileRepository;
 import com.gl.ceir.config.repository.UserRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
+import com.gl.ceir.config.service.businesslogic.StateMachine;
 import com.gl.ceir.config.specificationsbuilder.GenericSpecificationBuilder;
 import com.gl.ceir.config.specificationsbuilder.Joiner;
 import com.gl.ceir.config.transaction.StockTransaction;
@@ -82,6 +87,9 @@ public class StockServiceImpl {
 
 	private static final Logger logger = LogManager.getLogger(StockServiceImpl.class);
 
+	// This is set with @postconstruct
+	private String featureName;
+	
 	@Autowired
 	StokeDetailsRepository stokeDetailsRepository;
 
@@ -138,6 +146,9 @@ public class StockServiceImpl {
 	
 	@Autowired
 	StakeholderfeatureServiceImpl stakeholderfeatureServiceImpl;
+	
+	@Autowired
+	AlertServiceImpl alertServiceImpl;
 
 	public GenricResponse uploadStock(StockMgmt stockMgmt) {
 		boolean isStockAssignRequest = Boolean.FALSE;
@@ -222,14 +233,15 @@ public class StockServiceImpl {
 					logger.info("Invalid request for stock registeration.", stockMgmt.getTxnId());
 					return new GenricResponse(3, "Invalid request for stock registeration.", stockMgmt.getTxnId());
 				}
-				addInAuditTrail(user.getId(), stockMgmt.getTxnId(), SubFeatures.UPLOAD,stockMgmt.getRoleType());
+				addInAuditTrail(user.getId(), stockMgmt.getTxnId(), SubFeatures.UPLOAD, stockMgmt.getRoleType());
 			}else {
 				stockMgmt.setUser(new User().setId(new Long(stockMgmt.getUserId())));
-				addInAuditTrail(stockMgmt.getId(), stockMgmt.getTxnId(), SubFeatures.UPLOAD,stockMgmt.getRoleType());
+				addInAuditTrail(stockMgmt.getUserId(), stockMgmt.getTxnId(), SubFeatures.UPLOAD,stockMgmt.getRoleType());
 			}
 
 			WebActionDb webActionDb = new WebActionDb();
-			webActionDb.setFeature(stakeholderfeatureServiceImpl.getFeatureNameById(4L));
+			webActionDb.setFeature(WebActionDbFeature.STOCK.getName());
+			//webActionDb.setFeature(stakeholderfeatureServiceImpl.getFeatureNameById(4L));
 			webActionDb.setSubFeature(WebActionDbSubFeature.UPLOAD.getName());
 			webActionDb.setState(WebActionDbState.INIT.getCode());
 			webActionDb.setTxnId(stockMgmt.getTxnId());
@@ -262,11 +274,14 @@ public class StockServiceImpl {
 					return new GenricResponse(1, "Stock registeration have been failed.", stockMgmt.getTxnId());
 				}
 			}
-
-
-
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
+			
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", featureName);
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.REGISTER);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, stockMgmt.getUserId().intValue(), bodyPlaceHolderMap);
+			
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
@@ -278,6 +293,12 @@ public class StockServiceImpl {
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
+			
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", featureName);
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.VIEW);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, 0, bodyPlaceHolderMap);
+			
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
@@ -327,6 +348,12 @@ public class StockServiceImpl {
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
+			
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", featureName);
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.VIEW_ALL);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, filterRequest.getUserId(), bodyPlaceHolderMap);
+			
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
@@ -354,6 +381,12 @@ public class StockServiceImpl {
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
+			
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", featureName);
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.VIEW_ALL);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, filterRequest.getUserId(), bodyPlaceHolderMap);
+			
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
@@ -459,6 +492,12 @@ public class StockServiceImpl {
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
+			
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", featureName);
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.VIEW);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, filterRequest.getUserId(), bodyPlaceHolderMap);
+			
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
@@ -491,7 +530,8 @@ public class StockServiceImpl {
 				txnRecord.setDeleteFlag(0);
 
 				WebActionDb webActionDb = new WebActionDb();
-				webActionDb.setFeature(stakeholderfeatureServiceImpl.getFeatureNameById(4L));
+				webActionDb.setFeature(WebActionDbFeature.STOCK.getName());
+				// webActionDb.setFeature(stakeholderfeatureServiceImpl.getFeatureNameById(4L));
 				webActionDb.setSubFeature(WebActionDbSubFeature.DELETE.getName());
 				webActionDb.setState(WebActionDbState.INIT.getCode());
 				webActionDb.setTxnId(deleteObj.getTxnId());
@@ -507,6 +547,12 @@ public class StockServiceImpl {
 			}
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
+			
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", featureName);
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.DELETE);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, 0, bodyPlaceHolderMap);
+			
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
@@ -538,7 +584,8 @@ public class StockServiceImpl {
 			}
 
 			WebActionDb webActionDb = new WebActionDb();
-			webActionDb.setFeature(stakeholderfeatureServiceImpl.getFeatureNameById(4L));
+			webActionDb.setFeature(WebActionDbFeature.STOCK.getName());
+			// webActionDb.setFeature(stakeholderfeatureServiceImpl.getFeatureNameById(4L));
 			webActionDb.setSubFeature(WebActionDbSubFeature.UPDATE.getName());
 			webActionDb.setState(WebActionDbState.INIT.getCode());
 			webActionDb.setTxnId(distributerManagement.getTxnId());
@@ -607,6 +654,12 @@ public class StockServiceImpl {
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
+			
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", featureName);
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.EXPORT);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, filterRequest.getUserId(), bodyPlaceHolderMap);
+			
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}finally {
 			try {
@@ -680,6 +733,12 @@ public class StockServiceImpl {
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
+			
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", featureName);
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.EXPORT);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, filterRequest.getUserId(), bodyPlaceHolderMap);
+			
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}finally {
 			try {
@@ -796,6 +855,11 @@ public class StockServiceImpl {
 				String action = null;
 				String txnId = null;
 				String receiverUserType = stockMgmt.getUserType();
+				
+				if(!StateMachine.isStockStatetransitionAllowed("CEIRSYSTEM", stockMgmt.getStockStatus())) {
+					logger.info("state transition is not allowed." + consignmentUpdateRequest.getTxnId());
+					return new GenricResponse(3, "state transition is not allowed.", consignmentUpdateRequest.getTxnId());
+				}
 
 				if(consignmentUpdateRequest.getAction() == 0) {
 					action = SubFeatures.ACCEPT;
@@ -805,8 +869,13 @@ public class StockServiceImpl {
 
 					placeholderMap.put("<First name>", firstName);
 					placeholderMap.put("<Txn id>", stockMgmt.getTxnId());
+					
+					if(stockMgmt.getStockStatus() == StockStatus.UPLOADING.getCode()) {
+						stockMgmt.setStockStatus(StockStatus.PROCESSING.getCode());
+					}else {
+						stockMgmt.setStockStatus(StockStatus.SUCCESS.getCode());
+					}
 
-					stockMgmt.setStockStatus(StockStatus.SUCCESS.getCode());
 				}else {
 					action = SubFeatures.REJECT;
 					mailTag = "STOCK_PROCESS_FAILED_TO_USER_MAIL";
@@ -838,13 +907,22 @@ public class StockServiceImpl {
 							"Users");
 					logger.info("Notfication have been saved.");
 
-					logger.info(consignmentUpdateRequest);
-					addInAuditTrail(Long.valueOf(consignmentUpdateRequest.getUserId()), 
-							consignmentUpdateRequest.getTxnId(), action, consignmentUpdateRequest.getRoleType());
+					logger.debug(consignmentUpdateRequest);
+					/*
+					 * addInAuditTrail(Long.valueOf(consignmentUpdateRequest.getUserId()),
+					 * consignmentUpdateRequest.getTxnId(), action,
+					 * consignmentUpdateRequest.getRoleType());
+					 */
 				}
 
 			}else {
 				logger.warn("Accept/reject of Stock not allowed to you.");
+				
+				Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+				bodyPlaceHolderMap.put("<feature>", featureName);
+				bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.ACCEPT_REJECT);
+				alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, 0, bodyPlaceHolderMap);
+				
 				new GenricResponse(1, "Operation not Allowed", consignmentUpdateRequest.getTxnId());
 			}
 
@@ -879,7 +957,7 @@ public class StockServiceImpl {
 		User requestUser = null;
 		try {
 			requestUser = userRepository.getById(userId);
-			if(requestUser.getUsertype().getId() ==17) {
+			if(requestUser.getUsertype().getId() == 17) {
 				requestUser.getUsertype().setUsertypeName("End User");
 			}
 			logger.info("User Details"+requestUser);
@@ -903,5 +981,10 @@ public class StockServiceImpl {
 			logger.error("Could not find the user information");
 		}
 
+	}
+	
+	@PostConstruct
+	public void setFeatureName() {
+		featureName = stakeholderfeatureServiceImpl.getFeatureNameById(4L);
 	}
 }

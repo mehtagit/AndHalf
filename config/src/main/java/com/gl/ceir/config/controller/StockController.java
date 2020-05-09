@@ -31,24 +31,24 @@ public class StockController {
 
 	@Autowired
 	StockServiceImpl stackholderServiceImpl;
-
+	
 	@Autowired
 	FieldValidationServiceImpl fieldValidationServiceImpl;
-
+	
 	//new GenricResponse(5, "Failed to validate fields", "", data);
 
 	@ApiOperation(value = "Add Retailer And Distributer Info.", response = GenricResponse.class)
 	@RequestMapping(path = "/Stock/upload", method = RequestMethod.POST)
 	public GenricResponse uploadStock(@RequestBody StockMgmt stockMgmt){
 
-		// ValidationOutput validationOutput = fieldValidationServiceImpl.validateFieldsByObject(stockMgmt);
-		// if(validationOutput.getIsValid()) {
-		logger.info("Upload Stock Request =" + stockMgmt);
+		/*ValidationOutput validationOutput = fieldValidationServiceImpl.validateFieldsByObject(stockMgmt);
+		if(validationOutput.getIsValid()) {*/
+			logger.info("Upload Stock Request =" + stockMgmt);
+			
+			GenricResponse genricResponse =	stackholderServiceImpl.uploadStock(stockMgmt);
 
-		GenricResponse genricResponse =	stackholderServiceImpl.uploadStock(stockMgmt);
-
-		logger.info("Upload Stock Response ="+genricResponse.toString());
-		return genricResponse;
+			logger.info("Upload Stock Response ="+genricResponse.toString());
+			return genricResponse;
 		/*
 		 * }else { return new GenricResponse(5, "Failed to validate fields", "",
 		 * validationOutput.getInvalidFields()); }
@@ -65,7 +65,7 @@ public class StockController {
 		GenricResponse genricResponse =	stackholderServiceImpl.updateStockInfo(stockMgmt);
 
 		logger.info("Stock Update Response = " + genricResponse);
-
+		
 		return genricResponse;
 
 	}
@@ -102,7 +102,7 @@ public class StockController {
 			FileDetails fileDetails = stackholderServiceImpl.getFilteredStockInFileV2(filterRequest);
 			mapping = new MappingJacksonValue(fileDetails);
 		}
-
+		
 		logger.info("Response Filtered Record Details = " + mapping);
 
 		return mapping;

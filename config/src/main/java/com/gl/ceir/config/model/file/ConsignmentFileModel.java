@@ -4,50 +4,49 @@ import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvBindByPosition;
 
 public class ConsignmentFileModel {
-
-	@CsvBindByName(column = "Txn Id")
-	@CsvBindByPosition(position = 0)
-	private String txnId;
-	@CsvBindByName(column = "Status")
-	@CsvBindByPosition(position = 1)
-	private String consignmentStatus;
-	@CsvBindByName(column = "Supplier Name")
-	@CsvBindByPosition(position = 2)
-	private String supplierName;
-	@CsvBindByName(column = "Tax Status")
-	@CsvBindByPosition(position = 3)
-	private String taxPaidStatus;
-	@CsvBindByName(column = "File Name")
-	@CsvBindByPosition(position = 4)
-	private String fileName;
-	@CsvBindByName(column = "IMEI Quantity")
-	@CsvBindByPosition(position = 5)
-	private Integer quantity;
 	@CsvBindByName(column = "Create On")
-	@CsvBindByPosition(position = 6)
+	@CsvBindByPosition(position = 0)
 	private String createdOn;
 	@CsvBindByName(column = "Modified On")
-	@CsvBindByPosition(position = 7)
+	@CsvBindByPosition(position = 1)
 	private String modifiedOn;
-
+	@CsvBindByName(column = "Txn Id")
+	@CsvBindByPosition(position = 2)
+	private String txnId;
+	@CsvBindByName(column = "Supplier Name")
+	@CsvBindByPosition(position = 3)
+	private String supplierName;
+	@CsvBindByName(column = "Status")
+	@CsvBindByPosition(position = 4)
+	private String consignmentStatus;
+	@CsvBindByName(column = "Tax Status")
+	@CsvBindByPosition(position = 5)
+	private String taxPaidStatus;
+	@CsvBindByName(column = "IMEI Quantity")
+	@CsvBindByPosition(position = 6)
+	private Integer quantity;	
 	@CsvBindByName(column = "Device Quantity")
-	@CsvBindByPosition(position = 8)
+	@CsvBindByPosition(position = 7)
 	private Integer deviceQuantity;
+	@CsvBindByName(column = "File Name")
+	@CsvBindByPosition(position = 8)
+	private String fileName;
+	
 	public ConsignmentFileModel() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ConsignmentFileModel(String consignmentStatus, String txnId, String supplierName, 
-			String taxPaidStatus, String fileName, String createdOn, String modifiedOn, Integer quantity,Integer deviceQuantity) {
-		this.consignmentStatus = consignmentStatus;
-		this.txnId = txnId;
-		this.supplierName = supplierName;
-		this.taxPaidStatus = taxPaidStatus;
-		this.fileName = fileName;
+	public ConsignmentFileModel(String createdOn, String modifiedOn,String txnId, String supplierName,String consignmentStatus,  
+			String taxPaidStatus,  Integer quantity,Integer deviceQuantity,String fileName) {
 		this.createdOn = createdOn;
 		this.modifiedOn = modifiedOn;
+		this.txnId = txnId;
+		this.supplierName = supplierName;
+		this.consignmentStatus = consignmentStatus;
+		this.taxPaidStatus = taxPaidStatus;
 		this.quantity = quantity;
 		this.deviceQuantity=deviceQuantity;
+		this.fileName = fileName;
 	}
 
 	public String getConsignmentStatus() {

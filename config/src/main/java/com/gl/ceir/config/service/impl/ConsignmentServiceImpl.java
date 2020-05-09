@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import javax.annotation.PostConstruct;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +47,7 @@ import com.gl.ceir.config.model.SystemConfigurationDb;
 import com.gl.ceir.config.model.User;
 import com.gl.ceir.config.model.UserProfile;
 import com.gl.ceir.config.model.WebActionDb;
+import com.gl.ceir.config.model.constants.Alerts;
 import com.gl.ceir.config.model.constants.ConsignmentStatus;
 import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.Features;
@@ -85,6 +88,9 @@ public class ConsignmentServiceImpl {
 	private static final Logger logger = LogManager.getLogger(ConsignmentServiceImpl.class);
 
 	private final String CEIRSYSTEM = "CEIRSYSTEM";
+	
+	// This is set with @postconstruct
+	private String featureName;
 
 	@Autowired
 	private ConsignmentRepository consignmentRepository;
@@ -145,17 +151,21 @@ public class ConsignmentServiceImpl {
 
 	@Autowired
 	UserFeignClient userFeignClient;
-	
+
 	@Autowired
 	StakeholderfeatureServiceImpl stakeholderfeatureServiceImpl;
+		
+	@Autowired
+	AlertServiceImpl alertServiceImpl;
 
 	public GenricResponse registerConsignment(ConsignmentMgmt consignmentFileRequest) {
 
 		try {
 			Long importerId = Long.valueOf(consignmentFileRequest.getUserId());
-			
+
 			WebActionDb webActionDb = new WebActionDb();
-			webActionDb.setFeature(stakeholderfeatureServiceImpl.getFeatureNameById(3L));
+			webActionDb.setFeature(WebActionDbFeature.CONSIGNMENT.getName());
+			// webActionDb.setFeature(stakeholderfeatureServiceImpl.getFeatureNameById(3L));
 			webActionDb.setSubFeature(WebActionDbSubFeature.CONSIGNMENT_REGISTER.getName());
 			webActionDb.setState(WebActionDbState.INIT.getCode());
 			webActionDb.setTxnId(consignmentFileRequest.getTxnId());
@@ -174,6 +184,12 @@ public class ConsignmentServiceImpl {
 
 		}catch (Exception e) {
 			logger.error(e.getMessage(), e);
+			
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", featureName);
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.REGISTER);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, consignmentFileRequest.getUserId(), bodyPlaceHolderMap);
+			
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
@@ -184,6 +200,12 @@ public class ConsignmentServiceImpl {
 			return consignmentRepository.getByUserIdOrderByIdDesc(importerId);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
+			
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", featureName);
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.VIEW_ALL);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, 0, bodyPlaceHolderMap);
+			
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
@@ -198,6 +220,12 @@ public class ConsignmentServiceImpl {
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
+			
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", featureName);
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.VIEW_ALL);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, consignmentMgmt.getUserId(), bodyPlaceHolderMap);
+			
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 
@@ -207,10 +235,10 @@ public class ConsignmentServiceImpl {
 		try {
 
 			List<StateMgmtDb> statusList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
-			logger.info("statusList " + statusList);
+			logger.debug("statusList " + statusList);
 
 			List<ConsignmentMgmt> consignmentMgmts = consignmentRepository.findAll(buildSpecification(filterRequest, statusList).build(), new Sort(Sort.Direction.DESC, "modifiedOn"));
-			logger.info("consignmentMgmts " + consignmentMgmts);
+			logger.debug("consignmentMgmts " + consignmentMgmts);
 
 			for(ConsignmentMgmt consignmentMgmt2 : consignmentMgmts) {
 
@@ -229,6 +257,12 @@ public class ConsignmentServiceImpl {
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
+			
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", featureName);
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.VIEW_ALL);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, filterRequest.getUserId(), bodyPlaceHolderMap);
+			
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
@@ -274,6 +308,12 @@ public class ConsignmentServiceImpl {
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
+			
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", featureName);
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.VIEW_ALL);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, consignmentMgmt.getUserId(), bodyPlaceHolderMap);
+			
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 
@@ -303,6 +343,12 @@ public class ConsignmentServiceImpl {
 			return consignmentMgmt;
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
+			
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", featureName);
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.VIEW);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, 0, bodyPlaceHolderMap);
+			
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
@@ -352,7 +398,8 @@ public class ConsignmentServiceImpl {
 				}
 
 				WebActionDb webActionDb = new WebActionDb();
-				webActionDb.setFeature(stakeholderfeatureServiceImpl.getFeatureNameById(3L));
+				webActionDb.setFeature(WebActionDbFeature.CONSIGNMENT.getName());
+				// webActionDb.setFeature(stakeholderfeatureServiceImpl.getFeatureNameById(3L));
 				webActionDb.setSubFeature(WebActionDbSubFeature.UPDATE.getName());
 				webActionDb.setState(WebActionDbState.INIT.getCode());
 				webActionDb.setTxnId(consignmentFileRequest.getTxnId());
@@ -365,12 +412,19 @@ public class ConsignmentServiceImpl {
 			}				
 		}catch (Exception e) {
 			logger.error(e.getMessage(), e);
+			
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", featureName);
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.UPDATE);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, consignmentFileRequest.getUserId(), bodyPlaceHolderMap);
+			
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	} 
 
 	@Transactional
 	public GenricResponse deleteConsigmentInfo(ConsignmentUpdateRequest consignmentUpdateRequest) {
+		Integer userId = consignmentUpdateRequest.getUserId().intValue();
 		try {
 			if(Objects.isNull(consignmentUpdateRequest.getTxnId())) {
 				logger.info("TxnId is null in the request." + consignmentUpdateRequest.getTxnId());
@@ -412,9 +466,10 @@ public class ConsignmentServiceImpl {
 			consignmentMgmt.setUserName(consignmentUpdateRequest.getUserName());
 			consignmentMgmt.setUserType(consignmentUpdateRequest.getUserType());
 			consignmentMgmt.setRoleType(consignmentUpdateRequest.getRoleType());
-			
+
 			WebActionDb webActionDb = new WebActionDb();
-			webActionDb.setFeature(stakeholderfeatureServiceImpl.getFeatureNameById(3L));
+			webActionDb.setFeature(WebActionDbFeature.CONSIGNMENT.getName());
+			//webActionDb.setFeature(stakeholderfeatureServiceImpl.getFeatureNameById(3L));
 			webActionDb.setSubFeature(WebActionDbSubFeature.DELETE.getName());
 			webActionDb.setState(WebActionDbState.INIT.getCode());
 			webActionDb.setTxnId(consignmentUpdateRequest.getTxnId());
@@ -429,6 +484,12 @@ public class ConsignmentServiceImpl {
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
+			
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", featureName);
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.DELETE);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, userId, bodyPlaceHolderMap);
+			
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
@@ -496,15 +557,16 @@ public class ConsignmentServiceImpl {
 					}
 
 					else if("CUSTOM".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())) {
-						
+
 						webActionDb = new WebActionDb();
-						webActionDb.setFeature(stakeholderfeatureServiceImpl.getFeatureNameById(3L));
-						webActionDb.setSubFeature(stakeholderfeatureServiceImpl.getFeatureNameById(3L));
+						webActionDb.setFeature(WebActionDbFeature.CONSIGNMENT.getName());
+						// webActionDb.setSubFeature(stakeholderfeatureServiceImpl.getFeatureNameById(3L));
+						webActionDb.setSubFeature(WebActionDbSubFeature.APPROVE.getName());
 						webActionDb.setState(WebActionDbState.INIT.getCode());
 						webActionDb.setTxnId(consignmentUpdateRequest.getTxnId());
-						
-						consignmentMgmt.setCustomID(consignmentUpdateRequest.getUserId());
-						
+
+					//	consignmentMgmt.setCustomID(consignmentUpdateRequest.getUserId());
+
 						if(!StateMachine.isConsignmentStatetransitionAllowed("CUSTOM", consignmentMgmt.getConsignmentStatus())) {
 							logger.info("state transition is not allowed." + consignmentUpdateRequest.getTxnId());
 							return new GenricResponse(3, "state transition is not allowed.", consignmentUpdateRequest.getTxnId());
@@ -808,14 +870,9 @@ public class ConsignmentServiceImpl {
 				}
 			}
 			//TODO check if CUSTOM approved the consignment than we need to add an entry in webaction
-			/*
-			 * consignmentMgmt.setUserName(consignmentUpdateRequest.getUserName());
-			 * consignmentMgmt.setUserType(consignmentUpdateRequest.getRoleType());
-			 * consignmentMgmt.setUserTypeId(consignmentUpdateRequest.getRoleTypeUserId().
-			 * intValue());
-			 * consignmentMgmt.setFeatureId(consignmentUpdateRequest.getFeatureId());
-			 * consignmentMgmt.setRoleType(consignmentUpdateRequest.getRoleType());
-			 */
+
+			consignmentMgmt.setFeatureId(consignmentUpdateRequest.getFeatureId());
+			consignmentMgmt.setRoleType(consignmentUpdateRequest.getRoleType());
 			if(consignmentTransaction.executeUpdateStatusConsignment(consignmentMgmt,webActionDb)) {
 				logger.info("Consignment status have Update SuccessFully." + consignmentUpdateRequest.getTxnId());
 				return new GenricResponse(0, "Consignment status have Update SuccessFully.", consignmentUpdateRequest.getTxnId());
@@ -825,6 +882,12 @@ public class ConsignmentServiceImpl {
 			}
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
+			
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", featureName);
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.DELETE);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, consignmentUpdateRequest.getUserId().intValue(), bodyPlaceHolderMap);
+			
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
@@ -863,13 +926,16 @@ public class ConsignmentServiceImpl {
 			if( !consignmentMgmts.isEmpty() ) {
 				fileRecords = new ArrayList<>();
 				for( ConsignmentMgmt consignmentMgmt : consignmentMgmts ) {
-					cfm = new ConsignmentFileModel(consignmentMgmt.getStateInterp(), 
-							consignmentMgmt.getTxnId(), 
-							consignmentMgmt.getSupplierName(), consignmentMgmt.getTaxInterp(), consignmentMgmt.getFileName(), 
+					cfm = new ConsignmentFileModel(
 							consignmentMgmt.getCreatedOn().format(dtf),
 							consignmentMgmt.getModifiedOn().format(dtf),
-							consignmentMgmt.getQuantity(),consignmentMgmt.getDeviceQuantity());
-
+							consignmentMgmt.getTxnId(),
+							consignmentMgmt.getSupplierName(),
+							consignmentMgmt.getStateInterp(), 
+							consignmentMgmt.getTaxInterp(), 
+							consignmentMgmt.getQuantity(),
+							consignmentMgmt.getDeviceQuantity(),
+							consignmentMgmt.getFileName());
 					fileRecords.add(cfm);
 				}
 
@@ -890,6 +956,12 @@ public class ConsignmentServiceImpl {
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
+			
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", featureName);
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.EXPORT);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, filterRequest.getUserId(), bodyPlaceHolderMap);
+			
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}finally {
 			try {
@@ -999,12 +1071,10 @@ public class ConsignmentServiceImpl {
 			 cmsb.orSearch(new SearchCriteria("expectedArrivaldate", consignmentMgmt.getSearchString(), SearchOperation.EQUALITY, Datatype.DATE));
 			 cmsb.orSearch(new SearchCriteria("expectedDispatcheDate", consignmentMgmt.getSearchString(), SearchOperation.EQUALITY, Datatype.DATE));		
 			 cmsb.orSearch(new SearchCriteria("totalPrice", consignmentMgmt.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
-			 cmsb.orSearch(new SearchCriteria("remarks",consignmentMgmt.getSearchString(), SearchOperation.LIKE,Datatype.STRING)); 
-			 cmsb.orSearch(new SearchCriteria("userId",consignmentMgmt.getSearchString(), SearchOperation.LIKE, Datatype.STRING)); 
 			 cmsb.orSearch(new SearchCriteria("deviceQuantity",consignmentMgmt.getSearchString(), SearchOperation.LIKE,Datatype.STRING));
-			 cmsb.orSearch(new SearchCriteria("customID",consignmentMgmt.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
-			 cmsb.orSearch(new SearchCriteria("ceirAdminID",consignmentMgmt.getSearchString(), SearchOperation.LIKE, Datatype.STRING)); 
-			 cmsb.orSearch(new SearchCriteria("drtID",consignmentMgmt.getSearchString(), SearchOperation.LIKE,Datatype.STRING));
+			 cmsb.orSearch(new SearchCriteria("consignmentNumber",consignmentMgmt.getSearchString(), SearchOperation.LIKE, Datatype.STRING)); 
+			 cmsb.orSearch(new SearchCriteria("supplierId",consignmentMgmt.getSearchString(), SearchOperation.LIKE,Datatype.STRING));
+
 		 }
 
 		 return cmsb;
@@ -1055,6 +1125,9 @@ public class ConsignmentServiceImpl {
 			return false;
 		}
 	}
+	
+	@PostConstruct
+	public void setFeatureName() {
+		featureName = stakeholderfeatureServiceImpl.getFeatureNameById(3L);
+	}
 }
-
-
