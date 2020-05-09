@@ -60,7 +60,8 @@ public class EmailUtil {
 			messages = new SimpleMailMessage[noOfElements];
 			batchSize=noOfElements;
 			log.info("batch size: "+batchSize);
-			log.info("msg array size: "+messages);
+			//??messages
+			//log.info("msg array size: "+messages);
 		}
 		else {
 			logger.info("if total mails greater than or equals to batch size");
@@ -69,7 +70,9 @@ public class EmailUtil {
 			log.info("batch size: "+batchSize);
 		}
 	}
-	
+	public void setIndexZero() {
+		messageIndex = 0;
+	}
 	public void increaseBatchSize() {
 		batchSize=batchSize+1;
 		log.info("batch size now: "+batchSize);
@@ -100,6 +103,7 @@ public class EmailUtil {
 		try {
 			logger.info("adding emails into the array");
 			 messages[messageIndex++] = simpleMailMessage;
+			 logger.info("Message: "+messages[messageIndex-1]);
 			    if (messageIndex == batchSize) {
 			    	logger.info("if batch size equals to no of mails added into array");
 			    	logger.info("now going to send emails");
@@ -125,16 +129,16 @@ public class EmailUtil {
 			
 						return Boolean.FALSE;
 			    	}
-			    	catch(MailException  send ) {
+			    	catch(MailParseException  send ) {
 			    		log.info("inside other mail exceptions");
-				        logger.info("if emails fail to send: "+batchSize);
+				        logger.info("if emails fail to parse: "+batchSize);
 				        int difference=totalData-dataRead;
 				        setBatchSize(batchSize,difference);
 			//	        logger.info("now batchSize is "+batchSize);
 				        messageIndex = 0;
-						RunningAlertDb alertDb=new RunningAlertDb("alert009","error occurs while sending email",0);
+						RunningAlertDb alertDb=new RunningAlertDb("alert009","error occurs while parsing email",0);
 						alertDbRepo.saveAlertDb(alertDb);
-						logger.info("error occur while send email");
+						logger.info("error occur while parsing email");
 						logger.info(send.getMessage());
 						logger.info(send.toString());
 						return Boolean.FALSE;
@@ -148,11 +152,13 @@ public class EmailUtil {
 				catch(Exception e) {
 					log.info(e.toString());
 				}
+			    logger.info("Send Email Status TRUE");
 			return Boolean.TRUE;
 		}catch (Exception e) {
 			logger.info("error occur");
 			logger.error(e.getMessage());
 			logger.info(e.toString());
+			logger.info("Send Email Status FALSE");
 			return Boolean.FALSE;
 		}
 	}

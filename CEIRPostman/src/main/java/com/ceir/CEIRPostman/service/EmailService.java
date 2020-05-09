@@ -196,10 +196,6 @@ public class EmailService implements Runnable {
 							} else {
 								User user = userRepoService.getById(notification.getUserId());
 								toEmail = user.getUserProfile().getEmail();
-								List<Long> usertypes = new ArrayList<Long>();
-								usertypes.add(4l);
-								usertypes.add(5l);
-								usertypes.add(6l);
 								if(Objects.nonNull(notification.getAuthorityStatus())) {
 									log.info("authority status: "+notification.getAuthorityStatus());
 								if(notification.getAuthorityStatus()==1) {
@@ -220,6 +216,7 @@ public class EmailService implements Runnable {
 								log.info("toEmail  " + toEmail);
 								if (emailUtil.emailValidator(toEmail)) {
 									String message=body.replace("\\n", "\n");
+									log.info("authorityEmail: "+authorityEmail+" fromEmail: "+fromEmail.getValue()+" getSubject: "+messageDb.getSubject());
 									emailStatus = emailUtil.sendEmail(toEmail, fromEmail.getValue(),
 											notification.getSubject(), body, notificationData.size(), sNo,
 											sleepTimeinMilliSec);
@@ -235,12 +232,13 @@ public class EmailService implements Runnable {
 									}
 
 										if (authorityEmail != null && !authorityEmail.isEmpty()) {
-
-											if (emailUtil.emailValidator(toEmail)) {
+//??to email
+											if (emailUtil.emailValidator(authorityEmail)) {
 												body=body.replace("\\n", "\n");
 												String content=messageDb.getValue().replace("\\n", "\n");
 												message =content +  "\n" +body;
 												log.info("message content in case of authority email: " + message);
+												log.info("authorityEmail: "+authorityEmail+" fromEmail: "+fromEmail.getValue()+"getSubject: "+messageDb.getSubject());
 												emailStatus = emailUtil.sendEmail(authorityEmail, fromEmail.getValue(),
 														messageDb.getSubject(), message, notificationData.size(), sNo,
 														sleepTimeinMilliSec);
@@ -288,6 +286,7 @@ public class EmailService implements Runnable {
 
 					log.info("total mail sent=  " + totalMailsent);
 					log.info("email fail to send: " + totalMailNotsent);
+					emailUtil.setIndexZero();
 				} else {
 					log.info("notification data is  empty");
 					log.info(" so no email is pending to send");
