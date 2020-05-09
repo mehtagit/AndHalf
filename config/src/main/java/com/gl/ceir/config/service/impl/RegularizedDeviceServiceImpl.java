@@ -96,7 +96,7 @@ public class RegularizedDeviceServiceImpl {
 
 	@Autowired
 	AuditTrailRepository auditTrailRepository;
-
+  
 	@Autowired
 	EndUserDbRepository endUserDbRepository;
 
@@ -309,9 +309,11 @@ public class RegularizedDeviceServiceImpl {
 				csvWriter.write(fileRecords);
 			}
 
-		User user=new User();
+			// Save in audit.
+			// Save in audit.
 			String username="";
 			 int userId=0;
+			 User user=new User();
 			if(Objects.nonNull(filterRequest.getUserType()))
 			{
 
@@ -326,8 +328,6 @@ public class RegularizedDeviceServiceImpl {
 					userId=filterRequest.getUserId();
 				}
 			}
-       
-        
 			AuditTrail auditTrail = new AuditTrail(userId, 
 					username, 
 					Long.valueOf(filterRequest.getUserTypeId()), 
@@ -625,15 +625,20 @@ public class RegularizedDeviceServiceImpl {
             long userId=0;
             String subFeature="";
             String username="";
-			RegularizeDeviceDb regularizeDeviceDb = regularizedDeviceDbRepository.getByFirstImei(ceirActionRequest.getImei1());
-			logger.debug("Accept/Reject regularized Devices : " + regularizeDeviceDb);
-
-			endUserDB = endUserDbRepository.getByNid(regularizeDeviceDb.getNid());
-
-			placeholders.put("<Txn id>", regularizeDeviceDb.getTxnId());
-			placeholders.put("<First name>", endUserDB.getFirstName());
+			RegularizeDeviceDb regularizeDeviceDb =new RegularizeDeviceDb();
 
 			if("CEIRADMIN".equalsIgnoreCase(ceirActionRequest.getUserType())){
+				regularizeDeviceDb=regularizedDeviceDbRepository.getByFirstImei(ceirActionRequest.getImei1());
+				logger.debug("Accept/Reject regularized Devices : " + regularizeDeviceDb);
+	            if(Objects.isNull(regularizeDeviceDb))
+	            {
+	            	return new GenricResponse(1, "First imei is incorrect", "");            	
+	            }
+				endUserDB = endUserDbRepository.getByNid(regularizeDeviceDb.getNid());
+
+				placeholders.put("<Txn id>", regularizeDeviceDb.getTxnId());
+				placeholders.put("<First name>", endUserDB.getFirstName());
+
 			userId=ceirActionRequest.getUserId();
 				userTypeId=8;
                 if(Objects.nonNull(ceirActionRequest.getUsername())) {
@@ -678,6 +683,17 @@ public class RegularizedDeviceServiceImpl {
 				}
 			}
 			else if("CEIRSYSTEM".equalsIgnoreCase(ceirActionRequest.getUserType())){
+				regularizeDeviceDb=regularizedDeviceDbRepository.getByTxnId(ceirActionRequest.getTxnId());
+				logger.debug("Accept/Reject regularized Devices : " + regularizeDeviceDb);
+	            if(Objects.isNull(regularizeDeviceDb))
+	            {
+	            	return new GenricResponse(1, "transaction id is incorrect", "");            	
+	            }
+				endUserDB = endUserDbRepository.getByNid(regularizeDeviceDb.getNid());
+
+				placeholders.put("<Txn id>", regularizeDeviceDb.getTxnId());
+				placeholders.put("<First name>", endUserDB.getFirstName());
+
 				userTypeId=0;
 				if(ceirActionRequest.getAction() == 0) {
 					regularizeDeviceDb.setStatus(RegularizeDeviceStatus.PENDING_APPROVAL_FROM_CEIR_ADMIN.getCode());
@@ -838,7 +854,7 @@ for(User userData:user) {
 			specificationBuilder.with(new SearchCriteria("nid", filterRequest.getNid(), SearchOperation.EQUALITY, Datatype.STRING));
 
 		if(Objects.nonNull(filterRequest.getStartDate()) && !filterRequest.getStartDate().isEmpty())
- 			specificationBuilder.with(new SearchCriteria("createdOn", filterRequest.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
+ 			specificationBuilder.with(new SearchCriteria("createdO[EmailService.javan", filterRequest.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
         
 			if(Objects.nonNull(filterRequest.getUserTypeId())) {
             if(filterRequest.getUserTypeId()==18)		
