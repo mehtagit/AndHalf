@@ -321,7 +321,6 @@ public class CEIRFeatureFileFunctions {
         String query = "select value from system_configuration_db where tag='" + apiURI + "'";
 
         try {
-
             logger.info("Query is " + query);
             logger.info("............\n    " + responseBody + " ");
             logger.info("............");
@@ -330,13 +329,11 @@ public class CEIRFeatureFileFunctions {
             while (rs1.next()) {
                 tag = rs1.getString("value");
             }
-            ;
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
             try {
                 stmt.close();
-                ;
             } catch (Exception e) {
                 logger.info("errror" + e);
             }
@@ -372,11 +369,9 @@ public class CEIRFeatureFileFunctions {
             result = sb.toString();
             in.close();
             logger.info("OUTPUT result is .." + result);
-        } catch (IOException e) {
-            logger.info("errror" + e);
-
+        } catch (Exception e) {
+            logger.info("error " + e);
         }
-
     }
 
     public HttpURLConnection getHttpConnection(String url, String type) {

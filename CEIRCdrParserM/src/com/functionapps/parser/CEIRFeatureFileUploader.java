@@ -26,9 +26,11 @@ public class CEIRFeatureFileUploader {
         Connection conn = new com.functionapps.db.MySQLConnection().getConnection();
         CEIRFeatureFileFunctions ceirfunction = new CEIRFeatureFileFunctions();
         HashMap<String, String> feature_file_mapping = new HashMap<String, String>();
+//        String feature = null;
         ResultSet file_details = ceirfunction.getFileDetails(conn, 0);  //select * from web_action_db limit 1 
         try {
             while (file_details.next()) {
+//                feature = file_details.getString("feature").replaceAll("\\s", "");
                 logger.info("  FEATURE.." + file_details.getString("feature"));   // add usertype name 
                  if (file_details.getString("feature").equalsIgnoreCase("Register Device") || file_details.getString("feature").equalsIgnoreCase("Update Visa")) {
                     logger.info(" Feature  Register Device / Visa Update. Only Web action Db state Update");
@@ -42,8 +44,9 @@ public class CEIRFeatureFileUploader {
                 feature_file_management = ceirfunction.getFeatureFileManagement(conn, feature_file_mapping.get("mgnt_table_db"), file_details.getString("txn_id"));   //select * from " + management_db + " 
                 if (file_details.getString("sub_feature").equalsIgnoreCase("Register") && !(feature_file_management.get("modified_on").equals(feature_file_management.get("created_on")))) {
                     ceirfunction.updateFeatureFileStatus(conn, file_details.getString("txn_id"), 4, file_details.getString("feature"), file_details.getString("sub_feature")); // update web_action_db           
-                    ceirfunction.UpdateStatusViaApi(conn, file_details.getString("txn_id"), 1, file_details.getString("feature"));
-                    logger.info("  It is regsiter and different dates,, means it is modified  so we remove it");
+                    ceirfunction.UpdateStatusViaApi(conn, file_details.getString("txn_id"), 1,file_details.getString("feature"));
+                    ceirfunction.updateFeatureManagementStatus(conn, file_details.getString("txn_id"),  2, feature_file_mapping.get("mgnt_table_db"), file_details.getString("feature"));
+                   logger.info("  It is regsiter and different dates,, means it is modified  so we remove it");
                     break;
                 }
                
@@ -83,12 +86,11 @@ public class CEIRFeatureFileUploader {
                     }
                     if (file_details.getString("sub_feature").equalsIgnoreCase("register") || file_details.getString("sub_feature").equalsIgnoreCase("update") || file_details.getString("sub_feature").equalsIgnoreCase("upload")) {
                         logger.info("Sub State :.... " + file_details.getString("sub_feature") + " Only Web action State to be update ");
-                        rawDataResult = hfr.readConvertedFeatureFile(conn, feature_file_management.get("file_name"), complete_file_path, file_details.getString("feature"), basePath, raw_upload_set_no, file_details.getString("txn_id"), file_details.getString("sub_feature"), feature_file_mapping.get("mgnt_table_db"), user_type);
+                       rawDataResult = hfr.readConvertedFeatureFile(conn, feature_file_management.get("file_name"), complete_file_path, file_details.getString("feature"), basePath, raw_upload_set_no, file_details.getString("txn_id"), file_details.getString("sub_feature"), feature_file_mapping.get("mgnt_table_db"), user_type);
                     }
                 } else {
                     logger.info("No File Found.. ");
                     if (file_details.getString("feature").equalsIgnoreCase("TYPE_APPROVED") && (file_details.getString("sub_feature").equalsIgnoreCase("register") || file_details.getString("sub_feature").equalsIgnoreCase("register"))) {
-
                         ceirfunction.updateFeatureManagementStatus(conn, file_details.getString("txn_id"), 1, feature_file_mapping.get("mgnt_table_db"), file_details.getString("feature"));
                         ceirfunction.updateFeatureFileStatus(conn, file_details.getString("txn_id"), 2, file_details.getString("feature"), file_details.getString("sub_feature")); // update web_action_db    
                     } else {

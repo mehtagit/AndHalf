@@ -956,7 +956,7 @@ public class HexFileReader {
                 CEIRFeatureFileFunctions ceirfunction = new CEIRFeatureFileFunctions();
                 ceirfunction.updateFeatureFileStatus(conn, txn_id, 2, main_type, subfeature); // update web_action_db 
                  ceirfunction.UpdateStatusViaApi(conn, txn_id, 0,    main_type ); 
-           //     ceirfunction.updateFeatureManagementStatus(conn, txn_id, 1, management_table, main_type);      // 1 for processing
+               ceirfunction.updateFeatureManagementStatus(conn, txn_id, 1, management_table, main_type);      // 1 for processing
                 String error_file_path = CEIRFeatureFileParser.getErrorFilePath(conn) + txn_id + "/" + txn_id + "_error.csv";
                 File errorfile = new File(error_file_path);
                 if (errorfile.exists()) {     // in case of no error   ,,  file is deleted
@@ -1079,7 +1079,7 @@ public class HexFileReader {
                 //     ceirfunction.addFeatureFileConfigDetails(conn, "update", main_type, subfeature, txn_id, fileName, "PARAM_NOT_VALID", "");
                 ceirfunction.updateFeatureFileStatus(conn, txn_id, 4, main_type, subfeature); // update web_action_db  
                 ceirfunction.UpdateStatusViaApi(conn, txn_id, 1,   main_type );    // working for cons, 
-//                ceirfunction.updateFeatureManagementStatus(conn, txn_id, 2, management_table, main_type);
+                ceirfunction.updateFeatureManagementStatus(conn, txn_id, 2, management_table, main_type);
             }
 
         } catch (Exception e) {

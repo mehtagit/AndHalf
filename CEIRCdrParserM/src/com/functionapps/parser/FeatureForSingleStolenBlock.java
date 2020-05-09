@@ -29,16 +29,12 @@ public class FeatureForSingleStolenBlock {
 
     public void readFeatureWithoutFile(Connection conn, String feature, int raw_upload_set_no, String txn_id, String sub_feature, String mgnt_table_db, String user_type) {
 
-        Statement stmt = null; // stolenand_recovery_mgmt
-        Statement stmt1 = null;
+//        Statement stmt = null; // stolenand_recovery_mgmt
+//        Statement stmt1 = null;
         Map<String, String> map = new HashMap<String, String>();
         try {
-            CEIRFeatureFileFunctions ceirfunction = new CEIRFeatureFileFunctions();
-            logger.info("  readFeatureWithoutFile ") ;
-              ceirfunction.UpdateStatusViaApi(conn, txn_id, 1, feature);
-            ceirfunction.updateFeatureManagementStatus(conn, txn_id, 1, mgnt_table_db, feature);
-            ceirfunction.updateFeatureFileStatus(conn, txn_id, 2, feature, sub_feature); // update web_action_db    
-
+//            CEIRFeatureFileFunctions ceirfunction = new CEIRFeatureFileFunctions();
+            logger.info("  readFeatureWithoutFile ");
             map.put("feature", feature);
             // map.put("raw_upload_set_no", (String)raw_upload_set_no);
             map.put("sub_feature", sub_feature);
@@ -145,9 +141,10 @@ public class FeatureForSingleStolenBlock {
                             logger.info("imei Null");
                             logger.info("File error... IMEI which are provided,  mainSingle in present Database.");
                             errFile.gotoErrorFile(txn_id, "IMEI which are provided,  not in present Database.");
-                            failstatusUpdator(conn, map);
+                            failPasstatusUpdator(conn, map, 1);
                         } else {
                             insertinRawtable(conn, map);
+                            failPasstatusUpdator(conn, map, 0);
                         }
 
                     } catch (Exception e) {
@@ -292,10 +289,9 @@ public class FeatureForSingleStolenBlock {
                 }
                 stmt = conn.createStatement();
                 logger.info("  Flow type " + ty);
-                logger.info(" squery query is.... " + qury);
+                logger.info(" query is.... " + qury);
                 ResultSet resultmsdn = null;
                 resultmsdn = stmt.executeQuery(qury);
-
                 try {
                     while (resultmsdn.next()) {
                         map.put("imei_esn_meid", resultmsdn.getString("imei_esn_meid"));
@@ -307,7 +303,7 @@ public class FeatureForSingleStolenBlock {
                     logger.info("Error..getImedn.." + e);
                 }
                 stmt.close();
-                conn.commit();
+//                conn.commit();
                 if (i == 1) {
                     logger.info("start..stolenFlowStartSingleExtended...." + i);
                     stolenFlowStartSingleExtended(conn, map, i);
@@ -341,6 +337,7 @@ public class FeatureForSingleStolenBlock {
                 logger.info("Going to  insert into Raw  after getting imei...... ");
                 if (imei == null) {
                     insertinRawtable(conn, map);
+                    failPasstatusUpdator(conn, map, 0);
                 }
 
                 for (int i = 2; i <= 4; i++) {
@@ -350,9 +347,10 @@ public class FeatureForSingleStolenBlock {
                         map.put("contact_number", msisdnothr);
                         imei = getImeiWithMsisdn(conn, map);
                         map.put("imei_esn_meid", imei);
-                        logger.info("Going to  insert into Raw after getting imei...... ");
+                        logger.info("Going to  insert into Raw for I " + i + " after getting imei...... ");
                         if (imei == null) {
                             insertinRawtable(conn, map);
+                            failPasstatusUpdator(conn, map, 0);
                         }
                     }
                 }
@@ -360,6 +358,7 @@ public class FeatureForSingleStolenBlock {
             } else {
                 logger.info("Going to insert in RAW with imei..... " + map.get("imei_esn_meid"));
                 insertinRawtable(conn, map);
+                 failPasstatusUpdator(conn, map, 0);
             }
 
         } catch (Exception e) {
@@ -369,8 +368,7 @@ public class FeatureForSingleStolenBlock {
 
     }
 
-    private String getImeiWithMsisdn(Connection conn, Map<String, String> map)
-            throws ClassNotFoundException, SQLException {
+    private String getImeiWithMsisdn(Connection conn, Map<String, String> map) throws ClassNotFoundException, SQLException {
         ErrorFileGenrator errFile = new ErrorFileGenrator();
         String imei = "";
         String txn_id = map.get("txn_id");
@@ -429,7 +427,7 @@ public class FeatureForSingleStolenBlock {
                     + "' and  Use date after " + date + "";
 
             errFile.gotoErrorFile(txn_id, fileString);
-            failstatusUpdator(conn, map);
+            failPasstatusUpdator(conn, map, 1);
         } else {
             logger.info("NOT Empty List");
             if (lst.size() == 1) {
@@ -479,12 +477,10 @@ public class FeatureForSingleStolenBlock {
                     logger.info(" List Size  in Gsma_tac_db is not valid");
                     String fileString = strTacs + "...... NO SIMILAR  Model And Brand Name  FOUND IN Gsma_tac_Db SCHEMA ";
                     errFile.gotoErrorFile(txn_id, fileString);
-                    failstatusUpdator(conn, map);
-
+                    failPasstatusUpdator(conn, map, 1);
                 }
             }
         }
-
         return imei;
     }
 
@@ -538,22 +534,20 @@ public class FeatureForSingleStolenBlock {
         } catch (Exception e) {
             logger.info(" Error  " + e);
         }
-
     }
 
-    void failstatusUpdator(Connection conn, Map<String, String> map) {
-        String tblName = (map.get("feature").equalsIgnoreCase("Stolen") || map.get("feature").equalsIgnoreCase("Recovery") || map.get("feature").equalsIgnoreCase("Block") || map.get("feature").equalsIgnoreCase("Unblock")) ? "file" : map.get("feature");
+    void failPasstatusUpdator(Connection conn, Map<String, String> map, int stats) {   // 1 reject
+        String statusName = (map.get("feature").equalsIgnoreCase("Stolen") || map.get("feature").equalsIgnoreCase("Recovery") || map.get("feature").equalsIgnoreCase("Block") || map.get("feature").equalsIgnoreCase("Unblock")) ? "file" : map.get("feature");
         String subfeature = map.get("sub_feature");
         String txn_id = map.get("txn_id");
         String feature = map.get("feature");
-        String fileName = map.get("feature");
         String management_table = map.get("mgnt_table_db");
         CEIRFeatureFileFunctions ceirfunction = new CEIRFeatureFileFunctions();
-        logger.info("main_type Is .." + feature);
-//        ceirfunction.addFeatureFileConfigDetails(conn, "update", feature, subfeature, txn_id, fileName,   "PARAM_NOT_VALID", "");
-        ceirfunction.updateFeatureFileStatus(conn, txn_id, 4, feature, subfeature); // update web_action_db set
-        ceirfunction.updateFeatureManagementStatus(conn, txn_id, 2, management_table, tblName);
+        logger.info("main_type Is:" + feature + ",  management_table:" + management_table);
 
+        ceirfunction.updateFeatureFileStatus(conn, txn_id, (stats == 1 ? 4 : 2), feature, subfeature); // update web_action_db 
+        ceirfunction.UpdateStatusViaApi(conn, txn_id, stats, feature);
+        ceirfunction.updateFeatureManagementStatus(conn, txn_id, (stats == 1 ? 2 : 1), management_table, statusName);
     }
 
     public String getOtherContactsImei(Connection conn, int i, Map<String, String> map) {
