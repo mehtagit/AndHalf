@@ -96,7 +96,7 @@ public class RegularizedDeviceServiceImpl {
 
 	@Autowired
 	AuditTrailRepository auditTrailRepository;
-
+  
 	@Autowired
 	EndUserDbRepository endUserDbRepository;
 
