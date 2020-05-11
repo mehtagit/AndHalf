@@ -21,7 +21,6 @@ public class FilterRequest {
 	private String userName;
 	private Integer userTypeId;
 	private String searchString;
-
 	private Integer taxPaidStatus;
 	private Integer deviceIdType;
 	private Integer deviceType;

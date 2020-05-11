@@ -14,10 +14,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.gl.ceir.config.model.AuditTrail;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.RuleEngine;
 import com.gl.ceir.config.model.RuleEngineMapping;
+import com.gl.ceir.config.model.constants.Features;
+import com.gl.ceir.config.model.constants.SubFeatures;
+import com.gl.ceir.config.repository.AuditTrailRepository;
 import com.gl.ceir.config.service.impl.RuleEngineMappingServiceImpl;
 
 import io.swagger.annotations.ApiOperation;
@@ -30,6 +34,9 @@ public class RuleEngineMappingController {
 	@Autowired
 	RuleEngineMappingServiceImpl ruleEngineMappingServiceImpl;
 
+	@Autowired
+	AuditTrailRepository auditTrailRepository;
+	
 	@ApiOperation(value = "pagination View filtered rule-engine-mapping", response = RuleEngine.class)
 	@PostMapping("/filter/rule-engine-mapping")
 	public MappingJacksonValue getFilteredData(@RequestBody FilterRequest filterRequest,
@@ -38,7 +45,7 @@ public class RuleEngineMappingController {
 			@RequestParam(value = "file", defaultValue = "0") Integer file) {
 
 		MappingJacksonValue mapping = null;
-
+	
 		logger.info("Request to view filtered rule engine mapping = " + filterRequest);
 		Page<RuleEngineMapping> ruleEngineMapping =  ruleEngineMappingServiceImpl.filterRuleEngineMapping(filterRequest, pageNo, pageSize);
 		mapping = new MappingJacksonValue(ruleEngineMapping);
@@ -70,8 +77,16 @@ public class RuleEngineMappingController {
 		logger.info("Save rule engine mapping [" + ruleEngineMapping + "]");
 
 		GenricResponse genricResponse = ruleEngineMappingServiceImpl.save(ruleEngineMapping);
-
 		MappingJacksonValue mapping = new MappingJacksonValue(ruleEngineMapping);
+		
+		if(genricResponse.getErrorCode() == 0) {
+			auditTrailRepository.save( new AuditTrail( ruleEngineMapping.getId(),
+					ruleEngineMapping.getUserName(), Long.valueOf(ruleEngineMapping.getUserTypeId()),
+			  "CEIRSystem", Long.valueOf(ruleEngineMapping.getFeatureId()),
+			  Features.SYSTEM_MANAGEMENT, SubFeatures.REGISTER, "","NA",
+			  ruleEngineMapping.getRoleType()));
+		}
+	
 
 		logger.info("Response to send= " + mapping);
 
@@ -85,7 +100,15 @@ public class RuleEngineMappingController {
 		logger.info("Update rule engine mapping [" + ruleEngineMapping + "]");
 
 		GenricResponse genricResponse = ruleEngineMappingServiceImpl.updateById(ruleEngineMapping);
-
+		
+		if(genricResponse.getErrorCode() == 0) {
+			auditTrailRepository.save( new AuditTrail( ruleEngineMapping.getId(),
+					ruleEngineMapping.getUserName(), Long.valueOf(ruleEngineMapping.getUserTypeId()),
+			  "CEIRSystem", Long.valueOf(ruleEngineMapping.getFeatureId()),
+			  Features.SYSTEM_MANAGEMENT, SubFeatures.UPDATE, "","NA",
+			  ruleEngineMapping.getRoleType()));
+		}
+		
 		MappingJacksonValue mapping = new MappingJacksonValue(ruleEngineMapping);
 
 		logger.info("Response to send= " + mapping);
@@ -102,7 +125,15 @@ public class RuleEngineMappingController {
 		GenricResponse genricResponse = ruleEngineMappingServiceImpl.deleteById(ruleEngineMapping);
 
 		MappingJacksonValue mapping = new MappingJacksonValue(ruleEngineMapping);
-
+		
+	if(genricResponse.getErrorCode() == 0) {
+			auditTrailRepository.save( new AuditTrail( ruleEngineMapping.getId(),
+					ruleEngineMapping.getUserName(), Long.valueOf(ruleEngineMapping.getUserTypeId()),
+			  "CEIRSystem", Long.valueOf(ruleEngineMapping.getFeatureId()),
+			  Features.SYSTEM_MANAGEMENT, SubFeatures.DELETE, "","NA",
+			  ruleEngineMapping.getRoleType()));
+		}
+		
 		logger.info("Response to send = " + mapping);
 
 		return mapping;

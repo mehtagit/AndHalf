@@ -12,14 +12,19 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.gl.ceir.config.EmailSender.EmailUtil;
+import com.gl.ceir.config.audit.AuditTrailMethods;
 import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
+import com.gl.ceir.config.model.AuditTrail;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.RuleEngineMapping;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.constants.Datatype;
+import com.gl.ceir.config.model.constants.Features;
 import com.gl.ceir.config.model.constants.SearchOperation;
+import com.gl.ceir.config.model.constants.SubFeatures;
+import com.gl.ceir.config.repository.AuditTrailRepository;
 import com.gl.ceir.config.repository.RuleEngineMappingRepository;
 import com.gl.ceir.config.specificationsbuilder.GenericSpecificationBuilder;
 import com.gl.ceir.config.util.InterpSetter;
@@ -47,7 +52,10 @@ public class RuleEngineMappingServiceImpl {
 	
 	@Autowired
 	ConfigurationManagementServiceImpl configurationManagementServiceImpl;
-
+	
+	
+	@Autowired
+	AuditTrailRepository auditTrailRepository;
 	public RuleEngineMapping findById(long id){
 		try {
 			return ruleEngineMappingRepository.getById(id);
@@ -76,7 +84,6 @@ public class RuleEngineMappingServiceImpl {
 		try {
 			
 			ruleEngineMappingRepository.save(ruleEngineMapping);
-
 			return new GenricResponse(0);
 		} catch (Exception e) {
 			logger.info(e.getMessage(), e);
@@ -102,14 +109,21 @@ public class RuleEngineMappingServiceImpl {
 			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
 
 			Page<RuleEngineMapping> page = ruleEngineMappingRepository.findAll( buildSpecification(filterRequest).build(), pageable );
-
+		
+			auditTrailRepository.save( new AuditTrail( filterRequest.getUserId(),
+			  filterRequest.getUserName(), Long.valueOf(filterRequest.getUserTypeId()),
+			   "SystemAdmin", Long.valueOf(filterRequest.getFeatureId()),
+			  Features.SYSTEM_MANAGEMENT, SubFeatures.VIEW, "","NA",
+			  filterRequest.getRoleType()));
+			 
 			return page;
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
-
+	
+	
 	private GenericSpecificationBuilder<RuleEngineMapping> buildSpecification(FilterRequest filterRequest){
 		GenericSpecificationBuilder<RuleEngineMapping> cmsb = new GenericSpecificationBuilder<>(propertiesReader.dialect);
 		
@@ -122,6 +136,12 @@ public class RuleEngineMappingServiceImpl {
 		if(Objects.nonNull(filterRequest.getUserType()))
 			cmsb.with(new SearchCriteria("userType", filterRequest.getUserType(), SearchOperation.EQUALITY, Datatype.STRING));
 		
+		
+		 if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
+			 cmsb.orSearch(new SearchCriteria("order", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+			 cmsb.orSearch(new SearchCriteria("createdOn", filterRequest.getSearchString(), SearchOperation.EQUALITY, Datatype.DATE));
+			 cmsb.orSearch(new SearchCriteria("modifiedOn", filterRequest.getSearchString(), SearchOperation.EQUALITY, Datatype.DATE));		
+		 }
 		return cmsb;
 	}
 
