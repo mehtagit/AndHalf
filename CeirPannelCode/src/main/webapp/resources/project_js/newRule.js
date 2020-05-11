@@ -45,7 +45,12 @@ function save(){
 			"postGraceAction": $('#PostGracePeriod').val(),
 			"ruleOrder":parseInt($('#order').val()),
 			"userType":$('#User').val(),
-			"output": $('#output').val()
+			"output": $('#output').val(),
+			"userId":parseInt($("body").attr("data-userID")),
+			"featureId":parseInt(featureId),
+			"userTypeId": parseInt($("body").attr("data-userTypeID")),
+			"userName":$("body").attr("data-username"),
+			"roleType":$("body").attr("data-roleType")
 	}
 	$.ajax({
 
@@ -56,10 +61,10 @@ function save(){
 		type : 'POST',
 		success: function (data, textStatus, jqXHR) {
 			$("#successModal").openModal({
-		        dismissible:false
-		    });
+				dismissible:false
+			});
 
-			
+
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
 

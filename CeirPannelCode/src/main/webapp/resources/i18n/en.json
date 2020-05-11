@@ -158,6 +158,7 @@
      "Curr_Update_Sucess" : "Currency has been sucessfully update",
      "Curr_Update_Fail" : "Currency failed to update",
      "Curr_Data_By_Id_Fail" : "Failed to find Currency by Id",
-     "featureNotSupportForCambodian" : "This service is not applicable for Cambodian users."
-     
+     "Curr_Year_Null" : "Year value must not be null",
+     "Curr_Month_Null" : "Month value must not be null",
+      "featureNotSupportForCambodian" : "This service is not applicable for Cambodian users." 
 }

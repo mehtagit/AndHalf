@@ -303,7 +303,7 @@ public class StolenRecovery {
 				  			log.info("file already exist");
 				  		Path temp = Files.move 
 				  		(Paths.get(urlToUpload.getValue()+txnId+"/"+file.getOriginalFilename()), 
-				  		Paths.get(urlToMove.getValue()+movedFileTime+file.getOriginalFilename())); 
+				  		Paths.get(urlToMove.getValue()+movedFileTime+"_"+file.getOriginalFilename())); 
 
 				  		String movedPath=urlToMove.getValue()+movedFileTime+"_"+file.getOriginalFilename();
 				  		// tmpDir.renameTo(new File("/home/ubuntu/apache-tomcat-9.0.4/webapps/MovedFile/"+txnId+"/"));
