@@ -5,12 +5,16 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.Join;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.data.jpa.domain.Specification;
 
+import com.gl.ceir.config.model.ConsignmentMgmt;
 import com.gl.ceir.config.model.SearchCriteria;
+import com.gl.ceir.config.model.User;
+import com.gl.ceir.config.model.UserProfile;
 import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.SearchOperation;
 import com.gl.ceir.config.util.DbFunctions;
@@ -183,4 +187,13 @@ public class GenericSpecificationBuilder<T> {
 	public Specification<T> notIn(String key, List<String> status){
 		return (root, query, cb) -> cb.in(root.get(key)).value(status).not();
 	}
+	
+	
+	public Specification<ConsignmentMgmt> joinWithMultiple(SearchCriteria searchCriteria){
+		return (root, query, cb) -> {
+		Join<ConsignmentMgmt, User> join_User = root.join("user".intern());
+		Join<User, UserProfile> join_UserProfile = join_User.join("userProfile".intern());
+		return cb.equal(join_UserProfile.get(searchCriteria.getKey()), searchCriteria.getValue().toString());
+		};
+		}
 }
