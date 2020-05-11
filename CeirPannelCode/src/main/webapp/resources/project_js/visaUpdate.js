@@ -22,12 +22,19 @@
 				
 				});
 
-
-
+					
 			$(document).ready(function(){
 				$('div#initialloader').fadeIn('fast');
 				DataTable(lang);
 				pageRendering();
+				$.getJSON('./getDropdownList/'+featureId+'/'+$("body").attr("data-userTypeID"), function(data) {
+					for (i = 0; i < data.length; i++) {
+						$('<option>').val(data[i].state).text(data[i].interp)
+						.appendTo('#statusvisa'); 
+					
+					}
+			
+				});
 			});
 
 			var userId = $("body").attr("data-userID");
@@ -45,6 +52,9 @@
 				
 				var filterRequest={
 						"endDate":$('#endDate').val(),
+						"startDate":$('#startDate').val(),
+						"txnId":$('#visaTxnId').val(),
+						"status":$('#statusvisa').val(),
 						"startDate":$('#startDate').val(),
 						"userId": parseInt($("body").attr("data-userID")),
 						"featureId":parseInt(featureId),
@@ -89,13 +99,24 @@
 							"columns": result
 						});
 						$('div#initialloader').delay(300).fadeOut('slow');
-						$('#pendingTACLibraryTable input').unbind();
+						/*$('#pendingTACLibraryTable input').unbind();
 						$('#pendingTACLibraryTable input').bind('keyup', function (e) {
 							if (e.keyCode == 13) {
 								table.search(this.value).draw();
 							}
 
-						});
+						});*/
+						
+						$('.dataTables_filter input')
+					       .off().on('keyup', function(event) {
+					    	   if(event.keyCode == 8 && !textBox.val() || event.keyCode == 46 && !textBox.val() || event.keyCode == 83 && !textBox.val()) {
+						    
+						            }
+					    		if (event.keyCode === 13) {
+					    			 table.search(this.value.trim(), false, false).draw();
+					    		}
+					          
+					       });
 					},
 					error: function (jqXHR, textStatus, errorThrown) {
 						console.log("error in ajax");
@@ -151,7 +172,7 @@
 										"<span class='caret'>"+"</span>"+
 										"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
 
-										"<select id="+dropdown[i].id+"  class='select-wrapper select2  initialized'>"+
+										"<select id="+'statusvisa'+"  class='select-wrapper select2  initialized'>"+
 										"<option value='-1'>"+dropdown[i].title+
 										"</option>"+
 										"</select>"+
@@ -185,18 +206,18 @@
 
 				}); 
 				
-				setAllDropdown();
+				
 			};
 			
 			
-			function setAllDropdown(){
+			/*function setAllDropdown(){
 				$.getJSON('./getAllfeatures', function(data) {
 				for (i = 0; i < data.length; i++) {
 				$('<option>').val(data[i].id).text(data[i].name).appendTo('#feature');
 				}
 			});
 				
-		}
+		}*/
 
 
 
@@ -286,10 +307,10 @@
 			
 
 
-			function deviceApprovalPopup(imei,date,txnId){
+			function deviceApprovalPopup(visaId,endUserId,txnId){
 				$('#approveInformation').openModal({dismissible:false});
-				window.imei=imei;
-				window.date=date.replace("="," ");
+				window.visaId=visaId;
+				window.endUserId=endUserId;
 				$('#approveTxnId').text(txnId);
 			}   
 
@@ -298,11 +319,9 @@
 
 				var approveRequest={
 						"action" : 0,
-						"imei1": window.imei,
-						"featureId":parseInt(featureId),
 						"remarks": "",
-						"roleTypeUserId": parseInt($("body").attr("data-userTypeID")),
-						"userId":parseInt($("body").attr("data-userID")),
+						"id":window.visaId,
+						"userId":window.endUserId,
 						"userType": $("body").attr("data-roleType")	  	
 				}
 
@@ -316,7 +335,7 @@
 					success : function(data) {
 
 						if(data.errorCode==0){
-							confirmApproveInformation(window.imei,window.date);
+							confirmApproveInformation();
 
 						}
 
@@ -328,17 +347,18 @@
 				});
 			}
 
-			function confirmApproveInformation(imei,date){
+			function confirmApproveInformation(){
 				$('#approveInformation').closeModal(); 
 				setTimeout(function(){ $('#confirmApproveInformation').openModal({dismissible:false});}, 200);
 			}
 
 
 
-			function userRejectPopup(imei,txnId){
+			function userRejectPopup(visaId,endUserId,txnId){
 				$('#rejectInformation').openModal({dismissible:false});
 				$('#disapproveTxnId').text(txnId)
-				window.imei=imei;
+				window.visaId=visaId;
+				window.endUserId=endUserId;
 			}
 
 
@@ -347,12 +367,9 @@
 				
 				var rejectRequest={
 						"action" : 1,
-						"imei1": window.imei,
-						"featureId":parseInt(featureId),
 						"remarks": $("#Reason").val(),
-						"roleTypeUserId": parseInt($("body").attr("data-userTypeID")),
-						"txnId": "",
-						"userId":parseInt(userId),
+						"id":window.visaId,
+						"userId":parseInt(endUserId),
 						"userType": $("body").attr("data-roleType")	  	
 				}
 				$.ajax({
@@ -387,3 +404,65 @@
 
 
 			
+			
+			
+			function viewDetails(visaId,endUserId){ 
+				
+					window.location.href="./view-visa-information/"+visaId+"/"+endUserId;
+
+
+			}
+			
+			
+			
+			function historyRecord(txnID){
+				console.log("txn id=="+txnID)
+				$("#tableOnModal").openModal({dismissible:false});
+				 var filter =[];
+				 var formData= new FormData();
+				 var filterRequest={
+						 "columns": [
+							    "created_on","modified_on","txn_id","status","nid","visa_type","visa_number","visa_expiry_date","visa_file_name","entry_date_in_country","remark","user_id","id"
+							    
+							    ],
+						"tableName": "visa_update_db_aud",
+						"dbName" : "ceirconfig",
+						"txnId":txnID
+				}
+				formData.append("filter",JSON.stringify(filterRequest));	
+				if(lang=='km'){
+					var langFile='../resources/i18n/khmer_datatable.json';
+				}
+
+				$.ajax({
+					url: 'Consignment/consignment-history',
+					type: 'POST',
+					data: formData,
+					processData: false,
+					contentType: false,
+					success: function(result){
+						var dataObject = eval(result);
+						$('#data-table-history').dataTable({
+							 "order" : [[1, "asc"]],
+							 destroy:true,
+							"serverSide": false,
+							 orderCellsTop : true,
+							"ordering" : false,
+							"bPaginate" : true,
+							"bFilter" : true,
+							"scrollX": true,
+							"bInfo" : true,
+							"bSearchable" : true,
+							 "data": dataObject.data,
+							 "columns": dataObject.columns
+						
+					    });
+						$('div#initialloader').delay(300).fadeOut('slow');
+				}
+					
+		});
+			
+				$('.datepicker').on('mousedown',function(event){
+				event.preventDefault();
+			});
+		}

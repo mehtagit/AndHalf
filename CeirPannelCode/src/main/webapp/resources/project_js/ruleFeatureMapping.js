@@ -38,7 +38,12 @@
 				  
 				  "ruleName": Rule,
 				  
-				  "userType": User
+				  "userType": User,
+				  	"userId":parseInt($("body").attr("data-userID")),
+							"featureId":parseInt(featureId),
+							"userTypeId": parseInt($("body").attr("data-userTypeID")),
+							"userName":$("body").attr("data-username"),
+							"roleType":$("body").attr("data-roleType")
 				}
 			if(lang=='km'){
 				var langFile='./resources/i18n/khmer_datatable.json';
@@ -75,13 +80,16 @@
 					});
 
 					$('div#initialloader').delay(300).fadeOut('slow');
-						$('#table input').unbind();
-						$('#table input').bind('keyup', function (e) {
-							if (e.keyCode == 13) {
-								table.search(this.value).draw();
-							}
-
-						});
+					   $('.dataTables_filter input')
+				       .off().on('keyup', function(event) {
+				    	   if(event.keyCode == 8 && !textBox.val() || event.keyCode == 46 && !textBox.val() || event.keyCode == 83 && !textBox.val()) {
+					    
+					            }
+				    		if (event.keyCode === 13) {
+				    			 table.search(this.value.trim(), false, false).draw();
+				    		}
+				          
+				       });
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
 					
@@ -276,7 +284,14 @@
 					  "postGraceAction": $("#PostGracePeriod").val(),
 					  "ruleOrder":parseInt($("#order").val()),
 					  "userType": $("#editUser").val(),
-					  "output":  $("#editOutput").val()
+					  "output":  $("#editOutput").val(),
+					  
+					  
+							"userId":parseInt($("body").attr("data-userID")),
+							"featureId":parseInt(featureId),
+							"userTypeId": parseInt($("body").attr("data-userTypeID")),
+							"userName":$("body").attr("data-username"),
+							"roleType":$("body").attr("data-roleType")
 					}
 			$.ajax({
 				
@@ -312,7 +327,12 @@
 		}
 		function deleteModal(){
 			var newRule ={
-					"id" : parseInt(window.id)
+					"id" : parseInt(window.id),
+				  	"userId":parseInt($("body").attr("data-userID")),
+					"featureId":parseInt(featureId),
+					"userTypeId": parseInt($("body").attr("data-userTypeID")),
+					"userName":$("body").attr("data-username"),
+					"roleType":$("body").attr("data-roleType")
 			}
 			$.ajax({
 				url : "./deleteRuleMapping",

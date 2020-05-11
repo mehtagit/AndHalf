@@ -1,9 +1,11 @@
 package org.gl.ceir.CeirPannelCode.Feignclient;
 
 import org.gl.ceir.CeirPannelCode.Model.EndUserVisaInfo;
+import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest_UserPaidStatus;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.LawfulStolenRecovey;
+import org.gl.ceir.CeirPannelCode.Model.UpdateVisaModel;
 import org.gl.ceir.pagination.model.UserPaidStatusContent;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Service;
@@ -77,5 +79,9 @@ public interface UploadPaidStatusFeignClient {
 	
 	@PutMapping("/accept-reject/end-user-visa")
 	public @ResponseBody GenricResponse updateVisaRequest(FilterRequest_UserPaidStatus filterRequest);
+	
+
+	@PostMapping("/visa/viewById")
+	public @ResponseBody UpdateVisaModel viewVisaDetails(FilterRequest filterRequest);
 
 }

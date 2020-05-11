@@ -3,7 +3,7 @@ package org.gl.ceir.pagination.model;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SystemUsertype {
+public class Usertype  {
 	
 	private Integer id;
 	private String usertypeName;
@@ -64,7 +64,7 @@ public class SystemUsertype {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("SystemUsertype [id=");
+		builder.append("Usertype [id=");
 		builder.append(id);
 		builder.append(", usertypeName=");
 		builder.append(usertypeName);
@@ -83,6 +83,5 @@ public class SystemUsertype {
 		builder.append("]");
 		return builder.toString();
 	}
-	
 	
 }

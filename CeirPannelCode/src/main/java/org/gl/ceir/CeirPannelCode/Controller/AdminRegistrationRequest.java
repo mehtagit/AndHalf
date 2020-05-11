@@ -7,12 +7,18 @@ import org.gl.ceir.CeirPannelCode.Feignclient.UserProfileFeignImpl;
 import org.gl.ceir.CeirPannelCode.Model.FileExportResponse;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.Registration;
+import org.gl.ceir.CeirPannelCode.Model.UserStatus;
+import org.gl.ceir.CeirPannelCode.Service.ProfileService;
+import org.gl.ceir.CeirPannelCode.Util.HttpResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
@@ -23,6 +29,9 @@ public class AdminRegistrationRequest {
 	
 	@Autowired
 	UserProfileFeignImpl userProfileFeignImpl; 
+	
+	@Autowired
+	ProfileService profileService;
 
 	@RequestMapping(value=
 		{"/registrationRequest"},method={org.springframework.web.bind.annotation.
@@ -127,5 +136,11 @@ public class AdminRegistrationRequest {
 		
 	}
 	
+	@RequestMapping(value ="/adminChangeRequest",method = RequestMethod.POST)
+	@ResponseBody
+	public  HttpResponse changeUserStatus(@RequestBody UserStatus userStatus,HttpSession session) {
+		return profileService.changeUserStatusService(userStatus,session);
+		
+	}
 	
 }

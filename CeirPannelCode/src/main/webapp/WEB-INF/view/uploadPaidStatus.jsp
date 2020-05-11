@@ -166,6 +166,10 @@ input[type='search'] {
 	background-repeat: no-repeat;
 	color: #444;
 }
+
+.dataTables_scrollBody {
+    height: 100px !important;
+}
 </style>
 </head>
 <body data-id="12" data-roleType="${usertype}" data-userTypeID="${usertypeId}"

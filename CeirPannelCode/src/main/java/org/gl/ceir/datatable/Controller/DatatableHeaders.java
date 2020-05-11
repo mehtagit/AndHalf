@@ -179,7 +179,7 @@ public class DatatableHeaders {
 
 			//operator view
 			else if("greyBlackList".equals(role)) {
-				String[] headers = {"table.createdDateTime","table.fileName","table.fileType","table.action"};
+				String[] headers = {"table.creationDate","table.fileName","table.fileType","table.action"};
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
@@ -486,13 +486,13 @@ public class DatatableHeaders {
 			//Visa Headers
 			else if("adminVisaHeaders".equals(role)) {
 				
-				String[] headers = {"table.creationDate","table.lastupdatedate","table.visaType","input.VisaNumber","table.fileName","table.visaExpiry", "table.status","table.action"};	
+				String[] headers = {"table.creationDate","table.lastupdatedate","table.transactionID","table.PassportNumber","table.visaType","input.VisaNumber","table.fileName","table.visaExpiry", "table.status","table.action"};	
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
 				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);	
 			}
-			
+
 			//DEFAULT PORTION  
 			else {
 				String[] headers = {"table.date","table.transactionID","table.fileName","table.status","table.action"};    

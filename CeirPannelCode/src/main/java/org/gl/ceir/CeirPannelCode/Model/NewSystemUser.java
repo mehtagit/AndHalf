@@ -3,7 +3,7 @@ package org.gl.ceir.CeirPannelCode.Model;
 public class NewSystemUser {
 	private String email;
 	private String firstName;
-	private Integer id;
+	private Integer id,dataId,userId,featureId;
 	private String lastName;
 	private String middleName;
 	private String password;
@@ -11,8 +11,9 @@ public class NewSystemUser {
 	private String phoneNo;
 	private String remarks;
 	private String userType;
-	private Integer userTypeId;
+	private Integer userTypeId,usertypeId;
 	private String username;
+	private String userName;
 	public String getEmail() {
 		return email;
 	}
@@ -30,6 +31,24 @@ public class NewSystemUser {
 	}
 	public void setId(Integer id) {
 		this.id = id;
+	}
+	public Integer getDataId() {
+		return dataId;
+	}
+	public void setDataId(Integer dataId) {
+		this.dataId = dataId;
+	}
+	public Integer getUserId() {
+		return userId;
+	}
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+	public Integer getFeatureId() {
+		return featureId;
+	}
+	public void setFeatureId(Integer featureId) {
+		this.featureId = featureId;
 	}
 	public String getLastName() {
 		return lastName;
@@ -79,11 +98,23 @@ public class NewSystemUser {
 	public void setUserTypeId(Integer userTypeId) {
 		this.userTypeId = userTypeId;
 	}
+	public Integer getUsertypeId() {
+		return usertypeId;
+	}
+	public void setUsertypeId(Integer usertypeId) {
+		this.usertypeId = usertypeId;
+	}
 	public String getUsername() {
 		return username;
 	}
 	public void setUsername(String username) {
 		this.username = username;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 	@Override
 	public String toString() {
@@ -94,6 +125,12 @@ public class NewSystemUser {
 		builder.append(firstName);
 		builder.append(", id=");
 		builder.append(id);
+		builder.append(", dataId=");
+		builder.append(dataId);
+		builder.append(", userId=");
+		builder.append(userId);
+		builder.append(", featureId=");
+		builder.append(featureId);
 		builder.append(", lastName=");
 		builder.append(lastName);
 		builder.append(", middleName=");
@@ -110,12 +147,15 @@ public class NewSystemUser {
 		builder.append(userType);
 		builder.append(", userTypeId=");
 		builder.append(userTypeId);
+		builder.append(", usertypeId=");
+		builder.append(usertypeId);
 		builder.append(", username=");
 		builder.append(username);
+		builder.append(", userName=");
+		builder.append(userName);
 		builder.append("]");
 		return builder.toString();
 	}
-	
 	
 	
 }

@@ -811,10 +811,12 @@
 													name="stolenBulkBlockPeriod"> <spring:message
 														code="operator.later" />
 												</label>
-												<div class="col s6 m2 responsiveDiv"
+												<div class="input-field col s6 m2 responsiveDiv"
 													style="display: none; width: 30%; margin-right: 30%; float: right; margin-top: -15px"
 													id="stolenCalender">
 													<div id="Stolenstartdatepicker" class="input-group date">
+														<label for="stolenBulkDatePeriod"><spring:message code="operator.blockingTypePeriod" /> <span class="star"> </span> 
+																</label>
 														<input type="text" id="stolenBulkDatePeriod"
 															style="margin-top: -9px" /> <span
 															class="input-group-addon" style="color: #ff4081"><i

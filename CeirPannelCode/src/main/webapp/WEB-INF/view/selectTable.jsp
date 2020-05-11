@@ -175,7 +175,7 @@ section {
 						</div>
 						<div class="input-field col s7 m4">
                                 <select class="browser-default" id="tableId" required="">
-                                <option value="" disabled="" selected="">Select Table</option>
+                                <option value="" selected="">Select Table</option>
                                  </select>
                          </div>
 						<div class="input-field col s12 m2 l2">

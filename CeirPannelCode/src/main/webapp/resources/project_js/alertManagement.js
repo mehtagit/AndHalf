@@ -59,6 +59,7 @@
 					"featureId":parseInt(featureId),
 					"userTypeId": parseInt($("body").attr("data-userTypeID")),
 					"userType":$("body").attr("data-roleType"),
+					"username" : $("body").attr("data-selected-username"),
 					"alertId" : alertId
 					
 			}				
@@ -101,13 +102,16 @@
 					});
 
 					$('div#initialloader').delay(300).fadeOut('slow');
-						$('#alertManagementLibraryTable input').unbind();
-						$('#alertManagementLibraryTable input').bind('keyup', function (e) {
-							if (e.keyCode == 13) {
-								table.search(this.value).draw();
-							}
-
-						});
+					$('.dataTables_filter input')
+				       .off().on('keyup', function(event) {
+				    	   if(event.keyCode == 8 && !textBox.val() || event.keyCode == 46 && !textBox.val() || event.keyCode == 83 && !textBox.val()) {
+					    
+					            }
+				    		if (event.keyCode === 13) {
+				    			 table.search(this.value.trim(), false, false).draw();
+				    		}
+				          
+				       });
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
 					
@@ -214,16 +218,14 @@
 			var filterRequest={
 					"endDate":$('#endDate').val(),
 					"startDate":$('#startDate').val(),
-					"userId":parseInt(userId),
 					"featureId":parseInt(featureId),
 					"userTypeId": parseInt($("body").attr("data-userTypeID")),
 					"userType":$("body").attr("data-roleType"),
 					"pageNo":parseInt(pageNo),
 					"pageSize":parseInt(pageSize),
-					"userTypeId": parseInt($("body").attr("data-userTypeID")),
-					"userType":$("body").attr("data-roleType"),
-					"userId" : $("body").attr("data-userID"),
-					"alertId" : alertId
+					"userId" : parseInt($("body").attr("data-userID")),
+					"alertId" : alertId,
+					"username" : $("body").attr("data-selected-username")
 					
 					
 			}
@@ -247,12 +249,22 @@
 			
 		
 		function alertViewByID(id){
-			$("#editId").val(id);
+			
+			var request = {
+				"dataId" :  parseInt(id),	
+				"featureId":parseInt(featureId),
+				"userId" :  parseInt($("body").attr("data-userID")),
+			   "userType":  $("body").attr("data-roleType"),
+			 "userTypeId" : parseInt($("body").attr("data-userTypeID")),
+			   "username" : $("body").attr("data-selected-username"),
+			}
+			
+			console.log("request--------->" +JSON.stringify(request));
 			
 			$.ajax({
-					url: './alertViewByID/'+id,
+					url: './alertViewByID',
 					type: 'POST',
-				//	data : JSON.stringify(request),
+					data : JSON.stringify(request),
 					dataType : 'json',
 					contentType : 'application/json; charset=utf-8',
 					success: function (data, textStatus, jqXHR) {
@@ -273,6 +285,7 @@
 			$("#editAlertId").val(result.alertId);
 			$("#editfeature").val(result.feature);
 			$("#editdescription").val(result.description);
+			$("#editId").val(result.id);
 			
 			$("label[for='editAlertId']").addClass('active');
 			$("label[for='editfeature']").addClass('active');
@@ -285,11 +298,17 @@
 		
 		
 		function updatedAlert(){
-		
+			
 			var request ={ 
 					 "id" : parseInt($("#editId").val()),
 					 "alertId":  $('#editAlertId').val(),
 					 "description": $('#editdescription').val(),
+					 "featureId": parseInt(featureId),
+					 "userId" : parseInt($("body").attr("data-userID")),
+					 "userType":$("body").attr("data-roleType"),
+					 "userTypeId": parseInt($("body").attr("data-userTypeID")),
+					 "username" : $("body").attr("data-selected-username"),
+					 
 			}
 			
 			console.log("request--->" +JSON.stringify(request))

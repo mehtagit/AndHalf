@@ -16,7 +16,7 @@ public class SystemUserContent {
 	private String modifiedBy;
 	private String referenceId;
 	private String approvedBy;
-	private SystemUsertype systemUsertype;
+	private Usertype usertype;
 	private String stateInterp;
 	public Integer getId() {
 		return id;
@@ -90,11 +90,11 @@ public class SystemUserContent {
 	public void setApprovedBy(String approvedBy) {
 		this.approvedBy = approvedBy;
 	}
-	public SystemUsertype getSystemUsertype() {
-		return systemUsertype;
+	public Usertype getUsertype() {
+		return usertype;
 	}
-	public void setSystemUsertype(SystemUsertype systemUsertype) {
-		this.systemUsertype = systemUsertype;
+	public void setUsertype(Usertype usertype) {
+		this.usertype = usertype;
 	}
 	public String getStateInterp() {
 		return stateInterp;
@@ -129,14 +129,13 @@ public class SystemUserContent {
 		builder.append(referenceId);
 		builder.append(", approvedBy=");
 		builder.append(approvedBy);
-		builder.append(", systemUsertype=");
-		builder.append(systemUsertype);
+		builder.append(", usertype=");
+		builder.append(usertype);
 		builder.append(", stateInterp=");
 		builder.append(stateInterp);
 		builder.append("]");
 		return builder.toString();
 	}
-	
 	
 	
 }

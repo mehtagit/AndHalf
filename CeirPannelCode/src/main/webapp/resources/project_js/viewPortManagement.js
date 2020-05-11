@@ -48,11 +48,12 @@
 			var filterRequest={
 					"endDate":$('#endDate').val(),
 					"startDate":$('#startDate').val(),
+					"port" : parseInt($("#portType").val()),
 					"userId":parseInt(userId),
 					"featureId":parseInt(featureId),
 					"userTypeId": parseInt($("body").attr("data-userTypeID")),
 					"userType":$("body").attr("data-roleType"),
-					"port" : parseInt($("#portType").val())
+					"username" : $("body").attr("data-selected-username")
 			}				
 			if(lang=='km'){
 				var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
@@ -88,13 +89,16 @@
 					});
 
 					$('div#initialloader').delay(300).fadeOut('slow');
-						$('#portManagementLibraryTable input').unbind();
-						$('#portManagementLibraryTable input').bind('keyup', function (e) {
-							if (e.keyCode == 13) {
-								table.search(this.value).draw();
-							}
-
-						});
+					$('.dataTables_filter input')
+				       .off().on('keyup', function(event) {
+				    	   if(event.keyCode == 8 && !textBox.val() || event.keyCode == 46 && !textBox.val() || event.keyCode == 83 && !textBox.val()) {
+					    
+					            }
+				    		if (event.keyCode === 13) {
+				    			 table.search(this.value.trim(), false, false).draw();
+				    		}
+				          
+				       });
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
 					
@@ -200,9 +204,15 @@
 	function submitPort(){
 		
 		var request={
-					  "port":   $('#port').val(),
-					  "address": $('#portAddress').val(),
-				}
+				"port":   $('#port').val(),
+				"address": $('#portAddress').val(),
+				"userId": parseInt(userId),
+				"featureId":parseInt(featureId),
+				"userTypeId": parseInt($("body").attr("data-userTypeID")),
+				"userType":$("body").attr("data-roleType"),
+				"username" : $("body").attr("data-selected-username")
+
+		}
 		
 		console.log("request------------->" +JSON.stringify(request))
 		$.ajax({
@@ -232,11 +242,18 @@
 	
 	function PortViewByID(id){
 		$("#editId").val(id);
-		
+		var request ={
+				"dataId" :  parseInt(id),
+				"userId": parseInt(userId),
+				"featureId":parseInt(featureId),
+				"userTypeId": parseInt($("body").attr("data-userTypeID")),
+				"userType":$("body").attr("data-roleType"),
+				"username" : $("body").attr("data-selected-username")
+		}
 		$.ajax({
-				url: './portViewByID/'+id,
+				url: './portViewByID',
 				type: 'POST',
-			//	data : JSON.stringify(request),
+				data : JSON.stringify(request),
 				dataType : 'json',
 				contentType : 'application/json; charset=utf-8',
 				success: function (data, textStatus, jqXHR) {
@@ -267,28 +284,33 @@
 	
 	
 	function updatedPort(){
-	
+
 		var request ={ 
-				 "id" : parseInt($("#editId").val()),
-				 "port":   $('#editport').val(),
-				 "address": $('#editportAddress').val(),
+				"id" : parseInt($("#editId").val()),
+				"port":   $('#editport').val(),
+				"address": $('#editportAddress').val(),
+				"userId":parseInt(userId),
+				"featureId":parseInt(featureId),
+				"userTypeId": parseInt($("body").attr("data-userTypeID")),
+				"userType":$("body").attr("data-roleType"),
+				"username" : $("body").attr("data-selected-username")
 		}
-		
+
 		console.log("request--->" +JSON.stringify(request))
 		$.ajax({
-			url: './updateAlert',
+			url: './updatePortAddress', 
 			type: 'POST',
 			data : JSON.stringify(request),
 			dataType : 'json',
 			contentType : 'application/json; charset=utf-8',
 			success: function (data, textStatus, jqXHR) {
-			
+
 				console.log("Updated data---->" +data)
 				$("#editPortAddressModal").closeModal();	
 				$("#updateFieldsSuccess").openModal({
-			        dismissible:false
-			    });
-				
+					dismissible:false
+				});
+
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
 				console.log("error in ajax")
@@ -305,22 +327,30 @@
 	
 	function DeletePortRecord(id){
 		$("#DeleteFieldModal").openModal({
-	        dismissible:false
-	    });
+			dismissible:false
+		});
 		$("#deletePortId").val(id);
-		
+
 	}	
 	
 	
 	
 	function confirmantiondelete(){
+		var request ={ 
+				"dataId" : parseInt($("#deletePortId").val()),
+				"port":   $('#editport').val(),
+				"address": $('#editportAddress').val(),
+				"userId":parseInt(userId),
+				"featureId":parseInt(featureId),
+				"userTypeId": parseInt($("body").attr("data-userTypeID")),
+				"userType":$("body").attr("data-roleType"),
+				"username" : $("body").attr("data-selected-username")
+		}
 		
-		var id  = parseInt($("#deletePortId").val());
 		
-		console.log(JSON.stringify(id));
 		$.ajax({
-			url : './deletePort/'+id,
-//			data : JSON.stringify(request),
+			url : './deletePort',
+			data : JSON.stringify(request),
 			dataType : 'json',
 			contentType : 'application/json; charset=utf-8',
 			type : 'POST',
@@ -328,9 +358,9 @@
 				console.log(data);
 				$("#DeleteFieldModal").closeModal();
 				$("#closeDeleteModal").openModal({
-			        dismissible:false
-			    });
-				
+					dismissible:false
+				});
+
 				$("#materialize-lean-overlay-3").css("display","none");
 			},
 			error : function() {

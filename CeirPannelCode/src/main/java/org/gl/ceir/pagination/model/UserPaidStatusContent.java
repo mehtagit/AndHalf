@@ -1,9 +1,13 @@
 package org.gl.ceir.pagination.model;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.gl.ceir.CeirPannelCode.Model.EndUserVisaInfo;
+import org.gl.ceir.CeirPannelCode.Model.UplodPaidStatusModel;
+import org.gl.ceir.CeirPannelCode.Model.UserDepartment;
+import org.gl.ceir.CeirPannelCode.Model.VisaDb;
 import org.springframework.stereotype.Component;
 @Component
 public class UserPaidStatusContent {
@@ -32,16 +36,14 @@ public class UserPaidStatusContent {
 	private String secondImei;
 	private String thirdImei;
 	private String fourthImei,filePreviewLink;
+	private UserDepartment userDepartment;
+	private List<UplodPaidStatusModel> regularizeDeviceDbs;
+	private List<VisaDb> visaDb;
 	private EndUserVisaInfo endUserDB;
 	private String origin,nationality;
-	//private EndUserVisaInfo endUserDB;
-	
-	
-	
 	public Integer getId() {
 		return id;
 	}
-	
 	public void setId(Integer id) {
 		this.id = id;
 	}
@@ -189,6 +191,30 @@ public class UserPaidStatusContent {
 	public void setFourthImei(String fourthImei) {
 		this.fourthImei = fourthImei;
 	}
+	public String getFilePreviewLink() {
+		return filePreviewLink;
+	}
+	public void setFilePreviewLink(String filePreviewLink) {
+		this.filePreviewLink = filePreviewLink;
+	}
+	public UserDepartment getUserDepartment() {
+		return userDepartment;
+	}
+	public void setUserDepartment(UserDepartment userDepartment) {
+		this.userDepartment = userDepartment;
+	}
+	public List<UplodPaidStatusModel> getRegularizeDeviceDbs() {
+		return regularizeDeviceDbs;
+	}
+	public void setRegularizeDeviceDbs(List<UplodPaidStatusModel> regularizeDeviceDbs) {
+		this.regularizeDeviceDbs = regularizeDeviceDbs;
+	}
+	public List<VisaDb> getVisaDb() {
+		return visaDb;
+	}
+	public void setVisaDb(List<VisaDb> visaDb) {
+		this.visaDb = visaDb;
+	}
 	public EndUserVisaInfo getEndUserDB() {
 		return endUserDB;
 	}
@@ -201,21 +227,12 @@ public class UserPaidStatusContent {
 	public void setOrigin(String origin) {
 		this.origin = origin;
 	}
-	public String getFilePreviewLink() {
-		return filePreviewLink;
-	}
-	public void setFilePreviewLink(String filePreviewLink) {
-		this.filePreviewLink = filePreviewLink;
-	}
-
 	public String getNationality() {
 		return nationality;
 	}
-
 	public void setNationality(String nationality) {
 		this.nationality = nationality;
 	}
-
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -271,6 +288,12 @@ public class UserPaidStatusContent {
 		builder.append(fourthImei);
 		builder.append(", filePreviewLink=");
 		builder.append(filePreviewLink);
+		builder.append(", userDepartment=");
+		builder.append(userDepartment);
+		builder.append(", regularizeDeviceDbs=");
+		builder.append(regularizeDeviceDbs);
+		builder.append(", visaDb=");
+		builder.append(visaDb);
 		builder.append(", endUserDB=");
 		builder.append(endUserDB);
 		builder.append(", origin=");
@@ -280,6 +303,6 @@ public class UserPaidStatusContent {
 		builder.append("]");
 		return builder.toString();
 	}
-
+	
 	
 }

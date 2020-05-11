@@ -43,11 +43,19 @@
 				
 				var featureName = $('#feature').val() == null ? null : $("#feature option:selected").text();
 				
+				//var usertype = $('#userType').val() == null ? null : $("#userType option:selected").text(); 
+				
 				var filterRequest={
 						//"endDate":$('#endDate').val(),
 						//"startDate":$('#startDate').val(),
 						"feature" : parseInt($('#feature').val()),
-						"usertype" : $('#userType').val(),
+						"usertype" : parseInt($('#userType').val()),
+						"username" : $("body").attr("data-selected-username"),
+						"featureId":parseInt(featureId),
+						"userTypeId": parseInt($("body").attr("data-userTypeID")),
+						"userType":$("body").attr("data-roleType"),
+						"userId" : parseInt($("body").attr("data-userID"))
+						
 				}
 				
 				if(lang=='km'){
@@ -85,13 +93,16 @@
 							"columns": result
 						});
 						$('div#initialloader').delay(300).fadeOut('slow');
-						$('#slaLibraryTable input').unbind();
-						$('#slaLibraryTable input').bind('keyup', function (e) {
-							if (e.keyCode == 13) {
-								table.search(this.value).draw();
-							}
-
-						});
+						$('.dataTables_filter input')
+					       .off().on('keyup', function(event) {
+					    	   if(event.keyCode == 8 && !textBox.val() || event.keyCode == 46 && !textBox.val() || event.keyCode == 83 && !textBox.val()) {
+						    
+						            }
+					    		if (event.keyCode === 13) {
+					    			 table.search(this.value.trim(), false, false).draw();
+					    		}
+					          
+					       });
 					},
 					error: function (jqXHR, textStatus, errorThrown) {
 						console.log("error in ajax");
@@ -148,7 +159,7 @@
 										"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
 
 										"<select id="+dropdown[i].id+"  class='select-wrapper select2  initialized'>"+
-										"<option value='-1'>"+dropdown[i].title+
+										"<option value=null>"+dropdown[i].title+
 										"</option>"+
 										"</select>"+
 										"</div>"+
@@ -192,7 +203,7 @@
 				}
 			});
 				
-				$.getJSON('./registrationUserType', function(data) {
+				$.getJSON('./registrationUserType?type=2', function(data) {
 					for (i = 0; i < data.length; i++) {
 						$('<option>').val(data[i].id).text(data[i].usertypeName)
 						.appendTo('#userType');

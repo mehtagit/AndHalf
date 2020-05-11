@@ -8,11 +8,12 @@ import org.springframework.stereotype.Component;
 public class DBrowDataModel {
 	private String dbName;
 	private String tableName;
+	private Integer pageNo, pageSize;
 	private List<String> columns;
 	private List<Map<String, String>> rowData;
 	
-	private String endDate,startDate,txnId;
-	private Integer reportnameId;
+	private String endDate,startDate,txnId,username,userType;
+	private Integer reportnameId,userTypeId,userId,featureId;
 	public String getDbName() {
 		return dbName;
 	}
@@ -24,6 +25,18 @@ public class DBrowDataModel {
 	}
 	public void setTableName(String tableName) {
 		this.tableName = tableName;
+	}
+	public Integer getPageNo() {
+		return pageNo;
+	}
+	public void setPageNo(Integer pageNo) {
+		this.pageNo = pageNo;
+	}
+	public Integer getPageSize() {
+		return pageSize;
+	}
+	public void setPageSize(Integer pageSize) {
+		this.pageSize = pageSize;
 	}
 	public List<String> getColumns() {
 		return columns;
@@ -55,11 +68,41 @@ public class DBrowDataModel {
 	public void setTxnId(String txnId) {
 		this.txnId = txnId;
 	}
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public String getUserType() {
+		return userType;
+	}
+	public void setUserType(String userType) {
+		this.userType = userType;
+	}
 	public Integer getReportnameId() {
 		return reportnameId;
 	}
 	public void setReportnameId(Integer reportnameId) {
 		this.reportnameId = reportnameId;
+	}
+	public Integer getUserTypeId() {
+		return userTypeId;
+	}
+	public void setUserTypeId(Integer userTypeId) {
+		this.userTypeId = userTypeId;
+	}
+	public Integer getUserId() {
+		return userId;
+	}
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+	public Integer getFeatureId() {
+		return featureId;
+	}
+	public void setFeatureId(Integer featureId) {
+		this.featureId = featureId;
 	}
 	@Override
 	public String toString() {
@@ -68,6 +111,10 @@ public class DBrowDataModel {
 		builder.append(dbName);
 		builder.append(", tableName=");
 		builder.append(tableName);
+		builder.append(", pageNo=");
+		builder.append(pageNo);
+		builder.append(", pageSize=");
+		builder.append(pageSize);
 		builder.append(", columns=");
 		builder.append(columns);
 		builder.append(", rowData=");
@@ -78,12 +125,22 @@ public class DBrowDataModel {
 		builder.append(startDate);
 		builder.append(", txnId=");
 		builder.append(txnId);
+		builder.append(", username=");
+		builder.append(username);
+		builder.append(", userType=");
+		builder.append(userType);
 		builder.append(", reportnameId=");
 		builder.append(reportnameId);
+		builder.append(", userTypeId=");
+		builder.append(userTypeId);
+		builder.append(", userId=");
+		builder.append(userId);
+		builder.append(", featureId=");
+		builder.append(featureId);
 		builder.append("]");
 		return builder.toString();
 	}
-		  
-		  
-		
+	
+	
+	
 }

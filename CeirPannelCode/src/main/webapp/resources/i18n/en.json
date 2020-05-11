@@ -150,5 +150,13 @@
 "Email_Exist":"Email already exists in the system",
     "Phone_Exist":"Phone Number already exists in the system",
     "VISA_UPDATE_NOT_ALLOWED":"This passport number is not registered with CEIR system. Kindly register your device first.",
-     "visaUpdatesuccessMsg": "Your visa has been successfully updated. The Transaction ID for future reference is "
+     "visaUpdatesuccessMsg": "Your visa has been successfully updated. The Transaction ID for future reference is ",
+     "Curr_Save_Sucess" : "Currency has been sucessfully saved",
+     "Curr_Already_Exist" : "Currency data for this date is already exist",
+     "Curr_Wrong_Id" : "Currency Id is wrong",
+     "Curr_Save_Fail" : "Currency failed to save",
+     "Curr_Update_Sucess" : "Currency has been sucessfully update",
+     "Curr_Update_Fail" : "Currency failed to update",
+     "Curr_Data_By_Id_Fail" : "Failed to find Currency by Id"
+     
 }

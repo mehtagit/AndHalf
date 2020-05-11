@@ -461,7 +461,12 @@ public @ResponseBody ConfigContentModel viewAdminFeign(FilterRequest filterReque
 					@RequestMapping(value="/pending-tac-approved" ,method=RequestMethod.DELETE) 
 					public @ResponseBody GenricResponse deletePendingTac(@RequestBody FilterRequest filterRequest);
 					
-					
+					@RequestMapping(value="/visa/view" ,method=RequestMethod.POST) 
+					public Object viewVisaRequest(@RequestBody FilterRequest filterRequest,
+					@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
+					@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+					@RequestParam(value = "file", defaultValue = "0") Integer file);
+							
 }					
 
 

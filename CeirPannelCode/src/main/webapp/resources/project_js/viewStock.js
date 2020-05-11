@@ -403,6 +403,17 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 			
 				});
 				$('div#initialloader').delay(300).fadeOut('slow');
+				
+				$('.dataTables_filter input')
+			       .off().on('keyup', function(event) {
+			    	   if(event.keyCode == 8 && !textBox.val() || event.keyCode == 46 && !textBox.val() || event.keyCode == 83 && !textBox.val()) {
+				    
+				            }
+			    		if (event.keyCode === 13) {
+			    			 table.search(this.value.trim(), false, false).draw();
+			    		}
+			          
+			       });
 			}
 		}); 
 	}	
@@ -427,6 +438,8 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 			type: 'POST',
 			dataType: "json",
 			success: function(data){
+				data.userStatus == "Disable" ? $('#btnLink').addClass( "eventNone" ) : $('#btnLink').removeClass( "eventNone" );
+				
 				var elem='<p class="PageHeading">'+data.pageTitle+'</p>';
 				$("#pageHeader").append(elem);
 				var button=data.buttonList;
@@ -816,15 +829,33 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 			$("#tableOnModal").openModal({dismissible:false});
 			 var filter =[];
 			 var formData= new FormData();
-			 var filterRequest={
-					 "columns":["created_on","modified_on","txn_id","user_type","role_type","stock_status","supplier_id","suplier_name",
-						 "quantity","device_quantity","invoice_number","file_name","remarks","previous_stock_status","id","assigner_id",
-						 "total_price","currency","revtype","user_id","delete_flag","ceir_admin_id"
-						 ],
-					"tableName": "stock_mgmt_aud",
-					"dbName" : "ceirconfig",
-					"txnId":txnID
-			}
+			 var ceirAdmin='';
+			 var userTypeValue=$("body").attr("data-roleType");
+			 if(userTypeValue=='CEIRAdmin')
+			 {
+				 var filterRequest={
+						 "columns":["created_on","modified_on","txn_id","user_type","role_type","stock_status","supplier_id","suplier_name",
+							 "quantity","device_quantity","invoice_number","file_name","remarks","previous_stock_status","id","assigner_id",
+							 "total_price","currency","user_id","delete_flag","ceir_admin_id"
+							 ],
+						"tableName": "stock_mgmt_aud",
+						"dbName" : "ceirconfig",
+						"txnId":txnID
+				}
+			 }
+			 else{
+				 var filterRequest={
+						 "columns":["created_on","modified_on","txn_id","user_type","role_type","stock_status","supplier_id","suplier_name",
+							 "quantity","device_quantity","invoice_number","file_name","remarks","previous_stock_status","id","assigner_id",
+							 "total_price","currency","user_id","delete_flag",
+							 ],
+						"tableName": "stock_mgmt_aud",
+						"dbName" : "ceirconfig",
+						"txnId":txnID
+				}
+			 }
+			 
+			
 			formData.append("filter",JSON.stringify(filterRequest));	
 			if(lang=='km'){
 				var langFile='../resources/i18n/khmer_datatable.json';

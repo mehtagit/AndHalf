@@ -155,7 +155,16 @@ section {
 </style>
 
 </head>
-<body data-id="3">
+<body data-id="3" 
+data-roleType="${usertype}"
+	data-userTypeID="${usertypeId}" data-userID="${userid}"
+	data-selected-roleType="${selectedUserTypeId}"
+	data-stolenselected-roleType="${stolenselectedUserTypeId}"
+	data-selected-consignmentTxnId="${consignmentTxnId}"
+	data-selected-consignmentStatus="${consignmentStatus}"
+	session-value="en"
+	session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}"
+	data-username="${username}">
 	<!-- START MAIN -->
 
 	<!-- START WRAPPER -->

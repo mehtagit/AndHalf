@@ -1127,16 +1127,54 @@ function confirmantiondelete(){
 			$("#tableOnModal").openModal({dismissible:false});
 			 var filter =[];
 			 var formData= new FormData();
-			 var filterRequest={
-					 "columns": [
-						    "created_on","modified_on","txn_id","consignment_status","supplier_id","supplier_name","consignment_number","expected_dispatche_date","expected_arrivaldate","organisation_country",
-						    "expected_arrival_port","port_address","quantity","device_quantity","remarks","total_price","currency",
-						    "file_name","tax_paid_status","revtype","user_id","pending_tac_approved_by_custom","delete_flag","ceir_admin_id","custom_id"
-						    ],
-					"tableName": "consignment_mgmt_aud",
-					"dbName" : "ceirconfig",
-					"txnId":txnID
-			}
+			 var ceirAdmin='';
+			 var userTypeValue=$("body").attr("data-roleType");
+			
+			 if(userTypeValue=='CEIRAdmin')
+				 {
+				
+				 var filterRequest={
+						 
+						 "columns": [
+							    "created_on","modified_on","txn_id","consignment_status","supplier_id","supplier_name","consignment_number","expected_dispatche_date","expected_arrivaldate","organisation_country",
+							    "expected_arrival_port","port_address","quantity","device_quantity","remarks","total_price","currency",
+							    "file_name","tax_paid_status","user_id","pending_tac_approved_by_custom","delete_flag","ceir_admin_id","custom_id"
+							    ],
+						"tableName": "consignment_mgmt_aud",
+						"dbName" : "ceirconfig",
+						"txnId":txnID
+				}
+				
+				 }
+			 else if(userTypeValue=='Custom'){
+				 ceirAdmin="custom_id";
+				 var filterRequest={
+						 
+						 "columns": [
+							    "created_on","modified_on","txn_id","consignment_status","supplier_id","supplier_name","consignment_number","expected_dispatche_date","expected_arrivaldate","organisation_country",
+							    "expected_arrival_port","port_address","quantity","device_quantity","remarks","total_price","currency",
+							    "file_name","tax_paid_status","user_id","pending_tac_approved_by_custom","delete_flag","custom_id"
+							    ],
+						"tableName": "consignment_mgmt_aud",
+						"dbName" : "ceirconfig",
+						"txnId":txnID
+				}
+			 }
+			 else{
+				 ceirAdmin="'ceir_admin_id'"+','+"'custom_id'";
+              var filterRequest={
+						 
+						 "columns": [
+							    "created_on","modified_on","txn_id","consignment_status","supplier_id","supplier_name","consignment_number","expected_dispatche_date","expected_arrivaldate","organisation_country",
+							    "expected_arrival_port","port_address","quantity","device_quantity","remarks","total_price","currency",
+							    "file_name","tax_paid_status","user_id","pending_tac_approved_by_custom","delete_flag"
+							    ],
+						"tableName": "consignment_mgmt_aud",
+						"dbName" : "ceirconfig",
+						"txnId":txnID
+				}
+			 }
+			 
 			formData.append("filter",JSON.stringify(filterRequest));	
 			if(lang=='km'){
 				var langFile='../resources/i18n/khmer_datatable.json';
@@ -1157,10 +1195,11 @@ function confirmantiondelete(){
 						 orderCellsTop : true,
 						"ordering" : false,
 						"bPaginate" : true,
-						"bFilter" : true,
+						"bFilter" : false,
 						"bInfo" : true,
 						"scrollX": true,
-						"bSearchable" : true,
+						"scrolly": true,
+
 						 "data": dataObject.data,
 						 "columns": dataObject.columns
 					

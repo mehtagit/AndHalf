@@ -83,7 +83,11 @@ var path="${context}";
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
   
- 
+ <style type="text/css">
+ .dataTables_scrollBody {
+    height: 100px !important;
+}
+ </style>
 
 </head>
 
@@ -161,7 +165,7 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}"
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
-                     <a class="btn modal-close" href="./uploadPaidStatus"><spring:message code="modal.ok" /></a>
+                     <a class="btn modal-close" href="./updateVisa?FeatureId=43"><spring:message code="modal.ok" /></a>
                    
                 </div>
             </div>
@@ -209,13 +213,27 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}"
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
-                    <a class="btn modal-close" href="./uploadPaidStatus"><spring:message code="modal.ok" /></a>
+                    <a class="btn modal-close" href="./updateVisa?FeatureId=43"><spring:message code="modal.ok" /></a>
                 </div>
             </div>
         </div>
     </div>
 	
+<div id="tableOnModal" class="modal">
+		<button type="button"
+			class=" modal-action modal-close waves-effect waves-green btn-flat right"
+			data-dismiss="modal">&times;</button>
+		<h6 class="modal-header"><spring:message code="modal.header.viewHistory" /></h6>
+		
+		<div class="modal-content">
 
+			<div class="row">
+				<table class="responsive-table striped display"
+					id="data-table-history" cellspacing="0">
+				</table>
+			</div>
+		</div>
+	</div>
 	<!--materialize js-->
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>

@@ -56,7 +56,7 @@ public class DBDatatableController {
 		DBrowDataModel filterrequest = gsonObject.fromJson(filter, DBrowDataModel.class);
 		try {
 			log.info("request passed to API:::::::::" + filter);
-			Object response = dBTablesFeignClient.DBRowDetailsFeign(filterrequest);
+			Object response = dBTablesFeignClient.historyConsignmentFeign(filterrequest);
 			Gson gson = new Gson();
 			String apiResponse = gson.toJson(response);
 			log.info("apiResponse ::::::::::::::" + apiResponse);
