@@ -724,10 +724,11 @@ data-dismiss="modal">&times;</button> -->
 <script type="text/javascript">
 $(document).ready(function () {
 	<%
-	if(usertypeId==13){
+	if(usertypeId==13 || usertypeId==20){
 		%>
-		$("#langlist").val('en');
+	//	$("#langlist").val('en');
 		 $("#langlist").prop("disabled", true);
+$("#divLang").hide();
 		<%}%>
 	
 openEditPage(<%=usertypeId%>)

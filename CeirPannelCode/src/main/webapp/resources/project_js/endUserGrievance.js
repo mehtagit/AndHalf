@@ -304,7 +304,8 @@ function enableReplySelectFile(){
 						var filterRequest={
 						        "featureId": 6,
 						        "grievanceId":$('#trackGrievanceId').val(),
-						        "grievanceStatus":-1
+						        "grievanceStatus":-1,
+						       // "userType" : "End User"
 				      }
 						$('#endUsergrivanceLibraryTable').css("display", "block");
 						$('#trackGrievanceDiv').css("display", "none");

@@ -1377,7 +1377,7 @@ function historyRecord(txnID){
 				 orderCellsTop : true,
 				"ordering" : false,
 				"bPaginate" : true,
-				"bFilter" : true,
+				"bFilter" : false,
 				"bInfo" : true,
 				"scrollX": true,
 				"bSearchable" : true,

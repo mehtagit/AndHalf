@@ -70,21 +70,21 @@ public class GrievanceDatatableController {
 		log.info("session value user Type==" + session.getAttribute("usertype") + " grievanceSessionUsesFlag=="
 				+ grievanceSessionUsesFlag);
 		String userType = (String) session.getAttribute("usertype");
-		if(userType==null)
-		{
-			log.info("user type is null______________");
-			userType="End User";
-			
+		if(userType!=null){
+			log.info("inside if----->" +userType);
+			userType = (String) session.getAttribute("usertype");
+		}else {
+			log.info("inside else----->" +userType);
+			userType = "End User";
 		}
+		log.info("user type is ______________" +userType);
+		filterrequest.setUserType(userType);
 		Integer userId = (Integer) session.getAttribute("userid");
-		log.info(" filterrequest*************" + filterrequest);
 		
+		log.info("request parameters send to view grievance api=" + filterrequest);
 		response = grievanceFeignClient.grievanceFilter(filterrequest,pageNo,pageSize,file);
-
+		log.info("response::::::::::::::" + response);
 		try {
-
-			log.info("request parameters send to view grievance api=" + filterrequest);
-			log.info("response::::::::::::::" + response);
 			Gson gson = new Gson();
 			String apiResponse = gson.toJson(response);
 			grievancepaginationmodel = gson.fromJson(apiResponse, GrievancePaginationModel.class);
@@ -278,6 +278,23 @@ public class GrievanceDatatableController {
 						List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);
+					}
+				}else if("Immigration".equals(userType)) {
+					log.info("<><><><> in Immigration Greivance Controller");
+					for (GrievanceContentModel dataInsideList : paginationContentList) {
+					String createdOn = dataInsideList.getCreatedOn();
+					String modifiedOn = dataInsideList.getModifiedOn();
+					String txnId = dataInsideList.getTxnId();
+					String grievanceId = String.valueOf(dataInsideList.getGrievanceId());
+					String StatusofGrievance = String.valueOf(dataInsideList.getGrievanceStatus());
+					String grievanceStatus = dataInsideList.getStateInterp();
+					String userStatus = (String) session.getAttribute("userStatus");	
+					String action = iconState.grievanceState(dataInsideList.getFileName(), txnId, grievanceId,
+					StatusofGrievance, userStatus, userId);
+					Object[] finalData = { createdOn, modifiedOn, txnId, grievanceId, grievanceStatus, action };
+					List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
+					finalList.add(finalDataList);
+					datatableResponseModel.setData(finalList);
 					}
 				}
 			}

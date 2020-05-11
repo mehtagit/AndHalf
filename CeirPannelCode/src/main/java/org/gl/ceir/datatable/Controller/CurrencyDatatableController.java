@@ -86,7 +86,7 @@ public class CurrencyDatatableController {
 				   String id= String.valueOf(dataInsideList.getId());	
 				   String createdOn= dataInsideList.getCreatedOn();
 				   String modifiedOn = (String) dataInsideList.getModifiedOn();
-				   String month= dataInsideList.getMonth();
+				   String month= dataInsideList.getMonthInterp();
 				   String year = dataInsideList.getYear();
 				   String currency= String.valueOf(dataInsideList.getCurrencyInterp());
 				   String riel= String.valueOf(dataInsideList.getRiel());

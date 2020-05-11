@@ -3,7 +3,12 @@ package org.gl.ceir.CeirPannelCode.Controller;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -381,9 +386,14 @@ FeignCleintImplementation feignCleintImplementation;
 		Integer userId= (Integer) session.getAttribute("userid");
 		String roletype=session.getAttribute("usertype").toString();
 		String name=session.getAttribute("name").toString();
-
+		String movedFileTime = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
+		log.info("Moved File Time value=="+movedFileTime);
 		addMoreFileModel.setTag("system_upload_filepath");
 		urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
+		
+		addMoreFileModel.setTag("uploaded_file_move_path");
+		urlToMove=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
+		log.info("moved file path from api="+urlToMove.getValue());
 		
 		String filter = request.getParameter("request");
 		Gson gson= new Gson(); 
@@ -398,9 +408,21 @@ FeignCleintImplementation feignCleintImplementation;
 		}
 		else {
 			try {
-
-				byte[] bytes = file.getBytes();
 				String rootPath =urlToUpload.getValue()+lawfulIndivisualStolen.getTxnId()+"/"; 
+				File tmpDir = new File(rootPath+file.getOriginalFilename());
+				boolean exists = tmpDir.exists();
+				if(exists) {
+
+				Path temp = Files.move 
+				(Paths.get(urlToUpload.getValue()+"/"+lawfulIndivisualStolen.getTxnId()+"/"+file.getOriginalFilename()), 
+				Paths.get(urlToMove.getValue()+movedFileTime+"_"+file.getOriginalFilename())); 
+				String movedPath=urlToMove.getValue()+movedFileTime+"_"+file.getOriginalFilename();	
+
+				log.info("file is already exist, moved to this "+movedFileTime+"_"+movedPath+" path. ");
+				tmpDir.delete();
+				}
+				byte[] bytes = file.getBytes();
+				
 				File dir = new File(rootPath + File.separator);
 
 				if (!dir.exists()) dir.mkdirs();
@@ -427,6 +449,19 @@ FeignCleintImplementation feignCleintImplementation;
 
 				byte[] bytes = firFileName.getBytes();
 				String rootPath =urlToUpload.getValue()+lawfulIndivisualStolen.getTxnId()+"/"; 
+				File tmpDir = new File(rootPath+firFileName.getOriginalFilename());
+				boolean exists = tmpDir.exists();
+				if(exists) {
+
+				Path temp = Files.move 
+				(Paths.get(urlToUpload.getValue()+"/"+lawfulIndivisualStolen.getTxnId()+"/"+firFileName.getOriginalFilename()), 
+				Paths.get(urlToMove.getValue()+movedFileTime+"_"+firFileName.getOriginalFilename())); 
+				String movedPath=urlToMove.getValue()+movedFileTime+"_"+firFileName.getOriginalFilename();	
+
+				log.info("file is already exist, moved to this "+movedFileTime+"_"+movedPath+" path. ");
+				tmpDir.delete();
+				}
+				
 				File dir = new File(rootPath + File.separator);
 
 				if (!dir.exists()) dir.mkdirs();

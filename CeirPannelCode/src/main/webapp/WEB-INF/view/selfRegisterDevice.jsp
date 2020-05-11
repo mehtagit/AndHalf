@@ -293,7 +293,7 @@ input[type='search'] {
 										</div>
 
 										<div class="input-field col s12 m6 l6">
-											<input type="text" id="commune" pattern="[a-zA-Z]{1,30}"
+											<input type="text" id="commune" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}"
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 												required maxlength="30"> <label for="commune"><spring:message
