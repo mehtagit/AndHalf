@@ -245,22 +245,22 @@
 
 
 
-<div class="row myRow">
+					<div class="row myRow">
 						<div class=" col s12 m6">
 							<p style="margin: 0; font-size: 12px;">
 								<spring:message code="table.expectedOutput" />
 								<span class="star">*</span>
 							</p>
-							<select id="editOutput" name="editOutput"
-								class="browser-default" class="mySelect"
+							<select id="editOutput" name="editOutput" class="browser-default"
+								class="mySelect"
 								onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 								oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 								style="padding-left: 0;" required>
-								<option value="Y"> Yes</option>
-									<option value="N"> No</option>
-								</select>
+								<option value="Y">Yes</option>
+								<option value="N">No</option>
+							</select>
 						</div>
-	</div>
+					</div>
 
 
 
@@ -287,62 +287,77 @@
 
 		<!--end container-->
 	</section>
-	
-	
-		<div id="updateFieldsSuccess" class="modal">
-     <h6 class="modal-header" style="margin:0px;"><spring:message code="button.update" /></h6>
-        <div class="modal-content">
-            
-            <div class="row">
-                <h6 id="updateFieldMessage"><spring:message code="input.requestupdated" /></h6>
-            </div>
-            <div class="row">
-                <div class="input-field col s12 center">
-                    <a href="" class="modal-close btn"><spring:message code="modal.ok" /></a>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    
-    
-    
-    <div id="DeleteFieldModal" class="modal">
-		<h6 class="modal-header"><spring:message code="modal.header.deleteRuleFeature" /></h6>
+
+
+	<div id="updateFieldsSuccess" class="modal">
+		<h6 class="modal-header" style="margin: 0px;">
+			<spring:message code="button.update" />
+		</h6>
 		<div class="modal-content">
-		<div class="row">
-				<h6><spring:message code="modal.message.ruleFeature.delete" /></h6>
-			</div> 
+
 			<div class="row">
-				<div class="input-field col s12 center">
-					<a onclick="deleteModal()"
-						class="modal-close modal-trigger btn" type="submit"><spring:message code="modal.yes" /></a>
-					<button class="modal-close btn" style="margin-left: 10px;"><spring:message code="modal.no" /></button>
-				</div>
-			</div>
-		</div>
-	</div>	
-
-
-
-<div id="closeDeleteModal" class="modal">
-			<h6 class="modal-header"><spring:message code="modal.message.ruleFeature.delete" /></h6>
-			<div class="modal-content">
-		
-			
-			<div class="row">
-
-				<h6 id="tacModalText"><spring:message code="modal.message.ruleFeatureDeleted" /> </h6>
+				<h6 id="updateFieldMessage">
+					<spring:message code="input.requestupdated" />
+				</h6>
 			</div>
 			<div class="row">
 				<div class="input-field col s12 center">
-					<a href="" class="modal-close btn"
-						style="margin-left: 10px;"><spring:message code="modal.ok" /></a>
+					<a href="" class="modal-close btn"><spring:message
+							code="modal.ok" /></a>
 				</div>
 			</div>
 		</div>
 	</div>
-		
+
+
+
+
+	<div id="DeleteFieldModal" class="modal">
+		<h6 class="modal-header">
+			<spring:message code="modal.header.deleteRuleFeature" />
+		</h6>
+		<div class="modal-content">
+			<div class="row">
+				<h6>
+					<spring:message code="modal.message.ruleFeature.delete" />
+				</h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<a onclick="deleteModal()" class="modal-close modal-trigger btn"
+						type="submit"><spring:message code="modal.yes" /></a>
+					<button class="modal-close btn" style="margin-left: 10px;">
+						<spring:message code="modal.no" />
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<div id="closeDeleteModal" class="modal">
+		<h6 class="modal-header">
+			<spring:message code="modal.message.ruleFeature.delete" />
+		</h6>
+		<div class="modal-content">
+
+
+			<div class="row">
+
+				<h6 id="tacModalText">
+					<spring:message code="modal.message.ruleFeatureDeleted" />
+				</h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<a href="" class="modal-close btn" style="margin-left: 10px;"><spring:message
+							code="modal.ok" /></a>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<!--materialize js-->
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>

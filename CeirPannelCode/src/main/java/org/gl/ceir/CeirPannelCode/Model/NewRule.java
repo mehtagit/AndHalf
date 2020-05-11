@@ -12,7 +12,7 @@ public class NewRule {
 	private Integer ruleOrder;
 	private String userType;
 	private String output;
-	
+
 	public String userName;
 
 	public String getUserName() {
@@ -51,7 +51,7 @@ public class NewRule {
 	private Integer userTypeId;
 
 	private String roleType;
-	
+
 	public String getOutput() {
 		return output;
 	}

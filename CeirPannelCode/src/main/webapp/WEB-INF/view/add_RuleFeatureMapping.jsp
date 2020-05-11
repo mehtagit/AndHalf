@@ -88,6 +88,8 @@ input
 
 
 
+
+
 [
 type
 =
@@ -97,17 +99,23 @@ text
 
 
 
+
+
 :not
 
 
+
  
+
 
 
 (
 .browser-default
 
 
+
  
+
 
 
 )
@@ -117,14 +125,20 @@ font-size
 
 
 
+
+
 :
+
 
 
  
 
 
+
 13
 px
+
+
 
 
 
@@ -155,8 +169,7 @@ section {
 </style>
 
 </head>
-<body data-id="3" 
-data-roleType="${usertype}"
+<body data-id="3" data-roleType="${usertype}"
 	data-userTypeID="${usertypeId}" data-userID="${userid}"
 	data-selected-roleType="${selectedUserTypeId}"
 	data-stolenselected-roleType="${stolenselectedUserTypeId}"
@@ -196,8 +209,8 @@ data-roleType="${usertype}"
 												<spring:message code="table.ruleName" />
 												<span class="star">*</span>
 											</p>
-											<select id="Rule" name="rule"
-												class="browser-default" class="mySelect"
+											<select id="Rule" name="rule" class="browser-default"
+												class="mySelect"
 												onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 												oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 												style="padding-left: 0;" required></select>
@@ -300,22 +313,22 @@ data-roleType="${usertype}"
 									</div>
 
 
-<div class="row myRow">
-						<div class=" col s12 m6">
-							<p style="margin: 0; font-size: 12px;">
-								<spring:message code="table.expectedOutput" />
-								<span class="star">*</span>
-							</p>
-							<select id="output" name="output"
-								class="browser-default" class="mySelect"
-								onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-								oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-								style="padding-left: 0;" required>
-								<option value="Y"> Yes</option>
-									<option value="N"> No</option>
-								</select>
-						</div>
-	</div>
+									<div class="row myRow">
+										<div class=" col s12 m6">
+											<p style="margin: 0; font-size: 12px;">
+												<spring:message code="table.expectedOutput" />
+												<span class="star">*</span>
+											</p>
+											<select id="output" name="output" class="browser-default"
+												class="mySelect"
+												onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+												oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+												style="padding-left: 0;" required>
+												<option value="Y">Yes</option>
+												<option value="N">No</option>
+											</select>
+										</div>
+									</div>
 
 
 
@@ -330,7 +343,7 @@ data-roleType="${usertype}"
 											<a href="#cancelMessage" class="btn modal-trigger"
 												type="cancel" style="margin-left: 10px;"><spring:message
 													code="button.cancel" /></a>
-													
+
 										</div>
 
 									</div>
@@ -346,39 +359,51 @@ data-roleType="${usertype}"
 	</div>
 
 
-														<div id="cancelMessage" class="modal">
-		<h6 class="modal-header"> <spring:message code="modal.cancelrequest" /></h6>
+	<div id="cancelMessage" class="modal">
+		<h6 class="modal-header">
+			<spring:message code="modal.cancelrequest" />
+		</h6>
 		<div class="modal-content">
 			<div class="row">
-				<h6><spring:message code="modal.message" /></h6>
+				<h6>
+					<spring:message code="modal.message" />
+				</h6>
 			</div>
 			<div class="row">
 				<div class="input-field col s12 center">
 					<div class="input-field col s12 center">
-						<a href="${context}/ruleFeatureMav?FeatureId=30" class="btn"><spring:message code="modal.yes" /></a>
+						<a href="${context}/ruleFeatureMav?FeatureId=30" class="btn"><spring:message
+								code="modal.yes" /></a>
 						<button class="modal-close waves-effect waves-light btn"
-							style="margin-left: 10px;"><spring:message code="modal.no" /></button>
+							style="margin-left: 10px;">
+							<spring:message code="modal.no" />
+						</button>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	
+
 	<div id="successModal" class="modal">
-     <h6 class="modal-header" style="margin:0px;"><spring:message code="button.add" /></h6>
-        <div class="modal-content">
-            
-            <div class="row">
-                <h6 id="updateFieldMessage">Successfully Added New Rule FeatureMapping.</h6>
-            </div>
-            <div class="row">
-                <div class="input-field col s12 center">
-                    <a class="modal-close btn" href="${context}/ruleFeatureMav?FeatureId=30"><spring:message code="modal.ok" /></a>
-                </div>
-            </div>
-        </div>
-    </div>
-    
+		<h6 class="modal-header" style="margin: 0px;">
+			<spring:message code="button.add" />
+		</h6>
+		<div class="modal-content">
+
+			<div class="row">
+				<h6 id="updateFieldMessage">Successfully Added New Rule
+					FeatureMapping.</h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<a class="modal-close btn"
+						href="${context}/ruleFeatureMav?FeatureId=30"><spring:message
+							code="modal.ok" /></a>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<div id="cancelMessage" class="modal">
 		<h6 class="modal-header">
 			<spring:message code="modal.cancelrequest" />
