@@ -271,7 +271,6 @@ function hide() {
         		"email":email,
         		"phoneNo":phoneNo,
         		"visaDb":visaDb,
-        		"txnId":txnid,
         		"entryDateInCountry":entryDate
         }
        
@@ -302,6 +301,12 @@ function hide() {
 				$('#errorMessage').text($.i18n(''));
 				$('#errorMessage').text($.i18n(data.tag));
 				}
+				else if(data.errorCode==0)
+					{
+					$('#successMsg').openModal();
+					$('#messageResponse').text($.i18n('visaUpdatesuccessMsg')+' '+data.txnId);
+				    $("#updateVisaButton").prop('disabled', true);
+					}
 				else{
 					$('#successMsg').openModal();
 					$('#messageResponse').text($.i18n('VISA_UPDATE_SUCCESS'));

@@ -4,8 +4,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class FilterRequest {
-	public String startDate,endDate,createdOn,modifiedOn,roleType,userType,txnId,searchString,grievanceId,tag,remarks,deviceId,nid,childTag,field,interp,tagId,value,displayName,description,address,featureName,subFeatureName,userName,date,fileName,invoiceNumber,suplierName,supplierId,stateInterp,alertId,remark,email,phoneNo,username,tac,userDisplayName,filterUserName,FilterUserType,raisedBy,filteredUserType;
-	private Integer pageNo, pageSize,userId,taxPaidStatus,consignmentStatus,featureId,userTypeId,fileStatus,requestType,sourceType,grievanceStatus,userRoleTypeId,status,asType,serviceDump,fileType,action,operatorTypeId,channel,type,deviceIdType,parentValue,id,port,currency,quantity,stockStatus,feature,period,year;
+	public String startDate,endDate,createdOn,modifiedOn,roleType,userType,txnId,searchString,grievanceId,tag,remarks,deviceId,nid,childTag,field,interp,tagId,value,displayName,description,address,featureName,subFeatureName,userName,date,fileName,invoiceNumber,suplierName,supplierId,stateInterp,alertId,remark,email,phoneNo,username,tac,userDisplayName,filterUserName,FilterUserType,raisedBy,filteredUserType,monthDate;
+	private Integer pageNo, pageSize,userId,taxPaidStatus,consignmentStatus,featureId,userTypeId,fileStatus,requestType,sourceType,grievanceStatus,userRoleTypeId,status,asType,serviceDump,fileType,action,operatorTypeId,channel,type,deviceIdType,parentValue,id,port,currency,quantity,stockStatus,feature,period,year,dataId,usertypeId;
 	private Double dollar,riel;
 	private int roleTypeId;
 	private String state,ruleName;
@@ -255,6 +255,12 @@ public class FilterRequest {
 	public void setFilteredUserType(String filteredUserType) {
 		this.filteredUserType = filteredUserType;
 	}
+	public String getMonthDate() {
+		return monthDate;
+	}
+	public void setMonthDate(String monthDate) {
+		this.monthDate = monthDate;
+	}
 	public Integer getPageNo() {
 		return pageNo;
 	}
@@ -435,6 +441,18 @@ public class FilterRequest {
 	public void setYear(Integer year) {
 		this.year = year;
 	}
+	public Integer getDataId() {
+		return dataId;
+	}
+	public void setDataId(Integer dataId) {
+		this.dataId = dataId;
+	}
+	public Integer getUsertypeId() {
+		return usertypeId;
+	}
+	public void setUsertypeId(Integer usertypeId) {
+		this.usertypeId = usertypeId;
+	}
 	public Double getDollar() {
 		return dollar;
 	}
@@ -550,6 +568,8 @@ public class FilterRequest {
 		builder.append(raisedBy);
 		builder.append(", filteredUserType=");
 		builder.append(filteredUserType);
+		builder.append(", monthDate=");
+		builder.append(monthDate);
 		builder.append(", pageNo=");
 		builder.append(pageNo);
 		builder.append(", pageSize=");
@@ -610,6 +630,10 @@ public class FilterRequest {
 		builder.append(period);
 		builder.append(", year=");
 		builder.append(year);
+		builder.append(", dataId=");
+		builder.append(dataId);
+		builder.append(", usertypeId=");
+		builder.append(usertypeId);
 		builder.append(", dollar=");
 		builder.append(dollar);
 		builder.append(", riel=");
@@ -623,7 +647,6 @@ public class FilterRequest {
 		builder.append("]");
 		return builder.toString();
 	}
-	
-	
-	
+
+
 }

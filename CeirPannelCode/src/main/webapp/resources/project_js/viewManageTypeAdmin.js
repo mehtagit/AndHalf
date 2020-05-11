@@ -47,7 +47,7 @@ function typeApprovedDataTable(lang){
 function Datatable(Url,dataUrl){
 	var txn= (txnIdValue == 'null' && transactionIDValue == undefined)? $('#transactionID').val() : transactionIDValue;
 
-			
+	var FilterUserType = $('#userType').val()=='-1' || $('#userType').val()==undefined ? null : $("#userType option:selected").text();		
 	if (userType == "CEIRAdmin") {
 		var userId = 0;
 		var filterRequest = {
@@ -60,6 +60,7 @@ function Datatable(Url,dataUrl){
 			"userTypeId" : parseInt($("body").attr("data-userTypeID")),
 			"userType" : $("body").attr("data-roleType"),
 			"status" : parseInt($('#Status').val()),
+			"FilterUserType" : FilterUserType
 		}
 	} else {
 		var userId = parseInt($("body").attr("data-userID"))
@@ -118,13 +119,16 @@ $.ajax({
 			});
 			
 			$('div#initialloader').delay(300).fadeOut('slow');
-			$('#ImporterAdmintypeAprroveTable input').unbind();
-			$('#ImporterAdmintypeAprroveTable input').bind('keyup', function (e) {
-				if (e.keyCode == 13) {
-					table.search(this.value).draw();
-				}
-
-			});
+			$('.dataTables_filter input')
+		       .off().on('keyup', function(event) {
+		    	   if(event.keyCode == 8 && !textBox.val() || event.keyCode == 46 && !textBox.val() || event.keyCode == 83 && !textBox.val()) {
+			    
+			            }
+		    		if (event.keyCode === 13) {
+		    			 table.search(this.value.trim(), false, false).draw();
+		    		}
+		          
+		       });
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
 			console.log("error in ajax");
@@ -181,7 +185,7 @@ function pageRendering(){
 								"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
 
 								"<select id="+dropdown[i].id+" class='select2 initialized'>"+
-								"<option>"+dropdown[i].title+
+								"<option value='-1' >"+dropdown[i].title+
 								"</option>"+
 								"</select>"+
 								"</div>"+
@@ -858,6 +862,13 @@ function historyRecord(txnID){
 	 var filter =[];
 	 var formData= new FormData();
 	 var filterRequest={
+			 
+			 "columns": [
+				    "created_on","modified_on","txn_id","user_type","approve_status","trademark","product_name","model_number","manufacturer_country","frequency_range","tac","file_name",
+				    "remark",
+				    "id","rev","admin_approve_status","admin_remark","admin_user_id","admin_user_type","approve_disapprove_date","feature_id","country","manufacturer_id",
+				    "manufacturer_name","request_date", "user_id","delete_flag"
+				    ],
 			"tableName": "type_approved_db_aud",
 			"dbName" : "ceirconfig",
 			"txnId":txnID

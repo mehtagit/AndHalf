@@ -662,9 +662,10 @@ name="stolenBlockPeriod">
 <spring:message code="operator.later" /></label>
 
 </div>
-<div class="col s6 m6 responsiveDiv" style="display: none;" id="calender">
+<div class="input-field col s6 m6 responsiveDiv" style="display: none;" id="calender">
 <div id="startdatepicker" class="input-group date">
-<p> <spring:message code="operator.blockingTypePeriod" /> </p>
+<label for="stolenDatePeriodedit"><spring:message code="operator.blockingTypePeriod" /> <span class="star"> </span> 
+																</label>
 <input type="text" id="stolenDatePeriodedit" style="margin-top: -9px" /> <span
 class="input-group-addon" style="color: #ff4081"><i class="fa fa-calendar"
 aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>

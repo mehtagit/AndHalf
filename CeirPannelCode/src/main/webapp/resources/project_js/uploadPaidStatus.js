@@ -343,6 +343,18 @@ function table(url,dataUrl){
 				"columns": result
 			});
 			$('div#initialloader').delay(300).fadeOut('slow');
+			
+
+			$('.dataTables_filter input')
+		       .off().on('keyup', function(event) {
+		    	   if(event.keyCode == 8 && !textBox.val() || event.keyCode == 46 && !textBox.val() || event.keyCode == 83 && !textBox.val()) {
+			    
+			            }
+		    		if (event.keyCode === 13) {
+		    			 table.search(this.value.trim(), false, false).draw();
+		    		}
+		          
+		       });
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
 			console.log("error in ajax");
@@ -594,6 +606,8 @@ function historytable(url,dataUrl){
 			});
 			$('#viewBlockDevices').openModal({dismissible:false});
 			$('div#initialloader').delay(300).fadeOut('slow');
+			
+			
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
 			console.log("error in ajax");
@@ -1520,11 +1534,20 @@ $(document).on("keyup", "#Price1", function(e) {
 		$("#tableOnModal").openModal({dismissible:false});
 		 var filter =[];
 		 var formData= new FormData();
-		 var filterRequest={
-				"tableName": "regularize_device_db_aud",
-				"dbName" : "ceirconfig",
-				"txnId":txnID
-		}
+		 
+			 var filterRequest={
+					 
+					 "columns": [
+						    "created_on","modified_on","txn_id","status","nid","device_type","device_id_type","multi_sim_status","country","device_serial_number","tax_paid_status","device_status","price",
+						    "currency","first_imei","second_imei","third_imei","fourth_imei","origin","remark",
+						    "id", "user_id","creator_user_id"
+						    ],
+					"tableName": "regularize_device_db_aud",
+					"dbName" : "ceirconfig",
+					"txnId":txnID
+			} 
+		 
+		
 		formData.append("filter",JSON.stringify(filterRequest));	
 		if(lang=='km'){
 			var langFile='../resources/i18n/khmer_datatable.json';

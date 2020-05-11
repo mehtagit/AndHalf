@@ -57,7 +57,8 @@
 					"featureId":parseInt(featureId),
 					"userTypeId": parseInt($("body").attr("data-userTypeID")),
 					"userType":$("body").attr("data-roleType"),
-					"id" : parseInt($("#userType").val())
+					"id" : parseInt($("#userType").val()),
+					"username" : $("body").attr("data-selected-username")
 					
 			}				
 			if(lang=='km'){
@@ -93,14 +94,18 @@
 						"columns": result
 					});
 
-					$('div#initialloader').delay(300).fadeOut('slow');
-						$('#userManagementLibraryTable input').unbind();
-						$('#userManagementLibraryTable input').bind('keyup', function (e) {
-							if (e.keyCode == 13) {
-								table.search(this.value).draw();
-							}
 
-						});
+					$('div#initialloader').delay(300).fadeOut('slow');
+					$('.dataTables_filter input')
+				       .off().on('keyup', function(event) {
+				    	   if(event.keyCode == 8 && !textBox.val() || event.keyCode == 46 && !textBox.val() || event.keyCode == 83 && !textBox.val()) {
+					    
+					            }
+				    		if (event.keyCode === 13) {
+				    			 table.search(this.value.trim(), false, false).draw();
+				    		}
+				          
+				       });
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
 					
@@ -158,7 +163,7 @@
 									"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
 
 									"<select id="+dropdown[i].id+" class='select2 initialized'>"+
-									"<option value='' disabled selected>"+dropdown[i].title+
+									"<option value='' selected>"+dropdown[i].title+
 									"</option>"+
 									"</select>"+
 									"</div>"+
@@ -207,7 +212,12 @@
 	function chanegeUserStatus(){
 		var Request={
 				"status" : parseInt($("#userStatus").val()),
-				"usertypeId": parseInt(window.userId)
+				"usertypeId": parseInt(window.userId),
+				"userId":parseInt(userId),
+				"featureId":parseInt(featureId),
+				"userTypeId": parseInt($("body").attr("data-userTypeID")),
+				"userType":$("body").attr("data-roleType"),
+				"username" : $("body").attr("data-selected-username")
 		}
 		
 		$.ajax({

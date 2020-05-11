@@ -241,8 +241,8 @@ footer {
 
 									<p style="margin-left: 10px;">
 										<spring:message code="registration.theimeinumber" />
-										<span id="InvalidImeiNumber"> </span> is
-										<spring:message code="registration.invalid" />
+										<span id="InvalidImeiNumber"> </span> 
+										<spring:message code="registration.invalid" /><i class="fa fa-times-circle-o red-text" style="margin-left: 23px;" title="Rejected"></i>
 									</p>
 									<div class="input-field col s6 m4">
 										<label for="invalidTac"><spring:message

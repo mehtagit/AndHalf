@@ -293,9 +293,6 @@ public class IconsState {
 			error="<a onclick="+errorURL+" class="+disableIconClass+"><i  class="
 					+disableErrorIcon+" aria-hidden=\"true\" title="
 					+errorIconTitle+"  ></i></a>";
-			edit="<a onclick="+editAction+" class="+disableIconClass+"><i class="
-					+disableEditIcon+" aria-hidden=\"true\"  title="
-					+editIconTitle+"></i></a>"; 
 		}
 		else if("2".equals(status)  && "Approved".equals(userStatus)) {
 			download="<a onclick="+downloadURL+"  class="+disableIconClass+"><i class="
@@ -2537,7 +2534,7 @@ public class IconsState {
 
 		String editAction= "viewDetails("+id+",'Edit')";
 		String viewAction="viewDetails("+id+",'View')";
-		String deleteAction= "deleteByImei()";
+		String deleteAction= "DeleteByID('"+id+"')";
 
 		// state related Code 
 
@@ -2560,18 +2557,19 @@ public class IconsState {
 	/********************************** Icons for Admin Visa Update Datatable **********************************/ 
 
 
-	public String visaUpdateAdminIcons(String status,String id) {	
+	public String visaUpdateAdminIcons(String status,String id,Integer endUserId,String txnid) {	
 		executePostConstruct();
-		String viewAction="viewByID("+id+",'view','"+projectPath+"')";
-		//	String downloadURL = "./dowloadFiles/actual/"+fileName.replace(" ", "%20")+"/"+txnId+"/"+defaultTagName+"";
-		//String downloadURL = "fileDownload('"+fileName.replace(" ", "%20")+"','actual','"+txnId+"','"+defaultTagName+"')";
-		String approveAction = "";
-		String rejectAction= "";
+		String viewAction="viewDetails('"+id+"','"+endUserId+"')";
+
+		String approveAction ="deviceApprovalPopup('"+id+"','"+endUserId+"','"+txnid+"')";
+		String rejectAction= "userRejectPopup('"+id+"','"+endUserId+"','"+txnid+"')";
 
 
 		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
-
+		 String historyAction ="historyRecord('"+txnid+"')";
+	     String history="<a onclick="+historyAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+historyIcon+" aria-hidden=\"true\"  title="
+					+historyTitle+"></i></a>";
 		/*
 		 * String download="<a onclick="+downloadURL+" ><i class="
 		 * +downloadIcon+" aria-hidden=\"true\" title=" +downloadIconTitle+" ></i></a>";
@@ -2583,7 +2581,7 @@ public class IconsState {
 
 
 
-		String action = view.concat(approve).concat(reject);
+		String action = view.concat(approve).concat(reject).concat(history);
 		return action;
 
 	}

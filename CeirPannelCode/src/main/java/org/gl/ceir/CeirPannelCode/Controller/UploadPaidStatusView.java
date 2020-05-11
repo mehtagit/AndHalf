@@ -18,8 +18,10 @@ import org.gl.ceir.CeirPannelCode.Feignclient.UserPaidStatusFeignClient;
 import org.gl.ceir.CeirPannelCode.Model.AddMoreFileModel;
 import org.gl.ceir.CeirPannelCode.Model.EndUserVisaInfo;
 import org.gl.ceir.CeirPannelCode.Model.FileExportResponse;
+import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest_UserPaidStatus;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
+import org.gl.ceir.CeirPannelCode.Model.UpdateVisaModel;
 import org.gl.ceir.CeirPannelCode.Model.VisaDb;
 import org.gl.ceir.CeirPannelCode.Util.UtilDownload;
 import org.gl.ceir.pagination.model.UserPaidStatusContent;
@@ -359,6 +361,8 @@ FeignCleintImplementation feignCleintImplementation;
 		String filter = request.getParameter("request");
 		//log.info("txnid+++++++++++"+request.getParameter("request[regularizeDeviceDbs][txnId]"));
 		Gson gson= new Gson(); 
+		  String txnNumber="A" + utildownload.getTxnId();	
+			log.info("Random transaction id number="+txnNumber);
 		log.info("before casting request in to pojo classs"+filter);
 		addMoreFileModel.setTag("system_upload_filepath");
 		urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
@@ -372,7 +376,7 @@ FeignCleintImplementation feignCleintImplementation;
 		log.info("device db size--"+endUservisaInfo.getVisaDb().size());
 		  for(int i =0; i<endUservisaInfo.getVisaDb().size();i++) {
 		  //regularizeDeviceDbs.getRegularizeDeviceDbs().get(i).setTxnId(txnNumber);
-		  endUservisaInfo.setTxnId(endUservisaInfo.getTxnId());
+		  endUservisaInfo.setTxnId(txnNumber);
 		 // endUservisaInfo.getRegularizeDeviceDbs().get(i).setTxnId(txnNumber);
 		  endUservisaInfo.getVisaDb().get(i).setVisaFileName((visaImage.getOriginalFilename()));
 		  log.info("file name to be set in varivable="+endUservisaInfo.getVisaDb().get(i).getVisaFileName());
@@ -391,7 +395,7 @@ FeignCleintImplementation feignCleintImplementation;
 		else {
 			try {
 				byte[] bytes = passportImage.getBytes();
-			String rootPath =urlToUpload.getValue()+endUservisaInfo.getTxnId()+"/"; 
+			String rootPath =urlToUpload.getValue()+txnNumber+"/"; 
 			File dir = new File(rootPath + File.separator);
 
 			if (!dir.exists()) dir.mkdirs();
@@ -424,7 +428,7 @@ FeignCleintImplementation feignCleintImplementation;
 			 */
 			
 
-String rootPath = urlToUpload.getValue()+endUservisaInfo.getTxnId()+"/";
+String rootPath = urlToUpload.getValue()+txnNumber+"/";
 File tmpDir = new File(rootPath+visaImage.getOriginalFilename());
 boolean exists = tmpDir.exists();
 if(exists) {
@@ -456,6 +460,7 @@ stream.close();
 		endUserVisaInfo=	uploadPaidStatusFeignClient.updateEndUSerVisaDetailsby(endUservisaInfo);
 		log.info("Response from fetchVisaDetailsbyPassport api== "+endUserVisaInfo);
 		log.info("---exit  point in update visa validity page");
+		endUserVisaInfo.setTxnId(txnNumber);
 		return endUserVisaInfo;
 	}
 	
@@ -605,7 +610,7 @@ stream.close();
 	  request,HttpSession session) {
 	  log.info("---entry point in update visa validity page");
 	  log.info("---request---"+request.getParameter("request"));
-	  
+
 	  String filter =request.getParameter("request");
 	  Gson gson= new Gson();
 	  log.info("before casting request in to pojo classs"+filter);
@@ -692,12 +697,45 @@ public ModelAndView viewDeviceInformation(@RequestParam(name="viewbyImei",requir
 
 @PostMapping("approveVisaUpdateRequest") 
 public @ResponseBody GenricResponse approveVisaUpdateRequest (@RequestBody FilterRequest_UserPaidStatus filterRequestuserpaidStatus)  {
-	log.info("request send to the approveRejectDevice api="+filterRequestuserpaidStatus);
-	GenricResponse response= uploadPaidStatusFeignClient.approveRejectFeign(filterRequestuserpaidStatus);
+	log.info("request send to the approveReject visa  api="+filterRequestuserpaidStatus);
+	GenricResponse response= uploadPaidStatusFeignClient.updateVisaRequest(filterRequestuserpaidStatus);
 
-	log.info("response from currency api "+response);
+	log.info("response from approveReject visa "+response);
 	return response;
 
 	}
+@GetMapping("view-visa-information/{visaId}/{endUserId}")
+public ModelAndView viewVisaInformationView(@PathVariable("visaId") Integer visaId,@PathVariable("endUserId") Integer endUserId,HttpSession session) {
+	
+	ModelAndView modelAndView = new ModelAndView();
+	FilterRequest filter= new FilterRequest();
+	Integer userId= (int) session.getAttribute("userid");
+	
+	String userType=(String) session.getAttribute("usertype");
+	Integer userTypeId=(int) session.getAttribute("usertypeId");
+	
+	filter.setId(endUserId);
+	filter.setUserType(userType);
+	filter.setUserTypeId(userTypeId);
+	filter.setUserId(userId);
+	
+	log.info("request passed to the view visa details .."+filter);
+	UpdateVisaModel content= uploadPaidStatusFeignClient.viewVisaDetails(filter);
+	log.info(" reponse from view visa details api. =="+content);
+
+	addMoreFileModel.setTag("upload_file_link");
+    urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
+    log.info("file link =="+urlToUpload.getValue());
+   // content.setFilePreviewLink(urlToUpload.getValue());
+	String fileLink=urlToUpload.getValue();
+	modelAndView.addObject("fileLink", fileLink);
+    modelAndView.addObject("viewInformation", content);
+    modelAndView.setViewName("viewVisaInformation");	
+    
+    	
+    
+	return modelAndView;
 }
+}
+
 

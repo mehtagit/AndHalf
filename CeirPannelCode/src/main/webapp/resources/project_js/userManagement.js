@@ -55,9 +55,10 @@
 					"startDate":$('#startDate').val(),
 					"userId":parseInt(userId),
 					"featureId":parseInt(featureId),
+					"usertypeId" : parseInt($('#userType').val()),
 					"userTypeId": parseInt($("body").attr("data-userTypeID")),
 					"userType":$("body").attr("data-roleType"),
-					"currency" : parseInt($("#currencyType").val())
+					"username" : $("body").attr("data-selected-username"),
 			}				
 			if(lang=='km'){
 				var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
@@ -92,14 +93,18 @@
 						"columns": result
 					});
 
-					$('div#initialloader').delay(300).fadeOut('slow');
-						$('#userLibrarayTableDiv input').unbind();
-						$('#userLibrarayTableDiv input').bind('keyup', function (e) {
-							if (e.keyCode == 13) {
-								table.search(this.value).draw();
-							}
 
-						});
+					$('div#initialloader').delay(300).fadeOut('slow');
+					$('.dataTables_filter input')
+				       .off().on('keyup', function(event) {
+				    	   if(event.keyCode == 8 && !textBox.val() || event.keyCode == 46 && !textBox.val() || event.keyCode == 83 && !textBox.val()) {
+					    
+					            }
+				    		if (event.keyCode === 13) {
+				    			 table.search(this.value.trim(), false, false).draw();
+				    		}
+				          
+				       });
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
 					
@@ -157,7 +162,7 @@
 									"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
 
 									"<select id="+dropdown[i].id+" class='select2 initialized'>"+
-									"<option value='' selected Disabled >"+dropdown[i].title+
+									"<option value='' selected >"+dropdown[i].title+
 									"</option>"+
 									"</select>"+
 									"</div>"+
@@ -190,17 +195,27 @@
 		$.getJSON('./registrationUserType?type=1', function(data) {
 			for (i = 0; i < data.length; i++) {
 				$('<option>').val(data[i].id).text(data[i].usertypeName)
-				.appendTo('#userType','#edituserType');
+				.appendTo('#userType');
 			}
 		});
 	}
 
 	
 	function viewDetails(id,action){
+	
+	var request = {	
+		"dataId":parseInt(id), 
+		"userId":parseInt(userId),
+		"featureId":parseInt(featureId),
+		"userTypeId": parseInt($("body").attr("data-userTypeID")),
+		"userType":$("body").attr("data-roleType"),
+		"username" : $("body").attr("data-selected-username")
+	}
+	
 		$.ajax({
-			url: './viewUser/'+id,
+			url: './viewUser',
 			type: 'POST',
-		   //data : JSON.stringify(request),
+		    data : JSON.stringify(request),
 			dataType : 'json',
 			contentType : 'application/json; charset=utf-8',
 			success: function (data, textStatus, jqXHR) {
@@ -234,8 +249,8 @@
 		$("#viewemailID").val(result.email);
 		$("#viewPassword").val(result.password);
 		$("#viewconfirmPassword").val(result.password);
-		$("#viewuserType").val(result.userType);
-		$("#viewuserName").val(result.username);
+		$("#viewuserType").val(result.viewUserType);
+		$("#viewuserName").val(result.userName);
 		$("#viewuserRemark").val(result.remarks);
 		
 		
@@ -262,9 +277,9 @@
 				$('<option>').val(data[i].id).text(data[i].usertypeName)
 				.appendTo('#edituserType');
 			}
-			$("#edituserType").val(result.userTypeId);
+			$("#edituserType").val(result.usertypeId);
 		});
-		alert(result.userTypeId);
+		
 		$("#editId").val(result.id);
 		$("#editfirstName").val(result.firstName);
 		$("#editmiddleName").val(result.middleName);
@@ -273,7 +288,7 @@
 		$("#editemailID").val(result.email);
 		$("#editPassword").val(result.password);
 		$("#EditconfirmPassword").val(result.password);
-		$("#edituserName").val(result.username);
+		$("#edituserName").val(result.userName);
 		$("#edituserRemark").val(result.remarks);
 		
 		
@@ -294,11 +309,14 @@
 	
 	
 	function update(){
-	
 		var request ={ 
-				 "id" : parseInt($("#editId").val()),
-		 "userTypeId" : $("#edituserType").val(),
-				
+				"id" : parseInt($("#editId").val()),
+				"userId":parseInt(userId),
+				"featureId":parseInt(featureId),
+				"userTypeId": parseInt($("body").attr("data-userTypeID")),
+				"usertypeId" :  parseInt($("#edituserType").val()),
+				"userType":$("body").attr("data-roleType"),
+				"username" : $("body").attr("data-selected-username")
 		}
 		
 		console.log("request--->" +JSON.stringify(request))
@@ -315,7 +333,7 @@
 				$("#updateFieldsSuccess").openModal({
 			        dismissible:false
 			    });
-				
+				$('#updateFieldMessage').text(data.message);
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
 				console.log("error in ajax")
@@ -330,39 +348,47 @@
   /*------------------------------------ Delete Field -----------------------------------*/
 	
 	
-	function DeleteCurrency(id){
+
+	function DeleteByID(id){
+		
+		window.id=parseInt(id);
+		
+		
+		
 		$("#DeleteFieldModal").openModal({
 	        dismissible:false
 	    });
-		$("#deletePortId").val(id);
 		
-	}	
+	}
 	
-	
-	
-	function confirmantiondelete(){
+	function deleteModal(){
 		
-		var id  = parseInt($("#deletePortId").val());
+		var request ={ 
+				"dataId" : parseInt(window.id),
+				"userId":parseInt(userId),
+				"featureId":parseInt(featureId),
+				"userTypeId": parseInt($("body").attr("data-userTypeID")),
+				"userType":$("body").attr("data-roleType"),
+				"username" : $("body").attr("data-selected-username")
+		}
 		
-		console.log(JSON.stringify(id));
 		$.ajax({
-			url : './deletePort/'+id,
-//			data : JSON.stringify(request),
+			url: './deleteSystemUserType',
+			data : JSON.stringify(request),
 			dataType : 'json',
 			contentType : 'application/json; charset=utf-8',
 			type : 'POST',
 			success : function(data, textStatus, xhr) {
-				console.log(data);
 				$("#DeleteFieldModal").closeModal();
 				$("#closeDeleteModal").openModal({
 			        dismissible:false
 			    });
-				
-				$("#materialize-lean-overlay-3").css("display","none");
+				$('#deleteModalText').text(data.message);
 			},
 			error : function() {
-				console.log("Error");
+				
 			}
 		});
-	}
 	
+		return false;
+	}

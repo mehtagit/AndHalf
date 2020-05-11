@@ -2,6 +2,7 @@ package org.gl.ceir.CeirPannelCode.Controller;
 
 import javax.servlet.http.HttpSession;
 
+import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Feignclient.UserProfileFeignImpl;
 import org.gl.ceir.CeirPannelCode.Model.FileExportResponse;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
@@ -24,6 +25,9 @@ public class VisaController {
 	@Autowired
 	UserProfileFeignImpl userProfileFeignImpl;
 	
+	@Autowired
+	FeignCleintImplementation feignCleintImplementation;
+	
 	@GetMapping("updateVisa")
 	public ModelAndView view() {
 		return new ModelAndView("visaUpdate");
@@ -38,7 +42,7 @@ public class VisaController {
 		Object response;
 		Integer file = 1;	
 		log.info("filterRequest:::::::::"+filterRequest);
-		response= userProfileFeignImpl.viewVisaRequest(filterRequest, filterRequest.getPageNo(), filterRequest.getPageSize(), file);
+		response= feignCleintImplementation.viewVisaRequest(filterRequest, filterRequest.getPageNo(), filterRequest.getPageSize(), file);
 		FileExportResponse fileExportResponse;
 		Gson gson= new Gson(); 
 		String apiResponse = gson.toJson(response);

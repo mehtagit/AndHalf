@@ -4,6 +4,7 @@ import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.NewRule;
 import org.gl.ceir.CeirPannelCode.Model.NewSystemUser;
+import org.gl.ceir.CeirPannelCode.Model.OtpResponse;
 import org.gl.ceir.CeirPannelCode.Model.Password;
 import org.gl.ceir.CeirPannelCode.Model.PaymentRequest;
 import org.gl.ceir.CeirPannelCode.Model.Registration;
@@ -91,8 +92,8 @@ public interface UserProfileFeignImpl {
 	
 	//***************************************************View Port Management Feign********************************
 	
-	@RequestMapping(value="/portAddress/viewById/{id}" ,method=RequestMethod.POST) 
-	public @ResponseBody GenricResponse viewPortFeign(@PathVariable("id") Integer id);
+	@RequestMapping(value="/portAddress/viewDataById" ,method=RequestMethod.POST) 
+	public @ResponseBody GenricResponse viewPortFeign(@RequestBody FilterRequest filterRequest);
 	
 	
 	
@@ -103,8 +104,8 @@ public interface UserProfileFeignImpl {
 	
 	//***************************************************Delete Port Management Feign********************************
 	
-	@RequestMapping(value="/portAddress/delete/{id}" ,method=RequestMethod.POST) 
-	public @ResponseBody GenricResponse deletePortFeign(@PathVariable("id") Integer id);
+	@RequestMapping(value="/portAddress/delete" ,method=RequestMethod.POST) 
+	public @ResponseBody GenricResponse deletePortFeign(@RequestBody FilterRequest filterRequest);
 	
 	
 	/*-------------------------- view all Currency Feign ------------------------------*/
@@ -126,8 +127,8 @@ public interface UserProfileFeignImpl {
 		
 		//***************************************************View Currency Feign********************************
 		
-		@RequestMapping(value="/currency/viewById/{id}" ,method=RequestMethod.POST) 
-		public @ResponseBody GenricResponse viewCurrencyFeign(@PathVariable ("id") Integer id);
+		@RequestMapping(value="/currency/viewById" ,method=RequestMethod.POST) 
+		public @ResponseBody GenricResponse viewCurrencyFeign(@RequestBody FilterRequest filterRequest);
 		
 		
 		
@@ -139,7 +140,6 @@ public interface UserProfileFeignImpl {
 	/*-------------------------- view userManagement Feign ------------------------------*/
 		
 		@RequestMapping(value="/usertypeData" ,method=RequestMethod.POST) 
-
 		public Object viewUserTypeRequest(@RequestBody FilterRequest filterRequest,
 		@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
 		@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
@@ -190,10 +190,10 @@ public interface UserProfileFeignImpl {
 		@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
 		@RequestParam(value = "file", defaultValue = "0") Integer file);	
 
-		//***************************************************View Alert Management Feign********************************
+		//***************************************************View Alert by Id Management Feign********************************
 		
-		@RequestMapping(value="/alertDb/viewById/{id}" ,method=RequestMethod.POST) 
-		public @ResponseBody GenricResponse viewAlertFeign(@PathVariable("id") Integer id);
+		@RequestMapping(value="/alertDb/viewById" ,method=RequestMethod.POST) 
+		public @ResponseBody GenricResponse viewAlertFeign(@RequestBody FilterRequest filterRequest);
 
 		
 		//***************************************************Update Alert Management  Feign******************************
@@ -233,16 +233,21 @@ public interface UserProfileFeignImpl {
 	/*----------------------- Add System user feign ---------------------------*/
 		
 		@PostMapping("/userMgmt/save")
-		public NewSystemUser saveSystemUser(@RequestBody NewSystemUser newSystemUser);		
+		public GenricResponse saveSystemUser(@RequestBody NewSystemUser newSystemUser);		
 		
 		//***************************************************View user Feign********************************
 		
-		@RequestMapping(value="/userMgmt/getById/{id}" ,method=RequestMethod.POST) 
-		public @ResponseBody GenricResponse viewUserFeign(@PathVariable ("id") Integer id);	
+		@RequestMapping(value="/userMgmt/getById" ,method=RequestMethod.POST) 
+		public @ResponseBody GenricResponse viewUserFeign(@RequestBody NewSystemUser newSystemUser);	
 		
 		//***************************************************Update user Feign********************************
 
 		@RequestMapping(value= "/userMgmt/update", method=RequestMethod.POST) 
 		public GenricResponse updateUserFeign(@RequestBody NewSystemUser newSystemUser);
+		
+		//***************************************************Delete user Feign********************************
+		
+		@RequestMapping(value="/userMgmt/delete" ,method=RequestMethod.POST) 
+		public @ResponseBody GenricResponse deleteUserFeign(@RequestBody NewSystemUser newSystemUser);
 } 
 
