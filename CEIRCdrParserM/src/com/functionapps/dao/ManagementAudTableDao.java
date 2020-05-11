@@ -22,7 +22,7 @@ public class ManagementAudTableDao {
 
 		String query = "insert into " + tableName + " (id,rev, revtype, created_on, device_action, device_id_type, "
 				+ "device_launch_date, device_status, device_type, imei_esn_meid, modified_on, multiple_sim_status," 
-				+ "sn_of_device, previous_device_status, txn_id, user_id) values(";
+				+ "sn_of_device, txn_id, user_id) values(";
 
 		if (isOracle) {
 			query = query + sequenceName +".nextVal,";
@@ -30,7 +30,7 @@ public class ManagementAudTableDao {
 			query = query + (getMaxIdDeviceImporterAud(conn, tableName) + 1) +",";
 		}
 
-		query = query + "?,?," + dateFunction + ",?,?,?,?,?,?," + dateFunction + ",?,?,?,?,?)";
+		query = query + "?,?," + dateFunction + ",?,?,?,?,?,?," + dateFunction + ",?,?,?,?)";
 
 		PreparedStatement preparedStatement = null;
 
@@ -51,9 +51,8 @@ public class ManagementAudTableDao {
 				preparedStatement.setString(8, managementDb.getImeiEsnMeid()); 
 				preparedStatement.setString(9, managementDb.getMultipleSimStatus());
 				preparedStatement.setString(10, managementDb.getSnOfDevice());
-				preparedStatement.setInt(11, managementDb.getPreviousDeviceStatus()); 
-				preparedStatement.setString(12, managementDb.getTxnId());
-				preparedStatement.setLong(13, managementDb.getUserId());
+				preparedStatement.setString(11, managementDb.getTxnId());
+				preparedStatement.setLong(12, managementDb.getUserId());
 				
 				System.out.println("Query " + preparedStatement);
 				preparedStatement.addBatch();

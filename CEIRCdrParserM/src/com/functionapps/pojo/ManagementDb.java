@@ -23,7 +23,6 @@ public class ManagementDb  implements Serializable{
 	private Long userId;
 	private String txnId;
 	private String deviceStatus;
-	private Integer previousDeviceStatus;
 	private String period;
 	
 	public ManagementDb() {
@@ -33,7 +32,7 @@ public class ManagementDb  implements Serializable{
 	public ManagementDb(Long rev, int revtype, String createdOn, String modifiedOn, 
 			String deviceType, String deviceIdType, String multipleSimStatus, String snOfDevice, String imeiEsnMeid,
 			String deviceLaunchDate, String deviceAction, Long userId, String txnId, 
-			String deviceStatus, Integer previousDeviceStatus, String period) {
+			String deviceStatus, String period) {
 		this.rev = rev;
 		this.revtype = revtype;
 		this.createdOn = createdOn;
@@ -48,7 +47,6 @@ public class ManagementDb  implements Serializable{
 		this.userId = userId;
 		this.txnId = txnId;
 		this.deviceStatus = deviceStatus;
-		this.previousDeviceStatus = previousDeviceStatus;
 		this.period = period;
 	}
 	
@@ -172,14 +170,6 @@ public class ManagementDb  implements Serializable{
 		this.deviceStatus = deviceStatus;
 	}
 
-	public Integer getPreviousDeviceStatus() {
-		return previousDeviceStatus;
-	}
-
-	public void setPreviousDeviceStatus(Integer previousDeviceStatus) {
-		this.previousDeviceStatus = previousDeviceStatus;
-	}
-
 	public String getPeriod() {
 		return period;
 	}
@@ -225,8 +215,6 @@ public class ManagementDb  implements Serializable{
 		builder.append(txnId);
 		builder.append(", deviceStatus=");
 		builder.append(deviceStatus);
-		builder.append(", previousDeviceStatus=");
-		builder.append(previousDeviceStatus);
 		builder.append(", period=");
 		builder.append(period);
 		builder.append("]");

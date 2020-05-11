@@ -10,6 +10,7 @@ import com.functionapps.parser.service.ConsignmentDelete;
 import com.functionapps.parser.service.ConsignmentInsertUpdate;
 import com.functionapps.parser.service.RegisterTac;
 import com.functionapps.parser.service.WithdrawnTac;
+import com.functionapps.parser.service.StockDelete;
 import org.apache.log4j.Logger;
 
 public class CEIRFeatureFileParser {
@@ -29,7 +30,7 @@ public class CEIRFeatureFileParser {
 //		ResultSet featurers=getFeatureFileDetails(conn);
         try {
             if (featurers.next()) {
-                  ceirfunction.updateFeatureFileStatus(conn, featurers.getString("txn_id"), 3, featurers.getString("feature"), featurers.getString("sub_feature"));  // update web_action
+                ceirfunction.updateFeatureFileStatus(conn, featurers.getString("txn_id"), 3, featurers.getString("feature"), featurers.getString("sub_feature"));  // update web_action
                 if (featurers.getString("feature").equalsIgnoreCase("Register Device") || featurers.getString("feature").equalsIgnoreCase("Update Visa")) {
                     logger.info(" Feature  Register Device / Visa Update. ");
                     ceirfunction.UpdateStatusViaApi(conn, featurers.getString("txn_id"), 0, featurers.getString("feature"));
@@ -149,20 +150,20 @@ public class CEIRFeatureFileParser {
                 new ConsignmentInsertUpdate().process(conn, operator, sub_feature, rulelist, txn_id, operator_tag, usertype_name);
             } else if (operator.equalsIgnoreCase("consignment") && (sub_feature.equalsIgnoreCase("delete"))) {
                 System.out.println("running consignment delete process.");
-                new ConsignmentDelete().process(conn, operator, sub_feature, rulelist, txn_id, operator_tag);
+                new ConsignmentDelete().process(conn, operator, sub_feature, rulelist, txn_id, operator_tag, usertype_name);
             } else if (operator.equalsIgnoreCase("consignment") && (sub_feature.equalsIgnoreCase("approve"))) {
                 System.out.println("running consignment approve process.");
                 new ApproveConsignment().process(conn, operator, sub_feature, rulelist, txn_id, operator_tag, usertype_name);
             } else if (operator.equalsIgnoreCase("TYPE_APPROVED") && (sub_feature.equalsIgnoreCase("REGISTER"))) {
                 System.out.println("running tac register process.");
-                new RegisterTac().process(conn, operator, sub_feature, rulelist, txn_id, operator_tag);
+                new RegisterTac().process(conn, operator, sub_feature, rulelist, txn_id, operator_tag, usertype_name);
             } else if (operator.equalsIgnoreCase("TYPE_APPROVED") && (sub_feature.equalsIgnoreCase("delete"))) {
                 System.out.println("running tac delete process.");
-                new WithdrawnTac().process(conn, operator, sub_feature, rulelist, txn_id, operator_tag);
-            }else if(operator.equalsIgnoreCase("STOCK") &&(sub_feature.equalsIgnoreCase("DELETE"))){
-				System.out.println("running stock delete process.");
-				new StockDelete().process(conn, operator, sub_feature, rulelist, txn_id, operator_tag, usertype_name, "");
-			} else {
+                new WithdrawnTac().process(conn, operator, sub_feature, rulelist, txn_id, operator_tag, usertype_name);
+            } else if (operator.equalsIgnoreCase("STOCK") && (sub_feature.equalsIgnoreCase("DELETE"))) {
+                System.out.println("running stock delete process.");
+                new StockDelete().process(conn, operator, sub_feature, rulelist, txn_id, operator_tag, usertype_name, "");
+            } else {
                 System.out.println("Skipping the process.");
             }
 
