@@ -32,7 +32,7 @@ public class PropertyReader {
 
 		try {
 			prop = new Properties();
-			String propFileName = "/home/ceirapp/ceir/ceir_parser/config.properties";
+			String propFileName = "config.properties";
 			
 			logger.info("Porperty File is ["+propFileName+"]");
 			
