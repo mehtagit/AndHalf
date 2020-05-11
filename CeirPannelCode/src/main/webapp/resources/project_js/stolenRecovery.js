@@ -349,6 +349,18 @@ function Datatable(url,dataUrl,sourceTypeFiler){
 		        ]
 			});
 			$('div#initialloader').delay(300).fadeOut('slow');
+			$('.dataTables_filter input')
+		       .off().on('keyup', function(event) {
+		    	   if(event.keyCode == 8 && !textBox.val() || event.keyCode == 46 && !textBox.val() || event.keyCode == 83 && !textBox.val()) {
+			    
+			            }
+		    		if (event.keyCode === 13) {
+		    			 table.search(this.value.trim(), false, false).draw();
+		    		}
+		          
+		       });
+			
+			
 		}
 	}); 
 }				
@@ -1123,17 +1135,36 @@ function historyRecord(txnID){
 	$("#tableOnModal").openModal({dismissible:false});
 	 var filter =[];
 	 var formData= new FormData();
-	 var filterRequest={
-			 
-			 "columns": [
-				    "created_on","modified_on","txn_id","role_type","operator_type_id","request_type","source_type","file_status","complaint_type","file_name","fir_file_name",
-				    "block_category","blocking_type","blocking_time_period","quantity","device_quantity","remark","rejected_remark","date_of_recovery","date_of_stolen",
-				     "id","rev","user_id","ceir_admin_id"
-				    ],
-			"tableName": "stolenand_recovery_mgmt_aud",
-			"dbName" : "ceirconfig",
-			"txnId":txnID
-	}
+	 
+	 var userTypeValue=$("body").attr("data-roleType");
+	 if(userTypeValue=='CEIRAdmin')
+	 {
+		 var filterRequest={
+				 
+				 "columns": [
+					    "created_on","modified_on","txn_id","role_type","operator_type_id","request_type","source_type","file_status","complaint_type","file_name","fir_file_name",
+					    "block_category","blocking_type","blocking_time_period","quantity","device_quantity","remark","rejected_remark","date_of_recovery","date_of_stolen",
+					     "id","user_id","ceir_admin_id"
+					    ],
+				"tableName": "stolenand_recovery_mgmt_aud",
+				"dbName" : "ceirconfig",
+				"txnId":txnID
+		} 
+	 }
+	 else{
+ var filterRequest={
+				 
+				 "columns": [
+					    "created_on","modified_on","txn_id","role_type","operator_type_id","request_type","source_type","file_status","complaint_type","file_name","fir_file_name",
+					    "block_category","blocking_type","blocking_time_period","quantity","device_quantity","remark","rejected_remark","date_of_recovery","date_of_stolen",
+					     "id","user_id"
+					    ],
+				"tableName": "stolenand_recovery_mgmt_aud",
+				"dbName" : "ceirconfig",
+				"txnId":txnID
+		} 
+	 }
+	
 	formData.append("filter",JSON.stringify(filterRequest));	
 	if(lang=='km'){
 		var langFile='../resources/i18n/khmer_datatable.json';

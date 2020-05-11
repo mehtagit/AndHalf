@@ -221,7 +221,7 @@
 										  oninput="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
 													
-												  required   maxlength="200" class="materialize-textarea" style= "min-height: 8rem;"></textarea>
+											disabled required   maxlength="200" class="materialize-textarea" style= "min-height: 8rem;"></textarea>
                                             <label for="viewuserRemark"><spring:message code="input.Remark" /><span
                                                     class="star">*</span></label>
                                         </div>
@@ -344,7 +344,7 @@
 										  oninput="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
 													
-												  required   maxlength="200" class="materialize-textarea" style= "min-height: 8rem;"></textarea>
+												disabled  required   maxlength="200" class="materialize-textarea" style= "min-height: 8rem;"></textarea>
                                             <label for="edituserRemark"><spring:message code="input.Remark" /><span
                                                     class="star">*</span></label>
                                         </div>
@@ -368,19 +368,7 @@
 				</form>
 			</div>
 		</div>
-	<div id="confirmField" class="modal">
-		<h6 class="modal-header">Add Exchange Rate</h6>
-		<div class="modal-content">
-			<div class="row">
-				<h6 id="sucessMessage">Currency Added Successfully</h6>
-			</div>
-			 <div class="row">
-				<div class="input-field col s12 center">
-                   <a href="" class="modal-close btn" class="btn">ok</a>
-                </div>
-			</div> 
-		</div>
-	</div>
+	
 	
 	
 	
@@ -389,11 +377,11 @@
 		
 		
 	<div id="updateFieldsSuccess" class="modal">
-     <h6 class="modal-header" style="margin:0px;">Edit Exchange Rate</h6>
+     <h6 class="modal-header" style="margin:0px;">Edit User </h6>
         <div class="modal-content">
             
             <div class="row">
-                <h6 id="updateFieldMessage"><spring:message code="input.requestupdated" /></h6>
+                <h6 id="updateFieldMessage"></h6>
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
@@ -429,7 +417,7 @@
 			
 			<div class="row">
 
-				<h6 id="tacModalText"><spring:message code="modal.message.userDeleted"/> </h6>
+				<h6 id="deleteModalText"></h6>
 			</div>
 			<div class="row">
 				<div class="input-field col s12 center">

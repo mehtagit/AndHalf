@@ -93,14 +93,18 @@
 						"columns": result
 					});
 
-					$('div#initialloader').delay(300).fadeOut('slow');
-						$('#userLibrarayTableDiv input').unbind();
-						$('#userLibrarayTableDiv input').bind('keyup', function (e) {
-							if (e.keyCode == 13) {
-								table.search(this.value).draw();
-							}
 
-						});
+					$('div#initialloader').delay(300).fadeOut('slow');
+					$('.dataTables_filter input')
+				       .off().on('keyup', function(event) {
+				    	   if(event.keyCode == 8 && !textBox.val() || event.keyCode == 46 && !textBox.val() || event.keyCode == 83 && !textBox.val()) {
+					    
+					            }
+				    		if (event.keyCode === 13) {
+				    			 table.search(this.value.trim(), false, false).draw();
+				    		}
+				          
+				       });
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
 					
@@ -191,7 +195,7 @@
 		$.getJSON('./registrationUserType?type=1', function(data) {
 			for (i = 0; i < data.length; i++) {
 				$('<option>').val(data[i].id).text(data[i].usertypeName)
-				.appendTo('#userType','#edituserType');
+				.appendTo('#userType');
 			}
 		});
 	}
@@ -245,8 +249,8 @@
 		$("#viewemailID").val(result.email);
 		$("#viewPassword").val(result.password);
 		$("#viewconfirmPassword").val(result.password);
-		$("#viewuserType").val(result.userType);
-		$("#viewuserName").val(result.username);
+		$("#viewuserType").val(result.viewUserType);
+		$("#viewuserName").val(result.userName);
 		$("#viewuserRemark").val(result.remarks);
 		
 		
@@ -284,7 +288,7 @@
 		$("#editemailID").val(result.email);
 		$("#editPassword").val(result.password);
 		$("#EditconfirmPassword").val(result.password);
-		$("#edituserName").val(result.username);
+		$("#edituserName").val(result.userName);
 		$("#edituserRemark").val(result.remarks);
 		
 		
@@ -306,7 +310,7 @@
 	
 	function update(){
 		var request ={ 
-				"dataId" : parseInt($("#editId").val()),
+				"id" : parseInt($("#editId").val()),
 				"userId":parseInt(userId),
 				"featureId":parseInt(featureId),
 				"userTypeId": parseInt($("body").attr("data-userTypeID")),
@@ -329,7 +333,7 @@
 				$("#updateFieldsSuccess").openModal({
 			        dismissible:false
 			    });
-				
+				$('#updateFieldMessage').text(data.message);
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
 				console.log("error in ajax")
@@ -379,6 +383,7 @@
 				$("#closeDeleteModal").openModal({
 			        dismissible:false
 			    });
+				$('#deleteModalText').text(data.message);
 			},
 			error : function() {
 				

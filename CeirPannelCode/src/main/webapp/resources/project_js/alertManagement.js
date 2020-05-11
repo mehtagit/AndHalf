@@ -102,13 +102,16 @@
 					});
 
 					$('div#initialloader').delay(300).fadeOut('slow');
-						$('#alertManagementLibraryTable input').unbind();
-						$('#alertManagementLibraryTable input').bind('keyup', function (e) {
-							if (e.keyCode == 13) {
-								table.search(this.value).draw();
-							}
-
-						});
+					$('.dataTables_filter input')
+				       .off().on('keyup', function(event) {
+				    	   if(event.keyCode == 8 && !textBox.val() || event.keyCode == 46 && !textBox.val() || event.keyCode == 83 && !textBox.val()) {
+					    
+					            }
+				    		if (event.keyCode === 13) {
+				    			 table.search(this.value.trim(), false, false).draw();
+				    		}
+				          
+				       });
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
 					
@@ -282,6 +285,7 @@
 			$("#editAlertId").val(result.alertId);
 			$("#editfeature").val(result.feature);
 			$("#editdescription").val(result.description);
+			$("#editId").val(result.id);
 			
 			$("label[for='editAlertId']").addClass('active');
 			$("label[for='editfeature']").addClass('active');
@@ -294,9 +298,9 @@
 		
 		
 		function updatedAlert(){
-		
+			
 			var request ={ 
-					 "dataId" : parseInt($("#editId").val()),
+					 "id" : parseInt($("#editId").val()),
 					 "alertId":  $('#editAlertId').val(),
 					 "description": $('#editdescription').val(),
 					 "featureId": parseInt(featureId),

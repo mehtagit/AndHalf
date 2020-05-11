@@ -95,13 +95,16 @@
 					});
 
 					$('div#initialloader').delay(300).fadeOut('slow');
-						$('#currencyManagementLibraryTable input').unbind();
-						$('#currencyManagementLibraryTable input').bind('keyup', function (e) {
-							if (e.keyCode == 13) {
-								table.search(this.value).draw();
-							}
-
-						});
+					$('.dataTables_filter input')
+				       .off().on('keyup', function(event) {
+				    	   if(event.keyCode == 8 && !textBox.val() || event.keyCode == 46 && !textBox.val() || event.keyCode == 83 && !textBox.val()) {
+					    
+					            }
+				    		if (event.keyCode === 13) {
+				    			 table.search(this.value.trim(), false, false).draw();
+				    		}
+				          
+				       });
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
 					
@@ -212,7 +215,7 @@
 	function submitPort(){
 		
 		var request={
-				"date":   $('#month').val(),
+				"monthDate":   $('#month').val(),
 				"currency": $('#currency').val(),
 				"riel":   parseFloat($('#cambodianRiel').val()),
 				"dollar": parseFloat($('#dollar').val()),
@@ -235,6 +238,12 @@
 					$("#confirmField").openModal({
 				        dismissible:false
 				    });
+					$('#sucessMessage').text(data.message);
+					
+					/*if(data.errorCode==200){
+						$('#sucessMessage').text('');
+						$('#sucessMessage').text($.i18n('Curr_Save_Sucess'));
+						}*/	
 			},
 			error : function(jqXHR, textStatus, errorThrown) {
 				console.log("error in ajax")
@@ -283,7 +292,7 @@
 	
 	
 	function currencyEditPopupData(result){
-		$("#editMonth").val(result.date);
+		$("#editMonth").val(result.monthDate);
 		$("#editCurrency").val(result.currency);
 		$("#editCambodianRiel").val(result.riel);
 		$("#editDollar").val(result.dollar);
@@ -302,7 +311,7 @@
 	
 		var request ={ 
 				"id" : parseInt($("#editId").val()),
-				"date":   $('#editMonth').val(),
+				"monthDate":   $('#editMonth').val(),
 				"currency": $('#editCurrency').val(),
 				"riel":   parseFloat($('#editCambodianRiel').val()),
 				"dollar": parseFloat($('#editDollar').val()),
@@ -327,7 +336,7 @@
 				$("#updateFieldsSuccess").openModal({
 			        dismissible:false
 			    });
-				
+				$('#updateFieldMessage').text(data.message);
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
 				console.log("error in ajax")

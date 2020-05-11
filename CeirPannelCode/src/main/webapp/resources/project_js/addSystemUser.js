@@ -58,7 +58,7 @@ function SaveSystemUser(){
 				        dismissible:false
 				    });
 					console.log(JSON.stringify(data))
-					$('#newUserId').text(data.username);
+					$('#sucessMessage').text(data.message);
 				}
 				else {
 						$.i18n().locale = window.parent.$('#langlist').val();

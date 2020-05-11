@@ -13,6 +13,7 @@ public class NewSystemUser {
 	private String userType;
 	private Integer userTypeId,usertypeId;
 	private String username;
+	private String userName;
 	public String getEmail() {
 		return email;
 	}
@@ -109,6 +110,12 @@ public class NewSystemUser {
 	public void setUsername(String username) {
 		this.username = username;
 	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -144,6 +151,8 @@ public class NewSystemUser {
 		builder.append(usertypeId);
 		builder.append(", username=");
 		builder.append(username);
+		builder.append(", userName=");
+		builder.append(userName);
 		builder.append("]");
 		return builder.toString();
 	}

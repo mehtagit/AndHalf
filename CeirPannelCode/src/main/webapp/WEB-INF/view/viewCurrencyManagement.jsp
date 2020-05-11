@@ -221,7 +221,7 @@
 		<h6 class="modal-header">Add Exchange Rate</h6>
 		<div class="modal-content">
 			<div class="row">
-				<h6 id="sucessMessage">Currency Added Successfully</h6>
+				<h6 id="sucessMessage"> </h6>
 			</div>
 			 <div class="row">
 				<div class="input-field col s12 center">
@@ -278,7 +278,7 @@
         <div class="modal-content">
             
             <div class="row">
-                <h6 id="updateFieldMessage"><spring:message code="input.requestupdated" /></h6>
+                <h6 id="updateFieldMessage"></h6>
             </div>
             <div class="row">
                 <div class="input-field col s12 center">

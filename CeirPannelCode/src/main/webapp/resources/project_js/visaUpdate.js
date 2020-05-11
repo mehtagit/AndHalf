@@ -99,13 +99,24 @@
 							"columns": result
 						});
 						$('div#initialloader').delay(300).fadeOut('slow');
-						$('#pendingTACLibraryTable input').unbind();
+						/*$('#pendingTACLibraryTable input').unbind();
 						$('#pendingTACLibraryTable input').bind('keyup', function (e) {
 							if (e.keyCode == 13) {
 								table.search(this.value).draw();
 							}
 
-						});
+						});*/
+						
+						$('.dataTables_filter input')
+					       .off().on('keyup', function(event) {
+					    	   if(event.keyCode == 8 && !textBox.val() || event.keyCode == 46 && !textBox.val() || event.keyCode == 83 && !textBox.val()) {
+						    
+						            }
+					    		if (event.keyCode === 13) {
+					    			 table.search(this.value.trim(), false, false).draw();
+					    		}
+					          
+					       });
 					},
 					error: function (jqXHR, textStatus, errorThrown) {
 						console.log("error in ajax");
@@ -411,8 +422,8 @@
 				 var formData= new FormData();
 				 var filterRequest={
 						 "columns": [
-							    "created_on","modified_on","txn_id","status","nid","visa_type","visa_number","visa_expiry_date","visa_file_name","entry_date_in_country","remark","user_id","id",
-							    "rev"
+							    "created_on","modified_on","txn_id","status","nid","visa_type","visa_number","visa_expiry_date","visa_file_name","entry_date_in_country","remark","user_id","id"
+							    
 							    ],
 						"tableName": "visa_update_db_aud",
 						"dbName" : "ceirconfig",

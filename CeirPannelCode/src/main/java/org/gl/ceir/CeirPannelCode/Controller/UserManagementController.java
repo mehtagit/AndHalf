@@ -61,7 +61,7 @@ public class UserManagementController {
 		if(newSystemUser.getRePassword().equals(newSystemUser.getPassword())) {
 			log.info("if password and confirm password match");
 			String username=randomDigits.getAlphaNumericString(4)+randomDigits.getNumericString(4)+randomDigits.getAlphaNumericString(1);
-			newSystemUser.setUsername(username);
+			newSystemUser.setUserName(username);
 			log.info("request::::::"+newSystemUser);
 			GenricResponse response = userProfileFeignImpl.saveSystemUser(newSystemUser);
 			log.info("response::::::"+response);

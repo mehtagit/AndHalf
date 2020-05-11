@@ -183,7 +183,7 @@ section {
                               <select class="browser-default" id="deviceType" style="height: 30px" 
                               					
 												required>
-                                  <option value="" disabled selected>Device ID Type</option>
+                                  <option value=""  selected>Device ID Type</option>
                               </select>
                           </div>
                             

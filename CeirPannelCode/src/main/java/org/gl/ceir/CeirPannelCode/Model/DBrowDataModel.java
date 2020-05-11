@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 public class DBrowDataModel {
 	private String dbName;
 	private String tableName;
+	private Integer pageNo, pageSize;
 	private List<String> columns;
 	private List<Map<String, String>> rowData;
 	
@@ -24,6 +25,18 @@ public class DBrowDataModel {
 	}
 	public void setTableName(String tableName) {
 		this.tableName = tableName;
+	}
+	public Integer getPageNo() {
+		return pageNo;
+	}
+	public void setPageNo(Integer pageNo) {
+		this.pageNo = pageNo;
+	}
+	public Integer getPageSize() {
+		return pageSize;
+	}
+	public void setPageSize(Integer pageSize) {
+		this.pageSize = pageSize;
 	}
 	public List<String> getColumns() {
 		return columns;
@@ -98,6 +111,10 @@ public class DBrowDataModel {
 		builder.append(dbName);
 		builder.append(", tableName=");
 		builder.append(tableName);
+		builder.append(", pageNo=");
+		builder.append(pageNo);
+		builder.append(", pageSize=");
+		builder.append(pageSize);
 		builder.append(", columns=");
 		builder.append(columns);
 		builder.append(", rowData=");
@@ -123,6 +140,7 @@ public class DBrowDataModel {
 		builder.append("]");
 		return builder.toString();
 	}
+	
 	
 	
 }

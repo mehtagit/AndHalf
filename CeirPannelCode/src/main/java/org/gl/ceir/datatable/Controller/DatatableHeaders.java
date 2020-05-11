@@ -179,7 +179,7 @@ public class DatatableHeaders {
 
 			//operator view
 			else if("greyBlackList".equals(role)) {
-				String[] headers = {"table.createdDateTime","table.fileName","table.fileType","table.action"};
+				String[] headers = {"table.creationDate","table.fileName","table.fileType","table.action"};
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}

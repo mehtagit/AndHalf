@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.common.base.Objects;
 import com.google.gson.Gson;
 
 @RestController
@@ -106,12 +107,14 @@ public class ImporterManageTypeAdmin {
 						  for (AttachedFile fileList : list) {
 						  fileName1 = fileList.getFileName();
 						  log.info("fileName1 is ---> "+fileName1);
-						  if(fileName1.equals("") || fileName1.equals(null)) {
-							  fileName1 = "0";
-							  log.info("inside if filename =" +fileName1);
-						  }else {
+						  //if(fileName1.equals("") || fileName1.equals(null)) {
+						  if(fileName1 != null  && fileName1.equals("")) {
 							  fileName1 = fileList.getFileName();
 							  log.info("inside else filename =" +fileName1);
+						  }else {
+
+							  fileName1 = "0";
+							  log.info("inside if filename =" +fileName1);
 						  }
 						  }
 						String approveState = String.valueOf(trcContentModelList.getApproveStatus());	
@@ -140,12 +143,13 @@ public class ImporterManageTypeAdmin {
 						  for (AttachedFile fileList : list) {
 						  fileName1 = fileList.getFileName();
 						  log.info("fileName1 is ---> "+fileName1);
-						  if(fileName1.equals("") || fileName1.equals(null)) {
-							  fileName1 = "0";
-							  log.info("inside if filename =" +fileName1);
-						  }else {
+						  if(fileName1 != null  && fileName1.equals("")) {
 							  fileName1 = fileList.getFileName();
 							  log.info("inside else filename =" +fileName1);
+						  }else {
+
+							  fileName1 = "0";
+							  log.info("inside if filename =" +fileName1);
 						  }
 						  }
 						String approveState = String.valueOf(trcContentModelList.getApproveStatus());	
@@ -166,12 +170,13 @@ public class ImporterManageTypeAdmin {
 						  for (AttachedFile fileList : list) {
 						  fileName1 = fileList.getFileName();
 						  log.info("fileName1 is ---> "+fileName1);
-						  if(fileName1.equals("") || fileName1.equals(null)) {
-							  fileName1 = "0";
-							  log.info("inside if filename =" +fileName1);
-						  }else {
+						  if(fileName1 != null  && fileName1.equals("")) {
 							  fileName1 = fileList.getFileName();
 							  log.info("inside else filename =" +fileName1);
+						  }else {
+
+							  fileName1 = "0";
+							  log.info("inside if filename =" +fileName1);
 						  }
 						  }
 						 

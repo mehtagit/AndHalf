@@ -51,47 +51,76 @@
 		//**************************************************filter table**********************************************
 		
 		function Datatable(lang){
-			 var filter =[];
-			 var formData= new FormData();
-			 var filterRequest={
+			var table = $('#reportLibraryTable').DataTable();
+			
+			alert("table");
+			var info = table.page.info(); 
+			var pageNo=info.page;
+			var pageSize =info.length;
+			
+		
+			var filter =[];
+			var formData= new FormData();
+			var filterRequest={
 					"reportnameId" : parseInt(reportnameId),
 					"featureId":parseInt(featureId),
 					"userTypeId": parseInt($("body").attr("data-userTypeID")),
 					"userType":$("body").attr("data-roleType"),
 					"username" : $("body").attr("data-selected-username"),
-					"userId" : parseInt($("body").attr("data-userID")) 
+					"userId" : parseInt($("body").attr("data-userID")),
+					//"pageNo": Integer.parseInt(pageNo),
+					//"pageSize":Integer.parseInt(pageSize),
+
 			}
+			
 			formData.append("filter",JSON.stringify(filterRequest));	
 			if(lang=='km'){
 				var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
 			}
-			$.ajax({
-				url: 'dbReportData',
-				type: 'POST',
-				data: formData,
-				processData: false,
-				contentType: false,
-				success: function(result){
-					var dataObject = result;
-					console.log("dataObject------->" +JSON.stringify(dataObject.data))
-					$('#reportLibraryTable').dataTable({
-						 /*"order" : [[1, "asc"]],*/
-						 destroy:true,
-						"serverSide": false,
-						 orderCellsTop : true,
-						"ordering" : false,
-						"bPaginate" : true,
-						"bFilter" : true,
-						"bInfo" : true,
-						"bSearchable" : true,
-						"data": dataObject.data,
-						"columns": dataObject.columns
-					});
-					$('div#initialloader').delay(300).fadeOut('slow');
-			}
-				
-	});
+			
 		
+			$.ajax({
+					url : 'dbReportData',
+					type: 'POST',
+					data: formData,
+					processData: false,
+					contentType: false,
+					success: function(result){
+						var dataObject = eval(result);
+						
+						console.log("dataObject--->" +dataObject);
+						
+						var temp = table.dataTable({
+							/* "order" : [[1, "asc"]],*/
+							destroy :true,
+							"serverSide": false,
+							"orderCellsTop" : true,
+							"ordering" : false,
+							"bPaginate" : true,
+							"bFilter" : true,
+							"bInfo" : true,
+							"bSearchable" : true,
+							"data": dataObject.data,
+							"columns": dataObject.columns
+						});
+						
+						
+					}
+			
+				
+				//fixedColumns: true,
+				
+			});
+
+			$('div#initialloader').delay(300).fadeOut('slow');
+				$('#alertManagementLibraryTable input').unbind();
+				$('#alertManagementLibraryTable input').bind('keyup', function (e) {
+					if (e.keyCode == 13) {
+						table.search(this.value).draw();
+					}
+
+				});
+			
 			$('.datepicker').on('mousedown',function(event){
 			event.preventDefault();
 		});
