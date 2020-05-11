@@ -93,13 +93,16 @@
 							"columns": result
 						});
 						$('div#initialloader').delay(300).fadeOut('slow');
-						$('#slaLibraryTable input').unbind();
-						$('#slaLibraryTable input').bind('keyup', function (e) {
-							if (e.keyCode == 13) {
-								table.search(this.value).draw();
-							}
-
-						});
+						$('.dataTables_filter input')
+					       .off().on('keyup', function(event) {
+					    	   if(event.keyCode == 8 && !textBox.val() || event.keyCode == 46 && !textBox.val() || event.keyCode == 83 && !textBox.val()) {
+						    
+						            }
+					    		if (event.keyCode === 13) {
+					    			 table.search(this.value.trim(), false, false).draw();
+					    		}
+					          
+					       });
 					},
 					error: function (jqXHR, textStatus, errorThrown) {
 						console.log("error in ajax");
@@ -200,7 +203,7 @@
 				}
 			});
 				
-				$.getJSON('./registrationUserType', function(data) {
+				$.getJSON('./registrationUserType?type=2', function(data) {
 					for (i = 0; i < data.length; i++) {
 						$('<option>').val(data[i].id).text(data[i].usertypeName)
 						.appendTo('#userType');

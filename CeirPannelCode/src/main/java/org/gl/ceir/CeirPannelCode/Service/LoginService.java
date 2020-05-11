@@ -107,7 +107,11 @@ public class LoginService {
 		log.info("language data:  "+language);
 		Integer userID=(Integer)session.getAttribute("userid");
 		log.info("userID from session: " +userID);
-		ChangeLanguage languageData=new ChangeLanguage(userID,language);
+		String username=(String)session.getAttribute("username");
+		String userType=(String)session.getAttribute("usertype");
+		Integer userTypeId=(Integer)session.getAttribute("usertypeId");
+		ChangeLanguage languageData=new ChangeLanguage(language, username,
+				userTypeId, userID, 0, userType);
 		HttpResponse response=userLoginFeignImpl.changeUserLanguage(languageData);
 		if(response!=null) {
 			log.info("response from controller: "+response);

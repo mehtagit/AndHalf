@@ -57,11 +57,12 @@
 					"userId":parseInt(userId),
 					"featureId":parseInt(featureId),
 					"userTypeId": parseInt($("body").attr("data-userTypeID")),
-					"userType": parseInt($("#userType").val()),
-					"id" : parseInt($("#userType").val()),
+					"usertypeId" : parseInt($("#userType").val()),
 					"feature" : parseInt($("#feature").val()),
-					"period" : parseInt($("#period").val())
-						
+					"period" : parseInt($("#period").val()),
+					"userType":$("body").attr("data-roleType"),
+					"username" : $("body").attr("data-selected-username")
+					
 			}				
 			if(lang=='km'){
 				var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
@@ -97,13 +98,16 @@
 					});
 
 					$('div#initialloader').delay(300).fadeOut('slow');
-						$('#userFeatureLibraryTable input').unbind();
-						$('#userFeatureLibraryTable input').bind('keyup', function (e) {
-							if (e.keyCode == 13) {
-								table.search(this.value).draw();
-							}
-
-						});
+					$('.dataTables_filter input')
+				       .off().on('keyup', function(event) {
+				    	   if(event.keyCode == 8 && !textBox.val() || event.keyCode == 46 && !textBox.val() || event.keyCode == 83 && !textBox.val()) {
+					    
+					            }
+				    		if (event.keyCode === 13) {
+				    			 table.search(this.value.trim(), false, false).draw();
+				    		}
+				          
+				       });
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
 					
@@ -220,7 +224,12 @@
 		var period = parseInt($("#userPeriod").val());
 		var Request={
 				"period" : period,
-				"id": parseInt(window.userId)
+				"dataId": parseInt(window.userId),
+				"userId":parseInt(userId),
+				"featureId":parseInt(featureId),
+				"userTypeId": parseInt($("body").attr("data-userTypeID")),
+				"userType":$("body").attr("data-roleType"),
+				"username" : $("body").attr("data-selected-username")
 		}
 		
 		$.ajax({

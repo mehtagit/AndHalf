@@ -182,23 +182,29 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
 	<div id="rejectInformation" class="modal">
            <h6 class="modal-header"><spring:message code="modal.header.reject" /></h6>
             <div class="modal-content">
+            <form action="" onsubmit="return rejectUser()">
             <div class="row">
-                <form action="">
                 
                     <div class="input-field" style="margin-top: 30px;">
-                        <textarea id="Reason" class="materialize-textarea"></textarea>
-                        <label for="textarea1" style="margin-left: -10px;"><spring:message code="lable.reason" /></label>
+                        <textarea id="Reason"
+                        oninput="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
+						oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200character" />');" 
+                         class="materialize-textarea" required></textarea>
+                        <label for="textarea1" style="margin-left: -10px;"><spring:message code="lable.reason" /><span class="star">*</span></label>
                     </div>
                     <h6><spring:message code="registration.doreject" /></h6>
                     <input type ="text" id="rejectUserName" hidden="hidden">
-                </form>
+               
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
-                    <a onclick="rejectUser()" class="btn modal-close modal-trigger"><spring:message code="modal.yes" /></a>
+                    <button type="submit" class="btn" type="submit">
+								<spring:message code="modal.yes" />
+							</button>
                     <button class="btn modal-close" style="margin-left: 10px;"><spring:message code="modal.no" /></button>
                 </div>
             </div>
+            </form>
         </div>
     </div>
 	<div id="confirmRejectInformation" class="modal">

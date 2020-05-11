@@ -69,19 +69,8 @@ public class ProfileController {
 	
 	
 	
-	@RequestMapping(value ="/updateSystemUserTypeStatus",method = RequestMethod.POST)
-	@ResponseBody
-	public  HttpResponse changeSystemUserTypeStatus(@RequestBody UserManagementContent userManagementContent,HttpSession session) {
-		return profileService.changeSystemUserStatusService(userManagementContent,session);
-		
-	}
 	
-	@RequestMapping(value ="/updateSystemUserPeriod",method = RequestMethod.POST)
-	@ResponseBody
-	public  HttpResponse changeUserPeriodStatus(@RequestBody UserManagementContent userManagementContent,HttpSession session) {
-		return profileService.changeSystemUserPeriodService(userManagementContent,session);
-		
-	}
+	
 	
 	@GetMapping("/editOthersProfile")
 	public ModelAndView editProfile() {

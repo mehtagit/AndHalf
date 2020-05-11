@@ -92,8 +92,8 @@ public interface UserProfileFeignImpl {
 	
 	//***************************************************View Port Management Feign********************************
 	
-	@RequestMapping(value="/portAddress/viewById/{id}" ,method=RequestMethod.POST) 
-	public @ResponseBody GenricResponse viewPortFeign(@PathVariable("id") Integer id);
+	@RequestMapping(value="/portAddress/viewDataById" ,method=RequestMethod.POST) 
+	public @ResponseBody GenricResponse viewPortFeign(@RequestBody FilterRequest filterRequest);
 	
 	
 	
@@ -104,8 +104,8 @@ public interface UserProfileFeignImpl {
 	
 	//***************************************************Delete Port Management Feign********************************
 	
-	@RequestMapping(value="/portAddress/delete/{id}" ,method=RequestMethod.POST) 
-	public @ResponseBody GenricResponse deletePortFeign(@PathVariable("id") Integer id);
+	@RequestMapping(value="/portAddress/delete" ,method=RequestMethod.POST) 
+	public @ResponseBody GenricResponse deletePortFeign(@RequestBody FilterRequest filterRequest);
 	
 	
 	/*-------------------------- view all Currency Feign ------------------------------*/
@@ -127,8 +127,8 @@ public interface UserProfileFeignImpl {
 		
 		//***************************************************View Currency Feign********************************
 		
-		@RequestMapping(value="/currency/viewById/{id}" ,method=RequestMethod.POST) 
-		public @ResponseBody GenricResponse viewCurrencyFeign(@PathVariable ("id") Integer id);
+		@RequestMapping(value="/currency/viewById" ,method=RequestMethod.POST) 
+		public @ResponseBody GenricResponse viewCurrencyFeign(@RequestBody FilterRequest filterRequest);
 		
 		
 		
@@ -140,7 +140,6 @@ public interface UserProfileFeignImpl {
 	/*-------------------------- view userManagement Feign ------------------------------*/
 		
 		@RequestMapping(value="/usertypeData" ,method=RequestMethod.POST) 
-
 		public Object viewUserTypeRequest(@RequestBody FilterRequest filterRequest,
 		@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
 		@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
@@ -238,8 +237,8 @@ public interface UserProfileFeignImpl {
 		
 		//***************************************************View user Feign********************************
 		
-		@RequestMapping(value="/userMgmt/getById/{id}" ,method=RequestMethod.POST) 
-		public @ResponseBody GenricResponse viewUserFeign(@PathVariable ("id") Integer id);	
+		@RequestMapping(value="/userMgmt/getById" ,method=RequestMethod.POST) 
+		public @ResponseBody GenricResponse viewUserFeign(@RequestBody NewSystemUser newSystemUser);	
 		
 		//***************************************************Update user Feign********************************
 
@@ -248,7 +247,7 @@ public interface UserProfileFeignImpl {
 		
 		//***************************************************Delete user Feign********************************
 		
-		@RequestMapping(value="/userMgmt/delete/{id}" ,method=RequestMethod.POST) 
-		public @ResponseBody GenricResponse deleteUserFeign(@PathVariable("id") Integer id);
+		@RequestMapping(value="/userMgmt/delete" ,method=RequestMethod.POST) 
+		public @ResponseBody GenricResponse deleteUserFeign(@RequestBody NewSystemUser newSystemUser);
 } 
 

@@ -22,8 +22,10 @@ public interface DBTablesFeignClient {
 	public DBTableModel getAlltables(@RequestParam(name="dbName") String dbName);
 	
 	
-	@RequestMapping(value= "/db/table/data" , method=RequestMethod.POST) 
-	public Object DBRowDetailsFeign(@RequestBody DBrowDataModel filterRequest);
+	/*
+	 * @RequestMapping(value= "/db/table/data/V2" , method=RequestMethod.POST)
+	 * public Object DBRowDetailsFeign(@RequestBody DBrowDataModel filterRequest);
+	 */
 	
 		
 	
@@ -36,5 +38,7 @@ public interface DBTablesFeignClient {
 	
 	
 	@RequestMapping(value= "/report/data" , method=RequestMethod.POST) 
-	public Object ReportDetailsFeign(@RequestBody DBrowDataModel filterRequest);
+	public Object ReportDetailsFeign(@RequestBody DBrowDataModel filterRequest,
+			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
+			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize);
 }

@@ -53,12 +53,13 @@
 			var filterRequest={
 					"endDate":$('#endDate').val(),
 					"startDate":$('#startDate').val(),
+					"currency" : parseInt($("#currencyType").val()),
+					"year" : parseInt($('#year').val()),
 					"userId":parseInt(userId),
 					"featureId":parseInt(featureId),
 					"userTypeId": parseInt($("body").attr("data-userTypeID")),
 					"userType":$("body").attr("data-roleType"),
-					"currency" : parseInt($("#currencyType").val()),
-					"year" : parseInt($('#year').val()),
+					"username" : $("body").attr("data-selected-username")
 			}				
 			if(lang=='km'){
 				var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
@@ -94,13 +95,16 @@
 					});
 
 					$('div#initialloader').delay(300).fadeOut('slow');
-						$('#currencyManagementLibraryTable input').unbind();
-						$('#currencyManagementLibraryTable input').bind('keyup', function (e) {
-							if (e.keyCode == 13) {
-								table.search(this.value).draw();
-							}
-
-						});
+					$('.dataTables_filter input')
+				       .off().on('keyup', function(event) {
+				    	   if(event.keyCode == 8 && !textBox.val() || event.keyCode == 46 && !textBox.val() || event.keyCode == 83 && !textBox.val()) {
+					    
+					            }
+				    		if (event.keyCode === 13) {
+				    			 table.search(this.value.trim(), false, false).draw();
+				    		}
+				          
+				       });
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
 					
@@ -211,11 +215,16 @@
 	function submitPort(){
 		
 		var request={
-					  "date":   $('#month').val(),
-					  "currency": $('#currency').val(),
-					  "riel":   parseFloat($('#cambodianRiel').val()),
-					  "dollar": parseFloat($('#dollar').val()),
-				}
+				"monthDate":   $('#month').val(),
+				"currency": $('#currency').val(),
+				"riel":   parseFloat($('#cambodianRiel').val()),
+				"dollar": parseFloat($('#dollar').val()),
+				"userId":parseInt(userId),
+				"featureId":parseInt(featureId),
+				"userTypeId": parseInt($("body").attr("data-userTypeID")),
+				"userType":$("body").attr("data-roleType"),
+				"username" : $("body").attr("data-selected-username")
+		}
 		
 		console.log("request------------->" +JSON.stringify(request))
 		$.ajax({
@@ -229,6 +238,12 @@
 					$("#confirmField").openModal({
 				        dismissible:false
 				    });
+					$('#sucessMessage').text(data.message);
+					
+					/*if(data.errorCode==200){
+						$('#sucessMessage').text('');
+						$('#sucessMessage').text($.i18n('Curr_Save_Sucess'));
+						}*/	
 			},
 			error : function(jqXHR, textStatus, errorThrown) {
 				console.log("error in ajax")
@@ -246,10 +261,19 @@
 	function currencyViewByID(id){
 		$("#editId").val(id);
 		
+		var request ={
+				"dataId" :  parseInt(id),
+				"userId": parseInt(userId),
+				"featureId":parseInt(featureId),
+				"userTypeId": parseInt($("body").attr("data-userTypeID")),
+				"userType":$("body").attr("data-roleType"),
+				"username" : $("body").attr("data-selected-username")
+		}
+		
 		$.ajax({
-				url: './currencyViewByID/'+id,
+				url: './currencyViewByID',
 				type: 'POST',
-			//data : JSON.stringify(request),
+				data : JSON.stringify(request),
 				dataType : 'json',
 				contentType : 'application/json; charset=utf-8',
 				success: function (data, textStatus, jqXHR) {
@@ -268,7 +292,7 @@
 	
 	
 	function currencyEditPopupData(result){
-		$("#editMonth").val(result.date);
+		$("#editMonth").val(result.monthDate);
 		$("#editCurrency").val(result.currency);
 		$("#editCambodianRiel").val(result.riel);
 		$("#editDollar").val(result.dollar);
@@ -286,11 +310,16 @@
 	function updateCurrency(){
 	
 		var request ={ 
-				 "id" : parseInt($("#editId").val()),
-				 "date":   $('#editMonth').val(),
-				 "currency": $('#editCurrency').val(),
-				 "riel":   parseFloat($('#editCambodianRiel').val()),
-				 "dollar": parseFloat($('#editDollar').val()),
+				"id" : parseInt($("#editId").val()),
+				"monthDate":   $('#editMonth').val(),
+				"currency": $('#editCurrency').val(),
+				"riel":   parseFloat($('#editCambodianRiel').val()),
+				"dollar": parseFloat($('#editDollar').val()),
+				"userId":parseInt(userId),
+				"featureId":parseInt(featureId),
+				"userTypeId": parseInt($("body").attr("data-userTypeID")),
+				"userType":$("body").attr("data-roleType"),
+				"username" : $("body").attr("data-selected-username")
 		}
 		
 		console.log("request--->" +JSON.stringify(request))
@@ -307,7 +336,7 @@
 				$("#updateFieldsSuccess").openModal({
 			        dismissible:false
 			    });
-				
+				$('#updateFieldMessage').text(data.message);
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
 				console.log("error in ajax")

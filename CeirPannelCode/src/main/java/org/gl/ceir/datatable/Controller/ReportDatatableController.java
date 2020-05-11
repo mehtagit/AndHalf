@@ -58,8 +58,9 @@ public class ReportDatatableController {
 		//Integer pageSize = Integer.parseInt(request.getParameter("length"));
 		//Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize ;
 		try {
-			log.info("request passed to API:::::::::" + filter);
-			Object response = dBTablesFeignClient.ReportDetailsFeign(filterrequest);
+			log.info("request passed to API:::::::::" + filterrequest);
+			Object response = dBTablesFeignClient.ReportDetailsFeign(filterrequest, filterrequest.getPageNo(), filterrequest.getPageSize());
+			log.info("request passed filterrequest::::::::" + filterrequest);
 			Gson gson = new Gson();
 			String apiResponse = gson.toJson(response);
 			log.info("apiResponse ::::::::::::::" + apiResponse);

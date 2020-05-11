@@ -444,7 +444,7 @@ select {
 														
 
 														<div class="col s12 m6 l6">
-															<label> <spring:message code="operator.Operator1" />
+															<label> <spring:message code="operator.Operator" />
 																<span class="star">*</span></label> <select
 																class="browser-default" id="singleStolenOperator"
 																oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"

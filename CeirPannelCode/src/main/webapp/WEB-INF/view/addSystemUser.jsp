@@ -208,19 +208,37 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}" data-u
                                             <label for="emailID"><spring:message code="input.EmailID" /> <span class="star"> *</span></label>
                                         </div>
 
-                                       	<div class="input-field col s12 m6" style="margin-top: 23px;">
-                                            <input type="text" id="password" name="password"
-                                               pattern="[a-zA-Z]{0,20}" required maxlength="18" />
-                                            <label for="password"><spring:message code="registration.password" /><span class="star"> *</span></label>
-                                        </div>
-                                        
-                                        <div class="input-field col s12 m6" style="margin-top: 23px;">
-                                            <input type="text" id="confirmPassword" name="confirmPassword"
-                                               pattern="[a-zA-Z]{0,20}" required maxlength="18" />
-                                            <label for="confirmPassword"><spring:message code="registration.retypepassword"/><span class="star"> *</span></label>
-                                        </div>
-                                        
-                                         <div class="col s12 m6 selectDropdwn">
+								<div class="input-field col s12 m6 l6">
+									<input type="password" name="password" class="password"
+										id="password"
+										pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,10}$"
+										min="8" maxlength="10"
+										oninput="InvalidMsg(this,'input','<spring:message code="validation.password" />');"
+										oninvalid="InvalidMsg(this,'input','<spring:message code="validation.password" />');"
+										required /> <label for="password"><spring:message
+											code="registration.password" /> <span class="star">*</span></label>
+									<div class="input-field-addon">
+										<i class="fa fa-eye-slash teal-text toggle-password"
+											aria-hidden="true"></i>
+									</div>
+								</div>
+
+								<div class="input-field col s12 m6 l6">
+									<input type="password" name="rePassword" class="password2"
+										id="confirmPassword"
+										pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,10}$"
+										maxlength="10" min="8"
+										oninput="InvalidMsg(this,'input','<spring:message code="validation.password" />');"
+										oninvalid="InvalidMsg(this,'input','<spring:message code="validation.password" />');"
+										required /> <label for="confirmPassword"> <spring:message
+											code="registration.retypepassword" /> <span class="star">*</span></label>
+									<div class="input-field-addon">
+										<i class="fa fa-eye-slash teal-text toggle-password2"
+											aria-hidden="true"></i>
+									</div>
+								</div>
+
+								<div class="col s12 m6 selectDropdwn">
                                             <label for="userType"><spring:message code="table.userType" /> <span class="star">*</span></label>
                                             <select class="browser-default" 
 											title="<spring:message code="" />" oninput="setCustomValidity('')"  
@@ -269,10 +287,7 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}" data-u
          <h6 class="modal-header"><spring:message code="table.registerUser" /></h6>
         <div class="modal-content">
            <div class="row">
-               <h6 id="sucessMessage">
-					<spring:message code="modal.user.futureRef" />
-					<span id="newUserId"> </span>
-				</h6>
+               <h6 id="sucessMessage"></h6>
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
@@ -431,9 +446,7 @@ var path="${context}";
     <!--custom-script.js - Add your own theme custom JS-->
     <script type="text/javascript" src="${context}/resources/js/custom-script.js"></script>
     	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
-    <script type="text/javascript"
-		src="${context}/resources/project_js/grievanceManagement.js"></script>
-    
+   <script type="text/javascript" src="${context}/resources/ajax/Password.js"></script>
 	
 			<script type="text/javascript"
 		src="${context}/resources/project_js/_dateFunction.js" async></script>
