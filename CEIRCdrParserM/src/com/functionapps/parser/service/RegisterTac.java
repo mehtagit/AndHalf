@@ -72,11 +72,8 @@ public class RegisterTac {
 				 * Pending by CEIR Admin }else { typeApprovedDb.setApproveStatus(2); // Rejected
 				 * By System. }
 				 */
-				typeApprovedDb.setApproveStatus(3);
-				System.out.println(typeApprovedDb);
-				
-				tacApiConsumer.updateStatus(typeApprovedDb.getTxnId(), typeApprovedDb.getUserId(), 
-						"CEIRSYSTEM", 2);
+
+				tacApiConsumer.approveReject(typeApprovedDb.getTxnId(), 3);
 				
 				// Get users Profile.
 				UserWithProfile userWithProfile = userWithProfileDao.getUserWithProfileById(conn, typeApprovedDb.getUserId());
