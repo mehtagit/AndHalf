@@ -72,7 +72,7 @@ public class RegisterTac {
 				 * Pending by CEIR Admin }else { typeApprovedDb.setApproveStatus(2); // Rejected
 				 * By System. }
 				 */
-				typeApprovedDb.setApproveStatus(3)
+				typeApprovedDb.setApproveStatus(3);
 				System.out.println(typeApprovedDb);
 				
 				tacApiConsumer.updateStatus(typeApprovedDb.getTxnId(), typeApprovedDb.getUserId(), 

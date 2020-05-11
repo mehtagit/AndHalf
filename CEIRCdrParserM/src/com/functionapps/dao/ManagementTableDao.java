@@ -29,7 +29,7 @@ public class ManagementTableDao {
 					+ "multiple_sim_status, sn_of_device, imei_esn_meid, "
 					//+ "TO_DATE(DEVICE_LAUNCH_DATE, 'DD-MM-YYYY') as launch_date, device_status, device_action, "
 					+ "DEVICE_LAUNCH_DATE as launch_date, device_status, device_action, "
-					+ "user_id, txn_id, previous_device_status, period "
+					+ "user_id, txn_id, period "
 					+ "from " 
 					+ managementTable 
 					+ " where txn_id='" + txnId + "'";
@@ -48,7 +48,6 @@ public class ManagementTableDao {
 						rs.getString("multiple_sim_status"),  rs.getString("sn_of_device"), rs.getString("imei_esn_meid"), 
 						rs.getString("launch_date"), rs.getString("device_action"), 
 						rs.getLong("user_id"), rs.getString("txn_id"), rs.getString("device_status"),
-						rs.getInt("previous_device_status"),
 						rs.getString("period")) ); 
 
 			}
