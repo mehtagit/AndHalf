@@ -1,10 +1,7 @@
 package com.ceir.CEIRPostman.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.PriorityQueue;
-import java.util.Queue;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -216,7 +213,7 @@ public class EmailService implements Runnable {
 								log.info("toEmail  " + toEmail);
 								if (emailUtil.emailValidator(toEmail)) {
 									String message=body.replace("\\n", "\n");
-									log.info("authorityEmail: "+authorityEmail+" fromEmail: "+fromEmail.getValue()+" getSubject: "+messageDb.getSubject());
+									log.info(" fromEmail: "+fromEmail.getValue()+" getSubject: "+messageDb.getSubject());
 									emailStatus = emailUtil.sendEmail(toEmail, fromEmail.getValue(),
 											notification.getSubject(), body, notificationData.size(), sNo,
 											sleepTimeinMilliSec);

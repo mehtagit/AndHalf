@@ -60,8 +60,6 @@ public class EmailUtil {
 			messages = new SimpleMailMessage[noOfElements];
 			batchSize=noOfElements;
 			log.info("batch size: "+batchSize);
-			//??messages
-			//log.info("msg array size: "+messages);
 		}
 		else {
 			logger.info("if total mails greater than or equals to batch size");
@@ -74,9 +72,17 @@ public class EmailUtil {
 		messageIndex = 0;
 	}
 	public void increaseBatchSize() {
+		SimpleMailMessage[] messages1;
 		batchSize=batchSize+1;
 		log.info("batch size now: "+batchSize);
+		messages1 = new SimpleMailMessage[batchSize];
+		for(int i=0;i<messages.length;i++) {
+			messages1[i]=messages[i];
+		}
 		messages = new SimpleMailMessage[batchSize];
+		for(int i=0;i<messages1.length;i++) {
+			messages[i]=messages1[i];
+		}
 	}
 	public boolean emailValidator(String email) {
 		boolean isValid=false;
@@ -102,15 +108,18 @@ public class EmailUtil {
 		simpleMailMessage.setText(msgBody);
 		try {
 			logger.info("adding emails into the array");
-			 messages[messageIndex++] = simpleMailMessage;
-			 logger.info("Message: "+messages[messageIndex-1]);
+			 messages[messageIndex] = simpleMailMessage;
+			 logger.info("Message: "+messages[messageIndex]+" Index Value: "+messageIndex+" Batch Size: "+batchSize);
+			 messageIndex++;
 			    if (messageIndex == batchSize) {
 			    	logger.info("if batch size equals to no of mails added into array");
 			    	logger.info("now going to send emails");
 			    	try {
-			            mailSender.send(messages);    		
+			            mailSender.send(messages);   		
 				        logger.info("no of emails are sent: "+batchSize);
+				        log.info("Total Data: "+totalData+" Data Read: "+dataRead);
 				        int difference=totalData-dataRead;
+				        log.info("Difference: "+difference);
 				        setBatchSize(batchSize,difference);
 				        logger.info("now batchSize is "+batchSize);
 				        messageIndex = 0;
@@ -143,6 +152,14 @@ public class EmailUtil {
 						logger.info(send.toString());
 						return Boolean.FALSE;
 			    	}
+			    	catch (Exception e) {
+						logger.info("error occur in first block");
+						logger.error(e.getMessage());
+						logger.info(e.toString());
+						logger.info("Send Email Status FALSE");
+						messageIndex = 0;
+						return Boolean.FALSE;
+					}
 			
 			    }
 			    try {
@@ -159,6 +176,7 @@ public class EmailUtil {
 			logger.error(e.getMessage());
 			logger.info(e.toString());
 			logger.info("Send Email Status FALSE");
+			messageIndex = 0;
 			return Boolean.FALSE;
 		}
 	}
