@@ -88,6 +88,32 @@ public class CustomerCareServiceImpl {
 	TypeApprovedDbServiceImpl typeApprovedDbServiceImpl;
 
 	public GenricResponse getAll(CustomerCareRequest customerCareRequest, String listType) {
+		String imei = customerCareRequest.getImei();
+
+		try {
+			if(Objects.nonNull(imei) 
+					&& "IMEI".equalsIgnoreCase(customerCareRequest.getDeviceIdType())) {
+				return fetchDetailsOfImei(imei, 0L, listType);
+
+			}else if(Objects.nonNull(customerCareRequest.getMsisdn())){
+				DeviceUsageDb deviceUsageDb = deviceUsageDbRepository.getByImei(imei);
+
+				if(Objects.isNull(deviceUsageDb)) {
+					return new GenricResponse(2, GenericMessageTags.NO_DATA.getTag(), GenericMessageTags.NO_DATA.getMessage(), null);
+				}else {
+					return fetchDetailsOfImei(deviceUsageDb.getImei(), 0L, listType);
+				}
+			}else {
+				return new GenricResponse(1, GenericMessageTags.INVALID_REQUEST.getMessage(), "", null);
+			}
+
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
+	}
+
+	public GenricResponse getAllV2(CustomerCareRequest customerCareRequest, String listType) {
 		Long msisdn = null;
 		String imei = customerCareRequest.getImei();
 		String deviceIdType = customerCareRequest.getDeviceIdType();
@@ -327,7 +353,7 @@ public class CustomerCareServiceImpl {
 			logger.info("MSISDN not found in device_duplicate_db. So, Check in device_usage_db. imei [" + msisdn + "]");
 			DeviceUsageDb deviceUsageDb = deviceUsageDbRepository.getByMsisdn(msisdn);	
 			logger.debug(deviceUsageDb);
-			
+
 			if(Objects.nonNull(deviceUsageDb)) {
 				String imei = deviceUsageDb.getImei();
 				logger.info("Found a valid imei[" + imei + "] in device_usage_db for msisdn[" + msisdn + "]");
