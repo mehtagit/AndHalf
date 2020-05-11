@@ -7,7 +7,9 @@ import java.io.FileOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -281,6 +283,8 @@ public class StolenRecovery {
 					
 					addMoreFileModel.setTag("uploaded_file_move_path");
 					urlToMove=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
+					String movedFileTime = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
+					log.info("Moved File Time value=="+movedFileTime);
 					
 					
 				  log.info(" update file stolen/recovery entry point .");
@@ -299,9 +303,9 @@ public class StolenRecovery {
 				  			log.info("file already exist");
 				  		Path temp = Files.move 
 				  		(Paths.get(urlToUpload.getValue()+txnId+"/"+file.getOriginalFilename()), 
-				  		Paths.get(urlToMove.getValue()+file.getOriginalFilename())); 
+				  		Paths.get(urlToMove.getValue()+movedFileTime+file.getOriginalFilename())); 
 
-				  		String movedPath=urlToMove.getValue()+file.getOriginalFilename();
+				  		String movedPath=urlToMove.getValue()+movedFileTime+"_"+file.getOriginalFilename();
 				  		// tmpDir.renameTo(new File("/home/ubuntu/apache-tomcat-9.0.4/webapps/MovedFile/"+txnId+"/"));
 				  		log.info("file is already exist moved to the this "+movedPath+" path");
 				  		tmpDir.delete();

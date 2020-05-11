@@ -47,7 +47,13 @@ function hide() {
 			
 				if(data.errorCode==1)
 					{
-					
+						if(data.data.nationality=="Cambodian")
+							{
+							$('#errorModal').openModal();
+							$('#errorMessage').text($.i18n(''));
+							$('#errorMessage').text($.i18n('featureNotSupportForCambodian'));
+							}
+						else{
 					 $("#match-data").css("display", "block");
 		                $("#EndUserInfoForm").css("display", "block");
 		                $("#submitbtn").css("display", "none");
@@ -87,7 +93,7 @@ function hide() {
 		               
 		                                   
 		                
-		                
+						}
 					}
 				
 				else{

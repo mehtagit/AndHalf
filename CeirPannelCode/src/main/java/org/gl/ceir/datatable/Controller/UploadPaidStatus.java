@@ -133,7 +133,7 @@ public class UploadPaidStatus {
 					String action = iconState.userPaidStatusIcon(imei1,taxStatus,status,userStatus,txnId);
 
 					
-					Object[] data = {createdOn,nid,txnId,country,nationality,taxStatusInterp,origin,statusInterp,action};
+					Object[] data = {createdOn,nid,txnId,nationality,taxStatusInterp,origin,statusInterp,action};
 
 					List<Object> datatableList = Arrays.asList(data);
 					finalList.add(datatableList);
@@ -161,7 +161,7 @@ public class UploadPaidStatus {
 					String deviceState = String.valueOf(contentModelList.getStatus());
 					String action = iconState.adminUserPaidStatusIcon(imei1,createdOn,contentModelList.getTxnId(),deviceState,userStatus);
 
-					Object[] data = {createdOn,nid,txnId,country,nationality,taxStatus,origin,status,action};
+					Object[] data = {createdOn,nid,txnId,nationality,taxStatus,origin,status,action};
 
 					List<Object> datatableList = Arrays.asList(data);
 					finalList.add(datatableList);
@@ -190,7 +190,7 @@ public class UploadPaidStatus {
 					String deviceState = String.valueOf(contentModelList.getStatus());
 					String action = iconState.deviceActivationIcon(imei1,createdOn,contentModelList.getTxnId(),deviceState,userStatus);
 
-					Object[] data = {createdOn,nid,txnId,country,nationality,taxStatus,origin,status,action};
+					Object[] data = {createdOn,nid,txnId,nationality,taxStatus,origin,status,action};
 
 					List<Object> datatableList = Arrays.asList(data);
 					finalList.add(datatableList);
@@ -219,7 +219,7 @@ public class UploadPaidStatus {
 					String action = iconState.endUserPaidStatusIcon(imei1,userStatus,deviceState,txnId);
 					log.info("in end user data table controller  Status---");
 					
-					Object[] data = {createdOn,nid,txnId,country,nationality,status,origin,statusInterp,action};
+					Object[] data = {createdOn,nid,txnId,nationality,status,origin,statusInterp,action};
 
 					List<Object> datatableList = Arrays.asList(data);
 					finalList.add(datatableList);

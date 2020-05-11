@@ -157,6 +157,7 @@
      "Curr_Save_Fail" : "Currency failed to save",
      "Curr_Update_Sucess" : "Currency has been sucessfully update",
      "Curr_Update_Fail" : "Currency failed to update",
-     "Curr_Data_By_Id_Fail" : "Failed to find Currency by Id"
+     "Curr_Data_By_Id_Fail" : "Failed to find Currency by Id",
+     "featureNotSupportForCambodian" : "This service is not applicable for Cambodian users."
      
 }

@@ -901,6 +901,7 @@ public class IconsState {
 
 	public String dashboardIcon(String userStatus,Integer featureID,String txnID,Integer userID,String roleType) {
 		executePostConstruct();
+		log.info("featureID=="+featureID);
 		// URL link
 		String viewAction = featureID == 3 ?"./Consignment/viewConsignment?txnID="+txnID+"" :
 			featureID == 4 ? "./assignDistributor?txnID="+txnID+"&userTypeId="+roleType+"":
@@ -911,6 +912,7 @@ public class IconsState {
 								featureID == 11 ? "./manageTypeDevices?txnID="+txnID+"":
 									featureID == 12 ? "./uploadPaidStatus?via=other&txnID="+txnID+"" :
 										featureID == 21 ? "./manageTypeDevices2?txnID="+txnID+"" :
+											featureID == 43 ? "./updateVisa?txnID="+txnID+"" :
 										"JavaScript:void(0);";
 		//System.out.println("featureID::::::::::"+featureID);
 		// state related Code
