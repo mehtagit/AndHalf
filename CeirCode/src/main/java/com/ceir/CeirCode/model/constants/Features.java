@@ -15,4 +15,5 @@ public interface Features {
 	String IP_Log_Management="IP Log Management";
 	String SLA_Management="SLA Management";
 	String User_Management="User Management";
+	String Profile="Profile";
 }

@@ -110,6 +110,8 @@ public class AlertDb  extends AllRequest {
 		builder.append(alertId);
 		builder.append(", description=");
 		builder.append(description);
+		builder.append(", toString()=");
+		builder.append(super.toString());
 		builder.append("]");
 		return builder.toString();
 	}

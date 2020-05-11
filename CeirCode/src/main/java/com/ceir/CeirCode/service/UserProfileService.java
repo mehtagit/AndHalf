@@ -88,14 +88,11 @@ public class UserProfileService {
 
 		GenericSpecificationBuilder<UserProfile> uPSB = new GenericSpecificationBuilder<UserProfile>(propertiesReader.dialect);	
 
-		Integer currentStatus=null;
 		User user=userRepoService.findByUSerId(filterRequest.getUserId());
 		if(user!=null) {
 			userService.saveUserTrail(user, "Registration Request", "View", filterRequest.getFeatureId());
 		}
-		if(filterRequest.getStatus()!=null && filterRequest.getStatus()!=-1){
-			currentStatus=UserStatus.PENDING_ADMIN_APPROVAL.getCode();
-		}
+		
 
 		if(Objects.nonNull(filterRequest.getStartDate()) && filterRequest.getStartDate()!="")
 			uPSB.addSpecification(uPSB.joinWithUser(new SearchCriteria("createdOn",filterRequest.getStartDate(), SearchOperation.GREATER_THAN, Datatype.DATE)));
@@ -123,10 +120,14 @@ public class UserProfileService {
 		if(Objects.nonNull(filterRequest.getUsername()) && !filterRequest.getUsername().isEmpty()) 
 			uPSB.addSpecification(uPSB.joinWithUser(new SearchCriteria("username",filterRequest.getUsername(), SearchOperation.EQUALITY, Datatype.STRING)));
 		
-		if(Objects.nonNull(currentStatus) && currentStatus!=-1) 
-			uPSB.addSpecification(uPSB.joinWithUser(new SearchCriteria("currentStatus",filterRequest.getStatus(), SearchOperation.EQUALITY, Datatype.INTEGER)));
-		else  
+		if(Objects.isNull(filterRequest.getStatus())) {
 			uPSB.addSpecification(uPSB.joinWithUser(new SearchCriteria("currentStatus",UserStatus.PENDING_ADMIN_APPROVAL.getCode(), SearchOperation.EQUALITY, Datatype.INT)));				
+		}
+		else if(Objects.nonNull(filterRequest.getStatus()) && filterRequest.getStatus()!=-1) 
+		{
+			uPSB.addSpecification(uPSB.joinWithUser(new SearchCriteria("currentStatus",filterRequest.getStatus(), SearchOperation.EQUALITY, Datatype.INTEGER)));
+			
+		}
 
 		if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
 		//uPSB.orSearchUser(new SearchCriteria("username", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));

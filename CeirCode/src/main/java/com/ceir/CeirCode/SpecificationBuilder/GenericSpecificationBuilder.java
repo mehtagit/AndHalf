@@ -111,8 +111,8 @@ public class GenericSpecificationBuilder<T> {
 				searchSpecification = searchSpecification.or(specifications.get(i));
 			}
 			if( finalSpecification != null ) {
-				finalSpecification = finalSpecification.or( searchSpecification );
-			}else {//If no call of addSpecification method and empty params 
+				finalSpecification = finalSpecification.and( searchSpecification );
+			}else {//If no call of addSpecification method
 				finalSpecification = Specification.where(searchSpecification);
 			}
 		}

@@ -46,16 +46,29 @@ public class Notification  implements Serializable{
 
 	private String subject;
 
-	private Integer retryCount;
+	private Integer retryCount; 
     
-	private String referTable;
+	private String referTable="users";
 
 	@Column(length = 50)
 	private String receiverUserType;
-
+	
+	private Integer authorityStatus;
+	
+	
 
 
       
+	public Integer getAuthorityStatus() {
+		return authorityStatus;
+	}
+
+
+	public void setAuthorityStatus(Integer authorityStatus) {
+		this.authorityStatus = authorityStatus;
+	}
+
+
 	public Notification() {
 
 	}
@@ -211,6 +224,8 @@ public class Notification  implements Serializable{
 		builder.append(referTable);
 		builder.append(", receiverUserType=");
 		builder.append(receiverUserType);
+		builder.append(", authorityStatus=");
+		builder.append(authorityStatus);
 		builder.append("]");
 		return builder.toString();
 	}

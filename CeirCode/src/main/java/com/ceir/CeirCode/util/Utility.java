@@ -3,9 +3,11 @@ package com.ceir.CeirCode.util;
 import java.io.File;
 import java.io.FileWriter;
 import java.text.DateFormat;
+import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
@@ -96,9 +98,9 @@ public class Utility {
 		return currentDate;
 	}
 	
-	public String convertToMonth(Date date) {
+	public String convertToMonth(Date yearMonth) {
 		DateFormat dateFormat=new SimpleDateFormat("MMMM");
-		String currentDate=dateFormat.format(date);
+		String currentDate=dateFormat.format(yearMonth);
 		return currentDate;
 	}
 	
@@ -244,4 +246,18 @@ public class Utility {
 			return null;
 		}
 	}
+	
+	public String getMonth(int month) {
+		try {
+		    return new DateFormatSymbols().getMonths()[month-1];		
+		}
+		catch(Exception e)
+		{
+			log.info("error occur while converting month int value to String:  ");
+			log.info(e.toString());
+			return null;
+		}
+
+	}	
+	
 }

@@ -8,11 +8,13 @@ public class UserDetails extends AllRequest{
 	private String phoneNo;
 	private String email;
 	private String password;
-	private String username;
-	private long Id;
+	private String userName;
+	private long id;
+	private long usertypeId;
 	
-	private long userTypeId;
-	private String userType;
+	private String viewUserType;
+	
+	
 	private String remarks;
 	public String getFirstName() {
 		return firstName;
@@ -50,17 +52,20 @@ public class UserDetails extends AllRequest{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getUsername() {
-		return username;
+	
+	
+	
+	public String getUserName() {
+		return userName;
 	}
-	public void setUsername(String username) {
-		this.username = username;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
-	public long getUserTypeId() {
-		return userTypeId;
+	public long getUsertypeId() {
+		return usertypeId;
 	}
-	public void setUserTypeId(long userTypeId) {
-		this.userTypeId = userTypeId;
+	public void setUsertypeId(long usertypeId) {
+		this.usertypeId = usertypeId;
 	}
 	public String getRemarks() {
 		return remarks;
@@ -68,30 +73,31 @@ public class UserDetails extends AllRequest{
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
 	}
+
 	public long getId() {
-		return Id;
+		return id;
 	}
 	public void setId(long id) {
-		Id = id;
+		this.id = id;
 	}
-	public String getUserType() {
-		return userType;
+	public String getViewUserType() {
+		return viewUserType;
 	}
-	public void setUserType(String userType) {
-		this.userType = userType;
+	public void setViewUserType(String viewUserType) {
+		this.viewUserType = viewUserType;
 	}
 	public UserDetails(String firstName, String middleName, String lastName, String phoneNo, String email,
-			String userType, String username, long id, long userTypeId, String remarks) {
+			String userType, String userName, long id, long userTypeId, String remarks) {
 		super();
 		this.firstName = firstName;
 		this.middleName = middleName;
 		this.lastName = lastName;
 		this.phoneNo = phoneNo;
 		this.email = email;
-		this.userType = userType;
-		this.username = username;
-		Id = id;
-		this.userTypeId = userTypeId;
+		this.userName = userName;
+		this.viewUserType=userType;
+		this.id = id;
+		this.usertypeId = userTypeId;
 		this.remarks = remarks;
 	}
 	@Override
@@ -109,14 +115,14 @@ public class UserDetails extends AllRequest{
 		builder.append(email);
 		builder.append(", password=");
 		builder.append(password);
-		builder.append(", username=");
-		builder.append(username);
-		builder.append(", Id=");
-		builder.append(Id);
-		builder.append(", userTypeId=");
-		builder.append(userTypeId);
-		builder.append(", userType=");
-		builder.append(userType);
+		builder.append(", userName=");
+		builder.append(userName);
+		builder.append(", id=");
+		builder.append(id);
+		builder.append(", usertypeId=");
+		builder.append(usertypeId);
+		builder.append(", viewUserType=");
+		builder.append(viewUserType);
 		builder.append(", remarks=");
 		builder.append(remarks);
 		builder.append(", toString()=");
@@ -124,4 +130,5 @@ public class UserDetails extends AllRequest{
 		builder.append("]");
 		return builder.toString();
 	}
+	
 }

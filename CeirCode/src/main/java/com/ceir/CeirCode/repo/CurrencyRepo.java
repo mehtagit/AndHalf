@@ -1,5 +1,6 @@
 package com.ceir.CeirCode.repo;
 
+import java.time.YearMonth;
 import java.util.Date;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,8 +13,8 @@ public interface CurrencyRepo extends JpaRepository<Currency, Long>,JpaSpecifica
 
 	public Currency save(Currency currency);
 	public Currency findById(long id);
-    public Currency findTopByDateOrderByIdDesc(Date  date);
-    boolean existsByDate(Date date);   
+    public Currency findTopByMonthDateOrderByIdDesc(Date  date);
+    boolean existsByMonthDateAndCurrency(String date,Integer currency);   
 
 	
 }

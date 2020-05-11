@@ -3,6 +3,8 @@ package com.ceir.CeirCode.controller;
 import java.util.List;
 import java.util.Objects;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.converter.json.MappingJacksonValue;
@@ -33,13 +35,14 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("/sla")
 public class SlaReportController {
 
-	
+	private final Logger log = LoggerFactory.getLogger(getClass());
 
 	@Autowired
 	SlaService slaService;
 	
 	@Autowired
 	FeatureService featureService;
+	
 	
 	@ApiOperation(value = "sla report  data.", response = AlertDb.class)
 	@PostMapping("/viewAll") 
@@ -50,6 +53,7 @@ public class SlaReportController {
 		MappingJacksonValue mapping = null;
 		if( file == 0) {
 			Page<SlaReport> slaReponse  = slaService.viewAllSlaData(filterRequest, pageNo, pageSize);
+			log.info("sla record fetched: "+slaReponse);
 			if(Objects.nonNull(slaReponse)) {
 				List<StakeholderFeature> featureData=featureService.featureAllData();
 				for(SlaReport sla:slaReponse.getContent()) {

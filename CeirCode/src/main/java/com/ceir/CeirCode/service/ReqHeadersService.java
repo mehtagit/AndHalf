@@ -139,7 +139,6 @@ public class ReqHeadersService {
 //			headerService.saveRequestHeader(header);
 			userService.saveUserTrail(filterRequest.getUserId(),filterRequest.getUsername(),
 					filterRequest.getUserType(),filterRequest.getUserTypeId(),Features.IP_Log_Management,SubFeatures.VIEW_ALL,filterRequest.getFeatureId());
-
 			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
 			Page<RequestHeaders> page = reqHeaderRepo.findAll( buildSpecification(filterRequest).build(), pageable );
 			return page;
@@ -166,10 +165,6 @@ public class ReqHeadersService {
 		SystemConfigurationDb alertDbDowlonadDir=systemConfigurationDbRepoImpl.getDataByTag("reqHeader_Download_Dir");
 		SystemConfigurationDb alertDbDowlonadLink=systemConfigurationDbRepoImpl.getDataByTag("reqHeader_Download_link");
 		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-		User user=userRepoService.findByUSerId(filterRequest.getUserId());
-		if(user!=null) {
-			userService.saveUserTrail(user, "Alert db", "Export", filterRequest.getFeatureId());
-		}
 		String filePath  = alertDbDowlonadDir.getValue();
 		log.info("filePath:  "+filePath);
 		StatefulBeanToCsvBuilder<ReqHeaderFile> builder = null;

@@ -1,6 +1,9 @@
 package com.ceir.CeirCode.controller;
 
+import java.time.YearMonth;
+import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -68,11 +71,13 @@ public class CurrencyController {
 						currency.setCurrencyInterp(systemConfig.getInterp());
 					}
 				}
-				if(currency.getDate()!=null) {
-				String month=utility.convertToMonth(currency.getDate());
-				currency.setMonth(month);
-				String year=utility.convertToYear(currency.getDate());
-				currency.setYear(year);
+				if(currency.getMonth()!=null) {
+				String  monthInterp=utility.getMonth(currency.getMonth());
+				if(Objects.nonNull(monthInterp))
+				{
+					currency.setMonthInterp(monthInterp);
+				}
+				
 				} 
 			}
 			

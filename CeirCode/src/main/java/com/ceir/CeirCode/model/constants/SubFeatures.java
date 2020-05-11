@@ -20,4 +20,5 @@ public interface SubFeatures {
 	String UPLOAD = "Upload";
 	String REQUEST="Request";
 	String SAVE="Save";
+	String Change_Language="Change Language";
 }

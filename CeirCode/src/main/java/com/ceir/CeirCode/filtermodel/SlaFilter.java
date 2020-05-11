@@ -6,8 +6,8 @@ public class SlaFilter extends AllRequest{
 	public String  startDate;
 	public String  endDate;
 	private String searchString;
-	private long feature;
-	private long usertype;
+	private Integer feature;
+	private Integer usertype;
 	
 	public String getStartDate() {
 		return startDate;
@@ -28,16 +28,16 @@ public class SlaFilter extends AllRequest{
 		this.searchString = searchString;
 	}
 	
-	public long getFeature() {
+	public Integer getFeature() {
 		return feature;
 	}
-	public void setFeature(long feature) {
+	public void setFeature(Integer feature) {
 		this.feature = feature;
 	}
-	public long getUsertype() {
+	public Integer getUsertype() {
 		return usertype;
 	}
-	public void setUsertype(long usertype) {
+	public void setUsertype(Integer usertype) {
 		this.usertype = usertype;
 	}
 	@Override

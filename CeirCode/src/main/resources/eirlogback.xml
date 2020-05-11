@@ -16,7 +16,7 @@ class="ch.qos.logback.core.rolling.RollingFileAppender">
 </logger>
 <logger name="org.apache.http" level="INFO">
 </logger>
-<root level="DEBUG">
+<root level="INFO">
 <appender-ref ref="FILE" />
 </root>
 </configuration>

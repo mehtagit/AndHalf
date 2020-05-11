@@ -66,7 +66,7 @@ public class LoginController{
 	@ApiOperation(value = "change langauge", response = HttpResponse.class)
 	@CrossOrigin
 	@PostMapping("/changeLanguage")     
-	public ResponseEntity<?> sessionTracking(@RequestBody ChangeLanguage languageData  ){
+	public ResponseEntity<?> changeLanguage(@RequestBody ChangeLanguage languageData  ){
 		return loginService.changeLanguage(languageData);  
 	}
 	

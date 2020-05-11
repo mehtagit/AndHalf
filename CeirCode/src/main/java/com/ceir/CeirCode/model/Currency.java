@@ -1,6 +1,7 @@
 package com.ceir.CeirCode.model;
 
 import java.time.LocalDateTime;
+import java.time.YearMonth;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -35,21 +36,22 @@ public class Currency  extends AllRequest{
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime modifiedOn;
 	
-	@Type(type="date")
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date date;
+	private String monthDate;
+
+	private Integer month;
 	
-	@Transient
-	private String month;
-	
-	@Transient
-	private String year;
+	private Integer year;
 	
 	private Integer currency;
 	private double riel;
 	private double dollar;
+	
 	@Transient
 	private String currencyInterp;
+	
+	@Transient
+	private String monthInterp;
+	
 	
 	
 	public static long getSerialVersionUID() {
@@ -76,12 +78,7 @@ public class Currency  extends AllRequest{
 	public void setModifiedOn(LocalDateTime modifiedOn) {
 		this.modifiedOn = modifiedOn;
 	}
-	public Date getDate() {
-		return date;
-	}
-	public void setDate(Date date) {
-		this.date = date;
-	}
+	
 	public Integer getCurrency() {
 		return currency;
 	}
@@ -108,18 +105,30 @@ public class Currency  extends AllRequest{
 		this.currencyInterp = currencyInterp;
 	}
 	
-	public String getMonth() {
+	public Integer getMonth() {
 		return month;
 	}
-	public void setMonth(String month) {
+	public void setMonth(Integer month) {
 		this.month = month;
 	}
-	
-	public String getYear() {
+	public Integer getYear() {
 		return year;
 	}
-	public void setYear(String year) {
+	public void setYear(Integer year) {
 		this.year = year;
+	}
+	public String getMonthDate() {
+		return monthDate;
+	}
+	public void setMonthDate(String monthDate) {
+		this.monthDate = monthDate;
+	}
+	
+	public String getMonthInterp() {
+		return monthInterp;
+	}
+	public void setMonthInterp(String monthInterp) {
+		this.monthInterp = monthInterp;
 	}
 	@Override
 	public String toString() {
@@ -130,8 +139,8 @@ public class Currency  extends AllRequest{
 		builder.append(createdOn);
 		builder.append(", modifiedOn=");
 		builder.append(modifiedOn);
-		builder.append(", date=");
-		builder.append(date);
+		builder.append(", monthDate=");
+		builder.append(monthDate);
 		builder.append(", month=");
 		builder.append(month);
 		builder.append(", year=");
@@ -144,10 +153,9 @@ public class Currency  extends AllRequest{
 		builder.append(dollar);
 		builder.append(", currencyInterp=");
 		builder.append(currencyInterp);
-		builder.append(", toString()=");
-		builder.append(super.toString());
+		builder.append(", monthInterp=");
+		builder.append(monthInterp);
 		builder.append("]");
 		return builder.toString();
 	}
-	
 }

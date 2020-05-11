@@ -28,6 +28,8 @@ import com.ceir.CeirCode.model.UserSecurityquestion;
 import com.ceir.CeirCode.model.Userrole;
 import com.ceir.CeirCode.model.Usertype;
 import com.ceir.CeirCode.model.constants.ChannelType;
+import com.ceir.CeirCode.model.constants.Features;
+import com.ceir.CeirCode.model.constants.SubFeatures;
 import com.ceir.CeirCode.model.constants.UserStatus;
 import com.ceir.CeirCode.repo.LoginTrackingRepo;
 import com.ceir.CeirCode.repo.SystemConfigDbListRepository;
@@ -342,14 +344,13 @@ public class LoginService
 		try 
 		{
 			User user=new User();
+			userService.saveUserTrail(languageData.getUserId(),languageData.getUsername(),
+		languageData.getUserType(),languageData.getUserTypeId(),Features.Profile,SubFeatures.Change_Language,0);
 			user=userRepo.findById(languageData.getUserId());
 			if(user!=null) {
-				user.setUserLanguage(languageData.getLanguage());
-				userService.saveUserTrail(user, "Profile","change language",0);
 				User output=userRepo.save(user);
 				if(output!=null) 
 				{
-					
 					HttpResponse response=new HttpResponse("user language sucessfully update",200);
 					return new ResponseEntity<>(response,HttpStatus.OK);	
 				}   
@@ -392,13 +393,13 @@ public class LoginService
 				String phoneOtp=otpService.phoneOtp(userData.getUserProfile().getPhoneNo()); 
 				String emailOtpData=randomDigits.getNumericString(6);
 				boolean notificationStatus=emailUtils.saveNotification("PRO_VERIFY_OTP_EMAIL_MSG", userData.getUserProfile(), 0,
-						"User Login", "Forgot Password", userData.getUsername(),
+						"Forgot Password", "Forgot Password", userData.getUsername(),
 						"Forgot Password Notification "+userData.getUsername(),emailOtpData,
-						ChannelType.EMAIL,""); 
+						ChannelType.EMAIL,"users",0); 
 				log.info("notification save:  "+notificationStatus);
 				boolean notificationStatusForSms=emailUtils.saveNotification("PRO_VERIFY_OTP__MSG", userData.getUserProfile(), 0,
 						"User Login", "forgot Password", userData.getUsername(),
-						userData.getUserProfile().getFirstName(),phoneOtp,ChannelType.SMS,"");
+						userData.getUserProfile().getFirstName(),phoneOtp,ChannelType.SMS,"users",0);
 				log.info("notificationStatusForSms save:  "+notificationStatusForSms);
 				userData.setPreviousStatus(UserStatus.APPROVED.getCode());
 				userData.setCurrentStatus(UserStatus.OTP_VERIFICATION_PENDING.getCode());

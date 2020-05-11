@@ -4,9 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
-
 import javax.transaction.Transactional;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,23 +12,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
 import com.ceir.CeirCode.Constants.Datatype;
 import com.ceir.CeirCode.Constants.SearchOperation;
 import com.ceir.CeirCode.SpecificationBuilder.GenericSpecificationBuilder;
 import com.ceir.CeirCode.configuration.PropertiesReaders;
 import com.ceir.CeirCode.filtermodel.UserMgmtFilter;
 import com.ceir.CeirCode.model.AllRequest;
-import com.ceir.CeirCode.model.FilterRequest;
-import com.ceir.CeirCode.model.PortAddress;
-import com.ceir.CeirCode.model.RequestHeaders;
 import com.ceir.CeirCode.model.RunningAlertDb;
 import com.ceir.CeirCode.model.SearchCriteria;
-import com.ceir.CeirCode.model.StateMgmtDb;
-import com.ceir.CeirCode.model.SystemConfigListDb;
 import com.ceir.CeirCode.model.SystemConfigurationDb;
 import com.ceir.CeirCode.model.User;
 import com.ceir.CeirCode.model.UserDetails;
@@ -40,7 +30,6 @@ import com.ceir.CeirCode.model.Usertype;
 import com.ceir.CeirCode.model.constants.AlertStatus;
 import com.ceir.CeirCode.model.constants.Features;
 import com.ceir.CeirCode.model.constants.SubFeatures;
-import com.ceir.CeirCode.model.constants.UserStatus;
 import com.ceir.CeirCode.model.constants.UsertypeData;
 import com.ceir.CeirCode.repo.UserProfileRepo;
 import com.ceir.CeirCode.repo.UserRepo;
@@ -52,10 +41,9 @@ import com.ceir.CeirCode.repoService.UserRepoService;
 import com.ceir.CeirCode.response.GenricResponse;
 import com.ceir.CeirCode.response.tags.PortAddsTags;
 import com.ceir.CeirCode.response.tags.RegistrationTags;
-import com.ceir.CeirCode.util.HttpResponse;
+
 @Service
 public class UserMgmtService {
-
 
 	@Autowired
 	UserRepo userRepo;
@@ -102,12 +90,15 @@ public class UserMgmtService {
 		if(Objects.nonNull(filterRequest.getEndDate()) && filterRequest.getEndDate()!="")
 			uPSB.with(new SearchCriteria("createdOn",filterRequest.getEndDate(), SearchOperation.LESS_THAN, Datatype.DATE));
 		if(Objects.nonNull(filterRequest.getUsertypeId()) && filterRequest.getUsertypeId()!=-1)
-			uPSB.with(new SearchCriteria("usertype",filterRequest.getUsertypeId(), SearchOperation.EQUALITY, Datatype.INT));
-		if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
-			uPSB.orSearchUsertype(new SearchCriteria("username", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
-		}
-		uPSB.addSpecification(uPSB.joinWithUserType(new SearchCriteria("selfRegister",0, SearchOperation.EQUALITY, Datatype.INT)));
+		uPSB.with(new SearchCriteria("usertype",filterRequest.getUsertypeId(), SearchOperation.EQUALITY, Datatype.INT));
+		
 		uPSB.with(new SearchCriteria("currentStatus",3, SearchOperation.EQUALITY, Datatype.INT));
+		uPSB.addSpecification(uPSB.joinWithUserType(new SearchCriteria("selfRegister",0, SearchOperation.EQUALITY, Datatype.INT)));
+		
+		if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
+			uPSB.orSearch(new SearchCriteria("username", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+		//	uPSB.orSearchUsertype(new SearchCriteria("usertypeName", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+		}
 
 		return uPSB;
 	}
@@ -149,11 +140,12 @@ public class UserMgmtService {
 	@Transactional
 	public GenricResponse saveUser(UserDetails details)
 	{
-		Usertype userType=new Usertype(details.getUserTypeId());
+		Usertype userType=new Usertype(details.getUsertypeId());
 		String displayName="";
 		log.info("data: "+details);
 //		RequestHeaders header=new RequestHeaders(details.getUserAgent(),details.getPublicIp(),details.getUsername());
 //		headerService.saveRequestHeader(header);
+		log.info("going to save audit trail");
 		userService.saveUserTrail(details.getUserId(),details.getUsername(),
 				details.getUserType(),details.getUserTypeId(),Features.User_Management,SubFeatures.SAVE,details.getFeatureId());
 
@@ -169,7 +161,7 @@ public class UserMgmtService {
 		UserProfile profile=new UserProfile(details.getFirstName(),details.getMiddleName(),details.getLastName(),
 				details.getEmail(),details.getPhoneNo(),displayName);
 		List<Userrole> role=new ArrayList<Userrole>();
-		User user=new User(details.getUsername(),details.getPassword(),3,details.getRemarks(),profile,userType,role);
+		User user=new User(details.getUserName(),details.getPassword(),3,details.getRemarks(),profile,userType,role);
 		user.setUserLanguage("en");
 		profile.setUser(user);
 		Userrole userRole=new Userrole(user,userType);
@@ -177,19 +169,23 @@ public class UserMgmtService {
 		User output=new User();
 		boolean emailExist=userProfileRepo.existsByEmail(details.getEmail());
 		if(emailExist) {
-		
+		    log.info("if email already exist in the data");
 			GenricResponse response=new GenricResponse(409,RegistrationTags.Email_Exist.getTag(),RegistrationTags.Email_Exist.getMessage(),"");
+			log.info("response send to user: " +response);
 			return response;
 		}
 
 		boolean phoneExist=userProfileRepo.existsByPhoneNo(details.getPhoneNo());
 		if(phoneExist) {
-			
+		    log.info("if phone number already exist in the data");
 			GenricResponse response=new GenricResponse(409,RegistrationTags.Phone_Exist.getTag(),RegistrationTags.Phone_Exist.getMessage(),"");
+			log.info("response send to user: " +response);
 			return response;
 		}
-		if(Objects.isNull(details.getUserTypeId()) || details.getUserTypeId()==0) {
+		if(Objects.isNull(details.getUsertypeId()) || details.getUsertypeId()==0) {
 			GenricResponse response=new GenricResponse(409,"Usertype Id value must not be null or 0","");
+			log.info("Usertype Id value must not be null or 0");
+			log.info("response send to user: " +response);
 			return  response;
 			
 		}
@@ -200,7 +196,7 @@ public class UserMgmtService {
 		map.put(UsertypeData.Operation.getCode(), "Operation_User_Limit");
 		map.put(UsertypeData.End_User.getCode(), "customer_user_limit");
 		map.put(UsertypeData.Customer_Care.getCode(), "end_user_limit");
-		int usertypeId=(int) details.getUserTypeId();
+		int usertypeId=(int)details.getUsertypeId();
 		log.info("then going to fetch data from system configuration db by tag "+map.get(usertypeId));
 		SystemConfigurationDb systemConfigData=systemConfigurationDbRepoImpl.getDataByTag(map.get(usertypeId));
 		long userLimit=0;
@@ -210,7 +206,7 @@ public class UserMgmtService {
 				userLimit=Long.parseLong(systemConfigData.getValue());				
 			}
 			catch(Exception e) {
-				
+				log.info("user creation limit is exceeded for "+UsertypeData.getByCode(usertypeId).getDescription());
 				RunningAlertDb alertDb=new RunningAlertDb("alert001"," user creation limit is exceeded for "+UsertypeData.getByCode(usertypeId).getDescription() +" usertype",AlertStatus.Init.getCode());
 				alertDbRepo.saveAlertDb(alertDb);
 				log.info(e.toString());
@@ -218,7 +214,7 @@ public class UserMgmtService {
 
 		}
         
-		long count=userRepoService.countByUsertypeId(details.getUserTypeId());
+		long count=userRepoService.countByUsertypeId(details.getUsertypeId());
 		log.info("total users find by this usertype= "+count);
 		log.info("now going to compare these two above values");
 		if(count>=userLimit) {
@@ -255,12 +251,13 @@ public class UserMgmtService {
 			userService.saveUserTrail(details.getUserId(),details.getUsername(),
 					details.getUserType(),details.getUserTypeId(),Features.User_Management,SubFeatures.UPDATE,details.getFeatureId());
 
-			Usertype userType=new Usertype(details.getUserTypeId());
+			Usertype userType=new Usertype(details.getUsertypeId());
 			List<Userrole> role=new ArrayList<Userrole>();
 			User userData=new User();
 			try {
 				userData=userRepo.findById(details.getId());
 				if(Objects.isNull(userData)) {
+					log.info("user id is wrong");
 					GenricResponse response=new GenricResponse(500,"User is is wrong","");
 					return  response;
 				}
@@ -270,15 +267,15 @@ public class UserMgmtService {
 			log.info(e.toString());
 			GenricResponse response=new GenricResponse(500,"Oops something wrong happened","");
 			return  response;
-           
 		}
-			Userrole userRole=new Userrole(userData,userType);
-			for(Userrole roles:userData.getUserRole()) {
-				userRole.setId(roles.getId());				
+       
+			for(Userrole rolesData:userData.getUserRole())
+			{
+				rolesData.setUsertypeData(userType);
+				role.add(rolesData);
 			}
 			userData.setUsertype(userType);
 			userData.setUserRole(role);
-			role.add(userRole);
 			User output=new User();
 			try {
 	                output=userRepo.save(userData);
@@ -286,7 +283,7 @@ public class UserMgmtService {
 			catch(Exception e) {
 				log.info("Exception occure");
 				log.info(e.toString());
-				GenricResponse response=new GenricResponse(500,PortAddsTags.PAdd_Save_Fail.getMessage(),PortAddsTags.PAdd_Save_Fail.getTag());
+				GenricResponse response=new GenricResponse(500,"User failed to update",PortAddsTags.PAdd_Save_Fail.getTag());
 				return  response;
 	           
 			}

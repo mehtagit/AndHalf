@@ -1,9 +1,21 @@
 package com.ceir.CeirCode.model;
 
+import javax.persistence.Transient;
+
 public class ChangeLanguage {
 
-	private long userId;
 	private String language;
+	
+	private String username;
+	
+	
+	private long userTypeId;
+	private long userId;
+	private long featureId;
+	
+	private String userType;
+
+	
 	public long getUserId() {
 		return userId;
 	}
@@ -15,6 +27,31 @@ public class ChangeLanguage {
 	}
 	public void setLanguage(String language) {
 		this.language = language;
+	}
+	
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public long getUserTypeId() {
+		return userTypeId;
+	}
+	public void setUserTypeId(long userTypeId) {
+		this.userTypeId = userTypeId;
+	}
+	public long getFeatureId() {
+		return featureId;
+	}
+	public void setFeatureId(long featureId) {
+		this.featureId = featureId;
+	}
+	public String getUserType() {
+		return userType;
+	}
+	public void setUserType(String userType) {
+		this.userType = userType;
 	}
 	@Override
 	public String toString() {

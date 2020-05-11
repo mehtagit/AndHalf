@@ -135,7 +135,7 @@ public class AlertDbService {
 			//RequestHeaders header=new RequestHeaders(filterRequest.getUserAgent(),filterRequest.getPublicIp(),filterRequest.getUsername());
 			//headerService.saveRequestHeader(header);
 			userService.saveUserTrail(filterRequest.getUserId(),filterRequest.getUsername(),
-					filterRequest.getUserType(),filterRequest.getUserTypeId(),Features.Alert_Management,SubFeatures.VIEW_ALL,filterRequest.getFeatureId());
+					filterRequest.getUserType(),filterRequest.getUserTypeId(),Features.Profile,SubFeatures.VIEW_ALL,filterRequest.getFeatureId());
 			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
             Page<AlertDb> page=alertDbRepo.findAll(buildSpecification(filterRequest).build(),pageable);
 			return page;

@@ -54,6 +54,8 @@ public class SlaService {
 
 	@Autowired
 	PropertiesReaders propertiesReader;
+	
+	
 	@Autowired
 	UserService userService;
 
@@ -83,27 +85,29 @@ public class SlaService {
 	
 	private GenericSpecificationBuilder<SlaReport> buildSpecification(SlaFilter filterRequest){
 		
+		log.info("sla report filters function");;
 		GenericSpecificationBuilder<SlaReport> uPSB = new GenericSpecificationBuilder<SlaReport>(propertiesReader.dialect);	
-
+        log.info("sla object created");
 		if(Objects.nonNull(filterRequest.getStartDate()) && filterRequest.getStartDate()!="")
 			uPSB.with(new SearchCriteria("createdOn",filterRequest.getStartDate(), SearchOperation.GREATER_THAN, Datatype.DATE));
-
+        log.info("start date");
 		if(Objects.nonNull(filterRequest.getEndDate()) && filterRequest.getEndDate()!="")
 			uPSB.with(new SearchCriteria("createdOn",filterRequest.getEndDate(), SearchOperation.LESS_THAN, Datatype.DATE));
-
+        log.info("end date");
 		if(Objects.nonNull(filterRequest.getFeature()) && filterRequest.getFeature()!=-1)
 			uPSB.with(new SearchCriteria("featureId",filterRequest.getFeature(), SearchOperation.EQUALITY, Datatype.INTEGER));
-
+        log.info("feature");
 		if(Objects.nonNull(filterRequest.getUsertype()) && filterRequest.getUsertype()!=-1)
 			uPSB.with(new SearchCriteria("usertypeId",filterRequest.getUsertype(), SearchOperation.EQUALITY, Datatype.INTEGER));
-
+        log.info("user typr data");
 		
 		if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
+		log.info("search sTring not emppty");
 		uPSB.orSearch(new SearchCriteria("username", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 		uPSB.orSearch(new SearchCriteria("stateInterp", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 		uPSB.orSearch(new SearchCriteria("txnId", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 		}
-
+       log.info("filter data added");
 		return uPSB;
 	}
 	
@@ -131,8 +135,9 @@ public class SlaService {
 //			headerService.saveRequestHeader(header);
 			userService.saveUserTrail(filterRequest.getUserId(),filterRequest.getUsername(),
 					filterRequest.getUserType(),filterRequest.getUserTypeId(),Features.SLA_Management,SubFeatures.VIEW_ALL,filterRequest.getFeatureId());
-
+            log.info("now going to fetch sla data");
 			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
+			log.info("page data set");
             Page<SlaReport> page=slaRepo.findAll(buildSpecification(filterRequest).build(),pageable);
 			return page;
 
