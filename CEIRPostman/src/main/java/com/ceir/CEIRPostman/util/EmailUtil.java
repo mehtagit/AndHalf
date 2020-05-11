@@ -90,8 +90,8 @@ public class EmailUtil {
 		}
 		
 	}
+	
 	public boolean sendEmail(String toAddress, String fromAddress, String subject, String msgBody,int totalData,int dataRead,Integer sleep) {
-
 		SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
 		simpleMailMessage.setFrom(fromAddress);
 		simpleMailMessage.setTo(toAddress);
@@ -99,7 +99,8 @@ public class EmailUtil {
 		simpleMailMessage.setText(msgBody);
 		try {
 			logger.info("adding emails into the array");
-			 messages[messageIndex++] = simpleMailMessage;
+			 messages[messageIndex] = simpleMailMessage;
+			 messageIndex++;
 			    if (messageIndex == batchSize) {
 			    	logger.info("if batch size equals to no of mails added into array");
 			    	logger.info("now going to send emails");
