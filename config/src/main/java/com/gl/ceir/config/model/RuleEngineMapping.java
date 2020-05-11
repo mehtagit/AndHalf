@@ -10,6 +10,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -72,6 +73,16 @@ public class RuleEngineMapping implements Serializable {
 
 	@Column(length = 1)
 	private String output;
+	
+	//@Transient parameters 	
+	@Transient
+	public String userName;
+	@Transient
+	private Integer featureId;
+	@Transient
+	private Integer userTypeId;
+	@Transient
+	private String roleType;
 	
 	public String getOutput() {
 		return output;
@@ -175,6 +186,39 @@ public class RuleEngineMapping implements Serializable {
 		this.failedRuleActionPostGrace = failedRuleActionPostGrace;
 	}
 
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public Integer getFeatureId() {
+		return featureId;
+	}
+
+	public void setFeatureId(Integer featureId) {
+		this.featureId = featureId;
+	}
+
+	public Integer getUserTypeId() {
+		return userTypeId;
+	}
+
+	public void setUserTypeId(Integer userTypeId) {
+		this.userTypeId = userTypeId;
+	}
+
+	public String getRoleType() {
+		return roleType;
+	}
+
+	public void setRoleType(String roleType) {
+		this.roleType = roleType;
+	}
+	
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -202,8 +246,16 @@ public class RuleEngineMapping implements Serializable {
 		builder.append(failedRuleActionPostGrace);
 		builder.append(", output=");
 		builder.append(output);
+		builder.append(", userName=");
+		builder.append(userName);
+		builder.append(", featureId=");
+		builder.append(featureId);
+		builder.append(", userTypeId=");
+		builder.append(userTypeId);
+		builder.append(", roleType=");
+		builder.append(roleType);
 		builder.append("]");
 		return builder.toString();
 	}
-	
+
 }

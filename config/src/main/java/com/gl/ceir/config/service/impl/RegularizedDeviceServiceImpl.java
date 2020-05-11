@@ -665,7 +665,7 @@ public class RegularizedDeviceServiceImpl {
 					if(Objects.nonNull(endUserDB.getEmail()) && !endUserDB.getEmail().isEmpty()) {
 						rawMails.add(new RawMail(tag, 
 								endUserDB.getId(), 
-								4, 
+								12, 
 								Features.REGISTER_DEVICE, 
 								subFeature, 
 								regularizeDeviceDb.getTxnId(), 
@@ -708,7 +708,7 @@ public class RegularizedDeviceServiceImpl {
 					if(Objects.nonNull(endUserDB.getEmail()) && !endUserDB.getEmail().isEmpty()) {
 						rawMails.add(new RawMail("Reg_Device_Process_success_To_EndUser", 
 								endUserDB.getId(), 
-								4, 
+								12, 
 								Features.REGISTER_DEVICE, 
 								SubFeatures.SYSTEM_ACCEPT, 
 								regularizeDeviceDb.getTxnId(), 
@@ -722,7 +722,7 @@ for(User userData:user) {
 	
 	rawMails.add(new RawMail("Reg_Device_Process_success_mail_To_CEIRAdmin", 
 			userData.getId(), 
-			4, 
+			12, 
 			Features.REGISTER_DEVICE, 
 			SubFeatures.SYSTEM_ACCEPT, 
 			regularizeDeviceDb.getTxnId(), 
@@ -746,7 +746,7 @@ for(User userData:user) {
 						if(Objects.nonNull(endUserDB.getEmail()) && !endUserDB.getEmail().isEmpty()) {
 						rawMails.add(new RawMail("Reg_Device_Process_Fail_To_EndUser", 
 								endUserDB.getId(), 
-								4, 
+								12, 
 								Features.REGISTER_DEVICE, 
 								SubFeatures.SYSTEM_REJECT, 
 								regularizeDeviceDb.getTxnId(), 

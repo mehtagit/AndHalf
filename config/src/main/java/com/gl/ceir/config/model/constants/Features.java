@@ -17,4 +17,6 @@ public interface Features {
 	String GLOBAL_BLACKLIST = "Global Black List";//customerCareGsmaBlacklist
 	String TYPE_APPROVE = "Type Approve"; //customerCareTypeApprove
 	String UPDATE_VISA_Request = "Update Visa Request";
+	String SYSTEM_MANAGEMENT = "System Management";
+	String RULE_FEATURE_MAPPING = "Rule Feature Mapping";
 }
