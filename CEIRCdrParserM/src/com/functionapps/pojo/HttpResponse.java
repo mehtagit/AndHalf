@@ -4,9 +4,16 @@ public class HttpResponse {
 	
 	private String response;
 	private Integer statusCode;
+	private Integer errorCode;
 	private String user;
 	private String tag;
 	
+	public Integer getErrorCode() {
+		return errorCode;
+	}
+	public void setErrorCode(Integer errorCode) {
+		this.errorCode = errorCode;
+	}
 	public String getResponse() {
 		return response;
 	}

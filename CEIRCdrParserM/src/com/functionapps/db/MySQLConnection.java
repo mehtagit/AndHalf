@@ -3,6 +3,9 @@ package com.functionapps.db;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
+
 public class MySQLConnection {
 
     public Connection getConnection() {
@@ -27,7 +30,6 @@ public class MySQLConnection {
         final String DB_URL = "jdbc:mysql://172.31.22.35:3306/ceirconfig";
         final String USER = "root";
         final String PASS = "root";
-        
         Connection conn = null;
         try {
             Class.forName(JDBC_DRIVER);

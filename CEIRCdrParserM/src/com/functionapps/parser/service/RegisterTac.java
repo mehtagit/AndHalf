@@ -12,6 +12,7 @@ import com.functionapps.dao.TypeApprovalDbDao;
 import com.functionapps.dao.UserWithProfileDao;
 import com.functionapps.parser.CEIRFeatureFileFunctions;
 import com.functionapps.parser.Rule;
+import com.functionapps.pojo.HttpResponse;
 import com.functionapps.pojo.MessageConfigurationDb;
 import com.functionapps.pojo.Notification;
 import com.functionapps.pojo.TypeApprovedDb;
@@ -73,7 +74,13 @@ public class RegisterTac {
 				 * By System. }
 				 */
 
-				tacApiConsumer.approveReject(typeApprovedDb.getTxnId(), 3);
+				HttpResponse httpResponse = tacApiConsumer.approveReject(typeApprovedDb.getTxnId(), 3);
+				
+				if(httpResponse.getErrorCode() != 200) {
+					// TODO Add to the Alert.
+					logger.info("Approve_Reject API for type_approved_db is failed. Response[" + httpResponse + "]");
+					return;
+				}
 				
 				// Get users Profile.
 				UserWithProfile userWithProfile = userWithProfileDao.getUserWithProfileById(conn, typeApprovedDb.getUserId());
