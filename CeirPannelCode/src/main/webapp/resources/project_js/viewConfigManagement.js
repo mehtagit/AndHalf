@@ -21,12 +21,13 @@ function configManagementDatatable(){
 	var filterRequest={
 			"endDate":$('#endDate').val(),
 			"startDate":$('#startDate').val(),
+			"tag":$('#parametername').val(),
+			"type" : parseInt($('#type').val()),
 			"userId":parseInt(userId),
 			"featureId":parseInt(featureId),
 			"userTypeId": parseInt($("body").attr("data-userTypeID")),
 			"userType":$("body").attr("data-roleType"),
-			"tag":$('#parametername').val(),
-			"type" : parseInt($('#type').val())
+			"username" : $("body").attr("data-selected-username")
 	}
 	
 	$.ajax({
@@ -168,7 +169,12 @@ function viewDetails(tag){
         dismissible:false
     });
 	var RequestData = {
-			"tag" : tag
+			"tag" : tag,
+			"userId":parseInt(userId),
+			"featureId":parseInt(featureId),
+			"userTypeId": parseInt($("body").attr("data-userTypeID")),
+			"userType":$("body").attr("data-roleType"),
+			"username" : $("body").attr("data-selected-username")
 	} 
 	$.ajax({
 		url : "./system/viewTag",
@@ -200,7 +206,12 @@ function updateDetails(tag){
         dismissible:false
     });
 	var RequestData = {
-			"tag" : tag
+			"tag" : tag,
+			"userId":parseInt(userId),
+			"featureId":parseInt(featureId),
+			"userTypeId": parseInt($("body").attr("data-userTypeID")),
+			"userType":$("body").attr("data-roleType"),
+			"username" : $("body").attr("data-selected-username")
 	} 
 	$.ajax({
 		url : "./system/viewTag",
@@ -235,7 +246,12 @@ var updateRequest = {
 		"description": $("#editdescription").val(),
 		"remark": $("#editremarks").val(),
 		"value": $("#editValue").val(),
-		"type" : parseInt($("#edittype").val())
+		"type" : parseInt($("#edittype").val()),
+		"userId":parseInt(userId),
+		"featureId":parseInt(featureId),
+		"userTypeId": parseInt($("body").attr("data-userTypeID")),
+		"userType":$("body").attr("data-roleType"),
+		"username" : $("body").attr("data-selected-username")
 }
 
 
@@ -279,14 +295,15 @@ function exportData()
 	var filterRequest={
 			"endDate":$('#endDate').val(),
 			"startDate":$('#startDate').val(),
-			"userId":parseInt($("body").attr("data-userID")),
-			"featureId":parseInt(featureId),
-			"userTypeId": parseInt($("body").attr("data-userTypeID")),
-			"userType":$("body").attr("data-roleType"),
 			"tag":$('#parametername').val(),
 			"type" : parseInt($('#type').val()),
 			"pageNo":parseInt(pageNo),
-			"pageSize":parseInt(pageSize)
+			"pageSize":parseInt(pageSize),
+			"userId":parseInt(userId),
+			"featureId":parseInt(featureId),
+			"userTypeId": parseInt($("body").attr("data-userTypeID")),
+			"userType":$("body").attr("data-roleType"),
+			"username" : $("body").attr("data-selected-username")
 	}
 	console.log(JSON.stringify(filterRequest))
 	$.ajax({

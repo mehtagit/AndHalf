@@ -351,6 +351,9 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 
 	function Datatable(url,dataUrl) {
 		var txn= (txnIdValue == 'null' && transactionIDValue == undefined)? $('#transactionID').val() : transactionIDValue;
+		
+		var filereduserType =  $('#userType').val() =='null' || $('#userType').val()==undefined ? null : $("#userType option:selected").text();
+		
 		var jsonObj = {
 				"endDate":$('#endDate').val(),
 				"startDate":$('#startDate').val(),
@@ -362,7 +365,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 				"txnId":txn,
 				"consignmentStatus":parseInt($('#StockStatus').val()),
 				"displayName" : $('#name').val(),
-				"filteredUserType" : $('#userType').val()
+				"filteredUserType" : filereduserType
 		}
 		if(lang=='km'){
 			var langFile='./resources/i18n/khmer_datatable.json';
@@ -476,7 +479,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 								"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
 
 								"<select id="+dropdown[i].id+" class='select-wrapper select2  initialized'>"+
-								"<option value=null>"+dropdown[i].title+
+								"<option value='null'>"+dropdown[i].title+
 								"</option>"+
 								"</select>"+
 								"</div>"+

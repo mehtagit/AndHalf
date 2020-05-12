@@ -19,13 +19,14 @@ var role = currentRoleType == null ? roleType : currentRoleType;
 function configManagementDatatable(){
 	
 	var filterRequest={
+			"tag":$('#parametername').val(),
+			"status":parseInt($('#status').val()),
+			"type": parseInt($("#type").val()),
 			"userId":parseInt(userId),
 			"featureId":parseInt(featureId),
 			"userTypeId": parseInt($("body").attr("data-userTypeID")),
 			"userType":$("body").attr("data-roleType"),
-			"tag":$('#parametername').val(),
-			"status":parseInt($('#status').val()),
-			"type": parseInt($("#type").val())
+			"username" : $("body").attr("data-selected-username")
 	}
 	
 	$.ajax({
@@ -175,7 +176,12 @@ function viewDetails(tag){
         dismissible:false
     });
 	var RequestData = {
-			"tag" : tag
+			"tag" : tag,
+			"userId":parseInt(userId),
+			"featureId":parseInt(featureId),
+			"userTypeId": parseInt($("body").attr("data-userTypeID")),
+			"userType":$("body").attr("data-roleType"),
+			"username" : $("body").attr("data-selected-username")
 	} 
 	$.ajax({
 		url : "./policy/viewTag",
@@ -211,7 +217,12 @@ function updateDetails(tag,status){
 	$("#EditStatusValue").val(status)
 	
 	var RequestData = {
-			"tag" : tag
+			"tag" : tag,
+			"userId":parseInt(userId),
+			"featureId":parseInt(featureId),
+			"userTypeId": parseInt($("body").attr("data-userTypeID")),
+			"userType":$("body").attr("data-roleType"),
+			"username" : $("body").attr("data-selected-username")
 	} 
 	$.ajax({
 		url : "./policy/viewTag",
@@ -253,7 +264,12 @@ function updatePolicy(){
 			 "description" : $("#editdescription").val(),
 			 "status" : parseInt($("#EditStatusValue").val()),
 			 "remark" : $("#editremarks").val(),
-			 "policyOrder": $("#editviewpolicyOrder").val()
+			 "policyOrder": $("#editviewpolicyOrder").val(),
+			 "userId":parseInt(userId),
+			 "featureId":parseInt(featureId),
+			 "userTypeId": parseInt($("body").attr("data-userTypeID")),
+			 "userType":$("body").attr("data-roleType"),
+			 "username" : $("body").attr("data-selected-username")
 	}
 	
 	console.log("updateRequest-->" +updateRequest);

@@ -449,6 +449,7 @@ function usertypeData2(id) {
 		dataType : 'html',
 		async : false,
 		success : function(data) {
+			$("#usertypes").empty();
 			var response = JSON.parse(data);
 			var usertypeDropdown = $("#usertypes");
 			for (var i = 0; i < response.length; i++) {

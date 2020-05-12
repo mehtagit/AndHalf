@@ -21,12 +21,13 @@ function messageManagementDatatable(){
 	var filterRequest={
 			"endDate":$('#endDate').val(),
 			"startDate":$('#startDate').val(),
+			"tag":$('#parametername').val(),
+			"channel" : parseInt($('#channel').val()),
 			"userId":parseInt(userId),
 			"featureId":parseInt(featureId),
 			"userTypeId": parseInt($("body").attr("data-userTypeID")),
 			"userType":$("body").attr("data-roleType"),
-			"tag":$('#parametername').val(),
-			"channel" : parseInt($('#channel').val())
+			"username" : $("body").attr("data-selected-username")
 	}
 	
 	$.ajax({
@@ -155,7 +156,12 @@ function viewDetails(tag){
         dismissible:false
     });
 	var RequestData = {
-			"tag" : tag
+			"tag" : tag,
+			"userId":parseInt(userId),
+			"featureId":parseInt(featureId),
+			"userTypeId": parseInt($("body").attr("data-userTypeID")),
+			"userType":$("body").attr("data-roleType"),
+			"username" : $("body").attr("data-selected-username")
 	} 
 	$.ajax({
 		url : "./message/viewTag",
@@ -193,7 +199,12 @@ function updateDetails(tag){
     });
 	
 	var RequestData = {
-			"tag" : tag
+			"tag" : tag,
+			"userId":parseInt(userId),
+			"featureId":parseInt(featureId),
+			"userTypeId": parseInt($("body").attr("data-userTypeID")),
+			"userType":$("body").attr("data-roleType"),
+			"username" : $("body").attr("data-selected-username")
 	} 
 	$.ajax({
 		url : "./message/viewTag",
@@ -226,7 +237,12 @@ function updateMessage(){
 		 	 "tag" : $("#Edittag").val(),
 			 "value" : $("#editValue").val(),
 			 "description" : $("#editdescription").val(),
-			 "channel" : parseInt($("#editChannel").val())
+			 "channel" : parseInt($("#editChannel").val()),
+			 "userId":parseInt(userId),
+			 "featureId":parseInt(featureId),
+			 "userTypeId": parseInt($("body").attr("data-userTypeID")),
+			 "userType":$("body").attr("data-roleType"),
+			 "username" : $("body").attr("data-selected-username")
 	}
 	 
 	 $.ajax({
