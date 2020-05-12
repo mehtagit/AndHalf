@@ -113,7 +113,7 @@ public class RuleEngineMappingServiceImpl {
 			auditTrailRepository.save( new AuditTrail( filterRequest.getUserId(),
 			  filterRequest.getUserName(), Long.valueOf(filterRequest.getUserTypeId()),
 			   "SystemAdmin", Long.valueOf(filterRequest.getFeatureId()),
-			  Features.SYSTEM_MANAGEMENT, SubFeatures.VIEW, "","NA",
+			  Features.RULE_FEATURE_MAPPING, SubFeatures.VIEW, "","NA",
 			  filterRequest.getRoleType()));
 			 
 			return page;

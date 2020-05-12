@@ -19,4 +19,6 @@ public interface Features {
 	String UPDATE_VISA_Request = "Update Visa Request";
 	String SYSTEM_MANAGEMENT = "System Management";
 	String RULE_FEATURE_MAPPING = "Rule Feature Mapping";
+	String POLICY_MANAGEMENT = "Policy Management";
+	String MESSAGE_MANAGEMENT = "Message Management";
 }
