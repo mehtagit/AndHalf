@@ -89,7 +89,7 @@ public class StockServiceImpl {
 
 	// This is set with @postconstruct
 	private String featureName;
-	
+
 	@Autowired
 	StokeDetailsRepository stokeDetailsRepository;
 
@@ -143,10 +143,10 @@ public class StockServiceImpl {
 
 	@Autowired
 	StockTransaction stockTransaction;
-	
+
 	@Autowired
 	StakeholderfeatureServiceImpl stakeholderfeatureServiceImpl;
-	
+
 	@Autowired
 	AlertServiceImpl alertServiceImpl;
 
@@ -276,12 +276,12 @@ public class StockServiceImpl {
 			}
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			
+
 			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
 			bodyPlaceHolderMap.put("<feature>", featureName);
 			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.REGISTER);
 			alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, stockMgmt.getUserId().intValue(), bodyPlaceHolderMap);
-			
+
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
@@ -293,12 +293,12 @@ public class StockServiceImpl {
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			
+
 			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
 			bodyPlaceHolderMap.put("<feature>", featureName);
 			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.VIEW);
 			alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, 0, bodyPlaceHolderMap);
-			
+
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
@@ -348,12 +348,12 @@ public class StockServiceImpl {
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			
+
 			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
 			bodyPlaceHolderMap.put("<feature>", featureName);
 			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.VIEW_ALL);
 			alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, filterRequest.getUserId(), bodyPlaceHolderMap);
-			
+
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
@@ -381,19 +381,19 @@ public class StockServiceImpl {
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			
+
 			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
 			bodyPlaceHolderMap.put("<feature>", featureName);
 			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.VIEW_ALL);
 			alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, filterRequest.getUserId(), bodyPlaceHolderMap);
-			
+
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
 
 	private GenericSpecificationBuilder<StockMgmt> buildSpecification(FilterRequest filterRequest, List<StateMgmtDb> statusList){
 		GenericSpecificationBuilder<StockMgmt> specificationBuilder = new GenericSpecificationBuilder<>(propertiesReader.dialect);
-		
+
 		if("Importer".equalsIgnoreCase(filterRequest.getUserType()) || 
 				"Distributor".equalsIgnoreCase(filterRequest.getUserType()) || 
 				"Retailer".equalsIgnoreCase(filterRequest.getUserType()) || 
@@ -403,7 +403,7 @@ public class StockServiceImpl {
 			if(Objects.nonNull(filterRequest.getUserId()) )
 				specificationBuilder.with(new SearchCriteria("userId", filterRequest.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));
 
-			if(Objects.nonNull(filterRequest.getUserId()))
+			if(Objects.nonNull(filterRequest.getRoleType()))
 				specificationBuilder.with(new SearchCriteria("roleType", filterRequest.getRoleType(), SearchOperation.EQUALITY, Datatype.STRING));
 		} 
 
@@ -416,20 +416,17 @@ public class StockServiceImpl {
 		if(Objects.nonNull(filterRequest.getTxnId()) && !filterRequest.getTxnId().isEmpty())
 			specificationBuilder.with(new SearchCriteria("txnId", filterRequest.getTxnId(), SearchOperation.EQUALITY, Datatype.STRING));
 
-		if(Objects.nonNull(filterRequest.getUserType()) && "Custom".equalsIgnoreCase(filterRequest.getUserType()))
+		if(Objects.nonNull(filterRequest.getUserType()) && "Custom".equalsIgnoreCase(filterRequest.getUserType())) {
+			logger.info("Inside custom block.");
 			specificationBuilder.with(new SearchCriteria("userType", filterRequest.getUserType(), SearchOperation.EQUALITY, Datatype.STRING));
+		}
 
-		if(Objects.nonNull(filterRequest.getFilteredUserType()) && !filterRequest.getFilteredUserType().isEmpty())
+		if(Objects.nonNull(filterRequest.getFilteredUserType()) && !filterRequest.getFilteredUserType().isEmpty()) {
+			logger.info("Inside getFilteredUserType block.");
 			specificationBuilder.with(new SearchCriteria("userType", filterRequest.getFilteredUserType(), SearchOperation.EQUALITY, Datatype.STRING));
-
-		// Status handling.
-		if("CEIRADMIN".equalsIgnoreCase(filterRequest.getUserType())) {
-			if(Objects.isNull(filterRequest.getConsignmentStatus()))
-				specificationBuilder.with(new SearchCriteria("stockStatus", 3, SearchOperation.EQUALITY, Datatype.STRING));
-			else {
-				specificationBuilder.with(new SearchCriteria("stockStatus", filterRequest.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
-			}
-		}else if(Objects.nonNull(filterRequest.getConsignmentStatus())) {
+		}
+		
+		if(Objects.nonNull(filterRequest.getConsignmentStatus())) {
 			specificationBuilder.with(new SearchCriteria("stockStatus", filterRequest.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
 		}else {
 			if(Objects.nonNull(filterRequest.getFeatureId()) && Objects.nonNull(filterRequest.getUserTypeId())) {
@@ -454,7 +451,7 @@ public class StockServiceImpl {
 			}
 		}
 
-	
+
 		if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
 			specificationBuilder.orSearch(new SearchCriteria("txnId", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 		}
@@ -492,12 +489,12 @@ public class StockServiceImpl {
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			
+
 			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
 			bodyPlaceHolderMap.put("<feature>", featureName);
 			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.VIEW);
 			alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, filterRequest.getUserId(), bodyPlaceHolderMap);
-			
+
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
@@ -547,12 +544,12 @@ public class StockServiceImpl {
 			}
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			
+
 			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
 			bodyPlaceHolderMap.put("<feature>", featureName);
 			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.DELETE);
 			alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, 0, bodyPlaceHolderMap);
-			
+
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
@@ -654,12 +651,12 @@ public class StockServiceImpl {
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			
+
 			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
 			bodyPlaceHolderMap.put("<feature>", featureName);
 			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.EXPORT);
 			alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, filterRequest.getUserId(), bodyPlaceHolderMap);
-			
+
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}finally {
 			try {
@@ -733,12 +730,12 @@ public class StockServiceImpl {
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			
+
 			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
 			bodyPlaceHolderMap.put("<feature>", featureName);
 			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.EXPORT);
 			alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, filterRequest.getUserId(), bodyPlaceHolderMap);
-			
+
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}finally {
 			try {
@@ -855,7 +852,7 @@ public class StockServiceImpl {
 				String action = null;
 				String txnId = null;
 				String receiverUserType = stockMgmt.getUserType();
-				
+
 				if(!StateMachine.isStockStatetransitionAllowed("CEIRSYSTEM", stockMgmt.getStockStatus())) {
 					logger.info("state transition is not allowed." + consignmentUpdateRequest.getTxnId());
 					return new GenricResponse(3, "state transition is not allowed.", consignmentUpdateRequest.getTxnId());
@@ -869,7 +866,7 @@ public class StockServiceImpl {
 
 					placeholderMap.put("<First name>", firstName);
 					placeholderMap.put("<Txn id>", stockMgmt.getTxnId());
-					
+
 					if(stockMgmt.getStockStatus() == StockStatus.UPLOADING.getCode()) {
 						stockMgmt.setStockStatus(StockStatus.PROCESSING.getCode());
 					}else {
@@ -917,12 +914,12 @@ public class StockServiceImpl {
 
 			}else {
 				logger.warn("Accept/reject of Stock not allowed to you.");
-				
+
 				Map<String, String> bodyPlaceHolderMap = new HashMap<>();
 				bodyPlaceHolderMap.put("<feature>", featureName);
 				bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.ACCEPT_REJECT);
 				alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, 0, bodyPlaceHolderMap);
-				
+
 				new GenricResponse(1, "Operation not Allowed", consignmentUpdateRequest.getTxnId());
 			}
 
@@ -982,7 +979,7 @@ public class StockServiceImpl {
 		}
 
 	}
-	
+
 	@PostConstruct
 	public void setFeatureName() {
 		featureName = stakeholderfeatureServiceImpl.getFeatureNameById(4L);
