@@ -66,9 +66,12 @@
 
 <link rel="stylesheet"
 	href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
-<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script> <script
-	src="http://malsup.github.io/jquery.blockUI.js"></script> <script
-	src="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json"></script> <!------------------------------------------- Dragable Model---------------------------------->
+<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+ <script
+	src="http://malsup.github.io/jquery.blockUI.js"></script>
+<script
+	src="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json"></script>
+	 <!------------------------------------------- Dragable Model---------------------------------->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> <script
 	src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <script type="text/javascript">

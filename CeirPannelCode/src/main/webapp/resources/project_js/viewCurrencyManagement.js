@@ -12,21 +12,9 @@
 		var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 
 
-		$.i18n().locale = lang;	
 		
-		$.i18n().load( {
-			'en': '../resources/i18n/en.json',
-			'km': '../resources/i18n/km.json'
-		} ).done( function() { 
-			rejectedMsg=$.i18n('rejectedMsg');
-			consignmentApproved=$.i18n('consignmentApproved');
-			errorMsg=$.i18n('errorMsg');
-			havingTxnID=$.i18n('havingTxnID');
-			updateMsg=$.i18n('updateMsg');
-			hasBeenUpdated=$.i18n('hasBeenUpdated');
-			consignmentDeleted=$.i18n('consignmentDeleted');
-			deleteInProgress=$.i18n('deleteInProgress');
-		});
+		
+		
 
          $(window).load(function(){
 			$('div#initialloader').fadeIn('fast');
@@ -196,7 +184,13 @@
 	
 		$.getJSON('./getDropdownList/Year', function(data) {
 			for (i = 0; i < data.length; i++) {
-				$('<option>').val(data[i].value).text(data[i].interp).appendTo('#year');
+				$('<option>').val(data[i].value).text(data[i].interp).appendTo('#year,#addYear,#editYear');
+			}
+		});
+		
+		$.getJSON('./getDropdownList/Month', function(data) {
+			for (i = 0; i < data.length; i++) {
+				$('<option>').val(data[i].value).text(data[i].interp).appendTo('#addMonth,#editMonth');
 			}
 		});
 	}
@@ -215,7 +209,9 @@
 	function submitPort(){
 		
 		var request={
-				"monthDate":   $('#month').val(),
+				
+				"month" : $('#addMonth').val(),
+				"year" : $('#addYear').val(),
 				"currency": $('#currency').val(),
 				"riel":   parseFloat($('#cambodianRiel').val()),
 				"dollar": parseFloat($('#dollar').val()),
@@ -234,16 +230,33 @@
 			contentType : 'application/json; charset=utf-8',
 			type : 'POST',
 			success : function(data, textStatus, jqXHR) {
-					console.log(JSON.stringify(data));
 					$("#confirmField").openModal({
 				        dismissible:false
 				    });
-					$('#sucessMessage').text(data.message);
+					$.i18n().locale = lang;	
+					$.i18n().load( {
+						'en': './resources/i18n/en.json',
+						'km': './resources/i18n/km.json'
+					} ).done( function() { 
+						if(data.errorCode==200){
+							$('#sucessMessage').text('');
+							$('#sucessMessage').text($.i18n('Curr_Save_Sucess'));
+						}else if(data.errorCode==3){
+							$('#sucessMessage').text('');
+							$('#sucessMessage').text($.i18n('Curr_Already_Exist'));
+						}else if(data.errorCode==1){
+							$('#sucessMessage').text('');
+							$('#sucessMessage').text($.i18n('Curr_Year_Null'));
+						}else if(data.errorCode==2){
+							$('#sucessMessage').text('');
+							$('#sucessMessage').text($.i18n('Curr_Month_Null'));
+						}else if(data.errorCode==500){
+							$('#sucessMessage').text('');
+							$('#sucessMessage').text($.i18n('Curr_Save_Fail'));
+						}
+					});
 					
-					/*if(data.errorCode==200){
-						$('#sucessMessage').text('');
-						$('#sucessMessage').text($.i18n('Curr_Save_Sucess'));
-						}*/	
+				
 			},
 			error : function(jqXHR, textStatus, errorThrown) {
 				console.log("error in ajax")
@@ -292,12 +305,15 @@
 	
 	
 	function currencyEditPopupData(result){
-		$("#editMonth").val(result.monthDate);
+		$("#editId").val(result.id);
+		$("#editMonth").val(result.month);
+		$("#editYear").val(result.year);
 		$("#editCurrency").val(result.currency);
 		$("#editCambodianRiel").val(result.riel);
 		$("#editDollar").val(result.dollar);
 		
 		$("label[for='editMonth']").addClass('active');
+		$("label[for='editYear']").addClass('active');
 		$("label[for='editCurrency']").addClass('active');
 		$("label[for='editCambodianRiel']").addClass('active');
 		$("label[for='editDollar']").addClass('active');
@@ -308,10 +324,11 @@
 	
 	
 	function updateCurrency(){
-	
+		
 		var request ={ 
 				"id" : parseInt($("#editId").val()),
-				"monthDate":   $('#editMonth').val(),
+				"month" : $('#editMonth').val(),
+				"year" : $('#editYear').val(),
 				"currency": $('#editCurrency').val(),
 				"riel":   parseFloat($('#editCambodianRiel').val()),
 				"dollar": parseFloat($('#editDollar').val()),
@@ -330,13 +347,33 @@
 			dataType : 'json',
 			contentType : 'application/json; charset=utf-8',
 			success: function (data, textStatus, jqXHR) {
-			
-				console.log("Updated data---->" +data)
 				$("#editCurrencyModal").closeModal();	
 				$("#updateFieldsSuccess").openModal({
 			        dismissible:false
 			    });
-				$('#updateFieldMessage').text(data.message);
+				$.i18n().locale = lang;	
+				$.i18n().load( {
+					'en': './resources/i18n/en.json',
+					'km': './resources/i18n/km.json'
+				} ).done( function() { 
+					if(data.errorCode==200){
+						$('#updateFieldMessage').text('');
+						$('#updateFieldMessage').text($.i18n('Curr_Update_Sucess'));
+					}else if(data.errorCode==1){
+						$('#updateFieldMessage').text('');
+						$('#updateFieldMessage').text($.i18n('Curr_Year_Null'));
+					}else if(data.errorCode==2){
+						$('#updateFieldMessage').text('');
+						$('#updateFieldMessage').text($.i18n('Curr_Month_Null'));
+					}else if(data.errorCode==3){
+						$('#updateFieldMessage').text('');
+						$('#updateFieldMessage').text($.i18n('Curr_Already_Exist'));
+					}else if(data.errorCode==500){
+						$('#updateFieldMessage').text('');
+						$('#updateFieldMessage').text($.i18n('Curr_Update_Fail'));
+					}
+
+				});
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
 				console.log("error in ajax")
@@ -348,42 +385,5 @@
 
 	
 	
-  /*------------------------------------ Delete Field -----------------------------------*/
-	
-	
-	function DeleteCurrency(id){
-		$("#DeleteFieldModal").openModal({
-	        dismissible:false
-	    });
-		$("#deletePortId").val(id);
-		
-	}	
-	
-	
-	
-	function confirmantiondelete(){
-		
-		var id  = parseInt($("#deletePortId").val());
-		
-		console.log(JSON.stringify(id));
-		$.ajax({
-			url : './deletePort/'+id,
-//			data : JSON.stringify(request),
-			dataType : 'json',
-			contentType : 'application/json; charset=utf-8',
-			type : 'POST',
-			success : function(data, textStatus, xhr) {
-				console.log(data);
-				$("#DeleteFieldModal").closeModal();
-				$("#closeDeleteModal").openModal({
-			        dismissible:false
-			    });
-				
-				$("#materialize-lean-overlay-3").css("display","none");
-			},
-			error : function() {
-				console.log("Error");
-			}
-		});
-	}
+
 	

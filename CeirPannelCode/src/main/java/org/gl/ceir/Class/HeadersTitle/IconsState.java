@@ -911,7 +911,8 @@ public class IconsState {
 								featureID == 11 ? "./manageTypeDevices?txnID="+txnID+"":
 									featureID == 12 ? "./uploadPaidStatus?via=other&txnID="+txnID+"" :
 										featureID == 21 ? "./manageTypeDevices2?txnID="+txnID+"" :
-										"JavaScript:void(0);";
+											featureID == 43 ? "./updateVisa?txnID="+txnID+"" :
+											"JavaScript:void(0);";
 		//System.out.println("featureID::::::::::"+featureID);
 		// state related Code
 		String view=null;
@@ -2557,7 +2558,7 @@ public class IconsState {
 	/********************************** Icons for Admin Visa Update Datatable **********************************/ 
 
 
-	public String visaUpdateAdminIcons(String status,String id,Integer endUserId,String txnid) {	
+	public String visaUpdateAdminIcons(String status,String id,Integer endUserId,String txnid, String userStatus) {	
 		executePostConstruct();
 		String viewAction="viewDetails('"+id+"','"+endUserId+"')";
 
@@ -2579,7 +2580,23 @@ public class IconsState {
 		String reject = "<a onclick="+rejectAction+"><i class="+rejectIcon+" aria-hidden=\"true\" title="
 				+rejectIconTitle+" ></i></a>";
 
-
+		
+		
+		if("6".equals(status) && "Approved".equals(userStatus)){
+			approve = "<a onclick="+approveAction+" class=\"eventNone\"><i class="+disableApproveIcon+" aria-hidden=\"true\" title="
+					+approveIconTitle+" ></i></a>";
+		}else if("7".equals(status) && "Approved".equals(userStatus)){
+			reject = "<a onclick="+rejectAction+" class=\"eventNone\"><i class="+disableRejectIcon+" aria-hidden=\"true\" title="
+					+rejectIconTitle+" ></i></a>";
+		}
+		
+		if("Disable".equals(userStatus)) {
+			log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
+			approve = "<a onclick="+approveAction+" class=\"eventNone\"><i class="+disableApproveIcon+" aria-hidden=\"true\" title="
+					+approveIconTitle+" ></i></a>";
+			reject = "<a onclick="+rejectAction+" class=\"eventNone\"><i class="+disableRejectIcon+" aria-hidden=\"true\" title="
+					+rejectIconTitle+" ></i></a>";
+		}
 
 		String action = view.concat(approve).concat(reject).concat(history);
 		return action;

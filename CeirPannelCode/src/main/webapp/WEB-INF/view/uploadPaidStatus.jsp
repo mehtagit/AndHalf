@@ -630,11 +630,11 @@ input[type='search'] {
 
 														<div class="col s12 m6">
 															<label for="country1"><spring:message code="select.countryBoughtFrom" /> <span
-																class="star">*</span></label> <select id="country1"
+																class="star"></span></label> <select id="country1"
 																class="browser-default" class="mySelect"
 																oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 											        oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-																title= "<spring:message code="validation.selectFieldMsg" />" style="padding-left: 0;" required></select>
+																title= "<spring:message code="validation.selectFieldMsg" />" style="padding-left: 0;"></select>
 														</div>
 
 														<div class="input-field col s12 m6"
@@ -643,8 +643,8 @@ input[type='search'] {
 																pattern="[A-Za-z0-9]{0,15}"
 																oninput="InvalidMsg(this,'input','<spring:message code="validation.15serialNo" />');"
 											            oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15serialNo" />');"
-																title= "<spring:message code="validation.15serialNo" />"required
-																maxlength="15"> <label for="serialNumber1"> <spring:message code="input.deviceSerialNumber" /> <span class="star">*</span>
+																title= "<spring:message code="validation.15serialNo" />"
+																maxlength="15"> <label for="serialNumber1"> <spring:message code="input.deviceSerialNumber" /> <span class="star"></span>
 															</label>
 														</div>
 

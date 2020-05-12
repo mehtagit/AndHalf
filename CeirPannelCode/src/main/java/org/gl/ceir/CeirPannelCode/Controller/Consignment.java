@@ -16,8 +16,10 @@ import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.ListIterator;
@@ -299,6 +301,8 @@ public @ResponseBody GenricResponse openconsignmentRecordPage(@RequestParam(name
 @RequestParam(name="roleType",required = false) String roleType) 
 {
 ConsignmentModel consignment = new ConsignmentModel();
+String movedFileTime = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
+log.info("Moved File Time value=="+movedFileTime);
 
 String userName=session.getAttribute("username").toString();
 String userId= session.getAttribute("userid").toString();
@@ -347,10 +351,10 @@ if(exists) {
 
 Path temp = Files.move 
 (Paths.get(urlToUpload.getValue()+"/"+txnId+"/"+file.getOriginalFilename()), 
-Paths.get(urlToMove.getValue()+file.getOriginalFilename())); 
-String movedPath=urlToMove.getValue()+file.getOriginalFilename();	
+Paths.get(urlToMove.getValue()+movedFileTime+"_"+file.getOriginalFilename())); 
+String movedPath=urlToMove.getValue()+movedFileTime+"_"+file.getOriginalFilename();	
 
-log.info("file is already exist, moved to this "+movedPath+" path. ");
+log.info("file is already exist, moved to this "+movedFileTime+"_"+movedPath+" path. ");
 tmpDir.delete();
 }
 byte[] bytes = file.getBytes();

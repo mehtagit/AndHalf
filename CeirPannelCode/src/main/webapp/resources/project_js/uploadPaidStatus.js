@@ -1568,7 +1568,7 @@ $(document).on("keyup", "#Price1", function(e) {
 					 orderCellsTop : true,
 					"ordering" : false,
 					"bPaginate" : true,
-					"bFilter" : true,
+					"bFilter" : false,
 					"scrollX": true,
 					"bInfo" : true,
 					"bSearchable" : true,

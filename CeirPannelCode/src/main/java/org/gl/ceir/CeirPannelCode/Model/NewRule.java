@@ -12,6 +12,46 @@ public class NewRule {
 	private Integer ruleOrder;
 	private String userType;
 	private String output;
+
+	public String userName;
+
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	public Long getUserId() {
+		return userId;
+	}
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+	public Integer getFeatureId() {
+		return featureId;
+	}
+	public void setFeatureId(Integer featureId) {
+		this.featureId = featureId;
+	}
+	public Integer getUserTypeId() {
+		return userTypeId;
+	}
+	public void setUserTypeId(Integer userTypeId) {
+		this.userTypeId = userTypeId;
+	}
+	public String getRoleType() {
+		return roleType;
+	}
+	public void setRoleType(String roleType) {
+		this.roleType = roleType;
+	}
+	private Long userId;
+	private Integer featureId;
+
+	private Integer userTypeId;
+
+	private String roleType;
+
 	public String getOutput() {
 		return output;
 	}
@@ -50,6 +90,16 @@ public class NewRule {
 		builder.append(userType);
 		builder.append(", output=");
 		builder.append(output);
+		builder.append(", userName=");
+		builder.append(userName);
+		builder.append(", userId=");
+		builder.append(userId);
+		builder.append(", featureId=");
+		builder.append(featureId);
+		builder.append(", userTypeId=");
+		builder.append(userTypeId);
+		builder.append(", roleType=");
+		builder.append(roleType);
 		builder.append("]");
 		return builder.toString();
 	}

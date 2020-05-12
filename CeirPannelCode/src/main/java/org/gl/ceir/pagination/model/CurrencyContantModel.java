@@ -1,8 +1,5 @@
 package org.gl.ceir.pagination.model;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.stereotype.Component;
 
 @Component
@@ -18,6 +15,7 @@ public class CurrencyContantModel {
 	private String currencyInterp;
 	private String month;
 	private String year;
+	private String monthInterp;
 	public Integer getId() {
 		return id;
 	}
@@ -78,6 +76,12 @@ public class CurrencyContantModel {
 	public void setYear(String year) {
 		this.year = year;
 	}
+	public String getMonthInterp() {
+		return monthInterp;
+	}
+	public void setMonthInterp(String monthInterp) {
+		this.monthInterp = monthInterp;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -101,9 +105,14 @@ public class CurrencyContantModel {
 		builder.append(month);
 		builder.append(", year=");
 		builder.append(year);
+		builder.append(", monthInterp=");
+		builder.append(monthInterp);
 		builder.append("]");
 		return builder.toString();
 	}
+
+	
+
 	
 		
 }
