@@ -45,8 +45,8 @@ public class TacApiConsumer {
 
 		try {
 			String result = "";
-			// String uri = propertyReader.getPropValue("api.tac.approve_reject");
-			String uri = "http://172.24.2.66:9502/CEIR/TypeApproved/approveReject";
+			String uri = propertyReader.getPropValue("api.tac.approve_reject");
+			// String uri = "http://172.24.2.66:9502/CEIR/TypeApproved/approveReject";
 			TacApproveRequest tacApproveRequest = new TacApproveRequest(txnId, status);
 			String body = gson.toJson(tacApproveRequest, TacApproveRequest.class);
 			
