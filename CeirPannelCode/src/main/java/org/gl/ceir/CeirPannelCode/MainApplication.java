@@ -7,16 +7,14 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.FilterType;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.annotation.PropertySources;
 @EnableFeignClients
 @EnableAutoConfiguration
 @SpringBootConfiguration 
 @ComponentScan(basePackages ="org.gl.ceir")
 /* @PropertySource("classpath:application_Production.properties") */
 /* @PropertySource("classpath:ApplicationTestServer.properties") */ 
-   @PropertySource("classpath:awsConfiguration.properties") 
+ @PropertySource("classpath:awsConfiguration.properties")  
 public class MainApplication extends SpringBootServletInitializer
 {
 	@Override

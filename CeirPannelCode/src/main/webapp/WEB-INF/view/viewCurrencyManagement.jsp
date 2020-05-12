@@ -73,6 +73,7 @@
 <script src="http://malsup.github.io/jquery.blockUI.js"></script>
 <script src="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json"></script>
 
+
 <!------------------------------------------- Dragable Model---------------------------------->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script
@@ -134,7 +135,7 @@
           	<form action="" onsubmit="return submitPort()" method="post" >
                 <div class="row" style="margin-top: 10px;">
 					
-					<div class="input-field col s12 m6" style="margin-top: 22px;">
+					<!-- <div class="input-field col s12 m6" style="margin-top: 22px;">
 						<input type="text" name="month"
 						id='month' class='form-control datepick'
 						autocomplete='off'  required /> 
@@ -142,18 +143,35 @@
 						</label> <span class="input-group-addon" style="color: #ff4081"><i
 												class="fa fa-calendar" aria-hidden="true"></i></span>
 					
-					</div>
-					
+					</div> -->
 					<div class="col s12 m6">
-					<label for="port" class="active">Currency<span class="star">*</span></label>
-                     	 <select class="browser-default" id="currency" style="margin-bottom: 5px;" required="required">
-                                <option value=""  selected="" disabled>Select Currency</option>
+					<label for="port" class="active">Month<span class="star"> *</span></label>
+                     	 <select class="browser-default" id="addMonth" required="required">
+                                <option value="" selected >Select Month</option>
                           </select>
                         
                          <input type="text" id="id" hidden>
                     </div>
 					
-					<div class="input-field col s12 m6">
+					<div class="col s12 m6">
+					<label for="port" class="active">Year<span class="star"> *</span></label>
+                     	 <select class="browser-default" id="addYear" required="required">
+                                <option value="" selected>Select Year</option>
+                          </select>
+                        
+                         <input type="text" id="id" hidden>
+                    </div>
+					
+					<div class="col s12 m6">
+					<label for="port" class="active">Currency<span class="star"> *</span></label>
+                     	 <select class="browser-default" id="currency" required="required">
+                                <option value=""  selected>Select Currency</option>
+                          </select>
+                        
+                         <input type="text" id="id" hidden>
+                    </div>
+					
+					<div class="input-field col s12 m6" style="margin-top: 22px;">
                         <input type="number" id="cambodianRiel" name=""  pattern="[0-9]" title="Please enter numeric numbers"  maxlength="" required="required">
                         <label for="cambodianRiel" class="">Cambodian Riel <span class="star"> *</span></label>
                     </div>
@@ -179,33 +197,39 @@
           	<form action="" onsubmit="return updateCurrency()" method="post" >
                 <div class="row" style="margin-top: 10px;">
 					
-					<div class="input-field col s12 m6" style="margin-top: 22px;">
-						<input type="text" name="month"
-						id='editMonth' class='form-control datepick'
-						autocomplete='off'  required disabled="disabled" /> 
-						<label for="editMonth" class="center-align">Month <span class="star">*</span>
-						</label> <span class="input-group-addon" style="color: #ff4081"><i
-												class="fa fa-calendar" aria-hidden="true"></i></span>
-					
-					</div>
-					
 					<div class="col s12 m6">
-					<label for="port" class="active">Currency<span class="star">*</span></label>
-                     	 <select class="browser-default" id="editCurrency" style="margin-bottom: 5px;" required="required">
-                                <option value=""  selected="" disabled>Select Currency</option>
+					<label for="port" class="active">Month<span class="star"> *</span></label>
+                     	 <select class="browser-default"  id="editMonth" required="required"  disabled>
+                                <option value="" selected>Select Month</option>
                           </select>
                         
                          <input type="text" id="editId" hidden>
                     </div>
 					
-					<div class="input-field col s12 m6">
+					<div class="col s12 m6">
+					<label for="port" class="active">Year<span class="star"> *</span></label>
+                     	 <select class="browser-default" id="editYear" required="required" disabled>
+                                <option value=""  selected>Select Year</option>
+                          </select>
+                    </div>
+					
+					<div class="col s12 m6">
+					<label for="editCurrency" class="active">Currency<span class="star"> *</span></label>
+                     	 <select class="browser-default" id="editCurrency" required="required">
+                                <option value=""  selected>Select Currency</option>
+                          </select>
+                        
+                         <input type="text" id="id" hidden>
+                    </div>
+					
+					<div class="input-field col s12 m6" style="margin-top: 23px;">
                         <input type="number" id="editCambodianRiel" name=""  pattern="[0-9]{8,8}" title="Please enter numeric numbers"  maxlength="" required="required">
                         <label for="editCambodianRiel" class="">Cambodian Riel <span class="star"> *</span></label>
                     </div>
                     
                     <div class="input-field col s12 m6">
                         <input type="number" id="editDollar" name=""  pattern="[0-9]{8,8}" title="Please enter numeric numbers"  maxlength="" required="required">
-                        <label for="editDollar" class="">US Dollar <span class="star"> *</span></label>
+                        <label for="editDollar" class="">US Dollar <span class="star">  *</span></label>
                     </div>
 
 					 <div class="col s12 m12 center" style="margin-top: 20px;">

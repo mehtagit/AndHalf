@@ -6,6 +6,8 @@ import java.io.FileOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -280,6 +282,9 @@ else {
 	addMoreFileModel.setTag("uploaded_file_move_path");
 	urlToMove=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
 	
+	String movedFileTime = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
+	log.info("Moved File Time value=="+movedFileTime);
+
 	
 	String roleType=String.valueOf(session.getAttribute("usertype"));
 	String userName=session.getAttribute("username").toString();
@@ -310,9 +315,9 @@ else {
 	if(exists) {
 	Path temp = Files.move 
 	(Paths.get(urlToUpload.getValue()+"/"+txnId+"/"+file.getOriginalFilename()), 
-	Paths.get(urlToMove.getValue()+file.getOriginalFilename())); 
+	Paths.get(urlToMove.getValue()+movedFileTime+"_"+file.getOriginalFilename())); 
 
-	String movedPath=urlToMove.getValue()+file.getOriginalFilename();
+	String movedPath=urlToMove.getValue()+movedFileTime+"_"+file.getOriginalFilename();
 	// tmpDir.renameTo(new File("/home/ubuntu/apache-tomcat-9.0.4/webapps/MovedFile/"+txnId+"/"));
 	log.info("file is already exist moved to the this "+movedPath+" path");
 	tmpDir.delete();
