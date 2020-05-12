@@ -22,7 +22,8 @@ public class LoginResponse {
     private String tag;
 	private Integer statusValue;
 	private Integer selfRegister;
-    
+	private String defaultLink;
+	
 	public String getOperatorTypeName() {
 		return operatorTypeName;
 	}
@@ -126,6 +127,13 @@ public class LoginResponse {
 	public void setSelfRegister(Integer selfRegister) {
 		this.selfRegister = selfRegister;
 	}
+	
+	public String getDefaultLink() {
+		return defaultLink;
+	}
+	public void setDefaultLink(String defaultLink) {
+		this.defaultLink = defaultLink;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -161,6 +169,8 @@ public class LoginResponse {
 		builder.append(statusValue);
 		builder.append(", selfRegister=");
 		builder.append(selfRegister);
+		builder.append(", defaultLink=");
+		builder.append(defaultLink);
 		builder.append("]");
 		return builder.toString();
 	}
