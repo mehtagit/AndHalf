@@ -53,8 +53,6 @@ public class ParserMain {
 				if(my_result_set.next()){
 					raw_upload_set_no = my_result_set.getInt("raw_upload_set_no");
 				}
-
-	        	
 	        	basePath = hfr.getFilePath(conn,"mediation_ftp_path");
 	        	if(!basePath.endsWith("/")){
 	        		basePath+="/";
@@ -70,9 +68,7 @@ public class ParserMain {
 		    			for( int i = 0; i < remainFileList.size(); i++ ){
 				        	startTime = sdf.format( Calendar.getInstance().getTime() );
 				        	data = remainFileList.get(i)[0].split("_");				        	
-
 				        	if(true){
-
 				        		if( remainFileList.get(i)[1] != null ){
 				        			logger.info("first stage");
 							        logger.info("File Name is "+remainFileList.get(i)[0]);
@@ -114,9 +110,7 @@ public class ParserMain {
 	        		}
 	        	}catch( Exception ex ){}
 	        }
-	        
-		
-			
+	        	
 		}
 
 		    

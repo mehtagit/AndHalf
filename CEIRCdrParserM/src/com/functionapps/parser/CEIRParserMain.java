@@ -126,7 +126,7 @@ public class CEIRParserMain {
 
         String failed_rule_name = "";
         String failed_rule_id = "";
-        String action = "";
+        String finalAction = "";
 
         int parser_base_limit = 0;
         int old_sno = 0;
@@ -182,7 +182,7 @@ public class CEIRParserMain {
                 device_info.put("servedIMEI", rs.getString("IMEI"));
                 device_info.put("recordType", rs.getString("record_type"));
                 device_info.put("servedIMSI", rs.getString("IMSI"));
-                device_info.put("servedMSISDN", ( rs.getString("MSISDN").startsWith("19") ? rs.getString("MSISDN").substring(2) : rs.getString("MSISDN")  )    );
+                device_info.put("servedMSISDN", (rs.getString("MSISDN").startsWith("19") ? rs.getString("MSISDN").substring(2) : rs.getString("MSISDN")));
                 device_info.put("systemType", rs.getString("system_type"));
                 device_info.put("operator", rs.getString("operator"));
                 device_info.put("file_name", rs.getString("file_name"));
@@ -196,18 +196,18 @@ public class CEIRParserMain {
                             "operator", "file_name", "record_time", "type", "rule_id", "rule_name", "status", "time");
                 } else {
                     new LogWriter().writeEvents(myWriter, rs.getString("IMEI"),
-                            rs.getString("record_type"), rs.getString("IMSI"), ( rs.getString("MSISDN").startsWith("19") ? rs.getString("MSISDN").substring(2) : rs.getString("MSISDN")  ) ,
+                            rs.getString("record_type"), rs.getString("IMSI"), (rs.getString("MSISDN").startsWith("19") ? rs.getString("MSISDN").substring(2) : rs.getString("MSISDN")),
                             rs.getString("system_type"),
                             rs.getString("operator"), rs.getString("file_name"), rs.getString("record_time"), "Init", "", "", "", new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date()));
 
                 }
 
                 if (rs.getString("IMEI") == null || rs.getString("IMEI").equals("") || rs.getString("IMEI") == null) {
-                    output = checkDeviceNullDB(conn,  ( rs.getString("MSISDN").startsWith("19") ? rs.getString("MSISDN").substring(2) : rs.getString("MSISDN")  )      );
+                    output = checkDeviceNullDB(conn, (rs.getString("MSISDN").startsWith("19") ? rs.getString("MSISDN").substring(2) : rs.getString("MSISDN")));
                     if (output == 0) {
                         my_query = "insert into device_null_db (msisdn,imsi,create_filename,update_filename,"
                                 + "updated_on,created_on,record_type,system_type) "
-                                + "values('" + ( rs.getString("MSISDN").startsWith("19") ? rs.getString("MSISDN").substring(2) : rs.getString("MSISDN")  )  + "',"
+                                + "values('" + (rs.getString("MSISDN").startsWith("19") ? rs.getString("MSISDN").substring(2) : rs.getString("MSISDN")) + "',"
                                 + "'" + rs.getString("IMSI") + "',"
                                 + "'" + rs.getString("file_name") + "',"
                                 + "'" + rs.getString("file_name") + "',"
@@ -223,7 +223,7 @@ public class CEIRParserMain {
                                 //								+"',updated_on='"+rs.getString("record_time")+
                                 + "',updated_on=" + dateFunction
                                 + ""
-                                + " where msisdn='" + ( rs.getString("MSISDN").startsWith("19") ? rs.getString("MSISDN").substring(2) : rs.getString("MSISDN")  )  + "'";
+                                + " where msisdn='" + (rs.getString("MSISDN").startsWith("19") ? rs.getString("MSISDN").substring(2) : rs.getString("MSISDN")) + "'";
                         logger.info("need to update");
                     }
                 } else {
@@ -235,20 +235,29 @@ public class CEIRParserMain {
 //                        action = my_rule_detail.get("action");          
                         period = my_rule_detail.get("period");
                     }
-                    action = my_rule_detail.get("action");    // inside if cond. but fetch outside for everyuse
+//                    action = my_rule_detail.get("action");    // inside if cond. but fetch outside for everyuse
 //                    else {
 //                        failed_rule_name = "";
 //                        failed_rule_id = "";
 //                        action = "";
 //                        period = "";
 //                    }
-                    output = checkDeviceUsageDB(conn, rs.getString("IMEI"), ( rs.getString("MSISDN").startsWith("19") ? rs.getString("MSISDN").substring(2) : rs.getString("MSISDN")  )   );
+
+                    if (failed_rule_id == null) {
+                        finalAction = "ALLOWED";
+                    }else if (period.equalsIgnoreCase("Grace")) {
+                        finalAction = "SYS_REG";
+                    }else if (period.equalsIgnoreCase("Post_ Grace")) {
+                        finalAction = "USER_REG";
+                    }
+
+                    output = checkDeviceUsageDB(conn, rs.getString("IMEI"), (rs.getString("MSISDN").startsWith("19") ? rs.getString("MSISDN").substring(2) : rs.getString("MSISDN")));
                     if (output == 0) {                                         // imei not found in usagedb
                         my_query = "insert into device_usage_db (imei,msisdn,imsi,create_filename,update_filename,"
                                 + "updated_on,created_on,system_type,failed_rule_id,failed_rule_name,tac,period,action "
                                 + " , mobile_operator , record_type , failed_rule_date,  modified_on ) "
                                 + "values('" + rs.getString("IMEI") + "',"
-                                + "'" + ( rs.getString("MSISDN").startsWith("19") ? rs.getString("MSISDN").substring(2) : rs.getString("MSISDN")  )  + "',"
+                                + "'" + (rs.getString("MSISDN").startsWith("19") ? rs.getString("MSISDN").substring(2) : rs.getString("MSISDN")) + "',"
                                 + "'" + rs.getString("IMSI") + "',"
                                 + "'" + rs.getString("file_name") + "',"
                                 + "'" + rs.getString("file_name") + "',"
@@ -261,7 +270,7 @@ public class CEIRParserMain {
                                 + "'" + failed_rule_name + "',"
                                 + "'" + rs.getString("IMEI").substring(0, 8) + "',"
                                 + "'" + period + "',"
-                                + "'" + action + "' , "
+                                + "'" + finalAction + "' , "
                                 + "'" + rs.getString("operator") + "' , "
                                 + "'" + rs.getString("record_type") + "' , "
                                 + "" + dateFunction + " , "
@@ -274,22 +283,22 @@ public class CEIRParserMain {
                                 + "update_filename = '" + rs.getString("file_name")
                                 //								+"', updated_on=TO_DATE('"+rs.getString("record_time")+"','yyyy/mm/dd hh24:mi:ss')"
                                 + "', updated_on=" + dateFunction + ""
-                                 + "', modified_on=" + dateFunction + ""
+                                + "', modified_on=" + dateFunction + ""
                                 + ", failed_rule_id='" + failed_rule_id
                                 + "', failed_rule_name='" + failed_rule_name
                                 + "',period='" + period
-                                + "',action='" + action
+                                + "',action='" + finalAction
                                 + "' where imei='" + rs.getString("IMEI") + "'";
                         logger.info(" update into usage db " + my_query);
                     }
                     if (output == 2) {                                 // imei found with different msisdn
-                        output = checkDeviceDuplicateDB(conn, rs.getString("IMEI"),  ( rs.getString("MSISDN").startsWith("19") ? rs.getString("MSISDN").substring(2) : rs.getString("MSISDN")  )   );
+                        output = checkDeviceDuplicateDB(conn, rs.getString("IMEI"), (rs.getString("MSISDN").startsWith("19") ? rs.getString("MSISDN").substring(2) : rs.getString("MSISDN")));
                         if (output == 0) {
                             my_query = "insert into device_duplicate_db (imei,msisdn,imsi,create_filename,update_filename,"
                                     + "updated_on,created_on,system_type,failed_rule_id,failed_rule_name,tac,period,action  "
                                     + " , mobile_operator , record_type , failed_rule_date,  modified_on    ) "
                                     + "values('" + rs.getString("IMEI") + "',"
-                                    + "'" +  ( rs.getString("MSISDN").startsWith("19") ? rs.getString("MSISDN").substring(2) : rs.getString("MSISDN")  )     + "',"
+                                    + "'" + (rs.getString("MSISDN").startsWith("19") ? rs.getString("MSISDN").substring(2) : rs.getString("MSISDN")) + "',"
                                     + "'" + rs.getString("IMSI") + "',"
                                     + "'" + rs.getString("file_name") + "',"
                                     + "'" + rs.getString("file_name") + "',"
@@ -302,7 +311,7 @@ public class CEIRParserMain {
                                     + "'" + failed_rule_name + "',"
                                     + "'" + rs.getString("IMEI").substring(0, 8) + "',"
                                     + "'" + period + "',"
-                                    + "'" + action + "' , "
+                                    + "'" + finalAction + "' , "
                                     + "'" + rs.getString("operator") + "' , "
                                     + "'" + rs.getString("record_type") + "' , "
                                     + "" + dateFunction + " , "
@@ -314,12 +323,12 @@ public class CEIRParserMain {
                                     + "update_filename = '" + rs.getString("file_name")
                                     //									+"', updated_on=TO_DATE('"+rs.getString("record_time")+"','yyyy/mm/dd hh24:mi:ss')"
                                     + "', updated_on=" + dateFunction + ""
-                                     + "', modified_on=" + dateFunction + ""
+                                    + "', modified_on=" + dateFunction + ""
                                     + ", failed_rule_id='" + failed_rule_id
                                     + "', failed_rule_name='" + failed_rule_name
                                     + "',period='" + period
-                                    + "',action='" + action
-                                    + "' where msisdn='" +( rs.getString("MSISDN").startsWith("19") ? rs.getString("MSISDN").substring(2) : rs.getString("MSISDN")  )  + "' and imei='" + rs.getString("IMEI") + "'";
+                                    + "',action='" + finalAction
+                                    + "' where msisdn='" + (rs.getString("MSISDN").startsWith("19") ? rs.getString("MSISDN").substring(2) : rs.getString("MSISDN")) + "' and imei='" + rs.getString("IMEI") + "'";
                             logger.info("need to update duplicate DB" + my_query);
                         }
                     }

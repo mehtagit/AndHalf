@@ -82,6 +82,8 @@ public class HttpURLConnectionExample {
 	public static String sendPOST(String url, String body) throws IOException {
 		URL obj = new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+		con.setRequestProperty("Content-Type", "application/json");
+		con.setRequestProperty("Accept", "application/json");
 
 		con.setRequestMethod("POST");
 

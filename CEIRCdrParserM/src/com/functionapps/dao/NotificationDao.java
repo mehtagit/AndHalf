@@ -7,17 +7,21 @@ import java.sql.SQLException;
 import org.apache.log4j.Logger;
 
 import com.functionapps.pojo.Notification;
+import com.functionapps.util.Util;
 
 public class NotificationDao {
 	static Logger logger = Logger.getLogger(NotificationDao.class);
 	static String GENERIC_DATE_FORMAT = "dd-MM-yyyy";
 
 	public void insertNotification(Connection conn, Notification notification) {
+		boolean isOracle = conn.toString().contains("oracle");
+		String dateFunction = Util.defaultDate(isOracle);
+		
 		String query = "insert into notification ( channel_type, created_on, feature_id, feature_name, "
 				+ "message, modified_on, sub_feature, user_id, feature_txn_id, status, "
 				+ "retry_count, subject, refer_table, role_type, receiver_user_type" 
-				+ ") values (?,sysdate,?,?,?,sysdate,?,?,?,0,0,?,'USERS',?,?)";
-//notification_seq.nextVal,
+				+ ") values (?," + dateFunction + ",?,?,?," + dateFunction + ",?,?,?,0,0,?,'USERS',?,?)";
+		//notification_seq.nextVal,
 		System.out.println("Query [" + query + " ]");
 		logger.info("Add notification [ " + query + "]");
 

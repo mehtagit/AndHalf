@@ -144,7 +144,6 @@ public class CEIRFeatureFileParser {
 
     public static void addCDRInProfileWithRule(String operator, Connection conn, ArrayList<Rule> rulelist, String operator_tag, String txn_id, String sub_feature, String usertype_name) {
 
-        Statement stmt = null;
         try {
             if (((sub_feature.equalsIgnoreCase("Register") || sub_feature.equalsIgnoreCase("update") || sub_feature.equalsIgnoreCase("UPLOAD")) ) &&  !operator.equalsIgnoreCase("TYPE_APPROVED")    ) {
                logger.info(" NOTE.. ** NOT FOR TYPE APPROVE" );

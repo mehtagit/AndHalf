@@ -84,9 +84,11 @@ public class CEIRFeatureFileUploader {
                     }
                 } else {
                     logger.info("No File Found.. ");
-                    if (file_details.getString("feature").equalsIgnoreCase("TYPE_APPROVED") && (file_details.getString("sub_feature").equalsIgnoreCase("register") || file_details.getString("sub_feature").equalsIgnoreCase("register"))) {
+                    if (file_details.getString("feature").equalsIgnoreCase("TYPE_APPROVED") ) {
+                        logger.info("TYPE_APPROVED  with .. " + file_details.getString("sub_feature") );
                         ceirfunction.updateFeatureFileStatus(conn, file_details.getString("txn_id"), 2, file_details.getString("feature"), file_details.getString("sub_feature")); // update web_action_db    
                     } else {
+                        logger.info("NOT typeApprove   " ) ; 
                         FeatureForSingleStolenBlock featureForSingleStolenBlock = new FeatureForSingleStolenBlock();
                         featureForSingleStolenBlock.readFeatureWithoutFile(conn, file_details.getString("feature"), raw_upload_set_no, file_details.getString("txn_id"), file_details.getString("sub_feature"), feature_file_mapping.get("mgnt_table_db"), user_type);
                     }

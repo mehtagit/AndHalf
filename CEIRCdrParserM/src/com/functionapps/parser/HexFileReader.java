@@ -448,7 +448,6 @@ public class HexFileReader {
 
                             } else {
                                 logger.info("Column name not matched");
-
                             }
                         }
                         if (my_column_count == myfilelist.size()) {

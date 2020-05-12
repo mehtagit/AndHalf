@@ -1,5 +1,6 @@
 package com.functionapps.constants;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,12 +33,12 @@ public class PropertyReader {
 
 		try {
 			prop = new Properties();
-			String propFileName = "/config.properties";
+			String propFileName = "/home/ubuntu/CEIR/GSMA/ceir_parser/conf/config.properties";
 			
 			logger.info("Porperty File is ["+propFileName+"]");
 			
-			inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
-
+			// inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
+			inputStream = new FileInputStream(propFileName);
 			if (inputStream != null) {
 				prop.load(inputStream);
 			} else {
