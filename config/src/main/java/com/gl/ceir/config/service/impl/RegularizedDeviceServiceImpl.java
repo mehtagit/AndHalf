@@ -182,11 +182,7 @@ public class RegularizedDeviceServiceImpl {
 
 			if(filterRequest.getTaxPaidStatus() != TaxStatus.BLOCKED.getCode()) {
 				// TODO
-
 			}
-
-			
-
 			stateList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
 			logger.info(stateList);
 			logger.info("dialect : " + propertiesReader.dialect);
@@ -634,7 +630,6 @@ public class RegularizedDeviceServiceImpl {
 	            	return new GenricResponse(1, "First imei is incorrect", "");            	
 	            }
 				endUserDB = endUserDbRepository.getByNid(regularizeDeviceDb.getNid());
-
 				placeholders.put("<Txn id>", regularizeDeviceDb.getTxnId());
 				placeholders.put("<First name>", endUserDB.getFirstName());
 
@@ -687,6 +682,8 @@ public class RegularizedDeviceServiceImpl {
 					}
 					
 				}
+				auditTrailRepository.save(new AuditTrail(userId, username, userTypeId,
+						ceirActionRequest.getUserType(), 12,Features.REGISTER_DEVICE, subFeature, "", txnId));
 			}
 			else if("CEIRSYSTEM".equalsIgnoreCase(ceirActionRequest.getUserType())){
 				regularizeDeviceDb=regularizedDeviceDbRepository.getByTxnId(ceirActionRequest.getTxnId());
@@ -788,8 +785,6 @@ if(Objects.nonNull(regularizeOutput))
 				subFeature="";
 				return new GenricResponse(1, "You are not allowed to do this operation.", "");
 			}
-			auditTrailRepository.save(new AuditTrail(userId, username, userTypeId,
-					ceirActionRequest.getUserType(), 12,Features.REGISTER_DEVICE, subFeature, "", txnId));
 			return new GenricResponse(0, "Device Update SuccessFully.", ceirActionRequest.getTxnId());
 
 		} catch (Exception e) {

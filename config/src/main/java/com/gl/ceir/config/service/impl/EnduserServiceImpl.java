@@ -852,6 +852,9 @@ public class EnduserServiceImpl {
 						emailUtil.saveNotification(rawMails);	
 					}
 					}
+				auditTrailRepository.save(new AuditTrail(userId, username, userTypeId,
+						ceirActionRequest.getUserType(), 43,Features.UPDATE_VISA, sufeature, "", txnId));
+
 			}
 			else if("CEIRSYSTEM".equalsIgnoreCase(ceirActionRequest.getUserType())){
 				visaDb=visaUpdateRepo.getByTxnId(ceirActionRequest.getTxnId());
@@ -951,21 +954,14 @@ public class EnduserServiceImpl {
 
 					}
 				}else {
-					txnId = "0";
-					userId=0;
 					return new GenricResponse(2, "unknown operation", "");
 
 
 				}
 			}
 			else {
-				userTypeId=0;
-				txnId = "0";
-				userId=0;
 				return new GenricResponse(1, "You are not allowed to do this operation.", "");
 			}
-			auditTrailRepository.save(new AuditTrail(userId, username, userTypeId,
-					ceirActionRequest.getUserType(), 43,Features.UPDATE_VISA, sufeature, "", txnId));
 
 
 			return new GenricResponse(0, "Visa Update SuccessFully.", ceirActionRequest.getTxnId());
