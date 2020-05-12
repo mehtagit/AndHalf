@@ -411,7 +411,7 @@ public class EnduserServiceImpl {
 					//					VisaDb visaDb = visaDbs.get(visaDbs.size() - 1);
 					//					visaDb.setVisaExpiryDate(latestVisa.getVisaExpiryDate());	
 
-					VisaDb OldVisa=visaDbs.get(0);
+					VisaDb OldVisa=visaDbs.get(0); 	
 					VisaUpdateDb visaUpdateDb=new VisaUpdateDb(OldVisa.getVisaType(), OldVisa.getVisaNumber(),
 							latestVisa.getVisaFileName(), OldVisa.getEntryDateInCountry(), latestVisa.getVisaExpiryDate(),
 							0,endUserDB1.getId(),endUserDB.getTxnId(),endUserDB.getNid()); 
@@ -420,7 +420,7 @@ public class EnduserServiceImpl {
 					Map<String, String> placeholderMap = new HashMap<String, String>();
 					placeholderMap.put("<First name>", endUserDB1.getFirstName());
 					placeholderMap.put("<txn_id>", endUserDB1.getTxnId());
-					rawMails.add(new RawMail(mailTag, endUserDB1.getId(), Long.valueOf(12), 
+					rawMails.add(new RawMail(mailTag, endUserDB1.getId(), Long.valueOf(43), 
 							Features.UPDATE_VISA, SubFeatures.REQUEST, endUserDB1.getTxnId(), 
 							endUserDB1.getTxnId(), placeholderMap, ReferTable.END_USER, null, "End User"));
 					emailUtil.saveNotification(rawMails);
@@ -832,7 +832,7 @@ public class EnduserServiceImpl {
 					if(Objects.nonNull(endUserDB.getEmail()) && !endUserDB.getEmail().isEmpty()) {
 						rawMails.add(new RawMail(tag, 
 								endUserDB.getId(), 
-								4, 
+								43, 
 								Features.UPDATE_VISA, 
 								sufeature, 
 								endUserDB.getTxnId(), 
@@ -884,7 +884,7 @@ public class EnduserServiceImpl {
 						if(Objects.nonNull(endUserDB.getEmail()) && !endUserDB.getEmail().isEmpty()) {
 							rawMails.add(new RawMail("Update_Visa_Approved_System", 
 									endUserDB.getId(), 
-									4, 
+									43, 
 									Features.UPDATE_VISA, 
 									SubFeatures.SYSTEM_ACCEPT, 
 									endUserDB.getTxnId(), 
@@ -899,7 +899,7 @@ public class EnduserServiceImpl {
 
 						rawMails.add(new RawMail("Update_Visa_Request_CEIRAdmin", 
 								userData.getId(), 
-								4, 
+								43, 
 								Features.UPDATE_VISA, 
 								SubFeatures.SYSTEM_ACCEPT, 
 								endUserDB.getTxnId(), 
@@ -924,7 +924,7 @@ public class EnduserServiceImpl {
 					if(Objects.nonNull(endUserDB.getEmail()) && !endUserDB.getEmail().isEmpty()) {
 						rawMails.add(new RawMail("Update_Visa_Reject_System", 
 								endUserDB.getId(), 
-								4, 
+								43, 
 								Features.UPDATE_VISA, 
 								SubFeatures.SYSTEM_REJECT, 
 								endUserDB.getTxnId(), 

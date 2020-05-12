@@ -138,9 +138,7 @@ public class RuleEngineMappingServiceImpl {
 		
 		
 		 if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
-			 cmsb.orSearch(new SearchCriteria("order", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
-			 cmsb.orSearch(new SearchCriteria("createdOn", filterRequest.getSearchString(), SearchOperation.EQUALITY, Datatype.DATE));
-			 cmsb.orSearch(new SearchCriteria("modifiedOn", filterRequest.getSearchString(), SearchOperation.EQUALITY, Datatype.DATE));		
+			 cmsb.orSearch(new SearchCriteria("ruleOrder", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));	
 		 }
 		return cmsb;
 	}
