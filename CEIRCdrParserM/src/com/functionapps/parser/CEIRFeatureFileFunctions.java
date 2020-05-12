@@ -223,7 +223,7 @@ public class CEIRFeatureFileFunctions {
                 stmt.close();
                 conn.commit();
             } catch (Exception e) {
-                logger.info("Error at updateFeatureManagementStatus.." + e);
+                logger.error("Error at updateFeatureManagementStatus.." + e);
             }
         }
 
@@ -294,7 +294,7 @@ public class CEIRFeatureFileFunctions {
         }
         if (feature.equalsIgnoreCase("stock")) {
             apiURI = "stock_api_URI";
-            responseBody = "{  \"action\": " + Action + " ,  \"remarks\":\"0Accept\",  \"roleType\": \"CEIRSystem\",  \"txnId\": \"" + txn_id + "\"  ,\"featureId\" : 6 }";
+            responseBody = "{  \"action\": " + Action + " ,  \"remarks\":\"0Accept\",  \"roleType\": \"CEIRSystem\",  \"txnId\": \"" + txn_id + "\"  ,\"featureId\" : 4 }";
         }
         if (feature.equalsIgnoreCase("consignment")) {
             apiURI = "mail_api_path";

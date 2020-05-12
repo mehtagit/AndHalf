@@ -330,7 +330,6 @@ public class FeatureForSingleStolenBlock {
             }
             if (map.get("imei_esn_meid") == null) {
                 logger.info(" Action for Null IMEI Started.......");
-
                 String imei = getImeiWithMsisdn(conn, map);
                 logger.info("GETTED IMEI is " + imei);
                 map.put("imei_esn_meid", imei);

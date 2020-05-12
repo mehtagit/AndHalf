@@ -3,10 +3,8 @@ package com.functionapps.parser;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.HashMap;
-
+import com.functionapps.util.Util;
 import java.io.File;
-import java.sql.SQLException;
-import java.util.logging.Level;
 import org.apache.log4j.Logger;
 
 public class CEIRFeatureFileUploader {
@@ -17,12 +15,13 @@ public class CEIRFeatureFileUploader {
         logger.info(" ");
         logger.info(" ");
         logger.info(" CEIRFeatureFileUploader.class ");
-           HexFileReader hfr = new HexFileReader();
+        HexFileReader hfr = new HexFileReader();
         String basePath = "";
         String complete_file_path = "";
         CEIRParserMain ceir_parser_main = new CEIRParserMain();
         int raw_upload_set_no = 1;
         String[] rawDataResult = null;
+        HashMap<String, String> feature_file_management = new HashMap<String, String>();
         Connection conn = new com.functionapps.db.MySQLConnection().getConnection();
         CEIRFeatureFileFunctions ceirfunction = new CEIRFeatureFileFunctions();
         HashMap<String, String> feature_file_mapping = new HashMap<String, String>();
@@ -32,24 +31,22 @@ public class CEIRFeatureFileUploader {
             while (file_details.next()) {
 //                feature = file_details.getString("feature").replaceAll("\\s", "");
                 logger.info("  FEATURE.." + file_details.getString("feature"));   // add usertype name 
-                 if (file_details.getString("feature").equalsIgnoreCase("Register Device") || file_details.getString("feature").equalsIgnoreCase("Update Visa")) {
+                if (file_details.getString("feature").equalsIgnoreCase("Register Device") || file_details.getString("feature").equalsIgnoreCase("Update Visa")) {
                     logger.info(" Feature  Register Device / Visa Update. Only Web action Db state Update");
                     ceirfunction.updateFeatureFileStatus(conn, file_details.getString("txn_id"), 1, file_details.getString("feature"), file_details.getString("sub_feature")); // update web_action_db           
                     ceirfunction.UpdateStatusViaApi(conn, file_details.getString("txn_id"), 0, file_details.getString("feature"));
                     ceirfunction.updateFeatureFileStatus(conn, file_details.getString("txn_id"), 2, file_details.getString("feature"), file_details.getString("sub_feature")); // update web_action_db           
                     break;
                 }
-                feature_file_mapping = ceirfunction.getFeatureMapping(conn, file_details.getString("feature"), "NOUSER");  //select * from feature_mapping_db
-                HashMap<String, String> feature_file_management = new HashMap<String, String>();
-                feature_file_management = ceirfunction.getFeatureFileManagement(conn, feature_file_mapping.get("mgnt_table_db"), file_details.getString("txn_id"));   //select * from " + management_db + " 
-                if (file_details.getString("sub_feature").equalsIgnoreCase("Register") && !(feature_file_management.get("modified_on").equals(feature_file_management.get("created_on")))) {
+                long diffTime = Util.timeDiff(feature_file_management.get("created_on"), feature_file_management.get("modified_on"));
+                logger.info("Time Difference .." + diffTime);
+                if ((file_details.getString("sub_feature").equalsIgnoreCase("Register") || file_details.getString("sub_feature").equalsIgnoreCase("UPLOAD")) && (diffTime != 0)) {
+                    logger.info("  It is Regsiter/Upload and different time" + feature_file_management.get("created_on") + " ||| " + feature_file_management.get("modified_on"));
                     ceirfunction.updateFeatureFileStatus(conn, file_details.getString("txn_id"), 4, file_details.getString("feature"), file_details.getString("sub_feature")); // update web_action_db           
-                    ceirfunction.UpdateStatusViaApi(conn, file_details.getString("txn_id"), 1,file_details.getString("feature"));
-                    ceirfunction.updateFeatureManagementStatus(conn, file_details.getString("txn_id"),  2, feature_file_mapping.get("mgnt_table_db"), file_details.getString("feature"));
-                   logger.info("  It is regsiter and different dates,, means it is modified  so we remove it");
                     break;
                 }
-               
+                feature_file_mapping = ceirfunction.getFeatureMapping(conn, file_details.getString("feature"), "NOUSER");  //select * from feature_mapping_db
+                feature_file_management = ceirfunction.getFeatureFileManagement(conn, feature_file_mapping.get("mgnt_table_db"), file_details.getString("txn_id"));   //select * from " + management_db + " 
                 String error_file_path = CEIRFeatureFileParser.getErrorFilePath(conn) + file_details.getString("txn_id") + "/" + file_details.getString("txn_id") + "_error.csv";
                 File errorfile = new File(error_file_path);
                 if (errorfile.exists()) {     // in case of update  ,, earlier file is remove
@@ -71,13 +68,11 @@ public class CEIRFeatureFileUploader {
                     if (my_result_set.next()) {
                         raw_upload_set_no = my_result_set.getInt("raw_upload_set_no");
                     }
-
                     basePath = hfr.getFilePath(conn, "system_upload_filepath");  // filePath
                     if (!basePath.endsWith("/")) {
                         basePath += "/";
                     }
                     logger.info(" file basePath " + basePath);
-
                     complete_file_path = basePath + file_details.getString("txn_id") + "/" + feature_file_management.get("file_name");
                     System.out.println("Complete file name " + complete_file_path);
                     logger.info("Complete file name is.... " + complete_file_path);
@@ -86,12 +81,12 @@ public class CEIRFeatureFileUploader {
                     }
                     if (file_details.getString("sub_feature").equalsIgnoreCase("register") || file_details.getString("sub_feature").equalsIgnoreCase("update") || file_details.getString("sub_feature").equalsIgnoreCase("upload")) {
                         logger.info("Sub State :.... " + file_details.getString("sub_feature") + " Only Web action State to be update ");
-                       rawDataResult = hfr.readConvertedFeatureFile(conn, feature_file_management.get("file_name"), complete_file_path, file_details.getString("feature"), basePath, raw_upload_set_no, file_details.getString("txn_id"), file_details.getString("sub_feature"), feature_file_mapping.get("mgnt_table_db"), user_type);
+                        rawDataResult = hfr.readConvertedFeatureFile(conn, feature_file_management.get("file_name"), complete_file_path, file_details.getString("feature"), basePath, raw_upload_set_no, file_details.getString("txn_id"), file_details.getString("sub_feature"), feature_file_mapping.get("mgnt_table_db"), user_type);
                     }
                 } else {
                     logger.info("No File Found.. ");
                     if (file_details.getString("feature").equalsIgnoreCase("TYPE_APPROVED") && (file_details.getString("sub_feature").equalsIgnoreCase("register") || file_details.getString("sub_feature").equalsIgnoreCase("register"))) {
-                        ceirfunction.updateFeatureManagementStatus(conn, file_details.getString("txn_id"), 1, feature_file_mapping.get("mgnt_table_db"), file_details.getString("feature"));
+                        //         ceirfunction.updateFeatureManagementStatus(conn, file_details.getString("txn_id"), 1, feature_file_mapping.get("mgnt_table_db"), file_details.getString("feature"));
                         ceirfunction.updateFeatureFileStatus(conn, file_details.getString("txn_id"), 2, file_details.getString("feature"), file_details.getString("sub_feature")); // update web_action_db    
                     } else {
                         FeatureForSingleStolenBlock featureForSingleStolenBlock = new FeatureForSingleStolenBlock();
@@ -102,19 +97,20 @@ public class CEIRFeatureFileUploader {
             }
             raw_upload_set_no = 1;
         } catch (Exception e) {
-            logger.info("CEIRFileUploader  Finished with Exception [" + e + "]");
+            logger.error("CEIRFileUploader  Finished with Exception [" + e + "]");
             e.printStackTrace();
             try {
                 if (conn != null) {
                     conn.rollback();
                 }
             } catch (Exception ex) {
-                logger.info(" [" + ex + "]");
+                logger.error(" [" + ex + "]");
             } finally {
                 try {
                     conn.close();
-                } catch (SQLException ex) {
-                    java.util.logging.Logger.getLogger(CEIRFeatureFileUploader.class.getName()).log(Level.SEVERE, null, ex);
+                    System.exit(0);
+                } catch (Exception ex) {
+                    logger.error(" [ " + ex + "]");
                 }
             }
         }

@@ -9,8 +9,8 @@ import com.functionapps.parser.service.ApproveConsignment;
 import com.functionapps.parser.service.ConsignmentDelete;
 import com.functionapps.parser.service.ConsignmentInsertUpdate;
 import com.functionapps.parser.service.RegisterTac;
-import com.functionapps.parser.service.StockDelete;
 import com.functionapps.parser.service.WithdrawnTac;
+import com.functionapps.parser.service.StockDelete;
 import org.apache.log4j.Logger;
 
 public class CEIRFeatureFileParser {
@@ -30,7 +30,7 @@ public class CEIRFeatureFileParser {
 //		ResultSet featurers=getFeatureFileDetails(conn);
         try {
             if (featurers.next()) {
-                  ceirfunction.updateFeatureFileStatus(conn, featurers.getString("txn_id"), 3, featurers.getString("feature"), featurers.getString("sub_feature"));  // update web_action
+                ceirfunction.updateFeatureFileStatus(conn, featurers.getString("txn_id"), 3, featurers.getString("feature"), featurers.getString("sub_feature"));  // update web_action
                 if (featurers.getString("feature").equalsIgnoreCase("Register Device") || featurers.getString("feature").equalsIgnoreCase("Update Visa")) {
                     logger.info(" Feature  Register Device / Visa Update. ");
                     ceirfunction.UpdateStatusViaApi(conn, featurers.getString("txn_id"), 0, featurers.getString("feature"));
@@ -52,8 +52,9 @@ public class CEIRFeatureFileParser {
             }
             conn.close();
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
+        }finally{
+             System.exit(0);
         }
     }
 
@@ -146,7 +147,7 @@ public class CEIRFeatureFileParser {
 
         Statement stmt = null;
         try {
-            if ((sub_feature.equalsIgnoreCase("register") || sub_feature.equalsIgnoreCase("update") || sub_feature.equalsIgnoreCase("UPLOAD"))) {
+            if (((sub_feature.equalsIgnoreCase("register") || sub_feature.equalsIgnoreCase("update") || sub_feature.equalsIgnoreCase("UPLOAD")) ) &&  !operator.equalsIgnoreCase("TYPE_APPROVED")    ) {
                 new ConsignmentInsertUpdate().process(conn, operator, sub_feature, rulelist, txn_id, operator_tag, usertype_name);
             } else if (operator.equalsIgnoreCase("consignment") && (sub_feature.equalsIgnoreCase("delete"))) {
                 System.out.println("running consignment delete process.");
@@ -160,10 +161,10 @@ public class CEIRFeatureFileParser {
             } else if (operator.equalsIgnoreCase("TYPE_APPROVED") && (sub_feature.equalsIgnoreCase("delete"))) {
                 System.out.println("running tac delete process.");
                 new WithdrawnTac().process(conn, operator, sub_feature, rulelist, txn_id, operator_tag, usertype_name);
-            }else if(operator.equalsIgnoreCase("STOCK") &&(sub_feature.equalsIgnoreCase("DELETE"))){
-				System.out.println("running stock delete process.");
-				new StockDelete().process(conn, operator, sub_feature, rulelist, txn_id, operator_tag, "", "");
-			} else {
+            } else if (operator.equalsIgnoreCase("STOCK") && (sub_feature.equalsIgnoreCase("DELETE"))) {
+                System.out.println("running stock delete process.");
+                new StockDelete().process(conn, operator, sub_feature, rulelist, txn_id, operator_tag, usertype_name, "");
+            } else {
                 System.out.println("Skipping the process.");
             }
 
