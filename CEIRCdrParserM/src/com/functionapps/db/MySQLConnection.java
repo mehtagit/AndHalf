@@ -17,16 +17,16 @@ public class MySQLConnection {
 
         // sqlplus CRESTELCEIR/CRESTELCEIR@//dmc-prod-db:1521/dmcproddb
         // PROD SERVER
-        final String JDBC_DRIVER = "oracle.jdbc.driver.OracleDriver";
-        final String DB_URL = "jdbc:oracle:thin:@dmc-prod-db:1521/dmcproddb";
-        final String USER = "CRESTELCEIR";
-        final String PASS = "CRESTELCEIR";
+//        final String JDBC_DRIVER = "oracle.jdbc.driver.OracleDriver";
+//        final String DB_URL = "jdbc:oracle:thin:@dmc-prod-db:1521/dmcproddb";
+//        final String USER = "CRESTELCEIR";
+//        final String PASS = "CRESTELCEIR";
 
 //DEV SERVER
-//        final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
-//        final String DB_URL = "jdbc:mysql://172.31.22.35:3306/ceirconfig";
-//        final String USER = "root";
-//        final String PASS = "root";
+        final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
+        final String DB_URL = "jdbc:mysql://172.31.22.35:3306/ceirconfig";
+        final String USER = "root";
+        final String PASS = "root";
         
         Connection conn = null;
         try {

@@ -41,7 +41,6 @@ public class CEIRFeatureFileParser {
                     HashMap<String, String> feature_file_management = new HashMap<String, String>();
                     feature_file_management = ceirfunction.getFeatureFileManagement(conn, feature_file_mapping.get("mgnt_table_db"), featurers.getString("txn_id"));   //  select * from " + management_db 
                     String user_type = ceirfunction.getUserType(conn, feature_file_management.get("user_id"), featurers.getString("feature"), featurers.getString("txn_id"));
-
                     feature = featurers.getString("feature");
                     ArrayList rulelist = new ArrayList<Rule>();
                     String period = ceirfileparser.checkGraceStatus(conn);
@@ -147,7 +146,8 @@ public class CEIRFeatureFileParser {
 
         Statement stmt = null;
         try {
-            if (((sub_feature.equalsIgnoreCase("register") || sub_feature.equalsIgnoreCase("update") || sub_feature.equalsIgnoreCase("UPLOAD")) ) &&  !operator.equalsIgnoreCase("TYPE_APPROVED")    ) {
+            if (((sub_feature.equalsIgnoreCase("Register") || sub_feature.equalsIgnoreCase("update") || sub_feature.equalsIgnoreCase("UPLOAD")) ) &&  !operator.equalsIgnoreCase("TYPE_APPROVED")    ) {
+               logger.info(" NOTE.. ** NOT FOR TYPE APPROVE" );
                 new ConsignmentInsertUpdate().process(conn, operator, sub_feature, rulelist, txn_id, operator_tag, usertype_name);
             } else if (operator.equalsIgnoreCase("consignment") && (sub_feature.equalsIgnoreCase("delete"))) {
                 System.out.println("running consignment delete process.");
