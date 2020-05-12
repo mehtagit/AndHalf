@@ -626,7 +626,6 @@ public class RegularizedDeviceServiceImpl {
             String subFeature="";
             String username="";
 			RegularizeDeviceDb regularizeDeviceDb =new RegularizeDeviceDb();
-
 			if("CEIRADMIN".equalsIgnoreCase(ceirActionRequest.getUserType())){
 				regularizeDeviceDb=regularizedDeviceDbRepository.getByFirstImei(ceirActionRequest.getImei1());
 				logger.debug("Accept/Reject regularized Devices : " + regularizeDeviceDb);
@@ -674,12 +673,19 @@ public class RegularizedDeviceServiceImpl {
 								ReferTable.END_USER,
 								null,
 								receiverUserType));
-						emailUtil.saveNotification(rawMails);	
-						
 					}
 					else {
 						logger.info("this end user don't have any email");
 					}
+				}
+				
+				RegularizeDeviceDb regularizeOutput=regularizedDeviceDbRepository.save(regularizeDeviceDb);
+				if(Objects.nonNull(regularizeOutput))
+				{
+					if(Objects.nonNull(rawMails) && !rawMails.isEmpty()) {
+						emailUtil.saveNotification(rawMails);	
+					}
+					
 				}
 			}
 			else if("CEIRSYSTEM".equalsIgnoreCase(ceirActionRequest.getUserType())){
@@ -734,7 +740,14 @@ for(User userData:user) {
 					}
 					
 
-					emailUtil.saveNotification(rawMails);	
+RegularizeDeviceDb regularizeOutput=regularizedDeviceDbRepository.save(regularizeDeviceDb);
+if(Objects.nonNull(regularizeOutput))
+{
+	if(Objects.nonNull(rawMails) && !rawMails.isEmpty()) {
+		emailUtil.saveNotification(rawMails);	
+	}
+	
+}	
 					
 				}else if(ceirActionRequest.getAction() == 1){
 					regularizeDeviceDb.setStatus(RegularizeDeviceStatus.Rejected_By_System.getCode());
@@ -755,8 +768,15 @@ for(User userData:user) {
 								ReferTable.END_USER,
 								null,
 								receiverUserType));
-						emailUtil.saveNotification(rawMails);	
 						}
+					}
+					RegularizeDeviceDb regularizeOutput=regularizedDeviceDbRepository.save(regularizeDeviceDb);
+					if(Objects.nonNull(regularizeOutput))
+					{
+						if(Objects.nonNull(rawMails) && !rawMails.isEmpty()) {
+							emailUtil.saveNotification(rawMails);	
+						}
+						
 					}
 				}else {
 					return new GenricResponse(2, "unknown operation", "");
@@ -770,11 +790,6 @@ for(User userData:user) {
 			}
 			auditTrailRepository.save(new AuditTrail(userId, username, userTypeId,
 					ceirActionRequest.getUserType(), 12,Features.REGISTER_DEVICE, subFeature, "", txnId));
-
-			regularizedDeviceDbRepository.save(regularizeDeviceDb);
-
-			
-			
 			return new GenricResponse(0, "Device Update SuccessFully.", ceirActionRequest.getTxnId());
 
 		} catch (Exception e) {
