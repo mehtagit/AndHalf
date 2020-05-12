@@ -52,8 +52,9 @@ public class CEIRFeatureFileParser {
             }
             conn.close();
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
+        }finally{
+             System.exit(0);
         }
     }
 
@@ -146,7 +147,7 @@ public class CEIRFeatureFileParser {
 
         Statement stmt = null;
         try {
-            if ((sub_feature.equalsIgnoreCase("register") || sub_feature.equalsIgnoreCase("update") || sub_feature.equalsIgnoreCase("UPLOAD"))) {
+            if (((sub_feature.equalsIgnoreCase("register") || sub_feature.equalsIgnoreCase("update") || sub_feature.equalsIgnoreCase("UPLOAD")) ) &&  !operator.equalsIgnoreCase("TYPE_APPROVED")    ) {
                 new ConsignmentInsertUpdate().process(conn, operator, sub_feature, rulelist, txn_id, operator_tag, usertype_name);
             } else if (operator.equalsIgnoreCase("consignment") && (sub_feature.equalsIgnoreCase("delete"))) {
                 System.out.println("running consignment delete process.");

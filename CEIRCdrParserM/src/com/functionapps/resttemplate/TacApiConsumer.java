@@ -5,6 +5,7 @@ import org.apache.log4j.Logger;
 import com.functionapps.constants.PropertyReader;
 import com.functionapps.http.HttpURLConnectionExample;
 import com.functionapps.pojo.HttpResponse;
+import com.functionapps.pojo.TacApproveRequest;
 import com.google.gson.Gson;
 
 public class TacApiConsumer {
@@ -20,7 +21,7 @@ public class TacApiConsumer {
 
 	}
 
-	public HttpResponse updateStatus(String txnId, Long userId, String userType, int deleteFlag){
+	public HttpResponse delete(String txnId, Long userId, String userType, int deleteFlag){
 
 		try {
 			String result = "";
@@ -31,6 +32,25 @@ public class TacApiConsumer {
 					+ "deleteFlag=" + deleteFlag;
 
 			String response = HttpURLConnectionExample.sendPOST(uri);
+			HttpResponse httpResponse = gson.fromJson(response, HttpResponse.class);
+			return httpResponse;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}	
+	}
+	
+	public HttpResponse approveReject(String txnId, Integer status){
+
+		try {
+			String result = "";
+			String uri = propertyReader.getPropValue("api.tac.approve_reject");
+			TacApproveRequest tacApproveRequest = new TacApproveRequest(txnId, status);
+			String body = gson.toJson(tacApproveRequest, TacApproveRequest.class);
+			
+			String response = HttpURLConnectionExample.sendPOST(uri, body);
+			
 			HttpResponse httpResponse = gson.fromJson(response, HttpResponse.class);
 			return httpResponse;
 

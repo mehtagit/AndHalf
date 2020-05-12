@@ -32,7 +32,7 @@ public class PropertyReader {
 
 		try {
 			prop = new Properties();
-			String propFileName = "config.properties";
+			String propFileName = "/config.properties";
 			
 			logger.info("Porperty File is ["+propFileName+"]");
 			

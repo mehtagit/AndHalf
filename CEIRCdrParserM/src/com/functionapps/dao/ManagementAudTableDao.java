@@ -62,6 +62,8 @@ public class ManagementAudTableDao {
 
 			System.out.println("Inserted in " + tableName + " succesfully.");
 			logger.info("Inserted in " + tableName + " succesfully.");
+			
+			conn.commit();
 
 		} catch (SQLException e) {
 			logger.error(e.getMessage(), e);

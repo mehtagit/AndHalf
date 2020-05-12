@@ -78,6 +78,45 @@ public class HttpURLConnectionExample {
 		
 		return response.toString();
 	}
+	
+	public static String sendPOST(String url, String body) throws IOException {
+		URL obj = new URL(url);
+		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+
+		con.setRequestMethod("POST");
+
+		// For POST only - START
+		con.setDoOutput(true);
+		OutputStream os = con.getOutputStream();
+		byte[] input = body.getBytes("utf-8");
+		os.write(input, 0, input.length);
+		os.flush();
+		os.close();
+		// For POST only - END
+		
+		StringBuffer response = new StringBuffer();
+		int responseCode = con.getResponseCode();
+		System.out.println("POST Response Code :: " + responseCode);
+
+		if (responseCode == HttpURLConnection.HTTP_OK) { //success
+			BufferedReader in = new BufferedReader(new InputStreamReader(
+					con.getInputStream()));
+			String inputLine;
+
+			while ((inputLine = in.readLine()) != null) {
+				response.append(inputLine);
+			}
+			in.close();
+
+			// print result
+			System.out.println(response.toString());
+			
+		} else {
+			System.out.println("POST request not worked");
+		}
+		
+		return response.toString();
+	}
 
 	public static void main(String[] args) {
 		try {
