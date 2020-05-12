@@ -366,7 +366,7 @@ public class EnduserServiceImpl {
 			throw new ResourceServicesException("Custom Service", e.getMessage());
 		}
 	}
-
+	@Transactional
 	public GenricResponse updateVisaEndUser(EndUserDB endUserDB) {
 		try {
 			VisaDb latestVisa = null;
@@ -401,7 +401,6 @@ public class EnduserServiceImpl {
 				logger.info("Going to update VISA of user. " + endUserDB1);
 
 				List<VisaDb> visaDbs = endUserDB1.getVisaDb();
-
 				if(visaDbs.isEmpty()) {
 					logger.info("You are not allowed to update Visa." + endUserDB.getNid());
 					return new GenricResponse(6, GenericMessageTags.VISA_UPDATE_NOT_ALLOWED.getTag(), 
@@ -423,22 +422,22 @@ public class EnduserServiceImpl {
 					rawMails.add(new RawMail(mailTag, endUserDB1.getId(), Long.valueOf(43), 
 							Features.UPDATE_VISA, SubFeatures.REQUEST, endUserDB1.getTxnId(), 
 							endUserDB1.getTxnId(), placeholderMap, ReferTable.END_USER, null, "End User"));
-					emailUtil.saveNotification(rawMails);
 					VisaUpdateDb visaDb=updateVisaRepository.findByUserId(endUserDB1.getId());
-
-		
 					if(visaDb!=null) { 
 						visaUpdateDb.setId(visaDb.getId());
 						visaUpdateDb.setCreatedOn(visaDb.getCreatedOn());
 
 					}
 					else {
-
 					}
 					WebActionDb webAction=new	 WebActionDb(Features.UPDATE_VISA, SubFeatures.REQUEST, 0, 
 							endUserDB.getTxnId());
-
 					if(endUserTransaction.addUpdateVisaRequest(visaUpdateDb, endUserDB1,webAction)) {
+						webActionDbRepository.save(webAction);
+						logger.info(" addition in web_action_db. " + webAction );
+						if(Objects.nonNull(rawMails) && !rawMails.isEmpty()) {
+							emailUtil.saveNotification(rawMails);	
+						}
 						return new GenricResponse(0, GenericMessageTags.VISA_UPDATE_REQUEST_SUCCESS.getTag(), 
 								GenericMessageTags.VISA_UPDATE_REQUEST_SUCCESS.getMessage(), endUserDB.getNid());
 
@@ -841,13 +840,18 @@ public class EnduserServiceImpl {
 								ReferTable.END_USER,
 								null,
 								receiverUserType));
-						emailUtil.saveNotification(rawMails);	
-
 					}
 					else {
 						logger.info("this end user don't have any email");
 					}
 				}
+				
+				VisaUpdateDb visaOutput=updateVisaRepo.save(visaDb);
+				if(Objects.nonNull(visaOutput)) {
+					if(Objects.nonNull(rawMails) && !rawMails.isEmpty()) {
+						emailUtil.saveNotification(rawMails);	
+					}
+					}
 			}
 			else if("CEIRSYSTEM".equalsIgnoreCase(ceirActionRequest.getUserType())){
 				visaDb=visaUpdateRepo.getByTxnId(ceirActionRequest.getTxnId());
@@ -911,7 +915,11 @@ public class EnduserServiceImpl {
 					}
 
 
-					emailUtil.saveNotification(rawMails);	
+					VisaUpdateDb visaOutput=updateVisaRepo.save(visaDb);
+					if(Objects.nonNull(visaOutput)) {
+						if(Objects.nonNull(rawMails) && !rawMails.isEmpty()) {
+							emailUtil.saveNotification(rawMails);	
+						}						}
 					txnId = endUserDB.getTxnId();
 
 				}else if(ceirActionRequest.getAction() == 1){
@@ -933,7 +941,12 @@ public class EnduserServiceImpl {
 								ReferTable.END_USER,
 								null,
 								receiverUserType));
-						emailUtil.saveNotification(rawMails);	
+						VisaUpdateDb visaOutput=updateVisaRepo.save(visaDb);
+						if(Objects.nonNull(visaOutput)) {
+							if(Objects.nonNull(rawMails) && !rawMails.isEmpty()) {
+								emailUtil.saveNotification(rawMails);	
+							}
+							}
 						txnId = endUserDB.getTxnId();
 
 					}
@@ -953,7 +966,7 @@ public class EnduserServiceImpl {
 			}
 			auditTrailRepository.save(new AuditTrail(userId, username, userTypeId,
 					ceirActionRequest.getUserType(), 43,Features.UPDATE_VISA, sufeature, "", txnId));
-			updateVisaRepo.save(visaDb);
+
 
 			return new GenricResponse(0, "Visa Update SuccessFully.", ceirActionRequest.getTxnId());
 

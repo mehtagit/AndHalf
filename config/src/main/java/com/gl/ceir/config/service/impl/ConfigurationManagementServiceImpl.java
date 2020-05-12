@@ -152,15 +152,11 @@ public class ConfigurationManagementServiceImpl {
 				systemConfigurationDb.setTypeInterp(interpSetter.setConfigInterp(Tags.CONFIG_TYPE, systemConfigurationDb.getType()));
 			}
 			
-			
-			
-			/*
-			 * auditTrailRepository.save(auditTrailMethods.saveAuditTrail_filterRequest(
-			 * filterRequest, Features.SYSTEM_MANAGEMENT, SubFeatures.VIEW));
-			 * logger.info("AUDIT : Saved view request in audit.");
-			 */
-			
-			
+		
+			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), filterRequest.getUserName(), 
+					Long.valueOf(filterRequest.getUserTypeId()), filterRequest.getUserType(), Long.valueOf(filterRequest.getFeatureId()),
+					Features.SYSTEM_MANAGEMENT, SubFeatures.VIEW, "", "NA",filterRequest.getRoleType()));
+			logger.info("SYSTEM_MANAGEMENT : successfully inserted in Audit trail.");
 			return page;
 
 		} catch (Exception e) {
@@ -241,6 +237,14 @@ public class ConfigurationManagementServiceImpl {
 				messageConfigurationDb.setChannelInterp(interpSetter.setConfigInterp(Tags.CHANNEL, messageConfigurationDb.getChannel()));
 			}
 
+			
+//audit trail entry
+			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), filterRequest.getUserName(), 
+					Long.valueOf(filterRequest.getUserTypeId()), filterRequest.getUserType(), Long.valueOf(filterRequest.getFeatureId()),
+					Features.MESSAGE_MANAGEMENT, SubFeatures.VIEW, "", "NA",filterRequest.getRoleType()));
+			logger.info("MESSAGE_MANAGEMENT : successfully inserted in Audit trail.");
+			
+			
 			return page;
 
 		} catch (Exception e) {
@@ -344,13 +348,19 @@ public class ConfigurationManagementServiceImpl {
 			for(PolicyConfigurationDb policyConfigurationDb : page.getContent()) {
 
 				for(StateMgmtDb stateMgmtDb : statusList) {
-					if(filterRequest.getType() == stateMgmtDb.getState()) {
-						policyConfigurationDb.setTag(stateMgmtDb.getInterp()); 
+					if(policyConfigurationDb.getType() == stateMgmtDb.getState()) {
+						policyConfigurationDb.setTypeInterp(stateMgmtDb.getInterp()); 
 						break; 
 					} 
 				}
 				getInterp(policyConfigurationDb);
 
+				
+				auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), filterRequest.getUserName(), 
+						Long.valueOf(filterRequest.getUserTypeId()), filterRequest.getUserType(), Long.valueOf(filterRequest.getFeatureId()),
+						Features.POLICY_MANAGEMENT, SubFeatures.VIEW, "", "NA",filterRequest.getRoleType()));
+				logger.info("POLICY_MANAGEMENT : successfully inserted in Audit trail ");
+				
 			}
 	
 
