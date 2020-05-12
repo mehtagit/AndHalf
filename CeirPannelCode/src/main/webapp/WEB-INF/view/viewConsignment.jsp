@@ -78,9 +78,18 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <style type="text/css">
+
 .dataTables_scrollBody {
-    height: 100px !important;
+    width: 100%;
+    max-height: 161px !important;
+    height: 101px !important;
+
+
 }
+.dataTables_scroll {
+    margin-top: 2px;
+}
+
 </style>
 </head>
 <body data-id="3"
