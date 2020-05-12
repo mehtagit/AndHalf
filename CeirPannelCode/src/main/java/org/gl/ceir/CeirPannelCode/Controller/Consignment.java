@@ -351,7 +351,7 @@ if(exists) {
 
 Path temp = Files.move 
 (Paths.get(urlToUpload.getValue()+"/"+txnId+"/"+file.getOriginalFilename()), 
-Paths.get(urlToMove.getValue()+file.getOriginalFilename())); 
+Paths.get(urlToMove.getValue()+movedFileTime+"_"+file.getOriginalFilename())); 
 String movedPath=urlToMove.getValue()+movedFileTime+"_"+file.getOriginalFilename();	
 
 log.info("file is already exist, moved to this "+movedFileTime+"_"+movedPath+" path. ");
