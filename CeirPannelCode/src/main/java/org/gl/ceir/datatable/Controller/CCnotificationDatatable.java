@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
+import org.gl.ceir.CeirPannelCode.Model.CCPolicyBreachRequest;
 import org.gl.ceir.CeirPannelCode.Model.CustomerCareRequest;
 import org.gl.ceir.Class.HeadersTitle.DatatableResponseModel;
 import org.gl.ceir.Class.HeadersTitle.IconsState;
@@ -60,15 +61,14 @@ public class CCnotificationDatatable {
 		
 				String filter = request.getParameter("filter");
 				Gson gsonObject=new Gson();
-				CustomerCareRequest filterRequest = gsonObject.fromJson(filter, CustomerCareRequest.class);
-				
+				CCPolicyBreachRequest filterRequest = gsonObject.fromJson(filter, CCPolicyBreachRequest.class);
 				Integer pageSize = Integer.parseInt(request.getParameter("length"));
 				Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize ;
 				log.info("pageSize"+pageSize+"-----------pageNo---"+pageNo);
 				filterRequest.setSearchString(request.getParameter("search[value]"));
 		try {
 			log.info("request send to the filter api ="+filterRequest);
-			Object response = feignCleintImplementation.ccdashBoardNotification(filterRequest, pageNo, pageNo);
+			Object response = feignCleintImplementation.ccdashBoardNotification(filterRequest, pageNo, pageSize);
 			log.info("response in datatable"+response);
 			Gson gson= new Gson(); 
 			String apiResponse = gson.toJson(response);
@@ -96,7 +96,6 @@ public class CCnotificationDatatable {
 			return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK); 
 			
 		}catch(Exception e) {
-			
 			datatableResponseModel.setRecordsTotal(null);
 			datatableResponseModel.setRecordsFiltered(null);
 			datatableResponseModel.setData(Collections.emptyList());

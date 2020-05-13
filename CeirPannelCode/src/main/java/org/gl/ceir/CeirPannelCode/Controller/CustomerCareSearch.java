@@ -19,13 +19,16 @@ public class CustomerCareSearch {
 	public ModelAndView ViewCustomerCare(@RequestParam(name="via", required = false) String via,
 									 @RequestParam(name="msisdn", required = false) String msisdn,
 									 @RequestParam(name="imei", required = false) String imei,
-									 @RequestParam(name="deviceIdType", required = false) String deviceIdType, HttpSession session){
+									 @RequestParam(name="deviceIdType", required = false) String deviceIdType,
+									 @RequestParam(name="deviceIdvalue", required = false) Integer deviceIdvalue,
+									 HttpSession session){
 		log.info("via-->"+via+" msisdn-->"+msisdn+" imei-->"+imei+" deviceIdType-->"+deviceIdType);
 		ModelAndView modelAndView = new ModelAndView();
 		if("other".equals(via)) {
 			modelAndView.addObject("msisdn",msisdn );
 			modelAndView.addObject("imei",imei );
 			modelAndView.addObject("deviceIdType",deviceIdType);
+			modelAndView.addObject("deviceIdvalue",deviceIdvalue);
 			modelAndView.setViewName("customerCare");
 		} 
 		else {

@@ -175,7 +175,7 @@
 		
 		
 		<div id="editTags" class="modal" style="z-index: 1003; display: none; opacity: 1; transform: scaleX(1); top: 10%;">
-        <h6 class="modal-header">Edit Value</h6>
+        <h6 class="modal-header">Edit Field Details</h6>
         <div class="modal-content">
           	<form action="" onsubmit="return updatedTag()">
                 <div class="row" style="margin-top: 10px;">

@@ -93,7 +93,7 @@ data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeI
 	data-selected-roleType="${selectedUserTypeId}"
 	 data-stolenselected-roleType="${stolenselectedUserTypeId}"
 	 session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}" 
-	 data-period="${period}" data-msisdn="${msisdn}" data-imei="${imei}" data-deviceIdType="${deviceIdType}">
+	 data-period="${period}" data-msisdn="${msisdn}" data-imei="${imei}" data-deviceIdType="${deviceIdType}" data-deviceIdvalue="${deviceIdvalue}">
 
 
 	<!-- START CONTENT -->
