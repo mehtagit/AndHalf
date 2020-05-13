@@ -114,6 +114,8 @@ public class DBDatatableController {
 
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
+			map.setColumns(null);
+			map.setData(null);
 			dBrowDataModel.setColumns(Collections.emptyList());
 			return new ResponseEntity<>(HttpStatus.OK);
 
