@@ -27,6 +27,7 @@ import com.gl.ceir.config.ConfigTags;
 import com.gl.ceir.config.EmailSender.EmailUtil;
 import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
+import com.gl.ceir.config.model.AllRequest;
 import com.gl.ceir.config.model.AuditTrail;
 import com.gl.ceir.config.model.CeirActionRequest;
 import com.gl.ceir.config.model.ConsignmentUpdateRequest;
@@ -142,9 +143,20 @@ public class EnduserServiceImpl {
 	Utility utility;
 
 
-	public GenricResponse endUserByNid(String nid) {
+	public GenricResponse endUserByNid(AllRequest data) {
 		try {
-			EndUserDB endUserDB = endUserDbRepository.getByNid(nid);
+			logger.info("data given: "+data);
+			String username="";
+			long userId=0;
+			if(data.getUserTypeId()!=17) {
+				username=data.getUsername();
+				userId=data.getUserId();
+			}
+			auditTrailRepository.save(new AuditTrail(userId, username, 17L,
+					data.getUserType(), 12,Features.REGISTER_DEVICE, SubFeatures.Search_Nid, "", "NA"));
+			logger.info("AUDIT : Saved request in audit.");
+			
+			EndUserDB endUserDB = endUserDbRepository.getByNid(data.getNid());
 
 			// End user is not registered with CEIR system.
 			if(Objects.nonNull(endUserDB)) {
@@ -155,10 +167,10 @@ public class EnduserServiceImpl {
 						regulaizedList.add(regularizeData);
 					}
 				endUserDB.setRegularizeDeviceDbs(regulaizedList);
-				logger.info("End User with nid [" + nid + "] does exist.");
-				return new GenricResponse(1, "End User does exist.", nid, endUserDB);
+				logger.info("End User with nid [" + data.getNid() + "] does exist.");
+				return new GenricResponse(1, "End User does exist.", data.getNid(), endUserDB);
 			}else {
-				logger.info("End User with nid [" + nid + "] does not exist.");
+				logger.info("End User with nid [" + data.getNid() + "] does not exist.");
 				return new GenricResponse(0, "User does not exist.", "");
 			}
 		} catch (Exception e) {
@@ -170,6 +182,19 @@ public class EnduserServiceImpl {
 	@Transactional
 	public GenricResponse saveEndUser(EndUserDB endUserDB) {
 		try {
+			logger.info("audit trail values from form: "+endUserDB.getAuditParameters());
+			String username="";
+			long userId=0;
+			if(endUserDB.getAuditParameters().getUserTypeId()!=17) {
+				username=endUserDB.getAuditParameters().getUsername();
+				userId=endUserDB.getAuditParameters().getUserId();
+				endUserDB.setCreatorUserId(endUserDB.getAuditParameters().getUserId());
+			}
+			auditTrailRepository.save(new AuditTrail(userId, username, 17L,
+					endUserDB.getAuditParameters().getUserType(), 12,Features.REGISTER_DEVICE, SubFeatures.REGISTER, "", endUserDB.getTxnId()));
+			logger.info("AUDIT : Saved request in audit.");
+
+			
 			List<WebActionDb> webActionDbs = new ArrayList<>();
 
 			// End user is not registered with CEIR system.
@@ -294,9 +319,6 @@ public class EnduserServiceImpl {
 			webActionDbRepository.saveAll(webActionDbs);
 			logger.info("Batch update in web_action_db. " + webActionDbs );
 
-			auditTrailRepository.save(new AuditTrail(endUserDB.getId(), "", 17L,
-					"End User", 0L,Features.REGISTER_DEVICE, SubFeatures.REGISTER, "", endUserDB.getTxnId()));
-			logger.info("AUDIT : Saved request in audit.");
 
 			return new GenricResponse(0, GenericMessageTags.USER_REGISTER_SUCCESS.getTag(),GenericMessageTags.USER_REGISTER_SUCCESS.getMessage(), endUserDB.getTxnId());
 

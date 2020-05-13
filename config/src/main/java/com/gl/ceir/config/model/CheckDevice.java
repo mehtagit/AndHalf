@@ -1,6 +1,6 @@
 package com.gl.ceir.config.model;
 
-public class CheckDevice {
+public class CheckDevice{
 	private static long serialVersionUID = 1L;
 	private Integer deviceIdType;
 	private long deviceId;
@@ -18,6 +18,14 @@ public class CheckDevice {
 	}
 	@Override
 	public String toString() {
-		return "CheckDevice [deviceIdType=" + deviceIdType + ", deviceId=" + deviceId + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("CheckDevice [deviceIdType=");
+		builder.append(deviceIdType);
+		builder.append(", deviceId=");
+		builder.append(deviceId);
+		builder.append(", toString()=");
+		builder.append(super.toString());
+		builder.append("]");
+		return builder.toString();
 	}
 }

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.gl.ceir.config.model.AllRequest;
 import com.gl.ceir.config.model.ConsignmentMgmt;
 import com.gl.ceir.config.model.ConsignmentUpdateRequest;
 import com.gl.ceir.config.model.EndUserDB;
@@ -32,12 +33,12 @@ public class EnduserController {
 	EnduserServiceImpl enduserServiceImpl;
 
 	@ApiOperation(value = "View Regularized DB of end User", response = GenricResponse.class)
-	@GetMapping("/end-user/{nid}")
-	public MappingJacksonValue getEnduserByNid(@PathVariable("nid") String nid) {
+	@PostMapping("/end-user/searchByNid")
+	public MappingJacksonValue getEnduserByNid(@RequestBody AllRequest data) {
 
 		MappingJacksonValue mapping = null;
 
-		GenricResponse genricResponse = enduserServiceImpl.endUserByNid(nid);
+		GenricResponse genricResponse = enduserServiceImpl.endUserByNid(data);
 		mapping = new MappingJacksonValue(genricResponse);
 
 		return mapping;
