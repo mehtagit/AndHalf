@@ -26,6 +26,9 @@ import com.gl.ceir.config.model.Notification;
 import com.gl.ceir.config.model.PolicyConfigurationDb;
 import com.gl.ceir.config.model.SystemConfigListDb;
 import com.gl.ceir.config.model.SystemConfigurationDb;
+import com.gl.ceir.config.model.constants.Features;
+import com.gl.ceir.config.model.constants.SubFeatures;
+import com.gl.ceir.config.repository.AuditTrailRepository;
 import com.gl.ceir.config.service.impl.ConfigurationManagementServiceImpl;
 
 import io.swagger.annotations.ApiOperation;
@@ -38,6 +41,8 @@ public class ConfigurationController {
 	@Autowired
 	ConfigurationManagementServiceImpl configurationManagementServiceImpl;
 
+	@Autowired
+	AuditTrailRepository auditTrailRepository;
 
 	@ApiOperation(value = "System Config view All Data", response = SystemConfigurationDb.class)
 	@PostMapping("/system/viewAll")
@@ -100,8 +105,14 @@ public class ConfigurationController {
 
 		logger.info("Update  system config request="+systemConfigurationDb);
 
-		GenricResponse GenricResponse =	configurationManagementServiceImpl.updateSystemInfo(systemConfigurationDb);
 
+		GenricResponse GenricResponse =	configurationManagementServiceImpl.updateSystemInfo(systemConfigurationDb);
+if(GenricResponse.getErrorCode()==0) {
+	auditTrailRepository.save(new AuditTrail(systemConfigurationDb.getUserId(), systemConfigurationDb.getUserName(), 
+			Long.valueOf(systemConfigurationDb.getUserTypeId()), systemConfigurationDb.getUserType(), Long.valueOf(systemConfigurationDb.getFeatureId()),
+			Features.SYSTEM_MANAGEMENT, SubFeatures.UPDATE, "", "NA",systemConfigurationDb.getRoleType()));
+	logger.info("SYSTEM_MANAGEMENT : successully inserted in audit trail ");
+}
 		logger.info("Update sytem config response="+GenricResponse);
 
 		return GenricResponse;
@@ -170,6 +181,13 @@ public class ConfigurationController {
 
 		GenricResponse GenricResponse =	configurationManagementServiceImpl.updateMessageInfo(messageConfigurationDb);
 
+		if(GenricResponse.getErrorCode()==0) {
+			auditTrailRepository.save(new AuditTrail(messageConfigurationDb.getUserId(), messageConfigurationDb.getUserName(), 
+					Long.valueOf(messageConfigurationDb.getUserTypeId()), messageConfigurationDb.getUserType(), Long.valueOf(messageConfigurationDb.getFeatureId()),
+					Features.MESSAGE_MANAGEMENT, SubFeatures.UPDATE, "", "NA",messageConfigurationDb.getRoleType()));
+			logger.info("MESSAGE_MANAGEMENT : successully inserted in audit trail ");
+		}
+		
 		logger.info("Update sytem config response="+GenricResponse);
 
 		return GenricResponse;
@@ -229,6 +247,14 @@ public class ConfigurationController {
 
 		GenricResponse GenricResponse =	configurationManagementServiceImpl.updatePolicyInfo(policyConfigurationDb);
 
+		if(GenricResponse.getErrorCode() == 0) {
+			auditTrailRepository.save(new AuditTrail(policyConfigurationDb.getUserId(), policyConfigurationDb.getUserName(), 
+					Long.valueOf(policyConfigurationDb.getUserTypeId()), policyConfigurationDb.getUserType(), Long.valueOf(policyConfigurationDb.getFeatureId()),
+					Features.POLICY_MANAGEMENT, SubFeatures.UPDATE, "", "NA",policyConfigurationDb.getRoleType()));
+			logger.info("POLICY_MANAGEMENT : successfully inserted in Audit trail ");
+
+		}
+		
 		logger.info("Update sytem config response="+GenricResponse);
 
 		return GenricResponse;

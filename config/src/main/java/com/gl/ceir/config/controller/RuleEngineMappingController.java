@@ -83,7 +83,7 @@ public class RuleEngineMappingController {
 			auditTrailRepository.save( new AuditTrail( ruleEngineMapping.getId(),
 					ruleEngineMapping.getUserName(), Long.valueOf(ruleEngineMapping.getUserTypeId()),
 			  "CEIRSystem", Long.valueOf(ruleEngineMapping.getFeatureId()),
-			  Features.SYSTEM_MANAGEMENT, SubFeatures.REGISTER, "","NA",
+			  Features.RULE_FEATURE_MAPPING, SubFeatures.REGISTER, "","NA",
 			  ruleEngineMapping.getRoleType()));
 		}
 	
@@ -105,7 +105,7 @@ public class RuleEngineMappingController {
 			auditTrailRepository.save( new AuditTrail( ruleEngineMapping.getId(),
 					ruleEngineMapping.getUserName(), Long.valueOf(ruleEngineMapping.getUserTypeId()),
 			  "CEIRSystem", Long.valueOf(ruleEngineMapping.getFeatureId()),
-			  Features.SYSTEM_MANAGEMENT, SubFeatures.UPDATE, "","NA",
+			  Features.RULE_FEATURE_MAPPING, SubFeatures.UPDATE, "","NA",
 			  ruleEngineMapping.getRoleType()));
 		}
 		
@@ -130,7 +130,7 @@ public class RuleEngineMappingController {
 			auditTrailRepository.save( new AuditTrail( ruleEngineMapping.getId(),
 					ruleEngineMapping.getUserName(), Long.valueOf(ruleEngineMapping.getUserTypeId()),
 			  "CEIRSystem", Long.valueOf(ruleEngineMapping.getFeatureId()),
-			  Features.SYSTEM_MANAGEMENT, SubFeatures.DELETE, "","NA",
+			  Features.RULE_FEATURE_MAPPING, SubFeatures.DELETE, "","NA",
 			  ruleEngineMapping.getRoleType()));
 		}
 		
