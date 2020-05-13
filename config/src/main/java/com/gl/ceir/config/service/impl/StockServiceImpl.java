@@ -425,7 +425,7 @@ public class StockServiceImpl {
 			logger.info("Inside getFilteredUserType block.");
 			specificationBuilder.with(new SearchCriteria("userType", filterRequest.getFilteredUserType(), SearchOperation.EQUALITY, Datatype.STRING));
 		}
-		
+
 		if(Objects.nonNull(filterRequest.getConsignmentStatus())) {
 			specificationBuilder.with(new SearchCriteria("stockStatus", filterRequest.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
 		}else {
@@ -775,7 +775,10 @@ public class StockServiceImpl {
 			String firstName = "";
 			User user = null;
 			Map<String, String> placeholderMap = new HashMap<>();
+			Integer currentStatus = null;
+
 			StockMgmt stockMgmt = stockManagementRepository.getByTxnId(consignmentUpdateRequest.getTxnId());
+			currentStatus = stockMgmt.getStockStatus();
 
 			// Fetch user_profile to update user over mail/sms regarding the action.
 			if("Custom".equals(stockMgmt.getRoleType())) {
@@ -891,18 +894,20 @@ public class StockServiceImpl {
 					return new GenricResponse(3, "Unable to update stock entity.", consignmentUpdateRequest.getTxnId()); 
 				}else {
 
-					emailUtil.saveNotification(mailTag, 
-							userProfile, 
-							consignmentUpdateRequest.getFeatureId(),
-							Features.STOCK,
-							action,
-							consignmentUpdateRequest.getTxnId(),
-							txnId,
-							placeholderMap,
-							stockMgmt.getRoleType(),
-							receiverUserType,
-							"Users");
-					logger.info("Notfication have been saved.");
+					if(currentStatus == StockStatus.PROCESSING.getCode()) {
+						emailUtil.saveNotification(mailTag, 
+								userProfile, 
+								consignmentUpdateRequest.getFeatureId(),
+								Features.STOCK,
+								action,
+								consignmentUpdateRequest.getTxnId(),
+								txnId,
+								placeholderMap,
+								stockMgmt.getRoleType(),
+								receiverUserType,
+								"Users");
+						logger.info("Notfication have been saved.");
+					}
 
 					logger.debug(consignmentUpdateRequest);
 					/*
