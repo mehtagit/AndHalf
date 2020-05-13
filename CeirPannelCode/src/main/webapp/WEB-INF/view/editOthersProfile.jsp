@@ -1,3 +1,24 @@
+<%@ page import="java.util.Date" %>
+<%
+   response.setHeader("Cache-Control", "no-cache");
+	response.setHeader("Cache-Control", "no-store");
+	response.setDateHeader("Expires", 0);
+	response.setHeader("Pragma", "no-cache");
+    /*   //200 secs
+	 session.setAttribute("usertype", null);  */
+/* 	 session.setMaxInactiveInterval(10); */
+	 int timeout = session.getMaxInactiveInterval();
+	
+	 long accessTime = session.getLastAccessedTime();
+	 long currentTime= new Date().getTime(); 
+	 System.out.println("accessTime========"+(accessTime + timeout));
+	 System.out.println("timeout========"+timeout);
+	 System.out.println("currentTime========"+currentTime);
+	 if( currentTime< accessTime + timeout){
+	/*  response.setHeader("Refresh", timeout + "; URL = ../login");
+	 System.out.println("timeout========"+timeout); 
+	if (session.getAttribute("usertype") != null) { */
+%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
@@ -930,3 +951,16 @@ var contextpath = "${context}";
     </script>
 </body>
 </html>
+<%
+	} else {
+		/*  request.setAttribute("msg", "  *Please login first");
+		request.getRequestDispatcher("./index.jsp").forward(request, response); */
+%>
+<script language="JavaScript">
+	sessionStorage.setItem("loginMsg",
+			"*Session has been expired");
+	window.top.location.href = "./login";
+</script>
+<%
+	}
+%>
