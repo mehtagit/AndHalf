@@ -438,33 +438,29 @@ var contextpath = "${context}";
 									<label for="authorityName"><spring:message code="registration.reportingauthorityname" /></label>
 								</div>
 
-								<div class="input-field col s12 m6 l6">
-									<input type="text" name="authorityEmail" required="required" maxlength="320"  id="authorityEmail" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,320}" 
-									oninput="InvalidMsg(this,'email','<spring:message code="validation.email" />');" oninvalid="InvalidMsg(this,'email','<spring:message code="validation.email" />');">
-									<label for="authorityEmail"> <spring:message code="registration.ReportingAuthorityEmailid"/><span class="star">*</span></label>
+							<div class="input-field col s12 m6 l6">
+									<input type="text" name="authorityEmail" required="required" maxlength="280" id="authorityEmail" pattern="[^@]+@[^@]+\.[a-zA-Z]{3,280}"
+									oninput="InvalidMsg(this,'email','<spring:message code="validation.email" />');" oninvalid="InvalidMsg(this,'email','<spring:message code="validation.email" />');" title=""> 
+										<label for="authorityEmail"><spring:message code="registration.ReportingAuthorityEmailid" /><span class="star">*</span></label>
 								</div>
-
 								<div class="input-field col s12 m6 l6">
 									<input type="tel" name="authorityPhoneNo" required="required" id="authorityPhoneNo" maxlength="15" pattern="[0-9]{7,15}"
-									oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');" title="<spring:message code="validation.contact" />"	>
-									<label for="authorityPhoneNo"> <spring:message code="registration.reportingauthoritycontactnumber" /><span class="star">*</span></label>
+										oninput="InvalidMsg(this,'input','<spring:message code="validation.contact" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.contact" />');" title="">
+									<label for="authorityPhoneNo"><spring:message code="registration.reportingauthoritycontactnumber" /><span class="star">*</span></label>
 								</div>
 
 								<div class="input-field col s12 m6 l6">
 									<input type="text" name="email" required="required" id="email" maxlength="280" pattern="[^@]+@[^@]+\.[a-zA-Z]{3,280}"
-									oninput="InvalidMsg(this,'email','<spring:message code="validation.address30characters" />');" oninvalid="InvalidMsg(this,'email','<spring:message code="validation.address30characters" />');"
-										title="" required /> 
-									<label for="email"><spring:message code="input.email" /> <span class="star">*</span></label>
+									oninput="InvalidMsg(this,'email','<spring:message code="validation.email" />');" oninvalid="InvalidMsg(this,'email','<spring:message code="validation.email" />');" title="" required/> 
+										<label for="email"><spring:message code="input.email" /> <span class="star">*</span></label>
 								</div>
 
 								<div class="input-field col s12 m6 l6">
 									<input type="tel" name="phoneNo" maxlength="15" id="phoneNo" pattern="[0-9]{7,15}"
-									oninput="InvalidMsg(this,'input','<spring:message code="validation.requiredMsg" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.requiredMsg" />');"
-									
-										title="<spring:message code="validation.contact" />" required /> 
-										<label for="phoneNo"><spring:message code="input.contactNum" /> <span class="star">*</span>
-									</label>
+									oninput="InvalidMsg(this,'input','<spring:message code="validation.contact" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.contact" />');" title="" required /> 
+										<label for="phoneNo"><spring:message code="input.contactNum" /> <span class="star">*</span></label>
 								</div>
+								
 							</div>
 
 <%if(usertypeId==12){%>
