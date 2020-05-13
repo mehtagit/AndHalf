@@ -112,6 +112,9 @@ footer {
 		margin-top: 0;
 	}
 }
+i.fa.fa-times-circle-o.red-text {
+    font-size: 32px !important;
+}
 </style>
 
 </head>
@@ -190,10 +193,10 @@ footer {
 								<div class="col s12 m12 l12">
 
 
-									<p style="margin-left: 10px;">
+									<p style="margin-left: 50px;">
 										<spring:message code="registration.theimeinumber" />
 										<span id="validImeiNumber"> </span>
-										<spring:message code="registration.valid" /> <i class="fa fa-check-circle-o green-text" style="margin-left: 23px;" title="Approved"></i>
+										<spring:message code="registration.valid" /> <i class="fa fa-check-circle-o green-text" style="    margin-left: -43px;float: left;" title="Approved"></i>
 									</p>
 									<div class="input-field col s6 m4">
 										<label for="validTac"><spring:message
@@ -226,7 +229,7 @@ footer {
 										<div class="input-field col s12 center">
 											<div class="input-field col s12 center">
 												<a href="./homePage" class="btn" style="width: 100%;"><spring:message
-														code="modal.ok" /></a>
+														code="modal.close" /></a>
 											</div>
 										</div>
 									</div>
@@ -239,10 +242,10 @@ footer {
 								<div class="col s12 m12 l12">
 
 
-									<p style="margin-left: 10px;">
+									<p style="margin-left: 50px;">
 										<spring:message code="registration.theimeinumber" />
 										<span id="InvalidImeiNumber"> </span> 
-										<spring:message code="registration.invalid" /><i class="fa fa-times-circle-o red-text" style="margin-left: 23px;" title="Rejected"></i>
+										<spring:message code="registration.invalid" /><i class="fa fa-times-circle-o red-text" style="margin-left: -43px; float: left;" title="Rejected"></i>
 									</p>
 									<div class="input-field col s6 m4">
 										<label for="invalidTac"><spring:message
@@ -254,7 +257,7 @@ footer {
 									</div>
 
 									<div class="input-field col s6 m4">
-										<label for="invalidRemark"> :<spring:message
+										<label for="invalidRemark"><spring:message
 												code="input.remarks" /></label>
 									</div>
 									<div class="input-field col s6 m8">
@@ -266,7 +269,7 @@ footer {
 										<div class="input-field col s12 center">
 											<div class="input-field col s12 center">
 												<a href="./homePage" class="btn" style="width: 100%;"><spring:message
-														code="modal.ok" /></a>
+														code="modal.close" /></a>
 											</div>
 										</div>
 									</div>

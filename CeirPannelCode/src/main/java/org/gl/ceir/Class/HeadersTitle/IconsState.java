@@ -916,7 +916,7 @@ public class IconsState {
 		// state related Code
 		String view=null;
 		String functionName="isActive("+featureID+")";
-		if(featureID == 3 || featureID == 4 || featureID == 6 || featureID == 7 || featureID == 21) {
+		if(featureID == 3 || featureID == 4 || featureID == 6 || featureID == 7 || featureID == 21 || featureID == 43 || featureID == 12 ||featureID == 5  ) {
 			view="<a href="+viewAction+" onclick="+functionName+"><i class="+viewIcon+" aria-hidden=\"true\" title="
 					+viewIconTitle+" ></i></a>";
 		}

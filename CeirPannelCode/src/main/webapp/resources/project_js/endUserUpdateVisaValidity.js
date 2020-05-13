@@ -44,7 +44,7 @@ function hide() {
 			success: function (data, textStatus, jqXHR) {
 
 				console.log(JSON.stringify(data));
-			
+				$('#passPortBtnId').prop('disabled', true);
 				if(data.errorCode==1)
 					{
 						if(data.data.nationality=="Cambodian")
@@ -53,6 +53,12 @@ function hide() {
 							$('#errorMessage').text($.i18n(''));
 							$('#errorMessage').text($.i18n('featureNotSupportForCambodian'));
 							}
+						else if(data.data.onVisa=="N")
+						{
+						$('#errorModal').openModal();
+						$('#errorMessage').text($.i18n(''));
+						$('#errorMessage').text($.i18n('VISA_UPDATE_NOT_ALLOWED'));
+						}
 						else{
 					 $("#match-data").css("display", "block");
 		                $("#EndUserInfoForm").css("display", "block");
