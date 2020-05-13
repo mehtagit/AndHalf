@@ -418,12 +418,18 @@ var contextpath = "${context}";
 <%} %>
 								</div>
 								
-
-								<div class="col s12 m6 l6" style="margin-top: 3px;">
+	<div class="input-field col s12 m6 l6">
 									<input disabled="disabled" placeholder="" type="text" name="natureOfEmployment" id="natureOfEmployment" 
 										title=""  /> 
 									<label for="natureOfEmployment"><spring:message code="registration.natureofemployment" /> <span class="star">*</span></label>
+								</div>
 
+
+<%-- 								<div class="col s12 m6 l6" style="margin-top: 3px;">
+									<input disabled="disabled" placeholder="" type="text" name="natureOfEmployment" id="natureOfEmployment" 
+										title=""  /> 
+									<label for="natureOfEmployment"><spring:message code="registration.natureofemployment" /> <span class="star">*</span></label>
+ --%>
 
 									<%-- <label> <spring:message code="registration.natureofemployment" /> <span class="star">*</span></label>
 
