@@ -84,8 +84,23 @@ var path="${context}";
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
   
  <style type="text/css">
- .dataTables_scrollBody {
+/*  .dataTables_scrollBody {
     height: 100px !important;
+} */
+.dataTables_scrollBody {
+    width: 100%;
+    max-height: 400px !important;
+
+   height: auto !important;
+
+
+}
+.dataTables_scroll {
+    margin-top: 2px;
+}
+button.modal-action.modal-close.waves-effect.waves-green.btn-flat.right {
+   height: 36px;
+	 font-size: 31px
 }
  </style>
 

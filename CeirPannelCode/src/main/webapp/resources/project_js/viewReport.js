@@ -51,12 +51,12 @@
 		//**************************************************filter table**********************************************
 		
 		function Datatable(lang){
-			var table = $('#reportLibraryTable').DataTable();
+			//var table = $('#reportLibraryTable').DataTable();
 			
-			alert("table");
-			var info = table.page.info(); 
-			var pageNo=info.page;
-			var pageSize =info.length;
+			//alert("table");
+			//var info = table.page.info(); 
+			//var pageNo=info.page;
+			//var pageSize =info.length;
 			
 		
 			var filter =[];
@@ -90,7 +90,7 @@
 						
 						console.log("dataObject--->" +dataObject);
 						
-						var temp = table.dataTable({
+						var table=  $('#reportLibraryTable').DataTable({
 							/* "order" : [[1, "asc"]],*/
 							destroy :true,
 							"serverSide": false,

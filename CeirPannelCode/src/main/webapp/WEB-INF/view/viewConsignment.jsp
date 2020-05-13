@@ -1,12 +1,26 @@
+<%@ page import="java.util.Date" %>
 <%
-	response.setHeader("Cache-Control", "no-cache");
+   response.setHeader("Cache-Control", "no-cache");
 	response.setHeader("Cache-Control", "no-store");
 	response.setDateHeader("Expires", 0);
 	response.setHeader("Pragma", "no-cache");
-	/*  session.setMaxInactiveInterval(200); //200 secs
-	 session.setAttribute("usertype", null); */
-	if (session.getAttribute("usertype") != null) {
+	
+    /*   //200 secs
+	 session.setAttribute("usertype", null);  */
+/* 	 session.setMaxInactiveInterval(10); */
+	 int timeout = session.getMaxInactiveInterval();
+	
+	 long accessTime = session.getLastAccessedTime();
+	 long currentTime= new Date().getTime(); 
+	 System.out.println("accessTime========"+(accessTime + timeout));
+	 System.out.println("timeout========"+timeout);
+	 System.out.println("currentTime========"+currentTime);
+	 if( currentTime< accessTime + timeout){
+	/*  response.setHeader("Refresh", timeout + "; URL = ../login");
+	 System.out.println("timeout========"+timeout); 
+	if (session.getAttribute("usertype") != null) { */
 %>
+
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
@@ -78,8 +92,21 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <style type="text/css">
+
 .dataTables_scrollBody {
-    height: 100px !important;
+    width: 100%;
+    max-height: 400px !important;
+
+   height: auto !important;
+
+
+}
+.dataTables_scroll {
+    margin-top: 2px;
+}
+button.modal-action.modal-close.waves-effect.waves-green.btn-flat.right {
+    height: 36px;
+	 font-size: 31px
 }
 </style>
 </head>
@@ -1050,6 +1077,13 @@
 			"*Session has been expired");
 	window.top.location.href = "../login";
 </script>
+<!-- <script language="JavaScript">
+window.onload = function() {
+setInterval(function() {
+window.location.replace("../login");
+}, 10);
+}
+ --></script>
 <%
 	}
 %>

@@ -585,7 +585,7 @@ function table(url,dataUrl){
 				orderCellsTop : true,
 				"ordering" : false,
 				"bPaginate" : true,
-				"bFilter" : true,
+				"bFilter" : false,
 				"bInfo" : true,
 				"bSearchable" : true,
 				"oLanguage": {  
@@ -1175,7 +1175,7 @@ function historytable(url,dataUrl){
 				orderCellsTop : true,
 				"ordering" : false,
 				"bPaginate" : true,
-				"bFilter" : true,
+				"bFilter" : false,
 				"bInfo" : true,
 				"bSearchable" : true,
 				"oLanguage": {  

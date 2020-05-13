@@ -1,10 +1,10 @@
 package org.gl.ceir.CeirPannelCode.Controller;
 import java.io.IOException;
 import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignClientImplementation;
@@ -17,9 +17,9 @@ import org.gl.ceir.CeirPannelCode.Model.Operator;
 import org.gl.ceir.CeirPannelCode.Model.Otp;
 import org.gl.ceir.CeirPannelCode.Model.OtpResponse;
 import org.gl.ceir.CeirPannelCode.Model.PortAddress;
-import org.gl.ceir.CeirPannelCode.Model.Registration;
 import org.gl.ceir.CeirPannelCode.Model.SecurityQuestion;
 import org.gl.ceir.CeirPannelCode.Model.Usertype;
+import org.gl.ceir.CeirPannelCode.Service.LoginService;
 import org.gl.ceir.CeirPannelCode.Service.RegistrationService;
 import org.gl.ceir.CeirPannelCode.Util.HttpResponse;
 import org.gl.ceir.pagination.model.AlertContentModel;
@@ -29,10 +29,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -53,14 +51,21 @@ public class RegistrationController {
 	@Autowired
 	PortAddressFeign portAddressFeign;
 
+	@Autowired
+	LoginService loginService;
 	private final Logger log = LoggerFactory.getLogger(getClass());	
-	@RequestMapping("DMC")
-	public ModelAndView index(HttpServletRequest request){
+
+@RequestMapping("DMC")
+	public ModelAndView index(HttpServletRequest request,HttpSession session){
+		
 		log.info("inside index controller ");
 		ModelAndView mv=new ModelAndView();
+		Integer userid=(Integer)session.getAttribute("userid");
+		log.info("userid::::::::::"+userid);
+		loginService.sessionRemoveCode(userid, session);
 		mv.setViewName("index");
 		return mv;      
-	}         
+	}          
 
 	@ResponseBody
 	@GetMapping("asTypeData/{tagId}")

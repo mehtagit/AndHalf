@@ -146,6 +146,7 @@
         .modal {
         	width: 50%;
         }
+        
  */    </style>
 <script>
 var contextpath = "${context}";
@@ -363,7 +364,7 @@ var contextpath = "${context}";
                                         <div class="row">
                                             <div class="input-field col s12 center">
                                                 <!-- <a href="homePage" class="btn" style="width: 100%;">ok</a> -->
-                                                 <a href="./redirectToHomePage" class=" btn" id="updateEndUserStockOK" type=""><spring:message code="modal.ok" /></a>
+                                                 <a href="./redirectToHomePage" class=" btn" id="updateEndUserStockOK" type=""><spring:message code="modal.close" /></a>
                                                 <button class=" btn" id="updateEndUserStock" type="submit"><spring:message code="button.submit" /></button>
                                             </div>
                                         </div>

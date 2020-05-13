@@ -256,7 +256,7 @@ public class UploadPaidStatus {
 		if("Immigration".equals(userType)){
 			pageElement.setPageTitle(Translator.toLocale("Device Activation"));	
 		}else {
-		pageElement.setPageTitle(Translator.toLocale("view.uplaodpaidstatus"));
+		pageElement.setPageTitle(Translator.toLocale("customRegisterDevice"));
 		}
 		
 		List<Button> buttonList = new ArrayList<>();
@@ -281,7 +281,7 @@ public class UploadPaidStatus {
 			pageElement.setButtonList(buttonList);
 			
 		}else {
-			String[] names= {"HeaderButton",Translator.toLocale("button.adddevice"),"./add-device-information","btnLink","FilterButton", Translator.toLocale("button.filter"),"filter("+ConfigParameters.languageParam+")","submitFilter"};
+			String[] names= {"HeaderButton",Translator.toLocale("button.register"),"./add-device-information","btnLink","FilterButton", Translator.toLocale("button.filter"),"filter("+ConfigParameters.languageParam+")","submitFilter"};
 			for(int i=0; i< names.length ; i++) {
 				button = new Button();
 				button.setType(names[i]);

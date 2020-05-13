@@ -1,3 +1,5 @@
+//var lang=$('#langlist').val() == 'km' ? 'km' : 'en';
+var tag;
 function changePassword(){
 	$("#changePassBtn").prop('disabled', true);
 	var obj="";

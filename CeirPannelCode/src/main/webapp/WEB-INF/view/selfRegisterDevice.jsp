@@ -155,6 +155,20 @@ input[type='search'] {
 	background-repeat: no-repeat;
 	color: #444;
 }
+.dataTables_scrollBody {
+    width: 100%;
+    max-height: 400px !important;
+
+   height: auto !important;
+
+
+}
+.dataTables_scroll {
+    margin-top: 2px;
+}
+button.modal-action.modal-close.waves-effect.waves-green.btn-flat.right {
+    height: 25px;
+}
 </style>
 </head>
 <body data-lang-param="${pageContext.response.locale}"
@@ -766,7 +780,7 @@ input[type='search'] {
 									
 										<form action="${context}/uploadPaidStatus">
 										<div class="col s12 m12 l12" id="tableDiv"
-											style="padding-bottom: 5px; background-color: #e2edef52;">
+											style="padding-bottom: 5px; background-color: #e2edef52; display:none">
 										</div>
 											<div id="filterBtnDiv"></div>
 											<p id="errorMsg" style="color: red;font-size: 12px;position: absolute;left: 40px;margin: 0;top: 122px;"class="left"></p>
@@ -779,7 +793,11 @@ input[type='search'] {
 													id="data-table-simple" cellspacing="0">
 
 												</table>
-
+													<div class="input-field col s12 m12 l12 center">
+                                           
+                                            <a href="./redirectToHomePage" class="btn modal-trigger"
+                                                style="margin-left: 10px;"><spring:message code="modal.close" /></a>
+                                        </div>
 												<a href="Javascript:void(0);" onclick="viewDeviceHistory()" style="display: none"><spring:message code="modal.header.viewBlockDevices" /></a>
 											</div>
 										</div>
@@ -949,7 +967,7 @@ input[type='search'] {
 		</div>
 	</div>
 	<form action="viewDeviceInformation" method="post" id="viewDeviceForm">
-	<input type="text" id="viewbyImei" name="viewbyImei">
+	<input type="text" id="viewbyImei" name="viewbyImei" style="display: none">
 	</form>
 	
 	<div id="tableOnModal" class="modal">

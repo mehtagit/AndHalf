@@ -57,7 +57,12 @@
 					"featureId":parseInt(featureId),
 					"userTypeId": parseInt($("body").attr("data-userTypeID")),
 					"userType":$("body").attr("data-roleType"),
-					"tag": window.tag_val
+					"tag": window.tag_val,
+					"userId":parseInt(userId),
+					"featureId":parseInt(featureId),
+					"userTypeId": parseInt($("body").attr("data-userTypeID")),
+					"userType":$("body").attr("data-roleType"),
+					"username" : $("body").attr("data-selected-username")
 			}				
 			if(lang=='km'){
 				var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
@@ -254,6 +259,11 @@
 					  "tagId": $('#tagId').val(),
 					  "value": $('#addValue').val(),
 					  "description" : $('#description').val(),
+					  "userId":parseInt(userId),
+					  "featureId":parseInt(featureId),
+					  "userTypeId": parseInt($("body").attr("data-userTypeID")),
+					  "userType":$("body").attr("data-roleType"),
+					  "username" : $("body").attr("data-selected-username")
 				}
 		
 		console.log("request------------->" +JSON.stringify(request))
@@ -287,7 +297,12 @@
 		
 			var request ={
 					  "id" : parseInt(Id),
-					  "userId":parseInt(userId)
+					  "userId":parseInt(userId),
+					  "userId":parseInt(userId),
+					  "featureId":parseInt(featureId),
+					  "userTypeId": parseInt($("body").attr("data-userTypeID")),
+					  "userType":$("body").attr("data-roleType"),
+					  "username" : $("body").attr("data-selected-username")
 				}
 			$.ajax({
 				url: './fieldViewByID',
@@ -336,7 +351,12 @@
 		  "id": parseInt($("#editId").val()),
 		  "interp": $("#editInterp").val(),
 		  "tag": $("#Edittag").val(),
-		  "tagId": $("#editFieldId").val()
+		  "tagId": $("#editFieldId").val(),
+		  "userId":parseInt(userId),
+		  "featureId":parseInt(featureId),
+		  "userTypeId": parseInt($("body").attr("data-userTypeID")),
+		  "userType":$("body").attr("data-roleType"),
+		  "username" : $("body").attr("data-selected-username")
 		  //"value":$("#editValue").val()
 		}
 		
@@ -382,7 +402,12 @@
 	function confirmantiondelete(){
 		var request ={
 				"userId" : $("body").attr("data-userID"),
-				"id"  : parseInt($("#deleteFieldId").val())
+				"id"  : parseInt($("#deleteFieldId").val()),
+				"userId":parseInt(userId),
+				"featureId":parseInt(featureId),
+				"userTypeId": parseInt($("body").attr("data-userTypeID")),
+				"userType":$("body").attr("data-roleType"),
+				"username" : $("body").attr("data-selected-username")
 		}
 		console.log(JSON.stringify(request));
 		$.ajax({

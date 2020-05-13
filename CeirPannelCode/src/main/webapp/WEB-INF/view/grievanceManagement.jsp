@@ -82,7 +82,12 @@ var path="${context}";
   <!------------------------------------------- Dragable Model---------------------------------->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-  
+  <style type="text/css">
+  button.modal-action.modal-close.waves-effect.waves-green.btn-flat.right {
+   height: 36px;
+   font-size: 31px
+}
+  </style>
  
 
 </head>
@@ -128,7 +133,7 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}" data-u
 	</section>
 	
 	<div id="replyModal" class="modal">
-        <button class="modal-close btn-flat right" onclick="cleanReplyPopUp()">&times;</button>
+        <button class="modal-action modal-close waves-effect waves-green btn-flat right" onclick="cleanReplyPopUp()">&times;</button>
              <h6 class="modal-header"><spring:message code="input.reply" /></h6>
              <div class="modal-content">
              <form id="replymessageForm" onsubmit="return saveGrievanceReply()" method="POST" enctype="multipart/form-data" >
@@ -245,7 +250,7 @@ style="font-size: 20px;">+</span> <spring:message code="input.addmorefile" /></b
 </div>
 
 <div id="manageAccount" class="modal">
-<button class="modal-close btn-flat right" data-dismiss="modal">&times;</button>
+<button class="modal-action modal-close waves-effect waves-green btn-flat right" data-dismiss="modal">&times;</button>
 <h6 class="modal-header"><spring:message code="modal.header.grievancehistory" /></h6>
 <div class="modal-content">
 <div id="live-chat">
