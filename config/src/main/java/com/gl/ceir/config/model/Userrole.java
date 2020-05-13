@@ -1,7 +1,5 @@
 package com.gl.ceir.config.model;
-
 import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,8 +9,11 @@ import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 
 @Entity
+@Audited
 public class Userrole {
 	private static long serialVersionUID = 1L;
 
@@ -24,11 +25,13 @@ public class Userrole {
 	@UpdateTimestamp
 	private Date modifiedOn; 
 
-	@ManyToOne 
+	@ManyToOne
+	@NotAudited
 	@JoinColumn(name = "user_id",nullable = false) 
 	private User userData;
 
 	@ManyToOne 
+	@NotAudited
 	@JoinColumn(name = "usertype_id",nullable = false) 
 	private Usertype usertypeData; 
 

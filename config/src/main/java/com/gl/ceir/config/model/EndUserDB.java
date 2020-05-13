@@ -27,7 +27,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Audited
-public class EndUserDB implements Serializable {
+public class EndUserDB   {
 
 	private static final long serialVersionUID = 1L;
 
