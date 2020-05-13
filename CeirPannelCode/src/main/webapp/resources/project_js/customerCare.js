@@ -179,7 +179,7 @@ function notificationTable(){
 	var filterRequest={
 			"imei" : $("body").attr("data-imei"),
 			"msisdn" : $("body").attr("data-msisdn"),
-			"deviceIdType" : $("body").attr("data-deviceIdType"),
+			"deviceIdType" : parseInt($("body").attr("data-deviceIdvalue")),
 			"userType" : $("body").attr("data-roleType"),
 			"userId" : $("body").attr("data-userID"),
 			"featureId" : 26,

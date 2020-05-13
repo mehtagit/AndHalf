@@ -85,6 +85,8 @@
 						"bFilter" : true,
 						"bInfo" : true,
 						"bSearchable" : true,
+						"scrollX": true,
+						"scrolly": true,
 						 "data": dataObject.data,
 						 "columns": dataObject.columns
 					

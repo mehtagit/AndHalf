@@ -3,6 +3,7 @@ import java.util.List;
 
 import org.gl.ceir.CeirPannelCode.Model.ActionModel;
 import org.gl.ceir.CeirPannelCode.Model.AddMoreFileModel;
+import org.gl.ceir.CeirPannelCode.Model.CCPolicyBreachRequest;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentModel;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentUpdateRequest;
 import org.gl.ceir.CeirPannelCode.Model.CustomerCareByTxnId;
@@ -402,7 +403,7 @@ public @ResponseBody ConfigContentModel viewAdminFeign(FilterRequest filterReque
 				//***************************************************CC Policy Notification Feign********************************
 
 				@RequestMapping(value="/policy-breach-notification" ,method=RequestMethod.POST) 
-				public Object ccdashBoardNotification(@RequestBody CustomerCareRequest filterRequest,
+				public Object ccdashBoardNotification(@RequestBody CCPolicyBreachRequest filterRequest,
 						@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
 						@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize);
 

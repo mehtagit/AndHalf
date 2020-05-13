@@ -12,14 +12,15 @@
 	});	
 	
 	function hide() {
-		var deviceDropDown =  document.getElementById("deviceType");
-		var deviceIdType = $('#deviceType').val();
+		//var deviceDropDown =  document.getElementById("deviceType");
+		var deviceIdType =  $("#deviceType option:selected").text();
+		var deviceIdvalue = $("#deviceType").val();
 		var msisdn = $('#msisdn').val();
 		var imei =  $('#imei').val();
 		var deviceIdType =  deviceIdType;
 		//sessionStorage.setItem("roleType",roleType);
 		//sessionStorage.setItem("tagId", tagId);
-		window.location.replace("./search?via=other&msisdn="+msisdn+"&imei="+imei+"&deviceIdType="+deviceIdType);
+		window.location.replace("./search?via=other&msisdn="+msisdn+"&imei="+imei+"&deviceIdType="+deviceIdType+"&deviceIdvalue="+deviceIdvalue);
 		return false;
 	}
 	

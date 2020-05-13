@@ -100,10 +100,11 @@
 												required  maxlength="12" name="Search" />
 
 										</div>
-										<div class="input-field col s12 m2 l2">
-											<button class="btn" type="submit">
+										<div class="input-field col s12 m6">
+											<button  class="btn" type="submit" id="passPortBtnId">
 												<spring:message code="button.submit" />
 											</button>
+											<a href="./redirectToHomePage" class="btn"><spring:message code="modal.close" /></a>
 										</div>
 									</div>
 								</form>
@@ -597,9 +598,9 @@
 				<div class="input-field col s12 center">
 					<div class="input-field col s12 center">
 						<!-- <a href="homePage" class="btn">Yes</a> -->
-						<button class="modal-close btn" style="margin-left: 10px;">
+						<a  href="./redirectToHomePage" class="modal-close btn" style="margin-left: 10px;">
 							<spring:message code="modal.ok" />
-						</button>
+						</a>
 					</div>
 				</div>
 			</div>

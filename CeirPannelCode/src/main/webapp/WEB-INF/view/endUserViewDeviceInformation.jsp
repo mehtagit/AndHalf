@@ -639,7 +639,7 @@ input[type='search'] {
 									<div class="col s12 m12 center" style="margin-top: 30px; padding-bottom: 50px;">
 										<%-- <button class="btn " type="submit"> <spring:message code="button.submit" /></button> --%>
 										<button type='button' class="btn" id="redirectToPage" 
-												style="margin-left: 10px;"><spring:message code="modal.close=Close" /></button>
+												style="margin-left: 10px;"><spring:message code="modal.close" /></button>
 									</div>
 
 								</form>

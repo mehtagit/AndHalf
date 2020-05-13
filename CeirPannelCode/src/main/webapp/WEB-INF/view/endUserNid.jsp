@@ -186,7 +186,9 @@ section {
 						</div>
 							
 						<div class="input-field col s12 m2 l2">
+						
 							<button type="submit" class="btn"  id="submit"><spring:message code="button.submit" /></button>
+							<a href="./redirectToHomePage" class="btn"><spring:message code="modal.close" /></a>
 						</div>
 						</form>
 						<div class="col s12 m12"><p id="errorMsgOnModal" class="nidValidationMsg"><spring:message code="validation.12NID" /></p></div>
