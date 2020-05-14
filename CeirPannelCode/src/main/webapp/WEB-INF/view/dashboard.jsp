@@ -105,8 +105,18 @@ data-roleType="${usertype}" data-userTypeID="${usertypeId}"
 	data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}"
 	data-stolenselected-roleType="${stolenselectedUserTypeId}"
 	data-selected-consignmentTxnId="${consignmentTxnId}"
-	data-selected-consignmentStatus="${consignmentStatus}">
+	data-selected-consignmentStatus="${consignmentStatus}"
+	data-defaultLink="${defaultLink}">
 	<!-- Start Page Loading -->
+	
+<!-- 	system - system management   feature id- 16
+operation - alert management feature id- 31
+customer care- search        feature id -26
+
+
+session parameter name- defaultLink -->
+
+
 	<div id="loader-wrapper">
 	<div id="initialloader"></div>
 		<div class="loader-section section-left"></div>
@@ -240,7 +250,7 @@ data-roleType="${usertype}" data-userTypeID="${usertypeId}"
 					<li>
 						<ul class="navData">
 							<c:forEach items="${features}" var="feature">
-							<li class="bold"><a href="${feature.link}?FeatureId=${feature.id}"
+							<li class="bold" data-li="${feature.id}"><a href="${feature.link}?FeatureId=${feature.id}"
 									target="mainArea" class="waves-effect waves-cyan"
 									data-featureID="${feature.id}"><i class="${feature.logo}"></i>
 										<spring:message
