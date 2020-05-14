@@ -20,5 +20,5 @@ public interface SubFeatures {
 	String UPLOAD = "Upload";
 	String REQUEST="Request";
 	String Check="Check";
-	String Search_Nid="Search Nid";
+	String Search_NID="Search NID";
 }

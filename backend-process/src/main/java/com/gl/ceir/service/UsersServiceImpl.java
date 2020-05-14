@@ -40,9 +40,11 @@ public class UsersServiceImpl {
 			return new ArrayList<>(1);
 		}
 	}
-	
+
 	public void deleteSomeUser(List<Long> ids) {
-		userRepository.deleteUsersWithIds(ids);
+		for(Long id : ids) {
+			userRepository.deleteById(id);
+		}
 	}
 
 	private GenericSpecificationBuilder<User> buildSpecification(String date){

@@ -173,11 +173,12 @@ public class VisaDb implements Serializable {
 		builder.append(entryDateInCountry);
 		builder.append(", visaExpiryDate=");
 		builder.append(visaExpiryDate);
-		builder.append(", endUserDB=");
-		builder.append(endUserDB);
+		builder.append(", visaTypeInterp=");
+		builder.append(visaTypeInterp);
+		builder.append(", toString()=");
+		builder.append(super.toString());
 		builder.append("]");
 		return builder.toString();
 	}
 
-	
 }

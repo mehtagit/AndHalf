@@ -49,7 +49,6 @@ import com.gl.ceir.config.model.Userrole;
 import com.gl.ceir.config.model.Usertype;
 import com.gl.ceir.config.model.WebActionDb;
 import com.gl.ceir.config.model.constants.Alerts;
-import com.gl.ceir.config.model.constants.ConsignmentStatus;
 import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.Features;
 import com.gl.ceir.config.model.constants.GenericMessageTags;
@@ -63,17 +62,14 @@ import com.gl.ceir.config.model.file.StockFileModel;
 import com.gl.ceir.config.repository.AuditTrailRepository;
 import com.gl.ceir.config.repository.DashboardUsersFeatureStateMapRepository;
 import com.gl.ceir.config.repository.StatesInterpretaionRepository;
-import com.gl.ceir.config.repository.StockDetailsOperationRepository;
 import com.gl.ceir.config.repository.StockManagementRepository;
 import com.gl.ceir.config.repository.StockMgmtHistoryRepository;
-import com.gl.ceir.config.repository.StokeDetailsRepository;
 import com.gl.ceir.config.repository.UserProfileRepo;
 import com.gl.ceir.config.repository.UserProfileRepository;
 import com.gl.ceir.config.repository.UserRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
 import com.gl.ceir.config.service.businesslogic.StateMachine;
 import com.gl.ceir.config.specificationsbuilder.GenericSpecificationBuilder;
-import com.gl.ceir.config.specificationsbuilder.Joiner;
 import com.gl.ceir.config.transaction.StockTransaction;
 import com.gl.ceir.config.util.CustomMappingStrategy;
 import com.gl.ceir.config.util.HttpResponse;
@@ -91,16 +87,10 @@ public class StockServiceImpl {
 	private String featureName;
 
 	@Autowired
-	StokeDetailsRepository stokeDetailsRepository;
-
-	@Autowired
 	StockManagementRepository stockManagementRepository;
 
 	@Autowired
 	StockMgmtHistoryRepository stockMgmtHistoryRepository;
-
-	@Autowired
-	StockDetailsOperationRepository stockDetailsOperationRepository;
 
 	@Autowired
 	DashboardUsersFeatureStateMapRepository dashboardUsersFeatureStateMapRepository; 

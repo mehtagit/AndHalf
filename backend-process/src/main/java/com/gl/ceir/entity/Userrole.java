@@ -11,8 +11,10 @@ import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.envers.Audited;
 
 @Entity
+@Audited
 public class Userrole {
 	private static long serialVersionUID = 1L;
 
@@ -31,8 +33,6 @@ public class Userrole {
 	@ManyToOne 
 	@JoinColumn(name = "usertype_id",nullable = false) 
 	private Usertype usertypeData; 
-
-	
 	
 	public Userrole() {
 		super();

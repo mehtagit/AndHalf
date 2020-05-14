@@ -6,6 +6,7 @@ import java.util.Objects;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.gl.ceir.constant.Alerts;
 import com.gl.ceir.constant.ConfigTags;
@@ -21,6 +22,7 @@ import com.gl.ceir.repo.VisaDbRepository;
 import com.gl.ceir.specification.GenericSpecificationBuilder;
 import com.gl.ceir.util.DateUtil;
 
+@Component
 public class VisaExpire extends BaseService{
 
 	private static final Logger logger = LogManager.getLogger(VisaExpire.class);

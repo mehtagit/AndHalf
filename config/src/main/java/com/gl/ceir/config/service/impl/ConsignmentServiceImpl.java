@@ -65,8 +65,6 @@ import com.gl.ceir.config.repository.AuditTrailRepository;
 import com.gl.ceir.config.repository.ConsignmentRepository;
 import com.gl.ceir.config.repository.DashboardUsersFeatureStateMapRepository;
 import com.gl.ceir.config.repository.MessageConfigurationDbRepository;
-import com.gl.ceir.config.repository.StockDetailsOperationRepository;
-import com.gl.ceir.config.repository.StokeDetailsRepository;
 import com.gl.ceir.config.repository.SystemConfigurationDbRepository;
 import com.gl.ceir.config.repository.UserProfileRepository;
 import com.gl.ceir.config.repository.UserRepository;
@@ -94,12 +92,6 @@ public class ConsignmentServiceImpl {
 
 	@Autowired
 	private ConsignmentRepository consignmentRepository;
-
-	@Autowired
-	StokeDetailsRepository stokeDetailsRepository;
-
-	@Autowired	
-	StockDetailsOperationRepository stockDetailsOperationRepository;
 
 	@Autowired
 	WebActionDbRepository webActionDbRepository;

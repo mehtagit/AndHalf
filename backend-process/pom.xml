@@ -5,7 +5,7 @@
 
 	<groupId>com.gl.ceir</groupId>
 	<artifactId>backend-process</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<packaging>jar</packaging>
 
 	<name>backend-process</name>
@@ -22,8 +22,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
-		<spring.boot.version>2.0.3.RELEASE</spring.boot.version>
-		<spring.version>5.0.8.RELEASE</spring.version>
+		<spring.version>5.1.15.RELEASE</spring.version>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 

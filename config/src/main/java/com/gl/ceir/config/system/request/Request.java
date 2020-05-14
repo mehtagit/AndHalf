@@ -2,7 +2,6 @@ package com.gl.ceir.config.system.request;
 
 import java.time.LocalDateTime;
 
-import com.gl.ceir.config.model.Action;
 import com.gl.ceir.config.model.Rules;
 import com.gl.ceir.config.model.constants.ActionNames;
 import com.gl.ceir.config.model.constants.ImeiStatus;
@@ -20,17 +19,8 @@ public class Request {
 	private String state;
 	private LocalDateTime nextRetryTime;
 	private ActionNames actionNames;
-	private Action action;
 	private String mobileOperator;
 	private Long scriptId;
-
-	public Action getAction() {
-		return action;
-	}
-
-	public void setAction(Action action) {
-		this.action = action;
-	}
 
 	public Long getImei() {
 		return imei;
@@ -141,7 +131,7 @@ public class Request {
 		return "Request [imei=" + imei + ", msisdn=" + msisdn + ", filename=" + filename + ", systemEntry="
 				+ systemEntry + ", imsi=" + imsi + ", failRule=" + failRule + ", ticketId=" + ticketId + ", status="
 				+ status + ", state=" + state + ", nextRetryTime=" + nextRetryTime + ", actionNames=" + actionNames
-				+ ", action=" + action + ", mobileOperator=" + mobileOperator + "]";
+				+ ", mobileOperator=" + mobileOperator + "]";
 	}
 
 }

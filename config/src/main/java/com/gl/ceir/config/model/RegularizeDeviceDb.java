@@ -414,14 +414,24 @@ public class RegularizeDeviceDb implements Serializable {
 		builder.append(fourthImei);
 		builder.append(", remark=");
 		builder.append(remark);
-		builder.append(", origin=");
-		builder.append(origin);
 		builder.append(", status=");
 		builder.append(status);
+		builder.append(", stateInterp=");
+		builder.append(stateInterp);
+		builder.append(", origin=");
+		builder.append(origin);
 		builder.append(", nationality=");
 		builder.append(nationality);
+		builder.append(", creatorUserId=");
+		builder.append(creatorUserId);
+		builder.append(", multiSimStatusInterp=");
+		builder.append(multiSimStatusInterp);
+		builder.append(", toString()=");
+		builder.append(super.toString());
 		builder.append("]");
 		return builder.toString();
 	}
+
+	
 
 }

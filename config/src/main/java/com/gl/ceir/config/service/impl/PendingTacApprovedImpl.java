@@ -213,7 +213,7 @@ public class PendingTacApprovedImpl {
 
 			cmsb.orSearch(new SearchCriteria("txnId", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 
-			cmsb.orSearch(new SearchCriteria("tac", filterRequest.getTac(), SearchOperation.LIKE, Datatype.STRING));
+			cmsb.orSearch(new SearchCriteria("tac", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 
 		}
 		return cmsb;

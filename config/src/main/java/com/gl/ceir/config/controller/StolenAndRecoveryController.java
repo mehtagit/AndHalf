@@ -22,7 +22,6 @@ import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.StackholderPolicyMapping;
 import com.gl.ceir.config.model.StolenandRecoveryMgmt;
 import com.gl.ceir.config.repository.AuditTrailRepository;
-import com.gl.ceir.config.service.impl.DeviceSnapShotServiceImpl;
 import com.gl.ceir.config.service.impl.StackholderPolicyMappingServiceImpl;
 import com.gl.ceir.config.service.impl.StolenAndRecoveryServiceImpl;
 import com.gl.ceir.config.util.Utility;
@@ -32,7 +31,7 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 public class StolenAndRecoveryController {
 
-	private static final Logger logger = LogManager.getLogger(DeviceSnapShotServiceImpl.class);
+	private static final Logger logger = LogManager.getLogger(StolenAndRecoveryController.class);
 
 	@Autowired
 	StolenAndRecoveryServiceImpl stolenAndRecoveryServiceImpl;

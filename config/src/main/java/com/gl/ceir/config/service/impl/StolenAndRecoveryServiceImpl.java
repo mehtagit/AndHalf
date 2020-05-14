@@ -64,7 +64,6 @@ import com.gl.ceir.config.model.file.StolenAndRecoveryFileModel;
 import com.gl.ceir.config.repository.AuditTrailRepository;
 import com.gl.ceir.config.repository.ConsignmentRepository;
 import com.gl.ceir.config.repository.DashboardUsersFeatureStateMapRepository;
-import com.gl.ceir.config.repository.ImmegreationImeiDetailsRepository;
 import com.gl.ceir.config.repository.SingleImeiHistoryDbRepository;
 import com.gl.ceir.config.repository.StockManagementRepository;
 import com.gl.ceir.config.repository.StolenAndRecoveryHistoryMgmtRepository;
@@ -111,9 +110,6 @@ public class StolenAndRecoveryServiceImpl {
 
 	@Autowired
 	SingleImeiHistoryDbRepository singleImeiHistoryDbRepository;
-
-	@Autowired
-	ImmegreationImeiDetailsRepository immegreationImeiDetailsRepository;
 
 	@Autowired
 	ConfigurationManagementServiceImpl configurationManagementServiceImpl; 
