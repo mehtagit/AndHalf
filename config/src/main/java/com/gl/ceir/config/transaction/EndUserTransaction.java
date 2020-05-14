@@ -58,9 +58,6 @@ public class EndUserTransaction {
 		boolean status = Boolean.FALSE;
 		updateVisaRepository.save(visaUpdateDb);
 		logger.info("update Visa request of user have been updated succesfully.");
-		auditTrailRepository.save(new AuditTrail(endUserdb.getId(), "", 17L, 
-				"End User", 43L, Features.UPDATE_VISA, SubFeatures.REQUEST, ""));
-		logger.info("VisaUpdate [" + endUserdb.getTxnId() + "] saved in audit_trail.");
 		status = Boolean.TRUE;
 		return status;
 	}

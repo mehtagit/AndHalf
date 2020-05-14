@@ -390,8 +390,6 @@ public class EndUserDB   {
 		builder.append(docType);
 		builder.append(", docTypeInterp=");
 		builder.append(docTypeInterp);
-		builder.append(", regularizeDeviceDbs=");
-		builder.append(regularizeDeviceDbs);
 		builder.append(", nationality=");
 		builder.append(nationality);
 		builder.append(", onVisa=");
@@ -416,8 +414,8 @@ public class EndUserDB   {
 		builder.append(entryDateInCountry);
 		builder.append(", rejectedRemark=");
 		builder.append(rejectedRemark);
-		builder.append(", auditParameters=");
-		builder.append(auditParameters);
+		builder.append(", toString()=");
+		builder.append(super.toString());
 		builder.append("]");
 		return builder.toString();
 	}

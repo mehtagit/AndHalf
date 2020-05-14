@@ -153,7 +153,7 @@ public class EnduserServiceImpl {
 				userId=data.getUserId();
 			}
 			auditTrailRepository.save(new AuditTrail(userId, username, 17L,
-					data.getUserType(), 12,Features.REGISTER_DEVICE, SubFeatures.Search_Nid, "", "NA"));
+					data.getUserType(), 12,Features.REGISTER_DEVICE, SubFeatures.Search_NID, "", "NA"));
 			logger.info("AUDIT : Saved request in audit.");
 			
 			EndUserDB endUserDB = endUserDbRepository.getByNid(data.getNid());
@@ -393,6 +393,10 @@ public class EnduserServiceImpl {
 		try {
 			VisaDb latestVisa = null;
 			// Check if request is null
+			auditTrailRepository.save(new AuditTrail(0, "", 17L, 
+					"End User", 43L, Features.UPDATE_VISA, SubFeatures.REQUEST, "",endUserDB.getTxnId()));
+			logger.info("VisaUpdate [" + endUserDB.getTxnId() + "] saved in audit_trail.");
+
 			if(Objects.isNull(endUserDB.getNid())) {
 				logger.info("Request should not have nid as null.");
 				return new GenricResponse(2, GenericMessageTags.NULL_NID.getTag(), 
@@ -448,7 +452,6 @@ public class EnduserServiceImpl {
 					if(visaDb!=null) { 
 						visaUpdateDb.setId(visaDb.getId());
 						visaUpdateDb.setCreatedOn(visaDb.getCreatedOn());
-
 					}
 					else {
 					}
