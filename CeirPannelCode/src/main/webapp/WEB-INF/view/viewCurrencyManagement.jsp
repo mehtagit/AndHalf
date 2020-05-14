@@ -229,7 +229,7 @@
 					
 					<div class="col s12 m6">
 					<label for="editCurrency" class="active">Currency<span class="star"> *</span></label>
-                     	 <select class="browser-default" id="editCurrency" required="required">
+                     	 <select class="browser-default" id="editCurrency" required="required" disabled>
                                 <option value=""  selected>Select Currency</option>
                           </select>
                         
