@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.UploadPaidStatusFeignClient;
+import org.gl.ceir.CeirPannelCode.Model.AllRequest;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentModel;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest_UserPaidStatus;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
@@ -63,8 +64,35 @@ public class UploadPaidStatus {
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
 	@GetMapping("/paid-status/{nid}")
-	public ResponseEntity<?> respone(@PathVariable("nid") String nid) {
-		GenricResponse response = uploadPaidStatusFeignClient.respone(nid);
+	public ResponseEntity<?> respone(@PathVariable("nid") String nid,HttpSession session) {
+		AllRequest request= new AllRequest();
+		log.info("ssfsfsdfsdf"+nid);
+		  String userType=(String) session.getAttribute("usertype"); 
+		  String  userName=session.getAttribute("username").toString(); 
+		  int userId= (int) session.getAttribute("userid"); 
+		  int userTypeid=(int)  session.getAttribute("usertypeId");
+		  
+		  request.setFeatureId(12);
+		  request.setUserId(userId);
+		  request.setNid(nid);
+		  request.setUsername(userName);
+		  request.setUserTypeId(userTypeid);
+		  request.setUserType(userType);
+		  
+		GenricResponse response = uploadPaidStatusFeignClient.respone(request);
+		return new ResponseEntity<>(response,HttpStatus.OK);
+	}
+	
+	@GetMapping("/endUserpaid-status/{nid}")
+	public ResponseEntity<?> endUserpaid(@PathVariable("nid") String nid,HttpSession session) {
+		AllRequest request= new AllRequest();
+		log.info("ssfsfsdfsdf"+nid);
+		  request.setFeatureId(12);
+		  request.setNid(nid);
+		 request.setUserTypeId(17);
+		  request.setUserType("End User");
+		  
+		GenricResponse response = uploadPaidStatusFeignClient.respone(request);
 		return new ResponseEntity<>(response,HttpStatus.OK);
 	}
 
@@ -366,19 +394,47 @@ public class UploadPaidStatus {
 
 
 	@DeleteMapping("/delete/{imei}")
-	public @ResponseBody GenricResponse deleteConsignment(@PathVariable("imei") Long imei) {
-		GenricResponse response=uploadPaidStatusFeignClient.delete(imei);
+	public @ResponseBody GenricResponse deleteConsignment(@PathVariable("imei") String imei,HttpSession session) {
+		
+		  String userType=(String) session.getAttribute("usertype"); 
+		  String  userName=session.getAttribute("username").toString();
+		  int userId= (int)  session.getAttribute("userid");
+		  int userTypeid=(int)  session.getAttribute("usertypeId");
+		  AllRequest request= new AllRequest();
+		 
+		  request.setFeatureId(12);
+		  request.setUsername(userName);
+		  request.setImei(imei);
+	      request.setUserTypeId(userTypeid);
+		  request.setUserType(userType);
+		  request.setUserId(userId);
+		  log.info(" request=="+request);
+		  GenricResponse response=uploadPaidStatusFeignClient.delete(request);
+		log.info("response after delete consignment."+response);
+		return response;
+	}
+	
+	@DeleteMapping("/endUserdelete/{imei}")
+	public @ResponseBody GenricResponse endUserdeleteConsignment(@PathVariable("imei") String  imei) {
+		  AllRequest request= new AllRequest();
+		  request.setFeatureId(12);
+
+		  request.setImei(imei);
+	      request.setUserTypeId(17);
+		  request.setUserType("End User");
+		  log.info(" request=="+request);
+		GenricResponse response=uploadPaidStatusFeignClient.delete(request);
 		log.info("response after delete consignment."+response);
 		return response;
 	}
 
 
 	
-	@GetMapping("/deviceInfo/{imei}")
-	public @ResponseBody UserPaidStatusContent viewByImei(@PathVariable("imei") Long imei) {
-		UserPaidStatusContent content= uploadPaidStatusFeignClient.viewByImei(imei);
-		return content;
-	}
+	/*
+	 * @GetMapping("/deviceInfo/{imei}") public @ResponseBody UserPaidStatusContent
+	 * viewByImei(@PathVariable("imei") Long imei) { UserPaidStatusContent content=
+	 * uploadPaidStatusFeignClient.viewByImei(imei); return content; }
+	 */
 	
 	
 }

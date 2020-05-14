@@ -422,7 +422,7 @@
 				 var formData= new FormData();
 				 var filterRequest={
 						 "columns": [
-							    "created_on","modified_on","txn_id","status","nid","visa_type","visa_number","visa_expiry_date","visa_file_name","entry_date_in_country","remark","user_id","id"
+							    "created_on","modified_on","txn_id","status","nid","visa_type","visa_number","visa_expiry_date","visa_file_name","entry_date_in_country","remark","user_id"
 							    
 							    ],
 						"tableName": "visa_update_db_aud",

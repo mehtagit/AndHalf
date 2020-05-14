@@ -380,9 +380,9 @@ var contextpath = "${context}";
             <div class="row">
                 <div class="input-field col s12 center">
                     <div class="input-field col s12 center">
-                        
-                        <button class="btn" onclick="closeCancelPopUp()" style="margin-left: 10px;"><spring:message code="modal.no" /></button>
                         <a href="./redirectToHomePage" class="btn"><spring:message code="modal.yes" /></a>
+                        <button class="btn" onclick="closeCancelPopUp()" style="margin-left: 10px;"><spring:message code="modal.no" /></button>
+                        
                     </div>
                 </div>
             </div>

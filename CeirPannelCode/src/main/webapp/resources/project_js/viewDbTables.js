@@ -87,8 +87,8 @@
 						"bSearchable" : true,
 						"scrollX": true,
 						"scrolly": true,
-						 "data": dataObject.data,
-						 "columns": dataObject.columns
+						 "data": dataObject.data,"defaultContent": "",
+						 "columns": dataObject.columns,"defaultContent": ""
 					
 				    });
 					$('div#initialloader').delay(300).fadeOut('slow');

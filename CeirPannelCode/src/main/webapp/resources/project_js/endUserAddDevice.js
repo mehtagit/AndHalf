@@ -31,6 +31,13 @@ function redirectToPage(){
 function submitDeviceInfo(){
 	 var formData= new FormData();	
 	 var fieldId=1;	
+	 var auditParameters={
+			    
+				"featureId":parseInt(12),
+				"userTypeId": 17,
+				"userType":"End User"
+		}
+
 		 var regularizeDeviceDbs =[];
 		 $('.deviceInformation').each(function() {	
 			 var deviceType1=$('#deviceType'+fieldId).val();
@@ -82,6 +89,7 @@ function submitDeviceInfo(){
 				  "propertyLocation": null,
 				  "province": null,
 				  "street": null,
+				  "auditParameters":auditParameters,
 				  "regularizeDeviceDbs":regularizeDeviceDbs,
 				  
 				}
