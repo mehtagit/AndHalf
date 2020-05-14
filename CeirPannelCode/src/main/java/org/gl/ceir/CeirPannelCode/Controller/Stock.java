@@ -68,7 +68,8 @@ ModelAndView mv = new ModelAndView();
 
 
 
-log.info("stock page entry point."+selectedRoleTypeId); 
+log.info("stock page entry point."+selectedRoleTypeId);
+try {
 if(selectedUserTypeId==null)
 {
 List<Usertype> userTypelist=(List<Usertype>) session.getAttribute("usertypeList");
@@ -77,25 +78,30 @@ log.info("role type or role type id="+userTypelist);
 
 if(userTypelist.size()>1)
 {
+	log.info("1");
 	mv.addObject("userTypelist", userTypelist);
 	mv.setViewName("assignDistributor");
 }
 else if(userTypelist.size()==1)
 {
-
+	log.info("2");
 session.setAttribute("selectedUserTypeId", session.getAttribute("usertype"));
 session.setAttribute("selectedRoleTypeId", session.getAttribute("usertypeId"));
 mv.setViewName("ViewStock");
 }
 }
 else {
-	
+	log.info("3");
 	log.info("selectedUserTypeId=="+selectedUserTypeId);
 	log.info("selectedRoleTypeId=="+selectedRoleTypeId);
 	session.setAttribute("selectedUserTypeId", selectedUserTypeId);
 	session.setAttribute("selectedRoleTypeId", selectedRoleTypeId);
 	mv.setViewName("ViewStock");
 
+}}
+catch (Exception e) {
+	// TODO: handle exception
+	log.info("this is catch block session is blank or something went wrong.");
 }
 		
 		return mv; 

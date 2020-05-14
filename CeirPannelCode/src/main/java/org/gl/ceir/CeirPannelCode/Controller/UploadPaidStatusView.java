@@ -84,6 +84,7 @@ FeignCleintImplementation feignCleintImplementation;
 	public ModelAndView pageView(@RequestParam(name="via", required = false) String via,@RequestParam(name="NID", required = false) String NID,HttpSession session
 			,@RequestParam(name="txnID",required = false) String txnID) {
 		ModelAndView modelAndView = new ModelAndView();
+		try {
 		if((session.getAttribute("usertype").equals("CEIRAdmin") || session.getAttribute("usertype").equals("DRT")) && !("other".equals(via))) {
 			modelAndView.setViewName("uploadPaidStatus");
 			
@@ -95,6 +96,10 @@ FeignCleintImplementation feignCleintImplementation;
 		else {
 			modelAndView.setViewName("nidForm");
 		
+		}}
+		catch (Exception e) {
+			// TODO: handle exception
+			log.info("this is catch block session is blank or something went wrong.");
 		}
 		return modelAndView;
 	}
