@@ -28,6 +28,7 @@ private String phoneNo;
 private Integer postalCode;
 private String propertyLocation;
 private String province,entryDateInCountry;;
+private AllRequest auditParameters;
 private List<UplodPaidStatusModel> regularizeDeviceDbs;
 private String street;
 private String txnId;
@@ -231,6 +232,12 @@ public String getRejectedRemark() {
 public void setRejectedRemark(String rejectedRemark) {
 	this.rejectedRemark = rejectedRemark;
 }
+public AllRequest getAuditParameters() {
+	return auditParameters;
+}
+public void setAuditParameters(AllRequest auditParameters) {
+	this.auditParameters = auditParameters;
+}
 @Override
 public String toString() {
 	StringBuilder builder = new StringBuilder();
@@ -278,6 +285,8 @@ public String toString() {
 	builder.append(province);
 	builder.append(", entryDateInCountry=");
 	builder.append(entryDateInCountry);
+	builder.append(", auditParameters=");
+	builder.append(auditParameters);
 	builder.append(", regularizeDeviceDbs=");
 	builder.append(regularizeDeviceDbs);
 	builder.append(", street=");

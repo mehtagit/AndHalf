@@ -71,6 +71,7 @@ public class StolenRecovery {
 					
 		ModelAndView mv = new ModelAndView();
 		log.info("entry point in stolen recovery  page with featureId-->  " +featureId);
+		try {
 		String roletype=session.getAttribute("usertype").toString();
 		String OperatorId = String.valueOf(session.getAttribute("operatorTypeId"));
 		if(selectedUserTypeId==null)
@@ -106,6 +107,11 @@ public class StolenRecovery {
 			session.setAttribute("stolenselectedUserTypeId", selectedUserTypeId);
 			mv.setViewName("stolenRecovery");		
 		
+		}
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+			log.info("this is catch block session is blank or something went wrong.");
 		}
 				
 				return mv; 

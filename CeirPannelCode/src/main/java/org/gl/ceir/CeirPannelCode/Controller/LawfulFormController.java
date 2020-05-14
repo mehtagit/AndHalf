@@ -178,7 +178,7 @@ FeignCleintImplementation feignCleintImplementation;
 				stream = new BufferedOutputStream(new FileOutputStream(serverFile));
 				stream.write(bytes); 
 				stream.close();
-				lawfulIndivisualStolen.setFileName(file.getOriginalFilename());
+				//lawfulIndivisualStolen.setFileName(file.getOriginalFilename());
 			} 
 			catch (Exception e) {
 				// TODO: handle exception
@@ -432,7 +432,7 @@ FeignCleintImplementation feignCleintImplementation;
 				stream = new BufferedOutputStream(new FileOutputStream(serverFile));
 				stream.write(bytes); 
 				stream.close();
-				lawfulIndivisualStolen.setFileName(file.getOriginalFilename());
+				//lawfulIndivisualStolen.setFileName(file.getOriginalFilename());
 			} 
 
 			catch (Exception e) {
@@ -471,7 +471,7 @@ FeignCleintImplementation feignCleintImplementation;
 				stream = new BufferedOutputStream(new FileOutputStream(serverFile));
 				stream.write(bytes); 
 				stream.close();
-				lawfulIndivisualStolen.setFileName(file.getOriginalFilename());
+				//lawfulIndivisualStolen.setFileName(file.getOriginalFilename());
 			} 
 			catch (Exception e) {
 				// TODO: handle exception

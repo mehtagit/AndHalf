@@ -736,7 +736,14 @@ function submitDeviceInfo(){
 				"name": departmentName,
 				"departmentFilename":departmentFileID
 		}
-
+ 
+		var auditParameters={
+			    "username":$("body").attr("data-username"),
+				"userId":parseInt(userId),
+				"featureId":parseInt(featureId),
+				"userTypeId": parseInt($("body").attr("data-userTypeID")),
+				"userType":$("body").attr("data-roleType")
+		}
 
 
 	//************************************************************************************************************************************
@@ -797,6 +804,7 @@ function submitDeviceInfo(){
 			"propertyLocation": address,
 			"province": state,
 			"street": streetNumber,
+			"auditParameters":auditParameters,
 			"regularizeDeviceDbs":regularizeDeviceDbs,
 			"isVip":isVip,
 			"onVisa":onVisa,
@@ -1540,7 +1548,7 @@ $(document).on("keyup", "#Price1", function(e) {
 					 "columns": [
 						    "created_on","modified_on","txn_id","status","nid","device_type","device_id_type","multi_sim_status","country","device_serial_number","tax_paid_status","device_status","price",
 						    "currency","first_imei","second_imei","third_imei","fourth_imei","origin","remark",
-						    "id", "user_id","creator_user_id"
+						     "user_id"
 						    ],
 					"tableName": "regularize_device_db_aud",
 					"dbName" : "ceirconfig",

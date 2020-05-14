@@ -1138,7 +1138,7 @@ function confirmantiondelete(){
 						 "columns": [
 							    "created_on","modified_on","txn_id","consignment_status","supplier_id","supplier_name","consignment_number","expected_dispatche_date","expected_arrivaldate","organisation_country",
 							    "expected_arrival_port","port_address","quantity","device_quantity","remarks","total_price","currency",
-							    "file_name","tax_paid_status","user_id","pending_tac_approved_by_custom","delete_flag","ceir_admin_id","custom_id"
+							    "file_name","tax_paid_status","user_id","ceir_admin_id","custom_id"
 							    ],
 						"tableName": "consignment_mgmt_aud",
 						"dbName" : "ceirconfig",
@@ -1153,7 +1153,7 @@ function confirmantiondelete(){
 						 "columns": [
 							    "created_on","modified_on","txn_id","consignment_status","supplier_id","supplier_name","consignment_number","expected_dispatche_date","expected_arrivaldate","organisation_country",
 							    "expected_arrival_port","port_address","quantity","device_quantity","remarks","total_price","currency",
-							    "file_name","tax_paid_status","user_id","pending_tac_approved_by_custom","delete_flag","custom_id"
+							    "file_name","tax_paid_status","user_id","custom_id"
 							    ],
 						"tableName": "consignment_mgmt_aud",
 						"dbName" : "ceirconfig",
@@ -1167,7 +1167,7 @@ function confirmantiondelete(){
 						 "columns": [
 							    "created_on","modified_on","txn_id","consignment_status","supplier_id","supplier_name","consignment_number","expected_dispatche_date","expected_arrivaldate","organisation_country",
 							    "expected_arrival_port","port_address","quantity","device_quantity","remarks","total_price","currency",
-							    "file_name","tax_paid_status","user_id","pending_tac_approved_by_custom","delete_flag"
+							    "file_name","tax_paid_status","user_id"
 							    ],
 						"tableName": "consignment_mgmt_aud",
 						"dbName" : "ceirconfig",

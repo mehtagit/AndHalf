@@ -27,6 +27,13 @@ var lang_param =window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 	function submitDeviceInfo(){
 		 var formData= new FormData();	
 		 var fieldId=1;	
+		 var auditParameters={
+				    "username":$("body").attr("data-username"),
+					"userId":parseInt($("body").attr("data-userID")),
+					"featureId":parseInt(12),
+					"userTypeId": parseInt($("body").attr("data-userTypeID")),
+					"userType":$("body").attr("data-roleType")
+			}
 			 var regularizeDeviceDbs =[];
 			 $('.deviceInformation').each(function() {	
 				 var deviceType1=$('#deviceType'+fieldId).val();
@@ -42,8 +49,7 @@ var lang_param =window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 					var IMEI4=$('#IMEID'+fieldId).val();
 					var deviceCountry=$('#country'+fieldId).val();
 					var multipleSimStatus1=$('#multipleSimStatus1'+fieldId).val();
-				console.log("serialNumber1="+serialNumber1+" deviceIdType1="+deviceIdType1+" taxStatus1="+taxStatus1+" deviceStatus1="+deviceStatus1+" Price1="+Price1+" Currency1="+Currency1)
-				console.log()
+					
 				var deviceInfo=
 				{
 					      "country": deviceCountry,
@@ -78,6 +84,7 @@ var lang_param =window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 					  "propertyLocation": null,
 					  "province": null,
 					  "street": null,
+					  "auditParameters":auditParameters,
 					  "regularizeDeviceDbs":regularizeDeviceDbs,
 					  
 					}
@@ -103,7 +110,8 @@ var lang_param =window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 					else{
 						//$('#sucessMessage').text('');
 						$('#regularisedDevice').openModal({dismissible:false});
-						$('#sucessMessage').text();
+						$('#dynamicTxnId').text('');
+						$('#sucessMessage').text('');
 						$('#sucessMessage').text(data.message);
 						
 					}

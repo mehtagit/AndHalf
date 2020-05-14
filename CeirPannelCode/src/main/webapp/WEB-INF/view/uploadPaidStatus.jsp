@@ -1,11 +1,25 @@
+<%@ page import="java.util.Date" %>
 <%
-	response.setHeader("Cache-Control", "no-cache");
+   response.setHeader("Cache-Control", "no-cache");
 	response.setHeader("Cache-Control", "no-store");
 	response.setDateHeader("Expires", 0);
 	response.setHeader("Pragma", "no-cache");
-	/*  session.setMaxInactiveInterval(200); //200 secs
-	 session.setAttribute("usertype", null); */
-	if (session.getAttribute("usertype") != null) {
+	
+    /*   //200 secs
+	 session.setAttribute("usertype", null);  */
+/* 	 session.setMaxInactiveInterval(10); */
+	 int timeout = session.getMaxInactiveInterval();
+	
+	 long accessTime = session.getLastAccessedTime();
+	 long currentTime= new Date().getTime(); 
+	 System.out.println("accessTime========"+(accessTime));
+	 System.out.println("timeout========"+timeout);
+	 long dfd= accessTime +timeout;
+	 System.out.println("currentTime========"+currentTime);
+	 if( currentTime< dfd){
+	/*  response.setHeader("Refresh", timeout + "; URL = ../login");
+	 System.out.println("timeout========"+timeout); 
+	if (session.getAttribute("usertype") != null) { */
 %>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
@@ -187,7 +201,7 @@ button.modal-action.modal-close.waves-effect.waves-green.btn-flat.right {
 }
 </style>
 </head>
-<body data-id="12" data-roleType="${usertype}" data-userTypeID="${usertypeId}"
+<body data-id="12" data-roleType="${usertype}" data-username="${username}" data-userTypeID="${usertypeId}"
 	data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}"
 	data-stolenselected-roleType="${stolenselectedUserTypeId}"
 	data-selected-consignmentTxnId="${consignmentTxnIdv}"
@@ -610,11 +624,11 @@ button.modal-action.modal-close.waves-effect.waves-green.btn-flat.right {
 
 														<div class="col s12 m6">
 															<label for="deviceType1"><spring:message code="select.deviceType" /> <span
-																class="star">*</span></label> <select class="browser-default"
+																class="star"></span></label> <select class="browser-default"
 																id="deviceType1" 
 																oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 											        oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-																title= "<spring:message code="validation.selectFieldMsg" />" required>
+																title= "<spring:message code="validation.selectFieldMsg" />">
 																<option value="" disabled selected><spring:message code="select.selectDeviceType" /></option>
 
 

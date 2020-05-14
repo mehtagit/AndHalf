@@ -319,7 +319,7 @@ $(document).ready(function () {
 		if(In.length > 0 && In !='null' ){
 		
 			$.ajax({
-				url : "./paid-status/"+In,
+				url : "./endUserpaid-status/"+In,
 				dataType : 'json',
 				contentType : 'application/json; charset=utf-8',
 				type : 'GET',
@@ -368,7 +368,7 @@ $(document).ready(function () {
 			
 			//sessionStorage.setItem("admin","CEIRAdmin");
 			$.ajax({
-				url : "./paid-status/"+In,
+				url : "./endUserpaid-status/"+In,
 				dataType : 'json',
 				contentType : 'application/json; charset=utf-8',
 				type : 'GET',
@@ -858,7 +858,12 @@ function submitEndUserDeviceInfo(){
 			"departmentFilename":departmentFileID
 	}
 
-
+	var auditParameters={
+		    
+			"featureId":parseInt(12),
+			"userTypeId": 17,
+			"userType":"End User"
+	}
 
 	var fieldId=1;
 	var regularizeDeviceDbs =[];
@@ -883,8 +888,7 @@ function submitEndUserDeviceInfo(){
 		var deviceInfo=
 		{
 				"country": deviceCountry,
-
-				"deviceIdType": parseInt(deviceIdType1),
+                "deviceIdType": parseInt(deviceIdType1),
 				"deviceSerialNumber": serialNumber1,
 				"deviceStatus": parseInt(deviceStatus1),
 				"deviceType": parseInt(deviceType1),
@@ -921,6 +925,7 @@ function submitEndUserDeviceInfo(){
 			"province": state,
 			"entryDateInCountry":visaDate,
 			"street": streetNumber,
+			"auditParameters":auditParameters,
 			"regularizeDeviceDbs":regularizeDeviceDbs,
 			"visaDb":visaDb,
 			"nationality":nationality,
@@ -1212,7 +1217,7 @@ function deleteByImei(imei){
 function accept(){
 
 	$.ajax({
-		url : "./delete/"+window.imei,
+		url : "./endUserdelete/"+window.imei,
 		dataType : 'json',
 		contentType : 'application/json; charset=utf-8',
 		type : 'DELETE',
@@ -1350,7 +1355,7 @@ function historyRecord(txnID){
 			 "columns": [
 				    "created_on","modified_on","txn_id","status","nid","device_type","device_id_type","multi_sim_status","country","device_serial_number","tax_paid_status","device_status","price",
 				    "currency","first_imei","second_imei","third_imei","fourth_imei","origin","remark",
-				    "id", "user_id","creator_user_id"
+				     "user_id"
 				    ],
 			"tableName": "regularize_device_db_aud",
 			"dbName" : "ceirconfig",
