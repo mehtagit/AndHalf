@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.gl.ceir.config.model.AuditTrail;
 import com.gl.ceir.config.model.BlacklistDbHistory;
 import com.gl.ceir.config.model.ConsignmentMgmtHistoryDb;
+import com.gl.ceir.config.model.CustomFilter;
 import com.gl.ceir.config.model.DeviceDbHistory;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GreylistDbHistory;
@@ -184,7 +185,7 @@ public class HistoryController {
 		return mapping;
 	}
 	
-	@ApiOperation(value = "View All Record of Notification Db.", response = Notification.class)
+/*	@ApiOperation(value = "View All Record of Notification Db.", response = Notification.class)
 	@RequestMapping(path = "v2/history/Notification", method = RequestMethod.POST)
 	public MappingJacksonValue viewNotification(@RequestBody FilterRequest filterRequest,
 			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
@@ -193,6 +194,21 @@ public class HistoryController {
 		logger.info("Request to view v2 Notification historyDetails = " + filterRequest);
 
 		Page<Notification> notification = historyServiceImpl.ViewAllNotificationHistory(pageNo, pageSize, filterRequest);
+
+		logger.info("Notification history Response= " + notification);
+		MappingJacksonValue mapping = new MappingJacksonValue(notification);
+		return mapping;
+	}*/
+	
+	@ApiOperation(value = "View All Record of Notification Db.", response = Notification.class)
+	@RequestMapping(path = "v2/history/Notification", method = RequestMethod.POST)
+	public MappingJacksonValue viewNotification(@RequestBody CustomFilter customFilter,
+			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
+			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
+
+		logger.info("Request to view v2 Notification historyDetails = " + customFilter);
+
+		Page<Notification> notification = historyServiceImpl.ViewAllNotificationHistory(pageNo, pageSize, customFilter);
 
 		logger.info("Notification history Response= " + notification);
 		MappingJacksonValue mapping = new MappingJacksonValue(notification);

@@ -17,6 +17,7 @@ import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.model.AuditTrail;
 import com.gl.ceir.config.model.BlacklistDbHistory;
 import com.gl.ceir.config.model.ConsignmentMgmtHistoryDb;
+import com.gl.ceir.config.model.CustomFilter;
 import com.gl.ceir.config.model.DeviceDbHistory;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GreylistDbHistory;
@@ -207,7 +208,7 @@ public class HistoryServiceImpl {
 		}
 	}
 
-	public Page<Notification> ViewAllNotificationHistory(Integer pageNo, Integer pageSize, FilterRequest filterRequest){
+/*	public Page<Notification> ViewAllNotificationHistory(Integer pageNo, Integer pageSize, FilterRequest filterRequest){
 		try {
 			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
 			NotificationSpecificationBuilder nsb = new NotificationSpecificationBuilder(propertiesReader.dialect);
@@ -225,6 +226,32 @@ public class HistoryServiceImpl {
 
 			nsb.with(new SearchCriteria("referTable", "END_USER", SearchOperation.NEGATION, Datatype.STRING));
 			
+			return notificationRepository.findAll(nsb.build(), pageable);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
+	}*/
+	
+	public Page<Notification> ViewAllNotificationHistory(Integer pageNo, Integer pageSize, CustomFilter customFilter) {
+		try {
+			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
+			NotificationSpecificationBuilder nsb = new NotificationSpecificationBuilder(propertiesReader.dialect);
+
+			if ("Custom".equalsIgnoreCase(customFilter.getUserTypeName())) {
+				logger.info("skipping userid in where clause for usertype : " + customFilter.getUserTypeName());
+				nsb.with(new SearchCriteria("receiverUserType", "Custom", SearchOperation.EQUALITY, Datatype.STRING));
+			} else if ("TRC".equalsIgnoreCase(customFilter.getUserTypeName())) {
+				logger.info("skipping userid in where clause for usertype : " + customFilter.getUserTypeName());
+				nsb.with(new SearchCriteria("receiverUserType", "TRC", SearchOperation.EQUALITY, Datatype.STRING));
+			} else {
+				if (Objects.nonNull(customFilter.getUserTypeId()))
+					nsb.with(new SearchCriteria("userId", customFilter.getUserTypeId(), SearchOperation.EQUALITY,
+							Datatype.STRING));
+			}
+
+			nsb.with(new SearchCriteria("referTable", "END_USER", SearchOperation.NEGATION, Datatype.STRING));
+
 			return notificationRepository.findAll(nsb.build(), pageable);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
