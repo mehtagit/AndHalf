@@ -356,8 +356,15 @@ public class RegularizedDeviceServiceImpl {
 				username=endUserDB.getAuditParameters().getUsername();
 				userId=endUserDB.getAuditParameters().getUserId();
 			}
+			String transactionId="";
+			for(RegularizeDeviceDb regularizeData:endUserDB.getRegularizeDeviceDbs())
+			{
+				transactionId=regularizeData.getTxnId();
+			}
+			logger.info("transaction id:"+transactionId);
 			auditTrailRepository.save(new AuditTrail(userId, username, 17L,
-					endUserDB.getAuditParameters().getUserType(), 12,Features.REGISTER_DEVICE, SubFeatures.REGISTER, "", endUserDB.getTxnId()));
+					endUserDB.getAuditParameters().getUserType(), 12,Features.REGISTER_DEVICE,
+					SubFeatures.REGISTER, "",transactionId));
 			logger.info("AUDIT : Saved request in audit.");
 
 			String txnId = null;
