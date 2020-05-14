@@ -19,4 +19,6 @@ public interface SubFeatures {
 	String ACCEPT_REJECT="Accept_Reject";
 	String UPLOAD = "Upload";
 	String REQUEST="Request";
+	String Check="Check";
+	String Search_Nid="Search Nid";
 }

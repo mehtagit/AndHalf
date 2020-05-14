@@ -7,16 +7,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gl.ceir.config.feign.CheckDeviceFeign;
+import com.gl.ceir.config.model.AuditTrail;
 import com.gl.ceir.config.model.CheckDevice;
 import com.gl.ceir.config.model.CheckDeviceReponse;
 import com.gl.ceir.config.model.CheckImeiResponse;
 import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.ImeiValidate;
+import com.gl.ceir.config.model.constants.Features;
+import com.gl.ceir.config.model.constants.SubFeatures;
+import com.gl.ceir.config.repository.AuditTrailRepository;
 @Service
 public class CheckDeviceImpl {
 
 	@Autowired
 	CheckDeviceFeign checkDeviceFeign;
+	
+	@Autowired
+	AuditTrailRepository auditTrailRepository;
 	
 	private static final Logger logger = LogManager.getLogger(CheckDeviceImpl.class);
 	
@@ -25,6 +32,16 @@ public class CheckDeviceImpl {
 		    ImeiValidate imeiValidate=new ImeiValidate("CheckImei",checkDevice.getDeviceIdType(),
 	        		"default",checkDevice.getDeviceId());
 	        try {
+                logger.info("going to save audit trail: ");  
+				AuditTrail auditTrail = new AuditTrail(0, 
+						"", 
+						17l, 
+					    "End User", 
+					    44, Features.Check_Device, 
+						SubFeatures.Check, 
+						"", "NA");
+				auditTrailRepository.save(auditTrail);
+				
 	        	logger.info("now going to call check imei api");
 		        CheckImeiResponse resp=checkDeviceFeign.checkImei(imeiValidate);
 		        if(Objects.nonNull(resp)) {
