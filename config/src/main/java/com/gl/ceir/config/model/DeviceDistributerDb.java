@@ -49,8 +49,7 @@ public class DeviceDistributerDb  implements Serializable{
 	private Long userId;
 	private String txnId;
 	private String period;
-	private Integer featureId;
-	
+	private String featureName;
 	public Long getId() {
 		return id;
 	}
@@ -99,7 +98,6 @@ public class DeviceDistributerDb  implements Serializable{
 	public void setImeiEsnMeid(String imeiEsnMeid) {
 		this.imeiEsnMeid = imeiEsnMeid;
 	}
-	
 	public String getDeviceLaunchDate() {
 		return deviceLaunchDate;
 	}
@@ -123,23 +121,22 @@ public class DeviceDistributerDb  implements Serializable{
 	}
 	public void setTxnId(String txnId) {
 		this.txnId = txnId;
-	}	
+	}
 	public String getPeriod() {
 		return period;
 	}
 	public void setPeriod(String period) {
 		this.period = period;
 	}
+	public String getFeatureName() {
+		return featureName;
+	}
+	public void setFeatureName(String featureName) {
+		this.featureName = featureName;
+	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	public Integer getFeatureId() {
-		return featureId;
-	}
-	public void setFeatureId(Integer featureId) {
-		this.featureId = featureId;
-	}
-	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -169,9 +166,10 @@ public class DeviceDistributerDb  implements Serializable{
 		builder.append(txnId);
 		builder.append(", period=");
 		builder.append(period);
-		builder.append(", featureId=");
-		builder.append(featureId);
+		builder.append(", featureName=");
+		builder.append(featureName);
 		builder.append("]");
 		return builder.toString();
 	}
+	
 }

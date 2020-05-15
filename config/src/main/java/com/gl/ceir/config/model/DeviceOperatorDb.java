@@ -51,7 +51,7 @@ public class DeviceOperatorDb implements Serializable{
 	private Long userId;
 	private String txnId;
 	private String period;
-	private Integer featureId;
+	private String featureName;
 	public Long getId() {
 		return id;
 	}
@@ -130,11 +130,11 @@ public class DeviceOperatorDb implements Serializable{
 	public void setPeriod(String period) {
 		this.period = period;
 	}
-	public Integer getFeatureId() {
-		return featureId;
+	public String getFeatureName() {
+		return featureName;
 	}
-	public void setFeatureId(Integer featureId) {
-		this.featureId = featureId;
+	public void setFeatureName(String featureName) {
+		this.featureName = featureName;
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
@@ -168,8 +168,8 @@ public class DeviceOperatorDb implements Serializable{
 		builder.append(txnId);
 		builder.append(", period=");
 		builder.append(period);
-		builder.append(", featureId=");
-		builder.append(featureId);
+		builder.append(", featureName=");
+		builder.append(featureName);
 		builder.append("]");
 		return builder.toString();
 	}
