@@ -158,7 +158,7 @@
                                                 <select class="browser-default" id = "userPeriod"
                                      onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" 
                                      oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" required>
-                                                    <option value="" disabled selected>Select Period</option>
+                                                    <option value="" selected>Select Period</option>
                                            	</select>
                                             </div>
                                    

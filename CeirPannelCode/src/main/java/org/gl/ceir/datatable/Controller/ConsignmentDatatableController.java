@@ -348,6 +348,7 @@ public class ConsignmentDatatableController {
 				{
 				UserModel userModel = dataInsideList.getUser();
 				UserProfileModel userprofileModel = userModel.getUserProfile();
+				String recordId =String.valueOf(dataInsideList.getId());
 				String createdOn= dataInsideList.getCreatedOn();
 				String txnId = dataInsideList.getTxnId(); 
 				String displayName = userprofileModel.getDisplayName();
@@ -358,7 +359,7 @@ public class ConsignmentDatatableController {
 				String userStatus = (String) session.getAttribute("userStatus");
 				String quantity = String.valueOf(dataInsideList.getQuantity());
 				String deviceQuantity=String.valueOf(dataInsideList.getDeviceQuantity());
-				String action=iconState.consignmentDRTState(dataInsideList.getFileName(), txnId, statusOfConsignment,userStatus,displayName);
+				String action=iconState.consignmentDRTState(dataInsideList.getFileName(), txnId, statusOfConsignment,userStatus,displayName,recordId);
 				
 				
 			

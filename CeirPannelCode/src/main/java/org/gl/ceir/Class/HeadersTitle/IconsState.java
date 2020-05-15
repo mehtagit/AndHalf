@@ -2326,7 +2326,7 @@ public class IconsState {
 	
 	/********************************** Icons for custom **********************************/ 
 
-	public String consignmentDRTState(String fileName,String txnId ,String status,String userStatus,String displayName) {
+	public String consignmentDRTState(String fileName,String txnId ,String status,String userStatus,String displayName,String recordId) {
 
 		// URL link 
 		// call post construct
@@ -2335,7 +2335,7 @@ public class IconsState {
 		//String downloadURL = "./dowloadFiles/actual/"+fileName.replace(" ", "%20")+"/"+txnId+"/"+defaultTagName+"";
 		String downloadURL = "fileDownload('"+fileName.replace(" ", "%20")+"','actual','"+txnId+"','"+defaultTagName+"')";
 		String viewAction="viewConsignmentDetails('"+txnId+"')"; 
-		String approveAction = "openDRTPopUp('" + txnId + "','"+displayName.replaceAll( " ", "+20")+ "')";
+		String approveAction = "openDRTPopUp('"+recordId+"')";
 
 		/* String escapedString = queryParser.escape(approveAction); */
 		String rejectAction = "openDisapprovePopup('"+txnId+"','"+displayName.replaceAll( " ", "+20")+"')";
@@ -2493,7 +2493,7 @@ public class IconsState {
 	
 	/********************************** Icons System User Management**********************************/
 	
-	public String userSystemManagementIcons(String id, String userStatus) { 
+	public String userSystemManagementIcons(String id) { 
 		executePostConstruct();
 
 		String editAction= "viewDetails("+id+",'Edit')";

@@ -1049,8 +1049,9 @@ function confirmantiondelete(){
 		});
 		
 		
-		function openDRTPopUp(){
+		function openDRTPopUp(recordId){
 			var userType=$("body").attr("data-roleType");
+			window.recordId = recordId;
 			$('#PayDRTtaxPopup').openModal({dismissible:false});
 			$('#amount').val('');
 		}
@@ -1059,7 +1060,7 @@ function confirmantiondelete(){
 			
 			var request ={ 
 					 "amount" : parseFloat($("#amount").val()),
-					 "userId" : $("body").attr("data-userID")
+					 "userId" : parseInt(window.recordId)
 					 
 			}
 			

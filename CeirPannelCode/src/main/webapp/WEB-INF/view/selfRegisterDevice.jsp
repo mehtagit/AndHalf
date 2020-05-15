@@ -709,6 +709,7 @@ button.modal-action.modal-close.waves-effect.waves-green.btn-flat.right {
 															title="<spring:message code="validation.1516digit" />"
 															maxlength="16"> <label for="IMEIC1"><spring:message
 																code="title.three" /></label>
+													<p id="errorMsgOnModal" class="deviceErrorTitle" style="    margin-top: -154px;margin-left: 104px;"></p>
 													</div>
 
 													<div class="input-field col s12 m6">
