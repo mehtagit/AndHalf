@@ -49,7 +49,6 @@ import com.gl.ceir.config.model.Userrole;
 import com.gl.ceir.config.model.Usertype;
 import com.gl.ceir.config.model.WebActionDb;
 import com.gl.ceir.config.model.constants.Alerts;
-import com.gl.ceir.config.model.constants.ConsignmentStatus;
 import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.Features;
 import com.gl.ceir.config.model.constants.GenericMessageTags;
@@ -63,17 +62,14 @@ import com.gl.ceir.config.model.file.StockFileModel;
 import com.gl.ceir.config.repository.AuditTrailRepository;
 import com.gl.ceir.config.repository.DashboardUsersFeatureStateMapRepository;
 import com.gl.ceir.config.repository.StatesInterpretaionRepository;
-import com.gl.ceir.config.repository.StockDetailsOperationRepository;
 import com.gl.ceir.config.repository.StockManagementRepository;
 import com.gl.ceir.config.repository.StockMgmtHistoryRepository;
-import com.gl.ceir.config.repository.StokeDetailsRepository;
 import com.gl.ceir.config.repository.UserProfileRepo;
 import com.gl.ceir.config.repository.UserProfileRepository;
 import com.gl.ceir.config.repository.UserRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
 import com.gl.ceir.config.service.businesslogic.StateMachine;
 import com.gl.ceir.config.specificationsbuilder.GenericSpecificationBuilder;
-import com.gl.ceir.config.specificationsbuilder.Joiner;
 import com.gl.ceir.config.transaction.StockTransaction;
 import com.gl.ceir.config.util.CustomMappingStrategy;
 import com.gl.ceir.config.util.HttpResponse;
@@ -91,16 +87,10 @@ public class StockServiceImpl {
 	private String featureName;
 
 	@Autowired
-	StokeDetailsRepository stokeDetailsRepository;
-
-	@Autowired
 	StockManagementRepository stockManagementRepository;
 
 	@Autowired
 	StockMgmtHistoryRepository stockMgmtHistoryRepository;
-
-	@Autowired
-	StockDetailsOperationRepository stockDetailsOperationRepository;
 
 	@Autowired
 	DashboardUsersFeatureStateMapRepository dashboardUsersFeatureStateMapRepository; 
@@ -403,7 +393,7 @@ public class StockServiceImpl {
 			if(Objects.nonNull(filterRequest.getUserId()) )
 				specificationBuilder.with(new SearchCriteria("userId", filterRequest.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));
 
-			if(Objects.nonNull(filterRequest.getUserId()))
+			if(Objects.nonNull(filterRequest.getRoleType()))
 				specificationBuilder.with(new SearchCriteria("roleType", filterRequest.getRoleType(), SearchOperation.EQUALITY, Datatype.STRING));
 		} 
 
@@ -417,22 +407,16 @@ public class StockServiceImpl {
 			specificationBuilder.with(new SearchCriteria("txnId", filterRequest.getTxnId(), SearchOperation.EQUALITY, Datatype.STRING));
 
 		if(Objects.nonNull(filterRequest.getUserType()) && "Custom".equalsIgnoreCase(filterRequest.getUserType())) {
-			logger.info("filterRequest.getUserType() with custom. " + filterRequest.getUserType());
+			logger.info("Inside custom block.");
 			specificationBuilder.with(new SearchCriteria("userType", filterRequest.getUserType(), SearchOperation.EQUALITY, Datatype.STRING));
 		}
+
 		if(Objects.nonNull(filterRequest.getFilteredUserType()) && !filterRequest.getFilteredUserType().isEmpty()) {
-			logger.info("filterRequest.getFilteredUserType()" + filterRequest.getFilteredUserType());
+			logger.info("Inside getFilteredUserType block.");
 			specificationBuilder.with(new SearchCriteria("userType", filterRequest.getFilteredUserType(), SearchOperation.EQUALITY, Datatype.STRING));
 		}
-		
-		// Status handling.
-		if("CEIRADMIN".equalsIgnoreCase(filterRequest.getUserType())) {
-			if(Objects.isNull(filterRequest.getConsignmentStatus()))
-				specificationBuilder.with(new SearchCriteria("stockStatus", 3, SearchOperation.EQUALITY, Datatype.STRING));
-			else {
-				specificationBuilder.with(new SearchCriteria("stockStatus", filterRequest.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
-			}
-		}else if(Objects.nonNull(filterRequest.getConsignmentStatus())) {
+
+		if(Objects.nonNull(filterRequest.getConsignmentStatus())) {
 			specificationBuilder.with(new SearchCriteria("stockStatus", filterRequest.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
 		}else {
 			if(Objects.nonNull(filterRequest.getFeatureId()) && Objects.nonNull(filterRequest.getUserTypeId())) {
@@ -781,7 +765,10 @@ public class StockServiceImpl {
 			String firstName = "";
 			User user = null;
 			Map<String, String> placeholderMap = new HashMap<>();
+			Integer currentStatus = null;
+
 			StockMgmt stockMgmt = stockManagementRepository.getByTxnId(consignmentUpdateRequest.getTxnId());
+			currentStatus = stockMgmt.getStockStatus();
 
 			// Fetch user_profile to update user over mail/sms regarding the action.
 			if("Custom".equals(stockMgmt.getRoleType())) {
@@ -897,18 +884,20 @@ public class StockServiceImpl {
 					return new GenricResponse(3, "Unable to update stock entity.", consignmentUpdateRequest.getTxnId()); 
 				}else {
 
-					emailUtil.saveNotification(mailTag, 
-							userProfile, 
-							consignmentUpdateRequest.getFeatureId(),
-							Features.STOCK,
-							action,
-							consignmentUpdateRequest.getTxnId(),
-							txnId,
-							placeholderMap,
-							stockMgmt.getRoleType(),
-							receiverUserType,
-							"Users");
-					logger.info("Notfication have been saved.");
+					if(currentStatus == StockStatus.PROCESSING.getCode()) {
+						emailUtil.saveNotification(mailTag, 
+								userProfile, 
+								consignmentUpdateRequest.getFeatureId(),
+								Features.STOCK,
+								action,
+								consignmentUpdateRequest.getTxnId(),
+								txnId,
+								placeholderMap,
+								stockMgmt.getRoleType(),
+								receiverUserType,
+								"Users");
+						logger.info("Notfication have been saved.");
+					}
 
 					logger.debug(consignmentUpdateRequest);
 					/*

@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.gl.ceir.config.exceptions.ResourceNotFoundException;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
-import com.gl.ceir.config.model.MobileOperator;
 import com.gl.ceir.config.model.Rules;
 import com.gl.ceir.config.repository.RulesRepository;
 import com.gl.ceir.config.service.RulesService;

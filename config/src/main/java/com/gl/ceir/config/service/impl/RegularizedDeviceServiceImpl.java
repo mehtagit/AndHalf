@@ -14,7 +14,6 @@ import java.util.Objects;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.hibernate.mapping.Array;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,12 +22,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gl.ceir.config.ConfigTags;
 import com.gl.ceir.config.EmailSender.EmailUtil;
-import com.gl.ceir.config.EmailSender.MailSubject;
 import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
+import com.gl.ceir.config.model.AllRequest;
 import com.gl.ceir.config.model.AuditTrail;
 import com.gl.ceir.config.model.CeirActionRequest;
 import com.gl.ceir.config.model.Count;
@@ -59,10 +57,8 @@ import com.gl.ceir.config.model.constants.TaxStatus;
 import com.gl.ceir.config.model.file.RegularizeDeviceFileModel;
 import com.gl.ceir.config.repository.AuditTrailRepository;
 import com.gl.ceir.config.repository.ConsignmentRepository;
-import com.gl.ceir.config.repository.CustomDetailsRepository;
 import com.gl.ceir.config.repository.EndUserDbRepository;
 import com.gl.ceir.config.repository.RegularizedDeviceDbRepository;
-import com.gl.ceir.config.repository.StokeDetailsRepository;
 import com.gl.ceir.config.repository.SystemConfigurationDbRepository;
 import com.gl.ceir.config.repository.UserProfileRepository;
 import com.gl.ceir.config.repository.UserRepository;
@@ -87,12 +83,6 @@ public class RegularizedDeviceServiceImpl {
 
 	@Autowired
 	ConsignmentRepository consignmentRepository;
-
-	@Autowired
-	StokeDetailsRepository stokeDetailsRepository;
-
-	@Autowired
-	CustomDetailsRepository customDetailsRepository;
 
 	@Autowired
 	AuditTrailRepository auditTrailRepository;
@@ -182,11 +172,7 @@ public class RegularizedDeviceServiceImpl {
 
 			if(filterRequest.getTaxPaidStatus() != TaxStatus.BLOCKED.getCode()) {
 				// TODO
-
 			}
-
-			
-
 			stateList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
 			logger.info(stateList);
 			logger.info("dialect : " + propertiesReader.dialect);
@@ -232,14 +218,12 @@ public class RegularizedDeviceServiceImpl {
 					userId=filterRequest.getUserId();
 				}
 			}
-        
-         
 			AuditTrail auditTrail = new AuditTrail(userId, 
 					username, 
 					Long.valueOf(filterRequest.getUserTypeId()), 
 					filterRequest.getUserType(), 
 					12, Features.REGISTER_DEVICE, 
-					SubFeatures.VIEW, 
+					SubFeatures.VIEW_ALL, 
 					"", "NA");
 			auditTrailRepository.save(auditTrail);
 			logger.info("AUDIT : View in audit_trail. " + auditTrail);
@@ -355,7 +339,23 @@ public class RegularizedDeviceServiceImpl {
 	@Transactional
 	public GenricResponse saveDevices(EndUserDB endUserDB) {
 		try {
-			
+			String username="";
+			long userId=0;
+			if(endUserDB.getAuditParameters().getUserTypeId()!=17) {
+				username=endUserDB.getAuditParameters().getUsername();
+				userId=endUserDB.getAuditParameters().getUserId();
+			}
+			String transactionId="";
+			for(RegularizeDeviceDb regularizeData:endUserDB.getRegularizeDeviceDbs())
+			{
+				transactionId=regularizeData.getTxnId();
+			}
+			logger.info("transaction id:"+transactionId);
+			auditTrailRepository.save(new AuditTrail(userId, username, 17L,
+					endUserDB.getAuditParameters().getUserType(), 12,Features.REGISTER_DEVICE,
+					SubFeatures.REGISTER, "",transactionId));
+			logger.info("AUDIT : Saved request in audit.");
+
 			String txnId = null;
 			List<WebActionDb> webActionDbs = new ArrayList<>();
 			String nid = endUserDB.getNid();
@@ -461,14 +461,7 @@ public class RegularizedDeviceServiceImpl {
 							}
 						}
 						
-						// Save in audit.
-						AuditTrail auditTrail = new AuditTrail(endUserDB.getCreatorUserId(), endUserDB.getNid(), 
-								17L, 
-								"End User", 12, Features.REGISTER_DEVICE, 
-								SubFeatures.REGISTER, "");
-						auditTrailRepository.save(auditTrail);
-						logger.info("AUDIT : Saved in audit_trail. " + auditTrail);
-
+					
 						return new GenricResponse(0, "End user device registration is sucessful.", txnId);
 					}else {
 						logger.info("End user device registration have been failed" + endUserDB);
@@ -546,16 +539,26 @@ public class RegularizedDeviceServiceImpl {
 			throw new ResourceServicesException("Custom Service", e.getMessage());}
 	}
 
-	public RegularizeDeviceDb viewDeviceInfoByImei1(String imei) {
+	public RegularizeDeviceDb viewDeviceInfoByImei1(AllRequest data) {
 		try {
-			logger.info("Going to get deviceInfo Info for imei : " + imei);
+			logger.info("Going to get deviceInfo Info for imei : " + data.getImei());
+			String username="";
+			long userId=0;
+			if(data.getUserTypeId()!=17) {
+				username=data.getUsername();
+				userId=data.getUserId();
+			}
+			auditTrailRepository.save(new AuditTrail(userId, username, 17L,
+					data.getUserType(), 12,Features.REGISTER_DEVICE, SubFeatures.VIEW, "", "NA"));
+			logger.info("AUDIT : Saved request in audit.");
 
-			if(Objects.isNull(imei)) {
+			
+			if(Objects.isNull(data.getImei())) {
 				throw new IllegalArgumentException();
 			}
 			RegularizeDeviceDb regularizeDeviceDb=new RegularizeDeviceDb();
 			try {
-				 regularizeDeviceDb = regularizedDeviceDbRepository.getByFirstImei(imei);				
+				 regularizeDeviceDb = regularizedDeviceDbRepository.getByFirstImei(data.getImei());				
 			}
 			catch(Exception e) {
 				logger.info(e.toString());
@@ -592,9 +595,19 @@ public class RegularizedDeviceServiceImpl {
 	}
 
 	@Transactional
-	public GenricResponse deleteCustomInfo(String imei) {
+	public GenricResponse deleteCustomInfo(AllRequest data) {
 		try {
-			RegularizeDeviceDb regularizeDeviceDb = regularizedDeviceDbRepository.getByFirstImei(imei);
+			String username="";
+			long userId=0;
+			if(data.getUserTypeId()!=17) {
+				username=data.getUsername();
+				userId=data.getUserId();
+			}
+			auditTrailRepository.save(new AuditTrail(userId, username, 17L,
+					data.getUserType(), 12,Features.REGISTER_DEVICE, SubFeatures.DELETE, "", "NA"));
+			logger.info("AUDIT : Saved request in audit.");
+
+			RegularizeDeviceDb regularizeDeviceDb = regularizedDeviceDbRepository.getByFirstImei(data.getImei());
 
 			if(Objects.nonNull(regularizeDeviceDb)) {
 
@@ -634,7 +647,6 @@ public class RegularizedDeviceServiceImpl {
 	            	return new GenricResponse(1, "First imei is incorrect", "");            	
 	            }
 				endUserDB = endUserDbRepository.getByNid(regularizeDeviceDb.getNid());
-
 				placeholders.put("<Txn id>", regularizeDeviceDb.getTxnId());
 				placeholders.put("<First name>", endUserDB.getFirstName());
 
@@ -687,6 +699,8 @@ public class RegularizedDeviceServiceImpl {
 					}
 					
 				}
+				auditTrailRepository.save(new AuditTrail(userId, username, userTypeId,
+						ceirActionRequest.getUserType(), 12,Features.REGISTER_DEVICE, subFeature, "", txnId));
 			}
 			else if("CEIRSYSTEM".equalsIgnoreCase(ceirActionRequest.getUserType())){
 				regularizeDeviceDb=regularizedDeviceDbRepository.getByTxnId(ceirActionRequest.getTxnId());
@@ -788,8 +802,6 @@ if(Objects.nonNull(regularizeOutput))
 				subFeature="";
 				return new GenricResponse(1, "You are not allowed to do this operation.", "");
 			}
-			auditTrailRepository.save(new AuditTrail(userId, username, userTypeId,
-					ceirActionRequest.getUserType(), 12,Features.REGISTER_DEVICE, subFeature, "", txnId));
 			return new GenricResponse(0, "Device Update SuccessFully.", ceirActionRequest.getTxnId());
 
 		} catch (Exception e) {

@@ -27,7 +27,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Audited
-public class EndUserDB implements Serializable {
+public class EndUserDB   {
 
 	private static final long serialVersionUID = 1L;
 
@@ -118,6 +118,10 @@ public class EndUserDB implements Serializable {
 
 	@Transient
 	private String rejectedRemark;
+	
+	@Transient
+	private AllRequest auditParameters;
+	
 	
 	
 	public String getRejectedRemark() {
@@ -218,6 +222,12 @@ public class EndUserDB implements Serializable {
 	}
 	
 	
+	public AllRequest getAuditParameters() {
+		return auditParameters;
+	}
+	public void setAuditParameters(AllRequest auditParameters) {
+		this.auditParameters = auditParameters;
+	}
 	public List<RegularizeDeviceDb> getRegularizeDeviceDbs() {
 		return regularizeDeviceDbs;
 	}
@@ -384,8 +394,12 @@ public class EndUserDB implements Serializable {
 		builder.append(nationality);
 		builder.append(", onVisa=");
 		builder.append(onVisa);
+		builder.append(", visaDb=");
+		builder.append(visaDb);
 		builder.append(", isVip=");
 		builder.append(isVip);
+		builder.append(", userDepartment=");
+		builder.append(userDepartment);
 		builder.append(", passportFileName=");
 		builder.append(passportFileName);
 		builder.append(", creatorUserId=");
@@ -400,6 +414,8 @@ public class EndUserDB implements Serializable {
 		builder.append(entryDateInCountry);
 		builder.append(", rejectedRemark=");
 		builder.append(rejectedRemark);
+		builder.append(", toString()=");
+		builder.append(super.toString());
 		builder.append("]");
 		return builder.toString();
 	}

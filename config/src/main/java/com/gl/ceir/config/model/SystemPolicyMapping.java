@@ -31,18 +31,13 @@ public class SystemPolicyMapping implements Serializable {
 	private Period period;
 	@ManyToOne
 	private Rules rule;
-	@ManyToOne
-	private Action action;
-
+	
 	private Integer priority;
 	private Date createdOn;
 	private Date modifiedOn;
 
 	private String createdBy;
 	private String modifiedBy;
-
-	@OneToOne
-	private Script script;
 
 	public Long getId() {
 		return id;
@@ -66,14 +61,6 @@ public class SystemPolicyMapping implements Serializable {
 
 	public void setRule(Rules rule) {
 		this.rule = rule;
-	}
-
-	public Action getAction() {
-		return action;
-	}
-
-	public void setAction(Action action) {
-		this.action = action;
 	}
 
 	public Integer getPriority() {
@@ -115,15 +102,7 @@ public class SystemPolicyMapping implements Serializable {
 	public void setModifiedBy(String modifiedBy) {
 		this.modifiedBy = modifiedBy;
 	}
-
-	public Script getScript() {
-		return script;
-	}
-
-	public void setScript(Script script) {
-		this.script = script;
-	}
-
+	
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}

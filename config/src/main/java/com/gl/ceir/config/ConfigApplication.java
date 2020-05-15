@@ -13,11 +13,8 @@ import org.springframework.data.envers.repository.support.EnversRevisionReposito
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-import com.gl.ceir.config.model.DeviceSnapShot;
-import com.gl.ceir.config.model.DuplicateImeiMsisdn;
 import com.gl.ceir.config.model.ImeiMsisdnIdentity;
 import com.gl.ceir.config.model.constants.ImeiStatus;
-import com.gl.ceir.config.service.DeviceSnapShotService;
 
 @SpringBootApplication
 @EnableAutoConfiguration
@@ -38,31 +35,4 @@ public class ConfigApplication {
 		// logger.info("SECOND: "+deviceSnapShot.toString());
 		// context.getBean(DeviceSnapShotServiceImpl.class).save(convertRequestToDeviceSnapShot());
 	}
-
-	@Autowired
-	private DeviceSnapShotService service;
-
-	private static DeviceSnapShot convertRequestToDeviceSnapShot() {
-		DeviceSnapShot deviceSnapShot = new DeviceSnapShot();
-		deviceSnapShot.setImei("898989");
-		// deviceSnapShot.setFailedRuleId(request.getFailRule().getId().toString());
-		// deviceSnapShot.setFailedRuleName(request.getFailRule().getName());
-		deviceSnapShot.setDuplicateImeiMsisdns(new ArrayList<>());
-		deviceSnapShot.getDuplicateImeiMsisdns().add(convertToDuplicateImeiMsisdn());
-		deviceSnapShot.getDuplicateImeiMsisdns().get(0).setDeviceSnapShot(deviceSnapShot);
-		return deviceSnapShot;
-	}
-
-	private static DuplicateImeiMsisdn convertToDuplicateImeiMsisdn() {
-		DuplicateImeiMsisdn duplicateImeiMsisdn = new DuplicateImeiMsisdn();
-		duplicateImeiMsisdn.setImeiMsisdnIdentity(new ImeiMsisdnIdentity("898989", 9090909L));
-		duplicateImeiMsisdn.setFileName("file");
-
-		duplicateImeiMsisdn.setImeiStatus(ImeiStatus.AUTO_REGULARIZED);
-		duplicateImeiMsisdn.setImsi(3232L);
-		duplicateImeiMsisdn.setRegulizedByUser(Boolean.FALSE);
-		return duplicateImeiMsisdn;
-
-	}
-
 }

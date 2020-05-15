@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.gl.ceir.config.model.AllRequest;
 import com.gl.ceir.config.model.CeirActionRequest;
 import com.gl.ceir.config.model.EndUserDB;
 import com.gl.ceir.config.model.FileDetails;
@@ -35,12 +36,12 @@ public class RegularizedDeviceController {
 	RegularizedDeviceServiceImpl regularizedDeviceServiceImpl;
 	
 	@ApiOperation(value = "View End User Device by IMEI1", response = GenricResponse.class)
-	@GetMapping("/end-user-device-info/{imei}")
-	public MappingJacksonValue viewDeviceInfoByImei1(@PathVariable("imei") String imei) {
+	@PostMapping("/end-user-device-info/view")
+	public MappingJacksonValue viewDeviceInfoByImei1(@RequestBody AllRequest data) {
 
-		logger.info("View Regularized device of IMEI= " + imei);
+		logger.info("View Regularized device of IMEI= " + data);
 
-		RegularizeDeviceDb response = regularizedDeviceServiceImpl.viewDeviceInfoByImei1(imei);
+		RegularizeDeviceDb response = regularizedDeviceServiceImpl.viewDeviceInfoByImei1(data);
 
 		MappingJacksonValue mapping = new MappingJacksonValue(response); 
 		return mapping;
@@ -92,12 +93,12 @@ public class RegularizedDeviceController {
 	}
 
 	@ApiOperation(value = "Delete taxPaid Status", response = GenricResponse.class)
-	@DeleteMapping("/end-user-device-info/{imei}")
-	public GenricResponse deleteCustominfo( @PathVariable("imei") String imei) {
+	@DeleteMapping("/end-user-device-info")
+	public GenricResponse deleteCustominfo( @RequestBody AllRequest data) {
 
-		logger.info("Request to delete regularized device = " + imei);
+		logger.info("Request to delete regularized device = " + data);
 		
-		GenricResponse response = regularizedDeviceServiceImpl.deleteCustomInfo(imei);
+		GenricResponse response = regularizedDeviceServiceImpl.deleteCustomInfo(data);
 		
 		//logger.info("Response send to user="+response);
 		return response;

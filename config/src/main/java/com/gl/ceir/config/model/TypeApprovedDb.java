@@ -102,12 +102,6 @@ public class TypeApprovedDb {
 
 	private Long featureId;
 	
-	@OneToMany(
-        cascade = CascadeType.ALL,
-        orphanRemoval = true
-    )
-	private List<TypeApprovedAttachedFileInfo> attachedFiles = new ArrayList<>();
-	
 	public String getTrademark() {
 		return trademark;
 	}
@@ -126,12 +120,7 @@ public class TypeApprovedDb {
 	public void setFrequencyRange(String frequencyRange) {
 		this.frequencyRange = frequencyRange;
 	}
-	public List<TypeApprovedAttachedFileInfo> getAttachedFiles() {
-		return attachedFiles;
-	}
-	public void setAttachedFiles(List<TypeApprovedAttachedFileInfo> attachedFiles) {
-		this.attachedFiles = attachedFiles;
-	}	
+	
 	public String getFileName() {
 		return fileName;
 	}
@@ -313,6 +302,6 @@ public class TypeApprovedDb {
 				+ ", approveStatus=" + approveStatus + ", approveDisapproveDate="
 				+ approveDisapproveDate + ", remark=" + remark + ", file=" + fileName + ", createdOn=" + createdOn
 				+ ", modifiedOn=" + modifiedOn + ", txnId=" + txnId + ",trademark="+trademark + ",modelNumber="+modelNumber + 
-				",productName="+productName + ",manufacturerCountry="+ manufacturerCountry +",frequencyRange="+ frequencyRange+ ",attachedFiles="+attachedFiles.toString()+ "]";
+				",productName="+productName + ",manufacturerCountry="+ manufacturerCountry +",frequencyRange="+ frequencyRange+ "]";
 	}
 }

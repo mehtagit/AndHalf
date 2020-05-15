@@ -272,8 +272,10 @@ public class CustomerCareServiceImpl {
 			try {
 				CustomerCareDeviceState customerCareDeviceState = new CustomerCareDeviceState();
 				customerCareDeviceState.setMsisdn(msisdn);
-
+				
 				customerCareDeviceStates.add(customerCareTarget.fetchDetailsByImei(imei, customerCareDeviceState));
+				logger.info("Added object of Db [" + o + "] in customerCareDeviceStates");
+				
 			}catch (Exception e) {
 				logger.error("Db [" + o + "] have some issue in fetching data for imei [" + imei + "]", e);
 			}
