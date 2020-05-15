@@ -29,27 +29,15 @@ public class DeviceUsageDb  implements Serializable{
 	@CreationTimestamp
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private Date createdOn;
-
-	private Integer duplicateCount;
-	private Integer foreginRule;
-	private Integer globalBlacklist;
-	private Integer lastpPolicyBreached;
-	private Date lastpPolicyBreachedDate;
 	
 	private String mobileOperator;
-	private Integer pending; 
 	
 	@Column(length = 30)
 	private String period;  
-	private String remarks; 
-	private Integer taxPaid;       
-	private Integer validImport;       
 	private String action; 
 	private String failedRuleId; 
 	private String failedRuleName; 
-	private Integer imeiStatus;      
 	private Long imsi;   
-	private Integer mobileOperatorId;   
 	
 	@JsonIgnore
 	@UpdateTimestamp
@@ -87,46 +75,6 @@ public class DeviceUsageDb  implements Serializable{
 		this.createdOn = createdOn;
 	}
 
-	public Integer getDuplicateCount() {
-		return duplicateCount;
-	}
-
-	public void setDuplicateCount(Integer duplicateCount) {
-		this.duplicateCount = duplicateCount;
-	}
-
-	public Integer getForeginRule() {
-		return foreginRule;
-	}
-
-	public void setForeginRule(Integer foreginRule) {
-		this.foreginRule = foreginRule;
-	}
-
-	public Integer getGlobalBlacklist() {
-		return globalBlacklist;
-	}
-
-	public void setGlobalBlacklist(Integer globalBlacklist) {
-		this.globalBlacklist = globalBlacklist;
-	}
-
-	public Integer getLastpPolicyBreached() {
-		return lastpPolicyBreached;
-	}
-
-	public void setLastpPolicyBreached(Integer lastpPolicyBreached) {
-		this.lastpPolicyBreached = lastpPolicyBreached;
-	}
-
-	public Date getLastpPolicyBreachedDate() {
-		return lastpPolicyBreachedDate;
-	}
-
-	public void setLastpPolicyBreachedDate(Date lastpPolicyBreachedDate) {
-		this.lastpPolicyBreachedDate = lastpPolicyBreachedDate;
-	}
-
 	public String getMobileOperator() {
 		return mobileOperator;
 	}
@@ -135,44 +83,12 @@ public class DeviceUsageDb  implements Serializable{
 		this.mobileOperator = mobileOperator;
 	}
 
-	public Integer getPending() {
-		return pending;
-	}
-
-	public void setPending(Integer pending) {
-		this.pending = pending;
-	}
-
 	public String getPeriod() {
 		return period;
 	}
 
 	public void setPeriod(String period) {
 		this.period = period;
-	}
-
-	public String getRemarks() {
-		return remarks;
-	}
-
-	public void setRemarks(String remarks) {
-		this.remarks = remarks;
-	}
-
-	public Integer getTaxPaid() {
-		return taxPaid;
-	}
-
-	public void setTaxPaid(Integer taxPaid) {
-		this.taxPaid = taxPaid;
-	}
-
-	public Integer getValidImport() {
-		return validImport;
-	}
-
-	public void setValidImport(Integer validImport) {
-		this.validImport = validImport;
 	}
 
 	public String getAction() {
@@ -199,28 +115,12 @@ public class DeviceUsageDb  implements Serializable{
 		this.failedRuleName = failedRuleName;
 	}
 
-	public Integer getImeiStatus() {
-		return imeiStatus;
-	}
-
-	public void setImeiStatus(Integer imeiStatus) {
-		this.imeiStatus = imeiStatus;
-	}
-
 	public Long getImsi() {
 		return imsi;
 	}
 
 	public void setImsi(Long imsi) {
 		this.imsi = imsi;
-	}
-
-	public Integer getMobileOperatorId() {
-		return mobileOperatorId;
-	}
-
-	public void setMobileOperatorId(Integer mobileOperatorId) {
-		this.mobileOperatorId = mobileOperatorId;
 	}
 
 	public Long getMsisdn() {
@@ -298,28 +198,10 @@ public class DeviceUsageDb  implements Serializable{
 		builder.append(imei);
 		builder.append(", createdOn=");
 		builder.append(createdOn);
-		builder.append(", duplicateCount=");
-		builder.append(duplicateCount);
-		builder.append(", foreginRule=");
-		builder.append(foreginRule);
-		builder.append(", globalBlacklist=");
-		builder.append(globalBlacklist);
-		builder.append(", lastpPolicyBreached=");
-		builder.append(lastpPolicyBreached);
-		builder.append(", lastpPolicyBreachedDate=");
-		builder.append(lastpPolicyBreachedDate);
 		builder.append(", mobileOperator=");
 		builder.append(mobileOperator);
-		builder.append(", pending=");
-		builder.append(pending);
 		builder.append(", period=");
 		builder.append(period);
-		builder.append(", remarks=");
-		builder.append(remarks);
-		builder.append(", taxPaid=");
-		builder.append(taxPaid);
-		builder.append(", validImport=");
-		builder.append(validImport);
 		builder.append(", action=");
 		builder.append(action);
 		builder.append(", failedRuleId=");
@@ -327,11 +209,8 @@ public class DeviceUsageDb  implements Serializable{
 		builder.append(", failedRuleName=");
 		builder.append(failedRuleName);
 		builder.append(", imeiStatus=");
-		builder.append(imeiStatus);
 		builder.append(", imsi=");
 		builder.append(imsi);
-		builder.append(", mobileOperatorId=");
-		builder.append(mobileOperatorId);
 		builder.append(", msisdn=");
 		builder.append(msisdn);
 		builder.append(", modifiedOn=");
@@ -350,6 +229,5 @@ public class DeviceUsageDb  implements Serializable{
 		builder.append(tac);
 		builder.append("]");
 		return builder.toString();
-	}  
-	
+	}  	
 }

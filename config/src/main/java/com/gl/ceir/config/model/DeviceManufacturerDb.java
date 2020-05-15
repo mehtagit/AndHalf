@@ -1,7 +1,6 @@
 package com.gl.ceir.config.model;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -19,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Audited
-public class DeviceManufacturerDb  implements Serializable{
+public class DeviceManufacturerDb implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
@@ -37,7 +36,6 @@ public class DeviceManufacturerDb  implements Serializable{
 	@UpdateTimestamp
 	private Date modifiedOn;
 
-	private String manufaturerDate;
 	private String deviceType;
 	private String deviceIdType;
 	private String multipleSimStatus;
@@ -45,23 +43,11 @@ public class DeviceManufacturerDb  implements Serializable{
 	private String imeiEsnMeid;
 	private String DeviceLaunchDate;
 	private String deviceStatus;
-	private String deviceAction;
 
 	private Long userId;
 	private String txnId;
-	private LocalDateTime localDate;
-	private Integer deviceState;
-	private Integer previousDeviceStatus;
 	private String period;
 	private Integer featureId;
-	
-	
-	public Integer getFeatureId() {
-		return featureId;
-	}
-	public void setFeatureId(Integer featureId) {
-		this.featureId = featureId;
-	}
 	public Long getId() {
 		return id;
 	}
@@ -79,12 +65,6 @@ public class DeviceManufacturerDb  implements Serializable{
 	}
 	public void setModifiedOn(Date modifiedOn) {
 		this.modifiedOn = modifiedOn;
-	}
-	public String getManufaturerDate() {
-		return manufaturerDate;
-	}
-	public void setManufaturerDate(String manufaturerDate) {
-		this.manufaturerDate = manufaturerDate;
 	}
 	public String getDeviceType() {
 		return deviceType;
@@ -128,13 +108,6 @@ public class DeviceManufacturerDb  implements Serializable{
 	public void setDeviceStatus(String deviceStatus) {
 		this.deviceStatus = deviceStatus;
 	}
-	public String getDeviceAction() {
-		return deviceAction;
-	}
-	public void setDeviceAction(String deviceAction) {
-		this.deviceAction = deviceAction;
-	}
-	
 	public Long getUserId() {
 		return userId;
 	}
@@ -147,30 +120,17 @@ public class DeviceManufacturerDb  implements Serializable{
 	public void setTxnId(String txnId) {
 		this.txnId = txnId;
 	}
-	public LocalDateTime getLocalDate() {
-		return localDate;
-	}
-	public void setLocalDate(LocalDateTime localDate) {
-		this.localDate = localDate;
-	}
-	
-	public Integer getDeviceState() {
-		return deviceState;
-	}
-	public void setDeviceState(Integer deviceState) {
-		this.deviceState = deviceState;
-	}
-	public Integer getPreviousDeviceStatus() {
-		return previousDeviceStatus;
-	}
-	public void setPreviousDeviceStatus(Integer previousDeviceStatus) {
-		this.previousDeviceStatus = previousDeviceStatus;
-	}
 	public String getPeriod() {
 		return period;
 	}
 	public void setPeriod(String period) {
 		this.period = period;
+	}
+	public Integer getFeatureId() {
+		return featureId;
+	}
+	public void setFeatureId(Integer featureId) {
+		this.featureId = featureId;
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
@@ -184,8 +144,6 @@ public class DeviceManufacturerDb  implements Serializable{
 		builder.append(createdOn);
 		builder.append(", modifiedOn=");
 		builder.append(modifiedOn);
-		builder.append(", manufaturerDate=");
-		builder.append(manufaturerDate);
 		builder.append(", deviceType=");
 		builder.append(deviceType);
 		builder.append(", deviceIdType=");
@@ -200,18 +158,10 @@ public class DeviceManufacturerDb  implements Serializable{
 		builder.append(DeviceLaunchDate);
 		builder.append(", deviceStatus=");
 		builder.append(deviceStatus);
-		builder.append(", deviceAction=");
-		builder.append(deviceAction);
 		builder.append(", userId=");
 		builder.append(userId);
 		builder.append(", txnId=");
 		builder.append(txnId);
-		builder.append(", localDate=");
-		builder.append(localDate);
-		builder.append(", deviceState=");
-		builder.append(deviceState);
-		builder.append(", previousDeviceStatus=");
-		builder.append(previousDeviceStatus);
 		builder.append(", period=");
 		builder.append(period);
 		builder.append(", featureId=");
@@ -219,5 +169,7 @@ public class DeviceManufacturerDb  implements Serializable{
 		builder.append("]");
 		return builder.toString();
 	}
+
+	
 	
 }

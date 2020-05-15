@@ -20,7 +20,6 @@ import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GreylistDbHistory;
 import com.gl.ceir.config.model.Notification;
 import com.gl.ceir.config.model.SearchCriteria;
-import com.gl.ceir.config.model.StolenAndRecoveryHistoryMgmt;
 import com.gl.ceir.config.model.SystemConfigurationDb;
 import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.SearchOperation;
@@ -29,7 +28,6 @@ import com.gl.ceir.config.repository.BlackListTrackDetailsRepository;
 import com.gl.ceir.config.repository.GreyListTrackRepository;
 import com.gl.ceir.config.repository.NotificationRepository;
 import com.gl.ceir.config.repository.StockMgmtHistoryRepository;
-import com.gl.ceir.config.repository.StolenAndRecoveryHistoryMgmtRepository;
 import com.gl.ceir.config.repository.SystemConfigurationDbRepository;
 import com.gl.ceir.config.specificationsbuilder.NotificationSpecificationBuilder;
 
@@ -47,9 +45,6 @@ public class HistoryServiceImpl {
 	@Autowired
 	GreyListTrackRepository greyListTrackRepository;
 
-
-	@Autowired
-	StolenAndRecoveryHistoryMgmtRepository stolenAndRecoveryHistoryMgmtRepository;
 
 	@Autowired
 	StockMgmtHistoryRepository stockMgmtHistoryRepository;
@@ -90,17 +85,6 @@ public class HistoryServiceImpl {
 
 	
 
-
-	public Page<StolenAndRecoveryHistoryMgmt> ViewAllStolenAndRecoveryHistory(Integer pageNo, Integer pageSize){
-		try {
-			Pageable pageable = PageRequest.of(pageNo, pageSize);
-
-			return stolenAndRecoveryHistoryMgmtRepository.findAll(pageable);
-		} catch (Exception e) {
-			logger.error("Not Register Consignent="+e.getMessage());
-			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
-		}
-	}
 
 	public Page<AuditTrail> ViewAllAuditHistory(Integer pageNo, Integer pageSize){
 		try {

@@ -11,13 +11,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.gl.ceir.config.model.AuditTrail;
 import com.gl.ceir.config.model.BlacklistDbHistory;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GreylistDbHistory;
 import com.gl.ceir.config.model.Notification;
-import com.gl.ceir.config.model.StockMgmtHistoryDb;
-import com.gl.ceir.config.model.StolenAndRecoveryHistoryMgmt;
 import com.gl.ceir.config.service.impl.HistoryServiceImpl;
 
 import io.swagger.annotations.ApiOperation;
@@ -53,21 +50,6 @@ public class HistoryController {
 		Page<GreylistDbHistory> policyDb = historyServiceImpl.ViewAllGreyHistory(pageNo, pageSize);
 
 		logger.info("Grey history Response="+policyDb);
-		MappingJacksonValue mapping = new MappingJacksonValue(policyDb);
-		return mapping;
-
-	}
-
-	@ApiOperation(value = "View All Record of Device history Db.", response = StolenAndRecoveryHistoryMgmt.class)
-	@RequestMapping(path = "/history/StlAndRcry", method = RequestMethod.POST)
-	public MappingJacksonValue viewStolenAndRecovery(@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
-			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
-
-		logger.info("Request to view Stolen And Recovery  historyDetails Page No="+pageNo+" Pagesize="+pageNo);
-
-		Page<StolenAndRecoveryHistoryMgmt> policyDb = historyServiceImpl.ViewAllStolenAndRecoveryHistory(pageNo, pageSize);
-
-		logger.info("Stolen And Recovery  history Response="+policyDb);
 		MappingJacksonValue mapping = new MappingJacksonValue(policyDb);
 		return mapping;
 

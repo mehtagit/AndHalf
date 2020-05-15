@@ -40,7 +40,6 @@ import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.SingleImeiDetails;
 import com.gl.ceir.config.model.StateMgmtDb;
 import com.gl.ceir.config.model.StockMgmt;
-import com.gl.ceir.config.model.StolenAndRecoveryHistoryMgmt;
 import com.gl.ceir.config.model.StolenIndividualUserDB;
 import com.gl.ceir.config.model.StolenOrganizationUserDB;
 import com.gl.ceir.config.model.StolenandRecoveryMgmt;
@@ -66,7 +65,6 @@ import com.gl.ceir.config.repository.ConsignmentRepository;
 import com.gl.ceir.config.repository.DashboardUsersFeatureStateMapRepository;
 import com.gl.ceir.config.repository.SingleImeiHistoryDbRepository;
 import com.gl.ceir.config.repository.StockManagementRepository;
-import com.gl.ceir.config.repository.StolenAndRecoveryHistoryMgmtRepository;
 import com.gl.ceir.config.repository.StolenAndRecoveryRepository;
 import com.gl.ceir.config.repository.StolenIndividualUserRepository;
 import com.gl.ceir.config.repository.StolenOrganizationUserRepository;
@@ -98,9 +96,6 @@ public class StolenAndRecoveryServiceImpl {
 
 	@Autowired
 	PropertiesReader propertiesReader;
-
-	@Autowired
-	StolenAndRecoveryHistoryMgmtRepository stolenAndRecoveryHistoryMgmtRepository;
 
 	@Autowired
 	StockManagementRepository distributerManagementRepository;
@@ -634,20 +629,7 @@ public class StolenAndRecoveryServiceImpl {
 				WebActionDb webActionDb = new WebActionDb(decideFeature(stolenandRecoveryMgmt.getRequestType()), 
 						SubFeatures.UPDATE, 
 						WebActionStatus.INIT.getCode(), stolenandRecoveryMgmt.getTxnId());
-
-				StolenAndRecoveryHistoryMgmt historyMgmt = new StolenAndRecoveryHistoryMgmt();
-				historyMgmt.setBlockingTimePeriod(stolenandRecoveryMgmtInfo.getBlockingTimePeriod());
-				historyMgmt.setBlockingType(stolenandRecoveryMgmtInfo.getBlockingType());
-				historyMgmt.setFileName(stolenandRecoveryMgmtInfo.getFileName());
-				historyMgmt.setFileStatus(stolenandRecoveryMgmtInfo.getFileStatus());
-				historyMgmt.setRequestType(stolenandRecoveryMgmtInfo.getRequestType());
-				historyMgmt.setRoleType(stolenandRecoveryMgmtInfo.getRoleType());
-				historyMgmt.setTxnId(stolenandRecoveryMgmtInfo.getTxnId());
-				historyMgmt.setUserId(stolenandRecoveryMgmtInfo.getUserId());
-				historyMgmt.setSourceType(stolenandRecoveryMgmtInfo.getSourceType());
-
-				stolenAndRecoveryHistoryMgmtRepository.save(historyMgmt);
-
+				
 				// 0 = Stolen
 				if (stolenandRecoveryMgmt.getRequestType() == 0){
 					stolenandRecoveryMgmtInfo.setBlockingTimePeriod(stolenandRecoveryMgmt.getBlockingTimePeriod());

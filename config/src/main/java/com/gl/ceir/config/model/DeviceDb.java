@@ -42,7 +42,6 @@ public class DeviceDb  implements Serializable{
 	private String imeiEsnMeid;
 	private LocalDateTime DeviceLaunchDate;
 	private String deviceStatus;
-	private String deviceAction;
 	
 	private String tac;
 
@@ -50,7 +49,8 @@ public class DeviceDb  implements Serializable{
 	
 	private String txnId;
 	private Integer state;
-
+	private String featureName;
+	
 	public Long getId() {
 		return id;
 	}
@@ -131,14 +131,6 @@ public class DeviceDb  implements Serializable{
 		this.deviceStatus = deviceStatus;
 	}
 
-	public String getDeviceAction() {
-		return deviceAction;
-	}
-
-	public void setDeviceAction(String deviceAction) {
-		this.deviceAction = deviceAction;
-	}
-
 	public String getPeriod() {
 		return period;
 	}
@@ -174,6 +166,15 @@ public class DeviceDb  implements Serializable{
 		this.state = state;
 	}
 
+	
+	public String getFeatureName() {
+		return featureName;
+	}
+
+	public void setFeatureName(String featureName) {
+		this.featureName = featureName;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -197,10 +198,16 @@ public class DeviceDb  implements Serializable{
 		builder.append(DeviceLaunchDate);
 		builder.append(", deviceStatus=");
 		builder.append(deviceStatus);
-		builder.append(", deviceAction=");
-		builder.append(deviceAction);
+		builder.append(", tac=");
+		builder.append(tac);
 		builder.append(", period=");
 		builder.append(period);
+		builder.append(", txnId=");
+		builder.append(txnId);
+		builder.append(", state=");
+		builder.append(state);
+		builder.append(", featureName=");
+		builder.append(featureName);
 		builder.append("]");
 		return builder.toString();
 	}
