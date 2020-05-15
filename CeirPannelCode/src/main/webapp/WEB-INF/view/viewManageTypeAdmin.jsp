@@ -339,7 +339,7 @@ button.modal-action.modal-close.waves-effect.waves-green.btn-flat.right {
 						
 						 <div class="input-field col s12 m6 l6">
 							<input type="text" id="editImportertac" name="tac" placeholder=""
-								pattern="[0-9]{8,8}" maxlength="8"
+								 pattern="[A-Za-z0-9 \s]{8,8}"  maxlength="8"
 								oninput="InvalidMsg(this,'input','<spring:message code="validation.tac8" />');"
 								oninvalid="InvalidMsg(this,'input','<spring:message code="validation.tac8" />');"
 								required> <label for="tac"><spring:message

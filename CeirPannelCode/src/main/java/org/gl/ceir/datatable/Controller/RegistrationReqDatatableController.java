@@ -60,8 +60,8 @@ public class RegistrationReqDatatableController {
 	@PostMapping("registrationData")
 	public ResponseEntity<?> viewUserProfileRecord(@RequestParam(name="type",defaultValue = "registration",required = false) String role, HttpServletRequest request,HttpSession session) {
 	
-		String userType = (String) session.getAttribute("usertype");
-		int userId=	(int) session.getAttribute("userid");
+		//String userType = (String) session.getAttribute("usertype");
+		//int userId=	(int) session.getAttribute("userid");
 		String sessionUserName =  (String) session.getAttribute("username");
 		
 		log.info("session value user Type admin registration Controller=="+session.getAttribute("usertype"));

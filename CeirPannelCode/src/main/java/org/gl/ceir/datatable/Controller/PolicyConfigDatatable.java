@@ -51,8 +51,8 @@ public class PolicyConfigDatatable {
 	
 	@PostMapping("policyConfigData")
 	public ResponseEntity<?> viewPolicyConfig(@RequestParam(name="type",defaultValue = "PolicyConfig",required = false) String role, HttpServletRequest request,HttpSession session) {
-		String userType = (String) session.getAttribute("usertype");
-		int userId=	(int) session.getAttribute("userid");
+		//String userType = (String) session.getAttribute("usertype");
+		//int userId=	(int) session.getAttribute("userid");
 		// Data set on this List
 				List<List<Object>> finalList=new ArrayList<List<Object>>();
 				String filter = request.getParameter("filter");

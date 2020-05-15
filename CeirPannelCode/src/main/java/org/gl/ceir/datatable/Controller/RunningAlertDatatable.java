@@ -55,8 +55,8 @@ public class RunningAlertDatatable {
 	
 	@PostMapping("runningAlertManagementData")
 	public ResponseEntity<?> viewRunningAlertsRecord(@RequestParam(name="type",defaultValue = "runningAlertManagement",required = false) String role, HttpServletRequest request,HttpSession session) {
-		String userType = (String) session.getAttribute("usertype");
-		int userId=	(int) session.getAttribute("userid");
+		//String userType = (String) session.getAttribute("usertype");
+		//int userId=	(int) session.getAttribute("userid");
 		int file=0;
 		// Data set on this List
 		List<List<Object>> finalList=new ArrayList<List<Object>>();
@@ -86,7 +86,7 @@ public class RunningAlertDatatable {
 				   String alertId = dataInsideList.getAlertId();
 				   String statusInterp= dataInsideList.getStatusInterp();
 				   String description = dataInsideList.getDescription();
-				   String userStatus = (String) session.getAttribute("userStatus");	  
+				   //String userStatus = (String) session.getAttribute("userStatus");	  
 				   Object[] finalData={createdOn,alertId,description,statusInterp}; 
 				   List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 					finalList.add(finalDataList);

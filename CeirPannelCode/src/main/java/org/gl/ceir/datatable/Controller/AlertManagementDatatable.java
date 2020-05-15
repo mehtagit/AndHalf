@@ -56,8 +56,8 @@ public class AlertManagementDatatable {
 	
 	@PostMapping("alertManagementData")
 	public ResponseEntity<?> viewAlertRecord(@RequestParam(name="type",defaultValue = "alertManagement",required = false) String role, HttpServletRequest request,HttpSession session) {
-		String userType = (String) session.getAttribute("usertype");
-		int userId=	(int) session.getAttribute("userid");
+		//String userType = (String) session.getAttribute("usertype");
+		//int userId=	(int) session.getAttribute("userid");
 		int file=0;
 		// Data set on this List
 		List<List<Object>> finalList=new ArrayList<List<Object>>();
@@ -87,7 +87,7 @@ public class AlertManagementDatatable {
 				   String alertId = dataInsideList.getAlertId();
 				   String feature = dataInsideList.getFeature();
 				   String description = dataInsideList.getDescription();
-				   String userStatus = (String) session.getAttribute("userStatus");	  
+				   //String userStatus = (String) session.getAttribute("userStatus");	  
 				   String action = iconState.alertManagementIcons(id);
 				   Object[] finalData={createdOn,modifiedOn,alertId,feature,description,action}; 
 				   List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));

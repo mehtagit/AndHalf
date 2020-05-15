@@ -53,8 +53,8 @@ private final Logger log = LoggerFactory.getLogger(getClass());
 	
 	@PostMapping("adminConfigData")
 	public ResponseEntity<?> viewAdminConfig(@RequestParam(name="type",defaultValue = "Config",required = false) String role, HttpServletRequest request,HttpSession session) {
-		String userType = (String) session.getAttribute("usertype");
-		int userId=	(int) session.getAttribute("userid");
+		//String userType = (String) session.getAttribute("usertype");
+		//int userId=	(int) session.getAttribute("userid");
 		// Data set on this List
 				List<List<Object>> finalList=new ArrayList<List<Object>>();
 				String filter = request.getParameter("filter");
