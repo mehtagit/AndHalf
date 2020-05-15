@@ -323,6 +323,7 @@ input[type='search'] {
 											        oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																
 																	maxlength="16"> <label for="IMEIC1"><spring:message code="title.three" /></label>
+															<p id="errorMsgOnModal" class="deviceErrorTitle" style="margin-top: -136px;margin-left: 173px;"></p>
 															</div>
 
 															<div class="input-field col s12 m6" id="field">

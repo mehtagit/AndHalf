@@ -642,6 +642,7 @@ select {
 																maxlength="16" id="updatesingleStolenimei3"> <label
 																for="updatesingleStolenimei3"> <spring:message
 																	code="registration.three" /></label>
+																	<p id="errorMsgOnModal" class="deviceErrorTitle" style="margin-top: -136px;margin-left: 173px;"></p>
 														</div>
 
 														<div class="input-field col s12 m6">

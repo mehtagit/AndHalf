@@ -12,10 +12,7 @@
 	
 	 long accessTime = session.getLastAccessedTime();
 	 long currentTime= new Date().getTime(); 
-	 System.out.println("accessTime========"+(accessTime));
-	 System.out.println("timeout========"+timeout);
-	 long dfd= accessTime +timeout;
-	 System.out.println("currentTime========"+currentTime);
+     long dfd= accessTime +timeout;
 	 if( currentTime< dfd){
 	/*  response.setHeader("Refresh", timeout + "; URL = ../login");
 	 System.out.println("timeout========"+timeout); 
@@ -633,6 +630,7 @@ select {
 																
 																maxlength="16" id="singleStolenimei3"> <label
 																for="singleStolenimei3"> <spring:message code="registration.three" /></label>
+														<p id="errorMsgOnModal" class="deviceErrorTitle"></p>
 														</div>
 
 														<div class="input-field col s12 m6">
@@ -643,8 +641,9 @@ select {
 																
 																maxlength="16" id="singleStolenimei4"> <label
 																for="singleStolenimei4"> <spring:message code="registration.four" /></label>
+														
 														</div>
-
+														
 
 														<div class="col s12 m12" style="margin-top: 30px;">
 															<h5>
