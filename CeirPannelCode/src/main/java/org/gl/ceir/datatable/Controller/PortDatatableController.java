@@ -62,8 +62,8 @@ public class PortDatatableController {
 	
 	@PostMapping("portManagementData")
 	public ResponseEntity<?> viewPortRecord(@RequestParam(name="type",defaultValue = "portAddress",required = false) String role, HttpServletRequest request,HttpSession session) {
-		String userType = (String) session.getAttribute("usertype");
-		int userId=	(int) session.getAttribute("userid");
+		//String userType = (String) session.getAttribute("usertype");
+		//int userId=	(int) session.getAttribute("userid");
 		int file=0;
 		// Data set on this List
 		List<List<Object>> finalList=new ArrayList<List<Object>>();

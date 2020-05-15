@@ -160,7 +160,7 @@
 														code="registration.frequencyrange" /> <span class="star">*</span></label>
 											</div>
 											<div class="input-field col s12 m6 l6">
-												<input type="text" id="tac" pattern="[0-9]{8,8}"
+												<input type="text" id="tac"  pattern="[A-Za-z0-9 \s]{8,8}"
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.tac8" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.tac8" />');"
 													name="tac" maxlength="8" required="required"> <label

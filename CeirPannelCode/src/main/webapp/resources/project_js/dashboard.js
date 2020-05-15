@@ -11,11 +11,18 @@ $('#langlist').on('change', function() {
 	});    
 	window.location.replace("?lang="+lang);
 }); 
+var urlController;
+if($('.navData li a').attr("data-featureid") == 16 || $('.navData li a').attr("data-featureid") ==31 || $('.navData li a').attr("data-featureid") == 26){
 
+urlController=$("body").attr("data-defaultLink");
+}
+else{
+	urlController="./Home?FeatureId=1"; 
+}
 
-
-var featurID=sessionStorage.getItem("data-feature") == null ? '1' : sessionStorage.getItem("data-feature");
-var intialController=sessionStorage.getItem("currentPageLocation") == null ? "./Home" : sessionStorage.getItem("currentPageLocation");
+$('.navData li:nth-child(1)').addClass("active");
+var featurID=sessionStorage.getItem("data-feature") == null ? $('.navData li a').attr("data-featureid") : sessionStorage.getItem("data-feature");
+var intialController=sessionStorage.getItem("currentPageLocation") == null ?  urlController : sessionStorage.getItem("currentPageLocation");
 $(document).ready(function () {
 	//var DB_LANG_VALUE= sessionStorage.getItem("sessionLang") == null ? window.parent.$("body").attr("data-lang") :  sessionStorage.getItem("sessionLang");
 	$("#section").append(" <iframe name='mainArea' class='embed-responsive-item' id='mainArea' frameBorder='0' src="+intialController+" width='100%' onLoad='self.scrollTo(0,0)'></iframe>");

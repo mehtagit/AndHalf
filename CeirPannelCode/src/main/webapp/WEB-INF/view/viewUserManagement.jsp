@@ -158,7 +158,7 @@
                                                 <select class="browser-default" id = "userStatus"
                                      onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" 
                                      oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" required>
-                                                    <option value="" disabled selected>select user type status</option>
+                                                    <option value="" selected>select user type status</option>
                                            	</select>
                                             </div>
                                    

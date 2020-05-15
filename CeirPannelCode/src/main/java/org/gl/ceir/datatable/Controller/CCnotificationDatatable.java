@@ -52,10 +52,10 @@ public class CCnotificationDatatable {
 	@PostMapping("CCNotificationData")
 	public ResponseEntity<?> viewNotificationRecord(@RequestParam(name="type",defaultValue = "ccnotification",required = false) String role, HttpServletRequest request,HttpSession session) {
 		
-		String userType = (String) session.getAttribute("usertype");
-		int userId=	(int) session.getAttribute("userid");
+		//String userType = (String) session.getAttribute("usertype");
+		//int userId=	(int) session.getAttribute("userid");
 		
-		log.info("session value user Type customer care Controller=="+session.getAttribute("usertype"));
+		
 				// Data set on this List
 				List<List<Object>> finalList=new ArrayList<List<Object>>();
 		

@@ -54,8 +54,8 @@ public class SLADatatableController {
 	
 	@PostMapping("slaData") 
 	public ResponseEntity<?> viewPendingTacList(HttpServletRequest request,HttpSession session) {
-		String userType = (String) session.getAttribute("usertype");
-		int userId=	(int) session.getAttribute("userid");
+		//String userType = (String) session.getAttribute("usertype");
+		//int userId=	(int) session.getAttribute("userid");
 		int file=0;
 		// Data set on this List
 		List<List<Object>> finalList=new ArrayList<List<Object>>();
@@ -88,7 +88,7 @@ public class SLADatatableController {
 				   String userTypeName = dataInsideList.getUsertype();
 				   String featureName = dataInsideList.getFeatureName();
 				   String Status = dataInsideList.getStateInterp();
-				   String userStatus = (String) session.getAttribute("userStatus");	  
+				  //String userStatus = (String) session.getAttribute("userStatus");	  
 				   Object[] finalData={createdOn,userName,txnId,userTypeName,featureName,Status}; 
 				   List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 					finalList.add(finalDataList);

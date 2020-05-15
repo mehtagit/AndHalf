@@ -90,6 +90,7 @@ public class LoginService {
 				session.setAttribute("language",response.getUserLanguage()); 
 				session.setAttribute("period", response.getPeriod());
 				session.setAttribute("selfRegister", response.getSelfRegister());
+				session.setAttribute("defaultLink", response.getDefaultLink());
 				session.setMaxInactiveInterval(sessionLogOutTime);
 			
 				return response;      

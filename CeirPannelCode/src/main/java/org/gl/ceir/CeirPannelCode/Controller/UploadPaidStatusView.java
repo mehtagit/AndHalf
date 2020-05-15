@@ -356,8 +356,14 @@ FeignCleintImplementation feignCleintImplementation;
 	public @ResponseBody GenricResponse findEndUserByNid(@RequestParam(name="findEndUserByNid",required = false) String findEndUserByNid) {
 		log.info("---entry point in update visa validity page");
 		GenricResponse endUserVisaInfo= new GenricResponse();
-		log.info("Request send to the fetch recoed by Passport="+findEndUserByNid);
-		endUserVisaInfo=	uploadPaidStatusFeignClient.fetchVisaDetailsbyPassport(findEndUserByNid);
+		  AllRequest request= new AllRequest();
+		  request.setFeatureId(12);
+
+		  request.setNid(findEndUserByNid);
+	      request.setUserTypeId(17);
+		  request.setUserType("End User");
+		log.info("Request send to the fetch record by Passport="+request);
+		endUserVisaInfo=	uploadPaidStatusFeignClient.fetchVisaDetailsbyPassport(request);
 		log.info("Response from fetchVisaDetailsbyPassport api== "+endUserVisaInfo);
 		log.info("---exit  point in update visa validity page");
 		return endUserVisaInfo;

@@ -56,8 +56,8 @@ public interface UploadPaidStatusFeignClient {
 	@PutMapping("/accept-reject/end-user-device")
 	public @ResponseBody GenricResponse approveRejectFeign(FilterRequest_UserPaidStatus filterRequest);
 	
-	@GetMapping("/end-user/{nid}")
-	public @ResponseBody GenricResponse fetchVisaDetailsbyPassport(@PathVariable("nid") String  nid);
+	@PostMapping("/end-user/searchByNid")
+	public @ResponseBody GenricResponse fetchVisaDetailsbyPassport(@RequestBody AllRequest nid);
 	
 	@PutMapping("visa/end-user")
 	public @ResponseBody GenricResponse updateEndUSerVisaDetailsby(EndUserVisaInfo visaInfo);

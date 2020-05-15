@@ -267,6 +267,7 @@ select.browser-default {
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 														  maxlength="16" 	id="sigleRecoveryimeiNumber3" > <label
 																for="sigleRecoveryimeiNumber3"><spring:message code="registration.three" /></label>
+																<p id="errorMsgOnModal" class="deviceErrorTitle"></p>
 														</div>
 														
 														<div class="input-field col s12 m6">

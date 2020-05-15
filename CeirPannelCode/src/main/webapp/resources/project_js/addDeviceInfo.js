@@ -415,3 +415,57 @@ function defaultDeviceForm(){
 
 	}      
  }
+ 
+ $('#deviceIdType1').on('change', function() {
+		var value=parseInt($(this).val());
+
+		switch (value) {
+		case 0:
+			$("#IMEIA1,#IMEIB1,#IMEIC1,#IMEID1").attr("pattern","[0-9]{15,16}");
+			$("#IMEIA1,#IMEIB1,#IMEIC1,#IMEID1").attr("maxlength","16");
+			
+			$("#IMEIA1,#IMEIB1,#IMEIC1,#IMEID1").removeAttr("onkeyup");
+			$("#IMEIA1,#IMEIB1,#IMEIC1,#IMEID1").attr("oninput","InvalidMsg(this,'input','"+$.i18n('validationIMEI')+"')");
+			$("#IMEIA1,#IMEIB1,#IMEIC1,#IMEID1").attr("oninvalid","InvalidMsg(this,'input','"+$.i18n('validationIMEI')+"')");
+			
+			$('#errorMsgOnModal').text($.i18n('IMEIMsg'));
+			
+			break;
+		case 1:
+			$("#IMEIA1,#IMEIB1,#IMEIC1,#IMEID1").attr("pattern","[A-F0-9]{15,16}");
+			$("#IMEIA1,#IMEIB1,#IMEIC1,#IMEID1").attr("maxlength","16");
+			
+			$("#IMEIA1,#IMEIB1,#IMEIC1,#IMEID1").removeAttr("onkeyup");
+			$("#IMEIA1,#IMEIB1,#IMEIC1,#IMEID1").attr("oninput","InvalidMsg(this,'input','"+$.i18n('validationMEID')+"')");
+			$("#IMEIA1,#IMEIB1,#IMEIC1,#IMEID1").attr("oninvalid","InvalidMsg(this,'input','"+$.i18n('validationMEID')+"')");
+			$('#errorMsgOnModal').text($.i18n('MEIDMsg'));
+			break;
+		case 2:
+			$("#IMEIA1,#IMEIB1,#IMEIC1,#IMEID1").val('');
+			$("#IMEIA1,#IMEIB1,#IMEIC1,#IMEID1").attr("pattern","[0-9]{8,11}");
+			$("#IMEIA1,#IMEIB1,#IMEIC1,#IMEID1").attr("onkeyup","isLengthValid(this.value)");
+			$("#IMEIA1,#IMEIB1,#IMEIC1,#IMEID1").attr("maxlength","11");	
+			$("#IMEIA1,#IMEIB1,#IMEIC1,#IMEID1").attr("oninput","InvalidMsg(this,'input','"+$.i18n('validationESN11')+"')");
+			$("#IMEIA1,#IMEIB1,#IMEIC1,#IMEID1").attr("oninvalid","InvalidMsg(this,'input','"+$.i18n('validationESN11')+"')");
+			$("#errorMsgOnModal").text($.i18n('ESNMsg'));
+			break;
+		}
+
+	}); 
+
+	function isLengthValid(val){
+		var deviceIDLength=val.length;
+		if(!isNaN(val)){
+			$("#IMEIA1,#IMEIB1,#IMEIC1,#IMEID1").attr("pattern","[0-9]{11,11}");
+			$("#IMEIA1,#IMEIB1,#IMEIC1,#IMEID1").attr("maxlength","11");
+			$("#IMEIA1,#IMEIB1,#IMEIC1,#IMEID1").attr("oninput","InvalidMsg(this,'input','"+$.i18n('validationESN11')+"')");
+			$("#IMEIA1,#IMEIB1,#IMEIC1,#IMEID1").attr("oninvalid","InvalidMsg(this,'input','"+$.i18n('validationESN11')+"')");
+		}
+		else if(typeof val == 'string' || val instanceof String){
+			$("#IMEIA1,#IMEIB1,#IMEIC1,#IMEID1").attr("maxlength","8");
+			$("#IMEIA1,#IMEIB1,#IMEIC1,#IMEID1").attr("pattern","[A-F0-9]{8,8}");
+			$("#IMEIA1,#IMEIB1,#IMEIC1,#IMEID1").attr("oninput","InvalidMsg(this,'input','"+$.i18n('validationESN8')+"')");
+			$("#IMEIA1,#IMEIB1,#IMEIC1,#IMEID1").attr("oninvalid","InvalidMsg(this,'input','"+$.i18n('validationESN8')+"')");
+
+		}
+	}
