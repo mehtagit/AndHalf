@@ -557,7 +557,6 @@ public class ConsignmentServiceImpl {
 					}
 
 					else if("CUSTOM".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())) {
-
 						webActionDb = new WebActionDb();
 						webActionDb.setFeature(WebActionDbFeature.CONSIGNMENT.getName());
 						// webActionDb.setSubFeature(stakeholderfeatureServiceImpl.getFeatureNameById(3L));

@@ -112,7 +112,6 @@ public class RegularizedDeviceController {
 		GenricResponse genricResponse = regularizedDeviceServiceImpl.getCountOfRegularizedDevicesByNid(nid,type);
 		//logger.info("Resonse send = " + genricResponse);
 		return genricResponse;
-
 	}
 	
 	@ApiOperation(value = "Accept/Reject regularized Devices Status.", response = GenricResponse.class)

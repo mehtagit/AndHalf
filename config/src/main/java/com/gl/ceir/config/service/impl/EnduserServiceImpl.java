@@ -281,6 +281,15 @@ public class EnduserServiceImpl {
 						}
 
 						// Add in web action list.
+						if(endUserDB.getAuditParameters().getUserTypeId()==7) {
+							if(regularizeDeviceDb.getTaxPaidStatus()==TaxStatus.TAX_PAID.getCode())
+							{
+								logger.info("if usertype is custom and tax status is paid so now this entry going to web action db");
+								webActionDbs.add(new WebActionDb(Features.REGISTER_DEVICE, SubFeatures.Approve, 0, 
+										regularizeDeviceDb.getTxnId()));
+								
+							}
+						}
 						webActionDbs.add(new WebActionDb(Features.REGISTER_DEVICE, SubFeatures.REGISTER, 0, 
 								regularizeDeviceDb.getTxnId()));
 					}
@@ -837,7 +846,7 @@ public class EnduserServiceImpl {
 					}
 					tag = "Update_Visa_Approved_CEIRAdmin";
 					receiverUserType = "End User";
-					sufeature=SubFeatures.ACCEPT;
+					sufeature=SubFeatures.Approve;
 					//feature= 
 					txnId = endUserDB.getTxnId();
 					userId=ceirActionRequest.getUserId();
