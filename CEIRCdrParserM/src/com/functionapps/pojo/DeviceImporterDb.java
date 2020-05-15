@@ -12,7 +12,6 @@ public class DeviceImporterDb  implements Serializable{
 	private String createdOn;
 	private String modifiedOn;
 
-	private String manufatureDate;
 	private String deviceType;
 	private String deviceIdType;
 	private String multipleSimStatus;
@@ -20,29 +19,23 @@ public class DeviceImporterDb  implements Serializable{
 	private String imeiEsnMeid;
 	private String deviceLaunchDate;
 	private String deviceStatus;
-	private String deviceAction;
 
 	private Long userId;
 	private String txnId;
-	private String localDate;
-	private Integer deviceState;
-	private Integer previousDeviceStatus;
 	private String period;
-	private Integer featureId;
+	private String featureName;
 	
 	public DeviceImporterDb() {
 		
 	}
 	
-	public DeviceImporterDb(Long rev, int revtype, String createdOn, String modifiedOn, String manufatureDate, 
+	public DeviceImporterDb(Long rev, int revtype, String createdOn, String modifiedOn,
 			String deviceType, String deviceIdType, String multipleSimStatus, String snOfDevice, String imeiEsnMeid,
-			String deviceLaunchDate, String deviceStatus, String deviceAction, Long userId, String txnId, String localDate, 
-			Integer deviceState, Integer previousDeviceStatus, String period, Integer featureId) {
+			String deviceLaunchDate, String deviceStatus, Long userId, String txnId, String period, String featureName) {
 		this.rev = rev;
 		this.revtype = revtype;
 		this.createdOn = createdOn;
 		this.modifiedOn = modifiedOn;
-		this.manufatureDate = manufatureDate;
 		this.deviceType = deviceType;
 		this.deviceIdType = deviceIdType;
 		this.multipleSimStatus = multipleSimStatus;
@@ -50,14 +43,10 @@ public class DeviceImporterDb  implements Serializable{
 		this.imeiEsnMeid = imeiEsnMeid;
 		this.deviceLaunchDate = deviceLaunchDate;
 		this.deviceStatus = deviceStatus;
-		this.deviceAction = deviceAction;
 		this.userId = userId;
 		this.txnId = txnId;
-		this.localDate = localDate;
-		this.deviceState = deviceState;
-		this.previousDeviceStatus = previousDeviceStatus;
 		this.period = period;
-		this.featureId = featureId;
+		this.featureName = featureName;
 	}
 	
 	public Long getRev() {
@@ -98,14 +87,6 @@ public class DeviceImporterDb  implements Serializable{
 
 	public void setModifiedOn(String modifiedOn) {
 		this.modifiedOn = modifiedOn;
-	}
-
-	public String getManufatureDate() {
-		return manufatureDate;
-	}
-
-	public void setManufatureDate(String manufatureDate) {
-		this.manufatureDate = manufatureDate;
 	}
 
 	public String getDeviceType() {
@@ -156,14 +137,6 @@ public class DeviceImporterDb  implements Serializable{
 		this.deviceStatus = deviceStatus;
 	}
 
-	public String getDeviceAction() {
-		return deviceAction;
-	}
-
-	public void setDeviceAction(String deviceAction) {
-		this.deviceAction = deviceAction;
-	}
-
 	public Long getUserId() {
 		return userId;
 	}
@@ -188,30 +161,6 @@ public class DeviceImporterDb  implements Serializable{
 		this.deviceLaunchDate = deviceLaunchDate;
 	}
 
-	public String getLocalDate() {
-		return localDate;
-	}
-
-	public void setLocalDate(String localDate) {
-		this.localDate = localDate;
-	}
-
-	public Integer getDeviceState() {
-		return deviceState;
-	}
-
-	public void setDeviceState(Integer deviceState) {
-		this.deviceState = deviceState;
-	}
-
-	public Integer getPreviousDeviceStatus() {
-		return previousDeviceStatus;
-	}
-
-	public void setPreviousDeviceStatus(Integer previousDeviceStatus) {
-		this.previousDeviceStatus = previousDeviceStatus;
-	}
-
 	public String getPeriod() {
 		return period;
 	}
@@ -220,12 +169,13 @@ public class DeviceImporterDb  implements Serializable{
 		this.period = period;
 	}
 
-	public Integer getFeatureId() {
-		return featureId;
+	
+	public String getFeatureName() {
+		return featureName;
 	}
 
-	public void setFeatureId(Integer featureId) {
-		this.featureId = featureId;
+	public void setFeatureName(String featureName) {
+		this.featureName = featureName;
 	}
 
 	public static long getSerialversionuid() {
@@ -237,12 +187,14 @@ public class DeviceImporterDb  implements Serializable{
 		StringBuilder builder = new StringBuilder();
 		builder.append("DeviceImporterDb [id=");
 		builder.append(id);
+		builder.append(", rev=");
+		builder.append(rev);
+		builder.append(", revtype=");
+		builder.append(revtype);
 		builder.append(", createdOn=");
 		builder.append(createdOn);
 		builder.append(", modifiedOn=");
 		builder.append(modifiedOn);
-		builder.append(", manufatureDate=");
-		builder.append(manufatureDate);
 		builder.append(", deviceType=");
 		builder.append(deviceType);
 		builder.append(", deviceIdType=");
@@ -257,23 +209,16 @@ public class DeviceImporterDb  implements Serializable{
 		builder.append(deviceLaunchDate);
 		builder.append(", deviceStatus=");
 		builder.append(deviceStatus);
-		builder.append(", deviceAction=");
-		builder.append(deviceAction);
 		builder.append(", userId=");
 		builder.append(userId);
 		builder.append(", txnId=");
 		builder.append(txnId);
-		builder.append(", localDate=");
-		builder.append(localDate);
-		builder.append(", deviceState=");
-		builder.append(deviceState);
-		builder.append(", previousDeviceStatus=");
-		builder.append(previousDeviceStatus);
 		builder.append(", period=");
 		builder.append(period);
-		builder.append(", featureId=");
-		builder.append(featureId);
+		builder.append(", featureName=");
+		builder.append(featureName);
 		builder.append("]");
 		return builder.toString();
 	}
+
 }

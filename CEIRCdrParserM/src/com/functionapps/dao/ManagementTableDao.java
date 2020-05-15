@@ -26,10 +26,8 @@ public class ManagementTableDao {
 		List<ManagementDb> managementDbs = new LinkedList<>();
 		try{
 			query = "select id, created_on, modified_on, device_type, device_id_type, "
-					+ "multiple_sim_status, sn_of_device, imei_esn_meid, "
-					//+ "TO_DATE(DEVICE_LAUNCH_DATE, 'DD-MM-YYYY') as launch_date, device_status, device_action, "
-					+ "DEVICE_LAUNCH_DATE as launch_date, device_status, device_action, "
-					+ "user_id, txn_id, period "
+					+ "multiple_sim_status, sn_of_device, imei_esn_meid, DEVICE_LAUNCH_DATE as launch_date, "
+					+ "device_status, user_id, txn_id, period, feature_name "
 					+ "from " 
 					+ managementTable 
 					+ " where txn_id='" + txnId + "'";
@@ -46,10 +44,8 @@ public class ManagementTableDao {
 				managementDbs.add(new ManagementDb(rs.getLong("id"), 0, rs.getString("created_on"),
 						rs.getString("modified_on"),  rs.getString("device_type"),  rs.getString("device_id_type"),
 						rs.getString("multiple_sim_status"),  rs.getString("sn_of_device"), rs.getString("imei_esn_meid"), 
-						rs.getString("launch_date"), rs.getString("device_action"), 
-						rs.getLong("user_id"), rs.getString("txn_id"), rs.getString("device_status"),
-						rs.getString("period")) ); 
-
+						rs.getString("launch_date"), rs.getLong("user_id"), rs.getString("txn_id"), 
+						rs.getString("device_status"), rs.getString("period"), rs.getString("feature_name")) ); 
 			}
 		}
 		catch(Exception e){

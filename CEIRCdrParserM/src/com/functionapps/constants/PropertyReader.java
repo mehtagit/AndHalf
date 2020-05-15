@@ -37,7 +37,6 @@ public class PropertyReader {
 			
 			logger.info("Porperty File is ["+propFileName+"]");
 			
-			// inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
 			inputStream = new FileInputStream(propFileName);
 			if (inputStream != null) {
 				prop.load(inputStream);
@@ -46,8 +45,7 @@ public class PropertyReader {
 				throw new FileNotFoundException("property file '" + propFileName + "' not found in the classpath");
 			}
 		}
-		catch(IOException io)
-		{
+		catch(IOException io){
 			logger.error(io.toString(),(Throwable)io);
 			//System.exit(-1);
 		}

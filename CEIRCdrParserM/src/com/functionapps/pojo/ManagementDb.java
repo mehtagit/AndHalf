@@ -18,21 +18,20 @@ public class ManagementDb  implements Serializable{
 	private String snOfDevice;
 	private String imeiEsnMeid;
 	private String deviceLaunchDate;
-	private String deviceAction;
 
 	private Long userId;
 	private String txnId;
 	private String deviceStatus;
 	private String period;
+	private String featureName;
 	
 	public ManagementDb() {
 		
 	}
 	
-	public ManagementDb(Long rev, int revtype, String createdOn, String modifiedOn, 
-			String deviceType, String deviceIdType, String multipleSimStatus, String snOfDevice, String imeiEsnMeid,
-			String deviceLaunchDate, String deviceAction, Long userId, String txnId, 
-			String deviceStatus, String period) {
+	public ManagementDb(Long rev, int revtype, String createdOn, String modifiedOn, String deviceType, 
+			String deviceIdType, String multipleSimStatus, String snOfDevice, String imeiEsnMeid,
+			String deviceLaunchDate, Long userId, String txnId, String deviceStatus, String period, String featureName) {
 		this.rev = rev;
 		this.revtype = revtype;
 		this.createdOn = createdOn;
@@ -43,13 +42,21 @@ public class ManagementDb  implements Serializable{
 		this.snOfDevice = snOfDevice;
 		this.imeiEsnMeid = imeiEsnMeid;
 		this.deviceLaunchDate = deviceLaunchDate;
-		this.deviceAction = deviceAction;
 		this.userId = userId;
 		this.txnId = txnId;
 		this.deviceStatus = deviceStatus;
 		this.period = period;
+		this.featureName = featureName;
 	}
-	
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	public Long getRev() {
 		return rev;
 	}
@@ -64,14 +71,6 @@ public class ManagementDb  implements Serializable{
 
 	public void setRevtype(Integer revtype) {
 		this.revtype = revtype;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public String getCreatedOn() {
@@ -130,12 +129,12 @@ public class ManagementDb  implements Serializable{
 		this.imeiEsnMeid = imeiEsnMeid;
 	}
 
-	public String getDeviceAction() {
-		return deviceAction;
+	public String getDeviceLaunchDate() {
+		return deviceLaunchDate;
 	}
 
-	public void setDeviceAction(String deviceAction) {
-		this.deviceAction = deviceAction;
+	public void setDeviceLaunchDate(String deviceLaunchDate) {
+		this.deviceLaunchDate = deviceLaunchDate;
 	}
 
 	public Long getUserId() {
@@ -154,14 +153,6 @@ public class ManagementDb  implements Serializable{
 		this.txnId = txnId;
 	}
 
-	public String getDeviceLaunchDate() {
-		return deviceLaunchDate;
-	}
-
-	public void setDeviceLaunchDate(String deviceLaunchDate) {
-		this.deviceLaunchDate = deviceLaunchDate;
-	}
-
 	public String getDeviceStatus() {
 		return deviceStatus;
 	}
@@ -176,6 +167,14 @@ public class ManagementDb  implements Serializable{
 
 	public void setPeriod(String period) {
 		this.period = period;
+	}
+
+	public String getFeatureName() {
+		return featureName;
+	}
+
+	public void setFeatureName(String featureName) {
+		this.featureName = featureName;
 	}
 
 	public static long getSerialversionuid() {
@@ -207,8 +206,6 @@ public class ManagementDb  implements Serializable{
 		builder.append(imeiEsnMeid);
 		builder.append(", deviceLaunchDate=");
 		builder.append(deviceLaunchDate);
-		builder.append(", deviceAction=");
-		builder.append(deviceAction);
 		builder.append(", userId=");
 		builder.append(userId);
 		builder.append(", txnId=");
@@ -217,9 +214,9 @@ public class ManagementDb  implements Serializable{
 		builder.append(deviceStatus);
 		builder.append(", period=");
 		builder.append(period);
+		builder.append(", featureName=");
+		builder.append(featureName);
 		builder.append("]");
 		return builder.toString();
 	}
-
-	
 }
