@@ -111,15 +111,15 @@ public class GenericSpecificationBuilder<T> {
 							&& Datatype.LONG.equals(searchCriteria.getDatatype())) {
 						return cb.equal(root.get(searchCriteria.getKey()), (Long)searchCriteria.getValue());
 					}
-					else if(SearchOperation.GREATER_THAN.equals(searchCriteria.getSearchOperation())
+					else if(SearchOperation.GREATER_THAN_OR_EQUAL.equals(searchCriteria.getSearchOperation())
 							&& Datatype.DATE.equals(searchCriteria.getDatatype())){
 						Expression<String> dateStringExpr = cb.function(DbFunctions.getDate(dialect), String.class, root.get(searchCriteria.getKey()), cb.literal(DbFunctions.getDateFormat(dialect)));
 						return cb.greaterThanOrEqualTo(cb.lower(dateStringExpr), searchCriteria.getValue().toString());
 					}
-					else if(SearchOperation.LESS_THAN.equals(searchCriteria.getSearchOperation())
+					else if(SearchOperation.GREATER_THAN.equals(searchCriteria.getSearchOperation())
 							&& Datatype.DATE.equals(searchCriteria.getDatatype())){
 						Expression<String> dateStringExpr = cb.function(DbFunctions.getDate(dialect), String.class, root.get(searchCriteria.getKey()), cb.literal(DbFunctions.getDateFormat(dialect)));
-						return cb.lessThanOrEqualTo(cb.lower(dateStringExpr), searchCriteria.getValue().toString());
+						return cb.lessThan(cb.lower(dateStringExpr), searchCriteria.getValue().toString());
 					}
 					else if(SearchOperation.NEGATION.equals(searchCriteria.getSearchOperation())
 							&& Datatype.STRING.equals(searchCriteria.getDatatype())) {

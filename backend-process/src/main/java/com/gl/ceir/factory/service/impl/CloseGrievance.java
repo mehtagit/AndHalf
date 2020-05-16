@@ -62,11 +62,12 @@ public class CloseGrievance extends BaseService{
 				return;
 			}
 
-			String date = DateUtil.nextDate( (Integer.parseInt(defaultPerioToCloseGrievance.getValue())) * -1);
-			logger.info("Close grievance raised on date [" + date + "] because of inactivity.");
+			String fromDate = DateUtil.nextDate( (Integer.parseInt(defaultPerioToCloseGrievance.getValue())) * -1);
+			String toDate = DateUtil.nextDate( ((Integer.parseInt(defaultPerioToCloseGrievance.getValue())) * -1 ) + 1);
+			logger.info("Close grievance raised on fromDate [" + fromDate + "] toDate[" + toDate + "] because of inactivity.");
 
 			// Read all inactive grievances for last configured number of days.
-			List<Grievance> grievances = grievanceRepository.findAll(buildSpecification(date).build());
+			List<Grievance> grievances = grievanceRepository.findAll(buildSpecification(fromDate, toDate).build());
 
 			// Map, To replace few placeholders in notification(mail) content.
 			Map<String, String> placeholderMap = new HashMap<>();
@@ -88,8 +89,8 @@ public class CloseGrievance extends BaseService{
 				// Save in notification.
 				user = userRepository.getById(grievance.getUserId());
 				if(Objects.nonNull(user)) {
-					placeholderMap.put("<User>", user.getUserProfile().getFirstName());
-					placeholderMap.put("<txn_id>", grievance.getTxnId());
+					placeholderMap.put("<First name>", user.getUserProfile().getFirstName());
+					placeholderMap.put("<Txn id>", grievance.getTxnId());
 
 					rawMails.add(new RawMail("Email", 
 							"MAIL_TO_USER_ON_GRIEVANCE_CLOSURE", 
@@ -142,13 +143,13 @@ public class CloseGrievance extends BaseService{
 		}
 	}
 
-	private GenericSpecificationBuilder<Grievance> buildSpecification(String date){
+	private GenericSpecificationBuilder<Grievance> buildSpecification(String fromDate, String toDate){
 		GenericSpecificationBuilder<Grievance> cmsb = new GenericSpecificationBuilder<>(propertiesReader.dialect);
 
 		// Grievance status - Pending With User
 		cmsb.with(new SearchCriteria("grievanceStatus", 2, SearchOperation.EQUALITY, Datatype.STRING));
-		cmsb.with(new SearchCriteria("modifiedOn", date, SearchOperation.GREATER_THAN, Datatype.DATE));
-		cmsb.with(new SearchCriteria("modifiedOn", date, SearchOperation.LESS_THAN, Datatype.DATE));
+		cmsb.with(new SearchCriteria("modifiedOn", fromDate, SearchOperation.GREATER_THAN_OR_EQUAL, Datatype.DATE));
+		cmsb.with(new SearchCriteria("modifiedOn", toDate, SearchOperation.LESS_THAN, Datatype.DATE));
 
 		return cmsb;
 	}	

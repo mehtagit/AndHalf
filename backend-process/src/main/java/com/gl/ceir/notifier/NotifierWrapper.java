@@ -44,7 +44,7 @@ public class NotifierWrapper {
 				
 				notifications.add(new Notification(rawMail.getChannel(), 
 						message, 
-						rawMail.getUserProfile().getUser().getId(), 
+						rawMail.getUserId(), 
 						rawMail.getFeatureId(),
 						rawMail.getFeatureName(), 
 						rawMail.getSubFeature(), 

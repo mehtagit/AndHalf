@@ -3,15 +3,12 @@ package com.gl.ceir.pojo;
 import java.io.Serializable;
 import java.util.Map;
 
-import com.gl.ceir.entity.UserProfile;
-
 public class RawMail implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
 	private String channel;
 	private String tag;
-	private UserProfile userProfile;
 	private long featureId;
 	private String featureName;
 	private String subFeature;
@@ -21,24 +18,7 @@ public class RawMail implements Serializable{
 	private Map<String, String> placeholders;
 	private String roleType;
 	private String receiverUserType;
-	
-	public RawMail(String channel, String tag, UserProfile userProfile, long featureId, String featureName, String subFeature,
-			String featureTxnId, String subject, Map<String, String> placeholders, String referTable, 
-			String roleType, String receiverUserType) {
-		super();
-		this.channel = channel;
-		this.tag = tag;
-		this.userProfile = userProfile;
-		this.featureId = featureId;
-		this.featureName = featureName;
-		this.subFeature = subFeature;
-		this.featureTxnId = featureTxnId;
-		this.subject = subject;
-		this.placeholders = placeholders;
-		this.referTable = referTable;
-		this.roleType = roleType;
-		this.receiverUserType = receiverUserType;
-	}
+	private Long userId;
 	
 	public RawMail(String channel, String tag, long userId, long featureId, String featureName, String subFeature,
 			String featureTxnId, String subject, Map<String, String> placeholders, String referTable,
@@ -46,7 +26,7 @@ public class RawMail implements Serializable{
 		super();
 		this.channel = channel;
 		this.tag = tag;
-		this.userProfile = new UserProfile().setId(userId);
+		this.userId = userId;
 		this.featureId = featureId;
 		this.featureName = featureName;
 		this.subFeature = subFeature;
@@ -57,6 +37,16 @@ public class RawMail implements Serializable{
 		this.roleType = roleType;
 		this.receiverUserType = receiverUserType;
 	}
+
+	public Long getUserId() {
+		return userId;
+	}
+
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+
 
 	public String getChannel() {
 		return channel;
@@ -79,12 +69,6 @@ public class RawMail implements Serializable{
 	}
 	public void setTag(String tag) {
 		this.tag = tag;
-	}
-	public UserProfile getUserProfile() {
-		return userProfile;
-	}
-	public void setUserProfile(UserProfile userProfile) {
-		this.userProfile = userProfile;
 	}
 	public long getFeatureId() {
 		return featureId;
@@ -146,8 +130,6 @@ public class RawMail implements Serializable{
 		StringBuilder builder = new StringBuilder();
 		builder.append("RawMail [tag=");
 		builder.append(tag);
-		builder.append(", userProfile=");
-		builder.append(userProfile);
 		builder.append(", featureId=");
 		builder.append(featureId);
 		builder.append(", featureName=");
