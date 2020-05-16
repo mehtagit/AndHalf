@@ -48,10 +48,11 @@ public class BlockEndUserDevice extends BaseService{
 				return;
 			}
 
-			String reminderDate = DateUtil.nextDate( (Integer.parseInt(graceDays.getValue())) * -1);
-			logger.info("Reminder will sent to user who has registered device on date [" + reminderDate + "] and not paid tax.");
+			String fromDate = DateUtil.nextDate( (Integer.parseInt(graceDays.getValue())) * -1);
+			String toDate = DateUtil.nextDate( ( Integer.parseInt( graceDays.getValue() ) - 1) * -1);
+			logger.info("Reminder will sent to user who has registered device on fromDate [" + fromDate + "] toDate[" + toDate + "]and not paid tax.");
 
-			List<RegularizeDeviceDb> regularizeDeviceDbs = regularizedDeviceDbRepository.findAll(buildSpecification(reminderDate).build());
+			List<RegularizeDeviceDb> regularizeDeviceDbs = regularizedDeviceDbRepository.findAll(buildSpecification(fromDate, toDate).build());
 
 			for(RegularizeDeviceDb regularizeDeviceDb : regularizeDeviceDbs) {
 				regularizeDeviceDb.setStatus(3); // Blocked State
@@ -80,11 +81,11 @@ public class BlockEndUserDevice extends BaseService{
 		}
 	}
 
-	private GenericSpecificationBuilder<RegularizeDeviceDb> buildSpecification(String reminderDate){
+	private GenericSpecificationBuilder<RegularizeDeviceDb> buildSpecification(String fromDate, String toDate){
 		GenericSpecificationBuilder<RegularizeDeviceDb> cmsb = new GenericSpecificationBuilder<>(propertiesReader.dialect);
 
-		cmsb.with(new SearchCriteria("createdOn", reminderDate, SearchOperation.GREATER_THAN, Datatype.DATE));
-		cmsb.with(new SearchCriteria("createdOn", reminderDate, SearchOperation.LESS_THAN, Datatype.DATE));
+		cmsb.with(new SearchCriteria("createdOn", fromDate, SearchOperation.GREATER_THAN_OR_EQUAL, Datatype.DATE));
+		cmsb.with(new SearchCriteria("createdOn", toDate, SearchOperation.LESS_THAN, Datatype.DATE));
 		cmsb.with(new SearchCriteria("taxPaidStatus", 1, SearchOperation.EQUALITY, Datatype.STRING));
 
 		return cmsb;

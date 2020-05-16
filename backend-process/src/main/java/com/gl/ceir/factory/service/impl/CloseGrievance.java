@@ -63,7 +63,7 @@ public class CloseGrievance extends BaseService{
 			}
 
 			String fromDate = DateUtil.nextDate( (Integer.parseInt(defaultPerioToCloseGrievance.getValue())) * -1);
-			String toDate = DateUtil.nextDate( ((Integer.parseInt(defaultPerioToCloseGrievance.getValue())) * -1 ) + 1);
+			String toDate = DateUtil.nextDate( (Integer.parseInt(defaultPerioToCloseGrievance.getValue()) - 1) * -1 );
 			logger.info("Close grievance raised on fromDate [" + fromDate + "] toDate[" + toDate + "] because of inactivity.");
 
 			// Read all inactive grievances for last configured number of days.
