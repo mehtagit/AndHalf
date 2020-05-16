@@ -304,9 +304,30 @@ FeignCleintImplementation feignCleintImplementation;
 
 	@ResponseBody
 	@PutMapping("tax-paid/status")
-	public GenricResponse taxPaidStatusUpdate(@RequestBody Register_UploadPaidStatus model) {
+	public GenricResponse taxPaidStatusUpdate(@RequestBody Register_UploadPaidStatus model,HttpSession session) {
+		
+		try {
+			log.info("11");
+		String roleType=String.valueOf(session.getAttribute("usertype"));
+		String userName=session.getAttribute("username").toString();
+		int userId= (int) session.getAttribute("userid");  
+		int userTypeId =(int) session.getAttribute("usertypeId");
+		
+		 AllRequest request= new AllRequest();
+		 request.setFeatureId(12);
+		 request.setUsername(userName);
+		 request.setUserId(userId);
+		 request.setUserType(roleType);
+         request.setUserTypeId(userTypeId);
+		 model.setAuditParameters(request);
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+		}
+		log.info("request passed to the tax pay api="+model);
 		GenricResponse response = userPaidStatusFeignClient.tax(model);
-		log.info("::::::::::model:::::::"+model);
+		//model.getAuditParameters().setUserId(userId);
+		
 		log.info("---------response--------"+response);
 		return response;
 	}

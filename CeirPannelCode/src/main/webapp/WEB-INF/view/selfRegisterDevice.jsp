@@ -648,7 +648,7 @@ button.modal-action.modal-close.waves-effect.waves-green.btn-flat.right {
 														</select>
 													</div>
 													
-													<div class="col s12 m6" style="    margin-right: 2px;">
+													<%-- <div class="col s12 m6" style="    margin-right: 2px;" >
 															<label for="taxStatus1"><spring:message code="select.taxPaidStatus" /> <span
 																class="star">*</span></label> <select class="browser-default"
 																oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
@@ -666,7 +666,7 @@ button.modal-action.modal-close.waves-effect.waves-green.btn-flat.right {
 											            oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
 																title= "<spring:message code="validation.7digits" />" maxlength="7">
 															<label for="Price1"><spring:message code="select.price" /></label>
-														</div>
+														</div> --%>
 
 														<div class="col s12 m6" id="CurrencyDiv" style="display: none;    margin-left: -1px;">
 															<label for="Currency1"><spring:message code="input.currency" /> <span

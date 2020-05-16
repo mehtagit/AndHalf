@@ -240,17 +240,7 @@ input[type='search'] {
 														</label>
 													</div>
 
-													<div class="col s12 m6">
-														<label for="taxStatus1"><spring:message code="select.taxPaidStatus" /><span
-															class="star">*</span></label> <select class="browser-default"
-															required="required"
-															oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-											        oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-															 id="taxStatus1">
-															<option value="" disabled selected><spring:message code="select.selectTaxPaidStatus" /></option>
-
-														</select>
-													</div>
+													
 												</div>
 											</div>
 											<div class="row">
@@ -266,22 +256,7 @@ input[type='search'] {
 														</select>
 													</div>
 
-													<div class="input-field col s12 m6 l6">
-														<input type="text" name="Price" id="Price1"
-														oninput="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
-											        oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
-															pattern="[0-9]{0,7}"  maxlength="7">
-														<label for="Price1"><spring:message code="select.price" /></label>
-													</div>
-
-													<div class="col s12 m6" id="CurrencyDiv" style="display: none;">
-														<label for="Currency1"><spring:message code="input.currency" /><span class="star">*</span></label>
-														<select class="browser-default" id="Currency1"
-														oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-											            oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');">
-															<option value="" disabled selected><spring:message code="select.selectCurrency" /></option>
-														 </select>
-													</div>
+												
 												</div>
 											</div>
 											<div class="row">

@@ -16,7 +16,7 @@ public class Register_UploadPaidStatus {
 	private String street;
 	private String locality;
 	private String province;
-	private String country,district,commune,village, nationality,passportFileName;
+	private String country,district,commune,village, nationality,passportFileName,txnId;
 	private AllRequest auditParameters;
 	private List<UplodPaidStatusModel> regularizeDeviceDbs;
 	private Long firstImei;
@@ -155,6 +155,8 @@ public class Register_UploadPaidStatus {
 	public void setAuditParameters(AllRequest auditParameters) {
 		this.auditParameters = auditParameters;
 	}
+	
+	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -202,10 +204,18 @@ public class Register_UploadPaidStatus {
 		builder.append(taxPaidStatus);
 		builder.append(", postalCode=");
 		builder.append(postalCode);
+		builder.append(", txnId=");
+		builder.append(txnId);
 		builder.append("]");
 		return builder.toString();
 	}
-	
-	
+	public String getTxnId() {
+		return txnId;
+	}
+	public void setTxnId(String txnId) {
+		this.txnId = txnId;
+	}
+
+
 
 }
