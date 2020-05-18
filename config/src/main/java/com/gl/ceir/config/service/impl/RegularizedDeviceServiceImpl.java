@@ -510,6 +510,15 @@ public class RegularizedDeviceServiceImpl {
 			String mailSubject = null;
 			List<RawMail> rawMails = new ArrayList<>(1);
 			Map<String, String> placeholders = new HashMap<>();
+            AllRequest audit=regularizeDeviceDb.getAuditParameters();
+            logger.info("txn_id is : "+regularizeDeviceDb.getTxnId());
+			AuditTrail auditTrail = new AuditTrail(audit.getUserId(), audit.getUsername(), audit.getUserTypeId(), 
+					audit.getUserType(), 12, Features.REGISTER_DEVICE, 
+					SubFeatures.Tax_Paid, "",regularizeDeviceDb.getTxnId());
+			auditTrailRepository.save(auditTrail);
+			logger.info("AUDIT : update in audit_trail. " + auditTrail);
+
+			
 			RegularizeDeviceDb userCustomDbDetails = regularizedDeviceDbRepository.getByFirstImei(regularizeDeviceDb.getFirstImei());
 			UserProfile ceirAdminProfile = userStaticServiceImpl.getCeirAdmin().getUserProfile();
 
@@ -547,13 +556,7 @@ public class RegularizedDeviceServiceImpl {
 				 */
 
 				// Save in audit.
-                AllRequest audit=regularizeDeviceDb.getEndUserDB().getAuditParameters();
                 
-				AuditTrail auditTrail = new AuditTrail(audit.getUserId(), audit.getUsername(), audit.getUserTypeId(), 
-						audit.getUserType(), 12, Features.REGISTER_DEVICE, 
-						SubFeatures.Tax_Paid, regularizeDeviceDb.getTxnId());
-				auditTrailRepository.save(auditTrail);
-				logger.info("AUDIT : update in audit_trail. " + auditTrail);
 
 				return new GenricResponse(0, "Update Successfully.", userCustomDbDetails.getFirstImei());
 

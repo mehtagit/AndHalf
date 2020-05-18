@@ -111,6 +111,9 @@ public class RegularizeDeviceDb implements Serializable {
 	@Transient
 	private String multiSimStatusInterp;
 	
+	@Transient
+	private AllRequest auditParameters;
+
 	public String getMultiSimStatusInterp() {
 		return multiSimStatusInterp;
 	}
@@ -362,6 +365,13 @@ public class RegularizeDeviceDb implements Serializable {
 	public void setNationality(String nationality) {
 		this.nationality = nationality;
 	}
+	public AllRequest getAuditParameters() {
+		return auditParameters;
+	}
+
+	public void setAuditParameters(AllRequest auditParameters) {
+		this.auditParameters = auditParameters;
+	}
 
 	@Override
 	public String toString() {
@@ -431,7 +441,5 @@ public class RegularizeDeviceDb implements Serializable {
 		builder.append("]");
 		return builder.toString();
 	}
-
 	
-
 }
