@@ -111,31 +111,8 @@ public class ConfigurationManagementServiceImpl {
 
 	public Page<SystemConfigurationDb> filterSystemConfiguration(FilterRequest filterRequest, Integer pageNo, Integer pageSize){
 		try {
-
 			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
-			GenericSpecificationBuilder<SystemConfigurationDb> sb = new GenericSpecificationBuilder<SystemConfigurationDb>(propertiesReader.dialect);
-
-			if(Objects.nonNull(filterRequest.getTag()))
-				sb.with(new SearchCriteria("tag", filterRequest.getTag(), SearchOperation.EQUALITY, Datatype.STRING));
-
-			if(Objects.nonNull(filterRequest.getType()))
-				sb.with(new SearchCriteria("type", filterRequest.getType(), SearchOperation.EQUALITY, Datatype.STRING));
-
-			if(Objects.nonNull(filterRequest.getFeatureName()))
-				sb.with(new SearchCriteria("featureName", filterRequest.getFeatureName(), SearchOperation.EQUALITY, Datatype.STRING));
-
-			/*
-			 * if(Objects.nonNull(filterRequest.getUserType())) sb.with(new
-			 * SearchCriteria("userType", filterRequest.getUserType(),
-			 * SearchOperation.EQUALITY, Datatype.STRING));
-			 */
-
-			if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
-				sb.orSearch(new SearchCriteria("description", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
-				sb.orSearch(new SearchCriteria("value", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
-			}
-
-			Page<SystemConfigurationDb> page = systemConfigurationDbRepository.findAll(sb.build(), pageable);
+			Page<SystemConfigurationDb> page = systemConfigurationDbRepository.findAll(buildSpecification_system(filterRequest).build(),pageable);
 
 			for(SystemConfigurationDb systemConfigurationDb : page.getContent()) {	
 				systemConfigurationDb.setTypeInterp(interpSetter.setConfigInterp(Tags.CONFIG_TYPE, systemConfigurationDb.getType()));
@@ -174,6 +151,8 @@ public class ConfigurationManagementServiceImpl {
 		}
 	}
 
+	
+	
 	@Transactional
 	public GenricResponse updateSystemInfo(SystemConfigurationDb systemConfigurationDb) {
 		try {
@@ -191,6 +170,7 @@ public class ConfigurationManagementServiceImpl {
 
 			systemConfigurationDb2.setValue(systemConfigurationDb.getValue());
 			systemConfigurationDb2.setDescription(systemConfigurationDb.getDescription());
+			systemConfigurationDb2.setRemark(systemConfigurationDb.getRemark());
 			systemConfigurationDbRepository.save(systemConfigurationDb2);
 
 			return new GenricResponse(0, "System configuration update Sucessfully", "");
@@ -217,7 +197,7 @@ public class ConfigurationManagementServiceImpl {
 	public Page<MessageConfigurationDb> filterMessageConfiguration(FilterRequest filterRequest, Integer pageNo, Integer pageSize){
 		try {
 
-			Pageable pageable = PageRequest.of(pageNo, pageSize);
+			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
 			Page<MessageConfigurationDb> page = messageConfigurationDbRepository.findAll(buildSpecification(filterRequest).build(), pageable);
 
 			for(MessageConfigurationDb messageConfigurationDb : page.getContent()) {	
@@ -565,16 +545,38 @@ public class ConfigurationManagementServiceImpl {
 
 
 	
-	
-	
 	private GenericSpecificationBuilder<MessageConfigurationDb> buildSpecification(FilterRequest filterRequest){
-	GenericSpecificationBuilder<MessageConfigurationDb> sb = new GenericSpecificationBuilder<>(propertiesReader.dialect);
+		GenericSpecificationBuilder<MessageConfigurationDb> sb = new GenericSpecificationBuilder<>(propertiesReader.dialect);
+
+		if(Objects.nonNull(filterRequest.getTag()))
+			sb.with(new SearchCriteria("tag", filterRequest.getTag(), SearchOperation.EQUALITY, Datatype.STRING));
+
+		if(Objects.nonNull(filterRequest.getChannel()))
+			sb.with(new SearchCriteria("channel", filterRequest.getChannel(), SearchOperation.EQUALITY, Datatype.STRING));
+
+		if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
+			sb.orSearch(new SearchCriteria("description", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+			sb.orSearch(new SearchCriteria("value", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+		}
+		return sb;
+		}
+		
+		
+	
+	
+	private GenericSpecificationBuilder<SystemConfigurationDb> buildSpecification_system(FilterRequest filterRequest){
+	
+	GenericSpecificationBuilder<SystemConfigurationDb> sb = new GenericSpecificationBuilder<SystemConfigurationDb>(propertiesReader.dialect);
 
 	if(Objects.nonNull(filterRequest.getTag()))
 		sb.with(new SearchCriteria("tag", filterRequest.getTag(), SearchOperation.EQUALITY, Datatype.STRING));
 
-	if(Objects.nonNull(filterRequest.getChannel()))
-		sb.with(new SearchCriteria("channel", filterRequest.getChannel(), SearchOperation.EQUALITY, Datatype.STRING));
+	if(Objects.nonNull(filterRequest.getType()))
+		sb.with(new SearchCriteria("type", filterRequest.getType(), SearchOperation.EQUALITY, Datatype.STRING));
+
+	if(Objects.nonNull(filterRequest.getFeatureName()))
+		sb.with(new SearchCriteria("featureName", filterRequest.getFeatureName(), SearchOperation.EQUALITY, Datatype.STRING));
+
 
 	if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
 		sb.orSearch(new SearchCriteria("description", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
@@ -583,6 +585,15 @@ public class ConfigurationManagementServiceImpl {
 	return sb;
 	}
 	
+	
+	
+	
+	
+	public void setInterp_system(SystemConfigurationDb systemConfigurationDb) {
+		if(Objects.nonNull(systemConfigurationDb.getType())) {
+			systemConfigurationDb.setTypeInterp(interpSetter.setConfigInterp(Tags.CONFIG_TYPE, systemConfigurationDb.getType()));
+		}	
+	}	
 	
 	
 	
@@ -620,6 +631,21 @@ public class ConfigurationManagementServiceImpl {
 	
 	
 	
+	private List<SystemConfigurationDb> getAll_system(FilterRequest filterRequest){
+		try {
+			List<SystemConfigurationDb> list = systemConfigurationDbRepository.findAll(buildSpecification_system(filterRequest).build(), new Sort(Sort.Direction.DESC, "modifiedOn"));
+			for(SystemConfigurationDb systemConfigurationDb : list) {
+			setInterp_system(systemConfigurationDb);
+			}
+			return list;
+
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
+	}
+	
+	
 	/*************************************** Export File for System Mgt ********************************
 	 *************************************************************************************************/
 	
@@ -644,8 +670,7 @@ public class ConfigurationManagementServiceImpl {
 		CustomMappingStrategy<SystemMgtFileModel> mappingStrategy = new CustomMappingStrategy<>();
 
 		try {
-			List<SystemConfigurationDb> systemConfigurationDBList = systemConfigurationDbRepository.getByType(filterRequest.getType());
-			logger.info("systemConfigurationDBList:::::::::::::::::::"+systemConfigurationDBList);
+			List<SystemConfigurationDb> systemConfigurationDBList = getAll_system(filterRequest);
 			fileName = LocalDateTime.now().format(dtf2).replace(" ", "_") + "_SystemMgt.csv";
 			writer = Files.newBufferedWriter(Paths.get(filepath.getValue() + fileName));
 			mappingStrategy.setType(SystemMgtFileModel.class);
@@ -660,13 +685,12 @@ public class ConfigurationManagementServiceImpl {
 					LocalDateTime creation = systemConfigurationDB.getCreatedOn() == null ? LocalDateTime.now() : systemConfigurationDB.getCreatedOn();
 					LocalDateTime modified = systemConfigurationDB.getModifiedOn() == null ? LocalDateTime.now() : systemConfigurationDB.getModifiedOn();
 					
-					logger.info("size of arraylist:::::"+systemConfigurationDBList.size());
 					fileModel = new SystemMgtFileModel(
 							creation.format(dtf), 
 							modified.format(dtf), 
 							systemConfigurationDB.getDescription() == null ? "NA" : systemConfigurationDB.getDescription(),
 							systemConfigurationDB.getValue() == null ? "NA" : systemConfigurationDB.getValue(), 
-									systemConfigurationDB.getUserType() == null ? "NA" : systemConfigurationDB.getUserType());
+							systemConfigurationDB.getTypeInterp());
 					fileRecords.add(fileModel);
 				}
 
@@ -675,13 +699,7 @@ public class ConfigurationManagementServiceImpl {
 				csvWriter.write( new SystemMgtFileModel());
 			}
 
-			/*
-			 * auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), "",
-			 * Long.valueOf(filterRequest.getUserTypeId()), filterRequest.getUserType(),
-			 * Long.valueOf(filterRequest.getFeatureId()), Features.CONSIGNMENT,
-			 * SubFeatures.VIEW, "", "NA",filterRequest.getRoleType()));
-			 * logger.info("AUDIT : Saved file export request in audit.");
-			 */
+			
 			FileDetails fileDetails = new FileDetails( fileName, filepath.getValue(), link.getValue() + fileName );
 			logger.info(fileDetails);
 			return fileDetails;
@@ -728,7 +746,6 @@ public class ConfigurationManagementServiceImpl {
 
 		try {
 			List<MessageConfigurationDb> messageConfigurationDbList = getAll(filterRequest);
-			logger.info("systemConfigurationDBList:::::::::::::::::::"+messageConfigurationDbList);
 			fileName = LocalDateTime.now().format(dtf2).replace(" ", "_") + "_MessageMgt.csv";
 			writer = Files.newBufferedWriter(Paths.get(filepath.getValue() + fileName));
 			mappingStrategy.setType(MessageMgtFileModel.class);
@@ -744,8 +761,6 @@ public class ConfigurationManagementServiceImpl {
 					LocalDateTime creation = messageConfigurationDb.getCreatedOn() == null ? LocalDateTime.now() : messageConfigurationDb.getCreatedOn();
 					LocalDateTime modified = messageConfigurationDb.getModifiedOn() == null ? LocalDateTime.now() : messageConfigurationDb.getModifiedOn();
 					
-					
-					logger.info("size of arraylist:::::"+messageConfigurationDbList.size());
 					fileModel = new MessageMgtFileModel(creation.format(dtf), 
 							modified.format(dtf), 
 							messageConfigurationDb.getDescription() == null ? "NA" : messageConfigurationDb.getDescription(),
