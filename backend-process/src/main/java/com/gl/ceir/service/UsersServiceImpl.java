@@ -34,7 +34,11 @@ public class UsersServiceImpl {
 
 	public List<User> getUserWithStatusPendingOtp(int day) {
 		try {
-			return userRepository.findAll(buildSpecification(DateUtil.nextDate(day)).build());
+			String fromDate = DateUtil.nextDate(day);
+			String toDate = DateUtil.nextDate(day-1);
+			logger.info("fromDate[" + fromDate + "] toDate[" + toDate + "]");
+			
+			return userRepository.findAll(buildSpecification(fromDate, toDate).build());
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			return new ArrayList<>(1);
@@ -47,12 +51,12 @@ public class UsersServiceImpl {
 		}
 	}
 
-	private GenericSpecificationBuilder<User> buildSpecification(String date){
+	private GenericSpecificationBuilder<User> buildSpecification(String fromDate, String toDate){
 		GenericSpecificationBuilder<User> cmsb = new GenericSpecificationBuilder<>(propertiesReader.dialect);
 
-		cmsb.with(new SearchCriteria("createdOn", date , SearchOperation.GREATER_THAN, Datatype.DATE));
-		cmsb.with(new SearchCriteria("createdOn", date , SearchOperation.LESS_THAN, Datatype.DATE));
-		cmsb.with(new SearchCriteria("status", 1, SearchOperation.GREATER_THAN, Datatype.STRING));
+		cmsb.with(new SearchCriteria("createdOn", fromDate , SearchOperation.GREATER_THAN_OR_EQUAL, Datatype.DATE));
+		cmsb.with(new SearchCriteria("createdOn", toDate , SearchOperation.LESS_THAN, Datatype.DATE));
+		cmsb.with(new SearchCriteria("currentStatus", 1, SearchOperation.EQUALITY, Datatype.STRING));
 
 		return cmsb;
 	}

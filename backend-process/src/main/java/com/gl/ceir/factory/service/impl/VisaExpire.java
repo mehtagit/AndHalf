@@ -44,9 +44,12 @@ public class VisaExpire extends BaseService{
 				return;
 			}
 
-			String date = DateUtil.nextDate( Integer.parseInt(reminderDays.getValue()) * -1);
-
-			List<VisaDb> visaDbs = visaDbRepository.findAll(buildSpecification(date).build());
+			String fromDate = DateUtil.nextDate( Integer.parseInt(reminderDays.getValue()) * -1);
+			String toDate = DateUtil.nextDate( (Integer.parseInt(reminderDays.getValue()) -1) * -1);
+			logger.info("fromDate[" + fromDate + "] toDate[" + toDate + "]");
+			
+			
+			List<VisaDb> visaDbs = visaDbRepository.findAll(buildSpecification(fromDate, toDate).build());
 
 			for(VisaDb visaDb : visaDbs) {
 				process(visaDb);
@@ -78,11 +81,11 @@ public class VisaExpire extends BaseService{
 
 	}
 
-	private GenericSpecificationBuilder<VisaDb> buildSpecification(String date){
+	private GenericSpecificationBuilder<VisaDb> buildSpecification(String fromDate, String toDate){
 		GenericSpecificationBuilder<VisaDb> cmsb = new GenericSpecificationBuilder<>(propertiesReader.dialect);
 
-		cmsb.with(new SearchCriteria("createdOn", date, SearchOperation.GREATER_THAN, Datatype.DATE));
-		cmsb.with(new SearchCriteria("createdOn", date, SearchOperation.LESS_THAN, Datatype.DATE));
+		cmsb.with(new SearchCriteria("createdOn", fromDate, SearchOperation.GREATER_THAN_OR_EQUAL, Datatype.DATE));
+		cmsb.with(new SearchCriteria("createdOn", toDate, SearchOperation.LESS_THAN, Datatype.DATE));
 
 		return cmsb;
 	}

@@ -34,19 +34,24 @@ public class DeviceUsageServiceImpl {
 
 	public List<DeviceUsageDb> getDeviceUsageOfTodayHavingActionUserReg() {
 		try {
-			return deviceUsageDbRepository.findAll(buildSpecification(DateUtil.nextDate(0)).build());
+			String fromDate = DateUtil.nextDate(-1);
+			String toDate = DateUtil.nextDate(0);
+			
+			logger.info("Record of device usage fromDate[" + fromDate + "] toDate[" + toDate + "]");
+			
+			return deviceUsageDbRepository.findAll(buildSpecification(fromDate, toDate).build());
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			return new ArrayList<>(1);
 		}
 	}
 
-	private GenericSpecificationBuilder<DeviceUsageDb> buildSpecification(String date){
+	private GenericSpecificationBuilder<DeviceUsageDb> buildSpecification(String fromDate, String toDate){
 		GenericSpecificationBuilder<DeviceUsageDb> cmsb = new GenericSpecificationBuilder<>(propertiesReader.dialect);
 
-		cmsb.with(new SearchCriteria("modifiedOn", date , SearchOperation.GREATER_THAN, Datatype.DATE));
-		cmsb.with(new SearchCriteria("modifiedOn", date , SearchOperation.LESS_THAN, Datatype.DATE));
-		cmsb.with(new SearchCriteria("action", "USER_REG", SearchOperation.GREATER_THAN, Datatype.STRING));
+		cmsb.with(new SearchCriteria("modifiedOn", fromDate , SearchOperation.GREATER_THAN_OR_EQUAL, Datatype.DATE));
+		cmsb.with(new SearchCriteria("modifiedOn", toDate , SearchOperation.LESS_THAN, Datatype.DATE));
+		cmsb.with(new SearchCriteria("action", "USER_REG", SearchOperation.EQUALITY, Datatype.STRING));
 
 		return cmsb;
 	}

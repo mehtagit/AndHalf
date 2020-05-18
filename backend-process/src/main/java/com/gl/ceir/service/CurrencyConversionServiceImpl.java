@@ -62,10 +62,9 @@ public class CurrencyConversionServiceImpl {
 	private GenericSpecificationBuilder<Currency> buildSpecification(String date){
 		GenericSpecificationBuilder<Currency> cmsb = new GenericSpecificationBuilder<>(propertiesReader.dialect);
 		
-		logger.info("Date in query : " + date);
-		cmsb.with(new SearchCriteria("monthDate", date , SearchOperation.GREATER_THAN, Datatype.DATE));
-		cmsb.with(new SearchCriteria("monthDate", date , SearchOperation.LESS_THAN, Datatype.DATE));
-
+		logger.info("Date to get currency : " + date);
+		cmsb.with(new SearchCriteria("monthDate", date , SearchOperation.EQUALITY, Datatype.STRING));
+		
 		return cmsb;
 	}
 }

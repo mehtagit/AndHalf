@@ -23,7 +23,7 @@ public class Currency{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
-	@Column(nullable =false)
+	@Column(nullable = false)
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
 	@CreationTimestamp
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -50,8 +50,6 @@ public class Currency{
 	
 	@Transient
 	private String monthInterp;
-	
-	
 	
 	public static long getSerialVersionUID() {
 		return serialVersionUID;
