@@ -19,6 +19,7 @@ import com.gl.ceir.config.model.BlacklistDbHistory;
 import com.gl.ceir.config.model.ConsignmentMgmtHistoryDb;
 import com.gl.ceir.config.model.CustomFilter;
 import com.gl.ceir.config.model.DeviceDbHistory;
+import com.gl.ceir.config.model.Feature;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GreylistDbHistory;
 import com.gl.ceir.config.model.Notification;
@@ -257,6 +258,16 @@ public class HistoryServiceImpl {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
+	}
+	
+	
+	public Feature insertToFeature(FilterRequest filterRequest) {
+		Feature feature = new Feature();
+		//if(filterRequest.getFeatureId() != null)
+		feature.setFeatureId(filterRequest.getFeatureId());
+		feature.setUserTypeId(filterRequest.getUserTypeId());
+		feature.setFeatureName(filterRequest.getFeatureName());		
+		return featureRepository.save(feature);
 	}
 
 }

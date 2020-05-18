@@ -1,5 +1,6 @@
 package com.gl.ceir.config.controller;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import com.gl.ceir.config.model.BlacklistDbHistory;
 import com.gl.ceir.config.model.ConsignmentMgmtHistoryDb;
 import com.gl.ceir.config.model.CustomFilter;
 import com.gl.ceir.config.model.DeviceDbHistory;
+import com.gl.ceir.config.model.Feature;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GreylistDbHistory;
 import com.gl.ceir.config.model.Notification;
@@ -199,8 +201,9 @@ public class HistoryController {
 		MappingJacksonValue mapping = new MappingJacksonValue(notification);
 		return mapping;
 	}*/
+	/*before update*/
 	
-	@ApiOperation(value = "View All Record of Notification Db.", response = Notification.class)
+/*	@ApiOperation(value = "View All Record of Notification Db.", response = Notification.class)
 	@RequestMapping(path = "v2/history/Notification", method = RequestMethod.POST)
 	public MappingJacksonValue viewNotification(@RequestBody CustomFilter customFilter,
 			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
@@ -211,6 +214,25 @@ public class HistoryController {
 		Page<Notification> notification = historyServiceImpl.ViewAllNotificationHistory(pageNo, pageSize, customFilter);
 
 		logger.info("Notification history Response= " + notification);
+		MappingJacksonValue mapping = new MappingJacksonValue(notification);
+		return mapping;
+	}*/
+	
+	
+	
+	@ApiOperation(value = "View All Record of Notification Db.", response = Notification.class)
+	@RequestMapping(path = "v2/history/Notification", method = RequestMethod.POST)
+	public MappingJacksonValue viewNotification(@RequestBody FilterRequest filterRequest,
+			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
+			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
+		Feature feature = null;
+		logger.info("Request to view v2 Notification historyDetails = " + filterRequest);
+		if(!StringUtils.isBlank(filterRequest.getFeatureName()))
+		 feature = historyServiceImpl.insertToFeature(filterRequest);
+
+		Page<Notification> notification = historyServiceImpl.ViewAllNotificationHistory(pageNo, pageSize, filterRequest);
+
+		logger.info("Inserted data in feature table is = " + notification);
 		MappingJacksonValue mapping = new MappingJacksonValue(notification);
 		return mapping;
 	}
