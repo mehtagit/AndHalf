@@ -131,27 +131,19 @@ public class HistoryServiceImpl {
 
 			NotificationSpecificationBuilder nsb = new NotificationSpecificationBuilder(propertiesReader.dialect);
 
-			/*if("Custom".equalsIgnoreCase(filterRequest.getUserType())) {
+			if("Custom".equalsIgnoreCase(filterRequest.getUserType())) {
 				logger.info("skipping userid in where clause for usertype : " + filterRequest.getUserType());
 				nsb.with(new SearchCriteria("receiverUserType", "Custom", SearchOperation.EQUALITY, Datatype.STRING));
 			}else if("TRC".equalsIgnoreCase(filterRequest.getUserType())){
 				logger.info("skipping userid in where clause for usertype : " + filterRequest.getUserType());
 				nsb.with(new SearchCriteria("receiverUserType", "TRC", SearchOperation.EQUALITY, Datatype.STRING));
-			}*/
-			if(notiLogics.isEmpty() || Objects.isNull(notiLogics)) {
-				logger.info("notiLogics is empty for userType[" + filterRequest.getUserType() + "]");
+			} else {
 				if(Objects.nonNull(filterRequest.getUserId()))
 					nsb.with(new SearchCriteria("userId", filterRequest.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));
-
 				nsb.with(new SearchCriteria("referTable", "END_USER", SearchOperation.NEGATION, Datatype.STRING));
-
-				pageable = PageRequest.of(pageNo, defaultPagesize, new Sort(Sort.Direction.DESC, "modifiedOn"));
-				return notificationRepository.findAll(nsb.build(), pageable);
-			}else {
-				cherryPickNotification(pageNo, defaultPagesize, notiLogics, filterRequest, content);
 			}
+			return notificationRepository.findAll(nsb.build(), pageable);
 			
-			return result;
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());

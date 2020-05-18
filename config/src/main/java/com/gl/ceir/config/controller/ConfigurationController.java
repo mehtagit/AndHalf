@@ -76,7 +76,6 @@ public class ConfigurationController {
 		else {
 			FileDetails fileDetails = configurationManagementServiceImpl.exportFile_System(filterRequest);
 			mapping = new MappingJacksonValue(fileDetails);
-			logger.info("Response to send fileDetails:::::::::::" + fileDetails);
 		}
 
 
