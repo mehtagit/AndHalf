@@ -33,7 +33,7 @@ public class CustomerCareStolen implements CustomerCareTarget{
 			customerCareDeviceState.setTxnId(deviceOperatorDb.getTxnId());
 			customerCareDeviceState.setDate(deviceOperatorDb.getCreatedOn().toString());
 			customerCareDeviceState.setStatus(Constants.available);
-			customerCareDeviceState.setFeatureId(0);
+			customerCareDeviceState.setFeatureId(5);
 		}else {
 			DeviceLawfulDb deviceLawfulDb = deviceLawfulDbRepository.getByImeiEsnMeidAndDeviceStatus(imei, 10);
 			if(Objects.nonNull(deviceLawfulDb)) {
