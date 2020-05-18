@@ -54,6 +54,7 @@ public class DeviceLawfulDb implements Serializable{
 	private String txnId;
 	private String period;
 	private String featureName;
+	
 	public Long getId() {
 		return id;
 	}

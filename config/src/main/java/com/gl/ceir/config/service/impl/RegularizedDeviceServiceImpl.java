@@ -14,6 +14,7 @@ import java.util.Objects;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.hibernate.mapping.Array;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,8 +23,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gl.ceir.config.ConfigTags;
 import com.gl.ceir.config.EmailSender.EmailUtil;
+import com.gl.ceir.config.EmailSender.MailSubject;
 import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.model.AllRequest;
@@ -421,6 +424,14 @@ public class RegularizedDeviceServiceImpl {
 							endUserDB.setOrigin(regularizeDeviceDb.getOrigin());
 						}
 
+						if(endUserDB.getAuditParameters().getUserTypeId()==7) {
+							if(regularizeDeviceDb.getTaxPaidStatus()==TaxStatus.TAX_PAID.getCode())
+							{
+								logger.info("if usertype is custom and tax status is paid so now this entry going to web action db");
+								webActionDbs.add(new WebActionDb(Features.REGISTER_DEVICE, SubFeatures.Approve, 0, 
+										regularizeDeviceDb.getTxnId()));
+							}
+						}
 						// Add in web action list.
 						webActionDbs.add(new WebActionDb(Features.REGISTER_DEVICE, SubFeatures.REGISTER, 0, 
 								regularizeDeviceDb.getTxnId()));
@@ -491,14 +502,28 @@ public class RegularizedDeviceServiceImpl {
 			String mailSubject = null;
 			List<RawMail> rawMails = new ArrayList<>(1);
 			Map<String, String> placeholders = new HashMap<>();
+            AllRequest audit=regularizeDeviceDb.getAuditParameters();
+            logger.info("txn_id is : "+regularizeDeviceDb.getTxnId());
+			AuditTrail auditTrail = new AuditTrail(audit.getUserId(), audit.getUsername(), audit.getUserTypeId(), 
+					audit.getUserType(), 12, Features.REGISTER_DEVICE, 
+					SubFeatures.Tax_Paid, "",regularizeDeviceDb.getTxnId());
+			auditTrailRepository.save(auditTrail);
+			logger.info("AUDIT : update in audit_trail. " + auditTrail);
+
+			
 			RegularizeDeviceDb userCustomDbDetails = regularizedDeviceDbRepository.getByFirstImei(regularizeDeviceDb.getFirstImei());
 			UserProfile ceirAdminProfile = userStaticServiceImpl.getCeirAdmin().getUserProfile();
 
 			if(Objects.nonNull(userCustomDbDetails)) {
-
+                
 				userCustomDbDetails.setTaxPaidStatus(regularizeDeviceDb.getTaxPaidStatus());
-				regularizedDeviceDbRepository.save(userCustomDbDetails);
-
+				RegularizeDeviceDb output=regularizedDeviceDbRepository.save(userCustomDbDetails);
+                if(Objects.nonNull(output))
+                {
+					WebActionDb webAction=new WebActionDb(Features.REGISTER_DEVICE,SubFeatures.Approve, 0, 
+							regularizeDeviceDb.getTxnId());
+					webActionDbRepository.save(webAction);
+                }
 				/*
 				 * placeholders.put("<FIRST_NAME>", ceirAdminProfile.getFirstName());
 				 * placeholders.put("<txn_id>", regularizeDeviceDb.getTxnId());
@@ -523,11 +548,7 @@ public class RegularizedDeviceServiceImpl {
 				 */
 
 				// Save in audit.
-				AuditTrail auditTrail = new AuditTrail(0, "", 0L, 
-						"", 12, Features.REGISTER_DEVICE, 
-						SubFeatures.UPDATE, "");
-				auditTrailRepository.save(auditTrail);
-				logger.info("AUDIT : update in audit_trail. " + auditTrail);
+                
 
 				return new GenricResponse(0, "Update Successfully.", userCustomDbDetails.getFirstImei());
 
@@ -659,7 +680,7 @@ public class RegularizedDeviceServiceImpl {
 					regularizeDeviceDb.setStatus(RegularizeDeviceStatus.APPROVED.getCode());
 					tag = "MAIL_TO_USER_ON_CEIR_DEVICE_APPROVAL";
 					receiverUserType = "End User";
-					subFeature=SubFeatures.ACCEPT;
+					subFeature=SubFeatures.Approve;
 					//feature=
 					txnId = regularizeDeviceDb.getTxnId();
 				}else if(ceirActionRequest.getAction() == 1){
@@ -692,8 +713,12 @@ public class RegularizedDeviceServiceImpl {
 				}
 				
 				RegularizeDeviceDb regularizeOutput=regularizedDeviceDbRepository.save(regularizeDeviceDb);
+			
 				if(Objects.nonNull(regularizeOutput))
 				{
+					WebActionDb webAction=new WebActionDb(Features.REGISTER_DEVICE,subFeature, 0, 
+							regularizeDeviceDb.getTxnId());
+					webActionDbRepository.save(webAction);
 					if(Objects.nonNull(rawMails) && !rawMails.isEmpty()) {
 						emailUtil.saveNotification(rawMails);	
 					}
