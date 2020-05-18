@@ -15,6 +15,6 @@ CustomerCareRepo<DeviceOperatorDb>{
 
 	public DeviceOperatorDb getByImeiEsnMeid(String imei);
 	
-	public DeviceOperatorDb getByImeiEsnMeidAndDeviceState(String imei, Integer deviceState);
+	public DeviceOperatorDb getByImeiEsnMeidAndDeviceStatus(String imei, Integer deviceStatus);
 
 }

@@ -60,10 +60,8 @@ import com.gl.ceir.config.model.constants.TaxStatus;
 import com.gl.ceir.config.model.file.RegularizeDeviceFileModel;
 import com.gl.ceir.config.repository.AuditTrailRepository;
 import com.gl.ceir.config.repository.ConsignmentRepository;
-import com.gl.ceir.config.repository.CustomDetailsRepository;
 import com.gl.ceir.config.repository.EndUserDbRepository;
 import com.gl.ceir.config.repository.RegularizedDeviceDbRepository;
-import com.gl.ceir.config.repository.StokeDetailsRepository;
 import com.gl.ceir.config.repository.SystemConfigurationDbRepository;
 import com.gl.ceir.config.repository.UserProfileRepository;
 import com.gl.ceir.config.repository.UserRepository;
@@ -88,12 +86,6 @@ public class RegularizedDeviceServiceImpl {
 
 	@Autowired
 	ConsignmentRepository consignmentRepository;
-
-	@Autowired
-	StokeDetailsRepository stokeDetailsRepository;
-
-	@Autowired
-	CustomDetailsRepository customDetailsRepository;
 
 	@Autowired
 	AuditTrailRepository auditTrailRepository;

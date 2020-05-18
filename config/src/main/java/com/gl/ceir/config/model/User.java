@@ -1,8 +1,10 @@
 package com.gl.ceir.config.model;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -16,6 +18,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gl.ceir.config.util.Utility;
@@ -55,6 +58,12 @@ public class User {
 	@JsonIgnore
 	@OneToMany(mappedBy = "userData", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	private List<Userrole> userRole;
+	
+	@Column(nullable =false)
+	@JsonIgnore
+	@CreationTimestamp
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	private LocalDateTime passwordDate;
 	
 	public List<Userrole> getUserRole() {
 		return userRole;

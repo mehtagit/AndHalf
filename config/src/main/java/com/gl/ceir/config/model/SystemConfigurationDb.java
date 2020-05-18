@@ -60,6 +60,18 @@ public class SystemConfigurationDb implements Serializable {
 	
 	private String featureName;
 	private String userType;
+	
+	@Transient
+	private long userId;
+	@Transient
+	private String userName;
+	@Transient
+	private long userTypeId;
+	@Transient
+	private long featureId;
+	@Transient
+	private String roleType;
+	
 	public Long getId() {
 		return id;
 	}
@@ -162,10 +174,52 @@ public class SystemConfigurationDb implements Serializable {
 		builder.append(featureName);
 		builder.append(", userType=");
 		builder.append(userType);
+		builder.append(", userId=");
+		builder.append(userId);
+		builder.append(", userName=");
+		builder.append(userName);
+		builder.append(", userTypeId=");
+		builder.append(userTypeId);
+		builder.append(", featureId=");
+		builder.append(featureId);
+		builder.append(", roleType=");
+		builder.append(roleType);
 		builder.append("]");
 		return builder.toString();
 	}
+	public long getUserId() {
+		return userId;
+	}
+	public void setUserId(long userId) {
+		this.userId = userId;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	public long getUserTypeId() {
+		return userTypeId;
+	}
+	public void setUserTypeId(long userTypeId) {
+		this.userTypeId = userTypeId;
+	}
+	public long getFeatureId() {
+		return featureId;
+	}
+	public void setFeatureId(long featureId) {
+		this.featureId = featureId;
+	}
+	public String getRoleType() {
+		return roleType;
+	}
+	public void setRoleType(String roleType) {
+		this.roleType = roleType;
+	}
 	
+
+
 	
 
 

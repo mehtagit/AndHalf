@@ -1,7 +1,6 @@
 package com.gl.ceir.config.model;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -44,7 +43,6 @@ public class DeviceImporterDb  implements Serializable{
 	@UpdateTimestamp
 	private Date modifiedOn;
 
-	private String manufatureDate;
 	private String deviceType;
 	private String deviceIdType;
 	private String multipleSimStatus;
@@ -52,16 +50,11 @@ public class DeviceImporterDb  implements Serializable{
 	private String imeiEsnMeid;
 	private String deviceLaunchDate;
 	private String deviceStatus;
-	private String deviceAction;
 
 	private Long userId;
 	private String txnId;
-	private LocalDateTime localDate;
-	private Integer deviceState;
-	private Integer previousDeviceStatus;
 	private String period;
-	private Integer featureId;
-
+	private String featureName;
 	public Long getId() {
 		return id;
 	}
@@ -79,12 +72,6 @@ public class DeviceImporterDb  implements Serializable{
 	}
 	public void setModifiedOn(Date modifiedOn) {
 		this.modifiedOn = modifiedOn;
-	}
-	public String getManufatureDate() {
-		return manufatureDate;
-	}
-	public void setManufatureDate(String manufatureDate) {
-		this.manufatureDate = manufatureDate;
 	}
 	public String getDeviceType() {
 		return deviceType;
@@ -116,7 +103,6 @@ public class DeviceImporterDb  implements Serializable{
 	public void setImeiEsnMeid(String imeiEsnMeid) {
 		this.imeiEsnMeid = imeiEsnMeid;
 	}
-
 	public String getDeviceLaunchDate() {
 		return deviceLaunchDate;
 	}
@@ -129,13 +115,6 @@ public class DeviceImporterDb  implements Serializable{
 	public void setDeviceStatus(String deviceStatus) {
 		this.deviceStatus = deviceStatus;
 	}
-	public String getDeviceAction() {
-		return deviceAction;
-	}
-	public void setDeviceAction(String deviceAction) {
-		this.deviceAction = deviceAction;
-	}
-
 	public Long getUserId() {
 		return userId;
 	}
@@ -148,41 +127,21 @@ public class DeviceImporterDb  implements Serializable{
 	public void setTxnId(String txnId) {
 		this.txnId = txnId;
 	}
-	public LocalDateTime getLocalDate() {
-		return localDate;
-	}
-	public void setLocalDate(LocalDateTime localDate) {
-		this.localDate = localDate;
-	}
-
-	public Integer getDeviceState() {
-		return deviceState;
-	}
-	public void setDeviceState(Integer deviceState) {
-		this.deviceState = deviceState;
-	}
-	public Integer getPreviousDeviceStatus() {
-		return previousDeviceStatus;
-	}
-	public void setPreviousDeviceStatus(Integer previousDeviceStatus) {
-		this.previousDeviceStatus = previousDeviceStatus;
-	}
 	public String getPeriod() {
 		return period;
 	}
 	public void setPeriod(String period) {
 		this.period = period;
 	}
+	public String getFeatureName() {
+		return featureName;
+	}
+	public void setFeatureName(String featureName) {
+		this.featureName = featureName;
+	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	public Integer getFeatureId() {
-		return featureId;
-	}
-	public void setFeatureId(Integer featureId) {
-		this.featureId = featureId;
-	}
-
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -192,8 +151,6 @@ public class DeviceImporterDb  implements Serializable{
 		builder.append(createdOn);
 		builder.append(", modifiedOn=");
 		builder.append(modifiedOn);
-		builder.append(", manufatureDate=");
-		builder.append(manufatureDate);
 		builder.append(", deviceType=");
 		builder.append(deviceType);
 		builder.append(", deviceIdType=");
@@ -208,24 +165,16 @@ public class DeviceImporterDb  implements Serializable{
 		builder.append(deviceLaunchDate);
 		builder.append(", deviceStatus=");
 		builder.append(deviceStatus);
-		builder.append(", deviceAction=");
-		builder.append(deviceAction);
 		builder.append(", userId=");
 		builder.append(userId);
 		builder.append(", txnId=");
 		builder.append(txnId);
-		builder.append(", localDate=");
-		builder.append(localDate);
-		builder.append(", deviceState=");
-		builder.append(deviceState);
-		builder.append(", previousDeviceStatus=");
-		builder.append(previousDeviceStatus);
 		builder.append(", period=");
 		builder.append(period);
-		builder.append(", featureId=");
-		builder.append(featureId);
+		builder.append(", featureName=");
+		builder.append(featureName);
 		builder.append("]");
 		return builder.toString();
-	}	
-
+	}
+	
 }

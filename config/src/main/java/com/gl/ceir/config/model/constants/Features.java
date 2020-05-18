@@ -18,4 +18,8 @@ public interface Features {
 	String TYPE_APPROVE = "Type Approve"; //customerCareTypeApprove
 	String UPDATE_VISA_Request = "Update Visa Request";
 	String Check_Device="Check Device";
+	String SYSTEM_MANAGEMENT = "System Management";
+	String RULE_FEATURE_MAPPING = "Rule Feature Mapping";
+	String POLICY_MANAGEMENT = "Policy Management";
+	String MESSAGE_MANAGEMENT = "Message Management";
 }

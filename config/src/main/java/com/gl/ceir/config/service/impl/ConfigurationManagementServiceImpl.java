@@ -26,45 +26,35 @@ import org.springframework.stereotype.Service;
 import com.gl.ceir.config.ConfigTags;
 import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
-import com.gl.ceir.config.genericresponse.DataClass;
-import com.gl.ceir.config.genericresponse.GenricResponse_Class;
 import com.gl.ceir.config.model.AuditTrail;
-import com.gl.ceir.config.model.ConsignmentMgmt;
 import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.MessageConfigurationDb;
 import com.gl.ceir.config.model.Notification;
 import com.gl.ceir.config.model.PolicyConfigurationDb;
-import com.gl.ceir.config.model.PolicyConfigurationHistoryDb;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.StateMgmtDb;
 import com.gl.ceir.config.model.SystemConfigListDb;
 import com.gl.ceir.config.model.SystemConfigUserwiseDb;
 import com.gl.ceir.config.model.SystemConfigurationDb;
-import com.gl.ceir.config.model.SystemConfigurationHistoryDb;
 import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.Features;
 import com.gl.ceir.config.model.constants.SearchOperation;
 import com.gl.ceir.config.model.constants.SubFeatures;
 import com.gl.ceir.config.model.constants.Tags;
-import com.gl.ceir.config.model.file.ConsignmentFileModel;
 import com.gl.ceir.config.model.file.MessageMgtFileModel;
 import com.gl.ceir.config.model.file.SystemMgtFileModel;
 import com.gl.ceir.config.repository.AuditTrailRepository;
-import com.gl.ceir.config.repository.ConfigurationManagementRepository;
 import com.gl.ceir.config.repository.MessageConfigurationDbRepository;
 import com.gl.ceir.config.repository.NotificationRepository;
 import com.gl.ceir.config.repository.PolicyConfigurationDbRepository;
-import com.gl.ceir.config.repository.PolicyConfigurationHistoryDbRepository;
 import com.gl.ceir.config.repository.SystemConfigListRepository;
 import com.gl.ceir.config.repository.SystemConfigUserwiseRepository;
 import com.gl.ceir.config.repository.SystemConfigurationDbRepository;
-import com.gl.ceir.config.repository.SystemConfigurationHistoryDbRepository;
 import com.gl.ceir.config.specificationsbuilder.GenericSpecificationBuilder;
 import com.gl.ceir.config.util.CustomMappingStrategy;
 import com.gl.ceir.config.util.InterpSetter;
-import com.google.gson.Gson;
 import com.opencsv.CSVWriter;
 import com.opencsv.bean.StatefulBeanToCsv;
 import com.opencsv.bean.StatefulBeanToCsvBuilder;
@@ -82,12 +72,6 @@ public class ConfigurationManagementServiceImpl {
 
 	@Autowired
 	PolicyConfigurationDbRepository policyConfigurationDbRepository;
-
-	@Autowired
-	SystemConfigurationHistoryDbRepository systemConfigurationHistoryDbRepository;
-
-	@Autowired
-	PolicyConfigurationHistoryDbRepository policyConfigurationHistoryDbRepository;
 
 	@Autowired
 	SystemConfigListRepository systemConfigListRepository;
@@ -113,6 +97,9 @@ public class ConfigurationManagementServiceImpl {
 	@Autowired
 	StateMgmtServiceImpl stateMgmtServiceImpl;
 	
+
+	
+	
 	public List<SystemConfigurationDb> getAllInfo(){
 		try {
 			return systemConfigurationDbRepository.findAll();
@@ -125,7 +112,7 @@ public class ConfigurationManagementServiceImpl {
 	public Page<SystemConfigurationDb> filterSystemConfiguration(FilterRequest filterRequest, Integer pageNo, Integer pageSize){
 		try {
 
-			Pageable pageable = PageRequest.of(pageNo, pageSize);
+			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
 			GenericSpecificationBuilder<SystemConfigurationDb> sb = new GenericSpecificationBuilder<SystemConfigurationDb>(propertiesReader.dialect);
 
 			if(Objects.nonNull(filterRequest.getTag()))
@@ -153,6 +140,12 @@ public class ConfigurationManagementServiceImpl {
 			for(SystemConfigurationDb systemConfigurationDb : page.getContent()) {	
 				systemConfigurationDb.setTypeInterp(interpSetter.setConfigInterp(Tags.CONFIG_TYPE, systemConfigurationDb.getType()));
 			}
+			
+		
+			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), filterRequest.getUserName(), 
+					Long.valueOf(filterRequest.getUserTypeId()), filterRequest.getUserType(), Long.valueOf(filterRequest.getFeatureId()),
+					Features.SYSTEM_MANAGEMENT, SubFeatures.VIEW, "", "NA",filterRequest.getRoleType()));
+			logger.info("SYSTEM_MANAGEMENT : successfully inserted in Audit trail.");
 			return page;
 
 		} catch (Exception e) {
@@ -196,8 +189,6 @@ public class ConfigurationManagementServiceImpl {
 				return new GenricResponse(15, "This Id does not exist", "");
 			}
 
-			systemConfigurationHistoryDbRepository.save(new SystemConfigurationHistoryDb(systemConfigurationDb2.getTag(), systemConfigurationDb2.getValue(), systemConfigurationDb2.getDescription()));
-
 			systemConfigurationDb2.setValue(systemConfigurationDb.getValue());
 			systemConfigurationDb2.setDescription(systemConfigurationDb.getDescription());
 			systemConfigurationDbRepository.save(systemConfigurationDb2);
@@ -233,6 +224,14 @@ public class ConfigurationManagementServiceImpl {
 				messageConfigurationDb.setChannelInterp(interpSetter.setConfigInterp(Tags.CHANNEL, messageConfigurationDb.getChannel()));
 			}
 
+			
+//audit trail entry
+			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), filterRequest.getUserName(), 
+					Long.valueOf(filterRequest.getUserTypeId()), filterRequest.getUserType(), Long.valueOf(filterRequest.getFeatureId()),
+					Features.MESSAGE_MANAGEMENT, SubFeatures.VIEW, "", "NA",filterRequest.getRoleType()));
+			logger.info("MESSAGE_MANAGEMENT : successfully inserted in Audit trail.");
+			
+			
 			return page;
 
 		} catch (Exception e) {
@@ -309,9 +308,10 @@ public class ConfigurationManagementServiceImpl {
 	}
 
 	public Page<PolicyConfigurationDb> filterPolicyConfiguration(FilterRequest filterRequest, Integer pageNo, Integer pageSize){
+		List<StateMgmtDb> statusList = null;
 		try {
 
-			Pageable pageable = PageRequest.of(pageNo, pageSize);
+			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
 			GenericSpecificationBuilder<PolicyConfigurationDb> sb = new GenericSpecificationBuilder<>(propertiesReader.dialect);
 
 			if(Objects.nonNull(filterRequest.getTag()))
@@ -330,9 +330,26 @@ public class ConfigurationManagementServiceImpl {
 
 			Page<PolicyConfigurationDb> page = policyConfigurationDbRepository.findAll(sb.build(), pageable);
 
+			statusList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
+
 			for(PolicyConfigurationDb policyConfigurationDb : page.getContent()) {
-				policyConfigurationDb.setStatusInterp(interpSetter.setConfigInterp(Tags.IS_ACTIVE, policyConfigurationDb.getStatus()));
+
+				for(StateMgmtDb stateMgmtDb : statusList) {
+					if(policyConfigurationDb.getType() == stateMgmtDb.getState()) {
+						policyConfigurationDb.setTypeInterp(stateMgmtDb.getInterp()); 
+						break; 
+					} 
+				}
+				getInterp(policyConfigurationDb);
+
+				
+				auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), filterRequest.getUserName(), 
+						Long.valueOf(filterRequest.getUserTypeId()), filterRequest.getUserType(), Long.valueOf(filterRequest.getFeatureId()),
+						Features.POLICY_MANAGEMENT, SubFeatures.VIEW, "", "NA",filterRequest.getRoleType()));
+				logger.info("POLICY_MANAGEMENT : successfully inserted in Audit trail ");
+				
 			}
+	
 
 			return page;
 
@@ -353,6 +370,8 @@ public class ConfigurationManagementServiceImpl {
 		}	
 	}
 
+	
+	
 	@Transactional
 	public GenricResponse updatePolicyInfo(PolicyConfigurationDb policyConfigurationDb) {
 		try {
@@ -366,14 +385,7 @@ public class ConfigurationManagementServiceImpl {
 				return new GenricResponse(15, "This tag does not exist", "");
 			}
 
-			PolicyConfigurationHistoryDb mshb = new PolicyConfigurationHistoryDb();
-
-			mshb.setDescription(mcd.getDescription());
-			mshb.setTag(mcd.getTag());
-			mshb.setValue(mcd.getValue());
-			policyConfigurationHistoryDbRepository.save(mshb);
-
-			policyConfigurationDb.setTag(mshb.getTag());
+			policyConfigurationDb.setTag(mcd.getTag());
 			policyConfigurationDb.setCreatedOn(mcd.getCreatedOn());
 			policyConfigurationDb.setActive(mcd.getActive());
 			policyConfigurationDbRepository.save(policyConfigurationDb);
@@ -774,6 +786,10 @@ public class ConfigurationManagementServiceImpl {
 	}
 	
 	
-	
+	public void getInterp(PolicyConfigurationDb policyConfigurationDb) {
+
+			if(Objects.nonNull( policyConfigurationDb.getStatus()))
+				policyConfigurationDb.setStatusInterp(interpSetter.setConfigInterp(Tags.IS_ACTIVE, policyConfigurationDb.getStatus()));
+			}
 
 }

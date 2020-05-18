@@ -1,51 +1,15 @@
 package com.gl.ceir.config.service.impl;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
-import java.util.Date;
-
-import javax.transaction.Transactional;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import com.gl.ceir.config.exceptions.FileStorageException;
-import com.gl.ceir.config.exceptions.MyFileNotFoundException;
-import com.gl.ceir.config.exceptions.ResourceNotFoundException;
-import com.gl.ceir.config.model.DocumentStatus;
-import com.gl.ceir.config.model.Documents;
-import com.gl.ceir.config.model.PendingActions;
-import com.gl.ceir.config.model.UploadFileRequest;
-import com.gl.ceir.config.model.UploadFileResponse;
-import com.gl.ceir.config.model.constants.TransactionState;
-import com.gl.ceir.config.repository.PendingActionsRepositoy;
-import com.gl.ceir.config.service.DocumentsService;
-import com.gl.ceir.config.service.PendingActionsService;
 
 @Service
 public class FileStorageService {
 	private static final Logger logger = LogManager.getLogger(FileStorageService.class);
 
 	public static final String downloadContext = "/document/download/";
-
-	@Autowired
-	private DocumentsService documentsService;
-
-	@Autowired
-	private PendingActionsService pendingActionsService;
-
-	@Autowired
-	private PendingActionsRepositoy pendingActionsRepositoy;
 
 	/*
 	@Autowired

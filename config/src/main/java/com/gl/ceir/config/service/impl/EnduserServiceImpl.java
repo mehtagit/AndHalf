@@ -65,7 +65,6 @@ import com.gl.ceir.config.repository.EndUserDbRepository;
 import com.gl.ceir.config.repository.SystemConfigurationDbRepository;
 import com.gl.ceir.config.repository.UpdateVisaRepository;
 import com.gl.ceir.config.repository.VipListRepository;
-import com.gl.ceir.config.repository.VisaHistoryDBRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
 import com.gl.ceir.config.specificationsbuilder.GenericSpecificationBuilder;
 import com.gl.ceir.config.specificationsbuilder.SpecificationBuilder;
@@ -99,9 +98,6 @@ public class EnduserServiceImpl {
 
 	@Autowired
 	SystemConfigurationDbRepository systemConfigurationDbRepository;
-
-	@Autowired
-	VisaHistoryDBRepository visaHistoryDBRepository;
 
 	@Autowired
 	WebActionDbRepository webActionDbRepository;

@@ -14,6 +14,6 @@ CustomerCareRepo<DeviceLawfulDb>{
 
 	public DeviceLawfulDb getByImeiEsnMeid(String imei);
 	
-	public DeviceLawfulDb getByImeiEsnMeidAndDeviceState(String imei, Integer deviceState);
+	public DeviceLawfulDb getByImeiEsnMeidAndDeviceStatus(String imei, Integer deviceStatus);
 
 }

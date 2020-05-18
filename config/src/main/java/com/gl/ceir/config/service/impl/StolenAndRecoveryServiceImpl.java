@@ -40,7 +40,6 @@ import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.SingleImeiDetails;
 import com.gl.ceir.config.model.StateMgmtDb;
 import com.gl.ceir.config.model.StockMgmt;
-import com.gl.ceir.config.model.StolenAndRecoveryHistoryMgmt;
 import com.gl.ceir.config.model.StolenIndividualUserDB;
 import com.gl.ceir.config.model.StolenOrganizationUserDB;
 import com.gl.ceir.config.model.StolenandRecoveryMgmt;
@@ -64,10 +63,8 @@ import com.gl.ceir.config.model.file.StolenAndRecoveryFileModel;
 import com.gl.ceir.config.repository.AuditTrailRepository;
 import com.gl.ceir.config.repository.ConsignmentRepository;
 import com.gl.ceir.config.repository.DashboardUsersFeatureStateMapRepository;
-import com.gl.ceir.config.repository.ImmegreationImeiDetailsRepository;
 import com.gl.ceir.config.repository.SingleImeiHistoryDbRepository;
 import com.gl.ceir.config.repository.StockManagementRepository;
-import com.gl.ceir.config.repository.StolenAndRecoveryHistoryMgmtRepository;
 import com.gl.ceir.config.repository.StolenAndRecoveryRepository;
 import com.gl.ceir.config.repository.StolenIndividualUserRepository;
 import com.gl.ceir.config.repository.StolenOrganizationUserRepository;
@@ -101,9 +98,6 @@ public class StolenAndRecoveryServiceImpl {
 	PropertiesReader propertiesReader;
 
 	@Autowired
-	StolenAndRecoveryHistoryMgmtRepository stolenAndRecoveryHistoryMgmtRepository;
-
-	@Autowired
 	StockManagementRepository distributerManagementRepository;
 
 	@Autowired
@@ -111,9 +105,6 @@ public class StolenAndRecoveryServiceImpl {
 
 	@Autowired
 	SingleImeiHistoryDbRepository singleImeiHistoryDbRepository;
-
-	@Autowired
-	ImmegreationImeiDetailsRepository immegreationImeiDetailsRepository;
 
 	@Autowired
 	ConfigurationManagementServiceImpl configurationManagementServiceImpl; 
@@ -572,12 +563,12 @@ public class StolenAndRecoveryServiceImpl {
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			
+
 			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
 			bodyPlaceHolderMap.put("<feature>", decideFeature(5L));
 			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.VIEW_ALL);
 			alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, 0, bodyPlaceHolderMap);
-			
+
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
@@ -615,12 +606,12 @@ public class StolenAndRecoveryServiceImpl {
 			}
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			
+
 			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
 			bodyPlaceHolderMap.put("<feature>", decideFeature(5L));
 			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.DELETE);
 			alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, filterRequest.getUserId(), bodyPlaceHolderMap);
-			
+
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
@@ -638,20 +629,7 @@ public class StolenAndRecoveryServiceImpl {
 				WebActionDb webActionDb = new WebActionDb(decideFeature(stolenandRecoveryMgmt.getRequestType()), 
 						SubFeatures.UPDATE, 
 						WebActionStatus.INIT.getCode(), stolenandRecoveryMgmt.getTxnId());
-
-				StolenAndRecoveryHistoryMgmt historyMgmt = new StolenAndRecoveryHistoryMgmt();
-				historyMgmt.setBlockingTimePeriod(stolenandRecoveryMgmtInfo.getBlockingTimePeriod());
-				historyMgmt.setBlockingType(stolenandRecoveryMgmtInfo.getBlockingType());
-				historyMgmt.setFileName(stolenandRecoveryMgmtInfo.getFileName());
-				historyMgmt.setFileStatus(stolenandRecoveryMgmtInfo.getFileStatus());
-				historyMgmt.setRequestType(stolenandRecoveryMgmtInfo.getRequestType());
-				historyMgmt.setRoleType(stolenandRecoveryMgmtInfo.getRoleType());
-				historyMgmt.setTxnId(stolenandRecoveryMgmtInfo.getTxnId());
-				historyMgmt.setUserId(stolenandRecoveryMgmtInfo.getUserId());
-				historyMgmt.setSourceType(stolenandRecoveryMgmtInfo.getSourceType());
-
-				stolenAndRecoveryHistoryMgmtRepository.save(historyMgmt);
-
+				
 				// 0 = Stolen
 				if (stolenandRecoveryMgmt.getRequestType() == 0){
 					stolenandRecoveryMgmtInfo.setBlockingTimePeriod(stolenandRecoveryMgmt.getBlockingTimePeriod());
@@ -709,12 +687,12 @@ public class StolenAndRecoveryServiceImpl {
 		}catch (Exception e) {
 
 			logger.error(e.getMessage(), e);
-			
+
 			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
 			bodyPlaceHolderMap.put("<feature>", decideFeature(5L));
 			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.UPDATE);
 			alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, 0, bodyPlaceHolderMap);
-			
+
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
@@ -738,7 +716,7 @@ public class StolenAndRecoveryServiceImpl {
 
 			StolenandRecoveryMgmt stolenandRecoveryMgmt2 = stolenAndRecoveryRepository.getByTxnId(stolenandRecoveryMgmt.getTxnId());
 			setInterp(stolenandRecoveryMgmt2);
-			
+
 			addInAuditTrail(Long.valueOf(stolenandRecoveryMgmt.getUserId()), stolenandRecoveryMgmt.getTxnId(), SubFeatures.VIEW, stolenandRecoveryMgmt.getRoleType(),stolenandRecoveryMgmt.getRequestType(),0);
 			return stolenandRecoveryMgmt2;
 		} catch (Exception e) {
@@ -764,7 +742,7 @@ public class StolenAndRecoveryServiceImpl {
 				return stolenAndRecoveryRepository.getStolenandRecoveryCount( status, Integer.valueOf(requestType));
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			
+
 			return new ResponseCountAndQuantity(0,0);
 		}
 	}
@@ -774,7 +752,8 @@ public class StolenAndRecoveryServiceImpl {
 			UserProfile userProfile = null;
 			Map<String, String> placeholderMap1 = null;
 			StolenandRecoveryMgmt stolenandRecoveryMgmt = stolenAndRecoveryRepository.getByTxnId(consignmentUpdateRequest.getTxnId());
-
+			Integer currentStatus = stolenandRecoveryMgmt.getFileStatus();
+			
 			// Fetch user_profile to update user over mail/sms regarding the action.
 			userProfile = userProfileRepository.getByUserId(stolenandRecoveryMgmt.getUserId());
 
@@ -930,17 +909,19 @@ public class StolenAndRecoveryServiceImpl {
 					placeholderMap1.put("<First name>", userProfile.getFirstName());
 					placeholderMap1.put("<Txn id>", txnId);
 
-					emailUtil.saveNotification(mailTag, 
-							userProfile, 
-							consignmentUpdateRequest.getFeatureId(),
-							decideFeature(consignmentUpdateRequest.getRequestType()),
-							action,
-							consignmentUpdateRequest.getTxnId(),
-							txnId,
-							placeholderMap1,
-							"CEIRSYSTEM",
-							user.getUsertype().getUsertypeName());
-					logger.info("Notfication have been saved.");
+					if(currentStatus == StolenStatus.PROCESSING.getCode()) {
+						emailUtil.saveNotification(mailTag, 
+								userProfile, 
+								consignmentUpdateRequest.getFeatureId(),
+								decideFeature(consignmentUpdateRequest.getRequestType()),
+								action,
+								consignmentUpdateRequest.getTxnId(),
+								txnId,
+								placeholderMap1,
+								"CEIRSYSTEM",
+								user.getUsertype().getUsertypeName());
+						logger.info("Notfication have been saved.");
+					}
 				}
 
 			}else {
@@ -952,12 +933,12 @@ public class StolenAndRecoveryServiceImpl {
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			
+
 			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
 			bodyPlaceHolderMap.put("<feature>", decideFeature(5L));
 			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.ACCEPT_REJECT);
 			alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, 0, bodyPlaceHolderMap);
-			
+
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}

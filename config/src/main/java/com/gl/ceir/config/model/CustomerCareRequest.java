@@ -5,6 +5,7 @@ public class CustomerCareRequest {
 	private String deviceIdType;
 	private String imei;
 	private String msisdn;
+	private String userType;
 	
 	public CustomerCareRequest() {
 		
@@ -29,15 +30,25 @@ public class CustomerCareRequest {
 		this.msisdn = msisdn;
 	}
 	
+	public String getUserType() {
+		return userType;
+	}
+
+	public void setUserType(String userType) {
+		this.userType = userType;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("CustomerCare [deviceIdType=");
+		builder.append("CustomerCareRequest [deviceIdType=");
 		builder.append(deviceIdType);
 		builder.append(", imei=");
 		builder.append(imei);
 		builder.append(", msisdn=");
 		builder.append(msisdn);
+		builder.append(", userType=");
+		builder.append(userType);
 		builder.append("]");
 		return builder.toString();
 	}

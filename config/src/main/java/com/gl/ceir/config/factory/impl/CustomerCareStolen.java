@@ -27,15 +27,15 @@ public class CustomerCareStolen implements CustomerCareTarget{
 	@Override
 	public CustomerCareDeviceState fetchDetailsByImei(String imei, CustomerCareDeviceState customerCareDeviceState) {
 
-		DeviceOperatorDb deviceOperatorDb = deviceOperatorDbRepository.getByImeiEsnMeidAndDeviceState(imei, 12);
+		DeviceOperatorDb deviceOperatorDb = deviceOperatorDbRepository.getByImeiEsnMeidAndDeviceStatus(imei, 12);
 
 		if(Objects.nonNull(deviceOperatorDb)) {
 			customerCareDeviceState.setTxnId(deviceOperatorDb.getTxnId());
 			customerCareDeviceState.setDate(deviceOperatorDb.getCreatedOn().toString());
 			customerCareDeviceState.setStatus(Constants.available);
-			customerCareDeviceState.setFeatureId(deviceOperatorDb.getFeatureId());
+			customerCareDeviceState.setFeatureId(5);
 		}else {
-			DeviceLawfulDb deviceLawfulDb = deviceLawfulDbRepository.getByImeiEsnMeidAndDeviceState(imei, 10);
+			DeviceLawfulDb deviceLawfulDb = deviceLawfulDbRepository.getByImeiEsnMeidAndDeviceStatus(imei, 10);
 			if(Objects.nonNull(deviceLawfulDb)) {
 				customerCareDeviceState.setTxnId(deviceLawfulDb.getTxnId());
 				customerCareDeviceState.setDate(deviceLawfulDb.getCreatedOn().toString());
