@@ -59,6 +59,12 @@ function confirmantiondelete(){
 							"roleType":$("body").attr("data-roleType")
 
 			}
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$.ajaxSetup({
+		        headers:
+		        { 'X-CSRF-TOKEN': token }
+		    	});
 			$.ajax({
 				url : "./deleteConsignment",
 				data : JSON.stringify(obj),
@@ -88,6 +94,12 @@ function confirmantiondelete(){
 			});
 			return false;
 		}
+var token = $("meta[name='_csrf']").attr("content");
+var header = $("meta[name='_csrf_header']").attr("content");
+$.ajaxSetup({
+    headers:
+    { 'X-CSRF-TOKEN': token }
+	});
 		$.getJSON('../getDropdownList/CUSTOMS_PORT', function(data) {
 			$("#expectedArrivalPortEdit").empty();
 			for (i = 0; i < data.length; i++) {
@@ -101,6 +113,12 @@ function confirmantiondelete(){
 	
 		
 		function EditConsignmentDetails(txnId){ 
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$.ajaxSetup({
+		        headers:
+		        { 'X-CSRF-TOKEN': token }
+		    	});
 			$.ajax({
 				url : "./openRegisterConsignmentPopup?reqType=editPage&txnId="+txnId,
 				dataType : 'json',
@@ -125,7 +143,13 @@ function confirmantiondelete(){
 
 	function ConsignmentCurrency()
 		{
-			var currency="CURRENCY";
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+	        headers:
+	        { 'X-CSRF-TOKEN': token }
+	    	});
+		var currency="CURRENCY";
 			$.ajax({
 				url: './consignmentCurency?CURRENCY='+currency,
 				type: 'GET',
@@ -151,6 +175,12 @@ function confirmantiondelete(){
 
 		function viewConsignmentCurrency()
 		{
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$.ajaxSetup({
+		        headers:
+		        { 'X-CSRF-TOKEN': token }
+		    	});
 			var currency="CURRENCY";
 			$.ajax({
 				url: './consignmentCurency?CURRENCY='+currency,
@@ -183,7 +213,12 @@ function confirmantiondelete(){
 		        dismissible:false
 		    });
 			
-			
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$.ajaxSetup({
+		        headers:
+		        { 'X-CSRF-TOKEN': token }
+		    	});
 			$.ajax({
 				url : "./openRegisterConsignmentPopup?reqType=editPage&txnId="+txnId,
 				dataType : 'json',
@@ -333,6 +368,12 @@ function confirmantiondelete(){
 			if(lang=='km'){
 				var langFile='../resources/i18n/khmer_datatable.json';
 			}
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$.ajaxSetup({
+		        headers:
+		        { 'X-CSRF-TOKEN': token }
+		    	});
 
 			$.ajax({
 				url: url,
@@ -430,6 +471,12 @@ function confirmantiondelete(){
 			formData.append('portAddress', parseInt($('#editPortAddress').val()));
 			formData.append('deviceQuantity', parseInt($('#editDeviceQuantity').val()));
 			formData.append('roleType', $("body").attr("data-roleType"));
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$.ajaxSetup({
+		        headers:
+		        { 'X-CSRF-TOKEN': token }
+		    	});
 			$.ajax({
 				url: './updateRegisterConsignment',
 				type: 'POST',
@@ -530,6 +577,12 @@ function confirmantiondelete(){
 
 
 		function pageButtons(url){
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$.ajaxSetup({
+		        headers:
+		        { 'X-CSRF-TOKEN': token }
+		    	});
 			$.ajax({
 				url: url,
 				type: 'POST',
@@ -629,6 +682,12 @@ function confirmantiondelete(){
 						$("#btnLink").css({display: "none"}); 
 					}
 					//Consignment status-----------dropdown
+					var token = $("meta[name='_csrf']").attr("content");
+					var header = $("meta[name='_csrf_header']").attr("content");
+					$.ajaxSetup({
+				        headers:
+				        { 'X-CSRF-TOKEN': token }
+				    	});
 					$.getJSON('../getDropdownList/'+featureId+'/'+$("body").attr("data-userTypeID"), function(data) {
 
 						for (i = 0; i < data.length; i++) {
@@ -651,6 +710,12 @@ function confirmantiondelete(){
 
 
 					//Tax paid status-----------dropdown
+					var token = $("meta[name='_csrf']").attr("content");
+					var header = $("meta[name='_csrf_header']").attr("content");
+					$.ajaxSetup({
+				        headers:
+				        { 'X-CSRF-TOKEN': token }
+				    	});
 					$.getJSON('../getTypeDropdownList/CUSTOMS_TAX_STATUS/'+$("body").attr("data-userTypeID"), function(data) {
 						for (i = 0; i < data.length; i++) {
 							$('<option>').val(data[i].value).text(data[i].interp)
@@ -693,7 +758,12 @@ function confirmantiondelete(){
 			displayName=displayName.replace("+20"," " );
 			$('#ApproveConsignment').openModal({dismissible:false});
 			if(userType=='Custom'){
-				
+				var token = $("meta[name='_csrf']").attr("content");
+				var header = $("meta[name='_csrf_header']").attr("content");
+				$.ajaxSetup({
+			        headers:
+			        { 'X-CSRF-TOKEN': token }
+			    	});
 				$.ajax({
 					url : "./openRegisterConsignmentPopup?reqType=editPage&txnId="+txnId,
 					dataType : 'json',
@@ -754,6 +824,12 @@ function confirmantiondelete(){
 					"userName":$("body").attr("data-username"),
 					"roleType":$("body").attr("data-roleType")
 			}
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$.ajaxSetup({
+		        headers:
+		        { 'X-CSRF-TOKEN': token }
+		    	});
 			$.ajax({
 				url : "./updateConsignmentStatus",
 				data : JSON.stringify(approveRequest),
@@ -808,6 +884,12 @@ function confirmantiondelete(){
 					"userName":$("body").attr("data-username"),
 					"roleType":$("body").attr("data-roleType")
 			}
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$.ajaxSetup({
+		        headers:
+		        { 'X-CSRF-TOKEN': token }
+		    	});
 			$.ajax({
 				url : "./updateConsignmentStatus",
 				data : JSON.stringify(approveRequest),
@@ -869,6 +951,12 @@ function confirmantiondelete(){
 		{
 
 			var stolenRecoverydata=JSON.stringify(valuesPush());
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$.ajaxSetup({
+		        headers:
+		        { 'X-CSRF-TOKEN': token }
+		    	});
 			$.ajax({
 				url: '../multipleStolenRecovery',
 				type: 'POST',
@@ -1013,7 +1101,13 @@ function confirmantiondelete(){
 		{
 			fileName=fileName.split("%20").join(" ");
 		console.log(" fileName "+fileName+" fileType  "+fileType+" txnId "+txnId+"  doc_TypeTag "+doc_TypeTag)
-			$.ajax({
+		var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+        headers:
+        { 'X-CSRF-TOKEN': token }
+    	});	
+		$.ajax({
 				url : "./dowloadFiles/"+fileType+'/'+fileName+'/'+txnId+'/'+doc_TypeTag,
 				dataType : 'json',
 				contentType : 'application/json; charset=utf-8',
@@ -1065,6 +1159,12 @@ function confirmantiondelete(){
 			}
 			
 			console.log("request--->" +JSON.stringify(request))
+		var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+        headers:
+        { 'X-CSRF-TOKEN': token }
+    	});
 			$.ajax({
 				url: './payTax',
 				type: 'POST',
@@ -1094,6 +1194,12 @@ function confirmantiondelete(){
 		
 		
 		function getByPort(port) {
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$.ajaxSetup({
+		        headers:
+		        { 'X-CSRF-TOKEN': token }
+		    	});
 			$
 					.ajax({
 						type : 'GET',
@@ -1180,6 +1286,12 @@ function confirmantiondelete(){
 			if(lang=='km'){
 				var langFile='../resources/i18n/khmer_datatable.json';
 			}
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$.ajaxSetup({
+		        headers:
+		        { 'X-CSRF-TOKEN': token }
+		    	});
 			$.ajax({
 				url: 'consignment-history',
 				type: 'POST',
