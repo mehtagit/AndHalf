@@ -1,10 +1,7 @@
 package com.ceir.CEIRPostman.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.PriorityQueue;
-import java.util.Queue;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -79,7 +76,7 @@ public class EmailService implements Runnable {
 		SystemConfigurationDb emailRetryCount = systemConfigRepoImpl.getDataByTag("Email_Retry_Count");
 		SystemConfigurationDb authorityMailSend = systemConfigRepoImpl.getDataByTag("Reporting_Authority_Mail_Status");
 		MessageConfigurationDb messageDb = messageRepo.getByTag("Reporting_Authority_Notification");
-		Integer sleepTimeinMilliSec = 0;
+		Integer sleepTimeinMilliSec =  0;
 		Integer emailretrycountValue = 0;
 		Integer authorityStatusValue = 0;
 		try {
@@ -146,8 +143,6 @@ public class EmailService implements Runnable {
 										{
 											toEmail = endUser.getEmail();		
 										}
-										
-									
 									}
 									else {
 										log.info("no data found for this userid: "+notification.getUserId()+" in end user table");
@@ -196,10 +191,6 @@ public class EmailService implements Runnable {
 							} else {
 								User user = userRepoService.getById(notification.getUserId());
 								toEmail = user.getUserProfile().getEmail();
-								List<Long> usertypes = new ArrayList<Long>();
-								usertypes.add(4l);
-								usertypes.add(5l);
-								usertypes.add(6l);
 								if(Objects.nonNull(notification.getAuthorityStatus())) {
 									log.info("authority status: "+notification.getAuthorityStatus());
 								if(notification.getAuthorityStatus()==1) {
@@ -220,6 +211,7 @@ public class EmailService implements Runnable {
 								log.info("toEmail  " + toEmail);
 								if (emailUtil.emailValidator(toEmail)) {
 									String message=body.replace("\\n", "\n");
+									log.info(" fromEmail: "+fromEmail.getValue()+" getSubject: "+messageDb.getSubject());
 									emailStatus = emailUtil.sendEmail(toEmail, fromEmail.getValue(),
 											notification.getSubject(), body, notificationData.size(), sNo,
 											sleepTimeinMilliSec);
@@ -288,6 +280,7 @@ public class EmailService implements Runnable {
 
 					log.info("total mail sent=  " + totalMailsent);
 					log.info("email fail to send: " + totalMailNotsent);
+					emailUtil.setIndexZero();
 				} else {
 					log.info("notification data is  empty");
 					log.info(" so no email is pending to send");

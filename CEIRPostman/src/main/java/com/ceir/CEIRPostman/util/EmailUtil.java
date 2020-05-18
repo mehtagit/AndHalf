@@ -5,13 +5,10 @@ import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import java.io.IOException;
-import java.util.LinkedHashMap;
-import java.util.Map;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
-import org.springframework.mail.MailException;
 import org.springframework.mail.MailParseException;
 import org.springframework.mail.MailSendException;
 import org.springframework.mail.MailSender;
@@ -23,12 +20,6 @@ import org.springframework.stereotype.Service;
 import com.ceir.CEIRPostman.RepositoryService.RunningAlertRepoService;
 import com.ceir.CEIRPostman.RepositoryService.SystemConfigurationDbRepoImpl;
 import com.ceir.CEIRPostman.model.RunningAlertDb;
-import com.ceir.CEIRPostman.model.SystemConfigurationDb;
-import com.mysql.cj.log.Log;
-
-import java.io.IOException;
-
-import javax.mail.MessagingException;
 
 import org.slf4j.Logger;
 @Service
@@ -60,7 +51,6 @@ public class EmailUtil {
 			messages = new SimpleMailMessage[noOfElements];
 			batchSize=noOfElements;
 			log.info("batch size: "+batchSize);
-			log.info("msg array size: "+messages);
 		}
 		else {
 			logger.info("if total mails greater than or equals to batch size");
@@ -69,11 +59,21 @@ public class EmailUtil {
 			log.info("batch size: "+batchSize);
 		}
 	}
-	
+	public void setIndexZero() {
+		messageIndex = 0;
+	}
 	public void increaseBatchSize() {
+		SimpleMailMessage[] messages1;
 		batchSize=batchSize+1;
 		log.info("batch size now: "+batchSize);
+		messages1 = new SimpleMailMessage[batchSize];
+		for(int i=0;i<messages.length;i++) {
+			messages1[i]=messages[i];
+		}
 		messages = new SimpleMailMessage[batchSize];
+		for(int i=0;i<messages1.length;i++) {
+			messages[i]=messages1[i];
+		}
 	}
 	public boolean emailValidator(String email) {
 		boolean isValid=false;
@@ -90,8 +90,8 @@ public class EmailUtil {
 		}
 		
 	}
-	
 	public boolean sendEmail(String toAddress, String fromAddress, String subject, String msgBody,int totalData,int dataRead,Integer sleep) {
+
 		SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
 		simpleMailMessage.setFrom(fromAddress);
 		simpleMailMessage.setTo(toAddress);
@@ -100,14 +100,17 @@ public class EmailUtil {
 		try {
 			logger.info("adding emails into the array");
 			 messages[messageIndex] = simpleMailMessage;
+			 logger.info("Message: "+messages[messageIndex]+" Index Value: "+messageIndex+" Batch Size: "+batchSize);
 			 messageIndex++;
 			    if (messageIndex == batchSize) {
 			    	logger.info("if batch size equals to no of mails added into array");
 			    	logger.info("now going to send emails");
 			    	try {
-			            mailSender.send(messages);    		
+			            mailSender.send(messages);   		
 				        logger.info("no of emails are sent: "+batchSize);
+				        log.info("Total Data: "+totalData+" Data Read: "+dataRead);
 				        int difference=totalData-dataRead;
+				        log.info("Difference: "+difference);
 				        setBatchSize(batchSize,difference);
 				        logger.info("now batchSize is "+batchSize);
 				        messageIndex = 0;
@@ -117,7 +120,9 @@ public class EmailUtil {
 			    		log.info("inside email send exception");
 				        logger.info("if emails fail to send: "+batchSize);
 				        log.info(send.toString());
+				        log.info("Total Data: "+totalData+" Data Read: "+dataRead);
 				        int difference=totalData-dataRead;
+				        log.info("Difference: "+difference);
 				        setBatchSize(batchSize,difference);
 				        messageIndex = 0;
 						RunningAlertDb alertDb=new RunningAlertDb("alert009","error occurs while sending email",0);
@@ -126,20 +131,30 @@ public class EmailUtil {
 			
 						return Boolean.FALSE;
 			    	}
-			    	catch(MailException  send ) {
+			    	catch(MailParseException  send ) {
 			    		log.info("inside other mail exceptions");
-				        logger.info("if emails fail to send: "+batchSize);
+				        logger.info("if emails fail to parse: "+batchSize);
+				        log.info("Total Data: "+totalData+" Data Read: "+dataRead);
 				        int difference=totalData-dataRead;
+				        log.info("Difference: "+difference);
 				        setBatchSize(batchSize,difference);
-			//	        logger.info("now batchSize is "+batchSize);
+				        logger.info("now batchSize is "+batchSize);
 				        messageIndex = 0;
-						RunningAlertDb alertDb=new RunningAlertDb("alert009","error occurs while sending email",0);
+						RunningAlertDb alertDb=new RunningAlertDb("alert009","error occurs while parsing email",0);
 						alertDbRepo.saveAlertDb(alertDb);
-						logger.info("error occur while send email");
+						logger.info("error occur while parsing email");
 						logger.info(send.getMessage());
 						logger.info(send.toString());
 						return Boolean.FALSE;
 			    	}
+			    	catch (Exception e) {
+						logger.info("error occur in first block");
+						logger.error(e.getMessage());
+						logger.info(e.toString());
+						logger.info("Send Email Status FALSE");
+						messageIndex = 0;
+						return Boolean.FALSE;
+					}
 			
 			    }
 			    try {
@@ -149,11 +164,14 @@ public class EmailUtil {
 				catch(Exception e) {
 					log.info(e.toString());
 				}
+			    logger.info("Send Email Status TRUE");
 			return Boolean.TRUE;
 		}catch (Exception e) {
 			logger.info("error occur");
 			logger.error(e.getMessage());
 			logger.info(e.toString());
+			logger.info("Send Email Status FALSE");
+			messageIndex = 0;
 			return Boolean.FALSE;
 		}
 	}

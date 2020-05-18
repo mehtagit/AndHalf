@@ -1,11 +1,7 @@
 package com.ceir.CEIRPostman.util;
-
-import java.util.Properties;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
@@ -22,17 +18,14 @@ public class MailConfig {
 		JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setHost( systemConfigurationDbRepository.getByTag("Email_Host").getValue());
         mailSender.setPort(Integer.valueOf( systemConfigurationDbRepository.getByTag("Email_Port").getValue() ));
-          
         mailSender.setUsername(systemConfigurationDbRepository.getByTag("Email_Username").getValue());
-        mailSender.setPassword(systemConfigurationDbRepository.getByTag("Email_Password").getValue());
-//       mailSender.setPassword("");  
-        Properties props = mailSender.getJavaMailProperties();
-        props.put("mail.transport.protocol", "smtp");
-        props.put("mail.smtp.auth", "false");
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.debug", "true");
-          
+//        mailSender.setPassword(systemConfigurationDbRepository.getByTag("Email_Password").getValue());
+       mailSender.setPassword("");  
+//        Properties props = mailSender.getJavaMailProperties();
+//        props.put("mail.transport.protocol", "smtp");
+//        props.put("mail.smtp.auth", "false");
+//        props.put("mail.smtp.starttls.enable", "true");
+//        props.put("mail.debug", "true");
         return mailSender;
 	}
-	
 }

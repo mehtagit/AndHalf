@@ -86,8 +86,8 @@
 		</dependency>
 	</dependencies>
 	<build>
-<!-- 		<finalName>${artifactId}-${version}_SmsService</finalName> -->
-		<finalName>${artifactId}-${version}_EmailService</finalName>
+		<finalName>${artifactId}-${version}_SmsService</finalName>
+<!-- 		<finalName>${artifactId}-${version}_EmailService</finalName> -->
 	
  	<resources>
 			<resource>
