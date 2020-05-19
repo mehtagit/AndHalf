@@ -739,7 +739,9 @@ public class RegularizedDeviceServiceImpl {
 						ceirActionRequest.getUserType(), 12,Features.REGISTER_DEVICE, subFeature, "", txnId));
 			}
 			else if("CEIRSYSTEM".equalsIgnoreCase(ceirActionRequest.getUserType())){
-				regularizeDeviceDb=regularizedDeviceDbRepository.getByTxnId(ceirActionRequest.getTxnId());
+				List<RegularizeDeviceDb> regularizeList=regularizedDeviceDbRepository.findByTxnId(ceirActionRequest.getTxnId());
+				regularizeList=regularizedDeviceDbRepository.findByTxnId(ceirActionRequest.getTxnId());
+				regularizeDeviceDb=regularizeList.get(0);
 				logger.debug("Accept/Reject regularized Devices : " + regularizeDeviceDb);
 	            if(Objects.isNull(regularizeDeviceDb))
 	            {
@@ -752,6 +754,10 @@ public class RegularizedDeviceServiceImpl {
 
 				userTypeId=0;
 				if(ceirActionRequest.getAction() == 0) {
+				    for(RegularizeDeviceDb regularizeData:regularizeList)
+				    {
+				    	regularizeData.setStatus(RegularizeDeviceStatus.PENDING_APPROVAL_FROM_CEIR_ADMIN.getCode());
+				    }
 					regularizeDeviceDb.setStatus(RegularizeDeviceStatus.PENDING_APPROVAL_FROM_CEIR_ADMIN.getCode());
 					tag = "MAIL_TO_USER_ON_CEIR_DEVICE_APPROVAL";
 					txnId = regularizeDeviceDb.getTxnId();
@@ -800,7 +806,11 @@ if(Objects.nonNull(regularizeOutput))
 }	
 					
 				}else if(ceirActionRequest.getAction() == 1){
-					regularizeDeviceDb.setStatus(RegularizeDeviceStatus.Rejected_By_System.getCode());
+					for(RegularizeDeviceDb regularizeData:regularizeList)
+				    {
+				    	regularizeData.setStatus(RegularizeDeviceStatus.Rejected_By_System.getCode());
+				    }
+//					regularizeDeviceDb.setStatus(RegularizeDeviceStatus.Rejected_By_System.getCode());
 					tag = "MAIL_TO_USER_ON_CEIR_DEVICE_DISAPPROVAL";	
 					receiverUserType = "End User";
 					txnId = regularizeDeviceDb.getTxnId();
@@ -820,8 +830,8 @@ if(Objects.nonNull(regularizeOutput))
 								receiverUserType));
 						}
 					}
-					RegularizeDeviceDb regularizeOutput=regularizedDeviceDbRepository.save(regularizeDeviceDb);
-					if(Objects.nonNull(regularizeOutput))
+					List<RegularizeDeviceDb> regularizeOutput=regularizedDeviceDbRepository.saveAll(regularizeList);
+					if(Objects.nonNull(regularizeOutput)&&!regularizeOutput.isEmpty())
 					{
 						if(Objects.nonNull(rawMails) && !rawMails.isEmpty()) {
 							emailUtil.saveNotification(rawMails);	

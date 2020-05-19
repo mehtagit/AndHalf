@@ -30,4 +30,5 @@ JpaSpecificationExecutor<RegularizeDeviceDb	>, CustomerCareRepo<RegularizeDevice
 	@Query("SELECT r FROM RegularizeDeviceDb r WHERE firstImei = :imei OR secondImei = :imei OR thirdImei = :imei OR fourthImei = :imei") 
 	public RegularizeDeviceDb getByImei(String imei);
 
+	public List<RegularizeDeviceDb> findByTxnId(String txnid);
 }
