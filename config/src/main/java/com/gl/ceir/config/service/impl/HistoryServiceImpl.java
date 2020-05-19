@@ -121,29 +121,39 @@ public class HistoryServiceImpl {
 		try {
 			int defaultPagesize = 10;
 			pageSize = 100;
-			pageNo = 1;
+			pageNo = 0;
 			List<Notification> content = new ArrayList<>();
 			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
-			Page<Notification> result = new PageImpl<>(content, pageable, defaultPagesize);
+			Page<Notification> result =  null;
 
 			List<NotiLogic> notiLogics = notiLogicRepository.getByUsertypeId(filterRequest.getUserTypeId());
 			logger.info(notiLogics);
 
 			NotificationSpecificationBuilder nsb = new NotificationSpecificationBuilder(propertiesReader.dialect);
 
-			if("Custom".equalsIgnoreCase(filterRequest.getUserType())) {
+			/*if("Custom".equalsIgnoreCase(filterRequest.getUserType())) {
 				logger.info("skipping userid in where clause for usertype : " + filterRequest.getUserType());
 				nsb.with(new SearchCriteria("receiverUserType", "Custom", SearchOperation.EQUALITY, Datatype.STRING));
 			}else if("TRC".equalsIgnoreCase(filterRequest.getUserType())){
 				logger.info("skipping userid in where clause for usertype : " + filterRequest.getUserType());
 				nsb.with(new SearchCriteria("receiverUserType", "TRC", SearchOperation.EQUALITY, Datatype.STRING));
-			} else {
+			}*/
+			if(notiLogics.isEmpty() || Objects.isNull(notiLogics)) {
+				logger.info("notiLogics is empty for userType[" + filterRequest.getUserType() + "]");
 				if(Objects.nonNull(filterRequest.getUserId()))
 					nsb.with(new SearchCriteria("userId", filterRequest.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));
+
 				nsb.with(new SearchCriteria("referTable", "END_USER", SearchOperation.NEGATION, Datatype.STRING));
+
+				pageable = PageRequest.of(pageNo, defaultPagesize, new Sort(Sort.Direction.DESC, "modifiedOn"));
+				result = notificationRepository.findAll(nsb.build(), pageable);
+			}else {
+				cherryPickNotification(pageNo, defaultPagesize, notiLogics, filterRequest, content);
+				result = new PageImpl<>(content, pageable, defaultPagesize);
+				logger.info("Final Content in notification : " + content);
 			}
-			return notificationRepository.findAll(nsb.build(), pageable);
 			
+			return result;
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
@@ -175,7 +185,7 @@ public class HistoryServiceImpl {
 						logger.warn("noti_logic don't have valid values.[" + notiLogic.getType() + "]");
 					}
 				}else {
-					logger.info("Noti id [" + notification.getFeatureId() + "] is not configured in table noti_logic.");
+					// logger.info("Noti id [" + notification.getFeatureId() + "] is not configured in table noti_logic.");
 					continue;
 				}
 			}
