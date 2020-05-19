@@ -977,7 +977,7 @@ public class IconsState {
 	/********************************** Icons for UPS **********************************/ 	
 	public String userPaidStatusIcon(String imei1, String taxStatus, String status, String userStatus, String txnId) {
 		executePostConstruct();
-		String payTaxAction ="taxPaid('"+imei1+"')";
+		String payTaxAction ="taxPaid('"+imei1+"','"+txnId+"')";
 		String errorURL = "fileDownload('','error','"+txnId+"','"+defaultTagName+"')";
 		String viewAction="viewDetails('"+imei1+"')";
 		String deleteAction= "deleteByImei('"+imei1+"')";

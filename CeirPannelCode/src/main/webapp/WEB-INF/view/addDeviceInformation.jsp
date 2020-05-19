@@ -230,11 +230,11 @@ input[type='search'] {
 
 													<div class="col s12 m6">
 														<label for="country1"><spring:message code="select.countryBoughtFrom" /><span
-															class="star">*</span></label> <select id="country1"
+															class="star"></span></label> <select id="country1"
 															oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 											        oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 															class="browser-default" class="mySelect"
-															style="padding-left: 0;" required="required">
+															style="padding-left: 0;">
 															<option value="" disabled selected><spring:message code="select.countryBoughtFrom" />
 														</select>
 													</div>
@@ -249,7 +249,7 @@ input[type='search'] {
 														</label>
 													</div>
 
-													<div class="col s12 m6">
+													<div class="col s12 m6" id="taxStatusDiv">
 														<label for="taxStatus1"><spring:message code="select.taxPaidStatus" /><span
 															class="star">*</span></label> <select class="browser-default"
 															required="required"
@@ -275,7 +275,7 @@ input[type='search'] {
 														</select>
 													</div>
 
-													<div class="input-field col s12 m6 l6">
+													<div class="input-field col s12 m6 l6" id="priceDiv">
 														<input type="text" name="Price" id="Price1"
 														oninput="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
 											        oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"

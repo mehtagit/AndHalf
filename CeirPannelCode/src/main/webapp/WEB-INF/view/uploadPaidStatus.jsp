@@ -42,6 +42,8 @@
 <meta content="" name="description" />
 <meta content="" name="author" />
 
+
+
 <script type="text/javascript"
 	src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
 <!--   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"></script>  
@@ -677,7 +679,7 @@ button.modal-action.modal-close.waves-effect.waves-green.btn-flat.right {
 															</label>
 														</div>
 
-														<div class="col s12 m6">
+														<div class="col s12 m6" id="taxStatusDiv">
 															<label for="taxStatus1"><spring:message code="select.taxPaidStatus" /> <span
 																class="star">*</span></label> <select class="browser-default"
 																oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"

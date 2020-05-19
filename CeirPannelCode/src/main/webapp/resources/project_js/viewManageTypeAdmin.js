@@ -45,6 +45,7 @@ function typeApprovedDataTable(lang){
 //**************************************************Importer Type Approved table**********************************************
 
 function Datatable(Url,dataUrl){
+	
 	var txn= (txnIdValue == 'null' && transactionIDValue == undefined)? $('#transactionID').val() : transactionIDValue;
 
 	var FilterUserType = $('#userType').val()=='-1' || $('#userType').val()==undefined ? null : $("#userType option:selected").text();		
@@ -80,7 +81,7 @@ function Datatable(Url,dataUrl){
 		var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
 	}				
 	
-	
+	$("#submitFilter").prop('disabled', true);
 
 $.ajax({
 		url: Url,
@@ -106,18 +107,21 @@ $.ajax({
 					data : function(d) {
 						d.filter = JSON.stringify(filterRequest); 
 						console.log(JSON.stringify(filterRequest));
+						
 					}
 
 				},
 				"columns": result,
 				fixedColumns: true,
+				
 				columnDefs: [
 		            { width: 158, targets: result.length - 1 },
 		            { width: 121, targets: 0 }
 		          
 			]
+				
 			});
-			
+			$("#submitFilter").prop('disabled', false);
 			$('div#initialloader').delay(300).fadeOut('slow');
 			$('.dataTables_filter input')
 		       .off().on('keyup', function(event) {
@@ -129,11 +133,14 @@ $.ajax({
 		    		}
 		          
 		       });
+		
 		},
+		
 		error: function (jqXHR, textStatus, errorThrown) {
 			console.log("error in ajax");
 		}
 	});
+   
 }
 
 

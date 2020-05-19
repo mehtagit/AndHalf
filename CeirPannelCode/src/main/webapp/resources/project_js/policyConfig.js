@@ -162,6 +162,14 @@ function pageRendering(){
 		}
 		});
 	
+	$.getJSON('./getDropdownList/Period', function(data) {
+		for (i = 0; i < data.length; i++) {
+		$('<option>').val(data[i].interp).text(data[i].interp)
+		.appendTo('#editPeriod');
+	 }
+	});
+	
+	
 }
 
 
@@ -241,12 +249,19 @@ function updateDetails(tag,status){
 }
 
 function setEditPopupData(data){
+	$.getJSON('./getDropdownList/IS_ACTIVE', function(data) {
+		$('#editstatus').empty();
+		for (i = 0; i < data.length; i++) {
+		$('<option>').val(data[i].value).text(data[i].interp)
+		.appendTo('#editstatus');
+		}
+		});
 	$("#editTag").val(data.tag);
 	$("#EditId").val(data.id);
 	$("#editValue").val(data.value);
 	$("#editPeriod").val(data.period);
 	$("#editdescription").val(data.description);
-	$("#editstatus").val(data.statusInterp);
+	$("#editstatus").val(data.status);
 	$("#editremarks").val(data.remark);
 	$("#editpolicyOrder").val(data.policyOrder);
 	$("#EditStatusValue").val(data.status)
@@ -260,9 +275,9 @@ function updatePolicy(){
 			 "id" : parseInt($("#EditId").val()),
 			 "tag" : $("#editTag").val(),
 			 "value" : $("#editValue").val(),
-			 "period" : $("#editPeriod").val(),
+			 "period" :   $("#editPeriod option:selected").text(),
 			 "description" : $("#editdescription").val(),
-			 "status" : parseInt($("#EditStatusValue").val()),
+			 "status" : parseInt($("#editstatus").val()),
 			 "remark" : $("#editremarks").val(),
 			 "policyOrder": $("#editviewpolicyOrder").val(),
 			 "userId":parseInt(userId),

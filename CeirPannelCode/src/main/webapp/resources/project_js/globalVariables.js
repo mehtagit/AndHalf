@@ -102,7 +102,7 @@ $("input[type=file]").keypress(function(ev) {
 					dismissible:false
 				});
 				}
-			else if(fileSize>='2000'){
+			else if(fileSize>='10000'){
 				window.parent.$('#fileFormateModal').openModal({
 					dismissible:false
 				});

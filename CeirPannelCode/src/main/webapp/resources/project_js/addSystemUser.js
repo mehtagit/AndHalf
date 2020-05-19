@@ -54,6 +54,7 @@ function SaveSystemUser(){
 			type : 'POST',
 			success: function (data, textStatus, jqXHR) {
 				if(data.errorCode == 200){
+					$("#saveAnonymousGrieavance").prop('disabled', true);
 					$("#successModal").openModal({
 				        dismissible:false
 				    });

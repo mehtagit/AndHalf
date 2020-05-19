@@ -164,7 +164,7 @@
 					
 					<div class="input-field col s12 m6">
 					<textarea id="remarks" class="materialize-textarea" placeholder="Remarks" readonly="readonly" style="min-height:8rem"></textarea>
-					<label for="remarks" class=""><spring:message code="input.remarks" /> <span class="star">*</span></label>
+					<label for="remarks" class=""><spring:message code="input.remarks" /></label>
 
 					</div>
 				
@@ -219,8 +219,8 @@
 					</div>
 
 					<div class="input-field col s12 m6">
-					<textarea id="editremarks" class="materialize-textarea" disabled style="min-height:8rem"></textarea>
-					<label for="editremarks" class=""><spring:message code="input.remarks" /> <span class="star">*</span></label>
+					<textarea id="editremarks" class="materialize-textarea" style="min-height:8rem" ></textarea>
+					<label for="editremarks" class=""><spring:message code="input.remarks" /></label>
 
 					</div>
 				</div>
