@@ -1,5 +1,7 @@
 package CeirPannelCode.Model;
 import java.util.List;
+
+import org.gl.ceir.CeirPannelCode.Model.AllRequest;
 import org.gl.ceir.CeirPannelCode.Model.UplodPaidStatusModel;
 
 public class Register_UploadPaidStatus {
@@ -14,8 +16,8 @@ public class Register_UploadPaidStatus {
 	private String street;
 	private String locality;
 	private String province;
-	private String country,district,commune,village, nationality,passportFileName;
-	
+	private String country,district,commune,village, nationality,passportFileName,txnId;
+	private AllRequest auditParameters;
 	private List<UplodPaidStatusModel> regularizeDeviceDbs;
 	private Long firstImei;
 	private Integer taxPaidStatus,postalCode;
@@ -145,6 +147,16 @@ public class Register_UploadPaidStatus {
 	public void setPostalCode(Integer postalCode) {
 		this.postalCode = postalCode;
 	}
+	
+	
+	public AllRequest getAuditParameters() {
+		return auditParameters;
+	}
+	public void setAuditParameters(AllRequest auditParameters) {
+		this.auditParameters = auditParameters;
+	}
+	
+	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -182,6 +194,8 @@ public class Register_UploadPaidStatus {
 		builder.append(nationality);
 		builder.append(", passportFileName=");
 		builder.append(passportFileName);
+		builder.append(", auditParameters=");
+		builder.append(auditParameters);
 		builder.append(", regularizeDeviceDbs=");
 		builder.append(regularizeDeviceDbs);
 		builder.append(", firstImei=");
@@ -190,10 +204,18 @@ public class Register_UploadPaidStatus {
 		builder.append(taxPaidStatus);
 		builder.append(", postalCode=");
 		builder.append(postalCode);
+		builder.append(", txnId=");
+		builder.append(txnId);
 		builder.append("]");
 		return builder.toString();
 	}
-	
-	
+	public String getTxnId() {
+		return txnId;
+	}
+	public void setTxnId(String txnId) {
+		this.txnId = txnId;
+	}
+
+
 
 }

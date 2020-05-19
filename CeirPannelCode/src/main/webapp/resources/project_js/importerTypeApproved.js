@@ -159,6 +159,7 @@ window.parent
 				contentType : false, 
 				async:false,
 				success : function(data, textStatus, jqXHR) {
+					$("#trcSubmitButton").prop('disabled', true);
 						var result =  JSON.parse(data)
 						console.log("successdata-----" +result);
 						$("#trcSubmitButton").prop('disabled', true);

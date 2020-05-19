@@ -45,6 +45,7 @@ function typeApprovedDataTable(lang){
 //**************************************************Importer Type Approved table**********************************************
 
 function Datatable(Url,dataUrl){
+	
 	var txn= (txnIdValue == 'null' && transactionIDValue == undefined)? $('#transactionID').val() : transactionIDValue;
 
 	var FilterUserType = $('#userType').val()=='-1' || $('#userType').val()==undefined ? null : $("#userType option:selected").text();		
@@ -80,7 +81,7 @@ function Datatable(Url,dataUrl){
 		var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
 	}				
 	
-	
+	$("#submitFilter").prop('disabled', true);
 
 $.ajax({
 		url: Url,
@@ -106,18 +107,21 @@ $.ajax({
 					data : function(d) {
 						d.filter = JSON.stringify(filterRequest); 
 						console.log(JSON.stringify(filterRequest));
+						
 					}
 
 				},
 				"columns": result,
 				fixedColumns: true,
+				
 				columnDefs: [
 		            { width: 158, targets: result.length - 1 },
 		            { width: 121, targets: 0 }
 		          
 			]
+				
 			});
-			
+			$("#submitFilter").prop('disabled', false);
 			$('div#initialloader').delay(300).fadeOut('slow');
 			$('.dataTables_filter input')
 		       .off().on('keyup', function(event) {
@@ -129,11 +133,14 @@ $.ajax({
 		    		}
 		          
 		       });
+		
 		},
+		
 		error: function (jqXHR, textStatus, errorThrown) {
 			console.log("error in ajax");
 		}
 	});
+   
 }
 
 
@@ -866,8 +873,8 @@ function historyRecord(txnID){
 			 "columns": [
 				    "created_on","modified_on","txn_id","user_type","approve_status","trademark","product_name","model_number","manufacturer_country","frequency_range","tac","file_name",
 				    "remark",
-				    "id","rev","admin_approve_status","admin_remark","admin_user_id","admin_user_type","approve_disapprove_date","feature_id","country","manufacturer_id",
-				    "manufacturer_name","request_date", "user_id","delete_flag"
+				    "admin_approve_status","admin_remark","approve_disapprove_date","feature_id","country","manufacturer_id",
+				    "manufacturer_name","request_date", "user_id"
 				    ],
 			"tableName": "type_approved_db_aud",
 			"dbName" : "ceirconfig",

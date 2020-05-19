@@ -608,3 +608,58 @@ function setOpertorTypeMandaotry()
 		  $("#operator5span").css("display", "block");
 		  }	
 }
+
+
+
+
+$('#singleStolendeviceIDType').on('change', function() {
+	var value=parseInt($(this).val());
+
+	switch (value) {
+	case 0:
+		$("#updatesingleStolenimei1,#updatesingleStolenimei2,#updatesingleStolenimei3,#updatesingleStolenimei4").attr("pattern","[0-9]{15,16}");
+		$("#updatesingleStolenimei1,#updatesingleStolenimei2,#updatesingleStolenimei3,#updatesingleStolenimei4").attr("maxlength","16");
+		$("#updatesingleStolenimei1,#updatesingleStolenimei2,#updatesingleStolenimei3,#updatesingleStolenimei4").removeAttr("onkeyup");
+		$("#updatesingleStolenimei1,#updatesingleStolenimei2,#updatesingleStolenimei3,#updatesingleStolenimei4").attr("oninput","InvalidMsg(this,'input','"+$.i18n('validationIMEI')+"')");
+		$("#updatesingleStolenimei1,#updatesingleStolenimei2,#updatesingleStolenimei3,#updatesingleStolenimei4").attr("oninvalid","InvalidMsg(this,'input','"+$.i18n('validationIMEI')+"')");
+		$('#errorMsgOnModal').text($.i18n('IMEIMsg'));
+		
+		break;
+	case 1:
+		$("#updatesingleStolenimei1,#updatesingleStolenimei2,#updatesingleStolenimei3,#updatesingleStolenimei4").attr("pattern","[A-F0-9]{15,16}");
+		$("#updatesingleStolenimei1,#updatesingleStolenimei2,#updatesingleStolenimei3,#updatesingleStolenimei4").attr("maxlength","16");
+        $("#updatesingleStolenimei1,#updatesingleStolenimei2,#updatesingleStolenimei3,#updatesingleStolenimei4").removeAttr("onkeyup");
+		$("#updatesingleStolenimei1,#updatesingleStolenimei2,#updatesingleStolenimei3,#updatesingleStolenimei4").attr("oninput","InvalidMsg(this,'input','"+$.i18n('validationMEID')+"')");
+		$("#updatesingleStolenimei1,#updatesingleStolenimei2,#updatesingleStolenimei3,#updatesingleStolenimei4").attr("oninvalid","InvalidMsg(this,'input','"+$.i18n('validationMEID')+"')");
+		$('#errorMsgOnModal').text($.i18n('MEIDMsg'));
+		break;
+	case 2:
+		
+		$("#updatesingleStolenimei1,#updatesingleStolenimei2,#updatesingleStolenimei3,#updatesingleStolenimei4").val('');
+        $("#updatesingleStolenimei1,#updatesingleStolenimei2,#updatesingleStolenimei3,#updatesingleStolenimei4").attr("pattern","[0-9]{8,11}");
+		$("#updatesingleStolenimei1,#updatesingleStolenimei2,#updatesingleStolenimei3,#updatesingleStolenimei4").attr("onkeyup","isLengthValid(this.value)");
+		$("#updatesingleStolenimei1,#updatesingleStolenimei2,#updatesingleStolenimei3,#updatesingleStolenimei4").attr("maxlength","11");	
+		$("#updatesingleStolenimei1,#updatesingleStolenimei2,#updatesingleStolenimei3,#updatesingleStolenimei4").attr("oninput","InvalidMsg(this,'input','"+$.i18n('validationESN11')+"')");
+		$("#updatesingleStolenimei1,#updatesingleStolenimei2,#updatesingleStolenimei3,#updatesingleStolenimei4").attr("oninvalid","InvalidMsg(this,'input','"+$.i18n('validationESN11')+"')");
+		$("#errorMsgOnModal").text($.i18n('ESNMsg'));
+		break;
+	}
+
+}); 
+
+function isLengthValid(val){
+	var deviceIDLength=val.length;
+	if(!isNaN(val)){
+		$("#updatesingleStolenimei1,#updatesingleStolenimei2,#updatesingleStolenimei3,#updatesingleStolenimei4").attr("pattern","[0-9]{11,11}");
+		$("#updatesingleStolenimei1,#updatesingleStolenimei2,#updatesingleStolenimei3,#updatesingleStolenimei4").attr("maxlength","11");
+		$("#updatesingleStolenimei1,#updatesingleStolenimei2,#updatesingleStolenimei3,#updatesingleStolenimei4").attr("oninput","InvalidMsg(this,'input','"+$.i18n('validationESN11')+"')");
+		$("#updatesingleStolenimei1,#updatesingleStolenimei2,#updatesingleStolenimei3,#updatesingleStolenimei4").attr("oninvalid","InvalidMsg(this,'input','"+$.i18n('validationESN11')+"')");
+	}
+	else if(typeof val == 'string' || val instanceof String){
+		$("#updatesingleStolenimei1,#updatesingleStolenimei2,#updatesingleStolenimei3,#updatesingleStolenimei4").attr("maxlength","8");
+		$("#updatesingleStolenimei1,#updatesingleStolenimei2,#updatesingleStolenimei3,#updatesingleStolenimei4").attr("pattern","[A-F0-9]{8,8}");
+		$("#updatesingleStolenimei1,#updatesingleStolenimei2,#updatesingleStolenimei3,#updatesingleStolenimei4").attr("oninput","InvalidMsg(this,'input','"+$.i18n('validationESN8')+"')");
+		$("#updatesingleStolenimei1,#updatesingleStolenimei2,#updatesingleStolenimei3,#updatesingleStolenimei4").attr("oninvalid","InvalidMsg(this,'input','"+$.i18n('validationESN8')+"')");
+
+	}
+}

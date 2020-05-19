@@ -48,19 +48,10 @@
 		var reportnameId = sessionStorage.getItem("reportname");
 		
 		
+		
 		//**************************************************filter table**********************************************
 		
 		function Datatable(lang){
-			//var table = $('#reportLibraryTable').DataTable();
-			
-			//alert("table");
-			//var info = table.page.info(); 
-			//var pageNo=info.page;
-			//var pageSize =info.length;
-			
-		
-			var filter =[];
-			var formData= new FormData();
 			var filterRequest={
 					"reportnameId" : parseInt(reportnameId),
 					"featureId":parseInt(featureId),
@@ -72,61 +63,82 @@
 					//"pageSize":Integer.parseInt(pageSize),
 
 			}
-			
-			formData.append("filter",JSON.stringify(filterRequest));	
 			if(lang=='km'){
 				var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
-			}
+			}				
 			
-		
-			$.ajax({
-					url : 'dbReportData',
-					type: 'POST',
-					data: formData,
-					processData: false,
-					contentType: false,
-					success: function(result){
-						var dataObject = eval(result);
-						
-						console.log("dataObject--->" +dataObject);
-						
-						var table=  $('#reportLibraryTable').DataTable({
-							/* "order" : [[1, "asc"]],*/
-							destroy :true,
-							"serverSide": false,
-							"orderCellsTop" : true,
-							"ordering" : false,
-							"bPaginate" : true,
-							"bFilter" : true,
-							"bInfo" : true,
-							"bSearchable" : true,
-							"data": dataObject.data,
-							"columns": dataObject.columns
-						});
-						
-						
-					}
 			
-				
-				//fixedColumns: true,
-				
+
+		$.ajax({
+				url: 'tableHeaders?reportnameId='+parseInt(reportnameId),
+				type: 'POST',
+				dataType: "json",
+				success: function(result){
+					var table=	$("#reportLibraryTable").DataTable({
+						destroy:true,
+						"serverSide": true,
+						orderCellsTop : true,
+						"ordering" : false,
+						"bPaginate" : true,
+						"bFilter" : true,
+						"bInfo" : true,
+						"bSearchable" : true,
+						"scrollX": true,
+						"scrolly": true,
+						"oLanguage": {  
+							"sUrl": langFile  
+						},
+						ajax: {
+							url : 'dbReportData',
+							type: 'POST',
+							dataType: "json",
+							data : function(d) {
+								d.filter = JSON.stringify(filterRequest); 
+								console.log(JSON.stringify(filterRequest));
+							}
+
+						},
+						//"dataSrc": data,
+						"columns": result,
+						fixedColumns: true,
+						/*"columns": [
+							result,
+					        {
+					            "orderable": false
+					        },
+					        {
+					            "defaultContent": "Edit",
+					            "orderable": false
+					        },
+					        {
+					            "defaultContent": "Delete",
+					            "orderable": false
+					        }
+					    ],
+					    "order": [],*/
+						
+						
+					});
+					
+					$('div#initialloader').delay(300).fadeOut('slow');
+					$('.dataTables_filter input')
+				       .off().on('keyup', function(event) {
+				    	   if(event.keyCode == 8 && !textBox.val() || event.keyCode == 46 && !textBox.val() || event.keyCode == 83 && !textBox.val()) {
+					    
+					            }
+				    		if (event.keyCode === 13) {
+				    			 table.search(this.value.trim(), false, false).draw();
+				    		}
+				          
+				       });
+				},
+				error: function (jqXHR, textStatus, errorThrown) {
+					console.log("error in ajax");
+				}
 			});
-
-			$('div#initialloader').delay(300).fadeOut('slow');
-				$('#alertManagementLibraryTable input').unbind();
-				$('#alertManagementLibraryTable input').bind('keyup', function (e) {
-					if (e.keyCode == 13) {
-						table.search(this.value).draw();
-					}
-
-				});
-			
-			$('.datepicker').on('mousedown',function(event){
-			event.preventDefault();
-		});
-
-	
-}
+		}
+		
+		
 		function pageRendering(){
 			$.ajax({
 				url: 'dbReportTable/pageRendering',

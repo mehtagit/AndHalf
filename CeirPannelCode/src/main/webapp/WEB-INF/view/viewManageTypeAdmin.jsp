@@ -1,12 +1,25 @@
-
+<%@ page import="java.util.Date" %>
 <%
-	response.setHeader("Cache-Control", "no-cache");
+   response.setHeader("Cache-Control", "no-cache");
 	response.setHeader("Cache-Control", "no-store");
 	response.setDateHeader("Expires", 0);
 	response.setHeader("Pragma", "no-cache");
-	/*  session.setMaxInactiveInterval(200); //200 secs
-	 session.setAttribute("usertype", null); */
-	if (session.getAttribute("usertype") != null) {
+	
+    /*   //200 secs
+	 session.setAttribute("usertype", null);  */
+/* 	 session.setMaxInactiveInterval(10); */
+	 int timeout = session.getMaxInactiveInterval();
+	
+	 long accessTime = session.getLastAccessedTime();
+	 long currentTime= new Date().getTime(); 
+	 System.out.println("accessTime========"+(accessTime));
+	 System.out.println("timeout========"+timeout);
+	 long dfd= accessTime +timeout;
+	 System.out.println("currentTime========"+currentTime);
+	 if( currentTime< dfd){
+	/*  response.setHeader("Refresh", timeout + "; URL = ../login");
+	 System.out.println("timeout========"+timeout); 
+	if (session.getAttribute("usertype") != null) { */
 %>
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
@@ -326,7 +339,7 @@ button.modal-action.modal-close.waves-effect.waves-green.btn-flat.right {
 						
 						 <div class="input-field col s12 m6 l6">
 							<input type="text" id="editImportertac" name="tac" placeholder=""
-								pattern="[0-9]{8,8}" maxlength="8"
+								 pattern="[A-Za-z0-9 \s]{8,8}"  maxlength="8"
 								oninput="InvalidMsg(this,'input','<spring:message code="validation.tac8" />');"
 								oninvalid="InvalidMsg(this,'input','<spring:message code="validation.tac8" />');"
 								required> <label for="tac"><spring:message

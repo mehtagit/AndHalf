@@ -56,8 +56,8 @@ public class SytemUserDatatableController {
 
 	@PostMapping("UserManagementData")
 	public ResponseEntity<?> viewUserManagementRecord(HttpServletRequest request,HttpSession session) {
-		String userType = (String) session.getAttribute("usertype");
-		int userId=	(int) session.getAttribute("userid");
+		//String userType = (String) session.getAttribute("usertype");
+		//int userId=	(int) session.getAttribute("userid");
 		int file=0;
 		// Data set on this List
 		List<List<Object>> finalList=new ArrayList<List<Object>>();
@@ -86,7 +86,7 @@ public class SytemUserDatatableController {
 				   String modifiedOn = dataInsideList.getModifiedOn();
 				   String userName = dataInsideList.getUsername();
 				   String userTypeName = dataInsideList.getUsertype().getUsertypeName();
-				   String action=iconState.userSystemManagementIcons(id,userType);			   
+				   String action=iconState.userSystemManagementIcons(id);			   
 				   Object[] finalData={createdOn,modifiedOn,userName,userTypeName,action}; 
 				   List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 				   finalList.add(finalDataList);

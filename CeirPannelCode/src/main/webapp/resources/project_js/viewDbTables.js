@@ -46,14 +46,12 @@
 		var TagId = sessionStorage.getItem("tagId");
 		
 		var tableName = sessionStorage.getItem("tableName");
-		
+		var dbName = "ceirconfig";
 		
 		//**************************************************filter table**********************************************
 		
 		function Datatable(lang){
-			 var filter =[];
-			 var formData= new FormData();
-			 var filterRequest={
+			var filterRequest={
 					"tableName": tableName,
 					"dbName" : "ceirconfig",
 					"featureId":parseInt(featureId),
@@ -62,24 +60,20 @@
 					"username" : $("body").attr("data-selected-username"),
 					"userId" : parseInt($("body").attr("data-userID")) 
 			}
-			formData.append("filter",JSON.stringify(filterRequest));	
+			
 			if(lang=='km'){
 				var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
-			}
-			$.ajax({
-				url: 'dbManagementData',
+			}				
+			
+		$.ajax({
+				url: "./dbtableHeaders?dbName="+dbName+"&tableName="+tableName,
 				type: 'POST',
-				data: formData,
-				processData: false,
-				contentType: false,
+				dataType: "json",
 				success: function(result){
-					var dataObject = eval(result);
-					console.log("dataObject------->" +JSON.stringify(dataObject.data))
-					$('#DBManagementLibraryTable').dataTable({
-						 /*"order" : [[1, "asc"]],*/
-						 destroy:true,
-						"serverSide": false,
-						 orderCellsTop : true,
+					var table=	$("#DBManagementLibraryTable").DataTable({
+						destroy:true,
+						"serverSide": true,
+						orderCellsTop : true,
 						"ordering" : false,
 						"bPaginate" : true,
 						"bFilter" : true,
@@ -87,21 +81,51 @@
 						"bSearchable" : true,
 						"scrollX": true,
 						"scrolly": true,
-						 "data": dataObject.data,
-						 "columns": dataObject.columns
+						"oLanguage": {  
+							"sUrl": langFile  
+						},
+						//dataSrc : result,
+						ajax: {
+							url : 'dbManagementData',
+							type: 'POST',
+							dataType: "json",
+							data : function(d) {
+								d.filter = JSON.stringify(filterRequest); 
+								console.log(JSON.stringify(filterRequest));
+							}
+						},
+						
+						"columns": result,"defaultContent":"",
+						fixedColumns: true,
+						
+					});
 					
-				    });
 					$('div#initialloader').delay(300).fadeOut('slow');
-			}
-				
-	});
+					$('.dataTables_filter input')
+				       .off().on('keyup', function(event) {
+				    	   if(event.keyCode == 8 && !textBox.val() || event.keyCode == 46 && !textBox.val() || event.keyCode == 83 && !textBox.val()) {
+					    
+					            }
+				    		if (event.keyCode === 13) {
+				    			 table.search(this.value.trim(), false, false).draw();
+				    		}
+				          
+				       });
+				},
+				error: function (jqXHR, textStatus, errorThrown) {
+					console.log("error in ajax");
+				}
+			});
+		}
 		
-			$('.datepicker').on('mousedown',function(event){
+
+		
+		$('.datepicker').on('mousedown',function(event){
 			event.preventDefault();
 		});
 
 	
-}
+
 		function pageRendering(){
 			$.ajax({
 				url: 'dbTable/pageRendering',

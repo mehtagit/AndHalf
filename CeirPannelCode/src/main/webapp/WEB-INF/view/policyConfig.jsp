@@ -1,11 +1,25 @@
+<%@ page import="java.util.Date" %>
 <%
-	response.setHeader("Cache-Control", "no-cache");
+   response.setHeader("Cache-Control", "no-cache");
 	response.setHeader("Cache-Control", "no-store");
 	response.setDateHeader("Expires", 0);
 	response.setHeader("Pragma", "no-cache");
-	/*  session.setMaxInactiveInterval(200); //200 secs
+	
+    /*   //200 secs
 	 session.setAttribute("usertype", null);  */
-	if (session.getAttribute("usertype") != null) {
+/* 	 session.setMaxInactiveInterval(10); */
+	 int timeout = session.getMaxInactiveInterval();
+	
+	 long accessTime = session.getLastAccessedTime();
+	 long currentTime= new Date().getTime(); 
+	 System.out.println("accessTime========"+(accessTime));
+	 System.out.println("timeout========"+timeout);
+	 long dfd= accessTime +timeout;
+	 System.out.println("currentTime========"+currentTime);
+	 if( currentTime< dfd){
+	/*  response.setHeader("Refresh", timeout + "; URL = ../login");
+	 System.out.println("timeout========"+timeout); 
+	if (session.getAttribute("usertype") != null) { */
 %>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
@@ -183,7 +197,7 @@ data-selected-username="${username}"
 		<div class="modal-content">
 		<form action="" onsubmit="return updatePolicy()">
 		<div class="row">
-			<div class="row" style="margin-top: 10px;">
+			<div class="row">
 					<div class="input-field col s12 m6 l6">
 						<input type="text" name="tag" id="editTag"
 							placeholder="tag" hidden="hidden"> 
@@ -196,22 +210,25 @@ data-selected-username="${username}"
 							placeholder="" hidden="hidden"> 	
 					</div>
 					
-					
-					<div class="input-field col s12 m6 l6">
-						<input type="text" name="period" id="editPeriod"
-							placeholder="Period" disabled>
-						<label for="period"><spring:message code="table.Period" /> <span class="star">*</span></label>
-					</div>
-
-					<div class="input-field col s12 m6" style="margin-top:22px">
-						<input type="text" id="editstatus" name="status"
-							placeholder="" maxlength="20" placeholder="Status" disabled>
-						<label for="status"><spring:message code="table.status" /> <span class="star">*</span></label>
-					</div>
 				
-					
-					
-					<div class="input-field col s12 m6">
+
+						<div class="col s12 m6">
+							<label for="port" class="active"><spring:message code="table.Period" /><span class="star">
+									*</span></label> <select class="browser-default" id="editPeriod"
+								required="required">
+								<option value="" selected > Select Period</option>
+							</select> <input type="text" id="editId" hidden>
+						</div>
+
+						<div class="col s12 m6">
+							<label for="port" class="active"><spring:message code="table.status" /><span class="star">
+									*</span></label> <select class="browser-default" id="editstatus"
+								required="required">
+								<option value="" selected>Select status</option>
+							</select>
+						</div>
+
+					<div class="input-field col s12 m6"  style="margin-top: 30px;">
 					<textarea id="editValue" class="materialize-textarea" placeholder="value" title="Please enter alphabets and numbers upto 100 characters only" maxlength="100" required="required" style="min-height:8rem"></textarea>
 					<label for="editValue" class=""><spring:message code="table.Value" /> <span class="star">*</span></label>
 
@@ -219,7 +236,7 @@ data-selected-username="${username}"
 					
 					
 					
-					<div class="input-field col s12 m6">
+					<div class="input-field col s12 m6" style="margin-top: 30px;">
 					<textarea id="editdescription" class="materialize-textarea" placeholder="Description" title="Please enter alphabets and numbers upto 200 characters only" maxlength="200" style="min-height:8rem"></textarea>
 					<label for="description" class=""><spring:message code="registration.description" /></label>
 

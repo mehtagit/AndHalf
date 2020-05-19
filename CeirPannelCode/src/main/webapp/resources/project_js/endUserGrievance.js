@@ -346,9 +346,12 @@ function enableReplySelectFile(){
 							"columns": result,
 							fixedColumns: true,
 							columnDefs: [
-					            { width: 137, targets: result.length - 1 },
-					            { width: 280, targets: 4 },
-					            { width: 155, targets: 2 },
+					            { width: 184, targets: result.length - 1 },
+					            { width: 340, targets: 4 },
+					            { width: 190, targets: 2 },
+					            { width: 147, targets: 0 },
+					            { width: 147, targets: 1 },
+					            { width: 95, targets: 3 }
 					            
 					        ]
 						});

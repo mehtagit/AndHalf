@@ -1029,7 +1029,7 @@ function historyRecord(txnID){
 				 "columns": [
 					    "created_on","modified_on","txn_id","role_type","operator_type_id","request_type","source_type","file_status","complaint_type","file_name","fir_file_name",
 					    "block_category","blocking_type","blocking_time_period","quantity","device_quantity","remark","rejected_remark","date_of_recovery","date_of_stolen",
-					     "id","user_id","ceir_admin_id"
+					     "user_id","ceir_admin_id"
 					    ],
 				"tableName": "stolenand_recovery_mgmt_aud",
 				"dbName" : "ceirconfig",
@@ -1041,7 +1041,7 @@ function historyRecord(txnID){
 				 "columns": [
 					    "created_on","modified_on","txn_id","role_type","operator_type_id","request_type","source_type","file_status","complaint_type","file_name","fir_file_name",
 					    "block_category","blocking_type","blocking_time_period","quantity","device_quantity","remark","rejected_remark","date_of_recovery","date_of_stolen",
-					     "id","user_id"
+					     "user_id"
 					    ],
 				"tableName": "stolenand_recovery_mgmt_aud",
 				"dbName" : "ceirconfig",
@@ -1091,4 +1091,115 @@ function historyRecord(txnID){
 	
 	
 	
+}
+
+
+
+
+
+$('#singleStolendeviceIDType').on('change', function() {
+	var value=parseInt($(this).val());
+
+	switch (value) {
+	case 0:
+		$("#singleStolenimei1,#singleStolenimei2,#singleStolenimei3,#singleStolenimei4").attr("pattern","[0-9]{15,16}");
+		$("#singleStolenimei1,#singleStolenimei2,#singleStolenimei3,#singleStolenimei4").attr("maxlength","16");
+		$("#singleStolenimei1,#singleStolenimei2,#singleStolenimei3,#singleStolenimei4").removeAttr("onkeyup");
+		$("#singleStolenimei1,#singleStolenimei2,#singleStolenimei3,#singleStolenimei4").attr("oninput","InvalidMsg(this,'input','"+$.i18n('validationIMEI')+"')");
+		$("#singleStolenimei1,#singleStolenimei2,#singleStolenimei3,#singleStolenimei4").attr("oninvalid","InvalidMsg(this,'input','"+$.i18n('validationIMEI')+"')");
+		$('#errorMsgOnModal').text($.i18n('IMEIMsg'));
+		
+		break;
+	case 1:
+		$("#singleStolenimei1,#singleStolenimei2,#singleStolenimei3,#singleStolenimei4").attr("pattern","[A-F0-9]{15,16}");
+		$("#singleStolenimei1,#singleStolenimei2,#singleStolenimei3,#singleStolenimei4").attr("maxlength","16");
+        $("#singleStolenimei1,#singleStolenimei2,#singleStolenimei3,#singleStolenimei4").removeAttr("onkeyup");
+		$("#singleStolenimei1,#singleStolenimei2,#singleStolenimei3,#singleStolenimei4").attr("oninput","InvalidMsg(this,'input','"+$.i18n('validationMEID')+"')");
+		$("#singleStolenimei1,#singleStolenimei2,#singleStolenimei3,#singleStolenimei4").attr("oninvalid","InvalidMsg(this,'input','"+$.i18n('validationMEID')+"')");
+		$('#errorMsgOnModal').text($.i18n('MEIDMsg'));
+		break;
+	case 2:
+		
+		$("#singleStolenimei1,#singleStolenimei2,#singleStolenimei3,#singleStolenimei4").val('');
+        $("#singleStolenimei1,#singleStolenimei2,#singleStolenimei3,#singleStolenimei4").attr("pattern","[0-9]{8,11}");
+		$("#singleStolenimei1,#singleStolenimei2,#singleStolenimei3,#singleStolenimei4").attr("onkeyup","isLengthValid(this.value)");
+		$("#singleStolenimei1,#singleStolenimei2,#singleStolenimei3,#singleStolenimei4").attr("maxlength","11");	
+		$("#singleStolenimei1,#singleStolenimei2,#singleStolenimei3,#singleStolenimei4").attr("oninput","InvalidMsg(this,'input','"+$.i18n('validationESN11')+"')");
+		$("#singleStolenimei1,#singleStolenimei2,#singleStolenimei3,#singleStolenimei4").attr("oninvalid","InvalidMsg(this,'input','"+$.i18n('validationESN11')+"')");
+		$("#errorMsgOnModal").text($.i18n('ESNMsg'));
+		break;
+	}
+
+}); 
+
+function isLengthValid(val){
+	var deviceIDLength=val.length;
+	if(!isNaN(val)){
+		$("#singleStolenimei1,#singleStolenimei2,#singleStolenimei3,#singleStolenimei4").attr("pattern","[0-9]{11,11}");
+		$("#singleStolenimei1,#singleStolenimei2,#singleStolenimei3,#singleStolenimei4").attr("maxlength","11");
+		$("#singleStolenimei1,#singleStolenimei2,#singleStolenimei3,#singleStolenimei4").attr("oninput","InvalidMsg(this,'input','"+$.i18n('validationESN11')+"')");
+		$("#singleStolenimei1,#singleStolenimei2,#singleStolenimei3,#singleStolenimei4").attr("oninvalid","InvalidMsg(this,'input','"+$.i18n('validationESN11')+"')");
+	}
+	else if(typeof val == 'string' || val instanceof String){
+		$("#singleStolenimei1,#singleStolenimei2,#singleStolenimei3,#singleStolenimei4").attr("maxlength","8");
+		$("#singleStolenimei1,#singleStolenimei2,#singleStolenimei3,#singleStolenimei4").attr("pattern","[A-F0-9]{8,8}");
+		$("#singleStolenimei1,#singleStolenimei2,#singleStolenimei3,#singleStolenimei4").attr("oninput","InvalidMsg(this,'input','"+$.i18n('validationESN8')+"')");
+		$("#singleStolenimei1,#singleStolenimei2,#singleStolenimei3,#singleStolenimei4").attr("oninvalid","InvalidMsg(this,'input','"+$.i18n('validationESN8')+"')");
+
+	}
+}
+
+
+$('#sigleRecoverydeviceIDType').on('change', function() {
+	var value=parseInt($(this).val());
+
+	switch (value) {
+	case 0:
+		$("#sigleRecoveryimeiNumber1,#sigleRecoveryimeiNumber2,#sigleRecoveryimeiNumber3,#sigleRecoveryimeiNumber4").attr("pattern","[0-9]{15,16}");
+		$("#sigleRecoveryimeiNumber1,#sigleRecoveryimeiNumber2,#sigleRecoveryimeiNumber3,#sigleRecoveryimeiNumber4").attr("maxlength","16");
+		
+		$("#sigleRecoveryimeiNumber1,#sigleRecoveryimeiNumber2,#sigleRecoveryimeiNumber3,#sigleRecoveryimeiNumber4").removeAttr("onkeyup");
+		$("#sigleRecoveryimeiNumber1,#sigleRecoveryimeiNumber2,#sigleRecoveryimeiNumber3,#sigleRecoveryimeiNumber4").attr("oninput","InvalidMsg(this,'input','"+$.i18n('validationIMEI')+"')");
+		$("#sigleRecoveryimeiNumber1,#sigleRecoveryimeiNumber2,#sigleRecoveryimeiNumber3,#sigleRecoveryimeiNumber4").attr("oninvalid","InvalidMsg(this,'input','"+$.i18n('validationIMEI')+"')");
+		
+		$('#errorMsgOnModal').text($.i18n('IMEIMsg'));
+		
+		break;
+	case 1:
+		$("#sigleRecoveryimeiNumber1,#sigleRecoveryimeiNumber2,#sigleRecoveryimeiNumber3,#sigleRecoveryimeiNumber4").attr("pattern","[A-F0-9]{15,16}");
+		$("#sigleRecoveryimeiNumber1,#sigleRecoveryimeiNumber2,#sigleRecoveryimeiNumber3,#sigleRecoveryimeiNumber4").attr("maxlength","16");
+		
+		$("#sigleRecoveryimeiNumber1,#sigleRecoveryimeiNumber2,#sigleRecoveryimeiNumber3,#sigleRecoveryimeiNumber4").removeAttr("onkeyup");
+		$("#sigleRecoveryimeiNumber1,#sigleRecoveryimeiNumber2,#sigleRecoveryimeiNumber3,#sigleRecoveryimeiNumber4").attr("oninput","InvalidMsg(this,'input','"+$.i18n('validationMEID')+"')");
+		$("#sigleRecoveryimeiNumber1,#sigleRecoveryimeiNumber2,#sigleRecoveryimeiNumber3,#sigleRecoveryimeiNumber4").attr("oninvalid","InvalidMsg(this,'input','"+$.i18n('validationMEID')+"')");
+		$('#errorMsgOnModal').text($.i18n('MEIDMsg'));
+		break;
+	case 2:
+		$("#sigleRecoveryimeiNumber1,#sigleRecoveryimeiNumber2,#sigleRecoveryimeiNumber3,#sigleRecoveryimeiNumber4").val('');
+		$("#sigleRecoveryimeiNumber1,#sigleRecoveryimeiNumber2,#sigleRecoveryimeiNumber3,#sigleRecoveryimeiNumber4").attr("pattern","[0-9]{8,11}");
+		$("#sigleRecoveryimeiNumber1,#sigleRecoveryimeiNumber2,#sigleRecoveryimeiNumber3,#sigleRecoveryimeiNumber4").attr("onkeyup","isLengthValid(this.value)");
+		$("#sigleRecoveryimeiNumber1,#sigleRecoveryimeiNumber2,#sigleRecoveryimeiNumber3,#sigleRecoveryimeiNumber4").attr("maxlength","11");	
+		$("#sigleRecoveryimeiNumber1,#sigleRecoveryimeiNumber2,#sigleRecoveryimeiNumber3,#sigleRecoveryimeiNumber4").attr("oninput","InvalidMsg(this,'input','"+$.i18n('validationESN11')+"')");
+		$("#sigleRecoveryimeiNumber1,#sigleRecoveryimeiNumber2,#sigleRecoveryimeiNumber3,#sigleRecoveryimeiNumber4").attr("oninvalid","InvalidMsg(this,'input','"+$.i18n('validationESN11')+"')");
+		$("#errorMsgOnModal").text($.i18n('ESNMsg'));
+		break;
+	}
+
+}); 
+
+function isLengthValid(val){
+	var deviceIDLength=val.length;
+	if(!isNaN(val)){
+		$("#sigleRecoveryimeiNumber1,#sigleRecoveryimeiNumber2,#sigleRecoveryimeiNumber3,#sigleRecoveryimeiNumber4").attr("pattern","[0-9]{11,11}");
+		$("#sigleRecoveryimeiNumber1,#sigleRecoveryimeiNumber2,#sigleRecoveryimeiNumber3,#sigleRecoveryimeiNumber4").attr("maxlength","11");
+		$("#sigleRecoveryimeiNumber1,#sigleRecoveryimeiNumber2,#sigleRecoveryimeiNumber3,#sigleRecoveryimeiNumber4").attr("oninput","InvalidMsg(this,'input','"+$.i18n('validationESN11')+"')");
+		$("#sigleRecoveryimeiNumber1,#sigleRecoveryimeiNumber2,#sigleRecoveryimeiNumber3,#sigleRecoveryimeiNumber4").attr("oninvalid","InvalidMsg(this,'input','"+$.i18n('validationESN11')+"')");
+	}
+	else if(typeof val == 'string' || val instanceof String){
+		$("#sigleRecoveryimeiNumber1,#sigleRecoveryimeiNumber2,#sigleRecoveryimeiNumber3,#sigleRecoveryimeiNumber4").attr("maxlength","8");
+		$("#sigleRecoveryimeiNumber1,#sigleRecoveryimeiNumber2,#sigleRecoveryimeiNumber3,#sigleRecoveryimeiNumber4").attr("pattern","[A-F0-9]{8,8}");
+		$("#sigleRecoveryimeiNumber1,#sigleRecoveryimeiNumber2,#sigleRecoveryimeiNumber3,#sigleRecoveryimeiNumber4").attr("oninput","InvalidMsg(this,'input','"+$.i18n('validationESN8')+"')");
+		$("#sigleRecoveryimeiNumber1,#sigleRecoveryimeiNumber2,#sigleRecoveryimeiNumber3,#sigleRecoveryimeiNumber4").attr("oninvalid","InvalidMsg(this,'input','"+$.i18n('validationESN8')+"')");
+
+	}
 }

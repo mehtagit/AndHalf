@@ -1,11 +1,25 @@
+<%@ page import="java.util.Date" %>
 <%
-	response.setHeader("Cache-Control", "no-cache");
+   response.setHeader("Cache-Control", "no-cache");
 	response.setHeader("Cache-Control", "no-store");
 	response.setDateHeader("Expires", 0);
 	response.setHeader("Pragma", "no-cache");
-	/*  session.setMaxInactiveInterval(200); //200 secs
-	 session.setAttribute("usertype", null); */
-	if (session.getAttribute("usertype") != null) {
+	
+    /*   //200 secs
+	 session.setAttribute("usertype", null);  */
+/* 	 session.setMaxInactiveInterval(10); */
+	 int timeout = session.getMaxInactiveInterval();
+	
+	 long accessTime = session.getLastAccessedTime();
+	 long currentTime= new Date().getTime(); 
+	 System.out.println("accessTime========"+(accessTime));
+	 System.out.println("timeout========"+timeout);
+	 long dfd= accessTime +timeout;
+	 System.out.println("currentTime========"+currentTime);
+	 if( currentTime< dfd){
+	/*  response.setHeader("Refresh", timeout + "; URL = ../login");
+	 System.out.println("timeout========"+timeout); 
+	if (session.getAttribute("usertype") != null) { */
 %>
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
@@ -144,7 +158,7 @@
                                                 <select class="browser-default" id = "userPeriod"
                                      onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" 
                                      oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" required>
-                                                    <option value="" disabled selected>Select Period</option>
+                                                    <option value="" selected>Select Period</option>
                                            	</select>
                                             </div>
                                    

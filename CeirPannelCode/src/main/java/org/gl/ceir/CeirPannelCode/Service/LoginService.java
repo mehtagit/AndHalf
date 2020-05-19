@@ -50,7 +50,7 @@ public class LoginService {
 	RegistrationService registerService;
 	
 	@Value ("${sessionLogOutTime}")
-	Integer sessionLogOutTime;
+	int sessionLogOutTime;
 	
 	public  ModelAndView loginPage(){
 		log.info("inside login controller");
@@ -62,6 +62,7 @@ public class LoginService {
 
 	public LoginResponse checkLogin(User user,HttpSession session,HttpServletRequest request) {
 		log.info("check login controller ");
+		log.info("session time from properties file."+sessionLogOutTime);
 		UserHeader header=registerService.getUserHeaders(request);
 		user.setUserAgent(header.getUserAgent());
 		user.setPublicIp(header.getPublicIp());
@@ -89,6 +90,7 @@ public class LoginService {
 				session.setAttribute("language",response.getUserLanguage()); 
 				session.setAttribute("period", response.getPeriod());
 				session.setAttribute("selfRegister", response.getSelfRegister());
+				session.setAttribute("defaultLink", response.getDefaultLink());
 				session.setMaxInactiveInterval(sessionLogOutTime);
 			
 				return response;      

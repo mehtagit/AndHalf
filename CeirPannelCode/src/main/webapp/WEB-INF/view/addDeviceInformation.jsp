@@ -1,11 +1,25 @@
+<%@ page import="java.util.Date" %>
 <%
-	response.setHeader("Cache-Control", "no-cache");
+   response.setHeader("Cache-Control", "no-cache");
 	response.setHeader("Cache-Control", "no-store");
 	response.setDateHeader("Expires", 0);
 	response.setHeader("Pragma", "no-cache");
-	/*  session.setMaxInactiveInterval(200); //200 secs
-	 session.setAttribute("usertype", null); */
-	if (session.getAttribute("usertype") != null) {
+	
+    /*   //200 secs
+	 session.setAttribute("usertype", null);  */
+/* 	 session.setMaxInactiveInterval(10); */
+	 int timeout = session.getMaxInactiveInterval();
+	
+	 long accessTime = session.getLastAccessedTime();
+	 long currentTime= new Date().getTime(); 
+	 System.out.println("accessTime========"+(accessTime));
+	 System.out.println("timeout========"+timeout);
+	 long dfd= accessTime +timeout;
+	 System.out.println("currentTime========"+currentTime);
+	 if( currentTime< dfd){
+	/*  response.setHeader("Refresh", timeout + "; URL = ../login");
+	 System.out.println("timeout========"+timeout); 
+	if (session.getAttribute("usertype") != null) { */
 %>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
@@ -153,7 +167,8 @@ input[type='search'] {
 }
 </style>
 </head>
-<body data-id="12" session-value="${not empty param.NID ? param.NID : 'null'}" data-roleType="${usertype}">
+<body data-id="12" session-value="${not empty param.NID ? param.NID : 'null'}"
+ data-username="${username}" data-userTypeID="${usertypeId}" data-userID="${userid}" data-roleType="${usertype}">
 
 	<!-- START CONTENT -->
 	<section id="content">
@@ -181,10 +196,10 @@ input[type='search'] {
 
 													<div class="col s12 m6">
 														<label for="deviceType1"><spring:message code="select.deviceType" /><span
-															class="star">*</span></label> <select class="browser-default"
+															class="star"></span></label> <select class="browser-default"
 															oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 											                oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-															id="deviceType1" required="required">
+															id="deviceType1">
 															<option value="" disabled selected><spring:message code="select.selectDeviceType" />
 																</option>
 
@@ -215,28 +230,26 @@ input[type='search'] {
 
 													<div class="col s12 m6">
 														<label for="country1"><spring:message code="select.countryBoughtFrom" /><span
-															class="star">*</span></label> <select id="country1"
+															class="star"></span></label> <select id="country1"
 															oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 											        oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 															class="browser-default" class="mySelect"
-															style="padding-left: 0;" required="required">
+															style="padding-left: 0;">
 															<option value="" disabled selected><spring:message code="select.countryBoughtFrom" />
 														</select>
 													</div>
 
 													<div class="input-field col s12 m6"
 														style="margin-top: 28px;">
-														<input type="text" id="serialNumber1" name="serialNumber"
-															required="required" pattern="[A-Za-z0-9]{0,15}"
-															
+														<input type="text" id="serialNumber1" name="serialNumber" pattern="[A-Za-z0-9]{0,15}"
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.15serialNo" />');"
 											        oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15serialNo" />');"
 															title=""
-															maxlength="15"> <label for="serialNumber1"> <spring:message code="input.deviceSerialNumber" /><span class="star">*</span>
+															maxlength="15"> <label for="serialNumber1"> <spring:message code="input.deviceSerialNumber" /><span class="star"></span>
 														</label>
 													</div>
 
-													<div class="col s12 m6">
+													<div class="col s12 m6" id="taxStatusDiv">
 														<label for="taxStatus1"><spring:message code="select.taxPaidStatus" /><span
 															class="star">*</span></label> <select class="browser-default"
 															required="required"
@@ -262,7 +275,7 @@ input[type='search'] {
 														</select>
 													</div>
 
-													<div class="input-field col s12 m6 l6">
+													<div class="input-field col s12 m6 l6" id="priceDiv">
 														<input type="text" name="Price" id="Price1"
 														oninput="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
 											        oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
@@ -310,6 +323,7 @@ input[type='search'] {
 											        oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																
 																	maxlength="16"> <label for="IMEIC1"><spring:message code="title.three" /></label>
+															<p id="errorMsgOnModal" class="deviceErrorTitle" style="margin-top: -136px;margin-left: 173px;"></p>
 															</div>
 
 															<div class="input-field col s12 m6" id="field">

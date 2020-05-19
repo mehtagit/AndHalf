@@ -53,8 +53,8 @@ public class IPLogManagementDatatable {
 	
 	@PostMapping("iPLogManagementData")
 	public ResponseEntity<?> viewAlertRecord(HttpServletRequest request,HttpSession session) {
-		String userType = (String) session.getAttribute("usertype");
-		int userId=	(int) session.getAttribute("userid");
+		//String userType = (String) session.getAttribute("usertype");
+		//int userId=	(int) session.getAttribute("userid");
 		int file=0;
 		// Data set on this List
 		List<List<Object>> finalList=new ArrayList<List<Object>>();
@@ -84,7 +84,7 @@ public class IPLogManagementDatatable {
 				   String username = dataInsideList.getUsername();
 				   String publicIp = dataInsideList.getPublicIp();
 				   String userAgent = dataInsideList.getUserAgent();
-				   String userStatus = (String) session.getAttribute("userStatus");	  
+				   //String userStatus = (String) session.getAttribute("userStatus");	  
 				   //String action = iconState.alertManagementIcons(id);
 				   Object[] finalData={createdOn,username,publicIp,userAgent}; 
 				   List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));

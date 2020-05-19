@@ -1,11 +1,22 @@
+<%@ page import="java.util.Date" %>
 <%
-	response.setHeader("Cache-Control", "no-cache");
+   response.setHeader("Cache-Control", "no-cache");
 	response.setHeader("Cache-Control", "no-store");
 	response.setDateHeader("Expires", 0);
 	response.setHeader("Pragma", "no-cache");
-	/*  session.setMaxInactiveInterval(200); //200 secs
+	
+    /*   //200 secs
 	 session.setAttribute("usertype", null);  */
-	if (session.getAttribute("usertype") != null) {
+/* 	 session.setMaxInactiveInterval(10); */
+	 int timeout = session.getMaxInactiveInterval();
+	
+	 long accessTime = session.getLastAccessedTime();
+	 long currentTime= new Date().getTime(); 
+     long dfd= accessTime +timeout;
+	 if( currentTime< dfd){
+	/*  response.setHeader("Refresh", timeout + "; URL = ../login");
+	 System.out.println("timeout========"+timeout); 
+	if (session.getAttribute("usertype") != null) { */
 %>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
@@ -619,6 +630,7 @@ select {
 																
 																maxlength="16" id="singleStolenimei3"> <label
 																for="singleStolenimei3"> <spring:message code="registration.three" /></label>
+														<p id="errorMsgOnModal" class="deviceErrorTitle"></p>
 														</div>
 
 														<div class="input-field col s12 m6">
@@ -629,8 +641,9 @@ select {
 																
 																maxlength="16" id="singleStolenimei4"> <label
 																for="singleStolenimei4"> <spring:message code="registration.four" /></label>
+														
 														</div>
-
+														
 
 														<div class="col s12 m12" style="margin-top: 30px;">
 															<h5>
