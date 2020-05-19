@@ -121,10 +121,10 @@ public class HistoryServiceImpl {
 		try {
 			int defaultPagesize = 10;
 			pageSize = 100;
-			pageNo = 1;
+			pageNo = 0;
 			List<Notification> content = new ArrayList<>();
 			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
-			Page<Notification> result = new PageImpl<>(content, pageable, defaultPagesize);
+			Page<Notification> result =  null;
 
 			List<NotiLogic> notiLogics = notiLogicRepository.getByUsertypeId(filterRequest.getUserTypeId());
 			logger.info(notiLogics);
@@ -146,9 +146,11 @@ public class HistoryServiceImpl {
 				nsb.with(new SearchCriteria("referTable", "END_USER", SearchOperation.NEGATION, Datatype.STRING));
 
 				pageable = PageRequest.of(pageNo, defaultPagesize, new Sort(Sort.Direction.DESC, "modifiedOn"));
-				return notificationRepository.findAll(nsb.build(), pageable);
+				result = notificationRepository.findAll(nsb.build(), pageable);
 			}else {
 				cherryPickNotification(pageNo, defaultPagesize, notiLogics, filterRequest, content);
+				result = new PageImpl<>(content, pageable, defaultPagesize);
+				logger.info("Final Content in notification : " + content);
 			}
 			
 			return result;
@@ -183,7 +185,7 @@ public class HistoryServiceImpl {
 						logger.warn("noti_logic don't have valid values.[" + notiLogic.getType() + "]");
 					}
 				}else {
-					logger.info("Noti id [" + notification.getFeatureId() + "] is not configured in table noti_logic.");
+					// logger.info("Noti id [" + notification.getFeatureId() + "] is not configured in table noti_logic.");
 					continue;
 				}
 			}
