@@ -11,7 +11,7 @@
 	</parent>
 	<groupId>com.gl.ceir</groupId>
 	<artifactId>config</artifactId>
-	<version>1.0.48</version>
+	<version>1.0.48_atul</version>
 	<name>config</name>
 	<description>Demo project for Spring Boot</description>
 

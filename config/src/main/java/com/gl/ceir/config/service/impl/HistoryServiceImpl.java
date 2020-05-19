@@ -130,14 +130,7 @@ public class HistoryServiceImpl {
 			logger.info(notiLogics);
 
 			NotificationSpecificationBuilder nsb = new NotificationSpecificationBuilder(propertiesReader.dialect);
-
-			/*if("Custom".equalsIgnoreCase(filterRequest.getUserType())) {
-				logger.info("skipping userid in where clause for usertype : " + filterRequest.getUserType());
-				nsb.with(new SearchCriteria("receiverUserType", "Custom", SearchOperation.EQUALITY, Datatype.STRING));
-			}else if("TRC".equalsIgnoreCase(filterRequest.getUserType())){
-				logger.info("skipping userid in where clause for usertype : " + filterRequest.getUserType());
-				nsb.with(new SearchCriteria("receiverUserType", "TRC", SearchOperation.EQUALITY, Datatype.STRING));
-			}*/
+			
 			if(notiLogics.isEmpty() || Objects.isNull(notiLogics)) {
 				logger.info("notiLogics is empty for userType[" + filterRequest.getUserType() + "]");
 				if(Objects.nonNull(filterRequest.getUserId()))
@@ -160,11 +153,17 @@ public class HistoryServiceImpl {
 		}
 	}
 
-	private void cherryPickNotification(int pageNo, int defaultPagesize, List<NotiLogic> notiLogics, FilterRequest filterRequest, List<Notification> content){
+	private void cherryPickNotification(int pageNo, int defaultPagesize, 
+			List<NotiLogic> notiLogics, FilterRequest filterRequest, List<Notification> content){
 
 		Pageable pageable = PageRequest.of(pageNo, 100, new Sort(Sort.Direction.DESC, "modifiedOn"));
-		Page<Notification> tempPage = notificationRepository.findAll(pageable);
+		NotificationSpecificationBuilder nsb = new NotificationSpecificationBuilder(propertiesReader.dialect);
+		nsb.with(new SearchCriteria("referTable", "END_USER", SearchOperation.NEGATION, Datatype.STRING));
+		nsb.with(new SearchCriteria("receiverUserType", filterRequest.getUserType(), SearchOperation.NEGATION, Datatype.STRING));
+		
+		Page<Notification> tempPage = notificationRepository.findAll(nsb.build(), pageable);
 		List<Notification> tempContent = tempPage.getContent();
+		logger.info("tempContent : " + tempContent);
 
 		for(Notification notification : tempContent) {
 			for(NotiLogic notiLogic : notiLogics) {
