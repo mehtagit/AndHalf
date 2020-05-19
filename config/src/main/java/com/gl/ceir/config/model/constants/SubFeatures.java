@@ -22,5 +22,6 @@ public interface SubFeatures {
 	String Check="Check";
 	String Search_NID="Search NID";
 	String Approve="Approve";
+	String Clear="Clear";
 	String Tax_Paid="Tax Paid";
 }

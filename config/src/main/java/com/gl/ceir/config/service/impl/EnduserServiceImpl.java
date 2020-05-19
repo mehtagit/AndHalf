@@ -151,7 +151,7 @@ public class EnduserServiceImpl {
 			auditTrailRepository.save(new AuditTrail(userId, username, 17L,
 					data.getUserType(), 12,Features.REGISTER_DEVICE, SubFeatures.Search_NID, "", "NA"));
 			logger.info("AUDIT : Saved request in audit.");
-			
+
 			EndUserDB endUserDB = endUserDbRepository.getByNid(data.getNid());
 
 			// End user is not registered with CEIR system.
@@ -190,7 +190,7 @@ public class EnduserServiceImpl {
 					endUserDB.getAuditParameters().getUserType(), 12,Features.REGISTER_DEVICE, SubFeatures.REGISTER, "", endUserDB.getTxnId()));
 			logger.info("AUDIT : Saved request in audit.");
 
-			
+
 			List<WebActionDb> webActionDbs = new ArrayList<>();
 
 			// End user is not registered with CEIR system.
@@ -252,7 +252,21 @@ public class EnduserServiceImpl {
 						type=2;
 					}	
 				}
-				if(regularizedService.validateRegularizedDevicesCount(endUserDB.getNid(), endUserDB.getRegularizeDeviceDbs(),type)) {
+				if(endUserDB.getAuditParameters().getUserTypeId()!=7)
+				{	
+					logger.info("if usertype is not custom and type is : "+type);
+					for(RegularizeDeviceDb regularizeDb:endUserDB.getRegularizeDeviceDbs())
+					{
+						if(type==1)
+						{
+							regularizeDb.setTaxPaidStatus(TaxStatus.TAX_NOT_PAID.getCode());
+						}
+						else {
+							regularizeDb.setTaxPaidStatus(TaxStatus.REGULARIZED.getCode());				
+						}
+					}
+				}
+				if(regularizedService.validateRegularizedDevicesCount(endUserDB.getNid(), endUserDB.getRegularizeDeviceDbs(),type,endUserDB.getAuditParameters().getUserTypeId())) {
 					if(commonFunction.hasDuplicateImeiInRequest(endUserDB.getRegularizeDeviceDbs())) {
 						return new GenricResponse(6,GenericMessageTags.DUPLICATE_IMEI_IN_REQUEST.getTag(),GenericMessageTags.DUPLICATE_IMEI_IN_REQUEST.getMessage(), ""); 
 					}
@@ -283,7 +297,7 @@ public class EnduserServiceImpl {
 								logger.info("if usertype is custom and tax status is paid so now this entry going to web action db");
 								webActionDbs.add(new WebActionDb(Features.REGISTER_DEVICE, SubFeatures.Approve, 0, 
 										regularizeDeviceDb.getTxnId()));
-								
+
 							}
 						}
 						webActionDbs.add(new WebActionDb(Features.REGISTER_DEVICE, SubFeatures.REGISTER, 0, 
@@ -875,13 +889,13 @@ public class EnduserServiceImpl {
 						logger.info("this end user don't have any email");
 					}
 				}
-				
+
 				VisaUpdateDb visaOutput=updateVisaRepo.save(visaDb);
 				if(Objects.nonNull(visaOutput)) {
 					if(Objects.nonNull(rawMails) && !rawMails.isEmpty()) {
 						emailUtil.saveNotification(rawMails);	
 					}
-					}
+				}
 				auditTrailRepository.save(new AuditTrail(userId, username, userTypeId,
 						ceirActionRequest.getUserType(), 43,Features.UPDATE_VISA, sufeature, "", txnId));
 
@@ -979,7 +993,7 @@ public class EnduserServiceImpl {
 							if(Objects.nonNull(rawMails) && !rawMails.isEmpty()) {
 								emailUtil.saveNotification(rawMails);	
 							}
-							}
+						}
 						txnId = endUserDB.getTxnId();
 
 					}
@@ -1023,7 +1037,7 @@ public class EnduserServiceImpl {
 		if(Objects.nonNull(filterRequest.getTxnId()) && !filterRequest.getTxnId().isEmpty()) {
 			uPSB.with(new SearchCriteria("txnId", filterRequest.getTxnId(), SearchOperation.EQUALITY, Datatype.STRING));
 		}
-		
+
 		if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
 			uPSB.orSearch(new SearchCriteria("visaNumber", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 			uPSB.orSearch(new SearchCriteria("visaExpiryDate", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
@@ -1032,7 +1046,7 @@ public class EnduserServiceImpl {
 			uPSB.orSearch(new SearchCriteria("txnId", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 
 		}
-		
+
 		return uPSB;
 	}
 
@@ -1178,7 +1192,7 @@ public class EnduserServiceImpl {
 			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), filterRequest.getUserName(), 8L,
 					filterRequest.getUserType(), 43,Features.UPDATE_VISA, SubFeatures.VIEW, "","NA"));
 
-			
+
 			if(Objects.nonNull(endUserDB)) {
 				VisaUpdateDb visaUpdateDb=updateVisaRepo.findByUserId(filterRequest.getId());
 				List<RegularizeDeviceDb> regulaizedList=new ArrayList<RegularizeDeviceDb>();

@@ -362,7 +362,6 @@ public class RegularizedDeviceServiceImpl {
 			String txnId = null;
 			List<WebActionDb> webActionDbs = new ArrayList<>();
 			String nid = endUserDB.getNid();
-
 			if(Objects.isNull(endUserDB.getNid())) {
 				logger.info(GenericMessageTags.NULL_NID);
 				return new GenricResponse(1, GenericMessageTags.NULL_NID.getTag(), 
@@ -383,10 +382,22 @@ public class RegularizedDeviceServiceImpl {
 					type=2;
 				}	
 			}
-			
+			if(endUserDB.getAuditParameters().getUserTypeId()!=7)
+			{	
+				for(RegularizeDeviceDb regularizeDb:endUserDB.getRegularizeDeviceDbs())
+				{
+					if(type==1)
+					{
+						regularizeDb.setTaxPaidStatus(TaxStatus.TAX_NOT_PAID.getCode());
+					}
+					else {
+						regularizeDb.setTaxPaidStatus(TaxStatus.REGULARIZED.getCode());				
+					}
+				}
+			}
 			
 			if(!endUserDB.getRegularizeDeviceDbs().isEmpty()) {
-				if(validateRegularizedDevicesCount(nid, endUserDB.getRegularizeDeviceDbs(),type)) {
+				if(validateRegularizedDevicesCount(nid, endUserDB.getRegularizeDeviceDbs(),type,endUserDB.getAuditParameters().getUserTypeId())) {
 					for(RegularizeDeviceDb regularizeDeviceDb : endUserDB.getRegularizeDeviceDbs()) {
 						// TODO     responsse 5
 						if(Objects.isNull(endUserDB2)) {
@@ -520,7 +531,7 @@ public class RegularizedDeviceServiceImpl {
 				RegularizeDeviceDb output=regularizedDeviceDbRepository.save(userCustomDbDetails);
                 if(Objects.nonNull(output))
                 {
-					WebActionDb webAction=new WebActionDb(Features.REGISTER_DEVICE,SubFeatures.Approve, 0, 
+					WebActionDb webAction=new WebActionDb(Features.REGISTER_DEVICE,SubFeatures.Clear, 0, 
 							regularizeDeviceDb.getTxnId());
 					webActionDbRepository.save(webAction);
                 }
@@ -863,10 +874,10 @@ if(Objects.nonNull(regularizeOutput))
 		}
 	}
 
-	public boolean validateRegularizedDevicesCount(String nid, List<RegularizeDeviceDb> regularizeDeviceDbs,Integer type) {
+	public boolean validateRegularizedDevicesCount(String nid, List<RegularizeDeviceDb> regularizeDeviceDbs,Integer type,long usertypeId) {
 		try {
 			Count count = (Count) getCountOfRegularizedDevicesByNid(nid, type).getData();
-			return validateRegularizedDevicesCount(count, regularizeDeviceDbs);
+			return validateRegularizedDevicesCount(count, regularizeDeviceDbs,usertypeId);
 		}catch (ClassCastException e) {
 			return Boolean.FALSE;
 		}catch (Exception e) {
@@ -875,13 +886,26 @@ if(Objects.nonNull(regularizeOutput))
 		}
 	}
 
-	private boolean validateRegularizedDevicesCount(Count count, List<RegularizeDeviceDb> regularizeDeviceDbs) {
+	private boolean validateRegularizedDevicesCount(Count count, List<RegularizeDeviceDb> regularizeDeviceDbs,long userypeId) {
 		try {
 			Long regularizedDeviceCount = regularizedDevicesCountByStatus(regularizeDeviceDbs, TaxStatus.REGULARIZED.getCode());
 			if(count.getAllowed() >= regularizedDeviceCount + count.getCurrent()) {
 				return Boolean.TRUE;
 			}else {
-				return Boolean.FALSE;
+                if(userypeId!=7)
+                {
+					logger.info("if regularize device limit increase so tax value set not paid");
+                	for(RegularizeDeviceDb regularize:regularizeDeviceDbs)
+                	{
+                		regularize.setTaxPaidStatus(TaxStatus.TAX_NOT_PAID.getCode());
+                	}
+                	return Boolean.TRUE;
+                }
+                else
+                {
+                	return Boolean.FALSE;
+                }
+				
 			}
 		}catch (Exception e) {
 			logger.error(e.getMessage(), e);

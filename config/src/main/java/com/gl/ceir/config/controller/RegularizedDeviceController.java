@@ -72,7 +72,8 @@ public class RegularizedDeviceController {
 	@ApiOperation(value = "Register End User Device Info ", response = GenricResponse.class)
 	@PostMapping("/end-user-device-info")
 	public GenricResponse saveEndUserInfo(@RequestBody EndUserDB endUserDB) {
-		logger.info("Custom registeration request= " + endUserDB);
+		logger.info(" register device request end user data= " + endUserDB);
+		logger.info("regularize data= " + endUserDB);
 		GenricResponse genricResponse = regularizedDeviceServiceImpl.saveDevices(endUserDB);
 		//logger.info("Resonse send = " + genricResponse);
 		return genricResponse;
