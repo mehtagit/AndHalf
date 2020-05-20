@@ -139,6 +139,9 @@ public class StockServiceImpl {
 
 	@Autowired
 	AlertServiceImpl alertServiceImpl;
+	
+	@Autowired
+	UserStaticServiceImpl userStaticServiceImpl;
 
 	public GenricResponse uploadStock(StockMgmt stockMgmt) {
 		boolean isStockAssignRequest = Boolean.FALSE;
@@ -842,6 +845,7 @@ public class StockServiceImpl {
 
 			}else if("CEIRSYSTEM".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())){
 				String mailTag = null;
+				String adminMailTag = null;
 				String action = null;
 				String txnId = null;
 				String receiverUserType = stockMgmt.getUserType();
@@ -854,7 +858,7 @@ public class StockServiceImpl {
 				if(consignmentUpdateRequest.getAction() == 0) {
 					action = SubFeatures.ACCEPT;
 					mailTag = "STOCK_PROCESS_SUCCESS_TO_USER_MAIL"; 
-
+					adminMailTag = "STOCK_PROCESS_SUCCESS_TO_CEIR_MAIL";
 					txnId = stockMgmt.getTxnId();
 
 					placeholderMap.put("<First name>", firstName);
@@ -896,7 +900,22 @@ public class StockServiceImpl {
 								stockMgmt.getRoleType(),
 								receiverUserType,
 								"Users");
+
 						logger.info("Notfication have been saved.");
+						
+						if(consignmentUpdateRequest.getAction() == 0) {
+							emailUtil.saveNotification(adminMailTag, 
+									userStaticServiceImpl.getCeirAdmin().getUserProfile(), 
+									consignmentUpdateRequest.getFeatureId(),
+									Features.STOCK,
+									action,
+									consignmentUpdateRequest.getTxnId(),
+									txnId,
+									placeholderMap,
+									stockMgmt.getRoleType(),
+									receiverUserType,
+									"Users");
+						}
 					}
 
 					logger.debug(consignmentUpdateRequest);
