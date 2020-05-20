@@ -10,4 +10,5 @@ public interface StaticRuleEntityRepository extends JpaRepository<StaticRuleEngi
 
 	public StaticRuleEngineMapping getById(long id);
 
+	
 }
