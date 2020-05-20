@@ -126,7 +126,7 @@ public class DeviceTaxReminder extends BaseService{
 					List<RawMail> rawMails = new ArrayList<>(1);
 					Map<String, String> placeholderMap = new HashMap<>();
 					
-					rawMails.add(new RawMail(channel, 
+					rawMails.add(new RawMail("EMAIL", 
 							"REMINDER_DEVICE_TAX_NOT_PAID", 
 							endUserDB.getId(), 
 							0L, // Feature Id 

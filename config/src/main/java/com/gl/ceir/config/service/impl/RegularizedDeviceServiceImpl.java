@@ -588,18 +588,19 @@ public class RegularizedDeviceServiceImpl {
 			if(Objects.isNull(data.getImei())) {
 				throw new IllegalArgumentException();
 			}
-			RegularizeDeviceDb regularizeDeviceDb=new RegularizeDeviceDb();
+			RegularizeDeviceDb regularizeDeviceDb = new RegularizeDeviceDb();
 			try {
-				 regularizeDeviceDb = regularizedDeviceDbRepository.getByFirstImei(data.getImei());				
-			}
-			catch(Exception e) {
-				logger.info(e.toString());
-				return null;
+				 regularizeDeviceDb = regularizedDeviceDbRepository.getByFirstImei(data.getImei());	
+				 
+			}catch(Exception e) {
+				logger.info("throwing : ResourceServicesException : " + e.getMessage());
+				// return new GenricResponse(5,GenericMessageTags.DUPLICATE_IMEI.getTag(),GenericMessageTags.DUPLICATE_IMEI.getMessage(), "");
+				throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 			}
 
 			if(Objects.nonNull(regularizeDeviceDb)) {
 				EndUserDB endUserDB = endUserDbRepository.getByNid(regularizeDeviceDb.getNid());
-				//EndUserDB endUserDB =regularizeDeviceDb.getEndUserDB();
+				
 				endUserDB.setRegularizeDeviceDbs(new ArrayList<>(1));
 				if(Objects.nonNull(endUserDB.getDocType())) {
 					endUserDB.setDocTypeInterp(interpSetter.setTagId(Tags.DOC_TYPE, endUserDB.getDocType()));	
