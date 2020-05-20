@@ -15,32 +15,37 @@ import com.gl.ceir.config.repository.RegularizedDeviceDbRepository;
 
 @Component
 public class CommonFunction {
-	
+
 	private static final Logger logger = LogManager.getLogger(RegularizedDeviceController.class);
 	@Autowired
 	RegularizedDeviceDbRepository regularizedDeviceDbRepository;
-	
-	
+
+
 	public Boolean checkAllImeiOfRegularizedDevice(RegularizeDeviceDb regularizeDeviceDb) {
-		if(Objects.nonNull(regularizeDeviceDb.getFirstImei()) && Objects.isNull(regularizedDeviceDbRepository.getByImei(regularizeDeviceDb.getFirstImei()))) {
+		try {
+			if(Objects.nonNull(regularizeDeviceDb.getFirstImei()) && Objects.isNull(regularizedDeviceDbRepository.getByImei(regularizeDeviceDb.getFirstImei()))) {
+				return Boolean.FALSE;
+			}
+			if(Objects.nonNull(regularizeDeviceDb.getSecondImei()) && Objects.isNull(regularizedDeviceDbRepository.getByImei(regularizeDeviceDb.getSecondImei()))) {
+				return Boolean.FALSE;
+			}
+			if(Objects.nonNull(regularizeDeviceDb.getThirdImei()) && Objects.isNull(regularizedDeviceDbRepository.getByImei(regularizeDeviceDb.getThirdImei()))) {
+				return Boolean.FALSE;
+			}
+			if(Objects.nonNull(regularizeDeviceDb.getFourthImei()) && Objects.isNull(regularizedDeviceDbRepository.getByImei(regularizeDeviceDb.getFourthImei()))) {
+				return Boolean.FALSE;
+			}
+			return Boolean.TRUE;
+		}catch (Exception e) {
+			// TODO: handle exception
 			return Boolean.FALSE;
 		}
-		if(Objects.nonNull(regularizeDeviceDb.getSecondImei()) && Objects.isNull(regularizedDeviceDbRepository.getByImei(regularizeDeviceDb.getSecondImei()))) {
-			return Boolean.FALSE;
-		}
-		if(Objects.nonNull(regularizeDeviceDb.getThirdImei()) && Objects.isNull(regularizedDeviceDbRepository.getByImei(regularizeDeviceDb.getThirdImei()))) {
-			return Boolean.FALSE;
-		}
-		if(Objects.nonNull(regularizeDeviceDb.getFourthImei()) && Objects.isNull(regularizedDeviceDbRepository.getByImei(regularizeDeviceDb.getFourthImei()))) {
-			return Boolean.FALSE;
-		}
-		return Boolean.TRUE;
 	}
-	
+
 	public Boolean hasDuplicateImeiInRequest(List<RegularizeDeviceDb> regularizeDeviceDbs) {
 		logger.info("regularized device list check for duplicate imei"+regularizeDeviceDbs);
 		HashSet<String> set = new HashSet<>();
-		
+
 		for(RegularizeDeviceDb device : regularizeDeviceDbs) {
 			if(device.getFirstImei()!=null && !device.getFirstImei().isEmpty()) {
 				if(!set.add(device.getFirstImei())) {
@@ -65,7 +70,7 @@ public class CommonFunction {
 		}
 		return Boolean.FALSE;
 	}
-	
+
 	public int getFeatureIdByTxnId(String txnId) {
 		if(Objects.isNull(txnId)) {
 			return 0;
