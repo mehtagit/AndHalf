@@ -32,8 +32,8 @@ public class StaticRuleEngineMapping implements Serializable {
 	private String feature;
 
 	@NotNull
-	@Enumerated(EnumType.STRING)
-	private RulesNames name;
+	/*@Enumerated(EnumType.STRING)*/
+	private String name;
 	
 	@NotNull
 	@Column(length = 20)
@@ -55,11 +55,13 @@ public class StaticRuleEngineMapping implements Serializable {
 		this.id = id;
 	}
 
-	public RulesNames getName() {
+  
+
+	public String getName() {
 		return name;
 	}
 
-	public void setName(RulesNames name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 

@@ -8,4 +8,7 @@ import com.gl.ceir.config.model.StaticRuleEngineMapping;
 @Repository
 public interface StaticRuleEntityRepository extends JpaRepository<StaticRuleEngineMapping, Long>{
 
+	public StaticRuleEngineMapping getById(long id);
+
+	
 }
