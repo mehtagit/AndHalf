@@ -66,11 +66,7 @@ $('.navData li').on('click', function() {
 
 
 function changeLanguage(lang){
-	var token = $("meta[name='_csrf']").attr("content");
-	var header = $("meta[name='_csrf_header']").attr("content");
 	$.ajax({
-		headers:
-        { 'X-CSRF-TOKEN': token },
 		type : 'POST',
 		url :'./changeLanguage/'+lang,
 		contentType :"application/json",

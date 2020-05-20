@@ -908,7 +908,7 @@ function fileTypeValueChanges(formType) {
 			});
 
 		}
-		else if(fileSize>='2000'){
+		else if(fileSize>='10000'){
 			$('#fileFormateModal').openModal({
 				dismissible:false
 			});
@@ -935,7 +935,7 @@ function fileTypeValueChanges(formType) {
 			});
 
 		}
-		else if(fileSize>='2000'){
+		else if(fileSize>='10000'){
 			$('#fileFormateModal').openModal({
 				dismissible:false
 			});

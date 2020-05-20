@@ -60,6 +60,7 @@ function save(){
 		contentType : 'application/json; charset=utf-8',
 		type : 'POST',
 		success: function (data, textStatus, jqXHR) {
+			$("#consignmentSubbmitButton").prop('disabled', true);
 			$("#successModal").openModal({
 				dismissible:false
 			});

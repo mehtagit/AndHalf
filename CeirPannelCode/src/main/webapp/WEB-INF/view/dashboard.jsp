@@ -41,13 +41,6 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta content="" name="description" />
 <meta content="" name="author" />
-
-<!-- Security Tags -->
-<meta name="_csrf" content="${_csrf.token}"/>
-<!-- default header name is X-CSRF-TOKEN -->
-<meta name="_csrf_header" content="${_csrf.headerName}"/>
-<!-- Security Tags -->
-
 <!-- CORE CSS-->
 <link href="${context}/resources/css/materialize.css" type="text/css"
 	rel="stylesheet" media="screen,projection">

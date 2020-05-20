@@ -102,6 +102,7 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}"
 
 <section id="content">
 <!--start container-->
+<div id="initialloader"></div>
 <div class="container">
 <div class="section">
 <div class="row">
@@ -358,7 +359,8 @@ $.i18n().load( {
 
 
      function saveGrievance() {
-				var raisedBy;
+    	 $('div#initialloader').fadeIn('fast');
+    	 		var raisedBy;
 				var name;
 				var userId;
 				
@@ -481,6 +483,7 @@ $.i18n().load( {
 					async : false,
 					/*	method: 'POST',*/
 					success : function(data, textStatus, jqXHR) {
+						
 						$("#saveGrievancesubmitButton").prop('disabled', true);
 						var x = data;
 						var y = JSON.parse(x);

@@ -62,6 +62,7 @@ var featureId = 6;
 			//**************************************************Grievance table**********************************************
 
 			function DataTable(Url,dataUrl){
+				$('div#initialloader').fadeIn('fast');
 				var txn= (txnIdValue == 'null' && transactionIDValue == undefined)? $('#grievanceID').val() : transactionIDValue;
 	
 				var grievancePageSource =localStorage.getItem("grievancePageSource");

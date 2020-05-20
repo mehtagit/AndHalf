@@ -38,11 +38,6 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta content="" name="description" />
 <meta content="" name="author" />
-<!-- Security Tags -->
-<meta name="_csrf" content="${_csrf.token}"/>
-<!-- default header name is X-CSRF-TOKEN -->
-<meta name="_csrf_header" content="${_csrf.headerName}"/>
-<!-- Security Tags -->
 
 <script type="text/javascript"
 	src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
@@ -168,6 +163,7 @@ input#quantity {
 
 		<!-- START CONTENT -->
 		<section id="content">
+		<div id="initialloader"></div>
 			<!--start container-->
 			<div class="container">
 				<div class="section">
@@ -370,9 +366,8 @@ input#quantity {
 			</div>
 			<div class="row">
 				<div class="input-field col s12 center">
-					<form action="${context}/Consignment/viewConsignment" 
+					<form action="${context}/Consignment/viewConsignment"
 						id="closeOkPop" method="POST">
-						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 						<a onclick="closeConfirmation()" class="btn"><spring:message code="modal.ok" /></a>
 					</form>
 				</div>

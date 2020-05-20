@@ -43,11 +43,6 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta content="" name="description" />
 <meta content="" name="author" />
-<!-- Security Tags -->
-<meta name="_csrf" content="${_csrf.token}"/>
-<!-- default header name is X-CSRF-TOKEN -->
-<meta name="_csrf_header" content="${_csrf.headerName}"/>
-<!-- Security Tags -->
 
 <script type="text/javascript"
 	src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
@@ -165,7 +160,7 @@ button.modal-action.modal-close.waves-effect.waves-green.btn-flat.right {
 
 	<!--viewModal Modal start   -->
 
-	<div id="viewModal" class="modal-form" style="overflow-y: hidden;">
+	<div id="viewModal" class="modal-form" >
 		<h6 class="modal-header">
 			<spring:message code="modal.header.viewConsignment" />
 		</h6>

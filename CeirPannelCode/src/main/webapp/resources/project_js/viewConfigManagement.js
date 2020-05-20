@@ -29,6 +29,7 @@ function configManagementDatatable(){
 			"userType":$("body").attr("data-roleType"),
 			"username" : $("body").attr("data-selected-username")
 	}
+	 
 	
 	$.ajax({
 		url: 'headers?type=adminConfigMessage',
@@ -62,6 +63,7 @@ function configManagementDatatable(){
 		        ]
 			});
 			
+		   
 			$('div#initialloader').delay(300).fadeOut('slow');
 			$('.dataTables_filter input')
 		       .off().on('keyup', function(event) {
@@ -78,6 +80,8 @@ function configManagementDatatable(){
 			console.log("error in ajax");
 		}
 	});
+	
+	
 }
 
 
@@ -282,9 +286,7 @@ setTimeout(function(){$('#confirmedUpdatedSystem').openModal({
 }
 
 
-function exportData()
-{
-	alert("called")	
+function exportData(){
 	var roleType = $("body").attr("data-roleType");
 	var currentRoleType = $("body").attr("data-stolenselected-roleType");
 	var table = $('#configLibraryTable').DataTable();
@@ -297,13 +299,14 @@ function exportData()
 			"startDate":$('#startDate').val(),
 			"tag":$('#parametername').val(),
 			"type" : parseInt($('#type').val()),
-			"pageNo":parseInt(pageNo),
-			"pageSize":parseInt(pageSize),
 			"userId":parseInt(userId),
 			"featureId":parseInt(featureId),
 			"userTypeId": parseInt($("body").attr("data-userTypeID")),
 			"userType":$("body").attr("data-roleType"),
-			"username" : $("body").attr("data-selected-username")
+			"username" : $("body").attr("data-selected-username"),
+			"pageNo":parseInt(pageNo),
+			"pageSize":parseInt(pageSize)
+			
 	}
 	console.log(JSON.stringify(filterRequest))
 	$.ajax({

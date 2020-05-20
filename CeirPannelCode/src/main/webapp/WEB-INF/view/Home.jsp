@@ -17,12 +17,6 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
 <meta content="" name="description" />
 <meta content="" name="author" />
 
-<!-- Security Tags -->
-<meta name="_csrf" content="${_csrf.token}"/>
-<!-- default header name is X-CSRF-TOKEN -->
-<meta name="_csrf_header" content="${_csrf.headerName}"/>
-<!-- Security Tags -->
-
   <!-- CORE CSS-->
   <link href="${context}/resources/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection">
   <link href="${context}/resources/css/style.css" type="text/css" rel="stylesheet" media="screen,projection">

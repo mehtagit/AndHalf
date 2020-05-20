@@ -209,7 +209,6 @@ public class ImporterManageTypeAdmin {
 			return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK);
 
 		} catch (Exception e) {
-
 			datatableResponseModel.setRecordsTotal(null);
 			datatableResponseModel.setRecordsFiltered(null);
 			datatableResponseModel.setData(Collections.emptyList());

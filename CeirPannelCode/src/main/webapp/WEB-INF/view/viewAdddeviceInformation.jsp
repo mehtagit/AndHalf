@@ -539,7 +539,7 @@ input[type='search'] {
 
 													<div class="col s12 m6">
 														<label for="multipleSimStatus1"><spring:message code="select.multiSimStatus" /><span class="star"></span>
-														</label> <input type="text" value="${viewInformation.deviceIdTypeInterp}" readonly="readonly">
+														</label> <input type="text" value="${viewInformation.multiSimStatus}" readonly="readonly">
 													</div>
 
 													<div class="col s12 m6">

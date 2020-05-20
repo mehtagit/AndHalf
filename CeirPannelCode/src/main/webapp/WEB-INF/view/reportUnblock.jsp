@@ -557,7 +557,7 @@ src="${context}/resources/project_js/enterKey.js"></script>
 					});
 
 				}
-				else if(fileSize>='2000'){
+				else if(fileSize>='10000'){
 					$('#fileFormateModal').openModal({
 						dismissible:false
 					});

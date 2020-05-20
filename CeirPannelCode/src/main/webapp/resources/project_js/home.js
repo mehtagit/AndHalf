@@ -16,12 +16,6 @@
 
 	$(document).ready(function(){
 		$('div#initialloader').fadeIn('fast');
-		var token = $("meta[name='_csrf']").attr("content");
-		var header = $("meta[name='_csrf_header']").attr("content");
-		$.ajaxSetup({
-	        headers:
-	        { 'X-CSRF-TOKEN': token }
-	    	});
 		var url;
 		$.ajax({
 			url: './dashboard/box?userTypeId='+userTypeId,
@@ -40,7 +34,7 @@
 					}
 					
 					var requestType=data[i].featureId == 5 ? "0,1" : data[i].featureId == 7 ? "2,3" : "0"; 
-				    	
+					
 					$.ajax({
 						url: './'+url[0]+'?featureId='+data[i].featureId+'&userId='+userId+'&userTypeId='+userTypeId+'&requestType='+requestType+'&userType='+userType,
 						'async': false,
@@ -80,12 +74,7 @@
 		if(sessionLang=='km'){
 			var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
 		}
-		var token = $("meta[name='_csrf']").attr("content");
-		var header = $("meta[name='_csrf_header']").attr("content");
-		$.ajaxSetup({
-	        headers:
-	        { 'X-CSRF-TOKEN': token }
-	    	});
+		
 		$.ajax({
 			url: 'headers?type=dashboardNotification&lang='+sessionLang,
 			type: 'POST',

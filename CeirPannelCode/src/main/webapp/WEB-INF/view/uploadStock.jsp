@@ -44,11 +44,6 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta content="" name="description" />
 <meta content="" name="author" />
-<!-- Security Tags -->
-<meta name="_csrf" content="${_csrf.token}"/>
-<!-- default header name is X-CSRF-TOKEN -->
-<meta name="_csrf_header" content="${_csrf.headerName}"/>
-<!-- Security Tags -->
 
 <script type="text/javascript"
 	src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
@@ -637,7 +632,7 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 
 
 function uploadStock(){
-	
+	$('div#initialloader').fadeIn('fast');
 	 var supplierId=$('#supplierId').val();
 	 var supplierName=$('#supplierName').val();
 	 var invoiceNumber=$('#invoiceNumber').val();
@@ -652,13 +647,7 @@ function uploadStock(){
 	 	formData.append('invoiceNumber',invoiceNumber);
 	 	formData.append('quantity',quantity);
 		formData.append('deviceQuantity',deviceQuantity);
-		var token = $("meta[name='_csrf']").attr("content");
-		var header = $("meta[name='_csrf_header']").attr("content");
-		$.ajaxSetup({
-	        headers:
-	        { 'X-CSRF-TOKEN': token }
-	    	});
-
+	 	
 	 $.ajax({
 		url: './uploadStock',
 		type: 'POST',
@@ -666,7 +655,7 @@ function uploadStock(){
 		processData: false,
 		contentType: false,
 		success: function (data, textStatus, jqXHR) {
-			
+			$('div#initialloader').delay(300).fadeOut('slow');
 			 console.log(data);
 			 $("#stockSubmitButton").prop('disabled', true);
 			   $('#submitStock').openModal({
@@ -756,7 +745,7 @@ function fileTypeValueChanges(dd, ddd) {
 	    	   dismissible:false
 	       });
 		}
-	else if(fileSize>='2000'){
+	else if(fileSize>='10000'){
 		 $('#fileFormateModal').openModal({
 	    	   dismissible:false
 	       });
@@ -801,13 +790,6 @@ function assigneeTable(URL,dataUrl){
 	if(lang=='km'){
 		var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
 	}
-   var token = $("meta[name='_csrf']").attr("content");
-	var header = $("meta[name='_csrf_header']").attr("content");
-	$.ajaxSetup({
-       headers:
-       { 'X-CSRF-TOKEN': token }
-   	});
-
 	$.ajax({
 		url: URL,
 		type: 'POST',
