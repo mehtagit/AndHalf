@@ -78,6 +78,10 @@ public class EndUserDB   {
 	private Integer docType;
 	@Transient
 	private String docTypeInterp;
+	
+	@Transient
+	private String documentInterp;
+	
 
 	@NotAudited
 	@OneToMany(mappedBy = "endUserDB",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
@@ -221,7 +225,12 @@ public class EndUserDB   {
 		this.phoneNo = phoneNo;
 	}
 	
-	
+	public String getDocumentInterp() {
+		return documentInterp;
+	}
+	public void setDocumentInterp(String documentInterp) {
+		this.documentInterp = documentInterp;
+	}
 	public AllRequest getAuditParameters() {
 		return auditParameters;
 	}
@@ -390,6 +399,8 @@ public class EndUserDB   {
 		builder.append(docType);
 		builder.append(", docTypeInterp=");
 		builder.append(docTypeInterp);
+		builder.append(", documentInterp=");
+		builder.append(documentInterp);
 		builder.append(", nationality=");
 		builder.append(nationality);
 		builder.append(", onVisa=");

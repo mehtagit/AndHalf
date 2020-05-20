@@ -40,6 +40,7 @@ import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.PolicyConfigurationDb;
 import com.gl.ceir.config.model.RawMail;
 import com.gl.ceir.config.model.RegularizeDeviceDb;
+import com.gl.ceir.config.model.RegularizeDeviceView;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.StateMgmtDb;
 import com.gl.ceir.config.model.SystemConfigListDb;
@@ -48,6 +49,7 @@ import com.gl.ceir.config.model.User;
 import com.gl.ceir.config.model.UserProfile;
 import com.gl.ceir.config.model.VisaDb;
 import com.gl.ceir.config.model.WebActionDb;
+import com.gl.ceir.config.model.constants.ConsignmentStatus;
 import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.Features;
 import com.gl.ceir.config.model.constants.GenericMessageTags;
@@ -227,7 +229,7 @@ public class RegularizedDeviceServiceImpl {
 					filterRequest.getUserType(), 
 					12, Features.REGISTER_DEVICE, 
 					SubFeatures.VIEW_ALL, 
-					"", "NA");
+					"", "NA",filterRequest.getUserType());
 			auditTrailRepository.save(auditTrail);
 			logger.info("AUDIT : View in audit_trail. " + auditTrail);
 			return page;
@@ -321,7 +323,7 @@ public class RegularizedDeviceServiceImpl {
 					filterRequest.getUserType(), 
 					12, Features.REGISTER_DEVICE, 
 					SubFeatures.EXPORT, 
-					"", "NA");
+					"", "NA",filterRequest.getUserType());
 			auditTrailRepository.save(auditTrail);
 			logger.info("AUDIT : export in audit_trail. ");
 
@@ -356,7 +358,7 @@ public class RegularizedDeviceServiceImpl {
 			logger.info("transaction id:"+transactionId);
 			auditTrailRepository.save(new AuditTrail(userId, username, 17L,
 					endUserDB.getAuditParameters().getUserType(), 12,Features.REGISTER_DEVICE,
-					SubFeatures.REGISTER, "",transactionId));
+					SubFeatures.Add_Device, "",transactionId,endUserDB.getAuditParameters().getUserType()));
 			logger.info("AUDIT : Saved request in audit.");
 
 			String txnId = null;
@@ -439,12 +441,12 @@ public class RegularizedDeviceServiceImpl {
 							if(regularizeDeviceDb.getTaxPaidStatus()==TaxStatus.TAX_PAID.getCode())
 							{
 								logger.info("if usertype is custom and tax status is paid so now this entry going to web action db");
-								webActionDbs.add(new WebActionDb(Features.REGISTER_DEVICE, SubFeatures.Approve, 0, 
+								webActionDbs.add(new WebActionDb(Features.REGISTER_DEVICE, SubFeatures.Clear, 0, 
 										regularizeDeviceDb.getTxnId()));
 							}
 						}
 						// Add in web action list.
-						webActionDbs.add(new WebActionDb(Features.REGISTER_DEVICE, SubFeatures.REGISTER, 0, 
+						webActionDbs.add(new WebActionDb(Features.REGISTER_DEVICE, SubFeatures.Add_Device, 0, 
 								regularizeDeviceDb.getTxnId()));
 					}
 
@@ -517,7 +519,7 @@ public class RegularizedDeviceServiceImpl {
             logger.info("txn_id is : "+regularizeDeviceDb.getTxnId());
 			AuditTrail auditTrail = new AuditTrail(audit.getUserId(), audit.getUsername(), audit.getUserTypeId(), 
 					audit.getUserType(), 12, Features.REGISTER_DEVICE, 
-					SubFeatures.Tax_Paid, "",regularizeDeviceDb.getTxnId());
+					SubFeatures.Tax_Paid, "",regularizeDeviceDb.getTxnId(),audit.getUserType());
 			auditTrailRepository.save(auditTrail);
 			logger.info("AUDIT : update in audit_trail. " + auditTrail);
 
@@ -571,7 +573,7 @@ public class RegularizedDeviceServiceImpl {
 			throw new ResourceServicesException("Custom Service", e.getMessage());}
 	}
 
-	public RegularizeDeviceDb viewDeviceInfoByImei1(AllRequest data) {
+	public RegularizeDeviceDb viewDeviceInfoByImei1(RegularizeDeviceView data) {
 		try {
 			logger.info("Going to get deviceInfo Info for imei : " + data.getImei());
 			String username="";
@@ -581,7 +583,7 @@ public class RegularizedDeviceServiceImpl {
 				userId=data.getUserId();
 			}
 			auditTrailRepository.save(new AuditTrail(userId, username, 17L,
-					data.getUserType(), 12,Features.REGISTER_DEVICE, SubFeatures.VIEW, "", "NA"));
+					data.getUserType(), 12,Features.REGISTER_DEVICE, SubFeatures.VIEW, "",data.getTxnId(),data.getUserType()));
 			logger.info("AUDIT : Saved request in audit.");
 
 			
@@ -603,6 +605,7 @@ public class RegularizedDeviceServiceImpl {
 				endUserDB.setRegularizeDeviceDbs(new ArrayList<>(1));
 				if(Objects.nonNull(endUserDB.getDocType())) {
 					endUserDB.setDocTypeInterp(interpSetter.setTagId(Tags.DOC_TYPE, endUserDB.getDocType()));	
+					endUserDB.setDocumentInterp(interpSetter.setConfigInterp(Tags.DOC_TYPE, endUserDB.getDocType()));	
 				}
 				if(Objects.nonNull(endUserDB.getVisaDb())) {
 					List<VisaDb> visaList=new ArrayList<VisaDb>();
@@ -627,8 +630,9 @@ public class RegularizedDeviceServiceImpl {
 	}
 
 	@Transactional
-	public GenricResponse deleteCustomInfo(AllRequest data) {
+	public GenricResponse deleteCustomInfo(RegularizeDeviceView data) {
 		try {
+			logger.info("inside delete regularize service");
 			String username="";
 			long userId=0;
 			if(data.getUserTypeId()!=17) {
@@ -636,7 +640,7 @@ public class RegularizedDeviceServiceImpl {
 				userId=data.getUserId();
 			}
 			auditTrailRepository.save(new AuditTrail(userId, username, 17L,
-					data.getUserType(), 12,Features.REGISTER_DEVICE, SubFeatures.DELETE, "", "NA"));
+					data.getUserType(), 12,Features.REGISTER_DEVICE, SubFeatures.DELETE, "", data.getTxnId(),data.getUserType()));
 			logger.info("AUDIT : Saved request in audit.");
 
 			RegularizeDeviceDb regularizeDeviceDb = regularizedDeviceDbRepository.getByFirstImei(data.getImei());
@@ -756,9 +760,13 @@ public class RegularizedDeviceServiceImpl {
 				if(ceirActionRequest.getAction() == 0) {
 				    for(RegularizeDeviceDb regularizeData:regularizeList)
 				    {
-				    	regularizeData.setStatus(RegularizeDeviceStatus.PENDING_APPROVAL_FROM_CEIR_ADMIN.getCode());
+				    	if(regularizeData.getStatus() == RegularizeDeviceStatus.New.getCode()) {
+				    		regularizeData.setStatus(RegularizeDeviceStatus.Processing.getCode());
+						}else {
+							regularizeData.setStatus(RegularizeDeviceStatus.PENDING_APPROVAL_FROM_CEIR_ADMIN.getCode());
+						}
 				    }
-					regularizeDeviceDb.setStatus(RegularizeDeviceStatus.PENDING_APPROVAL_FROM_CEIR_ADMIN.getCode());
+					regularizeDeviceDb=regularizeList.get(0);
 					tag = "MAIL_TO_USER_ON_CEIR_DEVICE_APPROVAL";
 					txnId = regularizeDeviceDb.getTxnId();
                     List<User> user= new ArrayList<User>();
@@ -800,9 +808,10 @@ RegularizeDeviceDb regularizeOutput=regularizedDeviceDbRepository.save(regulariz
 if(Objects.nonNull(regularizeOutput))
 {
 	if(Objects.nonNull(rawMails) && !rawMails.isEmpty()) {
-		emailUtil.saveNotification(rawMails);	
+		if(regularizeDeviceDb.getStatus()==RegularizeDeviceStatus.Processing.getCode()) {
+			emailUtil.saveNotification(rawMails);				
+		}
 	}
-	
 }	
 					
 				}else if(ceirActionRequest.getAction() == 1){
@@ -815,6 +824,7 @@ if(Objects.nonNull(regularizeOutput))
 					receiverUserType = "End User";
 					txnId = regularizeDeviceDb.getTxnId();
 					subFeature=SubFeatures.SYSTEM_REJECT;
+					
 					if(Objects.nonNull(endUserDB.getEmail()) && !endUserDB.getEmail().isEmpty()) {
 						if(Objects.nonNull(endUserDB.getEmail()) && !endUserDB.getEmail().isEmpty()) {
 						rawMails.add(new RawMail("Reg_Device_Process_Fail_To_EndUser", 
@@ -834,7 +844,9 @@ if(Objects.nonNull(regularizeOutput))
 					if(Objects.nonNull(regularizeOutput)&&!regularizeOutput.isEmpty())
 					{
 						if(Objects.nonNull(rawMails) && !rawMails.isEmpty()) {
+							if(regularizeDeviceDb.getStatus()==RegularizeDeviceStatus.Processing.getCode()) {
 							emailUtil.saveNotification(rawMails);	
+							}
 						}
 						
 					}

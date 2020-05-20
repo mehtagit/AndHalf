@@ -23,6 +23,7 @@ import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.RegularizeDeviceDb;
+import com.gl.ceir.config.model.RegularizeDeviceView;
 import com.gl.ceir.config.service.impl.RegularizedDeviceServiceImpl;
 
 import io.swagger.annotations.ApiOperation;
@@ -37,7 +38,7 @@ public class RegularizedDeviceController {
 	
 	@ApiOperation(value = "View End User Device by IMEI1", response = GenricResponse.class)
 	@PostMapping("/end-user-device-info/view")
-	public MappingJacksonValue viewDeviceInfoByImei1(@RequestBody AllRequest data) {
+	public MappingJacksonValue viewDeviceInfoByImei1(@RequestBody RegularizeDeviceView data) {
 
 		logger.info("View Regularized device of IMEI= " + data);
 
@@ -95,7 +96,7 @@ public class RegularizedDeviceController {
 
 	@ApiOperation(value = "Delete taxPaid Status", response = GenricResponse.class)
 	@DeleteMapping("/end-user-device-info")
-	public GenricResponse deleteCustominfo( @RequestBody AllRequest data) {
+	public GenricResponse deleteCustominfo( @RequestBody RegularizeDeviceView data) {
 
 		logger.info("Request to delete regularized device = " + data);
 		
