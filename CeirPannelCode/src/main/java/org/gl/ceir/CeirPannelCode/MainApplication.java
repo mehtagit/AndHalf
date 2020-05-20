@@ -16,7 +16,13 @@ import org.springframework.context.annotation.PropertySources;
 @ComponentScan(basePackages ="org.gl.ceir")
 /* @PropertySource("classpath:application_Production.properties") */
 /* @PropertySource("classpath:ApplicationTestServer.properties") */ 
- @PropertySource("classpath:awsConfiguration.properties") 
+/* @PropertySource("classpath:awsConfiguration.properties") */
+/*
+ * @PropertySource(value =
+ * "file:/home/ubuntu/apache-tomcat-9.0.4/conf/application.properties")
+ */
+
+@PropertySource("file:${HOME}/guiconfig/application.properties")
 public class MainApplication extends SpringBootServletInitializer
 {
 	@Override

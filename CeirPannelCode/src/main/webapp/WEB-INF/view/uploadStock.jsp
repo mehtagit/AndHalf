@@ -632,7 +632,7 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 
 
 function uploadStock(){
-	
+	$('div#initialloader').fadeIn('fast');
 	 var supplierId=$('#supplierId').val();
 	 var supplierName=$('#supplierName').val();
 	 var invoiceNumber=$('#invoiceNumber').val();
@@ -655,7 +655,7 @@ function uploadStock(){
 		processData: false,
 		contentType: false,
 		success: function (data, textStatus, jqXHR) {
-			
+			$('div#initialloader').delay(300).fadeOut('slow');
 			 console.log(data);
 			 $("#stockSubmitButton").prop('disabled', true);
 			   $('#submitStock').openModal({

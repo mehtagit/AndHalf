@@ -460,6 +460,7 @@ populateCountries
 
 function updateImporterTypeDevice()
 {
+	$('div#initialloader').fadeIn('fast');
 	var userId = $("body").attr("data-userID");
 	var id=$("#importerColumnid").val();
 	 
@@ -562,7 +563,7 @@ function updateImporterTypeDevice()
 			processData : false,
 			contentType : false,
 			success : function(data, textStatus, jqXHR) {
-			
+				$('div#initialloader').delay(300).fadeOut('slow');
 				console.log(data);
 				
 			

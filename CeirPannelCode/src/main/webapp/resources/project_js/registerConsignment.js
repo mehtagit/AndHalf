@@ -10,6 +10,7 @@ $.i18n().load( {
 });
 
 function registerConsignment() {
+	$('div#initialloader').fadeIn('fast');
 	var supplierId = $('#supplierId').val();
 	var supplierName = $('#supplierName').val();
 	var consignmentNumber = $('#consignmentNumber').val();
@@ -46,6 +47,7 @@ function registerConsignment() {
 		processData : false,
 		contentType : false,
 		success : function(data, textStatus, jqXHR) {
+			$('div#initialloader').delay(300).fadeOut('slow');
 			$("#consignmentSubbmitButton").prop('disabled', true);
 			$('#submitConsignment').openModal({dismissible:false});
 			if (data.errorCode == "0") {

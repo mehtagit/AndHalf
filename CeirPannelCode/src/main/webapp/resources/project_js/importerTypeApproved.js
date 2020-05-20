@@ -54,6 +54,7 @@ window.parent
 	
 		
 		function registerTAC() {
+			$('div#initialloader').fadeIn('fast');
 			var trademark = $('#trademark').val();
 			var productName = $('#productname').val();
 			var modelNumber = $('#modelNumber').val();
@@ -159,6 +160,7 @@ window.parent
 				contentType : false, 
 				async:false,
 				success : function(data, textStatus, jqXHR) {
+					$('div#initialloader').delay(300).fadeOut('slow');
 					$("#trcSubmitButton").prop('disabled', true);
 						var result =  JSON.parse(data)
 						console.log("successdata-----" +result);

@@ -174,6 +174,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 
 	function editUploadStock(){
 
+		$('div#initialloader').fadeIn('fast');
 		var supplierId=$('#editSupplierId').val();
 		var supplierName=$('#editSupplierName').val();
 		var filename=$('#editcsvUploadFileName').val();
@@ -205,7 +206,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 			processData: false,
 			contentType: false,
 			success: function (data, textStatus, jqXHR) {
-
+				$('div#initialloader').delay(300).fadeOut('slow');
 				console.log(data);
 				$('#editStockModal').closeModal();
 				 $('#successUpdateStockModal').openModal({

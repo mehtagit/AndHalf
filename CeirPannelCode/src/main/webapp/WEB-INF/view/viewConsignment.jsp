@@ -160,7 +160,7 @@ button.modal-action.modal-close.waves-effect.waves-green.btn-flat.right {
 
 	<!--viewModal Modal start   -->
 
-	<div id="viewModal" class="modal-form" style="overflow-y: hidden;">
+	<div id="viewModal" class="modal-form" >
 		<h6 class="modal-header">
 			<spring:message code="modal.header.viewConsignment" />
 		</h6>
