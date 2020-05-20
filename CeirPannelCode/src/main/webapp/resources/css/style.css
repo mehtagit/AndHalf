@@ -918,7 +918,10 @@ nav ul li.no-hover:hover {
 
 ul.side-nav.leftside-navigation {
 	top: 56px;
-	overflow: hidden;
+overflow-y: auto;
+overflow-y: auto;
+scrollbar-color: transparent transparent;
+height: calc(100vh - 100px)!important;
 }
 
 @media only screen and(max-width: 660px) {
@@ -3204,3 +3207,14 @@ div#error_Modal_reg {
     height: 50px;
     margin-top: 14%;
 }
+
+
+.scrollDivHeight{
+height: 50px;
+}
+
+.modal-content-style{
+margin-top: 5px; 
+overflow-y: scroll;
+}
+

@@ -7218,7 +7218,7 @@ deg
 
 .container {
 	margin: 0 auto;
-	max-width: 1280px;
+	/* max-width: 1280px; */
 	width: 90%;
 }
 
@@ -9258,6 +9258,7 @@ a.waves-effect .waves-ripple {
 	will-change: top, opacity;
 	z-index: 9999;
 	top: 60 !important;
+	transform: inherit !important;
 }
 
 .modal-form {
@@ -9277,6 +9278,7 @@ a.waves-effect .waves-ripple {
 	will-change: top, opacity;
 	z-index: 9999;
 	top: 60 !important;
+	transform: inherit !important;
 }
 
 @media only screen and (max-width: 992px) {
