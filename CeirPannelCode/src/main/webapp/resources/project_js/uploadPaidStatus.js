@@ -147,7 +147,7 @@ $( document ).ready(function() {
 var id=2;
 var x = 1;
 $(document).ready(function () {
-	 $.getJSON('./addMoreFile/more_files_count', function(data) {
+	 $.getJSON('./addMoreFile/add_more_device_count', function(data) {
 			console.log(data);
 			
 			localStorage.setItem("maxCount", data.value);
@@ -514,15 +514,17 @@ populateCountries("country");
 
 
 
-function deleteByImei(imei){
+function deleteByImei(imei,txnId){
 	$('#deleteMsg').openModal({dismissible:false});
 	window.imei=imei;
+	window.txnId=txnId;
+	
 }
 
 function accept(){
 
 	$.ajax({
-		url : "./delete/"+window.imei,
+		url : "./delete/"+window.imei+"/"+window.txnId,
 		dataType : 'json',
 		contentType : 'application/json; charset=utf-8',
 		type : 'DELETE',
@@ -543,7 +545,7 @@ function accept(){
 }
 
 
-	function viewDetails(imei){ 
+	function viewDetails(imei,txnId){ 
 	/*$('#viewDeviceInformation').openModal({dismissible:false});
 	$.ajax({
 		url : "./deviceInfo/"+imei,
@@ -558,7 +560,7 @@ function accept(){
 		}
 	});*/
 		
-		window.location.href="./view-device-information/"+imei;
+		window.location.href="./view-device-information/"+imei+"/"+txnId;
 
 
 }
@@ -789,7 +791,7 @@ function submitDeviceInfo(){
 			var IMEI3=$('#IMEIC'+fieldId).val();
 			var IMEI4=$('#IMEID'+fieldId).val();
 			var deviceCountry=$('#country'+fieldId).val();
-			var multipleSimStatus1=$('#multipleSimStatus1'+fieldId).val();
+			var multipleSimStatus1=$('#multipleSimStatus'+fieldId).val();
 
 
 		var deviceInfo=
@@ -804,7 +806,7 @@ function submitDeviceInfo(){
 				"secondImei": parseInt(IMEI2),
 				"thirdImei": parseInt(IMEI3),
 				"fourthImei": parseInt(IMEI4),
-				"multiSimStatus": deviceStatus1,
+				"multiSimStatus": multipleSimStatus1,
 				"price": parseFloat(Price1),
 				"taxPaidStatus": parseInt(taxStatus1),
 				"nid":nationalId,
@@ -1108,6 +1110,7 @@ function aprroveDevice(){
 			"imei1": window.imei,
 			"featureId":parseInt(featureId),
 			"remarks": "",
+			"userName":$("body").attr("data-username"),
 			"roleTypeUserId": parseInt($("body").attr("data-userTypeID")),
 			"txnId": window.txnId,
 			"userId":parseInt(userId),

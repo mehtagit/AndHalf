@@ -393,8 +393,8 @@ public class UploadPaidStatus {
 	//************************************************ delete consignment record page********************************************************************************/
 
 
-	@DeleteMapping("/delete/{imei}")
-	public @ResponseBody GenricResponse deleteConsignment(@PathVariable("imei") String imei,HttpSession session) {
+	@DeleteMapping("/delete/{imei}/{txnId}")
+	public @ResponseBody GenricResponse deleteConsignment(@PathVariable("imei") String imei,@PathVariable("txnId") String txnId,HttpSession session) {
 		
 		  String userType=(String) session.getAttribute("usertype"); 
 		  String  userName=session.getAttribute("username").toString();
@@ -408,20 +408,22 @@ public class UploadPaidStatus {
 	      request.setUserTypeId(userTypeid);
 		  request.setUserType(userType);
 		  request.setUserId(userId);
+		  request.setTxnId(txnId);
 		  log.info(" request=="+request);
 		  GenricResponse response=uploadPaidStatusFeignClient.delete(request);
 		log.info("response after delete consignment."+response);
 		return response;
 	}
 	
-	@DeleteMapping("/endUserdelete/{imei}")
-	public @ResponseBody GenricResponse endUserdeleteConsignment(@PathVariable("imei") String  imei) {
+	@DeleteMapping("/endUserdelete/{imei}/{txnId}")
+	public @ResponseBody GenricResponse endUserdeleteConsignment(@PathVariable("imei") String  imei,@PathVariable("imei") String txnId  ) {
 		  AllRequest request= new AllRequest();
 		  request.setFeatureId(12);
 
 		  request.setImei(imei);
 	      request.setUserTypeId(17);
 		  request.setUserType("End User");
+		  request.setTxnId(txnId);
 		  log.info(" request=="+request);
 		GenricResponse response=uploadPaidStatusFeignClient.delete(request);
 		log.info("response after delete consignment."+response);

@@ -992,7 +992,7 @@ button.modal-action.modal-close.waves-effect.waves-green.btn-flat.right {
 	
 
 	<div id="regularisedDevice" class="modal">
-		<h6 class="modal-header"> <spring:message code="modal.uploadPaidDevice" /> </h6>
+		<h6 class="modal-header"> <spring:message code="customRegisterDevice" /> </h6>
 		<div class="modal-content">
 			<div class="row">
 				<h6 id="sucessMessage">

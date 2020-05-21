@@ -109,6 +109,12 @@ button.modal-action.modal-close.waves-effect.waves-green.btn-flat.right {
     height: 36px;
 	 font-size: 31px
 }
+
+.header-fixed-style{
+width: inherit;
+ z-index: 1003; 
+ position: fixed;
+}
 </style>
 </head>
 <body data-id="3"
@@ -161,10 +167,17 @@ button.modal-action.modal-close.waves-effect.waves-green.btn-flat.right {
 	<!--viewModal Modal start   -->
 
 	<div id="viewModal" class="modal-form" >
-		<h6 class="modal-header">
+		   
+		<div class="header-fixed header-fixed-style">
+			<h6 class="modal-header">
 			<spring:message code="modal.header.viewConsignment" />
 		</h6>
-		<div class="modal-content" style="margin-top: 5px;">
+		</div>
+
+		<div class="scrollDivHeight"></div>
+
+		<div class="modal-content modal-content-style">
+		
 			<div class="row myRow">
 				<div class="input-field col s12 m6">
 					<input type="text" name="name" id="supplierId" placeholder=""
@@ -344,9 +357,16 @@ button.modal-action.modal-close.waves-effect.waves-green.btn-flat.right {
 	<!-- Modal 1 start   -->
 
 	<div id="updateConsignment" class="modal">
+		
+		   <div class="header-fixed" style="width:inherit;z-index:1003;position: fixed;">
 		<h6 class="modal-header">
-			<spring:message code="modal.header.updateConsignment" />
+			<spring:message code="modal.header.viewConsignment" />
 		</h6>
+		</div>
+		
+		 <div style="height: 50px;">
+</div>
+		
 		<div class="modal-content">
 
 
@@ -661,10 +681,19 @@ button.modal-action.modal-close.waves-effect.waves-green.btn-flat.right {
 
 	<!-- Update Modal Start -->
 		<div id="updateModal" class="modal-form">
-		<h6 class="modal-header">
+		
+		<div class="header-fixed header-fixed-style">
+				<h6 class="modal-header">
 			<spring:message code="modal.header.editConsignment" />
 		</h6>
-		<div class="modal-content">
+		</div>
+
+		<div class="scrollDivHeight"></div>
+
+		<div class="modal-content modal-content-style">
+
+		
+		
 			<form action="" onsubmit="return editRegisterConsignment()"
 				method="POST" enctype="multipart/form-data">
 				<div class="row myRow" style="margin-top: 5px;" >
@@ -974,12 +1003,21 @@ button.modal-action.modal-close.waves-effect.waves-green.btn-flat.right {
 	<!-- Modal start   -->
 
 	<div id="tableOnModal" class="modal">
-		<button type="button"
+		
+		
+				<div class="header-fixed header-fixed-style">
+				<button type="button"
 			class=" modal-action modal-close waves-effect waves-green btn-flat right"
 			data-dismiss="modal">&times;</button>
-		<h6 class="modal-header"><spring:message code="modal.header.viewHistory" /></h6>
+			<h6 class="modal-header">
+			<spring:message code="modal.header.viewConsignment" />
+		</h6>
+		</div>
+
+		<div class="scrollDivHeight"></div>
+
+		<div class="modal-content modal-content-style">
 		
-		<div class="modal-content">
 
 			<div class="row">
 				<table class="responsive-table striped display"

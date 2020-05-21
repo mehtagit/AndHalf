@@ -24,8 +24,9 @@ var lang_param =window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 
 
 	 $('#ok,#redirectToPage').click(function(){
-		 window.location.replace("./uploadPaidStatus?via=other&NID="+nationalID);
-		});
+		 window.location.replace("../uploadPaidStatus?via=other&NID="+nationalID);
+		 
+	 });
 
 	 function redirectToPage(){
 		 
@@ -224,7 +225,7 @@ function defaultDeviceForm(){
 	
            var id=2;
 	 	  function RegularisedDeviceForm(){
-	 		 $.getJSON('./addMoreFile/more_files_count', function(data) {
+	 		 $.getJSON('./addMoreFile/add_more_device_count', function(data) {
 	 			console.log(data);
 	 			
 	 			localStorage.setItem("maxCount", data.value);

@@ -113,8 +113,8 @@
 	"validationESN8": "Please enter alphanumeric upto 8 characters only",
 	"validationESN11": "Please enter number upto 11 only",
 	"IMEIMsg": "IMEI should be 15 to 16 digit number",
-	"MEIDMsg": "MEID should be alphanumeric upto 16 characters only",
-	"ESNMsg": "The length is either 8 or 11. If length is 11, then all value should be numeric else value can be alphanumeric.",
+	
+	
 	"Otp_Sucess_For_UpdateUSer": "Your one time password is verified!",
 	"fileNotFound": "There is  some problem in server please try after some time",
 	"TYPE_APPROVE_REJECTED": "Type Approved has been rejected by CEIR Admin.",
@@ -160,6 +160,7 @@
      "Curr_Year_Null" : "Year value must not be null",
      "Curr_Month_Null" : "Month value must not be null",
       "featureNotSupportForCambodian" : "This service is not applicable for Cambodian users.",
-      "VISA_UPDATE_NOT_ALLOWED":"No visa Information  was provided at the time of registration .kindly register your device along with valid visa details." 
-
+      "VISA_UPDATE_NOT_ALLOWED":"No visa Information  was provided at the time of registration .kindly register your device along with valid visa details.",
+       "ESNMsg": "The length is either 8 or 11. If length is 11, then all value should be numeric else value can be alphanumeric and character should be in uppercase and between A to F.",
+       "MEIDMsg": "MEID should be alphanumeric upto 16 characters only . All character should be in uppercase and between A to F"
 }

@@ -2,7 +2,7 @@ package org.gl.ceir.CeirPannelCode.Model;
 
 public class AllRequest {
 
-	private String username,userType,imei,nid;
+	private String username,userType,imei,nid,txnId;
     private long userId,featureId,userTypeId;
     
 	public String getUsername() {
@@ -49,6 +49,12 @@ public class AllRequest {
 	public void setNid(String nid) {
 		this.nid = nid;
 	}
+	public String getTxnId() {
+		return txnId;
+	}
+	public void setTxnId(String txnId) {
+		this.txnId = txnId;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -60,6 +66,8 @@ public class AllRequest {
 		builder.append(imei);
 		builder.append(", nid=");
 		builder.append(nid);
+		builder.append(", txnId=");
+		builder.append(txnId);
 		builder.append(", userId=");
 		builder.append(userId);
 		builder.append(", featureId=");
@@ -69,6 +77,7 @@ public class AllRequest {
 		builder.append("]");
 		return builder.toString();
 	}
+	
 	
 
 
