@@ -3,6 +3,7 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,11 +13,14 @@ import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
+@Audited
 public class UserPayment {
 
 	private static long serialVersionUID = 1L;
@@ -43,7 +47,8 @@ public class UserPayment {
 	private double amount;
 	
 	
-	@ManyToOne 
+	@ManyToOne
+	@NotAudited
 	@JoinColumn(name = "user_id",nullable = false) 
 	private User userPayment;
 

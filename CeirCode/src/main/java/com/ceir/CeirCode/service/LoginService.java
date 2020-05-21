@@ -179,8 +179,7 @@ public class LoginService
 								UserData.getUsertype().getUsertypeName(), UserData.getUsertype().getId(), 
 								status,UserData.getUserProfile().getOperatorTypeName(),
 								UserData.getUserProfile().getOperatorTypeId(), UserData.getUserLanguage(),
-								periodInterp,UserData.getCurrentStatus(),UserData.getUsertype().getSelfRegister());  
-						
+								periodInterp,UserData.getCurrentStatus(),UserData.getUsertype().getSelfRegister(),UserData.getUsertype().getDefaultLink());  
 						log.info("login response:  "+response);
 						return new ResponseEntity<>(response,HttpStatus.OK);
 					}

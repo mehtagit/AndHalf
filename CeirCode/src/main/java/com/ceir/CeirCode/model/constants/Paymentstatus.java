@@ -1,8 +1,7 @@
 package com.ceir.CeirCode.model.constants;
 
 public enum Paymentstatus {
-
-	Success(1, "Success"), Fail(0, "Fail");
+	Success(0, "Success"), Fail(1, "Fail");
 	private Integer code;
 	private String description;
 

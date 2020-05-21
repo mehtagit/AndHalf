@@ -60,6 +60,9 @@ public class Usertype {
 	
 	private Integer selfRegister;
 
+	private String defaultLink;
+	
+	
 	public long getId() {
 		return id; 
 	}
@@ -128,13 +131,43 @@ public class Usertype {
 	public void setSelfRegister(Integer selfRegister) {
 		this.selfRegister = selfRegister;
 	}
+	public String getDefaultLink() {
+		return defaultLink;
+	}
+	public void setDefaultLink(String defaultLink) {
+		this.defaultLink = defaultLink;
+	}
 	public Usertype(long id, String usertypeName) {
 		super();
 		this.id = id;
 		this.usertypeName = usertypeName;
 	}
-	
-	
-	
-	
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Usertype [id=");
+		builder.append(id);
+		builder.append(", usertypeName=");
+		builder.append(usertypeName);
+		builder.append(", createdOn=");
+		builder.append(createdOn);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
+		builder.append(", user=");
+		builder.append(user);
+		builder.append(", userRole=");
+		builder.append(userRole);
+		builder.append(", userTofeatureMapping=");
+		builder.append(userTofeatureMapping);
+		builder.append(", status=");
+		builder.append(status);
+		builder.append(", statusInterp=");
+		builder.append(statusInterp);
+		builder.append(", selfRegister=");
+		builder.append(selfRegister);
+		builder.append(", defaultLink=");
+		builder.append(defaultLink);
+		builder.append("]");
+		return builder.toString();
+	}
 }

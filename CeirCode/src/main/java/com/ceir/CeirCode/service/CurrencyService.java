@@ -135,38 +135,9 @@ public class CurrencyService {
 		currency.getUserType(),currency.getUserTypeId(),Features.Exchange_Rate_Management,SubFeatures.UPDATE,currency.getFeatureId());
 		Currency data=currencyRepoService.getById(currency.getId());
 		if(data!=null) {
-			//currency.setCreatedOn(data.getCreatedOn());
-			//data.setCurrency(currency.getCurrency());
 			data.setDollar(currency.getDollar());
 			data.setRiel(currency.getRiel());
-			data.setCurrency(currency.getCurrency());
-			String monthValue=null;
-			if(Objects.isNull(currency.getYear()) ){
-				GenricResponse response=new GenricResponse(1,CurrencyTags.Curr_Year_Null.getTag(),CurrencyTags.Curr_Year_Null.getMessage(),"");
-				return  new ResponseEntity<>(response,HttpStatus.OK);
-			}
-			if(Objects.isNull(currency.getMonth()) ){
-				GenricResponse response=new GenricResponse(2,CurrencyTags.Curr_Month_Null.getTag(),CurrencyTags.Curr_Month_Null.getMessage(),"");
-				return  new ResponseEntity<>(response,HttpStatus.OK);
-			}
-			if(currency.getMonth()<10&&currency.getMonth()!=0) {
-				log.info("if month value less than 10");
-				monthValue="0"+currency.getMonth()+"";
-			}
-			else {
-				log.info("if month value greater than 10");
-				monthValue=""+currency.getMonth()+"";
-			}
-			log.info("now month value: "+monthValue);
-			String monthDate=currency.getYear()+"-"+monthValue;
-			currency.setMonthDate(monthDate);
-			boolean monthExist=currencyRepoService.existsByMonthDateAndCurrency(currency.getMonthDate(),currency.getCurrency());
-			if(monthExist==true) {
-				GenricResponse response=new GenricResponse(3,CurrencyTags.Curr_Already_Exist.getTag(),CurrencyTags.Curr_Already_Exist.getMessage(),"");
-				return  new ResponseEntity<>(response,HttpStatus.OK);			
-			}
-			else {
-				Currency output=currencyRepoService.save(data);
+		Currency output=currencyRepoService.save(data);
 				if(output!=null) {
 					GenricResponse response=new GenricResponse(200,CurrencyTags.Curr_Update_Sucess.getTag(),CurrencyTags.Curr_Update_Sucess.getMessage(),"");
 					log.info("exit from  update  Currency controller");
@@ -179,8 +150,6 @@ public class CurrencyService {
 					log.info("response send: "+response);
 					return  new ResponseEntity<>(response,HttpStatus.OK);
 				}
-		}
-			
 		}
 		else {
 			GenricResponse response=new GenricResponse(400,CurrencyTags.Curr_Wrong_Id.getTag(),CurrencyTags.Curr_Wrong_Id.getMessage(),"");

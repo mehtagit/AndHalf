@@ -31,7 +31,7 @@ public class GenricResponse {
 		this.txnId = txnId;
 		this.data = data;
 	}
-
+ 
 	public int getErrorCode() {
 		return errorCode;
 	}

@@ -17,7 +17,6 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import com.ceir.CeirCode.Constants.Datatype;
 import com.ceir.CeirCode.Constants.SearchOperation;
@@ -87,13 +86,10 @@ public class UserProfileService {
 	private GenericSpecificationBuilder<UserProfile> buildSpecification(FilterRequest filterRequest){
 
 		GenericSpecificationBuilder<UserProfile> uPSB = new GenericSpecificationBuilder<UserProfile>(propertiesReader.dialect);	
-
 		User user=userRepoService.findByUSerId(filterRequest.getUserId());
 		if(user!=null) {
 			userService.saveUserTrail(user, "Registration Request", "View", filterRequest.getFeatureId());
 		}
-		
-
 		if(Objects.nonNull(filterRequest.getStartDate()) && filterRequest.getStartDate()!="")
 			uPSB.addSpecification(uPSB.joinWithUser(new SearchCriteria("createdOn",filterRequest.getStartDate(), SearchOperation.GREATER_THAN, Datatype.DATE)));
 
@@ -120,15 +116,16 @@ public class UserProfileService {
 		if(Objects.nonNull(filterRequest.getUsername()) && !filterRequest.getUsername().isEmpty()) 
 			uPSB.addSpecification(uPSB.joinWithUser(new SearchCriteria("username",filterRequest.getUsername(), SearchOperation.EQUALITY, Datatype.STRING)));
 		
-		if(Objects.isNull(filterRequest.getStatus())) {
-			uPSB.addSpecification(uPSB.joinWithUser(new SearchCriteria("currentStatus",UserStatus.PENDING_ADMIN_APPROVAL.getCode(), SearchOperation.EQUALITY, Datatype.INT)));				
-		}
 		else if(Objects.nonNull(filterRequest.getStatus()) && filterRequest.getStatus()!=-1) 
 		{
 			uPSB.addSpecification(uPSB.joinWithUser(new SearchCriteria("currentStatus",filterRequest.getStatus(), SearchOperation.EQUALITY, Datatype.INTEGER)));
-			
 		}
-
+		else
+		{
+			uPSB.addSpecification(uPSB.joinWithUser(new SearchCriteria("currentStatus",UserStatus.PENDING_ADMIN_APPROVAL.getCode(), SearchOperation.EQUALITY, Datatype.INT)));				
+		}
+		uPSB.addSpecification(uPSB.joinWithMultiple(new SearchCriteria("selfRegister",1, SearchOperation.EQUALITY, Datatype.INTEGER)));
+		
 		if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
 		//uPSB.orSearchUser(new SearchCriteria("username", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 	    uPSB.orSearchUsertype(new SearchCriteria("usertypeName", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));

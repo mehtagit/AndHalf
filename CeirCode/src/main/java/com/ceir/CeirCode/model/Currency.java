@@ -36,13 +36,17 @@ public class Currency  extends AllRequest{
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime modifiedOn;
 	
+	@Column(nullable =false)
 	private String monthDate;
 
+	@Column(nullable =false)
 	private Integer month;
 	
+	@Column(nullable =false)
 	private Integer year;
-	
+	@Column(nullable =false)
 	private Integer currency;
+	
 	private double riel;
 	private double dollar;
 	

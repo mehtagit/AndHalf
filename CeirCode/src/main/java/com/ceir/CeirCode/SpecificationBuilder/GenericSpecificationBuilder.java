@@ -375,7 +375,6 @@ public class GenericSpecificationBuilder<T> {
 		}; 
 	}
 
-
 		private List<Specification<T>> joinWithUserOr( List<SearchCriteria> criterias){
 			List<Specification<T>> specifications = new ArrayList<Specification<T>>();
 			try {

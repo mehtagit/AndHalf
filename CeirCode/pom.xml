@@ -22,10 +22,11 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
 		<spring.boot.version>2.1.4.RELEASE</spring.boot.version>
-<!-- 		<spring.version>5.0.8.RELEASE</spring.version>
- -->		<start-class>com.ceir.CeirCode.App</start-class>
+<!-- 		<spring.version>5.0.8.RELEASE</spring.version> -->
+		<start-class>com.ceir.CeirCode.App</start-class>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
+		<spring-cloud.version>Finchley.SR4</spring-cloud.version>
 	</properties>
 
 	<dependencies>
@@ -203,7 +204,23 @@
     <artifactId>hibernate-envers</artifactId>
 </dependency>
  
+ <!-- <dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-openfeign</artifactId>
+		</dependency> -->
 	</dependencies> 
+	
+	<!-- <dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring-cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement> -->
 	<build>
 
 		<finalName>${artifactId}-${version}</finalName>

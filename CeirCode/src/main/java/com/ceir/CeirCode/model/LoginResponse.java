@@ -17,6 +17,7 @@ public class LoginResponse {
 	private String password;
 	private String period;
 	private Integer selfRegister;
+	private String defaultLink;
 	
 	public String getStatus() {
 		return status;
@@ -122,9 +123,16 @@ public class LoginResponse {
 	public void setSelfRegister(Integer selfRegister) {
 		this.selfRegister = selfRegister;
 	}
+	
+	public String getDefaultLink() {
+		return defaultLink;
+	}
+	public void setDefaultLink(String defaultLink) {
+		this.defaultLink = defaultLink;
+	}
 	public LoginResponse(String response, Integer statusCode, List<Usertype> userRoles, String username, long userId,
 			String name, String primaryRole, long primaryRoleId, String status, String operatorTypeName,
-			Integer operatorTypeId, String userLanguage,String period,Integer statusValue,Integer selfRegister) {
+			Integer operatorTypeId, String userLanguage,String period,Integer statusValue,Integer selfRegister,String defaultLink) {
 		super();
 		this.response = response;
 		this.statusCode = statusCode;
@@ -141,6 +149,7 @@ public class LoginResponse {
 		this.period=period;
 		this.statusValue=statusValue;
 		this.selfRegister=selfRegister;
+		this.defaultLink=defaultLink;
 	}
 	public LoginResponse(String response, Integer statusCode, long userId) {
 		super();
@@ -203,6 +212,10 @@ public class LoginResponse {
 		builder.append(password);
 		builder.append(", period=");
 		builder.append(period);
+		builder.append(", selfRegister=");
+		builder.append(selfRegister);
+		builder.append(", defaultLink=");
+		builder.append(defaultLink);
 		builder.append("]");
 		return builder.toString();
 	}
