@@ -185,6 +185,12 @@ public class GreylistDb implements Serializable {
 		this.modeType = modeType;
 	}
 	
+	public LocalDateTime getCreatedOn() {
+		return createdOn;
+	}
+	public LocalDateTime getModifiedOn() {
+		return modifiedOn;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();

@@ -149,7 +149,7 @@ public class EnduserServiceImpl {
 				userId=data.getUserId();
 			}
 			auditTrailRepository.save(new AuditTrail(userId, username, 17L,
-					data.getUserType(), 12,Features.REGISTER_DEVICE, SubFeatures.Search_NID, "", "NA"));
+					data.getUserType(), 12,Features.REGISTER_DEVICE, SubFeatures.Search_NID, "", data.getNid(),data.getUserType()));
 			logger.info("AUDIT : Saved request in audit.");
 
 			EndUserDB endUserDB = endUserDbRepository.getByNid(data.getNid());
@@ -187,7 +187,7 @@ public class EnduserServiceImpl {
 				endUserDB.setCreatorUserId(endUserDB.getAuditParameters().getUserId());
 			}
 			auditTrailRepository.save(new AuditTrail(userId, username, 17L,
-					endUserDB.getAuditParameters().getUserType(), 12,Features.REGISTER_DEVICE, SubFeatures.REGISTER, "", endUserDB.getTxnId()));
+					endUserDB.getAuditParameters().getUserType(), 12,Features.REGISTER_DEVICE, SubFeatures.REGISTER, "", endUserDB.getTxnId(),endUserDB.getAuditParameters().getUserType()));
 			logger.info("AUDIT : Saved request in audit.");
 
 
