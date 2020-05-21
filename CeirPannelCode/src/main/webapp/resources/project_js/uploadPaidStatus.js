@@ -38,12 +38,7 @@ $( document ).ready(function() {
 	var In = $("body").attr("session-value");
 	 var loggedUserType=$("body").attr("data-roleType");
 	if(loggedUserType=='Custom' || loggedUserType=='Immigration' ){
-		var token = $("meta[name='_csrf']").attr("content");
-		var header = $("meta[name='_csrf_header']").attr("content");
-		$.ajaxSetup({
-	        headers:
-	        { 'X-CSRF-TOKEN': token }
-	    	});
+		
 
 		$.ajax({
 			url : "./paid-status/"+In,
@@ -152,14 +147,7 @@ $( document ).ready(function() {
 var id=2;
 var x = 1;
 $(document).ready(function () {
-	var token = $("meta[name='_csrf']").attr("content");
-	var header = $("meta[name='_csrf_header']").attr("content");
-	$.ajaxSetup({
-        headers:
-        { 'X-CSRF-TOKEN': token }
-    	});
-
-	 $.getJSON('./addMoreFile/more_files_count', function(data) {
+	 $.getJSON('./addMoreFile/add_more_device_count', function(data) {
 			console.log(data);
 			
 			localStorage.setItem("maxCount", data.value);
@@ -227,12 +215,6 @@ console.log("nationType=="+nationType);
 			populateCountries("country"+id);
 			
 			var allowed =localStorage.getItem("allowed");
-			var token = $("meta[name='_csrf']").attr("content");
-			var header = $("meta[name='_csrf_header']").attr("content");
-			$.ajaxSetup({
-		        headers:
-		        { 'X-CSRF-TOKEN': token }
-		    	});
 			$.getJSON('./getDropdownList/CUSTOMS_TAX_STATUS', function(data) {
 				var dropdownid=id-1;
 				if(dropdownid <= allowed){
@@ -355,12 +337,6 @@ function table(url,dataUrl){
 	if(lang=='km'){
 		var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
 	}
-	var token = $("meta[name='_csrf']").attr("content");
-	var header = $("meta[name='_csrf_header']").attr("content");
-	$.ajaxSetup({
-        headers:
-        { 'X-CSRF-TOKEN': token }
-    	});
 	$.ajax({
 		url: url,
 		type: 'POST',
@@ -420,12 +396,7 @@ function pageRendering(lang){
 
 
 function pageButtons(url){
-	var token = $("meta[name='_csrf']").attr("content");
-	var header = $("meta[name='_csrf_header']").attr("content");
-	$.ajaxSetup({
-        headers:
-        { 'X-CSRF-TOKEN': token }
-    	});
+	
 	$.ajax({
 		url: url,
 		type: 'POST',
@@ -495,12 +466,7 @@ function pageButtons(url){
 
 
 			//Tax paid status-----------dropdown
-			var token = $("meta[name='_csrf']").attr("content");
-			var header = $("meta[name='_csrf_header']").attr("content");
-			$.ajaxSetup({
-		        headers:
-		        { 'X-CSRF-TOKEN': token }
-		    	});
+			
 			$.getJSON('./getDropdownList/CUSTOMS_TAX_STATUS', function(data) {
 				for (i = 0; i < data.length; i++) {
 					//console.log(data[i].value);
@@ -548,20 +514,17 @@ populateCountries("country");
 
 
 
-function deleteByImei(imei){
+function deleteByImei(imei,txnId){
 	$('#deleteMsg').openModal({dismissible:false});
 	window.imei=imei;
+	window.txnId=txnId;
+	
 }
 
 function accept(){
-	var token = $("meta[name='_csrf']").attr("content");
-	var header = $("meta[name='_csrf_header']").attr("content");
-	$.ajaxSetup({
-        headers:
-        { 'X-CSRF-TOKEN': token }
-    	});
+
 	$.ajax({
-		url : "./delete/"+window.imei,
+		url : "./delete/"+window.imei+"/"+window.txnId,
 		dataType : 'json',
 		contentType : 'application/json; charset=utf-8',
 		type : 'DELETE',
@@ -582,7 +545,7 @@ function accept(){
 }
 
 
-	function viewDetails(imei){ 
+	function viewDetails(imei,txnId){ 
 	/*$('#viewDeviceInformation').openModal({dismissible:false});
 	$.ajax({
 		url : "./deviceInfo/"+imei,
@@ -597,7 +560,7 @@ function accept(){
 		}
 	});*/
 		
-		window.location.href="./view-device-information/"+imei;
+		window.location.href="./view-device-information/"+imei+"/"+txnId;
 
 
 }
@@ -636,12 +599,7 @@ function historytable(url,dataUrl){
 	if(lang=='km'){
 		var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
 	}
-	var token = $("meta[name='_csrf']").attr("content");
-	var header = $("meta[name='_csrf_header']").attr("content");
-	$.ajaxSetup({
-        headers:
-        { 'X-CSRF-TOKEN': token }
-    	});
+	
 	$.ajax({
 		url: url,
 		type: 'POST',
@@ -833,7 +791,7 @@ function submitDeviceInfo(){
 			var IMEI3=$('#IMEIC'+fieldId).val();
 			var IMEI4=$('#IMEID'+fieldId).val();
 			var deviceCountry=$('#country'+fieldId).val();
-			var multipleSimStatus1=$('#multipleSimStatus1'+fieldId).val();
+			var multipleSimStatus1=$('#multipleSimStatus'+fieldId).val();
 
 
 		var deviceInfo=
@@ -848,7 +806,7 @@ function submitDeviceInfo(){
 				"secondImei": parseInt(IMEI2),
 				"thirdImei": parseInt(IMEI3),
 				"fourthImei": parseInt(IMEI4),
-				"multiSimStatus": deviceStatus1,
+				"multiSimStatus": multipleSimStatus1,
 				"price": parseFloat(Price1),
 				"taxPaidStatus": parseInt(taxStatus1),
 				"nid":nationalId,
@@ -897,10 +855,7 @@ function submitDeviceInfo(){
 	formData.append("docType",docType);
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
-	$.ajaxSetup({
-        headers:
-        { 'X-CSRF-TOKEN': token }
-    	});
+	
 	$.ajax({
 		url: './registerEndUserDevice',
 		type: 'POST',
@@ -962,10 +917,7 @@ function taxPaidStatus(){
 	}
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
-	$.ajaxSetup({
-        headers:
-        { 'X-CSRF-TOKEN': token }
-    	});
+	
 	$.ajax({
 		url: './tax-paid/status',
 		type: 'PUT',
@@ -1006,12 +958,7 @@ populateCountries(
 		"country",	"state");
 
 $(document).ready(function () {
-	var token = $("meta[name='_csrf']").attr("content");
-	var header = $("meta[name='_csrf_header']").attr("content");
-	$.ajaxSetup({
-        headers:
-        { 'X-CSRF-TOKEN': token }
-    	});
+	
 	$.getJSON('./getDropdownList/CUSTOMS_TAX_STATUS', function(data) {
 		var checkAllowedCount =localStorage.getItem("allowed");	
 		//alert("222222"+checkAllowedCount);
@@ -1081,12 +1028,7 @@ $(document).ready(function () {
 
 
 	$(document).ready(function(){
-		var token = $("meta[name='_csrf']").attr("content");
-		var header = $("meta[name='_csrf_header']").attr("content");
-		$.ajaxSetup({
-	        headers:
-	        { 'X-CSRF-TOKEN': token }
-	    	});
+		
 		$.getJSON('./getSourceTypeDropdown/DOC_TYPE/'+featureId, function(data) {
 
 			for (i = 0; i < data.length; i++) {
@@ -1119,12 +1061,6 @@ function regularizedCount(nationType){
 		nationType=1;
 		var nid= '';
 	}
-	var token = $("meta[name='_csrf']").attr("content");
-	var header = $("meta[name='_csrf_header']").attr("content");
-	$.ajaxSetup({
-        headers:
-        { 'X-CSRF-TOKEN': token }
-    	});
 	$.ajax({
 		url: './countByNid?nid='+nid+"&nationType="+nationType,
 		type: 'GET',
@@ -1174,17 +1110,13 @@ function aprroveDevice(){
 			"imei1": window.imei,
 			"featureId":parseInt(featureId),
 			"remarks": "",
+			"userName":$("body").attr("data-username"),
 			"roleTypeUserId": parseInt($("body").attr("data-userTypeID")),
 			"txnId": window.txnId,
 			"userId":parseInt(userId),
 			"userType": $("body").attr("data-roleType")	  	
 	}
-	var token = $("meta[name='_csrf']").attr("content");
-	var header = $("meta[name='_csrf_header']").attr("content");
-	$.ajaxSetup({
-        headers:
-        { 'X-CSRF-TOKEN': token }
-    	});
+	
 	$.ajax({
 		url : './approveRejectDevice',
 		data : JSON.stringify(approveRequest),
@@ -1235,12 +1167,7 @@ function rejectUser(){
 			"userId":parseInt(userId),
 			"userType": $("body").attr("data-roleType")	  	
 	}
-	var token = $("meta[name='_csrf']").attr("content");
-	var header = $("meta[name='_csrf_header']").attr("content");
-	$.ajaxSetup({
-        headers:
-        { 'X-CSRF-TOKEN': token }
-    	});
+	
 	$.ajax({
 		url : './approveRejectDevice',
 		data : JSON.stringify(rejectRequest),
@@ -1677,12 +1604,6 @@ $(document).on("keyup", "#Price1", function(e) {
 		if(lang=='km'){
 			var langFile='../resources/i18n/khmer_datatable.json';
 		}
-		var token = $("meta[name='_csrf']").attr("content");
-		var header = $("meta[name='_csrf_header']").attr("content");
-		$.ajaxSetup({
-	        headers:
-	        { 'X-CSRF-TOKEN': token }
-	    	});
 		$.ajax({
 			url: 'Consignment/consignment-history',
 			type: 'POST',

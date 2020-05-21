@@ -221,7 +221,7 @@ function defaultDeviceForm(){
 
       var id=2;
 	  function RegularisedDeviceForm(){
-		 $.getJSON('./addMoreFile/more_files_count', function(data) {
+		 $.getJSON('./addMoreFile/add_more_device_count', function(data) {
 			console.log(data);
 			
 			localStorage.setItem("maxCount", data.value);

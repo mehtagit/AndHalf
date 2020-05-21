@@ -636,7 +636,7 @@ $(document).ready(function () {
 	
 	
 
-	$.getJSON('./addMoreFile/more_files_count', function(data) {
+	$.getJSON('./addMoreFile/add_more_device_count', function(data) {
 		console.log(data);
 		
 		localStorage.setItem("maxCount", data.value);
@@ -1209,15 +1209,17 @@ function historytable(url,dataUrl){
 		}
 	});
 }
-function deleteByImei(imei){
+function deleteByImei(imei,txnId){
 	$('#deleteMsg').openModal({dismissible:false});
 	window.imei=imei;
+	window.txnId=txnId;
+	
 }
 
 function accept(){
 
 	$.ajax({
-		url : "./endUserdelete/"+window.imei,
+		url : "./endUserdelete/"+window.imei+"/"+window.txnId,
 		dataType : 'json',
 		contentType : 'application/json; charset=utf-8',
 		type : 'DELETE',
@@ -1237,8 +1239,10 @@ function accept(){
 	});
 }
 
-function viewDetails(imei){ 
+function viewDetails(imei,txnid){ 
 		$('#viewbyImei').val(imei);
+		$('#viewbytxnId').val(txnid);
+		
 		$('#viewDeviceForm').submit();
 		/*window.location.href="./view-device-information/"+imei;*/
 

@@ -194,7 +194,7 @@ input[type='search'] {
 											<div class="col s12 m12" style="margin-top: 20px;">
 												<div class="input-field col s12 m4">
 													<input type="text" id="nationalID" readonly="readonly" value="${viewInformation.endUserDB.nid}"/> <label for="nationalID"
-														class="center-align ml-10"><spring:message code="input.nidText" /></label>
+														class="center-align ml-10"><spring:message code="registration.nationalid/passporartnumber" /></label>
 												</div>
 
 													<div class="col s12 m4" style="margin-top: -10px;">
@@ -205,14 +205,14 @@ input[type='search'] {
 											                    oninvalid="InvalidMsg(this,'input','<spring:message code="validation.selectFieldMsg" />');" required>
 																<option value="" disabled selected><spring:message code="select.documenttype" /> </option>
 															</select> --%>
-															<input type="text" value="${viewInformation.endUserDB.docTypeInterp}" readonly="readonly">
+															<input type="text" value="${viewInformation.endUserDB.documentInterp}" readonly="readonly">
 															
 															<!-- <input type="text" id="docTypeNymericValue" style="display: none" > -->
 														</div>	
 
 												<div class="file-field col s12 m4"
 													style="margin-top: -15px;">
-													<h6 style="color: #000;"><spring:message code="input.uploadNidProof" /> <span class="star"></span>
+													<h6 style="color: #000;"><spring:message code="validation.PassportPlaceholder" /> <span class="star"></span>
 													</h6>
 													<!-- <div class="">
 														 <input type="text"  readonly="readonly" >
@@ -539,7 +539,7 @@ input[type='search'] {
 
 													<div class="col s12 m6">
 														<label for="multipleSimStatus1"><spring:message code="select.multiSimStatus" /><span class="star"></span>
-														</label> <input type="text" value="${viewInformation.multiSimStatus}" readonly="readonly">
+														</label> <input type="text" value="${viewInformation.multiSimStatusInterp}" readonly="readonly">
 													</div>
 
 													<div class="col s12 m6">
@@ -599,17 +599,17 @@ input[type='search'] {
 															</div>
 															<div class="input-field col s12 m6">
 																<input type="text" value="${viewInformation.secondImei}" readonly="readonly">
-																 <label for="IMEIB1"><spring:message code="title.two" /></label>
+																 <label for="IMEIB1" class="Active"><spring:message code="title.two" /></label>
 															</div>
 
 															<div class="input-field col s12 m6">
 																<input type="text" value="${viewInformation.thirdImei}" readonly="readonly">
-																 <label for="IMEIC1"><spring:message code="title.three" /></label>
+																 <label for="IMEIC1" class="Active"><spring:message code="title.three" /></label>
 															</div>
 
 															<div class="input-field col s12 m6" id="field">
 																<input type="text" value="${viewInformation.fourthImei}" readonly="readonly">
-																 <label for="IMEID1"><spring:message code="title.four" /></label>
+																 <label for="IMEID1" class="Active"><spring:message code="title.four" /></label>
 															</div>
 														</div>
 													</div>
@@ -1084,7 +1084,8 @@ input[type='search'] {
 <script type="text/javascript">
 $('#redirectToPage').click(function(){
 	var nationalID=$('#nationalID').val();
-	 window.location.replace("../uploadPaidStatus?via=other&NID="+nationalID);
+	 window.location.replace("${context}/uploadPaidStatus?via=other&NID="+nationalID);
+
 	});
 	
 var selectvip=$("input[name='selectvip']:checked").val()
@@ -1105,7 +1106,7 @@ $("label[for='datepicker']").addClass('active');
 $("label[for='email']").addClass('active');
 $("label[for='Price1']").addClass('active');
  */
-
+ $("label[for='middleName']").addClass('active');
 
 </script>
 </body>

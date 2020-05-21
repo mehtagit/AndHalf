@@ -46,33 +46,32 @@ body {
 }
 
 .modal {
-background-color: #fff;
-&.modal-fixed-header {
-padding: 0;
-height: 70%;
-.modal-header {
-border-top: 1px solid rgba(0, 0, 0, 0.1);
-position: absolute;
-top: 0;
-}
-.modal-header {
-border-radius: 0 0 2px 2px;
-//background-color: #fafafa;
-padding: 4px 6px;
-height: 56px;
-width: 100%;
-}
-.modal-content {
-position: absolute;
-top:56px;
-height: calc(100% - 56px);
-max-height: 100%;
-width: 100%;
-overflow-y: auto;
-}
-}
+	background-color: #fff; &. modal-fixed-header { padding : 0;
+	height: 70%; . modal-header { border-top : 1px solid rgba( 0, 0, 0, 0.1
+	);
+	position: absolute;
+	top: 0;
 }
 
+.modal-header {
+	border-radius: 0 0 2px 2px; //
+	background-color: #fafafa;
+	padding: 4px 6px;
+	height: 56px;
+	width: 100%;
+}
+
+.modal-content {
+	position: absolute;
+	top: 56px;
+	height: calc(100% - 56px);
+	max-height: 100%;
+	width: 100%;
+	overflow-y: auto;
+}
+
+}
+}
 #main {
 	padding-left: 240px;
 }
@@ -373,10 +372,14 @@ li.home:before {
 
 
 
+
+
 :
 
 
+
  
+
 
 
 rotate
@@ -384,8 +387,12 @@ rotate
 
 
 
+
+
 (360
 deg
+
+
 
 
 );
@@ -394,10 +401,14 @@ deg
 
 
 
+
+
 :
 
 
+
  
+
 
 
 rotate
@@ -405,8 +416,12 @@ rotate
 
 
 
+
+
 (360
 deg
+
+
 
 
 );
@@ -415,10 +430,14 @@ transform
 
 
 
+
+
 :
 
 
+
  
+
 
 
 rotate
@@ -426,8 +445,12 @@ rotate
 
 
 
+
+
 (360
 deg
+
+
 
 
 );
@@ -447,10 +470,14 @@ keyframes spin { 0% {
 
 
 
+
+
 :
 
 
+
  
+
 
 
 rotate
@@ -458,8 +485,12 @@ rotate
 
 
 
+
+
 (360
 deg
+
+
 
 
 );
@@ -468,10 +499,14 @@ deg
 
 
 
+
+
 :
 
 
+
  
+
 
 
 rotate
@@ -479,8 +514,12 @@ rotate
 
 
 
+
+
 (360
 deg
+
+
 
 
 );
@@ -489,10 +528,14 @@ transform
 
 
 
+
+
 :
 
 
+
  
+
 
 
 rotate
@@ -500,8 +543,12 @@ rotate
 
 
 
+
+
 (360
 deg
+
+
 
 
 );
@@ -754,9 +801,13 @@ input.header-search-input:focus {
 
 .search-out
 
+
  
 
+
 input
+
+
 
 
 [
@@ -766,55 +817,81 @@ text
 ]
 
 
+
+
 :focus
+
+
 
 
 :not
 
+
  
+
 
 (
 [
 readonly
 ]
 
+
  
+
 
 )
 {
 border-bottom
 
 
+
+
 :
 
+
  
+
 
 1
 px
 
+
  
+
 
 solid
 
+
  
+
 
 #fff
 
+
  
+
 
 !
 important
+
+
 
 
 ;
 box-shadow
 
 
+
+
 :
+
 
  
 
+
 none
+
+
 
 
 ;
@@ -918,7 +995,10 @@ nav ul li.no-hover:hover {
 
 ul.side-nav.leftside-navigation {
 	top: 56px;
-	overflow: hidden;
+	overflow-y: auto;
+	overflow-y: auto;
+	scrollbar-color: transparent transparent;
+	height: calc(100vh - 100px) !important;
 }
 
 @media only screen and(max-width: 660px) {
@@ -3141,66 +3221,66 @@ thead {
 
 .onEditModalTitle {
 	color: red;
-    font-size: 12px;
-    position: absolute;
-    margin: 0;
-    top: 55px;
-    right: 0;
-    width: 275px;
+	font-size: 12px;
+	position: absolute;
+	margin: 0;
+	top: 55px;
+	right: 0;
+	width: 275px;
 }
 
 td.dateDiv {
 	white-space: nowrap;
 }
-.nidValidationMsg
-{color: red;
-    font-size: 12px;
-    position: absolute;
-    margin: 0;
-    top: 135px;}
-    
-    .imgPreviewLink{
-position: absolute;
-top: 30px;
-right: 10px;
+
+.nidValidationMsg {
+	color: red;
+	font-size: 12px;
+	position: absolute;
+	margin: 0;
+	top: 135px;
 }
 
-
-
+.imgPreviewLink {
+	position: absolute;
+	top: 30px;
+	right: 10px;
+}
 
 label#nId {
-    width: 95%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+	width: 95%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
-
 
 div#modalMessageBody {
-    text-align: center;
-    margin-top: 12px;
+	text-align: center;
+	margin-top: 12px;
 }
+
 div#error_Modal {
-    width: 550px;
-    height: 50px;
-    margin-top: 14%;
+	width: 550px;
+	height: 50px;
+	margin-top: 14%;
 }
 
-
-
-
-
-
-
-
-
-
-div#modalMessageBodyReg{
-    text-align: center;
-    margin-top: 12px;
+div#modalMessageBodyReg {
+	text-align: center;
+	margin-top: 12px;
 }
+
 div#error_Modal_reg {
-    width: 550px;
-    height: 50px;
-    margin-top: 14%;
+	width: 550px;
+	height: 50px;
+	margin-top: 14%;
+}
+
+.scrollDivHeight {
+	height: 50px;
+}
+
+.modal-content-style {
+	margin-top: 5px;
+	overflow-y: scroll;
 }

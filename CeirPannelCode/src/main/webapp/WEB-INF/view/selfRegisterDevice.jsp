@@ -7,7 +7,7 @@
 <!DOCTYPE html>
 <html lang="en" class="no-js">
 <head>
-<title>Upload Paid Status</title>
+<title>Register Device</title>
 <meta http-equiv='cache-control' content='no-cache'>
 <meta http-equiv='expires' content='-1'>
 <meta http-equiv='pragma' content='no-cache'>
@@ -969,6 +969,7 @@ button.modal-action.modal-close.waves-effect.waves-green.btn-flat.right {
 	</div>
 	<form action="viewDeviceInformation" method="post" id="viewDeviceForm">
 	<input type="text" id="viewbyImei" name="viewbyImei" style="display: none">
+	<input type="text" id="viewbytxnId" name="viewbytxnId" style="display: none">
 	</form>
 	
 	<div id="tableOnModal" class="modal">

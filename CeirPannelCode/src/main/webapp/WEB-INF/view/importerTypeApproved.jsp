@@ -88,154 +88,151 @@
 
 							<form onsubmit="return registerTAC()" method="POST"
 								enctype="multipart/form-data" id="registerTAC">
-								<div class="row" style="margin-top: 10px;">
 
-									<div class="row">
-
-
-										<div class="input-field col s12 m6 l6"
-											style="margin-top: 22px">
-											<input type="text" id="trademark" name="trademark"
-												pattern="[A-Za-z0-9 \s]{0,160}"
-												oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-												title="" maxlength="30" required> <label
-												for="trademark"><spring:message
-													code="registration.trademark" /> <span class="star">*</span></label>
-										</div>
+								<div class="row myRow">
+									<div class="input-field col s12 m6 l6" style="margin-top: 22px">
+										<input type="text" id="trademark" name="trademark"
+											pattern="[A-Za-z0-9 \s]{0,160}"
+											oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
+											oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
+											title="" maxlength="30" required> <label
+											for="trademark"><spring:message
+												code="registration.trademark" /> <span class="star">*</span></label>
+									</div>
 
 
-										<div class="col s12 m6 l6" style="margin-bottom: 5px;">
-											<label for="productName"><spring:message
-													code="table.ProductName" /> <span class="star">*</span></label>
-											<select id="productname" class="browser-default"
-												onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-												oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-												required>
-												<option value="" disabled selected><spring:message
-														code="registration.selectproduct" />
-												</option>
-											</select>
-										</div>
-
-
-										<div class="row">
-											<div class="col s12 m6 l6">
-												<label for="modalNumber"><spring:message
-														code="registration.modelnumber" /> <span class="star">*</span></label>
-												<select id="modelNumber" class="browser-default"
-													onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-													oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-													required>
-													<option value="" disabled selected>
-														<spring:message code="registration.selectmodelnumber" /></option>
-
-												</select>
-											</div>
-
-											<div class="col s12 m6 l6" hidden="hidden">
-												<select class="browser-default" id="status">
-												</select>
-											</div>
-
-											<div class="col s12 m6 l6">
-												<label><spring:message code="input.Country" /> <span
-													class="star">*</span></label> <select id="country"
-													class="browser-default" class="mySelect"
-													style="padding-left: 0;"
-													onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-													oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-													required></select>
-											</div>
-
-
-										</div>
-
-										<div class="row" style="margin-top: 10px;">
-											<div class="input-field col s12 m6 l6">
-												<input type="text" id="frequencyrange"
-													oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-													maxlength="30" required> <label
-													for="frequencyrange"><spring:message
-														code="registration.frequencyrange" /> <span class="star">*</span></label>
-											</div>
-											<div class="input-field col s12 m6 l6">
-												<input type="text" id="tac"  pattern="[A-Za-z0-9 \s]{8,8}"
-													oninput="InvalidMsg(this,'input','<spring:message code="validation.tac8" />');"
-													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.tac8" />');"
-													name="tac" maxlength="8" required="required"> <label
-													for="tac"><spring:message code="registration.tac" />
-													<span class="star">*</span></label>
-											</div>
-										</div>
-
-										<div id="mainDiv" class="mainDiv">
-											<div id="filediv" class="fileDiv">
-												<div class="row">
-													<div class="col s12 m6 l6">
-														<label for="Category"><spring:message
-																code="input.documenttype" /></label> <select
-															class="browser-default" id="docTypetag1"
-															onchange="enableSelectFile()">
-															<option value="" disabled selected><spring:message
-																	code="select.documenttype" />
-															</option>
-
-														</select> <select class="browser-default" id="docTypetagValue1"
-															style="display: none;">
-															<option value="" disabled selected><spring:message
-																	code="select.documenttype" /></option>
-
-														</select>
-													</div>
-
-													<div class="file-field col s12 m6">
-														<h6 id="supportingdocumentFile"
-															class="file-upload-heading">
-															<spring:message code="input.supportingdocument" />
-														</h6>
-														<div class="btn">
-															<span><spring:message code="input.selectfile" /></span>
-															<input type="file" name="files[]" id="docTypeFile1"
-																disabled="disabled" onchange="enableAddMore()"
-																		onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-												oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');">
-														</div>
-														<div class="file-path-wrapper">
-															<input class="file-path validate" type="text"
-																placeholder="<spring:message code="grievanceFileMessage" />">
-															<div>
-																<p id="myFiles"></p>
-															</div>
-														</div>
-													</div>
-												</div>
-
-
-											</div>
-
-										</div>
-										<div class="col s12 m6 right">
-											<button class="btn right add_field_button"
-												disabled="disabled">
-												<span style="font-size: 20px;">+</span>
-												<spring:message code="input.addmorefile" />
-											</button>
-										</div>
+									<div class="col s12 m6 l6" style="margin-bottom: 5px;">
+										<label for="productName"><spring:message
+												code="table.ProductName" /> <span class="star">*</span></label> <select
+											id="productname" class="browser-default"
+											onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+											oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+											required>
+											<option value="" disabled selected><spring:message
+													code="registration.selectproduct" />
+											</option>
+										</select>
 									</div>
 								</div>
-								<span><spring:message code="input.requiredfields" /><span
-									class="star">*</span></span>
 
-								<div class="center" style="margin-top: 50px;">
-									<button class="btn" id="trcSubmitButton" type="submit">
-										<spring:message code="button.submit" />
-									</button>
-									<a href="./manageTypeDevices2" class="btn" id="Cancel"
-										style="margin-left: 10px;"><spring:message
-											code="button.cancel" /></a>
+								<div class="row myRow">
+									<div class="col s12 m6 l6">
+										<label for="modalNumber"><spring:message
+												code="registration.modelnumber" /> <span class="star">*</span></label>
+										<select id="modelNumber" class="browser-default"
+											onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+											oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+											required>
+											<option value="" disabled selected>
+												<spring:message code="registration.selectmodelnumber" /></option>
+
+										</select>
+									</div>
+
+									<div class="col s12 m6 l6" hidden="hidden">
+										<select class="browser-default" id="status">
+										</select>
+									</div>
+
+									<div class="col s12 m6 l6">
+										<label><spring:message code="input.Country" /> <span
+											class="star">*</span></label> <select id="country"
+											class="browser-default" class="mySelect"
+											style="padding-left: 0;"
+											onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+											oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+											required></select>
+									</div>
+
 								</div>
+
+								<div class="row myRow">
+									<div class="input-field col s12 m6 l6">
+										<input type="text" id="frequencyrange"
+											oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
+											oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
+											maxlength="30" required> <label for="frequencyrange"><spring:message
+												code="registration.frequencyrange" /> <span class="star">*</span></label>
+									</div>
+									<div class="input-field col s12 m6 l6">
+										<input type="text" id="tac" pattern="[A-Za-z0-9 \s]{8,8}"
+											oninput="InvalidMsg(this,'input','<spring:message code="validation.tac8" />');"
+											oninvalid="InvalidMsg(this,'input','<spring:message code="validation.tac8" />');"
+											name="tac" maxlength="8" required="required"> <label
+											for="tac"><spring:message code="registration.tac" />
+											<span class="star">*</span></label>
+									</div>
+								</div>
+
+
+
+								<div id="mainDiv" class="mainDiv">
+									<div id="filediv" class="fileDiv">
+										<div class="row myRow">
+											<div class="col s12 m6 l6">
+												<label for="Category"><spring:message
+														code="input.documenttype" /></label> <select
+													class="browser-default" id="docTypetag1"
+													onchange="enableSelectFile()">
+													<option value="" disabled selected><spring:message
+															code="select.documenttype" />
+													</option>
+
+												</select> <select class="browser-default" id="docTypetagValue1"
+													style="display: none;">
+													<option value="" disabled selected><spring:message
+															code="select.documenttype" /></option>
+
+												</select>
+											</div>
+
+											<div class="file-field col s12 m6">
+												<h6 id="supportingdocumentFile" class="file-upload-heading">
+													<spring:message code="input.supportingdocument" />
+												</h6>
+												<div class="btn">
+													<span><spring:message code="input.selectfile" /></span> <input
+														type="file" name="files[]" id="docTypeFile1"
+														disabled="disabled" onchange="enableAddMore()"
+														onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+														oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');">
+												</div>
+												<div class="file-path-wrapper">
+													<input class="file-path validate" type="text"
+														placeholder="<spring:message code="grievanceFileMessage" />">
+													<div>
+														<p id="myFiles"></p>
+													</div>
+												</div>
+											</div>
+										</div>
+
+
+									</div>
+
+								</div>
+								<div class="col s12 m6 right">
+									<button class="btn right add_field_button" disabled="disabled">
+										<span style="font-size: 20px;">+</span>
+										<spring:message code="input.addmorefile" />
+									</button>
+								</div>
+
+								<div class="row myRow">
+									<span><spring:message code="input.requiredfields" /><span
+										class="star">*</span></span>
+								</div>
+								<div class="row">
+									<div class="center">
+										<button class="btn" id="trcSubmitButton" type="submit">
+											<spring:message code="button.submit" />
+										</button>
+										<a href="./manageTypeDevices2" class="btn" id="Cancel"
+											style="margin-left: 10px;"><spring:message
+												code="button.cancel" /></a>
+									</div>
+								</div>
+
 							</form>
 						</div>
 					</div>
@@ -369,9 +366,9 @@
 		src="${context}/resources/project_js/importerTypeApproved.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/validationMsg.js"></script>
-			<script type="text/javascript"
+	<script type="text/javascript"
 		src="${context}/resources/project_js/_dateFunction.js" async></script>
-		<script type="text/javascript"
+	<script type="text/javascript"
 		src="${context}/resources/project_js/globalVariables.js"></script>
 	<script type="text/javascript">
 		populateCountries("country");

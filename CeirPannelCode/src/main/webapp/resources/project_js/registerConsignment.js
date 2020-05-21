@@ -10,9 +10,7 @@ $.i18n().load( {
 });
 
 function registerConsignment() {
-	var token = $("meta[name='_csrf']").attr("content");
-	var header = $("meta[name='_csrf_header']").attr("content");
-
+	$('div#initialloader').fadeIn('fast');
 	var supplierId = $('#supplierId').val();
 	var supplierName = $('#supplierName').val();
 	var consignmentNumber = $('#consignmentNumber').val();
@@ -43,14 +41,13 @@ function registerConsignment() {
 	formData.append('deviceQuantity', parseInt($('#deviceQuantity').val()));	
 	formData.append('roleType', $("body").attr("data-roleType"));
 	$.ajax({
-		headers:
-        { 'X-CSRF-TOKEN': token },
 		url : '../Consignment/registerConsignment',
 		type : 'POST',
 		data : formData,
 		processData : false,
 		contentType : false,
 		success : function(data, textStatus, jqXHR) {
+			$('div#initialloader').delay(300).fadeOut('slow');
 			$("#consignmentSubbmitButton").prop('disabled', true);
 			$('#submitConsignment').openModal({dismissible:false});
 			if (data.errorCode == "0") {
@@ -159,14 +156,6 @@ function closeConfirmation() {
 populateCountries("country");
 
 $(document).ready(function() {
-	
-	var token = $("meta[name='_csrf']").attr("content");
-	var header = $("meta[name='_csrf_header']").attr("content");
-	$.ajaxSetup({
-        headers:
-        { 'X-CSRF-TOKEN': token }
-    	});
-	
 	$.getJSON('../getDropdownList/CURRENCY', function(data) {
 		/ $("#expectedArrivalPort").empty(); /
 		for (i = 0; i < data.length; i++) {
@@ -229,14 +218,8 @@ $("input[type=file]").keypress(function(ev) {
 
 
 function getByPort(port) {
-	var token = $("meta[name='_csrf']").attr("content");
-	var header = $("meta[name='_csrf_header']").attr("content");
-	$.ajaxSetup({
-        headers:
-        { 'X-CSRF-TOKEN': token }
-    	});
-	$.ajax({
-			
+	$
+			.ajax({
 				type : 'GET',
 				url : '../byArrivalPort/' + port,
 				contentType : "application/json",
@@ -258,3 +241,6 @@ function getByPort(port) {
 				}
 			});
 }
+
+
+$('div#initialloader').delay(300).fadeOut('slow');

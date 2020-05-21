@@ -39,6 +39,8 @@ $(document).ready(function () {
 	isActive(featurID);
 	sessionStorage.removeItem("data-feature");
 	 $("#manualDownload").attr("href", "./Consignment/ManualFileDownload?userTypeId="+userTypeID);
+
+$(window).scrollTop(0); 
 });   
 
 //var password = document.getElementById("password");

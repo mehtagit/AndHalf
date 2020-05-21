@@ -979,8 +979,8 @@ public class IconsState {
 		executePostConstruct();
 		String payTaxAction ="taxPaid('"+imei1+"','"+txnId+"')";
 		String errorURL = "fileDownload('','error','"+txnId+"','"+defaultTagName+"')";
-		String viewAction="viewDetails('"+imei1+"')";
-		String deleteAction= "deleteByImei('"+imei1+"')";
+		String viewAction="viewDetails('"+imei1+"','"+txnId+"')";
+		String deleteAction= "deleteByImei('"+imei1+"','"+txnId+"')";
 		
 
         String historyAction ="historyRecord('"+txnId+"')";
@@ -1068,11 +1068,11 @@ public class IconsState {
 	/********************************** Icons for AdminUPS **********************************/ 	
 	public String adminUserPaidStatusIcon(String imei1,String createdOn,String txnId,String State,String userStatus) {
 		executePostConstruct();
-		String viewAction="viewDetails('"+imei1+"')";
+		String viewAction="viewDetails('"+imei1+"','"+txnId+"')";
 
 		String approveAction ="deviceApprovalPopup("+imei1+",'"+createdOn.replace(" ", "=")+"','"+txnId+"')";
 		String rejectAction= "userRejectPopup('"+imei1+"','"+txnId+"')";
-		String deleteAction= "deleteByImei('"+imei1+"')";
+		String deleteAction= "deleteByImei('"+imei1+"','"+txnId+"')";
 
 		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
@@ -1835,8 +1835,8 @@ public class IconsState {
 
 	public String deviceActivationIcon(String imei1,String createdOn,String txnId,String status,String userStatus) {
 		executePostConstruct();
-		String viewAction="viewDetails('"+imei1+"')";
-		String deleteAction= "deleteByImei('"+imei1+"')";
+		String viewAction="viewDetails('"+imei1+"','"+txnId+"')";
+		String deleteAction= "deleteByImei('"+imei1+"','"+txnId+"')";
 		String errorURL = "fileDownload('','error','"+txnId+"','"+defaultTagName+"')";
 
 		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
@@ -2401,7 +2401,7 @@ public class IconsState {
 	/********************************** Icons End userRegister device**********************************/
 	public String endUserPaidStatusIcon(String imei1, String userStatus, String status, String txnId) {
 		executePostConstruct();
-		String viewAction="viewDetails('"+imei1+"')";
+		String viewAction="viewDetails('"+imei1+"','"+txnId+"')";
 		String deleteAction= "deleteByImei('"+imei1+"')";
 		String errorURL = "fileDownload('','error','"+txnId+"','"+defaultTagName+"')";
 
