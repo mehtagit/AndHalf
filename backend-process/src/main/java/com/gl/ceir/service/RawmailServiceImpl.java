@@ -43,7 +43,8 @@ public class RawmailServiceImpl {
 				message = message.replaceAll(entry.getKey(), entry.getValue());
 			}
 		}
-
+		
+		// TODO return mesage_DB complete object.
 		return message;
 	}
 }

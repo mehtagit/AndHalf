@@ -109,9 +109,9 @@ public class RegularizeDbServiceImpl {
 					tag, 
 					userWiseMailCount.getUserId(),
 					0L, // Feature Id 
-					"Process",
-					"Reminder",
-					"", // Txn Id 
+					"Process", // TODO
+					"Reminder", // TODO
+					"", // Txn Id // TODO
 					"", // Subject 
 					userWiseMailCount.getPlaceholderMap(),  
 					ReferTable.END_USER, 

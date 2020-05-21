@@ -93,6 +93,8 @@ public class DeviceTaxReminder extends BaseService{
 	@Override
 	public void process(Object o) {
 		String channel = "SMS";
+		// TODO Read it from message_configuration_db.
+		// Check if user has email.
 		String policyBreachMessage = "User have not paid tax of registered device.";
 
 		@SuppressWarnings("unchecked")
