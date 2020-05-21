@@ -517,13 +517,13 @@ public class RegularizedDeviceServiceImpl {
 			Map<String, String> placeholders = new HashMap<>();
             AllRequest audit=regularizeDeviceDb.getAuditParameters();
             logger.info("txn_id is : "+regularizeDeviceDb.getTxnId());
-			AuditTrail auditTrail = new AuditTrail(audit.getUserId(), audit.getUsername(), audit.getUserTypeId(), 
+            AuditTrail auditTrail = new AuditTrail(audit.getUserId(), audit.getUsername(), audit.getUserTypeId(), 
 					audit.getUserType(), 12, Features.REGISTER_DEVICE, 
 					SubFeatures.Tax_Paid, "",regularizeDeviceDb.getTxnId(),audit.getUserType());
 			auditTrailRepository.save(auditTrail);
 			logger.info("AUDIT : update in audit_trail. " + auditTrail);
 
-			
+	
 			RegularizeDeviceDb userCustomDbDetails = regularizedDeviceDbRepository.getByFirstImei(regularizeDeviceDb.getFirstImei());
 			UserProfile ceirAdminProfile = userStaticServiceImpl.getCeirAdmin().getUserProfile();
 
@@ -590,18 +590,19 @@ public class RegularizedDeviceServiceImpl {
 			if(Objects.isNull(data.getImei())) {
 				throw new IllegalArgumentException();
 			}
-			RegularizeDeviceDb regularizeDeviceDb=new RegularizeDeviceDb();
+			RegularizeDeviceDb regularizeDeviceDb = new RegularizeDeviceDb();
 			try {
-				 regularizeDeviceDb = regularizedDeviceDbRepository.getByFirstImei(data.getImei());				
-			}
-			catch(Exception e) {
-				logger.info(e.toString());
-				return null;
+				 regularizeDeviceDb = regularizedDeviceDbRepository.getByFirstImei(data.getImei());	
+				 
+			}catch(Exception e) {
+				logger.info("throwing : ResourceServicesException : " + e.getMessage());
+				// return new GenricResponse(5,GenericMessageTags.DUPLICATE_IMEI.getTag(),GenericMessageTags.DUPLICATE_IMEI.getMessage(), "");
+				throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 			}
 
 			if(Objects.nonNull(regularizeDeviceDb)) {
 				EndUserDB endUserDB = endUserDbRepository.getByNid(regularizeDeviceDb.getNid());
-				//EndUserDB endUserDB =regularizeDeviceDb.getEndUserDB();
+				
 				endUserDB.setRegularizeDeviceDbs(new ArrayList<>(1));
 				if(Objects.nonNull(endUserDB.getDocType())) {
 					endUserDB.setDocTypeInterp(interpSetter.setTagId(Tags.DOC_TYPE, endUserDB.getDocType()));	
