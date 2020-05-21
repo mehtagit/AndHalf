@@ -58,7 +58,8 @@ public class BlockEndUserDevice extends BaseService{
 				EndUserDB endUserDB = regularizeDeviceDb.getEndUserDB();
 				logger.info(endUserDB);
 				if("cambodian".equalsIgnoreCase(endUserDB.getNationality())) {
-					regularizeDeviceDb.setStatus(3); // Blocked State
+					// regularizeDeviceDb.setStatus(3); // Blocked State
+					regularizeDeviceDb.setTaxPaidStatus(3);
 					processedDeviceDbs.add(regularizeDeviceDb);
 				}else {
 					logger.info("Current Device belong to a foreigner, So no need to block the device because of tax not paid.");
