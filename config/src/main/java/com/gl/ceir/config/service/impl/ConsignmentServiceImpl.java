@@ -548,7 +548,7 @@ public class ConsignmentServiceImpl {
 								SubFeatures.ACCEPT,
 								consignmentUpdateRequest.getTxnId(),
 								consignmentMgmt.getTxnId(),
-								placeholderMap, null, "Importer");
+								placeholderMap, null, "Importer", ReferTable.USERS);
 					}
 
 					else if("CUSTOM".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())) {
@@ -595,7 +595,8 @@ public class ConsignmentServiceImpl {
 								consignmentMgmt.getTxnId(),
 								placeholderMap, 
 								null, 
-								"Importer");
+								"Importer",
+								ReferTable.USERS);
 						emailUtil.saveNotification("Consignment_Approved_CustomCEIRAdmin_Email_Message", 
 								ceirUserProfile,
 								consignmentUpdateRequest.getFeatureId(),
@@ -605,7 +606,8 @@ public class ConsignmentServiceImpl {
 								consignmentMgmt.getTxnId(),
 								placeholderMap, 
 								null, 
-								"CEIRAdmin");
+								"CEIRAdmin",
+								ReferTable.USERS);
 
 					}
 					else if(CEIRSYSTEM.equalsIgnoreCase(consignmentUpdateRequest.getRoleType())) {
@@ -688,7 +690,8 @@ public class ConsignmentServiceImpl {
 								consignmentMgmt.getTxnId(),
 								placeholderMap, 
 								null, 
-								"Importer");
+								"Importer",
+								ReferTable.USERS);
 						emailUtil.saveNotification("Consignment_Approved_DRTCEIRAdmin_Email_Message", 
 								ceirUserProfile,
 								consignmentUpdateRequest.getFeatureId(),
@@ -698,7 +701,8 @@ public class ConsignmentServiceImpl {
 								consignmentMgmt.getTxnId(),
 								placeholderMap, 
 								null, 
-								"CEIRAdmin");
+								"CEIRAdmin",
+								ReferTable.USERS);
 
 					}
 					else {
@@ -729,7 +733,8 @@ public class ConsignmentServiceImpl {
 							consignmentMgmt.getTxnId(),
 							placeholderMap, 
 							null,
-							"Importer");
+							"Importer",
+							ReferTable.USERS);
 
 				}
 				else if("CUSTOM".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())) {
@@ -770,7 +775,8 @@ public class ConsignmentServiceImpl {
 							consignmentMgmt.getTxnId(),
 							placeholderMap, 
 							null,
-							"Importer");
+							"Importer",
+							ReferTable.USERS);
 
 					emailUtil.saveNotification("CONSIGNMENT_REJECTED_BY_CUSTOM_TO_CEIR_EMAIL", 
 							ceirUserProfile, 
@@ -781,7 +787,8 @@ public class ConsignmentServiceImpl {
 							consignmentMgmt.getTxnId(),
 							placeholderMap, 
 							null,
-							"Importer");
+							"Importer", 
+							ReferTable.USERS);
 
 				}
 				else if(CEIRSYSTEM.equalsIgnoreCase(consignmentUpdateRequest.getRoleType())) {
@@ -849,7 +856,8 @@ public class ConsignmentServiceImpl {
 							consignmentMgmt.getTxnId(),
 							placeholderMap, 
 							null,
-							"Importer");
+							"Importer",
+							ReferTable.USERS);
 
 					emailUtil.saveNotification("CONSIGNMENT_REJECTED_BY_DRT_TO_CEIR_EMAIL'", 
 							ceirUserProfile, 
@@ -860,7 +868,8 @@ public class ConsignmentServiceImpl {
 							consignmentMgmt.getTxnId(),
 							placeholderMap, 
 							null,
-							"Importer");
+							"Importer",
+							ReferTable.USERS);
 
 				}
 				else {
