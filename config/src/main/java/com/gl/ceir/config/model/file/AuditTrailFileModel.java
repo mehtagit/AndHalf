@@ -13,7 +13,7 @@ public class AuditTrailFileModel {
 	@CsvBindByPosition(position = 1)
 	private String txnId;
 	
-	@CsvBindByName(column = "User Name")
+	@CsvBindByName(column = "User Id")
 	@CsvBindByPosition(position = 2)
 	private String userName;
 	
