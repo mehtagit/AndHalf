@@ -24,4 +24,5 @@ public interface SubFeatures {
 	String Approve="Approve";
 	String Clear="Clear";
 	String Tax_Paid="Tax Paid";
+	String Add_Device="Add Device";
 }
