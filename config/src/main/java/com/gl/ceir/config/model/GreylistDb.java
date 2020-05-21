@@ -1,6 +1,7 @@
 package com.gl.ceir.config.model;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -28,12 +29,12 @@ public class GreylistDb implements Serializable {
 	@CreationTimestamp
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	@Column(nullable = false, updatable = false)
-	private Date createdOn;
+	private LocalDateTime createdOn;
 	
 	@JsonIgnore
 	@UpdateTimestamp
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
-	private Date modifiedOn;
+	private LocalDateTime modifiedOn;
 	private String imei;
 	@Column(length = 15)
 	private String roleType;
@@ -49,39 +50,25 @@ public class GreylistDb implements Serializable {
 	private String  deviceId;
 	private String imeiEsnMeid;
 	private Date expiryDate;
+	
+	@Column(name = "mode2")
 	private String mode;
 	private String requestType;
 	private String userType;
-	private Integer complainType;
+	private String complainType;
 	private String modeType;
 	
-	
-
-
 	public Long getId() {
 		return id;
 	}
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public Date getCreatedOn() {
-		return createdOn;
-	}
-	public void setCreatedOn(Date createdOn) {
-		this.createdOn = createdOn;
-	}
-
 	public String getTxnId() {
 		return txnId;
 	}
 	public void setTxnId(String txnId) {
 		this.txnId = txnId;
-	}
-	public Date getModifiedOn() {
-		return modifiedOn;
-	}
-	public void setModifiedOn(Date modifiedOn) {
-		this.modifiedOn = modifiedOn;
 	}
 	public String getRoleType() {
 		return roleType;
@@ -175,11 +162,21 @@ public class GreylistDb implements Serializable {
 	public void setUserType(String userType) {
 		this.userType = userType;
 	}
-	public Integer getComplainType() {
+	
+	public String getComplainType() {
 		return complainType;
 	}
-	public void setComplainType(Integer complainType) {
+	public void setComplainType(String complainType) {
 		this.complainType = complainType;
+	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	public void setCreatedOn(LocalDateTime createdOn) {
+		this.createdOn = createdOn;
+	}
+	public void setModifiedOn(LocalDateTime modifiedOn) {
+		this.modifiedOn = modifiedOn;
 	}
 	public String getModeType() {
 		return modeType;
@@ -187,40 +184,60 @@ public class GreylistDb implements Serializable {
 	public void setModeType(String modeType) {
 		this.modeType = modeType;
 	}
+	
+	public LocalDateTime getCreatedOn() {
+		return createdOn;
+	}
+	public LocalDateTime getModifiedOn() {
+		return modifiedOn;
+	}
 	@Override
 	public String toString() {
-		StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append("GreylistDb [id=");
-		stringBuilder.append(id);
-		stringBuilder.append(", createdOn=");
-		stringBuilder.append(createdOn);
-		stringBuilder.append(", modifiedOn=");
-		stringBuilder.append(modifiedOn);
-		stringBuilder.append(", imei=");
-		stringBuilder.append(imei);
-		stringBuilder.append(", roleType=");
-		stringBuilder.append(roleType);
-		stringBuilder.append(", userId=");
-		stringBuilder.append(userId);
-		stringBuilder.append(", txnId=");
-		stringBuilder.append(txnId);
-		stringBuilder.append(", deviceNumber=");
-		stringBuilder.append(deviceNumber);
-		stringBuilder.append(", deviceType=");
-		stringBuilder.append(deviceType);
-		stringBuilder.append(", deviceAction=");
-		stringBuilder.append(deviceAction);
-		stringBuilder.append(", deviceStatus=");
-		stringBuilder.append(deviceStatus);
-		stringBuilder.append(", DeviceLaunchDate=");
-		stringBuilder.append(DeviceLaunchDate);
-		stringBuilder.append(", multipleSimStatus=");
-		stringBuilder.append(multipleSimStatus);
-		stringBuilder.append(", deviceId=");
-		stringBuilder.append(deviceId);
-		stringBuilder.append(", imeiEsnMeid=");
-		stringBuilder.append(imeiEsnMeid);
-		stringBuilder.append("]");
-		return stringBuilder.toString();
+		StringBuilder builder = new StringBuilder();
+		builder.append("GreylistDb [id=");
+		builder.append(id);
+		builder.append(", createdOn=");
+		builder.append(createdOn);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
+		builder.append(", imei=");
+		builder.append(imei);
+		builder.append(", roleType=");
+		builder.append(roleType);
+		builder.append(", userId=");
+		builder.append(userId);
+		builder.append(", txnId=");
+		builder.append(txnId);
+		builder.append(", deviceNumber=");
+		builder.append(deviceNumber);
+		builder.append(", deviceType=");
+		builder.append(deviceType);
+		builder.append(", deviceAction=");
+		builder.append(deviceAction);
+		builder.append(", deviceStatus=");
+		builder.append(deviceStatus);
+		builder.append(", DeviceLaunchDate=");
+		builder.append(DeviceLaunchDate);
+		builder.append(", multipleSimStatus=");
+		builder.append(multipleSimStatus);
+		builder.append(", deviceId=");
+		builder.append(deviceId);
+		builder.append(", imeiEsnMeid=");
+		builder.append(imeiEsnMeid);
+		builder.append(", expiryDate=");
+		builder.append(expiryDate);
+		builder.append(", mode=");
+		builder.append(mode);
+		builder.append(", requestType=");
+		builder.append(requestType);
+		builder.append(", userType=");
+		builder.append(userType);
+		builder.append(", complainType=");
+		builder.append(complainType);
+		builder.append(", modeType=");
+		builder.append(modeType);
+		builder.append("]");
+		return builder.toString();
 	}
+
 }

@@ -58,7 +58,8 @@ public class BlockEndUserDevice extends BaseService{
 				EndUserDB endUserDB = regularizeDeviceDb.getEndUserDB();
 				logger.info(endUserDB);
 				if("cambodian".equalsIgnoreCase(endUserDB.getNationality())) {
-					regularizeDeviceDb.setStatus(3); // Blocked State
+					// regularizeDeviceDb.setStatus(3); // Blocked State
+					regularizeDeviceDb.setTaxPaidStatus(3);
 					processedDeviceDbs.add(regularizeDeviceDb);
 				}else {
 					logger.info("Current Device belong to a foreigner, So no need to block the device because of tax not paid.");
@@ -83,7 +84,6 @@ public class BlockEndUserDevice extends BaseService{
 
 	@Override
 	public void process(Object o) {
-		String channel = "EMAIL";
 		
 		@SuppressWarnings("unchecked")
 		List<RegularizeDeviceDb> regularizeDeviceDbs = (List<RegularizeDeviceDb>) o;
@@ -94,29 +94,7 @@ public class BlockEndUserDevice extends BaseService{
 		
 		// Save in notification.
 		if("Y".equalsIgnoreCase(systemConfigMap.get(ConfigTags.SEND_NOTI_ON_DEVICE_TAX_NOT_PAID).getValue())) {
-			List<UserWiseMailCount> userWiseMailCounts = regularizeDbServiceImpl.getUserWiseMailCountDto(regularizeDeviceDbs);
-
-			List<RawMail> rawMails = new ArrayList<>(1);
-
-			for(UserWiseMailCount userWiseMailCount : userWiseMailCounts) {
-
-				rawMails.add(new RawMail(channel, 
-						"BLOCK_DEVICE_ON_TAX_NOT_PAID_MAIL", 
-						userWiseMailCount.getUserId(), 
-						0L, // Feature Id 
-						"System Process",
-						"Reminder",
-						"", // Txn Id 
-						"", // Subject 
-						userWiseMailCount.getPlaceholderMap(), 
-						ReferTable.END_USER, 
-						"End User",
-						"End User"));
-			}
-
-			notifierWrapper.saveNotification(rawMails);
-			logger.info("No. of notification sent is [" + userWiseMailCounts.size() + "]");
-
+			regularizeDbServiceImpl.sendNotification(regularizeDeviceDbs, "BLOCK_DEVICE_ON_TAX_NOT_PAID_MAIL");
 		}else {
 			logger.info("WARN : Notification is off for reminding user on failure of tax paying of registered device.");
 		}
