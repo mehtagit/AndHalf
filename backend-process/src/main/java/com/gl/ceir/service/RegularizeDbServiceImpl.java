@@ -13,9 +13,12 @@ import org.springframework.stereotype.Service;
 
 import com.gl.ceir.configuration.PropertiesReader;
 import com.gl.ceir.constant.Datatype;
+import com.gl.ceir.constant.ReferTable;
 import com.gl.ceir.constant.SearchOperation;
 import com.gl.ceir.entity.EndUserDB;
 import com.gl.ceir.entity.RegularizeDeviceDb;
+import com.gl.ceir.notifier.NotifierWrapper;
+import com.gl.ceir.pojo.RawMail;
 import com.gl.ceir.pojo.SearchCriteria;
 import com.gl.ceir.pojo.UserWiseMailCount;
 import com.gl.ceir.repo.RegularizedDeviceDbRepository;
@@ -35,6 +38,9 @@ public class RegularizeDbServiceImpl {
 
 	@Autowired
 	RegularizedDeviceDbRepository regularizedDeviceDbRepository;
+	
+	@Autowired
+	NotifierWrapper notifierWrapper;
 
 	public List<RegularizeDeviceDb> getDevicesbyTaxStatusAndDate(String fromDate, String toDate, int taxPaidStatus){
 		return regularizedDeviceDbRepository.findAll(buildSpecification(fromDate, toDate, taxPaidStatus).build());
@@ -72,7 +78,7 @@ public class RegularizeDbServiceImpl {
 					placeholderMap.put("<First name>", endUserDB.getFirstName());
 					placeholderMap.put("<date>", regularizeDeviceDb.getCreatedOn().toString().substring(0, 10));
 					placeholderMap.put("<count>", Integer.toString(userWiseMailCount.getDeviceCount()));
-					
+
 					userWiseMailCountMap.put(regularizeDeviceDb.getNid(), userWiseMailCount);
 				}else {
 					userWiseMailCount = userWiseMailCountMap.get(regularizeDeviceDb.getNid());
@@ -81,16 +87,41 @@ public class RegularizeDbServiceImpl {
 					placeholderMap.put("<count>", Integer.toString(userWiseMailCount.getDeviceCount()));
 				}
 			}
-			
+
 			List<UserWiseMailCount> userWiseMailCounts = new ArrayList<>(userWiseMailCountMap.values());
 			logger.debug(userWiseMailCounts);
-			
+
 			return userWiseMailCounts;
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			return new ArrayList<>(1);
 		}
+	}
+
+	public void sendNotification(List<RegularizeDeviceDb> regularizeDeviceDbs, String tag) {
+		String channel = "EMAIL";
+		List<UserWiseMailCount> userWiseMailCounts = getUserWiseMailCountDto(regularizeDeviceDbs);
+		List<RawMail> rawMails = new ArrayList<>(1);
+
+		for(UserWiseMailCount userWiseMailCount : userWiseMailCounts) {
+			rawMails.add(new RawMail(channel, 
+					tag, 
+					userWiseMailCount.getUserId(),
+					0L, // Feature Id 
+					"Process",
+					"Reminder",
+					"", // Txn Id 
+					"", // Subject 
+					userWiseMailCount.getPlaceholderMap(),  
+					ReferTable.END_USER, 
+					"End User",
+					"End User"));
+		}
+
+		notifierWrapper.saveNotification(rawMails);
+		
+		logger.info("No. of notification sent is [" + userWiseMailCounts.size() + "]");
 	}
 
 }
