@@ -953,7 +953,7 @@ if(Objects.nonNull(regularizeOutput))
 			specificationBuilder.with(new SearchCriteria("nid", filterRequest.getNid(), SearchOperation.EQUALITY, Datatype.STRING));
 
 		if(Objects.nonNull(filterRequest.getStartDate()) && !filterRequest.getStartDate().isEmpty())
- 			specificationBuilder.with(new SearchCriteria("createdO[EmailService.javan", filterRequest.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
+ 			specificationBuilder.with(new SearchCriteria("createdOn", filterRequest.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
         
 			if(Objects.nonNull(filterRequest.getUserTypeId())) {
             if(filterRequest.getUserTypeId()==18)		
@@ -964,14 +964,10 @@ if(Objects.nonNull(regularizeOutput))
             {
      			specificationBuilder.with(new SearchCriteria("origin", "Self" , SearchOperation.EQUALITY, Datatype.STRING));
             }
-
             else {
-           	 
             }
-
 		}
 
-		
 		if(Objects.nonNull(filterRequest.getEndDate()) && !filterRequest.getEndDate().isEmpty())
 			specificationBuilder.with(new SearchCriteria("createdOn", filterRequest.getEndDate() , SearchOperation.LESS_THAN, Datatype.DATE));
 

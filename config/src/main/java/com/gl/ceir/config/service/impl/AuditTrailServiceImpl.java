@@ -31,8 +31,10 @@ import com.gl.ceir.config.model.SystemConfigurationDb;
 import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.SearchOperation;
 import com.gl.ceir.config.model.file.AuditTrailFileModel;
+import com.gl.ceir.config.model.file.ConsignmentFileModel;
 import com.gl.ceir.config.repository.AuditTrailRepository;
 import com.gl.ceir.config.specificationsbuilder.GenericSpecificationBuilder;
+import com.gl.ceir.config.util.CustomMappingStrategy;
 import com.gl.ceir.config.util.InterpSetter;
 import com.gl.ceir.config.util.Utility;
 import com.opencsv.CSVWriter;
@@ -76,9 +78,9 @@ public class AuditTrailServiceImpl {
 		try {
 			List<AuditTrail> auditTrails = auditTrailRepository.findAll( buildSpecification(filterRequest).build());
 
-			for(AuditTrail auditTrail : auditTrails ) {
-				setInterp(auditTrail);
-			}
+//			for(AuditTrail auditTrail : auditTrails ) {
+//				setInterp(auditTrail);
+//			}
 
 			return auditTrails;
 
@@ -129,7 +131,7 @@ public class AuditTrailServiceImpl {
 		StatefulBeanToCsvBuilder<AuditTrailFileModel> builder = null;
 		StatefulBeanToCsv<AuditTrailFileModel> csvWriter = null;
 		List< AuditTrailFileModel > fileRecords = null;
-
+		CustomMappingStrategy<AuditTrailFileModel> mappingStrategy = new CustomMappingStrategy<>();
 		try {
 			List<AuditTrail> auditTrails = getAll(filterRequest);
 			if( !auditTrails.isEmpty() ) {
@@ -143,21 +145,20 @@ public class AuditTrailServiceImpl {
 			}
 
 			writer = Files.newBufferedWriter(Paths.get(filePath+fileName));
+			mappingStrategy.setType(AuditTrailFileModel.class);
 			builder = new StatefulBeanToCsvBuilder<>(writer);
-			csvWriter = builder.withQuotechar(CSVWriter.NO_QUOTE_CHARACTER).build();
+			csvWriter = builder.withMappingStrategy(mappingStrategy).withSeparator(',').withQuotechar(CSVWriter.NO_QUOTE_CHARACTER).build();
 
 			if( !auditTrails.isEmpty() ) {
 				fileRecords = new ArrayList<>(); 
-
 				for(AuditTrail auditTrail : auditTrails ) {
 					atfm = new AuditTrailFileModel();
-
 					atfm.setCreatedOn(auditTrail.getCreatedOn().toString());
 					atfm.setTxnId(auditTrail.getTxnId());
-					atfm.setRoleType("");
+					atfm.setRoleType(auditTrail.getRoleType());
 					atfm.setFeatureName(auditTrail.getFeatureName());
 					atfm.setSubFeatureName(auditTrail.getSubFeature());
-
+					atfm.setUserName(auditTrail.getUserName());
 					logger.debug(atfm);
 
 					fileRecords.add(atfm);
@@ -165,6 +166,11 @@ public class AuditTrailServiceImpl {
 
 				csvWriter.write(fileRecords);
 			}
+			else
+			{
+				csvWriter.write( new AuditTrailFileModel());	
+			}
+			
 			return new FileDetails( fileName, filePath, link.getValue() + fileName ); 
 
 		} catch (Exception e) {
