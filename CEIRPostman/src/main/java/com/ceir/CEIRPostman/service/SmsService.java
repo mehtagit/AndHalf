@@ -1,7 +1,9 @@
 package com.ceir.CEIRPostman.service;
 
+
 import java.util.List;
 import java.util.Objects;
+
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,21 +19,19 @@ import com.ceir.CEIRPostman.RepositoryService.SystemConfigurationDbRepoImpl;
 import com.ceir.CEIRPostman.RepositoryService.UserRepoService;
 import com.ceir.CEIRPostman.RepositoryService.UserTempRepoService;
 import com.ceir.CEIRPostman.configuration.AppConfig;
-import com.ceir.CEIRPostman.model.AuthorityNotification;
 import com.ceir.CEIRPostman.model.EndUserDB;
-import com.ceir.CEIRPostman.model.MessageConfigurationDb;
 import com.ceir.CEIRPostman.model.Notification;
 import com.ceir.CEIRPostman.model.RunningAlertDb;
 import com.ceir.CEIRPostman.model.SystemConfigurationDb;
 import com.ceir.CEIRPostman.model.User;
 import com.ceir.CEIRPostman.model.UserTemporarydetails;
-import com.ceir.CEIRPostman.util.EmailUtil;
+import com.ceir.CEIRPostman.util.SmsUtil;
 
 @Service
-public class EmailService implements Runnable {
+public class SmsService implements Runnable {
 
 	@Autowired
-	EmailUtil emailUtil;
+	SmsUtil emailUtil;
 
 	@Autowired
 	NotificationRepository notificationRepo;
@@ -74,27 +74,26 @@ public class EmailService implements Runnable {
 		SystemConfigurationDb sleepTps = systemConfigRepoImpl.getDataByTag("Email_TPS_Milli_Sec");
 		SystemConfigurationDb fromEmail = systemConfigRepoImpl.getDataByTag("Email_Username");
 		SystemConfigurationDb emailRetryCount = systemConfigRepoImpl.getDataByTag("Email_Retry_Count");
-		SystemConfigurationDb authorityMailSend = systemConfigRepoImpl.getDataByTag("Reporting_Authority_Mail_Status");
-		MessageConfigurationDb messageDb = messageRepo.getByTag("Reporting_Authority_Notification");
-		Integer sleepTimeinMilliSec =  0;
+		//SystemConfigurationDb authorityMailSend = systemConfigRepoImpl.getDataByTag("Reporting_Authority_Mail_Status");
+		//MessageConfigurationDb messageDb = messageRepo.getByTag("Reporting_Authority_Notification");
+		Integer sleepTimeinMilliSec = 0;
 		Integer emailretrycountValue = 0;
-		Integer authorityStatusValue = 0;
+		//Integer authorityStatusValue = 0;
 		try {
 			emailretrycountValue = Integer.parseInt(emailRetryCount.getValue());
 			log.info("email retry count value: " + emailRetryCount.getValue());
 		} catch (Exception e) {
-			RunningAlertDb alertDb = new RunningAlertDb("alert008", "email retry count value not found in db", 0);
+			RunningAlertDb alertDb = new RunningAlertDb("alert008", "sms retry count value not found in db", 0);
 			alertDbRepo.saveAlertDb(alertDb);
 			log.info(e.toString());
 		}
-		try {
-			authorityStatusValue = Integer.parseInt(authorityMailSend.getValue());
-			log.info("Authority mail status value: " + authorityMailSend.getValue());
-		} catch (Exception e) {
-			RunningAlertDb alertDb = new RunningAlertDb("alert010", "authority email status value not found in db", 0);
-			alertDbRepo.saveAlertDb(alertDb);
-			log.info(e.toString());
-		}
+		/*
+		 * try { authorityStatusValue = Integer.parseInt(authorityMailSend.getValue());
+		 * log.info("Authority mail status value: " + authorityMailSend.getValue()); }
+		 * catch (Exception e) { RunningAlertDb alertDb = new RunningAlertDb("alert010",
+		 * "authority email status value not found in db", 0);
+		 * alertDbRepo.saveAlertDb(alertDb); log.info(e.toString()); }
+		 */
 		try {
 			sleepTimeinMilliSec = Integer.parseInt(sleepTps.getValue());
 
@@ -114,37 +113,37 @@ public class EmailService implements Runnable {
 			try {
 				log.info("inside email process");
 				log.info("going to fetch data from notification table by status=1 and channel type= " + type);
-				List<Notification> notificationData = notificationRepoImpl.dataByStatus(1);
+				List<Notification> notificationData = notificationRepoImpl.dataByStatusAndChannelType(1, type);
 				int totalMailsent = 0;
 				int totalMailNotsent = 0;
 
 				if (notificationData.isEmpty() == false) {
 					log.info("notification data is not empty and size is " + notificationData.size());
-					SystemConfigurationDb emailBodyFooter = systemConfigRepoImpl.getDataByTag("mail_signature");
+					//SystemConfigurationDb emailBodyFooter = systemConfigRepoImpl.getDataByTag("mail_signature");
 					int sNo = 0;
 					emailUtil.setBatchSize(batchSize, notificationData.size());
 					for (Notification notification : notificationData) {
-						if(type.equalsIgnoreCase(notification.getChannelType()))
-						{
 						log.info("notification data id= " + notification.getId());
 						sNo++;
 						String body = new String();
 						body = notification.getMessage();
-						if (emailBodyFooter != null) {
-							body = body + "\n" + emailBodyFooter.getValue();
-						}
+						/*
+						 * if (emailBodyFooter != null) { body = body + "\n" +
+						 * emailBodyFooter.getValue(); }
+						 */
 						String toEmail = "";
-						String authorityEmail = "";
 						if (Objects.nonNull(notification.getUserId()) && notification.getUserId() != 0) {
 							if (notification.getReferTable() != null) {
 								log.info("refer Table: " + notification.getReferTable());
 								if ("END_USER".equalsIgnoreCase(notification.getReferTable())) {
 									EndUserDB endUser = endUserRepoService.getById(notification.getUserId());
 									if(Objects.nonNull(endUser)) {
-										if(Objects.nonNull(endUser.getEmail()))
+										if(Objects.nonNull(endUser.getPhoneNo()))
 										{
-											toEmail = endUser.getEmail();		
+											toEmail = endUser.getPhoneNo();		
 										}
+										
+									
 									}
 									else {
 										log.info("no data found for this userid: "+notification.getUserId()+" in end user table");
@@ -155,8 +154,8 @@ public class EmailService implements Runnable {
 											.getUserTempByUserId(notification.getUserId());
 									if(Objects.nonNull(details))
 									{
-										if (Objects.nonNull(details.getEmailId())) {
-											toEmail = details.getEmailId();
+										if (Objects.nonNull(details.getMobileNo())) {
+											toEmail = details.getMobileNo();
 										}	
 									}
 									else {
@@ -168,8 +167,8 @@ public class EmailService implements Runnable {
 									User user = userRepoService.getById(notification.getUserId());
 									if(Objects.nonNull(user))
 									{
-										if(Objects.nonNull(user.getUserProfile().getEmail())){
-											toEmail = user.getUserProfile().getEmail();	
+										if(Objects.nonNull(user.getUserProfile().getPhoneNo())){
+											toEmail = user.getUserProfile().getPhoneNo();	
 										}
 										
 									}
@@ -178,42 +177,43 @@ public class EmailService implements Runnable {
 										
 									}
 									
-									if(Objects.nonNull(notification.getAuthorityStatus())) {
-										log.info("authority status: "+notification.getAuthorityStatus());
-										if(notification.getAuthorityStatus()==1) {
-											if (Objects.nonNull(user.getUserProfile().getAuthorityEmail())
-													&& authorityStatusValue == 1) {
-												authorityEmail = user.getUserProfile().getAuthorityEmail();
-												log.info("authorityEmail:  "+authorityEmail);
-												emailUtil.increaseBatchSize();
-											}
-										}	
-									}
+									/*
+									 * if(Objects.nonNull(notification.getAuthorityStatus())) {
+									 * log.info("authority status: "+notification.getAuthorityStatus());
+									 * if(notification.getAuthorityStatus()==1) { if
+									 * (Objects.nonNull(user.getUserProfile().getAuthorityEmail()) &&
+									 * authorityStatusValue == 1) { authorityEmail =
+									 * user.getUserProfile().getAuthorityEmail();
+									 * log.info("authorityEmail:  "+authorityEmail); emailUtil.increaseBatchSize();
+									 * } } }
+									 */
 								}
 							} else {
 								User user = userRepoService.getById(notification.getUserId());
-								toEmail = user.getUserProfile().getEmail();
-								if(Objects.nonNull(notification.getAuthorityStatus())) {
-									log.info("authority status: "+notification.getAuthorityStatus());
-								if(notification.getAuthorityStatus()==1) {
-									if (Objects.nonNull(user.getUserProfile().getAuthorityEmail())
-											&& authorityStatusValue == 1) {
-										authorityEmail = user.getUserProfile().getAuthorityEmail();
-										log.info("authorityEmail:  "+authorityEmail);
-										emailUtil.increaseBatchSize();
-									}
+								
+								if(Objects.nonNull(user.getUserProfile().getPhoneNo())){
+									toEmail = user.getUserProfile().getPhoneNo();	
 								}
-								}
+								/*
+								 * if(Objects.nonNull(notification.getAuthorityStatus())) {
+								 * log.info("authority status: "+notification.getAuthorityStatus());
+								 * if(notification.getAuthorityStatus()==1) { if
+								 * (Objects.nonNull(user.getUserProfile().getAuthorityEmail()) &&
+								 * authorityStatusValue == 1) { authorityEmail =
+								 * user.getUserProfile().getAuthorityEmail();
+								 * log.info("authorityEmail:  "+authorityEmail); emailUtil.increaseBatchSize();
+								 * } } }
+								 */
 								
 							}
 
 							boolean emailStatus = false;
 
 							if (toEmail != null && !toEmail.isEmpty()) {
-								log.info("toEmail  " + toEmail);
+								log.info("toSms  " + toEmail);
+								//validator regex??
 								if (emailUtil.emailValidator(toEmail)) {
-									String message=body.replace("\\n", "\n");
-									log.info(" fromEmail: "+fromEmail.getValue()+" getSubject: "+messageDb.getSubject());
+									//String message=body.replace("\\n", "\n");
 									emailStatus = emailUtil.sendEmail(toEmail, fromEmail.getValue(),
 											notification.getSubject(), body, notificationData.size(), sNo,
 											sleepTimeinMilliSec);
@@ -228,38 +228,33 @@ public class EmailService implements Runnable {
 										totalMailNotsent++;
 									}
 
-										if (authorityEmail != null && !authorityEmail.isEmpty()) {
-
-											if (emailUtil.emailValidator(toEmail)) {
-												body=body.replace("\\n", "\n");
-												String content=messageDb.getValue().replace("\\n", "\n");
-												message =content +  "\n" +body;
-												log.info("message content in case of authority email: " + message);
-												emailStatus = emailUtil.sendEmail(authorityEmail, fromEmail.getValue(),
-														messageDb.getSubject(), message, notificationData.size(), sNo,
-														sleepTimeinMilliSec);
-												if (emailStatus) {
-													totalMailsent++;
-													AuthorityNotification authoritNoti = new AuthorityNotification(
-															notification.getChannelType(), message,
-															notification.getUserId(), notification.getFeatureId(),
-															notification.getFeatureTxnId(),
-															notification.getFeatureName(), notification.getSubFeature(),
-															notification.getStatus(), notification.getSubject(),
-															notification.getRetryCount(), notification.getReferTable(),
-															notification.getRoleType(),
-															notification.getReceiverUserType());
-													authorityRepo.saveNotification(authoritNoti);
-
-												} else {
-													totalMailNotsent++;
-												}
-											}
-
-									}
+									/*
+									 * if (authorityEmail != null && !authorityEmail.isEmpty()) { if
+									 * (emailUtil.emailValidator(authorityEmail)) { body=body.replace("\\n", "\n");
+									 * String content=messageDb.getValue().replace("\\n", "\n"); message =content +
+									 * "\n" +body; log.info("message content in case of authority email: " +
+									 * message);
+									 * log.info("authorityEmail: "+authorityEmail+" fromEmail: "+fromEmail.getValue(
+									 * )+"getSubject: "+messageDb.getSubject()); emailStatus =
+									 * emailUtil.sendEmail(authorityEmail, fromEmail.getValue(),
+									 * messageDb.getSubject(), message, notificationData.size(), sNo,
+									 * sleepTimeinMilliSec); if (emailStatus) { totalMailsent++;
+									 * AuthorityNotification authoritNoti = new AuthorityNotification(
+									 * notification.getChannelType(), message, notification.getUserId(),
+									 * notification.getFeatureId(), notification.getFeatureTxnId(),
+									 * notification.getFeatureName(), notification.getSubFeature(),
+									 * notification.getStatus(), notification.getSubject(),
+									 * notification.getRetryCount(), notification.getReferTable(),
+									 * notification.getRoleType(), notification.getReceiverUserType());
+									 * authorityRepo.saveNotification(authoritNoti);
+									 * 
+									 * } else { totalMailNotsent++; } }
+									 * 
+									 * }
+									 */
 
 								} else {
-									log.info("this to email is invalid: " + toEmail);
+									log.info("this to sms is invalid: " + toEmail);
 									notification.setRetryCount(notification.getRetryCount() + 1);
 									notification.setStatus(2);
 								}
@@ -279,15 +274,15 @@ public class EmailService implements Runnable {
 
 						notificationRepo.save(notification);
 					}
-				}
-					log.info("total mail sent=  " + totalMailsent);
-					log.info("email fail to send: " + totalMailNotsent);
+
+					log.info("total sms sent=  " + totalMailsent);
+					log.info("sms failed to send: " + totalMailNotsent);
 					emailUtil.setIndexZero();
 				} else {
 					log.info("notification data is  empty");
-					log.info(" so no email is pending to send");
+					log.info(" so no sms is pending to send");
 				}
-				log.info("exit from email process");
+				log.info("exit from sms process");
 			} catch (Exception e) {
 				log.info("error in sending email");
 				log.info(e.toString());

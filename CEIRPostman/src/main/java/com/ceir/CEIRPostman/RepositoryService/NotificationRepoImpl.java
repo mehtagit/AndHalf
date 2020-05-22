@@ -18,9 +18,20 @@ public class NotificationRepoImpl {
 	NotificationRepository notificationRepository;
 	
 	private final Logger log = LoggerFactory.getLogger(getClass());
-	public List<Notification> notitificationByStatus(int status,String channelType) {
+	public List<Notification> dataByStatusAndChannelType(int status,String type) {
 		try {
-			List<Notification> notification=notificationRepository.findByStatusAndChannelType(status,channelType);
+			List<Notification> notification=notificationRepository.findByStatusAndChannelTypeContainingIgnoreCase(status,type);
+		    return notification;
+		}
+		catch(Exception e) {
+			log.info(e.toString());
+            return new ArrayList<Notification>();
+		}
+	}
+	
+	public List<Notification> dataByStatus(int status) {
+		try {
+			List<Notification> notification=notificationRepository.findByStatus(status);
 		    return notification;
 		}
 		catch(Exception e) {

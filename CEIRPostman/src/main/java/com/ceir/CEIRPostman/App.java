@@ -6,6 +6,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.annotation.EnableAsync;
 import com.ceir.CEIRPostman.service.EmailService;
+
 @EnableAsync
 @SpringBootConfiguration
 @EnableAutoConfiguration
@@ -16,6 +17,8 @@ public class App
 	{
 		ConfigurableApplicationContext ctx =SpringApplication.run(App.class, args);
 		EmailService fetch=ctx.getBean(EmailService.class);
-		new Thread(fetch).start(); 
+		new Thread(fetch).start();
+//		SmsService fetch1=ctx.getBean(SmsService.class);
+//		new Thread(fetch1).start(); 
 	}
 }

@@ -2,7 +2,6 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-
 	<groupId>com.ceir</groupId>
 	<artifactId>CEIRPostman</artifactId>
 	<version>0.0.4-SNAPSHOT</version>
@@ -84,18 +83,22 @@
 			<artifactId>ojdbc8</artifactId>
 			<version>19.3</version>
 		</dependency>
+				<!-- https://mvnrepository.com/artifact/org.json/json -->
+<dependency>
+    <groupId>org.json</groupId>
+    <artifactId>json</artifactId>
+    <version>20180813</version>
+</dependency>
 	</dependencies>
 	<build>
-		<finalName>${artifactId}-${version}_SmsService</finalName>
-<!-- 		<finalName>${artifactId}-${version}_EmailService</finalName> -->
-	
+<!-- 		<finalName>${artifactId}-${version}_SmsService</finalName> -->
+		<finalName>${artifactId}-${version}_EmailService</finalName>
  	<resources>
 			<resource>
 				<directory>src/main/resources</directory>
 				<filtering>true</filtering>
 			</resource>
 		</resources>
-
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
