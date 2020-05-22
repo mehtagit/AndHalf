@@ -207,7 +207,10 @@ window.parent
 	 
 			//var max_fields = 2; //maximum input boxes allowed
 			var max_fields =localStorage.getItem("maxCount");
-			
+			if (max_fields==0){
+				 console.log("1111");
+				 $(".add_field_button").prop('disabled', true);
+			 }
 		var wrapper = $(".mainDiv"); //Fields wrapper
 		var add_button = $(".add_field_button"); //Add button ID
 		var x = 1; //initlal text box count

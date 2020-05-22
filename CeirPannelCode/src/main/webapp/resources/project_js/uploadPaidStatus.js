@@ -34,7 +34,7 @@ $.i18n().load( {
 });
 
 $( document ).ready(function() {
-	$('div#initialloader').fadeIn('fast');
+	
 	var In = $("body").attr("session-value");
 	 var loggedUserType=$("body").attr("data-roleType");
 	if(loggedUserType=='Custom' || loggedUserType=='Immigration' ){
@@ -147,15 +147,18 @@ $( document ).ready(function() {
 var id=2;
 var x = 1;
 $(document).ready(function () {
-	 $.getJSON('./addMoreFile/more_files_count', function(data) {
+	 $.getJSON('./addMoreFile/add_more_device_count', function(data) {
 			console.log(data);
 			
 			localStorage.setItem("maxCount", data.value);
 			
 		});
 	 
-			//var max_fields = 2; //maximum input boxes allowed
-			var max_fields =localStorage.getItem("maxCount");
+	 var max_fields =localStorage.getItem("maxCount");
+	 if (max_fields==0){
+		 console.log("1111");
+		 $(".add_field_button").prop('disabled', true);
+	 }		
 			console.log("maximum fields for add more  from api="+max_fields);
 	//var max_fields = 15; //maximum input boxes allowed
 	var wrapper = $(".mainDeviceInformation"); //Fields wrapper
@@ -514,15 +517,17 @@ populateCountries("country");
 
 
 
-function deleteByImei(imei){
+function deleteByImei(imei,txnId){
 	$('#deleteMsg').openModal({dismissible:false});
 	window.imei=imei;
+	window.txnId=txnId;
+	
 }
 
 function accept(){
 
 	$.ajax({
-		url : "./delete/"+window.imei,
+		url : "./delete/"+window.imei+"/"+window.txnId,
 		dataType : 'json',
 		contentType : 'application/json; charset=utf-8',
 		type : 'DELETE',
@@ -543,7 +548,7 @@ function accept(){
 }
 
 
-	function viewDetails(imei){ 
+	function viewDetails(imei,txnId){ 
 	/*$('#viewDeviceInformation').openModal({dismissible:false});
 	$.ajax({
 		url : "./deviceInfo/"+imei,
@@ -558,7 +563,7 @@ function accept(){
 		}
 	});*/
 		
-		window.location.href="./view-device-information/"+imei;
+		window.location.href="./view-device-information/"+imei+"/"+txnId;
 
 
 }
@@ -666,6 +671,7 @@ function exportpaidStatus(){
 
 
 function submitDeviceInfo(){
+	$('div#initialloader').fadeIn('fast');
 	var formData= new FormData();
 
 
@@ -789,7 +795,7 @@ function submitDeviceInfo(){
 			var IMEI3=$('#IMEIC'+fieldId).val();
 			var IMEI4=$('#IMEID'+fieldId).val();
 			var deviceCountry=$('#country'+fieldId).val();
-			var multipleSimStatus1=$('#multipleSimStatus1'+fieldId).val();
+			var multipleSimStatus1=$('#multipleSimStatus'+fieldId).val();
 
 
 		var deviceInfo=
@@ -804,7 +810,7 @@ function submitDeviceInfo(){
 				"secondImei": parseInt(IMEI2),
 				"thirdImei": parseInt(IMEI3),
 				"fourthImei": parseInt(IMEI4),
-				"multiSimStatus": deviceStatus1,
+				"multiSimStatus": multipleSimStatus1,
 				"price": parseFloat(Price1),
 				"taxPaidStatus": parseInt(taxStatus1),
 				"nid":nationalId,
@@ -861,6 +867,7 @@ function submitDeviceInfo(){
 		processData: false,
 		contentType: false,
 		success: function (data, textStatus, jqXHR) {
+			$('div#initialloader').delay(300).fadeOut('slow');
 			$("#uploadPaidStatusbutton").prop('disabled', true);
 //			$('#updateConsignment').modal();
 			if(data.errorCode==0){
@@ -1108,6 +1115,7 @@ function aprroveDevice(){
 			"imei1": window.imei,
 			"featureId":parseInt(featureId),
 			"remarks": "",
+			"userName":$("body").attr("data-username"),
 			"roleTypeUserId": parseInt($("body").attr("data-userTypeID")),
 			"txnId": window.txnId,
 			"userId":parseInt(userId),

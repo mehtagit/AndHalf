@@ -876,6 +876,8 @@ $(document).keyup(function(event) {
     	$("#viewAssigneeHistoryBtn").click();
   }
 }); 
+
+$('div#initialloader').delay(300).fadeOut('slow');
 </script>
 
 </body>

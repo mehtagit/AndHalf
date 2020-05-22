@@ -172,6 +172,7 @@ input[type='search'] {
 
 	<!-- START CONTENT -->
 	<section id="content">
+	<div id="initialloader"></div>
 		<!--start container-->
 		<div class="container">
 			<div class="section">
@@ -669,7 +670,7 @@ input[type='search'] {
 	<!-- Modal start   -->
 
 	<div id="regularisedDevice" class="modal">
-		<h6 class="modal-header"><spring:message code="modal.uploadPaidDevice" /></h6>
+		<h6 class="modal-header"><spring:message code="customRegisterDevice" /></h6>
 		<div class="modal-content">
 			<div class="row">
 				<h6 id="sucessMessage"><spring:message code="modal.message.futureRef" />  <span id="dynamicTxnId"></span>
@@ -798,6 +799,14 @@ input[type='search'] {
 	<!-- ================================================
     Scripts
     ================================================ -->
+<script type="text/javascript">
+$('#ok,#redirectToPage').click(function(){
+	 window.location.replace("${context}/uploadPaidStatus?via=other&NID="+nationalID);
+	 
+});
+
+$('div#initialloader').delay(300).fadeOut('slow');
+</script>
 
 </body>
 </html>

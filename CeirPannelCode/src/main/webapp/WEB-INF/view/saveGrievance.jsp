@@ -333,8 +333,8 @@ src="${context}/resources/js/countries.js"></script>
 
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
-<script type="text/javascript"
-src="${context}/resources/project_js/viewStock.js"></script>
+<%-- <script type="text/javascript"
+src="${context}/resources/project_js/viewStock.js"></script> --%>
 
 <script type="text/javascript"
 		src="${context}/resources/project_js/profileInfoTab.js" async></script>
@@ -483,7 +483,7 @@ $.i18n().load( {
 					async : false,
 					/*	method: 'POST',*/
 					success : function(data, textStatus, jqXHR) {
-						
+						$('div#initialloader').delay(300).fadeOut('slow');
 						$("#saveGrievancesubmitButton").prop('disabled', true);
 						var x = data;
 						var y = JSON.parse(x);
@@ -562,7 +562,7 @@ $.i18n().load( {
 
 			// Integreation with add more field api
 
-			$.getJSON('./addMoreFile/more_files_count', function(data) {
+			$.getJSON('./addMoreFile/grievance_supporting_doc_count', function(data) {
 				console.log(data);
 
 				localStorage.setItem("maxCount", data.value);
@@ -571,7 +571,10 @@ $.i18n().load( {
 
 			//var max_fields = 2; //maximum input boxes allowed
 			var max_fields = localStorage.getItem("maxCount");
-
+			if (max_fields==0){
+				 console.log("1111");
+				 $(".add_field_button").prop('disabled', true);
+			 }
 			var wrapper = $(".mainDiv"); //Fields wrapper
 			var add_button = $(".add_field_button"); //Add button ID
 			var x = 1; //initlal text box count
@@ -776,6 +779,8 @@ $.i18n().load( {
 			function closeCancelPopUp() {
 				$('#cancelMessage').closeModal();
 			}
+			
+			$('div#initialloader').delay(300).fadeOut('slow');
 			/* $( document ).ready(function() {
 			 var ccc=addMoreFileCount();
 			 alert(ccc);

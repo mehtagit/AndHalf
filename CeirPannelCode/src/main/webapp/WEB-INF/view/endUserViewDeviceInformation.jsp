@@ -191,7 +191,7 @@ input[type='search'] {
 											                    oninvalid="InvalidMsg(this,'input','<spring:message code="validation.selectFieldMsg" />');" required>
 																<option value="" disabled selected><spring:message code="select.documenttype" /> </option>
 															</select> --%>
-															<input type="text" value="${viewInformation.endUserDB.docTypeInterp}" readonly="readonly">
+															<input type="text" value="${viewInformation.endUserDB.documentInterp}" readonly="readonly">
 															
 															<!-- <input type="text" id="docTypeNymericValue" style="display: none" > -->
 														</div>	

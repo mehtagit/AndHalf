@@ -12,7 +12,7 @@ private String country;
 private String createdOn;
 private String district;
 private Integer docType;
-private String docTypeInterp;
+private String docTypeInterp,documentInterp;
 private String email;
 private String firstName;
 private Integer id;
@@ -238,6 +238,12 @@ public AllRequest getAuditParameters() {
 public void setAuditParameters(AllRequest auditParameters) {
 	this.auditParameters = auditParameters;
 }
+public String getDocumentInterp() {
+	return documentInterp;
+}
+public void setDocumentInterp(String documentInterp) {
+	this.documentInterp = documentInterp;
+}
 @Override
 public String toString() {
 	StringBuilder builder = new StringBuilder();
@@ -253,6 +259,8 @@ public String toString() {
 	builder.append(docType);
 	builder.append(", docTypeInterp=");
 	builder.append(docTypeInterp);
+	builder.append(", documentInterp=");
+	builder.append(documentInterp);
 	builder.append(", email=");
 	builder.append(email);
 	builder.append(", firstName=");

@@ -636,7 +636,7 @@ $(document).ready(function () {
 	
 	
 
-	$.getJSON('./addMoreFile/more_files_count', function(data) {
+	$.getJSON('./addMoreFile/add_more_device_count', function(data) {
 		console.log(data);
 		
 		localStorage.setItem("maxCount", data.value);
@@ -645,6 +645,10 @@ $(document).ready(function () {
 
 		//var max_fields = 2; //maximum input boxes allowed
 		var max_fields =localStorage.getItem("maxCount");
+		if (max_fields==0){
+			 console.log("1111");
+			 $(".add_field_button").prop('disabled', true);
+		 }
 		console.log("max_fields from api="+max_fields);
 
 	$('#langlist').val(data_lang_param);
@@ -767,7 +771,7 @@ $(document).ready(function () {
 
 function submitEndUserDeviceInfo(){
 	var formData= new FormData();
-
+	$('div#initialloader').fadeIn('fast');
 
 	var nationalID=$('#endUserNID').val();
 	var endUserNID=$('#endUserNID').val();
@@ -951,7 +955,7 @@ function submitEndUserDeviceInfo(){
 		processData: false,
 		contentType: false,
 		success: function (data, textStatus, jqXHR) {
-
+			$('div#initialloader').delay(300).fadeOut('slow');
 			console.log(data);
 
 
@@ -1209,15 +1213,17 @@ function historytable(url,dataUrl){
 		}
 	});
 }
-function deleteByImei(imei){
+function deleteByImei(imei,txnId){
 	$('#deleteMsg').openModal({dismissible:false});
 	window.imei=imei;
+	window.txnId=txnId;
+	
 }
 
 function accept(){
 
 	$.ajax({
-		url : "./endUserdelete/"+window.imei,
+		url : "./endUserdelete/"+window.imei+"/"+window.txnId,
 		dataType : 'json',
 		contentType : 'application/json; charset=utf-8',
 		type : 'DELETE',
@@ -1237,8 +1243,10 @@ function accept(){
 	});
 }
 
-function viewDetails(imei){ 
+function viewDetails(imei,txnid){ 
 		$('#viewbyImei').val(imei);
+		$('#viewbytxnId').val(txnid);
+		
 		$('#viewDeviceForm').submit();
 		/*window.location.href="./view-device-information/"+imei;*/
 

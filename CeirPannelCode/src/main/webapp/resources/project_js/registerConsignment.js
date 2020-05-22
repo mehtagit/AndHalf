@@ -241,3 +241,6 @@ function getByPort(port) {
 				}
 			});
 }
+
+
+$('div#initialloader').delay(300).fadeOut('slow');

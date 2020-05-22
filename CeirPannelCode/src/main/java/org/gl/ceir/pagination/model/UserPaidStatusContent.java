@@ -24,7 +24,7 @@ public class UserPaidStatusContent {
 	private String deviceTypeInterp;
 	private Integer deviceIdType;
 	private String deviceIdTypeInterp;
-	private String multiSimStatus;
+	private String multiSimStatus,multiSimStatusInterp;
 	private String country;
 	private String deviceSerialNumber;
 	private String txnId;
@@ -233,6 +233,12 @@ public class UserPaidStatusContent {
 	public void setNationality(String nationality) {
 		this.nationality = nationality;
 	}
+	public String getMultiSimStatusInterp() {
+		return multiSimStatusInterp;
+	}
+	public void setMultiSimStatusInterp(String multiSimStatusInterp) {
+		this.multiSimStatusInterp = multiSimStatusInterp;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -264,6 +270,8 @@ public class UserPaidStatusContent {
 		builder.append(deviceIdTypeInterp);
 		builder.append(", multiSimStatus=");
 		builder.append(multiSimStatus);
+		builder.append(", multiSimStatusInterp=");
+		builder.append(multiSimStatusInterp);
 		builder.append(", country=");
 		builder.append(country);
 		builder.append(", deviceSerialNumber=");
@@ -303,6 +311,10 @@ public class UserPaidStatusContent {
 		builder.append("]");
 		return builder.toString();
 	}
+	
+	
+
+	
 	
 	
 }

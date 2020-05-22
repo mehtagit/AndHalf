@@ -23,9 +23,10 @@ var lang_param =window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 	});
 
 
-	 $('#ok,#redirectToPage').click(function(){
-		 window.location.replace("./uploadPaidStatus?via=other&NID="+nationalID);
-		});
+	/* $('#ok,#redirectToPage').click(function(){
+		 window.location.replace("${context}/uploadPaidStatus?via=other&NID="+nationalID);
+		 
+	 });*/
 
 	 function redirectToPage(){
 		 
@@ -224,7 +225,7 @@ function defaultDeviceForm(){
 	
            var id=2;
 	 	  function RegularisedDeviceForm(){
-	 		 $.getJSON('./addMoreFile/more_files_count', function(data) {
+	 		 $.getJSON('./addMoreFile/add_more_device_count', function(data) {
 	 			console.log(data);
 	 			
 	 			localStorage.setItem("maxCount", data.value);
@@ -233,6 +234,10 @@ function defaultDeviceForm(){
 	 	 
 	 			//var max_fields = 2; //maximum input boxes allowed
 	 			var max_fields =localStorage.getItem("maxCount");
+	 			if (max_fields==0){
+	 				 console.log("1111");
+	 				 $(".add_field_button").prop('disabled', true);
+	 			 }
 	 			console.log("max_fields from api="+max_fields);
 	 		  
        // var max_fields = 15; //maximum input boxes allowed

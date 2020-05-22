@@ -124,9 +124,9 @@ FeignCleintImplementation feignCleintImplementation;
 	}
 	
 
-	@GetMapping("view-device-information/{imei}")
-	public ModelAndView viewDeviceInformationView(@PathVariable("imei") String imei,HttpSession session) {
-		log.info(" imei =="+imei);
+	@GetMapping("view-device-information/{imei}/{txnId}")
+	public ModelAndView viewDeviceInformationView(@PathVariable("imei") String imei,@PathVariable("txnId") String txnId,HttpSession session) {
+		log.info(" imei =="+imei+"  txnid=="+txnId);
 		String userType=(String) session.getAttribute("usertype"); 
 		  String  userName=session.getAttribute("username").toString(); 
 		  int userId= (int) session.getAttribute("userid"); 
@@ -138,6 +138,7 @@ FeignCleintImplementation feignCleintImplementation;
 		  request.setUsername(userName);
 		  request.setUserTypeId(userTypeid);
 		  request.setUserType(userType);
+		  request.setTxnId(txnId);
 		ModelAndView modelAndView = new ModelAndView("viewAdddeviceInformation");
 		log.info("request info send to view api device api= "+request);
 		UserPaidStatusContent content= uploadPaidStatusFeignClient.viewByImei(request);
@@ -724,7 +725,7 @@ public ModelAndView  endUserdeviceInformationView() {
 	return modelAndView;
 }		
 @PostMapping("viewDeviceInformation")
-public ModelAndView viewDeviceInformation(@RequestParam(name="viewbyImei",required = true) String imei) {
+public ModelAndView viewDeviceInformation(@RequestParam(name="viewbyImei",required = true) String imei,@RequestParam(name="viewbytxnId",required = true) String viewbytxnId) {
 	log.info(" imei in end user  =="+imei);
 	ModelAndView modelAndView = new ModelAndView("viewAdddeviceInformation");
 	
@@ -732,6 +733,7 @@ public ModelAndView viewDeviceInformation(@RequestParam(name="viewbyImei",requir
 	  request.setFeatureId(12);
 
 	  request.setImei(imei);
+	  request.setTxnId(viewbytxnId);
       request.setUserTypeId(17);
 	  request.setUserType("End User");
 	  log.info(" request=="+request);
