@@ -116,6 +116,7 @@
 
 
             <section id="content">
+             <div id="initialloader"></div>
                 <!--start container-->
                 <div class="container">
                     <div class="section">
@@ -538,6 +539,8 @@ onclick="_Services._selectstartDate()"></i></span>
 	$('#stolenBulkDatePeriod').datepicker({
 		dateFormat : "yy-mm-dd"
 	});
+	
+	$('div#initialloader').delay(300).fadeOut('slow');
 	</script>	
 
 </body>

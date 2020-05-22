@@ -161,6 +161,7 @@ input[type='search'] {
 
 	<!-- START CONTENT -->
 	<section id="content">
+	<div id="initialloader"></div>
 		<!--start container-->
 		<div class="container">
 			<div class="section">
@@ -424,6 +425,7 @@ var input2 = document.querySelector("#phone");
 window.intlTelInput(input2, {
 	utilsScript : "${context}/resources/js/utils.js",
 });
+$('div#initialloader').delay(300).fadeOut('slow');
 </script>
 
 </body>

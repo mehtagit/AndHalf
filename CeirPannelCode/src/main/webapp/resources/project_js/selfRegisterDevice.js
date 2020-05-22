@@ -645,6 +645,10 @@ $(document).ready(function () {
 
 		//var max_fields = 2; //maximum input boxes allowed
 		var max_fields =localStorage.getItem("maxCount");
+		if (max_fields==0){
+			 console.log("1111");
+			 $(".add_field_button").prop('disabled', true);
+		 }
 		console.log("max_fields from api="+max_fields);
 
 	$('#langlist').val(data_lang_param);
@@ -767,7 +771,7 @@ $(document).ready(function () {
 
 function submitEndUserDeviceInfo(){
 	var formData= new FormData();
-
+	$('div#initialloader').fadeIn('fast');
 
 	var nationalID=$('#endUserNID').val();
 	var endUserNID=$('#endUserNID').val();
@@ -951,7 +955,7 @@ function submitEndUserDeviceInfo(){
 		processData: false,
 		contentType: false,
 		success: function (data, textStatus, jqXHR) {
-
+			$('div#initialloader').delay(300).fadeOut('slow');
 			console.log(data);
 
 

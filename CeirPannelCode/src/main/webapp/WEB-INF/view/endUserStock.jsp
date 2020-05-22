@@ -156,6 +156,7 @@ var contextpath = "${context}";
 <body data-lang-param="${pageContext.response.locale}">
 <section id="content" style="margin-bottom: 100px;">
                 <!--start container-->
+                <div id="initialloader"></div>
                 <input type="text" id="pageTypeValue" value="${showPagetype}" style="display: none;">
                 <div class="container" style="margin-top:5vh;" id="uploadPaidStatusDiv" style="dispay:none">
                     <div class="section">
@@ -563,6 +564,8 @@ var contextpath = "${context}";
 <script type="text/javascript"
 		src="${context}/resources/project_js/ValidationFileOutsidePortal.js"></script>
 		
-   
+   <script type="text/javascript">
+   $('div#initialloader').delay(300).fadeOut('slow');
+   </script>
 </body>
 </html>

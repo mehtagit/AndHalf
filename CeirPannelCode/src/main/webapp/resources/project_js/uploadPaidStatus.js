@@ -34,7 +34,7 @@ $.i18n().load( {
 });
 
 $( document ).ready(function() {
-	$('div#initialloader').fadeIn('fast');
+	
 	var In = $("body").attr("session-value");
 	 var loggedUserType=$("body").attr("data-roleType");
 	if(loggedUserType=='Custom' || loggedUserType=='Immigration' ){
@@ -154,8 +154,11 @@ $(document).ready(function () {
 			
 		});
 	 
-			//var max_fields = 2; //maximum input boxes allowed
-			var max_fields =localStorage.getItem("maxCount");
+	 var max_fields =localStorage.getItem("maxCount");
+	 if (max_fields==0){
+		 console.log("1111");
+		 $(".add_field_button").prop('disabled', true);
+	 }		
 			console.log("maximum fields for add more  from api="+max_fields);
 	//var max_fields = 15; //maximum input boxes allowed
 	var wrapper = $(".mainDeviceInformation"); //Fields wrapper
@@ -668,6 +671,7 @@ function exportpaidStatus(){
 
 
 function submitDeviceInfo(){
+	$('div#initialloader').fadeIn('fast');
 	var formData= new FormData();
 
 
@@ -863,6 +867,7 @@ function submitDeviceInfo(){
 		processData: false,
 		contentType: false,
 		success: function (data, textStatus, jqXHR) {
+			$('div#initialloader').delay(300).fadeOut('slow');
 			$("#uploadPaidStatusbutton").prop('disabled', true);
 //			$('#updateConsignment').modal();
 			if(data.errorCode==0){

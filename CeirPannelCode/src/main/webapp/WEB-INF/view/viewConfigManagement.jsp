@@ -219,7 +219,7 @@
 					</div>
 
 					<div class="input-field col s12 m6">
-					<textarea id="editremarks" class="materialize-textarea" style="min-height:8rem" ></textarea>
+					<textarea id="editremarks" placeholder="Remarks" class="materialize-textarea" style="min-height:8rem" ></textarea>
 					<label for="editremarks" class=""><spring:message code="input.remarks" /></label>
 
 					</div>

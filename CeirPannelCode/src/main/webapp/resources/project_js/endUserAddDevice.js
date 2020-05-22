@@ -29,6 +29,7 @@ function redirectToPage(){
 	 
 }
 function submitDeviceInfo(){
+	$('div#initialloader').fadeIn('fast');
 	 var formData= new FormData();	
 	 var fieldId=1;	
 	 var auditParameters={
@@ -103,7 +104,7 @@ function submitDeviceInfo(){
 			success: function (data, textStatus, jqXHR) {
 				console.log("in suucess method");
 				console.log(data);
-			   
+				$('div#initialloader').delay(300).fadeOut('slow');
 				// $('#updateConsignment').modal();
 				if(data.errorCode==0){
 
@@ -230,6 +231,10 @@ function defaultDeviceForm(){
 	 
 			//var max_fields = 2; //maximum input boxes allowed
 			var max_fields =localStorage.getItem("maxCount");
+			if (max_fields==0){
+				
+				 $(".add_field_button").prop('disabled', true);
+			 }
 			console.log("max_fields from api="+max_fields);
 		  
   // var max_fields = 15; //maximum input boxes allowed

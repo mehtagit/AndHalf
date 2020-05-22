@@ -677,7 +677,7 @@ var featureId = 6;
 
 
 
-			$.getJSON('./addMoreFile/more_files_count', function(data) {
+			$.getJSON('./addMoreFile/grievance_supporting_doc_count', function(data) {
 				console.log(data);
 				
 				localStorage.setItem("maxCount", data.value);
@@ -686,7 +686,10 @@ var featureId = 6;
 		 
 				//var max_fields = 2; //maximum input boxes allowed
 				var max_fields =localStorage.getItem("maxCount");
-				
+				if (max_fields==0){
+					 console.log("1111");
+					 $(".add_field_button").prop('disabled', true);
+				 }
 
 			//var max_fields = 15; //maximum input boxes allowed
 			var wrapper = $(".mainDiv"); //Fields wrapper

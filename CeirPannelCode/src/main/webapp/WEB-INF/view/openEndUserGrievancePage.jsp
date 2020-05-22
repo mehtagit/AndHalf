@@ -159,6 +159,7 @@ var contextpath = "${context}";
 <body data-lang-param="${pageContext.response.locale}">
          <!-- START CONTENT -->
             <section id="content">
+            <div id="initialloader"></div>
                 <!--start container-->
                 <div class="container" style="padding-bottom: 70px; margin-top:5.5vh;" >
                     <div class="section">
@@ -673,6 +674,8 @@ var path="${context}";
 		src="${context}/resources/project_js/ValidationFileOutsidePortal.js"></script>
     
 
-   
+  <script type="text/javascript">
+  $('div#initialloader').delay(300).fadeOut('slow');
+  </script> 
 </body>
 </html>
