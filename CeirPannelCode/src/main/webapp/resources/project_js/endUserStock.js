@@ -33,6 +33,7 @@ $(document).ready(function () {
     
 function uploadEndUserStock()
 {
+	$('div#initialloader').fadeIn('fast');
 	var formData= new FormData();
 	 var endUsercsvUploadFile=$('#endUsercsvUploadFile').val();
 	 var endUseremail=$('#endUseremail').val();
@@ -58,6 +59,7 @@ function uploadEndUserStock()
 			processData: false,
 			contentType: false,
 			success: function (data, textStatus, jqXHR) {
+				$('div#initialloader').delay(300).fadeOut('slow');
 				console.log("in suucess method");
 				console.log(data);
 				$('#endUserStockModal').openModal({
@@ -74,7 +76,7 @@ function uploadEndUserStock()
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
 				console.log("error in ajax")
-
+				$('div#initialloader').delay(300).fadeOut('slow');
 			}
 		});
 		return false;	

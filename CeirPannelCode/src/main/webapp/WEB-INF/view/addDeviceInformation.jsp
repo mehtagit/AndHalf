@@ -172,6 +172,7 @@ input[type='search'] {
 
 	<!-- START CONTENT -->
 	<section id="content">
+	<div id="initialloader"></div>
 		<!--start container-->
 		<div class="container">
 			<div class="section">
@@ -798,6 +799,14 @@ input[type='search'] {
 	<!-- ================================================
     Scripts
     ================================================ -->
+<script type="text/javascript">
+$('#ok,#redirectToPage').click(function(){
+	 window.location.replace("${context}/uploadPaidStatus?via=other&NID="+nationalID);
+	 
+});
+
+$('div#initialloader').delay(300).fadeOut('slow');
+</script>
 
 </body>
 </html>

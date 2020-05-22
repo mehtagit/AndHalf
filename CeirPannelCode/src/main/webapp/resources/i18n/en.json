@@ -162,5 +162,11 @@
       "featureNotSupportForCambodian" : "This service is not applicable for Cambodian users.",
       "VISA_UPDATE_NOT_ALLOWED":"No visa Information  was provided at the time of registration .kindly register your device along with valid visa details.",
        "ESNMsg": "The length is either 8 or 11. If length is 11, then all value should be numeric else value can be alphanumeric and character should be in uppercase and between A to F.",
-       "MEIDMsg": "MEID should be alphanumeric upto 16 characters only . All character should be in uppercase and between A to F"
+       "MEIDMsg": "MEID should be alphanumeric upto 16 characters only . All character should be in uppercase and between A to F",
+       "Total IMEI Waiting for Approval": "Total IMEI Waiting for Approval",
+	"Total IMEI Waiting For Upload": "Total IMEI Waiting For Upload",
+	"Stolen Requests": "Stolen Requests",
+	"Recovery Requests": "Recovery Requests",
+	"Block Requests": "Block Requests",
+	"Unblock Requests": "Unblock Requests"
 }

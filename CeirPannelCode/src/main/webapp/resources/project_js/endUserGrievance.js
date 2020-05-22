@@ -26,7 +26,7 @@
 	});
 
 function saveaAonymousGrievance(){
-
+	$('div#initialloader').fadeIn('fast');
 	var firstName=$('#firstName').val();
 	var middleName=$('#middleName').val();
 	var lastName=$('#lastName').val();
@@ -134,6 +134,7 @@ function saveaAonymousGrievance(){
 		contentType: false,
 		async:false,
 		success: function (data, textStatus, jqXHR) {
+			$('div#initialloader').delay(300).fadeOut('slow');
 			console.log(data);
 			 $("#saveAnonymousGrieavance").prop('disabled', true);
 			var x=data;
@@ -144,14 +145,15 @@ function saveaAonymousGrievance(){
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
 			/* console.log("error in ajax") */
-			 $('#exceptionMessage').openModal(); 
+			$('div#initialloader').delay(300).fadeOut('slow');
+			$('#exceptionMessage').openModal(); 
 		}
 	});
 return false;
 
 }
 
-$.getJSON('./addMoreFile/more_files_count', function(data) {
+$.getJSON('./addMoreFile/grievance_supporting_doc_count', function(data) {
 	console.log(data);
 	
 	localStorage.setItem("maxCount", data.value);
@@ -162,7 +164,10 @@ $.getJSON('./addMoreFile/more_files_count', function(data) {
 	var max_fields =localStorage.getItem("maxCount");
 	console.log("max_fields from api="+max_fields);
 
-
+	if (max_fields==0){
+		 console.log("1111");
+		 $(".endUser_add_field_button").prop('disabled', true);
+	 }
 //var max_fields = 15; //maximum input boxes allowed
 var endUserwrapper = $(".endUsermainDiv"); //Fields wrapper
 var add_button = $(".endUser_add_field_button"); //Add button ID
@@ -513,7 +518,9 @@ function enableReplySelectFile(){
 			
 			function saveEndUserGrievanceReply()
 			{
-				 var endUseruserId=488;
+				$('div#initialloader').fadeIn('fast'); 
+				var endUseruserId=488;
+				 
 				var endUsergrievanceTicketStatus;
 				if ($('#closeTicketCheck').is(":checked"))
 				{
@@ -579,7 +586,7 @@ function enableReplySelectFile(){
 					processData: false,
 					contentType: false,
 					success: function (data, textStatus, jqXHR) {
-					
+						$('div#initialloader').delay(300).fadeOut('slow');	
 						$('#replyMsg').openModal({
 			    	    	   dismissible:false
 			    	       });
