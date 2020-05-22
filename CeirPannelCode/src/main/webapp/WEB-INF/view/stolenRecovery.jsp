@@ -1330,6 +1330,7 @@ oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />
 maxlength="16">
 <label for="editsingleblockIMEI3">
 <spring:message code="title.three" /></label>
+   <p id="errorMsgOnModal" class="deviceErrorTitle" style="margin-top:-146px;margin-left:115px;"></p>
 </div>
 
 <div class="input-field col s12 m6">

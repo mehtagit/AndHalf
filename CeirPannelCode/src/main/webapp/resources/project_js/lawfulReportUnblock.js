@@ -108,6 +108,7 @@ var formData= new FormData();
 }
 
 function saveCompanyRecoveryRequest(){
+	$('div#initialloader').fadeIn('fast');
 	var formData= new FormData();
 	var bulkRecoveryquantity=$('#bulkRecoveryquantity').val();
 	var bulkRecoveryRemark=$('#bulkRecoveryRemark').val();
@@ -163,6 +164,8 @@ function saveCompanyRecoveryRequest(){
 		processData: false,
 		contentType: false,
 		success: function (response, textStatus, jqXHR) {
+			
+			$('div#initialloader').delay(300).fadeOut('slow');
 		console.log(JSON.stringify(response));
 		var resp= JSON.stringify(response);
 		console.log(resp.errorCode);
@@ -185,6 +188,7 @@ function saveCompanyRecoveryRequest(){
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
 			console.log("error in ajax")
+			$('div#initialloader').delay(300).fadeOut('slow');
 
 		}
 	});

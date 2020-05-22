@@ -144,6 +144,7 @@ select {
 	<section id="content">
 		<!--start container-->
 		<div class="container">
+		 <div id="initialloader"></div>
 			<div class="section">
 				<div class="row">
 					<div class="col s12 m12 l12">
@@ -1562,6 +1563,9 @@ select {
 	<script type="text/javascript"
 		src="${context}/resources/project_js/lawfulStolenRecovery.js"></script>
 
+<script type="text/javascript">
+/* $('div#initialloader').delay(300).fadeOut('slow'); */
+</script>
 </body>
 
 </html>

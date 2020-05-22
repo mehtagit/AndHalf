@@ -231,9 +231,10 @@ input[type='search'] {
 													</label>
 												</div>
 
-												<div class="input-field col s12 m4 l4">
-													<input type="text" readonly="readonly" id="middleName" value="${viewInformation.endUserDB.middleName}">
+												<div class="col s12 m4 l4">
 													<label for="middleName" class="active"><spring:message code="input.middleName" /></label>
+													<input type="text" readonly="readonly" id="middleName" value="${viewInformation.endUserDB.middleName}">
+													
 												</div>
 
 												<div class="input-field col s12 m4 l4">
@@ -354,10 +355,11 @@ input[type='search'] {
 											</div>
 
 											<div class="col s12 m12" style="margin-top: 10px;">
-												<div class="input-field col s12 m6 l6">
-														<input type="email" readonly="readonly" id="email"
-														 value="${viewInformation.endUserDB.email}"> <label for="email"><spring:message code="input.email" /><span
+												<div class="col s12 m6 l6">
+												 <label for="email"><spring:message code="input.email" /><span
 														class="star"></span></label>
+														<input type="email" readonly="readonly" id="email"
+														 value="${viewInformation.endUserDB.email}">
 												</div>
 
 												<div class="input-field col s12 m6 l6" style="margin-top: 18px;">
@@ -548,11 +550,12 @@ input[type='search'] {
 															<input type="text" value="${viewInformation.country}" readonly="readonly">
 													</div>
 
-													<div class="input-field col s12 m6"
-														style="margin-top: 28px;">
-														<input type="text" value="${viewInformation.deviceSerialNumber}" readonly="readonly">
-														 <label for="serialNumber1"> <spring:message code="input.deviceSerialNumber" /><span class="star"></span>
+													<div class="col s12 m6"
+														style="">
+														<label for="serialNumber1"> <spring:message code="input.deviceSerialNumber" /><span class="star"></span>
 														</label>
+														<input type="text" value="${viewInformation.deviceSerialNumber}" readonly="readonly">
+														 
 													</div>
 
 													<div class="col s12 m6">
@@ -564,16 +567,17 @@ input[type='search'] {
 											</div>
 											<div class="row">
 												<div class="col s12 m12">
-													<div class="col s12 m6" style="margin-top: -10px;">
+													<div class="col s12 m6">
 														<label for="deviceStatus1"><spring:message code="select.deviceStatus" /><span
 															class="star"></span></label> 
 														<input type="text" readonly="readonly" value="${viewInformation.deviceStatusInterp}">	
 													</div>
                                                       <c:choose>
 												<c:when test = "${viewInformation.endUserDB.onVisa=='N'}">
-													<div class="input-field col s12 m6 l6">
-														<input type="text" id="Price1" value="${viewInformation.price}" readonly="readonly">
+													<div class="col s12 m6 l6">
 														<label for="Price1"><spring:message code="select.price" /></label>
+														<input type="text" id="Price1" value="${viewInformation.price}" readonly="readonly">
+														
 													</div>
 
 													<div class="col s12 m6">
