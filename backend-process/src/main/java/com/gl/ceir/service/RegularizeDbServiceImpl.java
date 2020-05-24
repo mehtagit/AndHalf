@@ -42,18 +42,18 @@ public class RegularizeDbServiceImpl {
 	@Autowired
 	NotifierWrapper notifierWrapper;
 
-	public List<RegularizeDeviceDb> getDevicesbyTaxStatusAndDate(String fromDate, String toDate, int taxPaidStatus){
-		return regularizedDeviceDbRepository.findAll(buildSpecification(fromDate, toDate, taxPaidStatus).build());
+	public List<RegularizeDeviceDb> getDevicesbyTaxStatusAndDate( String toDate, int taxPaidStatus){
+		return regularizedDeviceDbRepository.findAll(buildSpecification(toDate, taxPaidStatus).build());
 	}
 
 	public void saveAllDevices(List<RegularizeDeviceDb> regularizeDeviceDbs) {
 		regularizedDeviceDbRepository.saveAll(regularizeDeviceDbs);
 	}
 
-	public GenericSpecificationBuilder<RegularizeDeviceDb> buildSpecification(String fromDate, String toDate, int taxPaidStatus){
+	public GenericSpecificationBuilder<RegularizeDeviceDb> buildSpecification(String toDate, int taxPaidStatus){
 		GenericSpecificationBuilder<RegularizeDeviceDb> cmsb = new GenericSpecificationBuilder<>(propertiesReader.dialect);
 
-		cmsb.with(new SearchCriteria("createdOn", fromDate, SearchOperation.GREATER_THAN_OR_EQUAL, Datatype.DATE));
+		// cmsb.with(new SearchCriteria("createdOn", fromDate, SearchOperation.GREATER_THAN_OR_EQUAL, Datatype.DATE));
 		cmsb.with(new SearchCriteria("createdOn", toDate, SearchOperation.LESS_THAN, Datatype.DATE));
 		cmsb.with(new SearchCriteria("taxPaidStatus", taxPaidStatus, SearchOperation.EQUALITY, Datatype.STRING)); 
 
@@ -73,7 +73,13 @@ public class RegularizeDbServiceImpl {
 					userWiseMailCount = new UserWiseMailCount();
 					userWiseMailCount.setUserId(endUserDB.getId());
 					userWiseMailCount.setDeviceCount(1);
-
+					userWiseMailCount.setTxnId(regularizeDeviceDb.getTxnId());
+					userWiseMailCount.setPhoneNo(endUserDB.getPhoneNo());
+					userWiseMailCount.setFirstImei(regularizeDeviceDb.getFirstImei());
+					userWiseMailCount.setSecondImei(regularizeDeviceDb.getSecondImei());
+					userWiseMailCount.setThirdImei(regularizeDeviceDb.getThirdImei());
+					userWiseMailCount.setFourthImei(regularizeDeviceDb.getFourthImei());
+					
 					placeholderMap = userWiseMailCount.getPlaceholderMap();
 					placeholderMap.put("<First name>", endUserDB.getFirstName());
 					placeholderMap.put("<date>", regularizeDeviceDb.getCreatedOn().toString().substring(0, 10));
@@ -99,19 +105,19 @@ public class RegularizeDbServiceImpl {
 		}
 	}
 
-	public void sendNotification(List<RegularizeDeviceDb> regularizeDeviceDbs, String tag) {
+	public void sendNotification(List<RegularizeDeviceDb> regularizeDeviceDbs, String tag, String subFeature) {
 		String channel = "EMAIL";
 		List<UserWiseMailCount> userWiseMailCounts = getUserWiseMailCountDto(regularizeDeviceDbs);
-		List<RawMail> rawMails = new ArrayList<>(1);
+		List<RawMail> rawMails = new ArrayList<>();
 
 		for(UserWiseMailCount userWiseMailCount : userWiseMailCounts) {
 			rawMails.add(new RawMail(channel, 
 					tag, 
 					userWiseMailCount.getUserId(),
 					0L, // Feature Id 
-					"Process", // TODO
-					"Reminder", // TODO
-					"", // Txn Id // TODO
+					"System Process", 
+					subFeature, 
+					userWiseMailCount.getTxnId(),
 					"", // Subject 
 					userWiseMailCount.getPlaceholderMap(),  
 					ReferTable.END_USER, 
