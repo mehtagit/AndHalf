@@ -26,11 +26,11 @@ public class DeviceDbDao {
 
 		List<DeviceDb> deviceDbs = new LinkedList<>();
 		try{
-			query = "select id, created_on, modified_on, manufature_date, device_type, device_id_type, "
-					+ "multiple_sim_status, sn_of_device, imei_esn_meid, "
-					//+ "TO_DATE(DEVICE_LAUNCH_DATE, 'DD-MM-YYYY') as launch_date, device_status, device_action,"
-					+ "DEVICE_LAUNCH_DATE as launch_date, device_status, device_action,"
-					+ "tac, period, txn_id, state from device_db where txn_id='" + txnId + "'";
+			query = "select id, created_on, modified_on, device_type, device_id_type, "
+					+ "multiple_sim_status, sn_of_device, imei_esn_meid, DEVICE_LAUNCH_DATE as launch_date, "
+					+ "device_status, tac, period, txn_id, state, feature_name "
+					+ "from device_db "
+					+ "where txn_id='" + txnId + "'";
 
 			System.out.println("Select Query on device_db ["+query+"]");
 			logger.info("Select Query on device_db ["+query+"]");
@@ -41,11 +41,10 @@ public class DeviceDbDao {
 				System.out.println("Inside while of device_db.");		
 
 				deviceDbs.add(new DeviceDb(rs.getLong("id"), 0, rs.getString("created_on"), rs.getString("modified_on"), 
-						rs.getString("manufature_date"), rs.getString("device_type"), rs.getString("device_id_type"), 
-						rs.getString("multiple_sim_status"), rs.getString("sn_of_device"), rs.getString("imei_esn_meid"), 
-						rs.getString("launch_date"), rs.getString("device_status"), rs.getString("device_action"), 
-						rs.getInt("tac"), rs.getString("period"), rs.getString("txn_id"), rs.getInt("state")));
-
+						rs.getString("device_type"), rs.getString("device_id_type"),rs.getString("multiple_sim_status"), 
+						rs.getString("sn_of_device"), rs.getString("imei_esn_meid"),rs.getString("launch_date"),
+						rs.getString("device_status"),rs.getInt("tac"), rs.getString("period"), rs.getString("txn_id"), 
+						rs.getInt("state"), rs.getString("feature_name")));
 			}
 
 		}
@@ -73,7 +72,7 @@ public class DeviceDbDao {
 
 
 		String query = "insert into device_db_aud (id, rev, revtype, created_on, modified_on, device_type, device_id_type, "
-				+ "multiple_sim_status, sn_of_device, imei_esn_meid, device_launch_date, device_status, device_action, "
+				+ "multiple_sim_status, sn_of_device, imei_esn_meid, device_launch_date, device_status, "
 				+ "tac, period, txn_id, state) values(";
 
 		if (isOracle) {
@@ -82,7 +81,7 @@ public class DeviceDbDao {
 			query = query + (getMaxIdDeviceDbAud(conn) + 1) +",";
 		}
 
-		query = query + "?,2," + dateFunction + "," + dateFunction + ",?,?,?,?,?,?,?,?,?,?,?,?)";
+		query = query + "?,2," + dateFunction + "," + dateFunction + ",?,?,?,?,?,?,?,?,?,?,?)";
 
 		logger.info("Add device_db_aud ["+query+"]");
 
@@ -99,11 +98,10 @@ public class DeviceDbDao {
 				preparedStatement.setString(6, deviceDb.getImeiEsnMeid());
 				preparedStatement.setString(7, deviceDb.getDeviceLaunchDate()); 
 				preparedStatement.setString(8, deviceDb.getDeviceStatus());
-				preparedStatement.setString(9, deviceDb.getDeviceAction());
-				preparedStatement.setInt(10, deviceDb.getTac());
-				preparedStatement.setString(11, deviceDb.getPeriod());
-				preparedStatement.setString(12, deviceDb.getTxnId()); 
-				preparedStatement.setLong(13, deviceDb.getState());
+				preparedStatement.setInt(9, deviceDb.getTac());
+				preparedStatement.setString(10, deviceDb.getPeriod());
+				preparedStatement.setString(11, deviceDb.getTxnId()); 
+				preparedStatement.setLong(12, deviceDb.getState());
 
 				System.out.println("Query " + preparedStatement);
 				preparedStatement.addBatch();

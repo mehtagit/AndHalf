@@ -1,5 +1,6 @@
 package com.functionapps.parser;
 
+import com.functionapps.util.Util;
 import com.functionapps.zte.ZTEFields;
 
 import java.util.HashMap;
@@ -333,22 +334,10 @@ public class HexFileReader {
         return result;
     }
 
-    public String[] readConvertedCSVFile(Connection conn, String fileName, String filePath, String repName,
-            String basePath, int raw_upload_set_no) {
+    public void readConvertedCSVFile(Connection conn, String fileName, String filePath, String repName, String basePath, int raw_upload_set_no) {
         String cdrCount = null;
-        String endTime = null;
-        String inTrkName = null;
-        String outTrkName = null;
-        String inTrkNo = null;
-        String outTrkNo = null;
-        String partId = null;
-        String billId = null;
-        int sCount = 0;
-        int fCount = 0;
-        int startId = 0;
-        int endId = 0;
-        int endRow = 0;
-        int i = 0;
+
+        int total_error_record_count = 0;
         int k = 0;
         int startRow = 0;
         int rowInserted = 0;
@@ -356,70 +345,47 @@ public class HexFileReader {
         String failquery = null;
         String values = "values(";
         String failvalues = "values(";
-        // Connection conn = null;
         PreparedStatement ps = null;
         PreparedStatement failed_ps = null;
         PreparedStatement temPS = null;
         ResultSet rs = null;
         String cdrStartTime = null;
         String cdrEndTime = null;
-        String cdrTime = null;
-        String changeCDRTime = null;
         String fieldName = null;
         File file = null;
         String line = null;
         String str = null;
-        String answerId = null;
-        String startTime = null;
-        String preCDRTime = null;
+
         String[] data = null;
         BufferedReader br = null;
         FileWriter fw = null;
         FileReader fr = null;
-        String[] result = null;
+//        String[] result = null;
         Date date = null;
         SimpleDateFormat actF = null;
         SimpleDateFormat sdf = null;
         DataInputStream dis = null;
         FileInputStream fis = null;
         ArrayList<String> billIds = null;
-        List<String> fieldList = null;
         HashMap<String, int[]> hm = new HashMap<String, int[]>();
-        int fieldValue = 0;
         int failed_flag = 1;
-        String recordtype = null;
-        String imei = null;
-        String imsi = null;
-        String msisdn = null;
-        String systemtype = null;
         String updatetime = null;
         logger.info("in file reader");
 
         try {
-            fieldList = new ArrayList<String>();
-            logger.info("NOTEEEEEEEEE  (readConvertedCSVFile)>>>>>>>>>>  main_type, txn_id     but usertype_name is not used ****************************");
-            String main_type = "";
-            String txn_id = "";
             String usertype_name = "";
             ArrayList<CDRColumn> myfilelist = getCDRFields(conn, "CDR", usertype_name);
             logger.info("file list size is " + myfilelist.size());
-            // fieldList = Arrays.asList(fields);
-            logger.info("File name is [" + fileName + "]");
-
             date = new Date();
             actF = new SimpleDateFormat("yyyyMMddHHmmss"); // actF = new SimpleDateFormat("yyyyMMddHHmmss");
             sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
             String[] fileArray = fileName.split("_");
             updatetime = sdf.format(actF.parse(fileArray[fileArray.length - 2]));
-
             file = new File(filePath);
             fr = new FileReader(file);
             br = new BufferedReader(fr);
-
             query = "insert into " + repName + "_raw" + "(";
             failquery = "insert into " + repName + "_error" + "(";
-
             hm = zte.getfieldSet();
             billIds = new ArrayList<String>();
 
@@ -431,7 +397,8 @@ public class HexFileReader {
             if (conn.toString().contains("oracle")) {
                 toDate = " TO_DATE(?,'yyyy/mm/dd hh24:mi:ss') ";
             }
-
+            boolean isOracle = conn.toString().contains("oracle");
+            String dateFunction = Util.defaultDate(isOracle);
             while ((line = br.readLine()) != null) {
                 data = line.split(",", -1);
                 if (k == 0) {
@@ -441,32 +408,30 @@ public class HexFileReader {
                         int my_column_count = 0;
                         for (CDRColumn cdrColumn : myfilelist) {
                             if ((cdrColumn.columString).trim().equals(data[my_column_count].trim())) {
-                                logger.info("column name matched");
+                                logger.info("Column name matched");
                                 my_column_count++;
                                 query = query + cdrColumn.columString + ",";
                                 values = values + "?,";
-
-                            } else {
-                                logger.info("Column name not matched");
+                                failquery = failquery + cdrColumn.columString + ",";   //
+                                failvalues = failvalues + " ?, ";                           //
                             }
+//                            else {
+//                                logger.info("Column name not matched");
+//                            }
                         }
                         if (my_column_count == myfilelist.size()) {
-
-                            query = query + "operator" + "," + "file_name" + "," + "record_time" + "," + "status" + ",";
-                            values = values + "?,?, " + toDate + " ,'Init',";
+                            query = query + "operator" + "," + "file_name" + "," + "record_time" + "," + "status" + ", created_on ,";
+                            values = values + "?,?, " + toDate + " ,'Init'," + dateFunction + ",";
                             query = query.substring(0, query.length() - 1) + ") "
                                     + values.substring(0, values.length() - 1) + ")";
-
                             ps = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-
-                            failquery = failquery + "operator" + "," + "file_name" + "," + "record_time" + "," + "status" + ",";
-                            failvalues = failvalues + "?,?, " + toDate + ",'Error',";
+                            failquery = failquery + "operator" + "," + "file_name" + "," + "record_time" + "," + "status" + ", created_on   ";     // why not comma 
+                            failvalues = failvalues + "?,?, " + toDate + ",'Error'," + dateFunction + ",";   //
                             failquery = failquery.substring(0, failquery.length() - 1) + ") "
                                     + failvalues.substring(0, failvalues.length() - 1) + ")";
-
                             failed_ps = conn.prepareStatement(failquery, Statement.RETURN_GENERATED_KEYS);
                             logger.info("complete query is [" + query + "]");
-                            logger.info("complete header matched");
+                            logger.info("complete error " + failquery);
                         } else {
                             // logger.info("getting error in file so moving the file ");
                             fr.close();
@@ -477,33 +442,42 @@ public class HexFileReader {
                     } else {
                         // logger.info("getting error in file so moving the file ");
                         fr.close();
-                        logger.info("Configured Comumn nad File headers are not matched");
+//                        logger.info("Configured Comumn nad File headers are not matched");  
                         new com.functionapps.files.FileList().moveFile(fileName, repName, basePath, "error");
                     }
                 } else {
-                    int j = 1;
+                    int j = 1;               ///  
+                    failed_flag = 1;
                     for (CDRColumn cdrColumn : myfilelist) {
+//                        logger.info(j + "   <-- FIELD -> " + data[j - 1]);
                         if (cdrColumn.graceType.equalsIgnoreCase("Mandatory")) {
-                            if (data[j - 1] == "" || data[j - 1] == null) {
+//                            logger.info(j + "   <--Mandatory field -> " + data[j - 1]);
+                            if (data[j - 1].equals("") || " ".equals(data[j - 1]) || data[j - 1].equals(" ") || data[j - 1] == null) {
+//                                logger.info(" No data " + data[j - 1]);   
                                 failed_flag = 0;
                             }
-                            j++;
+                            // j++;
                         }
+                        j++;
                     }
                     j = 1;
+//                    logger.info("Failed FLAG value " + failed_flag);
                     if (failed_flag == 1) {
                         for (; j <= data.length; j++) {
-                            // logger.info("j"+j+" data"+data[j-1]);
                             ps.setString(j, data[j - 1].trim());
                         }
                         ps.setString(j, repName);
                         ps.setString(j + 1, fileName);
                         ps.setString(j + 2, updatetime);
+//                        logger.info(" query Pass+ ");
                         ps.addBatch();
                         pass_my_batch++;
-
-                    } else {
+                    }
+                    if (failed_flag == 0) {
+                        total_error_record_count++;
+//                        logger.info("Fail before  For  " + data.length);
                         for (; j <= data.length; j++) {
+//                            logger.info("inside For:::    " + j + " :: " + data[j - 1].trim());
                             failed_ps.setString(j, data[j - 1].trim());
                         }
                         failed_ps.setString(j, repName);
@@ -514,40 +488,40 @@ public class HexFileReader {
                     }
                 }
                 k++;
-                logger.info(k);
+                logger.info("..... " + k);
                 if (pass_my_batch == my_batch_count) {
                     logger.info("Executing Pass batch");
-                    logger.info("Executing Pass Batch File");
                     ps.executeBatch();
                     pass_my_batch = 0;
                 }
                 if (fail_my_batch == my_batch_count) {
                     logger.info("Executing Fail batch");
-                    logger.info("Executing Fail Batch File");
                     failed_ps.executeBatch();
-                    pass_my_batch = 0;
-
+                    fail_my_batch = 0;
                 }
-            }
+            }    // while End
+
+            logger.info("File Finished ");
             ps.executeBatch();
-            conn.commit();
 
             failed_ps.executeBatch();
+            cdrFileDetailsInsert(conn, dateFunction, fileName, repName, k - 1, total_error_record_count);  //total_records_count
+
+            //            conn.commit();
             if (fr != null) {
                 fr.close();
             }
+
             rowInserted = ps.getUpdateCount();
             rs = ps.getGeneratedKeys();
-
             if (rs != null) {
                 rs.close();
             }
-
+            logger.info("sys insert close ");
             new com.functionapps.files.FileList().moveFile(fileName, repName, basePath, "file");
-
-            if (cdrCount != null && cdrStartTime != null && cdrEndTime != null) {
-            } else {
-            }
+//            if (cdrCount != null && cdrStartTime != null && cdrEndTime != null) {
+//            } else {
+//            }
 
         } catch (Exception e) {
             logger.info("Exception [" + e + "]");
@@ -558,7 +532,7 @@ public class HexFileReader {
                 }
             } catch (Exception ex) {
             }
-            result = null;
+//            result = null;
         } finally {
             try {
                 if (conn != null) {
@@ -569,7 +543,6 @@ public class HexFileReader {
                         ps.clearParameters();
                         ps.close();
                     }
-
                 }
                 if (fis != null) {
                     fis.close();
@@ -584,13 +557,6 @@ public class HexFileReader {
             }
             query = null;
             cdrCount = null;
-            endTime = null;
-            inTrkName = null;
-            outTrkName = null;
-            inTrkNo = null;
-            outTrkNo = null;
-            partId = null;
-            billId = null;
             values = null;
             cdrStartTime = null;
             cdrEndTime = null;
@@ -600,7 +566,7 @@ public class HexFileReader {
             billIds = null;
             hm = null;
         }
-        return result;
+//        return result;
     }
 
     public String[] readConvertedFeatureFile(Connection conn, String fileName, String filePath, String main_type, String basePath, int raw_upload_set_no, String txn_id, String subfeature, String management_table, String usertype_name) throws IOException, SQLException {
@@ -611,7 +577,8 @@ public class HexFileReader {
         String query = null;
 
         String values = "values(";
-
+        boolean isOracle = conn.toString().contains("oracle");
+        String dateFunction = Util.defaultDate(isOracle);
         PreparedStatement ps = null;
 
         ResultSet rs = null;
@@ -640,21 +607,17 @@ public class HexFileReader {
 
         Set<String> hash_Set = new HashSet<String>();
         HashMap<String, String> msgConfig = new HashMap<String, String>();
-
+        ArrayList<String> fileLines = new ArrayList<String>();
         try {
             ArrayList<CDRColumn> myfilelist = getCDRFields(conn, main_type, usertype_name);
-
             logger.info("file list size is " + myfilelist.size());
             logger.info("File Name is " + fileName);
             date = new Date();
             actF = new SimpleDateFormat("yyyyMddHHmmssSS"); // actF = new SimpleDateFormat("yyyyMMddHHmmss");
             sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String[] fileArray = fileName.split("_");
-
             Statement st5 = conn.createStatement();
-            String qry = " select quantity, device_quantity from  " + main_type.trim().toLowerCase() + "_mgmt where txn_id  = '" + txn_id
-                    + "'";
-
+            String qry = " select quantity, device_quantity from  " + main_type.trim().toLowerCase() + "_mgmt where txn_id  = '" + txn_id + "'";
             if (main_type.equalsIgnoreCase("Stolen") || main_type.equalsIgnoreCase("Recovery")
                     || main_type.equalsIgnoreCase("Block") || main_type.equalsIgnoreCase("Unblock")) {
                 qry = "  select  quantity, device_quantity from stolenand_recovery_mgmt  where txn_id  = '" + txn_id + "'  ";
@@ -678,7 +641,7 @@ public class HexFileReader {
             fr = new FileReader(file);
             br = new BufferedReader(fr);
 
-            query = "insert into " + main_type + "_raw" + "(";
+            query = "insert into " + main_type + "_raw" + "( ";
 
             int pass_my_batch = 0;
             int cnt = 0;
@@ -686,7 +649,7 @@ public class HexFileReader {
             List aList = new ArrayList();
             List aList1 = new ArrayList();
             List alst = new ArrayList();
-            logger.info(" WE CAN  START HERE");
+//            logger.info(" WE CAN  START HERE");
             String errorString = " , ";
 
             Statement stmt2 = conn.createStatement();
@@ -699,9 +662,7 @@ public class HexFileReader {
                 logger.info("Error at device_type " + e);
             }
             rsult.close();
-
             String interpQury = " select interp from system_config_list_db where tag =  ";
-
 //			Statement stmt2 = conn.createStatement();
             ResultSet result1 = stmt2.executeQuery(interpQury + " 'DEVICE_TYPE'");
             Set<String> deviceType = new HashSet<String>();
@@ -749,17 +710,17 @@ public class HexFileReader {
                 logger.info("Error at DEVICE_STATUS " + e);
             }
             stmt5.close();
+            String errorFilePath = CEIRFeatureFileParser.getErrorFilePath(conn);
+            String error_file_path = errorFilePath + txn_id + "/" + txn_id + "_error.csv";
 
             while ((line = br.readLine()) != null) {
-                logger.info("Line No " + cnt);
                 data = line.split(",", -1);
-
                 logger.info("line is " + line + "  line length " + line.trim().length());
                 if (line.replace(",", " ").trim().length() > 0) {
                     errorString = "";
                     if (k == 0) {
                         if (data.length == 1) {
-                            logger.info(" File is corrupted " + data.toString() + "  lllll..." + line);
+                            logger.info(" File is corrupted " + data.toString() + "  ..." + line);
                             errFile.gotoErrorFile(txn_id, "   Error Code :CON_FILE_0010, Error Message: The file is corrupt.    ");
                             failed_flag = 0;
                             fr.close();/////////
@@ -818,8 +779,7 @@ public class HexFileReader {
                                 failed_flag = 0;
                                 fr.close();
                                 if (conVal == 0) {
-                                    errFile.gotoErrorFile(txn_id,
-                                            "    Error Code :CON_FILE_0002, Error Message: The header in the file is not in correct order     "); /////////
+                                    errFile.gotoErrorFile(txn_id, "    Error Code :CON_FILE_0002, Error Message: The header in the file is not in correct order     "); /////////
                                     logger.info("Total column are not matched" + my_column_count);
                                 }
                                 break;
@@ -829,13 +789,12 @@ public class HexFileReader {
                             fr.close();
                             break;
                         }
-
-                        errFile.gotoErrorFile(txn_id, line.toString() + ", Error Code , Error Message    "); /////////
-
+//                        errFile.gotoErrorFile(txn_id, line.toString() + ", Error Code , Error Message    "); /////////
+                        fileLines.add(line.toString() + ",Error Code , Error Message");
                     } else {
-                        logger.info("FILE AFTER HEADER");
-                        logger.info("Data as per record " + data[0] + " <><><><> " + data[1] + " <><><><> " + data[2]
-                                + " <><><><> " + data[3] + " <><><> " + data[4] + " <><><> " + data[5]);
+//                        logger.info("FILE AFTER HEADER");
+//                        logger.info("Data as per record " + data[0] + " <><><><> " + data[1] + " <><><><> " + data[2]
+//                                + " <><><><> " + data[3] + " <><><> " + data[4] + " <><><> " + data[5]);
 
                         // if(data[0].equals("") && data[1].equals("") && data[2].equals("") &&
                         // data[3].equals("") && data[4].equals("") && data[5].equals("") &&
@@ -843,12 +802,12 @@ public class HexFileReader {
                         // logger.info("err.. BLNK FILE ,, just skip it" );
                         // continue;
                         // }
-                        int j = 1;
-                        logger.info(" DATA " + data[j - 1]);
+                        int j = 1;           //
+                        //
+//                        logger.info(" DATA " + data[j - 1]);
                         String[] arrOfFile = line.trim().split(",", 8);
                         String imeiV = arrOfFile[4];
                         hash_Set.add(arrOfFile[3].trim());
-
                         for (int v = 0; v < data.length; v++) {
                             if (data[v].length() > 25) {
 //								errFile.gotoErrorFile(txn_id, " " + line.toString() + "     Error Code :CON_FILE_0004, Error Message:   File Contain a Long Field  Record   ");                                   /////////
@@ -865,18 +824,15 @@ public class HexFileReader {
                         }
 
                         if (!(deviceType.contains(data[0].trim()))) {
-
 //							errFile.gotoErrorFile(txn_id,      " " + line.toString() + "    Error Code :CON_FILE_0006, Error Message:  The field value(Device Type) is not as per the specifications");                                   /////////
                             errorString += "  Error Code :CON_FILE_0006, Error Message:  The field value(Device Type) is not as per the specifications,";
                             failed_flag = 0;
-
                         }
 
                         if (!(deviceType3.contains(data[1].trim()))) {
 //							errFile.gotoErrorFile(txn_id, " " + line.toString() + "    Error Code :CON_FILE_0006, Error Message:  The field value(Device ID Type) is not as per the specifications");                                   /////////
                             errorString += "  Error Code :CON_FILE_0006, Error Message:  The field value(Device ID Type) is not as per the specifications,";
                             failed_flag = 0;
-
                         }
                         if (!(deviceType4.contains(data[2].trim()))) {
 //							errFile.gotoErrorFile(txn_id, " " + line.toString() + "     Error Code :CON_FILE_0006, Error Message:  The field value(Multiple Sim Status) is not as per the specifications");                                   /////////
@@ -886,77 +842,69 @@ public class HexFileReader {
                         if (!(deviceType5.contains(data[6].trim()))) {
 //							errFile.gotoErrorFile(txn_id, " " + line.toString() + "    Error Code :CON_FILE_006, Error Message:  The field value(Device c ) is not as per the specifications");                                   /////////
                             errorString += "  Error Code :CON_FILE_0006, Error Message:  The field value(Device Status) is not as per the specifications,";
-
                             failed_flag = 0;
 
                         }
                         boolean val = validateJavaDate(data[5]);
-                        logger.info("resss " + val);
-
+//                        logger.info("resss " + val);
                         if (!val) {
 //							errFile.gotoErrorFile(txn_id, " " + line.toString() + "    Error Code :CON_FILE_0006, Error Message:  The field value(Device Launch Date) is not as per the specifications");                                   /////////
                             errorString += "  Error Code :CON_FILE_0006, Error Message:  The field value(Device Launch Date) is not as per the specifications,";
                             failed_flag = 0;
-
                         }
-
                         for (CDRColumn cdrColumn : myfilelist) {
-                            logger.info("  graceTYE .." + cdrColumn.graceType);
+//                            logger.info("  graceTYE .." + cdrColumn.graceType);  
                             if (cdrColumn.graceType.equalsIgnoreCase("Mandatory")) {
                                 logger.info("DATA in field ... " + data[j - 1]);
-                                if (data[j - 1].equals("") || data[j - 1] == " " || data[j - 1].equals(" ")
-                                        || data[j - 1] == null) {
+                                if (data[j - 1].equals("") || data[j - 1] == " " || data[j - 1].equals(" ") || data[j - 1] == null) {
                                     logger.info("2 mandorty are their. .remove one ");
 //									errFile.gotoErrorFile(txn_id, " " + line.toString() + "    Error Code :CON_FILE_0007, Error Message:   The mandatory parameter does not contain the value. ");   
                                     errorString += "   Error Code :CON_FILE_0007, Error Message:   The mandatory parameter does not contain the value. ,";
-                                    failed_flag = 0;/////////
-                                    //
+                                    failed_flag = 0;
                                 }
                                 j++;
                             }
+                            j++;
                         }
-                        errFile.gotoErrorFile(txn_id, line.toString() + errorString);
+//                        errFile.gotoErrorFile(txn_id, line.toString() + errorString);
+                        fileLines.add(line.toString() + errorString);
                     }
-
                     k++;
                 } else {
                     totalBlnkLine++;
                 }
+                logger.info("Line Number ..    " + (k + totalBlnkLine));
             }
-
             int lngth = hash_Set.size();
             logger.info(" Total size of Serial Number ..    " + lngth);
             logger.info(" Total lines with data    " + k);
             logger.info("Total Blank Lines in File " + totalBlnkLine);
             if ((k - 1) != fileCnt) {
-                logger.info(
-                        "  Quantity  provided doesnot matched with Lines in File  but Error will not see  till now if earlier Error happened ");
+                logger.info("  Quantity  provided doesnot matched with Lines in File  but Error will not see  till now if earlier Error happened ");
                 if (failed_flag != 0) {
                     logger.info("  Quantity  provided doesnot matched with Data  in File  ");
-                    errFile.gotoErrorFile(txn_id,
-                            "    Error Code :CON_FILE_0010, Error Message:  IMEI/ESN/MEID Quantity  does not match with the  count of data records in the uploaded file   ");
+                    //   errFile.gotoErrorFile(txn_id, "  Error Code :CON_FILE_0010, Error Message:  IMEI/ESN/MEID Quantity  does not match with the  count of data records in the uploaded file   ");
+                    fileLines.add(" Error Code :CON_FILE_0010, Error Message:  IMEI/ESN/MEID Quantity  does not match with the  count of data records in the uploaded file   ");
                     failed_flag = 0;
                 }
             }
-            //
             if (lngth != deviceQuantity) {
                 logger.info("   Devce Qntity Error method started ");
                 if (failed_flag != 0) {
                     logger.info(" Device Quantity   doesnot matched with unique serial number  in File  ");
-                    errFile.gotoErrorFile(txn_id, "    Error Code :CON_FILE_0011, Error Message: Device Quantity does not match with the  count of unique serial number in the uploaded file  ");
+                    //  errFile.gotoErrorFile(txn_id, "Error Code :CON_FILE_0011, Error Message: Device Quantity does not match with the  count of unique serial number in the uploaded file  ");
+                    fileLines.add("Error Code :CON_FILE_0011, Error Message: Device Quantity does not match with the  count of unique serial number in the uploaded file  ");
                     failed_flag = 0;
                 }
             }
-
             br.close();
             k = 0;
-
             if (failed_flag == 1) {
                 CEIRFeatureFileFunctions ceirfunction = new CEIRFeatureFileFunctions();
                 ceirfunction.updateFeatureFileStatus(conn, txn_id, 2, main_type, subfeature); // update web_action_db 
-//                 ceirfunction.UpdateStatusViaApi(conn, txn_id, 0,    main_type ); 
-               ceirfunction.updateFeatureManagementStatus(conn, txn_id, 1, management_table, main_type);      // 1 for processing
-                String error_file_path = CEIRFeatureFileParser.getErrorFilePath(conn) + txn_id + "/" + txn_id + "_error.csv";
+                ceirfunction.UpdateStatusViaApi(conn, txn_id, 0, main_type);
+                ceirfunction.updateFeatureManagementStatus(conn, txn_id, 1, management_table, main_type);      // 1 for processing
+
                 File errorfile = new File(error_file_path);
                 if (errorfile.exists()) {     // in case of no error   ,,  file is deleted
                     logger.info("Error file already esists ");
@@ -973,25 +921,21 @@ public class HexFileReader {
                 br = new BufferedReader(fr);
                 while ((line = br.readLine()) != null) {
                     data = line.split(",", -1);
-
                     if (line.replace(",", " ").trim().length() > 0) {
                         if (k == 0) {
-                            logger.info(" data length is " + data.length + " fileld List size is " + myfilelist.size());
                             if (data.length == myfilelist.size()) {
                                 logger.info("Configured Column name and File Headers are matched");
                                 int my_column_count = 0;
-
                                 for (CDRColumn cdrColumn : myfilelist) {
                                     query = query + cdrColumn.columString + ",";
                                     values = values + "?,";
                                     my_column_count++;
                                 }
                                 if (my_column_count == myfilelist.size()) {
-                                    query = query + "txn_id" + "," + "file_name" + "," + "feature_type" + ",";
-                                    values = values + "?,?,?,";
+                                    query = query + "txn_id" + "," + "file_name" + "," + "feature_type" + ",created_on   ";   // removin comma may14
+                                    values = values + "?,?,?,?,";
                                     query = query.substring(0, query.length() - 1) + ") "
                                             + values.substring(0, values.length() - 1) + ")";
-
                                     ps = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
                                     logger.info("complete query is [" + query + "]");
                                     logger.info("complete header matched");
@@ -1000,53 +944,46 @@ public class HexFileReader {
                                     logger.info("Total column are not matched" + my_column_count);
                                     break;
                                 }
-                            } else {
-                                fr.close();
-                                logger.info(
-                                        "Configured Comumn nad File headers are not matched ,,File Header   number is "
-                                        + data.length + "  , Required size is(defined in db ) "
-                                        + myfilelist.size() + "  is not macthed for 2nd");
-
                             }
+//                            else {
+//                                fr.close();
+//                                logger.info(
+//                                        "Configured Comumn nad File headers are not matched ,,File Header   number is "
+//                                        + data.length + "  , Required size is(defined in db ) "
+//                                        + myfilelist.size() + "  is not macthed for 2nd");
+//
+//                            }
+
                         } else {
-
-                            int mdntryCols[] = new int[myfilelist.size()];
+//                            int j = 1;
+//                            for (CDRColumn cdrColumn1 : myfilelist) {
+//                                if (cdrColumn1.graceType.equalsIgnoreCase("Mandatory")) {
+//                                    if (data[j - 1] == "" || data[j - 1] == null) {
+//                                    }
+//                                    j++;
+//                                }
+//                            }
                             int j = 1;
-                            for (CDRColumn cdrColumn1 : myfilelist) {
-                                if (cdrColumn1.graceType.equalsIgnoreCase("Mandatory")) {
-                                    if (data[j - 1] == "" || data[j - 1] == null) {
-                                    }
-                                    j++;
-                                }
-                            }
-                            j = 1;
                             if (failed_flag == 1) {
-
-                                logger.info("Data as per record " + data[0] + " ()()()()() " + data[1] + " ()()()()() "
-                                        + data[2] + " ()()()()() " + data[3] + " ()()()()()" + data[4] + "()()()()() "
-                                        + data[5]);
-
                                 if (data[0].equals("") && data[1].equals("") && data[2].equals("") && data[3].equals("")
                                         && data[4].equals("") && data[5].equals("") && data[6].equals("")) {
                                     logger.info("err..   BLNK FILE   ,, just skip it");
                                     continue;
                                 }
-
                                 String imeiV = data[4].trim();
                                 logger.info("imeiV;;" + imeiV);
                                 if (aList.contains(imeiV)) {
-                                    logger.info("err. for list,,." + imeiV); //
-                                    // errFile.gotoErrorFile(txn_id, " " + line.toString() + " Error Code
-                                    // :CON_FILE_0008, Error Message: The record is duplicate in the file");
+                                    logger.info("err. for list,,." + imeiV);
                                 } else {
                                     aList.add(imeiV);
                                     for (; j <= data.length; j++) {
-                                        logger.info("DATA at setString " + data[j - 1].trim());
+//                                        logger.info("DATA at setString " + data[j - 1].trim());
                                         ps.setString(j, data[j - 1].trim());
                                     }
                                     ps.setString(j, txn_id);
                                     ps.setString(j + 1, fileName);
                                     ps.setString(j + 2, main_type);
+                                    ps.setString(j + 3, dateFunction);
                                     ps.addBatch();
                                     pass_my_batch++;
                                 }
@@ -1057,27 +994,26 @@ public class HexFileReader {
                         if (pass_my_batch == my_batch_count) {
                             logger.info("Executing Pass Batch File");
                             ps.executeBatch();
-                            conn.commit();
+//                            conn.commit();
                             pass_my_batch = 0;
                         }
                     }
-                }
+                }      // While close 
                 br.close();
                 ps.executeBatch();
                 if (fr != null) {
                     fr.close();
                 }
-
                 rs = ps.getGeneratedKeys();
                 if (rs != null) {
                     rs.close();
                 }
                 conn.commit();
             } else {
+                errFile.gotoErrorFilewithList(errorFilePath, txn_id, fileLines);
                 CEIRFeatureFileFunctions ceirfunction = new CEIRFeatureFileFunctions();
-                //     ceirfunction.addFeatureFileConfigDetails(conn, "update", main_type, subfeature, txn_id, fileName, "PARAM_NOT_VALID", "");
                 ceirfunction.updateFeatureFileStatus(conn, txn_id, 4, main_type, subfeature); // update web_action_db  
-//                ceirfunction.UpdateStatusViaApi(conn, txn_id, 1,   main_type );    // working for cons, 
+                ceirfunction.UpdateStatusViaApi(conn, txn_id, 1, main_type);    // working for cons, 
                 ceirfunction.updateFeatureManagementStatus(conn, txn_id, 2, management_table, main_type);
             }
 
@@ -1861,6 +1797,24 @@ public class HexFileReader {
         }
         return usrtype;
     }
+
+    void cdrFileDetailsInsert(Connection conn, String dateFunction, String fileName, String repName, int total_records_count, int total_error_record_count) {
+
+        Statement stmt = null;
+        String raw_query = "insert into cdr_file_details_db(created_on, file_name, operator, total_records_count, total_error_record_count,source  ) "
+                + "  values( " + dateFunction + ", '" + fileName + "', '" + repName + "', '" + total_records_count + "','" + total_error_record_count + "',''  )";
+        try {
+             logger.info("  cdrFileDetailsInsert is " + raw_query);
+            stmt = conn.createStatement();
+            stmt.executeUpdate(raw_query);
+            stmt.closeOnCompletion();
+        } catch (Exception e) {
+logger.info("  "+e);
+        }
+    }
+
+}
+
 //
 //    public void readFeatureWithoutFile(Connection conn, String feature, int raw_upload_set_no, String txn_id,
 //            String sub_feature, String mgnt_table_db, String user_type) {
@@ -2411,8 +2365,6 @@ public class HexFileReader {
 //        }
 //        return cntctNo;
 //    }
-
-}
 //
 //	
 

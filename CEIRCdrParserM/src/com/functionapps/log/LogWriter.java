@@ -7,14 +7,17 @@ import java.io.BufferedWriter;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 
 public class LogWriter {
-	
-	final String logPath  = "/home/ceirapp/ceir/ceir_parser/logs/";    // /home/ceirapp/ceir/ceir_parser      // change in log4j.properties file
-	
-										///home/ceirapp/GSMA/CEIRParser.log
+	  
+    
+	static String logPath  = "/home/ceirapp/ceir/ceir_parser/webAction/logs/";    
+
+    public String getLogPath() {
+        return logPath;
+    }
+
 	public boolean writeLog( String cdrFileName, String fileSize, String cdrCount, String parserStartTime, String parserEndTime, String cdrStartTime, String cdrEndTime, String successCount, String failCount, String dbInsertCount, String dbSize  ){
 		boolean result  = false;
 		PrintWriter pw  = null;
@@ -49,13 +52,14 @@ public class LogWriter {
 		}
 		return result;
 	}
+        
+        
 	public void writeEvents( FileWriter pw, String servedIMEI, String  recordType,
 			String servedIMSI, String servedMSISDN, String systemType, String  operator, String  file_name,
 			String record_time,String type, String rule_id, String rule_name,  String status , String time){		
 		try{
 			pw.write(servedIMEI+","+recordType+","+servedIMSI+","+servedMSISDN+","+systemType+","+operator+","
 			+file_name+","+record_time+","+type+","+rule_id+","+rule_name+","+status+","+time+String.format("%n"));
-			
 			pw.flush();
 		}catch( Exception e ){
 			e.printStackTrace();
@@ -82,8 +86,6 @@ public class LogWriter {
 		}catch( Exception e ){
 			e.printStackTrace();
 		}
-			
-		
 	}
 
 }

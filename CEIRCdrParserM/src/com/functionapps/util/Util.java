@@ -31,19 +31,13 @@ public class Util {
     }
 
 //    public static void main(String[] args) {
-//           SimpleDateFormat format = new SimpleDateFormat("dd-MMM-yy HH.mm.ss");
-//        Date d1 = null;
-//        Date d2 = null;
-//        try {
-//            d1 = format.parse(created_on);
-//            d2 = format.parse(modified_on);
-//        } catch (Exception e) {
-//            e.printStackTrace();
+//
+//        String aa = "13244dfa^&sfasdf23113";
+//        if (aa.matches("^[-\\w.]+")) {
+//            System.out.println("true");
+//        } else {
+//            System.out.println("false");
 //        }
-//        long diff = d2.getTime() - d1.getTime();
-//        System.out.println("diff// " + diff);
-//      
-//        
-//        
+//
 //    }
 }

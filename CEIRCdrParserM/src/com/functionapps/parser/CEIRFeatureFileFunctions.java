@@ -1,12 +1,10 @@
 package com.functionapps.parser;
 
+import com.functionapps.util.Util;
 import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -21,28 +19,7 @@ public class CEIRFeatureFileFunctions {
 
     Logger logger = Logger.getLogger(CEIRFeatureFileFunctions.class);
 
-//    public ResultSet getFileDetails(Connection conn) {
-//        Statement stmt = null;
-//        ResultSet rs = null;
-//        String query = null;
-//        String limiter = " limit 1 ";
-//        if (conn.toString().contains("oracle")) {
-//            limiter = " fetch next 1 rows only ";
-//        }
-//
-//        try { /// state=0 and (feature = 'CONSIGNMENT' or feature = 'STOCK')
-//            query = "select * from web_action_db where state=0      order by id asc " + limiter + "   ";
-//            logger.info("Query to get  (getFileDetails) File Details [" + query + "]");
-//
-//            stmt = conn.createStatement();
-//            return rs = stmt.executeQuery(query);
-//        } catch (Exception e) {
-//
-//            logger.info("" + e);
-//        }
-//        return rs;
-//
-//    }
+
     public ResultSet getFileDetails(Connection conn, int state) {
         Statement stmt = null;
         ResultSet rs = null;
@@ -124,6 +101,7 @@ public class CEIRFeatureFileFunctions {
                 feature_file_management_details.put("file_name", rs.getString("file_name"));
                 feature_file_management_details.put("created_on", rs.getString("created_on"));
                 feature_file_management_details.put("modified_on", rs.getString("modified_on"));
+                feature_file_management_details.put("delete_flag", rs.getString("delete_flag"));
             }
         } catch (Exception e) {
             logger.info("Exception in feature_file_management_details" + e);
@@ -188,7 +166,6 @@ public class CEIRFeatureFileFunctions {
         try {
             stmt = conn.createStatement();
             stmt.executeUpdate(query);
-
         } catch (Exception e) {
             logger.info("errror" + e);
         } finally {
@@ -415,7 +392,7 @@ public class CEIRFeatureFileFunctions {
 
     }
 
-    public Map getUserRoleType(Connection conn, String txn_id) {
+    public Map<String, String> getUserRoleType(Connection conn, String txn_id) {
         Statement stmt = null;
         ResultSet rs = null;
         String query = null;
@@ -437,13 +414,104 @@ public class CEIRFeatureFileFunctions {
         return map;
     }
 
-    void RegisterVisaUpdateApi(String string) {
+    void getfromRegulizeEnterInCustom(Connection conn, String txn_id, String feature) {
+        Statement stmt = null;
+        ResultSet rs = null;
+        Statement stmt1 = null;
+        ResultSet rs1 = null;
+        String query = null;
+        String InsrtQry = null;
+        boolean isOracle = conn.toString().contains("oracle");
+        String dateFunction = Util.defaultDate(isOracle);
 
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            String ValImei = "";
+            for (int i = 1; i < 5; i++) {
+                if (i == 1) {
+                    ValImei = "first_imei";
+                }
+                if (i == 2) {
+                    ValImei = "second_imei";
+                }
+                if (i == 3) {
+                    ValImei = "third_imei";
+                }
+                if (i == 4) {
+                    ValImei = "fourth_imei";
+                }
+                query = "select * from regularize_device_db where  txn_id = '" + txn_id + "' where " + ValImei + " is not null   ";
+                stmt = conn.createStatement();
+                rs = stmt.executeQuery(query);
+                try {
+                    while (rs.next()) {
+                        InsrtQry = "insert  into device_custom_db(CREATED_ON , DEVICE_ID_TYPE, DEVICE_STATUS,DEVICE_TYPE,IMEI_ESN_MEID,MULTIPLE_SIM_STATUS,FEATURE_NAME ,TXN_ID) "
+                                + "values (" + dateFunction + " , '" + rs.getString("DEVICE_ID_TYPE") + "' , '" + rs.getString("DEVICE_STATUS") + "', '" + rs.getString("DEVICE_TYPE") + "' , '" + rs.getString("" + ValImei + "") + "' , '" + rs.getString("MULTIPLE_SIM_STATUS") + "' , 'Register Device' , '" + rs.getString("TXN_ID") + "'     )";
+                        logger.info(" insert qury  [" + InsrtQry + "]");
+                        stmt1 = conn.createStatement();
+                        stmt1.executeQuery(query);
+                    }
+                } catch (Exception e) {
+                    logger.info("errro" + e);
+                }
+            }
+            stmt1.close();
+        } catch (Exception e) {
+            logger.info("Exception in getfromRegulizeEnterInCustom[" + e + "]");
+            System.out.println("" + e);
+        }
+
     }
 
-    private HashMap<String, String> getOtherStolenRecoveryDetails(Connection conn, String txn_id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    void deleteFromCustom(Connection conn, String txn_id, String string0) {
+
+        Statement stmt = null;
+        ResultSet rs = null;
+        Statement stmt1 = null;
+        Statement stmt3 = null;
+        ResultSet rs1 = null;
+        String query = null;
+        String InsrtQry = null;
+        boolean isOracle = conn.toString().contains("oracle");
+        String dateFunction = Util.defaultDate(isOracle);
+
+        try {
+            String ValImei = "";
+            for (int i = 1; i < 5; i++) {
+                if (i == 1) {
+                    ValImei = "first_imei";
+                }
+                if (i == 2) {
+                    ValImei = "second_imei";
+                }
+                if (i == 3) {
+                    ValImei = "third_imei";
+                }
+                if (i == 4) {
+                    ValImei = "fourth_imei";
+                }
+                query = "select * from regularize_device_db where  txn_id = '" + txn_id + "'  where " + ValImei + " is not null  ";
+
+                stmt = conn.createStatement();
+                rs = stmt.executeQuery(query);
+                while (rs.next()) {
+                    InsrtQry = "insert  into device_custom_db_aud(CREATED_ON , DEVICE_ID_TYPE, DEVICE_STATUS,DEVICE_TYPE,IMEI_ESN_MEID,MULTIPLE_SIM_STATUS,FEATURE_NAME ,TXN_ID) "
+                            + "values (" + dateFunction + " , '" + rs.getString("DEVICE_ID_TYPE") + "' , '" + rs.getString("DEVICE_STATUS") + "', '" + rs.getString("DEVICE_TYPE") + "' , '" + rs.getString("" + ValImei + "") + "' , '" + rs.getString("MULTIPLE_SIM_STATUS") + "' , 'Register Device' , '" + rs.getString("TXN_ID") + "'     )";
+                    logger.info(" insert qury  [" + InsrtQry + "]");
+
+                    stmt1 = conn.createStatement();
+                    stmt1.executeQuery(query);
+
+                }
+            }
+            stmt3 = conn.createStatement();
+            stmt3.executeQuery("delete from device_custom_db  where  txn_id = '" + txn_id + "' ");
+
+            conn.commit();
+        } catch (Exception e) {
+            logger.info("Exception in getfromRegulizeEnterInCustom[" + e + "]");
+            System.out.println("" + e);
+        }
+
     }
 
 }

@@ -19,13 +19,11 @@ public class DeviceCustomDb  implements Serializable{
 	private String imeiEsnMeid;
 	private String deviceLaunchDate;
 	private String deviceStatus;
-	private String deviceAction;
 
 	private Long userId;
 	private String txnId;
-	private Integer deviceState;
-	private Integer previousDeviceStatus;
 	private String period;
+	private String featureName;
 	
 	public DeviceCustomDb() {
 		
@@ -33,8 +31,7 @@ public class DeviceCustomDb  implements Serializable{
 	
 	public DeviceCustomDb(Long rev, int revtype, String createdOn, String modifiedOn,
 			String deviceType, String deviceIdType, String multipleSimStatus, String snOfDevice, String imeiEsnMeid,
-			String deviceLaunchDate, String deviceStatus, String deviceAction, Long userId, String txnId,  
-			Integer deviceState, Integer previousDeviceStatus, String period) {
+			String deviceLaunchDate, String deviceStatus, Long userId, String txnId, String period, String featureName) {
 		this.rev = rev;
 		this.revtype = revtype;
 		this.createdOn = createdOn;
@@ -46,14 +43,20 @@ public class DeviceCustomDb  implements Serializable{
 		this.imeiEsnMeid = imeiEsnMeid;
 		this.deviceLaunchDate = deviceLaunchDate;
 		this.deviceStatus = deviceStatus;
-		this.deviceAction = deviceAction;
 		this.userId = userId;
 		this.txnId = txnId;
-		this.deviceState = deviceState;
-		this.previousDeviceStatus = previousDeviceStatus;
 		this.period = period;
+		this.featureName = featureName;
 	}
 	
+	public String getFeatureName() {
+		return featureName;
+	}
+
+	public void setFeatureName(String featureName) {
+		this.featureName = featureName;
+	}
+
 	public Long getRev() {
 		return rev;
 	}
@@ -142,14 +145,6 @@ public class DeviceCustomDb  implements Serializable{
 		this.deviceStatus = deviceStatus;
 	}
 
-	public String getDeviceAction() {
-		return deviceAction;
-	}
-
-	public void setDeviceAction(String deviceAction) {
-		this.deviceAction = deviceAction;
-	}
-
 	public Long getUserId() {
 		return userId;
 	}
@@ -172,22 +167,6 @@ public class DeviceCustomDb  implements Serializable{
 
 	public void setDeviceLaunchDate(String deviceLaunchDate) {
 		this.deviceLaunchDate = deviceLaunchDate;
-	}
-
-	public Integer getDeviceState() {
-		return deviceState;
-	}
-
-	public void setDeviceState(Integer deviceState) {
-		this.deviceState = deviceState;
-	}
-
-	public Integer getPreviousDeviceStatus() {
-		return previousDeviceStatus;
-	}
-
-	public void setPreviousDeviceStatus(Integer previousDeviceStatus) {
-		this.previousDeviceStatus = previousDeviceStatus;
 	}
 
 	public String getPeriod() {
@@ -229,20 +208,15 @@ public class DeviceCustomDb  implements Serializable{
 		builder.append(deviceLaunchDate);
 		builder.append(", deviceStatus=");
 		builder.append(deviceStatus);
-		builder.append(", deviceAction=");
-		builder.append(deviceAction);
 		builder.append(", userId=");
 		builder.append(userId);
 		builder.append(", txnId=");
 		builder.append(txnId);
-		builder.append(", deviceState=");
-		builder.append(deviceState);
-		builder.append(", previousDeviceStatus=");
-		builder.append(previousDeviceStatus);
 		builder.append(", period=");
 		builder.append(period);
+		builder.append(", featureName=");
+		builder.append(featureName);
 		builder.append("]");
 		return builder.toString();
 	}
-
 }

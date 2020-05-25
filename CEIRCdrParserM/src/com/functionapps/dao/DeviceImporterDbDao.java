@@ -11,9 +11,7 @@ import java.util.Objects;
 
 import org.apache.log4j.Logger;
 
-import com.functionapps.pojo.DeviceCustomDb;
 import com.functionapps.pojo.DeviceImporterDb;
-import com.functionapps.util.DateUtil;
 import com.functionapps.util.Util;
 
 public class DeviceImporterDbDao {
@@ -27,12 +25,11 @@ public class DeviceImporterDbDao {
 
 		List<DeviceImporterDb> deviceImporterDbs = new LinkedList<>();
 		try{
-			query = "select id, created_on, modified_on, manufature_date, device_type, device_id_type, "
-					+ "multiple_sim_status, sn_of_device, imei_esn_meid, "
-					//+ "TO_DATE(DEVICE_LAUNCH_DATE, 'DD-MM-YYYY') as launch_date, device_status, device_action, "
-					+ "DEVICE_LAUNCH_DATE as launch_date, device_status, device_action, "
-					+ "user_id, txn_id, local_date, device_state, previous_device_status, period,"
-					+ "feature_id from device_importer_db where txn_id='" + txnId + "'";
+			query = "select id, created_on, modified_on, device_type, device_id_type, multiple_sim_status, sn_of_device, "
+					+ "imei_esn_meid, DEVICE_LAUNCH_DATE as launch_date, device_status, user_id, txn_id, device_state, "
+					+ "period, feature_name "
+					+ "from device_importer_db "
+					+ "where txn_id='" + txnId + "'";
 
 			logger.info("Query ["+query+"]");
 			System.out.println("Query ["+query+"]");
@@ -41,18 +38,12 @@ public class DeviceImporterDbDao {
 			rs = stmt.executeQuery(query);
 
 			while(rs.next()){
-
-
 				deviceImporterDbs.add(new DeviceImporterDb(rs.getLong("id"), 0, rs.getString("created_on"),
-						rs.getString("modified_on"),  rs.getString("manufature_date"),
-						rs.getString("device_type"),  rs.getString("device_id_type"),
+						rs.getString("modified_on"), rs.getString("device_type"),  rs.getString("device_id_type"),
 						rs.getString("multiple_sim_status"),  rs.getString("sn_of_device"),
 						rs.getString("imei_esn_meid"),  rs.getString("launch_date"),
-						rs.getString("device_status"),  rs.getString("device_action"),
-						rs.getLong("user_id"), rs.getString("txn_id"), rs.getString("local_date"),
-						rs.getInt("device_state"), rs.getInt("previous_device_status"),
-						rs.getString("period"), rs.getInt("feature_id")) ); 
-
+						rs.getString("device_status"), rs.getLong("user_id"), rs.getString("txn_id"), 
+						rs.getString("period"), rs.getString("feature_name")) ); 
 			}
 		}
 		catch(Exception e){
@@ -77,9 +68,9 @@ public class DeviceImporterDbDao {
 		boolean isOracle = conn.toString().contains("oracle");
 		String dateFunction = Util.defaultDate(isOracle);
 
-		String query = "insert into device_importer_db_aud (id,rev, revtype, created_on, device_action, device_id_type, "
+		String query = "insert into device_importer_db_aud (id, rev, revtype, created_on, device_id_type, "
 				+ "device_launch_date, device_status, device_type, imei_esn_meid, modified_on, multiple_sim_status," 
-				+ "sn_of_device, previous_device_status, txn_id, user_id, device_state) values(";
+				+ "sn_of_device, txn_id, user_id, feature_name) values(";
 
 		if (isOracle) {
 			query = query + "device_importer_db_aud_seq.nextVal,";
@@ -87,7 +78,7 @@ public class DeviceImporterDbDao {
 			query = query + (getMaxIdDeviceImporterAud(conn) + 1) +",";
 		}
 
-		query = query + "?,?," + dateFunction + ",?,?,?,?,?,?," + dateFunction + ",?,?,?,?,?,?)";
+		query = query + "?,?," + dateFunction + ",?,?,?,?,?," + dateFunction + ",?,?,?,?)";
 
 		PreparedStatement preparedStatement = null;
 
@@ -99,19 +90,16 @@ public class DeviceImporterDbDao {
 
 			for (DeviceImporterDb deviceImporterDb : deviceImporterDbs) {
 				preparedStatement.setLong(1, deviceImporterDb.getRev());
-				preparedStatement.setInt(2, 2);
-				preparedStatement.setString(3, deviceImporterDb.getDeviceAction());	 
-				preparedStatement.setString(4, deviceImporterDb.getDeviceIdType());
-				preparedStatement.setString(5, deviceImporterDb.getDeviceLaunchDate());
-				preparedStatement.setString(6, deviceImporterDb.getDeviceStatus());
-				preparedStatement.setString(7, deviceImporterDb.getDeviceType());
-				preparedStatement.setString(8, deviceImporterDb.getImeiEsnMeid()); 
-				preparedStatement.setString(9, deviceImporterDb.getMultipleSimStatus());
-				preparedStatement.setString(10, deviceImporterDb.getSnOfDevice());
-				preparedStatement.setInt(11, deviceImporterDb.getPreviousDeviceStatus()); 
-				preparedStatement.setString(12, deviceImporterDb.getTxnId());
-				preparedStatement.setLong(13, deviceImporterDb.getUserId());
-				preparedStatement.setInt(14, deviceImporterDb.getDeviceState()); 
+				preparedStatement.setInt(2, 2);	 
+				preparedStatement.setString(3, deviceImporterDb.getDeviceIdType());
+				preparedStatement.setString(4, deviceImporterDb.getDeviceLaunchDate());
+				preparedStatement.setString(5, deviceImporterDb.getDeviceStatus());
+				preparedStatement.setString(6, deviceImporterDb.getDeviceType());
+				preparedStatement.setString(7, deviceImporterDb.getImeiEsnMeid()); 
+				preparedStatement.setString(8, deviceImporterDb.getMultipleSimStatus());
+				preparedStatement.setString(9, deviceImporterDb.getSnOfDevice()); 
+				preparedStatement.setString(10, deviceImporterDb.getTxnId());
+				preparedStatement.setLong(11, deviceImporterDb.getUserId());
 				
 				System.out.println("Query " + preparedStatement);
 				preparedStatement.addBatch();

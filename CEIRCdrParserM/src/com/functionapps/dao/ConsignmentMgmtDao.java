@@ -2,17 +2,11 @@ package com.functionapps.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Objects;
 
 import org.apache.log4j.Logger;
 
-import com.functionapps.pojo.DeviceImporterDb;
-import com.functionapps.util.DateUtil;
 import com.functionapps.util.Util;
 
 public class ConsignmentMgmtDao {

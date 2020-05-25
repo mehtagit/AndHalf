@@ -1,5 +1,7 @@
 package com.functionapps.parser;
 
+import java.sql.Connection;
+
 public class Rule {
 	String rule_name;
 	String output;
@@ -7,6 +9,7 @@ public class Rule {
 	String period;
 	String action;
 	String failed_rule_aciton;
+     
 	
 	public Rule(String rule_name, String output, String ruleid, String period, String action,String failed_rule_action){
 		this.rule_name = rule_name;

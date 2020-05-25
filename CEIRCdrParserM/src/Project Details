@@ -1,4 +1,13 @@
 Project Details
 Name : CEIRCDdrParser
 Java Version:1.8
-Release Version :2020/05/12-002
+Release Version :2020/05/18-002
+
+
+logs  :
+Ceir
+package com.functionapps.log,LogWriter;
+
+RuleEngine:
+package com.gl.utils.LogWriter;
+log4j

@@ -20,9 +20,9 @@ public class ManagementAudTableDao {
 		boolean isOracle = conn.toString().contains("oracle");
 		String dateFunction = Util.defaultDate(isOracle);
 
-		String query = "insert into " + tableName + " (id,rev, revtype, created_on, device_action, device_id_type, "
+		String query = "insert into " + tableName + " (id, rev, revtype, created_on, device_id_type, "
 				+ "device_launch_date, device_status, device_type, imei_esn_meid, modified_on, multiple_sim_status," 
-				+ "sn_of_device, txn_id, user_id) values(";
+				+ "sn_of_device, txn_id, user_id, feature_name) values(";
 
 		if (isOracle) {
 			query = query + sequenceName +".nextVal,";
@@ -42,17 +42,17 @@ public class ManagementAudTableDao {
 
 			for (ManagementDb managementDb : managementDbs) {
 				preparedStatement.setLong(1, managementDb.getRev());
-				preparedStatement.setInt(2, 2);
-				preparedStatement.setString(3, managementDb.getDeviceAction());	 
-				preparedStatement.setString(4, managementDb.getDeviceIdType());
-				preparedStatement.setString(5, managementDb.getDeviceLaunchDate());
-				preparedStatement.setString(6, managementDb.getDeviceStatus());
-				preparedStatement.setString(7, managementDb.getDeviceType());
-				preparedStatement.setString(8, managementDb.getImeiEsnMeid()); 
-				preparedStatement.setString(9, managementDb.getMultipleSimStatus());
-				preparedStatement.setString(10, managementDb.getSnOfDevice());
-				preparedStatement.setString(11, managementDb.getTxnId());
-				preparedStatement.setLong(12, managementDb.getUserId());
+				preparedStatement.setInt(2, 2); 
+				preparedStatement.setString(3, managementDb.getDeviceIdType());
+				preparedStatement.setString(4, managementDb.getDeviceLaunchDate());
+				preparedStatement.setString(5, managementDb.getDeviceStatus());
+				preparedStatement.setString(6, managementDb.getDeviceType());
+				preparedStatement.setString(7, managementDb.getImeiEsnMeid()); 
+				preparedStatement.setString(8, managementDb.getMultipleSimStatus());
+				preparedStatement.setString(9, managementDb.getSnOfDevice());
+				preparedStatement.setString(10, managementDb.getTxnId());
+				preparedStatement.setLong(11, managementDb.getUserId());
+				preparedStatement.setString(12, managementDb.getFeatureName());
 				
 				System.out.println("Query " + preparedStatement);
 				preparedStatement.addBatch();

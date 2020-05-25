@@ -6,7 +6,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import javax.print.attribute.IntegerSyntax;
+
 
 import org.apache.log4j.Logger;
 
@@ -67,7 +67,7 @@ public class MyRuleFilter {
 			else{
 				my_rule_details.put("rule_name", device_info.get("rule_name"));
 				my_rule_details.put("rule_id", device_info.get("rule_id"));
-				String insertQuery = "Insert into device_invalid_db ()";
+				String insertQuery = "Insert into deviceinvalid_db ()";
 				logger.info("Invalid Length"+device_info.get("servedIMEI"));
 			}
 		}
