@@ -106,12 +106,11 @@ public class RegularizeDbServiceImpl {
 	}
 
 	public void sendNotification(List<RegularizeDeviceDb> regularizeDeviceDbs, String tag, String subFeature) {
-		String channel = "EMAIL";
 		List<UserWiseMailCount> userWiseMailCounts = getUserWiseMailCountDto(regularizeDeviceDbs);
 		List<RawMail> rawMails = new ArrayList<>();
 
 		for(UserWiseMailCount userWiseMailCount : userWiseMailCounts) {
-			rawMails.add(new RawMail(channel, 
+			rawMails.add(new RawMail("", 
 					tag, 
 					userWiseMailCount.getUserId(),
 					0L, // Feature Id 

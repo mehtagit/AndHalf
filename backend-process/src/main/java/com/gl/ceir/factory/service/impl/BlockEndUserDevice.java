@@ -15,6 +15,8 @@ import com.gl.ceir.entity.EndUserDB;
 import com.gl.ceir.entity.RegularizeDeviceDb;
 import com.gl.ceir.entity.SystemConfigurationDb;
 import com.gl.ceir.factory.service.BaseService;
+import com.gl.ceir.pojo.UserWiseMailCount;
+import com.gl.ceir.service.PolicyBreachNotiServiceImpl;
 import com.gl.ceir.service.RegularizeDbServiceImpl;
 import com.gl.ceir.util.DateUtil;
 
@@ -25,6 +27,9 @@ public class BlockEndUserDevice extends BaseService{
 
 	@Autowired
 	RegularizeDbServiceImpl regularizeDbServiceImpl;
+
+	@Autowired
+	PolicyBreachNotiServiceImpl policyBreachNotiServiceImpl; 
 
 	@Override
 	public void fetch() {
@@ -64,7 +69,7 @@ public class BlockEndUserDevice extends BaseService{
 			}
 
 			if(processedDeviceDbs.isEmpty()) {
-				logger.info("No new device of cambodian to be block found today[" + fromDate + "]");
+				logger.info("No new device of cambodian to be block found on date[" + fromDate + "]");
 				return;
 			}
 
@@ -81,14 +86,20 @@ public class BlockEndUserDevice extends BaseService{
 
 	@Override
 	public void process(Object o) {
-		
+		String tag = "BLOCK_DEVICE_TAX_NOT_PAID";
+
 		@SuppressWarnings("unchecked")
 		List<RegularizeDeviceDb> regularizeDeviceDbs = (List<RegularizeDeviceDb>) o;
 		logger.info("Going to block devices : " + regularizeDeviceDbs);
-		
+
 		regularizeDbServiceImpl.saveAllDevices(regularizeDeviceDbs);
 		logger.info("All devices are blocked.");
+
 		
+		List<UserWiseMailCount> userWiseMailCounts = regularizeDbServiceImpl.getUserWiseMailCountDto(regularizeDeviceDbs);
+
+		policyBreachNotiServiceImpl.batchUpdatePolicyBreachNoti(tag, userWiseMailCounts);
+
 		// Save in notification.
 		if("Y".equalsIgnoreCase(systemConfigMap.get(ConfigTags.SEND_NOTI_ON_DEVICE_TAX_NOT_PAID).getValue())) {
 			regularizeDbServiceImpl.sendNotification(regularizeDeviceDbs, "BLOCK_DEVICE_ON_TAX_NOT_PAID_MAIL", "Block device");

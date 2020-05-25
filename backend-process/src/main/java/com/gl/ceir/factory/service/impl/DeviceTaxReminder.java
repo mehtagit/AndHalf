@@ -2,7 +2,6 @@ package com.gl.ceir.factory.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 import org.apache.logging.log4j.LogManager;
@@ -13,14 +12,11 @@ import org.springframework.stereotype.Component;
 import com.gl.ceir.constant.Alerts;
 import com.gl.ceir.constant.ConfigTags;
 import com.gl.ceir.entity.EndUserDB;
-import com.gl.ceir.entity.PolicyBreachNotification;
 import com.gl.ceir.entity.RegularizeDeviceDb;
 import com.gl.ceir.entity.SystemConfigurationDb;
 import com.gl.ceir.factory.service.BaseService;
-import com.gl.ceir.pojo.MessageConfigurationDb;
 import com.gl.ceir.pojo.UserWiseMailCount;
-import com.gl.ceir.repo.MessageConfigurationDbRepository;
-import com.gl.ceir.repo.PolicyBreachNotificationRepository;
+import com.gl.ceir.service.PolicyBreachNotiServiceImpl;
 import com.gl.ceir.service.RegularizeDbServiceImpl;
 import com.gl.ceir.util.DateUtil;
 
@@ -30,13 +26,10 @@ public class DeviceTaxReminder extends BaseService{
 	private static final Logger logger = LogManager.getLogger(DeviceTaxReminder.class);
 
 	@Autowired
-	PolicyBreachNotificationRepository policyBreachNotificationRepository;
-
-	@Autowired
 	RegularizeDbServiceImpl regularizeDbServiceImpl;
-
+	
 	@Autowired
-	MessageConfigurationDbRepository messageConfigurationDbRepository;
+	PolicyBreachNotiServiceImpl policyBreachNotiServiceImpl; 
 
 	@Override
 	public void fetch() {
@@ -88,70 +81,16 @@ public class DeviceTaxReminder extends BaseService{
 
 	@Override
 	public void process(Object o) {
-		String channel = "SMS";
 		String tag = "REMINDER_DEVICE_TAX_NOT_PAID";
-		String policyBreachMessage = "";
-
-		// Check if user has email.
-		MessageConfigurationDb messageDB = messageConfigurationDbRepository.getByTagAndActive(tag, 0);
-		policyBreachMessage = messageDB.getValue();
 
 		@SuppressWarnings("unchecked")
 		List<RegularizeDeviceDb> regularizeDeviceDbs = (List<RegularizeDeviceDb>) o;
 		logger.info("Going to send reminder for devices : " + regularizeDeviceDbs);
 
-		// Add Entry In Policy Breach Table.
-		List<PolicyBreachNotification> policyBreachNotifications = new ArrayList<>();
-
 		List<UserWiseMailCount> userWiseMailCounts = regularizeDbServiceImpl.getUserWiseMailCountDto(regularizeDeviceDbs);
 
-		for(UserWiseMailCount userWiseMailCount : userWiseMailCounts) {
-			Map<String, String>  placeholders = userWiseMailCount.getPlaceholderMap();
-			
-			// Replace Placeholders from message.
-			if(Objects.nonNull(placeholders)) {
-				for (Map.Entry<String, String> entry : placeholders.entrySet()) {
-					logger.debug("Placeholder key : " + entry.getKey() + " value : " + entry.getValue());
-					policyBreachMessage = policyBreachMessage.replaceAll(entry.getKey(), entry.getValue());
-				}
-			}
-			
-			policyBreachNotifications.add(new PolicyBreachNotification(
-					channel, 
-					policyBreachMessage, 
-					"", 
-					Long.parseLong(userWiseMailCount.getPhoneNo()), 
-					userWiseMailCount.getFirstImei()));
-			if(Objects.nonNull(userWiseMailCount.getSecondImei()))
-				policyBreachNotifications.add(new PolicyBreachNotification(
-						channel, 
-						policyBreachMessage, 
-						"", 
-						Long.parseLong(userWiseMailCount.getPhoneNo()), 
-						userWiseMailCount.getSecondImei()));
-
-			if(Objects.nonNull(userWiseMailCount.getThirdImei()))
-				policyBreachNotifications.add(new PolicyBreachNotification(
-						channel, 
-						policyBreachMessage, 
-						"", 
-						Long.parseLong(userWiseMailCount.getPhoneNo()), 
-						userWiseMailCount.getThirdImei()));
-
-			if(Objects.nonNull(userWiseMailCount.getFourthImei()))
-				policyBreachNotifications.add(new PolicyBreachNotification(
-						channel, 
-						policyBreachMessage, 
-						"", 
-						Long.parseLong(userWiseMailCount.getPhoneNo()), 
-						userWiseMailCount.getFourthImei()));
-		}
-
-		logger.info(policyBreachNotifications);
-
-		policyBreachNotificationRepository.saveAll(policyBreachNotifications);
-		logger.info("Entry added in policy_breach_notification.");
-
+		policyBreachNotiServiceImpl.batchUpdatePolicyBreachNoti(tag, userWiseMailCounts);
+		
 		// Save in notification.
 		if("Y".equalsIgnoreCase(systemConfigMap.get(ConfigTags.SEND_NOTI_ON_DEVICE_TAX_NOT_PAID).getValue())) {
 			regularizeDbServiceImpl.sendNotification(regularizeDeviceDbs, tag, "Reminder");

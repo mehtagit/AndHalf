@@ -64,10 +64,10 @@ public class CloseGrievance extends BaseService{
 
 			String fromDate = DateUtil.nextDate( (Integer.parseInt(defaultPerioToCloseGrievance.getValue())) * -1);
 			String toDate = DateUtil.nextDate( (Integer.parseInt(defaultPerioToCloseGrievance.getValue()) - 1) * -1 );
-			logger.info("Close grievance raised on fromDate [" + fromDate + "] toDate[" + toDate + "] because of inactivity.");
+			logger.info("Close grievance raised before the date[" + toDate + "] because of inactivity.");
 
 			// Read all inactive grievances for last configured number of days.
-			List<Grievance> grievances = grievanceRepository.findAll(buildSpecification(fromDate, toDate).build());
+			List<Grievance> grievances = grievanceRepository.findAll(buildSpecification(toDate).build());
 
 			// Map, To replace few placeholders in notification(mail) content.
 			Map<String, String> placeholderMap = new HashMap<>();
@@ -143,12 +143,12 @@ public class CloseGrievance extends BaseService{
 		}
 	}
 
-	private GenericSpecificationBuilder<Grievance> buildSpecification(String fromDate, String toDate){
+	private GenericSpecificationBuilder<Grievance> buildSpecification(String toDate){
 		GenericSpecificationBuilder<Grievance> cmsb = new GenericSpecificationBuilder<>(propertiesReader.dialect);
 
 		// Grievance status - Pending With User
 		cmsb.with(new SearchCriteria("grievanceStatus", 2, SearchOperation.EQUALITY, Datatype.STRING));
-		cmsb.with(new SearchCriteria("modifiedOn", fromDate, SearchOperation.GREATER_THAN_OR_EQUAL, Datatype.DATE));
+		// cmsb.with(new SearchCriteria("modifiedOn", fromDate, SearchOperation.GREATER_THAN_OR_EQUAL, Datatype.DATE));
 		cmsb.with(new SearchCriteria("modifiedOn", toDate, SearchOperation.LESS_THAN, Datatype.DATE));
 
 		return cmsb;
