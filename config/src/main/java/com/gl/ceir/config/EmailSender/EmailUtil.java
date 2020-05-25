@@ -99,12 +99,13 @@ public class EmailUtil {
 		try {
 			MessageConfigurationDb messageDB = messageConfigurationDbRepository.getByTagAndActive(tag, 0);
 			logger.info("Message for tag [" + tag + "] " + messageDB);
-			String message = messageDB.getValue();
 			
-			if(Objects.isNull(message)) {
+			if(Objects.isNull(messageDB)) {
 				return Boolean.TRUE;
 			}
 
+			String message = messageDB.getValue();
+			
 			// Replace Placeholders from message.
 			if(Objects.nonNull(placeholders)) {
 				for (Map.Entry<String, String> entry : placeholders.entrySet()) {

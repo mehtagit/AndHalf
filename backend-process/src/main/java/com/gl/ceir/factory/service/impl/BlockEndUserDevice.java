@@ -48,7 +48,7 @@ public class BlockEndUserDevice extends BaseService{
 			String toDate = DateUtil.nextDate( ( Integer.parseInt( graceDays.getValue() ) - 1) * -1);
 			logger.info("Device block notification will sent to user who has registered device on Date [" + fromDate + "] and not paid tax.");
 
-			List<RegularizeDeviceDb> regularizeDeviceDbs = regularizeDbServiceImpl.getDevicesbyTaxStatusAndDate(fromDate, toDate, 1);
+			List<RegularizeDeviceDb> regularizeDeviceDbs = regularizeDbServiceImpl.getDevicesbyTaxStatusAndDate(toDate, 1);
 
 			List<RegularizeDeviceDb> processedDeviceDbs = new ArrayList<>();
 			for(RegularizeDeviceDb regularizeDeviceDb : regularizeDeviceDbs) {
