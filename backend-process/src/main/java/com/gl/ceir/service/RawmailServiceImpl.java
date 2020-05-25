@@ -20,18 +20,18 @@ public class RawmailServiceImpl {
 	@Autowired
 	MessageConfigurationDbRepository messageConfigurationDbRepository;
 
-	public String createMailContent(RawMail rawMail) {
+	public MessageConfigurationDb createMailContent(RawMail rawMail) {
 		return createMailContent(rawMail.getTag(), rawMail.getPlaceholders());
 	}
 	
-	public String createMailContent(String tag, Map<String, String> placeholders) {
+	public MessageConfigurationDb createMailContent(String tag, Map<String, String> placeholders) {
 		String message = "";
 		MessageConfigurationDb messageDB = messageConfigurationDbRepository.getByTagAndActive(tag, 0);
 		logger.info("Message for tag [" + tag + "] " + messageDB);
 		
 		if(Objects.isNull(messageDB)) {
 			logger.info("No mail content is configured for tag [" + tag + "]");
-			return message;
+			return null;
 		}else {
 			message = messageDB.getValue();	
 		}
@@ -44,7 +44,7 @@ public class RawmailServiceImpl {
 			}
 		}
 		
-		// TODO return mesage_DB complete object.
-		return message;
+		messageDB.setValue(message);
+		return messageDB;
 	}
 }

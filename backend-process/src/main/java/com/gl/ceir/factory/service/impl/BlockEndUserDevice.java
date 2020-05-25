@@ -11,13 +11,10 @@ import org.springframework.stereotype.Component;
 
 import com.gl.ceir.constant.Alerts;
 import com.gl.ceir.constant.ConfigTags;
-import com.gl.ceir.constant.ReferTable;
 import com.gl.ceir.entity.EndUserDB;
 import com.gl.ceir.entity.RegularizeDeviceDb;
 import com.gl.ceir.entity.SystemConfigurationDb;
 import com.gl.ceir.factory.service.BaseService;
-import com.gl.ceir.pojo.RawMail;
-import com.gl.ceir.pojo.UserWiseMailCount;
 import com.gl.ceir.service.RegularizeDbServiceImpl;
 import com.gl.ceir.util.DateUtil;
 
@@ -33,10 +30,10 @@ public class BlockEndUserDevice extends BaseService{
 	public void fetch() {
 
 		try {
-			SystemConfigurationDb graceDays 	= systemConfigurationDbRepository.getByTag(ConfigTags.GRACE_PERIOD_FOR_RGISTER_DEVICE);
+			SystemConfigurationDb graceDays = systemConfigurationDbRepository.getByTag(ConfigTags.GRACE_PERIOD_FOR_RGISTER_DEVICE);
 			logger.info("graceDays [" + graceDays + "]");
 
-			SystemConfigurationDb sendNotiOnDeviceTaxNotPaid 	= systemConfigurationDbRepository.getByTag(ConfigTags.SEND_NOTI_ON_DEVICE_TAX_NOT_PAID);
+			SystemConfigurationDb sendNotiOnDeviceTaxNotPaid = systemConfigurationDbRepository.getByTag(ConfigTags.SEND_NOTI_ON_DEVICE_TAX_NOT_PAID);
 			logger.info("sendNotiOnDeviceTaxNotPaid [" + sendNotiOnDeviceTaxNotPaid + "]");
 
 			systemConfigMap.put(ConfigTags.SEND_NOTI_ON_DEVICE_TAX_NOT_PAID, sendNotiOnDeviceTaxNotPaid);
@@ -94,7 +91,7 @@ public class BlockEndUserDevice extends BaseService{
 		
 		// Save in notification.
 		if("Y".equalsIgnoreCase(systemConfigMap.get(ConfigTags.SEND_NOTI_ON_DEVICE_TAX_NOT_PAID).getValue())) {
-			regularizeDbServiceImpl.sendNotification(regularizeDeviceDbs, "BLOCK_DEVICE_ON_TAX_NOT_PAID_MAIL");
+			regularizeDbServiceImpl.sendNotification(regularizeDeviceDbs, "BLOCK_DEVICE_ON_TAX_NOT_PAID_MAIL", "Block device");
 		}else {
 			logger.info("WARN : Notification is off for reminding user on failure of tax paying of registered device.");
 		}

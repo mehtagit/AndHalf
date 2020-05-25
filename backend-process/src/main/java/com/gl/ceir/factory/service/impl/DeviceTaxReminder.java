@@ -1,7 +1,6 @@
 package com.gl.ceir.factory.service.impl;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -13,21 +12,16 @@ import org.springframework.stereotype.Component;
 
 import com.gl.ceir.constant.Alerts;
 import com.gl.ceir.constant.ConfigTags;
-import com.gl.ceir.constant.Datatype;
-import com.gl.ceir.constant.ReferTable;
-import com.gl.ceir.constant.SearchOperation;
 import com.gl.ceir.entity.EndUserDB;
 import com.gl.ceir.entity.PolicyBreachNotification;
 import com.gl.ceir.entity.RegularizeDeviceDb;
 import com.gl.ceir.entity.SystemConfigurationDb;
 import com.gl.ceir.factory.service.BaseService;
-import com.gl.ceir.pojo.RawMail;
-import com.gl.ceir.pojo.SearchCriteria;
+import com.gl.ceir.pojo.MessageConfigurationDb;
 import com.gl.ceir.pojo.UserWiseMailCount;
+import com.gl.ceir.repo.MessageConfigurationDbRepository;
 import com.gl.ceir.repo.PolicyBreachNotificationRepository;
-import com.gl.ceir.repo.RegularizedDeviceDbRepository;
 import com.gl.ceir.service.RegularizeDbServiceImpl;
-import com.gl.ceir.specification.GenericSpecificationBuilder;
 import com.gl.ceir.util.DateUtil;
 
 @Component
@@ -40,6 +34,9 @@ public class DeviceTaxReminder extends BaseService{
 
 	@Autowired
 	RegularizeDbServiceImpl regularizeDbServiceImpl;
+
+	@Autowired
+	MessageConfigurationDbRepository messageConfigurationDbRepository;
 
 	@Override
 	public void fetch() {
@@ -57,11 +54,10 @@ public class DeviceTaxReminder extends BaseService{
 				return;
 			}
 
-			String fromDate = DateUtil.nextDate( (Integer.parseInt(graceDays.getValue()) + Integer.parseInt(reminderDays.getValue())) * -1);
 			String toDate = DateUtil.nextDate( (Integer.parseInt(graceDays.getValue()) - Integer.parseInt(reminderDays.getValue()) -1) * -1);
-			logger.info("Reminder will sent to user who has registered device on date [" + fromDate + "] toDate[" + toDate + "] and not paid tax.");
+			logger.info("Reminder will sent to user who has registered device on toDate[" + toDate + "] and not paid tax.");
 
-			List<RegularizeDeviceDb> regularizeDeviceDbs = regularizeDbServiceImpl.getDevicesbyTaxStatusAndDate(fromDate, toDate, 1);
+			List<RegularizeDeviceDb> regularizeDeviceDbs = regularizeDbServiceImpl.getDevicesbyTaxStatusAndDate(toDate, 1);
 
 			List<RegularizeDeviceDb> processedDeviceDbs = new ArrayList<>();
 			for(RegularizeDeviceDb regularizeDeviceDb : regularizeDeviceDbs) {
@@ -75,7 +71,7 @@ public class DeviceTaxReminder extends BaseService{
 			}
 
 			if(processedDeviceDbs.isEmpty()) {
-				logger.info("No new device of cambodian to send reminder found today[" + fromDate + "]");
+				logger.info("No new device of cambodian to send reminder found today[" + DateUtil.nextDate(0) + "]");
 				return;
 			}
 
@@ -93,64 +89,74 @@ public class DeviceTaxReminder extends BaseService{
 	@Override
 	public void process(Object o) {
 		String channel = "SMS";
-		// TODO Read it from message_configuration_db.
+		String tag = "REMINDER_DEVICE_TAX_NOT_PAID";
+		String policyBreachMessage = "";
+
 		// Check if user has email.
-		String policyBreachMessage = "User have not paid tax of registered device.";
+		MessageConfigurationDb messageDB = messageConfigurationDbRepository.getByTagAndActive(tag, 0);
+		policyBreachMessage = messageDB.getValue();
 
 		@SuppressWarnings("unchecked")
 		List<RegularizeDeviceDb> regularizeDeviceDbs = (List<RegularizeDeviceDb>) o;
 		logger.info("Going to send reminder for devices : " + regularizeDeviceDbs);
-		
+
 		// Add Entry In Policy Breach Table.
 		List<PolicyBreachNotification> policyBreachNotifications = new ArrayList<>();
 
-		for(RegularizeDeviceDb regularizeDeviceDb : regularizeDeviceDbs) {
-			EndUserDB endUserDB = regularizeDeviceDb.getEndUserDB();
-			if(Objects.isNull(endUserDB)) {
-				logger.info("No end user is found associated with device of IMEI [" + regularizeDeviceDb.getFirstImei() + "]");
-			}else {	
-					policyBreachNotifications.add(new PolicyBreachNotification(
-							channel, 
-							policyBreachMessage, 
-							"", 
-							Long.parseLong(endUserDB.getPhoneNo()), 
-							regularizeDeviceDb.getFirstImei()));
-					if(Objects.nonNull(regularizeDeviceDb.getSecondImei()))
-						policyBreachNotifications.add(new PolicyBreachNotification(
-								channel, 
-								policyBreachMessage, 
-								"", 
-								Long.parseLong(endUserDB.getPhoneNo()), 
-								regularizeDeviceDb.getSecondImei()));
+		List<UserWiseMailCount> userWiseMailCounts = regularizeDbServiceImpl.getUserWiseMailCountDto(regularizeDeviceDbs);
 
-					if(Objects.nonNull(regularizeDeviceDb.getThirdImei()))
-						policyBreachNotifications.add(new PolicyBreachNotification(
-								channel, 
-								policyBreachMessage, 
-								"", 
-								Long.parseLong(endUserDB.getPhoneNo()), 
-								regularizeDeviceDb.getThirdImei()));
-
-					if(Objects.nonNull(regularizeDeviceDb.getFourthImei()))
-						policyBreachNotifications.add(new PolicyBreachNotification(
-								channel, 
-								policyBreachMessage, 
-								"", 
-								Long.parseLong(endUserDB.getPhoneNo()), 
-								regularizeDeviceDb.getFourthImei()));
+		for(UserWiseMailCount userWiseMailCount : userWiseMailCounts) {
+			Map<String, String>  placeholders = userWiseMailCount.getPlaceholderMap();
+			
+			// Replace Placeholders from message.
+			if(Objects.nonNull(placeholders)) {
+				for (Map.Entry<String, String> entry : placeholders.entrySet()) {
+					logger.debug("Placeholder key : " + entry.getKey() + " value : " + entry.getValue());
+					policyBreachMessage = policyBreachMessage.replaceAll(entry.getKey(), entry.getValue());
+				}
 			}
 			
-			logger.info(policyBreachNotifications);
-			
-			policyBreachNotificationRepository.saveAll(policyBreachNotifications);
-			logger.info("Entry added in policy_breach_notification.");
-			
-			// Save in notification.
-			if("Y".equalsIgnoreCase(systemConfigMap.get(ConfigTags.SEND_NOTI_ON_DEVICE_TAX_NOT_PAID).getValue())) {
-				regularizeDbServiceImpl.sendNotification(regularizeDeviceDbs, "REMINDER_DEVICE_TAX_NOT_PAID");
-			}else {
-				logger.info("WARN : Notification is off for reminding user on failure of tax paying of registered device.");
-			}
+			policyBreachNotifications.add(new PolicyBreachNotification(
+					channel, 
+					policyBreachMessage, 
+					"", 
+					Long.parseLong(userWiseMailCount.getPhoneNo()), 
+					userWiseMailCount.getFirstImei()));
+			if(Objects.nonNull(userWiseMailCount.getSecondImei()))
+				policyBreachNotifications.add(new PolicyBreachNotification(
+						channel, 
+						policyBreachMessage, 
+						"", 
+						Long.parseLong(userWiseMailCount.getPhoneNo()), 
+						userWiseMailCount.getSecondImei()));
+
+			if(Objects.nonNull(userWiseMailCount.getThirdImei()))
+				policyBreachNotifications.add(new PolicyBreachNotification(
+						channel, 
+						policyBreachMessage, 
+						"", 
+						Long.parseLong(userWiseMailCount.getPhoneNo()), 
+						userWiseMailCount.getThirdImei()));
+
+			if(Objects.nonNull(userWiseMailCount.getFourthImei()))
+				policyBreachNotifications.add(new PolicyBreachNotification(
+						channel, 
+						policyBreachMessage, 
+						"", 
+						Long.parseLong(userWiseMailCount.getPhoneNo()), 
+						userWiseMailCount.getFourthImei()));
 		}
-	}	
+
+		logger.info(policyBreachNotifications);
+
+		policyBreachNotificationRepository.saveAll(policyBreachNotifications);
+		logger.info("Entry added in policy_breach_notification.");
+
+		// Save in notification.
+		if("Y".equalsIgnoreCase(systemConfigMap.get(ConfigTags.SEND_NOTI_ON_DEVICE_TAX_NOT_PAID).getValue())) {
+			regularizeDbServiceImpl.sendNotification(regularizeDeviceDbs, tag, "Reminder");
+		}else {
+			logger.info("WARN : Notification is off for reminding user on failure of tax paying of registered device.");
+		}
+	}
 }
