@@ -100,6 +100,11 @@ var path="${context}";
    height: 36px;
    font-size: 31px
 }
+.header-fixed-style{
+width: inherit;
+z-index: 1003;
+position: fixed;
+}
   </style>
  
 
@@ -146,9 +151,19 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}" data-u
 	</section>
 	
 	<div id="replyModal" class="modal">
-        <button class="modal-action modal-close waves-effect waves-green btn-flat right" onclick="cleanReplyPopUp()">&times;</button>
+      
+      
+<div class="header-fixed header-fixed-style">
+ <button class="modal-action modal-close waves-effect waves-green btn-flat right" onclick="cleanReplyPopUp()">&times;</button>
              <h6 class="modal-header"><spring:message code="input.reply" /></h6>
-             <div class="modal-content">
+       
+
+</div>
+
+<div class="scrollDivHeight"></div>
+
+<div class="modal-content modal-content-style">
+             
              <form id="replymessageForm" onsubmit="return saveGrievanceReply()" method="POST" enctype="multipart/form-data" >
             <div class="row">
                 <div class="col s12 m12">
@@ -263,9 +278,13 @@ style="font-size: 20px;">+</span> <spring:message code="input.addmorefile" /></b
 </div>
 
 <div id="manageAccount" class="modal">
+
+<div class="header-fixed header-fixed-style">
 <button class="modal-action modal-close waves-effect waves-green btn-flat right" data-dismiss="modal">&times;</button>
 <h6 class="modal-header"><spring:message code="modal.header.grievancehistory" /></h6>
-<div class="modal-content">
+</div>
+<div class="scrollDivHeight"></div>
+<div class="modal-content modal-content-style" >
 <div id="live-chat">
 <div class="chat">
 <div class="chat-history">

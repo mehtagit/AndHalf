@@ -110,6 +110,12 @@ button.modal-action.modal-close.waves-effect.waves-green.btn-flat.right {
    height: 36px;
 	 font-size: 31px
 }
+.header-fixed-style{
+width: inherit;
+z-index: 1003;
+position: fixed;
+}
+
 </style>
 </head>
 <body data-id="21" data-roleType="${usertype}"
@@ -261,10 +267,12 @@ button.modal-action.modal-close.waves-effect.waves-green.btn-flat.right {
 
 
 		<div id="importereditModal" class="modal">
+			<div class="header-fixed header-fixed-style">
 			<h6 class="modal-header">
 				<spring:message code="modal.UpdateDevices" />
-			</h6>
-			<div class="modal-content">
+			</h6></div>
+			<div class="scrollDivHeight"></div>
+			<div class="modal-content modal-content-style">
 
 				<form action="" onsubmit="return updateImporterTypeDevice()"
 					method="post" style="margin-top: 30px;">
@@ -688,12 +696,14 @@ button.modal-action.modal-close.waves-effect.waves-green.btn-flat.right {
 	</div>
 	
 	<div id="tableOnModal" class="modal">
+		<div class="header-fixed header-fixed-style">
 		<button type="button"
 			class=" modal-action modal-close waves-effect waves-green btn-flat right"
 			data-dismiss="modal">&times;</button>
 		<h6 class="modal-header"><spring:message code="modal.header.viewHistory" /></h6>
-		
-		<div class="modal-content">
+		</div>
+		<div class="scrollDivHeight"></div>
+		<div class="modal-content modal-content-style">
 
 			<div class="row">
 				<table class="responsive-table striped display"

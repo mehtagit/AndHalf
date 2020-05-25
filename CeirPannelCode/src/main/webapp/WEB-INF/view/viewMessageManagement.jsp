@@ -145,14 +145,14 @@
 					
 					<div class="input-field col s12 m6" style="margin-top:22px">
 					<input type="text" id= "viewChannel" placeholder="" disabled>
-					<label for="viewChannel" class=""><spring:message code="registration.channel" /> <span class="star">*</span></label>
+					<label for="viewChannel" class=""><spring:message code="registration.channel" /></label>
 
 					</div>
 					
 					
 					<div class="input-field col s12 m6" >
 					<textarea id="viewValue" class="materialize-textarea" readonly="readonly" style="min-height:8rem"></textarea>
-					<label for="viewValue" class=""><spring:message code="registration.value" /> <span class="star">*</span></label>
+					<label for="viewValue" class=""><spring:message code="registration.value" /> </label>
 
 					</div>
 
@@ -203,7 +203,7 @@
 					
 					<div class="input-field col s12 m6">
 					<input type="text" id= "editChannel"  placeholder="" disabled>
-					<label for="editChannel" class=""><spring:message code="registration.channel" /><span class="star">*</span></label>
+					<label for="editChannel" class=""><spring:message code="registration.channel" /></label>
 
 					</div>
 					
