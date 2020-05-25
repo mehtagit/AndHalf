@@ -145,7 +145,7 @@
 				
 					<div class="input-field col s12 m6" style="margin-top:22px">
 					<input type="text" id="viewValue" class="materialize-textarea" placeholder="Value" readonly="readonly"  style="min-height:8rem" >
-					<label for="viewValue" class=""><spring:message code="registration.value" /> <span class="star">*</span></label>
+					<label for="viewValue" class=""><spring:message code="registration.value" /></label>
 
 					</div>
 					
@@ -159,7 +159,7 @@
 					<div class="input-field col s12 m6"  style="margin-top:22px">
 						<input type="text" id="viewtype" name="type"
 							placeholder="Type" maxlength="20" disabled>
-						<label for="type"><spring:message code="table.Type" /> <span class="star">*</span></label>
+						<label for="type"><spring:message code="table.Type" /></label>
 					</div>	
 					
 					<div class="input-field col s12 m6">
@@ -215,7 +215,7 @@
 
 					<div class="input-field col s12 m6" style="margin-top: 22px;">
 						<input type="text" id="edittype" name="type" placeholder="" maxlength="20" disabled>
-						<label for="type"><spring:message code="table.Type" /> <span class="star">*</span></label>
+						<label for="type"><spring:message code="table.Type" /></label>
 					</div>
 
 					<div class="input-field col s12 m6">

@@ -159,7 +159,7 @@
 					
 					</div> -->
 					<div class="col s12 m6">
-					<label for="port" class="active">Month<span class="star"> *</span></label>
+					<label for="port" class="active">Month</label>
                      	 <select class="browser-default" id="addMonth" required="required">
                                 <option value="" selected >Select Month</option>
                           </select>
@@ -168,7 +168,7 @@
                     </div>
 					
 					<div class="col s12 m6">
-					<label for="port" class="active">Year<span class="star"> *</span></label>
+					<label for="port" class="active">Year</label>
                      	 <select class="browser-default" id="addYear" required="required">
                                 <option value="" selected>Select Year</option>
                           </select>
@@ -177,7 +177,7 @@
                     </div>
 					
 					<div class="col s12 m6">
-					<label for="port" class="active">Currency<span class="star"> *</span></label>
+					<label for="port" class="active">Currency</label>
                      	 <select class="browser-default" id="currency" required="required">
                                 <option value=""  selected>Select Currency</option>
                           </select>
@@ -395,6 +395,8 @@
 		src="${context}/resources/project_js/disable_inspectElement.js"></script> --%>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/viewCurrencyManagement.js"></script>
+			<script type="text/javascript"
+		src="${context}/resources/project_js/validationMsg.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/_dateFunction.js" async></script>
 			<script type="text/javascript"

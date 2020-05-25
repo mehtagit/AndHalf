@@ -369,3 +369,10 @@
 		});
 	}
 	
+	
+ function resetFields(){
+	 $('#port').val('');
+	 $('#portAddress').val('');
+	 
+	 
+ }	

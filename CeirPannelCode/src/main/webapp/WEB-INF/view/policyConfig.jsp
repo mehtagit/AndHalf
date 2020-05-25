@@ -146,20 +146,20 @@ data-selected-username="${username}"
 					<div class="input-field col s12 m6 l6">
 						<input type="text" name="period" id="viewPeriod"
 							placeholder="Period" disabled>
-						<label for="period"><spring:message code="table.Period" /> <span class="star">*</span></label>
+						<label for="period"><spring:message code="table.Period" /> </label>
 					</div>
 
 					<div class="input-field col s12 m6">
 						<input type="text" id="viewstatus" name="status"
 							placeholder="" maxlength="20" placeholder="Status" disabled >
-						<label for="status"><spring:message code="table.status" /> <span class="star">*</span></label>
+						<label for="status"><spring:message code="table.status" /> </label>
 					</div>
 				
 					
 					
 					<div class="input-field col s12 m6">
 					<textarea id="viewValue" class="materialize-textarea" placeholder="value" readonly="readonly" style="min-height:8rem"></textarea>
-					<label for="viewValue" class=""><spring:message code="table.Value" /> <span class="star">*</span></label>
+					<label for="viewValue" class=""><spring:message code="table.Value" /> </label>
 
 					</div>
 					
