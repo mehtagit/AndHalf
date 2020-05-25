@@ -155,7 +155,7 @@
                                             <input type="text" id="viewfirstName"  name="firstName" pattern="[a-zA-Z]{0,20}" required="required" disabled
 											oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"  >
-                                            <label for="viewfirstName"><spring:message code="input.firstName" /> </label>
+                                            <label for="viewfirstName"><spring:message code="input.firstName" /> <span class="star">*</span></label>
                                         </div>
 
                                         <div class="input-field col s12 m4">
@@ -170,7 +170,7 @@
 											oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 													 required   maxlength="20" />
-                                            <label for="viewlastName"><spring:message code="input.lastName" /> </label>
+                                            <label for="viewlastName"><spring:message code="input.lastName" /> <span class="star">*</span></label>
                                         </div>
 						
 						
@@ -183,7 +183,8 @@
  													oninput="InvalidMsg(this,'input','<spring:message code="validation.10digits" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10digits" />');"
 												  required   maxlength="10" />
-                                            <label for="viewcontactNumber"><spring:message code="input.contact" /></label>
+                                            <label for="viewcontactNumber"><spring:message code="input.contact" /><span
+                                                    class="star">*</span></label>
                                         </div>
 
                                         <div class="input-field col s12 m6">
@@ -191,7 +192,7 @@
 											oninput="InvalidMsg(this,'input','<spring:message code="validation.emailformate" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.emailformate" />');"
 												required maxlength="30" />
-                                            <label for="viewemailID"><spring:message code="input.EmailID" /></label>
+                                            <label for="viewemailID"><spring:message code="input.EmailID" /> <span class="star"> *</span></label>
                                         </div>
 
 							</div>			
@@ -215,13 +216,13 @@
 							<div class="input-field col s12 m6" style="margin-top: 23px;">
                                             <input type="text" id="viewuserName" name="userName" disabled
                                                pattern="[a-zA-Z]{0,20}" required maxlength="18" />
-                                            <label for="viewuserName"><spring:message code="registration.username"/></label>
+                                            <label for="viewuserName"><spring:message code="registration.username"/><span class="star"> *</span></label>
                               </div>
 							
 						  <div class="input-field col s12 m6" style="margin-top: 23px;">
                                             <input type="text" id="viewuserType" name="userType" disabled
                                                pattern="[a-zA-Z]{0,20}" required maxlength="18" />
-                                            <label for="viewuserType"><spring:message code="table.userType"/></label>
+                                            <label for="viewuserType"><spring:message code="table.userType"/><span class="star"> *</span></label>
                             </div>
                                         
                                    
@@ -235,7 +236,8 @@
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
 													
 											disabled required   maxlength="200" class="materialize-textarea" style= "min-height: 8rem;"></textarea>
-                                            <label for="viewuserRemark"><spring:message code="input.Remark" /></label>
+                                            <label for="viewuserRemark"><spring:message code="input.Remark" /><span
+                                                    class="star">*</span></label>
                                         </div>
 						
 						</div>
