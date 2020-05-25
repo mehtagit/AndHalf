@@ -432,7 +432,7 @@ public class StockServiceImpl {
 				List<Integer> stockStatus = new LinkedList<>();
 
 				if(Objects.nonNull(dashboardUsersFeatureStateMap)) {
-					if("dashboard".equalsIgnoreCase(source)) {
+					if("dashboard".equalsIgnoreCase(source) || "menu".equalsIgnoreCase(source)) {
 						for(DashboardUsersFeatureStateMap dashboardUsersFeatureStateMap2 : dashboardUsersFeatureStateMap ) {
 							stockStatus.add(dashboardUsersFeatureStateMap2.getState());
 						}
