@@ -104,6 +104,12 @@ button.modal-action.modal-close.waves-effect.waves-green.btn-flat.right {
    height: 36px;
 	 font-size: 31px
 }
+.header-fixed-style{
+width: inherit;
+z-index: 1003;
+position: fixed;
+}
+
 </style>
 </head>
 
@@ -1330,6 +1336,7 @@ oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />
 maxlength="16">
 <label for="editsingleblockIMEI3">
 <spring:message code="title.three" /></label>
+   <p id="errorMsgOnModal" class="deviceErrorTitle" style="margin-top:-146px;margin-left:115px;"></p>
 </div>
 
 <div class="input-field col s12 m6">
@@ -1624,12 +1631,14 @@ type="submit" ><spring:message code="button.update" /></button>
 		</div>
 	</div>
 <div id="tableOnModal" class="modal">
+<div class="header-fixed header-fixed-style">
 		<button type="button"
 			class=" modal-action modal-close waves-effect waves-green btn-flat right"
 			data-dismiss="modal">&times;</button>
 		<h6 class="modal-header"><spring:message code="modal.header.viewHistory" /></h6>
-		
-		<div class="modal-content">
+		</div>
+		<div class="scrollDivHeight"></div>
+		<div class="modal-content modal-content-style">
 
 			<div class="row">
 				<table class="responsive-table striped display"

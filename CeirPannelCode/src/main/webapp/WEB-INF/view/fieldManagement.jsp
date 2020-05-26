@@ -143,13 +143,13 @@
 	</section>
 	
  	<div id="addTags" class="modal" style="z-index: 1003; display: none; opacity: 1; transform: scaleX(1); top: 10%;">
-        <h6 class="modal-header">Add New Value</h6>
+        <h6 class="modal-header">Add New Field</h6>
         <div class="modal-content">
           	<form action="" onsubmit="return submitTag()" method="post" >
                 <div class="row" style="margin-top: 10px;">
 					
 					<div class="col s12 m6">
-					<label for="tag" class="active">Field <span class="star">*</span></label>
+					<label for="tag" class="active">Field </label>
                         <!-- <input type="text" id="tag" name="tag" pattern="[A-Za-z]{0,30}" Placeholder=""  maxlength="15" value="" required="required" disabled> -->
                         <select class="browser-default" id="tag" disabled>
                                 <option value="" disabled="" selected="">Select field</option>
@@ -195,7 +195,7 @@
                 <div class="row" style="margin-top: 10px;">
 					
 					<div class="col s12 m6">
-					<label for="tag" class="active">Field <span class="star">*</span></label>
+					<label for="tag" class="active">Field </label>
                         <!-- <input type="text" id="tag" name="tag" pattern="[A-Za-z]{0,30}" Placeholder=""  maxlength="15" value="" required="required" disabled> -->
                         <select class="browser-default" id="Edittag" disabled>
                                 <option value="" disabled="" selected="">Select field</option>
@@ -236,7 +236,7 @@
 		<h6 class="modal-header"><spring:message code="modal.header.submitFieldRecord" /></h6>
 		<div class="modal-content">
 			<div class="row">
-				<h6 id="sucessMessage">New Value Added Successfully</h6>
+				<h6 id="sucessMessage">New Field Added Successfully</h6>
 			</div>
 			 <div class="row">
 				<div class="input-field col s12 center">

@@ -201,6 +201,11 @@ button.modal-action.modal-close.waves-effect.waves-green.btn-flat.right {
    height: 36px;
 	 font-size: 31px
 }
+.header-fixed-style{
+width: inherit;
+z-index: 1003;
+position: fixed;
+}
 </style>
 </head>
 <body data-id="12" data-roleType="${usertype}" data-username="${username}" data-userTypeID="${usertypeId}"
@@ -1218,12 +1223,14 @@ button.modal-action.modal-close.waves-effect.waves-green.btn-flat.right {
 	</div>
 
 <div id="tableOnModal" class="modal">
+<div class="header-fixed header-fixed-style">
 		<button type="button"
 			class=" modal-action modal-close waves-effect waves-green btn-flat right"
 			data-dismiss="modal">&times;</button>
 		<h6 class="modal-header"><spring:message code="modal.header.viewHistory" /></h6>
-		
-		<div class="modal-content">
+		</div>
+		<div class="scrollDivHeight"></div>
+		<div class="modal-content modal-content-style">
 
 			<div class="row">
 				<table class="responsive-table striped display"

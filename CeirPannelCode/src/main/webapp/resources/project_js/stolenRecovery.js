@@ -1208,3 +1208,62 @@ function historyRecord(txnID){
 	
 	
 }
+
+
+
+
+
+
+$('#editblockdeviceIdType').on('change', function() {
+	var value=parseInt($(this).val());
+
+	switch (value) {
+	case 0:
+		$("#editsingleblockIMEI1,#editsingleblockIMEI2,#editsingleblockIMEI3,#editsingleblockIMEI4").attr("pattern","[0-9]{15,16}");
+		$("#editsingleblockIMEI1,#editsingleblockIMEI2,#editsingleblockIMEI3,#editsingleblockIMEI4").attr("maxlength","16");
+		
+		$("#editsingleblockIMEI1,#editsingleblockIMEI2,#editsingleblockIMEI3,#editsingleblockIMEI4").removeAttr("onkeyup");
+		$("#editsingleblockIMEI1,#editsingleblockIMEI2,#editsingleblockIMEI3,#editsingleblockIMEI4").attr("oninput","InvalidMsg(this,'input','"+$.i18n('validationIMEI')+"')");
+		$("#editsingleblockIMEI1,#editsingleblockIMEI2,#editsingleblockIMEI3,#editsingleblockIMEI4").attr("oninvalid","InvalidMsg(this,'input','"+$.i18n('validationIMEI')+"')");
+		
+		$('#errorMsgOnModal').text($.i18n('IMEIMsg'));
+		
+		break;
+	case 1:
+		$("#editsingleblockIMEI1,#editsingleblockIMEI2,#editsingleblockIMEI3,#editsingleblockIMEI4").attr("pattern","[A-F0-9]{15,16}");
+		$("#editsingleblockIMEI1,#editsingleblockIMEI2,#editsingleblockIMEI3,#editsingleblockIMEI4").attr("maxlength","16");
+		
+		$("#editsingleblockIMEI1,#editsingleblockIMEI2,#editsingleblockIMEI3,#editsingleblockIMEI4").removeAttr("onkeyup");
+		$("#editsingleblockIMEI1,#editsingleblockIMEI2,#editsingleblockIMEI3,#editsingleblockIMEI4").attr("oninput","InvalidMsg(this,'input','"+$.i18n('validationMEID')+"')");
+		$("#editsingleblockIMEI1,#editsingleblockIMEI2,#editsingleblockIMEI3,#editsingleblockIMEI4").attr("oninvalid","InvalidMsg(this,'input','"+$.i18n('validationMEID')+"')");
+		$('#errorMsgOnModal').text($.i18n('MEIDMsg'));
+		break;
+	case 2:
+		$("#editsingleblockIMEI1,#editsingleblockIMEI2,#editsingleblockIMEI3,#editsingleblockIMEI4").val('');
+		$("#editsingleblockIMEI1,#editsingleblockIMEI2,#editsingleblockIMEI3,#editsingleblockIMEI4").attr("pattern","[0-9]{8,11}");
+		$("#editsingleblockIMEI1,#editsingleblockIMEI2,#editsingleblockIMEI3,#editsingleblockIMEI4").attr("onkeyup","isLengthValid(this.value)");
+		$("#editsingleblockIMEI1,#editsingleblockIMEI2,#editsingleblockIMEI3,#editsingleblockIMEI4").attr("maxlength","11");	
+		$("#editsingleblockIMEI1,#editsingleblockIMEI2,#editsingleblockIMEI3,#editsingleblockIMEI4").attr("oninput","InvalidMsg(this,'input','"+$.i18n('validationESN11')+"')");
+		$("#editsingleblockIMEI1,#editsingleblockIMEI2,#editsingleblockIMEI3,#editsingleblockIMEI4").attr("oninvalid","InvalidMsg(this,'input','"+$.i18n('validationESN11')+"')");
+		$("#errorMsgOnModal").text($.i18n('ESNMsg'));
+		break;
+	}
+
+}); 
+
+function isLengthValid(val){
+	var deviceIDLength=val.length;
+	if(!isNaN(val)){
+		$("#editsingleblockIMEI1,#editsingleblockIMEI2,#editsingleblockIMEI3,#editsingleblockIMEI4").attr("pattern","[0-9]{11,11}");
+		$("#editsingleblockIMEI1,#editsingleblockIMEI2,#editsingleblockIMEI3,#editsingleblockIMEI4").attr("maxlength","11");
+		$("#editsingleblockIMEI1,#editsingleblockIMEI2,#editsingleblockIMEI3,#editsingleblockIMEI4").attr("oninput","InvalidMsg(this,'input','"+$.i18n('validationESN11')+"')");
+		$("#editsingleblockIMEI1,#editsingleblockIMEI2,#editsingleblockIMEI3,#editsingleblockIMEI4").attr("oninvalid","InvalidMsg(this,'input','"+$.i18n('validationESN11')+"')");
+	}
+	else if(typeof val == 'string' || val instanceof String){
+		$("#editsingleblockIMEI1,#editsingleblockIMEI2,#editsingleblockIMEI3,#editsingleblockIMEI4").attr("maxlength","8");
+		$("#editsingleblockIMEI1,#editsingleblockIMEI2,#editsingleblockIMEI3,#editsingleblockIMEI4").attr("pattern","[A-F0-9]{8,8}");
+		$("#editsingleblockIMEI1,#editsingleblockIMEI2,#editsingleblockIMEI3,#editsingleblockIMEI4").attr("oninput","InvalidMsg(this,'input','"+$.i18n('validationESN8')+"')");
+		$("#editsingleblockIMEI1,#editsingleblockIMEI2,#editsingleblockIMEI3,#editsingleblockIMEI4").attr("oninvalid","InvalidMsg(this,'input','"+$.i18n('validationESN8')+"')");
+
+	}
+}

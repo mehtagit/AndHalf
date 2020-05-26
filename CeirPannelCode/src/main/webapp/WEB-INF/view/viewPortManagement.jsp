@@ -150,21 +150,21 @@
 					
 					<div class="col s12 m6">
 					<label for="port" class="active">Port Type <span class="star">*</span></label>
-                     	 <select class="browser-default" id="port" >
-                                <option value=""  selected="" disabled>Select Port Type</option>
+                     	 <select class="browser-default" id="port" required="required" >
+                                <option value=""  selected >Select Port Type</option>
                           </select>
                         
                          <input type="text" id="id" hidden>
                     </div>
 					
 					<div class="input-field col s12 m6" style="margin-top: 22px;">
-                        <input type="text" id="portAddress" name="value"  title="Please enter alphabets and numbers upto 30 characters only" maxlength="30" required="required">
+                        <input type="text" id="portAddress" name="value"  title="Please enter alphabets and numbers upto 100 characters only" maxlength="100" required="required">
                         <label for="portAddress" class="">Port Address <span class="star"> *</span></label>
                     </div>
 
 					 <div class="col s12 m12 center" style="margin-top: 20px;">
                         <button class="btn" type="submit">Submit</button>
-                        <a href="#" class="btn modal-close" id="Cancel" style="margin-left: 10px;">Cancel</a>
+                        <a href="#" class="btn modal-close" id="Cancel" onclick='resetFields()'  style="margin-left: 10px;">Cancel</a>
                     </div>
                 </div>
             </form>
@@ -188,7 +188,7 @@
                     </div>
 					
 					<div class="input-field col s12 m6" style="margin-top: 22px;">
-                        <input type="text" id="editportAddress" name="value"  title="Please enter alphabets and numbers upto 30 characters only" maxlength="30" required="required">
+                        <input type="text" id="editportAddress" name="value"  title="Please enter alphabets and numbers upto 100 characters only" maxlength="100" required="required">
                         <label for="editportAddress" class="">Port Address <span class="star"> *</span></label>
                     </div>
 

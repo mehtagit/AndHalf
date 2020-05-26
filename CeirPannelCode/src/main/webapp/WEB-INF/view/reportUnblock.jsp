@@ -112,6 +112,7 @@ padding: 0 !important;
 
 <section id="content">
                 <!--start container-->
+                 <div id="initialloader"></div>
                 <div class="container">
                     <div class="section">
                         <div class="row">
@@ -244,6 +245,7 @@ aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
                                                                    oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
                                                                    maxlength="16">
                                                                 <label for="IMEI3"><spring:message code="title.three" /></label>
+                                                               <p id="errorMsgOnModal" class="deviceErrorTitle" style="margin-top:-146px;margin-left:115px;"></p>
                                                             </div>
             
                                                             <div class="input-field col s12 m6">
@@ -581,6 +583,7 @@ src="${context}/resources/project_js/enterKey.js"></script>
 			    //ev.preventDefault(); //works as well
 
 			});
+			$('div#initialloader').delay(300).fadeOut('slow');
 		</script>
 
 </body>

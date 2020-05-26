@@ -65,8 +65,9 @@ public class Dashboard {
 	
 	
 	@GetMapping("/stock/countAndQuantity")
-	public ResponseEntity<?> getStockCountAndQuantity(@RequestParam(value = "userId") Integer userId,@RequestParam(value = "featureId") Integer featureId,@RequestParam(value = "userTypeId") Integer userTypeId,@RequestParam(value = "userType") String userType) {
-		RequestCountAndQuantity response = dashboardFeignClient.stockNotification(userId, featureId, userTypeId,userType);
+	public ResponseEntity<?> getStockCountAndQuantity(@RequestParam(value = "userId") Integer userId,@RequestParam(value = "featureId") Integer featureId,@RequestParam(value = "userTypeId") Integer userTypeId,@RequestParam(value = "userType") String userType,
+			@RequestParam(name="source",defaultValue = "dashboard",required = false) String source) {
+		RequestCountAndQuantity response = dashboardFeignClient.stockNotification(userId, featureId, userTypeId,userType,source);
 	return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 	
