@@ -11,6 +11,7 @@ var roleType = $("body").attr("data-roleType");
 		 {
 		 $("#taxStatusDiv").css("display", "none");
 		 $("#priceDiv").css("display", "none");
+			$("#taxStatus1").attr("required", false);
 		 }
 var lang_param =window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 	$.i18n().locale = lang_param;
@@ -55,7 +56,7 @@ var lang_param =window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 					var IMEI3=$('#IMEIC'+fieldId).val();
 					var IMEI4=$('#IMEID'+fieldId).val();
 					var deviceCountry=$('#country'+fieldId).val();
-					var multipleSimStatus1=$('#multipleSimStatus1'+fieldId).val();
+					var multipleSimStatus1=$('#multipleSimStatus'+fieldId).val();
 					
 				var deviceInfo=
 				{
@@ -69,7 +70,7 @@ var lang_param =window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 					      "secondImei": parseInt(IMEI2),
 					      "thirdImei": parseInt(IMEI3),
 					      "fourthImei": parseInt(IMEI4),
-					      "multiSimStatus": deviceStatus1,
+					      "multiSimStatus": multipleSimStatus1,
 					      "price": parseFloat(Price1),
 					      "taxPaidStatus": parseInt(taxStatus1),
 					      "nid":nationalID,

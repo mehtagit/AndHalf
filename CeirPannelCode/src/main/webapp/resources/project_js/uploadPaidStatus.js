@@ -22,6 +22,7 @@ if(roleType=="Immigration")
  	$('#uploadNidImage').text($.i18n('Upload Passport Image'));
  	$("#nidLabelName").append('<span class="star">*</span>');
  	$("#uploadNidImage").append('<span class="star">*</span>');
+ 	$("#taxStatus1").attr("required", false);
 	}
 
 // Internationalization

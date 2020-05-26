@@ -461,6 +461,7 @@ $.ajax({
 
 
 function saveIndivisualStolenRequest(){
+	
 	var formData= new FormData();
 
 	var singleStolenfirstName=$('#singleStolenfirstName').val();
@@ -638,6 +639,8 @@ function saveIndivisualStolenRequest(){
 
 
 function saveCompanyStolenRequest(){
+	$('div#initialloader').fadeIn('fast');
+	
 	var formData= new FormData();
 
 	var bulkStolencompanyName=$('#bulkStolencompanyName').val();
@@ -733,6 +736,7 @@ function saveCompanyStolenRequest(){
 		processData: false,
 		contentType: false,
 		success: function (response, textStatus, jqXHR) {
+			$('div#initialloader').delay(300).fadeOut('slow');
 			console.log(response)
 
 			if(response.errorCode==0){
@@ -752,6 +756,7 @@ function saveCompanyStolenRequest(){
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
 			console.log("error in ajax")
+			$('div#initialloader').delay(300).fadeOut('slow');
 
 		}
 	});
