@@ -902,7 +902,7 @@ public class IconsState {
 		executePostConstruct();
 		// URL link
 		String viewAction = featureID == 3 ?"./Consignment/viewConsignment?txnID="+txnID+"" :
-			featureID == 4 ? "./assignDistributor?txnID="+txnID+"&userTypeId="+roleType+"":
+			featureID == 4 ? "./assignDistributor?txnID="+txnID+"&userTypeId="+roleType+"&source=noti":
 				featureID == 0 ? "./stolenRecovery?txnID="+txnID+"" :
 					featureID == 6 ? "./grievanceManagement?txnID="+txnID+"" :
 						featureID == 7 ? "./stolenRecovery?txnID="+txnID+"" :

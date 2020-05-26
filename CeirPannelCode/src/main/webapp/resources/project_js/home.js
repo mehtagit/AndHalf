@@ -33,7 +33,7 @@
 						userId = -1;
 					}
 					
-					var requestType=data[i].featureId == 5 ? "0,1" : data[i].featureId == 7 ? "2,3" : "0"; 
+					var requestType=data[i].featureId == 5 ? "1" : data[i].featureId == 7 ? "3" : "0"; 
 					
 					$.ajax({
 						url: './'+url[0]+'?featureId='+data[i].featureId+'&userId='+userId+'&userTypeId='+userTypeId+'&requestType='+requestType+'&userType='+userType,
