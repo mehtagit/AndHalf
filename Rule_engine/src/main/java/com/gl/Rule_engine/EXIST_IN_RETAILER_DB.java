@@ -53,7 +53,8 @@ static final Logger logger = Logger.getLogger(EXIST_IN_RETAILER_DB.class);
     }
 
       static String executeAction(String[] args, Connection conn ,ArrayList<String> fileErrorLines) {
-        switch (args[13]) {
+        try {
+            switch (args[13]) {
             case "Allow": {
                 logger.info("Action is Allow");
             }
@@ -90,7 +91,11 @@ static final Logger logger = Logger.getLogger(EXIST_IN_RETAILER_DB.class);
                 logger.info(" The Action " + args[13] + "  is Not Defined  ");
         }
 
-        return "Success";
+         return "Success";
+        } catch (Exception e) {
+            logger.info(" Error " + e);
+            return "FAilure";
+        }
     }
     
     
@@ -137,7 +142,8 @@ static final Logger logger = Logger.getLogger(EXIST_IN_RETAILER_DB.class);
 //                String fileString = args[15] +" , Error Occured :IMEI/ESN/MEID is already present in the system";
 //                map.put("fileString", fileString);
 //                  fileErrorLines.add(fileString);
-//                return "success";
+//                 return "Success";
+ 
 //            }
 //        } catch (Exception e) {
 //            rrst = "Error";

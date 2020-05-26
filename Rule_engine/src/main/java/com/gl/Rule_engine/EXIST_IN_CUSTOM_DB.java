@@ -17,15 +17,13 @@ import org.apache.log4j.Logger;
  */
 class EXIST_IN_CUSTOM_DB {
 
-static final Logger logger = Logger.getLogger(EXIST_IN_CUSTOM_DB.class);
-     
-   
+    static final Logger logger = Logger.getLogger(EXIST_IN_CUSTOM_DB.class);
 
-    static String executeRule(String[] args, Connection conn ) {
+    static String executeRule(String[] args, Connection conn) {
         String res = "";
-         
+
         try {
-              
+
             Statement stmt2 = conn.createStatement();
 //            if (args[2].equalsIgnoreCase("CDR")) {
 //                logger.info("Error Not For CDR");
@@ -46,8 +44,8 @@ static final Logger logger = Logger.getLogger(EXIST_IN_CUSTOM_DB.class);
                     res = "No";
                 }
                 result1.close();
-             stmt2.close();
-                 
+                stmt2.close();
+
             }
         } catch (Exception e) {
             logger.info("error.." + e);
@@ -55,52 +53,52 @@ static final Logger logger = Logger.getLogger(EXIST_IN_CUSTOM_DB.class);
         return res;
     }
 
-      static String executeAction(String[] args, Connection conn ,ArrayList<String> fileErrorLines) {
-        switch (args[13]) {
-            case "Allow": {
-                logger.info("Action is Allow");
-            }
-            break;
-            case "Skip": {
-                logger.info("Action is Skip");
-            }
-            break;
-            case "Reject": {
-                logger.info("Action is Reject");
-                
-                String fileString = args[15] + " , Error Description : IMEI/ESN/MEID is already present in the system  ";
-                  fileErrorLines.add(fileString);
-            }
-            break;
-            case "Block": {
-                logger.info("Action is Block");
-            }
-            break;
-            case "Report": {
-                logger.info("Action is Report");
+    static String executeAction(String[] args, Connection conn, ArrayList<String> fileErrorLines) {
+        try {
+            switch (args[13]) {
+                case "Allow": {
+                    logger.info("Action is Allow");
+                }
+                break;
+                case "Skip": {
+                    logger.info("Action is Skip");
+                }
+                break;
+                case "Reject": {
+                    logger.info("Action is Reject");
 
+                    String fileString = args[15] + " , Error Description : IMEI/ESN/MEID is already present in the system  ";
+                    fileErrorLines.add(fileString);
+                }
+                break;
+                case "Block": {
+                    logger.info("Action is Block");
+                }
+                break;
+                case "Report": {
+                    logger.info("Action is Report");
+
+                }
+                break;
+                case "SYS_REG": {
+                    logger.info("Action is SYS_REG");
+                }
+                break;
+                case "USER_REG": {
+                    logger.info("Action is USER_REG");
+                }
+                break;
+                default:
+                    logger.info(" The Action " + args[13] + "  is Not Defined  ");
             }
-            break;
-            case "SYS_REG": {
-                logger.info("Action is SYS_REG");
-            }
-            break;
-            case "USER_REG": {
-                logger.info("Action is USER_REG");
-            }
-            break;
-            default:
-                logger.info(" The Action " + args[13] + "  is Not Defined  ");
+
+            return "Success";
+        } catch (Exception e) {
+            logger.info(" Error " + e);
+            return "FAilure";
         }
-
-        return "Success";
     }
-    
-    
-    
-    
-    
-    
+
 //    static String executeAction(String[] args, Connection conn ,ArrayList<String> fileErrorLines) {
 //        String rrst = "Success";
 //        try {
@@ -130,5 +128,4 @@ static final Logger logger = Logger.getLogger(EXIST_IN_CUSTOM_DB.class);
 //        }
 //        return rrst;
 //    }
-
 }

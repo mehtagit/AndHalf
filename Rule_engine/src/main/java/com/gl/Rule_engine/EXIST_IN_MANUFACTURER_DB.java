@@ -56,7 +56,8 @@ static final Logger logger = Logger.getLogger(EXIST_IN_MANUFACTURER_DB.class);
 
     
       static String executeAction(String[] args, Connection conn ,ArrayList<String> fileErrorLines) {
-        switch (args[13]) {
+        try {
+            switch (args[13]) {
             case "Allow": {
                 logger.info("Action is Allow");
             }
@@ -93,7 +94,11 @@ static final Logger logger = Logger.getLogger(EXIST_IN_MANUFACTURER_DB.class);
                 logger.info(" The Action " + args[13] + "  is Not Defined  ");
         }
 
-        return "Success";
+         return "Success";
+        } catch (Exception e) {
+            logger.info(" Error " + e);
+            return "FAilure";
+        }
     }
     
 //    static String executeAction(String[] args, Connection conn ,ArrayList<String> fileErrorLines) {
@@ -132,9 +137,7 @@ static final Logger logger = Logger.getLogger(EXIST_IN_MANUFACTURER_DB.class);
 //                map.put("fileName", args[14]);
 //                String fileString = args[15] + " ,Error Occured : :  IMEI/ESN/MEID is already present in the system ";
 //                map.put("fileString", fileString);
-//                  fileErrorLines.add(fileString);
-//                return "Success";
-//            }
+
 //
 //        } catch (Exception e) {
 //            rrst = "Error";

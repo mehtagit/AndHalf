@@ -59,45 +59,50 @@ public class EXISTS_IN_FOREIGN_DB {
     }
 
     static String executeAction(String[] args, Connection conn, ArrayList<String> fileErrorLines) {
-        switch (args[13]) {
-            case "Allow": {
-                logger.info("Action is Allow");
-            }
-            break;
-            case "Skip": {
-                logger.info("Action is Skip");
-            }
-            break;
-            case "Reject": {
-                logger.info("Action is Reject");
+        try {
+            switch (args[13]) {
+                case "Allow": {
+                    logger.info("Action is Allow");
+                }
+                break;
+                case "Skip": {
+                    logger.info("Action is Skip");
+                }
+                break;
+                case "Reject": {
+                    logger.info("Action is Reject");
 
-                String fileString = args[15] + " , Error Description : IMEI/ESN/MEID is already present in the system  ";
-                fileErrorLines.add(fileString);
+                    String fileString = args[15] + " , Error Description : IMEI/ESN/MEID is already present in the system  ";
+                    fileErrorLines.add(fileString);
 
-            }
-            break;
-            case "Block": {
-                logger.info("Action is Block");
-            }
-            break;
-            case "Report": {
-                logger.info("Action is Report");
+                }
+                break;
+                case "Block": {
+                    logger.info("Action is Block");
+                }
+                break;
+                case "Report": {
+                    logger.info("Action is Report");
 
+                }
+                break;
+                case "SYS_REG": {
+                    logger.info("Action is SYS_REG");
+                }
+                break;
+                case "USER_REG": {
+                    logger.info("Action is USER_REG");
+                }
+                break;
+                default:
+                    logger.info(" The Action " + args[13] + "  is Not Defined  ");
             }
-            break;
-            case "SYS_REG": {
-                logger.info("Action is SYS_REG");
-            }
-            break;
-            case "USER_REG": {
-                logger.info("Action is USER_REG");
-            }
-            break;
-            default:
-                logger.info(" The Action " + args[13] + "  is Not Defined  ");
+            return "Success";
+        } catch (Exception e) {
+            logger.info(" Error " + e);
+            return "FAilure";
         }
 
-        return "Success";
     }
 
 }

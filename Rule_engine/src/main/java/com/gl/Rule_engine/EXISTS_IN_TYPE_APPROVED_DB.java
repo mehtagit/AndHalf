@@ -58,7 +58,7 @@ class EXISTS_IN_TYPE_APPROVED_DB {
     }
 
     static String executeAction(String[] args, Connection conn, ArrayList<String> fileErrorLines) {
-
+try{
         switch (args[13]) {
             case "Allow": {
                 logger.info("Action is Allow");
@@ -113,7 +113,12 @@ class EXISTS_IN_TYPE_APPROVED_DB {
 
         }
 
-        return "Success";
+       
+return "Success";
+        } catch (Exception e) {
+            logger.info(" Error " + e);
+            return "FAilure";
+        }
     }
 
 }

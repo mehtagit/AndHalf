@@ -136,8 +136,8 @@ public class BasicApplication {
                         status = "No";
                     }
                 } catch (Exception e) {
-                    System.out.println("ITS NA" + e);
-                    status = "NA";
+                    System.out.println("ITS NAN" + e);
+                    status = "NAN";
                 }
             } else {
                 status = "Yes";

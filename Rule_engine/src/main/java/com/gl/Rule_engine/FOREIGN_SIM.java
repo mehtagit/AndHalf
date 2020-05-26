@@ -35,7 +35,8 @@ class FOREIGN_SIM {
 
     static String executeAction(String[] args, Connection conn, ArrayList<String> fileErrorLines) {
 
-        switch (args[13]) {
+        try {
+            switch (args[13]) {
             case "Allow": {
                 String msisdn = args[12].startsWith("19") ? args[12].substring(2) : args[12];
                 logger.info("Action is Allow");
@@ -136,7 +137,11 @@ class FOREIGN_SIM {
                 logger.info(" The Action " + args[13] + "  is Not Defined  ");
         }
 
-        return "Success";
+         return "Success";
+        } catch (Exception e) {
+            logger.info(" Error " + e);
+            return "FAilure";
+        }
     }
 
 }

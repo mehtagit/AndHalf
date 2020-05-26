@@ -56,7 +56,7 @@ public class EXISTS_IN_WHITELIST_DB {
     }
 
     static String executeAction(String[] args, Connection conn, ArrayList<String> fileErrorLines) {
-        switch (args[13]) {
+    try{    switch (args[13]) {
             case "Allow": {
                 logger.info("Action is Allow");
             }
@@ -93,7 +93,12 @@ public class EXISTS_IN_WHITELIST_DB {
                 logger.info(" The Action " + args[13] + "  is Not Defined  ");
         }
 
-        return "Success";
+       
+return "Success";
+        } catch (Exception e) {
+            logger.info(" Error " + e);
+            return "FAilure";
+        }
     }
 
 }

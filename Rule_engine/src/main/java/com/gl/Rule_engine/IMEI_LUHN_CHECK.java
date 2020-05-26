@@ -28,7 +28,8 @@ class IMEI_LUHN_CHECK {
     static String executeAction(String[] args, Connection conn, ArrayList<String> fileErrorLines) {
         logger.info(" IMEI_LUHN_CHECK  executeAction");
 
-        switch (args[13]) {
+        try {
+            switch (args[13]) {
             case "Allow": {
                 logger.info("Action is Allow");
             }
@@ -85,7 +86,11 @@ class IMEI_LUHN_CHECK {
                 logger.info(" The Action " + args[13] + "  is Not Defined  ");
         }
 
-        return "Success";
+         return "Success";
+        } catch (Exception e) {
+            logger.info(" Error " + e);
+            return "FAilure";
+        }
     }
 
     static String ExecuteLuhnAlgorithm(String ImeiNo) {

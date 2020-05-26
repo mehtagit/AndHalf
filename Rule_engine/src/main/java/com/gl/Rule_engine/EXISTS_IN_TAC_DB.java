@@ -51,7 +51,7 @@ class EXISTS_IN_TAC_DB {
     }
 
     static String executeAction(String[] args, Connection conn, ArrayList<String> fileErrorLines) {
-        switch (args[13]) {
+      try{  switch (args[13]) {
             case "Allow": {
                 logger.info("Action is Allow");
             }
@@ -72,32 +72,21 @@ class EXISTS_IN_TAC_DB {
             break;
             case "Report": {
                 logger.info("Action is Report");
-
-//                     
-//                    Connection  
-//                    DateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd");   //
-//                    Calendar cal = Calendar.getInstance();
-//                    cal.add(Calendar.DATE, 0);
-//                    String date = dateFormat1.format(cal.getTime());
-//
-//                    String qry1 = " INSERT into device_invalid_db (imei_esn_meid ,operator_id,operator_name, record_date, rule_name,   device_id_type  ,created_on  ) "
-//                            + "values  (  '" + args[3] + "'  ,    '" + args[] + "' , '" + args[] + "' , '" +  + "' , 'EXISTS_IN_TAC_DB'  , '" + args[4] + "'  ,  '" + date + "' ) ";
-//                    logger.info(" Query1.( DB TO BE FORMED LATER ,CN HAve problm in schema sctructure). " + qry1);
-//                    PreparedStatement statementN = conn.prepareStatement(qry1);
-//                    int rowsInserted1 = statementN.executeUpdate();
-//                    if (rowsInserted1 > 0) {
-//                        logger.info("device_usage_db updated");
-//                    }
-//                     
-//                } catch (Exception e) {
-//                    logger.info("erorr " + e);
-//                }
             }
             break;
             case "SYS_REG": {
                 logger.info("Action is SYS_REG");
             }
             break;
+            case "NAN": {
+                logger.info("Action is NAN");
+                String fileString = args[15] + " , Error Code :CON_RULE_000X, Error Description :Something went Wrong while Authorization of TAC .Try after Some Time.   ";
+                fileErrorLines.add(fileString);
+            }
+            break;
+            
+            
+            
             case "USER_REG": {
                 logger.info("Action is USER_REG");
             }
@@ -106,7 +95,12 @@ class EXISTS_IN_TAC_DB {
                 logger.info(" The Action " + args[13] + "  is Not Defined  ");
         }
 
-        return "Success";
+       
+return "Success";
+        } catch (Exception e) {
+            logger.info(" Error " + e);
+            return "FAilure";
+        }
     }
 
 }

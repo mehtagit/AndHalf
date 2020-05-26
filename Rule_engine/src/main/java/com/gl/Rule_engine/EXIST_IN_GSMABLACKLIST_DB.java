@@ -26,7 +26,8 @@ public class EXIST_IN_GSMABLACKLIST_DB {
 
     static String executeAction(String[] args, Connection conn, ArrayList<String> fileErrorLines) {
 
-        switch (args[13]) {
+        try {
+            switch (args[13]) {
             case "Allow": {
                 logger.info("Action is Allow");
             }
@@ -61,11 +62,22 @@ public class EXIST_IN_GSMABLACKLIST_DB {
                 logger.info("Action is USER_REG");
             }
             break;
+            case "NAN": {
+                logger.info("Action is NAN");
+                String fileString = args[15] + " , Error Code :CON_RULE_000X, Error Description :Something went Wrong while Checking  Status of Imei .Try after Some Time.   ";
+                fileErrorLines.add(fileString);
+            }
+            break;
+            
             default:
                 logger.info(" The Action " + args[13] + "  is Not Defined  ");
         }
 
-        return "Success";
+         return "Success";
+        } catch (Exception e) {
+            logger.info(" Error " + e);
+            return "FAilure";
+        }
     }
 
 }

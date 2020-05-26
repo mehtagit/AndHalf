@@ -57,7 +57,8 @@ class EXIST_IN_VIP_LIST {
     }
 
     static String executeAction(String[] args, Connection conn, ArrayList<String> fileErrorLines) {
-        switch (args[13]) {
+        try {
+            switch (args[13]) {
             case "Allow": {
                 logger.info("Action is Allow");
             }
@@ -95,7 +96,11 @@ class EXIST_IN_VIP_LIST {
                 logger.info(" The Action " + args[13] + "  is Not Defined  ");
         }
 
-        return "Success";
+         return "Success";
+        } catch (Exception e) {
+            logger.info(" Error " + e);
+            return "FAilure";
+        }
     }
 
 //    static String executeAction(String[] args, Connection conn ,ArrayList<String> fileErrorLines) {

@@ -55,7 +55,8 @@ class EXIST_IN_DISTRIBUTOR_DB {
     }
 
     static String executeAction(String[] args, Connection conn ,ArrayList<String> fileErrorLines) {
-        switch (args[13]) {
+        try {
+            switch (args[13]) {
             case "Allow": {
                 logger.info("Action is Allow");
             }
@@ -91,7 +92,11 @@ class EXIST_IN_DISTRIBUTOR_DB {
                 logger.info(" The Action " + args[13] + "  is Not Defined  ");
         }
 
-        return "Success";
+         return "Success";
+        } catch (Exception e) {
+            logger.info(" Error " + e);
+            return "FAilure";
+        }
     }
 }
 
@@ -143,8 +148,7 @@ class EXIST_IN_DISTRIBUTOR_DB {
 //                String fileString =args[15]  + " ,Error Occured :IMEI/ESN/MEID is already present in the system ";
 //                map.put("fileString", fileString);
 //                  fileErrorLines.add(fileString);
-//                return "success";
-//            }
+//                 return "Success";
 //        } catch (Exception e) {
 //            rrst = "Error";
 //        }

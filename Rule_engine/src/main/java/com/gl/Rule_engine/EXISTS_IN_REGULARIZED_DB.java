@@ -57,7 +57,7 @@ result1.close();
     }
 
     static String executeAction(String[] args, Connection conn, ArrayList<String> fileErrorLines) {
-        switch (args[13]) {
+     try{   switch (args[13]) {
             case "Allow": {
                 logger.info("Action is Allow");
             }
@@ -95,7 +95,12 @@ result1.close();
                 logger.info(" The Action " + args[13] + "  is Not Defined  ");
         }
 
-        return "Success";
+       
+return "Success";
+        } catch (Exception e) {
+            logger.info(" Error " + e);
+            return "FAilure";
+        }
     }
 
 }

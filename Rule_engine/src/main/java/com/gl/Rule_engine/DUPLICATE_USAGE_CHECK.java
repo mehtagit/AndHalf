@@ -19,9 +19,6 @@ class DUPLICATE_USAGE_CHECK {
 
     static final Logger logger = Logger.getLogger(DUPLICATE_USAGE_CHECK.class);
 
-    ;
-     
-
     static String executeRule(String[] args, Connection conn) {
         String res = null;
         try {
@@ -72,13 +69,13 @@ class DUPLICATE_USAGE_CHECK {
                 } else {
                     res = "No";
                 }
-                 result1.close();
-                 result3.close();
-                 result4.close();
+                result1.close();
+                result3.close();
+                result4.close();
                 stmt2.close();
                 stmt3.close();
                 stmt4.close();
-                
+
             }
         } catch (Exception e) {
         }
@@ -86,44 +83,47 @@ class DUPLICATE_USAGE_CHECK {
     }
 
     static String executeAction(String[] args, Connection conn, ArrayList<String> fileErrorLines) {
-        switch (args[13]) {
-            case "Allow": {
-                logger.info("Action is Allow");
-            }
-            break;
-            case "Skip": {
-                logger.info("Action is Skip");
-            }
-            break;
-            case "Reject": {
-                logger.info("Action is Reject");
-                String fileString = args[15] + " , Error Description : IMEI/ESN/MEID is already present in the system  ";
-                fileErrorLines.add(fileString);
+        try {
+            switch (args[13]) {
+                case "Allow": {
+                    logger.info("Action is Allow");
+                }
+                break;
+                case "Skip": {
+                    logger.info("Action is Skip");
+                }
+                break;
+                case "Reject": {
+                    logger.info("Action is Reject");
+                    String fileString = args[15] + " , Error Description : IMEI/ESN/MEID is already present in the system  ";
+                    fileErrorLines.add(fileString);
+                }
+                break;
+                case "Block": {
+                    logger.info("Action is Block");
+                }
+                break;
+                case "Report": {
+                    logger.info("Action is Report");
 
+                }
+                break;
+                case "SYS_REG": {
+                    logger.info("Action is SYS_REG");
+                }
+                break;
+                case "USER_REG": {
+                    logger.info("Action is USER_REG");
+                }
+                break;
+                default:
+                    logger.info(" The Action " + args[13] + "  is Not Defined  ");
             }
-            break;
-            case "Block": {
-                logger.info("Action is Block");
-            }
-            break;
-            case "Report": {
-                logger.info("Action is Report");
-
-            }
-            break;
-            case "SYS_REG": {
-                logger.info("Action is SYS_REG");
-            }
-            break;
-            case "USER_REG": {
-                logger.info("Action is USER_REG");
-            }
-            break;
-            default:
-                logger.info(" The Action " + args[13] + "  is Not Defined  ");
+            return "Success";
+        } catch (Exception e) {
+            logger.info(" Error " + e);
+            return "FAilure";
         }
-
-        return "Success";
     }
 }
 

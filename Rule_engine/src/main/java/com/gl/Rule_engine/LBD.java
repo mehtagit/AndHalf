@@ -90,13 +90,15 @@ public class LBD {
             logger.info("Error" + e);
         }
         return res;
+    
     }
+    
+
+    
 
     static String executeAction(String[] args, Connection conn, ArrayList<String> fileErrorLines) {
         logger.info("LBD executeAction");
-        String res = "Success";
         try {
-
             switch (args[13]) {
                 case "Allow": {
                     logger.info("Action is Allow");
@@ -143,14 +145,16 @@ public class LBD {
                 default:
                     logger.info(" The Action " + args[13] + "  is Not Defined  ");
             }
-
+            return "Success";
         } catch (Exception e) {
-            res = "Error";
             logger.info("Error.." + e);
         }
-        return res;
+        return "Failure";
+
     }
+
 }
+
 
 //            String url = System.getenv("ceir_db_url");
 //            String username = System.getenv("ceir_db_username");

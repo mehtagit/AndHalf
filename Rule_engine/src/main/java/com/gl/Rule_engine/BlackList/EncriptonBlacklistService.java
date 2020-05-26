@@ -46,8 +46,8 @@ public class EncriptonBlacklistService {
             String auth = encrypt(Salt_String + Organization_Id + "=" + abc, Secretkey);
             logger.info("the auth key is =" + auth);
             String message = verifyGSMA(deviceId, auth);
-            if (message.equalsIgnoreCase("NA")) {
-                status = "NA";
+            if (message.equalsIgnoreCase("NAN")) {
+                status = "NAN";
             } else {
                 logWriter.writeLogBlacklist("End Result for  " + Imei + " :: " + message);
                 status = lacklistServiceImpl.databaseMapper(message, conn);
@@ -86,7 +86,7 @@ public class EncriptonBlacklistService {
             respons = httpResponse.getBody();
         } catch (Exception ex) {
             logger.info(" Error :" + ex);
-            respons = "NA";
+            respons = "NAN";
         }
         return respons;
     }
