@@ -5,8 +5,10 @@ import com.google.gson.Gson;
 import java.io.InputStream;
 import java.security.KeyStore;
 import java.sql.Connection;
- 
+
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 import javax.net.ssl.SSLContext;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -35,7 +37,6 @@ public class BasicApplication {
         BasicApplication stt = new BasicApplication();
 
 //        stt.gsmaApplication(fileOutputName);                                ///////////////////////////////
-
 //        BufferedReader reader;
 //        reader = new BufferedReader(new FileReader(fileOutputName));
 //        reader.readLine();
@@ -86,7 +87,6 @@ public class BasicApplication {
                 gsma_tac_timewait = map.get("gsma_tac_timewait");
                 logger.info("httpPostUrl  " + httpPostUrl);
                 int timewait = Integer.parseInt(gsma_tac_timewait);
-                Thread.sleep(timewait);
                 logWriter.writeLogGsma("Start imei_tac is " + imei_tac);
                 BasicApplication obj = new BasicApplication();
                 SSLContext sslContext = SSLContexts.custom()
@@ -99,43 +99,48 @@ public class BasicApplication {
                 HttpClient httpClient = HttpClients.custom().setSslcontext(sslContext).build();
 //         HttpPost request = new HttpPost("https://devicecheck.gsma.com/imeirtl/leadclookup");        ///     lookup ... blacklist    //commented
 //        HttpPost request = new HttpPost("https://imeidb.gsma.com/services/rest/GetHandSetDetails");   // original   ... tac
-               
+
                 HttpPost request = new HttpPost(httpPostUrl);
                 String auth = EncriptonService.getAuth(imei_tac, APIKey, Password, Salt_String, Organization_Id, Secretkey);      // for original.. ta 
                 request.addHeader("Authorisation", auth);
                 request.addHeader("Content-Type", "application/json");     // original
                 request.setEntity(input);
+
+//                int hardTimeout = 15; // seconds
+                TimerTask task = new TimerTask() {
+                    @Override
+                    public void run() {
+                        if (request != null) {
+                            request.abort();
+                        } else {
+                            System.out.println("NO TIMEOUT ");
+                        }
+                    }
+                };
+                new Timer(true).schedule(task, timewait * 1000);
                 try {
-                    HttpParams httpParams = httpClient.getParams();
-                    HttpConnectionParams.setConnectionTimeout(httpParams, timewait * 1000);
-                    HttpConnectionParams.setSoTimeout(httpParams, timewait * 1000);
-                } catch (Exception e) {
-                    logger.info("Timeout Error" + e);
-                }
-                String message = "";
-                try {
+                    String message = "";
                     HttpResponse response = httpClient.execute(request);
                     HttpEntity entity = response.getEntity();
                     message = EntityUtils.toString(response.getEntity());
                     EntityUtils.consume(entity);
+                    logWriter.writeLogGsma("End Result for  " + imei_tac + " :: " + message);
+                    Gson gson = new Gson();
+                    GsmaEntity product = gson.fromJson(message, GsmaEntity.class);
+                    if (product.getGsmaApprovedTac().equals("Yes")) {
+                        status = snt.databaseMapper(message, conn);
+                        status = "Yes";
+                    } else {
+                        logger.info("GSMAINVALIDDB");
+                        snt.invalidGsmaDb(product.getDeviceId(), conn);
+                        status = "No";
+                    }
                 } catch (Exception e) {
-                    logger.info("HttpResponse Error" + e);
-                }
-                logWriter.writeLogGsma("End Result for  " + imei_tac + " :: " + message);
-                Gson gson = new Gson();
-                GsmaEntity product = gson.fromJson(message, GsmaEntity.class);
-
-                if (product.getGsmaApprovedTac().equals("Yes")) {
-                    status = snt.databaseMapper(message, conn);
-                    status = "Yes";
-                } else {
-                    logger.info("GSMAINVALIDDB");
-                    snt.invalidGsmaDb(product.getDeviceId() ,conn);
-                    status = "No";
+                    System.out.println("ITS NA" + e);
+                    status = "NA";
                 }
             } else {
                 status = "Yes";
-                
             }
         }
         return status;
@@ -148,4 +153,4 @@ public class BasicApplication {
 //  chck if present in tac_db 
 //   if not , call api and populate tac_db 
 //   save in model and  brand db
-  //   if NA , send to invalidDb
+//   if NA , send to invalidDb

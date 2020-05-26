@@ -6,7 +6,7 @@ import java.util.Base64;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
-
+//import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +18,8 @@ import org.apache.log4j.Logger;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.sql.Connection;
+import java.time.Duration;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 
 //@Component
 public class EncriptonBlacklistService {
@@ -32,11 +34,11 @@ public class EncriptonBlacklistService {
     static String Secretkey = "GSMAESencryption";
     static String url = "https://devicecheck.gsma.com/imeirtl/leadclookup";
 
-    public static String startBlacklistApp(String Imei ,Connection conn) {
+    public static String startBlacklistApp(String Imei, Connection conn) {
         LogWriter logWriter = new LogWriter();
         String status = null;
         BlacklistServiceImpl lacklistServiceImpl = new BlacklistServiceImpl();
-        String rslt = lacklistServiceImpl.getBlacklistStatus(conn,Imei);
+        String rslt = lacklistServiceImpl.getBlacklistStatus(conn, Imei);
         if (rslt.equalsIgnoreCase("NA")) {
             String deviceId = Imei;
             logWriter.writeLogBlacklist("Start with Imei " + Imei);
@@ -44,8 +46,12 @@ public class EncriptonBlacklistService {
             String auth = encrypt(Salt_String + Organization_Id + "=" + abc, Secretkey);
             logger.info("the auth key is =" + auth);
             String message = verifyGSMA(deviceId, auth);
-            logWriter.writeLogBlacklist("End Result for  " + Imei + " :: " + message);
-            status = lacklistServiceImpl.databaseMapper(message, conn);
+            if (message.equalsIgnoreCase("NA")) {
+                status = "NA";
+            } else {
+                logWriter.writeLogBlacklist("End Result for  " + Imei + " :: " + message);
+                status = lacklistServiceImpl.databaseMapper(message, conn);
+            }
         } else {
             status = rslt;
         }
@@ -55,21 +61,18 @@ public class EncriptonBlacklistService {
 
     public static String verifyGSMA(String deviceId, String auth) {
         URI uri = null;
-        URL urrl = null;
         HttpHeaders headers = null;
-        RestTemplate restTemplate = null;
         MultiValueMap<String, String> map = null;
         HttpEntity<MultiValueMap<String, String>> request = null;
         ResponseEntity<String> httpResponse = null;
+        String respons = null;
         try {
             uri = new URI(url);
-            urrl = new URL(url);
-            HttpURLConnection huc = (HttpURLConnection) urrl.openConnection();
-            HttpURLConnection.setFollowRedirects(false);
-            huc.setConnectTimeout(10 * 1000);
-            huc.setReadTimeout(10 * 1000);
-
-            restTemplate = new RestTemplate();
+            final RestTemplate restTemplate
+                    = new RestTemplateBuilder()
+                            .setConnectTimeout(Duration.ofMillis(10000))
+                            .setReadTimeout(Duration.ofMillis(10000))
+                            .build();
             headers = new HttpHeaders();
             headers.setContentType(org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED);
             headers.set("Authorisation", auth);
@@ -80,11 +83,12 @@ public class EncriptonBlacklistService {
 
             httpResponse = restTemplate.postForEntity(uri, request, String.class);
             logger.info("Response Body:[" + httpResponse.getBody() + "]");
+            respons = httpResponse.getBody();
         } catch (Exception ex) {
-            ex.printStackTrace();
             logger.info(" Error :" + ex);
+            respons = "NA";
         }
-        return httpResponse.getBody();
+        return respons;
     }
 
     public static String getSHA(String stringToHash) {
