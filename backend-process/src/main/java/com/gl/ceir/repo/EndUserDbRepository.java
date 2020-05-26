@@ -15,6 +15,6 @@ JpaRepository<EndUserDB, Long>, JpaSpecificationExecutor<EndUserDB> {
 
 	public EndUserDB getByNid(String nid);
 	
-	public EndUserDB deleteByNid(String nid);
+	public void deleteByNid(String nid);
 	
 }

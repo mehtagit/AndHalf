@@ -105,5 +105,4 @@ public class RemoveIncompleteUser extends BaseService{
 			onErrorRaiseAnAlert(Alerts.ALERT_006, bodyPlaceholder);	
 		}
 	}
-
 }

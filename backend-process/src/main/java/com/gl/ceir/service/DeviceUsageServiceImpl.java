@@ -49,7 +49,7 @@ public class DeviceUsageServiceImpl {
 	private GenericSpecificationBuilder<DeviceUsageDb> buildSpecification(String fromDate, String toDate){
 		GenericSpecificationBuilder<DeviceUsageDb> cmsb = new GenericSpecificationBuilder<>(propertiesReader.dialect);
 
-		cmsb.with(new SearchCriteria("modifiedOn", fromDate , SearchOperation.GREATER_THAN_OR_EQUAL, Datatype.DATE));
+		//cmsb.with(new SearchCriteria("modifiedOn", fromDate , SearchOperation.GREATER_THAN_OR_EQUAL, Datatype.DATE));
 		cmsb.with(new SearchCriteria("modifiedOn", toDate , SearchOperation.LESS_THAN, Datatype.DATE));
 		cmsb.with(new SearchCriteria("action", "USER_REG", SearchOperation.EQUALITY, Datatype.STRING));
 
