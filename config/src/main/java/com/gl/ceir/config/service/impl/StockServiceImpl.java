@@ -509,6 +509,22 @@ public class StockServiceImpl {
 	}
 
 	public GenricResponse deleteStockDetailes(ConsignmentUpdateRequest deleteObj) {
+		UserProfile userProfile = null;
+		String firstName = "";
+		User user = null;
+		Map<String, String> placeholderMap = new HashMap<>();
+		String mailTag = null;
+		String action = null;
+		String txnId = null;
+		String receiverUserType = deleteObj.getUserType();
+		action = SubFeatures.DELETE;
+		mailTag = "STOCK_DELETE_BY_CEIR_ADMIN"; 
+		user = userRepository.getById(deleteObj.getUserId());				
+		userProfile = user.getUserProfile();
+		txnId = deleteObj.getTxnId();
+
+		placeholderMap.put("<First name>", firstName);
+		placeholderMap.put("<Txn id>", deleteObj.getTxnId());
 		try {
 
 			if(Objects.isNull(deleteObj.getTxnId())) {
@@ -527,11 +543,15 @@ public class StockServiceImpl {
 				return new GenricResponse(1000, "No record found against this transactionId.", deleteObj.getTxnId());
 			}else {
 
-				if("CEIRADMIN".equalsIgnoreCase(deleteObj.getUserType()))
+				if("CEIRADMIN".equalsIgnoreCase(deleteObj.getUserType())) {
 					txnRecord.setStockStatus(StockStatus.WITHDRAWN_BY_CEIR_ADMIN.getCode());
-				else
-					txnRecord.setStockStatus(StockStatus.WITHDRAWN_BY_USER.getCode());
 
+
+				}
+
+				else {
+					txnRecord.setStockStatus(StockStatus.WITHDRAWN_BY_USER.getCode());
+				}
 				txnRecord.setRemarks(deleteObj.getRemarks());
 				txnRecord.setDeleteFlag(0);
 
@@ -545,6 +565,18 @@ public class StockServiceImpl {
 				addInAuditTrail(Long.valueOf(deleteObj.getUserId()), deleteObj.getTxnId(), SubFeatures.DELETE,deleteObj.getRoleType());
 				if(stockTransaction.executeDeleteStock(txnRecord, webActionDb)) {
 					logger.info("Deletion of Stock is in Progress." + deleteObj.getTxnId());
+					emailUtil.saveNotification(mailTag, 
+							userProfile, 
+							deleteObj.getFeatureId(),
+							Features.STOCK,
+							action,
+							deleteObj.getTxnId(),
+							txnId,
+							placeholderMap,
+							deleteObj.getRoleType(),
+							receiverUserType,
+							"Users");
+					logger.info("Notfication have been saved.");
 					return new GenricResponse(0, "Deletion of Stock is in Progress.",deleteObj.getTxnId());
 				}else {
 					logger.info("Deletion of Stock have been failed." + deleteObj.getTxnId());
