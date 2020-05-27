@@ -18,15 +18,16 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
 import com.gl.ceir.config.ConfigTags;
 import com.gl.ceir.config.EmailSender.EmailUtil;
 import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.model.AuditTrail;
+import com.gl.ceir.config.model.ConsignmentMgmt;
 import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.SearchCriteria;
+import com.gl.ceir.config.model.SystemConfigListDb;
 import com.gl.ceir.config.model.SystemConfigurationDb;
 import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.SearchOperation;
@@ -73,15 +74,29 @@ public class AuditTrailServiceImpl {
 		}
 	}
 
-	public List<AuditTrail> getAll(FilterRequest filterRequest) {
+	public List<AuditTrail> getAll2(FilterRequest filterRequest) {
 
 		try {
-			List<AuditTrail> auditTrails = auditTrailRepository.findAll( buildSpecification(filterRequest).build());
+			logger.info("filter data in file : "+filterRequest);
+			List<AuditTrail> auditTrails = auditTrailRepository.findAll(buildSpecification(filterRequest).build(), new Sort(Sort.Direction.DESC, "modifiedOn"));
 
 //			for(AuditTrail auditTrail : auditTrails ) {
 //				setInterp(auditTrail);
 //			}
 
+			return auditTrails;
+
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
+
+	}
+	
+	public List<AuditTrail> getAll(FilterRequest filterRequest) {
+
+		try {
+			List<AuditTrail> auditTrails = auditTrailRepository.findAll( buildSpecification(filterRequest).build());
 			return auditTrails;
 
 		} catch (Exception e) {
@@ -111,10 +126,9 @@ public class AuditTrailServiceImpl {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
-
 	}
 
-	public FileDetails getFilteredAuditTrailInFile(FilterRequest filterRequest) {
+	public FileDetails getFilteredAuditTrailInFile2(FilterRequest filterRequest) {
 		String fileName = null;
 		Writer writer   = null;
 		AuditTrailFileModel atfm = null;
@@ -134,6 +148,7 @@ public class AuditTrailServiceImpl {
 		CustomMappingStrategy<AuditTrailFileModel> mappingStrategy = new CustomMappingStrategy<>();
 		try {
 			List<AuditTrail> auditTrails = getAll(filterRequest);
+			logger.info("audit data size: "+auditTrails.size());
 			if( !auditTrails.isEmpty() ) {
 				if(Objects.nonNull(filterRequest.getUserId()) && (filterRequest.getUserId() != -1 && filterRequest.getUserId() != 0)) {
 					fileName = LocalDateTime.now().format(dtf2).replace(" ", "_") + "_AuditTrails.csv";
@@ -151,6 +166,7 @@ public class AuditTrailServiceImpl {
 
 			if( !auditTrails.isEmpty() ) {
 				fileRecords = new ArrayList<>(); 
+				
 				for(AuditTrail auditTrail : auditTrails ) {
 					atfm = new AuditTrailFileModel();
 					atfm.setCreatedOn(auditTrail.getCreatedOn().toString());
@@ -160,7 +176,6 @@ public class AuditTrailServiceImpl {
 					atfm.setSubFeatureName(auditTrail.getSubFeature());
 					atfm.setUserName(auditTrail.getUserName());
 					logger.debug(atfm);
-
 					fileRecords.add(atfm);
 				}
 
@@ -183,10 +198,80 @@ public class AuditTrailServiceImpl {
 			} catch (IOException e) {}
 		}
 	}
+	public FileDetails getFilteredAuditTrailInFile(FilterRequest filterRequest) {
+		String fileName = null;
+		Writer writer   = null;
+		AuditTrailFileModel atfm = null;
+		
+		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		DateTimeFormatter dtf2  = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
 
+		SystemConfigurationDb filepath = configurationManagementServiceImpl.findByTag(ConfigTags.file_download_dir);
+		logger.info("CONFIG : file_consignment_download_dir [" + filepath + "]");
+		SystemConfigurationDb link = configurationManagementServiceImpl.findByTag(ConfigTags.file_download_link);
+		logger.info("CONFIG : file_consignment_download_link [" + link + "]");
+
+		if(Objects.isNull(filepath) || Objects.isNull(link)) {
+			logger.info("CONFIG: MISSING : file_download_dir or file_download_link not found.");
+			return null;
+		}
+		String filePath = filepath.getValue();
+		StatefulBeanToCsvBuilder<AuditTrailFileModel> builder = null;
+		StatefulBeanToCsv<AuditTrailFileModel> csvWriter = null;
+		List<AuditTrailFileModel> fileRecords = null;
+		try {
+			List<AuditTrail> auditTrails = getAll(filterRequest);
+			logger.info("audit list size: "+auditTrails.size());
+			if( !auditTrails.isEmpty() ) {
+				if(Objects.nonNull(filterRequest.getUserId()) && (filterRequest.getUserId() != -1 && filterRequest.getUserId() != 0)) {
+					fileName = LocalDateTime.now().format(dtf2).replace(" ", "_") + "_AuditTrails.csv";
+				}else {
+					fileName = LocalDateTime.now().format(dtf2).replace(" ", "_") + "_AuditTrails.csv";
+				}
+			}else {
+				fileName = LocalDateTime.now().format(dtf2).replace(" ", "_") + "_AuditTrails.csv";
+			}
+
+			writer = Files.newBufferedWriter(Paths.get(filePath+fileName));
+			builder = new StatefulBeanToCsvBuilder<AuditTrailFileModel>(writer);
+			csvWriter = builder.withQuotechar(CSVWriter.NO_QUOTE_CHARACTER).build();
+
+			if( !auditTrails.isEmpty() ) {
+				fileRecords = new ArrayList<>(); 
+
+				for(AuditTrail auditTrail : auditTrails ) {
+					atfm = new AuditTrailFileModel();
+					atfm.setCreatedOn(auditTrail.getCreatedOn().toString());
+					atfm.setTxnId(auditTrail.getTxnId());
+					atfm.setRoleType(auditTrail.getRoleType());
+					atfm.setFeatureName(auditTrail.getFeatureName());
+					atfm.setSubFeatureName(auditTrail.getSubFeature());
+					atfm.setUserName(auditTrail.getUserName());
+					logger.debug(atfm);
+					fileRecords.add(atfm);
+				}
+
+				csvWriter.write(fileRecords);
+			}else {
+				csvWriter.write(new AuditTrailFileModel());
+			}
+			return new FileDetails( fileName, filePath, link.getValue() + fileName ); 
+
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}finally {
+			try {
+				if( Objects.nonNull(writer) )
+					writer.close();
+			} catch (IOException e) {}
+		}
+	}
+
+	
 	private GenericSpecificationBuilder<AuditTrail> buildSpecification(FilterRequest filterRequest){
-		GenericSpecificationBuilder<AuditTrail> cmsb = new GenericSpecificationBuilder<>(propertiesReader.dialect);
-
+		GenericSpecificationBuilder<AuditTrail> cmsb = new GenericSpecificationBuilder<AuditTrail>(propertiesReader.dialect);
+        logger.info("filter data in specification : "+filterRequest);
 		if (!"SystemAdmin".equalsIgnoreCase(filterRequest.getUserType())) {
 			if(Objects.nonNull(filterRequest.getUserId()))
 				cmsb.with(new SearchCriteria("userId", filterRequest.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));
@@ -218,6 +303,7 @@ public class AuditTrailServiceImpl {
 			cmsb.orSearch(new SearchCriteria("featureName", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 			cmsb.orSearch(new SearchCriteria("subFeature", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 		}
+		logger.info("cmsb: "+cmsb.toString());
 		return cmsb;
 	}
 
