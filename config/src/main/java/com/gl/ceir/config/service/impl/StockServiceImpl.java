@@ -139,7 +139,7 @@ public class StockServiceImpl {
 
 	@Autowired
 	AlertServiceImpl alertServiceImpl;
-	
+
 	@Autowired
 	UserStaticServiceImpl userStaticServiceImpl;
 
@@ -296,7 +296,8 @@ public class StockServiceImpl {
 		}
 	}
 
-	public Page<StockMgmt> getAllFilteredData(FilterRequest filterRequest, Integer pageNo, Integer pageSize){
+	public Page<StockMgmt> getAllFilteredData(FilterRequest filterRequest, Integer pageNo, Integer pageSize, 
+			String source){
 
 		List<StateMgmtDb> statusList = null;
 
@@ -306,7 +307,7 @@ public class StockServiceImpl {
 			statusList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
 			logger.info(statusList);
 
-			Page<StockMgmt> page = stockManagementRepository.findAll(buildSpecification(filterRequest, statusList).build(), pageable);
+			Page<StockMgmt> page = stockManagementRepository.findAll(buildSpecification(filterRequest, statusList, source).build(), pageable);
 
 			for(StockMgmt stockMgmt : page.getContent()) {
 
@@ -357,7 +358,7 @@ public class StockServiceImpl {
 		try {
 			statusList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
 			logger.info("statusList " + statusList);
-			List<StockMgmt> stockMgmts = stockManagementRepository.findAll(buildSpecification(filterRequest, statusList).build(), new Sort(Sort.Direction.DESC, "modifiedOn"));
+			List<StockMgmt> stockMgmts = stockManagementRepository.findAll(buildSpecification(filterRequest, statusList, null).build(), new Sort(Sort.Direction.DESC, "modifiedOn"));
 
 			logger.info(statusList);
 
@@ -384,7 +385,8 @@ public class StockServiceImpl {
 		}
 	}
 
-	private GenericSpecificationBuilder<StockMgmt> buildSpecification(FilterRequest filterRequest, List<StateMgmtDb> statusList){
+	private GenericSpecificationBuilder<StockMgmt> buildSpecification(FilterRequest filterRequest, 
+			List<StateMgmtDb> statusList, String source){
 		GenericSpecificationBuilder<StockMgmt> specificationBuilder = new GenericSpecificationBuilder<>(propertiesReader.dialect);
 
 		if("Importer".equalsIgnoreCase(filterRequest.getUserType()) || 
@@ -429,13 +431,27 @@ public class StockServiceImpl {
 
 				List<Integer> stockStatus = new LinkedList<>();
 
-				if(Objects.nonNull(dashboardUsersFeatureStateMap)) {	
-					for(DashboardUsersFeatureStateMap dashboardUsersFeatureStateMap2 : dashboardUsersFeatureStateMap ) {
-						stockStatus.add(dashboardUsersFeatureStateMap2.getState());
+				if(Objects.nonNull(dashboardUsersFeatureStateMap)) {
+					if("dashboard".equalsIgnoreCase(source) || "menu".equalsIgnoreCase(source)) {
+						for(DashboardUsersFeatureStateMap dashboardUsersFeatureStateMap2 : dashboardUsersFeatureStateMap ) {
+							stockStatus.add(dashboardUsersFeatureStateMap2.getState());
+						}
+					}else if("filter".equalsIgnoreCase(source)) {
+						if(nothingInFilter(filterRequest)) {
+							for(DashboardUsersFeatureStateMap dashboardUsersFeatureStateMap2 : dashboardUsersFeatureStateMap ) {
+								stockStatus.add(dashboardUsersFeatureStateMap2.getState());
+							}
+						}else {
+							for(StateMgmtDb stateMgmtDb : statusList ) {
+								stockStatus.add(stateMgmtDb.getState());
+							}
+						}
+					}else if("noti".equalsIgnoreCase(source)) {
+						logger.info("Skip status check, because source is noti.");
 					}
 
 					logger.info("Array list to add is = " + stockStatus);
-					if(!statusList.isEmpty()) {
+					if(!stockStatus.isEmpty()) {
 						specificationBuilder.addSpecification(specificationBuilder.in("stockStatus", stockStatus));
 					}else {
 						logger.warn("no predefined status are available.");
@@ -493,6 +509,22 @@ public class StockServiceImpl {
 	}
 
 	public GenricResponse deleteStockDetailes(ConsignmentUpdateRequest deleteObj) {
+		UserProfile userProfile = null;
+		String firstName = "";
+		User user = null;
+		Map<String, String> placeholderMap = new HashMap<>();
+		String mailTag = null;
+		String action = null;
+		String txnId = null;
+		String receiverUserType = deleteObj.getUserType();
+		action = SubFeatures.DELETE;
+		mailTag = "STOCK_DELETE_BY_CEIR_ADMIN"; 
+		user = userRepository.getById(deleteObj.getUserId());				
+		userProfile = user.getUserProfile();
+		txnId = deleteObj.getTxnId();
+
+		placeholderMap.put("<First name>", firstName);
+		placeholderMap.put("<Txn id>", deleteObj.getTxnId());
 		try {
 
 			if(Objects.isNull(deleteObj.getTxnId())) {
@@ -511,11 +543,15 @@ public class StockServiceImpl {
 				return new GenricResponse(1000, "No record found against this transactionId.", deleteObj.getTxnId());
 			}else {
 
-				if("CEIRADMIN".equalsIgnoreCase(deleteObj.getUserType()))
+				if("CEIRADMIN".equalsIgnoreCase(deleteObj.getUserType())) {
 					txnRecord.setStockStatus(StockStatus.WITHDRAWN_BY_CEIR_ADMIN.getCode());
-				else
-					txnRecord.setStockStatus(StockStatus.WITHDRAWN_BY_USER.getCode());
 
+
+				}
+
+				else {
+					txnRecord.setStockStatus(StockStatus.WITHDRAWN_BY_USER.getCode());
+				}
 				txnRecord.setRemarks(deleteObj.getRemarks());
 				txnRecord.setDeleteFlag(0);
 
@@ -529,6 +565,18 @@ public class StockServiceImpl {
 				addInAuditTrail(Long.valueOf(deleteObj.getUserId()), deleteObj.getTxnId(), SubFeatures.DELETE,deleteObj.getRoleType());
 				if(stockTransaction.executeDeleteStock(txnRecord, webActionDb)) {
 					logger.info("Deletion of Stock is in Progress." + deleteObj.getTxnId());
+					emailUtil.saveNotification(mailTag, 
+							userProfile, 
+							deleteObj.getFeatureId(),
+							Features.STOCK,
+							action,
+							deleteObj.getTxnId(),
+							txnId,
+							placeholderMap,
+							deleteObj.getRoleType(),
+							receiverUserType,
+							"Users");
+					logger.info("Notfication have been saved.");
 					return new GenricResponse(0, "Deletion of Stock is in Progress.",deleteObj.getTxnId());
 				}else {
 					logger.info("Deletion of Stock have been failed." + deleteObj.getTxnId());
@@ -902,7 +950,7 @@ public class StockServiceImpl {
 								"Users");
 
 						logger.info("Notfication have been saved.");
-						
+
 						if(consignmentUpdateRequest.getAction() == 0) {
 							emailUtil.saveNotification(adminMailTag, 
 									userStaticServiceImpl.getCeirAdmin().getUserProfile(), 
@@ -992,6 +1040,30 @@ public class StockServiceImpl {
 			logger.error("Could not find the user information");
 		}
 
+	}
+
+	public boolean nothingInFilter(FilterRequest filterRequest) {
+		if(Objects.nonNull(filterRequest.getStartDate()) || !filterRequest.getStartDate().isEmpty()) {
+			return Boolean.FALSE;
+		}
+		if(Objects.nonNull(filterRequest.getEndDate()) || !filterRequest.getEndDate().isEmpty()) {
+			return Boolean.FALSE;
+		}
+
+		if(Objects.nonNull(filterRequest.getTxnId()) || !filterRequest.getTxnId().isEmpty()) {
+			return Boolean.FALSE;
+		}
+
+		if(Objects.nonNull(filterRequest.getDisplayName()) || !filterRequest.getDisplayName().isEmpty()) {
+			return Boolean.FALSE;
+		}
+		if(Objects.nonNull(filterRequest.getConsignmentStatus()) ) {
+			return Boolean.FALSE;
+		}
+		if(Objects.nonNull(filterRequest.getUserType()) || !filterRequest.getEndDate().isEmpty()) {
+			return Boolean.FALSE;
+		}
+		return Boolean.TRUE;
 	}
 
 	@PostConstruct

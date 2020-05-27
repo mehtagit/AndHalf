@@ -88,7 +88,8 @@ public class StockTransaction {
 					stockMgmt.getTxnId(),
 					placeholderMap,
 					stockMgmt.getRoleType(),
-					null)) {
+					null,
+					ReferTable.USERS)) {
 				logger.info("Notification have been saved.");
 			}else {
 				logger.info("Notification have been not saved.");

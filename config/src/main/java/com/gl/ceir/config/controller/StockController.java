@@ -89,13 +89,14 @@ public class StockController {
 	public MappingJacksonValue findAllFilteredData(@RequestBody FilterRequest filterRequest,
 			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
 			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+			@RequestParam(value = "source", defaultValue = "menu") String source,
 			@RequestParam(value = "file", defaultValue = "0") Integer file) {
 
 		MappingJacksonValue mapping = null;
 
 		if(file == 0) {
 			logger.info("Stock View filter Details Request= " + filterRequest);
-			Page<StockMgmt> response = stackholderServiceImpl.getAllFilteredData(filterRequest, pageNo, pageSize);
+			Page<StockMgmt> response = stackholderServiceImpl.getAllFilteredData(filterRequest, pageNo, pageSize, source);
 			mapping = new MappingJacksonValue(response);
 		}else {
 			logger.info("Request to export filtered Stocks = " + filterRequest);

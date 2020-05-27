@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.gl.ceir.config.genericresponse.GenricResponse_Class;
 import com.gl.ceir.config.model.FeatureValidateReq;
 import com.gl.ceir.config.model.GenricResponse;
-import com.gl.ceir.config.request.model.Generic_Response_Notification;
-import com.gl.ceir.config.request.model.Port;
 import com.gl.ceir.config.util.HttpResponse;
 
 @Service
@@ -29,14 +27,4 @@ public interface UserFeignClient {
 	@PostMapping("/portAddress/viewById/{id}")
 	public GenricResponse_Class portAddressInterp(@PathVariable("id") Integer id);
 
-	
-	  @PostMapping("/userMgmt/DataByPortAndUserType/") 
-	  public Generic_Response_Notification getUserIDByPortAddress(Port registeration);
-	  
-	  @PostMapping("/userMgmt/databyUserTypeId/{usertypeId}") 
-	  public GenricResponse_Class databyUserTypeId(@PathVariable("usertypeId") Integer
-	  usertypeId);
-	  
-	 
-	
 }

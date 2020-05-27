@@ -51,6 +51,7 @@ import com.gl.ceir.config.model.WebActionDb;
 import com.gl.ceir.config.model.constants.Alerts;
 import com.gl.ceir.config.model.constants.ConsignmentStatus;
 import com.gl.ceir.config.model.constants.Datatype;
+import com.gl.ceir.config.model.constants.ReferTable;
 import com.gl.ceir.config.model.constants.SearchOperation;
 import com.gl.ceir.config.model.constants.StockStatus;
 import com.gl.ceir.config.model.constants.StolenStatus;
@@ -839,7 +840,8 @@ public class StolenAndRecoveryServiceImpl {
 							txnId,
 							placeholderMap1,
 							"CEIRADMIN",
-							user.getUsertype().getUsertypeName());
+							user.getUsertype().getUsertypeName(),
+							ReferTable.USERS);
 					logger.info("Notfication have been saved.");
 				}
 				addInAuditTrail(Long.valueOf(stolenandRecoveryMgmt.getUserId()), stolenandRecoveryMgmt.getTxnId(), action, stolenandRecoveryMgmt.getRoleType(),stolenandRecoveryMgmt.getRequestType(),0);
@@ -920,7 +922,8 @@ public class StolenAndRecoveryServiceImpl {
 								txnId,
 								placeholderMap1,
 								"CEIRSYSTEM",
-								user.getUsertype().getUsertypeName());
+								user.getUsertype().getUsertypeName(),
+								ReferTable.USERS);
 						logger.info("Notfication have been saved.");
 					}
 				}
