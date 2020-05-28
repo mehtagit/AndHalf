@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="warn">
     <Properties>
-        <Property name="basePath">G:\\logs</Property>
+        <Property name="basePath">/home/ceirapp/ceir/Process/individual_process/logs</Property>
     </Properties>
  
     <Appenders>
@@ -23,7 +23,7 @@
             <appender-ref ref="fileLogger" level="debug" />
         </Logger>
         <Root level="debug" additivity="false">
-            <appender-ref ref="console" />
+            <appender-ref ref="fileLogger" />
         </Root>
     </Loggers>
 </Configuration>
