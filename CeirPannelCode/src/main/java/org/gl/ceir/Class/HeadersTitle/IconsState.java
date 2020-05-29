@@ -28,7 +28,7 @@ public class IconsState {
 	String deletionIcon="\"fa fa-trash delete-icon\"";
 	String replyIcon="\"fa fa-reply reply-icon\""; 
 	String approveIcon = "\"fa fa-check-circle-o approve-icon\"";
-	String rejectIcon = "\"fa fa-user-times reject-icon\"";
+	String rejectIcon = "\"fa fa-user-times reject-icon\""; 
 	String payTaxIcon = "\"fa fa-money pay-tax-icon\"";
 	String ListIcon =  "\"fa fa-list list-icon\"";
 	String plusIcon = "\"fa fa-plus-square download-icon\"";
