@@ -24,25 +24,21 @@ public class StateMachine {
 	public static boolean isConsignmentStatetransitionAllowedWithAction(String userType, int currentStatus, int action) {
 		if("CEIRADMIN".equalsIgnoreCase(userType)) {
 			if(ConsignmentStatus.PENDING_APPROVAL_FROM_CEIR_AUTHORITY.getCode() == currentStatus) {
-				return Boolean.TRUE;
+				return true;
 			}
 
 			if(action == 0) {
 				if(ConsignmentStatus.REJECTED_BY_CEIR_AUTHORITY.getCode() == currentStatus){
-					return Boolean.TRUE;
-				}else {
-					return Boolean.FALSE;
+					return true;
 				}
 			}else {
 				if(ConsignmentStatus.PENDING_APPROVAL_FROM_CUSTOMS.getCode() == currentStatus){
-					return Boolean.TRUE;
-				}else {
-					return Boolean.FALSE;
+					return true;
 				}
 			}
 		}
 
-		return Boolean.FALSE;
+		return false;
 	}
 
 	public static boolean isStockStatetransitionAllowed(String userType, int currentStatus) {
