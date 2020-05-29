@@ -26,6 +26,9 @@ public class brandRepoModel implements Serializable{
 
 	private String brandName;
 
+    
+        
+        
 	public String getBrand_name() {
 		return brandName;
 	}
@@ -34,15 +37,7 @@ public class brandRepoModel implements Serializable{
 		this.brandName = brandName;
 	}
 
-	private LocalDateTime created_on;
-
-	public LocalDateTime getCreated_on() {
-		return created_on;
-	}
-
-	public void setCreated_on(LocalDateTime created_on) {
-		this.created_on = created_on;
-	}
+	
 
 	public Long getId() {
 		return id;

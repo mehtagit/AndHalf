@@ -14,6 +14,6 @@ import com.gl.ceir.config.model.modelRepoPojo;
 public  interface ModelRepository extends JpaRepository<modelRepoPojo, Long>, JpaSpecificationExecutor<modelRepoPojo>  {
 
 
-	public List<modelRepoPojo> getByBrandNameId(int brandNameId);
-
+	public List<modelRepoPojo> getByBrandNameIdOrderByModelNameAsc(int brandNameId);
+     
 }

@@ -25,7 +25,8 @@ public class ModelServiceImpl {
 	public List<modelRepoPojo> getAll(int brandNameId) {
 		try {
 			logger.info("Going to get All Model  List for id;; "+ brandNameId);
-			return modelRepository.getByBrandNameId(brandNameId);
+			return modelRepository.getByBrandNameIdOrderByModelNameAsc(brandNameId);
+//                             getByBrandNameId
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
