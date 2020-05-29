@@ -30,17 +30,18 @@ public class ConsignmentDelete {
 		
 		try{
 			List<DeviceDb> deviceDbs = deviceDbDao.getDeviceDbByTxnId(conn, "", txnId);
-			logger.info("deviceDbs" + deviceDbs);
+			logger.info("deviceDb Values Get" );
 			deviceDbDao.insertDeviceDbAud(conn, deviceDbs);
 			deviceDbDao.deleteDevicesFromDeviceDb(conn, txnId);
+                        logger.info(" deviceDb Values Get" );
 			
 			List<DeviceImporterDb> deviceImporterDbs = deviceImporterDbDao.getDeviceImporterDbByTxnId(conn, txnId);
-			logger.info("deviceImporterDbs" + deviceImporterDbs);
+//			logger.info("deviceImporterDbs" + deviceImporterDbs);
 			deviceImporterDbDao.insertDeviceImporterDbAud(conn, deviceImporterDbs);
 			deviceImporterDbDao.deleteDevicesFromDeviceImporterDb(conn, txnId);
 			
 			List<DeviceCustomDb> deviceCustomDbs = deviceCustomDbDao.getDeviceCustomDbByTxnId(conn, txnId);
-			logger.info("deviceCustomDbs" + deviceCustomDbs);
+//			logger.info("deviceCustomDbs" + deviceCustomDbs);
 			deviceCustomDbDao.insertDeviceCustomDbAud(conn, deviceCustomDbs);
 			deviceCustomDbDao.deleteDevicesFromDeviceCustomDb(conn, txnId);
 			

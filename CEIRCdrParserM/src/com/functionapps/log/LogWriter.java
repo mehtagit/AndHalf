@@ -12,7 +12,7 @@ import java.util.Calendar;
 public class LogWriter {
 	  
     
-	static String logPath  = "/home/ceirapp/ceir/ceir_parser/webAction/logs/";    
+	static String logPath  = "home/ceirapp/ceir/ceir_parser/webAction/logs/";    
 
     public String getLogPath() {
         return logPath;
@@ -79,13 +79,13 @@ public class LogWriter {
 		}
 	}
 	
-	public void logWrite(FileWriter pw, String logString ) {
-		try{
-			pw.write(logString);
-			pw.flush();
-		}catch( Exception e ){
-			e.printStackTrace();
-		}
-	}
+//	public void logWrite(FileWriter pw, String logString ) {
+//		try{
+//			pw.write(logString);
+//			pw.flush();
+//		}catch( Exception e ){
+//			e.printStackTrace();
+//		}
+//	}
 
 }

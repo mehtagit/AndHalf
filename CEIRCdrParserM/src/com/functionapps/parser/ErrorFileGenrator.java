@@ -103,7 +103,9 @@ public class ErrorFileGenrator {
         try {
             File file = new File(errorPath + txn_id);
             file.mkdir();
+             logger.info(" mkdir done " );
             String fileNameInput = errorPath + txn_id + "/" + txn_id + "_error.csv";
+                         logger.info(" fileNameInput Erorr file name  "  + fileNameInput);
             File fout = new File(fileNameInput);
             FileOutputStream fos = new FileOutputStream(fout, true);
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
@@ -113,7 +115,7 @@ public class ErrorFileGenrator {
             }
             bw.close();
         } catch (Exception e) {
-            logger.info("Error" + e);
+            logger.info("Error + gotoErrorFilewithList " + e);
         }
     }
 

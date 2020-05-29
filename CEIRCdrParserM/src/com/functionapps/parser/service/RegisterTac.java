@@ -66,7 +66,7 @@ public class RegisterTac {
 				/*
 				 * String output = RuleEngineApplication.startRuleEngine(ruleArr);
 				 * 
-				 * System.out.println("Rule [EXISTS_IN_TAC_DB] Execution output is [" + output +
+				 *  // System.out.println("Rule [EXISTS_IN_TAC_DB] Execution output is [" + output +
 				 * "]");
 				 * 
 				 * if("yes".equalsIgnoreCase(output)) { typeApprovedDb.setApproveStatus(3); //
@@ -110,13 +110,13 @@ public class RegisterTac {
 					
 				}else {
 					logger.warn("No message is configured for tag [TAC_PROCESS_SUCCESFUL_MAIL_TO_USER]");
-					System.out.println("No message is configured for tag [TAC_PROCESS_SUCCESFUL_MAIL_TO_USER]");
+					 // System.out.println("No message is configured for tag [TAC_PROCESS_SUCCESFUL_MAIL_TO_USER]");
 				}
 				
 				ceirfunction.updateFeatureFileStatus(conn, txnId, 2, operator, sub_feature);	
 			}else {
 				logger.info("Txn_id [" + txnId + "] is is not present in type_approved_db.");
-				System.out.println("Txn_id [" + txnId + "] is is not present in type_approved_db.");
+				 // System.out.println("Txn_id [" + txnId + "] is is not present in type_approved_db.");
 			}
 
 		}catch(Exception e){

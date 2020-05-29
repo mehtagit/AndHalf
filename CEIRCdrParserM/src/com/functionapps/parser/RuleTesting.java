@@ -11,9 +11,9 @@ public class RuleTesting {
 
         String a = "09";
         if (a.toUpperCase().matches("^[0-9]+$")) {
-            System.out.println("yes");
+             // System.out.println("yes");
         } else {
-            System.out.println("No");
+             // System.out.println("No");
         }
 
     }

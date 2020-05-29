@@ -29,19 +29,17 @@ public class FeatureForSingleStolenBlock {
 
     public void readFeatureWithoutFile(Connection conn, String feature, int raw_upload_set_no, String txn_id, String sub_feature, String mgnt_table_db, String user_type) {
 
-//        Statement stmt = null; // stolenand_recovery_mgmt
-//        Statement stmt1 = null;
         Map<String, String> map = new HashMap<String, String>();
         try {
-//            CEIRFeatureFileFunctions ceirfunction = new CEIRFeatureFileFunctions();
             logger.info("  readFeatureWithoutFile ");
             map.put("feature", feature);
-            // map.put("raw_upload_set_no", (String)raw_upload_set_no);
             map.put("sub_feature", sub_feature);
             map.put("mgnt_table_db", mgnt_table_db);
             map.put("user_type", user_type);
-
             map.put("txn_id", txn_id);
+
+            deleteFromRawTable(conn, txn_id, feature);
+
             map = getstolenandRecoveryDetails(conn, map);
 
             logger.info("  request_type is " + map.get("request_type"));
@@ -341,7 +339,10 @@ public class FeatureForSingleStolenBlock {
 
                 for (int i = 2; i <= 4; i++) {
                     String msisdnothr = getOtherContactsImei(conn, i, map);
-                    if (msisdnothr != null || msisdnothr.trim() == "" || msisdnothr.equals("") || msisdnothr.equals("0")) {
+
+                    if (msisdnothr == null || msisdnothr.trim() == "" || msisdnothr.equals("") || msisdnothr.equals("0")) {
+                        logger.info(" new msisdnothr  id NULL...." + msisdnothr);  //optmse
+                    } else {
                         logger.info(" new msisdnothr ...." + msisdnothr);
                         map.put("contact_number", msisdnothr);
                         imei = getImeiWithMsisdn(conn, map);
@@ -357,7 +358,7 @@ public class FeatureForSingleStolenBlock {
             } else {
                 logger.info("Going to insert in RAW with imei..... " + map.get("imei_esn_meid"));
                 insertinRawtable(conn, map);
-                 failPasstatusUpdator(conn, map, 0);
+                failPasstatusUpdator(conn, map, 0);
             }
 
         } catch (Exception e) {
@@ -572,6 +573,19 @@ public class FeatureForSingleStolenBlock {
             logger.info("Error..getOtherContactsImei ..2.." + e);
         }
         return cntctNo;
+    }
+
+    public void deleteFromRawTable(Connection conn, String txn_id, String feature) {
+        String query = "delete from " + feature + "_raw where txn_id ='" + txn_id + "'";
+        logger.info(query);
+        Statement st5 = null;
+        try {
+            st5 = conn.createStatement();
+            st5.executeQuery(query);
+            logger.info("delete from Raw table");
+        } catch (Exception e) {
+            logger.error("Error at deleteFromRawTable " + e);
+        }
     }
 
 }

@@ -26,7 +26,7 @@ public class StockMgmtDao {
 			query = "select user_type, role_type from stock_mgmt where txn_id='" + txnId + "'";
 
 			logger.info("Query ["+query+"]");
-			System.out.println("Query ["+query+"]");
+			 // System.out.println("Query ["+query+"]");
 			
 			stmt  = conn.createStatement();
 			rs = stmt.executeQuery(query);

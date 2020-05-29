@@ -73,7 +73,7 @@ public class ManagementTableDao {
 
 		query = "delete from " + managementTable + " where txn_id='" + txnId + "'";	
 		logger.info("Query ["+query+"]");
-		System.out.println("Query ["+query+"]");
+		 // System.out.println("Query ["+query+"]");
 
 		try {
 			stmt = conn.createStatement();
@@ -98,7 +98,7 @@ public class ManagementTableDao {
 
 		String query = "update " + tableName + " set delete_flag=? where txn_id=?";
 		logger.info("Query [" + query + " ]");
-		System.out.println("Query [" + query + " ]");
+		 // System.out.println("Query [" + query + " ]");
 
 		PreparedStatement preparedStatement = null;
 
@@ -112,7 +112,7 @@ public class ManagementTableDao {
 			preparedStatement.execute();
 
 			logger.info("Update delete flag in  "+tableName+" succesfully.");
-			System.out.println("Update delete flag in  "+tableName+" succesfully.");
+			 // System.out.println("Update delete flag in  "+tableName+" succesfully.");
 			
 		} catch (SQLException e) {
 			logger.error(e.getMessage(), e);

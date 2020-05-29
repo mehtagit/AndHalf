@@ -28,16 +28,24 @@ public class CEIRFeatureFileFunctions {
         if (conn.toString().contains("oracle")) {
             limiter = " fetch next 1 rows only ";
         }
+        
+//        
+                String stater = "" ;
+                if(state == 0){
+                    stater = "  state  = 0    ";   // or  state  = 1 
+                }else{
+                     stater = "  state  = 2    ";  // or  state  = 3
+                }
 
         try {
 //        	query = "select * from web_action_db where state="+state+" and feature='TYPE_APPROVED' order by id desc ";
-            query = "select * from web_action_db where state=" + state + "  order by id asc " + limiter + "  ";
+            query = "select * from web_action_db where  state =  " + state + "  order by state desc , id asc " + limiter + "  ";
             logger.info("Query to get File Details [" + query + "]");
             stmt = conn.createStatement();
             return rs = stmt.executeQuery(query);
         } catch (Exception e) {
             logger.info("Exception in getFileDetails[" + e + "]");
-            System.out.println("" + e);
+             // System.out.println("" + e);
         }
         return rs;
     }
@@ -119,35 +127,35 @@ public class CEIRFeatureFileFunctions {
 
     }
 
-    public void addFeatureFileConfigDetails(Connection conn, String type, String feature, String sub_feature,
-            String txn_id, String file_name, String status, String user_type) {
-        String query = "";
-        Statement stmt = null;
-        if (type == "insert") {
-            query = "insert into feature_file_config_db (feature,sub_feature,txn_id,file_name,status,usertype_name)values('"
-                    + feature + "','" + sub_feature + "','" + txn_id + "','" + file_name + "','" + status + "','"
-                    + user_type + "')";
-        } else {
-            query = "update feature_file_config_db set status='" + status + "' where feature = '" + feature
-                    + "' and txn_id='" + txn_id + "' and sub_feature='" + sub_feature + "'";
-        }
-        logger.info("A config DB[" + query + "]");
-
-        try {
-            stmt = conn.createStatement();
-            stmt.executeUpdate(query);
-
-        } catch (Exception e) {
-            logger.info("errror" + e);
-        } finally {
-            try {
-                stmt.close();
-                conn.commit();
-            } catch (Exception e) {
-                logger.info("errror" + e);
-            }
-        }
-    }
+//    public void addFeatureFileConfigDetails(Connection conn, String type, String feature, String sub_feature,
+//            String txn_id, String file_name, String status, String user_type) {
+//        String query = "";
+//        Statement stmt = null;
+//        if (type == "insert") {
+//            query = "insert into feature_file_c onfig_db (feature,sub_feature,txn_id,file_name,status,usertype_name)values('"
+//                    + feature + "','" + sub_feature + "','" + txn_id + "','" + file_name + "','" + status + "','"
+//                    + user_type + "')";
+//        } else {
+//            query = "update feature_file_c onfig_db set status='" + status + "' where feature = '" + feature
+//                    + "' and txn_id='" + txn_id + "' and sub_feature='" + sub_feature + "'";
+//        }
+//        logger.info("A config DB[" + query + "]");
+//
+//        try {
+//            stmt = conn.createStatement();
+//            stmt.executeUpdate(query);
+//
+//        } catch (Exception e) {
+//            logger.info("errror" + e);
+//        } finally {
+//            try {
+//                stmt.close();
+//                conn.commit();
+//            } catch (Exception e) {
+//                logger.info("errror" + e);
+//            }
+//        }
+//    }
 
     public void updateFeatureFileStatus(Connection conn, String txn_id, int status, String feature, String subfeature) {
         String query = "";
@@ -375,7 +383,7 @@ public class CEIRFeatureFileFunctions {
         Statement stmt = null;
         query = "update " + table_name + " set delete_status =" + status + " where txn_id='" + txn_id + "'";
         logger.info("update delete status [" + query + "]");
-        System.out.println("update delete status [" + query + "]");
+         // System.out.println("update delete status [" + query + "]");
         try {
             stmt = conn.createStatement();
             stmt.executeUpdate(query);
@@ -409,7 +417,7 @@ public class CEIRFeatureFileFunctions {
             }
         } catch (Exception e) {
             logger.info("Exception in getFileDetails[" + e + "]");
-            System.out.println("" + e);
+             // System.out.println("" + e);
         }
         return map;
     }
@@ -457,7 +465,7 @@ public class CEIRFeatureFileFunctions {
             stmt1.close();
         } catch (Exception e) {
             logger.info("Exception in getfromRegulizeEnterInCustom[" + e + "]");
-            System.out.println("" + e);
+             // System.out.println("" + e);
         }
 
     }
@@ -509,7 +517,7 @@ public class CEIRFeatureFileFunctions {
             conn.commit();
         } catch (Exception e) {
             logger.info("Exception in getfromRegulizeEnterInCustom[" + e + "]");
-            System.out.println("" + e);
+             // System.out.println("" + e);
         }
 
     }
@@ -552,7 +560,7 @@ public class CEIRFeatureFileFunctions {
 //		Statement stmt = null;
 //		query = "update "+table_name+" set status="+status+" where txn_id='"+txn_id+"'";			
 //		logger.info("update management db status ["+query+"]");
-//		System.out.println("update management db status["+query+"]");
+//		 // System.out.println("update management db status["+query+"]");
 //		try {
 //			stmt = conn.createStatement();
 //			stmt.executeUpdate(query);

@@ -22,7 +22,7 @@ public class StockDelete {
 	public void process(Connection conn, String operator, String subFeature, ArrayList<Rule> rulelist, String txnId, 
 			String operator_tag, String usertypeName, String roleType ){
 		
-		System.out.println("Delete will perform for usertypeName[" + usertypeName + "] and roleType [" + roleType + "].");
+		 // System.out.println("Delete will perform for usertypeName[" + usertypeName + "] and roleType [" + roleType + "].");
 		logger.info("Delete will perform for usertypeName[" + usertypeName + "] and roleType [" + roleType + "].");
 		
 		ManagementTableDao managementTableDao = new ManagementTableDao();
@@ -30,16 +30,16 @@ public class StockDelete {
 		StockMgmtDao stockMgmtDao = new StockMgmtDao();
 
 		StockMgmt stockMgmt =  stockMgmtDao.getStockByTxnId(conn, txnId);
-		System.out.println(stockMgmt);
+		 // System.out.println(stockMgmt);
 		logger.debug(stockMgmt);
 		
 		try{
 			List<ManagementTable> managementTables = getTableNameByUserType(stockMgmt.getUserType(), stockMgmt.getRoleType());
-			System.out.println(managementTables);
+			 // System.out.println(managementTables);
 			logger.debug(managementTables);
 
 			if(managementTables.isEmpty()) {
-				System.out.println("No management table found for usertype[" + usertypeName + "]");
+				 // System.out.println("No management table found for usertype[" + usertypeName + "]");
 				logger.info("No management table found for usertype[" + usertypeName + "]");
 				return;
 			}else {
@@ -48,7 +48,7 @@ public class StockDelete {
 					List<ManagementDb> managementDbs = managementTableDao.getManagementDbByTxnId(conn, txnId, 
 							managementTable.getName());
 					logger.debug(managementDbs);
-					System.out.println(managementDbs);
+					 // System.out.println(managementDbs);
 
 					managementAudTableDao.insertManagementDbAud(conn, managementDbs, managementTable.getAudName(), managementTable.getAudSequenceName());
 

@@ -40,17 +40,17 @@ public class Query{
 			if(dataValues != null){
 				dataValues  = dataValues.substring(0, dataValues.lastIndexOf(","));
 				insertQuery = insertQuery+dataValues;
-				System.out.println(insertQuery);
+				 // System.out.println(insertQuery);
 				this.insert(insertQuery);
 				isThresholdTableEmpty = new Query().isTableEmpty(reportName+"_threshold");
 	            isAlertTableEmpty     = new Query().isTableEmpty(reportName+"_alerts");
-				System.out.println("Threshold table is empty ["+isThresholdTableEmpty+"]");
-				System.out.println("Alert table is empty ["+isAlertTableEmpty+"]");
+				 // System.out.println("Threshold table is empty ["+isThresholdTableEmpty+"]");
+				 // System.out.println("Alert table is empty ["+isAlertTableEmpty+"]");
 				if( isThresholdTableEmpty && isAlertTableEmpty ){
             				new ComputeThreshold().computeThreshold(reportName, this.getolumnNameAverage(reportName));
             				new Threshold().calculateAlarms( reportName, this.getStartIndexFromTable(reportName), this.getTableColumnsName(reportName));
             	}else{
-					System.out.println("Going to calculate alarms for report ["+reportName+"]");
+					 // System.out.println("Going to calculate alarms for report ["+reportName+"]");
             		new Threshold().calculateAlarms( reportName, this.getStartIndexFromTable(reportName), this.getTableColumnsName(reportName));
             	}
 				queryString = "code_request=calNet&userId=brij&repId="+this.getReportIdByReportName(reportName);
@@ -78,7 +78,7 @@ public class Query{
 			e.printStackTrace();
 			result = null;
 		}
-		System.out.println("Date column name is ["+result+"]");
+		 // System.out.println("Date column name is ["+result+"]");
 		return result;
 	}
 	
@@ -88,7 +88,7 @@ public class Query{
 		Statement st    = null;
 		int numOfEffRec = 0;
 		try{
-			System.out.println("Query to create table is ["+query+"].");
+			 // System.out.println("Query to create table is ["+query+"].");
 			conn = new MySQLConnection().getConnection();
 			st   = conn.createStatement();
 			numOfEffRec = st.executeUpdate(query);
@@ -110,7 +110,7 @@ public class Query{
 			}catch(Exception ex){}
 			
 		}
-		System.out.println();
+		 // System.out.println();
 	}
 	public boolean isTableAllReadyPresent(String tableName){
 		boolean retVal  = false;
@@ -121,10 +121,10 @@ public class Query{
 			DatabaseMetaData dmd = conn.getMetaData();
 			rs                   = dmd.getTables(null, null, "+tableName+" , null);
 			if(!rs.next()){
-				System.out.println("Create table ["+tableName+"].");
+				 // System.out.println("Create table ["+tableName+"].");
 				retVal = false;
 			}else{
-				System.out.println("Table ["+tableName+"] is all ready exist.");
+				 // System.out.println("Table ["+tableName+"] is all ready exist.");
 				retVal = true;
 			}
 			
@@ -151,19 +151,19 @@ public class Query{
 		boolean retVal  = false;
 
 		try{
-			//System.out.println( "Query to run is ["+query+"]" );
+			// // System.out.println( "Query to run is ["+query+"]" );
 			conn = new MySQLConnection().getConnection();
 			if(conn == null)
-				System.out.println("Connection is not working.");
+				 // System.out.println("Connection is not working.");
 			stmt = conn.createStatement();
 			numOfEffRec = stmt.executeUpdate( query );
 			if( numOfEffRec > 0 ){
 				 // conn.commit();
-				System.out.println( "Data inserted successfully..." );
+				 // System.out.println( "Data inserted successfully..." );
 				retVal = true;
 			}else{
 				conn.rollback();
-				System.out.println( "Data insertion failed..." );
+				 // System.out.println( "Data insertion failed..." );
 				retVal = false;
 			}
 		}catch(Exception e){
@@ -224,7 +224,7 @@ public class Query{
 				}
 			}
 		}
-		//System.out.println("result of isTableEmpty function:"+result);
+		// // System.out.println("result of isTableEmpty function:"+result);
 		return result;
 	}
 	
@@ -237,7 +237,7 @@ public class Query{
 		String date     = null;
 		try{
 			query = "select `date` from `"+tableName+"` order by `date` desc limit 1";
-                        System.out.println(".. getLastDateTimeFromTable .. qry is ;;"+ query);
+                         // System.out.println(".. getLastDateTimeFromTable .. qry is ;;"+ query);
 			conn  = new MySQLConnection().getConnection();
 			stmt  = conn.createStatement();
 			rs    = stmt.executeQuery(query);
@@ -267,7 +267,7 @@ public class Query{
 				}
 			}
 		}
-		System.out.println("result of getLastDateTimeFromTable function :"+result);
+		 // System.out.println("result of getLastDateTimeFromTable function :"+result);
 		return result;
 	}
 	
@@ -295,7 +295,7 @@ public class Query{
 				qry = qry + str+",";
 			}
 			qry  = ((qry.substring(0, qry.lastIndexOf(","))).trim() + " from "+repName).trim();
-			System.out.println("Query for getting column values is ["+qry+"]");
+			 // System.out.println("Query for getting column values is ["+qry+"]");
 			conn = new MySQLConnection().getConnection();
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			rs   = stmt.executeQuery(qry);
@@ -312,21 +312,21 @@ public class Query{
 			}
 			sumOfColumn    = new double[columnCount];
 			sumOfColumn[0] = 0;
-			System.out.println("Threshold limit for report is ["+thresholdRowLimit+"]");
+			 // System.out.println("Threshold limit for report is ["+thresholdRowLimit+"]");
 			while(rs.next() && currentRowNum < thresholdRowLimit){
 				for( int k = 1; k < columnNames.length; k++ ){
 					columnVal   = rs.getString(columnNames[k]).trim();
-					//System.out.println("Column value for column ["+columnNames[k]+"] is ["+columnVal+"]");
+					// // System.out.println("Column value for column ["+columnNames[k]+"] is ["+columnVal+"]");
 					if(columnVal.contains("%")){
 						columnVal   = columnVal.substring( 0, columnVal.indexOf("%"));
-						System.out.println("Column value for column ["+columnVal+"] after removing % is ["+columnVal+"]");
+						 // System.out.println("Column value for column ["+columnVal+"] after removing % is ["+columnVal+"]");
 						columnValue = Double.parseDouble(columnVal);
 					}else if(columnVal.contains(" ")){
 						columnVal   = columnVal.substring( 0, columnVal.indexOf(" "));
-						System.out.println("Column value for column ["+columnNames[k]+"] after removing space is ["+columnVal+"]");
+						 // System.out.println("Column value for column ["+columnNames[k]+"] after removing space is ["+columnVal+"]");
 						columnValue = Double.parseDouble(columnVal);
 					}else{
-						System.out.println("Normal column value ["+columnVal+"]");
+						 // System.out.println("Normal column value ["+columnVal+"]");
 						columnValue = Double.parseDouble( columnVal );
 					}
 					sumOfColumn[k] = sumOfColumn[k] + columnValue;
@@ -334,8 +334,8 @@ public class Query{
 				currentRowNum++;
 			}
 			for( i = 0; i < sumOfColumn.length; i++){
-				System.out.println("Row count is ["+thresholdRowLimit+"]");
-				System.out.println("Average of column ["+columnNames[i]+"] is ["+sumOfColumn[i]/thresholdRowLimit+"]");
+				 // System.out.println("Row count is ["+thresholdRowLimit+"]");
+				 // System.out.println("Average of column ["+columnNames[i]+"] is ["+sumOfColumn[i]/thresholdRowLimit+"]");
 				lhm.put(columnNames[i], sumOfColumn[i]/thresholdRowLimit);
 			}
 		}catch(Exception e){
@@ -380,7 +380,7 @@ public class Query{
 			columnName = new String[rsmd.getColumnCount()-1];
 			for(int i = 0; i < columnName.length; i++){
 				columnName[i] = rsmd.getColumnName(i+2);
-				System.out.println("Column Name is ["+columnName[i]+"].");
+				 // System.out.println("Column Name is ["+columnName[i]+"].");
 			}
 			columnNames = columnName;
 		}catch(Exception e){

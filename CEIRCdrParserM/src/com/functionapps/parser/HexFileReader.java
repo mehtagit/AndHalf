@@ -334,12 +334,10 @@ public class HexFileReader {
         return result;
     }
 
-    public void readConvertedCSVFile(Connection conn, String fileName, String filePath, String repName, String basePath, int raw_upload_set_no) {
-        String cdrCount = null;
+    public void readConvertedCSVFile(Connection conn, String fileName, String repName /*oprtator NAme */, String fileFolderPath, int raw_upload_set_no, String source) {
 
         int total_error_record_count = 0;
         int k = 0;
-        int startRow = 0;
         int rowInserted = 0;
         String query = null;
         String failquery = null;
@@ -349,47 +347,41 @@ public class HexFileReader {
         PreparedStatement failed_ps = null;
         PreparedStatement temPS = null;
         ResultSet rs = null;
-        String cdrStartTime = null;
-        String cdrEndTime = null;
-        String fieldName = null;
         File file = null;
         String line = null;
-        String str = null;
 
         String[] data = null;
         BufferedReader br = null;
-        FileWriter fw = null;
+     
         FileReader fr = null;
-//        String[] result = null;
-        Date date = null;
         SimpleDateFormat actF = null;
         SimpleDateFormat sdf = null;
-        DataInputStream dis = null;
-        FileInputStream fis = null;
-        ArrayList<String> billIds = null;
+       
         HashMap<String, int[]> hm = new HashMap<String, int[]>();
         int failed_flag = 1;
         String updatetime = null;
         logger.info("in file reader");
 
         try {
+            String p1StartTime = java.time.LocalDateTime.now().toString();
             String usertype_name = "";
             ArrayList<CDRColumn> myfilelist = getCDRFields(conn, "CDR", usertype_name);
             logger.info("file list size is " + myfilelist.size());
-            date = new Date();
             actF = new SimpleDateFormat("yyyyMMddHHmmss"); // actF = new SimpleDateFormat("yyyyMMddHHmmss");
             sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            String[] fileArray = fileName.split("_");
-            updatetime = sdf.format(actF.parse(fileArray[fileArray.length - 2]));
-            file = new File(filePath);
+//            String[] fileArray11 = fileName.split("_");
+            String str1 = fileName.substring(0, fileName.length() - 10);
+            String str2 = str1.substring(str1.length() - 14, str1.length());
+            updatetime = sdf.format(actF.parse(str2));
+
+            file = new File(fileFolderPath + fileName);
             fr = new FileReader(file);
             br = new BufferedReader(fr);
+
             query = "insert into " + repName + "_raw" + "(";
             failquery = "insert into " + repName + "_error" + "(";
             hm = zte.getfieldSet();
-            billIds = new ArrayList<String>();
 
-            // preCDRTime = this.getPreviousTimeFromRaw(repName, conn);
             int fail_my_batch = 0;
             int pass_my_batch = 0;
             int my_batch_count = raw_upload_set_no;
@@ -435,7 +427,7 @@ public class HexFileReader {
                         } else {
                             // logger.info("getting error in file so moving the file ");
                             fr.close();
-                            new com.functionapps.files.FileList().moveFile(fileName, repName, basePath, "error");
+                            new com.functionapps.files.FileList().moveCDRFile(conn, fileName, repName, fileFolderPath, source, "error");
                             logger.info("Total column are not matched" + my_column_count);
                             break;
                         }
@@ -443,7 +435,7 @@ public class HexFileReader {
                         // logger.info("getting error in file so moving the file ");
                         fr.close();
 //                        logger.info("Configured Comumn nad File headers are not matched");  
-                        new com.functionapps.files.FileList().moveFile(fileName, repName, basePath, "error");
+                        new com.functionapps.files.FileList().moveCDRFile(conn, fileName, repName, fileFolderPath, source, "error");
                     }
                 } else {
                     int j = 1;               ///  
@@ -503,9 +495,10 @@ public class HexFileReader {
 
             logger.info("File Finished ");
             ps.executeBatch();
-
             failed_ps.executeBatch();
-            cdrFileDetailsInsert(conn, dateFunction, fileName, repName, k - 1, total_error_record_count);  //total_records_count
+            conn.commit();
+            String p1EndTime = java.time.LocalDateTime.now().toString();
+            cdrFileDetailsInsert(conn, dateFunction, fileName, repName, k - 1, total_error_record_count, p1StartTime, p1EndTime);  //total_records_count
 
             //            conn.commit();
             if (fr != null) {
@@ -514,14 +507,8 @@ public class HexFileReader {
 
             rowInserted = ps.getUpdateCount();
             rs = ps.getGeneratedKeys();
-            if (rs != null) {
-                rs.close();
-            }
             logger.info("sys insert close ");
-            new com.functionapps.files.FileList().moveFile(fileName, repName, basePath, "file");
-//            if (cdrCount != null && cdrStartTime != null && cdrEndTime != null) {
-//            } else {
-//            }
+            new com.functionapps.files.FileList().moveCDRFile(conn, fileName, repName, fileFolderPath, source, "");
 
         } catch (Exception e) {
             logger.info("Exception [" + e + "]");
@@ -544,27 +531,11 @@ public class HexFileReader {
                         ps.close();
                     }
                 }
-                if (fis != null) {
-                    fis.close();
-                }
-                if (dis != null) {
-                    dis.close();
-                }
-                if (fw != null) {
-                    fw.close();
-                }
+               
+                
             } catch (Exception ex) {
             }
-            query = null;
-            cdrCount = null;
-            values = null;
-            cdrStartTime = null;
-            cdrEndTime = null;
-            data = null;
-            fieldName = null;
-            file = null;
-            billIds = null;
-            hm = null;
+//            
         }
 //        return result;
     }
@@ -601,7 +572,7 @@ public class HexFileReader {
         int failed_flag = 1;
         int crptBrk = 0;
         String my_column_name = "";
-        logger.info("in file reader");
+
         ErrorFileGenrator errFile = new ErrorFileGenrator();
         Set<String> set = new HashSet<String>();
 
@@ -623,6 +594,7 @@ public class HexFileReader {
                 qry = "  select  quantity, device_quantity from stolenand_recovery_mgmt  where txn_id  = '" + txn_id + "'  ";
             }
 
+            new FeatureForSingleStolenBlock().deleteFromRawTable(conn, txn_id, main_type);
             ResultSet resul5 = st5.executeQuery(qry);
             logger.info("query for quantity .." + qry);
             long fileCnt = 0;
@@ -649,7 +621,6 @@ public class HexFileReader {
             List aList = new ArrayList();
             List aList1 = new ArrayList();
             List alst = new ArrayList();
-//            logger.info(" WE CAN  START HERE");
             String errorString = " , ";
 
             Statement stmt2 = conn.createStatement();
@@ -659,7 +630,7 @@ public class HexFileReader {
                     msgConfig.put(rsult.getString("tag"), rsult.getString("value"));
                 }
             } catch (Exception e) {
-                logger.info("Error at device_type " + e);
+                logger.info("Error at device_Ttype " + e);
             }
             rsult.close();
             String interpQury = " select interp from system_config_list_db where tag =  ";
@@ -674,7 +645,6 @@ public class HexFileReader {
                 logger.info("Error at device_type " + e);
             }
             stmt2.close();
-
             Statement stmt3 = conn.createStatement();
             ResultSet result3 = stmt3.executeQuery(interpQury + " 'DEVICE_ID_TYPE' ");
             Set<String> deviceType3 = new HashSet<String>();
@@ -686,7 +656,6 @@ public class HexFileReader {
                 logger.info("Error at DEVICE_ID_TYPE " + e);
             }
             stmt3.close();
-
             Statement stmt4 = conn.createStatement();
             ResultSet result4 = stmt4.executeQuery(interpQury + " 'MULTI_SIM_STATUS'");
             Set<String> deviceType4 = new HashSet<String>();
@@ -712,7 +681,7 @@ public class HexFileReader {
             stmt5.close();
             String errorFilePath = CEIRFeatureFileParser.getErrorFilePath(conn);
             String error_file_path = errorFilePath + txn_id + "/" + txn_id + "_error.csv";
-
+            logger.info("error_file_path " + error_file_path);
             while ((line = br.readLine()) != null) {
                 data = line.split(",", -1);
                 logger.info("line is " + line + "  line length " + line.trim().length());
@@ -733,6 +702,7 @@ public class HexFileReader {
                         // logger.info("err.. BLNK FILE ,, just skip it" );
                         // continue;
                         // }
+                        logger.info(" Check for File Column Empty ");
                         for (int fldCount = 0; fldCount < data.length; fldCount++) {
                             if (data[fldCount].equals("") || data[fldCount] == "") {
                                 logger.info(" File Column is Empty ");
@@ -749,7 +719,7 @@ public class HexFileReader {
                             failed_flag = 0;
                             break;
                         }
-
+                        logger.info(" Check for Configured Column name match with File Headers ");
                         if (data.length == myfilelist.size()) {
                             logger.info("Configured Column name and File Headers are matched");
                             int my_column_count = 0;
@@ -774,6 +744,7 @@ public class HexFileReader {
                                 }
 
                             }
+                            logger.info("Total column mtch check ");
                             if (my_column_count == myfilelist.size()) {
                             } else {
                                 failed_flag = 0;
@@ -792,7 +763,7 @@ public class HexFileReader {
 //                        errFile.gotoErrorFile(txn_id, line.toString() + ", Error Code , Error Message    "); /////////
                         fileLines.add(line.toString() + ",Error Code , Error Message");
                     } else {
-//                        logger.info("FILE AFTER HEADER");
+                        logger.info("FILE AFTER HEADER");
 //                        logger.info("Data as per record " + data[0] + " <><><><> " + data[1] + " <><><><> " + data[2]
 //                                + " <><><><> " + data[3] + " <><><> " + data[4] + " <><><> " + data[5]);
 
@@ -804,7 +775,7 @@ public class HexFileReader {
                         // }
                         int j = 1;           //
                         //
-//                        logger.info(" DATA " + data[j - 1]);
+                        logger.info(" DATA " + data[j - 1]);
                         String[] arrOfFile = line.trim().split(",", 8);
                         String imeiV = arrOfFile[4];
                         hash_Set.add(arrOfFile[3].trim());
@@ -845,13 +816,15 @@ public class HexFileReader {
                             failed_flag = 0;
 
                         }
+
                         boolean val = validateJavaDate(data[5]);
-//                        logger.info("resss " + val);
+//                        logger.info(" " + val);
                         if (!val) {
 //							errFile.gotoErrorFile(txn_id, " " + line.toString() + "    Error Code :CON_FILE_0006, Error Message:  The field value(Device Launch Date) is not as per the specifications");                                   /////////
                             errorString += "  Error Code :CON_FILE_0006, Error Message:  The field value(Device Launch Date) is not as per the specifications,";
                             failed_flag = 0;
                         }
+                        logger.info("CON_FILE_0006 All done");
                         for (CDRColumn cdrColumn : myfilelist) {
 //                            logger.info("  graceTYE .." + cdrColumn.graceType);  
                             if (cdrColumn.graceType.equalsIgnoreCase("Mandatory")) {
@@ -866,6 +839,7 @@ public class HexFileReader {
                             }
                             j++;
                         }
+                        logger.info("CON_FILE_0007 All done");
 //                        errFile.gotoErrorFile(txn_id, line.toString() + errorString);
                         fileLines.add(line.toString() + errorString);
                     }
@@ -901,9 +875,6 @@ public class HexFileReader {
             k = 0;
             if (failed_flag == 1) {
                 CEIRFeatureFileFunctions ceirfunction = new CEIRFeatureFileFunctions();
-                ceirfunction.updateFeatureFileStatus(conn, txn_id, 2, main_type, subfeature); // update web_action_db 
-                ceirfunction.UpdateStatusViaApi(conn, txn_id, 0, main_type);
-                ceirfunction.updateFeatureManagementStatus(conn, txn_id, 1, management_table, main_type);      // 1 for processing
 
                 File errorfile = new File(error_file_path);
                 if (errorfile.exists()) {     // in case of no error   ,,  file is deleted
@@ -914,7 +885,6 @@ public class HexFileReader {
                         logger.info("Failed to delete the file");
                     }
                 }
-
                 logger.info("Uploading file"); // uploading data to db ..
                 file = new File(filePath);
                 fr = new FileReader(file);
@@ -938,7 +908,6 @@ public class HexFileReader {
                                             + values.substring(0, values.length() - 1) + ")";
                                     ps = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
                                     logger.info("complete query is [" + query + "]");
-                                    logger.info("complete header matched");
                                 } else {
                                     fr.close();
                                     logger.info("Total column are not matched" + my_column_count);
@@ -1008,13 +977,31 @@ public class HexFileReader {
                 if (rs != null) {
                     rs.close();
                 }
+
+                if (main_type.equalsIgnoreCase("Consignment")) {
+                    ceirfunction.UpdateStatusViaApi(conn, txn_id, 0, main_type);
+                    logger.info("UpdateStatusViaApi 0 done");
+                } else {
+                    ceirfunction.updateFeatureManagementStatus(conn, txn_id, 1, management_table, main_type);      // 1 for processing
+                    logger.info("mgmt Db  1  done");
+                }
+                ceirfunction.updateFeatureFileStatus(conn, txn_id, 2, main_type, subfeature); // update web_action_db 
+                logger.info("web_action_db 2 done");
                 conn.commit();
             } else {
                 errFile.gotoErrorFilewithList(errorFilePath, txn_id, fileLines);
+                logger.info("Error file Generated ");
                 CEIRFeatureFileFunctions ceirfunction = new CEIRFeatureFileFunctions();
+                if (main_type.equalsIgnoreCase("Consignment")) {
+                    ceirfunction.UpdateStatusViaApi(conn, txn_id, 1, main_type);
+                    logger.info("UpdateStatusViaApi 1 (error) done");
+                } else {
+                    ceirfunction.updateFeatureManagementStatus(conn, txn_id, 2, management_table, main_type);
+                    logger.info("mgmt status  2 (error) done");
+                }
                 ceirfunction.updateFeatureFileStatus(conn, txn_id, 4, main_type, subfeature); // update web_action_db  
-                ceirfunction.UpdateStatusViaApi(conn, txn_id, 1, main_type);    // working for cons, 
-                ceirfunction.updateFeatureManagementStatus(conn, txn_id, 2, management_table, main_type);
+                logger.info("web_action_db 4 done");
+
             }
 
         } catch (Exception e) {
@@ -1798,18 +1785,18 @@ public class HexFileReader {
         return usrtype;
     }
 
-    void cdrFileDetailsInsert(Connection conn, String dateFunction, String fileName, String repName, int total_records_count, int total_error_record_count) {
+    void cdrFileDetailsInsert(Connection conn, String dateFunction, String fileName, String repName, int total_records_count, int total_error_record_count, String p1starttime, String p1endTime) {
 
         Statement stmt = null;
-        String raw_query = "insert into cdr_file_details_db(created_on, file_name, operator, total_records_count, total_error_record_count,source  ) "
-                + "  values( " + dateFunction + ", '" + fileName + "', '" + repName + "', '" + total_records_count + "','" + total_error_record_count + "',''  )";
+        String raw_query = "insert into cdr_file_details_db(created_on, file_name, operator, total_records_count, total_error_record_count,source   ,   P1StartTime ,P1EndTime    ) "
+                + "  values( " + dateFunction + ", '" + fileName + "', '" + repName + "', '" + total_records_count + "','" + total_error_record_count + "','' , '" + p1starttime + "'   ,  '" + p1endTime + "' )";
         try {
-             logger.info("  cdrFileDetailsInsert is " + raw_query);
+            logger.info("  cdrFileDetailsInsert is " + raw_query);
             stmt = conn.createStatement();
             stmt.executeUpdate(raw_query);
             stmt.closeOnCompletion();
         } catch (Exception e) {
-logger.info("  "+e);
+            logger.info("  " + e);
         }
     }
 

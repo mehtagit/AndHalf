@@ -17,7 +17,7 @@ public class SourceTacInactiveInfoDao {
 
 		query = "delete from source_tac_inactive_info where txn_id='" + txnId + "'";	
 		logger.info("delete source_tac_inactive_info ["+query+"]");
-		System.out.println("delete device_importer_db ["+query+"]");
+		 // System.out.println("delete device_importer_db ["+query+"]");
 
 		try {
 			stmt = conn.createStatement();

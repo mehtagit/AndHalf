@@ -17,7 +17,7 @@ public class TypeApprovalDbFinalDao {
 
 		query = "delete from type_approved_db_final where txn_id='" + txnId + "'";	
 		logger.info("Query ["+query+"]");
-		System.out.println("Query ["+query+"]");
+		 // System.out.println("Query ["+query+"]");
 
 		try {
 			stmt = conn.createStatement();

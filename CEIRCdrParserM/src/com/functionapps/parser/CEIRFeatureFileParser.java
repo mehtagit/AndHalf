@@ -18,64 +18,91 @@ public class CEIRFeatureFileParser {
     public static Logger logger = Logger.getLogger(CEIRFeatureFileParser.class);
 
     public static void main(String args[]) {
+
+        Connection conn = null;
+        conn = new com.functionapps.db.MySQLConnection().getConnection();
+        ParserMain(conn);
+    }
+
+    public static void ParserMain(Connection conn) {
+
         logger.info("  ");
         logger.info("  ");
         logger.info(" CEIRFeatureFileParser.class ");
         String feature = null;
-        Connection conn = null;
-        conn =  new com.functionapps.db.MySQLConnection().getConnection();
+//        Connection conn = null;
+//        conn = new com.functionapps.db.MySQLConnection().getConnection();
         CEIRFeatureFileFunctions ceirfunction = new CEIRFeatureFileFunctions();
         CEIRFeatureFileParser ceirfileparser = new CEIRFeatureFileParser();
         ResultSet featurers = ceirfunction.getFileDetails(conn, 2);     //select * from web_action_db 
 //		ResultSet featurers=getFeatureFileDetails(conn);
         try {
-            if (featurers.next()) {
+            while (featurers.next()) {
+                   System.out.println("" + featurers.getString("txn_id"));
                 ceirfunction.updateFeatureFileStatus(conn, featurers.getString("txn_id"), 3, featurers.getString("feature"), featurers.getString("sub_feature"));  // update web_action
-                if (featurers.getString("feature").equalsIgnoreCase("Register Device") || featurers.getString("feature").equalsIgnoreCase("Update Visa")) {
-                    logger.info(" Feature  Register Device / Visa Update. ");
-//                    ceirfunction.UpdateStatusViaApi(conn, featurers.getString("txn_id"), 0, featurers.getString("feature"));
-//                    ceirfunction.updateFeatureFileStatus(conn, featurers.getString("txn_id"), 4, featurers.getString("feature"), featurers.getString("sub_feature"));  // update web_action
+                logger.info("  webACtion 3 don3e ");
+                if (featurers.getString("feature").equalsIgnoreCase("Register Device")) {
+                    logger.info("  Register Device" + featurers.getString("feature"));
+                    if ((featurers.getString("sub_feature").equalsIgnoreCase("Register")) || (featurers.getString("sub_feature").equalsIgnoreCase("Add Device"))) {     //'Add Device'
+                        ceirfunction.UpdateStatusViaApi(conn, featurers.getString("txn_id"), 0, featurers.getString("feature"));
+                        logger.info("UpdateStatusViaApi 0 done");
+                        ceirfunction.updateFeatureFileStatus(conn, featurers.getString("txn_id"), 4, featurers.getString("feature"), featurers.getString("sub_feature")); // update web_action_db           
+                        logger.info("webaction  4 done");
+                        break;
+                    } else {
+                        logger.info("subfeature not Register / Add Device .. webAction 4 done ");
+                        ceirfunction.updateFeatureFileStatus(conn, featurers.getString("txn_id"), 4, featurers.getString("feature"), featurers.getString("sub_feature")); // update web_action_db           
+                        break;
+                    }
+                } else if (featurers.getString("feature").equalsIgnoreCase("Update Visa")) {
+                    logger.info(" Feature  Visa Update. Web action Db state : 4 ; UpdateStatusViaApi : 0");
+                    ceirfunction.UpdateStatusViaApi(conn, featurers.getString("txn_id"), 0, featurers.getString("feature"));
+                    ceirfunction.updateFeatureFileStatus(conn, featurers.getString("txn_id"), 4, featurers.getString("feature"), featurers.getString("sub_feature")); // update web_action_db           
+                    break;
                 } else {
                     HashMap<String, String> feature_file_mapping = new HashMap<String, String>();
                     feature_file_mapping = ceirfunction.getFeatureMapping(conn, featurers.getString("feature"), "NOUSER");
                     HashMap<String, String> feature_file_management = new HashMap<String, String>();
                     feature_file_management = ceirfunction.getFeatureFileManagement(conn, feature_file_mapping.get("mgnt_table_db"), featurers.getString("txn_id"));   //  select * from " + management_db 
                     String user_type = ceirfunction.getUserType(conn, feature_file_management.get("user_id"), featurers.getString("feature"), featurers.getString("txn_id"));
+                    logger.info("user_type is [" + user_type + "] ");
                     feature = featurers.getString("feature");
                     ArrayList<Rule> rulelist = new ArrayList<Rule>();
                     String period = CEIRFeatureFileParser.checkGraceStatus(conn);
                     logger.info("Period is [" + period + "] ");
+                    logger.info("State is [" + featurers.getInt("state") + "] ");
                     rulelist = CEIRFeatureFileParser.getRuleDetails(feature, conn, "", period, "", user_type);
-                    addCDRInProfileWithRule(feature, conn, rulelist, "", featurers.getString("txn_id"), featurers.getString("sub_feature"), user_type);
+                    addCDRInProfileWithRule(feature, conn, rulelist, "", featurers.getString("txn_id"), featurers.getString("sub_feature"), user_type, featurers.getInt("state"));
                 }
             }
             conn.close();
         } catch (SQLException e) {
+            logger.error("" + e);
             e.printStackTrace();
-        }finally{
-             System.exit(0);
+        } finally {
+            System.out.println("Exit");
+            System.exit(0);
         }
     }
 
-    public static ResultSet getFeatureFileDetails(Connection conn) {
-        Statement stmt = null;
-        ResultSet rs = null;
-        String query = null;
-        String limiter = " limit 1 ";
-        if (conn.toString().contains("oracle")) {
-            limiter = " fetch next 1 rows only ";
-        }
-        try { // and feature = '"+main_type+"'
-            query = "select * from feature_file_config_db where status='Init'  order by sno asc  " + limiter + " ";
-            stmt = conn.createStatement();
-            logger.info("get feature file details [" + query + "] ");
-            return rs = stmt.executeQuery(query);
-        } catch (Exception e) {
-            logger.info("" + e);
-        }
-        return rs;
-    }
-
+//    public static ResultSet getFeatureFileDetails(Connection conn) {
+//        Statement stmt = null;
+//        ResultSet rs = null;
+//        String query = null;
+//        String limiter = " limit 1 ";
+//        if (conn.toString().contains("oracle")) {
+//            limiter = " fetch next 1 rows only ";
+//        }
+//        try { // and feature = '"+main_type+"'
+//            query = "select * from feature_f ile_config_db where status='Init'  order by sno asc  " + limiter + " ";
+//            stmt = conn.createStatement();
+//            logger.info("get feature file details [" + query + "] ");
+//            return rs = stmt.executeQuery(query);
+//        } catch (Exception e) {
+//            logger.info("" + e);
+//        }
+//        return rs;
+//    }
     public static String checkGraceStatus(Connection conn) {
         String period = "";
         String query = null;
@@ -142,12 +169,12 @@ public class CEIRFeatureFileParser {
 
     }
 
-    public static void addCDRInProfileWithRule(String operator, Connection conn, ArrayList<Rule> rulelist, String operator_tag, String txn_id, String sub_feature, String usertype_name) {
+    public static void addCDRInProfileWithRule(String operator, Connection conn, ArrayList<Rule> rulelist, String operator_tag, String txn_id, String sub_feature, String usertype_name, int webActState) {
 
         try {
-            if (((sub_feature.equalsIgnoreCase("Register") || sub_feature.equalsIgnoreCase("update") || sub_feature.equalsIgnoreCase("UPLOAD")) ) &&  !operator.equalsIgnoreCase("TYPE_APPROVED")    ) {
-               logger.info(" NOTE.. ** NOT FOR TYPE APPROVE" );
-                new ConsignmentInsertUpdate().process(conn, operator, sub_feature, rulelist, txn_id, operator_tag, usertype_name);
+            if (((sub_feature.equalsIgnoreCase("Register") || sub_feature.equalsIgnoreCase("update") || sub_feature.equalsIgnoreCase("UPLOAD"))) && !operator.equalsIgnoreCase("TYPE_APPROVED")) {
+                logger.info(" NOTE.. ** NOT FOR TYPE APPROVE  ::" + sub_feature);
+                new ConsignmentInsertUpdate().process(conn, operator, sub_feature, rulelist, txn_id, operator_tag, usertype_name, webActState);
             } else if (operator.equalsIgnoreCase("consignment") && (sub_feature.equalsIgnoreCase("delete"))) {
                 logger.info("running consignment delete process.");
                 new ConsignmentDelete().process(conn, operator, sub_feature, rulelist, txn_id, operator_tag, usertype_name);
@@ -171,13 +198,10 @@ public class CEIRFeatureFileParser {
             ceirfunction.updateFeatureFileStatus(conn, txn_id, 4, operator, sub_feature);
 
         } catch (Exception e) {
+            logger.error("addCDRInProfileWithRule " + e);
             e.printStackTrace();
         } finally {
-            try {
-            } catch (Exception e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+
         }
     }
 
@@ -330,7 +354,7 @@ public class CEIRFeatureFileParser {
             while (rs1.next()) {
                 rslt = rs1.getString(1);
             }
-            
+
             if (rslt.equalsIgnoreCase("Custom")) {
                 logger.info("IT is  Custom");
                 rst = 1;
@@ -417,7 +441,7 @@ public class CEIRFeatureFileParser {
                 rs1.close();
             } catch (SQLException e) {
                 // TODO Auto-generated catch block
-                logger.error("Error.." + e);
+                logger.error("Error.getRuleDetails ." + e);
             }
         }
         return rule_details;
@@ -824,19 +848,19 @@ public class CEIRFeatureFileParser {
 //
 //            }  
 //            else if(operator.equalsIgnoreCase("consignment") &&(sub_feature.equalsIgnoreCase("delete"))){
-//				System.out.println("running consignment delete process.");
+//				 // System.out.println("running consignment delete process.");
 //				new ConsignmentDelete().process(conn, operator, sub_feature, rulelist, txn_id, operator_tag);
 //			}else if(operator.equalsIgnoreCase("consignment") &&(sub_feature.equalsIgnoreCase("approve"))){
-//				System.out.println("running consignment approve process.");
+//				 // System.out.println("running consignment approve process.");
 //				new ApproveConsignment().process(conn, operator, sub_feature, rulelist, txn_id, operator_tag);
 //			}else if(operator.equalsIgnoreCase("TYPE_APPROVED") &&(sub_feature.equalsIgnoreCase("REGISTER"))){
-//				System.out.println("running tac register process.");
+//				 // System.out.println("running tac register process.");
 //				new RegisterTac().process(conn, operator, sub_feature, rulelist, txn_id, operator_tag);
 //			}else if(operator.equalsIgnoreCase("TYPE_APPROVED") &&(sub_feature.equalsIgnoreCase("delete"))){
-//				System.out.println("running tac delete process.");
+//				 // System.out.println("running tac delete process.");
 //				new WithdrawnTac().process(conn, operator, sub_feature, rulelist, txn_id, operator_tag);
 //			}else {
-//				System.out.println("Skipping the process.");
+//				 // System.out.println("Skipping the process.");
 //			}
 //            
 //            

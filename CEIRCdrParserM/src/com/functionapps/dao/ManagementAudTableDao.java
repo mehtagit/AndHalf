@@ -34,7 +34,7 @@ public class ManagementAudTableDao {
 
 		PreparedStatement preparedStatement = null;
 
-		System.out.println("Add " + tableName + " [" + query + " ]");
+		 // System.out.println("Add " + tableName + " [" + query + " ]");
 		logger.info("Add " + tableName + " ["+query+"]");
 
 		try {
@@ -54,13 +54,13 @@ public class ManagementAudTableDao {
 				preparedStatement.setLong(11, managementDb.getUserId());
 				preparedStatement.setString(12, managementDb.getFeatureName());
 				
-				System.out.println("Query " + preparedStatement);
+				 // System.out.println("Query " + preparedStatement);
 				preparedStatement.addBatch();
 			}
 
 			preparedStatement.executeBatch();
 
-			System.out.println("Inserted in " + tableName + " succesfully.");
+			 // System.out.println("Inserted in " + tableName + " succesfully.");
 			logger.info("Inserted in " + tableName + " succesfully.");
 			
 			conn.commit();
@@ -90,7 +90,7 @@ public class ManagementAudTableDao {
 			query = "select max(id) as max from " + tableName;
 
 			logger.info("Query ["+query+"]");
-			System.out.println("Query ["+query+"]");
+			 // System.out.println("Query ["+query+"]");
 			stmt  = conn.createStatement();
 			rs = stmt.executeQuery(query);
 

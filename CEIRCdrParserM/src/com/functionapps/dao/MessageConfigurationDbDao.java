@@ -22,7 +22,7 @@ public class MessageConfigurationDbDao {
 				+ "from message_configuration_db where tag='" + tag + "'";
 
 		logger.info("Query ["+query+"]");
-		System.out.println("Query ["+query+"]");
+		 // System.out.println("Query ["+query+"]");
 		
 		try{
 			stmt  = conn.createStatement();

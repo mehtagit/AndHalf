@@ -32,7 +32,7 @@ public class DeviceImporterDbDao {
 					+ "where txn_id='" + txnId + "'";
 
 			logger.info("Query ["+query+"]");
-			System.out.println("Query ["+query+"]");
+			 // System.out.println("Query ["+query+"]");
 			
 			stmt  = conn.createStatement();
 			rs = stmt.executeQuery(query);
@@ -82,7 +82,7 @@ public class DeviceImporterDbDao {
 
 		PreparedStatement preparedStatement = null;
 
-		System.out.println("Add device_importer_db_aud [" + query + " ]");
+		 // System.out.println("Add device_importer_db_aud [" + query + " ]");
 		logger.info("Add device_importer_db_aud ["+query+"]");
 
 		try {
@@ -101,13 +101,13 @@ public class DeviceImporterDbDao {
 				preparedStatement.setString(10, deviceImporterDb.getTxnId());
 				preparedStatement.setLong(11, deviceImporterDb.getUserId());
 				
-				System.out.println("Query " + preparedStatement);
+				 // System.out.println("Query " + preparedStatement);
 				preparedStatement.addBatch();
 			}
 
 			preparedStatement.executeBatch();
 
-			System.out.println("Inserted in device_importer_db_aud succesfully.");
+			 // System.out.println("Inserted in device_importer_db_aud succesfully.");
 			logger.info("Inserted in device_importer_db_aud succesfully.");
 
 		} catch (SQLException e) {
@@ -132,7 +132,7 @@ public class DeviceImporterDbDao {
 
 		query = "delete from device_importer_db where txn_id='" + txnId + "'";	
 		logger.info("delete device_importer_db ["+query+"]");
-		System.out.println("delete device_importer_db ["+query+"]");
+		 // System.out.println("delete device_importer_db ["+query+"]");
 
 		try {
 			stmt = conn.createStatement();
@@ -160,7 +160,7 @@ public class DeviceImporterDbDao {
 			query = "select max(id) as max from device_importer_db_aud";
 
 			logger.info("Query ["+query+"]");
-			System.out.println("Query ["+query+"]");
+			 // System.out.println("Query ["+query+"]");
 			stmt  = conn.createStatement();
 			rs = stmt.executeQuery(query);
 

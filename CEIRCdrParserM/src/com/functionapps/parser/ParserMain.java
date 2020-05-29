@@ -1,11 +1,9 @@
 package com.functionapps.parser;
 
 import com.functionapps.files.FileList;
-import com.functionapps.log.LogWriter;
+import java.io.File;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import org.apache.log4j.Logger;
 
 public class ParserMain {
@@ -13,30 +11,20 @@ public class ParserMain {
     static Logger logger = Logger.getLogger(ParserMain.class);
 
     public static void main(String args[]) {
-//        Logger logger = Logger.getLogger(ParserMain.class);
-        String requestType = null;
         Connection conn = null;
-        ArrayList< String[]> fileList = null;
-        ArrayList< String[]> remainFileList = null;
         if (args.length < 0) {
             printHelp();
         }
         if (args.length > 0) {
-            boolean result = false;
+            logger.info("ParserMain.class ");
             HexFileReader hfr = new HexFileReader();
-            LogWriter logWriter = new LogWriter();
             String basePath = "";
+            String intermPath = "";
             String filePath = "";
-            String startTime = null;
-            String endTime = null;
             String fileName = null;
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            File filder = null;
             String tableName = args[0];
-            String[] rawDataResult = null;
-            String previousSequence = null;
-            String[] data = null;
-            String serial_no = null;
-            System.out.println("first stage ");
+            
             int raw_upload_set_no = 1;
             try {
                 conn = new com.functionapps.db.MySQLConnection().getConnection();
@@ -45,68 +33,48 @@ public class ParserMain {
                 if (my_result_set.next()) {
                     raw_upload_set_no = my_result_set.getInt("raw_upload_set_no");
                 }
-                basePath = hfr.getFilePath(conn, "smart_file_path");     
+                basePath = hfr.getFilePath(conn, tableName.toLowerCase() + "_file_path");
                 if (!basePath.endsWith("/")) {
                     basePath += "/";
                 }
-                filePath = basePath + "/" + args[0] + "/";
-                logger.info("File Path is " + filePath);
-                System.out.println("File Path is " + basePath);
-                remainFileList = new FileList().remaingFileList(args[0], filePath);
-                System.out.println("	Remain file size is " + remainFileList.size());
-                for (int k = 0; k < remainFileList.size(); k++) {
-                    if (remainFileList.size() > 0) {
-                        for (int i = 0; i < remainFileList.size(); i++) {
-                            startTime = sdf.format(Calendar.getInstance().getTime());
-                            data = remainFileList.get(i)[0].split("_");
-                            if (true) {
-                                if (remainFileList.get(i)[1] != null) {
-                                    logger.info("first stage");
-                                    logger.info("File Name is " + remainFileList.get(i)[0]);
-//                                    rawDataResult =
-                                            hfr.readConvertedCSVFile(conn, remainFileList.get(i)[0], remainFileList.get(i)[1], args[0], basePath, raw_upload_set_no);
-//					            	hfr.updateNextCount( args[1], conn ,Integer.parseInt(serial_no));
-                                    endTime = sdf.format(Calendar.getInstance().getTime());
-//                                    if (rawDataResult != null) {
-//                                        if (rawDataResult[1] != null && rawDataResult[2] != null) {
-////						            		result  = logWriter.writeLog( remainFileList.get(i)[0], remainFileList.get(i)[2], rawDataResult[0], startTime, endTime, rawDataResult[1], rawDataResult[2], rawDataResult[5], rawDataResult[6],rawDataResult[3], rawDataResult[4]);
-//                                        } else {
-//                                            break;
-//                                        }
-//                                    } else {
-////						            	result = logWriter.writeLog( remainFileList.get(i)[0], remainFileList.get(i)[2],"0", startTime, endTime, "null", "null", "0", "0","0",rawDataResult[4]);
-//                                        break;
-//                                    }
-                                }
-                            } else {
-                                System.out.println("sequence is not matching");
-//				        		break;
-                            }
-                        }
+                intermPath = basePath + "/" + args[0].toLowerCase() + "/";
+                if (LocalDateTime.now().getHour() % 2 == 0) {
+                    filder = new File(intermPath + "sm_msc01/");
+                    if (filder.listFiles().length == 0) {
+                        filePath = intermPath + "sm_msc02/";
+                    } else {
+                        filePath = intermPath + "sm_msc01/";
                     }
-                    remainFileList = new FileList().remaingFileList(args[0], filePath);
+                } else {
+                    filder = new File(intermPath + "sm_msc02/");
+                    if (filder.listFiles().length == 0) {
+                        filePath = intermPath + "sm_msc01/";
+                    } else {
+                        filePath = intermPath + "sm_msc02/";
+                    }
                 }
-                fileList = null;
+                String source = filePath.replace(intermPath, "");
+                fileName = new FileList().readOldestOneFile(filePath);
+                logger.info("FilePath :" + filePath + ";fileName:" + fileName + " ;basePath :" + basePath + ";source : " + source);
+                hfr.readConvertedCSVFile(conn, fileName, args[0], filePath, raw_upload_set_no, source);
+                conn.commit();
             } catch (Exception e) {
                 e.printStackTrace();
-                System.out.println("No record found from file [" + fileList.get(0)[1] + "]");
+                // System.out.println("No record found from file ");
             } finally {
                 try {
-                    if (conn != null) {
-                        conn.commit();
-                        conn.close();
-                    }
+                    logger.info(" Process 2 Start " + args[0]);
+                    CEIRParserMain.CDRPARSERmain(conn, args[0]);
                 } catch (Exception ex) {
+                    logger.info(" :" + ex);
                 }
+                System.exit(0);
             }
-
         }
-
     }
 
     public static void printHelp() {
-        System.out.println("java " + ParserMain.class.getSimpleName()
-                + " \"<Operator Name>\" ");
+        // System.out.println("java " + ParserMain.class.getSimpleName()                + " \"<Operator Name>\" ");
         System.exit(0);
     }
 
@@ -124,7 +92,7 @@ public class ParserMain {
 //fileList               = new FileList().fileList( args[0] );
 //for( int i = 0; i < fileList.size(); i++ ){
 //	startTime = sdf.format( Calendar.getInstance().getTime() );
-//    //System.out.println( "file name is ["+fileList.get(i)[1]+"]+");
+//    // // System.out.println( "file name is ["+fileList.get(i)[1]+"]+");
 //    if( fileList.get(i)[1] != null ){
 //   //     hfr.readBinaryFileUsingDIS( fileList.get(i)[0], fileList.get(i)[1], tableName );
 //    }
@@ -151,7 +119,7 @@ public class ParserMain {
 //        }
 //	}
 //}else{
-//	System.out.println("No sorted file found");
+//	 // System.out.println("No sorted file found");
 //	System.exit(0);
 //}
 //if( requestType.equalsIgnoreCase("test")){
@@ -162,5 +130,5 @@ public class ParserMain {
 //}	
 //}
 //else if(requestType.equalsIgnoreCase("update")){}else{
-//System.out.println("No request supported");
+// // System.out.println("No request supported");
 //}

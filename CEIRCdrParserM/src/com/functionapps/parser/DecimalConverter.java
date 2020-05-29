@@ -1,9 +1,5 @@
 package com.functionapps.parser;
 
-import java.awt.HeadlessException;
-import java.nio.ByteBuffer;
-import java.nio.CharBuffer;
-
 public class DecimalConverter {
 	final protected char[] hexArray = "0123456789ABCDEF".toCharArray();
 	
@@ -17,7 +13,7 @@ public class DecimalConverter {
 	        	hexChars[j * 2 + 1] = hexArray[v & 0x0F];
 	    	}
 	    	hex = new String(hexChars);
-	    	//System.out.println(hex);
+	    	// // System.out.println(hex);
 	    }catch( Exception e ){
 	    	e.printStackTrace();
 	    }
@@ -51,7 +47,7 @@ public class DecimalConverter {
 			e.printStackTrace();
 			result = "NA";
 		}
-		//System.out.println("Result:["+result+"]");
+		// // System.out.println("Result:["+result+"]");
 		return result;
 	}
 	
@@ -60,9 +56,9 @@ public class DecimalConverter {
 		char[] bitArray = null;
 		String binary = null;
 		try{
-			//System.out.println("Byte date to convert is ["+data+"]");
+			// // System.out.println("Byte date to convert is ["+data+"]");
 			binary   = String.format("%8s", Integer.toBinaryString(data & 0xFF)).replace(' ', '0');
-			//System.out.println("Binary is ["+binary+"]");
+			// // System.out.println("Binary is ["+binary+"]");
 			bitArray = binary.toCharArray();
 			result   = String.valueOf(bitArray[pos-1]);
 		}catch( Exception e ){
@@ -76,11 +72,11 @@ public class DecimalConverter {
 		char[] bitArray = null;
 		String binary = null;
 		try{
-			//System.out.println("Byte date to convert is ["+data+"]");
+			// // System.out.println("Byte date to convert is ["+data+"]");
 			binary   = String.format("%8s", Integer.toBinaryString(data & 0xFF)).replace(' ', '0');
 			//binary   = Integer.toString(data,2);
-			//System.out.println("Binary is ["+Integer.toString(data,16)+"]");
-			//System.out.println("Binary is ["+binary+"]");
+			// // System.out.println("Binary is ["+Integer.toString(data,16)+"]");
+			// // System.out.println("Binary is ["+binary+"]");
 			bitArray = binary.toCharArray();
 			result   = String.valueOf(bitArray[bitArray.length - (pos)]);
 		}catch( Exception e ){
@@ -99,14 +95,14 @@ public class DecimalConverter {
 			sb = new StringBuffer();
 			hex = hex.replace( "0", "" );
 			if( hex != null && hex != "" && hex.length() > 0 ){
-				//System.out.println("Hex string is"+hex);
+				// // System.out.println("Hex string is"+hex);
 				hexArray = hex.toCharArray();
 				for( int i = 0; i < hexArray.length; i++ ){
 					firstTemp   = hexArray[i];
-					//System.out.println("First temp:"+firstTemp);
+					// // System.out.println("First temp:"+firstTemp);
 					if( (i + 1) <  hexArray.length ){
 						secTemp       = hexArray[i+1];
-						//System.out.println("Second temp:"+secTemp);
+						// // System.out.println("Second temp:"+secTemp);
 						sb.append(secTemp);
 						sb.append(firstTemp);
 					}else
@@ -122,7 +118,7 @@ public class DecimalConverter {
 		}catch( Exception e ){
 			e.printStackTrace();
 		}
-		//System.out.println("BCD is :"+result);
+		// // System.out.println("BCD is :"+result);
 		return result;
 	}
 	
@@ -136,13 +132,13 @@ public class DecimalConverter {
 			sb = new StringBuffer();
 			hex = hex.replace( "0", "" );
 			if( hex != null && hex != "" && hex.length() > 0 ){
-				//System.out.println("Hex string is"+hex);
+				// // System.out.println("Hex string is"+hex);
 				hexArray = hex.toCharArray();
 				for( int i = hexArray.length - 1; i >= 0 ; i-- ){
 					firstTemp   = hexArray[i];
 					if( (i - 1) >  0 ){
 						secTemp       = hexArray[i-1];
-						//System.out.println("Second temp:"+secTemp);
+						// // System.out.println("Second temp:"+secTemp);
 						sb.append(secTemp);
 						sb.append(firstTemp);
 					}else
@@ -158,7 +154,7 @@ public class DecimalConverter {
 		}catch( Exception e ){
 			e.printStackTrace();
 		}
-		//System.out.println("BCD is :"+result);
+		// // System.out.println("BCD is :"+result);
 		return result;
 	}
 	public String getNumberFromRightBCD( String hex ){
@@ -169,11 +165,11 @@ public class DecimalConverter {
 		StringBuffer sb = null;
 		try{
 			sb = new StringBuffer();
-			//System.out.println("Hex code before replacing zero is ["+hex+"]");
+			// // System.out.println("Hex code before replacing zero is ["+hex+"]");
 			hex = hex.replace( "0", "" );
-			//System.out.println("Hex code after replacing zero is ["+hex+"]");
+			// // System.out.println("Hex code after replacing zero is ["+hex+"]");
 			if( hex != null && hex != "" && hex.length() > 0 ){
-				//System.out.println("Hex string is"+hex);
+				// // System.out.println("Hex string is"+hex);
 				hexArray = hex.toCharArray();
 				for( int i = hexArray.length - 1; i >= 0 ; i-- ){
 					if( hexArray.length % 2 == 0 ){
@@ -196,14 +192,14 @@ public class DecimalConverter {
 				//sb.append(hexArray);
 				result = sb.toString();
 				result = result.replace("A", "0");
-				//System.out.println("Right BCD result ["+result+"]");
+				// // System.out.println("Right BCD result ["+result+"]");
 			}else{
 				result = "0";
 			}
 		}catch( Exception e ){
 			e.printStackTrace();
 		}
-		//System.out.println("BCD is :"+result);
+		// // System.out.println("BCD is :"+result);
 		return result;
 	}
 	

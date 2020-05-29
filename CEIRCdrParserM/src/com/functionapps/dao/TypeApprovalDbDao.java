@@ -23,7 +23,7 @@ public class TypeApprovalDbDao {
 				+ "from type_approved_db where txn_id='" + txnId + "'";
 
 		logger.info("Query ["+query+"]");
-		System.out.println("Query ["+query+"]");
+		 // System.out.println("Query ["+query+"]");
 		
 		try{
 			stmt  = conn.createStatement();
@@ -54,7 +54,7 @@ public class TypeApprovalDbDao {
 		PreparedStatement preparedStatement = null;
 		String query = "update type_approved_db set approve_status=? where txn_id=?";
 
-		System.out.println("update type_approved_db [" + query + " ]");
+		 // System.out.println("update type_approved_db [" + query + " ]");
 		logger.info("update type_approved_db ["+query+"]");
 
 		try{
@@ -64,7 +64,7 @@ public class TypeApprovalDbDao {
 
 			preparedStatement.execute();
 
-			System.out.println("update type_approved_db succesfully.");
+			 // System.out.println("update type_approved_db succesfully.");
 
 		} catch (SQLException e) {
 			logger.error(e.getMessage(), e);

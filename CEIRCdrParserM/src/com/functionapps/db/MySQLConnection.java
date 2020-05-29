@@ -24,20 +24,21 @@ public class MySQLConnection {
             final String DB_URL = "jdbc:oracle:thin:@dmc-prod-db:1521/dmcproddb";
             final String USER = "CRESTELCEIR";
             final String PASS = "CRESTELCEIR";
-            System.out.println(""+ JDBC_DRIVER);
-            System.out.println(""+ DB_URL);
-            System.out.println(""+ USER );
-            System.out.println(""+  PASS);
-            System.out.println(java.time.LocalDateTime.now());
+             // System.out.println(""+ JDBC_DRIVER);
+             // System.out.println(""+ DB_URL);
+             // System.out.println(""+ USER );
+             // System.out.println(""+  PASS);
+              System.out.println(java.time.LocalDateTime.now());
             Connection conn = null;
             Class.forName(JDBC_DRIVER);
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
             conn.setAutoCommit(false);
-            System.out.println("Connnection created successfully" + conn);
+              System.out.println("Connnection created successfully" + conn);
+              System.out.println(java.time.LocalDateTime.now());
             return conn;
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println(java.time.LocalDateTime.now());
+             // System.out.println(java.time.LocalDateTime.now());
             System.exit(0);
             return null;
         }

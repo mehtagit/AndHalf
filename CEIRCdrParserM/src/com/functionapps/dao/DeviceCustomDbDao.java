@@ -75,7 +75,7 @@ public class DeviceCustomDbDao {
 				+ ") values(" + dateFunction + "," + dateFunction+",?,?,?,?,?,?,?,?,?,?,?)";
 		
 		logger.info("Add device_custom_db ["+query+"]");
-		System.out.println("Add device_custom_db ["+query+"]");
+		 // System.out.println("Add device_custom_db ["+query+"]");
 
 		try {
 			preparedStatement = conn.prepareStatement(query);
@@ -151,7 +151,7 @@ public class DeviceCustomDbDao {
 				preparedStatement.setLong(11, deviceCustomDb.getUserId());
 				preparedStatement.setString(12, deviceCustomDb.getFeatureName());
 				
-				System.out.println("Query " + preparedStatement);
+				 // System.out.println("Query " + preparedStatement);
 				preparedStatement.addBatch();
 			}
 
@@ -209,7 +209,7 @@ public class DeviceCustomDbDao {
 				preparedStatement.setLong(11, deviceCustomDb.getUserId());
 				preparedStatement.setString(12, deviceCustomDb.getFeatureName());
 				
-				System.out.println("Query " + preparedStatement);
+				 // System.out.println("Query " + preparedStatement);
 				preparedStatement.addBatch();
 			}
 

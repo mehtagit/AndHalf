@@ -26,7 +26,7 @@ public class Util {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("diff// " + diff);
+         // System.out.println("diff// " + diff);
         return diff;
     }
 
@@ -34,9 +34,9 @@ public class Util {
 //
 //        String aa = "13244dfa^&sfasdf23113";
 //        if (aa.matches("^[-\\w.]+")) {
-//            System.out.println("true");
+//             // System.out.println("true");
 //        } else {
-//            System.out.println("false");
+//             // System.out.println("false");
 //        }
 //
 //    }

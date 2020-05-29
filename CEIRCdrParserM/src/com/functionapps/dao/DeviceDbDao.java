@@ -32,13 +32,13 @@ public class DeviceDbDao {
 					+ "from device_db "
 					+ "where txn_id='" + txnId + "'";
 
-			System.out.println("Select Query on device_db ["+query+"]");
+			 // System.out.println("Select Query on device_db ["+query+"]");
 			logger.info("Select Query on device_db ["+query+"]");
 			stmt  = conn.createStatement();
 			rs = stmt.executeQuery(query);
 
 			while(rs.next()){
-				System.out.println("Inside while of device_db.");		
+//				 // System.out.println("Inside while of device_db.");		
 
 				deviceDbs.add(new DeviceDb(rs.getLong("id"), 0, rs.getString("created_on"), rs.getString("modified_on"), 
 						rs.getString("device_type"), rs.getString("device_id_type"),rs.getString("multiple_sim_status"), 
@@ -49,7 +49,7 @@ public class DeviceDbDao {
 
 		}
 		catch(Exception e){
-			logger.info(e.getMessage(), e);
+			logger.error(e.getMessage(), e);
 			e.printStackTrace();
 		}
 		finally{
@@ -57,6 +57,7 @@ public class DeviceDbDao {
 				rs.close();
 				stmt.close();
 			} catch (SQLException e) {
+                            logger.error(e.getMessage(), e);
 				e.printStackTrace();
 			}			
 		}
@@ -86,7 +87,7 @@ public class DeviceDbDao {
 		logger.info("Add device_db_aud ["+query+"]");
 
 		try {
-			System.out.println("sop2.1");
+			 // System.out.println("sop2.1");
 			preparedStatement = conn.prepareStatement(query);
 
 			for (DeviceDb deviceDb : deviceDbs) {
@@ -103,7 +104,7 @@ public class DeviceDbDao {
 				preparedStatement.setString(11, deviceDb.getTxnId()); 
 				preparedStatement.setLong(12, deviceDb.getState());
 
-				System.out.println("Query " + preparedStatement);
+				 // System.out.println("Query " + preparedStatement);
 				preparedStatement.addBatch();
 			}
 
@@ -131,13 +132,13 @@ public class DeviceDbDao {
 
 		query = "delete from device_db where txn_id='" + txnId + "'";	
 		logger.info("delete device_db [" + query + "]");
-		System.out.println("delete device_db [" + query + "]");
+//		 // System.out.println("delete device_db [" + query + "]");
 
 		try {
 			stmt = conn.createStatement();
 			executeStatus = stmt.executeUpdate(query);
 			logger.info("Deleted from device_db successfully.");
-			System.out.println("Deleted from device_db successfully.");
+			 // System.out.println("Deleted from device_db successfully.");
 		} catch (SQLException e) {
 			e.printStackTrace();
 			logger.error(e.getMessage(), e);
@@ -163,7 +164,7 @@ public class DeviceDbDao {
 			query = "select max(id) as max from device_db_aud";
 
 			logger.info("Query ["+query+"]");
-			System.out.println("Query ["+query+"]");
+//			 // System.out.println("Query ["+query+"]");
 			stmt  = conn.createStatement();
 			rs = stmt.executeQuery(query);
 
@@ -177,7 +178,7 @@ public class DeviceDbDao {
 			return max;
 		}
 		catch(Exception e){
-			logger.info("Exception in getFeatureMapping"+e);
+			logger.info("Exception in getMaxIdDeviceDbAud"+e);
 			e.printStackTrace();
 			return 0L;
 		}
@@ -189,6 +190,7 @@ public class DeviceDbDao {
 					stmt.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
+                               logger.error(e.getMessage(), e);
 			}			
 		}
 	}

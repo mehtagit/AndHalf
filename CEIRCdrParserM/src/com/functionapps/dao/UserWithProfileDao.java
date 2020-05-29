@@ -27,7 +27,7 @@ public class UserWithProfileDao {
 					+ "where users.id=" + userId;
 
 			logger.info("Query ["+query+"]");
-			System.out.println("Query ["+query+"]");
+			 // System.out.println("Query ["+query+"]");
 
 			stmt  = conn.createStatement();
 			rs = stmt.executeQuery(query);

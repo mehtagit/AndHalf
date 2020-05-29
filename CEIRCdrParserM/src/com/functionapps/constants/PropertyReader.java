@@ -56,7 +56,7 @@ public class PropertyReader {
 			
 		if(Objects.nonNull(prop)){
 			String value = prop.getProperty(key);
-			System.out.println("Value of property [" + key + "] is [" + value +"]");			
+			 // System.out.println("Value of property [" + key + "] is [" + value +"]");			
 			return value;
 		}  
 		else{
