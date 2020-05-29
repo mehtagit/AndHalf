@@ -8,7 +8,7 @@ package com.gl.Rule_engine;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.ArrayList;
+import java.io.BufferedWriter;
 import org.apache.log4j.Logger;
 
 /**
@@ -51,7 +51,7 @@ class EXISTS_IN_USAGE_DB {
         return res;
     }
 
-    static String executeAction(String[] args, Connection conn, ArrayList<String> fileErrorLines) {
+    static String executeAction(String[] args, Connection conn,  BufferedWriter bw) {
         try {
             switch (args[13]) {
                 case "Allow": {
@@ -64,7 +64,8 @@ class EXISTS_IN_USAGE_DB {
                 break;
                 case "Reject": {
                     String fileString = args[15] + " , Error Description : IMEI/ESN/MEID is already in use in the network ";
-                    fileErrorLines.add(fileString);
+                     bw.write(fileString);
+                bw.newLine();
                 }
                 break;
                 case "Block": {
@@ -91,11 +92,11 @@ class EXISTS_IN_USAGE_DB {
             return "Success";
         } catch (Exception e) {
             logger.info(" Error " + e);
-            return "FAilure";
+            return "Failure";
         }
     }
 
-//    static String executeAction(String[] args, Connection conn ,ArrayList<String> fileErrorLines) {
+//    static String executeAction(String[] args, Connection conn , BufferedWriter bw) {
 //        String res = "Success";
 //        try{
 //        logger.info("EXISTS_IN_USAGE_DB executeAction");
@@ -107,7 +108,8 @@ class EXISTS_IN_USAGE_DB {
 //            map.put("fileName", args[14]);
 //            String fileString = args[15] + ", Error Code:CON_RULE_0001,TAC in the IMEI/MEID is not a approved TAC from TRC" ;
 //            map.put("fileString", fileString);
-//              fileErrorLines.add(fileString);
+//               bw.write(fileString);
+ 
 //        }
 //        }catch(Exception e){
 //        res = "Error";}

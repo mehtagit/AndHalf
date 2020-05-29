@@ -9,7 +9,7 @@ import org.apache.log4j.Logger;
 
 import com.gl.Rule_engine.BlackList.EncriptonBlacklistService;
 import java.sql.Connection;
-import java.util.ArrayList;
+import java.io.BufferedWriter;
 
 /**
  *
@@ -24,7 +24,7 @@ public class EXIST_IN_GSMABLACKLIST_DB {
         return rslt;
     }
 
-    static String executeAction(String[] args, Connection conn, ArrayList<String> fileErrorLines) {
+    static String executeAction(String[] args, Connection conn,  BufferedWriter bw) {
 
         try {
             switch (args[13]) {
@@ -41,7 +41,8 @@ public class EXIST_IN_GSMABLACKLIST_DB {
 
                 String fileString = args[15] + " , Error Description : IMEI/ESN/MEID is already present in the system  ";
 
-                fileErrorLines.add(fileString);
+                 bw.write(fileString);
+                bw.newLine();
 
             }
             break;
@@ -65,7 +66,8 @@ public class EXIST_IN_GSMABLACKLIST_DB {
             case "NAN": {
                 logger.info("Action is NAN");
                 String fileString = args[15] + " , Error Code :CON_RULE_000X, Error Description :Something went Wrong while Checking  Status of Imei .Try after Some Time.   ";
-                fileErrorLines.add(fileString);
+                 bw.write(fileString);
+                bw.newLine();
             }
             break;
             
@@ -76,7 +78,7 @@ public class EXIST_IN_GSMABLACKLIST_DB {
          return "Success";
         } catch (Exception e) {
             logger.info(" Error " + e);
-            return "FAilure";
+            return "Failure";
         }
     }
 

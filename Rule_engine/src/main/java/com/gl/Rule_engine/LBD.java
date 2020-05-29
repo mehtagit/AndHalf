@@ -5,10 +5,11 @@
  */
 package com.gl.Rule_engine;
 
+import java.io.BufferedWriter;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.ArrayList;
+import java.io.BufferedWriter;
 import org.apache.log4j.Logger;
 
 /**
@@ -96,7 +97,7 @@ public class LBD {
 
     
 
-    static String executeAction(String[] args, Connection conn, ArrayList<String> fileErrorLines) {
+    static String executeAction(String[] args, Connection conn,  BufferedWriter bw) {
         logger.info("LBD executeAction");
         try {
             switch (args[13]) {
@@ -109,19 +110,13 @@ public class LBD {
                 }
                 break;
                 case "Reject": {
-//                logger.info("Action is Reject");
-//                Map<String, String> map = new HashMap<String, String>();
-//                map.put("fileName", args[14]);
-//                String fileString = args[15] + " , Error Code :CON_RULE_0003 , Error Description :TAC in IMEI is not approved TAC from GSMA  ";
-//                map.put("fileString", fileString);
-//                  fileErrorLines.add(fileString);
-
                     String errmsg = "IMEI is  not Present. (It is not marked as stolen ) ";
                     if (args[2].equalsIgnoreCase("stolen") || args[2].equalsIgnoreCase("block")) {
                         errmsg = " IMEI/ESN/MEID  is  already marked as stolen/blocked ";
                     }
                     String fileString = args[15] + ",  Error Code : CON_RULE_0002,  Error Discription : " + errmsg;
-                    fileErrorLines.add(fileString);
+                     bw.write(fileString);
+                bw.newLine();
 
                 }
                 break;

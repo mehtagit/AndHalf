@@ -12,7 +12,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.io.BufferedWriter;
 import java.util.Calendar;
 import org.apache.log4j.Logger;
 
@@ -57,7 +57,7 @@ class EXISTS_IN_TYPE_APPROVED_DB {
         return res;
     }
 
-    static String executeAction(String[] args, Connection conn, ArrayList<String> fileErrorLines) {
+    static String executeAction(String[] args, Connection conn,  BufferedWriter bw) {
 try{
         switch (args[13]) {
             case "Allow": {
@@ -71,7 +71,8 @@ try{
             case "Reject": {
                 logger.info("Action is Reject");
                 String fileString = args[15] + " ,Error Description : TAC in the IMEI/MEID is not a approved TAC from TRC ";
-                fileErrorLines.add(fileString);
+                 bw.write(fileString);
+                bw.newLine();
             }
             break;
             case "Block": {
@@ -97,9 +98,9 @@ try{
                 } catch (Exception e) {
                     logger.info("Error" + e);
                 }
-
-                String fileString = args[15];
-                fileErrorLines.add(fileString);
+//                String fileString = args[15];
+//                 bw.write(fileString);
+//                bw.newLine();
             }
             break;
             case "SYS_REG": {
@@ -117,7 +118,7 @@ try{
 return "Success";
         } catch (Exception e) {
             logger.info(" Error " + e);
-            return "FAilure";
+            return "Failure";
         }
     }
 

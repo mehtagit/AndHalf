@@ -6,7 +6,7 @@
 package com.gl.Rule_engine;
 
 import java.sql.Connection;
-import java.util.ArrayList;
+import java.io.BufferedWriter;
 import org.apache.log4j.Logger;
 
 /**
@@ -25,7 +25,7 @@ class IMEI_LUHN_CHECK {
         return res;
     }
 
-    static String executeAction(String[] args, Connection conn, ArrayList<String> fileErrorLines) {
+    static String executeAction(String[] args, Connection conn,  BufferedWriter bw) {
         logger.info(" IMEI_LUHN_CHECK  executeAction");
 
         try {
@@ -41,7 +41,8 @@ class IMEI_LUHN_CHECK {
             case "Reject": {
                 logger.info("Action is Reject");
                 String fileString = args[15] + " , Error Description : IMEI does not pass the Checksum algorithm  ";
-                fileErrorLines.add(fileString);
+                 bw.write(fileString);
+                bw.newLine();
             }
             break;
             case "Block": {
@@ -89,7 +90,7 @@ class IMEI_LUHN_CHECK {
          return "Success";
         } catch (Exception e) {
             logger.info(" Error " + e);
-            return "FAilure";
+            return "Failure";
         }
     }
 

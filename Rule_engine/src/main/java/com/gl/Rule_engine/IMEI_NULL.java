@@ -6,7 +6,7 @@
 package com.gl.Rule_engine;
 
 import java.sql.Connection;
-import java.util.ArrayList;
+import java.io.BufferedWriter;
 import org.apache.log4j.Logger;
 
 /**
@@ -32,15 +32,14 @@ public class IMEI_NULL {
         return res;
     }
 
-    static String executeAction(String[] args, Connection conn, ArrayList<String> fileErrorLines) {
+    static String executeAction(String[] args, Connection conn,  BufferedWriter bw) {
         logger.info("IMEI_NULL executeAction .." + args[2] + "..." + args[3]);
         String res = "Success";
         try {
             {
-
                 String fileString = args[15] + ", Error Description:IMEI/ESN/MEID is missing in the record. ";
-
-                fileErrorLines.add(fileString);
+                 bw.write(fileString);
+                bw.newLine();
             }
         } catch (Exception e) {
             logger.info("Error e ");

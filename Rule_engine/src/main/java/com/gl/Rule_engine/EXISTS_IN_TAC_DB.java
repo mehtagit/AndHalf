@@ -10,7 +10,7 @@ package com.gl.Rule_engine;
 import org.apache.log4j.Logger;
 import gsmaTac.BasicApplication;
 import java.sql.Connection;
-import java.util.ArrayList;
+import java.io.BufferedWriter;
 
 /**
  *
@@ -50,7 +50,7 @@ class EXISTS_IN_TAC_DB {
         return res;
     }
 
-    static String executeAction(String[] args, Connection conn, ArrayList<String> fileErrorLines) {
+    static String executeAction(String[] args, Connection conn,  BufferedWriter bw) {
       try{  switch (args[13]) {
             case "Allow": {
                 logger.info("Action is Allow");
@@ -63,7 +63,8 @@ class EXISTS_IN_TAC_DB {
             case "Reject": {
                 logger.info("Action is Reject");
                 String fileString = args[15] + " , Error Code :CON_RULE_0003 , Error Description :TAC in IMEI is not approved TAC from GSMA  ";
-                fileErrorLines.add(fileString);
+                 bw.write(fileString);
+                bw.newLine();
             }
             break;
             case "Block": {
@@ -81,7 +82,8 @@ class EXISTS_IN_TAC_DB {
             case "NAN": {
                 logger.info("Action is NAN");
                 String fileString = args[15] + " , Error Code :CON_RULE_000X, Error Description :Something went Wrong while Authorization of TAC .Try after Some Time.   ";
-                fileErrorLines.add(fileString);
+                 bw.write(fileString);
+                bw.newLine();
             }
             break;
             
@@ -99,7 +101,7 @@ class EXISTS_IN_TAC_DB {
 return "Success";
         } catch (Exception e) {
             logger.info(" Error " + e);
-            return "FAilure";
+            return "Failure";
         }
     }
 
@@ -119,7 +121,8 @@ return "Success";
 //                map.put("fileName", args[14]);
 //                String fileString = args[15] + " , ";
 //                map.put("fileString", fileString);
-//                  fileErrorLines.add(fileString);
+//                   bw.write(fileString);
+                
 //            }
 //
 //        } catch (Exception e) {

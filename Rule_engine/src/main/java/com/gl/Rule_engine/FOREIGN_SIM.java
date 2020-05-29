@@ -10,7 +10,7 @@ import java.sql.Connection;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.ArrayList;
+import java.io.BufferedWriter;
 import org.apache.log4j.Logger;
 
 class FOREIGN_SIM {
@@ -33,7 +33,7 @@ class FOREIGN_SIM {
         return res;
     }
 
-    static String executeAction(String[] args, Connection conn, ArrayList<String> fileErrorLines) {
+    static String executeAction(String[] args, Connection conn,  BufferedWriter bw) {
 
         try {
             switch (args[13]) {
@@ -88,7 +88,8 @@ class FOREIGN_SIM {
 
                 String fileString = args[15] + " , Error Description : Imei  Utilised By Foreign Sim   ";
 
-                fileErrorLines.add(fileString);
+                 bw.write(fileString);
+                bw.newLine();
             }
             break;
             case "Block": {
@@ -140,7 +141,7 @@ class FOREIGN_SIM {
          return "Success";
         } catch (Exception e) {
             logger.info(" Error " + e);
-            return "FAilure";
+            return "Failure";
         }
     }
 

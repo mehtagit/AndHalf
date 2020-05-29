@@ -6,7 +6,7 @@
 package com.gl.Rule_engine;
 
 import java.sql.Connection;
-import java.util.ArrayList;
+import java.io.BufferedWriter;
 import org.apache.log4j.Logger;
 
 /**
@@ -20,117 +20,116 @@ class IMEI_LENGTH {
     static String executeRule(String[] args, Connection conn) {
         String res = "No";
         logger.info("IMEI_LENGTH executeRule ....." + args[3]);
-
-        if (args[9].trim().equalsIgnoreCase("IMEI") || args[10].trim().equalsIgnoreCase("GSM")) {
-            if ((args[3].length() == 15 || args[3].length() == 16) && (args[3].matches("^[0-9]+$"))) {
-                res = "Yes";
-            } else {
-                res = "No";
-            }
-        } else {
-
-            if (args[9].trim().equalsIgnoreCase("MEID")) {
-                if ((args[3].length() == 15 || args[3].length() == 16) && (args[3].matches("^[0-9A-F]+$"))) {
+        try {
+            if (args[9].trim().equalsIgnoreCase("IMEI") || args[10].trim().equalsIgnoreCase("GSM")) {
+                if ((args[3].length() == 15 || args[3].length() == 16) && (args[3].matches("^[0-9]+$"))) {
                     res = "Yes";
                 } else {
                     res = "No";
                 }
-            } else if (args[9].trim().equalsIgnoreCase("ESN")) {
-                switch (args[3].length()) {
-                    case 8:
-                        if (args[3].matches("^[0-9A-F]+$")) {
-                            res = "Yes";
-                        } else {
-                            res = "No";
-                        }
-                        break;
-                    case 11:
-                        if (args[3].matches("^[0-9]+$")) {
-                            res = "Yes";
-                        } else {
-                            res = "No";
-                        }
-                        break;
-                    default:
+            } else {
+
+                if (args[9].trim().equalsIgnoreCase("MEID")) {
+                    if ((args[3].length() == 15 || args[3].length() == 16) && (args[3].matches("^[0-9A-F]+$"))) {
+                        res = "Yes";
+                    } else {
                         res = "No";
-                        break;
-                }
-            } else {   ///cdma
-                switch (args[3].length()) {
-                    case 8:
-                        if (args[3].matches("^[0-9A-F]+$")) {
-                            res = "Yes";
-                        } else {
+                    }
+                } else if (args[9].trim().equalsIgnoreCase("ESN")) {
+                    switch (args[3].length()) {
+                        case 8:
+                            if (args[3].matches("^[0-9A-F]+$")) {
+                                res = "Yes";
+                            } else {
+                                res = "No";
+                            }
+                            break;
+                        case 11:
+                            if (args[3].matches("^[0-9]+$")) {
+                                res = "Yes";
+                            } else {
+                                res = "No";
+                            }
+                            break;
+                        default:
                             res = "No";
-                        }
-                        break;
+                            break;
+                    }
+                } else {   ///cdma
+                    switch (args[3].length()) {
+                        case 8:
+                            if (args[3].matches("^[0-9A-F]+$")) {
+                                res = "Yes";
+                            } else {
+                                res = "No";
+                            }
+                            break;
 
-                    case 15:
-                        if (args[3].matches("^[0-9A-F]+$")) {
-                            res = "Yes";
-                        } else {
-                            res = "No";
-                        }
-                        break;
+                        case 15:
+                            if (args[3].matches("^[0-9A-F]+$")) {
+                                res = "Yes";
+                            } else {
+                                res = "No";
+                            }
+                            break;
 
-                    case 16:
-                        if (args[3].matches("^[0-9A-F]+$")) {
-                            res = "Yes";
-                        } else {
-                            res = "No";
-                        }
-                        break;
+                        case 16:
+                            if (args[3].matches("^[0-9A-F]+$")) {
+                                res = "Yes";
+                            } else {
+                                res = "No";
+                            }
+                            break;
 
-                    case 11:
-                        if (args[3].matches("^[0-9]+$")) {
-                            res = "Yes";
-                        } else {
+                        case 11:
+                            if (args[3].matches("^[0-9]+$")) {
+                                res = "Yes";
+                            } else {
+                                res = "No";
+                            }
+                            break;
+                        default:
                             res = "No";
-                        }
-                        break;
-                    default:
-                        res = "No";
-                        break;
+                            break;
+                    }
+
                 }
 
             }
 
-        }
-
-        try {
             // cdma  meid/esn  ..      gsm imei
-
         } catch (Exception e) {
             logger.info("Error.." + e);
         }
         return res;
     }
 
-    static String executeAction(String[] args, Connection conn, ArrayList<String> fileErrorLines) {
+    static String executeAction(String[] args, Connection conn, BufferedWriter bw) {
 
         try {
             switch (args[13]) {
-            case "Allow": {
-                logger.info("Action is Allow");
-            }
-            break;
-            case "Skip": {
-                logger.info("Action is Skip");
-            }
-            break;
-            case "Reject": {
-                logger.info("Action is Reject");
+                case "Allow": {
+                    logger.info("Action is Allow");
+                }
+                break;
+                case "Skip": {
+                    logger.info("Action is Skip");
+                }
+                break;
+                case "Reject": {
+                    logger.info("Action is Reject");
 
-                String fileString = args[15] + " , Error Description : IMEI/ESN/MEID is not as per specifications ";
-                fileErrorLines.add(fileString);
-            }
-            break;
-            case "Block": {
-                logger.info("Action is Block");
-            }
-            break;
-            case "Report": {
-                logger.info("Action is Report");
+                    String fileString = args[15] + " , Error Description : IMEI/ESN/MEID is not as per specifications ";
+                    bw.write(fileString);
+                    bw.newLine();
+                }
+                break;
+                case "Block": {
+                    logger.info("Action is Block");
+                }
+                break;
+                case "Report": {
+                    logger.info("Action is Report");
 
 //                    Connection  
 //                    boolean isOracle = conn.toString().contains("oracle");
@@ -146,29 +145,28 @@ class IMEI_LENGTH {
 //                } catch (Exception e) {
 //                    logger.info("Error e " + e);
 //                }
+                }
+                break;
+                case "SYS_REG": {
+                    logger.info("Action is SYS_REG");
+                }
+                break;
+                case "USER_REG": {
+                    logger.info("Action is USER_REG");
+                }
+                break;
+                default:
+                    logger.info(" The Action " + args[13] + "  is Not Defined  ");
             }
-            break;
-            case "SYS_REG": {
-                logger.info("Action is SYS_REG");
-            }
-            break;
-            case "USER_REG": {
-                logger.info("Action is USER_REG");
-            }
-            break;
-            default:
-                logger.info(" The Action " + args[13] + "  is Not Defined  ");
-        }
 
-         return "Success";
+            return "Success";
         } catch (Exception e) {
             logger.info(" Error " + e);
-            return "FAilure";
+            return "Failure";
         }
     }
 
 }
-
 
 //
 //

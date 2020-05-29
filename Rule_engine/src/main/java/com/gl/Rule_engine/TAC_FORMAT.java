@@ -6,7 +6,7 @@
 package com.gl.Rule_engine;
 
 import java.sql.Connection;
-import java.util.ArrayList;
+import java.io.BufferedWriter;
 import org.apache.log4j.Logger;
 
 /**
@@ -34,7 +34,7 @@ class TAC_FORMAT {
         return res;
     }
 
-    static String executeAction(String[] args, Connection conn, ArrayList<String> fileErrorLines) {
+    static String executeAction(String[] args, Connection conn,  BufferedWriter bw) {
 
         try {
             switch (args[13]) {
@@ -51,7 +51,8 @@ class TAC_FORMAT {
 
                 String fileString = args[15] + " , Error Description :  TAC is not as per specifications  ";
 
-                fileErrorLines.add(fileString);
+                 bw.write(fileString);
+                bw.newLine();
             }
             break;
             case "Block": {
@@ -103,7 +104,7 @@ class TAC_FORMAT {
          return "Success";
         } catch (Exception e) {
             logger.info(" Error " + e);
-            return "FAilure";
+            return "Failure";
         }
     }
 

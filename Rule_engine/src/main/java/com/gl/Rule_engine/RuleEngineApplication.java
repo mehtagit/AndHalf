@@ -1,8 +1,10 @@
 package com.gl.Rule_engine;
 
  
+
+import java.io.BufferedWriter;
 import java.sql.Connection;
-import java.util.ArrayList;
+import java.io.BufferedWriter;
 import org.apache.log4j.Logger;
 
 public class RuleEngineApplication {
@@ -13,7 +15,7 @@ public class RuleEngineApplication {
 //        logger.info(startRuleEngine(args,conn));
 //    }
 
-    public static String startRuleEngine(String[] args, Connection conn,ArrayList<String> fileErrorLines) {
+    public static String startRuleEngine(String[] args, Connection conn, BufferedWriter bw) {
         String reslt = "";
 
         if ("1".equalsIgnoreCase(args[1])) {
@@ -115,86 +117,86 @@ public class RuleEngineApplication {
 //            }
 
             if ("LBD".equalsIgnoreCase(args[0])) {
-                reslt = LBD.executeAction(args,conn,fileErrorLines);
+                reslt = LBD.executeAction(args,conn,bw);
             }
             if ("IMEI_LENGTH".equalsIgnoreCase(args[0])) {
-                reslt = IMEI_LENGTH.executeAction(args,conn,fileErrorLines);
+                reslt = IMEI_LENGTH.executeAction(args,conn,bw);
             }
             if ("EXISTS_IN_TAC_DB".equalsIgnoreCase(args[0])) {
-                reslt = EXISTS_IN_TAC_DB.executeAction(args,conn,fileErrorLines);
+                reslt = EXISTS_IN_TAC_DB.executeAction(args,conn,bw);
             }
             if ("IMEI_LUHN_CHECK".equalsIgnoreCase(args[0])) {
-                reslt = IMEI_LUHN_CHECK.executeAction(args,conn,fileErrorLines);
+                reslt = IMEI_LUHN_CHECK.executeAction(args,conn,bw);
             }
             if ("EXISTS_IN_TYPE_APPROVED_DB".equalsIgnoreCase(args[0])) {
-                reslt = EXISTS_IN_TYPE_APPROVED_DB.executeAction(args,conn,fileErrorLines);
+                reslt = EXISTS_IN_TYPE_APPROVED_DB.executeAction(args,conn,bw);
             }
             if ("EXISTS_IN_USAGE_DB".equalsIgnoreCase(args[0])) {
-                reslt = EXISTS_IN_USAGE_DB.executeAction(args,conn,fileErrorLines);
+                reslt = EXISTS_IN_USAGE_DB.executeAction(args,conn,bw);
             }
             if ("EXIST_IN_IMPORTER_DB".equalsIgnoreCase(args[0])) {
-                reslt = EXIST_IN_IMPORTER_DB.executeAction(args,conn,fileErrorLines);
+                reslt = EXIST_IN_IMPORTER_DB.executeAction(args,conn,bw);
             }
             if ("EXIST_IN_DISTRIBUTOR_DB".equalsIgnoreCase(args[0])) {
-                reslt = EXIST_IN_DISTRIBUTOR_DB.executeAction(args,conn,fileErrorLines);
+                reslt = EXIST_IN_DISTRIBUTOR_DB.executeAction(args,conn,bw);
             }
             if ("EXIST_IN_RETAILER_DB".equalsIgnoreCase(args[0])) {
-                reslt = EXIST_IN_RETAILER_DB.executeAction(args,conn,fileErrorLines);
+                reslt = EXIST_IN_RETAILER_DB.executeAction(args,conn,bw);
             }
             if ("EXIST_IN_MANUFACTURER_DB".equalsIgnoreCase(args[0])) {
-                reslt = EXIST_IN_MANUFACTURER_DB.executeAction(args,conn,fileErrorLines);
+                reslt = EXIST_IN_MANUFACTURER_DB.executeAction(args,conn,bw);
             }
             if ("EXIST_IN_CUSTOM_DB".equalsIgnoreCase(args[0])) {
-                reslt = EXIST_IN_CUSTOM_DB.executeAction(args,conn,fileErrorLines);
+                reslt = EXIST_IN_CUSTOM_DB.executeAction(args,conn,bw);
             }
             if ("EXIST_IN_END_USER_DB".equalsIgnoreCase(args[0])) {
-                reslt = EXIST_IN_END_USER_DB.executeAction(args,conn,fileErrorLines);
+                reslt = EXIST_IN_END_USER_DB.executeAction(args,conn,bw);
             }
             if ("EXISTS_IN_REGULARIZED_DB".equalsIgnoreCase(args[0])) {
-                reslt = EXISTS_IN_REGULARIZED_DB.executeAction(args,conn,fileErrorLines);
+                reslt = EXISTS_IN_REGULARIZED_DB.executeAction(args,conn,bw);
             }
             if ("EXIST_IN_TAX_PAID_DB".equalsIgnoreCase(args[0])) {
-                reslt = EXIST_IN_TAX_PAID_DB.executeAction(args,conn,fileErrorLines);
+                reslt = EXIST_IN_TAX_PAID_DB.executeAction(args,conn,bw);
             }
             if ("EXIST_REGULARIZED".equalsIgnoreCase(args[0])) {
-                reslt = EXIST_REGULARIZED.executeAction(args,conn,fileErrorLines);
+                reslt = EXIST_REGULARIZED.executeAction(args,conn,bw);
             }
             if ("EXIST_IN_VIP_LIST".equalsIgnoreCase(args[0])) {
-                reslt = EXIST_IN_VIP_LIST.executeAction(args,conn,fileErrorLines);
+                reslt = EXIST_IN_VIP_LIST.executeAction(args,conn,bw);
             }
             if ("DUPLICATE_USAGE_CHECK".equalsIgnoreCase(args[0])) {
-                reslt = DUPLICATE_USAGE_CHECK.executeAction(args,conn,fileErrorLines);
+                reslt = DUPLICATE_USAGE_CHECK.executeAction(args,conn,bw);
             }
             if ("EXIST_IN_BLACKLIST_DB".equalsIgnoreCase(args[0])) {
-                reslt = EXIST_IN_BLACKLIST_DB.executeAction(args,conn,fileErrorLines);
+                reslt = EXIST_IN_BLACKLIST_DB.executeAction(args,conn,bw);
             }
             if ("IMEI_NULL".equalsIgnoreCase(args[0])) {
-                reslt = IMEI_NULL.executeAction(args,conn,fileErrorLines);
+                reslt = IMEI_NULL.executeAction(args,conn,bw);
             }
             if ("EXISTS_IN_GREYLIST_DB".equalsIgnoreCase(args[0])) {
-                reslt = EXISTS_IN_GREYLIST_DB.executeAction(args,conn,fileErrorLines);
+                reslt = EXISTS_IN_GREYLIST_DB.executeAction(args,conn,bw);
             }
             if ("SYS_REG".equalsIgnoreCase(args[0])) {
-                reslt = SYS_REG.executeAction(args,conn,fileErrorLines);
+                reslt = SYS_REG.executeAction(args,conn,bw);
             }
             if ("USER_REG".equalsIgnoreCase(args[0])) {
-                reslt = USER_REG.executeAction(args,conn,fileErrorLines);
+                reslt = USER_REG.executeAction(args,conn,bw);
             }
             if ("EXISTS_IN_FOREIGN_DB".equalsIgnoreCase(args[0])) {
-                reslt = EXISTS_IN_FOREIGN_DB.executeAction(args,conn,fileErrorLines);
+                reslt = EXISTS_IN_FOREIGN_DB.executeAction(args,conn,bw);
             }
 
             if ("EXISTS_IN_WHITELIST_DB".equalsIgnoreCase(args[0])) {
-                reslt = EXISTS_IN_WHITELIST_DB.executeAction(args,conn,fileErrorLines);
+                reslt = EXISTS_IN_WHITELIST_DB.executeAction(args,conn,bw);
             }
             if ("EXIST_IN_GSMABLACKLIST_DB".equalsIgnoreCase(args[0])) {
-                reslt = EXIST_IN_GSMABLACKLIST_DB.executeAction(args,conn,fileErrorLines);
+                reslt = EXIST_IN_GSMABLACKLIST_DB.executeAction(args,conn,bw);
             }
             if ("FOREIGN_SIM".equalsIgnoreCase(args[0])) {
-                reslt = FOREIGN_SIM.executeAction(args,conn,fileErrorLines);
+                reslt = FOREIGN_SIM.executeAction(args,conn,bw);
             }
             if ("TAC_FORMAT".equalsIgnoreCase(args[0])) {
-                reslt = TAC_FORMAT.executeAction(args,conn,fileErrorLines);
+                reslt = TAC_FORMAT.executeAction(args,conn,bw);
             }
 
         }

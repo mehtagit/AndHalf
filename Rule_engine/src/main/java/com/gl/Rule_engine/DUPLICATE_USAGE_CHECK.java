@@ -6,7 +6,7 @@
 package com.gl.Rule_engine;
 
 import java.sql.Connection;
-import java.util.ArrayList;
+import java.io.BufferedWriter;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import org.apache.log4j.Logger;
@@ -82,7 +82,7 @@ class DUPLICATE_USAGE_CHECK {
         return res;
     }
 
-    static String executeAction(String[] args, Connection conn, ArrayList<String> fileErrorLines) {
+    static String executeAction(String[] args, Connection conn,  BufferedWriter bw) {
         try {
             switch (args[13]) {
                 case "Allow": {
@@ -96,7 +96,8 @@ class DUPLICATE_USAGE_CHECK {
                 case "Reject": {
                     logger.info("Action is Reject");
                     String fileString = args[15] + " , Error Description : IMEI/ESN/MEID is already present in the system  ";
-                    fileErrorLines.add(fileString);
+                     bw.write(fileString);
+                bw.newLine();
                 }
                 break;
                 case "Block": {
@@ -122,7 +123,7 @@ class DUPLICATE_USAGE_CHECK {
             return "Success";
         } catch (Exception e) {
             logger.info(" Error " + e);
-            return "FAilure";
+            return "Failure";
         }
     }
 }
@@ -162,7 +163,8 @@ class DUPLICATE_USAGE_CHECK {
 //            map.put("fileName", args[14]);
 //          String fileString =args[15]  + " ,Error Occured :IMEI/ESN/MEID is already present in the system ";
 //          map.put("fileString", fileString);
-//              fileErrorLines.add(fileString);
+//               bw.write(fileString);
+           
 //        }
 //            
 //            

@@ -6,13 +6,10 @@
 package com.gl.Rule_engine;
 
 import java.sql.Connection;
-import java.util.ArrayList;
-import java.sql.DriverManager;
+import java.io.BufferedWriter;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 import org.apache.log4j.Logger;
 
@@ -60,7 +57,7 @@ class SYS_REG {
         return res;
     }
 
-    static String executeAction(String[] args, Connection conn, ArrayList<String> fileErrorLines) {
+    static String executeAction(String[] args, Connection conn,  BufferedWriter bw) {
         try {
             switch (args[13]) {
             case "Allow": {
@@ -76,7 +73,8 @@ class SYS_REG {
 
                 String fileString = args[15] + " , Error Description : IMEI/ESN/MEID is already present in the system  ";
 
-                fileErrorLines.add(fileString);
+                 bw.write(fileString);
+                bw.newLine();
             }
             break;
             case "Block": {
@@ -103,7 +101,7 @@ class SYS_REG {
          return "Success";
         } catch (Exception e) {
             logger.info(" Error " + e);
-            return "FAilure";
+            return "Failure";
         }
     }
 

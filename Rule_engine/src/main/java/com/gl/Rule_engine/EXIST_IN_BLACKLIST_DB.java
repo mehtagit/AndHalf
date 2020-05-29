@@ -6,7 +6,7 @@
 package com.gl.Rule_engine;
 
 import java.sql.Connection;
-import java.util.ArrayList;
+import java.io.BufferedWriter;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import org.apache.log4j.Logger;
@@ -19,12 +19,11 @@ public class EXIST_IN_BLACKLIST_DB {
 
     static final Logger logger = Logger.getLogger(EXIST_IN_BLACKLIST_DB.class);
 
-    ;
      
 
     static String executeRule(String[] args, Connection conn) {
         String res = "";
-        logger.info("EXIST_IN_GSMABLACKLIST_DB executeRule");
+        logger.info("EXIST_IN_BLACKLIST_DB executeRule");
 
         try {
 
@@ -56,7 +55,7 @@ public class EXIST_IN_BLACKLIST_DB {
         return res;
     }
 
-    static String executeAction(String[] args, Connection conn, ArrayList<String> fileErrorLines) {
+    static String executeAction(String[] args, Connection conn,  BufferedWriter bw) {
      try{   switch (args[13]) {
             case "Allow": {
                 logger.info("Action is Allow");
@@ -71,7 +70,8 @@ public class EXIST_IN_BLACKLIST_DB {
 
                 String fileString = args[15] + " , Error Description : IMEI/ESN/MEID is already present in the system  ";
 
-                fileErrorLines.add(fileString);
+                 bw.write(fileString);
+                bw.newLine();
             }
             break;
             case "Block": {
@@ -98,7 +98,7 @@ public class EXIST_IN_BLACKLIST_DB {
 return "Success";
         } catch (Exception e) {
             logger.info(" Error " + e);
-            return "FAilure";
+            return "Failure";
         }
     }
 
