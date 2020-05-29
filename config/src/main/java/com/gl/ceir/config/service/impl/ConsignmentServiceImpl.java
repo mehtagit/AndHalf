@@ -1,9 +1,3 @@
-
-
-
-
-
-
 package com.gl.ceir.config.service.impl;
 
 import java.io.IOException;
@@ -608,9 +602,10 @@ public class ConsignmentServiceImpl {
 				}
 				else {
 					logger.info("Nothing to update for request :: " + consignmentUpdateRequest);
+				return new GenricResponse(1, "Nothing to update for request.",payload_txnID);
 				}
 			}
-
+			
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
@@ -622,7 +617,7 @@ public class ConsignmentServiceImpl {
 
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
-		return null;
+
 	}
 
 
