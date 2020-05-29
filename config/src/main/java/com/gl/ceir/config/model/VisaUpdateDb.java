@@ -1,5 +1,7 @@
 package com.gl.ceir.config.model;
 import java.time.LocalDateTime;
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -43,7 +45,7 @@ public class VisaUpdateDb {
 	
 	private String entryDateInCountry;
 	
-	private String visaExpiryDate;
+	private Date visaExpiryDate;
 	
 	@Transient
 	private String visaTypeInterp;
@@ -76,7 +78,7 @@ public class VisaUpdateDb {
 	}
 
 	public VisaUpdateDb(@NotNull Integer visaType, String visaNumber, @NotNull String visaFileName,
-			String entryDateInCountry, String visaExpiryDate, Integer status,long userId,String txnId,String nid) {
+			String entryDateInCountry, Date visaExpiryDate, Integer status,long userId,String txnId,String nid) {
 		super();
 		this.visaType = visaType;
 		this.visaNumber = visaNumber;
@@ -153,11 +155,13 @@ public class VisaUpdateDb {
 		this.entryDateInCountry = entryDateInCountry;
 	}
 
-	public String getVisaExpiryDate() {
+	
+
+	public Date getVisaExpiryDate() {
 		return visaExpiryDate;
 	}
 
-	public void setVisaExpiryDate(String visaExpiryDate) {
+	public void setVisaExpiryDate(Date visaExpiryDate) {
 		this.visaExpiryDate = visaExpiryDate;
 	}
 

@@ -2,6 +2,7 @@ package com.gl.ceir.config.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -52,7 +53,7 @@ public class VisaDb implements Serializable {
 	
 	private String entryDateInCountry;
 	
-	private String visaExpiryDate;
+	private Date visaExpiryDate;
 	
 	@Transient
 	private String visaTypeInterp;
@@ -67,6 +68,18 @@ public class VisaDb implements Serializable {
 	
 	public VisaDb(Integer visaType, String visaNumber, String visaFileName, String entryDateInCountry, String visaExpiryDate) {
 		// TODO Auto-generated constructor stub
+	}
+	
+
+	public VisaDb(@NotNull Integer visaType, String visaNumber, @NotNull String visaFileName, String entryDateInCountry,
+			Date visaExpiryDate, EndUserDB endUserDB) {
+		super();
+		this.visaType = visaType;
+		this.visaNumber = visaNumber;
+		this.visaFileName = visaFileName;
+		this.entryDateInCountry = entryDateInCountry;
+		this.visaExpiryDate = visaExpiryDate;
+		this.endUserDB = endUserDB;
 	}
 
 	public LocalDateTime getCreatedOn() {
@@ -109,11 +122,11 @@ public class VisaDb implements Serializable {
 		this.entryDateInCountry = entryDateInCountry;
 	}
 
-	public String getVisaExpiryDate() {
+	public Date getVisaExpiryDate() {
 		return visaExpiryDate;
 	}
 
-	public void setVisaExpiryDate(String visaExpiryDate) {
+	public void setVisaExpiryDate(Date visaExpiryDate) {
 		this.visaExpiryDate = visaExpiryDate;
 	}
 

@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -235,11 +236,7 @@ public class EnduserServiceImpl {
 				}	
 			}
 
-			// Validate and set visa expiry date as per default rule.
-			GenricResponse response = setVisaExpiryDate(endUserDB);
-			if(response.getErrorCode() != 0) 
-				return response;
-
+			
 			// Validate end user devices.
 			if(!endUserDB.getRegularizeDeviceDbs().isEmpty()){
 
@@ -249,6 +246,10 @@ public class EnduserServiceImpl {
 						type=1;
 					}
 					else {
+						// Validate and set visa expiry date as per default rule.
+						GenricResponse response = setVisaExpiryDate(endUserDB);
+						if(response.getErrorCode() != 0) 
+							return response;
 						type=2;
 					}	
 				}
@@ -289,7 +290,6 @@ public class EnduserServiceImpl {
 						if(Objects.isNull(endUserDB.getOrigin())) {
 							endUserDB.setOrigin(regularizeDeviceDb.getOrigin());
 						}
-
 						// Add in web action list.
 						if(endUserDB.getAuditParameters().getUserTypeId()==7) {
 							if(regularizeDeviceDb.getTaxPaidStatus()==TaxStatus.TAX_PAID.getCode())
@@ -297,13 +297,11 @@ public class EnduserServiceImpl {
 								logger.info("if usertype is custom and tax status is paid so now this entry going to web action db");
 								webActionDbs.add(new WebActionDb(Features.REGISTER_DEVICE, SubFeatures.Approve, 0, 
 										regularizeDeviceDb.getTxnId()));
-
 							}
 						}
 						webActionDbs.add(new WebActionDb(Features.REGISTER_DEVICE, SubFeatures.REGISTER, 0, 
 								regularizeDeviceDb.getTxnId()));
 					}
-
 					logger.info("regularize devices: "+endUserDB.getRegularizeDeviceDbs());
 				}else {
 					logger.warn("Regularized Devices are exceeding the allowed count." + endUserDB);
@@ -313,8 +311,7 @@ public class EnduserServiceImpl {
 
 			endUserDB = endUserDbRepository.save(endUserDB);
 			if(Objects.nonNull(endUserDB)){
-
-				if(Objects.nonNull(endUserDB.getEmail()) && !endUserDB.getEmail().isEmpty() ) {
+				if(Objects.nonNull(endUserDB.getEmail()) && !endUserDB.getEmail().isEmpty() && !"NA".equalsIgnoreCase(endUserDB.getEmail()) ) {
 					List<RawMail> rawMails = new ArrayList<>();
 					String mailTag = "END_USER_REGISTER";
 					Map<String, String> placeholderMap = new HashMap<String, String>();
@@ -324,9 +321,7 @@ public class EnduserServiceImpl {
 					rawMails.add(new RawMail(mailTag, endUserDB.getId(), Long.valueOf(12), 
 							Features.REGISTER_DEVICE, SubFeatures.REGISTER, endUserDB.getTxnId(), 
 							endUserDB.getTxnId(), placeholderMap, ReferTable.END_USER, null, "End User"));
-
 					emailUtil.saveNotification(rawMails);
-
 				}
 				else {
 					logger.info("this end user don't have any email");
@@ -592,7 +587,7 @@ public class EnduserServiceImpl {
 					if(Objects.nonNull(endUserDB.getVisaDb())) {
 						if(!endUserDB.getVisaDb().isEmpty()) {
 							VisaDb visaDb = endUserDB.getVisaDb().get(endUserDB.getVisaDb().size()-1);
-							visaExpiryDate = visaDb.getVisaExpiryDate();
+							visaExpiryDate = DateUtil.dateToString(visaDb.getVisaExpiryDate());
 						}
 					}
 
@@ -661,6 +656,7 @@ public class EnduserServiceImpl {
 	}
 
 	private GenricResponse setVisaExpiryDate(EndUserDB endUserDB) {
+		logger.info("inside set visa expiry process");
 		if("Y".equalsIgnoreCase(endUserDB.getOnVisa())) {
 			if(Objects.isNull(endUserDB.getVisaDb())) {
 				return new GenricResponse(11, GenericMessageTags.NULL_VISA.getTag(), GenericMessageTags.NULL_VISA.getMessage(), "");
@@ -668,7 +664,7 @@ public class EnduserServiceImpl {
 				List<VisaDb> visaDbs = endUserDB.getVisaDb();
 				if(visaDbs.isEmpty()) {
 					return new GenricResponse(12, GenericMessageTags.VISA_EMPTY.getTag(), GenericMessageTags.VISA_EMPTY.getMessage(), "");
-				}else if(Objects.isNull(visaDbs.get(0).getVisaExpiryDate()) || visaDbs.get(0).getVisaExpiryDate().isEmpty()) {
+				}else if(Objects.isNull(visaDbs.get(0).getVisaExpiryDate()) || visaDbs.get(0).getVisaExpiryDate().equals("")) {
 					SystemConfigurationDb defaultVisaExpirationDays = systemConfigurationDbRepository.getByTag(ConfigTags.default_visa_expiration_days);
 					int day = 0;
 					try {
@@ -678,7 +674,18 @@ public class EnduserServiceImpl {
 						return new GenricResponse(13, GenericMessageTags.DISCREPENCY_IN_CONFIG.getTag(), 
 								GenericMessageTags.DISCREPENCY_IN_CONFIG.getMessage(), "default_visa_expiration_days must be cast to numeric value");
 					}
-					String date = DateUtil.nextDate(day, null);
+					Date date;
+					String entryDate=endUserDB.getEntryDateInCountry();
+					logger.info("entry date in country:  "+entryDate);
+					Date toDate=DateUtil.stringToDate(entryDate);
+					if(Objects.nonNull(toDate))
+					{
+						date=DateUtil.addDaysInDate(day, toDate);
+					}
+					else {
+						date = DateUtil.addDaysInDate(day, new Date());						
+					}
+                    logger.info("expiry date: "+date);
 					visaDbs.get(0).setVisaExpiryDate(date);
 					visaDbs.get(0).setEndUserDB(endUserDB);
 					return new GenricResponse(0);
@@ -687,7 +694,33 @@ public class EnduserServiceImpl {
 					return new GenricResponse(0);
 				}
 			}
-		}else {
+		}
+		else {
+			SystemConfigurationDb defaultVisaExpirationDays = systemConfigurationDbRepository.getByTag(ConfigTags.default_visa_expiration_days);
+			int day = 0;
+			try {
+				day = Integer.parseInt(defaultVisaExpirationDays.getValue());
+			}catch (NumberFormatException e) {
+				logger.info("Config value 'default_visa_expiration_days' [" + defaultVisaExpirationDays.getValue() + "] must be cast to numeric value.");
+				return new GenricResponse(13, GenericMessageTags.DISCREPENCY_IN_CONFIG.getTag(), 
+						GenericMessageTags.DISCREPENCY_IN_CONFIG.getMessage(), "default_visa_expiration_days must be cast to numeric value");
+			}
+			Date date;
+			String entryDate=endUserDB.getEntryDateInCountry();
+			logger.info("entry date in country:  "+entryDate);
+			Date toDate=DateUtil.stringToDate(entryDate);
+			if(Objects.nonNull(toDate))
+			{
+				date=DateUtil.addDaysInDate(day, toDate);
+			}
+			else {
+				date = DateUtil.addDaysInDate(day, new Date());						
+			}
+            logger.info("expiry date: "+date);
+            List<VisaDb> visaDbs =new ArrayList<VisaDb>();
+            VisaDb visaDb=new VisaDb( 1,"NA","NA",entryDate,date,endUserDB);
+		    visaDbs.add(visaDb);
+		    endUserDB.setVisaDb(visaDbs);
 			return new GenricResponse(0);
 		}
 
@@ -872,7 +905,7 @@ public class EnduserServiceImpl {
 				}
 				// Send Notifications
 				if(Objects.nonNull(endUserDB)) {
-					if(Objects.nonNull(endUserDB.getEmail()) && !endUserDB.getEmail().isEmpty()) {
+					if(Objects.nonNull(endUserDB.getEmail()) && !endUserDB.getEmail().isEmpty() && !"NA".equalsIgnoreCase(endUserDB.getEmail())) {
 						rawMails.add(new RawMail(tag, 
 								endUserDB.getId(), 
 								43, 
@@ -923,7 +956,12 @@ public class EnduserServiceImpl {
 
 				userTypeId=0;
 				if(ceirActionRequest.getAction() == 0) {
-					visaDb.setStatus(RegularizeDeviceStatus.PENDING_APPROVAL_FROM_CEIR_ADMIN.getCode());
+			    	if(visaDb.getStatus() == RegularizeDeviceStatus.New.getCode()) {
+			    		visaDb.setStatus(RegularizeDeviceStatus.Processing.getCode());
+					}else {
+						visaDb.setStatus(RegularizeDeviceStatus.PENDING_APPROVAL_FROM_CEIR_ADMIN.getCode());
+					}
+
 					tag = "MAIL_TO_USER_ON_CEIR_DEVICE_APPROVAL";
 					txnId = endUserDB.getTxnId();
 					List<User> user= new ArrayList<User>();
@@ -931,8 +969,7 @@ public class EnduserServiceImpl {
 					UserProfile ceirUserProfile = new UserProfile();
 					ceirUserProfile.setUser(userStaticServiceImpl.getCeirAdmin());
 					sufeature="SYSTEM_ACCEPT";
-					if(Objects.nonNull(endUserDB.getEmail()) && !endUserDB.getEmail().isEmpty()) {
-						if(Objects.nonNull(endUserDB.getEmail()) && !endUserDB.getEmail().isEmpty()) {
+					if(Objects.nonNull(endUserDB.getEmail()) && !endUserDB.getEmail().isEmpty() && !"NA".equalsIgnoreCase(endUserDB.getEmail())) {
 							rawMails.add(new RawMail("Update_Visa_Approved_System", 
 									endUserDB.getId(), 
 									43, 
@@ -944,7 +981,7 @@ public class EnduserServiceImpl {
 									ReferTable.END_USER,
 									null,
 									"End User"));
-						}
+					
 					}	
 					for(User userData:user) {
 
@@ -965,18 +1002,19 @@ public class EnduserServiceImpl {
 					VisaUpdateDb visaOutput=updateVisaRepo.save(visaDb);
 					if(Objects.nonNull(visaOutput)) {
 						if(Objects.nonNull(rawMails) && !rawMails.isEmpty()) {
-							emailUtil.saveNotification(rawMails);	
+							if(visaOutput.getStatus()==RegularizeDeviceStatus.Processing.getCode()) {
+								emailUtil.saveNotification(rawMails);				
+							}
 						}						}
 					txnId = endUserDB.getTxnId();
 
 				}else if(ceirActionRequest.getAction() == 1){
-
 					sufeature="SYSTEM_REJECT";
 					visaDb.setStatus(RegularizeDeviceStatus.Rejected_By_System.getCode());
 					tag = "MAIL_TO_USER_ON_CEIR_DEVICE_DISAPPROVAL";	
 					receiverUserType = "End User";
 					txnId = endUserDB.getTxnId();
-					if(Objects.nonNull(endUserDB.getEmail()) && !endUserDB.getEmail().isEmpty()) {
+					if(Objects.nonNull(endUserDB.getEmail()) && !endUserDB.getEmail().isEmpty() && !"NA".equalsIgnoreCase(endUserDB.getEmail())) {
 						rawMails.add(new RawMail("Update_Visa_Reject_System", 
 								endUserDB.getId(), 
 								43, 
@@ -999,8 +1037,6 @@ public class EnduserServiceImpl {
 					}
 				}else {
 					return new GenricResponse(2, "unknown operation", "");
-
-
 				}
 			}
 			else {
@@ -1160,7 +1196,7 @@ public class EnduserServiceImpl {
 					uVFm = new UpdateVisaFileModel();
 					uVFm.setRequestedOn(utility.converedtlocalTime(visa.getCreatedOn()));
 					uVFm.setModifiedOn(utility.converedtlocalTime(visa.getModifiedOn()));
-					uVFm.setVisaExpiryDate(visa.getVisaExpiryDate());
+					uVFm.setVisaExpiryDate(DateUtil.dateToString(visa.getVisaExpiryDate()));
 					uVFm.setVisaNumber(visa.getVisaNumber());
 					uVFm.setVisaType(visa.getVisaTypeInterp());
 					uVFm.setStatus(visa.getStateInterp());
