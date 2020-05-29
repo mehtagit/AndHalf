@@ -12,7 +12,7 @@ public class StockUploadModel {
 	private int quantity;
 	private int stockStatus;
 	private String supplierId;
-	private Integer deviceQuantity;
+	private Integer deviceQuantity,featureId;
 	public Integer getDeviceQuantity() {
 		return deviceQuantity;
 	}
@@ -135,6 +135,12 @@ public class StockUploadModel {
 	public void setUser(StockUserModel user) {
 		this.user = user;
 	}
+	public Integer getFeatureId() {
+		return featureId;
+	}
+	public void setFeatureId(Integer featureId) {
+		this.featureId = featureId;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -158,6 +164,8 @@ public class StockUploadModel {
 		builder.append(supplierId);
 		builder.append(", deviceQuantity=");
 		builder.append(deviceQuantity);
+		builder.append(", featureId=");
+		builder.append(featureId);
 		builder.append(", userType=");
 		builder.append(userType);
 		builder.append(", remarks=");
@@ -180,9 +188,6 @@ public class StockUploadModel {
 		return builder.toString();
 	}
 
-	
-
-	
 	
 	
 }

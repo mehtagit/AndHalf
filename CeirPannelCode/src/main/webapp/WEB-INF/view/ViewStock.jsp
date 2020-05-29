@@ -113,11 +113,12 @@ button.modal-action.modal-close.waves-effect.waves-green.btn-flat.right {
 </style>
 </head>
 <body data-id="4" data-roleType="${usertype}" data-userID="${userid}"
-	data-userTypeID="${usertypeId}"
+	data-userTypeID="${usertypeId}" 
 	data-selectedRoleTypeId="${selectedRoleTypeId}"
 	data-selected-roleType="${selectedUserTypeId}"
 	data-stolenselected-roleType="${stolenselectedUserTypeId}"
 	session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}"
+	data-Source="${source}"
 	data-period="${period}" data-username="${username}">
 
 
@@ -639,12 +640,14 @@ button.modal-action.modal-close.waves-effect.waves-green.btn-flat.right {
 	<!-- Modal End -->
 	<!-- END MAIN -->
 <div id="tableOnModal" class="modal">
+		<div class="header-fixed header-fixed-style">
 		<button type="button"
 			class=" modal-action modal-close waves-effect waves-green btn-flat right"
 			data-dismiss="modal">&times;</button>
 		<h6 class="modal-header"><spring:message code="modal.header.viewHistory" /></h6>
-		
-		<div class="modal-content">
+		</div>
+		<div class="scrollDivHeight"></div>
+		<div class="modal-content modal-content-style">
 
 			<div class="row">
 				<table class="responsive-table striped display"

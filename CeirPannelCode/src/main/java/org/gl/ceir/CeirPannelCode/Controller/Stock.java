@@ -63,12 +63,12 @@ public class Stock {
 	
 	@RequestMapping(value={"/assignDistributor"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST})
 	public ModelAndView  viewStock( HttpSession session , @RequestParam(name="userTypeId",required=false) String selectedUserTypeId,@RequestParam(name="selectedRoleTypeId",required=false) Integer selectedRoleTypeId 
-			,@RequestParam(name="txnID",required = false) String txnID ) {
+			,@RequestParam(name="txnID",required = false) String txnID ,@RequestParam(name="source",required = false,defaultValue = "menu") String source) {
 ModelAndView mv = new ModelAndView();
 
 
 
-log.info("stock page entry point."+selectedRoleTypeId);
+log.info("stock page entry point."+selectedRoleTypeId+"==source=="+source);
 try {
 if(selectedUserTypeId==null)
 {
@@ -85,6 +85,7 @@ if(userTypelist.size()>1)
 else if(userTypelist.size()==1)
 {
 	log.info("2");
+mv.addObject("source",source);
 session.setAttribute("selectedUserTypeId", session.getAttribute("usertype"));
 session.setAttribute("selectedRoleTypeId", session.getAttribute("usertypeId"));
 mv.setViewName("ViewStock");
@@ -96,6 +97,7 @@ else {
 	log.info("selectedRoleTypeId=="+selectedRoleTypeId);
 	session.setAttribute("selectedUserTypeId", selectedUserTypeId);
 	session.setAttribute("selectedRoleTypeId", selectedRoleTypeId);
+	mv.addObject("source",source);
 	mv.setViewName("ViewStock");
 
 }}
@@ -103,6 +105,7 @@ catch (Exception e) {
 	// TODO: handle exception
 	log.info("this is catch block session is blank or something went wrong.");
 }
+		
 		
 		return mv; 
 	}
@@ -403,7 +406,8 @@ catch (Exception e) {
 			HttpSession session,
 			@RequestParam(name="pageSize") Integer pageSize,
 			@RequestParam(name="pageNo") Integer pageNo,
-			@RequestParam(name="roleType") String roleType)
+			@RequestParam(name="roleType") String roleType,
+			@RequestParam(name="source")String source)
 	{
 		log.info("stockStartDate=="+stockStartDate+ " stockEndDate ="+stockEndDate+" stockTxnId="+stockTxnId+"StockStatus="+stockTxnId+"userType="+userType+"userTypeId="+userTypeId);
 		int userId= (int) session.getAttribute("userid"); 
@@ -419,10 +423,10 @@ catch (Exception e) {
 		filterRequest.setUserType(userType);
 		filterRequest.setUserTypeId(userTypeId);
 		filterRequest.setFeatureId(4);
-		
+		log.info("source=="+source);;
 		
 		log.info(" request passed to the stock exportTo Excel Api =="+filterRequest+" *********** pageSize"+pageSize+"  pageNo  "+pageNo);
-		Object	response= feignCleintImplementation.stockFilter(filterRequest, pageNo, pageSize, file);
+		Object	response= feignCleintImplementation.stockFilter(filterRequest, pageNo, pageSize, file,source);
 
 	   Gson gson= new Gson(); 
 	   String apiResponse = gson.toJson(response);

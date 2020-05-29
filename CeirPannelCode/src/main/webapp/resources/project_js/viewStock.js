@@ -1,4 +1,5 @@
 var period= $("body").attr("data-period");	
+var sourceParam="";
 var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 
 		$.i18n().locale = lang;
@@ -23,6 +24,7 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 	$(document).ready(function(){
 		$('div#initialloader').fadeIn('fast');
 			filter(lang);
+		
 			sessionStorage.removeItem("session-value");
 		pageRendering()
 	});
@@ -323,20 +325,24 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 		$(".lean-overlay").remove();
 
 	}
-
+/*	var sourceParam=$("body").attr("data-Source");*/
 	var sourceType =localStorage.getItem("sourceType");
 	var currentRoleType = $("body").attr("data-selected-roleType"); 
 	//alert("sourceType<><><><>"+sourceType);
 	//console.log("currentRoleType<><><><>"+currentRoleType);
-	function filter(lang){
+	function filter(lang,sourceParam){
+	if(sourceParam==undefined)
+		{
+		sourceParam="menu";
+		}
 		if((currentRoleType=="Importer" || currentRoleType=="Retailer" || currentRoleType=="Distributor" || currentRoleType=="Manufacturer") && sourceType !="viaStock" ){
-		Datatable('headers?lang='+lang+'&type=stockHeaders','stockData');
+		Datatable('headers?lang='+lang+'&type=stockHeaders','stockData?source='+sourceParam);
 		}else if(currentRoleType=="Custom" && sourceType !="viaStock"){
-		Datatable('./headers?lang='+lang+'&type=customStockHeaders','stockData')
+		Datatable('./headers?lang='+lang+'&type=customStockHeaders','stockData?source='+sourceParam)
 		}else if(currentRoleType=="CEIRAdmin" && sourceType !="viaStock"){
-		Datatable('./headers?lang='+lang+'&type=adminStockHeaders','stockData')
+		Datatable('./headers?lang='+lang+'&type=adminStockHeaders','stockData?source='+sourceParam)
 		}else if((currentRoleType=="Importer"|| currentRoleType=="Retailer" || currentRoleType=="Distributor" || currentRoleType=="Custom") && sourceType =="viaStock"){
-		Datatable('./headers?lang='+lang+'&type=stockcheckHeaders','stockData?sourceType=viaStock')
+		Datatable('./headers?lang='+lang+'&type=stockcheckHeaders','stockData?sourceType=viaStock&source='+sourceParam)
 		}
 		localStorage.removeItem('sourceType');
 	}
@@ -366,7 +372,8 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 				"txnId":txn,
 				"consignmentStatus":parseInt($('#StockStatus').val()),
 				"displayName" : $('#name').val(),
-				"filteredUserType" : filereduserType
+				"filteredUserType" : filereduserType,
+				"source":$("body").attr("data-Source")
 		}
 		if(lang=='km'){
 			var langFile='./resources/i18n/khmer_datatable.json';
@@ -757,7 +764,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 		var roleType = role;
 		var currentRoleType = $("body").attr("data-stolenselected-roleType");	
 		var userType = role;
-		
+		var sourceParam=$("body").attr("data-Source");
 		//var userTypeId = $("body").attr("data-userTypeID");
 		var selectedRoleTypeId=$("body").attr("data-selectedRoleTypeId");
 		//alert("selectedRoleTypeId="+selectedRoleTypeId);
@@ -778,7 +785,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 		var pageSize =info.length;
 		console.log("--------"+pageSize+"---------"+pageNo);
 		console.log("stockStartDate  ="+stockStartDate+"  stockEndDate=="+stockEndDate+"  stockTxnId="+stockTxnId+" StockStatus ="+StockStatus+" roleType="+$("body").attr("data-roleType")+"  userType="+role);
-		window.location.href="./exportStock?stockStartDate="+stockStartDate+"&stockEndDate="+stockEndDate+"&stockTxnId="+stockTxnId+"&StockStatus="+StockStatus+"&userType="+userType+"&userTypeId="+selectedRoleTypeId+"&pageSize="+pageSize+"&pageNo="+pageNo+"&roleType="+roleType;
+		window.location.href="./exportStock?stockStartDate="+stockStartDate+"&stockEndDate="+stockEndDate+"&stockTxnId="+stockTxnId+"&StockStatus="+StockStatus+"&userType="+userType+"&userTypeId="+selectedRoleTypeId+"&pageSize="+pageSize+"&pageNo="+pageNo+"&roleType="+roleType+'&source='+sourceParam;
 	}
 	
 	function fileTypeValueChanges() {

@@ -29,7 +29,7 @@ public interface DashboardFeignClient {
 	//stock/countAndQuantity  feign  controller
 	@RequestMapping(value="/stock/countAndQuantity" ,method=RequestMethod.GET) 
 	public RequestCountAndQuantity stockNotification(@RequestParam(value = "userId") Integer userId,
-			@RequestParam(name="source",defaultValue = "dashboard",required = false) String source,@RequestParam(value = "featureId") Integer featureId,@RequestParam(value = "userTypeId") Integer userTypeId,@RequestParam(value = "userType") String userType) ;
+			@RequestParam(value = "featureId") Integer featureId,@RequestParam(value = "userTypeId") Integer userTypeId,@RequestParam(value = "userType") String userType,@RequestParam(name="source",defaultValue = "dashboard",required = false) String source) ;
 
 	//stolen/recovery countAndQuantity  feign  controller
 	@RequestMapping(value="/stakeholder/count" ,method=RequestMethod.GET) 

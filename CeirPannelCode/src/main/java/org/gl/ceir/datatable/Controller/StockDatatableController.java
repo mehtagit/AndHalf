@@ -52,11 +52,12 @@ public class StockDatatableController {
 	IconsState iconState;
 
 	@PostMapping("stockData")
-	public ResponseEntity<?> viewStockList(@RequestParam(name="type",defaultValue = "stock",required = false) String role,@RequestParam(name="sourceType",required = false) String sourceType, HttpServletRequest request,HttpSession session) {	 		
+	public ResponseEntity<?> viewStockList(@RequestParam(name="type",defaultValue = "stock",required = false) String role,@RequestParam(name="sourceType",required = false) String sourceType, HttpServletRequest request,HttpSession session,
+			@RequestParam(name="source",required = false) String sourceParam) {	 		
 		// Data set on this List
 		List<List<Object>> finalList=new ArrayList<List<Object>>();
 
-		log.info("session value user Type=="+session.getAttribute("usertype"));
+		log.info("session value user Type=="+session.getAttribute("usertype")+"==sourceParam=="+sourceParam);
 		String userType = (String) session.getAttribute("usertype");
 		//FilterRequest filterrequest = request.getParameter("FilterRequest");
 		String filter = request.getParameter("filter");
@@ -69,7 +70,7 @@ public class StockDatatableController {
 		// list provided via Back-end process
 
 		filterrequest.setSearchString(request.getParameter("search[value]"));
-		Object response = feignCleintImplementation.stockFilter(filterrequest,pageNo,pageSize,exportFile);
+		Object response = feignCleintImplementation.stockFilter(filterrequest,pageNo,pageSize,exportFile,sourceParam);
 		log.info("request passed to the filter api  ="+filterrequest);
 		log.info("response::::::::::::::::"+response);
 		try {		
@@ -255,7 +256,7 @@ public class StockDatatableController {
 		
 			log.info("sourceType render---2------" +sourceType);	
 			if("Custom".equals(userType)) {
-				String[] names= {"HeaderButton",Translator.toLocale("button.assignStock"),"./openUploadStock?reqType=formPage","btnLink", "FilterButton",Translator.toLocale("button.filter"),"filter("+ConfigParameters.languageParam+")","submitFilter"};
+				String[] names= {"HeaderButton",Translator.toLocale("button.assignStock"),"./openUploadStock?reqType=formPage","btnLink", "FilterButton",Translator.toLocale("button.filter"),"filter("+ConfigParameters.languageParam+",'filter')","submitFilter"};
 
 				for(int i=0; i< names.length ; i++) {
 					button = new Button();
@@ -269,7 +270,7 @@ public class StockDatatableController {
 					buttonList.add(button);
 				}
 			}else{
-				String[] names= {"HeaderButton",Translator.toLocale("button.uploadStock"),"./openUploadStock?reqType=formPage","btnLink","FilterButton", Translator.toLocale("button.filter"),"filter("+ConfigParameters.languageParam+")","submitFilter"};
+				String[] names= {"HeaderButton",Translator.toLocale("button.uploadStock"),"./openUploadStock?reqType=formPage","btnLink","FilterButton", Translator.toLocale("button.filter"),"filter("+ConfigParameters.languageParam+",'filter')","submitFilter"};
 				for(int i=0; i< names.length ; i++) {
 					button = new Button();
 					button.setType(names[i]);
