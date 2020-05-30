@@ -496,6 +496,13 @@ public class ConsignmentServiceImpl {
 			WebActionDb webActionDb = null;
 
 			ConsignmentMgmt consignmentMgmt = consignmentRepository.getByTxnId(consignmentUpdateRequest.getTxnId());
+			
+		
+			
+			logger.info("consignmentMgmt.getExpectedArrivalPort()::::::"+consignmentMgmt.getExpectedArrivalPort());
+			logger.info("consignmentMgmt.getPortAddress():::::::::::::::::"+consignmentMgmt.getPortAddress());
+			
+
 			logger.debug("Accept/Reject Consignment : " + consignmentMgmt);
 			currentStatus = consignmentMgmt.getConsignmentStatus();
 
@@ -527,6 +534,13 @@ public class ConsignmentServiceImpl {
 						else {
 							response = userFeignClient.usertypeStatus(7);
 							logger.info("FEIGN : response for validatePeriod " + response);
+							
+							/*
+							consignmentMgmt.getExpectedArrivalPort();
+							consignmentMgmt.getPortAddress();
+							*/
+							
+							
 							if(response.getErrorCode() == 200) {
 								nextStatus=ConsignmentStatus.PENDING_APPROVAL_FROM_CUSTOMS.getCode();
 							}

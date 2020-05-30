@@ -807,4 +807,6 @@ public class ConfigurationManagementServiceImpl {
 				policyConfigurationDb.setStatusInterp(interpSetter.setConfigInterp(Tags.IS_ACTIVE, policyConfigurationDb.getStatus()));
 			}
 
+	
+	
 }
