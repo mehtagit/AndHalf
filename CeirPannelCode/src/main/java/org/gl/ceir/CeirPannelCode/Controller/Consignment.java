@@ -101,10 +101,8 @@ private final Logger log = LoggerFactory.getLogger(getClass());
 @RequestMapping(value=
 {"/viewConsignment"},method={org.springframework.web.bind.annotation.
 RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST})
-public ModelAndView viewConsignment(HttpSession session,@RequestParam(name="txnID",required = false) String txnID) {
+public ModelAndView viewConsignment(HttpSession session,@RequestParam(name="txnID",required = false) String txnID,@RequestParam(name="source",defaultValue = "menu",required = false) String source) {
 ModelAndView mv = new ModelAndView();
-
-
 
 log.info(" view consignment entry point................."); 
 mv.setViewName("viewConsignment");
@@ -114,87 +112,6 @@ return mv;
 
 
 
-/*
-* @RequestMapping(value=
-* {"/filterConsignments"},method={org.springframework.web.bind.annotation.
-* RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}
-* ) public @ResponseBody List<ConsignmentModel>filterConsignment(@RequestBody
-* FilterRequest filterRequest) { filterRequest.setUserId("1");
-* log.info("view consignment filter entry point.************"+filterRequest);
-* List<ConsignmentModel>
-* consignmentdetails=feignCleintImplementation.consignmentFilter(filterRequest)
-* ; log.info("fillter Data=="+consignmentdetails);
-* log.info(" view consignment exit point."); return consignmentdetails; }
-* 
-*/
-
-
-
-/*
-* @RequestMapping(value=
-* {"/filterConsignment"},method={org.springframework.web.bind.annotation.
-* RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}
-* ) public @ResponseBody List<ConsignmentModel>filterConsignment(@RequestBody
-* FilterRequest filterRequest, HttpSession session) {
-* log.info("coming in controller+++++");
-* 
-* 
-* String userid= session.getAttribute("userid").toString();
-* log.info("user id from session="+userid);
-* filterRequest.setUserId(Integer.parseInt(userid));
-* 
-* log.info("filterRequest=="+filterRequest);
-* 
-* session.setAttribute("startDate", filterRequest.getStartDate());
-* session.setAttribute("endDate",filterRequest.getEndDate());
-* session.setAttribute("consignmentStatus",
-* filterRequest.getConsignmentStatus()); session.setAttribute("taxPaidStatus",
-* filterRequest.getTaxPaidStatus());
-* 
-* log.info("session value=="+session.getAttribute("consignmentStatus"));
-* 
-* if(session.getAttribute("startDate")!=null
-* ||session.getAttribute("endDate")!=null||
-* session.getAttribute("consignmentStatus")!=null ||
-* session.getAttribute("taxPaidStatus")!=null ) {
-* 
-* log.info("session is available atleast in one parameters");
-* 
-* filterRequest.setConsignmentStatus((int)session.getAttribute(
-* "consignmentStatus")); filterRequest.setEndDate((String)
-* session.getAttribute("startdate")); filterRequest.setStartDate((String)
-* session.getAttribute("endDate")); filterRequest.setTaxPaidStatus((String)
-* session.getAttribute("taxPaidStatus")); }
-* 
-* else { log.info("session is not present consignment value ="+filterRequest);
-* 
-* }
-* 
-* 
-* 
-* 
-* log.info("view consignment filter entry point."+filterRequest);
-* List<ConsignmentModel>
-* consignmentdetails=feignCleintImplementation.consignmentFilter(filterRequest)
-* ; log.info("fillter Data=="+consignmentdetails);
-* log.info(" view consignment exit point."); return consignmentdetails; }
-*/
-
-
-/*
-* @RequestMapping(value={"/viewConsignment"},method={org.springframework.web.
-* bind.annotation.
-* RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}
-* ) public ModelAndView viewConsignment() { ModelAndView modelAndView=new
-* ModelAndView("viewConsignment"); return modelAndView; }
-* 
-* @GetMapping
-* 
-* @RequestMapping("/viewConsignmentList" ) public ResponseEntity<?>
-* viewConsignmentList() { long id=1; List<ConsignmentModel>
-* consignmentdetails=feignCleintImplementation.consignmentList(id); return new
-* ResponseEntity<>(consignmentdetails, HttpStatus.OK); }
-*/
 
 @RequestMapping(value= {"/registerConsignment"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}) 
 public @ResponseBody GenricResponse registerConsignment(@RequestParam(name="supplierId",required = false) String supplierId,@RequestParam(name="supplierName",required = false) String supplierName
@@ -651,7 +568,7 @@ public String exportToExcel(@RequestParam(name="consignmentStartDate",required =
 	filterRequest.setFeatureId(3);
 	filterRequest.setRoleType(userType);
 	log.info(" request passed to the exportTo Excel Api =="+filterRequest+" *********** pageSize"+pageSize+"  pageNo  "+pageNo);
-	Object	response= feignCleintImplementation.consignmentFilter(filterRequest, pageNo, pageSize, file);
+	Object	response= feignCleintImplementation.consignmentFilter(filterRequest, pageNo, pageSize, file,"filter");
 
    Gson gson= new Gson(); 
    String apiResponse = gson.toJson(response);

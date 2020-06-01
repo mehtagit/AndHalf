@@ -19,7 +19,7 @@ public class Register_UploadPaidStatus {
 	private String country,district,commune,village, nationality,passportFileName,txnId;
 	private AllRequest auditParameters;
 	private List<UplodPaidStatusModel> regularizeDeviceDbs;
-	private Long firstImei;
+	private String  firstImei;
 	private Integer taxPaidStatus,postalCode;
 	public String getFirstName() {
 		return firstName;
@@ -129,12 +129,7 @@ public class Register_UploadPaidStatus {
 	public void setRegularizeDeviceDbs(List<UplodPaidStatusModel> regularizeDeviceDbs) {
 		this.regularizeDeviceDbs = regularizeDeviceDbs;
 	}
-	public Long getFirstImei() {
-		return firstImei;
-	}
-	public void setFirstImei(Long firstImei) {
-		this.firstImei = firstImei;
-	}
+	
 	public Integer getTaxPaidStatus() {
 		return taxPaidStatus;
 	}
@@ -156,7 +151,12 @@ public class Register_UploadPaidStatus {
 		this.auditParameters = auditParameters;
 	}
 	
-	
+	public String getTxnId() {
+		return txnId;
+	}
+	public void setTxnId(String txnId) {
+		this.txnId = txnId;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -194,6 +194,8 @@ public class Register_UploadPaidStatus {
 		builder.append(nationality);
 		builder.append(", passportFileName=");
 		builder.append(passportFileName);
+		builder.append(", txnId=");
+		builder.append(txnId);
 		builder.append(", auditParameters=");
 		builder.append(auditParameters);
 		builder.append(", regularizeDeviceDbs=");
@@ -204,16 +206,14 @@ public class Register_UploadPaidStatus {
 		builder.append(taxPaidStatus);
 		builder.append(", postalCode=");
 		builder.append(postalCode);
-		builder.append(", txnId=");
-		builder.append(txnId);
 		builder.append("]");
 		return builder.toString();
 	}
-	public String getTxnId() {
-		return txnId;
+	public String getFirstImei() {
+		return firstImei;
 	}
-	public void setTxnId(String txnId) {
-		this.txnId = txnId;
+	public void setFirstImei(String firstImei) {
+		this.firstImei = firstImei;
 	}
 
 

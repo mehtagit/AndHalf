@@ -88,6 +88,7 @@ else if(userTypelist.size()==1)
 mv.addObject("source",source);
 session.setAttribute("selectedUserTypeId", session.getAttribute("usertype"));
 session.setAttribute("selectedRoleTypeId", session.getAttribute("usertypeId"));
+session.setAttribute("filterSource", source);
 mv.setViewName("ViewStock");
 }
 }
@@ -97,8 +98,10 @@ else {
 	log.info("selectedRoleTypeId=="+selectedRoleTypeId);
 	session.setAttribute("selectedUserTypeId", selectedUserTypeId);
 	session.setAttribute("selectedRoleTypeId", selectedRoleTypeId);
+	session.setAttribute("filterSource", source);
 	mv.addObject("source",source);
 	mv.setViewName("ViewStock");
+	
 
 }}
 catch (Exception e) {

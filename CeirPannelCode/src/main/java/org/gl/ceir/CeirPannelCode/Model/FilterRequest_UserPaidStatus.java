@@ -3,7 +3,7 @@ package org.gl.ceir.CeirPannelCode.Model;
 public class FilterRequest_UserPaidStatus {
 	
 	private Integer id, deviceIdType,deviceType,taxPaidStatus,consignmentStatus,action,featureId,roleTypeUserId,userId,userTypeId,status;
-	private String createdOn,startDate,endDate,modifiedOn,nid,remarks,userType,txnId,origin,searchString,userName;
+	private String createdOn,startDate,endDate,modifiedOn,nid,remarks,userType,txnId,origin,searchString,username;
 	  private String imei1;
 	public Integer getDeviceIdType() {
 		return deviceIdType;
@@ -137,11 +137,12 @@ public class FilterRequest_UserPaidStatus {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public String getUserName() {
-		return userName;
+	
+	public String getUsername() {
+		return username;
 	}
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 	@Override
 	public String toString() {
@@ -188,8 +189,8 @@ public class FilterRequest_UserPaidStatus {
 		builder.append(origin);
 		builder.append(", searchString=");
 		builder.append(searchString);
-		builder.append(", userName=");
-		builder.append(userName);
+		builder.append(", username=");
+		builder.append(username);
 		builder.append(", imei1=");
 		builder.append(imei1);
 		builder.append("]");
