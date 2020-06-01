@@ -1025,7 +1025,7 @@ public class IconsState {
 	public String dashboardIcon(String userStatus,Integer featureID,String txnID,Integer userID,String roleType) {
 		executePostConstruct();
 		// URL link
-		String viewAction = featureID == 3 ?"./Consignment/viewConsignment?txnID="+txnID+"" :
+		String viewAction = featureID == 3 ?"./Consignment/viewConsignment?source=noti&txnID="+txnID+"" :
 			featureID == 4 ? "./assignDistributor?txnID="+txnID+"&userTypeId="+roleType+"&source=noti":
 				featureID == 0 ? "./stolenRecovery?txnID="+txnID+"" :
 					featureID == 6 ? "./grievanceManagement?txnID="+txnID+"" :

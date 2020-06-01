@@ -24,7 +24,7 @@ public interface DashboardFeignClient {
 
 	//countAndQuantity  feign  controller
 	@RequestMapping(value="/consignment/countAndQuantity" ,method=RequestMethod.GET) 
-	public RequestCountAndQuantity consignmentNotification(@RequestParam(value = "userId") Integer userId,@RequestParam(value = "featureId") Integer featureId,@RequestParam(value = "userTypeId") Integer userTypeId,@RequestParam(value = "userType") String userType) ;
+	public RequestCountAndQuantity consignmentNotification(@RequestParam(value = "userId") Integer userId,@RequestParam(value = "featureId") Integer featureId,@RequestParam(value = "userTypeId") Integer userTypeId,@RequestParam(value = "userType") String userType,	@RequestParam(name="source",defaultValue = "dashboard",required = false) String source) ;
 
 	//stock/countAndQuantity  feign  controller
 	@RequestMapping(value="/stock/countAndQuantity" ,method=RequestMethod.GET) 
@@ -54,5 +54,13 @@ public interface DashboardFeignClient {
 		///TypeApproved/count
 		@RequestMapping(value="/TypeApproved/count" ,method=RequestMethod.GET) 
 		public RequestCountAndQuantity typeApprovedCount(@RequestParam(value = "requestType") String requestType,@RequestParam(value = "userId") Integer userId,@RequestParam(value = "featureId") Integer featureId,@RequestParam(value = "userTypeId") Integer userTypeId,@RequestParam(value = "userType") String userType) ;
-
+		
+		
+		@RequestMapping(value="/device/countAndQuantity" ,method=RequestMethod.GET) 
+		public RequestCountAndQuantity deviceCountAndQuantity(@RequestParam(value = "requestType") String requestType,@RequestParam(value = "userId") Integer userId,@RequestParam(value = "featureId") Integer featureId,@RequestParam(value = "userTypeId") Integer userTypeId,@RequestParam(value = "userType") String userType) ;
+		
+		
 		}
+
+
+
