@@ -392,7 +392,7 @@ public class EnduserServiceImpl {
 			endUserDbRepository.save(endUserDBNew);
 
 			auditTrailRepository.save(new AuditTrail(endUserDBOld.getId(), "", 17L,
-					"End User", 0L,Features.REGISTER_DEVICE, SubFeatures.UPDATE, ""));
+					"End User", 0L,Features.REGISTER_DEVICE, SubFeatures.UPDATE, "","End User"));
 			logger.info("AUDIT : Saved update request in audit.");
 
 			return new GenricResponse(1, GenericMessageTags.USER_UPDATE_SUCCESS.getTag(), GenericMessageTags.USER_UPDATE_SUCCESS.getMessage(), nid);
@@ -408,7 +408,7 @@ public class EnduserServiceImpl {
 			VisaDb latestVisa = null;
 			// Check if request is null
 			auditTrailRepository.save(new AuditTrail(0, "", 17L, 
-					"End User", 43L, Features.UPDATE_VISA, SubFeatures.REQUEST, "",endUserDB.getTxnId()));
+					"End User", 43L, Features.UPDATE_VISA, SubFeatures.REQUEST, "",endUserDB.getTxnId(),"End User"));
 			logger.info("VisaUpdate [" + endUserDB.getTxnId() + "] saved in audit_trail.");
 
 			if(Objects.isNull(endUserDB.getNid())) {
@@ -453,7 +453,7 @@ public class EnduserServiceImpl {
 					VisaDb OldVisa=visaDbs.get(0); 	
 					VisaUpdateDb visaUpdateDb=new VisaUpdateDb(OldVisa.getVisaType(), OldVisa.getVisaNumber(),
 							latestVisa.getVisaFileName(), OldVisa.getEntryDateInCountry(), latestVisa.getVisaExpiryDate(),
-							0,endUserDB1.getId(),endUserDB.getTxnId(),endUserDB.getNid()); 
+							0,endUserDB1,endUserDB.getTxnId(),endUserDB.getNid()); 
 					String mailTag = "Update_Visa_Request";
 					List<RawMail> rawMails = new ArrayList<>();
 					Map<String, String> placeholderMap = new HashMap<String, String>();
@@ -462,7 +462,7 @@ public class EnduserServiceImpl {
 					rawMails.add(new RawMail(mailTag, endUserDB1.getId(), Long.valueOf(43), 
 							Features.UPDATE_VISA, SubFeatures.REQUEST, endUserDB1.getTxnId(), 
 							endUserDB1.getTxnId(), placeholderMap, ReferTable.END_USER, null, "End User"));
-					VisaUpdateDb visaDb=updateVisaRepository.findByUserId(endUserDB1.getId());
+					VisaUpdateDb visaDb=updateVisaRepository.findByEndUserDBData_Id(endUserDB1.getId());
 					if(visaDb!=null) { 
 						visaUpdateDb.setId(visaDb.getId());
 						visaUpdateDb.setCreatedOn(visaDb.getCreatedOn());
@@ -521,7 +521,7 @@ public class EnduserServiceImpl {
 			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), "", 
 					Long.valueOf(filterRequest.getUserTypeId()), filterRequest.getUserType(), 
 					Long.valueOf(filterRequest.getFeatureId()),
-					Features.MANAGE_USER, SubFeatures.VIEW, ""));
+					Features.MANAGE_USER, SubFeatures.VIEW, "",filterRequest.getUserType()));
 			logger.info("AUDIT : Saved view request in audit.");
 			return page;
 
@@ -614,7 +614,7 @@ public class EnduserServiceImpl {
 			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), "", 
 					Long.valueOf(filterRequest.getUserTypeId()), filterRequest.getUserType(), 
 					Long.valueOf(filterRequest.getFeatureId()),
-					Features.CONSIGNMENT, SubFeatures.VIEW, ""));
+					Features.CONSIGNMENT, SubFeatures.VIEW, "",filterRequest.getUserType()));
 			logger.info("AUDIT : Saved file export request in audit.");
 
 			return new FileDetails( fileName, filepath.getValue(), link.getValue() + fileName );
@@ -850,9 +850,14 @@ public class EnduserServiceImpl {
 				if(Objects.isNull(visaDb)) {
 					return new GenricResponse(1, "Visa Db is incorrect", "");				
 				}
-				endUserDB = endUserDbRepository.getById(visaDb.getUserId());
+				endUserDB = endUserDbRepository.getById(visaDb.getEndUserDBData().getId());
 
-				if(Objects.isNull(endUserDB.getVisaDb())) {
+				if(Objects.isNull(endUserDB)) {
+					logger.info("end user data should not be null.");
+					return new GenricResponse(3, GenericMessageTags.NULL_EndUser.getTag(), 
+							GenericMessageTags.NULL_VISA.getMessage(), null);
+				}
+				else if(Objects.isNull(endUserDB.getVisaDb())) {
 					logger.info("Request visa update should not be null.");
 					return new GenricResponse(3, GenericMessageTags.NULL_VISA.getTag(), 
 							GenericMessageTags.NULL_VISA.getMessage(), null);
@@ -870,7 +875,7 @@ public class EnduserServiceImpl {
 				if(Objects.nonNull(ceirActionRequest.getUsername())) {
 					username=ceirActionRequest.getUsername();		
 				}
-
+				visaDb.setApprovedBy(username);
 				if(ceirActionRequest.getAction() == 0) {
 					visaDb.setStatus(RegularizeDeviceStatus.APPROVED.getCode());
 					List<VisaDb> visaDbs = endUserDB.getVisaDb();
@@ -930,7 +935,7 @@ public class EnduserServiceImpl {
 					}
 				}
 				auditTrailRepository.save(new AuditTrail(userId, username, userTypeId,
-						ceirActionRequest.getUserType(), 43,Features.UPDATE_VISA, sufeature, "", txnId));
+						ceirActionRequest.getUserType(), 43,Features.UPDATE_VISA, sufeature, "", txnId,ceirActionRequest.getUserType()));
 
 			}
 			else if("CEIRSYSTEM".equalsIgnoreCase(ceirActionRequest.getUserType())){
@@ -938,7 +943,7 @@ public class EnduserServiceImpl {
 				if(Objects.isNull(visaDb)) {
 					return new GenricResponse(1, "transaction id is incorrect", "");				
 				}
-				endUserDB = endUserDbRepository.getById(visaDb.getUserId());
+				endUserDB = endUserDbRepository.getById(visaDb.getEndUserDBData().getId());
 
 				if(Objects.isNull(endUserDB.getVisaDb())) {
 					logger.info("Request visa update should not be null.");
@@ -1095,7 +1100,7 @@ public class EnduserServiceImpl {
 
 
 			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), filterRequest.getUserName(), 8L,
-					filterRequest.getUserType(), 43,Features.UPDATE_VISA, SubFeatures.VIEW_ALL, "","NA"));
+					filterRequest.getUserType(), 43,Features.UPDATE_VISA, SubFeatures.VIEW_ALL, "","NA",filterRequest.getUserType()));
 
 
 			for(VisaUpdateDb visa : page.getContent()) {
@@ -1112,6 +1117,9 @@ public class EnduserServiceImpl {
 				if(Objects.nonNull(visa.getVisaType()))
 				{
 					visa.setVisaTypeInterp(interpSetter.setConfigInterp(Tags.VISA_TYPE, visa.getVisaType()));	
+				}
+				if(Objects.nonNull(visa.getEndUserDBData())) {
+					visa.setUserId(visa.getEndUserDBData().getId());
 				}
 			}
 			return page;
@@ -1160,7 +1168,7 @@ public class EnduserServiceImpl {
 		try {
 			List<VisaUpdateDb> visaData = this.getAllVisaUpdate(filterRequest);
 			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), filterRequest.getUserName(), 8L,
-					filterRequest.getUserType(), 43,Features.UPDATE_VISA, SubFeatures.EXPORT, "","NA"));
+					filterRequest.getUserType(), 43,Features.UPDATE_VISA, SubFeatures.EXPORT, "","NA",filterRequest.getUserType()));
 
 			for(VisaUpdateDb visa : visaData) {
 				List<StateMgmtDb> statusList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
@@ -1226,11 +1234,11 @@ public class EnduserServiceImpl {
 			logger.info("inside end user data by id service and given data: "+filterRequest.getId());
 
 			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), filterRequest.getUserName(), 8L,
-					filterRequest.getUserType(), 43,Features.UPDATE_VISA, SubFeatures.VIEW, "","NA"));
+					filterRequest.getUserType(), 43,Features.UPDATE_VISA, SubFeatures.VIEW, "","NA",filterRequest.getUserType()));
 
 
 			if(Objects.nonNull(endUserDB)) {
-				VisaUpdateDb visaUpdateDb=updateVisaRepo.findByUserId(filterRequest.getId());
+				VisaUpdateDb visaUpdateDb=updateVisaRepo.findByEndUserDBData_Id(filterRequest.getId());
 				List<RegularizeDeviceDb> regulaizedList=new ArrayList<RegularizeDeviceDb>();
 				if(Objects.nonNull(endUserDB.getRegularizeDeviceDbs()))
 					for(RegularizeDeviceDb regularizeData:endUserDB.getRegularizeDeviceDbs()) {

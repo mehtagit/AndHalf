@@ -53,6 +53,7 @@ public class VisaDb implements Serializable {
 	
 	private String entryDateInCountry;
 	
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date visaExpiryDate;
 	
 	@Transient

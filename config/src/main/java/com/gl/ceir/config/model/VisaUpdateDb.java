@@ -7,12 +7,17 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.envers.Audited;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
@@ -28,9 +33,12 @@ public class VisaUpdateDb {
 	@CreationTimestamp
 	@Column(nullable = false, updatable = false)
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime createdOn;
 	
 	@UpdateTimestamp
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private LocalDateTime modifiedOn;
 	
 	@NotNull
@@ -45,6 +53,7 @@ public class VisaUpdateDb {
 	
 	private String entryDateInCountry;
 	
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date visaExpiryDate;
 	
 	@Transient
@@ -55,8 +64,14 @@ public class VisaUpdateDb {
 	@Transient
 	private String stateInterp;
 	
-
+    @Transient  
 	private long userId;
+	
+	@ManyToOne
+	@JoinColumn(name = "userId")
+	@JsonIgnore
+	EndUserDB endUserDBData;
+
 	
 	private String txnId;
 	
@@ -64,6 +79,7 @@ public class VisaUpdateDb {
 	 
 	private String nid;
 	
+    private String approvedBy;
 	
 	public String getRemark() {
 		return remark;
@@ -77,8 +93,17 @@ public class VisaUpdateDb {
 		super();
 	}
 
+	
+	public long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(long userId) {
+		this.userId = userId;
+	}
+
 	public VisaUpdateDb(@NotNull Integer visaType, String visaNumber, @NotNull String visaFileName,
-			String entryDateInCountry, Date visaExpiryDate, Integer status,long userId,String txnId,String nid) {
+			String entryDateInCountry, Date visaExpiryDate, Integer status,EndUserDB userId,String txnId,String nid) {
 		super();
 		this.visaType = visaType;
 		this.visaNumber = visaNumber;
@@ -86,7 +111,7 @@ public class VisaUpdateDb {
 		this.entryDateInCountry = entryDateInCountry;
 		this.visaExpiryDate = visaExpiryDate;
 		this.status = status;
-		this.userId=userId;
+		this.endUserDBData=userId;
 		this.txnId=txnId;
 		this.nid=nid;
 	}
@@ -181,13 +206,15 @@ public class VisaUpdateDb {
 		this.status = status;
 	}
 
-	
-	public long getUserId() {
-		return userId;
+
+
+
+	public EndUserDB getEndUserDBData() {
+		return endUserDBData;
 	}
 
-	public void setUserId(long userId) {
-		this.userId = userId;
+	public void setEndUserDBData(EndUserDB endUserDBData) {
+		this.endUserDBData = endUserDBData;
 	}
 
 	public String getStateInterp() {
@@ -215,6 +242,14 @@ public class VisaUpdateDb {
 		this.nid = nid;
 	}
 
+	public String getApprovedBy() {
+		return approvedBy;
+	}
+
+	public void setApprovedBy(String approvedBy) {
+		this.approvedBy = approvedBy;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -240,17 +275,16 @@ public class VisaUpdateDb {
 		builder.append(status);
 		builder.append(", stateInterp=");
 		builder.append(stateInterp);
-		builder.append(", userId=");
-		builder.append(userId);
 		builder.append(", txnId=");
 		builder.append(txnId);
 		builder.append(", remark=");
 		builder.append(remark);
 		builder.append(", nid=");
 		builder.append(nid);
+		builder.append(", approvedBy=");
+		builder.append(approvedBy);
 		builder.append("]");
 		return builder.toString();
 	}
-	
 	
 }

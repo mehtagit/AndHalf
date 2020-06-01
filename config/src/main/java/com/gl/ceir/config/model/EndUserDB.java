@@ -97,6 +97,11 @@ public class EndUserDB   {
 	@NotAudited
 	@OneToMany(mappedBy = "endUserDB", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<VisaDb> visaDb;
+
+	@NotAudited
+	@JsonIgnore
+	@OneToMany(mappedBy = "endUserDBData", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<VisaUpdateDb> visaUpdateDb;
 	
 	@Column(length = 1)
 	private String isVip="N";
@@ -352,6 +357,12 @@ public class EndUserDB   {
 	}
 	public void setEntryDateInCountry(String entryDateInCountry) {
 		this.entryDateInCountry = entryDateInCountry;
+	}
+	public List<VisaUpdateDb> getVisaUpdateDb() {
+		return visaUpdateDb;
+	}
+	public void setVisaUpdateDb(List<VisaUpdateDb> visaUpdateDb) {
+		this.visaUpdateDb = visaUpdateDb;
 	}
 	
 	@Override

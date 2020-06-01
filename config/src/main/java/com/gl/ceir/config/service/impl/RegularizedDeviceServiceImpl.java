@@ -641,11 +641,11 @@ public class RegularizedDeviceServiceImpl {
 			auditTrailRepository.save(new AuditTrail(userId, username, 17L,
 					data.getUserType(), 12,Features.REGISTER_DEVICE, SubFeatures.DELETE, "", data.getTxnId(),data.getUserType()));
 			logger.info("AUDIT : Saved request in audit.");
-
 			RegularizeDeviceDb regularizeDeviceDb = regularizedDeviceDbRepository.getByFirstImei(data.getImei());
 
 			if(Objects.nonNull(regularizeDeviceDb)) {
 				regularizeDeviceDb.setStatus(RegularizeDeviceStatus.WithDrawn_BY_CEIR_ADMIN.getCode());
+				regularizeDeviceDb.setApprovedBy(username);
 				regularizedDeviceDbRepository.save(regularizeDeviceDb);
 				return new GenricResponse(0, "Device have been deleted sucessfully.", regularizeDeviceDb.getFirstImei());
 			}else {
@@ -672,13 +672,16 @@ public class RegularizedDeviceServiceImpl {
             String username="";
 			RegularizeDeviceDb regularizeDeviceDb =new RegularizeDeviceDb();
 			if("CEIRADMIN".equalsIgnoreCase(ceirActionRequest.getUserType())){
+				
 				regularizeDeviceDb=regularizedDeviceDbRepository.getByFirstImei(ceirActionRequest.getImei1());
+				
 				logger.debug("Accept/Reject regularized Devices : " + regularizeDeviceDb);
 	            if(Objects.isNull(regularizeDeviceDb))
 	            {
 	            	return new GenricResponse(1, "First imei is incorrect", "");            	
 	            }
-				endUserDB = endUserDbRepository.getByNid(regularizeDeviceDb.getNid());
+
+	            endUserDB = endUserDbRepository.getByNid(regularizeDeviceDb.getNid());
 				placeholders.put("<Txn id>", regularizeDeviceDb.getTxnId());
 				placeholders.put("<First name>", endUserDB.getFirstName());
 
@@ -687,6 +690,7 @@ public class RegularizedDeviceServiceImpl {
                 if(Objects.nonNull(ceirActionRequest.getUsername())) {
                 	username=ceirActionRequest.getUsername();
                 }
+	            regularizeDeviceDb.setApprovedBy(username);
 				if(ceirActionRequest.getAction() == 0) {
 					regularizeDeviceDb.setStatus(RegularizeDeviceStatus.APPROVED.getCode());
 					tag = "MAIL_TO_USER_ON_CEIR_DEVICE_APPROVAL";
