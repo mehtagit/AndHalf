@@ -9,8 +9,8 @@ public interface UpdateVisaRepository extends JpaRepository<VisaUpdateDb, Long>,
 
 
 	public VisaUpdateDb save(VisaUpdateDb visa);
-	public VisaUpdateDb findByUserId(long id);
+	public VisaUpdateDb findByEndUserDBData_Id(long id);
 	public VisaUpdateDb getById(long id);
-	public VisaUpdateDb getByUserId(long id);
+	public VisaUpdateDb getByEndUserDBData_Id(long id);
 	public VisaUpdateDb getByTxnId(String txnId);
 }

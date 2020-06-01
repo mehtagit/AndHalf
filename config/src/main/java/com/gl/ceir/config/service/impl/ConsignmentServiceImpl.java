@@ -496,13 +496,6 @@ public class ConsignmentServiceImpl {
 			WebActionDb webActionDb = null;
 
 			ConsignmentMgmt consignmentMgmt = consignmentRepository.getByTxnId(consignmentUpdateRequest.getTxnId());
-			
-		
-			
-			logger.info("consignmentMgmt.getExpectedArrivalPort()::::::"+consignmentMgmt.getExpectedArrivalPort());
-			logger.info("consignmentMgmt.getPortAddress():::::::::::::::::"+consignmentMgmt.getPortAddress());
-			
-
 			logger.debug("Accept/Reject Consignment : " + consignmentMgmt);
 			currentStatus = consignmentMgmt.getConsignmentStatus();
 
@@ -534,13 +527,6 @@ public class ConsignmentServiceImpl {
 						else {
 							response = userFeignClient.usertypeStatus(7);
 							logger.info("FEIGN : response for validatePeriod " + response);
-							
-							/*
-							consignmentMgmt.getExpectedArrivalPort();
-							consignmentMgmt.getPortAddress();
-							*/
-							
-							
 							if(response.getErrorCode() == 200) {
 								nextStatus=ConsignmentStatus.PENDING_APPROVAL_FROM_CUSTOMS.getCode();
 							}
@@ -562,7 +548,7 @@ public class ConsignmentServiceImpl {
 								SubFeatures.ACCEPT,
 								consignmentUpdateRequest.getTxnId(),
 								consignmentMgmt.getTxnId(),
-								placeholderMap, null, "Importer");
+								placeholderMap, null, "Importer", ReferTable.USERS);
 					}
 
 					else if("CUSTOM".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())) {
@@ -609,7 +595,8 @@ public class ConsignmentServiceImpl {
 								consignmentMgmt.getTxnId(),
 								placeholderMap, 
 								null, 
-								"Importer");
+								"Importer",
+								ReferTable.USERS);
 						emailUtil.saveNotification("Consignment_Approved_CustomCEIRAdmin_Email_Message", 
 								ceirUserProfile,
 								consignmentUpdateRequest.getFeatureId(),
@@ -619,7 +606,8 @@ public class ConsignmentServiceImpl {
 								consignmentMgmt.getTxnId(),
 								placeholderMap, 
 								null, 
-								"CEIRAdmin");
+								"CEIRAdmin",
+								ReferTable.USERS);
 
 					}
 					else if(CEIRSYSTEM.equalsIgnoreCase(consignmentUpdateRequest.getRoleType())) {
@@ -702,7 +690,8 @@ public class ConsignmentServiceImpl {
 								consignmentMgmt.getTxnId(),
 								placeholderMap, 
 								null, 
-								"Importer");
+								"Importer",
+								ReferTable.USERS);
 						emailUtil.saveNotification("Consignment_Approved_DRTCEIRAdmin_Email_Message", 
 								ceirUserProfile,
 								consignmentUpdateRequest.getFeatureId(),
@@ -712,7 +701,8 @@ public class ConsignmentServiceImpl {
 								consignmentMgmt.getTxnId(),
 								placeholderMap, 
 								null, 
-								"CEIRAdmin");
+								"CEIRAdmin",
+								ReferTable.USERS);
 
 					}
 					else {
@@ -743,7 +733,8 @@ public class ConsignmentServiceImpl {
 							consignmentMgmt.getTxnId(),
 							placeholderMap, 
 							null,
-							"Importer");
+							"Importer",
+							ReferTable.USERS);
 
 				}
 				else if("CUSTOM".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())) {
@@ -784,7 +775,8 @@ public class ConsignmentServiceImpl {
 							consignmentMgmt.getTxnId(),
 							placeholderMap, 
 							null,
-							"Importer");
+							"Importer",
+							ReferTable.USERS);
 
 					emailUtil.saveNotification("CONSIGNMENT_REJECTED_BY_CUSTOM_TO_CEIR_EMAIL", 
 							ceirUserProfile, 
@@ -795,7 +787,8 @@ public class ConsignmentServiceImpl {
 							consignmentMgmt.getTxnId(),
 							placeholderMap, 
 							null,
-							"Importer");
+							"Importer", 
+							ReferTable.USERS);
 
 				}
 				else if(CEIRSYSTEM.equalsIgnoreCase(consignmentUpdateRequest.getRoleType())) {
@@ -863,7 +856,8 @@ public class ConsignmentServiceImpl {
 							consignmentMgmt.getTxnId(),
 							placeholderMap, 
 							null,
-							"Importer");
+							"Importer",
+							ReferTable.USERS);
 
 					emailUtil.saveNotification("CONSIGNMENT_REJECTED_BY_DRT_TO_CEIR_EMAIL'", 
 							ceirUserProfile, 
@@ -874,7 +868,8 @@ public class ConsignmentServiceImpl {
 							consignmentMgmt.getTxnId(),
 							placeholderMap, 
 							null,
-							"Importer");
+							"Importer",
+							ReferTable.USERS);
 
 				}
 				else {

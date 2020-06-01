@@ -45,7 +45,6 @@ public class CommonFunction {
 	public Boolean hasDuplicateImeiInRequest(List<RegularizeDeviceDb> regularizeDeviceDbs) {
 		logger.info("regularized device list check for duplicate imei"+regularizeDeviceDbs);
 		HashSet<String> set = new HashSet<>();
-
 		for(RegularizeDeviceDb device : regularizeDeviceDbs) {
 			if(device.getFirstImei()!=null && !device.getFirstImei().isEmpty()) {
 				if(!set.add(device.getFirstImei())) {

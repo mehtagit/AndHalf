@@ -14,6 +14,7 @@ import com.gl.ceir.config.model.CheckImeiResponse;
 import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.ImeiValidate;
 import com.gl.ceir.config.model.constants.Features;
+import com.gl.ceir.config.model.constants.GenericMessageTags;
 import com.gl.ceir.config.model.constants.SubFeatures;
 import com.gl.ceir.config.repository.AuditTrailRepository;
 @Service
@@ -55,14 +56,14 @@ public class CheckDeviceImpl {
 		    	        return response;
 		        	}
 		        	else {
-				        GenricResponse response=new GenricResponse(409,resp.getErrorMessage(),"");
+				        GenricResponse response=new GenricResponse(409,resp.getErrorMessage(),"","");
 				        
 				        return response;
 		        		
 		        	}
 		        }
 		        else {
-			        GenricResponse response=new GenricResponse(500,"Oops Somthing wrong happened","");
+			        GenricResponse response=new GenricResponse(500,GenericMessageTags.COMMAN_FAIL_MSG.getTag(),"Oops Somthing wrong happened","");
 			        
 			        return response;
 		        	
@@ -72,7 +73,7 @@ public class CheckDeviceImpl {
 	        {
 	        	logger.info("error occurs");
 	        	logger.info(e.toString());
-		        GenricResponse response=new GenricResponse(500,"Oops Somthing wrong happened","");
+		        GenricResponse response=new GenricResponse(500,GenericMessageTags.COMMAN_FAIL_MSG.getTag(),"Oops Somthing wrong happened","");
 		        return response;
 
 	        }
