@@ -213,12 +213,13 @@ public class ConsignmentServiceImpl {
 	}
 
 	public List<ConsignmentMgmt> getFilterConsignments(FilterRequest consignmentMgmt, Integer pageNo, Integer pageSize) {
+		List<StateMgmtDb> statusList = null;
 		try {
 			Pageable pageable = PageRequest.of(pageNo, pageSize);
-
+			statusList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(consignmentMgmt.getFeatureId(), consignmentMgmt.getUserTypeId());
 			System.out.println("dialect : " + propertiesReader.dialect);
 
-			return consignmentRepository.findAll(buildSpecification(consignmentMgmt, null).build(), pageable).getContent();
+			return consignmentRepository.findAll(buildSpecification(consignmentMgmt, statusList ,null).build(), pageable).getContent();
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
@@ -239,7 +240,7 @@ public class ConsignmentServiceImpl {
 			List<StateMgmtDb> statusList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
 			logger.debug("statusList " + statusList);
 
-			List<ConsignmentMgmt> consignmentMgmts = consignmentRepository.findAll(buildSpecification(filterRequest, statusList).build(), new Sort(Sort.Direction.DESC, "modifiedOn"));
+			List<ConsignmentMgmt> consignmentMgmts = consignmentRepository.findAll(buildSpecification(filterRequest, statusList,null).build(), new Sort(Sort.Direction.DESC, "modifiedOn"));
 			logger.debug("consignmentMgmts " + consignmentMgmts);
 
 			for(ConsignmentMgmt consignmentMgmt2 : consignmentMgmts) {
@@ -270,7 +271,7 @@ public class ConsignmentServiceImpl {
 	}
 
 	public Page<ConsignmentMgmt> getFilterPaginationConsignments(FilterRequest consignmentMgmt, Integer pageNo, 
-			Integer pageSize) {
+			Integer pageSize,String source) {
 
 		List<StateMgmtDb> statusList = null;
 
@@ -279,7 +280,7 @@ public class ConsignmentServiceImpl {
 
 			statusList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(consignmentMgmt.getFeatureId(), consignmentMgmt.getUserTypeId());
 
-			Page<ConsignmentMgmt> page = consignmentRepository.findAll(buildSpecification(consignmentMgmt, statusList).build(), pageable);
+			Page<ConsignmentMgmt> page = consignmentRepository.findAll(buildSpecification(consignmentMgmt, statusList,source).build(), pageable);
 
 			for(ConsignmentMgmt consignmentMgmt2 : page.getContent()) {
 
@@ -602,8 +603,9 @@ public class ConsignmentServiceImpl {
 				}
 				else {
 					logger.info("Nothing to update for request :: " + consignmentUpdateRequest);
-				return new GenricResponse(1, "Nothing to update for request.",payload_txnID);
 				}
+				return new GenricResponse(1, "Nothing to update for request.",payload_txnID);
+
 			}
 			
 
@@ -722,7 +724,7 @@ public class ConsignmentServiceImpl {
 		}
 	}
 
-	private GenericSpecificationBuilder<ConsignmentMgmt> buildSpecification(FilterRequest consignmentMgmt, List<StateMgmtDb> statusList){
+	private GenericSpecificationBuilder<ConsignmentMgmt> buildSpecification(FilterRequest consignmentMgmt, List<StateMgmtDb> statusList,String source){
 		GenericSpecificationBuilder<ConsignmentMgmt> cmsb = new GenericSpecificationBuilder<>(propertiesReader.dialect);
 		String consignmentStatusLiteral = "consignmentStatus";
 
@@ -745,28 +747,13 @@ public class ConsignmentServiceImpl {
 		if(Objects.nonNull(consignmentMgmt.getTaxPaidStatus()))
 			cmsb.with(new SearchCriteria("taxPaidStatus", consignmentMgmt.getTaxPaidStatus(), SearchOperation.EQUALITY, Datatype.STRING));
 
+		if(Objects.nonNull(consignmentMgmt.getConsignmentStatus())) {
+			 cmsb.with(new SearchCriteria("consignmentStatus", consignmentMgmt.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
+		 }
 		if(Objects.nonNull(consignmentMgmt.getDisplayName()) && !consignmentMgmt.getDisplayName().isEmpty())
 			cmsb.addSpecification(cmsb.joinWithMultiple(new SearchCriteria("displayName",consignmentMgmt.getDisplayName(), SearchOperation.EQUALITY, Datatype.STRING)));
-
-		// Status handling.
-		/*
-		 * if("CEIRADMIN".equalsIgnoreCase(consignmentMgmt.getUserType())) {
-		 * if(Objects.isNull(consignmentMgmt.getConsignmentStatus())) cmsb.with(new
-		 * SearchCriteria(consignmentStatusLiteral, 3, SearchOperation.EQUALITY,
-		 * Datatype.STRING)); else { cmsb.with(new
-		 * SearchCriteria(consignmentStatusLiteral,
-		 * consignmentMgmt.getConsignmentStatus(), SearchOperation.EQUALITY,
-		 * Datatype.STRING)); } }else
-		 * if("Custom".equalsIgnoreCase(consignmentMgmt.getUserType())) {
-		 * if(Objects.isNull(consignmentMgmt.getConsignmentStatus())) cmsb.with(new
-		 * SearchCriteria(consignmentStatusLiteral, 5, SearchOperation.EQUALITY,
-		 * Datatype.STRING)); else { cmsb.with(new
-		 * SearchCriteria(consignmentStatusLiteral,
-		 * consignmentMgmt.getConsignmentStatus(), SearchOperation.EQUALITY,
-		 * Datatype.STRING)); } }else
-		 */ if(Objects.nonNull(consignmentMgmt.getConsignmentStatus())) {
-			 cmsb.with(new SearchCriteria("consignmentStatus", consignmentMgmt.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
-		 }else {
+		
+		else {
 
 			 if(Objects.nonNull(consignmentMgmt.getFeatureId()) && Objects.nonNull(consignmentMgmt.getUserTypeId())) {
 
@@ -774,19 +761,36 @@ public class ConsignmentServiceImpl {
 				 logger.debug(dashboardUsersFeatureStateMap);
 				 List<Integer> consignmentStatus = new LinkedList<>();
 
-
 				 if(Objects.nonNull(dashboardUsersFeatureStateMap)) {	
-					 for(DashboardUsersFeatureStateMap dashboardUsersFeatureStateMap2 : dashboardUsersFeatureStateMap ) {
-						 consignmentStatus.add(dashboardUsersFeatureStateMap2.getState());
-					 }
+					 
+					if("dashboard".equalsIgnoreCase(source) || "menu".equalsIgnoreCase(source)) {
+							for(DashboardUsersFeatureStateMap dashboardUsersFeatureStateMap2 : dashboardUsersFeatureStateMap ) {
+								 consignmentStatus.add(dashboardUsersFeatureStateMap2.getState());
+							 }
+						}else if("filter".equalsIgnoreCase(source)) {
+							if(nothingInFilter(consignmentMgmt)) {
+								for(DashboardUsersFeatureStateMap dashboardUsersFeatureStateMap2 : dashboardUsersFeatureStateMap ) {
+									 consignmentStatus.add(dashboardUsersFeatureStateMap2.getState());
+								 }
+							}else {
+								for(StateMgmtDb stateMgmtDb : statusList ) {
+									consignmentStatus.add(stateMgmtDb.getState());
+								}
+							}
+						}else if("noti".equalsIgnoreCase(source)) {
+							logger.info("Skip status check, because source is noti.");
+						}
+
 					 logger.info("Array list to add is = " + consignmentStatus);
 
-					 if(!consignmentStatus.isEmpty()) {
-						 cmsb.addSpecification(cmsb.in("consignmentStatus", consignmentStatus));
-					 }else {
-						 logger.warn("no status are predefined foe the user.");
-					 }
-
+						if(!consignmentStatus.isEmpty()) {
+							 cmsb.addSpecification(cmsb.in("consignmentStatus", consignmentStatus));
+						 }else {
+							 logger.warn("no status are predefined for the user.");
+						 }
+					
+						
+						
 				 }
 			 }
 		 }
@@ -919,21 +923,32 @@ public class ConsignmentServiceImpl {
 
 
 				if(ConsignmentStatus.PENDING_CLEARANCE_FROM_DRT.getCode() == current_consignment_response.getConsignmentStatus()) {
+					Generic_Response_Notification generic_Response_Notification = userFeignClient.ceirInfoByUserTypeId(21);
 
-					logger.info("DRT PENDING_CLEARANCE_FROM_DRT Notification:::with current_status : "+current_consignment_response.getConsignmentStatus());
-					placeholderMap.put("<First name>", userProfile.getFirstName());
-					placeholderMap.put("<Txn id>", current_consignment_response.getTxnId());
-					emailUtil.saveNotification("PENDING_CLEARANCE_FROM_DRT_Email_Message", 
-							userProfile, 
-							consignmentUpdateRequest.getFeatureId(),
-							Features.CONSIGNMENT, 
-							SubFeatures.ACCEPT,
-							payload_txnID,
-							current_consignment_response.getTxnId(),
-							placeholderMap, 
-							"DRT", 
-							"DRT",
-							ReferTable.USERS);
+					logger.info("generic_Response_Notification::::::::"+generic_Response_Notification);
+
+					List<RegisterationUser> registerationUserList = generic_Response_Notification.getData();
+
+					for(RegisterationUser registerationUser :registerationUserList) {
+						UserProfile userProfile_generic_Response_Notification = new UserProfile();
+						userProfile_generic_Response_Notification  = userProfileRepository.getByUserId(registerationUser.getId());
+						logger.info("firstname:::"+userProfile_generic_Response_Notification.getFirstName());
+						logger.info("DRT PENDING_CLEARANCE_FROM_DRT Notification:::with current_status : "+current_consignment_response.getConsignmentStatus());
+						placeholderMap.put("<First name>", userProfile_generic_Response_Notification.getFirstName());
+						placeholderMap.put("<Txn id>", current_consignment_response.getTxnId());
+						emailUtil.saveNotification("PENDING_CLEARANCE_FROM_DRT_Email_Message", 
+								userProfile_generic_Response_Notification, 
+								consignmentUpdateRequest.getFeatureId(),
+								Features.CONSIGNMENT, 
+								SubFeatures.ACCEPT,
+								payload_txnID,
+								current_consignment_response.getTxnId(),
+								placeholderMap, 
+								"DRT", 
+								"DRT",
+								ReferTable.USERS);
+					}
+			
 				}
 
 
@@ -1192,17 +1207,34 @@ public class ConsignmentServiceImpl {
 							consignmentUpdateRequest.getRoleType(),
 							"Importer"));
 
-					rawMails.add(new RawMail("CONSIGNMENT_PROCESS_SUCCESS_TO_CEIR_MAIL", 
-							ceirUserProfile, 
-							consignmentUpdateRequest.getFeatureId(), 
-							Features.CONSIGNMENT,
-							SubFeatures.ACCEPT,
-							consignmentUpdateRequest.getTxnId(), 
-							current_consignment_response.getTxnId(), 
-							placeholderMap, ReferTable.USERS, 
-							consignmentUpdateRequest.getRoleType(),
-							"CEIRAdmin"));
+					
+					
+					
+					Generic_Response_Notification generic_Response_Notification = userFeignClient.ceirInfoByUserTypeId(8);
 
+					logger.info("generic_Response_Notification::::::::"+generic_Response_Notification);
+
+					List<RegisterationUser> registerationUserList = generic_Response_Notification.getData();
+
+					for(RegisterationUser registerationUser :registerationUserList) {
+						UserProfile userProfile_generic_Response_Notification = new UserProfile();
+						userProfile_generic_Response_Notification  = userProfileRepository.getByUserId(registerationUser.getId());
+logger.info(" firstName :::::"+userProfile_generic_Response_Notification.getFirstName());
+						placeholderMap.put("<First name>", userProfile_generic_Response_Notification.getFirstName());
+						placeholderMap.put("<Txn id>", current_consignment_response.getTxnId());
+
+						
+						rawMails.add(new RawMail("CONSIGNMENT_PROCESS_SUCCESS_TO_CEIR_MAIL", 
+								userProfile_generic_Response_Notification, 
+								consignmentUpdateRequest.getFeatureId(), 
+								Features.CONSIGNMENT,
+								SubFeatures.ACCEPT,
+								consignmentUpdateRequest.getTxnId(), 
+								current_consignment_response.getTxnId(), 
+								placeholderMap, ReferTable.USERS, 
+								consignmentUpdateRequest.getRoleType(),
+								"CEIRAdmin"));
+}
 					emailUtil.saveNotification(rawMails);
 				}
 			}
@@ -1349,6 +1381,31 @@ public class ConsignmentServiceImpl {
 			logger.info("Consignment status Update have failed." +payload_txnID);
 			return new GenricResponse(2, "Consignment status Update have failed.",payload_txnID);
 		}
+	}
+
+	
+	public boolean nothingInFilter(FilterRequest filterRequest) {
+		if(Objects.nonNull(filterRequest.getStartDate()) || !filterRequest.getStartDate().isEmpty()) {
+			return false;
+		}
+		if(Objects.nonNull(filterRequest.getEndDate()) || !filterRequest.getEndDate().isEmpty()) {
+			return false;
+		}
+
+		if(Objects.nonNull(filterRequest.getTxnId()) || !filterRequest.getTxnId().isEmpty()) {
+			return false;
+		}
+
+		if(Objects.nonNull(filterRequest.getDisplayName()) || !filterRequest.getDisplayName().isEmpty()) {
+			return false;
+		}
+		if(Objects.nonNull(filterRequest.getConsignmentStatus()) ) {
+			return false;
+		}
+		if(Objects.nonNull(filterRequest.getUserType()) || !filterRequest.getEndDate().isEmpty()) {
+			return false;
+		}
+		return true;
 	}
 
 }
