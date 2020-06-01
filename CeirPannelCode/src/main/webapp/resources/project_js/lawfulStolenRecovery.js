@@ -640,7 +640,7 @@ function saveIndivisualStolenRequest(){
 
 function saveCompanyStolenRequest(){
 	$('div#initialloader').fadeIn('fast');
-	
+	$("#bulkStolenButton").prop('disabled', true);
 	var formData= new FormData();
 
 	var bulkStolencompanyName=$('#bulkStolencompanyName').val();
@@ -844,7 +844,7 @@ function aprroveDevice(){
 		dataType : 'json',
 		'async' : false,
 		contentType : 'application/json; charset=utf-8',
-		type : 'PUT',
+		type : 'POST',
 		success : function(data) {
 			console.log("approveRequest----->"+JSON.stringify(approveRequest));
 			if(data.errorCode==0){
@@ -1208,3 +1208,26 @@ function isLengthValid(val){
 
 	}
 }
+
+
+
+$(document).on("keyup", "#singleStolenimei1", function(e) {
+	var singleStolenimei1=$('#singleStolenimei1').val();
+	if(singleStolenimei1.length<'1' )
+	{
+		$("#singleStolendeviceIDType").attr("required", false);
+		/*$('#currency').attr("disabled",true);*/
+		/*$('#currencyDiv').hide();
+
+		$("#currency")[0].selectedIndex = 0;*/
+		$("#deviceIdTypeSpan").css("display", "none");
+	}
+	else
+	{
+		$('#singleStolendeviceIDType').prop('required',true);
+		//$("#currency").attr("required", true);
+		/*$('#currency').attr("disabled",false);*/
+		$("#deviceIdTypeSpan").css("display", "block");
+
+	}
+});

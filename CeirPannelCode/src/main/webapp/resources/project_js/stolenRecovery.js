@@ -1051,7 +1051,7 @@ function aprroveDevice(){
 		dataType : 'json',
 		'async' : false,
 		contentType : 'application/json; charset=utf-8',
-		type : 'PUT',
+		type : 'POST',
 		success : function(data) {
 			console.log("approveRequest----->"+JSON.stringify(approveRequest));
 			if(data.errorCode==0){
