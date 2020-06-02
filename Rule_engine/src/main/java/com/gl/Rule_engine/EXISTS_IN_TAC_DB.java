@@ -22,7 +22,7 @@ class EXISTS_IN_TAC_DB {
 
     static String executeRule(String[] args, Connection conn) {
         String res = "No";
-        logger.info("EXISTS_IN_TAC_DB executeRule");
+        logger.debug("EXISTS_IN_TAC_DB executeRule");
         try {
 
             String tac = "";
@@ -35,7 +35,7 @@ class EXISTS_IN_TAC_DB {
                 tac = args[3].trim().substring(0, 8);
             }
 
-            logger.info("tac val .." + tac);
+            logger.debug("tac val .." + tac);
             if (tac.equalsIgnoreCase("")) {
                 res = "No";
             } else {

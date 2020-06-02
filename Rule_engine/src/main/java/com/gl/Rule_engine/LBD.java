@@ -23,14 +23,14 @@ public class LBD {
     public static String executeRule(String[] args, Connection conn) {
 
         String res = "";
-        logger.info("LBD executeRule");
+//        logger.info("LBD executeRule");
         try {
 
             int count = 0;
             int count1 = 0;
             Statement stmt2 = conn.createStatement();
             ResultSet result1 = stmt2.executeQuery("select device_status from device_operator_db where imei_esn_meid='" + args[3] + "' ");
-            logger.info("Qury ..select device_status from device_operator_db where imei_esn_meid='" + args[3] + "' ");
+            logger.debug("Qury ..select device_status from device_operator_db where imei_esn_meid='" + args[3] + "' ");
             try {
                 while (result1.next()) {
                     count = result1.getInt(1);
@@ -42,7 +42,7 @@ public class LBD {
             stmt2.close();
             Statement stmt3 = conn.createStatement();
             ResultSet result2 = stmt3.executeQuery("select  device_status from device_lawful_db where imei_esn_meid='" + args[3] + "' ");
-            logger.info("Qury ..select device_status from device_lawful_db where imei_esn_meid='" + args[3] + "' ");
+            logger.debug("Qury ..select device_status from device_lawful_db where imei_esn_meid='" + args[3] + "' ");
             try {
                 while (result2.next()) {
                     count1 = result2.getInt(1);
@@ -52,8 +52,8 @@ public class LBD {
             } catch (Exception e) {
                 logger.info("E2." + e);
             }
-            logger.info("device_operator_db  .." + count);
-            logger.info("device_lawful_db .." + count1);
+//            logger.info("device_operator_db  .." + count);
+//            logger.info("device_lawful_db .." + count1);
 
             if (count == 12 || count1 == 10) {
                 String ddz = "device_operator_db";
@@ -62,7 +62,7 @@ public class LBD {
                     ddz = "device_lawful_db";
                 }
                 ResultSet result3 = stmt3.executeQuery("select file_status from stolenand_recovery_mgmt where txn_id =     (select  txn_id from " + ddz + " where imei_esn_meid='" + args[3] + "'   )");
-                logger.info("After Qury : ..     select file_status from stolenand_recovery_mgmt where txn_id =     (select  txn_id from " + ddz + " where imei_esn_meid='" + args[3] + "'   )");
+                logger.debug("After Qury : ..     select file_status from stolenand_recovery_mgmt where txn_id =     (select  txn_id from " + ddz + " where imei_esn_meid='" + args[3] + "'   )");
                 try {
                     while (result3.next()) {
                         file_stat1 = result3.getInt(1);
@@ -75,30 +75,27 @@ public class LBD {
                     result3.close();
                     stmt3.close();
                 } catch (Exception e) {
-                    logger.info("E2." + e);
+                    logger.error("E2." + e);
                 }
-                logger.info("Result for Qury::." + res);
+                logger.debug("Result for Qury::." + res);
 
             } else {
-                logger.info("Not in Lawful And Operator:.");
+                logger.debug("Not in Lawful And Operator:.");
 
                 res = "No";
 
             }
 
-            logger.info(res);
+            logger.debug(res);
         } catch (Exception e) {
-            logger.info("Error" + e);
+            logger.error("Error" + e);
         }
         return res;
-    
+
     }
-    
 
-    
-
-    static String executeAction(String[] args, Connection conn,  BufferedWriter bw) {
-        logger.info("LBD executeAction");
+    static String executeAction(String[] args, Connection conn, BufferedWriter bw) {
+//        logger.info("LBD executeAction");
         try {
             switch (args[13]) {
                 case "Allow": {
@@ -115,8 +112,8 @@ public class LBD {
                         errmsg = " IMEI/ESN/MEID  is  already marked as stolen/blocked ";
                     }
                     String fileString = args[15] + ",  Error Code : CON_RULE_0002,  Error Discription : " + errmsg;
-                     bw.write(fileString);
-                bw.newLine();
+                    bw.write(fileString);
+                    bw.newLine();
 
                 }
                 break;
@@ -142,14 +139,13 @@ public class LBD {
             }
             return "Success";
         } catch (Exception e) {
-            logger.info("Error.." + e);
+            logger.error("Error.." + e);
         }
         return "Failure";
 
     }
 
 }
-
 
 //            String url = System.getenv("ceir_db_url");
 //            String username = System.getenv("ceir_db_username");

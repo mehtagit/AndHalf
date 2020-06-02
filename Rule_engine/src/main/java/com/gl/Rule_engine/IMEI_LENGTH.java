@@ -19,7 +19,7 @@ class IMEI_LENGTH {
 
     static String executeRule(String[] args, Connection conn) {
         String res = "No";
-        logger.info("IMEI_LENGTH executeRule ....." + args[3]);
+        logger.debug("IMEI_LENGTH executeRule ....." + args[3]);
         try {
             if (args[9].trim().equalsIgnoreCase("IMEI") || args[10].trim().equalsIgnoreCase("GSM")) {
                 if ((args[3].length() == 15 || args[3].length() == 16) && (args[3].matches("^[0-9]+$"))) {
@@ -119,7 +119,7 @@ class IMEI_LENGTH {
                 case "Reject": {
                     logger.info("Action is Reject");
 
-                    String fileString = args[15] + " , Error Description : IMEI/ESN/MEID is not as per specifications ";
+                    String fileString = args[15] + " , Error Description : IMEI/ESN/MEID is not as per Specifications ";
                     bw.write(fileString);
                     bw.newLine();
                 }

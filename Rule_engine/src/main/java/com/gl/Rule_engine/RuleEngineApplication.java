@@ -19,10 +19,10 @@ public class RuleEngineApplication {
         String reslt = "";
 
         if ("1".equalsIgnoreCase(args[1])) {
-            logger.info("******************************************* EXECUTE RULE *******************************************" + args[0]);
-            for (int i = 0; i < args.length; i++) {
-                System.out.print("" + i + "==" + args[i] + " , ");
-            }
+//            logger.info("******************************************* EXECUTE RULE *******************************************" + args[0]);
+//            for (int i = 0; i < args.length; i++) {
+//                System.out.print("" + i + "==" + args[i] + " , ");
+//            }
             if ("LBD".equalsIgnoreCase(args[0])) {
                 reslt = LBD.executeRule(args,conn);
             }
@@ -106,12 +106,12 @@ public class RuleEngineApplication {
                 reslt = TAC_FORMAT.executeRule(args,conn);
             }
 
-            logger.info("*******************************************  " + args[0] + " ..... RESULT .....  " + reslt + " *******************************************");
+            logger.debug(" " + args[0] + " ..... RESULT .....  " + reslt  );
 
         }
 
         if ("2".equalsIgnoreCase(args[1])) {
-            logger.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@EXECUTE ACTION(@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ " + args[0]);
+            logger.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@EXECUTE ACTION(@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ " + args[0]);
 //            for (int i = 0; i < args.length; i++) {
 //                System.out.print("" + i + "==" + args[i] + " ,, ");
 //            }
@@ -200,7 +200,7 @@ public class RuleEngineApplication {
             }
 
         }
-        logger.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  " + args[0] + "  ....RESULT ....  " + reslt + "   @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ " + args[0]);
+        logger.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  " + args[0] + "  ....RESULT ....  " + reslt + "   @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ " + args[0]);
 
         return reslt;
     }

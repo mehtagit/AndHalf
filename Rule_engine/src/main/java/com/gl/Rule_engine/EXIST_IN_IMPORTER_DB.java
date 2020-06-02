@@ -24,7 +24,7 @@ class EXIST_IN_IMPORTER_DB {
     static String executeRule(String[] args, Connection conn ) {
         String res =  null;
         int res2 =  0;
-        logger.info("EXIST_IN_IMPORTER_DB executeRule");
+        logger.debug("EXIST_IN_IMPORTER_DB executeRule");
        
         try {
           

@@ -25,7 +25,7 @@ class SYS_REG {
      
 
     static String executeRule(String[] args, Connection conn) {
-        logger.info(" SYS_REG executeRule ");
+//        logger.info(" SYS_REG executeRule ");
         String res = "";
         try {
 
@@ -40,19 +40,20 @@ class SYS_REG {
                     hash_Set.add(result1.getString(1));
                 }
             } catch (Exception e) {
-                logger.info("");
+                logger.error("" + e);
             }
             if (hash_Set.contains("SYS_REG")) {
-                logger.info("Yes");
+                logger.debug("Yes");
                 res = "Yes";
             } else {
-                logger.info("No");
+                logger.debug("No");
                 res = "no";
             }
              result1.close();
                     stmt2.close();
              
         } catch (Exception e) {
+            logger.error("" + e);
         }
         return res;
     }

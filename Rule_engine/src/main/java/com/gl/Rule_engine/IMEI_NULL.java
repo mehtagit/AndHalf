@@ -19,7 +19,7 @@ public class IMEI_NULL {
 
     static String executeRule(String[] args, Connection conn) {
         String res = "";
-        logger.info("IMEI_NULL executeRule .." + args[3]);
+//        logger.debug("IMEI_NULL executeRule .." + args[3]);
         try {
             if ((args[3] == null) || args[3] == "") {
                 res = "Yes";
@@ -33,7 +33,7 @@ public class IMEI_NULL {
     }
 
     static String executeAction(String[] args, Connection conn,  BufferedWriter bw) {
-        logger.info("IMEI_NULL executeAction .." + args[2] + "..." + args[3]);
+//        logger.info("IMEI_NULL executeAction .." + args[2] + "..." + args[3]);
         String res = "Success";
         try {
             {

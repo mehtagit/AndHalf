@@ -22,7 +22,7 @@ static final Logger logger = Logger.getLogger(EXIST_IN_RETAILER_DB.class);
 
     static String executeRule(String[] args, Connection conn ) {
         String res = "No";
-        logger.info("EXIST_IN_RETAILER_DB executeRule");
+        logger.debug("EXIST_IN_RETAILER_DB executeRule");
        
         try {        
             Statement stmt2 = conn.createStatement();
@@ -35,7 +35,7 @@ static final Logger logger = Logger.getLogger(EXIST_IN_RETAILER_DB.class);
                         res2 = result1.getString(1);
                     }
                 } catch (Exception e) {
-                    logger.info("");
+                    logger.error("");
                 }
                 if (!res2.equalsIgnoreCase("0")) {
                     res = "Yes";
@@ -47,7 +47,7 @@ static final Logger logger = Logger.getLogger(EXIST_IN_RETAILER_DB.class);
             }
              
         } catch (Exception e) {
-            logger.info("error.." + e);
+            logger.error("error.." + e);
         }
         return res;
     }
@@ -94,7 +94,7 @@ static final Logger logger = Logger.getLogger(EXIST_IN_RETAILER_DB.class);
 
          return "Success";
         } catch (Exception e) {
-            logger.info(" Error " + e);
+            logger.error(" Error " + e);
             return "Failure";
         }
     }

@@ -33,7 +33,7 @@ public class EXISTS_IN_FOREIGN_DB {
                     + "(first_imei='" + args[3] + "' or second_imei='" + args[3] + "' or third_imei='" + args[3] + "' or fourth_imei='" + args[3] + "') and nationality<>'Cambodian';";
 
             ResultSet result1 = stmt2.executeQuery(qry);
-            logger.info(" Foreign Db " + qry);
+//            logger.info(" Foreign Db " + qry);
             int res2 = 0;
             try {
                 while (result1.next()) {

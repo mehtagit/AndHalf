@@ -19,7 +19,7 @@ class FOREIGN_SIM {
 
     static String executeRule(String[] args, Connection conn) {
         String res = null;
-        logger.info("FOREIGN_SIM executeRule ....." + args[3]);
+//        logger.info("FOREIGN_SIM executeRule ....." + args[3]);
         try {
             String msisdn = args[12].startsWith("19") ? args[12].substring(2) : args[12];
             if (msisdn.startsWith("855")) {
@@ -28,7 +28,7 @@ class FOREIGN_SIM {
                 res = "No";
             }
         } catch (Exception e) {
-            logger.info("Error.." + e);
+            logger.error("Error.." + e);
         }
         return res;
     }
@@ -52,7 +52,7 @@ class FOREIGN_SIM {
                     int status = 0;
                     String my_query = "";
                     String query = "select * from foreign_sim_msisdn_db where msisdn='" + msisdn + "' and imei_esn_meid = '" + args[3] + "' ";
-                    logger.info("device usage db" + query);
+                    logger.debug("foreign_sim_msisdn_db" + query);
                     stmt = conn.createStatement();
                     rs1 = stmt.executeQuery(query);
                     int count = 0;

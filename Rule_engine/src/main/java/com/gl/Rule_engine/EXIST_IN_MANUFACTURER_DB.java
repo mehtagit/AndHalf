@@ -24,7 +24,7 @@ static final Logger logger = Logger.getLogger(EXIST_IN_MANUFACTURER_DB.class);
 
     static String executeRule(String[] args, Connection conn ) {
         String res = "No";
-        logger.info("EXIST_IN_MANUFACTURER_DB executeRule");
+        logger.debug("EXIST_IN_MANUFACTURER_DB executeRule");
 //         
         try { 
             Statement stmt2 = conn.createStatement();
@@ -36,7 +36,7 @@ static final Logger logger = Logger.getLogger(EXIST_IN_MANUFACTURER_DB.class);
                         res2 = result1.getString(1);
                     }
                 } catch (Exception e) {
-                    logger.info("");
+                    logger.error("" + e);
                 }
                 if (!res2.equals("0")) {
                     res = "Yes";
@@ -49,7 +49,7 @@ static final Logger logger = Logger.getLogger(EXIST_IN_MANUFACTURER_DB.class);
             }
              
         } catch (Exception e) {
-            logger.info("error.." + e);
+            logger.error("error.." + e);
         }
         return res;
     }

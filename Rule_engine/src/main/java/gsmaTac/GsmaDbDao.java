@@ -202,13 +202,13 @@ class GsmaDbDao {
                 }
                 resultmsdn.close();
             } catch (Exception e) {
-                logger.info("Database ClassnotFound " + e);
+                logger.error("Database ClassnotFound " + e);
             }
             map.put("resultid", resultid);
             logger.info("Found at resultid  " + resultid);
             String str = " select tag , value from system_configuration_db where tag in ('gsma_tac_APIKey' , 'gsma_tac_Password','gsma_tac_Salt_String' , 'gsma_tac_Organization_Id' ,'gsma_tac_Secretkey', 'gsma_tac_httpPostUrl',  'gsma_tac_timewait')  ";
             ResultSet result = stmt.executeQuery(str);
-            logger.info("  " + str);
+            logger.debug("  " + str);
             while (result.next()) {
                 map.put(result.getString("tag"), result.getString("value"));
             }
@@ -230,12 +230,12 @@ class GsmaDbDao {
             boolean isOracle = conn.toString().contains("oracle");
             String dateFunction = Util.defaultDate(isOracle);
             PreparedStatement statementR = conn.prepareStatement("insert into gsma_invalid_tac_db (created_on , tac ) values ( " + dateFunction + "  , '" + deviceId + "'   )    ");
-            logger.info("IMEI is not GsmaApprovedTac...  " + "insert into gsma_invalid_tac_db (created_on , tac ) values ( " + dateFunction + "  , '" + deviceId + "'   )    ");
+            logger.error("IMEI is not GsmaApprovedTac...  " + "insert into gsma_invalid_tac_db (created_on , tac ) values ( " + dateFunction + "  , '" + deviceId + "'   )    ");
             statementR.executeUpdate();
             statementR.closeOnCompletion();
 
         } catch (Exception e) {
-            logger.info("Error + " + e);
+            logger.error("Error + " + e);
         }
 
     }

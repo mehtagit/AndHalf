@@ -18,10 +18,7 @@ import org.apache.log4j.Logger;
 public class EXISTS_IN_GREYLIST_DB {
 
     static final Logger logger = Logger.getLogger(EXIST_IN_CUSTOM_DB.class);
-
-    ;
-     
-
+ 
     static String executeRule(String[] args, Connection conn) {
         String res = "";
 

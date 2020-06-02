@@ -20,7 +20,7 @@ class EXIST_IN_TAX_PAID_DB {
     static final Logger logger = Logger.getLogger(EXIST_IN_TAX_PAID_DB.class);
 
     static String executeRule(String[] args, Connection conn) {
-        logger.info("EXIST_IN_TAX_PAID_DB executeRule");
+        logger.debug("EXIST_IN_TAX_PAID_DB executeRule");
         String res = "No";
         try {
 
@@ -32,10 +32,10 @@ class EXIST_IN_TAX_PAID_DB {
                     res1 = result1.getInt(1);
                 }
             } catch (Exception e) {
-                logger.info("Error" + e);
+                logger.debug("Error" + e);
             }
             if (res1 != 0) {
-                logger.info("Yes");
+//                logger.info("Yes");
                 res = "Yes";
             } else {
                 res = "No";
@@ -44,7 +44,7 @@ class EXIST_IN_TAX_PAID_DB {
              stmt2.close();
 
         } catch (Exception e) {
-            logger.info("" + e);
+            logger.error("" + e);
         }
         return res;
     }

@@ -23,14 +23,14 @@ class EXIST_IN_DISTRIBUTOR_DB {
 
     static String executeRule(String[] args, Connection conn ) {
         String res = "No";
-        logger.info("EXIST_IN_DISTRIBUTOR_DB executeRule");
+//        logger.info("EXIST_IN_DISTRIBUTOR_DB executeRule");
        
         try {
            Statement stmt2 = conn.createStatement();
            
             {
                 ResultSet result1 = stmt2.executeQuery("select count(imei_esn_meid) from device_distributor_db  where imei_esn_meid='" + args[3] + "' ");
-                logger.info("select count(*) from device_distributor_db  where imei_esn_meid='" + args[3] + "' ");
+                logger.debug("select count(*) from device_distributor_db  where imei_esn_meid='" + args[3] + "' ");
                 String res2 = "0";
                 try {
                     while (result1.next()) {

@@ -16,8 +16,6 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClients;
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.params.HttpParams;
 import org.apache.http.ssl.SSLContexts;
 import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
@@ -30,31 +28,6 @@ public class BasicApplication {
     private static final String KEYSTOREPASS = "Hello1234";
     private static final String KEYPASS = "keypass";
     LogWriter logWriter = new LogWriter();
-
-    public static void main(String[] args) throws Exception {
-//        SpringApplication.run(BasicApplication.class, args);
-        String fileOutputName = args[0];
-        BasicApplication stt = new BasicApplication();
-
-//        stt.gsmaApplication(fileOutputName);                                ///////////////////////////////
-//        BufferedReader reader;
-//        reader = new BufferedReader(new FileReader(fileOutputName));
-//        reader.readLine();
-//        String line = reader.readLine();
-//        Set<String> hash_Set = new HashSet<String>();
-//        while (line != null) {
-//            String data = line.substring(line.indexOf(",", 2) + 1, line.indexOf(",", 4)).trim();
-//            if (!data.equals("")) {
-//                hash_Set.add(data.substring(0, 8));
-//            }
-//            line = reader.readLine();
-//        }
-//        reader.close();
-//        Iterator itr = hash_Set.iterator();
-//        while (itr.hasNext()) {
-//            stt.gsmaApplication(itr.next().toString());
-//        }
-    }
 
     public KeyStore readStore() throws Exception {
         try (InputStream keyStoreStream = this.getClass().getResourceAsStream(KEYSTOREPATH)) {
@@ -70,11 +43,13 @@ public class BasicApplication {
 //        String msisdn = imei_tac;
         String status = "Yes";
         if (imei_tac.length() != 8) {
-            status = " DeviceId should be 1st 8 digits of an IMEI";
-            logger.info(status);
+//            status = " ";
+            logger.error("DeviceId should be 1st 8 digits of an IMEI");
+            status = "No";
+            logger.debug(status);
         } else {
             Thread.sleep(100);
-            logger.info("Gsma Application Started");
+            logger.debug("Gsma Application Started");
             Map<String, String> map = snt.getExistingGsmaDetails(imei_tac, conn);
             if (map.get("resultid").equals("0") || map.get("resultid").equals("")) {
                 String APIKey = null, Password = null, Salt_String = null, Organization_Id = null, Secretkey = null, httpPostUrl = null, gsma_tac_timewait = null;
@@ -85,7 +60,7 @@ public class BasicApplication {
                 Secretkey = map.get("gsma_tac_Secretkey");
                 httpPostUrl = map.get("gsma_tac_httpPostUrl");
                 gsma_tac_timewait = map.get("gsma_tac_timewait");
-                logger.info("httpPostUrl  " + httpPostUrl);
+                logger.debug("httpPostUrl  " + httpPostUrl);
                 int timewait = Integer.parseInt(gsma_tac_timewait);
                 logWriter.writeLogGsma("Start imei_tac is " + imei_tac);
                 BasicApplication obj = new BasicApplication();
@@ -112,8 +87,8 @@ public class BasicApplication {
                     public void run() {
                         if (request != null) {
                             request.abort();
+                            logWriter.writeLogGsma("Request TimeOut");
                         } else {
-                            System.out.println("NO TIMEOUT ");
                         }
                     }
                 };
@@ -131,12 +106,13 @@ public class BasicApplication {
                         status = snt.databaseMapper(message, conn);
                         status = "Yes";
                     } else {
-                        logger.info("GSMAINVALIDDB");
+                        logger.debug("GSMAINVALIDDB");
                         snt.invalidGsmaDb(product.getDeviceId(), conn);
                         status = "No";
                     }
                 } catch (Exception e) {
-                    System.out.println("ITS NAN" + e);
+                    logWriter.writeLogGsma("Error in Getting Connection.." + e);
+                    logger.info("ITS NAN.." + e);
                     status = "NAN";
                 }
             } else {

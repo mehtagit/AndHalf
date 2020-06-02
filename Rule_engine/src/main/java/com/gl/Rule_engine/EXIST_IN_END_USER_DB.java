@@ -13,13 +13,10 @@ import org.apache.log4j.Logger;
 class EXIST_IN_END_USER_DB {
 
     static final Logger logger = Logger.getLogger(EXIST_IN_END_USER_DB.class);
-
-    ;
-     
-
+ 
     static String executeRule(String[] args, Connection conn) {
         String res = "";
-        logger.info("EXIST_IN_END_USER_DB executeRule");
+//        logger.info("EXIST_IN_END_USER_DB executeRule");
 
         try {
 
@@ -34,7 +31,7 @@ class EXIST_IN_END_USER_DB {
                         res2 = result1.getString(1);
                     }
                 } catch (Exception e) {
-                    logger.info("ERrror " + e);
+                    logger.error("ERrror " + e);
                 }
                 if (!res2.equals("0")) {
                     res = "Yes";

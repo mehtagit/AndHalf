@@ -21,7 +21,7 @@ public class EncriptonService {
 
     public static String getAuth(String deviceId, String APIKey, String Password, String Salt_String, String Organization_Id, String Secretkey) {
         String abc = getSHA(APIKey + Password + deviceId);
-        logger.info("SHA output " + abc);
+        logger.debug("SHA output " + abc);
         String auth = encrypt(Salt_String + Organization_Id + "=" + abc, Secretkey);
         return auth;
     }
@@ -54,7 +54,7 @@ public class EncriptonService {
             return hashtext;
         } // For specifying wrong message digest algorithms 
         catch (NoSuchAlgorithmException e) {
-            logger.info("Exception thrown"
+            logger.error("Exception thrown"
                     + " for incorrect algorithm: " + e);
 
             return null;
@@ -68,7 +68,7 @@ public class EncriptonService {
             cipher.init(Cipher.ENCRYPT_MODE, secretKey);
             return Base64.getEncoder().encodeToString(cipher.doFinal(strToEncrypt.getBytes("UTF-8")));
         } catch (Exception e) {
-            logger.info("Error while encrypting: " + e.toString());
+            logger.error("Error while encrypting: " + e.toString());
         }
         return null;
     }

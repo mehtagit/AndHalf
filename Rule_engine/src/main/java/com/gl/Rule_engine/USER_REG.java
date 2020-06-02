@@ -22,7 +22,7 @@ class USER_REG {
     static final Logger logger = Logger.getLogger(USER_REG.class);
 
     static String executeRule(String[] args, Connection conn) {
-        logger.info(" USER_REG executeRule ");
+//        logger.info(" USER_REG executeRule ");
         String res = "";
         try {
 
@@ -39,16 +39,17 @@ class USER_REG {
                 logger.info("Error " + e);
             }
             if (hash_Set.contains("USER_REG")) {
-                logger.info("Yes");
+                logger.debug("Yes");
                 res = "Yes";
             } else {
-                logger.info("No");
+                logger.debug("No");
                 res = "no";
             }
             result1.close();
             stmt2.close();
 
         } catch (Exception e) {
+            logger.error("Error:"+ e);
         }
         return res;
     }

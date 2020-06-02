@@ -23,14 +23,14 @@ public class EXIST_IN_BLACKLIST_DB {
 
     static String executeRule(String[] args, Connection conn) {
         String res = "";
-        logger.info("EXIST_IN_BLACKLIST_DB executeRule");
+        logger.debug("EXIST_IN_BLACKLIST_DB executeRule");
 
         try {
 
             Statement stmt2 = conn.createStatement();
             {
                 String qur = " select sum(countd) from   (select count(imei) as countd from black_list  where imei  =   '" + args[3] + "'      union all select count(imei) as countd from greylist_db  where imei  =  '" + args[3] + "' )                          ";
-                logger.info("Query:  " + qur);
+                logger.debug("Query:  " + qur);
 
                 ResultSet result1 = stmt2.executeQuery(qur);
                 String res2 = "0";

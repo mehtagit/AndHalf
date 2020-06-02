@@ -26,7 +26,7 @@ class IMEI_LUHN_CHECK {
     }
 
     static String executeAction(String[] args, Connection conn,  BufferedWriter bw) {
-        logger.info(" IMEI_LUHN_CHECK  executeAction");
+        logger.debug(" IMEI_LUHN_CHECK  executeAction");
 
         try {
             switch (args[13]) {
@@ -98,7 +98,7 @@ class IMEI_LUHN_CHECK {
         String ress = "No";
 
         if (ImeiNo.length() != 15) {
-            logger.info("IMEI Number should contain 15 characters");
+            logger.debug("IMEI Number should contain 15 characters");
         } else {
             int sum = 0;
             boolean errorflag = false;
@@ -155,10 +155,10 @@ class IMEI_LUHN_CHECK {
             // Check the error flag to avoid overWriting of Warning Lable  
             if (!errorflag) {
                 if (sum % 10 == 0) {
-                    logger.info("Valid");
+                    logger.debug("Valid");
                     ress = "Yes";
                 } else {
-                    logger.info("Invalid");
+                    logger.debug("Invalid");
                     ress = "No";
                 }
             }

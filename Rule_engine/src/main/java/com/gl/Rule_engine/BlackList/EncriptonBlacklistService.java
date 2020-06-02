@@ -15,8 +15,6 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import com.gl.utils.LogWriter;
 import org.apache.log4j.Logger;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.sql.Connection;
 import java.time.Duration;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -44,7 +42,7 @@ public class EncriptonBlacklistService {
             logWriter.writeLogBlacklist("Start with Imei " + Imei);
             String abc = getSHA(APIKey + Password + deviceId);
             String auth = encrypt(Salt_String + Organization_Id + "=" + abc, Secretkey);
-            logger.info("the auth key is =" + auth);
+            logger.debug("the auth key is =" + auth);
             String message = verifyGSMA(deviceId, auth);
             if (message.equalsIgnoreCase("NAN")) {
                 status = "NAN";
@@ -55,7 +53,7 @@ public class EncriptonBlacklistService {
         } else {
             status = rslt;
         }
-        logger.info("Final status");
+        logger.debug("Final status");
         return status;
     }
 

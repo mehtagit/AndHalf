@@ -23,7 +23,7 @@ class DUPLICATE_USAGE_CHECK {
         String res = null;
         try {
 
-            logger.info("DUPLICATE_USAGE_CHECK executeRule");
+//            logger.info("DUPLICATE_USAGE_CHECK executeRule");
             {
 
                 Statement stmt2 = conn.createStatement();
@@ -37,7 +37,7 @@ class DUPLICATE_USAGE_CHECK {
                 } catch (Exception e) {
                     logger.info("eror " + e);
                 }
-                logger.info("device_usage_db count:" + res1);
+                logger.debug("device_usage_db count:" + res1);
                 Statement stmt3 = conn.createStatement();
                 logger.info(" select count(msisdn) as c1  from device_duplicate_db where imei='" + args[3] + "' ");
                 ResultSet result3 = stmt3.executeQuery("  select count(imei) as c1  from device_duplicate_db where imei='" + args[3] + "' ");
@@ -50,9 +50,9 @@ class DUPLICATE_USAGE_CHECK {
                     logger.info("errro2 " + e);
                 }
 
-                logger.info("device_duplicate_db count:" + res3);
+                logger.debug("device_duplicate_db count:" + res3);
                 int ttl = res1 + res3;
-                logger.info("Total  count: " + ttl);
+                logger.debug("Total  count: " + ttl);
                 Statement stmt4 = conn.createStatement();
                 ResultSet result4 = stmt4.executeQuery("Select  value from system_configuration_db where tag='DUPLICATE_IMEI_USAGE_COUNT'");
                 int res4 = 0;
@@ -61,7 +61,7 @@ class DUPLICATE_USAGE_CHECK {
                         res4 = result4.getInt(1);
                     }
                 } catch (Exception e) {
-                    logger.info("" + e);
+                    logger.error("" + e);
                 }
                 logger.info("Select  value from system_configuration_db where tag='DUPLICATE_IMEI_USAGE_COUNT'  .... " + res4);
                 if (res4 <= ttl) {
@@ -122,7 +122,7 @@ class DUPLICATE_USAGE_CHECK {
             }
             return "Success";
         } catch (Exception e) {
-            logger.info(" Error " + e);
+            logger.error(" Error " + e);
             return "Failure";
         }
     }

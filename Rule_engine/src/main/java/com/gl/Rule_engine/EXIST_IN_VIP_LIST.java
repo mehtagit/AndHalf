@@ -20,7 +20,7 @@ class EXIST_IN_VIP_LIST {
     static final Logger logger = Logger.getLogger(EXIST_IN_VIP_LIST.class);
 
     static String executeRule(String[] args, Connection conn) {
-        logger.info(" EXIST_IN_VIP_LIST executeRule ");
+//        logger.info(" EXIST_IN_VIP_LIST executeRule ");/
         String res = "";
         try {
 
@@ -29,7 +29,7 @@ class EXIST_IN_VIP_LIST {
 
             String qury = "select count(imei)  from vip_list  where IMEI='" + args[3] + "' ";
             ResultSet result1 = stmt2.executeQuery(qury);
-            logger.info(qury);
+            logger.debug(qury);
             int res1 = 0;
             try {
                 while (result1.next()) {
@@ -39,10 +39,10 @@ class EXIST_IN_VIP_LIST {
                 logger.info("");
             }
             if (res1 != 0) {
-                logger.info("Yes");
+//                logger.info("Yes");
                 res = "Yes";
             } else {
-                logger.info("No");
+//                logger.info("No");
                 res = "no";
             }
             result1.close();
