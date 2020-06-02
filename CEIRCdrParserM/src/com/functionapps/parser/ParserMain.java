@@ -22,9 +22,9 @@ public class ParserMain {
             String intermPath = "";
             String filePath = "";
             String fileName = null;
-            File filder = null;
+            String source = null;
             String tableName = args[0];
-            
+            logger.info("...." + tableName);
             int raw_upload_set_no = 1;
             try {
                 conn = new com.functionapps.db.MySQLConnection().getConnection();
@@ -34,39 +34,31 @@ public class ParserMain {
                     raw_upload_set_no = my_result_set.getInt("raw_upload_set_no");
                 }
                 basePath = hfr.getFilePath(conn, tableName.toLowerCase() + "_file_path");
+                basePath = hfr.getFilePath(conn, "smart_file_path");
                 if (!basePath.endsWith("/")) {
                     basePath += "/";
                 }
                 intermPath = basePath + "/" + args[0].toLowerCase() + "/";
-                if (LocalDateTime.now().getHour() % 2 == 0) {
-                    filder = new File(intermPath + "sm_msc01/");
-                    if (filder.listFiles().length == 0) {
-                        filePath = intermPath + "sm_msc02/";
-                    } else {
-                        filePath = intermPath + "sm_msc01/";
-                    }
-                } else {
-                    filder = new File(intermPath + "sm_msc02/");
-                    if (filder.listFiles().length == 0) {
-                        filePath = intermPath + "sm_msc01/";
-                    } else {
-                        filePath = intermPath + "sm_msc02/";
-                    }
-                }
-                String source = filePath.replace(intermPath, "");
+                String folderNam = getFolderNameByOpertor(conn, intermPath, args[0]);   // opt
+                filePath = intermPath + folderNam;
+                source = filePath.replace(intermPath, "");
                 fileName = new FileList().readOldestOneFile(filePath);
+
+//                 filePath = "/home/ceirapp/ceir/ceir_parser/ETL/SMART/Files/SMART/";
+//                 fileName = "test5.txt";
+//                 source = "SMART";
                 logger.info("FilePath :" + filePath + ";fileName:" + fileName + " ;basePath :" + basePath + ";source : " + source);
                 hfr.readConvertedCSVFile(conn, fileName, args[0], filePath, raw_upload_set_no, source);
-                conn.commit();
+//                conn.commit();
             } catch (Exception e) {
                 e.printStackTrace();
                 // System.out.println("No record found from file ");
             } finally {
                 try {
-                    logger.info(" Process 2 Start " + args[0]);
+                    logger.debug(" Process 2 Start " + args[0]);
                     CEIRParserMain.CDRPARSERmain(conn, args[0]);
                 } catch (Exception ex) {
-                    logger.info(" :" + ex);
+                    logger.error(" :" + ex);
                 }
                 System.exit(0);
             }
@@ -74,8 +66,40 @@ public class ParserMain {
     }
 
     public static void printHelp() {
-        // System.out.println("java " + ParserMain.class.getSimpleName()                + " \"<Operator Name>\" ");
+        System.out.println("java " + ParserMain.class.getSimpleName() + " \"<Operator Name>\" ");
         System.exit(0);
+    }
+
+    private static String getFolderNameByOpertor(Connection conn, String intermPath, String opertor) {
+        String query = null;
+        String mainFolder = null;
+        String folderList = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+        File fldr = null;
+        try {
+            query = "select value from system_configuration_db where tag= '" + opertor + "_folder_list'  ";
+            
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                folderList = rs.getString("value");
+            }
+            stmt.closeOnCompletion();
+            String folderArr[] = folderList.split(",");
+            for (String val : folderArr) {
+                fldr = new File(intermPath + val);
+                if (fldr.listFiles().length > 0) {
+                    mainFolder = val;
+                    break;
+                }
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return mainFolder + "/";
     }
 
 }

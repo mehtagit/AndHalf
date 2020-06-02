@@ -312,7 +312,15 @@ public class FeatureForSingleStolenBlock {
                 } else {
                     // break;
                 }
+
+            }  // End For
+
+            if (map.get("failPassUpdator").equalsIgnoreCase("PASS")) {
+                failPasstatusUpdator(conn, map, 0);
+            } else {
+                failPasstatusUpdator(conn, map, 1);
             }
+
         } catch (Exception e) {
             logger.info("Excep: +" + e);
         }
@@ -332,33 +340,38 @@ public class FeatureForSingleStolenBlock {
                 logger.info("GETTED IMEI is " + imei);
                 map.put("imei_esn_meid", imei);
                 logger.info("Going to  insert into Raw  after getting imei...... ");
-                if (imei == null) {
+                if (imei != null) {
                     insertinRawtable(conn, map);
-                    failPasstatusUpdator(conn, map, 0);
-                }
+                    map.put("failPassUpdator", "PASS");
+//                    f ailPasstatusUpdator(conn, map, 0);
+                } 
+//                else {
+//                    return;  //  
+//                }
 
                 for (int i = 2; i <= 4; i++) {
                     String msisdnothr = getOtherContactsImei(conn, i, map);
 
                     if (msisdnothr == null || msisdnothr.trim() == "" || msisdnothr.equals("") || msisdnothr.equals("0")) {
                         logger.info(" new msisdnothr  id NULL...." + msisdnothr);  //optmse
-                    } else {
+                    } else {     
                         logger.info(" new msisdnothr ...." + msisdnothr);
                         map.put("contact_number", msisdnothr);
                         imei = getImeiWithMsisdn(conn, map);
                         map.put("imei_esn_meid", imei);
                         logger.info("Going to  insert into Raw for I " + i + " after getting imei...... ");
-                        if (imei == null) {
+                        if (imei != null) {
                             insertinRawtable(conn, map);
-                            failPasstatusUpdator(conn, map, 0);
+                            map.put("failPassUpdator", "PASS");
+//                            f ailPasstatusUpdator(conn, map, 0); 
                         }
                     }
                 }
-
             } else {
                 logger.info("Going to insert in RAW with imei..... " + map.get("imei_esn_meid"));
                 insertinRawtable(conn, map);
-                failPasstatusUpdator(conn, map, 0);
+                map.put("failPassUpdator", "PASS");
+//                f ailPasstatusUpdator(conn, map, 0);
             }
 
         } catch (Exception e) {
@@ -370,7 +383,7 @@ public class FeatureForSingleStolenBlock {
 
     private String getImeiWithMsisdn(Connection conn, Map<String, String> map) throws ClassNotFoundException, SQLException {
         ErrorFileGenrator errFile = new ErrorFileGenrator();
-        String imei = "";
+        String imei = null;
         String txn_id = map.get("txn_id");
         String lawful_stolen_usage_db_num_days_qury = " select value from  system_configuration_db  where tag  = 'lawful_stolen_usage_db_num_days'";
         logger.info(" getImeiMsisdn ,,,lawful_stolen_usage_db_num_days_qury,,, " + lawful_stolen_usage_db_num_days_qury);
@@ -427,7 +440,8 @@ public class FeatureForSingleStolenBlock {
                     + "' and  Use date after " + date + "";
 
             errFile.gotoErrorFile(txn_id, fileString);
-            failPasstatusUpdator(conn, map, 1);
+            map.put("failPassUpdator", "FAIL");
+//            f ailPasstatusUpdator(conn, map, 1);
         } else {
             logger.info("NOT Empty List");
             if (lst.size() == 1) {
@@ -477,7 +491,8 @@ public class FeatureForSingleStolenBlock {
                     logger.info(" List Size  in Gsma_tac_db is not valid");
                     String fileString = strTacs + "...... NO SIMILAR  Model And Brand Name  FOUND IN Gsma_tac_Db SCHEMA ";
                     errFile.gotoErrorFile(txn_id, fileString);
-                    failPasstatusUpdator(conn, map, 1);
+                    map.put("failPassUpdator", "FAIL");
+//                    f ailPasstatusUpdator(conn, map, 1);
                 }
             }
         }
@@ -529,7 +544,7 @@ public class FeatureForSingleStolenBlock {
             stmt = conn.createStatement();
             stmt.executeUpdate(query);
             stmt.close();
-            conn.commit();
+//            conn.commit();
 
         } catch (Exception e) {
             logger.info(" Error  " + e);

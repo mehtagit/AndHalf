@@ -53,7 +53,9 @@ public class RuleFilter {
                 device_info.get("action") //13
         };
             try {
+                logger.debug("Rule Started .."+ device_info.get("rule_name"));
                 output = RuleEngineApplication.startRuleEngine(my_arr, conn, bw);
+                logger.info("Rule End .."+ device_info.get("rule_name")+ "; Rule Output:"  + output + " ;  Expected O/T : " + device_info.get("output"));
             } catch (Exception e) {
                 logger.info("Error1 " + e);
             }
@@ -91,7 +93,7 @@ public class RuleFilter {
                 try {
                     action_output = RuleEngineApplication.startRuleEngine(my_action_arr, conn, bw);
                 } catch (Exception e) {
-                    logger.info("Error2 " + e);
+                    logger.error("Error2 " + e);
                 }
 //                logger.info("Rule Filter Action Output is [" + action_output + "]   .  ");
                 new LogWriter().writeEvents(myWriter, device_info.get("servedIMEI"),
@@ -124,7 +126,7 @@ public class RuleFilter {
         try {
             String query = "insert into device_invalid_db (CREATED_ON,MODIFIED_ON ,IMEI_ESN_MEID ,RULE_NAME ,OPERATOR_NAME, SN_OF_DEVICE ,OPERATOR_TYPE ,  FILE_NAME ,RECORD_DATE) "
                     + " values ( " + dateFunction + "," + dateFunction + ",'" + device_info.get("servedIMEI") + "','" + device_info.get("rule_name") + "','" + device_info.get("operator") + "', '" + device_info.get("servedIMSI") + "','CDR' ,'" + device_info.get("file_name") + "','" + device_info.get("record_time") + "'  ) ";
-            logger.info("Qury " + query);
+            logger.debug("Qury " + query);
             stmt = conn.createStatement();
             stmt.executeUpdate(query);
 
@@ -150,13 +152,13 @@ public class RuleFilter {
             device_info.put("action", rule.action);
             device_info.put("failed_rule_aciton", rule.failed_rule_aciton);
 
-            new LogWriter().writeFeatureEvents(myWriter, device_info.get("IMEIESNMEID"),
-                    device_info.get("DeviceType"), device_info.get("MultipleSIMStatus"), device_info.get("SNofDevice"),
-                    device_info.get("Devicelaunchdate"), device_info.get("DeviceStatus"),
-                    device_info.get("txn_id"), device_info.get("operator"), device_info.get("file_name"), "RuleCheckStart",
-                    device_info.get("ruleid"), device_info.get("rule_name"), "", new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date()));
-//            RuleEngineApplication rea = new RuleEngineApplication();
-
+//            new LogWriter().writeFeatureEvents(myWriter, device_info.get("IMEIESNMEID"),
+//                    device_info.get("DeviceType"), device_info.get("MultipleSIMStatus"), device_info.get("SNofDevice"),
+//                    device_info.get("Devicelaunchdate"), device_info.get("DeviceStatus"),
+//                    device_info.get("txn_id"), device_info.get("operator"), device_info.get("file_name"), "RuleCheckStart",
+//                    device_info.get("ruleid"), device_info.get("rule_name"), "", new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date()));
+ 
+            
             String fileArray = device_info.get("DeviceType") + "," + device_info.get("DeviceIdType") + "," + device_info.get("MultipleSIMStatus") + "," + device_info.get("SNofDevice") + "," + device_info.get("IMEIESNMEID") + "," + device_info.get("Devicelaunchdate") + "," + device_info.get("DeviceStatus") + "";
             String[] my_arr = {
                 device_info.get("rule_name"), //0
@@ -176,10 +178,10 @@ public class RuleFilter {
                 device_info.get("txn_id"), //14
                 fileArray //15
             };
-            logger.info(" Rule Execution Start" + Arrays.toString(my_arr));
+            logger.debug(" Rule Execution Start" + Arrays.toString(my_arr));
             output = RuleEngineApplication.startRuleEngine(my_arr, conn, bw);
-            logger.info("Rule Execute OUTPUT is [" + output + "], Database Output--" + device_info.get("output"));
-
+            logger.info("Rule End .."+ device_info.get("rule_name")+ "; Rule Output:"  + output + " ;  Expected O/T : " + device_info.get("output"));
+          
             new LogWriter().writeFeatureEvents(myWriter, device_info.get("IMEIESNMEID"),
                     device_info.get("DeviceType"), device_info.get("MultipleSIMStatus"), device_info.get("SNofDevice"),
                     device_info.get("Devicelaunchdate"), device_info.get("DeviceStatus"),

@@ -21,22 +21,22 @@ public class CEIRParserMain {
     static Logger logger = Logger.getLogger(CEIRParserMain.class);
 
     public static void main(String args[]) {
-    
-    Connection conn = null;
+
+        Connection conn = null;
         conn = (Connection) new com.functionapps.db.MySQLConnection().getConnection();
-        
-     String operator = args[0];
-      CDRPARSERmain( conn,operator) ;
-     
+
+        String operator = args[0];
+        CDRPARSERmain(conn, operator);
+
     }
-        
-        public static void CDRPARSERmain(Connection conn , String operator ) {
-        
+
+    public static void CDRPARSERmain(Connection conn, String operator) {
+
 //        logger = Logger.getLogger(CEIRParserMain.class)
         logger.info("");
         logger.info(" CEIRParserMain.class.");
 //        String operator = args[0];
-        
+
         String operator_tag = getOperatorTag(conn, operator);
         logger.info("Operator tag is [" + operator_tag + "] ");
         ArrayList rulelist = new ArrayList<Rule>();
@@ -213,20 +213,21 @@ public class CEIRParserMain {
                 device_info.put("operator_tag", operator_tag);
 
                 // Event writer into file
-                if (file.length() == 0) {
-                    new LogWriter().writeEvents(myWriter, "servedIMEI",
-                            "recordType", "servedIMSI", "servedMSISDN", "systemType",
-                            "operator", "file_name", "record_time", "type", "rule_id", "rule_name", "status", "time");
-                } else {
-                    new LogWriter().writeEvents(myWriter, rs.getString("IMEI"),
-                            rs.getString("record_type"), rs.getString("IMSI"), (rs.getString("MSISDN").startsWith("19") ? rs.getString("MSISDN").substring(2) : rs.getString("MSISDN")),
-                            rs.getString("system_type"),
-                            rs.getString("operator"), rs.getString("file_name"), rs.getString("record_time"), "Init", "", "", "", new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date()));
-                }
+//                if (file.length() == 0) {
+//                    new LogWriter().writeEvents(myWriter, "servedIMEI",
+//                            "recordType", "servedIMSI", "servedMSISDN", "systemType",
+//                            "operator", "file_name", "record_time", "type", "rule_id", "rule_name", "status", "time");
+//                } else {
+//                    new LogWriter().writeEvents(myWriter, rs.getString("IMEI"),
+//                            rs.getString("record_type"), rs.getString("IMSI"), (rs.getString("MSISDN").startsWith("19") ? rs.getString("MSISDN").substring(2) : rs.getString("MSISDN")),
+//                            rs.getString("system_type"),
+//                            rs.getString("operator"), rs.getString("file_name"), rs.getString("record_time"), "Init", "", "", "", new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date()));
+//                }
                 if (rs.getString("IMEI") == null || rs.getString("IMEI").equals("") || rs.getString("IMEI") == "") {
-//                    logger.info("Imei Null");
+                    logger.info("Imei Null");
                     if (rs.getString("MSISDN") != null) {
                         output = checkDeviceNullDB(conn, (rs.getString("MSISDN").startsWith("19") ? rs.getString("MSISDN").substring(2) : rs.getString("MSISDN")));
+                         logger.info(" Null Output "+ output);
                         if (output == 0) {
                             my_query = "insert into device_null_db (msisdn,imsi,create_filename,update_filename,"
                                     + "updated_on,created_on,record_type,system_type , operator ,record_time) "
@@ -249,7 +250,7 @@ public class CEIRParserMain {
                                     + "',updated_on=" + dateFunction
                                     + ""
                                     + " where msisdn='" + (rs.getString("MSISDN").startsWith("19") ? rs.getString("MSISDN").substring(2) : rs.getString("MSISDN")) + "'";
-//                            logger.info("need to update");
+                            logger.info("need to update");
 
                             nullUpdate++;
 
@@ -257,9 +258,10 @@ public class CEIRParserMain {
                     }
                 } else {
 //                    logger.info("Imei NOt NUll"); 
+                    String failedRuleDate = null;
                     device_info.put("tac", rs.getString("IMEI").substring(0, 8));
                     my_rule_detail = rule_filter.getMyRule(conn, device_info, rulelist, myWriter, bw);
-                    String failedRuleDate = null;
+
                     logger.info("getMyRule done");
                     if (my_rule_detail.get("rule_name") != null) {
                         failed_rule_name = my_rule_detail.get("rule_name");
@@ -388,13 +390,13 @@ public class CEIRParserMain {
             }   // End While
 //            if (update_sno != 0) {  
             stmt1.executeBatch();
-             conn.commit();
+            conn.commit();
             String p2Endtime = java.time.LocalDateTime.now().toString();
             cdrFileDetailsUpdate(conn, operator, device_info.get("file_name"), usageInsert, usageUpdate, duplicateInsert, duplicateUpdate, nullInsert, nullUpdate, p2Starttime, p2Endtime);
 
 //            }
             raw_stmt = conn.createStatement();
-            raw_query = "update " + operator + "_raw" + " set status='Complete' where sno <='" + update_sno + "'";
+            raw_query = "update " + operator + "_raw" + " set status='Complete' where sno <='" + update_sno + "'     ";
             logger.info("raw_query + " + raw_query);
             raw_stmt.executeUpdate(raw_query);
 
@@ -413,12 +415,11 @@ public class CEIRParserMain {
 
                 conn.commit();
                 stmt.close();
-                
 
             } catch (SQLException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
-                logger.info("Ereor" + e);
+                logger.info("Error:" + e);
             }
         }
     }
@@ -636,7 +637,7 @@ public class CEIRParserMain {
 
         String query = null;
         Statement stmt = null;
-        query = "update cdr_file_details_db set total_inserts_in_usage_db='" + usageInsert + "' , total_updates_in_usage_db='" + usageUpdate + "'  ,  total_insert_in_dup_db='" + duplicateInsert + "' , total_updates_in_dup_db='" + duplicateUpdate + "' "
+        query = "update cdr_file_details_db set  MODIFIED_ON = sysdate ,     total_inserts_in_usage_db='" + usageInsert + "' , total_updates_in_usage_db='" + usageUpdate + "'  ,  total_insert_in_dup_db='" + duplicateInsert + "' , total_updates_in_dup_db='" + duplicateUpdate + "' "
                 + " ,total_insert_in_null_db='" + nullInsert + "' ,total_update_in_null_db='" + nullUpdate + "'    , P2StartTime='" + P2StartTime + "' , P2EndTime='" + P2EndTime + "'     where operator='" + operator + "'   and file_name = '" + fileName + "' ";
         logger.info(" qury is " + query);
 

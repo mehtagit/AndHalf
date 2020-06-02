@@ -16,7 +16,7 @@ public class CEIRFeatureFileUploader {
     static Logger logger = Logger.getLogger(CEIRFeatureFileUploader.class);
 
     public static void main(String[] args) {
-        logger.info(" CEIRFeatureFileUploader.class ");
+        logger.info(" CEIRFeatureFileUploader.class");
         HexFileReader hfr = new HexFileReader();
         String basePath = "";
         String complete_file_path = "";
@@ -32,6 +32,13 @@ public class CEIRFeatureFileUploader {
             while (file_details.next()) {
                 System.out.println("" + file_details.getString("txn_id"));
                 logger.info("State ###.. " + file_details.getString("state"));
+
+                if (file_details.getString("state").equalsIgnoreCase("2") || file_details.getString("state").equalsIgnoreCase("3")) {
+                   
+                    CEIRFeatureFileParser.ParserMain(conn);
+                    return;
+                }
+
                 ceirfunction.updateFeatureFileStatus(conn, file_details.getString("txn_id"), 1, file_details.getString("feature"), file_details.getString("sub_feature"));  //update web_action_db set state 1
 //                feature = file_details.getString("feature").replaceAll("\\s", "");
 
@@ -58,7 +65,7 @@ public class CEIRFeatureFileUploader {
                     logger.info(" Feature  Visa Update. Only Web action Db state Update");
                     ceirfunction.UpdateStatusViaApi(conn, file_details.getString("txn_id"), 0, file_details.getString("feature"));
                     logger.info("UpdateStatusViaApi 0 done ");
-                    ceirfunction.updateFeatureFileStatus(conn, file_details.getString("txn_id"), 4, file_details.getString("feature"), file_details.getString("sub_feature")); // update web_action_db           
+                    ceirfunction.updateFeatureFileStatus(conn, file_details.getString("txn_id"), 2, file_details.getString("feature"), file_details.getString("sub_feature")); // update web_action_db           
                     logger.info("Web Action 2 done ");
                     break;
                 }
@@ -113,12 +120,6 @@ public class CEIRFeatureFileUploader {
                         logger.info("Failed to move the file");
                     }
 
-//                    logger.info("Error file already esists ");
-//                    if (err orfile.delete()) {
-//                        logger.info("File deleted successfully");
-//                    } else {
-//                        logger.info("Failed to delete the file");
-//                    }
                 }
                 String user_type = ceirfunction.getUserType(conn, feature_file_management.get("user_id"), file_details.getString("feature").toUpperCase(), file_details.getString("txn_id"));      //   usertype_name from users a, usertype b
                 //  ceirfunction.addFeatureFileConfigDetails(conn, "insert", file_details.getString("feature"), file_details.getString("sub_feature"), file_details.getString("txn_id"), feature_file_management.get("file_name"), "Init", user_type);     //insert into feature_fil e_config_db 

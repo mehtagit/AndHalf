@@ -29,6 +29,7 @@ import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -352,16 +353,14 @@ public class HexFileReader {
 
         String[] data = null;
         BufferedReader br = null;
-     
+
         FileReader fr = null;
         SimpleDateFormat actF = null;
         SimpleDateFormat sdf = null;
-       
+
         HashMap<String, int[]> hm = new HashMap<String, int[]>();
         int failed_flag = 1;
         String updatetime = null;
-        logger.info("in file reader");
-
         try {
             String p1StartTime = java.time.LocalDateTime.now().toString();
             String usertype_name = "";
@@ -370,10 +369,11 @@ public class HexFileReader {
             actF = new SimpleDateFormat("yyyyMMddHHmmss"); // actF = new SimpleDateFormat("yyyyMMddHHmmss");
             sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 //            String[] fileArray11 = fileName.split("_");
-            String str1 = fileName.substring(0, fileName.length() - 10);
-            String str2 = str1.substring(str1.length() - 14, str1.length());
-            updatetime = sdf.format(actF.parse(str2));
-
+//            String str1 = fileName.substring(0, fileName.length() - 10);
+//            String str2 = str1.substring(str1.length() - 14, str1.length());
+//            LocalDateTime now = LocalDateTime.now();  
+//            updatetime = sdf.format("20200531123456");
+            updatetime = "2020-05-30 12:34:56"; ///
             file = new File(fileFolderPath + fileName);
             fr = new FileReader(file);
             br = new BufferedReader(fr);
@@ -394,13 +394,13 @@ public class HexFileReader {
             while ((line = br.readLine()) != null) {
                 data = line.split(",", -1);
                 if (k == 0) {
-                    logger.info(" data length in file is " + data.length + ".. field List(DB) size is " + myfilelist.size());
+                    logger.debug(" data length in file is " + data.length + ".. field List(DB) size is " + myfilelist.size());
                     if (data.length == myfilelist.size()) {
-                        logger.info("Configured Column name and File Headers are matched");
+                        logger.debug("Configured Column name and File Headers are matched");
                         int my_column_count = 0;
                         for (CDRColumn cdrColumn : myfilelist) {
                             if ((cdrColumn.columString).trim().equals(data[my_column_count].trim())) {
-                                logger.info("Column name matched");
+                                logger.debug("Column name matched");
                                 my_column_count++;
                                 query = query + cdrColumn.columString + ",";
                                 values = values + "?,";
@@ -428,7 +428,7 @@ public class HexFileReader {
                             // logger.info("getting error in file so moving the file ");
                             fr.close();
                             new com.functionapps.files.FileList().moveCDRFile(conn, fileName, repName, fileFolderPath, source, "error");
-                            logger.info("Total column are not matched" + my_column_count);
+                            logger.error("Total column are not matched" + my_column_count);
                             break;
                         }
                     } else {
@@ -437,23 +437,23 @@ public class HexFileReader {
 //                        logger.info("Configured Comumn nad File headers are not matched");  
                         new com.functionapps.files.FileList().moveCDRFile(conn, fileName, repName, fileFolderPath, source, "error");
                     }
-                } else {
+                } else {    // k = 0 End
                     int j = 1;               ///  
                     failed_flag = 1;
                     for (CDRColumn cdrColumn : myfilelist) {
-//                        logger.info(j + "   <-- FIELD -> " + data[j - 1]);
+                        logger.debug(j + "   <-- FIELD -> " + data[j - 1]);
                         if (cdrColumn.graceType.equalsIgnoreCase("Mandatory")) {
-//                            logger.info(j + "   <--Mandatory field -> " + data[j - 1]);
+                            logger.info(j + "   <--Mandatory field -> " + data[j - 1]);
                             if (data[j - 1].equals("") || " ".equals(data[j - 1]) || data[j - 1].equals(" ") || data[j - 1] == null) {
-//                                logger.info(" No data " + data[j - 1]);   
+                                logger.debug(" No data " + data[j - 1]);   
                                 failed_flag = 0;
                             }
-                            // j++;
+//                             j++;
                         }
                         j++;
                     }
                     j = 1;
-//                    logger.info("Failed FLAG value " + failed_flag);
+
                     if (failed_flag == 1) {
                         for (; j <= data.length; j++) {
                             ps.setString(j, data[j - 1].trim());
@@ -480,16 +480,18 @@ public class HexFileReader {
                     }
                 }
                 k++;
-                logger.info("..... " + k);
+
                 if (pass_my_batch == my_batch_count) {
-                    logger.info("Executing Pass batch");
+                    logger.info("Executing Pass batch..... " + k);
                     ps.executeBatch();
                     pass_my_batch = 0;
+                    logger.info("..... " + k);
                 }
                 if (fail_my_batch == my_batch_count) {
-                    logger.info("Executing Fail batch");
+                    logger.info("Executing Fail batch.." + k);
                     failed_ps.executeBatch();
                     fail_my_batch = 0;
+
                 }
             }    // while End
 
@@ -531,8 +533,7 @@ public class HexFileReader {
                         ps.close();
                     }
                 }
-               
-                
+
             } catch (Exception ex) {
             }
 //            

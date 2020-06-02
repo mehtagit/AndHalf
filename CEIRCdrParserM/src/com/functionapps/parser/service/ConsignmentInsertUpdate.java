@@ -180,15 +180,15 @@ public class ConsignmentInsertUpdate {
                 device_info.put("file_name", rs.getString("file_name"));
                 device_info.put("operator_tag", operator_tag);
                 device_info.put("txn_id", txn_id);
-                try {
-                    if (file.length() == 0) {
-                        new LogWriter().writeFeatureEvents(myWriter, "IMEIESNMEID", "DeviceType", "MultipleSIMStatus", "SNofDevice", "Devicelaunchdate", "DeviceStatus", "txn_id", "operator", "file_name", "type", "rule_id", "rule_name", "status", "time");
-                    } else {
-                        new LogWriter().writeFeatureEvents(myWriter, rs.getString("IMEIESNMEID"), rs.getString("DeviceType"), rs.getString("MultipleSIMStatus"), rs.getString("SNofDevice"), rs.getString("Devicelaunchdate"), rs.getString("DeviceStatus"), txn_id, operator, rs.getString("file_name"), "Init", "", "", "", new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date()));
-                    }
-                } catch (Exception e) {
-                    logger.error(" exception.. at   new LogWriter().writeFeatureEvents(myWriter, ,,," + e);
-                }
+//                try {
+//                    if (file.length() == 0) {
+//                        new LogWriter().writeFeatureEvents(myWriter, "IMEIESNMEID", "DeviceType", "MultipleSIMStatus", "SNofDevice", "Devicelaunchdate", "DeviceStatus", "txn_id", "operator", "file_name", "type", "rule_id", "rule_name", "status", "time");
+//                    } else {
+//                        new LogWriter().writeFeatureEvents(myWriter, rs.getString("IMEIESNMEID"), rs.getString("DeviceType"), rs.getString("MultipleSIMStatus"), rs.getString("SNofDevice"), rs.getString("Devicelaunchdate"), rs.getString("DeviceStatus"), txn_id, operator, rs.getString("file_name"), "Init", "", "", "", new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date()));
+//                    }
+//                } catch (Exception e) {
+//                    logger.error(" exception.. at   new LogWriter().writeFeatureEvents(myWriter, ,,," + e);
+//                }
                 logger.info(" process .. getMyFeatureRule start   ");
                 my_rule_detail = rule_filter.getMyFeatureRule(conn, device_info, rulelist, myWriter, bw);
                 logger.info(" process .. getMyFeatureRule End with   errorFlag  " + my_rule_detail.get("errorFlag"));
