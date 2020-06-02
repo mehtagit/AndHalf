@@ -464,27 +464,25 @@ public class RegularizedDeviceServiceImpl {
 
 					// Return message to the client.
 					if(executionSuccess) {
-						logger.info("End user device registration is sucessful." + endUserDB);
+						logger.info("End user device registration is sucessful.");
 						String mailTag = "END_USER_NEW_DEVICE_ADD";
 						List<RawMail> rawMails = new ArrayList<>();
 						Map<String, String> placeholderMap = new HashMap<String, String>();
 
 						// Mail to End user. 
-						if(Objects.nonNull(endUserDB2)) {
-							if(Objects.nonNull(endUserDB2.getEmail()) && !endUserDB2.getEmail().isEmpty()) {
+							if(Objects.nonNull(endUserDB2.getEmail()) && !endUserDB2.getEmail().isEmpty() && !"NA".equalsIgnoreCase(endUserDB2.getEmail())) {
 								placeholderMap.put("<First name>", endUserDB2.getFirstName());
-								placeholderMap.put("<Txn id>", endUserDB2.getTxnId());
+								placeholderMap.put("<Txn id>",transactionId);
 								rawMails.add(new RawMail(mailTag, endUserDB2.getId(), Long.valueOf(12), 
-										Features.REGISTER_DEVICE, SubFeatures.REGISTER, endUserDB2.getTxnId(), 
-										endUserDB2.getTxnId(), placeholderMap, ReferTable.END_USER, null, "End User"));
+										Features.REGISTER_DEVICE, SubFeatures.REGISTER, transactionId, 
+										transactionId, placeholderMap, ReferTable.END_USER, null, "End User"));
 								emailUtil.saveNotification(rawMails);	
-								
 							}
 							else {
 								logger.info("this end user don't have any email");
 							}
-						}
-						
+							
+						logger.info("raw email size: "+rawMails.size());
 					
 						return new GenricResponse(0, "End user device registration is sucessful.", txnId);
 					}else {
@@ -643,19 +641,16 @@ public class RegularizedDeviceServiceImpl {
 			auditTrailRepository.save(new AuditTrail(userId, username, 17L,
 					data.getUserType(), 12,Features.REGISTER_DEVICE, SubFeatures.DELETE, "", data.getTxnId(),data.getUserType()));
 			logger.info("AUDIT : Saved request in audit.");
-
 			RegularizeDeviceDb regularizeDeviceDb = regularizedDeviceDbRepository.getByFirstImei(data.getImei());
 
 			if(Objects.nonNull(regularizeDeviceDb)) {
-
-				regularizedDeviceDbRepository.deleteById(regularizeDeviceDb.getId());
-
+				regularizeDeviceDb.setStatus(RegularizeDeviceStatus.WithDrawn_BY_CEIR_ADMIN.getCode());
+				regularizeDeviceDb.setApprovedBy(username);
+				regularizedDeviceDbRepository.save(regularizeDeviceDb);
 				return new GenricResponse(0, "Device have been deleted sucessfully.", regularizeDeviceDb.getFirstImei());
 			}else {
-
 				return new GenricResponse(4, "This IMEI does not exist.", "");	
 			}
-
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException("Custom Service", e.getMessage());
@@ -677,13 +672,16 @@ public class RegularizedDeviceServiceImpl {
             String username="";
 			RegularizeDeviceDb regularizeDeviceDb =new RegularizeDeviceDb();
 			if("CEIRADMIN".equalsIgnoreCase(ceirActionRequest.getUserType())){
+				
 				regularizeDeviceDb=regularizedDeviceDbRepository.getByFirstImei(ceirActionRequest.getImei1());
+				
 				logger.debug("Accept/Reject regularized Devices : " + regularizeDeviceDb);
 	            if(Objects.isNull(regularizeDeviceDb))
 	            {
 	            	return new GenricResponse(1, "First imei is incorrect", "");            	
 	            }
-				endUserDB = endUserDbRepository.getByNid(regularizeDeviceDb.getNid());
+
+	            endUserDB = endUserDbRepository.getByNid(regularizeDeviceDb.getNid());
 				placeholders.put("<Txn id>", regularizeDeviceDb.getTxnId());
 				placeholders.put("<First name>", endUserDB.getFirstName());
 
@@ -692,6 +690,7 @@ public class RegularizedDeviceServiceImpl {
                 if(Objects.nonNull(ceirActionRequest.getUsername())) {
                 	username=ceirActionRequest.getUsername();
                 }
+	            regularizeDeviceDb.setApprovedBy(username);
 				if(ceirActionRequest.getAction() == 0) {
 					regularizeDeviceDb.setStatus(RegularizeDeviceStatus.APPROVED.getCode());
 					tag = "MAIL_TO_USER_ON_CEIR_DEVICE_APPROVAL";
@@ -710,7 +709,7 @@ public class RegularizedDeviceServiceImpl {
 				}
 				// Send Notifications
 				if(Objects.nonNull(endUserDB)) {
-					if(Objects.nonNull(endUserDB.getEmail()) && !endUserDB.getEmail().isEmpty()) {
+					if(Objects.nonNull(endUserDB.getEmail()) && !endUserDB.getEmail().isEmpty() && !"NA".equalsIgnoreCase(endUserDB.getEmail())) {
 						rawMails.add(new RawMail(tag, 
 								endUserDB.getId(), 
 								12, 
@@ -741,7 +740,7 @@ public class RegularizedDeviceServiceImpl {
 					
 				}
 				auditTrailRepository.save(new AuditTrail(userId, username, userTypeId,
-						ceirActionRequest.getUserType(), 12,Features.REGISTER_DEVICE, subFeature, "", txnId));
+						ceirActionRequest.getUserType(), 12,Features.REGISTER_DEVICE, subFeature, "", txnId,ceirActionRequest.getUserType()));
 			}
 			else if("CEIRSYSTEM".equalsIgnoreCase(ceirActionRequest.getUserType())){
 				List<RegularizeDeviceDb> regularizeList=regularizedDeviceDbRepository.findByTxnId(ceirActionRequest.getTxnId());
@@ -776,7 +775,7 @@ public class RegularizedDeviceServiceImpl {
 					ceirUserProfile.setUser(userStaticServiceImpl.getCeirAdmin());
 					
 					subFeature=SubFeatures.SYSTEM_ACCEPT;
-					if(Objects.nonNull(endUserDB.getEmail()) && !endUserDB.getEmail().isEmpty()) {
+					if(Objects.nonNull(endUserDB.getEmail()) && !endUserDB.getEmail().isEmpty() && !"NA".equalsIgnoreCase(endUserDB.getEmail())) {
 						rawMails.add(new RawMail("Reg_Device_Process_success_To_EndUser", 
 								endUserDB.getId(), 
 								12, 
@@ -826,8 +825,7 @@ if(Objects.nonNull(regularizeOutput))
 					txnId = regularizeDeviceDb.getTxnId();
 					subFeature=SubFeatures.SYSTEM_REJECT;
 					
-					if(Objects.nonNull(endUserDB.getEmail()) && !endUserDB.getEmail().isEmpty()) {
-						if(Objects.nonNull(endUserDB.getEmail()) && !endUserDB.getEmail().isEmpty()) {
+					if(Objects.nonNull(endUserDB.getEmail()) && !endUserDB.getEmail().isEmpty() && !"NA".equalsIgnoreCase(endUserDB.getEmail())) {
 						rawMails.add(new RawMail("Reg_Device_Process_Fail_To_EndUser", 
 								endUserDB.getId(), 
 								12, 
@@ -840,14 +838,11 @@ if(Objects.nonNull(regularizeOutput))
 								null,
 								receiverUserType));
 						}
-					}
 					List<RegularizeDeviceDb> regularizeOutput=regularizedDeviceDbRepository.saveAll(regularizeList);
 					if(Objects.nonNull(regularizeOutput)&&!regularizeOutput.isEmpty())
 					{
 						if(Objects.nonNull(rawMails) && !rawMails.isEmpty()) {
-							if(regularizeDeviceDb.getStatus()==RegularizeDeviceStatus.Processing.getCode()) {
 							emailUtil.saveNotification(rawMails);	
-							}
 						}
 						
 					}

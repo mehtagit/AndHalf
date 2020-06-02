@@ -11,7 +11,7 @@
 	</parent>
 	<groupId>com.gl.ceir</groupId>
 	<artifactId>config</artifactId>
-	<version>1.0.51</version>
+	<version>1.0.55</version>
 	<name>config</name>
 	<description>Demo project for Spring Boot</description>
 
@@ -102,9 +102,9 @@
 		</dependency>
 
 		<dependency>
-			<groupId>com.oracle</groupId>
+			<groupId>com.oracle.ojdbc</groupId>
 			<artifactId>ojdbc8</artifactId>
-			<version>19.3</version>
+			<version>19.3.0.0</version>
 		</dependency>
 
 		<dependency>

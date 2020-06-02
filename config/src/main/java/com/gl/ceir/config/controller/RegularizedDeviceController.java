@@ -74,7 +74,7 @@ public class RegularizedDeviceController {
 	@PostMapping("/end-user-device-info")
 	public GenricResponse saveEndUserInfo(@RequestBody EndUserDB endUserDB) {
 		logger.info(" register device request end user data= " + endUserDB);
-		logger.info("regularize data= " + endUserDB);
+		logger.info("regularze data: "+endUserDB.getRegularizeDeviceDbs().toString());
 		GenricResponse genricResponse = regularizedDeviceServiceImpl.saveDevices(endUserDB);
 		//logger.info("Resonse send = " + genricResponse);
 		return genricResponse;
@@ -120,7 +120,7 @@ public class RegularizedDeviceController {
 	@RequestMapping(path = "accept-reject/end-user-device", method = RequestMethod.PUT)
 	public GenricResponse updateConsigmentStatus(@RequestBody CeirActionRequest ceirActionRequest) {
 
-		logger.info("Request to update the regularized devices = " + ceirActionRequest);
+		logger.info("Request to accpt/reject the regularized devices = " + ceirActionRequest);
 
 		GenricResponse genricResponse = regularizedDeviceServiceImpl.acceptReject(ceirActionRequest);
 
