@@ -68,6 +68,8 @@ import com.gl.ceir.config.repository.UserProfileRepo;
 import com.gl.ceir.config.repository.UserProfileRepository;
 import com.gl.ceir.config.repository.UserRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
+import com.gl.ceir.config.request.model.Generic_Response_Notification;
+import com.gl.ceir.config.request.model.RegisterationUser;
 import com.gl.ceir.config.service.businesslogic.StateMachine;
 import com.gl.ceir.config.specificationsbuilder.GenericSpecificationBuilder;
 import com.gl.ceir.config.transaction.StockTransaction;
@@ -526,6 +528,10 @@ public class StockServiceImpl {
 		userProfile = user.getUserProfile();
 		txnId = deleteObj.getTxnId();
 	
+		
+		/*placeholderMap.put("<First name>", userProfile_generic_Response_Notification.getFirstName());
+		placeholderMap.put("<Txn id>", consignmentMgmt.getTxnId());*/
+		
 		placeholderMap.put("<First name>", firstName);
 		placeholderMap.put("<Txn id>", deleteObj.getTxnId());
 		try {
@@ -574,8 +580,19 @@ public class StockServiceImpl {
 						userProfile = user.getUserProfile();
 						logger.info("user profile details-");
 						logger.info(userProfile);
+						Generic_Response_Notification generic_Response_Notification = userFeignClient.ceirInfoByUserTypeId(8);
+
+						logger.info("generic_Response_Notification::::::::"+generic_Response_Notification);
+
+						List<RegisterationUser> registerationUserList = generic_Response_Notification.getData();
+
+						for(RegisterationUser registerationUser :registerationUserList) {
+						UserProfile userProfile_generic_Response_Notification = new UserProfile();
+						userProfile_generic_Response_Notification = userProfileRepository.getByUserId(registerationUser.getId());
+						
+						
 						emailUtil.saveNotification(userMailTag, 
-								userStaticServiceImpl.getCeirAdmin().getUserProfile(),
+								userProfile_generic_Response_Notification,
 								deleteObj.getFeatureId(),
 								Features.STOCK,
 								action,
@@ -586,7 +603,7 @@ public class StockServiceImpl {
 								receiverUserType,
 								"Users");
 						logger.info("Notfication for CEIRAdmin have been saved.");
-						
+					}
 						emailUtil.saveNotification(userMailTag, 
 								userProfile, 
 								deleteObj.getFeatureId(),
@@ -934,18 +951,30 @@ public class StockServiceImpl {
 							receiverUserType,
 							"Users");
 					logger.info("Notfication have been saved for user.");
-					emailUtil.saveNotification(adminMailTag, 
-							userStaticServiceImpl.getCeirAdmin().getUserProfile(), 
-							consignmentUpdateRequest.getFeatureId(),
-							Features.STOCK,
-							action,
-							consignmentUpdateRequest.getTxnId(),
-							txnId,
-							placeholderMap,
-							stockMgmt.getRoleType(),
-							receiverUserType,
-							"Users");
-					logger.info("Notfication have been saved for CEIR Admin.");
+					if(consignmentUpdateRequest.getAction() == 0) {
+						 Generic_Response_Notification generic_Response_Notification =
+								  userFeignClient.ceirInfoByUserTypeId(8);
+								  
+								  logger.info("generic_Response_Notification::::::::"+
+								  generic_Response_Notification);
+								  
+								  List<RegisterationUser> registerationUserList =
+								  generic_Response_Notification.getData();
+								  
+								  for(RegisterationUser registerationUser :registerationUserList) { UserProfile
+								  userProfile_generic_Response_Notification = new UserProfile();
+								  userProfile_generic_Response_Notification =
+								  userProfileRepository.getByUserId(registerationUser.getId());
+								  emailUtil.saveNotification(adminMailTag,
+								  userProfile_generic_Response_Notification,
+								  consignmentUpdateRequest.getFeatureId(), Features.STOCK, action,
+								  consignmentUpdateRequest.getTxnId(), txnId, placeholderMap,
+								  stockMgmt.getRoleType(), receiverUserType, "Users");
+								  logger.info("Notfication have been saved for CEIR Admin."); }	
+					}
+					
+					 
+					 
 				}
 
 			}else if("CEIRSYSTEM".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())){
@@ -1013,8 +1042,18 @@ public class StockServiceImpl {
 						logger.info("Notfication have been saved for user.");
 
 						if(consignmentUpdateRequest.getAction() == 0) {
+							Generic_Response_Notification generic_Response_Notification = userFeignClient.ceirInfoByUserTypeId(8);
+
+							logger.info("generic_Response_Notification::::::::"+generic_Response_Notification);
+
+							List<RegisterationUser> registerationUserList = generic_Response_Notification.getData();
+
+							for(RegisterationUser registerationUser :registerationUserList) {
+							UserProfile userProfile_generic_Response_Notification = new UserProfile();
+							userProfile_generic_Response_Notification = userProfileRepository.getByUserId(registerationUser.getId());
+							
 							emailUtil.saveNotification(adminMailTag, 
-									userStaticServiceImpl.getCeirAdmin().getUserProfile(), 
+									userProfile_generic_Response_Notification,
 									consignmentUpdateRequest.getFeatureId(),
 									Features.STOCK,
 									action,
@@ -1025,6 +1064,7 @@ public class StockServiceImpl {
 									receiverUserType,
 									"Users");
 							logger.info("Notfication have been saved for CEIR Admin.");
+							}
 							emailUtil.saveNotification(mailTag, 
 									userProfile, 
 									consignmentUpdateRequest.getFeatureId(),
