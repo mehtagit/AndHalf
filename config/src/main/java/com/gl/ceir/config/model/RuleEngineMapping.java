@@ -18,133 +18,134 @@ import io.swagger.annotations.ApiModel;
 @ApiModel
 @Entity
 public class RuleEngineMapping implements Serializable {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
 
-	@NotNull
-	@Column(length = 20)
-	private String feature;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
+    @NotNull
+    @Column(length = 20)
+    private String feature;
 
     @Column
-	private String name;
-	
-	@NotNull
-	@Column(length = 20)
-	private String graceAction;
-	
-	@NotNull
-	@Column(length = 20)
-	private String postGraceAction;
-	
-	@NotNull
-	private Integer ruleOrder;
-	
-	@NotNull
-	@Column(length = 20)
-	private String userType;
-	
-	
-	@Column(length = 20)
-	private String output;
-	
-	
+    private String name;
 
-	public String getOutput() {
-		return output;
-	}
+    @NotNull
+    @Column(length = 20)
+    private String graceAction;
 
-	public void setOutput(String output) {
-		this.output = output;
-	}
+    @NotNull
+    @Column(length = 20)
+    private String postGraceAction;
 
-	public Long getId() {
-		return id;
-	}
+    @NotNull
+    private Integer ruleOrder;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    @NotNull
+    @Column(length = 20)
+    private String userType;
 
-	public String getName() {
-		return name;
-	}
+    @Column(length = 20)
+    private String output;
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    @Column
+    private String ruleMessage;
 
-	public String getFeature() {
-		return feature;
-	}
+    public String getRuleMessage() {
+        return ruleMessage;
+    }
 
-	public void setFeature(String feature) {
-		this.feature = feature;
-	}
+    public void setRuleMessage(String ruleMessage) {
+        this.ruleMessage = ruleMessage;
+    }
 
-	public String getGraceAction() {
-		return graceAction;
-	}
+    public String getOutput() {
+        return output;
+    }
 
-	public void setGraceAction(String graceAction) {
-		this.graceAction = graceAction;
-	}
+    public void setOutput(String output) {
+        this.output = output;
+    }
 
-	public String getPostGraceAction() {
-		return postGraceAction;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public void setPostGraceAction(String postGraceAction) {
-		this.postGraceAction = postGraceAction;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	
+    public String getName() {
+        return name;
+    }
 
-	public Integer getRuleOrder() {
-		return ruleOrder;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setRuleOrder(Integer ruleOrder) {
-		this.ruleOrder = ruleOrder;
-	}
+    public String getFeature() {
+        return feature;
+    }
 
-	public String getUserType() {
-		return userType;
-	}
+    public void setFeature(String feature) {
+        this.feature = feature;
+    }
 
-	public void setUserType(String userType) {
-		this.userType = userType;
-	}
+    public String getGraceAction() {
+        return graceAction;
+    }
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
+    public void setGraceAction(String graceAction) {
+        this.graceAction = graceAction;
+    }
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("RuleEngineMapping [id=");
-		builder.append(id);
-		builder.append(", feature=");
-		builder.append(feature);
-		builder.append(", name=");
-		builder.append(name);
-		builder.append(", graceAction=");
-		builder.append(graceAction);
-		builder.append(", postGraceAction=");
-		builder.append(postGraceAction);
-		builder.append(", ruleOrder=");
-		builder.append(ruleOrder);
-		builder.append(", userType=");
-		builder.append(userType);
-		builder.append("]");
-		return builder.toString();
-	}
-	
+    public String getPostGraceAction() {
+        return postGraceAction;
+    }
+
+    public void setPostGraceAction(String postGraceAction) {
+        this.postGraceAction = postGraceAction;
+    }
+
+    public Integer getRuleOrder() {
+        return ruleOrder;
+    }
+
+    public void setRuleOrder(Integer ruleOrder) {
+        this.ruleOrder = ruleOrder;
+    }
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
+
+    public static long getSerialversionuid() {
+        return serialVersionUID;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("RuleEngineMapping{id=").append(id);
+        sb.append(", feature=").append(feature);
+        sb.append(", name=").append(name);
+        sb.append(", graceAction=").append(graceAction);
+        sb.append(", postGraceAction=").append(postGraceAction);
+        sb.append(", ruleOrder=").append(ruleOrder);
+        sb.append(", userType=").append(userType);
+        sb.append(", output=").append(output);
+        sb.append(", ruleMessage=").append(ruleMessage);
+        sb.append('}');
+        return sb.toString();
+    }
+
 }
