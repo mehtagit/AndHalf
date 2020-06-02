@@ -751,7 +751,8 @@ public class ConfigurationManagementServiceImpl {
 			mappingStrategy.setType(MessageMgtFileModel.class);
 
 			builder = new StatefulBeanToCsvBuilder<>(writer);
-			csvWriter = builder.withMappingStrategy(mappingStrategy).withSeparator(',').withQuotechar(CSVWriter.NO_QUOTE_CHARACTER).build();
+			//csvWriter = builder.withMappingStrategy(mappingStrategy).withSeparator(',').withQuotechar(CSVWriter.NO_QUOTE_CHARACTER).build();
+			csvWriter = builder.withMappingStrategy(mappingStrategy).withSeparator(',').withQuotechar(CSVWriter.DEFAULT_QUOTE_CHARACTER).build();
 
 			if( !messageConfigurationDbList.isEmpty() ) {
 				fileRecords = new ArrayList<>();
