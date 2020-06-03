@@ -928,7 +928,11 @@ public class ConsignmentServiceImpl {
 					logger.info("generic_Response_Notification::::::::"+generic_Response_Notification);
 
 					List<RegisterationUser> registerationUserList = generic_Response_Notification.getData();
-
+					if(registerationUserList == null || registerationUserList.isEmpty()) {
+						logger.info("no user found");
+					}
+					else {
+						
 					for(RegisterationUser registerationUser :registerationUserList) {
 						UserProfile userProfile_generic_Response_Notification = new UserProfile();
 						userProfile_generic_Response_Notification  = userProfileRepository.getByUserId(registerationUser.getId());
@@ -948,7 +952,7 @@ public class ConsignmentServiceImpl {
 								"DRT",
 								ReferTable.USERS);
 					}
-			
+					}
 				}
 
 
@@ -962,7 +966,10 @@ public class ConsignmentServiceImpl {
 					logger.info("generic_Response_Notification::::::::"+generic_Response_Notification);
 
 					List<RegisterationUser> registerationUserList = generic_Response_Notification.getData();
-
+if(registerationUserList == null || registerationUserList.isEmpty()) {
+	logger.info("no user found in this port/address");
+}
+else {
 					for(RegisterationUser registerationUser :registerationUserList) {
 						UserProfile userProfile_generic_Response_Notification = new UserProfile();
 						userProfile_generic_Response_Notification  = userProfileRepository.getByUserId(registerationUser.getId());
@@ -983,6 +990,7 @@ public class ConsignmentServiceImpl {
 								ReferTable.USERS);
 
 					}
+}
 				}
 			}
 			else {
@@ -1084,7 +1092,11 @@ public class ConsignmentServiceImpl {
 					logger.info("generic_Response_Notification::::::::"+generic_Response_Notification);
 
 					List<RegisterationUser> registerationUserList = generic_Response_Notification.getData();
-
+					if(registerationUserList == null || registerationUserList.isEmpty()) {
+						logger.info("no user found");
+					}
+					else {
+						
 					for(RegisterationUser registerationUser :registerationUserList) {
 						UserProfile userProfile_generic_Response_Notification = new UserProfile();
 						userProfile_generic_Response_Notification  = userProfileRepository.getByUserId(registerationUser.getId());
@@ -1103,6 +1115,7 @@ public class ConsignmentServiceImpl {
 								null, 
 								"CEIRAdmin",
 								ReferTable.USERS);
+					}
 					}
 				}
 			}
@@ -1215,11 +1228,15 @@ public class ConsignmentServiceImpl {
 					logger.info("generic_Response_Notification::::::::"+generic_Response_Notification);
 
 					List<RegisterationUser> registerationUserList = generic_Response_Notification.getData();
-
+					if(registerationUserList == null || registerationUserList.isEmpty()) {
+						logger.info("no user found");
+					}
+					else {
+						
 					for(RegisterationUser registerationUser :registerationUserList) {
 						UserProfile userProfile_generic_Response_Notification = new UserProfile();
 						userProfile_generic_Response_Notification  = userProfileRepository.getByUserId(registerationUser.getId());
-logger.info(" firstName :::::"+userProfile_generic_Response_Notification.getFirstName());
+						logger.info(" firstName :::::"+userProfile_generic_Response_Notification.getFirstName());
 						placeholderMap.put("<First name>", userProfile_generic_Response_Notification.getFirstName());
 						placeholderMap.put("<Txn id>", current_consignment_response.getTxnId());
 
@@ -1235,6 +1252,7 @@ logger.info(" firstName :::::"+userProfile_generic_Response_Notification.getFirs
 								consignmentUpdateRequest.getRoleType(),
 								"CEIRAdmin"));
 }
+					}
 					emailUtil.saveNotification(rawMails);
 				}
 			}
