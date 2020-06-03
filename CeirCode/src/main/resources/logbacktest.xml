@@ -19,4 +19,8 @@ class="ch.qos.logback.core.rolling.RollingFileAppender">
 <root level="INFO">
 <appender-ref ref="FILE" />
 </root>
-</configuration>
+<!-- <root level="DEBUG">
+<appender-ref ref="FILE" />
+</root>
+ -->
+ </configuration>

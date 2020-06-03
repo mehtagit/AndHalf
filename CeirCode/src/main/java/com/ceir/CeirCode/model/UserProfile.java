@@ -59,7 +59,8 @@ public class UserProfile {
 	private String email;
 	private String phoneNo;
 	private Integer arrivalPort;
-	private Integer PortAddress;
+	@Column(name = "port_address")
+	private Integer portAddress;
 	@Transient
 	private String PortAddressName;
 	@Transient
@@ -508,10 +509,10 @@ public class UserProfile {
 		this.userLanguage = userLanguage;
 	}
 	public Integer getPortAddress() {
-		return PortAddress;
+		return portAddress;
 	}
 	public void setPortAddress(Integer portAddress) {
-		PortAddress = portAddress;
+		this.portAddress = portAddress;
 	}
 	public String getPortAddressName() {
 		return PortAddressName;
@@ -562,7 +563,7 @@ public class UserProfile {
 				+ questionList + ", roles=" + roles + ", usertypeName=" + usertypeName + ", password=" + password
 				+ ", source=" + source + ", expiryDate=" + expiryDate + ", sourceUsername=" + sourceUsername
 				+ ", userAgent=" + userAgent + ", publicIp=" + publicIp + ", userLanguage=" + userLanguage +
-				" portAddress=" + PortAddress +" , PortAddressName=" + PortAddressName +", userTypeId=" + userTypeId +""
+				" portAddress=" + portAddress +" , PortAddressName=" + PortAddressName +", userTypeId=" + userTypeId +""
 						+ "  RolesList="+rolesList+"]";
 	}
 	public UserProfile(String firstName, String middleName, String lastName, String propertyLocation, String street,

@@ -16,6 +16,7 @@ import com.ceir.CeirCode.model.AllRequest;
 import com.ceir.CeirCode.model.PortAddress;
 import com.ceir.CeirCode.model.User;
 import com.ceir.CeirCode.model.UserDetails;
+import com.ceir.CeirCode.othermodel.UserPort;
 import com.ceir.CeirCode.response.GenricResponse;
 import com.ceir.CeirCode.service.UserMgmtService;
 import com.ceir.CeirCode.util.HttpResponse;
@@ -67,5 +68,19 @@ public class UserManagement {
 			mapping = new MappingJacksonValue(userData);
 			return mapping;		
 	}
+	
+	@ApiOperation(value="user data by usertype Id")
+	@PostMapping("/databyUserTypeId/{usertypeId}")
+	public GenricResponse updateUser(@PathVariable("usertypeId")long userTypeId){
+		return userService.DataByUserTypeId(userTypeId);
+	}
+	
+	@ApiOperation(value="user data by usertype Id")
+	@PostMapping("/DataByPortAndUserType/")
+	public GenricResponse dataByPortAndUserType(@RequestBody UserPort port){
+		return userService.portData(port);
+	}
+
+	
 	
 }

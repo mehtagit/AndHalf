@@ -51,7 +51,7 @@ public class NotificationUtil {
 
 
 
-	public boolean saveNotification(@NonNull String tag, UserProfile userProfileData, long featureId, String featureName, String subFeature, String featureTxnId,String subject,String otp,String channelType,String referTable,int authorityStatus) {
+	public boolean saveNotification(@NonNull String tag, UserProfile userProfileData, long featureId, String featureName, String subFeature, String featureTxnId,String otp,String channelType,String referTable,int authorityStatus) {
 		try {
 			String emailBody="";
 			MessageConfigurationDb messageDB = new MessageConfigurationDb();
@@ -59,7 +59,7 @@ public class NotificationUtil {
 			messageDB = messageConfigurationDbRepository.getByTag(tag);
 				logger.info("messageDB data by tag: "+messageDB);
 				emailBody=userService.emailContent(messageDB, userProfileData, otp);		
-		
+		String subject=userService.getsubject(messageDB, userProfileData, otp);
 			logger.info("email body=  "+emailBody);
 			Notification notification=new Notification();
 			notification.setChannelType(channelType);

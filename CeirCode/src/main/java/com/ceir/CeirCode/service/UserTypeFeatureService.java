@@ -83,7 +83,7 @@ public class UserTypeFeatureService {
 				uPSB.with(new SearchCriteria("period",filterRequest.getPeriod(), SearchOperation.EQUALITY, Datatype.INTEGER));
 
 			if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
-				//uPSB.orSearchUser(new SearchCriteria("username", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+				uPSB.orSearch(new SearchCriteria("stakeholderFeature-name", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 			    uPSB.orSearchUsertypeMapToFeature(new SearchCriteria("usertypeName", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 //			    uPSB.orSearchFeature(new SearchCriteria("name", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 				}

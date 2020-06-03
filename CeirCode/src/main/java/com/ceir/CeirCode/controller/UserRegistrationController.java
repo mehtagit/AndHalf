@@ -114,7 +114,16 @@ public class UserRegistrationController {
 	public ResponseEntity<?> resendOtp(@RequestBody ResendOtp otp)
 	{     
 		return userService.resendOtp(otp);
-	}        
+	} 
+	
+	@ApiOperation(value = "otp resend", response = HttpResponse.class)
+	@CrossOrigin
+	@PostMapping("/profileResendOtp")   
+	public ResponseEntity<?> profileResendOtp(@RequestBody ResendOtp otp)
+	{     
+		return userService.profileResendOtp(otp);
+	} 
+	
 	
 	
 	

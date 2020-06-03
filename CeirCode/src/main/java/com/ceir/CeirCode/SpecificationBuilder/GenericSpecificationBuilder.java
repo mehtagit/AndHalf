@@ -104,7 +104,7 @@ public class GenericSpecificationBuilder<T> {
 			}
 		}
 		/***If searchParams list not empty***/
-		specifications = createSpecifications( searchParams );
+			specifications = createSpecifications( searchParams );
 		if( !specifications.isEmpty()) {
 			searchSpecification = specifications.get(0);
 			for(int i = 1; i<specifications.size() ;i++) {
@@ -112,7 +112,7 @@ public class GenericSpecificationBuilder<T> {
 			}
 			if( finalSpecification != null ) {
 				finalSpecification = finalSpecification.and( searchSpecification );
-			}else {//If no call of addSpecification method
+			}else {//If no call of addSpecification method and empty params 
 				finalSpecification = Specification.where(searchSpecification);
 			}
 		}

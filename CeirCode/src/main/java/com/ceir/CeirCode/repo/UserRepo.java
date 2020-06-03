@@ -1,4 +1,6 @@
 package com.ceir.CeirCode.repo;
+import java.util.List;
+
 import javax.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -13,5 +15,7 @@ public interface UserRepo extends JpaRepository<User, Long> ,JpaSpecificationExe
 	public User findByUserProfile_Id(long id);
 	long countByUsertype_Id(long id);
 	public void deleteById(long id);
+	public List<User> findByUsertype_IdAndCurrentStatus(long usertypeId,Integer status); 	
+	public List<User> findByUsertype_IdAndCurrentStatusAndUserProfile_ArrivalPortAndUserProfile_PortAddress(long usertypeId,Integer status,Integer port,Integer address); 	
 	
 }

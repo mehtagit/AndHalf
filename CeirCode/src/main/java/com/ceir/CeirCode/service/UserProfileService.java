@@ -358,7 +358,7 @@ public class UserProfileService {
 					uPFm.setType(userProfile.getAsTypeName());
 					uPFm.setUserType(userProfile.getUser().getUsertype().getUsertypeName());
 					uPFm.setStatus(UserStatus.getUserStatusByCode(userProfile.getUser().getCurrentStatus()).getDescription());
-					uPFm.setApprovedBy(userProfile.getUser().getUsername());
+					uPFm.setApprovedBy(userProfile.getUser().getApprovedBy());
 					System.out.println(uPFm.toString());
 					fileRecords.add(uPFm);
 				}

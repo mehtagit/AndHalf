@@ -67,6 +67,7 @@ public class LoginController{
 	@CrossOrigin
 	@PostMapping("/changeLanguage")     
 	public ResponseEntity<?> changeLanguage(@RequestBody ChangeLanguage languageData  ){
+		log.info("inside change language controller");
 		return loginService.changeLanguage(languageData);  
 	}
 	

@@ -31,6 +31,7 @@ import com.ceir.CeirCode.model.constants.AlertStatus;
 import com.ceir.CeirCode.model.constants.Features;
 import com.ceir.CeirCode.model.constants.SubFeatures;
 import com.ceir.CeirCode.model.constants.UsertypeData;
+import com.ceir.CeirCode.othermodel.UserPort;
 import com.ceir.CeirCode.repo.UserProfileRepo;
 import com.ceir.CeirCode.repo.UserRepo;
 import com.ceir.CeirCode.repo.UsertypeRepo;
@@ -354,6 +355,53 @@ public class UserMgmtService {
 			}
 			else {
 				GenricResponse response=new GenricResponse(500,PortAddsTags.PAdd_Data_By_Id_Fail.getMessage(),PortAddsTags.PAdd_Data_By_Id_Fail.getTag());
+				return  response;
+			}
+
+		}
+		
+		
+		public GenricResponse DataByUserTypeId(long userTypeId){
+			log.info("inside view data by userTypeId: "+userTypeId);
+			List<User> output=new ArrayList<User>();
+			try {
+				 output=userRepo.findByUsertype_IdAndCurrentStatus(userTypeId,3);
+		}
+		catch(Exception e) {
+			log.info("Exception occurs");
+			log.info(e.toString());
+			GenricResponse response=new GenricResponse(500,"Oops Somthing wrong happened","");
+			return  response;
+		}
+			if(output!=null && !output.isEmpty()) {
+				GenricResponse response=new GenricResponse(200,"","",output);		
+				return  response;
+			}
+			else {
+				GenricResponse response=new GenricResponse(409,"No data found for this userTypeId","");
+				return  response;
+			}
+
+		}
+		
+		public GenricResponse portData(UserPort data){
+			log.info("data given: "+data);
+			List<User> output=new ArrayList<User>();
+			try {
+				 output=userRepo.findByUsertype_IdAndCurrentStatusAndUserProfile_ArrivalPortAndUserProfile_PortAddress(data.getUserTypeId(),3, data.getArrivalPort(), data.getPortAddress());
+		}
+		catch(Exception e) {
+			log.info("Exception occurs");
+			log.info(e.toString());
+			GenricResponse response=new GenricResponse(500,"Oops Somthing wrong happened","");
+			return  response;
+		}
+			if(output!=null && !output.isEmpty()) {
+				GenricResponse response=new GenricResponse(200,"","",output);		
+				return  response;
+			}
+			else {
+				GenricResponse response=new GenricResponse(409,"data not found","");
 				return  response;
 			}
 

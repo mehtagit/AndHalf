@@ -120,7 +120,7 @@ public class LoginService
 			{ 
 				RequestHeaders header=new RequestHeaders(userLogin.getUserAgent(),userLogin.getPublicIp(),UserData.getUsername());
 				headerService.saveRequestHeader(header);
-				userService.saveUserTrail(UserData, "Login","Login",0);
+				userService.saveUserTrail(UserData, "User Management","Login",41);
 				if(UserData.getPassword().equals(user.getPassword()))
 				{
 					if(UserData.getCurrentStatus()==user.getCurrentStatus() || UserData.getCurrentStatus()==status2)
@@ -318,7 +318,7 @@ public class LoginService
 
 	public ResponseEntity<?> sessionTracking(LoginTracking loginTracking){
 		try {
-			userService.saveUserTrail(loginTracking.getUserTrack(), "Logout","Logout",0);
+			userService.saveUserTrail(loginTracking.getUserTrack(), "User Management","Logout",41);
 			LoginTracking loginTrackingOutput=loginTrackingRepo.save(loginTracking);
 			if(loginTrackingOutput!=null) {
 				HttpResponse response=new HttpResponse("user session sucessfully added",200);
@@ -342,25 +342,30 @@ public class LoginService
 	{
 		try 
 		{
+			log.info("lanugage data:  "+languageData);
 			User user=new User();
 			userService.saveUserTrail(languageData.getUserId(),languageData.getUsername(),
-		languageData.getUserType(),languageData.getUserTypeId(),Features.Profile,SubFeatures.Change_Language,0);
+		    languageData.getUserType(),languageData.getUserTypeId(),"User Management",SubFeatures.Change_Language,41);
 			user=userRepo.findById(languageData.getUserId());
 			if(user!=null) {
+				user.setUserLanguage(languageData.getLanguage());
 				User output=userRepo.save(user);
 				if(output!=null) 
 				{
 					HttpResponse response=new HttpResponse("user language sucessfully update",200);
+					log.info("response send: "+response);
 					return new ResponseEntity<>(response,HttpStatus.OK);	
 				}   
 				else 
 				{
 					HttpResponse response=new HttpResponse("user language fails to update",204);
+					log.info("response send: "+response);
 					return new ResponseEntity<>(response,HttpStatus.OK);	
 				}
 			}
 			else {
 				HttpResponse response=new HttpResponse("user id is incorrect",204);
+				log.info("response send: "+response);
 				return new ResponseEntity<>(response,HttpStatus.OK);	
 			}
 		}  
@@ -368,6 +373,7 @@ public class LoginService
 		{
 			e.printStackTrace();
 			HttpResponse response=new HttpResponse("Oops something wrong happened",409);
+			log.info("response send: "+response);			
 			return new ResponseEntity<>(response,HttpStatus.OK);
 		}    
 	}
@@ -382,7 +388,7 @@ public class LoginService
 		if(userData!=null)
 		{
 			log.info("now match user question and answer on UserSecurityquestion");
-			userService.saveUserTrail(userData, "Login","forgot password",0);
+			userService.saveUserTrail(userData, "User Management","Forgot Password",41);
 			Securityquestion securityData=new Securityquestion();
 			securityData.setId(forgotPassword.getQuestionId());
 			UserSecurityquestion questionDetails=userSecurityQuestionRepo.findByUser_IdAndSecurityQuestion_IdAndAnswer(userData.getId(),securityData.getId(),forgotPassword.getAnswer());
@@ -391,14 +397,12 @@ public class LoginService
 			{
 				String phoneOtp=otpService.phoneOtp(userData.getUserProfile().getPhoneNo()); 
 				String emailOtpData=randomDigits.getNumericString(6);
-				boolean notificationStatus=emailUtils.saveNotification("PRO_VERIFY_OTP_EMAIL_MSG", userData.getUserProfile(), 0,
-						"Forgot Password", "Forgot Password", userData.getUsername(),
-						"Forgot Password Notification "+userData.getUsername(),emailOtpData,
+				boolean notificationStatus=emailUtils.saveNotification("FORGOT_PASS_OTP_EMAIL_MSG", userData.getUserProfile(), 41,
+						"User Management", "Forgot Password Email OTP", userData.getUsername(),emailOtpData,
 						ChannelType.EMAIL,"users",0); 
 				log.info("notification save:  "+notificationStatus);
-				boolean notificationStatusForSms=emailUtils.saveNotification("PRO_VERIFY_OTP__MSG", userData.getUserProfile(), 0,
-						"User Login", "forgot Password", userData.getUsername(),
-						userData.getUserProfile().getFirstName(),phoneOtp,ChannelType.SMS,"users",0);
+				boolean notificationStatusForSms=emailUtils.saveNotification("FORGOT_PASS_OTP_SMS_MSG", userData.getUserProfile(), 41,
+						"User Management", "Forgot Password SMS OTP", userData.getUsername(),phoneOtp,ChannelType.SMS,"users",0);
 				log.info("notificationStatusForSms save:  "+notificationStatusForSms);
 				userData.setPreviousStatus(UserStatus.APPROVED.getCode());
 				userData.setCurrentStatus(UserStatus.OTP_VERIFICATION_PENDING.getCode());
