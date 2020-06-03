@@ -232,7 +232,7 @@ function editProfile(){
 			$("#registrationForm #country").val(resp.country); 
 			$("#registrationForm #postalCode").val(resp.postalCode);
 			$("#registrationForm #locality").val(resp.locality);
-
+			$("#registrationForm #vatNo").val(resp.vatNo);
 			//$("#registrationForm #state").text(resp.province);
 			$("#registrationForm #companyName").val(resp.companyName);
 			$("#registrationForm #passportNo").val(resp.passportNo);
