@@ -194,6 +194,32 @@ function resendOtp(){
 	});
 }
 
+function resendOtp2(){
+	var id=document.getElementById("userid").value;
+	$.ajax({
+		type : 'POST',
+		url : contextpath + '/profileResendOtp/'+id,
+		contentType : "application/json",
+		dataType : 'html',
+		success : function(data) {
+			var response=JSON.parse(data);
+			var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
+			$.i18n().locale = lang;	
+				$.i18n().load( {
+					'en': './resources/i18n/en.json',
+					'km': './resources/i18n/km.json'
+				}).done( function() {
+					$("#verifyOtpResp").text($.i18n(response.tag));
+
+				});
+		},    
+		error: function (xhr, ajaxOptions, thrownError) {
+		}
+	});
+}
+
+
+
 function refreshCaptcha(imageId){
 	path = contextpath+'/captcha?cache='; //for example
 	imageObject = document.getElementById(imageId);
