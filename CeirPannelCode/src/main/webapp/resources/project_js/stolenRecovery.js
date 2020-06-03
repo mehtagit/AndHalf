@@ -26,7 +26,7 @@ $.i18n().load( {
 $(document).ready(function(){
 	$('div#initialloader').fadeIn('fast');
 	console.log("featureId is---->" +featureId);
-	filterStolen();
+	filterStolen(lang,null,null);
 	pageRendering();
 });
 
@@ -265,12 +265,31 @@ populateCountries
 
 var userType = $("body").attr("data-roleType");
 var sourceType = localStorage.getItem("sourceType");
-function filterStolen(language,sourceTypeFilter){
+function filterStolen(language,sourceTypeFilter,source){
+	var source__val;
+
+	if(source == 'filter' ) {
+		source__val= source;
+	}
+	else{
+		source__val= $("body").attr("data-session-source");
+
+	}
+	var sessionFlag;
+
+	if(sourceType==null){
+		sessionFlag=2;
+
+	}
+	else{
+		sessionFlag=1;
+
+	}
 	var userTypeId = $("body").attr("data-userTypeID");
 	if(userType=="Operator" || userType=="Operation" ){
-		Datatable('./headers?type=blockUnblock','stolenData?featureId='+featureId+'&userTypeId='+userTypeId,sourceTypeFilter)
+		Datatable('./headers?type=blockUnblock','stolenData?featureId='+featureId+'&userTypeId='+userTypeId,sourceTypeFilter+'&source='+source__val)
 	}else if(userType =="CEIRAdmin"){
-		Datatable('./headers?type=BlockUnblockCEIRAdmin','stolenData?featureId='+featureId+'&userTypeId='+userTypeId,sourceTypeFilter)
+		Datatable('./headers?type=BlockUnblockCEIRAdmin','stolenData?featureId='+featureId+'&userTypeId='+userTypeId,sourceTypeFilter+'&source='+source__val)
 	}else if(sourceType !="viaExistingRecovery"){
 		Datatable('./headers?type=stolen','stolenData',sourceTypeFilter)
 	}else if(sourceType =="viaExistingRecovery" ){

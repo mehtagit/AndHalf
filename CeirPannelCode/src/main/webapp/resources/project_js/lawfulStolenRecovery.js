@@ -27,7 +27,7 @@ $.i18n().load( {
 
 $(document).ready(function(){
 	$('div#initialloader').fadeIn('fast');
-	filterStolen();
+	filterStolen(lang,null,null);
 	pageRendering();
 });
 
@@ -38,12 +38,32 @@ $('.datepicker').on('mousedown',function(event){
 var userType = $("body").attr("data-roleType");
 var sourceType = localStorage.getItem("sourceType");
 
-function filterStolen(ss,sourceTypeFiler){
+
+function filterStolen(ss,sourceTypeFiler,source){
+	var source__val;
+
+	if(source == 'filter' ) {
+		source__val= source;
+	}
+	else{
+		source__val= $("body").attr("data-session-source");
+
+	}
+	var sessionFlag;
+
+	if(sourceType==null){
+		sessionFlag=2;
+
+	}
+	else{
+		sessionFlag=1;
+
+	}
 	console.log(" ****** sourceType ="+sourceTypeFiler);
 	if(userType=="Lawful Agency"){
-		Datatable('./headers?type=lawfulStolenHeaders','./stolenData?featureId='+featureId,sourceTypeFiler)
+		Datatable('./headers?type=lawfulStolenHeaders','./stolenData?featureId='+featureId,sourceTypeFiler+'&source='+source__val)
 	}else if(userType =="CEIRAdmin"){
-		Datatable('./headers?type=lawfulStolenHeaders','./stolenData?featureId='+featureId,sourceTypeFiler)
+		Datatable('./headers?type=lawfulStolenHeaders','./stolenData?featureId='+featureId,sourceTypeFiler+'&source='+source__val)
 	}
 	localStorage.removeItem('sourceType');
 }

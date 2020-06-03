@@ -118,7 +118,8 @@ position: fixed;
 	data-selected-roleType="${stolenselectedUserTypeId}"
 	data-stolenselected-roleType="${stolenselectedUserTypeId}"
 	data-OperatorTypeId="${operatorTypeId}" data-requestType="${requestType}"		
-		 session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}">
+	session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}"
+	data-session-source="${not empty param.source ? param.source : 'menu'}">
 
 
 	<!-- START CONTENT -->
