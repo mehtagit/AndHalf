@@ -28,6 +28,7 @@ import com.gl.ceir.config.ConfigTags;
 import com.gl.ceir.config.EmailSender.EmailUtil;
 import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
+import com.gl.ceir.config.feign.UserFeignClient;
 import com.gl.ceir.config.model.AuditTrail;
 import com.gl.ceir.config.model.ConsignmentMgmt;
 import com.gl.ceir.config.model.ConsignmentUpdateRequest;
@@ -72,6 +73,8 @@ import com.gl.ceir.config.repository.StolenOrganizationUserRepository;
 import com.gl.ceir.config.repository.UserProfileRepository;
 import com.gl.ceir.config.repository.UserRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
+import com.gl.ceir.config.request.model.Generic_Response_Notification;
+import com.gl.ceir.config.request.model.RegisterationUser;
 import com.gl.ceir.config.service.businesslogic.StateMachine;
 import com.gl.ceir.config.specificationsbuilder.GenericSpecificationBuilder;
 import com.gl.ceir.config.transaction.StolenAndRecoveryTransaction;
@@ -145,6 +148,9 @@ public class StolenAndRecoveryServiceImpl {
 
 	@Autowired
 	UserStaticServiceImpl userStaticServiceImpl;
+	
+	@Autowired 
+	UserFeignClient userFeignClient;
 
 	public GenricResponse uploadDetails(StolenandRecoveryMgmt stolenandRecoveryMgmt) {
 
@@ -225,7 +231,7 @@ public class StolenAndRecoveryServiceImpl {
 
 	}
 
-	public Page<StolenandRecoveryMgmt> getAllInfo(FilterRequest filterRequest, Integer pageNo, Integer pageSize){
+	public Page<StolenandRecoveryMgmt> getAllInfo(FilterRequest filterRequest, Integer pageNo, Integer pageSize,String source){
 		List<StateMgmtDb> stateInterpList = null;
 		List<StateMgmtDb> statusList = null;
 
@@ -234,7 +240,7 @@ public class StolenAndRecoveryServiceImpl {
 
 			statusList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
 
-			Page<StolenandRecoveryMgmt> stolenandRecoveryMgmtPage = stolenAndRecoveryRepository.findAll(buildSpecification(filterRequest, statusList).build(), pageable);
+			Page<StolenandRecoveryMgmt> stolenandRecoveryMgmtPage = stolenAndRecoveryRepository.findAll(buildSpecification(filterRequest, statusList, source).build(), pageable);
 			stateInterpList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
 			logger.info(stateInterpList);
 
@@ -287,7 +293,7 @@ public class StolenAndRecoveryServiceImpl {
 		try {
 			statusList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
 
-			List<StolenandRecoveryMgmt> stolenandRecoveryMgmts = stolenAndRecoveryRepository.findAll(buildSpecification(filterRequest, statusList).build());
+			List<StolenandRecoveryMgmt> stolenandRecoveryMgmts = stolenAndRecoveryRepository.findAll(buildSpecification(filterRequest, statusList, null).build());
 			stateInterpList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
 			logger.info(stateInterpList);
 
@@ -326,7 +332,7 @@ public class StolenAndRecoveryServiceImpl {
 		}	
 	}
 
-	private GenericSpecificationBuilder<StolenandRecoveryMgmt> buildSpecification(FilterRequest filterRequest, List<StateMgmtDb> statusList) {
+	private GenericSpecificationBuilder<StolenandRecoveryMgmt> buildSpecification(FilterRequest filterRequest, List<StateMgmtDb> statusList, String source) {
 		GenericSpecificationBuilder<StolenandRecoveryMgmt> srsb = new GenericSpecificationBuilder<>(propertiesReader.dialect);
 		String ceirAdmin = "CEIRADMIN";
 		String fileStatus = "fileStatus";
@@ -386,13 +392,28 @@ public class StolenAndRecoveryServiceImpl {
 
 				List<DashboardUsersFeatureStateMap> dashboardUsersFeatureStateMap = dashboardUsersFeatureStateMapRepository.findByUserTypeIdAndFeatureId(filterRequest.getUserTypeId(), filterRequest.getFeatureId());
 				logger.debug(dashboardUsersFeatureStateMap);
-
-				if(Objects.nonNull(dashboardUsersFeatureStateMap)) {	
-					for(DashboardUsersFeatureStateMap dashboardUsersFeatureStateMap2 : dashboardUsersFeatureStateMap ) {
-						configuredStatus.add(dashboardUsersFeatureStateMap2.getState());
+				
+				//Code written by Sonu
+				if(Objects.nonNull(dashboardUsersFeatureStateMap)) {
+					if("dashboard".equalsIgnoreCase(source) || "menu".equalsIgnoreCase(source)) {
+						for(DashboardUsersFeatureStateMap dashboardUsersFeatureStateMap2 : dashboardUsersFeatureStateMap ) {
+							configuredStatus.add(dashboardUsersFeatureStateMap2.getState());
+						}
+					}else if("filter".equalsIgnoreCase(source)) {
+						if(nothingInFilter(filterRequest)) {
+							for(DashboardUsersFeatureStateMap dashboardUsersFeatureStateMap2 : dashboardUsersFeatureStateMap ) {
+								configuredStatus.add(dashboardUsersFeatureStateMap2.getState());
+							}
+						}else {
+							for(StateMgmtDb stateMgmtDb : statusList ) {
+								configuredStatus.add(stateMgmtDb.getState());
+							}
+						}
+					}else if("noti".equalsIgnoreCase(source)) {
+						logger.info("Skip status check, because source is noti.");
 					}
-					logger.info("Array list to add is = " + configuredStatus);
 
+					logger.info("Array list to add is = " + configuredStatus);
 					if(!configuredStatus.isEmpty())
 						srsb.addSpecification(srsb.in("fileStatus", configuredStatus));
 					else{
@@ -427,7 +448,8 @@ public class StolenAndRecoveryServiceImpl {
 
 		return srsb;
 	}
-
+	
+	
 	public FileDetails getFilteredStolenAndRecoveryInFile(FilterRequest filterRequest) {
 		String fileName = null;
 		Writer writer   = null;
@@ -580,7 +602,6 @@ public class StolenAndRecoveryServiceImpl {
 
 	@Transactional
 	public GenricResponse deleteRecord(FilterRequest filterRequest) {
-
 		try {
 			StolenandRecoveryMgmt stolenandRecoveryMgmtInfo = stolenAndRecoveryRepository.getById(filterRequest.getId());
 			if(Objects.isNull(filterRequest.getRemark())) {
@@ -835,10 +856,25 @@ public class StolenAndRecoveryServiceImpl {
 					return new GenricResponse(3, "Unable to update Stolen and recovery entity.", consignmentUpdateRequest.getTxnId());
 				}else {
 					placeholderMap1 = new HashMap<>();
-
+					
 					placeholderMap1.put("<First name>", userProfile.getFirstName());
 					placeholderMap1.put("<Txn id>", txnId);
+					
+					//Added Code for multiple CEIR ADmin 				
+					/*userProfile = user.getUserProfile();
+					logger.info("user profile details-");
+					logger.info(userProfile);
+					Generic_Response_Notification generic_Response_Notification = userFeignClient.ceirInfoByUserTypeId(8);
 
+					logger.info("generic_Response_Notification::::::::"+generic_Response_Notification);
+
+					List<RegisterationUser> registerationUserList = generic_Response_Notification.getData();
+					for(RegisterationUser registerationUser :registerationUserList) {
+						UserProfile userProfile_generic_Response_Notification = new UserProfile();
+						userProfile_generic_Response_Notification = userProfileRepository.getByUserId(registerationUser.getId());
+					
+					
+					}*/
 					emailUtil.saveNotification(mailTag, 
 							userProfile, 
 							consignmentUpdateRequest.getFeatureId(),
@@ -1109,5 +1145,28 @@ public class StolenAndRecoveryServiceImpl {
 			logger.error("Could not find the user information");
 		}
 	}
+	
+	public boolean nothingInFilter(FilterRequest filterRequest) {
+		if(Objects.nonNull(filterRequest.getStartDate()) || !filterRequest.getStartDate().isEmpty()) {
+			return Boolean.FALSE;
+		}
+		if(Objects.nonNull(filterRequest.getEndDate()) || !filterRequest.getEndDate().isEmpty()) {
+			return Boolean.FALSE;
+		}
 
+		if(Objects.nonNull(filterRequest.getTxnId()) || !filterRequest.getTxnId().isEmpty()) {
+			return Boolean.FALSE;
+		}
+
+		if(Objects.nonNull(filterRequest.getDisplayName()) || !filterRequest.getDisplayName().isEmpty()) {
+			return Boolean.FALSE;
+		}
+		if(Objects.nonNull(filterRequest.getConsignmentStatus()) ) {
+			return Boolean.FALSE;
+		}
+		if(Objects.nonNull(filterRequest.getUserType()) || !filterRequest.getEndDate().isEmpty()) {
+			return Boolean.FALSE;
+		}
+		return Boolean.TRUE;
+	}
 }
