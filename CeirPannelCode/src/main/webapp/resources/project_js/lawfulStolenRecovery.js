@@ -27,7 +27,7 @@ $.i18n().load( {
 
 $(document).ready(function(){
 	$('div#initialloader').fadeIn('fast');
-	filterStolen();
+	filterStolen(lang,null,null);
 	pageRendering();
 });
 
@@ -38,12 +38,31 @@ $('.datepicker').on('mousedown',function(event){
 var userType = $("body").attr("data-roleType");
 var sourceType = localStorage.getItem("sourceType");
 
-function filterStolen(ss,sourceTypeFiler){
+function filterStolen(ss,sourceTypeFiler,source){
+	var source__val;
+
+	if(source == 'filter' ) {
+		source__val= source;
+	}
+	else{
+		source__val= $("body").attr("data-session-source");
+
+	}
+	var sessionFlag;
+
+	if(sourceType==null){
+		sessionFlag=2;
+
+	}
+	else{
+		sessionFlag=1;
+
+	}
 	console.log(" ****** sourceType ="+sourceTypeFiler);
 	if(userType=="Lawful Agency"){
-		Datatable('./headers?type=lawfulStolenHeaders','./stolenData?featureId='+featureId,sourceTypeFiler)
+		Datatable('./headers?type=lawfulStolenHeaders','./stolenData?featureId='+featureId,sourceTypeFiler+'&source='+source__val)
 	}else if(userType =="CEIRAdmin"){
-		Datatable('./headers?type=lawfulStolenHeaders','./stolenData?featureId='+featureId,sourceTypeFiler)
+		Datatable('./headers?type=lawfulStolenHeaders','./stolenData?featureId='+featureId,sourceTypeFiler+'&source='+source__val)
 	}
 	localStorage.removeItem('sourceType');
 }
@@ -639,7 +658,7 @@ function saveIndivisualStolenRequest(){
 
 
 function saveCompanyStolenRequest(){
-	$('div#initialloader').fadeIn('fast');
+	
 	$("#bulkStolenButton").prop('disabled', true);
 	var formData= new FormData();
 
@@ -664,6 +683,8 @@ function saveCompanyStolenRequest(){
 	var bulkStolenofficeEmail=$('#bulkStolenofficeEmail').val();
 	var trimbulkStolenContact=$('#bulkStolenContact').val();
 	var bulkStolenContact =trimbulkStolenContact.replace(/[^A-Z0-9]/ig, "");
+	
+
 	var uploadFirBulk=$('#uploadFirBulk').val();
 
 	var deviceBulkStolenaddress=$('#deviceBulkStolenaddress').val();
@@ -729,13 +750,22 @@ function saveCompanyStolenRequest(){
 	formData.append('firFileName', $('#uploadFirBulk')[0].files[0]);
 	formData.append("request",JSON.stringify(request));
 
+	
+	
 	$.ajax({
 		url: './lawfulOraganisationStolen',
 		type: 'POST',
 		data: formData,
 		processData: false,
 		contentType: false,
+		beforeSend: function() {
+			var divCreation="<div id=\'initialloader2\'></div>";
+			var div_id=document.getElementById("content");
+			div_id.innerHTML=divCreation;
+	    },
 		success: function (response, textStatus, jqXHR) {
+			
+			$('#initialloader2').remove();
 			$('div#initialloader').delay(300).fadeOut('slow');
 			console.log(response)
 

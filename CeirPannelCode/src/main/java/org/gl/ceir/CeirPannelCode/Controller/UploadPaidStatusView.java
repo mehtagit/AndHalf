@@ -128,7 +128,7 @@ FeignCleintImplementation feignCleintImplementation;
 	public ModelAndView viewDeviceInformationView(@PathVariable("imei") String imei,@PathVariable("txnId") String txnId,HttpSession session) {
 		log.info(" imei =="+imei+"  txnid=="+txnId);
 		String userType=(String) session.getAttribute("usertype"); 
-		  String  userName=session.getAttribute("username").toString(); 
+		  String  userName= (String) session.getAttribute("username").toString(); 
 		  int userId= (int) session.getAttribute("userid"); 
 		  int userTypeid=(int)  session.getAttribute("usertypeId");
 		  AllRequest request= new AllRequest();
@@ -252,7 +252,8 @@ FeignCleintImplementation feignCleintImplementation;
 		int userId= (int) session.getAttribute("userid");
 		int file=1;
 		
-		String userName=session.getAttribute("username").toString();
+		String userName=(String) session.getAttribute("username").toString();
+		log.info("username value=="+userName);
 		int userTypeId =(int) session.getAttribute("usertypeId");
 		String userType=(String) session.getAttribute("usertype"); 	
 		
@@ -260,6 +261,8 @@ FeignCleintImplementation feignCleintImplementation;
 		FilterRequest_UserPaidStatus filterRequestuserpaidStatus = new FilterRequest_UserPaidStatus();
 		filterRequestuserpaidStatus.setCreatedOn(startDate);
 		filterRequestuserpaidStatus.setModifiedOn(endDate);
+		filterRequestuserpaidStatus.setStartDate(startDate);
+		filterRequestuserpaidStatus.setEndDate(endDate);
 		filterRequestuserpaidStatus.setTaxPaidStatus(taxPaidStatus);
 		filterRequestuserpaidStatus.setDeviceIdType(deviceIdType);
 		filterRequestuserpaidStatus.setDeviceType(deviceType);

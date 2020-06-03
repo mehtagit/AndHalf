@@ -242,11 +242,12 @@ i.fa.fa-times-circle-o.red-text {
 								<div class="col s12 m12 l12">
 
 
-									<p style="margin-left: 50px;">
-										<spring:message code="registration.theimeinumber" />
+									<p style="margin-left: 50px;" id="checkDevicesMsg">
+										
 										<span id="InvalidImeiNumber"> </span> 
-										<spring:message code="registration.invalid" /><i class="fa fa-times-circle-o red-text" style="margin-left: -43px; float: left;" title="Rejected"></i>
+										
 									</p>
+									<i class="fa fa-times-circle-o red-text" style="margin-top: -40px; float: left;" title="Rejected"></i>
 									<div class="input-field col s6 m4">
 										<label for="invalidTac"><spring:message
 												code="registration.tacnumberis" /></label>

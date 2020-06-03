@@ -64,11 +64,12 @@ function setvalidData(response){
 }
 
 
-function setInvalidData(data){
-
-	$("#InvalidImeiNumber").text(response.data.imei)
-	$("#invalidTac").val(response.data.tacNumber);
-	$("#invalidRemark").val(response.data.brandName);
+function setInvalidData(response){
+	/*$.i18n('validationIMEI')*/
+	$('#checkDevicesMsg').text($.i18n(response.tag));	
+	//$("#InvalidImeiNumber").text(response.data.imei)
+	$("#invalidTac").val(response.tacNumber);
+	$("#invalidRemark").val(response.brandName);
 
 
 }

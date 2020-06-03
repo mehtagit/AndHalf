@@ -9,12 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
-import org.gl.ceir.CeirPannelCode.Model.ActionModel;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Util.UtilDownload;
 import org.gl.ceir.Class.HeadersTitle.DatatableResponseModel;
 import org.gl.ceir.Class.HeadersTitle.IconsState;
-import org.gl.ceir.configuration.ConfigParameters;
 import org.gl.ceir.configuration.Translator;
 import org.gl.ceir.pageElement.model.Button;
 import org.gl.ceir.pageElement.model.InputFields;
@@ -58,6 +56,7 @@ public class StolenDatatableController {
 			@RequestParam(name="sourceType",required = false) String sourceType,
 			@RequestParam(name="featureId",required = false) String featureId,
 			@RequestParam(name="userTypeId",required = false) Integer userTypeId,
+			@RequestParam(name="source",defaultValue = "menu",required = false) String source,
 			HttpServletRequest request, HttpSession session) {
 		List<List<Object>> finalList = new ArrayList<List<Object>>();
 		
@@ -79,7 +78,7 @@ public class StolenDatatableController {
 		// list provided via Back-end process
 		try {
 			String quantity;
-			Object response = feignCleintImplementation.stolenFilter(filterrequest, pageNo, pageSize,exportFile);
+			Object response = feignCleintImplementation.stolenFilter(filterrequest, pageNo, pageSize,exportFile,source);
 			log.info("response::::::::::::"+response);
 			Gson gson = new Gson();
 			String apiResponse = gson.toJson(response);
@@ -99,12 +98,12 @@ public class StolenDatatableController {
 						// for future purpose statusOfStolen
 						String statusOfStolen = String.valueOf(dataInsideList.getFileStatus());
 						String stolenStatusName = dataInsideList.getStateInterp();
-						String source =dataInsideList.getSourceTypeInterp();
-						log.info("source type message="+source);
+						String sourceInterp =dataInsideList.getSourceTypeInterp();
+						log.info("source type message="+sourceInterp);
 						String requestType = dataInsideList.getRequestType(); 
 						String requestTypeName = dataInsideList.getRequestTypeInterp();
 						int id = dataInsideList.getId();
-						Object[] finalData = {checboxes,createdOn,txnId,fileName, stolenStatusName,source, requestTypeName};
+						Object[] finalData = {checboxes,createdOn,txnId,fileName, stolenStatusName,sourceInterp, requestTypeName};
 						List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);
@@ -124,7 +123,7 @@ public class StolenDatatableController {
 						String fileName = dataInsideList.getRequestType();
 						String statusOfStolen = String.valueOf(dataInsideList.getFileStatus());
 						String stolenStatusName = dataInsideList.getStateInterp();
-						String source =dataInsideList.getSourceTypeInterp();
+						String sourceInterp =dataInsideList.getSourceTypeInterp();
 						String requestType = dataInsideList.getRequestType(); 
 						String requestTypeName = dataInsideList.getRequestTypeInterp();
 						String deviceQuantity=String.valueOf(dataInsideList.getDeviceQuantity());
@@ -140,7 +139,7 @@ public class StolenDatatableController {
 						String userStatus = (String) session.getAttribute("userStatus");
 						String action = iconState.blockUnblockState(dataInsideList.getFileName(), dataInsideList.getTxnId(),
 								statusOfStolen, userStatus,requestType,id,dataInsideList.getQty(),dataInsideList.getSourceType());
-						Object[] finalData = {createdOn,txnId,requestTypeName,source,stolenStatusName,quantity,deviceQuantity,action};
+						Object[] finalData = {createdOn,txnId,requestTypeName,sourceInterp,stolenStatusName,quantity,deviceQuantity,action};
 						List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);
@@ -155,7 +154,7 @@ public class StolenDatatableController {
 						String fileName = dataInsideList.getRequestType();
 						String fileStatus = String.valueOf(dataInsideList.getFileStatus());
 						String stolenStatusName = dataInsideList.getStateInterp();
-						String source =dataInsideList.getSourceTypeInterp();
+						String sourceInterp =dataInsideList.getSourceTypeInterp();
 						String requestType = dataInsideList.getRequestType(); 
 						String deviceQuantity=String.valueOf(dataInsideList.getDeviceQuantity());
 						String requestTypeName = dataInsideList.getRequestTypeInterp();
@@ -171,7 +170,7 @@ public class StolenDatatableController {
 						log.info("1");
 						String action = iconState.adminBlockUnblock(dataInsideList.getFileName(), dataInsideList.getTxnId(),
 								fileStatus, userStatus,requestType,id,dataInsideList.getQty(),dataInsideList.getSourceType(),operator);
-						Object[] finalData = {createdOn,txnId,operator,requestTypeName,source,stolenStatusName,quantity,deviceQuantity,action};
+						Object[] finalData = {createdOn,txnId,operator,requestTypeName,sourceInterp,stolenStatusName,quantity,deviceQuantity,action};
 						List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);
@@ -241,7 +240,7 @@ public class StolenDatatableController {
 						String fileName = dataInsideList.getRequestType();
 						String statusOfStolen = String.valueOf(dataInsideList.getFileStatus());
 						String stolenStatusName = dataInsideList.getStateInterp();
-						String source =dataInsideList.getSourceTypeInterp();
+						String sourceInterp =dataInsideList.getSourceTypeInterp();
 						String requestType = dataInsideList.getRequestType(); 
 						String requestTypeName = dataInsideList.getRequestTypeInterp();
 						String deviceQuantity=String.valueOf(dataInsideList.getDeviceQuantity());
@@ -258,7 +257,7 @@ public class StolenDatatableController {
 						String userStatus = (String) session.getAttribute("userStatus");
 						String action = iconState.blockUnblockState(dataInsideList.getFileName(), dataInsideList.getTxnId(),
 								statusOfStolen, userStatus,requestType,id,dataInsideList.getQty(),dataInsideList.getSourceType());
-						Object[] finalData = {createdOn,txnId,requestTypeName,source,stolenStatusName,quantity,deviceQuantity,action};
+						Object[] finalData = {createdOn,txnId,requestTypeName,sourceInterp,stolenStatusName,quantity,deviceQuantity,action};
 						List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);
@@ -271,8 +270,8 @@ public class StolenDatatableController {
 						String fileName = dataInsideList.getFileName();
 						String statusOfStolen = String.valueOf(dataInsideList.getFileStatus());
 						String stolenStatusName = dataInsideList.getStateInterp();
-						String source =dataInsideList.getSourceTypeInterp();
-						log.info("source type message="+source);
+						String sourceInterp =dataInsideList.getSourceTypeInterp();
+						log.info("source type message="+sourceInterp);
 						String requestType = dataInsideList.getRequestType(); 
 						String requestTypeName = dataInsideList.getRequestTypeInterp();
 						int id = dataInsideList.getId();
@@ -288,7 +287,7 @@ public class StolenDatatableController {
 						log.info("in ELSE condition");
 						String action = iconState.stolenState(dataInsideList.getFileName(), dataInsideList.getTxnId(),
 								statusOfStolen, userStatus,requestType,id,dataInsideList.getQty());
-						Object[] finalData = { createdOn,txnId,fileName, stolenStatusName,source, requestTypeName,quantity, action };
+						Object[] finalData = { createdOn,txnId,fileName, stolenStatusName,sourceInterp, requestTypeName,quantity, action };
 						List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);
@@ -337,7 +336,7 @@ public class StolenDatatableController {
 		
 		if("Operator".equals(userType) || "CEIRAdmin".equals(userType) || "Operation".equals(userType) && !"5".equals(featureId)) {
 			String[] names = { "HeaderButton", Translator.toLocale("button.ReportBlock/Unblock"), "./selectblockUnblockPage",
-					"btnLink", "FilterButton",Translator.toLocale("button.filter"), "filterStolen("+ConfigParameters.languageParam+",\"filter\")", "submitFilter" };
+					"btnLink", "FilterButton",Translator.toLocale("button.filter"), "filterStolen(window.parent.$('#langlist').val(),'null','filter')", "submitFilter" };
 			for (int i = 0; i < names.length; i++) {
 				button = new Button();
 
@@ -408,7 +407,7 @@ public class StolenDatatableController {
 			//This Block is for all other Stolen Upper Filter/Button Forms------------------------------------------------
 			
 			String[] names = { "HeaderButton", Translator.toLocale("button.repoertStolen/Recovery"), "openStolenRecoveryModal()",
-					"btnLink", "FilterButton", Translator.toLocale("button.filter"), "filterStolen("+ConfigParameters.languageParam+",\"filter\")", "submitFilter" };
+					"btnLink", "FilterButton", Translator.toLocale("button.filter"), "filterStolen(window.parent.$('#langlist').val(),'filter')", "submitFilter" };
 			for (int i = 0; i < names.length; i++) {
 				button = new Button();
 
