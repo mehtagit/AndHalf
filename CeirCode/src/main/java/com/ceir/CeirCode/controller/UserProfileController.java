@@ -83,10 +83,11 @@ public class UserProfileController {
 	public MappingJacksonValue viewRecord(@RequestBody FilterRequest filterRequest,
 			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
 			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
-			@RequestParam(value = "file", defaultValue = "0") Integer file){
+			@RequestParam(value = "file", defaultValue = "0") Integer file,
+			@RequestParam(value = "source", defaultValue = "menu") String source){
 		MappingJacksonValue mapping = null;
 		if( file == 0) {
-			Page<UserProfile> userProfileResponse  = userProService.viewAllRecord(filterRequest, pageNo, pageSize);
+			Page<UserProfile> userProfileResponse  = userProService.viewAllRecord(filterRequest, pageNo, pageSize,source);
 			List<SystemConfigListDb> asTypeList=systemConfigRepo.getByTag("AS_TYPE");
 			if(userProfileResponse!=null) {
 			for(UserProfile profile:userProfileResponse.getContent()) {

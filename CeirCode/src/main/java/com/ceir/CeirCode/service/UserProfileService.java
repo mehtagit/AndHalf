@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import org.slf4j.Logger;
@@ -25,6 +26,7 @@ import com.ceir.CeirCode.configuration.FileStorageProperties;
 import com.ceir.CeirCode.configuration.PropertiesReaders;
 import com.ceir.CeirCode.exceptions.ResourceServicesException;
 import com.ceir.CeirCode.filtermodel.SearchAssignee;
+import com.ceir.CeirCode.model.DashboardUsersFeatureStateMap;
 import com.ceir.CeirCode.model.FileDetails;
 import com.ceir.CeirCode.model.FilterRequest;
 import com.ceir.CeirCode.model.SearchCriteria;
@@ -38,6 +40,7 @@ import com.ceir.CeirCode.model.Userrole;
 import com.ceir.CeirCode.model.constants.AssigneeType;
 import com.ceir.CeirCode.model.constants.UserStatus;
 import com.ceir.CeirCode.model.constants.UsertypeData;
+import com.ceir.CeirCode.repo.DashboardUsersFeatureStateMapRepository;
 import com.ceir.CeirCode.repo.SystemConfigDbListRepository;
 import com.ceir.CeirCode.repo.UserProfileRepo;
 import com.ceir.CeirCode.repo.UserRoleRepo;
@@ -54,6 +57,7 @@ public class UserProfileService {
 
 	@Autowired
 	FileStorageProperties fileStorageProperties;
+
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
 	@Autowired  
@@ -82,8 +86,12 @@ public class UserProfileService {
 	
 	@Autowired
 	Utility utility;
+	
+	@Autowired
+	DashboardUsersFeatureStateMapRepository dashboardUsersFeatureStateMapRepository; 
 
-	private GenericSpecificationBuilder<UserProfile> buildSpecification(FilterRequest filterRequest){
+
+	private GenericSpecificationBuilder<UserProfile> buildSpecification(FilterRequest filterRequest,List<StateMgmtDb> statusList, String source){
 
 		GenericSpecificationBuilder<UserProfile> uPSB = new GenericSpecificationBuilder<UserProfile>(propertiesReader.dialect);	
 		User user=userRepoService.findByUSerId(filterRequest.getUserId());
@@ -122,8 +130,48 @@ public class UserProfileService {
 		}
 		else
 		{
-			uPSB.addSpecification(uPSB.joinWithUser(new SearchCriteria("currentStatus",UserStatus.PENDING_ADMIN_APPROVAL.getCode(), SearchOperation.EQUALITY, Datatype.INT)));				
+			//uPSB.addSpecification(uPSB.joinWithUser(new SearchCriteria("currentStatus",UserStatus.PENDING_ADMIN_APPROVAL.getCode(), SearchOperation.EQUALITY, Datatype.INT)));				
+			if(Objects.nonNull(filterRequest.getFeatureId()) && Objects.nonNull(filterRequest.getUserTypeId())) {
+
+				List<DashboardUsersFeatureStateMap> dashboardUsersFeatureStateMap = dashboardUsersFeatureStateMapRepository.findByUserTypeIdAndFeatureId(filterRequest.getUserTypeId(), filterRequest.getFeatureId());
+				log.info("dashboard data size: "+dashboardUsersFeatureStateMap.size());
+
+				List<Integer> stockStatus = new LinkedList<>();
+
+				if(Objects.nonNull(dashboardUsersFeatureStateMap)) {
+					if("dashboard".equalsIgnoreCase(source) || "menu".equalsIgnoreCase(source)) {
+						for(DashboardUsersFeatureStateMap dashboardUsersFeatureStateMap2 : dashboardUsersFeatureStateMap ) {
+							stockStatus.add(dashboardUsersFeatureStateMap2.getState());
+						}
+					}else if("filter".equalsIgnoreCase(source)) {
+						if(nothingInFilter(filterRequest)) {
+							for(DashboardUsersFeatureStateMap dashboardUsersFeatureStateMap2 : dashboardUsersFeatureStateMap ) {
+								stockStatus.add(dashboardUsersFeatureStateMap2.getState());
+							}
+						}else {
+							for(StateMgmtDb stateMgmtDb : statusList ) {
+								stockStatus.add(stateMgmtDb.getState());
+							}
+						}
+					}else if("noti".equalsIgnoreCase(source)) {
+						log.info("Skip status check, because source is noti.");
+					}
+
+					log.info("Array list to add is = " + stockStatus);
+					if(!stockStatus.isEmpty()) {
+						//specificationBuilder.addSpecification(specificationBuilder.in("stockStatus", stockStatus));
+						uPSB.addSpecification(uPSB.inQuery("currentStatus",stockStatus));
+
+					}else {
+						log.warn("no predefined status are available.");
+					}
+				}
+			}
+		
+		
 		}
+		
+		
 		uPSB.addSpecification(uPSB.joinWithMultiple(new SearchCriteria("selfRegister",1, SearchOperation.EQUALITY, Datatype.INTEGER)));
 		
 		if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
@@ -135,10 +183,61 @@ public class UserProfileService {
 		return uPSB;
 	}
 	
-	public List<UserProfile> getAll(FilterRequest filterRequest) {
+	public boolean nothingInFilter(FilterRequest filterRequest) {
+		if(Objects.nonNull(filterRequest.getStartDate()) || !filterRequest.getStartDate().isEmpty()) {
+			return Boolean.FALSE;
+		}
+		if(Objects.nonNull(filterRequest.getEndDate()) || !filterRequest.getEndDate().isEmpty()) {
+			return Boolean.FALSE;
+		}
 
+		if(Objects.nonNull(filterRequest.getStatus())) {
+			return Boolean.FALSE;
+		}
+
+		if(Objects.nonNull(filterRequest.getAsType())) {
+			return Boolean.FALSE;
+		}
+		if(Objects.nonNull(filterRequest.getUserRoleTypeId()) ) {
+			return Boolean.FALSE;
+		}
+		if(Objects.nonNull(filterRequest.getViewAllUserStatus())) {
+			return Boolean.FALSE;
+		}
+		
+		if(Objects.nonNull(filterRequest.getFeatureId())) {
+			return Boolean.FALSE;
+		}
+
+		if(Objects.nonNull(filterRequest.getUserId())) {
+			return Boolean.FALSE;
+		}
+
+		if(Objects.nonNull(filterRequest.getUserTypeId())) {
+			return Boolean.FALSE;
+		}
+
+		if(Objects.nonNull(filterRequest.getEmail()) || !filterRequest.getEmail().isEmpty()) {
+			return Boolean.FALSE;
+		}
+
+		if(Objects.nonNull(filterRequest.getPhoneNo()) || !filterRequest.getPhoneNo().isEmpty()) {
+			return Boolean.FALSE;
+		}
+
+		if(Objects.nonNull(filterRequest.getUsername()) || !filterRequest.getUsername().isEmpty()) {
+			return Boolean.FALSE;
+		}
+		
+		return Boolean.TRUE;
+	}
+	
+	public List<UserProfile> getAll(FilterRequest filterRequest) {
+		List<StateMgmtDb> statusList = null;
 		try {
-			List<UserProfile> systemConfigListDbs = userProfileRepo.findAll( buildSpecification(filterRequest).build());
+			statusList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
+
+			List<UserProfile> systemConfigListDbs = userProfileRepo.findAll( buildSpecification(filterRequest,statusList,null).build());
 
 			return systemConfigListDbs;
 
@@ -153,14 +252,14 @@ public class UserProfileService {
 
 	
 
-	public Page<UserProfile>  viewAllRecord(FilterRequest filterRequest, Integer pageNo, Integer pageSize){
+	public Page<UserProfile>  viewAllRecord(FilterRequest filterRequest, Integer pageNo, Integer pageSize,String source){
 		try { 
 			log.info("filter data:  "+filterRequest);
 			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
-			Page<UserProfile> page = userProfileRepo.findAll( buildSpecification(filterRequest).build(), pageable );
+			List<StateMgmtDb> statusList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
+			Page<UserProfile> page = userProfileRepo.findAll( buildSpecification(filterRequest,statusList,source).build(), pageable );
 
 			for(UserProfile userProfile : page.getContent()) {
-				List<StateMgmtDb> statusList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
 		        log.info("after fetching state mgmt data");
 
 				for(StateMgmtDb stateMgmtDb : statusList) {
