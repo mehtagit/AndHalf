@@ -309,6 +309,7 @@
 	
 	
 	function update(){
+		
 		var request ={ 
 				"id" : parseInt($("#editId").val()),
 				"userId":parseInt(userId),
@@ -316,7 +317,10 @@
 				"userTypeId": parseInt($("body").attr("data-userTypeID")),
 				"usertypeId" :  parseInt($("#edituserType").val()),
 				"userType":$("body").attr("data-roleType"),
-				"username" : $("body").attr("data-selected-username")
+				"username" : $("body").attr("data-selected-username"),
+				"phoneNo": $('#editcontactNumber').val(),
+				"email": $('#editemailID').val(),
+				"remarks": $('#edituserRemark').val()
 		}
 		
 		console.log("request--->" +JSON.stringify(request))

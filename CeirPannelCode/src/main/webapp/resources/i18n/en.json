@@ -169,5 +169,7 @@
 	"Recovery Requests": "Recovery Requests",
 	"Block Requests": "Block Requests",
 	"Unblock Requests": "Unblock Requests",
-	"DUPLICATE_IMEI":"IMEI is already registered in CEIR System"
+	"DUPLICATE_IMEI":"IMEI is already registered in CEIR System",
+	"TRCRegister_futureRef": "Your request to register device has been received successfully. The Transaction ID for future reference is",
+	"REGISTER_TYPE_APPROVE_REJECTED":"Type Approved for TAC already exists."
 }

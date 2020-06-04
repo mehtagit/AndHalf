@@ -9,17 +9,10 @@ window.parent
 									.assign("./openGrievanceForm?reqType=formPage&lang="
 											+ lang);
 						});
-		$.i18n().locale = lang;
-		var documenttype, selectfile, selectDocumentType;
-		$.i18n().load({
-			'en' : './resources/i18n/en.json',
-			'km' : './resources/i18n/km.json'
-		}).done(function() {
-			console.log("done")
-		});
-		
 	
+		var documenttype, selectfile, selectDocumentType,REGISTER_TYPE_APPROVE_REJECTED,TRCRegister_futureRef;
 		var featureId = 21;
+		
 		populateCountries("country");
 		
 		$.getJSON('./getDropdownList/'+featureId+'/'+$("body").attr("data-userTypeID"), function(data) {
@@ -54,7 +47,7 @@ window.parent
 	
 		
 		function registerTAC() {
-			$('div#initialloader').fadeIn('fast');
+			//$('div#initialloader').fadeIn('fast');
 			var trademark = $('#trademark').val();
 			var productName = $('#productname').val();
 			var modelNumber = $('#modelNumber').val();
@@ -160,7 +153,7 @@ window.parent
 				contentType : false, 
 				async:false,
 				success : function(data, textStatus, jqXHR) {
-					$('div#initialloader').delay(300).fadeOut('slow');
+					//$('div#initialloader').delay(300).fadeOut('slow');
 					$("#trcSubmitButton").prop('disabled', true);
 						var result =  JSON.parse(data)
 						console.log("successdata-----" +result);
@@ -169,6 +162,25 @@ window.parent
 						$('#RegisterManageTypeDevice').openModal({
 					    	   dismissible:false
 					       });
+						$.i18n().locale = lang;
+						$.i18n().load({
+							'en' : './resources/i18n/en.json',
+							'km' : './resources/i18n/km.json'
+						}).done(function() {
+							if(data.errorCode==200){
+								$('#sucessMessage').text('');
+								$('#sucessMessage').text($.i18n('TRCRegister_futureRef'));
+							}else if(data.errorCode==201){
+								$('#sucessMessage').text('');
+								$('#sucessMessage').text($.i18n('REGISTER_TYPE_APPROVE_REJECTED'));
+							}
+							
+							//REGISTER_TYPE_APPROVE_REJECTED=$.i18n('REGISTER_TYPE_APPROVE_REJECTED');
+							//TRCRegister_futureRef=$.i18n('TRCRegister_futureRef');
+							console.log("done")
+						});
+						
+						
 						$('#transactionId').text(result.txnId);
 				},
 				error : function(jqXHR, textStatus, errorThrown) {
