@@ -32,10 +32,11 @@ $(document).ready(function(){
 
 
 
-function DeleteConsignmentRecord(txnId,id){
+function DeleteConsignmentRecord(txnId,id,reqType){
 	$("#DeleteConsignment").openModal({dismissible:false});
 	$("#transID").text(txnId);
 	$("#setStolenRecoveyRowId").text(id);
+	window.reqType=reqType;
 }
 
 
@@ -55,7 +56,8 @@ function confirmantiondelete(){
 			"userId":userId,
 			"featureId":featureId,
 			"id":id,
-			"remark":remarks
+			"remark":remarks,
+			"requestType":window.reqType
 			
 
 	}

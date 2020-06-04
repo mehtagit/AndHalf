@@ -807,12 +807,14 @@ function saveCompanyStolenRequest(){
 }
 
 
-function DeleteConsignmentRecord(txnId,id){
+function DeleteConsignmentRecord(txnId,id,reqType){
 	$("#DeleteConsignment").openModal({
 		dismissible:false
 	});
 	$("#transID").text(txnId);
 	$("#setStolenRecoveyRowId").text(id);
+	console.log("  reqType  ="+reqType)
+	window.reqType=reqType;
 }
 
 
@@ -825,13 +827,15 @@ function confirmantiondelete(){
 	var remarks = $("#textarea1").val();
 	var role = currentRoleType == null ? roleType : currentRoleType;
 	console.log("txnId===**"+txnId+" userId="+userId+" roleType== "+roleType+ " currentRoleType=="+currentRoleType);
+	console.log("  reqType========"+window.reqType)
 	var obj ={
 			"txnId" : txnId,
 			"roleType":roleType,
 			"userId":userId,
 			"featureId":featureId,
 			"id":id,
-			"remark":remarks
+			"remark":remarks,
+			"requestType":window.reqType
 
 	}
 	$.ajax({
