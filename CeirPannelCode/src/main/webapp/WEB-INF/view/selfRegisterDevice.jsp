@@ -382,7 +382,7 @@ position: fixed;
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.emailformate" />');"
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.emailformate" />');"
 											
-												maxlength="30" /> <label for="endUseremailID"><spring:message
+												maxlength="280" /> <label for="endUseremailID"><spring:message
 													code="input.EmailID" /> </label>
 										</div>
 

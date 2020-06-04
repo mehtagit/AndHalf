@@ -74,7 +74,7 @@
 
 	<section id="content">
 		<!--start container-->
-		<div id="initialloader"></div>
+		<!-- <div id="initialloader"></div> -->
 		<div class="container">
 			<div class="section">
 				<div class="row">

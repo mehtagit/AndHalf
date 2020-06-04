@@ -17,7 +17,7 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 			errorOccured=$.i18n('errorMsg');
 			operationNotAllowed=$.i18n('operationnotallowed');
 			stockDeleted=$.i18n('stockDeleted');
-			console.log("done"+stockDeleted);
+			
 		});
 
 
@@ -260,6 +260,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 		var stockRemark= $("#deleteStockremark").val();
 		console.log("roleType=="+role+" ==stockRemark=="+stockRemark);
 		var obj ={
+				"roleType":role,
 				"txnId" : txnId,
 				"userType":role,
 				"remarks":stockRemark,
@@ -329,12 +330,22 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 	var sourceType =localStorage.getItem("sourceType");
 	var currentRoleType = $("body").attr("data-selected-roleType"); 
 	//alert("sourceType<><><><>"+sourceType);
-	//console.log("currentRoleType<><><><>"+currentRoleType);
+	
 	function filter(lang,sourceParam){
+		var filterSource= $("body").attr("data-filterSource");
+		console.log("filterSource<><><><>"+filterSource);
 	if(sourceParam==undefined)
 		{
 		sourceParam="menu";
 		}
+	if(filterSource==null)
+		{
+		sourceParam="menu";
+		}
+	else{
+		sourceParam=filterSource;
+	}
+	console.log("sourceParam= "+sourceParam);
 		if((currentRoleType=="Importer" || currentRoleType=="Retailer" || currentRoleType=="Distributor" || currentRoleType=="Manufacturer") && sourceType !="viaStock" ){
 		Datatable('headers?lang='+lang+'&type=stockHeaders','stockData?source='+sourceParam);
 		}else if(currentRoleType=="Custom" && sourceType !="viaStock"){
@@ -366,7 +377,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 				"startDate":$('#startDate').val(),
 				"roleType": role,
 				"userId": userId,
-				"userType" : role,
+				"userType" : $("body").attr("data-roleType"),
 				"featureId":featureId,
 				"userTypeId":$("body").attr("data-userTypeID"),
 				"txnId":txn,

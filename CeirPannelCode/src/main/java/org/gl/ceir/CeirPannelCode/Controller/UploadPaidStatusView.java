@@ -128,7 +128,7 @@ FeignCleintImplementation feignCleintImplementation;
 	public ModelAndView viewDeviceInformationView(@PathVariable("imei") String imei,@PathVariable("txnId") String txnId,HttpSession session) {
 		log.info(" imei =="+imei+"  txnid=="+txnId);
 		String userType=(String) session.getAttribute("usertype"); 
-		  String  userName=session.getAttribute("username").toString(); 
+		  String  userName= (String) session.getAttribute("username").toString(); 
 		  int userId= (int) session.getAttribute("userid"); 
 		  int userTypeid=(int)  session.getAttribute("usertypeId");
 		  AllRequest request= new AllRequest();
@@ -251,11 +251,18 @@ FeignCleintImplementation feignCleintImplementation;
 
 		int userId= (int) session.getAttribute("userid");
 		int file=1;
+		
+		String userName=(String) session.getAttribute("username").toString();
+		log.info("username value=="+userName);
+		int userTypeId =(int) session.getAttribute("usertypeId");
 		String userType=(String) session.getAttribute("usertype"); 	
+		
 		FileExportResponse fileExportResponse;
 		FilterRequest_UserPaidStatus filterRequestuserpaidStatus = new FilterRequest_UserPaidStatus();
 		filterRequestuserpaidStatus.setCreatedOn(startDate);
 		filterRequestuserpaidStatus.setModifiedOn(endDate);
+		filterRequestuserpaidStatus.setStartDate(startDate);
+		filterRequestuserpaidStatus.setEndDate(endDate);
 		filterRequestuserpaidStatus.setTaxPaidStatus(taxPaidStatus);
 		filterRequestuserpaidStatus.setDeviceIdType(deviceIdType);
 		filterRequestuserpaidStatus.setDeviceType(deviceType);
@@ -263,6 +270,10 @@ FeignCleintImplementation feignCleintImplementation;
 		filterRequestuserpaidStatus.setTxnId(txnId);
 		filterRequestuserpaidStatus.setUserId(userId);
 		filterRequestuserpaidStatus.setStatus(status); 
+		filterRequestuserpaidStatus.setUsername(userName);
+		filterRequestuserpaidStatus.setUserTypeId(userTypeId);
+		filterRequestuserpaidStatus.setFeatureId(12);
+		filterRequestuserpaidStatus.setUserType(userType);
 		log.info(" request passed to the exportTo Excel Api =="+filterRequestuserpaidStatus+" *********** pageSize"+pageSize+"  pageNo  "+pageNo);
 		Object response = userPaidStatusFeignClient.consignmentFilter(filterRequestuserpaidStatus, pageNo, pageSize, file);
 		Gson gson= new Gson(); 
@@ -753,10 +764,20 @@ public ModelAndView viewDeviceInformation(@RequestParam(name="viewbyImei",requir
 }
 
 @PostMapping("approveVisaUpdateRequest") 
-public @ResponseBody GenricResponse approveVisaUpdateRequest (@RequestBody FilterRequest_UserPaidStatus filterRequestuserpaidStatus)  {
+public @ResponseBody GenricResponse approveVisaUpdateRequest (@RequestBody FilterRequest_UserPaidStatus filterRequestuserpaidStatus,HttpSession session)  {
 	log.info("request send to the approveReject visa  api="+filterRequestuserpaidStatus);
 	GenricResponse response= uploadPaidStatusFeignClient.updateVisaRequest(filterRequestuserpaidStatus);
-
+	AllRequest request=new AllRequest();
+	String roleType=String.valueOf(session.getAttribute("usertype"));
+	String userName=session.getAttribute("username").toString();
+	int userId= (int) session.getAttribute("userid");  
+	int userTypeId =(int) session.getAttribute("usertypeId");
+	request.setFeatureId(43);
+	request.setUserType(roleType);
+	request.setUserId(userId);
+	request.setUserTypeId(userTypeId);
+	request.setUsername(userName);
+	
 	log.info("response from approveReject visa "+response);
 	return response;
 
@@ -770,11 +791,13 @@ public ModelAndView viewVisaInformationView(@PathVariable("visaId") Integer visa
 	
 	String userType=(String) session.getAttribute("usertype");
 	Integer userTypeId=(int) session.getAttribute("usertypeId");
-	
+	String userName=session.getAttribute("username").toString();
 	filter.setId(endUserId);
 	filter.setUserType(userType);
 	filter.setUserTypeId(userTypeId);
 	filter.setUserId(userId);
+	filter.setFeatureId(43);
+	filter.setUsername(userName);
 	
 	log.info("request passed to the view visa details .."+filter);
 	UpdateVisaModel content= uploadPaidStatusFeignClient.viewVisaDetails(filter);

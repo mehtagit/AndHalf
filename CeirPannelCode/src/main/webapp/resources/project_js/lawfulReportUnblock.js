@@ -109,6 +109,7 @@ var formData= new FormData();
 
 function saveCompanyRecoveryRequest(){
 	$('div#initialloader').fadeIn('fast');
+	$("#indivisualStolenButton").prop('disabled', true);
 	var formData= new FormData();
 	var bulkRecoveryquantity=$('#bulkRecoveryquantity').val();
 	var bulkRecoveryRemark=$('#bulkRecoveryRemark').val();

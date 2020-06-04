@@ -15,17 +15,12 @@ import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Feignclient.UserRegistrationFeignImpl;
-import org.gl.ceir.CeirPannelCode.Model.Dropdown;
-import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.Otp;
 import org.gl.ceir.CeirPannelCode.Model.OtpResponse;
 import org.gl.ceir.CeirPannelCode.Model.Registration;
 import org.gl.ceir.CeirPannelCode.Model.ResendOtp;
 import org.gl.ceir.CeirPannelCode.Model.SecurityQuestion;
-import org.gl.ceir.CeirPannelCode.Model.Tag;
 import org.gl.ceir.CeirPannelCode.Model.UserHeader;
 import org.gl.ceir.CeirPannelCode.Model.Usertype;
 import org.gl.ceir.CeirPannelCode.Util.GenerateRandomDigits;
@@ -43,8 +38,8 @@ import com.google.gson.Gson;
 @Service 
 public class RegistrationService {
 
-//	@Value("${FilePath1}") 
-//	String filePath; 
+	@Value("${FilePath1}") 
+	String filePath; 
 
 	@Autowired
 	UserRegistrationFeignImpl registrationFeignImpl;
@@ -52,12 +47,9 @@ public class RegistrationService {
 	UserRegistrationFeignImpl userRegistrationFeignImpl;
 	@Autowired
 	GenerateRandomDigits randomDigits;
-	@Autowired
-	FeignCleintImplementation feignCleintImplementation;
-
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
-	public String registrationView(String usertype,Model model,HttpSession session) {
+	public String registrationView(String usertype,Model model) {
 		log.info("inside registration view controller");
 		log.info("usertype given: "+usertype);
 		HashMap<String, String> map=new HashMap<String,String>();
@@ -70,7 +62,6 @@ public class RegistrationService {
 		map.put("Custom", "customRegistration");
 		map.put("Operator", "operatorRegistration");
 		map.put("Immigration", "customRegistration");
-		map.put("DRT", "customRegistration");
 		if(usertype!=null) {
 			String output= map.get(usertype);
 			log.info("value for key: "+output);
@@ -81,15 +72,7 @@ public class RegistrationService {
 				Usertype usertypeData=userRegistrationFeignImpl.userypeDataByName(usertype);
 				log.info("usertypeData by usertypeName"+usertypeData);
 				model.addAttribute("usertypeId", usertypeData.getId());
-				log.info("now check registration available or not");;
-                HttpResponse response=userRegistrationFeignImpl.checkRegistration(usertypeData.getId());
-                log.info("response got: "+response);
-                session.removeAttribute("response");
-                session.removeAttribute("statusCode");
-                session.removeAttribute("usertypeId");
-                session.setAttribute("tag",response.getTag());
-                session.setAttribute("statusCode",response.getStatusCode());
-                session.setAttribute("usertypeId",usertypeData.getId());
+
 			}
 			return output;
 
@@ -126,7 +109,7 @@ public class RegistrationService {
 		return mv;                
 	}                    
 
-	public OtpResponse saveOtherRegistration(String data,MultipartFile photo,MultipartFile nationalIdImage,MultipartFile idCard,HttpSession session,HttpServletRequest request,MultipartFile vatFile) throws IOException {
+	public OtpResponse saveOtherRegistration(String data,MultipartFile photo,MultipartFile nationalIdImage,MultipartFile idCard,HttpSession session,HttpServletRequest request) throws IOException {
 		Gson gson=new Gson();                       
 		Registration registration=gson.fromJson(data, Registration.class);
 		UserHeader header=getUserHeaders(request);
@@ -139,18 +122,15 @@ public class RegistrationService {
 		if(registration.getCaptcha().equals(validCaptcha)) {
 			log.info("if captcha match");  
 			if(registration.getRePassword().equals(registration.getPassword())) {
-				
 				log.info("if password and confirm password match");
 				String username=randomDigits.getAlphaNumericString(4)+randomDigits.getNumericString(4)+randomDigits.getAlphaNumericString(1);
 				registration.setUsername(username);
-				Tag tagData=new Tag("user_upload_filepath");
-				Dropdown dropdown = feignCleintImplementation.dataByTag(tagData);
-				log.info("user upload file path value from db: "+dropdown.getValue());
-				StringBuilder combinedPath=new StringBuilder(dropdown.getValue()).append("/"+username);
+
+				StringBuilder combinedPath=new StringBuilder(filePath).append("/"+username);
 				String nationalIdPath=new String(combinedPath+"/NID");  
 				String photoPath=new String(combinedPath+"/photo");
 				String idCardPath=new String(combinedPath+"/IDCard");  
-				String vatFilePath=new String(combinedPath+"/Vat");
+
 				if(nationalIdImage.isEmpty()==false) {
 					log.info("going to save user NationalId file");
 					log.info("file name: " +nationalIdImage.getOriginalFilename());
@@ -194,22 +174,6 @@ public class RegistrationService {
 					registration.setIdCardFilename(idCard.getOriginalFilename());
 					log.info("id card file save in server");
 				} 
-				if(registration.getUserTypeId()==12) {
-					log.info("vat file "+vatFile.getOriginalFilename());
-				if(vatFile.isEmpty()==false) {
-					log.info("file name: " +vatFile.getOriginalFilename());
-					log.info("finalPath:   "+vatFilePath);
-					log.info("path plus filename: "+vatFilePath+vatFile.getOriginalFilename());
-					File dir = new File(vatFilePath);
-					if (!dir.exists()) dir.mkdirs();
-					byte barr[]=vatFile.getBytes();
-					BufferedOutputStream bout=new BufferedOutputStream(new FileOutputStream(vatFilePath + "/" + vatFile.getOriginalFilename()));
-					bout.write(barr);
-					bout.flush();
-					bout.close();
-					registration.setVatFilename(vatFile.getOriginalFilename());
-				}
-				}
 
 				log.info("now going to call registration api");
 				OtpResponse response=userRegistrationFeignImpl.registration(registration);
@@ -253,10 +217,7 @@ public class RegistrationService {
 				log.info("if password and confirm password match");
 				String username=randomDigits.getAlphaNumericString(4)+randomDigits.getNumericString(4)+randomDigits.getAlphaNumericString(1);
 				registration.setUsername(username);
-				Tag tagData=new Tag("user_upload_filepath");
-				Dropdown dropdown = feignCleintImplementation.dataByTag(tagData);	
-				log.info("user upload file path value from db: "+dropdown.getValue());
-				StringBuilder combinedPath=new StringBuilder(dropdown.getValue()).append("/"+username);
+				StringBuilder combinedPath=new StringBuilder(filePath).append("/"+username);
 				String nationalIdPath=new String(combinedPath+"/NID");  
 				String vatFilePath=new String(combinedPath+"/Vat");
 				if(registration.getVatStatus()==1) {
@@ -347,16 +308,10 @@ public class RegistrationService {
 		return response;
 	}
 
-	public GenricResponse securityQuestionList(String username){
-		log.info("inside security question controller and username: "+username);
-		GenricResponse response =userRegistrationFeignImpl.securityQuestionList(username);
-		return response; 
-	}
-	
-	public List<SecurityQuestion> allSecurityQuestionList(){
+	public List<SecurityQuestion> securityQuestionList(){
 		log.info("inside security question controller");
-		List<SecurityQuestion> response =userRegistrationFeignImpl.getAllSecurityQuestion();
-		return response; 
+		List<SecurityQuestion> questionList =userRegistrationFeignImpl.securityQuestionList();
+		return questionList; 
 	}
 	public HttpResponse resendOtp(Integer id,HttpServletRequest request) {
 		log.info("inside resend otp controller");
@@ -364,6 +319,17 @@ public class RegistrationService {
 		UserHeader header=getUserHeaders(request);
 		ResendOtp otp=new ResendOtp(header.getUserAgent(),header.getPublicIp(),id);
 		HttpResponse response=userRegistrationFeignImpl.otpResend(otp); 
+		log.info("resend otp api response:  "+response);
+		log.info("exit from resend otp controller");
+		return response;
+	}
+	
+	public HttpResponse profileResendOtp(Integer id,HttpServletRequest request) {
+		log.info("inside resend otp controller");
+		log.info("id:   "+id);     
+		UserHeader header=getUserHeaders(request);
+		ResendOtp otp=new ResendOtp(header.getUserAgent(),header.getPublicIp(),id);
+		HttpResponse response=userRegistrationFeignImpl.profileResendOtp(otp); 
 		log.info("resend otp api response:  "+response);
 		log.info("exit from resend otp controller");
 		return response;

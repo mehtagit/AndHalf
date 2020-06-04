@@ -807,10 +807,10 @@ function submitDeviceInfo(){
 				"deviceSerialNumber": serialNumber1,
 				"deviceStatus": parseInt(deviceStatus1),
 				"deviceType": parseInt(deviceType1),
-				"firstImei": parseInt(IMEI1),
-				"secondImei": parseInt(IMEI2),
-				"thirdImei": parseInt(IMEI3),
-				"fourthImei": parseInt(IMEI4),
+				"firstImei": IMEI1,
+				"secondImei": IMEI2,
+				"thirdImei":IMEI3,
+				"fourthImei": IMEI4,
 				"multiSimStatus": multipleSimStatus1,
 				"price": parseFloat(Price1),
 				"taxPaidStatus": parseInt(taxStatus1),
@@ -916,11 +916,12 @@ populateCountries
 
 function taxPaidStatus(){
 
-	var request={
-			"firstImei": parseInt(window.taxIMEI),			
+	var regularizeDeviceDbs={
+			"firstImei": window.taxIMEI,			
 			"taxPaidStatus":0,
 			"txnId":	window.taxTxnId
 	}
+	console.log("--");
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
 	
@@ -929,7 +930,7 @@ function taxPaidStatus(){
 		type: 'PUT',
 		dataType : 'json',
 		contentType : 'application/json; charset=utf-8',
-		'data' : JSON.stringify(request),
+		'data' : JSON.stringify(regularizeDeviceDbs),
 		success: function (data, textStatus, jqXHR) {
 
 			var msg="The device status has been successfully updated";
@@ -1062,13 +1063,19 @@ function regularizedCount(nationType){
 		nationType=2;
 		var nid= nationalId == 'null' ? null : nationalId;
 	}
+	else if(nationType==2)
+		{
+		console.log("hit for foreigner.");
+		nationType==2;
+		}
 	else{
 		console.log("else  condition for CEIR admin");
 		nationType=1;
 		var nid= '';
 	}
+
 	$.ajax({
-		url: './countByNid?nid='+nid+"&nationType="+nationType,
+		url: './countByNid?nid='+nationalID+"&nationType="+nationType,
 		type: 'GET',
 		processData: false,
 		contentType: false,
@@ -1116,7 +1123,7 @@ function aprroveDevice(){
 			"imei1": window.imei,
 			"featureId":parseInt(featureId),
 			"remarks": "",
-			"userName":$("body").attr("data-username"),
+			"username":$("body").attr("data-username"),
 			"roleTypeUserId": parseInt($("body").attr("data-userTypeID")),
 			"txnId": window.txnId,
 			"userId":parseInt(userId),
@@ -1168,6 +1175,7 @@ function rejectUser(){
 			"imei1": window.imei,
 			"featureId":parseInt(featureId),
 			"remarks": $("#Reason").val(),
+			"username":$("body").attr("data-username"),
 			"roleTypeUserId": parseInt($("body").attr("data-userTypeID")),
 			"txnId": window.txnId,
 			"userId":parseInt(userId),

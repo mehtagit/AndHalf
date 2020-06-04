@@ -169,5 +169,21 @@
 	"Recovery Requests": "Recovery Requests",
 	"Block Requests": "Block Requests",
 	"Unblock Requests": "Unblock Requests",
-	"DUPLICATE_IMEI":"IMEI is already registered in CEIR System"
+	"DUPLICATE_IMEI":"IMEI is already registered in CEIR System",
+	
+	"IMEI_LUHN_CHECK":"IMEI does not pass the checksum algorithm",
+	"EXISTS_IN_TAC_DB":"The device does  not have a  valid TAC",
+	"EXIST_IN_RETAILER_DB":"IMEI/ESN/MEID is already present in the system",
+	"EXIST_IN_END_USER_DB":"IMEI/ESN/MEID is already present in the system",
+	"EXIST_IN_MANUFACTURER_DB":"The device is not marked as tax paid in the CEIR system.",
+	"EXIST_IN_CUSTOM_DB":"The device is not marked as tax paid in the CEIR system.",
+	"LBD":"The device with IMEI/ESN/MEID  is marked as stolen/blocked in the CEIR system",
+	"EXISTS_IN_USAGE_DB":"IMEI/ESN/MEID is already in use in the network",
+	"EXIST_IN_VIP_LIST":"IMEI/ESN/MEID is already present in the system",
+	"IMEI_NULL":"IMEI/ESN/MEID is missing in the record.",
+	"EXIST_IN_BLACKLIST_DB":"The device with IMEI/ESN/MEID  is marked as stolen/blocked in the CEIR system",
+	"IMEI_LENGTH":"IMEI/ESN/MEID is not as per the 3GPP specification",
+	"EXIST_IN_GSMABLACKLIST_DB":"The device with IMEI/ESN/MEID  is marked as stolen/blocked globally",
+	"EXIST_IN_DISTRIBUTOR_DB":"IMEI/ESN/MEID is already present in the system",
+	"EXIST_IN_IMPORTER_DB":"This device is not importer"
 }

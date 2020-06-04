@@ -64,16 +64,16 @@ function submitDeviceInfo(){
 				      "deviceSerialNumber": serialNumber1,
 				      "deviceStatus": parseInt(deviceStatus1),
 				      "deviceType": parseInt(deviceType1),
-				      "firstImei": parseInt(IMEI1),
-				      "secondImei": parseInt(IMEI2),
-				      "thirdImei": parseInt(IMEI3),
-				      "fourthImei": parseInt(IMEI4),
+				      "firstImei": IMEI1,
+				      "secondImei": IMEI2,
+				      "thirdImei": IMEI3,
+				      "fourthImei": IMEI4,
 				      "multiSimStatus": deviceStatus1,
 				      "price": parseFloat(Price1),
 				      "taxPaidStatus": parseInt(taxStatus1),
 				      "nid":nationalID,
 				      "txnId":"",
-				      "origin":"self"
+				      "origin":"Self"
 			}
 			regularizeDeviceDbs.push(deviceInfo);  
 			fieldId++;

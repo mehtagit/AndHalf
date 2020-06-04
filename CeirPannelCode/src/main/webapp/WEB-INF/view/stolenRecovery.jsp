@@ -116,9 +116,10 @@ position: fixed;
 <body data-id="7" data-roleType="${usertype}" data-userTypeID="${usertypeId}"
 	data-userID="${userid}" data-operatorTypeId="${operatorTypeId}"
 	data-selected-roleType="${stolenselectedUserTypeId}"
-	data-stolenselected-roleType="${stolenselectedUserTypeId}"
+		data-stolenselected-roleType="${stolenselectedUserTypeId}"
 	data-OperatorTypeId="${operatorTypeId}" data-requestType="${requestType}"		
-		 session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}">
+	session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}"
+	data-session-source="${not empty param.source ? param.source : 'menu'}">
 
 
 	<!-- START CONTENT -->

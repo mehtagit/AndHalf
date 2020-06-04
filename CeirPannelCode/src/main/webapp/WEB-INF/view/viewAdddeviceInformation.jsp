@@ -12,10 +12,9 @@
 	
 	 long accessTime = session.getLastAccessedTime();
 	 long currentTime= new Date().getTime(); 
-	 System.out.println("accessTime========"+(accessTime));
-	 System.out.println("timeout========"+timeout);
+	 
 	 long dfd= accessTime +timeout;
-	 System.out.println("currentTime========"+currentTime);
+	
 	 if( currentTime< dfd){
 	/*  response.setHeader("Refresh", timeout + "; URL = ../login");
 	 System.out.println("timeout========"+timeout); 
@@ -167,7 +166,7 @@ input[type='search'] {
 }
 </style>
 </head>
-<body data-id="12" session-value="${not empty param.NID ? param.NID : 'null'}">
+<body data-id="12" session-value="${not empty param.NID ? param.NID : 'null'}" data-roleType="${usertype}">
 
 	<!-- START CONTENT -->
 	<section id="content">
@@ -1088,7 +1087,16 @@ input[type='search'] {
 <script type="text/javascript">
 $('#redirectToPage').click(function(){
 	var nationalID=$('#nationalID').val();
-	 window.location.replace("${context}/uploadPaidStatus?via=other&NID="+nationalID);
+var userType= $("body").attr("data-roleType");
+   if(userType=="CEIRAdmin")
+	   {
+	   window.location.replace("${context}/uploadPaidStatus");
+	   }
+   else{
+	   
+   window.location.replace("${context}/uploadPaidStatus?via=other&NID="+nationalID);  
+       }
+	 
 
 	});
 	

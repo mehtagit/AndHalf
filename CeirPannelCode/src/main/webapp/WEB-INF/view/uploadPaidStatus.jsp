@@ -462,7 +462,7 @@ position: fixed;
 														<input type="email" name="email" id="email" 
 														oninput="InvalidMsg(this,'input','<spring:message code="validation.emial" />');"
 											            oninvalid="InvalidMsg(this,'input','<spring:message code="validation.emial" />');"
-														title= "<spring:message code="validation.emial" />" maxlength="30"> <label for="email"><spring:message code="input.email" /><span
+														title= "<spring:message code="validation.emial" />" maxlength="280"> <label for="email"><spring:message code="input.email" /><span
 														class="star"></span></label>
 												</div>
 

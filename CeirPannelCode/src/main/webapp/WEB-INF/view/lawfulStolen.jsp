@@ -139,12 +139,13 @@ select {
 
 
 
-
+		<div id="initialloader"></div>
 
 	<section id="content">
 		<!--start container-->
+
 		<div class="container">
-		 <div id="initialloader"></div>
+		 
 			<div class="section">
 				<div class="row">
 					<div class="col s12 m12 l12">
@@ -403,7 +404,7 @@ select {
 
 														<div class="col s6 m6 ">
 															<label for="deviceIDType"> <spring:message
-																	code="select.deviceIDType" /></label> <select
+																	code="select.deviceIDType" /> <span class="star" id="deviceIdTypeSpan" style="display: none ; margin-top: -18px;margin-left: 82px;">*</span> </label> <select
 															id="singleStolendeviceIDType" class="browser-default">
 																<option value="" disabled selected>
 																	<spring:message code="select.deviceIDType" />
