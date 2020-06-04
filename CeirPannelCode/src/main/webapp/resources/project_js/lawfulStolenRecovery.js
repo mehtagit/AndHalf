@@ -1,3 +1,5 @@
+
+
 var roleType = $("body").attr("data-roleType");
 var userId = $("body").attr("data-userID");
 var currentRoleType = $("body").attr("data-stolenselected-roleType");  
@@ -27,7 +29,7 @@ $.i18n().load( {
 
 $(document).ready(function(){
 	$('div#initialloader').fadeIn('fast');
-	filterStolen(lang,null,null);
+	filterStolen(lang,null);
 	pageRendering();
 });
 
@@ -38,17 +40,26 @@ $('.datepicker').on('mousedown',function(event){
 var userType = $("body").attr("data-roleType");
 var sourceType = localStorage.getItem("sourceType");
 
-function filterStolen(ss,sourceTypeFiler,source){
+function filterStolen(sourceTypeFiler,source){
 	var source__val;
-
+console.log("----"+source)
 	if(source == 'filter' ) {
+		console.log("1");
 		source__val= source;
 	}
+	else if(source==undefined || source==null)
+		{
+		console.log("2");
+		source__val= $("body").attr("data-requestType");
+		}
 	else{
-		source__val= $("body").attr("data-session-source");
+		console.log("3");
+		source__val= $("body").attr("data-requestType");
 
 	}
 	var sessionFlag;
+	
+	console.log(source+"----- "+source__val)
 
 	if(sourceType==null){
 		sessionFlag=2;
@@ -60,7 +71,7 @@ function filterStolen(ss,sourceTypeFiler,source){
 	}
 	console.log(" ****** sourceType ="+sourceTypeFiler);
 	if(userType=="Lawful Agency"){
-		Datatable('./headers?type=lawfulStolenHeaders','./stolenData?featureId='+featureId,sourceTypeFiler+'&source='+source__val)
+		Datatable('./headers?type=lawfulStolenHeaders','./stolenData?featureId='+featureId+'&source='+source__val)
 	}else if(userType =="CEIRAdmin"){
 		Datatable('./headers?type=lawfulStolenHeaders','./stolenData?featureId='+featureId,sourceTypeFiler+'&source='+source__val)
 	}

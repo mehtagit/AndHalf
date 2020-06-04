@@ -60,7 +60,7 @@ public class StolenDatatableController {
 			HttpServletRequest request, HttpSession session) {
 		List<List<Object>> finalList = new ArrayList<List<Object>>();
 		
-		log.info("featureId------->"+featureId+"---userTypeId------>"+userTypeId);
+		log.info("featureId------->"+featureId+"---userTypeId------>"+userTypeId+"==source=="+source);
 		
 		log.info("session value user Type=="+session.getAttribute("usertype"));
 		String userType = (String) session.getAttribute("usertype");

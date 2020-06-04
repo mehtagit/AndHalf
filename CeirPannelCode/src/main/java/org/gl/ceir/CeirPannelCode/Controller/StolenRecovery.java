@@ -72,7 +72,7 @@ public class StolenRecovery {
 			) {
 			
 		ModelAndView mv = new ModelAndView();
-		log.info("entry point in stolen recovery  page with featureId-->  " +featureId);
+		log.info("entry point in stolen recovery  page with featureId-->  " +featureId+"  source  =="+source);
 		try {
 		String roletype=session.getAttribute("usertype").toString();
 		String OperatorId = String.valueOf(session.getAttribute("operatorTypeId"));
@@ -88,23 +88,26 @@ public class StolenRecovery {
 		{
 			if((roletype.equals("Lawful Agency") || roletype.equals("CEIRAdmin")) && "5".equals(featureId))
 			{
-				log.info("return Lawful Stolen Recovery**roletype****"+roletype+" featureId******" +featureId);
+				log.info(" 1 return Lawful Stolen Recovery**roletype****"+roletype+" featureId******" +featureId);
 				session.removeAttribute("requestType");
 				session.setAttribute("requestType",requestType);
+				session.setAttribute("filterSource", source);
 				mv.setViewName("lawfulStolenRecovery");
 			}
 			else {
-				log.info("return stolen Recovery**roletype****"+roletype+" featureId******" +featureId+"****OperatorId***"+OperatorId);
+				log.info("  2  return stolen Recovery**roletype****"+roletype+" featureId******" +featureId+"****OperatorId***"+OperatorId);
 				session.setAttribute("stolenselectedUserTypeId", roletype);
 				session.setAttribute("operatorTypeId", OperatorId);
 				session.removeAttribute("requestType");
 				session.setAttribute("requestType",requestType);
+				session.setAttribute("filterSource", source);
 				mv.setViewName("stolenRecovery");
 			}
 				
 		}
 		}
 		else {
+			session.setAttribute("filterSource", source);
 			log.info("selected role type in stolen and recovery  is = "+selectedUserTypeId);
 			session.setAttribute("stolenselectedUserTypeId", selectedUserTypeId);
 			mv.setViewName("stolenRecovery");		
