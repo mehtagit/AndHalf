@@ -10,55 +10,55 @@ import com.google.gson.Gson;
 
 public class TacApiConsumer {
 
-	private	final static Logger logger = Logger.getLogger(TacApiConsumer.class);
+    private final static Logger logger = Logger.getLogger(TacApiConsumer.class);
 
-	PropertyReader propertyReader;
-	Gson gson;
+    PropertyReader propertyReader;
+    Gson gson;
 
-	public TacApiConsumer() {
-		propertyReader = new PropertyReader();
-		gson = new Gson();
+    public TacApiConsumer() {
+        propertyReader = new PropertyReader();
+        gson = new Gson();
 
-	}
+    }
 
-	public HttpResponse delete(String txnId, Long userId, String userType, int deleteFlag){
+    public HttpResponse delete(String txnId, Long userId, String userType, int deleteFlag) {
 
-		try {
-			String result = "";
-			String uri = propertyReader.getPropValue("api.tac.delete")
-					+ "?txnId=" + txnId + "&"
-					+ "userId=" + userId + "&"
-					+ "userType=" + userType + "&"
-					+ "deleteFlag=" + deleteFlag;
+        try {
+            String result = "";
+            String uri = propertyReader.getPropValue("api.tac.delete")
+                    + "?txnId=" + txnId + "&"
+                    + "userId=" + userId + "&"
+                    + "userType=" + userType + "&"
+                    + "deleteFlag=" + deleteFlag;   // 2
+            logger.info("Request Body : " + uri);
+            String response = HttpURLConnectionExample.sendPOST(uri);
+            HttpResponse httpResponse = gson.fromJson(response, HttpResponse.class);
+            return httpResponse;
 
-			String response = HttpURLConnectionExample.sendPOST(uri);
-			HttpResponse httpResponse = gson.fromJson(response, HttpResponse.class);
-			return httpResponse;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}	
-	}
-	
-	public HttpResponse approveReject(String txnId, Integer status){
+    public HttpResponse approveReject(String txnId, Integer status) {   //
 
-		try {
-			String result = "";
-			String uri = propertyReader.getPropValue("api.tac.approve_reject");
-			TacApproveRequest tacApproveRequest = new TacApproveRequest(txnId, status);
-			
-			String body = gson.toJson(tacApproveRequest, TacApproveRequest.class);
-			logger.info("Request Body : " + body);
-			
-			String response = HttpURLConnectionExample.sendPOST(uri, body);
-			logger.info("Response : " + response);
-			HttpResponse httpResponse = gson.fromJson(response, HttpResponse.class);
-			return httpResponse;
+        try {
+            String result = "";
+            String uri = propertyReader.getPropValue("api.tac.approve_reject");
+            TacApproveRequest tacApproveRequest = new TacApproveRequest(txnId, status);
 
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}	
-	}
+            String body = gson.toJson(tacApproveRequest, TacApproveRequest.class);
+            logger.info("Request Body : " + body);
+
+            String response = HttpURLConnectionExample.sendPOST(uri, body);
+            logger.info("Response : " + response);
+            HttpResponse httpResponse = gson.fromJson(response, HttpResponse.class);
+            return httpResponse;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

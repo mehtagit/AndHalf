@@ -412,13 +412,13 @@ public class HexFileReader {
 //                            }
                         }
                         if (my_column_count == myfilelist.size()) {
-                            query = query + "operator" + "," + "file_name" + "," + "record_time" + "," + "status" + ", created_on ,";
-                            values = values + "?,?, " + toDate + " ,'Init'," + dateFunction + ",";
+                            query = query + "operator" + "," + "file_name" + "," + "record_time" + "," + "status" + ", created_on,modified_on   ";
+                            values = values + "?,?, " + toDate + " ,'Init'," + dateFunction + ", "+dateFunction +  "  ";
                             query = query.substring(0, query.length() - 1) + ") "
                                     + values.substring(0, values.length() - 1) + ")";
                             ps = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-                            failquery = failquery + "operator" + "," + "file_name" + "," + "record_time" + "," + "status" + ", created_on   ";     // why not comma 
-                            failvalues = failvalues + "?,?, " + toDate + ",'Error'," + dateFunction + ",";   //
+                            failquery = failquery + "operator" + "," + "file_name" + "," + "record_time" + "," + "status" + ", created_on,modified_on   ";     // why not comma 
+                            failvalues = failvalues + "?,?, " + toDate + ",'Error'," + dateFunction + ", "+dateFunction +  "   ";   // 
                             failquery = failquery.substring(0, failquery.length() - 1) + ") "
                                     + failvalues.substring(0, failvalues.length() - 1) + ")";
                             failed_ps = conn.prepareStatement(failquery, Statement.RETURN_GENERATED_KEYS);
@@ -445,7 +445,7 @@ public class HexFileReader {
                         if (cdrColumn.graceType.equalsIgnoreCase("Mandatory")) {
                             logger.info(j + "   <--Mandatory field -> " + data[j - 1]);
                             if (data[j - 1].equals("") || " ".equals(data[j - 1]) || data[j - 1].equals(" ") || data[j - 1] == null) {
-                                logger.debug(" No data " + data[j - 1]);   
+                                logger.debug(" No data " + data[j - 1]);
                                 failed_flag = 0;
                             }
 //                             j++;
@@ -568,10 +568,9 @@ public class HexFileReader {
         int conVal = 0;
         int totalBlnkLine = 0;
         int ooo9Break = 0;
-        Date date = null;
 
         int failed_flag = 1;
-        int crptBrk = 0;
+
         String my_column_name = "";
 
         ErrorFileGenrator errFile = new ErrorFileGenrator();
@@ -584,10 +583,13 @@ public class HexFileReader {
             ArrayList<CDRColumn> myfilelist = getCDRFields(conn, main_type, usertype_name);
             logger.info("file list size is " + myfilelist.size());
             logger.info("File Name is " + fileName);
-            date = new Date();
+            Date date = new Date();
+            SimpleDateFormat DateFor = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String stringDate = DateFor.format(date);
+            System.out.println(stringDate);
             actF = new SimpleDateFormat("yyyyMddHHmmssSS"); // actF = new SimpleDateFormat("yyyyMMddHHmmss");
             sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            String[] fileArray = fileName.split("_");
+//            String[] fileArray = fileName.split("_");
             Statement st5 = conn.createStatement();
             String qry = " select quantity, device_quantity from  " + main_type.trim().toLowerCase() + "_mgmt where txn_id  = '" + txn_id + "'";
             if (main_type.equalsIgnoreCase("Stolen") || main_type.equalsIgnoreCase("Recovery")
@@ -903,8 +905,8 @@ public class HexFileReader {
                                     my_column_count++;
                                 }
                                 if (my_column_count == myfilelist.size()) {
-                                    query = query + "txn_id" + "," + "file_name" + "," + "feature_type" + ",created_on   ";   // removin comma may14
-                                    values = values + "?,?,?,?,";
+                                    query = query + "txn_id" + "," + "file_name" + "," + "feature_type" + ",created_on ,modified_on    ";   // removin comma may14
+                                    values = values + "?,?,?,?,?  ";
                                     query = query.substring(0, query.length() - 1) + ") "
                                             + values.substring(0, values.length() - 1) + ")";
                                     ps = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
@@ -953,7 +955,8 @@ public class HexFileReader {
                                     ps.setString(j, txn_id);
                                     ps.setString(j + 1, fileName);
                                     ps.setString(j + 2, main_type);
-                                    ps.setString(j + 3, dateFunction);
+                                    ps.setString(j + 3, stringDate);
+                                    ps.setString(j + 4, stringDate);
                                     ps.addBatch();
                                     pass_my_batch++;
                                 }

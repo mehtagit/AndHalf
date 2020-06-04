@@ -27,16 +27,14 @@ public class CEIRFeatureFileFunctions {
         if (conn.toString().contains("oracle")) {
             limiter = " fetch next 1 rows only ";
         }
-
-//        
-//                String stater = "" ;
-//                if(state == 0){
-//                    stater = "  state  = 0    ";   // or  state  = 1 
-//                }else{
-//                     stater = "  state  = 2    ";  // or  state  = 3
-//                }
+        String stater = "";
+        if (state == 0) {
+            stater = "  state  = 0  or  state  = 1    ";
+        } else {
+            stater = "  state  = 2   or  state  = 3  ";
+        }
         try {                               //where state =  " + state + " 
-            query = "select * from web_action_db where state =  " + state + "    order by state desc , id asc " + limiter + "  ";
+            query = "select * from web_action_db where " + stater + "    order by state desc , id asc " + limiter + "  ";
             logger.info("Query to get File Details [" + query + "]");
             stmt = conn.createStatement();
             return rs = stmt.executeQuery(query);

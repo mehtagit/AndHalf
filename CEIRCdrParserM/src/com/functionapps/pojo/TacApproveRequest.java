@@ -3,7 +3,7 @@ package com.functionapps.pojo;
 public class TacApproveRequest {
 	
 	private Integer adminApproveStatus;
-	private String adminUserType = "SystemAdmin ";
+	private String adminUserType = "CEIRSYSTEM";  //  SystemAdmin
 	private String txnId;
 	
 	public TacApproveRequest(String txnId, Integer adminApproveStatus) {

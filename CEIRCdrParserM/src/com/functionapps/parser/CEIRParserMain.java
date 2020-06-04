@@ -133,7 +133,6 @@ public class CEIRParserMain {
         String failed_rule_name = null;
         String failed_rule_id = null;
         String finalAction = "";
-        int parser_base_limit = 0;
         int old_sno = 0;
         int update_sno = 0;
         int usageInsert = 0;
@@ -155,14 +154,11 @@ public class CEIRParserMain {
             logger.info(" select * from rep_schedule_config_db where operator ='" + operator + "' ");
             ResultSet my_result_set = operatorDetails(conn, operator);
             if (my_result_set.next()) {
-                parser_base_limit = my_result_set.getInt("split_upload_set_no");
                 old_sno = my_result_set.getInt("last_upload_sno");
                 split_upload_batch_no = my_result_set.getInt("split_upload_batch_no");
             }
             logger.info(" split_upload_batch_no .." + split_upload_batch_no);
-//			query = "select * from "+operator+"_raw where sno>"+old_sno+" and status='Init' order by sno asc FETCH FIRST "+parser_base_limit+" ROWS WITH TIES ";
-            //  query = "select * from " + operator + "_raw where sno>" + old_sno + " and sno<=" + (old_sno + parser_base_limit) + " and status='Init' order by sno asc ";
-            String p2Starttime = java.time.LocalDateTime.now().toString();
+             String p2Starttime = java.time.LocalDateTime.now().toString();
             query = "select * from " + operator + "_raw where  status='Init'  and file_name = (select file_name from   " + operator + "_raw where  status='Init' order by sno asc  fetch next 1 rows only)  order by sno    asc ";
             stmt = conn.createStatement();
             rs = stmt.executeQuery(query);
@@ -170,8 +166,7 @@ public class CEIRParserMain {
 
             HashMap<String, String> device_info = new HashMap<String, String>();
             RuleFilter rule_filter = new RuleFilter();
-//            updateLastStatuSno(conn, operator, old_sno, parser_base_limit);
-            stmt1 = conn.createStatement();
+             stmt1 = conn.createStatement();
 
             // CDR File Writer
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -230,12 +225,13 @@ public class CEIRParserMain {
                          logger.info(" Null Output "+ output);
                         if (output == 0) {
                             my_query = "insert into device_null_db (msisdn,imsi,create_filename,update_filename,"
-                                    + "updated_on,created_on,record_type,system_type , operator ,record_time) "
+                                    + "updated_on,modified_on , created_on,record_type,system_type , operator ,record_time  ) "
                                     + "values('" + (rs.getString("MSISDN").startsWith("19") ? rs.getString("MSISDN").substring(2) : rs.getString("MSISDN")) + "',"
                                     + "'" + rs.getString("IMSI") + "',"
                                     + "'" + rs.getString("file_name") + "',"
                                     + "'" + rs.getString("file_name") + "',"
                                     + "" + dateFunction + ","
+                                     + "" + dateFunction + ","
                                     + "" + dateFunction + ","
                                     + "'" + rs.getString("record_type") + "',"
                                     + "'" + rs.getString("record_type") + "',"
@@ -270,17 +266,7 @@ public class CEIRParserMain {
                         period = my_rule_detail.get("period");
                         failedRuleDate = dateFunction;
                     }
-//                    logger.info("Rule Handling Cclosed");
-//                    logger.info("Rule Handling closed" + failed_rule_name);
-//                    action = my_rule_detail.get("action");    // inside if cond. but fetch outside for everyuse
-//                    else {
-//                        failed_rule_name = "";
-//                        failed_rule_id = "";
-//                        action = "";
-//                        period = "";
-//                    }
-
-//                    else {
+ 
                     if (failed_rule_id == null) {
                         finalAction = "ALLOWED";
                     } else {

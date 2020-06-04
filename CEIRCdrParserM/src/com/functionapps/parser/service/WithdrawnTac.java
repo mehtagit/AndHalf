@@ -14,46 +14,45 @@ import com.functionapps.pojo.TypeApprovedDb;
 import com.functionapps.resttemplate.TacApiConsumer;
 
 public class WithdrawnTac {
-	static Logger logger = Logger.getLogger(WithdrawnTac.class);
 
-	public WithdrawnTac() {
+    static Logger logger = Logger.getLogger(WithdrawnTac.class);
 
-	}
+    public WithdrawnTac() {
 
-	public void process(Connection conn, String operator, String sub_feature, ArrayList<Rule> rulelist, String txnId, 
-			String operator_tag, String usertypeName){
+    }
 
-		CEIRFeatureFileFunctions ceirfunction = new CEIRFeatureFileFunctions();
-		TypeApprovalDbDao typeApprovalDbDao = new TypeApprovalDbDao();
-		TacApiConsumer tacApiConsumer = new TacApiConsumer();
+    public void process(Connection conn, String operator, String sub_feature, ArrayList<Rule> rulelist, String txnId,
+            String operator_tag, String usertypeName) {
 
-		try{
-			Optional<TypeApprovedDb> typeApprovedDbOptional = typeApprovalDbDao.getTypeApprovedDbTxnId(conn, "", txnId);
+//		CEIRFeatureFileFunctions ceirfunction = new CEIRFeatureFileFunctions();
+        TypeApprovalDbDao typeApprovalDbDao = new TypeApprovalDbDao();
+        TacApiConsumer tacApiConsumer = new TacApiConsumer();
 
-			if(typeApprovedDbOptional.isPresent()) {
-				TypeApprovedDb typeApprovedDb = typeApprovedDbOptional.get();
-				
-				HttpResponse httpResponse = tacApiConsumer.delete(txnId, typeApprovedDb.getUserId(), 
-						"SystemAdmin", 2);
+        try {
+            Optional<TypeApprovedDb> typeApprovedDbOptional = typeApprovalDbDao.getTypeApprovedDbTxnId(conn, "", txnId);
 
-				if(httpResponse.getStatusCode() != 200) {
-					// TODO Add to the Alert.
-					logger.info("Delete API for type_approved_db is failed. Response[" + httpResponse + "]");
-					return;
-				}else {
-					logger.info("Delete API for type_approved_db is Success. Response[" + httpResponse + "]");
-					return;
-				}
-			}else {
-				logger.info("type_approved_db has no record for txn_id[" + txnId + "]");
-				return;
-			}
+            if (typeApprovedDbOptional.isPresent()) {
+                TypeApprovedDb typeApprovedDb = typeApprovedDbOptional.get();
+                HttpResponse httpResponse = tacApiConsumer.delete(txnId, typeApprovedDb.getUserId(),
+                        "CEIRSYSTEM", 4);    // CEIRSYSTEM    SystemAdmin    //2
 
-			// ceirfunction.updateFeatureFileStatus(conn, txnId, 2, operator, sub_feature);	
+                if (httpResponse.getStatusCode() != 200) {
+                    // TODO Add to the Alert.
+                    logger.info("Delete API for type_approved_db is failed. Response[" + httpResponse + "]");
+                    return;
+                } else {
+                    logger.info("Delete API for type_approved_db is Success. Response[" + httpResponse + "]");
+                    return;
+                }
+            } else {
+                logger.info("type_approved_db has no record for txn_id[" + txnId + "]");
+                return;
+            }
 
-		}catch(Exception e){
-			e.printStackTrace();
-			logger.error(e.getMessage(), e);
-		}
-	}
+            // ceirfunction.updateFeatureFileStatus(conn, txnId, 2, operator, sub_feature);	
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error(e.getMessage(), e);
+        }
+    }
 }

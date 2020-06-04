@@ -1,141 +1,124 @@
 package com.functionapps.http;
 
+import com.functionapps.parser.service.WithdrawnTac;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import org.apache.log4j.Logger;
 
 public class HttpURLConnectionExample {
 
-	private static final String POST_PARAMS = "";
+    static Logger logger = Logger.getLogger(HttpURLConnectionExample.class);
+    private static final String POST_PARAMS = "";
 
-	public static String sendGET(String url) throws IOException {
-		URL obj = new URL(url);
-		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-		con.setRequestMethod("GET");
+    public static String sendGET(String url) throws IOException {
+        URL obj = new URL(url);
+        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+        con.setRequestMethod("GET");
 
-		int responseCode = con.getResponseCode();
-		StringBuffer response = new StringBuffer();
-		
-		 // System.out.println("GET Response Code :: " + responseCode);
-		
-		if (responseCode == HttpURLConnection.HTTP_OK) { // success
-			BufferedReader in = new BufferedReader(new InputStreamReader(
-					con.getInputStream()));
-			String inputLine;
+        int responseCode = con.getResponseCode();
+        StringBuffer response = new StringBuffer();
 
-			while ((inputLine = in.readLine()) != null) {
-				response.append(inputLine);
-			}
-			in.close();
+        // System.out.println("GET Response Code :: " + responseCode);
+        if (responseCode == HttpURLConnection.HTTP_OK) { // success
+            BufferedReader in = new BufferedReader(new InputStreamReader(
+                    con.getInputStream()));
+            String inputLine;
 
-			// print result
-			 // System.out.println(response.toString());
-		} else {
-			 // System.out.println("GET request not worked");
-		}
-		
-		return response.toString();
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            in.close();
+            logger.debug(response.toString());
+        } else {
+            logger.warn("GET request not worked");
+        }
 
-	}
+        return response.toString();
 
-	public static String sendPOST(String url) throws IOException {
-		URL obj = new URL(url);
-		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+    }
 
-		con.setRequestMethod("POST");
+    public static String sendPOST(String url) throws IOException {
+        URL obj = new URL(url);
+        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
-		// For POST only - START
-		con.setDoOutput(true);
-		OutputStream os = con.getOutputStream();
-		os.write(POST_PARAMS.getBytes());
-		os.flush();
-		os.close();
-		// For POST only - END
-		
-		StringBuffer response = new StringBuffer();
-		int responseCode = con.getResponseCode();
-		 // System.out.println("POST Response Code :: " + responseCode);
+        con.setRequestMethod("POST");
 
-		if (responseCode == HttpURLConnection.HTTP_OK) { //success
-			BufferedReader in = new BufferedReader(new InputStreamReader(
-					con.getInputStream()));
-			String inputLine;
+        // For POST only - START
+        con.setDoOutput(true);
+        OutputStream os = con.getOutputStream();
+        os.write(POST_PARAMS.getBytes());
+        os.flush();
+        os.close();
+        // For POST only - END
 
-			while ((inputLine = in.readLine()) != null) {
-				response.append(inputLine);
-			}
-			in.close();
+        StringBuffer response = new StringBuffer();
+        int responseCode = con.getResponseCode();
+        logger.debug("POST Response Code :: " + responseCode);
 
-			// print result
-			 // System.out.println(response.toString());
-			
-		} else {
-			 // System.out.println("POST request not worked");
-		}
-		
-		return response.toString();
-	}
-	
-	public static String sendPOST(String url, String body) throws IOException {
-		URL obj = new URL(url);
-		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-		con.setRequestProperty("Content-Type", "application/json");
-		con.setRequestProperty("Accept", "application/json");
+        if (responseCode == HttpURLConnection.HTTP_OK) { //success
+            BufferedReader in = new BufferedReader(new InputStreamReader(
+                    con.getInputStream()));
+            String inputLine;
 
-		con.setRequestMethod("POST");
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            in.close();
 
-		// For POST only - START
-		con.setDoOutput(true);
-		OutputStream os = con.getOutputStream();
-		byte[] input = body.getBytes("utf-8");
-		os.write(input, 0, input.length);
-		os.flush();
-		os.close();
-		// For POST only - END
-		
-		StringBuffer response = new StringBuffer();
-		int responseCode = con.getResponseCode();
-		 // System.out.println("POST Response Code :: " + responseCode);
+            // print result
+            logger.debug(response.toString());
 
-		if (responseCode == HttpURLConnection.HTTP_OK) { //success
-			BufferedReader in = new BufferedReader(new InputStreamReader(
-					con.getInputStream()));
-			String inputLine;
+        } else {
+            logger.warn("POST request not worked");
+        }
 
-			while ((inputLine = in.readLine()) != null) {
-				response.append(inputLine);
-			}
-			in.close();
+        return response.toString();
+    }
 
-			// print result
-			 // System.out.println(response.toString());
-			
-		} else {
-			 // System.out.println("POST request not worked");
-		}
-		
-		return response.toString();
-	}
+    public static String sendPOST(String url, String body) throws IOException {
+        URL obj = new URL(url);
+        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+        con.setRequestProperty("Content-Type", "application/json");
+        con.setRequestProperty("Accept", "application/json");
 
-	public static void main(String[] args) {
-		try {
-			String txnId = "T20200411152839491";
-			String userId = "360";
-			String userType = "CEIRSYSTEM";
-			String deleteFlag = "1";
+        con.setRequestMethod("POST");
 
-			String uri = "http://172.24.2.65:9502/CEIR/TypeApproved/delete" 
-					+ "?txnId=" + txnId + "&"
-					+ "userId=" + userId + "&"
-					+ "userType=" + userType + "&"
-					+ "deleteFlag=" + deleteFlag;
+        // For POST only - START
+        con.setDoOutput(true);
+        OutputStream os = con.getOutputStream();
+        byte[] input = body.getBytes("utf-8");
+        os.write(input, 0, input.length);
+        os.flush();
+        os.close();
+        // For POST only - END
 
-			sendPOST(uri);
-		}catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+        StringBuffer response = new StringBuffer();
+        int responseCode = con.getResponseCode();
+        logger.debug("POST Response Code :: " + responseCode);
+
+        if (responseCode == HttpURLConnection.HTTP_OK) { //success
+            BufferedReader in = new BufferedReader(new InputStreamReader(
+                    con.getInputStream()));
+            String inputLine;
+
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            in.close();
+
+            // print result
+            logger.debug(response.toString());
+
+        } else {
+            logger.debug("POST request not worked");
+        }
+
+        return response.toString();
+    }
+
+ 
 }

@@ -21,8 +21,7 @@ public class NotificationDao {
 				+ "message, modified_on, sub_feature, user_id, feature_txn_id, status, "
 				+ "retry_count, subject, refer_table, role_type, receiver_user_type" 
 				+ ") values (?," + dateFunction + ",?,?,?," + dateFunction + ",?,?,?,0,0,?,'USERS',?,?)";
-		//notification_seq.nextVal,
-		 // System.out.println("Query [" + query + " ]");
+	
 		logger.info("Add notification [ " + query + "]");
 
 		try(PreparedStatement preparedStatement = conn.prepareStatement(query);){
@@ -37,11 +36,11 @@ public class NotificationDao {
 			preparedStatement.setString(9, notification.getRoleType());
 			preparedStatement.setString(10, notification.getReceiverUserType());
 
-			 // System.out.println("Query " + preparedStatement);
+			 logger.info("Query " + preparedStatement);
 
 			preparedStatement.execute();
 
-			 // System.out.println("Inserted in notification succesfully.");
+			 logger.info("Inserted in notification succesfully.");
 
 		} catch (SQLException e) {
 			logger.error(e.getMessage(), e);

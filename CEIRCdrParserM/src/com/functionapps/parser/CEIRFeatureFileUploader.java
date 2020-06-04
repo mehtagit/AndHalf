@@ -16,7 +16,10 @@ public class CEIRFeatureFileUploader {
     static Logger logger = Logger.getLogger(CEIRFeatureFileUploader.class);
 
     public static void main(String[] args) {
-        logger.info(" CEIRFeatureFileUploader.class");
+        logger.info(" CEIRFeatureFileUploader.class"); 
+        Connection conn = new com.functionapps.db.MySQLConnection().getConnection();
+        logger.info("  "); 
+        
         HexFileReader hfr = new HexFileReader();
         String basePath = "";
         String complete_file_path = "";
@@ -24,17 +27,15 @@ public class CEIRFeatureFileUploader {
         int raw_upload_set_no = 1;
         String[] rawDataResult = null;
         HashMap<String, String> feature_file_management = new HashMap<String, String>();
-        Connection conn = new com.functionapps.db.MySQLConnection().getConnection();
+       
         CEIRFeatureFileFunctions ceirfunction = new CEIRFeatureFileFunctions();
         HashMap<String, String> feature_file_mapping = new HashMap<String, String>();
         ResultSet file_details = ceirfunction.getFileDetails(conn, 0);  //select * from web_action_db limit 1 
         try {
             while (file_details.next()) {
-                System.out.println("" + file_details.getString("txn_id"));
                 logger.info("State ###.. " + file_details.getString("state"));
 
                 if (file_details.getString("state").equalsIgnoreCase("2") || file_details.getString("state").equalsIgnoreCase("3")) {
-                   
                     CEIRFeatureFileParser.ParserMain(conn);
                     return;
                 }
@@ -45,7 +46,6 @@ public class CEIRFeatureFileUploader {
                 logger.info("  FEATURE.." + file_details.getString("feature"));                              // add usertype name 
                 if (file_details.getString("feature").equalsIgnoreCase("Register Device")) {
                     if ((file_details.getString("sub_feature").equalsIgnoreCase("Register")) || (file_details.getString("sub_feature").equalsIgnoreCase("Add Device"))) {     //'Add Device'
-
                         ceirfunction.UpdateStatusViaApi(conn, file_details.getString("txn_id"), 0, file_details.getString("feature"));
                         logger.info("Status via API 0 done ");
                         ceirfunction.updateFeatureFileStatus(conn, file_details.getString("txn_id"), 2, file_details.getString("feature"), file_details.getString("sub_feature")); // update web_action_db           
@@ -56,7 +56,6 @@ public class CEIRFeatureFileUploader {
                         logger.info("Web Action 2 done ");
                         break;
                     }
-
                 }
                 //      ceirfunction.getfromRegulizeEnterInCustom(conn, file_details.getString("txn_id"), file_details.getString("feature"))  ;
                 //    ceirfunction.deleteFromCustom(conn, file_details.getString("txn_id"), file_details.getString("feature"))  ;    
@@ -80,10 +79,8 @@ public class CEIRFeatureFileUploader {
                     ceirfunction.updateFeatureFileStatus(conn, file_details.getString("txn_id"), 4, file_details.getString("feature"), file_details.getString("sub_feature")); // update web_action_db           
                     break;
                 }
-                logger.info(" .**.");
-
+                
                 try {     // check it for null
-
                     if (file_details.getString("feature").equalsIgnoreCase("CONSIGNMENT") || file_details.getString("feature").equalsIgnoreCase("STOCK")) {
                     } else {     // optimise
                         if (feature_file_management.get("delete_flag") == null) {

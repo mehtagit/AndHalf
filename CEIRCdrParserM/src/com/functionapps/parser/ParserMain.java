@@ -3,7 +3,7 @@ package com.functionapps.parser;
 import com.functionapps.files.FileList;
 import java.io.File;
 import java.sql.*;
-import java.time.LocalDateTime;
+
 import org.apache.log4j.Logger;
 
 public class ParserMain {
@@ -16,7 +16,7 @@ public class ParserMain {
             printHelp();
         }
         if (args.length > 0) {
-            logger.info("ParserMain.class ");
+            logger.info("ParserMain.class " + args[0]);
             HexFileReader hfr = new HexFileReader();
             String basePath = "";
             String intermPath = "";
@@ -33,20 +33,17 @@ public class ParserMain {
                 if (my_result_set.next()) {
                     raw_upload_set_no = my_result_set.getInt("raw_upload_set_no");
                 }
-                basePath = hfr.getFilePath(conn, tableName.toLowerCase() + "_file_path");
                 basePath = hfr.getFilePath(conn, "smart_file_path");
                 if (!basePath.endsWith("/")) {
                     basePath += "/";
                 }
                 intermPath = basePath + "/" + args[0].toLowerCase() + "/";
-                String folderNam = getFolderNameByOpertor(conn, intermPath, args[0]);   // opt
-                filePath = intermPath + folderNam;
-                source = filePath.replace(intermPath, "");
+                logger.info("intermPath :" + intermPath);
+//                source = getFolderNameByOpertor(conn, intermPath, args[0]);   // opt
+                source = "output/";
+                logger.info("source :" + source);
+                filePath = intermPath + source;
                 fileName = new FileList().readOldestOneFile(filePath);
-
-//                 filePath = "/home/ceirapp/ceir/ceir_parser/ETL/SMART/Files/SMART/";
-//                 fileName = "test5.txt";
-//                 source = "SMART";
                 logger.info("FilePath :" + filePath + ";fileName:" + fileName + " ;basePath :" + basePath + ";source : " + source);
                 hfr.readConvertedCSVFile(conn, fileName, args[0], filePath, raw_upload_set_no, source);
 //                conn.commit();
@@ -55,7 +52,7 @@ public class ParserMain {
                 // System.out.println("No record found from file ");
             } finally {
                 try {
-                    logger.debug(" Process 2 Start " + args[0]);
+                    logger.debug(" ..................................................................... " + args[0]);
                     CEIRParserMain.CDRPARSERmain(conn, args[0]);
                 } catch (Exception ex) {
                     logger.error(" :" + ex);
@@ -79,16 +76,19 @@ public class ParserMain {
         File fldr = null;
         try {
             query = "select value from system_configuration_db where tag= '" + opertor + "_folder_list'  ";
-            
+            logger.debug("query: " + query);
             stmt = conn.createStatement();
             rs = stmt.executeQuery(query);
             while (rs.next()) {
                 folderList = rs.getString("value");
             }
             stmt.closeOnCompletion();
+            logger.debug("folderList: " + folderList);
             String folderArr[] = folderList.split(",");
             for (String val : folderArr) {
-                fldr = new File(intermPath + val);
+                fldr = new File(intermPath + val.trim());
+                logger.debug("fldr : " + fldr);
+                logger.debug("fldr.listFiles().length : " + fldr.listFiles().length);
                 if (fldr.listFiles().length > 0) {
                     mainFolder = val;
                     break;
@@ -97,6 +97,8 @@ public class ParserMain {
             }
 
         } catch (Exception e) {
+            logger.error("Error : " + e);
+
             e.printStackTrace();
         }
         return mainFolder + "/";

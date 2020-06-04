@@ -205,11 +205,7 @@ public class ConsignmentInsertUpdate {
                     }
                     countError++;
                 }
-                split_upload_batch_count++;
-                if (split_upload_batch_count == split_upload_batch_no) {
-                    conn.commit();
-                    split_upload_batch_count = 0;
-                }
+               
                 update_sno = Integer.parseInt(rs.getString("sno"));
             }                 // while end
             if (update_sno != 0) {
@@ -240,7 +236,7 @@ public class ConsignmentInsertUpdate {
                     logger.info("Failed to move the file");
                 }
 
-                rrslt = cEIRFeatureFileParser.getCustomData(conn, txn_id); // select user_type from stock_mgmt where txn_id
+                rrslt = cEIRFeatureFileParser.getCustomData(conn, txn_id); //  1  for custom select user_type from stock_mgmt where txn_id
                 logger.info(".getCustomData rslt ." + rrslt);
                 stmt0 = conn.createStatement();
                 stmt1 = conn.createStatement();
@@ -257,13 +253,10 @@ public class ConsignmentInsertUpdate {
                 } else {
                     dateNow1 = new SimpleDateFormat("YYYY-MM-dd").format(new Date());
                 }
-                
-                 boolean isOracle = conn.toString().contains("oracle");
-            String dateFunction = Util.defaultDate(isOracle);
-                
-                
-                
-                
+
+                boolean isOracle = conn.toString().contains("oracle");
+                String dateFunction = Util.defaultDate(isOracle);
+
                 logger.info(".output_device_db  ." + feature_file_mapping.get("output_device_db"));
                 while (rs1.next()) {      //can b rs (we can run again)
                     split_upload_batch_count++;
@@ -282,13 +275,14 @@ public class ConsignmentInsertUpdate {
                             + feature_file_management.get("user_id") + ", '" + operator + "'  )";    // "," + operator +  
 
                     device_db_query = "insert into device_db (device_id_type,created_on,device_launch_date,device_status,"
-                            + "device_type,imei_esn_meid,modified_on,multiple_sim_status,period,sn_of_device,txn_id , feature_name) " // feature_name
+                            + "device_type,imei_esn_meid,modified_on,multiple_sim_status,period,sn_of_device, tac  ,txn_id , feature_name   ) " // feature_name
                             + "values('" + rs1.getString("DeviceIdType") + "'," + "" + dateFunction + "," + "'"
                             + rs1.getString("Devicelaunchdate") + "'," + "'" + rs1.getString("DeviceStatus") + "',"
                             + "'" + rs1.getString("DeviceType") + "'," + "'" + rs1.getString("IMEIESNMEID") + "',"
                             + "" + dateFunction + "," + "'" + rs1.getString("MultipleSIMStatus") + "',"
-                            + "'" + (period == "grace" ? 0 : 1) + "'," + "'" + rs1.getString("SNofDevice") + "',"
-                            + "'" + txn_id + "'  "
+                            + "'" + period + "'," + "'" + rs1.getString("SNofDevice") + "',"
+                            + "'" + rs1.getString("IMEIESNMEID").substring(0, 8) + "'  "
+                            + ",'" + txn_id + "'  "
                             + " , '" + operator + "' "
                             + ")";
 
@@ -298,7 +292,7 @@ public class ConsignmentInsertUpdate {
                             + rs1.getString("Devicelaunchdate") + "'," + "'" + rs1.getString("DeviceStatus") + "',"
                             + "'" + rs1.getString("DeviceType") + "'," + "'" + rs1.getString("IMEIESNMEID") + "',"
                             + "" + dateFunction + "," + "'" + rs1.getString("MultipleSIMStatus") + "',"
-                             + "'" + (period == "grace" ? 0 : 1) + "'," + "'" + rs1.getString("SNofDevice") + "',"
+                            + "'" + period  + "'," + "'" + rs1.getString("SNofDevice") + "',"
                             + "'" + txn_id + "'  "
                             + " , '" + operator + "' "
                             + ")";

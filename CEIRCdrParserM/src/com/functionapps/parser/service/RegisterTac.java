@@ -19,109 +19,119 @@ import com.functionapps.pojo.TypeApprovedDb;
 import com.functionapps.pojo.UserWithProfile;
 import com.functionapps.resttemplate.TacApiConsumer;
 import com.gl.Rule_engine.RuleEngineApplication;
+import java.io.BufferedWriter;
 
 public class RegisterTac {
-	static Logger logger = Logger.getLogger(RegisterTac.class);
-	
-	public RegisterTac() {
-		
-	}
 
-	public void process(Connection conn, String operator, String sub_feature, ArrayList<Rule> rulelist, String txnId, 
-			String operator_tag, String usertypeName){
+    static Logger logger = Logger.getLogger(RegisterTac.class);
 
-		CEIRFeatureFileFunctions ceirfunction = new CEIRFeatureFileFunctions();
-		
-		TypeApprovalDbDao typeApprovalDbDao = new TypeApprovalDbDao();
-		MessageConfigurationDbDao messageConfigurationDbDao = new MessageConfigurationDbDao();
-		NotificationDao notificationDao = new NotificationDao();
-		UserWithProfileDao userWithProfileDao = new UserWithProfileDao();
-		TacApiConsumer tacApiConsumer = new TacApiConsumer();
+    public void process(Connection conn, String operator, String sub_feature, ArrayList<Rule> rulelist, String txnId,
+            String operator_tag, String usertypeName) {
 
-		try{
-			// Fetch type approved details.
-			Optional<TypeApprovedDb> typeApprovedDbOptional = typeApprovalDbDao.getTypeApprovedDbTxnId(conn, "", txnId);
-			
-			if(typeApprovedDbOptional.isPresent()) {
-				MessageConfigurationDb messageDb = null;
-				
-				TypeApprovedDb typeApprovedDb = typeApprovedDbOptional.get();
-				
-				String [] ruleArr = {"EXISTS_IN_TAC_DB",
-						"1",
-						"TAC",
-						typeApprovedDb.getTac(),
-						"0",
-						"", // file_name
-						"0",
-						"", // record_time
-						"", // operator
-						"error",
-						"", // operator_tag
-						"", // period
-						"", // servedMSISDN
-						"" // action
-						};
-				
-				/*
-				 * String output = RuleEngineApplication.startRuleEngine(ruleArr);
-				 * 
-				 *  // System.out.println("Rule [EXISTS_IN_TAC_DB] Execution output is [" + output +
-				 * "]");
-				 * 
-				 * if("yes".equalsIgnoreCase(output)) { typeApprovedDb.setApproveStatus(3); //
+        CEIRFeatureFileFunctions ceirfunction = new CEIRFeatureFileFunctions();
+
+        TypeApprovalDbDao typeApprovalDbDao = new TypeApprovalDbDao();
+        MessageConfigurationDbDao messageConfigurationDbDao = new MessageConfigurationDbDao();
+        NotificationDao notificationDao = new NotificationDao();
+        UserWithProfileDao userWithProfileDao = new UserWithProfileDao();
+        TacApiConsumer tacApiConsumer = new TacApiConsumer();
+
+        try {
+            // Fetch type approved details.
+            Optional<TypeApprovedDb> typeApprovedDbOptional = typeApprovalDbDao.getTypeApprovedDbTxnId(conn, "", txnId);
+            if (typeApprovedDbOptional.isPresent()) {
+                MessageConfigurationDb messageDb = null;
+                BufferedWriter bw = null;
+                int resultValue = 2;
+                String action_output = null;
+
+                TypeApprovedDb typeApprovedDb = typeApprovedDbOptional.get();
+                HttpResponse httpResponse = tacApiConsumer.approveReject(typeApprovedDb.getTxnId(), 1);
+
+                if (httpResponse.getErrorCode() != 200) {
+                    // TODO Add to the Alert.
+                    logger.info("Approve_Reject API for type_approved_db  at Processing State is failed. Response[" + httpResponse + "]");
+                    return;
+                }
+
+                String[] ruleArr = {"EXISTS_IN_TYPE_APPROVED_TAC", "1", "TAC", typeApprovedDb.getTac()};   // typeApproceTac with status =3 
+                action_output = RuleEngineApplication.startRuleEngine(ruleArr, conn, bw);
+                logger.info("EXISTS_IN_TYPE_APPROVED_TAC result " + action_output);
+                if (action_output.equalsIgnoreCase("NO")) {   // tac Format
+                    String[] ruleArr1 = {"TAC_FORMAT", "1", "TAC", typeApprovedDb.getTac()};
+                    action_output = RuleEngineApplication.startRuleEngine(ruleArr1, conn, bw);
+                    logger.info("TAC_FORMAT result" + action_output);
+                    if (action_output.equalsIgnoreCase("YES")) {
+                        String[] ruleArr2 = {"EXISTS_IN_TAC_DB", "1", "TAC", typeApprovedDb.getTac()};
+                        action_output = RuleEngineApplication.startRuleEngine(ruleArr2, conn, bw);
+                        logger.info(" EXISTS_IN_TAC_DB result " + action_output);
+                        if (action_output.equalsIgnoreCase("YES")) {
+                            resultValue = 3;
+                        } else {
+                            resultValue = 2;
+                        }
+                    } else {
+                        resultValue = 2;
+                    }
+                } else {
+                    resultValue = 3;
+                }
+
+
+                /* * if("yes".equalsIgnoreCase(output)) { typeApprovedDb.setApproveStatus(3); //
 				 * Pending by CEIR Admin }else { typeApprovedDb.setApproveStatus(2); // Rejected
 				 * By System. }
-				 */
+                 */
+                //3 Pass   //2 Fail
+//                HttpResponse httpResponse = tacApiConsumer.approveReject(typeApprovedDb.getTxnId(), 3 );
+                httpResponse = tacApiConsumer.approveReject(typeApprovedDb.getTxnId(), resultValue);
 
-				HttpResponse httpResponse = tacApiConsumer.approveReject(typeApprovedDb.getTxnId(), 3);
-				
-				if(httpResponse.getErrorCode() != 200) {
-					// TODO Add to the Alert.
-					logger.info("Approve_Reject API for type_approved_db is failed. Response[" + httpResponse + "]");
-					return;
-				}
-				
-				// Get users Profile.
-				UserWithProfile userWithProfile = userWithProfileDao.getUserWithProfileById(conn, typeApprovedDb.getUserId());
-				
-				// Read message
-				Optional<MessageConfigurationDb> messageDbOptional = messageConfigurationDbDao.getMessageDbTag(conn, "", "TAC_PROCESS_SUCCESFUL_MAIL_TO_USER");
-				
-				if(messageDbOptional.isPresent()) {
-					
-					messageDb = messageDbOptional.get();
-					String message = messageDb.getValue().replace("<tac>", typeApprovedDb.getTac());
-					message = message.replace("<txn_name>", txnId);
-					message = message.replace("<first name>", userWithProfile.getFirstName());
-					
-					// Saving in notification
-					Notification notification = new Notification("EMAIL", message, typeApprovedDb.getUserId(), 
-							21L, 
-							"Type Approved", 
-							"Register", 
-							txnId, 
-							messageDb.getSubject().replace("<XXX>", txnId), 
-							"", //roleType
-							userWithProfile.getUsertypeName() // receiverUserType
-							);
-					
-					notificationDao.insertNotification(conn, notification);
-					
-				}else {
-					logger.warn("No message is configured for tag [TAC_PROCESS_SUCCESFUL_MAIL_TO_USER]");
-					 // System.out.println("No message is configured for tag [TAC_PROCESS_SUCCESFUL_MAIL_TO_USER]");
-				}
-				
-				ceirfunction.updateFeatureFileStatus(conn, txnId, 2, operator, sub_feature);	
-			}else {
-				logger.info("Txn_id [" + txnId + "] is is not present in type_approved_db.");
-				 // System.out.println("Txn_id [" + txnId + "] is is not present in type_approved_db.");
-			}
+                if (httpResponse.getErrorCode() != 200) {
+                    // TODO Add to the Alert.
+                    logger.info("Approve_Reject API for type_approved_db is failed. Response[" + httpResponse + "]");
+                    return;
+                }
 
-		}catch(Exception e){
-			e.printStackTrace();
-			logger.error(e.getMessage(), e);
-		}
-	}
+                // Get users Profile.
+                UserWithProfile userWithProfile = userWithProfileDao.getUserWithProfileById(conn, typeApprovedDb.getUserId());
+
+                // Read message
+                Optional<MessageConfigurationDb> messageDbOptional = messageConfigurationDbDao.getMessageDbTag(conn, "", "TAC_PROCESS_SUCCESFUL_MAIL_TO_USER");
+
+                if (messageDbOptional.isPresent()) {
+
+                    messageDb = messageDbOptional.get();
+                    String message = messageDb.getValue().replace("<tac>", typeApprovedDb.getTac());
+                    message = message.replace("<txn_name>", txnId);
+                    message = message.replace("<first name>", userWithProfile.getFirstName());
+
+                    // Saving in notification
+                    Notification notification = new Notification("EMAIL", message, typeApprovedDb.getUserId(),
+                            21L,
+                            "Type Approved",
+                            "Register",
+                            txnId,
+                            messageDb.getSubject().replace("<XXX>", txnId),
+                            "", //roleType
+                            userWithProfile.getUsertypeName() // receiverUserType
+                    );
+
+                    notificationDao.insertNotification(conn, notification);
+
+                } else {
+                    logger.warn("No message is configured for tag [TAC_PROCESS_SUCCESFUL_MAIL_TO_USER]");
+                    // System.out.println("No message is configured for tag [TAC_PROCESS_SUCCESFUL_MAIL_TO_USER]");
+                }
+
+                ceirfunction.updateFeatureFileStatus(conn, txnId, 4, operator, sub_feature);
+            } else {
+                logger.info("Txn_id [" + txnId + "] is is not present in type_approved_db.");
+                // System.out.println("Txn_id [" + txnId + "] is is not present in type_approved_db.");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error(e.getMessage(), e);
+        }
+    }
 }
