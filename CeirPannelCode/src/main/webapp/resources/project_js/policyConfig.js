@@ -26,7 +26,8 @@ function configManagementDatatable(){
 			"featureId":parseInt(featureId),
 			"userTypeId": parseInt($("body").attr("data-userTypeID")),
 			"userType":$("body").attr("data-roleType"),
-			"username" : $("body").attr("data-selected-username")
+			"username" : $("body").attr("data-selected-username"),
+			"roleType":$("body").attr("data-roleType")
 	}
 	
 	$.ajax({
@@ -230,7 +231,10 @@ function updateDetails(tag,status){
 			"featureId":parseInt(featureId),
 			"userTypeId": parseInt($("body").attr("data-userTypeID")),
 			"userType":$("body").attr("data-roleType"),
-			"username" : $("body").attr("data-selected-username")
+			"username" : $("body").attr("data-selected-username"),
+			"roleType":$("body").attr("data-roleType")
+			
+			
 	} 
 	$.ajax({
 		url : "./policy/viewTag",

@@ -29,7 +29,12 @@
 		var state= $("#State").val();
 
 			var filterRequest={
-					  "state": state
+					  "state": state,
+						"userId":parseInt($("body").attr("data-userID")),
+						"featureId":parseInt(featureId),
+						"userTypeId": parseInt($("body").attr("data-userTypeID")),
+						"userName":$("body").attr("data-username"),
+						"roleType":$("body").attr("data-roleType")
 					
 			}
 			if(lang=='km'){
@@ -209,7 +214,12 @@
 						"description":description,
 						"state":state,
 						"id":window.xid,
-						"output":window.xoutput
+						"output":window.xoutput,
+						"userId":parseInt($("body").attr("data-userID")),
+						"featureId":parseInt(featureId),
+						"userTypeId": parseInt($("body").attr("data-userTypeID")),
+						"userName":$("body").attr("data-username"),
+						"roleType":$("body").attr("data-roleType")
 						
 				}
 	
