@@ -167,10 +167,10 @@ window.parent
 							'en' : './resources/i18n/en.json',
 							'km' : './resources/i18n/km.json'
 						}).done(function() {
-							if(data.errorCode==200){
+							if(result.errorCode==200){
 								$('#sucessMessage').text('');
 								$('#sucessMessage').text($.i18n('TRCRegister_futureRef'));
-							}else if(data.errorCode==201){
+							}else if(result.errorCode==201){
 								$('#sucessMessage').text('');
 								$('#sucessMessage').text($.i18n('REGISTER_TYPE_APPROVE_REJECTED'));
 							}
