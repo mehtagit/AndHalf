@@ -285,7 +285,7 @@ a#newUserLink {
 							pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
 							maxlength="10" min="8"
 							title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
-							required="required" id="password" class="password3" />
+							required="required" id="password2" class="password3" />
 				<div class="input-field-addon">
 		<i  class="fa fa-eye-slash teal-text toggle-password3" aria-hidden="true"></i>
 											</div>				
