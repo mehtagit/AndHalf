@@ -185,5 +185,7 @@
 	"IMEI_LENGTH":"IMEI/ESN/MEID is not as per the 3GPP specification",
 	"EXIST_IN_GSMABLACKLIST_DB":"The device with IMEI/ESN/MEID  is marked as stolen/blocked globally",
 	"EXIST_IN_DISTRIBUTOR_DB":"IMEI/ESN/MEID is already present in the system",
-	"EXIST_IN_IMPORTER_DB":"This device is not importer"
+	"EXIST_IN_IMPORTER_DB":"This device is not importer",
+	"TRCRegister_futureRef": "Your request to register device has been received successfully. The Transaction ID for future reference is",
+	"REGISTER_TYPE_APPROVE_REJECTED":"Type Approved for TAC already exists."
 }

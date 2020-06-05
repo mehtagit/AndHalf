@@ -99,7 +99,7 @@
 	data-stolenselected-roleType="${stolenselectedUserTypeId}"
 	data-selected-consignmentTxnId="${consignmentTxnId}"
 	data-selected-consignmentStatus="${consignmentStatus}"
-	session-value="en"
+	session-value="en" 	data-selected-username="${username}"
 	session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}">
 
 	<%-- session-value="${not empty param.NID ? param.NID : 'null'}" --%>

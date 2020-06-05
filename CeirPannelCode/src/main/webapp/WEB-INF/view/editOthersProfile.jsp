@@ -508,7 +508,7 @@ var contextpath = "${context}";
 <div class="row">
 									<div class="input-field col s12 m6 l6"  id="vatNumberField">
 									<input type="hidden" id="vatStatus" value="1"/>
-										<input disabled="disabled" placeholder="" type="text"  name="vatNo" 
+										<input id="vatNo" disabled="disabled" placeholder="" type="text"  name="vatNo" 
 										>
 										<label for="vatNo"><spring:message code="registration.vatnumber" /> <span class="star">*</span></label>
 									</div>
@@ -799,7 +799,7 @@ var contextpath = "${context}";
                                    id="phoneOtp" placeholder="" required >
                             </div>
                         </div>
-                        <a href="javascript:void(0)" onclick="resendOtp(); document.getElementById('resendOtp').style.display ='block';" class="right"><spring:message code="registration.resendotp" /></a>
+                        <a href="javascript:void(0)" onclick="resendOtp2(); document.getElementById('resendOtp').style.display ='block';" class="right"><spring:message code="registration.resendotp" /></a>
                         <button type="submit" id="otpVerifyBtn"  class="btn" style="width: 100%; margin-top: 20px; margin-bottom: 20px;"><spring:message code="registration.done" /></button>
                     </form>
         </div>

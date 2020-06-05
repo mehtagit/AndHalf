@@ -336,7 +336,7 @@ public class StolenDatatableController {
 		
 		if("Operator".equals(userType) || "CEIRAdmin".equals(userType) || "Operation".equals(userType) && !"5".equals(featureId)) {
 			String[] names = { "HeaderButton", Translator.toLocale("button.ReportBlock/Unblock"), "./selectblockUnblockPage",
-					"btnLink", "FilterButton",Translator.toLocale("button.filter"), "filterStolen(window.parent.$('#langlist').val(),'null','filter')", "submitFilter" };
+					"btnLink", "FilterButton",Translator.toLocale("button.filter"), "filterStolen(window.parent.$('#langlist').val(),'filter')", "submitFilter" };
 			for (int i = 0; i < names.length; i++) {
 				button = new Button();
 

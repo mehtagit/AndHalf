@@ -45,6 +45,10 @@ public interface UserRegistrationFeignImpl {
 	@PostMapping("/userRegistration/resendOtp")                                                                                         
 	public HttpResponse otpResend(@RequestBody ResendOtp otp); 
 	
+	@PostMapping("/userRegistration/profileResendOtp")                                                                                         
+	public HttpResponse profileResendOtp(@RequestBody ResendOtp otp); 
+
+	
 	@PostMapping("/userRegistration/getUsertypes")                                                                                         
 	public List<Usertype> userRegistrationDropdown(@RequestParam(name="type",required = false) Integer type); 
 	

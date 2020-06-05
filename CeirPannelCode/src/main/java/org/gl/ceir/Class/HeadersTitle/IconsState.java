@@ -2869,8 +2869,12 @@ public class IconsState {
 		
 		reply = "<a onclick="+replyAction+" class=\"eventNone\"><i class="+disableReplyIcon+" aria-hidden=\"true\" title="
 					+replyIconTitle+" ></i></a>";
-
-		if(status!="0" || status !="1" || status !="2" || status !="3" || status==null || status.equals("")){
+		
+		if("0".equals(status) || "1".equals(status) || "2".equals(status) || "3".equals(status)){
+			 reply = "<a onclick="+replyAction+" class=\"eventNone\"><i class="+disableReplyIcon+" aria-hidden=\"true\" title="
+					 +replyIconTitle+" ></i></a>";
+		}
+		else if(status!="0" || status !="1" || status !="2" || status !="3" || status==null || status.equals("")){
 			 reply = "<a onclick="+replyAction+" class=\"eventNone\"><i class="+disableReplyIcon+" aria-hidden=\"true\" title="
 					 +replyIconTitle+" ></i></a>";
 			 view="<a onclick="+viewAction+" class="+disableIconClass+"><i class="+disableViewIcon+" aria-hidden=\"true\" title="

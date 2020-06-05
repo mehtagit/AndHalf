@@ -50,11 +50,11 @@ console.log("----"+source)
 	else if(source==undefined || source==null)
 		{
 		console.log("2");
-		source__val= $("body").attr("data-requestType");
+		source__val= $("body").attr("data-filterSorce");
 		}
 	else{
 		console.log("3");
-		source__val= $("body").attr("data-requestType");
+		source__val= $("body").attr("data-filterSorce");
 
 	}
 	var sessionFlag;
@@ -71,9 +71,9 @@ console.log("----"+source)
 	}
 	console.log(" ****** sourceType ="+sourceTypeFiler);
 	if(userType=="Lawful Agency"){
-		Datatable('./headers?type=lawfulStolenHeaders','./stolenData?featureId='+featureId+'&source='+source__val)
+		Datatable('./headers?type=lawfulStolenHeaders','./stolenData?featureId='+featureId+'&source='+source__val,sourceTypeFiler)
 	}else if(userType =="CEIRAdmin"){
-		Datatable('./headers?type=lawfulStolenHeaders','./stolenData?featureId='+featureId,sourceTypeFiler+'&source='+source__val)
+		Datatable('./headers?type=lawfulStolenHeaders','./stolenData?featureId='+featureId+'&source='+source__val,sourceTypeFiler)
 	}
 	localStorage.removeItem('sourceType');
 }

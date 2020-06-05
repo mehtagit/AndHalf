@@ -26,6 +26,7 @@
 	type="text/css" rel="stylesheet" media="screen,projection">
 
 <!-- Favicons-->
+<link rel="shortcut icon" href="">
 <!--<link rel="icon" href="images/favicon/favicon-32x32.png" sizes="32x32">-->
 <!-- Favicons-->
 <link rel="apple-touch-icon-precomposed"
@@ -382,8 +383,8 @@ a#newUserLink {
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 	<!-- chartist -->
-	<script type="text/javascript"
-		src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script>
+<%-- 	<script type="text/javascript"
+		src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script> --%>
 	<!-- data-tables -->
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>

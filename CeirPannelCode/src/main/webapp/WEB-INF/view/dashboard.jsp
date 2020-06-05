@@ -41,6 +41,10 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta content="" name="description" />
 <meta content="" name="author" />
+
+<script type="text/javascript"
+	src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
+	<link rel="shortcut icon" href="">
 <!-- CORE CSS-->
 <link href="${context}/resources/css/materialize.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
@@ -63,8 +67,18 @@
 <link
 	href="${context}/resources/font/font-awesome/css/font-awesome.min.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
+
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+
+<script src="http://malsup.github.io/jquery.blockUI.js"></script>
+
+<!------------------------------------------- Dragable Model---------------------------------->
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+	src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+	
 <script>
 var contextpath = "${context}";
 <%

@@ -187,6 +187,13 @@ public class RegistrationController {
 		HttpResponse response =registrationService.resendOtp(userid,request);
 		return response;                 
 	}  
+	
+	@RequestMapping(value = "/profileResendOtp/{userid}",method = {RequestMethod.POST})
+	@ResponseBody
+	public HttpResponse profileResendOtp(@PathVariable Integer userid,HttpServletRequest request){
+		HttpResponse response =registrationService.profileResendOtp(userid,request);
+		return response;                 
+	}  
 
 
 

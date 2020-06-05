@@ -26,6 +26,8 @@ function configManagementDatatable(){
 			"featureId":parseInt(featureId),
 			"userTypeId": parseInt($("body").attr("data-userTypeID")),
 			"userType":$("body").attr("data-roleType"),
+			"userName" : $("body").attr("data-selected-username"),
+			"roleType":$("body").attr("data-roleType"),
 			"username" : $("body").attr("data-selected-username")
 	}
 	
@@ -189,6 +191,8 @@ function viewDetails(tag){
 			"featureId":parseInt(featureId),
 			"userTypeId": parseInt($("body").attr("data-userTypeID")),
 			"userType":$("body").attr("data-roleType"),
+			"userName" : $("body").attr("data-selected-username"),
+			"roleType":$("body").attr("data-roleType"),
 			"username" : $("body").attr("data-selected-username")
 	} 
 	$.ajax({
@@ -230,6 +234,8 @@ function updateDetails(tag,status){
 			"featureId":parseInt(featureId),
 			"userTypeId": parseInt($("body").attr("data-userTypeID")),
 			"userType":$("body").attr("data-roleType"),
+			"userName" : $("body").attr("data-selected-username"),
+			"roleType":$("body").attr("data-roleType"),
 			"username" : $("body").attr("data-selected-username")
 	} 
 	$.ajax({
@@ -284,7 +290,9 @@ function updatePolicy(){
 			 "featureId":parseInt(featureId),
 			 "userTypeId": parseInt($("body").attr("data-userTypeID")),
 			 "userType":$("body").attr("data-roleType"),
-			 "username" : $("body").attr("data-selected-username")
+			 "userName" : $("body").attr("data-selected-username"),
+				"roleType":$("body").attr("data-roleType"),
+				"username" : $("body").attr("data-selected-username")
 	}
 	
 	console.log("updateRequest-->" +updateRequest);
