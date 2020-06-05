@@ -28,7 +28,7 @@ function messageManagementDatatable(){
 			"userTypeId": parseInt($("body").attr("data-userTypeID")),
 			"userType":$("body").attr("data-roleType"),
 			"userName" : $("body").attr("data-selected-username"),
-
+			"username" : $("body").attr("data-selected-username"),
 			"roleType":$("body").attr("data-roleType")
 	}
 	
@@ -164,7 +164,8 @@ function viewDetails(tag){
 			"featureId":parseInt(featureId),
 			"userTypeId": parseInt($("body").attr("data-userTypeID")),
 			"userType":$("body").attr("data-roleType"),
-			"userName" : $("body").attr("data-selected-username")
+			"userName" : $("body").attr("data-selected-username"),
+			"username" : $("body").attr("data-selected-username")
 	} 
 	$.ajax({
 		url : "./message/viewTag",
@@ -207,7 +208,8 @@ function updateDetails(tag){
 			"featureId":parseInt(featureId),
 			"userTypeId": parseInt($("body").attr("data-userTypeID")),
 			"userType":$("body").attr("data-roleType"),
-			"userName" : $("body").attr("data-selected-username")
+			"userName" : $("body").attr("data-selected-username"),
+			"username" : $("body").attr("data-selected-username")
 	} 
 	$.ajax({
 		url : "./message/viewTag",
@@ -246,7 +248,8 @@ function updateMessage(){
 			 "userTypeId": parseInt($("body").attr("data-userTypeID")),
 			 "userType":$("body").attr("data-roleType"),
 			 "userName" : $("body").attr("data-selected-username"),
-			"roleType":$("body").attr("data-roleType")
+			"roleType":$("body").attr("data-roleType"),
+			"username" : $("body").attr("data-selected-username")
 	}
 	 
 	 $.ajax({

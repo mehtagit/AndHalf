@@ -27,7 +27,8 @@ function configManagementDatatable(){
 			"featureId":parseInt(featureId),
 			"userTypeId": parseInt($("body").attr("data-userTypeID")),
 			"userType":$("body").attr("data-roleType"),
-			"username" : $("body").attr("data-selected-username")
+			"username" : $("body").attr("data-selected-username"),
+			"userName" : $("body").attr("data-selected-username")
 	}
 	 
 	
@@ -178,7 +179,8 @@ function viewDetails(tag){
 			"featureId":parseInt(featureId),
 			"userTypeId": parseInt($("body").attr("data-userTypeID")),
 			"userType":$("body").attr("data-roleType"),
-			"username" : $("body").attr("data-selected-username")
+			"username" : $("body").attr("data-selected-username"),
+			"userName" : $("body").attr("data-selected-username")
 	} 
 	$.ajax({
 		url : "./system/viewTag",
@@ -215,7 +217,8 @@ function updateDetails(tag){
 			"featureId":parseInt(featureId),
 			"userTypeId": parseInt($("body").attr("data-userTypeID")),
 			"userType":$("body").attr("data-roleType"),
-			"username" : $("body").attr("data-selected-username")
+			"username" : $("body").attr("data-selected-username"),
+			"userName" : $("body").attr("data-selected-username")
 	} 
 	$.ajax({
 		url : "./system/viewTag",
@@ -255,7 +258,8 @@ var updateRequest = {
 		"featureId":parseInt(featureId),
 		"userTypeId": parseInt($("body").attr("data-userTypeID")),
 		"userType":$("body").attr("data-roleType"),
-		"username" : $("body").attr("data-selected-username")
+		"username" : $("body").attr("data-selected-username"),
+		"userName" : $("body").attr("data-selected-username")
 }
 
 
@@ -305,7 +309,8 @@ function exportData(){
 			"userType":$("body").attr("data-roleType"),
 			"username" : $("body").attr("data-selected-username"),
 			"pageNo":parseInt(pageNo),
-			"pageSize":parseInt(pageSize)
+			"pageSize":parseInt(pageSize),
+			"userName" : $("body").attr("data-selected-username")
 			
 	}
 	console.log(JSON.stringify(filterRequest))

@@ -27,7 +27,8 @@ function configManagementDatatable(){
 			"userTypeId": parseInt($("body").attr("data-userTypeID")),
 			"userType":$("body").attr("data-roleType"),
 			"userName" : $("body").attr("data-selected-username"),
-			"roleType":$("body").attr("data-roleType")
+			"roleType":$("body").attr("data-roleType"),
+			"username" : $("body").attr("data-selected-username")
 	}
 	
 	$.ajax({
@@ -191,7 +192,8 @@ function viewDetails(tag){
 			"userTypeId": parseInt($("body").attr("data-userTypeID")),
 			"userType":$("body").attr("data-roleType"),
 			"userName" : $("body").attr("data-selected-username"),
-			"roleType":$("body").attr("data-roleType")
+			"roleType":$("body").attr("data-roleType"),
+			"username" : $("body").attr("data-selected-username")
 	} 
 	$.ajax({
 		url : "./policy/viewTag",
@@ -233,8 +235,8 @@ function updateDetails(tag,status){
 			"userTypeId": parseInt($("body").attr("data-userTypeID")),
 			"userType":$("body").attr("data-roleType"),
 			"userName" : $("body").attr("data-selected-username"),
-			"roleType":$("body").attr("data-roleType")
-			
+			"roleType":$("body").attr("data-roleType"),
+			"username" : $("body").attr("data-selected-username")
 	} 
 	$.ajax({
 		url : "./policy/viewTag",
@@ -289,7 +291,8 @@ function updatePolicy(){
 			 "userTypeId": parseInt($("body").attr("data-userTypeID")),
 			 "userType":$("body").attr("data-roleType"),
 			 "userName" : $("body").attr("data-selected-username"),
-				"roleType":$("body").attr("data-roleType")
+				"roleType":$("body").attr("data-roleType"),
+				"username" : $("body").attr("data-selected-username")
 	}
 	
 	console.log("updateRequest-->" +updateRequest);
