@@ -83,17 +83,21 @@
 	
  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
  
+<!--  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"> -->
+ 
   <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
    <!------------------------------------------- Dragable Model---------------------------------->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script> 
 
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>	 -->
+
 
 
  
  
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"> -->
+
+   
 
 
 
@@ -113,7 +117,9 @@ data-stolenselected-roleType="${stolenselectedUserTypeId}"
 session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}"
 data-session-id="${not empty param.id ? param.id : 'null'}"
 data-session-roles="${not empty param.roles ? param.roles : 'null'}"
-data-session-type="${not empty param.type ? param.type : 'null'}">
+data-session-type="${not empty param.type ? param.type : 'null'}"
+data-session-source="${not empty param.source ? param.source : 'menu'}">
+
 
 
 	<!-- START CONTENT -->
@@ -348,12 +354,16 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
                    	   
                                    <div class="row"  style="margin-top: 10px">
                                         	
-                              <%--  <div class="input-field col s12 m6 l6" id="rolesDiv">
-									<p><spring:message code="table.roleType" /> <span class="star">*</span></p> 
-									<select multiple  name="roles" id="usertypes" >
-										<option value="" disabled><spring:message code="table.roleType" /></option>
-									</select>
-								</div>  --%>
+                             
+                                   
+                                 <%--   <div class="col s12 m6 l6">
+									<label data-error="Please select at least one option" for="usertypes"><spring:message code="select.changeUserRole" /> <span class="star">*</span></label>
+									
+									<select name="roles" class="validate" id="usertypes" 
+									oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"  oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" multiple required>
+										<option value="" disabled><spring:message code="select.changeUserRole" /></option>
+									</select> 
+								</div> --%>
                                         	
                                         	
                                         <div class="col s12 m6 l6" style="margin-bottom: 5px;">
@@ -484,6 +494,7 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
 		src="${context}/resources/project_js/profileInfoTab.js" async></script>
 		<script type="text/javascript"
 		src="${context}/resources/project_js/validationMsg.js"></script>
+	 
 			
 		
 </body>

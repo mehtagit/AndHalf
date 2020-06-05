@@ -19,7 +19,7 @@
 	});
 
 	$(document).ready(function(){
-		registrationDatatable();
+		registrationDatatable(null);
 		pageRendering();
 		
 	});
@@ -29,7 +29,17 @@
 
 	//**************************************************Registration table**********************************************
 
-	function registrationDatatable(){
+	function registrationDatatable(source){
+		var source__val;
+
+		if(source == 'filter' ) {
+			source__val= source;
+		}
+		else{
+			source__val= $("body").attr("data-session-source");
+
+		}
+		
 		var asType = $('#asType').val();
 		var userRoleTypeId = $("#role").val();
 		var status =  $('#recentStatus').val();
@@ -73,7 +83,7 @@
 								"sUrl": langFile  
 							},
 					ajax: {
-						url : 'registrationData',
+						url : 'registrationData?source='+source__val,
 						type: 'POST',
 						dataType: "json",
 						data : function(d) {
@@ -425,7 +435,7 @@ function roleStatusChange(Id,sessionUserName, userTypeId){
 	    window.sessionUserName = sessionUserName,
 	    window.userTypeId = userTypeId, 
 	    
-	    
+	   
 	   usertypeData2(userTypeId);
 	    
 	    $("#statusRoleChange").openModal({
@@ -439,7 +449,6 @@ function roleStatusChange(Id,sessionUserName, userTypeId){
 	    }
 	}
 	 	
-
 
 function usertypeData2(id) {
 	$.ajax({
