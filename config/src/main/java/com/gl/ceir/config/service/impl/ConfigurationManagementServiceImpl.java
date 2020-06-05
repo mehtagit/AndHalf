@@ -206,7 +206,7 @@ public class ConfigurationManagementServiceImpl {
 
 			
 //audit trail entry
-			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), filterRequest.getUserName(), 
+			auditTrailRepository.save(new AuditTrail(Long.valueOf(filterRequest.getUserId()), filterRequest.getUserName(), 
 					Long.valueOf(filterRequest.getUserTypeId()), filterRequest.getUserType(), Long.valueOf(filterRequest.getFeatureId()),
 					Features.MESSAGE_MANAGEMENT, SubFeatures.VIEW, "", "NA",filterRequest.getRoleType()));
 			logger.info("MESSAGE_MANAGEMENT : successfully inserted in Audit trail.");
@@ -323,7 +323,7 @@ public class ConfigurationManagementServiceImpl {
 				getInterp(policyConfigurationDb);
 
 				
-				auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), filterRequest.getUserName(), 
+				auditTrailRepository.save(new AuditTrail(Long.valueOf(filterRequest.getUserId()), filterRequest.getUserName(), 
 						Long.valueOf(filterRequest.getUserTypeId()), filterRequest.getUserType(), Long.valueOf(filterRequest.getFeatureId()),
 						Features.POLICY_MANAGEMENT, SubFeatures.VIEW, "", "NA",filterRequest.getRoleType()));
 				logger.info("POLICY_MANAGEMENT : successfully inserted in Audit trail ");
@@ -751,7 +751,8 @@ public class ConfigurationManagementServiceImpl {
 			mappingStrategy.setType(MessageMgtFileModel.class);
 
 			builder = new StatefulBeanToCsvBuilder<>(writer);
-			csvWriter = builder.withMappingStrategy(mappingStrategy).withSeparator(',').withQuotechar(CSVWriter.NO_QUOTE_CHARACTER).build();
+			//csvWriter = builder.withMappingStrategy(mappingStrategy).withSeparator(',').withQuotechar(CSVWriter.NO_QUOTE_CHARACTER).build();
+			csvWriter = builder.withMappingStrategy(mappingStrategy).withSeparator(',').withQuotechar(CSVWriter.DEFAULT_QUOTE_CHARACTER).build();
 
 			if( !messageConfigurationDbList.isEmpty() ) {
 				fileRecords = new ArrayList<>();

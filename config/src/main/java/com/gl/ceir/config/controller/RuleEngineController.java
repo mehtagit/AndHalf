@@ -15,9 +15,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.gl.ceir.config.model.AuditTrail;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.RuleEngine;
+import com.gl.ceir.config.model.constants.Features;
+import com.gl.ceir.config.model.constants.SubFeatures;
+import com.gl.ceir.config.repository.AuditTrailRepository;
 import com.gl.ceir.config.service.impl.RuleEngineServiceImpl;
 
 import io.swagger.annotations.ApiOperation;
@@ -29,6 +33,10 @@ public class RuleEngineController {
 
 	@Autowired
 	RuleEngineServiceImpl ruleEngineServiceImpl;
+	
+	@Autowired
+	AuditTrailRepository auditTrailRepository;
+	
 
 	@ApiOperation(value = "pagination View filtered audit-trail", response = RuleEngine.class)
 	@PostMapping("/filter/rule-engine")
@@ -85,10 +93,18 @@ public class RuleEngineController {
 		logger.info("Update rule engine [" + ruleEngine + "]");
 
 		GenricResponse genricResponse = ruleEngineServiceImpl.updateById(ruleEngine);
-
+		
 		MappingJacksonValue mapping = new MappingJacksonValue(ruleEngine);
 
 		logger.info("Response to send= " + mapping);
+		if(genricResponse.getErrorCode() == 0) {
+			auditTrailRepository.save( new AuditTrail(Long.valueOf(ruleEngine.getUserId()),
+					ruleEngine.getUserName(), Long.valueOf(ruleEngine.getUserTypeId()),
+					   "SystemAdmin", Long.valueOf(ruleEngine.getFeatureId()),
+					  Features.RULE_LIST, SubFeatures.UPDATE, "","NA",
+					  ruleEngine.getRoleType()));
+					
+		}
 
 		return mapping;
 	}
