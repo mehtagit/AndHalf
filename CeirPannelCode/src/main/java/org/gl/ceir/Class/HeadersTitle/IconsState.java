@@ -459,7 +459,7 @@ public class IconsState {
 		//String downloadURL = "./Consignment/dowloadFiles/actual/"+file+"/"+txnId+"/"+defaultTagName+"";
 		String downloadURL = "fileDownload('"+file+"','actual','"+txnId+"','"+defaultTagName+"')";
 		String editAction="openFileStolenUpdate('"+txnId+"','"+requestType+"','"+id+"','"+qty+"')";
-		String deleteAction ="DeleteConsignmentRecord('"+txnId+"','"+id+"')";
+		String deleteAction ="DeleteConsignmentRecord('"+txnId+"','"+id+"','"+requestType+"')";
 
 
 		// state related Code 
@@ -1364,7 +1364,7 @@ public class IconsState {
 		//String errorURL = "./Consignment/dowloadFiles/error/"+file+"/"+txnId+"/"+defaultTagName+"";
 		//String downloadURL = "./Consignment/dowloadFiles/actual/"+file+"/"+txnId+"/"+defaultTagName+"";
 		String downloadURL = "fileDownload('"+file+"','actual','"+txnId+"','"+defaultTagName+"')";
-		String deleteAction ="DeleteConsignmentRecord('"+txnId+"','"+id+"')";
+		String deleteAction ="DeleteConsignmentRecord('"+txnId+"','"+id+"','"+requestType+"')";
 
 
         String historyAction ="historyRecord('"+txnId+"')";
@@ -1689,7 +1689,7 @@ public class IconsState {
 		//	String errorURL = "./Consignment/dowloadFiles/error/"+file+"/"+txnId+"/"+defaultTagName+"";
 		String errorURL = "fileDownload('"+file+"','error','"+txnId+"','"+defaultTagName+"')";
 		
-		String deleteAction ="DeleteConsignmentRecord('"+txnId+"','"+id+"')";
+		String deleteAction ="DeleteConsignmentRecord('"+txnId+"','"+id+"','"+requestType+"')";
 
 
         String historyAction ="historyRecord('"+txnId+"')";
@@ -1837,7 +1837,7 @@ public class IconsState {
 		String errorURL = "fileDownload('"+file+"','error','"+txnId+"','"+defaultTagName+"')";
 		//String downloadURL = "./Consignment/dowloadFiles/actual/"+file+"/"+txnId+"/"+defaultTagName+"";
 		String downloadURL = "fileDownload('"+file+"','actual','"+txnId+"','"+defaultTagName+"')";
-		String deleteAction ="DeleteConsignmentRecord('"+txnId+"','"+id+"')";
+		String deleteAction ="DeleteConsignmentRecord('"+txnId+"','"+id+"','"+requestTypeValue+"')";
 		String historyAction ="historyRecord('"+txnId+"')";
 		String history="<a onclick="+historyAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+historyIcon+" aria-hidden=\"true\"  title="
 						+historyTitle+"></i></a>";
@@ -2428,7 +2428,7 @@ public class IconsState {
 		String errorURL = "fileDownload('"+file+"','error','"+txnId+"','"+defaultTagName+"')";
 		//String downloadURL = "./Consignment/dowloadFiles/actual/"+file+"/"+txnId+"/"+defaultTagName+"";
 		String downloadURL = "fileDownload('"+file+"','actual','"+txnId+"','"+defaultTagName+"')";
-		String deleteAction ="DeleteConsignmentRecord('"+txnId+"','"+id+"')";
+		String deleteAction ="DeleteConsignmentRecord('"+txnId+"','"+id+"','"+requestTypeValue+"')";
 
        String historyAction ="historyRecord('"+txnId+"')";
        String history="<a onclick="+historyAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+historyIcon+" aria-hidden=\"true\"  title="
@@ -2869,8 +2869,12 @@ public class IconsState {
 		
 		reply = "<a onclick="+replyAction+" class=\"eventNone\"><i class="+disableReplyIcon+" aria-hidden=\"true\" title="
 					+replyIconTitle+" ></i></a>";
-
-		if(status!="0" || status !="1" || status !="2" || status !="3" || status==null || status.equals("")){
+		
+		if("0".equals(status) || "1".equals(status) || "2".equals(status) || "3".equals(status)){
+			 reply = "<a onclick="+replyAction+" class=\"eventNone\"><i class="+disableReplyIcon+" aria-hidden=\"true\" title="
+					 +replyIconTitle+" ></i></a>";
+		}
+		else if(status!="0" || status !="1" || status !="2" || status !="3" || status==null || status.equals("")){
 			 reply = "<a onclick="+replyAction+" class=\"eventNone\"><i class="+disableReplyIcon+" aria-hidden=\"true\" title="
 					 +replyIconTitle+" ></i></a>";
 			 view="<a onclick="+viewAction+" class="+disableIconClass+"><i class="+disableViewIcon+" aria-hidden=\"true\" title="

@@ -183,6 +183,8 @@
 	"IMEI_LENGTH":"IMEI / ESN / MEID មិនដូចទៅនឹងការបញ្ជាក់របស់ 3GPP ទេ",
 	"EXIST_IN_GSMABLACKLIST_DB":"ឧបករណ៍ដែលមាន IMEI / ESN / MEID ត្រូវបានសម្គាល់ថាបានលួច / រារាំងទូទាំងពិភពលោក",
 	"EXIST_IN_DISTRIBUTOR_DB":"IMEI / ESN / MEID មានរួចហើយនៅក្នុងប្រព័ន្ធ",
-	"EXIST_IN_IMPORTER_DB":"ឧបករណ៍នេះមិនមែនជាអ្នកនាំចូលទេ"
+	"EXIST_IN_IMPORTER_DB":"ឧបករណ៍នេះមិនមែនជាអ្នកនាំចូលទេ",
+	"TRCRegister_futureRef": "ការស្នើសុំចុះឈ្មោះឧបករណ៍របស់អ្នកត្រូវបានទទួលដោយជោគជ័យ។ លេខសម្គាល់ប្រតិបត្តិការសម្រាប់ឯកសារយោងនាពេលអនាគតគឺ",
+	"REGISTER_TYPE_APPROVE_REJECTED":"ប្រភេទដែលបានអនុម័តសម្រាប់ TAC មានរួចហើយ។"
 				}
 			

@@ -322,6 +322,7 @@ function editOtherProfile(){
 			$("#registrationForm #country").val(resp.country); 
 			$("#registrationForm #postalCode").val(resp.postalCode);
 			$("#registrationForm #locality").val(resp.locality);
+			$("#registrationForm #vatNo").val(resp.vatNo);
 			$("#registrationForm #companyName").val(resp.companyName);
 			$("#registrationForm #arrivalPort").val(resp.arrivalPortName);
 			$("#registrationForm #operatorTypeName").val(resp.operatorTypeName);

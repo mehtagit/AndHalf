@@ -368,6 +368,17 @@ public class RegistrationService {
 		log.info("exit from resend otp controller");
 		return response;
 	}
+	
+	public HttpResponse profileResendOtp(Integer id,HttpServletRequest request) {
+		log.info("inside resend otp controller");
+		log.info("id:   "+id);     
+		UserHeader header=getUserHeaders(request);
+		ResendOtp otp=new ResendOtp(header.getUserAgent(),header.getPublicIp(),id);
+		HttpResponse response=userRegistrationFeignImpl.profileResendOtp(otp); 
+		log.info("resend otp api response:  "+response);
+		log.info("exit from resend otp controller");
+		return response;
+	}
 
 	public void captcha(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException{
 		log.info("inside captcha controller");

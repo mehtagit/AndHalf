@@ -32,10 +32,11 @@ $(document).ready(function(){
 
 
 
-function DeleteConsignmentRecord(txnId,id){
+function DeleteConsignmentRecord(txnId,id,reqType){
 	$("#DeleteConsignment").openModal({dismissible:false});
 	$("#transID").text(txnId);
 	$("#setStolenRecoveyRowId").text(id);
+	window.reqType=reqType;
 }
 
 
@@ -55,7 +56,8 @@ function confirmantiondelete(){
 			"userId":userId,
 			"featureId":featureId,
 			"id":id,
-			"remark":remarks
+			"remark":remarks,
+			"requestType":window.reqType
 			
 
 	}
@@ -287,9 +289,9 @@ function filterStolen(language,sourceTypeFilter,source){
 	}
 	var userTypeId = $("body").attr("data-userTypeID");
 	if(userType=="Operator" || userType=="Operation" ){
-		Datatable('./headers?type=blockUnblock','stolenData?featureId='+featureId+'&userTypeId='+userTypeId,sourceTypeFilter)
+		Datatable('./headers?type=blockUnblock','stolenData?featureId='+featureId+'&userTypeId='+userTypeId+'&source='+source__val,sourceTypeFilter)
 	}else if(userType =="CEIRAdmin"){
-		Datatable('./headers?type=BlockUnblockCEIRAdmin','stolenData?featureId='+featureId+'&userTypeId='+userTypeId,sourceTypeFilter)
+		Datatable('./headers?type=BlockUnblockCEIRAdmin','stolenData?featureId='+featureId+'&userTypeId='+userTypeId+'&source='+source__val,sourceTypeFilter)
 	}else if(sourceType !="viaExistingRecovery"){
 		Datatable('./headers?type=stolen','stolenData',sourceTypeFilter)
 	}else if(sourceType =="viaExistingRecovery" ){

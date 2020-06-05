@@ -251,7 +251,7 @@ input[type='search'] {
 												<c:when test = "${viewInformation.endUserDB.nationality=='Cambodian'}">
 										<div class="input-field col s12 m6" id="entryCountryDiv" style="display: none;">
 												<input type="text" readonly="readonly" id="datepicker" value="${viewInformation.endUserDB.entryDateInCountry}" /> <label for="datepicker"><spring:message
-														code="input.EntryCountry" /> <span class="star">*</span></label>
+														code="input.EntryCountry" /> <span class="star"></span></label>
 									</div>
 									</c:when>
 									<c:otherwise>
@@ -405,19 +405,19 @@ input[type='search'] {
 											<div class="input-field col s12 m6">
 												<input type="text" id="departmentName" readonly="readonly" value="${viewInformation.endUserDB.userDepartment.name}"/> 
 												<label for="departmentName"><spring:message
-														code="input.DepartmentName" /> <span class="star">*</span></label>
+														code="input.DepartmentName" /> <span class="star"></span></label>
 											</div>
 
 											<div class="input-field col s12 m6">
 												<input type="text" id="endUserdepartmentID" readonly="readonly" value="${viewInformation.endUserDB.userDepartment.departmentId}" />
 												 <label for="endUserdepartmentID"><spring:message
-														code="input.DepartmentID" /><span class="star">*</span> </label>
+														code="input.DepartmentID" /><span class="star"></span> </label>
 											</div>
 
 											<div class="file-field input-field col s12 m6 l6">
 												 <h6 style="color: #000;">
 													<spring:message code="input.UploadIDImage" />
-													<span class="star">*</span>
+													<span class="star"></span>
 												</h6>
 											<%--	<div class="btn">
 													<span><spring:message code="operator.file" /></span> <input
@@ -438,7 +438,7 @@ input[type='search'] {
 										
 								<div class="col s12 m12" style="height: 4rem; display: block "id="askVisaDetails">
 											<label for="nationality"><spring:message
-													code="input.AddVisa" /> <span class="star">*</span></label>
+													code="input.AddVisa" /> <span class="star"></span></label>
 											<div class=" boxHeight">
 												<c:choose>
 												<c:when test = "${viewInformation.endUserDB.onVisa=='Y'}">
