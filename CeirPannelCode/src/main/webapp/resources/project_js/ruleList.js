@@ -33,7 +33,7 @@
 						"userId":parseInt($("body").attr("data-userID")),
 						"featureId":parseInt(featureId),
 						"userTypeId": parseInt($("body").attr("data-userTypeID")),
-						"userName":$("body").attr("data-username"),
+						"userName":$("body").attr("data-selected-username"),
 						"roleType":$("body").attr("data-roleType")
 					
 			}
@@ -218,7 +218,7 @@
 						"userId":parseInt($("body").attr("data-userID")),
 						"featureId":parseInt(featureId),
 						"userTypeId": parseInt($("body").attr("data-userTypeID")),
-						"userName":$("body").attr("data-username"),
+						"userName":$("body").attr("data-selected-username"),
 						"roleType":$("body").attr("data-roleType")
 						
 				}

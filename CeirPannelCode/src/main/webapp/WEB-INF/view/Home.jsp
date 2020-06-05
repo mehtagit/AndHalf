@@ -16,7 +16,9 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta content="" name="description" />
 <meta content="" name="author" />
-
+<script type="text/javascript"
+	src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
+	<link rel="shortcut icon" href="">
   <!-- CORE CSS-->
   <link href="${context}/resources/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection">
   <link href="${context}/resources/css/style.css" type="text/css" rel="stylesheet" media="screen,projection">
@@ -42,12 +44,21 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
 	href="${context}/resources/font/font-awesome/css/font-awesome.min.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
 	
-	
- <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
-  <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
- 
-<script src="http://malsup.github.io/jquery.blockUI.js"></script>
+
 <link rel="stylesheet"
+	href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+
+<script src="http://malsup.github.io/jquery.blockUI.js"></script>
+
+<!------------------------------------------- Dragable Model---------------------------------->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+	
+	
+	
+<link rel="stylesheet"
+
 	href="${context}/resources/project_css/iconStates.css">
 <style type="text/css">
   .dataTables_info {
@@ -172,9 +183,7 @@ table.dataTable.display tbody tr:first-child td {
 
 	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
 <script type="text/javascript"
-		src="${context}/resources/project_js/backbutton.js"></script>
-	<script type="text/javascript"
-		src="${context}/resources/project_js/dragableModal.js"></script>	
+		src="${context}/resources/project_js/backbutton.js"></script>	
 			<script type="text/javascript"
 		src="${context}/resources/project_js/enterKey.js"></script>
 			<script type="text/javascript"

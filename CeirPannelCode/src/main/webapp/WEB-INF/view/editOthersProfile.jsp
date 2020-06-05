@@ -508,7 +508,7 @@ var contextpath = "${context}";
 <div class="row">
 									<div class="input-field col s12 m6 l6"  id="vatNumberField">
 									<input type="hidden" id="vatStatus" value="1"/>
-										<input id="vatNo" disabled="disabled" placeholder="" type="text"  name="vatNo" 
+										<input disabled="disabled" placeholder="" type="text"  name="vatNo" 
 										>
 										<label for="vatNo"><spring:message code="registration.vatnumber" /> <span class="star">*</span></label>
 									</div>
