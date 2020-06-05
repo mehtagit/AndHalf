@@ -515,14 +515,14 @@ public class StockServiceImpl {
 		String firstName = "";
 		User user = null;
 		Map<String, String> placeholderMap = new HashMap<>();
-		String mailTag = null;
+		//String mailTag = null;
 		String action = null;
 		String txnId = null;
 		String userMailTag = null;
 		Boolean isUserCeirAdmin=false;
 		String receiverUserType = deleteObj.getUserType();
 		action = SubFeatures.DELETE;
-		mailTag = "STOCK_DELETE_BY_CEIR_ADMIN"; 
+	//	mailTag = "STOCK_DELETE_BY_CEIR_ADMIN"; 
 		userMailTag = "STOCK_DELETE_BY_USER"; 
 		user = userRepository.getById(deleteObj.getUserId());				
 		userProfile = user.getUserProfile();
@@ -532,7 +532,7 @@ public class StockServiceImpl {
 		/*placeholderMap.put("<First name>", userProfile_generic_Response_Notification.getFirstName());
 		placeholderMap.put("<Txn id>", consignmentMgmt.getTxnId());*/
 		
-		placeholderMap.put("<First name>", firstName);
+		placeholderMap.put("<First name>",userProfile.getFirstName());
 		placeholderMap.put("<Txn id>", deleteObj.getTxnId());
 		try {
 
