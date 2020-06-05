@@ -40,7 +40,8 @@ media="screen,projection">
 <link href="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.css" type="text/css" rel="stylesheet"
 media="screen,projection">
 <link href="${context}/resources/js/plugins/chartist-js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection">
-
+<link href="${context}/resources/css/style.css" type="text/css"
+	rel="stylesheet" media="screen,projection">
 <style>
 ul li {
 display: inline-flex;
@@ -102,7 +103,7 @@ var contextpath = "${context}";
 <option value="Manufacturer">Manufacturer</option>
 <option value="Lawful Agency">Lawful Agency</option>
 <option value="Immigration">Immigration</option>
-
+<option value="DRT">DRT</option>
 </select>
 </li>
 

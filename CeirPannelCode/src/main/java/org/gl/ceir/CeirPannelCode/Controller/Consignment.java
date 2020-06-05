@@ -2,29 +2,46 @@ package org.gl.ceir.CeirPannelCode.Controller;
 
 
 import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.Console;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.ListIterator;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.gl.ceir.CeirPannelCode.Feignclient.DBTablesFeignClient;
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
+import org.gl.ceir.CeirPannelCode.Feignclient.UserProfileFeignImpl;
+import org.gl.ceir.CeirPannelCode.Model.AddMoreFileModel;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentModel;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentUpdateRequest;
+import org.gl.ceir.CeirPannelCode.Model.DBrowDataModel;
+import org.gl.ceir.CeirPannelCode.Model.DbListDataHeaders;
 import org.gl.ceir.CeirPannelCode.Model.Dropdown;
 import org.gl.ceir.CeirPannelCode.Model.FileExportResponse;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
+import org.gl.ceir.CeirPannelCode.Model.MapDatatableResponse;
+import org.gl.ceir.CeirPannelCode.Model.PaymentRequest;
 import org.gl.ceir.CeirPannelCode.Service.ConsignmentService;
 import org.gl.ceir.CeirPannelCode.Util.UtilDownload;
 import org.slf4j.Logger;
@@ -58,25 +75,34 @@ public class Consignment {
 	@Value ("${filePathforMoveFile}")
 	String filePathforMoveFile;
 	
+
+	@Value ("${filePathforErrorFile}")
+	String filePathforErrorFile;
+	
+@Autowired
+AddMoreFileModel addMoreFileModel,urlToUpload,urlToMove;
+
+
+@Autowired
+UserProfileFeignImpl userProfileFeignImpl;
+	
 @Autowired
 
 FeignCleintImplementation feignCleintImplementation;
 @Autowired
 UtilDownload utildownload;
-/*
-* @Autowired ConsignmentService consignmentService;
-*/
-
+@Autowired
+DBTablesFeignClient dBTablesFeignClient;
+@Autowired
+DBrowDataModel dBrowDataModel;
 private final Logger log = LoggerFactory.getLogger(getClass());
 
 
 @RequestMapping(value=
 {"/viewConsignment"},method={org.springframework.web.bind.annotation.
 RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST})
-public ModelAndView viewConsignment(HttpSession session,@RequestParam(name="txnID",required = false) String txnID) {
+public ModelAndView viewConsignment(HttpSession session,@RequestParam(name="txnID",required = false) String txnID,@RequestParam(name="source",defaultValue = "menu",required = false) String source) {
 ModelAndView mv = new ModelAndView();
-
-
 
 log.info(" view consignment entry point................."); 
 mv.setViewName("viewConsignment");
@@ -86,94 +112,20 @@ return mv;
 
 
 
-/*
-* @RequestMapping(value=
-* {"/filterConsignments"},method={org.springframework.web.bind.annotation.
-* RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}
-* ) public @ResponseBody List<ConsignmentModel>filterConsignment(@RequestBody
-* FilterRequest filterRequest) { filterRequest.setUserId("1");
-* log.info("view consignment filter entry point.************"+filterRequest);
-* List<ConsignmentModel>
-* consignmentdetails=feignCleintImplementation.consignmentFilter(filterRequest)
-* ; log.info("fillter Data=="+consignmentdetails);
-* log.info(" view consignment exit point."); return consignmentdetails; }
-* 
-*/
-
-
-
-/*
-* @RequestMapping(value=
-* {"/filterConsignment"},method={org.springframework.web.bind.annotation.
-* RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}
-* ) public @ResponseBody List<ConsignmentModel>filterConsignment(@RequestBody
-* FilterRequest filterRequest, HttpSession session) {
-* log.info("coming in controller+++++");
-* 
-* 
-* String userid= session.getAttribute("userid").toString();
-* log.info("user id from session="+userid);
-* filterRequest.setUserId(Integer.parseInt(userid));
-* 
-* log.info("filterRequest=="+filterRequest);
-* 
-* session.setAttribute("startDate", filterRequest.getStartDate());
-* session.setAttribute("endDate",filterRequest.getEndDate());
-* session.setAttribute("consignmentStatus",
-* filterRequest.getConsignmentStatus()); session.setAttribute("taxPaidStatus",
-* filterRequest.getTaxPaidStatus());
-* 
-* log.info("session value=="+session.getAttribute("consignmentStatus"));
-* 
-* if(session.getAttribute("startDate")!=null
-* ||session.getAttribute("endDate")!=null||
-* session.getAttribute("consignmentStatus")!=null ||
-* session.getAttribute("taxPaidStatus")!=null ) {
-* 
-* log.info("session is available atleast in one parameters");
-* 
-* filterRequest.setConsignmentStatus((int)session.getAttribute(
-* "consignmentStatus")); filterRequest.setEndDate((String)
-* session.getAttribute("startdate")); filterRequest.setStartDate((String)
-* session.getAttribute("endDate")); filterRequest.setTaxPaidStatus((String)
-* session.getAttribute("taxPaidStatus")); }
-* 
-* else { log.info("session is not present consignment value ="+filterRequest);
-* 
-* }
-* 
-* 
-* 
-* 
-* log.info("view consignment filter entry point."+filterRequest);
-* List<ConsignmentModel>
-* consignmentdetails=feignCleintImplementation.consignmentFilter(filterRequest)
-* ; log.info("fillter Data=="+consignmentdetails);
-* log.info(" view consignment exit point."); return consignmentdetails; }
-*/
-
-
-/*
-* @RequestMapping(value={"/viewConsignment"},method={org.springframework.web.
-* bind.annotation.
-* RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}
-* ) public ModelAndView viewConsignment() { ModelAndView modelAndView=new
-* ModelAndView("viewConsignment"); return modelAndView; }
-* 
-* @GetMapping
-* 
-* @RequestMapping("/viewConsignmentList" ) public ResponseEntity<?>
-* viewConsignmentList() { long id=1; List<ConsignmentModel>
-* consignmentdetails=feignCleintImplementation.consignmentList(id); return new
-* ResponseEntity<>(consignmentdetails, HttpStatus.OK); }
-*/
 
 @RequestMapping(value= {"/registerConsignment"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}) 
 public @ResponseBody GenricResponse registerConsignment(@RequestParam(name="supplierId",required = false) String supplierId,@RequestParam(name="supplierName",required = false) String supplierName
 ,@RequestParam(name="consignmentNumber",required = false) String consignmentNumber,@RequestParam(name="expectedArrivaldate",required = false) String expectedArrivalDate,
 @RequestParam(name="organisationcountry",required = false) String organisationcountry,@RequestParam(name="expectedDispatcheDate",required = false) String expectedDispatcheDate,
 @RequestParam(name="expectedArrivalPort",required = false) Integer expectedArrivalPort,@RequestParam(name="quantity",required = false) String quantity,
-@RequestParam(name="file",required = false) MultipartFile file,HttpSession session,@RequestParam(name="totalPrice",required = false) String totalPrice,@RequestParam(name="currency",required = false) Integer currency,HttpServletRequest request) {
+@RequestParam(name="file",required = false) MultipartFile file,HttpSession session,@RequestParam(name="totalPrice",required = false) String totalPrice,@RequestParam(name="currency",required = false) Integer currency,
+@RequestParam(name="userType",required = false) String userType,
+@RequestParam(name="userTypeId",required = false) Integer userTypeId,
+@RequestParam(name="portAddress",required = false) Integer portAddress,
+@RequestParam(name="deviceQuantity",required = false) Integer deviceQuantity,
+@RequestParam(name="featureId",required = false) Integer featureId,
+@RequestParam(name="roleType",required = false) String roleType,HttpServletRequest request) {
+
 
 	log.info("headers request="+request.getHeaderNames());
 	log.info("user-agent"+request.getHeader("user-agent"));
@@ -190,11 +142,16 @@ String name=session.getAttribute("name").toString();
 log.info(" Register consignment entry point.");
 String txnNumner=utildownload.getTxnId();
 txnNumner = "C"+txnNumner;
+
+addMoreFileModel.setTag("system_upload_filepath");
+urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
+
+log.info("url to upload file=="+urlToUpload.getValue());
 log.info("Random transaction id number="+txnNumner);
 ConsignmentModel consignment = new ConsignmentModel();
 try {
 byte[] bytes = file.getBytes();
-String rootPath = filePathforUploadFile+txnNumner+"/";
+String rootPath = urlToUpload.getValue()+txnNumner+"/";
 File dir = new File(rootPath + File.separator);
 
 if (!dir.exists()) 
@@ -225,9 +182,15 @@ consignment.setQuantity(quantity);
 consignment.setTxnId(txnNumner);
 consignment.setFileName(file.getOriginalFilename());
 consignment.setUserId(Long.valueOf(userId));
-
+consignment.setUserName(userName);
+consignment.setFeatureId(featureId);
+consignment.setUserType(userType);
+consignment.setUserTypeId(userTypeId);
 consignment.setCurrency(currency);
 consignment.setTotalPrice(totalPrice);
+consignment.setPortAddress(portAddress);
+consignment.setDeviceQuantity(deviceQuantity);
+consignment.setRoleType(roleType);
 log.info("consignment form parameters passed to register consignment api "+consignment.toString());
 GenricResponse response = feignCleintImplementation.addConsignment(consignment);
 log.info("response from register consignment api"+response.toString());
@@ -246,15 +209,30 @@ public @ResponseBody GenricResponse openconsignmentRecordPage(@RequestParam(name
 @RequestParam(name="organisationcountry",required = false) String organisationcountry,@RequestParam(name="expectedDispatcheDate",required = false) String expectedDispatcheDate,
 @RequestParam(name="expectedArrivalPort",required = false) Integer expectedArrivalPort,@RequestParam(name="quantity",required = false) String quantity, HttpSession session,
 @RequestParam(name="file",required = false) MultipartFile file,@RequestParam(name="filename",required = false) String filename,@RequestParam(name="txnId",required = false) String txnId,
-@RequestParam(name="totalPrice",required = false) String totalPrice,@RequestParam(name="currency",required = false) Integer currency) 
+@RequestParam(name="totalPrice",required = false) String totalPrice,@RequestParam(name="currency",required = false) Integer currency,
+@RequestParam(name="userType",required = false) String userType,
+@RequestParam(name="userTypeId",required = false) Integer userTypeId,
+@RequestParam(name="portAddress",required = false) Integer portAddress,
+@RequestParam(name="featureId",required = false) Integer featureId,
+@RequestParam(name="deviceQuantity",required = false) Integer deviceQuantity,
+@RequestParam(name="roleType",required = false) String roleType) 
 {
 ConsignmentModel consignment = new ConsignmentModel();
+String movedFileTime = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
+log.info("Moved File Time value=="+movedFileTime);
 
 String userName=session.getAttribute("username").toString();
 String userId= session.getAttribute("userid").toString();
 String name=session.getAttribute("name").toString();
 
 GenricResponse response= new GenricResponse();
+
+addMoreFileModel.setTag("system_upload_filepath");
+urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
+
+addMoreFileModel.setTag("uploaded_file_move_path");
+urlToMove=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
+log.info("moved file path from api="+urlToMove.getValue());
 
 log.info("entry point in update Consignment.");
 if(file==null)
@@ -272,23 +250,28 @@ consignment.setFileName(filename);
 consignment.setUserId(Long.valueOf(userId));
 consignment.setCurrency(currency);
 consignment.setTotalPrice(totalPrice);
-
-
+consignment.setUserName(userName);
+consignment.setFeatureId(featureId);
+consignment.setUserType(userType);
+consignment.setUserTypeId(userTypeId);
+consignment.setPortAddress(portAddress);
+consignment.setDeviceQuantity(deviceQuantity);
+consignment.setRoleType(roleType);
 }
 else {
 log.info("file is empty or not "+file.isEmpty());
 try {
-String rootPath = filePathforUploadFile+txnId+"/";
+String rootPath = urlToUpload.getValue()+txnId+"/";
 File tmpDir = new File(rootPath+file.getOriginalFilename());
 boolean exists = tmpDir.exists();
 if(exists) {
 
 Path temp = Files.move 
-(Paths.get(filePathforUploadFile+"/"+txnId+"/"+file.getOriginalFilename()), 
-Paths.get(filePathforMoveFile+file.getOriginalFilename())); 
-String movedPath=filePathforMoveFile+file.getOriginalFilename();	
+(Paths.get(urlToUpload.getValue()+"/"+txnId+"/"+file.getOriginalFilename()), 
+Paths.get(urlToMove.getValue()+movedFileTime+"_"+file.getOriginalFilename())); 
+String movedPath=urlToMove.getValue()+movedFileTime+"_"+file.getOriginalFilename();	
 
-log.info("file is already exist, moved to this "+movedPath+" path. ");
+log.info("file is already exist, moved to this "+movedFileTime+"_"+movedPath+" path. ");
 tmpDir.delete();
 }
 byte[] bytes = file.getBytes();
@@ -323,8 +306,14 @@ consignment.setTxnId(txnId);
 consignment.setFileName(filename);
 consignment.setUserId(Long.valueOf(userId));
 consignment.setCurrency(currency);
-
+consignment.setPortAddress(portAddress);
 consignment.setTotalPrice(totalPrice);
+consignment.setFeatureId(featureId);
+consignment.setUserType(userType);
+consignment.setUserTypeId(userTypeId);
+consignment.setPortAddress(portAddress);
+consignment.setDeviceQuantity(deviceQuantity);
+consignment.setRoleType(roleType);
 }
 
 log.info("Request passed to the update register consignment="+consignment.toString());
@@ -370,6 +359,11 @@ request.setUserId((int) session.getAttribute("userid"));
 request.setRemarks(consignmentUpdateRequest.getRemarks());
 request.setTxnId(consignmentUpdateRequest.getTxnId());
 request.setFeatureId(consignmentUpdateRequest.getFeatureId());
+request.setUserName(consignmentUpdateRequest.getUserName());
+request.setUserType(consignmentUpdateRequest.getUserType());
+request.setUserTypeId(consignmentUpdateRequest.getUserTypeId());
+request.setFeatureId(consignmentUpdateRequest.getFeatureId());
+request.setRoleType(consignmentUpdateRequest.getRoleType());
 log.info(" request passed to the update consignment status="+request);
 GenricResponse response=feignCleintImplementation.updateConsignmentStatus(request);
 log.info("response after update consignment status="+response);
@@ -437,18 +431,92 @@ return consignmentdetails;
 @RequestMapping(value="/dowloadFiles/{filetype}/{fileName}/{transactionNumber}/{doc_TypeTag}",method={org.springframework.web.bind.annotation.RequestMethod.GET}) 
 //@RequestMapping(value="/dowloadFiles/{filetype}/{fileName}/{transactionNumber}",method={org.springframework.web.bind.annotation.RequestMethod.GET}, headers = {"content-Disposition=attachment"}) 
 
-public ModelAndView downloadFile(@PathVariable("transactionNumber") String txnid,@PathVariable("fileName") String fileName,@PathVariable("filetype") String filetype,@PathVariable(name="doc_TypeTag",required = false) String doc_TypeTag) throws IOException {
+public @ResponseBody FileExportResponse downloadFile(@PathVariable("transactionNumber") String txnid,@PathVariable("fileName") String fileName,@PathVariable("filetype") String filetype,@PathVariable(name="doc_TypeTag",required = false) String doc_TypeTag) throws IOException {
 
-	
-log.info("inside file download method");
+	FileExportResponse response = new FileExportResponse();	
+log.info("inside file download method"+doc_TypeTag);
+
+
+if (filetype.equalsIgnoreCase("actual"))
+{
+
+if (!doc_TypeTag.equals("DEFAULT"))
+{
+	log.info("doc_TypeTag_______"+doc_TypeTag);
+	String rootPath = filePathforUploadFile+txnid+"/"+doc_TypeTag+"/";
+	File tmpDir = new File(rootPath+fileName);
+	boolean exists = tmpDir.exists();
+	if(exists) {
+
+String extension = fileName.substring(fileName.lastIndexOf("."));
+log.info("fileExtension==="+extension);
+
+				if(extension.equalsIgnoreCase(".png") || extension.equalsIgnoreCase(".jpeg") || extension.equalsIgnoreCase(".gif") || extension.equalsIgnoreCase("jpg"))		
+				{
+					response=feignCleintImplementation.downloadFile(txnid,filetype,fileName.replace("%20", " "),doc_TypeTag);
+					response.setFilePath("imageType");
+					return response;
+				}
+		log.info("file against document   is exist.");
+	}
+	else {
+		log.info(" file against documrnt type   is not exist.");
+		response.setUrl("Not Found");
+		return response;
+	}
+
+}
+else if(doc_TypeTag.equalsIgnoreCase("DEFAULT")) {
+	log.info("doc_TypeTag==="+doc_TypeTag);
+	String rootPath = filePathforUploadFile+txnid+"/";
+	File tmpDir = new File(rootPath+fileName);
+	boolean exists = tmpDir.exists();
+	if(exists) {
+
+		log.info("actual file is exist.");
+	}
+	else {
+		log.info(" actual file is not exist.");
+		response.setUrl("Not Found");
+		return response;
+	}
+
+}
+}
+else if(filetype.equalsIgnoreCase("error"))
+{
+	String rootPath = filePathforErrorFile+txnid+"/"+txnid+"_error.csv";
+	File tmpDir = new File(rootPath);
+	boolean exists = tmpDir.exists();
+	if(exists) {
+     log.info(" error file is exist.");
+	}
+	else {
+		log.info(" error file is not exist.");
+		response.setUrl("Not Found");
+		return response;
+	}
+
+}
+
+
+log.info(" everything is fine for hit to api for file downloading");
 log.info("request send to the download file api= txnid("+txnid+") fileName ("+fileName+") fileType ("+filetype+")"+doc_TypeTag);
-FileExportResponse response=feignCleintImplementation.downloadFile(txnid,filetype,fileName.replace("%20", " "),doc_TypeTag);
+response=feignCleintImplementation.downloadFile(txnid,filetype,fileName.replace("%20", " "),doc_TypeTag);
+
 log.info("response of download api="+response+"------------------"+fileName.replace("%20", " "));
 log.info("redirect:"+response.getUrl());
 //ModelAndView mv= new ModelAndView(("redirect:"+ URLEncoder.encode(response.getUrl(), "UTF-8")));
-ModelAndView mv= new ModelAndView(("redirect:"+ new URL(response.getUrl())));
 
-return mv;
+
+
+
+		/*
+		 * File file = new File(response.getUrl()); if(file.exists()){
+		 * log.info("file is exist "); return response.getUrl(); } else {
+		 * log.info("file is Not exist "); return null; }
+		 */
+return response;
 }
 
 
@@ -498,8 +566,9 @@ public String exportToExcel(@RequestParam(name="consignmentStartDate",required =
 	filterRequest.setUserType(userType);
 	filterRequest.setUserTypeId(usertypeId);
 	filterRequest.setFeatureId(3);
+	filterRequest.setRoleType(userType);
 	log.info(" request passed to the exportTo Excel Api =="+filterRequest+" *********** pageSize"+pageSize+"  pageNo  "+pageNo);
-	Object	response= feignCleintImplementation.consignmentFilter(filterRequest, pageNo, pageSize, file);
+	Object	response= feignCleintImplementation.consignmentFilter(filterRequest, pageNo, pageSize, file,"filter");
 
    Gson gson= new Gson(); 
    String apiResponse = gson.toJson(response);
@@ -512,14 +581,73 @@ public String exportToExcel(@RequestParam(name="consignmentStartDate",required =
 
 
 @RequestMapping(value="/ManualFileDownload",method={org.springframework.web.bind.annotation.RequestMethod.GET}) 
-public String ManualSampleFile() throws IOException {
+public String ManualSampleFile(@RequestParam(name="userTypeId",required = false) int userTypeId) throws IOException {
 log.info("request send to the manual sample file download api=");
+log.info("userTypeId==="+userTypeId);
 
-
-FileExportResponse response=feignCleintImplementation.manualDownloadSampleFile();
+FileExportResponse response=feignCleintImplementation.manualDownloadSampleFile(userTypeId);
 log.info("response from manual sample file download file "+response);
 
 return "redirect:"+response.getUrl();
 
 }
+
+
+@PostMapping("/payTax") 
+public @ResponseBody GenricResponse payConsignmentTax (@RequestBody PaymentRequest paymentRequest)  {
+	log.info("request send to the payConsignmentTax api="+paymentRequest);
+	GenricResponse response= userProfileFeignImpl.consignmentTaxFeign(paymentRequest);
+	log.info("response from payConsignmentTax api "+response);
+	return response;
+}	
+
+
+// consignment History 
+
+@PostMapping("consignment-history")
+public ResponseEntity<?> viewHistory(HttpServletRequest request) {
+	List<List<Object>> finalList = new ArrayList<List<Object>>();
+	List<List<String>> mul = new ArrayList<List<String>>();
+	String filter = request.getParameter("filter");
+	MapDatatableResponse map = new MapDatatableResponse();
+	Gson gsonObject = new Gson();
+	DBrowDataModel filterRequest = gsonObject.fromJson(filter, DBrowDataModel.class);
+	try {
+		log.info("request passed to API:::::::::" + filter);
+		Object response = dBTablesFeignClient.historyConsignmentFeign(filterRequest);
+		Gson gson = new Gson();
+		String apiResponse = gson.toJson(response);
+		log.info("apiResponse ::::::::::::::" + apiResponse);
+		DBrowDataModel dBrowDataModel = gson.fromJson(apiResponse, DBrowDataModel.class);
+		log.info("response::::::" + dBrowDataModel);
+
+		List<String> columnList = dBrowDataModel.getColumns();
+		List<Map<String, String>> rowData = dBrowDataModel.getRowData();
+		List<DbListDataHeaders> headers = new ArrayList<>();
+
+		if (columnList.isEmpty()) {
+			dBrowDataModel.setColumns(Collections.emptyList());
+		} else {
+			List<String> list = dBrowDataModel.getColumns();
+			ListIterator<String> iterator = list.listIterator();
+			String columnName = null;
+			while (iterator.hasNext()) {
+				columnName = iterator.next();
+				headers.add(new DbListDataHeaders(columnName, columnName));
+			}
+
+			map.setColumns(headers);
+			map.setData(rowData);
+
+		}
+		return new ResponseEntity<>(map, HttpStatus.OK);
+
+	} catch (Exception e) {
+		log.error(e.getMessage(), e);
+		dBrowDataModel.setColumns(Collections.emptyList());
+		return new ResponseEntity<>(HttpStatus.OK);
+
+	}
+}
+
 }

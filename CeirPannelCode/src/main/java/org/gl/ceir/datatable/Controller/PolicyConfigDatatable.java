@@ -51,8 +51,8 @@ public class PolicyConfigDatatable {
 	
 	@PostMapping("policyConfigData")
 	public ResponseEntity<?> viewPolicyConfig(@RequestParam(name="type",defaultValue = "PolicyConfig",required = false) String role, HttpServletRequest request,HttpSession session) {
-		String userType = (String) session.getAttribute("usertype");
-		int userId=	(int) session.getAttribute("userid");
+		//String userType = (String) session.getAttribute("usertype");
+		//int userId=	(int) session.getAttribute("userid");
 		// Data set on this List
 				List<List<Object>> finalList=new ArrayList<List<Object>>();
 				String filter = request.getParameter("filter");
@@ -84,11 +84,14 @@ public class PolicyConfigDatatable {
 					   String value = dataInsideList.getValue();
 					   String tag = dataInsideList.getTag();
 					   Object period = dataInsideList.getPeriod();
-					   Object status = dataInsideList.getStatus();
+					   Object statusInterp = dataInsideList.getStatusInterp();
+					   String Status = String.valueOf(dataInsideList.getStatus());
+					   String type = String.valueOf(dataInsideList.getType());
+					   String typeInterp = dataInsideList.getTypeInterp();
 					   String policyOrder =String.valueOf(dataInsideList.getPolicyOrder());
 					   String userStatus = (String) session.getAttribute("userStatus");
-					   String action=iconState.policyConfigIcons(userStatus,tag);			   
-					   Object[] finalData={createdOn,modifiedOn,description,value,period,status,policyOrder,action}; 
+					   String action=iconState.policyConfigIcons(userStatus,tag,Status,type);			   
+					   Object[] finalData={createdOn,modifiedOn,description,value,tag ,period,statusInterp,action}; 
 						List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);	

@@ -1,3 +1,26 @@
+<%@ page import="java.util.Date" %>
+<%
+   response.setHeader("Cache-Control", "no-cache");
+	response.setHeader("Cache-Control", "no-store");
+	response.setDateHeader("Expires", 0);
+	response.setHeader("Pragma", "no-cache");
+	
+    /*   //200 secs
+	 session.setAttribute("usertype", null);  */
+/* 	 session.setMaxInactiveInterval(10); */
+	 int timeout = session.getMaxInactiveInterval();
+	
+	 long accessTime = session.getLastAccessedTime();
+	 long currentTime= new Date().getTime(); 
+	 System.out.println("accessTime========"+(accessTime));
+	 System.out.println("timeout========"+timeout);
+	 long dfd= accessTime +timeout;
+	 System.out.println("currentTime========"+currentTime);
+	 if( currentTime< dfd){
+	/*  response.setHeader("Refresh", timeout + "; URL = ../login");
+	 System.out.println("timeout========"+timeout); 
+	if (session.getAttribute("usertype") != null) { */
+%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
@@ -165,7 +188,7 @@ section {
 
 		<div class="row card-panel">
 			<div class="container-fluid pageHeader">
-				<p class="PageHeading"><spring:message code="modal.header.formList" /></p>
+				<p class="PageHeading"><spring:message code="view.Field" /></p>
 			</div>
 			<div class="row">
 				<div class="col s12 m12" style="margin-top: 20px;">
@@ -175,7 +198,7 @@ section {
 						</div>
 						<div class="input-field col s7 m4">
                                 <select class="browser-default" id="tagId" required="">
-                                <option value="" disabled="" selected="">Select field</option>
+                                <option value="" selected="">Select field</option>
                                  </select>
                          </div>
 						<div class="input-field col s12 m2 l2">
@@ -207,3 +230,16 @@ section {
 		src="${context}/resources/project_js/tagForm.js"></script>
 </body>
 </html>
+<%
+	} else {
+		/*  request.setAttribute("msg", "  *Please login first");
+		request.getRequestDispatcher("./index.jsp").forward(request, response); */
+%>
+<script language="JavaScript">
+	sessionStorage.setItem("loginMsg",
+			"*Session has been expired");
+	window.top.location.href = "./login";
+</script>
+<%
+	}
+%>

@@ -1,3 +1,26 @@
+<%@ page import="java.util.Date" %>
+<%
+   response.setHeader("Cache-Control", "no-cache");
+	response.setHeader("Cache-Control", "no-store");
+	response.setDateHeader("Expires", 0);
+	response.setHeader("Pragma", "no-cache");
+	
+    /*   //200 secs
+	 session.setAttribute("usertype", null);  */
+/* 	 session.setMaxInactiveInterval(10); */
+	 int timeout = session.getMaxInactiveInterval();
+	
+	 long accessTime = session.getLastAccessedTime();
+	 long currentTime= new Date().getTime(); 
+	 System.out.println("accessTime========"+(accessTime));
+	 System.out.println("timeout========"+timeout);
+	 long dfd= accessTime +timeout;
+	 System.out.println("currentTime========"+currentTime);
+	 if( currentTime< dfd){
+	/*  response.setHeader("Refresh", timeout + "; URL = ../login");
+	 System.out.println("timeout========"+timeout); 
+	if (session.getAttribute("usertype") != null) { */
+%>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
@@ -67,7 +90,10 @@
 
 </head>
 <%-- <body data-roleType="${usertype}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}"> --%>
-<body data-roleType="${usertype}" data-userTypeID="${usertypeId}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${stolenselectedUserTypeId}">
+<body data-roleType="${usertype}" data-userTypeID="${usertypeId}" data-userID="${userid}" 
+data-selected-roleType="${selectedUserTypeId}"
+data-selected-username="${username}"
+ data-stolenselected-roleType="${stolenselectedUserTypeId}">
 
 
 	<!-- START CONTENT -->
@@ -114,45 +140,33 @@
 
 			<div class="row">
 				<div class="row" style="margin-top: 10px;">
-					<div class="input-field col s12 m6 l6">
-						<input type="text" name="tag" id="viewTag"
-							placeholder="tag" disabled
-							style="height: 28px;"> <label for="tag"><spring:message code="registration.tag" /></label>
-					</div>
-
 					
-					
+						<input type="text" name="tag" id="viewTag" placeholder="tag" disabled hidden="hidden" > 
+				
 					<div class="input-field col s12 m6 l6">
-						<input type="text" name="policyOrder" id="viewpolicyOrder"
-							placeholder="Policy Order" disabled style="height: 28px;">
-						<label for="policyOrder"><spring:message code="table.PolicyOrder" /></label>
-					</div>	
-						
-					<div class="row" style="margin-top: 20px;">	
-					<div class="input-field col s12 m6 l6" style="margin-top: 20px;">
 						<input type="text" name="period" id="viewPeriod"
-							placeholder="Period" disabled style="height: 28px;">
-						<label for="period"><spring:message code="table.Period" /></label>
+							placeholder="Period" disabled>
+						<label for="period"><spring:message code="table.Period" /> </label>
 					</div>
 
-					<div class="input-field col s12 m6" style="margin-top: 20px;">
+					<div class="input-field col s12 m6">
 						<input type="text" id="viewstatus" name="status"
-							placeholder="" maxlength="20" placeholder="Status" disabled style="height: 28px;">
-						<label for="status"><spring:message code="table.status" /></label>
+							placeholder="" maxlength="20" placeholder="Status" disabled >
+						<label for="status"><spring:message code="table.status" /> </label>
 					</div>
-					</div>	
+				
 					
 					
-					<div class="input-field col s12 m6" style="margin-top: 20px;">
-					<textarea id="viewValue" class="materialize-textarea" style="height: 22px;" placeholder="value" readonly="readonly"></textarea>
-					<label for="viewValue" class=""><spring:message code="table.Value" /></label>
+					<div class="input-field col s12 m6">
+					<textarea id="viewValue" class="materialize-textarea" placeholder="value" readonly="readonly" style="min-height:8rem"></textarea>
+					<label for="viewValue" class=""><spring:message code="table.Value" /> </label>
 
 					</div>
 					
 					
 					
-					<div class="input-field col s12 m6" style="margin-top: 22px">
-					<textarea id="description" class="materialize-textarea" style="height: 22px;" placeholder="Description" readonly="readonly"></textarea>
+					<div class="input-field col s12 m6">
+					<textarea id="description" class="materialize-textarea" placeholder="Description" readonly="readonly" style="min-height:8rem"></textarea>
 					<label for="description" class=""><spring:message code="registration.description" /></label>
 
 					</div>
@@ -167,7 +181,7 @@
 
 				<div class="row input_fields_wrap">
 					<div class="col s12 m12 center" style="margin-top: 10px;">
-					<button class="btn modal-close" style="margin-left: 10px;"><spring:message code="button.cancel" /></button>
+					<button class="btn modal-close" style="margin-left: 10px;"><spring:message code="modal.close" /></button>
 				</div>
 
 				</div>
@@ -181,63 +195,53 @@
 	<div id="editPolicyConfigModel" class="modal">
 		<h6 class="modal-header"><spring:message code="registration.editpolicyconfiguration" /></h6>
 		<div class="modal-content">
+		<form action="" onsubmit="return updatePolicy()">
 		<div class="row">
-			<div class="row" style="margin-top: 10px;">
+			<div class="row">
 					<div class="input-field col s12 m6 l6">
 						<input type="text" name="tag" id="editTag"
-							placeholder="tag" 
-							style="height: 28px;" hidden> 
+							placeholder="tag" hidden="hidden"> 
 					</div>
 					
 					<div class="input-field col s12 m6 l6">
 						<input type="text" name="tag" id="EditId"
-							placeholder="ID" 
-							style="height: 28px;" hidden> 
+							placeholder="ID" hidden="hidden"> 
+						<input type="text" name="status" id="EditStatusValue"
+							placeholder="" hidden="hidden"> 	
 					</div>
 					
-					
-					<div class="input-field col s12 m6 l6">
-						<input type="text" name="policyOrder" id="editpolicyOrder"
-							placeholder="Policy Order"  style="height: 28px;" disabled>
-						<label for="policyOrder"><spring:message code="table.PolicyOrder" /></label>
-					</div>	
-						
-					<div class="row" style="margin-top: 20px;">	
-					<div class="input-field col s12 m6 l6" style="margin-top: 20px;">
-						<input type="text" name="period" id="editPeriod"
-							placeholder="Period"  style="height: 28px;" disabled>
-						<label for="period"><spring:message code="table.Period" /></label>
-					</div>
+				
 
-					<div class="input-field col s12 m6" style="margin-top: 20px;">
-						<input type="text" id="editstatus" name="status"
-							placeholder="" maxlength="20" placeholder="Status"  style="height: 28px;" disabled>
-						<label for="status"><spring:message code="table.status" /></label>
-					</div>
-					</div>	
-					
-					
-					<div class="input-field col s12 m6" style="margin-top: 20px;">
-					<textarea id="editValue" class="materialize-textarea" style="height: 22px;" placeholder="value"></textarea>
-					<label for="viewValue" class=""><spring:message code="table.Value" /></label>
+						<div class="col s12 m6">
+							<label for="port" class="active"><spring:message code="table.Period" /><span class="star">
+									*</span></label> <select class="browser-default" id="editPeriod"
+								required="required">
+								<option value="" selected > Select Period</option>
+							</select> <input type="text" id="editId" hidden>
+						</div>
+
+						<div class="col s12 m6">
+							<label for="port" class="active"><spring:message code="table.status" /><span class="star">
+									*</span></label> <select class="browser-default" id="editstatus"
+								required="required">
+								<option value="" selected>Select status</option>
+							</select>
+						</div>
+
+					<div class="input-field col s12 m6"  style="margin-top: 30px;">
+					<textarea id="editValue" class="materialize-textarea" placeholder="value" title="Please enter alphabets and numbers upto 100 characters only" maxlength="100" required="required" style="min-height:8rem"></textarea>
+					<label for="editValue" class=""><spring:message code="table.Value" /> <span class="star">*</span></label>
 
 					</div>
 					
 					
 					
-					<div class="input-field col s12 m6" style="margin-top: 22px">
-					<textarea id="editdescription" class="materialize-textarea" style="height: 22px;" placeholder="Description" disabled></textarea>
+					<div class="input-field col s12 m6" style="margin-top: 30px;">
+					<textarea id="editdescription" class="materialize-textarea" placeholder="Description" title="Please enter alphabets and numbers upto 200 characters only" maxlength="200" style="min-height:8rem"></textarea>
 					<label for="description" class=""><spring:message code="registration.description" /></label>
 
 					</div>
 				
-					
-					<div class="input-field col s12 m6 l6">
-						<input type="text" name="policyOrder" id="editpolicyOrder"
-							placeholder=""  style="height: 28px;" disabled>
-						<label for="policyOrder"><spring:message code="table.PolicyOrder" /></label>
-					</div>
-					
 					
 				</div>
 
@@ -245,12 +249,13 @@
 
 				<div class="row input_fields_wrap">
 					<div class="col s12 m12 center" style="margin-top: 10px;">
-					<button class="btn modal-close" style="margin-left: 10px;" onclick ="updatePolicy()"><spring:message code="button.update" /></button>
-					<button class="btn modal-close" style="margin-left: 10px;"><spring:message code="button.cancel" /></button>
+					<button class="btn " type="submit"><spring:message code="button.update" /></button>
+					<button class="modal-close btn" type="button" style="margin-left: 10px;"><spring:message code="button.cancel" /></button>
 				</div>
 
 				</div>
 			</div>
+			</form>
 		</div>
 	</div>
 	<!-- Modal End -->
@@ -313,3 +318,16 @@
 		
 </body>
 </html>
+<%
+	} else {
+		/*  request.setAttribute("msg", "  *Please login first");
+		request.getRequestDispatcher("./index.jsp").forward(request, response); */
+%>
+<script language="JavaScript">
+	sessionStorage.setItem("loginMsg",
+			"*Session has been expired");
+	window.top.location.href = "./login";
+</script>
+<%
+	}
+%>

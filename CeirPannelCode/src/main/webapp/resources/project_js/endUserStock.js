@@ -9,7 +9,15 @@ $('#langlist').on('change', function() {
 
 
 $(document).ready(function () {
-	 $('#langlist').val(data_lang_param);
+	$('#langlist').val(data_lang_param);
+	$.i18n().locale = data_lang_param;
+	var successMsg;
+	$.i18n().load( {
+		'en': './resources/i18n/en.json',
+		'km': './resources/i18n/km.json'
+	} ).done( function() { 
+	});
+
         if($('#pageTypeValue').val()==0)
         	{
         	$('#uploadPaidStatusDiv').css("display", "block");
@@ -25,12 +33,15 @@ $(document).ready(function () {
     
 function uploadEndUserStock()
 {
+	$('div#initialloader').fadeIn('fast');
 	var formData= new FormData();
 	 var endUsercsvUploadFile=$('#endUsercsvUploadFile').val();
 	 var endUseremail=$('#endUseremail').val();
 	 var endUserquantity=$('#endUserquantity').val();
+	 var endUserDevicequantity= $('#endUserDevicequantity').val();
 	 var request={
 		  "quantity": endUserquantity,
+		  "deviceQuantity":endUserDevicequantity,
 		   "userType": "End User",
 		   "user": {
 		       "userProfile": {
@@ -48,9 +59,12 @@ function uploadEndUserStock()
 			processData: false,
 			contentType: false,
 			success: function (data, textStatus, jqXHR) {
+				$('div#initialloader').delay(300).fadeOut('slow');
 				console.log("in suucess method");
 				console.log(data);
-				$('#endUserStockModal').openModal();
+				$('#endUserStockModal').openModal({
+	    	    	   dismissible:false
+	    	       });
 				$("#endUserStock").prop('disabled', true);
 				if(data.errorCode==0){
 					$('#endUsertXnId').text(data.txnId);
@@ -62,7 +76,7 @@ function uploadEndUserStock()
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
 				console.log("error in ajax")
-
+				$('div#initialloader').delay(300).fadeOut('slow');
 			}
 		});
 		return false;	
@@ -82,7 +96,9 @@ function validateTxnId()
 			setViewPopupData(data);
 		},
 		error : function() {
-		$('#errorModal').openModal();
+		$('#errorModal').openModal({
+	    	   dismissible:false
+	       });
 		}
 	});
     return false;
@@ -99,12 +115,14 @@ function setViewPopupData(data){
 	$("#uploadDate").val(data.createdOn);
 	$("#viewUploadFile").val(data.fileName);
 	$("#errorFileStatus").val(data.stateInterp);
+	$('#endUserStockFileLink').attr("onclick",'fileDownload("'+data.fileName+'","actual","'+data.txnId+'","DEFAULT")');
+	$('#errorFileStock').attr("onclick",'fileDownload("blank","error","'+data.txnId+'","DEFAULT")');
 	console.log(data.stockStatus);
 	if(data.stockStatus=='2')
 		{
 		console.log("if condition");
 		$('#errorFileStatusDiv').css("display", "block");
-    	$("#errorFileName").val(data.fileName);
+    	$("#errorFileName").val(data.txnId+'_error.csv');
     	$('#updateEndUserStockOK').css("display", "none");
     	$('#updateEndUserStock').css("display", "block");
     	}
@@ -161,7 +179,9 @@ function updateFile()
 		success: function (data, textStatus, jqXHR) {
 
 			console.log(data);
-			$('#fileUpdateSucessModal').openModal();
+			$('#fileUpdateSucessModal').openModal({
+ 	    	   dismissible:false
+ 	       });
 			if(data.errorCode=='0')
 				{
 			$('#endUserStockSuceesMessage').text('');
@@ -200,10 +220,53 @@ return false;
 
 function  openCancelPopUp()
 {
-	 $('#cancelStock').openModal(); 
+	 $('#cancelStock').openModal({
+  	   dismissible:false
+     });
 }
 
 function  closeCancelPopUp()
 {
 	 $('#cancelStock').closeModal();
+}
+
+
+
+function fileTypeValueChanges(dd, ddd) {
+	var uploadedFileName = $("#endUsercsvUploadFile").val();
+	uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
+	var ext = uploadedFileName.split('.').pop();
+	
+	var fileSize = ($("#endUsercsvUploadFile")[0].files[0].size);
+	fileSize = (Math.round((fileSize / 1024) * 100) / 100)
+   if (uploadedFileName.length > 30) {
+       $('#fileFormateModal').openModal({
+    	   dismissible:false
+       });
+      
+   } 
+	else if(ext!='csv')
+		{
+	
+		  $('#fileFormateModal').openModal({
+	    	   dismissible:false
+	       });
+		 
+		}
+	else if(fileSize>='2000'){
+		alert("2222");		$('#fileFormateModal').openModal({
+	    	   dismissible:false
+	       });
+		
+	}
+	
+	
+
+}
+
+
+function clearFileName() {
+	$('#endUsersaveFileName').val('');
+	$("#endUsercsvUploadFile").val('');
+	$('#fileFormateModal').closeModal();
 }

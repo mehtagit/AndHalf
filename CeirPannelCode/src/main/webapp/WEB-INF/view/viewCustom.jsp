@@ -186,7 +186,7 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
                                         </div>
 
                                         <div class="input-field col s12 m6 l6">
-                                            <input type="text" name="natureOfEmployment" id="natureOfEmployment" value="${registration.natureOfEmployment}" maxlength="30" disabled="" placeholder="">
+                                            <input type="text" name="natureOfEmployment" id="natureOfEmployment" value="${registration.natureOfEmploymentInterp}" maxlength="30" disabled="" placeholder="">
                                             <label for="natureOfEmployment" class="active"><spring:message code="registration.natureofemployment" /> </label>
                                         </div>
                                     </div>
@@ -222,6 +222,11 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
                                             <input type="text" name="phone" id="phone" value="${registration.phoneNo}" maxlength="10" disabled="" placeholder="">
                                             <label for="phone" class="active"><spring:message code="input.contactNum" /> </label>
                                         </div>
+                                        
+                                        <div class="input-field col s12 m6">
+                                    			<input type="text" name="approvedBy" id="approvedBy" value="${registration.user.approvedBy}" maxlength="16" placeholder="" disabled="">
+                                    			<label for="approvedBy" class="active"><spring:message code="registration.approedBy" /> </label>
+                                	 	</div>
                                     </div>
                                 </div>
                                 </div>
@@ -230,7 +235,7 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
                                     <div class="col s12 m12">
                                 	<div class="input-field col s12 center">
                                         <!-- <a href="index.html" class="btn" id="btnSave"> Submit</a> -->
-                                          <a class="btn modal-close" href="./registrationRequest"><spring:message code="modal.cancel" /></a>
+                                          <a class="btn modal-close" href="./registrationRequest"><spring:message code="modal.close" /></a>
                                     </div>
                                 </div>
                                 </div>

@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Feignclient.GrievanceFeignClient;
+import org.gl.ceir.CeirPannelCode.Model.AddMoreFileModel;
 import org.gl.ceir.CeirPannelCode.Model.FileExportResponse;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
@@ -46,11 +47,16 @@ public class GrievanceController {
 	@Value ("${filePathforMoveFile}")
 	String filePathforMoveFile;
 	
+	@Autowired
 	FeignCleintImplementation feignCleintImplementation;
 	@Autowired
 	UtilDownload utildownload;
 	@Autowired
 	GrievanceFeignClient grievanceFeignClient;
+	@Autowired
+	AddMoreFileModel addMoreFileModel,urlToUpload;
+	
+	
 	
 	GrievanceModel grievance= new GrievanceModel();
 	GenricResponse response = new GenricResponse();
@@ -61,16 +67,20 @@ public class GrievanceController {
 	    public ModelAndView viewGrievance(HttpSession session,@RequestParam(name="txnID",required = false) String txnID) {
 		ModelAndView mv = new ModelAndView();
 		log.info(" view Grievance entry point."); 
+		String userName= (String) session.getAttribute("username");
+		log.info("username In Grievance------->"+userName);
 		
 		if(session.getAttribute("")!=null)
 		{
 			log.info(" user type is not blank"); 
+			mv.addObject("userName", userName);
 			mv.setViewName("grievanceManagement");
 			log.info(" view Grievance exit point."); 
 		}
 		else {
 			log.info(" user type isblank");
 			mv.setViewName("grievanceManagement");
+			mv.addObject("userName", userName);
 			log.info(" view Grievance exit point."); 
 		}
 	    
@@ -84,16 +94,19 @@ public class GrievanceController {
 
 		int userId= (int) session.getAttribute("userid");
 		String roletype=(String) session.getAttribute("usertype");
-
+		
 		String grevnceId=utildownload.getTxnId();
 		grevnceId = "G"+grevnceId;
 		Gson gson= new Gson(); 
 		String grievanceDetails=request.getParameter("multirequest");
 		log.info("grievanceDetails------"+grievanceDetails);
-
+		
+		addMoreFileModel.setTag("system_upload_filepath");
+		urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
+		
 		GrievanceModel grievanceRequest  = gson.fromJson(grievanceDetails, GrievanceModel.class);
-		grievanceRequest.setUserId(userId);
-		grievanceRequest.setUserType(roletype);
+		//grievanceRequest.setUserId(userId);
+		//grievanceRequest.setUserType(roletype);
 		grievanceRequest.setGrievanceId(grevnceId);
 
 		for (int i=0;i<grievanceRequest.getAttachedFiles().size();i++) {
@@ -114,7 +127,7 @@ public class GrievanceController {
 
 			try {
 				byte[] bytes =
-						file.getBytes(); String rootPath = filePathforUploadFile+grevnceId+"/"+tagName+"/"; 
+						file.getBytes(); String rootPath = urlToUpload.getValue()+grevnceId+"/"+tagName+"/"; 
 						File dir =   new File(rootPath + File.separator);
 						if (!dir.exists()) dir.mkdirs(); // Create the file on server // Calendar now = Calendar.getInstance();
 						File serverFile = new File(rootPath+file.getOriginalFilename());
@@ -207,6 +220,8 @@ public class GrievanceController {
 		 * String roletype=(String) session.getAttribute("usertype");
 		 * log.info("+ roletype="+roletype);
 		 */ 
+					addMoreFileModel.setTag("system_upload_filepath");
+					urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
 				    String grievanceDetails=request.getParameter("multirequest");
 					log.info("grievanceDetails------"+grievanceDetails);
 					Gson gson= new Gson(); 	
@@ -223,7 +238,7 @@ public class GrievanceController {
 						}
 						else {
 						byte[] bytes = file.getBytes();
-						String rootPath = filePathforUploadFile+grievanceRequest.getGrievanceId()+"/"+tagName+"/";
+						String rootPath = urlToUpload.getValue()+grievanceRequest.getGrievanceId()+"/"+tagName+"/";
 						File dir = new File(rootPath + File.separator);
 
 						if (!dir.exists()) 
@@ -277,6 +292,8 @@ public class GrievanceController {
 							Gson gson= new Gson(); 	
 							GrievanceModel grievanceRequest  = gson.fromJson(grievanceDetails, GrievanceModel.class);
 							//grievanceRequest.setUserId(userId);
+							addMoreFileModel.setTag("system_upload_filepath");
+							urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
 							grievanceRequest.setUserType(roletype);
 							int i=0;
 							for( MultipartFile file : fileUpload) {
@@ -288,7 +305,7 @@ public class GrievanceController {
 								}
 								else {
 								byte[] bytes = file.getBytes();
-								String rootPath = filePathforUploadFile+grievanceRequest.getGrievanceId()+"/"+tagName+"/";
+								String rootPath = urlToUpload.getValue()+grievanceRequest.getGrievanceId()+"/"+tagName+"/";
 								File dir = new File(rootPath + File.separator);
 
 								if (!dir.exists()) 
@@ -381,7 +398,8 @@ public class GrievanceController {
 						Gson gson= new Gson(); 
 						String grievanceDetails=request.getParameter("multirequest");
 						log.info("grievanceDetails------"+grievanceDetails);
-
+						addMoreFileModel.setTag("system_upload_filepath");
+						urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
 						GrievanceModel grievanceRequest  = gson.fromJson(grievanceDetails, GrievanceModel.class);
 						//grievanceRequest.setUserId(userId);
 						grievanceRequest.setUserType("End User");
@@ -405,7 +423,7 @@ public class GrievanceController {
 
 							try {
 								byte[] bytes =
-										file.getBytes(); String rootPath = filePathforUploadFile+grevnceId+"/"+tagName+"/"; 
+										file.getBytes(); String rootPath = urlToUpload.getValue()+grevnceId+"/"+tagName+"/"; 
 										File dir =   new File(rootPath + File.separator);
 										if (!dir.exists()) dir.mkdirs(); // Create the file on server // Calendar now = Calendar.getInstance();
 										File serverFile = new File(rootPath+file.getOriginalFilename());
@@ -442,6 +460,28 @@ public class GrievanceController {
 						 log.info("save grievance  exit point.");
 						 return response;
 					}
-
+					
+					
+					//***************************************** open Search UserName *********************************
+					@RequestMapping(value="/searchUserNameForm",method ={org.springframework.web.bind.annotation.RequestMethod.GET})
+					public ModelAndView openSearchUsernameForm()
+					{
+						ModelAndView mv= new ModelAndView();
+						log.info("open Search userName Grievance form");
+						mv.setViewName("searchUserName");
+						return mv;
+				}
+					
+					//***************************************** open Customer Care Grievance Form *********************************
+					
+					@RequestMapping(value={"/raiseCCgrievance"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST})
+				    public  ModelAndView openCCGrievancePage() 
+				{
+					ModelAndView mv = new ModelAndView();
+					log.info(" view CC user Grievance entry point.");
+					mv.setViewName("CCRaiseGrievance");
+					log.info(" view CC user Grievance exit point."); 
+					return mv; 
+				}
 }
 

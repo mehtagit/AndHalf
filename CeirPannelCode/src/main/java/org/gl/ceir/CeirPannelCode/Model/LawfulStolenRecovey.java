@@ -14,15 +14,15 @@ public class LawfulStolenRecovey {
 	private String modifiedOn;
 	private Integer operatorTypeId;
 	private String operatorTypeIdInterp;
-	private Integer qty;
-	private String remark;
+	private Integer qty,quantity,deviceQuantity;
+	private String remark,rejectedRemark;
 	private Integer requestType;
 	private String requestTypeInterp;
 	private String roleType;
 	private SingleImeiDetails singleImeiDetails;
 	private Integer sourceType;
 	private String sourceTypeInterp;
-	private String stateInterp,dateOfStolen,dateOfRecovery;
+	private String stateInterp,dateOfStolen,dateOfRecovery,firFileName,complaintType,fileLink;
 	private StolenIndividualUserDB stolenIndividualUserDB;
 	private StolenOrganizationUserDB stolenOrganizationUserDB;
 	private String txnId;
@@ -247,6 +247,58 @@ public class LawfulStolenRecovey {
 		this.dateOfRecovery = dateOfRecovery;
 	}
 
+	public String getFirFileName() {
+		return firFileName;
+	}
+
+	public void setFirFileName(String firFileName) {
+		this.firFileName = firFileName;
+	}
+
+	
+	
+	public String getComplaintType() {
+		return complaintType;
+	}
+
+	public void setComplaintType(String complaintType) {
+		this.complaintType = complaintType;
+	}
+
+	public String getFileLink() {
+		return fileLink;
+	}
+
+	public void setFileLink(String fileLink) {
+		this.fileLink = fileLink;
+	}
+
+	public String getRejectedRemark() {
+		return rejectedRemark;
+	}
+
+	public void setRejectedRemark(String rejectedRemark) {
+		this.rejectedRemark = rejectedRemark;
+	}
+
+	public Integer getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
+	}
+
+	
+	
+	public Integer getDeviceQuantity() {
+		return deviceQuantity;
+	}
+
+	public void setDeviceQuantity(Integer deviceQuantity) {
+		this.deviceQuantity = deviceQuantity;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -276,8 +328,14 @@ public class LawfulStolenRecovey {
 		builder.append(operatorTypeIdInterp);
 		builder.append(", qty=");
 		builder.append(qty);
+		builder.append(", quantity=");
+		builder.append(quantity);
+		builder.append(", deviceQuantity=");
+		builder.append(deviceQuantity);
 		builder.append(", remark=");
 		builder.append(remark);
+		builder.append(", rejectedRemark=");
+		builder.append(rejectedRemark);
 		builder.append(", requestType=");
 		builder.append(requestType);
 		builder.append(", requestTypeInterp=");
@@ -296,6 +354,12 @@ public class LawfulStolenRecovey {
 		builder.append(dateOfStolen);
 		builder.append(", dateOfRecovery=");
 		builder.append(dateOfRecovery);
+		builder.append(", firFileName=");
+		builder.append(firFileName);
+		builder.append(", complaintType=");
+		builder.append(complaintType);
+		builder.append(", fileLink=");
+		builder.append(fileLink);
 		builder.append(", stolenIndividualUserDB=");
 		builder.append(stolenIndividualUserDB);
 		builder.append(", stolenOrganizationUserDB=");
@@ -307,5 +371,7 @@ public class LawfulStolenRecovey {
 		builder.append("]");
 		return builder.toString();
 	}
+
+	
 
 }

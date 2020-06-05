@@ -1,14 +1,41 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ page import="java.util.Date" %>
+<%
+   response.setHeader("Cache-Control", "no-cache");
+	response.setHeader("Cache-Control", "no-store");
+	response.setDateHeader("Expires", 0);
+	response.setHeader("Pragma", "no-cache");
+	
+    /*   //200 secs
+	 session.setAttribute("usertype", null);  */
+/* 	 session.setMaxInactiveInterval(10); */
+	 int timeout = session.getMaxInactiveInterval();
+	
+	 long accessTime = session.getLastAccessedTime();
+	 long currentTime= new Date().getTime(); 
+	 System.out.println("accessTime========"+(accessTime));
+	 System.out.println("timeout========"+timeout);
+	 long dfd= accessTime +timeout;
+	 System.out.println("currentTime========"+currentTime);
+	 if( currentTime< dfd){
+	/*  response.setHeader("Refresh", timeout + "; URL = ../login");
+	 System.out.println("timeout========"+timeout); 
+	if (session.getAttribute("usertype") != null) { */
+%>
+
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
-<html lang="en" class="no-js">
+<html class="no-js" lang="en" dir="ltr">
 <head>
-<title>Dashboard</title>
-
+<title>Consignment</title>
+<meta http-equiv='cache-control' content='no-cache'>
+<meta http-equiv='expires' content='-1'>
+<meta http-equiv='pragma' content='no-cache'>
+<meta name="fragment" content="!">
 <meta charset="utf-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
@@ -35,8 +62,6 @@
 <link
 	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
-<link href="${context}/resources/css/jquery-datepicker2.css"
-	type="text/css" rel="stylesheet" media="screen,projection">
 <!-- Custome CSS-->
 <link href="${context}/resources/css/custom/custom.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
@@ -52,23 +77,53 @@
 	type="text/css" rel="stylesheet" media="screen,projection">
 <%--  <link href="${context}/resources/js/plugins/chartist-js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection"> --%>
 <link rel="stylesheet"
-	href="${context}/resources/project_css/stolenRecovery.css">
+	href="${context}/resources/project_css/viewConsignment.css">
 <link rel="stylesheet"
 	href="${context}/resources/project_css/iconStates.css">
+
 <link rel="stylesheet"
 	href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
 <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
-  <!------------------------------------------- Dragable Model---------------------------------->
+
+<script src="http://malsup.github.io/jquery.blockUI.js"></script>
+<script src="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json"></script>
+
+<!------------------------------------------- Dragable Model---------------------------------->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script> 
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<style type="text/css">
 
+.dataTables_scrollBody {
+    width: 100%;
+    max-height: 400px !important;
+
+   height: auto !important;
+
+
+}
+.dataTables_scroll {
+    margin-top: 2px;
+}
+button.modal-action.modal-close.waves-effect.waves-green.btn-flat.right {
+    height: 36px;
+	 font-size: 31px
+}
+
+.header-fixed-style{
+width: inherit;
+ z-index: 1003; 
+ position: fixed;
+}
+</style>
 </head>
-
-<body data-roleType="${usertype}" data-userTypeID="${usertypeId}"
+<body data-id="5" data-roleType="${usertype}" data-userTypeID="${usertypeId}"
 	data-userID="${userid}" data-operatorTypeId="${operatorTypeId}"
 	data-selected-roleType="${stolenselectedUserTypeId}"
-	data-stolenselected-roleType="${stolenselectedUserTypeId}"	>
+	data-stolenselected-roleType="${stolenselectedUserTypeId}"	data-requestType="${requestType}" data-filterSorce="${filterSource}"
+	data-session-source="${not empty param.source ? param.source : 'aaaa'}">
 
+    
 
 	<!-- START CONTENT -->
 	<!-- START CONTENT -->
@@ -81,7 +136,7 @@
 					<div class="col s12 m12 l12">
 						<div class="row card-panel">
 							<div class="container-fluid pageHeader" id="pageHeader">
-
+									
 								<a class="boton right" id="btnLink"></a>
 							</div>
 							<form action="${context}/stakeholder/record" method="post">
@@ -107,24 +162,30 @@
 	</section>
 
 	<div id="DeleteConsignment" class="modal">
-		<h6 class="modal-header"><spring:message code="modal.header.delete" /></h6>
+		<h6 class="modal-header"><spring:message code="modal.header.delete" /></h6>  
+		<form action="" onsubmit=" return confirmantiondelete()" method="POST">
 		<div class="modal-content">
 	<div class="row">
 				<h6><spring:message code="modal.withdraw.messageforStolen" /> ( <span id="transID"></span>)
 				</h6>
 				<span id="setStolenRecoveyRowId" style="display: none;"></span>
+				<div class="input-field col s12 m12">
+					<textarea id="textarea1" required="required" maxlength="200"  class="materialize-textarea"></textarea>
+					<label for="textarea1"><spring:message code="input.remarks" /><span class="star">*</span></label>
+				</div>
 			</div>
 			<input type="text" id="popupTransactionId" maxlength="15" hidden />
 			<div class="row">
 				<div class="input-field col s12 center">
 					<div class="input-field col s12 center">
-						<a class="btn" onclick="confirmantiondelete()"><spring:message code="modal.ok" /></a>
-						<button class="modal-close btn" onclick="closeUpdateModal()"
+						<button class="btn" type="submit"><spring:message code="modal.ok" /></button>
+						<button type="button" class="modal-close btn" onclick="closeUpdateModal()"
 							style="margin-left: 10px;"><spring:message code="modal.no" /></button>
 					</div>
 				</div>
 			</div>
 		</div>
+		</form>
 	</div>
 
 
@@ -175,8 +236,127 @@
                 </div></div></div>
 
 
+<div id="fileFormateModal" class="modal">
+		<h6 class="modal-header"><spring:message code="fileValidationModalHeader" /></h6>
+		<div class="modal-content">
+			<div class="row">
+				<h6 id="fileErrormessage"><spring:message code="fileValidationName" /><br> <br> <spring:message code="fileValidationFormate" /> <br><br> <spring:message code="fileValidationSize" /> </h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<div class="input-field col s12 center">
+						<button class="modal-close waves-effect waves-light btn" onclick="clearFileName()"
+							style="margin-left: 10px;"><spring:message code="modal.ok" /></button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
+<div id="approveInformation" class="modal" style="width: 40%; z-index: 1003; opacity: 1; transform: scaleX(1); top: 10%;">
+        <h6 class="modal-header"><spring:message code="modal.header.approve" /></h6>
+        <div class="modal-content">
+            <div class="row">
+                <form action="">
+                   
+                    <h6><spring:message code="modal.approveRequest" /><span id="blockApproveTxnId"></span>?</h6>
+                </form>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <a onclick="aprroveDevice()" class="btn modal-trigger"><spring:message code="modal.yes" /></a>
+                    <button class="btn modal-close" style="margin-left: 10px;"><spring:message code="modal.no" /></button>
+                      <span id="userId" hidden></span>
+                       <span id="adminCurrentStatus" hidden></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+     <div id="confirmApproveInformation" class="modal" style="width: 40%; z-index: 1005; opacity: 1; transform: scaleX(1); top: 10%;">
+        <h6 class="modal-header"><spring:message code="modal.header.approve" /></h6>
+        <div class="modal-content">
+            <div class="row">
+                <form action="">
+                    
+                    <h6><spring:message code="modal.deviceApproved" /></h6>
+                   
+                </form>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                     <a class="btn modal-close" href="./stolenRecovery?FeatureId=5"><spring:message code="modal.ok" /></a>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+    
+	    <!--------------------------------------------------- Reject Model--------------------------------------------->
+    
+        <div id="rejectInformation" class="modal">
+           <h6 class="modal-header"><spring:message code="modal.header.reject" /></h6>
+            <div class="modal-content">
+                <form action="" onsubmit=" return rejectUser()" method="POST">
+            <div class="row">
+             <h6><spring:message code="modal.rejectRequest" /><span id="rejectTxnId"></span> ?</h6>
+            
+                
+                    <div class="input-field" style="margin-top: 30px;">
+                        <textarea id="Reason" class="materialize-textarea" 
+                        oninput="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
+						oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
+                        required="required"></textarea>
+                        <label for="textarea1" style="margin-left: -10px;"><spring:message code="lable.reason" /><span class="star">*</span></label>
+                    </div>
+                   
+                    
+            
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <button  class="btn" type="submit"><spring:message code="modal.yes" /></button>
+                    <button class="btn modal-close" type="button" style="margin-left: 10px;"><spring:message code="modal.no" /></button>
+                </div>
+            </div>
+                </form>
+        </div>
+    </div>
+  
+    	<div id="confirmRejectInformation" class="modal">
+         <h6 class="modal-header"><spring:message code="registration.reject" /></h6>
+          <div class="modal-content">
+            <div class="row">
+                <form action="">
+                  
+                    <h6><spring:message code="modal.deviceRejected" /></h6>
+                </form>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <a class="btn modal-close" href="./stolenRecovery?FeatureId=5"><spring:message code="modal.ok" /></a>
+                </div>
+            </div>
+        </div>
+    </div>
 
+<div id="tableOnModal" class="modal">
+<div class="header-fixed header-fixed-style">
+		<button type="button"
+			class=" modal-action modal-close waves-effect waves-green btn-flat right"
+			data-dismiss="modal">&times;</button>
+		<h6 class="modal-header"><spring:message code="modal.header.viewHistory" /></h6>
+		</div>
+		<div class="scrollDivHeight"></div>
+		<div class="modal-content modal-content-style">
+
+			<div class="row">
+				<table class="responsive-table striped display"
+					id="data-table-history" cellspacing="0">
+				</table>
+			</div>
+		</div>
+	</div>
 <script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
 
@@ -233,11 +413,29 @@
 
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
-
-
+<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
+<script type="text/javascript"
+		src="${context}/resources/project_js/_dateFunction.js" async></script>
 <script type="text/javascript"
 		src="${context}/resources/project_js/lawfulStolenRecovery.js"></script>
 <script type="text/javascript"
-		src="${context}/resources/project_js/dragableModal.js"></script>			
+		src="${context}/resources/project_js/dragableModal.js"></script>
+			<script type="text/javascript"
+		src="${context}/resources/project_js/validationMsg.js"></script>
+					<script type="text/javascript"
+		src="${context}/resources/project_js/profileInfoTab.js" async></script>			
 </body>
 </html>
+<%
+	}else{
+		/*  request.setAttribute("msg", "  *Please login first");
+		request.getRequestDispatcher("./index.jsp").forward(request, response); */
+%>
+<script language="JavaScript">
+	sessionStorage.setItem("loginMsg",
+			"*Session has been expired");
+	window.top.location.href = "./login";
+</script>
+<%
+	}
+%>

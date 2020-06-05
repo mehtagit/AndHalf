@@ -3,13 +3,20 @@ package org.gl.ceir.CeirPannelCode.Controller;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Feignclient.UploadPaidStatusFeignClient;
+import org.gl.ceir.CeirPannelCode.Model.AddMoreFileModel;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.LawfulStolenRecovey;
 import org.gl.ceir.CeirPannelCode.Model.SingleImeiDetailsModel;
@@ -40,20 +47,28 @@ public class LawfulFormController
 
 	@Value ("${filePathforMoveFile}")
 	String filePathforMoveFile;
-	
+
 	@Autowired
 	UtilDownload utildownload;
 
 	@Autowired
 	UploadPaidStatusFeignClient uploadPaidStatusFeignClient;
-
 	
+	@Autowired
+	AddMoreFileModel addMoreFileModel,urlToUpload,urlToMove;
+	
+	
+@Autowired
+
+FeignCleintImplementation feignCleintImplementation;
+
+
 	private final Logger log = LoggerFactory.getLogger(getClass());
 	ModelAndView mv = new ModelAndView();
 	GenricResponse response= new GenricResponse();
-	
-	
-	
+
+
+
 	@RequestMapping(value="/openlawfulStolenRecoveryPage",method = {RequestMethod.GET,RequestMethod.POST} )
 	public ModelAndView openStolenRecoveryPage(@RequestParam(name="pageType") String pageType,@RequestParam(name="pageView") String pageView,
 			@RequestParam(name="txnId") String txnId)
@@ -92,18 +107,21 @@ public class LawfulFormController
 			mv.addObject("pageName","editCompanyRecovery");
 			mv.setViewName("editCompanyRecovery");
 		}
-		
+
 		log.info("exit point in  open stolen and recovery   page."+pageView);
 		mv.addObject("stolenTxnId",txnId);
 		mv.addObject("viewType",pageView);
 		return mv;
 	}
-	
-	
+
+
 
 	@PostMapping("lawfulIndivisualStolen")
-	public @ResponseBody GenricResponse register(@RequestParam(name="file",required = false) MultipartFile file,HttpServletRequest request,HttpSession session) {
+	public @ResponseBody GenricResponse register(@RequestParam(name="file",required = false) MultipartFile file,
+			@RequestParam(name="firFileName",required = false) MultipartFile firFileName,
+			HttpServletRequest request,HttpSession session) {
 		log.info("-inside controllerlawfulIndivisualStolen-------request---------");
+		
 		String userName=session.getAttribute("username").toString();
 		Integer userId= (Integer) session.getAttribute("userid");
 		String roletype=session.getAttribute("usertype").toString();
@@ -111,31 +129,61 @@ public class LawfulFormController
 		String txnNumber="L" + utildownload.getTxnId();
 		log.info("Random transaction id number="+txnNumber);
 		String filter = request.getParameter("request");
+		
 		Gson gson= new Gson(); 
-        log.info("*********"+filter);
-        LawfulStolenRecovey lawfulIndivisualStolen  = gson.fromJson(filter, LawfulStolenRecovey.class);
-        log.info(""+lawfulIndivisualStolen.toString());
-        lawfulIndivisualStolen.setTxnId(txnNumber);
-        lawfulIndivisualStolen.setUserId(userId);
-        lawfulIndivisualStolen.setRoleType(roletype);
-       // lawfulIndivisualStolen.setFileName(file.getOriginalFilename());
-        
+		log.info("*********"+filter);
+		
+		addMoreFileModel.setTag("system_upload_filepath");
+		urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
+		
+		LawfulStolenRecovey lawfulIndivisualStolen  = gson.fromJson(filter, LawfulStolenRecovey.class);
+		log.info(""+lawfulIndivisualStolen.toString());
+		lawfulIndivisualStolen.setTxnId(txnNumber);
+		lawfulIndivisualStolen.setUserId(userId);
+		lawfulIndivisualStolen.setRoleType(roletype);
+		// lawfulIndivisualStolen.setFileName(file.getOriginalFilename());
+
 		try {
 			byte[] bytes = file.getBytes();
-		String rootPath =filePathforUploadFile+txnNumber+"/"; 
-		File dir = new File(rootPath + File.separator);
+			String rootPath =urlToUpload.getValue()+txnNumber+"/"; 
+			File dir = new File(rootPath + File.separator);
 
-		if (!dir.exists()) dir.mkdirs();
-		// Create the file on server 
-		File serverFile = new File(rootPath+file.getOriginalFilename());
-		log.info("uploaded file path on server" + serverFile); BufferedOutputStream
-		stream = new BufferedOutputStream(new FileOutputStream(serverFile));
-		stream.write(bytes); 
-		stream.close();
+			if (!dir.exists()) dir.mkdirs();
+			// Create the file on server 
+			File serverFile = new File(rootPath+file.getOriginalFilename());
+			log.info("uploaded file path on server" + serverFile); BufferedOutputStream
+			stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+			stream.write(bytes); 
+			stream.close();
 		} 
 		catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
+		}
+
+		if(firFileName==null) {
+			log.info("fir file is empty");	
+		}
+		else {
+			try {
+
+				byte[] bytes = firFileName.getBytes();
+				String rootPath =urlToUpload.getValue()+lawfulIndivisualStolen.getTxnId()+"/"; 
+				File dir = new File(rootPath + File.separator);
+
+				if (!dir.exists()) dir.mkdirs();
+				// Create the file on server 
+				File serverFile = new File(rootPath+firFileName.getOriginalFilename());
+				log.info("uploaded file path on server" + serverFile); BufferedOutputStream
+				stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+				stream.write(bytes); 
+				stream.close();
+				//lawfulIndivisualStolen.setFileName(file.getOriginalFilename());
+			} 
+			catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
 		}
 		log.info("request passed to the save regularizeDeviceDbs api"+lawfulIndivisualStolen);
 		GenricResponse response = null;
@@ -152,10 +200,10 @@ public class LawfulFormController
 		}
 		return response;
 	}
-	
-	
+
+
 	@PostMapping("lawfulOraganisationStolen")
-	public @ResponseBody GenricResponse lawfulOraganisationStolen(@RequestParam(name="file",required = false) MultipartFile file,HttpServletRequest request,HttpSession session) {
+	public @ResponseBody GenricResponse lawfulOraganisationStolen(@RequestParam(name="file",required = false) MultipartFile file,@RequestParam(name="firFileName",required = false) MultipartFile firFileName,HttpServletRequest request,HttpSession session) {
 		log.info("-inside controllerlawfulIndivisualStolen-------request---------");
 		String userName=session.getAttribute("username").toString();
 		Integer userId= (Integer) session.getAttribute("userid");
@@ -164,32 +212,60 @@ public class LawfulFormController
 		String txnNumber="L" + utildownload.getTxnId();
 		log.info("Random transaction id number="+txnNumber);
 		String filter = request.getParameter("request");
+
+		addMoreFileModel.setTag("system_upload_filepath");
+		urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
 		
 		Gson gson= new Gson(); 
-        log.info("*********"+filter);
-        LawfulStolenRecovey lawfulIndivisualStolen  = gson.fromJson(filter, LawfulStolenRecovey.class);
-        log.info(""+lawfulIndivisualStolen.toString());
-        lawfulIndivisualStolen.setTxnId(txnNumber);
-        lawfulIndivisualStolen.setUserId(userId);
-        lawfulIndivisualStolen.setRoleType(roletype);
-        lawfulIndivisualStolen.setFileName(file.getOriginalFilename());
-        
+		log.info("*********"+filter);
+		LawfulStolenRecovey lawfulIndivisualStolen  = gson.fromJson(filter, LawfulStolenRecovey.class);
+		log.info(""+lawfulIndivisualStolen.toString());
+		lawfulIndivisualStolen.setTxnId(txnNumber);
+		lawfulIndivisualStolen.setUserId(userId);
+		lawfulIndivisualStolen.setRoleType(roletype);
+		lawfulIndivisualStolen.setFileName(file.getOriginalFilename());
+
 		try {
 			byte[] bytes = file.getBytes();
-		String rootPath =filePathforUploadFile+txnNumber+"/"; 
-		File dir = new File(rootPath + File.separator);
+			String rootPath =urlToUpload.getValue()+txnNumber+"/"; 
+			File dir = new File(rootPath + File.separator);
 
-		if (!dir.exists()) dir.mkdirs();
-		// Create the file on server 
-		File serverFile = new File(rootPath+file.getOriginalFilename());
-		log.info("uploaded file path on server" + serverFile); BufferedOutputStream
-		stream = new BufferedOutputStream(new FileOutputStream(serverFile));
-		stream.write(bytes); 
-		stream.close();
+			if (!dir.exists()) dir.mkdirs();
+			// Create the file on server 
+			File serverFile = new File(rootPath+file.getOriginalFilename());
+			log.info("uploaded file path on server" + serverFile); BufferedOutputStream
+			stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+			stream.write(bytes); 
+			stream.close();
 		} 
 		catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
+		}
+		log.info("fir file detaissssssssss"+firFileName);
+		if(firFileName==null) {
+			log.info(" bulk fir file is empty");	
+		}
+		else {
+			try {
+
+				byte[] bytes = firFileName.getBytes();
+				String rootPath =urlToUpload.getValue()+lawfulIndivisualStolen.getTxnId()+"/"; 
+				File dir = new File(rootPath + File.separator);
+
+				if (!dir.exists()) dir.mkdirs();
+				// Create the file on server 
+				File serverFile = new File(rootPath+firFileName.getOriginalFilename());
+				log.info("uploaded file path on server" + serverFile); BufferedOutputStream
+				stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+				stream.write(bytes); 
+				stream.close();
+				lawfulIndivisualStolen.setFileName(file.getOriginalFilename());
+			} 
+			catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
 		}
 		log.info("request passed to the report Indivisual and comapny  api"+lawfulIndivisualStolen);
 		GenricResponse response = null;
@@ -206,9 +282,9 @@ public class LawfulFormController
 		}
 		return response;
 	}
-	
-	
-	
+
+
+
 
 	@PostMapping("lawfulIndivisualRecovery")
 	public @ResponseBody GenricResponse lawfulIndivsualRecovery(@RequestParam(name="file",required = false) MultipartFile file,HttpServletRequest request,HttpSession session) {
@@ -219,43 +295,47 @@ public class LawfulFormController
 		String txnNumber="L" + utildownload.getTxnId();
 		log.info("Random transaction id number="+txnNumber);
 		String filter = request.getParameter("request");
+
+		addMoreFileModel.setTag("system_upload_filepath");
+		urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
+		
 		
 		Gson gson= new Gson(); 
-        log.info("*********"+filter);
-        LawfulStolenRecovey lawfulIndivisualStolen  = gson.fromJson(filter, LawfulStolenRecovey.class);
-        log.info(""+lawfulIndivisualStolen.toString());
-        lawfulIndivisualStolen.setTxnId(txnNumber);
-        lawfulIndivisualStolen.setUserId(userId);
-        lawfulIndivisualStolen.setRoleType(roletype);
-        
-       if(file==null)
-       {
-    	   log.info("file is blank");
-    	   lawfulIndivisualStolen.setFileName("");   
-       }
-       else {
-    	try {
-    		log.info("file is not blank");
-			byte[] bytes = file.getBytes();
-		String rootPath =filePathforUploadFile+txnNumber+"/"; 
-		File dir = new File(rootPath + File.separator);
+		log.info("*********"+filter);
+		LawfulStolenRecovey lawfulIndivisualStolen  = gson.fromJson(filter, LawfulStolenRecovey.class);
+		log.info(""+lawfulIndivisualStolen.toString());
+		lawfulIndivisualStolen.setTxnId(txnNumber);
+		lawfulIndivisualStolen.setUserId(userId);
+		lawfulIndivisualStolen.setRoleType(roletype);
 
-		if (!dir.exists()) dir.mkdirs();
-		// Create the file on server 
-		File serverFile = new File(rootPath+file.getOriginalFilename());
-		log.info("uploaded file path on server" + serverFile); BufferedOutputStream
-		stream = new BufferedOutputStream(new FileOutputStream(serverFile));
-		stream.write(bytes); 
-		stream.close();
-		 lawfulIndivisualStolen.setFileName(file.getOriginalFilename());
-		} 
-		catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
+		if(file==null)
+		{
+			log.info("file is blank");
+			lawfulIndivisualStolen.setFileName("");   
 		}
-		
-       }
-       log.info("request passed to the report Indivisual and comapny recovery api"+lawfulIndivisualStolen);
+		else {
+			try {
+				log.info("file is not blank");
+				byte[] bytes = file.getBytes();
+				String rootPath =urlToUpload.getValue()+txnNumber+"/"; 
+				File dir = new File(rootPath + File.separator);
+
+				if (!dir.exists()) dir.mkdirs();
+				// Create the file on server 
+				File serverFile = new File(rootPath+file.getOriginalFilename());
+				log.info("uploaded file path on server" + serverFile); BufferedOutputStream
+				stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+				stream.write(bytes); 
+				stream.close();
+				lawfulIndivisualStolen.setFileName(file.getOriginalFilename());
+			} 
+			catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+
+		}
+		log.info("request passed to the report Indivisual and comapny recovery api"+lawfulIndivisualStolen);
 		GenricResponse response = null;
 		try {
 			response = uploadPaidStatusFeignClient.lawfulIndivisualStolen(lawfulIndivisualStolen);
@@ -273,59 +353,130 @@ public class LawfulFormController
 
 
 	@RequestMapping(value="/openStolenAndRecoveryPage",method ={org.springframework.web.bind.annotation.RequestMethod.POST})
-	public @ResponseBody LawfulStolenRecovey openSingleImeiForm(@RequestParam(name="txnId",required = false) String txnId,HttpSession session)
+	public @ResponseBody LawfulStolenRecovey openSingleImeiForm(@RequestParam(name="txnId",required = false) String txnId,HttpSession session,
+			@RequestParam(name="requestType") int requestType)
 	{
 		log.info("entry point of  fetch lawful stolen an recovery devices in the bases of transaction id .");
+		Integer userId= (Integer) session.getAttribute("userid");
+		String roletype=session.getAttribute("usertype").toString();
 		
 		LawfulStolenRecovey lawfulStolenRecovery= new LawfulStolenRecovey();
 		LawfulStolenRecovey lawfulUser= new LawfulStolenRecovey();
-		log.info("request passed to the fetch Device api="+txnId);
+		
 		lawfulUser.setTxnId(txnId);
+		lawfulUser.setRequestType(requestType);
+		lawfulUser.setRoleType(roletype);
+		lawfulUser.setUserId(userId);
+		log.info("request passed to the fetch Device api="+lawfulUser);
 		lawfulStolenRecovery=uploadPaidStatusFeignClient.fetchSingleDevicebyTxnId(lawfulUser);
+		
 		log.info("response from fetch lawful stolen an recovery devices  api="+lawfulStolenRecovery);
-			return lawfulStolenRecovery;
+		
+		addMoreFileModel.setTag("upload_file_link");
+        urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
+        lawfulStolenRecovery.setFileLink(urlToUpload.getValue());
+        return lawfulStolenRecovery;
 	}
-	
-	
+
+
 	@PostMapping("lawfulIndivisualStolenUpdate")
-	public @ResponseBody GenricResponse updateStolenRequest(@RequestParam(name="file",required = false) MultipartFile file,HttpServletRequest request,HttpSession session) {
+	public @ResponseBody GenricResponse updateStolenRequest(@RequestParam(name="file",required = false) MultipartFile file,@RequestParam(name="firFileName",required = false) MultipartFile firFileName,HttpServletRequest request,HttpSession session) {
 		log.info("-inside controller lawfulIndivisualStolen update-------request---------");
 		String userName=session.getAttribute("username").toString();
 		Integer userId= (Integer) session.getAttribute("userid");
 		String roletype=session.getAttribute("usertype").toString();
 		String name=session.getAttribute("name").toString();
+		String movedFileTime = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
+		log.info("Moved File Time value=="+movedFileTime);
+		addMoreFileModel.setTag("system_upload_filepath");
+		urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
+		
+		addMoreFileModel.setTag("uploaded_file_move_path");
+		urlToMove=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
+		log.info("moved file path from api="+urlToMove.getValue());
 		
 		String filter = request.getParameter("request");
 		Gson gson= new Gson(); 
-        log.info("*********"+filter);
-        LawfulStolenRecovey lawfulIndivisualStolen  = gson.fromJson(filter, LawfulStolenRecovey.class);
-        log.info(""+lawfulIndivisualStolen.toString());
-        lawfulIndivisualStolen.setUserId(userId);
-        lawfulIndivisualStolen.setRoleType(roletype);
-        
-        if(file==null) {
-        	log.info("file is empty");	
-        }
-        else {
-		try {
-			
-			byte[] bytes = file.getBytes();
-		String rootPath =filePathforUploadFile+lawfulIndivisualStolen.getTxnId()+"/"; 
-		File dir = new File(rootPath + File.separator);
+		log.info("*********"+filter);
+		LawfulStolenRecovey lawfulIndivisualStolen  = gson.fromJson(filter, LawfulStolenRecovey.class);
+		log.info(""+lawfulIndivisualStolen.toString());
+		lawfulIndivisualStolen.setUserId(userId);
+		lawfulIndivisualStolen.setRoleType(roletype);
 
-		if (!dir.exists()) dir.mkdirs();
-		// Create the file on server 
-		File serverFile = new File(rootPath+file.getOriginalFilename());
-		log.info("uploaded file path on server" + serverFile); BufferedOutputStream
-		stream = new BufferedOutputStream(new FileOutputStream(serverFile));
-		stream.write(bytes); 
-		stream.close();
-		lawfulIndivisualStolen.setFileName(file.getOriginalFilename());
-		} 
-		catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
+		if(file==null) {
+			log.info("file is empty");	
 		}
+		else {
+			try {
+				String rootPath =urlToUpload.getValue()+lawfulIndivisualStolen.getTxnId()+"/"; 
+				File tmpDir = new File(rootPath+file.getOriginalFilename());
+				boolean exists = tmpDir.exists();
+				if(exists) {
+
+				Path temp = Files.move 
+				(Paths.get(urlToUpload.getValue()+"/"+lawfulIndivisualStolen.getTxnId()+"/"+file.getOriginalFilename()), 
+				Paths.get(urlToMove.getValue()+movedFileTime+"_"+file.getOriginalFilename())); 
+				String movedPath=urlToMove.getValue()+movedFileTime+"_"+file.getOriginalFilename();	
+
+				log.info("file is already exist, moved to this "+movedFileTime+"_"+movedPath+" path. ");
+				tmpDir.delete();
+				}
+				byte[] bytes = file.getBytes();
+				
+				File dir = new File(rootPath + File.separator);
+
+				if (!dir.exists()) dir.mkdirs();
+				// Create the file on server 
+				File serverFile = new File(rootPath+file.getOriginalFilename());
+				log.info("uploaded file path on server" + serverFile); BufferedOutputStream
+				stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+				stream.write(bytes); 
+				stream.close();
+				//lawfulIndivisualStolen.setFileName(file.getOriginalFilename());
+			} 
+
+			catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+		}
+
+		if(firFileName==null) {
+			log.info("fir file is empty");	
+		}
+		else {
+			try {
+
+				byte[] bytes = firFileName.getBytes();
+				String rootPath =urlToUpload.getValue()+lawfulIndivisualStolen.getTxnId()+"/"; 
+				File tmpDir = new File(rootPath+firFileName.getOriginalFilename());
+				boolean exists = tmpDir.exists();
+				if(exists) {
+
+				Path temp = Files.move 
+				(Paths.get(urlToUpload.getValue()+"/"+lawfulIndivisualStolen.getTxnId()+"/"+firFileName.getOriginalFilename()), 
+				Paths.get(urlToMove.getValue()+movedFileTime+"_"+firFileName.getOriginalFilename())); 
+				String movedPath=urlToMove.getValue()+movedFileTime+"_"+firFileName.getOriginalFilename();	
+
+				log.info("file is already exist, moved to this "+movedFileTime+"_"+movedPath+" path. ");
+				tmpDir.delete();
+				}
+				
+				File dir = new File(rootPath + File.separator);
+
+				if (!dir.exists()) dir.mkdirs();
+				// Create the file on server 
+				File serverFile = new File(rootPath+firFileName.getOriginalFilename());
+				log.info("uploaded file path on server" + serverFile); BufferedOutputStream
+				stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+				stream.write(bytes); 
+				stream.close();
+				//lawfulIndivisualStolen.setFileName(file.getOriginalFilename());
+			} 
+			catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
 		}
 		log.info("request passed to the update stolen  api"+lawfulIndivisualStolen);
 		GenricResponse response = null;
@@ -342,5 +493,5 @@ public class LawfulFormController
 		}
 		return response;
 	}
-	
+
 }

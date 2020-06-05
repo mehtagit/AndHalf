@@ -2,8 +2,12 @@ package org.gl.ceir.CeirPannelCode.Controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Feignclient.GsmaFeignClient;
+import org.gl.ceir.CeirPannelCode.Model.AddMoreFileModel;
 import org.gl.ceir.CeirPannelCode.Model.Dropdown;
 import org.gl.ceir.CeirPannelCode.Model.Tag;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
@@ -45,7 +49,6 @@ public class ProjectDropdownController {
 	@GetMapping("getDropdownList/{tag}")
 	public List<Dropdown> getTaxPaidStatus(@PathVariable("tag") String tag) {
 		List<Dropdown> dropdown = feignCleintImplementation.taxPaidStatusList(tag);
-		log.info("DROPDOWN::::::::"+dropdown);
 		return dropdown;
 	}
 	
@@ -60,12 +63,8 @@ public class ProjectDropdownController {
 	@ResponseBody
 	@GetMapping("dataByTag/{tag}/")
 	public Dropdown dataByTag(@PathVariable("tag") String tag) {
-		log.info("inside data by tag controller");
 		Tag tagData=new Tag(tag);
-		log.info("tag from form: "+tag);
 		Dropdown dropdown = feignCleintImplementation.dataByTag(tagData);
-		log.info("data by tag from api =  "+dropdown);
-		log.info("exit from data by tag controller");
 		return dropdown;
 	}
 	
@@ -109,4 +108,14 @@ public class ProjectDropdownController {
 		}
 
 	
+	@GetMapping("/addMoreFile/{tag}") 
+	public @ResponseBody AddMoreFileModel addMoreFileControler (@PathVariable("tag") String tag)  {
+		log.info("request send to the addMore Count api="+tag);
+		AddMoreFileModel addmore = new AddMoreFileModel();
+		addmore.setTag(tag);
+		AddMoreFileModel response= feignCleintImplementation.addMoreBuutonCount(addmore);
+		log.info("response from addMore Count api "+response);
+		return response;
+
+		}
 }

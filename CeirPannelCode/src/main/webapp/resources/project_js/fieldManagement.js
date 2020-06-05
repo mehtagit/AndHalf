@@ -57,7 +57,12 @@
 					"featureId":parseInt(featureId),
 					"userTypeId": parseInt($("body").attr("data-userTypeID")),
 					"userType":$("body").attr("data-roleType"),
-					"tag": window.tag_val
+					"tag": window.tag_val,
+					"userId":parseInt(userId),
+					"featureId":parseInt(featureId),
+					"userTypeId": parseInt($("body").attr("data-userTypeID")),
+					"userType":$("body").attr("data-roleType"),
+					"username" : $("body").attr("data-selected-username")
 			}				
 			if(lang=='km'){
 				var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
@@ -93,13 +98,16 @@
 					});
 
 					$('div#initialloader').delay(300).fadeOut('slow');
-						$('#fieldManagementLibraryTable input').unbind();
-						$('#fieldManagementLibraryTable input').bind('keyup', function (e) {
-							if (e.keyCode == 13) {
-								table.search(this.value).draw();
-							}
-
-						});
+					$('.dataTables_filter input')
+				       .off().on('keyup', function(event) {
+				    	   if(event.keyCode == 8 && !textBox.val() || event.keyCode == 46 && !textBox.val() || event.keyCode == 83 && !textBox.val()) {
+					    
+					            }
+				    		if (event.keyCode === 13) {
+				    			 table.search(this.value.trim(), false, false).draw();
+				    		}
+				          
+				       });
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
 					
@@ -153,7 +161,7 @@
 									"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
 
 									"<select id="+dropdown[i].id+" class='select2 initialized'>"+
-									"<option value=''>"+dropdown[i].title+
+									"<option value=null selected>"+dropdown[i].title+
 									"</option>"+
 									"</select>"+
 									"</div>"+
@@ -230,7 +238,9 @@
 	}
 
 		function AddField(){
-			$('#addTags').openModal();
+			$('#addTags').openModal({
+		        dismissible:false
+		    });
 			$('#tag').val(window.tag_val);	
 			var tagDropDown =  document.getElementById("tag");
 			var displayName = tagDropDown.options[tagDropDown.selectedIndex].text;
@@ -249,6 +259,11 @@
 					  "tagId": $('#tagId').val(),
 					  "value": $('#addValue').val(),
 					  "description" : $('#description').val(),
+					  "userId":parseInt(userId),
+					  "featureId":parseInt(featureId),
+					  "userTypeId": parseInt($("body").attr("data-userTypeID")),
+					  "userType":$("body").attr("data-roleType"),
+					  "username" : $("body").attr("data-selected-username")
 				}
 		
 		console.log("request------------->" +JSON.stringify(request))
@@ -260,7 +275,9 @@
 			type : 'POST',
 			success : function(data, textStatus, jqXHR) {
 					console.log(JSON.stringify(data));
-					$("#confirmField").openModal();
+					$("#confirmField").openModal({
+				        dismissible:false
+				    });
 			},
 			error : function(jqXHR, textStatus, errorThrown) {
 				console.log("error in ajax")
@@ -280,7 +297,12 @@
 		
 			var request ={
 					  "id" : parseInt(Id),
-					  "userId":parseInt(userId)
+					  "userId":parseInt(userId),
+					  "userId":parseInt(userId),
+					  "featureId":parseInt(featureId),
+					  "userTypeId": parseInt($("body").attr("data-userTypeID")),
+					  "userType":$("body").attr("data-roleType"),
+					  "username" : $("body").attr("data-selected-username")
 				}
 			$.ajax({
 				url: './fieldViewByID',
@@ -290,7 +312,9 @@
 				contentType : 'application/json; charset=utf-8',
 				success: function (data, textStatus, jqXHR) {
 						var result = data.data
-						$("#editTags").openModal();
+						$("#editTags").openModal({
+					        dismissible:false
+					    });
 						FieldEditPopupData(result);
 						console.log(result)
 				},
@@ -308,6 +332,11 @@
 		$("#editInterp").val(result.interp);
 		$("#editFieldId").val(result.tagId);
 		$("#editdisplayName").val(result.displayName);
+		
+		$("label[for='editdescription']").addClass('active');
+		$("label[for='editInterp']").addClass('active');
+		$("label[for='editFieldId']").addClass('active');
+		
 	}
 	
 	
@@ -322,7 +351,12 @@
 		  "id": parseInt($("#editId").val()),
 		  "interp": $("#editInterp").val(),
 		  "tag": $("#Edittag").val(),
-		  "tagId": $("#editFieldId").val()
+		  "tagId": $("#editFieldId").val(),
+		  "userId":parseInt(userId),
+		  "featureId":parseInt(featureId),
+		  "userTypeId": parseInt($("body").attr("data-userTypeID")),
+		  "userType":$("body").attr("data-roleType"),
+		  "username" : $("body").attr("data-selected-username")
 		  //"value":$("#editValue").val()
 		}
 		
@@ -337,7 +371,9 @@
 			
 				console.log("Updated data---->" +data)
 				$("#editTags").closeModal();	
-				$("#updateFieldsSuccess").openModal();
+				$("#updateFieldsSuccess").openModal({
+			        dismissible:false
+			    });
 				
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
@@ -354,7 +390,9 @@
 	
 	
 	function DeleteFieldRecord(id){
-		$("#DeleteFieldModal").openModal();
+		$("#DeleteFieldModal").openModal({
+	        dismissible:false
+	    });
 		$("#deleteFieldId").val(id);
 		
 	}	
@@ -364,7 +402,12 @@
 	function confirmantiondelete(){
 		var request ={
 				"userId" : $("body").attr("data-userID"),
-				"id"  : parseInt($("#deleteFieldId").val())
+				"id"  : parseInt($("#deleteFieldId").val()),
+				"userId":parseInt(userId),
+				"featureId":parseInt(featureId),
+				"userTypeId": parseInt($("body").attr("data-userTypeID")),
+				"userType":$("body").attr("data-roleType"),
+				"username" : $("body").attr("data-selected-username")
 		}
 		console.log(JSON.stringify(request));
 		$.ajax({
@@ -376,7 +419,9 @@
 			success : function(data, textStatus, xhr) {
 				console.log(data);
 				$("#DeleteFieldModal").closeModal();
-				$("#closeDeleteModal").openModal();
+				$("#closeDeleteModal").openModal({
+			        dismissible:false
+			    });
 				
 				$("#materialize-lean-overlay-3").css("display","none");
 			},

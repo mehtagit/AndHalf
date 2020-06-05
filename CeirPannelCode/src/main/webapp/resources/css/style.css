@@ -13,42 +13,93 @@
 /*----------------------------------------
     General Layout Style
   ------------------------------------------*/
-/* FIREFOX FIX OF UGLY SELECT BOXES */
-@supports (-moz-appearance:none) {
-
-  SELECT
-  {
-  -moz-appearance:none !important;
-  background: transparent url('../images/dropdownIcon.png') right center no-repeat !important;
-  background-position: calc(100% - 5px) center !important;
-  line-height:1;
-  
-  }
+@
+supports (-moz-appearance:none ) {select.browser-default {
+	display: block;
+	outline: transparent;
+	box-shadow: none;
+}
 
 }
-  
+select::-ms-expand {
+	border: none;
+	background-image: $url('../images/dropdownIcon.png') !important;
+	background: transparent url('../images/dropdownIcon.png') right center
+		no-repeat !important;
+	background-position: calc(100% - 5px) center !important;
+	background-repeat: no-repeat;
+}
+
+@media ( -webkit-min-device-pixel-ratio : 0) {
+	select {
+		-webkit-appearance: none;
+		background-image: $url('../images/dropdownIcon.png') !important;
+		background: transparent url('../images/dropdownIcon.png') right center
+			no-repeat !important;
+		background-position: calc(100% - 5px) center !important;
+		background-repeat: no-repeat;
+	}
+}
+
 body {
 	background-color: #f9f9f9;
 }
 
+.modal {
+	background-color: #fff; &. modal-fixed-header { padding : 0;
+	height: 70%; . modal-header { border-top : 1px solid rgba( 0, 0, 0, 0.1
+	);
+	position: absolute;
+	top: 0;
+}
+
+.modal-header {
+	border-radius: 0 0 2px 2px; //
+	background-color: #fafafa;
+	padding: 4px 6px;
+	height: 56px;
+	width: 100%;
+}
+
+.modal-content {
+	position: absolute;
+	top: 56px;
+	height: calc(100% - 56px);
+	max-height: 100%;
+	width: 100%;
+	overflow-y: auto;
+}
+
+}
+}
 #main {
 	padding-left: 240px;
 }
-
-
 
 footer.page-footer {
 	padding-top: 0px;
 }
 
-select {
+/* select {
 	background-color: transparent;
 	width: 100%;
-	/* padding: 5px; */
+	padding: 5px;
 	border: none;
 	border-radius: 2px;
 	height: 2.7rem;
 	border-bottom: 1px solid #9e9e9e;
+}
+ */
+select {
+	background-color: transparent;
+	width: 100%;
+	/*      padding: 5px;  */
+	border: none;
+	border-radius: 2px;
+	height: 2.7rem;
+	border-bottom: 1px solid #9e9e9e;
+	text-overflow: ellipsis;
+	white-space: normal;
 }
 
 @media only screen and (max-width: 425px) {
@@ -317,26 +368,92 @@ li.home:before {
 100%
 {
 -webkit-transform
-:
- 
-rotate
-(360deg);
 
-      
+
+
+
+
+
+:
+
+
+
+ 
+
+
+
+rotate
+
+
+
+
+
+
+(360
+deg
+
+
+
+
+);
 -ms-transform
-:
- 
-rotate
-(360deg);
 
-      
+
+
+
+
+
+:
+
+
+
+ 
+
+
+
+rotate
+
+
+
+
+
+
+(360
+deg
+
+
+
+
+);
 transform
-:
- 
-rotate
-(360deg);
 
-    
+
+
+
+
+
+:
+
+
+
+ 
+
+
+
+rotate
+
+
+
+
+
+
+(360
+deg
+
+
+
+
+);
 }
 }
 @
@@ -349,26 +466,92 @@ keyframes spin { 0% {
 100%
 {
 -webkit-transform
-:
- 
-rotate
-(360deg);
 
-      
+
+
+
+
+
+:
+
+
+
+ 
+
+
+
+rotate
+
+
+
+
+
+
+(360
+deg
+
+
+
+
+);
 -ms-transform
-:
- 
-rotate
-(360deg);
 
-      
+
+
+
+
+
+:
+
+
+
+ 
+
+
+
+rotate
+
+
+
+
+
+
+(360
+deg
+
+
+
+
+);
 transform
-:
- 
-rotate
-(360deg);
 
-    
+
+
+
+
+
+:
+
+
+
+ 
+
+
+
+rotate
+
+
+
+
+
+
+(360
+deg
+
+
+
+
+);
 }
 }
 .loaded #loader-wrapper {
@@ -421,12 +604,11 @@ h1.logo-wrapper {
 	margin: 0;
 }
 
-@media only screen and(max-width: 768px){
-	
-h1.logo-wrapper {
-	margin: 0;
-	font-size: 18px;
-}
+@media only screen and(max-width: 768px) {
+	h1.logo-wrapper {
+		margin: 0;
+		font-size: 18px;
+	}
 }
 
 h1 span.logo-text {
@@ -446,19 +628,17 @@ header .brand-logo {
 	padding: 8px 20px;
 }
 
-@media only screen and(max-width: 768px){
-header .brand-logo {
-    margin: 0;
-    padding: 12px 0 !important;
-    font-size: 18px !important;
-    /* margin-left: -40px; */
+@media only screen and(max-width: 768px) {
+	header .brand-logo {
+		margin: 0;
+		padding: 12px 0 !important;
+		font-size: 18px !important;
+		/* margin-left: -40px; */
+	}
+	.text-right.px-0.ml-3.my-auto a img.darken-1 {
+		margin-left: 50px !important;
+	}
 }
-
-.text-right.px-0.ml-3.my-auto a img.darken-1 {
-    margin-left: 50px !important;
-}
-}
-
 
 header .brand-logo img {
 	width: 172px;
@@ -487,18 +667,16 @@ header .brand-logo img {
 		top: 120px !important;
 	}
 } */
-
-@media only screen and (max-width: 768px){
+@media only screen and (max-width: 768px) {
 	ul#chat-out.right {
-    right: 0;
-    position: absolute;
-    top: 64px;
-    height: 64px;
-}
-
-i.mdi-action-account-circle {
-    margin-top: -14px;
-}
+		right: 0;
+		position: absolute;
+		top: 64px;
+		height: 64px;
+	}
+	i.mdi-action-account-circle {
+		margin-top: -14px;
+	}
 }
 
 @media only screen and(max-width: 768px)and(min-width:480px) {
@@ -621,11 +799,103 @@ input.header-search-input:focus {
 	display: none;
 }
 
-.search-out input[type=text]:focus:not ([readonly] ) {
-	border-bottom: 1px solid #fff !important;
-	box-shadow: none;
-}
+.search-out
 
+
+ 
+
+
+input
+
+
+
+
+[
+type
+=
+text
+]
+
+
+
+
+:focus
+
+
+
+
+:not
+
+
+ 
+
+
+(
+[
+readonly
+]
+
+
+ 
+
+
+)
+{
+border-bottom
+
+
+
+
+:
+
+
+ 
+
+
+1
+px
+
+
+ 
+
+
+solid
+
+
+ 
+
+
+#fff
+
+
+ 
+
+
+!
+important
+
+
+
+
+;
+box-shadow
+
+
+
+
+:
+
+
+ 
+
+
+none
+
+
+
+
+;
+}
 .search-out-text {
 	border-bottom: 1px solid #fff !important;
 }
@@ -725,7 +995,10 @@ nav ul li.no-hover:hover {
 
 ul.side-nav.leftside-navigation {
 	top: 56px;
-	overflow: hidden;
+	overflow-y: auto;
+	overflow-y: auto;
+	scrollbar-color: transparent transparent;
+	height: calc(100vh - 100px) !important;
 }
 
 @media only screen and(max-width: 660px) {
@@ -759,6 +1032,8 @@ ul.side-nav.leftside-navigation li.active {
 ul.side-nav.leftside-navigation li a {
 	font-size: 14px;
 	font-weight: 400;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
 ul.side-nav.leftside-navigation li.user-details {
@@ -2710,11 +2985,11 @@ div#initialloader {
 	text-align: center;
 	letter-spacing: .5px;
 	transition: 0.2s ease-out;
-    cursor: pointer;
+	cursor: pointer;
 }
 
 i.fa.fa-file-excel-o {
-    margin-left: 4px;
+	margin-left: 4px;
 }
 
 @media only screen and (max-width: 425px) {
@@ -2876,12 +3151,10 @@ div#viewuplodedModel {
 	padding-right: 10px;
 }
 
-
-
-@media only screen and (max-width: 992px) and(min-width: 786px){
+@media only screen and (max-width: 992px) and(min-width: 786px) {
 	img.darken-1.my-2 {
-	margin-left:50px;
-}
+		margin-left: 50px;
+	}
 }
 
 .full-screen-modal {
@@ -2906,34 +3179,108 @@ div#viewuplodedModel {
 .button-div {
 	padding: 20px 0;
 }
- a.modal-close.waves-effect.waves-green.btn-flat {
-    position: absolute;
-    top: -10px;
-    right: -10px;
-    background-color: #80cbf7;
-    border-radius: 100px;
+
+a.modal-close.waves-effect.waves-green.btn-flat {
+	position: absolute;
+	top: -10px;
+	right: -10px;
+	background-color: #80cbf7;
+	border-radius: 100px;
 }
 
-
-.document-Type{
-    margin-right: 50px;
-    text-transform: uppercase;
-        font-size: 12px;
-	}
-	
-	
-	.upload-file-label{
-       color: #000;
-    margin-top: 0;
-    font-size: 0.9rem;
+.document-Type {
+	margin-right: 50px;
+	text-transform: uppercase;
+	font-size: 12px;
 }
+
+.upload-file-label {
+	color: #000;
+	margin-top: 0;
+	font-size: 0.9rem;
+}
+
 .endUser_remove_field.btn.right.btn-info {
-cursor: pointer;
-background-color: red;
-margin-right: 1.1%;
-margin-bottom: 5px;
+	cursor: pointer;
+	background-color: red;
+	margin-right: 1.1%;
+	margin-bottom: 5px;
 }
+
 thead {
-background: #529dba !important;
-color: white;
+	background: #529dba !important;
+	color: white;
+}
+
+.grievance-reply-msg {
+	max-width: 85%;
+	max-height: 50px;
+	overflow-y: auto;
+	min-height: 1.2rem;
+}
+
+.onEditModalTitle {
+	color: red;
+	font-size: 12px;
+	position: absolute;
+	margin: 0;
+	top: 55px;
+	right: 0;
+	width: 275px;
+}
+
+td.dateDiv {
+	white-space: nowrap;
+}
+
+.nidValidationMsg {
+	color: red;
+	font-size: 12px;
+	position: absolute;
+	margin: 0;
+	top: 135px;
+}
+
+.imgPreviewLink {
+	position: absolute;
+	top: 30px;
+	right: 10px;
+}
+
+label#nId {
+	width: 95%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+div#modalMessageBody {
+	text-align: center;
+	margin-top: 12px;
+}
+
+div#error_Modal {
+	width: 550px;
+	height: 50px;
+	margin-top: 14%;
+}
+
+div#modalMessageBodyReg {
+	text-align: center;
+	margin-top: 12px;
+}
+
+div#error_Modal_reg {
+	width: 550px;
+	height: 50px;
+	margin-top: 14%;
+}
+
+.scrollDivHeight {
+	height: 50px;
+}
+
+.modal-content-style {
+	margin-top: 5px;
+	overflow-y: scroll;
 }

@@ -1,4 +1,5 @@
 var period= $("body").attr("data-period");	
+var sourceParam="";
 var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 
 		$.i18n().locale = lang;
@@ -16,13 +17,14 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 			errorOccured=$.i18n('errorMsg');
 			operationNotAllowed=$.i18n('operationnotallowed');
 			stockDeleted=$.i18n('stockDeleted');
-			console.log("done"+stockDeleted);
+			
 		});
 
 
 	$(document).ready(function(){
 		$('div#initialloader').fadeIn('fast');
 			filter(lang);
+		
 			sessionStorage.removeItem("session-value");
 		pageRendering()
 	});
@@ -40,11 +42,15 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 	//*******************************************View Pop up data *************************************************************************************************
 	function viewUploadedStockDetails(txnId){
 
-		$("#viewStockModal").openModal();
+		var userType=$("body").attr("data-roleType");
+		$('#viewStockModal').openModal({
+	    	   dismissible:false
+	       });
+		
 		var role = currentRoleType == null ? roleType : currentRoleType;
 
 		$.ajax({
-			url : "./openStockPopup?reqType=editPage&txnId="+txnId+'&role='+role,
+			url : "./openStockPopup?reqType=editPage&txnId="+txnId+'&role='+role+'&userType='+userType+"&userId="+userId,
 			dataType : 'json',
 			contentType : 'application/json; charset=utf-8',
 			type : 'GET',
@@ -60,15 +66,42 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 
 
 	function setViewPopupData(data){
-		console.log("_________________++++++++++"+data)
-
+		var  assigneIdLabel=$.i18n('assigneIdLabel');
+		 var assigneNameLabel=$.i18n('assigneNameLabel');
+		
+ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType"); 
+		if(currentRoleTypeAssignei=='Manufacturer')
+			{
+			
+			$("#supplierIdDiv").css("display", "none"); 
+			$("#supplierNameDiv").css("display", "none");
+			$("#invoiceNumberDiv").css("display", "none");
+			}
+		else if(currentRoleTypeAssignei=='Custom'){
+			$('#SupplierIdLabel').text('');
+			$('#SupplierIdLabel').text(assigneIdLabel);
+		
+			$('#SupplierNameLabel').text('');
+			$('#SupplierNameLabel').text(assigneNameLabel);
+			
+			$("#editSupplierIdDiv").css("display", "block"); 
+			$("#editSupplierNameDiv").css("display", "block");
+			$("#editSupplierNameDiv").css("display", "block");
+		}
+		else {
+			$("#supplierIdDiv").css("display", "block"); 
+			$("#supplierNameDiv").css("display", "block");
+			$("#invoiceNumberDiv").css("display", "block");
+		}
 		$("#SupplierId").val(data.supplierId);
 		$("#SupplierName").val(data.suplierName);
 		$("#InvoiceNumber").val(data.invoiceNumber);
 		$("#Quantity").val(data.quantity);
 		$("#TransactionId").val(data.txnId);
 		$("#csvUploadFileName").val(data.fileName);
-
+		$("#withdrawnRemark").val(data.remarks);
+		$("#viewdevicequantity").val(data.deviceQuantity);
+		$("label[for='viewdevicequantity']").addClass('active');
 
 	}
 
@@ -78,29 +111,53 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 	//***************************************** start edit Pop up data ***********************************************************************************************
 
 	function EditUploadedStockDetails(txnId){ 
-
 		var role = currentRoleType == null ? roleType : currentRoleType;
-
+		var userType=$("body").attr("data-roleType");
 		$.ajax({
-			url : "./openStockPopup?reqType=editPage&txnId="+txnId+'&role='+role,
+			url : "./openStockPopup?reqType=editPage&txnId="+txnId+'&role='+role+'&userType='+userType+"&userId="+userId,
 			dataType : 'json',
 			contentType : 'application/json; charset=utf-8',
 			type : 'GET',
 			success : function(data) {
 				console.log(data)
 				setEditPopupData(data) 
+				console.log(url)
 			},
 			error : function() {
 				//alert("Failed");
 			}
 		});
 
-		$("#editStockModal").openModal();
+		 $('#editStockModal').openModal({
+	    	   dismissible:false
+	       });
 	}
 
 
 	function setEditPopupData(data){
+		var  assigneIdLabel=$.i18n('assigneIdLabel');
+		 var assigneNameLabel=$.i18n('assigneNameLabel');
+
 		console.log()
+var currentRoleTypeAssignei = $("body").attr("data-selected-roleType"); 		
+		if(currentRoleTypeAssignei=='Manufacturer')
+			{
+			
+			$("#editSupplierIdDiv").css("display", "none"); 
+			$("#editSupplierNameDiv").css("display", "none");
+			$("#editInvoiceNumberDiv").css("display", "none");
+			$("#editSupplierName").attr("required", false);
+			}
+		else if(currentRoleTypeAssignei=='Custom'){
+			$('#editSupplierIdLabel').text('');
+			$('#editSupplierIdLabel').text(assigneIdLabel);
+		
+			$('#editSupplierNameLabel').text('');
+			$('#editSupplierNameLabel').text(assigneNameLabel);
+			$("#editSupplierIdDiv").css("display", "block"); 
+			$("#editSupplierNameDiv").css("display", "block");
+			$("#editSupplierNameDiv").css("display", "block");
+		}
 		$("#editSupplierId").val(data.supplierId);
 		$("#editSupplierName").val(data.suplierName);
 		$("#editInvoiceNumber").val(data.invoiceNumber);
@@ -108,7 +165,8 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 		$("#editTransactionId").val(data.txnId);
 		$("#editcsvUploadFileName").val(data.fileName);
 		$("#existingFileName").val(data.fileName);
-		
+		$("#editdevicequantity").val(data.deviceQuantity);
+		$("label[for='editdevicequantity']").addClass('active');
 
 	} 
 
@@ -118,13 +176,15 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 
 	function editUploadStock(){
 
+		$('div#initialloader').fadeIn('fast');
 		var supplierId=$('#editSupplierId').val();
 		var supplierName=$('#editSupplierName').val();
 		var filename=$('#editcsvUploadFileName').val();
 		var txnId=$('#editTransactionId').val();
 		var quantity=$('#editQuantity').val();
 		var InvoiceNumber=$('#editInvoiceNumber').val();
-
+		var editdevicequantity=$('#editdevicequantity').val();
+		
 		console.log(supplierName,supplierName,filename,txnId,quantity,InvoiceNumber);
 
 		var formData= new FormData();
@@ -136,7 +196,8 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 		formData.append('filename',filename);
 
 		formData.append('invoiceNumber',InvoiceNumber);
-
+		formData.append('deviceQuantity',editdevicequantity);
+		
 		console.log(JSON.stringify(formData));
 		console.log("*********");
 
@@ -147,10 +208,12 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 			processData: false,
 			contentType: false,
 			success: function (data, textStatus, jqXHR) {
-
+				$('div#initialloader').delay(300).fadeOut('slow');
 				console.log(data);
 				$('#editStockModal').closeModal();
-				$('#successUpdateStockModal').openModal();
+				 $('#successUpdateStockModal').openModal({
+			    	   dismissible:false
+			       });
 				if(data.errorCode==200){
 
 					$('#stockSucessMessage').text('');
@@ -183,7 +246,10 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 	//**************************************************** Delete Stock Modal *************************************************************************
 
 	function DeleteStockRecord(txnId){
-		$("#DeleteStockconfirmationModal").openModal();
+		
+		$('#DeleteStockconfirmationModal').openModal({
+	    	   dismissible:false
+	       });
 		$("#stockdeleteTxnId").text(txnId);
 	}
 
@@ -194,9 +260,15 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 		var stockRemark= $("#deleteStockremark").val();
 		console.log("roleType=="+role+" ==stockRemark=="+stockRemark);
 		var obj ={
+				"roleType":role,
 				"txnId" : txnId,
 				"userType":role,
-				"remarks":stockRemark
+				"remarks":stockRemark,
+				"userId":parseInt(userId),
+				"featureId":parseInt(featureId),
+				"userTypeId": parseInt($("body").attr("data-userTypeID")),
+				"userType":$("body").attr("data-roleType"),
+				"userName":$("body").attr("data-username")
 		}
 
 		$.ajax({
@@ -211,7 +283,9 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 				//$("#stockModalText").text(data.message);
 				$("#DeleteStockconfirmationModal").closeModal();
 
-				$("#closeDeleteModal").openModal();
+				$('#closeDeleteModal').openModal({
+			    	   dismissible:false
+			       });
 				if(data.errorCode == 0){
 					$("#stockModalText").text(stockDeleted);
 				}
@@ -222,7 +296,7 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 				console.log("Error");
 			}
 		});
-		
+		return false;
 		/* 
 	$(".lean-overlay").remove(); */ 
 
@@ -252,20 +326,34 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 		$(".lean-overlay").remove();
 
 	}
-
+/*	var sourceParam=$("body").attr("data-Source");*/
 	var sourceType =localStorage.getItem("sourceType");
 	var currentRoleType = $("body").attr("data-selected-roleType"); 
 	//alert("sourceType<><><><>"+sourceType);
-	//console.log("currentRoleType<><><><>"+currentRoleType);
-	function filter(lang){
+	
+	function filter(lang,sourceParam){
+		var filterSource= $("body").attr("data-filterSource");
+		console.log("filterSource<><><><>"+filterSource);
+	if(sourceParam==undefined)
+		{
+		sourceParam="menu";
+		}
+	if(filterSource==null)
+		{
+		sourceParam="menu";
+		}
+	else{
+		sourceParam=filterSource;
+	}
+	console.log("sourceParam= "+sourceParam);
 		if((currentRoleType=="Importer" || currentRoleType=="Retailer" || currentRoleType=="Distributor" || currentRoleType=="Manufacturer") && sourceType !="viaStock" ){
-		Datatable('headers?lang='+lang+'&type=stockHeaders','stockData');
+		Datatable('headers?lang='+lang+'&type=stockHeaders','stockData?source='+sourceParam);
 		}else if(currentRoleType=="Custom" && sourceType !="viaStock"){
-		Datatable('./headers?lang='+lang+'&type=customStockHeaders','stockData')
+		Datatable('./headers?lang='+lang+'&type=customStockHeaders','stockData?source='+sourceParam)
 		}else if(currentRoleType=="CEIRAdmin" && sourceType !="viaStock"){
-		Datatable('./headers?lang='+lang+'&type=adminStockHeaders','stockData')
+		Datatable('./headers?lang='+lang+'&type=adminStockHeaders','stockData?source='+sourceParam)
 		}else if((currentRoleType=="Importer"|| currentRoleType=="Retailer" || currentRoleType=="Distributor" || currentRoleType=="Custom") && sourceType =="viaStock"){
-		Datatable('./headers?lang='+lang+'&type=stockcheckHeaders','stockData?sourceType=viaStock')
+		Datatable('./headers?lang='+lang+'&type=stockcheckHeaders','stockData?sourceType=viaStock&source='+sourceParam)
 		}
 		localStorage.removeItem('sourceType');
 	}
@@ -281,19 +369,25 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 
 	function Datatable(url,dataUrl) {
 		var txn= (txnIdValue == 'null' && transactionIDValue == undefined)? $('#transactionID').val() : transactionIDValue;
+		
+		var filereduserType =  $('#userType').val() =='null' || $('#userType').val()==undefined ? null : $("#userType option:selected").text();
+		
 		var jsonObj = {
 				"endDate":$('#endDate').val(),
 				"startDate":$('#startDate').val(),
 				"roleType": role,
 				"userId": userId,
-				"userType" : role,
+				"userType" : $("body").attr("data-roleType"),
 				"featureId":featureId,
 				"userTypeId":$("body").attr("data-userTypeID"),
 				"txnId":txn,
-				"consignmentStatus":parseInt($('#StockStatus').val())
+				"consignmentStatus":parseInt($('#StockStatus').val()),
+				"displayName" : $('#name').val(),
+				"filteredUserType" : filereduserType,
+				"source":$("body").attr("data-Source")
 		}
 		if(lang=='km'){
-			var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
+			var langFile='./resources/i18n/khmer_datatable.json';
 		}
 
 		$.ajax({
@@ -331,6 +425,17 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 			
 				});
 				$('div#initialloader').delay(300).fadeOut('slow');
+				
+				$('.dataTables_filter input')
+			       .off().on('keyup', function(event) {
+			    	   if(event.keyCode == 8 && !textBox.val() || event.keyCode == 46 && !textBox.val() || event.keyCode == 83 && !textBox.val()) {
+				    
+				            }
+			    		if (event.keyCode === 13) {
+			    			 table.search(this.value.trim(), false, false).draw();
+			    		}
+			          
+			       });
 			}
 		}); 
 	}	
@@ -355,6 +460,8 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 			type: 'POST',
 			dataType: "json",
 			success: function(data){
+				data.userStatus == "Disable" ? $('#btnLink').addClass( "eventNone" ) : $('#btnLink').removeClass( "eventNone" );
+				
 				var elem='<p class="PageHeading">'+data.pageTitle+'</p>';
 				$("#pageHeader").append(elem);
 				var button=data.buttonList;
@@ -369,11 +476,16 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 								+"</label>"+
 								"<span	class='input-group-addon' style='color: #ff4081'>"+
 								"<i	class='fa fa-calendar' aria-hidden='true' style='float: right; margin-top: -37px;'>"+"</i>"+"</span>");
+						$( "#"+date[i].id ).datepicker({
+							dateFormat: "yy-mm-dd",
+							 maxDate: new Date()
+				        });
 					} 
 					else if(date[i].type === "text"){
 						$("#consignmentTableDIv").append("<div class='input-field col s6 m2' ><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
 
 					}
+					 
 				}
 	//			dynamic dropdown portion
 				var dropdown=data.dropdownList;
@@ -386,7 +498,7 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 								"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
 
 								"<select id="+dropdown[i].id+" class='select-wrapper select2  initialized'>"+
-								"<option>"+dropdown[i].title+
+								"<option value='null'>"+dropdown[i].title+
 								"</option>"+
 								"</select>"+
 								"</div>"+
@@ -435,9 +547,7 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 				}
 				
 			
-				$('.datepicker').datepicker({
-					dateFormat: "yy-mm-dd"
-					});
+				
 			}
 
 	//	$("#filterBtnDiv").append();
@@ -471,7 +581,10 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 
 
 	function markedstolen(){
-		$('#markAsMultipleStolen').openModal();
+		//$('#markAsMultipleStolen').openModal();
+		$('#markAsMultipleStolen').openModal({
+	    	   dismissible:false
+	       });
 
 	}
 
@@ -520,6 +633,13 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 
 			}
 		});
+		
+		$.getJSON('./registrationUserType', function(data) {
+			for (i = 0; i < data.length; i++) {
+				$('<option>').val(data[i].id).text(data[i].usertypeName)
+				.appendTo('#userType');
+			}
+		});
 	}
 
 	function ApproveStock(txnId)
@@ -527,12 +647,19 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 		var userType=$("body").attr("data-roleType");
 		if(userType=='Custom')
 			{
-			$('#ApproveStock').openModal();
+			//$('#ApproveStock').openModal();
+			$('#ApproveStock').openModal({
+		    	   dismissible:false
+		       });
+
 			$('#approveStockTxnId').text(txnId);
 			
 			}
 		else {
-			$('#ApproveStock').openModal();
+			//$('#ApproveStock').openModal();
+			$('#ApproveStock').openModal({
+		    	   dismissible:false
+		       });
 			$('#stockApproveMessage').text('');
 			$('#stockApproveMessage').text(stockTxn+" "+txnId);
 			$('#stockAppapprove').text('');
@@ -560,7 +687,10 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 			type : 'POST',
 			success : function(data) {
 				$('#ApproveStock').closeModal();
-				$('#confirmApproveStockModal').openModal();
+				//$('#confirmApproveStockModal').openModal();
+				$('#confirmApproveStockModal').openModal({
+			    	   dismissible:false
+			       });
 				console.log(data);
 				if(data.errorCode==0){
 
@@ -581,7 +711,10 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 	function disApproveStock(txnId)
 	{
 
-		$('#RejectStockModal').openModal();
+		//$('#RejectStockModal').openModal();
+		$('#RejectStockModal').openModal({
+	    	   dismissible:false
+	       });
 		$('#disaproveTxnId').text(txnId);
 		
 
@@ -608,7 +741,10 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 				
 				//setTimeout(function(){ $('#confirmRejectStock').openModal()}, 200);
 				$('#RejectStockModal').closeModal();
-				$('#confirmRejectStock').openModal();
+				//$('#confirmRejectStock').openModal();
+				$('#confirmRejectStock').openModal({
+			    	   dismissible:false
+			       });
 				if(data.errorCode==0){
 
 					$('#stockDisapproveSucessMessage').text('');
@@ -639,7 +775,7 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 		var roleType = role;
 		var currentRoleType = $("body").attr("data-stolenselected-roleType");	
 		var userType = role;
-		
+		var sourceParam=$("body").attr("data-Source");
 		//var userTypeId = $("body").attr("data-userTypeID");
 		var selectedRoleTypeId=$("body").attr("data-selectedRoleTypeId");
 		//alert("selectedRoleTypeId="+selectedRoleTypeId);
@@ -650,7 +786,7 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 	
 		if(isNaN(StockStatus))
 		{
-			StockStatus='';
+		StockStatus='';
 		console.log(" StockStatus=="+StockStatus);
 		}
 	
@@ -660,7 +796,7 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 		var pageSize =info.length;
 		console.log("--------"+pageSize+"---------"+pageNo);
 		console.log("stockStartDate  ="+stockStartDate+"  stockEndDate=="+stockEndDate+"  stockTxnId="+stockTxnId+" StockStatus ="+StockStatus+" roleType="+$("body").attr("data-roleType")+"  userType="+role);
-		window.location.href="./exportStock?stockStartDate="+stockStartDate+"&stockEndDate="+stockEndDate+"&stockTxnId="+stockTxnId+"&StockStatus="+StockStatus+"&userType="+userType+"&userTypeId="+selectedRoleTypeId+"&pageSize="+pageSize+"&pageNo="+pageNo+"&roleType="+roleType;
+		window.location.href="./exportStock?stockStartDate="+stockStartDate+"&stockEndDate="+stockEndDate+"&stockTxnId="+stockTxnId+"&StockStatus="+StockStatus+"&userType="+userType+"&userTypeId="+selectedRoleTypeId+"&pageSize="+pageSize+"&pageNo="+pageNo+"&roleType="+roleType+'&source='+sourceParam;
 	}
 	
 	function fileTypeValueChanges() {
@@ -671,17 +807,22 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 		var fileSize = ($("#editcsvUploadFile")[0].files[0].size);
 		fileSize = (Math.round((fileSize / 1024) * 100) / 100)
 	   if (uploadedFileName.length > 30) {
-	       $('#fileFormateModal').openModal();
+	     //  $('#fileFormateModal').openModal();
+	       $('#fileFormateModal').openModal({
+	    	   dismissible:false
+	       });
 	      
 	   } 
 		else if(ext!='csv')
 			{
-			$('#fileFormateModal').openModal();
-			 
+			  $('#fileFormateModal').openModal({
+		    	   dismissible:false
+		       }); 
 			}
-		else if(fileSize>='2000'){
-			$('#fileFormateModal').openModal();
-			 
+		else if(fileSize>='10000'){
+			  $('#fileFormateModal').openModal({
+		    	   dismissible:false
+		       });
 		}
 		else {
 			console.log("file formate is correct")
@@ -696,4 +837,81 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 		$('#fileFormateModal').closeModal();
 		
 		$("#editcsvUploadFileName").val(existingfile);
+	}
+
+	$("input[type=file]").keypress(function(ev) {
+	    return false;
+	    //ev.preventDefault(); //works as well
+
+	});
+
+	
+	function historyRecord(txnID){
+			console.log("txn id=="+txnID)
+			$("#tableOnModal").openModal({dismissible:false});
+			 var filter =[];
+			 var formData= new FormData();
+			 var ceirAdmin='';
+			 var userTypeValue=$("body").attr("data-roleType");
+			 if(userTypeValue=='CEIRAdmin')
+			 {
+				 var filterRequest={
+						 "columns":["created_on","modified_on","txn_id","user_type","role_type","stock_status","supplier_id","suplier_name",
+							 "quantity","device_quantity","invoice_number","file_name","remarks","previous_stock_status","id","assigner_id",
+							 "total_price","currency","user_id","ceir_admin_id"
+							 ],
+						"tableName": "stock_mgmt_aud",
+						"dbName" : "ceirconfig",
+						"txnId":txnID
+				}
+			 }
+			 else{
+				 var filterRequest={
+						 "columns":["created_on","modified_on","txn_id","user_type","role_type","stock_status","supplier_id","suplier_name",
+							 "quantity","device_quantity","invoice_number","file_name","remarks","previous_stock_status","id","assigner_id",
+							 "total_price","currency","user_id"
+							 ],
+						"tableName": "stock_mgmt_aud",
+						"dbName" : "ceirconfig",
+						"txnId":txnID
+				}
+			 }
+			 
+			
+			formData.append("filter",JSON.stringify(filterRequest));	
+			if(lang=='km'){
+				var langFile='../resources/i18n/khmer_datatable.json';
+			}
+
+			$.ajax({
+				url: 'Consignment/consignment-history',
+				type: 'POST',
+				data: formData,
+				processData: false,
+				contentType: false,
+				success: function(result){
+					var dataObject = eval(result);
+					$('#data-table-history').dataTable({
+						 "order" : [[1, "asc"]],
+						 destroy:true,
+						"serverSide": false,
+						 orderCellsTop : true,
+						"ordering" : false,
+						"bPaginate" : true,
+						"bFilter" : false,
+						"scrollX": true,
+						"bInfo" : true,
+						"bSearchable" : true,
+						 "data": dataObject.data,
+						 "columns": dataObject.columns
+					
+				    });
+					$('div#initialloader').delay(300).fadeOut('slow');
+			}
+				
+	});
+		
+			$('.datepicker').on('mousedown',function(event){
+			event.preventDefault();
+		});
 	}

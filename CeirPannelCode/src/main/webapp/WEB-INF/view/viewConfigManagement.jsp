@@ -1,3 +1,26 @@
+<%@ page import="java.util.Date" %>
+<%
+   response.setHeader("Cache-Control", "no-cache");
+	response.setHeader("Cache-Control", "no-store");
+	response.setDateHeader("Expires", 0);
+	response.setHeader("Pragma", "no-cache");
+	
+    /*   //200 secs
+	 session.setAttribute("usertype", null);  */
+/* 	 session.setMaxInactiveInterval(10); */
+	 int timeout = session.getMaxInactiveInterval();
+	
+	 long accessTime = session.getLastAccessedTime();
+	 long currentTime= new Date().getTime(); 
+	 System.out.println("accessTime========"+(accessTime));
+	 System.out.println("timeout========"+timeout);
+	 long dfd= accessTime +timeout;
+	 System.out.println("currentTime========"+currentTime);
+	 if( currentTime< dfd){
+	/*  response.setHeader("Refresh", timeout + "; URL = ../login");
+	 System.out.println("timeout========"+timeout); 
+	if (session.getAttribute("usertype") != null) { */
+%>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
@@ -66,7 +89,9 @@
 
 </head>
 <%-- <body data-roleType="${usertype}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}"> --%>
-<body data-roleType="${usertype}" data-userTypeID="${usertypeId}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${stolenselectedUserTypeId}">
+<body data-roleType="${usertype}" data-userTypeID="${usertypeId}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}" 
+	data-selected-username="${username}" 
+	data-stolenselected-roleType="${stolenselectedUserTypeId}">
 
 
 	<!-- START CONTENT -->
@@ -114,52 +139,44 @@
 
 			<div class="row">
 				<div class="row" style="margin-top:10px">
-					<div class="input-field col s12 m6 l6">
+				
 						<input type="text" name="tag" id="viewTag"
-							placeholder="tag" disabled
-							style="height: 28px;"> <label for="tag"><spring:message code="registration.tag" /></label>
-					</div>
-					
-					<div class="input-field col s12 m6">
-						<input type="text" id="viewtype" name="type"
-							placeholder="Type" maxlength="20" disabled style="height: 28px;">
-						<label for="type"><spring:message code="table.Type" /></label>
-					</div>	
-					
-					<div class="input-field col s12 m6" style="margin-top:30px">
-					<input type="text" id="viewValue" class="materialize-textarea" style="height: 22px;" placeholder="Value" readonly="readonly">
+							placeholder="tag" disabled hidden="hidden"> 
+				
+					<div class="input-field col s12 m6" style="margin-top:22px">
+					<input type="text" id="viewValue" class="materialize-textarea" placeholder="Value" readonly="readonly"  style="min-height:8rem" >
 					<label for="viewValue" class=""><spring:message code="registration.value" /></label>
 
 					</div>
 					
-
-					
-					<div class="row input_fields_wrap">
-					
-					<div class="input-field col s12 m6" style="margin-top:37px">
-					<textarea id="description" class="materialize-textarea" style="height: 22px;" placeholder="Description" readonly="readonly"></textarea>
+					<div class="input-field col s12 m6">
+					<textarea id="description" class="materialize-textarea" placeholder="Description" readonly="readonly" style="min-height:8rem"></textarea>
 					<label for="description" class=""><spring:message code="table.Description" /></label>
 
 					</div>
-
 					
-					</div>
-					<div class="row input_fields_wrap">	
+					
+					<div class="input-field col s12 m6"  style="margin-top:22px">
+						<input type="text" id="viewtype" name="type"
+							placeholder="Type" maxlength="20" disabled>
+						<label for="type"><spring:message code="table.Type" /></label>
+					</div>	
+					
 					<div class="input-field col s12 m6">
-					<textarea id="remarks" class="materialize-textarea" style="height: 22px;" placeholder="Remarks" readonly="readonly"></textarea>
+					<textarea id="remarks" class="materialize-textarea" placeholder="Remarks" readonly="readonly" style="min-height:8rem"></textarea>
 					<label for="remarks" class=""><spring:message code="input.remarks" /></label>
 
 					</div>
-					</div>
+				
 				</div>
 
 
-				<div class="row input_fields_wrap">
+			
 					<div class="col s12 m12 center" style="margin-top: 10px;">
-					<button class="btn modal-close" style="margin-left: 10px;"><spring:message code="modal.cancel" /></button>
+					<button class="btn modal-close" style="margin-left: 10px;"><spring:message code="modal.close" /></button>
 				</div>
 
-				</div>
+		
 			</div>
 		</div>
 	</div>
@@ -170,42 +187,39 @@
 	<div id="editAdminSystemModel" class="modal">
 		<h6 class="modal-header"><spring:message code="modal.EditConfiguration" /></h6>
 		<div class="modal-content">
-
+		<form action="" onsubmit="return updateSystem()">
 			<div class="row">
 				<div class="row">
 					<div class="input-field col s12 m6 l6">
 						<input type="text" name="Id" id="EditId"
-							placeholder="ID" disabled
-							style="height: 28px;" hidden> 
+							placeholder="ID" disabled hidden="hidden"> 
 					</div>
 					
 					<div class="input-field col s12 m6 l6">
 						<input type="text" name="tag" id="editTag"
-							placeholder="tag" disabled
-							style="height: 28px;" hidden>
+							placeholder="tag" disabled hidden ="hidden">
 					</div>
 				
 					<div class="input-field col s12 m6">
-					<textarea id="editValue" class="materialize-textarea" Placeholder="" style="height: 22px;"></textarea>
-					<label for="editValue" class=""><spring:message code="registration.value" /></label>
+					<textarea id="editValue" class="materialize-textarea" Placeholder="" title="Please enter alphabets and numbers upto 100 characters only" maxlength="100" required="required" style="min-height:8rem"></textarea>
+					<label for="editValue" class=""><spring:message code="registration.value" /> <span class="star">*</span></label>
 
 					</div>
 
 
 					<div class="input-field col s12 m6">
-					<textarea id="editdescription" class="materialize-textarea" Placeholder="" style="height: 22px;" disabled></textarea>
+					<textarea id="editdescription" class="materialize-textarea" Placeholder="" placeholder="" title="Please enter alphabets and numbers upto 200 characters only" maxlength="200" style="min-height:8rem"></textarea>
 					<label for="editdescription" class=""><spring:message code="registration.description" /></label>
 
 					</div>
 
-					<div class="input-field col s12 m6">
-						<input type="text" id="edittype" name="type"
-							placeholder="" maxlength="20"  style="height: 28px;" disabled>
+					<div class="input-field col s12 m6" style="margin-top: 22px;">
+						<input type="text" id="edittype" name="type" placeholder="" maxlength="20" disabled>
 						<label for="type"><spring:message code="table.Type" /></label>
 					</div>
 
 					<div class="input-field col s12 m6">
-					<textarea id="editremarks" class="materialize-textarea" style="height: 22px;" disabled></textarea>
+					<textarea id="editremarks" placeholder="Remarks" class="materialize-textarea" style="min-height:8rem" ></textarea>
 					<label for="editremarks" class=""><spring:message code="input.remarks" /></label>
 
 					</div>
@@ -214,12 +228,13 @@
 
 				<div class="row input_fields_wrap">
 					<div class="col s12 m12 center" style="margin-top: 10px;">
-					<button class="btn modal-close" style="margin-left: 10px;" onclick ="updateSystem()"><spring:message code="button.update" /></button>
-					<button class="btn modal-close" style="margin-left: 10px;"><spring:message code="button.cancel" /></button>
+					<button class="btn " type="submit" style="margin-left: 10px;"><spring:message code="button.update" /></button>
+					<button class="modal-close btn" type="button" style="margin-left: 10px;"><spring:message code="button.cancel" /></button>
 				</div>
 
 				</div>
 			</div>
+			</form>
 		</div>
 	</div>
 	
@@ -286,3 +301,17 @@
 		
 </body>
 </html>
+
+<%
+	} else {
+		/*  request.setAttribute("msg", "  *Please login first");
+		request.getRequestDispatcher("./index.jsp").forward(request, response); */
+%>
+<script language="JavaScript">
+	sessionStorage.setItem("loginMsg",
+			"*Session has been expired");
+	window.top.location.href = "./login";
+</script>
+<%
+	}
+%>

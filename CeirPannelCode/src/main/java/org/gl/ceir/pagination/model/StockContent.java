@@ -24,7 +24,7 @@ public class StockContent {
 	private String userType;
 	private Object totalPrice;
 	private Object remarks;
-	private String stateInterp;
+	private String stateInterp,deviceQuantity;
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 	public Integer getId() {
 		return id;
@@ -146,16 +146,60 @@ public class StockContent {
 	public void setAdditionalProperties(Map<String, Object> additionalProperties) {
 		this.additionalProperties = additionalProperties;
 	}
+	public String getDeviceQuantity() {
+		return deviceQuantity;
+	}
+	public void setDeviceQuantity(String deviceQuantity) {
+		this.deviceQuantity = deviceQuantity;
+	}
 	@Override
 	public String toString() {
-		return "StockContent [id=" + id + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", suplierName="
-				+ suplierName + ", supplierId=" + supplierId + ", invoiceNumber=" + invoiceNumber + ", txnId=" + txnId
-				+ ", fileName=" + fileName + ", userId=" + userId + ", user=" + user + ", roleType=" + roleType
-				+ ", quantity=" + quantity + ", stockStatus=" + stockStatus + ", previousStockStatus="
-				+ previousStockStatus + ", currency=" + currency + ", userType=" + userType + ", totalPrice="
-				+ totalPrice + ", remarks=" + remarks + ", stateInterp=" + stateInterp + ", additionalProperties="
-				+ additionalProperties + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("StockContent [id=");
+		builder.append(id);
+		builder.append(", createdOn=");
+		builder.append(createdOn);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
+		builder.append(", suplierName=");
+		builder.append(suplierName);
+		builder.append(", supplierId=");
+		builder.append(supplierId);
+		builder.append(", invoiceNumber=");
+		builder.append(invoiceNumber);
+		builder.append(", txnId=");
+		builder.append(txnId);
+		builder.append(", fileName=");
+		builder.append(fileName);
+		builder.append(", userId=");
+		builder.append(userId);
+		builder.append(", user=");
+		builder.append(user);
+		builder.append(", roleType=");
+		builder.append(roleType);
+		builder.append(", quantity=");
+		builder.append(quantity);
+		builder.append(", stockStatus=");
+		builder.append(stockStatus);
+		builder.append(", previousStockStatus=");
+		builder.append(previousStockStatus);
+		builder.append(", currency=");
+		builder.append(currency);
+		builder.append(", userType=");
+		builder.append(userType);
+		builder.append(", totalPrice=");
+		builder.append(totalPrice);
+		builder.append(", remarks=");
+		builder.append(remarks);
+		builder.append(", stateInterp=");
+		builder.append(stateInterp);
+		builder.append(", deviceQuantity=");
+		builder.append(deviceQuantity);
+		builder.append(", additionalProperties=");
+		builder.append(additionalProperties);
+		builder.append("]");
+		return builder.toString();
 	}
-
+	
 
 }

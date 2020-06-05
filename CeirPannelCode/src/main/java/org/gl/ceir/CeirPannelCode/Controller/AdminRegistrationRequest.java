@@ -7,12 +7,18 @@ import org.gl.ceir.CeirPannelCode.Feignclient.UserProfileFeignImpl;
 import org.gl.ceir.CeirPannelCode.Model.FileExportResponse;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.Registration;
+import org.gl.ceir.CeirPannelCode.Model.UserStatus;
+import org.gl.ceir.CeirPannelCode.Service.ProfileService;
+import org.gl.ceir.CeirPannelCode.Util.HttpResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
@@ -23,6 +29,9 @@ public class AdminRegistrationRequest {
 	
 	@Autowired
 	UserProfileFeignImpl userProfileFeignImpl; 
+	
+	@Autowired
+	ProfileService profileService;
 
 	@RequestMapping(value=
 		{"/registrationRequest"},method={org.springframework.web.bind.annotation.
@@ -42,17 +51,18 @@ public class AdminRegistrationRequest {
 				RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}
 			)
 	    public ModelAndView viewAdminUser(HttpSession session,@RequestParam(name="id") int id, @RequestParam(name="roles") String roles,@RequestParam(name="type") String asType) {
+		int userId=	(int) session.getAttribute("userid");
 		ModelAndView mv = new ModelAndView();
 		
-		log.info("ID------------>"+id+"--------- Roles------------->"+roles+"--------type------>"+asType);
+		log.info("ID----->"+id+"----- Roles----->"+roles+"----type------>"+asType+"----userId---->"+userId);
 		
 		roles = roles.replace("=", " ");
 		
-		Registration registration = userProfileFeignImpl.ViewAdminUser(id);
+		Registration registration = userProfileFeignImpl.ViewAdminUser(id, userId);
 		log.info("View registration API Response--------------->" +registration);
 		mv.addObject("registration", registration);
 		
-		log.info(" view trcInformation entry point."+registration+"---ID-----"+id); 
+		
 		
 	
 		if("TRC".equals(roles)) {
@@ -74,6 +84,9 @@ public class AdminRegistrationRequest {
 		}else if(("Importer".equals(roles) || "Distributor".equals(roles) || "Retailer".equals(roles)) && "Individual".equals(asType)){
 			log.info("-------------------->5");
 			mv.setViewName("viewIndividual");
+		}else if(("Manufacturer".equals(roles))  && "Company".equals(asType)){
+			log.info("-------------------->6");
+			mv.setViewName("viewManufacturer");
 		}
 		
 		log.info(" view trcInformation  exit point."); 
@@ -90,6 +103,7 @@ public class AdminRegistrationRequest {
 			@RequestParam(name="RegistrationEndDate",required = false) String RegistrationEndDate,
 			@RequestParam(name="asType",required = false) Integer asType,
 			@RequestParam(name="userRoleTypeId", required = false) Integer userRoleTypeId,
+			@RequestParam(name="featureId", required = false) Integer featureId,
 			@RequestParam(name="status",required = false) Integer status,
 			@RequestParam(name="pageSize") Integer pageSize,
 			@RequestParam(name="pageNo") Integer pageNo,
@@ -111,6 +125,7 @@ public class AdminRegistrationRequest {
 		filterRequest.setStatus(status);
 		filterRequest.setUserId(userId);
 		filterRequest.setUserType(userType);
+		filterRequest.setFeatureId(featureId);
 		log.info(" request passed to the exportTo Excel Api =="+filterRequest+" *********** pageSize"+pageSize+"  pageNo  "+pageNo);
 		Object response = userProfileFeignImpl.registrationRequest(filterRequest, pageNo, pageSize,file);
 		Gson gson= new Gson(); 
@@ -121,5 +136,11 @@ public class AdminRegistrationRequest {
 		
 	}
 	
+	@RequestMapping(value ="/adminChangeRequest",method = RequestMethod.POST)
+	@ResponseBody
+	public  HttpResponse changeUserStatus(@RequestBody UserStatus userStatus,HttpSession session) {
+		return profileService.changeUserStatusService(userStatus,session);
+		
+	}
 	
 }

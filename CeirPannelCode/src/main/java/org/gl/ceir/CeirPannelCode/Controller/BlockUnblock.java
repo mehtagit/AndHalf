@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Feignclient.GrievanceFeignClient;
+import org.gl.ceir.CeirPannelCode.Model.AddMoreFileModel;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.SingleImeiDetailsModel;
 import org.gl.ceir.CeirPannelCode.Model.StockUploadModel;
@@ -47,6 +48,10 @@ public class BlockUnblock {
 	
 	@Autowired
 	GrievanceFeignClient grievanceFeignClient;
+	
+	@Autowired
+	AddMoreFileModel addMoreFileModel,urlToUpload,urlToMove;
+	
 	
 	private final Logger log = LoggerFactory.getLogger(getClass());
 	ModelAndView mv = new ModelAndView();
@@ -92,6 +97,18 @@ public class BlockUnblock {
 		log.info("entry point in  save  single imei block");
 		int userId= (int) session.getAttribute("userid"); 
 		String roletype=session.getAttribute("usertype").toString();
+		//Integer operatorTypeId= (Integer) session.getAttribute("operatorTypeId");
+		
+		
+		String parsedOperatorTypeId=String.valueOf(session.getAttribute("operatorTypeId"));
+		Integer operatorTypeId=  Integer.valueOf(parsedOperatorTypeId);
+		if(operatorTypeId==null)
+		{
+		log.info("operator type id is null="+operatorTypeId);
+		operatorTypeId=-1;
+		log.info("operator type value set to -1 ="+operatorTypeId);
+		}
+	    log.info("operaot type id=="+operatorTypeId);
 		String blockTxnNumber=utildownload.getTxnId();
 		blockTxnNumber = "B"+blockTxnNumber;
 		log.info("Random transaction id number="+blockTxnNumber);
@@ -99,6 +116,7 @@ public class BlockUnblock {
 		singleImeiDetailsModel.setTxnId(blockTxnNumber);
 		singleImeiDetailsModel.setUserId(userId);
 		singleImeiDetailsModel.setUserType(roletype);
+		singleImeiDetailsModel.setOperatorTypeId(operatorTypeId);
 		log.info("request send to the save signle Imei block devices="+singleImeiDetailsModel);
 		response= grievanceFeignClient.singleImeiBlockDevices(singleImeiDetailsModel);
 		log.info("response from save signle Imei block devices="+response);
@@ -113,11 +131,35 @@ public class BlockUnblock {
 		int userId= (int) session.getAttribute("userid"); 
 		String roletype=session.getAttribute("usertype").toString();
 		String blockTxnNumber=utildownload.getTxnId();
+		Integer operatorTypeId;
+		String parsedOperatorTypeId=String.valueOf(session.getAttribute("operatorTypeId"));
+		log.info("operatorType id is null or not ---="+parsedOperatorTypeId);
+		if(parsedOperatorTypeId.equals("null"))
+		{
+			parsedOperatorTypeId=null;
+			operatorTypeId=null;
+			//Integer operatorTypeId=  Integer.valueOf(parsedOperatorTypeId);	
+		}
+		else {
+			 operatorTypeId=  Integer.valueOf(parsedOperatorTypeId);
+		}
+		
+		log.info("operatorTypeId==="+operatorTypeId);
+		
+		if(operatorTypeId==null)
+		{
+		log.info("operator type id is null="+operatorTypeId);
+		operatorTypeId=-1;
+		log.info("operator type value set to -1 ="+operatorTypeId);
+		}
+	    log.info("operaot type id=="+operatorTypeId);
 		blockTxnNumber = "B"+blockTxnNumber;
 		log.info("Random transaction id number="+blockTxnNumber);
 		singleImeiDetailsModel.setTxnId(blockTxnNumber);
 		singleImeiDetailsModel.setUserId(userId);
 		singleImeiDetailsModel.setUserType(roletype);
+		singleImeiDetailsModel.setRoleType(roletype);
+		singleImeiDetailsModel.setOperatorTypeId(operatorTypeId);
 		log.info("request send to the save signle Imei block devices="+singleImeiDetailsModel);
 		response= grievanceFeignClient.singleImeiBlockDevices(singleImeiDetailsModel);
 		log.info("response from save signle Imei block devices="+response);
@@ -135,8 +177,32 @@ public class BlockUnblock {
 		 * "B"+blockTxnNumber; log.info("Random transaction id number="+blockTxnNumber);
 		 * singleImeiDetailsModel.setTxnId(blockTxnNumber);
 		 */
+		Integer operatorTypeId;
+		String parsedOperatorTypeId=String.valueOf(session.getAttribute("operatorTypeId"));
+		log.info("operatorType id is null or not ---="+parsedOperatorTypeId);
+		if(parsedOperatorTypeId.equals("null"))
+		{
+			parsedOperatorTypeId=null;
+			operatorTypeId=null;
+			//Integer operatorTypeId=  Integer.valueOf(parsedOperatorTypeId);	
+		}
+		else {
+			 operatorTypeId=  Integer.valueOf(parsedOperatorTypeId);
+		}
+		
+		log.info("operatorTypeId==="+operatorTypeId);
+		//Integer operatorTypeId= (Integer) session.getAttribute("operatorTypeId"); 
+		if(operatorTypeId==null)
+		{
+		log.info("operator type id is null="+operatorTypeId);
+		operatorTypeId=-1;
+		log.info("operator type value set to -1 ="+operatorTypeId);
+		}
+	    log.info("operaot type id=="+operatorTypeId);
 		singleImeiDetailsModel.setUserId(userId);
 		singleImeiDetailsModel.setUserType(roletype);
+		singleImeiDetailsModel.setRoleType(roletype);
+		singleImeiDetailsModel.setOperatorTypeId(operatorTypeId);
 		log.info("request send to the upate signle Imei block devices="+singleImeiDetailsModel);
 		response= grievanceFeignClient.updateSingleImeiBlockDevices(singleImeiDetailsModel);
 		log.info("response from update signle Imei block devices="+response);
@@ -153,14 +219,37 @@ public class BlockUnblock {
 			  @RequestParam(name="file",required = false) MultipartFile file,@RequestParam(name="requestType",required = false) int requestType,
 			  @RequestParam(name="roleType",required = false) String roleType,  @RequestParam(name="sourceType",required = false) Integer sourceType,
 			  @RequestParam(name="userId",required = false) Integer userId,@RequestParam(name="qty",required = false) Integer qty,
-	
+			  @RequestParam(name="deviceQuantity",required = false) Integer deviceQuantity,
 			  @RequestParam(name="blockCategory",required = false) Integer deviceCategory,@RequestParam(name="remark",required = false) String remark, HttpSession session)
  {	
 		  log.info(" file stolen entry point .");
 		 
 		    StolenRecoveryModel stolenRecoveryModel= new StolenRecoveryModel(); 
 		    GenricResponse response= new GenricResponse();
-		    Integer operatorTypeId= (Integer) session.getAttribute("operatorTypeId"); 
+		  //  Integer operatorTypeId= (Integer) session.getAttribute("operatorTypeId"); 
+			Integer operatorTypeId;
+			String parsedOperatorTypeId=String.valueOf(session.getAttribute("operatorTypeId"));
+			log.info("operatorType id is null or not ---="+parsedOperatorTypeId);
+			if(parsedOperatorTypeId.equals("null"))
+			{
+				parsedOperatorTypeId=null;
+				operatorTypeId=null;
+				//Integer operatorTypeId=  Integer.valueOf(parsedOperatorTypeId);	
+			}
+			else {
+				 operatorTypeId=  Integer.valueOf(parsedOperatorTypeId);
+			}
+			
+			log.info("operatorTypeId==="+operatorTypeId);
+		    
+		    addMoreFileModel.setTag("system_upload_filepath");
+			urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
+		    if(operatorTypeId==null)
+		    {
+		    log.info("operator type id is null="+operatorTypeId);
+		    operatorTypeId=-1;
+		    log.info("operator type value set to -1 ="+operatorTypeId);
+		    }
 		    log.info("operaot type id=="+operatorTypeId);
 			String roletype=session.getAttribute("usertype").toString();
 			String stlnTxnNumber=utildownload.getTxnId();
@@ -168,7 +257,7 @@ public class BlockUnblock {
 			log.info("Random transaction id number="+stlnTxnNumber);
 		  	try {
 				byte[] bytes = file.getBytes();
-				String rootPath = filePathforUploadFile+stlnTxnNumber+"/";
+				String rootPath = urlToUpload.getValue()+stlnTxnNumber+"/";
 				File dir = new File(rootPath + File.separator);
 
 				if (!dir.exists()) 
@@ -201,7 +290,7 @@ public class BlockUnblock {
 			stolenRecoveryModel.setOperatorTypeId(operatorTypeId);
 			stolenRecoveryModel.setBlockCategory(deviceCategory);
 			stolenRecoveryModel.setRoleType(roletype);
-
+			stolenRecoveryModel.setDeviceQuantity(deviceQuantity);
 			log.info("request passed to the file stolen api ="+stolenRecoveryModel);
 			response=feignCleintImplementation.fileStolen(stolenRecoveryModel);
 			log.info("respondse from file stolen api="+response);
@@ -218,7 +307,7 @@ public class BlockUnblock {
 	  public @ResponseBody GenricResponse fileTypeRecovery( @RequestParam(name="file",required = false) MultipartFile file,@RequestParam(name="requestType",required = false) int requestType,
 			  @RequestParam(name="roleType",required = false) String roleType,  @RequestParam(name="sourceType",required = false) Integer sourceType,
 			  @RequestParam(name="userId",required = false) Integer userId,@RequestParam(name="qty",required = false) Integer qty,
-			 
+			  @RequestParam(name="deviceQuantity",required = false) Integer deviceQuantity,
 			  @RequestParam(name="blockCategory",required = false) Integer blockCategory,@RequestParam(name="remark",required = false) String remark,HttpSession session
 			  )
 	  {	
@@ -228,11 +317,38 @@ public class BlockUnblock {
 		  GenricResponse response= new GenricResponse();
 			String stlnTxnNumber=utildownload.getTxnId();
 			stlnTxnNumber = "B"+stlnTxnNumber;
-			int operatorTypeId= (int) session.getAttribute("operatorTypeId"); 
+			
+			addMoreFileModel.setTag("system_upload_filepath");
+			urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
+			
+			//int operatorTypeId= (int) session.getAttribute("operatorTypeId"); 
+			// Integer operatorTypeId= (Integer) session.getAttribute("operatorTypeId"); 
+			Integer operatorTypeId;
+			String parsedOperatorTypeId=String.valueOf(session.getAttribute("operatorTypeId"));
+			log.info("operatorType id is null or not ---="+parsedOperatorTypeId);
+			if(parsedOperatorTypeId.equals("null"))
+			{
+				parsedOperatorTypeId=null;
+				operatorTypeId=null;
+				//Integer operatorTypeId=  Integer.valueOf(parsedOperatorTypeId);	
+			}
+			else {
+				 operatorTypeId=  Integer.valueOf(parsedOperatorTypeId);
+			}
+			
+			log.info("operatorTypeId==="+operatorTypeId);
+			if(operatorTypeId==null)
+			 {
+			 log.info("operator type id is null="+operatorTypeId);
+			 operatorTypeId=-1;
+			 log.info("operator type value set to -1 ="+operatorTypeId);
+			 }
+			    log.info("operaot type id=="+operatorTypeId);
+				//String roletype=session.getAttribute("usertype").toString();
 			log.info("Random transaction id number="+stlnTxnNumber);
 		  	try {
 				byte[] bytes = file.getBytes();
-				String rootPath = filePathforUploadFile+stlnTxnNumber+"/";
+				String rootPath = urlToUpload.getValue()+stlnTxnNumber+"/";
 				File dir = new File(rootPath + File.separator);
 
 				if (!dir.exists()) 
@@ -264,6 +380,7 @@ public class BlockUnblock {
 			//stolenRecoveryModel.setDeviceCaegory(deviceCaegory);
 			stolenRecoveryModel.setBlockCategory(blockCategory);
 			stolenRecoveryModel.setOperatorTypeId(operatorTypeId);
+			stolenRecoveryModel.setDeviceQuantity(deviceQuantity);
 			log.info("request sent to fileRecovery api ="+stolenRecoveryModel);
 			response=feignCleintImplementation.fileRecovery(stolenRecoveryModel);
 			log.info("request sent to file Recovery api ="+response);
@@ -309,21 +426,21 @@ public class BlockUnblock {
 	 */
 		
 		@RequestMapping(value="/openbulkView",method ={org.springframework.web.bind.annotation.RequestMethod.GET})
-		public @ResponseBody StolenRecoveryModel openBulkFile(@RequestParam(name="reqType") String reqType,@RequestParam(name="txnId",required = false) String txnId,@RequestParam(name="singleDeivce",required = false) String singleDeivce,HttpSession session)
+		public @ResponseBody Object openBulkFile(@RequestParam(name="reqType") Integer reqType,@RequestParam(name="txnId",required = false) String txnId,@RequestParam(name="singleDeivce",required = false) String singleDeivce,HttpSession session)
 		{
 			log.info("entry point of  fetch block/unclock devices in the bases of transaction id .");
 			StolenRecoveryModel viewbulkDevices= new StolenRecoveryModel();
 			int userId= (int) session.getAttribute("userid"); 
 			String roletype=session.getAttribute("usertype").toString();
-			StolenRecoveryModel stolenRecoveryModel;
 			viewbulkDevices.setTxnId(txnId);
 			viewbulkDevices.setUserId(userId);
 			viewbulkDevices.setRoleType(roletype);
+			viewbulkDevices.setRequestType(reqType);
 			
 			log.info("request passed to the fetch Device api="+viewbulkDevices);
-			stolenRecoveryModel=feignCleintImplementation.fetchBulkDeviceByTxnId(viewbulkDevices);
+			Object ds=feignCleintImplementation.fetchBulkDeviceByTxnId(viewbulkDevices);
 			//log.info("response from fetch stock api="+stockUploadModelResponse);
-				return stolenRecoveryModel;
+				return ds;
 		}
 		
 //******************************************************* fetch singleImei details through txnId************************************************************		

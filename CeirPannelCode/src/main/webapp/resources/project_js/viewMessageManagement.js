@@ -21,12 +21,15 @@ function messageManagementDatatable(){
 	var filterRequest={
 			"endDate":$('#endDate').val(),
 			"startDate":$('#startDate').val(),
+			"tag":$('#parametername').val(),
+			"channel" : parseInt($('#channel').val()),
 			"userId":parseInt(userId),
 			"featureId":parseInt(featureId),
 			"userTypeId": parseInt($("body").attr("data-userTypeID")),
 			"userType":$("body").attr("data-roleType"),
-			"tag":$('#parametername').val(),
-			"channel" : parseInt($('#channel').val())
+			"userName" : $("body").attr("data-selected-username"),
+			"username" : $("body").attr("data-selected-username"),
+			"roleType":$("body").attr("data-roleType")
 	}
 	
 	$.ajax({
@@ -63,6 +66,17 @@ function messageManagementDatatable(){
 
 		        ]
 			});
+			$('div#initialloader').delay(300).fadeOut('slow');
+			$('.dataTables_filter input')
+		       .off().on('keyup', function(event) {
+		    	   if(event.keyCode == 8 && !textBox.val() || event.keyCode == 46 && !textBox.val() || event.keyCode == 83 && !textBox.val()) {
+			    
+			            }
+		    		if (event.keyCode === 13) {
+		    			 table.search(this.value.trim(), false, false).draw();
+		    		}
+		          
+		       });
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
 			console.log("error in ajax");
@@ -97,13 +111,12 @@ function pageRendering(){
 			for(i=0; i<dropdown.length; i++){
 				var dropdownDiv=
 					$("#messageTableDiv").append("<div class='col s6 m2 l2 selectDropdwn'>"+
-							"<br>"+
 							"<div class='select-wrapper select2 form-control boxBorder boxHeight initialized'>"+
 							"<span class='caret'>"+"</span>"+
 							"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
 
 							"<select id="+dropdown[i].id+" class='select2 form-control boxBorder boxHeight initialized'>"+
-							"<option value='-1'>"+dropdown[i].title+
+							"<option value='' selected>"+dropdown[i].title+
 							"</option>"+
 							"</select>"+
 							"</div>"+
@@ -112,6 +125,7 @@ function pageRendering(){
 			
 			
 			$("#messageTableDiv").append("<div class='col s12 m2 l2'><button class='btn primary botton' type='button' id='submitFilter'></button></div>");
+			$("#messageTableDiv").append("<div class=' col s3 m2 l8'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportData()'>Export<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 			for(i=0; i<button.length; i++){
 				$('#'+button[i].id).text(button[i].buttonTitle);
 				$('#'+button[i].id).attr("onclick", button[i].buttonURL);
@@ -141,9 +155,17 @@ $('.datepicker').on('mousedown',function(event){
 
 
 function viewDetails(tag){
-	$("#viewMessageModel").openModal();
+	$("#viewMessageModel").openModal({
+        dismissible:false
+    });
 	var RequestData = {
-			"tag" : tag
+			"tag" : tag,
+			"userId":parseInt(userId),
+			"featureId":parseInt(featureId),
+			"userTypeId": parseInt($("body").attr("data-userTypeID")),
+			"userType":$("body").attr("data-roleType"),
+			"userName" : $("body").attr("data-selected-username"),
+			"username" : $("body").attr("data-selected-username")
 	} 
 	$.ajax({
 		url : "./message/viewTag",
@@ -165,14 +187,29 @@ function setViewPopupData(data){
 	$("#viewTag").val(data.tag);
 	$("#viewValue").val(data.value);
 	$("#description").val(data.description);
+	$('#viewChannel').val(data.channelInterp);
+	
+	$("label[for='viewTag']").addClass('active');
+	$("label[for='viewValue']").addClass('active');
+	$("label[for='description']").addClass('active');
+	$("label[for='viewChannel']").addClass('active');
+	
 
 }
 
 function updateDetails(tag){
-	$("#editMessageModel").openModal();
+	$("#editMessageModel").openModal({
+        dismissible:false
+    });
 	
 	var RequestData = {
-			"tag" : tag
+			"tag" : tag,
+			"userId":parseInt(userId),
+			"featureId":parseInt(featureId),
+			"userTypeId": parseInt($("body").attr("data-userTypeID")),
+			"userType":$("body").attr("data-roleType"),
+			"userName" : $("body").attr("data-selected-username"),
+			"username" : $("body").attr("data-selected-username")
 	} 
 	$.ajax({
 		url : "./message/viewTag",
@@ -205,7 +242,14 @@ function updateMessage(){
 		 	 "tag" : $("#Edittag").val(),
 			 "value" : $("#editValue").val(),
 			 "description" : $("#editdescription").val(),
-			 "channel" : parseInt($("#editChannel").val())
+			 "channel" : parseInt($("#editChannel").val()),
+			 "userId":parseInt(userId),
+			 "featureId":parseInt(featureId),
+			 "userTypeId": parseInt($("body").attr("data-userTypeID")),
+			 "userType":$("body").attr("data-roleType"),
+			 "userName" : $("body").attr("data-selected-username"),
+			"roleType":$("body").attr("data-roleType"),
+			"username" : $("body").attr("data-selected-username")
 	}
 	 
 	 $.ajax({
@@ -222,11 +266,54 @@ function updateMessage(){
 				alert("Failed");
 			}
 		});
+	 return false;
 }
 
 
 function confirmModel(){
 	$("#editMessageModel").closeModal();
-	setTimeout(function(){$('#confirmedUpdatedMessage').openModal();},200);
+	setTimeout(function(){$('#confirmedUpdatedMessage').openModal({
+        dismissible:false
+    });},200);
+}
+
+function exportData(){
+	var roleType = $("body").attr("data-roleType");
+	var currentRoleType = $("body").attr("data-stolenselected-roleType");
+	var table = $('#messageLibraryTable').DataTable();
+	var info = table.page.info(); 
+	var pageNo=info.page;
+	var pageSize =info.length;
+
+	var filterRequest={
+			"endDate":$('#endDate').val(),
+			"startDate":$('#startDate').val(),
+			"tag":$('#parametername').val(),
+			"channel" : parseInt($('#channel').val()),
+			"userId":parseInt(userId),
+			"featureId":parseInt(featureId),
+			"userTypeId": parseInt($("body").attr("data-userTypeID")),
+			"userType":$("body").attr("data-roleType"),
+			"userName" : $("body").attr("data-selected-username"),
+			"pageNo":parseInt(pageNo),
+			"pageSize":parseInt(pageSize)
+			
+	}
+	console.log(JSON.stringify(filterRequest))
+	$.ajax({
+		url: './exportMessageConfigData',
+		type: 'POST',
+		dataType : 'json',
+		contentType : 'application/json; charset=utf-8',
+		data : JSON.stringify(filterRequest),
+		success: function (data, textStatus, jqXHR) {
+			window.location.href = data.url;
+
+		},
+		error: function (jqXHR, textStatus, errorThrown) {
+
+		}
+	});
+
 }
 

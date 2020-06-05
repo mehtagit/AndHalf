@@ -1,3 +1,26 @@
+<%@ page import="java.util.Date" %>
+<%
+   response.setHeader("Cache-Control", "no-cache");
+	response.setHeader("Cache-Control", "no-store");
+	response.setDateHeader("Expires", 0);
+	response.setHeader("Pragma", "no-cache");
+	
+    /*   //200 secs
+	 session.setAttribute("usertype", null);  */
+/* 	 session.setMaxInactiveInterval(10); */
+	 int timeout = session.getMaxInactiveInterval();
+	
+	 long accessTime = session.getLastAccessedTime();
+	 long currentTime= new Date().getTime(); 
+	 System.out.println("accessTime========"+(accessTime));
+	 System.out.println("timeout========"+timeout);
+	 long dfd= accessTime +timeout;
+	 System.out.println("currentTime========"+currentTime);
+	 if( currentTime< dfd){
+	/*  response.setHeader("Refresh", timeout + "; URL = ../login");
+	 System.out.println("timeout========"+timeout); 
+	if (session.getAttribute("usertype") != null) { */
+%>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
@@ -61,13 +84,42 @@
  <!------------------------------------------- Dragable Model---------------------------------->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script> 
+
+<style type="text/css">
+/* .dataTables_scrollBody {
+    height: 100px !important;
+} */
+.dataTables_scrollBody {
+    width: 100%;
+    max-height: 400px !important;
+
+   height: auto !important;
+
+
+}
+.dataTables_scroll {
+    margin-top: 2px;
+}
+button.modal-action.modal-close.waves-effect.waves-green.btn-flat.right {
+   height: 36px;
+	 font-size: 31px
+}
+.header-fixed-style{
+width: inherit;
+z-index: 1003;
+position: fixed;
+}
+
+</style>
 </head>
 
 <body data-id="7" data-roleType="${usertype}" data-userTypeID="${usertypeId}"
 	data-userID="${userid}" data-operatorTypeId="${operatorTypeId}"
 	data-selected-roleType="${stolenselectedUserTypeId}"
-	data-stolenselected-roleType="${stolenselectedUserTypeId}"	
-		 session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}">
+		data-stolenselected-roleType="${stolenselectedUserTypeId}"
+	data-OperatorTypeId="${operatorTypeId}" data-requestType="${requestType}"		
+	session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}"
+	data-session-source="${not empty param.source ? param.source : 'menu'}">
 
 
 	<!-- START CONTENT -->
@@ -84,7 +136,7 @@
 
 								<a class="boton right" id="btnLink"></a>
 							</div>
-							<form action="${context}/stakeholder/record" method="post">
+							<form action="${context}/stakeholder/record" method="post" id="stolenRecoveryFormDiv">
 								<div class="col s12 m12 l12" id="consignmentTableDIv"
 									style="padding-bottom: 5px; background-color: #e2edef52;">
 									<div id="filterBtnDiv">
@@ -206,23 +258,31 @@
 
 	<div id="DeleteConsignment" class="modal">
 		<h6 class="modal-header"><spring:message code="modal.header.delete" /></h6>
+		<form action="" onsubmit=" return confirmantiondelete()" method="POST">
 		<div class="modal-content">
 	<div class="row">
 				<h6><spring:message code="modal.withdraw.messageforStolen" /> ( <span id="transID"></span>)
 				</h6>
 				<span id="setStolenRecoveyRowId" style="display: none;"></span>
+				
+				<div class="input-field col s12 m12">
+					<textarea id="textarea1" required="required" maxlength="200"  class="materialize-textarea"></textarea>
+					<label for="textarea1"><spring:message code="input.remarks" /><span class="star">*</span></label>
+				</div>
+		
 			</div>
 			<input type="text" id="popupTransactionId" maxlength="15" hidden />
 			<div class="row">
 				<div class="input-field col s12 center">
 					<div class="input-field col s12 center">
-						<a class="btn" onclick="confirmantiondelete()"><spring:message code="modal.ok" /></a>
-						<button class="modal-close btn" onclick="closeUpdateModal()"
+					<button class="btn" type="submit"><spring:message code="modal.ok" /></button>
+					<button class="modal-close btn" onclick="closeUpdateModal()" type="button"
 							style="margin-left: 10px;"><spring:message code="modal.no" /></button>
 					</div>
 				</div>
 			</div>
 		</div>
+		</form>
 	</div>
 	<!-- Modal End -->
 	<!-- END CONTENT -->
@@ -300,7 +360,6 @@
 				<div class="input-field col s12 m6">
 					<input type="text" name="supplierName" id="supplierNameEdit"
 						pattern="[A-Za-z]{0,50}"
-						title="Please enter alphabets  upto 50 characters only"
 						maxlength="50" placeholder="" required />
 					<label for="supplierNameEdit" class="center-align"><spring:message code="input.suppliername" /> <span class="star">*</span>
 					</label>
@@ -951,26 +1010,46 @@
                                                             title="" maxlength="16" value="1500" disabled>
                                                         <label for="viewBulkBlockquantity"><spring:message code="input.quantity" /></label>
                                                     </div>
-														</div>	
-                                                    <div class="row">
-
+                                                    
+                                                    <div class="input-field col s12 m6" style="margin-top: 25px;">
+                                                        <input type="text" id="viewBulkBlockDevicequantity" name="quantity" pattern="[0-9]"
+                                                            title="" maxlength="16" value="1500" disabled>
+                                                        <label for="viewBulkBlockquantity"><spring:message code="input.devicequantity" /></label>
+                                                    </div>
+                                                    
                                                     <div class="input-field col s12 m6" style="margin-top: 25px;">
                                                         <input type="text" id="viewBulkBlockuploadFile" name="uploadFile" pattern="[0-9]"
                                                             title="" maxlength="16" value="file.csv" disabled>
                                                         <label for="viewBulkBlockuploadFile"><spring:message code="input.UploadBulk" /></label>
                                                     </div>
+														</div>	
+                                                    <div class="row">
+
 													
 													<div class="input-field col s12 m6" style="margin-top: 25px;">
                                                         <input type="text" id="viewBulkBlockTxnId" name="viewBulkBlockTxnId" pattern="[0-9]"
                                                             title="" maxlength="16" value="1500" disabled>
                                                         <label for="viewBulkBulkTxnId"><spring:message code="input.TransactionID1" /></label>
+                                                    </div>
+                                                    <div class="input-field col s12 m6">
+                                                        <textarea id="viewBulkBlockRemark" class="materialize-textarea" placeholder="kjdhdskjfhdskhfkdsjhf" disabled></textarea>
+                                                        <label for="viewBulkBlockRemark"><spring:message code="input.Remark" /></label>
                                                     </div>		
                                                     </div>
                                                     <div class="row">
-                                                     <div class="input-field col s12 m6">
-                                                        <textarea id="viewBulkBlockRemark" class="materialize-textarea" placeholder="kjdhdskjfhdskhfkdsjhf" disabled></textarea>
-                                                        <label for="viewBulkBlockRemark"><spring:message code="input.Remark" /></label>
-                                                    </div>	
+                                                     
+                                                    <div class="input-field col s12 m6" id="bulkblockingTypeId" style="display: none">
+            													<input type="text" id="viewbulkblockingType" name="" placeholder="" disabled="disabled">
+                                                                <label for="viewbulkblockingType"><spring:message code="operator.blocking" /></label>		
+                                                              </div>	
+                                                    </div>
+                                                    
+                                                      <div class="row">
+                                                     <div class="input-field col s12 m6" style="display: none" id="viewBulkBlockRemarkRejectDiv">
+                                                        <textarea id="viewBulkBlockRemarkReject" class="materialize-textarea"  disabled></textarea>
+                                                        <label for="viewBulkBlockRemarkReject"><spring:message code="input.remarksRejected" /></label>
+                                                    </div>
+                                                   	
                                                     </div>
 													
                                                    
@@ -1034,11 +1113,16 @@
                                                                 <textarea id="viewsingleblockremark" disabled="disabled" placeholder="" class="materialize-textarea" required="required"></textarea>
                                                                 <label for="viewsingleblockremark"><spring:message code="input.remarks" /></label>
                                                             </div>
+                                                            
+                                                              <div class="input-field col s12 m6"  style="display: none;" id="viewsingleblockremarkDiv">
+                                                                <textarea id="viewsingleblockremarkReject" disabled="disabled" placeholder="" class="materialize-textarea" required="required"></textarea>
+                                                                <label for="viewsingleblockremarkReject"><spring:message code="input.remarksRejected" /></label>
+                                                            </div>
                                                             <div class="input-field col s12 m6">
                                                                 <input type="text" id="viewsingleblockCategory" name="" placeholder="" disabled="disabled">
                                                                 <label for="viewsingleblockCategory"><spring:message code="operator.category" /></label>
                                                               </div> 
-                                                              <div class="input-field col s12 m6">
+                                                              <div class="input-field col s12 m6" id="blockingTypeId">
             													<input type="text" id="viewsingleblockingType" name="" placeholder="" disabled="disabled">
                                                                 <label for="viewsingleblockingType"><spring:message code="operator.blocking" /></label>		
                                                               </div>
@@ -1089,7 +1173,7 @@
                                            
             </div></div>
             
-         <div id="editblockImeiDevice" class="modal-form" style="overflow-y: hidden;">
+         <div id="editblockImeiDevice" class="modal-form">
 <h6 id="singleBlockDeviceHeading" class="modal-header">
 <spring:message code="modal.UpdateBlock" />
 </h6>
@@ -1101,8 +1185,8 @@ enctype="multipart/form-data">
 <div class="row">
 <div class="col s12 m6">
 <label for="editblockdeviceType">
-<spring:message code="table.devicetype" /> <span class="star">*</span></label>
-<select class="browser-default" id="editblockdeviceType" required="required">
+<spring:message code="table.devicetype" /> <span class="star"></span></label>
+<select class="browser-default" id="editblockdeviceType" >
 <option value="" disabled selected>
 <spring:message code="table.devicetype" />
 </option>
@@ -1122,8 +1206,8 @@ enctype="multipart/form-data">
 <div class="row">
 <div class="col s12 m6">
 <label for="editblockmultipleSimStatus">
-<spring:message code="select.multiSimStatus" /> <span class="star">*</span></label>
-<select class="browser-default" id="editblockmultipleSimStatus" required="required">
+<spring:message code="select.multiSimStatus" /> <span class="star"></span></label>
+<select class="browser-default" id="editblockmultipleSimStatus" >
 <option value="" disabled selected>
 <spring:message code="select.multiSimStatus" />
 </option>
@@ -1133,15 +1217,19 @@ enctype="multipart/form-data">
 
 <div class="input-field col s12 m6">
 <input type="text" id="editsingleblockserialNumber" name="serialNumber" placeholder=""
-pattern="[A-Za-z0-9]{1,15}" required="required"
+pattern="[A-Za-z0-9]{1,15}" 
+oninput="InvalidMsg(this,'input','<spring:message code="validation.15serialNo" />');"
+oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15serialNo" />');"
 title="Please enter your device serial number first" maxlength="15">
 <label for="editsingleblockserialNumber">
-<spring:message code="input.deviceSerialNumber" /> <span class="star">*</span></label>
+<spring:message code="input.deviceSerialNumber" /> <span class="star"></span></label>
 </div>
 </div>
 <div class="row">
 <div class="input-field col s12 m6">
 <textarea id="editsingleblockremark" placeholder="" class="materialize-textarea"
+oninput="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
+oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
 required="required"></textarea>
 <label for="editsingleblockremark">
 <spring:message code="input.remarks" /> <span class="star">*</span></label>
@@ -1157,7 +1245,7 @@ required="required"></textarea>
 </select>
 </div>
 </div>
-<div class="row">
+<div class="row" id="editBlockTimePeriod">
 <div class="col s12 m6">
 <spring:message code="operator.blocking" /> <label style="margin-right: 2%;"> <input
 type="radio" name="editbulkBlockdeviceradio" class="blocktypeRadio" id=""
@@ -1177,9 +1265,11 @@ name="stolenBlockPeriod">
 <spring:message code="operator.later" /></label>
 
 </div>
-<div class="col s6 m6 responsiveDiv" style="display: none;" id="calender">
+<div class="input-field col s6 m6 responsiveDiv" style="display: none;" id="calender">
 <div id="startdatepicker" class="input-group date">
-<p> Blocking Time Period </p>
+<%-- <p> <spring:message code="operator.blockingTypePeriod" /> </p> --%>
+	<label for="stolenDatePeriodedit"><spring:message code="operator.blockingTypePeriod" /> <span class="star"> </span> 
+																</label>
 <input type="text" id="stolenDatePeriodedit" style="margin-top: -9px" /> <span
 class="input-group-addon" style="color: #ff4081"><i class="fa fa-calendar"
 aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
@@ -1222,14 +1312,18 @@ onclick="_Services._selectstartDate()"></i></span>
 <div class="input-field col s12 m6">
 <input type="text" id="editsingleblockIMEI1" name="IMEI1" placeholder=""
 pattern="[0-9]{15,16}" required="required"
-title="Please enter minimum 15 and maximum 16 digit only" maxlength="16">
+	oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
+	oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
+title="" maxlength="16">
 <label for="editsingleblockIMEI1">
 <spring:message code="title.one" /> <span class="star">*</span></label>
 </div>
 
 <div class="input-field col s12 m6">
 <input type="text" id="editsingleblockIMEI2" name="IMEI2" placeholder=""
-pattern="[0-9]{15,16}" title="Please enter minimum 15 and maximum 16 digit only"
+pattern="[0-9]{15,16}" 
+	oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
+	oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 maxlength="16">
 <label for="editsingleblockIMEI2">
 <spring:message code="title.two" /></label>
@@ -1237,15 +1331,20 @@ maxlength="16">
 
 <div class="input-field col s12 m6">
 <input type="text" id="editsingleblockIMEI3" name="IMEI3" placeholder=""
-pattern="[0-9]{15,16}" title="Please enter minimum 15 and maximum 16 digit only"
+pattern="[0-9]{15,16}" 
+oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
+	oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 maxlength="16">
 <label for="editsingleblockIMEI3">
 <spring:message code="title.three" /></label>
+   <p id="errorMsgOnModal" class="deviceErrorTitle" style="margin-top:-146px;margin-left:115px;"></p>
 </div>
 
 <div class="input-field col s12 m6">
 <input type="text" id="editsingleblockIMEI4" name="IMEI4[]" placeholder=""
-pattern="[0-9]{15,16}" title="Please enter minimum 15 and maximum 16 digit only"
+pattern="[0-9]{15,16}" 
+oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
+	oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 maxlength="16">
 <label for="editsingleblockIMEI4">
 <spring:message code="title.four" /></label>
@@ -1293,11 +1392,20 @@ maxlength="16">
 </div>
 
 <div class="input-field col s12 m6">
-<input type="text" id="editBulkBlockquantity" required name="editBulkBlockquantity" pattern="[0-9]{1,9}"
-title="Please enter numbers upto 9 characters only" maxlength="9" value="" placeholder="" >
+<input type="text" id="editBulkBlockquantity" required name="editBulkBlockquantity" pattern="[0-9]{1,7}"
+oninput="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
+title="" maxlength="7" value="" placeholder="" >
 <label for="editBulkBlockquantity"><spring:message code="input.quantity" /> <span class="star">*</span></label>
 </div>
 
+<div class="input-field col s12 m6">
+<input type="text" id="editBulkBlockDevicequantity" required name="editBulkBlockDevicequantity" pattern="[0-9]{1,7}"
+oninput="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
+title="" maxlength="7" value="" placeholder="" >
+<label for="editBulkBlockDevicequantity"><spring:message code="input.devicequantity" /> <span class="star">*</span></label>
+</div>
 
 </div>
 <div class="row">
@@ -1305,7 +1413,10 @@ title="Please enter numbers upto 9 characters only" maxlength="9" value="" place
 <p style="color: #000; margin: 5px 0;"><spring:message code="input.UploadBulk" /> <span class="star">*</span></p>
 <div class="btn">
 <span><spring:message code="operator.file" /></span>
-<input type="file" id="editselectBulkBlockuploadFile">
+<input type="file" id="editselectBulkBlockuploadFile"
+oninput="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');"
+oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');"
+ onchange="fileTypeValueChanges(2)">
 </div>
 <div class="file-path-wrapper">
 <input class="file-path validate" required="required" type="text" id="editBulkBlockuploadFile" placeholder="">
@@ -1313,12 +1424,16 @@ title="Please enter numbers upto 9 characters only" maxlength="9" value="" place
 </div>
 
 <div class="input-field col s12 m6">
-<textarea id="editBulkBlockRemark" class="materialize-textarea" required="required" placeholder="" ></textarea>
+<textarea id="editBulkBlockRemark" class="materialize-textarea"
+oninput="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
+oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
+ required="required" placeholder="" ></textarea>
 <label for="editBulkBlockRemark"><spring:message code="input.Remark" /> <span class="star">*</span> </label>
 <!-- <input type="text" id="editBulkBlockTxnId" name="editBulkBlockTxnId" pattern="[0-9]"
 title="" maxlength="16" value="1500" disabled> -->
 
 </div>
+
 <input type="text" style="display:none" id="editBulkBlockrequestType">
 <input type="text" style="display:none" id="editBulkBlockTxnId">
 <!-- <div class="input-field col s12 m6" style="margin-top: 25px;">
@@ -1327,7 +1442,62 @@ title="" maxlength="16" value="1500" disabled>
 <label for="editBulkBlockTxnId">Transaction Id</label>
 <input type="text" style="display:none" id="editBulkBlockrequestType">
 </div> -->
+
+
 </div>
+													<div class="col s12 m6 blockingType" id="editBulkBlockDiv" style="display: none;">
+												<p style="margin-top: 3px; margin-bottom: 5px">
+													<spring:message code="operator.blocking" />
+												</p>
+												<label style="margin-right: 2%;"> <input
+													type="radio" class="editbulkblocktypeRadio" id="" value="Immediate"
+													onclick="document.getElementById('bulkeditcalender').style.display = 'none';"
+													name="editbulkblocktypeName" checked> <spring:message
+														code="operator.immediate" />
+												</label> <label style="margin-right: 2%;"> <input
+													type="radio" class="editbulkblocktypeRadio" value="Default" id="editbulkblocktypeRadioId"
+													onclick="document.getElementById('bulkeditcalender').style.display = 'none';"
+													name="editbulkblocktypeName"> <spring:message
+														code="operator.default" />
+												</label> <label> <input type="radio" required="required"
+													value="tilldate" class="editbulkblocktypeRadio"
+													onclick="document.getElementById('bulkeditcalender').style.display = 'block';"
+													name="editbulkblocktypeName"> <spring:message
+														code="operator.later" />
+												</label>
+												<div class="input-field col s6 m2 responsiveDiv"
+													style="display: none; width: 30%; margin-right: 30%; float: right; margin-top: -15px"
+													id="bulkeditcalender">
+													<div id="Stolenstartdatepicker" class="input-group date">
+														<label for="editstolenBulkDatePeriod"><spring:message code="operator.blockingTypePeriod" /> <span class="star"> </span> 
+																</label>
+														<input type="text" id="editstolenBulkDatePeriod"
+															style="margin-top: -9px" /> <span
+															class="input-group-addon" style="color: #ff4081"><i
+															class="fa fa-calendar" aria-hidden="true"
+															style="float: right; margin-top: -30px;"></i></span>
+													</div>
+
+												</div>
+
+
+												<div class="col s12 m2 l2"
+													style="width: 40%; display: none; float: right; margin-right: 30%;"
+													id="stolenDate">
+
+													<label for="TotalPrice" class="center-align"> <spring:message
+															code="operator.tilldate" /></label>
+													<div id="Stolenstartdatepicker" class="input-group"
+														style="margin-top: 10px;">
+
+														<input class="form-control" name="inputsaves" type="text"
+															id="startDateFilter" readonly /> <span
+															class="input-group-addon" style="color: #ff4081"><i
+															class="glyphicon glyphicon-calendar"
+															onclick="_Services._selectstartDate()"></i></span>
+													</div>
+												</div>
+											</div>
 <p style="margin-left: 10px;"><a href="./Consignment/sampleFileDownload/7"><spring:message code="input.downlaod.sample" /></a></p>
 <div class="row">
 <div class="input-field col s12 center">
@@ -1348,7 +1518,7 @@ type="submit" ><spring:message code="button.update" /></button>
             <div class="row">
                 <div class="input-field col s12 center">
                     <div class="input-field col s12 center">
-                        <a  href ="./stolenRecovery" class=" btn"><spring:message code="modal.ok" /></a>
+                        <a  href ="./stolenRecovery?FeatureId=5" class=" btn"><spring:message code="modal.ok" /></a>
                     </div>
                 </div>
             </div>
@@ -1390,7 +1560,7 @@ type="submit" ><spring:message code="button.update" /></button>
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
-                     <a class="btn modal-close" href="./stolenRecovery"><spring:message code="modal.ok" /></a>
+                     <a class="btn modal-close" href="./stolenRecovery?FeatureId=5"><spring:message code="modal.ok" /></a>
                    
                 </div>
             </div>
@@ -1403,24 +1573,28 @@ type="submit" ><spring:message code="button.update" /></button>
         <div id="rejectInformation" class="modal">
            <h6 class="modal-header"><spring:message code="modal.header.reject" /></h6>
             <div class="modal-content">
+              <form  action="" onsubmit=" return rejectUser()" method="POST">
             <div class="row">
              <h6><spring:message code="modal.rejectRequest" /><span id="rejectTxnId"></span> ?</h6>
-                <form action="">
+              
                 
                     <div class="input-field" style="margin-top: 30px;">
-                        <textarea id="Reason" class="materialize-textarea"></textarea>
-                        <label for="textarea1" style="margin-left: -10px;"><spring:message code="lable.reason" /></label>
+                        <textarea id="Reason" class="materialize-textarea"oninput="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
+						oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
+                        required="required"></textarea>
+                        <label for="textarea1" style="margin-left: -10px;"><spring:message code="lable.reason" /><span class="star">*</span></label>
                     </div>
                    
                     
-                </form>
+              
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
-                    <a onclick="rejectUser()" class="btn modal-close modal-trigger"><spring:message code="modal.yes" /></a>
-                    <button class="btn modal-close" style="margin-left: 10px;"><spring:message code="modal.no" /></button>
+                    <button type="submit" class="btn"><spring:message code="modal.yes" /></button>
+                    <button class="btn modal-close" type="button" style="margin-left: 10px;"><spring:message code="modal.no" /></button>
                 </div>
             </div>
+            </form>
         </div>
     </div>
   
@@ -1435,13 +1609,45 @@ type="submit" ><spring:message code="button.update" /></button>
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
-                    <a class="btn modal-close" href="./stolenRecovery"><spring:message code="modal.ok" /></a>
+                    <a class="btn modal-close" href="./stolenRecovery?FeatureId=5"><spring:message code="modal.ok" /></a>
                 </div>
             </div>
         </div>
     </div>
 
+	<div id="fileFormateModal" class="modal">
+		<h6 class="modal-header"><spring:message code="fileValidationModalHeader" /></h6>
+		<div class="modal-content">
+			<div class="row">
+				<h6 id="fileErrormessage"><spring:message code="fileValidationName" /><br> <br> <spring:message code="fileValidationFormate" /> <br><br> <spring:message code="fileValidationSize" /> </h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<div class="input-field col s12 center">
+						<button class="modal-close waves-effect waves-light btn" onclick="clearFileName()"
+							style="margin-left: 10px;"><spring:message code="modal.ok" /></button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+<div id="tableOnModal" class="modal">
+<div class="header-fixed header-fixed-style">
+		<button type="button"
+			class=" modal-action modal-close waves-effect waves-green btn-flat right"
+			data-dismiss="modal">&times;</button>
+		<h6 class="modal-header"><spring:message code="modal.header.viewHistory" /></h6>
+		</div>
+		<div class="scrollDivHeight"></div>
+		<div class="modal-content modal-content-style">
 
+			<div class="row">
+				<table class="responsive-table striped display"
+					id="data-table-history2" cellspacing="0">
+				</table>
+			</div>
+		</div>
+	</div>
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
 
@@ -1516,5 +1722,28 @@ type="submit" ><spring:message code="button.update" /></button>
 
 		<script type="text/javascript"
 		src="${context}/resources/project_js/profileInfoTab.js" async></script>
+		<script type="text/javascript"
+		src="${context}/resources/project_js/_dateFunction.js" async></script>
+		
+		<script type="text/javascript"
+		src="${context}/resources/project_js/validationMsg.js"></script>
+		<script type="text/javascript">
+		$('#editstolenBulkDatePeriod').datepicker({
+			dateFormat : "yy-mm-dd"
+		});
+		</script>
 </body>
 </html>
+<%
+	} else {
+		/*  request.setAttribute("msg", "  *Please login first");
+		request.getRequestDispatcher("./index.jsp").forward(request, response); */
+%>
+<script language="JavaScript">
+	sessionStorage.setItem("loginMsg",
+			"*Session has been expired");
+	window.top.location.href = "./login";
+</script>
+<%
+	}
+%>

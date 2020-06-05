@@ -1,13 +1,26 @@
+<%@ page import="java.util.Date" %>
 <%
-	response.setHeader("Cache-Control", "no-cache");
+   response.setHeader("Cache-Control", "no-cache");
 	response.setHeader("Cache-Control", "no-store");
 	response.setDateHeader("Expires", 0);
 	response.setHeader("Pragma", "no-cache");
-	/*  session.setMaxInactiveInterval(200); //200 secs
-	 session.setAttribute("usertype", null); */
-	if (session.getAttribute("usertype") != null) {
+	
+    /*   //200 secs
+	 session.setAttribute("usertype", null);  */
+/* 	 session.setMaxInactiveInterval(10); */
+	 int timeout = session.getMaxInactiveInterval();
+	
+	 long accessTime = session.getLastAccessedTime();
+	 long currentTime= new Date().getTime(); 
+	 System.out.println("accessTime========"+(accessTime));
+	 System.out.println("timeout========"+timeout);
+	 long dfd= accessTime +timeout;
+	 System.out.println("currentTime========"+currentTime);
+	 if( currentTime< dfd){
+	/*  response.setHeader("Refresh", timeout + "; URL = ../login");
+	 System.out.println("timeout========"+timeout); 
+	if (session.getAttribute("usertype") != null) { */
 %>
-
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
@@ -54,8 +67,6 @@ var path="${context}";
 <link
 	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
-<link href="${context}/resources/css/jquery-datepicker2.css"
-	type="text/css" rel="stylesheet" media="screen,projection">
 <!-- Custome CSS-->
 <link href="${context}/resources/css/custom/custom.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
@@ -82,13 +93,23 @@ var path="${context}";
   <!------------------------------------------- Dragable Model---------------------------------->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-  
+  <style type="text/css">
+  button.modal-action.modal-close.waves-effect.waves-green.btn-flat.right {
+   height: 36px;
+   font-size: 31px
+}
+.header-fixed-style{
+width: inherit;
+z-index: 1003;
+position: fixed;
+}
+  </style>
  
 
 </head>
 
 <body data-id="6" data-roleType="${usertype}" data-userTypeID="${usertypeId}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${stolenselectedUserTypeId}" 
-data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}"
+data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}" data-userName="${userName}"		
  data-grievanceStatus="${grievanceStatus}" session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}">
 
 
@@ -128,9 +149,19 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}"
 	</section>
 	
 	<div id="replyModal" class="modal">
-        <button class="modal-close btn-flat right" onclick="cleanReplyPopUp()">&times;</button>
+      
+      
+<div class="header-fixed header-fixed-style">
+ <button class="modal-action modal-close waves-effect waves-green btn-flat right" onclick="cleanReplyPopUp()">&times;</button>
              <h6 class="modal-header"><spring:message code="input.reply" /></h6>
-             <div class="modal-content">
+       
+
+</div>
+
+<div class="scrollDivHeight"></div>
+
+<div class="modal-content modal-content-style">
+             
              <form id="replymessageForm" onsubmit="return saveGrievanceReply()" method="POST" enctype="multipart/form-data" >
             <div class="row">
                 <div class="col s12 m12">
@@ -147,7 +178,11 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}"
                
  <div class="col s12 m12">
                   <label for="replyRemark" style="margin-top: 7px"><spring:message code="input.remarks" /><span class="star">*</span></label>
-                    <textarea id="replyRemark" class="materialize-textarea" placeholder="" required="required"></textarea>
+                    <textarea id="replyRemark" class="materialize-textarea" maxlength="200" style="min-height: 8rem"  
+oninput="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');" 
+oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');"
+ required></textarea>
+                    
                     <input type="text" style="display: none" id="grievanceUserid">
                     <!-- <h6 style="color: #000;">Upload Supporting Document </h6> -->
  
@@ -165,11 +200,24 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}"
  <div id="mainDiv" class="mainDiv">
 <div id="filediv" class="fileDiv">
 <div class="row">
+
+<div class="col s12 m6 l6" style="margin-top: 8px;">
+<label for="Category"><spring:message code="input.documenttype" /></label>
+<select class="browser-default" id="docTypetag1" onchange="enableSelectFile()"
+oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" 
+oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" >
+<option value="" disabled selected><spring:message code="select.documenttype" /> </option>
+
+</select>
+
+</div>
 <div class="file-field col s12 m6">
-<h6 style="color: #000;"><spring:message code="input.supportingdocument" /></h6>
+<h6 id="supportingdocumentFile" style="color: #000;"><spring:message code="input.supportingdocument" /></h6>
 <div class="btn">
 <span><spring:message code="input.selectfile" /></span>
-<input type="file" name="files[]" id="docTypeFile1"  multiple>
+<input type="file" name="files[]" id="docTypeFile1" onchange="enableAddMore()" disabled="disabled"
+oninput="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');" 
+oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');" >
 </div>
 <div class="file-path-wrapper">
 <input class="file-path validate" type="text" 
@@ -178,14 +226,6 @@ placeholder="<spring:message code="grievanceFileMessage" />">
 <p id="myFiles"></p>
 </div>
 </div>
-</div>
-<div class="col s12 m6 l6" style="margin-top: 8px;">
-<label for="Category"><spring:message code="input.documenttype" /></label>
-<select class="browser-default" id="docTypetag1" onchange="enableAddMore()" >
-<option value="" disabled selected><spring:message code="select.documenttype" /> </option>
-
-</select>
-
 </div>
 </div>
 
@@ -197,19 +237,13 @@ placeholder="<spring:message code="grievanceFileMessage" />">
 <button class="btn right add_field_button" disabled="disabled"><span
 style="font-size: 20px;">+</span> <spring:message code="input.addmorefile" /></button>
 </div>
-              <div class="col s12 m12">  <p>
-              <p id="closeTicketCheckbox" style="float: left; display: none;">
-                        <label>
-                            <span><spring:message code="modal.message.griev.closeticket" /></span>
-                            <input type="checkbox" id="closeTicketCheck" />
-                        </label>
-                    </p> <br>
+              <div class="col s12 m12">
+              	<p> <spring:message code="input.requiredfields" /> <span class="star">*</span></p>
+	              <p id="closeTicketCheckbox" style="display: none;">
+	               <label><span><spring:message code="modal.message.griev.closeticket" /></span><input type="checkbox" id="closeTicketCheck" /></label>
+	               </p>
 				<!-- <a href="./Consignment/sampleFileDownload/filetype=sample">Download Sample Format</a><br> -->
-			
-
-			<span> <spring:message code="input.requiredfields" /> <span class="star">*</span></span>
-			
-                </div>
+				</div>
                 <div class="col s12 m12 center">
                  <p id="closeTicketCheckbox" style="float: left; display: none;">
                         <label>
@@ -242,9 +276,13 @@ style="font-size: 20px;">+</span> <spring:message code="input.addmorefile" /></b
 </div>
 
 <div id="manageAccount" class="modal">
-<button class="modal-close btn-flat right" data-dismiss="modal">&times;</button>
+
+<div class="header-fixed header-fixed-style">
+<button class="modal-action modal-close waves-effect waves-green btn-flat right" data-dismiss="modal">&times;</button>
 <h6 class="modal-header"><spring:message code="modal.header.grievancehistory" /></h6>
-<div class="modal-content">
+</div>
+<div class="scrollDivHeight"></div>
+<div class="modal-content modal-content-style" >
 <div id="live-chat">
 <div class="chat">
 <div class="chat-history">
@@ -276,6 +314,15 @@ style="font-size: 20px;">+</span> <spring:message code="input.addmorefile" /></b
 			</div>
 		</div>
 	</div>
+	
+	<div id="viewuplodedModel" class="modal" style="overflow: hidden">
+	<a href="#!" class="modal-close waves-effect waves-green btn-flat">&times;</a>
+		<div class="modal-content">
+			<div class="row">
+					<img src="" id="fileSource" width="400" height="400">
+			</div>
+		</div>
+	</div>
 	<!--materialize js-->
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
@@ -296,8 +343,7 @@ style="font-size: 20px;">+</span> <spring:message code="input.addmorefile" /></b
     <script type="text/javascript" src="${context}/resources/js/materialize-plugins/date_picker/picker.js"></script> --%>
 	<!--custom-script.js - Add your own theme custom JS-->
 	<script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
-	<script type="text/javascript"
-		src="${context}/resources/js/Validator.js"></script>
+	
 	<!--prism
     <script type="text/javascript" src="${context}/resources/resources/js/prism/prism.js"></script>-->
 	<!--scrollbar-->
@@ -348,7 +394,8 @@ style="font-size: 20px;">+</span> <spring:message code="input.addmorefile" /></b
 		<script type="text/javascript"
 		src="${context}/resources/project_js/_dateFunction.js" async></script>
 		
-	
+	<script type="text/javascript"
+		src="${context}/resources/project_js/validationMsg.js"></script>
 </body>
 </html>
 <%

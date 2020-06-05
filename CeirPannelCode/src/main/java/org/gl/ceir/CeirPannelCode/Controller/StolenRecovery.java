@@ -7,13 +7,16 @@ import java.io.FileOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
+import org.gl.ceir.CeirPannelCode.Model.AddMoreFileModel;
 import org.gl.ceir.CeirPannelCode.Model.FileExportResponse;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest_UserPaidStatus;
@@ -27,6 +30,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -54,14 +58,24 @@ public class StolenRecovery {
 	@Autowired
 	UtilDownload utildownload;
 	
+	@Autowired
+	AddMoreFileModel addMoreFileModel,urlToUpload,urlToMove;
+	
+	
 	
 	
 	@RequestMapping(value={"/stolenRecovery"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST})
-			public ModelAndView  viewStolenRecovery( HttpSession session , @RequestParam(name="userTypeId",required=false) String selectedUserTypeId 
-					,@RequestParam(name="txnID",required = false) String txnID) {
+	public ModelAndView  viewStolenRecovery( HttpSession session , @RequestParam(name="userTypeId",required=false) String selectedUserTypeId 
+			,@RequestParam(name="txnID",required = false) String txnID, @RequestParam(name="FeatureId",required = false) String featureId,
+			@RequestParam(name="requestType" ,required = false)String requestType,
+			@RequestParam(name="source",defaultValue = "menu",required = false) String source
+			) {
+			
 		ModelAndView mv = new ModelAndView();
-		log.info("entry point in stolen recovery  page");
+		log.info("entry point in stolen recovery  page with featureId-->  " +featureId+"  source  =="+source);
+		try {
 		String roletype=session.getAttribute("usertype").toString();
+		String OperatorId = String.valueOf(session.getAttribute("operatorTypeId"));
 		if(selectedUserTypeId==null)
 		{
 		List<Usertype> userTypelist=(List<Usertype>) session.getAttribute("usertypeList");
@@ -72,24 +86,37 @@ public class StolenRecovery {
 		}
 		else if(userTypelist.size()==1)
 		{
-			if(roletype.equals("Lawful Agency"))
+			if((roletype.equals("Lawful Agency") || roletype.equals("CEIRAdmin")) && "5".equals(featureId))
 			{
-				log.info("*******"+roletype);
+				log.info(" 1 return Lawful Stolen Recovery**roletype****"+roletype+" featureId******" +featureId);
+				session.removeAttribute("requestType");
+				session.setAttribute("requestType",requestType);
+				session.setAttribute("filterSource", source);
 				mv.setViewName("lawfulStolenRecovery");
 			}
 			else {
-				log.info("role type is"+roletype);
+				log.info("  2  return stolen Recovery**roletype****"+roletype+" featureId******" +featureId+"****OperatorId***"+OperatorId);
 				session.setAttribute("stolenselectedUserTypeId", roletype);
+				session.setAttribute("operatorTypeId", OperatorId);
+				session.removeAttribute("requestType");
+				session.setAttribute("requestType",requestType);
+				session.setAttribute("filterSource", source);
 				mv.setViewName("stolenRecovery");
 			}
 				
 		}
 		}
 		else {
+			session.setAttribute("filterSource", source);
 			log.info("selected role type in stolen and recovery  is = "+selectedUserTypeId);
 			session.setAttribute("stolenselectedUserTypeId", selectedUserTypeId);
 			mv.setViewName("stolenRecovery");		
 		
+		}
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+			log.info("this is catch block session is blank or something went wrong.");
 		}
 				
 				return mv; 
@@ -130,10 +157,13 @@ public class StolenRecovery {
 		    GenricResponse response= new GenricResponse();
 			String stlnTxnNumber=utildownload.getTxnId();
 			stlnTxnNumber = "L"+stlnTxnNumber;
+			addMoreFileModel.setTag("system_upload_filepath");
+			urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
+			
 			log.info("Random transaction id number="+stlnTxnNumber);
 		  	try {
 				byte[] bytes = file.getBytes();
-				String rootPath = filePathforUploadFile+stlnTxnNumber+"/";
+				String rootPath = urlToUpload.getValue()+stlnTxnNumber+"/";
 				File dir = new File(rootPath + File.separator);
 
 				if (!dir.exists()) 
@@ -184,10 +214,13 @@ public class StolenRecovery {
 		  GenricResponse response= new GenricResponse();
 			String stlnTxnNumber=utildownload.getTxnId();
 			stlnTxnNumber = "L"+stlnTxnNumber;
+			addMoreFileModel.setTag("system_upload_filepath");
+			urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
+			
 			log.info("Random transaction id number="+stlnTxnNumber);
 		  	try {
 				byte[] bytes = file.getBytes();
-				String rootPath = filePathforUploadFile+stlnTxnNumber+"/";
+				String rootPath = urlToUpload.getValue()+stlnTxnNumber+"/";
 				File dir = new File(rootPath + File.separator);
 
 				if (!dir.exists()) 
@@ -227,10 +260,12 @@ public class StolenRecovery {
 // ***************************************** delete stolen recovery controller **************************************************************
 
 		@RequestMapping(value= {"/stolenRecoveryDelete"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}) 
-		public @ResponseBody GenricResponse deleteStock(@RequestBody StolenRecoveryModel stolenRecoveryModel,HttpSession session) {
-
-			log.info("enter in  delete stolenRecovery.");
+		public @ResponseBody GenricResponse deleteStock(@RequestBody FilterRequest stolenRecoveryModel,HttpSession session) {
+			String roletype=session.getAttribute("usertype").toString();
+			log.info("enter in  delete stolenRecovery.==");
+			stolenRecoveryModel.setUserType(roletype);
 			log.info("request passed to the delete stolenRecovery Api="+stolenRecoveryModel);
+			
 			GenricResponse response=feignCleintImplementation.deleteStolenRecovery(stolenRecoveryModel);
 			log.info("response after delete stolenRecovery."+response);
 			log.info("exit point of delete stolenRecovery.");
@@ -250,10 +285,19 @@ public class StolenRecovery {
 					  @RequestParam(name="roleType",required = false) String roleType,  @RequestParam(name="sourceType",required = false) Integer sourceType,
 					  @RequestParam(name="userId",required = false) Integer userId,@RequestParam(name="txnId",required = false) String txnId,@RequestParam(name="id",required = false) Integer id,
 					  @RequestParam(name="blockCategory",required = false) Integer blockCategory,@RequestParam(name="remark",required = false) String remark,@RequestParam(name="fileName",required = false) String fileName,
-					  @RequestParam(name="qty",required = false) Integer qty)
+					  @RequestParam(name="qty",required = false) Integer qty, @RequestParam(name="deviceQuantity",required = false) Integer deviceQuantity)
 {	
 				  StolenRecoveryModel stolenRecoveryModel= new StolenRecoveryModel();
 				  GenricResponse response = new GenricResponse();
+				  addMoreFileModel.setTag("system_upload_filepath");
+					urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
+					
+					addMoreFileModel.setTag("uploaded_file_move_path");
+					urlToMove=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
+					String movedFileTime = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
+					log.info("Moved File Time value=="+movedFileTime);
+					
+					
 				  log.info(" update file stolen/recovery entry point .");
 				  log.info("Random transaction id number="+txnId);
 				  	try {
@@ -262,17 +306,17 @@ public class StolenRecovery {
 				  		}{			
 				  			
 				  			log.info("file is not null");
-				  		String rootPath = filePathforUploadFile+txnId+"/";
+				  		String rootPath = urlToUpload.getValue()+txnId+"/";
 				  		File tmpDir = new File(rootPath+file.getOriginalFilename());
 				  		boolean exists = tmpDir.exists();
 
 				  		if(exists) {
 				  			log.info("file already exist");
 				  		Path temp = Files.move 
-				  		(Paths.get(filePathforUploadFile+txnId+"/"+file.getOriginalFilename()), 
-				  		Paths.get(filePathforMoveFile+file.getOriginalFilename())); 
+				  		(Paths.get(urlToUpload.getValue()+txnId+"/"+file.getOriginalFilename()), 
+				  		Paths.get(urlToMove.getValue()+movedFileTime+"_"+file.getOriginalFilename())); 
 
-				  		String movedPath=filePathforMoveFile+file.getOriginalFilename();
+				  		String movedPath=urlToMove.getValue()+movedFileTime+"_"+file.getOriginalFilename();
 				  		// tmpDir.renameTo(new File("/home/ubuntu/apache-tomcat-9.0.4/webapps/MovedFile/"+txnId+"/"));
 				  		log.info("file is already exist moved to the this "+movedPath+" path");
 				  		tmpDir.delete();
@@ -310,7 +354,7 @@ public class StolenRecovery {
 					stolenRecoveryModel.setBlockCategory(blockCategory);
 
 					stolenRecoveryModel.setRemark(remark);
-					
+					stolenRecoveryModel.setDeviceQuantity(deviceQuantity);
 					log.info("request passed to the update file stolen api ="+stolenRecoveryModel);
 					response=feignCleintImplementation.updateFileStolen(stolenRecoveryModel);
 					log.info("respondse from update  file stolen api="+response);
@@ -320,35 +364,24 @@ public class StolenRecovery {
 			  }
 			  
 			//***************************************** Export Grievance controller *********************************
-				@RequestMapping(value="/exportStolenRecovery",method ={org.springframework.web.bind.annotation.RequestMethod.GET})
-				public String exportToExcel(@RequestParam(name="stolenRecoveryStartDate",required = false) String stolenRecoveryStartDate,@RequestParam(name="stolenRecoveryEndDate",required = false) String stolenRecoveryEndDate,
-						@RequestParam(name="stolenRecoveryTxnId",required = false) String stolenRecoveryTxnId,@RequestParam(name="stolenRecoveryFileStatus") Integer stolenRecoveryFileStatus,HttpServletRequest request,
-						HttpSession session,@RequestParam(name="pageSize") Integer pageSize,@RequestParam(name="pageNo") Integer pageNo,@RequestParam(name="roleType") String roleType,@RequestParam(name="stolenRecoverySourceStatus") Integer stolenRecoverySourceStatus
-						,@RequestParam(name="stolenRecoveryRequestType") Integer stolenRecoveryRequestType)
+				@PostMapping("exportStolenRecovery")
+				@ResponseBody
+				public FileExportResponse exportToExcel(@RequestBody FilterRequest filterRequest,HttpSession session)
 				{
-					log.info("stolenRecoveryStartDate=="+stolenRecoveryStartDate+ " stolenRecoveryEndDate ="+stolenRecoveryEndDate+" stolenRecoveryTxnId="+stolenRecoveryTxnId+"stolenRecoveryFileStatus="+stolenRecoveryFileStatus
-							+"stolenRecoveryRequestType="+stolenRecoveryRequestType+"stolenRecoverySourceStatus  ="+stolenRecoverySourceStatus);
-					int userId= (int) session.getAttribute("userid"); 
-					int file=1;
-					FileExportResponse fileExportResponse;
-					FilterRequest filterRequest= new FilterRequest();
-					filterRequest.setStartDate(stolenRecoveryStartDate);
-					filterRequest.setEndDate(stolenRecoveryEndDate);
-					filterRequest.setTxnId(stolenRecoveryTxnId);
-					filterRequest.setGrievanceStatus(stolenRecoveryFileStatus);
-					filterRequest.setRequestType(stolenRecoveryRequestType);
-					filterRequest.setSourceType(stolenRecoverySourceStatus);
+					Integer userId= (Integer) session.getAttribute("userid");
+					Gson gsonObject=new Gson();
+					Object response;
+					Integer file = 1;	
 					filterRequest.setUserId(userId);
-					filterRequest.setRoleType(roleType);
-					log.info(" request passed to the stolen/rcovery exportTo Excel Api =="+filterRequest+" *********** pageSize"+pageSize+"  pageNo  "+pageNo);
-					Object	response= feignCleintImplementation.stolenFilter(filterRequest, pageNo, pageSize, file);
-
+					log.info("filterRequest:::::::::"+filterRequest);
+				response= feignCleintImplementation.stolenFilter(filterRequest, filterRequest.getPageNo(), filterRequest.getPageSize(), file,"filter");
+				FileExportResponse fileExportResponse;
 				   Gson gson= new Gson(); 
 				   String apiResponse = gson.toJson(response);
 				   fileExportResponse = gson.fromJson(apiResponse, FileExportResponse.class);
 				   log.info("response  from   export stolen/recovery  api="+fileExportResponse);
 					
-					return "redirect:"+fileExportResponse.getUrl();
+					return fileExportResponse;
 				}
 				
 				
@@ -356,7 +389,7 @@ public class StolenRecovery {
 				//******************************* Block Unblock Approve/Reject Devices ********************************
 				
 				
-				@PutMapping("blockUnblockApproveReject") 
+				@PostMapping("blockUnblockApproveReject") 
 				public @ResponseBody GenricResponse approveRejectDevice (@RequestBody FilterRequest FilterRequest)  {
 					log.info("request send to the approveRejectDevice api="+FilterRequest);
 					GenricResponse response= feignCleintImplementation.approveRejectFeign(FilterRequest);

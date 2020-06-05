@@ -1,5 +1,7 @@
 package CeirPannelCode.Model;
 import java.util.List;
+
+import org.gl.ceir.CeirPannelCode.Model.AllRequest;
 import org.gl.ceir.CeirPannelCode.Model.UplodPaidStatusModel;
 
 public class Register_UploadPaidStatus {
@@ -14,31 +16,11 @@ public class Register_UploadPaidStatus {
 	private String street;
 	private String locality;
 	private String province;
-	private String country,district,commune,village, nationality;
-	
-	
-	
-	
-	@Override
-	public String toString() {
-		return "Register_UploadPaidStatus [firstName=" + firstName + ", middleName=" + middleName + ", lastName="
-				+ lastName + ", passportNo=" + passportNo + ", email=" + email + ", phoneNo=" + phoneNo + ", nid=" + nid
-				+ ", propertyLocation=" + propertyLocation + ", street=" + street + ", locality=" + locality
-				+ ", province=" + province + ", country=" + country + ", district=" + district + ", commune=" + commune
-				+ ", village=" + village + ", nationality=" + nationality + ", regularizeDeviceDbs="
-				+ regularizeDeviceDbs + ", firstImei=" + firstImei + ", taxPaidStatus=" + taxPaidStatus
-				+ ", postalCode=" + postalCode + "]";
-	}
-	public String getNationality() {
-		return nationality;
-	}
-	public void setNationality(String nationality) {
-		this.nationality = nationality;
-	}
+	private String country,district,commune,village, nationality,passportFileName,txnId;
+	private AllRequest auditParameters;
 	private List<UplodPaidStatusModel> regularizeDeviceDbs;
-	private Long firstImei;
+	private String  firstImei;
 	private Integer taxPaidStatus,postalCode;
-	
 	public String getFirstName() {
 		return firstName;
 	}
@@ -129,18 +111,25 @@ public class Register_UploadPaidStatus {
 	public void setVillage(String village) {
 		this.village = village;
 	}
+	public String getNationality() {
+		return nationality;
+	}
+	public void setNationality(String nationality) {
+		this.nationality = nationality;
+	}
+	public String getPassportFileName() {
+		return passportFileName;
+	}
+	public void setPassportFileName(String passportFileName) {
+		this.passportFileName = passportFileName;
+	}
 	public List<UplodPaidStatusModel> getRegularizeDeviceDbs() {
 		return regularizeDeviceDbs;
 	}
 	public void setRegularizeDeviceDbs(List<UplodPaidStatusModel> regularizeDeviceDbs) {
 		this.regularizeDeviceDbs = regularizeDeviceDbs;
 	}
-	public Long getFirstImei() {
-		return firstImei;
-	}
-	public void setFirstImei(Long firstImei) {
-		this.firstImei = firstImei;
-	}
+	
 	public Integer getTaxPaidStatus() {
 		return taxPaidStatus;
 	}
@@ -155,5 +144,78 @@ public class Register_UploadPaidStatus {
 	}
 	
 	
+	public AllRequest getAuditParameters() {
+		return auditParameters;
+	}
+	public void setAuditParameters(AllRequest auditParameters) {
+		this.auditParameters = auditParameters;
+	}
+	
+	public String getTxnId() {
+		return txnId;
+	}
+	public void setTxnId(String txnId) {
+		this.txnId = txnId;
+	}
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Register_UploadPaidStatus [firstName=");
+		builder.append(firstName);
+		builder.append(", middleName=");
+		builder.append(middleName);
+		builder.append(", lastName=");
+		builder.append(lastName);
+		builder.append(", passportNo=");
+		builder.append(passportNo);
+		builder.append(", email=");
+		builder.append(email);
+		builder.append(", phoneNo=");
+		builder.append(phoneNo);
+		builder.append(", nid=");
+		builder.append(nid);
+		builder.append(", propertyLocation=");
+		builder.append(propertyLocation);
+		builder.append(", street=");
+		builder.append(street);
+		builder.append(", locality=");
+		builder.append(locality);
+		builder.append(", province=");
+		builder.append(province);
+		builder.append(", country=");
+		builder.append(country);
+		builder.append(", district=");
+		builder.append(district);
+		builder.append(", commune=");
+		builder.append(commune);
+		builder.append(", village=");
+		builder.append(village);
+		builder.append(", nationality=");
+		builder.append(nationality);
+		builder.append(", passportFileName=");
+		builder.append(passportFileName);
+		builder.append(", txnId=");
+		builder.append(txnId);
+		builder.append(", auditParameters=");
+		builder.append(auditParameters);
+		builder.append(", regularizeDeviceDbs=");
+		builder.append(regularizeDeviceDbs);
+		builder.append(", firstImei=");
+		builder.append(firstImei);
+		builder.append(", taxPaidStatus=");
+		builder.append(taxPaidStatus);
+		builder.append(", postalCode=");
+		builder.append(postalCode);
+		builder.append("]");
+		return builder.toString();
+	}
+	public String getFirstImei() {
+		return firstImei;
+	}
+	public void setFirstImei(String firstImei) {
+		this.firstImei = firstImei;
+	}
+
+
 
 }

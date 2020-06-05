@@ -21,7 +21,8 @@ public class LoginResponse {
     private String userLanguage;
     private String tag;
 	private Integer statusValue;
-    
+	private Integer selfRegister;
+	private String defaultLink;
     
 	public String getOperatorTypeName() {
 		return operatorTypeName;
@@ -120,13 +121,57 @@ public class LoginResponse {
 	public void setStatusValue(Integer statusValue) {
 		this.statusValue = statusValue;
 	}
+	public Integer getSelfRegister() {
+		return selfRegister;
+	}
+	public void setSelfRegister(Integer selfRegister) {
+		this.selfRegister = selfRegister;
+	}
+	public String getDefaultLink() {
+		return defaultLink;
+	}
+	public void setDefaultLink(String defaultLink) {
+		this.defaultLink = defaultLink;
+	}
 	@Override
 	public String toString() {
-		return "LoginResponse [response=" + response + ", statusCode=" + statusCode + ", userRoles=" + userRoles
-				+ ", username=" + username + ", userId=" + userId + ", name=" + name + ", primaryRole=" + primaryRole
-				+ ", primaryRoleId=" + primaryRoleId + ", status=" + status + ", operatorTypeName=" + operatorTypeName
-				+ ", operatorTypeId=" + operatorTypeId + ", period=" + period + ", userLanguage=" + userLanguage
-				+ ", tag=" + tag + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("LoginResponse [response=");
+		builder.append(response);
+		builder.append(", statusCode=");
+		builder.append(statusCode);
+		builder.append(", userRoles=");
+		builder.append(userRoles);
+		builder.append(", username=");
+		builder.append(username);
+		builder.append(", userId=");
+		builder.append(userId);
+		builder.append(", name=");
+		builder.append(name);
+		builder.append(", primaryRole=");
+		builder.append(primaryRole);
+		builder.append(", primaryRoleId=");
+		builder.append(primaryRoleId);
+		builder.append(", status=");
+		builder.append(status);
+		builder.append(", operatorTypeName=");
+		builder.append(operatorTypeName);
+		builder.append(", operatorTypeId=");
+		builder.append(operatorTypeId);
+		builder.append(", period=");
+		builder.append(period);
+		builder.append(", userLanguage=");
+		builder.append(userLanguage);
+		builder.append(", tag=");
+		builder.append(tag);
+		builder.append(", statusValue=");
+		builder.append(statusValue);
+		builder.append(", selfRegister=");
+		builder.append(selfRegister);
+		builder.append(", defaultLink=");
+		builder.append(defaultLink);
+		builder.append("]");
+		return builder.toString();
 	}
 	
 	

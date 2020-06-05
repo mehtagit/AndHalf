@@ -2,18 +2,10 @@ package org.gl.ceir.CeirPannelCode.Model;
 
 public class StolenIndividualUserDB {
 	
-	public Long getImeiEsnMeid() {
-		return imeiEsnMeid;
-	}
-
-	public void setImeiEsnMeid(Long imeiEsnMeid) {
-		this.imeiEsnMeid = imeiEsnMeid;
-	}
-
 	private String alternateContactNumber;
 	private String commune;
 	private Integer complaintType;
-	private String contactNumber;
+	private String contactNumber,contactNumber2,contactNumber3,contactNumber4;
 	private String country;
 	private String createdOn;
 	private String deviceBrandName;
@@ -32,14 +24,14 @@ public class StolenIndividualUserDB {
 	private String email;
 	private String firstName;
 	private Integer id;
-	private Long imeiEsnMeid;
+	private String imeiEsnMeid1,imeiEsnMeid2,imeiEsnMeid3,imeiEsnMeid4;
 	private String lastName;
 	private String locality;
 	private String middleName;
 	private String modelNumber;
 	private String modifiedOn;
 	private String nid;
-	private Integer operator;
+	private Integer operator,operator2,operator3,operator4;
 	private String phoneNo;
 	private Integer postalCode;
 	private String propertyLocation;
@@ -47,341 +39,312 @@ public class StolenIndividualUserDB {
 	private String remark;
 	private String street;
 	private String village,multiSimStatus,deviceSerialNumber,deviceStolenCountry,deviceStolenProvince,nidFileName;
-	
 	public String getAlternateContactNumber() {
-	return alternateContactNumber;
+		return alternateContactNumber;
 	}
-
 	public void setAlternateContactNumber(String alternateContactNumber) {
-	this.alternateContactNumber = alternateContactNumber;
+		this.alternateContactNumber = alternateContactNumber;
 	}
-
 	public String getCommune() {
-	return commune;
+		return commune;
 	}
-
 	public void setCommune(String commune) {
-	this.commune = commune;
+		this.commune = commune;
 	}
-
 	public Integer getComplaintType() {
-	return complaintType;
+		return complaintType;
 	}
-
 	public void setComplaintType(Integer complaintType) {
-	this.complaintType = complaintType;
+		this.complaintType = complaintType;
 	}
-
 	public String getContactNumber() {
-	return contactNumber;
+		return contactNumber;
 	}
-
 	public void setContactNumber(String contactNumber) {
-	this.contactNumber = contactNumber;
+		this.contactNumber = contactNumber;
 	}
-
 	public String getCountry() {
-	return country;
+		return country;
 	}
-
 	public void setCountry(String country) {
-	this.country = country;
+		this.country = country;
 	}
-
 	public String getCreatedOn() {
-	return createdOn;
+		return createdOn;
 	}
-
 	public void setCreatedOn(String createdOn) {
-	this.createdOn = createdOn;
+		this.createdOn = createdOn;
 	}
-
 	public String getDeviceBrandName() {
-	return deviceBrandName;
+		return deviceBrandName;
 	}
-
 	public void setDeviceBrandName(String deviceBrandName) {
-	this.deviceBrandName = deviceBrandName;
+		this.deviceBrandName = deviceBrandName;
 	}
-
 	public Integer getDeviceIdType() {
-	return deviceIdType;
+		return deviceIdType;
 	}
-
 	public void setDeviceIdType(Integer deviceIdType) {
-	this.deviceIdType = deviceIdType;
+		this.deviceIdType = deviceIdType;
 	}
-
 	public String getDeviceStolenCommune() {
-	return deviceStolenCommune;
+		return deviceStolenCommune;
 	}
-
 	public void setDeviceStolenCommune(String deviceStolenCommune) {
-	this.deviceStolenCommune = deviceStolenCommune;
+		this.deviceStolenCommune = deviceStolenCommune;
 	}
-
 	public String getDeviceStolenDistrict() {
-	return deviceStolenDistrict;
+		return deviceStolenDistrict;
 	}
-
 	public void setDeviceStolenDistrict(String deviceStolenDistrict) {
-	this.deviceStolenDistrict = deviceStolenDistrict;
+		this.deviceStolenDistrict = deviceStolenDistrict;
 	}
-
 	public String getDeviceStolenLocality() {
-	return deviceStolenLocality;
+		return deviceStolenLocality;
 	}
-
 	public void setDeviceStolenLocality(String deviceStolenLocality) {
-	this.deviceStolenLocality = deviceStolenLocality;
+		this.deviceStolenLocality = deviceStolenLocality;
 	}
-
 	public Integer getDeviceStolenPostalCode() {
-	return deviceStolenPostalCode;
+		return deviceStolenPostalCode;
 	}
-
 	public void setDeviceStolenPostalCode(Integer deviceStolenPostalCode) {
-	this.deviceStolenPostalCode = deviceStolenPostalCode;
+		this.deviceStolenPostalCode = deviceStolenPostalCode;
 	}
-
 	public String getDeviceStolenPropertyLocation() {
-	return deviceStolenPropertyLocation;
+		return deviceStolenPropertyLocation;
 	}
-
 	public void setDeviceStolenPropertyLocation(String deviceStolenPropertyLocation) {
-	this.deviceStolenPropertyLocation = deviceStolenPropertyLocation;
+		this.deviceStolenPropertyLocation = deviceStolenPropertyLocation;
 	}
-
 	public String getDeviceStolenStreet() {
-	return deviceStolenStreet;
+		return deviceStolenStreet;
 	}
-
 	public void setDeviceStolenStreet(String deviceStolenStreet) {
-	this.deviceStolenStreet = deviceStolenStreet;
+		this.deviceStolenStreet = deviceStolenStreet;
 	}
-
 	public String getDeviceStolenVillage() {
-	return deviceStolenVillage;
+		return deviceStolenVillage;
 	}
-
 	public void setDeviceStolenVillage(String deviceStolenVillage) {
-	this.deviceStolenVillage = deviceStolenVillage;
+		this.deviceStolenVillage = deviceStolenVillage;
 	}
-
 	public Integer getDeviceType() {
-	return deviceType;
+		return deviceType;
 	}
-
 	public void setDeviceType(Integer deviceType) {
-	this.deviceType = deviceType;
+		this.deviceType = deviceType;
 	}
-
 	public String getDistrict() {
-	return district;
+		return district;
 	}
-
 	public void setDistrict(String district) {
-	this.district = district;
+		this.district = district;
 	}
-
 	public Integer getDocType() {
-	return docType;
+		return docType;
 	}
-
 	public void setDocType(Integer docType) {
-	this.docType = docType;
+		this.docType = docType;
 	}
-
 	public Integer getDocTypeInterp() {
-	return docTypeInterp;
+		return docTypeInterp;
 	}
-
 	public void setDocTypeInterp(Integer docTypeInterp) {
-	this.docTypeInterp = docTypeInterp;
+		this.docTypeInterp = docTypeInterp;
 	}
-
 	public String getEmail() {
-	return email;
+		return email;
 	}
-
 	public void setEmail(String email) {
-	this.email = email;
+		this.email = email;
 	}
-
 	public String getFirstName() {
-	return firstName;
+		return firstName;
 	}
-
 	public void setFirstName(String firstName) {
-	this.firstName = firstName;
+		this.firstName = firstName;
 	}
-
 	public Integer getId() {
-	return id;
+		return id;
 	}
-
 	public void setId(Integer id) {
-	this.id = id;
+		this.id = id;
 	}
-
-
-
+	public String getImeiEsnMeid1() {
+		return imeiEsnMeid1;
+	}
+	public void setImeiEsnMeid1(String imeiEsnMeid1) {
+		this.imeiEsnMeid1 = imeiEsnMeid1;
+	}
+	public String getImeiEsnMeid2() {
+		return imeiEsnMeid2;
+	}
+	public void setImeiEsnMeid2(String imeiEsnMeid2) {
+		this.imeiEsnMeid2 = imeiEsnMeid2;
+	}
+	public String getImeiEsnMeid3() {
+		return imeiEsnMeid3;
+	}
+	public void setImeiEsnMeid3(String imeiEsnMeid3) {
+		this.imeiEsnMeid3 = imeiEsnMeid3;
+	}
+	public String getImeiEsnMeid4() {
+		return imeiEsnMeid4;
+	}
+	public void setImeiEsnMeid4(String imeiEsnMeid4) {
+		this.imeiEsnMeid4 = imeiEsnMeid4;
+	}
 	public String getLastName() {
-	return lastName;
+		return lastName;
 	}
-
 	public void setLastName(String lastName) {
-	this.lastName = lastName;
+		this.lastName = lastName;
 	}
-
 	public String getLocality() {
-	return locality;
+		return locality;
 	}
-
 	public void setLocality(String locality) {
-	this.locality = locality;
+		this.locality = locality;
 	}
-
 	public String getMiddleName() {
-	return middleName;
+		return middleName;
 	}
-
 	public void setMiddleName(String middleName) {
-	this.middleName = middleName;
+		this.middleName = middleName;
 	}
-
 	public String getModelNumber() {
-	return modelNumber;
+		return modelNumber;
 	}
-
 	public void setModelNumber(String modelNumber) {
-	this.modelNumber = modelNumber;
+		this.modelNumber = modelNumber;
 	}
-
 	public String getModifiedOn() {
-	return modifiedOn;
+		return modifiedOn;
 	}
-
 	public void setModifiedOn(String modifiedOn) {
-	this.modifiedOn = modifiedOn;
+		this.modifiedOn = modifiedOn;
 	}
-
 	public String getNid() {
-	return nid;
+		return nid;
 	}
-
 	public void setNid(String nid) {
-	this.nid = nid;
+		this.nid = nid;
 	}
-
 	public Integer getOperator() {
-	return operator;
+		return operator;
 	}
-
 	public void setOperator(Integer operator) {
-	this.operator = operator;
+		this.operator = operator;
 	}
-
 	public String getPhoneNo() {
-	return phoneNo;
+		return phoneNo;
 	}
-
 	public void setPhoneNo(String phoneNo) {
-	this.phoneNo = phoneNo;
+		this.phoneNo = phoneNo;
 	}
-
 	public Integer getPostalCode() {
-	return postalCode;
+		return postalCode;
 	}
-
 	public void setPostalCode(Integer postalCode) {
-	this.postalCode = postalCode;
+		this.postalCode = postalCode;
 	}
-
 	public String getPropertyLocation() {
-	return propertyLocation;
+		return propertyLocation;
 	}
-
 	public void setPropertyLocation(String propertyLocation) {
-	this.propertyLocation = propertyLocation;
+		this.propertyLocation = propertyLocation;
 	}
-
 	public String getProvince() {
-	return province;
+		return province;
 	}
-
 	public void setProvince(String province) {
-	this.province = province;
+		this.province = province;
 	}
-
 	public String getRemark() {
-	return remark;
+		return remark;
 	}
-
 	public void setRemark(String remark) {
-	this.remark = remark;
+		this.remark = remark;
 	}
-
 	public String getStreet() {
-	return street;
+		return street;
 	}
-
 	public void setStreet(String street) {
-	this.street = street;
+		this.street = street;
 	}
-
 	public String getVillage() {
-	return village;
+		return village;
 	}
-
 	public void setVillage(String village) {
-	this.village = village;
+		this.village = village;
 	}
-
-	
-	
 	public String getMultiSimStatus() {
 		return multiSimStatus;
 	}
-
 	public void setMultiSimStatus(String multiSimStatus) {
 		this.multiSimStatus = multiSimStatus;
 	}
-
 	public String getDeviceSerialNumber() {
 		return deviceSerialNumber;
 	}
-
 	public void setDeviceSerialNumber(String deviceSerialNumber) {
 		this.deviceSerialNumber = deviceSerialNumber;
 	}
-
-	
-	
 	public String getDeviceStolenCountry() {
 		return deviceStolenCountry;
 	}
-
 	public void setDeviceStolenCountry(String deviceStolenCountry) {
 		this.deviceStolenCountry = deviceStolenCountry;
 	}
-
 	public String getDeviceStolenProvince() {
 		return deviceStolenProvince;
 	}
-
 	public void setDeviceStolenProvince(String deviceStolenProvince) {
 		this.deviceStolenProvince = deviceStolenProvince;
 	}
-
 	public String getNidFileName() {
 		return nidFileName;
 	}
-
 	public void setNidFileName(String nidFileName) {
 		this.nidFileName = nidFileName;
 	}
-
+	public String getContactNumber2() {
+		return contactNumber2;
+	}
+	public void setContactNumber2(String contactNumber2) {
+		this.contactNumber2 = contactNumber2;
+	}
+	public String getContactNumber3() {
+		return contactNumber3;
+	}
+	public void setContactNumber3(String contactNumber3) {
+		this.contactNumber3 = contactNumber3;
+	}
+	public String getContactNumber4() {
+		return contactNumber4;
+	}
+	public void setContactNumber4(String contactNumber4) {
+		this.contactNumber4 = contactNumber4;
+	}
+	public Integer getOperator2() {
+		return operator2;
+	}
+	public void setOperator2(Integer operator2) {
+		this.operator2 = operator2;
+	}
+	public Integer getOperator3() {
+		return operator3;
+	}
+	public void setOperator3(Integer operator3) {
+		this.operator3 = operator3;
+	}
+	public Integer getOperator4() {
+		return operator4;
+	}
+	public void setOperator4(Integer operator4) {
+		this.operator4 = operator4;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -393,6 +356,12 @@ public class StolenIndividualUserDB {
 		builder.append(complaintType);
 		builder.append(", contactNumber=");
 		builder.append(contactNumber);
+		builder.append(", contactNumber2=");
+		builder.append(contactNumber2);
+		builder.append(", contactNumber3=");
+		builder.append(contactNumber3);
+		builder.append(", contactNumber4=");
+		builder.append(contactNumber4);
 		builder.append(", country=");
 		builder.append(country);
 		builder.append(", createdOn=");
@@ -429,8 +398,14 @@ public class StolenIndividualUserDB {
 		builder.append(firstName);
 		builder.append(", id=");
 		builder.append(id);
-		builder.append(", imeiEsnMeid=");
-		builder.append(imeiEsnMeid);
+		builder.append(", imeiEsnMeid1=");
+		builder.append(imeiEsnMeid1);
+		builder.append(", imeiEsnMeid2=");
+		builder.append(imeiEsnMeid2);
+		builder.append(", imeiEsnMeid3=");
+		builder.append(imeiEsnMeid3);
+		builder.append(", imeiEsnMeid4=");
+		builder.append(imeiEsnMeid4);
 		builder.append(", lastName=");
 		builder.append(lastName);
 		builder.append(", locality=");
@@ -445,6 +420,12 @@ public class StolenIndividualUserDB {
 		builder.append(nid);
 		builder.append(", operator=");
 		builder.append(operator);
+		builder.append(", operator2=");
+		builder.append(operator2);
+		builder.append(", operator3=");
+		builder.append(operator3);
+		builder.append(", operator4=");
+		builder.append(operator4);
 		builder.append(", phoneNo=");
 		builder.append(phoneNo);
 		builder.append(", postalCode=");
@@ -472,22 +453,6 @@ public class StolenIndividualUserDB {
 		builder.append("]");
 		return builder.toString();
 	}
-
-	
-
-
 	
 	
-	
-	
-
-	
-
-	
-	
-	
-
-	
-
-
 }

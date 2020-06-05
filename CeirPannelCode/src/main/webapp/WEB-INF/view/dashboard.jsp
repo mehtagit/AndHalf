@@ -1,11 +1,27 @@
-<% 
-  		response.setHeader("Cache-Control","no-cache");
-        response.setHeader("Cache-Control","no-store");
-        response.setDateHeader("Expires", 0);
-        response.setHeader("Pragma","no-cache");
-		if(session.getAttribute("usertype") !=null){ 
-		
+<%@ page import="java.util.Date" %>
+<%
+   response.setHeader("Cache-Control", "no-cache");
+	response.setHeader("Cache-Control", "no-store");
+	response.setDateHeader("Expires", 0);
+	response.setHeader("Pragma", "no-cache");
+	
+    /*   //200 secs
+	 session.setAttribute("usertype", null);  */
+/* 	 session.setMaxInactiveInterval(10); */
+	 int timeout = session.getMaxInactiveInterval();
+	
+	 long accessTime = session.getLastAccessedTime();
+	 long currentTime= new Date().getTime(); 
+	 System.out.println("accessTime========"+(accessTime));
+	 System.out.println("timeout========"+timeout);
+	 long dfd= accessTime +timeout;
+	 System.out.println("currentTime========"+currentTime);
+	 if( currentTime< dfd){
+	/*  response.setHeader("Refresh", timeout + "; URL = ../login");
+	 System.out.println("timeout========"+timeout); 
+	if (session.getAttribute("usertype") != null) { */
 %>
+
         <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
@@ -25,6 +41,10 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta content="" name="description" />
 <meta content="" name="author" />
+
+<script type="text/javascript"
+	src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
+	<link rel="shortcut icon" href="">
 <!-- CORE CSS-->
 <link href="${context}/resources/css/materialize.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
@@ -47,16 +67,35 @@
 <link
 	href="${context}/resources/font/font-awesome/css/font-awesome.min.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
+
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+
+<script src="http://malsup.github.io/jquery.blockUI.js"></script>
+
+<!------------------------------------------- Dragable Model---------------------------------->
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+	
 <script>
 var contextpath = "${context}";
 <%
 String usertype = (String) session.getAttribute("usertype");
 String name = (String) session.getAttribute("name");
-%>
+Integer usertypeId=(Integer)session.getAttribute("usertypeId");
+if(usertypeId==null){
+	usertypeId=0;
+}
 
+Integer selfRegister=(Integer)session.getAttribute("selfRegister");
+if(selfRegister==null){
+	selfRegister=0;
+}
+
+%>
 </script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
 
 </head>
 <style>
@@ -65,9 +104,22 @@ String name = (String) session.getAttribute("name");
 	right: 10px;
 	top: 10px;
 }
-
+div#modalMessageBody {
+    text-align: center;
+    margin-top: 12px;
+}
+div#error_Modal {
+    width: 550px;
+    height: 50px;
+    margin-top: 14%;
+}
 </style>
-<body data-lang="${language}" data-usertype="${usertype}">
+<body data-lang="${language}" data-usertype="${usertype}"
+data-roleType="${usertype}" data-userTypeID="${usertypeId}"
+	data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}"
+	data-stolenselected-roleType="${stolenselectedUserTypeId}"
+	data-selected-consignmentTxnId="${consignmentTxnId}"
+	data-selected-consignmentStatus="${consignmentStatus}" data-defaultLink="${defaultLink}">
 	<!-- Start Page Loading -->
 	<div id="loader-wrapper">
 	<div id="initialloader"></div>
@@ -113,50 +165,54 @@ String name = (String) session.getAttribute("name");
 					</ul>
 					<ul id="chat-out" class="right hide-on-med-and-down"
 						style="overflow: inherit !important;">
-						<li><a  href="./Consignment/ManualFileDownload/"
+						<li><a  id="manualDownload" download="download"
 							 style="color: white; cursor: pointer;"><i class="fa fa-download download-icon" aria-hidden="true" 
-							 title="Download Manual" download="download" style="color: #fff;"></i></a></li>
+							 title="Download Manual"  style="color: #fff; line-height: 3;"></i></a></li>
 						<li>
 							<div id="divLang" style="display: flex; margin: 8px 6px;"
 								class="darken-1">
 								<div id="iconLable" class="darken-1">
-									<i class="fa fa-globe fa-6" aria-hidden="true"></i>
+									<i class="fa fa-globe fa-6" aria-hidden="true" style="line-height:4"></i>
 								</div>
 								<div style="width: 80px !important;">
 									<select class="darken-1" id="langlist"
-										style="border-bottom: none; height: 42px; background: #00bcd4; border: 1px solid #00bcd4 !important;">
-										<option value="en">English</option>
-										<option value="km"><spring:message code="lang.khmer" /></option>
+										style="border-bottom: none; height: 42px; background: #00bcd4; line-height:1; border: 1px solid #00bcd4 !important;">
+										<option value="en" style="color:#444;">English</option>
+										<option value="km" style="color:#444;"><spring:message code="lang.khmer" /></option>
 									</select>
 								</div>
 							</div>
 						</li>
-						<li><a   data-target="goToLogout" class="modal-trigger"
-							 style="color: white; cursor: pointer;"><spring:message
-									code="registration.home" /></a></li>
+<%-- 						<li>
+                             <a href="javascript:void(0)"  
+							 style="color:rgba(0, 0, 0, 0.3);; cursor: pointer;"><spring:message
+									code="registration.home" /></a></li> --%>
 						<li class="profileInfo"><a
 							class="btn-flat dropdown-button waves-effect waves-light white-text profile-btn"
 							href="#" data-activates="profile-dropdown" style="height: 40px;"><i
 								class="mdi-action-account-circle"
 								style="color: #fff; font-size: 40px;"></i></a>
 							<ul id="profile-dropdown" class="dropdown-content">
-								<li><a href="${context}/editProfile" target="mainArea"><i
+							   <%if(selfRegister!=0){ %>
+								<li><a id="editLink" href="javascript:void(0)" target="mainArea"><i
 										class="fa fa-pencil dropdownColor" style="float: left;"></i><span
 										style="float: left" class="dropdownColor"><spring:message
 												code="registration.editinfo" /></span></a></li>
 								<li class="divider"></li>
-								<li><a data-target="changePassword" class="modal-trigger"><i
-										class="fa fa-key dropdownColor" style="float: left"></i><span
-										style="float: left" class="dropdownColor"><spring:message
-												code="registration.changepassword" /></span></a></li>
-								<li class="divider"></li>
-								<li><a href="#manageAccount" class="modal-trigger"><i
+								<li><a onclick="manageAccountPopup();" href="javascript:void(0)"><i
 										class="mdi-action-settings dropdownColor"></i> <span
 										class="dropdownColor"> <spring:message
 												code="registration.activate/deactivateaccount" /></span></a></li>
 								<li class="divider"></li>
-
-								<li><a data-target="goToLogout" style="cursor: pointer;" class="modal-trigger" id=""><i
+                            
+								 <%} %>
+								<li><a  href="javascript:void(0)" onclick="changePasswordPopup()"><i
+										class="fa fa-key dropdownColor" style="float: left"></i><span
+										style="float: left" class="dropdownColor"><spring:message
+												code="registration.changepassword" /></span></a></li>
+								<li class="divider"></li>
+							   
+								<li><a href="javascript:void(0)" onclick="openLogout()" style="cursor: pointer;"  id=""><i
 										style="float: left;"
 										class="mdi-hardware-keyboard-tab dropdownColor"></i> <span
 										class="dropdownColor"> <spring:message
@@ -198,7 +254,7 @@ String name = (String) session.getAttribute("name");
 					<li>
 						<ul class="navData">
 							<c:forEach items="${features}" var="feature">
-								<li class="bold"><a href="${feature.link}"
+							<li class="bold"><a href="${feature.link}?FeatureId=${feature.id}"
 									target="mainArea" class="waves-effect waves-cyan"
 									data-featureID="${feature.id}"><i class="${feature.logo}"></i>
 										<spring:message
@@ -284,32 +340,34 @@ String name = (String) session.getAttribute("name");
 					<p>
 						<label style="margin-right: 50px"> <input type="radio"
 							name="status" value="Deactivate" 
-							oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');"
-							title= "<spring:message code="validation.Options" />" required  / > <span>
+							oninput="InvalidMsg(this,'fileType','<spring:message code="validation.Options" />');" oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.Options" />');"
+							required > <span>
 								<spring:message code="registration.deactivate" />
 						</span></label>
 						<spring:message code="registration.permanentlydeleteportal" />
 					</p>
 				</div>
 				<%
-					String status = (String) session.getAttribute("userStatus");
+					//String status = (String) session.getAttribute("userStatus");
+				Integer statusValue=(Integer)session.getAttribute("userStatusValue");
 				%>
 				<%
-					if (status.equalsIgnoreCase("Approved")) {
+					if (statusValue==3) {
+	
 				%>
 				<div class="row" style="height: 30px;">
 					<p>
 						<label style="margin-right: 67px"> <input type="radio"
 							value="Disable" name="status" 
-							oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');"
-							title= "<spring:message code="validation.Options" />" required  / > <span>
+							oninput="InvalidMsg(this,'fileType','<spring:message code="validation.Options" />');" oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.Options" />');"
+							title= "" required  / > <span>
 								<spring:message code="registration.disable" />
 						</span></label>
 						<spring:message code="registration.alltheactionwillbe" />
 					</p>
 				</div>
 				<%
-					} else if (status.equalsIgnoreCase("Disable")) {
+					} else if (statusValue==5) {
 				%>
 				<div class="row" style="height: 30px;">
 					<p>
@@ -342,9 +400,6 @@ String name = (String) session.getAttribute("name");
 	<!-- Modal 4 start   -->
 
 	<div id="manageAccountSubmit" class="modal">
-		<button type="button"
-			class=" modal-action modal-close waves-effect waves-green btn-flat right"
-			data-dismiss="modal">&times;</button>
 		<h6 class="modal-header">
 			<spring:message code="registration.manageaccount" />
 		</h6>
@@ -369,10 +424,8 @@ String name = (String) session.getAttribute("name");
 			<spring:message code="registration.changepassword" />
 		</h6>
 		<div class="modal-content">
-			<form onsubmit="return changePassword()">
+			<form id="changePassForm" onsubmit="return changePassword();">
 				<div class="row">
-
-
 					<span style="text-align: center; color: red;" id="errorMsg"></span>
 					<div class="col s1">
 						<i class="fa fa-lock" aria-hidden="true"
@@ -381,10 +434,11 @@ String name = (String) session.getAttribute("name");
 
 					<div class="input-field col s11">
 						<input type="password" id="oldPassword" class="password"
-							pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
+							pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,10}$"
 							maxlength="10" min="8"
-							oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-							title= "<spring:message code="validation.minumum8length" />" required  / >
+oninput="InvalidMsg(this,'input','<spring:message code="validation.password" />');"
+ oninvalid="InvalidMsg(this,'input','<spring:message code="validation.password" />');"	 required  />	
+							
 							 <label for="oldPassword"
 							class="center-align" style="color: #000; font-size: 12px;">
 							<spring:message code="registration.oldpassword" />
@@ -408,8 +462,9 @@ String name = (String) session.getAttribute("name");
 								code="registration.newpassword" /></label> <input type="password"
 							pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
 							maxlength="10" min="8" 
-							oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-							title= "<spring:message code="validation.minumum8length" />" required  /  id="password" class="password2" />
+oninput="InvalidMsg(this,'input','<spring:message code="validation.password" />');" 
+oninvalid="InvalidMsg(this,'input','<spring:message code="validation.password" />');"		
+			 required  id="password" class="password2" />
 							<div class="input-field-addon">
 							<i class="fa fa-eye-slash teal-text toggle-password2"
 								aria-hidden="true"></i>
@@ -428,8 +483,9 @@ String name = (String) session.getAttribute("name");
 							class="password3" id="confirm_password"
 							pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
 							maxlength="10" min="8"
-							oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-							title= "<spring:message code="validation.minumum8length" />" required  / >
+oninput="InvalidMsg(this,'input','<spring:message code="validation.password" />');" 
+oninvalid="InvalidMsg(this,'input','<spring:message code="validation.password" />');"
+							title= "<spring:message code="validation.minumum8length" />" required >
 							<div class="input-field-addon">
 							<i class="fa fa-eye-slash teal-text toggle-password3"
 								aria-hidden="true"></i>
@@ -438,9 +494,13 @@ String name = (String) session.getAttribute("name");
 				</div>
 				<div class="row" style="margin-top: 30px;">
 					<div class="input-field col s12 center">
-						<button class="btn" id="updateStatusBtn">
+						<%-- <button class="btn" type="submit" id="changePassBtn">
 							<spring:message code="button.submit" />
-						</button>
+						</button> --%>
+							<button  class="btn" id="changePassBtn" 
+							type="submit" style="margin-left: 10px;">
+									<spring:message code="button.submit" />
+								</button>
 						<button type="button" class="btn modal-close"
 							style="margin-left: 10px;">
 							<spring:message code="modal.cancel" />
@@ -523,7 +583,13 @@ String name = (String) session.getAttribute("name");
 			</div>
 			<div class="row">
 				<div class="center">
-					<a href="" class="btn"><spring:message code="modal.ok" /></a>
+					
+													<%String userLatestLang=(String)session.getAttribute("updatedLanguage"); %>
+								<%if(userLatestLang!=null){%>
+								<a href="./?lang=<%=userLatestLang%>" class="btn modal-close"><spring:message code="modal.ok" /></a>
+                                <%}else{ %>
+								<a href="./?lang=<%=session.getAttribute("language")%>" class="btn modal-close"><spring:message code="modal.ok" /></a>
+                                <%} %>
 				</div>
 			</div>
 		</div>
@@ -544,8 +610,8 @@ data-dismiss="modal">&times;</button> -->
 			</div>
 			<div class="input-field col s12 center">
 				<div class="input-field col s12 center">
-					<a href="./homePage" class="btn" type="submit" name="add_user"
-						id="add_user"><spring:message code="modal.yes" /></a> <a href="#"
+					<a href="${context}/homePage" class="btn" type="submit" name="add_user"
+						id="home_Links"><spring:message code="modal.yes" /></a> <a href="#"
 						class="modal-close btn" style="margin-left: 10px;"><spring:message
 							code="modal.no" /></a>
 				</div>
@@ -578,14 +644,39 @@ data-dismiss="modal">&times;</button> -->
 	</div>
 
 	<!-- Modal End -->
+	
 	<!-- Modal End -->
 	<!-- Modal End -->
 
-
+	<!-- File Related Modal  -->
+<div id="fileFormateModal" class="modal">
+		<h6 class="modal-header"><spring:message code="fileValidationModalHeader" /></h6>
+		<div class="modal-content">
+			<div class="row">
+				<h6 id="fileErrormessage"><spring:message code="fileValidationName" /><br> <br> <spring:message code="fileValidationFormate" /> <br><br> <spring:message code="fileValidationSize" /> </h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<div class="input-field col s12 center">
+						<button class="modal-close waves-effect waves-light btn" onclick="document.getElementById('mainArea').contentWindow.clearFileName();"
+							style="margin-left: 10px;"><spring:message code="modal.ok" /></button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Modal End -->
 	<!-- ================================================
     Scripts
     ================================================ -->
-
+<!-- 	Error Modal -->
+	<div class="modal" id="error_Modal" role="dialog">
+		<div class="modal-dialog">
+			<div class="row" id="modalMessageBody"
+					style="text-align: center;"></div>
+			
+		</div>
+	</div>
 
 	<!-- jQuery Library -->
 
@@ -606,7 +697,7 @@ data-dismiss="modal">&times;</button> -->
 	<script type="text/javascript"
 		src="${context}/resources/js/custom-script.js"></script>
 
-	<!-- i18n library -->
+			<!-- i18n library -->
 	<script type="text/javascript"
 		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
 	<script type="text/javascript"
@@ -636,13 +727,14 @@ data-dismiss="modal">&times;</button> -->
 
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
-
-	<!------------------------------------------- Dragable Model---------------------------------->
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-
-		
+	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
+<script type="text/javascript"
+		src="${context}/resources/project_js/backbutton.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/project_js/dragableModal.js"></script>	
+			<script type="text/javascript"
+		src="${context}/resources/project_js/enterKey.js"></script>
+	
 	<!-- ajax js -->
 	
 
@@ -650,22 +742,29 @@ data-dismiss="modal">&times;</button> -->
 			<script type="text/javascript" src="${context}/resources/ajax/Login.js"></script>
 	<%-- 	<script type="text/javascript"
 		src="${context}/resources/project_js/disable_inspectElement.js"></script> --%>
-	<script type="text/javascript">
-$(document).ready(function () {
-<%String lang=(String)session.getAttribute("language");%>
-<%if(lang!=null){%>
-<%-- console.log("language="+"<%=lang%>"); --%>
-<%--  $("#langlist").val("<%=lang%>");  --%>
-<%-- document.getElementById("langlist").value="<%=lang%>"; --%>
-<%}%>
-});
-</script>
+		</script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/dashboard.js"></script>
 <script type="text/javascript"
 		src="${context}/resources/ajax/Profile.js"></script>
+
 <script type="text/javascript"
-		src="${context}/resources/project_js/profileInfoTab.js" async></script>		
+		src="${context}/resources/project_js/profileInfoTab.js" async></script>	
+
+<script type="text/javascript">
+$(document).ready(function () {
+	<%
+	if(usertypeId==13 || usertypeId==20){
+		%>
+	//	$("#langlist").val('en');
+		 $("#langlist").prop("disabled", true);
+$("#divLang").hide();
+		<%}%>
+	
+openEditPage(<%=usertypeId%>)
+});
+</script>
+	
 </body>
 
 </html>

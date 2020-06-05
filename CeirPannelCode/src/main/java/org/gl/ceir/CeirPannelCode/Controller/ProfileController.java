@@ -7,18 +7,26 @@ import org.gl.ceir.CeirPannelCode.Model.UserStatus;
 import org.gl.ceir.CeirPannelCode.Response.UpdateProfileResponse;
 import org.gl.ceir.CeirPannelCode.Service.ProfileService;
 import org.gl.ceir.CeirPannelCode.Util.HttpResponse;
+import org.gl.ceir.pagination.model.UserManagementContent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class ProfileController {
 
 	@Autowired
 	ProfileService profileService;
+	
+	private final Logger log = LoggerFactory.getLogger(getClass());	
+
 
 	@RequestMapping(value = "changePassword",method = RequestMethod.POST)
 	@ResponseBody
@@ -52,11 +60,24 @@ public class ProfileController {
 		
 	}
 	
-	@RequestMapping(value = "viewProfile/{id}",method = RequestMethod.POST)
+	@RequestMapping(value = "viewProfile/{id}/{userId}",method = RequestMethod.POST)
 	@ResponseBody 
-	public  Registration ViewAdminUserService(HttpSession session, @PathVariable ("id") long id) {
-	return profileService.ViewAdminUserService(session, id);
+	public  Registration ViewAdminUserService(HttpSession session, @PathVariable ("id") long id,@PathVariable("userId") Integer userId) {
+	return profileService.ViewAdminUserService(session, id, userId);
 
 	} 
 	
+	
+	
+	
+	
+	
+	@GetMapping("/editOthersProfile")
+	public ModelAndView editProfile() {
+		ModelAndView mv = new ModelAndView();
+		log.info(" editProfile entry point..");
+		mv.setViewName("editOthersProfile");
+		log.info("editProfile exit point..");
+		return mv;
+	}
 }

@@ -6,8 +6,9 @@ var startdate=$('#startDate').val();
 var endDate=$('#endDate').val();
 
 $(document).ready(function(){
-	auditManagementDatatable();
 	pageRendering();
+	setTimeout(function(){ auditManagementDatatable(); }, 200);
+	
 	
 });
 
@@ -18,13 +19,29 @@ var role = currentRoleType == null ? roleType : currentRoleType;
 
 function auditManagementDatatable(){
 	
+	var userType = $('#userType').val() == 'null' ? null : $("#userType option:selected").text();
+	var featureName = $('#feature').val() == 'null' ? null : $("#feature option:selected").text();
+	var subFeature = $('#subFeature').val() == 'null' ? null : $("#subFeature option:selected").text();
+	var roleType = $('#roleType').val() == 'null' ? null : $("#roleType option:selected").text();
 	var filterRequest={
-			"userId":parseInt(userId),
-			"featureId":parseInt(featureId),
-			"userTypeId": parseInt($("body").attr("data-userTypeID")),
-			"userType":$("body").attr("data-roleType"),
-			"featureId": parseInt(featureId)
+			
+			//"userId":parseInt(userId),
+			//"featureId":parseInt(featureId),
+			//"userTypeId": parseInt($("body").attr("data-userTypeID")),
+			"userType": userType,
+			"featureId": parseInt(featureId),
+			"startDate" : $("#startDate").val(),
+			"endDate" : $("#endDate").val(),
+			"txnId" : $("#transactionID").val(),
+			"featureName" : featureName,
+			"subFeatureName" : subFeature,
+			"userName" : $("#userName").val(),
+			"roleType" : roleType
+			
+			
 	}
+	
+	console.log("filterRequest-->" +JSON.stringify(filterRequest));
 	$.ajax({
 		url: 'headers?type=auditManagement',
 		type: 'POST',
@@ -57,6 +74,18 @@ function auditManagementDatatable(){
 		            { width: 150, targets: 1 }
 		        ]
 			});
+			$('div#initialloader').delay(300).fadeOut('slow');
+			$('.dataTables_filter input')
+		       .off().on('keyup', function(event) {
+		    	   if(event.keyCode == 8 && !textBox.val() || event.keyCode == 46 && !textBox.val() || event.keyCode == 83 && !textBox.val()) {
+			    
+			            }
+		    		if (event.keyCode === 13) {
+		    			 table.search(this.value.trim(), false, false).draw();
+		    		}
+		          
+		       });
+			
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
 			console.log("error in ajax");
@@ -74,37 +103,100 @@ function pageRendering(){
 		type: 'POST',
 		dataType: "json",
 		success: function(data){
+			data.userStatus == "Disable" ? $('#btnLink').addClass( "eventNone" ) : $('#btnLink').removeClass( "eventNone" );
+			
 			var elem='<p class="PageHeading">'+data.pageTitle+'</p>';		
 			$("#pageHeader").append(elem);
 			var button=data.buttonList;
-
 			var date=data.inputTypeDateList;
-			
 			for(i=0; i<date.length; i++){
 				if(date[i].type === "date"){
-					$("#auditTableDiv").append("<div class='col s6 m2 l2 responsiveDiv'>"+
+					$("#auditTableDiv").append("<div class='input-field col s6 m2'>"+
 							"<div id='enddatepicker' class='input-group date'>"+
-							"<label for='TotalPrice'>"+date[i].title
-							+"</label>"+"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off'>"+
+							"<input class='form-control datepicker' onchange='checkDate(startDate,endDate)' type='text' id="+date[i].id+" autocomplete='off'>"+
+							"<label for="+date[i].id+">"+date[i].title
+							+"</label>"+
 							"<span	class='input-group-addon' style='color: #ff4081'>"+
 							"<i	class='fa fa-calendar' aria-hidden='true' style='float: right; margin-top: -37px;'>"+"</i>"+"</span>");
-					}
-					else if(date[i].type === "text"){
-						$("#auditTableDiv").append("<div class='col s12 m2 l12'><a href='JavaScript:void(0)' onclick='exportAuditData()' type='button' class='export-to-excel right'>Export <i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
-						for(i=0; i<button.length; i++){
-							$('#'+button[i].id).text(button[i].buttonTitle);
-							$('#'+button[i].id).attr("onclick", button[i].buttonURL);
-						}
-					}
-				} 
-			$('.datepicker').datepicker({
-				dateFormat: "yy-mm-dd"
-				});
-		}
+					$( "#"+date[i].id ).datepicker({
+						dateFormat: "yy-mm-dd",
+						 maxDate: new Date()
+			        }); 
+				}else if(date[i].type === "text"){
+					$("#auditTableDiv").append("<div class='input-field col s6 m2' ><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
+				}
+				
+			} 
+		
+		// dynamic dropdown portion
+			var dropdown=data.dropdownList;
+			for(i=0; i<dropdown.length; i++){
+				var dropdownDiv=
+					$("#auditTableDiv").append("<div class='col s6 m2 selectDropdwn'>"+
+						
+							"<div class='select-wrapper select2  initialized'>"+
+							"<span class='caret'>"+"</span>"+
+							"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
 
-	}); 
+							"<select id="+dropdown[i].id+" class='select2 initialized'>"+
+							"<option value=null selected>"+dropdown[i].title+
+							"</option>"+
+							"</select>"+
+							"</div>"+
+					"</div>");
+			}
+
+				$("#auditTableDiv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
+				$("#auditTableDiv").append("<div class=' col s3 m2 l1'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportAuditData()'>Export<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+				for(i=0; i<button.length; i++){
+					$('#'+button[i].id).text(button[i].buttonTitle);
+					$('#'+button[i].id).attr("onclick", button[i].buttonURL);
+				}
+
+			
+		
+
+
+		}
+	});
+	
+	setAllDropdown()
 	
 }
+
+
+function setAllDropdown(){
+	$.getJSON('./registrationUserType?type=2', function(data) {
+		for (i = 0; i < data.length; i++) {
+			$('<option>').val(data[i].id).text(data[i].usertypeName)
+			.appendTo('#userType');
+		}
+	});
+	
+	$.getJSON('./registrationUserType?type=2', function(data) {
+		for (i = 0; i < data.length; i++) {
+			$('<option>').val(data[i].id).text(data[i].usertypeName)
+			.appendTo('#roleType');
+		}
+	});
+	
+	
+	$.getJSON('./getAllfeatures', function(data) {
+		for (i = 0; i < data.length; i++) {
+		$('<option>').val(data[i].id).text(data[i].name).appendTo('#feature');
+		}
+	});
+	
+	$.getJSON('./getsubfeatures', function(data) {
+		for (i = 0; i < data.length; i++) {
+		$('<option>').val(data[i].id).text(data[i].name).appendTo('#subFeature');
+		}
+	});
+}
+
+
+
+
 
 
 $('.datepicker').on('mousedown',function(event){
@@ -113,7 +205,9 @@ $('.datepicker').on('mousedown',function(event){
 
 
 function viewDetails(Id){
-	$("#viewAuditModel").openModal();
+	$("#viewAuditModel").openModal({
+        dismissible:false
+    });
 	 var Id = parseInt(Id);
 	$.ajax({
 		url : './audit/view/'+Id,
@@ -132,10 +226,13 @@ function viewDetails(Id){
 
 function setViewPopupData(data){
 	$("#viewUserId").val(data.userId);
+	$("#viewTxnId").val(data.txnId);
 	$("#viewUserName").val(data.userName);
-	$("#viewRoleType").val(data.userType);
+	$("#viewUserType").val(data.userType);
+	$("#viewRoleType").val(data.roleType);
 	$("#viewFeature").val(data.featureName);
 	$("#viewSubFeature").val(data.subFeature);
+	
 }
 
 

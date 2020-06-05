@@ -60,8 +60,9 @@ public class RegistrationReqDatatableController {
 	@PostMapping("registrationData")
 	public ResponseEntity<?> viewUserProfileRecord(@RequestParam(name="type",defaultValue = "registration",required = false) String role, HttpServletRequest request,HttpSession session) {
 	
-		String userType = (String) session.getAttribute("usertype");
-		int userId=	(int) session.getAttribute("userid");
+		//String userType = (String) session.getAttribute("usertype");
+		//int userId=	(int) session.getAttribute("userid");
+		String sessionUserName =  (String) session.getAttribute("username");
 		
 		log.info("session value user Type admin registration Controller=="+session.getAttribute("usertype"));
 		int file=0;
@@ -101,14 +102,19 @@ public class RegistrationReqDatatableController {
 				   String Id =   String.valueOf(dataInsideList.getUser().getId());
 				   String username =  dataInsideList.getUser().getUsername();
 				   String id =  String.valueOf(dataInsideList.getId());
+				   String userTypeId = String.valueOf(dataInsideList.getUser().getUsertype().getId());
 				   String type = dataInsideList.getAsTypeName();
 				   String roles =  (String) dataInsideList.getUser().getUsertype().getUsertypeName();
-				   String StatusName =  UserStatus.getUserStatusByCode(dataInsideList.getUser().getCurrentStatus()).getDescription();
+				   String StatusName = dataInsideList.getUser().getStateInterp();
 				   String status =  String.valueOf(dataInsideList.getUser().getCurrentStatus());
+				   String email = dataInsideList.getEmail();
+				   String phoneNo = dataInsideList.getPhoneNo();
+				   
+				   
 				   String userStatus = (String) session.getAttribute("userStatus");	  
 				   //log.info("Id-->"+Id+"--userStatus--->"+userStatus+"--StatusName---->"+StatusName+"--createdOn---->"+createdOn+"--id--->"+id+"--userName-->"+username);
-				   String action=iconState.adminRegistrationRequest(Id,userStatus,StatusName,createdOn,roles,type,id,username,status);			   
-				   Object[] finalData={createdOn,modifiedOn,username,type,roles,StatusName,action}; 
+				   String action=iconState.adminRegistrationRequest(Id,userStatus,StatusName,createdOn,roles,type,id,username,status,sessionUserName,userTypeId);			   
+				   Object[] finalData={createdOn,modifiedOn,username,email,phoneNo,type,roles,StatusName,action}; 
 
 				   List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 					finalList.add(finalDataList);
@@ -165,7 +171,7 @@ public class RegistrationReqDatatableController {
 			pageElement.setButtonList(buttonList);
 			
 			//Dropdown items			
-			String[] selectParam= {"select",Translator.toLocale("table.AsType"),"asType","","select",Translator.toLocale("table.Role"),"role","","select",Translator.toLocale("table.status"),"recentStatus",""};
+			String[] selectParam= {"select",Translator.toLocale("table.AsType"),"asType","","select",Translator.toLocale("select.userType"),"role","","select",Translator.toLocale("table.status"),"recentStatus",""};
 			for(int i=0; i< selectParam.length; i++) {
 				inputFields= new InputFields();
 				inputFields.setType(selectParam[i]);
@@ -180,7 +186,7 @@ public class RegistrationReqDatatableController {
 			pageElement.setDropdownList(dropdownList);
 			
 			//input type date list		
-			String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","", "text",Translator.toLocale("input.transactionID"),"transactionID","","text",Translator.toLocale("input.grievID"),"grievanceID","" };
+			String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("table.email"),"emailID","","text",Translator.toLocale("table.phone"),"phone","","text",Translator.toLocale("table.UserName"),"userName",""};
 			for(int i=0; i< dateParam.length; i++) {
 				dateRelatedFields= new InputFields();
 				dateRelatedFields.setType(dateParam[i]);

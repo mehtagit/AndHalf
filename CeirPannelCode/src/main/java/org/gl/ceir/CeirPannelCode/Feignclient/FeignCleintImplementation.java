@@ -2,13 +2,20 @@ package org.gl.ceir.CeirPannelCode.Feignclient;
 import java.util.List;
 
 import org.gl.ceir.CeirPannelCode.Model.ActionModel;
+import org.gl.ceir.CeirPannelCode.Model.AddMoreFileModel;
+import org.gl.ceir.CeirPannelCode.Model.CCPolicyBreachRequest;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentModel;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentUpdateRequest;
+import org.gl.ceir.CeirPannelCode.Model.CustomerCareByTxnId;
+import org.gl.ceir.CeirPannelCode.Model.CustomerCareRequest;
 import org.gl.ceir.CeirPannelCode.Model.Dropdown;
 import org.gl.ceir.CeirPannelCode.Model.FileExportResponse;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.GrievanceDropdown;
+import org.gl.ceir.CeirPannelCode.Model.NewRule;
+import org.gl.ceir.CeirPannelCode.Model.RuleListContent;
+import org.gl.ceir.CeirPannelCode.Model.RuleNameModel;
 import org.gl.ceir.CeirPannelCode.Model.StockUploadModel;
 import org.gl.ceir.CeirPannelCode.Model.StolenRecoveryModel;
 import org.gl.ceir.CeirPannelCode.Model.Tag;
@@ -18,6 +25,8 @@ import org.gl.ceir.pagination.model.MessageContentModel;
 import org.gl.ceir.pagination.model.PolicyConfigContent;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -44,7 +53,8 @@ public interface FeignCleintImplementation {
 	public Object consignmentFilter(@RequestBody FilterRequest filterRequest,
 			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
 			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
-			@RequestParam(value = "file", defaultValue = "0") Integer file) ;
+			@RequestParam(value = "file", defaultValue = "0") Integer file,
+			@RequestParam(name="source",defaultValue = "menu",required = false) String source) ;
 
 
 
@@ -113,7 +123,7 @@ public interface FeignCleintImplementation {
 
 	//edit stock feign  controller
 	@RequestMapping(value="/stock/view" ,method=RequestMethod.POST) 
-	public @ResponseBody StockUploadModel fetchUploadedStockByTxnId(StockUploadModel stockUploadModel) ;
+	public @ResponseBody StockUploadModel fetchUploadedStockByTxnId(FilterRequest filterRequest) ;
 
 
 
@@ -128,7 +138,9 @@ public interface FeignCleintImplementation {
 	public Object stolenFilter(@RequestBody FilterRequest filterRequest,
 			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
 			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
-			@RequestParam(value = "file", defaultValue = "0") Integer file) ;
+			@RequestParam(value = "file", defaultValue = "0") Integer file,
+			@RequestParam(name="source",defaultValue = "menu",required = false) String source);
+	
 
 
 	
@@ -145,7 +157,8 @@ public interface FeignCleintImplementation {
 	public Object stockFilter(@RequestBody FilterRequest filterRequest,
 			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
 			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
-			@RequestParam(value = "file", defaultValue = "0") Integer file) ;
+			@RequestParam(value = "file", defaultValue = "0") Integer file, 
+	        @RequestParam(value = "source",defaultValue = "menu") String  source);
 
 
 
@@ -176,7 +189,7 @@ public interface FeignCleintImplementation {
 
 	//delete stolen recovery feign  controller
 	@RequestMapping(value="/stakeholder/Delete" ,method=RequestMethod.DELETE) 
-	public @ResponseBody GenricResponse deleteStolenRecovery(StolenRecoveryModel stolenRecoveryModel) ;
+	public @ResponseBody GenricResponse deleteStolenRecovery(FilterRequest stolenRecoveryModel) ;
 	/************* DROPDOWN *****************/
 
 	@RequestMapping(value="/state-mgmt/{featureId}/{userTypeId}" ,method=RequestMethod.GET) 
@@ -203,8 +216,8 @@ public interface FeignCleintImplementation {
 	//Dashboard/Datatable Feign
 		@RequestMapping(value="/v2/history/Notification" ,method=RequestMethod.GET) 
 		public Object dashBoardNotification(@RequestBody FilterRequest filterRequest,
-		@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
-		@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) ;	
+		@RequestParam Integer pageNo,
+		@RequestParam Integer pageSize) ;	
 		
 		
 		
@@ -226,7 +239,7 @@ public interface FeignCleintImplementation {
 		
 				//edit stock feign  controller
 				@RequestMapping(value="/stolen-and-recovery/by-txnId" ,method=RequestMethod.POST) 
-				public @ResponseBody StolenRecoveryModel fetchBulkDeviceByTxnId(StolenRecoveryModel stolenRecoveryModel) ;
+				public @ResponseBody Object fetchBulkDeviceByTxnId(StolenRecoveryModel stolenRecoveryModel) ;
 
 				
 				//***************************************************Admin System message Management Feign********************************
@@ -337,7 +350,7 @@ public @ResponseBody ConfigContentModel viewAdminFeign(FilterRequest filterReque
 		
 				//download file(Error or Uploaded file) feign  controller
 				@RequestMapping(value="/Download/manuals" ,method=RequestMethod.GET) 
-				public @ResponseBody FileExportResponse manualDownloadSampleFile();
+				public @ResponseBody FileExportResponse manualDownloadSampleFile(@RequestParam("userTypeId") int userTypeId);
 				
 //******************************* Tag Updated DropDown in Field ****************************************
 				
@@ -345,7 +358,7 @@ public @ResponseBody ConfigContentModel viewAdminFeign(FilterRequest filterReque
 				public @ResponseBody GenricResponse getAllTagsDropdowntFeign(FilterRequest filterRequest);	
 				
 				
-				//***************************************************Field Management Feign********************************
+				//***************************************************Field Management Feign**********************************
 
 				@RequestMapping(value= "/filter/system-config-list" , method=RequestMethod.POST) 
 				public Object fieldManagementFeign(@RequestBody FilterRequest filterRequest,
@@ -378,10 +391,88 @@ public @ResponseBody ConfigContentModel viewAdminFeign(FilterRequest filterReque
 				@RequestMapping(value="/tags/system-config-list" ,method=RequestMethod.DELETE) 
 				public @ResponseBody GenricResponse deleteFieldFeign(@RequestBody FilterRequest filterRequest);
 				
+				@PostMapping("/system/viewTag")
+				public @ResponseBody AddMoreFileModel addMoreBuutonCount(AddMoreFileModel addMoreCount);	
+				
+				
+				//************************************************ view customer Care Feign *****************************************
 
-		}
+				@PostMapping("/customer-care/record")
+				public @ResponseBody GenricResponse viewcustomerDetialsfeign(
+						@RequestParam(name = "listType", required = false) String listType,
+						@RequestBody CustomerCareRequest customerCareRequest);
+
+				
+
+				//***************************************************CC Policy Notification Feign********************************
+
+				@RequestMapping(value="/policy-breach-notification" ,method=RequestMethod.POST) 
+				public Object ccdashBoardNotification(@RequestBody CCPolicyBreachRequest filterRequest,
+						@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
+						@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize);
+
+				
+				@PostMapping("/customer-care/by-txn-id")
+				public @ResponseBody GenricResponse customerCareViaTxnId( @RequestBody CustomerCareByTxnId customerCareDeviceState);
+				/* Rule List Feign */
+				@RequestMapping(value="/filter/rule-engine" ,method=RequestMethod.POST) 
+				public Object ruleListFeign(@RequestBody FilterRequest filterRequest,
+						@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
+						@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+						@RequestParam(name = "file", defaultValue = "0" ,required = false) Integer file);
+				
+				
+				
+				@RequestMapping(value="rule-engine/{id}" ,method=RequestMethod.GET) 
+				public RuleListContent fetchData(@PathVariable("id") Integer id);
+				
+				@RequestMapping(value="rule-engine" ,method=RequestMethod.PUT) 
+				public GenricResponse update(@RequestBody RuleListContent ruleListContent);
 		
+				/* Rule Feature Mapping  Feign */
+				@RequestMapping(value="/filter/rule-engine-mapping" ,method=RequestMethod.POST) 
+				public Object ruleFeatureMappingListFeign(@RequestBody FilterRequest filterRequest,
+						@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
+						@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+						@RequestParam(name = "file", defaultValue = "0" ,required = false) Integer file);
+				
+					@PostMapping("/rule-engine-mapping")
+					public NewRule save(@RequestBody NewRule newRule);
+					
+					@RequestMapping(value="/rule-engine-mapping" ,method=RequestMethod.PUT) 
+					public GenricResponse updateRuleFeatureMapping(@RequestBody NewRule newRule);
+					
+					@GetMapping("/all/rule-engine")
+					public List<RuleNameModel> getList();
+					
+					@GetMapping("/rule-engine-mapping/{id}")
+					public NewRule getObjectByID(@PathVariable("id") Integer id);
+					
+					@DeleteMapping(value="rule-engine-mapping") 
+					public @ResponseBody GenricResponse delete(NewRule newRule) ;
+					
+					
+					//***************************************************Admin Pending TAC List Feign********************************
 
+					@RequestMapping(value="/filter/pending-tac-approveddb" ,method=RequestMethod.POST) 
+					public Object pendingTACFeign(@RequestBody FilterRequest filterRequest,
+							@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
+							@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+							@RequestParam(value = "file", defaultValue = "0") Integer file) ;	
+					
+					
+					//****************************************Pending TAC List Delete Feign********************************
+					
+					@RequestMapping(value="/pending-tac-approved" ,method=RequestMethod.DELETE) 
+					public @ResponseBody GenricResponse deletePendingTac(@RequestBody FilterRequest filterRequest);
+					
+					@RequestMapping(value="/visa/view" ,method=RequestMethod.POST) 
+					public Object viewVisaRequest(@RequestBody FilterRequest filterRequest,
+					@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
+					@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+					@RequestParam(value = "file", defaultValue = "0") Integer file);
+							
+}					
 
 
 

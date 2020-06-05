@@ -53,8 +53,8 @@ private final Logger log = LoggerFactory.getLogger(getClass());
 	
 	@PostMapping("adminConfigData")
 	public ResponseEntity<?> viewAdminConfig(@RequestParam(name="type",defaultValue = "Config",required = false) String role, HttpServletRequest request,HttpSession session) {
-		String userType = (String) session.getAttribute("usertype");
-		int userId=	(int) session.getAttribute("userid");
+		//String userType = (String) session.getAttribute("usertype");
+		//int userId=	(int) session.getAttribute("userid");
 		// Data set on this List
 				List<List<Object>> finalList=new ArrayList<List<Object>>();
 				String filter = request.getParameter("filter");
@@ -82,12 +82,13 @@ private final Logger log = LoggerFactory.getLogger(getClass());
 				   String modifiedOn = (String) dataInsideList.getModifiedOn();
 				   String description = dataInsideList.getDescription();
 				   String value = dataInsideList.getValue();
-				   String type = dataInsideList.getTypeInterp();
+				   String typeInterp = dataInsideList.getTypeInterp();
 				   String tag = dataInsideList.getTag();
+				   String type = String.valueOf(dataInsideList.getType());
 				   String userStatus = (String) session.getAttribute("userStatus");
 				   //log.info("----Id------"+Id+"-------id----------------"+id+"---userName-----"+username);
-				   String action=iconState.adminConfigIcons(userStatus,tag);			   
-				   Object[] finalData={createdOn,modifiedOn,description,value,type,action}; 
+				   String action=iconState.adminConfigIcons(userStatus,tag, type);			   
+				   Object[] finalData={createdOn,modifiedOn,description,value,typeInterp,action}; 
 					List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 					finalList.add(finalDataList);
 					datatableResponseModel.setData(finalList);	

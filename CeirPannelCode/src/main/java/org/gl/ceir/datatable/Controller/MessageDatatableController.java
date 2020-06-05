@@ -51,8 +51,8 @@ public class MessageDatatableController {
 	
 	@PostMapping("adminMessageData")
 	public ResponseEntity<?> viewAdminMessage(@RequestParam(name="type",defaultValue = "message",required = false) String role, HttpServletRequest request,HttpSession session) {
-		String userType = (String) session.getAttribute("usertype");
-		int userId=	(int) session.getAttribute("userid");
+		//String userType = (String) session.getAttribute("usertype");
+		//int userId=	(int) session.getAttribute("userid");
 		// Data set on this List
 				List<List<Object>> finalList=new ArrayList<List<Object>>();
 				String filter = request.getParameter("filter");
@@ -81,7 +81,7 @@ public class MessageDatatableController {
 					   String modifiedOn = (String) dataInsideList.getModifiedOn();
 					   String tag = dataInsideList.getTag();
 					   String description = dataInsideList.getDescription();
-					   String value = dataInsideList.getValue();
+					   String value = dataInsideList.getValue().replaceAll("<","&lt;").replaceAll(">","&gt;");
 					   String channel = dataInsideList.getChannelInterp();
 					   String userStatus = (String) session.getAttribute("userStatus");
 					   //log.info("----Id------"+Id+"-------id----------------"+id+"---userName-----"+username);

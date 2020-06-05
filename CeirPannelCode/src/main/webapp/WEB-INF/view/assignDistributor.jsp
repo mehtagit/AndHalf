@@ -1,3 +1,26 @@
+<%@ page import="java.util.Date" %>
+<%
+   response.setHeader("Cache-Control", "no-cache");
+	response.setHeader("Cache-Control", "no-store");
+	response.setDateHeader("Expires", 0);
+	response.setHeader("Pragma", "no-cache");
+	
+    /*   //200 secs
+	 session.setAttribute("usertype", null);  */
+/* 	 session.setMaxInactiveInterval(10); */
+	 int timeout = session.getMaxInactiveInterval();
+	
+	 long accessTime = session.getLastAccessedTime();
+	 long currentTime= new Date().getTime(); 
+	 System.out.println("accessTime========"+(accessTime));
+	 System.out.println("timeout========"+timeout);
+	 long dfd= accessTime +timeout;
+	 System.out.println("currentTime========"+currentTime);
+	 if( currentTime< dfd){
+	/*  response.setHeader("Refresh", timeout + "; URL = ../login");
+	 System.out.println("timeout========"+timeout); 
+	if (session.getAttribute("usertype") != null) { */
+%>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
@@ -121,64 +144,7 @@
                         </div>
                     </div>
                     
-                    <!-- Modal 1 start   -->
-
-    <div id="modal1" class="modal">
-        <button type="button" class=" modal-action modal-close waves-effect waves-green btn-flat right"
-            data-dismiss="modal">&times;</button>
-            <h6><spring:message code="registration.assigndistributor" /></h6>
-            <div class="modal-content">
- <!-- <h4 class="header2 pb-2">User Info</h4> -->
-
-            <div class="row">
-                <div class="input-field col s10 m6">
-                    <input type="text" name="name" id="name" />
-                    <label for="Name" class="center-align"><spring:message code="registration.distributorid" /></label>
-                </div>
-
-                <div class="input-field col s10 m6">
-                    <input type="text" name="name" id="name" />
-                    <label for="Name" class="center-align"><spring:message code="registration.distributorname" /></label>
-                </div>
-            </div>
-            <div class="row">
-                <div class="input-field col s10 m6">
-                    <input type="text" name="name" id="name" />
-                    <label for="Name" class="center-align"><spring:message code="input.invoiceNumber" /></label>
-                </div>
-            </div>
-
-            <div class="row">
-                <h6 style="color: #000; margin-left: 10px;"> <spring:message code="input.uploadBulkStock" /></h6>
-                <div class="file-field input-field col s12 m6">
-                    <div class="btn" style="height: 35px; line-height:2.5rem;">
-                        <span><spring:message code="input.selectfile" /></span>
-                        <input type="file" id="csvUploadFile" accept=".csv">
-                    </div>
-                    <div class="file-path-wrapper">
-                        <input class="file-path validate" type="text">
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="row">
-                <div class="input-field col s12">
-                    <button
-                        class="waves-effect waves-light btn gradient-45deg-light-blue-cyan box-shadow-none border-round mr-1"
-                        type="submit" name="add_user" id="add_user" style="margin-left: 35%;"><spring:message code="button.submit" /></button>
-                    <button
-                        class="modal-close waves-effect waves-light btn gradient-45deg-light-blue-cyan box-shadow-none border-round mr-1"
-                        type="submit" name="add_user" id="add_user"><spring:message code="button.cancel" /><spring:message code="input.selectfile" /></button>
-
-
-                </div>
-            </div>
-        </div>
-    </div>
-       
-       
-       <!-- ================================================
+ <!-- ================================================
     Scripts
     ================================================ -->
 
@@ -202,7 +168,8 @@
     <script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
     <!--custom-script.js - Add your own theme custom JS-->
     <script type="text/javascript" src="${context}/resources/js/custom-script.js"></script>
-    
+    			<script type="text/javascript"
+		src="${context}/resources/project_js/enterKey.js"></script>
     <script>
     function StockController(selectedUserTypeRole,selectedRoleTypeId){
     	console.log("selectedUserTypeRole=="+selectedUserTypeRole);
@@ -224,3 +191,16 @@
 
 </body>
 </html>
+
+<%
+} else {
+
+%>
+<script language="JavaScript">
+sessionStorage.setItem("loginMsg",
+"*Session has been expired");
+window.top.location.href = "./login";
+</script>
+<%
+}
+%>

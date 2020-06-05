@@ -1,3 +1,26 @@
+<%@ page import="java.util.Date" %>
+<%
+   response.setHeader("Cache-Control", "no-cache");
+	response.setHeader("Cache-Control", "no-store");
+	response.setDateHeader("Expires", 0);
+	response.setHeader("Pragma", "no-cache");
+	
+    /*   //200 secs
+	 session.setAttribute("usertype", null);  */
+/* 	 session.setMaxInactiveInterval(10); */
+	 int timeout = session.getMaxInactiveInterval();
+	
+	 long accessTime = session.getLastAccessedTime();
+	 long currentTime= new Date().getTime(); 
+	 System.out.println("accessTime========"+(accessTime));
+	 System.out.println("timeout========"+timeout);
+	 long dfd= accessTime +timeout;
+	 System.out.println("currentTime========"+currentTime);
+	 if( currentTime< dfd){
+	/*  response.setHeader("Refresh", timeout + "; URL = ../login");
+	 System.out.println("timeout========"+timeout); 
+	if (session.getAttribute("usertype") != null) { */
+%>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
@@ -24,6 +47,7 @@
  -->
 
 <!-- CORE CSS-->
+
 <link href="${context}/resources/css/materialize.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
 <link href="${context}/resources/css/style.css" type="text/css"
@@ -58,13 +82,28 @@
 	href="${context}/resources/project_css/iconStates.css">
 	
  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+ 
   <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
    <!------------------------------------------- Dragable Model---------------------------------->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script> 
+
+
+
+ 
+ 
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"> -->
+
+
+
+   
 	
 
 
+<script>
+var contextpath = "${context}";
+</script>
 
 </head>
 <%-- <body data-roleType="${usertype}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}"> --%>
@@ -122,6 +161,8 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
                 <form action="">
                  	<h6> <spring:message code="registration.thetransactionid" /><span id="registrationTxnId"> </span> <spring:message code="registration.pendingforapproval" /></h6>
                     <p><spring:message code="registration.dorequest" /></p>
+                    <input type ="text" id="sessionUserName" hidden="hidden">
+                    	
                 </form>
             </div>
             <div class="row">
@@ -140,8 +181,7 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
             <div class="row">
                 <form action="">
             
-                    <h6><spring:message code="registration.emailregister" /> <br> <spring:message code="registration.registrationid" />  <span id="RegistrationId"></span>
-                          <spring:message code="registration.registrationdate" /><span id="registrationDate"></span>.</h6>
+                    <h6><spring:message code="registration.approveEmailregister" />.</h6>
                    
                 </form>
             </div>
@@ -156,23 +196,29 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
 	<div id="rejectInformation" class="modal">
            <h6 class="modal-header"><spring:message code="modal.header.reject" /></h6>
             <div class="modal-content">
+            <form action="" onsubmit="return rejectUser()">
             <div class="row">
-                <form action="">
                 
                     <div class="input-field" style="margin-top: 30px;">
-                        <textarea id="Reason" class="materialize-textarea"></textarea>
-                        <label for="textarea1" style="margin-left: -10px;"><spring:message code="lable.reason" /></label>
+                        <textarea id="Reason"
+                        oninput="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
+						oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200character" />');" 
+                         class="materialize-textarea" required></textarea>
+                        <label for="textarea1" style="margin-left: -10px;"><spring:message code="lable.reason" /><span class="star">*</span></label>
                     </div>
                     <h6><spring:message code="registration.doreject" /></h6>
-                    
-                </form>
+                    <input type ="text" id="rejectUserName" hidden="hidden">
+               
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
-                    <a onclick="rejectUser()" class="btn modal-close modal-trigger"><spring:message code="modal.yes" /></a>
+                    <button type="submit" class="btn" type="submit">
+								<spring:message code="modal.yes" />
+							</button>
                     <button class="btn modal-close" style="margin-left: 10px;"><spring:message code="modal.no" /></button>
                 </div>
             </div>
+            </form>
         </div>
     </div>
 	<div id="confirmRejectInformation" class="modal">
@@ -181,7 +227,7 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
             <div class="row">
                 <form action="">
                   
-                    <h6><spring:message code="registration.rejectionreason" /></h6>
+                    <h6><spring:message code="registration.approveEmailregister" /></h6>
                 </form>
             </div>
             <div class="row">
@@ -192,8 +238,173 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
         </div>
     </div>
     
+    		<div id="statusChangemodal" class="modal">
+               <form action="" onsubmit="return chanegeUserStatus('status')" method="POST"
+								enctype="multipart/form-data" id="">
+								  <div class="row" id="singleInput">
+								  <h6 class="modal-header "> <spring:message code="registration.changeUserStatus" /></h6>
+                                <div class="col s12 m12 l12">
+                   	   
+                                   <div class="row"  style="margin-top: 10px">
+                                        	<div class="col s12 m6 l6" style="margin-bottom: 5px;">
+											<label for="userStatus"><spring:message
+													code="select.changeUserStatus" /> <span class="star">*</span></label>
+											<select id="userStatus" class="browser-default"
+												onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+												oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+												required>
+												<option value="" disabled selected><spring:message
+														code="select.selectUserStatus" />
+												</option>
+											</select>
+										</div> 
+                                       		
+                                       
+										
+									<div class="input-field col s12 m6" style="margin-top: 22px;">
+										<input type="text" name="refererence" id="refererenceId"
+							placeholder="" oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
+							maxlength="50"/> <label for="refererenceId"
+							class="center-align"><spring:message
+								code="input.refId" /> </label>
+								</div>		
+                                            
+                   		  
+								<div class="input-field col s12 m12">
+							<textarea id="changeStatusRemark" style="min-height: 8rem;" 
+								class="materialize-textarea" 
+							oninput="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
+							oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200character" />');" required></textarea>
+							<label for="textarea1" class=""><spring:message
+									code="input.remarks" /> <span class="star">*</span> </label>
+								</div>
+						
+                                   
+                                        </div>
+                                 		 <input type ="text" id="statusUserName" hidden="hidden" >
+                                        <div class="row">
+                                            <div class="input-field col s12 center" style="padding: 20px 0;">
+                                                <!-- <a href="#submitIMEI" class="btn modal-trigger">Submit</a>  -->
+                                                 <button class=" btn" type="submit"><spring:message code="button.submit" /></button>
+                                               	<button type="button" onclick = "resetButtons()" class="btn modal-close" style="margin-left: 10px;" title=" "><spring:message code="button.cancel" /></button>
+                                            </div>
+
+                                        </div>
+                                      
+									
+                                    </div>
+                                   </div></form>
+                    </div>           
+    
+    <div id="confirmUserStatus" class="modal">
+         <h6 class="modal-header"><spring:message code="registration.changeUserStatus" /></h6>
+          <div class="modal-content">
+            <div class="row">
+                <form action="">
+                  
+                    <h6><spring:message code="registration.changedStatus" /></h6>
+                </form>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <a class="btn modal-close" href="./registrationRequest"><spring:message code="modal.ok" /></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    	<div id="statusRoleChange" class="modal">
+           <h6 class="modal-header"><spring:message code="table.RegistrationRequest" /></h6>
+           <div class="modal-content">
+            <div class="row">
+              
+                   <h5 class="center">
+						<label> <input name="group1" type="radio" value="0"
+							onclick="userChangeStatus('status');"/>
+							<span class="checkboxFont"> <spring:message code="registration.changeUserStatus" /></span></label>
+									
+						 <label> <input name="group2" type="radio" value="1"
+							onclick="userChangeStatus('roleType')"/>
+							<span class="checkboxFont"> <spring:message code="changeRoleType" /></span>
+						</label> 
+					</h5>
+							  
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <button class="btn modal-close" onclick = "resetButtons()"style="margin-left: 10px;"><spring:message code="button.cancel" /></button>
+                </div>
+            </div>
+        </div>
+    </div>
     
     
+    <div id="roleTypeChangemodal" class="modal">
+               <form action="" onsubmit="return chanegeUserStatus('role')" method="POST"
+								enctype="multipart/form-data" id="">
+								  <div class="row" id="singleInput">
+								  <h6 class="modal-header "> <spring:message code="changeRoleType" /></h6>
+                                <div class="col s12 m12 l12">
+                   	   
+                                   <div class="row"  style="margin-top: 10px">
+                                        	
+                              <%--  <div class="input-field col s12 m6 l6" id="rolesDiv">
+									<p><spring:message code="table.roleType" /> <span class="star">*</span></p> 
+									<select multiple  name="roles" id="usertypes" >
+										<option value="" disabled><spring:message code="table.roleType" /></option>
+									</select>
+								</div>  --%>
+                                        	
+                                        	
+                                        <div class="col s12 m6 l6" style="margin-bottom: 5px;">
+											<label for="usertypes"><spring:message
+													code="changeRoleType" /> <span class="star">*</span></label>
+											<select id="usertypes" class="browser-default"
+												onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+												oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+												required>
+												<option value="" disabled selected><spring:message
+														code="select.changeUserRole" />
+												</option>
+											</select>
+										</div> 
+                                       		
+                                       
+										
+									<div class="input-field col s12 m6" style="margin-top: 22px;">
+										<input type="text" name="refererence" id="refererenceId"
+							placeholder="" oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
+							maxlength="50"/> <label for="refererenceId"
+							class="center-align"><spring:message
+								code="input.refId" /> </label>
+								</div>		
+                                            
+                   		  
+								<div class="input-field col s12 m12">
+							<textarea id="changeStatusRemark" style="min-height: 8rem;" 
+								class="materialize-textarea" 
+							oninput="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
+							oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200character" />');" required></textarea>
+							<label for="textarea1" class=""><spring:message
+									code="input.remarks" /> <span class="star">*</span> </label>
+								</div>
+						
+                                   
+                                        </div>
+                                 		 <input type ="text" id="statusUserName" hidden="hidden" >
+                                        <div class="row">
+                                            <div class="input-field col s12 center" style="padding: 20px 0;">
+                                                <!-- <a href="#submitIMEI" class="btn modal-trigger">Submit</a>  -->
+                                                 <button class=" btn" type="submit"><spring:message code="button.submit" /></button>
+                                               	<button type="button" onclick = "resetButtons()" class="btn modal-close" style="margin-left: 10px;" title=" "><spring:message code="button.cancel" /></button>
+                                            </div>
+
+                                        </div>
+                                      
+									
+                                    </div>
+                                   </div></form>
+                    </div>           
 
     
 	
@@ -271,7 +482,22 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
 		src="${context}/resources/project_js/_dateFunction.js" async></script>	
 		<script type="text/javascript"
 		src="${context}/resources/project_js/profileInfoTab.js" async></script>
+		<script type="text/javascript"
+		src="${context}/resources/project_js/validationMsg.js"></script>
 			
 		
 </body>
 </html>
+<%
+	} else {
+		/*  request.setAttribute("msg", "  *Please login first");
+		request.getRequestDispatcher("./index.jsp").forward(request, response); */
+%>
+<script language="JavaScript">
+	sessionStorage.setItem("loginMsg",
+			"*Session has been expired");
+	window.top.location.href = "./login";
+</script>
+<%
+	}
+%>

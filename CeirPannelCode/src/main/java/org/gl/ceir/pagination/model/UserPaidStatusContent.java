@@ -1,8 +1,13 @@
 package org.gl.ceir.pagination.model;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.gl.ceir.CeirPannelCode.Model.EndUserVisaInfo;
+import org.gl.ceir.CeirPannelCode.Model.UplodPaidStatusModel;
+import org.gl.ceir.CeirPannelCode.Model.UserDepartment;
+import org.gl.ceir.CeirPannelCode.Model.VisaDb;
 import org.springframework.stereotype.Component;
 @Component
 public class UserPaidStatusContent {
@@ -19,7 +24,7 @@ public class UserPaidStatusContent {
 	private String deviceTypeInterp;
 	private Integer deviceIdType;
 	private String deviceIdTypeInterp;
-	private String multiSimStatus;
+	private String multiSimStatus,multiSimStatusInterp;
 	private String country;
 	private String deviceSerialNumber;
 	private String txnId;
@@ -27,12 +32,15 @@ public class UserPaidStatusContent {
 	private Double price;
 	private Integer currency;
 	private String currencyInterp;
-	private Long firstImei;
-	private Long secondImei;
-	private Long thirdImei;
-	private Long fourthImei;
-	private Object endUserDB;
-	private String origin;
+	private String firstImei;
+	private String secondImei;
+	private String thirdImei;
+	private String fourthImei,filePreviewLink;
+	private UserDepartment userDepartment;
+	private List<UplodPaidStatusModel> regularizeDeviceDbs;
+	private List<VisaDb> visaDb;
+	private EndUserVisaInfo endUserDB;
+	private String origin,nationality;
 	public Integer getId() {
 		return id;
 	}
@@ -159,34 +167,58 @@ public class UserPaidStatusContent {
 	public void setCurrencyInterp(String currencyInterp) {
 		this.currencyInterp = currencyInterp;
 	}
-	public Long getFirstImei() {
+	public String getFirstImei() {
 		return firstImei;
 	}
-	public void setFirstImei(Long firstImei) {
+	public void setFirstImei(String firstImei) {
 		this.firstImei = firstImei;
 	}
-	public Long getSecondImei() {
+	public String getSecondImei() {
 		return secondImei;
 	}
-	public void setSecondImei(Long secondImei) {
+	public void setSecondImei(String secondImei) {
 		this.secondImei = secondImei;
 	}
-	public Long getThirdImei() {
+	public String getThirdImei() {
 		return thirdImei;
 	}
-	public void setThirdImei(Long thirdImei) {
+	public void setThirdImei(String thirdImei) {
 		this.thirdImei = thirdImei;
 	}
-	public Long getFourthImei() {
+	public String getFourthImei() {
 		return fourthImei;
 	}
-	public void setFourthImei(Long fourthImei) {
+	public void setFourthImei(String fourthImei) {
 		this.fourthImei = fourthImei;
 	}
-	public Object getEndUserDB() {
+	public String getFilePreviewLink() {
+		return filePreviewLink;
+	}
+	public void setFilePreviewLink(String filePreviewLink) {
+		this.filePreviewLink = filePreviewLink;
+	}
+	public UserDepartment getUserDepartment() {
+		return userDepartment;
+	}
+	public void setUserDepartment(UserDepartment userDepartment) {
+		this.userDepartment = userDepartment;
+	}
+	public List<UplodPaidStatusModel> getRegularizeDeviceDbs() {
+		return regularizeDeviceDbs;
+	}
+	public void setRegularizeDeviceDbs(List<UplodPaidStatusModel> regularizeDeviceDbs) {
+		this.regularizeDeviceDbs = regularizeDeviceDbs;
+	}
+	public List<VisaDb> getVisaDb() {
+		return visaDb;
+	}
+	public void setVisaDb(List<VisaDb> visaDb) {
+		this.visaDb = visaDb;
+	}
+	public EndUserVisaInfo getEndUserDB() {
 		return endUserDB;
 	}
-	public void setEndUserDB(Object endUserDB) {
+	public void setEndUserDB(EndUserVisaInfo endUserDB) {
 		this.endUserDB = endUserDB;
 	}
 	public String getOrigin() {
@@ -195,19 +227,94 @@ public class UserPaidStatusContent {
 	public void setOrigin(String origin) {
 		this.origin = origin;
 	}
+	public String getNationality() {
+		return nationality;
+	}
+	public void setNationality(String nationality) {
+		this.nationality = nationality;
+	}
+	public String getMultiSimStatusInterp() {
+		return multiSimStatusInterp;
+	}
+	public void setMultiSimStatusInterp(String multiSimStatusInterp) {
+		this.multiSimStatusInterp = multiSimStatusInterp;
+	}
 	@Override
 	public String toString() {
-		return "UserPaidStatusContent [id=" + id + ", status=" + status + ", stateInterp=" + stateInterp
-				+ ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", nid=" + nid + ", deviceStatus="
-				+ deviceStatus + ", taxPaidStatus=" + taxPaidStatus + ", taxPaidStatusInterp=" + taxPaidStatusInterp
-				+ ", deviceType=" + deviceType + ", deviceTypeInterp=" + deviceTypeInterp + ", deviceIdType="
-				+ deviceIdType + ", deviceIdTypeInterp=" + deviceIdTypeInterp + ", multiSimStatus=" + multiSimStatus
-				+ ", country=" + country + ", deviceSerialNumber=" + deviceSerialNumber + ", txnId=" + txnId
-				+ ", deviceStatusInterp=" + deviceStatusInterp + ", price=" + price + ", currency=" + currency
-				+ ", currencyInterp=" + currencyInterp + ", firstImei=" + firstImei + ", secondImei=" + secondImei
-				+ ", thirdImei=" + thirdImei + ", fourthImei=" + fourthImei + ", endUserDB=" + endUserDB + ", origin="
-				+ origin + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("UserPaidStatusContent [id=");
+		builder.append(id);
+		builder.append(", status=");
+		builder.append(status);
+		builder.append(", stateInterp=");
+		builder.append(stateInterp);
+		builder.append(", createdOn=");
+		builder.append(createdOn);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
+		builder.append(", nid=");
+		builder.append(nid);
+		builder.append(", deviceStatus=");
+		builder.append(deviceStatus);
+		builder.append(", taxPaidStatus=");
+		builder.append(taxPaidStatus);
+		builder.append(", taxPaidStatusInterp=");
+		builder.append(taxPaidStatusInterp);
+		builder.append(", deviceType=");
+		builder.append(deviceType);
+		builder.append(", deviceTypeInterp=");
+		builder.append(deviceTypeInterp);
+		builder.append(", deviceIdType=");
+		builder.append(deviceIdType);
+		builder.append(", deviceIdTypeInterp=");
+		builder.append(deviceIdTypeInterp);
+		builder.append(", multiSimStatus=");
+		builder.append(multiSimStatus);
+		builder.append(", multiSimStatusInterp=");
+		builder.append(multiSimStatusInterp);
+		builder.append(", country=");
+		builder.append(country);
+		builder.append(", deviceSerialNumber=");
+		builder.append(deviceSerialNumber);
+		builder.append(", txnId=");
+		builder.append(txnId);
+		builder.append(", deviceStatusInterp=");
+		builder.append(deviceStatusInterp);
+		builder.append(", price=");
+		builder.append(price);
+		builder.append(", currency=");
+		builder.append(currency);
+		builder.append(", currencyInterp=");
+		builder.append(currencyInterp);
+		builder.append(", firstImei=");
+		builder.append(firstImei);
+		builder.append(", secondImei=");
+		builder.append(secondImei);
+		builder.append(", thirdImei=");
+		builder.append(thirdImei);
+		builder.append(", fourthImei=");
+		builder.append(fourthImei);
+		builder.append(", filePreviewLink=");
+		builder.append(filePreviewLink);
+		builder.append(", userDepartment=");
+		builder.append(userDepartment);
+		builder.append(", regularizeDeviceDbs=");
+		builder.append(regularizeDeviceDbs);
+		builder.append(", visaDb=");
+		builder.append(visaDb);
+		builder.append(", endUserDB=");
+		builder.append(endUserDB);
+		builder.append(", origin=");
+		builder.append(origin);
+		builder.append(", nationality=");
+		builder.append(nationality);
+		builder.append("]");
+		return builder.toString();
 	}
+	
+	
 
+	
+	
 	
 }

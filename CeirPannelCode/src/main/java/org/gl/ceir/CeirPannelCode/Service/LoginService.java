@@ -21,11 +21,14 @@ import org.gl.ceir.CeirPannelCode.Model.Password;
 import org.gl.ceir.CeirPannelCode.Model.Tag;
 import org.gl.ceir.CeirPannelCode.Model.User;
 import org.gl.ceir.CeirPannelCode.Model.UserHeader;
+import org.gl.ceir.CeirPannelCode.Model.UserStatus;
 import org.gl.ceir.CeirPannelCode.Response.LoginResponse;
+import org.gl.ceir.CeirPannelCode.Response.UpdateProfileResponse;
 import org.gl.ceir.CeirPannelCode.Util.HttpResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -46,6 +49,8 @@ public class LoginService {
 	@Autowired
 	RegistrationService registerService;
 	
+	@Value ("${sessionLogOutTime}")
+	int sessionLogOutTime;
 	
 	public  ModelAndView loginPage(){
 		log.info("inside login controller");
@@ -57,6 +62,7 @@ public class LoginService {
 
 	public LoginResponse checkLogin(User user,HttpSession session,HttpServletRequest request) {
 		log.info("check login controller ");
+		log.info("session time from properties file."+sessionLogOutTime);
 		UserHeader header=registerService.getUserHeaders(request);
 		user.setUserAgent(header.getUserAgent());
 		user.setPublicIp(header.getPublicIp());
@@ -77,11 +83,16 @@ public class LoginService {
 				session.setAttribute("usertype", response.getPrimaryRole());
 				session.setAttribute("name", response.getName());   
 				session.setAttribute("userStatus", response.getStatus());
+				session.setAttribute("userStatusValue", response.getStatusValue());
 				session.setAttribute("usertypeId", response.getPrimaryRoleId());
 				session.setAttribute("operatorTypeId", response.getOperatorTypeId());
 				session.setAttribute("operatorTypeName", response.getOperatorTypeName());
 				session.setAttribute("language",response.getUserLanguage()); 
 				session.setAttribute("period", response.getPeriod());
+				session.setAttribute("selfRegister", response.getSelfRegister());
+				session.setAttribute("defaultLink", response.getDefaultLink());
+				session.setMaxInactiveInterval(sessionLogOutTime);
+			
 				return response;      
 			}       
 			else {
@@ -103,10 +114,16 @@ public class LoginService {
 		log.info("language data:  "+language);
 		Integer userID=(Integer)session.getAttribute("userid");
 		log.info("userID from session: " +userID);
-		ChangeLanguage languageData=new ChangeLanguage(userID,language);
+		String username=(String)session.getAttribute("username");
+		String userType=(String)session.getAttribute("usertype");
+		Integer userTypeId=(Integer)session.getAttribute("usertypeId");
+		ChangeLanguage languageData=new ChangeLanguage(language, username,
+				userTypeId, userID, 0, userType);
 		HttpResponse response=userLoginFeignImpl.changeUserLanguage(languageData);
 		if(response!=null) {
 			log.info("response from controller: "+response);
+			session.removeAttribute("updatedLanguage");
+			session.setAttribute("updatedLanguage", language);
 		}
 		log.info("exit from language controller ");
 		return response;
@@ -131,9 +148,6 @@ public class LoginService {
 	public ModelAndView logout(HttpSession session){
 		log.info("inside logout controller");
 		Integer userid=(Integer)session.getAttribute("userid");
-		if(userid!=null) {
-			userLoginFeignImpl.sessionTracking(userid);
-		}
 		sessionRemoveCode( userid, session);
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("msg","you have been logged out successfully");
@@ -202,10 +216,10 @@ public class LoginService {
 		}
 	}
 
-	public HttpResponse forgotPasswordRequest(ForgotPassword password) {
+	public UpdateProfileResponse forgotPasswordRequest(ForgotPassword password) {
 		log.info("inside forgot password controller");
 		log.info("password data is:  "+password);
-		HttpResponse response=new HttpResponse();           
+		UpdateProfileResponse response=new UpdateProfileResponse();           
 		response=userLoginFeignImpl.ForgotPassword(password);
 		return response;
 	}  
@@ -219,8 +233,7 @@ public class LoginService {
 			return response;
 		}
 		else {
-			HttpResponse response=new HttpResponse(); 
-			response.setResponse("Both Passwords do the match");      
+			HttpResponse response=new HttpResponse("Both Passwords do the match",500,"password_mismatch");   
 			return response;
 		}
 
@@ -236,11 +249,19 @@ public class LoginService {
 			return response; 	
 		}
 		else {    
-			HttpResponse response=new HttpResponse();             
-            response.setResponse("Both Passwords do the match");
+			HttpResponse response=new HttpResponse("Both Passwords do the match",500,"password_mismatch");   
 			return response; 
 		}
 		  
+	} 
+	
+	
+	public LoginResponse searchUserDetailService(UserStatus userStatus, HttpSession session, HttpServletRequest request) {
+		log.info(" data send to searchUserDetail :  "+userStatus);
+		//LoginResponse response=new LoginResponse();           
+		LoginResponse response=userLoginFeignImpl.searchUserDetailFeign(userStatus);
+		log.info(" response searchUserDetail :  "+response);
+		return response;
 	} 
 	
 }

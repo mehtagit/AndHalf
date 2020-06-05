@@ -41,7 +41,7 @@
     <link href="${context}/resources/js/plugins/prism/prism.css" type="text/css" rel="stylesheet" media="screen,projection">
     <link href="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.css" type="text/css" rel="stylesheet"
         media="screen,projection">
-    <link href="${context}/resources/js/plugins/chartist-js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection">
+ <%--    <link href="${context}/resources/js/plugins/chartist-js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection"> --%>
 
     <style>
         .boton {
@@ -135,7 +135,7 @@ var contextpath='${context}';
 
                                         <div class="input-field col s12 m6 l6">
                                             <input type="text" name="username" 
-     oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"                                       
+     oninput="InvalidMsg(this,'input','<spring:message code="validation.50alphanumeric" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50alphanumeric" />');"
               title= "<spring:message code="validation.requiredMsg" />" required id="username" maxlength="10" />
                                         </div>
                                     </div>
@@ -149,7 +149,7 @@ var contextpath='${context}';
                                         <div class="input-field col s12 m6 l6">
                                             <select class="browser-default" id="questionId" 
    													title="<spring:message code="validation.selectFieldMsg" />" oninput="setCustomValidity('')"  
-												oninvalid="this.setCustomValidity('<spring:message code="validation.selectFieldMsg" />')"  required  >
+												oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"  required  >
                                                 <option value="" disabled selected><spring:message code="registration.securityquestion" /></option>
                                              </select>
                                         </div>
@@ -163,7 +163,7 @@ var contextpath='${context}';
 
                                         <div class="input-field col s12 m6 l6">
                                             <input type="text" name="answer" 
-  oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
+oninput="InvalidMsg(this,'input','<spring:message code="validation.50alphanumeric" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50alphanumeric" />');"
 												 title= "<spring:message code="validation.requiredMsg" />" required id="answer" maxlength="50" />
                                         </div>
                                     </div>
@@ -218,10 +218,10 @@ var contextpath='${context}';
 				<div class="input-field col s11">
                     <input type="hidden" id="usernamedata">
 					<label for="password" style="color: #000; font-size: 12px;">
-						<spring:message code="registration.newpassword" /></label> <input type="password" id="password" class="password"
+						<spring:message code="registration.newpassword" /></label> <input type="password"  id="password" class="password"
 						pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$" maxlength="10" min="8"
-						
-						oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
+						oninput="InvalidMsg(this,'input','<spring:message code="validation.password" />');"
+						oninvalid="InvalidMsg(this,'input','<spring:message code="validation.password" />');" 
 												 title= "<spring:message code="validation.minumum8" />" required/>
 				<div class="input-field-addon">
 				<i  class="fa fa-eye-slash teal-text toggle-password" aria-hidden="true"></i>
@@ -236,17 +236,18 @@ var contextpath='${context}';
 					<label for="confirm_password" style="color: #000; font-size: 12px;">
 						<spring:message code="registration.confirmpassword" /></label> <input type="password" class="password2" id="confirm_password"
 						pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$" maxlength="10" min="8"
-oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
+						oninput="InvalidMsg(this,'input','<spring:message code="validation.password" />');"
+						oninvalid="InvalidMsg(this,'input','<spring:message code="validation.password" />');" 
 												 title= "<spring:message code="validation.minumum8" />" required/>								
-				<div class="input-field-addon">
+				<div class="ienput-field-addon">
 				<i  class="fa fa-eye-slash teal-text toggle-password2" aria-hidden="true"></i>
 											</div>					
 				</div>
 			</div>  
 			<div class="row" style="margin-top: 30px;">
 				<div class="input-field col s12 m12 l12 center">
-					<button  
-						class="btn" type="submit" id="save"
+					<button   
+						class="btn" type="submit" id="UpdatePassBtn"
 						style="width: 100%;"><spring:message code="registration.save" /></button>
 				</div>
 			</div>
@@ -269,32 +270,99 @@ oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:messa
         </div>
     </div>
 
-    <%-- <div id="submitBtnAction" class="modal">
-        <button type="button" class=" modal-action modal-close waves-effect waves-green btn-flat right"
-          data-dismiss="modal">&times;</button>
-        <div class="modal-content">
-        <h6 class="modal-header">Forgot Password</h6>
-          <div class="row">
-            <h6 id="responseMsg"></h6>
-          </div>
-          <div class="row">
-            <div class="input-field col s12 center">
-              <div class="input-field col s12 center">
-                  <a href="${context}/login" class="btn" style="margin-left: 10px;">ok</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div> --%>
+   	<!-- modal start -->
+
+	<div id="otpVerification" class="modal" style="width: 40%;">
+		<!-- <button type="button" class=" modal-action modal-close waves-effect waves-green btn-flat right"
+            data-dismiss="modal">&times;</button> -->
+		<h6 class="modal-header"><spring:message code="registration.otp" /></h6>
+		<div class="modal-content">
+			<form id="verifyOtpForm" onsubmit="return verifyOtp2()" >
+				<p class="center" id="verifyOtpResp"></p>
+				<input type="hidden" id="userid" name="userid" value="${userId}">
+				<div class="row">
+					<div class="input-field col s12 m12">
+						<input type="text" placeholder="<spring:message code="placeholder.emailotp" />" name="emailOtp" maxlength="6" id="emailOtp"
+							pattern="[0-9]{0,6}" oninput="InvalidMsg(this,'input','<spring:message code="validation.6Character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.6Character" />');" 
+							 required  />
+					</div>
+					<div class="input-field col s12 m12">
+						<input placeholder="<spring:message code="placeholder.optphone" />" type="text" name="phoneOtp" maxlength="6" pattern="[0-9]{0,6}"
+							id="phoneOtp" oninput="InvalidMsg(this,'input','<spring:message code="validation.6Character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.6Character" />');" 
+							required  />
+					</div>
+				</div>
+				<a href="javascript:void(0)"
+					onclick="resendOtp(); document.getElementById('resendOtp').style.display ='block';"
+					class="right"><spring:message code="registration.resendotp" /></a>
+				<button type="submit"  id="otpVerifyBtn" class="btn"
+					style="width: 100%; margin-top: 20px; margin-bottom: 20px;">
+					<spring:message code="registration.done" />
+				</button>
+			</form>
+		</div>
+	</div>
+	
+	
+	<div id="otpMsgModal" class="modal"
+		style="width: 40%; margin-left: 30%; margin-top: 10vh;">
+		<!-- <button type="button"
+			class=" modal-action modal-close waves-effect waves-green btn-flat right"
+			data-dismiss="modal">&times;</button> -->
+		<h6 class="modal-header">
+			<spring:message code="registration.verifyotp" />
+		</h6>
+		<div class="modal-content">
+			<!-- <h4 class="header2 pb-2">User Info</h4> -->
+
+			<p style="padding: 10px;" class="center" id="otpMsg"></p>
+
+			<a href="javascript:void(0)" onclick="openOtpPopup()" class="btn"
+				style="width: 100%; margin-top: 20px; margin-bottom: 20px;"><spring:message
+					code="registration.verifyotp" /></a>
+		</div>
+	</div>
      <!--  Modal End -->
     
+    <div id="otpMessage2" class="modal">
+<!-- 		<button type="button"
+			class="modal-action modal-close waves-effect waves-green btn-flat right"
+			data-dismiss="modal">&times;</button> -->
+		<h6 class="modal-header">
+			<spring:message code="registration.verifyotp" />
+		</h6>
+		<div class="modal-content">
+			<h6 id="otpResponse"></h6>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<a href="${context}/login" class="btn"><spring:message
+							code="modal.ok" /></a>
+				</div>
+			</div>
+		</div>
+	</div>
 
 
-    <!-- ================================================
+	<!-- ================================================
     Scripts
     ================================================ -->
-<!-- i18n library -->
-    <script type="text/javascript" src="${context}/resources/ajax/Registration.js"></script>
+	<!-- jQuery Library -->
+	<%-- <script type="text/javascript"
+		src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script> --%>
+
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+
+<script>
+
+
+</script>
+<%-- <script type="text/javascript"
+		src="${context}/resources/project_js/validationMsg.js"></script> --%>
+	    
+	<script type="text/javascript"
+		src="${context}/resources/ajax/Registration.js"></script>
+		<!-- i18n library -->
 	<script type="text/javascript"
 		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
 	<script type="text/javascript"
@@ -325,35 +393,42 @@ oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:messa
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
 		
-	
-  <!-- jQuery Library -->
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
-       <!-- ajax js -->
-
-    <!--materialize js-->
-    <script type="text/javascript" src="${context}/resources/js/materialize.js"></script>
-    <!--prism
+	<script type="text/javascript" src="${context}/resources/ajax/Login.js"></script>
+	<script type="text/javascript" src="${context}/resources/ajax/Password.js"></script>
+	<!--materialize js-->
+	<script type="text/javascript"
+		src="${context}/resources/js/materialize.js"></script>
+	<!--prism
     <script type="text/javascript" src="js/prism/prism.js"></script>-->
-    <!--scrollbar-->
-    <script type="text/javascript" src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-    <!-- chartist -->
-    <script type="text/javascript" src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script>
+	<!--scrollbar-->
+	<script type="text/javascript"
+		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+	<!-- chartist -->
+	<script type="text/javascript"
+		src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script>
+	<!-- data-tables -->
+	<script type="text/javascript"
+		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/js/plugins/data-tables/data-tables-script.js"></script>
 
-    <!-- data-tables -->
-    <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/data-tables-script.js"></script>
-
-    <!--plugins.js - Some Specific JS codes for Plugin Settings-->
-    <script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
-    <!--custom-script.js - Add your own theme custom JS-->
-    <script type="text/javascript" src="${context}/resources/js/custom-script.js"></script>
-<script type="text/javascript"
-		src="${context}/resources/project_js/validationMsg.js"></script>
-			<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
-	<script type="text/javascript" src="${context}/resources/project_js/forgotPassword.js"></script>
+	<!--plugins.js - Some Specific JS codes for Plugin Settings-->
+	<script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
+	<!--custom-script.js - Add your own theme custom JS-->
+	<script type="text/javascript"
+		src="${context}/resources/js/custom-script.js"></script>
     
-    <script type="text/javascript" src="${context}/resources/ajax/Login.js"></script>
- 	<script type="text/javascript" src="${context}/resources/ajax/Password.js"></script>
+    	
+
+	<script type="text/javascript" src="${context}/resources/ajax/Login.js"></script>
+
+    			<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
+	<script type="text/javascript" src="${context}/resources/project_js/forgotPassword.js"></script>
+
+
+			<script type="text/javascript"
+		src="${context}/resources/project_js/ValidationFileOutsidePortal.js"></script>
+		
 
   
 </body>

@@ -9,17 +9,10 @@ window.parent
 									.assign("./openGrievanceForm?reqType=formPage&lang="
 											+ lang);
 						});
-		$.i18n().locale = lang;
-		var documenttype, selectfile, selectDocumentType;
-		$.i18n().load({
-			'en' : './resources/i18n/en.json',
-			'km' : './resources/i18n/km.json'
-		}).done(function() {
-			console.log("done")
-		});
-		
 	
+		var documenttype, selectfile, selectDocumentType,REGISTER_TYPE_APPROVE_REJECTED,TRCRegister_futureRef;
 		var featureId = 21;
+		
 		populateCountries("country");
 		
 		$.getJSON('./getDropdownList/'+featureId+'/'+$("body").attr("data-userTypeID"), function(data) {
@@ -54,6 +47,7 @@ window.parent
 	
 		
 		function registerTAC() {
+			//$('div#initialloader').fadeIn('fast');
 			var trademark = $('#trademark').val();
 			var productName = $('#productname').val();
 			var modelNumber = $('#modelNumber').val();
@@ -75,6 +69,10 @@ window.parent
 			var docTypeTagIdValue='';
 			var filename='';
 			
+			var filesameStatus=false;
+			var documenttype=false;
+			var docTypeTag='';
+			var documentFileNameArray=[];
 			
 			$('.fileDiv').each(function() {	
 			var x={
@@ -82,10 +80,53 @@ window.parent
 				"fileName":$('#docTypeFile'+fieldId).val().replace('C:\\fakepath\\','')
 				}
 				formData.append('files[]',$('#docTypeFile'+fieldId)[0].files[0]);
+			documentFileName=$('#docTypeFile'+fieldId).val().replace('C:\\fakepath\\','')
+			docTypeTag=$('#docTypetag'+fieldId).val();
+			var fileIsSame=	documentFileNameArray.includes(documentFileName);
+			
+			var documentTypeTag=documentFileNameArray.includes(docTypeTag);
+		
+			if(filesameStatus!=true){
+				filesameStatus=	fileIsSame;
+			}
+			
+			 if(documenttype!=true)
+				{
+				documenttype=documentTypeTag;
+		
+				}
+			documentFileNameArray.push(documentFileName);
+			documentFileNameArray.push(docTypeTag);
+			
 				fileInfo.push(x);
 				fieldId++;
 				i++;
 			});
+			
+			if(filesameStatus==true)
+			{	
+			
+			//$('#fileFormateModal').openModal();
+			 $('#fileFormateModal').openModal({
+		    	   dismissible:false
+		       });
+				$('#fileErrormessage').text('')
+				$('#fileErrormessage').text($.i18n('duplicateFileName'));
+			return false;
+			
+			}
+			
+			if(documenttype==true)
+			{	
+				$('#fileFormateModal').openModal({
+			    	   dismissible:false
+			       });
+			//$('#fileFormateModal').openModal();
+				$('#fileErrormessage').text('')
+				$('#fileErrormessage').text($.i18n('documentTypeName'));
+			return false;
+			
+			}
 			
 			var multirequest={
 					"attachedFiles":fileInfo,
@@ -97,7 +138,7 @@ window.parent
 					"tac" : $('#tac').val(),
 			 		"userId" : $("body").attr("data-userID"),
 			 		"featureId" : featureId,
-			 		"approveStatus" : 2
+			 		"approveStatus" : 0
 				}
 			console.log("multirequest------------->" +JSON.stringify(multirequest))
 			formData.append('fileInfo[]',JSON.stringify(fileInfo));
@@ -112,11 +153,37 @@ window.parent
 				contentType : false, 
 				async:false,
 				success : function(data, textStatus, jqXHR) {
+					//$('div#initialloader').delay(300).fadeOut('slow');
+					$("#trcSubmitButton").prop('disabled', true);
 						var result =  JSON.parse(data)
 						console.log("successdata-----" +result);
 						$("#trcSubmitButton").prop('disabled', true);
-						$('#RegisterManageTypeDevice').openModal();
-						$('#transactionId').text(result.txnId);
+						//$('#RegisterManageTypeDevice').openModal();
+						$('#RegisterManageTypeDevice').openModal({
+					    	   dismissible:false
+					       });
+						$.i18n().locale = lang;
+						$.i18n().load({
+							'en' : './resources/i18n/en.json',
+							'km' : './resources/i18n/km.json'
+						}).done(function() {
+							if(result.errorCode==200){
+								//$('#sucessMessage').text('');
+								$('#sucessMessage').text($.i18n('TRCRegister_futureRef'));
+								//alert(result.txnId);
+								$('#transactionId').text(result.txnId);
+							}else if(result.errorCode==201){
+								$('#sucessMessage').text('');
+								$('#sucessMessage').text($.i18n('REGISTER_TYPE_APPROVE_REJECTED'));
+							}
+							
+							//REGISTER_TYPE_APPROVE_REJECTED=$.i18n('REGISTER_TYPE_APPROVE_REJECTED');
+							//TRCRegister_futureRef=$.i18n('TRCRegister_futureRef');
+							
+						});
+						
+						
+						
 				},
 				error : function(jqXHR, textStatus, errorThrown) {
 					console.log("error in ajax")
@@ -126,6 +193,7 @@ window.parent
 			return false;
 
 		}
+
 
 		$.getJSON('./getSourceTypeDropdown/DOC_TYPE/21', function(data) {
 			console.log("@@@@@" + JSON.stringify(data));
@@ -144,7 +212,19 @@ window.parent
 			$('#replymessageForm').trigger("reset");
 		}
  
-		var max_fields = 15; //maximum input boxes allowed
+		$.getJSON('./addMoreFile/more_files_count', function(data) {
+			console.log(data);
+			
+			localStorage.setItem("maxCount", data.value);
+			
+		});
+	 
+			//var max_fields = 2; //maximum input boxes allowed
+			var max_fields =localStorage.getItem("maxCount");
+			if (max_fields==0){
+				 console.log("1111");
+				 $(".add_field_button").prop('disabled', true);
+			 }
 		var wrapper = $(".mainDiv"); //Fields wrapper
 		var add_button = $(".add_field_button"); //Add button ID
 		var x = 1; //initlal text box count
@@ -160,7 +240,7 @@ window.parent
 												'<div id="filediv'+id+'" class="fileDiv"><div class="row"><div class="file-field col s12 m6"><label for="Category">'
 														+ $
 																.i18n('documenttype')
-														+ '</label><select id="docTypetag'+id+'" required class="browser-default"> <option value="" disabled selected>'
+														+ '</label><select id="docTypetag'+id+'"  class="browser-default"> <option value="" disabled selected>'
 														+ $
 																.i18n('selectDocumentType')
 														+ ' </option></select><select id="docTypetagValue'+id+'" style="display:none" class="browser-default"> <option value="" disabled selected>'
@@ -168,7 +248,7 @@ window.parent
 																.i18n('selectDocumentType')
 														+ ' </option></select></div> <div class="file-field col s12 m6" style="margin-top: 23px;"><div class="btn"><span>'
 														+ $.i18n('selectfile')
-														+ '</span><input id="docTypeFile'+id+'" type="file" required name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" type="text"></div></div><div style="cursor:pointer;background-color:red;margin-right: 1.7%;" class="remove_field btn right btn-info">-</div></div></div>'); //add input box
+														+ '</span><input id="docTypeFile'+id+'" type="file"  name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" type="text"></div></div><div style="cursor:pointer;background-color:red;margin-right: 1.7%;" class="remove_field btn right btn-info">-</div></div></div>'); //add input box
 							}
 
 							$.getJSON('./getSourceTypeDropdown/DOC_TYPE/21', function(
@@ -249,4 +329,19 @@ window.parent
 			$("#file").val('');
 			$('#fileFormateModal').closeModal();
 		}*/
+
+		function enableAddMore(){
+			$(".add_field_button").attr("disabled", false);
+		}
+		function enableSelectFile(){
+			$("#docTypeFile1").attr("disabled", false);
+			$("#docTypeFile1").attr("required", true);
+			$("#supportingdocumentFile").append('<span class="star">*</span>');
+		}
 		
+
+		$("input[type=file]").keypress(function(ev) {
+		    return false;
+		    //ev.preventDefault(); //works as well
+
+		});

@@ -146,6 +146,7 @@
         .modal {
         	width: 50%;
         }
+        
  */    </style>
 <script>
 var contextpath = "${context}";
@@ -155,6 +156,7 @@ var contextpath = "${context}";
 <body data-lang-param="${pageContext.response.locale}">
 <section id="content" style="margin-bottom: 100px;">
                 <!--start container-->
+                <div id="initialloader"></div>
                 <input type="text" id="pageTypeValue" value="${showPagetype}" style="display: none;">
                 <div class="container" style="margin-top:5vh;" id="uploadPaidStatusDiv" style="dispay:none">
                     <div class="section">
@@ -170,23 +172,33 @@ var contextpath = "${context}";
                                             <div class="input-field col s12 m6">
                                                 <label for="endUser" style="color: #000;"><spring:message code="input.EmailID" /> </label>
                                                 <input type="email" id="endUseremail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" 
-												oninput="InvalidMsg(this,'email');" oninvalid="InvalidMsg(this,'email');"  
-												 title= "<spring:message code="validation.Matchformat" />"  maxlength="30" name="email"/>
+											    oninput="InvalidMsg(this,'input','<spring:message code="validation.Matchformat" />');"
+												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.Matchformat" />');" 
+												   maxlength="30" name="email"/>
                                             </div>
 
                                             <div class="input-field col s12 m6 quantity" style="margin-top: 19px;">
                                                 <label for="endUserquantity" style="color: #000;"><spring:message code="input.quantity" />  <span class="star">*</span></label>
                                                 <input type="text" id="endUserquantity" maxlength="7" name="endUserquantity" pattern=[0-9]{0,7}
-												oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
+												oninput="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
+												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');" 
 												 title= "<spring:message code="validation.7digits" />" required> </div>
+												 
+											<div class="input-field col s12 m6 quantity" style="margin-top: 19px;">
+                                                <label for="endUserDevicequantity" style="color: #000;"><spring:message code="input.devicequantity" />  <span class="star">*</span></label>
+                                                <input type="text" id="endUserDevicequantity" maxlength="7" name="endUserDevicequantity" pattern=[0-9]{0,7}
+												oninput="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
+												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');" 
+												 title= "<spring:message code="validation.7digits" />" required> </div>	 
 
                                             <div class="file-field col s12 m6">
                                                 <h6 style="margin-top: 15px;"><spring:message code="registration.uploadfile" /> <span
                                                         class="star">*</span></h6>
                                                 <div class="btn">
                                                     <span><spring:message code="input.selectfile" /></span>
-                                                    <input type="file" id="endUsercsvUploadFile" accept=".csv" 
-                                                    oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');"
+                                                    <input type="file" id="endUsercsvUploadFile" accept=".csv"  onchange="fileTypeValueChanges(this,'fileType')"
+                                                    oninput="InvalidMsg(this,'fileType','<spring:message code="validation.file" />');"
+												oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.file" />');" 
                                                     title="<spring:message code="validation.NoChosen" />" required />                                                    
 
                                                 </div>
@@ -292,7 +304,7 @@ var contextpath = "${context}";
                                                 <label for="viewUploadFile"><spring:message code="input.ViewUploadFile" /></label>
                                             </div>
                                             <div class="input-field col s6 m7">
-                                               <a href="JavaScript:void();" onclick="endUserStockFileDownload()" > <i class="fa fa-download download-icon" aria-hidden="true"
+                                               <a href="JavaScript:void();"  id="endUserStockFileLink" > <i class="fa fa-download download-icon" aria-hidden="true"
                                                     style="position: absolute; right: 0; margin: 10px 15px 0 0;"
                                                     title="download"></i></a>
                                                 <input type="text" id="viewUploadFile" name="viewUploadFile"
@@ -313,7 +325,7 @@ var contextpath = "${context}";
                                                 <label for="errorFileName"><spring:message code="input.ViewErrorReport" /></label>
                                             </div>
                                             <div class="input-field col s6 m7">
-                                                <a href="JavaScript:void();" onclick="endUserStockErrorFileDownload()"><i class="fa fa-download download-icon" aria-hidden="true"
+                                                <a href="JavaScript:void();" id="errorFileStock"><i class="fa fa-download download-icon" aria-hidden="true"
                                                     style="position: absolute; right: 0; margin: 10px 15px 0 0;"
                                                     title="download"></i></a>
                                                 <input type="text" id="errorFileName" name="errorFileName"
@@ -353,7 +365,7 @@ var contextpath = "${context}";
                                         <div class="row">
                                             <div class="input-field col s12 center">
                                                 <!-- <a href="homePage" class="btn" style="width: 100%;">ok</a> -->
-                                                 <a href="./redirectToHomePage" class=" btn" id="updateEndUserStockOK" type=""><spring:message code="modal.ok" /></a>
+                                                 <a href="./redirectToHomePage" class=" btn" id="updateEndUserStockOK" type=""><spring:message code="modal.close" /></a>
                                                 <button class=" btn" id="updateEndUserStock" type="submit"><spring:message code="button.submit" /></button>
                                             </div>
                                         </div>
@@ -468,10 +480,29 @@ var contextpath = "${context}";
             </div>
         </div>
     </div>
+    
+    <div id="fileFormateModal" class="modal">
+		<h6 class="modal-header"><spring:message code="fileValidationModalHeader" /></h6>
+		<div class="modal-content">
+			<div class="row">
+				<h6 id="fileErrormessage"><spring:message code="fileValidationName" /><br> <br> <spring:message code="fileValidationFormate" /> <br><br> <spring:message code="fileValidationSize" /> </h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<div class="input-field col s12 center">
+						<button class=" btn" onclick="clearFileName()"
+							style="margin-left: 10px;"><spring:message code="modal.ok" /></button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
     <!-- ================================================
     Scripts
     ================================================ -->
  <!-- jQuery Library -->
+ 
+ 
     <%-- <script type="text/javascript" src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script> --%>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
        <!-- ajax js -->
@@ -484,19 +515,57 @@ var contextpath = "${context}";
     <script type="text/javascript" src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
     <!-- chartist -->
     <script type="text/javascript" src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script>
+    
+    
 <script type="text/javascript"
 		src="${context}/resources/project_js/validationMsg.js"></script>
     <!-- data-tables -->
     <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/data-tables-script.js"></script>
+    <!-- i18n library -->
+	<script type="text/javascript"
+		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.messagestore.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.fallbacks.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.language.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.parser.js"></script>
+
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.js"></script>
+
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.bidi.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/jquery.history.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
 	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
+	
+	
     <!--plugins.js - Some Specific JS codes for Plugin Settings-->
     <script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
     <!--custom-script.js - Add your own theme custom JS-->
     <script type="text/javascript" src="${context}/resources/js/custom-script.js"></script>
         <script type="text/javascript" src="${context}/resources/project_js/endUserStock.js"></script>
  
-
-   
+<script type="text/javascript"
+		src="${context}/resources/project_js/ValidationFileOutsidePortal.js"></script>
+		
+   <script type="text/javascript">
+   $('div#initialloader').delay(300).fadeOut('slow');
+   </script>
 </body>
 </html>

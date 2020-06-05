@@ -29,6 +29,7 @@ public class DeviceActivation {
 		 log.info(" view deviceActivation entry point."); 
 		 mv.setViewName("deviceActivation");
 		log.info(" view deviceActivation exit point."); 
+		mv.addObject("passportNo", passportNo);
 		return mv; 
 	}	
 }

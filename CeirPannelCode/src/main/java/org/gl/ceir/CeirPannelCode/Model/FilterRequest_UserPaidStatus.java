@@ -2,9 +2,9 @@ package org.gl.ceir.CeirPannelCode.Model;
 
 public class FilterRequest_UserPaidStatus {
 	
-	private Integer deviceIdType,deviceType,taxPaidStatus,consignmentStatus,action,featureId,roleTypeUserId,userId,userTypeId;
-	private String createdOn,startDate,endDate,modifiedOn,nid,remarks,userType,txnId,origin,searchString;
-	  private Long imei1;
+	private Integer id, deviceIdType,deviceType,taxPaidStatus,consignmentStatus,action,featureId,roleTypeUserId,userId,userTypeId,status;
+	private String createdOn,startDate,endDate,modifiedOn,nid,remarks,userType,txnId,origin,searchString,username;
+	  private String imei1;
 	public Integer getDeviceIdType() {
 		return deviceIdType;
 	}
@@ -119,21 +119,85 @@ public class FilterRequest_UserPaidStatus {
 	public void setSearchString(String searchString) {
 		this.searchString = searchString;
 	}
-	public Long getImei1() {
+	public String getImei1() {
 		return imei1;
 	}
-	public void setImei1(Long imei1) {
+	public void setImei1(String imei1) {
 		this.imei1 = imei1;
+	}
+	public Integer getStatus() {
+		return status;
+	}
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
 	}
 	@Override
 	public String toString() {
-		return "FilterRequest_UserPaidStatus [deviceIdType=" + deviceIdType + ", deviceType=" + deviceType
-				+ ", taxPaidStatus=" + taxPaidStatus + ", consignmentStatus=" + consignmentStatus + ", action=" + action
-				+ ", featureId=" + featureId + ", roleTypeUserId=" + roleTypeUserId + ", userId=" + userId
-				+ ", userTypeId=" + userTypeId + ", createdOn=" + createdOn + ", startDate=" + startDate + ", endDate="
-				+ endDate + ", modifiedOn=" + modifiedOn + ", nid=" + nid + ", remarks=" + remarks + ", userType="
-				+ userType + ", txnId=" + txnId + ", origin=" + origin + ", searchString=" + searchString + ", imei1="
-				+ imei1 + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("FilterRequest_UserPaidStatus [id=");
+		builder.append(id);
+		builder.append(", deviceIdType=");
+		builder.append(deviceIdType);
+		builder.append(", deviceType=");
+		builder.append(deviceType);
+		builder.append(", taxPaidStatus=");
+		builder.append(taxPaidStatus);
+		builder.append(", consignmentStatus=");
+		builder.append(consignmentStatus);
+		builder.append(", action=");
+		builder.append(action);
+		builder.append(", featureId=");
+		builder.append(featureId);
+		builder.append(", roleTypeUserId=");
+		builder.append(roleTypeUserId);
+		builder.append(", userId=");
+		builder.append(userId);
+		builder.append(", userTypeId=");
+		builder.append(userTypeId);
+		builder.append(", status=");
+		builder.append(status);
+		builder.append(", createdOn=");
+		builder.append(createdOn);
+		builder.append(", startDate=");
+		builder.append(startDate);
+		builder.append(", endDate=");
+		builder.append(endDate);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
+		builder.append(", nid=");
+		builder.append(nid);
+		builder.append(", remarks=");
+		builder.append(remarks);
+		builder.append(", userType=");
+		builder.append(userType);
+		builder.append(", txnId=");
+		builder.append(txnId);
+		builder.append(", origin=");
+		builder.append(origin);
+		builder.append(", searchString=");
+		builder.append(searchString);
+		builder.append(", username=");
+		builder.append(username);
+		builder.append(", imei1=");
+		builder.append(imei1);
+		builder.append("]");
+		return builder.toString();
 	}
+	
+	
+	
 	
 }

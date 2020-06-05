@@ -1,9 +1,12 @@
 package org.gl.ceir.CeirPannelCode.Feignclient;
 
+import org.gl.ceir.CeirPannelCode.Model.AllRequest;
 import org.gl.ceir.CeirPannelCode.Model.EndUserVisaInfo;
+import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest_UserPaidStatus;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.LawfulStolenRecovey;
+import org.gl.ceir.CeirPannelCode.Model.UpdateVisaModel;
 import org.gl.ceir.pagination.model.UserPaidStatusContent;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Service;
@@ -22,8 +25,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @FeignClient(url = "${feignClientPath}",value = "dsj" )
 public interface UploadPaidStatusFeignClient {
 
-	@GetMapping("/end-user/{nid}")
-	public GenricResponse respone(@PathVariable("nid") String nid);
+	@PostMapping("/end-user/searchByNid")
+	public GenricResponse respone(@RequestBody AllRequest request);
 	
 	
 	@PostMapping("/filter/end-user-device-info")
@@ -34,27 +37,27 @@ public interface UploadPaidStatusFeignClient {
 	
 	
 
-	@DeleteMapping("/end-user-device-info/{imei}")
-	public @ResponseBody GenricResponse delete(@PathVariable("imei") Long imei);
+	@DeleteMapping("/end-user-device-info")
+	public @ResponseBody GenricResponse delete(@RequestBody AllRequest request);
 	
 	
 	
 	
 	
 	// ********************************************** open register page or edit popup *****************************
-	@GetMapping("/end-user-device-info/{imei}")
-	public @ResponseBody UserPaidStatusContent viewByImei(@PathVariable("imei") Long imei);
+	@PostMapping("/end-user-device-info/view")
+	public @ResponseBody UserPaidStatusContent viewByImei(@RequestBody AllRequest imei);
 	
 
-	@PostMapping("/end-user-device-info/count-by-nid/{nid}")
-	public @ResponseBody GenricResponse countByNid(@PathVariable("nid") String  nid);
+	@PostMapping("/end-user-device-info/count-by-nid/{nid}/{type}")
+	public @ResponseBody GenricResponse countByNid(@PathVariable("nid") String  nid,@PathVariable("type") int nationType);
 	
 	
 	@PutMapping("/accept-reject/end-user-device")
 	public @ResponseBody GenricResponse approveRejectFeign(FilterRequest_UserPaidStatus filterRequest);
 	
-	@GetMapping("/end-user/{nid}")
-	public @ResponseBody GenricResponse fetchVisaDetailsbyPassport(@PathVariable("nid") String  nid);
+	@PostMapping("/end-user/searchByNid")
+	public @ResponseBody GenricResponse fetchVisaDetailsbyPassport(@RequestBody AllRequest nid);
 	
 	@PutMapping("visa/end-user")
 	public @ResponseBody GenricResponse updateEndUSerVisaDetailsby(EndUserVisaInfo visaInfo);
@@ -74,5 +77,12 @@ public interface UploadPaidStatusFeignClient {
 	@RequestMapping(value="/stakeholder/update",method=RequestMethod.PUT) 
 	public GenricResponse updateIndivisualStolen(LawfulStolenRecovey lawfulStolen );
 
+	
+	@PutMapping("/accept-reject/end-user-visa")
+	public @ResponseBody GenricResponse updateVisaRequest(FilterRequest_UserPaidStatus filterRequest);
+	
+
+	@PostMapping("/visa/viewById")
+	public @ResponseBody UpdateVisaModel viewVisaDetails(FilterRequest filterRequest);
 
 }

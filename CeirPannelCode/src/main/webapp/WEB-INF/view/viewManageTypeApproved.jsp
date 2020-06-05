@@ -81,6 +81,12 @@
    <script type="text/javascript">
 var path="${context}";
 </script>
+
+<style type="text/css">
+.dataTables_scrollBody {
+    height: 100px !important;
+}
+</style>
 </head>
 <body data-id="11" data-roleType="${usertype}" data-userTypeID="${usertypeId}"
 	data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}"

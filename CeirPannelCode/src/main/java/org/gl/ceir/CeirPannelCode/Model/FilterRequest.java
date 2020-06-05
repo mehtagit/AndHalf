@@ -4,8 +4,11 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class FilterRequest {
-	public String startDate,endDate,roleType,userType,txnId,searchString,grievanceId,tag,remarks,deviceId,nid,childTag,field,interp,tagId,value,displayName,description;
-	private Integer userId,taxPaidStatus,consignmentStatus,featureId,userTypeId,fileStatus,requestType,sourceType,grievanceStatus,userRoleTypeId,status,asType,serviceDump,fileType,action,operatorTypeId,channel,type,deviceIdType,parentValue,id;
+	public String startDate,endDate,createdOn,modifiedOn,roleType,userType,txnId,searchString,grievanceId,tag,remarks,deviceId,nid,childTag,field,interp,tagId,value,displayName,description,address,featureName,subFeatureName,userName,date,fileName,invoiceNumber,suplierName,supplierId,stateInterp,alertId,remark,email,phoneNo,username,tac,userDisplayName,filterUserName,FilterUserType,raisedBy,filteredUserType,month;
+	private Integer pageNo, pageSize,userId,taxPaidStatus,consignmentStatus,featureId,userTypeId,fileStatus,requestType,sourceType,grievanceStatus,userRoleTypeId,status,asType,serviceDump,fileType,action,operatorTypeId,channel,type,deviceIdType,parentValue,id,port,currency,quantity,stockStatus,feature,period,year,dataId,usertypeId;
+	private Double dollar,riel;
+	private int roleTypeId;
+	private String state,ruleName;
 	public String getStartDate() {
 		return startDate;
 	}
@@ -17,6 +20,18 @@ public class FilterRequest {
 	}
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
+	}
+	public String getCreatedOn() {
+		return createdOn;
+	}
+	public void setCreatedOn(String createdOn) {
+		this.createdOn = createdOn;
+	}
+	public String getModifiedOn() {
+		return modifiedOn;
+	}
+	public void setModifiedOn(String modifiedOn) {
+		this.modifiedOn = modifiedOn;
 	}
 	public String getRoleType() {
 		return roleType;
@@ -113,6 +128,150 @@ public class FilterRequest {
 	}
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	public String getFeatureName() {
+		return featureName;
+	}
+	public void setFeatureName(String featureName) {
+		this.featureName = featureName;
+	}
+	public String getSubFeatureName() {
+		return subFeatureName;
+	}
+	public void setSubFeatureName(String subFeatureName) {
+		this.subFeatureName = subFeatureName;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
+	}
+	public String getFileName() {
+		return fileName;
+	}
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+	public String getInvoiceNumber() {
+		return invoiceNumber;
+	}
+	public void setInvoiceNumber(String invoiceNumber) {
+		this.invoiceNumber = invoiceNumber;
+	}
+	public String getSuplierName() {
+		return suplierName;
+	}
+	public void setSuplierName(String suplierName) {
+		this.suplierName = suplierName;
+	}
+	public String getSupplierId() {
+		return supplierId;
+	}
+	public void setSupplierId(String supplierId) {
+		this.supplierId = supplierId;
+	}
+	public String getStateInterp() {
+		return stateInterp;
+	}
+	public void setStateInterp(String stateInterp) {
+		this.stateInterp = stateInterp;
+	}
+	public String getAlertId() {
+		return alertId;
+	}
+	public void setAlertId(String alertId) {
+		this.alertId = alertId;
+	}
+	public String getRemark() {
+		return remark;
+	}
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getPhoneNo() {
+		return phoneNo;
+	}
+	public void setPhoneNo(String phoneNo) {
+		this.phoneNo = phoneNo;
+	}
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public String getTac() {
+		return tac;
+	}
+	public void setTac(String tac) {
+		this.tac = tac;
+	}
+	public String getUserDisplayName() {
+		return userDisplayName;
+	}
+	public void setUserDisplayName(String userDisplayName) {
+		this.userDisplayName = userDisplayName;
+	}
+	public String getFilterUserName() {
+		return filterUserName;
+	}
+	public void setFilterUserName(String filterUserName) {
+		this.filterUserName = filterUserName;
+	}
+	public String getFilterUserType() {
+		return FilterUserType;
+	}
+	public void setFilterUserType(String filterUserType) {
+		FilterUserType = filterUserType;
+	}
+	public String getRaisedBy() {
+		return raisedBy;
+	}
+	public void setRaisedBy(String raisedBy) {
+		this.raisedBy = raisedBy;
+	}
+	public String getFilteredUserType() {
+		return filteredUserType;
+	}
+	public void setFilteredUserType(String filteredUserType) {
+		this.filteredUserType = filteredUserType;
+	}
+	public String getMonth() {
+		return month;
+	}
+	public void setMonth(String month) {
+		this.month = month;
+	}
+	public Integer getPageNo() {
+		return pageNo;
+	}
+	public void setPageNo(Integer pageNo) {
+		this.pageNo = pageNo;
+	}
+	public Integer getPageSize() {
+		return pageSize;
+	}
+	public void setPageSize(Integer pageSize) {
+		this.pageSize = pageSize;
 	}
 	public Integer getUserId() {
 		return userId;
@@ -240,24 +399,254 @@ public class FilterRequest {
 	public void setId(Integer id) {
 		this.id = id;
 	}
+	public Integer getPort() {
+		return port;
+	}
+	public void setPort(Integer port) {
+		this.port = port;
+	}
+	public Integer getCurrency() {
+		return currency;
+	}
+	public void setCurrency(Integer currency) {
+		this.currency = currency;
+	}
+	public Integer getQuantity() {
+		return quantity;
+	}
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
+	}
+	public Integer getStockStatus() {
+		return stockStatus;
+	}
+	public void setStockStatus(Integer stockStatus) {
+		this.stockStatus = stockStatus;
+	}
+	public Integer getFeature() {
+		return feature;
+	}
+	public void setFeature(Integer feature) {
+		this.feature = feature;
+	}
+	public Integer getPeriod() {
+		return period;
+	}
+	public void setPeriod(Integer period) {
+		this.period = period;
+	}
+	public Integer getYear() {
+		return year;
+	}
+	public void setYear(Integer year) {
+		this.year = year;
+	}
+	public Integer getDataId() {
+		return dataId;
+	}
+	public void setDataId(Integer dataId) {
+		this.dataId = dataId;
+	}
+	public Integer getUsertypeId() {
+		return usertypeId;
+	}
+	public void setUsertypeId(Integer usertypeId) {
+		this.usertypeId = usertypeId;
+	}
+	public Double getDollar() {
+		return dollar;
+	}
+	public void setDollar(Double dollar) {
+		this.dollar = dollar;
+	}
+	public Double getRiel() {
+		return riel;
+	}
+	public void setRiel(Double riel) {
+		this.riel = riel;
+	}
+	public int getRoleTypeId() {
+		return roleTypeId;
+	}
+	public void setRoleTypeId(int roleTypeId) {
+		this.roleTypeId = roleTypeId;
+	}
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
+	}
+	public String getRuleName() {
+		return ruleName;
+	}
+	public void setRuleName(String ruleName) {
+		this.ruleName = ruleName;
+	}
 	@Override
 	public String toString() {
-		return "FilterRequest [startDate=" + startDate + ", endDate=" + endDate + ", roleType=" + roleType
-				+ ", userType=" + userType + ", txnId=" + txnId + ", searchString=" + searchString + ", grievanceId="
-				+ grievanceId + ", tag=" + tag + ", remarks=" + remarks + ", deviceId=" + deviceId + ", nid=" + nid
-				+ ", childTag=" + childTag + ", field=" + field + ", interp=" + interp + ", tagId=" + tagId + ", value="
-				+ value + ", displayName=" + displayName + ", description=" + description + ", userId=" + userId
-				+ ", taxPaidStatus=" + taxPaidStatus + ", consignmentStatus=" + consignmentStatus + ", featureId="
-				+ featureId + ", userTypeId=" + userTypeId + ", fileStatus=" + fileStatus + ", requestType="
-				+ requestType + ", sourceType=" + sourceType + ", grievanceStatus=" + grievanceStatus
-				+ ", userRoleTypeId=" + userRoleTypeId + ", status=" + status + ", asType=" + asType + ", serviceDump="
-				+ serviceDump + ", fileType=" + fileType + ", action=" + action + ", operatorTypeId=" + operatorTypeId
-				+ ", channel=" + channel + ", type=" + type + ", deviceIdType=" + deviceIdType + ", parentValue="
-				+ parentValue + ", id=" + id + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("FilterRequest [startDate=");
+		builder.append(startDate);
+		builder.append(", endDate=");
+		builder.append(endDate);
+		builder.append(", createdOn=");
+		builder.append(createdOn);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
+		builder.append(", roleType=");
+		builder.append(roleType);
+		builder.append(", userType=");
+		builder.append(userType);
+		builder.append(", txnId=");
+		builder.append(txnId);
+		builder.append(", searchString=");
+		builder.append(searchString);
+		builder.append(", grievanceId=");
+		builder.append(grievanceId);
+		builder.append(", tag=");
+		builder.append(tag);
+		builder.append(", remarks=");
+		builder.append(remarks);
+		builder.append(", deviceId=");
+		builder.append(deviceId);
+		builder.append(", nid=");
+		builder.append(nid);
+		builder.append(", childTag=");
+		builder.append(childTag);
+		builder.append(", field=");
+		builder.append(field);
+		builder.append(", interp=");
+		builder.append(interp);
+		builder.append(", tagId=");
+		builder.append(tagId);
+		builder.append(", value=");
+		builder.append(value);
+		builder.append(", displayName=");
+		builder.append(displayName);
+		builder.append(", description=");
+		builder.append(description);
+		builder.append(", address=");
+		builder.append(address);
+		builder.append(", featureName=");
+		builder.append(featureName);
+		builder.append(", subFeatureName=");
+		builder.append(subFeatureName);
+		builder.append(", userName=");
+		builder.append(userName);
+		builder.append(", date=");
+		builder.append(date);
+		builder.append(", fileName=");
+		builder.append(fileName);
+		builder.append(", invoiceNumber=");
+		builder.append(invoiceNumber);
+		builder.append(", suplierName=");
+		builder.append(suplierName);
+		builder.append(", supplierId=");
+		builder.append(supplierId);
+		builder.append(", stateInterp=");
+		builder.append(stateInterp);
+		builder.append(", alertId=");
+		builder.append(alertId);
+		builder.append(", remark=");
+		builder.append(remark);
+		builder.append(", email=");
+		builder.append(email);
+		builder.append(", phoneNo=");
+		builder.append(phoneNo);
+		builder.append(", username=");
+		builder.append(username);
+		builder.append(", tac=");
+		builder.append(tac);
+		builder.append(", userDisplayName=");
+		builder.append(userDisplayName);
+		builder.append(", filterUserName=");
+		builder.append(filterUserName);
+		builder.append(", FilterUserType=");
+		builder.append(FilterUserType);
+		builder.append(", raisedBy=");
+		builder.append(raisedBy);
+		builder.append(", filteredUserType=");
+		builder.append(filteredUserType);
+		builder.append(", month=");
+		builder.append(month);
+		builder.append(", pageNo=");
+		builder.append(pageNo);
+		builder.append(", pageSize=");
+		builder.append(pageSize);
+		builder.append(", userId=");
+		builder.append(userId);
+		builder.append(", taxPaidStatus=");
+		builder.append(taxPaidStatus);
+		builder.append(", consignmentStatus=");
+		builder.append(consignmentStatus);
+		builder.append(", featureId=");
+		builder.append(featureId);
+		builder.append(", userTypeId=");
+		builder.append(userTypeId);
+		builder.append(", fileStatus=");
+		builder.append(fileStatus);
+		builder.append(", requestType=");
+		builder.append(requestType);
+		builder.append(", sourceType=");
+		builder.append(sourceType);
+		builder.append(", grievanceStatus=");
+		builder.append(grievanceStatus);
+		builder.append(", userRoleTypeId=");
+		builder.append(userRoleTypeId);
+		builder.append(", status=");
+		builder.append(status);
+		builder.append(", asType=");
+		builder.append(asType);
+		builder.append(", serviceDump=");
+		builder.append(serviceDump);
+		builder.append(", fileType=");
+		builder.append(fileType);
+		builder.append(", action=");
+		builder.append(action);
+		builder.append(", operatorTypeId=");
+		builder.append(operatorTypeId);
+		builder.append(", channel=");
+		builder.append(channel);
+		builder.append(", type=");
+		builder.append(type);
+		builder.append(", deviceIdType=");
+		builder.append(deviceIdType);
+		builder.append(", parentValue=");
+		builder.append(parentValue);
+		builder.append(", id=");
+		builder.append(id);
+		builder.append(", port=");
+		builder.append(port);
+		builder.append(", currency=");
+		builder.append(currency);
+		builder.append(", quantity=");
+		builder.append(quantity);
+		builder.append(", stockStatus=");
+		builder.append(stockStatus);
+		builder.append(", feature=");
+		builder.append(feature);
+		builder.append(", period=");
+		builder.append(period);
+		builder.append(", year=");
+		builder.append(year);
+		builder.append(", dataId=");
+		builder.append(dataId);
+		builder.append(", usertypeId=");
+		builder.append(usertypeId);
+		builder.append(", dollar=");
+		builder.append(dollar);
+		builder.append(", riel=");
+		builder.append(riel);
+		builder.append(", roleTypeId=");
+		builder.append(roleTypeId);
+		builder.append(", state=");
+		builder.append(state);
+		builder.append(", ruleName=");
+		builder.append(ruleName);
+		builder.append("]");
+		return builder.toString();
 	}
-	
-	
-	
 	
 	
 }

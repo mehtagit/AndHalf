@@ -9,6 +9,29 @@ public class ConsignmentUpdateRequest {
 	private int userId;
 	private String remarks;
 	private Integer featureId;
+	
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	public String getUserType() {
+		return userType;
+	}
+	public void setUserType(String userType) {
+		this.userType = userType;
+	}
+	public int getUserTypeId() {
+		return userTypeId;
+	}
+	public void setUserTypeId(int userTypeId) {
+		this.userTypeId = userTypeId;
+	}
+	private String userName,userType;
+	private int userTypeId;
+
+	
 	public int getAction() {
 		return action;
 	}
@@ -53,9 +76,29 @@ public class ConsignmentUpdateRequest {
 	}
 	@Override
 	public String toString() {
-		return "ConsignmentUpdateRequest [action=" + action + ", roleType=" + roleType + ", roleTypeUserId="
-				+ roleTypeUserId + ", txnId=" + txnId + ", userId=" + userId + ", remarks=" + remarks + ", featureId="
-				+ featureId + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("ConsignmentUpdateRequest [action=");
+		builder.append(action);
+		builder.append(", roleType=");
+		builder.append(roleType);
+		builder.append(", roleTypeUserId=");
+		builder.append(roleTypeUserId);
+		builder.append(", txnId=");
+		builder.append(txnId);
+		builder.append(", userId=");
+		builder.append(userId);
+		builder.append(", remarks=");
+		builder.append(remarks);
+		builder.append(", featureId=");
+		builder.append(featureId);
+		builder.append(", userName=");
+		builder.append(userName);
+		builder.append(", userType=");
+		builder.append(userType);
+		builder.append(", userTypeId=");
+		builder.append(userTypeId);
+		builder.append("]");
+		return builder.toString();
 	}
 	
 }

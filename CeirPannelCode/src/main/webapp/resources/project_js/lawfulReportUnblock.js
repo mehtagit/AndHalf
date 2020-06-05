@@ -7,7 +7,10 @@ var formData= new FormData();
 	
 
 	var sigleRecoverydeviceBrandName=$('#sigleRecoverydeviceBrandName').val();
-	var sigleRecoveryimeiNumber=$('#sigleRecoveryimeiNumber').val();
+	var sigleRecoveryimeiNumber1=$('#sigleRecoveryimeiNumber1').val();
+	var sigleRecoveryimeiNumber2=$('#sigleRecoveryimeiNumber2').val();
+	var sigleRecoveryimeiNumber3=$('#sigleRecoveryimeiNumber3').val();
+	var sigleRecoveryimeiNumber4=$('#sigleRecoveryimeiNumber4').val();
 	var sigleRecoverydeviceIDType=$('#sigleRecoverydeviceIDType').val();
 	var sigleRecoverydeviceType=$('#sigleRecoverydeviceType').val();
 	var sigleRecoverydeviceSimStatus=$('#sigleRecoverydeviceSimStatus').val();
@@ -18,16 +21,18 @@ var formData= new FormData();
 	var sigleRecoveryvillage=$('#sigleRecoveryvillage').val();
 	var sigleRecoverylocality=$('#sigleRecoverylocality').val();
 	var sigleRecoverydistrict=$('#sigleRecoverydistrict').val();
-	var sigleRecoverycommune=$('#sigleRecoverycommune').val();
+	var sigleRecoverycommune=$('#sigleRecoverycommune').val(); 
 	var sigleRecoverypin=$('#sigleRecoverypin').val();
    /* var deviceRecoveryDate=$('#deviceRecoveryDevice').val();*/
 	var sigleRecovery =$('#sigleRecovery').val();
 	var country1=$('#country1').val();
 	var state1=$('#state1').val();
-	var sigleRecoverydeviceStatus=$('#sigleRecoverydeviceStatus').val();
+	//var sigleRecoverydeviceStatus=$('#sigleRecoverydeviceStatus').val();
 	var sigleRecoveryBlockPeriod=$('#singleRecoveryDatePeriod').val();
-	var blockingType =$('.blocktypeRadio:checked').val();
+	var blockingType ='Immediate';
 	var IndivisualRecoveryDevice=$('#IndivisualRecoveryDevice').val();
+	var singleStolenmodalNumber=$('#singleRecoverymodalNumber').val();
+	var singleStolendeviceBrandName=$('#sigleRecoverydeviceBrandName').val();
 
 	 
 	
@@ -42,22 +47,27 @@ var formData= new FormData();
 			"deviceStolenStreet": sigleRecoverystreetNumber,
 			"deviceStolenVillage": sigleRecoveryvillage,
 			"deviceType":sigleRecoverydeviceType,
-			"imeiEsnMeid": sigleRecoveryimeiNumber,
+			"imeiEsnMeid1": parseInt(sigleRecoveryimeiNumber1),
+			"imeiEsnMeid2": parseInt(sigleRecoveryimeiNumber2),
+			"imeiEsnMeid3": parseInt(sigleRecoveryimeiNumber3),
+			"imeiEsnMeid4": parseInt(sigleRecoveryimeiNumber4),
 			"deviceStolenProvince": state1,
-			"remark": sigleRecovery,
 			"multiSimStatus":sigleRecoverydeviceSimStatus,
 			"deviceStolenCountry":country1,
-			"deviceSerialNumber":sigleRecoveryserialNumber
+			"deviceSerialNumber":sigleRecoveryserialNumber,
+			"modelNumber":singleStolenmodalNumber,
+			"deviceBrandName": singleStolendeviceBrandName
 			
 	}
 	
 
 	var request={
 			"dateOfRecovery":IndivisualRecoveryDevice,
-			"blockingTimePeriod":sigleRecoveryBlockPeriod,
 			"blockingType":blockingType,
+			"deviceQuantity":1,
 			"requestType":1,
-			"sourceType":4,
+			"sourceType":5,
+			"remark": sigleRecovery,
 			"stolenIndividualUserDB":stolenIndividualUserDB
 	}
 
@@ -73,12 +83,16 @@ var formData= new FormData();
 		
 			if(response.errorCode=='0'){
 				$("#indivisualStolenButton").prop('disabled', true);
-				$('#IndivisualStolenSucessPopup').openModal();
+				$('#IndivisualStolenSucessPopup').openModal({
+					dismissible:false
+				});
 				$('#IndivisualStolenTxnId').text(response.txnId)
 			}
 			else{
 //				$('#sucessMessage').text('');
-				$('#IndivisualStolenSucessPopup').openModal();
+				$('#IndivisualStolenSucessPopup').openModal({
+					dismissible:false
+				});
 				$('#sucessMessage').text('');
 				$('#sucessMessage').text(response.message);
 			}
@@ -94,6 +108,8 @@ var formData= new FormData();
 }
 
 function saveCompanyRecoveryRequest(){
+	$('div#initialloader').fadeIn('fast');
+	$("#indivisualStolenButton").prop('disabled', true);
 	var formData= new FormData();
 	var bulkRecoveryquantity=$('#bulkRecoveryquantity').val();
 	var bulkRecoveryRemark=$('#bulkRecoveryRemark').val();
@@ -112,8 +128,8 @@ function saveCompanyRecoveryRequest(){
    /* var deviceRecoveryDate=$('#deviceRecoveryDevice').val();*/
 
 	var sigleRecoveryBlockPeriod=$('#stolenDatePeriod').val();
-	var blockingType =$('.blocktypeRadio:checked').val();
-	
+	var blockingType ='Immediate';
+	var bulkDevicequantity=$('#recoveryDevicequantity').val();
 	var stolenOrganizationUserDB= {
 		   
 		    "incidentCommune": bulkRecoverycommune,
@@ -125,16 +141,17 @@ function saveCompanyRecoveryRequest(){
 		    "incidentStreet": bulkRecoverystreetNumber,
 		    "incidentVillage": bulkRecoveryvillage,
 		    "incidentPropertyLocation": bulkRecoveryaddress,
-		    "remark":bulkRecoveryRemark
+		    
 		  }
 	
 	var request={
 			"dateOfRecovery":bulkRecoveryDate,
 			"qty":bulkRecoveryquantity,
-			"blockingTimePeriod":sigleRecoveryBlockPeriod,
+			"deviceQuantity":bulkDevicequantity,
 			"blockingType":blockingType,
 			"requestType":1,
 			"sourceType":6,
+			 "remark":bulkRecoveryRemark,
 			"stolenOrganizationUserDB":stolenOrganizationUserDB
 	}
 
@@ -148,27 +165,36 @@ function saveCompanyRecoveryRequest(){
 		processData: false,
 		contentType: false,
 		success: function (response, textStatus, jqXHR) {
+			
+			$('div#initialloader').delay(300).fadeOut('slow');
 		console.log(JSON.stringify(response));
 		var resp= JSON.stringify(response);
 		console.log(resp.errorCode);
 		console.log(response.errorCode);
 		if(response.errorCode=='0'){
 				$("#indivisualStolenButton").prop('disabled', true);
-				$('#IndivisualStolenSucessPopup').openModal();
+				$('#IndivisualStolenSucessPopup').openModal({
+					dismissible:false
+				});
 				$('#IndivisualStolenTxnId').text(response.txnId)
 			}
 			else{
 //				$('#sucessMessage').text('');
-				$('#IndivisualStolenSucessPopup').openModal();
+				$('#IndivisualStolenSucessPopup').openModal({
+					dismissible:false
+				});
 				$('#sucessMessage').text('');
 				$('#sucessMessage').text(response.message);
 			}
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
 			console.log("error in ajax")
+			$('div#initialloader').delay(300).fadeOut('slow');
 
 		}
 	});
 	return false;
 
 }
+
+

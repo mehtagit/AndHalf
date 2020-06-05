@@ -5,11 +5,7 @@ var role = currentRoleType == null ? roleType : currentRoleType;
 
 var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 var userType = $("body").attr("data-roleType");
-if(userType == "Operator" || userType == "CEIRAdmin" ){
-	var featureId="7";
-}else{
-	var featureId="5"; //this check is for stolen & recovery
-}
+
 
 /*window.parent.$('#langlist').on('change', function() {
 	var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
@@ -29,16 +25,18 @@ $.i18n().load( {
 
 $(document).ready(function(){
 	$('div#initialloader').fadeIn('fast');
-	filterStolen();
+	console.log("featureId is---->" +featureId);
+	filterStolen(lang,null,null);
 	pageRendering();
 });
 
 
 
-function DeleteConsignmentRecord(txnId,id){
-	$("#DeleteConsignment").openModal();
+function DeleteConsignmentRecord(txnId,id,reqType){
+	$("#DeleteConsignment").openModal({dismissible:false});
 	$("#transID").text(txnId);
 	$("#setStolenRecoveyRowId").text(id);
+	window.reqType=reqType;
 }
 
 
@@ -49,12 +47,18 @@ function confirmantiondelete(){
 	var userId = $("body").attr("data-userID");
 	var currentRoleType = $("body").attr("data-stolenselected-roleType"); 
 	var role = currentRoleType == null ? roleType : currentRoleType;
+	var remarks = $("#textarea1").val();
 	console.log("txnId===**"+txnId+" userId="+userId+" roleType== "+roleType+ " currentRoleType=="+currentRoleType);
 	var obj ={
 			"txnId" : txnId,
+			"userType":role,
 			"roleType":role,
 			"userId":userId,
-			"id":id
+			"featureId":featureId,
+			"id":id,
+			"remark":remarks,
+			"requestType":window.reqType
+			
 
 	}
 	$.ajax({
@@ -76,20 +80,21 @@ function confirmantiondelete(){
 		}
 	});
 	$("#DeleteConsignment").closeModal();
-	$("#confirmDeleteConsignment").openModal();
+	$("#confirmDeleteConsignment").openModal({dismissible:false});
+	return false;
 }
 
 
 function EditConsignmentDetails(txnId){ 	
 
 
-	$("#fileStolenModal").openModal();
+	$("#fileStolenModal").openModal({dismissible:false});
 }
 
 
 function viewConsignmentDetails(txnId){
 
-	$("#viewModal").openModal();
+	$("#viewModal").openModal({dismissible:false});
 	$.ajax({
 		url : "./openRegisterConsignmentPopup?reqType=editPage&txnId="+txnId,
 		dataType : 'json',
@@ -158,6 +163,7 @@ function editRegisterConsignment(){
 	var organisationcountry=$('#country').val();
 	var filename=$('#fileNameEdit').val();
 	var txnId=$('#TransactionIdEdit').val();
+
 	var quantity=$('#QuantityEdit').val();
 	console.log(supplierName,consignmentNumber,expectedArrivalDate,txnId,filename)
 
@@ -215,7 +221,7 @@ function openDeleteModal(transactionId)
 {
 	/*   $('#deletemodal').modal('open');
         	  backdrop: 'static' */
-	$('#deletemodal').openModal();
+	$('#deletemodal').openModal({dismissible:false});
 	console.log("transactionId value="+transactionId);
 	$('#deleteTransactionId').val(transactionId);
 }
@@ -229,63 +235,6 @@ function myFunction(message) {
 	$('#errorMessage').html(message);
 	setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
 }
-
-function dispatchDateValidation(){
-	var currentDate;
-	var dispatcDate=  $('#expectedDispatcheDate').val();
-	var now=new Date();
-	if(now.getDate().toString().charAt(0) != '0'){
-		currentDate='0'+now.getDate();
-
-		/* alert("only date="+currentDate); */
-	}
-	else{
-		currentDate=now.getDate();
-	}
-	var today = now.getFullYear()+ '-' + (now.getMonth()+1)+ '-' +currentDate ;
-	//alert("today"+today);
-	console.log("dispatche="+dispatcDate);
-	console.log("todays parse date"+Date.parse(today));
-	console.log("dispatche parse date"+Date.parse(dispatcDate));
-
-
-	if(Date.parse(today)>Date.parse(dispatcDate))
-	{
-		myFunction("dispatche date should be greater then or equals to today");
-		$('#expectedDispatcheDate').val("");
-	}
-
-	//alert("current date="+today+" dispatche date="+dispatcDate)
-}
-
-function arrivalDateValidation(){
-	var currentDate;
-	var dispatcDate=  $('#expectedArrivalDate').val();
-	var now=new Date();
-	if(now.getDate().toString().charAt(0) != '0'){
-		currentDate='0'+now.getDate();
-
-		/* alert("only date="+currentDate); */
-	}
-	else{
-		currentDate=now.getDate();
-	}
-	var today = now.getFullYear()+ '-' + (now.getMonth()+1)+ '-' +currentDate ;
-	//alert("today"+today);
-	console.log("dispatche="+dispatcDate);
-	console.log("todays parse date"+Date.parse(today));
-	console.log("dispatche parse date"+Date.parse(dispatcDate));
-
-
-	if(Date.parse(today)>Date.parse(dispatcDate))
-	{
-		myFunction("Arrival date should be greater then or equals to today");
-		$('#expectedArrivalDate').val("");
-	}
-
-	//alert("current date="+today+" dispatche date="+dispatcDate)
-}
-
 
 
 
@@ -318,40 +267,73 @@ populateCountries
 
 var userType = $("body").attr("data-roleType");
 var sourceType = localStorage.getItem("sourceType");
-function filterStolen(){
+function filterStolen(language,sourceTypeFilter,source){
+	var source__val;
+
+	if(source == 'filter' ) {
+		source__val= source;
+	}
+	else{
+		source__val= $("body").attr("data-session-source");
+
+	}
+	var sessionFlag;
+
+	if(sourceType==null){
+		sessionFlag=2;
+
+	}
+	else{
+		sessionFlag=1;
+
+	}
 	var userTypeId = $("body").attr("data-userTypeID");
-	if(userType=="Operator"){
-		Datatable('./headers?type=blockUnblock','stolenData?featureId='+featureId+'&userTypeId='+userTypeId)
+	if(userType=="Operator" || userType=="Operation" ){
+		Datatable('./headers?type=blockUnblock','stolenData?featureId='+featureId+'&userTypeId='+userTypeId+'&source='+source__val,sourceTypeFilter)
 	}else if(userType =="CEIRAdmin"){
-		Datatable('./headers?type=BlockUnblockCEIRAdmin','stolenData?featureId='+featureId+'&userTypeId='+userTypeId)
+		Datatable('./headers?type=BlockUnblockCEIRAdmin','stolenData?featureId='+featureId+'&userTypeId='+userTypeId+'&source='+source__val,sourceTypeFilter)
 	}else if(sourceType !="viaExistingRecovery"){
-		Datatable('./headers?type=stolen','stolenData')
+		Datatable('./headers?type=stolen','stolenData',sourceTypeFilter)
 	}else if(sourceType =="viaExistingRecovery" ){
-		Datatable('./headers?type=stolenCheckHeaders', 'stolenData?sourceType=viaExistingRecovery')
+		Datatable('./headers?type=stolenCheckHeaders', 'stolenData?sourceType=viaExistingRecovery',sourceTypeFilter)
 	}
 	localStorage.removeItem('sourceType');
 }  
 
 
-function Datatable(url,dataUrl){
+function Datatable(url,dataUrl,sourceTypeFiler){
+	
+	console.log(" == sourceType ="+sourceTypeFiler);
+	var requestType='';
+	var userType=$("body").attr("data-roleType");
+	if (sourceTypeFiler=="filter")
+		{
+		
+		requestType = parseInt($('#requestType').val())
+		}
+	else{
+		requestType = parseInt($("body").attr("data-requestType"));
+	  }
+	console.log("=== requestType======"+requestType)
 	var txn= (txnIdValue == 'null' && transactionIDValue == undefined)? $('#transactionID').val() : transactionIDValue;
 	var filterRequest={
 			"endDate":$('#endDate').val(),
 			"startDate":$('#startDate').val(),
 			"txnId": txn,
 			"consignmentStatus":parseInt($('#status').val()),
-			"requestType":parseInt($('#requestType').val()),
+			"requestType":requestType,
 			"sourceType":parseInt($('#sourceStatus').val()),
-			//"roleType": role,
+			"roleType": role,
 			"userId": userId,
 			"featureId":featureId,
 			"userTypeId": parseInt($("body").attr("data-userTypeID")),
-			"userType":$("body").attr("data-roleType"),
+			"userType":userType,
 			"operatorTypeId" : parseInt($('#operator').val())
 	}
 
+
 	if(lang=='km'){
-				var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
+		var langFile='../resources/i18n/khmer_datatable.json';
 			}
 
 	$.ajax({
@@ -388,6 +370,18 @@ function Datatable(url,dataUrl){
 		        ]
 			});
 			$('div#initialloader').delay(300).fadeOut('slow');
+			$('.dataTables_filter input')
+		       .off().on('keyup', function(event) {
+		    	   if(event.keyCode == 8 && !textBox.val() || event.keyCode == 46 && !textBox.val() || event.keyCode == 83 && !textBox.val()) {
+			    
+			            }
+		    		if (event.keyCode === 13) {
+		    			 table.search(this.value.trim(), false, false).draw();
+		    		}
+		          
+		       });
+			
+			
 		}
 	}); 
 }				
@@ -421,15 +415,19 @@ function pageElements(url){
 				if(date[i].type === "date"){
 					$("#consignmentTableDIv").append("<div class='input-field col s6 m2'>"+
 							"<div id='enddatepicker' class='input-group'>"+
-							"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off'>"+
+							"<input class='form-control datepicker' onchange='checkDate(startDate,endDate)'  type='text' id="+date[i].id+" autocomplete='off'>"+
 							"<label for="+date[i].id+">"+date[i].title
 							+"</label>"+
 							"<span	class='input-group-addon' style='color: #ff4081'>"+
 							"<i	class='fa fa-calendar' aria-hidden='true' style='float: right; margin-top: -37px;'>"+"</i>"+"</span>");
-
+					$( "#"+date[i].id ).datepicker({
+						dateFormat: "yy-mm-dd",
+						 maxDate: new Date()
+			        });
 				}else if(date[i].type === "text"){
 					$("#consignmentTableDIv").append("<div class='input-field col s6 m2' ><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
 				}
+				 
 			} 
 
 			// dynamic dropdown portion
@@ -492,14 +490,16 @@ function pageElements(url){
 					}
 				}
 			}
-			$('.datepicker').datepicker({
-			    dateFormat: "yy-mm-dd"
-			    });
+	
 		}
 
 	//$("#filterBtnDiv").append();
 	}); 
-
+	
+	if($("body").attr("data-roleType")=="CEIRAdmin"){
+		$("#btnLink").css({display: "none"});
+	}
+	
 	setAllDropdowns();
 	/*if(userType=="CEIRAdmin"){
 		$("#btnLink").css({display: "none"});
@@ -542,7 +542,7 @@ function fileStolenReport(){
 
 			console.log(data);
 			$('#fileStolenModal').closeModal();
-			$('#markAsStolen').openModal();
+			$('#markAsStolen').openModal({dismissible:false});
 			//if(data.errorCode==200){
 			/* 
    						 $('#stockSucessMessage').text('');
@@ -598,7 +598,7 @@ function fileRecoveryReport(){
 		success: function (data, textStatus, jqXHR) {
 			console.log(data);
 			$('#recoveryFileModal').closeModal();
-			$('#markAsRecoverDone').openModal();
+			$('#markAsRecoverDone').openModal({dismissible:false});
 			/*  $('#editStockModal').closeModal();
    						 $('#successUpdateStockModal').modal();
    						  if(data.errorCode==200){
@@ -627,7 +627,7 @@ function fileRecoveryReport(){
 
 function openStolenRecoveryModal(){
 	console.log("openStolenRecoveryModal===");
-	$('#stoleRecoveryModal').openModal();
+	$('#stoleRecoveryModal').openModal({dismissible:false});
 }
 
 function openFileStolenModal(){
@@ -637,7 +637,7 @@ function openFileStolenModal(){
 	$('#stoleRecoveryModal').closeModal();
 	setTimeout(function(){
 
-		$('#fileStolenModal').openModal();
+		$('#fileStolenModal').openModal({dismissible:false});
 	}, 200);
 	//$("#materialize-lean-overlay-3").css("display","none");
 
@@ -651,7 +651,7 @@ function openRecoveryModal(){
 	$('#editRecoveryFileModal').closeModal();
 	setTimeout(function(){
 
-		$('#recoveryFileModal').openModal();
+		$('#recoveryFileModal').openModal({dismissible:false});
 	}, 200);
 	//$("#materialize-lean-overlay-3").css("display","none");
 
@@ -672,14 +672,14 @@ function openFileStolenUpdate(txnId,requestType,id,qty)
 {
 	console.log("requestType="+requestType+" txnId="+txnId+" id= "+id);
 	if(requestType=='1'){
-		$('#editRecoveryFileModal').openModal(); 
+		$('#editRecoveryFileModal').openModal({dismissible:false}); 
 		$('#editFileRecoveryTxnId').text(txnId)
 		$('#editFileRecoveryId').val(id);
 		$('#editRecoveryQuantity').val(qty);
 		
 	}
 	else{
-		$('#editFileStolenModal').openModal(); 
+		$('#editFileStolenModal').openModal({dismissible:false}); 
 		$('#editFileStolenTxnId').text(txnId)
 		$('#editFileStolenId').val(id);
 		$('#editStolenQuantity').val(qty);
@@ -745,7 +745,7 @@ function updatefileStolenReport(){
 				console.log("close stolen model.");
 				$('#editRecoveryFileModal').closeModal();
 			}
-			$('#updateMarkAsStolen').openModal();
+			$('#updateMarkAsStolen').openModal({dismissible:false});
 			if(data.errorCode==0){
 
 				$('#editMessageTextStoleRecovery').text('');
@@ -845,7 +845,7 @@ function valuesPush(){
 
 
 function markedRecovered(){
-	$('#markAsMultipleRecovery').openModal();
+	$('#markAsMultipleRecovery').openModal({dismissible:false});
 
 }
 
@@ -863,7 +863,7 @@ function openMulipleStolenPopUp()
 		success: function (data, textStatus, jqXHR) {
 
 			console.log(data);
-			$('#markAsRecoveryDone').openModal();
+			$('#markAsRecoveryDone').openModal({dismissible:false});
 			/*  $('#editStockModal').closeModal();
 					 $('#successUpdateStockModal').modal();
 					  if(data.errorCode==200){
@@ -1002,17 +1002,54 @@ function exportStolenRecoveryData()
 
 	var table = $('#stolenLibraryTable').DataTable();
 	var info = table.page.info(); 
-    var pageNo=info.page;
-    var pageSize =info.length;
-	console.log("--------"+pageSize+"---------"+pageNo);
-	console.log("stolenRecoveryStartDate  ="+stolenRecoveryStartDate+"  stolenRecoveryEndDate=="+stolenRecoveryEndDate+"  stolenRecoveryTxnId="+stolenRecoveryTxnId+" stolenRecoveryFileStatus ="+stolenRecoveryFileStatus+"=role="+role+" stolenRecoverySourceStatus="+stolenRecoverySourceStatus+" stolenRecoveryRequestType"+stolenRecoveryRequestType);
-	window.location.href="./exportStolenRecovery?stolenRecoveryStartDate="+stolenRecoveryStartDate+"&stolenRecoveryEndDate="+stolenRecoveryEndDate+"&stolenRecoveryTxnId="+stolenRecoveryTxnId+"&stolenRecoveryFileStatus="+stolenRecoveryFileStatus+"&stolenRecoverySourceStatus="+stolenRecoverySourceStatus+"&stolenRecoveryRequestType="+stolenRecoveryRequestType+"&pageSize="+pageSize+"&pageNo="+pageNo+"&roleType="+roleType;
+	var pageNo=info.page;
+	var pageSize =info.length;
+
+	if(userType=="Operator"){
+		var operatorId = parseInt($("body").attr("data-OperatorTypeId"));
+	}else{
+		var operatorId = parseInt($('#operator').val());
+	}
+	
+	var filterRequest={
+			"endDate":stolenRecoveryEndDate,
+			"startDate":stolenRecoveryStartDate,
+			"txnId":stolenRecoveryTxnId,
+			"grievanceStatus":stolenRecoveryFileStatus, 
+			"sourceType":stolenRecoverySourceStatus,
+			"requestType":stolenRecoveryRequestType,
+			"featureId":featureId,
+			"roleType":roleType,
+			"operatorTypeId" : operatorId,
+			"pageNo":parseInt(pageNo),
+			"pageSize":parseInt(pageSize),
+			"userTypeId": parseInt($("body").attr("data-userTypeID")),
+			"userType":$("body").attr("data-roleType"),
+			"userId" : $("body").attr("data-userID")
+			
+			
+	}
+	console.log(JSON.stringify(filterRequest))
+	$.ajax({
+		url: './exportStolenRecovery',
+		type: 'POST',
+		dataType : 'json',
+		contentType : 'application/json; charset=utf-8',
+		data : JSON.stringify(filterRequest),
+		success: function (data, textStatus, jqXHR) {
+			  window.location.href = data.url;
+
+		},
+		error: function (jqXHR, textStatus, errorThrown) {
+			
+		}
+	});
 
 }
 
 
 function deviceApprovalPopup(transactionId,requestType){
-	$('#approveInformation').openModal();
+	$('#approveInformation').openModal({dismissible:false});
 	$('#blockApproveTxnId').text(transactionId);
 	window.transactionId=transactionId;
 	window.requestType=requestType;
@@ -1035,7 +1072,7 @@ function aprroveDevice(){
 		dataType : 'json',
 		'async' : false,
 		contentType : 'application/json; charset=utf-8',
-		type : 'PUT',
+		type : 'POST',
 		success : function(data) {
 			console.log("approveRequest----->"+JSON.stringify(approveRequest));
 			if(data.errorCode==0){
@@ -1052,11 +1089,11 @@ function aprroveDevice(){
 
 function confirmApproveInformation(){
 	$('#approveInformation').closeModal(); 
-	setTimeout(function(){ $('#confirmApproveInformation').openModal();}, 200);
+	setTimeout(function(){ $('#confirmApproveInformation').openModal({dismissible:false});}, 200);
 }
 
 function userRejectPopup(transactionId,requestType){
-	$('#rejectInformation').openModal();
+	$('#rejectInformation').openModal({dismissible:false});
 	$('#rejectTxnId').text(transactionId);
 	window.transactionId=transactionId;
 	window.requestType=requestType;
@@ -1081,7 +1118,7 @@ function rejectUser(){
 		dataType : 'json',
 		'async' : false,
 		contentType : 'application/json; charset=utf-8',
-		type : 'PUT',
+		type : 'POST',
 		success : function(data) {
 			console.log("approveRequest----->"+JSON.stringify(rejectRequest));
 			if(data.errorCode==0){
@@ -1094,13 +1131,160 @@ function rejectUser(){
 			alert("Failed");
 		}
 	});
+	return false;
 }
 
 function confirmRejectInformation(){
 	$('#rejectInformation').closeModal();
-	setTimeout(function(){$('#confirmRejectInformation').openModal();},200);
+	setTimeout(function(){$('#confirmRejectInformation').openModal({dismissible:false});},200);
 }
 
 
 
+
+$("input[type=file]").keypress(function(ev) {
+    return false;
+    //ev.preventDefault(); //works as well
+
+});
+
+
+
+
+function historyRecord(txnID){
+	console.log("txn id=="+txnID)
+	$("#tableOnModal").openModal({dismissible:false});
+	 var filter =[];
+	 var formData= new FormData();
+	 
+	 var userTypeValue=$("body").attr("data-roleType");
+	 if(userTypeValue=='CEIRAdmin')
+	 {
+		 var filterRequest={
+				 
+				 "columns": [
+					    "created_on","modified_on","txn_id","role_type","operator_type_id","request_type","source_type","file_status","complaint_type","file_name","fir_file_name",
+					    "block_category","blocking_type","blocking_time_period","quantity","device_quantity","remark","rejected_remark","date_of_recovery","date_of_stolen",
+					     "user_id","ceir_admin_id"
+					    ],
+				"tableName": "stolenand_recovery_mgmt_aud",
+				"dbName" : "ceirconfig",
+				"txnId":txnID
+		} 
+	 }
+	 else{
+ var filterRequest={
+				 
+				 "columns": [
+					    "created_on","modified_on","txn_id","role_type","operator_type_id","request_type","source_type","file_status","complaint_type","file_name","fir_file_name",
+					    "block_category","blocking_type","blocking_time_period","quantity","device_quantity","remark","rejected_remark","date_of_recovery","date_of_stolen",
+					     "user_id"
+					    ],
+				"tableName": "stolenand_recovery_mgmt_aud",
+				"dbName" : "ceirconfig",
+				"txnId":txnID
+		} 
+	 }
 	
+	formData.append("filter",JSON.stringify(filterRequest));	
+	if(lang=='km'){
+		var langFile='../resources/i18n/khmer_datatable.json';
+	}
+	console.log("22");
+	$.ajax({
+		url: 'Consignment/consignment-history',
+		type: 'POST',
+		data: formData,
+		processData: false,
+		contentType: false,
+		success: function(result){
+			var dataObject = eval(result);
+			//alert(JSON.stringify(dataObject.data))
+			$('#data-table-history2').dataTable({
+				 "order" : [[1, "asc"]],
+				 destroy:true,
+				"serverSide": false,
+				 orderCellsTop : true,
+				"ordering" : false,
+				"bPaginate" : true,
+				"bFilter" : false,
+				"bInfo" : true,
+				"scrollX": true,
+				"bSearchable" : true,
+				 "data": dataObject.data,
+				 "columns": dataObject.columns
+			
+		    });
+			$('div#initialloader').delay(300).fadeOut('slow');
+	}
+		
+});
+
+	$('.datepicker').on('mousedown',function(event){
+	event.preventDefault();
+});
+
+	
+	
+	
+	
+}
+
+
+
+
+
+
+$('#editblockdeviceIdType').on('change', function() {
+	var value=parseInt($(this).val());
+
+	switch (value) {
+	case 0:
+		$("#editsingleblockIMEI1,#editsingleblockIMEI2,#editsingleblockIMEI3,#editsingleblockIMEI4").attr("pattern","[0-9]{15,16}");
+		$("#editsingleblockIMEI1,#editsingleblockIMEI2,#editsingleblockIMEI3,#editsingleblockIMEI4").attr("maxlength","16");
+		
+		$("#editsingleblockIMEI1,#editsingleblockIMEI2,#editsingleblockIMEI3,#editsingleblockIMEI4").removeAttr("onkeyup");
+		$("#editsingleblockIMEI1,#editsingleblockIMEI2,#editsingleblockIMEI3,#editsingleblockIMEI4").attr("oninput","InvalidMsg(this,'input','"+$.i18n('validationIMEI')+"')");
+		$("#editsingleblockIMEI1,#editsingleblockIMEI2,#editsingleblockIMEI3,#editsingleblockIMEI4").attr("oninvalid","InvalidMsg(this,'input','"+$.i18n('validationIMEI')+"')");
+		
+		$('#errorMsgOnModal').text($.i18n('IMEIMsg'));
+		
+		break;
+	case 1:
+		$("#editsingleblockIMEI1,#editsingleblockIMEI2,#editsingleblockIMEI3,#editsingleblockIMEI4").attr("pattern","[A-F0-9]{15,16}");
+		$("#editsingleblockIMEI1,#editsingleblockIMEI2,#editsingleblockIMEI3,#editsingleblockIMEI4").attr("maxlength","16");
+		
+		$("#editsingleblockIMEI1,#editsingleblockIMEI2,#editsingleblockIMEI3,#editsingleblockIMEI4").removeAttr("onkeyup");
+		$("#editsingleblockIMEI1,#editsingleblockIMEI2,#editsingleblockIMEI3,#editsingleblockIMEI4").attr("oninput","InvalidMsg(this,'input','"+$.i18n('validationMEID')+"')");
+		$("#editsingleblockIMEI1,#editsingleblockIMEI2,#editsingleblockIMEI3,#editsingleblockIMEI4").attr("oninvalid","InvalidMsg(this,'input','"+$.i18n('validationMEID')+"')");
+		$('#errorMsgOnModal').text($.i18n('MEIDMsg'));
+		break;
+	case 2:
+		$("#editsingleblockIMEI1,#editsingleblockIMEI2,#editsingleblockIMEI3,#editsingleblockIMEI4").val('');
+		$("#editsingleblockIMEI1,#editsingleblockIMEI2,#editsingleblockIMEI3,#editsingleblockIMEI4").attr("pattern","[0-9]{8,11}");
+		$("#editsingleblockIMEI1,#editsingleblockIMEI2,#editsingleblockIMEI3,#editsingleblockIMEI4").attr("onkeyup","isLengthValid(this.value)");
+		$("#editsingleblockIMEI1,#editsingleblockIMEI2,#editsingleblockIMEI3,#editsingleblockIMEI4").attr("maxlength","11");	
+		$("#editsingleblockIMEI1,#editsingleblockIMEI2,#editsingleblockIMEI3,#editsingleblockIMEI4").attr("oninput","InvalidMsg(this,'input','"+$.i18n('validationESN11')+"')");
+		$("#editsingleblockIMEI1,#editsingleblockIMEI2,#editsingleblockIMEI3,#editsingleblockIMEI4").attr("oninvalid","InvalidMsg(this,'input','"+$.i18n('validationESN11')+"')");
+		$("#errorMsgOnModal").text($.i18n('ESNMsg'));
+		break;
+	}
+
+}); 
+
+function isLengthValid(val){
+	var deviceIDLength=val.length;
+	if(!isNaN(val)){
+		$("#editsingleblockIMEI1,#editsingleblockIMEI2,#editsingleblockIMEI3,#editsingleblockIMEI4").attr("pattern","[0-9]{11,11}");
+		$("#editsingleblockIMEI1,#editsingleblockIMEI2,#editsingleblockIMEI3,#editsingleblockIMEI4").attr("maxlength","11");
+		$("#editsingleblockIMEI1,#editsingleblockIMEI2,#editsingleblockIMEI3,#editsingleblockIMEI4").attr("oninput","InvalidMsg(this,'input','"+$.i18n('validationESN11')+"')");
+		$("#editsingleblockIMEI1,#editsingleblockIMEI2,#editsingleblockIMEI3,#editsingleblockIMEI4").attr("oninvalid","InvalidMsg(this,'input','"+$.i18n('validationESN11')+"')");
+	}
+	else if(typeof val == 'string' || val instanceof String){
+		$("#editsingleblockIMEI1,#editsingleblockIMEI2,#editsingleblockIMEI3,#editsingleblockIMEI4").attr("maxlength","8");
+		$("#editsingleblockIMEI1,#editsingleblockIMEI2,#editsingleblockIMEI3,#editsingleblockIMEI4").attr("pattern","[A-F0-9]{8,8}");
+		$("#editsingleblockIMEI1,#editsingleblockIMEI2,#editsingleblockIMEI3,#editsingleblockIMEI4").attr("oninput","InvalidMsg(this,'input','"+$.i18n('validationESN8')+"')");
+		$("#editsingleblockIMEI1,#editsingleblockIMEI2,#editsingleblockIMEI3,#editsingleblockIMEI4").attr("oninvalid","InvalidMsg(this,'input','"+$.i18n('validationESN8')+"')");
+
+	}
+}

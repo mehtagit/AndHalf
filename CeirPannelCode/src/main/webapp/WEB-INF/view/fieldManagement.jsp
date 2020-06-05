@@ -1,11 +1,25 @@
+<%@ page import="java.util.Date" %>
 <%
-	response.setHeader("Cache-Control", "no-cache");
+   response.setHeader("Cache-Control", "no-cache");
 	response.setHeader("Cache-Control", "no-store");
 	response.setDateHeader("Expires", 0);
 	response.setHeader("Pragma", "no-cache");
-	/*  session.setMaxInactiveInterval(200); //200 secs
-	 session.setAttribute("usertype", null); */
-	if (session.getAttribute("usertype") != null) {
+	
+    /*   //200 secs
+	 session.setAttribute("usertype", null);  */
+/* 	 session.setMaxInactiveInterval(10); */
+	 int timeout = session.getMaxInactiveInterval();
+	
+	 long accessTime = session.getLastAccessedTime();
+	 long currentTime= new Date().getTime(); 
+	 System.out.println("accessTime========"+(accessTime));
+	 System.out.println("timeout========"+timeout);
+	 long dfd= accessTime +timeout;
+	 System.out.println("currentTime========"+currentTime);
+	 if( currentTime< dfd){
+	/*  response.setHeader("Refresh", timeout + "; URL = ../login");
+	 System.out.println("timeout========"+timeout); 
+	if (session.getAttribute("usertype") != null) { */
 %>
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
@@ -85,6 +99,7 @@
 	data-stolenselected-roleType="${stolenselectedUserTypeId}"
 	data-selected-consignmentTxnId="${consignmentTxnId}"
 	data-selected-consignmentStatus="${consignmentStatus}"
+	data-selected-username="${username}"
 	session-value="en"
 	session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}">
 
@@ -128,13 +143,13 @@
 	</section>
 	
  	<div id="addTags" class="modal" style="z-index: 1003; display: none; opacity: 1; transform: scaleX(1); top: 10%;">
-        <h6 class="modal-header">Add Fields</h6>
+        <h6 class="modal-header">Add New Field</h6>
         <div class="modal-content">
           	<form action="" onsubmit="return submitTag()" method="post" >
                 <div class="row" style="margin-top: 10px;">
 					
 					<div class="col s12 m6">
-					<label for="tag" class="active">Field <span class="star">*</span></label>
+					<label for="tag" class="active">Field </label>
                         <!-- <input type="text" id="tag" name="tag" pattern="[A-Za-z]{0,30}" Placeholder=""  maxlength="15" value="" required="required" disabled> -->
                         <select class="browser-default" id="tag" disabled>
                                 <option value="" disabled="" selected="">Select field</option>
@@ -144,20 +159,24 @@
                         
                     </div>
 					
+					
+					
+					 <div class="input-field col s12 m6" style="margin-top: 22px;">
+                        <input type="text" id="tagId" name="addFieldId"  title="Please enter alphabets and numbers upto 30 characters only" maxlength="30">
+                        <label for="addFieldId" class="">Field ID </label>
+                    </div>
+					
+                    <div class="input-field col s12 m6" style="margin-top: 22px;">
+                        <input type="text" id="addInterp" name="interp" title="Please enter alphabets and numbers upto 30 characters only" maxlength="30" required="required">
+                        <label for="addInterp" class="">Display Name <span class="star">*</span></label>
+                    </div>
+						
 					<div class="input-field col s12 m6" style="margin-top: 22px;">
-                        <input type="text" id="description" name="value"  pattern="[A-Za-z0-9]{0,200}" title="Please enter alphabets and numbers upto 30 characters only" maxlength="30">
+                        <input type="text" id="description" name="value"   title="Please enter alphabets and numbers upto 200 characters only" maxlength="200" style="min-height:8rem">
                         <label for="description" class="">Description</label>
                     </div>
-
-                    <div class="input-field col s12 m6" style="margin-top: 22px;">
-                        <input type="text" id="addInterp" name="interp" pattern="[A-Za-z0-9]{0,200}" title="Please enter alphabets and numbers upto 30 characters only" maxlength="30" required="required">
-                        <label for="addInterp" class="">Interp <span class="star">*</span></label>
-                    </div>
-
-                    <div class="input-field col s12 m6" style="margin-top: 22px;">
-                        <input type="text" id="tagId" name="addFieldId" pattern="[A-Za-z0-9]{0,200}" title="Please enter alphabets and numbers upto 30 characters only" maxlength="30" required="required">
-                        <label for="addFieldId" class="">Field ID <span class="star">*</span></label>
-                    </div>
+						
+                   
 
                     <div class="col s12 m12 center" style="margin-top: 20px;">
                         <button class="btn" type="submit">Submit</button>
@@ -170,13 +189,13 @@
 		
 		
 		<div id="editTags" class="modal" style="z-index: 1003; display: none; opacity: 1; transform: scaleX(1); top: 10%;">
-        <h6 class="modal-header">Edit Fields</h6>
+        <h6 class="modal-header">Edit Field Details</h6>
         <div class="modal-content">
           	<form action="" onsubmit="return updatedTag()">
                 <div class="row" style="margin-top: 10px;">
 					
 					<div class="col s12 m6">
-					<label for="tag" class="active">Field <span class="star">*</span></label>
+					<label for="tag" class="active">Field </label>
                         <!-- <input type="text" id="tag" name="tag" pattern="[A-Za-z]{0,30}" Placeholder=""  maxlength="15" value="" required="required" disabled> -->
                         <select class="browser-default" id="Edittag" disabled>
                                 <option value="" disabled="" selected="">Select field</option>
@@ -186,21 +205,23 @@
                           <input type="text" id="editId" hidden>
                     </div>
 					
+					
+                    <div class="input-field col s12 m6" style="margin-top: 22px;">
+                        <input type="text" id="editFieldId" name="editField"  title="Please enter alphabets and numbers upto 30 characters only" maxlength="30" >
+                        <label for="editFieldId" class="">Field ID</label>
+                    </div>
+					
+
+                    <div class="input-field col s12 m6" style="margin-top: 22px;">
+                        <input type="text" id="editInterp" name="interp"  title="Please enter alphabets and numbers upto 30 characters only" maxlength="30" required="required">
+                        <label for="editInterp" class="">Display Name <span class="star">*</span></label>
+                    </div>
+					
 					<div class="input-field col s12 m6" style="margin-top: 22px;">
-                        <input type="text" id="editdescription" name="value" pattern="[A-Za-z0-9]{0,200}" title="Please enter alphabets and numbers upto 30 characters only" maxlength="30">
+                        <input type="text" id="editdescription" name="value" title="Please enter alphabets and numbers upto 200 characters only" maxlength="200" style="min-height:8rem">
                         <label for="editdescription" class="">Description</label>
                     </div>
-
-
-                    <div class="input-field col s12 m6" style="margin-top: 22px;">
-                        <input type="text" id="editInterp" name="interp" pattern="[A-Za-z0-9]{0,200}" title="Please enter alphabets and numbers upto 30 characters only" maxlength="30" required="required">
-                        <label for="editInterp" class="">Interp <span class="star">*</span></label>
-                    </div>
-
-                    <div class="input-field col s12 m6" style="margin-top: 22px;">
-                        <input type="text" id="editFieldId" name="editField" pattern="[A-Za-z0-9]{0,200}" title="Please enter alphabets and numbers upto 30 characters only" maxlength="30" required="required">
-                        <label for="editFieldId" class="">Field ID <span class="star">*</span></label>
-                    </div>
+					
 
                     <div class="col s12 m12 center" style="margin-top: 20px;">
                         <button class="btn" type="submit">Update</button>
@@ -215,7 +236,7 @@
 		<h6 class="modal-header"><spring:message code="modal.header.submitFieldRecord" /></h6>
 		<div class="modal-content">
 			<div class="row">
-				<h6 id="sucessMessage">Field Record Added Successfully</h6>
+				<h6 id="sucessMessage">New Field Added Successfully</h6>
 			</div>
 			 <div class="row">
 				<div class="input-field col s12 center">
@@ -365,7 +386,7 @@
 <script language="JavaScript">
 	sessionStorage.setItem("loginMsg",
 			"*Session has been expired");
-	window.top.location.href = "../login";
+	window.top.location.href = "./login";
 </script>
 <%
 	}

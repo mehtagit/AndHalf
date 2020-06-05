@@ -13,6 +13,7 @@ import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.Class.HeadersTitle.DatatableResponseModel;
 import org.gl.ceir.Class.HeadersTitle.IconsState;
 import org.gl.ceir.configuration.ConfigParameters;
+import org.gl.ceir.configuration.Translator;
 import org.gl.ceir.pageElement.model.Button;
 import org.gl.ceir.pageElement.model.InputFields;
 import org.gl.ceir.pageElement.model.PageElement;
@@ -48,12 +49,13 @@ public class AuditDatatableController {
 	AuditContentModel auditContentModel;
 	@Autowired
 	AuditPaginationModel auditPaginationModel;
-	
+	@Autowired
+	Translator Translator;
 	
 	@PostMapping("auditManagementData")
 	public ResponseEntity<?> viewAuditManagement(@RequestParam(name="type",defaultValue = "AuditManagement",required = false) String role, HttpServletRequest request,HttpSession session) {
-		String userType = (String) session.getAttribute("usertype");
-		int userId=	(int) session.getAttribute("userid");
+		//String userType = (String) session.getAttribute("usertype");
+		//int userId=	(int) session.getAttribute("userid");
 		// Data set on this List
 		List<List<Object>> finalList=new ArrayList<List<Object>>();
 		String filter = request.getParameter("filter");
@@ -79,16 +81,17 @@ public class AuditDatatableController {
 				{
 				  String id = String.valueOf(dataInsideList.getId());	
 				  String createdOn = dataInsideList.getCreatedOn();
-				  String modifiedOn = dataInsideList.getModifiedOn();
+				 // String modifiedOn = dataInsideList.getModifiedOn();
 				  String txnId = dataInsideList.getTxnId();
 				  String getuserId = String.valueOf(dataInsideList.getUserId());
 				  String userName = dataInsideList.getUserName();
 				  String userTypeName = dataInsideList.getUserType();
+				  String roleType = dataInsideList.getRoleType();
 				  String featureName = dataInsideList.getFeatureName();
 				  String subFeature = dataInsideList.getSubFeature();
 				   String userStatus = (String) session.getAttribute("userStatus");
-				   String action=iconState.auditManagementIcons(userStatus,getuserId,id);			   
-				   Object[] finalData={createdOn,txnId,userName,userTypeName,featureName,subFeature,action}; 
+				   String action=iconState.auditManagementIcons(userStatus,getuserId,id);		
+				   Object[] finalData={createdOn,txnId,userName,userTypeName,roleType,featureName,subFeature,action}; 
 				   List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 				   finalList.add(finalDataList);
 				   datatableResponseModel.setData(finalList);	
@@ -127,7 +130,8 @@ public class AuditDatatableController {
 			log.info("USER STATUS:::::::::"+userStatus);
 			log.info("session value user Type=="+session.getAttribute("usertype"));
 			
-			String[] names= {"FilterButton", "filter","auditManagementDatatable("+ConfigParameters.languageParam+")","submitFilter"};
+			String[] names = { "HeaderButton", Translator.toLocale("button.addCurrency"), "AddCurrencyAddress()", "btnLink",
+					"FilterButton", Translator.toLocale("button.filter"),"auditManagementDatatable(" + ConfigParameters.languageParam + ")", "submitFilter" };
 			for(int i=0; i< names.length ; i++) {
 				button = new Button();
 				button.setType(names[i]);
@@ -140,12 +144,28 @@ public class AuditDatatableController {
 				buttonList.add(button);
 			}			
 			pageElement.setButtonList(buttonList);
-		
 			
-			//input type date list	
-			String[] dateParam = {"text","User ID","userId",""};
-			for (int i = 0; i < dateParam.length; i++) {
-				dateRelatedFields = new InputFields();
+		
+		  //Dropdown items 
+			String[] selectParam={"select","User Type","userType","","select","Role Type","roleType","","select","Feature","feature",""}; 
+		  for(int i=0; i<selectParam.length; i++) { 
+				inputFields= new InputFields();
+		  inputFields.setType(selectParam[i]); 
+		  i++;
+		  inputFields.setTitle(selectParam[i]);
+		  i++; 
+		  inputFields.setId(selectParam[i]);
+		  i++; 
+		  inputFields.setClassName(selectParam[i]);
+		  dropdownList.add(inputFields);
+		  } 
+		pageElement.setDropdownList(dropdownList);
+		 
+			
+			//input type date list		
+			String[] dateParam= {"date","Start Date","startDate","","date","End Date","endDate","","text","Transaction ID","transactionID","","text","User Name","userName",""};
+			for(int i=0; i< dateParam.length; i++) {
+				dateRelatedFields= new InputFields();
 				dateRelatedFields.setType(dateParam[i]);
 				i++;
 				dateRelatedFields.setTitle(dateParam[i]);
@@ -155,6 +175,7 @@ public class AuditDatatableController {
 				dateRelatedFields.setClassName(dateParam[i]);
 				inputTypeDateList.add(dateRelatedFields);
 			}
+			
 			
 			pageElement.setInputTypeDateList(inputTypeDateList);
 			pageElement.setUserStatus(userStatus);

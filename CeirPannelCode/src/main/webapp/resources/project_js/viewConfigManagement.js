@@ -21,13 +21,15 @@ function configManagementDatatable(){
 	var filterRequest={
 			"endDate":$('#endDate').val(),
 			"startDate":$('#startDate').val(),
+			"tag":$('#parametername').val(),
+			"type" : parseInt($('#type').val()),
 			"userId":parseInt(userId),
 			"featureId":parseInt(featureId),
 			"userTypeId": parseInt($("body").attr("data-userTypeID")),
 			"userType":$("body").attr("data-roleType"),
-			"tag":$('#parametername').val(),
-			"type" : parseInt($('#type').val())
+			"username" : $("body").attr("data-selected-username")
 	}
+	 
 	
 	$.ajax({
 		url: 'headers?type=adminConfigMessage',
@@ -60,11 +62,26 @@ function configManagementDatatable(){
 		            { width: 100, targets: result.length - 1 }
 		        ]
 			});
+			
+		   
+			$('div#initialloader').delay(300).fadeOut('slow');
+			$('.dataTables_filter input')
+		       .off().on('keyup', function(event) {
+		    	   if(event.keyCode == 8 && !textBox.val() || event.keyCode == 46 && !textBox.val() || event.keyCode == 83 && !textBox.val()) {
+			    
+			            }
+		    		if (event.keyCode === 13) {
+		    			 table.search(this.value.trim(), false, false).draw();
+		    		}
+		          
+		       });
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
 			console.log("error in ajax");
 		}
 	});
+	
+	
 }
 
 
@@ -91,12 +108,16 @@ function pageRendering(){
 							+"</label>"+"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off'>"+
 							"<span	class='input-group-addon' style='color: #ff4081'>"+
 							"<i	class='fa fa-calendar' aria-hidden='true' style='float: right; margin-top: -37px;'>"+"</i>"+"</span>");
-					}
+					$( "#"+date[i].id ).datepicker({
+						dateFormat: "yy-mm-dd",
+						 maxDate: new Date()
+			        }); 	
+				}
 					else if(date[i].type === "text"){
 						$("#configTableDiv").append("<div class='input-field col s6 m2' style='margin-top: 22px;'><input type="+date[i].type+" id="+date[i].id+"><label for='parametername' class='center-align'>"+date[i].title+"</label></div>");
 						
 					}
-					
+				
 				} 
 			
 			// dynamic dropdown portion
@@ -104,13 +125,13 @@ function pageRendering(){
 			for(i=0; i<dropdown.length; i++){
 				var dropdownDiv=
 					$("#configTableDiv").append("<div class='col s6 m2 l2 selectDropdwn'>"+
-							"<br>"+
+							
 							"<div class='select-wrapper select2 form-control boxBorder boxHeight initialized'>"+
 							"<span class='caret'>"+"</span>"+
 							"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
 
 							"<select id="+dropdown[i].id+" class='select2 form-control boxBorder boxHeight initialized'>"+
-							"<option value='-1'>"+dropdown[i].title+
+							"<option value='null' selected>"+dropdown[i].title+
 							"</option>"+
 							"</select>"+
 							"</div>"+
@@ -120,15 +141,14 @@ function pageRendering(){
 			
 			
 			$("#configTableDiv").append("<div class='col s12 m2 l2'><button class='btn primary botton' type='button' id='submitFilter'></button></div>");
+			$("#configTableDiv").append("<div class=' col s3 m2 l8'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportData()'>Export<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 			for(i=0; i<button.length; i++){
 				$('#'+button[i].id).text(button[i].buttonTitle);
 				$('#'+button[i].id).attr("onclick", button[i].buttonURL);
 			
 			}
 			
-			$('.datepicker').datepicker({
-				dateFormat: "yy-mm-dd"
-				});
+			
 		}
 
 	}); 
@@ -149,9 +169,16 @@ $('.datepicker').on('mousedown',function(event){
 
 
 function viewDetails(tag){
-	$("#viewAdminSystemModel").openModal();
+	$("#viewAdminSystemModel").openModal({
+        dismissible:false
+    });
 	var RequestData = {
-			"tag" : tag
+			"tag" : tag,
+			"userId":parseInt(userId),
+			"featureId":parseInt(featureId),
+			"userTypeId": parseInt($("body").attr("data-userTypeID")),
+			"userType":$("body").attr("data-roleType"),
+			"username" : $("body").attr("data-selected-username")
 	} 
 	$.ajax({
 		url : "./system/viewTag",
@@ -179,9 +206,16 @@ function setViewPopupData(data){
 
 
 function updateDetails(tag){
-	$("#editAdminSystemModel").openModal();
+	$("#editAdminSystemModel").openModal({
+        dismissible:false
+    });
 	var RequestData = {
-			"tag" : tag
+			"tag" : tag,
+			"userId":parseInt(userId),
+			"featureId":parseInt(featureId),
+			"userTypeId": parseInt($("body").attr("data-userTypeID")),
+			"userType":$("body").attr("data-roleType"),
+			"username" : $("body").attr("data-selected-username")
 	} 
 	$.ajax({
 		url : "./system/viewTag",
@@ -216,7 +250,12 @@ var updateRequest = {
 		"description": $("#editdescription").val(),
 		"remark": $("#editremarks").val(),
 		"value": $("#editValue").val(),
-		"type" : parseInt($("#edittype").val())
+		"type" : parseInt($("#edittype").val()),
+		"userId":parseInt(userId),
+		"featureId":parseInt(featureId),
+		"userTypeId": parseInt($("body").attr("data-userTypeID")),
+		"userType":$("body").attr("data-roleType"),
+		"username" : $("body").attr("data-selected-username")
 }
 
 
@@ -235,10 +274,59 @@ $.ajax({
 	}
 });
 
+return false;
 	
 }
 
 function confirmModel(){
 $("#editAdminSystemModel").closeModal();
-setTimeout(function(){$('#confirmedUpdatedSystem').openModal();},200);
+setTimeout(function(){$('#confirmedUpdatedSystem').openModal({
+    dismissible:false
+});},200);
 }
+
+
+function exportData(){
+	var roleType = $("body").attr("data-roleType");
+	var currentRoleType = $("body").attr("data-stolenselected-roleType");
+	var table = $('#configLibraryTable').DataTable();
+	var info = table.page.info(); 
+	var pageNo=info.page;
+	var pageSize =info.length;
+
+	var filterRequest={
+			"endDate":$('#endDate').val(),
+			"startDate":$('#startDate').val(),
+			"tag":$('#parametername').val(),
+			"type" : parseInt($('#type').val()),
+			"userId":parseInt(userId),
+			"featureId":parseInt(featureId),
+			"userTypeId": parseInt($("body").attr("data-userTypeID")),
+			"userType":$("body").attr("data-roleType"),
+			"username" : $("body").attr("data-selected-username"),
+			"pageNo":parseInt(pageNo),
+			"pageSize":parseInt(pageSize)
+			
+	}
+	console.log(JSON.stringify(filterRequest))
+	$.ajax({
+		url: './exportSystemConfigData',
+		type: 'POST',
+		dataType : 'json',
+		contentType : 'application/json; charset=utf-8',
+		data : JSON.stringify(filterRequest),
+		success: function (data, textStatus, jqXHR) {
+			window.location.href = data.url;
+
+		},
+		error: function (jqXHR, textStatus, errorThrown) {
+
+		}
+	});
+
+}
+
+
+
+
+

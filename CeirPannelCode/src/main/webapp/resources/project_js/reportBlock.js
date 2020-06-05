@@ -45,7 +45,26 @@
 				console.log('#blockdeviceIdType');
 			}
 		});
-		$.getJSON('./getDropdownList/BLOCK_CATEGORY', function(data) {
+		
+		var RequestData = {
+				"tag" : "GREY_TO_BLACK_MOVE_PERIOD_IN_DAY"
+		}
+		$.ajax({
+			url : "./system/viewTag",
+			data :	JSON.stringify(RequestData),
+			dataType : 'json',
+			contentType : 'application/json; charset=utf-8',
+			type : 'POST',
+			success : function(data) {
+				console.log(data.value);
+				$('#defaultPeriodId,#bulkblocktypeRadioId,#editbulkblocktypeRadioId').attr('title', data.value+' Days');
+			},
+			error : function() {
+				console.log("Failed");
+			}
+		});
+	
+		$.getJSON('./getTypeDropdownList/BLOCK_CATEGORY/'+$("body").attr("data-userTypeID"), function(data) {
 			
 			for (i = 0; i < data.length; i++) {
 				$('<option>').val(data[i].value).text(data[i].interp)
@@ -144,7 +163,7 @@ function showMultipleImeiUnBlock()
 
 function submitBlockImei()
 {
-	 
+	 $('div#initialloader').fadeIn('fast');
 		var bulkBlockdeviceCategory = $('#bulkBlockdeviceCategory').val();
 		var blockbulkquantity = $('#blockbulkquantity').val();
 		//var blockBulkFile = $('#blockBulkFile').val();
@@ -153,7 +172,9 @@ function submitBlockImei()
 		var requestType='2';
 		var roleType = $("body").attr("data-roleType");
 		var userId = $("body").attr("data-userID");
-
+		var bulkBlockingTimePeriod=$('#stolenBulkDatePeriod').val();
+		var bulkBlocktype =$('.bulkblocktypeRadio:checked').val();
+		 var deviceQuantity=$('#blockbulkDeviceQuantity').val();
 		console.log("bulkBlockdeviceCategory="+bulkBlockdeviceCategory+" blockbulkquantity=="+blockbulkquantity+" blockUnblockRemark="+blockbulkRemark)
 		
 		var formData = new FormData();
@@ -165,6 +186,9 @@ function submitBlockImei()
 		formData.append('requestType', requestType);
 		formData.append('userId',userId);
 		formData.append('roleType',roleType);
+		formData.append('blockingTimePeriod',bulkBlockingTimePeriod);
+		formData.append('blockingType',bulkBlocktype);
+		formData.append('deviceQuantity',deviceQuantity);
 		
 			
 
@@ -175,14 +199,16 @@ function submitBlockImei()
 			processData: false,
 			contentType: false,
 			success: function (data, textStatus, jqXHR) {
+				 $('div#initialloader').delay(300).fadeOut('slow');
 				$("#blockBulkSubmitButton").prop('disabled', true);
 				console.log(data);
 				//$('#fileStolenModal').closeModal();
-				$('#markBulkAsBlock').openModal();
+				$('#markBulkAsBlock').openModal({dismissible:false});
 				$('#txnIdsingleImei').text(data.txnId);
 
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
+				 $('div#initialloader').delay(300).fadeOut('slow');
 				console.log("error in ajax")
 			}
 		});
@@ -194,6 +220,7 @@ function submitBlockImei()
 
 function submitUnBlockImei()
 {
+	 $('div#initialloader').fadeIn('fast');
 	    var unblockbulkquantity = $('#unblockbulkquantity').val();
 		//var blockBulkFile = $('#blockBulkFile').val();
 	    var bulkunBlockdeviceCategory=$('#bulkunBlockdeviceCategory').val();
@@ -202,6 +229,7 @@ function submitUnBlockImei()
 		var requestType='3';
 		var roleType = $("body").attr("data-roleType");
 		var userId = $("body").attr("data-userID");
+		var deviceQuantity=$('#unblockbulkDevicequantity').val();
 
 		//console.log("bulkBlockdeviceCategory="+bulkBlockdeviceCategory+" blockbulkquantity=="+blockbulkquantity+" blockUnblockRemark="+blockUnblockRemark)
 		var formData = new FormData();
@@ -213,6 +241,8 @@ function submitUnBlockImei()
 		formData.append('requestType', requestType);
 		formData.append('userId',userId);
 		formData.append('roleType',roleType);
+		formData.append('deviceQuantity',deviceQuantity);
+		
 
 $.ajax({
 			url: './reportUnblockBulkFile',
@@ -222,14 +252,16 @@ $.ajax({
 			contentType: false,
 			success: function (data, textStatus, jqXHR) {
 			console.log(data);
+			 $('div#initialloader').delay(300).fadeOut('slow');
 			$("#bulkUnblockSubmitButton").prop('disabled', true);
 //		 console.log(data);
-			$('#markBulkAsUnblock').openModal();
+			$('#markBulkAsUnblock').openModal({dismissible:false});
 			 $('#txnIdUnblocksingleDevice').text(data.txnId);
 
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
 				console.log("error in ajax")
+				 $('div#initialloader').delay(300).fadeOut('slow');
 			}
 		});
 
@@ -240,7 +272,7 @@ $.ajax({
 
 function submitSingleBlockDevicesRequest()
 {
-	
+	 $('div#initialloader').fadeIn('fast');
 	var deviceType=$('#blockdeviceType').val();
 	var blockdeviceIdType=$('#blockdeviceIdType').val();
 	var multipleSimStatus=$('#blockmultipleSimStatus').val();
@@ -274,7 +306,8 @@ var singleImeiBlockDetail={
 		'sourceType':4,
 		'blockingTimePeriod':blockingTimePeriod,
 		'blockingType':blockingType,
-		'category':category
+		'category':category,
+		'deviceQuantity':1
 		
 		
 }
@@ -289,13 +322,15 @@ var singleImeiBlockDetail={
 		contentType : 'application/json; charset=utf-8',
 		type : 'POST',
 		success: function (data, textStatus, jqXHR) {
+			 $('div#initialloader').delay(300).fadeOut('slow');
 			$("#singleblockSubmit").prop('disabled', true);
 			 console.log(data);
-			 $('#markAsBlock').openModal();
+			 $('#markAsBlock').openModal({dismissible:false});
 			 $('#txnIdblockBulkDevice').text(data.txnId);
 			
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
+			 $('div#initialloader').delay(300).fadeOut('slow');
 		console.log("error in ajax")
 		}
 	});
@@ -306,6 +341,7 @@ var singleImeiBlockDetail={
 
 function submitSingleUnBlockDevicesRequest()
 {
+	 $('div#initialloader').fadeIn('fast');
 	var deviceType=$('#unbockSingledeviceType').val();
 	var blockdeviceIdType=$('#UnblockdeviceIdType').val();
 	var multipleSimStatus=$('#unbockSingleMultipleSimStatus').val();
@@ -342,7 +378,8 @@ var singleImeiBlockDetail={
 		'sourceType':4,
 		'blockingTimePeriod':blockingTimePeriod,
 		'blockingType':blockingType,
-		'category':category
+		'category':category,
+		'deviceQuantity':1
 	
 }
 		
@@ -356,13 +393,15 @@ var singleImeiBlockDetail={
 		contentType : 'application/json; charset=utf-8',
 		type : 'POST',
 		success: function (data, textStatus, jqXHR) {
+			$('div#initialloader').delay(300).fadeOut('slow');
 			$("#singleUnblockSubmitButton").prop('disabled', true);
 			 console.log(data);
-			 $('#markAsUnblock').openModal();
+			 $('#markAsUnblock').openModal({dismissible:false});
 			 $('#txnIdblocksingleDevice').text(data.txnId);
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
 		console.log("error in ajax")
+		$('div#initialloader').delay(300).fadeOut('slow');
 		}
 	});
 		return false;
@@ -377,12 +416,12 @@ var singleImeiBlockDetail={
 
 //*******************************************View Pop up data *************************************************************************************************
 function viewDeviceDetails(txnId,popUpType,requestType){
-
+console.log("requestType=="+requestType)
 	
 	var role = currentRoleType == null ? roleType : currentRoleType;
 	console.log("popUpType=="+popUpType);
 	$.ajax({
-		url : "./openbulkView?reqType=editPage&txnId="+txnId+'&modeType=singleDeivce',
+		url : "./openbulkView?reqType="+requestType+"&txnId="+txnId+'&modeType=singleDeivce',
 		dataType : 'json',
 		contentType : 'application/json; charset=utf-8',
 		type : 'GET',
@@ -397,7 +436,7 @@ function viewDeviceDetails(txnId,popUpType,requestType){
 	});
 }
 
-$.getJSON('./getDropdownList/BLOCK_CATEGORY', function(data) {
+$.getJSON('./getTypeDropdownList/BLOCK_CATEGORY/'+$("body").attr("data-userTypeID"), function(data) {
 	$('#editBulkBlockCategory').empty();
 	for (i = 0; i < data.length; i++) {
 		$('<option>').val(data[i].value).text(data[i].interp)
@@ -415,47 +454,71 @@ function setViewBulkPopUp(data,popUpType,requestType){
 	
 		if(requestType=="3")
 		{
-      
+			
+			$("#bulkblockingTypeId").css("display", "none");
 		$('#viewModalHeader').text($.i18n('viewBulkUnblock'));
 		}
 		else{
-			
+			$("#bulkblockingTypeId").css("display", "block");
 		$('#viewModalHeader').text($.i18n('viewBlockDevice'));
 		}
 			
-	$("#viewBulkBlockDeviceModal").openModal();
+	$("#viewBulkBlockDeviceModal").openModal({dismissible:false});
 	$("#viewBulkBlockCategory").val(data.blockCategoryInterp);
 	$("#viewBulkBlockRemark").val(data.remark);
 	$("#viewBulkBlockuploadFile").val(data.fileName);
 	$("#viewBulkBlockquantity").val(data.qty);
+	$("#viewBulkBlockDevicequantity").val(data.deviceQuantity);
 	$("#viewBulkBlockTxnId").val(data.txnId);
+	$("#viewBulkBlockRemarkReject").val(data.rejectedRemark);
+	$("#viewBulkBlockRemarkRejectDiv").css("display", "block");
+	if(data.blockingType=='tilldate')
+	{
+	
+	$("#viewbulkblockingType").val("Later ( Block time period : " +data.blockingTimePeriod+" )");
+	}
+else{
+$("#viewbulkblockingType").val(data.blockingType);
+}
 	}
 	else
 	{
 		if(requestType=="3")
 		{
-			  
+			$("#editBulkBlockDiv").css("display", "none"); 
 		$('#editblockHeading').text(editUnblock);
 		}
 		else{
-			  
+			$("#editBulkBlockDiv").css("display", "block"); 
 		$('#editblockHeading').text($.i18n('editBlockDevice'));
 		}
 		
 		console.log("++++++++++"+popUpType+" requestType="+requestType);
-	$("#editBulkBlockDeviceModal").openModal();
+	$("#editBulkBlockDeviceModal").openModal({dismissible:false});
 	$("#editBulkBlockRemark").val(data.remark);
 	$("#editBulkBlockuploadFile").val(data.fileName);
 	$("#editBulkBlockquantity").val(data.qty);
+	$("#editBulkBlockDevicequantity").val(data.deviceQuantity);
 	$("#editBulkBlockTxnId").val(data.txnId);
 	$("#editBulkBlockrequestType").val(data.requestType);
 	$("#editBulkBlockCategory").val(data.blockCategory);
+	$('input[name=editbulkblocktypeName][value='+data.blockingType+']').attr('checked', true);
+	if(data.blockingType=='tilldate')
+	{
+	$("#bulkeditcalender").css("display", "block"); 
+	
+	$("#editstolenBulkDatePeriod").val(data.blockingTimePeriod);
+	}
+else{
+	$("#bulkeditcalender").css("display", "none"); 
+}
 	
 	}
 }
 
 
 function updateBulkDevice(){
+	$('div#initialloader').fadeIn('fast');
 var categoryInterp=	$("#editBulkBlockCategory").val();
 var remark=	$("#editBulkBlockRemark").val();
 var fileName=$("#editBulkBlockuploadFile").val();
@@ -466,8 +529,12 @@ var ModeType=3
 var roleType = $("body").attr("data-roleType");
 var userId = $("body").attr("data-userID");
 var formData = new FormData();
+var editbulkBlockingTimePeriod=$('#editstolenBulkDatePeriod').val();
+var editbulkBlocktype =$('.editbulkblocktypeRadio:checked').val();
+var devicequantity = $("#editBulkBlockDevicequantity").val();
 formData.append('file', $('#editselectBulkBlockuploadFile')[0].files[0]);
 formData.append('qty', qty);
+formData.append('deviceQuantity',devicequantity);
 formData.append('blockCategory', categoryInterp);
 formData.append('remark', remark);
 formData.append('sourceType', ModeType);
@@ -476,6 +543,9 @@ formData.append('userId',userId);
 formData.append('roleType',roleType);
 formData.append('txnId',txnId);
 formData.append('fileName',fileName);
+formData.append('blockingTimePeriod',editbulkBlockingTimePeriod);
+formData.append('blockingType',editbulkBlocktype);
+
 $.ajax({
 	url: './updateFileTypeStolenRecovery',
 	type: 'POST',
@@ -485,7 +555,8 @@ $.ajax({
 	success: function (data, textStatus, jqXHR) {
 	console.log(data);
 // console.log(data);
-	$('#confirmEditBlockUnblock').openModal();
+	$('div#initialloader').delay(300).fadeOut('slow');
+	$('#confirmEditBlockUnblock').openModal({dismissible:false});
 		//if(data.errorCode==200){
 		/* 
 						 $('#stockSucessMessage').text('');
@@ -501,6 +572,7 @@ $.ajax({
 	},
 	error: function (jqXHR, textStatus, errorThrown) {
 		console.log("error in ajax")
+		$('div#initialloader').delay(300).fadeOut('slow');
 	}
 });
 return false;
@@ -515,7 +587,8 @@ function viewblockImeiDevice(txnId,popUpType,requestType)
 
 	
 	$.ajax({
-		url : "./openSingleImeiForm?reqType=editPage&txnId="+txnId+'&modeType=singleDeivce',
+		/*url : "./openSingleImeiForm?reqType=editPage&txnId="+txnId+'&modeType=singleDeivce',*/
+		url : "./openbulkView?reqType="+requestType+"&txnId="+txnId+'&modeType=singleDeivce',
 		dataType : 'json',
 		contentType : 'application/json; charset=utf-8',
 		type : 'GET',
@@ -525,7 +598,7 @@ function viewblockImeiDevice(txnId,popUpType,requestType)
 			setSingleDeviceViewPopUp(data,popUpType,requestType);
 		},
 		error : function() {
-			alert("Failed");
+		
 		}
 	});
 	
@@ -544,7 +617,7 @@ $.getJSON('./getDropdownList/DEVICE_TYPE', function(data) {
 	}
 });
 
-$.getJSON('./getDropdownList/BLOCK_CATEGORY', function(data) {
+$.getJSON('./getTypeDropdownList/BLOCK_CATEGORY/'+$("body").attr("data-userTypeID"), function(data) {
 	$("#editbulkBlockdeviceCategory").empty();
 	for (i = 0; i < data.length; i++) {
 		$('<option>').val(data[i].value).text(data[i].interp)
@@ -575,69 +648,79 @@ $.getJSON('./getDropdownList/DEVICE_ID_TYPE', function(data) {
 
 
 function setSingleDeviceViewPopUp(data,popUpType,requestType){
-
+console.log(data.rejectedRemark);
+console.log(data.singleImeiDetails.firstImei);
 
 	if(popUpType=='view'){
-		
+		$("#viewsingleblockremarkDiv").css("display", "block"); 
 		if(requestType=="3")
 		{
-          
+			
+			$("#blockingTypeId").css("display", "none"); 
+			$("#editBlockTimePeriod").css("display", "none"); 
 		$('#singleBlockUnblockHeading').text($.i18n('viewBulkUnblock'));
 		}
 		else{
-			   
+			$("#blockingTypeId").css("display", "block"); 
+			$("#editBlockTimePeriod").css("display", "block"); 
+			
 		$('#singleBlockUnblockHeading').text($.i18n('viewBlockDevice'));
 		}
-		$('#viewblockImeiDevice').openModal();
+		$('#viewblockImeiDevice').openModal({dismissible:false});
 		console.log("++++++++++"+popUpType+"requestType="+requestType);
-		for (i = 0; i < data.length; i++) {
+		
 			
 
 	
-			if(data[i].secondImei==0 && data[i].thirdImei==0 && data[i].fourthImei==0  )
+			if(data.singleImeiDetails.secondImei==0 && data.singleImeiDetails.thirdImei==0 && data.singleImeiDetails.fourthImei==0  )
 			{
 			$("#viewsingleblockIMEI2").val("");
 			$("#viewsingleblockIMEI3").val("");
 			$("#viewsingleblockIMEI4").val("");
 			}
-		else if(data[i].secondImei==0 && data[i].thirdImei==0 &&  data[i].fourthImei!=0 )
+		else if(data.singleImeiDetails.secondImei==0 && data.singleImeiDetails.thirdImei==0 && data.singleImeiDetails.fourthImei!=0 )
 			{
 			$("#viewsingleblockIMEI2").val("");
 			$("#viewsingleblockIMEI3").val("");
-			$("#viewsingleblockIMEI4").val(data[i].fourthImei);
+			$("#viewsingleblockIMEI4").val(data.singleImeiDetails.fourthImei);
 			}
-		else if(data[i].secondImei!=0 && data[i].thirdImei==0 && data[i].fourthImei==0)
+		else if(data.singleImeiDetails.secondImei!=0 && data.singleImeiDetails.thirdImei==0 && data.singleImeiDetails.fourthImei==0)
 			{
-			$("#viewsingleblockIMEI2").val(data[i].secondImei);
+			$("#viewsingleblockIMEI2").val(data.singleImeiDetails.secondImei);
 			$("#viewsingleblockIMEI3").val("");
 			$("#viewsingleblockIMEI4").val("");
 			}
-		else if(data[i].secondImei==0 && data[i].thirdImei!=0 &&  data[i].fourthImei==0)
+		else if(data.singleImeiDetails.secondImei==0 && data.singleImeiDetails.thirdImei!=0 && data.singleImeiDetails.fourthImei==0)
 			{
 			$("#viewsingleblockIMEI2").val("");
-			$("#viewsingleblockIMEI3").val(data[i].thirdImei);
+			$("#viewsingleblockIMEI3").val(data.singleImeiDetails.thirdImei);
 			$("#viewsingleblockIMEI4").val("");
 			}
 		else{
 			console.log("else############")
 		}
-	$("#viewblockdeviceType").val(data[i].deviceTypeInterp);
-	$("#viewblockdeviceIdType").val(data[i].deviceIdTypeInterp);
-	$("#viewblockmultipleSimStatus").val(data[i].multipleSimStatusInterp);
-	$("#viewsingleblockserialNumber").val(data[i].deviceSerialNumber);
-	$("#viewsingleblockremark").val(data[i].remark);
-	$("#viewsingleblockIMEI1").val(data[i].firstImei);
-	$("#viewsingleblocTxnid").val(data[i].txnId);
-	$("#viewsingleblockCategory").val(data[i].categoryInterp);
-	if(data[i].blockingType=='tilldate')
+			
+	$("#viewblockdeviceType").val(data.singleImeiDetails.deviceTypeInterp);
+	$("#viewblockdeviceIdType").val(data.singleImeiDetails.deviceIdTypeInterp);
+	$("#viewblockmultipleSimStatus").val(data.singleImeiDetails.multipleSimStatusInterp);
+	$("#viewsingleblockserialNumber").val(data.singleImeiDetails.deviceSerialNumber);
+	$("#viewsingleblockremark").val(data.singleImeiDetails.remark);
+	$("#viewsingleblockIMEI1").val(data.singleImeiDetails.firstImei);
+	$("#viewsingleblocTxnid").val(data.singleImeiDetails.txnId);
+	$("#viewsingleblockCategory").val(data.singleImeiDetails.categoryInterp);
+	$("#viewsingleblockremark").val(data.singleImeiDetails.remark);
+	$("#viewsingleblockremarkReject").val(data.rejectedRemark);
+	
+	
+	if(data.blockingType=='tilldate')
 		{
 		
-		$("#viewsingleblockingType").val("Later ( Block time period : " +data[i].blockingTimePeriod+" )");
+		$("#viewsingleblockingType").val("Later ( Block time period : " +data.blockingTimePeriod+" )");
 		}
 	else{
-	$("#viewsingleblockingType").val(data[i].blockingType);
+	$("#viewsingleblockingType").val(data.blockingType);
 	}
-	}
+	
 	}
 	else
 	{
@@ -657,56 +740,56 @@ function setSingleDeviceViewPopUp(data,popUpType,requestType){
 		
 		
 		console.log("++++++++++"+popUpType+" requestType="+requestType);
-	$("#editblockImeiDevice").openModal();
+	$("#editblockImeiDevice").openModal({dismissible:false});
 	 
 		
 		
 		
-		for (i = 0; i < data.length; i++) {
-		if(data[i].secondImei==0 && data[i].thirdImei==0 && data[i].fourthImei==0  )
+		
+		if(data.singleImeiDetails.secondImei==0 && data.singleImeiDetails.thirdImei==0 && data.singleImeiDetails.fourthImei==0  )
 			{
 			$("#editsingleblockIMEI2").val("");
 			$("#editsingleblockIMEI3").val("");
 			$("#editsingleblockIMEI4").val("");
 			}
-		else if(data[i].secondImei==0 && data[i].thirdImei==0 &&  data[i].fourthImei!=0 )
+		else if(data.singleImeiDetails.secondImei==0 && data.singleImeiDetails.thirdImei==0 && data.singleImeiDetails.fourthImei!=0 )
 			{
 			$("#editsingleblockIMEI2").val("");
 			$("#editsingleblockIMEI3").val("");
-			$("#editsingleblockIMEI4").val(data[i].fourthImei);
+			$("#editsingleblockIMEI4").val(data.singleImeiDetails.fourthImei);
 			}
-		else if(data[i].secondImei!=0 && data[i].thirdImei==0 && data[i].fourthImei==0)
+		else if(data.singleImeiDetails.secondImei!=0 && data.singleImeiDetails.thirdImei==0 && data.singleImeiDetails.fourthImei==0)
 			{
-			$("#editsingleblockIMEI2").val(data[i].secondImei);
+			$("#editsingleblockIMEI2").val(data.singleImeiDetails.secondImei);
 			$("#editsingleblockIMEI3").val("");
 			$("#editsingleblockIMEI4").val("");
 			}
-		else if(data[i].secondImei==0 && data[i].thirdImei!=0 &&  data[i].fourthImei==0)
+		else if(data.singleImeiDetails.secondImei==0 && data.singleImeiDetails.thirdImei!=0 && data.singleImeiDetails.fourthImei==0)
 			{
 			$("#editsingleblockIMEI2").val("");
-			$("#editsingleblockIMEI3").val(data[i].thirdImei);
+			$("#editsingleblockIMEI3").val(data.singleImeiDetails.thirdImei);
 			$("#editsingleblockIMEI4").val("");
 			}
 		else{
 			console.log("else############");
 		}
-		console.log("device id type="+data[i].deviceIdType);
-		$("#editblockdeviceType").val(data[i].deviceType).change();
-		$("#editblockdeviceIdType").val(data[i].deviceIdType).change();
-		$("#editblockmultipleSimStatus").val(data[i].multipleSimStatus);
-		$("#editsingleblockserialNumber").val(data[i].deviceSerialNumber);
-		$("#editsingleblockremark").val(data[i].remark);
-		$("#editsingleblockIMEI1").val(data[i].firstImei);
-		$("#editsingleblockTxnid").val(data[i].txnId);
-		$("#editbulkBlockdeviceCategory").val(data[i].category);
+		console.log("device id type="+data.singleImeiDetails.deviceIdType);
+		$("#editblockdeviceType").val(data.singleImeiDetails.deviceType).change();
+		$("#editblockdeviceIdType").val(data.singleImeiDetails.deviceIdType).change();
+		$("#editblockmultipleSimStatus").val(data.singleImeiDetails.multipleSimStatus);
+		$("#editsingleblockserialNumber").val(data.singleImeiDetails.deviceSerialNumber);
+		$("#editsingleblockremark").val(data.singleImeiDetails.remark);
+		$("#editsingleblockIMEI1").val(data.singleImeiDetails.firstImei);
+		$("#editsingleblockTxnid").val(data.singleImeiDetails.txnId);
+		$("#editbulkBlockdeviceCategory").val(data.singleImeiDetails.category);
 		
-		$('input[name=editbulkBlockdeviceradio][value='+data[i].blockingType+']').attr('checked', true); 
+		$('input[name=editbulkBlockdeviceradio][value='+data.blockingType+']').attr('checked', true); 
 		
-		if(data[i].blockingType=='tilldate')
+		if(data.blockingType=='tilldate')
 			{
 			$("#calender").css("display", "block"); 
 			
-			$("#stolenDatePeriodedit").val(data[i].blockingTimePeriod);
+			$("#stolenDatePeriodedit").val(data.blockingTimePeriod);
 			}
 		else{
 			$("#calender").css("display", "none"); 
@@ -714,7 +797,7 @@ function setSingleDeviceViewPopUp(data,popUpType,requestType){
 		//$('input[name=editbulkBlockdeviceradio][value='+data[i].blockingTimePeriod+']').attr('checked', true); 
 		$("#editsingleblocRequestType").val(requestType);
 		}
-	}
+	
 }
 
 
@@ -722,7 +805,7 @@ function setSingleDeviceViewPopUp(data,popUpType,requestType){
 
 function updateSingleBlockDevicesRequest()
 {
-	
+	 $('div#initialloader').fadeIn('fast');
 	var deviceType=$('#editblockdeviceType').val();
 	var blockdeviceIdType=$('#editblockdeviceIdType').val();
 	var multipleSimStatus=$('#editblockmultipleSimStatus').val();
@@ -772,8 +855,9 @@ var singleImeiBlockDetail={
 		type : 'POST',
 		success: function (data, textStatus, jqXHR) {
 			
+			 $('div#initialloader').delay(300).fadeOut('slow');
 			 console.log(data);
-			 $('#confirmEditBlockUnblock').openModal();
+			 $('#confirmEditBlockUnblock').openModal({dismissible:false});
 	/*		 if(data.errorCode==200){
 			
 		     $('#singleDeviceBlockMessage').text('');
@@ -788,6 +872,7 @@ var singleImeiBlockDetail={
 			
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
+			 $('div#initialloader').delay(300).fadeOut('slow');
 		console.log("error in ajax")
 		}
 	});
@@ -815,3 +900,194 @@ function singleImeiFormClear(){
 	//$('input[name=editbulkBlockdeviceradio]').attr('checked', false);
 }
 
+
+
+function fileTypeValueChanges(formType) {
+
+	 if(formType=='2')
+    {
+		var uploadedFileName = $("#editselectBulkBlockuploadFile").val();
+		uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
+		var ext = uploadedFileName.split('.').pop();
+
+		var fileSize = ($("#editselectBulkBlockuploadFile")[0].files[0].size);
+		fileSize = (Math.round((fileSize / 1024) * 100) / 100)
+		if (uploadedFileName.length > 30) {
+			$('#fileFormateModal').openModal({dismissible:false});
+
+		} 
+		else if(ext!='csv')
+		{
+			$('#fileFormateModal').openModal({
+				dismissible:false
+			});
+
+		}
+		else if(fileSize>='10000'){
+			$('#fileFormateModal').openModal({
+				dismissible:false
+			});
+
+		}
+	}
+	else 
+		{
+		
+		var uploadedFileName = $("#blockBulkFile").val();
+		uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
+		var ext = uploadedFileName.split('.').pop();
+
+		var fileSize = ($("#blockBulkFile")[0].files[0].size);
+		fileSize = (Math.round((fileSize / 1024) * 100) / 100)
+		if (uploadedFileName.length > 30) {
+			$('#fileFormateModal').openModal({dismissible:false});
+
+		} 
+		else if(ext!='csv')
+		{
+			$('#fileFormateModal').openModal({
+				dismissible:false
+			});
+
+		}
+		else if(fileSize>='10000'){
+			$('#fileFormateModal').openModal({
+				dismissible:false
+			});
+
+		}
+		}
+
+
+}
+
+
+function clearFileName() {
+	$('#unblockFileName').val('');
+	$("#blockBulkFile").val('');
+	$('#unblockFileName').val('');
+	$("#editselectBulkBlockuploadFile").val('');
+	$("#editBulkBlockuploadFile").val('');
+	$('#fileFormateModal').closeModal();
+}
+
+
+$("input[type=file]").keypress(function(ev) {
+    return false;
+    //ev.preventDefault(); //works as well
+
+});
+
+
+$('#blockdeviceIdType').on('change', function() {
+	var value=parseInt($(this).val());
+
+	switch (value) {
+	case 0:
+		$("#singleblockIMEI1,#singleblockIMEI2,#singleblockIMEI3,#singleblockIMEI4").attr("pattern","[0-9]{15,16}");
+		$("#singleblockIMEI1,#singleblockIMEI2,#singleblockIMEI3,#singleblockIMEI4").attr("maxlength","16");
+		
+		$("#singleblockIMEI1,#singleblockIMEI2,#singleblockIMEI3,#singleblockIMEI4").removeAttr("onkeyup");
+		$("#singleblockIMEI1,#singleblockIMEI2,#singleblockIMEI3,#singleblockIMEI4").attr("oninput","InvalidMsg(this,'input','"+$.i18n('validationIMEI')+"')");
+		$("#singleblockIMEI1,#singleblockIMEI2,#singleblockIMEI3,#singleblockIMEI4").attr("oninvalid","InvalidMsg(this,'input','"+$.i18n('validationIMEI')+"')");
+		
+		$('#errorMsgOnModal').text($.i18n('IMEIMsg'));
+		
+		break;
+	case 1:
+		$("#singleblockIMEI1,#singleblockIMEI2,#singleblockIMEI3,#singleblockIMEI4").attr("pattern","[A-F0-9]{15,16}");
+		$("#singleblockIMEI1,#singleblockIMEI2,#singleblockIMEI3,#singleblockIMEI4").attr("maxlength","16");
+		
+		$("#singleblockIMEI1,#singleblockIMEI2,#singleblockIMEI3,#singleblockIMEI4").removeAttr("onkeyup");
+		$("#singleblockIMEI1,#singleblockIMEI2,#singleblockIMEI3,#singleblockIMEI4").attr("oninput","InvalidMsg(this,'input','"+$.i18n('validationMEID')+"')");
+		$("#singleblockIMEI1,#singleblockIMEI2,#singleblockIMEI3,#singleblockIMEI4").attr("oninvalid","InvalidMsg(this,'input','"+$.i18n('validationMEID')+"')");
+		$('#errorMsgOnModal').text($.i18n('MEIDMsg'));
+		break;
+	case 2:
+		$("#singleblockIMEI1,#singleblockIMEI2,#singleblockIMEI3,#singleblockIMEI4").val('');
+		$("#singleblockIMEI1,#singleblockIMEI2,#singleblockIMEI3,#singleblockIMEI4").attr("pattern","[0-9]{8,11}");
+		$("#singleblockIMEI1,#singleblockIMEI2,#singleblockIMEI3,#singleblockIMEI4").attr("onkeyup","isLengthValid(this.value)");
+		$("#singleblockIMEI1,#singleblockIMEI2,#singleblockIMEI3,#singleblockIMEI4").attr("maxlength","11");	
+		$("#singleblockIMEI1,#singleblockIMEI2,#singleblockIMEI3,#singleblockIMEI4").attr("oninput","InvalidMsg(this,'input','"+$.i18n('validationESN11')+"')");
+		$("#singleblockIMEI1,#singleblockIMEI2,#singleblockIMEI3,#singleblockIMEI4").attr("oninvalid","InvalidMsg(this,'input','"+$.i18n('validationESN11')+"')");
+		$("#errorMsgOnModal").text($.i18n('ESNMsg'));
+		break;
+	}
+
+}); 
+
+function isLengthValid(val){
+	var deviceIDLength=val.length;
+	if(!isNaN(val)){
+		$("#singleblockIMEI1,#singleblockIMEI2,#singleblockIMEI3,#singleblockIMEI4").attr("pattern","[0-9]{11,11}");
+		$("#singleblockIMEI1,#singleblockIMEI2,#singleblockIMEI3,#singleblockIMEI4").attr("maxlength","11");
+		$("#singleblockIMEI1,#singleblockIMEI2,#singleblockIMEI3,#singleblockIMEI4").attr("oninput","InvalidMsg(this,'input','"+$.i18n('validationESN11')+"')");
+		$("#singleblockIMEI1,#singleblockIMEI2,#singleblockIMEI3,#singleblockIMEI4").attr("oninvalid","InvalidMsg(this,'input','"+$.i18n('validationESN11')+"')");
+	}
+	else if(typeof val == 'string' || val instanceof String){
+		$("#singleblockIMEI1,#singleblockIMEI2,#singleblockIMEI3,#singleblockIMEI4").attr("maxlength","8");
+		$("#singleblockIMEI1,#singleblockIMEI2,#singleblockIMEI3,#singleblockIMEI4").attr("pattern","[A-F0-9]{8,8}");
+		$("#singleblockIMEI1,#singleblockIMEI2,#singleblockIMEI3,#singleblockIMEI4").attr("oninput","InvalidMsg(this,'input','"+$.i18n('validationESN8')+"')");
+		$("#singleblockIMEI1,#singleblockIMEI2,#singleblockIMEI3,#singleblockIMEI4").attr("oninvalid","InvalidMsg(this,'input','"+$.i18n('validationESN8')+"')");
+
+	}
+}
+
+
+
+
+
+
+$('#UnblockdeviceIdType').on('change', function() {
+	var value=parseInt($(this).val());
+
+	switch (value) {
+	case 0:
+		$("#unbockSingleIMEI1,#unbockSingleIMEI2,#unbockSingleIMEI3,#unbockSingleIMEI4").attr("pattern","[0-9]{15,16}");
+		$("#unbockSingleIMEI1,#unbockSingleIMEI2,#unbockSingleIMEI3,#unbockSingleIMEI4").attr("maxlength","16");
+		
+		$("#unbockSingleIMEI1,#unbockSingleIMEI2,#unbockSingleIMEI3,#unbockSingleIMEI4").removeAttr("onkeyup");
+		$("#unbockSingleIMEI1,#unbockSingleIMEI2,#unbockSingleIMEI3,#unbockSingleIMEI4").attr("oninput","InvalidMsg(this,'input','"+$.i18n('validationIMEI')+"')");
+		$("#unbockSingleIMEI1,#unbockSingleIMEI2,#unbockSingleIMEI3,#unbockSingleIMEI4").attr("oninvalid","InvalidMsg(this,'input','"+$.i18n('validationIMEI')+"')");
+		
+		$('#errorMsgOnModal').text($.i18n('IMEIMsg'));
+		
+		break;
+	case 1:
+		$("#unbockSingleIMEI1,#unbockSingleIMEI2,#unbockSingleIMEI3,#unbockSingleIMEI4").attr("pattern","[A-F0-9]{15,16}");
+		$("#unbockSingleIMEI1,#unbockSingleIMEI2,#unbockSingleIMEI3,#unbockSingleIMEI4").attr("maxlength","16");
+		
+		$("#unbockSingleIMEI1,#unbockSingleIMEI2,#unbockSingleIMEI3,#unbockSingleIMEI4").removeAttr("onkeyup");
+		$("#unbockSingleIMEI1,#unbockSingleIMEI2,#unbockSingleIMEI3,#unbockSingleIMEI4").attr("oninput","InvalidMsg(this,'input','"+$.i18n('validationMEID')+"')");
+		$("#unbockSingleIMEI1,#unbockSingleIMEI2,#unbockSingleIMEI3,#unbockSingleIMEI4").attr("oninvalid","InvalidMsg(this,'input','"+$.i18n('validationMEID')+"')");
+		$('#errorMsgOnModal').text($.i18n('MEIDMsg'));
+		break;
+	case 2:
+		$("#unbockSingleIMEI1,#unbockSingleIMEI2,#unbockSingleIMEI3,#unbockSingleIMEI4").val('');
+		$("#unbockSingleIMEI1,#unbockSingleIMEI2,#unbockSingleIMEI3,#unbockSingleIMEI4").attr("pattern","[0-9]{8,11}");
+		$("#unbockSingleIMEI1,#unbockSingleIMEI2,#unbockSingleIMEI3,#unbockSingleIMEI4").attr("onkeyup","isLengthValid(this.value)");
+		$("#unbockSingleIMEI1,#unbockSingleIMEI2,#unbockSingleIMEI3,#unbockSingleIMEI4").attr("maxlength","11");	
+		$("#unbockSingleIMEI1,#unbockSingleIMEI2,#unbockSingleIMEI3,#unbockSingleIMEI4").attr("oninput","InvalidMsg(this,'input','"+$.i18n('validationESN11')+"')");
+		$("#unbockSingleIMEI1,#unbockSingleIMEI2,#unbockSingleIMEI3,#unbockSingleIMEI4").attr("oninvalid","InvalidMsg(this,'input','"+$.i18n('validationESN11')+"')");
+		$("#errorMsgOnModal").text($.i18n('ESNMsg'));
+		break;
+	}
+
+}); 
+
+function isLengthValid(val){
+	var deviceIDLength=val.length;
+	if(!isNaN(val)){
+		$("#unbockSingleIMEI1,#unbockSingleIMEI2,#unbockSingleIMEI3,#unbockSingleIMEI4").attr("pattern","[0-9]{11,11}");
+		$("#unbockSingleIMEI1,#unbockSingleIMEI2,#unbockSingleIMEI3,#unbockSingleIMEI4").attr("maxlength","11");
+		$("#unbockSingleIMEI1,#unbockSingleIMEI2,#unbockSingleIMEI3,#unbockSingleIMEI4").attr("oninput","InvalidMsg(this,'input','"+$.i18n('validationESN11')+"')");
+		$("#unbockSingleIMEI1,#unbockSingleIMEI2,#unbockSingleIMEI3,#unbockSingleIMEI4").attr("oninvalid","InvalidMsg(this,'input','"+$.i18n('validationESN11')+"')");
+	}
+	else if(typeof val == 'string' || val instanceof String){
+		$("#unbockSingleIMEI1,#unbockSingleIMEI2,#unbockSingleIMEI3,#unbockSingleIMEI4").attr("maxlength","8");
+		$("#unbockSingleIMEI1,#unbockSingleIMEI2,#unbockSingleIMEI3,#unbockSingleIMEI4").attr("pattern","[A-F0-9]{8,8}");
+		$("#unbockSingleIMEI1,#unbockSingleIMEI2,#unbockSingleIMEI3,#unbockSingleIMEI4").attr("oninput","InvalidMsg(this,'input','"+$.i18n('validationESN8')+"')");
+		$("#unbockSingleIMEI1,#unbockSingleIMEI2,#unbockSingleIMEI3,#unbockSingleIMEI4").attr("oninvalid","InvalidMsg(this,'input','"+$.i18n('validationESN8')+"')");
+
+	}
+}

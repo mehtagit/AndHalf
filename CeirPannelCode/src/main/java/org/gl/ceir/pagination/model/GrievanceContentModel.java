@@ -1,8 +1,5 @@
 package org.gl.ceir.pagination.model;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.stereotype.Component;
 
 @Component
@@ -18,7 +15,8 @@ public class GrievanceContentModel {
 	private String modifiedOn;
 	private String remarks;
 	private String stateInterp;
-	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+	private String userDisplayName;
+	private String raisedBy;
 	public String getGrievanceId() {
 		return grievanceId;
 	}
@@ -85,21 +83,49 @@ public class GrievanceContentModel {
 	public void setStateInterp(String stateInterp) {
 		this.stateInterp = stateInterp;
 	}
-	public Map<String, Object> getAdditionalProperties() {
-		return additionalProperties;
+	public String getUserDisplayName() {
+		return userDisplayName;
 	}
-	public void setAdditionalProperties(Map<String, Object> additionalProperties) {
-		this.additionalProperties = additionalProperties;
+	public void setUserDisplayName(String userDisplayName) {
+		this.userDisplayName = userDisplayName;
+	}
+	public String getRaisedBy() {
+		return raisedBy;
+	}
+	public void setRaisedBy(String raisedBy) {
+		this.raisedBy = raisedBy;
 	}
 	@Override
 	public String toString() {
-		return "GrievanceContentModel [grievanceId=" + grievanceId + ", userId=" + userId + ", userType=" + userType
-				+ ", grievanceStatus=" + grievanceStatus + ", txnId=" + txnId + ", categoryId=" + categoryId
-				+ ", fileName=" + fileName + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", remarks="
-				+ remarks + ", stateInterp=" + stateInterp + ", additionalProperties=" + additionalProperties + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("GrievanceContentModel [grievanceId=");
+		builder.append(grievanceId);
+		builder.append(", userId=");
+		builder.append(userId);
+		builder.append(", userType=");
+		builder.append(userType);
+		builder.append(", grievanceStatus=");
+		builder.append(grievanceStatus);
+		builder.append(", txnId=");
+		builder.append(txnId);
+		builder.append(", categoryId=");
+		builder.append(categoryId);
+		builder.append(", fileName=");
+		builder.append(fileName);
+		builder.append(", createdOn=");
+		builder.append(createdOn);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
+		builder.append(", remarks=");
+		builder.append(remarks);
+		builder.append(", stateInterp=");
+		builder.append(stateInterp);
+		builder.append(", userDisplayName=");
+		builder.append(userDisplayName);
+		builder.append(", raisedBy=");
+		builder.append(raisedBy);
+		builder.append("]");
+		return builder.toString();
 	}
 
-	
-
-	
 }

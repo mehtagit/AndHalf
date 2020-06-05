@@ -70,14 +70,14 @@
 
 </style>
 </head>
-<body data-lang-param="${pageContext.response.locale}">
+<body onSubmit='window.scrollTo(60, 0)' data-lang-param="${pageContext.response.locale}">
 
 
 	<section id="content">
 		<!--start container-->
 		<div class="container">
 			<div class="section">
-				<div class="row card-panel update-visa-responsive-page"
+				<div class="row card-panel update-visa-responsive-page" onSubmit='self.scrollTo(0,0)'
 					style="width: 50%; margin: auto; margin-bottom: 50px; margin-top: 20px;">
 					<h6 class="fixPage-modal-header ">
 						<spring:message code="input.UpdateVisaValidity" />
@@ -89,22 +89,22 @@
 									enctype="multipart/form-data">
 									<div id="submitbtn">
 										<div class="input-field col s12 m1 l1">
-											<label for="Search" class="center-align ml-10"><spring:message
-													code="input.NID4" /></label>
+											<label for="Search" class="center-align ml-10"><spring:message code="input.pportnumber" /></label>
 										</div>
 										<div class="input-field col s12 m3 l3">
 											<input type="text" id="nidForEndUser"
 												pattern="[A-Za-z0-9]{0,12}"
-												oninput="InvalidMsg(this,'input');"
-												oninvalid="InvalidMsg(this,'input');"
+												oninput="InvalidMsg(this,'select','<spring:message code="validation.12NID" />');"
+															oninvalid="InvalidMsg(this,'select','<spring:message code="validation.12NID" />');"
 												title="<spring:message code="validation.12NID" />"
 												required  maxlength="12" name="Search" />
 
 										</div>
-										<div class="input-field col s12 m2 l2">
-											<button class="btn" type="submit">
+										<div class="input-field col s12 m6">
+											<button  class="btn" type="submit" id="passPortBtnId">
 												<spring:message code="button.submit" />
 											</button>
+											<a href="./redirectToHomePage" class="btn"><spring:message code="modal.close" /></a>
 										</div>
 									</div>
 								</form>
@@ -117,26 +117,25 @@
 											<input type="text" id="endUserpassportNumber"
 												name="endUserpassportNumber" placeholder=""
 												pattern="[a-zA-Z0-9]{1,15}"
-												oninput="InvalidMsg(this,'input');"
-												oninvalid="InvalidMsg(this,'input');"
+												oninput="InvalidMsg(this,'select','<spring:message code="validation.15numbers" />');"
+															oninvalid="InvalidMsg(this,'select','<spring:message code="validation.15numbers" />');"
 												title="<spring:message code="validation.15numbers" />"
-												required  /  maxlength="15" /> <label
+												  maxlength="15" /> <label
 												for="endUserpassportNumber"><spring:message
-													code="input.passportNo" /> <span class="star">*</span></label>
+													code="input.passportNo" /> <span class="star"></span></label>
 										</div>
 										<input type="text" id="endUserTxnId" style="display: none">
 										<div class="file-field col s12 m6" style="margin-top: -8px;">
 											<h6 style="font-size: 12px;">
 												<spring:message code="input.UploadImage" />
-												<span class="star">*</span>
+												<span class="star"></span>
 											</h6>
 											<div class="btn" id="passportFileDiv">
 												<span><spring:message code="input.selectfile" /></span> <input
 													type="file"
-													title="<spring:message code="validation.NoChosen" />"
-													oninput="InvalidMsg(this,'input');"
-													oninvalid="InvalidMsg(this,'input');"
-													required / id="uploadPassportID">
+													oninput="InvalidMsg(this,'select','<spring:message code="validation.NoChosen" />');"
+													oninvalid="InvalidMsg(this,'select','<spring:message code="validation.NoChosen" />');"
+													  id="uploadPassportID">
 											</div>
 											<div class="file-path-wrapper" id="passportFileNameDiv">
 												<input class="file-path validate" type="text"
@@ -146,19 +145,20 @@
 
 										<div class="input-field col s12 m4">
 											<input type="text" id="endUserfirstName" placeholder=""
-												pattern="[a-zA-Z]{1,20}" oninput="InvalidMsg(this,'input');"
-												oninvalid="InvalidMsg(this,'input');"
-												title="<spring:message code="validation.20Character" />"
-												required    maxlength="20" /> <label
+												pattern="[a-zA-Z]{1,20}" oninput="InvalidMsg(this,'select','<spring:message code="validation.20Character" />');"
+													oninvalid="InvalidMsg(this,'select','<spring:message code="validation.20Character" />');"
+												
+												    maxlength="20" /> <label
 												for="endUserfirstName"><spring:message
-													code="input.firstName" /> <span class="star">*</span></label>
+													code="input.firstName" /> <span class="star"></span></label>
 										</div>
 
 										<div class="input-field col s12 m4">
 											<input type="text" id="endUsermiddleName" placeholder=""
 												pattern="[a-zA-Z]{1,20}" 
-												oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-												title="<spring:message code="validation.20Character" />"
+												oninput="InvalidMsg(this,'select','<spring:message code="validation.20Character" />');"
+													oninvalid="InvalidMsg(this,'select','<spring:message code="validation.20Character" />');"
+												
 												maxlength="20" /> <label for="endUsermiddleName"><spring:message
 													code="input.middleName" /></label>
 										</div>
@@ -166,19 +166,39 @@
 										<div class="input-field col s12 m4">
 											<input type="text" id="endUserlastName" placeholder=""
 												pattern="[a-zA-Z]{1,20}" 
-												oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-												title="<spring:message code="validation.20Character" />"
-												required    maxlength="20" /> <label for="endUserlastName"><spring:message
-													code="input.lastName" /> <span class="star">*</span></label>
+												oninput="InvalidMsg(this,'select','<spring:message code="validation.20Character" />');"
+													oninvalid="InvalidMsg(this,'select','<spring:message code="validation.20Character" />');"
+												title=""
+											    maxlength="20" /> <label for="endUserlastName"><spring:message
+													code="input.lastName" /> <span class="star"></span></label>
 										</div>
+										<div class="col s12 m6" id="nationalityDiv"
+											style="display: block">
+											<label for="nationality" class="active"><spring:message
+													code="input.Nationality" /> <span class="star"></span></label>
+											<input type="text" id="nationality" name="nationality"
+												pattern="[a-zA-Z]{1,25}" oninput="InvalidMsg(this,'input');"
+												oninput="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
+												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
+												title="" maxlength="25">
+										</div>
+										<div class="col s12 m6" id="entryCountryDiv" style="display: block;">
+										<label for="datepicker" class="active"><spring:message
+														code="input.EntryCountry" /> <span class="star"></span></label>
+												<input type="text" id="datepicker"
+													oninput="InvalidMsg(this,'input','<spring:message code="validation.date" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.date" />');"
+													 maxlength="15" /> 
+									</div>
 
 										<div class="input-field col s12 m12 l12">
 											<input type="text" placeholder="" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,200}"
-												oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-												title="<spring:message code="validation.50character" />"   
+												oninput="InvalidMsg(this,'select','<spring:message code="validation.200character" />');"
+													oninvalid="InvalidMsg(this,'select','<spring:message code="validation.200Character" />');"
+												title="<spring:message code="" />"   
 												class="form-control boxBorder boxHeight" id="endUseraddress" required
 												maxlength="200"> <label for="address"><spring:message
-													code="input.address" /> <span class="star">*</span></label>
+													code="input.address" /> <span class="star"></span></label>
 										</div>
 
 										<div class="input-field col s12 m6 l6">
@@ -186,76 +206,76 @@
 												pattern="[^[a-zA-Z0-9\s,'-]*$]{0,50}"
 												class="form-control boxBorder boxHeight"
 												id="endUserstreetNumber" 
-												oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-												title="<spring:message code="validation.50character" />"
-												required    maxlength="50"> <label
+													oninput="InvalidMsg(this,'select','<spring:message code="validation.50character" />');"
+													oninvalid="InvalidMsg(this,'select','<spring:message code="validation.50character" />');"
+												
+												  maxlength="50"> <label
 												for="streetNumber"><spring:message
-													code="input.streetNumber" /> <span class="star">*</span></label>
+													code="input.streetNumber" /> <span class="star"></span></label>
 										</div>
 										<div class="input-field col s12 m6 l6">
 											<input type="text" placeholder="" placeholder=""
 												pattern="[^[a-zA-Z0-9\s,'-]*$]{0,50}"
-												oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-												title="<spring:message code="validation.50character" />" 
+												oninput="InvalidMsg(this,'select','<spring:message code="validation.50character" />');"
+													oninvalid="InvalidMsg(this,'select','<spring:message code="validation.50character" />');"
+												 
 												class="form-control boxBorder boxHeight"
 												id="endUserlocality" required maxlength="20"> <label
 												for="locality"><spring:message code="input.locality" />
-												<span class="star">*</span></label>
+												<span class="star"></span></label>
 										</div>
 
 										<div class="input-field col s12 m6 l6">
 											<input type="text" placeholder="" id="endUservillage"
 												pattern="[^[a-zA-Z0-9\s,'-]*$]{0,50}"
-												oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-												title="<spring:message code="validation.50character" />"
-												required   maxlength="20"> <label for="village"><spring:message
-													code="input.village" /> <span class="star">*</span></label>
+												oninput="InvalidMsg(this,'select','<spring:message code="validation.50character" />');"
+												oninvalid="InvalidMsg(this,'select','<spring:message code="validation.50character" />');"
+												   maxlength="20"> <label for="village"><spring:message
+													code="input.village" /> <span class="star"></span></label>
 										</div>
 
 										<div class="input-field col s12 m6 l6">
 											<input type="text" placeholder=""
 												pattern="[^[a-zA-Z0-9\s,'-]*$]{0,50}"
-												oninput="InvalidMsg(this,'input');"
-												oninvalid="InvalidMsg(this,'input');"
-												title="<spring:message code="validation.50character" />"
-												required     id="endUsercommune" maxlength="50"> <label
+												oninput="InvalidMsg(this,'select','<spring:message code="validation.50character" />');"
+													oninvalid="InvalidMsg(this,'select','<spring:message code="validation.50character" />');"
+												     id="endUsercommune" maxlength="50"> <label
 												for="commune"><spring:message code="input.commune" /><span
-												class="star">*</span></label>
+												class="star"></span></label>
 										</div>
 
 										<div class="input-field col s12 m6 l6">
 											<input type="text" placeholder="" id="endUserdistrict"
 												pattern="[^[a-zA-Z0-9\s,'-]*$]{0,50}"
-												oninput="setCustomValidity('')"
-												oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
-												title="<spring:message code="validation.50character" />"
-												required   maxlength="50"> <label for="district"><spring:message
-													code="input.district" /> <span class="star">*</span></label>
+												oninput="InvalidMsg(this,'select','<spring:message code="validation.50character" />');"
+													oninvalid="InvalidMsg(this,'select','<spring:message code="validation.50character" />');"
+												   maxlength="50"> <label for="district"><spring:message
+													code="input.district" /> <span class="star"></span></label>
 										</div>
 
 										<div class="input-field col s12 m6 l6">
 											<input type="text" placeholder="" pattern="[0-9]{6,10}"
-												oninput="InvalidMsg(this,'input');"
-												oninvalid="InvalidMsg(this,'input');"
-												title="<spring:message code="validation.postalcode" />"
+												oninput="InvalidMsg(this,'select','<spring:message code="validation.postalcode" />');"
+												oninvalid="InvalidMsg(this,'select','<spring:message code="validation.postalcode" />');"
+												
 												class="form-control boxBorder boxHeight" id="endUserpin"
-												required   maxlength="6"> <label for="pin"><spring:message
-													code="registration.postalcode" /><span class="star">*</span></label>
+												   maxlength="6"> <label for="pin"><spring:message
+													code="registration.postalcode" /><span class="star"></span></label>
 										</div>
 
 										<div class="input-field col s12 m6 l6">
 											<p
 												style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
 												<spring:message code="input.Country" />
-												<span class="star">*</span>
+												<span class="star"></span>
 											</p>
-											<select id="country" class="browser-default" required
+											<select id="country" class="browser-default" 
 												class="mySelect"
 												title="<spring:message code="validation.selectFieldMsg" />"
-												oninput="setCustomValidity('')"
-												oninput="InvalidMsg(this,'input');"
-												oninvalid="InvalidMsg(this,'input');"
-												style="padding-left: 0;" required></select>
+												oninput="InvalidMsg(this,'select','<spring:message code="validation.postalcode" />');"
+												oninvalid="InvalidMsg(this,'select','<spring:message code="validation.postalcode" />');"
+												
+												style="padding-left: 0;" ></select>
 										</div>
 
 										<div class="input-field col s12 m6 l6"
@@ -263,25 +283,23 @@
 											<p
 												style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
 												<spring:message code="input.province" />
-												<span class="star">*</span>
+												<span class="star"></span>
 											</p>
 											<select id="state" class="browser-default" class="mySelect"
 												title="<spring:message code="validation.selectFieldMsg" />"
-												oninput="setCustomValidity('')"
-												oninput="InvalidMsg(this,'select');"
-												oninvalid="InvalidMsg(this,'select');"
-												style="padding-left: 0;"required  ></select>
+												
+												style="padding-left: 0;"  ></select>
 										</div>
 
 
 										<div class="input-field col s12 m6" style="margin-top: 0;">
 											<p class="contact-label">
 												<spring:message code="input.contactNum" />
-												<span class="star">*</span>
+												<span class="star"></span>
 											</p>
 											<input type="tel" oninput="setCustomValidity('')"
 												oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-												title= "<spring:message code="validation.10digits" />" required  
+												title= "<spring:message code="validation.10digits" />"   
 											   placeholder="" id="phone" maxlength="10">
 										</div>
 
@@ -299,7 +317,7 @@
 										<div class="col s12 m6">
 											<label for="visaType"><spring:message
 													code="input.VisaType" /> <span class="star">*</span></label> <select
-												class="browser-default" id="endUservisaType" required
+												class="browser-default" id="endUservisaType"  required="required"
 												title="<spring:message code="validation.selectFieldMsg" />"
 												oninput="setCustomValidity('')"
 												oninput="InvalidMsg(this,'select');"
@@ -313,11 +331,11 @@
 
 										<div class="input-field col s12 m6" id="endUserdatepickerDiv">
 											<input type="text" id="endUserdatepicker1" placeholder=""
-												onchange="InvalidMsg(this,'date');"
-												oninvalid="InvalidMsg(this,'date');"
+												oninput="InvalidMsg(this,'input','<spring:message code="validation.date" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.date" />');"
 												title="<spring:message code="validation.date" />"
-												required / maxlength="15" /> <label for="datepicker1"><spring:message
-													code="input.EntryCountry" /> <span class="star">*</span></label>
+												 maxlength="15" /> <label for="datepicker1"><spring:message
+													code="input.EntryCountry" /> <span class="star"></span></label>
 										</div>
 
 										<div class="file-field col s12 m6" style="margin-top: -8px;">
@@ -328,16 +346,14 @@
 											<div class="btn">
 												<span><spring:message code="input.selectfile" /></span> <input
 													type="file"
-													title="<spring:message code="validation.NoChosen" />"
-													oninput="InvalidMsg(this,'fileType');"
-													oninvalid="InvalidMsg(this,'fileType');"
-													oninput="setCustomValidity('')"
-													required /  id="endUseruploadnationalID"
-													placeholder="Upload Visa Image">
+													oninput="InvalidMsg(this,'fileType','<spring:message code="validation.file" />');" oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.file" />');"
+													
+													required   id="endUseruploadnationalID" onchange="visaImageValidation()"
+														placeholder="<spring:message code="validation.visaPlaceholder" />">
 											</div>
 											<div class="file-path-wrapper">
-												<input class="file-path validate" type="text"
-													placeholder="Upload Visa Image">
+												<input class="file-path validate" type="text" id="endUseruploadnationalIDPlaceHolder"
+														placeholder="<spring:message code="validation.visaPlaceholder" />">
 											</div>
 										</div>
 
@@ -550,8 +566,46 @@
 		<!--end container-->
 	</section>
 
+	<div id="visafileFormateModal" class="modal">
+		<h6 class="modal-header"><spring:message code="fileValidationModalHeader" /></h6>
+		<div class="modal-content">
+			<div class="row">
+				<h6 id="visafileErrormessage"><spring:message code="fileValidationName" /><br> <br> <spring:message code="fileValidationFormate" /> <br><br> <spring:message code="fileValidationSize" /> </h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<div class="input-field col s12 center">
+						<button class="modal-close  btn" onclick="clearVisaName()"
+							style="margin-left: 10px;"><spring:message code="modal.ok" /></button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
+	<div id="errorModal" class="modal">
+		<h6 class="modal-header">
+			<spring:message code="input.UpdateVisaValidity" />
+		</h6>
+		<div class="modal-content">
 
+			<div class="row">
+				<h6 id="errorMessage">
+					<spring:message code="passportNotExist" />
+				</h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<div class="input-field col s12 center">
+						<!-- <a href="homePage" class="btn">Yes</a> -->
+						<a  href="./redirectToHomePage" class="modal-close btn" style="margin-left: 10px;">
+							<spring:message code="modal.ok" />
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
 	<script type="text/javascript"
@@ -596,6 +650,8 @@
 
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
+		
+		
 			<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/endUserUpdateVisaValidity.js"></script>
@@ -606,8 +662,10 @@
 		
 			<script type="text/javascript"
 		src="${context}/resources/js/intlTelInput.js"></script>
+		
 		<script type="text/javascript"
-		src="${context}/resources/project_js/validationMsg.js"></script>
+		src="${context}/resources/project_js/ValidationFileOutsidePortal.js"></script>
+		
 	<script type="text/javascript">
 
 	 var input = document.querySelector("#phone1");

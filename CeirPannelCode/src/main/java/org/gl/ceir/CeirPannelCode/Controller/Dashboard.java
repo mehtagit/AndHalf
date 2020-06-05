@@ -36,7 +36,7 @@ public class Dashboard {
 	ModelAndView mv = new ModelAndView();
 	
 	
-	  @GetMapping("/importerDashboard") 
+	  @GetMapping("*") 
 	  public ModelAndView openUserRegisterPage(HttpSession session) { 
 		  return loginService.dashBoard(session); 
 		  }
@@ -58,15 +58,17 @@ public class Dashboard {
 	}
 	
 	@GetMapping("/consignment/countAndQuantity")
-	public ResponseEntity<?> getConsignmetnCountAndQuantity(@RequestParam(value = "userId") Integer userId,@RequestParam(value = "featureId") Integer featureId,@RequestParam(value = "userTypeId") Integer userTypeId,@RequestParam(value = "userType") String userType) {
-		RequestCountAndQuantity response = dashboardFeignClient.consignmentNotification(userId, featureId, userTypeId,userType);
+	public ResponseEntity<?> getConsignmetnCountAndQuantity(@RequestParam(value = "userId") Integer userId,@RequestParam(value = "featureId") Integer featureId,@RequestParam(value = "userTypeId") Integer userTypeId,@RequestParam(value = "userType") String userType,
+			@RequestParam(name="source",defaultValue = "dashboard",required = false) String source) {
+		RequestCountAndQuantity response = dashboardFeignClient.consignmentNotification(userId, featureId, userTypeId,userType,source);
 	return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 	
 	
 	@GetMapping("/stock/countAndQuantity")
-	public ResponseEntity<?> getStockCountAndQuantity(@RequestParam(value = "userId") Integer userId,@RequestParam(value = "featureId") Integer featureId,@RequestParam(value = "userTypeId") Integer userTypeId,@RequestParam(value = "userType") String userType) {
-		RequestCountAndQuantity response = dashboardFeignClient.stockNotification(userId, featureId, userTypeId,userType);
+	public ResponseEntity<?> getStockCountAndQuantity(@RequestParam(value = "userId") Integer userId,@RequestParam(value = "featureId") Integer featureId,@RequestParam(value = "userTypeId") Integer userTypeId,@RequestParam(value = "userType") String userType,
+			@RequestParam(name="source",defaultValue = "dashboard",required = false) String source) {
+		RequestCountAndQuantity response = dashboardFeignClient.stockNotification(userId, featureId, userTypeId,userType,source);
 	return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 	
@@ -84,12 +86,6 @@ public class Dashboard {
 	return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 	
-	@GetMapping("/users/pendingCount")
-	public ResponseEntity<?> getUsersPendingCount(@RequestParam(value = "requestType") String requestType,@RequestParam(value = "userId") Integer userId,@RequestParam(value = "featureId") Integer featureId,@RequestParam(value = "userTypeId") Integer userTypeId,@RequestParam(value = "userType") String userType) {
-		RequestCountAndQuantity response = dashboardFeignClient.userPendingCount(requestType,userId, featureId, userTypeId,userType);
-	return new ResponseEntity<>(response, HttpStatus.OK);
-	}
-	
 	@GetMapping("/stakeholder/blockUnblockCount")
 	public ResponseEntity<?> getStakeholderBlockUnblockCount(@RequestParam(value = "requestType") String requestType,@RequestParam(value = "userId") Integer userId,@RequestParam(value = "featureId") Integer featureId,@RequestParam(value = "userTypeId") Integer userTypeId,@RequestParam(value = "userType") String userType) {
 		RequestCountAndQuantity response = dashboardFeignClient.stakeholderBlockUnblockCount(requestType,userId, featureId, userTypeId,userType);
@@ -102,4 +98,16 @@ public class Dashboard {
 	return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 	
+	@GetMapping("/users/pendingCount")
+	public ResponseEntity<?> getUsersPendingCount(@RequestParam(value = "requestType") String requestType,@RequestParam(value = "userId") Integer userId,@RequestParam(value = "featureId") Integer featureId,@RequestParam(value = "userTypeId") Integer userTypeId,@RequestParam(value = "userType") String userType) {
+		RequestCountAndQuantity response = dashboardFeignClient.userPendingCount(requestType,userId, featureId, userTypeId,userType);
+	return new ResponseEntity<>(response, HttpStatus.OK);
+	}
+	
+	
+	@GetMapping("/device/countAndQuantity")
+	public ResponseEntity<?> getDeviceCountAndQuantityCount(@RequestParam(value = "requestType") String requestType,@RequestParam(value = "userId") Integer userId,@RequestParam(value = "featureId") Integer featureId,@RequestParam(value = "userTypeId") Integer userTypeId,@RequestParam(value = "userType") String userType) {
+		RequestCountAndQuantity response = dashboardFeignClient.deviceCountAndQuantity(requestType,userId, featureId, userTypeId,userType);
+	return new ResponseEntity<>(response, HttpStatus.OK);
+	}
 } 

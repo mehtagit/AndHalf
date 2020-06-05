@@ -14,7 +14,7 @@ function viewIndivisualStolen()
 var txnid=$('#existingStolenTxnId').val();
 	
 	$.ajax({
-		url: './openStolenAndRecoveryPage?txnId='+txnid,
+		url: './openStolenAndRecoveryPage?txnId='+txnid+"&requestType=0",
 		type: 'POST',
 		processData: false,
 		contentType: false,
@@ -35,7 +35,7 @@ var txnid=$('#existingStolenTxnId').val();
 		$('#firstName').val(response.stolenOrganizationUserDB.personnelFirstName);
 		$('#bulkStolenmiddleName').val(response.stolenOrganizationUserDB.personnelMiddleName);
 		$('#bulkStolenlastName').val(response.stolenOrganizationUserDB.personnelLastName);
-		$('#deviceBulkStolenaddress').val(response.stolenOrganizationUserDB.incidentPropertyLocation)
+		$('#deviceBulkStolenaddress').val(response.stolenOrganizationUserDB.incidentPropertyLocation);
 		$('#deviceBulkStolenstreetNumber').val(response.stolenOrganizationUserDB.incidentStreet);
 		$('#deviceBulkStolenvillage').val(response.stolenOrganizationUserDB.incidentVillage);
 		$('#deviceBulkStolenlocality').val(response.stolenOrganizationUserDB.incidentLocality);
@@ -43,15 +43,38 @@ var txnid=$('#existingStolenTxnId').val();
 		$('#deviceBulkStolencommune').val(response.stolenOrganizationUserDB.incidentCommune);
 		$('#deviceBulkStolenpin').val(response.stolenOrganizationUserDB.incidentPostalCode);
 		$('#country3').val(response.stolenOrganizationUserDB.incidentCountry).change();
-
+		
+		$('#deviceBulkStolenComplaint').val(response.complaintType);
 		$('#bulkStolenofficeEmail').val(response.stolenOrganizationUserDB.email);
 		$('#bulkStolenContact').val(response.stolenOrganizationUserDB.phoneNo);
 		
 		$('#state3').val(response.stolenOrganizationUserDB.incidentProvince);
-		$('#deviceBulkStolenComplaint').val();
+		$('#singleStolenComplaintType').val(response.complaintType);
 		$('#deviceBulkStolenquantity').val(response.qty);
-		$('#deviceBulkStolenRemark').val();
+		$('#devicequantity').val(response.deviceQuantity);
+		
+		$('#deviceBulkStolenRemark').val(response.remark);
 		$('#stolenFileName').val(response.fileName);
+		
+		$('#IndivisualStolenDate').val(response.dateOfStolen);
+		$('#uploadFirSingleName').val(response.firFileName);
+		$('#bulkDeviceRejectRemark').val(response.rejectedRemark);
+		$("label[for='IndivisualStolenDate']").addClass('active');
+		
+		$('input[name=stolenBulkBlockPeriod][value='+response.blockingType+']').attr('checked', true); 
+		
+		if(response.blockingType=='tilldate')
+			{
+			$("#stolenCalender").css("display", "block"); 
+			
+			$("#stolenBulkDatePeriod").val(response.blockingTimePeriod);
+			}
+		else{
+			$("#calender").css("display", "none"); 
+		}
+		
+		$('#firFilePreview').attr("onclick",'previewFile("'+response.fileLink+'","'+response.firFileName+'","'+response.txnId+'")');
+		//$('#deviceListlink').attr("onclick",'previewFile("'+response.fileLink+'","'+response.fileName+'","'+response.txnId+'")');
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
 			console.log("error in ajax")
@@ -79,14 +102,15 @@ function updateCompanyStolenDetails(){
 
 	var txnid=$('#existingStolenTxnId').val();
 	var blockingTimePeriod=$('#stolenBulkDatePeriod').val();
-	var blockingType =$('.stolenBulkBlockPeriod:checked').val();
+	var blockingType =$('.blocktypeRadio:checked').val();
 	var fileName=$('#stolenFileName').val();
 	
 	var firstName=$('#firstName').val();
 	var bulkStolenmiddleName=$('#bulkStolenmiddleName').val();
 	var bulkStolenlastName=$('#bulkStolenlastName').val();
 	var bulkStolenofficeEmail=$('#bulkStolenofficeEmail').val();
-	var bulkStolenContact=$('#bulkStolenContact').val();
+	var trimContactNumber=$('#bulkStolenContact').val();
+	var bulkStolenContact =trimContactNumber.replace(/[^A-Z0-9]/ig, "");
 
 	
 	var deviceBulkStolenaddress=$('#deviceBulkStolenaddress').val();
@@ -101,9 +125,9 @@ function updateCompanyStolenDetails(){
 	var deviceBulkStolenComplaint=$('#deviceBulkStolenComplaint').val();
 	var deviceBulkStolenquantity=$('#deviceBulkStolenquantity').val();
 	var deviceBulkStolenRemark=$('#deviceBulkStolenRemark').val();
-	var bulkStolenDate=$('#bulkStolenDate').val();
-	
-
+	var bulkStolenDate=$('#IndivisualStolenDate').val();
+	var uploadFirSingle=$('#uploadFirSingleName').val();
+	var bulkDevicequantity=$('#devicequantity').val();
 	
 	var stolenOrganizationUserDB= {
     "commune": bulkStolencommune,
@@ -116,13 +140,14 @@ function updateCompanyStolenDetails(){
     "incidentDistrict": deviceBulkStolendistrict,
     "incidentLocality": deviceBulkStolenlocality,
     "incidentPostalCode": deviceBulkStolenpin,
+    "incidentPropertyLocation":deviceBulkStolenaddress,
     "incidentProvince": state3,
     "incidentStreet": deviceBulkStolenstreetNumber,
     "incidentVillage": deviceBulkStolenvillage,
     "locality": deviceBulkStolenlocality ,
     "personnelFirstName": firstName,
-    "personnelLastName": bulkStolenmiddleName,
-    "personnelMiddleName": bulkStolenlastName,
+    "personnelLastName":bulkStolenlastName ,
+    "personnelMiddleName":bulkStolenmiddleName ,
     "phoneNo": bulkStolenContact,
     "postalCode": bulkStolenpin,
     "propertyLocation": bulkStolenaddress,
@@ -135,8 +160,12 @@ function updateCompanyStolenDetails(){
 	var request={
 			"txnId":txnid,
 			"fileName":fileName,
+			"deviceQuantity":bulkDevicequantity,
+			"firFileName":uploadFirSingle,
+			"remark":deviceBulkStolenRemark,
 			"qty":deviceBulkStolenquantity,
 			"dateOfStolen":bulkStolenDate,
+			"complaintType":deviceBulkStolenComplaint,
 			"blockingTimePeriod":blockingTimePeriod,
 			"blockingType":blockingType,
 			"requestType":0,
@@ -144,6 +173,7 @@ function updateCompanyStolenDetails(){
 			"stolenOrganizationUserDB":stolenOrganizationUserDB
 	}
 	formData.append('file', $('#deviceBulkStolenFile')[0].files[0]);
+	formData.append('firFileName',$('#uploadFirSingle')[0].files[0]);
 	formData.append("request",JSON.stringify(request));
 
 	$.ajax({
@@ -155,6 +185,15 @@ function updateCompanyStolenDetails(){
 		success: function (response, textStatus, jqXHR) {
 		console.log(response)
 		
+		if(response.errorCode==0){
+			$("#companyStolenButton").prop('disabled', true);
+			$('#stolenSucessPopUp').openModal({dismissible:false});;
+			}
+		else{
+			$('#stolenSucessPopUp').openModal({dismissible:false});;
+			$('#dynamicMessage').text('');
+			$('#dynamicMessage').text(response.message);
+		}
 		/*	if(response.errorCode==0){
 				$("#bulkStolenButton").prop('disabled', true);
 				$('#IndivisualStolenSucessPopup').openModal();
@@ -167,9 +206,27 @@ function updateCompanyStolenDetails(){
 			}*/
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			console.log("error in ajax")
+			console.log("error in ajax");
 
 		}
 	});
 	return false;
+}
+
+function clearFileName() {
+	var fieldId=$('#FilefieldId').val();
+	
+	 if(fieldId=='deviceBulkStolenFile')
+		{
+		$('#'+fieldId).val('');
+		$('#stolenFileName').val('');
+		}
+	else if(fieldId=='uploadFirSingle')
+	{
+		$('#'+fieldId).val('');
+	$('#uploadFirSingleName').val('');
+	}
+	
+	$('#fileFormateModal').closeModal();
+	$('#FilefieldId').val('');
 }

@@ -8,15 +8,6 @@
 
 	var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 
-/*
-	window.parent.$('#langlist').on('change', function() {
-		var langParam=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
-		var id= $("#mainArea").contents().find("body").html();
-		var roles= $("#mainArea").contents().find("body").attr("data-session-roles");
-		var type= $("#mainArea").contents().find("body").attr("data-session-type");
-		window.location.reload(true);
-			
-	}); */
 
 	$.i18n().locale = lang;	
 
@@ -54,7 +45,9 @@
 				"featureId":parseInt(featureId),
 				"userTypeId": parseInt($("body").attr("data-userTypeID")),
 				"userType":$("body").attr("data-roleType"),
-				
+				"email" : $('#emailID').val(),
+				"phoneNo" : $('#phone').val(),
+				"username" : $('#userName').val(),
 		}
 		
 		if(lang=='km'){
@@ -92,13 +85,16 @@
 					"columns": result
 				});
 				$('div#initialloader').delay(300).fadeOut('slow');
-				$('#registrationLibraryTable input').unbind();
-				$('#registrationLibraryTable input').bind('keyup', function (e) {
-					if (e.keyCode == 13) {
-						table.search(this.value).draw();
-					}
-
-				});
+				$('.dataTables_filter input')
+			       .off().on('keyup', function(event) {
+			    	   if(event.keyCode == 8 && !textBox.val() || event.keyCode == 46 && !textBox.val() || event.keyCode == 83 && !textBox.val()) {
+				    
+				            }
+			    		if (event.keyCode === 13) {
+			    			 table.search(this.value.trim(), false, false).draw();
+			    		}
+			          
+			       });
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
 				console.log("error in ajax");
@@ -133,14 +129,19 @@
 							+"</label>"+
 							"<span	class='input-group-addon' style='color: #ff4081'>"+
 							"<i	class='fa fa-calendar' aria-hidden='true' style='float: right; margin-top: -37px;'>"+"</i>"+"</span>");
+					$( "#"+date[i].id ).datepicker({
+						dateFormat: "yy-mm-dd",
+						 maxDate: new Date()
+			        }); 
 					}
-					else if(date[i].type === "select"){
-						$("#registrationTableDiv").append("<div class='input-field col s6 m2' ><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
+					else if(date[i].type === "text"){
+						$("#registrationTableDiv").append("<div class='input-field col s6 m2' ><input type="+date[i].type+" id="+date[i].id+" maxlength='60' /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
 						
 					}
 					
+					
 				} 
-
+				
 				// dynamic dropdown portion
 				var dropdown=data.dropdownList;
 				for(i=0; i<dropdown.length; i++){
@@ -167,9 +168,7 @@
 				
 				}
 				
-				$('.datepicker').datepicker({
-					dateFormat: "yy-mm-dd"
-					});
+			
 			
 				cierRoletype=="CEIRAdmin"? $("#btnLink").css({display: "none"}) : $("#btnLink").css({display: "block"});
 				/*sourceType=="viaStolen" ? $("#btnLink").css({display: "none"}) : $("#btnLink").css({display: "none"});*/
@@ -178,11 +177,18 @@
 			}
 
 		}); 
+	
+		setAllDropdown();
+	};
+
+	
+	function setAllDropdown(){
+		
 		
 		$.getJSON('./getDropdownList/'+featureId+'/'+$("body").attr("data-userTypeID"), function(data) {
 			for (i = 0; i < data.length; i++) {
 				$('<option>').val(data[i].state).text(data[i].interp)
-				.appendTo('#recentStatus');
+				.appendTo('#recentStatus,#userStatus');
 			}
 		});
 		
@@ -200,11 +206,9 @@
 			$('<option>').val(data[i].value).text(data[i].interp)
 			.appendTo('#asType');
 			}
-			});
+		});
 		
-	};
-
-
+	}
 
 
 	function myFunction(message) {
@@ -275,11 +279,15 @@
 
 
 
-	function userApprovalPopup(userId,date,username){
+	function userApprovalPopup(Id,date,username,sessionUserName){
 		$("#registrationTxnId").text(username);
-		$('#approveInformation').openModal();
-		$("#userId").text(userId);
-		window.userID=userId;
+		$("#sessionUserName").val(sessionUserName);
+		$('#approveInformation').openModal({
+		 	   dismissible:false
+	    });
+		$("#userId").text(Id);
+		window.ID=Id;
+		window.userName = username
 		window.date=date.replace("="," ");
 	}
 
@@ -287,12 +295,15 @@
 
 
 	function aprroveUser(){
-		var userid= $("#userId").text();
+		var id= $("#userId").text();
 		var approveRequest={
-				"userId": parseInt(userid),
+				"id": parseInt(id),
 				"status" : "Approved",
 				"remark": $("#Reason").val(),	
-				"featureId" : parseInt(featureId)
+				"featureId" : parseInt(featureId),
+				"statusValue" : 3,
+				"username" : $("#sessionUserName").val(),
+				"userId" : parseInt(userId)
 		}
 		
 		$.ajax({
@@ -304,7 +315,7 @@
 			type : 'POST',
 			success : function(data) {
 				console.log("approveRequest----->"+JSON.stringify(approveRequest));
-				confirmApproveInformation(window.userID,window.date);
+				confirmApproveInformation(window.ID,window.date);
 			},
 			error : function() {
 				alert("Failed");
@@ -312,27 +323,38 @@
 		});
 	}
 
-	function confirmApproveInformation(userID,date){
+	function confirmApproveInformation(ID,date){
 		$('#approveInformation').closeModal(); 
-		setTimeout(function(){ $('#confirmApproveInformation').openModal();}, 200);
+		setTimeout(function(){ $('#confirmApproveInformation').openModal({
+		 	   dismissible:false
+	    });}, 200);
 		$("#registrationDate").text(date);
-		$("#RegistrationId").text(userID);
+		$("#RegistrationId").text(window.userName);
 	}
 
-	function userRejectPopup(userId){
-		$('#rejectInformation').openModal();
-		console.log("Reject userId is---->"+userId);
-		$("#userId").text(userId)
+	function userRejectPopup(Id,sessionUserName){
+		$('#rejectInformation').openModal({
+		 	   dismissible:false
+	    });
+		console.log("Reject userId is---->"+Id);
+		$("#userId").text(Id)
+		$("#rejectUserName").val(sessionUserName);
+		
+		
 	}
 
 
 	function rejectUser(userId){
-		var userid= $("#userId").text();
+		var id= $("#userId").text();
 		var rejectRequest={
-				"userId": parseInt(userid),
+				"id": parseInt(id),
 				"status" : "Rejected",
 				"remark": $("#Reason").val(),
-				"featureId" : parseInt(featureId)
+				"featureId" : parseInt(featureId),
+				"statusValue" : 4,
+				"username" : $("#rejectUserName").val(),
+				"userId" : parseInt($("body").attr("data-userID"))
+				
 		}
 		
 		$.ajax({
@@ -350,12 +372,15 @@
 			}
 		});
 		
+		return false;
 		
 	}
 
 	function confirmRejectInformation(){
 		$('#rejectInformation').closeModal();
-		$('#confirmRejectInformation').openModal();
+		$('#confirmRejectInformation').openModal({
+		 	   dismissible:false
+	    });
 	}
 
 	function exportButton(){
@@ -364,18 +389,20 @@
 		var asType =  $('#asType').val();
 		var userRoleTypeId =  $("#role").val();
 		var status =  $('#recentStatus').val();
+		var featureId = 8;
 		
 		var table = $('#registrationLibraryTable').DataTable();
 		var info = table.page.info(); 
 		var pageNo=info.page;
 		var pageSize =info.length;
 		console.log("--------"+pageSize+"---------"+pageNo);
-		console.log("RegistrationS----------------------tartDate  ="+startdate+"  RegistrationEndDate=="+endDate+"  asType="+asType+" userRoleTypeId ="+userRoleTypeId+"status  "+status)
-		window.location.href="./exportAdminRegistration?RegistrationStartDate="+startdate+"&RegistrationEndDate="+endDate+"&asType="+asType+"&userRoleTypeId="+userRoleTypeId+"&status="+status+"&pageSize="+pageSize+"&pageNo="+pageNo;
+		console.log("RegistrationStartDate  ="+startdate+"  RegistrationEndDate=="+endDate+"  asType="+asType+" userRoleTypeId ="+userRoleTypeId+"status  "+status+" featureId---->" +featureId)
+		window.location.href="./exportAdminRegistration?RegistrationStartDate="+startdate+"&RegistrationEndDate="+endDate+"&asType="+asType+"&userRoleTypeId="+userRoleTypeId+"&featureId="+featureId+"&status="+status+"&pageSize="+pageSize+"&pageNo="+pageNo;
 	}
 
 
 	function previewFile(srcFilePath,srcFileName){
+		
 		window.filePath = srcFilePath;
 		window.fileName = srcFileName;
 		window.fileExtension = fileName.replace(/^.*\./, '');
@@ -390,3 +417,125 @@
 			window.open(FinalLink);
 		}
 	}
+	
+
+function roleStatusChange(Id,sessionUserName, userTypeId){
+		
+	    window.Id = Id,
+	    window.sessionUserName = sessionUserName,
+	    window.userTypeId = userTypeId, 
+	    
+	    
+	   usertypeData2(userTypeId);
+	    
+	    $("#statusRoleChange").openModal({
+		 	   dismissible:false
+		    });
+		
+	    if(userTypeId == "4" || userTypeId == "5" || userTypeId == "6"){
+	    	$('input[name=group2]').attr("disabled", false);
+	    }else{
+	    	$('input[name=group2]').attr("disabled",true);
+	    }
+	}
+	 	
+
+
+function usertypeData2(id) {
+	$.ajax({
+		type : 'GET',
+		url :  './getTypeDropdownList/ROLE_TYPE/' + id,
+		contentType : "application/json",
+		dataType : 'html',
+		async : false,
+		success : function(data) {
+		    $("#usertypes").empty();
+			var response = JSON.parse(data);
+			var usertypeDropdown = $("#usertypes");
+			for (var i = 0; i < response.length; i++) {
+				var data2 = '<option value="' + response[i].value + '">'
+						+ response[i].interp + '</option>';
+				usertypeDropdown.append(data2);
+
+			}
+			usertypeDropdown.val(id);
+			$('#usertypes option[value="' + id + '"]').attr('disabled', true);
+			setTimeout(function() {
+				$('.dropdown-trigger').dropdown();
+				$('select').formSelect();
+			}, 2000);
+		},
+		error : function(xhr, ajaxOptions, thrownError) {
+		}
+	});
+}
+
+
+
+function userChangeStatus(entity){
+	if (entity == "status"){
+		 $("#statusChangemodal").openModal({
+		 	   dismissible:false
+		    });
+	}else{
+		$("#roleTypeChangemodal").openModal({
+		 	   dismissible:false
+		    });
+	}
+}
+	
+ function chanegeUserStatus(changeType){
+	 	var action;
+	 	if (changeType == "status" ){
+	 		action = 0; 
+	 	}else{
+	 		action = 1;
+	 	}
+	 	//var fileData = [];
+	 	//var selectedRoleType = $('#usertypes').val();
+	 	//var RoleType=fileData.push(selectedRoleType);
+	 	
+	 	var RoleType = $('#usertypes').val();
+	 	var status= $("#userStatus").val();
+	 	
+	 	var Request={
+				"action" : action,
+				"status" : parseInt(status),
+				"id": parseInt(window.Id),
+				"username" : window.sessionUserName,
+				"referenceId" : $("#refererenceId").val(),
+				"remark" : $("#changeStatusRemark").val(),
+				"userId" : parseInt(userId),
+				"roles"  : [parseInt(RoleType)],
+				"usertype": parseInt(window.userTypeId)
+				
+				
+		}
+		console.log("Request-->"+JSON.stringify(Request));
+		
+		$.ajax({
+			url : './adminChangeRequest',
+			data : JSON.stringify(Request),
+			dataType : 'json',
+			contentType : 'application/json; charset=utf-8',
+			type : 'POST',
+			success : function(data) {
+				console.log("Request----->"+JSON.stringify(Request));
+				$("#confirmUserStatus").openModal({
+				 	   dismissible:false
+			    });
+			},
+			error : function() {
+				alert("Failed");
+			}
+		});
+	 return false
+ }	
+ 
+ 
+ function resetButtons(){
+	 $('input[name=group1]').attr('checked',false);
+	 $('input[name=group2]').attr('checked',false);
+ }
+	
+
