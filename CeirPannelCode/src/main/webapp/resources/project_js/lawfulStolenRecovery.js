@@ -41,26 +41,20 @@ var userType = $("body").attr("data-roleType");
 var sourceType = localStorage.getItem("sourceType");
 
 function filterStolen(sourceTypeFiler,source){
+	
 	var source__val;
-console.log("----"+source)
+
 	if(source == 'filter' ) {
-		console.log("1");
 		source__val= source;
 	}
-	else if(source==undefined || source==null)
-		{
-		console.log("2");
-		source__val= $("body").attr("data-filterSorce");
-		}
 	else{
-		console.log("3");
-		source__val= $("body").attr("data-filterSorce");
+		source__val= $("body").attr("data-session-source");
 
 	}
+
 	var sessionFlag;
 	
-	console.log(source+"----- "+source__val)
-
+	
 	if(sourceType==null){
 		sessionFlag=2;
 
