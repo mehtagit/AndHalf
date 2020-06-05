@@ -607,7 +607,7 @@ public class ConsignmentServiceImpl {
 				return new GenricResponse(1, "Nothing to update for request.",payload_txnID);
 
 			}
-			
+
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
@@ -748,68 +748,68 @@ public class ConsignmentServiceImpl {
 			cmsb.with(new SearchCriteria("taxPaidStatus", consignmentMgmt.getTaxPaidStatus(), SearchOperation.EQUALITY, Datatype.STRING));
 
 		if(Objects.nonNull(consignmentMgmt.getConsignmentStatus())) {
-			 cmsb.with(new SearchCriteria("consignmentStatus", consignmentMgmt.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
-		 }
+			cmsb.with(new SearchCriteria("consignmentStatus", consignmentMgmt.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
+		}
 		if(Objects.nonNull(consignmentMgmt.getDisplayName()) && !consignmentMgmt.getDisplayName().isEmpty())
 			cmsb.addSpecification(cmsb.joinWithMultiple(new SearchCriteria("displayName",consignmentMgmt.getDisplayName(), SearchOperation.EQUALITY, Datatype.STRING)));
-		
+
 		else {
 
-			 if(Objects.nonNull(consignmentMgmt.getFeatureId()) && Objects.nonNull(consignmentMgmt.getUserTypeId())) {
+			if(Objects.nonNull(consignmentMgmt.getFeatureId()) && Objects.nonNull(consignmentMgmt.getUserTypeId())) {
 
-				 List<DashboardUsersFeatureStateMap> dashboardUsersFeatureStateMap = dashboardUsersFeatureStateMapRepository.findByUserTypeIdAndFeatureId(consignmentMgmt.getUserTypeId(), consignmentMgmt.getFeatureId());
-				 logger.debug(dashboardUsersFeatureStateMap);
-				 List<Integer> consignmentStatus = new LinkedList<>();
+				List<DashboardUsersFeatureStateMap> dashboardUsersFeatureStateMap = dashboardUsersFeatureStateMapRepository.findByUserTypeIdAndFeatureId(consignmentMgmt.getUserTypeId(), consignmentMgmt.getFeatureId());
+				logger.debug(dashboardUsersFeatureStateMap);
+				List<Integer> consignmentStatus = new LinkedList<>();
 
-				 if(Objects.nonNull(dashboardUsersFeatureStateMap)) {	
-					 
+				if(Objects.nonNull(dashboardUsersFeatureStateMap)) {	
+
 					if("dashboard".equalsIgnoreCase(source) || "menu".equalsIgnoreCase(source)) {
-							for(DashboardUsersFeatureStateMap dashboardUsersFeatureStateMap2 : dashboardUsersFeatureStateMap ) {
-								 consignmentStatus.add(dashboardUsersFeatureStateMap2.getState());
-							 }
-						}else if("filter".equalsIgnoreCase(source)) {
-							if(nothingInFilter(consignmentMgmt)) {
-								for(DashboardUsersFeatureStateMap dashboardUsersFeatureStateMap2 : dashboardUsersFeatureStateMap ) {
-									 consignmentStatus.add(dashboardUsersFeatureStateMap2.getState());
-								 }
-							}else {
-								for(StateMgmtDb stateMgmtDb : statusList ) {
-									consignmentStatus.add(stateMgmtDb.getState());
-								}
-							}
-						}else if("noti".equalsIgnoreCase(source)) {
-							logger.info("Skip status check, because source is noti.");
+						for(DashboardUsersFeatureStateMap dashboardUsersFeatureStateMap2 : dashboardUsersFeatureStateMap ) {
+							consignmentStatus.add(dashboardUsersFeatureStateMap2.getState());
 						}
+					}else if("filter".equalsIgnoreCase(source)) {
+						if(nothingInFilter(consignmentMgmt)) {
+							for(DashboardUsersFeatureStateMap dashboardUsersFeatureStateMap2 : dashboardUsersFeatureStateMap ) {
+								consignmentStatus.add(dashboardUsersFeatureStateMap2.getState());
+							}
+						}else {
+							for(StateMgmtDb stateMgmtDb : statusList ) {
+								consignmentStatus.add(stateMgmtDb.getState());
+							}
+						}
+					}else if("noti".equalsIgnoreCase(source)) {
+						logger.info("Skip status check, because source is noti.");
+					}
 
-					 logger.info("Array list to add is = " + consignmentStatus);
+					logger.info("Array list to add is = " + consignmentStatus);
 
-						if(!consignmentStatus.isEmpty()) {
-							 cmsb.addSpecification(cmsb.in("consignmentStatus", consignmentStatus));
-						 }else {
-							 logger.warn("no status are predefined for the user.");
-						 }
-					
-						
-						
-				 }
-			 }
-		 }
+					if(!consignmentStatus.isEmpty()) {
+						cmsb.addSpecification(cmsb.in("consignmentStatus", consignmentStatus));
+					}else {
+						logger.warn("no status are predefined for the user.");
+					}
 
-		 if(Objects.nonNull(consignmentMgmt.getSearchString()) && !consignmentMgmt.getSearchString().isEmpty()){
-			 cmsb.orSearch(new SearchCriteria("txnId", consignmentMgmt.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
-			 cmsb.orSearch(new SearchCriteria("supplierName", consignmentMgmt.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
-			 cmsb.orSearch(new SearchCriteria("organisationCountry", consignmentMgmt.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
-			 cmsb.orSearch(new SearchCriteria("quantity", consignmentMgmt.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
-			 cmsb.orSearch(new SearchCriteria("expectedArrivaldate", consignmentMgmt.getSearchString(), SearchOperation.EQUALITY, Datatype.DATE));
-			 cmsb.orSearch(new SearchCriteria("expectedDispatcheDate", consignmentMgmt.getSearchString(), SearchOperation.EQUALITY, Datatype.DATE));		
-			 cmsb.orSearch(new SearchCriteria("totalPrice", consignmentMgmt.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
-			 cmsb.orSearch(new SearchCriteria("deviceQuantity",consignmentMgmt.getSearchString(), SearchOperation.LIKE,Datatype.STRING));
-			 cmsb.orSearch(new SearchCriteria("consignmentNumber",consignmentMgmt.getSearchString(), SearchOperation.LIKE, Datatype.STRING)); 
-			 cmsb.orSearch(new SearchCriteria("supplierId",consignmentMgmt.getSearchString(), SearchOperation.LIKE,Datatype.STRING));
 
-		 }
 
-		 return cmsb;
+				}
+			}
+		}
+
+		if(Objects.nonNull(consignmentMgmt.getSearchString()) && !consignmentMgmt.getSearchString().isEmpty()){
+			cmsb.orSearch(new SearchCriteria("txnId", consignmentMgmt.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+			cmsb.orSearch(new SearchCriteria("supplierName", consignmentMgmt.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+			cmsb.orSearch(new SearchCriteria("organisationCountry", consignmentMgmt.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+			cmsb.orSearch(new SearchCriteria("quantity", consignmentMgmt.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+			cmsb.orSearch(new SearchCriteria("expectedArrivaldate", consignmentMgmt.getSearchString(), SearchOperation.EQUALITY, Datatype.DATE));
+			cmsb.orSearch(new SearchCriteria("expectedDispatcheDate", consignmentMgmt.getSearchString(), SearchOperation.EQUALITY, Datatype.DATE));		
+			cmsb.orSearch(new SearchCriteria("totalPrice", consignmentMgmt.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+			cmsb.orSearch(new SearchCriteria("deviceQuantity",consignmentMgmt.getSearchString(), SearchOperation.LIKE,Datatype.STRING));
+			cmsb.orSearch(new SearchCriteria("consignmentNumber",consignmentMgmt.getSearchString(), SearchOperation.LIKE, Datatype.STRING)); 
+			cmsb.orSearch(new SearchCriteria("supplierId",consignmentMgmt.getSearchString(), SearchOperation.LIKE,Datatype.STRING));
+
+		}
+
+		return cmsb;
 	}
 
 	public void setInterp(ConsignmentMgmt consignmentMgmt) {
@@ -926,32 +926,31 @@ public class ConsignmentServiceImpl {
 					Generic_Response_Notification generic_Response_Notification = userFeignClient.ceirInfoByUserTypeId(21);
 
 					logger.info("generic_Response_Notification::::::::"+generic_Response_Notification);
-
 					List<RegisterationUser> registerationUserList = generic_Response_Notification.getData();
 					if(registerationUserList == null || registerationUserList.isEmpty()) {
 						logger.info("no user found");
 					}
 					else {
-						
-					for(RegisterationUser registerationUser :registerationUserList) {
-						UserProfile userProfile_generic_Response_Notification = new UserProfile();
-						userProfile_generic_Response_Notification  = userProfileRepository.getByUserId(registerationUser.getId());
-						logger.info("firstname:::"+userProfile_generic_Response_Notification.getFirstName());
-						logger.info("DRT PENDING_CLEARANCE_FROM_DRT Notification:::with current_status : "+current_consignment_response.getConsignmentStatus());
-						placeholderMap.put("<First name>", userProfile_generic_Response_Notification.getFirstName());
-						placeholderMap.put("<Txn id>", current_consignment_response.getTxnId());
-						emailUtil.saveNotification("PENDING_CLEARANCE_FROM_DRT_Email_Message", 
-								userProfile_generic_Response_Notification, 
-								consignmentUpdateRequest.getFeatureId(),
-								Features.CONSIGNMENT, 
-								SubFeatures.ACCEPT,
-								payload_txnID,
-								current_consignment_response.getTxnId(),
-								placeholderMap, 
-								"DRT", 
-								"DRT",
-								ReferTable.USERS);
-					}
+
+						for(RegisterationUser registerationUser :registerationUserList) {
+							UserProfile userProfile_generic_Response_Notification = new UserProfile();
+							userProfile_generic_Response_Notification  = userProfileRepository.getByUserId(registerationUser.getId());
+							logger.info("firstname:::"+userProfile_generic_Response_Notification.getFirstName());
+							logger.info("DRT PENDING_CLEARANCE_FROM_DRT Notification:::with current_status : "+current_consignment_response.getConsignmentStatus());
+							placeholderMap.put("<First name>", userProfile_generic_Response_Notification.getFirstName());
+							placeholderMap.put("<Txn id>", current_consignment_response.getTxnId());
+							emailUtil.saveNotification("PENDING_CLEARANCE_FROM_DRT_Email_Message", 
+									userProfile_generic_Response_Notification, 
+									consignmentUpdateRequest.getFeatureId(),
+									Features.CONSIGNMENT, 
+									SubFeatures.ACCEPT,
+									payload_txnID,
+									current_consignment_response.getTxnId(),
+									placeholderMap, 
+									"DRT", 
+									"DRT",
+									ReferTable.USERS);
+						}
 					}
 				}
 
@@ -966,31 +965,31 @@ public class ConsignmentServiceImpl {
 					logger.info("generic_Response_Notification::::::::"+generic_Response_Notification);
 
 					List<RegisterationUser> registerationUserList = generic_Response_Notification.getData();
-if(registerationUserList == null || registerationUserList.isEmpty()) {
-	logger.info("no user found in this port/address");
-}
-else {
-					for(RegisterationUser registerationUser :registerationUserList) {
-						UserProfile userProfile_generic_Response_Notification = new UserProfile();
-						userProfile_generic_Response_Notification  = userProfileRepository.getByUserId(registerationUser.getId());
-						placeholderMap.put("<First name>", userProfile_generic_Response_Notification.getFirstName());
-						placeholderMap.put("<Txn id>", current_consignment_response.getTxnId());
-
-						//notification sent to custom - based on port/address
-						emailUtil.saveNotification("Pending_approval_from_customs_Email_Message", 
-								userProfile_generic_Response_Notification, 
-								consignmentUpdateRequest.getFeatureId(),
-								Features.CONSIGNMENT, 
-								SubFeatures.ACCEPT,
-								payload_txnID,
-								current_consignment_response.getTxnId(),
-								placeholderMap, 
-								null, 
-								"Custom",
-								ReferTable.USERS);
-
+					if(registerationUserList == null || registerationUserList.isEmpty()) {
+						logger.info("no user found in this port/address");
 					}
-}
+					else {
+						for(RegisterationUser registerationUser :registerationUserList) {
+							UserProfile userProfile_generic_Response_Notification = new UserProfile();
+							userProfile_generic_Response_Notification  = userProfileRepository.getByUserId(registerationUser.getId());
+							placeholderMap.put("<First name>", userProfile_generic_Response_Notification.getFirstName());
+							placeholderMap.put("<Txn id>", current_consignment_response.getTxnId());
+
+							//notification sent to custom - based on port/address
+							emailUtil.saveNotification("Pending_approval_from_customs_Email_Message", 
+									userProfile_generic_Response_Notification, 
+									consignmentUpdateRequest.getFeatureId(),
+									Features.CONSIGNMENT, 
+									SubFeatures.ACCEPT,
+									payload_txnID,
+									current_consignment_response.getTxnId(),
+									placeholderMap, 
+									null, 
+									"Custom",
+									ReferTable.USERS);
+
+						}
+					}
 				}
 			}
 			else {
@@ -1041,7 +1040,7 @@ else {
 
 			consignmentMgmt.setConsignmentStatus(nextStatus);				
 			consignmentMgmt.setTaxPaidStatus(TaxStatus.TAX_PAID.getCode());
-			
+
 			// Delete tac if available in pending_tac_approval_db.
 			FilterRequest filterRequest = new FilterRequest().setTxnId(consignmentMgmt.getTxnId());
 			if(pendingTacApprovedImpl.findByTxnId(filterRequest).getErrorCode() == 0) {
@@ -1096,26 +1095,26 @@ else {
 						logger.info("no user found");
 					}
 					else {
-						
-					for(RegisterationUser registerationUser :registerationUserList) {
-						UserProfile userProfile_generic_Response_Notification = new UserProfile();
-						userProfile_generic_Response_Notification  = userProfileRepository.getByUserId(registerationUser.getId());
 
-						placeholderMap.put("<First name>", userProfile_generic_Response_Notification.getFirstName());
-						placeholderMap.put("<Txn id>", current_consignment_response.getTxnId());
+						for(RegisterationUser registerationUser :registerationUserList) {
+							UserProfile userProfile_generic_Response_Notification = new UserProfile();
+							userProfile_generic_Response_Notification  = userProfileRepository.getByUserId(registerationUser.getId());
 
-						emailUtil.saveNotification("Consignment_Approved_CustomCEIRAdmin_Email_Message", 
-								userProfile_generic_Response_Notification,
-								consignmentUpdateRequest.getFeatureId(),
-								Features.CONSIGNMENT, 
-								SubFeatures.ACCEPT,
-								consignmentUpdateRequest.getTxnId(),
-								current_consignment_response.getTxnId(),
-								placeholderMap, 
-								null, 
-								"CEIRAdmin",
-								ReferTable.USERS);
-					}
+							placeholderMap.put("<First name>", userProfile_generic_Response_Notification.getFirstName());
+							placeholderMap.put("<Txn id>", current_consignment_response.getTxnId());
+
+							emailUtil.saveNotification("Consignment_Approved_CustomCEIRAdmin_Email_Message", 
+									userProfile_generic_Response_Notification,
+									consignmentUpdateRequest.getFeatureId(),
+									Features.CONSIGNMENT, 
+									SubFeatures.ACCEPT,
+									consignmentUpdateRequest.getTxnId(),
+									current_consignment_response.getTxnId(),
+									placeholderMap, 
+									null, 
+									"CEIRAdmin",
+									ReferTable.USERS);
+						}
 					}
 				}
 			}
@@ -1220,9 +1219,9 @@ else {
 							consignmentUpdateRequest.getRoleType(),
 							"Importer"));
 
-					
-					
-					
+
+
+
 					Generic_Response_Notification generic_Response_Notification = userFeignClient.ceirInfoByUserTypeId(8);
 
 					logger.info("generic_Response_Notification::::::::"+generic_Response_Notification);
@@ -1232,26 +1231,26 @@ else {
 						logger.info("no user found");
 					}
 					else {
-						
-					for(RegisterationUser registerationUser :registerationUserList) {
-						UserProfile userProfile_generic_Response_Notification = new UserProfile();
-						userProfile_generic_Response_Notification  = userProfileRepository.getByUserId(registerationUser.getId());
-						logger.info(" firstName :::::"+userProfile_generic_Response_Notification.getFirstName());
-						placeholderMap.put("<First name>", userProfile_generic_Response_Notification.getFirstName());
-						placeholderMap.put("<Txn id>", current_consignment_response.getTxnId());
 
-						
-						rawMails.add(new RawMail("CONSIGNMENT_PROCESS_SUCCESS_TO_CEIR_MAIL", 
-								userProfile_generic_Response_Notification, 
-								consignmentUpdateRequest.getFeatureId(), 
-								Features.CONSIGNMENT,
-								SubFeatures.ACCEPT,
-								consignmentUpdateRequest.getTxnId(), 
-								current_consignment_response.getTxnId(), 
-								placeholderMap, ReferTable.USERS, 
-								consignmentUpdateRequest.getRoleType(),
-								"CEIRAdmin"));
-}
+						for(RegisterationUser registerationUser :registerationUserList) {
+							UserProfile userProfile_generic_Response_Notification = new UserProfile();
+							userProfile_generic_Response_Notification  = userProfileRepository.getByUserId(registerationUser.getId());
+							logger.info(" firstName :::::"+userProfile_generic_Response_Notification.getFirstName());
+							placeholderMap.put("<First name>", userProfile_generic_Response_Notification.getFirstName());
+							placeholderMap.put("<Txn id>", current_consignment_response.getTxnId());
+
+
+							rawMails.add(new RawMail("CONSIGNMENT_PROCESS_SUCCESS_TO_CEIR_MAIL", 
+									userProfile_generic_Response_Notification, 
+									consignmentUpdateRequest.getFeatureId(), 
+									Features.CONSIGNMENT,
+									SubFeatures.ACCEPT,
+									consignmentUpdateRequest.getTxnId(), 
+									current_consignment_response.getTxnId(), 
+									placeholderMap, ReferTable.USERS, 
+									consignmentUpdateRequest.getRoleType(),
+									"CEIRAdmin"));
+						}
 					}
 					emailUtil.saveNotification(rawMails);
 				}
@@ -1324,10 +1323,10 @@ else {
 			consignmentMgmt.setDrtID(consignmentUpdateRequest.getUserId());
 			consignmentMgmt.setRemarks(consignmentUpdateRequest.getRemarks());
 		}
-		
+
 		consignmentMgmt.setFeatureId(consignmentUpdateRequest.getFeatureId());
 		consignmentMgmt.setRoleType(consignmentUpdateRequest.getRoleType());
-		
+
 		if(consignmentTransaction.executeUpdateStatusConsignment(consignmentMgmt,webActionDb)) {
 
 			ConsignmentMgmt current_consignment_response = consignmentRepository.getByTxnId(payload_txnID);
@@ -1401,7 +1400,7 @@ else {
 		}
 	}
 
-	
+
 	public boolean nothingInFilter(FilterRequest filterRequest) {
 		if(Objects.nonNull(filterRequest.getStartDate()) || !filterRequest.getStartDate().isEmpty()) {
 			return false;
