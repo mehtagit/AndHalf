@@ -82,14 +82,16 @@ FeignCleintImplementation feignCleintImplementation;
 
 	@GetMapping("uploadPaidStatus")
 	public ModelAndView pageView(@RequestParam(name="via", required = false) String via,@RequestParam(name="NID", required = false) String NID,HttpSession session
-			,@RequestParam(name="txnID",required = false) String txnID) {
+			,@RequestParam(name="txnID",required = false) String txnID,@RequestParam(name="source",defaultValue ="menu" ,required = false) String source) {
 		ModelAndView modelAndView = new ModelAndView();
 		try {
 		if((session.getAttribute("usertype").equals("CEIRAdmin") || session.getAttribute("usertype").equals("DRT")) && !("other".equals(via))) {
+			session.setAttribute("filterSource", source);
 			modelAndView.setViewName("uploadPaidStatus");
 			
 		}
 		else if("other".equals(via)) {
+			session.setAttribute("filterSource", source);
 			modelAndView.setViewName("uploadPaidStatus");
 		
 		}
@@ -275,7 +277,7 @@ FeignCleintImplementation feignCleintImplementation;
 		filterRequestuserpaidStatus.setFeatureId(12);
 		filterRequestuserpaidStatus.setUserType(userType);
 		log.info(" request passed to the exportTo Excel Api =="+filterRequestuserpaidStatus+" *********** pageSize"+pageSize+"  pageNo  "+pageNo);
-		Object response = userPaidStatusFeignClient.consignmentFilter(filterRequestuserpaidStatus, pageNo, pageSize, file);
+		Object response = userPaidStatusFeignClient.consignmentFilter(filterRequestuserpaidStatus, pageNo, pageSize, file,"filter");
 		Gson gson= new Gson(); 
 		String apiResponse = gson.toJson(response);
 		fileExportResponse = gson.fromJson(apiResponse, FileExportResponse.class);

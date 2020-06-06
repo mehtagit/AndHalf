@@ -41,7 +41,6 @@ function verifyOtp() {
 		dataType : 'html',
 		data : JSON.stringify(obj),
 		success : function(data) {
-			console.log(data);
 			var resp = JSON.parse(data);
 			if (resp.statusCode == "200") {
 				// window.location.href='#otpMessage';
@@ -105,7 +104,6 @@ function verifyOtp2() {
 		dataType : 'html',
 		data : JSON.stringify(obj),
 		success : function(data) {
-			console.log(data);
 			var resp = JSON.parse(data);
 			if (resp.statusCode == "200") {
 				// window.location.href='#otpMessage';
@@ -331,7 +329,6 @@ function questionData(username) {
 				contentType : "application/json",
 				dataType : 'html',
 				success : function(data) {
-					console.log("response  "+data)
 					var resp = JSON.parse(data);
 					var usertypeDropdown = $("#questionId");
 					usertypeDropdown.empty();
@@ -423,14 +420,12 @@ function saveRegistration() {
 			}
 		}
 	});
-	console.log("question data:  " + JSON.stringify(obj));
 	var formData;
 
 	formData = new FormData();
 	formData.append('file', $('#file')[0].files[0]);
 	formData.append('data', JSON.stringify(obj));
 	formData.append('vatFile', $('#vatFile')[0].files[0]);
-	console.log("data=  " + formData);
 	registrationAjax(formData);
 	// $("#btnSave").prop('disabled', true);
 	/*
@@ -497,7 +492,6 @@ function saveCustomRegistration() {
 			}
 		}
 	});
-	console.log("question data:  " + JSON.stringify(obj));
 	var formData;
 	var usertypeId = $('#usertypeId').val();
 	formData = new FormData();
@@ -508,7 +502,6 @@ function saveCustomRegistration() {
 		formData.append('vatFile', $('#vatFile')[0].files[0]);
 	}
 	formData.append('data', JSON.stringify(obj));
-	console.log("data=  " + JSON.stringify(formData));
 	otherRegistrationAjax(formData);
 	return false;
 }
@@ -573,7 +566,6 @@ function saveOperatorRegistration() {
 					}
 				}
 			});
-	console.log("question data:  " + JSON.stringify(obj));
 	var formData;
 
 	formData = new FormData();
@@ -581,7 +573,6 @@ function saveOperatorRegistration() {
 	formData.append('photo', $('#photo')[0].files[0]);
 	formData.append('idCard', $('#idCard')[0].files[0]);
 	formData.append('data', JSON.stringify(obj));
-	console.log("data=  " + formData);
 	otherRegistrationAjax(formData);
 	return false;
 }
@@ -594,7 +585,6 @@ function registrationAjax(obj) {
 		contentType : false,
 		success : function(response) {
 			var respData = JSON.parse(JSON.stringify(response));
-			console.log("response from server:  " + JSON.stringify(respData));
 			if (respData.statusCode == 200) {
 
 				$.i18n().locale = $('#langlist').val();
@@ -638,7 +628,6 @@ function otherRegistrationAjax(obj) {
 		contentType : false,
 		success : function(response) {
 			var respData = JSON.parse(JSON.stringify(response));
-			console.log("response from server:  " + JSON.stringify(respData));
 			if (respData.statusCode == 200) {
 				$.i18n().locale = $('#langlist').val();
 				$.i18n().load({
@@ -679,14 +668,11 @@ function openEndUserGrievancePage(reportType) {
 }
 
 function openEndUserStockPage(reportType) {
-	console.log("reportType==" + reportType.value);
 	window.location.href = "./uploadAstock?reportType=" + reportType.value;
-	console.log("details." + window.location.href);
 	/*
 	 * $.ajax({ type : 'POST', url : contextpath +
 	 * '/openEndUserStockPage?reportType='+reportType.value, processData :
 	 * false, contentType : false, success : function(response) {
-	 * console.log("sucess function...%%%%") var
 	 * respData=JSON.parse(JSON.stringify(response)); console.log("response from
 	 * server: "+JSON.stringify(respData)); if(respData.statusCode==200){
 	 * //window.location.href='./verifyOtpPage/?userid='+respData.userId;

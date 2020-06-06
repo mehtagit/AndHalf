@@ -37,7 +37,8 @@ public class AdminRegistrationRequest {
 		{"/registrationRequest"},method={org.springframework.web.bind.annotation.
 				RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}
 			)
-	    public ModelAndView viewConsignment(HttpSession session,@RequestParam(name="txnID",required = false) String txnID) {
+	    public ModelAndView viewConsignment(HttpSession session,@RequestParam(name="txnID",required = false) String txnID,
+	    		@RequestParam(name="source",defaultValue = "menu",required = false) String source) {
 		ModelAndView mv = new ModelAndView();
 		 log.info(" view Admin Registration entry point."); 
 		 mv.setViewName("AdminRegistrationRequest");
@@ -127,7 +128,7 @@ public class AdminRegistrationRequest {
 		filterRequest.setUserType(userType);
 		filterRequest.setFeatureId(featureId);
 		log.info(" request passed to the exportTo Excel Api =="+filterRequest+" *********** pageSize"+pageSize+"  pageNo  "+pageNo);
-		Object response = userProfileFeignImpl.registrationRequest(filterRequest, pageNo, pageSize,file);
+		Object response = userProfileFeignImpl.registrationRequest(filterRequest, pageNo, pageSize,file,"filter");
 		Gson gson= new Gson(); 
 		String apiResponse = gson.toJson(response);
 		fileExportResponse = gson.fromJson(apiResponse, FileExportResponse.class);

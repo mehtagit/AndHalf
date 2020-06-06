@@ -372,7 +372,7 @@ String usertypeId="${usertypeId}";
 										<h6 class="file-upload-heading"><spring:message code="registration.UploadNationalityInformation" /> <span class="star">*</span></h6>
 										<div class="file-field input-field col s12 m6" style="margin-top: 5px; padding-left: 0;">
 											<div class="btn">
-												<span><spring:message code="input.selectfile" /></span> <input name="file" type="file" id="file" accept=".pdf"
+												<span><spring:message code="input.selectfile" /></span> <input name="file" type="file" id="file" onchange="isImageValid('file')"
 												oninput="InvalidMsg(this,'fileType','<spring:message code="validation.file" />');" oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.file" />');" pattern="{0,30}"
 												 >
 											</div>
@@ -809,6 +809,24 @@ String usertypeId="${usertypeId}";
 			
 		</div>
 	</div>
+	
+	<div id="fileFormateModal" class="modal">
+		<h6 class="modal-header"><spring:message code="fileValidationModalHeader" /></h6>
+		<div class="modal-content">
+			<div class="row">
+				<h6 id="fileErrormessage"><spring:message code="fileValidationName" /><br> <br> <spring:message code="fileValidationFormate" /> <br><br> <spring:message code="fileValidationSize" /> </h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<div class="input-field col s12 center">
+						<button class="modal-close waves-effect waves-light btn" onclick="clearFilesName('file')"
+							style="margin-left: 10px;"><spring:message code="modal.ok" /></button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
 		<!-- i18n library -->
 	<script type="text/javascript"
 		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
@@ -961,6 +979,13 @@ String usertypeId="${usertypeId}";
          		document.getElementById("vatNumberField").style.display = "none";
          		document.getElementById("vatFileDiv").style.display = "none";
          	}
+         }
+         function clearFilesName(id)
+         {
+        		//var fieldId=$('#'+id).val();
+        		
+        			$('#'+id).val('');
+        		    $("#fileText").val('');
          }
          </script>
 </body>

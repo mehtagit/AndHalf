@@ -113,7 +113,8 @@ data-stolenselected-roleType="${stolenselectedUserTypeId}"
 session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}"
 data-session-id="${not empty param.id ? param.id : 'null'}"
 data-session-roles="${not empty param.roles ? param.roles : 'null'}"
-data-session-type="${not empty param.type ? param.type : 'null'}">
+data-session-type="${not empty param.type ? param.type : 'null'}"
+data-session-source="${not empty param.source ? param.source : 'menu'}">
 
 
 	<!-- START CONTENT -->

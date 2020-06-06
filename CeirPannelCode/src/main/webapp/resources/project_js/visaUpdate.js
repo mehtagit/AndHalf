@@ -25,7 +25,7 @@
 					
 			$(document).ready(function(){
 				$('div#initialloader').fadeIn('fast');
-				DataTable(lang);
+				DataTable(lang,null);
 				pageRendering();
 				$.getJSON('./getDropdownList/'+featureId+'/'+$("body").attr("data-userTypeID"), function(data) {
 					for (i = 0; i < data.length; i++) {
@@ -46,8 +46,18 @@
 
 			//**************************************************Grievance table**********************************************
 
-			function DataTable(lang){
-				
+			function DataTable(lang,source){
+				var source__val;
+					console.log("1=="+source);
+				if(source == 'filter' ) {
+					source__val= source;
+				}
+				else{
+					source__val= $("body").attr("data-session-source");
+
+				}
+				console.log("2=="+source__val);
+
 				//var featureName = $('#feature').val() == null ? null : $("#feature option:selected").text();
 				
 				var filterRequest={
@@ -87,7 +97,7 @@
 									"sUrl": langFile  
 								},
 							ajax: {
-								url : 'visaUpdatedata',
+								url : 'visaUpdatedata?source='+source__val,
 								type: 'POST',
 								dataType: "json",
 								data : function(d) {

@@ -370,12 +370,12 @@ var contextpath = "${context}";
 									<h6 class="file-upload-heading"><spring:message code="registration.uploadnationalid" /> <span class="star">*</span></h6>
 									<div class="btn">
 										<span><spring:message code="input.selectfile" /></span>
-										<input type="file" id="NationalIdImage" placeholder=""
+										<input type="file" id="NationalIdImage" onchange="isImageValid('NationalIdImage')" placeholder=""
 										oninput="InvalidMsg(this,'fileType','<spring:message code="validation.selectImgMsg" />');" oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.selectImgMsg" />');"
 										 required/>
 									</div>
 									<div class="file-path-wrapper">
-									<input class="file-path validate" type="text" placeholder="<spring:message code="registration.uploadnationalid" />" />
+									<input class="file-path validate" id="NIdImageText" type="text" placeholder="<spring:message code="registration.uploadnationalid" />" />
 									</div>
 								</div>
 
@@ -783,6 +783,24 @@ var contextpath = "${context}";
 			
 		</div>
 	</div>
+	
+	<div id="fileFormateModal" class="modal">
+		<h6 class="modal-header"><spring:message code="fileValidationModalHeader" /></h6>
+		<div class="modal-content">
+			<div class="row">
+				<h6 id="fileErrormessage"><spring:message code="fileValidationName" /><br> <br> <spring:message code="fileValidationFormate" /> <br><br> <spring:message code="fileValidationSize" /> </h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<div class="input-field col s12 center">
+						<button class="modal-close waves-effect waves-light btn" onclick="clearFilesName('file')"
+							style="margin-left: 10px;"><spring:message code="modal.ok" /></button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
 	<!-- ================================================
     Scripts
     ================================================ -->
@@ -877,6 +895,13 @@ var contextpath = "${context}";
             	});
         });   
 
+        function clearFilesName(id)
+        {
+       		//var fieldId=$('#'+id).val();
+       		
+       			$('#'+id).val('');
+       		    $("#NIdImageText").val('');
+        }
   </script>
 
 	<script>
