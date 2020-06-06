@@ -19,38 +19,40 @@ class IMEI_LUHN_CHECK {
 
     static String executeRule(String[] args, Connection conn) {
         String res = "Yes";
-        if (args[9].trim().equalsIgnoreCase("IMEI")   ||  args[10].trim().equalsIgnoreCase("GSM")  ) {
+        if (args[9].trim().equalsIgnoreCase("IMEI") || args[10].trim().equalsIgnoreCase("GSM")) {
             res = ExecuteLuhnAlgorithm(args[3]);
+        } else {
+            res = "Yes";
         }
         return res;
     }
 
-    static String executeAction(String[] args, Connection conn,  BufferedWriter bw) {
+    static String executeAction(String[] args, Connection conn, BufferedWriter bw) {
         logger.debug(" IMEI_LUHN_CHECK  executeAction");
 
         try {
             switch (args[13]) {
-            case "Allow": {
-                logger.info("Action is Allow");
-            }
-            break;
-            case "Skip": {
-                logger.info("Action is Skip");
-            }
-            break;
-            case "Reject": {
-                logger.info("Action is Reject");
-                String fileString = args[15] + " , Error Description : IMEI does not pass the Checksum algorithm  ";
-                 bw.write(fileString);
-                bw.newLine();
-            }
-            break;
-            case "Block": {
-                logger.info("Action is Block");
-            }
-            break;
-            case "Report": {
-                logger.info("Action is Report");
+                case "Allow": {
+                    logger.info("Action is Allow");
+                }
+                break;
+                case "Skip": {
+                    logger.info("Action is Skip");
+                }
+                break;
+                case "Reject": {
+                    logger.info("Action is Reject");
+                    String fileString = args[15] + " , Error Description : IMEI does not pass the Checksum algorithm  ";
+                    bw.write(fileString);
+                    bw.newLine();
+                }
+                break;
+                case "Block": {
+                    logger.info("Action is Block");
+                }
+                break;
+                case "Report": {
+                    logger.info("Action is Report");
 
 //                try {
 //                     
@@ -72,22 +74,22 @@ class IMEI_LUHN_CHECK {
 //                    logger.info("Error..." + e);
 //                    as = "Error";
 //                }
-            }
-            break;
+                }
+                break;
 
-            case "SYS_REG": {
-                logger.info("Action is SYS_REG");
+                case "SYS_REG": {
+                    logger.info("Action is SYS_REG");
+                }
+                break;
+                case "USER_REG": {
+                    logger.info("Action is USER_REG");
+                }
+                break;
+                default:
+                    logger.info(" The Action " + args[13] + "  is Not Defined  ");
             }
-            break;
-            case "USER_REG": {
-                logger.info("Action is USER_REG");
-            }
-            break;
-            default:
-                logger.info(" The Action " + args[13] + "  is Not Defined  ");
-        }
 
-         return "Success";
+            return "Success";
         } catch (Exception e) {
             logger.info(" Error " + e);
             return "Failure";

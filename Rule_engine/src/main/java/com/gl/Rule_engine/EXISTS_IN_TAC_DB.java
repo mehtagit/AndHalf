@@ -24,9 +24,7 @@ class EXISTS_IN_TAC_DB {
         String res = "No";
         logger.debug("EXISTS_IN_TAC_DB executeRule");
         try {
-
             String tac = "";
-
             if (args[2].equalsIgnoreCase("CDR")) {
                 if (args[10].equalsIgnoreCase("GSM")) {
                     tac = args[3].trim().substring(0, 8);
@@ -34,7 +32,6 @@ class EXISTS_IN_TAC_DB {
             } else {
                 tac = args[3].trim().substring(0, 8);
             }
-
             logger.debug("tac val .." + tac);
             if (tac.equalsIgnoreCase("")) {
                 res = "No";
@@ -46,7 +43,6 @@ class EXISTS_IN_TAC_DB {
         } catch (Exception e) {
             logger.info("errror " + e);
         }
-
         return res;
     }
 
@@ -86,9 +82,6 @@ class EXISTS_IN_TAC_DB {
                 bw.newLine();
             }
             break;
-            
-            
-            
             case "USER_REG": {
                 logger.info("Action is USER_REG");
             }

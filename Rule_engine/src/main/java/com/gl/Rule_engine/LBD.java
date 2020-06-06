@@ -23,13 +23,12 @@ public class LBD {
     public static String executeRule(String[] args, Connection conn) {
 
         String res = "";
-//        logger.info("LBD executeRule");
         try {
-
+            logger.info(" dvcStatus == 10/12 --> [Y] fileStat from stolenRecovrMgmt = 5  -->   Rslt[Y]   fi [N]");
             int count = 0;
             int count1 = 0;
-            Statement stmt2 = conn.createStatement();
-            ResultSet result1 = stmt2.executeQuery("select device_status from device_operator_db where imei_esn_meid='" + args[3] + "' ");
+            Statement stmt = conn.createStatement();
+            ResultSet result1 = stmt.executeQuery("select device_status from device_operator_db where imei_esn_meid='" + args[3] + "' ");
             logger.debug("Qury ..select device_status from device_operator_db where imei_esn_meid='" + args[3] + "' ");
             try {
                 while (result1.next()) {
@@ -38,22 +37,19 @@ public class LBD {
             } catch (Exception e) {
                 logger.info("E1.." + e);
             }
-            result1.close();
-            stmt2.close();
-            Statement stmt3 = conn.createStatement();
-            ResultSet result2 = stmt3.executeQuery("select  device_status from device_lawful_db where imei_esn_meid='" + args[3] + "' ");
+            stmt = conn.createStatement();
+            ResultSet result2 = stmt.executeQuery("select  device_status from device_lawful_db where imei_esn_meid='" + args[3] + "' ");
             logger.debug("Qury ..select device_status from device_lawful_db where imei_esn_meid='" + args[3] + "' ");
             try {
                 while (result2.next()) {
                     count1 = result2.getInt(1);
                 }
-                result2.close();
-                stmt3.close();
+
             } catch (Exception e) {
                 logger.info("E2." + e);
             }
-//            logger.info("device_operator_db  .." + count);
-//            logger.info("device_lawful_db .." + count1);
+            logger.debug("device_operator_db  .." + count);
+            logger.debug("device_lawful_db .." + count1);
 
             if (count == 12 || count1 == 10) {
                 String ddz = "device_operator_db";
@@ -61,7 +57,7 @@ public class LBD {
                 if (count1 == 10) {
                     ddz = "device_lawful_db";
                 }
-                ResultSet result3 = stmt3.executeQuery("select file_status from stolenand_recovery_mgmt where txn_id =     (select  txn_id from " + ddz + " where imei_esn_meid='" + args[3] + "'   )");
+                ResultSet result3 = stmt.executeQuery("select file_status from stolenand_recovery_mgmt where txn_id =     (select  txn_id from " + ddz + " where imei_esn_meid='" + args[3] + "'   )");
                 logger.debug("After Qury : ..     select file_status from stolenand_recovery_mgmt where txn_id =     (select  txn_id from " + ddz + " where imei_esn_meid='" + args[3] + "'   )");
                 try {
                     while (result3.next()) {
@@ -72,11 +68,14 @@ public class LBD {
                     } else {
                         res = "No";
                     }
+                    result1.close();
+                    result2.close();
                     result3.close();
-                    stmt3.close();
+                    stmt.close();
                 } catch (Exception e) {
                     logger.error("E2." + e);
                 }
+
                 logger.debug("Result for Qury::." + res);
 
             } else {

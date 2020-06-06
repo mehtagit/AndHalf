@@ -23,10 +23,10 @@ class TAC_FORMAT {
         try {
             if ((args[3].length() == 8 && (args[3].matches("^[-\\w.]+")))) {      // args[10].equalsIgnoreCase("GSM") &&
                 res = "Yes";
-                logger.info("TAC_FORMAT   ok ");
+                logger.debug("TAC_FORMAT   ok ");
             } else {
                 res = "No";
-                logger.info("TAC_FORMAT   NOT OK ");
+                logger.debug("TAC_FORMAT   NOT OK ");
             }
         } catch (Exception e) {
             logger.info("Error.." + e);

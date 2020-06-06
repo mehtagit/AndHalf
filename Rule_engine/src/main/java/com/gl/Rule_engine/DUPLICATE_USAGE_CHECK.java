@@ -18,7 +18,7 @@ import org.apache.log4j.Logger;
 class DUPLICATE_USAGE_CHECK {
 
     static final Logger logger = Logger.getLogger(DUPLICATE_USAGE_CHECK.class);
-
+            
     static String executeRule(String[] args, Connection conn) {
         String res = null;
         try {
