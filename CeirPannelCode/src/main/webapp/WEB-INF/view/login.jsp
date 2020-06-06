@@ -26,6 +26,7 @@
 	type="text/css" rel="stylesheet" media="screen,projection">
 
 <!-- Favicons-->
+<link rel="shortcut icon" href="">
 <!--<link rel="icon" href="images/favicon/favicon-32x32.png" sizes="32x32">-->
 <!-- Favicons-->
 <link rel="apple-touch-icon-precomposed"
@@ -284,7 +285,7 @@ a#newUserLink {
 							pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
 							maxlength="10" min="8"
 							title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
-							required="required" id="password" class="password3" />
+							required="required" id="password2" class="password3" />
 				<div class="input-field-addon">
 		<i  class="fa fa-eye-slash teal-text toggle-password3" aria-hidden="true"></i>
 											</div>				
@@ -382,8 +383,8 @@ a#newUserLink {
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 	<!-- chartist -->
-	<script type="text/javascript"
-		src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script>
+<%-- 	<script type="text/javascript"
+		src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script> --%>
 	<!-- data-tables -->
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>

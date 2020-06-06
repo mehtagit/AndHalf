@@ -19,7 +19,7 @@
 	});
 
 	$(document).ready(function(){
-		registrationDatatable(null);
+		registrationDatatable(lang,null);
 		pageRendering();
 		
 	});
@@ -29,7 +29,7 @@
 
 	//**************************************************Registration table**********************************************
 
-	function registrationDatatable(source){
+	function registrationDatatable(lang,source){
 		var source__val;
 
 		if(source == 'filter' ) {

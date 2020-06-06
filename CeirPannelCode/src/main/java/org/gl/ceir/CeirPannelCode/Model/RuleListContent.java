@@ -1,5 +1,6 @@
 package org.gl.ceir.CeirPannelCode.Model;
 
+
 import org.springframework.stereotype.Component;
 
 @Component
@@ -11,7 +12,17 @@ public class RuleListContent {
 	private String description;
 	private String state;
 	private String output;
-		public Integer getId() {
+
+
+	// parameters 	
+
+	public String userName;
+	private Integer featureId;
+	private Integer userTypeId;
+	private String roleType;
+	private Integer userId;
+
+	public Integer getId() {
 		return id;
 	}
 	public void setId(Integer id) {
@@ -70,8 +81,48 @@ public class RuleListContent {
 		builder.append(state);
 		builder.append(", output=");
 		builder.append(output);
+		builder.append(", userName=");
+		builder.append(userName);
+		builder.append(", featureId=");
+		builder.append(featureId);
+		builder.append(", userTypeId=");
+		builder.append(userTypeId);
+		builder.append(", roleType=");
+		builder.append(roleType);
+		builder.append(", userId=");
+		builder.append(userId);
 		builder.append("]");
 		return builder.toString();
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	public Integer getFeatureId() {
+		return featureId;
+	}
+	public void setFeatureId(Integer featureId) {
+		this.featureId = featureId;
+	}
+	public Integer getUserTypeId() {
+		return userTypeId;
+	}
+	public void setUserTypeId(Integer userTypeId) {
+		this.userTypeId = userTypeId;
+	}
+	public String getRoleType() {
+		return roleType;
+	}
+	public void setRoleType(String roleType) {
+		this.roleType = roleType;
+	}
+	public Integer getUserId() {
+		return userId;
+	}
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 
 }

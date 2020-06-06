@@ -157,7 +157,7 @@ public class RegistrationReqDatatableController {
 			log.info("USER STATUS:::::::::"+userStatus);
 			log.info("session value user Type=="+session.getAttribute("usertype"));
 			
-			String[] names= {"FilterButton", Translator.toLocale("button.filter"),"registrationDatatable("+ConfigParameters.languageParam+")","submitFilter"};
+			String[] names= {"FilterButton", Translator.toLocale("button.filter"),"registrationDatatable("+ConfigParameters.languageParam+",'filter')","submitFilter"};
 			for(int i=0; i< names.length ; i++) {
 				button = new Button();
 				button.setType(names[i]);

@@ -65,14 +65,14 @@ public class StolenRecovery {
 	
 	
 	@RequestMapping(value={"/stolenRecovery"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST})
-			public ModelAndView  viewStolenRecovery( HttpSession session , @RequestParam(name="userTypeId",required=false) String selectedUserTypeId 
-					,@RequestParam(name="txnID",required = false) String txnID, @RequestParam(name="FeatureId",required = false) String featureId,
-					@RequestParam(name="requestType" ,required = false)String requestType,
-					@RequestParam(name="source",defaultValue = "menu",required = false) String source
-					) {
-					
+	public ModelAndView  viewStolenRecovery( HttpSession session , @RequestParam(name="userTypeId",required=false) String selectedUserTypeId 
+			,@RequestParam(name="txnID",required = false) String txnID, @RequestParam(name="FeatureId",required = false) String featureId,
+			@RequestParam(name="requestType" ,required = false)String requestType,
+			@RequestParam(name="source",defaultValue = "menu",required = false) String source
+			) {
+			
 		ModelAndView mv = new ModelAndView();
-		log.info("entry point in stolen recovery  page with featureId-->  " +featureId);
+		log.info("entry point in stolen recovery  page with featureId-->  " +featureId+"  source  =="+source);
 		try {
 		String roletype=session.getAttribute("usertype").toString();
 		String OperatorId = String.valueOf(session.getAttribute("operatorTypeId"));
@@ -88,23 +88,26 @@ public class StolenRecovery {
 		{
 			if((roletype.equals("Lawful Agency") || roletype.equals("CEIRAdmin")) && "5".equals(featureId))
 			{
-				log.info("return Lawful Stolen Recovery**roletype****"+roletype+" featureId******" +featureId);
+				log.info(" 1 return Lawful Stolen Recovery**roletype****"+roletype+" featureId******" +featureId);
 				session.removeAttribute("requestType");
 				session.setAttribute("requestType",requestType);
+				session.setAttribute("filterSource", source);
 				mv.setViewName("lawfulStolenRecovery");
 			}
 			else {
-				log.info("return stolen Recovery**roletype****"+roletype+" featureId******" +featureId+"****OperatorId***"+OperatorId);
+				log.info("  2  return stolen Recovery**roletype****"+roletype+" featureId******" +featureId+"****OperatorId***"+OperatorId);
 				session.setAttribute("stolenselectedUserTypeId", roletype);
 				session.setAttribute("operatorTypeId", OperatorId);
 				session.removeAttribute("requestType");
 				session.setAttribute("requestType",requestType);
+				session.setAttribute("filterSource", source);
 				mv.setViewName("stolenRecovery");
 			}
 				
 		}
 		}
 		else {
+			session.setAttribute("filterSource", source);
 			log.info("selected role type in stolen and recovery  is = "+selectedUserTypeId);
 			session.setAttribute("stolenselectedUserTypeId", selectedUserTypeId);
 			mv.setViewName("stolenRecovery");		
@@ -371,7 +374,7 @@ public class StolenRecovery {
 					Integer file = 1;	
 					filterRequest.setUserId(userId);
 					log.info("filterRequest:::::::::"+filterRequest);
-				response= feignCleintImplementation.stolenFilter(filterRequest, filterRequest.getPageNo(), filterRequest.getPageSize(), file, "filter");
+				response= feignCleintImplementation.stolenFilter(filterRequest, filterRequest.getPageNo(), filterRequest.getPageSize(), file,"filter");
 				FileExportResponse fileExportResponse;
 				   Gson gson= new Gson(); 
 				   String apiResponse = gson.toJson(response);

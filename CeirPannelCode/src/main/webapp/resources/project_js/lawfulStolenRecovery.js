@@ -1,3 +1,5 @@
+
+
 var roleType = $("body").attr("data-roleType");
 var userId = $("body").attr("data-userID");
 var currentRoleType = $("body").attr("data-stolenselected-roleType");  
@@ -27,7 +29,7 @@ $.i18n().load( {
 
 $(document).ready(function(){
 	$('div#initialloader').fadeIn('fast');
-	filterStolen(lang,null,null);
+	filterStolen(lang,null);
 	pageRendering();
 });
 
@@ -38,8 +40,8 @@ $('.datepicker').on('mousedown',function(event){
 var userType = $("body").attr("data-roleType");
 var sourceType = localStorage.getItem("sourceType");
 
-
-function filterStolen(ss,sourceTypeFiler,source){
+function filterStolen(sourceTypeFiler,source){
+	
 	var source__val;
 
 	if(source == 'filter' ) {
@@ -49,8 +51,10 @@ function filterStolen(ss,sourceTypeFiler,source){
 		source__val= $("body").attr("data-session-source");
 
 	}
-	var sessionFlag;
 
+	var sessionFlag;
+	
+	
 	if(sourceType==null){
 		sessionFlag=2;
 
@@ -61,9 +65,9 @@ function filterStolen(ss,sourceTypeFiler,source){
 	}
 	console.log(" ****** sourceType ="+sourceTypeFiler);
 	if(userType=="Lawful Agency"){
-		Datatable('./headers?type=lawfulStolenHeaders','./stolenData?featureId='+featureId,sourceTypeFiler+'&source='+source__val)
+		Datatable('./headers?type=lawfulStolenHeaders','./stolenData?featureId='+featureId+'&source='+source__val,sourceTypeFiler)
 	}else if(userType =="CEIRAdmin"){
-		Datatable('./headers?type=lawfulStolenHeaders','./stolenData?featureId='+featureId,sourceTypeFiler+'&source='+source__val)
+		Datatable('./headers?type=lawfulStolenHeaders','./stolenData?featureId='+featureId+'&source='+source__val,sourceTypeFiler)
 	}
 	localStorage.removeItem('sourceType');
 }
@@ -659,7 +663,7 @@ function saveIndivisualStolenRequest(){
 
 
 function saveCompanyStolenRequest(){
-	$('div#initialloader').fadeIn('fast');
+	
 	$("#bulkStolenButton").prop('disabled', true);
 	var formData= new FormData();
 
@@ -684,6 +688,8 @@ function saveCompanyStolenRequest(){
 	var bulkStolenofficeEmail=$('#bulkStolenofficeEmail').val();
 	var trimbulkStolenContact=$('#bulkStolenContact').val();
 	var bulkStolenContact =trimbulkStolenContact.replace(/[^A-Z0-9]/ig, "");
+	
+
 	var uploadFirBulk=$('#uploadFirBulk').val();
 
 	var deviceBulkStolenaddress=$('#deviceBulkStolenaddress').val();
@@ -749,13 +755,22 @@ function saveCompanyStolenRequest(){
 	formData.append('firFileName', $('#uploadFirBulk')[0].files[0]);
 	formData.append("request",JSON.stringify(request));
 
+	
+	
 	$.ajax({
 		url: './lawfulOraganisationStolen',
 		type: 'POST',
 		data: formData,
 		processData: false,
 		contentType: false,
+		beforeSend: function() {
+			var divCreation="<div id=\'initialloader2\'></div>";
+			var div_id=document.getElementById("content");
+			div_id.innerHTML=divCreation;
+	    },
 		success: function (response, textStatus, jqXHR) {
+			
+			$('#initialloader2').remove();
 			$('div#initialloader').delay(300).fadeOut('slow');
 			console.log(response)
 
@@ -786,12 +801,14 @@ function saveCompanyStolenRequest(){
 }
 
 
-function DeleteConsignmentRecord(txnId,id){
+function DeleteConsignmentRecord(txnId,id,reqType){
 	$("#DeleteConsignment").openModal({
 		dismissible:false
 	});
 	$("#transID").text(txnId);
 	$("#setStolenRecoveyRowId").text(id);
+	console.log("  reqType  ="+reqType)
+	window.reqType=reqType;
 }
 
 
@@ -804,13 +821,15 @@ function confirmantiondelete(){
 	var remarks = $("#textarea1").val();
 	var role = currentRoleType == null ? roleType : currentRoleType;
 	console.log("txnId===**"+txnId+" userId="+userId+" roleType== "+roleType+ " currentRoleType=="+currentRoleType);
+	console.log("  reqType========"+window.reqType)
 	var obj ={
 			"txnId" : txnId,
 			"roleType":roleType,
 			"userId":userId,
 			"featureId":featureId,
 			"id":id,
-			"remark":remarks
+			"remark":remarks,
+			"requestType":window.reqType
 
 	}
 	$.ajax({

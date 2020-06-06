@@ -158,7 +158,7 @@ public interface FeignCleintImplementation {
 			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
 			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
 			@RequestParam(value = "file", defaultValue = "0") Integer file, 
-	        @RequestParam(value = "source",defaultValue = "menu") String source);
+	        @RequestParam(value = "source",defaultValue = "menu") String  source);
 
 
 
@@ -470,7 +470,8 @@ public @ResponseBody ConfigContentModel viewAdminFeign(FilterRequest filterReque
 					public Object viewVisaRequest(@RequestBody FilterRequest filterRequest,
 					@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
 					@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
-					@RequestParam(value = "file", defaultValue = "0") Integer file);
+					@RequestParam(value = "file", defaultValue = "0") Integer file,
+					@RequestParam(value = "source", defaultValue = "menu") String source);
 							
 }					
 

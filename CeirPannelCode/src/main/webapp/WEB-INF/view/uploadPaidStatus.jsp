@@ -214,7 +214,8 @@ position: fixed;
 	data-selected-consignmentTxnId="${consignmentTxnIdv}"
 	data-selected-consignmentStatus="${consignmentStatus}" 
 	session-value="${not empty param.NID ? param.NID : 'null'}"
-	session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}">
+	session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}"
+	data-filterSource="${filterSource}">
 
 
 	<!-- //////////////////////////////////////////////////////////////////////////// -->

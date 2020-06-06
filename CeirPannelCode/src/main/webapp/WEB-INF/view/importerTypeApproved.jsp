@@ -74,7 +74,7 @@
 
 	<section id="content">
 		<!--start container-->
-		<div id="initialloader"></div>
+		
 		<div class="container">
 			<div class="section">
 				<div class="row">
@@ -253,9 +253,7 @@
 		<div class="modal-content">
 			<div class="row">
 				<h6 id="sucessMessage">
-					<spring:message code="modal.message.futureRef" />
-					<span id="transactionId"> </span>
-				</h6>
+				</h6><span id="transactionId"> </span>
 				<input type="text" style="display: none" id="errorCode">
 			</div>
 			<div class="row">

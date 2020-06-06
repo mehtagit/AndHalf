@@ -27,7 +27,9 @@ function messageManagementDatatable(){
 			"featureId":parseInt(featureId),
 			"userTypeId": parseInt($("body").attr("data-userTypeID")),
 			"userType":$("body").attr("data-roleType"),
-			"username" : $("body").attr("data-selected-username")
+			"userName" : $("body").attr("data-selected-username"),
+			"username" : $("body").attr("data-selected-username"),
+			"roleType":$("body").attr("data-roleType")
 	}
 	
 	$.ajax({
@@ -162,6 +164,7 @@ function viewDetails(tag){
 			"featureId":parseInt(featureId),
 			"userTypeId": parseInt($("body").attr("data-userTypeID")),
 			"userType":$("body").attr("data-roleType"),
+			"userName" : $("body").attr("data-selected-username"),
 			"username" : $("body").attr("data-selected-username")
 	} 
 	$.ajax({
@@ -205,6 +208,7 @@ function updateDetails(tag){
 			"featureId":parseInt(featureId),
 			"userTypeId": parseInt($("body").attr("data-userTypeID")),
 			"userType":$("body").attr("data-roleType"),
+			"userName" : $("body").attr("data-selected-username"),
 			"username" : $("body").attr("data-selected-username")
 	} 
 	$.ajax({
@@ -243,7 +247,9 @@ function updateMessage(){
 			 "featureId":parseInt(featureId),
 			 "userTypeId": parseInt($("body").attr("data-userTypeID")),
 			 "userType":$("body").attr("data-roleType"),
-			 "username" : $("body").attr("data-selected-username")
+			 "userName" : $("body").attr("data-selected-username"),
+			"roleType":$("body").attr("data-roleType"),
+			"username" : $("body").attr("data-selected-username")
 	}
 	 
 	 $.ajax({
@@ -288,7 +294,7 @@ function exportData(){
 			"featureId":parseInt(featureId),
 			"userTypeId": parseInt($("body").attr("data-userTypeID")),
 			"userType":$("body").attr("data-roleType"),
-			"username" : $("body").attr("data-selected-username"),
+			"userName" : $("body").attr("data-selected-username"),
 			"pageNo":parseInt(pageNo),
 			"pageSize":parseInt(pageSize)
 			

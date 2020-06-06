@@ -21,17 +21,21 @@
 	 System.out.println("timeout========"+timeout); 
 	if (session.getAttribute("usertype") != null) { */
 %>
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
-<html lang="en" class="no-js">
+<html class="no-js" lang="en" dir="ltr">
 <head>
-<title>Lawful</title>
-
+<title>Consignment</title>
+<meta http-equiv='cache-control' content='no-cache'>
+<meta http-equiv='expires' content='-1'>
+<meta http-equiv='pragma' content='no-cache'>
+<meta name="fragment" content="!">
 <meta charset="utf-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
@@ -58,8 +62,6 @@
 <link
 	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
-<link href="${context}/resources/css/jquery-datepicker2.css"
-	type="text/css" rel="stylesheet" media="screen,projection">
 <!-- Custome CSS-->
 <link href="${context}/resources/css/custom/custom.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
@@ -75,17 +77,23 @@
 	type="text/css" rel="stylesheet" media="screen,projection">
 <%--  <link href="${context}/resources/js/plugins/chartist-js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection"> --%>
 <link rel="stylesheet"
-	href="${context}/resources/project_css/stolenRecovery.css">
+	href="${context}/resources/project_css/viewConsignment.css">
 <link rel="stylesheet"
 	href="${context}/resources/project_css/iconStates.css">
+
 <link rel="stylesheet"
 	href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
 <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
-  <!------------------------------------------- Dragable Model---------------------------------->
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script> 
 
+<script src="http://malsup.github.io/jquery.blockUI.js"></script>
+<script src="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json"></script>
+
+<!------------------------------------------- Dragable Model---------------------------------->
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <style type="text/css">
+
 .dataTables_scrollBody {
     width: 100%;
     max-height: 400px !important;
@@ -98,24 +106,24 @@
     margin-top: 2px;
 }
 button.modal-action.modal-close.waves-effect.waves-green.btn-flat.right {
-   height: 36px;
-	 font-size: 31px;
+    height: 36px;
+	 font-size: 31px
 }
+
 .header-fixed-style{
 width: inherit;
-z-index: 1003;
-position: fixed;
+ z-index: 1003; 
+ position: fixed;
 }
-
 </style>
 </head>
-
 <body data-id="5" data-roleType="${usertype}" data-userTypeID="${usertypeId}"
 	data-userID="${userid}" data-operatorTypeId="${operatorTypeId}"
 	data-selected-roleType="${stolenselectedUserTypeId}"
-	data-stolenselected-roleType="${stolenselectedUserTypeId}"	data-requestType="${requestType}" 
+	data-stolenselected-roleType="${stolenselectedUserTypeId}"	data-requestType="${requestType}" data-filterSorce="${filterSource}"
 	data-session-source="${not empty param.source ? param.source : 'menu'}">
 
+    
 
 	<!-- START CONTENT -->
 	<!-- START CONTENT -->
@@ -128,7 +136,7 @@ position: fixed;
 					<div class="col s12 m12 l12">
 						<div class="row card-panel">
 							<div class="container-fluid pageHeader" id="pageHeader">
-
+									
 								<a class="boton right" id="btnLink"></a>
 							</div>
 							<form action="${context}/stakeholder/record" method="post">

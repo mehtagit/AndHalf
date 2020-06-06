@@ -70,7 +70,6 @@ function updateUSerStatus(){
 			status:$("input[name='status']:checked").val()
 
 	};
-	console.log("user status: "+JSON.stringify(obj));
 	$.ajax({ 
 		type : 'POST',
 		url : contextpath+'/updateUserStatus',
@@ -217,7 +216,6 @@ function editProfile(){
 		contentType : "application/json",
 		dataType : 'html', 
 		success : function(data) { 
-			console.log(data);
 			var resp=JSON.parse(data);
 			//$("#registrationForm #firstName").val("heello");
 			$("#registrationForm #firstName").val(resp.firstName);
@@ -267,7 +265,6 @@ function editProfile(){
 		 		document.getElementById("vatFileDiv").style.display = "none";
 		 	}
 			//arr=resp.roles;
-			//console.log("roles"+arr);
             if(resp.userTypeId==4 || resp.userTypeId==5 || resp.userTypeId==6){
              	$("#rolesDiv").show();
              	$("#AsTypeDiv").show();
@@ -305,7 +302,6 @@ function editOtherProfile(){
 		contentType : "application/json",
 		dataType : 'html', 
 		success : function(data) { 
-			console.log(data);
 			var resp=JSON.parse(data);
 			//$("#registrationForm #firstName").val("heello");
 			$("#registrationForm #firstName").val(resp.firstName);
@@ -322,6 +318,7 @@ function editOtherProfile(){
 			$("#registrationForm #country").val(resp.country); 
 			$("#registrationForm #postalCode").val(resp.postalCode);
 			$("#registrationForm #locality").val(resp.locality);
+			$("#registrationForm #vatNo").val(resp.vatNo);
 			$("#registrationForm #companyName").val(resp.companyName);
 			$("#registrationForm #arrivalPort").val(resp.arrivalPortName);
 			$("#registrationForm #operatorTypeName").val(resp.operatorTypeName);
@@ -389,7 +386,6 @@ function updateProfile(){
 	$("#passwordBtn").prop('disabled', true);
 	$("#btnSave").prop('disabled', true);
 	$('#registrationForm #usertypes option').attr('disabled', false);
-	console.log($('select#usertypes').val());
 	var obj=""; 
 	var oj2="";  
 	var questionData=[];
@@ -441,7 +437,6 @@ function updateProfile(){
 			}    
 		}  
 	});
-	console.log("question data:  "+JSON.stringify(obj));
 
 	$.ajax({
 		type : 'POST',
@@ -553,7 +548,6 @@ function verifyOtp2(){
 		dataType : 'html',  
 		data : JSON.stringify(obj),
 		success : function(data) {
-			console.log(data);	
 			var resp=JSON.parse(data);
 			$.i18n().locale =window.parent.$('#langlist').val();
 			if(resp.statusCode=="200"){
@@ -674,7 +668,6 @@ function previewFile2(srcFilePath,srcFileName){
 	window.FinalLink = filePath.concat(fileName);
 	
 	if(filePath == null || filePath == "" || filePath == undefined && fileName == null || fileName == "" || fileName == undefined ){
-		console.log("File is not Avialable")
 	}else if(fileExtension=="jpg" || fileExtension=="jpeg" || fileExtension=="png" || fileExtension=="gif" ){
 		$("#fileSource").attr("src",FinalLink);
 		$("#viewuplodedModel").openModal();

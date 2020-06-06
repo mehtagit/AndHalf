@@ -127,7 +127,7 @@ position: fixed;
 </head>
 
 <body data-id="43" data-roleType="${usertype}" data-userTypeID="${usertypeId}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${stolenselectedUserTypeId}" 
-data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}"
+data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}" data-session-source="${filterSource}" 
  data-grievanceStatus="${grievanceStatus}" session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}">
 
 

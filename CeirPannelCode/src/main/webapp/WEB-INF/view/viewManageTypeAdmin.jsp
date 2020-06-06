@@ -731,8 +731,6 @@ position: fixed;
 		<!--custom-script.js - Add your own theme custom JS-->
 		<script type="text/javascript"
 			src="${context}/resources/js/plugins.js"></script>
-		<script type="text/javascript"
-			src="${context}/resources/js/Validator.js"></script>
 		<!--prism
     <script type="text/javascript" src="${context}/resources/resources/js/prism/prism.js"></script>-->
 		<!--scrollbar-->

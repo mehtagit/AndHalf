@@ -40,7 +40,6 @@ $( document ).ready(function() {
 	 var loggedUserType=$("body").attr("data-roleType");
 	if(loggedUserType=='Custom' || loggedUserType=='Immigration' ){
 		
-
 		$.ajax({
 			url : "./paid-status/"+In,
 			dataType : 'json',
@@ -51,7 +50,7 @@ $( document ).ready(function() {
 				localStorage.setItem("nationalId", In);	
 				if (data.errorCode == 1) {
 					pageRendering(lang);
-					filter(lang);
+					filter(lang,null);
 					$("#user123").css("display", "none");
 					$("#user456").css("display", "block");
 					$("#addbutton").css("display", "block");
@@ -134,7 +133,7 @@ $( document ).ready(function() {
 					$("#addbutton").css("display", "block");
 					$("#submitbtn").css("display", "none");
 		pageRendering(lang);
-        filter(lang);
+        filter(lang,null);
 		$("#btnLink").css({display: "none"});
 
 
@@ -303,16 +302,26 @@ console.log("nationType=="+nationType);
 
 
 var sourceType =localStorage.getItem("sourceType");
-function filter(lang)
+function filter(lang , filterSource)
 {       
+	var source__val;
+
+	if(filterSource == 'filter' ) {
+		source__val= filterSource;
+	}
+	else{
+		source__val= $("body").attr("data-filterSource");
+
+	}
+	
 	var sessionFlag=0;
 	if(roleType=="Custom" || roleType=="Immigration"){
-		table('./headers?type=userPaidStatus&lang='+lang,'./user-paid-status-data?sessionFlag='+sessionFlag);
+		table('./headers?type=userPaidStatus&lang='+lang,'./user-paid-status-data?sessionFlag='+sessionFlag+'&source='+source__val);
 	}else if(roleType=="DRT"){
-		table('./headers?type=userPaidStatus&lang='+lang,'./user-paid-status-data?sessionFlag='+sessionFlag);
+		table('./headers?type=userPaidStatus&lang='+lang,'./user-paid-status-data?sessionFlag='+sessionFlag+'&source='+source__val);
 	}
 	else if(roleType == "CEIRAdmin"){
-		table('./headers?type=adminUserPaidStatus&lang='+lang,'./user-paid-status-data?sessionFlag='+sessionFlag);
+		table('./headers?type=adminUserPaidStatus&lang='+lang,'./user-paid-status-data?sessionFlag='+sessionFlag+'&source='+source__val);
 
 	}
 }

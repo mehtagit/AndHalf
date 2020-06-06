@@ -168,8 +168,10 @@ window.parent
 							'km' : './resources/i18n/km.json'
 						}).done(function() {
 							if(result.errorCode==200){
-								$('#sucessMessage').text('');
+								//$('#sucessMessage').text('');
 								$('#sucessMessage').text($.i18n('TRCRegister_futureRef'));
+								//alert(result.txnId);
+								$('#transactionId').text(result.txnId);
 							}else if(result.errorCode==201){
 								$('#sucessMessage').text('');
 								$('#sucessMessage').text($.i18n('REGISTER_TYPE_APPROVE_REJECTED'));
@@ -177,11 +179,11 @@ window.parent
 							
 							//REGISTER_TYPE_APPROVE_REJECTED=$.i18n('REGISTER_TYPE_APPROVE_REJECTED');
 							//TRCRegister_futureRef=$.i18n('TRCRegister_futureRef');
-							console.log("done")
+							
 						});
 						
 						
-						$('#transactionId').text(result.txnId);
+						
 				},
 				error : function(jqXHR, textStatus, errorThrown) {
 					console.log("error in ajax")
