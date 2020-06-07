@@ -57,8 +57,8 @@ public class LBD {
                 if (count1 == 10) {
                     ddz = "device_lawful_db";
                 }
-                ResultSet result3 = stmt.executeQuery("select file_status from stolenand_recovery_mgmt where txn_id =     (select  txn_id from " + ddz + " where imei_esn_meid='" + args[3] + "'   )");
-                logger.debug("After Qury : ..     select file_status from stolenand_recovery_mgmt where txn_id =     (select  txn_id from " + ddz + " where imei_esn_meid='" + args[3] + "'   )");
+                ResultSet result3 = stmt.executeQuery("select file_status from stolenand_recovery_mgmt where txn_id =   (select  txn_id from " + ddz + " where imei_esn_meid='" + args[3] + "'  order by id desc fetch next 1 rows only )     ");
+                logger.debug("After Qury : select file_status from stolenand_recovery_mgmt where txn_id  =  (select  txn_id from " + ddz + " where imei_esn_meid='" + args[3] + "'  order by id desc fetch next 1 rows only )  ");
                 try {
                     while (result3.next()) {
                         file_stat1 = result3.getInt(1);

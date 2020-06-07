@@ -72,7 +72,7 @@ class SYS_REG {
             case "Reject": {
                 logger.info("Action is Reject");
 
-                String fileString = args[15] + " , Error Description : IMEI/ESN/MEID is already present in the system  ";
+                String fileString = args[15] + " , Error Description : IMEI/ESN/MEID  is System Registered ";
 
                  bw.write(fileString);
                 bw.newLine();

@@ -102,6 +102,14 @@ public class RuleEngineApplication {
                 reslt = EXISTS_IN_TYPE_APPROVED_TAC.executeRule(args, conn);
             }
 
+            if ("SAME_OPERATOR_UNBLOCK".equalsIgnoreCase(args[0])) {
+                reslt = SAME_OPERATOR_UNBLOCK.executeRule(args, conn);
+            }
+            
+            
+            
+            
+            
             logger.debug(" " + args[0] + " ..... RESULT .....  " + reslt);
 
         }
@@ -198,8 +206,15 @@ public class RuleEngineApplication {
             if ("EXISTS_IN_TYPE_APPROVED_TAC".equalsIgnoreCase(args[0])) {
                 reslt = EXISTS_IN_TYPE_APPROVED_TAC.executeAction(args, conn, bw);
             }
+            if ("SAME_OPERATOR_UNBLOCK".equalsIgnoreCase(args[0])) {
+                reslt = SAME_OPERATOR_UNBLOCK.executeAction(args, conn, bw);
+            }
 
+            
+            
+            
         }
+        
         logger.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  " + args[0] + "  ....RESULT ....  " + reslt + "   @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ " + args[0]);
 
         return reslt;
