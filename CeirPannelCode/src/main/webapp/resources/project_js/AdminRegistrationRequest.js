@@ -88,7 +88,7 @@
 						dataType: "json",
 						data : function(d) {
 							d.filter = JSON.stringify(filterRequest); 
-							console.log(JSON.stringify(filterRequest));
+							//console.log(JSON.stringify(filterRequest));
 						}
 
 					},

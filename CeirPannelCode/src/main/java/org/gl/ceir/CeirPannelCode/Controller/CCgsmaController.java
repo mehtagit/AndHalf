@@ -30,8 +30,8 @@ public class CCgsmaController {
 	
 
 	@PostMapping("getGsmaDetails")
-	public @ResponseBody GsmaDetail getDetails(@RequestParam(name = "msisdn", required = false) Long msisdn,
-			@RequestParam(name = "imei", required = false) Long imei,
+	public @ResponseBody GsmaDetail getDetails(@RequestParam(name = "msisdn", required = false) String msisdn,
+			@RequestParam(name = "imei", required = false) String imei,
 			@RequestParam(name = "identifierType", required = false) String identifierType, HttpSession session) {
 		log.info("request passed to the getGsmaDetails Api msisdn-->"+msisdn+ " imei-->"+imei+" identifierType-->"+identifierType);
 		GsmaDetail response = gsmaFeignClient.viewGsmaFeign(msisdn, imei, identifierType);
