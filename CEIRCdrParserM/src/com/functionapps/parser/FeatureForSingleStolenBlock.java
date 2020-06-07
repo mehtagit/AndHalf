@@ -526,7 +526,7 @@ public class FeatureForSingleStolenBlock {
             DeviceSerial = " ( select  device_serial_number from stolen_individual_userdb where stolen_id  =" + id + " )";
 
         } else {
-            DeviceType = "select interp from system_config_list_db where tag = 'DEVICE_TYPE'  and value  =(select device_type  from single_imei_details where txn_id ='" + txn_id + "' )) ";
+            DeviceType = "( select interp from system_config_list_db where tag = 'DEVICE_TYPE'  and value  =(select device_type  from single_imei_details where txn_id ='" + txn_id + "' )) ";
             DeviceIdType = "( select interp from system_config_list_db where tag = 'DEVICE_ID_TYPE' and value  =(select device_id_type   from single_imei_details where txn_id ='" + txn_id + "') )";
             MultipleSIMStatus = "  (select interp from system_config_list_db where tag = 'MULTI_SIM_STATUS' and value  =(select multiple_sim_status   from single_imei_details where txn_id ='" + txn_id + "') )";
             DeviceSerial = " ( select  device_serial_number  from single_imei_details where txn_id ='" + txn_id + "' )";

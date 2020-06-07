@@ -21,10 +21,8 @@ public class CEIRParserMain {
     static Logger logger = Logger.getLogger(CEIRParserMain.class);
 
     public static void main(String args[]) {
-
         Connection conn = null;
         conn = (Connection) new com.functionapps.db.MySQLConnection().getConnection();
-
         String operator = args[0];
         CDRPARSERmain(conn, operator);
 
@@ -218,7 +216,7 @@ public class CEIRParserMain {
 //                            rs.getString("system_type"),
 //                            rs.getString("operator"), rs.getString("file_name"), rs.getString("record_time"), "Init", "", "", "", new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date()));
 //                }
-                if (rs.getString("IMEI") == null || rs.getString("IMEI").equals("") || rs.getString("IMEI") == "") {
+                if (rs.getString("IMEI") == null || rs.getString("IMEI").equals("") || rs.getString("IMEI") == ""  || rs.getString("IMEI").length() < 8) {
                     logger.info("Imei Null");
                     if (rs.getString("MSISDN") != null) {
                         output = checkDeviceNullDB(conn, (rs.getString("MSISDN").startsWith("19") ? rs.getString("MSISDN").substring(2) : rs.getString("MSISDN")));
