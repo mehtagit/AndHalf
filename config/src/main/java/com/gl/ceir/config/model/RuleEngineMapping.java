@@ -55,7 +55,7 @@ public class RuleEngineMapping implements Serializable {
 
 	@NotNull
 	//@Enumerated(EnumType.STRING)
-	private String name;
+	private String name; 
 	
 	@NotNull
 	@Column(length = 20)
