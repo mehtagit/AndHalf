@@ -60,27 +60,25 @@ public class GsmaValueServiceImpl {
 //		
 //		
 //	}
-    public UsagesValueModel getimeiValbymsisdn(Long msisdn) {
+    public UsagesValueModel getimeiValbymsisdn(String msisdn) {
         UsagesValueModel usagesValueModel = null;
         try {
             logger.info(" imei is Null ");
-            usagesValueModel = usagesValueRepository.getByMsisdn(msisdn);
+            usagesValueModel = usagesValueRepository.getByMsisdn(msisdn.toString());
             logger.info(" result is  " + usagesValueModel);
-
             return usagesValueModel;
-
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
         }
     }
 
-    public UsagesValueModel getimeiValbyImei(Long imei) {
+    public UsagesValueModel getimeiValbyImei(String imei) {
         UsagesValueModel usagesValueModel = null;
         try {
-            logger.info("  MSisdn is null");
-            usagesValueModel = usagesValueRepository.getByImei(imei);
-            logger.info(" result by imei is  " + usagesValueModel);
+            logger.info("Get Values By Imei");
+            usagesValueModel = usagesValueRepository.getByImei(imei.toString());
+            logger.info(" Result by imei is  " + usagesValueModel);
             return usagesValueModel;
         } catch (Exception e) {
             logger.error(e.getMessage(), e);

@@ -41,10 +41,6 @@ public class CheckImeiServiceImpl {
     public String getResult(String user_type, String feature, Long imei, Long imei_type) {
         String rulePass = "true";
         try {
-            logger.info("  feature   " + feature + user_type);
-            logger.info("   user_type   " + user_type);
-            logger.info(" imei_type for   " + imei_type);
-
             Connection conn = getSQlConnection();
             BufferedWriter bw = null;
             String expOutput = "";
@@ -61,7 +57,6 @@ public class CheckImeiServiceImpl {
                 case 2:
                     deviceIdValue = "ESN";
                     break;
-
             }
 
             List<RuleEngineMapping> ruleList = checkImeiRepository.getByFeatureAndUserTypeOrderByRuleOrder(feature, user_type);
@@ -70,10 +65,9 @@ public class CheckImeiServiceImpl {
                 Rule rule = new Rule(cim.getName(), cim.getOutput(), cim.getRuleMessage());
                 rule_details.add(rule);
             }
-            logger.info("rules Populated");  // optimse
-
+            logger.info("Rules Populated");  // optimse
             for (Rule rule : rule_details) {
-                String[] my_arr = {rule.rule_name, "1", "NONCDR", imei.toString(), "4", "5", "6", "7", "8",  deviceIdValue , "", " ", " ", ""};
+                String[] my_arr = {rule.rule_name, "1", "NONCDR", imei.toString(), "4", "5", "6", "7", "8", deviceIdValue, "", " ", " ", ""};
                 logger.info("Rule Output from RulE Engine");
 
                 expOutput = RuleEngineApplication.startRuleEngine(my_arr, conn, bw);

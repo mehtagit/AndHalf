@@ -1,9 +1,5 @@
 package com.gl.ceir.config.model;
 
-
-
-
-
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -20,41 +16,51 @@ import org.hibernate.annotations.CreationTimestamp;
 @Entity
 public class UsagesValueModel implements Serializable {
 
+    @Id
+    private String imei;
+    private String msisdn;
+    private String imsi;
 
-	@Id
-	private Long	imei;  
-	private Long	msisdn;  
-	private Long	imsi;  
+    public String getImei() {
+        return imei;
+    }
 
-	
-	
-	
-	public Long getImei() {
-		return imei;
-	}
-	public void setImei(Long imei) {
-		this.imei = imei;
-	}
-	public Long getMsisdn() {
-		return msisdn;
-	}
-	public void setMsisdn(Long msisdn) {
-		this.msisdn = msisdn;
-	}
-	public Long getImsi() {
-		return imsi;
-	}
-	public void setImsi(Long imsi) {
-		this.imsi = imsi;
-	}
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-	private static final long serialVersionUID = 1L;
+    public void setImei(String imei) {
+        this.imei = imei;
+    }
 
+    public String getMsisdn() {
+        return msisdn;
+    }
 
+    public void setMsisdn(String msisdn) {
+        this.msisdn = msisdn;
+    }
 
+    public String getImsi() {
+        return imsi;
+    }
 
+    public void setImsi(String imsi) {
+        this.imsi = imsi;
+    }
 
+    public static long getSerialversionuid() {
+        return serialVersionUID;
+    }
+    private static final long serialVersionUID = 1L;
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("UsagesValueModel{imei=").append(imei);
+        sb.append(", msisdn=").append(msisdn);
+        sb.append(", imsi=").append(imsi);
+        sb.append('}');
+        return sb.toString();
+    }
+
+    
+    
+    
 }

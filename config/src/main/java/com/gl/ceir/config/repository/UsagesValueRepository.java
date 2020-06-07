@@ -8,10 +8,8 @@ import com.gl.ceir.config.model.UsagesValueModel;
 
 public interface UsagesValueRepository    extends JpaRepository<UsagesValueModel, Long>, JpaSpecificationExecutor<UsagesValueModel> {
 
-	 public UsagesValueModel getByMsisdn(long msisdn);
-	 
-	 public UsagesValueModel getByImei(long imei);
-
-//	public UsagesValueModel getByImei(String imei);
+	 public UsagesValueModel getByMsisdn(String msisdn);
+ 
+	public UsagesValueModel getByImei(String imei);
 
 }
