@@ -41,7 +41,7 @@ public class MessageConfigurationDb implements Serializable {
 	private String value;
 	private String description;
 	
-	@NotNull
+	@NotNull 
 	private Integer channel;
 	@Transient
 	private String channelInterp;
