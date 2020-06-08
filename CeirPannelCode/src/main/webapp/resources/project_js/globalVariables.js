@@ -7,7 +7,7 @@ $('input').on('invalid', function(e) {
 
 $(function() {
 
-	$('html, body').animate({scrollTop: document.documentElement.scrollTop - 200}, 0);
+	$('html, body').animate({scrollTop: document.documentElement.scrollTop + 200}, 0);
 });
 
 
