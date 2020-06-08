@@ -116,6 +116,29 @@ public class RuleEngineServiceImpl {
 	}
 
 	private GenericSpecificationBuilder<RuleEngine> buildSpecification(FilterRequest filterRequest){
+		//ranjeet
+
+		GenericSpecificationBuilder<RuleEngine> cmsb = new GenericSpecificationBuilder<>(propertiesReader.dialect);
+		
+		
+		if(Objects.nonNull(filterRequest.getState()))
+			cmsb.with(new SearchCriteria("state", filterRequest.getState(), SearchOperation.EQUALITY, Datatype.STRING));
+		
+		 if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
+			 
+		     cmsb.orSearch(new SearchCriteria("name", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+			 cmsb.orSearch(new SearchCriteria("state", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+			 cmsb.orSearch(new SearchCriteria("description", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+			 
+	
+
+		 }
+		
+
+		return cmsb;
+	
+		
+		/*
 		GenericSpecificationBuilder<RuleEngine> cmsb = new GenericSpecificationBuilder<>(propertiesReader.dialect);
 		
 		if(Objects.nonNull(filterRequest.getState()))
@@ -133,7 +156,7 @@ public class RuleEngineServiceImpl {
 		
 
 		return cmsb;
-	}
+	*/}
 
 	private void setInterp(RuleEngine ruleEngine) {
 		/*if(Objects.nonNull(consignmentMgmt.getExpectedArrivalPort()))
