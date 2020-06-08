@@ -106,7 +106,7 @@ $.ajax({
 					dataType: "json",
 					data : function(d) {
 						d.filter = JSON.stringify(filterRequest); 
-						console.log(JSON.stringify(filterRequest));
+						//console.log(JSON.stringify(filterRequest));
 						
 					}
 
@@ -137,7 +137,7 @@ $.ajax({
 		},
 		
 		error: function (jqXHR, textStatus, errorThrown) {
-			console.log("error in ajax");
+			//console.log("error in ajax");
 		}
 	});
    
@@ -271,7 +271,7 @@ function exportTacData()
 	var userId = userId
 	
 	
-	console.log("tacStatus=="+tacStatus);
+	//console.log("tacStatus=="+tacStatus);
      if(isNaN(tacStatus))
 	   {
     	 tacStatus='';
@@ -281,7 +281,7 @@ function exportTacData()
 	var info = table.page.info(); 
  var pageNo=info.page;
   var pageSize =info.length;
-	console.log("pageSize=="+pageSize+" tacNumber=="+tacNumber+" tacStartDate=="+tacStartDate+" tacEndDate=="+tacEndDate+" tacStatus=="+tacStatus+" txnId=="+txnId+" userId=="+userId+" pageSize=="+pageSize+" pageNo=="+pageNo);
+	//console.log("pageSize=="+pageSize+" tacNumber=="+tacNumber+" tacStartDate=="+tacStartDate+" tacEndDate=="+tacEndDate+" tacStatus=="+tacStatus+" txnId=="+txnId+" userId=="+userId+" pageSize=="+pageSize+" pageNo=="+pageNo);
 	
 	window.location.href="./exportTac?tacNumber="+tacNumber+"&tacStartDate="+tacStartDate+"&tacEndDate="+tacEndDate+"&tacStatus="+tacStatus+"&txnId="+txnId+"&featureId="+featureId+"&userType"+userType+"&userTypeId="+userTypeId+"&userId="+userId+"&pageSize="+pageSize+"&pageNo="+pageNo;
 
@@ -303,7 +303,7 @@ function ImporterviewByID(id,actionType,projectPath,modalID){
 		contentType : 'application/json; charset=utf-8',
 		type : 'POST',
 		success : function(data) {
-			console.log(+data);
+			//console.log(+data);
 			if(actionType=='view')
 				{
 				//$("#viewImporterModal").openModal();
@@ -321,7 +321,7 @@ function ImporterviewByID(id,actionType,projectPath,modalID){
 			
 		},
 		error : function() {
-			console.log("failed");
+			//console.log("failed");
 		}
 	});
 	
@@ -403,7 +403,7 @@ function setImporterEditPopupData(data){
 		$("#docTypetag1").empty();
 		$('#docTypetag1').append('<option value="">'+$.i18n('selectDocumentType')+'</option>');
 		for (i = 0; i < data.length; i++) {
-			console.log(data[i].interp);
+			//console.log(data[i].interp);
 			$('<option>').val(data[i].tagId).text(data[i].interp).appendTo(
 					'#docTypetag1');
 		}
@@ -420,7 +420,7 @@ function setImporterEditPopupData(data){
 function setUploadedFiles(data){
 	var max_fields =localStorage.getItem("maxCount");
 	if (max_fields==0){
-		 console.log("1111");
+		 //console.log("1111");
 		 $(".add_field_button").prop('disabled', true);
 	 }
 
@@ -436,7 +436,7 @@ function setUploadedFiles(data){
 	{
 		for (var j=0 ; j < importerViewResponse[i]["attachedFiles"].length; j++){
 			
-			alert("Document Type----->"+importerViewResponse[i].attachedFiles[j].docType.length+" File Name--->"+importerViewResponse[i].attachedFiles[j].fileName.length)
+			//alert("Document Type----->"+importerViewResponse[i].attachedFiles[j].docType.length+" File Name--->"+importerViewResponse[i].attachedFiles[j].fileName.length)
 			if((importerViewResponse[i].attachedFiles[j].docType.length == 2 ) || (importerViewResponse[i].attachedFiles[j].fileName.length == 2 )){
 				var placeholderValue= $.i18n('selectFilePlaceHolder');
 				if (x < max_fields) { //max input box allowed
@@ -447,7 +447,7 @@ function setUploadedFiles(data){
 				}
 			}else{
 				
-				alert("in else part")
+				//alert("in else part")
 			}
 			
 			$("#docTypetag1").val(importerViewResponse[i].attachedFiles[j].docType);
@@ -556,7 +556,7 @@ function updateImporterTypeDevice()
 					"userType" : $("body").attr("data-roleType")
 				}
 			
-		console.log("multirequest------------->" +JSON.stringify(multirequest))
+		//console.log("multirequest------------->" +JSON.stringify(multirequest))
 		formData.append('fileInfo[]',JSON.stringify(fileInfo));
 		formData.append('multirequest',JSON.stringify(multirequest));
 	 
@@ -569,7 +569,7 @@ function updateImporterTypeDevice()
 			contentType : false,
 			success : function(data, textStatus, jqXHR) {
 				$('div#initialloader').delay(300).fadeOut('slow');
-				console.log(data);
+				//console.log(data);
 				
 			
 					
@@ -591,7 +591,7 @@ function updateImporterTypeDevice()
 					 
 			},
 			error : function(jqXHR, textStatus, errorThrown) {
-				console.log("error in ajax")
+				//console.log("error in ajax")
 			}
 		});
 		return false;
@@ -622,7 +622,7 @@ function setAllDropdown() {
 	$.getJSON('./getSourceTypeDropdown/DOC_TYPE/' + featureId + '', function(
 			data) {
 		for (i = 0; i < data.length; i++) {
-			console.log(data[i].interp);
+			//console.log(data[i].interp);
 			$('<option>').val(data[i].tagId).text(data[i].interp).appendTo(
 					'#docTypetag1');
 		}
@@ -631,7 +631,7 @@ function setAllDropdown() {
 }
 
 $.getJSON('./addMoreFile/more_files_count', function(data) {
-	console.log(data);
+	//console.log(data);
 	localStorage.setItem("maxCount", data.value);
 });
 
@@ -657,7 +657,7 @@ $(".add_field_button")
 							data) {
 
 						for (i = 0; i < data.length; i++) {
-							console.log(data[i].interp);
+							//console.log(data[i].interp);
 							var optionId = id - 1;
 							$('<option>').val(data[i].tagId).text(
 									data[i].interp).appendTo(
@@ -665,7 +665,7 @@ $(".add_field_button")
 							$('<option>').val(data[i].value).text(
 									data[i].tagId).appendTo(
 									'#docTypetagValue' + optionId);
-							console.log('#docTypetag' + optionId);
+							//console.log('#docTypetag' + optionId);
 
 						}
 					});
@@ -676,7 +676,7 @@ $(".add_field_button")
 $(wrapper).on("click", ".remove_field", function(e) { // user click on remove  text
 	e.preventDefault();
 	var Iid = id - 1;
-	/* alert("@@@"+Iid) */
+	/* //alert("@@@"+Iid) */
 	$('#filediv' + Iid).remove();
 	$(this).parent('div').remove();
 	x--;
@@ -732,7 +732,7 @@ function approveSubmit(actiontype){
 			}
 		},
 		error : function() {
-			alert("Failed");
+			//alert("Failed");
 		}
 	});
 }
@@ -784,7 +784,7 @@ function rejectSubmit(actiontype){
 			}
 		},
 		error : function() {
-			alert("Failed");
+			//alert("Failed");
 		}
 	});
 	
@@ -807,7 +807,7 @@ function confirmantiondelete(){
 	var tacRemark= $("#deleteTacRemark").val();
 	var id =  $("#deleteTacId").val();
 	
-	console.log("userType=="+userType+" ==id=="+id+"===userId===" +userId);
+	//console.log("userType=="+userType+" ==id=="+id+"===userId===" +userId);
 	
 	/*var obj ={
 			"txnId" : txnId,
@@ -822,7 +822,7 @@ function confirmantiondelete(){
 		contentType : 'application/json; charset=utf-8',
 		type : 'POST',
 		success : function(data, textStatus, xhr) {
-			console.log(data);
+			//console.log(data);
 
 			//$("#stockModalText").text(data.message);
 			$("#DeleteTacConfirmationModal").closeModal();
@@ -838,7 +838,7 @@ function confirmantiondelete(){
 			$("#materialize-lean-overlay-3").css("display","none");
 		},
 		error : function() {
-			console.log("Error");
+			//console.log("Error");
 		}
 	});
 	
@@ -870,7 +870,7 @@ $("input[type=file]").keypress(function(ev) {
 });
 
 function historyRecord(txnID){
-	console.log("txn id=="+txnID)
+	//console.log("txn id=="+txnID)
 	$("#tableOnModal").openModal({dismissible:false});
 	 var filter =[];
 	 var formData= new FormData();
@@ -890,16 +890,16 @@ function historyRecord(txnID){
 	if(lang=='km'){
 		var langFile='../resources/i18n/khmer_datatable.json';
 	}
-	console.log("22");
+	//console.log("22");
 	$.ajax({
-		url: 'Consignment/consignment-history',
+		url: './consignment-history',
 		type: 'POST',
 		data: formData,
 		processData: false,
 		contentType: false,
 		success: function(result){
 			var dataObject = eval(result);
-			//alert(JSON.stringify(dataObject.data))
+			////alert(JSON.stringify(dataObject.data))
 			$('#data-table-history').dataTable({
 				 "order" : [[1, "asc"]],
 				 destroy:true,

@@ -12,10 +12,7 @@
 	
 	 long accessTime = session.getLastAccessedTime();
 	 long currentTime= new Date().getTime(); 
-	 System.out.println("accessTime========"+(accessTime));
-	 System.out.println("timeout========"+timeout);
 	 long dfd= accessTime +timeout;
-	 System.out.println("currentTime========"+currentTime);
 	 if( currentTime< dfd){
 	/*  response.setHeader("Refresh", timeout + "; URL = ../login");
 	 System.out.println("timeout========"+timeout); 
@@ -56,8 +53,6 @@
 	type="text/css" rel="stylesheet" media="screen,projection">
 <link
 	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.css"
-	type="text/css" rel="stylesheet" media="screen,projection">
-<link href="${context}/resources/css/jquery-datepicker2.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
 <!-- Custome CSS-->
 <link href="${context}/resources/css/custom/custom.css" type="text/css"
@@ -366,7 +361,7 @@ input#quantity {
 			</div>
 			<div class="row">
 				<div class="input-field col s12 center">
-					<form action="${context}/Consignment/viewConsignment"
+					<form action="${context}/viewConsignment"
 						id="closeOkPop" method="POST">
 						<a onclick="closeConfirmation()" class="btn"><spring:message code="modal.ok" /></a>
 					</form>
@@ -383,7 +378,7 @@ input#quantity {
 			<div class="row">
 				<div class="input-field col s12 center">
 					<div class="input-field col s12 center">
-						<a href="${context}/Consignment/viewConsignment" class="btn"><spring:message code="modal.yes" /></a>
+						<a href="${context}/viewConsignment" class="btn"><spring:message code="modal.yes" /></a>
 						<button class="modal-close waves-effect waves-light btn"
 							style="margin-left: 10px;"><spring:message code="modal.no" /></button>
 					</div>
@@ -419,8 +414,7 @@ input#quantity {
     <script type="text/javascript" src="${context}/resources/js/materialize-plugins/date_picker/picker.js"></script> --%>
 	<!--custom-script.js - Add your own theme custom JS-->
 	<script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
-	<script type="text/javascript"
-		src="${context}/resources/js/Validator.js"></script>
+
 	<!--prism
     <script type="text/javascript" src="${context}/resources/resources/js/prism/prism.js"></script>-->
 	<!--scrollbar-->
@@ -483,7 +477,7 @@ input#quantity {
 <script language="JavaScript">
 	sessionStorage.setItem("loginMsg",
 			"*Session has been expired");
-	window.top.location.href = "../login";
+	window.top.location.href = "./login";
 </script>
 <%
 	}
