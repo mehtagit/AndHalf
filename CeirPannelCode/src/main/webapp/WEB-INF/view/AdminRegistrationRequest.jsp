@@ -60,8 +60,8 @@
 <link
 	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
-<link href="${context}/resources/css/jquery-datepicker2.css"
-	type="text/css" rel="stylesheet" media="screen,projection">
+<%-- <link href="${context}/resources/css/jquery-datepicker2.css"
+	type="text/css" rel="stylesheet" media="screen,projection"> --%>
 <!-- Custome CSS-->
 <link href="${context}/resources/css/custom/custom.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
@@ -113,7 +113,8 @@ data-stolenselected-roleType="${stolenselectedUserTypeId}"
 session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}"
 data-session-id="${not empty param.id ? param.id : 'null'}"
 data-session-roles="${not empty param.roles ? param.roles : 'null'}"
-data-session-type="${not empty param.type ? param.type : 'null'}">
+data-session-type="${not empty param.type ? param.type : 'null'}"
+data-session-source="${not empty param.source ? param.source : 'menu'}">
 
 
 	<!-- START CONTENT -->
@@ -426,8 +427,8 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
     <script type="text/javascript" src="${context}/resources/js/materialize-plugins/date_picker/picker.js"></script> --%>
 	<!--custom-script.js - Add your own theme custom JS-->
 	<script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
-	<script type="text/javascript"
-		src="${context}/resources/js/Validator.js"></script>
+<%-- 	<script type="text/javascript"
+		src="${context}/resources/js/Validator.js"></script> --%>
 	<!--prism
     <script type="text/javascript" src="${context}/resources/resources/js/prism/prism.js"></script>-->
 	<!--scrollbar-->

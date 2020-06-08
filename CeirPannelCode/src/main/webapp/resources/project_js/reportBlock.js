@@ -23,7 +23,7 @@
 				for (i = 0; i < data.length; i++) {
 					$('<option>').val(data[i].value).text(data[i].interp)
 					.appendTo('#blockdeviceType');
-					console.log('#blockdeviceType')
+					////console.log('#blockdeviceType')
 				}
 			});
 
@@ -32,7 +32,7 @@
 				for (i = 0; i < data.length; i++) {
 					$('<option>').val(data[i].value).text(data[i].interp)
 					.appendTo('#blockmultipleSimStatus');
-					console.log('#blockmultipleSimStatus');
+					//console.log('#blockmultipleSimStatus');
 				}
 			});
 		});
@@ -42,7 +42,7 @@
 			for (i = 0; i < data.length; i++) {
 				$('<option>').val(data[i].value).text(data[i].interp)
 				.appendTo('#blockdeviceIdType');
-				console.log('#blockdeviceIdType');
+				//console.log('#blockdeviceIdType');
 			}
 		});
 		
@@ -56,11 +56,11 @@
 			contentType : 'application/json; charset=utf-8',
 			type : 'POST',
 			success : function(data) {
-				console.log(data.value);
+				//console.log(data.value);
 				$('#defaultPeriodId,#bulkblocktypeRadioId,#editbulkblocktypeRadioId').attr('title', data.value+' Days');
 			},
 			error : function() {
-				console.log("Failed");
+				//console.log("Failed");
 			}
 		});
 	
@@ -69,10 +69,10 @@
 			for (i = 0; i < data.length; i++) {
 				$('<option>').val(data[i].value).text(data[i].interp)
 				.appendTo('#bulkBlockdeviceCategory');
-				console.log('#bulkBlockdeviceCategory');
+				//console.log('#bulkBlockdeviceCategory');
 				$('<option>').val(data[i].value).text(data[i].interp)
 				.appendTo('#singleDeviceCategory');
-				console.log('#singleDeviceCategory');
+				//console.log('#singleDeviceCategory');
 			}
 		});
 		
@@ -91,7 +91,7 @@ function showSingleImeiBlock()
 		for (i = 0; i < data.length; i++) {
 			$('<option>').val(data[i].value).text(data[i].interp)
 			.appendTo('#blockdeviceType');
-			console.log('#blockdeviceType')
+			//console.log('#blockdeviceType')
 		}
 	});
 
@@ -100,7 +100,7 @@ function showSingleImeiBlock()
 		for (i = 0; i < data.length; i++) {
 			$('<option>').val(data[i].value).text(data[i].interp)
 			.appendTo('#blockmultipleSimStatus');
-			console.log('#blockmultipleSimStatus');
+			//console.log('#blockmultipleSimStatus');
 		}
 	});
 	
@@ -109,7 +109,7 @@ function showSingleImeiBlock()
 		for (i = 0; i < data.length; i++) {
 			$('<option>').val(data[i].value).text(data[i].interp)
 			.appendTo('#blockdeviceIdType');
-			console.log('#blockdeviceIdType');
+			//console.log('#blockdeviceIdType');
 		}
 	});
 	
@@ -131,7 +131,7 @@ function showMultipleImeiBlock()
 		for (i = 0; i < data.length; i++) {
 			$('<option>').val(data[i].value).text(data[i].interp)
 			.appendTo('#bulkBlockdeviceCategory');
-			console.log('#bulkBlockdeviceCategory');
+			//console.log('#bulkBlockdeviceCategory');
 		}
 	});*/
 }
@@ -175,7 +175,10 @@ function submitBlockImei()
 		var bulkBlockingTimePeriod=$('#stolenBulkDatePeriod').val();
 		var bulkBlocktype =$('.bulkblocktypeRadio:checked').val();
 		 var deviceQuantity=$('#blockbulkDeviceQuantity').val();
-		console.log("bulkBlockdeviceCategory="+bulkBlockdeviceCategory+" blockbulkquantity=="+blockbulkquantity+" blockUnblockRemark="+blockbulkRemark)
+		var bulkBlockingTimePeriod=$('#stolenBulkDatePeriod').val();
+		var bulkBlocktype =$('.bulkblocktypeRadio:checked').val();
+		 var deviceQuantity=$('#blockbulkDeviceQuantity').val();
+		////console.log("bulkBlockdeviceCategory="+bulkBlockdeviceCategory+" blockbulkquantity=="+blockbulkquantity+" blockUnblockRemark="+blockbulkRemark)
 		
 		var formData = new FormData();
 		formData.append('file', $('#blockBulkFile')[0].files[0]);
@@ -201,7 +204,7 @@ function submitBlockImei()
 			success: function (data, textStatus, jqXHR) {
 				 $('div#initialloader').delay(300).fadeOut('slow');
 				$("#blockBulkSubmitButton").prop('disabled', true);
-				console.log(data);
+				//console.log(data);
 				//$('#fileStolenModal').closeModal();
 				$('#markBulkAsBlock').openModal({dismissible:false});
 				$('#txnIdsingleImei').text(data.txnId);
@@ -209,7 +212,7 @@ function submitBlockImei()
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
 				 $('div#initialloader').delay(300).fadeOut('slow');
-				console.log("error in ajax")
+				//console.log("error in ajax")
 			}
 		});
 
@@ -231,7 +234,7 @@ function submitUnBlockImei()
 		var userId = $("body").attr("data-userID");
 		var deviceQuantity=$('#unblockbulkDevicequantity').val();
 
-		//console.log("bulkBlockdeviceCategory="+bulkBlockdeviceCategory+" blockbulkquantity=="+blockbulkquantity+" blockUnblockRemark="+blockUnblockRemark)
+		////console.log("bulkBlockdeviceCategory="+bulkBlockdeviceCategory+" blockbulkquantity=="+blockbulkquantity+" blockUnblockRemark="+blockUnblockRemark)
 		var formData = new FormData();
 		formData.append('file', $('#unblockBulkFile')[0].files[0]);
 		formData.append('qty', unblockbulkquantity);
@@ -251,16 +254,16 @@ $.ajax({
 			processData: false,
 			contentType: false,
 			success: function (data, textStatus, jqXHR) {
-			console.log(data);
+			////console.log(data);
 			 $('div#initialloader').delay(300).fadeOut('slow');
 			$("#bulkUnblockSubmitButton").prop('disabled', true);
-//		 console.log(data);
+//		 //console.log(data);
 			$('#markBulkAsUnblock').openModal({dismissible:false});
 			 $('#txnIdUnblocksingleDevice').text(data.txnId);
 
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
-				console.log("error in ajax")
+				//console.log("error in ajax")
 				 $('div#initialloader').delay(300).fadeOut('slow');
 			}
 		});
@@ -288,8 +291,8 @@ function submitSingleBlockDevicesRequest()
 	
 	var requestType=2;
 	
-	console.log("****"+blockingTimePeriod+"**"+blockingType);
-	console.log("sucess include deviceType="+deviceType+" multipleSimStatus="+multipleSimStatus+" serialNumber="+serialNumber+" remark="+remark+" IMEI1="+IMEI1 );
+	//console.log("****"+blockingTimePeriod+"**"+blockingType);
+	//console.log("sucess include deviceType="+deviceType+" multipleSimStatus="+multipleSimStatus+" serialNumber="+serialNumber+" remark="+remark+" IMEI1="+IMEI1 );
 
 var singleImeiBlockDetail={
 	 	
@@ -312,8 +315,8 @@ var singleImeiBlockDetail={
 		
 }
 		
-		console.log(JSON.stringify(singleImeiBlockDetail));
-		console.log("*********");
+		//console.log(JSON.stringify(singleImeiBlockDetail));
+		//console.log("*********");
 	 	
 	 $.ajax({
 		url: './blockUnBlockSingleDevices',
@@ -324,14 +327,14 @@ var singleImeiBlockDetail={
 		success: function (data, textStatus, jqXHR) {
 			 $('div#initialloader').delay(300).fadeOut('slow');
 			$("#singleblockSubmit").prop('disabled', true);
-			 console.log(data);
+			 //console.log(data);
 			 $('#markAsBlock').openModal({dismissible:false});
 			 $('#txnIdblockBulkDevice').text(data.txnId);
 			
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
 			 $('div#initialloader').delay(300).fadeOut('slow');
-		console.log("error in ajax")
+		//console.log("error in ajax")
 		}
 	});
 		return false;
@@ -361,7 +364,7 @@ function submitSingleUnBlockDevicesRequest()
 	
 	
 	
-	console.log("sucess include deviceType="+deviceType+" multipleSimStatus="+multipleSimStatus+" serialNumber="+serialNumber+" remark="+remark+" IMEI1="+IMEI1 );
+	//console.log("sucess include deviceType="+deviceType+" multipleSimStatus="+multipleSimStatus+" serialNumber="+serialNumber+" remark="+remark+" IMEI1="+IMEI1 );
 
 var singleImeiBlockDetail={
 	 	
@@ -383,8 +386,8 @@ var singleImeiBlockDetail={
 	
 }
 		
-		console.log(JSON.stringify(singleImeiBlockDetail));
-		console.log("*********");
+		//console.log(JSON.stringify(singleImeiBlockDetail));
+		//console.log("*********");
 	 	
 	 $.ajax({
 		url: './blockUnBlockSingleDevices',
@@ -395,12 +398,12 @@ var singleImeiBlockDetail={
 		success: function (data, textStatus, jqXHR) {
 			$('div#initialloader').delay(300).fadeOut('slow');
 			$("#singleUnblockSubmitButton").prop('disabled', true);
-			 console.log(data);
+			 //console.log(data);
 			 $('#markAsUnblock').openModal({dismissible:false});
 			 $('#txnIdblocksingleDevice').text(data.txnId);
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-		console.log("error in ajax")
+		//console.log("error in ajax")
 		$('div#initialloader').delay(300).fadeOut('slow');
 		}
 	});
@@ -416,10 +419,10 @@ var singleImeiBlockDetail={
 
 //*******************************************View Pop up data *************************************************************************************************
 function viewDeviceDetails(txnId,popUpType,requestType){
-console.log("requestType=="+requestType)
+//console.log("requestType=="+requestType)
 	
 	var role = currentRoleType == null ? roleType : currentRoleType;
-	console.log("popUpType=="+popUpType);
+	//console.log("popUpType=="+popUpType);
 	$.ajax({
 		url : "./openbulkView?reqType="+requestType+"&txnId="+txnId+'&modeType=singleDeivce',
 		dataType : 'json',
@@ -427,7 +430,7 @@ console.log("requestType=="+requestType)
 		type : 'GET',
 		async :false,
 		success : function(data) {
-			console.log(data);
+			//console.log(data);
 			setViewBulkPopUp(data,popUpType,requestType);
 		},
 		error : function() {
@@ -450,7 +453,7 @@ function setViewBulkPopUp(data,popUpType,requestType){
 
 
 	if(popUpType=='view'){	
-		console.log("++++++++++"+popUpType+"requestType="+requestType);
+		//console.log("++++++++++"+popUpType+"requestType="+requestType);
 	
 		if(requestType=="3")
 		{
@@ -493,7 +496,7 @@ $("#viewbulkblockingType").val(data.blockingType);
 		$('#editblockHeading').text($.i18n('editBlockDevice'));
 		}
 		
-		console.log("++++++++++"+popUpType+" requestType="+requestType);
+		//console.log("++++++++++"+popUpType+" requestType="+requestType);
 	$("#editBulkBlockDeviceModal").openModal({dismissible:false});
 	$("#editBulkBlockRemark").val(data.remark);
 	$("#editBulkBlockuploadFile").val(data.fileName);
@@ -553,8 +556,8 @@ $.ajax({
 	processData: false,
 	contentType: false,
 	success: function (data, textStatus, jqXHR) {
-	console.log(data);
-// console.log(data);
+	//console.log(data);
+// //console.log(data);
 	$('div#initialloader').delay(300).fadeOut('slow');
 	$('#confirmEditBlockUnblock').openModal({dismissible:false});
 		//if(data.errorCode==200){
@@ -571,7 +574,7 @@ $.ajax({
 
 	},
 	error: function (jqXHR, textStatus, errorThrown) {
-		console.log("error in ajax")
+		//console.log("error in ajax")
 		$('div#initialloader').delay(300).fadeOut('slow');
 	}
 });
@@ -594,7 +597,7 @@ function viewblockImeiDevice(txnId,popUpType,requestType)
 		type : 'GET',
 		async :false,
 		success : function(data) {
-			console.log(data);
+			//console.log(data);
 			setSingleDeviceViewPopUp(data,popUpType,requestType);
 		},
 		error : function() {
@@ -622,7 +625,7 @@ $.getJSON('./getTypeDropdownList/BLOCK_CATEGORY/'+$("body").attr("data-userTypeI
 	for (i = 0; i < data.length; i++) {
 		$('<option>').val(data[i].value).text(data[i].interp)
 		.appendTo('#editbulkBlockdeviceCategory');
-		console.log('#editbulkBlockdeviceCategory');
+		//console.log('#editbulkBlockdeviceCategory');
 	}
 });
 
@@ -648,8 +651,8 @@ $.getJSON('./getDropdownList/DEVICE_ID_TYPE', function(data) {
 
 
 function setSingleDeviceViewPopUp(data,popUpType,requestType){
-console.log(data.rejectedRemark);
-console.log(data.singleImeiDetails.firstImei);
+//console.log(data.rejectedRemark);
+//console.log(data.singleImeiDetails.firstImei);
 
 	if(popUpType=='view'){
 		$("#viewsingleblockremarkDiv").css("display", "block"); 
@@ -667,7 +670,7 @@ console.log(data.singleImeiDetails.firstImei);
 		$('#singleBlockUnblockHeading').text($.i18n('viewBlockDevice'));
 		}
 		$('#viewblockImeiDevice').openModal({dismissible:false});
-		console.log("++++++++++"+popUpType+"requestType="+requestType);
+		//console.log("++++++++++"+popUpType+"requestType="+requestType);
 		
 			
 
@@ -697,7 +700,7 @@ console.log(data.singleImeiDetails.firstImei);
 			$("#viewsingleblockIMEI4").val("");
 			}
 		else{
-			console.log("else############")
+			//console.log("else############")
 		}
 			
 	$("#viewblockdeviceType").val(data.singleImeiDetails.deviceTypeInterp);
@@ -739,7 +742,7 @@ console.log(data.singleImeiDetails.firstImei);
 		}
 		
 		
-		console.log("++++++++++"+popUpType+" requestType="+requestType);
+		//console.log("++++++++++"+popUpType+" requestType="+requestType);
 	$("#editblockImeiDevice").openModal({dismissible:false});
 	 
 		
@@ -771,9 +774,9 @@ console.log(data.singleImeiDetails.firstImei);
 			$("#editsingleblockIMEI4").val("");
 			}
 		else{
-			console.log("else############");
+			//console.log("else############");
 		}
-		console.log("device id type="+data.singleImeiDetails.deviceIdType);
+		//console.log("device id type="+data.singleImeiDetails.deviceIdType);
 		$("#editblockdeviceType").val(data.singleImeiDetails.deviceType).change();
 		$("#editblockdeviceIdType").val(data.singleImeiDetails.deviceIdType).change();
 		$("#editblockmultipleSimStatus").val(data.singleImeiDetails.multipleSimStatus);
@@ -822,8 +825,8 @@ function updateSingleBlockDevicesRequest()
 	var category=$('#editbulkBlockdeviceCategory').val();
 	
 	
-	console.log("****");
-	//console.log("sucess include deviceType="+deviceType+" multipleSimStatus="+multipleSimStatus+" serialNumber="+serialNumber+" remark="+remark+" IMEI1="+IMEI1 );
+	//console.log("****");
+	////console.log("sucess include deviceType="+deviceType+" multipleSimStatus="+multipleSimStatus+" serialNumber="+serialNumber+" remark="+remark+" IMEI1="+IMEI1 );
 
 var singleImeiBlockDetail={
 	 	
@@ -844,8 +847,8 @@ var singleImeiBlockDetail={
 		'category':category
 }
 		
-		console.log(JSON.stringify(singleImeiBlockDetail));
-		console.log("*********");
+		//console.log(JSON.stringify(singleImeiBlockDetail));
+		//console.log("*********");
 	 	
 	 $.ajax({
 		url: './updateBlockUnBlockSingleDevices',
@@ -856,7 +859,7 @@ var singleImeiBlockDetail={
 		success: function (data, textStatus, jqXHR) {
 			
 			 $('div#initialloader').delay(300).fadeOut('slow');
-			 console.log(data);
+			 //console.log(data);
 			 $('#confirmEditBlockUnblock').openModal({dismissible:false});
 	/*		 if(data.errorCode==200){
 			
@@ -873,7 +876,7 @@ var singleImeiBlockDetail={
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
 			 $('div#initialloader').delay(300).fadeOut('slow');
-		console.log("error in ajax")
+		//console.log("error in ajax")
 		}
 	});
 		return false;

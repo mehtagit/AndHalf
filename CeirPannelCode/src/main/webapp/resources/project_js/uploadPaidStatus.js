@@ -40,7 +40,6 @@ $( document ).ready(function() {
 	 var loggedUserType=$("body").attr("data-roleType");
 	if(loggedUserType=='Custom' || loggedUserType=='Immigration' ){
 		
-
 		$.ajax({
 			url : "./paid-status/"+In,
 			dataType : 'json',
@@ -51,7 +50,7 @@ $( document ).ready(function() {
 				localStorage.setItem("nationalId", In);	
 				if (data.errorCode == 1) {
 					pageRendering(lang);
-					filter(lang);
+					filter(lang,null);
 					$("#user123").css("display", "none");
 					$("#user456").css("display", "block");
 					$("#addbutton").css("display", "block");
@@ -79,7 +78,7 @@ $( document ).ready(function() {
 				regularizedCount();
 			},
 			error : function() {
-				console.log("Failed");
+				//console.log("Failed");
 			}
 		}); 
 		
@@ -123,7 +122,7 @@ $( document ).ready(function() {
 				regularizedCount();
 			},
 			error : function() {
-				console.log("Failed");
+				//console.log("Failed");
 			}
 		}); */
 		/*pageRendering(lang);
@@ -134,7 +133,7 @@ $( document ).ready(function() {
 					$("#addbutton").css("display", "block");
 					$("#submitbtn").css("display", "none");
 		pageRendering(lang);
-        filter(lang);
+        filter(lang,null);
 		$("#btnLink").css({display: "none"});
 
 
@@ -149,7 +148,7 @@ var id=2;
 var x = 1;
 $(document).ready(function () {
 	 $.getJSON('./addMoreFile/add_more_device_count', function(data) {
-			console.log(data);
+			//console.log(data);
 			
 			localStorage.setItem("maxCount", data.value);
 			
@@ -157,10 +156,10 @@ $(document).ready(function () {
 	 
 	 var max_fields =localStorage.getItem("maxCount");
 	 if (max_fields==0){
-		 console.log("1111");
+		 //console.log("1111");
 		 $(".add_field_button").prop('disabled', true);
 	 }		
-			console.log("maximum fields for add more  from api="+max_fields);
+			//console.log("maximum fields for add more  from api="+max_fields);
 	//var max_fields = 15; //maximum input boxes allowed
 	var wrapper = $(".mainDeviceInformation"); //Fields wrapper
 	var add_button = $(".add_field_button"); //Add button ID
@@ -171,7 +170,7 @@ $(document).ready(function () {
 		var nationType= localStorage.getItem("nationType");
 		if (x < max_fields) { //max input box allowed
 			x++; //text box increment
-console.log("nationType=="+nationType);
+//console.log("nationType=="+nationType);
 			if (nationType=='1')
 			{
 				
@@ -303,16 +302,26 @@ console.log("nationType=="+nationType);
 
 
 var sourceType =localStorage.getItem("sourceType");
-function filter(lang)
+function filter(lang , filterSource)
 {       
+	var source__val;
+
+	if(filterSource == 'filter' ) {
+		source__val= filterSource;
+	}
+	else{
+		source__val= $("body").attr("data-filterSource");
+
+	}
+	
 	var sessionFlag=0;
 	if(roleType=="Custom" || roleType=="Immigration"){
-		table('./headers?type=userPaidStatus&lang='+lang,'./user-paid-status-data?sessionFlag='+sessionFlag);
+		table('./headers?type=userPaidStatus&lang='+lang,'./user-paid-status-data?sessionFlag='+sessionFlag+'&source='+source__val);
 	}else if(roleType=="DRT"){
-		table('./headers?type=userPaidStatus&lang='+lang,'./user-paid-status-data?sessionFlag='+sessionFlag);
+		table('./headers?type=userPaidStatus&lang='+lang,'./user-paid-status-data?sessionFlag='+sessionFlag+'&source='+source__val);
 	}
 	else if(roleType == "CEIRAdmin"){
-		table('./headers?type=adminUserPaidStatus&lang='+lang,'./user-paid-status-data?sessionFlag='+sessionFlag);
+		table('./headers?type=adminUserPaidStatus&lang='+lang,'./user-paid-status-data?sessionFlag='+sessionFlag+'&source='+source__val);
 
 	}
 }
@@ -385,7 +394,7 @@ function table(url,dataUrl){
 		       });
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			console.log("error in ajax");
+			//console.log("error in ajax");
 		}
 	});
 }
@@ -473,7 +482,7 @@ function pageButtons(url){
 			
 			$.getJSON('./getDropdownList/CUSTOMS_TAX_STATUS', function(data) {
 				for (i = 0; i < data.length; i++) {
-					//console.log(data[i].value);
+					////console.log(data[i].value);
 					$('<option>').val(data[i].value).text(data[i].interp)
 					.appendTo('#taxPaidStatus');
 				}
@@ -543,7 +552,7 @@ function accept(){
 				}*/
 		},
 		error : function() {
-			console.log("Error");
+			//console.log("Error");
 		}
 	});
 }
@@ -560,7 +569,7 @@ function accept(){
 			setViewPopupData(data);
 		},
 		error : function() {
-			console.log("Failed");
+			//console.log("Failed");
 		}
 	});*/
 		
@@ -642,7 +651,7 @@ function historytable(url,dataUrl){
 			
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			console.log("error in ajax");
+			//console.log("error in ajax");
 		}
 	});
 }
@@ -872,7 +881,7 @@ function submitDeviceInfo(){
 			$("#uploadPaidStatusbutton").prop('disabled', true);
 //			$('#updateConsignment').modal();
 			if(data.errorCode==0){
-					console.log("error code"+data.errorCode)
+					//console.log("error code"+data.errorCode)
 //				$('#sucessMessage').text('');
 				$('#regularisedDevice').openModal({dismissible:false});
 				$('#dynamicTxnId').text(data.txnId);
@@ -884,7 +893,7 @@ function submitDeviceInfo(){
 				$('#sucessMessage').text($.i18n('duplicateImei'));
 				}*/
 			else{
-				console.log("error code"+data.errorCode);
+				//console.log("error code"+data.errorCode);
 //				$('#sucessMessage').text('');
 				$('#regularisedDevice').openModal({dismissible:false});
 				$('#sucessMessage').text('');
@@ -892,7 +901,7 @@ function submitDeviceInfo(){
 			}
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			console.log("error in ajax")
+			//console.log("error in ajax")
 
 		}
 	});
@@ -921,7 +930,7 @@ function taxPaidStatus(){
 			"taxPaidStatus":0,
 			"txnId":	window.taxTxnId
 	}
-	console.log("--");
+	//console.log("--");
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
 	
@@ -946,7 +955,7 @@ function taxPaidStatus(){
 
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			console.log("error in ajax")
+			//console.log("error in ajax")
 		}
 	});
 }
@@ -1050,26 +1059,26 @@ $(document).ready(function () {
 
 
 function regularizedCount(nationType){
-	console.log("----"+nationType+"  roleType=="+roleType)
+	//console.log("----"+nationType+"  roleType=="+roleType)
 	var allowed='';
 	if(nationType==undefined && roleType=='Custom')
 		{
-		console.log("if condition for regulaised");
+		//console.log("if condition for regulaised");
 		nationType=1;
 		var nid= nationalId == 'null' ? null : nationalId;
 		}
 	else if(nationType==undefined && roleType=='Immigration'){
-		console.log("else  condition for regulaised");
+		//console.log("else  condition for regulaised");
 		nationType=2;
 		var nid= nationalId == 'null' ? null : nationalId;
 	}
 	else if(nationType==2)
 		{
-		console.log("hit for foreigner.");
+		//console.log("hit for foreigner.");
 		nationType==2;
 		}
 	else{
-		console.log("else  condition for CEIR admin");
+		//console.log("else  condition for CEIR admin");
 		nationType=1;
 		var nid= '';
 	}
@@ -1092,7 +1101,7 @@ function regularizedCount(nationType){
 			
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			console.log("error in ajax")
+			//console.log("error in ajax")
 
 		}
 	});
@@ -1146,7 +1155,7 @@ function aprroveDevice(){
 
 		},
 		error : function() {
-			console.log("Failed");
+			//console.log("Failed");
 
 		}
 	});
@@ -1198,7 +1207,7 @@ function rejectUser(){
 
 		},
 		error : function() {
-			console.log("Failed");
+			//console.log("Failed");
 		}
 	});
 	return false;
@@ -1596,7 +1605,7 @@ $(document).on("keyup", "#Price1", function(e) {
 	}
  
  function historyRecord(txnID){
-		console.log("txn id=="+txnID)
+		//console.log("txn id=="+txnID)
 		$("#tableOnModal").openModal({dismissible:false});
 		 var filter =[];
 		 var formData= new FormData();
@@ -1606,7 +1615,7 @@ $(document).on("keyup", "#Price1", function(e) {
 					 "columns": [
 						    "created_on","modified_on","txn_id","status","nid","device_type","device_id_type","multi_sim_status","country","device_serial_number","tax_paid_status","device_status","price",
 						    "currency","first_imei","second_imei","third_imei","fourth_imei","origin","remark",
-						     "user_id"
+						     "user_id","approved_by","tax_collected_by","custom_id","ceir_admin_id"
 						    ],
 					"tableName": "regularize_device_db_aud",
 					"dbName" : "ceirconfig",

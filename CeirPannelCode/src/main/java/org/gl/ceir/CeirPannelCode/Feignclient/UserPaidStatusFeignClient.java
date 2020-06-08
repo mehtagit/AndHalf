@@ -23,7 +23,8 @@ public interface UserPaidStatusFeignClient {
 	public Object consignmentFilter(@RequestBody FilterRequest_UserPaidStatus filterRequest,
 			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
 			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
-			@RequestParam(value = "file", defaultValue = "0") Integer file) ;
+			@RequestParam(value = "file", defaultValue = "0") Integer file,
+			@RequestParam(value="source",defaultValue ="menu") String source) ;
 
 
 

@@ -99,7 +99,7 @@ public class UploadPaidStatus {
 	@ResponseBody
 	@PostMapping("/user-paid-status-data")
 	public ResponseEntity<?> view(@RequestParam(name = "file", defaultValue = "0", required = false) Integer file,
-			HttpServletRequest request,HttpSession session) {	
+			HttpServletRequest request,HttpSession session,@RequestParam(name="source",required = false) String source) {	
 		// TODO Auto-generated method stub
 		String filter = request.getParameter("filter");
 		Object response = null;
@@ -117,7 +117,7 @@ public class UploadPaidStatus {
 		String userStatus = (String) session.getAttribute("userStatus");
 		log.info("userId==="+userId);
 		
-		log.info("userType in uploadPaidStatus" +userType);
+		log.info("userType in uploadPaidStatus" +userType+"  source=="+source);
 
 		/*
 		 * filterrequest.setUserId(userId); 
@@ -125,7 +125,7 @@ public class UploadPaidStatus {
 		 */
 		filterrequest.setSearchString(request.getParameter("search[value]"));
 		log.info("filterrequest--->"+filterrequest);
-		response = uploadPaidStatusFeignClient.view(filterrequest, pageNo, pageSize, file);
+		response = uploadPaidStatusFeignClient.view(filterrequest, pageNo, pageSize, file,source);
 		log.info("request passed to the filter api  ="+filterrequest);
 		String apiResponse = gson.toJson(response);
 		log.info("response filter api  ="+apiResponse);
@@ -294,7 +294,7 @@ public class UploadPaidStatus {
 		
 		
 		if("Immigration".equals(userType)){
-			String[] names= {"HeaderButton",Translator.toLocale("button.register"),"JavaScript:void(0);","btnLink","FilterButton", Translator.toLocale("button.filter"),"filter("+ConfigParameters.languageParam+")","submitFilter"};
+			String[] names= {"HeaderButton",Translator.toLocale("button.register"),"JavaScript:void(0);","btnLink","FilterButton", Translator.toLocale("button.filter"),"filter("+ConfigParameters.languageParam+",'filter')","submitFilter"};
 			for(int i=0; i< names.length ; i++) {
 				button = new Button();
 				button.setType(names[i]);
@@ -309,7 +309,7 @@ public class UploadPaidStatus {
 			pageElement.setButtonList(buttonList);
 			
 		}else {
-			String[] names= {"HeaderButton",Translator.toLocale("button.register"),"./add-device-information","btnLink","FilterButton", Translator.toLocale("button.filter"),"filter("+ConfigParameters.languageParam+")","submitFilter"};
+			String[] names= {"HeaderButton",Translator.toLocale("button.register"),"./add-device-information","btnLink","FilterButton", Translator.toLocale("button.filter"),"filter("+ConfigParameters.languageParam+",'filter')","submitFilter"};
 			for(int i=0; i< names.length ; i++) {
 				button = new Button();
 				button.setType(names[i]);

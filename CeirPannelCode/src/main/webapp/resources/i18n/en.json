@@ -187,5 +187,9 @@
 	"EXIST_IN_DISTRIBUTOR_DB":"IMEI/ESN/MEID is already present in the system",
 	"EXIST_IN_IMPORTER_DB":"This device is not importer",
 	"TRCRegister_futureRef": "Your request to register device has been received successfully. The Transaction ID for future reference is",
-	"REGISTER_TYPE_APPROVE_REJECTED":"Type Approved for TAC already exists."
+	"REGISTER_TYPE_APPROVE_REJECTED":"Type Approved for TAC already exists.",
+	"User_Success_Save" : "User has been sucessfully saved",
+	"User_Fail_Save":"User failed to saved",
+	"User_Success_Update" : "User has been sucessfully update",
+	"User_Fail_Update": "User has been failed to update"
 }

@@ -17,8 +17,8 @@ $(document).ready(function() {
 		async: false
 		});
 	$.getJSON('./productList', function(data) {
-	 	console.log("start");
-		 console.log(data)
+	 	//console.log("start");
+		//console.log(data)
 	 		for (i = 0; i < data.length; i++) {
 	 			
 	 			$('<option>').val(data[i].id).text(data[i].brand_name)
@@ -49,8 +49,8 @@ var txnid=$('#existingStolenTxnId').val();
 		processData: false,
 		contentType: false,
 		success: function (response, textStatus, jqXHR) {
-		console.log(response)
-		console.log("1=="+response.stolenIndividualUserDB.deviceBrandName);
+		//console.log(response)
+		//console.log("1=="+response.stolenIndividualUserDB.deviceBrandName);
 
 		
 		 //	alert(response.stolenIndividualUserDB.deviceBrandName);
@@ -217,7 +217,7 @@ $('#editsigleRecoverydeviceBrandName').on(
 		function() {
 			var brand_id = $('#editsigleRecoverydeviceBrandName').val();
 		//	alert("ss"+brand_id);
-			console.log("ss"+brand_id);
+			//console.log("ss"+brand_id);
 			$.ajaxSetup({
 				async: false
 				});
@@ -234,7 +234,7 @@ $('#editsigleRecoverydeviceBrandName').on(
 function setBrandName()
 {
 	var selectedBrandName = $('#selectedBrandName').val()
-	console.log("selectedBrandName value=="+selectedBrandName);
+	//console.log("selectedBrandName value=="+selectedBrandName);
 	$('editsigleRecoverydeviceBrandName').val(selectedBrandName);
 }
 

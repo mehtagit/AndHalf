@@ -781,7 +781,7 @@ onclick="_Services._selectstartDate()"></i></span>
 
 														<div class="input-field col s12 m6 l6">
 															<input type="text" name="commune" placeholder=""
-																id="singleDevicecommune" pattern="[a-zA-Z0-9]{0,30}"
+																id="singleDevicecommune" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}"
 																required="required" title=""
 																oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"

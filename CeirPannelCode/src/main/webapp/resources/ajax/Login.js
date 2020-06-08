@@ -13,7 +13,6 @@ function forgotPassword(){
 			}    
 		}    
 	});
-	console.log("obj data:"+JSON.stringify(obj));
 	$.ajax({
 		type : 'POST',
 		url : contextpath + '/forgotPasswordRequest',
@@ -21,7 +20,6 @@ function forgotPassword(){
 		dataType : 'html',
 		data : JSON.stringify(obj),
 		success : function(data) {
-			console.log("response: "+data);
 			var resp=JSON.parse(data);
 			$("#otpVerification #userid").val(resp.userId);
 	//		$('#content').addClass('lean-overlay');
@@ -117,7 +115,6 @@ function login(){
 			}    
 		}    
 	});
-	console.log("obj data:"+JSON.stringify(obj));
 	$.ajax({
 		type : 'POST',
 		url : contextpath + '/saveLogin',
@@ -191,7 +188,7 @@ function changeExpiryPassword(){
 			obj =  
 			{  
 					oldPassword:val.find('#oldPassword').val(),
-					password:val.find('#password').val(),
+					password:val.find('#password2').val(),
 					confirmPassword: val.find('#confirm_password').val(),
 					userid:val.find("#userId").val()
 			}    

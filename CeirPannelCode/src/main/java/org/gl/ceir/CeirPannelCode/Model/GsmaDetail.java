@@ -5,10 +5,10 @@ public class GsmaDetail {
 	private String bandName;
 	private Integer deviceId;
 	private String equipmentType;
-	private Long imei;
-	private Long imsi;
+	private String imei;
+	private String imsi;
 	private String modelName;
-	private Long msisdn;
+	private String msisdn;
 	private String operatingSystem;
 	private String identifierType;
 	public String getBandName() {
@@ -29,16 +29,16 @@ public class GsmaDetail {
 	public void setEquipmentType(String equipmentType) {
 		this.equipmentType = equipmentType;
 	}
-	public Long getImei() {
+	public String getImei() {
 		return imei;
 	}
-	public void setImei(Long imei) {
+	public void setImei(String imei) {
 		this.imei = imei;
 	}
-	public Long getImsi() {
+	public String getImsi() {
 		return imsi;
 	}
-	public void setImsi(Long imsi) {
+	public void setImsi(String imsi) {
 		this.imsi = imsi;
 	}
 	public String getModelName() {
@@ -47,10 +47,10 @@ public class GsmaDetail {
 	public void setModelName(String modelName) {
 		this.modelName = modelName;
 	}
-	public Long getMsisdn() {
+	public String getMsisdn() {
 		return msisdn;
 	}
-	public void setMsisdn(Long msisdn) {
+	public void setMsisdn(String msisdn) {
 		this.msisdn = msisdn;
 	}
 	public String getOperatingSystem() {
@@ -67,11 +67,28 @@ public class GsmaDetail {
 	}
 	@Override
 	public String toString() {
-		return "GsmaDetail [bandName=" + bandName + ", deviceId=" + deviceId + ", equipmentType=" + equipmentType
-				+ ", imei=" + imei + ", imsi=" + imsi + ", modelName=" + modelName + ", msisdn=" + msisdn
-				+ ", operatingSystem=" + operatingSystem + ", identifierType=" + identifierType + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("GsmaDetail [bandName=");
+		builder.append(bandName);
+		builder.append(", deviceId=");
+		builder.append(deviceId);
+		builder.append(", equipmentType=");
+		builder.append(equipmentType);
+		builder.append(", imei=");
+		builder.append(imei);
+		builder.append(", imsi=");
+		builder.append(imsi);
+		builder.append(", modelName=");
+		builder.append(modelName);
+		builder.append(", msisdn=");
+		builder.append(msisdn);
+		builder.append(", operatingSystem=");
+		builder.append(operatingSystem);
+		builder.append(", identifierType=");
+		builder.append(identifierType);
+		builder.append("]");
+		return builder.toString();
 	}
-
 	
 	
 }
