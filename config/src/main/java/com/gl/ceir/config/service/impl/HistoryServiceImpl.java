@@ -145,6 +145,7 @@ public class HistoryServiceImpl {
 
 				nsb.with(new SearchCriteria("referTable", "END_USER", SearchOperation.NEGATION, Datatype.STRING));
 
+				
 				pageable = PageRequest.of(pageNo, defaultPagesize, new Sort(Sort.Direction.DESC, "modifiedOn"));
 				result = notificationRepository.findAll(nsb.build(), pageable);
 			}else {
