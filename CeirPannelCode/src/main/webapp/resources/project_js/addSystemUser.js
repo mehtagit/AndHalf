@@ -59,7 +59,13 @@ function SaveSystemUser(){
 				        dismissible:false
 				    });
 					console.log(JSON.stringify(data))
-					$('#sucessMessage').text(data.message);
+					$.i18n().locale = window.parent.$('#langlist').val();
+					$.i18n().load({
+						'en' : './resources/i18n/en.json',
+						'km' : './resources/i18n/km.json'
+					}).done(function() {
+						$('#sucessMessage').text($.i18n(data.tag));
+					});
 				}
 				else {
 						$.i18n().locale = window.parent.$('#langlist').val();

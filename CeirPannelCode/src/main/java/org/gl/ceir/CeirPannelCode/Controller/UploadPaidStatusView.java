@@ -800,7 +800,7 @@ public ModelAndView viewVisaInformationView(@PathVariable("visaId") Integer visa
 	filter.setUserId(userId);
 	filter.setFeatureId(43);
 	filter.setUsername(userName);
-	
+	filter.setUserName(userName);
 	log.info("request passed to the view visa details .."+filter);
 	UpdateVisaModel content= uploadPaidStatusFeignClient.viewVisaDetails(filter);
 	log.info(" reponse from view visa details api. =="+content);
