@@ -40,4 +40,8 @@ public interface GsmaFeignClient {
 				@RequestParam(name = "identifierType", required = false) String identifierType);
 	
 	
+		
+		@RequestMapping(value="/Rule/DistinctName" ,method=RequestMethod.GET) 
+		public List<String> getFeatureName();
+		
 }

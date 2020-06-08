@@ -730,6 +730,7 @@ $(document).ready(function () {
 
 				}
 			});
+			
 			$.getJSON('./getDropdownList/DEVICE_STATUS', function(data) {
 				var dropdownid=id-1;
 				for (i = 0; i < data.length; i++) {
@@ -1371,7 +1372,7 @@ function historyRecord(txnID){
 	} 
 	formData.append("filter",JSON.stringify(filterRequest));	
 	if(data_lang_param=='km'){
-		var langFile='../resources/i18n/khmer_datatable.json';
+		var langFile='./resources/i18n/khmer_datatable.json';
 	}
 	console.log("22");
 	$.ajax({
