@@ -57,8 +57,12 @@ public class VisaUpdateDatableController {
 	
 	@PostMapping("visaUpdatedata") 
 	public ResponseEntity<?> viewPendingTacList(HttpServletRequest request,HttpSession session,@RequestParam(name="source",defaultValue ="menu" ,required = false) String source) {
-		String userType = (String) session.getAttribute("usertype");
-		int userId=	(int) session.getAttribute("userid");
+		
+		String userType=(String) session.getAttribute("usertype"); 
+		  String  userName= (String) session.getAttribute("username").toString(); 
+		  int userId= (int) session.getAttribute("userid"); 
+		  int userTypeid=(int)  session.getAttribute("usertypeId");
+		  
 		int file=0;
 		// Data set on this List
 		List<List<Object>> finalList=new ArrayList<List<Object>>();
@@ -70,6 +74,12 @@ public class VisaUpdateDatableController {
 		filterrequest.setSearchString(request.getParameter("search[value]"));
 		log.info("pageSize"+pageSize+"-----------pageNo---"+pageNo+"  source+++--"+source);
 		try{
+			filterrequest.setUserType(userType);
+			filterrequest.setUserName(userName);
+			filterrequest.setUsername(userName);
+			filterrequest.setUserId(userId);
+			filterrequest.setUsertypeId(userTypeid);
+			filterrequest.setFeatureId(43);
 			log.info("request send to the filter api ="+filterrequest);
 			Object response = feignCleintImplementation.viewVisaRequest(filterrequest, pageNo, pageSize, file,source);
 			log.info("response in datatable"+response);

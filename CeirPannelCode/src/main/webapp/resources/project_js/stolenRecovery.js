@@ -25,7 +25,7 @@ $.i18n().load( {
 
 $(document).ready(function(){
 	$('div#initialloader').fadeIn('fast');
-	//console.log("featureId is---->" +featureId);
+	////console.log("featureId is---->" +featureId);
 	filterStolen(lang,null,null);
 	pageRendering();
 });
@@ -68,7 +68,7 @@ function confirmantiondelete(){
 		contentType : 'application/json; charset=utf-8',
 		type : 'POST',
 		success : function(data, textStatus, xhr) {
-			//console.log(data);
+			////console.log(data);
 			if(data.errorCode == 200){
 				$("#consignmentText").text(data.message);
 			}else if(data.errorCode == 0){
@@ -76,7 +76,7 @@ function confirmantiondelete(){
 			}
 		},
 		error : function() {
-			console.log("Error");
+			//console.log("Error");
 		}
 	});
 	$("#DeleteConsignment").closeModal();
@@ -209,7 +209,7 @@ function editRegisterConsignment(){
 
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			console.log("error in ajax")
+			//console.log("error in ajax")
 		}
 	});
 
@@ -557,7 +557,7 @@ function fileStolenReport(){
 
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			console.log("error in ajax")
+			//console.log("error in ajax")
 		}
 	});
 
@@ -615,7 +615,7 @@ function fileRecoveryReport(){
 
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			console.log("error in ajax")
+			//console.log("error in ajax")
 		}
 	});
 
@@ -760,7 +760,7 @@ function updatefileStolenReport(){
 
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			console.log("error in ajax")
+			//console.log("error in ajax")
 		}
 	});
 
@@ -880,7 +880,7 @@ function openMulipleStolenPopUp()
 
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			console.log("error in ajax")
+			//console.log("error in ajax")
 		}
 	});
 
@@ -958,13 +958,13 @@ function exportStolenRecoveryData()
 	var role = currentRoleType == null ? roleType : currentRoleType;
 	//console.log("roleType=="+roleType+" currentRoleType="+currentRoleType+" role="+role);
     
-	console.log("stolenRecoveryFileStatus=="+stolenRecoveryFileStatus+" stolenRecoverySourceStatus=="+stolenRecoverySourceStatus+" stolenRecoveryRequestType="+stolenRecoveryRequestType)
+	//console.log("stolenRecoveryFileStatus=="+stolenRecoveryFileStatus+" stolenRecoverySourceStatus=="+stolenRecoverySourceStatus+" stolenRecoveryRequestType="+stolenRecoveryRequestType)
       if(isNaN(stolenRecoveryFileStatus) && isNaN(stolenRecoverySourceStatus) && isNaN(stolenRecoveryRequestType))
 	   {
     	  stolenRecoveryFileStatus='';
     	  stolenRecoverySourceStatus='';
     	  stolenRecoveryRequestType='';
-    	 //console.log(" 11111111stolenRecoveryFileStatus && stolenRecoverySourceStatus && stolenRecoveryRequestType is empty =="+stolenRecoveryFileStatus+stolenRecoverySourceStatus);
+    	  //console.log(" 11111111stolenRecoveryFileStatus && stolenRecoverySourceStatus && stolenRecoveryRequestType is empty =="+stolenRecoveryFileStatus+stolenRecoverySourceStatus);
 	   }
       else if(isNaN(stolenRecoveryFileStatus) && isNaN(stolenRecoverySourceStatus))
 	   {
@@ -976,7 +976,7 @@ function exportStolenRecoveryData()
 	   {
     	  stolenRecoverySourceStatus='';
     	  stolenRecoveryRequestType='';
-    	 //console.log(" 333333stolenRecoverySourceStatus && stolenRecoveryRequestType is empty="+stolenRecoverySourceStatus+stolenRecoveryRequestType);
+    	  //console.log(" 333333stolenRecoverySourceStatus && stolenRecoveryRequestType is empty="+stolenRecoverySourceStatus+stolenRecoveryRequestType);
 	   }
       else if(isNaN(stolenRecoveryRequestType) && isNaN(stolenRecoveryFileStatus))
     	  {

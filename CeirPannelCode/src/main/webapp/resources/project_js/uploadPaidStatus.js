@@ -78,7 +78,7 @@ $( document ).ready(function() {
 				regularizedCount();
 			},
 			error : function() {
-				console.log("Failed");
+				//console.log("Failed");
 			}
 		}); 
 		
@@ -122,7 +122,7 @@ $( document ).ready(function() {
 				regularizedCount();
 			},
 			error : function() {
-				console.log("Failed");
+				//console.log("Failed");
 			}
 		}); */
 		/*pageRendering(lang);
@@ -394,7 +394,7 @@ function table(url,dataUrl){
 		       });
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			console.log("error in ajax");
+			//console.log("error in ajax");
 		}
 	});
 }
@@ -482,7 +482,7 @@ function pageButtons(url){
 			
 			$.getJSON('./getDropdownList/CUSTOMS_TAX_STATUS', function(data) {
 				for (i = 0; i < data.length; i++) {
-					//console.log(data[i].value);
+					////console.log(data[i].value);
 					$('<option>').val(data[i].value).text(data[i].interp)
 					.appendTo('#taxPaidStatus');
 				}
@@ -552,7 +552,7 @@ function accept(){
 				}*/
 		},
 		error : function() {
-			console.log("Error");
+			//console.log("Error");
 		}
 	});
 }
@@ -569,7 +569,7 @@ function accept(){
 			setViewPopupData(data);
 		},
 		error : function() {
-			console.log("Failed");
+			//console.log("Failed");
 		}
 	});*/
 		
@@ -651,7 +651,7 @@ function historytable(url,dataUrl){
 			
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			console.log("error in ajax");
+			//console.log("error in ajax");
 		}
 	});
 }
@@ -901,7 +901,7 @@ function submitDeviceInfo(){
 			}
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			console.log("error in ajax")
+			//console.log("error in ajax")
 
 		}
 	});
@@ -955,7 +955,7 @@ function taxPaidStatus(){
 
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			console.log("error in ajax")
+			//console.log("error in ajax")
 		}
 	});
 }
@@ -1101,7 +1101,7 @@ function regularizedCount(nationType){
 			
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			console.log("error in ajax")
+			//console.log("error in ajax")
 
 		}
 	});
@@ -1155,7 +1155,7 @@ function aprroveDevice(){
 
 		},
 		error : function() {
-			console.log("Failed");
+			//console.log("Failed");
 
 		}
 	});
@@ -1207,7 +1207,7 @@ function rejectUser(){
 
 		},
 		error : function() {
-			console.log("Failed");
+			//console.log("Failed");
 		}
 	});
 	return false;
@@ -1615,7 +1615,7 @@ $(document).on("keyup", "#Price1", function(e) {
 					 "columns": [
 						    "created_on","modified_on","txn_id","status","nid","device_type","device_id_type","multi_sim_status","country","device_serial_number","tax_paid_status","device_status","price",
 						    "currency","first_imei","second_imei","third_imei","fourth_imei","origin","remark",
-						     "user_id"
+						     "user_id","approved_by","tax_collected_by","custom_id","ceir_admin_id"
 						    ],
 					"tableName": "regularize_device_db_aud",
 					"dbName" : "ceirconfig",

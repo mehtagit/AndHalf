@@ -479,7 +479,7 @@ $.ajax({
 		$('#defaultDatePeriod,#bulkDefaultPeiod,#editIndivisualDefaultPeriod,#editBulkDefaultPeriod').attr('title', data.value+' Days');
 	},
 	error : function() {
-		console.log("Failed");
+		//console.log("Failed");
 	}
 });
 
@@ -647,7 +647,7 @@ function saveIndivisualStolenRequest(){
 			}
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			console.log("error in ajax")
+			//console.log("error in ajax")
 
 		}
 	});
@@ -790,7 +790,7 @@ function saveCompanyStolenRequest(){
 			}
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			console.log("error in ajax")
+			//console.log("error in ajax")
 			$('div#initialloader').delay(300).fadeOut('slow');
 
 		}
@@ -821,7 +821,7 @@ function confirmantiondelete(){
 	var remarks = $("#textarea1").val();
 	var role = currentRoleType == null ? roleType : currentRoleType;
 	//console.log("txnId===**"+txnId+" userId="+userId+" roleType== "+roleType+ " currentRoleType=="+currentRoleType);
-	console.log("  reqType========"+window.reqType)
+	//console.log("  reqType========"+window.reqType)
 	var obj ={
 			"txnId" : txnId,
 			"roleType":roleType,
@@ -847,7 +847,7 @@ function confirmantiondelete(){
 			}
 		},
 		error : function() {
-			console.log("Error");
+			//console.log("Error");
 		}
 	});
 	$("#DeleteConsignment").closeModal();
@@ -888,7 +888,7 @@ function aprroveDevice(){
 			//console.log("approveRequest----->"+JSON.stringify(approveRequest));
 			if(data.errorCode==0){
 				confirmApproveInformation();
-				console.log("inside Approve Success")
+				//console.log("inside Approve Success")
 			}
 
 		},

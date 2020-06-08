@@ -232,7 +232,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
-				console.log("error in ajax")
+				//console.log("error in ajax")
 			}
 		});
 	return false;
@@ -293,7 +293,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 				$("#materialize-lean-overlay-3").css("display","none");
 			},
 			error : function() {
-				console.log("Error");
+				//console.log("Error");
 			}
 		});
 		return false;
@@ -605,7 +605,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 				$('#markAsStolenDone').openModal();
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
-				console.log("error in ajax");
+				//console.log("error in ajax");
 			}
 		});
 
@@ -781,8 +781,8 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 		//alert("selectedRoleTypeId="+selectedRoleTypeId);
 		//var currentSelectedRoleType=selectedRoleTypeId == null ? selectedRoleTypeId : userTypeId;
 		
-		//console.log("userType--->"+userType+"-------------userTypeId------------>"+userTypeId);
-		//console.log("roleType=="+roleType+" currentRoleType="+currentRoleType+" role="+role);
+		////console.log("userType--->"+userType+"-------------userTypeId------------>"+userTypeId);
+		////console.log("roleType=="+roleType+" currentRoleType="+currentRoleType+" role="+role);
 	
 		if(isNaN(StockStatus))
 		{
