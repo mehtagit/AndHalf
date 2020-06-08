@@ -1063,10 +1063,17 @@ position: fixed;
 
 
 <script type="text/javascript">
-/* var input2 = document.querySelector("#phone");
+/*  var input2 = document.querySelector("#phone");
 window.intlTelInput(input2, {
 	utilsScript : "${context}/resources/js/utils.js",
-}); */
+});  */
+$('input').on('invalid', function(e) {
+    setTimeout(function(){
+        $('html, body').animate({scrollTop: document.documentElement.scrollTop - 150}, 0);
+       // $('html, body').animate({scrollTop: document.documentElement.scrollDown}, 0);
+    }, 0);
+});
+
 </script>
 
 </body>
