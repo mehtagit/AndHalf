@@ -216,7 +216,7 @@
 					
 					
 			}
-			console.log(JSON.stringify(filterRequest))
+			//console.log(JSON.stringify(filterRequest))
 			$.ajax({
 				url: './exportLogData',
 				type: 'POST',

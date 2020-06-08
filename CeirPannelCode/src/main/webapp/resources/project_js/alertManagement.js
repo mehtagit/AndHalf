@@ -229,7 +229,7 @@
 					
 					
 			}
-			console.log(JSON.stringify(filterRequest))
+			//console.log(JSON.stringify(filterRequest))
 			$.ajax({
 				url: './exportAlertData',
 				type: 'POST',
@@ -259,7 +259,7 @@
 			   "username" : $("body").attr("data-selected-username"),
 			}
 			
-			console.log("request--------->" +JSON.stringify(request));
+			//console.log("request--------->" +JSON.stringify(request));
 			
 			$.ajax({
 					url: './alertViewByID',
@@ -273,10 +273,10 @@
 						        dismissible:false
 						    });
 							AlertEditPopupData(result);
-							console.log(result)
+							//console.log(result)
 					},
 					error: function (jqXHR, textStatus, errorThrown) {
-						console.log("error in ajax")
+						//console.log("error in ajax")
 					}
 				});	
 			}
@@ -311,7 +311,7 @@
 					 
 			}
 			
-			console.log("request--->" +JSON.stringify(request))
+			//console.log("request--->" +JSON.stringify(request))
 			$.ajax({
 				url: './updateAlert',
 				type: 'POST',
@@ -320,7 +320,7 @@
 				contentType : 'application/json; charset=utf-8',
 				success: function (data, textStatus, jqXHR) {
 				
-					console.log("Updated data---->" +data)
+					//console.log("Updated data---->" +data)
 					$("#editAlertModal").closeModal();	
 					$("#updateAlertSuccess").openModal({
 				        dismissible:false
@@ -328,7 +328,7 @@
 					
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
-					console.log("error in ajax")
+					//console.log("error in ajax")
 				}
 			});	
 			

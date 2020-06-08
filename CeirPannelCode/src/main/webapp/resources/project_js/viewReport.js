@@ -94,7 +94,7 @@
 							dataType: "json",
 							data : function(d) {
 								d.filter = JSON.stringify(filterRequest); 
-								console.log(JSON.stringify(filterRequest));
+								//console.log(JSON.stringify(filterRequest));
 							}
 
 						},
@@ -133,7 +133,7 @@
 				       });
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
-					console.log("error in ajax");
+					//console.log("error in ajax");
 				}
 			});
 		}
