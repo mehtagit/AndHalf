@@ -16,30 +16,20 @@ import org.apache.log4j.Logger;
  *
  * @author user
  */
-public class LBD {
+public class EXIST_IN_OPERATOR_DB {
 
-    static final Logger logger = Logger.getLogger(LBD.class);
+    static final Logger logger = Logger.getLogger(EXIST_IN_OPERATOR_DB.class);
 
     public static String executeRule(String[] args, Connection conn) {
 
         String res = "";
         try {
-            logger.info(" dvcStatus == 10/12 --> [Y] fileStat from stolenRecovrMgmt = 5  -->   Rslt[Y]   fi [N]");
             int count = 0;
             int count1 = 0;
             Statement stmt = conn.createStatement();
-            ResultSet result1 = stmt.executeQuery("select device_status from device_operator_db where imei_esn_meid='" + args[3] + "' ");
+
+            ResultSet result2 = stmt.executeQuery("select  device_status from device_operator_db where imei_esn_meid='" + args[3] + "' ");
             logger.debug("Qury ..select device_status from device_operator_db where imei_esn_meid='" + args[3] + "' ");
-            try {
-                while (result1.next()) {
-                    count = result1.getInt(1);
-                }
-            } catch (Exception e) {
-                logger.info("E1.." + e);
-            }
-            stmt = conn.createStatement();
-            ResultSet result2 = stmt.executeQuery("select  device_status from device_lawful_db where imei_esn_meid='" + args[3] + "' ");
-            logger.debug("Qury ..select device_status from device_lawful_db where imei_esn_meid='" + args[3] + "' ");
             try {
                 while (result2.next()) {
                     count1 = result2.getInt(1);
@@ -48,49 +38,17 @@ public class LBD {
             } catch (Exception e) {
                 logger.info("E2." + e);
             }
-            logger.debug("device_operator_db  .." + count);
-            logger.debug("device_lawful_db .." + count1);
-
-            if (count == 12 || count1 == 10) {
-                String ddz = "device_operator_db";
-                int file_stat1 = 0;
-                if (count1 == 10) {
-                    ddz = "device_lawful_db";
-                }
-                ResultSet result3 = stmt.executeQuery("select file_status from stolenand_recovery_mgmt where txn_id =   (select  txn_id from " + ddz + " where imei_esn_meid='" + args[3] + "'  order by id desc fetch next 1 rows only )     ");
-                logger.info("After Qury : select file_status from stolenand_recovery_mgmt where txn_id  =  (select  txn_id from " + ddz + " where imei_esn_meid='" + args[3] + "'  order by id desc fetch next 1 rows only )  ");
-                try {
-                    while (result3.next()) {
-                        file_stat1 = result3.getInt(1);
-                    }
-                    if (file_stat1 == 5) {
-                        res = "Yes";
-                    } else {
-                        res = "No";
-                    }
-                    result1.close();
-                    result2.close();
-                    result3.close();
-                    stmt.close();
-                } catch (Exception e) {
-                    logger.error("E2." + e);
-                }
-
-                logger.debug("Result for Qury::." + res);
-
+            if (count1 == 12) {
+                res = "YES";
             } else {
-                logger.debug("Not in Lawful And Operator:.");
-
-                res = "No";
-
+                res = "NO";
             }
-
-            logger.debug(res);
+            result2.close();
+            stmt.close();
         } catch (Exception e) {
-            logger.error("Error" + e);
+            logger.error("E2." + e);
         }
         return res;
-
     }
 
     static String executeAction(String[] args, Connection conn, BufferedWriter bw) {
@@ -106,11 +64,8 @@ public class LBD {
                 }
                 break;
                 case "Reject": {
-                    String errmsg = "IMEI is  not Present. (It is not marked as stolen ) ";
-                    if (args[2].equalsIgnoreCase("stolen") || args[2].equalsIgnoreCase("block")) {
-                        errmsg = " IMEI/ESN/MEID  is  already marked as stolen/blocked ";
-                    }
-                    String fileString = args[15] + ",  Error Code : CON_RULE_0002,  Error Discription : " + errmsg;
+
+                    String fileString = args[15] + ",  Error Code : CON_RULE_0002,  Error Discription : IMEI/ESN/MEID  is  already marked as Blocked";
                     bw.write(fileString);
                     bw.newLine();
 

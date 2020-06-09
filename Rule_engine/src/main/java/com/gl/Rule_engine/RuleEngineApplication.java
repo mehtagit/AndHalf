@@ -9,6 +9,8 @@ public class RuleEngineApplication {
 
     static final Logger logger = Logger.getLogger(RuleEngineApplication.class);
 
+    
+//    logger.error(this.getClass().getName() + e);
 //    public static void main(String[] args,conn) {
 //        logger.info(startRuleEngine(args,conn));  //LATEST JUN (9)
 //    }
