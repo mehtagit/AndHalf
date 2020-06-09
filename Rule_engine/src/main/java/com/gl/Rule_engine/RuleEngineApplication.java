@@ -10,7 +10,7 @@ public class RuleEngineApplication {
     static final Logger logger = Logger.getLogger(RuleEngineApplication.class);
 
 //    public static void main(String[] args,conn) {
-//        logger.info(startRuleEngine(args,conn));
+//        logger.info(startRuleEngine(args,conn));  //LATEST JUN (9)
 //    }
     public static String startRuleEngine(String[] args, Connection conn, BufferedWriter bw) {
         String reslt = "";
