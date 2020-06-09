@@ -24,22 +24,19 @@ import org.apache.log4j.Logger;
 public class ErrorFileGenrator {
 
     static Logger logger = Logger.getLogger(ErrorFileGenrator.class);
-   
-    public void gotoErrorFile(String txn_id, String errorString) {
-        
-          String url = System.getenv("ceir_db_url");
-     String username = System.getenv("ceir_db_username");
-     String password = System.getenv("ceir_db_password");
-     String db_name = System.getenv("ceir_db_dbName");
-     String db_type = System.getenv("ceir_db_dbType");
-     String jdbcUrlO = "jdbc:oracle:thin:@" + url + "/" + db_name;
-     String classNameO = "oracle.jdbc.driver.OracleDriver";
-     String jdbcUrlM = "jdbc:mysql://" + url + "/" + db_name;
-     String classNameM = "com.mysql.cj.jdbc.Driver";
 
-        
-        
-        
+    public void gotoErrorFile(String txn_id, String errorString) {
+
+        String url = System.getenv("ceir_db_url");
+        String username = System.getenv("ceir_db_username");
+        String password = System.getenv("ceir_db_password");
+        String db_name = System.getenv("ceir_db_dbName");
+        String db_type = System.getenv("ceir_db_dbType");
+        String jdbcUrlO = "jdbc:oracle:thin:@" + url + "/" + db_name;
+        String classNameO = "oracle.jdbc.driver.OracleDriver";
+        String jdbcUrlM = "jdbc:mysql://" + url + "/" + db_name;
+        String classNameM = "com.mysql.cj.jdbc.Driver";
+
         try {
 
             String className = null;
@@ -99,13 +96,13 @@ public class ErrorFileGenrator {
         }
     }
 
-  public  void gotoErrorFilewithList(String errorPath, String txn_id, ArrayList<String> fileLines) {
+    public void gotoErrorFilewithList(String errorPath, String txn_id, ArrayList<String> fileLines) {
         try {
             File file = new File(errorPath + txn_id);
             file.mkdir();
-             logger.info(" mkdir done " );
+            logger.info(" mkdir done ");
             String fileNameInput = errorPath + txn_id + "/" + txn_id + "_error.csv";
-                         logger.info(" fileNameInput Erorr file name  "  + fileNameInput);
+            logger.info(" fileNameInput Erorr file name  " + fileNameInput);
             File fout = new File(fileNameInput);
             FileOutputStream fos = new FileOutputStream(fout, true);
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
@@ -117,6 +114,26 @@ public class ErrorFileGenrator {
         } catch (Exception e) {
             logger.info("Error + gotoErrorFilewithList " + e);
         }
+    }
+
+    public void writeErrorMessageInFile(String errorPath, String txn_id, String errorString) {
+
+        try {
+            File file = new File(errorPath + txn_id);
+            file.mkdir();
+            String fileNameInput = errorPath + txn_id + "/" + txn_id + "_error.csv";       // 
+            logger.info("fileNameInput...." + fileNameInput);
+            logger.info("errorString...." + errorString);
+            File fout = new File(fileNameInput);
+            FileOutputStream fos = new FileOutputStream(fout, true);
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
+            bw.write(errorString);
+            bw.newLine();
+            bw.close();
+        } catch (Exception e) {
+            logger.info("exception at File..." + e);
+        }
+
     }
 
 }

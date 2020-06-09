@@ -11,6 +11,8 @@ import com.functionapps.dao.NotificationDao;
 import com.functionapps.dao.TypeApprovalDbDao;
 import com.functionapps.dao.UserWithProfileDao;
 import com.functionapps.parser.CEIRFeatureFileFunctions;
+import com.functionapps.parser.CEIRFeatureFileParser;
+import com.functionapps.parser.ErrorFileGenrator;
 import com.functionapps.parser.Rule;
 import com.functionapps.pojo.HttpResponse;
 import com.functionapps.pojo.MessageConfigurationDb;
@@ -35,7 +37,7 @@ public class RegisterTac {
         NotificationDao notificationDao = new NotificationDao();
         UserWithProfileDao userWithProfileDao = new UserWithProfileDao();
         TacApiConsumer tacApiConsumer = new TacApiConsumer();
-
+        ErrorFileGenrator err = new ErrorFileGenrator();
         try {
             // Fetch type approved details.
             Optional<TypeApprovedDb> typeApprovedDbOptional = typeApprovalDbDao.getTypeApprovedDbTxnId(conn, "", txnId);
@@ -44,7 +46,7 @@ public class RegisterTac {
                 BufferedWriter bw = null;
                 int resultValue = 2;
                 String action_output = null;
-
+                String errorFilePath = CEIRFeatureFileParser.getErrorFilePath(conn);
                 TypeApprovedDb typeApprovedDb = typeApprovedDbOptional.get();
                 HttpResponse httpResponse = tacApiConsumer.approveReject(typeApprovedDb.getTxnId(), 1);
 
@@ -68,9 +70,11 @@ public class RegisterTac {
                         if (action_output.equalsIgnoreCase("YES")) {
                             resultValue = 3;
                         } else {
+                            err.writeErrorMessageInFile(errorFilePath, txnId, "TAC No.:" + typeApprovedDb.getTac() + " ,  Error CODE :CON_RULE_0003   , Error Description :  TAC  is not approved from GSMA ");
                             resultValue = 2;
                         }
                     } else {
+                        err.writeErrorMessageInFile(errorFilePath, txnId, "TAC No.: " + typeApprovedDb.getTac() + " ,  Error CODE : CON_RULE_0014  , Error Description :  Tac Format is not as per Specifications ");
                         resultValue = 2;
                     }
                 } else {
