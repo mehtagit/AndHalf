@@ -1,22 +1,15 @@
 package com.gl.ceir.config.controller;
 
-import java.util.List;
-
-import javax.annotation.Resource;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gl.ceir.config.model.GsmaValueModel;
 import com.gl.ceir.config.model.UsagesValueModel;
-import com.gl.ceir.config.repository.GsmaValueRepository;
 import com.gl.ceir.config.service.impl.GsmaValueServiceImpl;
 
 import io.swagger.annotations.ApiOperation;

@@ -15,8 +15,7 @@ import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.model.DeviceSnapShot;
 import com.gl.ceir.config.model.DuplicateImeiMsisdn;
 import com.gl.ceir.config.model.ImeiMsisdnIdentity;
-import com.gl.ceir.config.model.constants.ImeiStatus;
-import com.gl.ceir.config.service.DeviceSnapShotService;
+import com.gl.ceir.config.model.constants.ImeiStatus; 
 
 @SpringBootApplication
 @EnableConfigurationProperties({ FileStorageProperties.class })
@@ -27,19 +26,9 @@ public class ConfigApplication {
 
 	public static void main(String[] args) {
 		ApplicationContext context = SpringApplication.run(ConfigApplication.class, args);
-		// DeviceSnapShot deviceSnapShot =
-		// context.getBean(DeviceSnapShotServiceImpl.class).get(13329001992380L);
-		// logger.info("FIRST: " + deviceSnapShot.toString());
-		//
-		// deviceSnapShot =
-		// context.getBean(DeviceSnapShotServiceImpl.class).get(13329001992380L);
-		// logger.info("SECOND: "+deviceSnapShot.toString());
-		// context.getBean(DeviceSnapShotServiceImpl.class).save(convertRequestToDeviceSnapShot());
 	}
 
-	@Autowired
-	private DeviceSnapShotService service;
-
+	 
 	private static DeviceSnapShot convertRequestToDeviceSnapShot() {
 		DeviceSnapShot deviceSnapShot = new DeviceSnapShot();
 		deviceSnapShot.setImei(898989L);

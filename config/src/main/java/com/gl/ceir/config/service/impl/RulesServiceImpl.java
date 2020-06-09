@@ -7,78 +7,47 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.gl.ceir.config.exceptions.ResourceNotFoundException;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
-import com.gl.ceir.config.model.MobileOperator;
-import com.gl.ceir.config.model.Rules;
+import com.gl.ceir.config.model.RuleEngineMapping;
 import com.gl.ceir.config.repository.RulesRepository;
-import com.gl.ceir.config.service.RulesService;
+import java.util.ArrayList;
 
 @Service
-public class RulesServiceImpl implements RulesService {
+public class RulesServiceImpl {
 
-	private static final Logger logger = LogManager.getLogger(RulesServiceImpl.class);
+    private static final Logger logger = LogManager.getLogger(RulesServiceImpl.class);
 
-	@Autowired
-	private RulesRepository rulesRepository;
+    @Autowired
+    private RulesRepository rulesRepository;
 
-	@Override
-	public List<Rules> getAll() {
-		try {
-			return rulesRepository.findAll();
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
-		}
+//    public List<String> findDistinctByFeature() {
+//        try {
+////            List<RuleEngineMapping>  ftr = rulesRepository.findNonReferencedFeature();
+//
+//            List<String> str = rulesRepository.findDistinctFeature();
+//            List<RuleEngineMapping> rem = new ArrayList<RuleEngineMapping>();
+//
+//            for (int i = 0; i < str.size(); i++) {
+//                rem.
+//            }
+//
+//            logger.info("Get All Names (Distinct) ");
+//
+//            return rulesRepository.findDistinctFeature();
+//        } catch (Exception e) {
+//            logger.error(e.getMessage(), e);
+//            throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+//        }
+//
+//    }
 
-	}
-
-	@Override
-	public Rules save(Rules rules) {
-		try {
-			return rulesRepository.save(rules);
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
-		}
-
-	}
-
-	@Override
-	public Rules get(Long id) {
-
-		try {
-			Rules rules = rulesRepository.findById(id)
-					.orElseThrow(() -> new ResourceNotFoundException("Rules", "id", id));
-			return rules;
-		} catch (ResourceNotFoundException e) {
-			throw e;
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
-		}
-	}
-
-	@Override
-	public Rules update(Rules rules) {
-		try {
-			return rulesRepository.save(rules);
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
-		}
-
-	}
-
-	@Override
-	public void delete(Long rules) {
-		try {
-			rulesRepository.deleteById(rules);
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
-		}
-
-	}
-
+     public List<String> findDistinctByFeature() {
+        try {
+            logger.info("Get All Names (Distinct) ");
+            return rulesRepository.findDistinctFeature();
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+        }
+    }
 }

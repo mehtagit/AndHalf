@@ -11,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.gl.ceir.config.model.constants.ImeiStatus;
 import com.gl.ceir.config.model.constants.Period;
 
 import io.swagger.annotations.ApiModel;
