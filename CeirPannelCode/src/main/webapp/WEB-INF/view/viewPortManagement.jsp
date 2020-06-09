@@ -355,7 +355,7 @@
 <script language="JavaScript">
 	sessionStorage.setItem("loginMsg",
 			"*Session has been expired");
-	window.top.location.href = "../login";
+	window.top.location.href = "./login";
 </script>
 <%
 	}

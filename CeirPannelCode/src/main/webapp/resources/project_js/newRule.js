@@ -1,8 +1,9 @@
-$.getJSON('./getAllfeatures', function(data) {
-	for (i = 0; i < data.length; i++) {
-		$('<option>').val(data[i].name).text(data[i].name).appendTo('#Feature');
-	}
-});
+$.getJSON('./Rule/DistinctName', function(data) {
+				for (i = 0; i < data.length; i++) {
+					$('<option>').val(data[i]).text(data[i]).appendTo('#Feature,#editFeature');
+				}
+			});
+			
 $.getJSON('./registrationUserType', function(data) {
 	for (i = 0; i < data.length; i++) {
 		$('<option>').val(data[i].usertypeName).text(data[i].usertypeName)

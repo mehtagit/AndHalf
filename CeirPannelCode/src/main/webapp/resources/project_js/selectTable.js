@@ -17,7 +17,7 @@
 		var tableName = $('#tableId').val();
 		
 		if(tableName.length == 0){
-			console.log("please field input");
+			//console.log("please field input");
 		}else{
 			//sessionStorage.setItem("roleType",roleType);
 		sessionStorage.setItem("tableName", tableName);
@@ -41,6 +41,6 @@
 			
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			console.log("error in ajax")
+			//console.log("error in ajax")
 		}
 	});

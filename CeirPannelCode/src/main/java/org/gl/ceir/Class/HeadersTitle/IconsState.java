@@ -2951,9 +2951,9 @@ public class IconsState {
 			approve = "<a onclick="+approveAction+" class=\"eventNone\"><i class="+disableApproveIcon+" aria-hidden=\"true\" title="
 					+approveIconTitle+" ></i></a>";
 		}
-		if("3".equals(status) && "Approved".equals(userStatus)){
+		else if("3".equals(status) && "Approved".equals(userStatus)){
 
-			  history="<a onclick="+historyAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+historyIcon+" aria-hidden=\"true\"  title="
+			 history="<a onclick="+historyAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+historyIcon+" aria-hidden=\"true\"  title="
 						+historyTitle+"></i></a>";
 
 			 view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="

@@ -140,7 +140,7 @@ window.parent
 			 		"featureId" : featureId,
 			 		"approveStatus" : 0
 				}
-			console.log("multirequest------------->" +JSON.stringify(multirequest))
+			//console.log("multirequest------------->" +JSON.stringify(multirequest))
 			formData.append('fileInfo[]',JSON.stringify(fileInfo));
 			formData.append('multirequest',JSON.stringify(multirequest));
 			
@@ -156,7 +156,7 @@ window.parent
 					//$('div#initialloader').delay(300).fadeOut('slow');
 					$("#trcSubmitButton").prop('disabled', true);
 						var result =  JSON.parse(data)
-						console.log("successdata-----" +result);
+						//console.log("successdata-----" +result);
 						$("#trcSubmitButton").prop('disabled', true);
 						//$('#RegisterManageTypeDevice').openModal();
 						$('#RegisterManageTypeDevice').openModal({
@@ -186,7 +186,7 @@ window.parent
 						
 				},
 				error : function(jqXHR, textStatus, errorThrown) {
-					console.log("error in ajax")
+					//console.log("error in ajax")
 				}
 			});
 
@@ -196,9 +196,9 @@ window.parent
 
 
 		$.getJSON('./getSourceTypeDropdown/DOC_TYPE/21', function(data) {
-			console.log("@@@@@" + JSON.stringify(data));
+			//console.log("@@@@@" + JSON.stringify(data));
 			for (i = 0; i < data.length; i++) {
-				console.log(data[i].interp);
+				//console.log(data[i].interp);
 				$('<option>').val(data[i].tagId).text(data[i].interp).appendTo(
 						'#docTypetag1');
 				$('<option>').val(data[i].value).text(data[i].tagId).appendTo(
@@ -208,12 +208,12 @@ window.parent
 		});
 
 		function cleanReplyPopUp() {
-			console.log("reset form function");
+			//console.log("reset form function");
 			$('#replymessageForm').trigger("reset");
 		}
  
 		$.getJSON('./addMoreFile/more_files_count', function(data) {
-			console.log(data);
+			//console.log(data);
 			
 			localStorage.setItem("maxCount", data.value);
 			
@@ -222,7 +222,7 @@ window.parent
 			//var max_fields = 2; //maximum input boxes allowed
 			var max_fields =localStorage.getItem("maxCount");
 			if (max_fields==0){
-				 console.log("1111");
+				//console.log("1111");
 				 $(".add_field_button").prop('disabled', true);
 			 }
 		var wrapper = $(".mainDiv"); //Fields wrapper
@@ -255,7 +255,7 @@ window.parent
 									data) {
 
 								for (i = 0; i < data.length; i++) {
-									console.log(data[i].interp);
+									//console.log(data[i].interp);
 									var optionId = id - 1;
 									$('<option>').val(data[i].tagId).text(
 											data[i].interp).appendTo(
@@ -263,7 +263,7 @@ window.parent
 									$('<option>').val(data[i].value).text(
 											data[i].tagId).appendTo(
 											'#docTypetagValue' + optionId);
-									console.log('#docTypetag' + optionId);
+									//console.log('#docTypetag' + optionId);
 
 								}
 							});

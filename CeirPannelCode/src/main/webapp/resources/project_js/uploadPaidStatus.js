@@ -477,7 +477,6 @@ function pageButtons(url){
 				}
 			}
 
-
 			//Tax paid status-----------dropdown
 			
 			$.getJSON('./getDropdownList/CUSTOMS_TAX_STATUS', function(data) {

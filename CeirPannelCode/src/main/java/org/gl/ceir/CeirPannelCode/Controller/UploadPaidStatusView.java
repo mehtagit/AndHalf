@@ -767,19 +767,24 @@ public ModelAndView viewDeviceInformation(@RequestParam(name="viewbyImei",requir
 
 @PostMapping("approveVisaUpdateRequest") 
 public @ResponseBody GenricResponse approveVisaUpdateRequest (@RequestBody FilterRequest_UserPaidStatus filterRequestuserpaidStatus,HttpSession session)  {
-	log.info("request send to the approveReject visa  api="+filterRequestuserpaidStatus);
-	GenricResponse response= uploadPaidStatusFeignClient.updateVisaRequest(filterRequestuserpaidStatus);
-	AllRequest request=new AllRequest();
+	
+	
 	String roleType=String.valueOf(session.getAttribute("usertype"));
 	String userName=session.getAttribute("username").toString();
 	int userId= (int) session.getAttribute("userid");  
 	int userTypeId =(int) session.getAttribute("usertypeId");
-	request.setFeatureId(43);
-	request.setUserType(roleType);
-	request.setUserId(userId);
-	request.setUserTypeId(userTypeId);
-	request.setUsername(userName);
-	
+		/*
+		 * request.setFeatureId(43); request.setUserType(roleType);
+		 * request.setUserId(userId); request.setUserTypeId(userTypeId);
+		 * request.setUsername(userName);
+		 */
+	filterRequestuserpaidStatus.setUserType(roleType);
+	filterRequestuserpaidStatus.setUsername(userName);
+	filterRequestuserpaidStatus.setUserId(userId);
+	filterRequestuserpaidStatus.setUserTypeId(userTypeId);
+	filterRequestuserpaidStatus.setFeatureId(43);
+	log.info("request send to the approveReject visa  api="+filterRequestuserpaidStatus);
+	GenricResponse response= uploadPaidStatusFeignClient.updateVisaRequest(filterRequestuserpaidStatus);
 	log.info("response from approveReject visa "+response);
 	return response;
 

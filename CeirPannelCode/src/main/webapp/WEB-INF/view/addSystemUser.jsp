@@ -400,8 +400,6 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}" data-u
     <script type="text/javascript" src="${context}/resources/js/prism/prism.js"></script>-->
     <!--scrollbar-->
     <script type="text/javascript" src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-    <!-- chartist -->
-    <script type="text/javascript" src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script>
 <!-- i18n library -->
 	<script type="text/javascript">
 var path="${context}";
@@ -448,8 +446,7 @@ var path="${context}";
     	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
    <script type="text/javascript" src="${context}/resources/ajax/Password.js"></script>
 	
-			<script type="text/javascript"
-		src="${context}/resources/project_js/_dateFunction.js" async></script>
+
 		<script type="text/javascript"
 		src="${context}/resources/project_js/profileInfoTab.js" async></script>
 

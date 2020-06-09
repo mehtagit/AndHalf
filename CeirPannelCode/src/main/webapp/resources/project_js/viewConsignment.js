@@ -15,8 +15,8 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 $.i18n().locale = lang;	
 
 $.i18n().load( {
-	'en': '../resources/i18n/en.json',
-	'km': '../resources/i18n/km.json'
+	'en': './resources/i18n/en.json',
+	'km': './resources/i18n/km.json'
 } ).done( function() { 
 	rejectedMsg=$.i18n('rejectedMsg');
 	consignmentApproved=$.i18n('consignmentApproved');
@@ -88,7 +88,7 @@ function confirmantiondelete(){
 	});
 	return false;
 }
-$.getJSON('../getDropdownList/CUSTOMS_PORT', function(data) {
+$.getJSON('./getDropdownList/CUSTOMS_PORT', function(data) {
 	$("#expectedArrivalPortEdit").empty();
 	for (i = 0; i < data.length; i++) {
 		$('<option>').val(data[i].value).text(data[i].interp)
@@ -114,7 +114,7 @@ function EditConsignmentDetails(txnId){
 			setEditPopupData(data) ;
 		},
 		error : function() {
-			alert("Failed");
+			//alert("Failed");
 		}
 	});
 
@@ -194,7 +194,7 @@ function viewConsignmentDetails(txnId){
 			viewConsignmentCurrency();
 		},
 		error : function() {
-			alert("Failed");
+			//alert("Failed");
 		}
 	});
 }
@@ -202,7 +202,7 @@ function viewConsignmentDetails(txnId){
 
 function setViewPopupData(data){
 	var totalPrice='';
-	console.log(data.totalPrice);
+	////console.log(data.totalPrice);
 	if(data.totalPrice==null){
 		totalPrice="";
 		$("#viewCurrencyDiv").css("display", "none");
@@ -235,7 +235,7 @@ function setViewPopupData(data){
 function setEditPopupData(data){
 
 	var totalPrice='';
-	console.log(data.totalPrice);
+	////console.log(data.totalPrice);
 	if(data.totalPrice==null){
 		totalPrice="";
 		$("#currencyDiv").css("display", "none"); 
@@ -295,20 +295,20 @@ function filterConsignment(lang,source)
 	}
 
 	if(cierRoletype=="Importer" && sourceType !="viaStolen" ){
-		table('../headers?lang='+lang+'&type=consignment','../consignmentData?sessionFlag='+sessionFlag+'&source='+source__val);
+		table('./headers?lang='+lang+'&type=consignment','./consignmentData?sessionFlag='+sessionFlag+'&source='+source__val);
 	}
 
 	else if((cierRoletype=="Custom" || cierRoletype=="DRT") && sourceType !="viaStolen"){
-		table('../headers?lang='+lang+'&type=customConsignment','../consignmentData?sessionFlag='+sessionFlag+'&source='+source__val);
+		table('./headers?lang='+lang+'&type=customConsignment','./consignmentData?sessionFlag='+sessionFlag+'&source='+source__val);
 	}
 
 	else if(cierRoletype=="CEIRAdmin"  && sourceType !="viaStolen"){
-		table('../headers?lang='+lang+'&type=adminConsignment','../consignmentData?sessionFlag='+sessionFlag+'&source='+source__val);
+		table('./headers?lang='+lang+'&type=adminConsignment','./consignmentData?sessionFlag='+sessionFlag+'&source='+source__val);
 	}  
 
 	else if(cierRoletype=="Importer" && sourceType ==="viaStolen" ){
 
-		table('../headers?lang='+lang+'&type=stolenconsignment','../consignmentData?sourceType=viaStolen&sessionFlag='+sessionFlag+'&source='+source__val);
+		table('./headers?lang='+lang+'&type=stolenconsignment','./consignmentData?sourceType=viaStolen&sessionFlag='+sessionFlag+'&source='+source__val);
 	}
 
 
@@ -339,7 +339,7 @@ function table(url,dataUrl){
 
 	}
 	if(lang=='km'){
-		var langFile='../resources/i18n/khmer_datatable.json';
+		var langFile='./resources/i18n/khmer_datatable.json';
 	}
 
 	$.ajax({
@@ -526,10 +526,10 @@ populateCountries
 
 function pageRendering(){
 	if(sourceType !="viaStolen" ){
-		pageButtons('../consignment/pageRendering');
+		pageButtons('./consignment/pageRendering');
 
 	}else if(sourceType ==="viaStolen" ){
-		pageButtons('../consignment/pageRendering?sourceType=viaStolen');
+		pageButtons('./consignment/pageRendering?sourceType=viaStolen');
 
 	}
 	localStorage.removeItem('sourceType');
@@ -637,7 +637,7 @@ function pageButtons(url){
 				$("#btnLink").css({display: "none"}); 
 			}
 			//Consignment status-----------dropdown
-			$.getJSON('../getDropdownList/'+featureId+'/'+$("body").attr("data-userTypeID"), function(data) {
+			$.getJSON('./getDropdownList/'+featureId+'/'+$("body").attr("data-userTypeID"), function(data) {
 
 				for (i = 0; i < data.length; i++) {
 					$('<option>').val(data[i].state).text(data[i].interp)
@@ -659,7 +659,7 @@ function pageButtons(url){
 
 
 			//Tax paid status-----------dropdown
-			$.getJSON('../getTypeDropdownList/CUSTOMS_TAX_STATUS/'+$("body").attr("data-userTypeID"), function(data) {
+			$.getJSON('./getTypeDropdownList/CUSTOMS_TAX_STATUS/'+$("body").attr("data-userTypeID"), function(data) {
 				for (i = 0; i < data.length; i++) {
 					$('<option>').val(data[i].value).text(data[i].interp)
 					.appendTo('#taxPaidStatus');
@@ -708,8 +708,8 @@ function openApprovePopUp(txnId,displayName)
 			contentType : 'application/json; charset=utf-8',
 			type : 'GET',
 			success : function(data) {
-				console.log(data.pendingTacApprovedByCustom);
-				console.log(data.pendingTacApprovedByCustom);
+				//console.log(data.pendingTacApprovedByCustom);
+				//console.log(data.pendingTacApprovedByCustom);
 
 				if(data.pendingTacApprovedByCustom=='N')
 				{
@@ -726,7 +726,7 @@ function openApprovePopUp(txnId,displayName)
 			},
 
 			error : function() {
-				alert("Failed");
+				//alert("Failed");
 			}
 		});
 
@@ -878,7 +878,7 @@ function openMulipleStolenPopUp()
 
 	var stolenRecoverydata=JSON.stringify(valuesPush());
 	$.ajax({
-		url: '../multipleStolenRecovery',
+		url: './multipleStolenRecovery',
 		type: 'POST',
 		data: stolenRecoverydata,
 		dataType : 'json',
@@ -900,7 +900,7 @@ function redirectToViewPage()
 	var userId = $("body").attr("data-userID");
 	var currentRoleType = $("body").attr("data-stolenselected-roleType"); 
 	var role = currentRoleType == null ? roleType : currentRoleType;
-	window.location.href = "../stolenRecovery?userTypeId="+role;
+	window.location.href = "./stolenRecovery?userTypeId="+role;
 
 }
 
@@ -1020,14 +1020,14 @@ $('#tacStatusChecKbox').click(function () {
 function consignmentFileDownload(fileName,fileType,txnId,doc_TypeTag)
 {
 	fileName=fileName.split("%20").join(" ");
-	console.log(" fileName "+fileName+" fileType  "+fileType+" txnId "+txnId+"  doc_TypeTag "+doc_TypeTag)
+	//console.log(" fileName "+fileName+" fileType  "+fileType+" txnId "+txnId+"  doc_TypeTag "+doc_TypeTag)
 	$.ajax({
 		url : "./dowloadFiles/"+fileType+'/'+fileName+'/'+txnId+'/'+doc_TypeTag,
 		dataType : 'json',
 		contentType : 'application/json; charset=utf-8',
 		type : 'GET',
 		success : function(data) {
-			console.log(data);
+			//console.log(data);
 			if(data.url=='Not Found')
 			{
 
@@ -1038,7 +1038,7 @@ function consignmentFileDownload(fileName,fileType,txnId,doc_TypeTag)
 				$('#fileErrormessage').text($.i18n('fileNotFound'));
 			}
 			else{
-				console.log("file is found");
+				//console.log("file is found");
 				window.location.href=data.url;
 
 			}
@@ -1072,7 +1072,7 @@ function payTaxDRT(){
 
 	}
 
-	console.log("request--->" +JSON.stringify(request))
+	//console.log("request--->" +JSON.stringify(request))
 	$.ajax({
 		url: './payTax',
 		type: 'POST',
@@ -1080,14 +1080,14 @@ function payTaxDRT(){
 		dataType : 'json',
 		contentType : 'application/json; charset=utf-8',
 		success: function (data, textStatus, jqXHR) {
-			console.log("Updated data---->" +data)
+			//console.log("Updated data---->" +data)
 			$("#PayDRTtaxPopup").closeModal();	
 			if(data.errorCode == 200){
 				window.open(data.data.url);
 			}
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			console.log("error in ajax")
+			//console.log("error in ajax")
 		}
 	});	
 
@@ -1105,7 +1105,7 @@ function getByPort(port) {
 	$
 	.ajax({
 		type : 'GET',
-		url : '../byArrivalPort/' + port,
+		url : './byArrivalPort/' + port,
 		contentType : "application/json",
 		dataType : 'html',
 		async : false,
@@ -1186,7 +1186,7 @@ function historyRecord(txnID){
 
 	formData.append("filter",JSON.stringify(filterRequest));	
 	if(lang=='km'){
-		var langFile='../resources/i18n/khmer_datatable.json';
+		var langFile='./resources/i18n/khmer_datatable.json';
 	}
 	$.ajax({
 		url: 'consignment-history',
@@ -1196,7 +1196,7 @@ function historyRecord(txnID){
 		contentType: false,
 		success: function(result){
 			var dataObject = eval(result);
-			//alert(JSON.stringify(dataObject.data))
+			////alert(JSON.stringify(dataObject.data))
 			$('#data-table-history').dataTable({
 				"order" : [[1, "asc"]],
 				destroy:true,

@@ -64,7 +64,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 
-@RequestMapping(value="/Consignment")
+//@RequestMapping(value="/Consignment")
 @Controller
 
 public class Consignment {

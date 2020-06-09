@@ -15,7 +15,26 @@ public class ConfigContentModel {
 	private String value;
 	private String description;
 	private Integer type;
-	private String typeInterp;
+	private String typeInterp,roleType,userType,userName;
+	
+	public String getRoleType() {
+		return roleType;
+	}
+	public void setRoleType(String roleType) {
+		this.roleType = roleType;
+	}
+	public String getUserType() {
+		return userType;
+	}
+	public void setUserType(String userType) {
+		this.userType = userType;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 	private String remark;
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 	public Integer getId() {
@@ -82,7 +101,8 @@ public class ConfigContentModel {
 	public String toString() {
 		return "ConfigContentModel [id=" + id + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", tag="
 				+ tag + ", value=" + value + ", description=" + description + ", type=" + type + ", typeInterp="
-				+ typeInterp + ", remark=" + remark + ", additionalProperties=" + additionalProperties + "]";
+				+ typeInterp + ", roleType=" + roleType + ", userType=" + userType + ", userName=" + userName
+				+ ", remark=" + remark + ", additionalProperties=" + additionalProperties + "]";
 	}
 	
 }
