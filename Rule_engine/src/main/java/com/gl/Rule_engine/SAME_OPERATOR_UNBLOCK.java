@@ -2,7 +2,9 @@
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
- */
+ */ 
+
+
 package com.gl.Rule_engine;
 
 import java.sql.Connection;
@@ -77,7 +79,7 @@ class SAME_OPERATOR_UNBLOCK {
                 case "Reject": {
                     logger.info("Action is Reject");
 
-                    String fileString = args[15] + " , Error Description : Current Operator don't have Permission to UnBlock this  IMEI/ESN/MEID   ";
+                    String fileString = args[15] + ",Error Code :CON_RULE_0015   , Error Description : Current Operator don't have Permission to UnBlock this  IMEI/ESN/MEID   ";
                     bw.write(fileString);
                     bw.newLine();
                 }
