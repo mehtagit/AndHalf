@@ -17,8 +17,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
+import org.gl.ceir.CeirPannelCode.Feignclient.GrievanceFeignClient;
 import org.gl.ceir.CeirPannelCode.Feignclient.UserRegistrationFeignImpl;
 import org.gl.ceir.CeirPannelCode.Model.Dropdown;
+import org.gl.ceir.CeirPannelCode.Model.FileCopyToOtherServer;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.Otp;
 import org.gl.ceir.CeirPannelCode.Model.OtpResponse;
@@ -54,6 +56,12 @@ public class RegistrationService {
 	GenerateRandomDigits randomDigits;
 	@Autowired
 	FeignCleintImplementation feignCleintImplementation;
+	
+	@Value ("${serverId}")
+	Integer serverId;
+
+	@Autowired
+	GrievanceFeignClient grievanceFeignClient;
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
@@ -163,6 +171,11 @@ public class RegistrationService {
 					bout.flush();
 					bout.close(); 
 					registration.setNidFilename(nationalIdImage.getOriginalFilename());
+					FileCopyToOtherServer fileCopyRequest= new FileCopyToOtherServer(nationalIdImage.getOriginalFilename(),
+							nationalIdPath,serverId,username);
+					log.info("request passed to move file to other server=="+fileCopyRequest);
+					GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
+					log.info("national id file move api response==="+fileRespnose);
 				} 
 
 				if(photo.isEmpty()==false) {
@@ -177,6 +190,12 @@ public class RegistrationService {
 					bout.flush();
 					bout.close();  
 					registration.setPhotoFilename(photo.getOriginalFilename());
+					FileCopyToOtherServer fileCopyRequest= new FileCopyToOtherServer(photo.getOriginalFilename(),
+							photoPath,serverId,username);
+					log.info("request passed to move file to other server=="+fileCopyRequest);
+					GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
+					log.info("photo file move api response==="+fileRespnose);
+
 				} 
 
 				if(idCard.isEmpty()==false) {
@@ -193,6 +212,12 @@ public class RegistrationService {
 					bout.close(); 
 					registration.setIdCardFilename(idCard.getOriginalFilename());
 					log.info("id card file save in server");
+					FileCopyToOtherServer fileCopyRequest= new FileCopyToOtherServer(idCard.getOriginalFilename(),
+							idCardPath,serverId,username);
+					log.info("request passed to move file to other server=="+fileCopyRequest);
+					GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
+					log.info("id Card file move api response==="+fileRespnose);
+
 				} 
 				if(registration.getUserTypeId()==12) {
 					log.info("vat file "+vatFile.getOriginalFilename());
@@ -208,6 +233,12 @@ public class RegistrationService {
 					bout.flush();
 					bout.close();
 					registration.setVatFilename(vatFile.getOriginalFilename());
+					FileCopyToOtherServer fileCopyRequest= new FileCopyToOtherServer(vatFile.getOriginalFilename(),
+							vatFilePath,serverId,username);
+					log.info("request passed to move file to other server=="+fileCopyRequest);
+					GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
+					log.info("vat file move api response==="+fileRespnose);
+
 				}
 				}
 
@@ -272,6 +303,12 @@ public class RegistrationService {
 						bout.flush();
 						bout.close();
 						registration.setVatFilename(vatFile.getOriginalFilename());
+						FileCopyToOtherServer fileCopyRequest= new FileCopyToOtherServer(vatFile.getOriginalFilename(),
+								vatFilePath,serverId,username);
+						log.info("request passed to move file to other server=="+fileCopyRequest);
+						GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
+						log.info("vat file move api response==="+fileRespnose);
+
 					}
 				}
 				else {}
@@ -295,6 +332,11 @@ public class RegistrationService {
 						bout.flush();
 						bout.close();   
 						registration.setNidFilename(file.getOriginalFilename());
+						FileCopyToOtherServer fileCopyRequest= new FileCopyToOtherServer(file.getOriginalFilename(),
+								nationalIdPath,serverId,username);
+						log.info("request passed to move file to other server=="+fileCopyRequest);
+						GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
+						log.info("national id file move api response==="+fileRespnose);
 						OtpResponse response=userRegistrationFeignImpl.registration(registration);
 						log.info("registration response:  "+response);
 						return response;
