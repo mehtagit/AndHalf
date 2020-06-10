@@ -3,6 +3,7 @@ package org.gl.ceir.CeirPannelCode.Feignclient;
 import java.util.List;
 
 import org.gl.ceir.CeirPannelCode.Model.Dropdown;
+import org.gl.ceir.CeirPannelCode.Model.FileCopyToOtherServer;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.GrievanceModel;
@@ -97,5 +98,8 @@ public interface GrievanceFeignClient {
 		@RequestMapping(value="/grievance/endUserSave" ,method=RequestMethod.POST) 
 		public GenricResponse saveEndUserGrievance(@RequestBody GrievanceModel greGrievanceModel) ;
 
-
+		@RequestMapping(value="/uploadedFile/save" ,method=RequestMethod.POST) 
+		public GenricResponse saveUploadedFileOnANotherServer(@RequestBody FileCopyToOtherServer fileRequest) ;
+		
+		
 }

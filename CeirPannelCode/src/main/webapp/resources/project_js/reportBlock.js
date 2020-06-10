@@ -163,7 +163,12 @@ function showMultipleImeiUnBlock()
 
 function submitBlockImei()
 {
-	 $('div#initialloader').fadeIn('fast');
+	setTimeout(function(){
+		$('div#initialloader').fadeIn('fast');
+		console.log("hiiii")
+	}, 1000);
+	 
+	 //$('div#initialloader').delay(300).fadeOut('slow');
 		var bulkBlockdeviceCategory = $('#bulkBlockdeviceCategory').val();
 		var blockbulkquantity = $('#blockbulkquantity').val();
 		//var blockBulkFile = $('#blockBulkFile').val();

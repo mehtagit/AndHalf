@@ -65,9 +65,9 @@ function filterStolen(sourceTypeFiler,source){
 	}
 	//console.log(" ****** sourceType ="+sourceTypeFiler);
 	if(userType=="Lawful Agency"){
-		Datatable('./headers?type=lawfulStolenHeaders','./stolenData?featureId='+featureId+'&source='+source__val,sourceTypeFiler)
+		Datatable('./headers?type=lawfulStolenHeaders','./stolenData?featureId='+featureId+'&source='+source__val,source__val)
 	}else if(userType =="CEIRAdmin"){
-		Datatable('./headers?type=lawfulStolenHeaders','./stolenData?featureId='+featureId+'&source='+source__val,sourceTypeFiler)
+		Datatable('./headers?type=lawfulStolenHeaders','./stolenData?featureId='+featureId+'&source='+source__val,source__val)
 	}
 	localStorage.removeItem('sourceType');
 }
@@ -763,11 +763,6 @@ function saveCompanyStolenRequest(){
 		data: formData,
 		processData: false,
 		contentType: false,
-		beforeSend: function() {
-			var divCreation="<div id=\'initialloader2\'></div>";
-			var div_id=document.getElementById("content");
-			div_id.innerHTML=divCreation;
-	    },
 		success: function (response, textStatus, jqXHR) {
 			
 			$('#initialloader2').remove();

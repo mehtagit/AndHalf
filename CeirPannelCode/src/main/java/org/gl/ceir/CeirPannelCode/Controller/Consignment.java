@@ -30,6 +30,7 @@ import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.DBTablesFeignClient;
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
+import org.gl.ceir.CeirPannelCode.Feignclient.GrievanceFeignClient;
 import org.gl.ceir.CeirPannelCode.Feignclient.UserProfileFeignImpl;
 import org.gl.ceir.CeirPannelCode.Model.AddMoreFileModel;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentModel;
@@ -37,6 +38,7 @@ import org.gl.ceir.CeirPannelCode.Model.ConsignmentUpdateRequest;
 import org.gl.ceir.CeirPannelCode.Model.DBrowDataModel;
 import org.gl.ceir.CeirPannelCode.Model.DbListDataHeaders;
 import org.gl.ceir.CeirPannelCode.Model.Dropdown;
+import org.gl.ceir.CeirPannelCode.Model.FileCopyToOtherServer;
 import org.gl.ceir.CeirPannelCode.Model.FileExportResponse;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
@@ -78,6 +80,13 @@ public class Consignment {
 
 	@Value ("${filePathforErrorFile}")
 	String filePathforErrorFile;
+	
+	@Value ("${serverId}")
+	Integer serverId;
+	
+	@Autowired
+	GrievanceFeignClient grievanceFeignClient;
+	
 	
 @Autowired
 AddMoreFileModel addMoreFileModel,urlToUpload,urlToMove;
@@ -126,7 +135,7 @@ public @ResponseBody GenricResponse registerConsignment(@RequestParam(name="supp
 @RequestParam(name="featureId",required = false) Integer featureId,
 @RequestParam(name="roleType",required = false) String roleType,HttpServletRequest request) {
 
-
+	FileCopyToOtherServer fileCopyRequest= new FileCopyToOtherServer();
 	log.info("headers request="+request.getHeaderNames());
 	log.info("user-agent"+request.getHeader("user-agent"));
 	  Enumeration headerNames = request.getHeaderNames();
@@ -145,6 +154,14 @@ txnNumner = "C"+txnNumner;
 
 addMoreFileModel.setTag("system_upload_filepath");
 urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
+
+fileCopyRequest.setFilePath(urlToUpload.getValue());
+fileCopyRequest.setTxnId(txnNumner);
+fileCopyRequest.setFileName(file.getOriginalFilename());
+fileCopyRequest.setServerId(serverId);
+log.info("request passed to move file to other server=="+fileCopyRequest);
+GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
+log.info("file move api response==="+fileRespnose);
 
 log.info("url to upload file=="+urlToUpload.getValue());
 log.info("Random transaction id number="+txnNumner);
@@ -218,6 +235,7 @@ public @ResponseBody GenricResponse openconsignmentRecordPage(@RequestParam(name
 @RequestParam(name="roleType",required = false) String roleType) 
 {
 ConsignmentModel consignment = new ConsignmentModel();
+FileCopyToOtherServer fileCopyRequest= new FileCopyToOtherServer();
 String movedFileTime = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
 log.info("Moved File Time value=="+movedFileTime);
 
@@ -229,6 +247,7 @@ GenricResponse response= new GenricResponse();
 
 addMoreFileModel.setTag("system_upload_filepath");
 urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
+
 
 addMoreFileModel.setTag("uploaded_file_move_path");
 urlToMove=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
@@ -261,6 +280,13 @@ consignment.setRoleType(roleType);
 else {
 log.info("file is empty or not "+file.isEmpty());
 try {
+	fileCopyRequest.setFilePath(urlToUpload.getValue());
+	fileCopyRequest.setTxnId(txnId);
+	fileCopyRequest.setFileName(file.getOriginalFilename());
+	fileCopyRequest.setServerId(serverId);
+	log.info("request passed to move file to other server=="+fileCopyRequest);
+	GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
+	log.info("file move api response==="+fileRespnose);
 String rootPath = urlToUpload.getValue()+txnId+"/";
 File tmpDir = new File(rootPath+file.getOriginalFilename());
 boolean exists = tmpDir.exists();

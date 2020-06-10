@@ -12,12 +12,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
+import org.gl.ceir.CeirPannelCode.Feignclient.GrievanceFeignClient;
 import org.gl.ceir.CeirPannelCode.Feignclient.ImmigrationFeignImpl;
 import org.gl.ceir.CeirPannelCode.Feignclient.UploadPaidStatusFeignClient;
 import org.gl.ceir.CeirPannelCode.Feignclient.UserPaidStatusFeignClient;
 import org.gl.ceir.CeirPannelCode.Model.AddMoreFileModel;
 import org.gl.ceir.CeirPannelCode.Model.AllRequest;
 import org.gl.ceir.CeirPannelCode.Model.EndUserVisaInfo;
+import org.gl.ceir.CeirPannelCode.Model.FileCopyToOtherServer;
 import org.gl.ceir.CeirPannelCode.Model.FileExportResponse;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest_UserPaidStatus;
@@ -79,6 +81,11 @@ AddMoreFileModel addMoreFileModel,urlToUpload,urlToMove;
 
 FeignCleintImplementation feignCleintImplementation;
 
+
+@Value ("${serverId}")
+Integer serverId;
+@Autowired
+GrievanceFeignClient grievanceFeignClient;
 
 	@GetMapping("uploadPaidStatus")
 	public ModelAndView pageView(@RequestParam(name="via", required = false) String via,@RequestParam(name="NID", required = false) String NID,HttpSession session
@@ -194,7 +201,15 @@ FeignCleintImplementation feignCleintImplementation;
 		log.info("*********"+filter);
 		addMoreFileModel.setTag("system_upload_filepath");
 		urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
-
+		
+		FileCopyToOtherServer fileCopyRequest= new FileCopyToOtherServer();
+		fileCopyRequest.setFilePath(urlToUpload.getValue());
+		fileCopyRequest.setTxnId(txnNumber);
+		fileCopyRequest.setFileName(file.getOriginalFilename());
+		fileCopyRequest.setServerId(serverId);
+		log.info("request passed to move file to other server=="+fileCopyRequest);
+		GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
+		log.info("file move api response==="+fileRespnose);
 
 		Register_UploadPaidStatus regularizeDeviceDbs  = gson.fromJson(filter, Register_UploadPaidStatus.class);
 		regularizeDeviceDbs.setNationality("Cambodian");
@@ -448,6 +463,14 @@ FeignCleintImplementation feignCleintImplementation;
 		}
 		else {
 			try {
+				FileCopyToOtherServer fileCopyRequest= new FileCopyToOtherServer();
+				 fileCopyRequest.setFilePath(urlToUpload.getValue());
+					fileCopyRequest.setTxnId(txnNumber);
+					fileCopyRequest.setFileName(passportImage.getOriginalFilename());
+					fileCopyRequest.setServerId(serverId);
+					log.info("request passed to move file to other server=="+fileCopyRequest);
+					GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
+					log.info("file move api response==="+fileRespnose);
 				byte[] bytes = passportImage.getBytes();
 			String rootPath =urlToUpload.getValue()+txnNumber+"/"; 
 			File dir = new File(rootPath + File.separator);
@@ -552,10 +575,11 @@ stream.close();
 		  
 		  addMoreFileModel.setTag("system_upload_filepath");
 			urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
-		  
+			
+			
 		  EndUserVisaInfo endUservisaInfo = gson.fromJson(filter,  EndUserVisaInfo.class);
-	
-		  List<VisaDb> visaDbaaa= endUservisaInfo.getVisaDb();
+          FileCopyToOtherServer fileCopyRequest= new FileCopyToOtherServer();
+		
 		  if(endUservisaInfo.getNationality().equals(""))
 		  {
 			  log.info("nationality......");
@@ -589,6 +613,14 @@ stream.close();
 				byte[] bytes = uploadnationalID.getBytes();
 			String rootPath =urlToUpload.getValue()+txnNumber+"/"+docType+"/"; 
 			File dir = new File(rootPath + File.separator);
+			
+			fileCopyRequest.setFilePath(urlToUpload.getValue());
+			fileCopyRequest.setTxnId(txnNumber);
+			fileCopyRequest.setFileName(uploadnationalID.getOriginalFilename());
+			fileCopyRequest.setServerId(serverId);
+			log.info("request passed to move file to other server=="+fileCopyRequest);
+			GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
+			log.info("file move api response==="+fileRespnose);
 
 			if (!dir.exists()) dir.mkdirs();
 			// Create the file on server 
@@ -609,7 +641,13 @@ stream.close();
 		  log.info(" upload status  entry point.");
 		  if(endUserDepartmentFile!=null) { 
 			  log.info("department  Image is not blank");
-		  
+			  fileCopyRequest.setFilePath(urlToUpload.getValue());
+				fileCopyRequest.setTxnId(txnNumber);
+				fileCopyRequest.setFileName(endUserDepartmentFile.getOriginalFilename());
+				fileCopyRequest.setServerId(serverId);
+				log.info("request passed to move file to other server=="+fileCopyRequest);
+				GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
+				log.info("file move api response==="+fileRespnose);
 		  try {
 			  byte[] bytes = endUserDepartmentFile.getBytes(); 
 			  String rootPath  =urlToUpload.getValue()+txnNumber+"/";
@@ -634,6 +672,13 @@ stream.close();
 			  try { byte[] bytes = visaImage.getBytes(); String rootPath
 			  =urlToUpload.getValue()+txnNumber+"/"; File dir = new File(rootPath +
 			  File.separator);
+			  fileCopyRequest.setFilePath(urlToUpload.getValue());
+				fileCopyRequest.setTxnId(txnNumber);
+				fileCopyRequest.setFileName(visaImage.getOriginalFilename());
+				fileCopyRequest.setServerId(serverId);
+				log.info("request passed to move file to other server=="+fileCopyRequest);
+				GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
+				log.info("file move api response==="+fileRespnose);
 			  
 			  if (!dir.exists()) dir.mkdirs(); // Create the file on server 
 			  File serverFile = new File(rootPath+visaImage.getOriginalFilename());
