@@ -210,7 +210,7 @@ var contextpath = "${context}";
 									<div class="col s12 m12">
 										<h6 class="file-upload-heading"><spring:message code="registration.UploadNationalityInformation" /> <span class="star">*</span></h6>
 									<div class="input-field col s12 m6 l6">
-                                            <input type="text" name="uploadNationalId" id="file"  maxlength="30" disabled="">
+                                            <input type="text" name="uploadNationalId" id="file"  maxlength="30" disabled>
                                             <input type="hidden"  id="filePath">
                                             
                                 <%--             <label for="uploadNationalId" class="active"><spring:message code="registration.uploadednationalid" /></label> --%>
@@ -605,7 +605,7 @@ onchange="InvalidMsg(this,'select','<spring:message code="validation.selectField
                 </div>
             </div>
         </div>
-    </div>
+   
     
     <div id="profileResponse" class="modal" style="width: 40%">
                             <h6 class="modal-header"><spring:message code="registration.updateinformation" /></h6>
