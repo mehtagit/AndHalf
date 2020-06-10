@@ -39,20 +39,20 @@ public class ParserMain {
                 }
                 intermPath = basePath + "/" + args[0].toLowerCase() + "/";
                 logger.info("intermPath :" + intermPath);
-//                source = getFolderNameByOpertor(conn, intermPath, args[0]);   // opt
-                source = "output/";
-                logger.info("source :" + source);
+                source = getFolderNameByOpertor(conn, intermPath, args[0]);   // opt
+//                source = "output/";
+                logger.debug("source :" + source);
                 filePath = intermPath + source;
                 fileName = new FileList().readOldestOneFile(filePath);
                 logger.info("FilePath :" + filePath + ";fileName:" + fileName + " ;basePath :" + basePath + ";source : " + source);
                 hfr.readConvertedCSVFile(conn, fileName, args[0], filePath, raw_upload_set_no, source);
 //                conn.commit();
             } catch (Exception e) {
+                logger.error(" :" + e);
                 e.printStackTrace();
-                // System.out.println("No record found from file ");
             } finally {
                 try {
-                    logger.debug(" ..................................................................... " + args[0]);
+                    logger.info(" ..................................................................... " + args[0]);
                     CEIRParserMain.CDRPARSERmain(conn, args[0]);
                 } catch (Exception ex) {
                     logger.error(" :" + ex);

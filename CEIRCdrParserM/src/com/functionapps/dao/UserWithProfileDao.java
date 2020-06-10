@@ -26,9 +26,7 @@ public class UserWithProfileDao {
 					+ "inner join usertype on users.usertype_id=usertype.id " 
 					+ "where users.id=" + userId;
 
-			logger.info("Query ["+query+"]");
-			 // System.out.println("Query ["+query+"]");
-
+			logger.info("Query ["+query+"]"); 
 			stmt  = conn.createStatement();
 			rs = stmt.executeQuery(query);
 

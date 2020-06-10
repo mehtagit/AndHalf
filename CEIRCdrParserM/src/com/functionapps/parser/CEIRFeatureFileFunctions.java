@@ -18,7 +18,8 @@ import org.apache.log4j.Logger;
 public class CEIRFeatureFileFunctions {
 
     Logger logger = Logger.getLogger(CEIRFeatureFileFunctions.class);
-
+ static StackTraceElement l = new Exception().getStackTrace()[0];
+//   logger.error("" + l.getClassName()+"/"+l.getMethodName()+":"+l.getLineNumber()  + e);
     public ResultSet getFileDetails(Connection conn, int state) {
         Statement stmt = null;
         ResultSet rs = null;
@@ -39,7 +40,7 @@ public class CEIRFeatureFileFunctions {
             stmt = conn.createStatement();
             return rs = stmt.executeQuery(query);
         } catch (Exception e) {
-            logger.info("Exception in getFileDetails[" + e + "]");
+            logger.error("" + l.getClassName()+"/"+l.getMethodName()+":"+l.getLineNumber()  + e);
             // System.out.println("" + e);
         }
         return rs;
@@ -55,7 +56,6 @@ public class CEIRFeatureFileFunctions {
         if (conn.toString().contains("oracle")) {
             limiter = " fetch next 1 rows only ";
         }
-
         if (!usertype_name.equals("NOUSER")) {
             addQuery = " and usertype_name = '" + usertype_name + "'   ";
         }
@@ -81,7 +81,7 @@ public class CEIRFeatureFileFunctions {
                 rs.close();
                 stmt.close();
             } catch (Exception e) {
-                logger.info("errror" + e);
+                logger.error("" + l.getClassName()+"/"+l.getMethodName()+":"+l.getLineNumber()  + e);
             }
         }
 
@@ -107,14 +107,15 @@ public class CEIRFeatureFileFunctions {
                 feature_file_management_details.put("delete_flag", rs.getString("delete_flag"));
             }
         } catch (Exception e) {
-            logger.info("Exception in feature_file_management_details" + e);
+             logger.error("" + l.getClassName()+"/"+l.getMethodName()+":"+l.getLineNumber()  + e);
+           
 
         } finally {
             try {
                 rs.close();
                 stmt.close();
             } catch (Exception e) {
-                logger.info("errror" + e);
+               logger.error("" + l.getClassName()+"/"+l.getMethodName()+":"+l.getLineNumber()  + e);
             }
         }
 
@@ -122,35 +123,7 @@ public class CEIRFeatureFileFunctions {
 
     }
 
-//    public void addFeatureFileConfigDetails(Connection conn, String type, String feature, String sub_feature,
-//            String txn_id, String file_name, String status, String user_type) {
-//        String query = "";
-//        Statement stmt = null;
-//        if (type == "insert") {
-//            query = "insert into feature_file_c onfig_db (feature,sub_feature,txn_id,file_name,status,usertype_name)values('"
-//                    + feature + "','" + sub_feature + "','" + txn_id + "','" + file_name + "','" + status + "','"
-//                    + user_type + "')";
-//        } else {
-//            query = "update feature_file_c onfig_db set status='" + status + "' where feature = '" + feature
-//                    + "' and txn_id='" + txn_id + "' and sub_feature='" + sub_feature + "'";
-//        }
-//        logger.info("A config DB[" + query + "]");
-//
-//        try {
-//            stmt = conn.createStatement();
-//            stmt.executeUpdate(query);
-//
-//        } catch (Exception e) {
-//            logger.info("errror" + e);
-//        } finally {
-//            try {
-//                stmt.close();
-//                conn.commit();
-//            } catch (Exception e) {
-//                logger.info("errror" + e);
-//            }
-//        }
-//    }
+ 
     public void updateFeatureFileStatus(Connection conn, String txn_id, int status, String feature, String subfeature) {
         String query = "";
         Statement stmt = null;
@@ -175,8 +148,7 @@ public class CEIRFeatureFileFunctions {
                 stmt.close();
                 conn.commit();
             } catch (Exception e) {
-                logger.info("Error at updateFeatureFileStatus.." + e);
-            }
+                logger.error("" + l.getClassName()+"/"+l.getMethodName()+":"+l.getLineNumber()  + e);            }
         }
 
     }
@@ -202,8 +174,7 @@ public class CEIRFeatureFileFunctions {
                 stmt.close();
                 conn.commit();
             } catch (Exception e) {
-                logger.error("Error at updateFeatureManagementStatus.." + e);
-            }
+           logger.error("" + l.getClassName()+"/"+l.getMethodName()+":"+l.getLineNumber()  + e);  }
         }
 
     }
@@ -230,15 +201,14 @@ public class CEIRFeatureFileFunctions {
             logger.info("user_type.. +" + user_type);
 
         } catch (Exception e) {
-            logger.info("errror" + e);
-            logger.info("errror" + e);
+            logger.error("" + l.getClassName()+"/"+l.getMethodName()+":"+l.getLineNumber()  + e);
         }
         try {
             rs.close();
             stmt.close();
         } catch (Exception e) {
             // TODO Auto-generated catch block
-            logger.info("errror" + e);
+            logger.error("" + l.getClassName()+"/"+l.getMethodName()+":"+l.getLineNumber()  + e);
         }
         return user_type;
     }
@@ -349,7 +319,7 @@ public class CEIRFeatureFileFunctions {
             in.close();
             logger.info("OUTPUT result is .." + result);
         } catch (Exception e) {
-            logger.info("error " + e);
+             logger.error("" + l.getClassName()+"/"+l.getMethodName()+":"+l.getLineNumber()  + e);
         }
     }
 
@@ -367,7 +337,7 @@ public class CEIRFeatureFileFunctions {
             con.setRequestProperty("Accept-Encoding", "application/json");
             con.setRequestProperty("Content-Type", "application/json");
         } catch (Exception e) {
-            logger.info("connection i/o failed " + e);
+             logger.error("" + l.getClassName()+"/"+l.getMethodName()+":"+l.getLineNumber()  + e);
         }
         return con;
     }
@@ -383,13 +353,11 @@ public class CEIRFeatureFileFunctions {
             stmt.executeUpdate(query);
             conn.commit();
         } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
+        logger.error("" + l.getClassName()+"/"+l.getMethodName()+":"+l.getLineNumber()  + e); } finally {
             try {
                 stmt.close();
             } catch (Exception e) {
-                e.printStackTrace();
-            }
+             logger.error("" + l.getClassName()+"/"+l.getMethodName()+":"+l.getLineNumber()  + e); }
         }
 
     }
@@ -410,9 +378,7 @@ public class CEIRFeatureFileFunctions {
                 map.put("role_type", rs.getString("role_type"));
             }
         } catch (Exception e) {
-            logger.info("Exception in getFileDetails[" + e + "]");
-            // System.out.println("" + e);
-        }
+           logger.error("" + l.getClassName()+"/"+l.getMethodName()+":"+l.getLineNumber()  + e);        }
         return map;
     }
 
@@ -453,14 +419,11 @@ public class CEIRFeatureFileFunctions {
                         stmt1.executeQuery(query);
                     }
                 } catch (Exception e) {
-                    logger.info("errro" + e);
-                }
+               logger.error("" + l.getClassName()+"/"+l.getMethodName()+":"+l.getLineNumber()  + e);  }
             }
             stmt1.close();
         } catch (Exception e) {
-            logger.info("Exception in getfromRegulizeEnterInCustom[" + e + "]");
-            // System.out.println("" + e);
-        }
+          logger.error("" + l.getClassName()+"/"+l.getMethodName()+":"+l.getLineNumber()  + e);  }
 
     }
 
@@ -510,9 +473,7 @@ public class CEIRFeatureFileFunctions {
 
             conn.commit();
         } catch (Exception e) {
-            logger.info("Exception in getfromRegulizeEnterInCustom[" + e + "]");
-            // System.out.println("" + e);
-        }
+         logger.error("" + l.getClassName()+"/"+l.getMethodName()+":"+l.getLineNumber()  + e);}
 
     }
 

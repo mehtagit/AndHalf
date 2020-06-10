@@ -55,10 +55,11 @@ public class RegisterTac {
                     logger.info("Approve_Reject API for type_approved_db  at Processing State is failed. Response[" + httpResponse + "]");
                     return;
                 }
+                // gET form rule
 
                 String[] ruleArr = {"EXISTS_IN_TYPE_APPROVED_TAC", "1", "TAC", typeApprovedDb.getTac()};   // typeApproceTac with status =3 
                 action_output = RuleEngineApplication.startRuleEngine(ruleArr, conn, bw);
-                logger.info("EXISTS_IN_TYPE_APPROVED_TAC result " + action_output);
+                logger.info("EXISTS_IN_TYPE_APPROVstartRuleEngineED_TAC result " + action_output);
                 if (action_output.equalsIgnoreCase("NO")) {   // tac Format
                     String[] ruleArr1 = {"TAC_FORMAT", "1", "TAC", typeApprovedDb.getTac()};
                     action_output = RuleEngineApplication.startRuleEngine(ruleArr1, conn, bw);
@@ -80,16 +81,8 @@ public class RegisterTac {
                 } else {
                     resultValue = 3;
                 }
-
-
-                /* * if("yes".equalsIgnoreCase(output)) { typeApprovedDb.setApproveStatus(3); //
-				 * Pending by CEIR Admin }else { typeApprovedDb.setApproveStatus(2); // Rejected
-				 * By System. }
-                 */
                 //3 Pass   //2 Fail
-//                HttpResponse httpResponse = tacApiConsumer.approveReject(typeApprovedDb.getTxnId(), 3 );
                 httpResponse = tacApiConsumer.approveReject(typeApprovedDb.getTxnId(), resultValue);
-
                 if (httpResponse.getErrorCode() != 200) {
                     // TODO Add to the Alert.
                     logger.info("Approve_Reject API for type_approved_db is failed. Response[" + httpResponse + "]");
@@ -100,7 +93,7 @@ public class RegisterTac {
                 UserWithProfile userWithProfile = userWithProfileDao.getUserWithProfileById(conn, typeApprovedDb.getUserId());
 
                 // Read message
-                Optional<MessageConfigurationDb> messageDbOptional = messageConfigurationDbDao.getMessageDbTag(conn, "", "TAC_PROCESS_SUCCESFUL_MAIL_TO_USER");
+                Optional<MessageConfigurationDb> messageDbOptional = messageConfigurationDbDao.getMessageDbTag(conn, "TAC_PROCESS_SUCCESFUL_MAIL_TO_USER");
 
                 if (messageDbOptional.isPresent()) {
 

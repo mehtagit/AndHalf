@@ -15,6 +15,7 @@ import org.apache.log4j.Logger;
 import com.functionapps.log.LogWriter;
 import com.functionapps.parser.CEIRFeatureFileFunctions;
 import com.functionapps.parser.CEIRFeatureFileParser;
+import com.functionapps.parser.HexFileReader;
 import com.functionapps.parser.Rule;
 import com.functionapps.parser.RuleFilter;
 import com.functionapps.util.Util;
@@ -24,6 +25,9 @@ import java.io.OutputStreamWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ConsignmentInsertUpdate {
 
@@ -45,6 +49,7 @@ public class ConsignmentInsertUpdate {
         Statement stmt5 = null; // greylisthistory_db
 
         String raw_query = null;
+        List<String> sourceTacList = new ArrayList<String>();
 
         String my_query = null;
         String device_db_query = null;
@@ -264,6 +269,7 @@ public class ConsignmentInsertUpdate {
                     if (stolenRecvryBlock == 1) {
                         dvsStatus = stolnRcvryDetails.get("divceStatus");
                     }
+                    sourceTacList.add(rs1.getString("IMEIESNMEID").substring(0, 8));
                     my_query = "insert into " + feature_file_mapping.get("output_device_db")
                             + " (device_id_type,created_on,device_launch_date,device_status,"
                             + "device_type,imei_esn_meid,modified_on,multiple_sim_status,period,sn_of_device,txn_id,user_id ,feature_name ) " //,feature_name
@@ -337,7 +343,7 @@ public class ConsignmentInsertUpdate {
                         insertFromImporterManufactor(conn, rs1, stolnRcvryDetails, feature_file_management, feature_file_mapping, dateFunction, period, txn_id);
                     } else {
                         stmt2.addBatch(device_db_query);
-                         logger.info("device_db_query  : " + device_db_query);
+                        logger.info("device_db_query  : " + device_db_query);
                     }
                     split_upload_batch_count++;
                     if (split_upload_batch_count == split_upload_batch_no) {
@@ -400,18 +406,23 @@ public class ConsignmentInsertUpdate {
                 stmt5.close();
 
                 ceirfunction.UpdateStatusViaApi(conn, txn_id, 0, operator);
-                logger.info("UpdateStatusViaApi  : 0");
                 ceirfunction.updateFeatureFileStatus(conn, txn_id, 4, operator, sub_feature);
-                logger.info("weBaction $4 done : ");
+
 //          ceirfunction.updateFeatureManagementStatus(conn, txn_id, 3, feature_file_mapping.get("mgnt_table_db"), operator);
             }
             raw_stmt = conn.createStatement();
             raw_query = "update " + operator + "_raw" + " set status='Complete' where txn_id='" + txn_id + "'";
             logger.info("updating raw table with cmplte.." + raw_query);
             raw_stmt.executeUpdate(raw_query);
+
+            if (feature_file_mapping.get("USERTYPE_NAME").equalsIgnoreCase("Importer") || feature_file_mapping.get("USERTYPE_NAME").equalsIgnoreCase("Manufacturer")) {
+                Map<String, Long> map = sourceTacList.stream()
+                        .collect(Collectors.groupingBy(c -> c, Collectors.counting()));
+                map.forEach((k, v) -> new HexFileReader().insertSourceTac(conn, k, device_info.get("file_name"), v, "source_tac_inactive_info"));
+            }
+
             conn.commit();
             raw_stmt.close();
-//            }
 
             bw.close();
         } catch (Exception e) {
@@ -447,16 +458,16 @@ public class ConsignmentInsertUpdate {
             String my_query = null;
             String device_greylist_db_qry = null;
             String device_greylist_History_db_qry = null;
-            
+
 //            select a.SN_OF_DEVICE ,a.DEVICE_ID_TYPE , a.DEVICE_ACTION , a.DEVICE_LAUNCH_DATE , a.DEVICE_STATUS , a.DEVICE_TYPE , a.MULTIPLE_SIM_STATUS,
             // change in code accordingly
-            
             while (rs.next()) {
                 my_query = "insert into " + feature_file_mapping.get("output_device_db")
                         + " (device_id_type,created_on,device_launch_date,device_status,"
                         + "device_type,imei_esn_meid,modified_on,multiple_sim_status,period,sn_of_device,txn_id,user_id) "
                         + "values(" + "'" + rs1.getString("DeviceIdType") + "'," + "" + dateFunction + "," /// "dd-MMM-YY"                              
-                        + "'" + rs1.getString("Devicelaunchdate") + "', '" + stolnRcvryDetails.get("divceStatus") + "'  ,'" + rs1.getString("DeviceType") + "'," + "'" + rs.getString("imei_esn_meid")
+                        + "'" + rs1.getString("Devicelaunchdate") + "', '" + stolnRcvryDetails.get("divceStatus") + "'  ,'" + rs1.getString("DeviceType") + "',"
+                        + "'" + rs.getString("imei_esn_meid")
                         + "'," + "" + dateFunction + "," + "'" + rs1.getString("MultipleSIMStatus") + "'," + "'"
                         + period + "'," + "'" + rs1.getString("SNofDevice") + "'," + "'" + txn_id + "'," + ""
                         + feature_file_management.get("user_id") + "" + ")";
@@ -483,9 +494,22 @@ public class ConsignmentInsertUpdate {
                         + "'" + stolnRcvryDetails.get("usertype") + "'," + "'"
                         + stolnRcvryDetails.get("complaint_type") + "' , " + "'"
                         + stolnRcvryDetails.get("operation") + "'  " + ")";
-                stmt1.executeUpdate(my_query);
-                stmt2.executeUpdate(device_greylist_db_qry);
-                stmt3.executeUpdate(device_greylist_History_db_qry);
+
+                try {
+                    stmt1.executeUpdate(my_query);
+                } catch (Exception e) {
+                    logger.error("Error 1 " + e);
+                }
+                try {
+                    stmt2.executeUpdate(device_greylist_db_qry);
+                } catch (Exception e) {
+                    logger.error("Error 2 " + e);
+                }
+                try {
+                    stmt3.executeUpdate(device_greylist_History_db_qry);
+                } catch (Exception e) {
+                    logger.error("Error 3 " + e);
+                }
 
                 logger.info("insertFromImporterManufactor.. my_query is ::" + my_query);
                 logger.info("insertFromImporterManufactor.. device_greylist_db_qry is ::" + device_greylist_db_qry);

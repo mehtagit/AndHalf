@@ -15,7 +15,7 @@ public class MessageConfigurationDbDao {
 	static Logger logger = Logger.getLogger(MessageConfigurationDbDao.class);
 	static String GENERIC_DATE_FORMAT = "dd-MM-yyyy";
 
-	public Optional<MessageConfigurationDb> getMessageDbTag(Connection conn, String managementDb, String tag) {
+	public Optional<MessageConfigurationDb> getMessageDbTag(Connection conn,  String tag) {
 		ResultSet rs = null;
 		Statement stmt = null;
 		String query = "select id, description, tag, value, channel, active, subject "

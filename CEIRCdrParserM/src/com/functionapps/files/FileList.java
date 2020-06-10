@@ -346,36 +346,26 @@ public class FileList {
             if (!folder.exists()) {
                 folder.mkdir();
             }
-            logger.info("folder Created ::" + folder);
+            logger.debug("folder Created ::" + folder);
             folder = new File(storagePath + opertorName + "/" + source);
             if (!folder.exists()) {
                 folder.mkdir();
             }
-            logger.info("folder Created ::" + folder);
+            logger.debug("folder Created ::" + folder);
 
             Path temp = Files.move(Paths.get(fileFolderPath + fileName),
                     Paths.get(storagePath + opertorName + "/" + source + "/" + fileName + errortype));
             if (temp != null) {
                 logger.info("File renamed and moved successfully");
             } else {
-                logger.info("Failed to move the file");
+                logger.warn("Failed to move the file");
             }
         } catch (Exception e) {
-            logger.info("Error" + e);
+            logger.error("Error" + e);
         }
 
     }
 
 }
 
-//  public String readOldestFileOne( String basePath) {
-////        File folder = new File(basePath);
-////        File[] listOfFiles = folder.listFiles();
-////        String fileName = listOfFiles[0].getName();
-//////        for (File file : listOfFiles) {
-//////            if (file.isFile()) {
-//////                fileName = file.getName();
-//////            }
-//////        }
-////        return fileName;
-//    }
+ 

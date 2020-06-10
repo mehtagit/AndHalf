@@ -63,15 +63,15 @@ public class ErrorFileGenrator {
                     errorPath = resultmsdn.getString(1);
                 }
             } catch (Exception e) {
-                logger.info("Error...errorPath." + e);
+                logger.error("Error...errorPath." + e);
             }
             conn.close();
-            logger.info("ErrorPath.." + errorPath);
+            logger.debug("ErrorPath.." + errorPath);
 
 //            String fileString = map.get("fileString");
 //            String fileName = map.get("fileName");
 //            
-            logger.info("fileString is " + errorString);
+            logger.debug("fileString is " + errorString);
 
             try {
                 File file = new File(errorPath + txn_id);
@@ -87,12 +87,12 @@ public class ErrorFileGenrator {
                 bw.newLine();
                 bw.close();
             } catch (Exception e) {
-                logger.info("exception at File..." + e);
+                logger.error("exception at File..." + e);
             }
-            logger.info("Success");
+             
 
         } catch (Exception e) {
-            logger.info("Exception ..." + e);
+            logger.error("Exception ..." + e);
         }
     }
 
@@ -112,7 +112,7 @@ public class ErrorFileGenrator {
             }
             bw.close();
         } catch (Exception e) {
-            logger.info("Error + gotoErrorFilewithList " + e);
+            logger.error("Error + gotoErrorFilewithList " + e);
         }
     }
 
@@ -131,7 +131,7 @@ public class ErrorFileGenrator {
             bw.newLine();
             bw.close();
         } catch (Exception e) {
-            logger.info("exception at File..." + e);
+            logger.error("exception at File..." + e);
         }
 
     }

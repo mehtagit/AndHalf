@@ -18,9 +18,7 @@ import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.BufferedReader;
-//import java.io.FileReader;
-//import java.io.InputStreamReader;
-//import java.io.BufferedReader;
+
 import java.io.DataInputStream;
 import java.io.IOException;
 
@@ -37,6 +35,8 @@ public class HexFileReader {
 
     // static Logger logger = Logger.getLogger(HexFileReader.class);
     // logger = Logger.getLogger(HexFileReader.class);
+    static StackTraceElement l = new Exception().getStackTrace()[0];
+//   logger.error("" + l.getClassName()+"/"+l.getMethodName()+":"+l.getLineNumber()  + e);
     Logger logger = Logger.getLogger(HexFileReader.class);
     private static final boolean String = false;
     ZTEFields zte = new ZTEFields();
@@ -91,8 +91,9 @@ public class HexFileReader {
             conn.commit();
             result = true;
         } catch (Exception e) {
-            logger.info("Failed to insert data.");
+            logger.error("Failed to insert data.");
             conn.rollback();
+            logger.error("" + l.getClassName() + "/" + l.getMethodName() + ":" + l.getLineNumber() + e);
             e.printStackTrace();
         } finally {
             try {
@@ -105,232 +106,9 @@ public class HexFileReader {
                     }
 //                    c onn.close();
                 }
-            } catch (Exception ex) {
+            } catch (Exception e) {
+                logger.error("" + l.getClassName() + "/" + l.getMethodName() + ":" + l.getLineNumber() + e);
             }
-        }
-        return result;
-    }
-
-    public String[] readBinaryFileUsingDIS(String fileName, String filePath, String repName) {
-        String csvFilePath = "/home/ildidea/upload/" + repName + "/";
-        int i = 0;
-        int offset = 0;
-        int numRead = 0;
-        int sCalls = 0;
-        int fCalls = 0;
-        String cdrSeqNo = null;
-        String callDuraExt = null;
-        String cdrStartTime = null;
-        String cdrEndTime = null;
-        String endTime = null;
-        String data = null;
-        String fieldName = null;
-        String answerId = null;
-        String callDuration = null;
-        String partId = null;
-        File file = null;
-        FileInputStream fis = null;
-        DataInputStream dis = null;
-        byte[] buffer = null;
-        // String line = null;
-        int[] fieldOffset = null;
-        String[] result = null;
-        StringBuilder sbCsv = null;
-        FileWriter csvFileWriter = null;
-        DecimalConverter dc = new DecimalConverter();
-        HashMap<String, int[]> hm = new HashMap<String, int[]>();
-
-        try {
-            /**
-             * **************Insert Query and prepared statement
-             * start**************
-             */
-            // StringBuilder csvHeader=new StringBuilder();
-            /*
-			 * for( String field : fields ){ csvHeader.append(field).append(","); }
-             */
-            /**
-             * **************Insert Query and prepared statement
-             * ends**************
-             */
-            buffer = new byte[392];
-            file = new File(filePath);
-            fis = new FileInputStream(file);
-            dis = new DataInputStream(fis);
-            hm = zte.getfieldSet();
-            sbCsv = new StringBuilder();
-            csvFileWriter = new FileWriter(csvFilePath + fileName + ".csv");
-            // csvHeader.setLength(Math.max(csvHeader.length() - 1, 0));
-            // csvFileWriter.write(csvHeader.toString());
-            // csvFileWriter.write(System.getProperty( "line.separator" ));
-            while ((offset < buffer.length) && (numRead = dis.read(buffer, offset, buffer.length - offset)) >= 0) {
-                for (int j = 0; j < fields.length; j++) {
-                    data = null;
-                    fieldOffset = new int[3];
-                    fieldName = fields[j];
-                    if (!fieldName.equals("cdr_condsider") && !fieldName.equals("CallDurationInSec")
-                            && !fieldName.equals("Changed_date") && !fieldName.equals("cdr_date")) {
-                        fieldOffset = hm.get(fieldName);
-                        // logger.info("Field name ["+fieldName+"]");
-                        byte[] byteData = null;
-                        switch (fieldOffset[2]) {
-                            case 0:
-                                // byteData = Arrays.copyOfRange( buffer, fieldOffset[0],
-                                // fieldOffset[0]+fieldOffset[1]);
-                                data = dc.hex2Decimal(dc.bytesToHex(byteData));
-                                break;
-                            case 1:
-                                // byteData = Arrays.copyOfRange( buffer, fieldOffset[0],
-                                // fieldOffset[0]+fieldOffset[1]);
-                                if (fieldName.equalsIgnoreCase("Call_Duration")) {
-                                    data = dc.bytesToHex(byteData);
-                                    callDuration = data;
-                                    // logger.info("Call_Duration hex value ["+dc.bytesToHex(byteData)+"]");
-                                } else {
-                                    data = dc.getNumberFromBCD(dc.bytesToHex(byteData));
-                                }
-                                break;
-                            case 2:
-                                // byteData = Arrays.copyOfRange( buffer, fieldOffset[0],
-                                // fieldOffset[0]+fieldOffset[1]);
-                                data = dc.getNumberFromRightBCD(dc.bytesToHex(byteData));
-                                break;
-                            case 3:
-                                data = dc.getBitFromByte(buffer[fieldOffset[0]], fieldOffset[1]);
-                                break;
-                            case 4:
-                                // byteData = Arrays.copyOfRange( buffer, fieldOffset[0],
-                                // fieldOffset[0]+fieldOffset[1]);
-                                data = dc.getStringFromByte(byteData);
-                                break;
-                            default:
-                                break;
-                        }
-                        if (fieldName.equalsIgnoreCase("AnswerID")) {
-                            answerId = data;
-                        } else if (fieldName.equalsIgnoreCase("EndTime")) {
-                            endTime = data;
-                        } else if (fieldName.equalsIgnoreCase("SeqNum")) {
-                            cdrSeqNo = data;
-                        } else if (fieldName.equalsIgnoreCase("Call_Duration_Extended")) {
-                            callDuraExt = data;
-                        } else if (fieldName.equalsIgnoreCase("PartRecID")) {
-                            partId = data;
-                        }
-
-                        // ps.setString( j+1, data);
-                    } else if (fieldName.equals("CallDurationInSec")) {
-                        if (answerId.equals("1")) {
-                            // logger.info("Call duration ["+callDuration+"]");
-                            data = this.getCallDurationInSecond(callDuration, partId, cdrSeqNo, callDuraExt);
-                        } else {
-                            data = "0";
-                        }
-                    } else if (fieldName.equals("Changed_date") || fieldName.equals("cdr_date")) {
-                        data = "0";
-                    } else {
-                        data = "N";
-                    }
-                    sbCsv.append(data).append(",");
-                }
-                sbCsv.setLength(Math.max(sbCsv.length() - 1, 0));
-                csvFileWriter.write(sbCsv.toString());
-                csvFileWriter.write(System.getProperty("line.separator"));
-                sbCsv.setLength(0);
-                i++;
-                // break;
-            }
-            csvFileWriter.flush();
-            new com.functionapps.files.FileList().moveFile(fileName, repName, "", "");
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (fis != null) {
-                    fis.close();
-                }
-                if (dis != null) {
-                    dis.close();
-                }
-            } catch (Exception ex) {
-            }
-            data = null;
-            fieldName = null;
-            file = null;
-            buffer = null;
-            fieldOffset = null;
-            dc = null;
-            hm = null;
-        }
-        return result;
-    }
-
-    public boolean insertIntoFileDetailTable(String fileName, String fileSize, String file, int cdrCount) {
-        boolean result = false;
-        try {
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return result;
-    }
-
-    public String getCallDurationInSecond(String callDuration, String partId, String cdrSeqNo, String callDurationExt) {
-        String duration = null;
-        int seqNo = 0;
-        int hour = 0;
-        int minute = 0;
-        int second = 0;
-        int total = 0;
-        try {
-            if (cdrSeqNo != null && !cdrSeqNo.equals("")) {
-                seqNo = Integer.valueOf(cdrSeqNo);
-            }
-            if (callDuration.length() == 8) {
-                // logger.info("Hour part ["+callDuration.substring( 2, 4)+"],minute part
-                // ["+callDuration.substring( 4, 6)+"] and second part["+callDuration.substring(
-                // 6, 8)+"]");
-                hour = Integer.valueOf(callDuration.substring(2, 4)) * 3600;
-                minute = Integer.valueOf(callDuration.substring(4, 6)) * 60;
-                second = Integer.valueOf(callDuration.substring(6, 8));
-                // logger.info("Hour part ["+hour+"],minute part ["+minute+"] and second
-                // part["+second+"]");
-                if (partId.equals("3") && seqNo != 0) {
-                    total = hour + minute + second + ((seqNo - 1) * 1800);
-                } else {
-                    total = hour + minute + second;
-                }
-                if (callDurationExt != null && !callDurationExt.equals("") && !callDurationExt.equals("0")) {
-                    // duration = String.valueOf((total + 1 ));
-                } else {
-                    // duration = String.valueOf(total);
-                }
-            } else {
-                duration = "0";
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return duration;
-    }
-
-    public boolean sortAllFile(String repName, String path) {
-        boolean result = false;
-        Process newProcess = null;
-        String command = null;
-        try {
-            if (path != null) {
-                command = "sh " + path + "script/sort_file.sh " + path;
-                logger.info("Command to execute script is [" + command + "]");
-                newProcess = Runtime.getRuntime().exec(command);
-                newProcess.waitFor();
-                logger.info("File sorting completed.");
-                result = true;
-            } else {
-                result = false;
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
         }
         return result;
     }
@@ -373,7 +151,7 @@ public class HexFileReader {
 //            String str2 = str1.substring(str1.length() - 14, str1.length());
 //            LocalDateTime now = LocalDateTime.now();  
 //            updatetime = sdf.format("20200531123456");
-            updatetime = "2020-05-30 12:34:56"; ///
+           updatetime = "2020-05-30 12:34:56";
             file = new File(fileFolderPath + fileName);
             fr = new FileReader(file);
             br = new BufferedReader(fr);
@@ -407,34 +185,32 @@ public class HexFileReader {
                                 failquery = failquery + cdrColumn.columString + ",";   //
                                 failvalues = failvalues + " ?, ";                           //
                             }
-//                            else {
-//                                logger.info("Column name not matched");
-//                            }
+
                         }
                         if (my_column_count == myfilelist.size()) {
                             query = query + "operator" + "," + "file_name" + "," + "record_time" + "," + "status" + ", created_on,modified_on   ";
-                            values = values + "?,?, " + toDate + " ,'Init'," + dateFunction + ", "+dateFunction +  "  ";
+                            values = values + "?,?, " + toDate + " ,'Init'," + dateFunction + ", " + dateFunction + "  ";
                             query = query.substring(0, query.length() - 1) + ") "
                                     + values.substring(0, values.length() - 1) + ")";
                             ps = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
                             failquery = failquery + "operator" + "," + "file_name" + "," + "record_time" + "," + "status" + ", created_on,modified_on   ";     // why not comma 
-                            failvalues = failvalues + "?,?, " + toDate + ",'Error'," + dateFunction + ", "+dateFunction +  "   ";   // 
+                            failvalues = failvalues + "?,?, " + toDate + ",'Error'," + dateFunction + ", " + dateFunction + "   ";   // 
                             failquery = failquery.substring(0, failquery.length() - 1) + ") "
                                     + failvalues.substring(0, failvalues.length() - 1) + ")";
                             failed_ps = conn.prepareStatement(failquery, Statement.RETURN_GENERATED_KEYS);
-                            logger.info("complete query is [" + query + "]");
-                            logger.info("complete error " + failquery);
+                            logger.debug("complete query is [" + query + "]");
+                            logger.debug("complete error " + failquery);
                         } else {
                             // logger.info("getting error in file so moving the file ");
                             fr.close();
                             new com.functionapps.files.FileList().moveCDRFile(conn, fileName, repName, fileFolderPath, source, "error");
-                            logger.error("Total column are not matched" + my_column_count);
+                            logger.warn("Total column are not matched" + my_column_count);
                             break;
                         }
                     } else {
-                        // logger.info("getting error in file so moving the file ");
+                        logger.warn("getting error in file so moving the file ");
                         fr.close();
-//                        logger.info("Configured Comumn nad File headers are not matched");  
+                        logger.warn("Configured Comumn nad File headers are not matched");
                         new com.functionapps.files.FileList().moveCDRFile(conn, fileName, repName, fileFolderPath, source, "error");
                     }
                 } else {    // k = 0 End
@@ -443,7 +219,7 @@ public class HexFileReader {
                     for (CDRColumn cdrColumn : myfilelist) {
                         logger.debug(j + "   <-- FIELD -> " + data[j - 1]);
                         if (cdrColumn.graceType.equalsIgnoreCase("Mandatory")) {
-                            logger.info(j + "   <--Mandatory field -> " + data[j - 1]);
+                            logger.debug(j + "   <--Mandatory field -> " + data[j - 1]);
                             if (data[j - 1].equals("") || " ".equals(data[j - 1]) || data[j - 1].equals(" ") || data[j - 1] == null) {
                                 logger.debug(" No data " + data[j - 1]);
                                 failed_flag = 0;
@@ -480,18 +256,16 @@ public class HexFileReader {
                     }
                 }
                 k++;
-
                 if (pass_my_batch == my_batch_count) {
-                    logger.info("Executing Pass batch..... " + k);
+                    logger.debug("Executing Pass batch..... " + k);
                     ps.executeBatch();
                     pass_my_batch = 0;
-                    logger.info("..... " + k);
+                    logger.debug("..... " + k);
                 }
                 if (fail_my_batch == my_batch_count) {
-                    logger.info("Executing Fail batch.." + k);
+                    logger.debug("Executing Fail batch.." + k);
                     failed_ps.executeBatch();
                     fail_my_batch = 0;
-
                 }
             }    // while End
 
@@ -509,19 +283,20 @@ public class HexFileReader {
 
             rowInserted = ps.getUpdateCount();
             rs = ps.getGeneratedKeys();
-            logger.info("sys insert close ");
+            logger.debug("sys insert close ");
             new com.functionapps.files.FileList().moveCDRFile(conn, fileName, repName, fileFolderPath, source, "");
 
         } catch (Exception e) {
-            logger.info("Exception [" + e + "]");
+            logger.error("" + l.getClassName() + "/" + l.getMethodName() + ":" + l.getLineNumber() + e);
             e.printStackTrace();
             try {
                 if (conn != null) {
                     conn.rollback();
                 }
             } catch (Exception ex) {
+                logger.error("" + l.getClassName() + "/" + l.getMethodName() + ":" + l.getLineNumber() + e);
             }
-//            result = null;
+
         } finally {
             try {
                 if (conn != null) {
@@ -534,7 +309,8 @@ public class HexFileReader {
                     }
                 }
 
-            } catch (Exception ex) {
+            } catch (Exception e) {
+                logger.error("" + l.getClassName() + "/" + l.getMethodName() + ":" + l.getLineNumber() + e);
             }
 //            
         }
@@ -581,7 +357,7 @@ public class HexFileReader {
         ArrayList<String> fileLines = new ArrayList<String>();
         try {
             ArrayList<CDRColumn> myfilelist = getCDRFields(conn, main_type, usertype_name);
-            logger.info("file list size is " + myfilelist.size());
+            logger.debug("file list size is " + myfilelist.size());
             logger.info("File Name is " + fileName);
             Date date = new Date();
             SimpleDateFormat DateFor = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -608,6 +384,7 @@ public class HexFileReader {
                     deviceQuantity = resul5.getInt("device_quantity");
                 }
             } catch (Exception e) {
+                logger.error("" + l.getClassName() + "/" + l.getMethodName() + ":" + l.getLineNumber() + e);
                 logger.info("Error at file Count Quality  " + e);
             }
             st5.close();
@@ -633,7 +410,7 @@ public class HexFileReader {
                     msgConfig.put(rsult.getString("tag"), rsult.getString("value"));
                 }
             } catch (Exception e) {
-                logger.info("Error at device_Ttype " + e);
+                logger.error("" + l.getClassName() + "/" + l.getMethodName() + ":" + l.getLineNumber() + e);
             }
             rsult.close();
             String interpQury = " select interp from system_config_list_db where tag =  ";
@@ -645,7 +422,7 @@ public class HexFileReader {
                     deviceType.add(result1.getString("interp"));
                 }
             } catch (Exception e) {
-                logger.info("Error at device_type " + e);
+                logger.error("" + l.getClassName() + "/" + l.getMethodName() + ":" + l.getLineNumber() + e);
             }
             stmt2.close();
             Statement stmt3 = conn.createStatement();
@@ -656,6 +433,7 @@ public class HexFileReader {
                     deviceType3.add(result3.getString("interp"));
                 }
             } catch (Exception e) {
+                logger.error("" + l.getClassName() + "/" + l.getMethodName() + ":" + l.getLineNumber() + e);
                 logger.info("Error at DEVICE_ID_TYPE " + e);
             }
             stmt3.close();
@@ -679,7 +457,8 @@ public class HexFileReader {
                     deviceType5.add(result5.getString(1));
                 }
             } catch (Exception e) {
-                logger.info("Error at DEVICE_STATUS " + e);
+                logger.error("" + l.getClassName() + "/" + l.getMethodName() + ":" + l.getLineNumber() + e);
+
             }
             stmt5.close();
             String errorFilePath = CEIRFeatureFileParser.getErrorFilePath(conn);
@@ -866,7 +645,7 @@ public class HexFileReader {
                 }
             }
             if (lngth != deviceQuantity) {
-                logger.info("   Devce Qntity Error method started ");
+                logger.info("   Devce Qntity   method started ");
                 if (failed_flag != 0) {
                     logger.info(" Device Quantity   doesnot matched with unique serial number  in File  ");
                     //  errFile.gotoErrorFile(txn_id, "Error Code :CON_FILE_0011, Error Message: Device Quantity does not match with the  count of unique serial number in the uploaded file  ");
@@ -885,7 +664,7 @@ public class HexFileReader {
                     if (errorfile.delete()) {
                         logger.info("File deleted successfully");
                     } else {
-                        logger.info("Failed to delete the file");
+                        logger.debug("Failed to delete the file");
                     }
                 }
                 logger.info("Uploading file"); // uploading data to db ..
@@ -994,22 +773,22 @@ public class HexFileReader {
                 conn.commit();
             } else {
                 errFile.gotoErrorFilewithList(errorFilePath, txn_id, fileLines);
-                logger.info("Error file Generated ");
+//                logger.info("Error file Generated ");
                 CEIRFeatureFileFunctions ceirfunction = new CEIRFeatureFileFunctions();
                 if (main_type.equalsIgnoreCase("Consignment")) {
                     ceirfunction.UpdateStatusViaApi(conn, txn_id, 1, main_type);
-                    logger.info("UpdateStatusViaApi 1 (error) done");
+//                    logger.info("UpdateStatusViaApi 1 (error) done");
                 } else {
                     ceirfunction.updateFeatureManagementStatus(conn, txn_id, 2, management_table, main_type);
-                    logger.info("mgmt status  2 (error) done");
+//                    logger.info("mgmt status  2 (error) done");
                 }
                 ceirfunction.updateFeatureFileStatus(conn, txn_id, 4, main_type, subfeature); // update web_action_db  
-                logger.info("web_action_db 4 done");
+//                logger.info("web_action_db 4 done");
 
             }
 
         } catch (Exception e) {
-            logger.info("Exception [" + e + "]");
+            logger.error("" + l.getClassName() + "/" + l.getMethodName() + ":" + l.getLineNumber() + e);
             e.printStackTrace();
             try {
                 if (conn != null) {
@@ -1038,17 +817,14 @@ public class HexFileReader {
                 if (fw != null) {
                     fw.close();
                 }
-            } catch (Exception ex) {
+            } catch (Exception e) {
+                logger.error("" + l.getClassName() + "/" + l.getMethodName() + ":" + l.getLineNumber() + e);
             }
             query = null;
-            // cdrCount = null;
             values = null;
-            // cdrStartTime = null;
-            // cdrEndTime = null;
             data = null;
             file = null;
-            // billIds = null;
-            // hm = null;
+
         }
         return result;
     }
@@ -1789,6 +1565,21 @@ public class HexFileReader {
         return usrtype;
     }
 
+    public void insertSourceTac(Connection conn, String tac, String txnFile, Long tacCount, String dbName) {
+        Statement stmt = null;
+        String raw_query = "insert into " + dbName + "( modified_on , created_on, tac , TXN_ID, RECORD_COUNT   ) "
+                + "  values( sysdate, sysdate,  '" + tac + "', '" + txnFile + "', " + tacCount + " )";
+        try {
+            logger.info(" " + raw_query);
+            stmt = conn.createStatement();
+            stmt.executeUpdate(raw_query);
+            stmt.closeOnCompletion();
+        } catch (Exception e) {
+            logger.warn("  " + e);
+        }
+
+    }
+
     void cdrFileDetailsInsert(Connection conn, String dateFunction, String fileName, String repName, int total_records_count, int total_error_record_count, String p1starttime, String p1endTime) {
 
         Statement stmt = null;
@@ -1800,7 +1591,7 @@ public class HexFileReader {
             stmt.executeUpdate(raw_query);
             stmt.closeOnCompletion();
         } catch (Exception e) {
-            logger.info("  " + e);
+            logger.warn("  " + e);
         }
     }
 
@@ -2456,3 +2247,200 @@ public class HexFileReader {
 ////	fr.close();
 ////	break;
 //}
+//    public String[] readBinaryFileUsingDIS(String fileName, String filePath, String repName) {
+//        String csvFilePath = "/home/ildidea/upload/" + repName + "/";
+//        int i = 0;
+//        int offset = 0;
+//        int numRead = 0;
+//        int sCalls = 0;
+//        int fCalls = 0;
+//        String cdrSeqNo = null;
+//        String callDuraExt = null;
+//        String cdrStartTime = null;
+//        String cdrEndTime = null;
+//        String endTime = null;
+//        String data = null;
+//        String fieldName = null;
+//        String answerId = null;
+//        String callDuration = null;
+//        String partId = null;
+//        File file = null;
+//        FileInputStream fis = null;
+//        DataInputStream dis = null;
+//        byte[] buffer = null;
+//        // String line = null;
+//        int[] fieldOffset = null;
+//        String[] result = null;
+//        StringBuilder sbCsv = null;
+//        FileWriter csvFileWriter = null;
+//        DecimalConverter dc = new DecimalConverter();
+//        HashMap<String, int[]> hm = new HashMap<String, int[]>();
+//
+//        try {
+//             
+//            buffer = new byte[392];
+//            file = new File(filePath);
+//            fis = new FileInputStream(file);
+//            dis = new DataInputStream(fis);
+//            hm = zte.getfieldSet();
+//            sbCsv = new StringBuilder();
+//            csvFileWriter = new FileWriter(csvFilePath + fileName + ".csv");
+//             while ((offset < buffer.length) && (numRead = dis.read(buffer, offset, buffer.length - offset)) >= 0) {
+//                for (int j = 0; j < fields.length; j++) {
+//                    data = null;
+//                    fieldOffset = new int[3];
+//                    fieldName = fields[j];
+//                    if (!fieldName.equals("cdr_condsider") && !fieldName.equals("CallDurationInSec")
+//                            && !fieldName.equals("Changed_date") && !fieldName.equals("cdr_date")) {
+//                        fieldOffset = hm.get(fieldName);
+//                        // logger.info("Field name ["+fieldName+"]");
+//                        byte[] byteData = null;
+//                        switch (fieldOffset[2]) {
+//                            case 0:
+//                                // byteData = Arrays.copyOfRange( buffer, fieldOffset[0],
+//                                // fieldOffset[0]+fieldOffset[1]);
+//                                data = dc.hex2Decimal(dc.bytesToHex(byteData));
+//                                break;
+//                            case 1:
+//                                // byteData = Arrays.copyOfRange( buffer, fieldOffset[0],
+//                                // fieldOffset[0]+fieldOffset[1]);
+//                                if (fieldName.equalsIgnoreCase("Call_Duration")) {
+//                                    data = dc.bytesToHex(byteData);
+//                                    callDuration = data;
+//                                    // logger.info("Call_Duration hex value ["+dc.bytesToHex(byteData)+"]");
+//                                } else {
+//                                    data = dc.getNumberFromBCD(dc.bytesToHex(byteData));
+//                                }
+//                                break;
+//                            case 2:
+//                                // byteData = Arrays.copyOfRange( buffer, fieldOffset[0],
+//                                // fieldOffset[0]+fieldOffset[1]);
+//                                data = dc.getNumberFromRightBCD(dc.bytesToHex(byteData));
+//                                break;
+//                            case 3:
+//                                data = dc.getBitFromByte(buffer[fieldOffset[0]], fieldOffset[1]);
+//                                break;
+//                            case 4:
+//                                // byteData = Arrays.copyOfRange( buffer, fieldOffset[0],
+//                                // fieldOffset[0]+fieldOffset[1]);
+//                                data = dc.getStringFromByte(byteData);
+//                                break;
+//                            default:
+//                                break;
+//                        }
+//                        if (fieldName.equalsIgnoreCase("AnswerID")) {
+//                            answerId = data;
+//                        } else if (fieldName.equalsIgnoreCase("EndTime")) {
+//                            endTime = data;
+//                        } else if (fieldName.equalsIgnoreCase("SeqNum")) {
+//                            cdrSeqNo = data;
+//                        } else if (fieldName.equalsIgnoreCase("Call_Duration_Extended")) {
+//                            callDuraExt = data;
+//                        } else if (fieldName.equalsIgnoreCase("PartRecID")) {
+//                            partId = data;
+//                        }
+//
+//                        // ps.setString( j+1, data);
+//                    } else if (fieldName.equals("CallDurationInSec")) {
+//                        if (answerId.equals("1")) {
+//                            // logger.info("Call duration ["+callDuration+"]");
+//                            data = this.getCallDurationInSecond(callDuration, partId, cdrSeqNo, callDuraExt);
+//                        } else {
+//                            data = "0";
+//                        }
+//                    } else if (fieldName.equals("Changed_date") || fieldName.equals("cdr_date")) {
+//                        data = "0";
+//                    } else {
+//                        data = "N";
+//                    }
+//                    sbCsv.append(data).append(",");
+//                }
+//                sbCsv.setLength(Math.max(sbCsv.length() - 1, 0));
+//                csvFileWriter.write(sbCsv.toString());
+//                csvFileWriter.write(System.getProperty("line.separator"));
+//                sbCsv.setLength(0);
+//                i++;
+//                // break;
+//            }
+//            csvFileWriter.flush();
+//            new com.functionapps.files.FileList().moveFile(fileName, repName, "", "");
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        } finally {
+//            try {
+//                if (fis != null) {
+//                    fis.close();
+//                }
+//                if (dis != null) {
+//                    dis.close();
+//                }
+//            } catch (Exception ex) {
+//            }
+//            data = null;
+//            fieldName = null;
+//            file = null;
+//            buffer = null;
+//            fieldOffset = null;
+//            dc = null;
+//            hm = null;
+//        }
+//        return result;
+//    }
+//    public String getCallDurationInSecond(String callDuration, String partId, String cdrSeqNo, String callDurationExt) {
+//        String duration = null;
+//        int seqNo = 0;
+//        int hour = 0;
+//        int minute = 0;
+//        int second = 0;
+//        int total = 0;
+//        try {
+//            if (cdrSeqNo != null && !cdrSeqNo.equals("")) {
+//                seqNo = Integer.valueOf(cdrSeqNo);
+//            }
+//            if (callDuration.length() == 8) {
+//                // logger.info("Hour part ["+callDuration.substring( 2, 4)+"],minute part
+//                // ["+callDuration.substring( 4, 6)+"] and second part["+callDuration.substring(
+//                // 6, 8)+"]");
+//                hour = Integer.valueOf(callDuration.substring(2, 4)) * 3600;
+//                minute = Integer.valueOf(callDuration.substring(4, 6)) * 60;
+//                second = Integer.valueOf(callDuration.substring(6, 8));
+//                // logger.info("Hour part ["+hour+"],minute part ["+minute+"] and second
+//                // part["+second+"]");
+//                if (partId.equals("3") && seqNo != 0) {
+//                    total = hour + minute + second + ((seqNo - 1) * 1800);
+//                } else {
+//                    total = hour + minute + second;
+//                }
+//                if (callDurationExt != null && !callDurationExt.equals("") && !callDurationExt.equals("0")) {
+//                    // duration = String.valueOf((total + 1 ));
+//                } else {
+//                    // duration = String.valueOf(total);
+//                }
+//            } else {
+//                duration = "0";
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return duration;
+//    }
+//    public boolean sortAllFile(String repName, String path) {
+//        boolean result = false;
+//        Process newProcess = null;
+//        String command = null;
+//        try {
+//            if (path != null) {
+//                command = "sh " + path + "script/sort_file.sh " + path;
+//                logger.info("Command to execute script is [" + command + "]");
+//                newProcess = Runtime.getRuntime().exec(command);
+//                newProcess.waitFor();
+//                logger.info("File sorting completed.");
+//                result = true;
+//            } else {
+//                result = false;
+//            }
+//        } catch (Exception ex) {
+//            ex.printStackTrace();
+//        }
+//        return result;
+//    }

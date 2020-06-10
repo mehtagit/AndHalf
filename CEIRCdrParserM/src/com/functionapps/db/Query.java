@@ -5,62 +5,12 @@ import java.sql.ResultSetMetaData;
 import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.DatabaseMetaData;
-//import java.text.DateFormat;
-//import java.text.SimpleDateFormat;
-//import java.util.ArrayList;
-//import java.util.HashMap;
 import java.util.LinkedHashMap;
-//import java.util.ListIterator;
-//import java.util.Date;
+ 
 
 public class Query{
 	
-	/*public void insertQueryNew( String reportName, HashMap< String, String[] > commonColumnData){
-		final String baseUrl = "203.122.58.181:8080/charting_backend_new/RequestHandler?";
-		String queryString   = null;
-		String[] fieldsName  = null;
-		String[] columnData  = null;
-		String dataValues    = "values(";
-		String insertQuery   = "INSERT INTO "+reportName+"(";
-        boolean isThresholdTableEmpty  = false;
-        boolean isAlertTableEmpty      = false;
-		try{
-			fieldsName      = this.getTableColumnsName( reportName );
-			for ( String fieldName : fieldsName ){
-				insertQuery = insertQuery+fieldName+",";
-			}
-			insertQuery = insertQuery.substring(0, insertQuery.lastIndexOf(","))+") ";
-			for( int i = commonColumnData.get( fieldsName[1].toLowerCase() ).length - 1; i >= 0 ; i-- ){
-				for( String columnName : fieldsName ){
-					columnData = commonColumnData.get( columnName.toLowerCase() );
-					dataValues = dataValues + "'"+columnData[i]+"',";
-				}
-				dataValues = dataValues.substring(0, dataValues.lastIndexOf("'")+1)+"),(";
-			}
-			if(dataValues != null){
-				dataValues  = dataValues.substring(0, dataValues.lastIndexOf(","));
-				insertQuery = insertQuery+dataValues;
-				 // System.out.println(insertQuery);
-				this.insert(insertQuery);
-				isThresholdTableEmpty = new Query().isTableEmpty(reportName+"_threshold");
-	            isAlertTableEmpty     = new Query().isTableEmpty(reportName+"_alerts");
-				 // System.out.println("Threshold table is empty ["+isThresholdTableEmpty+"]");
-				 // System.out.println("Alert table is empty ["+isAlertTableEmpty+"]");
-				if( isThresholdTableEmpty && isAlertTableEmpty ){
-            				new ComputeThreshold().computeThreshold(reportName, this.getolumnNameAverage(reportName));
-            				new Threshold().calculateAlarms( reportName, this.getStartIndexFromTable(reportName), this.getTableColumnsName(reportName));
-            	}else{
-					 // System.out.println("Going to calculate alarms for report ["+reportName+"]");
-            		new Threshold().calculateAlarms( reportName, this.getStartIndexFromTable(reportName), this.getTableColumnsName(reportName));
-            	}
-				queryString = "code_request=calNet&userId=brij&repId="+this.getReportIdByReportName(reportName);
-				new com.functionapps.http.HttpConnection().requestHandler(baseUrl, queryString, "GET");
-			}
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-	}*/
-	
+ 
 	public String isTableContainsDateField( String[] columnNames ){
 		String result   = null;
 		String columnId = null;
