@@ -19,7 +19,7 @@ var txnid=$('#existingStolenTxnId').val();
 		processData: false,
 		contentType: false,
 		success: function (response, textStatus, jqXHR) {
-		console.log(response)
+		//console.log(response)
 		
 		$('#bulkStolencompanyName').val(response.stolenOrganizationUserDB.companyName);
 		$('#bulkStolenaddress').val(response.stolenOrganizationUserDB.propertyLocation);
@@ -183,7 +183,7 @@ function updateCompanyStolenDetails(){
 		processData: false,
 		contentType: false,
 		success: function (response, textStatus, jqXHR) {
-		console.log(response)
+		//console.log(response)
 		
 		if(response.errorCode==0){
 			$("#companyStolenButton").prop('disabled', true);

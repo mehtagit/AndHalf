@@ -167,11 +167,19 @@ function pageButtons(Url){
 			}
 
 
-			$.getJSON('./getAllfeatures', function(data) {
+			/*$.getJSON('./getAllfeatures', function(data) {
 				for (i = 0; i < data.length; i++) {
 					$('<option>').val(data[i].name).text(data[i].name).appendTo('#Feature,#editFeature');
 				}
+			});*/
+			
+			$.getJSON('./Rule/DistinctName', function(data) {
+				for (i = 0; i < data.length; i++) {
+					$('<option>').val(data[i]).text(data[i]).appendTo('#Feature,#editFeature');
+				}
 			});
+			
+			
 			$.getJSON('./registrationUserType', function(data) {
 				for (i = 0; i < data.length; i++) {
 					$('<option>').val(data[i].usertypeName).text(data[i].usertypeName)
@@ -180,23 +188,10 @@ function pageButtons(Url){
 			});
 			$.getJSON('./ruleName', function(data) {
 				for (i = 0; i < data.length; i++) {
-					$('<option>').val(data[i].description).text(data[i].description)
-					.appendTo('#Rule');
+					$('<option>').val(data[i].name).text(data[i].description)
+					.appendTo('#Rule,#editRule');
 				}
 			});
-
-
-
-
-			$.getJSON('./ruleName', function(data) {
-				for (i = 0; i < data.length; i++) {
-					$('<option>').val(data[i].description).text(data[i].description)
-					.appendTo('#editRule');
-				}
-			});
-
-
-
 
 			$.getJSON('./getDropdownList/PERIOD_ACTION', function(data) {
 				for (i = 0; i < data.length; i++) {

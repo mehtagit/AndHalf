@@ -25,7 +25,7 @@
 					
 			$(document).ready(function(){
 				$('div#initialloader').fadeIn('fast');
-				DataTable(lang);
+				DataTable(lang,null);
 				pageRendering();
 				$.getJSON('./getDropdownList/'+featureId+'/'+$("body").attr("data-userTypeID"), function(data) {
 					for (i = 0; i < data.length; i++) {
@@ -46,8 +46,18 @@
 
 			//**************************************************Grievance table**********************************************
 
-			function DataTable(lang){
-				
+			function DataTable(lang,source){
+				var source__val;
+					//console.log("1=="+source);
+				if(source == 'filter' ) {
+					source__val= source;
+				}
+				else{
+					source__val= $("body").attr("data-session-source");
+
+				}
+				//console.log("2=="+source__val);
+
 				//var featureName = $('#feature').val() == null ? null : $("#feature option:selected").text();
 				
 				var filterRequest={
@@ -87,12 +97,12 @@
 									"sUrl": langFile  
 								},
 							ajax: {
-								url : 'visaUpdatedata',
+								url : 'visaUpdatedata?source='+source__val,
 								type: 'POST',
 								dataType: "json",
 								data : function(d) {
 									d.filter = JSON.stringify(filterRequest); 
-									console.log(JSON.stringify(filterRequest));
+									//console.log(JSON.stringify(filterRequest));
 								}
 
 							},
@@ -119,7 +129,7 @@
 					       });
 					},
 					error: function (jqXHR, textStatus, errorThrown) {
-						console.log("error in ajax");
+						//console.log("error in ajax");
 					}
 				});
 			}
@@ -238,7 +248,7 @@
 						"remark" : $("#deleteTacRemark").val(),
 						"userId" : parseInt($("body").attr("data-userID"))
 				}
-				console.log(JSON.stringify(deleteRequest));
+				//console.log(JSON.stringify(deleteRequest));
 				
 				$.ajax({
 					url : './pending-tac-approved',
@@ -247,7 +257,7 @@
 					contentType : 'application/json; charset=utf-8',
 					type : 'DELETE',
 					success : function(data, textStatus, xhr) {
-						console.log(data);
+						//console.log(data);
 						$("#DeleteTacConfirmationModal").closeModal();
 						$("#closeDeleteModal").openModal({
 					        dismissible:false
@@ -256,7 +266,7 @@
 						$("#materialize-lean-overlay-3").css("display","none");
 					},
 					error : function() {
-						console.log("Error");
+						//console.log("Error");
 					}
 				});
 				
@@ -287,7 +297,7 @@
 						"pageNo":parseInt(pageNo),
 						"pageSize":parseInt(pageSize)
 				}
-				console.log(JSON.stringify(filterRequest))
+				//console.log(JSON.stringify(filterRequest))
 				$.ajax({
 					url: './exportVisaData',
 					type: 'POST',
@@ -341,7 +351,7 @@
 
 					},
 					error : function() {
-						console.log("Failed");
+						//console.log("Failed");
 
 					}
 				});
@@ -388,7 +398,7 @@
 
 					},
 					error : function() {
-						console.log("Failed");
+						//console.log("Failed");
 					}
 				});
 				return false;
@@ -416,7 +426,7 @@
 			
 			
 			function historyRecord(txnID){
-				console.log("txn id=="+txnID)
+				//console.log("txn id=="+txnID)
 				$("#tableOnModal").openModal({dismissible:false});
 				 var filter =[];
 				 var formData= new FormData();

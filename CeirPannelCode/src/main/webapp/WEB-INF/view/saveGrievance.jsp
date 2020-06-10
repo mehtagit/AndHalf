@@ -12,10 +12,7 @@
 	
 	 long accessTime = session.getLastAccessedTime();
 	 long currentTime= new Date().getTime(); 
-	 System.out.println("accessTime========"+(accessTime));
-	 System.out.println("timeout========"+timeout);
 	 long dfd= accessTime +timeout;
-	 System.out.println("currentTime========"+currentTime);
 	 if( currentTime< dfd){
 	/*  response.setHeader("Refresh", timeout + "; URL = ../login");
 	 System.out.println("timeout========"+timeout); 
@@ -29,7 +26,7 @@
 <!DOCTYPE html>
 <html lang="en" class="no-js">
 <head>
-<title>Dashboard</title>
+<title>Grievance</title>
 <meta http-equiv='cache-control' content='no-cache'>
 <meta http-equiv='expires' content='-1'>
 <meta http-equiv='pragma' content='no-cache'>
@@ -354,7 +351,10 @@ var documenttype,selectfile,selectDocumentType;
 $.i18n().load( {
 	'en': './resources/i18n/en.json',
 	'km': './resources/i18n/km.json'
-} ).done( function() { console.log("done")});
+} ).done( function() { 
+	//console.log("done")
+	});
+
 
 
 
@@ -511,7 +511,7 @@ $.i18n().load( {
 						//alert("success");
 					},
 					error : function(jqXHR, textStatus, errorThrown) {
-						console.log("error in ajax")
+						//console.log("error in ajax")
 					}
 				});
 				return false;
@@ -525,7 +525,7 @@ $.i18n().load( {
 				processData : false,
 				contentType : false,
 				success : function(data, textStatus, jqXHR) {
-					console.log(data);
+					//console.log(data);
 
 					//$('#category').empty();
 					//$('#category').append('<option value="">'+$.i18n('selectCategory')+' *</option>');
@@ -541,7 +541,7 @@ $.i18n().load( {
 
 				},
 				error : function(jqXHR, textStatus, errorThrown) {
-					console.log("error in ajax")
+					//console.log("error in ajax")
 				}
 			});
 			/* $.getJSON('./getDropdownList/DOC_TYPE', function(data) {
@@ -556,14 +556,14 @@ $.i18n().load( {
 			 */
 
 			function cleanReplyPopUp() {
-				console.log("reset form function");
+				//console.log("reset form function");
 				$('#replymessageForm').trigger("reset");
 			}
 
 			// Integreation with add more field api
 
 			$.getJSON('./addMoreFile/grievance_supporting_doc_count', function(data) {
-				console.log(data);
+				//console.log(data);
 
 				localStorage.setItem("maxCount", data.value);
 
@@ -572,7 +572,7 @@ $.i18n().load( {
 			//var max_fields = 2; //maximum input boxes allowed
 			var max_fields = localStorage.getItem("maxCount");
 			if (max_fields==0){
-				 console.log("1111");
+				 //console.log("1111");
 				 $(".add_field_button").prop('disabled', true);
 			 }
 			var wrapper = $(".mainDiv"); //Fields wrapper
@@ -644,10 +644,7 @@ $.i18n().load( {
 											"data-userTypeID")),
 								}
 
-								console.log("request --->"
-										+ JSON.stringify(request));
-								$
-										.ajax({
+								$.ajax({
 											url : './get/tags-mapping',
 											type : 'POST',
 											data : JSON.stringify(request),
@@ -656,7 +653,7 @@ $.i18n().load( {
 											success : function(data,
 													textStatus, jqXHR) {
 
-												console.log(data);
+												//console.log(data);
 
 												for (i = 0; i < data.length; i++) {
 													var optionId = id - 1;
@@ -682,7 +679,7 @@ $.i18n().load( {
 											},
 											error : function(jqXHR, textStatus,
 													errorThrown) {
-												console.log("error in ajax")
+												//console.log("error in ajax")
 											}
 										});
 
@@ -724,7 +721,6 @@ $.i18n().load( {
 									"data-userTypeID")),
 						}
 
-						console.log("request --->" + JSON.stringify(request));
 						$.ajax({
 							url : './get/tags-mapping',
 							type : 'POST',
@@ -749,7 +745,7 @@ $.i18n().load( {
 
 							},
 							error : function(jqXHR, textStatus, errorThrown) {
-								console.log("error in ajax")
+								//console.log("error in ajax")
 							}
 						});
 

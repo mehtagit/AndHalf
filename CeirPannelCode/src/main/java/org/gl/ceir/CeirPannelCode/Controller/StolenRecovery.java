@@ -16,7 +16,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
+import org.gl.ceir.CeirPannelCode.Feignclient.GrievanceFeignClient;
 import org.gl.ceir.CeirPannelCode.Model.AddMoreFileModel;
+import org.gl.ceir.CeirPannelCode.Model.FileCopyToOtherServer;
 import org.gl.ceir.CeirPannelCode.Model.FileExportResponse;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest_UserPaidStatus;
@@ -60,6 +62,13 @@ public class StolenRecovery {
 	
 	@Autowired
 	AddMoreFileModel addMoreFileModel,urlToUpload,urlToMove;
+	
+
+	@Value ("${serverId}")
+	Integer serverId;
+	
+	@Autowired
+	GrievanceFeignClient grievanceFeignClient;
 	
 	
 	
@@ -289,7 +298,7 @@ public class StolenRecovery {
 {	
 				  StolenRecoveryModel stolenRecoveryModel= new StolenRecoveryModel();
 				  GenricResponse response = new GenricResponse();
-				  addMoreFileModel.setTag("system_upload_filepath");
+				    addMoreFileModel.setTag("system_upload_filepath");
 					urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
 					
 					addMoreFileModel.setTag("uploaded_file_move_path");
@@ -304,9 +313,17 @@ public class StolenRecovery {
 				  		if(file==null) {
 				  			stolenRecoveryModel.setFileName(fileName);
 				  		}{			
-				  			
+				  			FileCopyToOtherServer fileCopyRequest= new FileCopyToOtherServer();
 				  			log.info("file is not null");
-				  		String rootPath = urlToUpload.getValue()+txnId+"/";
+				  			fileCopyRequest.setFilePath(urlToUpload.getValue());
+				  			fileCopyRequest.setTxnId(txnId);
+				  			fileCopyRequest.setFileName(file.getOriginalFilename());
+				  			fileCopyRequest.setServerId(serverId);
+				  			log.info("request passed to move file to other server=="+fileCopyRequest);
+				  			GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
+				  			log.info("file move api response==="+fileRespnose);
+				  		    
+				  			String rootPath = urlToUpload.getValue()+txnId+"/";
 				  		File tmpDir = new File(rootPath+file.getOriginalFilename());
 				  		boolean exists = tmpDir.exists();
 

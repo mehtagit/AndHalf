@@ -1059,34 +1059,34 @@ public class IconsState {
 	public String dashboardIcon(String userStatus,Integer featureID,String txnID,Integer userID,String roleType) {
 		executePostConstruct();
 		// URL link
-		String viewAction = featureID == 3 ?"./Consignment/viewConsignment?source=noti&txnID="+txnID+"" :
-			featureID == 4 ? "./assignDistributor?txnID="+txnID+"&userTypeId="+roleType+"&source=noti":
-				featureID == 0 ? "./stolenRecovery?txnID="+txnID+"" :
-					featureID == 6 ? "./grievanceManagement?txnID="+txnID+"" :
-						featureID == 7 ? "./stolenRecovery?txnID="+txnID+"" :
-							featureID == 8 ? "./registrationRequest?txnID="+txnID+"" :
-								featureID == 11 ? "./manageTypeDevices?txnID="+txnID+"":
-									featureID == 12 ? "./uploadPaidStatus?via=other&txnID="+txnID+"" :
-										featureID == 21 ? "./manageTypeDevices2?txnID="+txnID+"" :
-											featureID == 43 ? "./updateVisa?txnID="+txnID+"" :
-											"JavaScript:void(0);";
+		String viewAction = featureID == 3 ?"./viewConsignment?source=noti&txnID="+txnID+"" :
+		featureID == 4 ? "./assignDistributor?txnID="+txnID+"&userTypeId="+roleType+"&source=noti":
+		featureID == 0 ? "./stolenRecovery?txnID="+txnID+"&source=noti" :
+		featureID == 6 ? "./grievanceManagement?txnID="+txnID+"&source=noti" :
+		featureID == 7 ? "./stolenRecovery?txnID="+txnID+"&source=noti" :
+		featureID == 8 ? "./registrationRequest?txnID="+txnID+"&source=noti" :
+		featureID == 11 ? "./manageTypeDevices?txnID="+txnID+"&source=noti":
+		featureID == 12 ? "./uploadPaidStatus?via=other&txnID="+txnID+"&source=noti" :
+		featureID == 21 ? "./manageTypeDevices2?txnID="+txnID+"&source=noti" :
+		featureID == 43 ? "./updateVisa?txnID="+txnID+"&source=noti" :
+		"JavaScript:void(0);";
 		//System.out.println("featureID::::::::::"+featureID);
 		// state related Code
 		String view=null;
 		String functionName="isActive("+featureID+")";
-		if(featureID == 3 || featureID == 4 || featureID == 6 || featureID == 7 || featureID == 21 || featureID == 43 || featureID == 12 ||featureID == 5  ) {
-			view="<a href="+viewAction+" onclick="+functionName+"><i class="+viewIcon+" aria-hidden=\"true\" title="
-					+viewIconTitle+" ></i></a>";
+		if(featureID == 3 || featureID == 4 || featureID == 6 || featureID == 7 || featureID == 21 || featureID == 43 || featureID == 12 ||featureID == 5 ) {
+		view="<a href="+viewAction+" onclick="+functionName+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+		+viewIconTitle+" ></i></a>";
 		}
 		else {
 
-			view="<a href="+viewAction+" onclick="+functionName+" class="+disableIconClass+"><i class="+disableViewIcon+" aria-hidden=\"true\" title="
-					+viewIconTitle+" ></i></a>";
+		view="<a href="+viewAction+" onclick="+functionName+" class="+disableIconClass+"><i class="+disableViewIcon+" aria-hidden=\"true\" title="
+		+viewIconTitle+" ></i></a>";
 		}
 		String action=view;
 		return action;
 
-	}
+		}
 
 	/********************************** Icons for TRC Manage Type Datatable **********************************/ 
 
@@ -2951,9 +2951,9 @@ public class IconsState {
 			approve = "<a onclick="+approveAction+" class=\"eventNone\"><i class="+disableApproveIcon+" aria-hidden=\"true\" title="
 					+approveIconTitle+" ></i></a>";
 		}
-		if("3".equals(status) && "Approved".equals(userStatus)){
+		else if("3".equals(status) && "Approved".equals(userStatus)){
 
-			  history="<a onclick="+historyAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+historyIcon+" aria-hidden=\"true\"  title="
+			 history="<a onclick="+historyAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+historyIcon+" aria-hidden=\"true\"  title="
 						+historyTitle+"></i></a>";
 
 			 view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="

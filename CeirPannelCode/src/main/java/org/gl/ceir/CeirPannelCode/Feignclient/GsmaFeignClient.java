@@ -35,9 +35,13 @@ public interface GsmaFeignClient {
 	//--------------------------------- Gsma Details ---------------------------------
 		
 		@PostMapping("/gsma/GsmaValues")	
-		public @ResponseBody GsmaDetail viewGsmaFeign(@RequestParam(name = "msisdn", required = false) Long msisdn,
-				@RequestParam(name = "imei", required = false) Long imei,
+		public @ResponseBody GsmaDetail viewGsmaFeign(@RequestParam(name = "msisdn", required = false) String msisdn,
+				@RequestParam(name = "imei", required = false) String imei,
 				@RequestParam(name = "identifierType", required = false) String identifierType);
 	
 	
+		
+		@RequestMapping(value="/Rule/DistinctName" ,method=RequestMethod.GET) 
+		public List<String> getFeatureName();
+		
 }

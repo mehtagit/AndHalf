@@ -52,7 +52,7 @@ function configManagementDatatable(){
 					dataType: "json",
 					data : function(d) {
 						d.filter = JSON.stringify(filterRequest); 
-						console.log(JSON.stringify(filterRequest));
+						//console.log(JSON.stringify(filterRequest));
 					}
 
 				},
@@ -78,7 +78,7 @@ function configManagementDatatable(){
 			
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			console.log("error in ajax");
+			//console.log("error in ajax");
 		}
 	});
 }
@@ -202,11 +202,11 @@ function viewDetails(tag){
 		contentType : 'application/json; charset=utf-8',
 		type : 'POST',
 		success : function(data) {
-			console.log(data);
+			//console.log(data);
 			setViewPopupData(data);
 		},
 		error : function() {
-			alert("Failed");
+			//alert("Failed");
 		}
 	});
 }
@@ -245,11 +245,11 @@ function updateDetails(tag,status){
 		contentType : 'application/json; charset=utf-8',
 		type : 'POST',
 		success : function(data) {
-			console.log(data);
+			//console.log(data);
 			setEditPopupData(data);
 		},
 		error : function() {
-			alert("Failed");
+			//alert("Failed");
 		}
 	});
 }
@@ -295,7 +295,7 @@ function updatePolicy(){
 				"username" : $("body").attr("data-selected-username")
 	}
 	
-	console.log("updateRequest-->" +updateRequest);
+	//console.log("updateRequest-->" +updateRequest);
 	$.ajax({
 		url : "./policy/update",
 		data :	JSON.stringify(updateRequest),
@@ -303,12 +303,12 @@ function updatePolicy(){
 		contentType : 'application/json; charset=utf-8',
 		type : 'PUT',
 		success : function(data) {
-			console.log(data);
+			//console.log(data);
 			confirmModel()
 			/* window.location = "./policyManagement";*/
 		},
 		error : function() {
-			alert("Failed");
+			//alert("Failed");
 		}
 	});
 	

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Feignclient.GrievanceFeignClient;
 import org.gl.ceir.CeirPannelCode.Model.AddMoreFileModel;
+import org.gl.ceir.CeirPannelCode.Model.FileCopyToOtherServer;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.SingleImeiDetailsModel;
 import org.gl.ceir.CeirPannelCode.Model.StockUploadModel;
@@ -51,6 +52,11 @@ public class BlockUnblock {
 	
 	@Autowired
 	AddMoreFileModel addMoreFileModel,urlToUpload,urlToMove;
+	
+	@Value ("${serverId}")
+	Integer serverId;
+	
+	
 	
 	
 	private final Logger log = LoggerFactory.getLogger(getClass());
@@ -320,6 +326,14 @@ public class BlockUnblock {
 			
 			addMoreFileModel.setTag("system_upload_filepath");
 			urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
+			FileCopyToOtherServer fileCopyRequest= new FileCopyToOtherServer();
+			fileCopyRequest.setFilePath(urlToUpload.getValue());
+			fileCopyRequest.setTxnId(stlnTxnNumber);
+			fileCopyRequest.setFileName(file.getOriginalFilename());
+			fileCopyRequest.setServerId(serverId);
+			log.info("request passed to move file to other server=="+fileCopyRequest);
+			GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
+			log.info("file move api response==="+fileRespnose);
 			
 			//int operatorTypeId= (int) session.getAttribute("operatorTypeId"); 
 			// Integer operatorTypeId= (Integer) session.getAttribute("operatorTypeId"); 

@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Feignclient.GrievanceFeignClient;
 import org.gl.ceir.CeirPannelCode.Model.AddMoreFileModel;
+import org.gl.ceir.CeirPannelCode.Model.FileCopyToOtherServer;
 import org.gl.ceir.CeirPannelCode.Model.FileExportResponse;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
@@ -56,6 +57,8 @@ public class GrievanceController {
 	@Autowired
 	AddMoreFileModel addMoreFileModel,urlToUpload;
 	
+	@Value ("${serverId}")
+	Integer serverId;
 	
 	
 	GrievanceModel grievance= new GrievanceModel();
@@ -105,6 +108,7 @@ public class GrievanceController {
 		urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
 		
 		GrievanceModel grievanceRequest  = gson.fromJson(grievanceDetails, GrievanceModel.class);
+		FileCopyToOtherServer fileCopyRequest= new FileCopyToOtherServer();
 		//grievanceRequest.setUserId(userId);
 		//grievanceRequest.setUserType(roletype);
 		grievanceRequest.setGrievanceId(grevnceId);
@@ -126,6 +130,7 @@ public class GrievanceController {
 			
 
 			try {
+				
 				byte[] bytes =
 						file.getBytes(); String rootPath = urlToUpload.getValue()+grevnceId+"/"+tagName+"/"; 
 						File dir =   new File(rootPath + File.separator);
@@ -133,7 +138,16 @@ public class GrievanceController {
 						File serverFile = new File(rootPath+file.getOriginalFilename());
 						log.info("uploaded file path on server" + serverFile); BufferedOutputStream
 						stream = new BufferedOutputStream(new FileOutputStream(serverFile));
-						stream.write(bytes); stream.close(); 
+						stream.write(bytes); stream.close();
+						
+						fileCopyRequest.setFilePath(rootPath);
+						fileCopyRequest.setTxnId(grevnceId);
+						fileCopyRequest.setFileName(file.getOriginalFilename());
+						fileCopyRequest.setServerId(serverId);
+						log.info("request passed to move file to other server=="+fileCopyRequest);
+						GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
+						log.info("file move api response==="+fileRespnose);
+						
 						//  grievanceRequest.setFileName(file.getOriginalFilename());
 
 			}
@@ -219,7 +233,8 @@ public class GrievanceController {
 		/*
 		 * String roletype=(String) session.getAttribute("usertype");
 		 * log.info("+ roletype="+roletype);
-		 */ 
+		 */ 	
+					FileCopyToOtherServer fileCopyRequest= new FileCopyToOtherServer();
 					addMoreFileModel.setTag("system_upload_filepath");
 					urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
 				    String grievanceDetails=request.getParameter("multirequest");
@@ -237,6 +252,7 @@ public class GrievanceController {
 							grievanceRequest.getAttachedFiles().get(i).setFileName("");
 						}
 						else {
+							
 						byte[] bytes = file.getBytes();
 						String rootPath = urlToUpload.getValue()+grievanceRequest.getGrievanceId()+"/"+tagName+"/";
 						File dir = new File(rootPath + File.separator);
@@ -251,6 +267,14 @@ public class GrievanceController {
 						BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
 						stream.write(bytes);
 						stream.close();
+						
+						fileCopyRequest.setFilePath(rootPath);
+						fileCopyRequest.setTxnId(grievanceRequest.getGrievanceId());
+						fileCopyRequest.setFileName(file.getOriginalFilename());
+						fileCopyRequest.setServerId(serverId);
+						log.info("request passed to move file to other server=="+fileCopyRequest);
+						GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
+						log.info("file move api response==="+fileRespnose);
 						}
 						
 						
@@ -292,6 +316,7 @@ public class GrievanceController {
 							Gson gson= new Gson(); 	
 							GrievanceModel grievanceRequest  = gson.fromJson(grievanceDetails, GrievanceModel.class);
 							//grievanceRequest.setUserId(userId);
+							FileCopyToOtherServer fileCopyRequest= new FileCopyToOtherServer();
 							addMoreFileModel.setTag("system_upload_filepath");
 							urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
 							grievanceRequest.setUserType(roletype);
@@ -304,6 +329,9 @@ public class GrievanceController {
 									grievanceRequest.getAttachedFiles().get(i).setFileName("");
 								}
 								else {
+									
+									
+								
 								byte[] bytes = file.getBytes();
 								String rootPath = urlToUpload.getValue()+grievanceRequest.getGrievanceId()+"/"+tagName+"/";
 								File dir = new File(rootPath + File.separator);
@@ -318,6 +346,14 @@ public class GrievanceController {
 								BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
 								stream.write(bytes);
 								stream.close();
+								
+								fileCopyRequest.setFilePath(rootPath);
+								fileCopyRequest.setTxnId(grievanceRequest.getGrievanceId());
+								fileCopyRequest.setFileName(file.getOriginalFilename());
+								fileCopyRequest.setServerId(serverId);
+								log.info("request passed to move file to other server=="+fileCopyRequest);
+								GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
+								log.info("file move api response==="+fileRespnose);
 								}
 								
 								
@@ -401,6 +437,7 @@ public class GrievanceController {
 						addMoreFileModel.setTag("system_upload_filepath");
 						urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
 						GrievanceModel grievanceRequest  = gson.fromJson(grievanceDetails, GrievanceModel.class);
+						FileCopyToOtherServer fileCopyRequest= new FileCopyToOtherServer();
 						//grievanceRequest.setUserId(userId);
 						grievanceRequest.setUserType("End User");
 						grievanceRequest.setGrievanceId(grevnceId);
@@ -422,6 +459,7 @@ public class GrievanceController {
 							
 
 							try {
+								
 								byte[] bytes =
 										file.getBytes(); String rootPath = urlToUpload.getValue()+grevnceId+"/"+tagName+"/"; 
 										File dir =   new File(rootPath + File.separator);
@@ -430,6 +468,14 @@ public class GrievanceController {
 										log.info("uploaded file path on server" + serverFile); BufferedOutputStream
 										stream = new BufferedOutputStream(new FileOutputStream(serverFile));
 										stream.write(bytes); stream.close(); 
+										
+										fileCopyRequest.setFilePath(rootPath);
+										fileCopyRequest.setTxnId(grevnceId);
+										fileCopyRequest.setFileName(file.getOriginalFilename());
+										fileCopyRequest.setServerId(serverId);
+										log.info("request passed to move file to other server=="+fileCopyRequest);
+										GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
+										log.info("file move api response==="+fileRespnose);
 										//  grievanceRequest.setFileName(file.getOriginalFilename());
 
 							}

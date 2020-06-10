@@ -57,8 +57,8 @@ function DeviceDetails(){
 
 function setvalidData(response){
 
-	$("#validTac").val(response.data.tacNumber);
-	$("#validbrandName").val(response.data.brandName);
+	$("#validTac").val(response.data.deviceId);
+	$("#validbrandName").val(response.data.bandName);
 	$("#validModelName").val(response.data.modelName);
 
 }
@@ -68,8 +68,8 @@ function setInvalidData(response){
 	/*$.i18n('validationIMEI')*/
 	$('#checkDevicesMsg').text($.i18n(response.tag));	
 	//$("#InvalidImeiNumber").text(response.data.imei)
-	$("#invalidTac").val(response.tacNumber);
-	$("#invalidRemark").val(response.brandName);
+	$("#invalidTac").val(response.deviceId);
+	$("#invalidRemark").val($.i18n(response.tag));
 
 
 }

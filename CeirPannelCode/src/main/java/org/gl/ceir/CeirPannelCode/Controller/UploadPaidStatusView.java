@@ -12,12 +12,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
+import org.gl.ceir.CeirPannelCode.Feignclient.GrievanceFeignClient;
 import org.gl.ceir.CeirPannelCode.Feignclient.ImmigrationFeignImpl;
 import org.gl.ceir.CeirPannelCode.Feignclient.UploadPaidStatusFeignClient;
 import org.gl.ceir.CeirPannelCode.Feignclient.UserPaidStatusFeignClient;
 import org.gl.ceir.CeirPannelCode.Model.AddMoreFileModel;
 import org.gl.ceir.CeirPannelCode.Model.AllRequest;
 import org.gl.ceir.CeirPannelCode.Model.EndUserVisaInfo;
+import org.gl.ceir.CeirPannelCode.Model.FileCopyToOtherServer;
 import org.gl.ceir.CeirPannelCode.Model.FileExportResponse;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest_UserPaidStatus;
@@ -80,16 +82,23 @@ AddMoreFileModel addMoreFileModel,urlToUpload,urlToMove;
 FeignCleintImplementation feignCleintImplementation;
 
 
+@Value ("${serverId}")
+Integer serverId;
+@Autowired
+GrievanceFeignClient grievanceFeignClient;
+
 	@GetMapping("uploadPaidStatus")
 	public ModelAndView pageView(@RequestParam(name="via", required = false) String via,@RequestParam(name="NID", required = false) String NID,HttpSession session
-			,@RequestParam(name="txnID",required = false) String txnID) {
+			,@RequestParam(name="txnID",required = false) String txnID,@RequestParam(name="source",defaultValue ="menu" ,required = false) String source) {
 		ModelAndView modelAndView = new ModelAndView();
 		try {
 		if((session.getAttribute("usertype").equals("CEIRAdmin") || session.getAttribute("usertype").equals("DRT")) && !("other".equals(via))) {
+			session.setAttribute("filterSource", source);
 			modelAndView.setViewName("uploadPaidStatus");
 			
 		}
 		else if("other".equals(via)) {
+			session.setAttribute("filterSource", source);
 			modelAndView.setViewName("uploadPaidStatus");
 		
 		}
@@ -192,7 +201,15 @@ FeignCleintImplementation feignCleintImplementation;
 		log.info("*********"+filter);
 		addMoreFileModel.setTag("system_upload_filepath");
 		urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
-
+		
+		FileCopyToOtherServer fileCopyRequest= new FileCopyToOtherServer();
+		fileCopyRequest.setFilePath(urlToUpload.getValue());
+		fileCopyRequest.setTxnId(txnNumber);
+		fileCopyRequest.setFileName(file.getOriginalFilename());
+		fileCopyRequest.setServerId(serverId);
+		log.info("request passed to move file to other server=="+fileCopyRequest);
+		GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
+		log.info("file move api response==="+fileRespnose);
 
 		Register_UploadPaidStatus regularizeDeviceDbs  = gson.fromJson(filter, Register_UploadPaidStatus.class);
 		regularizeDeviceDbs.setNationality("Cambodian");
@@ -275,7 +292,7 @@ FeignCleintImplementation feignCleintImplementation;
 		filterRequestuserpaidStatus.setFeatureId(12);
 		filterRequestuserpaidStatus.setUserType(userType);
 		log.info(" request passed to the exportTo Excel Api =="+filterRequestuserpaidStatus+" *********** pageSize"+pageSize+"  pageNo  "+pageNo);
-		Object response = userPaidStatusFeignClient.consignmentFilter(filterRequestuserpaidStatus, pageNo, pageSize, file);
+		Object response = userPaidStatusFeignClient.consignmentFilter(filterRequestuserpaidStatus, pageNo, pageSize, file,"filter");
 		Gson gson= new Gson(); 
 		String apiResponse = gson.toJson(response);
 		fileExportResponse = gson.fromJson(apiResponse, FileExportResponse.class);
@@ -446,6 +463,14 @@ FeignCleintImplementation feignCleintImplementation;
 		}
 		else {
 			try {
+				FileCopyToOtherServer fileCopyRequest= new FileCopyToOtherServer();
+				 fileCopyRequest.setFilePath(urlToUpload.getValue());
+					fileCopyRequest.setTxnId(txnNumber);
+					fileCopyRequest.setFileName(passportImage.getOriginalFilename());
+					fileCopyRequest.setServerId(serverId);
+					log.info("request passed to move file to other server=="+fileCopyRequest);
+					GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
+					log.info("file move api response==="+fileRespnose);
 				byte[] bytes = passportImage.getBytes();
 			String rootPath =urlToUpload.getValue()+txnNumber+"/"; 
 			File dir = new File(rootPath + File.separator);
@@ -550,10 +575,11 @@ stream.close();
 		  
 		  addMoreFileModel.setTag("system_upload_filepath");
 			urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
-		  
+			
+			
 		  EndUserVisaInfo endUservisaInfo = gson.fromJson(filter,  EndUserVisaInfo.class);
-	
-		  List<VisaDb> visaDbaaa= endUservisaInfo.getVisaDb();
+          FileCopyToOtherServer fileCopyRequest= new FileCopyToOtherServer();
+		
 		  if(endUservisaInfo.getNationality().equals(""))
 		  {
 			  log.info("nationality......");
@@ -587,6 +613,14 @@ stream.close();
 				byte[] bytes = uploadnationalID.getBytes();
 			String rootPath =urlToUpload.getValue()+txnNumber+"/"+docType+"/"; 
 			File dir = new File(rootPath + File.separator);
+			
+			fileCopyRequest.setFilePath(urlToUpload.getValue());
+			fileCopyRequest.setTxnId(txnNumber);
+			fileCopyRequest.setFileName(uploadnationalID.getOriginalFilename());
+			fileCopyRequest.setServerId(serverId);
+			log.info("request passed to move file to other server=="+fileCopyRequest);
+			GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
+			log.info("file move api response==="+fileRespnose);
 
 			if (!dir.exists()) dir.mkdirs();
 			// Create the file on server 
@@ -607,7 +641,13 @@ stream.close();
 		  log.info(" upload status  entry point.");
 		  if(endUserDepartmentFile!=null) { 
 			  log.info("department  Image is not blank");
-		  
+			  fileCopyRequest.setFilePath(urlToUpload.getValue());
+				fileCopyRequest.setTxnId(txnNumber);
+				fileCopyRequest.setFileName(endUserDepartmentFile.getOriginalFilename());
+				fileCopyRequest.setServerId(serverId);
+				log.info("request passed to move file to other server=="+fileCopyRequest);
+				GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
+				log.info("file move api response==="+fileRespnose);
 		  try {
 			  byte[] bytes = endUserDepartmentFile.getBytes(); 
 			  String rootPath  =urlToUpload.getValue()+txnNumber+"/";
@@ -632,6 +672,13 @@ stream.close();
 			  try { byte[] bytes = visaImage.getBytes(); String rootPath
 			  =urlToUpload.getValue()+txnNumber+"/"; File dir = new File(rootPath +
 			  File.separator);
+			  fileCopyRequest.setFilePath(urlToUpload.getValue());
+				fileCopyRequest.setTxnId(txnNumber);
+				fileCopyRequest.setFileName(visaImage.getOriginalFilename());
+				fileCopyRequest.setServerId(serverId);
+				log.info("request passed to move file to other server=="+fileCopyRequest);
+				GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
+				log.info("file move api response==="+fileRespnose);
 			  
 			  if (!dir.exists()) dir.mkdirs(); // Create the file on server 
 			  File serverFile = new File(rootPath+visaImage.getOriginalFilename());
@@ -765,19 +812,24 @@ public ModelAndView viewDeviceInformation(@RequestParam(name="viewbyImei",requir
 
 @PostMapping("approveVisaUpdateRequest") 
 public @ResponseBody GenricResponse approveVisaUpdateRequest (@RequestBody FilterRequest_UserPaidStatus filterRequestuserpaidStatus,HttpSession session)  {
-	log.info("request send to the approveReject visa  api="+filterRequestuserpaidStatus);
-	GenricResponse response= uploadPaidStatusFeignClient.updateVisaRequest(filterRequestuserpaidStatus);
-	AllRequest request=new AllRequest();
+	
+	
 	String roleType=String.valueOf(session.getAttribute("usertype"));
 	String userName=session.getAttribute("username").toString();
 	int userId= (int) session.getAttribute("userid");  
 	int userTypeId =(int) session.getAttribute("usertypeId");
-	request.setFeatureId(43);
-	request.setUserType(roleType);
-	request.setUserId(userId);
-	request.setUserTypeId(userTypeId);
-	request.setUsername(userName);
-	
+		/*
+		 * request.setFeatureId(43); request.setUserType(roleType);
+		 * request.setUserId(userId); request.setUserTypeId(userTypeId);
+		 * request.setUsername(userName);
+		 */
+	filterRequestuserpaidStatus.setUserType(roleType);
+	filterRequestuserpaidStatus.setUsername(userName);
+	filterRequestuserpaidStatus.setUserId(userId);
+	filterRequestuserpaidStatus.setUserTypeId(userTypeId);
+	filterRequestuserpaidStatus.setFeatureId(43);
+	log.info("request send to the approveReject visa  api="+filterRequestuserpaidStatus);
+	GenricResponse response= uploadPaidStatusFeignClient.updateVisaRequest(filterRequestuserpaidStatus);
 	log.info("response from approveReject visa "+response);
 	return response;
 
@@ -798,7 +850,7 @@ public ModelAndView viewVisaInformationView(@PathVariable("visaId") Integer visa
 	filter.setUserId(userId);
 	filter.setFeatureId(43);
 	filter.setUsername(userName);
-	
+	filter.setUserName(userName);
 	log.info("request passed to the view visa details .."+filter);
 	UpdateVisaModel content= uploadPaidStatusFeignClient.viewVisaDetails(filter);
 	log.info(" reponse from view visa details api. =="+content);

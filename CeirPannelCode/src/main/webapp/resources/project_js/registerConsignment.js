@@ -3,8 +3,8 @@ var langParam=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 $.i18n().locale = langParam;
 var successMsg;
 $.i18n().load( {
-	'en': '../resources/i18n/en.json',
-	'km': '../resources/i18n/km.json'
+	'en': './resources/i18n/en.json',
+	'km': './resources/i18n/km.json'
 } ).done( function() { 
 	successMsg=$.i18n('successMsg');
 });
@@ -41,7 +41,7 @@ function registerConsignment() {
 	formData.append('deviceQuantity', parseInt($('#deviceQuantity').val()));	
 	formData.append('roleType', $("body").attr("data-roleType"));
 	$.ajax({
-		url : '../Consignment/registerConsignment',
+		url : './registerConsignment',
 		type : 'POST',
 		data : formData,
 		processData : false,
@@ -156,14 +156,14 @@ function closeConfirmation() {
 populateCountries("country");
 
 $(document).ready(function() {
-	$.getJSON('../getDropdownList/CURRENCY', function(data) {
+	$.getJSON('./getDropdownList/CURRENCY', function(data) {
 		/ $("#expectedArrivalPort").empty(); /
 		for (i = 0; i < data.length; i++) {
 			$('<option>').val(data[i].value).text(data[i].interp).appendTo('#currency');
 		}
 	});
 
-	$.getJSON('../getDropdownList/CUSTOMS_PORT', function(data) {
+	$.getJSON('./getDropdownList/CUSTOMS_PORT', function(data) {
 		/* $("#expectedArrivalPort").empty(); */
 		for (i = 0; i < data.length; i++) {
 			$('<option>').val(data[i].value).text(data[i].interp)
@@ -221,7 +221,7 @@ function getByPort(port) {
 	$
 			.ajax({
 				type : 'GET',
-				url : '../byArrivalPort/' + port,
+				url : './byArrivalPort/' + port,
 				contentType : "application/json",
 				dataType : 'html',
 				async : false,

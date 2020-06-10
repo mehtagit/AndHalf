@@ -439,6 +439,14 @@
 			</div>
 		</div>
 	</div>
+	
+	<div class="modal" id="error_Modal_reg" role="dialog">
+		<div class="modal-dialog">
+			<div class="row" id="modalMessageBodyReg"
+					style="text-align: center;"></div>
+			
+		</div>
+	</div>
 <!--materialize js-->
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
@@ -513,6 +521,8 @@
 		src="${context}/resources/project_js/_dateFunction.js" async></script>
 			<script type="text/javascript"
 		src="${context}/resources/project_js/profileInfoTab.js" async></script>
+	<script type="text/javascript"
+		src="${context}/resources/project_js/ValidationFileOutsidePortal.js"></script>	
 </body>
 </html>
 <%

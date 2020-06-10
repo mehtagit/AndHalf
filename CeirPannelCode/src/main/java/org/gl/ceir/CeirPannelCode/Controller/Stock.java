@@ -14,9 +14,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
+import org.gl.ceir.CeirPannelCode.Feignclient.GrievanceFeignClient;
 import org.gl.ceir.CeirPannelCode.Feignclient.UserProfileFeignImpl;
 import org.gl.ceir.CeirPannelCode.Model.AddMoreFileModel;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentUpdateRequest;
+import org.gl.ceir.CeirPannelCode.Model.FileCopyToOtherServer;
 import org.gl.ceir.CeirPannelCode.Model.FileExportResponse;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
@@ -60,6 +62,10 @@ public class Stock {
 	@Autowired
 	AddMoreFileModel addMoreFileModel,urlToUpload,urlToMove;
 	
+	@Value ("${serverId}")
+	Integer serverId;
+	@Autowired
+	GrievanceFeignClient grievanceFeignClient;
 	
 	@RequestMapping(value={"/assignDistributor"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST})
 	public ModelAndView  viewStock( HttpSession session , @RequestParam(name="userTypeId",required=false) String selectedUserTypeId,@RequestParam(name="selectedRoleTypeId",required=false) Integer selectedRoleTypeId 
@@ -166,6 +172,14 @@ catch (Exception e) {
 		urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
 		String txnNumner=utildownload.getTxnId();
 		txnNumner = "S"+txnNumner;
+		FileCopyToOtherServer fileCopyRequest= new FileCopyToOtherServer();
+		fileCopyRequest.setFilePath(urlToUpload.getValue());
+		fileCopyRequest.setTxnId(txnNumner);
+		fileCopyRequest.setFileName(file.getOriginalFilename());
+		fileCopyRequest.setServerId(serverId);
+		log.info("request passed to move file to other server=="+fileCopyRequest);
+		GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
+		log.info("file move api response==="+fileRespnose);
 		log.info("Random  genrated transaction number ="+txnNumner);
 
 		StockUploadModel stockUpload= new StockUploadModel();
@@ -290,9 +304,11 @@ catch (Exception e) {
 	StockUploadModel stockUpload= new StockUploadModel();
 	addMoreFileModel.setTag("system_upload_filepath");
 	urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
-
+	FileCopyToOtherServer fileCopyRequest= new FileCopyToOtherServer();
 	addMoreFileModel.setTag("uploaded_file_move_path");
 	urlToMove=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
+	
+
 	
 	String movedFileTime = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
 	log.info("Moved File Time value=="+movedFileTime);
@@ -319,8 +335,15 @@ catch (Exception e) {
 	}
 	else {
 	
-	try {
+	try {	
 		log.info("file is not blank");
+		fileCopyRequest.setFilePath(urlToUpload.getValue());
+		fileCopyRequest.setTxnId(txnId);
+		fileCopyRequest.setFileName(filename);
+		fileCopyRequest.setServerId(serverId);
+		log.info("request passed to move file to other server=="+fileCopyRequest);
+		GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
+		log.info("file move api response==="+fileRespnose);
 	String rootPath = urlToUpload.getValue()+txnId+"/";
 	File tmpDir = new File(rootPath+file.getOriginalFilename());
 	boolean exists = tmpDir.exists();
@@ -469,7 +492,19 @@ catch (Exception e) {
 		log.info(" end user stock entry point.");
 		String txnNumber="S" + utildownload.getTxnId();
 		log.info("Random transaction id number="+txnNumber);
-
+		addMoreFileModel.setTag("system_upload_filepath");
+		urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
+		
+		
+		log.info("file is not blank");
+		FileCopyToOtherServer fileCopyRequest= new FileCopyToOtherServer();
+		fileCopyRequest.setFilePath(urlToUpload.getValue());
+		fileCopyRequest.setTxnId(txnNumber);
+		fileCopyRequest.setFileName(file.getOriginalFilename());
+		fileCopyRequest.setServerId(serverId);
+		log.info("request passed to move file to other server=="+fileCopyRequest);
+		GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
+		log.info("file move api response==="+fileRespnose);
 		
 		Gson gson= new Gson(); 
 
@@ -479,7 +514,7 @@ catch (Exception e) {
 		endUserStockModal.setFileName(file.getOriginalFilename());
 		endUserStockModal.setTxnId(txnNumber);
 		try { byte[] bytes = file.getBytes();
-		String rootPath =filePathforUploadFile+txnNumber+"/"; 
+		String rootPath =urlToUpload.getValue()+txnNumber+"/"; 
 		File dir = new File(rootPath + File.separator);
 
 		if (!dir.exists()) dir.mkdirs();
@@ -537,18 +572,32 @@ catch (Exception e) {
 
 		GenricResponse response= new GenricResponse();
 		stockUpload.setUserType("End User");
+		addMoreFileModel.setTag("system_upload_filepath");
+		urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
 		
+		addMoreFileModel.setTag("uploaded_file_move_path");
+		urlToMove=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
+		
+		log.info("file is not blank");
+		FileCopyToOtherServer fileCopyRequest= new FileCopyToOtherServer();
+		fileCopyRequest.setFilePath(urlToUpload.getValue());
+		fileCopyRequest.setTxnId(txnId);
+		fileCopyRequest.setFileName(file.getOriginalFilename());
+		fileCopyRequest.setServerId(serverId);
+		log.info("request passed to move file to other server=="+fileCopyRequest);
+		GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
+		log.info("file move api response==="+fileRespnose);
 		try {
 			log.info("file is not blank");
-		String rootPath = filePathforUploadFile+txnId+"/";
+		String rootPath = urlToUpload.getValue()+txnId+"/";
 		File tmpDir = new File(rootPath+file.getOriginalFilename());
 		boolean exists = tmpDir.exists();
 		if(exists) {
 		Path temp = Files.move 
-		(Paths.get(filePathforUploadFile+"/"+txnId+"/"+file.getOriginalFilename()), 
-		Paths.get(filePathforMoveFile+file.getOriginalFilename())); 
+		(Paths.get(urlToUpload.getValue()+"/"+txnId+"/"+file.getOriginalFilename()), 
+		Paths.get(urlToMove.getValue()+file.getOriginalFilename())); 
 
-		String movedPath=filePathforMoveFile+file.getOriginalFilename();
+		String movedPath=urlToMove.getValue()+file.getOriginalFilename();
 		// tmpDir.renameTo(new File("/home/ubuntu/apache-tomcat-9.0.4/webapps/MovedFile/"+txnId+"/"));
 		log.info("file is already exist moved to the this "+movedPath+" path");
 		tmpDir.delete();

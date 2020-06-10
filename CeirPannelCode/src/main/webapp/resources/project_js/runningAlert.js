@@ -226,7 +226,7 @@
 					
 					
 			}
-			console.log(JSON.stringify(filterRequest))
+			//console.log(JSON.stringify(filterRequest))
 			$.ajax({
 				url: './exportRunningAlertData',
 				type: 'POST',

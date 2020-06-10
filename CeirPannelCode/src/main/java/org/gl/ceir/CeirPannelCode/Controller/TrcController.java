@@ -12,8 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
+import org.gl.ceir.CeirPannelCode.Feignclient.GrievanceFeignClient;
 import org.gl.ceir.CeirPannelCode.Feignclient.TypeApprovedFeignImpl;
 import org.gl.ceir.CeirPannelCode.Model.AddMoreFileModel;
+import org.gl.ceir.CeirPannelCode.Model.FileCopyToOtherServer;
 import org.gl.ceir.CeirPannelCode.Model.FileExportResponse;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.GrievanceModel;
@@ -69,6 +71,11 @@ public class TrcController {
 	AddMoreFileModel addMoreFileModel,urlToUpload;
 	@Autowired
 	FeignCleintImplementation feignCleintImplementation;
+
+	@Value ("${serverId}")
+	Integer serverId;
+	@Autowired
+	GrievanceFeignClient grievanceFeignClient;
 	
 	@RequestMapping(value=
 		{"/manageTypeDevices"},method={org.springframework.web.bind.annotation.
@@ -109,8 +116,13 @@ public class TrcController {
 		log.info("Random transaction id number="+txnNumber);
 		request.getParameterValues("");
 		
+		
 		addMoreFileModel.setTag("system_upload_filepath");
 		urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
+		
+		
+		FileCopyToOtherServer fileCopyRequest= new FileCopyToOtherServer();
+		
 		
 		Gson gson= new Gson(); 
 		String trcDetails=request.getParameter("multirequest");
@@ -137,6 +149,10 @@ public class TrcController {
 			
 
 			try {
+				
+				
+				
+
 				byte[] bytes =
 						file.getBytes(); String rootPath = urlToUpload.getValue()+txnNumber+"/"+tagName+"/"; 
 						File dir =   new File(rootPath + File.separator);
@@ -146,6 +162,14 @@ public class TrcController {
 						stream = new BufferedOutputStream(new FileOutputStream(serverFile));
 						stream.write(bytes); stream.close(); 
 						//  grievanceRequest.setFileName(file.getOriginalFilename());
+						
+						fileCopyRequest.setFilePath(urlToUpload.getValue()+txnNumber+"/"+tagName+"/");
+						fileCopyRequest.setTxnId(txnNumber);
+						fileCopyRequest.setFileName(file.getOriginalFilename());
+						fileCopyRequest.setServerId(serverId);
+						log.info("request passed to move file to other server=="+fileCopyRequest);
+						GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
+						log.info("file move api response==="+fileRespnose);
 
 			}
 			catch (Exception e) { //
@@ -199,6 +223,7 @@ public class TrcController {
 		Gson gson= new Gson(); 
 		String trcDetails=request.getParameter("multirequest");
 		TRCRegisteration trcRequest = gson.fromJson(trcDetails, TRCRegisteration.class);
+		FileCopyToOtherServer fileCopyRequest= new FileCopyToOtherServer();
 		
 		int i=0;
 		for( MultipartFile file : fileUpload) {
@@ -209,6 +234,9 @@ public class TrcController {
 				trcRequest.getAttachedFiles().get(i).setFileName("");
 			}
 			else {
+				
+				
+				
 			byte[] bytes = file.getBytes();
 			String rootPath = urlToUpload.getValue()+trcRequest.getTxnId()+"/"+tagName+"/";
 			File dir = new File(rootPath + File.separator);
@@ -223,6 +251,13 @@ public class TrcController {
 			BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
 			stream.write(bytes);
 			stream.close();
+			fileCopyRequest.setFilePath(urlToUpload.getValue()+trcRequest.getTxnId()+"/"+tagName+"/");
+			fileCopyRequest.setTxnId(trcRequest.getTxnId());
+			fileCopyRequest.setFileName(file.getOriginalFilename());
+			fileCopyRequest.setServerId(serverId);
+			log.info("request passed to move file to other server=="+fileCopyRequest);
+			GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
+			log.info("file move api response==="+fileRespnose);
 			}
 			
 			

@@ -118,4 +118,12 @@ public class ProjectDropdownController {
 		return response;
 
 		}
+	
+	@ResponseBody
+	@GetMapping("Rule/DistinctName")
+	public List<String> getFeatureName() {
+		List<String> dropdown = gsmaFeignClient.getFeatureName();
+		return dropdown;
+	}
+	
 }
