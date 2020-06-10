@@ -27,7 +27,10 @@ function configManagementDatatable(){
 			"featureId":parseInt(featureId),
 			"userTypeId": parseInt($("body").attr("data-userTypeID")),
 			"userType":$("body").attr("data-roleType"),
-			"username" : $("body").attr("data-selected-username")
+			"username" : $("body").attr("data-selected-username"),
+			
+			"userName" : $("body").attr("data-selected-username"),
+			"roleType":$("body").attr("data-roleType")
 	}
 	 
 	
@@ -52,7 +55,7 @@ function configManagementDatatable(){
 					dataType: "json",
 					data : function(d) {
 						d.filter = JSON.stringify(filterRequest); 
-						console.log(JSON.stringify(filterRequest));
+						//console.log(JSON.stringify(filterRequest));
 					}
 
 				},
@@ -77,7 +80,7 @@ function configManagementDatatable(){
 		       });
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			console.log("error in ajax");
+			//console.log("error in ajax");
 		}
 	});
 	
@@ -178,7 +181,9 @@ function viewDetails(tag){
 			"featureId":parseInt(featureId),
 			"userTypeId": parseInt($("body").attr("data-userTypeID")),
 			"userType":$("body").attr("data-roleType"),
-			"username" : $("body").attr("data-selected-username")
+			"username" : $("body").attr("data-selected-username"),
+			"userName" : $("body").attr("data-selected-username"),
+			"roleType":$("body").attr("data-roleType")
 	} 
 	$.ajax({
 		url : "./system/viewTag",
@@ -187,11 +192,11 @@ function viewDetails(tag){
 		contentType : 'application/json; charset=utf-8',
 		type : 'POST',
 		success : function(data) {
-			console.log(data);
+			//console.log(data);
 			setViewPopupData(data);
 		},
 		error : function() {
-			alert("Failed");
+			//alert("Failed");
 		}
 	});
 }
@@ -215,7 +220,9 @@ function updateDetails(tag){
 			"featureId":parseInt(featureId),
 			"userTypeId": parseInt($("body").attr("data-userTypeID")),
 			"userType":$("body").attr("data-roleType"),
-			"username" : $("body").attr("data-selected-username")
+			"username" : $("body").attr("data-selected-username"),
+			"userName" : $("body").attr("data-selected-username"),
+			"roleType":$("body").attr("data-roleType")
 	} 
 	$.ajax({
 		url : "./system/viewTag",
@@ -224,11 +231,11 @@ function updateDetails(tag){
 		contentType : 'application/json; charset=utf-8',
 		type : 'POST',
 		success : function(data) {
-			console.log(data);
+			//console.log(data);
 			setEditPopupData(data);
 		},
 		error : function() {
-			alert("Failed");
+			//alert("Failed");
 		}
 	});
 }
@@ -255,7 +262,9 @@ var updateRequest = {
 		"featureId":parseInt(featureId),
 		"userTypeId": parseInt($("body").attr("data-userTypeID")),
 		"userType":$("body").attr("data-roleType"),
-		"username" : $("body").attr("data-selected-username")
+		"username" : $("body").attr("data-selected-username"),
+		"userName" : $("body").attr("data-selected-username"),
+		"roleType":$("body").attr("data-roleType")
 }
 
 
@@ -266,11 +275,11 @@ $.ajax({
 	contentType : 'application/json; charset=utf-8',
 	type : 'PUT',
 	success : function(data) {
-		console.log("updateRequest---------->" +JSON.stringify(updateRequest));
+		//console.log("updateRequest---------->" +JSON.stringify(updateRequest));
 		confirmModel()
 	},
 	error : function() {
-		alert("Failed");
+		//alert("Failed");
 	}
 });
 
@@ -305,10 +314,12 @@ function exportData(){
 			"userType":$("body").attr("data-roleType"),
 			"username" : $("body").attr("data-selected-username"),
 			"pageNo":parseInt(pageNo),
-			"pageSize":parseInt(pageSize)
+			"pageSize":parseInt(pageSize),
+			"userName" : $("body").attr("data-selected-username"),
+			"roleType":$("body").attr("data-roleType")
 			
 	}
-	console.log(JSON.stringify(filterRequest))
+	//console.log(JSON.stringify(filterRequest))
 	$.ajax({
 		url: './exportSystemConfigData',
 		type: 'POST',

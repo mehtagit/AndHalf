@@ -41,7 +41,7 @@ function auditManagementDatatable(){
 			
 	}
 	
-	console.log("filterRequest-->" +JSON.stringify(filterRequest));
+	//console.log("filterRequest-->" +JSON.stringify(filterRequest));
 	$.ajax({
 		url: 'headers?type=auditManagement',
 		type: 'POST',
@@ -62,7 +62,7 @@ function auditManagementDatatable(){
 					dataType: "json",
 					data : function(d) {
 						d.filter = JSON.stringify(filterRequest); 
-						console.log(JSON.stringify(filterRequest));
+					//	console.log(JSON.stringify(filterRequest));
 					}
 
 				},
@@ -88,7 +88,7 @@ function auditManagementDatatable(){
 			
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			console.log("error in ajax");
+			//console.log("error in ajax");
 		}
 	});
 }
@@ -218,7 +218,7 @@ function viewDetails(Id){
 			setViewPopupData(data);
 		},
 		error : function() {
-			alert("Failed");
+			//alert("Failed");
 		}
 	});
 }

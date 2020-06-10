@@ -12,10 +12,7 @@
 	
 	 long accessTime = session.getLastAccessedTime();
 	 long currentTime= new Date().getTime(); 
-	 System.out.println("accessTime========"+(accessTime));
-	 System.out.println("timeout========"+timeout);
 	 long dfd= accessTime +timeout;
-	 System.out.println("currentTime========"+currentTime);
 	 if( currentTime< dfd){
 	/*  response.setHeader("Refresh", timeout + "; URL = ../login");
 	 System.out.println("timeout========"+timeout); 
@@ -172,9 +169,9 @@
 		src="${context}/resources/project_js/enterKey.js"></script>
     <script>
     function StockController(selectedUserTypeRole,selectedRoleTypeId){
-    	console.log("selectedUserTypeRole=="+selectedUserTypeRole);
+    	//console.log("selectedUserTypeRole=="+selectedUserTypeRole);
     	var url="${context}/assignDistributor?userTypeId="+selectedUserTypeRole+"&selectedRoleTypeId="+selectedRoleTypeId;
-    	console.log(url);
+    	//console.log(url);
     	window.location.href=url;
    
     }   
