@@ -109,12 +109,16 @@ public class RuleEngineApplication {
             }
             
              if ("EXIST_IN_LAWFUL_DB".equalsIgnoreCase(args[0])) {
-                reslt = SAME_OPERATOR_UNBLOCK.executeRule(args, conn);
+                reslt = EXIST_IN_LAWFUL_DB.executeRule(args, conn);
             }
             
               if ("EXIST_IN_OPERATOR_DB".equalsIgnoreCase(args[0])) {
-                reslt = SAME_OPERATOR_UNBLOCK.executeRule(args, conn);
+                reslt = EXIST_IN_OPERATOR_DB.executeRule(args, conn);
             }
+                if ("EXISTS_IN_ALL_ACTIVE_DB".equalsIgnoreCase(args[0])) {
+                reslt = EXISTS_IN_ALL_ACTIVE_DB.executeRule(args, conn);
+            }
+            
             
             
             
@@ -221,14 +225,18 @@ public class RuleEngineApplication {
             }
 
             if ("EXIST_IN_LAWFUL_DB".equalsIgnoreCase(args[0])) {
-                reslt = SAME_OPERATOR_UNBLOCK.executeAction(args, conn ,bw);
+                reslt = EXIST_IN_LAWFUL_DB.executeAction(args, conn ,bw);
             }
             
               if ("EXIST_IN_OPERATOR_DB".equalsIgnoreCase(args[0])) {
-                reslt = SAME_OPERATOR_UNBLOCK.executeAction(args, conn, bw);
+                reslt = EXIST_IN_OPERATOR_DB.executeAction(args, conn, bw);
+            }
+            if ("EXISTS_IN_ALL_ACTIVE_DB".equalsIgnoreCase(args[0])) {
+                reslt = EXISTS_IN_ALL_ACTIVE_DB.executeAction(args, conn, bw);
             }
             
-            
+              
+              
             
         }
         
