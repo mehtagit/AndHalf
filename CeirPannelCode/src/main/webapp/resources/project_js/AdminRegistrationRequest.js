@@ -107,7 +107,7 @@
 			       });
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
-				console.log("error in ajax");
+				//console.log("error in ajax");
 			}
 		});
 	}
@@ -242,9 +242,9 @@
 		}
 		var today = now.getFullYear()+ '-' + (now.getMonth()+1)+ '-' +currentDate ;
 		//alert("today"+today);
-		console.log("dispatche="+dispatcDate);
-		console.log("todays parse date"+Date.parse(today));
-		console.log("dispatche parse date"+Date.parse(dispatcDate));
+		//console.log("dispatche="+dispatcDate);
+		//console.log("todays parse date"+Date.parse(today));
+		//console.log("dispatche parse date"+Date.parse(dispatcDate));
 
 
 		if(Date.parse(today)>Date.parse(dispatcDate))
@@ -270,9 +270,9 @@
 		}
 		var today = now.getFullYear()+ '-' + (now.getMonth()+1)+ '-' +currentDate ;
 		//alert("today"+today);
-		console.log("dispatche="+dispatcDate);
-		console.log("todays parse date"+Date.parse(today));
-		console.log("dispatche parse date"+Date.parse(dispatcDate));
+		//console.log("dispatche="+dispatcDate);
+		//console.log("todays parse date"+Date.parse(today));
+		//console.log("dispatche parse date"+Date.parse(dispatcDate));
 
 
 		if(Date.parse(today)>Date.parse(dispatcDate))
@@ -324,7 +324,7 @@
 			contentType : 'application/json; charset=utf-8',
 			type : 'POST',
 			success : function(data) {
-				console.log("approveRequest----->"+JSON.stringify(approveRequest));
+				//console.log("approveRequest----->"+JSON.stringify(approveRequest));
 				confirmApproveInformation(window.ID,window.date);
 			},
 			error : function() {
@@ -346,7 +346,7 @@
 		$('#rejectInformation').openModal({
 		 	   dismissible:false
 	    });
-		console.log("Reject userId is---->"+Id);
+		//console.log("Reject userId is---->"+Id);
 		$("#userId").text(Id)
 		$("#rejectUserName").val(sessionUserName);
 		
@@ -374,7 +374,7 @@
 			contentType : 'application/json; charset=utf-8',
 			type : 'POST',
 			success : function(data) {
-				console.log("rejectRequest----->"+JSON.stringify(rejectRequest));
+			   //console.log("rejectRequest----->"+JSON.stringify(rejectRequest));
 				confirmRejectInformation();
 			},
 			error : function() {
@@ -405,8 +405,8 @@
 		var info = table.page.info(); 
 		var pageNo=info.page;
 		var pageSize =info.length;
-		console.log("--------"+pageSize+"---------"+pageNo);
-		console.log("RegistrationStartDate  ="+startdate+"  RegistrationEndDate=="+endDate+"  asType="+asType+" userRoleTypeId ="+userRoleTypeId+"status  "+status+" featureId---->" +featureId)
+		//console.log("--------"+pageSize+"---------"+pageNo);
+		//console.log("RegistrationStartDate  ="+startdate+"  RegistrationEndDate=="+endDate+"  asType="+asType+" userRoleTypeId ="+userRoleTypeId+"status  "+status+" featureId---->" +featureId)
 		window.location.href="./exportAdminRegistration?RegistrationStartDate="+startdate+"&RegistrationEndDate="+endDate+"&asType="+asType+"&userRoleTypeId="+userRoleTypeId+"&featureId="+featureId+"&status="+status+"&pageSize="+pageSize+"&pageNo="+pageNo;
 	}
 
@@ -419,7 +419,7 @@
 		window.FinalLink = filePath.concat(fileName);
 		
 		if(filePath == null || filePath == "" || filePath == undefined && fileName == null || fileName == "" || fileName == undefined ){
-			console.log("File is not Avialable")
+			//console.log("File is not Avialable")
 		}else if(fileExtension=="jpg" || fileExtension=="jpeg" || fileExtension=="png" || fileExtension=="gif" ){
 			$("#fileSource").attr("src",FinalLink);
 			$("#viewuplodedModel").openModal();
@@ -429,14 +429,15 @@
 	}
 	
 
-function roleStatusChange(Id,sessionUserName, userTypeId){
+function roleStatusChange(Id,sessionUserName, userTypeId, tableId){
 		
 	    window.Id = Id,
 	    window.sessionUserName = sessionUserName,
 	    window.userTypeId = userTypeId, 
+	    window.tableId = tableId,
 	    
 	   
-	   usertypeData2(userTypeId);
+	   //usertypeData2(userTypeId);
 	    
 	    $("#statusRoleChange").openModal({
 		 	   dismissible:false
@@ -450,7 +451,7 @@ function roleStatusChange(Id,sessionUserName, userTypeId){
 	}
 	 	
 
-function usertypeData2(id) {
+/*function usertypeData2(id) {
 	$.ajax({
 		type : 'GET',
 		url :  './getTypeDropdownList/ROLE_TYPE/' + id,
@@ -477,7 +478,7 @@ function usertypeData2(id) {
 		error : function(xhr, ajaxOptions, thrownError) {
 		}
 	});
-}
+}*/
 
 
 
@@ -492,13 +493,71 @@ function userChangeStatus(entity){
 		    });
 	}
 }
+
+ function resetButtons(){
+	 $('input[name=group1]').attr('checked',false);
+	 $('input[name=group2]').attr('checked',false);
+ }
+	
+ $('#addDeleteRole').on(
+		 'change',
+		 function() {
+			 	var request = {
+							"action" : parseInt($('#addDeleteRole').val()),
+							"dataId" : parseInt(window.Id),
+							"featureId" : parseInt(featureId),
+							"userId" : parseInt(userId),
+							"userType" : $("body").attr("data-roleType"),
+							"userTypeId" : parseInt($("body").attr("data-userTypeID")),
+							"username" : $("body").attr("data-selected-username")
+						}
+			 		//console.log(JSON.stringify(request));	
+			 		$.ajax({
+							url : './getAddDeleteRoles',
+							type : 'POST',
+							data : JSON.stringify(request),
+							dataType : 'json',
+							contentType : 'application/json; charset=utf-8',
+							success : function(data, textStatus, jqXHR) {
+								if(data.errorCode == 200){
+								$.i18n().locale = lang;	
+								$.i18n().load( {
+									'en': './resources/i18n/en.json',
+									'km': './resources/i18n/km.json'
+								}).done( function() {
+									var result = data.data;
+									console.log("result---> " + JSON.stringify(result));
+									$("#usertypes").empty();
+									for (i = 0; i < result.length; i++) {
+										$('<option>').val(result[i].id).text(
+												result[i].usertypeName).appendTo(
+												'#usertypes');
+									}
+								});
+								}else{
+									$("#ErrorModel").openModal({
+									 	   dismissible:false
+								    });
+									$('#ErrorFieldMessage').text($.i18n(data.tag));
+								}
+								
+
+							},
+							error : function(jqXHR, textStatus, errorThrown) {
+								//console.log("error in ajax")
+							}
+						});
+		});
+
 	
  function chanegeUserStatus(changeType){
 	 	var action;
 	 	if (changeType == "status" ){
 	 		action = 0; 
-	 	}else{
+	 	}else if($('#addDeleteRole').val() == 1){
 	 		action = 1;
+	 	}else if($('#addDeleteRole').val() == 2){
+	 		action = 2;
 	 	}
 	 	//var fileData = [];
 	 	//var selectedRoleType = $('#usertypes').val();
@@ -511,16 +570,16 @@ function userChangeStatus(entity){
 				"action" : action,
 				"status" : parseInt(status),
 				"id": parseInt(window.Id),
-				"username" : window.sessionUserName,
+				"username" : $("body").attr("data-selected-username"),
 				"referenceId" : $("#refererenceId").val(),
 				"remark" : $("#changeStatusRemark").val(),
 				"userId" : parseInt(userId),
-				"roles"  : [parseInt(RoleType)],
+				"role"  : parseInt(RoleType),
 				"usertype": parseInt(window.userTypeId)
+	 		}
 				
-				
-		}
-		console.log("Request-->"+JSON.stringify(Request));
+		
+		//console.log("Request-->"+JSON.stringify(Request));
 		
 		$.ajax({
 			url : './adminChangeRequest',
@@ -529,10 +588,22 @@ function userChangeStatus(entity){
 			contentType : 'application/json; charset=utf-8',
 			type : 'POST',
 			success : function(data) {
-				console.log("Request----->"+JSON.stringify(Request));
 				$("#confirmUserStatus").openModal({
 				 	   dismissible:false
 			    });
+				if(data.errorCode == 200){
+					$.i18n().locale = lang;	
+					$.i18n().load( {
+						'en': './resources/i18n/en.json',
+						'km': './resources/i18n/km.json'
+					}).done( function() {
+						$('#statusChangedMessage').text($.i18n(data.tag));
+					});
+					}else{
+						$('#statusChangedMessage').text($.i18n(data.tag));
+					}
+				
+				
 			},
 			error : function() {
 				alert("Failed");
@@ -540,11 +611,3 @@ function userChangeStatus(entity){
 		});
 	 return false
  }	
- 
- 
- function resetButtons(){
-	 $('input[name=group1]').attr('checked',false);
-	 $('input[name=group2]').attr('checked',false);
- }
-	
-

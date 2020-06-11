@@ -86,7 +86,7 @@ public class AlertManagementDatatable {
 				   String modifiedOn = (String) dataInsideList.getModifiedOn();
 				   String alertId = dataInsideList.getAlertId();
 				   String feature = dataInsideList.getFeature();
-				   String description = dataInsideList.getDescription();
+				   String description = dataInsideList.getDescription().replaceAll("<","&lt;").replaceAll(">","&gt;");
 				   //String userStatus = (String) session.getAttribute("userStatus");	  
 				   String action = iconState.alertManagementIcons(id);
 				   Object[] finalData={createdOn,modifiedOn,alertId,feature,description,action}; 

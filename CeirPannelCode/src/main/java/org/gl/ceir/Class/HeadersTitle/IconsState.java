@@ -736,12 +736,15 @@ public class IconsState {
 
 		log.info("status is--->" +status+"---userStatus---->"+userStatus);
 		//Disable reply
-		if(("0".equals(status) || "1".equals(status) || "2".equals(status)|| "3".equals(status)) && "Approved".equals(userStatus)) {
+		if(("0".equals(status) || "1".equals(status) || "2".equals(status)) && "Approved".equals(userStatus)) {
 			 reply = "<a onclick="+replyAction+"><i class="+replyIcon+" aria-hidden=\"true\" title="
 					+replyIconTitle+" ></i></a>";
 			 view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
 					+viewIconTitle+" ></i></a>";
 
+		}else if("3".equals(status) && "Approved".equals(userStatus)) {
+			reply = "<a onclick="+replyAction+" class=\"eventNone\"><i class="+disableReplyIcon+" aria-hidden=\"true\" title="
+					+replyIconTitle+" ></i></a>";
 		}
 		else if(status!="0" || status !="1" || status !="3" || status==null || status.equals("")){
 			reply = "<a onclick="+replyAction+" class=\"eventNone\"><i class="+disableReplyIcon+" aria-hidden=\"true\" title="
@@ -780,14 +783,17 @@ public class IconsState {
 
 		log.info("status is--->" +status+"---userStatus---->"+userStatus);
 		//Disable reply
-		if(("0".equals(status) || "1".equals(status) || "2".equals(status)|| "3".equals(status)) && "Approved".equals(userStatus)) {
+		if(("0".equals(status) || "1".equals(status) || "2".equals(status)) && "Approved".equals(userStatus)) {
 			 reply = "<a onclick="+replyAction+"><i class="+replyIcon+" aria-hidden=\"true\" title="
 					+replyIconTitle+" ></i></a>";
 			 view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
 					+viewIconTitle+" ></i></a>";
 
+		}else if("3".equals(status) && "Approved".equals(userStatus)) {
+			reply = "<a onclick="+replyAction+" class=\"eventNone\"><i class="+disableReplyIcon+" aria-hidden=\"true\" title="
+					+replyIconTitle+" ></i></a>";
 		}
-		if(status!="0" || status !="1" || status !="3" || status==null || status.equals("")){
+		else if(status!="0" || status !="1" || status !="3" || status==null || status.equals("")){
 			 reply = "<a onclick="+replyAction+" class=\"eventNone\"><i class="+disableReplyIcon+" aria-hidden=\"true\" title="
 					 +replyIconTitle+" ></i></a>";
 			 view="<a onclick="+viewAction+" class="+disableIconClass+"><i class="+disableViewIcon+" aria-hidden=\"true\" title="
@@ -819,12 +825,16 @@ public class IconsState {
 
 		log.info("status is--->" +status+"---userStatus---->"+userStatus);
 
-		if(("0".equals(status) || "1".equals(status) || "2".equals(status)|| "3".equals(status)) && "Approved".equals(userStatus)) {
+		if(("0".equals(status) || "1".equals(status) || "2".equals(status)) && "Approved".equals(userStatus)) {
 			 reply = "<a onclick="+replyAction+"><i class="+replyIcon+" aria-hidden=\"true\" title="
 					+replyIconTitle+" ></i></a>";
 			 view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
 					+viewIconTitle+" ></i></a>";
 
+		}
+		else if("3".equals(status) && "Approved".equals(userStatus)) {
+			reply = "<a onclick="+replyAction+" class=\"eventNone\"><i class="+disableReplyIcon+" aria-hidden=\"true\" title="
+					+replyIconTitle+" ></i></a>";
 		}
 		else if(status!="0" || status !="1" || status !="2" || status !="3" || status==null || status.equals("")){
 			 reply = "<a onclick="+replyAction+" class=\"eventNone\"><i class="+disableReplyIcon+" aria-hidden=\"true\" title="
@@ -994,7 +1004,7 @@ public class IconsState {
 
 		String viewAction="trcInformation?id="+id+"&roles="+roles.replace(" ", "=")+"&type="+type;
 		String rejectAction = "userRejectPopup("+Id+",'"+sessionUserName+"')";
-		String editAction="roleStatusChange('"+Id+"','"+sessionUserName+"','"+userTypeId+"')";
+		String editAction="roleStatusChange('"+Id+"','"+sessionUserName+"','"+userTypeId+"','"+id+"')";
 
 
 		log.info("status---->"+status+"---------AdminCurrentStatus------>"+AdminCurrentStatus+" userStatus----------->" +userStatus);
@@ -2870,9 +2880,12 @@ public class IconsState {
 		reply = "<a onclick="+replyAction+" class=\"eventNone\"><i class="+disableReplyIcon+" aria-hidden=\"true\" title="
 					+replyIconTitle+" ></i></a>";
 		
-		if("0".equals(status) || "1".equals(status) || "2".equals(status) || "3".equals(status)){
+		if("0".equals(status) || "1".equals(status) || "2".equals(status)){
 			 reply = "<a onclick="+replyAction+" class=\"eventNone\"><i class="+disableReplyIcon+" aria-hidden=\"true\" title="
 					 +replyIconTitle+" ></i></a>";
+		}else if("3".equals(status)) {
+			reply = "<a onclick="+replyAction+" class=\"eventNone\"><i class="+disableReplyIcon+" aria-hidden=\"true\" title="
+					+replyIconTitle+" ></i></a>";
 		}
 		else if(status!="0" || status !="1" || status !="2" || status !="3" || status==null || status.equals("")){
 			 reply = "<a onclick="+replyAction+" class=\"eventNone\"><i class="+disableReplyIcon+" aria-hidden=\"true\" title="
