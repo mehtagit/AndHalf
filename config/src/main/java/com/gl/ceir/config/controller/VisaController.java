@@ -75,20 +75,20 @@ public class VisaController {
 	public MappingJacksonValue getDeviceByNid( @RequestBody FilterRequest filterRequest,
 			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
 			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
-			@RequestParam(value = "file", defaultValue = "0") Integer file) {
+			@RequestParam(value = "file", defaultValue = "0") Integer file,
+			@RequestParam(value = "source", defaultValue = "menu") String source) {
 
 		MappingJacksonValue mapping = null;
-		
+		logger.info("source value is : "+source);
 		if(file == 0) {
 			logger.info("Visa update view request " + filterRequest);
-			Page<VisaUpdateDb> customInfo = enduserServiceImpl.viewAllUpdateVisaRecord(filterRequest, pageNo, pageSize);
+			Page<VisaUpdateDb> customInfo = enduserServiceImpl.viewAllUpdateVisaRecord(filterRequest, pageNo, pageSize,source);
 			mapping = new MappingJacksonValue(customInfo);
 		}else {
 			logger.info("visa update Export request " + filterRequest);
 			FileDetails fileDetails = enduserServiceImpl.getFilterDataInFile(filterRequest);
 			mapping = new MappingJacksonValue(fileDetails);
-		}
-		
+		}	
 		return mapping;
 	}
 }

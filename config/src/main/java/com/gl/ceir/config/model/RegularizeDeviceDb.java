@@ -114,6 +114,11 @@ public class RegularizeDeviceDb implements Serializable {
 	@Transient
 	private AllRequest auditParameters;
 
+    private String approvedBy;
+    private String taxCollectedBy;
+    
+    
+    
 	public String getMultiSimStatusInterp() {
 		return multiSimStatusInterp;
 	}
@@ -373,6 +378,22 @@ public class RegularizeDeviceDb implements Serializable {
 		this.auditParameters = auditParameters;
 	}
 
+	public String getApprovedBy() {
+		return approvedBy;
+	}
+
+	public void setApprovedBy(String approvedBy) {
+		this.approvedBy = approvedBy;
+	}
+
+	public String getTaxCollectedBy() {
+		return taxCollectedBy;
+	}
+
+	public void setTaxCollectedBy(String taxCollectedBy) {
+		this.taxCollectedBy = taxCollectedBy;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -436,6 +457,10 @@ public class RegularizeDeviceDb implements Serializable {
 		builder.append(creatorUserId);
 		builder.append(", multiSimStatusInterp=");
 		builder.append(multiSimStatusInterp);
+		builder.append(taxCollectedBy);
+		builder.append(",taxCollectedBy");
+		builder.append(", approvedBy=");
+		builder.append(approvedBy);
 		builder.append(", toString()=");
 		builder.append(super.toString());
 		builder.append("]");

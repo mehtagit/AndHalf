@@ -32,7 +32,10 @@ public enum GenericMessageTags {
 	DUPLICATE_IMEI_IN_REQUEST("DUPLICATE_IMEI_IN_REQUEST" ,"Duplicate IMEI received in request"),
 	INVALID_TUPLE_FOR_IMEI_AND_MSISDN("INVALID_TUPLE_FOR_IMEI_AND_MSISDN", "This combination of imei and msisdn is invalid."),
 	NO_IMEI_FOR_MSISDN("NO_IMEI_FOR_MSISDN", "No imei is attached with the msisdn"),
-	INVALID_IMEI("INVALID_IMEI", "IMEI is invalid."),;
+	INVALID_IMEI("INVALID_IMEI", "IMEI is invalid."),
+	NULL_EndUser("NULL_ENDUSER", "End user data is null for this visa"),
+	COMMAN_FAIL_MSG("COMMAN_FAIL_MSG","Oops something wrong happened")
+	;
 	
 	private String tag;
 	private String message;

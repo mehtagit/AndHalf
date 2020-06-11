@@ -90,7 +90,7 @@ public class ConsignmentTransaction {
 	}
 
 	public boolean executeUpdateStatusConsignment(ConsignmentMgmt consignmentMgmt, WebActionDb webActionDb) {
-	
+		boolean queryStatus = Boolean.FALSE;
 		logger.info("consignmentMgmt:::::"+consignmentMgmt);
 		if(Objects.nonNull(webActionDb)) {
 			webActionDbRepository.save(webActionDb);
@@ -120,6 +120,7 @@ public class ConsignmentTransaction {
 			
 		}
 				
-	return true;
+	queryStatus = Boolean.TRUE;
+		return queryStatus;
 	}
 }
