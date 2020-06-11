@@ -261,12 +261,15 @@ public class HexFileReader {
                     ps.executeBatch();
                     pass_my_batch = 0;
                     logger.debug("..... " + k);
+                    conn.commit();
                 }
                 if (fail_my_batch == my_batch_count) {
                     logger.debug("Executing Fail batch.." + k);
                     failed_ps.executeBatch();
                     fail_my_batch = 0;
+                    conn.commit();
                 }
+                 logger.info(k);
             }    // while End
 
             logger.info("File Finished ");

@@ -73,7 +73,7 @@ public class ConsignmentInsertUpdate {
         String fileName = null;
         File file = null;
 //        String log = null;
-        int split_upload_batch_no = 10; // it should be dymnamic
+        int split_upload_batch_no = 1 ; // it should be dymnamic
         int split_upload_batch_count = 0;
         int rrslt = 0;
         int countError = 0;
@@ -111,10 +111,8 @@ public class ConsignmentInsertUpdate {
                 logger.info("State ####3..rawCount  " + rawCount + "  finalCount" + finalCount);
                 if (rawCount == finalCount) {
                     ceirfunction.UpdateStatusViaApi(conn, txn_id, 0, operator);
-                    logger.info("State ####3.. UpdateStatusViaApi 0");
-                    ceirfunction.updateFeatureFileStatus(conn, txn_id, 4, operator, sub_feature);
-                    logger.info("State ####3..webAction 4 ");
-                } else {
+                     ceirfunction.updateFeatureFileStatus(conn, txn_id, 4, operator, sub_feature);
+                    } else {
                     query = " delete from   " + feature_file_mapping.get("output_device_db") + " where   txn_id='" + txn_id + "'   ";
                     rs = stmt.executeQuery(query);
                     logger.info("State >>>.. " + query);
@@ -342,7 +340,11 @@ public class ConsignmentInsertUpdate {
                         logger.info("device_greylist_History_db_qry  : " + device_greylist_History_db_qry);
                         insertFromImporterManufactor(conn, rs1, stolnRcvryDetails, feature_file_management, feature_file_mapping, dateFunction, period, txn_id);
                     } else {
-                        stmt2.addBatch(device_db_query);
+                        try {
+                            stmt2.addBatch(device_db_query);
+                        } catch (Exception e) {
+                            logger.warn("Error in device_db  " + e);
+                        }
                         logger.info("device_db_query  : " + device_db_query);
                     }
                     split_upload_batch_count++;
@@ -353,7 +355,7 @@ public class ConsignmentInsertUpdate {
                             stmt2.executeBatch();
                             conn.commit();
                         } catch (Exception e) {
-                            logger.info("Error in device_db Query " + e);
+                            logger.warn("Error in device_db  " + e);
                         }
                         conn.commit();
                         if (rrslt != 0) {
@@ -383,8 +385,12 @@ public class ConsignmentInsertUpdate {
 
                 stmt1.executeBatch();
                 conn.commit();
-                stmt2.executeBatch();
-                conn.commit();
+                try {
+                    stmt2.executeBatch();
+                    conn.commit();
+                } catch (Exception e) {
+                    logger.warn("Error in device_db Query " + e);
+                }
                 if (rrslt != 0) {
                     stmt3.executeBatch();
                     conn.commit();

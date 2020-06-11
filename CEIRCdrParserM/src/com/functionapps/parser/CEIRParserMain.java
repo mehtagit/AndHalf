@@ -25,9 +25,9 @@ import java.util.stream.Collectors;
 import org.apache.log4j.Logger;
 
 public class CEIRParserMain {
-    
+
     static Logger logger = Logger.getLogger(CEIRParserMain.class);
-    
+
     static StackTraceElement l = new Exception().getStackTrace()[0];
 //   logger.error("" + l.getClassName()+"/"+l.getMethodName()+":"+l.getLineNumber()  + e);
 
@@ -37,7 +37,7 @@ public class CEIRParserMain {
         String operator = args[0];
         CDRPARSERmain(conn, operator);
     }
-    
+
     public static void CDRPARSERmain(Connection conn, String operator) {
 
 //        logger = Logger.getLogger(CEIRParserMain.class)
@@ -51,7 +51,7 @@ public class CEIRParserMain {
         addCDRInProfileWithRule(operator, conn, rulelist, operator_tag, period);
         System.exit(0);
     }
-    
+
     private static String checkGraceStatus(Connection conn) {
         String period = "";
         String query = null;
@@ -62,12 +62,12 @@ public class CEIRParserMain {
         Date graceDate = null;
         try {
             query = "select value from system_configuration_db where tag='grace_period_end_date'";
-            
+
             logger.info("Check Grace End Date [" + query + "]");
-            
+
             stmt = conn.createStatement();
             rs1 = stmt.executeQuery(query);
-            
+
             while (rs1.next()) {
                 graceDate = sdf.parse(rs1.getString("value"));
                 if (currentDate.compareTo(graceDate) > 0) {
@@ -88,11 +88,11 @@ public class CEIRParserMain {
                 ;
                 logger.error("" + l.getClassName() + "/" + l.getMethodName() + ":" + l.getLineNumber() + e);
             }
-            
+
         }
         return period;
     }
-    
+
     private static String getOperatorTag(Connection conn, String operator) {
         String operator_tag = "";
         String query = null;
@@ -117,12 +117,12 @@ public class CEIRParserMain {
                 logger.error("" + l.getClassName() + "/" + l.getMethodName() + ":" + l.getLineNumber() + e);
                 e.printStackTrace();
             }
-            
+
         }
         return operator_tag;
-        
+
     }
-    
+
     private static void addCDRInProfileWithRule(String operator, Connection conn, ArrayList<Rule> rulelist, String operator_tag, String period) {
         String query = null;
         ResultSet rs = null;
@@ -166,16 +166,16 @@ public class CEIRParserMain {
             stmt = conn.createStatement();
             rs = stmt.executeQuery(query);
             logger.debug("Getting Data from raw table  [" + query + "]");
-            
+
             HashMap<String, String> device_info = new HashMap<String, String>();
-            
+
             List<String> sourceTacList = new ArrayList<String>();
             RuleFilter rule_filter = new RuleFilter();
             stmt1 = conn.createStatement();
             raw_stmt = conn.createStatement();
             // CDR File Writer
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            
+
             fileName = "CEIR_CDR_File_" + sdf.format(Calendar.getInstance().getTime()) + ".csv";
             file = new File(logPath);
             if (!file.exists()) {
@@ -246,10 +246,10 @@ public class CEIRParserMain {
                             my_query = "update device_null_db set "
                                     + "update_filename = '" + rs.getString("file_name")
                                     //								+"',updated_on='"+rs.getString("record_time")+
-                                    + "',updated_on=" + dateFunction
+                                    + "',MODIFIED_ON=" + dateFunction
                                     + ""
                                     + " where msisdn='" + (rs.getString("MSISDN").startsWith("19") ? rs.getString("MSISDN").substring(2) : rs.getString("MSISDN")) + "'";
-                            logger.info("need to update");
+                            logger.debug("need to update");
                             nullUpdate++;
                         }
                     }
@@ -258,7 +258,7 @@ public class CEIRParserMain {
                     sourceTacList.add(rs.getString("IMEI").substring(0, 8));
                     device_info.put("tac", rs.getString("IMEI").substring(0, 8));
                     my_rule_detail = rule_filter.getMyRule(conn, device_info, rulelist, myWriter, bw);
-                    logger.info("getMyRule done");
+                    logger.debug("getMyRule done");
                     if (my_rule_detail.get("rule_name") != null) {
                         failed_rule_name = my_rule_detail.get("rule_name");
                         failed_rule_id = my_rule_detail.get("rule_id");
@@ -266,7 +266,7 @@ public class CEIRParserMain {
                         period = my_rule_detail.get("period");
                         failedRuleDate = dateFunction;
                     }
-                    
+
                     if (failed_rule_id == null) {
                         finalAction = "ALLOWED";
                     } else {
@@ -279,9 +279,9 @@ public class CEIRParserMain {
                             sendMessageToMsisdn(conn, rs.getString("MSISDN"), rs.getString("IMEI"));
                         }
                     }
-                    
+
                     output = checkDeviceUsageDB(conn, rs.getString("IMEI"), (rs.getString("MSISDN").startsWith("19") ? rs.getString("MSISDN").substring(2) : rs.getString("MSISDN")));
-                    logger.info("output  " + output);
+                    logger.debug("output  " + output);
                     if (output == 0) {                                         // imei not found in usagedb
                         my_query = "insert into device_usage_db (imei,msisdn,imsi,create_filename,update_filename,"
                                 + "updated_on,created_on,system_type,failed_rule_id,failed_rule_name,tac,period,action "
@@ -349,7 +349,7 @@ public class CEIRParserMain {
                                     + "'" + rs.getString("record_time") + "' "
                                     + ")";
                             duplicateInsert++;
-                            
+
                         } else {
                             my_query = "update device_duplicate_db set "
                                     + "update_filename = '" + rs.getString("file_name")
@@ -375,9 +375,9 @@ public class CEIRParserMain {
                     raw_query = "update " + operator + "_raw" + " set status='Complete' where sno <='" + update_sno + "'     ";
                     raw_stmt.executeUpdate(raw_query);
                     conn.commit();
-                    logger.info(" Count Number " + update_sno);
                 }
-                
+                logger.info("Count Number " + update_sno);
+
             }   //While End   
             stmt1.executeBatch();
             conn.commit();
@@ -387,13 +387,13 @@ public class CEIRParserMain {
             Map<String, Long> map = sourceTacList.stream()
                     .collect(Collectors.groupingBy(c -> c, Collectors.counting()));
             map.forEach((k, v) -> new HexFileReader().insertSourceTac(conn, k, device_info.get("file_name"), v, "source_tac_info"));
-            
+
             raw_stmt.executeUpdate(raw_query);
             updateRawLastSno(conn, operator, update_sno);
             conn.commit();
         } catch (Exception e) {
             logger.error("" + l.getClassName() + "/" + l.getMethodName() + ":" + l.getLineNumber() + e);
-            
+
         } finally {
             try {
                 raw_stmt.close();
@@ -405,7 +405,7 @@ public class CEIRParserMain {
             }
         }
     }
-    
+
     private static void updateRawData(Connection conn, String operator, String id, String status) {
         String query = null;
         Statement stmt = null;
@@ -424,9 +424,9 @@ public class CEIRParserMain {
                 logger.error("" + l.getClassName() + "/" + l.getMethodName() + ":" + l.getLineNumber() + e);
             }
         }
-        
+
     }
-    
+
     private static int checkDeviceDuplicateDB(Connection conn, String imei, String msisdn) {
         String query = null;
         ResultSet rs1 = null;
@@ -452,7 +452,7 @@ public class CEIRParserMain {
         }
         return status;
     }
-    
+
     private static int checkDeviceUsageDB(Connection conn, String imei, String msisdn) {
         String query = null;
         ResultSet rs1 = null;
@@ -464,7 +464,7 @@ public class CEIRParserMain {
             stmt = conn.createStatement();
             rs1 = stmt.executeQuery(query);
             while (rs1.next()) {
-                logger.info(rs1.getString("msisdn"));
+                logger.debug(rs1.getString("msisdn"));
                 if (rs1.getString("msisdn").equalsIgnoreCase(msisdn)) {     // imei found with same msisdn 
                     status = 1;
                 } else {
@@ -481,11 +481,9 @@ public class CEIRParserMain {
                 logger.error("" + l.getClassName() + "/" + l.getMethodName() + ":" + l.getLineNumber() + e);
             }
         }
-        
-        logger.info(status);
         return status;
     }
-    
+
     public static int checkDeviceNullDB(Connection conn, String msisdn) {
         String query = null;
         ResultSet rs1 = null;
@@ -511,7 +509,7 @@ public class CEIRParserMain {
         }
         return status;
     }
-    
+
     private static ArrayList getRuleDetails(String operator, Connection conn, String operator_tag, String period) {
         ArrayList rule_details = new ArrayList<Rule>();
         String query = null;
@@ -547,7 +545,7 @@ public class CEIRParserMain {
         }
         return rule_details;
     }
-    
+
     static ResultSet operatorDetails(Connection conn, String operator) {
 //              logger.info("operatorDetails...>");
         Statement stmt = null;
@@ -562,7 +560,7 @@ public class CEIRParserMain {
         }
         return rs;
     }
-    
+
     private static void updateLastStatuSno(Connection conn, String operator, int id, int limit) {
         String query = null;
         Statement stmt = null;
@@ -583,13 +581,13 @@ public class CEIRParserMain {
             }
         }
     }
-    
+
     private static void updateRawLastSno(Connection conn, String operator, int sno) {
         String query = null;
         Statement stmt = null;
         query = "update rep_schedule_config_db set last_upload_sno=" + sno + " where operator='" + operator + "'";
         logger.info("updateRawLastSno qury is " + query);
-        
+
         try {
             stmt = conn.createStatement();
             stmt.executeUpdate(query);
@@ -604,15 +602,15 @@ public class CEIRParserMain {
             }
         }
     }
-    
+
     static void cdrFileDetailsUpdate(Connection conn, String operator, String fileName, int usageInsert, int usageUpdate, int duplicateInsert, int duplicateUpdate, int nullInsert, int nullUpdate, String P2StartTime, String P2EndTime) {
-        
+
         String query = null;
         Statement stmt = null;
         query = "update cdr_file_details_db set  MODIFIED_ON = sysdate ,     total_inserts_in_usage_db='" + usageInsert + "' , total_updates_in_usage_db='" + usageUpdate + "'  ,  total_insert_in_dup_db='" + duplicateInsert + "' , total_updates_in_dup_db='" + duplicateUpdate + "' "
                 + " ,total_insert_in_null_db='" + nullInsert + "' ,total_update_in_null_db='" + nullUpdate + "'    , P2StartTime='" + P2StartTime + "' , P2EndTime='" + P2EndTime + "'     where operator='" + operator + "'   and file_name = '" + fileName + "' ";
         logger.info(" qury is " + query);
-        
+
         try {
             stmt = conn.createStatement();
             stmt.executeUpdate(query);
@@ -626,33 +624,32 @@ public class CEIRParserMain {
                 logger.error("" + l.getClassName() + "/" + l.getMethodName() + ":" + l.getLineNumber() + e);
             }
         }
-        
+
     }
-    
+
     private static void sendMessageToMsisdn(Connection conn, String msisdn, String imei) {
-        
+
         MessageConfigurationDbDao messageConfigurationDbDao = new MessageConfigurationDbDao();
         PolicyBreachNotificationDao policyBreachNotificationDao = new PolicyBreachNotificationDao();
         MessageConfigurationDb messageDb = null;
-        
+
         try {
             Optional<MessageConfigurationDb> messageDbOptional = messageConfigurationDbDao.getMessageDbTag(conn, "USER_REG_MESSAGE");
-            
+
             if (messageDbOptional.isPresent()) {
                 messageDb = messageDbOptional.get();
                 String message = messageDb.getValue().replace("<imei>", imei);
-                
-                
-                PolicyBreachNotification policyBreachNotification = new PolicyBreachNotification("SMS" , message, ""  ,msisdn , imei );
-                 
+
+                PolicyBreachNotification policyBreachNotification = new PolicyBreachNotification("SMS", message, "", msisdn, imei);
+
                 policyBreachNotificationDao.insertNotification(conn, policyBreachNotification);
-                
+
             }
-            
+
         } catch (Exception e) {
             logger.error("" + l.getClassName() + "/" + l.getMethodName() + ":" + l.getLineNumber() + e);
         }
-        
+
     }
-    
+
 }
