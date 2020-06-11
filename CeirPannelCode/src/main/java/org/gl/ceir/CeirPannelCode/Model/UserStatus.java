@@ -11,7 +11,7 @@ public class UserStatus {
 	private Integer statusValue;
 	private String username;
 	private String referenceId;
-	private String action;
+	private String action,role;
 	private List<Integer> roles ;
 	private String usertype;
 	public Integer getId() {
@@ -68,6 +68,12 @@ public class UserStatus {
 	public void setAction(String action) {
 		this.action = action;
 	}
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
+	}
 	public List<Integer> getRoles() {
 		return roles;
 	}
@@ -101,6 +107,8 @@ public class UserStatus {
 		builder.append(referenceId);
 		builder.append(", action=");
 		builder.append(action);
+		builder.append(", role=");
+		builder.append(role);
 		builder.append(", roles=");
 		builder.append(roles);
 		builder.append(", usertype=");
@@ -108,5 +116,6 @@ public class UserStatus {
 		builder.append("]");
 		return builder.toString();
 	}
+	
 	
 }

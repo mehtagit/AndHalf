@@ -210,7 +210,7 @@ var contextpath = "${context}";
 									<div class="col s12 m12">
 										<h6 class="file-upload-heading"><spring:message code="registration.UploadNationalityInformation" /> <span class="star">*</span></h6>
 									<div class="input-field col s12 m6 l6">
-                                            <input type="text" name="uploadNationalId" id="file"  maxlength="30" disabled="">
+                                            <input type="text" name="uploadNationalId" id="file"  maxlength="30" disabled>
                                             <input type="hidden"  id="filePath">
                                             
                                 <%--             <label for="uploadNationalId" class="active"><spring:message code="registration.uploadednationalid" /></label> --%>

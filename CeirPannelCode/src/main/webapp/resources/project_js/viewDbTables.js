@@ -52,6 +52,8 @@
 		
 		function Datatable(lang){
 			var filterRequest={
+					"startDate" : $('#startDate').val(), 
+					"endDate":$('#endDate').val(),
 					"tableName": tableName,
 					"dbName" : "ceirconfig",
 					"featureId":parseInt(featureId),

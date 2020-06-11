@@ -173,13 +173,6 @@ catch (Exception e) {
 		String txnNumner=utildownload.getTxnId();
 		txnNumner = "S"+txnNumner;
 		FileCopyToOtherServer fileCopyRequest= new FileCopyToOtherServer();
-		fileCopyRequest.setFilePath(urlToUpload.getValue());
-		fileCopyRequest.setTxnId(txnNumner);
-		fileCopyRequest.setFileName(file.getOriginalFilename());
-		fileCopyRequest.setServerId(serverId);
-		log.info("request passed to move file to other server=="+fileCopyRequest);
-		GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
-		log.info("file move api response==="+fileRespnose);
 		log.info("Random  genrated transaction number ="+txnNumner);
 
 		StockUploadModel stockUpload= new StockUploadModel();
@@ -198,6 +191,15 @@ catch (Exception e) {
 			BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
 			stream.write(bytes);
 			stream.close();
+			
+			fileCopyRequest.setFilePath(rootPath);
+			fileCopyRequest.setTxnId(txnNumner);
+			fileCopyRequest.setFileName(file.getOriginalFilename());
+			fileCopyRequest.setServerId(serverId);
+			log.info("request passed to move file to other server=="+fileCopyRequest);
+			GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
+			log.info("file move api response==="+fileRespnose);
+			
 
 		}
 		catch (Exception e) {
@@ -337,13 +339,6 @@ catch (Exception e) {
 	
 	try {	
 		log.info("file is not blank");
-		fileCopyRequest.setFilePath(urlToUpload.getValue());
-		fileCopyRequest.setTxnId(txnId);
-		fileCopyRequest.setFileName(filename);
-		fileCopyRequest.setServerId(serverId);
-		log.info("request passed to move file to other server=="+fileCopyRequest);
-		GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
-		log.info("file move api response==="+fileRespnose);
 	String rootPath = urlToUpload.getValue()+txnId+"/";
 	File tmpDir = new File(rootPath+file.getOriginalFilename());
 	boolean exists = tmpDir.exists();
@@ -372,6 +367,13 @@ catch (Exception e) {
 	stream.write(bytes);
 	stream.close();
 
+	fileCopyRequest.setFilePath(rootPath);
+	fileCopyRequest.setTxnId(txnId);
+	fileCopyRequest.setFileName(filename);
+	fileCopyRequest.setServerId(serverId);
+	log.info("request passed to move file to other server=="+fileCopyRequest);
+	GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
+	log.info("file move api response==="+fileRespnose);
 	}
 	catch (Exception e) {
 	// TODO: handle exception
@@ -494,17 +496,10 @@ catch (Exception e) {
 		log.info("Random transaction id number="+txnNumber);
 		addMoreFileModel.setTag("system_upload_filepath");
 		urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
-		
+		FileCopyToOtherServer fileCopyRequest= new FileCopyToOtherServer();
 		
 		log.info("file is not blank");
-		FileCopyToOtherServer fileCopyRequest= new FileCopyToOtherServer();
-		fileCopyRequest.setFilePath(urlToUpload.getValue());
-		fileCopyRequest.setTxnId(txnNumber);
-		fileCopyRequest.setFileName(file.getOriginalFilename());
-		fileCopyRequest.setServerId(serverId);
-		log.info("request passed to move file to other server=="+fileCopyRequest);
-		GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
-		log.info("file move api response==="+fileRespnose);
+		
 		
 		Gson gson= new Gson(); 
 
@@ -524,6 +519,15 @@ catch (Exception e) {
 		stream = new BufferedOutputStream(new FileOutputStream(serverFile));
 		stream.write(bytes); 
 		stream.close();
+		
+		
+		fileCopyRequest.setFilePath(rootPath);
+		fileCopyRequest.setTxnId(txnNumber);
+		fileCopyRequest.setFileName(file.getOriginalFilename());
+		fileCopyRequest.setServerId(serverId);
+		log.info("request passed to move file to other server=="+fileCopyRequest);
+		GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
+		log.info("file move api response==="+fileRespnose);
 		} 
 
 		catch (Exception e) {

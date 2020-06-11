@@ -34,7 +34,7 @@
 		dataType : 'json',
 		contentType : 'application/json; charset=utf-8',
 		success: function (data, textStatus, jqXHR) {
-			var resul= data;
+			var result= data;
 			//console.log("result-->"+JSON. stringify(result))
 			for (i = 0; i < result.length; i++){
 				$('<option>').val(result[i].reportnameId).text(result[i].reportName).appendTo('#tableId');

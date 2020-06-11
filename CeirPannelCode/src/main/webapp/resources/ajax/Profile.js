@@ -248,12 +248,13 @@ function editProfile(){
 			var arr=[];    
 			var vatStatus=resp.vatStatus;
 			if(vatStatus==1){
+		    	 $("#registrationForm #vatFile").val(resp.vatFilename);
+					$("#registrationForm #vatFilePath").val(resp.vatFilePath);
 		  		document.getElementById("vatNumberField").style.display = "block";
 		 		document.getElementById("vatFileDiv").style.display = "block";
 		 		$("#vatYes").prop('checked',true);
-		 		$('#vatYes').attr("disabled",true);
+		    	$("#registrationForm .vatStatus").attr('disabled', true);
 				$("#registrationForm #vatNo").val(resp.vatNo);
-
 		 	}
 		 	else{
 		  		$("#vatNo").val("");
@@ -637,8 +638,6 @@ function loadByAsType(resp){
      //	$("#vatYes").prop('checked',true);
      	//vatShowHide();
      	//$("input[name='vatStatus']").attr('disabled', true);
-    	 $("#registrationForm #vatFile").val(resp.vatFilename);
-			$("#registrationForm #vatFilePath").val(resp.vatFilePath);
          document.getElementById("uploadFile").style.display = "none";
          document.getElementById("passportNumberDiv").style.display = "none";
          document.getElementById("companyNames").style.display = "block";

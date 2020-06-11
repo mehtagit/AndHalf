@@ -229,7 +229,7 @@ public class BlockUnblock {
 			  @RequestParam(name="blockCategory",required = false) Integer deviceCategory,@RequestParam(name="remark",required = false) String remark, HttpSession session)
  {	
 		  log.info(" file stolen entry point .");
-		 
+		  FileCopyToOtherServer fileCopyRequest= new FileCopyToOtherServer();
 		    StolenRecoveryModel stolenRecoveryModel= new StolenRecoveryModel(); 
 		    GenricResponse response= new GenricResponse();
 		  //  Integer operatorTypeId= (Integer) session.getAttribute("operatorTypeId"); 
@@ -276,6 +276,14 @@ public class BlockUnblock {
 				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
 				stream.write(bytes);
 				stream.close();
+				
+				fileCopyRequest.setFilePath(rootPath);
+				fileCopyRequest.setTxnId(stlnTxnNumber);
+				fileCopyRequest.setFileName(file.getOriginalFilename());
+				fileCopyRequest.setServerId(serverId);
+				log.info("request passed to move file to other server=="+fileCopyRequest);
+				GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
+				log.info("file move api response==="+fileRespnose);
 
 			}
 			catch (Exception e) {
@@ -327,13 +335,7 @@ public class BlockUnblock {
 			addMoreFileModel.setTag("system_upload_filepath");
 			urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
 			FileCopyToOtherServer fileCopyRequest= new FileCopyToOtherServer();
-			fileCopyRequest.setFilePath(urlToUpload.getValue());
-			fileCopyRequest.setTxnId(stlnTxnNumber);
-			fileCopyRequest.setFileName(file.getOriginalFilename());
-			fileCopyRequest.setServerId(serverId);
-			log.info("request passed to move file to other server=="+fileCopyRequest);
-			GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
-			log.info("file move api response==="+fileRespnose);
+			
 			
 			//int operatorTypeId= (int) session.getAttribute("operatorTypeId"); 
 			// Integer operatorTypeId= (Integer) session.getAttribute("operatorTypeId"); 
@@ -375,7 +377,14 @@ public class BlockUnblock {
 				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
 				stream.write(bytes);
 				stream.close();
-
+				
+				fileCopyRequest.setFilePath(rootPath);
+				fileCopyRequest.setTxnId(stlnTxnNumber);
+				fileCopyRequest.setFileName(file.getOriginalFilename());
+				fileCopyRequest.setServerId(serverId);
+				log.info("request passed to move file to other server=="+fileCopyRequest);
+				GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
+				log.info("file move api response==="+fileRespnose);
 			}
 			catch (Exception e) {
 				// TODO: handle exception
