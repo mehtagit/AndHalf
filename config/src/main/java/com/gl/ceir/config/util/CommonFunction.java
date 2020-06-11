@@ -44,26 +44,42 @@ public class CommonFunction {
 
 	public Boolean hasDuplicateImeiInRequest(List<RegularizeDeviceDb> regularizeDeviceDbs) {
 		logger.info("regularized device list check for duplicate imei"+regularizeDeviceDbs);
-		HashSet<String> set = new HashSet<>();
-
+	//	HashSet<String> set = new HashSet<>();
 		for(RegularizeDeviceDb device : regularizeDeviceDbs) {
 			if(device.getFirstImei()!=null && !device.getFirstImei().isEmpty()) {
-				if(!set.add(device.getFirstImei())) {
+				long count=regularizedDeviceDbRepository.countByImei(device.getFirstImei());
+				if(count>0) {
 					return Boolean.TRUE;
 				}
+//				if(!set.add(device.getFirstImei())) {
+//					return Boolean.TRUE;
+//				}
 			}
 			if(device.getSecondImei()!=null && !device.getSecondImei().isEmpty()) {
-				if(!set.add(device.getSecondImei())) {
+//				if(!set.add(device.getSecondImei())) {
+//					return Boolean.TRUE;
+//				}
+				long count=regularizedDeviceDbRepository.countByImei(device.getSecondImei());
+				if(count>0) {
 					return Boolean.TRUE;
 				}
 			}
 			if(device.getThirdImei()!=null && !device.getThirdImei().isEmpty()) {
-				if(!set.add(device.getThirdImei())) {
+				long count=regularizedDeviceDbRepository.countByImei(device.getThirdImei());
+				if(count>0) {
 					return Boolean.TRUE;
 				}
+//				if(!set.add(device.getThirdImei())) {
+//					return Boolean.TRUE;
+//				}
 			}
 			if(device.getFourthImei()!=null && !device.getFourthImei().isEmpty()) {
-				if(!set.add(device.getFourthImei())) {
+//				if(!set.add(device.getFourthImei())) {
+//					return Boolean.TRUE;
+//				}
+				
+				long count=regularizedDeviceDbRepository.countByImei(device.getFourthImei());
+				if(count>0) {
 					return Boolean.TRUE;
 				}
 			}

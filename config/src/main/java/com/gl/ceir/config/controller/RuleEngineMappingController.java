@@ -102,7 +102,7 @@ public class RuleEngineMappingController {
 		GenricResponse genricResponse = ruleEngineMappingServiceImpl.updateById(ruleEngineMapping);
 		
 		if(genricResponse.getErrorCode() == 0) {
-			auditTrailRepository.save( new AuditTrail( ruleEngineMapping.getId(),
+			auditTrailRepository.save( new AuditTrail(ruleEngineMapping.getId(),
 					ruleEngineMapping.getUserName(), Long.valueOf(ruleEngineMapping.getUserTypeId()),
 			  "CEIRSystem", Long.valueOf(ruleEngineMapping.getFeatureId()),
 			  Features.RULE_FEATURE_MAPPING, SubFeatures.UPDATE, "","NA",

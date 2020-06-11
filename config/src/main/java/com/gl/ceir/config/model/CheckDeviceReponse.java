@@ -3,7 +3,7 @@ package com.gl.ceir.config.model;
 public class CheckDeviceReponse {
 
 	private String tacNumber;
-	private String brandName;
+	private String bandName;
 	private String modelName;
 	private long deviceId;
 	private String status;
@@ -19,11 +19,11 @@ public class CheckDeviceReponse {
 	public void setTacNumber(String tacNumber) {
 		this.tacNumber = tacNumber;
 	}
-	public String getBrandName() {
-		return brandName;
+	public String getBandName() {
+		return bandName;
 	}
-	public void setBrandName(String brandName) {
-		this.brandName = brandName;
+	public void setBandName(String bandName) {
+		this.bandName = bandName;
 	}
 	public String getModelName() {
 		return modelName;
@@ -80,8 +80,8 @@ public class CheckDeviceReponse {
 		StringBuilder builder = new StringBuilder();
 		builder.append("CheckDeviceReponse [tacNumber=");
 		builder.append(tacNumber);
-		builder.append(", brandName=");
-		builder.append(brandName);
+		builder.append(", bandName=");
+		builder.append(bandName);
 		builder.append(", modelName=");
 		builder.append(modelName);
 		builder.append(", deviceId=");
