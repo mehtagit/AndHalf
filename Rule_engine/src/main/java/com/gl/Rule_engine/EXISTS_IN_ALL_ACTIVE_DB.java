@@ -21,7 +21,7 @@ class EXISTS_IN_ALL_ACTIVE_DB {
 
     static String executeRule(String[] args, Connection conn) {
 
-        String res = "";
+        String res =null;
         try {
             String qry = " select sum (cnt) from  (select count  (imei) as cnt  from device_usage_db where imei = '"+args[3]+"' and MSISDN = '"+args[12]+"' "
                     + " union select count  (imei)  as cnt from device_duplicate_db where imei = '"+args[3]+"' and MSISDN = '"+args[12]+"' ) a ; ";
@@ -36,10 +36,9 @@ class EXISTS_IN_ALL_ACTIVE_DB {
                 logger.debug("" + e);
             }
             if (res1 != 0) {
-                logger.debug("Yes");
+//                logger.debug("Yes");
                 res = "Yes";
             } else {
-                logger.debug("No");
                 res = "No";
             }
             result1.close();

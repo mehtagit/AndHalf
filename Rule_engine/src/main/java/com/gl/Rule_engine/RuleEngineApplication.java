@@ -8,12 +8,7 @@ import org.apache.log4j.Logger;
 public class RuleEngineApplication {
 
     static final Logger logger = Logger.getLogger(RuleEngineApplication.class);
-
-    
-//    logger.error(this.getClass().getName() + e);
-//    public static void main(String[] args,conn) {
-//        logger.debug(startRuleEngine(args,conn));  //LATEST JUN (9)
-//    }
+ 
     public static String startRuleEngine(String[] args, Connection conn, BufferedWriter bw) {
         String reslt = "";
 
@@ -113,19 +108,12 @@ public class RuleEngineApplication {
             }
             
               if ("EXIST_IN_OPERATOR_DB".equalsIgnoreCase(args[0])) {
-                reslt = EXIST_IN_OPERATOR_DB.executeRule(args, conn);
+                reslt =EXIST_IN_OPERATOR_DB.executeRule(args, conn);
             }
                 if ("EXISTS_IN_ALL_ACTIVE_DB".equalsIgnoreCase(args[0])) {
                 reslt = EXISTS_IN_ALL_ACTIVE_DB.executeRule(args, conn);
             }
-            
-            
-            
-            
-            
-            
-            logger.debug(" " + args[0] + " ..... RESULT .....  " + reslt);
-
+           
         }
 
         if ("2".equalsIgnoreCase(args[1])) {
