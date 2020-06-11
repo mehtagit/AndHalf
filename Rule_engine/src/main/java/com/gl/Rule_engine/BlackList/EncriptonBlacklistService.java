@@ -80,7 +80,7 @@ public class EncriptonBlacklistService {
             request = new HttpEntity<>(map, headers);
 
             httpResponse = restTemplate.postForEntity(uri, request, String.class);
-            logger.info("Response Body:[" + httpResponse.getBody() + "]");
+            logger.debug("Response Body:[" + httpResponse.getBody() + "]");
             respons = httpResponse.getBody();
         } catch (Exception ex) {
             logger.info(" Error :" + ex);

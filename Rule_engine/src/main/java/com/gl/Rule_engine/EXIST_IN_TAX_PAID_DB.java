@@ -35,7 +35,7 @@ class EXIST_IN_TAX_PAID_DB {
                 logger.debug("Error" + e);
             }
             if (res1 != 0) {
-//                logger.info("Yes");
+//                logger.debug("Yes");
                 res = "Yes";
             } else {
                 res = "No";
@@ -53,15 +53,15 @@ class EXIST_IN_TAX_PAID_DB {
         try {
             switch (args[13]) {
             case "Allow": {
-                logger.info("Action is Allow");
+                logger.debug("Action is Allow");
             }
             break;
             case "Skip": {
-                logger.info("Action is Skip");
+                logger.debug("Action is Skip");
             }
             break;
             case "Reject": {
-                logger.info("Action is Reject");
+                logger.debug("Action is Reject");
 
                 String fileString = args[15] + " , Error Description : IMEI/ESN/MEID is already present in the system  ";
 
@@ -70,35 +70,35 @@ class EXIST_IN_TAX_PAID_DB {
             }
             break;
             case "Block": {
-                logger.info("Action is Block");
+                logger.debug("Action is Block");
             }
             break;
             case "Report": {
-                logger.info("Action is Report");
+                logger.debug("Action is Report");
 
             }
             break;
             case "SYS_REG": {
-                logger.info("Action is SYS_REG");
+                logger.debug("Action is SYS_REG");
             }
             break;
             case "USER_REG": {
-                logger.info("Action is USER_REG");
+                logger.debug("Action is USER_REG");
             }
             break;
             default:
-                logger.info(" The Action " + args[13] + "  is Not Defined  ");
+                logger.debug(" The Action " + args[13] + "  is Not Defined  ");
         }
 
          return "Success";
         } catch (Exception e) {
-            logger.info(" Error " + e);
+            logger.debug(" Error " + e);
             return "Failure";
         }
     }
 
 //    static String executeAction(String[] args, Connection conn , BufferedWriter bw) {
-//        logger.info("exist_in_tax_paid executeAction ");
+//        logger.debug("exist_in_tax_paid executeAction ");
 //        String res = "Success";
 //        try {
 //            if (args[2].equalsIgnoreCase("CDR")) {
@@ -120,11 +120,11 @@ class EXIST_IN_TAX_PAID_DB {
 //                String date = dateFormat1.format(cal.getTime());
 //
 //                String historyIns = " update device_usage_db set failed_rule_date = '" + date + "'   ,failed_rule_id = (select id from rule_engine where name = 'EXIST_IN_TAX_PAID_DB'),  failed_rule_name ='EXIST_IN_TAX_PAID_DB' , action = 'USER' ";
-//                logger.info(" is " + historyIns);
+//                logger.debug(" is " + historyIns);
 //                PreparedStatement statementN = conn.prepareStatement(historyIns);
 //                int rowsInserted1 = statementN.executeUpdate();
 //                if (rowsInserted1 > 0) {
-//                    logger.info("device_usage_db updated");
+//                    logger.debug("device_usage_db updated");
 //                }
 //                 
 //            } else {
@@ -137,7 +137,7 @@ class EXIST_IN_TAX_PAID_DB {
 //            }
 //
 //        } catch (Exception e) {
-//            logger.info("" + e);
+//            logger.debug("" + e);
 //            res = "Error";
 //        }
 //        return res;
@@ -150,7 +150,7 @@ class EXIST_IN_TAX_PAID_DB {
 //                ResultSet result3 = stmt3.executeQuery("select count(*) as cnt  from device_db  where imei_esn_meid='" + args[3] + "' "
 //                        + "  and manufacturer_device_status = 'approved' ");
 //
-//                logger.info(" Query ... select count(*) as cnt  from device_db  where imei_esn_meid='" + args[3] + "' "
+//                logger.debug(" Query ... select count(*) as cnt  from device_db  where imei_esn_meid='" + args[3] + "' "
 //                        + "  and manufacturer_device_status = 'approved' ");
 //
 //                int res3 = 0;
@@ -159,30 +159,30 @@ class EXIST_IN_TAX_PAID_DB {
 //                        res3 = result3.getInt(1);
 //                    }
 //                } catch (Exception e) {
-//                    logger.info("Error1 " + e);
+//                    logger.debug("Error1 " + e);
 //                }
 //                if (res3 != 0) {
-//                    logger.info("Yes");
+//                    logger.debug("Yes");
 //                    res = "Yes";
 //                } else {
 //                    Statement stmt4 = conn.createStatement();
 //                    ResultSet result4 = stmt4.executeQuery(" select  tax_paid_status from  regularize_device_db  where first_imei= '" + args[3] + "' or second_imei  = '" + args[3] + "' or fourth_imei= '" + args[3] + "' or third_imei = '" + args[3] + "'  ");
 //
-//                    logger.info("Qry 3 ...select  tax_paid_status from  regularize_device_db  where first_imei= '" + args[3] + "' or second_imei  = '" + args[3] + "' or fourth_imei= '" + args[3] + "' or third_imei = '" + args[3] + "'  ");
+//                    logger.debug("Qry 3 ...select  tax_paid_status from  regularize_device_db  where first_imei= '" + args[3] + "' or second_imei  = '" + args[3] + "' or fourth_imei= '" + args[3] + "' or third_imei = '" + args[3] + "'  ");
 //                    int res4 = 9;
 //                    try {
 //                        while (result4.next()) {
 //                            res4 = result4.getInt(1);
 //                        }
 //                    } catch (Exception e) {
-//                        logger.info("");
+//                        logger.debug("");
 //                    }
 //                    if (res4 == 0) {
-//                        logger.info("Yes");
+//                        logger.debug("Yes");
 //                        res = "Yes";
 //
 //                    } else {
-//                        logger.info("No");
+//                        logger.debug("No");
 //                        res = "No";
 //                    }
 //

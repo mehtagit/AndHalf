@@ -36,7 +36,7 @@ public class EXIST_IN_OPERATOR_DB {
                 }
 
             } catch (Exception e) {
-                logger.info("E2." + e);
+                logger.debug("E2." + e);
             }
             if (count1 == 12) {
                 res = "YES";
@@ -52,15 +52,15 @@ public class EXIST_IN_OPERATOR_DB {
     }
 
     static String executeAction(String[] args, Connection conn, BufferedWriter bw) {
-//        logger.info("LBD executeAction");
+//        logger.debug("LBD executeAction");
         try {
             switch (args[13]) {
                 case "Allow": {
-                    logger.info("Action is Allow");
+                    logger.debug("Action is Allow");
                 }
                 break;
                 case "Skip": {
-                    logger.info("Action is Skip");
+                    logger.debug("Action is Skip");
                 }
                 break;
                 case "Reject": {
@@ -72,24 +72,24 @@ public class EXIST_IN_OPERATOR_DB {
                 }
                 break;
                 case "Block": {
-                    logger.info("Action is Block");
+                    logger.debug("Action is Block");
                 }
                 break;
                 case "Report": {
-                    logger.info("Action is Report");
+                    logger.debug("Action is Report");
 
                 }
                 break;
                 case "SYS_REG": {
-                    logger.info("Action is SYS_REG");
+                    logger.debug("Action is SYS_REG");
                 }
                 break;
                 case "USER_REG": {
-                    logger.info("Action is USER_REG");
+                    logger.debug("Action is USER_REG");
                 }
                 break;
                 default:
-                    logger.info(" The Action " + args[13] + "  is Not Defined  ");
+                    logger.debug(" The Action " + args[13] + "  is Not Defined  ");
             }
             return "Success";
         } catch (Exception e) {
@@ -123,7 +123,7 @@ public class EXIST_IN_OPERATOR_DB {
 //
 //             
 //            if (args[2].equalsIgnoreCase("CDR")) {
-//                logger.info(" LBD exACTION CDR");
+//                logger.debug(" LBD exACTION CDR");
 //                Connection  
 //                DateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd");   //
 //                Calendar cal = Calendar.getInstance();
@@ -138,7 +138,7 @@ public class EXIST_IN_OPERATOR_DB {
 //                        count = resultc.getInt(1);
 //                    }
 //                } catch (Exception e) {
-//                    logger.info("E2." + e);
+//                    logger.debug("E2." + e);
 //                }
 //                String historyIns = "";
 //                if (count == 0) {
@@ -151,18 +151,18 @@ public class EXIST_IN_OPERATOR_DB {
 //                }
 //
 //                PreparedStatement statementN = conn.prepareStatement(historyIns);
-//                logger.info("Qury.." + historyIns);
+//                logger.debug("Qury.." + historyIns);
 //                int rowsInserted1 = statementN.executeUpdate();
 //                if (rowsInserted1 > 0) {
-//                    logger.info("inserted/updated in device_usage_db ");
+//                    logger.debug("inserted/updated in device_usage_db ");
 //                }
 //
 //                String stln = " insert into stolen_track_db (created_on, imei_esn_meid ,device_id_type,file_name,operator_id,record_date,operator_name,device_status    ) values "
-//                logger.info("qury2 .." + stln);
+//                logger.debug("qury2 .." + stln);
 //                PreparedStatement statementq = conn.prepareStatement(stln);
 //                int rowsInserted3 = statementq.executeUpdate();
 //                if (rowsInserted3 > 0) {
-//                    logger.info("inserted in stolen_track_db ");
+//                    logger.debug("inserted in stolen_track_db ");
 //                }
 //                 
 //

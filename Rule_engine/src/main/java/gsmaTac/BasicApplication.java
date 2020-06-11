@@ -112,7 +112,7 @@ public class BasicApplication {
                     }
                 } catch (Exception e) {
                     logWriter.writeLogGsma("Error in Getting Connection.." + e);
-                    logger.info("ITS NAN.." + e);
+                    logger.debug("ITS NAN.." + e);
                     status = "NAN";
                 }
             } else {

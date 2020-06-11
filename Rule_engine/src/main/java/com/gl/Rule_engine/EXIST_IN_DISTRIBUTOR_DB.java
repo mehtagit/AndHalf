@@ -23,7 +23,7 @@ class EXIST_IN_DISTRIBUTOR_DB {
 
     static String executeRule(String[] args, Connection conn ) {
         String res = "No";
-//        logger.info("EXIST_IN_DISTRIBUTOR_DB executeRule");
+//        logger.debug("EXIST_IN_DISTRIBUTOR_DB executeRule");
        
         try {
            Statement stmt2 = conn.createStatement();
@@ -37,7 +37,7 @@ class EXIST_IN_DISTRIBUTOR_DB {
                         res2 = result1.getString(1);
                     }
                 } catch (Exception e) {
-                    logger.info("eror" + e);
+                    logger.debug("eror" + e);
                 }
                 if (!res2.equals("0")) {
                     res = "Yes";
@@ -49,7 +49,7 @@ class EXIST_IN_DISTRIBUTOR_DB {
             }
              
         } catch (Exception e) {
-            logger.info("error.." + e);
+            logger.debug("error.." + e);
         }
         return res;
     }
@@ -58,44 +58,44 @@ class EXIST_IN_DISTRIBUTOR_DB {
         try {
             switch (args[13]) {
             case "Allow": {
-                logger.info("Action is Allow");
+                logger.debug("Action is Allow");
             }
             break;
             case "Skip": {
-                logger.info("Action is Skip");
+                logger.debug("Action is Skip");
             }
             break;
             case "Reject": {
-                logger.info("Action is Reject");
+                logger.debug("Action is Reject");
                 String fileString = args[15] + " , Error Description : IMEI/ESN/MEID is already present in the system  ";
                    bw.write(fileString);
                 bw.newLine();
             }
             break;
             case "Block": {
-                logger.info("Action is Block");
+                logger.debug("Action is Block");
             }
             break;
             case "Report": {
-                logger.info("Action is Report");
+                logger.debug("Action is Report");
 
             }
             break;
             case "SYS_REG": {
-                logger.info("Action is SYS_REG");
+                logger.debug("Action is SYS_REG");
             }
             break;
             case "USER_REG": {
-                logger.info("Action is USER_REG");
+                logger.debug("Action is USER_REG");
             }
             break;
             default:
-                logger.info(" The Action " + args[13] + "  is Not Defined  ");
+                logger.debug(" The Action " + args[13] + "  is Not Defined  ");
         }
 
          return "Success";
         } catch (Exception e) {
-            logger.info(" Error " + e);
+            logger.debug(" Error " + e);
             return "Failure";
         }
     }
@@ -125,18 +125,18 @@ class EXIST_IN_DISTRIBUTOR_DB {
 ////                cal.add(Calendar.DATE, 0);
 ////                String date = dateFormat1.format(cal.getTime());
 ////                String historyIns = " insert into device_distributor_db (created_on,device_id ,device_type,   device_status , imei_esn_meid   ) values  ( '" + date + "'  , 10 , '" + args[3] + "' ) ";
-////                logger.info("qry..."+historyIns);
+////                logger.debug("qry..."+historyIns);
 ////                PreparedStatement statementN = conn.prepareStatement(historyIns);
 ////                int rowsInserted1 = statementN.executeUpdate();
 ////                if (rowsInserted1 > 0) {
-////                    logger.info(" Details inserted into device_distributor_db for Grace Period");
+////                    logger.debug(" Details inserted into device_distributor_db for Grace Period");
 ////                    
 ////                }
 ////       //                String deviDB = " insert into device_db (created_on,device_id ,device_type   device_status , imei_esn_meid   ) values  ( '" + date + "'  , 10 , '" + args[3] + "' ) ";
 //////                PreparedStatement statementdeviDB = conn.prepareStatement(deviDB);
 //////                int rowsInserteddeviDB = statementdeviDB.executeUpdate();
 //////                if (rowsInserteddeviDB > 0) {
-//////                    logger.info("inserted into device_db");
+//////                    logger.debug("inserted into device_db");
 //////                }
 //////                
 ////                 

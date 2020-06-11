@@ -33,26 +33,26 @@ class IMEI_LUHN_CHECK {
         try {
             switch (args[13]) {
                 case "Allow": {
-                    logger.info("Action is Allow");
+                    logger.debug("Action is Allow");
                 }
                 break;
                 case "Skip": {
-                    logger.info("Action is Skip");
+                    logger.debug("Action is Skip");
                 }
                 break;
                 case "Reject": {
-                    logger.info("Action is Reject");
+                    logger.debug("Action is Reject");
                     String fileString = args[15] + " , Error Description : IMEI does not pass the Checksum algorithm  ";
                     bw.write(fileString);
                     bw.newLine();
                 }
                 break;
                 case "Block": {
-                    logger.info("Action is Block");
+                    logger.debug("Action is Block");
                 }
                 break;
                 case "Report": {
-                    logger.info("Action is Report");
+                    logger.debug("Action is Report");
 
 //                try {
 //                     
@@ -63,35 +63,35 @@ class IMEI_LUHN_CHECK {
 //
 //                    Connection  
 //                    String qry = " insert into device_invalid_db (imei ,   failedrule, failedruleid, action, failed_rule_date  ) values  (  '" + args[3] + "'  ,  'IMEI_LUHN_CHECK'  , (select id from rule_engine where name = 'IMEI_LUHN_CHECK') , 'rule' , '" + date + "' ) ";
-//                    logger.info(" Query.. " + qry);
+//                    logger.debug(" Query.. " + qry);
 //                    PreparedStatement statementN = conn.prepareStatement(qry);
 //                    int rowsInserted1 = statementN.executeUpdate();
 //                    if (rowsInserted1 > 0) {
-//                        logger.info("inserted into device_invalid_db tabl");
+//                        logger.debug("inserted into device_invalid_db tabl");
 //                    }
 //
 //                } catch (Exception e) {
-//                    logger.info("Error..." + e);
+//                    logger.debug("Error..." + e);
 //                    as = "Error";
 //                }
                 }
                 break;
 
                 case "SYS_REG": {
-                    logger.info("Action is SYS_REG");
+                    logger.debug("Action is SYS_REG");
                 }
                 break;
                 case "USER_REG": {
-                    logger.info("Action is USER_REG");
+                    logger.debug("Action is USER_REG");
                 }
                 break;
                 default:
-                    logger.info(" The Action " + args[13] + "  is Not Defined  ");
+                    logger.debug(" The Action " + args[13] + "  is Not Defined  ");
             }
 
             return "Success";
         } catch (Exception e) {
-            logger.info(" Error " + e);
+            logger.debug(" Error " + e);
             return "Failure";
         }
     }
@@ -110,7 +110,7 @@ class IMEI_LUHN_CHECK {
                 int number = c;
                 //Assigning number values to corrsponding Ascii value  
                 if (number < 48 || number > 57) {
-                    logger.info("Enter only numerals");
+                    logger.debug("Enter only numerals");
                     errorflag = true;
                     break;
                 } else {

@@ -19,7 +19,7 @@ class TAC_FORMAT {
 
     static String executeRule(String[] args, Connection conn) {
         String res = null;
-        logger.info("TAC_FORMAT executeRule ....." + args[3]);
+        logger.debug("TAC_FORMAT executeRule ....." + args[3]);
         try {
             if ((args[3].length() == 8 && (args[3].matches("^[-\\w.]+")))) {      // args[10].equalsIgnoreCase("GSM") &&
                 res = "Yes";
@@ -29,7 +29,7 @@ class TAC_FORMAT {
                 logger.debug("TAC_FORMAT   NOT OK ");
             }
         } catch (Exception e) {
-            logger.info("Error.." + e);
+            logger.debug("Error.." + e);
         }
         return res;
     }
@@ -39,15 +39,15 @@ class TAC_FORMAT {
         try {
             switch (args[13]) {
             case "Allow": {
-                logger.info("Action is Allow");
+                logger.debug("Action is Allow");
             }
             break;
             case "Skip": {
-                logger.info("Action is Skip");
+                logger.debug("Action is Skip");
             }
             break;
             case "Reject": {
-                logger.info("Action is Reject");
+                logger.debug("Action is Reject");
 
                 String fileString = args[15] + " , Error Description :  TAC is not as per specifications  ";
 
@@ -56,11 +56,11 @@ class TAC_FORMAT {
             }
             break;
             case "Block": {
-                logger.info("Action is Block");
+                logger.debug("Action is Block");
             }
             break;
             case "Report": {
-                logger.info("Action is Report");
+                logger.debug("Action is Report");
 
 //                try {
 //                     
@@ -72,38 +72,38 @@ class TAC_FORMAT {
 //                    } else {
 //                        actn = "1";
 //                    }
-//                    logger.info("Action ..." + actn);
+//                    logger.debug("Action ..." + actn);
 //                    Connection  
 //                    boolean isOracle = conn.toString().contains("oracle");
 //                    String dateFunction = Util.defaultDate(isOracle);
 //                    String qry1 = " insert into device_invalid_db (imei ,   failedrule, failedruleid, action, failed_rule_date  ) values  (  '" + args[3] + "'  ,  'IMEI_LENGTH'  , ( select id from rule_engine where name =   'IMEI_LENGTH' ), '" + actn + "' , " + dateFunction + " ) ";
-//                    logger.info("" + qry1);
+//                    logger.debug("" + qry1);
 //                    PreparedStatement statement1 = conn.prepareStatement(qry1);
 //                    int rowsInserted11 = statement1.executeUpdate();
 //                    if (rowsInserted11 > 0) {
-//                        logger.info("inserted into device_invalid_db tabl");
+//                        logger.debug("inserted into device_invalid_db tabl");
 //                    }
 //                     
 //                } catch (Exception e) {
-//                    logger.info("Error e " + e);
+//                    logger.debug("Error e " + e);
 //                }
             }
             break;
             case "SYS_REG": {
-                logger.info("Action is SYS_REG");
+                logger.debug("Action is SYS_REG");
             }
             break;
             case "USER_REG": {
-                logger.info("Action is USER_REG");
+                logger.debug("Action is USER_REG");
             }
             break;
             default:
-                logger.info(" The Action " + args[13] + "  is Not Defined  ");
+                logger.debug(" The Action " + args[13] + "  is Not Defined  ");
         }
 
          return "Success";
         } catch (Exception e) {
-            logger.info(" Error " + e);
+            logger.debug(" Error " + e);
             return "Failure";
         }
     }

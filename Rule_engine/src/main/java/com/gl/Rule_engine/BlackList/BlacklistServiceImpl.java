@@ -36,12 +36,12 @@ public class BlacklistServiceImpl {
             List<BlacklistTacDeviceHistoryDb> blacklistTacDeviceHistoryDb = blacklistTacDb.getDeviceHistory();
             insertBlacklistTacDeviceHistory(conn, id, blacklistTacDeviceHistoryDb);
         } catch (Exception ex) {
-            logger.info(" .." + ex);
+            logger.debug(" .." + ex);
         } finally {
             try {
                
             } catch (Exception ex) {
-                logger.info(" .." + ex);
+                logger.debug(" .." + ex);
             }
 
         }
@@ -59,23 +59,23 @@ public class BlacklistServiceImpl {
         Statement stmt = null;
         String query = " insert into blacklist_imei_db (blacklist_status , ref_code , deviceid, created_on)"
                 + "values ('" + blacklistTacDb.getBlacklistStatus() + "', '" + blacklistTacDb.getRefCode() + "' , '" + blacklistTacDb.getDeviceid() + "' ," + dateFunction + " )";
-        logger.info("query .." + query);
+        logger.debug("query .." + query);
         try {
             stmt = conn.createStatement();
             stmt.executeUpdate(query);
-            logger.info("Inserted in blck imei Db");
+            logger.debug("Inserted in blck imei Db");
             ResultSet resultmsdn = stmt.executeQuery("select id from blacklist_imei_db order by id desc  " + limiter + "  ");
             try {
                 while (resultmsdn.next()) {
                     iid = resultmsdn.getInt(1);
                 }
             } catch (Exception e) {
-                logger.info(" inside Erorr" + e);
+                logger.debug(" inside Erorr" + e);
             }
             resultmsdn.close();
             stmt.closeOnCompletion();
         } catch (Exception e) {
-            logger.info(" ERrorr" + e);
+            logger.debug(" ERrorr" + e);
         }
         return iid;
 
@@ -87,15 +87,15 @@ public class BlacklistServiceImpl {
         String dateFunction = Util.defaultDate(isOracle);
         String query = " insert into  blacklist_imei_device_details_db ( bluetooth,brand_name, device_type, manufacturer,marketing_name, model_name , nfc ,operating_system , wlan , blacklist_tac_db_id ,created_on) "
                 + " values( '" + btdd.getBluetooth() + "','" + btdd.getBrandName() + "', '" + btdd.getDeviceType() + "', '" + btdd.getManufacturer() + "','" + btdd.getMarketingName() + "','" + btdd.getModelName() + "','" + btdd.getNFC() + "',  '" + btdd.getOperatingSystem() + "', '" + btdd.getWLAN() + "', '" + id + "' ," + dateFunction + "     ) ";
-        logger.info("uqry " + query);
+        logger.debug("uqry " + query);
         try {
             stmt = conn.createStatement();
             stmt.executeUpdate(query);
-            logger.info("Inserted in blck Tac Details Db");
+            logger.debug("Inserted in blck Tac Details Db");
             
             stmt.closeOnCompletion();
         } catch (Exception e) {
-            logger.info(" ERrorr" + e);
+            logger.debug(" ERrorr" + e);
         }
 
     }
@@ -105,13 +105,13 @@ public class BlacklistServiceImpl {
         try {
             stmt = conn.createStatement();
         } catch (SQLException ex) {
-            logger.info("Error " + ex);
+            logger.debug("Error " + ex);
         }
         String query = null;
         boolean isOracle = conn.toString().contains("oracle");
         String dateFunction = Util.defaultDate(isOracle);
         for (BlacklistTacDeviceHistoryDb btr : blacklistTacDeviceHistoryDb) {
-            logger.info("..." + btr.getAction() + "..." + btr.getCountry() + "..." + btr.getDateReported());
+            logger.debug("..." + btr.getAction() + "..." + btr.getCountry() + "..." + btr.getDateReported());
             query = " insert  into blacklist_imei_device_history_db ( action,country, date_reported,organisation,organisation_type,reason ,blacklist_tac_db_id , created_on) "
                     + "values( '" + btr.getAction() + "', '" + btr.getCountry() + "',  '" + btr.getDateReported() + "',  '" + btr.getOrganisation() + "',  '" + btr.getOrganisationType() + "', '" + btr.getReason() + "', '" + id + "'  , " + dateFunction + "  )";
             try {
@@ -119,15 +119,15 @@ public class BlacklistServiceImpl {
 //stmt.closeOnCompletion();
             } 
             catch (Exception e) {
-                logger.info(" ERror" + e);
+                logger.debug(" ERror" + e);
             }
         }
 
-        logger.info("Inserted in blck Tac history Db");
+        logger.debug("Inserted in blck Tac history Db");
         try {
             stmt.close();
         } catch (SQLException ex) {
-            logger.info(" ERrorr" + ex);
+            logger.debug(" ERrorr" + ex);
         }
     }
 
@@ -137,14 +137,14 @@ public class BlacklistServiceImpl {
         Statement stmt = null;
         String query = " insert into blacklist_imei_invalid_db ( tac ,created_on )" // gsma_blacklist_tac_invalid_db earlier
                 + "values ( '" + blacklistTacDb.getDeviceid() + "' , "+ dateFunction+"  )";
-        logger.info("query .." + query);
+        logger.debug("query .." + query);
         try {
             stmt = conn.createStatement();
             stmt.executeUpdate(query);
             stmt.close();
-            logger.info("Inserted in blck Tac Db");
+            logger.debug("Inserted in blck Tac Db");
         } catch (Exception e) {
-            logger.info("Error " + e);
+            logger.debug("Error " + e);
         }
 
     }
@@ -162,7 +162,7 @@ public class BlacklistServiceImpl {
 
         try {
             query = "select count(deviceid) as counted from blacklist_imei_db  where deviceid = '" + Imei + "' ";
-            logger.info("Query to get getBlacklistCount [" + query + "]");
+            logger.debug("Query to get getBlacklistCount [" + query + "]");
             stmt = conn.createStatement();
             rs0 = stmt.executeQuery(query);
             int cnnt = 0;
@@ -173,7 +173,7 @@ public class BlacklistServiceImpl {
                 stats = "NA";
             } else {
                 query = " select blacklist_status  from  blacklist_imei_db  where deviceid = '" + Imei + "'  " + limiter + "  ";
-                logger.info("Query to get getBlacklist Status [" + query + "]");
+                logger.debug("Query to get getBlacklist Status [" + query + "]");
                 rs1 = stmt.executeQuery(query);
                 while (rs1.next()) {
                     stats = rs1.getString("blacklist_status");
@@ -182,9 +182,9 @@ public class BlacklistServiceImpl {
             rs0.close();
             rs1.close();
             stmt.close();
-            logger.info("  BlacklistSTatuss " + stats);
+            logger.debug("  BlacklistSTatuss " + stats);
         } catch (Exception e) {
-            logger.info("Error at   getBlack listStatus" + e);
+            logger.debug("Error at   getBlack listStatus" + e);
         }
 
         return stats;

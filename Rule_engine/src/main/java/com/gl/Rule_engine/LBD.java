@@ -24,7 +24,7 @@ public class LBD {
 
         String res = "";
         try {
-            logger.info(" dvcStatus == 10/12 --> [Y] fileStat from stolenRecovrMgmt = 5  -->   Rslt[Y]   fi [N]");
+            logger.debug(" dvcStatus == 10/12 --> [Y] fileStat from stolenRecovrMgmt = 5  -->   Rslt[Y]   fi [N]");
             int count = 0;
             int count1 = 0;
             Statement stmt = conn.createStatement();
@@ -35,7 +35,7 @@ public class LBD {
                     count = result1.getInt(1);
                 }
             } catch (Exception e) {
-                logger.info("E1.." + e);
+                logger.debug("E1.." + e);
             }
             stmt = conn.createStatement();
             ResultSet result2 = stmt.executeQuery("select  device_status from device_lawful_db where imei_esn_meid='" + args[3] + "' ");
@@ -46,7 +46,7 @@ public class LBD {
                 }
 
             } catch (Exception e) {
-                logger.info("E2." + e);
+                logger.debug("E2." + e);
             }
             logger.debug("device_operator_db  .." + count);
             logger.debug("device_lawful_db .." + count1);
@@ -58,7 +58,7 @@ public class LBD {
                     ddz = "device_lawful_db";
                 }
                 ResultSet result3 = stmt.executeQuery("select file_status from stolenand_recovery_mgmt where txn_id =   (select  txn_id from " + ddz + " where imei_esn_meid='" + args[3] + "'  order by id desc fetch next 1 rows only )     ");
-                logger.info("After Qury : select file_status from stolenand_recovery_mgmt where txn_id  =  (select  txn_id from " + ddz + " where imei_esn_meid='" + args[3] + "'  order by id desc fetch next 1 rows only )  ");
+                logger.debug("After Qury : select file_status from stolenand_recovery_mgmt where txn_id  =  (select  txn_id from " + ddz + " where imei_esn_meid='" + args[3] + "'  order by id desc fetch next 1 rows only )  ");
                 try {
                     while (result3.next()) {
                         file_stat1 = result3.getInt(1);
@@ -94,15 +94,15 @@ public class LBD {
     }
 
     static String executeAction(String[] args, Connection conn, BufferedWriter bw) {
-//        logger.info("LBD executeAction");
+//        logger.debug("LBD executeAction");
         try {
             switch (args[13]) {
                 case "Allow": {
-                    logger.info("Action is Allow");
+                    logger.debug("Action is Allow");
                 }
                 break;
                 case "Skip": {
-                    logger.info("Action is Skip");
+                    logger.debug("Action is Skip");
                 }
                 break;
                 case "Reject": {
@@ -117,24 +117,24 @@ public class LBD {
                 }
                 break;
                 case "Block": {
-                    logger.info("Action is Block");
+                    logger.debug("Action is Block");
                 }
                 break;
                 case "Report": {
-                    logger.info("Action is Report");
+                    logger.debug("Action is Report");
 
                 }
                 break;
                 case "SYS_REG": {
-                    logger.info("Action is SYS_REG");
+                    logger.debug("Action is SYS_REG");
                 }
                 break;
                 case "USER_REG": {
-                    logger.info("Action is USER_REG");
+                    logger.debug("Action is USER_REG");
                 }
                 break;
                 default:
-                    logger.info(" The Action " + args[13] + "  is Not Defined  ");
+                    logger.debug(" The Action " + args[13] + "  is Not Defined  ");
             }
             return "Success";
         } catch (Exception e) {
@@ -168,7 +168,7 @@ public class LBD {
 //
 //             
 //            if (args[2].equalsIgnoreCase("CDR")) {
-//                logger.info(" LBD exACTION CDR");
+//                logger.debug(" LBD exACTION CDR");
 //                Connection  
 //                DateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd");   //
 //                Calendar cal = Calendar.getInstance();
@@ -183,7 +183,7 @@ public class LBD {
 //                        count = resultc.getInt(1);
 //                    }
 //                } catch (Exception e) {
-//                    logger.info("E2." + e);
+//                    logger.debug("E2." + e);
 //                }
 //                String historyIns = "";
 //                if (count == 0) {
@@ -196,18 +196,18 @@ public class LBD {
 //                }
 //
 //                PreparedStatement statementN = conn.prepareStatement(historyIns);
-//                logger.info("Qury.." + historyIns);
+//                logger.debug("Qury.." + historyIns);
 //                int rowsInserted1 = statementN.executeUpdate();
 //                if (rowsInserted1 > 0) {
-//                    logger.info("inserted/updated in device_usage_db ");
+//                    logger.debug("inserted/updated in device_usage_db ");
 //                }
 //
 //                String stln = " insert into stolen_track_db (created_on, imei_esn_meid ,device_id_type,file_name,operator_id,record_date,operator_name,device_status    ) values "
-//                logger.info("qury2 .." + stln);
+//                logger.debug("qury2 .." + stln);
 //                PreparedStatement statementq = conn.prepareStatement(stln);
 //                int rowsInserted3 = statementq.executeUpdate();
 //                if (rowsInserted3 > 0) {
-//                    logger.info("inserted in stolen_track_db ");
+//                    logger.debug("inserted in stolen_track_db ");
 //                }
 //                 
 //

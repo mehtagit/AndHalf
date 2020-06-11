@@ -27,13 +27,13 @@ public class IMEI_NULL {
                 res = "No";
             }
         } catch (Exception e) {
-            logger.info("Error.." + e);
+            logger.debug("Error.." + e);
         }
         return res;
     }
 
     static String executeAction(String[] args, Connection conn,  BufferedWriter bw) {
-//        logger.info("IMEI_NULL executeAction .." + args[2] + "..." + args[3]);
+//        logger.debug("IMEI_NULL executeAction .." + args[2] + "..." + args[3]);
         String res = "Success";
         try {
             {
@@ -42,7 +42,7 @@ public class IMEI_NULL {
                 bw.newLine();
             }
         } catch (Exception e) {
-            logger.info("Error e ");
+            logger.debug("Error e ");
             res = "Error";
         }
         return res;

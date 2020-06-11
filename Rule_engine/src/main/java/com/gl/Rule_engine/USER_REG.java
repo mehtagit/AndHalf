@@ -22,21 +22,21 @@ class USER_REG {
     static final Logger logger = Logger.getLogger(USER_REG.class);
 
     static String executeRule(String[] args, Connection conn) {
-//        logger.info(" USER_REG executeRule ");
+//        logger.debug(" USER_REG executeRule ");
         String res = "";
         try {
 
             Statement stmt2 = conn.createStatement();
             String qury = " select action from device_usage_db  where  imei ='" + args[3] + "'   union  select action from  device_duplicate_db  where  imei =   '" + args[3] + "'  ";
             ResultSet result1 = stmt2.executeQuery(qury);
-            logger.info(qury);
+            logger.debug(qury);
             Set<String> hash_Set = new HashSet<String>();
             try {
                 while (result1.next()) {
                     hash_Set.add(result1.getString(1));
                 }
             } catch (Exception e) {
-                logger.info("Error " + e);
+                logger.debug("Error " + e);
             }
             if (hash_Set.contains("USER_REG")) {
                 logger.debug("Yes");
@@ -58,15 +58,15 @@ class USER_REG {
         try {
             switch (args[13]) {
             case "Allow": {
-                logger.info("Action is Allow");
+                logger.debug("Action is Allow");
             }
             break;
             case "Skip": {
-                logger.info("Action is Skip");
+                logger.debug("Action is Skip");
             }
             break;
             case "Reject": {
-                logger.info("Action is Reject");
+                logger.debug("Action is Reject");
 
                 String fileString = args[15] + " , Error Description : IMEI/ESN/MEID is already present in the system  ";
                  bw.write(fileString);
@@ -74,35 +74,35 @@ class USER_REG {
             }
             break;
             case "Block": {
-                logger.info("Action is Block");
+                logger.debug("Action is Block");
             }
             break;
             case "Report": {
-                logger.info("Action is Report");
+                logger.debug("Action is Report");
 
             }
             break;
             case "SYS_REG": {
-                logger.info("Action is SYS_REG");
+                logger.debug("Action is SYS_REG");
             }
             break;
             case "USER_REG": {
-                logger.info("Action is USER_REG");
+                logger.debug("Action is USER_REG");
             }
             break;
             default:
-                logger.info(" The Action " + args[13] + "  is Not Defined  ");
+                logger.debug(" The Action " + args[13] + "  is Not Defined  ");
         }
 
          return "Success";
         } catch (Exception e) {
-            logger.info(" Error " + e);
+            logger.debug(" Error " + e);
             return "Failure";
         }
     }
 
 //    static String executeAction(String[] args, Connection conn , BufferedWriter bw) {
-//        logger.info("Skip the action");
+//        logger.debug("Skip the action");
 //        return "Skip";
 //
 ////              Map<String, String> map = new HashMap<String, String>();

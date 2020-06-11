@@ -26,7 +26,7 @@ class EXIST_IN_CUSTOM_DB {
 
             Statement stmt2 = conn.createStatement();
 //            if (args[2].equalsIgnoreCase("CDR")) {
-//                logger.info("Error Not For CDR");
+//                logger.debug("Error Not For CDR");
 //            } else
             {
                 ResultSet result1 = stmt2.executeQuery("select count(imei_esn_meid) from device_custom_db  where imei_esn_meid='" + args[3] + "' ");
@@ -36,7 +36,7 @@ class EXIST_IN_CUSTOM_DB {
                         res2 = result1.getString(1);
                     }
                 } catch (Exception e) {
-                    logger.info("");
+                    logger.debug("");
                 }
                 if (!res2.equals("0")) {
                     res = "Yes";
@@ -48,7 +48,7 @@ class EXIST_IN_CUSTOM_DB {
 
             }
         } catch (Exception e) {
-            logger.info("error.." + e);
+            logger.debug("error.." + e);
         }
         return res;
     }
@@ -57,15 +57,15 @@ class EXIST_IN_CUSTOM_DB {
         try {
             switch (args[13]) {
                 case "Allow": {
-                    logger.info("Action is Allow");
+                    logger.debug("Action is Allow");
                 }
                 break;
                 case "Skip": {
-                    logger.info("Action is Skip");
+                    logger.debug("Action is Skip");
                 }
                 break;
                 case "Reject": {
-                    logger.info("Action is Reject");
+                    logger.debug("Action is Reject");
 
                     String fileString = args[15] + " , Error Description : IMEI/ESN/MEID is already present in the system  ";
                      bw.write(fileString);
@@ -73,29 +73,29 @@ class EXIST_IN_CUSTOM_DB {
                 }
                 break;
                 case "Block": {
-                    logger.info("Action is Block");
+                    logger.debug("Action is Block");
                 }
                 break;
                 case "Report": {
-                    logger.info("Action is Report");
+                    logger.debug("Action is Report");
 
                 }
                 break;
                 case "SYS_REG": {
-                    logger.info("Action is SYS_REG");
+                    logger.debug("Action is SYS_REG");
                 }
                 break;
                 case "USER_REG": {
-                    logger.info("Action is USER_REG");
+                    logger.debug("Action is USER_REG");
                 }
                 break;
                 default:
-                    logger.info(" The Action " + args[13] + "  is Not Defined  ");
+                    logger.debug(" The Action " + args[13] + "  is Not Defined  ");
             }
 
             return "Success";
         } catch (Exception e) {
-            logger.info(" Error " + e);
+            logger.debug(" Error " + e);
             return "Failure";
         }
     }

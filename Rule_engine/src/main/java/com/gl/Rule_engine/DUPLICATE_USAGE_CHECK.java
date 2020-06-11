@@ -23,23 +23,23 @@ class DUPLICATE_USAGE_CHECK {
         String res = null;
         try {
 
-//            logger.info("DUPLICATE_USAGE_CHECK executeRule");
+//            logger.debug("DUPLICATE_USAGE_CHECK executeRule");
             {
 
                 Statement stmt2 = conn.createStatement();
                 ResultSet result1 = stmt2.executeQuery("  select count( imei) as c1  from device_usage_db where imei='" + args[3] + "' ");
-                logger.info(" select count( msisdn) as c1  from device_usage_db where imei='" + args[3] + "'");
+                logger.debug(" select count( msisdn) as c1  from device_usage_db where imei='" + args[3] + "'");
                 int res1 = 0;
                 try {
                     while (result1.next()) {
                         res1 = result1.getInt(1);
                     }
                 } catch (Exception e) {
-                    logger.info("eror " + e);
+                    logger.debug("eror " + e);
                 }
                 logger.debug("device_usage_db count:" + res1);
                 Statement stmt3 = conn.createStatement();
-                logger.info(" select count(msisdn) as c1  from device_duplicate_db where imei='" + args[3] + "' ");
+                logger.debug(" select count(msisdn) as c1  from device_duplicate_db where imei='" + args[3] + "' ");
                 ResultSet result3 = stmt3.executeQuery("  select count(imei) as c1  from device_duplicate_db where imei='" + args[3] + "' ");
                 int res3 = 0;
                 try {
@@ -47,7 +47,7 @@ class DUPLICATE_USAGE_CHECK {
                         res3 = result3.getInt(1);
                     }
                 } catch (Exception e) {
-                    logger.info("errro2 " + e);
+                    logger.debug("errro2 " + e);
                 }
 
                 logger.debug("device_duplicate_db count:" + res3);
@@ -63,7 +63,7 @@ class DUPLICATE_USAGE_CHECK {
                 } catch (Exception e) {
                     logger.error("" + e);
                 }
-                logger.info("Select  value from system_configuration_db where tag='DUPLICATE_IMEI_USAGE_COUNT'  .... " + res4);
+                logger.debug("Select  value from system_configuration_db where tag='DUPLICATE_IMEI_USAGE_COUNT'  .... " + res4);
                 if (res4 <= ttl) {
                     res = "Yes";
                 } else {
@@ -86,39 +86,39 @@ class DUPLICATE_USAGE_CHECK {
         try {
             switch (args[13]) {
                 case "Allow": {
-                    logger.info("Action is Allow");
+                    logger.debug("Action is Allow");
                 }
                 break;
                 case "Skip": {
-                    logger.info("Action is Skip");
+                    logger.debug("Action is Skip");
                 }
                 break;
                 case "Reject": {
-                    logger.info("Action is Reject");
+                    logger.debug("Action is Reject");
                     String fileString = args[15] + " , Error Description : IMEI/ESN/MEID is already present in the system  ";
                      bw.write(fileString);
                 bw.newLine();
                 }
                 break;
                 case "Block": {
-                    logger.info("Action is Block");
+                    logger.debug("Action is Block");
                 }
                 break;
                 case "Report": {
-                    logger.info("Action is Report");
+                    logger.debug("Action is Report");
 
                 }
                 break;
                 case "SYS_REG": {
-                    logger.info("Action is SYS_REG");
+                    logger.debug("Action is SYS_REG");
                 }
                 break;
                 case "USER_REG": {
-                    logger.info("Action is USER_REG");
+                    logger.debug("Action is USER_REG");
                 }
                 break;
                 default:
-                    logger.info(" The Action " + args[13] + "  is Not Defined  ");
+                    logger.debug(" The Action " + args[13] + "  is Not Defined  ");
             }
             return "Success";
         } catch (Exception e) {
@@ -152,7 +152,7 @@ class DUPLICATE_USAGE_CHECK {
 //                PreparedStatement statementN = conn.prepareStatement(historyIns);
 //                int rowsInserted1 = statementN.executeUpdate();
 //                if (rowsInserted1 > 0) {
-//                    logger.info("inserted into device_usage_db");
+//                    logger.debug("inserted into device_usage_db");
 //                }
 //                 
 //            }
@@ -170,7 +170,7 @@ class DUPLICATE_USAGE_CHECK {
 //            
 //            
 //        } catch (Exception e) {
-//            logger.info("Errror" + e);
+//            logger.debug("Errror" + e);
 //        }
 //
 //

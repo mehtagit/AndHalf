@@ -28,7 +28,7 @@ class EXISTS_IN_TYPE_APPROVED_TAC {
         try {
             Statement stmt2 = conn.createStatement();
             ResultSet result1 = stmt2.executeQuery("select count(tac) as cnt  from type_approvedtac where tac='" + args[3].substring(0, 8) + "'  and  status = 3 ");
-            logger.info("select count(tac) as cnt  from type_approvedtac where tac='" + args[3].substring(0, 8) + "'  and  status = 3 ");
+            logger.debug("select count(tac) as cnt  from type_approvedtac where tac='" + args[3].substring(0, 8) + "'  and  status = 3 ");
             int res1 = 0;
             while (result1.next()) {
                 res1 = result1.getInt(1);
@@ -41,7 +41,7 @@ class EXISTS_IN_TYPE_APPROVED_TAC {
             result1.close();
             stmt2.close();
         } catch (Exception e) {
-            logger.info("Error" + e);
+            logger.debug("Error" + e);
         }
         return res;
     }
@@ -50,15 +50,15 @@ class EXISTS_IN_TYPE_APPROVED_TAC {
         try {
             switch (args[13]) {
                 case "Allow": {
-                    logger.info("Action is Allow");
+                    logger.debug("Action is Allow");
                 }
                 break;
                 case "Skip": {
-                    logger.info("Action is Skip");
+                    logger.debug("Action is Skip");
                 }
                 break;
                 case "Reject": {
-                    logger.info("Action is Reject");
+                    logger.debug("Action is Reject");
                     String fileString = args[15] + " ,Error Description : TAC in the IMEI/MEID is not a approved TAC from TRC ";
                     bw.write(fileString);
                     bw.newLine();
@@ -80,12 +80,12 @@ class EXISTS_IN_TYPE_APPROVED_TAC {
 //                        PreparedStatement statementN = conn.prepareStatement(pending_tac_approved_db);
 //                        int rowsInserted1 = statementN.executeUpdate();
 //                        if (rowsInserted1 > 0) {
-//                            logger.info("inserted into pending_tac_approved_db");
+//                            logger.debug("inserted into pending_tac_approved_db");
 //                        }
 //
 //                        statementN.close();
 //                    } catch (Exception e) {
-//                        logger.info("Error" + e);
+//                        logger.debug("Error" + e);
 //                    }
 
                 }
@@ -97,13 +97,13 @@ class EXISTS_IN_TYPE_APPROVED_TAC {
                 }
                 break;
                 default:
-                    logger.info(" The Action " + args[13] + "  is Not Defined  ");
+                    logger.debug(" The Action " + args[13] + "  is Not Defined  ");
 
             }
 
             return "Success";
         } catch (Exception e) {
-            logger.info(" Error " + e);
+            logger.debug(" Error " + e);
             return "Failure";
         }
     }

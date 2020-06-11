@@ -36,12 +36,12 @@ class EXISTS_IN_TAC_DB {
             if (tac.equalsIgnoreCase("")) {
                 res = "No";
             } else {
-                logger.info("GSMA started");
+                logger.debug("GSMA started");
                 BasicApplication w = new BasicApplication();
                 res = w.gsmaApplication(tac, conn);
             }
         } catch (Exception e) {
-            logger.info("errror " + e);
+            logger.debug("errror " + e);
         }
         return res;
     }
@@ -49,51 +49,51 @@ class EXISTS_IN_TAC_DB {
     static String executeAction(String[] args, Connection conn,  BufferedWriter bw) {
       try{  switch (args[13]) {
             case "Allow": {
-                logger.info("Action is Allow");
+                logger.debug("Action is Allow");
             }
             break;
             case "Skip": {
-                logger.info("Action is Skip");
+                logger.debug("Action is Skip");
             }
             break;
             case "Reject": {
-                logger.info("Action is Reject");
+                logger.debug("Action is Reject");
                 String fileString = args[15] + " , Error Code :CON_RULE_0003 , Error Description :TAC in IMEI is not approved TAC from GSMA  ";
                  bw.write(fileString);
                 bw.newLine();
             }
             break;
             case "Block": {
-                logger.info("Action is Block");
+                logger.debug("Action is Block");
             }
             break;
             case "Report": {
-                logger.info("Action is Report");
+                logger.debug("Action is Report");
             }
             break;
             case "SYS_REG": {
-                logger.info("Action is SYS_REG");
+                logger.debug("Action is SYS_REG");
             }
             break;
             case "NAN": {
-                logger.info("Action is NAN");
+                logger.debug("Action is NAN");
                 String fileString = args[15] + " , Error Code :CON_RULE_000X, Error Description :Something went Wrong while Authorization of TAC .Try after Some Time.   ";
                  bw.write(fileString);
                 bw.newLine();
             }
             break;
             case "USER_REG": {
-                logger.info("Action is USER_REG");
+                logger.debug("Action is USER_REG");
             }
             break;
             default:
-                logger.info(" The Action " + args[13] + "  is Not Defined  ");
+                logger.debug(" The Action " + args[13] + "  is Not Defined  ");
         }
 
        
 return "Success";
         } catch (Exception e) {
-            logger.info(" Error " + e);
+            logger.debug(" Error " + e);
             return "Failure";
         }
     }
@@ -101,7 +101,7 @@ return "Success";
 }
 
 //        
-//        logger.info("EXISTS_IN_TAC_DB executeAction ");
+//        logger.debug("EXISTS_IN_TAC_DB executeAction ");
 //        String res = "Success";
 //        try {
 //            if (args[2].equalsIgnoreCase("CDR")) {
@@ -119,7 +119,7 @@ return "Success";
 //            }
 //
 //        } catch (Exception e) {
-//            logger.info("" + e);
+//            logger.debug("" + e);
 //            res = "Error";
 //        }
 //        return res;

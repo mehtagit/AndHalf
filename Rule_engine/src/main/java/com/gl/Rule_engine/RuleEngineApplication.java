@@ -12,7 +12,7 @@ public class RuleEngineApplication {
     
 //    logger.error(this.getClass().getName() + e);
 //    public static void main(String[] args,conn) {
-//        logger.info(startRuleEngine(args,conn));  //LATEST JUN (9)
+//        logger.debug(startRuleEngine(args,conn));  //LATEST JUN (9)
 //    }
     public static String startRuleEngine(String[] args, Connection conn, BufferedWriter bw) {
         String reslt = "";

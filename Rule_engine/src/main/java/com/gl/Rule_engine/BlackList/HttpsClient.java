@@ -40,7 +40,7 @@ static final Logger logger = Logger.getLogger(HttpsClient.class);
 			out.write(json);
 			out.flush();
 		}
-		logger.info("Response Code=" + con.getResponseCode());
+		logger.debug("Response Code=" + con.getResponseCode());
 		try (BufferedReader reader = new BufferedReader(new InputStreamReader(con.getInputStream()))) {
 			reader.lines().forEach(System.out::println);
 		}

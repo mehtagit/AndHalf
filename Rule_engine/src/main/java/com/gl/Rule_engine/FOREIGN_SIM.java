@@ -19,7 +19,7 @@ class FOREIGN_SIM {
 
     static String executeRule(String[] args, Connection conn) {
         String res = null;
-//        logger.info("FOREIGN_SIM executeRule ....." + args[3]);
+//        logger.debug("FOREIGN_SIM executeRule ....." + args[3]);
         try {
             String msisdn = args[12].startsWith("19") ? args[12].substring(2) : args[12];
             if (msisdn.startsWith("855")) {
@@ -39,7 +39,7 @@ class FOREIGN_SIM {
             switch (args[13]) {
             case "Allow": {
                 String msisdn = args[12].startsWith("19") ? args[12].substring(2) : args[12];
-                logger.info("Action is Allow");
+                logger.debug("Action is Allow");
 
                 try {
 
@@ -74,17 +74,17 @@ class FOREIGN_SIM {
                     stmt.close();
 
                 } catch (Exception e) {
-                    logger.info("Error e " + e);
+                    logger.debug("Error e " + e);
                 }
 
             }
             break;
             case "Skip": {
-                logger.info("Action is Skip");
+                logger.debug("Action is Skip");
             }
             break;
             case "Reject": {
-                logger.info("Action is Reject");
+                logger.debug("Action is Reject");
 
                 String fileString = args[15] + " , Error Description : Imei  Utilised By Foreign Sim   ";
 
@@ -93,11 +93,11 @@ class FOREIGN_SIM {
             }
             break;
             case "Block": {
-                logger.info("Action is Block");
+                logger.debug("Action is Block");
             }
             break;
             case "Report": {
-                logger.info("Action is Report");
+                logger.debug("Action is Report");
 
 //                try {
 //                     
@@ -109,38 +109,38 @@ class FOREIGN_SIM {
 //                    } else {
 //                        actn = "1";
 //                    }
-//                    logger.info("Action ..." + actn);
+//                    logger.debug("Action ..." + actn);
 //                    Connection  
 //                    boolean isOracle = conn.toString().contains("oracle");
 //                    String dateFunction = Util.defaultDate(isOracle);
 //                    String qry1 = " insert into device_invalid_db (imei ,   failedrule, failedruleid, action, failed_rule_date  ) values  (  '" + args[3] + "'  ,  'IMEI_LENGTH'  , ( select id from rule_engine where name =   'IMEI_LENGTH' ), '" + actn + "' , " + dateFunction + " ) ";
-//                    logger.info("" + qry1);
+//                    logger.debug("" + qry1);
 //                    PreparedStatement statement1 = conn.prepareStatement(qry1);
 //                    int rowsInserted11 = statement1.executeUpdate();
 //                    if (rowsInserted11 > 0) {
-//                        logger.info("inserted into device _invalid_db tabl");
+//                        logger.debug("inserted into device _invalid_db tabl");
 //                    }
 //                     
 //                } catch (Exception e) {
-//                    logger.info("Error e " + e);
+//                    logger.debug("Error e " + e);
 //                }
             }
             break;
             case "SYS_REG": {
-                logger.info("Action is SYS_REG");
+                logger.debug("Action is SYS_REG");
             }
             break;
             case "USER_REG": {
-                logger.info("Action is USER_REG");
+                logger.debug("Action is USER_REG");
             }
             break;
             default:
-                logger.info(" The Action " + args[13] + "  is Not Defined  ");
+                logger.debug(" The Action " + args[13] + "  is Not Defined  ");
         }
 
          return "Success";
         } catch (Exception e) {
-            logger.info(" Error " + e);
+            logger.debug(" Error " + e);
             return "Failure";
         }
     }

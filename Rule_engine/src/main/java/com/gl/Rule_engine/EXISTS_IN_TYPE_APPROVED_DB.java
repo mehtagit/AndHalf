@@ -28,7 +28,7 @@ class EXISTS_IN_TYPE_APPROVED_DB {
         try {
             Statement stmt2 = conn.createStatement();
             ResultSet result1 = stmt2.executeQuery("select count(tac) as cnt  from type_approved_db where tac='" + args[3].substring(0, 8) + "' ");
-            logger.info("select count(tac) as cnt  from type_approved_db where tac='" + args[3].substring(0, 8) + "' ");
+            logger.debug("select count(tac) as cnt  from type_approved_db where tac='" + args[3].substring(0, 8) + "' ");
             int res1 = 0;
 
             while (result1.next()) {
@@ -42,7 +42,7 @@ class EXISTS_IN_TYPE_APPROVED_DB {
             result1.close();
             stmt2.close();
         } catch (Exception e) {
-            logger.info("Error" + e);
+            logger.debug("Error" + e);
         }
         return res;
     }
@@ -51,15 +51,15 @@ class EXISTS_IN_TYPE_APPROVED_DB {
         try {
             switch (args[13]) {
                 case "Allow": {
-                    logger.info("Action is Allow");
+                    logger.debug("Action is Allow");
                 }
                 break;
                 case "Skip": {
-                    logger.info("Action is Skip");
+                    logger.debug("Action is Skip");
                 }
                 break;
                 case "Reject": {
-                    logger.info("Action is Reject");
+                    logger.debug("Action is Reject");
                     String fileString = args[15] + " ,Error Description : TAC in the IMEI/MEID is not a approved TAC from TRC ";
                     bw.write(fileString);
                     bw.newLine();
@@ -78,15 +78,16 @@ class EXISTS_IN_TYPE_APPROVED_DB {
                         String pending_tac_approved_db = " insert into pending_tac_approved_db (created_on,feature_name ,  tac , txn_id, user_id   ,modified_on   ) "
                                 + "   values  ( '" + date + "'  , '" + args[2] + "'  ,    '" + args[3].substring(0, 8) + "'  , '" + args[14] + "' , " + user_id_qury + "  ,  '" + date + "'   ) ";
                         logger.debug("Qury is " + pending_tac_approved_db);
-                        PreparedStatement statementN = conn.prepareStatement(pending_tac_approved_db);
-                        int rowsInserted1 = statementN.executeUpdate();
-                        if (rowsInserted1 > 0) {
-                            logger.info("inserted into pending_tac_approved_db");
+                        try {
+                            PreparedStatement statementN = conn.prepareStatement(pending_tac_approved_db);
+                            statementN.executeUpdate();
+                            statementN.close();
+                        } catch (Exception e) {
+                            logger.debug(e);
                         }
 
-                        statementN.close();
                     } catch (Exception e) {
-                        logger.info("Error" + e);
+                        logger.debug("Error" + e);
                     }
 //                String fileString = args[15];
 //                 bw.write(fileString);
@@ -100,13 +101,13 @@ class EXISTS_IN_TYPE_APPROVED_DB {
                 }
                 break;
                 default:
-                    logger.info(" The Action " + args[13] + "  is Not Defined  ");
+                    logger.debug(" The Action " + args[13] + "  is Not Defined  ");
 
             }
 
             return "Success";
         } catch (Exception e) {
-            logger.info(" Error " + e);
+            logger.debug(" Error " + e);
             return "Failure";
         }
     }

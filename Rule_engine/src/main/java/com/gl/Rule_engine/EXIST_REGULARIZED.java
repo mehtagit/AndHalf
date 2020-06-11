@@ -16,7 +16,7 @@ class EXIST_REGULARIZED {
 
     static String executeRule(String[] args, Connection conn) {
         String str = "";
-        logger.info("EXIST_REGULARIZED executeRule ");
+        logger.debug("EXIST_REGULARIZED executeRule ");
 
         {
 
@@ -24,7 +24,7 @@ class EXIST_REGULARIZED {
 
                 Statement stmt2 = conn.createStatement();
                 ResultSet result1 = stmt2.executeQuery("select action, msisdn from device_usage_db  where imei_esn_meid='" + args[3] + "' ");
-                logger.info("select action, msisdn from device_usage_db  where imei_esn_meid='" + args[3] + "' ");
+                logger.debug("select action, msisdn from device_usage_db  where imei_esn_meid='" + args[3] + "' ");
                 String actn = "";
                 String msdn = "";
                 try {
@@ -39,7 +39,7 @@ class EXIST_REGULARIZED {
                 if (actn.equalsIgnoreCase("2") || actn.equalsIgnoreCase("0")) {
                     if (msdn.equalsIgnoreCase(args[12])) {
                         str = "No";
-//                        logger.info("No");
+//                        logger.debug("No");
                     } else {
                         str = chckDubplicateDb(args, conn);
                     }
@@ -63,14 +63,14 @@ class EXIST_REGULARIZED {
 
             Statement stmt3 = conn.createStatement();
             ResultSet result3 = stmt3.executeQuery("select action from device_duplicate_db  where imei_esn_meid='" + args[3] + "'    and msisdn = '" + args[12] + "' ");
-            logger.info("select action from device_duplicate_db  where imei_esn_meid='" + args[3] + "'    and msisdn = '" + args[12] + "' ");
+            logger.debug("select action from device_duplicate_db  where imei_esn_meid='" + args[3] + "'    and msisdn = '" + args[12] + "' ");
             String actn3 = "";
             try {
                 while (result3.next()) {
                     actn3 = result3.getString(1);
                 }
             } catch (Exception e) {
-                logger.info("");
+                logger.debug("");
             }
             if (actn3.equalsIgnoreCase("2") || actn3.equalsIgnoreCase("0")) {
 
@@ -91,15 +91,15 @@ class EXIST_REGULARIZED {
         try {
             switch (args[13]) {
                 case "Allow": {
-                    logger.info("Action is Allow");
+                    logger.debug("Action is Allow");
                 }
                 break;
                 case "Skip": {
-                    logger.info("Action is Skip");
+                    logger.debug("Action is Skip");
                 }
                 break;
                 case "Reject": {
-                    logger.info("Action is Reject");
+                    logger.debug("Action is Reject");
 
                     String fileString = args[15] + " , Error Description : IMEI/ESN/MEID is already present in the system  ";
 
@@ -108,29 +108,29 @@ class EXIST_REGULARIZED {
                 }
                 break;
                 case "Block": {
-                    logger.info("Action is Block");
+                    logger.debug("Action is Block");
                 }
                 break;
                 case "Report": {
-                    logger.info("Action is Report");
+                    logger.debug("Action is Report");
 
                 }
                 break;
                 case "SYS_REG": {
-                    logger.info("Action is SYS_REG");
+                    logger.debug("Action is SYS_REG");
                 }
                 break;
                 case "USER_REG": {
-                    logger.info("Action is USER_REG");
+                    logger.debug("Action is USER_REG");
                 }
                 break;
                 default:
-                    logger.info(" The Action " + args[13] + "  is Not Defined  ");
+                    logger.debug(" The Action " + args[13] + "  is Not Defined  ");
             }
 
             return "Success";
         } catch (Exception e) {
-            logger.info(" Error " + e);
+            logger.debug(" Error " + e);
             return "Failure";
         }
     }

@@ -31,7 +31,7 @@ class SAME_OPERATOR_UNBLOCK {
             Statement stmt2 = conn.createStatement();
             String qury = " select OPERATOR_TYPE_ID from stolenand_recovery_mgmt where  TXN_ID = (select TXN_ID  from  device_operator_db where IMEI_ESN_MEID = '" + args[3] + "' )";
             ResultSet result1 = stmt2.executeQuery(qury);
-            logger.info(qury);
+            logger.debug(qury);
             try {
                 while (result1.next()) {
                     opr1 = result1.getString(1);
@@ -42,7 +42,7 @@ class SAME_OPERATOR_UNBLOCK {
 
             qury = " select OPERATOR_TYPE_ID from stolenand_recovery_mgmt where  TXN_ID =  '" + args[14] + "' ";
             result1 = stmt2.executeQuery(qury);
-            logger.info(qury);
+            logger.debug(qury);
             try {
                 while (result1.next()) {
                     opr2 = result1.getString(1);
@@ -69,15 +69,15 @@ class SAME_OPERATOR_UNBLOCK {
         try {
             switch (args[13]) {
                 case "Allow": {
-                    logger.info("Action is Allow");
+                    logger.debug("Action is Allow");
                 }
                 break;
                 case "Skip": {
-                    logger.info("Action is Skip");
+                    logger.debug("Action is Skip");
                 }
                 break;
                 case "Reject": {
-                    logger.info("Action is Reject");
+                    logger.debug("Action is Reject");
 
                     String fileString = args[15] + ",Error Code :CON_RULE_0015   , Error Description : Current Operator don't have Permission to UnBlock this  IMEI/ESN/MEID   ";
                     bw.write(fileString);
@@ -85,29 +85,29 @@ class SAME_OPERATOR_UNBLOCK {
                 }
                 break;
                 case "Block": {
-                    logger.info("Action is Block");
+                    logger.debug("Action is Block");
                 }
                 break;
                 case "Report": {
-                    logger.info("Action is Report");
+                    logger.debug("Action is Report");
 
                 }
                 break;
                 case "SYS_REG": {
-                    logger.info("Action is SYS_REG");
+                    logger.debug("Action is SYS_REG");
                 }
                 break;
                 case "USER_REG": {
-                    logger.info("Action is USER_REG");
+                    logger.debug("Action is USER_REG");
                 }
                 break;
                 default:
-                    logger.info(" The Action " + args[13] + "  is Not Defined  ");
+                    logger.debug(" The Action " + args[13] + "  is Not Defined  ");
             }
 
             return "Success";
         } catch (Exception e) {
-            logger.info(" Error " + e);
+            logger.debug(" Error " + e);
             return "Failure";
         }
     }

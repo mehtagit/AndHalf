@@ -29,15 +29,15 @@ public class EXIST_IN_GSMABLACKLIST_DB {
         try {
             switch (args[13]) {
             case "Allow": {
-                logger.info("Action is Allow");
+                logger.debug("Action is Allow");
             }
             break;
             case "Skip": {
-                logger.info("Action is Skip");
+                logger.debug("Action is Skip");
             }
             break;
             case "Reject": {
-                logger.info("Action is Reject");
+                logger.debug("Action is Reject");
 
                 String fileString = args[15] + " , Error Description : IMEI/ESN/MEID is already present in the system  ";
 
@@ -47,37 +47,37 @@ public class EXIST_IN_GSMABLACKLIST_DB {
             }
             break;
             case "Block": {
-                logger.info("Action is Block");
+                logger.debug("Action is Block");
             }
             break;
             case "Report": {
-                logger.info("Action is Report");
+                logger.debug("Action is Report");
 
             }
             break;
             case "SYS_REG": {
-                logger.info("Action is SYS_REG");
+                logger.debug("Action is SYS_REG");
             }
             break;
             case "USER_REG": {
-                logger.info("Action is USER_REG");
+                logger.debug("Action is USER_REG");
             }
             break;
             case "NAN": {
-                logger.info("Action is NAN");
-                String fileString = args[15] + " , Error Code :CON_RULE_000X, Error Description :Something went Wrong while Checking  Status of Imei .Try after Some Time.   ";
+                logger.debug("Action is NAN");
+                String fileString = args[15] + " , Error Code :CON_RULE_0013, Error Description :Something went Wrong while Checking  Status of Imei .Try after Some Time.   ";
                  bw.write(fileString);
                 bw.newLine();
             }
             break;
             
             default:
-                logger.info(" The Action " + args[13] + "  is Not Defined  ");
+                logger.debug(" The Action " + args[13] + "  is Not Defined  ");
         }
 
          return "Success";
         } catch (Exception e) {
-            logger.info(" Error " + e);
+            logger.debug(" Error " + e);
             return "Failure";
         }
     }
