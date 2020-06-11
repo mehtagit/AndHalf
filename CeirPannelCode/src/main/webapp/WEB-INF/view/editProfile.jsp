@@ -605,7 +605,7 @@ onchange="InvalidMsg(this,'select','<spring:message code="validation.selectField
                 </div>
             </div>
         </div>
-   
+    </div>
     
     <div id="profileResponse" class="modal" style="width: 40%">
                             <h6 class="modal-header"><spring:message code="registration.updateinformation" /></h6>

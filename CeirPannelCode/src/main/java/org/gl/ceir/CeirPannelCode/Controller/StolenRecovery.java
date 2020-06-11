@@ -315,13 +315,7 @@ public class StolenRecovery {
 				  		}{			
 				  			FileCopyToOtherServer fileCopyRequest= new FileCopyToOtherServer();
 				  			log.info("file is not null");
-				  			fileCopyRequest.setFilePath(urlToUpload.getValue());
-				  			fileCopyRequest.setTxnId(txnId);
-				  			fileCopyRequest.setFileName(file.getOriginalFilename());
-				  			fileCopyRequest.setServerId(serverId);
-				  			log.info("request passed to move file to other server=="+fileCopyRequest);
-				  			GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
-				  			log.info("file move api response==="+fileRespnose);
+				  			
 				  		    
 				  			String rootPath = urlToUpload.getValue()+txnId+"/";
 				  		File tmpDir = new File(rootPath+file.getOriginalFilename());
@@ -350,6 +344,13 @@ public class StolenRecovery {
 						BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
 						stream.write(bytes);
 						stream.close();
+						fileCopyRequest.setFilePath(rootPath);
+			  			fileCopyRequest.setTxnId(txnId);
+			  			fileCopyRequest.setFileName(file.getOriginalFilename());
+			  			fileCopyRequest.setServerId(serverId);
+			  			log.info("request passed to move file to other server=="+fileCopyRequest);
+			  			GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
+			  			log.info("file move api response==="+fileRespnose);
 						stolenRecoveryModel.setFileName(file.getOriginalFilename());
 				  		}	
 					}

@@ -95,19 +95,6 @@ public void setTxnId(String txnId) {
 this.txnId = txnId;
 }
 
-
-public FileCopyToOtherServer(String fileName, String filePath, Integer serverId, String txnId) {
-	super();
-	this.fileName = fileName;
-	this.filePath = filePath;
-	this.serverId = serverId;
-	this.txnId = txnId;
-}
-
-public FileCopyToOtherServer() {
-	super();
-}
-
 @Override
 public String toString() {
 	StringBuilder builder = new StringBuilder();

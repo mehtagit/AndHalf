@@ -107,7 +107,8 @@ var contextpath = "${context}";
 
 </head>
 <%-- <body data-roleType="${usertype}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}"> --%>
-<body data-id="8" data-roleType="${usertype}" data-userTypeID="${usertypeId}" data-userID="${userid}" 
+<body data-id="8" data-roleType="${usertype}" data-userTypeID="${usertypeId}" data-userID="${userid}" 	
+data-selected-username="${username}"
 data-selected-roleType="${selectedUserTypeId}" 
 data-stolenselected-roleType="${stolenselectedUserTypeId}" 
 session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}"
@@ -303,7 +304,7 @@ data-session-source="${not empty param.source ? param.source : 'menu'}">
             <div class="row">
                 <form action="">
                   
-                    <h6><spring:message code="registration.changedStatus" /></h6>
+                    <h6 id ="statusChangedMessage"></h6>
                 </form>
             </div>
             <div class="row">
@@ -349,12 +350,19 @@ data-session-source="${not empty param.source ? param.source : 'menu'}">
                    	   
                                    <div class="row"  style="margin-top: 10px">
                                         	
-                              <%--  <div class="input-field col s12 m6 l6" id="rolesDiv">
-									<p><spring:message code="table.roleType" /> <span class="star">*</span></p> 
-									<select multiple  name="roles" id="usertypes" >
-										<option value="" disabled><spring:message code="table.roleType" /></option>
-									</select>
-								</div>  --%>
+                            
+                                        <div class="col s12 m6 l6" style="margin-bottom: 5px;">
+											<label for="addDeleteRole"><spring:message
+													code="select.AddDeleteRole"/> <span class="star">*</span></label>
+											<select id="addDeleteRole" class="browser-default"
+												onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+												oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+												required>
+												<option value="" disabled selected><spring:message code="select.AddDeleteRole" /></option>
+												<option value="1"><spring:message code="select.add" /></option>
+												<option value="2"><spring:message code="select.delete"/></option>
+											</select>
+										</div> 
                                         	
                                         	
                                         <div class="col s12 m6 l6" style="margin-bottom: 5px;">
@@ -364,7 +372,7 @@ data-session-source="${not empty param.source ? param.source : 'menu'}">
 												onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 												oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 												required>
-												<option value="" disabled selected><spring:message
+												<option value="" selected><spring:message
 														code="select.changeUserRole" />
 												</option>
 											</select>
@@ -381,7 +389,7 @@ data-session-source="${not empty param.source ? param.source : 'menu'}">
 								</div>		
                                             
                    		  
-								<div class="input-field col s12 m12">
+								<div class="input-field col s12 m6">
 							<textarea id="changeStatusRemark" style="min-height: 8rem;" 
 								class="materialize-textarea" 
 							oninput="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
@@ -407,7 +415,20 @@ data-session-source="${not empty param.source ? param.source : 'menu'}">
                                    </div></form>
                     </div>           
 
-    
+    	<div id="ErrorModel" class="modal">
+     <h6 class="modal-header" style="margin:0px;"><spring:message code="changeRoleType" /></h6>
+        <div class="modal-content">
+            
+            <div class="row">
+                <h6 id="ErrorFieldMessage"></h6>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <a href="" class="modal-close btn"><spring:message code="modal.ok" /></a>
+                </div>
+            </div>
+        </div>
+    </div>	
 	
 	<!--materialize js-->
 	<script type="text/javascript"
