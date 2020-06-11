@@ -359,7 +359,7 @@ var featureId = 6;
 						$('#replyModal').openModal({
 						 	   dismissible:false
 						    });
-						////console.log(data.grievance.categoryId)
+						//console.log(data.grievance.categoryId)
 						//alert("11"+data.categoryId)
 						setDocTypeValue(data[0].grievance.categoryId);
 						$('#existingGrievanceID').val(data[0].grievance.categoryId);

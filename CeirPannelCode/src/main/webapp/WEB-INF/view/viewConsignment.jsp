@@ -142,7 +142,7 @@ width: inherit;
 
 								<a href="" class="boton right" id="btnLink"></a>
 							</div>
-							<form action="${context}/Consignment/viewConsignment"
+							<form action="${context}/viewConsignment"
 								method="post">
 								<div class="col s12 m12 l12" id="consignmentTableDIv"
 									style="padding-bottom: 5px; background-color: #e2edef52;">
@@ -376,7 +376,7 @@ width: inherit;
 			</div>
 			<div class="row button-div">
 				<div class="input-field col s12 center">
-					<a href="${context}/Consignment/viewConsignment" class="btn"><spring:message
+					<a href="${context}/viewConsignment" class="btn"><spring:message
 							code="modal.ok" /></a>
 				</div>
 			</div>
@@ -408,7 +408,7 @@ width: inherit;
 			<div class="row button-div">
 				<div class="input-field col s12 center">
 					<div class="input-field col s12 center">
-						<a href="${context}/Consignment/viewConsignment" class="btn"><spring:message
+						<a href="${context}/viewConsignment" class="btn"><spring:message
 								code="modal.ok" /></a>
 					</div>
 				</div>
@@ -488,7 +488,7 @@ width: inherit;
 			<div class="row button-div">
 				<div class="input-field col s12 center">
 					<div class="input-field col s12 center">
-						<a href="${context}/Consignment/viewConsignment"
+						<a href="${context}/viewConsignment"
 							class="modal-close btn"><spring:message code="modal.close" /></a>
 					</div>
 				</div>
@@ -599,7 +599,7 @@ width: inherit;
 			<div class="row">
 				<div class="input-field col s12 center">
 					<div class="input-field col s12 center">
-						<a href="${context}/Consignment/viewConsignment"
+						<a href="${context}/viewConsignment"
 							class="modal-close btn"><spring:message code="modal.close" /></a>
 					</div>
 				</div>
@@ -669,7 +669,7 @@ width: inherit;
 			<div class="row button-div">
 				<div class="input-field col s12 center">
 					<div class="input-field col s12 center">
-						<a href="${context}/Consignment/viewConsignment"
+						<a href="${context}/viewConsignment"
 							class="modal-close btn"><spring:message code="modal.ok" /></a>
 					</div>
 				</div>
@@ -862,7 +862,7 @@ width: inherit;
 
 				<div class="row" style="padding-bottom: 15px">
 					<div class="col s12 m12">
-						<a href="./sampleFileDownload/3"><spring:message
+						<a href="./Consignment/sampleFileDownload/3"><spring:message
 								code="input.downlaod.sample" /></a></br> <span> <spring:message
 								code="input.requiredfields" /> <span class="star">*</span>
 						</span>

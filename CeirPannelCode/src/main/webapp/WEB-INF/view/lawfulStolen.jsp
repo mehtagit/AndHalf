@@ -87,7 +87,10 @@
 	font-size: 16px;
 	margin-right: 10px;
 }
+section#content {
 
+    position: absolute;
+}
 .section {
 	padding-top: 0.5rem;
 }

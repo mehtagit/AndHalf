@@ -170,7 +170,7 @@ window.parent
 							if(result.errorCode==200){
 								//$('#sucessMessage').text('');
 								$('#sucessMessage').text($.i18n('TRCRegister_futureRef'));
-								////alert(result.txnId);
+								//alert(result.txnId);
 								$('#transactionId').text(result.txnId);
 							}else if(result.errorCode==201){
 								$('#sucessMessage').text('');
@@ -222,7 +222,7 @@ window.parent
 			//var max_fields = 2; //maximum input boxes allowed
 			var max_fields =localStorage.getItem("maxCount");
 			if (max_fields==0){
-				 //console.log("1111");
+				//console.log("1111");
 				 $(".add_field_button").prop('disabled', true);
 			 }
 		var wrapper = $(".mainDiv"); //Fields wrapper
@@ -280,7 +280,7 @@ window.parent
 		$(wrapper).on("click", ".remove_field", function(e) { //user click on remove text
 			e.preventDefault();
 			var Iid = id - 1;
-			/*//alert("@@@"+Iid)*/
+			/*alert("@@@"+Iid)*/
 			$('#filediv' + Iid).remove();
 			$(this).parent('div').remove();
 			x--;
@@ -318,7 +318,7 @@ window.parent
 			       $('#fileErrormessage').text('file size must be less then 5 mb.');
 			}
 			else {
-				//console.log("file formate is correct")
+				console.log("file formate is correct")
 				
 			}
 		}

@@ -41,7 +41,7 @@ function registerConsignment() {
 	formData.append('deviceQuantity', parseInt($('#deviceQuantity').val()));	
 	formData.append('roleType', $("body").attr("data-roleType"));
 	$.ajax({
-		url : './Consignment/registerConsignment',
+		url : './registerConsignment',
 		type : 'POST',
 		data : formData,
 		processData : false,

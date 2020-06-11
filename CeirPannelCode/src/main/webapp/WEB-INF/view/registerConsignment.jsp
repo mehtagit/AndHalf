@@ -320,7 +320,7 @@ input#quantity {
 										
 										<div class="col s12 m12">
 											<p>
-											<a href="./sampleFileDownload/3"><spring:message code="input.downlaod.sample" /></a>
+											<a href="./Consignment/sampleFileDownload/3"><spring:message code="input.downlaod.sample" /></a>
 										</p>
 										<p><spring:message code="input.requiredfields" /> <span
 											class="star">*</span></p>

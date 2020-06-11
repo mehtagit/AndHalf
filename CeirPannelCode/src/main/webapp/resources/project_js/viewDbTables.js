@@ -52,6 +52,8 @@
 		
 		function Datatable(lang){
 			var filterRequest={
+					"startDate" : $('#startDate').val(), 
+					"endDate":$('#endDate').val(),
 					"tableName": tableName,
 					"dbName" : "ceirconfig",
 					"featureId":parseInt(featureId),
@@ -91,7 +93,7 @@
 							dataType: "json",
 							data : function(d) {
 								d.filter = JSON.stringify(filterRequest); 
-								console.log(JSON.stringify(filterRequest));
+								//console.log(JSON.stringify(filterRequest));
 							}
 						},
 						
@@ -113,7 +115,7 @@
 				       });
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
-					console.log("error in ajax");
+					//console.log("error in ajax");
 				}
 			});
 		}

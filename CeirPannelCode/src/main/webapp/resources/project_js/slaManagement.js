@@ -86,7 +86,7 @@
 								dataType: "json",
 								data : function(d) {
 									d.filter = JSON.stringify(filterRequest); 
-									console.log(JSON.stringify(filterRequest));
+									//console.log(JSON.stringify(filterRequest));
 								}
 
 							},
@@ -105,7 +105,7 @@
 					       });
 					},
 					error: function (jqXHR, textStatus, errorThrown) {
-						console.log("error in ajax");
+						//console.log("error in ajax");
 					}
 				});
 			}
@@ -236,7 +236,7 @@
 						"userTypeId": parseInt($("body").attr("data-userTypeID")),
 						"userType":$("body").attr("data-roleType")*/
 				}
-				console.log(JSON.stringify(filterRequest))
+				//console.log(JSON.stringify(filterRequest))
 				$.ajax({
 					url: './exportSlaData',
 					type: 'POST',

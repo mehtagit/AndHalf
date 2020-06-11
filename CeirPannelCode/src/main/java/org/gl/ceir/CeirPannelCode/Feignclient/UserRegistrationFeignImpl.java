@@ -2,6 +2,7 @@ package org.gl.ceir.CeirPannelCode.Feignclient;
 import java.util.List;
 
 import org.gl.ceir.CeirPannelCode.Model.FeatureDropdown;
+import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.Otp;
 import org.gl.ceir.CeirPannelCode.Model.OtpResponse;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
@@ -64,5 +66,8 @@ public interface UserRegistrationFeignImpl {
 	
 	@PostMapping("/subFeature/view")                                                                                         
 	public List<FeatureDropdown> userAllSubFeatureDropdown();
+	
+	@PostMapping("/userProfile/getAddDeleteRoles")	
+	public @ResponseBody GenricResponse getAddDeleteRoleFeign(FilterRequest filterRequest);	
 	
 }

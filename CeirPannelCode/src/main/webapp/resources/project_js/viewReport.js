@@ -1,34 +1,20 @@
 		var cierRoletype =$("body").attr("data-roleType");	
-		var startdate=$('#startDate').val(); 
-		var endDate=$('#endDate').val();
-		var taxStatus=$('#taxPaidStatus').val();
-		var txnId=$('#transactionID').val();
-		var consignmentStatus=$('#filterConsignmentStatus').val();
 		var userId = $("body").attr("data-userID");
 		var userType=$("body").attr("data-roleType");
 		var featureId="42";
-		var rejectedMsg,consignmentApproved,errorMsg,havingTxnID,updateMsg,hasBeenUpdated;
-		var consignmentDeleted,deleteInProgress;
 		var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 
 
 		$.i18n().locale = lang;	
 		
 		$.i18n().load( {
-			'en': '../resources/i18n/en.json',
-			'km': '../resources/i18n/km.json'
+			'en': './resources/i18n/en.json',
+			'km': './resources/i18n/km.json'
 		} ).done( function() { 
-			rejectedMsg=$.i18n('rejectedMsg');
-			consignmentApproved=$.i18n('consignmentApproved');
-			errorMsg=$.i18n('errorMsg');
-			havingTxnID=$.i18n('havingTxnID');
-			updateMsg=$.i18n('updateMsg');
-			hasBeenUpdated=$.i18n('hasBeenUpdated');
-			consignmentDeleted=$.i18n('consignmentDeleted');
-			deleteInProgress=$.i18n('deleteInProgress');
+			
 		});
 
-         $(window).load(function(){
+		$(document).ready(function(){
 			$('div#initialloader').fadeIn('fast');
 			Datatable(lang);
 			sessionStorage.removeItem("session-value");
@@ -42,8 +28,8 @@
 		});
 
 
-		var sourceType =localStorage.getItem("sourceType");
-		var TagId = sessionStorage.getItem("tagId");
+		//var sourceType =localStorage.getItem("sourceType");
+		//var TagId = sessionStorage.getItem("tagId");
 		
 		var reportnameId = sessionStorage.getItem("reportname");
 		
@@ -52,17 +38,23 @@
 		//**************************************************filter table**********************************************
 		
 		function Datatable(lang){
+			
 			var filterRequest={
+					"startDate" : $('#startDate').val(), 
+					"endDate":$('#endDate').val(),
 					"reportnameId" : parseInt(reportnameId),
 					"featureId":parseInt(featureId),
 					"userTypeId": parseInt($("body").attr("data-userTypeID")),
 					"userType":$("body").attr("data-roleType"),
 					"username" : $("body").attr("data-selected-username"),
-					"userId" : parseInt($("body").attr("data-userID")),
+					"userId" : parseInt($("body").attr("data-userID"))
 					//"pageNo": Integer.parseInt(pageNo),
 					//"pageSize":Integer.parseInt(pageSize),
 
 			}
+			
+			console.log(JSON.stringify(filterRequest));
+			
 			if(lang=='km'){
 				var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
 			}				
@@ -94,30 +86,12 @@
 							dataType: "json",
 							data : function(d) {
 								d.filter = JSON.stringify(filterRequest); 
-								console.log(JSON.stringify(filterRequest));
+								//console.log(JSON.stringify(filterRequest));
 							}
 
 						},
-						//"dataSrc": data,
-						"columns": result,
+						"columns": result,"defaultContent":"",
 						fixedColumns: true,
-						/*"columns": [
-							result,
-					        {
-					            "orderable": false
-					        },
-					        {
-					            "defaultContent": "Edit",
-					            "orderable": false
-					        },
-					        {
-					            "defaultContent": "Delete",
-					            "orderable": false
-					        }
-					    ],
-					    "order": [],*/
-						
-						
 					});
 					
 					$('div#initialloader').delay(300).fadeOut('slow');
@@ -131,11 +105,13 @@
 				    		}
 				          
 				       });
+					sessionStorage.removeItem("reportname");
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
-					console.log("error in ajax");
+					//console.log("error in ajax");
 				}
 			});
+		
 		}
 		
 		

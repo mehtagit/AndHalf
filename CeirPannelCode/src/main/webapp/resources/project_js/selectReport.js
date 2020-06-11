@@ -17,7 +17,7 @@
 		var reportname = $('#tableId').val();
 		
 		if(reportname.length == 0){
-			console.log("please field input");
+			//console.log("please field input");
 		}else{
 			//sessionStorage.setItem("roleType",roleType);
 		sessionStorage.setItem("reportname", reportname);
@@ -34,14 +34,14 @@
 		dataType : 'json',
 		contentType : 'application/json; charset=utf-8',
 		success: function (data, textStatus, jqXHR) {
-			var result = data;
-			console.log("result-->"+JSON. stringify(result))
+			var result= data;
+			//console.log("result-->"+JSON. stringify(result))
 			for (i = 0; i < result.length; i++){
 				$('<option>').val(result[i].reportnameId).text(result[i].reportName).appendTo('#tableId');
 			}
 			
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			console.log("error in ajax")
+			//console.log("error in ajax")
 		}
 	});

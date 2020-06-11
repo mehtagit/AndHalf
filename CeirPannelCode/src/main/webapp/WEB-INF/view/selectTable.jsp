@@ -58,8 +58,7 @@
 <link
 	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
-<link href="${context}/resources/css/jquery-datepicker2.css"
-	type="text/css" rel="stylesheet" media="screen,projection">
+
 <!-- Custome CSS-->
 <link href="${context}/resources/css/custom/custom.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
@@ -218,8 +217,7 @@ section {
 	<script
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
-	<script type="text/javascript"
-		src="${context}/resources/js/Validator.js"></script>
+	
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 	<script type="text/javascript"

@@ -191,5 +191,13 @@
 	"User_Success_Save" : "User has been sucessfully saved",
 	"User_Fail_Save":"User failed to saved",
 	"User_Success_Update" : "User has been sucessfully update",
-	"User_Fail_Update": "User has been failed to update"
+	"User_Fail_Update": "User has been failed to update",
+	"Roles_Exist" : "User Roles Already exist",
+	"Roles_Added" : "User Roles sucessfully added",
+	"Roles_Delete" : "User Roles sucessfully deleted",
+	"Role_Add_Not_Found" : "No Roles found to add",
+	"Role_Del_Not_Found" :  "No Roles found to delete",
+	"Add_Role_Not_Allowed" : "Add Role feature for this usertype is not available",
+	"Del_Role_Not_Allowed" : "Delete Role feature for this usertype is not available",
+	"Invalid_Action" : "Action is invalid"	
 }
