@@ -1022,7 +1022,7 @@ function consignmentFileDownload(fileName,fileType,txnId,doc_TypeTag)
 	fileName=fileName.split("%20").join(" ");
 	//console.log(" fileName "+fileName+" fileType  "+fileType+" txnId "+txnId+"  doc_TypeTag "+doc_TypeTag)
 	$.ajax({
-		url : "./dowloadFiles/"+fileType+'/'+fileName+'/'+txnId+'/'+doc_TypeTag,
+		url : "./Consignment/dowloadFiles/"+fileType+'/'+fileName+'/'+txnId+'/'+doc_TypeTag,
 		dataType : 'json',
 		contentType : 'application/json; charset=utf-8',
 		type : 'GET',

@@ -19,7 +19,7 @@
 	content="Materialize is a Material Design Admin Template,It's modern, responsive and based on Material Design by Google. ">
 <meta name="keywords"
 	content="materialize, admin template, dashboard template, flat admin template, responsive admin template,">
-<title>CEIR | Importer Portal</title>
+<title>CEIR Portal</title>
 
 <link
 	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.min.css"

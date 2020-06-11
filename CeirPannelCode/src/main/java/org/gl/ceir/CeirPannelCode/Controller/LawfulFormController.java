@@ -7,19 +7,18 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
+import org.gl.ceir.CeirPannelCode.Feignclient.GrievanceFeignClient;
 import org.gl.ceir.CeirPannelCode.Feignclient.UploadPaidStatusFeignClient;
 import org.gl.ceir.CeirPannelCode.Model.AddMoreFileModel;
+import org.gl.ceir.CeirPannelCode.Model.FileCopyToOtherServer;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.LawfulStolenRecovey;
-import org.gl.ceir.CeirPannelCode.Model.SingleImeiDetailsModel;
 import org.gl.ceir.CeirPannelCode.Util.UtilDownload;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,8 +34,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
-
-import CeirPannelCode.Model.Register_UploadPaidStatus;
 
 @Controller
 public class LawfulFormController 
@@ -62,6 +59,10 @@ public class LawfulFormController
 
 FeignCleintImplementation feignCleintImplementation;
 
+@Value ("${serverId}")
+Integer serverId;
+@Autowired
+GrievanceFeignClient grievanceFeignClient;
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
 	ModelAndView mv = new ModelAndView();
@@ -129,6 +130,8 @@ FeignCleintImplementation feignCleintImplementation;
 		String txnNumber="L" + utildownload.getTxnId();
 		log.info("Random transaction id number="+txnNumber);
 		String filter = request.getParameter("request");
+		FileCopyToOtherServer fileCopyRequest= new FileCopyToOtherServer();
+	
 		
 		Gson gson= new Gson(); 
 		log.info("*********"+filter);
@@ -144,6 +147,7 @@ FeignCleintImplementation feignCleintImplementation;
 		// lawfulIndivisualStolen.setFileName(file.getOriginalFilename());
 
 		try {
+			
 			byte[] bytes = file.getBytes();
 			String rootPath =urlToUpload.getValue()+txnNumber+"/"; 
 			File dir = new File(rootPath + File.separator);
@@ -155,6 +159,15 @@ FeignCleintImplementation feignCleintImplementation;
 			stream = new BufferedOutputStream(new FileOutputStream(serverFile));
 			stream.write(bytes); 
 			stream.close();
+			
+			fileCopyRequest.setFilePath(rootPath);
+			fileCopyRequest.setTxnId(txnNumber);
+			fileCopyRequest.setFileName(file.getOriginalFilename());
+			fileCopyRequest.setServerId(serverId);
+
+			log.info("request passed to move file to other server=="+fileCopyRequest);
+			GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
+			log.info("file move api response==="+fileRespnose);
 		} 
 		catch (Exception e) {
 			// TODO: handle exception
@@ -166,7 +179,7 @@ FeignCleintImplementation feignCleintImplementation;
 		}
 		else {
 			try {
-
+				
 				byte[] bytes = firFileName.getBytes();
 				String rootPath =urlToUpload.getValue()+lawfulIndivisualStolen.getTxnId()+"/"; 
 				File dir = new File(rootPath + File.separator);
@@ -178,6 +191,13 @@ FeignCleintImplementation feignCleintImplementation;
 				stream = new BufferedOutputStream(new FileOutputStream(serverFile));
 				stream.write(bytes); 
 				stream.close();
+				fileCopyRequest.setFilePath(rootPath);
+				fileCopyRequest.setTxnId(txnNumber);
+				fileCopyRequest.setFileName(firFileName.getOriginalFilename());
+				fileCopyRequest.setServerId(serverId);
+				log.info("request passed to move file to other server=="+fileCopyRequest);
+				GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
+				log.info("file move api response==="+fileRespnose);
 				//lawfulIndivisualStolen.setFileName(file.getOriginalFilename());
 			} 
 			catch (Exception e) {
@@ -213,6 +233,7 @@ FeignCleintImplementation feignCleintImplementation;
 		log.info("Random transaction id number="+txnNumber);
 		String filter = request.getParameter("request");
 
+		FileCopyToOtherServer fileCopyRequest= new FileCopyToOtherServer();
 		addMoreFileModel.setTag("system_upload_filepath");
 		urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
 		
@@ -226,6 +247,8 @@ FeignCleintImplementation feignCleintImplementation;
 		lawfulIndivisualStolen.setFileName(file.getOriginalFilename());
 
 		try {
+			
+			
 			byte[] bytes = file.getBytes();
 			String rootPath =urlToUpload.getValue()+txnNumber+"/"; 
 			File dir = new File(rootPath + File.separator);
@@ -237,6 +260,14 @@ FeignCleintImplementation feignCleintImplementation;
 			stream = new BufferedOutputStream(new FileOutputStream(serverFile));
 			stream.write(bytes); 
 			stream.close();
+			fileCopyRequest.setFilePath(rootPath);
+			fileCopyRequest.setTxnId(txnNumber);
+			fileCopyRequest.setFileName(file.getOriginalFilename());
+			fileCopyRequest.setServerId(serverId);
+			log.info("request passed to move file to other server=="+fileCopyRequest);
+			GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
+			log.info("file move api response==="+fileRespnose);
+			
 		} 
 		catch (Exception e) {
 			// TODO: handle exception
@@ -248,7 +279,8 @@ FeignCleintImplementation feignCleintImplementation;
 		}
 		else {
 			try {
-
+				
+				
 				byte[] bytes = firFileName.getBytes();
 				String rootPath =urlToUpload.getValue()+lawfulIndivisualStolen.getTxnId()+"/"; 
 				File dir = new File(rootPath + File.separator);
@@ -260,6 +292,13 @@ FeignCleintImplementation feignCleintImplementation;
 				stream = new BufferedOutputStream(new FileOutputStream(serverFile));
 				stream.write(bytes); 
 				stream.close();
+				fileCopyRequest.setFilePath(rootPath);
+				fileCopyRequest.setTxnId(txnNumber);
+				fileCopyRequest.setFileName(firFileName.getOriginalFilename());
+				fileCopyRequest.setServerId(serverId);
+				log.info("request passed to move file to other server=="+fileCopyRequest);
+				GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
+				log.info("file move api response==="+fileRespnose);
 				lawfulIndivisualStolen.setFileName(file.getOriginalFilename());
 			} 
 			catch (Exception e) {
@@ -296,6 +335,7 @@ FeignCleintImplementation feignCleintImplementation;
 		log.info("Random transaction id number="+txnNumber);
 		String filter = request.getParameter("request");
 
+		FileCopyToOtherServer fileCopyRequest= new FileCopyToOtherServer();
 		addMoreFileModel.setTag("system_upload_filepath");
 		urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
 		
@@ -315,6 +355,9 @@ FeignCleintImplementation feignCleintImplementation;
 		}
 		else {
 			try {
+				
+				
+				
 				log.info("file is not blank");
 				byte[] bytes = file.getBytes();
 				String rootPath =urlToUpload.getValue()+txnNumber+"/"; 
@@ -327,6 +370,13 @@ FeignCleintImplementation feignCleintImplementation;
 				stream = new BufferedOutputStream(new FileOutputStream(serverFile));
 				stream.write(bytes); 
 				stream.close();
+				fileCopyRequest.setFilePath(rootPath);
+				fileCopyRequest.setTxnId(txnNumber);
+				fileCopyRequest.setFileName(file.getOriginalFilename());
+				fileCopyRequest.setServerId(serverId);
+				log.info("request passed to move file to other server=="+fileCopyRequest);
+				GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
+				log.info("file move api response==="+fileRespnose);
 				lawfulIndivisualStolen.setFileName(file.getOriginalFilename());
 			} 
 			catch (Exception e) {
@@ -391,6 +441,7 @@ FeignCleintImplementation feignCleintImplementation;
 		addMoreFileModel.setTag("system_upload_filepath");
 		urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
 		
+		FileCopyToOtherServer fileCopyRequest= new FileCopyToOtherServer();
 		addMoreFileModel.setTag("uploaded_file_move_path");
 		urlToMove=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
 		log.info("moved file path from api="+urlToMove.getValue());
@@ -408,6 +459,9 @@ FeignCleintImplementation feignCleintImplementation;
 		}
 		else {
 			try {
+				
+				
+				
 				String rootPath =urlToUpload.getValue()+lawfulIndivisualStolen.getTxnId()+"/"; 
 				File tmpDir = new File(rootPath+file.getOriginalFilename());
 				boolean exists = tmpDir.exists();
@@ -432,6 +486,13 @@ FeignCleintImplementation feignCleintImplementation;
 				stream = new BufferedOutputStream(new FileOutputStream(serverFile));
 				stream.write(bytes); 
 				stream.close();
+				fileCopyRequest.setFilePath(rootPath);
+				fileCopyRequest.setTxnId(lawfulIndivisualStolen.getTxnId());
+				fileCopyRequest.setFileName(file.getOriginalFilename());
+				fileCopyRequest.setServerId(serverId);
+				log.info("request passed to move file to other server=="+fileCopyRequest);
+				GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
+				log.info("file move api response==="+fileRespnose);
 				//lawfulIndivisualStolen.setFileName(file.getOriginalFilename());
 			} 
 
@@ -447,6 +508,8 @@ FeignCleintImplementation feignCleintImplementation;
 		else {
 			try {
 
+				
+				
 				byte[] bytes = firFileName.getBytes();
 				String rootPath =urlToUpload.getValue()+lawfulIndivisualStolen.getTxnId()+"/"; 
 				File tmpDir = new File(rootPath+firFileName.getOriginalFilename());
@@ -471,6 +534,13 @@ FeignCleintImplementation feignCleintImplementation;
 				stream = new BufferedOutputStream(new FileOutputStream(serverFile));
 				stream.write(bytes); 
 				stream.close();
+				fileCopyRequest.setFilePath(rootPath);
+				fileCopyRequest.setTxnId(lawfulIndivisualStolen.getTxnId());
+				fileCopyRequest.setFileName(firFileName.getOriginalFilename());
+				fileCopyRequest.setServerId(serverId);
+				log.info("request passed to move file to other server=="+fileCopyRequest);
+				GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
+				log.info("file move api response==="+fileRespnose);
 				//lawfulIndivisualStolen.setFileName(file.getOriginalFilename());
 			} 
 			catch (Exception e) {
