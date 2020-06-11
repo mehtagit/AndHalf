@@ -2,7 +2,7 @@ package gsmaTac;
 
 import com.google.gson.Gson;
 import java.sql.Connection;
- 
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -23,7 +23,7 @@ class GsmaDbDao {
         try {
             stmt = conn.createStatement();
         } catch (SQLException ex) {
-            java.util.logging.Logger.getLogger(this.getClass().getName() ).log(Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
         }
 
         try {
@@ -113,25 +113,24 @@ class GsmaDbDao {
 //        return map;
 //
 //    }
-    
-    
-        public Map<String, String> getExistingGsmaDetails(String imeiTac, Connection conn) {
-        String resultid = "0";
+    public Map<String, String> getExistingGsmaDetails(String imeiTac, Connection conn) {
+        int resultid = 0;
         Map<String, String> map = new HashMap<String, String>();
         try {
 
             Statement stmt = conn.createStatement();
-            String msidnid = " select id from gsma_tac_db where  device_id = " + imeiTac + "  ";
+            String msidnid = " select count(id) from gsma_tac_db where  device_id = '" + imeiTac + "'  ";
             ResultSet resultmsdn = stmt.executeQuery(msidnid);
             try {
                 while (resultmsdn.next()) {
-                    resultid = resultmsdn.getString(1);
+                    resultid = resultmsdn.getInt(1);
                 }
-                resultmsdn.close();
+                
             } catch (Exception e) {
                 logger.error("Database ClassnotFound " + e);
             }
-            map.put("resultid", resultid);
+            map.put("resultid", String.valueOf(resultid));
+            resultmsdn.close();
             logger.debug("Found at resultid  " + resultid);
             String str = " select tag , value from system_configuration_db where tag in ('gsma_tac_APIKey' , 'gsma_tac_Password','gsma_tac_Salt_String' , 'gsma_tac_Organization_Id' ,'gsma_tac_Secretkey', 'gsma_tac_httpPostUrl',  'gsma_tac_timewait')  ";
             ResultSet result = stmt.executeQuery(str);
@@ -139,7 +138,6 @@ class GsmaDbDao {
             while (result.next()) {
                 map.put(result.getString("tag"), result.getString("value"));
             }
-
             result.close();
             stmt.close();
 
@@ -150,9 +148,6 @@ class GsmaDbDao {
         return map;
 
     }
-    
-    
-     
 
     void invalidGsmaDb(String deviceId, Connection conn) {
         Statement stmt = null;
