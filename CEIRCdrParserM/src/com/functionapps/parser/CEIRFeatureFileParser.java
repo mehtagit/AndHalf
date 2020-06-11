@@ -14,12 +14,15 @@ import com.functionapps.parser.service.StockDelete;
 import org.apache.log4j.Logger;
 
 public class CEIRFeatureFileParser {
+
     public static Logger logger = Logger.getLogger(CEIRFeatureFileParser.class);
+
     public static void main(String args[]) {
         Connection conn = null;
         conn = new com.functionapps.db.MySQLConnection().getConnection();
         ParserMain(conn);
     }
+
     public static void ParserMain(Connection conn) {
         logger.info("  ");
         logger.info(" CEIRFeatureFileParser.class ");
@@ -28,7 +31,7 @@ public class CEIRFeatureFileParser {
         ResultSet featurers = ceirfunction.getFileDetails(conn, 2);     //select * from web_action_db 
         try {
             while (featurers.next()) {
-                   System.out.println("" + featurers.getString("txn_id"));
+                System.out.println("" + featurers.getString("txn_id"));
                 ceirfunction.updateFeatureFileStatus(conn, featurers.getString("txn_id"), 3, featurers.getString("feature"), featurers.getString("sub_feature"));  // update web_action
                 logger.info("  webACtion 3 don3e ");
                 if (featurers.getString("feature").equalsIgnoreCase("Register Device")) {

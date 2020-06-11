@@ -109,7 +109,6 @@ public class CEIRFeatureFileUploader {
                     } else {
                         logger.warn("Failed to move the file");
                     }
-
                 }
                 String user_type = ceirfunction.getUserType(conn, feature_file_management.get("user_id"), file_details.getString("feature").toUpperCase(), file_details.getString("txn_id"));      //   usertype_name from users a, usertype b
                 //  ceirfunction.addFeatureFileConfigDetails(conn, "insert", file_details.getString("feature"), file_details.getString("sub_feature"), file_details.getString("txn_id"), feature_file_management.get("file_name"), "Init", user_type);     //insert into feature_fil e_config_db 

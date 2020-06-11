@@ -32,7 +32,6 @@ public class StockDelete {
 		StockMgmt stockMgmt =  stockMgmtDao.getStockByTxnId(conn, txnId);
 		 // System.out.println(stockMgmt);
 		logger.debug(stockMgmt);
-		
 		try{
 			List<ManagementTable> managementTables = getTableNameByUserType(stockMgmt.getUserType(), stockMgmt.getRoleType());
 			 // System.out.println(managementTables);
