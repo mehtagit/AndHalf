@@ -76,7 +76,7 @@ public class EmailService implements Runnable {
 		SystemConfigurationDb emailRetryCount = systemConfigRepoImpl.getDataByTag("Email_Retry_Count");
 		SystemConfigurationDb authorityMailSend = systemConfigRepoImpl.getDataByTag("Reporting_Authority_Mail_Status");
 		MessageConfigurationDb messageDb = messageRepo.getByTag("Reporting_Authority_Notification");
-		Integer sleepTimeinMilliSec =  0;
+		Integer sleepTimeinMilliSec = 0;
 		Integer emailretrycountValue = 0;
 		Integer authorityStatusValue = 0;
 		try {
@@ -114,7 +114,7 @@ public class EmailService implements Runnable {
 			try {
 				log.info("inside email process");
 				log.info("going to fetch data from notification table by status=1 and channel type= " + type);
-				List<Notification> notificationData = notificationRepoImpl.dataByStatus(1);
+				List<Notification> notificationData = notificationRepoImpl.dataByStatusAndChannelType(1,type);
 				int totalMailsent = 0;
 				int totalMailNotsent = 0;
 
@@ -124,8 +124,6 @@ public class EmailService implements Runnable {
 					int sNo = 0;
 					emailUtil.setBatchSize(batchSize, notificationData.size());
 					for (Notification notification : notificationData) {
-						if(type.equalsIgnoreCase(notification.getChannelType()))
-						{
 						log.info("notification data id= " + notification.getId());
 						sNo++;
 						String body = new String();
@@ -145,6 +143,8 @@ public class EmailService implements Runnable {
 										{
 											toEmail = endUser.getEmail();		
 										}
+										
+									
 									}
 									else {
 										log.info("no data found for this userid: "+notification.getUserId()+" in end user table");
@@ -229,12 +229,13 @@ public class EmailService implements Runnable {
 									}
 
 										if (authorityEmail != null && !authorityEmail.isEmpty()) {
-
-											if (emailUtil.emailValidator(toEmail)) {
+//??to email
+											if (emailUtil.emailValidator(authorityEmail)) {
 												body=body.replace("\\n", "\n");
 												String content=messageDb.getValue().replace("\\n", "\n");
 												message =content +  "\n" +body;
 												log.info("message content in case of authority email: " + message);
+												log.info("authorityEmail: "+authorityEmail+" fromEmail: "+fromEmail.getValue()+"getSubject: "+messageDb.getSubject());
 												emailStatus = emailUtil.sendEmail(authorityEmail, fromEmail.getValue(),
 														messageDb.getSubject(), message, notificationData.size(), sNo,
 														sleepTimeinMilliSec);
@@ -279,7 +280,7 @@ public class EmailService implements Runnable {
 
 						notificationRepo.save(notification);
 					}
-				}
+
 					log.info("total mail sent=  " + totalMailsent);
 					log.info("email fail to send: " + totalMailNotsent);
 					emailUtil.setIndexZero();
