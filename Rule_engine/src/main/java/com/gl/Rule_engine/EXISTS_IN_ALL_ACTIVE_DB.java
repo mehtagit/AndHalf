@@ -23,7 +23,8 @@ class EXISTS_IN_ALL_ACTIVE_DB {
 
         String res = "";
         try {
-            String qry = "select count(imei_esn_meid) as cnt  from device_usage_db  where imei_esn_meid='" + args[3] + "' ";
+            String qry = " select sum (cnt) from  (select count  (imei) as cnt  from device_usage_db where imei = '"+args[3]+"' and MSISDN = '"+args[12]+"' "
+                    + " union select count  (imei)  as cnt from device_duplicate_db where imei = '"+args[3]+"' and MSISDN = '"+args[12]+"' ) a ; ";
             Statement stmt2 = conn.createStatement();
             ResultSet result1 = stmt2.executeQuery(qry);
             int res1 = 0;
