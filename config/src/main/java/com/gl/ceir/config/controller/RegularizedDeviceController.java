@@ -53,13 +53,14 @@ public class RegularizedDeviceController {
 	public MappingJacksonValue getDeviceByNid( @RequestBody FilterRequest filterRequest,
 			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
 			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+			@RequestParam(value = "source", defaultValue = "menu") String source,
 			@RequestParam(value = "file", defaultValue = "0") Integer file) {
 
 		MappingJacksonValue mapping = null;
-		
+		logger.info("source value is : "+source);
 		if(file == 0) {
 			logger.info("Regularize Device view info request " + filterRequest);
-			Page<RegularizeDeviceDb> customInfo = regularizedDeviceServiceImpl.filter(filterRequest, pageNo, pageSize);
+			Page<RegularizeDeviceDb> customInfo = regularizedDeviceServiceImpl.filter(filterRequest, pageNo, pageSize,source);
 			mapping = new MappingJacksonValue(customInfo);
 		}else {
 			logger.info("Regularized Device Export request " + filterRequest);

@@ -58,6 +58,7 @@ import com.gl.ceir.config.model.constants.SubFeatures;
 import com.gl.ceir.config.model.constants.WebActionDbFeature;
 import com.gl.ceir.config.model.constants.WebActionDbState;
 import com.gl.ceir.config.model.constants.WebActionDbSubFeature;
+
 import com.gl.ceir.config.model.file.StockFileModel;
 import com.gl.ceir.config.repository.AuditTrailRepository;
 import com.gl.ceir.config.repository.DashboardUsersFeatureStateMapRepository;
@@ -68,6 +69,8 @@ import com.gl.ceir.config.repository.UserProfileRepo;
 import com.gl.ceir.config.repository.UserProfileRepository;
 import com.gl.ceir.config.repository.UserRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
+import com.gl.ceir.config.request.model.Generic_Response_Notification;
+import com.gl.ceir.config.request.model.RegisterationUser;
 import com.gl.ceir.config.service.businesslogic.StateMachine;
 import com.gl.ceir.config.specificationsbuilder.GenericSpecificationBuilder;
 import com.gl.ceir.config.transaction.StockTransaction;
@@ -513,20 +516,24 @@ public class StockServiceImpl {
 		String firstName = "";
 		User user = null;
 		Map<String, String> placeholderMap = new HashMap<>();
-		String mailTag = null;
+		//String mailTag = null;
 		String action = null;
 		String txnId = null;
 		String userMailTag = null;
 		Boolean isUserCeirAdmin=false;
 		String receiverUserType = deleteObj.getUserType();
 		action = SubFeatures.DELETE;
-		mailTag = "STOCK_DELETE_BY_CEIR_ADMIN"; 
+	//	mailTag = "STOCK_DELETE_BY_CEIR_ADMIN"; 
 		userMailTag = "STOCK_DELETE_BY_USER"; 
 		user = userRepository.getById(deleteObj.getUserId());				
 		userProfile = user.getUserProfile();
 		txnId = deleteObj.getTxnId();
 	
-		placeholderMap.put("<First name>", firstName);
+		
+		/*placeholderMap.put("<First name>", userProfile_generic_Response_Notification.getFirstName());
+		placeholderMap.put("<Txn id>", consignmentMgmt.getTxnId());*/
+		
+		placeholderMap.put("<First name>",userProfile.getFirstName());
 		placeholderMap.put("<Txn id>", deleteObj.getTxnId());
 		try {
 
@@ -574,8 +581,19 @@ public class StockServiceImpl {
 						userProfile = user.getUserProfile();
 						logger.info("user profile details-");
 						logger.info(userProfile);
+						Generic_Response_Notification generic_Response_Notification = userFeignClient.ceirInfoByUserTypeId(8);
+
+						logger.info("generic_Response_Notification::::::::"+generic_Response_Notification);
+
+						List<RegisterationUser> registerationUserList = generic_Response_Notification.getData();
+
+						for(RegisterationUser registerationUser :registerationUserList) {
+						UserProfile userProfile_generic_Response_Notification = new UserProfile();
+						userProfile_generic_Response_Notification = userProfileRepository.getByUserId(registerationUser.getId());
+						
+						
 						emailUtil.saveNotification(userMailTag, 
-								userStaticServiceImpl.getCeirAdmin().getUserProfile(),
+								userProfile_generic_Response_Notification,
 								deleteObj.getFeatureId(),
 								Features.STOCK,
 								action,
@@ -586,7 +604,7 @@ public class StockServiceImpl {
 								receiverUserType,
 								"Users");
 						logger.info("Notfication for CEIRAdmin have been saved.");
-						
+					}
 						emailUtil.saveNotification(userMailTag, 
 								userProfile, 
 								deleteObj.getFeatureId(),
@@ -764,12 +782,14 @@ public class StockServiceImpl {
 		StatefulBeanToCsvBuilder<StockFileModel> builder = null;
 		StatefulBeanToCsv<StockFileModel> csvWriter = null;
 		List< StockFileModel > fileRecords = null;
+		
 		CustomMappingStrategy<StockFileModel> mappingStrategy = new CustomMappingStrategy<>();
 
 		try {
 			List<StockMgmt> stockMgmts = getAll(filterRequest);
 			fileName = LocalDateTime.now().format(dtf2).replace(" ", "_") + "_Stock.csv";
 
+			/* if(filterRequest.getUserType().equalsIgnoreCase("CEIR")) */
 			writer = Files.newBufferedWriter(Paths.get(filePath+fileName));
 			mappingStrategy.setType(StockFileModel.class);
 
@@ -781,25 +801,81 @@ public class StockServiceImpl {
 			if( !stockMgmts.isEmpty() ) {
 
 				fileRecords = new ArrayList<>();
-
-				for( StockMgmt stockMgmt : stockMgmts ) {
-					sfm = new StockFileModel();
-
-					sfm.setStockStatus(stockMgmt.getStateInterp());
-					sfm.setTxnId( stockMgmt.getTxnId());
-					sfm.setCreatedOn(stockMgmt.getCreatedOn().format(dtf));
-					sfm.setModifiedOn( stockMgmt.getModifiedOn().format(dtf));
-					sfm.setFileName( stockMgmt.getFileName());
-					sfm.setSupplierName(stockMgmt.getSuplierName());
-					sfm.setQuantity(stockMgmt.getQuantity());
-					sfm.setDeviceQuantity(stockMgmt.getDeviceQuantity());
-
-					logger.debug(sfm);
-
-					fileRecords.add(sfm);
+				if(filterRequest.getUserType().equalsIgnoreCase("CUSTOM"))
+				{
+					logger.info("file export for custom.");
+					for( StockMgmt stockMgmt : stockMgmts ) {
+						
+						sfm = new StockFileModel();
+						
+						if(Objects.nonNull(stockMgmt.getSuplierName())) {
+							 sfm.setAssigneName(stockMgmt.getSuplierName());
+						 }
+						 else {
+							 sfm.setAssigneName("NA");
+						 }
+						
+						if(Objects.nonNull(stockMgmt.getInvoiceNumber())) {
+							 sfm.setInvoiceNumber(stockMgmt.getInvoiceNumber());
+						 }
+						 else {
+							 sfm.setInvoiceNumber("NA");
+						 }
+						sfm.setStockStatus(stockMgmt.getStateInterp());
+						sfm.setTxnId( stockMgmt.getTxnId());
+						sfm.setCreatedOn(stockMgmt.getCreatedOn().format(dtf));
+						sfm.setModifiedOn( stockMgmt.getModifiedOn().format(dtf));
+						sfm.setFileName( stockMgmt.getFileName());
+						sfm.setSupplierName("NA");
+						sfm.setQuantity(stockMgmt.getQuantity());
+						sfm.setDeviceQuantity(stockMgmt.getDeviceQuantity());
+						
+						
+						
+						logger.info(sfm);
+						
+						fileRecords.add(sfm);
+					}
+					
 				}
-
-				csvWriter.write(fileRecords);
+				else {
+					logger.info("else condition for export.");
+					for( StockMgmt stockMgmt : stockMgmts ) {
+						
+						sfm = new StockFileModel();
+						 if(Objects.nonNull(stockMgmt.getSuplierName())) {
+							 sfm.setSupplierName(stockMgmt.getSuplierName());
+						 }
+						 else {
+							 sfm.setSupplierName("NA");
+						 }
+						sfm.setStockStatus(stockMgmt.getStateInterp());
+						sfm.setTxnId( stockMgmt.getTxnId());
+						sfm.setCreatedOn(stockMgmt.getCreatedOn().format(dtf));
+						sfm.setModifiedOn( stockMgmt.getModifiedOn().format(dtf));
+						sfm.setFileName( stockMgmt.getFileName());
+						sfm.setQuantity(stockMgmt.getQuantity());
+						sfm.setDeviceQuantity(stockMgmt.getDeviceQuantity());
+						sfm.setAssigneName("NA");
+						 if(Objects.nonNull(stockMgmt.getInvoiceNumber())) {
+							 sfm.setInvoiceNumber(stockMgmt.getInvoiceNumber());
+						 }
+						 else {
+							 sfm.setInvoiceNumber("NA");
+						 }
+						logger.info(sfm);
+                        fileRecords.add(sfm);
+					}
+					
+				}
+				if(csvWriter!=null) {
+					logger.info("csv writer  is not  empty++++++++++++++++++++++++++++++++++++");
+					csvWriter.write(fileRecords);
+				}
+				else {
+					logger.info(" csv writer is empty---------------------------------------");
+				}
+				
 			}else {
 				csvWriter.write( new StockFileModel());
 			}
@@ -934,18 +1010,30 @@ public class StockServiceImpl {
 							receiverUserType,
 							"Users");
 					logger.info("Notfication have been saved for user.");
-					emailUtil.saveNotification(adminMailTag, 
-							userStaticServiceImpl.getCeirAdmin().getUserProfile(), 
-							consignmentUpdateRequest.getFeatureId(),
-							Features.STOCK,
-							action,
-							consignmentUpdateRequest.getTxnId(),
-							txnId,
-							placeholderMap,
-							stockMgmt.getRoleType(),
-							receiverUserType,
-							"Users");
-					logger.info("Notfication have been saved for CEIR Admin.");
+					if(consignmentUpdateRequest.getAction() == 0) {
+						 Generic_Response_Notification generic_Response_Notification =
+								  userFeignClient.ceirInfoByUserTypeId(8);
+								  
+								  logger.info("generic_Response_Notification::::::::"+
+								  generic_Response_Notification);
+								  
+								  List<RegisterationUser> registerationUserList =
+								  generic_Response_Notification.getData();
+								  
+								  for(RegisterationUser registerationUser :registerationUserList) { UserProfile
+								  userProfile_generic_Response_Notification = new UserProfile();
+								  userProfile_generic_Response_Notification =
+								  userProfileRepository.getByUserId(registerationUser.getId());
+								  emailUtil.saveNotification(adminMailTag,
+								  userProfile_generic_Response_Notification,
+								  consignmentUpdateRequest.getFeatureId(), Features.STOCK, action,
+								  consignmentUpdateRequest.getTxnId(), txnId, placeholderMap,
+								  stockMgmt.getRoleType(), receiverUserType, "Users");
+								  logger.info("Notfication have been saved for CEIR Admin."); }	
+					}
+					
+					 
+					 
 				}
 
 			}else if("CEIRSYSTEM".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())){
@@ -1013,8 +1101,18 @@ public class StockServiceImpl {
 						logger.info("Notfication have been saved for user.");
 
 						if(consignmentUpdateRequest.getAction() == 0) {
+							Generic_Response_Notification generic_Response_Notification = userFeignClient.ceirInfoByUserTypeId(8);
+
+							logger.info("generic_Response_Notification::::::::"+generic_Response_Notification);
+
+							List<RegisterationUser> registerationUserList = generic_Response_Notification.getData();
+
+							for(RegisterationUser registerationUser :registerationUserList) {
+							UserProfile userProfile_generic_Response_Notification = new UserProfile();
+							userProfile_generic_Response_Notification = userProfileRepository.getByUserId(registerationUser.getId());
+							
 							emailUtil.saveNotification(adminMailTag, 
-									userStaticServiceImpl.getCeirAdmin().getUserProfile(), 
+									userProfile_generic_Response_Notification,
 									consignmentUpdateRequest.getFeatureId(),
 									Features.STOCK,
 									action,
@@ -1025,6 +1123,7 @@ public class StockServiceImpl {
 									receiverUserType,
 									"Users");
 							logger.info("Notfication have been saved for CEIR Admin.");
+							}
 							emailUtil.saveNotification(mailTag, 
 									userProfile, 
 									consignmentUpdateRequest.getFeatureId(),

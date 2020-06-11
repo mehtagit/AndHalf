@@ -64,7 +64,7 @@ public class StolenAndRecoveryTransaction {
 		StolenOrganizationUserDB stolenOrganizationUserDB = stolenandRecoveryMgmt.getStolenOrganizationUserDB();
 
 		if(Objects.isNull(stolenandRecoveryMgmt.getOperatorTypeId()))
-			alertServiceImpl.raiseAnAlert(Alerts.alert002, stolenandRecoveryMgmt.getUserId().intValue());
+//			alertServiceImpl.raiseAnAlert(Alerts.alert002, stolenandRecoveryMgmt.getUserId().intValue());
 
 		stolenandRecoveryMgmt.setStolenIndividualUserDB(null);
 		stolenandRecoveryMgmt.setStolenOrganizationUserDB(null);

@@ -18,6 +18,6 @@ public interface CheckDeviceFeign {
 
 	
 	@PostMapping(value="/gsma/GsmaValues")
-	public CheckDeviceReponse imeiValues(@RequestParam long imei) ;
+	public CheckDeviceReponse imeiValues(@RequestParam String imei) ;
 
 }

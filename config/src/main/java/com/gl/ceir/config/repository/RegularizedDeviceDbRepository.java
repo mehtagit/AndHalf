@@ -30,5 +30,11 @@ JpaSpecificationExecutor<RegularizeDeviceDb	>, CustomerCareRepo<RegularizeDevice
 	@Query("SELECT r FROM RegularizeDeviceDb r WHERE firstImei = :imei OR secondImei = :imei OR thirdImei = :imei OR fourthImei = :imei") 
 	public RegularizeDeviceDb getByImei(String imei);
 
+	@Query("SELECT count(r) FROM RegularizeDeviceDb r WHERE firstImei = :imei OR secondImei = :imei OR thirdImei = :imei OR fourthImei = :imei") 
+	long countByImei(String imei);
+
+	
 	public List<RegularizeDeviceDb> findByTxnId(String txnid);
+	
+	//boolean existsByFirstImeiAndSecondImeiAndThirdImeiAndForthImei(); 
 }
