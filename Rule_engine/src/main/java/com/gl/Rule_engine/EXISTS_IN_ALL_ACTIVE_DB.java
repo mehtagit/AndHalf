@@ -24,8 +24,9 @@ class EXISTS_IN_ALL_ACTIVE_DB {
         String res =null;
         try {
             String qry = " select sum (cnt) from  (select count  (imei) as cnt  from device_usage_db where imei = '"+args[3]+"' and MSISDN = '"+args[12]+"' "
-                    + " union select count  (imei)  as cnt from device_duplicate_db where imei = '"+args[3]+"' and MSISDN = '"+args[12]+"' ) a ; ";
+                    + " union select count  (imei)  as cnt from device_duplicate_db where imei = '"+args[3]+"' and MSISDN = '"+args[12]+"' ) a  ";
             Statement stmt2 = conn.createStatement();
+logger.info(qry);
             ResultSet result1 = stmt2.executeQuery(qry);
             int res1 = 0;
             try {
@@ -33,10 +34,9 @@ class EXISTS_IN_ALL_ACTIVE_DB {
                     res1 = result1.getInt(1);
                 }
             } catch (Exception e) {
-                logger.debug("" + e);
+                logger.error("" + e);
             }
             if (res1 != 0) {
-//                logger.debug("Yes");
                 res = "Yes";
             } else {
                 res = "No";
@@ -44,7 +44,7 @@ class EXISTS_IN_ALL_ACTIVE_DB {
             result1.close();
             stmt2.close();
         } catch (Exception e) {
-            logger.debug("" + e);
+            logger.error("" + e);
         }
 
         return res;
