@@ -408,9 +408,6 @@ i.fa.fa-times-circle-o.red-text {
 	<!--scrollbar-->
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-	<!-- chartist -->
-	<script type="text/javascript"
-		src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script>
 
 
 	<!-- data-tables -->
@@ -456,8 +453,6 @@ i.fa.fa-times-circle-o.red-text {
 		src="${context}/resources/project_js/globalVariables.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/backbutton.js"></script>
-	<script type="text/javascript"
-		src="${context}/resources/project_js/dragableModal.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/enterKey.js"></script>
 	<script type="text/javascript"

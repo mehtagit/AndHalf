@@ -12,10 +12,7 @@
 	
 	 long accessTime = session.getLastAccessedTime();
 	 long currentTime= new Date().getTime(); 
-	 System.out.println("accessTime========"+(accessTime));
-	 System.out.println("timeout========"+timeout);
 	 long dfd= accessTime +timeout;
-	 System.out.println("currentTime========"+currentTime);
 	 if( currentTime< dfd){
 	/*  response.setHeader("Refresh", timeout + "; URL = ../login");
 	 System.out.println("timeout========"+timeout); 
@@ -30,7 +27,7 @@
 <!DOCTYPE html>
 <html class="no-js" lang="en" dir="ltr">
 <head>
-<title>Consignment</title>
+<title>View Report</title>
 <meta http-equiv='cache-control' content='no-cache'>
 <meta http-equiv='expires' content='-1'>
 <meta http-equiv='pragma' content='no-cache'>

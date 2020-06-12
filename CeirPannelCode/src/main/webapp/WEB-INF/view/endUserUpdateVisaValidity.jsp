@@ -35,8 +35,6 @@
 <link
 	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
-<link href="${context}/resources/css/jquery-datepicker2.css"
-	type="text/css" rel="stylesheet" media="screen,projection">
 <!-- Custome CSS-->
 <link href="${context}/resources/css/custom/custom.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
@@ -660,13 +658,12 @@
 					<script type="text/javascript"
 		src="${context}/resources/project_js/enterKey.js"></script>
 		
-			<script type="text/javascript"
-		src="${context}/resources/js/intlTelInput.js"></script>
+	
 		
 		<script type="text/javascript"
 		src="${context}/resources/project_js/ValidationFileOutsidePortal.js"></script>
 		
-	<script type="text/javascript">
+<!-- 	<script type="text/javascript">
 
 	 var input = document.querySelector("#phone1");
      window.intlTelInput(input, {
@@ -677,7 +674,7 @@
      window.intlTelInput(input, {
          utilsScript: "js/utils.js",
      });
-	</script>		
+	</script> -->		
 
 </body>
 </html>

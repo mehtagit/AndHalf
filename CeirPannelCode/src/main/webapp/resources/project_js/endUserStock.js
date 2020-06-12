@@ -28,7 +28,7 @@ $(document).ready(function () {
         	$('#uploadPaidStatusDiv').css("display", "none");
         	$('#checkUploadStatusDiv').css("display", "block");
         }
-            $('.modal').modal();
+
         });
     
 function uploadEndUserStock()

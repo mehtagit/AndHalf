@@ -615,7 +615,6 @@ style="font-size: 20px;">+</span> <spring:message code="input.addmorefile" /></b
     <!--scrollbar-->
     <script type="text/javascript" src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
     <!-- chartist -->
-    <script type="text/javascript" src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script>
 <!-- i18n library -->
 	<script type="text/javascript">
 var path="${context}";
@@ -665,8 +664,6 @@ var path="${context}";
     <script type="text/javascript"
 		src="${context}/resources/project_js/endUserGrievance.js"></script>
 	
-			<script type="text/javascript"
-		src="${context}/resources/project_js/_dateFunction.js" async></script>
 		<script type="text/javascript"
 		src="${context}/resources/project_js/profileInfoTab.js" async></script>
 	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>

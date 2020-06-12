@@ -33,8 +33,7 @@ if(statusCode==200){
 	href="${context}/resources/images/favicon/apple-touch-icon-152x152.png">
 <!-- For iPhone -->
 <meta name="msapplication-TileColor" content="#00bcd4">
-<meta name="msapplication-TileImage"
-	content="images/favicon/mstile-144x144.png">
+
 <!-- For Windows Phone -->
 <link rel="stylesheet"
 	href="${context}/resources/font/font-awesome/css/font-awesome.min.css">
@@ -708,8 +707,7 @@ var contextpath = "${context}";
 	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
 <script type="text/javascript"
 		src="${context}/resources/project_js/backbutton.js"></script>
-	<script type="text/javascript"
-		src="${context}/resources/project_js/dragableModal.js"></script>	
+	
 			<script type="text/javascript"
 		src="${context}/resources/project_js/enterKey.js"></script>
     

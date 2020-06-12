@@ -34,8 +34,6 @@
 <link
 	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
-<link href="${context}/resources/css/jquery-datepicker2.css"
-	type="text/css" rel="stylesheet" media="screen,projection">
 <!-- Custome CSS-->
 <link href="${context}/resources/css/custom/custom.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
@@ -91,41 +89,8 @@
 	<script
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
-	<script type="text/javascript"
-		src="${context}/resources/js/Validator.js"></script>
+
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-	<script type="text/javascript"
-		src="${context}/resources/js/countries.js"></script>
-			<!-- i18n library -->
-	<script type="text/javascript"
-		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.js"></script>
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.messagestore.js"></script>
 
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.fallbacks.js"></script>
-
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.language.js"></script>
-
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.parser.js"></script>
-
-
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.js"></script>
-
-
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.bidi.js"></script>
-
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/jquery.history.js"></script>
-
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
-		
 	

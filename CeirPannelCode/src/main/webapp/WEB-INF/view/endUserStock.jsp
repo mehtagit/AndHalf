@@ -513,12 +513,8 @@ var contextpath = "${context}";
     <script type="text/javascript" src="${context}/resources/js/prism/prism.js"></script>-->
     <!--scrollbar-->
     <script type="text/javascript" src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-    <!-- chartist -->
-    <script type="text/javascript" src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script>
     
-    
-<script type="text/javascript"
-		src="${context}/resources/project_js/validationMsg.js"></script>
+   
     <!-- data-tables -->
     <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/data-tables-script.js"></script>

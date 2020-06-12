@@ -43,7 +43,7 @@ function hide() {
 			contentType: false,
 			success: function (data, textStatus, jqXHR) {
 
-				console.log(JSON.stringify(data));
+				//console.log(JSON.stringify(data));
 				$('#passPortBtnId').prop('disabled', true);
 				if(data.errorCode==1)
 					{
@@ -89,7 +89,7 @@ function hide() {
 		                             $('#endUserdatepicker1').val(data.data.entryDateInCountry).prop('readonly', true); 
 		                             $('#endUservisaType').val(data.data.visaDb[0].visaType).attr("disabled", true);
 		                             // $('#endUserdatepickerDiv').attr("disabled", true);
-		                             console.log(data.data.visaDb[0].visaType);
+		                             //console.log(data.data.visaDb[0].visaType);
 		                             $("#endUserdatepickerDiv").css("pointer-events","none");
 		                               
 		                                 $('#endUserdatepicker1').prop('readonly', true);
@@ -116,7 +116,7 @@ function hide() {
 		      }
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
-				console.log("error in ajax")
+				//console.log("error in ajax")
 			}
 		});
 		return false;
@@ -158,10 +158,10 @@ function hide() {
 			contentType: false,
 			success: function (data, textStatus, jqXHR) {
 
-				console.log(JSON.stringify(data));
+				//console.log(JSON.stringify(data));
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
-				console.log("error in ajax")
+				//console.log("error in ajax")
 			}
 		});
 		return false;
@@ -172,7 +172,7 @@ function hide() {
 	   $('#langlist').val(data_lang_param);
 	 //  var langParam=$('#langlist').val() == 'km' ? 'km' : 'en';
 		$.i18n().locale = data_lang_param;
-		//alert($.i18n('imageSize')+"  langParam  "+langParam);
+		////alert($.i18n('imageSize')+"  langParam  "+langParam);
 		
 		$.i18n().load( {
 			'en': './resources/i18n/en.json',
@@ -298,7 +298,7 @@ function hide() {
 			data: formData,
 			success: function (data, textStatus, jqXHR) {
 				
-				console.log(JSON.stringify(data));
+				//console.log(JSON.stringify(data));
 				if(data.errorCode==5){
 					$('#successMsg').openModal();
 					$('#messageResponse').text($.i18n('VISA_UPDATE_SUCCESS'));
@@ -326,7 +326,7 @@ function hide() {
 				}
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
-				console.log("error in ajax")
+				//console.log("error in ajax")
 			}
 		});
 		return false;
@@ -337,17 +337,17 @@ function hide() {
     function visaImageValidation() {
     	var uploadedFileName = $("#endUseruploadnationalID").val();
     	uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
-    	//alert("file extension=="+uploadedFileName)
+    	////alert("file extension=="+uploadedFileName)
     	var ext = uploadedFileName.split('.').pop();
     	
     	var fileSize = ($("#endUseruploadnationalID")[0].files[0].size);
     	/*fileSize = (Math.round((fileSize / 100000) * 100) / 100)
-    	alert("----"+fileSize);*/
+    	//alert("----"+fileSize);*/
        fileSize = Math.floor(fileSize/1000);
                         
                       
        var areEqual =ext.toLowerCase()=='png';
-   	//alert(areEqual);
+   	////alert(areEqual);
    	if(areEqual==true)
    		{
    		ext='PNG';
