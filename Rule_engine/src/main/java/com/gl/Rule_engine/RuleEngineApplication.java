@@ -222,11 +222,7 @@ public class RuleEngineApplication {
             if ("EXISTS_IN_ALL_ACTIVE_DB".equalsIgnoreCase(args[0])) {
                 reslt = EXISTS_IN_ALL_ACTIVE_DB.executeAction(args, conn, bw);
             }
-            
-              
-              
-            
-        }
+          }
         
         logger.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  " + args[0] + "  ....RESULT ....  " + reslt + "   @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ " + args[0]);
 
