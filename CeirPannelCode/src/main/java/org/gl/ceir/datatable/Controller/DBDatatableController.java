@@ -92,7 +92,7 @@ public class DBDatatableController {
 					datatableResponseModel.setData(finalList);
 				}
 			}else {
-				datatableResponseModel.setData(null);
+				datatableResponseModel.setData(Collections.emptyList());
 			}
 			
 			
