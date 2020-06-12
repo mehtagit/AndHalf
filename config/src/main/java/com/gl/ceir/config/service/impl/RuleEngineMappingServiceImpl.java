@@ -110,7 +110,7 @@ public class RuleEngineMappingServiceImpl {
 
 			Page<RuleEngineMapping> page = ruleEngineMappingRepository.findAll( buildSpecification(filterRequest).build(), pageable );
 		
-			auditTrailRepository.save( new AuditTrail( filterRequest.getUserId(),
+			auditTrailRepository.save( new AuditTrail( Long.valueOf(filterRequest.getUserId()),
 			  filterRequest.getUserName(), Long.valueOf(filterRequest.getUserTypeId()),
 			   "SystemAdmin", Long.valueOf(filterRequest.getFeatureId()),
 			  Features.RULE_FEATURE_MAPPING, SubFeatures.VIEW, "","NA",

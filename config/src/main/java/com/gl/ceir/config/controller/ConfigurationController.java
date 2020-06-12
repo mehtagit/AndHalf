@@ -211,7 +211,6 @@ if(GenricResponse.getErrorCode()==0) {
 			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
 			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
 			@RequestParam(value = "file", defaultValue = "0") Integer file) {
-
 		logger.info("Paginated view of Message Config " + filterRequest);
 
 		Page<PolicyConfigurationDb>  page = configurationManagementServiceImpl.filterPolicyConfiguration(filterRequest, pageNo, pageSize);
@@ -247,11 +246,13 @@ if(GenricResponse.getErrorCode()==0) {
 		GenricResponse GenricResponse =	configurationManagementServiceImpl.updatePolicyInfo(policyConfigurationDb);
 
 		if(GenricResponse.getErrorCode() == 0) {
-			auditTrailRepository.save(new AuditTrail(policyConfigurationDb.getUserId(), policyConfigurationDb.getUserName(), 
+			auditTrailRepository.save(new AuditTrail(Long.valueOf(policyConfigurationDb.getUserId()), policyConfigurationDb.getUserName(), 
 					Long.valueOf(policyConfigurationDb.getUserTypeId()), policyConfigurationDb.getUserType(), Long.valueOf(policyConfigurationDb.getFeatureId()),
 					Features.POLICY_MANAGEMENT, SubFeatures.UPDATE, "", "NA",policyConfigurationDb.getRoleType()));
 			logger.info("POLICY_MANAGEMENT : successfully inserted in Audit trail ");
 
+		
+			
 		}
 		
 		logger.info("Update sytem config response="+GenricResponse);

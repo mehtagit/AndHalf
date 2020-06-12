@@ -101,12 +101,14 @@ public class ConsignmentController {
 	public MappingJacksonValue withPaginationConsignments(@RequestBody FilterRequest filterRequest,
 			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
 			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
-			@RequestParam(value = "file", defaultValue = "0") Integer file) {
-
+			@RequestParam(value = "file", defaultValue = "0") Integer file,
+			@RequestParam(value = "source", defaultValue = "menu") String source) {
+		
+		logger.info("source::::"+source);
 		MappingJacksonValue mapping = null;
 		if(file == 0) {
 			logger.info("Request to view filtered consignment = " + filterRequest);
-			Page<ConsignmentMgmt> consignment =  consignmentServiceImpl.getFilterPaginationConsignments(filterRequest, pageNo, pageSize);
+			Page<ConsignmentMgmt> consignment =  consignmentServiceImpl.getFilterPaginationConsignments(filterRequest, pageNo, pageSize,source);
 			mapping = new MappingJacksonValue(consignment);
 		}else {
 			logger.info("Request to export filtered consignment = " + filterRequest);

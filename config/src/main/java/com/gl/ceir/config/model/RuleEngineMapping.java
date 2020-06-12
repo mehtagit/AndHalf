@@ -33,13 +33,20 @@ public class RuleEngineMapping implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@CreationTimestamp
+/*	@CreationTimestamp
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	@Column(updatable = false)
 	private LocalDateTime createdOn;
 
 	@UpdateTimestamp
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
+	private LocalDateTime modifiedOn;*/
+	
+	@CreationTimestamp
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
+	private LocalDateTime createdOn;
+
+	@UpdateTimestamp
 	private LocalDateTime modifiedOn;
 
 	@NotNull
@@ -48,7 +55,7 @@ public class RuleEngineMapping implements Serializable {
 
 	@NotNull
 	//@Enumerated(EnumType.STRING)
-	private String name;
+	private String name; 
 	
 	@NotNull
 	@Column(length = 20)

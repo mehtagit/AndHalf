@@ -3,17 +3,17 @@ package com.gl.ceir.config.model;
 public class CheckDevice{
 	private static long serialVersionUID = 1L;
 	private Integer deviceIdType;
-	private long deviceId;
+	private String deviceId;
 	public Integer getDeviceIdType() {
 		return deviceIdType;
 	}
 	public void setDeviceIdType(Integer deviceIdType) {
 		this.deviceIdType = deviceIdType;
 	}
-	public long getDeviceId() {
+	public String getDeviceId() {
 		return deviceId;
 	}
-	public void setDeviceId(long deviceId) {
+	public void setDeviceId(String deviceId) {
 		this.deviceId = deviceId;
 	}
 	@Override

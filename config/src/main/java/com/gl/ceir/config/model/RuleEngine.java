@@ -58,12 +58,41 @@ public class RuleEngine implements Serializable {
 	private String output;
 	
 	
+	//@Transient parameters 	
+	@Transient
+	public String userName;
+	@Transient
+	private Integer featureId;
+	@Transient
+	private Integer userTypeId;
+	@Transient
+	private String roleType;
+	
+	@Transient
+	private Integer userId;
+
 	public Long getId() {
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public LocalDateTime getCreatedOn() {
+		return createdOn;
+	}
+
+	public void setCreatedOn(LocalDateTime createdOn) {
+		this.createdOn = createdOn;
+	}
+
+	public LocalDateTime getModifiedOn() {
+		return modifiedOn;
+	}
+
+	public void setModifiedOn(LocalDateTime modifiedOn) {
+		this.modifiedOn = modifiedOn;
 	}
 
 	public String getName() {
@@ -98,20 +127,44 @@ public class RuleEngine implements Serializable {
 		this.output = output;
 	}
 
-	public LocalDateTime getCreatedOn() {
-		return createdOn;
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setCreatedOn(LocalDateTime createdOn) {
-		this.createdOn = createdOn;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
-	public LocalDateTime getModifiedOn() {
-		return modifiedOn;
+	public Integer getFeatureId() {
+		return featureId;
 	}
 
-	public void setModifiedOn(LocalDateTime modifiedOn) {
-		this.modifiedOn = modifiedOn;
+	public void setFeatureId(Integer featureId) {
+		this.featureId = featureId;
+	}
+
+	public Integer getUserTypeId() {
+		return userTypeId;
+	}
+
+	public void setUserTypeId(Integer userTypeId) {
+		this.userTypeId = userTypeId;
+	}
+
+	public String getRoleType() {
+		return roleType;
+	}
+
+	public void setRoleType(String roleType) {
+		this.roleType = roleType;
+	}
+
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 
 	public static long getSerialversionuid() {
@@ -123,6 +176,10 @@ public class RuleEngine implements Serializable {
 		StringBuilder builder = new StringBuilder();
 		builder.append("RuleEngine [id=");
 		builder.append(id);
+		builder.append(", createdOn=");
+		builder.append(createdOn);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
 		builder.append(", name=");
 		builder.append(name);
 		builder.append(", description=");
@@ -131,12 +188,19 @@ public class RuleEngine implements Serializable {
 		builder.append(state);
 		builder.append(", output=");
 		builder.append(output);
-		builder.append(", createdOn=");
-		builder.append(createdOn);
-		builder.append(", modifiedOn=");
-		builder.append(modifiedOn);
+		builder.append(", userName=");
+		builder.append(userName);
+		builder.append(", featureId=");
+		builder.append(featureId);
+		builder.append(", userTypeId=");
+		builder.append(userTypeId);
+		builder.append(", roleType=");
+		builder.append(roleType);
+		builder.append(", userId=");
+		builder.append(userId);
 		builder.append("]");
 		return builder.toString();
 	}
+	
 
 }

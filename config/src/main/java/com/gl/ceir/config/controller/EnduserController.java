@@ -70,28 +70,28 @@ public class EnduserController {
 
 	}
 
-	@ApiOperation(value = "pagination View filtered consignment", response = ConsignmentMgmt.class)
-	@PostMapping("/filter/end-users")
-	public MappingJacksonValue withPaginationConsignments(@RequestBody FilterRequest filterRequest,
-			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
-			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
-			@RequestParam(value = "file", defaultValue = "0") Integer file) {
-
-		MappingJacksonValue mapping = null;
-		if(file == 0) {
-			logger.info("Request to view filtered end users = " + filterRequest);
-			Page<EndUserDB> consignment = enduserServiceImpl.filter(filterRequest, pageNo, pageSize);
-			mapping = new MappingJacksonValue(consignment);
-		}else {
-			logger.info("Request to export filtered end users = " + filterRequest);
-			FileDetails fileDetails = enduserServiceImpl.getFilteredEndUserInFileV2(filterRequest);
-			mapping = new MappingJacksonValue(fileDetails);
-		}
-
-		logger.info("Response of view Request = " + mapping);
-
-		return mapping;
-	}
+//	@ApiOperation(value = "pagination View filtered consignment", response = ConsignmentMgmt.class)
+//	@PostMapping("/filter/end-users")
+//	public MappingJacksonValue withPaginationConsignments(@RequestBody FilterRequest filterRequest,
+//			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
+//			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+//			@RequestParam(value = "file", defaultValue = "0") Integer file) {
+//
+//		MappingJacksonValue mapping = null;
+//		if(file == 0) {
+//			logger.info("Request to view filtered end users = " + filterRequest);
+//			Page<EndUserDB> consignment = enduserServiceImpl.filter(filterRequest, pageNo, pageSize);
+//			mapping = new MappingJacksonValue(consignment);
+//		}else {
+//			logger.info("Request to export filtered end users = " + filterRequest);
+//			FileDetails fileDetails = enduserServiceImpl.getFilteredEndUserInFileV2(filterRequest);
+//			mapping = new MappingJacksonValue(fileDetails);
+//		}
+//
+//		logger.info("Response of view Request = " + mapping);
+//
+//		return mapping;
+//	}
 
 	@ApiOperation(value = "Accept Reject end-users.", response = GenricResponse.class)
 	@PutMapping("/accept-reject/end-users") 

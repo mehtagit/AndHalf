@@ -129,7 +129,7 @@ public class StolenAndRecoveryController {
 			@RequestParam(value = "source", defaultValue = "menu") String source) {
 
 		MappingJacksonValue mapping = null;
-
+		logger.info("  source== "+source);
 		if(file == 0) {
 			logger.info("Record request to Stolen And Recovery Info = " +  stolenandRecoveryDetails);
 			Page<StolenandRecoveryMgmt>	stolenandRecoveryDetailsResponse = stolenAndRecoveryServiceImpl.getAllInfo(stolenandRecoveryDetails,pageNo,pageSize,source);

@@ -37,6 +37,17 @@ public class StockFileModel {
 	@CsvBindByPosition(position = 7)
 	private Integer deviceQuantity;
 
+	@CsvBindByName(column = "Assigner Name")
+	@CsvBindByPosition(position = 8)
+	private String assigneName;
+	
+	@CsvBindByName(column = "Invoice Number ")
+	@CsvBindByPosition(position = 9)
+	private String invoiceNumber;
+	
+	
+
+
 	public Integer getDeviceQuantity() {
 		return deviceQuantity;
 	}
@@ -101,25 +112,52 @@ public class StockFileModel {
 		this.modifiedOn = modifiedOn;
 	}
 
+	
+	public String getAssigneName() {
+		return assigneName;
+	}
+
+	public void setAssigneName(String assigneName) {
+		this.assigneName = assigneName;
+	}
+
+	
+
+	public String getInvoiceNumber() {
+		return invoiceNumber;
+	}
+
+	public void setInvoiceNumber(String invoiceNumber) {
+		this.invoiceNumber = invoiceNumber;
+	}
+
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder()
-		.append("ConsignmentFileModel [")
-		.append("stockStatus=")
-		.append(stockStatus)
-		.append(", txnId=")
-		.append(txnId)
-		.append(", supplierName=")
-		.append(supplierName)
-		.append(", fileName=")
-		.append(fileName)
-		.append(", createdOn=")
-		.append(createdOn)
-		.append(", modifiedOn=")
-		.append(modifiedOn)
-		.append("]");
-		
+		StringBuilder builder = new StringBuilder();
+		builder.append("StockFileModel [createdOn=");
+		builder.append(createdOn);
+		builder.append(", txnId=");
+		builder.append(txnId);
+		builder.append(", fileName=");
+		builder.append(fileName);
+		builder.append(", quantity=");
+		builder.append(quantity);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
+		builder.append(", stockStatus=");
+		builder.append(stockStatus);
+		builder.append(", supplierName=");
+		builder.append(supplierName);
+		builder.append(", deviceQuantity=");
+		builder.append(deviceQuantity);
+		builder.append(", assigneName=");
+		builder.append(assigneName);
+		builder.append(", invoiceNumber=");
+		builder.append(invoiceNumber);
+		builder.append("]");
 		return builder.toString();
 	}
+
+	
 
 }

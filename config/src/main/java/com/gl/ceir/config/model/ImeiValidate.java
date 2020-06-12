@@ -5,7 +5,7 @@ public class ImeiValidate {
 	private String feature;
 	private int imei_type;
 	private String user_type;
-	private long imei;
+	private String imei;
 	public String getFeature() {
 		return feature;
 	}
@@ -24,17 +24,17 @@ public class ImeiValidate {
 	public void setUser_type(String user_type) {
 		this.user_type = user_type;
 	}
-	public long getImei() {
+	public String getImei() {
 		return imei;
 	}
-	public void setImei(long imei) {
+	public void setImei(String imei) {
 		this.imei = imei;
 	}
 	
 	public ImeiValidate() {
 		super();
 	}
-	public ImeiValidate(String feature, int imei_type, String user_type, long imei) {
+	public ImeiValidate(String feature, int imei_type, String user_type, String imei) {
 		super();
 		this.feature = feature;
 		this.imei_type = imei_type;

@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -33,6 +34,7 @@ import com.gl.ceir.config.model.AllRequest;
 import com.gl.ceir.config.model.AuditTrail;
 import com.gl.ceir.config.model.CeirActionRequest;
 import com.gl.ceir.config.model.Count;
+import com.gl.ceir.config.model.DashboardUsersFeatureStateMap;
 import com.gl.ceir.config.model.EndUserDB;
 import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.FilterRequest;
@@ -62,6 +64,7 @@ import com.gl.ceir.config.model.constants.TaxStatus;
 import com.gl.ceir.config.model.file.RegularizeDeviceFileModel;
 import com.gl.ceir.config.repository.AuditTrailRepository;
 import com.gl.ceir.config.repository.ConsignmentRepository;
+import com.gl.ceir.config.repository.DashboardUsersFeatureStateMapRepository;
 import com.gl.ceir.config.repository.EndUserDbRepository;
 import com.gl.ceir.config.repository.RegularizedDeviceDbRepository;
 import com.gl.ceir.config.repository.SystemConfigurationDbRepository;
@@ -136,6 +139,10 @@ public class RegularizedDeviceServiceImpl {
 	@Autowired
 	CommonFunction commonFunction;
 
+	@Autowired
+	DashboardUsersFeatureStateMapRepository dashboardUsersFeatureStateMapRepository; 
+
+	
 	private List<RegularizeDeviceDb> getAll(FilterRequest filterRequest){
 
 		List<StateMgmtDb> stateList = null;
@@ -143,7 +150,7 @@ public class RegularizedDeviceServiceImpl {
 		try {
 			stateList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
 
-			List<RegularizeDeviceDb> regularizeDeviceDbs = regularizedDeviceDbRepository.findAll(buildSpecification(filterRequest).build());
+			List<RegularizeDeviceDb> regularizeDeviceDbs = regularizedDeviceDbRepository.findAll(buildSpecification(filterRequest,stateList,null).build());
 
 			for(RegularizeDeviceDb regularizeDeviceDb : regularizeDeviceDbs) {
 
@@ -165,7 +172,7 @@ public class RegularizedDeviceServiceImpl {
 		}
 	}
 
-	public Page<RegularizeDeviceDb> filter(FilterRequest filterRequest, Integer pageNo, Integer pageSize){
+	public Page<RegularizeDeviceDb> filter(FilterRequest filterRequest, Integer pageNo, Integer pageSize,String source){
 
 		User user = null;
 		List<StateMgmtDb> stateList = null;
@@ -173,6 +180,7 @@ public class RegularizedDeviceServiceImpl {
 		SystemConfigurationDb gracePeriodForRegisterDevice = systemConfigurationDbRepository.getByTag(ConfigTags.grace_period_for_rgister_device);
 
 		try {
+			
 			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
 
 			if(filterRequest.getTaxPaidStatus() != TaxStatus.BLOCKED.getCode()) {
@@ -182,7 +190,7 @@ public class RegularizedDeviceServiceImpl {
 			logger.info(stateList);
 			logger.info("dialect : " + propertiesReader.dialect);
 
-			Page<RegularizeDeviceDb> page = regularizedDeviceDbRepository.findAll(buildSpecification(filterRequest).build(), pageable);
+			Page<RegularizeDeviceDb> page = regularizedDeviceDbRepository.findAll(buildSpecification(filterRequest,stateList, source).build(), pageable);
             
 			for(RegularizeDeviceDb regularizeDeviceDb : page.getContent()) {
 				
@@ -440,6 +448,7 @@ public class RegularizedDeviceServiceImpl {
 						if(endUserDB.getAuditParameters().getUserTypeId()==7) {
 							if(regularizeDeviceDb.getTaxPaidStatus()==TaxStatus.TAX_PAID.getCode())
 							{
+								regularizeDeviceDb.setTaxCollectedBy(username);
 								logger.info("if usertype is custom and tax status is paid so now this entry going to web action db");
 								webActionDbs.add(new WebActionDb(Features.REGISTER_DEVICE, SubFeatures.Clear, 0, 
 										regularizeDeviceDb.getTxnId()));
@@ -520,20 +529,30 @@ public class RegularizedDeviceServiceImpl {
 					SubFeatures.Tax_Paid, "",regularizeDeviceDb.getTxnId(),audit.getUserType());
 			auditTrailRepository.save(auditTrail);
 			logger.info("AUDIT : update in audit_trail. " + auditTrail);
-
-	
 			RegularizeDeviceDb userCustomDbDetails = regularizedDeviceDbRepository.getByFirstImei(regularizeDeviceDb.getFirstImei());
 			UserProfile ceirAdminProfile = userStaticServiceImpl.getCeirAdmin().getUserProfile();
 
 			if(Objects.nonNull(userCustomDbDetails)) {
-                
 				userCustomDbDetails.setTaxPaidStatus(regularizeDeviceDb.getTaxPaidStatus());
+				userCustomDbDetails.setTaxCollectedBy(audit.getUsername());
 				RegularizeDeviceDb output=regularizedDeviceDbRepository.save(userCustomDbDetails);
                 if(Objects.nonNull(output))
                 {
 					WebActionDb webAction=new WebActionDb(Features.REGISTER_DEVICE,SubFeatures.Clear, 0, 
 							regularizeDeviceDb.getTxnId());
 					webActionDbRepository.save(webAction);
+					Map<String, String> placeholderMap = new HashMap<String, String>();
+                    EndUserDB endUserDb=output.getEndUserDB();
+					// Mail to End user. 
+						if(Objects.nonNull(endUserDb.getEmail()) && !endUserDb.getEmail().isEmpty() && !"NA".equalsIgnoreCase(endUserDb.getEmail())) {
+							placeholderMap.put("<First name>", endUserDb.getFirstName());
+							placeholderMap.put("<Txn id>",regularizeDeviceDb.getTxnId());
+							String mailTag = "Tax_Pay_Msg";
+							rawMails.add(new RawMail(mailTag, endUserDb.getId(), Long.valueOf(12), 
+									Features.REGISTER_DEVICE, SubFeatures.Tax_Paid, regularizeDeviceDb.getTxnId(), 
+									regularizeDeviceDb.getTxnId(), placeholderMap, ReferTable.END_USER, null, "End User"));
+							emailUtil.saveNotification(rawMails);	
+						}
                 }
 				/*
 				 * placeholders.put("<FIRST_NAME>", ceirAdminProfile.getFirstName());
@@ -941,7 +960,7 @@ if(Objects.nonNull(regularizeOutput))
 		}
 	}
 
-	private GenericSpecificationBuilder<RegularizeDeviceDb> buildSpecification(FilterRequest filterRequest){
+	private GenericSpecificationBuilder<RegularizeDeviceDb> buildSpecification(FilterRequest filterRequest,List<StateMgmtDb> statusList, String source){
 		GenericSpecificationBuilder<RegularizeDeviceDb> specificationBuilder = new GenericSpecificationBuilder<RegularizeDeviceDb>(propertiesReader.dialect);
 
 		if(Objects.nonNull(filterRequest.getNid()) && !filterRequest.getNid().isEmpty())
@@ -978,12 +997,50 @@ if(Objects.nonNull(regularizeOutput))
 		if(Objects.nonNull(filterRequest.getStatus())) {
 			specificationBuilder.with(new SearchCriteria("status", filterRequest.getStatus(), SearchOperation.EQUALITY, Datatype.INT));
 		}
+				
+
 		else {
 			if(Objects.nonNull(filterRequest.getUserTypeId())) {
 				
              if(filterRequest.getUserTypeId()==8)		
              {
-     			specificationBuilder.with(new SearchCriteria("status",RegularizeDeviceStatus.PENDING_APPROVAL_FROM_CEIR_ADMIN.getCode(), SearchOperation.EQUALITY, Datatype.INT));
+     //			specificationBuilder.with(new SearchCriteria("status",RegularizeDeviceStatus.PENDING_APPROVAL_FROM_CEIR_ADMIN.getCode(), SearchOperation.EQUALITY, Datatype.INT));
+       
+            		if(Objects.nonNull(filterRequest.getFeatureId()) && Objects.nonNull(filterRequest.getUserTypeId())) {
+
+        				List<DashboardUsersFeatureStateMap> dashboardUsersFeatureStateMap = dashboardUsersFeatureStateMapRepository.findByUserTypeIdAndFeatureId(filterRequest.getUserTypeId(), filterRequest.getFeatureId());
+        				logger.debug(dashboardUsersFeatureStateMap);
+
+        				List<Integer> deviceStatus = new LinkedList<>();
+
+        				if(Objects.nonNull(dashboardUsersFeatureStateMap)) {
+        					if("dashboard".equalsIgnoreCase(source) || "menu".equalsIgnoreCase(source)) {
+        						for(DashboardUsersFeatureStateMap dashboardUsersFeatureStateMap2 : dashboardUsersFeatureStateMap ) {
+        							deviceStatus.add(dashboardUsersFeatureStateMap2.getState());
+        						}
+        					}else if("filter".equalsIgnoreCase(source)) {
+        						if(nothingInFilter(filterRequest)) {
+        							for(DashboardUsersFeatureStateMap dashboardUsersFeatureStateMap2 : dashboardUsersFeatureStateMap ) {
+        								deviceStatus.add(dashboardUsersFeatureStateMap2.getState());
+        							}
+        						}else {
+        							for(StateMgmtDb stateMgmtDb : statusList ) {
+        								deviceStatus.add(stateMgmtDb.getState());
+        							}
+        						}
+        					}else if("noti".equalsIgnoreCase(source)) {
+        						logger.info("Skip status check, because source is noti.");
+        					}
+
+        					logger.info("Array list to add is = " + deviceStatus);
+        					if(!deviceStatus.isEmpty()) {
+        						specificationBuilder.addSpecification(specificationBuilder.in("status", deviceStatus));
+        					}else {
+        						logger.warn("no predefined status are available.");
+        					}
+        				}
+        			}
+
              }
              else {
             	 
@@ -1026,4 +1083,27 @@ if(Objects.nonNull(regularizeOutput))
 		
 	}
 
+	public boolean nothingInFilter(FilterRequest filterRequest) {
+		if(Objects.nonNull(filterRequest.getStartDate()) || !filterRequest.getStartDate().isEmpty()) {
+			return Boolean.FALSE;
+		}
+		if(Objects.nonNull(filterRequest.getEndDate()) || !filterRequest.getEndDate().isEmpty()) {
+			return Boolean.FALSE;
+		}
+
+		if(Objects.nonNull(filterRequest.getTxnId()) || !filterRequest.getTxnId().isEmpty()) {
+			return Boolean.FALSE;
+		}
+
+		if(Objects.nonNull(filterRequest.getDisplayName()) || !filterRequest.getDisplayName().isEmpty()) {
+			return Boolean.FALSE;
+		}
+		if(Objects.nonNull(filterRequest.getConsignmentStatus()) ) {
+			return Boolean.FALSE;
+		}
+		if(Objects.nonNull(filterRequest.getUserType()) || !filterRequest.getEndDate().isEmpty()) {
+			return Boolean.FALSE;
+		}
+		return Boolean.TRUE;
+	}
 }

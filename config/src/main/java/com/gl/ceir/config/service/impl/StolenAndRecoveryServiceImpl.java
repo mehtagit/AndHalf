@@ -52,6 +52,7 @@ import com.gl.ceir.config.model.WebActionDb;
 import com.gl.ceir.config.model.constants.Alerts;
 import com.gl.ceir.config.model.constants.ConsignmentStatus;
 import com.gl.ceir.config.model.constants.Datatype;
+import com.gl.ceir.config.model.constants.Features;
 import com.gl.ceir.config.model.constants.ReferTable;
 import com.gl.ceir.config.model.constants.SearchOperation;
 import com.gl.ceir.config.model.constants.StockStatus;
@@ -148,10 +149,12 @@ public class StolenAndRecoveryServiceImpl {
 
 	@Autowired
 	UserStaticServiceImpl userStaticServiceImpl;
+
 	
+
 	@Autowired 
 	UserFeignClient userFeignClient;
-
+	
 	public GenricResponse uploadDetails(StolenandRecoveryMgmt stolenandRecoveryMgmt) {
 
 		try {
@@ -239,7 +242,7 @@ public class StolenAndRecoveryServiceImpl {
 			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
 
 			statusList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
-
+			logger.info("  source== "+source);
 			Page<StolenandRecoveryMgmt> stolenandRecoveryMgmtPage = stolenAndRecoveryRepository.findAll(buildSpecification(filterRequest, statusList, source).build(), pageable);
 			stateInterpList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
 			logger.info(stateInterpList);
@@ -264,7 +267,7 @@ public class StolenAndRecoveryServiceImpl {
 				}
 
 			}
-
+			
 			logger.info(stolenandRecoveryMgmtPage.getContent());
 			if(Objects.nonNull(filterRequest.getTxnId())) {
 				addInAuditTrail(Long.valueOf(filterRequest.getUserId()), filterRequest.getTxnId(), SubFeatures.FILTER, filterRequest.getRoleType(),filterRequest.getRequestType(),filterRequest.getFeatureId());
@@ -336,7 +339,7 @@ public class StolenAndRecoveryServiceImpl {
 		GenericSpecificationBuilder<StolenandRecoveryMgmt> srsb = new GenericSpecificationBuilder<>(propertiesReader.dialect);
 		String ceirAdmin = "CEIRADMIN";
 		String fileStatus = "fileStatus";
-
+		logger.info("  source== "+source);
 		if(Objects.nonNull(filterRequest.getStartDate()) && !filterRequest.getStartDate().isEmpty())
 			srsb.with(new SearchCriteria("createdOn", filterRequest.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
 
@@ -394,12 +397,15 @@ public class StolenAndRecoveryServiceImpl {
 				logger.debug(dashboardUsersFeatureStateMap);
 				
 				//Code written by Sonu
+				logger.info("  source== "+source);
 				if(Objects.nonNull(dashboardUsersFeatureStateMap)) {
 					if("dashboard".equalsIgnoreCase(source) || "menu".equalsIgnoreCase(source)) {
+						logger.info("  source in 1 == "+source);
 						for(DashboardUsersFeatureStateMap dashboardUsersFeatureStateMap2 : dashboardUsersFeatureStateMap ) {
 							configuredStatus.add(dashboardUsersFeatureStateMap2.getState());
 						}
 					}else if("filter".equalsIgnoreCase(source)) {
+						logger.info("  source in 2 == "+source);
 						if(nothingInFilter(filterRequest)) {
 							for(DashboardUsersFeatureStateMap dashboardUsersFeatureStateMap2 : dashboardUsersFeatureStateMap ) {
 								configuredStatus.add(dashboardUsersFeatureStateMap2.getState());
@@ -602,6 +608,55 @@ public class StolenAndRecoveryServiceImpl {
 
 	@Transactional
 	public GenricResponse deleteRecord(FilterRequest filterRequest) {
+		
+		UserProfile userProfile = null;
+		//String firstName = "";
+		User user = null;
+		Map<String, String> placeholderMap = new HashMap<>();
+		Map<String, String> placeholderMap1 = new HashMap<>();
+		//String mailTag = null;
+		String action = null;
+		String txnId = null;
+		String userMailTag = null;
+		Boolean isUserCeirAdmin=false;
+		String receiverUserType = filterRequest.getUserType();
+		action = SubFeatures.DELETE;
+		StolenandRecoveryMgmt stolenandRecoveryMgmt = stolenAndRecoveryRepository.getByTxnId(filterRequest.getTxnId());
+		user = userRepository.getById(stolenandRecoveryMgmt.getUserId());				
+		userProfile = user.getUserProfile();
+		txnId = filterRequest.getTxnId();
+		String featureName=null;
+		
+		// set feature name for notification  & mail 
+		if(filterRequest.getFeatureId().equals(5))
+		{
+			featureName =Features.STOLEN_RECOVERY;
+		}else {
+			featureName =Features.BLOCK_UNBLOCK;
+		}
+		
+		if(filterRequest.getRequestType() == 0) {
+			userMailTag = "STOLEN_WITHDRAWN";
+			txnId = stolenandRecoveryMgmt.getTxnId();
+		}else if(filterRequest.getRequestType() == 1){
+			userMailTag = "RECOVERY_WITHDRAWN";
+			txnId =  stolenandRecoveryMgmt.getTxnId();
+		}else if(filterRequest.getRequestType() == 2){
+			userMailTag = "BLOCK_WITHDRAWN";
+			txnId =  stolenandRecoveryMgmt.getTxnId();
+		}else if(filterRequest.getRequestType() == 3){
+			userMailTag = "UNBLOCK_WITHDRAWN";
+			txnId =  stolenandRecoveryMgmt.getTxnId();
+		}
+		
+		/*placeholderMap.put("<First name>", userProfile_generic_Response_Notification.getFirstName());
+		placeholderMap.put("<Txn id>", consignmentMgmt.getTxnId());*/
+		
+		placeholderMap.put("<First name>", userProfile.getFirstName());
+		placeholderMap.put("<Txn id>", filterRequest.getTxnId());
+		
+		placeholderMap1.put("<First name>", userProfile.getFirstName());
+		placeholderMap1.put("<Txn id>", filterRequest.getTxnId());
 		try {
 			StolenandRecoveryMgmt stolenandRecoveryMgmtInfo = stolenAndRecoveryRepository.getById(filterRequest.getId());
 			if(Objects.isNull(filterRequest.getRemark())) {
@@ -626,13 +681,75 @@ public class StolenAndRecoveryServiceImpl {
 					//set file status =6
 					stolenandRecoveryMgmtInfo.setFileStatus(6);//withdrawn by CEIR Admin 
 					stolenandRecoveryMgmtInfo.setRemark(filterRequest.getRemark());
+					isUserCeirAdmin=true;
 				}else {
 					return new GenricResponse(3,"Operation not allowed", filterRequest.getTxnId());
 				}
 				stolenandRecoveryMgmtInfo.setDeleteFlag(0);
 				stolenandRecoveryMgmtInfo.setRemark(filterRequest.getRemark());
-				
+				logger.info("going to delete record.");
 				stolenAndRecoveryRepository.save(stolenandRecoveryMgmtInfo);
+				
+				if(isUserCeirAdmin) {
+					
+					/*
+					 * user = userRepository.getById(filterRequest.getUserId()); userProfile =
+					 * user.getUserProfile();
+					 */
+					logger.info("user profile details-");
+					logger.info(userProfile);
+					Generic_Response_Notification generic_Response_Notification = userFeignClient.ceirInfoByUserTypeId(8);
+
+					logger.info("generic_Response_Notification::::::::"+generic_Response_Notification);
+
+					List<RegisterationUser> registerationUserList = generic_Response_Notification.getData();
+
+					for(RegisterationUser registerationUser :registerationUserList) {
+					UserProfile userProfile_generic_Response_Notification = new UserProfile();
+					userProfile_generic_Response_Notification = userProfileRepository.getByUserId(registerationUser.getId());
+					placeholderMap.put("<First name>", userProfile_generic_Response_Notification.getFirstName());
+					placeholderMap.put("<Txn id>", filterRequest.getTxnId());
+					
+					emailUtil.saveNotification(userMailTag, 
+							userProfile_generic_Response_Notification,
+							filterRequest.getFeatureId(),
+							featureName,
+							action,
+							filterRequest.getTxnId(),
+							txnId,
+							placeholderMap,
+							filterRequest.getRoleType(),
+							receiverUserType,
+							"Users");
+					logger.info("Record delete by CEIRAdmin , Notfication for CEIRAdmin have been saved.");
+				}
+					emailUtil.saveNotification(userMailTag, 
+							userProfile, 
+							filterRequest.getFeatureId(),
+							featureName,
+							action,
+							filterRequest.getTxnId(),
+							txnId,
+							placeholderMap1,
+							filterRequest.getRoleType(),
+							receiverUserType,
+							"Users");
+					logger.info(" Record delete by CEIRAdmin ,Notfication for user have been saved.");
+				}
+				else {
+					emailUtil.saveNotification(userMailTag, 
+							userProfile, 
+							filterRequest.getFeatureId(),
+							featureName,
+							action,
+							filterRequest.getTxnId(),
+							txnId,
+							placeholderMap,
+							filterRequest.getRoleType(),
+							receiverUserType,
+							"Users");
+					logger.info("Record delete by user ,Notfication for user have  been saved.");	
+				}
 				addInAuditTrail(Long.valueOf(filterRequest.getUserId()), filterRequest.getTxnId(), SubFeatures.DELETE, filterRequest.getRoleType(),filterRequest.getRequestType(),filterRequest.getFeatureId());
 				return new GenricResponse(0,"Record Delete Sucessfully", filterRequest.getTxnId());
 			}
@@ -821,6 +938,7 @@ public class StolenAndRecoveryServiceImpl {
 						txnId =  stolenandRecoveryMgmt.getTxnId();
 					}else {
 						logger.warn("unknown request type received for stolen and recovery.");
+						return new GenricResponse(2, "unknown request type received for stolen and recovery.", consignmentUpdateRequest.getTxnId());
 					}
 
 					stolenandRecoveryMgmt.setFileStatus(StolenStatus.APPROVED_BY_CEIR_ADMIN.getCode());
@@ -883,10 +1001,42 @@ public class StolenAndRecoveryServiceImpl {
 							consignmentUpdateRequest.getTxnId(),
 							txnId,
 							placeholderMap1,
-							"CEIRADMIN",
+							stolenandRecoveryMgmt.getRoleType(),
 							user.getUsertype().getUsertypeName(),
 							ReferTable.USERS);
-					logger.info("Notfication have been saved.");
+					logger.info("Notfication have been saved for User.");
+					
+					if(consignmentUpdateRequest.getAction() == 0) {
+						 Generic_Response_Notification generic_Response_Notification =
+								  userFeignClient.ceirInfoByUserTypeId(8);
+								  
+								  logger.info("generic_Response_Notification::::::::"+
+								  generic_Response_Notification);
+								  
+								  List<RegisterationUser> registerationUserList =
+								  generic_Response_Notification.getData();
+								  
+								  for(RegisterationUser registerationUser :registerationUserList) { UserProfile
+								  userProfile_generic_Response_Notification = new UserProfile();
+								  userProfile_generic_Response_Notification =
+								  userProfileRepository.getByUserId(registerationUser.getId());
+								  placeholderMap1.put("<First name>",userProfile_generic_Response_Notification.getFirstName());
+								  
+								  emailUtil.saveNotification(mailTag,
+								  userProfile_generic_Response_Notification,
+								  consignmentUpdateRequest.getFeatureId(),
+								  decideFeature(consignmentUpdateRequest.getRequestType()),
+								  action,
+								  consignmentUpdateRequest.getTxnId(), 
+								  txnId,
+								  placeholderMap1,
+								  stolenandRecoveryMgmt.getRoleType(),
+								  consignmentUpdateRequest.getUserType(),
+								  "Users");
+								  logger.info("Notfication have been saved for CEIR Admin."); }	
+					}
+					
+					
 				}
 				addInAuditTrail(Long.valueOf(stolenandRecoveryMgmt.getUserId()), stolenandRecoveryMgmt.getTxnId(), action, stolenandRecoveryMgmt.getRoleType(),stolenandRecoveryMgmt.getRequestType(),0);
 			}else if("CEIRSYSTEM".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())){
@@ -973,20 +1123,47 @@ public class StolenAndRecoveryServiceImpl {
 								"CEIRSYSTEM",
 								user.getUsertype().getUsertypeName(),
 								ReferTable.USERS);
-						if(Objects.nonNull(ceirMailTag)) {
-							emailUtil.saveNotification(ceirMailTag, 
-									userStaticServiceImpl.getCeirAdmin().getUserProfile(), 
-									consignmentUpdateRequest.getFeatureId(),
-									decideFeature(consignmentUpdateRequest.getRequestType()),
-									action,
-									consignmentUpdateRequest.getTxnId(),
-									txnId,
-									placeholderMap1,
-									"CEIRSYSTEM",
-									"CEIRADMIN",
-									ReferTable.USERS);
+						 logger.info("proceed by system,Notfication  have been saved for User.");
+						
+						if(consignmentUpdateRequest.getAction() == 0) {
+							 Generic_Response_Notification generic_Response_Notification =
+									  userFeignClient.ceirInfoByUserTypeId(8);
+									  
+									  logger.info("generic_Response_Notification::::::::"+
+									  generic_Response_Notification);
+									  
+									  List<RegisterationUser> registerationUserList =
+									  generic_Response_Notification.getData();
+									  
+									  for(RegisterationUser registerationUser :registerationUserList) { UserProfile
+									  userProfile_generic_Response_Notification = new UserProfile();
+									  userProfile_generic_Response_Notification = userProfileRepository.getByUserId(registerationUser.getId());
+									  emailUtil.saveNotification(ceirMailTag,
+											  userProfile_generic_Response_Notification,
+											  consignmentUpdateRequest.getFeatureId(),
+											  decideFeature(consignmentUpdateRequest.getRequestType()),
+											  action,
+											  consignmentUpdateRequest.getTxnId(), 
+											  txnId,
+											  placeholderMap1,
+											  "CEIRSYSTEM",
+											  "CEIRADMIN", 
+											  ReferTable.USERS);
+									  logger.info(" proceed by system , Notfication have been saved for CEIR Admin.");
+									  }
+										
 						}
-						logger.info("Notfication have been saved.");
+						
+						/*
+						 * if(Objects.nonNull(ceirMailTag)) { emailUtil.saveNotification(ceirMailTag,
+						 * userStaticServiceImpl.getCeirAdmin().getUserProfile(),
+						 * consignmentUpdateRequest.getFeatureId(),
+						 * decideFeature(consignmentUpdateRequest.getRequestType()), action,
+						 * consignmentUpdateRequest.getTxnId(), txnId, placeholderMap1, "CEIRSYSTEM",
+						 * "CEIRADMIN", ReferTable.USERS); }
+						 * logger.info("Notfication have been saved.");
+						 */
+						 
 					}
 				}
 
