@@ -489,8 +489,9 @@ var contextpath = "${context}";
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input placeholder="" type="text" name="email" required="required" id="email"
-										title="" required /> 
+									<input maxlength="280" placeholder="" type="text" name="email" required="required" id="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,63}$"
+	                                 oninput="InvalidMsg(this,'email','<spring:message code="validation.email" />');" oninvalid="InvalidMsg(this,'email','<spring:message code="validation.email" />');" title=""
+                                required /> 
 									<label for="email"><spring:message code="input.email" /> <span class="star">*</span></label>
 								</div>
 

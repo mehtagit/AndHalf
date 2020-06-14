@@ -157,14 +157,14 @@ function isImageValid(id) {
 		$('#fileErrormessage').text($.i18n('imageMessage'));
 
 	}
-	else if(fileSize>=100){
+	else if(fileSize>=5000){
 		$('#fileFormateModal').openModal({
 			dismissible:false
 		});
 		$('#fileErrormessage').text('');
-		$('#fileErrormessage').text($.i18n('imageSize'));	
+		$('#fileErrormessage').text($.i18n('imageSize'));
 	}
-
+console.log("99")
 
 
 }

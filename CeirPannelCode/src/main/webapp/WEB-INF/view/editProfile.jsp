@@ -225,7 +225,7 @@ var contextpath = "${context}";
 										class="form-control boxBorder boxHeight" id="email"
 										oninput="InvalidMsg(this,'email','<spring:message code="validation.email" />');"
 										 oninvalid="InvalidMsg(this,'email','<spring:message code="validation.email" />');"
-								 pattern="[^@]+@[^@]+\.[a-zA-Z]{3,280}"  required >
+								 pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,63}$"  required >
 										  <label for="email"> <spring:message code="input.email" /> <span
 										class="star">*</span></label>
 								</div>

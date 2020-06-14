@@ -43,8 +43,9 @@
 	<!-- <logger name="org.jboss.netty" level="WARN"> </logger> <logger name="org.apache.activemq" 
 		level="WARN"> </logger> -->
 
-	<root level="DEBUG">
+	<root level="INFO">
 		<appender-ref ref="FILE" />
 	</root>
 
 </configuration>
+

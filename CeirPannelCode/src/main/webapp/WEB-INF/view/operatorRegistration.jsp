@@ -374,7 +374,7 @@ var contextpath = "${context}";
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="authorityEmail" required="required" maxlength="280" id="authorityEmail" pattern="[^@]+@[^@]+\.[a-zA-Z]{3,280}"
+									<input type="text" name="authorityEmail" required="required" maxlength="280" id="authorityEmail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,63}$"
 									oninput="InvalidMsg(this,'email','<spring:message code="validation.email" />');" oninvalid="InvalidMsg(this,'email','<spring:message code="validation.email" />');" title=""> 
 										<label for="authorityEmail"><spring:message code="registration.ReportingAuthorityEmailid" /><span class="star">*</span></label>
 								</div>
@@ -383,9 +383,8 @@ var contextpath = "${context}";
 										oninput="InvalidMsg(this,'input','<spring:message code="validation.contact" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.contact" />');" title="">
 									<label for="authorityPhoneNo"><spring:message code="registration.reportingauthoritycontactnumber" /><span class="star">*</span></label>
 								</div>
-
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="email" required="required" id="email" maxlength="280" pattern="[^@]+@[^@]+\.[a-zA-Z]{3,280}"
+									<input type="text" name="email" required="required" id="email" maxlength="280" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,63}$"
 									oninput="InvalidMsg(this,'email','<spring:message code="validation.email" />');" oninvalid="InvalidMsg(this,'email','<spring:message code="validation.email" />');" title="" required/> 
 										<label for="email"><spring:message code="input.email" /> <span class="star">*</span></label>
 								</div>

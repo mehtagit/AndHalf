@@ -387,7 +387,7 @@ String usertypeId="${usertypeId}";
 
 
 								<div class="input-field col s12 m6 l6" style="margin-top:22px;">
-									<input type="text" name="email" maxlength="280" id="email" pattern="[^@]+@[^@]+\.[a-zA-Z]{3,280}"
+									<input type="text" name="email" maxlength="280" id="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,63}$"
 									oninput="InvalidMsg(this,'email','<spring:message code="validation.email" />');" oninvalid="InvalidMsg(this,'email','<spring:message code="validation.email" />');"  
 									required />
 										 <label for="email"><spring:message                        
