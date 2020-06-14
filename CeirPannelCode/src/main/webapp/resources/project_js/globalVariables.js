@@ -133,7 +133,7 @@ function isImageValid(id) {
 	var fileSize = ($("#"+id)[0].files[0].size);
 	/*fileSize = (Math.round((fileSize / 100000) * 100) / 100)
 		alert("----"+fileSize);*/
-	fileSize = Math.floor(fileSize/1000);
+	fileSize = Math.floor(fileSize/50000);
 	$('#FilefieldId').val(id);
 	//alert(uploadedFileName+"----------"+ext+"----"+fileSize)
 	var areEqual =ext.toLowerCase()=='png';
@@ -157,14 +157,14 @@ function isImageValid(id) {
 		$('#fileErrormessage').text($.i18n('imageMessage'));
 
 	}
-	else if(fileSize>=5000){
+	else if(fileSize>=100){
 		$('#fileFormateModal').openModal({
 			dismissible:false
 		});
 		$('#fileErrormessage').text('');
-		$('#fileErrormessage').text($.i18n('imageSize'));
+		$('#fileErrormessage').text($.i18n('imageSize'));	
 	}
-console.log("99")
+
 
 
 }
