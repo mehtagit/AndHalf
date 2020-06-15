@@ -225,7 +225,7 @@ var contextpath = "${context}";
 										class="form-control boxBorder boxHeight" id="email"
 										oninput="InvalidMsg(this,'email','<spring:message code="validation.email" />');"
 										 oninvalid="InvalidMsg(this,'email','<spring:message code="validation.email" />');"
-								 pattern="[^@]+@[^@]+\.[a-zA-Z]{3,280}"  required >
+								 pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,63}$"  required >
 										  <label for="email"> <spring:message code="input.email" /> <span
 										class="star">*</span></label>
 								</div>
@@ -741,9 +741,9 @@ onchange="InvalidMsg(this,'select','<spring:message code="validation.selectField
     ================================================ -->
 	 <!-- jQuery Library -->
     <!-- <script type="text/javascript" src="js/plugins/jquery-1.11.2.min.js"></script>-->
-  <script type="text/javascript" src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
+  <script type="text/javascript" src="${context}/resources/js/plugins/jquery-1.11.2.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
   <script
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
        <!-- ajax js -->
   
        	
@@ -752,79 +752,79 @@ onchange="InvalidMsg(this,'select','<spring:message code="validation.selectField
 
 
 
-<script type="text/javascript" src="${context}/resources/ajax/Registration.js"></script>
-      <script type="text/javascript" src="${context}/resources/ajax/Profile.js"></script>
-       	<script type="text/javascript" src="${context}/resources/ajax/Password.js"></script>   
+<script type="text/javascript" src="${context}/resources/ajax/Registration.js?version=<%= (int) (Math.random() * 10) %>"></script>
+      <script type="text/javascript" src="${context}/resources/ajax/Profile.js?version=<%= (int) (Math.random() * 10) %>"></script>
+       	<script type="text/javascript" src="${context}/resources/ajax/Password.js?version=<%= (int) (Math.random() * 10) %>"></script>   
     		
     <!--materialize js-->
     <!--<script type="text/javascript" src="js/materialize.js"></script>-->
     <!-- Compiled and minified JavaScript -->
     
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script type="text/javascript" src="${context}/resources/js/materialize.js"></script>
-    <script type="text/javascript" src="${context}/resources/js/country.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
+    <script type="text/javascript" src="${context}/resources/js/materialize.js?version=<%= (int) (Math.random() * 10) %>"></script>
+    <script type="text/javascript" src="${context}/resources/js/country.js?version=<%= (int) (Math.random() * 10) %>"></script>
     <!--prism
     <script type="text/javascript" src="js/prism/prism.js"></script>-->
     <!--scrollbar-->
-    <script type="text/javascript" src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script type="text/javascript" src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
     <!-- chartist -->
     <!--<script type="text/javascript" src="js/plugins/chartist-js/chartist.min.js"></script>-->
 
 
     <!-- data-tables -->
-    <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/data-tables-script.js"></script>
+    <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
+    <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/data-tables-script.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
     <!--plugins.js - Some Specific JS codes for Plugin Settings-->
     <!--<script type="text/javascript" src="js/plugins.js"></script>-->
     <!--custom-script.js - Add your own theme custom JS-->
-    <script type="text/javascript" src="${context}/resources/js/custom-script.js"></script>
+    <script type="text/javascript" src="${context}/resources/js/custom-script.js?version=<%= (int) (Math.random() * 10) %>"></script>
 <script type="text/javascript"
-		src="${context}/resources/project_js/profileInfoTab.js" async></script>
+		src="${context}/resources/project_js/profileInfoTab.js?version=<%= (int) (Math.random() * 10) %>" async></script>
 	<!-- //////////////////////////////////////////////////////////////////////////// -->
 
 	
 	<!-- i18n library -->
 	<script type="text/javascript"
-		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
+		src="${context}/resources/project_js/CLDRPluralRuleParser.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.js"></script>
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.messagestore.js"></script>
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.messagestore.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.fallbacks.js"></script>
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.fallbacks.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.language.js"></script>
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.language.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.parser.js"></script>
-
-
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.js"></script>
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.parser.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.bidi.js"></script>
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.js?version=<%= (int) (Math.random() * 10) %>"></script>
+
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/jquery.history.js"></script>
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.bidi.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
-	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
+		src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/jquery.history.js?version=<%= (int) (Math.random() * 10) %>"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
+	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js?version=<%= (int) (Math.random() * 10) %>"></script>
 <script type="text/javascript"
-		src="${context}/resources/project_js/backbutton.js"></script>
+		src="${context}/resources/project_js/backbutton.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript"
-		src="${context}/resources/project_js/dragableModal.js"></script>	
+		src="${context}/resources/project_js/dragableModal.js?version=<%= (int) (Math.random() * 10) %>"></script>	
 			<script type="text/javascript"
-		src="${context}/resources/project_js/enterKey.js"></script>
+		src="${context}/resources/project_js/enterKey.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	 	<script type="text/javascript"
-		src="${context}/resources/project_js/validationMsg.js"></script>
+		src="${context}/resources/project_js/validationMsg.js?version=<%= (int) (Math.random() * 10) %>"></script>
 		    <script type="text/javascript"
-		src="${context}/resources/project_js/messageWindow.js"></script>  
+		src="${context}/resources/project_js/messageWindow.js?version=<%= (int) (Math.random() * 10) %>"></script>  
     <script> 
     var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 	window.parent.$('#langlist').on('change', function() {

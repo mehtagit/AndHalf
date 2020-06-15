@@ -82,14 +82,18 @@ public class ReportDatatableController {
 		DBReportDataModel paginationContentList = reportPaginationModel.getContent();
 		log.info("paginationContentList----------->" +paginationContentList);
 		try {
-			
-			for(Map<String, String> dataModel : reportPaginationModel.getContent().getRowData()) {
+			if(paginationContentList.getRowData().isEmpty()) {
+				datatableResponseModel.setData(Collections.emptyList());
+			}
+			else {
+			for(Map<String, String> dataModel : paginationContentList.getRowData()) {
 				List<Object> datatableList = new ArrayList<Object>();
 				for( String key : dataModel.keySet() ) {
-					datatableList.add( dataModel.get(key));
+					datatableList.add(dataModel.get(key));
 				}
 				finalList.add(datatableList);
 				datatableResponseModel.setData(finalList);
+			}
 			}
 			datatableResponseModel.setRecordsTotal(reportPaginationModel.getNumberOfElements());
 			datatableResponseModel.setRecordsFiltered(reportPaginationModel.getTotalElements());

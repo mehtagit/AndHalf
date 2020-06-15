@@ -224,24 +224,24 @@ Scripts
 ================================================ -->
 <!-- jQuery Library -->
 <%-- <script type="text/javascript" src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script> --%>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
 <!-- ajax js -->
-<script type="text/javascript" src="${context}/resources/ajax/Registration.js"></script>
+<script type="text/javascript" src="${context}/resources/ajax/Registration.js?version=<%= (int) (Math.random() * 10) %>"></script>
 <!--materialize js-->
-<script type="text/javascript" src="${context}/resources/js/materialize.js"></script>
+<script type="text/javascript" src="${context}/resources/js/materialize.js?version=<%= (int) (Math.random() * 10) %>"></script>
 <!--prism
 <script type="text/javascript" src="${context}/resources/js/prism/prism.js"></script>-->
 <!--scrollbar-->
-<script type="text/javascript" src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+<script type="text/javascript" src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 <!-- data-tables -->
-<script type="text/javascript" src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="${context}/resources/js/plugins/data-tables/data-tables-script.js"></script>
+<script type="text/javascript" src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
+<script type="text/javascript" src="${context}/resources/js/plugins/data-tables/data-tables-script.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 <!--plugins.js - Some Specific JS codes for Plugin Settings-->
-<script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
+<script type="text/javascript" src="${context}/resources/js/plugins.js?version=<%= (int) (Math.random() * 10) %>"></script>
 <!--custom-script.js - Add your own theme custom JS-->
-<script type="text/javascript" src="${context}/resources/js/custom-script.js"></script>
+<script type="text/javascript" src="${context}/resources/js/custom-script.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 
 </body>
