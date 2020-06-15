@@ -214,7 +214,7 @@ $(function() {
 
 
   // Floating-Fixed table of contents (Materialize pushpin)
-  if ($('nav').length) {
+/*  if ($('nav').length) {
     $('.toc-wrapper').pushpin({
       top: $('nav').height()
     });
@@ -228,7 +228,7 @@ $(function() {
     $('.toc-wrapper').pushpin({
       top: 0
     });
-  }
+  }*/
 
   // Toggle Flow Text
   var toggleFlowTextButton = $('#flow-toggle')

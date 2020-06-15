@@ -1189,7 +1189,7 @@ function historyRecord(txnID){
 		var langFile='./resources/i18n/khmer_datatable.json';
 	}
 	$.ajax({
-		url: 'consignment-history',
+		url: './Consignment/consignment-history',
 		type: 'POST',
 		data: formData,
 		processData: false,

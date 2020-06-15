@@ -23,11 +23,20 @@ var featureId = 6;
 				});
 
 
-
+				var userId = $("body").attr("data-userID");
 			$(document).ready(function(){
 				$('div#initialloader').fadeIn('fast');
 				grievanceDataTable(lang);
+				
+				
+				if(isNaN(userId))
+				{
+				console.log("11"+userId)					}
+			
+			else{
 				pageRendering();
+				
+			}
 			});
 
 
@@ -35,7 +44,7 @@ var featureId = 6;
 			var endDate=$('#endDate').val();
 			var taxStatus=$('#taxPaidStatus').val();
 			var consignmentStatus=$('#filterConsignmentStatus').val();
-			var userId = $("body").attr("data-userID");
+			
 			var userName = $("body").attr("data-userName");
 			
 			

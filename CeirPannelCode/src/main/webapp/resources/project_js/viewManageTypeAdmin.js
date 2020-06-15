@@ -984,7 +984,7 @@ function historyRecord(txnID) {
 	}
 	// console.log("22");
 	$.ajax({
-		url : '/consignment-history',
+		url : './Consignment/consignment-history',
 		type : 'POST',
 		data : formData,
 		processData : false,

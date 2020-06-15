@@ -130,22 +130,22 @@
 
 
     <!--materialize js-->
-    <script type="text/javascript" src="${context}/resources/js/materialize.js"></script>
+    <script type="text/javascript" src="${context}/resources/js/materialize.js?version=<%= (int) (Math.random() * 10) %>"></script>
     <!--prism
     <script type="text/javascript" src="js/prism/prism.js"></script>-->
     <!--scrollbar-->
-    <script type="text/javascript" src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script type="text/javascript" src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
     <!-- chartist -->
  <%--    <script type="text/javascript" src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script>
  --%>
     <!-- data-tables -->
-    <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/data-tables-script.js"></script>
+    <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
+    <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/data-tables-script.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
     <!--plugins.js - Some Specific JS codes for Plugin Settings-->
-    <script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
+    <script type="text/javascript" src="${context}/resources/js/plugins.js?version=<%= (int) (Math.random() * 10) %>"></script>
     <!--custom-script.js - Add your own theme custom JS-->
-    <script type="text/javascript" src="${context}/resources/js/custom-script.js"></script>
+    <script type="text/javascript" src="${context}/resources/js/custom-script.js?version=<%= (int) (Math.random() * 10) %>"></script>
     
 
   <script>
