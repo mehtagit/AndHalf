@@ -22,10 +22,8 @@ media="screen,projection">
 <!-- Favicons-->
 <!--<link rel="icon" href="images/favicon/favicon-32x32.png" sizes="32x32">-->
 <!-- Favicons-->
-<link rel="apple-touch-icon-precomposed" href="images/favicon/apple-touch-icon-152x152.png">
 <!-- For iPhone -->
 <meta name="msapplication-TileColor" content="#00bcd4">
-<meta name="msapplication-TileImage" content="images/favicon/mstile-144x144.png">
 <!-- For Windows Phone -->
 <link rel="stylesheet" href="${context}/resources/font/font-awesome/css/font-awesome.min.css">
 
@@ -226,34 +224,24 @@ Scripts
 ================================================ -->
 <!-- jQuery Library -->
 <%-- <script type="text/javascript" src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script> --%>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
 <!-- ajax js -->
-<script type="text/javascript" src="${context}/resources/ajax/Registration.js"></script>
+<script type="text/javascript" src="${context}/resources/ajax/Registration.js?version=<%= (int) (Math.random() * 10) %>"></script>
 <!--materialize js-->
-<script type="text/javascript" src="${context}/resources/js/materialize.js"></script>
+<script type="text/javascript" src="${context}/resources/js/materialize.js?version=<%= (int) (Math.random() * 10) %>"></script>
 <!--prism
 <script type="text/javascript" src="${context}/resources/js/prism/prism.js"></script>-->
 <!--scrollbar-->
-<script type="text/javascript" src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-<!-- chartist -->
-<script type="text/javascript" src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script>
+<script type="text/javascript" src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 <!-- data-tables -->
-<script type="text/javascript" src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="${context}/resources/js/plugins/data-tables/data-tables-script.js"></script>
+<script type="text/javascript" src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
+<script type="text/javascript" src="${context}/resources/js/plugins/data-tables/data-tables-script.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 <!--plugins.js - Some Specific JS codes for Plugin Settings-->
-<script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
+<script type="text/javascript" src="${context}/resources/js/plugins.js?version=<%= (int) (Math.random() * 10) %>"></script>
 <!--custom-script.js - Add your own theme custom JS-->
-<script type="text/javascript" src="${context}/resources/js/custom-script.js"></script>
-<script>
-$(document).ready(function () {
-// usertypeDropDownData();
-$('.modal').modal();
-});
-
-</script>
-
+<script type="text/javascript" src="${context}/resources/js/custom-script.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 
 </body>

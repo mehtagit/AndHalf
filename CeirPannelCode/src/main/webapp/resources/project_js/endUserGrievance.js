@@ -22,7 +22,6 @@
 			} ).done( function() { 
 			});
 
-		 $('.modal').modal();
 	});
 
 function saveaAonymousGrievance(){
@@ -135,7 +134,7 @@ function saveaAonymousGrievance(){
 		async:false,
 		success: function (data, textStatus, jqXHR) {
 			$('div#initialloader').delay(300).fadeOut('slow');
-			console.log(data);
+			//console.log(data);
 			 $("#saveAnonymousGrieavance").prop('disabled', true);
 			var x=data;
 			var y= JSON.parse(x);
@@ -144,7 +143,7 @@ function saveaAonymousGrievance(){
 			
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			/* console.log("error in ajax") */
+			/* //console.log("error in ajax") */
 			$('div#initialloader').delay(300).fadeOut('slow');
 			$('#exceptionMessage').openModal(); 
 		}
@@ -154,7 +153,7 @@ return false;
 }
 
 $.getJSON('./addMoreFile/grievance_supporting_doc_count', function(data) {
-	console.log(data);
+	//console.log(data);
 	
 	localStorage.setItem("maxCount", data.value);
 	
@@ -162,10 +161,10 @@ $.getJSON('./addMoreFile/grievance_supporting_doc_count', function(data) {
 
 	//var max_fields = 2; //maximum input boxes allowed
 	var max_fields =localStorage.getItem("maxCount");
-	console.log("max_fields from api="+max_fields);
+	//console.log("max_fields from api="+max_fields);
 
 	if (max_fields==0){
-		 console.log("1111");
+		 //console.log("1111");
 		 $(".endUser_add_field_button").prop('disabled', true);
 	 }
 //var max_fields = 15; //maximum input boxes allowed
@@ -188,7 +187,7 @@ $(".endUser_add_field_button").click(function (e) { //on add input button click
 
 
 		for (i = 0; i < data.length; i++) {
-			console.log(data[i].interp);
+			//console.log(data[i].interp);
 			var optionId=id-1;
 			$('<option>').val(data[i].tagId).text(data[i].interp).appendTo('#endUserdocTypetag'+optionId);
 			
@@ -203,7 +202,7 @@ $(".endUser_add_field_button").click(function (e) { //on add input button click
 			  "userTypeId":17 
 		}
 
-console.log("request --->" +JSON.stringify(request));	
+//console.log("request --->" +JSON.stringify(request));	
  $.ajax({
 		url: './get/tags-mapping',
 		type: 'POST',
@@ -212,7 +211,7 @@ console.log("request --->" +JSON.stringify(request));
 		contentType : 'application/json; charset=utf-8',
 		success: function (data, textStatus, jqXHR) {
 			
-			console.log(data);
+			//console.log(data);
 			
 			for (i = 0; i < data.length; i++){
 				var optionId=id-1;
@@ -223,7 +222,7 @@ console.log("request --->" +JSON.stringify(request));
 			
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			console.log("error in ajax")
+			//console.log("error in ajax")
 		}
 	});
  
@@ -234,7 +233,7 @@ console.log("request --->" +JSON.stringify(request));
 $(endUserwrapper).on("click", ".endUser_remove_field", function (e) { //user click on remove text
 e.preventDefault();
 var Iid=id-1;
-/*alert("@@@"+Iid)*/
+/*//alert("@@@"+Iid)*/
 $('#endUserfilediv'+Iid).remove();
 $(this).parent('div').remove();
 x--;
@@ -245,14 +244,14 @@ id--;
 
 /* $.getJSON('./getDropdownList/DOC_TYPE', function(data) {
 for (i = 0; i < data.length; i++) {
-	console.log(data[i].interp);
+	//console.log(data[i].interp);
 	$('<option>').val(data[i].tagId).text(data[i].interp).appendTo('#endUserdocTypetag1');
 	
 }
 }); */
 $.getJSON('./getTypeDropdownList/GRIEVANCE_CATEGORY/17', function(data) {
 for (i = 0; i < data.length; i++) {
-	console.log(data[i].interp);
+	//console.log(data[i].interp);
 	$('<option>').val(data[i].value).text(data[i].interp).appendTo('#endUsercategory');
 	
 }
@@ -261,7 +260,7 @@ for (i = 0; i < data.length; i++) {
 
 if($('#pageTypeValue').val()==0)
 {
-console.log("if condition ++++++++");
+//console.log("if condition ++++++++");
 $('#endUserRaiseGrievance').css("display", "block");
 $('#trackGrievanceDiv').css("display", "none");
 $('#trackGrievanceHeader').css("display", "none");
@@ -269,7 +268,7 @@ $('#trackGrievanctableDiv').css("display", "none");
 }
 else
 {
-console.log("else condition ++++++++");
+//console.log("else condition ++++++++");
 $('#endUserRaiseGrievance').css("display", "none");
 $('#trackGrievanceDiv').css("display", "block");
 $('#trackGrievanctableDiv').css("display", "none");
@@ -324,7 +323,7 @@ function enableReplySelectFile(){
 					dataType: "json",
 					success: function(result){
 						
-						/*console.log("Url-------" +url+"--------"+ "dataUrl-------" +dataUrl);*/
+						/*//console.log("Url-------" +url+"--------"+ "dataUrl-------" +dataUrl);*/
 						var table=	$("#endUsergrivanceLibraryTable").DataTable({
 							destroy:true,
 							bAutoWidth: false,
@@ -342,7 +341,7 @@ function enableReplySelectFile(){
 								dataType: "json",
 								data : function(d) {
 									d.filter = JSON.stringify(filterRequest); 
-									console.log(JSON.stringify(filterRequest));
+									//console.log(JSON.stringify(filterRequest));
 									
 								}
 
@@ -363,7 +362,7 @@ function enableReplySelectFile(){
 						$('div#initialloader').delay(300).fadeOut('slow');
 					},
 					error: function (jqXHR, textStatus, errorThrown) {
-						console.log("error in ajax");
+						//console.log("error in ajax");
 					}
 				});
 				
@@ -377,7 +376,7 @@ function enableReplySelectFile(){
 
 
 
-				console.log(projectPath+path);
+				//console.log(projectPath+path);
 				$.ajax({
 					url: './endUserViewGrievance?recordLimit=2&grievanceId='+grievanceId+"&userId="+userId,
 					type: 'GET',
@@ -385,26 +384,26 @@ function enableReplySelectFile(){
 					contentType: false,
 					success: function (data, textStatus, jqXHR) {
 
-						console.log(JSON.stringify(data));
+						//console.log(JSON.stringify(data));
 						$('#chatMsg').empty();
 						$('#manageAccount').openModal({
 			    	    	   dismissible:false
 			    	       });
-						console.log("****projectPath"+projectPath);
-						console.log("+++++path"+path);
+						//console.log("****projectPath"+projectPath);
+						//console.log("+++++path"+path);
 						
 						var projectpath=path+"/Consignment/dowloadFiles/actual";
-						console.log("--projectpath--"+projectpath);
+						//console.log("--projectpath--"+projectpath);
 						for(var i=0; i<data.length; i++)
 						{
-							console.log("iiiiiii"+i);
+							//console.log("iiiiiii"+i);
 							$("#chatMsg").append("<div class='chat-message-content clearfix'><span class='chat-time' id='timeHistory'>"+data[i].modifiedOn+"</span><h5 id='userTypehistory'>"+data[i].userDisplayName+"</h5><textarea class='materialize-textarea' style='min-height: 8rem' id='messageHistory'>"+data[i].reply+"</textarea></div>");
 								for (var j=0 ; j<data[i].attachedFiles.length;j++)
 								{
 									
 									if(data[i].attachedFiles[j].docType==null)
 									{
-									console.log("if condition file and doctype is empty");	
+									//console.log("if condition file and doctype is empty");	
 									//$("#chatMsg").append("<div class='chat-message-content clearfix'><a href='"+projectpath+"/"+data[i].attachedFiles[j].fileName+"/"+data[i].attachedFiles[j].grievanceId+"/"+data[i].attachedFiles[j].docType+"'>"+data[i].attachedFiles[j].fileName+"</a></div>");
 									}
 								else{
@@ -424,7 +423,7 @@ function enableReplySelectFile(){
 						}
 					},
 					error: function (jqXHR, textStatus, errorThrown) {
-						console.log("error in ajax")
+						//console.log("error in ajax")
 					}
 				});
 			}
@@ -443,7 +442,7 @@ function enableReplySelectFile(){
 					contentType: false,
 					success: function (data, textStatus, jqXHR) {
 
-						console.log(JSON.stringify(data));
+						//console.log(JSON.stringify(data));
 						$('#replyModal').openModal({
 			    	    	   dismissible:false
 			    	       });
@@ -454,7 +453,7 @@ function enableReplySelectFile(){
 						$('#grievanceUserid').val(userId);
 						var usertype = $("body").attr("data-roleType");
 						var projectpath=path+"/Consignment/dowloadFiles/actual";
-						console.log("usertype=="+usertype);
+						//console.log("usertype=="+usertype);
 						$("#viewPreviousMessage").empty();
 						for(var i=0; i<data.length; ++i)
 						{
@@ -469,7 +468,7 @@ function enableReplySelectFile(){
 									//$("#viewPreviousMessage").append("<div class='chat-message-content clearfix'><a href='"+projectpath+"/"+data[i].attachedFiles[j].fileName+"/"+data[i].attachedFiles[j].grievanceId+"/"+data[i].attachedFiles[j].docType+"'>"+data[i].attachedFiles[j].fileName+"</a></div>");
 									}
 								else{
-								//alert(data[i].attachedFiles[j].docType);
+								////alert(data[i].attachedFiles[j].docType);
 								if(data[i].attachedFiles[j].docType=="")
 									{
 									//$("#chatMsg").append("<div class='chat-message-content clearfix'> <span class='document-Type' ><b>Document Type : </b>"+data[i].attachedFiles[j].docType+"</span> <a href='"+projectpath+"/"+data[i].attachedFiles[j].fileName+"/"+data[i].attachedFiles[j].grievanceId+"/"+data[i].attachedFiles[j].docType+"'>"+data[i].attachedFiles[j].fileName+"</a></div>");
@@ -489,15 +488,15 @@ function enableReplySelectFile(){
 						if(usertype=='CEIRAdmin')
 						{
 							$("#closeTicketCheckbox").css("display","block");
-							console.log("block");
+							//console.log("block");
 						}
 						else{
 							$("#closeTicketCheckbox").css("display","none");	
-							console.log("none");
+							//console.log("none");
 						}
 						/*$.getJSON('./getDropdownList/DOC_TYPE', function(data) {
 							for (i = 0; i < data.length; i++) {
-								console.log(data[i].interp);
+								//console.log(data[i].interp);
 								$('<option>').val(data[i].tagId).text(data[i].interp).appendTo('#docTypetag1');
 								
 							}
@@ -535,7 +534,7 @@ function enableReplySelectFile(){
 				var  endUsergrievanceIdToSave= $('#grievanceIdToSave').text();
 				var  endUsergrievanceTxnId=  $('#grievanceTxnId').text();
 				
-				//console.log("remark "+remark+"  replyFile="+replyFile+" grievanceTxnId="+grievanceTxnId+"grievanceIdToSave="+grievanceIdToSave+"grievanceTicketStatus=="+grievanceTicketStatus);
+				////console.log("remark "+remark+"  replyFile="+replyFile+" grievanceTxnId="+grievanceTxnId+"grievanceIdToSave="+grievanceIdToSave+"grievanceTicketStatus=="+grievanceTicketStatus);
 				var endUserfieldId=1;
 				var endUserfileInfo =[];
 				var endUserformData= new FormData();
@@ -590,7 +589,7 @@ function enableReplySelectFile(){
 						$('#replyMsg').openModal({
 			    	    	   dismissible:false
 			    	       });
-						console.log(data.txnId);
+						//console.log(data.txnId);
 						if(data.errorCode=="0")
 						{
 							
@@ -605,7 +604,7 @@ function enableReplySelectFile(){
 						
 					},
 					error: function (jqXHR, textStatus, errorThrown) {
-						console.log("error in ajax")
+						//console.log("error in ajax")
 					}
 				});
 				return false;
@@ -620,23 +619,23 @@ function enableReplySelectFile(){
 				if (now.getDate().toString().charAt(0) != '0') {
 					currentDate = '0' + now.getDate();
 
-					/* alert("only date="+currentDate); */
+					/* //alert("only date="+currentDate); */
 				} else {
 					currentDate = now.getDate();
 				}
 				var today = now.getFullYear() + '-' + (now.getMonth() + 1) + '-'
 						+ currentDate;
-				//alert("today"+today);
-				console.log("dispatche=" + dispatcDate);
-				console.log("todays parse date" + Date.parse(today));
-				console.log("dispatche parse date" + Date.parse(dispatcDate));
+				////alert("today"+today);
+				//console.log("dispatche=" + dispatcDate);
+				//console.log("todays parse date" + Date.parse(today));
+				//console.log("dispatche parse date" + Date.parse(dispatcDate));
 
 				if (Date.parse(today) > Date.parse(dispatcDate)) {
 					myFunction("dispatche date should be greater then or equals to today");
 					$('#expectedDispatcheDate').val("");
 				}
 
-				//alert("current date="+today+" dispatche date="+dispatcDate)
+				////alert("current date="+today+" dispatche date="+dispatcDate)
 			}
 			
 	$('#endUsercategory').on('change',function() {
@@ -648,7 +647,7 @@ function enableReplySelectFile(){
 				  "userTypeId":17,
 			}
 	
-	console.log("request --->" +JSON.stringify(request));	
+	//console.log("request --->" +JSON.stringify(request));	
 	 $.ajax({
 			url: './get/tags-mapping',
 			type: 'POST',
@@ -658,7 +657,7 @@ function enableReplySelectFile(){
 			success: function (data, textStatus, jqXHR) {
 				$("#endUserdocTypetag1").empty();
 				$('#endUserdocTypetag1').append('<option value="">'+$.i18n('selectDocumentType')+'</option>');
-				console.log(data);
+				//console.log(data);
 				for (i = 0; i < data.length; i++){
 						//var html='<option value="'+data[i].value+'">'+data[i].interp+'</option>';
 						//$('#docTypetag1').append(html);	
@@ -668,7 +667,7 @@ function enableReplySelectFile(){
 				
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
-				console.log("error in ajax")
+				//console.log("error in ajax")
 			}
 		});
 	 
@@ -685,7 +684,7 @@ function enableReplySelectFile(){
 					  "userTypeId": 17,
 				}
 		
-		console.log("request --->" +JSON.stringify(request));	
+		//console.log("request --->" +JSON.stringify(request));	
 		 $.ajax({
 				url: './get/tags-mapping',
 				type: 'POST',
@@ -695,7 +694,7 @@ function enableReplySelectFile(){
 				success: function (data, textStatus, jqXHR) {
 					$("#docTypetag1").empty();
 					$('#docTypetag1').append('<option value="">'+$.i18n('selectDocumentType')+'</option>');
-					console.log(data);
+					//console.log(data);
 					for (i = 0; i < data.length; i++){
 							//var html='<option value="'+data[i].value+'">'+data[i].interp+'</option>';
 							//$('#docTypetag1').append(html);	
@@ -706,7 +705,7 @@ function enableReplySelectFile(){
 					
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
-					console.log("error in ajax")
+					//console.log("error in ajax")
 				}
 			});
 		}

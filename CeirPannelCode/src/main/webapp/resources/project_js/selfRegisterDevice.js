@@ -208,7 +208,7 @@ function hideVisaDetails(){
 	$("#visaType").attr("required", false);
 }
 function regularizedCount(nationType){
-	console.log("----"+nationType)
+	//console.log("----"+nationType)
 	var allowed='';
 	if(nationType==undefined)
 		{
@@ -233,7 +233,7 @@ function regularizedCount(nationType){
 			
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			console.log("error in ajax")
+			//console.log("error in ajax")
 
 		}
 	});
@@ -243,8 +243,8 @@ function regularizedCount(nationType){
 
 $.getJSON('./getDropdownList/CUSTOMS_TAX_STATUS', function(data) {
 	var checkAllowedCount =localStorage.getItem("allowed");	
-	//alert("222222"+checkAllowedCount);
-	console.log("  checkAllowedCount  == "+checkAllowedCount)
+	////alert("222222"+checkAllowedCount);
+	//console.log("  checkAllowedCount  == "+checkAllowedCount)
 	if(checkAllowedCount==0)
 		{
 	
@@ -356,7 +356,7 @@ $(document).ready(function () {
 					regularizedCount();
 				},
 				error : function() {
-					console.log("Failed");
+					//console.log("Failed");
 				}
 			}); 
 				
@@ -402,7 +402,7 @@ $(document).ready(function () {
 					regularizedCount();
 				},
 				error : function() {
-					console.log("Failed");
+					//console.log("Failed");
 				}
 			}); 
 			
@@ -501,7 +501,7 @@ function pageButtons(url){
 
 			$.getJSON('./getDropdownList/CUSTOMS_TAX_STATUS', function(data) {
 				for (i = 0; i < data.length; i++) {
-					//console.log(data[i].value);
+					////console.log(data[i].value);
 					$('<option>').val(data[i].value).text(data[i].interp)
 					.appendTo('#taxPaidStatus');
 				}
@@ -509,8 +509,8 @@ function pageButtons(url){
 			
 			//Stolen Status-----------dropdown
 			$.getJSON('./getDropdownList/12/17', function(data) {
-				console.log("___data");
-				console.log(data);
+				//console.log("___data");
+				//console.log(data);
 				for (i = 0; i < data.length; i++) {
 					$('<option>').val(data[i].state).text(data[i].interp)
 					.appendTo('#recordStatus'); 
@@ -617,7 +617,7 @@ function table(url,dataUrl){
 		       });
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			console.log("error in ajax");
+			//console.log("error in ajax");
 		}
 	});
 }
@@ -637,7 +637,7 @@ $(document).ready(function () {
 	
 
 	$.getJSON('./addMoreFile/add_more_device_count', function(data) {
-		console.log(data);
+		//console.log(data);
 		
 		localStorage.setItem("maxCount", data.value);
 		
@@ -646,10 +646,10 @@ $(document).ready(function () {
 		//var max_fields = 2; //maximum input boxes allowed
 		var max_fields =localStorage.getItem("maxCount");
 		if (max_fields==0){
-			 console.log("1111");
+			 //console.log("1111");
 			 $(".add_field_button").prop('disabled', true);
 		 }
-		console.log("max_fields from api="+max_fields);
+		//console.log("max_fields from api="+max_fields);
 
 	$('#langlist').val(data_lang_param);
 	//var max_fields = 15; //maximum input boxes allowed
@@ -756,13 +756,13 @@ $(document).ready(function () {
 	$(wrapper).on("click", ".remove_field", function (e) { //user click on remove text
 		e.preventDefault();
 		var Iid=id-1;
-		 /*alert("@@@"+Iid)*/
-		console.log("  Iid==== "+Iid);
+		 /*//alert("@@@"+Iid)*/
+		//console.log("  Iid==== "+Iid);
 		 $('#deviceInformation'+Iid).remove();
 		$(this).parent('div').remove();
 		x--;
 		id--;
-		console.log("id=="+id);
+		//console.log("id=="+id);
 	})
 });
 
@@ -957,7 +957,7 @@ function submitEndUserDeviceInfo(){
 		contentType: false,
 		success: function (data, textStatus, jqXHR) {
 			$('div#initialloader').delay(300).fadeOut('slow');
-			console.log(data);
+			//console.log(data);
 
 
 			if(data.errorCode==0){
@@ -975,7 +975,7 @@ function submitEndUserDeviceInfo(){
 			}
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			console.log("error in ajax")
+			//console.log("error in ajax")
 
 		}
 	});
@@ -1007,17 +1007,17 @@ function fileTypeValueChanges(id) {
 
 	var uploadedFileName = $("#"+id).val();
 	uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
-	//alert("file extension=="+uploadedFileName)
+	////alert("file extension=="+uploadedFileName)
 	var ext = uploadedFileName.split('.').pop();
 
 	var fileSize = ($("#"+id)[0].files[0].size);
 	/*fileSize = (Math.round((fileSize / 100000) * 100) / 100)
-	alert("----"+fileSize);*/
+	//alert("----"+fileSize);*/
 	fileSize = Math.floor(fileSize/1000);
 
-	//alert(uploadedFileName+"----------"+ext+"----"+fileSize)
+	////alert(uploadedFileName+"----------"+ext+"----"+fileSize)
 	var areEqual =ext.toLowerCase()=='png';
-	//alert(areEqual);
+	////alert(areEqual);
 	if(areEqual==true)
 		{
 		ext='PNG';
@@ -1059,16 +1059,16 @@ function clearFileName() {
 function visaImageValidation() {
 	var uploadedFileName = $("#visaImage").val();
 	uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
-	//alert("file extension=="+uploadedFileName)
+	////alert("file extension=="+uploadedFileName)
 	var ext = uploadedFileName.split('.').pop();
 
 	var fileSize = ($("#visaImage")[0].files[0].size);
 	/*fileSize = (Math.round((fileSize / 100000) * 100) / 100)
-	alert("----"+fileSize);*/
+	//alert("----"+fileSize);*/
 	fileSize = Math.floor(fileSize/1000);
 
 	var areEqual =ext.toLowerCase()=='png';
-	//alert(areEqual);
+	////alert(areEqual);
 	if(areEqual==true)
 		{
 		ext='PNG';
@@ -1112,16 +1112,16 @@ function clearVisaName() {
 function deptImageValidation() {
 	var uploadedFileName = $("#endUserDepartmentId").val();
 	uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
-	//alert("file extension=="+uploadedFileName)
+	////alert("file extension=="+uploadedFileName)
 	var ext = uploadedFileName.split('.').pop();
 
 	var fileSize = ($("#endUserDepartmentId")[0].files[0].size);
 	/*fileSize = (Math.round((fileSize / 100000) * 100) / 100)
-	alert("----"+fileSize);*/
+	//alert("----"+fileSize);*/
 	fileSize = Math.floor(fileSize/1000);
 	
 	var areEqual =ext.toLowerCase()=='png';
-	//alert(areEqual);
+	////alert(areEqual);
 	if(areEqual==true)
 		{
 		ext='PNG';
@@ -1210,7 +1210,7 @@ function historytable(url,dataUrl){
 			$('div#initialloader').delay(300).fadeOut('slow');
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			console.log("error in ajax");
+			//console.log("error in ajax");
 		}
 	});
 }
@@ -1239,7 +1239,7 @@ function accept(){
 				}*/
 		},
 		error : function() {
-			console.log("Error");
+			//console.log("Error");
 		}
 	});
 }
@@ -1256,7 +1256,7 @@ function viewDetails(imei,txnid){
 
 
 function regularizedCount(nationType){
-	console.log("----"+nationType)
+	//console.log("----"+nationType)
 	var allowed='';
 	if(nationType==undefined)
 		{
@@ -1281,7 +1281,7 @@ function regularizedCount(nationType){
 			
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			console.log("error in ajax")
+			//console.log("error in ajax")
 
 		}
 	});
@@ -1311,12 +1311,12 @@ $(document).on("keyup", "#Price1", function(e) {
 });
 
 function showHideCurrency() {
-	//alert(id-1);
+	////alert(id-1);
 	 var cuurecyId=id-1;
-	 //alert(ssss);
+	 ////alert(ssss);
 	var totalPriceaaa=$('#Price'+cuurecyId).val();
 	/*$('#country'+fieldId).val();*/
-	//alert(totalPriceaaa)
+	////alert(totalPriceaaa)
 	if(totalPriceaaa.length<'1' )
 	{
 		$("#Currency"+cuurecyId).attr("required", false);
@@ -1355,7 +1355,7 @@ $('input[type="checkbox"]').click(function(){
 
 
 function historyRecord(txnID){
-	console.log("txn id=="+txnID)
+	//console.log("txn id=="+txnID)
 	$("#tableOnModal").openModal({dismissible:false});
 	 var filter =[];
 	 var formData= new FormData();
@@ -1374,7 +1374,7 @@ function historyRecord(txnID){
 	if(data_lang_param=='km'){
 		var langFile='./resources/i18n/khmer_datatable.json';
 	}
-	console.log("22");
+	//console.log("22");
 	$.ajax({
 		url: 'Consignment/consignment-history',
 		type: 'POST',
@@ -1383,7 +1383,7 @@ function historyRecord(txnID){
 		contentType: false,
 		success: function(result){
 			var dataObject = eval(result);
-			//alert(JSON.stringify(dataObject.data))
+			////alert(JSON.stringify(dataObject.data))
 			$('#data-table-history2').dataTable({
 				 "order" : [[1, "asc"]],
 				 destroy:true,

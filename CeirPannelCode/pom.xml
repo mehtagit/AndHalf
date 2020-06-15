@@ -148,7 +148,7 @@
 	</dependencyManagement>
 	<build>
 
-		<finalName>Test</finalName>
+		<finalName>${name}</finalName>
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
