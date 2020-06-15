@@ -1124,18 +1124,18 @@ public class StockServiceImpl {
 									"Users");
 							logger.info("Notfication have been saved for CEIR Admin.");
 							}
-							emailUtil.saveNotification(mailTag, 
-									userProfile, 
-									consignmentUpdateRequest.getFeatureId(),
-									Features.STOCK,
-									action,
-									consignmentUpdateRequest.getTxnId(),
-									txnId,
-									placeholderMap,
-									stockMgmt.getRoleType(),
-									receiverUserType,
-									"Users");
-							logger.info("Notfication have been saved for user.");
+//							emailUtil.saveNotification(mailTag, 
+//									userProfile, 
+//									consignmentUpdateRequest.getFeatureId(),
+//									Features.STOCK,
+//									action,
+//									consignmentUpdateRequest.getTxnId(),
+//									txnId,
+//									placeholderMap,
+//									stockMgmt.getRoleType(),
+//									receiverUserType,
+//									"Users");
+//							logger.info("Notfication have been saved for user.");
 						}
 					}
 
