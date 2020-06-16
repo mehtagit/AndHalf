@@ -4,6 +4,7 @@
 
   <groupId>com.ceir</groupId>
   <artifactId>SLAModule</artifactId>
+<!--   <version>0.0.2-SNAPSHOT</version> -->
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
@@ -36,50 +37,6 @@
 			<version>3.8.1</version>
 			<scope>test</scope>
 		</dependency>
-
-	<!-- 	<dependency>
-			<groupId>com.gl.ceir</groupId>
-			<artifactId>config</artifactId>
-			<version>1.0.12</version>
-			<classifier>import-lib</classifier>
-			<scope>system</scope> <systemPath>D:\CEIR\ConfigJar\config-1.0.2.jar</systemPath>
-			<exclusions>
-				<exclusion>
-					<groupId>org.springframework.boot</groupId>
-					<artifactId>spring-boot-starter-logging</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework.boot</groupId>
-					<artifactId>spring-boot-starter-log4j2</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.slf4j</groupId>
-					<artifactId>slf4j-log4j12</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.slf4j</groupId>
-					<artifactId>slf4j-api</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.slf4j</groupId>
-					<artifactId>slf4j-simple</artifactId>
-				</exclusion>
-				<exclusion>
-					<artifactId>tomcat-embed-el</artifactId>
-					<groupId>org.apache.tomcat.embed</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>tomcat-embed-core</artifactId>
-					<groupId>org.apache.tomcat.embed</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>tomcat-embed-websocket</artifactId>
-					<groupId>org.apache.tomcat.embed</groupId>
-				</exclusion>
-
-			</exclusions>
-		</dependency> -->
-
 <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-autoconfigure</artifactId>
@@ -115,6 +72,10 @@
 			<artifactId>ojdbc8</artifactId>
 			<version>19.3</version>
 		</dependency>
+		<dependency>
+    <groupId>org.hibernate</groupId>
+    <artifactId>hibernate-envers</artifactId>
+</dependency>
 		</dependencies>
   
   <build>

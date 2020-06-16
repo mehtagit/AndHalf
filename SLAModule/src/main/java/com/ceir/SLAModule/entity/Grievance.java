@@ -2,8 +2,10 @@ package com.ceir.SLAModule.entity;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
@@ -12,6 +14,8 @@ import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.NamedQuery;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -66,7 +70,8 @@ public class Grievance {
 	@Transient
 	private String stateInterp;
 	
-	@OneToOne
+	@OneToOne(fetch = FetchType.EAGER)
+	@Fetch(FetchMode.SELECT)
 	@JoinColumn(name="user_id",insertable = false, updatable = false)
 	@JsonIgnore
 	private User user;

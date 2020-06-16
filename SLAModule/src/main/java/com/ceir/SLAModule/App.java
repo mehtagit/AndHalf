@@ -22,5 +22,6 @@ public class App
 		
 	    	ConfigurableApplicationContext	ctx =SpringApplication.run(App.class, args);
 	    	SLAService sLAService=ctx.getBean(SLAService.class);
-			new Thread(sLAService).start();	        }
+			new Thread(sLAService).start();	 
+			}
 	    }

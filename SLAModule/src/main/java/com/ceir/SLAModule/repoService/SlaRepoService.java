@@ -1,5 +1,8 @@
 package com.ceir.SLAModule.repoService;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,15 +20,15 @@ public class SlaRepoService {
 	
 	private final static Logger log =LoggerFactory.getLogger(App.class);
 	
-	public SlaReport saveSLA(SlaReport report) {
+	public List<SlaReport> saveSLA(List<SlaReport> report) {
 		
 		try {
 			log.info("going to save sla report");
-			return slaRepo.save(report);
+			return slaRepo.saveAll(report);
 		}
 		catch(Exception e) {
 			log.info("sla report data fail to save");
-			return null;
+			return new ArrayList<SlaReport>();
 		}
 	}
 }

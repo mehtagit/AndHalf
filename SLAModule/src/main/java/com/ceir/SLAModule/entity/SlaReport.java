@@ -1,18 +1,17 @@
 package com.ceir.SLAModule.entity;
 
 import java.time.LocalDateTime;
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
-
 
 @Entity
 public class SlaReport {
@@ -22,21 +21,25 @@ public class SlaReport {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	private String feature;
-	private String state;
-	
+	private long featureId;
+	private Integer state;
+	private String stateInterp;
+	private String username;
+	private long usertypeId;
 
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id", nullable = false)
 	private User userSlaReport;
 	
 	private String txnId;
 	
+	@Column(nullable =false)
 	@CreationTimestamp
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime createdOn;
 	
+	@Column(nullable =false)
 	@UpdateTimestamp
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime modifiedOn;
@@ -49,19 +52,21 @@ public class SlaReport {
 		this.id = id;
 	}
 
-	public String getFeature() {
-		return feature;
+	
+
+	public long getFeatureId() {
+		return featureId;
 	}
 
-	public void setFeature(String feature) {
-		this.feature = feature;
+	public void setFeatureId(long featureId) {
+		this.featureId = featureId;
 	}
 
-	public String getState() {
+	public Integer getState() {
 		return state;
 	}
 
-	public void setState(String state) {
+	public void setState(Integer state) {
 		this.state = state;
 	}
 
@@ -96,26 +101,80 @@ public class SlaReport {
 	public void setModifiedOn(LocalDateTime modifiedOn) {
 		this.modifiedOn = modifiedOn;
 	}
-
 	
-	@Override
-	public String toString() {
-		return "SlaReport [id=" + id + ", feature=" + feature + ", state=" + state + ", userSlaReport=" + userSlaReport
-				+ ", txnId=" + txnId + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + "]";
+	public static long getSerialVersionUID() {
+		return serialVersionUID;
 	}
-	
+
+	public static void setSerialVersionUID(long serialVersionUID) {
+		SlaReport.serialVersionUID = serialVersionUID;
+	}
+
+	public String getStateInterp() {
+		return stateInterp;
+	}
+
+	public void setStateInterp(String stateInterp) {
+		this.stateInterp = stateInterp;
+	}
+
 	public SlaReport() {
 
 	}
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	
 
 
-	public SlaReport(String feature, String state, User user, String txnId) {
+	public long getUsertypeId() {
+		return usertypeId;
+	}
+
+	public void setUsertypeId(long usertypeId) {
+		this.usertypeId = usertypeId;
+	}
+
+	public SlaReport(Integer featureId, Integer state,String stateInterp, User user, String txnId,String username,long usertypeId) {
 		super();
-		this.feature = feature;
+		this.featureId = featureId;
 		this.state = state;
 		userSlaReport=user;
 		this.txnId = txnId;
+		this.stateInterp=stateInterp;
+		this.username=username;
+		this.usertypeId=usertypeId;
 	}
+ 
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("SlaReport [id=");
+		builder.append(id);
+		builder.append(", featureId=");
+		builder.append(featureId);
+		builder.append(", state=");
+		builder.append(state);
+		builder.append(", stateInterup=");
+		builder.append(stateInterp);
+		builder.append(", username=");
+		builder.append(username);
+		builder.append(", usertypeId=");
+		builder.append(usertypeId);
+		builder.append(", txnId=");
+		builder.append(txnId);
+		builder.append(", createdOn=");
+		builder.append(createdOn);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
+		builder.append("]");
+		return builder.toString();
+	}
+
 
 
 }

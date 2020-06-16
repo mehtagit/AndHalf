@@ -7,4 +7,5 @@ import com.ceir.SLAModule.entity.SlaReport;
 public interface SlaRepo extends JpaRepository<SlaReport, Long>{
  
 	
+	
 }
