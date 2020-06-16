@@ -47,7 +47,7 @@ public class StateMachine {
 
 	public static boolean isStockStatetransitionAllowed(String userType, int currentStatus) {
 		if("CEIRSYSTEM".equalsIgnoreCase(userType)) {
-			return StockStatus.UPLOADING.getCode() == currentStatus || StockStatus.PROCESSING.getCode() == currentStatus;
+			return StockStatus.NEW.getCode() == currentStatus || StockStatus.PROCESSING.getCode() == currentStatus;
 		}
 		else {
 			return Boolean.FALSE;

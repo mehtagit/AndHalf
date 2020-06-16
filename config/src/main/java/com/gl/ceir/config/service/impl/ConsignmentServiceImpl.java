@@ -271,7 +271,7 @@ public class ConsignmentServiceImpl {
 	}
 
 	public Page<ConsignmentMgmt> getFilterPaginationConsignments(FilterRequest consignmentMgmt, Integer pageNo, 
-			Integer pageSize,String source) {
+			Integer pageSize, String source) {
 
 		List<StateMgmtDb> statusList = null;
 
@@ -280,7 +280,7 @@ public class ConsignmentServiceImpl {
 
 			statusList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(consignmentMgmt.getFeatureId(), consignmentMgmt.getUserTypeId());
 
-			Page<ConsignmentMgmt> page = consignmentRepository.findAll(buildSpecification(consignmentMgmt, statusList,source).build(), pageable);
+			Page<ConsignmentMgmt> page = consignmentRepository.findAll(buildSpecification(consignmentMgmt, statusList, source).build(), pageable);
 
 			for(ConsignmentMgmt consignmentMgmt2 : page.getContent()) {
 
@@ -747,29 +747,30 @@ public class ConsignmentServiceImpl {
 		if(Objects.nonNull(consignmentMgmt.getTaxPaidStatus()))
 			cmsb.with(new SearchCriteria("taxPaidStatus", consignmentMgmt.getTaxPaidStatus(), SearchOperation.EQUALITY, Datatype.STRING));
 
-		if(Objects.nonNull(consignmentMgmt.getConsignmentStatus())) {
-			cmsb.with(new SearchCriteria("consignmentStatus", consignmentMgmt.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
-		}
 		if(Objects.nonNull(consignmentMgmt.getDisplayName()) && !consignmentMgmt.getDisplayName().isEmpty())
 			cmsb.addSpecification(cmsb.joinWithMultiple(new SearchCriteria("displayName",consignmentMgmt.getDisplayName(), SearchOperation.EQUALITY, Datatype.STRING)));
-
-		else {
-
+		
+		if(Objects.nonNull(consignmentMgmt.getConsignmentStatus())) {
+			cmsb.with(new SearchCriteria("consignmentStatus", consignmentMgmt.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
+		}else {
 			if(Objects.nonNull(consignmentMgmt.getFeatureId()) && Objects.nonNull(consignmentMgmt.getUserTypeId())) {
 
-				List<DashboardUsersFeatureStateMap> dashboardUsersFeatureStateMap = dashboardUsersFeatureStateMapRepository.findByUserTypeIdAndFeatureId(consignmentMgmt.getUserTypeId(), consignmentMgmt.getFeatureId());
-				logger.debug(dashboardUsersFeatureStateMap);
+				List<DashboardUsersFeatureStateMap> dashboardUsersFeatureStateMaps = dashboardUsersFeatureStateMapRepository.findByUserTypeIdAndFeatureId(consignmentMgmt.getUserTypeId(), consignmentMgmt.getFeatureId());
+				logger.info(dashboardUsersFeatureStateMaps);
 				List<Integer> consignmentStatus = new LinkedList<>();
 
-				if(Objects.nonNull(dashboardUsersFeatureStateMap)) {	
+				if(Objects.nonNull(dashboardUsersFeatureStateMaps)) {	
 
 					if("dashboard".equalsIgnoreCase(source) || "menu".equalsIgnoreCase(source)) {
-						for(DashboardUsersFeatureStateMap dashboardUsersFeatureStateMap2 : dashboardUsersFeatureStateMap ) {
+						for(DashboardUsersFeatureStateMap dashboardUsersFeatureStateMap2 : dashboardUsersFeatureStateMaps ) {
 							consignmentStatus.add(dashboardUsersFeatureStateMap2.getState());
 						}
 					}else if("filter".equalsIgnoreCase(source)) {
-						if(nothingInFilter(consignmentMgmt)) {
-							for(DashboardUsersFeatureStateMap dashboardUsersFeatureStateMap2 : dashboardUsersFeatureStateMap ) {
+						boolean isFilterEmpty = nothingInFilter(consignmentMgmt);
+						logger.info("Nothing in filter : " + isFilterEmpty);
+						
+						if(isFilterEmpty) {
+							for(DashboardUsersFeatureStateMap dashboardUsersFeatureStateMap2 : dashboardUsersFeatureStateMaps ) {
 								consignmentStatus.add(dashboardUsersFeatureStateMap2.getState());
 							}
 						}else {
@@ -788,9 +789,6 @@ public class ConsignmentServiceImpl {
 					}else {
 						logger.warn("no status are predefined for the user.");
 					}
-
-
-
 				}
 			}
 		}
@@ -1402,24 +1400,38 @@ public class ConsignmentServiceImpl {
 
 
 	public boolean nothingInFilter(FilterRequest filterRequest) {
-		if(Objects.nonNull(filterRequest.getStartDate()) || !filterRequest.getStartDate().isEmpty()) {
+		// Clean
+		if(filterRequest.getStartDate().isEmpty()) {
+			filterRequest.setStartDate(null);
+		}
+		
+		if(filterRequest.getEndDate().isEmpty()) {
+			filterRequest.setEndDate(null);
+		}
+		
+		if(filterRequest.getTxnId().isEmpty()) {
+			filterRequest.setTxnId(null);
+		}
+		
+		// Logic
+		if(Objects.nonNull(filterRequest.getStartDate())) {
 			return false;
 		}
-		if(Objects.nonNull(filterRequest.getEndDate()) || !filterRequest.getEndDate().isEmpty()) {
+		if(Objects.nonNull(filterRequest.getEndDate())) {
 			return false;
 		}
 
-		if(Objects.nonNull(filterRequest.getTxnId()) || !filterRequest.getTxnId().isEmpty()) {
+		if(Objects.nonNull(filterRequest.getTxnId())) {
 			return false;
 		}
 
-		if(Objects.nonNull(filterRequest.getDisplayName()) || !filterRequest.getDisplayName().isEmpty()) {
+		if(Objects.nonNull(filterRequest.getDisplayName())) {
 			return false;
 		}
 		if(Objects.nonNull(filterRequest.getConsignmentStatus()) ) {
 			return false;
 		}
-		if(Objects.nonNull(filterRequest.getUserType()) || !filterRequest.getEndDate().isEmpty()) {
+		if(Objects.nonNull(filterRequest.getFilteredUserType())) {
 			return false;
 		}
 		return true;
