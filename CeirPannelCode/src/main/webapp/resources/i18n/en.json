@@ -104,7 +104,7 @@
 	"stockResponseMessage": "User is not a distributer or retailer to assign a stock.",
 	"documentTypeName": "Document type should not be same.",
 	"tacStatucMessage": "By clicking on the checkbox, it is understood that type approval document has been checked and verified as provided by the importer.  If they are not provided, kindly reject the request",
-	"imageMessage": "Kindly upload a valid image",
+	"imageMessage": "Image type should  be png extension.",
 	"imageSize": "Image name size should be less than 5 mb.",
 	"imageValidationName": "File name should not be more than 30 characters",
 	"expectedArrivaldateEdit": "Expected Dispatch Date should be less than Expected Arrival Date",
