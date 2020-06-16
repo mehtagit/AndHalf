@@ -7,7 +7,7 @@ public class GenricResponse {
 	private String message;
 	private String txnId;
 	private Object data;
-
+	public GenricResponse(){}
 	public GenricResponse(int errorCode) {
 		this.errorCode = errorCode;
 	}

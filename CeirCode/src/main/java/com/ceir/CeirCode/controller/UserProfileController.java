@@ -1,6 +1,9 @@
 package com.ceir.CeirCode.controller;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ceir.CeirCode.filtermodel.SearchAssignee;
+import com.ceir.CeirCode.model.AllRequest;
 import com.ceir.CeirCode.model.ChangePassword;
 import com.ceir.CeirCode.model.ChangeUserStatus;
 import com.ceir.CeirCode.model.FileDetails;
@@ -48,6 +52,9 @@ public class UserProfileController {
 	
 	@Autowired
 	UserRoleRepoService userRoleRepoService;
+	
+	private final Logger log = LoggerFactory.getLogger(getClass());
+	
 	
 	@ApiOperation(value = "change password", response = HttpResponse.class)
 	@PostMapping("/changePassword")
@@ -86,6 +93,7 @@ public class UserProfileController {
 			@RequestParam(value = "file", defaultValue = "0") Integer file,
 			@RequestParam(value = "source", defaultValue = "menu") String source){
 		MappingJacksonValue mapping = null;
+		log.info("source is:  "+source);
 		if( file == 0) {
 			Page<UserProfile> userProfileResponse  = userProService.viewAllRecord(filterRequest, pageNo, pageSize,source);
 			List<SystemConfigListDb> asTypeList=systemConfigRepo.getByTag("AS_TYPE");
@@ -154,4 +162,10 @@ public class UserProfileController {
 	public ResponseEntity<?> changeUserStatus(@RequestBody ChangeUserStatus userStatus){
 		return userService.changeUserStatus(userStatus);   
 	}
+
+	@ApiOperation(value = "add or delete roles", response = HttpResponse.class)
+	@PostMapping("/getAddDeleteRoles")
+	public ResponseEntity<?> addOrDeleteRoles(@RequestBody AllRequest request){
+		return userService.addDeleteroles(request);  
+	} 
 }

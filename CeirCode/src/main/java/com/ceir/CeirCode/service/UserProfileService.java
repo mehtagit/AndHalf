@@ -140,15 +140,19 @@ public class UserProfileService {
 
 				if(Objects.nonNull(dashboardUsersFeatureStateMap)) {
 					if("dashboard".equalsIgnoreCase(source) || "menu".equalsIgnoreCase(source)) {
+						log.info("if filter is dashboard or menu");
 						for(DashboardUsersFeatureStateMap dashboardUsersFeatureStateMap2 : dashboardUsersFeatureStateMap ) {
 							stockStatus.add(dashboardUsersFeatureStateMap2.getState());
 						}
 					}else if("filter".equalsIgnoreCase(source)) {
+						log.info("if source is filter");
 						if(nothingInFilter(filterRequest)) {
+							log.info("if filters are empty");
 							for(DashboardUsersFeatureStateMap dashboardUsersFeatureStateMap2 : dashboardUsersFeatureStateMap ) {
 								stockStatus.add(dashboardUsersFeatureStateMap2.getState());
 							}
 						}else {
+							log.info("if filters are not  empty");
 							for(StateMgmtDb stateMgmtDb : statusList ) {
 								stockStatus.add(stateMgmtDb.getState());
 							}
@@ -184,60 +188,45 @@ public class UserProfileService {
 	}
 	
 	public boolean nothingInFilter(FilterRequest filterRequest) {
-		if(Objects.nonNull(filterRequest.getStartDate()) || !filterRequest.getStartDate().isEmpty()) {
+		if(Objects.nonNull(filterRequest.getStartDate()) && filterRequest.getStartDate()!="") {
 			return Boolean.FALSE;
 		}
-		if(Objects.nonNull(filterRequest.getEndDate()) || !filterRequest.getEndDate().isEmpty()) {
-			return Boolean.FALSE;
-		}
-
-		if(Objects.nonNull(filterRequest.getStatus())) {
+		if(Objects.nonNull(filterRequest.getEndDate()) && filterRequest.getEndDate()!="") {
 			return Boolean.FALSE;
 		}
 
-		if(Objects.nonNull(filterRequest.getAsType())) {
-			return Boolean.FALSE;
-		}
-		if(Objects.nonNull(filterRequest.getUserRoleTypeId()) ) {
-			return Boolean.FALSE;
-		}
-		if(Objects.nonNull(filterRequest.getViewAllUserStatus())) {
-			return Boolean.FALSE;
-		}
-		
-		if(Objects.nonNull(filterRequest.getFeatureId())) {
+		if(Objects.nonNull(filterRequest.getStatus()) && filterRequest.getStatus()!=-1) {
 			return Boolean.FALSE;
 		}
 
-		if(Objects.nonNull(filterRequest.getUserId())) {
+		if(Objects.nonNull(filterRequest.getAsType()) && filterRequest.getAsType()!=-1) {
+			return Boolean.FALSE;
+		}
+		if(Objects.nonNull(filterRequest.getUserRoleTypeId()) && filterRequest.getAsType()!=-1) {
 			return Boolean.FALSE;
 		}
 
-		if(Objects.nonNull(filterRequest.getUserTypeId())) {
+		if(Objects.nonNull(filterRequest.getEmail()) &&  !filterRequest.getEmail().isEmpty()) {
 			return Boolean.FALSE;
 		}
 
-		if(Objects.nonNull(filterRequest.getEmail()) || !filterRequest.getEmail().isEmpty()) {
+		if(Objects.nonNull(filterRequest.getPhoneNo()) && !filterRequest.getPhoneNo().isEmpty()) {
 			return Boolean.FALSE;
 		}
 
-		if(Objects.nonNull(filterRequest.getPhoneNo()) || !filterRequest.getPhoneNo().isEmpty()) {
+		if(Objects.nonNull(filterRequest.getUsername()) && !filterRequest.getUsername().isEmpty()) {
 			return Boolean.FALSE;
 		}
-
-		if(Objects.nonNull(filterRequest.getUsername()) || !filterRequest.getUsername().isEmpty()) {
-			return Boolean.FALSE;
-		}
-		
-		return Boolean.TRUE;
+       return Boolean.TRUE;
 	}
 	
 	public List<UserProfile> getAll(FilterRequest filterRequest) {
 		List<StateMgmtDb> statusList = null;
 		try {
+			
 			statusList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
 
-			List<UserProfile> systemConfigListDbs = userProfileRepo.findAll( buildSpecification(filterRequest,statusList,null).build());
+			List<UserProfile> systemConfigListDbs = userProfileRepo.findAll( buildSpecification(filterRequest,statusList,null).build(), new Sort(Sort.Direction.DESC, "modifiedOn"));
 
 			return systemConfigListDbs;
 

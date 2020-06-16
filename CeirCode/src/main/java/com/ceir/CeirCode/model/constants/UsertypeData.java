@@ -8,7 +8,7 @@ public enum UsertypeData {
 	TRC(10, "TRC"),Manufacturer(12, "Manufacturer"),SystemAdmin(13, "SystemAdmin"),
 	Lawful_Agency(14, "Lawful Agency"),End_User(17, "End User"),Immigration(18, "Immigration"),
 	Anonymous(19, "Anonymous"),Customer_Care(20, "Customer Care"),DRT(21, "DRT"),
-	Operation(22,"Operation")
+	Operation(22,"Operation"),Reporting(23,"Reporting")
 	;
 	private Integer code;
 	private String description;

@@ -2,6 +2,7 @@ package com.ceir.CeirCode.service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
@@ -12,10 +13,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import com.ceir.CeirCode.model.AllRequest;
 import com.ceir.CeirCode.model.AuditTrail;
 import com.ceir.CeirCode.model.ChangePassword;
 import com.ceir.CeirCode.model.ChangeUserStatus;
 import com.ceir.CeirCode.model.MessageConfigurationDb;
+import com.ceir.CeirCode.model.Notification;
 import com.ceir.CeirCode.model.Otp;
 import com.ceir.CeirCode.model.PortAddress;
 import com.ceir.CeirCode.model.QuestionPair;
@@ -40,6 +44,7 @@ import com.ceir.CeirCode.model.constants.UserStatus;
 import com.ceir.CeirCode.model.constants.UserTypeStatusFlag;
 import com.ceir.CeirCode.model.constants.UsertypeData;
 import com.ceir.CeirCode.othermodel.RolesData;
+import com.ceir.CeirCode.repo.MessageConfigurationDbRepository;
 import com.ceir.CeirCode.repo.NotificationRepository;
 import com.ceir.CeirCode.repo.SecurityQuestionRepo;
 import com.ceir.CeirCode.repo.SystemConfigDbListRepository;
@@ -63,6 +68,7 @@ import com.ceir.CeirCode.response.UpdateProfileResponse;
 import com.ceir.CeirCode.response.tags.ProfileTags;
 import com.ceir.CeirCode.response.tags.RegistrationTags;
 import com.ceir.CeirCode.response.tags.UpdateUserStatusTags;
+import com.ceir.CeirCode.response.tags.UserRoleTags;
 import com.ceir.CeirCode.util.NotificationUtil;
 import com.ceir.CeirCode.util.GenerateRandomDigits;
 import com.ceir.CeirCode.util.HttpResponse;
@@ -135,6 +141,11 @@ public class UserService {
 	@Autowired
 	UserRoleRepoService userRoleRepoService;
 
+	@Autowired
+	MessageConfigurationDbRepository messageConfigurationDbRepository;
+
+	@Autowired
+	Utility utility;
 
 	public ResponseEntity<?> getUsertypeData(int type){
 		try {
@@ -617,7 +628,7 @@ public class UserService {
 
 			User output=userRepo.findById(otp.getUserid());
 			if(output!=null) {
-			//	RequestHeaders header=new RequestHeaders(otp.getUserAgent(),otp.getPublicIp(),output.getUsername());
+				//	RequestHeaders header=new RequestHeaders(otp.getUserAgent(),otp.getPublicIp(),output.getUsername());
 				//headerService.saveRequestHeader(header);
 				//return validateNewUser( output,otp);
 				if(output.getPreviousStatus()==UserStatus.APPROVED.getCode()) {
@@ -716,14 +727,23 @@ public class UserService {
 					{
 						for(User adminUser:adminUsers) 
 						{ 
-							String username=user.getUsername();
-							adminUser.setUsername(username);
-							boolean adminNotification=emailUtils.saveNotification("REG_NOTIFY_CEIR_ADMIN_TO_VERIFY_USER", adminUser.getUserProfile(),
-									41, "User Management", "user phone and email details validated", adminUser.getUsername(),"",ChannelType.EMAIL,"users",0);
+
+							//String username=user.getUsername();
+							//adminUser.setUsername(username);
+							MessageConfigurationDb messageDB = new MessageConfigurationDb();
+
+							messageDB = messageConfigurationDbRepository.getByTag("REG_NOTIFY_CEIR_ADMIN_TO_VERIFY_USER");
+							log.info("messageDB data by tag: "+messageDB);
+							String	emailBody=emailContent(messageDB, user.getUserProfile(), "");		
+							String subject=getsubject(messageDB, user.getUserProfile(), "");
+							Notification noti=new Notification(ChannelType.EMAIL,emailBody,adminUser.getId(),
+									41l,adminUser.getUsername(),"User Management", "user phone and email details validated",
+									1,subject,0,"users","CEIRAdmin",0);
+							boolean adminNotification= emailUtils.saveNoti(noti); 						
 							log.info("notification save:  "+adminNotification);
 						}	
 					}
-					
+
 					boolean notificationStatus2=emailUtils.saveNotification("REG_WAIT_USER_FOR_APPROV_STATUS", user.getUserProfile(),
 							41, "User Management", "user phone and email details validated", user.getUsername(),"",ChannelType.EMAIL,"users",authorityStatus);
 					log.info("notification save:  "+notificationStatus2);
@@ -774,7 +794,7 @@ public class UserService {
 		}
 
 	}
-	
+
 	public ResponseEntity<?> profileResendOtp(ResendOtp otp) {   
 		log.info("inside resend otp controller"); 
 		UserProfile profile=userProfileRepo.findByUser_Id(otp.getUserId());
@@ -906,7 +926,7 @@ public class UserService {
 			User user=userRepo.findById(password.getUserid());
 			//user.setPasswordDate(LocalDateTime.now());
 			saveUserTrail(user, "User Management","Save new Password",41);
-			return changePasswordMethod(user,password);
+			return changeExpiryPasswordMethod(user,password);
 		}
 
 		catch(Exception e) {
@@ -966,6 +986,51 @@ public class UserService {
 		}  
 	}
 
+	public ResponseEntity<?> changeExpiryPasswordMethod(User user,ChangePassword password){
+		if(password.getOldPassword().equals(user.getPassword())) {
+			boolean passwordExist=userPassHistoryRepoImpl.passwordExist(password.getPassword(), password.getUserid());
+			if(passwordExist==true) {
+				log.info("if this password exist");
+				HttpResponse response=new HttpResponse(ProfileTags.PRO_CPASS_LAST_3PASS_ERROR.getMessage(),204,
+						ProfileTags.PRO_CPASS_LAST_3PASS_ERROR.getTag());
+				log.info("exit from change password");
+				return new ResponseEntity<>(response,HttpStatus.OK);	
+			}
+			else {
+				log.info("if this password does not exist");
+				long count=userPassHistoryRepoImpl.countByUserId(password.getUserid());
+				log.info("password count: "+count);
+				if(count!=0) {
+					if(count>=3) {
+						log.info("going to delete password history greater than 3");
+						UserPasswordHistory passHistory=userPassHistoryRepoImpl.getPasswordHistory(password.getUserid());
+						userPasswordHistoryRepo.deleteById(passHistory.getId());
+						user.setPassword(password.getPassword());
+						return setPassword2(user);
+					}
+					else {
+						log.info("if password history less than 3");
+						user.setPassword(password.getPassword());
+						return setPassword2(user);	
+					}
+				}
+				else {
+					user.setPassword(password.getPassword());
+					return setPassword2(user);	
+				}
+
+			}
+
+
+		} 
+		else {
+			HttpResponse response=new HttpResponse(ProfileTags.PRO_OldPass_Error.getMessage(),204,
+					ProfileTags.PRO_OldPass_Error.getTag());
+			log.info("exit from change password");  
+			return new ResponseEntity<>(response,HttpStatus.OK);	
+		}  
+	}
+
 	public ResponseEntity<?> setPassword(User user){
 		User output=userRepo.save(user);
 		if(output!=null) {
@@ -988,7 +1053,55 @@ public class UserService {
 			{
 				authorityStatus=1;
 			}
-			
+
+			boolean notificationStatus=emailUtils.saveNotification("PRO_CHANGE_PASSWORD_BY_USER", output.getUserProfile(), 41, "User Management","Change Password", output.getUsername(),  "",ChannelType.EMAIL,"users",authorityStatus);	
+			log.info("notification save: "+notificationStatus);
+			HttpResponse response=new HttpResponse(ProfileTags.PRO_CPASS_SUCESS.getMessage(),200,ProfileTags.PRO_CPASS_SUCESS.getTag());
+			log.info("exit from change password");
+			return new ResponseEntity<>(response,HttpStatus.OK);	
+		}
+		else {
+			HttpResponse response=new HttpResponse(ProfileTags.PRO_CPASS_FAIL.getMessage(),500,ProfileTags.PRO_CPASS_FAIL.getTag());
+			log.info("exit from change password");   
+			return new ResponseEntity<>(response,HttpStatus.OK);
+		}
+	}
+
+	public ResponseEntity<?> setPassword2(User user){
+		SystemConfigurationDb systemConfiguration=systemConfigurationRepo.getDataByTag("USER_PASS_EXPIRY_DAYS"); 
+		log.info("system config data by tag: USER_PASS_EXPIRY_DAYS"+systemConfiguration.getValue());
+		Integer days=0;
+		if(systemConfiguration!=null) {
+			days=Integer.parseInt(systemConfiguration.getValue());		
+		}
+		log.info("days going to add"+days);
+		LocalDateTime date=user.getPasswordDate() ;
+		date= date.plusDays(days);
+		log.info("now password expiry date: "+date);
+		user.setPasswordDate(date);
+		User output=userRepo.save(user);
+		if(output!=null) {
+			UserPasswordHistory userPassHistory=new UserPasswordHistory();
+			userPassHistory.setPassword(user.getPassword());
+			userPassHistory.setUserPassword(output);
+			userPassHistory.setCreatedOn(LocalDateTime.now());
+			userPassHistory.setModifiedOn(LocalDateTime.now());
+
+			log.info("going to save user passowrd in user_password_history table");
+			UserPasswordHistory userPasswordOtput=userPassHistoryRepoImpl.saveUserPassword(userPassHistory);
+			if(userPasswordOtput!=null) {
+				log.info("user passowrd sucessfully save");
+			}
+			List<Long> usertypes = new ArrayList<Long>();
+			usertypes.add(4l);
+			usertypes.add(5l);
+			usertypes.add(6l);
+			int authorityStatus=0;
+			if(!usertypes.contains(user.getUsertype().getId()))
+			{
+				authorityStatus=1;
+			}
+
 			boolean notificationStatus=emailUtils.saveNotification("PRO_CHANGE_PASSWORD_BY_USER", output.getUserProfile(), 41, "User Management","Change Password", output.getUsername(),  "",ChannelType.EMAIL,"users",authorityStatus);	
 			log.info("notification save: "+notificationStatus);
 			HttpResponse response=new HttpResponse(ProfileTags.PRO_CPASS_SUCESS.getMessage(),200,ProfileTags.PRO_CPASS_SUCESS.getTag());
@@ -1114,7 +1227,7 @@ public class UserService {
 
 
 	public ResponseEntity<?> changeUserStatus(ChangeUserStatus userStatus){
-		log.info("inside  chane User status  controller");
+		log.info("inside  change User status  controller");
 		log.info(" userStatus data:  "+userStatus);      
 		log.info("get user  data by userid below");  
 		User user=userRepo.findById(userStatus.getId());
@@ -1146,43 +1259,47 @@ public class UserService {
 				}
 			}
 			else if(userStatus.getAction()==1) {
+				
+				log.info("if action is add");
 				User userData=userRepo.findById(userStatus.getUserId());
 				List<Long> usertypeList=new ArrayList<Long>();
 				usertypeList.add(4l);
 				usertypeList.add(5l);
 				usertypeList.add(6l);
+				Userrole roles=null;
 				if(usertypeList.contains(userStatus.getUsertype()))		    
 				{	
 
 					if(userData!=null)
 					{
-						saveUserTrail(userData, "Registration Request","Change user status",8);				
+						saveUserTrail(userData, "Registration Request","Add user roles",8);				
 					}
 
-					List<Userrole> rolesList=new ArrayList<Userrole>();
-					for(int i=0;i<userStatus.getRoles().length;i++) {
 						boolean existsData=false;
-						existsData=userRoleRepoService.existsByUerIdAndUsertypeId(userStatus.getId(), userStatus.getRoles()[i]);		    		    		
-						log.info("existsData for this usertypeID "+userStatus.getRoles()[i]+" and user id "+userStatus.getId()+"in userrole table: "+existsData);
-						if(!existsData) {
+						existsData=userRoleRepoService.existsByUerIdAndUsertypeId(userStatus.getId(), userStatus.getRole());		    		    		
+                        log.info("exist by role and userid: "+existsData);
+						if(existsData==false) {
 							User users=new User(userStatus.getId());
-							Usertype usertype=new Usertype(userStatus.getRoles()[i]);
-							Userrole roles=new Userrole(users,usertype);
-							rolesList.add(roles);
+							Usertype usertype=new Usertype(userStatus.getRole());
+							 roles=new Userrole(users,usertype);
 						}
-						else {}
+					
 					}
 
-					if(rolesList.isEmpty()==true) {
+					if(roles==null) {
 						HttpResponse response=new HttpResponse(UpdateUserStatusTags.Roles_Exist.getMessage(),
 								200,UpdateUserStatusTags.Roles_Exist.getTag());
 						return new ResponseEntity<>(response,HttpStatus.OK);
 					}
 					else {
-						List<Userrole> rolesOutput=userRoleRepoService.saveRoleList(rolesList);
-						if(rolesOutput.isEmpty()==false) {
-							HttpResponse response=new HttpResponse(UpdateUserStatusTags.Roles_Updated.getMessage(),
-									200,UpdateUserStatusTags.Roles_Updated.getTag());
+						user.setRemark(userStatus.getRemark());
+						user.setReferenceId(userStatus.getReferenceId());
+						user.setModifiedBy(userData.getUsername());
+						user.setApprovedBy(userData.getUsername());
+						Userrole rolesOutput=userRoleRepoService.saveRole(roles);
+						if(rolesOutput!=null) {
+							HttpResponse response=new HttpResponse(UpdateUserStatusTags.Roles_Added.getMessage(),
+									200,UpdateUserStatusTags.Roles_Added.getTag());
 							return new ResponseEntity<>(response,HttpStatus.OK);
 						}
 						else {
@@ -1192,21 +1309,38 @@ public class UserService {
 						}
 					}
 				}
-				else {
-					HttpResponse response= new HttpResponse(RegistrationTags.Change_Role_Not_Allowed.getMessage(),409,
-							RegistrationTags.Change_Role_Not_Allowed.getTag());
-					return new ResponseEntity<>(response,HttpStatus.OK);	
-
-				}
+			else if(userStatus.getAction()==2) {
+				User userData=userRepo.findById(userStatus.getUserId());
+				List<Long> usertypeList=new ArrayList<Long>();
+				usertypeList.add(4l);
+				usertypeList.add(5l);
+				usertypeList.add(6l);
+					if(userData!=null)
+					{
+						saveUserTrail(userData, "Registration Request","Delete user roles",8);				
+					}
+					user.setRemark(userStatus.getRemark());
+					user.setReferenceId(userStatus.getReferenceId());
+					user.setModifiedBy(userData.getUsername());
+					user.setApprovedBy(userData.getUsername());
+						boolean rolesOutput=userRoleRepoService.deletebyUserIdandUsertype(userStatus.getId(), userStatus.getRole());
+						if(rolesOutput) {
+							HttpResponse response=new HttpResponse(UpdateUserStatusTags.Roles_Delete.getMessage(),
+									200,UpdateUserStatusTags.Roles_Delete.getTag());
+							return new ResponseEntity<>(response,HttpStatus.OK);
+						}
+						else {
+							HttpResponse response=new HttpResponse(RegistrationTags.COMMAN_FAIL_MSG.getMessage(),
+									200,RegistrationTags.COMMAN_FAIL_MSG.getTag());
+							return new ResponseEntity<>(response,HttpStatus.OK);
+						}
+									
 			}
-
 			else {
 				HttpResponse response= new HttpResponse(RegistrationTags.Invalid_Action.getMessage(),409,
 						RegistrationTags.Invalid_Action.getTag());
 				return new ResponseEntity<>(response,HttpStatus.OK);	
 			}
-
-
 
 		}    
 		else { 
@@ -1215,6 +1349,228 @@ public class UserService {
 			log.info("response send to user:  "+response);
 			return new ResponseEntity<>(response,HttpStatus.OK);	
 		}
+	}
+
+	public long[] rolesArray(AllRequest request)
+	{
+		List<Long> rolesList=new ArrayList<Long>();
+		try
+		{
+			log.info("going fetch roles by userid :"+request.getDataId());
+			List<Userrole> userRoles=userRoleRepo.findByUserData_Id(request.getDataId());	
+			for(Userrole role:userRoles)
+			{
+				rolesList.add(role.getUsertypeData().getId());
+			}
+			long[] rolesArray = new long[rolesList.size()]; 
+			rolesArray = Longs.toArray(rolesList); 
+			Arrays.sort(rolesArray);
+	        return rolesArray;
+		}
+        catch(Exception e)
+		{  
+        	log.info("exception when getting role array");
+        	log.info(e.toString());
+        	return null;
+		}
+	
+	}
+	
+	public ResponseEntity<?> addRoles(AllRequest request){
+		long ID[]={4,5};
+		long IR[]={4,6};
+		long I[]={4};  
+		long D[]={5}; 
+	    log.info("if action is add");	
+		User user=userRepo.findById(request.getDataId());
+		long mainrole=user.getUsertype().getId();
+		log.info("main role is : "+mainrole);
+		List<Usertype> rolesOutput=new ArrayList<Usertype>();
+		if(mainrole==4) { 
+			long rolesArray[]=rolesArray(request);	
+			
+			if(Objects.isNull(rolesArray)) {
+				log.info("role array value is null");
+				GenricResponse response=new GenricResponse(409,RegistrationTags.COMMAN_FAIL_MSG.getTag(),RegistrationTags.COMMAN_FAIL_MSG.getMessage(),"");
+				return new ResponseEntity<>(response,HttpStatus.OK);
+			}
+			log.info("rolesArray : "+Arrays.toString(rolesArray));
+			log.info("rolesArray length: "+rolesArray.length);
+			if(rolesArray.length==3)
+			{
+				log.info("role addition limit completed");
+				GenricResponse response=new GenricResponse(409,UserRoleTags.Role_Add_Not_Found.getTag(),UserRoleTags.Role_Add_Not_Found.getMessage(),"");
+					return new ResponseEntity<>(response,HttpStatus.OK);
+			}
+			else {
+				if(Arrays.equals(rolesArray, ID)) {
+					log.info("if roles are ID");
+					rolesOutput.add(new Usertype(6,"Retailer"));
+					GenricResponse	 response=new GenricResponse(200,"roles are available to add","",rolesOutput);
+						return new ResponseEntity<>(response,HttpStatus.OK);
+				}
+				else if(Arrays.equals(rolesArray, IR)) {
+					log.info("if roles are IR");
+					rolesOutput.add(new Usertype(5,"Distributor"));
+					GenricResponse response=new GenricResponse(200,"roles are available to add","",rolesOutput);
+						return new ResponseEntity<>(response,HttpStatus.OK);
+				}
+				else if(Arrays.equals(rolesArray, I)) {
+					log.info("if roles are IR");
+					rolesOutput.add(new Usertype(5,"Distributor"));
+					rolesOutput.add(new Usertype(6,"Retailer"));
+					GenricResponse	 response=new GenricResponse(200,"roles are available to add","",rolesOutput);
+						return new ResponseEntity<>(response,HttpStatus.OK);
+				}   
+				else {
+					log.info("no roles found in the pair");
+					GenricResponse response=new GenricResponse(409,UserRoleTags.Role_Add_Not_Found.getTag(),UserRoleTags.Role_Add_Not_Found.getMessage(),"");
+						return new ResponseEntity<>(response,HttpStatus.OK);
+				}
+			}
+		}
+		else if(mainrole==5) {
+			long rolesArray[]=rolesArray(request);		
+			if(rolesArray.length==2)
+			{
+				log.info("role addition limit completed");
+				GenricResponse response=new GenricResponse(409,UserRoleTags.Role_Add_Not_Found.getTag(),UserRoleTags.Role_Add_Not_Found.getMessage(),"");
+					return new ResponseEntity<>(response,HttpStatus.OK);
+			}
+			else {
+			 if(Arrays.equals(rolesArray, D)) {
+					log.info("if role is D");
+					rolesOutput.add(new Usertype(6,"Retailer"));
+					GenricResponse response=new GenricResponse(200,"data is found","",rolesOutput);
+						return new ResponseEntity<>(response,HttpStatus.OK);					
+			 } 
+			 else {
+					GenricResponse response=new GenricResponse(409,UserRoleTags.Role_Add_Not_Found.getTag(),UserRoleTags.Role_Add_Not_Found.getMessage(),"");
+					return new ResponseEntity<>(response,HttpStatus.OK);
+			 }
+			}   
+		}
+		else if(mainrole==6) {
+			log.info("we can't add role to it");
+			GenricResponse response=new GenricResponse(409,UserRoleTags.Role_Add_Not_Found.getTag(),UserRoleTags.Role_Add_Not_Found.getMessage(),"");
+				return new ResponseEntity<>(response,HttpStatus.OK);
+						}         
+		else {
+			log.info("we can't add role to it");
+			GenricResponse response=new GenricResponse(409,UserRoleTags.Role_Add_Not_Found.getTag(),UserRoleTags.Role_Add_Not_Found.getMessage(),"");
+				return new ResponseEntity<>(response,HttpStatus.OK);		
+		}	
+	}
+	
+	public ResponseEntity<?> deleteroles(AllRequest request){
+		long IDR[]={4,5,6};
+		long ID[]={4,5};
+		long IR[]={4,6};
+		long DR[]={5,6};  
+		long I[]={4};  
+		long D[]={5}; 	
+		User user=userRepo.findById(request.getDataId());
+		long mainrole=user.getUsertype().getId();
+
+		List<Usertype> rolesOutput=new ArrayList<Usertype>();
+
+		if(mainrole==4) { 
+			long rolesArray[]=rolesArray(request);		
+			if(Objects.isNull(rolesArray)) {
+				GenricResponse response=new GenricResponse(409,RegistrationTags.COMMAN_FAIL_MSG.getTag(),RegistrationTags.COMMAN_FAIL_MSG.getMessage(),"");
+				return new ResponseEntity<>(response,HttpStatus.OK);
+				
+			}
+
+			if(rolesArray.length==1)
+			{
+				log.info("not able to delete");
+				GenricResponse response=new GenricResponse(409,UserRoleTags.Role_Del_Not_Found.getTag(),UserRoleTags.Role_Del_Not_Found.getMessage(),"");
+					return new ResponseEntity<>(response,HttpStatus.OK);
+			}
+			else {
+				if(Arrays.equals(rolesArray, IDR)) {
+					log.info("if roles are IDR");
+					rolesOutput.add(new Usertype(5,"Distributor"));
+					rolesOutput.add(new Usertype(6,"Retailer"));
+					GenricResponse response=new GenricResponse(200,"data is found","",rolesOutput);
+						return new ResponseEntity<>(response,HttpStatus.OK);
+				}
+				else if(Arrays.equals(rolesArray, ID)) {
+					log.info("if roles are ID");
+					rolesOutput.add(new Usertype(5,"Distributor"));
+					GenricResponse response=new GenricResponse(200,"data is found","",rolesOutput);
+						return new ResponseEntity<>(response,HttpStatus.OK);
+				}
+				else if(Arrays.equals(rolesArray, IR)) {
+					log.info("if roles are IR");
+					rolesOutput.add(new Usertype(6,"Retailer"));
+					GenricResponse response=new GenricResponse(200,"data is found","",rolesOutput);
+						return new ResponseEntity<>(response,HttpStatus.OK);
+				}
+				else {
+					GenricResponse response=new GenricResponse(409,UserRoleTags.Role_Del_Not_Found.getTag(),UserRoleTags.Role_Del_Not_Found.getMessage(),"");
+						return new ResponseEntity<>(response,HttpStatus.OK);
+				}
+			}
+		}
+		else if(mainrole==5) {
+			long rolesArray[]=rolesArray(request);		
+			if(rolesArray.length==1)
+			{
+				log.info("not able to delete");
+				GenricResponse response=new GenricResponse(409,UserRoleTags.Role_Del_Not_Found.getTag(),UserRoleTags.Role_Del_Not_Found.getMessage(),"");
+					return new ResponseEntity<>(response,HttpStatus.OK);
+			}
+			else {
+			 if(Arrays.equals(rolesArray, DR)) {
+					log.info("if role is D");
+					rolesOutput.add(new Usertype(6,"Retailer"));
+					GenricResponse response=new GenricResponse(200,"data is found","",rolesOutput);
+						return new ResponseEntity<>(response,HttpStatus.OK);
+				}     
+			 else {
+					GenricResponse response=new GenricResponse(409,UserRoleTags.Role_Del_Not_Found.getTag(),UserRoleTags.Role_Del_Not_Found.getMessage(),"");
+					return new ResponseEntity<>(response,HttpStatus.OK);
+			 }
+			}   
+		
+		}
+		else if(mainrole==6) {
+			log.info("we can't delete role to it");
+			GenricResponse response=new GenricResponse(409,UserRoleTags.Role_Del_Not_Found.getTag(),UserRoleTags.Role_Del_Not_Found.getMessage(),"");
+				return new ResponseEntity<>(response,HttpStatus.OK);
+		}         
+		else {
+			log.info("we can't delete role to it");
+			GenricResponse response=new GenricResponse(409,UserRoleTags.Role_Del_Not_Found.getTag(),UserRoleTags.Role_Del_Not_Found.getMessage(),"");
+				return new ResponseEntity<>(response,HttpStatus.OK);
+		}
+	}
+	public ResponseEntity<?> addDeleteroles(AllRequest request){
+		//GenricResponse response = new GenricResponse();
+		try {
+			log.info("inside getting add or delete roles");
+			log.info("data given: "+request);
+			if(request.getAction()==1) {
+		      return addRoles(request);
+			}
+			if(request.getAction()==2) {
+				return deleteroles(request);
+			}
+			else {
+				log.info("invalid action");
+				GenricResponse response=new GenricResponse(409,UserRoleTags.Invalid_Action.getTag(),UserRoleTags.Invalid_Action.getMessage(),"");
+					return new ResponseEntity<>(response,HttpStatus.OK);
+			}
+		}
+		catch(Exception e) {
+			log.info("error occurs");
+			log.info(e.toString());
+			GenricResponse response=new GenricResponse(409,RegistrationTags.COMMAN_FAIL_MSG.getTag(),RegistrationTags.COMMAN_FAIL_MSG.getMessage(),"");
+			return new ResponseEntity<>(response,HttpStatus.OK);
+		}
+		
 	}
 
 
@@ -1642,7 +1998,7 @@ public class UserService {
 						authorityStatus=1;
 					}
 					log.info("usertype: "+user.getUsertype().getId());
-                    log.info("authorityStatus: "+authorityStatus);
+					log.info("authorityStatus: "+authorityStatus);
 					boolean emailStatus=emailUtils.saveNotification(tag, output.getUserProfile(),8, 
 							"Registration Request",status, output.getUsername(),"",ChannelType.EMAIL,"users",authorityStatus);
 					log.info("emailStatus : "+emailStatus);
@@ -1693,8 +2049,8 @@ public class UserService {
 		}
 		return emailBody;
 
-		}
-	
+	}
+
 	public String getsubject(MessageConfigurationDb msgConfigDb,UserProfile profile,String otp) {
 		log.info("tag:  "+msgConfigDb.getTag());
 		String subject=null;
@@ -1711,7 +2067,7 @@ public class UserService {
 		}
 		return subject;
 
-		}
+	}
 
 	public HashMap<String, String> contentMap(String emailBody,UserProfile profile,String otp){
 		HashMap<String, String> map=new HashMap<String, String>();

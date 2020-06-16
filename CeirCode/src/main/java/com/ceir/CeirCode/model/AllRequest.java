@@ -20,6 +20,9 @@ public class AllRequest{
 	@Transient
 	private String userType;
 	
+	@Transient
+	private int action;
+	
 //	@Transient
 //	private String userAgent;
 //	
@@ -50,7 +53,14 @@ public class AllRequest{
 	public void setUserType(String userType) {
 		this.userType = userType;
 	}
-//	public String getUserAgent() {
+	
+public int getAction() {
+		return action;
+	}
+	public void setAction(int action) {
+		this.action = action;
+	}
+	//	public String getUserAgent() {
 //		return userAgent;
 //	}
 //	public void setUserAgent(String userAgent) {
@@ -76,6 +86,7 @@ public class AllRequest{
 	public void setDataId(long dataId) {
 		this.dataId = dataId;
 	}
+	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -91,6 +102,8 @@ public class AllRequest{
 		builder.append(featureId);
 		builder.append(", userType=");
 		builder.append(userType);
+		builder.append(", action=");
+		builder.append(action);
 		builder.append("]");
 		return builder.toString();
 	}

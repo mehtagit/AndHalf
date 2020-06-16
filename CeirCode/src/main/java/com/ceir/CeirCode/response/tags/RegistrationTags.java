@@ -22,9 +22,11 @@ public enum RegistrationTags {
     Email_Exist("Email_Exist","Email already exist in the system"),
     Phone_Exist("Phone_Exist","Phone Number already exist in the system"),
     Change_Role_Not_Allowed("Change_Role_Not_Allowed","Change Role feature for this usertype is not available"),
-    Invalid_Action("Invalid_Action","This is invalid action");
-    ;
-	
+    Invalid_Action("Invalid_Action","This is invalid action"),
+    User_Success_Save("User_Success_Save","User has been sucessfully saved"),
+    User_Fail_Save("User_Fail_Save","User failed to saved"),
+    User_Success_Update("User_Success_Update","User has been sucessfully update"),
+    User_Fail_Update("User_Fail_Update","User has been failed to update");
 	
 	private String tag;
 	private String message;

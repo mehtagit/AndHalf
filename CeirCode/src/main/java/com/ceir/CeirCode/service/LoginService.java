@@ -1,4 +1,5 @@
 package com.ceir.CeirCode.service;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.ceir.CeirCode.model.ChangeLanguage;
+import com.ceir.CeirCode.model.CurrentLogin;
 import com.ceir.CeirCode.model.ForgotPassword;
 import com.ceir.CeirCode.model.LoginResponse;
 import com.ceir.CeirCode.model.LoginTracking;
@@ -31,6 +33,7 @@ import com.ceir.CeirCode.model.constants.ChannelType;
 import com.ceir.CeirCode.model.constants.Features;
 import com.ceir.CeirCode.model.constants.SubFeatures;
 import com.ceir.CeirCode.model.constants.UserStatus;
+import com.ceir.CeirCode.repo.CurrentLoginRepo;
 import com.ceir.CeirCode.repo.LoginTrackingRepo;
 import com.ceir.CeirCode.repo.SystemConfigDbListRepository;
 import com.ceir.CeirCode.repo.UserPasswordHistoryRepo;
@@ -101,6 +104,9 @@ public class LoginService
 
 	@Autowired   
 	GenerateRandomDigits randomDigits;
+	
+	@Autowired
+	CurrentLoginRepo currentLoginRepo;
 
 	public ResponseEntity<?> userLogin(UserLogin userLogin)
 	{
@@ -146,6 +152,19 @@ public class LoginService
 						else {
 						LoginTracking loginTrack = new LoginTracking(1, UserData);
 						loginTrackingRepo.save(loginTrack); 
+						CurrentLogin currentLogin=new CurrentLogin(1, UserData);
+						List<CurrentLogin> currentLoginOutput=currentLoginRepo.findByCurrentUserLogin_Id(UserData.getId());
+						if(currentLoginOutput!=null) {
+							for(CurrentLogin loginUser:currentLoginOutput) {
+								loginUser.setCreatedOn(LocalDateTime.now());
+								loginUser.setModifiedOn(LocalDateTime.now());
+							}
+							currentLoginRepo.saveAll(currentLoginOutput);
+						}
+						else {
+							currentLoginRepo.save(currentLogin);
+						}
+						
 						List<Usertype> userRoles=new ArrayList<Usertype>();   
 						List<Userrole> userroleList=new ArrayList<Userrole>();
 						userroleList=userRoleRepo.findByUserData_Id(UserData.getId());
@@ -204,7 +223,8 @@ public class LoginService
 		}
 		catch(Exception e) 
 		{
-			e.printStackTrace();
+		    log.info("exception occur");
+		    log.info(e.toString());
 			HttpResponse response=new HttpResponse(RegistrationTags.COMMAN_FAIL_MSG.getMessage(),409,RegistrationTags.COMMAN_FAIL_MSG.getTag());
 			return new ResponseEntity<>(response,HttpStatus.OK);	
 		}
@@ -320,6 +340,19 @@ public class LoginService
 		try {
 			userService.saveUserTrail(loginTracking.getUserTrack(), "User Management","Logout",41);
 			LoginTracking loginTrackingOutput=loginTrackingRepo.save(loginTracking);
+			long userId=loginTracking.getUserTrack().getId();
+			log.info("now going to check data in current_login table by user id: "+userId);
+			List<CurrentLogin> loginExist=currentLoginRepo.findByCurrentUserLogin_Id(userId);
+			if(loginExist!=null)
+			{ 
+				for(CurrentLogin loginUser:loginExist) {
+					log.info("login exist so going to delete data by id : "+loginUser.getId());
+					currentLoginRepo.deleteById(loginUser.getId());
+				}
+			}
+			else {
+				log.info("login not exitexist  by user id : "+userId);
+			}
 			if(loginTrackingOutput!=null) {
 				HttpResponse response=new HttpResponse("user session sucessfully added",200);
 				log.info("exist from sessionTracking");

@@ -48,7 +48,20 @@ public class NotificationUtil {
 	NotificationRepository notificationRepo;
 
 
-
+    public boolean saveNoti(Notification noti)
+    {
+    	try {
+    		notificationRepo.save(noti);
+    		return true;
+    	}
+    	catch(Exception e) {
+    		logger.info("error occurs while saving notification");
+    		logger.info(e.toString());
+    		return false;
+    	}
+    }
+    
+    
 
 
 	public boolean saveNotification(@NonNull String tag, UserProfile userProfileData, long featureId, String featureName, String subFeature, String featureTxnId,String otp,String channelType,String referTable,int authorityStatus) {

@@ -55,4 +55,31 @@ private final Logger log = LoggerFactory.getLogger(getClass());
 			return new ArrayList<Userrole>();
 		}
 	}
+	@Transactional
+	public Userrole saveRole(Userrole rolesList)
+	{
+
+		try {
+			return userRoleRepo.save(rolesList);
+		}
+		catch(Exception e) {
+			log.info("error occurs in updation user role data");
+			return null;
+		}
+	}
+	
+	@Transactional
+	public boolean deletebyUserIdandUsertype(long userid,long usertypeId)
+	{
+
+		try {
+			 userRoleRepo.deleteByUserData_IdAndUsertypeData_Id(userid, usertypeId);
+			 return true;
+		}
+		catch(Exception e) {
+			log.info("error occurs in delete user role data");
+			log.info(e.toString());
+			return false;
+		}
+	}
 }

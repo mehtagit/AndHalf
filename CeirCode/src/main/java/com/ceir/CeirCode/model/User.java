@@ -112,7 +112,13 @@ public class User {
 	@NotAudited
 	@OneToMany(mappedBy = "userSlaReport", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<SlaReport> SlaReport;
-	
+
+    @NotAudited
+	@JsonIgnore
+	@OneToMany(mappedBy = "currentUserLogin",cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	List<CurrentLogin> currentLogin;
+
+    
 	@Transient
     private String stateInterp;
 	public long getId() {      
@@ -331,6 +337,12 @@ public class User {
 	}
 	public void setApprovedBy(String approvedBy) {
 		this.approvedBy = approvedBy;
+	}
+	public List<CurrentLogin> getCurrentLogin() {
+		return currentLogin;
+	}
+	public void setCurrentLogin(List<CurrentLogin> currentLogin) {
+		this.currentLogin = currentLogin;
 	}
 	@Override
 	public String toString() {

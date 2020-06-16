@@ -81,11 +81,6 @@ public class UserMgmtService {
 	private GenericSpecificationBuilder<User> buildSpecification(UserMgmtFilter filterRequest){
 
 		GenericSpecificationBuilder<User> uPSB = new GenericSpecificationBuilder<User>(propertiesReader.dialect);	
-		//		User user=userRepoService.findByUSerId(filterRequest.getUserId());
-		//		if(user!=null) {
-		//			userService.saveUserTrail(user, "Registration Request", "View", filterRequest.getFeatureId());
-		//		}
-
 		if(Objects.nonNull(filterRequest.getStartDate()) && filterRequest.getStartDate()!="")
 			uPSB.with(new SearchCriteria("createdOn",filterRequest.getStartDate(), SearchOperation.GREATER_THAN, Datatype.DATE));
 		if(Objects.nonNull(filterRequest.getEndDate()) && filterRequest.getEndDate()!="")
@@ -98,10 +93,10 @@ public class UserMgmtService {
 		
 		if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
 			uPSB.orSearch(new SearchCriteria("username", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
-		//	uPSB.orSearchUsertype(new SearchCriteria("usertypeName", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 		}
-
+		
 		return uPSB;
+		
 	}
 
 	public List<User> getAll(UserMgmtFilter filterRequest) {
@@ -197,6 +192,7 @@ public class UserMgmtService {
 		map.put(UsertypeData.Operation.getCode(), "Operation_User_Limit");
 		map.put(UsertypeData.End_User.getCode(), "customer_user_limit");
 		map.put(UsertypeData.Customer_Care.getCode(), "end_user_limit");
+		map.put(UsertypeData.Reporting.getCode(), "reporting_user_limit");
 		int usertypeId=(int)details.getUsertypeId();
 		log.info("then going to fetch data from system configuration db by tag "+map.get(usertypeId));
 		SystemConfigurationDb systemConfigData=systemConfigurationDbRepoImpl.getDataByTag(map.get(usertypeId));
@@ -230,16 +226,16 @@ public class UserMgmtService {
 		catch(Exception e) {
 			log.info("Exception occurs");
 			log.info(e.toString());
-			GenricResponse response=new GenricResponse(500,PortAddsTags.PAdd_Save_Fail.getMessage(),PortAddsTags.PAdd_Save_Fail.getTag());
+			GenricResponse response=new GenricResponse(500,RegistrationTags.COMMAN_FAIL_MSG.getTag(),RegistrationTags.COMMAN_FAIL_MSG.getMessage(), "");
 			return  response;
            
 		}
 		if(output!=null) {
-			GenricResponse response=new GenricResponse(200,"User Successfuly saved","");
+			GenricResponse response=new GenricResponse(200,RegistrationTags.User_Success_Save.getTag(),RegistrationTags.User_Success_Save.getMessage(),"");
 			return  response;
 		}
 		else {
-			GenricResponse response=new GenricResponse(500,"User fail to save","");
+			GenricResponse response=new GenricResponse(500,RegistrationTags.User_Fail_Save.getTag(),RegistrationTags.User_Fail_Save.getMessage(),"");
 			return  response;
 		}
 		
@@ -251,6 +247,7 @@ public class UserMgmtService {
 //			headerService.saveRequestHeader(header);
 			userService.saveUserTrail(details.getUserId(),details.getUsername(),
 					details.getUserType(),details.getUserTypeId(),Features.User_Management,SubFeatures.UPDATE,details.getFeatureId());
+            
 
 			Usertype userType=new Usertype(details.getUsertypeId());
 			List<Userrole> role=new ArrayList<Userrole>();
@@ -259,7 +256,7 @@ public class UserMgmtService {
 				userData=userRepo.findById(details.getId());
 				if(Objects.isNull(userData)) {
 					log.info("user id is wrong");
-					GenricResponse response=new GenricResponse(500,"User is is wrong","");
+					GenricResponse response=new GenricResponse(500,RegistrationTags.COMMAN_FAIL_MSG.getTag(),RegistrationTags.COMMAN_FAIL_MSG.getMessage(), "");
 					return  response;
 				}
 		}
@@ -269,14 +266,49 @@ public class UserMgmtService {
 			GenricResponse response=new GenricResponse(500,"Oops something wrong happened","");
 			return  response;
 		}
-       
+
+//			boolean emailExist=userProfileRepo.existsByEmail(details.getEmail());
+//			boolean phoneExist=userProfileRepo.existsByPhoneNo(details.getPhoneNo());
+            
+			UserProfile profile=userData.getUserProfile();
+			if(!details.getEmail().equalsIgnoreCase(profile.getEmail()))
+			{
+				boolean emailExist=userProfileRepo.existsByEmail(details.getEmail());
+				if(emailExist) {
+				    log.info("if email already exist in the data");
+					GenricResponse response=new GenricResponse(409,RegistrationTags.Email_Exist.getTag(),RegistrationTags.Email_Exist.getMessage(),"");
+					log.info("response send to user: " +response);
+					return response;
+				}	
+			}
+			
+			if(!details.getPhoneNo().equalsIgnoreCase(profile.getPhoneNo())) 
+			{
+				boolean phoneExist=userProfileRepo.existsByPhoneNo(details.getPhoneNo());
+				if(phoneExist) {
+				    log.info("if phone number already exist in the data");
+					GenricResponse response=new GenricResponse(409,RegistrationTags.Phone_Exist.getTag(),RegistrationTags.Phone_Exist.getMessage(),"");
+					log.info("response send to user: " +response);
+					return response;
+				}
+				if(Objects.isNull(details.getUsertypeId()) || details.getUsertypeId()==0) {
+					GenricResponse response=new GenricResponse(409,"Usertype Id value must not be null or 0","");
+					log.info("Usertype Id value must not be null or 0");
+					log.info("response send to user: " +response);
+					return  response;
+				}	
+			}
+			profile.setEmail(details.getEmail());	
+			profile.setPhoneNo(details.getPhoneNo());	
 			for(Userrole rolesData:userData.getUserRole())
 			{
 				rolesData.setUsertypeData(userType);
 				role.add(rolesData);
 			}
+			userData.setRemark(details.getRemarks());
 			userData.setUsertype(userType);
 			userData.setUserRole(role);
+			userData.setUserProfile(profile);
 			User output=new User();
 			try {
 	                output=userRepo.save(userData);
@@ -289,11 +321,11 @@ public class UserMgmtService {
 	           
 			}
 			if(output!=null) {
-				GenricResponse response=new GenricResponse(200,"User Successfuly update","");
+				GenricResponse response=new GenricResponse(200,RegistrationTags.User_Success_Update.getTag(),RegistrationTags.User_Success_Update.getMessage(),"");
 				return  response;
 			}
 			else {
-				GenricResponse response=new GenricResponse(500,"User fail to update","");
+				GenricResponse response=new GenricResponse(500,RegistrationTags.User_Fail_Update.getTag(),RegistrationTags.User_Fail_Update.getMessage(),"");
 				return  response;
 			}
 

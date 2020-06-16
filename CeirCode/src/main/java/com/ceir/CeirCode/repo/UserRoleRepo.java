@@ -11,5 +11,6 @@ public interface UserRoleRepo extends JpaRepository<Userrole, Integer>{
 	public Userrole findByUserData_IdAndUsertypeData_Id(long userid,long usertypeId);
 	public List<Userrole> findDistinctUserDataByUsertypeData_IdOrUsertypeData_Id(long usertyp1,long usertype2);
 	public boolean existsByUserData_IdAndUsertypeData_Id(long userId,long usertypeId);
+	public void deleteByUserData_IdAndUsertypeData_Id(long id,long usertypeId);
 }
  

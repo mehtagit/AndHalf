@@ -69,6 +69,26 @@ public class Notification  implements Serializable{
 	}
 
 
+	public Notification(String channelType, String message, long userId, Long featureId, String featureTxnId,
+			String featureName, String subFeature, Integer status, String subject, Integer retryCount,
+			String referTable, String receiverUserType, Integer authorityStatus) {
+		super();
+		this.channelType = channelType;
+		this.message = message;
+		this.userId = userId;
+		this.featureId = featureId;
+		this.featureTxnId = featureTxnId;
+		this.featureName = featureName;
+		this.subFeature = subFeature;
+		this.status = status;
+		this.subject = subject;
+		this.retryCount = retryCount;
+		this.referTable = referTable;
+		this.receiverUserType = receiverUserType;
+		this.authorityStatus = authorityStatus;
+	}
+
+
 	public Notification() {
 
 	}

@@ -6,7 +6,9 @@ public enum UpdateUserStatusTags {
 	USER_STATUS_CHANGE_FAIL("USER_STATUS_CHANGE_FAIL", "User status failed to change"),
 	USER_STATUS_WRONG_USERID("USER_STATUS_WRONG_USERID", "User Id is wrong"),
 	Roles_Updated("Roles_Updated","User Roles sucessfully updated"),
-	Roles_Exist("Roles_Exist","User Roles Already exist");
+	Roles_Exist("Roles_Exist","User Roles Already exist"),
+	Roles_Added("Roles_Added","User Roles sucessfully added"),
+	Roles_Delete("Roles_Delete","User Roles sucessfully deleted");
 	;
 	private String tag;
 	private String message;
