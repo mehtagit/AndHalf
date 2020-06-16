@@ -891,8 +891,9 @@ function DeleteTacRecord(txnId, id) {
 
 function confirmantiondelete() {
 	var txnId = $("#tacdeleteTxnId").text();
-	var tacRemark = $("#deleteTacRemark").val();
+	var remark = $("#deleteTacRemark").val();
 	var id = $("#deleteTacId").val();
+	
 
 	// console.log("userType=="+userType+" ==id=="+id+"===userId===" +userId);
 
@@ -903,7 +904,7 @@ function confirmantiondelete() {
 
 	$.ajax({
 		url : "./importerTacDelete?id=" + id + "&userType=" + userType
-				+ "&userId=" + userId,
+				+ "&userId=" + userId+ "&remark=" +remark,
 		// data : JSON.stringify(obj),
 		dataType : 'json',
 		contentType : 'application/json; charset=utf-8',
@@ -965,19 +966,33 @@ function historyRecord(txnID) {
 	});
 	var filter = [];
 	var formData = new FormData();
-	var filterRequest = {
+	
+	
+	if (userType == "CEIRAdmin"){
+		var filterRequest = {
 
 		"columns" : [ "created_on", "modified_on", "txn_id", "user_type",
 				"approve_status", "trademark", "product_name", "model_number",
-				"manufacturer_country", "frequency_range", "tac", "file_name",
-				"remark", "admin_approve_status", "admin_remark",
-				"approve_disapprove_date", "feature_id", "country",
-				"manufacturer_id", "manufacturer_name", "request_date",
-				"user_id" ],
+				"manufacturer_country", "frequency_range", "tac",
+				"remark", "feature_id","user_id" ],
 		"tableName" : "type_approved_db_aud",
 		"dbName" : "ceirconfig",
 		"txnId" : txnID
 	}
+	}else{
+		var filterRequest = {
+
+				"columns" : [ "created_on", "modified_on", "txn_id", "user_type",
+						"approve_status", "trademark", "product_name", "model_number",
+						"manufacturer_country", "frequency_range", "tac",
+						"remark", "feature_id",
+						"user_id" ],
+				"tableName" : "type_approved_db_aud",
+				"dbName" : "ceirconfig",
+				"txnId" : txnID
+			}
+	}
+	
 	formData.append("filter", JSON.stringify(filterRequest));
 	if (lang == 'km') {
 		var langFile = '../resources/i18n/khmer_datatable.json';

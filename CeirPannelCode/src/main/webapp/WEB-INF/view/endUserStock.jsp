@@ -171,7 +171,7 @@ var contextpath = "${context}";
                                         <div class="row myRow">
                                             <div class="input-field col s12 m6">
                                                 <label for="endUser" style="color: #000;"><spring:message code="input.EmailID" /> </label>
-                                                <input type="email" id="endUseremail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" 
+                                                <input type="email" id="endUseremail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,63}$" 
 											    oninput="InvalidMsg(this,'input','<spring:message code="validation.Matchformat" />');"
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.Matchformat" />');" 
 												   maxlength="30" name="email"/>

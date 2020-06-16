@@ -253,8 +253,8 @@ function fileTypeValueChanges(dd, ddd) {
 	       });
 		 
 		}
-	else if(fileSize>='2000'){
-		alert("2222");		$('#fileFormateModal').openModal({
+	else if(fileSize>='10000'){
+				$('#fileFormateModal').openModal({
 	    	   dismissible:false
 	       });
 		

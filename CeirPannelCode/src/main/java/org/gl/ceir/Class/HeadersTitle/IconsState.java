@@ -1374,11 +1374,8 @@ public class IconsState {
 		//String downloadURL = "./Consignment/dowloadFiles/actual/"+file+"/"+txnId+"/"+defaultTagName+"";
 		String downloadURL = "fileDownload('"+file+"','actual','"+txnId+"','"+defaultTagName+"')";
 		String deleteAction ="DeleteConsignmentRecord('"+txnId+"','"+id+"','"+requestType+"')";
-
-
-        String historyAction ="historyRecord('"+txnId+"')";
-        String history="<a onclick="+historyAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+historyIcon+" aria-hidden=\"true\"  title="
-				+historyTitle+"></i></a>";
+		String historyAction ="historyRecord('"+txnId+"')";
+       
 		if(source.equals("3")) {
 			editAction="viewDeviceDetails('"+txnId+"','edit','"+requestType+"')";
 			viewAction="viewDeviceDetails('"+txnId+"','view','"+requestType+"')";
@@ -1399,6 +1396,8 @@ public class IconsState {
 				+viewIconTitle+" ></i></a>";
 		String delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+deletionIcon+" aria-hidden=\"true\" title="
 				+deleteIconTitle+"></i></a>";
+		String history="<a onclick="+historyAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+historyIcon+" aria-hidden=\"true\"  title="
+					+historyTitle+"></i></a>";
 		
 		log.info("source---> " +source+"  status----> "+status);
 
@@ -1446,7 +1445,7 @@ public class IconsState {
 			 delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
 					+deletionIcon+" aria-hidden=\"true\"  title="
 					+deleteIconTitle+"></i></a>"; 
-			 history="<a onclick="+historyAction+" class="+disableIconClass+"><i class="+disableHistoryIcon+" aria-hidden=\"true\"  title="
+			 history="<a onclick="+historyAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+historyIcon+" aria-hidden=\"true\"  title="
 						+historyTitle+"></i></a>";
 		}
 		else if(status !="0" || status!="1" || status !="2" || status !="3" ||status !="4" || status !="7" || status==null || status.equals("")){
@@ -1848,8 +1847,7 @@ public class IconsState {
 		String downloadURL = "fileDownload('"+file+"','actual','"+txnId+"','"+defaultTagName+"')";
 		String deleteAction ="DeleteConsignmentRecord('"+txnId+"','"+id+"','"+requestTypeValue+"')";
 		String historyAction ="historyRecord('"+txnId+"')";
-		String history="<a onclick="+historyAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+historyIcon+" aria-hidden=\"true\"  title="
-						+historyTitle+"></i></a>";
+		
 		
 		if(source.equals("5") && requestTypeValue.equals("0")) {
 			//check for Stolen/Indvisual
@@ -1906,7 +1904,8 @@ public class IconsState {
 		String delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
 				+deletionIcon+" aria-hidden=\"true\"  title="
 				+deleteIconTitle+"></i></a>"; 
-
+		String history="<a onclick="+historyAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+historyIcon+" aria-hidden=\"true\"  title="
+				+historyTitle+"></i></a>";
 
 		log.info("source---> " +source+"  status----> "+status);
 
@@ -1943,7 +1942,7 @@ public class IconsState {
 			 delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
 					+deletionIcon+" aria-hidden=\"true\"  title="
 					+deleteIconTitle+"></i></a>"; 
-			 history="<a onclick="+historyAction+" class="+disableIconClass+"><i class="+disableHistoryIcon+" aria-hidden=\"true\"  title="
+			 history="<a onclick="+historyAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+historyIcon+" aria-hidden=\"true\"  title="
 						+historyTitle+"></i></a>";
 		}
 		else if(status !="0" || status!="1" || status !="2" || status !="3" ||status !="4" || status !="5" || status !="6" ||status !="7" || status==null || status.equals("")){

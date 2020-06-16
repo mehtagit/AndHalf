@@ -1066,8 +1066,8 @@ function historyRecord(txnID){
 	 {
 		 var filterRequest={
 				 "columns": [
-					    "created_on","modified_on","txn_id","role_type","operator_type_id","request_type","source_type","file_status","complaint_type","file_name","fir_file_name",
-					    "block_category","blocking_type","blocking_time_period","quantity","device_quantity","remark","rejected_remark","date_of_recovery","date_of_stolen",
+					    "created_on","modified_on","txn_id","role_type","request_type","source_type","file_status","complaint_type","file_name","fir_file_name",
+					    "blocking_type","blocking_time_period","quantity","device_quantity","remark","rejected_remark","date_of_recovery","date_of_stolen",
 					     "user_id","ceir_admin_id"
 					    ],
 				"tableName": "stolenand_recovery_mgmt_aud",
@@ -1078,8 +1078,8 @@ function historyRecord(txnID){
 	 else{
 		 var filterRequest={
 				 "columns": [
-					    "created_on","modified_on","txn_id","role_type","operator_type_id","request_type","source_type","file_status","complaint_type","file_name","fir_file_name",
-					    "block_category","blocking_type","blocking_time_period","quantity","device_quantity","remark","rejected_remark","date_of_recovery","date_of_stolen",
+					    "created_on","modified_on","txn_id","role_type","request_type","source_type","file_status","complaint_type","file_name","fir_file_name",
+					    "blocking_type","blocking_time_period","quantity","device_quantity","remark","rejected_remark","date_of_recovery","date_of_stolen",
 					     "user_id"
 					    ],
 				"tableName": "stolenand_recovery_mgmt_aud",

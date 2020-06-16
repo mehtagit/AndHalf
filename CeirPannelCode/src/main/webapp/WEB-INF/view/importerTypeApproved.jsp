@@ -190,7 +190,7 @@
 														code="input.documenttype" /></label> <select
 													class="browser-default" id="docTypetag1"
 													onchange="enableSelectFile()">
-													<option value="" disabled selected><spring:message
+													<option value="" selected><spring:message
 															code="select.documenttype" />
 													</option>
 
