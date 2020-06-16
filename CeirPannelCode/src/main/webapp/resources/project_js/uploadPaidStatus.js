@@ -681,6 +681,7 @@ function exportpaidStatus(){
 
 function submitDeviceInfo(){
 	$('div#initialloader').fadeIn('fast');
+	$("#uploadPaidStatusbutton").prop('disabled', true);
 	var formData= new FormData();
 
 
@@ -892,11 +893,8 @@ function submitDeviceInfo(){
 				$('#sucessMessage').text($.i18n('duplicateImei'));
 				}*/
 			else{
-				//console.log("error code"+data.errorCode);
-//				$('#sucessMessage').text('');
-				$('#regularisedDevice').openModal({dismissible:false});
-				$('#sucessMessage').text('');
-				$('#sucessMessage').text($.i18n(data.tag));
+				$('#customRegisterDeviceDuplicateImei').openModal({dismissible:false});;
+				$('#dupliCateImeiMsg').text($.i18n(data.tag));
 			}
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
@@ -1255,7 +1253,7 @@ function isImageValid(id) {
 		$('#fileErrormessage').text($.i18n('imageMessage'));
 
 	}
-	else if(fileSize>=100){
+	else if(fileSize>=5000){
 		$('#fileFormateModal').openModal({
 			dismissible:false
 		});
@@ -1520,7 +1518,7 @@ $(document).on("keyup", "#Price1", function(e) {
 
 		}
 		
-		else if(fileSize>='100'){
+		else if(fileSize>=5000){
 			$('#DeptfileFormateModal').openModal({
 				dismissible:false
 			});
@@ -1563,7 +1561,7 @@ $(document).on("keyup", "#Price1", function(e) {
 			$('#visafileErrormessage').text($.i18n('imageMessage'));
 
 		}
-		else if(fileSize>='100'){
+		else if(fileSize>=5000){
 			$('#visafileFormateModal').openModal({
 				dismissible:false
 			});

@@ -270,8 +270,8 @@ var sourceType = localStorage.getItem("sourceType");
 function filterStolen(language,sourceTypeFilter,source){
 	var source__val;
 
-	if(source == 'filter' ) {
-		source__val= source;
+	if(sourceTypeFilter == 'filter' ) {
+		source__val= 'filter';
 	}
 	else{
 		source__val= $("body").attr("data-session-source");

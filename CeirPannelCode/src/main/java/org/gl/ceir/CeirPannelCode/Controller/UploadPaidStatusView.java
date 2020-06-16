@@ -202,14 +202,17 @@ GrievanceFeignClient grievanceFeignClient;
 		addMoreFileModel.setTag("system_upload_filepath");
 		urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
 		
-		FileCopyToOtherServer fileCopyRequest= new FileCopyToOtherServer();
-		fileCopyRequest.setFilePath(urlToUpload.getValue());
-		fileCopyRequest.setTxnId(txnNumber);
-		fileCopyRequest.setFileName(file.getOriginalFilename());
-		fileCopyRequest.setServerId(serverId);
-		log.info("request passed to move file to other server=="+fileCopyRequest);
-		GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
-		log.info("file move api response==="+fileRespnose);
+		/*
+		 * FileCopyToOtherServer fileCopyRequest= new FileCopyToOtherServer();
+		 * fileCopyRequest.setFilePath(urlToUpload.getValue());
+		 * fileCopyRequest.setTxnId(txnNumber);
+		 * fileCopyRequest.setFileName(file.getOriginalFilename());
+		 * fileCopyRequest.setServerId(serverId);
+		 * log.info("request passed to move file to other server=="+fileCopyRequest);
+		 * GenricResponse
+		 * fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(
+		 * fileCopyRequest); log.info("file move api response==="+fileRespnose);
+		 */
 
 		Register_UploadPaidStatus regularizeDeviceDbs  = gson.fromJson(filter, Register_UploadPaidStatus.class);
 		regularizeDeviceDbs.setNationality("Cambodian");

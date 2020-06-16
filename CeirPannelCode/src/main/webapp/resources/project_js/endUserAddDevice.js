@@ -30,6 +30,7 @@ function redirectToPage(){
 }
 function submitDeviceInfo(){
 	$('div#initialloader').fadeIn('fast');
+	$("#uploadPaidStatusbutton").prop('disabled', true);
 	 var formData= new FormData();	
 	 var fieldId=1;	
 	 var auditParameters={
@@ -114,9 +115,11 @@ function submitDeviceInfo(){
 				}
 				else{
 					//$('#sucessMessage').text('');
-					$('#regularisedDevice').openModal({dismissible:false});
+					/*$('#regularisedDevice').openModal({dismissible:false});
 					$('#sucessMessage').text();
-					$('#sucessMessage').text(data.message);
+					$('#sucessMessage').text(data.message);*/
+					$('#endUserAddDeviceDuplicateImei').openModal({dismissible:false});;
+					$('#dupliCateImeiMsg').text($.i18n(data.tag));
 					
 				}
 				//sessionStorage.removeItem("nationalId");

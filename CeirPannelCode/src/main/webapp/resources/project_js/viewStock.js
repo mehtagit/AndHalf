@@ -334,18 +334,30 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 	function filter(lang,sourceParam){
 		var filterSource= $("body").attr("data-filterSource");
 		////console.log("filterSource<><><><>"+filterSource);
-	if(sourceParam==undefined)
+	/*if(sourceParam==undefined)
 		{
 		sourceParam="menu";
 		}
+	else if(sourceParam=='filter'){
+		sourceParam="filter";
+	}
 	if(filterSource==null)
 		{
 		sourceParam="menu";
 		}
+	
 	else{
 		sourceParam=filterSource;
-	}
-	////console.log("sourceParam= "+sourceParam);
+	}*/
+		
+		if(sourceParam == 'filter' ) {
+			sourceParam= 'filter';
+		}
+		else{
+			sourceParam= $("body").attr("data-filterSource");
+
+		}
+	//console.log("sourceParam= "+sourceParam);
 		if((currentRoleType=="Importer" || currentRoleType=="Retailer" || currentRoleType=="Distributor" || currentRoleType=="Manufacturer") && sourceType !="viaStock" ){
 		Datatable('headers?lang='+lang+'&type=stockHeaders','stockData?source='+sourceParam);
 		}else if(currentRoleType=="Custom" && sourceType !="viaStock"){

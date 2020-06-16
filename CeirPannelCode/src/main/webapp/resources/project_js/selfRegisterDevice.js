@@ -773,6 +773,7 @@ $(document).ready(function () {
 function submitEndUserDeviceInfo(){
 	var formData= new FormData();
 	$('div#initialloader').fadeIn('fast');
+	$("#uploadPaidStatusbutton").prop('disabled', true);
 
 	var nationalID=$('#endUserNID').val();
 	var endUserNID=$('#endUserNID').val();
@@ -968,10 +969,9 @@ function submitEndUserDeviceInfo(){
 				$("#endUserRegisterButton").prop('disabled', true);
 			}
 			else{
-//				$('#sucessMessage').text('');
-				$('#endUserRegisterDeviceModal').openModal({dismissible:false});;
-				$('#sucessMessageId').text('');
-				$('#sucessMessageId').text($.i18n(data.tag));
+           	
+				$('#endUserRegisterDeviceDuplicateImei').openModal({dismissible:false});;
+				$('#dupliCateImeiMsg').text($.i18n(data.tag));
 			}
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
@@ -1036,7 +1036,7 @@ function fileTypeValueChanges(id) {
 		$('#fileErrormessage').text($.i18n('imageMessage'));
 
 	}
-	else if(fileSize>=100){
+	else if(fileSize>=5000){
 		$('#fileFormateModal').openModal({
 			dismissible:false
 		});
@@ -1088,7 +1088,7 @@ function visaImageValidation() {
 		$('#visafileErrormessage').text($.i18n('imageMessage'));
 
 	}
-	else if(fileSize>='100'){
+	else if(fileSize>=5000){
 		$('#visafileFormateModal').openModal({
 			dismissible:false
 		});
@@ -1142,7 +1142,7 @@ function deptImageValidation() {
 
 	}
 	
-	else if(fileSize>='100'){
+	else if(fileSize>=5000){
 		$('#DeptfileFormateModal').openModal({
 			dismissible:false
 		});

@@ -320,11 +320,11 @@ var contextpath = "${context}";
 								<h6 class="file-label"><spring:message code="registration.uploadphoto" /> <span class="star">*</span></h6>
 									<div class="btn">
 										<span><spring:message code="registration.uploadphoto" /></span>
-										<input id="photo" type="file" placeholder="" oninput="InvalidMsg(this,'fileType','<spring:message code="validation.file" />');" oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.file" />');"
+										<input id="photo" type="file" onchange="isImageValid('photo')" placeholder="" oninput="InvalidMsg(this,'fileType','<spring:message code="validation.file" />');" oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.file" />');"
 										 title="" required />
 									</div>
 									<div class="file-path-wrapper">
-										<input class="file-path validate" type="text" placeholder="">
+										<input id="photoTxt" class="file-path validate" type="text" placeholder="">
 									</div>
 								</div>
 
@@ -338,11 +338,11 @@ var contextpath = "${context}";
 								<h6 class="file-label"><spring:message code="operator.uploadidcard" /> <span class="star">*</span></h6>
 									<div class="btn">
 										<span><spring:message code="operator.uploadidcard" /></span>
-										<input id="idCard" type="file" placeholder="" oninput="InvalidMsg(this,'fileType','<spring:message code="validation.file" />');" oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.file" />');"
+										<input onchange="isImageValid('idCard')" id="idCard" type="file" placeholder="" oninput="InvalidMsg(this,'fileType','<spring:message code="validation.file" />');" oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.file" />');"
 										 title="" required />
 									</div>
 									<div class="file-path-wrapper">
-										<input class="file-path validate" type="text" placeholder="">
+										<input id="idCardTxt" class="file-path validate" type="text" placeholder="">
 									</div>
 								</div>
 
@@ -382,7 +382,6 @@ var contextpath = "${context}";
 										oninput="InvalidMsg(this,'input','<spring:message code="validation.contact" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.contact" />');" title="">
 									<label for="authorityPhoneNo"><spring:message code="registration.reportingauthoritycontactnumber" /><span class="star">*</span></label>
 								</div>
-
 								<div class="input-field col s12 m6 l6">
 									<input type="text" name="email" required="required" id="email" maxlength="280" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,63}$"
 									oninput="InvalidMsg(this,'email','<spring:message code="validation.email" />');" oninvalid="InvalidMsg(this,'email','<spring:message code="validation.email" />');" title="" required/> 
@@ -716,7 +715,7 @@ var contextpath = "${context}";
 		
 		<script>
 		</script>
-		<div id="fileFormateModal" class="modal">
+			<div id="fileFormateModal" class="modal">
 		<h6 class="modal-header"><spring:message code="fileValidationModalHeader" /></h6>
 		<div class="modal-content">
 			<div class="row">
@@ -725,7 +724,8 @@ var contextpath = "${context}";
 			<div class="row">
 				<div class="input-field col s12 center">
 					<div class="input-field col s12 center">
-						<button class="modal-close waves-effect waves-light btn" onclick="clearFilesName('file')"
+					<input type="hidden" id="FilefieldId">
+						<button class="modal-close waves-effect waves-light btn" onclick="clearFilesName('FilefieldId')"
 							style="margin-left: 10px;"><spring:message code="modal.ok" /></button>
 					</div>
 				</div>
@@ -788,19 +788,28 @@ var contextpath = "${context}";
              populateStates("country","state");
         });   
 
-	        function clearFilesName(id)
+	         function clearFilesName(id)
 	        {
-	       		//var fieldId=$('#'+id).val();
-	       		
-	       			$('#'+id).val('');
-	       		    $("#NIdImageText").val('');
+	       		var fieldId=$('#'+id).val();
+	       		 if(fieldId=='NationalIdImage')
+    		    	{
+    		    	$('#'+fieldId).val('');
+        		    $("#NIdImageText").val('');
+    		    	}
+    		    else if(fieldId=='photo')
+    		    {
+    		    	$('#'+fieldId).val('');
+        		    $("#photoTxt").val('');
+    		    	
+    		    }
+    		    else if(fieldId=='idCard')
+    		    {
+    		    	$('#'+fieldId).val('');
+        		    $("#idCardTxt").val('');	
+    		    }
+    		    else{}
 	        }
-   
     </script>
-
-
-
-
 </body>
 
 </html>

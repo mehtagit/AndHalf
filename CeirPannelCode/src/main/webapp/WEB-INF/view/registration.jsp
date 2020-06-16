@@ -492,11 +492,11 @@ String usertypeId="${usertypeId}";
 										<div class="file-field col s12 m6">
 											<p class="upload-file-label"><spring:message code="registration.vatfile" /> <span class="star">*</span></p>
 											<div class="btn">
-												<span><spring:message code="input.selectfile" /></span> <input name="file" type="file" id="vatFile" accept=".pdf"
+												<span><spring:message code="input.selectfile" /></span> <input name="file" type="file" id="vatFile" onchange="isPdfAndImageValid('vatFile')"
 												oninput="InvalidMsg(this,'fileType','<spring:message code="validation.file" />');" oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.file" />');"   />
 											</div>
 											<div class="file-path-wrapper">
-												<input name="vatFile" class="file-path validate responsive-file-div" type="text"  >
+												<input name="vatFile" id="vatFileText" class="file-path validate responsive-file-div" type="text"  >
 											</div>
 										</div>
 										<br> <br>
@@ -799,16 +799,15 @@ String usertypeId="${usertypeId}";
 	</div>
 
 	<!-- Modal End -->
-
-		<div class="modal" id="error_Modal_reg" role="dialog">
+<div class="modal" id="error_Modal_reg" role="dialog">
 		<div class="modal-dialog">
 			<div class="row" id="modalMessageBodyReg"
 					style="text-align: center;"></div>
 			
 		</div>
+		
 	</div>
-	
-	<div id="fileFormateModal" class="modal">
+			<div id="fileFormateModal" class="modal">
 		<h6 class="modal-header"><spring:message code="fileValidationModalHeader" /></h6>
 		<div class="modal-content">
 			<div class="row">
@@ -817,13 +816,15 @@ String usertypeId="${usertypeId}";
 			<div class="row">
 				<div class="input-field col s12 center">
 					<div class="input-field col s12 center">
-						<button class="modal-close waves-effect waves-light btn" onclick="clearFilesName('file')"
+					<input type="hidden" id="FilefieldId">
+						<button class="modal-close waves-effect waves-light btn" onclick="clearFilesName('FilefieldId')"
 							style="margin-left: 10px;"><spring:message code="modal.ok" /></button>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	
 	
 		<!-- i18n library -->
 	<script type="text/javascript"
@@ -976,12 +977,20 @@ String usertypeId="${usertypeId}";
          		document.getElementById("vatFileDiv").style.display = "none";
          	}
          }
-         function clearFilesName(id)
+        function clearFilesName(id)
          {
-        		//var fieldId=$('#'+id).val();
-        		
-        			$('#'+id).val('');
+        		var fieldId=$('#'+id).val();
+        		if(fieldId=='file'){
+        			$('#'+fieldId).val('');
         		    $("#fileText").val('');
+        		}
+        		else if(fieldId=='vatFile')
+        			{
+        			$('#'+fieldId).val('');
+        		    $("#vatFileText").val('');
+        			
+        			}
+        		else{}
          }
          </script>
 </body>

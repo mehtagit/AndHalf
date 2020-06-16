@@ -4,7 +4,7 @@
 function saveIndivisualRecoveryRequest()
 {
 var formData= new FormData();
-	
+$("#singleDeviceRecovery").prop('disabled', true);
 
 	var sigleRecoverydeviceBrandName=$('#sigleRecoverydeviceBrandName').val();
 	var sigleRecoveryimeiNumber1=$('#sigleRecoveryimeiNumber1').val();
@@ -109,7 +109,7 @@ var formData= new FormData();
 
 function saveCompanyRecoveryRequest(){
 	$('div#initialloader').fadeIn('fast');
-	$("#indivisualStolenButton").prop('disabled', true);
+	$("#bulkRecoverySubmit").prop('disabled', true);
 	var formData= new FormData();
 	var bulkRecoveryquantity=$('#bulkRecoveryquantity').val();
 	var bulkRecoveryRemark=$('#bulkRecoveryRemark').val();
