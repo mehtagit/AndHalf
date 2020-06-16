@@ -12,10 +12,7 @@
 	
 	 long accessTime = session.getLastAccessedTime();
 	 long currentTime= new Date().getTime(); 
-	 System.out.println("accessTime========"+(accessTime));
-	 System.out.println("timeout========"+timeout);
 	 long dfd= accessTime +timeout;
-	 System.out.println("currentTime========"+currentTime);
 	 if( currentTime< dfd){
 	/*  response.setHeader("Refresh", timeout + "; URL = ../login");
 	 System.out.println("timeout========"+timeout); 
@@ -30,7 +27,7 @@
 <!DOCTYPE html>
 <html class="no-js" lang="en" dir="ltr">
 <head>
-<title>Consignment</title>
+<title>User Management</title>
 <meta http-equiv='cache-control' content='no-cache'>
 <meta http-equiv='expires' content='-1'>
 <meta http-equiv='pragma' content='no-cache'>
@@ -47,7 +44,8 @@
 	src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
 <!--   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"></script>  
  -->
-
+<!-- Favicons-->
+<link rel="icon" href="${context}/resources/images/DMC-Logo.png" sizes="32x32">
 <!-- CORE CSS-->
 <link href="${context}/resources/css/materialize.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
@@ -80,18 +78,22 @@
 <link rel="stylesheet"
 	href="${context}/resources/project_css/iconStates.css">
 
-<link rel="stylesheet"
-	href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
-<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
 
-<script src="http://malsup.github.io/jquery.blockUI.js"></script>
-<script src="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json"></script>
+<link rel="stylesheet"
+	href="${context}/resources/custom_js/jquery-ui.css?version=<%= (int) (Math.random() * 10) %>">
+<script src="${context}/resources/custom_js/1.11.2_jquery-ui.js?version=<%= (int) (Math.random() * 10) %>"></script>
+
+<script src="${context}/resources/custom_js/jquery.blockUI.js?version=<%= (int) (Math.random() * 10) %>"></script>
+<script src="${context}/resources/i18n/Khmer.json"></script>
+
+
+
 
 <!------------------------------------------- Dragable Model---------------------------------->
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="${context}/resources/custom_js/1.12.1_jquery-ui.js?version=<%= (int) (Math.random() * 10) %>"></script>
 <script
-	src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-
+	src="${context}/resources/custom_js/1.12.1_jquery-ui.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
+	
 </head>
 <body data-id="27"
 	data-roleType="${usertype}" data-userTypeID="${usertypeId}"
@@ -212,7 +214,7 @@
 
 	<!--plugins.js - Some Specific JS codes for Plugin Settings-->
 	<script
-		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/custom_js/bootstrap.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 	<%--   <script type="text/javascript" src="${context}/resources/js/materialize-plugins/date_picker/picker.date.js"></script>
     <script type="text/javascript" src="${context}/resources/js/materialize-plugins/date_picker/picker.js"></script> --%>
@@ -228,37 +230,37 @@
 	<%-- <script type="text/javascript" src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script> --%>
 	<script type="text/javascript"
 		src="${context}/resources/js/countries.js?version=<%= (int) (Math.random() * 10) %>"></script>
-	<!-- i18n library -->
+		<!-- i18n library -->
 	<script type="text/javascript"
 		src="${context}/resources/project_js/CLDRPluralRuleParser.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/i18n_library/i18n.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.messagestore.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/i18n_library/messagestore.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.fallbacks.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/i18n_library/fallbacks.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.language.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/i18n_library/language.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.parser.js?version=<%= (int) (Math.random() * 10) %>"></script>
-
-
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/i18n_library/parser.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.bidi.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/i18n_library/emitter.js?version=<%= (int) (Math.random() * 10) %>"></script>
+
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/jquery.history.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/i18n_library/bidi.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/i18n_library/history.js?version=<%= (int) (Math.random() * 10) %>"></script>
+
 	<script type="text/javascript"
+		src="${context}/resources/i18n_library/min.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		<script type="text/javascript"
 		src="${context}/resources/project_js/globalVariables.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/backbutton.js?version=<%= (int) (Math.random() * 10) %>"></script>

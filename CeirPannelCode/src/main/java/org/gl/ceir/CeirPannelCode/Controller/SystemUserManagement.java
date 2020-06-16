@@ -17,30 +17,28 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class SystemUserManagement {
-	
+
 	@Autowired
 	ProfileService profileService;
-	
-	private final Logger log = LoggerFactory.getLogger(getClass());
-	
-	@RequestMapping(value=
-		{"/usertypeManagment"},method={org.springframework.web.bind.annotation.
-				RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}
-			)
-	    public ModelAndView viewMessageManagement(HttpSession session) {
-		ModelAndView mv = new ModelAndView();
-		 log.info(" view viewUserManagement entry point."); 
-		 mv.setViewName("viewUserManagement");
-		log.info(" view viewUserManagement exit point."); 
-		return mv; 
-	}
-	
-	
 
-	@RequestMapping(value ="/updateSystemUserTypeStatus",method = RequestMethod.POST)
+	private final Logger log = LoggerFactory.getLogger(getClass());
+
+	@RequestMapping(value = { "/usertypeManagment" }, method = {
+			org.springframework.web.bind.annotation.RequestMethod.GET,
+			org.springframework.web.bind.annotation.RequestMethod.POST })
+	public ModelAndView viewMessageManagement(HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		log.info(" view viewUserManagement entry point.");
+		mv.setViewName("viewUserManagement");
+		log.info(" view viewUserManagement exit point.");
+		return mv;
+	}
+
+	@RequestMapping(value = "/updateSystemUserTypeStatus", method = RequestMethod.POST)
 	@ResponseBody
-	public  HttpResponse changeSystemUserTypeStatus(@RequestBody UserManagementContent userManagementContent,HttpSession session) {
-		return profileService.changeSystemUserStatusService(userManagementContent,session);
+	public HttpResponse changeSystemUserTypeStatus(@RequestBody UserManagementContent userManagementContent,
+			HttpSession session) {
+		return profileService.changeSystemUserStatusService(userManagementContent, session);
 
 	}
 }

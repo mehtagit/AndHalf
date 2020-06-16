@@ -12,13 +12,14 @@
         content="Materialize is a Material Design Admin Template,It's modern, responsive and based on Material Design by Google. ">
     <meta name="keywords"
         content="materialize, admin template, dashboard template, flat admin template, responsive admin template,">
-    <title>CEIR | Importer Portal</title>
+    <title>Stolen Recovery Role </title>
 
    <!-- jQuery Library -->
     <script type="text/javascript" src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
     <link href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.min.css" type="text/css" rel="stylesheet"
         media="screen,projection">
-
+<!-- Favicons-->
+<link rel="icon" href="${context}/resources/images/DMC-Logo.png" sizes="32x32">
     <!-- Favicons-->
     <!--<link rel="icon" href="images/favicon/favicon-32x32.png" sizes="32x32">-->
     <!-- Favicons-->

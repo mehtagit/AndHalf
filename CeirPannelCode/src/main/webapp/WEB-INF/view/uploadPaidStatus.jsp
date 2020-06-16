@@ -12,10 +12,7 @@
 	
 	 long accessTime = session.getLastAccessedTime();
 	 long currentTime= new Date().getTime(); 
-	 System.out.println("accessTime========"+(accessTime));
-	 System.out.println("timeout========"+timeout);
 	 long dfd= accessTime +timeout;
-	 System.out.println("currentTime========"+currentTime);
 	 if( currentTime< dfd){
 	/*  response.setHeader("Refresh", timeout + "; URL = ../login");
 	 System.out.println("timeout========"+timeout); 
@@ -48,7 +45,9 @@
 	src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
 <!--   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"></script>  
  -->
-
+	
+<!-- Favicons-->
+<link rel="icon" href="${context}/resources/images/DMC-Logo.png" sizes="32x32">
 <!-- CORE CSS-->
 <link href="${context}/resources/css/materialize.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
@@ -86,14 +85,15 @@
 	href="${context}/resources/project_css/intlTelInput.css">
 
 <link rel="stylesheet"
-	href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
-<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+	href="${context}/resources/custom_js/jquery-ui.css?version=<%= (int) (Math.random() * 10) %>">
+<script src="${context}/resources/custom_js/1.11.2_jquery-ui.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
-<script src="http://malsup.github.io/jquery.blockUI.js"></script>
-  <!------------------------------------------- Dragable Model---------------------------------->
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-
+<script src="${context}/resources/custom_js/jquery.blockUI.js?version=<%= (int) (Math.random() * 10) %>"></script>
+<!------------------------------------------- Dragable Model---------------------------------->
+<script src="${context}/resources/custom_js/1.12.1_jquery-ui.js?version=<%= (int) (Math.random() * 10) %>"></script>
+<script
+	src="${context}/resources/custom_js/1.12.1_jquery-ui.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
+	
 
 <style>
 .row {
@@ -1248,9 +1248,9 @@ position: fixed;
 		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
-	<script
-		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
-	<script type="text/javascript" src="${context}/resources/js/plugins.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		<script
+		src="${context}/resources/custom_js/bootstrap.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
+<script type="text/javascript" src="${context}/resources/js/plugins.js?version=<%= (int) (Math.random() * 10) %>"></script>
 <%-- 	<script type="text/javascript"
 		src="${context}/resources/js/Validator.js"></script> --%>
 	<script type="text/javascript"
@@ -1261,33 +1261,33 @@ position: fixed;
 	<script type="text/javascript"
 		src="${context}/resources/project_js/CLDRPluralRuleParser.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/i18n_library/i18n.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.messagestore.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/i18n_library/messagestore.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.fallbacks.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/i18n_library/fallbacks.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.language.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/i18n_library/language.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.parser.js?version=<%= (int) (Math.random() * 10) %>"></script>
-
-
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/i18n_library/parser.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.bidi.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/i18n_library/emitter.js?version=<%= (int) (Math.random() * 10) %>"></script>
+
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/jquery.history.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/i18n_library/bidi.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
-			<script type="text/javascript"
+		src="${context}/resources/i18n_library/history.js?version=<%= (int) (Math.random() * 10) %>"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/min.js?version=<%= (int) (Math.random() * 10) %>"></script>
+				<script type="text/javascript"
 		src="${context}/resources/project_js/enterKey.js?version=<%= (int) (Math.random() * 10) %>"></script>
 		
 	

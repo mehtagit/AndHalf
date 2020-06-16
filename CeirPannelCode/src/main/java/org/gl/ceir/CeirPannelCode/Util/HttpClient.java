@@ -1,4 +1,5 @@
 package org.gl.ceir.CeirPannelCode.Util;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -12,10 +13,6 @@ import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-
-
-
 
 public class HttpClient {
 
@@ -48,7 +45,7 @@ public class HttpClient {
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 		con.setRequestMethod("GET");
 
-		if(headers != null) {
+		if (headers != null) {
 			headers.forEach((k, v) -> con.setRequestProperty(k, v));
 		}
 
@@ -56,7 +53,7 @@ public class HttpClient {
 
 		httpCgResponse.setStatusCode(responseCode);
 
-		if (responseCode/100 == 2) {
+		if (responseCode / 100 == 2) {
 			BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
 			String inputLine;
 			StringBuffer response = new StringBuffer();
@@ -67,7 +64,7 @@ public class HttpClient {
 			in.close();
 
 			httpCgResponse.setResponse(response.toString());
-		}else{
+		} else {
 			BufferedReader in = new BufferedReader(new InputStreamReader(con.getErrorStream()));
 			String inputLine;
 			StringBuffer response = new StringBuffer();
@@ -76,7 +73,7 @@ public class HttpClient {
 				response.append(inputLine);
 			}
 			in.close();
-			logger.info("http CG Response: "+httpCgResponse);
+			logger.info("http CG Response: " + httpCgResponse);
 			httpCgResponse.setResponse(response.toString());
 		}
 
@@ -89,26 +86,26 @@ public class HttpClient {
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 		con.setRequestMethod("HEAD");
 
-		if(headers != null) {
+		if (headers != null) {
 			headers.forEach((k, v) -> con.setRequestProperty(k, v));
 		}
 
 		int responseCode = con.getResponseCode();
 		httpResponse.setStatusCode(responseCode);
-		
+
 		// Set Headers which came back in response.
-		if(responseHeadersName.size() > 0) {
+		if (responseHeadersName.size() > 0) {
 			Map<String, String> responseHeaderMap = new HashMap<>();
-			
-			for(String responseHeader : responseHeadersName) {
+
+			for (String responseHeader : responseHeadersName) {
 				responseHeaderMap.put(responseHeader, con.getHeaderField(responseHeader));
 			}
-			
-		//	httpResponse.setResponse(responseHeaderMap);
+
+			// httpResponse.setResponse(responseHeaderMap);
 		}
 
 		// Check response.
-		if (responseCode/100 == 2) {
+		if (responseCode / 100 == 2) {
 
 			BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
 			String inputLine;
@@ -120,8 +117,8 @@ public class HttpClient {
 			in.close();
 
 			httpResponse.setResponse(response.toString());
-		}else{
-			
+		} else {
+
 			BufferedReader in = new BufferedReader(new InputStreamReader(con.getErrorStream()));
 			String inputLine;
 			StringBuffer response = new StringBuffer();
@@ -145,7 +142,7 @@ public class HttpClient {
 		con.setRequestProperty("Accept", "application/json");
 		con.setRequestProperty("Content-type", "application/json");
 
-		if(headers != null) {
+		if (headers != null) {
 			headers.forEach((k, v) -> con.setRequestProperty(k, v));
 		}
 
@@ -160,7 +157,7 @@ public class HttpClient {
 		int responseCode = con.getResponseCode();
 		System.out.println("POST Response Code :: " + responseCode);
 		httpCustomResponse.setStatusCode(responseCode);
-		if (responseCode == 200) { //success
+		if (responseCode == 200) { // success
 
 			BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
 			String inputLine;
@@ -188,7 +185,6 @@ public class HttpClient {
 		return httpCustomResponse;
 	}
 
-
 	public String sendDelete(String url, String body) throws IOException {
 		URL obj = new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -196,14 +192,14 @@ public class HttpClient {
 		con.setRequestProperty("Accept", "application/json");
 		con.setRequestProperty("Content-type", "application/json");
 
-		if(headers != null) {
+		if (headers != null) {
 			headers.forEach((k, v) -> con.setRequestProperty(k, v));
 		}
 
 		int responseCode = con.getResponseCode();
 		System.out.println("DELETE Response Code :: " + responseCode);
 
-		if (responseCode == HttpURLConnection.HTTP_OK) { //success
+		if (responseCode == HttpURLConnection.HTTP_OK) { // success
 
 			BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
 			String inputLine;
@@ -230,7 +226,7 @@ public class HttpClient {
 		con.setRequestProperty("Accept", "application/json");
 		con.setRequestProperty("Content-type", "application/json");
 
-		if(headers != null) {
+		if (headers != null) {
 			headers.forEach((k, v) -> con.setRequestProperty(k, v));
 		}
 
@@ -243,7 +239,7 @@ public class HttpClient {
 
 		int responseCode = con.getResponseCode();
 
-		if (responseCode == HttpURLConnection.HTTP_OK) { //success
+		if (responseCode == HttpURLConnection.HTTP_OK) { // success
 
 			BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
 			String inputLine;

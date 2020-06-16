@@ -23,62 +23,56 @@ import com.google.gson.Gson;
 
 @Controller
 public class SystemConfigController {
-	
+
 	private final Logger log = LoggerFactory.getLogger(getClass());
-	
+
 	@Autowired
 	FeignCleintImplementation feignCleintImplementation;
-	
-	@RequestMapping(value=
-		{"/systempConfigManagement"},method={org.springframework.web.bind.annotation.
-				RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}
-			)
-	    public ModelAndView viewConfigManagement(HttpSession session) {
+
+	@RequestMapping(value = { "/systempConfigManagement" }, method = {
+			org.springframework.web.bind.annotation.RequestMethod.GET,
+			org.springframework.web.bind.annotation.RequestMethod.POST })
+	public ModelAndView viewConfigManagement(HttpSession session) {
 		ModelAndView mv = new ModelAndView();
-		 log.info(" view ConfigManagement entry point."); 
-		 mv.setViewName("viewConfigManagement");
-		log.info(" view ConfigManagement exit point."); 
-		return mv; 
+		log.info(" view ConfigManagement entry point.");
+		mv.setViewName("viewConfigManagement");
+		log.info(" view ConfigManagement exit point.");
+		return mv;
 	}
-	
-	
-	@PostMapping("/system/viewTag") 
-	public @ResponseBody ConfigContentModel SystemConfigViewTag (@RequestBody FilterRequest filterRequest)  {
-		log.info("request send to the SystemConfigViewTag api="+filterRequest);
-		ConfigContentModel response= feignCleintImplementation.viewAdminFeign(filterRequest);
-		log.info("response from currency api "+response);
+
+	@PostMapping("/system/viewTag")
+	public @ResponseBody ConfigContentModel SystemConfigViewTag(@RequestBody FilterRequest filterRequest) {
+		log.info("request send to the SystemConfigViewTag api=" + filterRequest);
+		ConfigContentModel response = feignCleintImplementation.viewAdminFeign(filterRequest);
+		log.info("response from currency api " + response);
 		return response;
 	}
-	
-	
+
 	@PutMapping("/system/update")
-	public @ResponseBody ConfigContentModel updateSystem (@RequestBody ConfigContentModel configContentModel) {
-		log.info("request send update Messsage api="+configContentModel);
+	public @ResponseBody ConfigContentModel updateSystem(@RequestBody ConfigContentModel configContentModel) {
+		log.info("request send update Messsage api=" + configContentModel);
 		configContentModel = feignCleintImplementation.updateSystem(configContentModel);
-		log.info("response from update Message api "+configContentModel);
+		log.info("response from update Message api " + configContentModel);
 		return configContentModel;
-		
+
 	}
-	
-	
-	
-	
+
 	@PostMapping("exportSystemConfigData")
 	@ResponseBody
-	public FileExportResponse exportToExcel(@RequestBody FilterRequest filterRequest,HttpSession session)
-	{
-		Gson gsonObject=new Gson();
+	public FileExportResponse exportToExcel(@RequestBody FilterRequest filterRequest, HttpSession session) {
+		Gson gsonObject = new Gson();
 		Object response;
-		Integer file = 1;	
-		log.info("filterRequest:::::::::"+filterRequest);
-		response= feignCleintImplementation.adminConfigFeign(filterRequest, filterRequest.getPageNo(), filterRequest.getPageSize(), file);
+		Integer file = 1;
+		log.info("filterRequest:::::::::" + filterRequest);
+		response = feignCleintImplementation.adminConfigFeign(filterRequest, filterRequest.getPageNo(),
+				filterRequest.getPageSize(), file);
 		FileExportResponse fileExportResponse;
-		Gson gson= new Gson(); 
+		Gson gson = new Gson();
 		String apiResponse = gson.toJson(response);
 		fileExportResponse = gson.fromJson(apiResponse, FileExportResponse.class);
-		log.info("response from system Management Export  api="+fileExportResponse);
+		log.info("response from system Management Export  api=" + fileExportResponse);
 
 		return fileExportResponse;
-	}		
-	
+	}
+
 }

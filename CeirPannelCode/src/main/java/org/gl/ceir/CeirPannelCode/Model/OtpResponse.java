@@ -2,12 +2,11 @@ package org.gl.ceir.CeirPannelCode.Model;
 
 import org.gl.ceir.CeirPannelCode.Util.HttpResponse;
 
-public class OtpResponse {  
+public class OtpResponse {
 	private String response;
 	private Integer statusCode;
 	private Integer userId;
 	private String tag;
-	
 
 	public Integer getUserId() {
 		return userId;
@@ -33,7 +32,6 @@ public class OtpResponse {
 		this.statusCode = statusCode;
 	}
 
-	
 	public String getTag() {
 		return tag;
 	}
@@ -47,8 +45,4 @@ public class OtpResponse {
 		return "OtpResponse [response=" + response + ", statusCode=" + statusCode + ", userId=" + userId + "]";
 	}
 
-
 }
-
-    
-

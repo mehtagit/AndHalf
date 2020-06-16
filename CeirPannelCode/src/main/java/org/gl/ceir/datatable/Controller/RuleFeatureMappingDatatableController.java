@@ -63,74 +63,75 @@ public class RuleFeatureMappingDatatableController {
 	DatatableResponseModel datatableResponseModel;
 	@Autowired
 	RuleFeatureMappingPagination ruleFeatureMappingPagination;
-	@PostMapping("ruleFeatureMappingListData")
-	public ResponseEntity<?> getData(@RequestParam(name="type",required = false) String role, HttpServletRequest request,HttpSession session) {
 
-		//String userType = (String) session.getAttribute("usertype");
-		//int userId=	(int) session.getAttribute("userid");
-		int file=0;
+	@PostMapping("ruleFeatureMappingListData")
+	public ResponseEntity<?> getData(@RequestParam(name = "type", required = false) String role,
+			HttpServletRequest request, HttpSession session) {
+
+		// String userType = (String) session.getAttribute("usertype");
+		// int userId= (int) session.getAttribute("userid");
+		int file = 0;
 		// Data set on this List
-		List<List<Object>> finalList=new ArrayList<List<Object>>();
+		List<List<Object>> finalList = new ArrayList<List<Object>>();
 		String filter = request.getParameter("filter");
-		Gson gsonObject=new Gson();
+		Gson gsonObject = new Gson();
 		FilterRequest filterRequest = gsonObject.fromJson(filter, FilterRequest.class);
 		Integer pageSize = Integer.parseInt(request.getParameter("length"));
-		Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize ;
+		Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize;
 		filterRequest.setSearchString(request.getParameter("search[value]"));
-		log.info("pageSize"+pageSize+"-----------pageNo---"+pageNo);
+		log.info("pageSize" + pageSize + "-----------pageNo---" + pageNo);
 		try {
-			log.info("request send to the filter api ="+filterRequest);
-			Object response = feignCleintImplementation.ruleFeatureMappingListFeign(filterRequest, pageNo, pageSize, file);
-			log.info("response in datatable"+response);
-			Gson gson= new Gson(); 
+			log.info("request send to the filter api =" + filterRequest);
+			Object response = feignCleintImplementation.ruleFeatureMappingListFeign(filterRequest, pageNo, pageSize,
+					file);
+			log.info("response in datatable" + response);
+			Gson gson = new Gson();
 			String apiResponse = gson.toJson(response);
 			ruleFeatureMappingPagination = gson.fromJson(apiResponse, RuleFeatureMappingPagination.class);
 			List<RuleFeatureMappingContent> ruleFeatureMappingContent = ruleFeatureMappingPagination.getContent();
-			if(ruleFeatureMappingContent.isEmpty()) {
+			if (ruleFeatureMappingContent.isEmpty()) {
 				datatableResponseModel.setData(Collections.emptyList());
-			}
-			else {
-				for(RuleFeatureMappingContent dataInsideList : ruleFeatureMappingContent) 
-				{
-					String id =  String.valueOf(dataInsideList.getId());	
+			} else {
+				for (RuleFeatureMappingContent dataInsideList : ruleFeatureMappingContent) {
+					String id = String.valueOf(dataInsideList.getId());
 					String createdOn = dataInsideList.getCreatedOn();
 					String modifiedOn = dataInsideList.getModifiedOn();
 					String name = dataInsideList.getName();
 					String feature = dataInsideList.getFeature();
-					String user=dataInsideList.getUserType();
-					Integer ruleOrder=dataInsideList.getRuleOrder();
-					String gracePeriod=dataInsideList.getGraceAction();
-					String postGracePeriod=dataInsideList.getPostGraceAction();
-					String moveToGrace=dataInsideList.getFailedRuleActionGrace();
-					String moveToPostGrace=dataInsideList.getFailedRuleActionPostGrace();
-					String output=dataInsideList.getOutput( )== null ?  null : dataInsideList.getOutput().equals("Y") ? "Yes" : "No";
+					String user = dataInsideList.getUserType();
+					Integer ruleOrder = dataInsideList.getRuleOrder();
+					String gracePeriod = dataInsideList.getGraceAction();
+					String postGracePeriod = dataInsideList.getPostGraceAction();
+					String moveToGrace = dataInsideList.getFailedRuleActionGrace();
+					String moveToPostGrace = dataInsideList.getFailedRuleActionPostGrace();
 					
-					//log.info("Id-->"+Id+"--userStatus--->"+userStatus+"--StatusName---->"+StatusName+"--createdOn---->"+createdOn+"--id--->"+id+"--userName-->"+username);
-					String action=iconState.ruleFeatureMappingIcons(id);			   
-					Object[] finalData={createdOn,modifiedOn,name,feature,user,ruleOrder,gracePeriod,postGracePeriod,moveToGrace,moveToPostGrace,output,action}; 
-					List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
+					String output=dataInsideList.getOutput( )== null ? null : (dataInsideList.getOutput().equals("Y") || dataInsideList.getOutput().equals("Yes")) ? "Yes" : "No";
+					// log.info("Id-->"+Id+"--userStatus--->"+userStatus+"--StatusName---->"+StatusName+"--createdOn---->"+createdOn+"--id--->"+id+"--userName-->"+username);
+					String action = iconState.ruleFeatureMappingIcons(id);
+					Object[] finalData = { createdOn, modifiedOn, name, feature, user, ruleOrder, gracePeriod,
+							postGracePeriod, moveToGrace, moveToPostGrace, output, action };
+					List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
 					finalList.add(finalDataList);
-					datatableResponseModel.setData(finalList);	
+					datatableResponseModel.setData(finalList);
 
 				}
 			}
-			//data set on ModelClass
+			// data set on ModelClass
 			datatableResponseModel.setRecordsTotal(ruleFeatureMappingPagination.getNumberOfElements());
 			datatableResponseModel.setRecordsFiltered(ruleFeatureMappingPagination.getTotalElements());
-			return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK); 
-		}catch(Exception e) {
+			return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK);
+		} catch (Exception e) {
 			datatableResponseModel.setRecordsTotal(null);
 			datatableResponseModel.setRecordsFiltered(null);
 			datatableResponseModel.setData(Collections.emptyList());
-			log.error(e.getMessage(),e);
-			return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK); 
+			log.error(e.getMessage(), e);
+			return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK);
 		}
 
 	}
 
-
 	@PostMapping("ruleFeatureMapping/pageRendering")
-	public ResponseEntity<?> pageRendering(HttpSession session){
+	public ResponseEntity<?> pageRendering(HttpSession session) {
 
 		String userType = (String) session.getAttribute("usertype");
 		String userStatus = (String) session.getAttribute("userStatus");
@@ -145,8 +146,9 @@ public class RuleFeatureMappingDatatableController {
 		List<InputFields> inputTypeDateList = new ArrayList<>();
 
 		String[] names = { "HeaderButton", Translator.toLocale("button.add"), "./add_ruleFeatureMav", "btnLink",
-				"FilterButton", Translator.toLocale("button.filter"),"filter(" + ConfigParameters.languageParam + ")", "submitFilter" };
-		for(int i=0; i< names.length ; i++) {
+				"FilterButton", Translator.toLocale("button.filter"), "filter(" + ConfigParameters.languageParam + ")",
+				"submitFilter" };
+		for (int i = 0; i < names.length; i++) {
 			button = new Button();
 			button.setType(names[i]);
 			i++;
@@ -156,28 +158,26 @@ public class RuleFeatureMappingDatatableController {
 			i++;
 			button.setId(names[i]);
 			buttonList.add(button);
-		}			
+		}
 		pageElement.setButtonList(buttonList);
 
+		// Dropdown items
 
-		//Dropdown items 
-
-		String[] selectParam= {"select",Translator.toLocale("table.ruleName"),"Rule Name","",
-				"select",Translator.toLocale("table.featureName"),"Feature Name","",
-				"select",Translator.toLocale("table.userType"),"User Type",""};
-		for(int i=0; i<selectParam.length; i++) { 
-			inputFields= new InputFields();
-			inputFields.setType(selectParam[i]); 
+		String[] selectParam = { "select", Translator.toLocale("table.ruleName"), "Rule Name", "", "select",
+				Translator.toLocale("table.featureName"), "Feature Name", "", "select",
+				Translator.toLocale("table.userType"), "User Type", "" };
+		for (int i = 0; i < selectParam.length; i++) {
+			inputFields = new InputFields();
+			inputFields.setType(selectParam[i]);
 			i++;
 			inputFields.setTitle(selectParam[i]);
-			i++; 
+			i++;
 			inputFields.setId(selectParam[i]);
-			i++; 
+			i++;
 			inputFields.setClassName(selectParam[i]);
 			dropdownList.add(inputFields);
-		} 
+		}
 		pageElement.setDropdownList(dropdownList);
-
 
 		/*
 		 * //input type date list String[] dateParam=
@@ -193,58 +193,53 @@ public class RuleFeatureMappingDatatableController {
 
 		pageElement.setInputTypeDateList(inputTypeDateList);
 		pageElement.setUserStatus(userStatus);
-		return new ResponseEntity<>(pageElement, HttpStatus.OK); 
-
+		return new ResponseEntity<>(pageElement, HttpStatus.OK);
 
 	}
 
+	// ************************************************ update consignment record
+	// page********************************************************************************/
 
-	//************************************************ update consignment record page********************************************************************************/
-
-	@RequestMapping(value= {"/save"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}) 
-	public NewRule saveRecord(@RequestBody NewRule newRule) 
-	{
-		log.info("request::::::"+newRule);
-		//RuleListContent ruleList = new RuleListContent();
+	@RequestMapping(value = { "/save" }, method = { org.springframework.web.bind.annotation.RequestMethod.GET,
+			org.springframework.web.bind.annotation.RequestMethod.POST })
+	public NewRule saveRecord(@RequestBody NewRule newRule) {
+		log.info("request::::::" + newRule);
+		// RuleListContent ruleList = new RuleListContent();
 		NewRule response = feignCleintImplementation.save(newRule);
-		log.info(" response::::::"+response);
+		log.info(" response::::::" + response);
 		return response;
 
 	}
 
+	// ************************************************ update Rule Feature Mapping
+	// record
+	// page********************************************************************************/
 
-	//************************************************ update Rule Feature Mapping record page********************************************************************************/
-
-	@PostMapping("/updateRuleMapping") 
-	public @ResponseBody GenricResponse updateRecord(@RequestBody NewRule newRule) 
-	{
-		log.info("request::::::"+newRule);
+	@PostMapping("/updateRuleMapping")
+	public @ResponseBody GenricResponse updateRecord(@RequestBody NewRule newRule) {
+		log.info("request::::::" + newRule);
 		GenricResponse response = feignCleintImplementation.updateRuleFeatureMapping(newRule);
-		log.info(" response from update Consignment api="+response);
+		log.info(" response from update Consignment api=" + response);
 		return response;
 
 	}
 
-	
-	
 	@GetMapping("ruleName")
-	public ResponseEntity<?> getRuleNames(){
+	public ResponseEntity<?> getRuleNames() {
 		List<RuleNameModel> list = feignCleintImplementation.getList();
-		return new ResponseEntity<>(list, HttpStatus.OK); 
+		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
-	
-	
+
 	@GetMapping("getBy/{id}")
-	public ResponseEntity<?> getByIDRule(@PathVariable("id") Integer id){
-		NewRule newRule= feignCleintImplementation.getObjectByID(id);
-		return new ResponseEntity<>(newRule, HttpStatus.OK); 
+	public ResponseEntity<?> getByIDRule(@PathVariable("id") Integer id) {
+		NewRule newRule = feignCleintImplementation.getObjectByID(id);
+		return new ResponseEntity<>(newRule, HttpStatus.OK);
 	}
-	
+
 	@PostMapping("deleteRuleMapping")
 	public @ResponseBody GenricResponse delete(@RequestBody NewRule newRule) {
-		GenricResponse response=feignCleintImplementation.delete(newRule);
+		GenricResponse response = feignCleintImplementation.delete(newRule);
 		return response;
 
-		}
+	}
 }
-

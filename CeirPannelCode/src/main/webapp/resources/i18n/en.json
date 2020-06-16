@@ -199,5 +199,7 @@
 	"Role_Del_Not_Found" :  "No Roles found to delete",
 	"Add_Role_Not_Allowed" : "Add Role feature for this usertype is not available",
 	"Del_Role_Not_Allowed" : "Delete Role feature for this usertype is not available",
-	"Invalid_Action" : "Action is invalid"	
+	"Invalid_Action" : "Action is invalid",
+	"End User Pending Device Count" : "End User Pending Device Count",
+	"End User Pending Device Quantity":"End User Pending Device Quantity"
 }

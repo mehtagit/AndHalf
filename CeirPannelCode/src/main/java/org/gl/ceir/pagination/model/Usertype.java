@@ -3,8 +3,8 @@ package org.gl.ceir.pagination.model;
 import org.springframework.stereotype.Component;
 
 @Component
-public class Usertype  {
-	
+public class Usertype {
+
 	private Integer id;
 	private String usertypeName;
 	private String createdOn;
@@ -13,54 +13,71 @@ public class Usertype  {
 	private String statusInterp;
 	private Integer selfRegister;
 	private RegistrationHandler hibernateLazyInitializer;
+
 	public Integer getId() {
 		return id;
 	}
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
 	public String getUsertypeName() {
 		return usertypeName;
 	}
+
 	public void setUsertypeName(String usertypeName) {
 		this.usertypeName = usertypeName;
 	}
+
 	public String getCreatedOn() {
 		return createdOn;
 	}
+
 	public void setCreatedOn(String createdOn) {
 		this.createdOn = createdOn;
 	}
+
 	public String getModifiedOn() {
 		return modifiedOn;
 	}
+
 	public void setModifiedOn(String modifiedOn) {
 		this.modifiedOn = modifiedOn;
 	}
+
 	public Integer getStatus() {
 		return status;
 	}
+
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
+
 	public String getStatusInterp() {
 		return statusInterp;
 	}
+
 	public void setStatusInterp(String statusInterp) {
 		this.statusInterp = statusInterp;
 	}
+
 	public Integer getSelfRegister() {
 		return selfRegister;
 	}
+
 	public void setSelfRegister(Integer selfRegister) {
 		this.selfRegister = selfRegister;
 	}
+
 	public RegistrationHandler getHibernateLazyInitializer() {
 		return hibernateLazyInitializer;
 	}
+
 	public void setHibernateLazyInitializer(RegistrationHandler hibernateLazyInitializer) {
 		this.hibernateLazyInitializer = hibernateLazyInitializer;
 	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -83,5 +100,5 @@ public class Usertype  {
 		builder.append("]");
 		return builder.toString();
 	}
-	
+
 }

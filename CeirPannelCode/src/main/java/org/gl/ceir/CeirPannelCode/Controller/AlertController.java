@@ -23,64 +23,59 @@ import com.google.gson.Gson;
 public class AlertController {
 	@Autowired
 	UserProfileFeignImpl userProfileFeignImpl;
-		
-private final Logger log = LoggerFactory.getLogger(getClass());
-	
-	@RequestMapping(value=
-		{"/alertManagment"},method={org.springframework.web.bind.annotation.
-				RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}
-			)
-	    public ModelAndView viewMessageManagement(HttpSession session) {
+
+	private final Logger log = LoggerFactory.getLogger(getClass());
+
+	@RequestMapping(value = { "/alertManagment" }, method = { org.springframework.web.bind.annotation.RequestMethod.GET,
+			org.springframework.web.bind.annotation.RequestMethod.POST })
+	public ModelAndView viewMessageManagement(HttpSession session) {
 		ModelAndView mv = new ModelAndView();
-		 log.info(" view Alert Management entry point."); 
-		 mv.setViewName("alertManagement");
-		log.info(" view Alert Management exit point."); 
-		return mv; 
+		log.info(" view Alert Management entry point.");
+		mv.setViewName("alertManagement");
+		log.info(" view Alert Management exit point.");
+		return mv;
 	}
-	
-	
-	
-	//------------------------------------- view Alert Address ----------------------------------------							
-	
-			@PostMapping("alertViewByID") 
-			public @ResponseBody GenricResponse viewAlertAddress (@RequestBody FilterRequest filterRequest)  {
-				log.info("request send to the View Alert api="+filterRequest);
-				GenricResponse response= userProfileFeignImpl.viewAlertFeign(filterRequest);
-				log.info("response from View api "+response);
-				return response;
-		}
-			
-			
-	//------------------------------------- update alert ----------------------------------------							
-			
-			@PostMapping("updateAlert") 
-			public @ResponseBody GenricResponse updateAlerts (@RequestBody FilterRequest filterRequest)  {
-				log.info("request send to the Update Alert api="+filterRequest);
-				GenricResponse response= userProfileFeignImpl.updateAlertFeign(filterRequest);
-				log.info("response from update api "+response);
-				return response;
-		}	
-				
-			
-	
-	//***************************************** Export Alert  controller *********************************
+
+	// ------------------------------------- view Alert Address
+	// ----------------------------------------
+
+	@PostMapping("alertViewByID")
+	public @ResponseBody GenricResponse viewAlertAddress(@RequestBody FilterRequest filterRequest) {
+		log.info("request send to the View Alert api=" + filterRequest);
+		GenricResponse response = userProfileFeignImpl.viewAlertFeign(filterRequest);
+		log.info("response from View api " + response);
+		return response;
+	}
+
+	// ------------------------------------- update alert
+	// ----------------------------------------
+
+	@PostMapping("updateAlert")
+	public @ResponseBody GenricResponse updateAlerts(@RequestBody FilterRequest filterRequest) {
+		log.info("request send to the Update Alert api=" + filterRequest);
+		GenricResponse response = userProfileFeignImpl.updateAlertFeign(filterRequest);
+		log.info("response from update api " + response);
+		return response;
+	}
+
+	// ***************************************** Export Alert controller
+	// *********************************
 	@PostMapping("exportAlertData")
 	@ResponseBody
-	public FileExportResponse exportToExcel(@RequestBody FilterRequest filterRequest,HttpSession session)
-	{
-		Gson gsonObject=new Gson();
+	public FileExportResponse exportToExcel(@RequestBody FilterRequest filterRequest, HttpSession session) {
+		Gson gsonObject = new Gson();
 		Object response;
-		Integer file = 1;	
-		log.info("filterRequest:::::::::"+filterRequest);
-	response= userProfileFeignImpl.viewAlertRequest(filterRequest, filterRequest.getPageNo(), filterRequest.getPageSize(), file);
-	FileExportResponse fileExportResponse;
-	   Gson gson= new Gson(); 
-	   String apiResponse = gson.toJson(response);
-	   fileExportResponse = gson.fromJson(apiResponse, FileExportResponse.class);
-	   log.info("response  from  Alert Export  api="+fileExportResponse);
-		
+		Integer file = 1;
+		log.info("filterRequest:::::::::" + filterRequest);
+		response = userProfileFeignImpl.viewAlertRequest(filterRequest, filterRequest.getPageNo(),
+				filterRequest.getPageSize(), file);
+		FileExportResponse fileExportResponse;
+		Gson gson = new Gson();
+		String apiResponse = gson.toJson(response);
+		fileExportResponse = gson.fromJson(apiResponse, FileExportResponse.class);
+		log.info("response  from  Alert Export  api=" + fileExportResponse);
+
 		return fileExportResponse;
 	}
-	
-	
+
 }

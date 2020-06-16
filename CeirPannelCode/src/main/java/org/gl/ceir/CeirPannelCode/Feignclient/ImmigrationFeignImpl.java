@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Service
-@FeignClient(url = "${feignClientPath}",value = "dsj" )
+@FeignClient(url = "${feignClientPath}", value = "dsj")
 public interface ImmigrationFeignImpl {
 	@PutMapping("/end-user")
 	public @ResponseBody GenricResponse RegisterEndUserDevice(EndUserVisaInfo visaInfo);
-	
+
 }

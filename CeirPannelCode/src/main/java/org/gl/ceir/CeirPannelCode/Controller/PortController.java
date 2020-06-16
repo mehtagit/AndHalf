@@ -20,69 +20,63 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class PortController {
-	
+
 	@Autowired
 	UserProfileFeignImpl userProfileFeignImpl;
-	
+
 	private final Logger log = LoggerFactory.getLogger(getClass());
-	
-	@RequestMapping(value=
-		{"/portManagement"},method={org.springframework.web.bind.annotation.
-				RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}
-			)
-	    public ModelAndView viewMessageManagement(HttpSession session) {
+
+	@RequestMapping(value = { "/portManagement" }, method = { org.springframework.web.bind.annotation.RequestMethod.GET,
+			org.springframework.web.bind.annotation.RequestMethod.POST })
+	public ModelAndView viewMessageManagement(HttpSession session) {
 		ModelAndView mv = new ModelAndView();
-		 log.info(" view port Management entry point."); 
-		 mv.setViewName("viewPortManagement");
-		log.info(" view port Management exit point."); 
-		return mv; 
+		log.info(" view port Management entry point.");
+		mv.setViewName("viewPortManagement");
+		log.info(" view port Management exit point.");
+		return mv;
 	}
-	
-	
+
 	/*------------------------------------- Add Port ------------------------------------------ */
 
-	    @PostMapping("add-Port") 
-	    public @ResponseBody GenricResponse AddPortAddress (@RequestBody FilterRequest filterRequest)  {
-		   log.info("request send to the add Port api="+filterRequest);
-	 	   GenricResponse response= userProfileFeignImpl.AddPortAddressFeign(filterRequest);
-		   log.info("response from add Port api "+response);
-		   return response;
+	@PostMapping("add-Port")
+	public @ResponseBody GenricResponse AddPortAddress(@RequestBody FilterRequest filterRequest) {
+		log.info("request send to the add Port api=" + filterRequest);
+		GenricResponse response = userProfileFeignImpl.AddPortAddressFeign(filterRequest);
+		log.info("response from add Port api " + response);
+		return response;
 	}
-	
-	
-	//------------------------------------- view Port Address ----------------------------------------							
-	
-		@PostMapping("portViewByID") 
-		public @ResponseBody GenricResponse viewPortAddress (@RequestBody FilterRequest filterRequest)  {
-			log.info("request send to the View Port api="+filterRequest);
-			GenricResponse response= userProfileFeignImpl.viewPortFeign(filterRequest);
-			log.info("response from add View api "+response);
-			return response;
+
+	// ------------------------------------- view Port Address
+	// ----------------------------------------
+
+	@PostMapping("portViewByID")
+	public @ResponseBody GenricResponse viewPortAddress(@RequestBody FilterRequest filterRequest) {
+		log.info("request send to the View Port api=" + filterRequest);
+		GenricResponse response = userProfileFeignImpl.viewPortFeign(filterRequest);
+		log.info("response from add View api " + response);
+		return response;
 	}
-		
-		
-	//------------------------------------- update Port Address ----------------------------------------							
-		
-		@PostMapping("updatePortAddress") 
-		public @ResponseBody GenricResponse updatePortAddress (@RequestBody FilterRequest filterRequest)  {
-			log.info("request send to the Update Port api="+filterRequest);
-			GenricResponse response= userProfileFeignImpl.updatePortAddressFeign(filterRequest);
-			log.info("response from update api "+response);
-			return response;
-	}	
-	
-	
-	//------------------------------------- delete Port Address ----------------------------------------	
-	
-		@PostMapping ("deletePort")
-		public @ResponseBody GenricResponse deletePortAddress(@RequestBody FilterRequest filterRequest) {
-			log.info("request send to the Delete PORT api="+filterRequest);
-			GenricResponse response= userProfileFeignImpl.deletePortFeign(filterRequest);
-			log.info("response after delete PORT."+response);
-			return response;
+
+	// ------------------------------------- update Port Address
+	// ----------------------------------------
+
+	@PostMapping("updatePortAddress")
+	public @ResponseBody GenricResponse updatePortAddress(@RequestBody FilterRequest filterRequest) {
+		log.info("request send to the Update Port api=" + filterRequest);
+		GenricResponse response = userProfileFeignImpl.updatePortAddressFeign(filterRequest);
+		log.info("response from update api " + response);
+		return response;
+	}
+
+	// ------------------------------------- delete Port Address
+	// ----------------------------------------
+
+	@PostMapping("deletePort")
+	public @ResponseBody GenricResponse deletePortAddress(@RequestBody FilterRequest filterRequest) {
+		log.info("request send to the Delete PORT api=" + filterRequest);
+		GenricResponse response = userProfileFeignImpl.deletePortFeign(filterRequest);
+		log.info("response after delete PORT." + response);
+		return response;
 
 	}
 }
-
-
-

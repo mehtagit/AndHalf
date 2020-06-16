@@ -20,72 +20,95 @@ public class UserFeaturePagination {
 	private Integer size;
 	private Integer number;
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+
 	public List<UserfeatureContent> getContent() {
 		return content;
 	}
+
 	public void setContent(List<UserfeatureContent> content) {
 		this.content = content;
 	}
+
 	public Pageable getPageable() {
 		return pageable;
 	}
+
 	public void setPageable(Pageable pageable) {
 		this.pageable = pageable;
 	}
+
 	public Boolean getLast() {
 		return last;
 	}
+
 	public void setLast(Boolean last) {
 		this.last = last;
 	}
+
 	public Integer getTotalPages() {
 		return totalPages;
 	}
+
 	public void setTotalPages(Integer totalPages) {
 		this.totalPages = totalPages;
 	}
+
 	public Integer getTotalElements() {
 		return totalElements;
 	}
+
 	public void setTotalElements(Integer totalElements) {
 		this.totalElements = totalElements;
 	}
+
 	public Boolean getFirst() {
 		return first;
 	}
+
 	public void setFirst(Boolean first) {
 		this.first = first;
 	}
+
 	public Sort getSort() {
 		return sort;
 	}
+
 	public void setSort(Sort sort) {
 		this.sort = sort;
 	}
+
 	public Integer getNumberOfElements() {
 		return numberOfElements;
 	}
+
 	public void setNumberOfElements(Integer numberOfElements) {
 		this.numberOfElements = numberOfElements;
 	}
+
 	public Integer getSize() {
 		return size;
 	}
+
 	public void setSize(Integer size) {
 		this.size = size;
 	}
+
 	public Integer getNumber() {
 		return number;
 	}
+
 	public void setNumber(Integer number) {
 		this.number = number;
 	}
+
 	public Map<String, Object> getAdditionalProperties() {
 		return additionalProperties;
 	}
+
 	public void setAdditionalProperties(Map<String, Object> additionalProperties) {
 		this.additionalProperties = additionalProperties;
 	}
+
 	@Override
 	public String toString() {
 		return "UserFeaturePagination [content=" + content + ", pageable=" + pageable + ", last=" + last
@@ -93,6 +116,5 @@ public class UserFeaturePagination {
 				+ sort + ", numberOfElements=" + numberOfElements + ", size=" + size + ", number=" + number
 				+ ", additionalProperties=" + additionalProperties + "]";
 	}
-	
-	
+
 }

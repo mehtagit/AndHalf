@@ -16,32 +16,27 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-
 @Service
-@FeignClient(url="${gsmaFeignClientPath}",value = "profileUrls")
+@FeignClient(url = "${gsmaFeignClientPath}", value = "profileUrls")
 public interface GsmaFeignClient {
 
-	//View all product Name feign controller
-		
-		@RequestMapping(value="/gsma/brandName" ,method=RequestMethod.GET) 
-		public List<Dropdown> viewAllProductList();
-		
-		
+	// View all product Name feign controller
 
-		@RequestMapping(value="/gsma/modelName" ,method=RequestMethod.GET) 
-		public List<Dropdown> viewAllmodel(@RequestParam(name="brand_id") Integer brand_id);
-		
-		
-	//--------------------------------- Gsma Details ---------------------------------
-		
-		@PostMapping("/gsma/GsmaValues")	
-		public @ResponseBody GsmaDetail viewGsmaFeign(@RequestParam(name = "msisdn", required = false) String msisdn,
-				@RequestParam(name = "imei", required = false) String imei,
-				@RequestParam(name = "identifierType", required = false) String identifierType);
-	
-	
-		
-		@RequestMapping(value="/Rule/DistinctName" ,method=RequestMethod.GET) 
-		public List<String> getFeatureName();
-		
+	@RequestMapping(value = "/gsma/brandName", method = RequestMethod.GET)
+	public List<Dropdown> viewAllProductList();
+
+	@RequestMapping(value = "/gsma/modelName", method = RequestMethod.GET)
+	public List<Dropdown> viewAllmodel(@RequestParam(name = "brand_id") Integer brand_id);
+
+	// --------------------------------- Gsma Details
+	// ---------------------------------
+
+	@PostMapping("/gsma/GsmaValues")
+	public @ResponseBody GsmaDetail viewGsmaFeign(@RequestParam(name = "msisdn", required = false) String msisdn,
+			@RequestParam(name = "imei", required = false) String imei,
+			@RequestParam(name = "identifierType", required = false) String identifierType);
+
+	@RequestMapping(value = "/Rule/DistinctName", method = RequestMethod.GET)
+	public List<String> getFeatureName();
+
 }

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Service
-@FeignClient(url="${apiUrl1}/portAddress",value = "portUrls")
+@FeignClient(url = "${apiUrl1}/portAddress", value = "portUrls")
 public interface PortAddressFeign {
 
 	@PostMapping("/getByPort/{arrivalPort}")

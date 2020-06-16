@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.stereotype.Component;
+
 @Component
 public class RegistrationUser {
 	private Integer id;
@@ -18,78 +19,103 @@ public class RegistrationUser {
 	private RegistrationUserType usertype;
 	private RegistrationHandler hibernateLazyInitializer;
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+
 	public Integer getId() {
 		return id;
 	}
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
 	public String getUsername() {
 		return username;
 	}
+
 	public void setUsername(String username) {
 		this.username = username;
 	}
+
 	public String getCreatedOn() {
 		return createdOn;
 	}
+
 	public void setCreatedOn(String createdOn) {
 		this.createdOn = createdOn;
 	}
+
 	public String getModifiedOn() {
 		return modifiedOn;
 	}
+
 	public void setModifiedOn(String modifiedOn) {
 		this.modifiedOn = modifiedOn;
 	}
+
 	public Integer getCurrentStatus() {
 		return currentStatus;
 	}
+
 	public void setCurrentStatus(Integer currentStatus) {
 		this.currentStatus = currentStatus;
 	}
+
 	public Integer getPreviousStatus() {
 		return previousStatus;
 	}
+
 	public void setPreviousStatus(Integer previousStatus) {
 		this.previousStatus = previousStatus;
 	}
+
 	public String getStateInterp() {
 		return stateInterp;
 	}
+
 	public void setStateInterp(String stateInterp) {
 		this.stateInterp = stateInterp;
 	}
+
 	public String getReferenceId() {
 		return referenceId;
 	}
+
 	public void setReferenceId(String referenceId) {
 		this.referenceId = referenceId;
 	}
+
 	public String getApprovedBy() {
 		return approvedBy;
 	}
+
 	public void setApprovedBy(String approvedBy) {
 		this.approvedBy = approvedBy;
 	}
+
 	public RegistrationUserType getUsertype() {
 		return usertype;
 	}
+
 	public void setUsertype(RegistrationUserType usertype) {
 		this.usertype = usertype;
 	}
+
 	public RegistrationHandler getHibernateLazyInitializer() {
 		return hibernateLazyInitializer;
 	}
+
 	public void setHibernateLazyInitializer(RegistrationHandler hibernateLazyInitializer) {
 		this.hibernateLazyInitializer = hibernateLazyInitializer;
 	}
+
 	public Map<String, Object> getAdditionalProperties() {
 		return additionalProperties;
 	}
+
 	public void setAdditionalProperties(Map<String, Object> additionalProperties) {
 		this.additionalProperties = additionalProperties;
 	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -120,6 +146,5 @@ public class RegistrationUser {
 		builder.append("]");
 		return builder.toString();
 	}
-	
-		
+
 }

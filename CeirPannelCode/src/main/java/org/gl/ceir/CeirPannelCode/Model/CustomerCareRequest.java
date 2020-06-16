@@ -9,6 +9,7 @@ public class CustomerCareRequest {
 	private String userType;
 	private Integer userTypeId;
 	private Integer featureId;
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -31,56 +32,69 @@ public class CustomerCareRequest {
 		builder.append("]");
 		return builder.toString();
 	}
+
 	public String getDeviceIdType() {
 		return deviceIdType;
 	}
+
 	public void setDeviceIdType(String deviceIdType) {
 		this.deviceIdType = deviceIdType;
 	}
+
 	public String getImei() {
 		return imei;
 	}
+
 	public void setImei(String imei) {
 		this.imei = imei;
 	}
+
 	public String getMsisdn() {
 		return msisdn;
 	}
+
 	public void setMsisdn(String msisdn) {
 		this.msisdn = msisdn;
 	}
+
 	public String getSearchString() {
 		return searchString;
 	}
+
 	public void setSearchString(String searchString) {
 		this.searchString = searchString;
 	}
+
 	public Integer getUserId() {
 		return userId;
 	}
+
 	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
+
 	public String getUserType() {
 		return userType;
 	}
+
 	public void setUserType(String userType) {
 		this.userType = userType;
 	}
+
 	public Integer getUserTypeId() {
 		return userTypeId;
 	}
+
 	public void setUserTypeId(Integer userTypeId) {
 		this.userTypeId = userTypeId;
 	}
+
 	public Integer getFeatureId() {
 		return featureId;
 	}
+
 	public void setFeatureId(Integer featureId) {
 		this.featureId = featureId;
 	}
-	
 
-	
-	
 }

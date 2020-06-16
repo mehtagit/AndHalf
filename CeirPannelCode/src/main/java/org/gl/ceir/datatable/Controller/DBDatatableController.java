@@ -62,40 +62,38 @@ public class DBDatatableController {
 		MapDatatableResponse map = new MapDatatableResponse();
 		Gson gsonObject = new Gson();
 		DBrowDataModel filterrequest = gsonObject.fromJson(filter, DBrowDataModel.class);
-		
+
 		Integer pageSize = Integer.parseInt(request.getParameter("length"));
-		Integer pageNumber = Integer.parseInt(request.getParameter("start")) / pageSize ;
-		
-		log.info("pageSize"+pageSize+"-----------pageNumber---"+pageNumber);
-		
-		
+		Integer pageNumber = Integer.parseInt(request.getParameter("start")) / pageSize;
+
+		log.info("pageSize" + pageSize + "-----------pageNumber---" + pageNumber);
+
 		try {
 			log.info("request passed to API:::::::::" + filterrequest);
 			Object response = dBTablesFeignClient.DBRowDetailsFeign(filterrequest, pageNumber, pageSize);
 			Gson gson = new Gson();
 			String apiResponse = gson.toJson(response);
 			log.info("apiResponse ::::::::::::::" + apiResponse);
-			
+
 			dbTablesPaginationModel = gson.fromJson(apiResponse, DbTablesPaginationModel.class);
 			log.info("response::::::" + dbTablesPaginationModel);
-			
+
 			DBrowDataModel paginationContentList = dbTablesPaginationModel.getContent();
-			log.info("paginationContentList----------->" +paginationContentList);
-			
-			if(paginationContentList != null) {
-				for(Map<String, String> dataModel : dbTablesPaginationModel.getContent().getRowData()) {
+			log.info("paginationContentList----------->" + paginationContentList);
+
+			if (paginationContentList != null) {
+				for (Map<String, String> dataModel : dbTablesPaginationModel.getContent().getRowData()) {
 					List<Object> datatableList = new ArrayList<Object>();
-					for( String key : dataModel.keySet() ) {
-						datatableList.add( dataModel.get(key));
+					for (String key : dataModel.keySet()) {
+						datatableList.add(dataModel.get(key));
 					}
 					finalList.add(datatableList);
 					datatableResponseModel.setData(finalList);
 				}
-			}else {
+			} else {
 				datatableResponseModel.setData(Collections.emptyList());
 			}
-			
-			
+
 			datatableResponseModel.setRecordsTotal(dbTablesPaginationModel.getNumberOfElements());
 			datatableResponseModel.setRecordsFiltered(dbTablesPaginationModel.getTotalElements());
 			return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK);
@@ -108,32 +106,30 @@ public class DBDatatableController {
 
 		}
 	}
-	
-	
-	
+
 	private Object row(Map<String, String> column) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 	@PostMapping("dbtableHeaders")
-	public ResponseEntity<?> headers(@RequestParam("dbName") String dbName, @RequestParam("tableName") String tableName){
+	public ResponseEntity<?> headers(@RequestParam("dbName") String dbName,
+			@RequestParam("tableName") String tableName) {
 		List<DatatableHeaderModel> dataTableInputs = new ArrayList<>();
 		try {
-			
-			DBrowDataModel filterrequest = dBTablesFeignClient.dbtableHeaders(dbName,tableName);
-				for(String header : filterrequest.getColumns()) {
-					dataTableInputs.add(new DatatableHeaderModel(header));
-				}
-				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);	
-		}catch(Exception e) {
+
+			DBrowDataModel filterrequest = dBTablesFeignClient.dbtableHeaders(dbName, tableName);
+			for (String header : filterrequest.getColumns()) {
+				dataTableInputs.add(new DatatableHeaderModel(header));
+			}
+			return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
+		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<>(Collections.emptyList(), HttpStatus.UNAVAILABLE_FOR_LEGAL_REASONS);
 		}
-			
+
 	}
-	
-	
+
 	@PostMapping("dbTable/pageRendering")
 	public ResponseEntity<?> pageRendering(String displayName, HttpSession session) {
 

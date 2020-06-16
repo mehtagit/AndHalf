@@ -9,18 +9,23 @@ import org.springframework.stereotype.Component;
 public class DBReportDataModel {
 	private List<String> columns;
 	private List<Map<String, String>> rowData;
+
 	public List<String> getColumns() {
 		return columns;
 	}
+
 	public void setColumns(List<String> columns) {
 		this.columns = columns;
 	}
+
 	public List<Map<String, String>> getRowData() {
 		return rowData;
 	}
+
 	public void setRowData(List<Map<String, String>> rowData) {
 		this.rowData = rowData;
 	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -31,7 +36,5 @@ public class DBReportDataModel {
 		builder.append("]");
 		return builder.toString();
 	}
-	
-	
-	 
+
 }

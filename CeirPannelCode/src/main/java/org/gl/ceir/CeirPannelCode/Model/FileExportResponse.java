@@ -2,7 +2,8 @@ package org.gl.ceir.CeirPannelCode.Model;
 
 public class FileExportResponse {
 
-	private String fileName,filePath,url;
+	private String fileName, filePath, url;
+
 	public String getFileName() {
 		return fileName;
 	}
@@ -22,15 +23,14 @@ public class FileExportResponse {
 	public String getUrl() {
 		return url;
 	}
+
 	public void setUrl(String url) {
 		this.url = url;
 	}
 
-@Override
+	@Override
 	public String toString() {
 		return "FileExportResponse [fileName=" + fileName + ", filePath=" + filePath + ", url=" + url + "]";
 	}
-	
-	
-	
+
 }

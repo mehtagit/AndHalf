@@ -15,7 +15,7 @@
 	content="Materialize is a Material Design Admin Template,It's modern, responsive and based on Material Design by Google. ">
 <meta name="keywords"
 	content="materialize, admin template, dashboard template, flat admin template, responsive admin template,">
-<title>CEIR | Importer Portal</title>
+<title>Check Devices</title>
 
 
 <link
@@ -26,7 +26,7 @@
 <jsp:include page="/WEB-INF/view/endUserFooter.jsp"></jsp:include>
 
 <!-- Favicons-->
-<!--<link rel="icon" href="images/favicon/favicon-32x32.png" sizes="32x32">-->
+<link rel="icon" href="${context}/resources/images/DMC-Logo.png" sizes="32x32">
 <!-- Favicons-->
 <link rel="apple-touch-icon-precomposed"
 	href="images/favicon/apple-touch-icon-152x152.png">
@@ -396,7 +396,7 @@ i.fa.fa-times-circle-o.red-text {
 	<!-- jQuery Library -->
 	<%-- <script type="text/javascript" src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script> --%>
 	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/custom_js/jquery.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<!-- ajax js -->
 	<script type="text/javascript"
 		src="${context}/resources/ajax/Registration.js?version=<%= (int) (Math.random() * 10) %>"></script>
@@ -420,33 +420,36 @@ i.fa.fa-times-circle-o.red-text {
 	<script type="text/javascript" src="${context}/resources/js/plugins.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<!--custom-script.js - Add your own theme custom JS-->
 	<!-- i18n library -->
+	<!-- i18n library -->
 	<script type="text/javascript"
 		src="${context}/resources/project_js/CLDRPluralRuleParser.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/i18n_library/i18n.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.messagestore.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/i18n_library/messagestore.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.fallbacks.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/i18n_library/fallbacks.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.language.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/i18n_library/language.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.parser.js?version=<%= (int) (Math.random() * 10) %>"></script>
-
-
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/i18n_library/parser.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.bidi.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/i18n_library/emitter.js?version=<%= (int) (Math.random() * 10) %>"></script>
+
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/jquery.history.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/i18n_library/bidi.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/history.js?version=<%= (int) (Math.random() * 10) %>"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/min.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript"

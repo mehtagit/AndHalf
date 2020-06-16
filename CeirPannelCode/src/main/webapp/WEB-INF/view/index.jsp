@@ -14,13 +14,13 @@
 content="Materialize is a Material Design Admin Template,It's modern, responsive and based on Material Design by Google. ">
 <meta name="keywords"
 content="materialize, admin template, dashboard template, flat admin template, responsive admin template,">
-<title>CEIR | Importer Portal</title>
+<title>Main</title>
 
 <link href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.min.css" type="text/css" rel="stylesheet"
 media="screen,projection">
 
 <!-- Favicons-->
-<!--<link rel="icon" href="images/favicon/favicon-32x32.png" sizes="32x32">-->
+<link rel="icon" href="${context}/resources/images/DMC-Logo.png" sizes="32x32">
 <!-- Favicons-->
 <!-- For iPhone -->
 <meta name="msapplication-TileColor" content="#00bcd4">
@@ -224,7 +224,7 @@ Scripts
 ================================================ -->
 <!-- jQuery Library -->
 <%-- <script type="text/javascript" src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script> --%>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
+<script src="${context}/resources/custom_js/jquery.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
 <!-- ajax js -->
 <script type="text/javascript" src="${context}/resources/ajax/Registration.js?version=<%= (int) (Math.random() * 10) %>"></script>
 <!--materialize js-->

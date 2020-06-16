@@ -46,63 +46,60 @@ public class CCnotificationDatatable {
 	CCNotificationContent ccnotificationContent;
 	@Autowired
 	CCNotificationPagination ccnotificationPagination;
-	
-	
-	
+
 	@PostMapping("CCNotificationData")
-	public ResponseEntity<?> viewNotificationRecord(@RequestParam(name="type",defaultValue = "ccnotification",required = false) String role, HttpServletRequest request,HttpSession session) {
-		
-		//String userType = (String) session.getAttribute("usertype");
-		//int userId=	(int) session.getAttribute("userid");
-		
-		
-				// Data set on this List
-				List<List<Object>> finalList=new ArrayList<List<Object>>();
-		
-				String filter = request.getParameter("filter");
-				Gson gsonObject=new Gson();
-				CCPolicyBreachRequest filterRequest = gsonObject.fromJson(filter, CCPolicyBreachRequest.class);
-				Integer pageSize = Integer.parseInt(request.getParameter("length"));
-				Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize ;
-				log.info("pageSize"+pageSize+"-----------pageNo---"+pageNo);
-				filterRequest.setSearchString(request.getParameter("search[value]"));
+	public ResponseEntity<?> viewNotificationRecord(
+			@RequestParam(name = "type", defaultValue = "ccnotification", required = false) String role,
+			HttpServletRequest request, HttpSession session) {
+
+		// String userType = (String) session.getAttribute("usertype");
+		// int userId= (int) session.getAttribute("userid");
+
+		// Data set on this List
+		List<List<Object>> finalList = new ArrayList<List<Object>>();
+
+		String filter = request.getParameter("filter");
+		Gson gsonObject = new Gson();
+		CCPolicyBreachRequest filterRequest = gsonObject.fromJson(filter, CCPolicyBreachRequest.class);
+		Integer pageSize = Integer.parseInt(request.getParameter("length"));
+		Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize;
+		log.info("pageSize" + pageSize + "-----------pageNo---" + pageNo);
+		filterRequest.setSearchString(request.getParameter("search[value]"));
 		try {
-			log.info("request send to the filter api ="+filterRequest);
+			log.info("request send to the filter api =" + filterRequest);
 			Object response = feignCleintImplementation.ccdashBoardNotification(filterRequest, pageNo, pageSize);
-			log.info("response in datatable"+response);
-			Gson gson= new Gson(); 
+			log.info("response in datatable" + response);
+			Gson gson = new Gson();
 			String apiResponse = gson.toJson(response);
-			ccnotificationPagination = gson.fromJson(apiResponse,CCNotificationPagination.class);
+			ccnotificationPagination = gson.fromJson(apiResponse, CCNotificationPagination.class);
 			List<CCNotificationContent> paginationContentList = ccnotificationPagination.getContent();
-			if(paginationContentList.isEmpty()) {
+			if (paginationContentList.isEmpty()) {
 				datatableResponseModel.setData(Collections.emptyList());
-			}else {
-				for(CCNotificationContent dataInsideList : paginationContentList) 
-				{
-					String createdOn =dataInsideList.getCreatedOn();
+			} else {
+				for (CCNotificationContent dataInsideList : paginationContentList) {
+					String createdOn = dataInsideList.getCreatedOn();
 					String txnID = dataInsideList.getFeatureTxnId();
 					String feature = dataInsideList.getFeatureName();
-					String message =dataInsideList.getMessage();
-					String action=iconState.ccNotificationIcon();			   
-					Object[] finalData={createdOn,txnID,feature,message,action}; 
-					List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
+					String message = dataInsideList.getMessage();
+					String action = iconState.ccNotificationIcon();
+					Object[] finalData = { createdOn, txnID, feature, message, action };
+					List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
 					finalList.add(finalDataList);
-					datatableResponseModel.setData(finalList);	
+					datatableResponseModel.setData(finalList);
+				}
 			}
-		}
-			//data set on ModelClass
+			// data set on ModelClass
 			datatableResponseModel.setRecordsTotal(ccnotificationPagination.getNumberOfElements());
 			datatableResponseModel.setRecordsFiltered(ccnotificationPagination.getTotalElements());
-			return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK); 
-			
-		}catch(Exception e) {
+			return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK);
+
+		} catch (Exception e) {
 			datatableResponseModel.setRecordsTotal(null);
 			datatableResponseModel.setRecordsFiltered(null);
 			datatableResponseModel.setData(Collections.emptyList());
-			return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK); 
-			
-			
+			return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK);
+
 		}
-		
+
 	}
 }

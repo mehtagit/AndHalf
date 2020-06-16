@@ -18,84 +18,111 @@ public class AuditContentModel {
 	private String jSessionId;
 	private String txnId;
 	private String roleType;
+
 	public Integer getId() {
 		return id;
 	}
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
 	public String getCreatedOn() {
 		return createdOn;
 	}
+
 	public void setCreatedOn(String createdOn) {
 		this.createdOn = createdOn;
 	}
+
 	public String getModifiedOn() {
 		return modifiedOn;
 	}
+
 	public void setModifiedOn(String modifiedOn) {
 		this.modifiedOn = modifiedOn;
 	}
+
 	public Integer getUserId() {
 		return userId;
 	}
+
 	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
+
 	public String getUserName() {
 		return userName;
 	}
+
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
+
 	public Integer getUserTypeId() {
 		return userTypeId;
 	}
+
 	public void setUserTypeId(Integer userTypeId) {
 		this.userTypeId = userTypeId;
 	}
+
 	public String getUserType() {
 		return userType;
 	}
+
 	public void setUserType(String userType) {
 		this.userType = userType;
 	}
+
 	public Integer getFeatureId() {
 		return featureId;
 	}
+
 	public void setFeatureId(Integer featureId) {
 		this.featureId = featureId;
 	}
+
 	public String getFeatureName() {
 		return featureName;
 	}
+
 	public void setFeatureName(String featureName) {
 		this.featureName = featureName;
 	}
+
 	public String getSubFeature() {
 		return subFeature;
 	}
+
 	public void setSubFeature(String subFeature) {
 		this.subFeature = subFeature;
 	}
+
 	public String getjSessionId() {
 		return jSessionId;
 	}
+
 	public void setjSessionId(String jSessionId) {
 		this.jSessionId = jSessionId;
 	}
+
 	public String getTxnId() {
 		return txnId;
 	}
+
 	public void setTxnId(String txnId) {
 		this.txnId = txnId;
 	}
+
 	public String getRoleType() {
 		return roleType;
 	}
+
 	public void setRoleType(String roleType) {
 		this.roleType = roleType;
 	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -128,5 +155,5 @@ public class AuditContentModel {
 		builder.append("]");
 		return builder.toString();
 	}
-	
+
 }

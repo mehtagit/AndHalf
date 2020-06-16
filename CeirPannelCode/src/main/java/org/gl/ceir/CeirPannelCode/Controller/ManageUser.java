@@ -15,18 +15,17 @@ public class ManageUser {
 
 	@Autowired
 	FeignCleintImplementation feignCleintImplementation;
-	
+
 	private final Logger log = LoggerFactory.getLogger(getClass());
-	
-	@RequestMapping(value=
-		{"/manageDevicesStock"},method={org.springframework.web.bind.annotation.
-				RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}
-			)
-	    public ModelAndView viewMessageManagement(HttpSession session) {
+
+	@RequestMapping(value = { "/manageDevicesStock" }, method = {
+			org.springframework.web.bind.annotation.RequestMethod.GET,
+			org.springframework.web.bind.annotation.RequestMethod.POST })
+	public ModelAndView viewMessageManagement(HttpSession session) {
 		ModelAndView mv = new ModelAndView();
-		 log.info(" view Manage User entry point."); 
-		 mv.setViewName("manageUsers");
-		log.info(" view Manage User exit point."); 
-		return mv; 
+		log.info(" view Manage User entry point.");
+		mv.setViewName("manageUsers");
+		log.info(" view Manage User exit point.");
+		return mv;
 	}
 }

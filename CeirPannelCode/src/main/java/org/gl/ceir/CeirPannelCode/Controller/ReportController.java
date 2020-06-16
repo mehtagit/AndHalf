@@ -22,42 +22,36 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class ReportController {
-		
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
-	@Value ("${filePathforUploadFile}")
+	@Value("${filePathforUploadFile}")
 	String filePathforUploadFile;
 
-	@Value ("${filePathforMoveFile}")
+	@Value("${filePathforMoveFile}")
 	String filePathforMoveFile;
-	
+
 	@Autowired
 	DBTablesFeignClient dBTablesFeignClient;
-	
+
 	@GetMapping("/report")
-	public ModelAndView pageView(@RequestParam(name="via", required = false) String via,
-								@RequestParam(name="tableName", required = false) String tableName, HttpSession session) {
+	public ModelAndView pageView(@RequestParam(name = "via", required = false) String via,
+			@RequestParam(name = "tableName", required = false) String tableName, HttpSession session) {
 		ModelAndView modelAndView = new ModelAndView();
-		if("other".equals(via)) {
+		if ("other".equals(via)) {
 			modelAndView.setViewName("viewReport");
-		}
-		else {
+		} else {
 			modelAndView.setViewName("selectReport");
 		}
 		return modelAndView;
 	}
 
-	
 	/*---------------------------------------- Select Report Dropdown ----------------------------------------*/
-	
-	@RequestMapping(value="/getallreports",method ={org.springframework.web.bind.annotation.RequestMethod.POST})
-	public @ResponseBody List<ReportResponse> dbReportList(){
+
+	@RequestMapping(value = "/getallreports", method = { org.springframework.web.bind.annotation.RequestMethod.POST })
+	public @ResponseBody List<ReportResponse> dbReportList() {
 		List<ReportResponse> dbTableList = dBTablesFeignClient.getAllReports();
-		return  dbTableList;
+		return dbTableList;
 	}
 
 }
-
-	
-

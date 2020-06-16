@@ -14,66 +14,87 @@ public class FieldContantModel {
 	private String tagId;
 	private String description;
 	private String displayName;
+
 	public String getCreatedOn() {
 		return createdOn;
 	}
+
 	public void setCreatedOn(String createdOn) {
 		this.createdOn = createdOn;
 	}
+
 	public String getModifiedOn() {
 		return modifiedOn;
 	}
+
 	public void setModifiedOn(String modifiedOn) {
 		this.modifiedOn = modifiedOn;
 	}
+
 	public Integer getId() {
 		return id;
 	}
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
 	public String getTag() {
 		return tag;
 	}
+
 	public void setTag(String tag) {
 		this.tag = tag;
 	}
+
 	public Integer getValue() {
 		return value;
 	}
+
 	public void setValue(Integer value) {
 		this.value = value;
 	}
+
 	public String getInterp() {
 		return interp;
 	}
+
 	public void setInterp(String interp) {
 		this.interp = interp;
 	}
+
 	public Integer getListOrder() {
 		return listOrder;
 	}
+
 	public void setListOrder(Integer listOrder) {
 		this.listOrder = listOrder;
 	}
+
 	public String getTagId() {
 		return tagId;
 	}
+
 	public void setTagId(String tagId) {
 		this.tagId = tagId;
 	}
+
 	public String getDescription() {
 		return description;
 	}
+
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
 	public String getDisplayName() {
 		return displayName;
 	}
+
 	public void setDisplayName(String displayName) {
 		this.displayName = displayName;
 	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -100,8 +121,5 @@ public class FieldContantModel {
 		builder.append("]");
 		return builder.toString();
 	}
-	
-	
-	
-	
+
 }

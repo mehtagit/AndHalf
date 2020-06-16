@@ -21,38 +21,37 @@ import com.google.gson.Gson;
 public class RunnigAlert {
 	@Autowired
 	UserProfileFeignImpl userProfileFeignImpl;
-		
-private final Logger log = LoggerFactory.getLogger(getClass());
-	
-	@RequestMapping(value=
-		{"/runningAlertManagment"},method={org.springframework.web.bind.annotation.
-				RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}
-			)
-	    public ModelAndView viewMessageManagement(HttpSession session) {
+
+	private final Logger log = LoggerFactory.getLogger(getClass());
+
+	@RequestMapping(value = { "/runningAlertManagment" }, method = {
+			org.springframework.web.bind.annotation.RequestMethod.GET,
+			org.springframework.web.bind.annotation.RequestMethod.POST })
+	public ModelAndView viewMessageManagement(HttpSession session) {
 		ModelAndView mv = new ModelAndView();
-		 log.info(" view Runnig Alert Management entry point."); 
-		 mv.setViewName("runningAlert");
-		log.info(" view Running Alert Management exit point."); 
-		return mv; 
+		log.info(" view Runnig Alert Management entry point.");
+		mv.setViewName("runningAlert");
+		log.info(" view Running Alert Management exit point.");
+		return mv;
 	}
-	
-	
-	//***************************************** Export Alert  controller *********************************
+
+	// ***************************************** Export Alert controller
+	// *********************************
 	@PostMapping("exportRunningAlertData")
 	@ResponseBody
-	public FileExportResponse exportToExcel(@RequestBody FilterRequest filterRequest,HttpSession session)
-	{
-		Gson gsonObject=new Gson();
+	public FileExportResponse exportToExcel(@RequestBody FilterRequest filterRequest, HttpSession session) {
+		Gson gsonObject = new Gson();
 		Object response;
-		Integer file = 1;	
-		log.info("filterRequest:::::::::"+filterRequest);
-	response= userProfileFeignImpl.viewRunningAlertRequest(filterRequest, filterRequest.getPageNo(), filterRequest.getPageSize(), file);
-	FileExportResponse fileExportResponse;
-	   Gson gson= new Gson(); 
-	   String apiResponse = gson.toJson(response);
-	   fileExportResponse = gson.fromJson(apiResponse, FileExportResponse.class);
-	   log.info("response  from Running Alert Export  api="+fileExportResponse);
-		
+		Integer file = 1;
+		log.info("filterRequest:::::::::" + filterRequest);
+		response = userProfileFeignImpl.viewRunningAlertRequest(filterRequest, filterRequest.getPageNo(),
+				filterRequest.getPageSize(), file);
+		FileExportResponse fileExportResponse;
+		Gson gson = new Gson();
+		String apiResponse = gson.toJson(response);
+		fileExportResponse = gson.fromJson(apiResponse, FileExportResponse.class);
+		log.info("response  from Running Alert Export  api=" + fileExportResponse);
+
 		return fileExportResponse;
 	}
 }

@@ -1,7 +1,7 @@
 package org.gl.ceir.CeirPannelCode.Model;
 
 public class LawfulStolenRecovey {
-	
+
 	private Integer blockCategory;
 	private String blockCategoryInterp;
 	private String blockingTimePeriod;
@@ -14,223 +14,220 @@ public class LawfulStolenRecovey {
 	private String modifiedOn;
 	private Integer operatorTypeId;
 	private String operatorTypeIdInterp;
-	private Integer qty,quantity,deviceQuantity;
-	private String remark,rejectedRemark;
+	private Integer qty, quantity, deviceQuantity;
+	private String remark, rejectedRemark;
 	private Integer requestType;
 	private String requestTypeInterp;
 	private String roleType;
 	private SingleImeiDetails singleImeiDetails;
 	private Integer sourceType;
 	private String sourceTypeInterp;
-	private String stateInterp,dateOfStolen,dateOfRecovery,firFileName,complaintType,fileLink;
+	private String stateInterp, dateOfStolen, dateOfRecovery, firFileName, complaintType, fileLink;
 	private StolenIndividualUserDB stolenIndividualUserDB;
 	private StolenOrganizationUserDB stolenOrganizationUserDB;
 	private String txnId;
 	private Integer userId;
-	
-	
+
 	public Integer getBlockCategory() {
-	return blockCategory;
+		return blockCategory;
 	}
 
 	public void setBlockCategory(Integer blockCategory) {
-	this.blockCategory = blockCategory;
+		this.blockCategory = blockCategory;
 	}
 
 	public String getBlockCategoryInterp() {
-	return blockCategoryInterp;
+		return blockCategoryInterp;
 	}
 
 	public void setBlockCategoryInterp(String blockCategoryInterp) {
-	this.blockCategoryInterp = blockCategoryInterp;
+		this.blockCategoryInterp = blockCategoryInterp;
 	}
 
 	public String getBlockingTimePeriod() {
-	return blockingTimePeriod;
+		return blockingTimePeriod;
 	}
 
 	public void setBlockingTimePeriod(String blockingTimePeriod) {
-	this.blockingTimePeriod = blockingTimePeriod;
+		this.blockingTimePeriod = blockingTimePeriod;
 	}
 
 	public String getBlockingType() {
-	return blockingType;
+		return blockingType;
 	}
 
 	public void setBlockingType(String blockingType) {
-	this.blockingType = blockingType;
+		this.blockingType = blockingType;
 	}
 
 	public String getCreatedOn() {
-	return createdOn;
+		return createdOn;
 	}
 
 	public void setCreatedOn(String createdOn) {
-	this.createdOn = createdOn;
+		this.createdOn = createdOn;
 	}
 
 	public String getFileName() {
-	return fileName;
+		return fileName;
 	}
 
 	public void setFileName(String fileName) {
-	this.fileName = fileName;
+		this.fileName = fileName;
 	}
 
 	public Integer getFileStatus() {
-	return fileStatus;
+		return fileStatus;
 	}
 
 	public void setFileStatus(Integer fileStatus) {
-	this.fileStatus = fileStatus;
+		this.fileStatus = fileStatus;
 	}
 
 	public Integer getId() {
-	return id;
+		return id;
 	}
 
 	public void setId(Integer id) {
-	this.id = id;
+		this.id = id;
 	}
 
 	public Integer getImei() {
-	return imei;
+		return imei;
 	}
 
 	public void setImei(Integer imei) {
-	this.imei = imei;
+		this.imei = imei;
 	}
 
 	public String getModifiedOn() {
-	return modifiedOn;
+		return modifiedOn;
 	}
 
 	public void setModifiedOn(String modifiedOn) {
-	this.modifiedOn = modifiedOn;
+		this.modifiedOn = modifiedOn;
 	}
 
 	public Integer getOperatorTypeId() {
-	return operatorTypeId;
+		return operatorTypeId;
 	}
 
 	public void setOperatorTypeId(Integer operatorTypeId) {
-	this.operatorTypeId = operatorTypeId;
+		this.operatorTypeId = operatorTypeId;
 	}
 
 	public String getOperatorTypeIdInterp() {
-	return operatorTypeIdInterp;
+		return operatorTypeIdInterp;
 	}
 
 	public void setOperatorTypeIdInterp(String operatorTypeIdInterp) {
-	this.operatorTypeIdInterp = operatorTypeIdInterp;
+		this.operatorTypeIdInterp = operatorTypeIdInterp;
 	}
 
 	public Integer getQty() {
-	return qty;
+		return qty;
 	}
 
 	public void setQty(Integer qty) {
-	this.qty = qty;
+		this.qty = qty;
 	}
 
 	public String getRemark() {
-	return remark;
+		return remark;
 	}
 
 	public void setRemark(String remark) {
-	this.remark = remark;
+		this.remark = remark;
 	}
 
 	public Integer getRequestType() {
-	return requestType;
+		return requestType;
 	}
 
 	public void setRequestType(Integer requestType) {
-	this.requestType = requestType;
+		this.requestType = requestType;
 	}
 
 	public String getRequestTypeInterp() {
-	return requestTypeInterp;
+		return requestTypeInterp;
 	}
 
 	public void setRequestTypeInterp(String requestTypeInterp) {
-	this.requestTypeInterp = requestTypeInterp;
+		this.requestTypeInterp = requestTypeInterp;
 	}
 
 	public String getRoleType() {
-	return roleType;
+		return roleType;
 	}
 
 	public void setRoleType(String roleType) {
-	this.roleType = roleType;
+		this.roleType = roleType;
 	}
 
 	public SingleImeiDetails getSingleImeiDetails() {
-	return singleImeiDetails;
+		return singleImeiDetails;
 	}
 
 	public void setSingleImeiDetails(SingleImeiDetails singleImeiDetails) {
-	this.singleImeiDetails = singleImeiDetails;
+		this.singleImeiDetails = singleImeiDetails;
 	}
 
 	public Integer getSourceType() {
-	return sourceType;
+		return sourceType;
 	}
 
 	public void setSourceType(Integer sourceType) {
-	this.sourceType = sourceType;
+		this.sourceType = sourceType;
 	}
 
 	public String getSourceTypeInterp() {
-	return sourceTypeInterp;
+		return sourceTypeInterp;
 	}
 
 	public void setSourceTypeInterp(String sourceTypeInterp) {
-	this.sourceTypeInterp = sourceTypeInterp;
+		this.sourceTypeInterp = sourceTypeInterp;
 	}
 
 	public String getStateInterp() {
-	return stateInterp;
+		return stateInterp;
 	}
 
 	public void setStateInterp(String stateInterp) {
-	this.stateInterp = stateInterp;
+		this.stateInterp = stateInterp;
 	}
 
 	public StolenIndividualUserDB getStolenIndividualUserDB() {
-	return stolenIndividualUserDB;
+		return stolenIndividualUserDB;
 	}
 
 	public void setStolenIndividualUserDB(StolenIndividualUserDB stolenIndividualUserDB) {
-	this.stolenIndividualUserDB = stolenIndividualUserDB;
+		this.stolenIndividualUserDB = stolenIndividualUserDB;
 	}
 
 	public StolenOrganizationUserDB getStolenOrganizationUserDB() {
-	return stolenOrganizationUserDB;
+		return stolenOrganizationUserDB;
 	}
 
 	public void setStolenOrganizationUserDB(StolenOrganizationUserDB stolenOrganizationUserDB) {
-	this.stolenOrganizationUserDB = stolenOrganizationUserDB;
+		this.stolenOrganizationUserDB = stolenOrganizationUserDB;
 	}
 
 	public String getTxnId() {
-	return txnId;
+		return txnId;
 	}
 
 	public void setTxnId(String txnId) {
-	this.txnId = txnId;
+		this.txnId = txnId;
 	}
 
 	public Integer getUserId() {
-	return userId;
+		return userId;
 	}
 
 	public void setUserId(Integer userId) {
-	this.userId = userId;
+		this.userId = userId;
 	}
 
-	
-	
 	public String getDateOfStolen() {
 		return dateOfStolen;
 	}
@@ -255,8 +252,6 @@ public class LawfulStolenRecovey {
 		this.firFileName = firFileName;
 	}
 
-	
-	
 	public String getComplaintType() {
 		return complaintType;
 	}
@@ -289,8 +284,6 @@ public class LawfulStolenRecovey {
 		this.quantity = quantity;
 	}
 
-	
-	
 	public Integer getDeviceQuantity() {
 		return deviceQuantity;
 	}
@@ -371,7 +364,5 @@ public class LawfulStolenRecovey {
 		builder.append("]");
 		return builder.toString();
 	}
-
-	
 
 }

@@ -16,20 +16,20 @@ public class DeviceActivation {
 
 	@Autowired
 	FeignCleintImplementation feignCleintImplementation;
-	
+
 	private final Logger log = LoggerFactory.getLogger(getClass());
-	
-	@RequestMapping(value=
-		{"/deviceActivation"},method={org.springframework.web.bind.annotation.
-				RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}
-			)
-	    public ModelAndView viewMessageManagement(HttpSession session, @RequestParam(name="passportNo",required = false)String passportNo) {
-		log.info("passport No.--->" +passportNo);
+
+	@RequestMapping(value = { "/deviceActivation" }, method = {
+			org.springframework.web.bind.annotation.RequestMethod.GET,
+			org.springframework.web.bind.annotation.RequestMethod.POST })
+	public ModelAndView viewMessageManagement(HttpSession session,
+			@RequestParam(name = "passportNo", required = false) String passportNo) {
+		log.info("passport No.--->" + passportNo);
 		ModelAndView mv = new ModelAndView();
-		 log.info(" view deviceActivation entry point."); 
-		 mv.setViewName("deviceActivation");
-		log.info(" view deviceActivation exit point."); 
+		log.info(" view deviceActivation entry point.");
+		mv.setViewName("deviceActivation");
+		log.info(" view deviceActivation exit point.");
 		mv.addObject("passportNo", passportNo);
-		return mv; 
-	}	
+		return mv;
+	}
 }

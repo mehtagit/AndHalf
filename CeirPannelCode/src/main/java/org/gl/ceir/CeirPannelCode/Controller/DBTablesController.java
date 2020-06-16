@@ -17,36 +17,34 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class DBTablesController {
-	
+
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
-	@Value ("${filePathforUploadFile}")
+	@Value("${filePathforUploadFile}")
 	String filePathforUploadFile;
 
-	@Value ("${filePathforMoveFile}")
+	@Value("${filePathforMoveFile}")
 	String filePathforMoveFile;
-	
+
 	@Autowired
 	DBTablesFeignClient dBTablesFeignClient;
-	
+
 	@GetMapping("/dbTables")
-	public ModelAndView pageView(@RequestParam(name="via", required = false) String via,
-								@RequestParam(name="tableName", required = false) String tableName, HttpSession session) {
+	public ModelAndView pageView(@RequestParam(name = "via", required = false) String via,
+			@RequestParam(name = "tableName", required = false) String tableName, HttpSession session) {
 		ModelAndView modelAndView = new ModelAndView();
-		if("other".equals(via)) {
+		if ("other".equals(via)) {
 			modelAndView.setViewName("viewDbTables");
-		}
-		else {
+		} else {
 			modelAndView.setViewName("selectTable");
 		}
 		return modelAndView;
 	}
 
-	
 	/*---------------------------------------- Select Table Dropdown ----------------------------------------*/
-	
-	@RequestMapping(value="/getallTables",method ={org.springframework.web.bind.annotation.RequestMethod.POST})
-	public @ResponseBody DBTableModel dbTableList(@RequestParam(name="dbName") String dbName){
+
+	@RequestMapping(value = "/getallTables", method = { org.springframework.web.bind.annotation.RequestMethod.POST })
+	public @ResponseBody DBTableModel dbTableList(@RequestParam(name = "dbName") String dbName) {
 		DBTableModel dbTableList = dBTablesFeignClient.getAlltables(dbName);
 		return dbTableList;
 	}

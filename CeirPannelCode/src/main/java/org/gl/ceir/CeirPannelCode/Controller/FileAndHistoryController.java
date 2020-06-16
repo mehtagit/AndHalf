@@ -35,155 +35,146 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 
-@RequestMapping(value="/Consignment")
+@RequestMapping(value = "/Consignment")
 @Controller
 public class FileAndHistoryController {
 
-	@Value ("${filePathforUploadFile}")
+	@Value("${filePathforUploadFile}")
 	String filePathforUploadFile;
 
-	@Value ("${filePathforMoveFile}")
+	@Value("${filePathforMoveFile}")
 	String filePathforMoveFile;
-	
 
-	@Value ("${filePathforErrorFile}")
+	@Value("${filePathforErrorFile}")
 	String filePathforErrorFile;
-	
-	@Value ("${serverId}")
+
+	@Value("${serverId}")
 	Integer serverId;
-	
+
 	@Autowired
 	GrievanceFeignClient grievanceFeignClient;
-	
-	
-@Autowired
-AddMoreFileModel addMoreFileModel,urlToUpload,urlToMove;
 
+	@Autowired
+	AddMoreFileModel addMoreFileModel, urlToUpload, urlToMove;
 
-@Autowired
-UserProfileFeignImpl userProfileFeignImpl;
-	
-@Autowired
+	@Autowired
+	UserProfileFeignImpl userProfileFeignImpl;
 
-FeignCleintImplementation feignCleintImplementation;
-@Autowired
-UtilDownload utildownload;
-@Autowired
-DBTablesFeignClient dBTablesFeignClient;
-@Autowired
-DBrowDataModel dBrowDataModel;
-private final Logger log = LoggerFactory.getLogger(getClass());
+	@Autowired
 
-	//************************************************* download file *************************************************************** 
+	FeignCleintImplementation feignCleintImplementation;
+	@Autowired
+	UtilDownload utildownload;
+	@Autowired
+	DBTablesFeignClient dBTablesFeignClient;
+	@Autowired
+	DBrowDataModel dBrowDataModel;
+	private final Logger log = LoggerFactory.getLogger(getClass());
 
-	@RequestMapping(value="/dowloadFiles/{filetype}/{fileName}/{transactionNumber}/{doc_TypeTag}",method={org.springframework.web.bind.annotation.RequestMethod.GET}) 
-	//@RequestMapping(value="/dowloadFiles/{filetype}/{fileName}/{transactionNumber}",method={org.springframework.web.bind.annotation.RequestMethod.GET}, headers = {"content-Disposition=attachment"}) 
+	// ************************************************* download file
+	// ***************************************************************
 
-	public @ResponseBody FileExportResponse downloadFile(@PathVariable("transactionNumber") String txnid,@PathVariable("fileName") String fileName,@PathVariable("filetype") String filetype,@PathVariable(name="doc_TypeTag",required = false) String doc_TypeTag) throws IOException {
+	@RequestMapping(value = "/dowloadFiles/{filetype}/{fileName}/{transactionNumber}/{doc_TypeTag}", method = {
+			org.springframework.web.bind.annotation.RequestMethod.GET })
+	// @RequestMapping(value="/dowloadFiles/{filetype}/{fileName}/{transactionNumber}",method={org.springframework.web.bind.annotation.RequestMethod.GET},
+	// headers = {"content-Disposition=attachment"})
 
-		FileExportResponse response = new FileExportResponse();	
-	log.info("inside file download method"+doc_TypeTag);
+	public @ResponseBody FileExportResponse downloadFile(@PathVariable("transactionNumber") String txnid,
+			@PathVariable("fileName") String fileName, @PathVariable("filetype") String filetype,
+			@PathVariable(name = "doc_TypeTag", required = false) String doc_TypeTag) throws IOException {
 
+		FileExportResponse response = new FileExportResponse();
+		log.info("inside file download method" + doc_TypeTag);
 
-	if (filetype.equalsIgnoreCase("actual"))
-	{
+		if (filetype.equalsIgnoreCase("actual")) {
 
-	if (!doc_TypeTag.equals("DEFAULT"))
-	{
-		log.info("doc_TypeTag_______"+doc_TypeTag);
-		String rootPath = filePathforUploadFile+txnid+"/"+doc_TypeTag+"/";
-		File tmpDir = new File(rootPath+fileName);
-		boolean exists = tmpDir.exists();
-		if(exists) {
+			if (!doc_TypeTag.equals("DEFAULT")) {
+				log.info("doc_TypeTag_______" + doc_TypeTag);
+				String rootPath = filePathforUploadFile + txnid + "/" + doc_TypeTag + "/";
+				File tmpDir = new File(rootPath + fileName);
+				boolean exists = tmpDir.exists();
+				if (exists) {
 
-	String extension = fileName.substring(fileName.lastIndexOf("."));
-	log.info("fileExtension==="+extension);
+					String extension = fileName.substring(fileName.lastIndexOf("."));
+					log.info("fileExtension===" + extension);
 
-					if(extension.equalsIgnoreCase(".png") || extension.equalsIgnoreCase(".jpeg") || extension.equalsIgnoreCase(".gif") || extension.equalsIgnoreCase("jpg"))		
-					{
-						response=feignCleintImplementation.downloadFile(txnid,filetype,fileName.replace("%20", " "),doc_TypeTag);
+					if (extension.equalsIgnoreCase(".png") || extension.equalsIgnoreCase(".jpeg")
+							|| extension.equalsIgnoreCase(".gif") || extension.equalsIgnoreCase("jpg")) {
+						response = feignCleintImplementation.downloadFile(txnid, filetype, fileName.replace("%20", " "),
+								doc_TypeTag);
 						response.setFilePath("imageType");
 						return response;
 					}
-			log.info("file against document   is exist.");
-		}
-		else {
-			log.info(" file against documrnt type   is not exist.");
-			response.setUrl("Not Found");
-			return response;
-		}
+					log.info("file against document   is exist.");
+				} else {
+					log.info(" file against documrnt type   is not exist.");
+					response.setUrl("Not Found");
+					return response;
+				}
 
-	}
-	else if(doc_TypeTag.equalsIgnoreCase("DEFAULT")) {
-		log.info("doc_TypeTag==="+doc_TypeTag);
-		String rootPath = filePathforUploadFile+txnid+"/";
-		File tmpDir = new File(rootPath+fileName);
-		boolean exists = tmpDir.exists();
-		if(exists) {
+			} else if (doc_TypeTag.equalsIgnoreCase("DEFAULT")) {
+				log.info("doc_TypeTag===" + doc_TypeTag);
+				String rootPath = filePathforUploadFile + txnid + "/";
+				File tmpDir = new File(rootPath + fileName);
+				boolean exists = tmpDir.exists();
+				if (exists) {
 
-			log.info("actual file is exist.");
-		}
-		else {
-			log.info(" actual file is not exist.");
-			response.setUrl("Not Found");
-			return response;
-		}
+					log.info("actual file is exist.");
+				} else {
+					log.info(" actual file is not exist.");
+					response.setUrl("Not Found");
+					return response;
+				}
 
-	}
-	}
-	else if(filetype.equalsIgnoreCase("error"))
-	{
-		String rootPath = filePathforErrorFile+txnid+"/"+txnid+"_error.csv";
-		File tmpDir = new File(rootPath);
-		boolean exists = tmpDir.exists();
-		if(exists) {
-	     log.info(" error file is exist.");
-		}
-		else {
-			log.info(" error file is not exist.");
-			response.setUrl("Not Found");
-			return response;
+			}
+		} else if (filetype.equalsIgnoreCase("error")) {
+			String rootPath = filePathforErrorFile + txnid + "/" + txnid + "_error.csv";
+			File tmpDir = new File(rootPath);
+			boolean exists = tmpDir.exists();
+			if (exists) {
+				log.info(" error file is exist.");
+			} else {
+				log.info(" error file is not exist.");
+				response.setUrl("Not Found");
+				return response;
+			}
+
 		}
 
-	}
+		log.info(" everything is fine for hit to api for file downloading");
+		log.info("request send to the download file api= txnid(" + txnid + ") fileName (" + fileName + ") fileType ("
+				+ filetype + ")" + doc_TypeTag);
+		response = feignCleintImplementation.downloadFile(txnid, filetype, fileName.replace("%20", " "), doc_TypeTag);
 
+		log.info("response of download api=" + response + "------------------" + fileName.replace("%20", " "));
+		log.info("redirect:" + response.getUrl());
+		// ModelAndView mv= new ModelAndView(("redirect:"+
+		// URLEncoder.encode(response.getUrl(), "UTF-8")));
 
-	log.info(" everything is fine for hit to api for file downloading");
-	log.info("request send to the download file api= txnid("+txnid+") fileName ("+fileName+") fileType ("+filetype+")"+doc_TypeTag);
-	response=feignCleintImplementation.downloadFile(txnid,filetype,fileName.replace("%20", " "),doc_TypeTag);
-
-	log.info("response of download api="+response+"------------------"+fileName.replace("%20", " "));
-	log.info("redirect:"+response.getUrl());
-	//ModelAndView mv= new ModelAndView(("redirect:"+ URLEncoder.encode(response.getUrl(), "UTF-8")));
-
-
-
-
-			/*
-			 * File file = new File(response.getUrl()); if(file.exists()){
-			 * log.info("file is exist "); return response.getUrl(); } else {
-			 * log.info("file is Not exist "); return null; }
-			 */
-	return response;
+		/*
+		 * File file = new File(response.getUrl()); if(file.exists()){
+		 * log.info("file is exist "); return response.getUrl(); } else {
+		 * log.info("file is Not exist "); return null; }
+		 */
+		return response;
 	}
 
+	// *********************************************** Download Sampmle file
+	// *************************************************
+	@RequestMapping(value = "/sampleFileDownload/{featureId}", method = {
+			org.springframework.web.bind.annotation.RequestMethod.GET })
+	public String downloadSampleFile(@PathVariable("featureId") String featureId) throws IOException {
+		log.info("request send to the sample file download api=" + featureId);
+		int featureIdForFile = Integer.parseInt(featureId);
 
-	//*********************************************** Download Sampmle file *************************************************
-	@RequestMapping(value="/sampleFileDownload/{featureId}",method={org.springframework.web.bind.annotation.RequestMethod.GET}) 
-	public String downloadSampleFile(@PathVariable("featureId") String  featureId) throws IOException {
-	log.info("request send to the sample file download api="+featureId);
-	int featureIdForFile=Integer.parseInt(featureId);
+		FileExportResponse response = feignCleintImplementation.downloadSampleFile(featureIdForFile);
+		log.info("response from sample file download file " + response);
 
-	FileExportResponse response=feignCleintImplementation.downloadSampleFile(featureIdForFile);
-	log.info("response from sample file download file "+response);
-
-	return "redirect:"+response.getUrl();
+		return "redirect:" + response.getUrl();
 
 	}
 
-
-
-	// consignment History 
+	// consignment History
 
 	@PostMapping("consignment-history")
 	public ResponseEntity<?> viewHistory(HttpServletRequest request) {
@@ -231,17 +222,17 @@ private final Logger log = LoggerFactory.getLogger(getClass());
 		}
 	}
 
+	@RequestMapping(value = "/ManualFileDownload", method = {
+			org.springframework.web.bind.annotation.RequestMethod.GET })
+	public String ManualSampleFile(@RequestParam(name = "userTypeId", required = false) int userTypeId)
+			throws IOException {
+		log.info("request send to the manual sample file download api=");
+		log.info("userTypeId===" + userTypeId);
 
+		FileExportResponse response = feignCleintImplementation.manualDownloadSampleFile(userTypeId);
+		log.info("response from manual sample file download file " + response);
 
-@RequestMapping(value="/ManualFileDownload",method={org.springframework.web.bind.annotation.RequestMethod.GET}) 
-public String ManualSampleFile(@RequestParam(name="userTypeId",required = false) int userTypeId) throws IOException {
-log.info("request send to the manual sample file download api=");
-log.info("userTypeId==="+userTypeId);
+		return "redirect:" + response.getUrl();
 
-FileExportResponse response=feignCleintImplementation.manualDownloadSampleFile(userTypeId);
-log.info("response from manual sample file download file "+response);
-
-return "redirect:"+response.getUrl();
-
-}
+	}
 }

@@ -11,81 +11,106 @@ public class UserStatus {
 	private Integer statusValue;
 	private String username;
 	private String referenceId;
-	private String action,role;
-	private List<Integer> roles ;
+	private String action, role;
+	private List<Integer> roles;
 	private String usertype;
+
 	public Integer getId() {
 		return id;
 	}
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
 	public String getStatus() {
 		return status;
 	}
+
 	public void setStatus(String status) {
 		this.status = status;
 	}
+
 	public Integer getUserId() {
 		return userId;
 	}
+
 	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
+
 	public String getRemark() {
 		return remark;
 	}
+
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
+
 	public Integer getFeatureId() {
 		return featureId;
 	}
+
 	public void setFeatureId(Integer featureId) {
 		this.featureId = featureId;
 	}
+
 	public Integer getStatusValue() {
 		return statusValue;
 	}
+
 	public void setStatusValue(Integer statusValue) {
 		this.statusValue = statusValue;
 	}
+
 	public String getUsername() {
 		return username;
 	}
+
 	public void setUsername(String username) {
 		this.username = username;
 	}
+
 	public String getReferenceId() {
 		return referenceId;
 	}
+
 	public void setReferenceId(String referenceId) {
 		this.referenceId = referenceId;
 	}
+
 	public String getAction() {
 		return action;
 	}
+
 	public void setAction(String action) {
 		this.action = action;
 	}
+
 	public String getRole() {
 		return role;
 	}
+
 	public void setRole(String role) {
 		this.role = role;
 	}
+
 	public List<Integer> getRoles() {
 		return roles;
 	}
+
 	public void setRoles(List<Integer> roles) {
 		this.roles = roles;
 	}
+
 	public String getUsertype() {
 		return usertype;
 	}
+
 	public void setUsertype(String usertype) {
 		this.usertype = usertype;
 	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -116,6 +141,5 @@ public class UserStatus {
 		builder.append("]");
 		return builder.toString();
 	}
-	
-	
+
 }

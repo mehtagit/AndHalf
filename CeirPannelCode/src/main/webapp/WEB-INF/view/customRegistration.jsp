@@ -26,7 +26,7 @@ if(statusCode==200){
 	<meta http-equiv='cache-control' content='no-cache'>
 <meta http-equiv='expires' content='-1'>
 <meta http-equiv='pragma' content='no-cache'>
-<title>CEIR | Custom Portal</title>
+<title>Custom Registration</title>
 <link
 	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.min.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
@@ -38,7 +38,8 @@ if(statusCode==200){
 <!-- For Windows Phone -->
 <link rel="stylesheet"
 	href="${context}/resources/font/font-awesome/css/font-awesome.min.css">
-
+<!-- Favicons-->
+<link rel="icon" href="${context}/resources/images/DMC-Logo.png" sizes="32x32">
 <!-- CORE CSS-->
 <link href="${context}/resources/css/materialize.css" type="text/css"
 	rel="stylesheet" media="screen,projection">

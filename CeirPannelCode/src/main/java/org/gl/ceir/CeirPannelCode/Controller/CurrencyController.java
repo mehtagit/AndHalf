@@ -21,54 +21,50 @@ public class CurrencyController {
 
 	@Autowired
 	UserProfileFeignImpl userProfileFeignImpl;
-	
+
 	private final Logger log = LoggerFactory.getLogger(getClass());
-	
-	@RequestMapping(value=
-		{"/currencyManagement"},method={org.springframework.web.bind.annotation.
-				RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}
-			)
-	    public ModelAndView viewMessageManagement(HttpSession session) {
+
+	@RequestMapping(value = { "/currencyManagement" }, method = {
+			org.springframework.web.bind.annotation.RequestMethod.GET,
+			org.springframework.web.bind.annotation.RequestMethod.POST })
+	public ModelAndView viewMessageManagement(HttpSession session) {
 		ModelAndView mv = new ModelAndView();
-		 log.info(" view Currency Management entry point."); 
-		 mv.setViewName("viewCurrencyManagement");
-		log.info(" view Currency Management exit point."); 
-		return mv; 
+		log.info(" view Currency Management entry point.");
+		mv.setViewName("viewCurrencyManagement");
+		log.info(" view Currency Management exit point.");
+		return mv;
 	}
-	
-	
 
 	/*------------------------------------- Add Currency ------------------------------------------ */
 
-	    @PostMapping("add-currency") 
-	    public @ResponseBody GenricResponse AddCurrency (@RequestBody FilterRequest filterRequest)  {
-		   log.info("request send to the add Currency api="+filterRequest);
-	 	   GenricResponse response= userProfileFeignImpl.AddCurrencyFeign(filterRequest);
-		   log.info("response from add Port api "+response);
-		   return response;
+	@PostMapping("add-currency")
+	public @ResponseBody GenricResponse AddCurrency(@RequestBody FilterRequest filterRequest) {
+		log.info("request send to the add Currency api=" + filterRequest);
+		GenricResponse response = userProfileFeignImpl.AddCurrencyFeign(filterRequest);
+		log.info("response from add Port api " + response);
+		return response;
 	}
-	
-	
-	//------------------------------------- view Currency ----------------------------------------							
-	
-		@PostMapping("currencyViewByID") 
-		public @ResponseBody GenricResponse viewCurrency (@RequestBody FilterRequest filterRequest )  {
-			log.info("request send to the View currency api="+filterRequest);
-			GenricResponse response= userProfileFeignImpl.viewCurrencyFeign(filterRequest);
-			log.info("response from Currency api "+response);
-			return response;
+
+	// ------------------------------------- view Currency
+	// ----------------------------------------
+
+	@PostMapping("currencyViewByID")
+	public @ResponseBody GenricResponse viewCurrency(@RequestBody FilterRequest filterRequest) {
+		log.info("request send to the View currency api=" + filterRequest);
+		GenricResponse response = userProfileFeignImpl.viewCurrencyFeign(filterRequest);
+		log.info("response from Currency api " + response);
+		return response;
 	}
-		
-		
-	//------------------------------------- update Currency ----------------------------------------							
-		
-		@PostMapping("updateCurrency") 
-		public @ResponseBody GenricResponse updatePortAddress (@RequestBody FilterRequest filterRequest)  {
-			log.info("request send to the Update Currency api="+filterRequest);
-			GenricResponse response= userProfileFeignImpl.updateCurrencyFeign(filterRequest);
-			log.info("response from update api "+response);
-			return response;
-	}	
-	
-	
+
+	// ------------------------------------- update Currency
+	// ----------------------------------------
+
+	@PostMapping("updateCurrency")
+	public @ResponseBody GenricResponse updatePortAddress(@RequestBody FilterRequest filterRequest) {
+		log.info("request send to the Update Currency api=" + filterRequest);
+		GenricResponse response = userProfileFeignImpl.updateCurrencyFeign(filterRequest);
+		log.info("response from update api " + response);
+		return response;
+	}
+
 }

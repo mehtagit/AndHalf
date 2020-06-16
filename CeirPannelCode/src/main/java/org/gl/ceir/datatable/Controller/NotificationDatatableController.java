@@ -45,70 +45,69 @@ public class NotificationDatatableController {
 	NotificationContent notificationContent;
 	@Autowired
 	NotificationPaginationModel notificationPaginationModel;
-	
-	
-	
+
 	@PostMapping("NotificationData")
-	public ResponseEntity<?> viewNotificationRecord(@RequestParam(name="type",defaultValue = "notification",required = false) String role, HttpServletRequest request,HttpSession session) {
-		
+	public ResponseEntity<?> viewNotificationRecord(
+			@RequestParam(name = "type", defaultValue = "notification", required = false) String role,
+			HttpServletRequest request, HttpSession session) {
+
 		String userType = (String) session.getAttribute("usertype");
-		int userId=	(int) session.getAttribute("userid");
-		
-		log.info("session value user Type admin registration Controller=="+session.getAttribute("usertype"));
-				// Data set on this List
-				List<List<Object>> finalList=new ArrayList<List<Object>>();
-				
-				String filter = request.getParameter("filter");
-				Gson gsonObject=new Gson();
-				FilterRequest filterrequest = gsonObject.fromJson(filter, FilterRequest.class);
-				
-				Integer pageSize = Integer.parseInt(request.getParameter("length"));
-				Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize ;
-				log.info("pageSize"+pageSize+"-----------pageNo---"+pageNo);
-				filterrequest.setSearchString(request.getParameter("search[value]"));
+		int userId = (int) session.getAttribute("userid");
+
+		log.info("session value user Type admin registration Controller==" + session.getAttribute("usertype"));
+		// Data set on this List
+		List<List<Object>> finalList = new ArrayList<List<Object>>();
+
+		String filter = request.getParameter("filter");
+		Gson gsonObject = new Gson();
+		FilterRequest filterrequest = gsonObject.fromJson(filter, FilterRequest.class);
+
+		Integer pageSize = Integer.parseInt(request.getParameter("length"));
+		Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize;
+		log.info("pageSize" + pageSize + "-----------pageNo---" + pageNo);
+		filterrequest.setSearchString(request.getParameter("search[value]"));
 		try {
-			log.info("request send to the filter api ="+filterrequest);
-			Object response = feignCleintImplementation.dashBoardNotification(filterrequest,pageNo,pageSize);
-			log.info("response in datatable"+response);
-			Gson gson= new Gson(); 
+			log.info("request send to the filter api =" + filterrequest);
+			Object response = feignCleintImplementation.dashBoardNotification(filterrequest, pageNo, pageSize);
+			log.info("response in datatable" + response);
+			Gson gson = new Gson();
 			String apiResponse = gson.toJson(response);
-			notificationPaginationModel = gson.fromJson(apiResponse,NotificationPaginationModel.class);
+			notificationPaginationModel = gson.fromJson(apiResponse, NotificationPaginationModel.class);
 			List<NotificationContent> paginationContentList = notificationPaginationModel.getContent();
-			if(paginationContentList.isEmpty()) {
+			if (paginationContentList.isEmpty()) {
 				datatableResponseModel.setData(Collections.emptyList());
-			}else {
-				for(NotificationContent dataInsideList : paginationContentList) 
-				{
-				//  Integer id = dataInsideList.getId();
-				  String createdOn = (String) dataInsideList.getCreatedOn();
-				  String txnID = dataInsideList.getFeatureTxnId();
-				  String featureName = dataInsideList.getFeatureName();
-				  String message =  dataInsideList.getMessage();
-				  String userStatus = (String) session.getAttribute("userStatus");
-				  Integer userID= dataInsideList.getUserId() == null ? -1 : dataInsideList.getUserId();
-				  String roleType=dataInsideList.getRoleType() == null ? "blank" : dataInsideList.getRoleType();
-				  String action=iconState.dashboardIcon(userStatus,dataInsideList.getFeatureId(),txnID,userID,roleType);			   
-				  Object[] finalData={createdOn,txnID,featureName,message,action}; 
-				  List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
-				  finalList.add(finalDataList);
-				  datatableResponseModel.setData(finalList);	
+			} else {
+				for (NotificationContent dataInsideList : paginationContentList) {
+					// Integer id = dataInsideList.getId();
+					String createdOn = (String) dataInsideList.getCreatedOn();
+					String txnID = dataInsideList.getFeatureTxnId();
+					String featureName = dataInsideList.getFeatureName();
+					String message = dataInsideList.getMessage();
+					String userStatus = (String) session.getAttribute("userStatus");
+					Integer userID = dataInsideList.getUserId() == null ? -1 : dataInsideList.getUserId();
+					String roleType = dataInsideList.getRoleType() == null ? "blank" : dataInsideList.getRoleType();
+					String action = iconState.dashboardIcon(userStatus, dataInsideList.getFeatureId(), txnID, userID,
+							roleType);
+					Object[] finalData = { createdOn, txnID, featureName, message, action };
+					List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
+					finalList.add(finalDataList);
+					datatableResponseModel.setData(finalList);
+				}
 			}
-		}
-			//data set on ModelClass
+			// data set on ModelClass
 			datatableResponseModel.setRecordsTotal(notificationPaginationModel.getNumberOfElements());
 			datatableResponseModel.setRecordsFiltered(notificationPaginationModel.getTotalElements());
-			return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK); 
-			
-		}catch(Exception e) {
-			
+			return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK);
+
+		} catch (Exception e) {
+
 			datatableResponseModel.setRecordsTotal(null);
 			datatableResponseModel.setRecordsFiltered(null);
 			datatableResponseModel.setData(Collections.emptyList());
-			return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK); 
-			
-			
+			return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK);
+
 		}
-		
+
 	}
-	
+
 }

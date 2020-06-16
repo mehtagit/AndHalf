@@ -1,15 +1,16 @@
 package org.gl.ceir.CeirPannelCode.Model;
 
 public class UploadStockAssigneModal {
-	
-	private String assigneId,assigneName,contactNumber,emailId;
 
-	public UploadStockAssigneModal(String assigneId,String assigneName,String contactNumber,String emailId){
-		this.assigneId=assigneId;
-		this.assigneName=assigneName;
-		this.contactNumber=contactNumber;
-		this.emailId=emailId;
+	private String assigneId, assigneName, contactNumber, emailId;
+
+	public UploadStockAssigneModal(String assigneId, String assigneName, String contactNumber, String emailId) {
+		this.assigneId = assigneId;
+		this.assigneName = assigneName;
+		this.contactNumber = contactNumber;
+		this.emailId = emailId;
 	}
+
 	public String getAssigneId() {
 		return assigneId;
 	}
@@ -56,6 +57,5 @@ public class UploadStockAssigneModal {
 		builder.append("]");
 		return builder.toString();
 	}
-	
 
 }

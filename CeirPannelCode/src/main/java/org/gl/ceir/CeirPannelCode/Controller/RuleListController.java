@@ -6,9 +6,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class RuleListController {
-@GetMapping("ruleListMav")
-public ModelAndView view() {
-	return new ModelAndView("ruleList");
-	
-}
+	@GetMapping("ruleListMav")
+	public ModelAndView view() {
+		return new ModelAndView("ruleList");
+
+	}
 }

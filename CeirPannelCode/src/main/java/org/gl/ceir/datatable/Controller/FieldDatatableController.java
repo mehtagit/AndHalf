@@ -85,7 +85,7 @@ public class FieldDatatableController {
 					String tagId = dataInsideList.getTagId();
 
 					String action = iconState.fieldManagementIcons(id, tag, interp, tagId);
-					Object[] finalData = {createdOn,modifiedOn, displayName, interp, tagId, description, action };
+					Object[] finalData = { createdOn, modifiedOn, displayName, interp, tagId, description, action };
 					List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
 					finalList.add(finalDataList);
 					datatableResponseModel.setData(finalList);
@@ -123,7 +123,8 @@ public class FieldDatatableController {
 		log.info("session value user Type==" + session.getAttribute("usertype"));
 
 		String[] names = { "HeaderButton", Translator.toLocale("button.addTag"), "AddField()", "btnLink",
-				"FilterButton", Translator.toLocale("button.filter"),"filterFieldTable(" + ConfigParameters.languageParam + ")", "submitFilter" };
+				"FilterButton", Translator.toLocale("button.filter"),
+				"filterFieldTable(" + ConfigParameters.languageParam + ")", "submitFilter" };
 		for (int i = 0; i < names.length; i++) {
 			button = new Button();
 			button.setType(names[i]);
@@ -137,21 +138,20 @@ public class FieldDatatableController {
 		}
 		pageElement.setButtonList(buttonList);
 
-		
-		  //Dropdown items 
-		String[] selectParam={"select",Translator.toLocale("select.filterTagId"),"filterTagId",""}; 
-		for(int i=0; i<selectParam.length; i++) {
-		  inputFields= new InputFields();
-		  inputFields.setType(selectParam[i]); 
-		  i++;
-		  inputFields.setTitle(selectParam[i]);
-		  i++; inputFields.setId(selectParam[i]);
-		  i++; 
-		  inputFields.setClassName(selectParam[i]); 
-		  dropdownList.add(inputFields);
-		  } 
+		// Dropdown items
+		String[] selectParam = { "select", Translator.toLocale("select.filterTagId"), "filterTagId", "" };
+		for (int i = 0; i < selectParam.length; i++) {
+			inputFields = new InputFields();
+			inputFields.setType(selectParam[i]);
+			i++;
+			inputFields.setTitle(selectParam[i]);
+			i++;
+			inputFields.setId(selectParam[i]);
+			i++;
+			inputFields.setClassName(selectParam[i]);
+			dropdownList.add(inputFields);
+		}
 		pageElement.setDropdownList(dropdownList);
-		 
 
 		// input type date list
 		String[] dateParam = { "date", Translator.toLocale("input.startDate"), "startDate", "", "date",

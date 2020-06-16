@@ -12,10 +12,7 @@
 	
 	 long accessTime = session.getLastAccessedTime();
 	 long currentTime= new Date().getTime(); 
-	 System.out.println("accessTime========"+(accessTime));
-	 System.out.println("timeout========"+timeout);
 	 long dfd= accessTime +timeout;
-	 System.out.println("currentTime========"+currentTime);
 	 if( currentTime< dfd){
 	/*  response.setHeader("Refresh", timeout + "; URL = ../login");
 	 System.out.println("timeout========"+timeout); 
@@ -49,7 +46,8 @@
 	src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
 <!--   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"></script>  
  -->
-
+<!-- Favicons-->
+<link rel="icon" href="${context}/resources/images/DMC-Logo.png" sizes="32x32">
 <!-- CORE CSS-->
 <link href="${context}/resources/css/materialize.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
@@ -79,11 +77,11 @@
 <%--  <link href="${context}/resources/js/plugins/chartist-js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection"> --%>
 
 <link rel="stylesheet"
-	href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
-<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+	href="${context}/resources/custom_js/jquery-ui.css?version=<%= (int) (Math.random() * 10) %>">
+<script src="${context}/resources/custom_js/1.11.2_jquery-ui.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
-<script src="http://malsup.github.io/jquery.blockUI.js"></script>
-<script src="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json"></script>
+<script src="${context}/resources/custom_js/jquery.blockUI.js?version=<%= (int) (Math.random() * 10) %>"></script>
+<script src="${context}/resources/i18n/Khmer.json"></script>
 
 			<script type="text/javascript"
 		src="${context}/resources/project_js/enterKey.js"></script>

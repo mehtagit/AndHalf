@@ -26,99 +26,94 @@ import com.google.gson.Gson;
 @Controller
 public class AdminRegistrationRequest {
 	private final Logger log = LoggerFactory.getLogger(getClass());
-	
+
 	@Autowired
-	UserProfileFeignImpl userProfileFeignImpl; 
-	
+	UserProfileFeignImpl userProfileFeignImpl;
+
 	@Autowired
 	ProfileService profileService;
 
-	@RequestMapping(value=
-		{"/registrationRequest"},method={org.springframework.web.bind.annotation.
-				RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}
-			)
-	    public ModelAndView viewConsignment(HttpSession session,@RequestParam(name="txnID",required = false) String txnID,
-	    		@RequestParam(name="source",defaultValue = "menu",required = false) String source) {
+	@RequestMapping(value = { "/registrationRequest" }, method = {
+			org.springframework.web.bind.annotation.RequestMethod.GET,
+			org.springframework.web.bind.annotation.RequestMethod.POST })
+	public ModelAndView viewConsignment(HttpSession session,
+			@RequestParam(name = "txnID", required = false) String txnID,
+			@RequestParam(name = "source", defaultValue = "menu", required = false) String source) {
 		ModelAndView mv = new ModelAndView();
-		 log.info(" view Admin Registration entry point."); 
-		 mv.setViewName("AdminRegistrationRequest");
-		log.info(" view Admin Registration  exit point."); 
-		return mv; 
+		log.info(" view Admin Registration entry point.");
+		mv.setViewName("AdminRegistrationRequest");
+		log.info(" view Admin Registration  exit point.");
+		return mv;
 	}
-	
-	
-	@RequestMapping(value=
-		{"/trcInformation"},method={org.springframework.web.bind.annotation.
-				RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}
-			)
-	    public ModelAndView viewAdminUser(HttpSession session,@RequestParam(name="id") int id, @RequestParam(name="roles") String roles,@RequestParam(name="type") String asType) {
-		int userId=	(int) session.getAttribute("userid");
+
+	@RequestMapping(value = { "/trcInformation" }, method = { org.springframework.web.bind.annotation.RequestMethod.GET,
+			org.springframework.web.bind.annotation.RequestMethod.POST })
+	public ModelAndView viewAdminUser(HttpSession session, @RequestParam(name = "id") int id,
+			@RequestParam(name = "roles") String roles, @RequestParam(name = "type") String asType) {
+		int userId = (int) session.getAttribute("userid");
 		ModelAndView mv = new ModelAndView();
-		
-		log.info("ID----->"+id+"----- Roles----->"+roles+"----type------>"+asType+"----userId---->"+userId);
-		
+
+		log.info("ID----->" + id + "----- Roles----->" + roles + "----type------>" + asType + "----userId---->"
+				+ userId);
+
 		roles = roles.replace("=", " ");
-		
+
 		Registration registration = userProfileFeignImpl.ViewAdminUser(id, userId);
-		log.info("View registration API Response--------------->" +registration);
+		log.info("View registration API Response--------------->" + registration);
 		mv.addObject("registration", registration);
-		
-		
-		
-	
-		if("TRC".equals(roles)) {
+
+		if ("TRC".equals(roles)) {
 			log.info("-------------------->1");
 			mv.setViewName("trcInformation");
-		
-		}else if("Operator".equals(roles)){
+
+		} else if ("Operator".equals(roles)) {
 			log.info("-------------------->2");
 			mv.setViewName("viewOperator");
-		
-		}else if("Custom".equals(roles) || roles.equals("Lawful Agency")){
+
+		} else if ("Custom".equals(roles) || roles.equals("Lawful Agency")) {
 			log.info("-------------------->3");
-			mv.setViewName("viewCustom"); 	
-			
-		}else if(("Importer".equals(roles) || "Distributor".equals(roles) || "Retailer".equals(roles)) && "Company".equals(asType) || "Organization".equals(asType)){
+			mv.setViewName("viewCustom");
+
+		} else if (("Importer".equals(roles) || "Distributor".equals(roles) || "Retailer".equals(roles))
+				&& "Company".equals(asType) || "Organization".equals(asType)) {
 			log.info("-------------------->4");
 			mv.setViewName("viewCompany");
-			
-		}else if(("Importer".equals(roles) || "Distributor".equals(roles) || "Retailer".equals(roles)) && "Individual".equals(asType)){
+
+		} else if (("Importer".equals(roles) || "Distributor".equals(roles) || "Retailer".equals(roles))
+				&& "Individual".equals(asType)) {
 			log.info("-------------------->5");
 			mv.setViewName("viewIndividual");
-		}else if(("Manufacturer".equals(roles))  && "Company".equals(asType)){
+		} else if (("Manufacturer".equals(roles)) && "Company".equals(asType)) {
 			log.info("-------------------->6");
 			mv.setViewName("viewManufacturer");
 		}
-		
-		log.info(" view trcInformation  exit point."); 
-		return mv; 
+
+		log.info(" view trcInformation  exit point.");
+		return mv;
 	}
-	
-	
-	
-	
-	//***************************************** Export Registration controller *********************************
-	
-	@RequestMapping(value="/exportAdminRegistration",method ={org.springframework.web.bind.annotation.RequestMethod.GET})
-	public String exportToExcel(@RequestParam(name="RegistrationStartDate", required = false) String RegistrationStartDate,
-			@RequestParam(name="RegistrationEndDate",required = false) String RegistrationEndDate,
-			@RequestParam(name="asType",required = false) Integer asType,
-			@RequestParam(name="userRoleTypeId", required = false) Integer userRoleTypeId,
-			@RequestParam(name="featureId", required = false) Integer featureId,
-			@RequestParam(name="status",required = false) Integer status,
-			@RequestParam(name="pageSize") Integer pageSize,
-			@RequestParam(name="pageNo") Integer pageNo,
-			HttpServletRequest request,
-			HttpSession session)
-	{
-				
-		
-		log.info("RegistrationStartDate=="+RegistrationStartDate+ " RegistrationEndDate ="+RegistrationEndDate+" asType="+asType+"userRoleTypeId="+userRoleTypeId);
-		int userId= (int) session.getAttribute("userid");
-		int file=1;
-		String userType=(String) session.getAttribute("usertype"); 	
+
+	// ***************************************** Export Registration controller
+	// *********************************
+
+	@RequestMapping(value = "/exportAdminRegistration", method = {
+			org.springframework.web.bind.annotation.RequestMethod.GET })
+	public String exportToExcel(
+			@RequestParam(name = "RegistrationStartDate", required = false) String RegistrationStartDate,
+			@RequestParam(name = "RegistrationEndDate", required = false) String RegistrationEndDate,
+			@RequestParam(name = "asType", required = false) Integer asType,
+			@RequestParam(name = "userRoleTypeId", required = false) Integer userRoleTypeId,
+			@RequestParam(name = "featureId", required = false) Integer featureId,
+			@RequestParam(name = "status", required = false) Integer status,
+			@RequestParam(name = "pageSize") Integer pageSize, @RequestParam(name = "pageNo") Integer pageNo,
+			HttpServletRequest request, HttpSession session) {
+
+		log.info("RegistrationStartDate==" + RegistrationStartDate + " RegistrationEndDate =" + RegistrationEndDate
+				+ " asType=" + asType + "userRoleTypeId=" + userRoleTypeId);
+		int userId = (int) session.getAttribute("userid");
+		int file = 1;
+		String userType = (String) session.getAttribute("usertype");
 		FileExportResponse fileExportResponse;
-		FilterRequest filterRequest= new FilterRequest();
+		FilterRequest filterRequest = new FilterRequest();
 		filterRequest.setStartDate(RegistrationStartDate);
 		filterRequest.setEndDate(RegistrationEndDate);
 		filterRequest.setAsType(asType);
@@ -127,21 +122,22 @@ public class AdminRegistrationRequest {
 		filterRequest.setUserId(userId);
 		filterRequest.setUserType(userType);
 		filterRequest.setFeatureId(featureId);
-		log.info(" request passed to the exportTo Excel Api =="+filterRequest+" *********** pageSize"+pageSize+"  pageNo  "+pageNo);
-		Object response = userProfileFeignImpl.registrationRequest(filterRequest, pageNo, pageSize,file,"filter");
-		Gson gson= new Gson(); 
+		log.info(" request passed to the exportTo Excel Api ==" + filterRequest + " *********** pageSize" + pageSize
+				+ "  pageNo  " + pageNo);
+		Object response = userProfileFeignImpl.registrationRequest(filterRequest, pageNo, pageSize, file, "filter");
+		Gson gson = new Gson();
 		String apiResponse = gson.toJson(response);
 		fileExportResponse = gson.fromJson(apiResponse, FileExportResponse.class);
-			log.info("response  from   export grievance  api="+fileExportResponse);
-			return "redirect:"+fileExportResponse.getUrl();
-		
+		log.info("response  from   export grievance  api=" + fileExportResponse);
+		return "redirect:" + fileExportResponse.getUrl();
+
 	}
-	
-	@RequestMapping(value ="/adminChangeRequest",method = RequestMethod.POST)
+
+	@RequestMapping(value = "/adminChangeRequest", method = RequestMethod.POST)
 	@ResponseBody
-	public  HttpResponse changeUserStatus(@RequestBody UserStatus userStatus,HttpSession session) {
-		return profileService.changeUserStatusService(userStatus,session);
-		
+	public HttpResponse changeUserStatus(@RequestBody UserStatus userStatus, HttpSession session) {
+		return profileService.changeUserStatusService(userStatus, session);
+
 	}
-	
+
 }
