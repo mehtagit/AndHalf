@@ -2,6 +2,8 @@ package com.ceir.GreyListProcess.util;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.io.PrintWriter;
+import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -15,7 +17,7 @@ import org.springframework.stereotype.Component;
 
 import com.ceir.GreyListProcess.model.GreylistDb;
 import com.ceir.GreyListProcess.model.GreylistDbHistory;
-import com.ceir.GreyListProcess.model.constants.StockOperation;
+import com.ceir.GreyListProcess.model.constants.GreyListOperation;
 
 
 @Component
@@ -48,6 +50,13 @@ public class Utility {
 		return cal.getTime();
 	}
 	
+	public  Date addDays(Date date, int days) {
+		GregorianCalendar cal = new GregorianCalendar();
+		cal.setTime(date);
+		cal.add(Calendar.DATE, +days);
+		return cal.getTime();
+	}
+	
 
 	public	String getYesterDayMonth() {
 		DateFormat dateFormat = new SimpleDateFormat("MMM-yyyy");
@@ -60,10 +69,13 @@ public class Utility {
 
 			File tmpDir = new File(fileName);
 			boolean exists = tmpDir.exists();
-
-			FileWriter fw = new FileWriter(fileName, true);
-
-			if (!exists)
+			if (exists) {
+				tmpDir.delete();
+				tmpDir.createNewFile();
+			}
+			FileWriter fw = new FileWriter(fileName,true);
+	
+			//if (!exists)
 				fw.append(header);
 
 			fw.append("\n");
@@ -80,12 +92,16 @@ public class Utility {
 
 			File tmpDir = new File(fileName);
 			boolean exists = tmpDir.exists();
+			if (exists) {
+				tmpDir.delete();
+				tmpDir.createNewFile();
+			}
 
-			FileWriter fw = new FileWriter(fileName, true);
-
-			if (!exists)
+			FileWriter fw = new FileWriter(fileName,true);
+			
+			//if (!exists)
 				fw.append(header);
-
+				
 			fw.append("\n");
 			for(GreylistDb greyListData:record) {
 				fw.append(String.valueOf(greyListData.getImei()));
@@ -104,15 +120,19 @@ public class Utility {
 
 			File tmpDir = new File(fileName);
 			boolean exists = tmpDir.exists();
+			if (exists) {
+				tmpDir.delete();
+				tmpDir.createNewFile();
+			}
 
-			FileWriter fw = new FileWriter(fileName, true);
-
-			if (!exists)
+			
+			FileWriter fw = new FileWriter(fileName,true);
+			//if (!exists)
 				fw.append(header);
 
 			fw.append("\n");
 			for(GreylistDbHistory greyListData:record) {
-				fw.append(String.valueOf(greyListData.getImei()) +"," +StockOperation.INSERT.getDescription());
+				fw.append(String.valueOf(greyListData.getImei()) +"," +GreyListOperation.getUserStatusByCode(greyListData.getOperation()).getDescription());
 				fw.append("\n");
 			}
 			
@@ -149,6 +169,11 @@ public class Utility {
 	
 	public String convertToDateIdformat(Date date) {
 		DateFormat dateFormat=new SimpleDateFormat("yyyyMMddHHmm");
+		String currentDate=dateFormat.format(date);
+		return currentDate;
+	}
+	public String convertToDate(Date date) {
+		DateFormat dateFormat=new SimpleDateFormat("yyyyMMdd");
 		String currentDate=dateFormat.format(date);
 		return currentDate;
 	}
@@ -195,7 +220,6 @@ public class Utility {
 				e.printStackTrace();
 				return null;
 			}  
-		    
 	}
 	
 }

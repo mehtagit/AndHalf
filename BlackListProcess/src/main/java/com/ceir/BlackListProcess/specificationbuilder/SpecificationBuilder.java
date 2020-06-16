@@ -1,19 +1,19 @@
-package com.ceir.GreyListProcess.specificationsbuilder;
+package com.ceir.BlackListProcess.specificationbuilder;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.persistence.criteria.Expression;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.data.jpa.domain.Specification;
+import javax.persistence.criteria.Expression;
 
-import com.ceir.GreyListProcess.model.SearchCriteria;
-import com.ceir.GreyListProcess.model.constants.Datatype;
-import com.ceir.GreyListProcess.model.constants.SearchOperation;
-import com.ceir.GreyListProcess.util.DbFunctions;
+import com.ceir.BlackListProcess.model.SearchCriteria;
+import com.ceir.BlackListProcess.model.constants.Datatype;
+import com.ceir.BlackListProcess.model.constants.SearchOperation;
+import com.ceir.BlackListProcess.util.DbFunctions;
+
 
 
 public class SpecificationBuilder<T> {
@@ -99,12 +99,12 @@ public class SpecificationBuilder<T> {
 					else if(SearchOperation.GREATER_THAN.equals(searchCriteria.getSearchOperation())
 							&& Datatype.DATE.equals(searchCriteria.getDatatype())){
 						Expression<String> dateStringExpr = cb.function(DbFunctions.getDate(dialect), String.class, root.get(searchCriteria.getKey()), cb.literal(DbFunctions.getDateFormat(dialect)));
-						return cb.greaterThanOrEqualTo(cb.lower(dateStringExpr), searchCriteria.getValue().toString());
+						return cb.greaterThan(cb.lower(dateStringExpr), searchCriteria.getValue().toString());
 					}
 					else if(SearchOperation.LESS_THAN.equals(searchCriteria.getSearchOperation())
 							&& Datatype.DATE.equals(searchCriteria.getDatatype())){
 						Expression<String> dateStringExpr = cb.function(DbFunctions.getDate(dialect), String.class, root.get(searchCriteria.getKey()), cb.literal(DbFunctions.getDateFormat(dialect)));
-						return cb.lessThanOrEqualTo(cb.lower(dateStringExpr), searchCriteria.getValue().toString());
+						return cb.lessThan(cb.lower(dateStringExpr), searchCriteria.getValue().toString());
 					}
 					
 					else if(SearchOperation.EQUALITY.equals(searchCriteria.getSearchOperation())

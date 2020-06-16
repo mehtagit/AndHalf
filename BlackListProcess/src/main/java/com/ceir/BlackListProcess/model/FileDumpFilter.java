@@ -1,5 +1,6 @@
-package com.ceir.GreyListProcess.model;
+package com.ceir.BlackListProcess.model;
 
+import java.util.Date;
 public class FileDumpFilter {
 	
 	public String startDate;

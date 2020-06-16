@@ -1,23 +1,22 @@
 package com.ceir.BlackListProcess.model;
 
-import java.io.Serializable;
 import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class BlacklistDbHistory implements Serializable {
+public class BlacklistDbHistory {
 
-	private static final long serialVersionUID = 1L;
+	private static long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -28,10 +27,10 @@ public class BlacklistDbHistory implements Serializable {
 	@JsonIgnore
 	@UpdateTimestamp
 	private Date modifiedOn;
-	private Long imei;
+	private String imei;
 	@Column(length = 15)
 	private String roleType;
-	private Long userId;
+	private String userId;
 	private String deviceNumber;
 	private String deviceType;
 	private String deviceAction;
@@ -41,7 +40,13 @@ public class BlacklistDbHistory implements Serializable {
 	private String  deviceId;
 	private String imeiEsnMeid;
 	private int operation;
-
+	private String modeType;
+	private String requestType;
+	private String userType;
+	private String complainType;
+	@Type(type="date")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date expiryDate;
 
 	public Long getId() {
 		return id;
@@ -61,10 +66,10 @@ public class BlacklistDbHistory implements Serializable {
 	public void setModifiedOn(Date modifiedOn) {
 		this.modifiedOn = modifiedOn;
 	}
-	public Long getImei() {
+	public String getImei() {
 		return imei;
 	}
-	public void setImei(Long imei) {
+	public void setImei(String imei) {
 		this.imei = imei;
 	}
 	public int getOperation() {
@@ -79,10 +84,10 @@ public class BlacklistDbHistory implements Serializable {
 	public void setRoleType(String roleType) {
 		this.roleType = roleType;
 	}
-	public Long getUserId() {
+	public String getUserId() {
 		return userId;
 	}
-	public void setUserId(Long userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 	public String getDeviceNumber() {
@@ -136,9 +141,10 @@ public class BlacklistDbHistory implements Serializable {
 	
 	public BlacklistDbHistory() {
 	}
-	public BlacklistDbHistory(Date createdOn, Date modifiedOn, Long imei, String roleType, Long userId,
+	public BlacklistDbHistory(Date createdOn, Date modifiedOn, String imei, String roleType, String userId,
 			String deviceNumber, String deviceType, String deviceAction, String deviceStatus, String deviceLaunchDate,
-			String multipleSimStatus, String deviceId, String imeiEsnMeid, int operation) {
+			String multipleSimStatus, String deviceId, String imeiEsnMeid, int operation,String modeType,
+			String requestType,String  userType,String complainType,Date expiryDate) {
 		super();
 		this.createdOn = createdOn;
 		this.modifiedOn = modifiedOn;
@@ -154,12 +160,52 @@ public class BlacklistDbHistory implements Serializable {
 		this.deviceId = deviceId;
 		this.imeiEsnMeid = imeiEsnMeid;
 		this.operation = operation;
+		this.modeType=modeType;
+		this.requestType=requestType;
+		this.userType=userType;
+		this.complainType=complainType;
+        this.expiryDate=expiryDate;
+	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	public static void setSerialversionuid(long serialversionuid) {
+		serialVersionUID = serialversionuid;
+	}
+	
+	public String getModeType() {
+		return modeType;
+	}
+	public void setModeType(String modeType) {
+		this.modeType = modeType;
+	}
+	public Date getExpiryDate() {
+		return expiryDate;
+	}
+	public void setExpiryDate(Date expiryDate) {
+		this.expiryDate = expiryDate;
 	}
 
-
-
-
-
-
-
+	public String getRequestType() {
+		return requestType;
+	}
+	public void setRequestType(String requestType) {
+		this.requestType = requestType;
+	}
+	public String getUserType() {
+		return userType;
+	}
+	public void setUserType(String userType) {
+		this.userType = userType;
+	}
+	public String getComplainType() {
+		return complainType;
+	}
+	public void setComplainType(String complainType) {
+		this.complainType = complainType;
+	}
+	
+	
 }
+
+

@@ -1,13 +1,13 @@
 package com.ceir.GreyListProcess.model.constants;
 
-public enum StockOperation {
+public enum GreyListOperation {
 
-INSERT(0,"Insert"),DELETE(1,"delete"),UPDATE(2,"Update");
+ADD(0,"Add"),DELETE(1,"Delete"),UPDATE(2,"Update");
 	
 	private int code;
 	private String description;
 	
-	StockOperation(Integer code, String description) {
+	GreyListOperation(Integer code, String description) {
 		this.code = code;
 		this.description = description; 
 	}       
@@ -21,8 +21,8 @@ INSERT(0,"Insert"),DELETE(1,"delete"),UPDATE(2,"Update");
 	}
 	
 
-	public static StockOperation getUserStatusByCode(Integer code) {
-		for (StockOperation approveStatus : StockOperation.values()) {
+	public static GreyListOperation getUserStatusByCode(Integer code) {
+		for (GreyListOperation approveStatus : GreyListOperation.values()) {
 			if (approveStatus.getCode() == code)
 				return approveStatus;
 		}
@@ -30,8 +30,8 @@ INSERT(0,"Insert"),DELETE(1,"delete"),UPDATE(2,"Update");
 		return null;
 	}
 	
-	public static StockOperation getUserStatusByDesc(String desc) {
-		for (StockOperation approveStatus : StockOperation.values()) {
+	public static GreyListOperation getUserStatusByDesc(String desc) {
+		for (GreyListOperation approveStatus : GreyListOperation.values()) {
 			if (approveStatus.getDescription().equals(desc))
 				return approveStatus;
 		}

@@ -49,6 +49,18 @@ public class ListFileDetailsImpl {
 		}
 	}
 	
+	public FileDumpMgmt topDataByDumpTypeAndServiceDump(String dumpType,int serviceDump) {
+		try {
+			logger.info("going to fetch topDataByDumpType where dumpType = "+dumpType);
+			return fileDumpMgmtRepository.findTopByDumpTypeAndServiceDumpOrderByIdDesc(dumpType,serviceDump);
+		}
+		catch(Exception e) {
+			logger.info("exception occur when fetching top data by dumpType in file_dump_mgmt table ");
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 	public FileDumpMgmt saveFileDumpMgmt(FileDumpMgmt fileDumpMgmt) {
 		try {
 			return fileDumpMgmtRepository.save(fileDumpMgmt);

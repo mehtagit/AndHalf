@@ -1,4 +1,4 @@
-package com.ceir.GreyListProcess.util;
+package com.ceir.BlackListProcess.util;
 
 import java.util.Objects;
 

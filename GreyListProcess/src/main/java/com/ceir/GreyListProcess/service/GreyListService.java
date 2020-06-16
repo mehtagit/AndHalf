@@ -3,6 +3,7 @@ package com.ceir.GreyListProcess.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import com.ceir.GreyListProcess.model.SystemConfigurationDb;
 import com.ceir.GreyListProcess.process.FullDumpProcess;
@@ -31,6 +32,15 @@ public class GreyListService implements Runnable{
 
 	@Autowired
 	WebActionRepoImpl webActionRepoImpl;
+	
+	@Value
+	("${filePathTag}")
+	String filePathTag;
+	
+	@Value
+	("${threadSleep}")
+	Integer threadSleep;
+	
 
 	private final Logger log =LoggerFactory.getLogger(getClass());
 
@@ -39,11 +49,11 @@ public class GreyListService implements Runnable{
 			SystemConfigurationDb filePath=new SystemConfigurationDb();
 			log.info("inside in Grey List dump process");
 			log.info("now going to check whether stolen data found on web_action_db table or not");   
-			boolean checkStolenStatus=webActionRepoImpl.checkFeatureExist("Stolen");
-			if(checkStolenStatus==false) {
-				log.info("If stolen data doesnot exist in web action db");
+		//	boolean checkStolenStatus=webActionRepoImpl.checkFeatureExist("Stolen");
+			//if(checkStolenStatus==false) {
+				//log.info("If stolen data doesnot exist in web action db");
 				SystemConfigurationDb systemConfigurationDb=new SystemConfigurationDb();
-				systemConfigurationDb.setTag("GREYLIST_FILEPATH");
+				systemConfigurationDb.setTag(filePathTag);
 				log.info("now fetching filepath to save grey list dump files");
 				try{
 					filePath=configurationManagementServiceImpl.findByTag(systemConfigurationDb);
@@ -58,14 +68,14 @@ public class GreyListService implements Runnable{
 				fullDumpProcess.fullDumpProcess(filePath.getValue());
 				increDumpProcess.incrementalDumpProcess(filePath.getValue());	
 				log.info("exit from grey List dump process");
-			}
+		/*	}
 			else {
 				log.info("stolen data exist in web action db");
 				log.info("so this process cannot go further");
-			}
+			}*/
 			log.info("exit from Grey List dump process");
 			try {
-				Thread.sleep(3600000);
+				Thread.sleep(threadSleep);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

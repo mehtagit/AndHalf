@@ -47,8 +47,8 @@ public class NationalislmServiceImpl {
 		try {
 			SpecificationBuilder<GreylistDb> fdsb = new SpecificationBuilder<GreylistDb>(propertiesReader.dialect);
 
-			if(Objects.nonNull(fileDumpFilter.getStartDate()))
-				fdsb.with(new SearchCriteria("createdOn",fileDumpFilter.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
+//			if(Objects.nonNull(fileDumpFilter.getStartDate()))
+//				fdsb.with(new SearchCriteria("createdOn",fileDumpFilter.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
 
 			if(Objects.nonNull(fileDumpFilter.getStartDate()))
 				fdsb.with(new SearchCriteria("createdOn",fileDumpFilter.getEndDate(), SearchOperation.LESS_THAN, Datatype.DATE));

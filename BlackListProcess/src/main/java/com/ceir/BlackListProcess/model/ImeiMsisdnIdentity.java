@@ -13,7 +13,7 @@ public class ImeiMsisdnIdentity implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	@NotNull
-	private Long imei;
+	private String imei;
 	@NotNull
 	private Long msisdn;
 
@@ -21,16 +21,16 @@ public class ImeiMsisdnIdentity implements Serializable {
 
 	}
 
-	public ImeiMsisdnIdentity(Long imei, Long msisdn) {
+	public ImeiMsisdnIdentity(String imei, Long msisdn) {
 		this.imei = imei;
 		this.msisdn = msisdn;
 	}
 
-	public Long getImei() {
+	public String getImei() {
 		return imei;
 	}
 
-	public void setImei(Long imei) {
+	public void setImei(String imei) {
 		this.imei = imei;
 	}
 

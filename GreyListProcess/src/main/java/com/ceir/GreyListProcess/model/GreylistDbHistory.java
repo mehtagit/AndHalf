@@ -1,6 +1,5 @@
 package com.ceir.GreyListProcess.model;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -10,13 +9,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class GreylistDbHistory implements Serializable {
+public class GreylistDbHistory  {
 
 	private static final long serialVersionUID = 1L;
 	@Id
@@ -30,10 +31,10 @@ public class GreylistDbHistory implements Serializable {
 	@JsonIgnore
 	@UpdateTimestamp
 	private Date modifiedOn;
-	private Long imei;
+	private String imei;
 	@Column(length = 15)
 	private String roleType;
-	private Long userId;
+	private String userId;
 	@Column(length = 20)
 	private String txnId;
 	private String deviceNumber;
@@ -44,10 +45,16 @@ public class GreylistDbHistory implements Serializable {
 	private String multipleSimStatus;
 	private String  deviceId;
 	private String imeiEsnMeid;
-
-	
 	private int operation;
-	
+	private String reason;
+	private String modeType;
+	private String requestType;
+	private String userType;
+	private String complainType;
+	@Type(type="date")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date expiryDate;
+
 	public Long getId() {
 		return id;
 	}
@@ -66,10 +73,10 @@ public class GreylistDbHistory implements Serializable {
 	public void setModifiedOn(Date modifiedOn) {
 		this.modifiedOn = modifiedOn;
 	}
-	public Long getImei() {
+	public String getImei() {
 		return imei;
 	}
-	public void setImei(Long imei) {
+	public void setImei(String imei) {
 		this.imei = imei;
 	}
 	public String getRoleType() {
@@ -78,10 +85,10 @@ public class GreylistDbHistory implements Serializable {
 	public void setRoleType(String roleType) {
 		this.roleType = roleType;
 	}
-	public Long getUserId() {
+	public String getUserId() {
 		return userId;
 	}
-	public void setUserId(Long userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 	public int getOperation() {
@@ -144,13 +151,71 @@ public class GreylistDbHistory implements Serializable {
 	public void setImeiEsnMeid(String imeiEsnMeid) {
 		this.imeiEsnMeid = imeiEsnMeid;
 	}
-	@Override
-	public String toString() {
-		return "GreylistDbHistory [id=" + id + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", imei="
-				+ imei + ", roleType=" + roleType + ", userId=" + userId + ", txnId=" + txnId + ", deviceNumber="
-				+ deviceNumber + ", deviceType=" + deviceType + ", deviceAction=" + deviceAction + ", deviceStatus="
-				+ deviceStatus + ", DeviceLaunchDate=" + DeviceLaunchDate + ", multipleSimStatus=" + multipleSimStatus
-				+ ", deviceId=" + deviceId + ", imeiEsnMeid=" + imeiEsnMeid + ", operation=" + operation + "]";
+	
+	public String getReason() {
+		return reason;
+	}
+	public void setReason(String reason) {
+		this.reason = reason;
+	}
+	
+
+	public String getRequestType() {
+		return requestType;
+	}
+	public void setRequestType(String requestType) {
+		this.requestType = requestType;
+	}
+	public String getUserType() {
+		return userType;
+	}
+	public void setUserType(String userType) {
+		this.userType = userType;
+	}
+	public String getComplainType() {
+		return complainType;
+	}
+	public void setComplainType(String complainType) {
+		this.complainType = complainType;
+	}
+	public GreylistDbHistory( Date createdOn, Date modifiedOn, String imei, String roleType, String userId,
+			String txnId, String deviceNumber, String deviceType, String deviceAction, String deviceStatus,
+			String deviceLaunchDate, String multipleSimStatus, String deviceId, String imeiEsnMeid, int operation,String reason,
+			String mode, String requestType,String  userType,String complainType,Date expiryDate) {
+		this.createdOn = createdOn;
+		this.modifiedOn = modifiedOn;
+		this.imei = imei;
+		this.roleType = roleType;
+		this.userId = userId;
+		this.txnId = txnId;
+		this.deviceNumber = deviceNumber;
+		this.deviceType = deviceType;
+		this.deviceAction = deviceAction;
+		this.deviceStatus = deviceStatus;
+		DeviceLaunchDate = deviceLaunchDate;
+		this.multipleSimStatus = multipleSimStatus;
+		this.deviceId = deviceId;
+		this.imeiEsnMeid = imeiEsnMeid;
+		this.operation = operation;
+		this.reason=reason;
+		this.requestType=requestType;
+		this.userType=userType;
+		this.complainType=complainType;
+        this.expiryDate=expiryDate;   
+	}
+	public GreylistDbHistory() {
+	}
+	public Date getExpiryDate() {
+		return expiryDate;
+	}
+	public void setExpiryDate(Date expiryDate) {
+		this.expiryDate = expiryDate;
+	}
+	public String getModeType() {
+		return modeType;
+	}
+	public void setModeType(String modeType) {
+		this.modeType = modeType;
 	}
 
 

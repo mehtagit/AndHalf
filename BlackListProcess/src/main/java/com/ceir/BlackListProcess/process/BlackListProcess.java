@@ -3,6 +3,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +16,7 @@ import com.ceir.BlackListProcess.model.GreylistDb;
 import com.ceir.BlackListProcess.model.GreylistDbHistory;
 import com.ceir.BlackListProcess.model.ImeiMsisdnIdentity;
 import com.ceir.BlackListProcess.model.SystemConfigurationDb;
-import com.ceir.BlackListProcess.model.constants.StockOperation;
+import com.ceir.BlackListProcess.model.constants.GreyListOperation;
 import com.ceir.BlackListProcess.repoimpl.BlackListRepoImpl;
 import com.ceir.BlackListProcess.repoimpl.ConfigurationManagementServiceImpl;
 import com.ceir.BlackListProcess.repoimpl.ListFileDetailsImpl;
@@ -44,75 +46,70 @@ public class BlackListProcess {
 	WebActionRepoImpl webActionRepoImpl;
 	
 	private final Logger log =LoggerFactory.getLogger(getClass());
-
+    @Transactional
 	public void blackListProcess() {
 		log.info("inside blacklist process");
-		boolean checkStolenStatus=webActionRepoImpl.checkFeatureExist("Stolen");
-		if(checkStolenStatus==false) {
-		log.info("if stolen data is not found");
+		//boolean checkStolenStatus=webActionRepoImpl.checkFeatureExist("Stolen");
+		//if(checkStolenStatus==false) {
 		SystemConfigurationDb greyToBlackListPeriodInDay=new SystemConfigurationDb();
 		SystemConfigurationDb sysConfigDb=new SystemConfigurationDb();
-		//log.info("now going to check whether data entered on file_dump_mgmt for grey list");
-		//FileDumpMgmt topDataForBlackList=listFileDetailsImpl.topDataByServiceDump(0);
-		//log.info("topDataForIncdump:  "+topDataForBlackList.toString());
-		//if(topDataForBlackList!= null) {
-		//log.info("if topDataForBlackList is not null");
-		//String currentDate=utility.currentDate();
 		Date currentDdate=utility.currentOnlyDate();
-		log.info("current Date:  "+currentDdate);
-		//String fileDumpDate=utility.convertToDateformat(topDataForBlackList.getCreatedOn());
-		//Date dumpDate=utility.convertDateToFormat(topDataForBlackList.getCreatedOn());
-		//log.info("fileDumpDate:  "+dumpDate);
-		//if(dumpDate.equals(currentDdate)) {
+		//log.info("current Date:  "+currentDdate);
 		sysConfigDb.setTag("GREY_TO_BLACK_MOVE_PERIOD_IN_DAY");
-		log.info("now going to check GREY TO BLACK MOVE PERIOD IN DAY");
-		greyToBlackListPeriodInDay=configurationManagementServiceImpl.findByTag(sysConfigDb);
-		log.info("GREY TO BLACK MOVE PERIOD IN DAY: "+greyToBlackListPeriodInDay.getValue());
-		Integer days=Integer.parseInt(greyToBlackListPeriodInDay.getValue());
-		//String compareDate=utility.addDaysInCurrentDate(days);
-		//Date periodDate=utility.stringToDate(compareDate);
+		//log.info("now going to check GREY TO BLACK MOVE PERIOD IN DAY");
+	//	greyToBlackListPeriodInDay=configurationManagementServiceImpl.findByTag(sysConfigDb);
+		//log.info("GREY TO BLACK MOVE PERIOD IN DAY: "+greyToBlackListPeriodInDay.getValue());
+		//Integer days=Integer.parseInt(greyToBlackListPeriodInDay.getValue());
 		List<GreylistDb> greyListData=new ArrayList<GreylistDb>();
 		log.info("going to fetch grey list data:");
 		greyListData=nationalislmServiceImpl.findAllGreyListData();
-		if(greyListData!=null) {
+		if(greyListData.isEmpty()==false) {
 			greyListProcess(greyListData);
 		}
-		//}
-		//}
-		}
 		else {
-			log.info("stolen data exist in web action db :  "+checkStolenStatus);
+			log.info("grey list data not found so process cannot go further");
 		}
+		//}
+		//}
+		/*
+		 * } else {
+		 * log.info("stolen data exist in web action db :  "+checkStolenStatus); }
+		 */
 		log.info("exit from blackList process");
 	}
-
+    
 	public void greyListProcess(List<GreylistDb> greyListData) {
-		log.info("if greylist data is not null");
+		log.info("if greylist data found");
 		for(GreylistDb greyListDb:greyListData) {
 			Date currentDate=utility.currentOnlyDate();
 			log.info("grace period expiry date for particular imei: "+greyListDb.getExpiryDate());
 			log.info("current date:  "+currentDate); 
+			if(greyListDb.getExpiryDate()!=null) {
 			if(currentDate.after(greyListDb.getExpiryDate())) {
 				log.info("if grace period for this imei is completed: "+greyListDb.getImei());	
+				log.info("so move this grey list data to greylist history and blacklist table");
 				GreylistDbHistory greyListHistory=new GreylistDbHistory(new Date(),new Date(),
 						greyListDb.getImei(), greyListDb.getRoleType(), greyListDb.getUserId(),
 						greyListDb.getTxnId(), greyListDb.getDeviceNumber(), greyListDb.getDeviceType(),
 						greyListDb.getDeviceAction(),greyListDb.getDeviceStatus(),greyListDb.getDeviceLaunchDate(),
-						greyListDb.getMultipleSimStatus(), greyListDb.getDeviceId(),greyListDb.getImeiEsnMeid(),StockOperation.INSERTION.getCode()
-						,"Moved to BlackList");
+						greyListDb.getMultipleSimStatus(), greyListDb.getDeviceId(),greyListDb.getImeiEsnMeid(),GreyListOperation.DELETE.getCode()
+						,"Moved to BlackList",greyListDb.getModeType(),greyListDb.getRequestType(),
+						greyListDb.getUserType(),greyListDb.getComplainType(),greyListDb.getExpiryDate());
 				GreylistDbHistory greylistDbHistory=nationalislmServiceImpl.saveGreyListHistory(greyListHistory);
                 
 				if(greylistDbHistory!=null) {
 					log.info("now data is saved into GreylistDbHistory table");
-					int deleteGreyListById=nationalislmServiceImpl.deleteGreyListById(greyListDb.getId());
-					if(deleteGreyListById!=0) {
+
+
 						log.info("that imei record removed from grey_List_Db table");
-						BlackList blackList=new BlackList();
-						ImeiMsisdnIdentity imeiMsisdnIdentity=new ImeiMsisdnIdentity();
-						imeiMsisdnIdentity.setImei(greylistDbHistory.getImei());
-						imeiMsisdnIdentity.setMsisdn(0l); 
-						blackList.setImeiMsisdnIdentity(imeiMsisdnIdentity);
-						
+					    
+						BlackList blackList=new BlackList(greyListDb.getImei(),0l,greyListDb.getRoleType(),
+								greyListDb.getUserId(),greyListDb.getTxnId(),greyListDb.getDeviceNumber(),greyListDb.getDeviceType(),
+								greyListDb.getDeviceAction(),greyListDb.getDeviceStatus(),greyListDb.getDeviceLaunchDate(),
+								greyListDb.getMultipleSimStatus(),greyListDb.getDeviceId(),greyListDb.getImeiEsnMeid(),
+								greyListDb.getModeType(),greyListDb.getRequestType(),greyListDb.getUserType(),
+								greyListDb.getComplainType(),greyListDb.getExpiryDate());
+					
 						BlackList blackListOutput=blackListRepoImpl.saveBlackList(blackList);	
 						if(blackListOutput!=null) {
 							log.info("data saved into black_list table");
@@ -121,17 +118,28 @@ public class BlackListProcess {
 									greyListDb.getImei(), greyListDb.getRoleType(), greyListDb.getUserId(),
 									greyListDb.getDeviceNumber(), greyListDb.getDeviceType(),
 									greyListDb.getDeviceAction(),greyListDb.getDeviceStatus(),greyListDb.getDeviceLaunchDate(),
-									greyListDb.getMultipleSimStatus(), greyListDb.getDeviceId(),greyListDb.getImeiEsnMeid(),StockOperation.INSERTION.getCode());
+									greyListDb.getMultipleSimStatus(), greyListDb.getDeviceId(),greyListDb.getImeiEsnMeid(),GreyListOperation.Add.getCode()
+									,greyListDb.getModeType(),greyListDb.getRequestType(),greyListDb.getUserType(),
+									greyListDb.getComplainType(),greyListDb.getExpiryDate());
 							BlacklistDbHistory output=blackListRepoImpl.saveBlackListHistory(blackListHistory);	
 							if(output!=null) {
 								System.out.println("data saved into blacklist_db_history table");
 							}
 						}
-					}
+						log.info("going to delete greyList table data for this imei");
+						int deleteGreyListById=nationalislmServiceImpl.deleteGreyListById(greyListDb.getId());
+						if(deleteGreyListById==1) {
+							log.info("greylist data sucessfully delete ");
+						}else {
+							log.info("greylist data failed to delete");
+						}
 				}
 			}
 			else{
-
+			}
+			}
+			else {
+				System.out.println("expiry date for imei is null");	
 			}
 		}
 	}

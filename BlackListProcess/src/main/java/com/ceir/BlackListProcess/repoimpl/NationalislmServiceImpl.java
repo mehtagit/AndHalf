@@ -97,7 +97,7 @@ public List<GreylistDb> findAllGreyListData() {
 		return greyListData;
 		}
 		catch(Exception e) {
-			return null;
+			return new ArrayList<GreylistDb>();
 		}
 	}
 
