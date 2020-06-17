@@ -6,7 +6,7 @@ import org.gl.ceir.CeirPannelCode.Model.DBrowDataModel;
 import org.springframework.stereotype.Component;
 @Component
 public class DbTablesPaginationModel {
-	private DBrowDataModel content = null;
+	private DBrowDataModel content;
 	private Pageable pageable;
 	private Integer totalPages;
 	private Integer totalElements;

@@ -62,45 +62,58 @@ public class DBDatatableController {
 		MapDatatableResponse map = new MapDatatableResponse();
 		Gson gsonObject = new Gson();
 		DBrowDataModel filterrequest = gsonObject.fromJson(filter, DBrowDataModel.class);
-		
+
 		Integer pageSize = Integer.parseInt(request.getParameter("length"));
 		Integer pageNumber = Integer.parseInt(request.getParameter("start")) / pageSize ;
-		
+
 		log.info("pageSize"+pageSize+"-----------pageNumber---"+pageNumber);
-		
-		
+
+
+		DBrowDataModel paginationContentList = null;
 		try {
 			log.info("request passed to API:::::::::" + filterrequest);
 			Object response = dBTablesFeignClient.DBRowDetailsFeign(filterrequest, pageNumber, pageSize);
 			Gson gson = new Gson();
 			String apiResponse = gson.toJson(response);
 			log.info("apiResponse ::::::::::::::" + apiResponse);
-			
 			dbTablesPaginationModel = gson.fromJson(apiResponse, DbTablesPaginationModel.class);
 			log.info("response::::::" + dbTablesPaginationModel);
-			
-			DBrowDataModel paginationContentList = dbTablesPaginationModel.getContent();
+			paginationContentList = dbTablesPaginationModel.getContent();
 			log.info("paginationContentList----------->" +paginationContentList);
-			
+		}catch(Exception ex) {
+			datatableResponseModel.setData(Collections.emptyList());
+			datatableResponseModel.setRecordsTotal(0);
+			datatableResponseModel.setRecordsFiltered(0);
+			return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK);
+		}
+
+		try {
 			if(paginationContentList != null) {
-				for(Map<String, String> dataModel : dbTablesPaginationModel.getContent().getRowData()) {
-					List<Object> datatableList = new ArrayList<Object>();
-					for( String key : dataModel.keySet() ) {
-						datatableList.add( dataModel.get(key));
+				if(dbTablesPaginationModel.getContent().getRowData() != null) {
+					log.info("in if paginationContentList isnt null");
+					for(Map<String, String> dataModel : dbTablesPaginationModel.getContent().getRowData()) {
+						List<Object> datatableList = new ArrayList<Object>();
+						for( String key : dataModel.keySet() ) {
+							datatableList.add( dataModel.get(key));
+						}
+						finalList.add(datatableList);
+						datatableResponseModel.setData(finalList);
 					}
-					finalList.add(datatableList);
-					datatableResponseModel.setData(finalList);
+				}else {
+					datatableResponseModel.setData(Collections.emptyList());
 				}
+
 			}else {
 				datatableResponseModel.setData(Collections.emptyList());
 			}
-			
-			
+
+
 			datatableResponseModel.setRecordsTotal(dbTablesPaginationModel.getNumberOfElements());
 			datatableResponseModel.setRecordsFiltered(dbTablesPaginationModel.getTotalElements());
 			return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK);
 
 		} catch (Exception e) {
+			log.error(e.getMessage(), e);
 			datatableResponseModel.setRecordsTotal(null);
 			datatableResponseModel.setRecordsFiltered(null);
 			datatableResponseModel.setData(Collections.emptyList());
@@ -108,32 +121,32 @@ public class DBDatatableController {
 
 		}
 	}
-	
-	
-	
+
+
+
 	private Object row(Map<String, String> column) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 	@PostMapping("dbtableHeaders")
 	public ResponseEntity<?> headers(@RequestParam("dbName") String dbName, @RequestParam("tableName") String tableName){
 		List<DatatableHeaderModel> dataTableInputs = new ArrayList<>();
 		try {
-			
+
 			DBrowDataModel filterrequest = dBTablesFeignClient.dbtableHeaders(dbName,tableName);
-				for(String header : filterrequest.getColumns()) {
-					dataTableInputs.add(new DatatableHeaderModel(header));
-				}
-				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);	
+			for(String header : filterrequest.getColumns()) {
+				dataTableInputs.add(new DatatableHeaderModel(header));
+			}
+			return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);	
 		}catch(Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<>(Collections.emptyList(), HttpStatus.UNAVAILABLE_FOR_LEGAL_REASONS);
 		}
-			
+
 	}
-	
-	
+
+
 	@PostMapping("dbTable/pageRendering")
 	public ResponseEntity<?> pageRendering(String displayName, HttpSession session) {
 

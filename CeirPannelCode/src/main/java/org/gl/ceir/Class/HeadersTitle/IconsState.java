@@ -1066,37 +1066,47 @@ public class IconsState {
 	/********************************* Icons for DashBoard Notification *********************************/
 
 
-	public String dashboardIcon(String userStatus,Integer featureID,String txnID,Integer userID,String roleType) {
+	public String dashboardIcon(String userStatus, Integer featureID, String txnID, Integer userID, String roleType) {
 		executePostConstruct();
 		// URL link
-		String viewAction = featureID == 3 ?"./viewConsignment?source=noti&txnID="+txnID+"" :
-		featureID == 4 ? "./assignDistributor?txnID="+txnID+"&userTypeId="+roleType+"&source=noti":
-		featureID == 0 ? "./stolenRecovery?txnID="+txnID+"&source=noti" :
-		featureID == 6 ? "./grievanceManagement?txnID="+txnID+"&source=noti" :
-		featureID == 7 ? "./stolenRecovery?txnID="+txnID+"&source=noti" :
-		featureID == 8 ? "./registrationRequest?txnID="+txnID+"&source=noti" :
-		featureID == 11 ? "./manageTypeDevices?txnID="+txnID+"&source=noti":
-		featureID == 12 ? "./uploadPaidStatus?via=other&txnID="+txnID+"&source=noti" :
-		featureID == 21 ? "./manageTypeDevices2?txnID="+txnID+"&source=noti" :
-		featureID == 43 ? "./updateVisa?txnID="+txnID+"&source=noti" :
-		"JavaScript:void(0);";
-		//System.out.println("featureID::::::::::"+featureID);
+		String viewAction = featureID == 3 ? "./viewConsignment?source=noti&txnID=" + txnID + ""
+				: featureID == 4 ? "./assignDistributor?txnID=" + txnID + "&userTypeId=" + roleType + "&source=noti"
+						: featureID == 0 ? "./stolenRecovery?txnID=" + txnID + "&source=noti"
+								: featureID == 6 ? "./grievanceManagement?txnID=" + txnID + "&source=noti"
+										: featureID == 7 ? "./stolenRecovery?txnID=" + txnID + "&source=noti"
+												: featureID == 8
+														? "./registrationRequest?txnID=" + txnID + "&source=noti"
+														: featureID == 11
+																? "./manageTypeDevices?txnID=" + txnID + "&source=noti"
+																: featureID == 12
+																		? "./uploadPaidStatus?via=other&txnID=" + txnID
+																				+ "&source=noti"
+																		: featureID == 21
+																				? "./manageTypeDevices2?txnID=" + txnID
+																						+ "&source=noti"
+																				: featureID == 43
+																						? "./updateVisa?txnID=" + txnID
+																								+ "&source=noti"
+																						: featureID == 5 ? "/stolenRecovery?txnID="+txnID+"&source=noti" :
+																							"JavaScript:void(0);";
+		// System.out.println("featureID::::::::::"+featureID);
 		// state related Code
-		String view=null;
-		String functionName="isActive("+featureID+")";
-		if(featureID == 3 || featureID == 4 || featureID == 6 || featureID == 7 || featureID == 21 || featureID == 43 || featureID == 12 ||featureID == 5 ) {
-		view="<a href="+viewAction+" onclick="+functionName+"><i class="+viewIcon+" aria-hidden=\"true\" title="
-		+viewIconTitle+" ></i></a>";
-		}
-		else {
+		String view = null;
+		String functionName = "isActive(" + featureID + ")";
+		if (featureID == 3 || featureID == 4 || featureID == 6 || featureID == 7 || featureID == 21 || featureID == 43
+				|| featureID == 12 || featureID == 5) {
+			view = "<a href=" + viewAction + " onclick=" + functionName + "><i class=" + viewIcon
+					+ " aria-hidden=\"true\" title=" + viewIconTitle + " ></i></a>";
+		} else {
 
-		view="<a href="+viewAction+" onclick="+functionName+" class="+disableIconClass+"><i class="+disableViewIcon+" aria-hidden=\"true\" title="
-		+viewIconTitle+" ></i></a>";
+			view = "<a href=" + viewAction + " onclick=" + functionName + " class=" + disableIconClass + "><i class="
+					+ disableViewIcon + " aria-hidden=\"true\" title=" + viewIconTitle + " ></i></a>";
 		}
-		String action=view;
+		String action = view;
 		return action;
 
-		}	
+	}
+
 	/********************************** Icons for TRC Manage Type Datatable **********************************/ 
 
 
@@ -1374,11 +1384,8 @@ public class IconsState {
 		//String downloadURL = "./Consignment/dowloadFiles/actual/"+file+"/"+txnId+"/"+defaultTagName+"";
 		String downloadURL = "fileDownload('"+file+"','actual','"+txnId+"','"+defaultTagName+"')";
 		String deleteAction ="DeleteConsignmentRecord('"+txnId+"','"+id+"','"+requestType+"')";
-
-
-        String historyAction ="historyRecord('"+txnId+"')";
-        String history="<a onclick="+historyAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+historyIcon+" aria-hidden=\"true\"  title="
-				+historyTitle+"></i></a>";
+		String historyAction ="historyRecord('"+txnId+"')";
+       
 		if(source.equals("3")) {
 			editAction="viewDeviceDetails('"+txnId+"','edit','"+requestType+"')";
 			viewAction="viewDeviceDetails('"+txnId+"','view','"+requestType+"')";
@@ -1399,6 +1406,8 @@ public class IconsState {
 				+viewIconTitle+" ></i></a>";
 		String delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+deletionIcon+" aria-hidden=\"true\" title="
 				+deleteIconTitle+"></i></a>";
+		String history="<a onclick="+historyAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+historyIcon+" aria-hidden=\"true\"  title="
+					+historyTitle+"></i></a>";
 		
 		log.info("source---> " +source+"  status----> "+status);
 
@@ -1446,7 +1455,7 @@ public class IconsState {
 			 delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
 					+deletionIcon+" aria-hidden=\"true\"  title="
 					+deleteIconTitle+"></i></a>"; 
-			 history="<a onclick="+historyAction+" class="+disableIconClass+"><i class="+disableHistoryIcon+" aria-hidden=\"true\"  title="
+			 history="<a onclick="+historyAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+historyIcon+" aria-hidden=\"true\"  title="
 						+historyTitle+"></i></a>";
 		}
 		else if(status !="0" || status!="1" || status !="2" || status !="3" ||status !="4" || status !="7" || status==null || status.equals("")){
@@ -1848,8 +1857,7 @@ public class IconsState {
 		String downloadURL = "fileDownload('"+file+"','actual','"+txnId+"','"+defaultTagName+"')";
 		String deleteAction ="DeleteConsignmentRecord('"+txnId+"','"+id+"','"+requestTypeValue+"')";
 		String historyAction ="historyRecord('"+txnId+"')";
-		String history="<a onclick="+historyAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+historyIcon+" aria-hidden=\"true\"  title="
-						+historyTitle+"></i></a>";
+		
 		
 		if(source.equals("5") && requestTypeValue.equals("0")) {
 			//check for Stolen/Indvisual
@@ -1906,7 +1914,8 @@ public class IconsState {
 		String delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
 				+deletionIcon+" aria-hidden=\"true\"  title="
 				+deleteIconTitle+"></i></a>"; 
-
+		String history="<a onclick="+historyAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+historyIcon+" aria-hidden=\"true\"  title="
+				+historyTitle+"></i></a>";
 
 		log.info("source---> " +source+"  status----> "+status);
 
@@ -1943,7 +1952,7 @@ public class IconsState {
 			 delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
 					+deletionIcon+" aria-hidden=\"true\"  title="
 					+deleteIconTitle+"></i></a>"; 
-			 history="<a onclick="+historyAction+" class="+disableIconClass+"><i class="+disableHistoryIcon+" aria-hidden=\"true\"  title="
+			 history="<a onclick="+historyAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+historyIcon+" aria-hidden=\"true\"  title="
 						+historyTitle+"></i></a>";
 		}
 		else if(status !="0" || status!="1" || status !="2" || status !="3" ||status !="4" || status !="5" || status !="6" ||status !="7" || status==null || status.equals("")){

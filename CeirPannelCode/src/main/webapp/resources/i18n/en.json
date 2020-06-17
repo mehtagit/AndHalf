@@ -201,6 +201,8 @@
 	"Del_Role_Not_Allowed" : "Delete Role feature for this usertype is not available",
 	"Invalid_Action" : "Action is invalid",
 	"imageSize": "Image size should be less than 5 mb.",
-	"imageAndPdfMsg": "Kindly upload a valid image or pdf file"
+	"imageAndPdfMsg": "Kindly upload a valid image or pdf file",
+	"End User Pending Device Count" : "End User Pending Device Count",
+	"End User Pending Device Quantity":"End User Pending Device Quantity"
 	
 }

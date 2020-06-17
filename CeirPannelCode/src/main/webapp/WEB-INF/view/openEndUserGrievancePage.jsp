@@ -201,7 +201,7 @@ var contextpath = "${context}";
                                         </div>
 
                                         <div class="input-field col s12 m6">
-                                            <input type="email" id="emailID" name="emailID" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" 
+                                            <input type="email" id="emailID" name="emailID" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,63}$" 
 											oninput="InvalidMsg(this,'input','<spring:message code="validation.emailformate" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.emailformate" />');"
 												required maxlength="30" />
@@ -672,7 +672,7 @@ var path="${context}";
     
 
   <script type="text/javascript">
-  $('div#initialloader').delay(300).fadeOut('slow');
+/*   $('div#initialloader').delay(300).fadeOut('slow'); */
   </script> 
 </body>
 </html>

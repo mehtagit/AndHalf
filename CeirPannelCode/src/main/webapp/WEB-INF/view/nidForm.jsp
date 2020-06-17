@@ -75,10 +75,10 @@
 	href="${context}/resources/project_css/iconStates.css">
 
 <link rel="stylesheet"
-	href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
-<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+	href="${context}/resources/custom_js/jquery-ui.css">
+<script src="${context}/resources/custom_js/1.11.2_jquery-ui.js"></script>
 
-<script src="http://malsup.github.io/jquery.blockUI.js"></script>
+<script src="${context}/resources/custom_js/jquery.blockUI.js"></script>
 
 
 <style>
@@ -221,8 +221,8 @@ section {
 
 
 	<!--plugins.js - Some Specific JS codes for Plugin Settings-->
-	<script
-		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		<script
+		src="${context}/resources/custom_js/bootstrap.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 	<%--   <script type="text/javascript" src="${context}/resources/js/materialize-plugins/date_picker/picker.date.js"></script>
     <script type="text/javascript" src="${context}/resources/js/materialize-plugins/date_picker/picker.js"></script> --%>

@@ -29,7 +29,7 @@
 <!DOCTYPE html>
 <html lang="en" class="no-js">
 <head>
-<title>Dashboard</title>
+<title>Customer Search</title>
 
 <meta charset="utf-8" />
 <meta name="viewport"
@@ -43,7 +43,8 @@
 	src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
 <!--   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"></script>  
  -->
-
+<!-- Favicons-->
+<link rel="icon" href="${context}/resources/images/DMC-Logo.png" sizes="32x32">
 <!-- CORE CSS-->
 <link href="${context}/resources/css/materialize.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
@@ -77,13 +78,14 @@
 <link rel="stylesheet"
 	href="${context}/resources/project_css/iconStates.css">
 
-<link rel="stylesheet"
-	href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
-<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
 
-<script src="http://malsup.github.io/jquery.blockUI.js"></script>
-<script src="http://malsup.github.io/jquery.blockUI.js"></script>
-<script src="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json"></script>
+<link rel="stylesheet"
+	href="${context}/resources/custom_js/jquery-ui.css">
+<script src="${context}/resources/custom_js/1.11.2_jquery-ui.js"></script>
+
+<script src="${context}/resources/custom_js/jquery.blockUI.js"></script>
+
+
 
 <style>
 .row {

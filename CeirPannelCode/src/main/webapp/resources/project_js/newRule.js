@@ -1,9 +1,9 @@
 $.getJSON('./Rule/DistinctName', function(data) {
-				for (i = 0; i < data.length; i++) {
-					$('<option>').val(data[i]).text(data[i]).appendTo('#Feature,#editFeature');
-				}
-			});
-			
+	for (i = 0; i < data.length; i++) {
+		$('<option>').val(data[i]).text(data[i]).appendTo('#Feature,#editFeature');
+	}
+});
+
 $.getJSON('./registrationUserType', function(data) {
 	for (i = 0; i < data.length; i++) {
 		$('<option>').val(data[i].usertypeName).text(data[i].usertypeName)
@@ -12,7 +12,7 @@ $.getJSON('./registrationUserType', function(data) {
 });
 $.getJSON('./ruleName', function(data) {
 	for (i = 0; i < data.length; i++) {
-		$('<option>').val(data[i].description).text(data[i].description)
+		$('<option>').val(data[i].name).text(data[i].name)
 		.appendTo('#Rule');
 	}
 });

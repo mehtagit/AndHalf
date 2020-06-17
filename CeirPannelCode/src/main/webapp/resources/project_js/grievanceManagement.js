@@ -31,8 +31,8 @@ var featureId = 6;
 				
 				if(isNaN(userId))
 				{
-				console.log("11"+userId)					}
-			
+					//
+				}
 			else{
 				pageRendering();
 				

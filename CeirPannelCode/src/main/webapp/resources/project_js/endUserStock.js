@@ -60,8 +60,8 @@ function uploadEndUserStock()
 			contentType: false,
 			success: function (data, textStatus, jqXHR) {
 				$('div#initialloader').delay(300).fadeOut('slow');
-				console.log("in suucess method");
-				console.log(data);
+				//console.log("in suucess method");
+				//console.log(data);
 				$('#endUserStockModal').openModal({
 	    	    	   dismissible:false
 	    	       });
@@ -75,7 +75,7 @@ function uploadEndUserStock()
 				}
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
-				console.log("error in ajax")
+				//console.log("error in ajax")
 				$('div#initialloader').delay(300).fadeOut('slow');
 			}
 		});
@@ -92,7 +92,7 @@ function validateTxnId()
 		contentType : 'application/json; charset=utf-8',
 		type : 'GET',
 		success : function(data) {
-			console.log(data)
+			//console.log(data)
 			setViewPopupData(data);
 		},
 		error : function() {
@@ -107,33 +107,36 @@ function validateTxnId()
 
 
 function setViewPopupData(data){
-	console.log("_________________++++++++++"+data)
+	//console.log("_________________++++++++++"+data)
    /* $("#viewStockModal").openModal();*/
 	$('#singleInput').css("display", "none");
 	$('#inputDetails').css("display", "block");
 	$("#transactionID").val(data.txnId);
 	$("#uploadDate").val(data.createdOn);
+	$("#viewEndUserEmail").val(data.user.userProfile.email);
+	$("#viewEndUserquantity").val(data.quantity);
+	$("#viewEdUserDevicequantity").val(data.deviceQuantity);
 	$("#viewUploadFile").val(data.fileName);
 	$("#errorFileStatus").val(data.stateInterp);
 	$('#endUserStockFileLink').attr("onclick",'fileDownload("'+data.fileName+'","actual","'+data.txnId+'","DEFAULT")');
 	$('#errorFileStock').attr("onclick",'fileDownload("blank","error","'+data.txnId+'","DEFAULT")');
-	console.log(data.stockStatus);
+	//console.log(data.stockStatus);
 	if(data.stockStatus=='2')
 		{
-		console.log("if condition");
+		//console.log("if condition");
 		$('#errorFileStatusDiv').css("display", "block");
     	$("#errorFileName").val(data.txnId+'_error.csv');
-    	$('#updateEndUserStockOK').css("display", "none");
+    	$('#updateEndUserStockOK').css("display", "block");
     	$('#updateEndUserStock').css("display", "block");
     	}
 	else if(data.stockStatus=='3'){
-		console.log("else condition");
+		//console.log("else condition");
 		$('#errorFileStatusDiv').css("display", "none");
 		$('#updateEndUserStockOK').css("display", "block");
 		$('#updateEndUserStock').css("display", "none");
 	}
 	else {
-		console.log("else condition");
+		//console.log("else condition");
 		$('#errorFileStatusDiv').css("display", "none");
 		$('#updateEndUserStockOK').css("display", "block");
 		$('#updateEndUserStock').css("display", "none");
@@ -178,7 +181,7 @@ function updateFile()
 		contentType: false,
 		success: function (data, textStatus, jqXHR) {
 
-			console.log(data);
+			////console.log(data);
 			$('#fileUpdateSucessModal').openModal({
  	    	   dismissible:false
  	       });
@@ -209,7 +212,7 @@ function updateFile()
 
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			console.log("error in ajax")
+			//console.log("error in ajax")
 		}
 	});
 return false;
@@ -253,8 +256,8 @@ function fileTypeValueChanges(dd, ddd) {
 	       });
 		 
 		}
-	else if(fileSize>='2000'){
-		alert("2222");		$('#fileFormateModal').openModal({
+	else if(fileSize>='10000'){
+				$('#fileFormateModal').openModal({
 	    	   dismissible:false
 	       });
 		

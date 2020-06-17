@@ -46,6 +46,7 @@ public interface TypeApprovedFeignImpl {
 	@PostMapping("/TypeApproved/delete") 
 	public GenricResponse TypeApproveDelete(@RequestParam(name="id",required = false ) Integer id,
 											@RequestParam(name="userType",required = false ) String userType, 
-											@RequestParam(name="userId",required = false ) Integer userId);
-
+											@RequestParam(name="userId",required = false ) Integer userId,
+											@RequestParam(name="remark",required = false ) String remark
+											 );
 }
