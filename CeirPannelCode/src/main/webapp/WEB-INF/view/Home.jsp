@@ -16,6 +16,9 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta content="" name="description" />
 <meta content="" name="author" />
+	
+<!-- Favicons-->
+<link rel="icon" href="${context}/resources/images/DMC-Logo.png" sizes="32x32">
 <script type="text/javascript"
 	src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
 	<link rel="shortcut icon" href="">
@@ -45,15 +48,14 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
 	type="text/css" rel="stylesheet" media="screen,projection">
 	
 
-<link rel="stylesheet"
-	href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
-<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+	<link rel="stylesheet"
+	href="${context}/resources/custom_js/jquery-ui.css">
+<script src="${context}/resources/custom_js/1.11.2_jquery-ui.js"></script>
 
-<script src="http://malsup.github.io/jquery.blockUI.js"></script>
-
+<script src="${context}/resources/custom_js/jquery.blockUI.js"></script>
 <!------------------------------------------- Dragable Model---------------------------------->
 <script
-	src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+	src="${context}/resources/custom_js/1.12.1_jquery-ui.min.js"></script>
 	
 	
 	
@@ -136,9 +138,9 @@ table.dataTable.display tbody tr:first-child td {
             <!-- END CONTENT -->
 	<script type="text/javascript"
 	src="${context}/resources/js/plugins/jquery-1.11.2.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
-	<script type="text/javascript"
+		<script
+		src="${context}/resources/custom_js/bootstrap.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
+<script type="text/javascript"
 		src="${context}/resources/js/materialize.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	
 		<script type="text/javascript"
@@ -181,7 +183,7 @@ table.dataTable.display tbody tr:first-child td {
 		src="${context}/resources/i18n_library/min.js?version=<%= (int) (Math.random() * 10) %>"></script>
 		
 
-	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
+	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js?version=<%= (int) (Math.random() * 10) %>"></script>
 <script type="text/javascript"
 		src="${context}/resources/project_js/backbutton.js?version=<%= (int) (Math.random() * 10) %>"></script>	
 			<script type="text/javascript"

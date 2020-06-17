@@ -681,6 +681,7 @@ function exportpaidStatus(){
 
 function submitDeviceInfo(){
 	$('div#initialloader').fadeIn('fast');
+	$("#uploadPaidStatusbutton").prop('disabled', true);
 	var formData= new FormData();
 
 
@@ -892,11 +893,8 @@ function submitDeviceInfo(){
 				$('#sucessMessage').text($.i18n('duplicateImei'));
 				}*/
 			else{
-				//console.log("error code"+data.errorCode);
-//				$('#sucessMessage').text('');
-				$('#regularisedDevice').openModal({dismissible:false});
-				$('#sucessMessage').text('');
-				$('#sucessMessage').text($.i18n(data.tag));
+				$('#customRegisterDeviceDuplicateImei').openModal({dismissible:false});;
+				$('#dupliCateImeiMsg').text($.i18n(data.tag));
 			}
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
@@ -1260,6 +1258,7 @@ function isImageValid(id) {
 }
 
 
+
 function clearFileName() {
 	$('#csvUploadFile').val('');
 	$("#csvUploadFileName").val('');
@@ -1482,51 +1481,45 @@ $(document).on("keyup", "#Price1", function(e) {
 
  }
  
- function deptImageValidation() {
+function deptImageValidation() {
 		var uploadedFileName = $("#endUserDepartmentId").val();
 		uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
 		//alert("file extension=="+uploadedFileName)
 		var ext = uploadedFileName.split('.').pop();
 
-		var fileSize = ($("#endUserDepartmentId")[0].files[0].size);
+		var fileSize = ($("#"+id)[0].files[0].size);
 		/*fileSize = (Math.round((fileSize / 100000) * 100) / 100)
 		alert("----"+fileSize);*/
 		fileSize = Math.floor(fileSize/1000);
-		
-		var areEqual =ext.toLowerCase()=='png';
-		//alert(areEqual);
-		if(areEqual==true)
-			{
-			ext='PNG';
-			}
-
+		//$('#FilefieldId').val(id);
+		//alert(uploadedFileName+"----------"+ext+"----"+fileSize)
+		var fileExtension =ext.toLowerCase();
+		console.log("file type: "+fileExtension);
+		var extArray = ["png", "jpg","jpeg","gif","bmp","gif"];
+		var isInArray =extArray.includes(fileExtension);
+		console.log("isInArray: "+isInArray)
 		if (uploadedFileName.length > 30) {
-			$('#DeptfileFormateModal').openModal({dismissible:false});
-			$('#DeptfileErrormessage').text('');
-			$('#DeptfileErrormessage').text($.i18n('imageMessage'));
-		} 
-		else if(ext!='PNG')
+			$('#fileFormateModal').openModal();
+			$('#fileErrormessage').text('');
+			$('#fileErrormessage').text($.i18n('imageMessage'));
+		}
+		else if(isInArray ==false)
 		{
-			$('#DeptfileFormateModal').openModal({
+			$('#fileFormateModal').openModal({
 				dismissible:false
 			});
-			$('#DeptfileErrormessage').text('');
-			$('#DeptfileErrormessage').text($.i18n('imageMessage'));
+			$('#fileErrormessage').text('');
+			$('#fileErrormessage').text($.i18n('imageMessage'));
 
 		}
-		
-		else if(fileSize>='100'){
-			$('#DeptfileFormateModal').openModal({
+		else if(fileSize>=5000){
+			$('#fileFormateModal').openModal({
 				dismissible:false
 			});
-			$('#DeptfileErrormessage').text('');
-			$('#DeptfileErrormessage').text($.i18n('imageSize'));	
+			$('#fileErrormessage').text('');
+			$('#fileErrormessage').text($.i18n('imageSize'));
 		}
-
-
-
-	}
- function visaImageValidation() {
+	}function visaImageValidation() {
 		var uploadedFileName = $("#visaImage").val();
 		uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
 		//alert("file extension=="+uploadedFileName)
@@ -1565,6 +1558,7 @@ $(document).on("keyup", "#Price1", function(e) {
 			$('#fileErrormessage').text($.i18n('imageSize'));
 		}
 	}
+
  var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
 	$.ajaxSetup({

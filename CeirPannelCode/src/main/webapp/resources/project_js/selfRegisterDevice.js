@@ -773,6 +773,7 @@ $(document).ready(function () {
 function submitEndUserDeviceInfo(){
 	var formData= new FormData();
 	$('div#initialloader').fadeIn('fast');
+	$("#uploadPaidStatusbutton").prop('disabled', true);
 
 	var nationalID=$('#endUserNID').val();
 	var endUserNID=$('#endUserNID').val();
@@ -968,10 +969,9 @@ function submitEndUserDeviceInfo(){
 				$("#endUserRegisterButton").prop('disabled', true);
 			}
 			else{
-//				$('#sucessMessage').text('');
-				$('#endUserRegisterDeviceModal').openModal({dismissible:false});;
-				$('#sucessMessageId').text('');
-				$('#sucessMessageId').text($.i18n(data.tag));
+           	
+				$('#endUserRegisterDeviceDuplicateImei').openModal({dismissible:false});;
+				$('#dupliCateImeiMsg').text($.i18n(data.tag));
 			}
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
@@ -1045,59 +1045,51 @@ function fileTypeValueChanges(id) {
 }
 
 
-
-
 function clearFileName() {
 	$('#nidPlaceHolder').val('');
 	$("#uploadnationalID").val('');
 	$('#fileFormateModal').closeModal();
 }
 
-
 function visaImageValidation() {
-	var uploadedFileName = $("#visaImage").val();
-	uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
-	////alert("file extension=="+uploadedFileName)
-	var ext = uploadedFileName.split('.').pop();
+var uploadedFileName = $("#visaImage").val();
+uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
+//alert("file extension=="+uploadedFileName)
+var ext = uploadedFileName.split('.').pop();
 
-	var fileSize = ($("#visaImage")[0].files[0].size);
-	/*fileSize = (Math.round((fileSize / 100000) * 100) / 100)
-	//alert("----"+fileSize);*/
-	fileSize = Math.floor(fileSize/1000);
-
-	var areEqual =ext.toLowerCase()=='png';
-	////alert(areEqual);
-	if(areEqual==true)
-		{
-		ext='PNG';
-		}
-
-	if (uploadedFileName.length > 30) {
-		$('#visafileFormateModal').openModal({dismissible:false});
-		$('#visafileErrormessage').text('');
-		$('#visafileErrormessage').text($.i18n('imageMessage'));
-	} 
-	else if(ext!='PNG')
-	{
-		$('#visafileFormateModal').openModal({
-			dismissible:false
-		});
-		$('#visafileErrormessage').text('');
-		$('#visafileErrormessage').text($.i18n('imageMessage'));
-
-	}
-	else if(fileSize>='100'){
-		$('#visafileFormateModal').openModal({
-			dismissible:false
-		});
-		$('#visafileErrormessage').text('');
-		$('#visafileErrormessage').text($.i18n('imageSize'));	
-	}
-
-
+var fileSize = ($("#"+id)[0].files[0].size);
+/*fileSize = (Math.round((fileSize / 100000) * 100) / 100)
+alert("----"+fileSize);*/
+fileSize = Math.floor(fileSize/1000);
+//$('#FilefieldId').val(id);
+//alert(uploadedFileName+"----------"+ext+"----"+fileSize)
+var fileExtension =ext.toLowerCase();
+console.log("file type: "+fileExtension);
+var extArray = ["png", "jpg","jpeg","gif","bmp","gif"];
+var isInArray =extArray.includes(fileExtension);
+console.log("isInArray: "+isInArray)
+if (uploadedFileName.length > 30) {
+$('#fileFormateModal').openModal();
+$('#fileErrormessage').text('');
+$('#fileErrormessage').text($.i18n('imageMessage'));
+}
+else if(isInArray ==false)
+{
+$('#fileFormateModal').openModal({
+dismissible:false
+});
+$('#fileErrormessage').text('');
+$('#fileErrormessage').text($.i18n('imageMessage'));
 
 }
-
+else if(fileSize>=5000){
+$('#fileFormateModal').openModal({
+dismissible:false
+});
+$('#fileErrormessage').text('');
+$('#fileErrormessage').text($.i18n('imageSize'));
+}
+}
 
 function clearVisaName() {
 	$('#visaImage').val('');
@@ -1146,7 +1138,6 @@ function deptImageValidation() {
 		$('#fileErrormessage').text($.i18n('imageSize'));
 	}
 }
-
 
 function clearDeptName() {
 	$('#endUserDepartmentId').val('');

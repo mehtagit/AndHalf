@@ -38,12 +38,13 @@ if(statusCode==200){
 <link rel="stylesheet"
 	href="${context}/resources/font/font-awesome/css/font-awesome.min.css">
 <!-- CORE CSS-->
-
+<!-- Favicons-->
+<link rel="icon" href="${context}/resources/images/DMC-Logo.png" sizes="32x32">
 
 <!--<link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection">-->
 <!-- Compiled and minified CSS -->
 <link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+	href="${context}/resources/custom_js/materialize.min.css">
 <link href="${context}/resources/css/style.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
 <!-- Custome CSS-->
@@ -492,11 +493,11 @@ String usertypeId="${usertypeId}";
 										<div class="file-field col s12 m6">
 											<p class="upload-file-label"><spring:message code="registration.vatfile" /> <span class="star">*</span></p>
 											<div class="btn">
-												<span><spring:message code="input.selectfile" /></span> <input name="file" type="file" id="vatFile" accept=".pdf"
+												<span><spring:message code="input.selectfile" /></span> <input name="file" type="file" id="vatFile" onchange="isPdfAndImageValid('vatFile')"
 												oninput="InvalidMsg(this,'fileType','<spring:message code="validation.file" />');" oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.file" />');"   />
 											</div>
 											<div class="file-path-wrapper">
-												<input name="vatFile" class="file-path validate responsive-file-div" type="text"  >
+												<input name="vatFile" id="vatFileText" class="file-path validate responsive-file-div" type="text"  >
 											</div>
 										</div>
 										<br> <br>
@@ -799,16 +800,15 @@ String usertypeId="${usertypeId}";
 	</div>
 
 	<!-- Modal End -->
-
-		<div class="modal" id="error_Modal_reg" role="dialog">
+<div class="modal" id="error_Modal_reg" role="dialog">
 		<div class="modal-dialog">
 			<div class="row" id="modalMessageBodyReg"
 					style="text-align: center;"></div>
 			
 		</div>
+		
 	</div>
-	
-	<div id="fileFormateModal" class="modal">
+			<div id="fileFormateModal" class="modal">
 		<h6 class="modal-header"><spring:message code="fileValidationModalHeader" /></h6>
 		<div class="modal-content">
 			<div class="row">
@@ -817,7 +817,8 @@ String usertypeId="${usertypeId}";
 			<div class="row">
 				<div class="input-field col s12 center">
 					<div class="input-field col s12 center">
-						<button class="modal-close waves-effect waves-light btn" onclick="clearFilesName('file')"
+					<input type="hidden" id="FilefieldId">
+						<button class="modal-close waves-effect waves-light btn" onclick="clearFilesName('FilefieldId')"
 							style="margin-left: 10px;"><spring:message code="modal.ok" /></button>
 					</div>
 				</div>
@@ -825,37 +826,38 @@ String usertypeId="${usertypeId}";
 		</div>
 	</div>
 	
-		<!-- i18n library -->
+	
+			<!-- i18n library -->
 	<script type="text/javascript"
 		src="${context}/resources/project_js/CLDRPluralRuleParser.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/i18n_library/i18n.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.messagestore.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/i18n_library/messagestore.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.fallbacks.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/i18n_library/fallbacks.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.language.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/i18n_library/language.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.parser.js?version=<%= (int) (Math.random() * 10) %>"></script>
-
-
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/i18n_library/parser.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.bidi.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/i18n_library/emitter.js?version=<%= (int) (Math.random() * 10) %>"></script>
+
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/jquery.history.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/i18n_library/bidi.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
-	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/i18n_library/history.js?version=<%= (int) (Math.random() * 10) %>"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/min.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js?version=<%= (int) (Math.random() * 10) %>"></script>
 <script type="text/javascript"
 		src="${context}/resources/project_js/backbutton.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	
@@ -976,12 +978,20 @@ String usertypeId="${usertypeId}";
          		document.getElementById("vatFileDiv").style.display = "none";
          	}
          }
-         function clearFilesName(id)
+        function clearFilesName(id)
          {
-        		//var fieldId=$('#'+id).val();
-        		
-        			$('#'+id).val('');
+        		var fieldId=$('#'+id).val();
+        		if(fieldId=='file'){
+        			$('#'+fieldId).val('');
         		    $("#fileText").val('');
+        		}
+        		else if(fieldId=='vatFile')
+        			{
+        			$('#'+fieldId).val('');
+        		    $("#vatFileText").val('');
+        			
+        			}
+        		else{}
          }
          </script>
 </body>

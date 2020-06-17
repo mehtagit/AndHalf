@@ -291,6 +291,31 @@ var contextpath = "${context}";
                                                     placeholder="" readonly="readonly">
                                             </div>
                                             
+                                            <div class="input-field col s6 m5">
+                                                <label for="endUser" style="color: #000;"><spring:message code="input.EmailID" /> </label>
+                                            </div>
+                                            <div class="input-field col s6 m7">
+                                                <input type="text" id="viewEndUserEmail" name="viewEndUserEmail"
+                                                    placeholder="" readonly="readonly">
+                                            </div>
+                                            
+                                            <div class="input-field col s6 m5">
+                                                <label for="endUserquantity" style="color: #000;"><spring:message code="input.quantity" />  <span class="star">*</span></label>
+                                            </div>
+                                            <div class="input-field col s6 m7">
+                                                <input type="text" id="viewEndUserquantity" name="viewEndUserquantity"
+                                                    placeholder="" readonly="readonly">
+                                            </div>
+                                            
+                                            <div class="input-field col s6 m5">
+                                               <label for="endUserDevicequantity" style="color: #000;"><spring:message code="input.devicequantity" />  <span class="star">*</span></label>
+                                            </div>
+                                            <div class="input-field col s6 m7">
+                                                <input type="text" id="viewEdUserDevicequantity" name="viewEdUserDevicequantity"
+                                                    placeholder="" readonly="readonly">
+                                            </div>
+                                            
+                                            
                                             <div id="stockRemarkDivId" style="display: none">
                                             <div class="input-field col s6 m5">
                                                 <label for="stockRemark"><spring:message code="input.Remark" /></label>
@@ -332,7 +357,7 @@ var contextpath = "${context}";
                                                     placeholder="" readonly="readonly">
                                             </div>
 
-                                            <div class="input-field col s6 m5">
+                                            <%-- <div class="input-field col s6 m5">
                                                 <label for="viewUploadFile"><spring:message code="input.freshfile" /></label>
                                             </div>
                                             <div class="input-field col s6 m7">
@@ -341,7 +366,7 @@ var contextpath = "${context}";
                                                         onclick="document.getElementById('uploadFile').style.display = 'block';">
                                                     <spring:message code="modal.yes" />
                                                 </div>
-                                            </div>
+                                            </div> --%>
 
 													
                                             <div id="uploadFile" style="display: none;">
@@ -366,7 +391,7 @@ var contextpath = "${context}";
                                             <div class="input-field col s12 center">
                                                 <!-- <a href="homePage" class="btn" style="width: 100%;">ok</a> -->
                                                  <a href="./redirectToHomePage" class=" btn" id="updateEndUserStockOK" type=""><spring:message code="modal.close" /></a>
-                                                <button class=" btn" id="updateEndUserStock" type="submit"><spring:message code="button.submit" /></button>
+                                                <%-- <button class=" btn" id="updateEndUserStock" type="submit"><spring:message code="button.submit" /></button> --%>
                                             </div>
                                         </div>
                                          </form>

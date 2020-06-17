@@ -845,6 +845,33 @@ position: fixed;
 				</div>
 			</div>
 		</div>
+		<div id="endUserRegisterDeviceDuplicateImei" class="modal">
+			<h6 class="modal-header">
+				<spring:message code="modal.header.registerdevice" />
+			</h6>
+			<div class="modal-content">
+
+				<div class="row">
+					<!-- <h6>Your request to upload device details has been accepted. The Transaction ID is ___________. Please
+                    save this for future reference.
+                    Kindly check the status of file upload by clicking on the check upload status button on the previous
+                    page and providing the Transaction ID. -->
+					<h6 id="dupliCateImeiMsg">
+						<%-- <spring:message code="modal.message.futureRef" />
+						<span id="endUsertXnId"></span> --%>
+					</h6>
+					<!--    </h6> -->
+				</div>
+				<div class="row">
+					<div class="input-field col s12 center">
+						<div class="input-field col s12 center">
+							<button  class="modal-close  btn"><spring:message
+									code="modal.ok" /></button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</section>
 
 	<div id="fileFormateModal" class="modal">

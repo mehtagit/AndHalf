@@ -46,6 +46,7 @@
 <!--   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"></script>  
  -->
 
+<link rel="icon" href="${context}/resources/images/DMC-Logo.png" sizes="32x32">
 <!-- CORE CSS-->
 <link href="${context}/resources/css/materialize.css?version=<%= (int) (Math.random() * 10) %>" type="text/css"
 	rel="stylesheet" media="screen,projection">
@@ -77,19 +78,17 @@
 	href="${context}/resources/project_css/viewConsignment.css?version=<%= (int) (Math.random() * 10) %>">
 <link rel="stylesheet"
 	href="${context}/resources/project_css/iconStates.css?version=<%= (int) (Math.random() * 10) %>">
-
 <link rel="stylesheet"
-	href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css?version=<%= (int) (Math.random() * 10) %>">
-<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js?version=<%= (int) (Math.random() * 10) %>"></script>
+	href="${context}/resources/custom_js/jquery-ui.css?version=<%= (int) (Math.random() * 10) %>">
+<script src="${context}/resources/custom_js/1.11.2_jquery-ui.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
-<script src="http://malsup.github.io/jquery.blockUI.js?version=<%= (int) (Math.random() * 10) %>"></script>
-<script src="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json"></script>
+<script src="${context}/resources/custom_js/jquery.blockUI.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 <!------------------------------------------- Dragable Model---------------------------------->
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js?version=<%= (int) (Math.random() * 10) %>"></script>
+<script src="${context}/resources/custom_js/1.12.1_jquery-ui.js?version=<%= (int) (Math.random() * 10) %>"></script>
 <script
-	src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
-<style type="text/css">
+	src="${context}/resources/custom_js/1.12.1_jquery-ui.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
+	<style type="text/css">
 
 .dataTables_scrollBody {
     width: 100%;
@@ -1037,7 +1036,7 @@ width: inherit;
 
 	<!--plugins.js - Some Specific JS codes for Plugin Settings-->
 	<script
-		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/custom_js/bootstrap.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 	<%--   <script type="text/javascript" src="${context}/resources/js/materialize-plugins/date_picker/picker.date.js"></script>
     <script type="text/javascript" src="${context}/resources/js/materialize-plugins/date_picker/picker.js"></script> --%>

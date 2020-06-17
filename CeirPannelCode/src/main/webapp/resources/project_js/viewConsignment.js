@@ -1138,50 +1138,49 @@ function historyRecord(txnID){
 	var formData= new FormData();
 	var ceirAdmin='';
 	var userTypeValue=$("body").attr("data-roleType");
-
 	if(userTypeValue=='CEIRAdmin')
 	{
 
-		var filterRequest={
+	var filterRequest={
 
-				"columns": [
-					"created_on","modified_on","txn_id","consignment_status","supplier_id","supplier_name","consignment_number","expected_dispatche_date","expected_arrivaldate","organisation_country",
-					"expected_arrival_port","port_address","quantity","device_quantity","remarks","total_price","currency",
-					"file_name","tax_paid_status","user_id","ceir_admin_id","custom_id"
-					],
-					"tableName": "consignment_mgmt_aud",
-					"dbName" : "ceirconfig",
-					"txnId":txnID
-		}
+	"columns": [
+	"created_on","modified_on","txn_id","consignment_status","supplier_id","supplier_name","consignment_number","expected_dispatche_date","expected_arrivaldate","organisation_country",
+	"expected_arrival_port","port_address","quantity","device_quantity","remarks","total_price","currency",
+	"tax_paid_status","user_id","ceir_admin_id","custom_id"
+	],
+	"tableName": "consignment_mgmt_aud",
+	"dbName" : "ceirconfig",
+	"txnId":txnID
+	}
 
 	}
 	else if(userTypeValue=='Custom'){
-		ceirAdmin="custom_id";
-		var filterRequest={
+	ceirAdmin="custom_id";
+	var filterRequest={
 
-				"columns": [
-					"created_on","modified_on","txn_id","consignment_status","supplier_id","supplier_name","consignment_number","expected_dispatche_date","expected_arrivaldate","organisation_country",
-					"expected_arrival_port","port_address","quantity","device_quantity","remarks","total_price","currency",
-					"file_name","tax_paid_status","user_id","custom_id"
-					],
-					"tableName": "consignment_mgmt_aud",
-					"dbName" : "ceirconfig",
-					"txnId":txnID
-		}
+	"columns": [
+	"created_on","modified_on","txn_id","consignment_status","supplier_id","supplier_name","consignment_number","expected_dispatche_date","expected_arrivaldate","organisation_country",
+	"expected_arrival_port","port_address","quantity","device_quantity","remarks","total_price","currency",
+	"tax_paid_status","user_id","custom_id"
+	],
+	"tableName": "consignment_mgmt_aud",
+	"dbName" : "ceirconfig",
+	"txnId":txnID
+	}
 	}
 	else{
-		ceirAdmin="'ceir_admin_id'"+','+"'custom_id'";
-		var filterRequest={
+	ceirAdmin="'ceir_admin_id'"+','+"'custom_id'";
+	var filterRequest={
 
-				"columns": [
-					"created_on","modified_on","txn_id","consignment_status","supplier_id","supplier_name","consignment_number","expected_dispatche_date","expected_arrivaldate","organisation_country",
-					"expected_arrival_port","port_address","quantity","device_quantity","remarks","total_price","currency",
-					"file_name","tax_paid_status","user_id"
-					],
-					"tableName": "consignment_mgmt_aud",
-					"dbName" : "ceirconfig",
-					"txnId":txnID
-		}
+	"columns": [
+	"created_on","modified_on","txn_id","consignment_status","supplier_id","supplier_name","consignment_number","expected_dispatche_date","expected_arrivaldate","organisation_country",
+	"expected_arrival_port","port_address","quantity","device_quantity","remarks","total_price","currency",
+	"tax_paid_status","user_id"
+	],
+	"tableName": "consignment_mgmt_aud",
+	"dbName" : "ceirconfig",
+	"txnId":txnID
+	}
 	}
 
 	formData.append("filter",JSON.stringify(filterRequest));	

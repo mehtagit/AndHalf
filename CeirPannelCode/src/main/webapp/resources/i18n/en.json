@@ -104,8 +104,8 @@
 	"stockResponseMessage": "User is not a distributer or retailer to assign a stock.",
 	"documentTypeName": "Document type should not be same.",
 	"tacStatucMessage": "By clicking on the checkbox, it is understood that type approval document has been checked and verified as provided by the importer.  If they are not provided, kindly reject the request",
-	"imageMessage": "Kindly upload a valid image.",
-	"imageSize": "Image size should be less than 5 MB.",
+    "imageMessage": "Kindly upload a valid image",
+	
 	"imageValidationName": "File name should not be more than 30 characters",
 	"expectedArrivaldateEdit": "Expected Dispatch Date should be less than Expected Arrival Date",
 	"validationIMEI": "Please enter numbers upto 16 characters only",
@@ -199,5 +199,10 @@
 	"Role_Del_Not_Found" :  "No Roles found to delete",
 	"Add_Role_Not_Allowed" : "Add Role feature for this usertype is not available",
 	"Del_Role_Not_Allowed" : "Delete Role feature for this usertype is not available",
-	"Invalid_Action" : "Action is invalid"	
+	"Invalid_Action" : "Action is invalid",
+	"imageSize": "Image size should be less than 5 mb.",
+	"imageAndPdfMsg": "Kindly upload a valid image or pdf file",
+	"End User Pending Device Count" : "End User Pending Device Count",
+	"End User Pending Device Quantity":"End User Pending Device Quantity"
+	
 }

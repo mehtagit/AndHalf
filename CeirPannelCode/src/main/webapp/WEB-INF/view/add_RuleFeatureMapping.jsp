@@ -42,6 +42,8 @@
 <!--   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"></script>  
  -->
 
+<!-- Favicons-->
+<link rel="icon" href="${context}/resources/images/DMC-Logo.png" sizes="32x32">
 <!-- CORE CSS-->
 <link href="${context}/resources/css/materialize.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
@@ -75,10 +77,10 @@
 	href="${context}/resources/project_css/iconStates.css">
 
 <link rel="stylesheet"
-	href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
-<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+	href="${context}/resources/project_css/jquery-ui.css">
+<script src="${context}/resources/js/jquery-ui.js"></script>
 
-<script src="http://malsup.github.io/jquery.blockUI.js"></script>
+<script src="${context}/resources/js/jquery.blockUI.js"></script>
 
 
 <style>
@@ -332,8 +334,8 @@ section {
 												onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 												oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 												style="padding-left: 0;" required>
-												<option value="Y">Yes</option>
-												<option value="N">No</option>
+												<option value="Yes">Yes</option>
+												<option value="No">No</option>
 											</select>
 										</div>
 									</div>

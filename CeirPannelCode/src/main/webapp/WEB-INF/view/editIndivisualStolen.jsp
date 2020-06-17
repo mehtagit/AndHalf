@@ -11,11 +11,8 @@
 	 int timeout = session.getMaxInactiveInterval();
 	
 	 long accessTime = session.getLastAccessedTime();
-	 long currentTime= new Date().getTime(); 
-	 System.out.println("accessTime========"+(accessTime));
-	 System.out.println("timeout========"+timeout);
+	 long currentTime= new Date().getTime();
 	 long dfd= accessTime +timeout;
-	 System.out.println("currentTime========"+currentTime);
 	 if( currentTime< dfd){
 	/*  response.setHeader("Refresh", timeout + "; URL = ../login");
 	 System.out.println("timeout========"+timeout); 
@@ -40,7 +37,8 @@
 <meta content="" name="description" />
 <meta content="" name="author" />
 
-
+<!-- Favicons-->
+<link rel="icon" href="${context}/resources/images/DMC-Logo.png" sizes="32x32">
 <script type="text/javascript"
 	src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
 <script type="text/javascript"
@@ -84,9 +82,10 @@
 	href="${context}/resources/project_css/iconStates.css">
 <link rel="stylesheet"
 	href="${context}/resources/project_css/intlTelInput.css">
+
 <link rel="stylesheet"
-	href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
-<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+	href="${context}/resources/custom_js/jquery-ui.css">
+<script src="${context}/resources/custom_js/1.11.2_jquery-ui.js"></script>
 
 <style>
 .checkboxFont {
@@ -1253,8 +1252,8 @@ onclick="_Services._selectstartDate()"></i></span>
 
 
 	<!--plugins.js - Some Specific JS codes for Plugin Settings-->
-	<script
-		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		<script
+		src="${context}/resources/custom_js/bootstrap.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 	<%--   <script type="text/javascript" src="${context}/resources/js/materialize-plugins/date_picker/picker.date.js"></script>
     <script type="text/javascript" src="${context}/resources/js/materialize-plugins/date_picker/picker.js"></script> --%>

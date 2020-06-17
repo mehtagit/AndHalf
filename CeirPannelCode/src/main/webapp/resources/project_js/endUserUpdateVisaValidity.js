@@ -334,50 +334,44 @@ function hide() {
     
     
 
-    function visaImageValidation() {
+    function visaImageValidation(id) {
     	var uploadedFileName = $("#endUseruploadnationalID").val();
     	uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
-    	////alert("file extension=="+uploadedFileName)
+    	//alert("file extension=="+uploadedFileName)
     	var ext = uploadedFileName.split('.').pop();
-    	
-    	var fileSize = ($("#endUseruploadnationalID")[0].files[0].size);
+
+    	var fileSize = ($("#"+id)[0].files[0].size);
     	/*fileSize = (Math.round((fileSize / 100000) * 100) / 100)
-    	//alert("----"+fileSize);*/
-       fileSize = Math.floor(fileSize/1000);
-                        
-                      
-       var areEqual =ext.toLowerCase()=='png';
-   	////alert(areEqual);
-   	if(areEqual==true)
-   		{
-   		ext='PNG';
-   		}
-   	
-        if (uploadedFileName.length > 30) {
-           $('#visafileFormateModal').openModal({
-	    	   dismissible:false
-	       });
-           $('#visafileErrormessage').text('');
-    		  $('#visafileErrormessage').text($.i18n('imageMessage'));
-       } 
-    	else if(ext!='PNG')
-    		{
-    		  $('#visafileFormateModal').openModal({
-    	    	   dismissible:false
-    	       });
-    		  $('#visafileErrormessage').text('');
-    		  $('#visafileErrormessage').text($.i18n('imageMessage'));
-    		  
-    		}
-    	else if(fileSize>='100'){
-    		  $('#visafileFormateModal').openModal({
-    	    	   dismissible:false
-    	       });
-    		  $('#visafileErrormessage').text('');
-    		  $('#visafileErrormessage').text($.i18n('imageSize'));	
+    	alert("----"+fileSize);*/
+    	fileSize = Math.floor(fileSize/1000);
+    	//$('#FilefieldId').val(id);
+    	//alert(uploadedFileName+"----------"+ext+"----"+fileSize)
+    	var fileExtension =ext.toLowerCase();
+    	console.log("file type: "+fileExtension);
+    	var extArray = ["png", "jpg","jpeg","gif","bmp","gif"];
+    	var isInArray =extArray.includes(fileExtension);
+    	console.log("isInArray: "+isInArray)
+    	if (uploadedFileName.length > 30) {
+    		$('#fileFormateModal').openModal();
+    		$('#fileErrormessage').text('');
+    		$('#fileErrormessage').text($.i18n('imageMessage'));
     	}
-    	
-    	
+    	else if(isInArray ==false)
+    	{
+    		$('#fileFormateModal').openModal({
+    			dismissible:false
+    		});
+    		$('#fileErrormessage').text('');
+    		$('#fileErrormessage').text($.i18n('imageMessage'));
+
+    	}
+    	else if(fileSize>=5000){
+    		$('#fileFormateModal').openModal({
+    			dismissible:false
+    		});
+    		$('#fileErrormessage').text('');
+    		$('#fileErrormessage').text($.i18n('imageSize'));
+    	}
 
     }
 

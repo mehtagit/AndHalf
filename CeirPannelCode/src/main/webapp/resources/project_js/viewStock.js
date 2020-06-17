@@ -334,18 +334,30 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 	function filter(lang,sourceParam){
 		var filterSource= $("body").attr("data-filterSource");
 		////console.log("filterSource<><><><>"+filterSource);
-	if(sourceParam==undefined)
+	/*if(sourceParam==undefined)
 		{
 		sourceParam="menu";
 		}
+	else if(sourceParam=='filter'){
+		sourceParam="filter";
+	}
 	if(filterSource==null)
 		{
 		sourceParam="menu";
 		}
+	
 	else{
 		sourceParam=filterSource;
-	}
-	////console.log("sourceParam= "+sourceParam);
+	}*/
+		
+		if(sourceParam == 'filter' ) {
+			sourceParam= 'filter';
+		}
+		else{
+			sourceParam= $("body").attr("data-filterSource");
+
+		}
+	//console.log("sourceParam= "+sourceParam);
 		if((currentRoleType=="Importer" || currentRoleType=="Retailer" || currentRoleType=="Distributor" || currentRoleType=="Manufacturer") && sourceType !="viaStock" ){
 		Datatable('headers?lang='+lang+'&type=stockHeaders','stockData?source='+sourceParam);
 		}else if(currentRoleType=="Custom" && sourceType !="viaStock"){
@@ -855,26 +867,26 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 			 var userTypeValue=$("body").attr("data-roleType");
 			 if(userTypeValue=='CEIRAdmin')
 			 {
-				 var filterRequest={
-						 "columns":["created_on","modified_on","txn_id","user_type","role_type","stock_status","supplier_id","suplier_name",
-							 "quantity","device_quantity","invoice_number","file_name","remarks","previous_stock_status","id","assigner_id",
-							 "total_price","currency","user_id","ceir_admin_id"
-							 ],
-						"tableName": "stock_mgmt_aud",
-						"dbName" : "ceirconfig",
-						"txnId":txnID
-				}
+			 var filterRequest={
+			 "columns":["created_on","modified_on","txn_id","user_type","role_type","stock_status","supplier_id","suplier_name",
+			 "quantity","device_quantity","invoice_number","remarks","assigner_id",
+			 "total_price","currency","user_id","ceir_admin_id" 
+			 ],
+			 "tableName": "stock_mgmt_aud",
+			 "dbName" : "ceirconfig",
+			 "txnId":txnID
+			 }
 			 }
 			 else{
-				 var filterRequest={
-						 "columns":["created_on","modified_on","txn_id","user_type","role_type","stock_status","supplier_id","suplier_name",
-							 "quantity","device_quantity","invoice_number","file_name","remarks","previous_stock_status","id","assigner_id",
-							 "total_price","currency","user_id"
-							 ],
-						"tableName": "stock_mgmt_aud",
-						"dbName" : "ceirconfig",
-						"txnId":txnID
-				}
+			 var filterRequest={
+			 "columns":["created_on","modified_on","txn_id","user_type","role_type","stock_status","supplier_id","suplier_name",
+			 "quantity","device_quantity","invoice_number","remarks","assigner_id",
+			 "total_price","currency","user_id"
+			 ],
+			 "tableName": "stock_mgmt_aud",
+			 "dbName" : "ceirconfig",
+			 "txnId":txnID
+			 }
 			 }
 			 
 			

@@ -4,7 +4,16 @@
 			window.location.assign("./uploadPaidStatus?lang="+lang);
 		}); */
 		
-		
+		$('#langlist').on('change', function() {
+	lang=$('#langlist').val() == 'km' ? 'km' : 'en';
+	var url_string = window.location.href;
+	var url = new URL(url_string);
+	
+	window.location.assign("selfRegisterDevice?lang="+lang);			
+	}); 
+
+
+		$('#langlist').val(data_lang_param);
 	$('#btnLink').css({"display":"none"});	
 	var roleType = $("body").attr("data-roleType");
 	var userId = $("body").attr("data-userID");

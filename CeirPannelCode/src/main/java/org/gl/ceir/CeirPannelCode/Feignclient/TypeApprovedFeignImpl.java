@@ -49,5 +49,4 @@ public interface TypeApprovedFeignImpl {
 											@RequestParam(name="userId",required = false ) Integer userId,
 											@RequestParam(name="remark",required = false ) String remark
 											 );
-
 }
