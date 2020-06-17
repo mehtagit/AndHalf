@@ -99,7 +99,7 @@ function Datatable(url,DataUrl,sourceTypeFiler){
 			"userId": userId,
 			"featureId":featureId,
 			"userTypeId": parseInt($("body").attr("data-userTypeID")),
-			"userType":userType ,
+			"userType":userType 
 	}
 
 	
@@ -337,11 +337,13 @@ function exportStolenRecoveryData()
 			"requestType":stolenRecoveryRequestType,
 			"featureId":featureId,
 			"roleType":roleType,
+			"userTypeId": parseInt($("body").attr("data-userTypeID")),
+			"userType": $("body").attr("data-roleType"),
 			"pageNo":parseInt(pageNo),
 			"pageSize":parseInt(pageSize)
 			
 	}
-	//console.log(JSON.stringify(filterRequest))
+	console.log(JSON.stringify(filterRequest))
 	$.ajax({
 		url: './exportStolenRecovery',
 		type: 'POST',
