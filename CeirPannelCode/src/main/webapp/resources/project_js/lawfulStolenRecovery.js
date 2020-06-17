@@ -267,6 +267,19 @@ function openStolenRecoveryModal(){
 //**********************************************************Export Excel file************************************************************************
 function exportStolenRecoveryData()
 {
+	var source__val;	
+	var startDate = $('#startDate').val(); 
+	var endDate = $('#endDate').val();
+	var transactionId = $('#transactionID').val();
+	var status  = $('#status').val();
+	var mode = $('#sourceStatus').val();
+	var requestType =  $('#requestType').val(); 
+	
+	var source__val = startDate != ''|| endDate != ''|| transactionId != ''|| status != "Status"|| mode != "Mode"|| requestType != "Request Type" ? 'filter' : $("body").attr("data-session-source");
+	
+	//console.log("startDate---" +startDate+  "endDate---" +endDate +  "transactionId---" +transactionId+  "status---" +status+  "mode---" +mode+  "requestType---" +requestType); 
+	//console.log("source__val--->" +source__val);
+	
 	var stolenRecoveryStartDate=$('#startDate').val();
 	var stolenRecoveryEndDate=$('#endDate').val();
 	var stolenRecoveryTxnId=$('#transactionID').val();
@@ -343,9 +356,9 @@ function exportStolenRecoveryData()
 			"pageSize":parseInt(pageSize)
 			
 	}
-	console.log(JSON.stringify(filterRequest))
+	//console.log(JSON.stringify(filterRequest))
 	$.ajax({
-		url: './exportStolenRecovery',
+		url: './exportStolenRecovery?source='+source__val,
 		type: 'POST',
 		dataType : 'json',
 		contentType : 'application/json; charset=utf-8',
