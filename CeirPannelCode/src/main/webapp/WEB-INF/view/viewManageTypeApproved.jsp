@@ -74,10 +74,6 @@
 <script src="${context}/resources/custom_js/1.11.2_jquery-ui.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 <script src="${context}/resources/custom_js/jquery.blockUI.js?version=<%= (int) (Math.random() * 10) %>"></script>
-<script src="${context}/resources/i18n/Khmer.json"></script>
-
-
-
 
 <!------------------------------------------- Dragable Model---------------------------------->
 <script src="${context}/resources/custom_js/1.12.1_jquery-ui.js?version=<%= (int) (Math.random() * 10) %>"></script>
