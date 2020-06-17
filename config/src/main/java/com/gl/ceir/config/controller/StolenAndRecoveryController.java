@@ -129,14 +129,14 @@ public class StolenAndRecoveryController {
 			@RequestParam(value = "source", defaultValue = "menu") String source) {
 
 		MappingJacksonValue mapping = null;
-		logger.info("  source== "+source);
+		logger.info("source== "+source);
 		if(file == 0) {
 			logger.info("Record request to Stolen And Recovery Info = " +  stolenandRecoveryDetails);
 			Page<StolenandRecoveryMgmt>	stolenandRecoveryDetailsResponse = stolenAndRecoveryServiceImpl.getAllInfo(stolenandRecoveryDetails,pageNo,pageSize,source);
 			mapping = new MappingJacksonValue(stolenandRecoveryDetailsResponse);
 		}else {
 			logger.info("Request to export filtered Stolen And Recovery = " + stolenandRecoveryDetails);
-			FileDetails fileDetails = stolenAndRecoveryServiceImpl.getFilteredStolenAndRecoveryInFile(stolenandRecoveryDetails);
+			FileDetails fileDetails = stolenAndRecoveryServiceImpl.getFilteredStolenAndRecoveryInFile(stolenandRecoveryDetails, source);
 			mapping = new MappingJacksonValue(fileDetails);
 		}
 		

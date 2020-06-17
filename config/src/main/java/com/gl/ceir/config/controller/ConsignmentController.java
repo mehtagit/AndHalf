@@ -112,7 +112,7 @@ public class ConsignmentController {
 			mapping = new MappingJacksonValue(consignment);
 		}else {
 			logger.info("Request to export filtered consignment = " + filterRequest);
-			FileDetails fileDetails = consignmentServiceImpl.getFilteredConsignmentInFileV2(filterRequest);
+			FileDetails fileDetails = consignmentServiceImpl.getFilteredConsignmentInFileV2(filterRequest, source);
 			mapping = new MappingJacksonValue(fileDetails);
 		}
 
@@ -147,10 +147,7 @@ public class ConsignmentController {
 		else {
 			new GenricResponse(1, "Error during update status before deleting", consignmentUpdateRequest.getTxnId());
 		}
-	
-
 		return genricResponse;
-
 	}
 
 	// for approve 
@@ -165,12 +162,4 @@ public class ConsignmentController {
 		return genricResponse ;
 
 	}
-
-
-	/*@ApiOperation(value = "Get total count and quantity.", response = ResponseCountAndQuantity.class)
-	@RequestMapping(path = "/consignment/countAndQuantity", method = RequestMethod.POST)
-	public MappingJacksonValue getConsignmentCountAndQuantity( @RequestBody RequestCountAndQuantity request ) {
-		ResponseCountAndQuantity response = consignmentServiceImpl.getConsignmentCountAndQuantity(request);
-		return new MappingJacksonValue(response);
-	}*/
 }

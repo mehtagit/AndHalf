@@ -143,14 +143,14 @@ public class RegularizedDeviceServiceImpl {
 	DashboardUsersFeatureStateMapRepository dashboardUsersFeatureStateMapRepository; 
 
 	
-	private List<RegularizeDeviceDb> getAll(FilterRequest filterRequest){
+	private List<RegularizeDeviceDb> getAll(FilterRequest filterRequest, String source){
 
 		List<StateMgmtDb> stateList = null;
 
 		try {
 			stateList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
 
-			List<RegularizeDeviceDb> regularizeDeviceDbs = regularizedDeviceDbRepository.findAll(buildSpecification(filterRequest,stateList,null).build());
+			List<RegularizeDeviceDb> regularizeDeviceDbs = regularizedDeviceDbRepository.findAll(buildSpecification(filterRequest, stateList, source).build());
 
 			for(RegularizeDeviceDb regularizeDeviceDb : regularizeDeviceDbs) {
 
@@ -248,7 +248,7 @@ public class RegularizedDeviceServiceImpl {
 		}
 	}
 
-	public FileDetails getFilteredDeviceInFile(FilterRequest filterRequest) {
+	public FileDetails getFilteredDeviceInFile(FilterRequest filterRequest, String source) {
 		String fileName = null;
 		Writer writer   = null;
 		RegularizeDeviceFileModel rdfm = null;
@@ -267,7 +267,7 @@ public class RegularizedDeviceServiceImpl {
 		List< RegularizeDeviceFileModel > fileRecords = null;
 
 		try {
-			List<RegularizeDeviceDb> regularizeDevices = getAll(filterRequest);
+			List<RegularizeDeviceDb> regularizeDevices = getAll(filterRequest, source);
 
 			fileName = LocalDateTime.now().format(dtf2).replace(" ", "_") + "_RegularizeDevice.csv";
 

@@ -100,7 +100,7 @@ public class StockController {
 			mapping = new MappingJacksonValue(response);
 		}else {
 			logger.info("Request to export filtered Stocks = " + filterRequest);
-			FileDetails fileDetails = stackholderServiceImpl.getFilteredStockInFileV2(filterRequest);
+			FileDetails fileDetails = stackholderServiceImpl.getFilteredStockInFileV2(filterRequest, source);
 			mapping = new MappingJacksonValue(fileDetails);
 		}
 		

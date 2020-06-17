@@ -234,13 +234,13 @@ public class ConsignmentServiceImpl {
 
 	}
 
-	private List<ConsignmentMgmt> getAll(FilterRequest filterRequest){
+	private List<ConsignmentMgmt> getAll(FilterRequest filterRequest, String source){
 		try {
 
 			List<StateMgmtDb> statusList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
 			logger.debug("statusList " + statusList);
 
-			List<ConsignmentMgmt> consignmentMgmts = consignmentRepository.findAll(buildSpecification(filterRequest, statusList,null).build(), new Sort(Sort.Direction.DESC, "modifiedOn"));
+			List<ConsignmentMgmt> consignmentMgmts = consignmentRepository.findAll(buildSpecification(filterRequest, statusList, source).build(), new Sort(Sort.Direction.DESC, "modifiedOn"));
 			logger.debug("consignmentMgmts " + consignmentMgmts);
 
 			for(ConsignmentMgmt consignmentMgmt2 : consignmentMgmts) {
@@ -568,10 +568,7 @@ public class ConsignmentServiceImpl {
 			logger.debug("Accept/Reject Consignment : " + consignmentMgmt);
 			// Fetch user_profile to update user over mail/sms regarding the action.
 			userProfile = userProfileRepository.getByUserId(consignmentMgmt.getUserId());
-			logger.debug("UserProfile : " + userProfile);
-
-			ceirUserProfile.setUser(userStaticServiceImpl.getCeirAdmin());
-			logger.debug("CeirUserProfile : " + ceirUserProfile);
+			logger.info("UserProfile : " + userProfile);
 
 			//action  0 - Accept, 1 - Reject			
 
@@ -580,26 +577,17 @@ public class ConsignmentServiceImpl {
 			}
 			else {
 				if("CEIRADMIN".equalsIgnoreCase(role_type)){
+					logger.info("Running for CEIRADMIN");
 					return ceir_ConsignmentStatus(consignmentMgmt,consignmentUpdateRequest,userProfile,ceirUserProfile,action);
-
-				}
-
-				else if("CUSTOM".equalsIgnoreCase(role_type)) {
-
-					return ceir_CustomStatus(consignmentMgmt,consignmentUpdateRequest,userProfile,action);
-
-				}
-
-				else if(CEIRSYSTEM.equalsIgnoreCase(role_type)) {
-
-					return ceir_CEIRSystemStatus(consignmentMgmt,userProfile,consignmentUpdateRequest,ceirUserProfile,consignmentMgmt.getConsignmentStatus(),action);
-
-				}
-
-				else if("DRT".equalsIgnoreCase(role_type)) {
-
-					return ceir_DRTStatus(consignmentMgmt,userProfile,consignmentUpdateRequest,ceirUserProfile,action);
-
+				}else if("CUSTOM".equalsIgnoreCase(role_type)) {
+					logger.info("Running for CUSTOM");
+					return ceir_CustomStatus(consignmentMgmt, consignmentUpdateRequest,userProfile,action);
+				}else if(CEIRSYSTEM.equalsIgnoreCase(role_type)) {
+					logger.info("Running for CEIRSYSTEM");
+					return ceir_CEIRSystemStatus(consignmentMgmt, userProfile, consignmentUpdateRequest,ceirUserProfile,consignmentMgmt.getConsignmentStatus(),action);
+				}else if("DRT".equalsIgnoreCase(role_type)) {
+					logger.info("Running for DRT");
+					return ceir_DRTStatus(consignmentMgmt, userProfile, consignmentUpdateRequest,ceirUserProfile,action);
 				}
 				else {
 					logger.info("Nothing to update for request :: " + consignmentUpdateRequest);
@@ -624,7 +612,7 @@ public class ConsignmentServiceImpl {
 
 
 
-	public FileDetails getFilteredConsignmentInFileV2(FilterRequest filterRequest) {
+	public FileDetails getFilteredConsignmentInFileV2(FilterRequest filterRequest, String source) {
 		String fileName = null;
 		Writer writer   = null;
 
@@ -644,7 +632,7 @@ public class ConsignmentServiceImpl {
 		CustomMappingStrategy<ConsignmentFileModel> mappingStrategy = new CustomMappingStrategy<>();
 
 		try {
-			List<ConsignmentMgmt> consignmentMgmts = getAll(filterRequest);
+			List<ConsignmentMgmt> consignmentMgmts = getAll(filterRequest, source);
 
 			fileName = LocalDateTime.now().format(dtf2).replace(" ", "_") + "_Consignment.csv";
 			writer = Files.newBufferedWriter(Paths.get(filepath.getValue() + fileName));
@@ -1167,17 +1155,11 @@ public class ConsignmentServiceImpl {
 		}
 	}
 
-
-
-	public GenricResponse ceir_CEIRSystemStatus(ConsignmentMgmt consignmentMgmt,UserProfile userProfile,ConsignmentUpdateRequest consignmentUpdateRequest, UserProfile ceirUserProfile,int consignmentStatus,int action) {
+	public GenricResponse ceir_CEIRSystemStatus(ConsignmentMgmt consignmentMgmt, UserProfile userProfile, ConsignmentUpdateRequest consignmentUpdateRequest, UserProfile ceirUserProfile,int consignmentStatus,int action) {
 		String payload_txnID = consignmentUpdateRequest.getTxnId();
 		List<RawMail> rawMails = new LinkedList<>();
-		UserProfile userProfile_importer = new UserProfile();
-		Integer user =consignmentMgmt.getUserId();
-		userProfile_importer.setUser(userRepository.getById(user));
-		logger.info("userProfile_importer::: " + userProfile_importer);
-
-
+		Integer user = consignmentMgmt.getUserId();
+		
 		if(!StateMachine.isConsignmentStatetransitionAllowed(CEIRSYSTEM, consignmentMgmt.getConsignmentStatus())) {
 			logger.info("state transition is not allowed." +payload_txnID);
 			return new GenricResponse(3, "state transition is not allowed.",payload_txnID);
@@ -1190,14 +1172,13 @@ public class ConsignmentServiceImpl {
 			}else {
 				consignmentMgmt.setConsignmentStatus(ConsignmentStatus.PENDING_APPROVAL_FROM_CEIR_AUTHORITY.getCode());
 			}
-		}
-		else {
+		}else {
 			consignmentMgmt.setConsignmentStatus(ConsignmentStatus.REJECTED_BY_SYSTEM.getCode());
-
 		}
 		consignmentMgmt.setFeatureId(consignmentUpdateRequest.getFeatureId());
 		consignmentMgmt.setRoleType(consignmentUpdateRequest.getRoleType());
-		if(consignmentTransaction.executeUpdateStatusConsignment(consignmentMgmt,webActionDb)) {
+		
+		if(consignmentTransaction.executeUpdateStatusConsignment(consignmentMgmt, webActionDb)) {
 			ConsignmentMgmt current_consignment_response = consignmentRepository.getByTxnId(payload_txnID);
 			if(action == 0) {
 				logger.info("CONSIGNMENT_PROCESS_SUCCESS_TO_IMPORTER_MAIL :  "+current_consignment_response.getConsignmentStatus());
@@ -1205,9 +1186,9 @@ public class ConsignmentServiceImpl {
 				placeholderMap.put("<First name>", userProfile.getFirstName());
 				placeholderMap.put("<Txn id>", current_consignment_response.getTxnId()); 
 
-				if(ConsignmentStatus.PROCESSING.getCode() == current_consignment_response.getConsignmentStatus()) {
+				if(ConsignmentStatus.PENDING_APPROVAL_FROM_CEIR_AUTHORITY.getCode() == current_consignment_response.getConsignmentStatus()) {
 					rawMails.add(new RawMail("CONSIGNMENT_PROCESS_SUCCESS_TO_IMPORTER_MAIL", 
-							userProfile_importer, 
+							userProfile, 
 							consignmentUpdateRequest.getFeatureId(), 
 							Features.CONSIGNMENT,
 							SubFeatures.ACCEPT,
@@ -1217,26 +1198,25 @@ public class ConsignmentServiceImpl {
 							consignmentUpdateRequest.getRoleType(),
 							"Importer"));
 
-
-
-
 					Generic_Response_Notification generic_Response_Notification = userFeignClient.ceirInfoByUserTypeId(8);
 
 					logger.info("generic_Response_Notification::::::::"+generic_Response_Notification);
 
 					List<RegisterationUser> registerationUserList = generic_Response_Notification.getData();
+					
 					if(registerationUserList == null || registerationUserList.isEmpty()) {
 						logger.info("no user found");
 					}
 					else {
 
-						for(RegisterationUser registerationUser :registerationUserList) {
+						for(RegisterationUser registerationUser : registerationUserList) {
 							UserProfile userProfile_generic_Response_Notification = new UserProfile();
 							userProfile_generic_Response_Notification  = userProfileRepository.getByUserId(registerationUser.getId());
 							logger.info(" firstName :::::"+userProfile_generic_Response_Notification.getFirstName());
+							
+							placeholderMap = new HashMap<String, String>();
 							placeholderMap.put("<First name>", userProfile_generic_Response_Notification.getFirstName());
 							placeholderMap.put("<Txn id>", current_consignment_response.getTxnId());
-
 
 							rawMails.add(new RawMail("CONSIGNMENT_PROCESS_SUCCESS_TO_CEIR_MAIL", 
 									userProfile_generic_Response_Notification, 
@@ -1250,18 +1230,19 @@ public class ConsignmentServiceImpl {
 									"CEIRAdmin"));
 						}
 					}
+					
+					logger.info("No. of mail sent : " + rawMails.size());
 					emailUtil.saveNotification(rawMails);
 				}
-			}
-			else {
+			}else {
 				logger.info("CONSIGNMENT_PROCESS_FAILED_TO_IMPORTER_MAIL :  "+current_consignment_response.getConsignmentStatus());
 
 				placeholderMap.put("<First name>", userProfile.getFirstName());
 				placeholderMap.put("<Txn id>", current_consignment_response.getTxnId());
 
-				if(ConsignmentStatus.PROCESSING.getCode() == current_consignment_response.getConsignmentStatus()) {
+				if(ConsignmentStatus.REJECTED_BY_SYSTEM.getCode() == current_consignment_response.getConsignmentStatus()) {
 					rawMails.add(new RawMail("CONSIGNMENT_PROCESS_FAILED_TO_IMPORTER_MAIL", 
-							userProfile_importer, 
+							userProfile, 
 							consignmentUpdateRequest.getFeatureId(), 
 							Features.CONSIGNMENT,
 							SubFeatures.REJECT,
@@ -1271,6 +1252,7 @@ public class ConsignmentServiceImpl {
 							consignmentUpdateRequest.getRoleType(),
 							"Importer"));
 
+					logger.info("No. of mail sent : " + rawMails.size());
 					emailUtil.saveNotification(rawMails);
 				}
 			}
@@ -1281,7 +1263,6 @@ public class ConsignmentServiceImpl {
 			return new GenricResponse(2, "Consignment status Update have failed.",payload_txnID);
 		}
 	}
-
 
 	public GenricResponse ceir_DRTStatus(ConsignmentMgmt consignmentMgmt,UserProfile userProfile,ConsignmentUpdateRequest consignmentUpdateRequest,UserProfile ceirUserProfile,int action) {
 		String payload_txnID = consignmentUpdateRequest.getTxnId();

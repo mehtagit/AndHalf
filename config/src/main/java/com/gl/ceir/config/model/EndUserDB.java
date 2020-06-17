@@ -22,6 +22,7 @@ import org.hibernate.envers.Audited;
 import org.hibernate.envers.NotAudited;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -84,6 +85,7 @@ public class EndUserDB   {
 	
 
 	@NotAudited
+	@JsonBackReference
 	@OneToMany(mappedBy = "endUserDB",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	private List<RegularizeDeviceDb> regularizeDeviceDbs ;
 	
@@ -436,8 +438,8 @@ public class EndUserDB   {
 		builder.append(entryDateInCountry);
 		builder.append(", rejectedRemark=");
 		builder.append(rejectedRemark);
-		builder.append(", toString()=");
-		builder.append(super.toString());
+		//builder.append(", toString()=");
+		//builder.append(super.toString());
 		builder.append("]");
 		return builder.toString();
 	}

@@ -355,13 +355,13 @@ public class StockServiceImpl {
 		}
 	}
 
-	private List<StockMgmt> getAll(FilterRequest filterRequest){
+	private List<StockMgmt> getAll(FilterRequest filterRequest, String source){
 		List<StateMgmtDb> statusList = null;
 
 		try {
 			statusList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
 			logger.info("statusList " + statusList);
-			List<StockMgmt> stockMgmts = stockManagementRepository.findAll(buildSpecification(filterRequest, statusList, null).build(), new Sort(Sort.Direction.DESC, "modifiedOn"));
+			List<StockMgmt> stockMgmts = stockManagementRepository.findAll(buildSpecification(filterRequest, statusList, source).build(), new Sort(Sort.Direction.DESC, "modifiedOn"));
 
 			logger.info(statusList);
 
@@ -700,7 +700,7 @@ public class StockServiceImpl {
 	}
 
 
-	public FileDetails getFilteredStockInFile(FilterRequest filterRequest) {
+	public FileDetails getFilteredStockInFile(FilterRequest filterRequest, String source) {
 		String fileName = null;
 		Writer writer   = null;
 		StockFileModel sfm = null;
@@ -718,7 +718,7 @@ public class StockServiceImpl {
 		List< StockFileModel > fileRecords = null;
 
 		try {
-			List<StockMgmt> stockMgmts = getAll(filterRequest);
+			List<StockMgmt> stockMgmts = getAll(filterRequest, source);
 
 			fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_Stock.csv";
 
@@ -767,7 +767,7 @@ public class StockServiceImpl {
 		}
 	}
 
-	public FileDetails getFilteredStockInFileV2(FilterRequest filterRequest) {
+	public FileDetails getFilteredStockInFileV2(FilterRequest filterRequest, String source) {
 		String fileName = null;
 		Writer writer   = null;
 		StockFileModel sfm = null;
@@ -789,7 +789,7 @@ public class StockServiceImpl {
 		CustomMappingStrategy<StockFileModel> mappingStrategy = new CustomMappingStrategy<>();
 
 		try {
-			List<StockMgmt> stockMgmts = getAll(filterRequest);
+			List<StockMgmt> stockMgmts = getAll(filterRequest, source);
 			fileName = LocalDateTime.now().format(dtf2).replace(" ", "_") + "_Stock.csv";
 
 			/* if(filterRequest.getUserType().equalsIgnoreCase("CEIR")) */

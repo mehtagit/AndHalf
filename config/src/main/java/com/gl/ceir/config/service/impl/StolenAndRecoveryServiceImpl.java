@@ -62,6 +62,7 @@ import com.gl.ceir.config.model.constants.Tags;
 import com.gl.ceir.config.model.constants.WebActionDbState;
 import com.gl.ceir.config.model.constants.WebActionDbSubFeature;
 import com.gl.ceir.config.model.constants.WebActionStatus;
+import com.gl.ceir.config.model.file.BlockUnblockFileModel;
 import com.gl.ceir.config.model.file.StolenAndRecoveryFileModel;
 import com.gl.ceir.config.repository.AuditTrailRepository;
 import com.gl.ceir.config.repository.ConsignmentRepository;
@@ -288,7 +289,7 @@ public class StolenAndRecoveryServiceImpl {
 		}	
 	}
 
-	public List<StolenandRecoveryMgmt> getAll(FilterRequest filterRequest){
+	public List<StolenandRecoveryMgmt> getAll(FilterRequest filterRequest, String source){
 
 		List<StateMgmtDb> stateInterpList = null;
 		List<StateMgmtDb> statusList = null;
@@ -296,7 +297,7 @@ public class StolenAndRecoveryServiceImpl {
 		try {
 			statusList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
 
-			List<StolenandRecoveryMgmt> stolenandRecoveryMgmts = stolenAndRecoveryRepository.findAll(buildSpecification(filterRequest, statusList, null).build());
+			List<StolenandRecoveryMgmt> stolenandRecoveryMgmts = stolenAndRecoveryRepository.findAll(buildSpecification(filterRequest, statusList, source).build());
 			stateInterpList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
 			logger.info(stateInterpList);
 
@@ -456,11 +457,7 @@ public class StolenAndRecoveryServiceImpl {
 	}
 
 
-	public FileDetails getFilteredStolenAndRecoveryInFile(FilterRequest filterRequest) {
-		String fileName = null;
-		Writer writer   = null;
-
-		StolenAndRecoveryFileModel srfm = null;
+	public FileDetails getFilteredStolenAndRecoveryInFile(FilterRequest filterRequest, String source) {
 
 		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		DateTimeFormatter dtf2  = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
@@ -472,18 +469,28 @@ public class StolenAndRecoveryServiceImpl {
 
 		String filePath = filepath.getValue();
 
+		if(filterRequest.getFeatureId() == 5) {
+			return exportStolenRecoveryData(filterRequest, source, dtf, dtf2, filePath, link);
+		}else {
+			return exportBlockData(filterRequest, source, dtf, dtf2, filePath, link);
+		}
+	}
+
+	private FileDetails exportStolenRecoveryData(FilterRequest filterRequest, String source, DateTimeFormatter dtf, DateTimeFormatter dtf2,
+			String filePath, SystemConfigurationDb link) {
+		StolenAndRecoveryFileModel srfm = null;
+		Writer writer   = null;
+		String fileName = null;
+		
 		StatefulBeanToCsvBuilder<StolenAndRecoveryFileModel> builder = null;
 		StatefulBeanToCsv<StolenAndRecoveryFileModel> csvWriter = null;
 		List< StolenAndRecoveryFileModel > fileRecords = null;
 		CustomMappingStrategy<StolenAndRecoveryFileModel> mappingStrategy = new CustomMappingStrategy<>();
 
 		try {
-			List<StolenandRecoveryMgmt> stolenandRecoveryMgmts = getAll(filterRequest);
-			if(filterRequest.getFeatureId() == 5) {
-				fileName = LocalDateTime.now().format(dtf2).replace(" ", "_") + "_StolenAndRecovery.csv";
-			}else {
-				fileName = LocalDateTime.now().format(dtf2).replace(" ", "_") + "_Block_Unblock.csv";
-			}
+			List<StolenandRecoveryMgmt> stolenandRecoveryMgmts = getAll(filterRequest, source);
+
+			fileName = LocalDateTime.now().format(dtf2).replace(" ", "_") + "_Stolen_Recovery.csv";
 
 			writer = Files.newBufferedWriter(Paths.get(filePath+fileName));
 			mappingStrategy.setType(StolenAndRecoveryFileModel.class);
@@ -498,6 +505,74 @@ public class StolenAndRecoveryServiceImpl {
 				fileRecords = new ArrayList<>();
 				for( StolenandRecoveryMgmt stolenandRecoveryMgmt : stolenandRecoveryMgmts ) {
 					srfm = new StolenAndRecoveryFileModel();
+					if(Objects.isNull(stolenandRecoveryMgmt)) {
+						continue;
+					}
+
+					srfm.setCreatedOn(stolenandRecoveryMgmt.getCreatedOn().format(dtf));
+					srfm.setModifiedOn( stolenandRecoveryMgmt.getModifiedOn().format(dtf));
+					srfm.setTxnId( stolenandRecoveryMgmt.getTxnId());
+					srfm.setRequestType(stolenandRecoveryMgmt.getRequestTypeInterp());
+					srfm.setMode(stolenandRecoveryMgmt.getSourceTypeInterp());
+					logger.info("Status : "+stolenandRecoveryMgmt.getStateInterp());
+					srfm.setStolenStatus(stolenandRecoveryMgmt.getStateInterp());
+					srfm.setFileName( stolenandRecoveryMgmt.getFileName());
+					srfm.setDeviceQuantity(stolenandRecoveryMgmt.getDeviceQuantity());
+
+					logger.debug(srfm);
+					fileRecords.add(srfm);
+				}
+				csvWriter.write(fileRecords);
+			}
+			addInAuditTrail(Long.valueOf(filterRequest.getUserId()), "NA", SubFeatures.EXPORT, filterRequest.getRoleType(),filterRequest.getRequestType(),filterRequest.getFeatureId());
+			return new FileDetails( fileName, filePath, link.getValue() + fileName ); 
+
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", decideFeature(5L));
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.EXPORT);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, filterRequest.getUserId(), bodyPlaceHolderMap);
+
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}finally {
+			try {
+				if( Objects.nonNull(writer) )
+					writer.close();
+			} catch (IOException e) {}
+		}
+	}
+	
+	private FileDetails exportBlockData(FilterRequest filterRequest, String source, DateTimeFormatter dtf, 
+			DateTimeFormatter dtf2, String filePath, SystemConfigurationDb link) {
+		BlockUnblockFileModel srfm = null;
+		Writer writer   = null;
+		String fileName = null;
+		
+		StatefulBeanToCsvBuilder<BlockUnblockFileModel> builder = null;
+		StatefulBeanToCsv<BlockUnblockFileModel> csvWriter = null;
+		List< BlockUnblockFileModel > fileRecords = null;
+		CustomMappingStrategy<BlockUnblockFileModel> mappingStrategy = new CustomMappingStrategy<>();
+
+		try {
+			List<StolenandRecoveryMgmt> stolenandRecoveryMgmts = getAll(filterRequest, source);
+
+			fileName = LocalDateTime.now().format(dtf2).replace(" ", "_") + "_Block_Unblock.csv";
+
+			writer = Files.newBufferedWriter(Paths.get(filePath+fileName));
+			mappingStrategy.setType(BlockUnblockFileModel.class);
+
+			builder = new StatefulBeanToCsvBuilder<>(writer);
+			csvWriter = builder.withMappingStrategy(mappingStrategy).withSeparator(',').withQuotechar(CSVWriter.NO_QUOTE_CHARACTER).build();
+
+			if( stolenandRecoveryMgmts.isEmpty() ) {
+				csvWriter.write(new BlockUnblockFileModel());
+			}else {
+
+				fileRecords = new ArrayList<>();
+				for( StolenandRecoveryMgmt stolenandRecoveryMgmt : stolenandRecoveryMgmts ) {
+					srfm = new BlockUnblockFileModel();
 					if(Objects.isNull(stolenandRecoveryMgmt)) {
 						continue;
 					}
@@ -1341,7 +1416,7 @@ public class StolenAndRecoveryServiceImpl {
 		if(Objects.nonNull(filterRequest.getStartDate())) {
 			return Boolean.FALSE;
 		}
-		
+
 		if(Objects.nonNull(filterRequest.getEndDate())) {
 			return Boolean.FALSE;
 		}
@@ -1353,15 +1428,15 @@ public class StolenAndRecoveryServiceImpl {
 		if(Objects.nonNull(filterRequest.getDisplayName())) {
 			return Boolean.FALSE;
 		}
-		
+
 		if(Objects.nonNull(filterRequest.getFilteredUserType())) {
 			return Boolean.FALSE;
 		}
-		
+
 		if(Objects.nonNull(filterRequest.getConsignmentStatus()) ) {
 			return Boolean.FALSE;
 		}
-		
+
 		return Boolean.TRUE;
 	}
 }

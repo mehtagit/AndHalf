@@ -3,7 +3,7 @@ package com.gl.ceir.config.model.file;
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvBindByPosition;
 
-public class StolenAndRecoveryFileModel {
+public class BlockUnblockFileModel {
 	
 	@CsvBindByName(column = "Created On")
 	@CsvBindByPosition(position = 0)
@@ -29,12 +29,16 @@ public class StolenAndRecoveryFileModel {
 	@CsvBindByPosition(position = 5)
 	private String stolenStatus;
 	
-	@CsvBindByName(column = "Filename")
+	@CsvBindByName(column = "Source")
 	@CsvBindByPosition(position = 6)
+	private String source;
+	
+	@CsvBindByName(column = "Filename")
+	@CsvBindByPosition(position = 7)
 	private String fileName;
 	
 	@CsvBindByName(column = "Device Quantity")
-	@CsvBindByPosition(position = 7)
+	@CsvBindByPosition(position = 8)
 	private Integer deviceQuantity;
 	
 	public Integer getDeviceQuantity() {
@@ -43,6 +47,14 @@ public class StolenAndRecoveryFileModel {
 
 	public void setDeviceQuantity(Integer deviceQuantity) {
 		this.deviceQuantity = deviceQuantity;
+	}
+
+	public String getSource() {
+		return source;
+	}
+
+	public void setSource(String source) {
+		this.source = source;
 	}
 
 	public String getStolenStatus() {

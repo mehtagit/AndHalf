@@ -21,6 +21,7 @@ import org.hibernate.envers.Audited;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Audited
@@ -96,6 +97,7 @@ public class RegularizeDeviceDb implements Serializable {
 	
 	
 	@ManyToOne
+	@JsonManagedReference
 	@JoinColumn(name = "userId") 
 	private EndUserDB endUserDB;
 	
@@ -457,12 +459,12 @@ public class RegularizeDeviceDb implements Serializable {
 		builder.append(creatorUserId);
 		builder.append(", multiSimStatusInterp=");
 		builder.append(multiSimStatusInterp);
-		builder.append(taxCollectedBy);
 		builder.append(",taxCollectedBy");
+		builder.append(taxCollectedBy);
 		builder.append(", approvedBy=");
 		builder.append(approvedBy);
-		builder.append(", toString()=");
-		builder.append(super.toString());
+		//builder.append(", toString()=");
+		//builder.append(super.toString());
 		builder.append("]");
 		return builder.toString();
 	}
