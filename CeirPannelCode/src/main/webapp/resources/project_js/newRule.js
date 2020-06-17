@@ -12,7 +12,7 @@ $.getJSON('./registrationUserType', function(data) {
 });
 $.getJSON('./ruleName', function(data) {
 	for (i = 0; i < data.length; i++) {
-		$('<option>').val(data[i].name).text(data[i].description)
+		$('<option>').val(data[i].name).text(data[i].name)
 		.appendTo('#Rule');
 	}
 });

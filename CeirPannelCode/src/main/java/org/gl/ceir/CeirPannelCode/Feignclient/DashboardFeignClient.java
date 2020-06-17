@@ -74,4 +74,9 @@ public interface DashboardFeignClient {
 			@RequestParam(value = "userId") Integer userId, @RequestParam(value = "featureId") Integer featureId,
 			@RequestParam(value = "userTypeId") Integer userTypeId, @RequestParam(value = "userType") String userType);
 
+	@RequestMapping(value = "/updateVisa/countAndQuantity", method = RequestMethod.GET)
+	public RequestCountAndQuantity updateVisaCountAndQuantity(@RequestParam(value = "requestType") String requestType,
+			@RequestParam(value = "userId") Integer userId, @RequestParam(value = "featureId") Integer featureId,
+			@RequestParam(value = "userTypeId") Integer userTypeId, @RequestParam(value = "userType") String userType);
+
 }

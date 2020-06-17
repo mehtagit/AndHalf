@@ -129,4 +129,13 @@ public class Dashboard {
 				userTypeId, userType);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
+	
+	@GetMapping("/updateVisa/countAndQuantity")
+	public ResponseEntity<?> getUpdateVisaCount(@RequestParam(value = "requestType") String requestType,
+			@RequestParam(value = "userId") Integer userId, @RequestParam(value = "featureId") Integer featureId,
+			@RequestParam(value = "userTypeId") Integer userTypeId, @RequestParam(value = "userType") String userType) {
+		RequestCountAndQuantity response = dashboardFeignClient.updateVisaCountAndQuantity(requestType, userId, featureId,
+				userTypeId, userType);
+		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
 }
