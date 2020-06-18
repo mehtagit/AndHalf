@@ -1087,7 +1087,7 @@ public class IconsState {
 																				: featureID == 43
 																						? "./updateVisa?txnID=" + txnID
 																								+ "&source=noti"
-																						: featureID == 5 ? "/stolenRecovery?txnID="+txnID+"&source=noti" :
+																						: featureID == 5 ? "./stolenRecovery?txnID="+txnID+"&source=noti" :
 																							"JavaScript:void(0);";
 		// System.out.println("featureID::::::::::"+featureID);
 		// state related Code
