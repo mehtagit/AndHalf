@@ -55,7 +55,8 @@ public class GrievanceDatatableController {
 	public ResponseEntity<?> viewStockList(
 			@RequestParam(name = "type", defaultValue = "grievance", required = false) String role,
 			HttpServletRequest request, HttpSession session,
-			@RequestParam(name = "grievanceSessionUsesFlag", required = false) Integer grievanceSessionUsesFlag) {
+			@RequestParam(name = "grievanceSessionUsesFlag", required = false) Integer grievanceSessionUsesFlag,
+			@RequestParam(name="source",defaultValue = "menu",required = false) String source) {
 
 		// Data set on this List
 		List<List<Object>> finalList = new ArrayList<List<Object>>();
@@ -82,7 +83,7 @@ public class GrievanceDatatableController {
 		Integer userId = (Integer) session.getAttribute("userid");
 		
 		log.info("request parameters send to view grievance api=" + filterrequest);
-		response = grievanceFeignClient.grievanceFilter(filterrequest,pageNo,pageSize,file);
+		response = grievanceFeignClient.grievanceFilter(filterrequest,pageNo,pageSize,file,source);
 		log.info("response::::::::::::::" + response);
 		try {
 			Gson gson = new Gson();
@@ -335,7 +336,7 @@ public class GrievanceDatatableController {
 		
 		if(userType.equals("Customer Care")) {
 			String[] names = { "HeaderButton", Translator.toLocale("button.reportGriev"), "./searchUserNameForm", "btnLink",
-					"FilterButton", Translator.toLocale("button.filter"), "grievanceDataTable("+ConfigParameters.languageParam+")", "submitFilter" };
+					"FilterButton", Translator.toLocale("button.filter"), "grievanceDataTable("+ConfigParameters.languageParam+",'filter')", "submitFilter" };
 			for (int i = 0; i < names.length; i++) {
 				button = new Button();
 				button.setType(names[i]);
@@ -351,7 +352,7 @@ public class GrievanceDatatableController {
 			
 		}else {
 			String[] names = { "HeaderButton", Translator.toLocale("button.reportGriev"), "./openGrievanceForm?reqType=formPage", "btnLink",
-					"FilterButton", Translator.toLocale("button.filter"), "grievanceDataTable("+ConfigParameters.languageParam+")", "submitFilter" };
+					"FilterButton", Translator.toLocale("button.filter"), "grievanceDataTable("+ConfigParameters.languageParam+",'filter')", "submitFilter" };
 			for (int i = 0; i < names.length; i++) {
 				button = new Button();
 				button.setType(names[i]);

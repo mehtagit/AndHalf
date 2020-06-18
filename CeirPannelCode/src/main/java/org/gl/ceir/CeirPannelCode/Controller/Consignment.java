@@ -471,9 +471,11 @@ return response;
 @RequestMapping(value="/exportConsignmnet",method ={org.springframework.web.bind.annotation.RequestMethod.GET})
 public String exportToExcel(@RequestParam(name="consignmentStartDate",required = false) String consignmentStartDate,@RequestParam(name="consignmentEndDate",required = false) String consignmentEndDate,
 		@RequestParam(name="consignmentTxnId",required = false) String consignmentTxnId,@RequestParam(name="consignmentTaxPaidStatus") Integer consignmentTaxPaidStatus,HttpServletRequest request,
-		HttpSession session,@RequestParam(name="pageSize") Integer pageSize,@RequestParam(name="pageNo") Integer pageNo,@RequestParam(name="filterConsignmentStatus") Integer filterConsignmentStatus)
+		HttpSession session,@RequestParam(name="pageSize") Integer pageSize,@RequestParam(name="pageNo") Integer pageNo,@RequestParam(name="filterConsignmentStatus") Integer filterConsignmentStatus,
+		@RequestParam(name="source",defaultValue = "menu",required = false) String source)
 {
 	log.info("consignmentStartDate=="+consignmentStartDate+ " consignmentEndDate ="+consignmentEndDate+" consignmentTxnId="+consignmentTxnId+"consignmentTaxPaidStatus="+consignmentTaxPaidStatus+" filterConsignmentStatus="+filterConsignmentStatus);
+	log.info("source--->" +source);
 	int userId= (int) session.getAttribute("userid"); 
 	int file=1;
 	String userType=(String) session.getAttribute("usertype");
@@ -491,7 +493,7 @@ public String exportToExcel(@RequestParam(name="consignmentStartDate",required =
 	filterRequest.setFeatureId(3);
 	filterRequest.setRoleType(userType);
 	log.info(" request passed to the exportTo Excel Api =="+filterRequest+" *********** pageSize"+pageSize+"  pageNo  "+pageNo);
-	Object	response= feignCleintImplementation.consignmentFilter(filterRequest, pageNo, pageSize, file,"filter");
+	Object	response= feignCleintImplementation.consignmentFilter(filterRequest, pageNo, pageSize, file,source);
 
    Gson gson= new Gson(); 
    String apiResponse = gson.toJson(response);

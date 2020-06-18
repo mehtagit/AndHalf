@@ -298,8 +298,8 @@ function exportTacData() {
 	} else {
 		var userId = parseInt($("body").attr("data-userID"));
 	}
-	var txn = (txnIdValue == 'null' && transactionIDValue == undefined) ? $(
-			'#transactionID').val() : transactionIDValue;
+	var txn = (txnIdValue == 'null' && transactionIDValue == undefined) ? $('#transactionID').val() : transactionIDValue;
+	
 	var tacStartDate = $('#startDate').val();
 	var tacEndDate = $('#endDate').val();
 	var tacStatus = parseInt($('#Status').val());
@@ -314,7 +314,18 @@ function exportTacData() {
 	if (isNaN(tacStatus)) {
 		tacStatus = '';
 	}
-
+	//console.log("transactionIDValue-->" +transactionIDValue);
+	//console.log("tacStartDate---" +tacStartDate+  "tacEndDate---" +tacEndDate +  "tacStatus---" +tacStatus+  "tacNumber---" +tacNumber+  "txnId---" +txnId);
+	
+	var source__val;
+	if(transactionIDValue != undefined){
+		source__val = 'noti'
+	}else{
+		source__val = tacStartDate != ''|| tacEndDate != ''|| tacStatus != '-1'|| tacNumber != ''|| txnId != '' ? 'filter' : $("body").attr("data-session-source");
+	}
+	
+	//console.log("source__val-->" +source__val);
+	
 	var table = $('#ImporterAdmintypeAprroveTable').DataTable();
 	var info = table.page.info();
 	var pageNo = info.page;
@@ -328,7 +339,7 @@ function exportTacData() {
 			+ "&tacStartDate=" + tacStartDate + "&tacEndDate=" + tacEndDate
 			+ "&tacStatus=" + tacStatus + "&txnId=" + txnId + "&featureId="
 			+ featureId + "&userType" + userType + "&userTypeId=" + userTypeId
-			+ "&userId=" + userId + "&pageSize=" + pageSize + "&pageNo="
+			+ "&userId=" + userId +"&source=" +source__val+ "&pageSize=" + pageSize + "&pageNo="
 			+ pageNo;
 
 }

@@ -349,6 +349,8 @@ function exportStolenRecoveryData()
 			"requestType":stolenRecoveryRequestType,
 			"featureId":featureId,
 			"roleType":roleType,
+			"userTypeId": parseInt($("body").attr("data-userTypeID")),
+			"userType": $("body").attr("data-roleType"),
 			"pageNo":parseInt(pageNo),
 			"pageSize":parseInt(pageSize)
 			

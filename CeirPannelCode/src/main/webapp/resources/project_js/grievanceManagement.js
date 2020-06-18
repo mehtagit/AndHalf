@@ -26,7 +26,7 @@ var featureId = 6;
 				var userId = $("body").attr("data-userID");
 			$(document).ready(function(){
 				$('div#initialloader').fadeIn('fast');
-				grievanceDataTable(lang);
+				grievanceDataTable(lang,null);
 				
 				
 				if(isNaN(userId))
@@ -50,11 +50,21 @@ var featureId = 6;
 			
 			/*localStorage.setItem("grievancePageSource", "viaGriebva");*/
 
-			function grievanceDataTable(lang){
+			function grievanceDataTable(lang,source){
+				var source__val;
+
+				if(source == 'filter' ) {
+					source__val= source;
+				}
+				else{
+					source__val= $("body").attr("data-session-source");
+
+				}
+				
 				if(cierRoletype=="CEIRAdmin" || cierRoletype=="Customer Care"){
-					DataTable('headers?type=adminGrievanceHeaders&lang='+lang ,'grievanceData');
+					DataTable('headers?type=adminGrievanceHeaders&lang='+lang ,'grievanceData?source='+source__val);
 				}else{
-					DataTable('headers?type=grievanceHeaders&lang='+lang,'grievanceData');
+					DataTable('headers?type=grievanceHeaders&lang='+lang,'grievanceData?source='+source__val);
 				}
 				
 			}	
@@ -653,14 +663,28 @@ var featureId = 6;
 				var grievanceStartDate=$('#startDate').val();
 				var grievanceEndDate=$('#endDate').val();
 				var grievancetxnId=$('#transactionID').val();
-				var grievanceId=$('#grievanceID').val();
+				//var grievanceId=$('#grievanceID').val();
 				var grievanceStatus=$('#recentStatus').val();
-
+				
+				var grievanceId = (txnIdValue == 'null' && transactionIDValue == undefined) ? $('#grievanceID').val() : transactionIDValue;
+				
+				//console.log("grievanceId-->" +grievanceId);
+				//console.log("grievanceStartDate---" +grievanceStartDate+  "grievanceEndDate---" +grievanceEndDate +  "grievancetxnId---" +grievancetxnId+  "grievanceId---" +grievanceId+  "grievanceStatus---" +grievanceStatus);
+				//var source__val = tacStartDate != ''|| tacEndDate != ''|| tacStatus != '-1'|| tacNumber != ''|| txnId != '' ? 'filter' : $("body").attr("data-session-source");	
+				
+				if(grievanceId != ''){
+					source__val = 'noti'
+				}else{
+					source__val = grievanceStartDate != ''|| grievanceEndDate != ''|| grievancetxnId != ''|| grievanceId != ''|| grievanceStatus != '-1' ? 'filter' : $("body").attr("data-session-source");
+				}
+				
+				//console.log("source__val-->" +source__val);
+				
 				var table = $('#grivanceLibraryTable').DataTable();
 				var info = table.page.info(); 
 				var pageNo=info.page;
 				var pageSize =info.length;
-				window.location.href="./exportGrievance?grievanceStartDate="+grievanceStartDate+"&grievanceEndDate="+grievanceEndDate+"&grievancetxnId="+grievancetxnId+"&grievanceId="+grievanceId+"&grievanceStatus="+grievanceStatus+"&pageSize="+pageSize+"&pageNo="+pageNo;
+				window.location.href="./exportGrievance?grievanceStartDate="+grievanceStartDate+"&grievanceEndDate="+grievanceEndDate+"&grievancetxnId="+grievancetxnId+"&grievanceId="+grievanceId+"&grievanceStatus="+grievanceStatus+"&source="+source__val+"&pageSize="+pageSize+"&pageNo="+pageNo;
 			}
 
 			//************************************************ category dropdown function ******************************************************************
