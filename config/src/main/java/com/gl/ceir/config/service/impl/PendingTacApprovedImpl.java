@@ -113,11 +113,13 @@ public class PendingTacApprovedImpl {
 						GenericMessageTags.NULL_REQ.getMessage(), null);
 			}
 
-			PendingTacApprovedDb pendingTacApprovedDb = pendingTacApprovedRepository.getByTxnId(filterRequest.getTxnId());
-			if(Objects.nonNull(pendingTacApprovedDb)) {
-				return new GenricResponse(0, "SUCCESS", "SUCCESS", pendingTacApprovedDb);
-			}else {
+			List<PendingTacApprovedDb> pendingTacApprovedDb = pendingTacApprovedRepository.getByTxnId(filterRequest.getTxnId());
+			if(pendingTacApprovedDb.isEmpty()) {
+				logger.info("No pending tacs found for consignment with txnId : " + filterRequest.getTxnId());
 				return new GenricResponse(1, "Not Found", "Not Found", "");
+			}else {
+				logger.info("Pending tacs available for consignment with txnId : " + filterRequest.getTxnId());
+				return new GenricResponse(0, "SUCCESS", "SUCCESS", pendingTacApprovedDb);
 			}
 
 		} catch (Exception e) {

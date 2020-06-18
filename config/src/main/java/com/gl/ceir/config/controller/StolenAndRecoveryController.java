@@ -115,7 +115,7 @@ public class StolenAndRecoveryController {
 		logger.info("Multiple Stolen Upload Request="+stolenandRecoveryDetails);
 
 		GenricResponse genricResponse =	stolenAndRecoveryServiceImpl.uploadMultipleStolen(stolenandRecoveryDetails);
-		logger.info("Muliple Stolen Upload Response ="+genricResponse);
+		logger.info("Muliple Stolen Upload Response = " + genricResponse);
 
 		return genricResponse;
 	}
@@ -129,7 +129,7 @@ public class StolenAndRecoveryController {
 			@RequestParam(value = "source", defaultValue = "menu") String source) {
 
 		MappingJacksonValue mapping = null;
-		logger.info("source== "+source);
+		logger.info("source == "+source);
 		if(file == 0) {
 			logger.info("Record request to Stolen And Recovery Info = " +  stolenandRecoveryDetails);
 			Page<StolenandRecoveryMgmt>	stolenandRecoveryDetailsResponse = stolenAndRecoveryServiceImpl.getAllInfo(stolenandRecoveryDetails,pageNo,pageSize,source);

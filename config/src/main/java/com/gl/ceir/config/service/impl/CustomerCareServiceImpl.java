@@ -171,6 +171,7 @@ public class CustomerCareServiceImpl {
 			if(repository instanceof CustomerCareRepo) {
 				CustomerCareRepo customerCareRepo = (CustomerCareRepo)repository;
 				objectBytxnId = customerCareRepo.getByTxnId(customerCareDeviceState.getTxnId());
+				
 				if(objectBytxnId instanceof ConsignmentMgmt) {
 					ConsignmentMgmt consignmentObj = (ConsignmentMgmt)objectBytxnId;
 					consignmentServiceImpl.setInterp(consignmentObj);

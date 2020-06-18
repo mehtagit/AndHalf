@@ -1078,7 +1078,6 @@ public class StockServiceImpl {
 					placeholderMap.put("<Txn id>", stockMgmt.getTxnId());
 
 					stockMgmt.setStockStatus(StockStatus.REJECTED_BY_SYSTEM.getCode());
-					stockMgmt.setRemarks(consignmentUpdateRequest.getRemarks());
 				}
 
 				// Update Stock and its history.
