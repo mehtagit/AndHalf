@@ -1,8 +1,9 @@
 var userTypeId = parseInt($("body").attr("data-userTypeID"));
 var userType = $("body").attr("data-roleType");
 var userId = $("body").attr("data-userID");
-var featureId="3";
+var operatortypeid = window.parent.$("body").attr("data-operatortypeid");
 
+var featureId="3";
 
 var sessionLang=window.parent.$('#langlist').val() == 'en' ? 'en' : 'km';
 $.i18n().locale = sessionLang;	
@@ -33,6 +34,7 @@ $(document).ready(function(){
 					userId = -1;
 				}
 
+				var operatorId;
 				var requestType;
 				if(data[i].name == 'Block Requests' && data[i].featureId == 7){
 					requestType=2;
@@ -49,10 +51,16 @@ $(document).ready(function(){
 					requestType=1;
 				}
 
-
-
+				var user_Type=window.parent.$("body").attr("data-usertype");
+				
+				if(user_Type =='Operator'){
+					operatorId=operatortypeid;
+					}
+				else{
+					operatorId=-1;
+				}
 				$.ajax({
-					url: './'+url[0]+'?featureId='+data[i].featureId+'&userId='+userId+'&userTypeId='+userTypeId+'&requestType='+requestType+'&userType='+userType,
+					url: './'+url[0]+'?featureId='+data[i].featureId+'&userId='+userId+'&userTypeId='+userTypeId+'&requestType='+requestType+'&userType='+userType+'&operatorId='+operatorId,
 					'async': false,
 					type: 'GET',
 					success: function(data){

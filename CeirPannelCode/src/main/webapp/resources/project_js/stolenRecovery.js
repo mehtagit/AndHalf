@@ -944,6 +944,7 @@ $.getJSON('./getSourceTypeDropdown/SOURCE_TYPE/'+featureId+'', function(data) {
 //**********************************************************Export Excel file************************************************************************
 function exportStolenRecoveryData()
 {
+	var source__val;
 	var stolenRecoveryStartDate=$('#startDate').val();
 	var stolenRecoveryEndDate=$('#endDate').val();
 	var stolenRecoveryTxnId=$('#transactionID').val();
@@ -955,6 +956,17 @@ function exportStolenRecoveryData()
 	var roleType = $("body").attr("data-roleType");
 	var currentRoleType = $("body").attr("data-stolenselected-roleType");
 	
+	var source__val = stolenRecoveryStartDate != ''|| stolenRecoveryEndDate != ''|| stolenRecoveryTxnId != ''|| stolenRecoveryFileStatus != "Status"|| stolenRecoverySourceStatus != "Mode"|| stolenRecoveryRequestType != "Request Type" ? 'filter' : $("body").attr("data-session-source");
+	var blockUnblcksource= $("body").attr("data-session-source");
+	if(blockUnblcksource=='noti')
+		{
+		//console.log("export noti data=="+$("body").attr("data-notificationTxnID"));
+		stolenRecoveryTxnId=$("body").attr("data-notificationTxnID");
+		source__val=$("body").attr("data-session-source");
+		}
+	else if(blockUnblcksource=='dashboard'){
+		source__val=$("body").attr("data-session-source");
+	}
 	var role = currentRoleType == null ? roleType : currentRoleType;
 	//console.log("roleType=="+roleType+" currentRoleType="+currentRoleType+" role="+role);
     
@@ -963,7 +975,7 @@ function exportStolenRecoveryData()
 	   {
     	  stolenRecoveryFileStatus='';
     	  stolenRecoverySourceStatus='';
-    	  stolenRecoveryRequestType='';
+    	  stolenRecoveryRequestType=parseInt($("body").attr("data-requestType"));
     	  //console.log(" 11111111stolenRecoveryFileStatus && stolenRecoverySourceStatus && stolenRecoveryRequestType is empty =="+stolenRecoveryFileStatus+stolenRecoverySourceStatus);
 	   }
       else if(isNaN(stolenRecoveryFileStatus) && isNaN(stolenRecoverySourceStatus))
@@ -975,12 +987,12 @@ function exportStolenRecoveryData()
       else if(isNaN(stolenRecoverySourceStatus) && isNaN(stolenRecoveryRequestType))
 	   {
     	  stolenRecoverySourceStatus='';
-    	  stolenRecoveryRequestType='';
+    	  stolenRecoveryRequestType=parseInt($("body").attr("data-requestType"));
     	  //console.log(" 333333stolenRecoverySourceStatus && stolenRecoveryRequestType is empty="+stolenRecoverySourceStatus+stolenRecoveryRequestType);
 	   }
       else if(isNaN(stolenRecoveryRequestType) && isNaN(stolenRecoveryFileStatus))
     	  {
-    	   stolenRecoveryRequestType='';
+    	   stolenRecoveryRequestType=parseInt($("body").attr("data-requestType"));
     	   stolenRecoveryFileStatus='';
     	   //console.log(" 44444stolenRecoveryRequestType && stolenRecoveryFileStatus is empty "+stolenRecoveryRequestType+stolenRecoveryFileStatus);
     	  }
@@ -996,7 +1008,7 @@ function exportStolenRecoveryData()
 	  }
       else if(isNaN(stolenRecoveryRequestType))
 	  {
-    	  stolenRecoveryRequestType='';
+    	  stolenRecoveryRequestType=parseInt($("body").attr("data-requestType"));
     	  //console.log("stolenRecoveryRequestType is blank="+stolenRecoveryRequestType);
 	  }
 
@@ -1025,13 +1037,14 @@ function exportStolenRecoveryData()
 			"pageSize":parseInt(pageSize),
 			"userTypeId": parseInt($("body").attr("data-userTypeID")),
 			"userType":$("body").attr("data-roleType"),
-			"userId" : $("body").attr("data-userID")
+			"userId" : $("body").attr("data-userID"),
+		
 			
 			
 	}
 	//console.log(JSON.stringify(filterRequest))
 	$.ajax({
-		url: './exportStolenRecovery',
+		url: './exportStolenRecovery?source='+source__val,
 		type: 'POST',
 		dataType : 'json',
 		contentType : 'application/json; charset=utf-8',

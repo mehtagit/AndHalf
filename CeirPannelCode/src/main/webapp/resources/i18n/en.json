@@ -10,7 +10,7 @@
 	"updateMsg": "Your update on the form for transaction ID",
 	"hasBeenUpdated": "has been successfully updated",
 	"consignmentDeleted": "Consignment Deleted Successfully",
-	"deleteInProgress": "Delete In Progress",
+	"deleteInProgress": "your request for deletion has been accepted",
 	"stockRejected": "Stock Rejected SuccessFully",
 	"stockUploadSuccess": "Stock Approved SuccessFully",
 	"stockhaveTxn": "Do you want to approve the stock having Transaction ID:",
@@ -203,6 +203,8 @@
 	"imageSize": "Image size should be less than 5 mb.",
 	"imageAndPdfMsg": "Kindly upload a valid image or pdf file",
 	"End User Pending Device Count" : "End User Pending Device Count",
-	"End User Pending Device Quantity":"End User Pending Device Quantity"
+	"End User Pending Device Quantity":"End User Pending Device Quantity",
+	"Update Visa Request":"Update Visa Request"
+	
 	
 }

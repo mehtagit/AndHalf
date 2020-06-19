@@ -365,7 +365,7 @@ function setStakeHolderData(name,date,featureId,status,txnId,imei)
 		$("#viewcurrency").val(data.data.currencyInterp);
 		$("#viewtotalPrice").val(data.data.totalPrice);
 		}
-		else if(name=='Distributor' || name=='Retailer') {
+		else if(name=='Distributor' || name=='Retailer' || name=="End User" ) {
 			
 			$('#viewStockModal').openModal({
 		    	   dismissible:false
@@ -414,7 +414,7 @@ function setStakeHolderData(name,date,featureId,status,txnId,imei)
      		$("#viewImportertac").val(data.data.tac);
      		$("#viewtxnId").val(data.data.txnId);
         	 }
-         else if(name=='End User')
+         else if(name=='Regularize device')
     	 {
     	 $('#viewDeviceInfo').openModal({
 	    	   dismissible:false
