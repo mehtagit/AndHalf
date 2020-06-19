@@ -61,7 +61,8 @@ public interface DashboardFeignClient {
 	@RequestMapping(value = "/stakeholder/blockUnblockCount", method = RequestMethod.GET)
 	public RequestCountAndQuantity stakeholderBlockUnblockCount(@RequestParam(value = "requestType") String requestType,
 			@RequestParam(value = "userId") Integer userId, @RequestParam(value = "featureId") Integer featureId,
-			@RequestParam(value = "userTypeId") Integer userTypeId, @RequestParam(value = "userType") String userType);
+			@RequestParam(value = "userTypeId") Integer userTypeId, @RequestParam(value = "userType") String userType,
+			@RequestParam(value = "operatorId",required = false) Integer operatorId);
 
 	/// TypeApproved/count
 	@RequestMapping(value = "/TypeApproved/count", method = RequestMethod.GET)
