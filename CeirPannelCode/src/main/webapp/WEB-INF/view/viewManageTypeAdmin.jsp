@@ -123,7 +123,7 @@ position: fixed;
 	data-selected-consignmentTxnId="${consignmentTxnId}"
 	data-selected-consignmentStatus="${consignmentStatus}"
 	session-value="en"
-	session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}"
+    session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}"
 	data-session-source="${not empty param.source ? param.source : 'menu'}">
 
 	<!-- START CONTENT -->

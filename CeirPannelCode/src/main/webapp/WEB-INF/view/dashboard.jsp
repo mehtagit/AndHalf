@@ -124,6 +124,7 @@ data-roleType="${usertype}" data-userTypeID="${usertypeId}"
 	data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}"
 	data-stolenselected-roleType="${stolenselectedUserTypeId}"
 	data-selected-consignmentTxnId="${consignmentTxnId}"
+	data-operatorTypeId="${operatorTypeId}"
 	data-selected-consignmentStatus="${consignmentStatus}" data-defaultLink="${defaultLink}">
 	<!-- Start Page Loading -->
 	<div id="loader-wrapper">

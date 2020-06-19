@@ -67,7 +67,7 @@ public class GrievanceController {
 	@RequestMapping(value=
 		{"grievanceManagement"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}
 			)
-	    public ModelAndView viewGrievance(HttpSession session,@RequestParam(name="txnID",required = false) String txnID,
+	 public ModelAndView viewGrievance(HttpSession session,@RequestParam(name="txnID",required = false) String txnID,
 	    		@RequestParam(name="source",defaultValue = "menu",required = false) String source) {
 		ModelAndView mv = new ModelAndView();
 		log.info(" view Grievance entry point."); 

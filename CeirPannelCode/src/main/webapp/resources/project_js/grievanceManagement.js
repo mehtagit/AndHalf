@@ -51,7 +51,7 @@ var featureId = 6;
 			/*localStorage.setItem("grievancePageSource", "viaGriebva");*/
 
 			function grievanceDataTable(lang,source){
-				var source__val;
+			var source__val;
 
 				if(source == 'filter' ) {
 					source__val= source;
@@ -658,7 +658,7 @@ var featureId = 6;
 
 
 			//**********************************************************Export Excel file************************************************************************
-			function exportData()
+						function exportData()
 			{
 				var grievanceStartDate=$('#startDate').val();
 				var grievanceEndDate=$('#endDate').val();

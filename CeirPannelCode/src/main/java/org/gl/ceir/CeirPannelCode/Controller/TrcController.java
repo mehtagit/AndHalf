@@ -294,12 +294,11 @@ public class TrcController {
 			@RequestParam(name="userTypeId",required = false) Integer userTypeId,
 			@RequestParam(name="userId",required = false) Integer userId,
 			@RequestParam(name="source",defaultValue = "menu",required = false) String source
-			
 			)
 	{
 		log.info("tacStartDate=="+tacStartDate+ " tacStatus ="+tacStatus+" tacNumber="+tacNumber+"tacEndDate="+tacEndDate);
-		log.info("source--->" +source);
 		//int userId= (int) session.getAttribute("userid"); 
+		log.info("source--->" +source);
 		int file=1;
 		FileExportResponse fileExportResponse;
 		TRCRequest trcRequest = new TRCRequest();
@@ -315,7 +314,7 @@ public class TrcController {
 		trcRequest.setUserId(userId);
 		trcRequest.setFile(file);
 		log.info(" request passed to the exportTo trcRequest Excel Api =="+trcRequest+" *********** pageSize"+pageSize+"  pageNo  "+pageNo+" userId==" +userId);
-		Object	response= typeApprovedFeignImpl.manageTypeFeign(trcRequest, pageNo, pageSize, file, source);
+		Object	response= typeApprovedFeignImpl.manageTypeFeign(trcRequest, pageNo, pageSize, file,source);
 
 		Gson gson= new Gson(); 
 		String apiResponse = gson.toJson(response);

@@ -97,9 +97,10 @@ public class Dashboard {
 	@GetMapping("/stakeholder/blockUnblockCount")
 	public ResponseEntity<?> getStakeholderBlockUnblockCount(@RequestParam(value = "requestType") String requestType,
 			@RequestParam(value = "userId") Integer userId, @RequestParam(value = "featureId") Integer featureId,
-			@RequestParam(value = "userTypeId") Integer userTypeId, @RequestParam(value = "userType") String userType) {
+			@RequestParam(value = "userTypeId") Integer userTypeId, @RequestParam(value = "userType") String userType,
+			@RequestParam(value = "operatorId",required = false) Integer operatorId) {
 		RequestCountAndQuantity response = dashboardFeignClient.stakeholderBlockUnblockCount(requestType, userId,
-				featureId, userTypeId, userType);
+				featureId, userTypeId, userType,operatorId);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 

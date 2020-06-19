@@ -352,7 +352,7 @@ public class GrievanceDatatableController {
 			
 		}else {
 			String[] names = { "HeaderButton", Translator.toLocale("button.reportGriev"), "./openGrievanceForm?reqType=formPage", "btnLink",
-					"FilterButton", Translator.toLocale("button.filter"), "grievanceDataTable("+ConfigParameters.languageParam+",'filter')", "submitFilter" };
+					"FilterButton", Translator.toLocale("button.filter"), "grievanceDataTable("+ConfigParameters.languageParam+")", "submitFilter" };
 			for (int i = 0; i < names.length; i++) {
 				button = new Button();
 				button.setType(names[i]);

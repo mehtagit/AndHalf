@@ -81,7 +81,7 @@ public class StolenRecovery {
 			) {
 			
 		ModelAndView mv = new ModelAndView();
-		log.info("entry point in stolen recovery  page with featureId-->  " +featureId+"  source  =="+source);
+		log.info("entry point in stolen recovery  page with featureId-->  " +featureId+"  source  =="+source+"  txnid=="+txnID);
 		try {
 		String roletype=session.getAttribute("usertype").toString();
 		String OperatorId = String.valueOf(session.getAttribute("operatorTypeId"));
@@ -101,8 +101,10 @@ public class StolenRecovery {
 				session.removeAttribute("requestType");
 				session.setAttribute("requestType",requestType);
 				session.setAttribute("filterSource", source);
+				session.setAttribute("txnID", txnID);
 				mv.setViewName("lawfulStolenRecovery");
 			}
+			
 			else {
 				log.info("  2  return stolen Recovery**roletype****"+roletype+" featureId******" +featureId+"****OperatorId***"+OperatorId);
 				session.setAttribute("stolenselectedUserTypeId", roletype);
@@ -110,6 +112,7 @@ public class StolenRecovery {
 				session.removeAttribute("requestType");
 				session.setAttribute("requestType",requestType);
 				session.setAttribute("filterSource", source);
+				session.setAttribute("txnID", txnID);
 				mv.setViewName("stolenRecovery");
 			}
 				
