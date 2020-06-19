@@ -132,17 +132,19 @@ public class PendingTacApprovedImpl {
 	@Transactional
 	public boolean updatePendingApproval(FilterRequest filterRequest){
 		try {
-			
-			PendingTacApprovedDb pendingTacApproveDb = pendingTacApprovedRepository.getByTxnId(filterRequest.getTxnId());
-			pendingTacApproveDb.setRemark(filterRequest.getRemark());
-			
-			logger.info("[Trying to update PendingTacApprovedDb] | Model ["+pendingTacApproveDb+"]");
-			pendingTacApprovedRepository.save(pendingTacApproveDb);
-			logger.info("[Updation of PendingTacApprovedDb is successful]  | Model ["+pendingTacApproveDb+"]");
-			return true;
+
+			List<PendingTacApprovedDb> pendingTacApproveDbs = pendingTacApprovedRepository.getByTxnId(filterRequest.getTxnId());
+
+			for(PendingTacApprovedDb pendingTacApproveDb : pendingTacApproveDbs) {
+				pendingTacApproveDb.setRemark(filterRequest.getRemark());
+			}
+			logger.info("[Trying to update PendingTacApprovedDb] | Model [" + pendingTacApproveDbs + "]");
+			pendingTacApprovedRepository.saveAll(pendingTacApproveDbs);
+			logger.info("[Updation of PendingTacApprovedDb is successful]  | Model [" + pendingTacApproveDbs + "]");
+			return Boolean.TRUE;
 		} catch (Exception e) {
 			logger.error("[Error while updating PendingTacApprovedDb] | Model ["+filterRequest+"] | Error ["+e+"]");
-			return false;
+			return Boolean.FALSE;
 		}
 	}
 

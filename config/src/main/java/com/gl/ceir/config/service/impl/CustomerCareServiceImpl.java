@@ -28,6 +28,7 @@ import com.gl.ceir.config.model.DeviceNullDb;
 import com.gl.ceir.config.model.DeviceUsageDb;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
+import com.gl.ceir.config.model.GreylistDb;
 import com.gl.ceir.config.model.PolicyBreachNotification;
 import com.gl.ceir.config.model.RegularizeDeviceDb;
 import com.gl.ceir.config.model.TypeApprovedDb;
@@ -86,6 +87,9 @@ public class CustomerCareServiceImpl {
 
 	@Autowired
 	TypeApprovedDbServiceImpl typeApprovedDbServiceImpl;
+	
+	@Autowired
+	GreylistServiceImpl greylistServiceImpl;
 
 	public GenricResponse getAll(CustomerCareRequest customerCareRequest, String listType) {
 		String imei = customerCareRequest.getImei();
@@ -192,6 +196,8 @@ public class CustomerCareServiceImpl {
 				else if(repository instanceof GreyListRepository) {
 					GreyListRepository greyListRepository = (GreyListRepository)repository;
 					objectBytxnId = greyListRepository.findByImei(customerCareDeviceState.getImei());
+					GreylistDb greylistDb = (GreylistDb)objectBytxnId;
+					greylistServiceImpl.setInterp(greylistDb);
 				}
 				else if(repository instanceof DeviceDuplicateDbRepository) {
 					DeviceDuplicateDbRepository deviceDuplicateDbRepository = (DeviceDuplicateDbRepository)repository;

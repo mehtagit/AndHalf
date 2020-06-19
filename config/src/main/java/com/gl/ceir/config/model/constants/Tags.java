@@ -21,4 +21,5 @@ public interface Tags {
 	String DELETE_FLAG = "DELETE_FLAG";
 	String MULTI_SIM_STATUS = "MULTI_SIM_STATUS";
 	String VISA_TYPE = "VISA_TYPE";
+	String COMPLAINT_TYPE = "COMPLAINT_TYPE";
 }

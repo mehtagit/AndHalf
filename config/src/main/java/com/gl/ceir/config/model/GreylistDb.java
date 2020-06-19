@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -56,6 +57,9 @@ public class GreylistDb implements Serializable {
 	private String requestType;
 	private String userType;
 	private String complainType;
+	
+	@Transient
+	private String complainTypeInterp;
 	private String modeType;
 	
 	public Long getId() {
@@ -191,6 +195,13 @@ public class GreylistDb implements Serializable {
 	public LocalDateTime getModifiedOn() {
 		return modifiedOn;
 	}
+	
+	public String getComplainTypeInterp() {
+		return complainTypeInterp;
+	}
+	public void setComplainTypeInterp(String complainTypeInterp) {
+		this.complainTypeInterp = complainTypeInterp;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -236,6 +247,8 @@ public class GreylistDb implements Serializable {
 		builder.append(complainType);
 		builder.append(", modeType=");
 		builder.append(modeType);
+		builder.append(", complainTypeInterp=");
+		builder.append(complainTypeInterp);
 		builder.append("]");
 		return builder.toString();
 	}
