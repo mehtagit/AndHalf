@@ -1070,30 +1070,55 @@ $(document).on("keyup", "#singleStolenphone5", function(e) {
 	}
 });
 
-function historyRecord(txnID){
+function historyRecord(txnID, requestType){
 	//console.log("txn id=="+txnID)
+	var requestType = requestType;
 	$("#tableOnModal").openModal({dismissible:false});
 	 var filter =[];
 	 var formData= new FormData();
 	 var userTypeValue=$("body").attr("data-roleType");
-	 if(userTypeValue=='CEIRAdmin')
+	 console.log("requestType--->" +requestType);
+	 if(userTypeValue=='CEIRAdmin' && requestType == 0)
 	 {
 		 var filterRequest={
 				 "columns": [
 					    "created_on","modified_on","txn_id","role_type","request_type","source_type","file_status","complaint_type","file_name","fir_file_name",
-					    "blocking_type","blocking_time_period","quantity","device_quantity","remark","rejected_remark","date_of_recovery","date_of_stolen",
+					    "blocking_type","blocking_time_period","quantity","device_quantity","remark","rejected_remark","date_of_stolen",
 					     "user_id","ceir_admin_id"
 					    ],
 				"tableName": "stolenand_recovery_mgmt_aud",
 				"dbName" : "ceirconfig",
 				"txnId":txnID
 		} 
-	 }
-	 else{
+	 }else if(userTypeValue=='CEIRAdmin' && requestType == 1){
 		 var filterRequest={
 				 "columns": [
 					    "created_on","modified_on","txn_id","role_type","request_type","source_type","file_status","complaint_type","file_name","fir_file_name",
-					    "blocking_type","blocking_time_period","quantity","device_quantity","remark","rejected_remark","date_of_recovery","date_of_stolen",
+					    "blocking_type","blocking_time_period","quantity","device_quantity","remark","rejected_remark","date_of_recovery",
+					     "user_id","ceir_admin_id"
+					    ],
+				"tableName": "stolenand_recovery_mgmt_aud",
+				"dbName" : "ceirconfig",
+				"txnId":txnID
+		} 
+		 
+	 }
+	 else if(userTypeValue !='CEIRAdmin' && requestType == 0){
+		 var filterRequest={
+				 "columns": [
+					    "created_on","modified_on","txn_id","role_type","request_type","source_type","file_status","complaint_type","file_name","fir_file_name",
+					    "blocking_type","blocking_time_period","quantity","device_quantity","remark","rejected_remark","date_of_stolen",
+					     "user_id"
+					    ],
+				"tableName": "stolenand_recovery_mgmt_aud",
+				"dbName" : "ceirconfig",
+				"txnId":txnID
+		}
+	 } else if(userTypeValue !='CEIRAdmin' && requestType == 1){
+		 var filterRequest={
+				 "columns": [
+					    "created_on","modified_on","txn_id","role_type","request_type","source_type","file_status","complaint_type","file_name","fir_file_name",
+					    "blocking_type","blocking_time_period","quantity","device_quantity","remark","rejected_remark","date_of_recovery",
 					     "user_id"
 					    ],
 				"tableName": "stolenand_recovery_mgmt_aud",

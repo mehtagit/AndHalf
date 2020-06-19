@@ -1856,7 +1856,7 @@ public class IconsState {
 		//String downloadURL = "./Consignment/dowloadFiles/actual/"+file+"/"+txnId+"/"+defaultTagName+"";
 		String downloadURL = "fileDownload('"+file+"','actual','"+txnId+"','"+defaultTagName+"')";
 		String deleteAction ="DeleteConsignmentRecord('"+txnId+"','"+id+"','"+requestTypeValue+"')";
-		String historyAction ="historyRecord('"+txnId+"')";
+		String historyAction ="historyRecord('"+txnId+"','"+requestTypeValue+"')";
 		
 		
 		if(source.equals("5") && requestTypeValue.equals("0")) {
@@ -2448,7 +2448,7 @@ public class IconsState {
 		String downloadURL = "fileDownload('"+file+"','actual','"+txnId+"','"+defaultTagName+"')";
 		String deleteAction ="DeleteConsignmentRecord('"+txnId+"','"+id+"','"+requestTypeValue+"')";
 
-       String historyAction ="historyRecord('"+txnId+"')";
+       String historyAction ="historyRecord('"+txnId+"','"+requestTypeValue+"')";
        String history="<a onclick="+historyAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+historyIcon+" aria-hidden=\"true\"  title="
 				+historyTitle+"></i></a>";
 		if(source.equals("5") && requestTypeValue.equals("0")) {
