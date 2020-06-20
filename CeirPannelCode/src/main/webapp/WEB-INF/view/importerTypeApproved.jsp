@@ -188,19 +188,19 @@
 														code="input.documenttype" /></label> <select
 													class="browser-default" id="docTypetag1"
 													onchange="enableSelectFile()">
-													<option value="" disabled selected><spring:message
+													<option value=""  selected><spring:message
 															code="select.documenttype" />
 													</option>
 
 												</select> <select class="browser-default" id="docTypetagValue1"
 													style="display: none;">
-													<option value="" disabled selected><spring:message
+													<option value=""  selected><spring:message
 															code="select.documenttype" /></option>
 
 												</select>
 											</div>
 
-											<div class="file-field col s12 m6">
+											<div class="file-field col s12 m6" id="removestar">
 												<h6 id="supportingdocumentFile" class="file-upload-heading">
 													<spring:message code="input.supportingdocument" />
 												</h6>
@@ -212,7 +212,7 @@
 														oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');">
 												</div>
 												<div class="file-path-wrapper">
-													<input class="file-path validate" type="text"
+													<input class="file-path validate" type="text" id="filetextField"
 														placeholder="<spring:message code="grievanceFileMessage" />">
 													<div>
 														<p id="myFiles"></p>
