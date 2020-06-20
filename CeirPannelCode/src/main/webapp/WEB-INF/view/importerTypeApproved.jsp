@@ -266,8 +266,7 @@
 		</h6>
 		<div class="modal-content">
 			<div class="row">
-				<h6 id="sucessMessage">
-				</h6><span id="transactionId"> </span>
+				<h6 id="sucessMessage"><spring:message code="TRCRegister_futureRef"/>  <span id="txnId"></span></h6>
 				<input type="text" style="display: none" id="errorCode">
 			</div>
 			<div class="row">

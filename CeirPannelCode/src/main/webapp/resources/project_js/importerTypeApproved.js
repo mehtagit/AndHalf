@@ -169,21 +169,20 @@ window.parent
 						}).done(function() {
 							if(result.errorCode==200){
 								//$('#sucessMessage').text('');
-								$('#sucessMessage').text($.i18n('TRCRegister_futureRef'));
-								//alert(result.txnId);
-								$('#transactionId').text(result.txnId);
+								//$('#sucessMessage').text($.i18n('TRCRegister_futureRef'));
+								$('#txnId').append(result.txnId);
 							}else if(result.errorCode==201){
 								$('#sucessMessage').text('');
 								$('#sucessMessage').text($.i18n('REGISTER_TYPE_APPROVE_REJECTED'));
-							}else if(data.errorCode == 204) {
-								$('#updateTacMessage').text('');
-								$('#updateTacMessage').text($.i18n('TYPE_APPROVE_WRONG_ID'));
-							}else if(data.errorCode == 500) {
-								$('#updateTacMessage').text('');
-								$('#updateTacMessage').text($.i18n('TYPE_APPROVE_UPDATE_FAIL'));
-							}else if(data.errorCode == 409) {
-								$('#updateTacMessage').text('');
-								$('#updateTacMessage').text($.i18n('UPDATE_ERROR'));
+							}else if(result.errorCode == 204) {
+								$('#sucessMessage').text('');
+								$('#sucessMessage').text($.i18n('TYPE_APPROVE_WRONG_ID'));
+							}else if(result.errorCode == 500) {
+								$('#sucessMessage').text('');
+								$('#sucessMessage').text($.i18n('TYPE_APPROVE_UPDATE_FAIL'));
+							}else if(result.errorCode == 409) {
+								$('#sucessMessage').text('');
+								$('#sucessMessage').text($.i18n('UPDATE_ERROR'));
 							}
 							
 							//REGISTER_TYPE_APPROVE_REJECTED=$.i18n('REGISTER_TYPE_APPROVE_REJECTED');
