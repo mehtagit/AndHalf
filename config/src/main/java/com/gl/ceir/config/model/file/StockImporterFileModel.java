@@ -3,7 +3,7 @@ package com.gl.ceir.config.model.file;
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvBindByPosition;
 
-public class StockFileModel {
+public class StockImporterFileModel {
 		
 	@CsvBindByName(column = "Created On")
 	@CsvBindByPosition(position = 0)
@@ -36,18 +36,7 @@ public class StockFileModel {
 	@CsvBindByName(column = "Device Quantity")
 	@CsvBindByPosition(position = 7)
 	private Integer deviceQuantity;
-
-	@CsvBindByName(column = "Assigner Name")
-	@CsvBindByPosition(position = 8)
-	private String assigneName;
 	
-	@CsvBindByName(column = "Invoice Number ")
-	@CsvBindByPosition(position = 9)
-	private String invoiceNumber;
-	
-	
-
-
 	public Integer getDeviceQuantity() {
 		return deviceQuantity;
 	}
@@ -111,26 +100,7 @@ public class StockFileModel {
 	public void setModifiedOn(String modifiedOn) {
 		this.modifiedOn = modifiedOn;
 	}
-
 	
-	public String getAssigneName() {
-		return assigneName;
-	}
-
-	public void setAssigneName(String assigneName) {
-		this.assigneName = assigneName;
-	}
-
-	
-
-	public String getInvoiceNumber() {
-		return invoiceNumber;
-	}
-
-	public void setInvoiceNumber(String invoiceNumber) {
-		this.invoiceNumber = invoiceNumber;
-	}
-
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -150,14 +120,7 @@ public class StockFileModel {
 		builder.append(supplierName);
 		builder.append(", deviceQuantity=");
 		builder.append(deviceQuantity);
-		builder.append(", assigneName=");
-		builder.append(assigneName);
-		builder.append(", invoiceNumber=");
-		builder.append(invoiceNumber);
 		builder.append("]");
 		return builder.toString();
 	}
-
-	
-
 }

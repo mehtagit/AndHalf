@@ -29,6 +29,7 @@ import com.gl.ceir.config.ConfigTags;
 import com.gl.ceir.config.EmailSender.EmailUtil;
 import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
+import com.gl.ceir.config.factory.ExportFileFactory;
 import com.gl.ceir.config.feign.UserFeignClient;
 import com.gl.ceir.config.model.AuditTrail;
 import com.gl.ceir.config.model.ConsignmentUpdateRequest;
@@ -59,7 +60,7 @@ import com.gl.ceir.config.model.constants.WebActionDbFeature;
 import com.gl.ceir.config.model.constants.WebActionDbState;
 import com.gl.ceir.config.model.constants.WebActionDbSubFeature;
 
-import com.gl.ceir.config.model.file.StockFileModel;
+import com.gl.ceir.config.model.file.StockCustomFileModel;
 import com.gl.ceir.config.repository.AuditTrailRepository;
 import com.gl.ceir.config.repository.DashboardUsersFeatureStateMapRepository;
 import com.gl.ceir.config.repository.StatesInterpretaionRepository;
@@ -145,6 +146,9 @@ public class StockServiceImpl {
 
 	@Autowired
 	UserStaticServiceImpl userStaticServiceImpl;
+
+	@Autowired
+	ExportFileFactory exportFileFactory;
 
 	public GenricResponse uploadStock(StockMgmt stockMgmt) {
 		boolean isStockAssignRequest = Boolean.FALSE;
@@ -355,7 +359,7 @@ public class StockServiceImpl {
 		}
 	}
 
-	private List<StockMgmt> getAll(FilterRequest filterRequest, String source){
+	public List<StockMgmt> getAll(FilterRequest filterRequest, String source){
 		List<StateMgmtDb> statusList = null;
 
 		try {
@@ -490,14 +494,6 @@ public class StockServiceImpl {
 			}else {
 				User user = userRepository.getById(filterRequest.getUserId());
 				logger.info(user);
-
-				/*
-				 * auditTrailRepository.save(new AuditTrail(user.getId(), user.getUsername(),
-				 * user.getUsertype().getId(), user.getUsertype().getUsertypeName(), 4,
-				 * Features.STOCK, SubFeatures.VIEW, "", filterRequest.getTxnId()));
-				 * logger.info("Stock [ View ][" + filterRequest.getTxnId() +
-				 * "] saved in audit_trail.");
-				 */
 			}
 			addInAuditTrail(Long.valueOf(filterRequest.getUserId()), filterRequest.getTxnId(), SubFeatures.VIEW,filterRequest.getRoleType());
 			return stockMgmt2;
@@ -699,79 +695,8 @@ public class StockServiceImpl {
 		}
 	}
 
-
 	public FileDetails getFilteredStockInFile(FilterRequest filterRequest, String source) {
-		String fileName = null;
-		Writer writer   = null;
-		StockFileModel sfm = null;
-
-		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-		SystemConfigurationDb filepath = configurationManagementServiceImpl.findByTag(ConfigTags.file_download_dir);
-		logger.info("CONFIG : file_consignment_download_dir [" + filepath + "]");
-		SystemConfigurationDb link = configurationManagementServiceImpl.findByTag(ConfigTags.file_download_link);
-		logger.info("CONFIG : file_consignment_download_link [" + link + "]");
-
-		String filePath = filepath.getValue();
-
-		StatefulBeanToCsvBuilder<StockFileModel> builder = null;
-		StatefulBeanToCsv<StockFileModel> csvWriter = null;
-		List< StockFileModel > fileRecords = null;
-
 		try {
-			List<StockMgmt> stockMgmts = getAll(filterRequest, source);
-
-			fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_Stock.csv";
-
-			writer = Files.newBufferedWriter(Paths.get(filePath+fileName));
-			builder = new StatefulBeanToCsvBuilder<StockFileModel>(writer);
-			csvWriter = builder.withQuotechar(CSVWriter.NO_QUOTE_CHARACTER).build();
-
-			if( !stockMgmts.isEmpty() ) {
-
-				fileRecords = new ArrayList<>();
-
-				for( StockMgmt stockMgmt : stockMgmts ) {
-					sfm = new StockFileModel();
-
-					sfm.setStockStatus(stockMgmt.getStateInterp());
-					sfm.setTxnId( stockMgmt.getTxnId());
-					sfm.setCreatedOn(stockMgmt.getCreatedOn().format(dtf));
-					sfm.setModifiedOn( stockMgmt.getModifiedOn().format(dtf));
-					sfm.setFileName( stockMgmt.getFileName());
-					sfm.setSupplierName(stockMgmt.getSuplierName());
-
-					logger.debug(sfm);
-
-					fileRecords.add(sfm);
-				}
-
-				csvWriter.write(fileRecords);
-			}
-			return new FileDetails( fileName, filePath, link.getValue() + fileName ); 
-
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-
-			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
-			bodyPlaceHolderMap.put("<feature>", featureName);
-			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.EXPORT);
-			alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, filterRequest.getUserId(), bodyPlaceHolderMap);
-
-			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
-		}finally {
-			try {
-
-				if( Objects.nonNull(writer) )
-					writer.close();
-			} catch (IOException e) {}
-		}
-	}
-
-	public FileDetails getFilteredStockInFileV2(FilterRequest filterRequest, String source) {
-		String fileName = null;
-		Writer writer   = null;
-		StockFileModel sfm = null;
-
 		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		DateTimeFormatter dtf2  = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
 
@@ -782,149 +707,15 @@ public class StockServiceImpl {
 
 		String filePath = filepath.getValue();
 
-		StatefulBeanToCsvBuilder<StockFileModel> builder = null;
-		StatefulBeanToCsv<StockFileModel> csvWriter = null;
-		List< StockFileModel > fileRecords = null;
-
-		CustomMappingStrategy<StockFileModel> mappingStrategy = new CustomMappingStrategy<>();
-
-		try {
-			List<StockMgmt> stockMgmts = getAll(filterRequest, source);
-			fileName = LocalDateTime.now().format(dtf2).replace(" ", "_") + "_Stock.csv";
-
-			/* if(filterRequest.getUserType().equalsIgnoreCase("CEIR")) */
-			writer = Files.newBufferedWriter(Paths.get(filePath+fileName));
-			mappingStrategy.setType(StockFileModel.class);
-
-			builder = new StatefulBeanToCsvBuilder<>(writer);
-			csvWriter = builder.withMappingStrategy(mappingStrategy)
-					.withSeparator(',')
-					.withQuotechar(CSVWriter.NO_QUOTE_CHARACTER).build();
-
-			if( !stockMgmts.isEmpty() ) {
-
-				fileRecords = new ArrayList<>();
-				if(filterRequest.getUserType().equalsIgnoreCase("CUSTOM"))
-				{
-					logger.info("file export for custom.");
-					for( StockMgmt stockMgmt : stockMgmts ) {
-
-						sfm = new StockFileModel();
-
-						if(Objects.nonNull(stockMgmt.getSuplierName())) {
-							sfm.setAssigneName(stockMgmt.getSuplierName());
-						}
-						else {
-							sfm.setAssigneName("NA");
-						}
-
-						if(Objects.nonNull(stockMgmt.getInvoiceNumber())) {
-							sfm.setInvoiceNumber(stockMgmt.getInvoiceNumber());
-						}
-						else {
-							sfm.setInvoiceNumber("NA");
-						}
-						sfm.setStockStatus(stockMgmt.getStateInterp());
-						sfm.setTxnId( stockMgmt.getTxnId());
-						sfm.setCreatedOn(stockMgmt.getCreatedOn().format(dtf));
-						sfm.setModifiedOn( stockMgmt.getModifiedOn().format(dtf));
-						sfm.setFileName( stockMgmt.getFileName());
-						sfm.setSupplierName("NA");
-						sfm.setQuantity(stockMgmt.getQuantity());
-						sfm.setDeviceQuantity(stockMgmt.getDeviceQuantity());
-
-
-
-						logger.info(sfm);
-
-						fileRecords.add(sfm);
-					}
-
-				}
-				else {
-					logger.info("else condition for export.");
-					for( StockMgmt stockMgmt : stockMgmts ) {
-
-						sfm = new StockFileModel();
-						if(Objects.nonNull(stockMgmt.getSuplierName())) {
-							sfm.setSupplierName(stockMgmt.getSuplierName());
-						}
-						else {
-							sfm.setSupplierName("NA");
-						}
-						sfm.setStockStatus(stockMgmt.getStateInterp());
-						sfm.setTxnId( stockMgmt.getTxnId());
-						sfm.setCreatedOn(stockMgmt.getCreatedOn().format(dtf));
-						sfm.setModifiedOn( stockMgmt.getModifiedOn().format(dtf));
-						sfm.setFileName( stockMgmt.getFileName());
-						sfm.setQuantity(stockMgmt.getQuantity());
-						sfm.setDeviceQuantity(stockMgmt.getDeviceQuantity());
-						sfm.setAssigneName("NA");
-						if(Objects.nonNull(stockMgmt.getInvoiceNumber())) {
-							sfm.setInvoiceNumber(stockMgmt.getInvoiceNumber());
-						}
-						else {
-							sfm.setInvoiceNumber("NA");
-						}
-						logger.info(sfm);
-						fileRecords.add(sfm);
-					}
-
-				}
-				if(csvWriter!=null) {
-					logger.info("csv writer  is not  empty++++++++++++++++++++++++++++++++++++");
-					csvWriter.write(fileRecords);
-				}
-				else {
-					logger.info(" csv writer is empty---------------------------------------");
-				}
-
-			}else {
-				csvWriter.write( new StockFileModel());
-			}
-			addInAuditTrail(Long.valueOf(filterRequest.getUserId()), "NA", SubFeatures.EXPORT,filterRequest.getRoleType());
-
-			return new FileDetails( fileName, filePath, link.getValue() + fileName ); 
-
-		} catch (Exception e) {
+		return exportFileFactory
+				.getObject(filterRequest.getUserType().toUpperCase(), 4)
+				.export(filterRequest, source, dtf, dtf2, filePath, link);
+		
+		}catch (Exception e) {
 			logger.error(e.getMessage(), e);
-
-			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
-			bodyPlaceHolderMap.put("<feature>", featureName);
-			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.EXPORT);
-			alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, filterRequest.getUserId(), bodyPlaceHolderMap);
-
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
-		}finally {
-			try {
-
-				if( Objects.nonNull(writer) )
-					writer.close();
-			} catch (IOException e) {
-				logger.error(e.getMessage(), e);
-			}
 		}
-	}
 
-	public ResponseCountAndQuantity getStockCountAndQuantity( long userId, Integer userTypeId, Integer featureId, String userType ) {
-		List<StateMgmtDb> featureList = null;
-		List<Integer> status = new ArrayList<>();
-		try {
-			logger.info("Going to get  stock count and quantity.");
-			featureList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId( featureId, userTypeId);
-			if(Objects.nonNull(featureList)) {	
-				for(StateMgmtDb stateDb : featureList ) {
-					status.add(stateDb.getState());
-				}
-			}
-			if( !userType.equalsIgnoreCase("ceiradmin") )
-				return stockManagementRepository.getStockCountAndQuantity( userId, status );
-			else
-				return stockManagementRepository.getStockCountAndQuantity( status );
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-			return new ResponseCountAndQuantity(0,0);
-		}
 	}
 
 	public GenricResponse acceptReject(ConsignmentUpdateRequest consignmentUpdateRequest) {
@@ -1186,7 +977,7 @@ public class StockServiceImpl {
 			return null;
 	}
 
-	private void addInAuditTrail(Long userId, String txnId, String subFeatureName, String roleType) {
+	public void addInAuditTrail(Long userId, String txnId, String subFeatureName, String roleType) {
 
 		User requestUser = null;
 		try {
@@ -1247,7 +1038,7 @@ public class StockServiceImpl {
 		if(Objects.nonNull(filterRequest.getConsignmentStatus())) {
 			return Boolean.FALSE;
 		}
-		
+
 		return Boolean.TRUE;
 	}
 
