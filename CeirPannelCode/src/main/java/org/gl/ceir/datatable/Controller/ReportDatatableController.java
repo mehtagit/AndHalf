@@ -131,15 +131,13 @@ public class ReportDatatableController {
 	}
 	
 	@PostMapping("dbReportTable/pageRendering")
-	public ResponseEntity<?> pageRendering(String displayName, HttpSession session) {
+	public ResponseEntity<?> pageRendering(String displayName, HttpSession session,@RequestParam("reportName") String reportName) {
 
 		String userType = (String) session.getAttribute("usertype");
 		String userStatus = (String) session.getAttribute("userStatus");
 
 		InputFields inputFields = new InputFields();
 		InputFields dateRelatedFields;
-
-		pageElement.setPageTitle("Report");
 
 		List<Button> buttonList = new ArrayList<>();
 		List<InputFields> dropdownList = new ArrayList<>();
@@ -187,7 +185,9 @@ public class ReportDatatableController {
 			dateRelatedFields.setClassName(dateParam[i]);
 			inputTypeDateList.add(dateRelatedFields);
 		}
-
+		
+		
+		pageElement.setPageTitle(Translator.toLocale("sidebar.Report")+" - "+reportName);
 		pageElement.setInputTypeDateList(inputTypeDateList);
 		pageElement.setUserStatus(userStatus);
 		return new ResponseEntity<>(pageElement, HttpStatus.OK);

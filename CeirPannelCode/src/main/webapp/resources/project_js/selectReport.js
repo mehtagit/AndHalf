@@ -15,12 +15,14 @@
 	
 	function hide() {
 		var reportname = $('#tableId').val();
+		var reportInterp = $("#tableId option:selected").text();
 		
 		if(reportname.length == 0){
 			//console.log("please field input");
 		}else{
 			//sessionStorage.setItem("roleType",roleType);
 		sessionStorage.setItem("reportname", reportname);
+		sessionStorage.setItem("reportInterp", reportInterp);
 		window.location.replace("./report?via=other&tableName="+reportname);
 		}
 	}
