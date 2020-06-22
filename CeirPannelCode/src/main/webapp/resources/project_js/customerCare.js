@@ -312,6 +312,7 @@ function setStakeHolderData(name,date,featureId,status,txnId,imei)
 		        $("#supplierIdDiv").css("display", "block"); 
 				$("#supplierNameDiv").css("display", "block");
 				$("#invoiceNumberDiv").css("display", "block");
+				$("#endUserEmailDiv").css("display", "none");
 				$("#SupplierId").val(data.data.supplierId);
 				$("#SupplierName").val(data.data.suplierName);
 				$("#InvoiceNumber").val(data.data.invoiceNumber);
@@ -336,6 +337,7 @@ function setStakeHolderData(name,date,featureId,status,txnId,imei)
 		$("#editSupplierIdDiv").css("display", "block"); 
 		$("#editSupplierNameDiv").css("display", "block");
 		$("#editSupplierNameDiv").css("display", "block");
+		$("#endUserEmailDiv").css("display", "none");
 			$("#SupplierId").val(data.data.supplierId);
 			$("#SupplierName").val(data.data.suplierName);
 			$("#InvoiceNumber").val(data.data.invoiceNumber);
@@ -365,7 +367,7 @@ function setStakeHolderData(name,date,featureId,status,txnId,imei)
 		$("#viewcurrency").val(data.data.currencyInterp);
 		$("#viewtotalPrice").val(data.data.totalPrice);
 		}
-		else if(name=='Distributor' || name=='Retailer' || name=="End User" ) {
+		else if(name=='Distributor' || name=='Retailer') {
 			
 			$('#viewStockModal').openModal({
 		    	   dismissible:false
@@ -373,10 +375,12 @@ function setStakeHolderData(name,date,featureId,status,txnId,imei)
 		        $("#supplierIdDiv").css("display", "block"); 
 				$("#supplierNameDiv").css("display", "block");
 				$("#invoiceNumberDiv").css("display", "block");
+				$("#endUserEmailDiv").css("display", "none");
 				$("#SupplierId").val(data.data.supplierId);
 				$("#SupplierName").val(data.data.suplierName);
 				$("#InvoiceNumber").val(data.data.invoiceNumber);
 				$("#StockQuantity").val(data.data.quantity);
+				$('#StockDeviceQuantity').val(data.data.deviceQuantity);
 				$("#StockTransactionId").val(data.data.txnId);
 				$("#csvUploadFileName").val(data.data.fileName);
 				$("#withdrawnRemark").val(data.data.remarks);
@@ -390,15 +394,38 @@ function setStakeHolderData(name,date,featureId,status,txnId,imei)
 			$("#supplierIdDiv").css("display", "none"); 
 			$("#supplierNameDiv").css("display", "none");
 			$("#invoiceNumberDiv").css("display", "none");
-			
-				$("#SupplierId").val(data.data.supplierId);
+			$("#endUserEmailDiv").css("display", "none");
+				
+			    $("#SupplierId").val(data.data.supplierId);
 				$("#SupplierName").val(data.data.suplierName);
 				$("#InvoiceNumber").val(data.data.invoiceNumber);
 				$("#StockQuantity").val(data.data.quantity);
+				$('#StockDeviceQuantity').val(data.data.deviceQuantity);
 				$("#StockTransactionId").val(data.data.txnId);
 				$("#csvUploadFileName").val(data.data.fileName);
 				$("#withdrawnRemark").val(data.data.remarks);
 			}
+         else if(name=="End User") {
+ 			
+ 			$('#viewStockModal').openModal({
+ 		    	   dismissible:false
+ 		       });
+ 			$("#supplierIdDiv").css("display", "none"); 
+ 			$("#supplierNameDiv").css("display", "none");
+ 			$("#invoiceNumberDiv").css("display", "none");
+ 			$("#endUserEmailDiv").css("display", "block");
+ 				$("#SupplierId").val(data.data.supplierId);
+ 				$("#SupplierName").val(data.data.suplierName);
+ 				$("#InvoiceNumber").val(data.data.invoiceNumber);
+ 				$("#StockQuantity").val(data.data.quantity);
+ 				$('#StockDeviceQuantity').val(data.data.deviceQuantity);
+ 				$("#StockTransactionId").val(data.data.txnId);
+ 				$("#csvUploadFileName").val(data.data.fileName);
+ 				$("#withdrawnRemark").val(data.data.remarks);
+ 				$("#endUseremail").val(data.data.user.userProfile.email);
+ 				$("label[for='endUseremail']").addClass('active');
+ 			}
+	    
          else if(name=='Type Approve')
         	 {
         	 $('#viewImporterModal').openModal({

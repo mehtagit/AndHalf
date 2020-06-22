@@ -186,7 +186,7 @@
 	"EXIST_IN_GSMABLACKLIST_DB":"The device with IMEI/ESN/MEID  is marked as stolen/blocked globally",
 	"EXIST_IN_DISTRIBUTOR_DB":"IMEI/ESN/MEID is already present in the system",
 	"EXIST_IN_IMPORTER_DB":"This device is not importer",
-	"TRCRegister_futureRef": "Your request to register device has been received successfully. The Transaction ID for future reference is",
+	"TRCRegister_futureRef": "Your request for TAC upload has been received successfully. The Transaction ID for the same is",
 	"REGISTER_TYPE_APPROVE_REJECTED":"Type Approved for TAC already exists.",
 	"User_Success_Save" : "User has been sucessfully saved",
 	"User_Fail_Save":"User failed to saved",
@@ -204,7 +204,11 @@
 	"imageAndPdfMsg": "Kindly upload a valid image or pdf file",
 	"End User Pending Device Count" : "End User Pending Device Count",
 	"End User Pending Device Quantity":"End User Pending Device Quantity",
-	"Update Visa Request":"Update Visa Request"
+	"Update Visa Request":"Update Visa Request",
+	"TYPE_APPROVE_WRONG_ID" : "please enter correct transaction Id.",
+	"TYPE_APPROVE_UPDATE_FAIL" : "Type Approved status failed to update.",
+	"UPDATE_ERROR" : "Oops something wrong happened" 
+	
 	
 	
 }

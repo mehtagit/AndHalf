@@ -169,12 +169,20 @@ window.parent
 						}).done(function() {
 							if(result.errorCode==200){
 								//$('#sucessMessage').text('');
-								$('#sucessMessage').text($.i18n('TRCRegister_futureRef'));
-								//alert(result.txnId);
-								$('#transactionId').text(result.txnId);
+								//$('#sucessMessage').text($.i18n('TRCRegister_futureRef'));
+								$('#txnId').append(result.txnId);
 							}else if(result.errorCode==201){
 								$('#sucessMessage').text('');
 								$('#sucessMessage').text($.i18n('REGISTER_TYPE_APPROVE_REJECTED'));
+							}else if(result.errorCode == 204) {
+								$('#sucessMessage').text('');
+								$('#sucessMessage').text($.i18n('TYPE_APPROVE_WRONG_ID'));
+							}else if(result.errorCode == 500) {
+								$('#sucessMessage').text('');
+								$('#sucessMessage').text($.i18n('TYPE_APPROVE_UPDATE_FAIL'));
+							}else if(result.errorCode == 409) {
+								$('#sucessMessage').text('');
+								$('#sucessMessage').text($.i18n('UPDATE_ERROR'));
 							}
 							
 							//REGISTER_TYPE_APPROVE_REJECTED=$.i18n('REGISTER_TYPE_APPROVE_REJECTED');
@@ -334,9 +342,17 @@ window.parent
 			$(".add_field_button").attr("disabled", false);
 		}
 		function enableSelectFile(){
-			$("#docTypeFile1").attr("disabled", false);
-			$("#docTypeFile1").attr("required", true);
-			$("#supportingdocumentFile").append('<span class="star">*</span>');
+			if($('#docTypetag1').val() != ''){
+				$("#docTypeFile1").attr("disabled", false);
+				$("#docTypeFile1").attr("required", true);
+				$("#removestar").find(".star").remove();
+				$("#supportingdocumentFile").append('<span class="star">*</span>');
+			}else{
+				$("#docTypeFile1").attr("required", false);
+				$('#filetextField').val('');
+				$("#removestar").find(".star").remove();
+			}
+			
 		}
 		
 

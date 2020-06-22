@@ -126,7 +126,7 @@ data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeI
                       <form action="">
                         <div class="col s12 m12 l12">
                           <h4 class="header2 device-info">
-                            Device Information <i class="fa fa-eye teal-text view-icon" aria-hidden="true" title="View"></i> </h4>
+                            Device Information</h4>
                           <div class="row">
                             <div class="input-field col s12 m4 l4">
                               <input type="text" id="MSISDN" name="MSISDN" value="" disabled>
@@ -378,11 +378,20 @@ data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeI
 							id="SupplierNameLabel" class="center-align"><spring:message
 								code="input.supllierName" /></label>
 					</div>
-
+					 
+					  <div class="col s12 m6" id="endUserEmailDiv">
+                           <label for="endUseremail" style="color: #000;"><spring:message code="input.EmailID" /> </label>
+                           <input type="text" id="endUseremail"  disabled name="endUseremail"/>
+                      </div>
 					<div class="input-field col s12 m6">
 						<input type="text" name="Quantity" id="StockQuantity" placeholder=""
 							disabled /> <label for="StockQuantity" class="center-align"><spring:message
 								code="input.quantity" /></label>
+					</div>
+					<div class="input-field col s12 m6">
+						<input type="text" name="StockDeviceQuantity" id="StockDeviceQuantity" placeholder=""
+							disabled /> <label for="StockDeviceQuantity" class="center-align"><spring:message
+								code="input.devicequantity" /></label>
 					</div>
 
 					<div class="input-field col s12 m6" id="invoiceNumberDiv">

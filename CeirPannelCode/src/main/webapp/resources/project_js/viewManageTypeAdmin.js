@@ -65,6 +65,20 @@ function Datatable(Url, dataUrl) {
 			"status" : parseInt($('#Status').val()),
 			"FilterUserType" : FilterUserType
 		}
+	}else if(userType == "TRC"){
+		var userId = 0;
+		var filterRequest = {
+			"endDate" : $('#endDate').val(),
+			"startDate" : $('#startDate').val(),
+			"tac" : $('#tac').val(),
+			"txnId" : txn,
+			"userId" : userId,
+			"featureId" : parseInt(featureId),
+			"userTypeId" : parseInt($("body").attr("data-userTypeID")),
+			"userType" : $("body").attr("data-roleType"),
+			"status" : parseInt($('#Status').val()),
+		}
+		
 	} else {
 		var userId = parseInt($("body").attr("data-userID"))
 		var filterRequest = {
@@ -653,21 +667,24 @@ function updateImporterTypeDevice() {
 		success : function(data, textStatus, jqXHR) {
 			$('div#initialloader').delay(300).fadeOut('slow');
 			// console.log(data);
-
-			if (data.errorCode == 0) {
-				// $('#updateManageTypeDevice').openModal();
-				$('#updateManageTypeDevice').openModal({
-					dismissible : false
-				});
-			} else {
-
-				// $('#updateManageTypeDevice').openModal();
-				$('#updateManageTypeDevice').openModal({
-					dismissible : false
-				});
+			$('#updateManageTypeDevice').openModal({
+				dismissible : false
+			});
+			if (data.errorCode == 200) {
 				$('#updateTacMessage').text('');
-				$('#updateTacMessage').text(
-						$.i18n('TYPE_APPROVE_UPDATE_SUCCESS'));
+				$('#updateTacMessage').text($.i18n('TYPE_APPROVE_UPDATE_SUCCESS'));
+			} else if(data.errorCode == 201) {
+				$('#updateTacMessage').text('');
+				$('#updateTacMessage').text($.i18n('REGISTER_TYPE_APPROVE_REJECTED'));
+			}else if(data.errorCode == 204) {
+				$('#updateTacMessage').text('');
+				$('#updateTacMessage').text($.i18n('TYPE_APPROVE_WRONG_ID'));
+			}else if(data.errorCode == 500) {
+				$('#updateTacMessage').text('');
+				$('#updateTacMessage').text($.i18n('TYPE_APPROVE_UPDATE_FAIL'));
+			}else if(data.errorCode == 409) {
+				$('#updateTacMessage').text('');
+				$('#updateTacMessage').text($.i18n('UPDATE_ERROR'));
 			}
 
 		},
@@ -985,7 +1002,7 @@ function historyRecord(txnID) {
 		"columns" : [ "created_on", "modified_on", "txn_id", "user_type",
 				"approve_status", "trademark", "product_name", "model_number",
 				"manufacturer_country", "frequency_range", "tac",
-				"remark", "feature_id","user_id" ],
+				"remark","admin_user_id","user_id" ],
 		"tableName" : "type_approved_db_aud",
 		"dbName" : "ceirconfig",
 		"txnId" : txnID
@@ -996,8 +1013,7 @@ function historyRecord(txnID) {
 				"columns" : [ "created_on", "modified_on", "txn_id", "user_type",
 						"approve_status", "trademark", "product_name", "model_number",
 						"manufacturer_country", "frequency_range", "tac",
-						"remark", "feature_id",
-						"user_id" ],
+						"remark","user_id" ],
 				"tableName" : "type_approved_db_aud",
 				"dbName" : "ceirconfig",
 				"txnId" : txnID
