@@ -72,6 +72,12 @@ public class ExportFileStockCeirAdmin implements ExportFile{
 				fileRecords = new ArrayList<>();
 
 				for(StockMgmt stockMgmt : stockMgmts) {
+					String displayName = null;
+					if(Objects.nonNull(stockMgmt.getUser())) {
+						displayName = stockMgmt.getUser().getUserProfile().getDisplayName();
+					}else {
+						displayName = "";
+					}
 					stockCeirAdminFileModel = new StockCeirAdminFileModel();
 					stockCeirAdminFileModel.setStockStatus(stockMgmt.getStateInterp());
 					stockCeirAdminFileModel.setTxnId( stockMgmt.getTxnId());
@@ -81,6 +87,8 @@ public class ExportFileStockCeirAdmin implements ExportFile{
 					stockCeirAdminFileModel.setSupplierName(stockMgmt.getSuplierName());
 					stockCeirAdminFileModel.setQuantity(stockMgmt.getQuantity());
 					stockCeirAdminFileModel.setDeviceQuantity(stockMgmt.getDeviceQuantity());
+					stockCeirAdminFileModel.setRoleType(stockMgmt.getUserType());
+					stockCeirAdminFileModel.setName(displayName);
 
 					fileRecords.add(stockCeirAdminFileModel);
 				}

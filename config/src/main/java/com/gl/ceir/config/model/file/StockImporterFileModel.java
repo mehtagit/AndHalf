@@ -17,7 +17,7 @@ public class StockImporterFileModel {
 	@CsvBindByPosition(position = 2)
 	private String fileName;
 	
-	@CsvBindByName(column = "Quantity")
+	@CsvBindByName(column = "IMEI Quantity")
 	@CsvBindByPosition(position = 3)
 	private Integer quantity;
 

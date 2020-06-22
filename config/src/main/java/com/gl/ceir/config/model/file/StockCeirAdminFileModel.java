@@ -12,31 +12,55 @@ public class StockCeirAdminFileModel {
 	@CsvBindByName(column = "Txn Id")
 	@CsvBindByPosition(position = 1)
 	private String txnId;
+	
+	@CsvBindByName(column = "Name")
+	@CsvBindByPosition(position = 2)
+	private String name;
+	
+	@CsvBindByName(column = "Role Type")
+	@CsvBindByPosition(position = 3)
+	private String roleType;
 
 	@CsvBindByName(column = "File Name")
-	@CsvBindByPosition(position = 2)
+	@CsvBindByPosition(position = 4)
 	private String fileName;
 	
-	@CsvBindByName(column = "Quantity")
-	@CsvBindByPosition(position = 3)
+	@CsvBindByName(column = "IMEI Quantity")
+	@CsvBindByPosition(position = 5)
 	private Integer quantity;
 
 	@CsvBindByName(column = "Modified On")
-	@CsvBindByPosition(position = 4)
+	@CsvBindByPosition(position = 6)
 	private String modifiedOn;
 	
 	@CsvBindByName(column = "Status")
-	@CsvBindByPosition(position = 5)
+	@CsvBindByPosition(position = 7)
 	private String stockStatus;
 	
 	@CsvBindByName(column = "Supplier Name")
-	@CsvBindByPosition(position = 6)
+	@CsvBindByPosition(position = 8)
 	private String supplierName;
 	
 	@CsvBindByName(column = "Device Quantity")
-	@CsvBindByPosition(position = 7)
+	@CsvBindByPosition(position = 9)
 	private Integer deviceQuantity;
 	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getRoleType() {
+		return roleType;
+	}
+
+	public void setRoleType(String roleType) {
+		this.roleType = roleType;
+	}
+
 	public Integer getDeviceQuantity() {
 		return deviceQuantity;
 	}

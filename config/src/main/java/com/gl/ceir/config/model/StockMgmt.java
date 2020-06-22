@@ -88,7 +88,6 @@ public class StockMgmt implements Serializable {
 	
 	private Long ceirAdminId;
 	
-
 	public Long getCeirAdminId() {
 		return ceirAdminId;
 	}

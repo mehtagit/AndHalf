@@ -173,12 +173,6 @@ public class AuditTrailServiceImpl {
 				csvWriter.write( new AuditTrailFileModel());	
 			}
 			
-			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), "", 
-					Long.valueOf(filterRequest.getUserTypeId()), filterRequest.getUserType(), 
-					Long.valueOf(filterRequest.getFeatureId()),
-					"Audit Trail", SubFeatures.VIEW, "", "NA", filterRequest.getRoleType()));
-			logger.info("AUDIT : Saved file export request in audit.");
-			
 			return new FileDetails( fileName, filePath, link.getValue() + fileName ); 
 
 		} catch (Exception e) {

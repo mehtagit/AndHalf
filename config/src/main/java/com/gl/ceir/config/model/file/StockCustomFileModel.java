@@ -17,7 +17,7 @@ public class StockCustomFileModel {
 	@CsvBindByPosition(position = 2)
 	private String fileName;
 	
-	@CsvBindByName(column = "Quantity")
+	@CsvBindByName(column = "IMEI Quantity")
 	@CsvBindByPosition(position = 3)
 	private Integer quantity;
 
@@ -33,7 +33,7 @@ public class StockCustomFileModel {
 	@CsvBindByPosition(position = 6)
 	private Integer deviceQuantity;
 
-	@CsvBindByName(column = "Assigner Name")
+	@CsvBindByName(column = "Assigned To")
 	@CsvBindByPosition(position = 7)
 	private String assigneName;
 	

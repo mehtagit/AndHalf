@@ -324,25 +324,11 @@ public class StockServiceImpl {
 					} 
 				}
 			}
-
-
-
-			/*
-			 * auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), "",
-			 * Long.valueOf(filterRequest.getUserTypeId()), filterRequest.getUserType(),
-			 * Long.valueOf(filterRequest.getFeatureId()), Features.STOCK, SubFeatures.VIEW,
-			 * "", "NA"));
-			 * 
-			 * logger.info("AUDIT : Saved view request in audit.");
-			 */
+			
 			if(Objects.isNull(filterRequest.getTxnId())) {
-
 				addInAuditTrail(Long.valueOf(filterRequest.getUserId()), "NA", SubFeatures.VIEW_ALL,filterRequest.getRoleType());
-
 			}else {
-
 				addInAuditTrail(Long.valueOf(filterRequest.getUserId()), filterRequest.getTxnId(), SubFeatures.FILTER,filterRequest.getRoleType());
-
 			}
 
 			return page;
@@ -437,7 +423,8 @@ public class StockServiceImpl {
 				logger.debug(dashboardUsersFeatureStateMap);
 
 				List<Integer> stockStatus = new LinkedList<>();
-
+				
+				logger.info("source for stock : " + source);
 				if(Objects.nonNull(dashboardUsersFeatureStateMap)) {
 					if("dashboard".equalsIgnoreCase(source) || "menu".equalsIgnoreCase(source)) {
 						for(DashboardUsersFeatureStateMap dashboardUsersFeatureStateMap2 : dashboardUsersFeatureStateMap ) {
@@ -715,7 +702,6 @@ public class StockServiceImpl {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
-
 	}
 
 	public GenricResponse acceptReject(ConsignmentUpdateRequest consignmentUpdateRequest) {

@@ -152,12 +152,7 @@ public class ConsignmentServiceImpl {
 
 	@Autowired
 	AlertServiceImpl alertServiceImpl;
-
-	GenricResponse_Class response = null;
-	Integer currentStatus = null;
-	Port port = new Port();
-	Map<String, String> placeholderMap = new HashMap<>();
-
+	
 	public GenricResponse registerConsignment(ConsignmentMgmt consignmentFileRequest) {
 
 		try {
@@ -645,10 +640,10 @@ public class ConsignmentServiceImpl {
 				csvWriter.write( new ConsignmentFileModel());
 			}
 
-			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), "", 
+			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), filterRequest.getUserName(), 
 					Long.valueOf(filterRequest.getUserTypeId()), filterRequest.getUserType(), 
 					Long.valueOf(filterRequest.getFeatureId()),
-					Features.CONSIGNMENT, SubFeatures.VIEW, "", "NA",filterRequest.getRoleType()));
+					Features.CONSIGNMENT, SubFeatures.EXPORT, "", "NA",filterRequest.getRoleType()));
 			logger.info("AUDIT : Saved file export request in audit.");
 
 			FileDetails fileDetails = new FileDetails( fileName, filepath.getValue(), link.getValue() + fileName );
@@ -834,6 +829,9 @@ public class ConsignmentServiceImpl {
 		}
 		WebActionDb webActionDb = null;
 		Integer nextStatus = null;
+		GenricResponse_Class response = null;
+		Map<String, String> placeholderMap = new HashMap<>();
+		Port port = new Port();
 
 		if(action == 0) {
 			// Checking DRT enable/disable.
@@ -864,21 +862,9 @@ public class ConsignmentServiceImpl {
 		consignmentMgmt.setFeatureId(consignmentUpdateRequest.getFeatureId());
 		consignmentMgmt.setRoleType(consignmentUpdateRequest.getRoleType());
 
-		if(consignmentTransaction.executeUpdateStatusConsignment(consignmentUpdateRequest, consignmentMgmt, webActionDb)) {
+		if(consignmentTransaction.executeUpdateStatus(consignmentUpdateRequest, consignmentMgmt, webActionDb)) {
 			ConsignmentMgmt current_consignment_response = consignmentRepository.getByTxnId(payload_txnID);
 
-			auditTrailRepository.save(new AuditTrail(
-					consignmentUpdateRequest.getUserId(), 
-					consignmentUpdateRequest.getUserName(), 
-					Long.valueOf(consignmentUpdateRequest.getUserTypeId()), 
-					consignmentUpdateRequest.getUserType(), 
-					Long.valueOf(consignmentUpdateRequest.getFeatureId())
-					, Features.CONSIGNMENT, 
-					SubFeatures.ACCEPT_REJECT, "", 
-					consignmentMgmt.getTxnId(),
-					consignmentUpdateRequest.getRoleType()));
-			logger.info("Consignment [" + consignmentMgmt.getTxnId() + "] saved in audit_trail.");
-			
 			if(action == 0) {
 				logger.info("Notification sent to Importer::: with current_status : "+current_consignment_response.getConsignmentStatus());
 
@@ -998,6 +984,8 @@ public class ConsignmentServiceImpl {
 			return new GenricResponse(3, "state transition is not allowed.", payloadTxnId);
 		}
 		
+		Map<String, String> placeholderMap = new HashMap<>();
+		
 		WebActionDb webActionDb = new WebActionDb();
 		webActionDb.setFeature(WebActionDbFeature.CONSIGNMENT.getName());
 		webActionDb.setState(WebActionDbState.INIT.getCode());
@@ -1031,20 +1019,8 @@ public class ConsignmentServiceImpl {
 		consignmentMgmt.setFeatureId(consignmentUpdateRequest.getFeatureId());
 		consignmentMgmt.setRoleType(consignmentUpdateRequest.getRoleType());
 
-		if(consignmentTransaction.executeUpdateStatusConsignment(consignmentUpdateRequest, consignmentMgmt, webActionDb)) {
+		if(consignmentTransaction.executeUpdateStatus(consignmentUpdateRequest, consignmentMgmt, webActionDb)) {
 			ConsignmentMgmt current_consignment_response = consignmentRepository.getByTxnId(payloadTxnId);
-			
-			auditTrailRepository.save(new AuditTrail(
-					consignmentUpdateRequest.getUserId(), 
-					consignmentUpdateRequest.getUserName(), 
-					Long.valueOf(consignmentUpdateRequest.getUserTypeId()), 
-					consignmentUpdateRequest.getUserType(), 
-					Long.valueOf(consignmentUpdateRequest.getFeatureId())
-					, Features.CONSIGNMENT, 
-					SubFeatures.ACCEPT_REJECT, "", 
-					consignmentMgmt.getTxnId(),
-					consignmentUpdateRequest.getRoleType()));
-			logger.info("Consignment [" + consignmentMgmt.getTxnId() + "] saved in audit_trail.");
 			
 			if(action == 0) {
 				if(ConsignmentStatus.APPROVED.getCode() == current_consignment_response.getConsignmentStatus()) {
@@ -1135,7 +1111,8 @@ public class ConsignmentServiceImpl {
 			logger.info("state transition is not allowed." +payload_txnID);
 			return new GenricResponse(3, "state transition is not allowed.", payload_txnID);
 		}
-
+		
+		Map<String, String> placeholderMap = new HashMap<>();
 		// 0 - approve 1-Reject
 		if(action == 0) {
 			if(consignmentStatus == ConsignmentStatus.INIT.getCode()) {
@@ -1149,7 +1126,7 @@ public class ConsignmentServiceImpl {
 		consignmentMgmt.setFeatureId(consignmentUpdateRequest.getFeatureId());
 		consignmentMgmt.setRoleType(consignmentUpdateRequest.getRoleType());
 
-		if(consignmentTransaction.executeUpdateStatusConsignment(consignmentMgmt, null)) {
+		if(consignmentTransaction.executeUpdateStatusConsignmentForCeirSystem(consignmentMgmt, null)) {
 			ConsignmentMgmt current_consignment_response = consignmentRepository.getByTxnId(payload_txnID);
 			if(action == 0) {
 				logger.info("CONSIGNMENT_PROCESS_SUCCESS_TO_IMPORTER_MAIL :  "+current_consignment_response.getConsignmentStatus());
@@ -1243,6 +1220,8 @@ public class ConsignmentServiceImpl {
 		}
 		WebActionDb webActionDb = null;
 		Integer nextStatus = null;
+		GenricResponse_Class response = null;
+		Map<String, String> placeholderMap = new HashMap<>();
 
 		if (action == 0) {
 			response = userFeignClient.usertypeStatus(7);
@@ -1282,20 +1261,8 @@ public class ConsignmentServiceImpl {
 		consignmentMgmt.setFeatureId(consignmentUpdateRequest.getFeatureId());
 		consignmentMgmt.setRoleType(consignmentUpdateRequest.getRoleType());
 
-		if(consignmentTransaction.executeUpdateStatusConsignment(consignmentUpdateRequest, consignmentMgmt, webActionDb)) {
+		if(consignmentTransaction.executeUpdateStatus(consignmentUpdateRequest, consignmentMgmt, webActionDb)) {
 			ConsignmentMgmt current_consignment_response = consignmentRepository.getByTxnId(payloadTxnId);
-			
-			auditTrailRepository.save(new AuditTrail(
-					consignmentUpdateRequest.getUserId(), 
-					consignmentUpdateRequest.getUserName(), 
-					Long.valueOf(consignmentUpdateRequest.getUserTypeId()), 
-					consignmentUpdateRequest.getUserType(), 
-					Long.valueOf(consignmentUpdateRequest.getFeatureId())
-					, Features.CONSIGNMENT, 
-					SubFeatures.ACCEPT_REJECT, "", 
-					consignmentMgmt.getTxnId(),
-					consignmentUpdateRequest.getRoleType()));
-			logger.info("Consignment [" + consignmentMgmt.getTxnId() + "] saved in audit_trail.");
 			
 			if(action == 0) {
 				logger.info("Consignment_Approved_DRTImporter_Email_Message :  "+current_consignment_response.getConsignmentStatus());

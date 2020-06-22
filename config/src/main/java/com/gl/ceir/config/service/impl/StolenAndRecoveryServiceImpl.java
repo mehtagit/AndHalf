@@ -1341,7 +1341,7 @@ public class StolenAndRecoveryServiceImpl {
 		return count==0? 1:count;
 	}
 
-	private void addInAuditTrail(Long userId, String txnId, String subFeatureName, String roleType,Integer requestType,Integer featureId) {
+	private void addInAuditTrail(Long userId, String txnId, String subFeatureName, String roleType, Integer requestType,Integer featureId) {
 
 		User requestUser = null;
 		String fearure = null;
