@@ -45,6 +45,7 @@
     <link href="${context}/resources/js/plugins/chartist-js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection">
 
     <style>
+   
    /*      ul li {
             display: inline-flex;
         }
@@ -147,7 +148,19 @@
         	width: 50%;
         }
         
- */    </style>
+ */    
+
+div#initialloader {
+position: absolute;
+left: 0px;
+top: 58px !important;
+width: 100%;
+height: 86% !important;
+z-index: 9999;
+background: url(resources/images/loader.gif) 50% 50% no-repeat white;
+}
+
+ </style>
 <script>
 var contextpath = "${context}";
 </script>
@@ -174,7 +187,7 @@ var contextpath = "${context}";
                                                 <input type="email" id="endUseremail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,63}$" 
 											    oninput="InvalidMsg(this,'input','<spring:message code="validation.Matchformat" />');"
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.Matchformat" />');" 
-												   maxlength="30" name="email"/>
+												   maxlength="280" name="email"/>
                                             </div>
 
                                             <div class="input-field col s12 m6 quantity" style="margin-top: 19px;">
