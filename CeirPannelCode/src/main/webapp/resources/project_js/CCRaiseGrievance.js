@@ -650,9 +650,20 @@ function enableReplySelectFile(){
 	
 	
 	function enableSelectFile(){
-		$("#endUserdocTypeFile1").attr("disabled", false);
-		$("#endUserdocTypeFile1").attr("required", true);
-		$("#endUserFileLabel").append('<span class="star">*</span>');
+		
+		//$("#endUserdocTypeFile1").attr("disabled", false);
+		//$("#endUserdocTypeFile1").attr("required", true);
+		//$("#endUserFileLabel").append('<span class="star">*</span>');		
+		if($('#endUserdocTypetag1').val() != ''){
+			$("#endUserdocTypeFile1").attr("disabled", false);
+			$("#endUserdocTypeFile1").attr("required", true);
+			$("#removestar").find(".star").remove();
+			$("#endUserFileLabel").append('<span class="star">*</span>');
+		}else{
+			$("#endUserdocTypeFile1").attr("required", false);
+			$('#filetextField').val('');
+			$("#removestar").find(".star").remove();
+		}
 	}
 	$("input[type=file]").keypress(function(ev) {
 	    return false;
