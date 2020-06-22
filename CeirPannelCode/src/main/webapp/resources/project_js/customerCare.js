@@ -424,7 +424,7 @@ function setStakeHolderData(name,date,featureId,status,txnId,imei)
  				$("#withdrawnRemark").val(data.data.remarks);
  				$("#endUseremail").val(data.data.user.userProfile.email);
  				$("label[for='endUseremail']").addClass('active');
- 				console.log("");
+ 			
  			}
 	    
          else if(name=='Type Approve')
