@@ -153,12 +153,11 @@ public class ConsignmentServiceImpl {
 	@Autowired
 	AlertServiceImpl alertServiceImpl;
 
-	GenricResponse_Class response= null;
+	GenricResponse_Class response = null;
 	Integer nextStatus;
 	Integer currentStatus = null;
 	Port port = new Port();
 	Map<String, String> placeholderMap = new HashMap<>();
-	WebActionDb webActionDb = null;
 
 	public GenricResponse registerConsignment(ConsignmentMgmt consignmentFileRequest) {
 
@@ -447,14 +446,9 @@ public class ConsignmentServiceImpl {
 			// Fetch user_profile to update user over mail/sms regarding the action.
 			userProfile = userProfileRepository.getByUserId(consignmentMgmt.getUserId());
 
-
-
 			if("CEIRADMIN".equalsIgnoreCase(consignmentUpdateRequest.getUserType())) {
 				consignmentMgmt.setConsignmentStatus(ConsignmentStatus.WITHDRAWN_BY_CEIR.getCode());
-			}
-
-
-			else if("IMPORTER".equalsIgnoreCase(consignmentUpdateRequest.getUserType())) {
+			}else if("IMPORTER".equalsIgnoreCase(consignmentUpdateRequest.getUserType())) {
 				// Check status must be Init or Rejected by system.
 				if(consignmentMgmt.getConsignmentStatus() == ConsignmentStatus.INIT.getCode() || 
 						consignmentMgmt.getConsignmentStatus() == ConsignmentStatus.REJECTED_BY_SYSTEM.getCode()) {
@@ -462,11 +456,7 @@ public class ConsignmentServiceImpl {
 				}else {
 					return new GenricResponse(5, GenericMessageTags.INVALID_STATE_TRANSTION.getTag(), GenericMessageTags.INVALID_STATE_TRANSTION.getMessage(), consignmentUpdateRequest.getTxnId());
 				}
-			}
-
-
-
-			else {
+			}else {
 				logger.info("UserType is invalid." + consignmentUpdateRequest.getTxnId());
 				return new GenricResponse(1, "UserType is invalid.", consignmentUpdateRequest.getTxnId());
 			}
@@ -481,7 +471,6 @@ public class ConsignmentServiceImpl {
 
 			WebActionDb webActionDb = new WebActionDb();
 			webActionDb.setFeature(WebActionDbFeature.CONSIGNMENT.getName());
-			//webActionDb.setFeature(stakeholderfeatureServiceImpl.getFeatureNameById(3L));
 			webActionDb.setSubFeature(WebActionDbSubFeature.DELETE.getName());
 			webActionDb.setState(WebActionDbState.INIT.getCode());
 			webActionDb.setTxnId(consignmentUpdateRequest.getTxnId());
@@ -489,8 +478,6 @@ public class ConsignmentServiceImpl {
 			if(consignmentTransaction.executeDeleteConsignment(consignmentMgmt, webActionDb)) {
 
 				if(consignmentMgmt.getConsignmentStatus() == 9) {
-
-
 					Generic_Response_Notification generic_Response_Notification = userFeignClient.ceirInfoByUserTypeId(8);
 
 					logger.info("generic_Response_Notification::::::::"+generic_Response_Notification);
@@ -552,7 +539,6 @@ public class ConsignmentServiceImpl {
 
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
-
 	}
 
 	public GenricResponse updateConsignmentStatus(ConsignmentUpdateRequest consignmentUpdateRequest) {
@@ -562,32 +548,30 @@ public class ConsignmentServiceImpl {
 		UserProfile ceirUserProfile = new UserProfile();
 		try {
 			UserProfile userProfile = null;
-			WebActionDb webActionDb = null;
-
 			ConsignmentMgmt consignmentMgmt = consignmentRepository.getByTxnId(payload_txnID);
 			logger.debug("Accept/Reject Consignment : " + consignmentMgmt);
+
 			// Fetch user_profile to update user over mail/sms regarding the action.
 			userProfile = userProfileRepository.getByUserId(consignmentMgmt.getUserId());
 			logger.info("UserProfile : " + userProfile);
 
 			//action  0 - Accept, 1 - Reject			
-
 			if(Objects.isNull(consignmentMgmt)) {
 				return new GenricResponse(1, "TxnId Does not Exist.",payload_txnID);
 			}
 			else {
 				if("CEIRADMIN".equalsIgnoreCase(role_type)){
 					logger.info("Running for CEIRADMIN");
-					return ceir_ConsignmentStatus(consignmentMgmt,consignmentUpdateRequest,userProfile,ceirUserProfile,action);
+					return ceirAdminStatus(consignmentMgmt, consignmentUpdateRequest, userProfile, ceirUserProfile, action);
 				}else if("CUSTOM".equalsIgnoreCase(role_type)) {
 					logger.info("Running for CUSTOM");
-					return ceir_CustomStatus(consignmentMgmt, consignmentUpdateRequest,userProfile,action);
+					return ceirCustomStatus(consignmentMgmt, consignmentUpdateRequest,userProfile,action);
 				}else if(CEIRSYSTEM.equalsIgnoreCase(role_type)) {
 					logger.info("Running for CEIRSYSTEM");
-					return ceir_CEIRSystemStatus(consignmentMgmt, userProfile, consignmentUpdateRequest,ceirUserProfile,consignmentMgmt.getConsignmentStatus(),action);
+					return ceirSystemStatus(consignmentMgmt, userProfile, consignmentUpdateRequest,ceirUserProfile,consignmentMgmt.getConsignmentStatus(),action);
 				}else if("DRT".equalsIgnoreCase(role_type)) {
 					logger.info("Running for DRT");
-					return ceir_DRTStatus(consignmentMgmt, userProfile, consignmentUpdateRequest,ceirUserProfile,action);
+					return ceirDRTStatus(consignmentMgmt, userProfile, consignmentUpdateRequest,ceirUserProfile,action);
 				}
 				else {
 					logger.info("Nothing to update for request :: " + consignmentUpdateRequest);
@@ -737,7 +721,7 @@ public class ConsignmentServiceImpl {
 
 		if(Objects.nonNull(consignmentMgmt.getDisplayName()) && !consignmentMgmt.getDisplayName().isEmpty())
 			cmsb.addSpecification(cmsb.joinWithMultiple(new SearchCriteria("displayName",consignmentMgmt.getDisplayName(), SearchOperation.EQUALITY, Datatype.STRING)));
-		
+
 		if(Objects.nonNull(consignmentMgmt.getConsignmentStatus())) {
 			cmsb.with(new SearchCriteria("consignmentStatus", consignmentMgmt.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
 		}else {
@@ -756,7 +740,7 @@ public class ConsignmentServiceImpl {
 					}else if("filter".equalsIgnoreCase(source)) {
 						boolean isFilterEmpty = nothingInFilter(consignmentMgmt);
 						logger.info("Nothing in filter : " + isFilterEmpty);
-						
+
 						if(isFilterEmpty) {
 							for(DashboardUsersFeatureStateMap dashboardUsersFeatureStateMap2 : dashboardUsersFeatureStateMaps ) {
 								consignmentStatus.add(dashboardUsersFeatureStateMap2.getState());
@@ -822,25 +806,19 @@ public class ConsignmentServiceImpl {
 
 	}
 
-	private GenricResponse mockFeignResponse() {
-		return new GenricResponse(200);	
-	}
-
-
 	@Transactional
 	public boolean updatePendingApproval(ConsignmentUpdateRequest consignmentUpdateRequest){
 		try {
-
 			ConsignmentMgmt consignmentInfo = consignmentRepository.getByTxnId(consignmentUpdateRequest.getTxnId());
 			consignmentInfo.setRemarks(consignmentUpdateRequest.getRemarks());
 
 			logger.info("[Trying to update ConsignmentMgmt] | Model ["+consignmentUpdateRequest+"]");
 			consignmentRepository.save(consignmentInfo);
 			logger.info("[Updation of Consignment is successful]  | Model ["+consignmentInfo+"]");
-			return true;
+			return Boolean.TRUE;
 		} catch (Exception e) {
 			logger.error("[Error while updating ConsignmentMgmt] | Model ["+consignmentUpdateRequest+"] | Error ["+e+"]");
-			return false;
+			return Boolean.FALSE;
 		}
 	}
 
@@ -849,44 +827,44 @@ public class ConsignmentServiceImpl {
 		featureName = stakeholderfeatureServiceImpl.getFeatureNameById(3L);
 	}
 
-
-	public GenricResponse ceir_ConsignmentStatus(ConsignmentMgmt consignmentMgmt,ConsignmentUpdateRequest consignmentUpdateRequest,UserProfile userProfile,UserProfile ceirUserProfile,int action) {
+	public GenricResponse ceirAdminStatus(ConsignmentMgmt consignmentMgmt,ConsignmentUpdateRequest consignmentUpdateRequest,UserProfile userProfile,UserProfile ceirUserProfile,int action) {
 		String payload_txnID = consignmentUpdateRequest.getTxnId();
 		if(!StateMachine.isConsignmentStatetransitionAllowedWithAction("CEIRADMIN", consignmentMgmt.getConsignmentStatus(), 0)) {
 			logger.info("state transition is not allowed." +payload_txnID);
 			return new GenricResponse(3, "state transition is not allowed.",payload_txnID);
 		}
+		WebActionDb webActionDb = null;
 
 		if(action == 0) {
-			// Check if this feature is supported in current period.
-
-			//checking DRT enable/disable 
+			// Checking DRT enable/disable.
 			response = userFeignClient.usertypeStatus(21);
 			logger.info("FEIGN : response for validatePeriod " + response);
 
 			if(response.getErrorCode() == 200) {
-				nextStatus=ConsignmentStatus.PENDING_CLEARANCE_FROM_DRT.getCode();
-			}
-			else {
+				nextStatus = ConsignmentStatus.PENDING_CLEARANCE_FROM_DRT.getCode();
+			}else {
 				response = userFeignClient.usertypeStatus(7);
 				logger.info("FEIGN : response for validatePeriod " + response);
-
 				nextStatus = response.getErrorCode() == 200 ? ConsignmentStatus.PENDING_APPROVAL_FROM_CUSTOMS.getCode() : ConsignmentStatus.APPROVED.getCode();
-
 			}
 
 			consignmentMgmt.setConsignmentStatus(nextStatus);
-		}
-
-		else {
+		}else {
 			nextStatus = ConsignmentStatus.REJECTED_BY_CEIR_AUTHORITY.getCode();
+			consignmentMgmt.setConsignmentStatus(nextStatus);
 			consignmentMgmt.setRemarks(consignmentUpdateRequest.getRemarks());
+
+			webActionDb = new WebActionDb();
+			webActionDb.setFeature(WebActionDbFeature.CONSIGNMENT.getName());
+			webActionDb.setState(WebActionDbState.INIT.getCode());
+			webActionDb.setTxnId(consignmentMgmt.getTxnId());
+			webActionDb.setSubFeature(WebActionDbSubFeature.REJECT.getName());
 		}
 		consignmentMgmt.setCeirAdminID(consignmentUpdateRequest.getUserId());
 		consignmentMgmt.setFeatureId(consignmentUpdateRequest.getFeatureId());
 		consignmentMgmt.setRoleType(consignmentUpdateRequest.getRoleType());
 
-		if(consignmentTransaction.executeUpdateStatusConsignment(consignmentMgmt,webActionDb)) {
+		if(consignmentTransaction.executeUpdateStatusConsignment(consignmentMgmt, webActionDb)) {
 			ConsignmentMgmt current_consignment_response = consignmentRepository.getByTxnId(payload_txnID);
 
 			if(action == 0) {
@@ -938,10 +916,7 @@ public class ConsignmentServiceImpl {
 									ReferTable.USERS);
 						}
 					}
-				}
-
-
-				else if (ConsignmentStatus.PENDING_APPROVAL_FROM_CUSTOMS.getCode() == current_consignment_response.getConsignmentStatus()) {
+				}else if (ConsignmentStatus.PENDING_APPROVAL_FROM_CUSTOMS.getCode() == current_consignment_response.getConsignmentStatus()) {
 					logger.info("Custom PENDING_APPROVAL_FROM_CUSTOMS Notification:::with current_status : "+current_consignment_response.getConsignmentStatus());
 					port.setArrivalPort(current_consignment_response.getExpectedArrivalPort());
 					port.setPortAddress(current_consignment_response.getPortAddress());
@@ -1003,25 +978,23 @@ public class ConsignmentServiceImpl {
 			logger.info("Consignment status Update have failed." +payload_txnID);
 			return new GenricResponse(2, "Consignment status Update have failed.",payload_txnID);
 		}
-
 	}
 
-	public GenricResponse ceir_CustomStatus(ConsignmentMgmt consignmentMgmt,ConsignmentUpdateRequest consignmentUpdateRequest,UserProfile userProfile,int action) {
+	public GenricResponse ceirCustomStatus(ConsignmentMgmt consignmentMgmt,ConsignmentUpdateRequest consignmentUpdateRequest,UserProfile userProfile,int action) {
 		String payload_txnID = consignmentUpdateRequest.getTxnId();
 		if(!StateMachine.isConsignmentStatetransitionAllowed("CUSTOM", consignmentMgmt.getConsignmentStatus())) {
 			logger.info("state transition is not allowed." +payload_txnID);
 			return new GenricResponse(3, "state transition is not allowed.",payload_txnID);
 		}
-
+		
+		WebActionDb webActionDb = new WebActionDb();
+		webActionDb.setFeature(WebActionDbFeature.CONSIGNMENT.getName());
+		webActionDb.setState(WebActionDbState.INIT.getCode());
+		webActionDb.setTxnId(payload_txnID);
+		
 		if(action == 0) {
-			webActionDb = new WebActionDb();
-			webActionDb.setFeature(WebActionDbFeature.CONSIGNMENT.getName());
-			// webActionDb.setSubFeature(stakeholderfeatureServiceImpl.getFeatureNameById(3L));
 			webActionDb.setSubFeature(WebActionDbSubFeature.APPROVE.getName());
-			webActionDb.setState(WebActionDbState.INIT.getCode());
-			webActionDb.setTxnId(payload_txnID);
 
-			//	consignmentMgmt.setCustomID(consignmentUpdateRequest.getUserId());
 			nextStatus = ConsignmentStatus.APPROVED.getCode();
 
 			consignmentMgmt.setConsignmentStatus(nextStatus);				
@@ -1043,13 +1016,14 @@ public class ConsignmentServiceImpl {
 			nextStatus = ConsignmentStatus.REJECTED_BY_CUSTOMS.getCode();
 			consignmentMgmt.setConsignmentStatus(nextStatus);
 			consignmentMgmt.setRemarks(consignmentUpdateRequest.getRemarks());	
+			
+			webActionDb.setSubFeature(WebActionDbSubFeature.REJECT.getName());
 		}
 		consignmentMgmt.setCustomID(consignmentUpdateRequest.getUserId());
-
 		consignmentMgmt.setFeatureId(consignmentUpdateRequest.getFeatureId());
 		consignmentMgmt.setRoleType(consignmentUpdateRequest.getRoleType());
 
-		if(consignmentTransaction.executeUpdateStatusConsignment(consignmentMgmt,webActionDb)) {
+		if(consignmentTransaction.executeUpdateStatusConsignment(consignmentMgmt, webActionDb)) {
 			ConsignmentMgmt current_consignment_response = consignmentRepository.getByTxnId(payload_txnID);
 			if(action == 0) {
 				if(ConsignmentStatus.APPROVED.getCode() == current_consignment_response.getConsignmentStatus()) {
@@ -1107,19 +1081,6 @@ public class ConsignmentServiceImpl {
 			else {
 
 				logger.info("Consignment_Rejected_Customwith current_status :  "+current_consignment_response.getConsignmentStatus());
-				/*
-				 * // Check if this feature is supported in current period. response =
-				 * userFeignClient.usertypeStatus(21);
-				 * 
-				 * //GenricResponse response=mockFeignResponse();
-				 * logger.info("FEIGN : response for validatePeriod " + response);
-				 * if(response.getErrorCode() == 200) {
-				 * nextStatus=ConsignmentStatus.PENDING_CLEARANCE_FROM_DRT.getCode(); } else {
-				 * nextStatus=ConsignmentStatus.APPROVED.getCode(); }
-				 * 
-				 * logger.info("nextStatus:"+nextStatus);
-				 * consignmentMgmt.setConsignmentStatus(nextStatus);
-				 */
 
 				placeholderMap.put("<First name>", userProfile.getFirstName());
 				placeholderMap.put("<Txn id>", current_consignment_response.getTxnId());
@@ -1135,16 +1096,6 @@ public class ConsignmentServiceImpl {
 						null,
 						"Importer",
 						ReferTable.USERS);
-
-				/*
-				 * emailUtil.saveNotification("CONSIGNMENT_REJECTED_BY_CUSTOM_TO_CEIR_EMAIL",
-				 * ceirUserProfile, consignmentUpdateRequest.getFeatureId(),
-				 * Features.CONSIGNMENT, SubFeatures.REJECT,
-				 * consignmentUpdateRequest.getTxnId(), consignmentMgmt.getTxnId(),
-				 * placeholderMap, null, "CEIRAdmin", ReferTable.USERS);
-				 */
-
-
 			}
 
 			logger.info("Consignment status have Update SuccessFully." +payload_txnID);
@@ -1155,14 +1106,14 @@ public class ConsignmentServiceImpl {
 		}
 	}
 
-	public GenricResponse ceir_CEIRSystemStatus(ConsignmentMgmt consignmentMgmt, UserProfile userProfile, ConsignmentUpdateRequest consignmentUpdateRequest, UserProfile ceirUserProfile,int consignmentStatus,int action) {
+	public GenricResponse ceirSystemStatus(ConsignmentMgmt consignmentMgmt, UserProfile userProfile, ConsignmentUpdateRequest consignmentUpdateRequest, UserProfile ceirUserProfile,int consignmentStatus,int action) {
 		String payload_txnID = consignmentUpdateRequest.getTxnId();
 		List<RawMail> rawMails = new LinkedList<>();
 		Integer user = consignmentMgmt.getUserId();
-		
+
 		if(!StateMachine.isConsignmentStatetransitionAllowed(CEIRSYSTEM, consignmentMgmt.getConsignmentStatus())) {
 			logger.info("state transition is not allowed." +payload_txnID);
-			return new GenricResponse(3, "state transition is not allowed.",payload_txnID);
+			return new GenricResponse(3, "state transition is not allowed.", payload_txnID);
 		}
 
 		// 0 - approve 1-Reject
@@ -1177,8 +1128,8 @@ public class ConsignmentServiceImpl {
 		}
 		consignmentMgmt.setFeatureId(consignmentUpdateRequest.getFeatureId());
 		consignmentMgmt.setRoleType(consignmentUpdateRequest.getRoleType());
-		
-		if(consignmentTransaction.executeUpdateStatusConsignment(consignmentMgmt, webActionDb)) {
+
+		if(consignmentTransaction.executeUpdateStatusConsignment(consignmentMgmt, null)) {
 			ConsignmentMgmt current_consignment_response = consignmentRepository.getByTxnId(payload_txnID);
 			if(action == 0) {
 				logger.info("CONSIGNMENT_PROCESS_SUCCESS_TO_IMPORTER_MAIL :  "+current_consignment_response.getConsignmentStatus());
@@ -1203,7 +1154,7 @@ public class ConsignmentServiceImpl {
 					logger.info("generic_Response_Notification::::::::"+generic_Response_Notification);
 
 					List<RegisterationUser> registerationUserList = generic_Response_Notification.getData();
-					
+
 					if(registerationUserList == null || registerationUserList.isEmpty()) {
 						logger.info("no user found");
 					}
@@ -1213,7 +1164,7 @@ public class ConsignmentServiceImpl {
 							UserProfile userProfile_generic_Response_Notification = new UserProfile();
 							userProfile_generic_Response_Notification  = userProfileRepository.getByUserId(registerationUser.getId());
 							logger.info(" firstName :::::"+userProfile_generic_Response_Notification.getFirstName());
-							
+
 							placeholderMap = new HashMap<String, String>();
 							placeholderMap.put("<First name>", userProfile_generic_Response_Notification.getFirstName());
 							placeholderMap.put("<Txn id>", current_consignment_response.getTxnId());
@@ -1230,7 +1181,7 @@ public class ConsignmentServiceImpl {
 									"CEIRAdmin"));
 						}
 					}
-					
+
 					logger.info("No. of mail sent : " + rawMails.size());
 					emailUtil.saveNotification(rawMails);
 				}
@@ -1264,12 +1215,13 @@ public class ConsignmentServiceImpl {
 		}
 	}
 
-	public GenricResponse ceir_DRTStatus(ConsignmentMgmt consignmentMgmt,UserProfile userProfile,ConsignmentUpdateRequest consignmentUpdateRequest,UserProfile ceirUserProfile,int action) {
+	public GenricResponse ceirDRTStatus(ConsignmentMgmt consignmentMgmt,UserProfile userProfile,ConsignmentUpdateRequest consignmentUpdateRequest,UserProfile ceirUserProfile,int action) {
 		String payload_txnID = consignmentUpdateRequest.getTxnId();
 		if(!StateMachine.isConsignmentStatetransitionAllowed("DRT", consignmentMgmt.getConsignmentStatus())) {
 			logger.info("state transition is not allowed." +payload_txnID);
 			return new GenricResponse(3, "state transition is not allowed.",payload_txnID);
 		}
+		WebActionDb webActionDb = null;
 
 		if (action == 0) {
 			response = userFeignClient.usertypeStatus(7);
@@ -1286,13 +1238,11 @@ public class ConsignmentServiceImpl {
 		else {
 			// Check if this feature is supported in current period.
 			response = userFeignClient.usertypeStatus(21);
-			//GenricResponse response=mockFeignResponse();
 			logger.info("FEIGN : response for validatePeriod " + response);
 			if(response.getErrorCode() == 200) {
-				nextStatus=ConsignmentStatus.REJECTED_BY_DRT.getCode();
+				nextStatus = ConsignmentStatus.REJECTED_BY_DRT.getCode();
 
-			}
-			else {
+			}else {
 				logger.info("Operation not allowed." + consignmentUpdateRequest.getTxnId());
 				return new GenricResponse(5, "Operation not allowed.", consignmentUpdateRequest.getTxnId());
 
@@ -1301,12 +1251,18 @@ public class ConsignmentServiceImpl {
 			consignmentMgmt.setConsignmentStatus(nextStatus);
 			consignmentMgmt.setDrtID(consignmentUpdateRequest.getUserId());
 			consignmentMgmt.setRemarks(consignmentUpdateRequest.getRemarks());
+
+			webActionDb = new WebActionDb();
+			webActionDb.setFeature(WebActionDbFeature.CONSIGNMENT.getName());
+			webActionDb.setState(WebActionDbState.INIT.getCode());
+			webActionDb.setTxnId(consignmentMgmt.getTxnId());
+			webActionDb.setSubFeature(WebActionDbSubFeature.REJECT.getName());
 		}
 
 		consignmentMgmt.setFeatureId(consignmentUpdateRequest.getFeatureId());
 		consignmentMgmt.setRoleType(consignmentUpdateRequest.getRoleType());
 
-		if(consignmentTransaction.executeUpdateStatusConsignment(consignmentMgmt,webActionDb)) {
+		if(consignmentTransaction.executeUpdateStatusConsignment(consignmentMgmt, webActionDb)) {
 
 			ConsignmentMgmt current_consignment_response = consignmentRepository.getByTxnId(payload_txnID);
 			if(action == 0) {
@@ -1385,15 +1341,15 @@ public class ConsignmentServiceImpl {
 		if(filterRequest.getStartDate().isEmpty()) {
 			filterRequest.setStartDate(null);
 		}
-		
+
 		if(filterRequest.getEndDate().isEmpty()) {
 			filterRequest.setEndDate(null);
 		}
-		
+
 		if(filterRequest.getTxnId().isEmpty()) {
 			filterRequest.setTxnId(null);
 		}
-		
+
 		// Logic
 		if(Objects.nonNull(filterRequest.getStartDate())) {
 			return false;

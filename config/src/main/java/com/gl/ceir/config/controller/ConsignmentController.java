@@ -139,12 +139,12 @@ public class ConsignmentController {
 	public GenricResponse deleteConsigment(@RequestBody ConsignmentUpdateRequest consignmentUpdateRequest) {
 
 		logger.info("Consignment Withdraw Request ="+consignmentUpdateRequest);
-		GenricResponse genricResponse=null;
+		
+		GenricResponse genricResponse = null;
 		if(consignmentServiceImpl.updatePendingApproval(consignmentUpdateRequest)) {	
-			genricResponse =	consignmentServiceImpl.deleteConsigmentInfo(consignmentUpdateRequest);
-		logger.info("Response of Delete Request="+genricResponse);
-		}
-		else {
+			genricResponse = consignmentServiceImpl.deleteConsigmentInfo(consignmentUpdateRequest);
+		logger.info("Response of Delete Request = " + genricResponse);
+		}else {
 			new GenricResponse(1, "Error during update status before deleting", consignmentUpdateRequest.getTxnId());
 		}
 		return genricResponse;
@@ -155,7 +155,7 @@ public class ConsignmentController {
 	@RequestMapping(path = "update/consigmentStatus", method = RequestMethod.PUT)
 	public GenricResponse updateConsigmentStatus(@RequestBody ConsignmentUpdateRequest consignmentUpdateRequest) {
 
-		logger.info("Request to update the consignmentStatus="+consignmentUpdateRequest);
+		logger.info("Request to update the consignmentStatus = " + consignmentUpdateRequest);
 
 		GenricResponse genricResponse = consignmentServiceImpl.updateConsignmentStatus(consignmentUpdateRequest);
 

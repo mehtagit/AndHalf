@@ -156,12 +156,7 @@ public class PendingTacApprovedImpl {
 				return new GenricResponse(1, GenericMessageTags.NULL_REQ.getTag(), 
 						GenericMessageTags.NULL_REQ.getMessage(), null);
 			}
-			User user = userRepository.getById(filterRequest.getUserId());
-
-			auditTrailRepository.save(new AuditTrail(user.getId(), user.getUsername(), 0L, "System", 0L, 
-					Features.CONFIG_LIST, SubFeatures.DELETE, ""));
-			logger.info("AUDIT : Delete Tags list saved in audit_trail.");
-
+			
 			if(Objects.nonNull(filterRequest.getTxnId())) {
 				//pendingTacApprovedRepository.save(pendingTacApproveDb);
 				pendingTacApprovedRepository.deleteByTxnId(filterRequest.getTxnId());

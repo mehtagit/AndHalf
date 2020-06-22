@@ -2,7 +2,7 @@ package com.gl.ceir.config.model.constants;
 
 public enum WebActionDbSubFeature {
 	CONSIGNMENT_REGISTER("REGISTER"), UPDATE("UPDATE"), DELETE(
-			"DELETE"), UPLOAD("UPLOAD"), APPROVE("APPROVE");
+			"DELETE"), UPLOAD("UPLOAD"), APPROVE("APPROVE"), REJECT("REJECT");
 	private String name;
 
 	WebActionDbSubFeature(String name) {

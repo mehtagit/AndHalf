@@ -42,6 +42,7 @@ import com.gl.ceir.config.repository.GsmaBlacklistRepository;
 import com.gl.ceir.config.repository.PolicyBreachNotificationRepository;
 import com.gl.ceir.config.repository.TypeApproveRepository;
 import com.gl.ceir.config.repository.VipListRepository;
+import com.gl.ceir.config.util.DateUtil;
 import com.gl.ceir.config.util.Utility;
 
 @Service
@@ -57,6 +58,9 @@ public class CustomerCareServiceImpl {
 
 	@Autowired	
 	EmailUtil emailUtil;
+	
+	@Autowired
+	DateUtil dateUtil;
 
 	@Autowired
 	UserStaticServiceImpl userStaticServiceImpl;
@@ -198,6 +202,8 @@ public class CustomerCareServiceImpl {
 					objectBytxnId = greyListRepository.findByImei(customerCareDeviceState.getImei());
 					GreylistDb greylistDb = (GreylistDb)objectBytxnId;
 					greylistServiceImpl.setInterp(greylistDb);
+					greylistDb.setCreatedOn(dateUtil.formatChangerLocaldateTime(greylistDb.getCreatedOn(), "yyyy-MM-dd HH:mm"));
+					logger.info(greylistDb);
 				}
 				else if(repository instanceof DeviceDuplicateDbRepository) {
 					DeviceDuplicateDbRepository deviceDuplicateDbRepository = (DeviceDuplicateDbRepository)repository;

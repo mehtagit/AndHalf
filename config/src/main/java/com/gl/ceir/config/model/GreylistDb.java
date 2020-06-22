@@ -26,7 +26,6 @@ public class GreylistDb implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@JsonIgnore
 	@CreationTimestamp
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	@Column(nullable = false, updatable = false)
@@ -45,7 +44,7 @@ public class GreylistDb implements Serializable {
 	private String deviceNumber;
 	private String deviceType;
 	private String deviceAction;
-	private String	 deviceStatus;
+	private String deviceStatus;
 	private String DeviceLaunchDate;
 	private String multipleSimStatus;
 	private String  deviceId;

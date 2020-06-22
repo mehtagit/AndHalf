@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
@@ -33,13 +34,20 @@ public class DateUtil {
 	}
 
 	public Date formatChanger(LocalDateTime localDateTime ) throws ParseException {
-
-		/*SimpleDateFormat format = new SimpleDateFormat("EEE MMM dd hh:mm:ss z yyyy");
-		java.util.Date date = format.parse(dateString);
-		 */
 		String dmyFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(localDateTime);
 		java.util.Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(dmyFormat);
 
+		return date;
+	}
+	
+	public LocalDateTime formatChangerLocaldateTime(LocalDateTime localDateTime, String outFormat){
+		LocalDateTime date = null;
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(outFormat);
+		try {
+			date = LocalDateTime.parse(localDateTime.format(formatter));
+		}catch( Exception ex) {
+			date = localDateTime;
+		}
 		return date;
 	}
 	
