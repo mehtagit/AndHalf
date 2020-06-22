@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import com.gl.ceir.config.model.AuditTrail;
 import com.gl.ceir.config.model.ConsignmentMgmt;
+import com.gl.ceir.config.model.ConsignmentUpdateRequest;
 import com.gl.ceir.config.model.WebActionDb;
 import com.gl.ceir.config.model.constants.Features;
 import com.gl.ceir.config.model.constants.SubFeatures;
@@ -107,6 +108,38 @@ public class ConsignmentTransaction {
 					consignmentMgmt.getUser().getUsername(),
 					Long.valueOf(Long.valueOf(consignmentMgmt.getUser().getUsertype().getId())),
 					consignmentMgmt.getUser().getUsertype().getUsertypeName(),
+					Long.valueOf(consignmentMgmt.getFeatureId()),
+					Features.CONSIGNMENT, SubFeatures.UPDATE, "",
+					consignmentMgmt.getTxnId(),consignmentMgmt.getRoleType()));
+			logger.info("Consignment [" + consignmentMgmt.getTxnId() + "] saved in audit_trail.");
+		}
+
+		queryStatus = Boolean.TRUE;
+		return queryStatus;
+	}
+	
+	public boolean executeUpdateStatusConsignment(ConsignmentUpdateRequest consignmentUpdateRequest, ConsignmentMgmt consignmentMgmt, 
+			WebActionDb webActionDb) {
+		boolean queryStatus = Boolean.FALSE;
+		
+		if(Objects.nonNull(webActionDb)) {
+			webActionDbRepository.save(webActionDb);
+			logger.info("Consignment [" + consignmentMgmt.getTxnId() + "] saved in webaction_db.");	
+		}
+
+		consignmentRepository.save(consignmentMgmt);
+		logger.info("Consignment [" + consignmentMgmt.getTxnId() + "] saved in consigment_mgmt_db.");
+
+		//Record insertion in  Audit trail  table
+		if("CEIRSYSTEM".equalsIgnoreCase(consignmentMgmt.getRoleType())) {
+			logger.info("No record insertion in audit trail [CEIRSYSTEM]");
+		}
+		else {
+			auditTrailRepository.save(new AuditTrail(
+					consignmentUpdateRequest.getUserId(),
+					consignmentMgmt.getUser().getUsername(),
+					Long.valueOf(Long.valueOf(consignmentMgmt.getUser().getUsertype().getId())),
+					consignmentUpdateRequest.getUserType(),
 					Long.valueOf(consignmentMgmt.getFeatureId()),
 					Features.CONSIGNMENT, SubFeatures.UPDATE, "",
 					consignmentMgmt.getTxnId(),consignmentMgmt.getRoleType()));

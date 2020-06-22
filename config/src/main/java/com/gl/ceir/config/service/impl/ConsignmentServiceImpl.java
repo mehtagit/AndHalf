@@ -827,7 +827,7 @@ public class ConsignmentServiceImpl {
 		featureName = stakeholderfeatureServiceImpl.getFeatureNameById(3L);
 	}
 
-	public GenricResponse ceirAdminStatus(ConsignmentMgmt consignmentMgmt,ConsignmentUpdateRequest consignmentUpdateRequest,UserProfile userProfile,UserProfile ceirUserProfile,int action) {
+	public GenricResponse ceirAdminStatus(ConsignmentMgmt consignmentMgmt, ConsignmentUpdateRequest consignmentUpdateRequest, UserProfile userProfile,UserProfile ceirUserProfile,int action) {
 		String payload_txnID = consignmentUpdateRequest.getTxnId();
 		if(!StateMachine.isConsignmentStatetransitionAllowedWithAction("CEIRADMIN", consignmentMgmt.getConsignmentStatus(), 0)) {
 			logger.info("state transition is not allowed." +payload_txnID);
@@ -864,7 +864,7 @@ public class ConsignmentServiceImpl {
 		consignmentMgmt.setFeatureId(consignmentUpdateRequest.getFeatureId());
 		consignmentMgmt.setRoleType(consignmentUpdateRequest.getRoleType());
 
-		if(consignmentTransaction.executeUpdateStatusConsignment(consignmentMgmt, webActionDb)) {
+		if(consignmentTransaction.executeUpdateStatusConsignment(consignmentUpdateRequest, consignmentMgmt, webActionDb)) {
 			ConsignmentMgmt current_consignment_response = consignmentRepository.getByTxnId(payload_txnID);
 
 			if(action == 0) {
@@ -1023,7 +1023,7 @@ public class ConsignmentServiceImpl {
 		consignmentMgmt.setFeatureId(consignmentUpdateRequest.getFeatureId());
 		consignmentMgmt.setRoleType(consignmentUpdateRequest.getRoleType());
 
-		if(consignmentTransaction.executeUpdateStatusConsignment(consignmentMgmt, webActionDb)) {
+		if(consignmentTransaction.executeUpdateStatusConsignment(consignmentUpdateRequest, consignmentMgmt, webActionDb)) {
 			ConsignmentMgmt current_consignment_response = consignmentRepository.getByTxnId(payload_txnID);
 			if(action == 0) {
 				if(ConsignmentStatus.APPROVED.getCode() == current_consignment_response.getConsignmentStatus()) {
@@ -1162,7 +1162,7 @@ public class ConsignmentServiceImpl {
 
 						for(RegisterationUser registerationUser : registerationUserList) {
 							UserProfile userProfile_generic_Response_Notification = new UserProfile();
-							userProfile_generic_Response_Notification  = userProfileRepository.getByUserId(registerationUser.getId());
+							userProfile_generic_Response_Notification = userProfileRepository.getByUserId(registerationUser.getId());
 							logger.info(" firstName :::::"+userProfile_generic_Response_Notification.getFirstName());
 
 							placeholderMap = new HashMap<String, String>();
@@ -1262,7 +1262,7 @@ public class ConsignmentServiceImpl {
 		consignmentMgmt.setFeatureId(consignmentUpdateRequest.getFeatureId());
 		consignmentMgmt.setRoleType(consignmentUpdateRequest.getRoleType());
 
-		if(consignmentTransaction.executeUpdateStatusConsignment(consignmentMgmt, webActionDb)) {
+		if(consignmentTransaction.executeUpdateStatusConsignment(consignmentUpdateRequest, consignmentMgmt, webActionDb)) {
 
 			ConsignmentMgmt current_consignment_response = consignmentRepository.getByTxnId(payload_txnID);
 			if(action == 0) {

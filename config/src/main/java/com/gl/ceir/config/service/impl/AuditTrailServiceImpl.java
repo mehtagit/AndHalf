@@ -29,7 +29,9 @@ import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.SystemConfigurationDb;
 import com.gl.ceir.config.model.constants.Datatype;
+import com.gl.ceir.config.model.constants.Features;
 import com.gl.ceir.config.model.constants.SearchOperation;
+import com.gl.ceir.config.model.constants.SubFeatures;
 import com.gl.ceir.config.model.file.AuditTrailFileModel;
 import com.gl.ceir.config.model.file.ConsignmentFileModel;
 import com.gl.ceir.config.repository.AuditTrailRepository;
@@ -170,6 +172,12 @@ public class AuditTrailServiceImpl {
 			{
 				csvWriter.write( new AuditTrailFileModel());	
 			}
+			
+			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), "", 
+					Long.valueOf(filterRequest.getUserTypeId()), filterRequest.getUserType(), 
+					Long.valueOf(filterRequest.getFeatureId()),
+					"Audit Trail", SubFeatures.VIEW, "", "NA", filterRequest.getRoleType()));
+			logger.info("AUDIT : Saved file export request in audit.");
 			
 			return new FileDetails( fileName, filePath, link.getValue() + fileName ); 
 
