@@ -931,8 +931,14 @@ function exportConsignmentData()
 		filterConsignmentStatus='';
 
 	}
-
-	//console.log("2------>"+"consignmentStartDate---" +consignmentStartDate+  "consignmentEndDate---" +consignmentEndDate +  "consignmentTxnId---" +consignmentTxnId+  "filterConsignmentStatus---" +filterConsignmentStatus+  "consignmentTaxPaidStatus---" +consignmentTaxPaidStatus);
+	var consignmentSource= $("body").attr("data-session-source");
+	if(consignmentSource=='noti')
+	{
+		consignmentTxnId=$("body").attr("session-valueTxnID");
+		//console.log("  consignmentTxnId  ==="+consignmentTxnId);
+	}
+	
+	console.log("2------>"+"consignmentStartDate---" +consignmentStartDate+  "consignmentEndDate---" +consignmentEndDate +  "consignmentTxnId---" +consignmentTxnId+  "filterConsignmentStatus---" +filterConsignmentStatus+  "consignmentTaxPaidStatus---" +consignmentTaxPaidStatus);
 	if(consignmentStartDate != '' || consignmentEndDate != '' || consignmentTxnId != '' || filterConsignmentStatus != '' || consignmentTaxPaidStatus != '' ){
 		source__val = 'filter'
 	}else{

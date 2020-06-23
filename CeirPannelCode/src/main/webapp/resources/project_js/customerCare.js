@@ -512,7 +512,16 @@ function setStakeHolderData(name,date,featureId,status,txnId,imei)
       		$("#blockedDate").val(data.data.createdOn);
       		$("#blockExpiryDate").val(data.data.expiryDate);
        		$("#blockeModeType").val(data.data.modeType);
-       		$("#complaintType").val(data.data.complainType);
+       		if(data.data.complainType=="null")
+       			{
+       			console.log("if");
+       			$("#complaintType").val("NA");	
+       			}
+       		else{
+       			console.log("else");
+       			$("#complaintType").val(data.data.complainType);
+       		    } 
+       		
          }
 	    
 	    
