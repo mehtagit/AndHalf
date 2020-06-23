@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.ModelAndView;
 
 //import com.ceir.CeirCode.feign.PaymentFeign;
 import com.ceir.CeirCode.model.User;
@@ -57,10 +58,10 @@ public class PaymentService {
 //	@Autowired
 //	PaymentFeign paymentFeign;
 	
-	public ResponseEntity<?> payment(PaymentParam payment,HttpServletResponse http){
+	public ModelAndView payment(PaymentParam payment,HttpServletResponse http){
 		log.info("inside payment controller");
 		log.info("data given: "+payment);
-		String txnId=utility.currentDateTimeInSeconds()+randomDigits.getAlphaNumericString(5);
+		String txnId=utility.currentDateTimeInSeconds()+randomDigits.getAlphaNumericString(6);
 		log.info("here generated txn id: "+txnId);
 		//SystemConfigurationDb urlDb=systemConfigService.getDataByTag("Payment_Url");
 		//log.info("url from db:  "+urlDb.getValue());
@@ -78,7 +79,8 @@ public class PaymentService {
 			catch(Exception e) {
 				 log.info("error occurs while add userPayment entry in db:  ");
 			}
-		String returnUrl="http://172.24.2.65:9501/CEIRCode/payment/callbackurl/";
+		//String returnUrl="http://172.24.2.65:9600/CEIRCode/payment/callbackurl/";
+		String returnUrl="http://13.233.39.58:9007/CEIRCode/payment/callbackurl/";
 		log.info("return url: "+returnUrl);
 		String encodedURL = Base64.getUrlEncoder().encodeToString(returnUrl.getBytes());
 		log.info("encoded return url: "+encodedURL);
@@ -98,13 +100,15 @@ public class PaymentService {
 //			PaymentParam paymentParam=new PaymentParameters(tran_id, amount, hash, firstname, lastname, phone, email, return_url, return_params)
 			 GenricResponse response=new GenricResponse(200,PaymentTags.url_Sucess.getMessage(),PaymentTags.url_Sucess.getTag(),paymentParam);
             log.info("response send: "+response);
-			return new ResponseEntity<>(response,HttpStatus.OK);	
+            String confirmURI=paymentUrl+"?tran_id="+txnId+"&amount="+payment.getAmount()+"&hash="+hash+"&firstname="+profile.getFirstName()+"&lastname="+profile.getLastName()+"&phone="+profile.getPhoneNo()+"&email="+profile.getEmail()+"&return_url="+encodedURL;
+			log.info("final url: "+confirmURI);
+            return new ModelAndView("redirect:" + confirmURI);	
 		}
 		else {
 			log.info("if user payment details are not saving to the table");
 			GenricResponse response=new GenricResponse(500,PaymentTags.url_Fail.getMessage(),PaymentTags.url_Fail.getTag());
             log.info("response send: "+response);
-			return new ResponseEntity<>(response,HttpStatus.OK);	
+			return null;	
 		}
 
 	}
@@ -192,4 +196,5 @@ public class PaymentService {
 	        	
 	        }
 	    }
+
 }
