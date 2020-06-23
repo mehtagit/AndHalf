@@ -323,6 +323,8 @@ public class StockMgmt implements Serializable {
 		builder.append(remarks);
 		builder.append(", stateInterp=");
 		builder.append(stateInterp);
+		builder.append(", assignerId=");
+		builder.append(assignerId);
 		builder.append("]");
 		return builder.toString();
 	}

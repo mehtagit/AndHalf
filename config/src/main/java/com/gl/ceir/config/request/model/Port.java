@@ -3,22 +3,11 @@ package com.gl.ceir.config.request.model;
 public class Port {
 
 	private Integer userTypeId;
-	
-	public Integer getUserTypeId() {
+	private Integer arrivalPort;
+    private Integer portAddress;
+    
+    public Integer getUserTypeId() {
 		return userTypeId;
-	}
-
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Registeration [userTypeId=");
-		builder.append(userTypeId);
-		builder.append(", arrivalPort=");
-		builder.append(arrivalPort);
-		builder.append(", portAddress=");
-		builder.append(portAddress);
-		builder.append("]");
-		return builder.toString();
 	}
 
 	public void setUserTypeId(Integer userTypeId) {
@@ -40,9 +29,18 @@ public class Port {
 	public void setPortAddress(Integer portAddress) {
 		this.portAddress = portAddress;
 	}
-
-	private Integer arrivalPort;
-
-    private Integer portAddress;
+	
+    @Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Registeration [userTypeId=");
+		builder.append(userTypeId);
+		builder.append(", arrivalPort=");
+		builder.append(arrivalPort);
+		builder.append(", portAddress=");
+		builder.append(portAddress);
+		builder.append("]");
+		return builder.toString();
+	}
    
 }

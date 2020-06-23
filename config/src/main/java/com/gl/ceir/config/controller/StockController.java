@@ -18,7 +18,6 @@ import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.StockMgmt;
-import com.gl.ceir.config.model.ValidationOutput;
 import com.gl.ceir.config.service.impl.FieldValidationServiceImpl;
 import com.gl.ceir.config.service.impl.StockServiceImpl;
 
@@ -35,8 +34,6 @@ public class StockController {
 	@Autowired
 	FieldValidationServiceImpl fieldValidationServiceImpl;
 
-	//new GenricResponse(5, "Failed to validate fields", "", data);
-
 	@ApiOperation(value = "Add Retailer And Distributer Info.", response = GenricResponse.class)
 	@RequestMapping(path = "/Stock/upload", method = RequestMethod.POST)
 	public GenricResponse uploadStock(@RequestBody StockMgmt stockMgmt){
@@ -44,7 +41,7 @@ public class StockController {
 
 		GenricResponse genricResponse =	stackholderServiceImpl.uploadStock(stockMgmt);
 
-		logger.info("Upload Stock Response = "+genricResponse.toString());
+		logger.info("Upload Stock Response = " + genricResponse.toString());
 		return genricResponse;
 	}
 
@@ -86,7 +83,7 @@ public class StockController {
 		MappingJacksonValue mapping = null;
 
 		if(file == 0) {
-			logger.info("Stock View filter Details Request= " + filterRequest);
+			logger.info("Stock View filter Details Request = " + filterRequest);
 			Page<StockMgmt> response = stackholderServiceImpl.getAllFilteredData(filterRequest, pageNo, pageSize, source);
 			mapping = new MappingJacksonValue(response);
 		}else {
@@ -98,7 +95,6 @@ public class StockController {
 		logger.info("Response Filtered Record Details = " + mapping);
 
 		return mapping;
-
 	}
 
 	@ApiOperation(value = "View Retailer And Distributer Record of TxnId.", response = StockMgmt.class)
@@ -138,7 +134,5 @@ public class StockController {
 		GenricResponse genricResponse = stackholderServiceImpl.acceptReject(acceptRejectRequest);
 
 		return genricResponse ;
-
 	}
-
 }

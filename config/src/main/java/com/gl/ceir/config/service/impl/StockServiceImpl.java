@@ -1,10 +1,5 @@
 package com.gl.ceir.config.service.impl;
 
-import java.io.IOException;
-import java.io.Writer;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,6 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
@@ -32,13 +28,13 @@ import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.factory.ExportFileFactory;
 import com.gl.ceir.config.feign.UserFeignClient;
 import com.gl.ceir.config.model.AuditTrail;
+import com.gl.ceir.config.model.ConsignmentMgmt;
 import com.gl.ceir.config.model.ConsignmentUpdateRequest;
 import com.gl.ceir.config.model.DashboardUsersFeatureStateMap;
 import com.gl.ceir.config.model.FeatureValidateReq;
 import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
-import com.gl.ceir.config.model.ResponseCountAndQuantity;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.StateMgmtDb;
 import com.gl.ceir.config.model.StatesInterpretationDb;
@@ -50,6 +46,7 @@ import com.gl.ceir.config.model.Userrole;
 import com.gl.ceir.config.model.Usertype;
 import com.gl.ceir.config.model.WebActionDb;
 import com.gl.ceir.config.model.constants.Alerts;
+import com.gl.ceir.config.model.constants.ConsignmentStatus;
 import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.Features;
 import com.gl.ceir.config.model.constants.GenericMessageTags;
@@ -59,8 +56,6 @@ import com.gl.ceir.config.model.constants.SubFeatures;
 import com.gl.ceir.config.model.constants.WebActionDbFeature;
 import com.gl.ceir.config.model.constants.WebActionDbState;
 import com.gl.ceir.config.model.constants.WebActionDbSubFeature;
-
-import com.gl.ceir.config.model.file.StockCustomFileModel;
 import com.gl.ceir.config.repository.AuditTrailRepository;
 import com.gl.ceir.config.repository.DashboardUsersFeatureStateMapRepository;
 import com.gl.ceir.config.repository.StatesInterpretaionRepository;
@@ -75,18 +70,16 @@ import com.gl.ceir.config.request.model.RegisterationUser;
 import com.gl.ceir.config.service.businesslogic.StateMachine;
 import com.gl.ceir.config.specificationsbuilder.GenericSpecificationBuilder;
 import com.gl.ceir.config.transaction.StockTransaction;
-import com.gl.ceir.config.util.CustomMappingStrategy;
 import com.gl.ceir.config.util.HttpResponse;
 import com.gl.ceir.config.util.InterpSetter;
-import com.opencsv.CSVWriter;
-import com.opencsv.bean.StatefulBeanToCsv;
-import com.opencsv.bean.StatefulBeanToCsvBuilder;
 
 @Service
 public class StockServiceImpl {
 
 	private static final Logger logger = LogManager.getLogger(StockServiceImpl.class);
 
+	private ReentrantLock lock = new ReentrantLock();
+	
 	// This is set with @postconstruct
 	private String featureName;
 
@@ -713,6 +706,7 @@ public class StockServiceImpl {
 			Integer currentStatus = null;
 			String adminMailTag = null;
 			adminMailTag = "STOCK_PROCESS_SUCCESS_TO_CEIR_MAIL";
+			String txnId = consignmentUpdateRequest.getTxnId();
 			logger.info("enter in accept reject method..");
 			StockMgmt stockMgmt = stockManagementRepository.getByTxnId(consignmentUpdateRequest.getTxnId());
 			currentStatus = stockMgmt.getStockStatus();
@@ -737,18 +731,26 @@ public class StockServiceImpl {
 				firstName = user.getUserProfile().getFirstName();
 			}
 
+			lock.lock();
+			logger.info("lock taken by thread : " + Thread.currentThread().getName());
 			// 0 - Accept, 1 - Reject
 			if("CEIRADMIN".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())){
 				String mailTag = null;
 				String action = null;
-				String txnId = null;
 				String receiverUserType = stockMgmt.getUserType();
 
 				logger.info("enter in CEIR Admin block.........");
 
 
 				if(consignmentUpdateRequest.getAction() == 0) {
-					logger.info("enter in accept method..");
+					// Check if someone else taken the same action on consignment.
+					StockMgmt stockMgmtTemp = stockManagementRepository.getByTxnId(txnId);
+					if(StockStatus.APPROVED_BY_CEIR_ADMIN.getCode() == stockMgmt.getStockStatus()) {
+						String message = "Any other user have taken the same action on the stock [" + txnId + "]";
+						logger.info(message);
+						return new GenricResponse(10, "", message, txnId);
+					}
+					
 					action = SubFeatures.ACCEPT;
 					mailTag = "STOCK_APPROVED_BY_CEIR_ADMIN"; 
 
@@ -759,7 +761,6 @@ public class StockServiceImpl {
 
 					stockMgmt.setStockStatus(StockStatus.APPROVED_BY_CEIR_ADMIN.getCode());
 				}else {
-					logger.info("enter in  reject method..");
 					action = SubFeatures.REJECT;
 					mailTag = "STOCK_REJECT_BY_CEIR_ADMIN";
 					txnId =  stockMgmt.getTxnId();
@@ -820,7 +821,6 @@ public class StockServiceImpl {
 				String mailTag = null;
 
 				String action = null;
-				String txnId = null;
 				String receiverUserType = stockMgmt.getUserType();
 				logger.info("enter in CEIR system.......");
 
@@ -903,27 +903,10 @@ public class StockServiceImpl {
 										"Users");
 								logger.info("Notfication have been saved for CEIR Admin.");
 							}
-							//							emailUtil.saveNotification(mailTag, 
-							//									userProfile, 
-							//									consignmentUpdateRequest.getFeatureId(),
-							//									Features.STOCK,
-							//									action,
-							//									consignmentUpdateRequest.getTxnId(),
-							//									txnId,
-							//									placeholderMap,
-							//									stockMgmt.getRoleType(),
-							//									receiverUserType,
-							//									"Users");
-							//							logger.info("Notfication have been saved for user.");
 						}
 					}
 
 					logger.debug(consignmentUpdateRequest);
-					/*
-					 * addInAuditTrail(Long.valueOf(consignmentUpdateRequest.getUserId()),
-					 * consignmentUpdateRequest.getTxnId(), action,
-					 * consignmentUpdateRequest.getRoleType());
-					 */
 				}
 
 			}else {
@@ -942,6 +925,11 @@ public class StockServiceImpl {
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}finally {
+			if(lock.isLocked()) {
+				logger.info("lock released by thread : " + Thread.currentThread().getName());
+				lock.unlock();
+			}
 		}
 	}
 

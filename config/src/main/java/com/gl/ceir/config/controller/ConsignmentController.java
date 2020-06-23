@@ -160,6 +160,5 @@ public class ConsignmentController {
 		GenricResponse genricResponse = consignmentServiceImpl.updateConsignmentStatus(consignmentUpdateRequest);
 
 		return genricResponse ;
-
 	}
 }

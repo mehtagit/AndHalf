@@ -12,6 +12,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.locks.ReentrantLock;
 
 import javax.annotation.PostConstruct;
 
@@ -90,6 +91,8 @@ public class ConsignmentServiceImpl {
 
 	private final String CEIRSYSTEM = "CEIRSYSTEM";
 
+	private ReentrantLock lock = new ReentrantLock();
+
 	// This is set with @postconstruct
 	private String featureName;
 
@@ -152,7 +155,7 @@ public class ConsignmentServiceImpl {
 
 	@Autowired
 	AlertServiceImpl alertServiceImpl;
-	
+
 	public GenricResponse registerConsignment(ConsignmentMgmt consignmentFileRequest) {
 
 		try {
@@ -287,15 +290,6 @@ public class ConsignmentServiceImpl {
 				setInterp(consignmentMgmt2);
 			}
 
-
-			/*
-			 * GenricResponse response = userFeignClient.nameById(3); Object
-			 * objectResponse=response.getData(); Gson gson= new Gson(); String apiResponse
-			 * = gson.toJson(objectResponse); GenericResponseObject genericResponseObject =
-			 * gson.fromJson(apiResponse, GenericResponseObject.class);
-			 * logger.info("name::::::::::"+genericResponseObject.getName());
-			 */
-
 			auditTrailRepository.save(new AuditTrail(consignmentMgmt.getUserId(), consignmentMgmt.getUserName(), 
 					Long.valueOf(consignmentMgmt.getUserTypeId()), consignmentMgmt.getUserType(), Long.valueOf(consignmentMgmt.getFeatureId()),
 					Features.CONSIGNMENT, SubFeatures.VIEW, "", "NA",consignmentMgmt.getRoleType()));
@@ -378,7 +372,8 @@ public class ConsignmentServiceImpl {
 				consignmentInfo.setUserTypeId(consignmentFileRequest.getUserTypeId());
 				consignmentInfo.setFeatureId(consignmentFileRequest.getFeatureId());
 				consignmentInfo.setRoleType(consignmentFileRequest.getRoleType());
-				// pending tac if available in pending_tac_approval_db.
+				
+				// Pending tac if available in pending_tac_approval_db.
 				FilterRequest filterRequest = new FilterRequest().setTxnId(consignmentFileRequest.getTxnId());
 				if(pendingTacApprovedImpl.findByTxnId(filterRequest).getErrorCode() == 0) {
 					logger.info("Tac related to the consignment with txn_id [" + consignmentFileRequest.getTxnId() + "] found in pending_tac_approval_db");
@@ -395,7 +390,6 @@ public class ConsignmentServiceImpl {
 
 				WebActionDb webActionDb = new WebActionDb();
 				webActionDb.setFeature(WebActionDbFeature.CONSIGNMENT.getName());
-				// webActionDb.setFeature(stakeholderfeatureServiceImpl.getFeatureNameById(3L));
 				webActionDb.setSubFeature(WebActionDbSubFeature.UPDATE.getName());
 				webActionDb.setState(WebActionDbState.INIT.getCode());
 				webActionDb.setTxnId(consignmentFileRequest.getTxnId());
@@ -470,6 +464,10 @@ public class ConsignmentServiceImpl {
 			webActionDb.setTxnId(consignmentUpdateRequest.getTxnId());
 
 			if(consignmentTransaction.executeDeleteConsignment(consignmentMgmt, webActionDb)) {
+				if("CEIRADMIN".equalsIgnoreCase(consignmentUpdateRequest.getUserType())) {
+					// Delete Tac if available in pending_tac_approval_db.
+					cleanFromPendingTacApprovalDb(consignmentMgmt);
+				}
 
 				if(consignmentMgmt.getConsignmentStatus() == 9) {
 					Generic_Response_Notification generic_Response_Notification = userFeignClient.ceirInfoByUserTypeId(8);
@@ -499,11 +497,10 @@ public class ConsignmentServiceImpl {
 					}
 				}
 
-
 				placeholderMap.put("<First name>", userProfile.getFirstName());
 				placeholderMap.put("<Txn id>", consignmentMgmt.getTxnId());
 
-				logger.info("consignmentMgmt.getTxnId()::"+consignmentMgmt.getTxnId()+"-------> "+userProfile.getFirstName());
+				logger.info("consignmentMgmt.getTxnId() :: " + consignmentMgmt.getTxnId() + "-------> " + userProfile.getFirstName());
 				emailUtil.saveNotification("Consignment_Delete_Email_Message", 
 						userProfile, 
 						consignmentUpdateRequest.getFeatureId(), 
@@ -573,8 +570,6 @@ public class ConsignmentServiceImpl {
 				return new GenricResponse(1, "Nothing to update for request.",payload_txnID);
 
 			}
-
-
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 
@@ -584,11 +579,13 @@ public class ConsignmentServiceImpl {
 			alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, consignmentUpdateRequest.getUserId().intValue(), bodyPlaceHolderMap);
 
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}finally {
+			if(lock.isLocked()) {
+				logger.info("lock released by thread : " + Thread.currentThread().getName());
+				lock.unlock();
+			}
 		}
-
 	}
-
-
 
 	public FileDetails getFilteredConsignmentInFileV2(FilterRequest filterRequest, String source) {
 		String fileName = null;
@@ -692,8 +689,6 @@ public class ConsignmentServiceImpl {
 
 	private GenericSpecificationBuilder<ConsignmentMgmt> buildSpecification(FilterRequest consignmentMgmt, List<StateMgmtDb> statusList,String source){
 		GenericSpecificationBuilder<ConsignmentMgmt> cmsb = new GenericSpecificationBuilder<>(propertiesReader.dialect);
-		String consignmentStatusLiteral = "consignmentStatus";
-
 		if("IMPORTER".equalsIgnoreCase(consignmentMgmt.getUserType()) 
 				&& Objects.nonNull(consignmentMgmt.getUserId())) {
 
@@ -822,18 +817,30 @@ public class ConsignmentServiceImpl {
 	}
 
 	public GenricResponse ceirAdminStatus(ConsignmentMgmt consignmentMgmt, ConsignmentUpdateRequest consignmentUpdateRequest, UserProfile userProfile,UserProfile ceirUserProfile,int action) {
-		String payload_txnID = consignmentUpdateRequest.getTxnId();
+		String payloadTxnId = consignmentUpdateRequest.getTxnId();
 		if(!StateMachine.isConsignmentStatetransitionAllowedWithAction("CEIRADMIN", consignmentMgmt.getConsignmentStatus(), 0)) {
-			logger.info("state transition is not allowed." +payload_txnID);
-			return new GenricResponse(3, "state transition is not allowed.",payload_txnID);
+			logger.info("state transition is not allowed." + payloadTxnId);
+			return new GenricResponse(3, "state transition is not allowed.", payloadTxnId);
 		}
+
 		WebActionDb webActionDb = null;
 		Integer nextStatus = null;
 		GenricResponse_Class response = null;
 		Map<String, String> placeholderMap = new HashMap<>();
 		Port port = new Port();
 
+		lock.lock();
+		logger.info("lock taken by thread : " + Thread.currentThread().getName());
 		if(action == 0) {
+			// Check if someone else taken the same action on consignment.
+			ConsignmentMgmt consignmentMgmtTemp = consignmentRepository.getByTxnId(consignmentMgmt.getTxnId());
+			if(ConsignmentStatus.PENDING_CLEARANCE_FROM_DRT.getCode() == consignmentMgmtTemp.getConsignmentStatus()
+					|| ConsignmentStatus.PENDING_APPROVAL_FROM_CUSTOMS.getCode() == consignmentMgmtTemp.getConsignmentStatus() ) {
+				String message = "Any other user have taken the same action on the consignment [" + payloadTxnId + "]";
+				logger.info(message);
+				return new GenricResponse(10, "", message, payloadTxnId);
+			}
+
 			// Checking DRT enable/disable.
 			response = userFeignClient.usertypeStatus(21);
 			logger.info("FEIGN : response for validatePeriod " + response);
@@ -848,6 +855,14 @@ public class ConsignmentServiceImpl {
 
 			consignmentMgmt.setConsignmentStatus(nextStatus);
 		}else {
+			// Check if someone else taken the same action on consignment.
+			ConsignmentMgmt consignmentMgmtTemp = consignmentRepository.getByTxnId(consignmentMgmt.getTxnId());
+			if(ConsignmentStatus.REJECTED_BY_CEIR_AUTHORITY.getCode() == consignmentMgmtTemp.getConsignmentStatus()) {
+				String message = "Any other user have taken the same action on the consignment [" + payloadTxnId + "]";
+				logger.info(message);
+				return new GenricResponse(10, "", message, payloadTxnId);
+			}
+
 			nextStatus = ConsignmentStatus.REJECTED_BY_CEIR_AUTHORITY.getCode();
 			consignmentMgmt.setConsignmentStatus(nextStatus);
 			consignmentMgmt.setRemarks(consignmentUpdateRequest.getRemarks());
@@ -863,7 +878,7 @@ public class ConsignmentServiceImpl {
 		consignmentMgmt.setRoleType(consignmentUpdateRequest.getRoleType());
 
 		if(consignmentTransaction.executeUpdateStatus(consignmentUpdateRequest, consignmentMgmt, webActionDb)) {
-			ConsignmentMgmt current_consignment_response = consignmentRepository.getByTxnId(payload_txnID);
+			ConsignmentMgmt current_consignment_response = consignmentRepository.getByTxnId(payloadTxnId);
 
 			if(action == 0) {
 				logger.info("Notification sent to Importer::: with current_status : "+current_consignment_response.getConsignmentStatus());
@@ -905,7 +920,7 @@ public class ConsignmentServiceImpl {
 									consignmentUpdateRequest.getFeatureId(),
 									Features.CONSIGNMENT, 
 									SubFeatures.ACCEPT,
-									payload_txnID,
+									payloadTxnId,
 									current_consignment_response.getTxnId(),
 									placeholderMap, 
 									"DRT", 
@@ -939,7 +954,7 @@ public class ConsignmentServiceImpl {
 									consignmentUpdateRequest.getFeatureId(),
 									Features.CONSIGNMENT, 
 									SubFeatures.ACCEPT,
-									payload_txnID,
+									payloadTxnId,
 									current_consignment_response.getTxnId(),
 									placeholderMap, 
 									null, 
@@ -960,59 +975,72 @@ public class ConsignmentServiceImpl {
 						consignmentUpdateRequest.getFeatureId(),
 						Features.CONSIGNMENT, 
 						SubFeatures.REJECT,
-						payload_txnID,
+						payloadTxnId,
 						current_consignment_response.getTxnId(),
 						placeholderMap, 
 						null, 
 						"Importer",
 						ReferTable.USERS);
+
+				// Delete Tac if available in pending_tac_approval_db.
+				cleanFromPendingTacApprovalDb(consignmentMgmt);
 			}
 
 
-			logger.info("Consignment status have Update SuccessFully." +payload_txnID);
-			return new GenricResponse(0, "Consignment status have Update SuccessFully.",payload_txnID);
+			logger.info("Consignment status have Update SuccessFully." + payloadTxnId);
+			return new GenricResponse(0, "Consignment status have Update SuccessFully.", payloadTxnId);
 		}else {
-			logger.info("Consignment status Update have failed." +payload_txnID);
-			return new GenricResponse(2, "Consignment status Update have failed.",payload_txnID);
+			logger.info("Consignment status Update have failed." + payloadTxnId);
+			return new GenricResponse(2, "Consignment status Update have failed.", payloadTxnId);
 		}
 	}
 
-	public GenricResponse ceirCustomStatus(ConsignmentMgmt consignmentMgmt,ConsignmentUpdateRequest consignmentUpdateRequest,UserProfile userProfile,int action) {
+	public GenricResponse ceirCustomStatus(ConsignmentMgmt consignmentMgmt, ConsignmentUpdateRequest consignmentUpdateRequest, UserProfile userProfile,int action) {
 		String payloadTxnId = consignmentUpdateRequest.getTxnId();
 		if(!StateMachine.isConsignmentStatetransitionAllowed("CUSTOM", consignmentMgmt.getConsignmentStatus())) {
 			logger.info("state transition is not allowed." + payloadTxnId);
 			return new GenricResponse(3, "state transition is not allowed.", payloadTxnId);
 		}
-		
+
 		Map<String, String> placeholderMap = new HashMap<>();
-		
+
 		WebActionDb webActionDb = new WebActionDb();
 		webActionDb.setFeature(WebActionDbFeature.CONSIGNMENT.getName());
 		webActionDb.setState(WebActionDbState.INIT.getCode());
 		webActionDb.setTxnId(payloadTxnId);
+
+		lock.lock();
+		logger.info("lock taken by thread : " + Thread.currentThread().getName());
 		
 		if(action == 0) {
-			
+			// Check if someone else taken the same action on consignment.
+			ConsignmentMgmt consignmentMgmtTemp = consignmentRepository.getByTxnId(consignmentMgmt.getTxnId());
+			if(ConsignmentStatus.APPROVED.getCode() == consignmentMgmtTemp.getConsignmentStatus()) {
+				String message = "Any other user have taken the same action on the consignment [" + payloadTxnId + "]";
+				logger.info(message);
+				return new GenricResponse(10, "", message, payloadTxnId);
+			}
+
 			consignmentMgmt.setConsignmentStatus(ConsignmentStatus.APPROVED.getCode());				
 			consignmentMgmt.setTaxPaidStatus(TaxStatus.TAX_PAID.getCode());
 
 			// Delete Tac if available in pending_tac_approval_db.
-			FilterRequest filterRequest = new FilterRequest().setTxnId(consignmentMgmt.getTxnId());
-			if(pendingTacApprovedImpl.findByTxnId(filterRequest).getErrorCode() == 0) {
-				logger.info("Tac related to the consignment with txn_id [" + consignmentMgmt.getTxnId() + "] found in pending_tac_approval_db");
-				pendingTacApprovedImpl.deletePendingApproval(filterRequest);
-				consignmentMgmt.setPendingTacApprovedByCustom("Y");
-			}else {
-				logger.info("No tac for the consignment with txn_id [" + consignmentMgmt.getTxnId() + "] is pending.");
-				consignmentMgmt.setPendingTacApprovedByCustom("N");
-			}
-			
+			cleanFromPendingTacApprovalDb(consignmentMgmt);
+
 			webActionDb.setSubFeature(WebActionDbSubFeature.APPROVE.getName());
 
 		}else {
+			// Check if someone else taken the same action on consignment.
+			ConsignmentMgmt consignmentMgmtTemp = consignmentRepository.getByTxnId(consignmentMgmt.getTxnId());
+			if(ConsignmentStatus.REJECTED_BY_CUSTOMS.getCode() == consignmentMgmtTemp.getConsignmentStatus()) {
+				String message = "Any other user have taken the same action on the consignment [" + payloadTxnId + "]";
+				logger.info(message);
+				return new GenricResponse(10, "", message, payloadTxnId);
+			}
+
 			consignmentMgmt.setConsignmentStatus(ConsignmentStatus.REJECTED_BY_CUSTOMS.getCode());
 			consignmentMgmt.setRemarks(consignmentUpdateRequest.getRemarks());	
-			
+
 			webActionDb.setSubFeature(WebActionDbSubFeature.REJECT.getName());
 		}
 		consignmentMgmt.setCustomID(consignmentUpdateRequest.getUserId());
@@ -1021,7 +1049,7 @@ public class ConsignmentServiceImpl {
 
 		if(consignmentTransaction.executeUpdateStatus(consignmentUpdateRequest, consignmentMgmt, webActionDb)) {
 			ConsignmentMgmt current_consignment_response = consignmentRepository.getByTxnId(payloadTxnId);
-			
+
 			if(action == 0) {
 				if(ConsignmentStatus.APPROVED.getCode() == current_consignment_response.getConsignmentStatus()) {
 					logger.info("Notification sent to Importer:::with current_status : "+current_consignment_response.getConsignmentStatus());
@@ -1076,7 +1104,6 @@ public class ConsignmentServiceImpl {
 				}
 			}
 			else {
-
 				logger.info("Consignment_Rejected_Customwith current_status :  " + current_consignment_response.getConsignmentStatus());
 
 				placeholderMap.put("<First name>", userProfile.getFirstName());
@@ -1093,6 +1120,9 @@ public class ConsignmentServiceImpl {
 						null,
 						"Importer",
 						ReferTable.USERS);
+
+				// Delete Tac if available in pending_tac_approval_db.
+				cleanFromPendingTacApprovalDb(consignmentMgmt);
 			}
 
 			logger.info("Consignment status have Update SuccessFully." +payloadTxnId);
@@ -1104,30 +1134,51 @@ public class ConsignmentServiceImpl {
 	}
 
 	public GenricResponse ceirSystemStatus(ConsignmentMgmt consignmentMgmt, UserProfile userProfile, ConsignmentUpdateRequest consignmentUpdateRequest, UserProfile ceirUserProfile,int consignmentStatus,int action) {
-		String payload_txnID = consignmentUpdateRequest.getTxnId();
+		String payloadTxnId = consignmentUpdateRequest.getTxnId();
 		List<RawMail> rawMails = new LinkedList<>();
 
 		if(!StateMachine.isConsignmentStatetransitionAllowed(CEIRSYSTEM, consignmentMgmt.getConsignmentStatus())) {
-			logger.info("state transition is not allowed." +payload_txnID);
-			return new GenricResponse(3, "state transition is not allowed.", payload_txnID);
+			logger.info("state transition is not allowed." + payloadTxnId);
+			return new GenricResponse(3, "state transition is not allowed.", payloadTxnId);
 		}
-		
+
 		Map<String, String> placeholderMap = new HashMap<>();
+		
+		lock.lock();
+		logger.info("lock taken by thread : " + Thread.currentThread().getName());
+		
 		// 0 - approve 1-Reject
 		if(action == 0) {
+			// Check if someone else taken the same action on consignment.
+			ConsignmentMgmt consignmentMgmtTemp = consignmentRepository.getByTxnId(consignmentMgmt.getTxnId());
+			if(ConsignmentStatus.PROCESSING.getCode() == consignmentMgmtTemp.getConsignmentStatus()
+					|| ConsignmentStatus.PENDING_APPROVAL_FROM_CEIR_AUTHORITY.getCode() == consignmentMgmtTemp.getConsignmentStatus()) {
+				String message = "Any other user have taken the same action on the consignment [" + payloadTxnId + "]";
+				logger.info(message);
+				return new GenricResponse(10, "", message, payloadTxnId);
+			}
+
 			if(consignmentStatus == ConsignmentStatus.INIT.getCode()) {
 				consignmentMgmt.setConsignmentStatus(ConsignmentStatus.PROCESSING.getCode());
 			}else {
 				consignmentMgmt.setConsignmentStatus(ConsignmentStatus.PENDING_APPROVAL_FROM_CEIR_AUTHORITY.getCode());
 			}
 		}else {
+			// Check if someone else taken the same action on consignment.
+			ConsignmentMgmt consignmentMgmtTemp = consignmentRepository.getByTxnId(consignmentMgmt.getTxnId());
+			if(ConsignmentStatus.REJECTED_BY_SYSTEM.getCode() == consignmentMgmtTemp.getConsignmentStatus()) {
+				String message = "Any other user have taken the same action on the consignment [" + payloadTxnId + "]";
+				logger.info(message);
+				return new GenricResponse(10, "", message, payloadTxnId);
+			}
+
 			consignmentMgmt.setConsignmentStatus(ConsignmentStatus.REJECTED_BY_SYSTEM.getCode());
 		}
 		consignmentMgmt.setFeatureId(consignmentUpdateRequest.getFeatureId());
 		consignmentMgmt.setRoleType(consignmentUpdateRequest.getRoleType());
 
 		if(consignmentTransaction.executeUpdateStatusConsignmentForCeirSystem(consignmentMgmt, null)) {
-			ConsignmentMgmt current_consignment_response = consignmentRepository.getByTxnId(payload_txnID);
+			ConsignmentMgmt current_consignment_response = consignmentRepository.getByTxnId(payloadTxnId);
 			if(action == 0) {
 				logger.info("CONSIGNMENT_PROCESS_SUCCESS_TO_IMPORTER_MAIL :  "+current_consignment_response.getConsignmentStatus());
 
@@ -1204,11 +1255,11 @@ public class ConsignmentServiceImpl {
 					emailUtil.saveNotification(rawMails);
 				}
 			}
-			logger.info("Consignment status have Update SuccessFully." +payload_txnID);
-			return new GenricResponse(0, "Consignment status have Update SuccessFully.",payload_txnID);
+			logger.info("Consignment status have Update SuccessFully." + payloadTxnId);
+			return new GenricResponse(0, "Consignment status have Update SuccessFully.", payloadTxnId);
 		}else {
-			logger.info("Consignment status Update have failed." +payload_txnID);
-			return new GenricResponse(2, "Consignment status Update have failed.",payload_txnID);
+			logger.info("Consignment status Update have failed." + payloadTxnId);
+			return new GenricResponse(2, "Consignment status Update have failed.", payloadTxnId);
 		}
 	}
 
@@ -1223,7 +1274,19 @@ public class ConsignmentServiceImpl {
 		GenricResponse_Class response = null;
 		Map<String, String> placeholderMap = new HashMap<>();
 
+		lock.lock();
+		logger.info("lock taken by thread : " + Thread.currentThread().getName());
+		
 		if (action == 0) {
+			// Check if someone else taken the same action on consignment.
+			ConsignmentMgmt consignmentMgmtTemp = consignmentRepository.getByTxnId(consignmentMgmt.getTxnId());
+			if(ConsignmentStatus.PENDING_APPROVAL_FROM_CUSTOMS.getCode() == consignmentMgmtTemp.getConsignmentStatus()
+					|| ConsignmentStatus.APPROVED.getCode() == consignmentMgmtTemp.getConsignmentStatus()) {
+				String message = "Any other user have taken the same action on the consignment [" + payloadTxnId + "]";
+				logger.info(message);
+				return new GenricResponse(10, "", message, payloadTxnId);
+			}
+
 			response = userFeignClient.usertypeStatus(7);
 			logger.info("FEIGN : response for validatePeriod " + response);
 			if(response.getErrorCode() == 200) {
@@ -1235,16 +1298,22 @@ public class ConsignmentServiceImpl {
 			consignmentMgmt.setConsignmentStatus(nextStatus);	
 			consignmentMgmt.setDrtID(consignmentUpdateRequest.getUserId());
 		}else {
+			// Check if someone else taken the same action on consignment.
+			ConsignmentMgmt consignmentMgmtTemp = consignmentRepository.getByTxnId(consignmentMgmt.getTxnId());
+			if(ConsignmentStatus.REJECTED_BY_DRT.getCode() == consignmentMgmtTemp.getConsignmentStatus()) {
+				String message = "Any other user have taken the same action on the consignment [" + payloadTxnId + "]";
+				logger.info(message);
+				return new GenricResponse(10, "", message, payloadTxnId);
+			}
+			
 			// Check if this feature is supported in current period.
 			response = userFeignClient.usertypeStatus(21);
 			logger.info("FEIGN : response for validatePeriod " + response);
 			if(response.getErrorCode() == 200) {
 				nextStatus = ConsignmentStatus.REJECTED_BY_DRT.getCode();
-
 			}else {
 				logger.info("Operation not allowed." + consignmentUpdateRequest.getTxnId());
 				return new GenricResponse(5, "Operation not allowed.", consignmentUpdateRequest.getTxnId());
-
 			}
 
 			consignmentMgmt.setConsignmentStatus(nextStatus);
@@ -1263,7 +1332,7 @@ public class ConsignmentServiceImpl {
 
 		if(consignmentTransaction.executeUpdateStatus(consignmentUpdateRequest, consignmentMgmt, webActionDb)) {
 			ConsignmentMgmt current_consignment_response = consignmentRepository.getByTxnId(payloadTxnId);
-			
+
 			if(action == 0) {
 				logger.info("Consignment_Approved_DRTImporter_Email_Message :  "+current_consignment_response.getConsignmentStatus());
 				if(ConsignmentStatus.APPROVED.getCode() == current_consignment_response.getConsignmentStatus())	{
@@ -1298,8 +1367,11 @@ public class ConsignmentServiceImpl {
 						null,
 						"Importer",
 						ReferTable.USERS);
+
+				// Delete Tac if available in pending_tac_approval_db.
+				cleanFromPendingTacApprovalDb(consignmentMgmt);
 			}
-			
+
 			logger.info("Consignment status have Update SuccessFully." + payloadTxnId);
 			return new GenricResponse(0, "Consignment status have Update SuccessFully.", payloadTxnId);
 		}else {
@@ -1344,6 +1416,22 @@ public class ConsignmentServiceImpl {
 		if(Objects.nonNull(filterRequest.getFilteredUserType())) {
 			return Boolean.FALSE;
 		}
+		return Boolean.TRUE;
+	}
+
+	public boolean cleanFromPendingTacApprovalDb(ConsignmentMgmt consignmentMgmt) {
+		// Delete Tac if available in pending_tac_approval_db.
+		FilterRequest filterRequest = new FilterRequest().setTxnId(consignmentMgmt.getTxnId());
+		filterRequest.setUserId(consignmentMgmt.getUserId());
+		if(pendingTacApprovedImpl.findByTxnId(filterRequest).getErrorCode() == 0) {
+			logger.info("Tac related to the consignment with txn_id [" + consignmentMgmt.getTxnId() + "] found in pending_tac_approval_db");
+			pendingTacApprovedImpl.deletePendingApproval(filterRequest);
+			consignmentMgmt.setPendingTacApprovedByCustom("Y");
+		}else {
+			logger.info("No tac for the consignment with txn_id [" + consignmentMgmt.getTxnId() + "] is pending.");
+			consignmentMgmt.setPendingTacApprovedByCustom("N");
+		}
+
 		return Boolean.TRUE;
 	}
 

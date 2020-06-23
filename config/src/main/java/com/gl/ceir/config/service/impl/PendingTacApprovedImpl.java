@@ -23,19 +23,15 @@ import org.springframework.transaction.annotation.Transactional;
 import com.gl.ceir.config.ConfigTags;
 import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
-import com.gl.ceir.config.model.AuditTrail;
 import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.PendingTacApprovedDb;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.SystemConfigurationDb;
-import com.gl.ceir.config.model.User;
 import com.gl.ceir.config.model.constants.Datatype;
-import com.gl.ceir.config.model.constants.Features;
 import com.gl.ceir.config.model.constants.GenericMessageTags;
 import com.gl.ceir.config.model.constants.SearchOperation;
-import com.gl.ceir.config.model.constants.SubFeatures;
 import com.gl.ceir.config.model.file.PendingTacApprovedFileModel;
 import com.gl.ceir.config.repository.AuditTrailRepository;
 import com.gl.ceir.config.repository.PendingTacApprovedRepository;
@@ -132,7 +128,6 @@ public class PendingTacApprovedImpl {
 	@Transactional
 	public boolean updatePendingApproval(FilterRequest filterRequest){
 		try {
-
 			List<PendingTacApprovedDb> pendingTacApproveDbs = pendingTacApprovedRepository.getByTxnId(filterRequest.getTxnId());
 
 			for(PendingTacApprovedDb pendingTacApproveDb : pendingTacApproveDbs) {
@@ -148,7 +143,6 @@ public class PendingTacApprovedImpl {
 		}
 	}
 
-
 	@Transactional
 	public GenricResponse deletePendingApproval(FilterRequest filterRequest){
 		try {
@@ -158,13 +152,15 @@ public class PendingTacApprovedImpl {
 			}
 			
 			if(Objects.nonNull(filterRequest.getTxnId())) {
-				//pendingTacApprovedRepository.save(pendingTacApproveDb);
 				pendingTacApprovedRepository.deleteByTxnId(filterRequest.getTxnId());
+				logger.info("Delete of tac is successful for txnId[" + filterRequest.getTxnId() + "] by only txnId.");
 				return new GenricResponse(0, "Deleted Successully.", "", "");
 			}else if(Objects.nonNull(filterRequest.getTac()) && Objects.nonNull(filterRequest.getImporterId())){
 				pendingTacApprovedRepository.deleteByTacAndUserId(filterRequest.getTac(), filterRequest.getImporterId());
+				logger.info("Delete of tac is successful for txnId[" + filterRequest.getTxnId() + "] by tac and importerid.");
 				return new GenricResponse(0, "Deleted Successully.", "", "");
 			}else {
+				logger.info("No Deletion of tac is allowed for invalid request [" + filterRequest + "]");
 				return new GenricResponse(3, "No Deletion Allowed.", "", "");
 			}
 
@@ -180,10 +176,6 @@ public class PendingTacApprovedImpl {
 			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
 
 			Page<PendingTacApprovedDb> page = pendingTacApprovedRepository.findAll( buildSpecification(filterRequest).build(), pageable );
-
-			/*
-			 * for(AuditTrail auditTrail : page.getContent()) { setInterp(auditTrail); }
-			 */
 
 			return page;
 
