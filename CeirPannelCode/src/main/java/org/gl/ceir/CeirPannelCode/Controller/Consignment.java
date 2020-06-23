@@ -480,6 +480,7 @@ public String exportToExcel(@RequestParam(name="consignmentStartDate",required =
 	int file=1;
 	String userType=(String) session.getAttribute("usertype");
 	Integer usertypeId=(int) session.getAttribute("usertypeId");
+	String userName=session.getAttribute("username").toString();
 	FileExportResponse fileExportResponse;
 	FilterRequest filterRequest= new FilterRequest();
 	filterRequest.setStartDate(consignmentStartDate);
@@ -492,6 +493,8 @@ public String exportToExcel(@RequestParam(name="consignmentStartDate",required =
 	filterRequest.setUserTypeId(usertypeId);
 	filterRequest.setFeatureId(3);
 	filterRequest.setRoleType(userType);
+	filterRequest.setUsername(userName);
+	filterRequest.setUserName(userName);
 	log.info(" request passed to the exportTo Excel Api =="+filterRequest+" *********** pageSize"+pageSize+"  pageNo  "+pageNo);
 	Object	response= feignCleintImplementation.consignmentFilter(filterRequest, pageNo, pageSize, file,source);
 

@@ -130,7 +130,7 @@
 
 		function pageRendering(){
 			$.ajax({
-				url: 'dbTable/pageRendering',
+				url: 'dbTable/pageRendering?tableName='+tableName,
 				type: 'POST',
 				dataType: "json",
 				success: function(data){
@@ -189,6 +189,7 @@
 					});
 				}
 			}); 
+			//alert("tableName-->" +tableName);
 			
 }
 

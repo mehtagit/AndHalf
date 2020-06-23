@@ -257,7 +257,7 @@ var contextpath = "${context}";
                                         </div>
 
                                         
-                                        <div class="file-field col s12 m6">
+                                        <div class="file-field col s12 m6" id="removestar">
                                             <h6 class="upload-file-label" id="endUserFileLabel"><spring:message code="modal.UploadSupporting" />
                                             </h6>
                                             <div class="btn">
@@ -269,8 +269,8 @@ var contextpath = "${context}";
 						 name="files[]" id="filer_input"
                                                     multiple="multiple" />
                                             </div>
-                                            <div class="file-path-wrapper">
-                                                <input class="file-path validate" type="text"
+                                            <div class="file-path-wrapper" >
+                                                <input class="file-path validate" type="text" id="filetextField"
                                                     placeholder="<spring:message code="input.selectfile" />">
                                             </div>
                                         </div>

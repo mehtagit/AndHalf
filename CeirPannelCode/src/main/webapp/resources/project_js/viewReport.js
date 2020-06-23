@@ -32,7 +32,7 @@
 		//var TagId = sessionStorage.getItem("tagId");
 		
 		var reportnameId = sessionStorage.getItem("reportname");
-		
+		var reportNameInterp = sessionStorage.getItem("reportInterp");
 		
 		
 		//**************************************************filter table**********************************************
@@ -117,7 +117,7 @@
 		
 		function pageRendering(){
 			$.ajax({
-				url: 'dbReportTable/pageRendering',
+				url: 'dbReportTable/pageRendering?reportName='+reportNameInterp,
 				type: 'POST',
 				dataType: "json",
 				success: function(data){
@@ -176,6 +176,7 @@
 					});
 				}
 			}); 
+			//alert("reportNameInterp--->" +reportNameInterp)
 			
 }
 

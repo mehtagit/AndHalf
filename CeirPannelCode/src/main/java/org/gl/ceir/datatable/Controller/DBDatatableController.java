@@ -148,15 +148,13 @@ public class DBDatatableController {
 
 
 	@PostMapping("dbTable/pageRendering")
-	public ResponseEntity<?> pageRendering(String displayName, HttpSession session) {
+	public ResponseEntity<?> pageRendering(String displayName, HttpSession session,@RequestParam("tableName") String tableName) {
 
 		String userType = (String) session.getAttribute("usertype");
 		String userStatus = (String) session.getAttribute("userStatus");
-
+		
 		InputFields inputFields = new InputFields();
 		InputFields dateRelatedFields;
-
-		pageElement.setPageTitle(Translator.toLocale("sidebar.DB_Tables"));
 
 		List<Button> buttonList = new ArrayList<>();
 		List<InputFields> dropdownList = new ArrayList<>();
@@ -204,7 +202,8 @@ public class DBDatatableController {
 			dateRelatedFields.setClassName(dateParam[i]);
 			inputTypeDateList.add(dateRelatedFields);
 		}
-
+		
+		pageElement.setPageTitle(Translator.toLocale("sidebar.DB_Tables")+" - "+tableName);
 		pageElement.setInputTypeDateList(inputTypeDateList);
 		pageElement.setUserStatus(userStatus);
 		return new ResponseEntity<>(pageElement, HttpStatus.OK);

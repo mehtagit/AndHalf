@@ -152,7 +152,7 @@ style="display: none;">
 
 </select>
 </div>
-<div class="file-field col s12 m6">
+<div class="file-field col s12 m6" id="removestar">
 <h6 id="supportingdocumentFile" style="color: #000;"> <spring:message code="input.supportingdocument" /></h6>
 <div class="btn">
 <span><spring:message code="input.selectfile" /></span>
@@ -161,7 +161,7 @@ oninput="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" 
 oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');" >
 </div>
 <div class="file-path-wrapper">
-<input class="file-path validate" type="text"  
+<input class="file-path validate" type="text"  id="filetextField"
 placeholder="<spring:message code="grievanceFileMessage" />">
 <div>
 <p id="myFiles"></p>
@@ -367,7 +367,7 @@ $.i18n().load( {
 				
 				if($("body").attr("data-roleType")=="Customer Care"){
 					raisedBy = "Customer Care"; 
-				    name = sessionStorage.getItem("userName");
+				    name = sessionStorage.getItem("primaryRole");
 				    userId = sessionStorage.getItem("userId");
 				}else{
 					raisedBy = "Self";
@@ -756,12 +756,19 @@ $.i18n().load( {
 				$(".add_field_button").attr("disabled", false);
 			}
 			function enableSelectFile() {
-				$("#docTypeFile1").attr("disabled", false);
-				$("#docTypeFile1").attr("required", true);
-
-				$("#supportingdocumentFile").append(
-						'<span class="star">*</span>');
+				if($('#docTypetag1').val() != ''){
+					$("#docTypeFile1").attr("disabled", false);
+					$("#docTypeFile1").attr("required", true);
+					$("#removestar").find(".star").remove();
+					$("#supportingdocumentFile").append('<span class="star">*</span>');
+				}else{
+					$("#docTypeFile1").attr("required", false);
+					$('#filetextField').val('');
+					$("#removestar").find(".star").remove();
+				}
 			}
+			
+		
 
 			$("input[type=file]").keypress(function(ev) {
 				return false;
