@@ -3283,4 +3283,10 @@ div#error_Modal_reg {
 .modal-content-style {
 	margin-top: 5px;
 	overflow-y: scroll;
+
+
+}
+
+.top-space {
+    margin-top: 0;
 }

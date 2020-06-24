@@ -809,14 +809,14 @@ select {
 																	code="input.Remark" /></label>
 														</div>
 													</div>
-													<p> <spring:message code="input.requiredfields" />
-												<span class="star">*</span></p>
 													
 													</div>
 											
 
 
-											<div class="input-field col s12 center">
+											<div class="input-field col s12 center top-space">
+											<div><p class="top-space"> <spring:message code="input.requiredfields" />
+                                                    <span class="star">*</span></p></div>
 												<button class="btn" type="submit"
 													id="indivisualStolenButton">
 													<spring:message code="button.submit" />

@@ -439,6 +439,7 @@ catch (Exception e) {
 	{
 		log.info("stockStartDate=="+stockStartDate+ " stockEndDate ="+stockEndDate+" stockTxnId="+stockTxnId+"StockStatus="+stockTxnId+"userType="+userType+"userTypeId="+userTypeId);
 		int userId= (int) session.getAttribute("userid"); 
+		String userName=session.getAttribute("username").toString();
 		int file=1;
 		FileExportResponse fileExportResponse;
 		FilterRequest filterRequest= new FilterRequest();
@@ -451,6 +452,8 @@ catch (Exception e) {
 		filterRequest.setUserType(userType);
 		filterRequest.setUserTypeId(userTypeId);
 		filterRequest.setFeatureId(4);
+		filterRequest.setUsername(userName);
+		filterRequest.setUserName(userName);
 		log.info("source=="+source);;
 		
 		log.info(" request passed to the stock exportTo Excel Api =="+filterRequest+" *********** pageSize"+pageSize+"  pageNo  "+pageNo);
