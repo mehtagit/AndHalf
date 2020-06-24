@@ -86,9 +86,6 @@ public class StateMgmtServiceImpl {
 		}
 	}
 
-	/*
-	 * 
-	 */
 	public List<TableActions> getTableActionsByFeatureIdAndUserTypeId(Integer featureId, Integer userTypeId) {
 		try {
 			

@@ -79,7 +79,7 @@ public class StockServiceImpl {
 	private static final Logger logger = LogManager.getLogger(StockServiceImpl.class);
 
 	private ReentrantLock lock = new ReentrantLock();
-	
+
 	// This is set with @postconstruct
 	private String featureName;
 
@@ -304,6 +304,14 @@ public class StockServiceImpl {
 		try {
 			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
 
+			if("noti".equalsIgnoreCase(source)) {
+				StockMgmt stockMgmtTemp = stockManagementRepository.getByTxnId(filterRequest.getTxnId());
+				User user = userRepository.getById(stockMgmtTemp.getUserId());
+				Long userTypeId = user.getUsertype().getId();
+				logger.info("REQUEST MODIFIED : get usertypeid from Stock, UserTypeId is[" + userTypeId + "]" );
+				filterRequest.setUserTypeId(userTypeId.intValue());
+			}
+
 			statusList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
 			logger.info(statusList);
 
@@ -317,7 +325,7 @@ public class StockServiceImpl {
 					} 
 				}
 			}
-			
+
 			if(Objects.isNull(filterRequest.getTxnId())) {
 				addInAuditTrail(Long.valueOf(filterRequest.getUserId()), "NA", SubFeatures.VIEW_ALL,filterRequest.getRoleType());
 			}else {
@@ -416,7 +424,7 @@ public class StockServiceImpl {
 				logger.debug(dashboardUsersFeatureStateMap);
 
 				List<Integer> stockStatus = new LinkedList<>();
-				
+
 				logger.info("source for stock : " + source);
 				if(Objects.nonNull(dashboardUsersFeatureStateMap)) {
 					if("dashboard".equalsIgnoreCase(source) || "menu".equalsIgnoreCase(source)) {
@@ -677,20 +685,20 @@ public class StockServiceImpl {
 
 	public FileDetails getFilteredStockInFile(FilterRequest filterRequest, String source) {
 		try {
-		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-		DateTimeFormatter dtf2  = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
+			DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+			DateTimeFormatter dtf2  = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
 
-		SystemConfigurationDb filepath = configurationManagementServiceImpl.findByTag(ConfigTags.file_download_dir);
-		logger.info("CONFIG : file_consignment_download_dir [" + filepath + "]");
-		SystemConfigurationDb link = configurationManagementServiceImpl.findByTag(ConfigTags.file_download_link);
-		logger.info("CONFIG : file_consignment_download_link [" + link + "]");
+			SystemConfigurationDb filepath = configurationManagementServiceImpl.findByTag(ConfigTags.file_download_dir);
+			logger.info("CONFIG : file_consignment_download_dir [" + filepath + "]");
+			SystemConfigurationDb link = configurationManagementServiceImpl.findByTag(ConfigTags.file_download_link);
+			logger.info("CONFIG : file_consignment_download_link [" + link + "]");
 
-		String filePath = filepath.getValue();
+			String filePath = filepath.getValue();
 
-		return exportFileFactory
-				.getObject(filterRequest.getUserType().toUpperCase(), 4)
-				.export(filterRequest, source, dtf, dtf2, filePath, link);
-		
+			return exportFileFactory
+					.getObject(filterRequest.getUserType().toUpperCase(), 4)
+					.export(filterRequest, source, dtf, dtf2, filePath, link);
+
 		}catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
@@ -745,12 +753,12 @@ public class StockServiceImpl {
 				if(consignmentUpdateRequest.getAction() == 0) {
 					// Check if someone else taken the same action on consignment.
 					StockMgmt stockMgmtTemp = stockManagementRepository.getByTxnId(txnId);
-					if(StockStatus.APPROVED_BY_CEIR_ADMIN.getCode() == stockMgmt.getStockStatus()) {
+					if(StockStatus.APPROVED_BY_CEIR_ADMIN.getCode() == stockMgmtTemp.getStockStatus()) {
 						String message = "Any other user have taken the same action on the stock [" + txnId + "]";
 						logger.info(message);
 						return new GenricResponse(10, "", message, txnId);
 					}
-					
+
 					action = SubFeatures.ACCEPT;
 					mailTag = "STOCK_APPROVED_BY_CEIR_ADMIN"; 
 
@@ -761,6 +769,14 @@ public class StockServiceImpl {
 
 					stockMgmt.setStockStatus(StockStatus.APPROVED_BY_CEIR_ADMIN.getCode());
 				}else {
+					// Check if someone else taken the same action on consignment.
+					StockMgmt stockMgmtTemp = stockManagementRepository.getByTxnId(txnId);
+					if(StockStatus.REJECTED_BY_CEIR_ADMIN.getCode() == stockMgmtTemp.getStockStatus()) {
+						String message = "Any other user have taken the same action on the stock [" + txnId + "]";
+						logger.info(message);
+						return new GenricResponse(10, "", message, txnId);
+					}
+					
 					action = SubFeatures.REJECT;
 					mailTag = "STOCK_REJECT_BY_CEIR_ADMIN";
 					txnId =  stockMgmt.getTxnId();
@@ -830,7 +846,14 @@ public class StockServiceImpl {
 				}
 
 				if(consignmentUpdateRequest.getAction() == 0) {
-					logger.info("enter in accept  method..");
+					// Check if someone else taken the same action on consignment.
+					StockMgmt stockMgmtTemp = stockManagementRepository.getByTxnId(txnId);
+					if(StockStatus.PROCESSING.getCode() == stockMgmtTemp.getStockStatus()) {
+						String message = "Any other user have taken the same action on the stock [" + txnId + "]";
+						logger.info(message);
+						return new GenricResponse(10, "", message, txnId);
+					}
+					
 					action = SubFeatures.ACCEPT;
 					mailTag = "STOCK_PROCESS_SUCCESS_TO_USER_MAIL"; 
 					adminMailTag = "STOCK_PROCESS_SUCCESS_TO_CEIR_MAIL";
@@ -838,15 +861,17 @@ public class StockServiceImpl {
 
 					placeholderMap.put("<First name>", firstName);
 					placeholderMap.put("<Txn id>", stockMgmt.getTxnId());
+					stockMgmt.setStockStatus(StockStatus.PROCESSING.getCode());
 
-					if(stockMgmt.getStockStatus() == StockStatus.NEW.getCode()) {
-						stockMgmt.setStockStatus(StockStatus.PROCESSING.getCode());
-					}else {
-						stockMgmt.setStockStatus(StockStatus.PENDING_APPROVAL_FROM_CEIR_ADMIN.getCode());
+				}else if(consignmentUpdateRequest.getAction() == 1){
+					// Check if someone else taken the same action on consignment.
+					StockMgmt stockMgmtTemp = stockManagementRepository.getByTxnId(txnId);
+					if(StockStatus.REJECTED_BY_SYSTEM.getCode() == stockMgmtTemp.getStockStatus()) {
+						String message = "Any other user have taken the same action on the stock [" + txnId + "]";
+						logger.info(message);
+						return new GenricResponse(10, "", message, txnId);
 					}
-
-				}else {
-					logger.info("enter in reject  method..");
+					
 					action = SubFeatures.REJECT;
 					mailTag = "STOCK_PROCESS_FAILED_TO_USER_MAIL";
 					txnId = stockMgmt.getTxnId();
@@ -855,6 +880,28 @@ public class StockServiceImpl {
 					placeholderMap.put("<Txn id>", stockMgmt.getTxnId());
 
 					stockMgmt.setStockStatus(StockStatus.REJECTED_BY_SYSTEM.getCode());
+				}else if(consignmentUpdateRequest.getAction() == 2) {
+					// Check if someone else taken the same action on consignment.
+					StockMgmt stockMgmtTemp = stockManagementRepository.getByTxnId(txnId);
+					if(StockStatus.PENDING_APPROVAL_FROM_CEIR_ADMIN.getCode() == stockMgmtTemp.getStockStatus()) {
+						String message = "Any other user have taken the same action on the stock [" + txnId + "]";
+						logger.info(message);
+						return new GenricResponse(10, "", message, txnId);
+					}
+					
+					action = SubFeatures.ACCEPT;
+					mailTag = "STOCK_PROCESS_SUCCESS_TO_USER_MAIL"; 
+					adminMailTag = "STOCK_PROCESS_SUCCESS_TO_CEIR_MAIL";
+					txnId = stockMgmt.getTxnId();
+
+					placeholderMap.put("<First name>", firstName);
+					placeholderMap.put("<Txn id>", stockMgmt.getTxnId());
+
+					stockMgmt.setStockStatus(StockStatus.PENDING_APPROVAL_FROM_CEIR_ADMIN.getCode());
+				}else {
+					String message = "Not a valid action to take on the Stock [" + stockMgmt.getTxnId() + "]";
+					logger.info(message);
+					return new GenricResponse(11, "", message, stockMgmt.getTxnId());
 				}
 
 				// Update Stock and its history.

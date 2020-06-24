@@ -104,7 +104,7 @@ public class ConsignmentController {
 			@RequestParam(value = "file", defaultValue = "0") Integer file,
 			@RequestParam(value = "source", defaultValue = "menu") String source) {
 		
-		logger.info("source::::"+source);
+		logger.info("source " + source);
 		MappingJacksonValue mapping = null;
 		if(file == 0) {
 			logger.info("Request to view filtered consignment = " + filterRequest);

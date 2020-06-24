@@ -150,14 +150,22 @@ public class PendingTacApprovedImpl {
 				return new GenricResponse(1, GenericMessageTags.NULL_REQ.getTag(), 
 						GenericMessageTags.NULL_REQ.getMessage(), null);
 			}
-			
+
 			if(Objects.nonNull(filterRequest.getTxnId())) {
-				pendingTacApprovedRepository.deleteByTxnId(filterRequest.getTxnId());
-				logger.info("Delete of tac is successful for txnId[" + filterRequest.getTxnId() + "] by only txnId.");
+				
+				if(pendingTacApprovedRepository.deleteByTxnId(filterRequest.getTxnId()) > 0) {
+					logger.info("Delete of tac is successful for txnId[" + filterRequest.getTxnId() + "] by only txnId.");
+				}else {
+					logger.info("Delete of tac is failed for txnId[" + filterRequest.getTxnId() + "] by only txnId.");
+				}
+				
 				return new GenricResponse(0, "Deleted Successully.", "", "");
 			}else if(Objects.nonNull(filterRequest.getTac()) && Objects.nonNull(filterRequest.getImporterId())){
-				pendingTacApprovedRepository.deleteByTacAndUserId(filterRequest.getTac(), filterRequest.getImporterId());
-				logger.info("Delete of tac is successful for txnId[" + filterRequest.getTxnId() + "] by tac and importerid.");
+				if(pendingTacApprovedRepository.deleteByTacAndUserId(filterRequest.getTac(), filterRequest.getImporterId()) > 0) {
+					logger.info("Delete of tac is successful for txnId[" + filterRequest.getTxnId() + "] by tac and importerid.");
+				}else {
+					logger.info("Delete of tac is failed for tac[" + filterRequest.getTac() + "] by tac and importerid.");
+				}
 				return new GenricResponse(0, "Deleted Successully.", "", "");
 			}else {
 				logger.info("No Deletion of tac is allowed for invalid request [" + filterRequest + "]");

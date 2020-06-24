@@ -215,6 +215,18 @@ public class Notification  implements Serializable{
 		builder.append(featureName);
 		builder.append(", subFeature=");
 		builder.append(subFeature);
+		builder.append(", status=");
+		builder.append(status);
+		builder.append(", subject=");
+		builder.append(subject);
+		builder.append(", retryCount=");
+		builder.append(retryCount);
+		builder.append(", referTable=");
+		builder.append(referTable);
+		builder.append(", roleType=");
+		builder.append(roleType);
+		builder.append(", receiverUserType=");
+		builder.append(receiverUserType);
 		builder.append("]");
 		return builder.toString();
 	}
