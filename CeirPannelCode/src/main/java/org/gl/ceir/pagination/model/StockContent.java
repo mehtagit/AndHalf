@@ -24,6 +24,7 @@ public class StockContent {
 	private String userType;
 	private Object totalPrice;
 	private Object remarks;
+	private Integer assignerId;
 	private String stateInterp,deviceQuantity;
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 	public Integer getId() {
@@ -134,23 +135,29 @@ public class StockContent {
 	public void setRemarks(Object remarks) {
 		this.remarks = remarks;
 	}
+	public Integer getAssignerId() {
+		return assignerId;
+	}
+	public void setAssignerId(Integer assignerId) {
+		this.assignerId = assignerId;
+	}
 	public String getStateInterp() {
 		return stateInterp;
 	}
 	public void setStateInterp(String stateInterp) {
 		this.stateInterp = stateInterp;
 	}
-	public Map<String, Object> getAdditionalProperties() {
-		return additionalProperties;
-	}
-	public void setAdditionalProperties(Map<String, Object> additionalProperties) {
-		this.additionalProperties = additionalProperties;
-	}
 	public String getDeviceQuantity() {
 		return deviceQuantity;
 	}
 	public void setDeviceQuantity(String deviceQuantity) {
 		this.deviceQuantity = deviceQuantity;
+	}
+	public Map<String, Object> getAdditionalProperties() {
+		return additionalProperties;
+	}
+	public void setAdditionalProperties(Map<String, Object> additionalProperties) {
+		this.additionalProperties = additionalProperties;
 	}
 	@Override
 	public String toString() {
@@ -191,6 +198,8 @@ public class StockContent {
 		builder.append(totalPrice);
 		builder.append(", remarks=");
 		builder.append(remarks);
+		builder.append(", assignerId=");
+		builder.append(assignerId);
 		builder.append(", stateInterp=");
 		builder.append(stateInterp);
 		builder.append(", deviceQuantity=");
@@ -201,5 +210,5 @@ public class StockContent {
 		return builder.toString();
 	}
 	
-
+	
 }
