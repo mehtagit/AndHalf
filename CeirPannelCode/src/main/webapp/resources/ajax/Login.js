@@ -13,6 +13,12 @@ function forgotPassword(){
 			}    
 		}    
 	});
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		type : 'POST',
 		url : contextpath + '/forgotPasswordRequest',
@@ -60,6 +66,12 @@ function udapteNewPassword(){
 					confirmPassword: val.find('#confirm_password').val()
 			} 
 		}
+	});
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
 	});
 	$.ajax({  
 		type : 'POST',
@@ -115,6 +127,12 @@ function login(){
 			}    
 		}    
 	});
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		type : 'POST',
 		url : contextpath + '/saveLogin',
@@ -153,6 +171,12 @@ function login(){
 	return false;
 }
 function dataByTag(tag,divId,input){ 
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		type : 'GET',
 		url :contextpath+'/dataByTag/'+tag+"/",
@@ -193,6 +217,12 @@ function changeExpiryPassword(){
 					userid:val.find("#userId").val()
 			}    
 		}
+	});
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
 	});
 	$.ajax({
 		type : 'POST',
