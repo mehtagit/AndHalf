@@ -12,6 +12,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.locks.ReentrantLock;
 
 import javax.transaction.Transactional;
 
@@ -91,6 +92,8 @@ public class StolenAndRecoveryServiceImpl {
 
 	private static final Logger logger = LogManager.getLogger(StolenAndRecoveryServiceImpl.class);
 
+	private ReentrantLock lock = new ReentrantLock();
+	
 	@Autowired
 	WebActionDbRepository webActionDbRepository;
 
@@ -757,20 +760,20 @@ public class StolenAndRecoveryServiceImpl {
 				}else {
 					return new GenricResponse(3,"Operation not allowed", filterRequest.getTxnId());
 				}
-				
+
 				stolenandRecoveryMgmtInfo.setDeleteFlag(0);
 				stolenandRecoveryMgmtInfo.setRemark(filterRequest.getRemark());
-				
+
 				logger.info("going to delete record.");
 				stolenAndRecoveryRepository.save(stolenandRecoveryMgmtInfo);
-				
+
 				// Add an entry in web_action_db.
 				WebActionDb webActionDb = new WebActionDb(decideFeature(stolenandRecoveryMgmt.getRequestType()), 
 						action, 
 						WebActionStatus.INIT.getCode(), stolenandRecoveryMgmt.getTxnId());
 				webActionDbRepository.save(webActionDb);
 				logger.info("Entry in web action of action [Delete] for txnid [" + stolenandRecoveryMgmt.getTxnId() + "]");
-				
+
 
 				if(isUserCeirAdmin) {
 					logger.info("user profile details-");
@@ -991,8 +994,11 @@ public class StolenAndRecoveryServiceImpl {
 				logger.info(message + " " + consignmentUpdateRequest.getTxnId());
 				return new GenricResponse(4, message, consignmentUpdateRequest.getTxnId());
 			}
-
-			// 0 - Accept, 1 - Reject
+			
+			lock.lock();
+			logger.info("lock taken by thread : " + Thread.currentThread().getName());
+			
+			// 0 - Processing, 1 - Reject, 2 - Pending Approval
 			if("CEIRADMIN".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())){
 				String mailTag = null;
 				String action = null;
@@ -1019,7 +1025,7 @@ public class StolenAndRecoveryServiceImpl {
 					}
 
 					stolenandRecoveryMgmt.setFileStatus(StolenStatus.APPROVED_BY_CEIR_ADMIN.getCode());
-					
+
 				}else {
 					action = SubFeatures.REJECT;
 
@@ -1043,23 +1049,9 @@ public class StolenAndRecoveryServiceImpl {
 					stolenandRecoveryMgmt.setFileStatus(StolenStatus.REJECTED_BY_CEIR_ADMIN.getCode());
 					stolenandRecoveryMgmt.setRejectedRemark(consignmentUpdateRequest.getRemarks());
 				}
-				
+
 				stolenandRecoveryMgmt.setCeirAdminId(consignmentUpdateRequest.getUserId());
-				
-				// synchronized (this) {
-				/*
-				 * StolenandRecoveryMgmt stolenandRecoveryMgmtTemp =
-				 * stolenAndRecoveryRepository.getByTxnId(consignmentUpdateRequest.getTxnId());
-				 * 
-				 * if(stolenandRecoveryMgmtTemp.getFileStatus() ==
-				 * StolenStatus.APPROVED_BY_CEIR_ADMIN.getCode() ||
-				 * stolenandRecoveryMgmtTemp.getFileStatus() ==
-				 * StolenStatus.REJECTED_BY_CEIR_ADMIN.getCode()) { String message =
-				 * "Action is already taken on txn id [" + stolenandRecoveryMgmtTemp.getTxnId()
-				 * + "] by any other CEIR Admin."; logger.info(message); return new
-				 * GenricResponse(5, message, consignmentUpdateRequest.getTxnId()); }
-				 */
-				
+
 				if(!stolenAndRecoveryTransaction.updateStatusWithHistory(stolenandRecoveryMgmt)) {
 					logger.warn("Unable to update Stolen and recovery entity.");
 					return new GenricResponse(3, "Unable to update Stolen and recovery entity.", consignmentUpdateRequest.getTxnId());
@@ -1112,16 +1104,16 @@ public class StolenAndRecoveryServiceImpl {
 						logger.info("Notfication have been saved for CEIR Admin."); }	
 					}
 				}
-				
+
 				// Add an entry in web_action_db.
 				WebActionDb webActionDb = new WebActionDb(decideFeature(stolenandRecoveryMgmt.getRequestType()), 
 						action, 
 						WebActionStatus.INIT.getCode(), stolenandRecoveryMgmt.getTxnId());
 				webActionDbRepository.save(webActionDb);
 				logger.info("Entry in web action of action[" + action + "] for txnid [" + stolenandRecoveryMgmt.getTxnId() + "]");
-				
+
 				//}
-				
+
 				addInAuditTrail(Long.valueOf(stolenandRecoveryMgmt.getUserId()), stolenandRecoveryMgmt.getTxnId(), action, stolenandRecoveryMgmt.getRoleType(),stolenandRecoveryMgmt.getRequestType(),0);
 			}else if("CEIRSYSTEM".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())){
 				String mailTag = null;
@@ -1135,6 +1127,15 @@ public class StolenAndRecoveryServiceImpl {
 
 				if(consignmentUpdateRequest.getAction() == 0) {
 					action = SubFeatures.ACCEPT;
+					
+					String payloadTxnId = stolenandRecoveryMgmt.getTxnId();
+					// Check if someone else taken the same action on Stolen/Recovery/Block/Unblock.
+					StolenandRecoveryMgmt stolenandRecoveryMgmtTemp = stolenAndRecoveryRepository.getByTxnId(payloadTxnId);
+					if(StolenStatus.PROCESSING.getCode() == stolenandRecoveryMgmtTemp.getFileStatus()) {
+						String message = "Any other user have taken the same action on the Stolen/Recovery/Block/Unblock [" + payloadTxnId + "]";
+						logger.info(message);
+						return new GenricResponse(10, "", message, payloadTxnId);
+					}
 
 					if(consignmentUpdateRequest.getRequestType() == 0) {
 						mailTag = "STOLEN_PROCESSED_SUCESSFULLY";
@@ -1156,14 +1157,19 @@ public class StolenAndRecoveryServiceImpl {
 						logger.warn("unknown request type received for stolen and recovery.");
 					}
 
-					if(stolenandRecoveryMgmt.getFileStatus() == StolenStatus.INIT.getCode()) {
-						stolenandRecoveryMgmt.setFileStatus(StolenStatus.PROCESSING.getCode());
-					}else {
-						stolenandRecoveryMgmt.setFileStatus(StolenStatus.PENDING_APPROVAL_FROM_CEIR_ADMIN.getCode());
-					}					
+					stolenandRecoveryMgmt.setFileStatus(StolenStatus.PROCESSING.getCode());
 
-				}else {
+				}else if(consignmentUpdateRequest.getAction() == 1) {
 					action = SubFeatures.REJECT;
+					
+					String payloadTxnId = stolenandRecoveryMgmt.getTxnId();
+					// Check if someone else taken the same action on Stolen/Recovery/Block/Unblock.
+					StolenandRecoveryMgmt stolenandRecoveryMgmtTemp = stolenAndRecoveryRepository.getByTxnId(payloadTxnId);
+					if(StolenStatus.REJECTED_BY_SYSTEM.getCode() == stolenandRecoveryMgmtTemp.getFileStatus()) {
+						String message = "Any other user have taken the same action on the Stolen/Recovery/Block/Unblock [" + payloadTxnId + "]";
+						logger.info(message);
+						return new GenricResponse(10, "", message, payloadTxnId);
+					}
 
 					if(consignmentUpdateRequest.getRequestType() == 0){
 						mailTag = "STOLEN_PROCESSED_FAILED";
@@ -1185,6 +1191,41 @@ public class StolenAndRecoveryServiceImpl {
 					stolenandRecoveryMgmt.setFileStatus(StolenStatus.REJECTED_BY_SYSTEM.getCode());
 					stolenandRecoveryMgmt.setRejectedRemark(consignmentUpdateRequest.getRemarks());
 
+				}else if(consignmentUpdateRequest.getAction() == 2) {
+					action = SubFeatures.ACCEPT;
+					
+					String payloadTxnId = stolenandRecoveryMgmt.getTxnId();
+					// Check if someone else taken the same action on Stolen/Recovery/Block/Unblock.
+					StolenandRecoveryMgmt stolenandRecoveryMgmtTemp = stolenAndRecoveryRepository.getByTxnId(payloadTxnId);
+					if(StolenStatus.PENDING_APPROVAL_FROM_CEIR_ADMIN.getCode() == stolenandRecoveryMgmtTemp.getFileStatus()) {
+						String message = "Any other user have taken the same action on the Stolen/Recovery/Block/Unblock [" + payloadTxnId + "]";
+						logger.info(message);
+						return new GenricResponse(10, "", message, payloadTxnId);
+					}
+
+					if(consignmentUpdateRequest.getRequestType() == 0) {
+						mailTag = "STOLEN_PROCESSED_SUCESSFULLY";
+						ceirMailTag = "STOLEN_PROCESSED_SUCESSFULLY_TO_CEIR_ADMIN";
+						txnId = stolenandRecoveryMgmt.getTxnId();
+					}else if(consignmentUpdateRequest.getRequestType() == 1){
+						mailTag = "RECOVERY_PROCESSED_SUCESSFULLY";
+						ceirMailTag = "RECOVERY_PROCESSED_SUCESSFULLY_TO_CEIR_ADMIN";
+						txnId =  stolenandRecoveryMgmt.getTxnId();
+					}else if(consignmentUpdateRequest.getRequestType() == 2){
+						mailTag = "BLOCK_PROCESSED_SUCESSFULLY";
+						ceirMailTag = "BLOCK_PROCESSED_SUCESSFULLY_TO_CEIR_ADMIN";
+						txnId = stolenandRecoveryMgmt.getTxnId();
+					}else if(consignmentUpdateRequest.getRequestType() == 3){
+						mailTag = "UNBLOCK_PROCESSED_SUCESSFULLY";
+						ceirMailTag = "UNBLOCK_PROCESSED_SUCESSFULLY_TO_CEIR_ADMIN";
+						txnId = stolenandRecoveryMgmt.getTxnId();
+					}else {
+						logger.warn("unknown request type received for stolen and recovery.");
+					}
+					stolenandRecoveryMgmt.setFileStatus(StolenStatus.PENDING_APPROVAL_FROM_CEIR_ADMIN.getCode());
+				}else {
+					logger.info("You are not allowed to do this operation.[" + stolenandRecoveryMgmt.getTxnId() + "]");
+					return new GenricResponse(1, "You are not allowed to do this operation.", "");
 				}
 
 				if(!stolenAndRecoveryTransaction.updateStatusWithHistory(stolenandRecoveryMgmt)) {
@@ -1255,6 +1296,11 @@ public class StolenAndRecoveryServiceImpl {
 			alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, 0, bodyPlaceHolderMap);
 
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}finally {
+			if(lock.isLocked()) {
+				logger.info("lock released by thread : " + Thread.currentThread().getName());
+				lock.unlock();
+			}
 		}
 	}
 

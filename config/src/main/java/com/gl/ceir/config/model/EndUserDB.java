@@ -83,8 +83,9 @@ public class EndUserDB   {
 	@Transient
 	private String documentInterp;
 	
+
 	@NotAudited
-	@JsonBackReference
+	//@JsonBackReference
 	@OneToMany(mappedBy = "endUserDB",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	private List<RegularizeDeviceDb> regularizeDeviceDbs ;
 	

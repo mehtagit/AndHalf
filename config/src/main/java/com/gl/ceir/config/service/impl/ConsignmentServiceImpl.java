@@ -535,11 +535,11 @@ public class ConsignmentServiceImpl {
 	public GenricResponse updateConsignmentStatus(ConsignmentUpdateRequest consignmentUpdateRequest) {
 		String roleType = consignmentUpdateRequest.getRoleType();
 		int action= consignmentUpdateRequest.getAction();
-		String payload_txnID = consignmentUpdateRequest.getTxnId();
+		String payloadTxnID = consignmentUpdateRequest.getTxnId();
 		UserProfile ceirUserProfile = new UserProfile();
 		try {
 			UserProfile userProfile = null;
-			ConsignmentMgmt consignmentMgmt = consignmentRepository.getByTxnId(payload_txnID);
+			ConsignmentMgmt consignmentMgmt = consignmentRepository.getByTxnId(payloadTxnID);
 			logger.debug("Accept/Reject Consignment : " + consignmentMgmt);
 
 			// Fetch user_profile to update user over mail/sms regarding the action.
@@ -548,7 +548,7 @@ public class ConsignmentServiceImpl {
 
 			//action  0 - Accept, 1 - Reject			
 			if(Objects.isNull(consignmentMgmt)) {
-				return new GenricResponse(1, "TxnId Does not Exist.",payload_txnID);
+				return new GenricResponse(1, "TxnId Does not Exist.", payloadTxnID);
 			}
 			else {
 				if("CEIRADMIN".equalsIgnoreCase(roleType)){
@@ -567,7 +567,7 @@ public class ConsignmentServiceImpl {
 				else {
 					logger.info("Nothing to update for request :: " + consignmentUpdateRequest);
 				}
-				return new GenricResponse(1, "Nothing to update for request.",payload_txnID);
+				return new GenricResponse(1, "Nothing to update for request.", payloadTxnID);
 
 			}
 		} catch (Exception e) {
@@ -663,7 +663,6 @@ public class ConsignmentServiceImpl {
 					writer.close();
 			} catch (IOException e) {}
 		}
-
 	}
 
 	public ResponseCountAndQuantity getConsignmentCountAndQuantity( Integer userId, Integer userTypeId, Integer featureId, String userType ) {
