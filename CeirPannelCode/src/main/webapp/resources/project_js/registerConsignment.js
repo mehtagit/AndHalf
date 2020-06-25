@@ -40,6 +40,12 @@ function registerConsignment() {
 	formData.append('portAddress', parseInt($('#portAddress').val()));
 	formData.append('deviceQuantity', parseInt($('#deviceQuantity').val()));	
 	formData.append('roleType', $("body").attr("data-roleType"));
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		url : './registerConsignment',
 		type : 'POST',
@@ -156,6 +162,12 @@ function closeConfirmation() {
 populateCountries("country");
 
 $(document).ready(function() {
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
 	$.getJSON('./getDropdownList/CURRENCY', function(data) {
 		/ $("#expectedArrivalPort").empty(); /
 		for (i = 0; i < data.length; i++) {
@@ -218,8 +230,13 @@ $("input[type=file]").keypress(function(ev) {
 
 
 function getByPort(port) {
-	$
-			.ajax({
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
+	$.ajax({
 				type : 'GET',
 				url : './byArrivalPort/' + port,
 				contentType : "application/json",
