@@ -15,6 +15,13 @@ window.parent
 		
 		populateCountries("country");
 		
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+	        headers:
+	        { 'X-CSRF-TOKEN': token }
+	    	});
+		
 		$.getJSON('./getDropdownList/'+featureId+'/'+$("body").attr("data-userTypeID"), function(data) {
 			for (i = 0; i < data.length; i++) {
 				$('<option>').val(data[i].state).text(data[i].interp)
@@ -143,6 +150,13 @@ window.parent
 			//console.log("multirequest------------->" +JSON.stringify(multirequest))
 			formData.append('fileInfo[]',JSON.stringify(fileInfo));
 			formData.append('multirequest',JSON.stringify(multirequest));
+			
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$.ajaxSetup({
+			headers:
+			{ 'X-CSRF-TOKEN': token }
+			});
 			
 			$.ajax({
 				url : './register-approved-device',

@@ -98,7 +98,14 @@ function Datatable(Url, dataUrl) {
 	}
 
 	$("#submitFilter").prop('disabled', true);
-
+	
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+	});
+	
 	$.ajax({
 		url : Url,
 		type : 'POST',
@@ -172,6 +179,14 @@ function Datatable(Url, dataUrl) {
 // buttons**********************************************
 
 function pageRendering() {
+	
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
+	
 	$
 			.ajax({
 				url : 'adminImprterTrc/pageRendering',
@@ -264,7 +279,14 @@ function pageRendering() {
 									button[i].buttonURL);
 						}
 					}
-
+					
+					var token = $("meta[name='_csrf']").attr("content");
+					var header = $("meta[name='_csrf_header']").attr("content");
+					$.ajaxSetup({
+					headers:
+					{ 'X-CSRF-TOKEN': token }
+					});
+					
 					$
 							.getJSON('./getDropdownList/' + featureId + '/'
 									+ $("body").attr("data-userTypeID"),
@@ -363,7 +385,14 @@ function ImporterviewByID(id, actionType, projectPath, modalID) {
 		dismissible : false
 	});
 	window.projectPath = projectPath;
-
+	
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
+	
 	$.ajax({
 		url : "./viewByID/" + id + "?lang=" + lang, // controller haven'nt made
 													// yet for this url. this is
@@ -458,6 +487,14 @@ function setImporterEditPopupData(data) {
 	$("#productname").val(data.productName);
 
 	var brand_id = $('#productname').val();
+	
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
+	
 	$.getJSON('./productModelList?brand_id=' + brand_id, function(data) {
 		$("#modelNumber").empty();
 		for (i = 0; i < data.length; i++) {
@@ -657,7 +694,14 @@ function updateImporterTypeDevice() {
 	// console.log("multirequest------------->" +JSON.stringify(multirequest))
 	formData.append('fileInfo[]', JSON.stringify(fileInfo));
 	formData.append('multirequest', JSON.stringify(multirequest));
-
+	
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
+	
 	$.ajax({
 		url : './update-register-approved-device',
 		type : 'POST',
@@ -696,6 +740,14 @@ function updateImporterTypeDevice() {
 }
 
 function setAllDropdown() {
+	
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
+	
 	$.getJSON('./productList', function(data) {
 		for (i = 0; i < data.length; i++) {
 			$('<option>').val(data[i].id).text(data[i].brand_name).appendTo(
@@ -825,6 +877,14 @@ function approveSubmit(actiontype) {
 		"adminUserType" : userType
 
 	}
+	
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
+	
 	$.ajax({
 		url : "./TACAprroveDisapprove",
 		data : JSON.stringify(approveRequest),
@@ -881,6 +941,14 @@ function rejectSubmit(actiontype) {
 		"remark" : $("#rejectTrcRemark").val()
 
 	}
+	
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
+	
 	$.ajax({
 		url : "./TACAprroveDisapprove",
 		data : JSON.stringify(approveRequest),
@@ -929,7 +997,14 @@ function confirmantiondelete() {
 	 * var obj ={ "txnId" : txnId, "userType": $("body").attr("data-roleType"),
 	 * "remark" : tacRemark }
 	 */
-
+	
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
+	
 	$.ajax({
 		url : "./importerTacDelete?id=" + id + "&userType=" + userType
 				+ "&userId=" + userId+ "&remark=" +remark,
@@ -1025,6 +1100,14 @@ function historyRecord(txnID) {
 		var langFile = '../resources/i18n/khmer_datatable.json';
 	}
 	// console.log("22");
+	
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
+	
 	$.ajax({
 		url : './Consignment/consignment-history',
 		type : 'POST',
