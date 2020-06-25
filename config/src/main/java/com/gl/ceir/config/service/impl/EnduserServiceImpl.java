@@ -839,7 +839,6 @@ public class EnduserServiceImpl {
 		}
 	}
 
-
 	@Transactional
 	public GenricResponse acceptReject(CeirActionRequest ceirActionRequest) {
 		try {
@@ -853,10 +852,10 @@ public class EnduserServiceImpl {
 			long userId=0;
 			String username="";
 			VisaDb latestVisa = null;            
-			VisaUpdateDb visaDb =new VisaUpdateDb();
+			VisaUpdateDb visaDb = new VisaUpdateDb();
 			String sufeature="";
 			if("CEIRADMIN".equalsIgnoreCase(ceirActionRequest.getUserType())){
-				visaDb=visaUpdateRepo.getById(ceirActionRequest.getId());
+				visaDb = visaUpdateRepo.getById(ceirActionRequest.getId());
 				if(Objects.isNull(visaDb)) {
 					return new GenricResponse(1, "Visa Db is incorrect", "");				
 				}
@@ -947,9 +946,8 @@ public class EnduserServiceImpl {
 				auditTrailRepository.save(new AuditTrail(userId, username, userTypeId,
 						ceirActionRequest.getUserType(), 43,Features.UPDATE_VISA, sufeature, "", txnId,ceirActionRequest.getUserType()));
 
-			}
-			else if("CEIRSYSTEM".equalsIgnoreCase(ceirActionRequest.getUserType())){
-				visaDb=visaUpdateRepo.getByTxnId(ceirActionRequest.getTxnId());
+			}else if("CEIRSYSTEM".equalsIgnoreCase(ceirActionRequest.getUserType())){
+				visaDb = visaUpdateRepo.getByTxnId(ceirActionRequest.getTxnId());
 				if(Objects.isNull(visaDb)) {
 					return new GenricResponse(1, "transaction id is incorrect", "");				
 				}

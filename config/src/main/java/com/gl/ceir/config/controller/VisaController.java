@@ -55,7 +55,6 @@ public class VisaController {
 		GenricResponse genricResponse = enduserServiceImpl.acceptReject(ceirActionRequest);
 
 		return genricResponse ;
-
 	}
 	
 	@ApiOperation(value = "View End User data by Id", response = GenricResponse.class)
