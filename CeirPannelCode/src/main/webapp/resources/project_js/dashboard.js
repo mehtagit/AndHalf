@@ -68,6 +68,13 @@ $('.navData li').on('click', function() {
 
 
 function changeLanguage(lang){
+
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		type : 'POST',
 		url :'./changeLanguage/'+lang,
