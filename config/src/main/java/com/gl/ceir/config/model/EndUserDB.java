@@ -83,7 +83,6 @@ public class EndUserDB   {
 	@Transient
 	private String documentInterp;
 	
-
 	@NotAudited
 	@JsonBackReference
 	@OneToMany(mappedBy = "endUserDB",cascade = CascadeType.ALL,fetch = FetchType.LAZY)

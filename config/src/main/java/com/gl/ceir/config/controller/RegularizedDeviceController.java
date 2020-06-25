@@ -73,7 +73,7 @@ public class RegularizedDeviceController {
 	@PostMapping("/end-user-device-info")
 	public GenricResponse saveEndUserInfo(@RequestBody EndUserDB endUserDB) {
 		logger.info(" register device request end user data= " + endUserDB);
-		logger.info("regularze data: "+endUserDB.getRegularizeDeviceDbs().toString());
+		logger.info("regularze data: " + endUserDB.getRegularizeDeviceDbs().toString());
 		GenricResponse genricResponse = regularizedDeviceServiceImpl.saveDevices(endUserDB);
 		//logger.info("Resonse send = " + genricResponse);
 		return genricResponse;
@@ -88,7 +88,7 @@ public class RegularizedDeviceController {
 
 		GenricResponse response = regularizedDeviceServiceImpl.updateTaxStatus(userCustomDb);
 
-		//logger.info("Response send to user = " + response);
+		logger.info("Response send to user = " + response);
 		return response;
 
 	}
@@ -101,7 +101,7 @@ public class RegularizedDeviceController {
 		
 		GenricResponse response = regularizedDeviceServiceImpl.deleteCustomInfo(data);
 		
-		//logger.info("Response send to user="+response);
+		logger.info("Response send to user="+response);
 		return response;
 	}
 

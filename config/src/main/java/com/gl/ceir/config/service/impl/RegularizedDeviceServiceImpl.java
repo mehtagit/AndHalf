@@ -785,16 +785,16 @@ public class RegularizedDeviceServiceImpl {
 				}
 				auditTrailRepository.save(new AuditTrail(userId, username, userTypeId,
 						ceirActionRequest.getUserType(), 12, Features.REGISTER_DEVICE, subFeature, "", txnId,ceirActionRequest.getUserType()));
-			}
-			else if("CEIRSYSTEM".equalsIgnoreCase(ceirActionRequest.getUserType())){
+			}else if("CEIRSYSTEM".equalsIgnoreCase(ceirActionRequest.getUserType())){
 				List<RegularizeDeviceDb> regularizeList = regularizedDeviceDbRepository.findByTxnId(ceirActionRequest.getTxnId());
 				regularizeList = regularizedDeviceDbRepository.findByTxnId(ceirActionRequest.getTxnId());
-				regularizeDeviceDb = regularizeList.get(0);
-
-				if(Objects.isNull(regularizeDeviceDb)){
+				
+				if(regularizeList.isEmpty()){
+					logger.info("txn Id [" + ceirActionRequest.getTxnId() + "] not found.");
 					return new GenricResponse(1, "transaction id is incorrect", "");            	
 				}
-
+				
+				regularizeDeviceDb = regularizeList.get(0);
 				endUserDB = endUserDbRepository.getByNid(regularizeDeviceDb.getNid());
 
 				placeholders.put("<Txn id>", regularizeDeviceDb.getTxnId());
@@ -809,7 +809,7 @@ public class RegularizedDeviceServiceImpl {
 						logger.info(message);
 						return new GenricResponse(10, "", message, txnId);
 					}
-					
+
 					regularizeList.stream().forEach((r) -> {
 						r.setStatus(RegularizeDeviceStatus.PROCESSING.getCode());
 					});
@@ -823,7 +823,7 @@ public class RegularizedDeviceServiceImpl {
 						logger.info(message);
 						return new GenricResponse(10, "", message, txnId);
 					}
-					
+
 					regularizeList.stream().forEach((r) -> {
 						r.setStatus(RegularizeDeviceStatus.REJECTED_BY_SYSTEM.getCode());
 					});
@@ -927,6 +927,9 @@ public class RegularizedDeviceServiceImpl {
 				userTypeId = 0;
 				userId = 0;
 				subFeature = "";
+				logger.info("Usertype[" + ceirActionRequest.getUserType() + "] is not allowed to take an action on txnId[" 
+						+ ceirActionRequest.getTxnId() + "] in current state.");
+
 				return new GenricResponse(1, "You are not allowed to do this operation.", "");
 			}
 

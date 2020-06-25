@@ -204,7 +204,7 @@ public class StolenAndRecoveryController {
 		logger.info("view Stolen and recovery request by txn id = " + stolenandRecoveryRequest);
 
 		StolenandRecoveryMgmt mgmt = stolenAndRecoveryServiceImpl.getByTxnId(stolenandRecoveryRequest);
-		logger.info("View details Response send =" + mgmt);
+		logger.info("View details Response send = " + mgmt);
 
 		MappingJacksonValue mapping = new MappingJacksonValue(mgmt);
 		return mapping;
