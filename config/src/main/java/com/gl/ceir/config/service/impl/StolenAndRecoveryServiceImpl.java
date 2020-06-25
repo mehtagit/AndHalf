@@ -1006,6 +1006,15 @@ public class StolenAndRecoveryServiceImpl {
 
 				if(consignmentUpdateRequest.getAction() == 0) {
 					action = SubFeatures.ACCEPT;
+					
+					String payloadTxnId = stolenandRecoveryMgmt.getTxnId();
+					// Check if someone else taken the same action on Stolen/Recovery/Block/Unblock.
+					StolenandRecoveryMgmt stolenandRecoveryMgmtTemp = stolenAndRecoveryRepository.getByTxnId(payloadTxnId);
+					if(StolenStatus.APPROVED_BY_CEIR_ADMIN.getCode() == stolenandRecoveryMgmtTemp.getFileStatus()) {
+						String message = "Any other user have taken the same action on the Stolen/Recovery/Block/Unblock [" + payloadTxnId + "]";
+						logger.info(message);
+						return new GenricResponse(10, "", message, payloadTxnId);
+					}
 
 					if(consignmentUpdateRequest.getRequestType() == 0) {
 						mailTag = "STOLEN_APPROVED_BY_CEIR_ADMIN";
@@ -1029,6 +1038,15 @@ public class StolenAndRecoveryServiceImpl {
 				}else {
 					action = SubFeatures.REJECT;
 
+					String payloadTxnId = stolenandRecoveryMgmt.getTxnId();
+					// Check if someone else taken the same action on Stolen/Recovery/Block/Unblock.
+					StolenandRecoveryMgmt stolenandRecoveryMgmtTemp = stolenAndRecoveryRepository.getByTxnId(payloadTxnId);
+					if(StolenStatus.REJECTED_BY_CEIR_ADMIN.getCode() == stolenandRecoveryMgmtTemp.getFileStatus()) {
+						String message = "Any other user have taken the same action on the Stolen/Recovery/Block/Unblock [" + payloadTxnId + "]";
+						logger.info(message);
+						return new GenricResponse(10, "", message, payloadTxnId);
+					}
+					
 					if(consignmentUpdateRequest.getRequestType() == 0) {
 						mailTag = "STOLEN_REJECT_BY_CEIR_ADMIN";
 						txnId =  stolenandRecoveryMgmt.getTxnId();

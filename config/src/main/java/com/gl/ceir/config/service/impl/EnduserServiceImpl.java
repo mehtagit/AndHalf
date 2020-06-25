@@ -756,6 +756,15 @@ public class EnduserServiceImpl {
 				}
 				visaDb.setApprovedBy(username);
 				if(ceirActionRequest.getAction() == 0) {
+					String payloadTxnId = ceirActionRequest.getTxnId();
+					// Check if someone else taken the same action on visa update.
+					VisaUpdateDb visaUpdateTemp = visaUpdateRepo.getByTxnId(payloadTxnId);
+					if(RegularizeDeviceStatus.APPROVED.getCode() == visaUpdateTemp.getStatus()) {
+						String message = "Any other user have taken the same action on the visaUpdate [" + payloadTxnId + "]";
+						logger.info(message);
+						return new GenricResponse(10, "", message, payloadTxnId);
+					}
+					
 					visaDb.setStatus(RegularizeDeviceStatus.APPROVED.getCode());
 					List<VisaDb> visaDbs = endUserDB.getVisaDb();
 					VisaDb visaDbUpdate = visaDbs.get(visaDbs.size() - 1);
@@ -778,6 +787,15 @@ public class EnduserServiceImpl {
 					txnId = visaDb.getTxnId();
 					userId=ceirActionRequest.getUserId();
 				}else if(ceirActionRequest.getAction() == 1){
+					String payloadTxnId = ceirActionRequest.getTxnId();
+					// Check if someone else taken the same action on visa update.
+					VisaUpdateDb visaUpdateTemp = visaUpdateRepo.getByTxnId(payloadTxnId);
+					if(RegularizeDeviceStatus.REJECTED_BY_CEIR_ADMIN.getCode() == visaUpdateTemp.getStatus()) {
+						String message = "Any other user have taken the same action on the visaUpdate [" + payloadTxnId + "]";
+						logger.info(message);
+						return new GenricResponse(10, "", message, payloadTxnId);
+					}
+					
 					visaDb.setStatus(RegularizeDeviceStatus.REJECTED_BY_CEIR_ADMIN.getCode());
 					visaDb.setRemark(ceirActionRequest.getRemarks()); 
 					tag = "Update_Visa_Reject_CEIRAdmin";	
