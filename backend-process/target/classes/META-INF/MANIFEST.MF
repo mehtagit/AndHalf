@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Built-By: Radhay
+Build-Jdk: 13.0.2
+Implementation-Title: backend-process
+Implementation-Version: 0.0.1
+Implementation-Vendor-Id: com.gl.ceir
+Implementation-URL: http://maven.apache.org
+Created-By: Maven Integration for Eclipse
+
