@@ -82,7 +82,9 @@ import com.gl.ceir.config.service.businesslogic.StateMachine;
 import com.gl.ceir.config.specificationsbuilder.GenericSpecificationBuilder;
 import com.gl.ceir.config.transaction.StolenAndRecoveryTransaction;
 import com.gl.ceir.config.util.CustomMappingStrategy;
+import com.gl.ceir.config.util.DateUtil;
 import com.gl.ceir.config.util.InterpSetter;
+import com.gl.ceir.config.util.Utility;
 import com.opencsv.CSVWriter;
 import com.opencsv.bean.StatefulBeanToCsv;
 import com.opencsv.bean.StatefulBeanToCsvBuilder;
@@ -93,7 +95,7 @@ public class StolenAndRecoveryServiceImpl {
 	private static final Logger logger = LogManager.getLogger(StolenAndRecoveryServiceImpl.class);
 
 	private ReentrantLock lock = new ReentrantLock();
-	
+
 	@Autowired
 	WebActionDbRepository webActionDbRepository;
 
@@ -157,13 +159,27 @@ public class StolenAndRecoveryServiceImpl {
 	@Autowired 
 	UserFeignClient userFeignClient;
 
+	@Autowired
+	Utility utility;
+
 	public GenricResponse uploadDetails(StolenandRecoveryMgmt stolenandRecoveryMgmt) {
 
 		try {
-			WebActionDb webActionDb = new WebActionDb(decideFeature(stolenandRecoveryMgmt.getRequestType()), SubFeatures.REGISTER, 
+			WebActionDb webActionDb = new WebActionDb(decideFeature(stolenandRecoveryMgmt.getRequestType()), 
+					SubFeatures.REGISTER, 
 					WebActionStatus.INIT.getCode(), stolenandRecoveryMgmt.getTxnId());
 
 			stolenandRecoveryMgmt.setFileStatus(StolenStatus.INIT.getCode());
+
+			// Only for logs purpose.
+			if(stolenandRecoveryMgmt.getRequestType() == 1) {
+				logger.info("Recovery request for txn_id["+stolenandRecoveryMgmt.getTxnId()+"]");
+			}else if(stolenandRecoveryMgmt.getRequestType() == 3) {
+				logger.info("Unblock request for txn_id["+stolenandRecoveryMgmt.getTxnId()+"]");
+			}
+
+			setBlockingType(stolenandRecoveryMgmt);
+
 			if(Objects.nonNull(stolenandRecoveryMgmt.getStolenIndividualUserDB())) {
 				StolenIndividualUserDB stolenIndividualUserDB = stolenandRecoveryMgmt.getStolenIndividualUserDB();
 				stolenandRecoveryMgmt.setQty(countImeiForIndividual(stolenIndividualUserDB.getImeiEsnMeid1(), 
@@ -178,7 +194,10 @@ public class StolenAndRecoveryServiceImpl {
 
 			if(stolenAndRecoveryTransaction.executeUploadDetails(stolenandRecoveryMgmt, webActionDb)) {
 				logger.info("Upload Successfully." +  stolenandRecoveryMgmt.getTxnId());
-				addInAuditTrail(stolenandRecoveryMgmt.getUserId(), stolenandRecoveryMgmt.getTxnId(), SubFeatures.UPLOAD, stolenandRecoveryMgmt.getRoleType(),stolenandRecoveryMgmt.getRequestType(),0);
+				addInAuditTrail(stolenandRecoveryMgmt.getUserId(), stolenandRecoveryMgmt.getTxnId(), 
+						SubFeatures.UPLOAD, stolenandRecoveryMgmt.getRoleType(), 
+						stolenandRecoveryMgmt.getRequestType(), 0);
+
 				return new GenricResponse(0, "Upload Successfully.", stolenandRecoveryMgmt.getTxnId());
 			}else {
 				logger.info("Upload have been failed." + stolenandRecoveryMgmt.getTxnId());
@@ -201,6 +220,16 @@ public class StolenAndRecoveryServiceImpl {
 	public GenricResponse v2uploadDetails(StolenandRecoveryMgmt stolenandRecoveryDetails) {
 
 		try {
+
+			// Only for logs purpose.
+			if(stolenandRecoveryDetails.getRequestType() == 1) {
+				logger.info("Recovery request for txn_id["+stolenandRecoveryDetails.getTxnId()+"]");
+			}else if(stolenandRecoveryDetails.getRequestType() == 3) {
+				logger.info("Unblock request for txn_id["+stolenandRecoveryDetails.getTxnId()+"]");
+			}
+
+			setBlockingType(stolenandRecoveryDetails);
+
 			// Single = 4
 			if(stolenandRecoveryDetails.getSourceType() == 4){
 				SingleImeiDetails singleImeiDetails = new SingleImeiDetails();	
@@ -221,7 +250,7 @@ public class StolenAndRecoveryServiceImpl {
 
 			webActionDbRepository.save(webActionDb);
 			addInAuditTrail(stolenandRecoveryDetails.getUserId(), stolenandRecoveryDetails.getTxnId(), SubFeatures.UPLOAD, stolenandRecoveryDetails.getRoleType(),stolenandRecoveryDetails.getRequestType(),0);
-			return new GenricResponse(0,"Upload Successfully.",stolenandRecoveryDetails.getTxnId());
+			return new GenricResponse(0, "Upload Successfully.", stolenandRecoveryDetails.getTxnId());
 
 		}catch (Exception e) {
 			logger.error(e.getMessage(), e);
@@ -859,6 +888,15 @@ public class StolenAndRecoveryServiceImpl {
 						SubFeatures.UPDATE, 
 						WebActionStatus.INIT.getCode(), stolenandRecoveryMgmt.getTxnId());
 
+				// Only for logs purpose.
+				if(stolenandRecoveryMgmt.getRequestType() == 1) {
+					logger.info("Recovery request for txn_id[" + stolenandRecoveryMgmt.getTxnId() + "]");
+				}else if(stolenandRecoveryMgmt.getRequestType() == 3) {
+					logger.info("Unblock request for txn_id[" + stolenandRecoveryMgmt.getTxnId() + "]");
+				}
+
+				setBlockingType(stolenandRecoveryMgmt);
+				
 				// 0 = Stolen
 				if (stolenandRecoveryMgmt.getRequestType() == 0){
 					stolenandRecoveryMgmtInfo.setBlockingTimePeriod(stolenandRecoveryMgmt.getBlockingTimePeriod());
@@ -994,10 +1032,10 @@ public class StolenAndRecoveryServiceImpl {
 				logger.info(message + " " + consignmentUpdateRequest.getTxnId());
 				return new GenricResponse(4, message, consignmentUpdateRequest.getTxnId());
 			}
-			
+
 			lock.lock();
 			logger.info("lock taken by thread : " + Thread.currentThread().getName());
-			
+
 			// 0 - Processing, 1 - Reject, 2 - Pending Approval
 			if("CEIRADMIN".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())){
 				String mailTag = null;
@@ -1006,7 +1044,7 @@ public class StolenAndRecoveryServiceImpl {
 
 				if(consignmentUpdateRequest.getAction() == 0) {
 					action = SubFeatures.ACCEPT;
-					
+
 					String payloadTxnId = stolenandRecoveryMgmt.getTxnId();
 					// Check if someone else taken the same action on Stolen/Recovery/Block/Unblock.
 					StolenandRecoveryMgmt stolenandRecoveryMgmtTemp = stolenAndRecoveryRepository.getByTxnId(payloadTxnId);
@@ -1046,7 +1084,7 @@ public class StolenAndRecoveryServiceImpl {
 						logger.info(message);
 						return new GenricResponse(10, "", message, payloadTxnId);
 					}
-					
+
 					if(consignmentUpdateRequest.getRequestType() == 0) {
 						mailTag = "STOLEN_REJECT_BY_CEIR_ADMIN";
 						txnId =  stolenandRecoveryMgmt.getTxnId();
@@ -1145,7 +1183,7 @@ public class StolenAndRecoveryServiceImpl {
 
 				if(consignmentUpdateRequest.getAction() == 0) {
 					action = SubFeatures.ACCEPT;
-					
+
 					String payloadTxnId = stolenandRecoveryMgmt.getTxnId();
 					// Check if someone else taken the same action on Stolen/Recovery/Block/Unblock.
 					StolenandRecoveryMgmt stolenandRecoveryMgmtTemp = stolenAndRecoveryRepository.getByTxnId(payloadTxnId);
@@ -1179,7 +1217,7 @@ public class StolenAndRecoveryServiceImpl {
 
 				}else if(consignmentUpdateRequest.getAction() == 1) {
 					action = SubFeatures.REJECT;
-					
+
 					String payloadTxnId = stolenandRecoveryMgmt.getTxnId();
 					// Check if someone else taken the same action on Stolen/Recovery/Block/Unblock.
 					StolenandRecoveryMgmt stolenandRecoveryMgmtTemp = stolenAndRecoveryRepository.getByTxnId(payloadTxnId);
@@ -1211,7 +1249,7 @@ public class StolenAndRecoveryServiceImpl {
 
 				}else if(consignmentUpdateRequest.getAction() == 2) {
 					action = SubFeatures.ACCEPT;
-					
+
 					String payloadTxnId = stolenandRecoveryMgmt.getTxnId();
 					// Check if someone else taken the same action on Stolen/Recovery/Block/Unblock.
 					StolenandRecoveryMgmt stolenandRecoveryMgmtTemp = stolenAndRecoveryRepository.getByTxnId(payloadTxnId);
@@ -1268,12 +1306,11 @@ public class StolenAndRecoveryServiceImpl {
 								ReferTable.USERS);
 						logger.info("proceed by system,Notfication  have been saved for User.");
 
-						if(consignmentUpdateRequest.getAction() == 0) {
+						if(consignmentUpdateRequest.getAction() == 2) {
 							Generic_Response_Notification generic_Response_Notification =
 									userFeignClient.ceirInfoByUserTypeId(8);
 
-							logger.info("generic_Response_Notification::::::::"+
-									generic_Response_Notification);
+							logger.info("generic_Response_Notification::::::::" + generic_Response_Notification);
 
 							List<RegisterationUser> registerationUserList =
 									generic_Response_Notification.getData();
@@ -1456,6 +1493,25 @@ public class StolenAndRecoveryServiceImpl {
 			auditTrailRepository.save(obj);
 		}else {
 			logger.error("Could not find the user information");
+		}
+	}
+
+	private void setBlockingType(StolenandRecoveryMgmt stolenandRecoveryMgmt) {
+		if(Objects.isNull(stolenandRecoveryMgmt.getBlockingType())
+				|| stolenandRecoveryMgmt.getBlockingType().equalsIgnoreCase("Default") 
+				|| stolenandRecoveryMgmt.getBlockingType().isEmpty()) {
+			SystemConfigurationDb systemConfigurationDb = configurationManagementServiceImpl.findByTag(ConfigTags.GREY_TO_BLACK_MOVE_PERIOD_IN_DAY);
+			String date = DateUtil.nextDate(Integer.parseInt(systemConfigurationDb.getValue()), "yyyy-MM-dd");
+			stolenandRecoveryMgmt.setBlockingTimePeriod(date); 
+			stolenandRecoveryMgmt.setBlockingType("Default");
+			logger.info("Set Default Blocking time period for txn_id [" + stolenandRecoveryMgmt.getTxnId() + "] Blockingtimeperiod [" + date + "]");
+		}else if(stolenandRecoveryMgmt.getBlockingType().equalsIgnoreCase("Immediate")) {
+			String date = DateUtil.nextDate(0, "yyyy-MM-dd");
+			stolenandRecoveryMgmt.setBlockingTimePeriod(date); 
+			stolenandRecoveryMgmt.setBlockingType("Immediate");
+			logger.info("Set Immediate Blocking time period for txn_id [" + stolenandRecoveryMgmt.getTxnId() + "] Blockingtimeperiod [" + date + "]");
+		}else {
+			logger.info("Unable to set Blocking time period for txn_id " + stolenandRecoveryMgmt.getTxnId());
 		}
 	}
 

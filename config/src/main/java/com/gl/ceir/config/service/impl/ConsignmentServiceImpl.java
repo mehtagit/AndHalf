@@ -1189,7 +1189,7 @@ public class ConsignmentServiceImpl {
 
 		if(consignmentTransaction.executeUpdateStatusConsignmentForCeirSystem(consignmentMgmt, null)) {
 			ConsignmentMgmt current_consignment_response = consignmentRepository.getByTxnId(payloadTxnId);
-			if(action == 0) {
+			if(action == 2) {
 				logger.info("CONSIGNMENT_PROCESS_SUCCESS_TO_IMPORTER_MAIL :  "+current_consignment_response.getConsignmentStatus());
 
 				placeholderMap.put("<First name>", userProfile.getFirstName());
@@ -1243,7 +1243,7 @@ public class ConsignmentServiceImpl {
 					logger.info("No. of mail sent : " + rawMails.size());
 					emailUtil.saveNotification(rawMails);
 				}
-			}else {
+			}else if(action == 1) {
 				logger.info("CONSIGNMENT_PROCESS_FAILED_TO_IMPORTER_MAIL :  "+current_consignment_response.getConsignmentStatus());
 
 				placeholderMap.put("<First name>", userProfile.getFirstName());
@@ -1264,7 +1264,10 @@ public class ConsignmentServiceImpl {
 					logger.info("No. of mail sent : " + rawMails.size());
 					emailUtil.saveNotification(rawMails);
 				}
+			}else {
+				logger.info("Don't take any action for mail.");
 			}
+			
 			logger.info("Consignment status have Update SuccessFully." + payloadTxnId);
 			return new GenricResponse(0, "Consignment status have Update SuccessFully.", payloadTxnId);
 		}else {

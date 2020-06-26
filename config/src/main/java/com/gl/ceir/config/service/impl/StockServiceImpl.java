@@ -828,9 +828,6 @@ public class StockServiceImpl {
 								stockMgmt.getRoleType(), receiverUserType, "Users");
 						logger.info("Notfication have been saved for CEIR Admin."); }	
 					}
-
-
-
 				}
 
 			}else if("CEIRSYSTEM".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())){
@@ -926,10 +923,10 @@ public class StockServiceImpl {
 
 						logger.info("Notfication have been saved for user.");
 
-						if(consignmentUpdateRequest.getAction() == 0) {
+						if(consignmentUpdateRequest.getAction() == 2) {
 							Generic_Response_Notification generic_Response_Notification = userFeignClient.ceirInfoByUserTypeId(8);
 
-							logger.info("generic_Response_Notification::::::::"+generic_Response_Notification);
+							logger.info("generic_Response_Notification::::::::" + generic_Response_Notification);
 
 							List<RegisterationUser> registerationUserList = generic_Response_Notification.getData();
 

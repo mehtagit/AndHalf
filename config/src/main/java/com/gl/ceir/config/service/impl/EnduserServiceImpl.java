@@ -937,7 +937,7 @@ public class EnduserServiceImpl {
 								"End User"));
 
 					}	
-					for(User userData:user) {
+					for(User userData : user) {
 
 						rawMails.add(new RawMail("Update_Visa_Request_CEIRAdmin", 
 								userData.getId(), 
