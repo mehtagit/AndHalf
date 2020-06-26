@@ -25,11 +25,13 @@
 		sessionStorage.setItem("reportInterp", reportInterp);
 		window.location.replace("./report?via=other&tableName="+reportname);
 		}
-	}
-	
-	
-	;
-	
+	};
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		url: './getallreports',
 		type: 'POST',

@@ -45,7 +45,12 @@ function SaveSystemUser(){
 				"userType":$("body").attr("data-roleType"),
 				"username" : $("body").attr("data-userName")
 		}
-	
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+			headers:
+			{ 'X-CSRF-TOKEN': token }
+		});
 		$.ajax({
 			url : "./saveNewSystemUser",
 			data : JSON.stringify(newUser),

@@ -30,7 +30,12 @@ function configManagementDatatable(){
 			"roleType":$("body").attr("data-roleType"),
 			"username" : $("body").attr("data-selected-username")
 	}
-	
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		url: 'headers?type=adminPolicyManagement',
 		type: 'POST',
@@ -88,6 +93,12 @@ function configManagementDatatable(){
 //**************************************************viewConfig page buttons**********************************************
 
 function pageRendering(){
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		url: 'policyConfig/pageRendering',
 		type: 'POST',
@@ -149,6 +160,12 @@ function pageRendering(){
 		}
 
 	}); 
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+	});
 	//Request Type status-----------dropdown
 	$.getJSON('./getDropdownList/CONFIG_TYPE', function(data) {
 		for (i = 0; i < data.length; i++) {
@@ -195,6 +212,12 @@ function viewDetails(tag){
 			"roleType":$("body").attr("data-roleType"),
 			"username" : $("body").attr("data-selected-username")
 	} 
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		url : "./policy/viewTag",
 		data :	JSON.stringify(RequestData),
@@ -237,7 +260,13 @@ function updateDetails(tag,status){
 			"userName" : $("body").attr("data-selected-username"),
 			"roleType":$("body").attr("data-roleType"),
 			"username" : $("body").attr("data-selected-username")
-	} 
+	}
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		url : "./policy/viewTag",
 		data :	JSON.stringify(RequestData),
@@ -294,7 +323,12 @@ function updatePolicy(){
 				"roleType":$("body").attr("data-roleType"),
 				"username" : $("body").attr("data-selected-username")
 	}
-	
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+			headers:
+			{ 'X-CSRF-TOKEN': token }
+		});
 	//console.log("updateRequest-->" +updateRequest);
 	$.ajax({
 		url : "./policy/update",

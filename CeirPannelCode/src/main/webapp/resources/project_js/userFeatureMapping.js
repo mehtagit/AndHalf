@@ -67,6 +67,12 @@
 			if(lang=='km'){
 				var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
 			}
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$.ajaxSetup({
+				headers:
+				{ 'X-CSRF-TOKEN': token }
+			});
 			$.ajax({
 				url: 'headers?type=userFeatureHeaders&lang='+lang,
 				/*	headers: {"Accept-Language": "en"},*/
@@ -124,6 +130,12 @@
 
 
 		function pageRendering(){
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$.ajaxSetup({
+				headers:
+				{ 'X-CSRF-TOKEN': token }
+			});
 			$.ajax({
 				url: 'systemUserFeature/pageRendering',
 				type: 'POST',
@@ -190,6 +202,12 @@
 
 		
 		function setAllDropdown(){
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$.ajaxSetup({
+				headers:
+				{ 'X-CSRF-TOKEN': token }
+			});
 			$.getJSON('./getAllfeatures', function(data) {
 			for (i = 0; i < data.length; i++) {
 			$('<option>').val(data[i].id).text(data[i].name).appendTo('#feature');
@@ -231,7 +249,12 @@
 				"userType":$("body").attr("data-roleType"),
 				"username" : $("body").attr("data-selected-username")
 		}
-		
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+			headers:
+			{ 'X-CSRF-TOKEN': token }
+		});
 		$.ajax({
 			url : './updateSystemUserPeriod',
 			data : JSON.stringify(Request),
