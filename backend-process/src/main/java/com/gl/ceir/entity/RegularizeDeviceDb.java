@@ -3,8 +3,10 @@ package com.gl.ceir.entity;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,10 +17,13 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.envers.Audited;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
+@Audited
 public class RegularizeDeviceDb implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -29,6 +34,7 @@ public class RegularizeDeviceDb implements Serializable {
 
 	@CreationTimestamp
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
+	@Column(nullable = false, updatable = false)
 	private LocalDateTime createdOn;
 
 	@UpdateTimestamp
@@ -37,56 +43,48 @@ public class RegularizeDeviceDb implements Serializable {
 	@NotNull
 	private String nid;
 	
-	@NotNull
 	private Integer deviceStatus;
 	@Transient
 	private String deviceStatusInterp;
 	
-	@NotNull
 	private Integer taxPaidStatus;
 	@Transient
 	private String taxPaidStatusInterp;
 	
-	@NotNull
 	private Integer deviceType;
 	@Transient
 	private String deviceTypeInterp;
 	
-	@NotNull
 	private Integer deviceIdType;
 	@Transient
 	private String deviceIdTypeInterp;
 	
-	@NotNull
 	private String multiSimStatus;
 	
-	@NotNull
 	private String country;
 	
 	private String deviceSerialNumber;
 	
-	@NotNull
 	private String txnId;
 	
 	// @NotNull
 	private Double price;
 	
-	@NotNull
 	private Integer currency;
 	@Transient
 	private String currencyInterp;
 	
 	@NotNull
-	@Column(unique = true)
+	@Column(unique = true, length = 18)
 	private String firstImei;
 	
-	@Column(unique = true)
+	@Column(unique = true, length = 18)
 	private String secondImei;
 	
-	@Column(unique = true)
+	@Column(unique = true, length = 18)
 	private String thirdImei;
 	
-	@Column(unique = true)
+	@Column(unique = true, length = 18)
 	private String fourthImei;
 	
 	private String remark;
@@ -96,7 +94,8 @@ public class RegularizeDeviceDb implements Serializable {
 	@Transient
 	private String stateInterp;
 	
-	@ManyToOne 
+	
+	@ManyToOne
 	@JoinColumn(name = "userId") 
 	private EndUserDB endUserDB;
 	
@@ -104,7 +103,24 @@ public class RegularizeDeviceDb implements Serializable {
 	@Column(length = 20)
 	private String origin;
 	
+	@Transient
+	private String nationality;
+	
+	
 	private long creatorUserId;
+	@Transient
+	private String multiSimStatusInterp;
+	
+    private String approvedBy;
+    
+    
+	public String getMultiSimStatusInterp() {
+		return multiSimStatusInterp;
+	}
+
+	public void setMultiSimStatusInterp(String multiSimStatusInterp) {
+		this.multiSimStatusInterp = multiSimStatusInterp;
+	}
 
 	public Long getId() {
 		return id;
@@ -201,7 +217,8 @@ public class RegularizeDeviceDb implements Serializable {
 	public void setTxnId(String txnId) {
 		this.txnId = txnId;
 	}
-
+	
+	
 	public EndUserDB getEndUserDB() {
 		return endUserDB;
 	}
@@ -341,6 +358,22 @@ public class RegularizeDeviceDb implements Serializable {
 		this.creatorUserId = creatorUserId;
 	}
 
+	public String getNationality() {
+		return nationality;
+	}
+
+	public void setNationality(String nationality) {
+		this.nationality = nationality;
+	}
+
+	public String getApprovedBy() {
+		return approvedBy;
+	}
+
+	public void setApprovedBy(String approvedBy) {
+		this.approvedBy = approvedBy;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -392,14 +425,24 @@ public class RegularizeDeviceDb implements Serializable {
 		builder.append(fourthImei);
 		builder.append(", remark=");
 		builder.append(remark);
-		builder.append(", origin=");
-		builder.append(origin);
 		builder.append(", status=");
 		builder.append(status);
-		builder.append(", endUserDB=");
-		builder.append(endUserDB);
+		builder.append(", stateInterp=");
+		builder.append(stateInterp);
+		builder.append(", origin=");
+		builder.append(origin);
+		builder.append(", nationality=");
+		builder.append(nationality);
+		builder.append(", creatorUserId=");
+		builder.append(creatorUserId);
+		builder.append(", multiSimStatusInterp=");
+		builder.append(multiSimStatusInterp);
+		builder.append(", approvedBy=");
+		builder.append(approvedBy);
+		builder.append(", toString()=");
+		builder.append(super.toString());
 		builder.append("]");
 		return builder.toString();
 	}
-
+	
 }

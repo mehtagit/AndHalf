@@ -20,12 +20,14 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.NotAudited;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Audited
-public class EndUserDB implements Serializable {
+public class EndUserDB   {
 
 	private static final long serialVersionUID = 1L;
 
@@ -34,6 +36,7 @@ public class EndUserDB implements Serializable {
 	private Long id;
 	
 	@CreationTimestamp
+	@Column(nullable = false, updatable = false)
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private LocalDateTime createdOn;
 	
@@ -74,10 +77,14 @@ public class EndUserDB implements Serializable {
 	
 	private Integer docType;
 	@Transient
-	private Integer docTypeInterp;
+	private String docTypeInterp;
+	
+	@Transient
+	private String documentInterp;
+	
 
 	@NotAudited
-	@OneToMany(mappedBy = "endUserDB", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "endUserDB",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	private List<RegularizeDeviceDb> regularizeDeviceDbs ;
 	
 	@Column(length = 50)
@@ -90,6 +97,11 @@ public class EndUserDB implements Serializable {
 	@NotAudited
 	@OneToMany(mappedBy = "endUserDB", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<VisaDb> visaDb;
+
+	@NotAudited
+	@JsonIgnore
+	@OneToMany(mappedBy = "endUserDBData", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<VisaUpdateDb> visaUpdateDb;
 	
 	@Column(length = 1)
 	private String isVip="N";
@@ -110,7 +122,18 @@ public class EndUserDB implements Serializable {
 	@NotNull
 	@Column(length = 20)
 	private String origin;
+	
+	private String entryDateInCountry;
 
+	@Transient
+	private String rejectedRemark;
+		
+	public String getRejectedRemark() {
+		return rejectedRemark;
+	}
+	public void setRejectedRemark(String rejectedRemark) {
+		this.rejectedRemark = rejectedRemark;
+	}
 	public Long getId() {
 		return id;
 	}
@@ -201,6 +224,13 @@ public class EndUserDB implements Serializable {
 	public void setPhoneNo(String phoneNo) {
 		this.phoneNo = phoneNo;
 	}
+	
+	public String getDocumentInterp() {
+		return documentInterp;
+	}
+	public void setDocumentInterp(String documentInterp) {
+		this.documentInterp = documentInterp;
+	}
 	public List<RegularizeDeviceDb> getRegularizeDeviceDbs() {
 		return regularizeDeviceDbs;
 	}
@@ -240,10 +270,10 @@ public class EndUserDB implements Serializable {
 	public void setDocType(Integer docType) {
 		this.docType = docType;
 	}
-	public Integer getDocTypeInterp() {
+	public String getDocTypeInterp() {
 		return docTypeInterp;
 	}
-	public void setDocTypeInterp(Integer docTypeInterp) {
+	public void setDocTypeInterp(String docTypeInterp) {
 		this.docTypeInterp = docTypeInterp;
 	}
 	public String getNationality() {
@@ -311,6 +341,19 @@ public class EndUserDB implements Serializable {
 		this.origin = origin;
 	}
 	
+	public String getEntryDateInCountry() {
+		return entryDateInCountry;
+	}
+	public void setEntryDateInCountry(String entryDateInCountry) {
+		this.entryDateInCountry = entryDateInCountry;
+	}
+	public List<VisaUpdateDb> getVisaUpdateDb() {
+		return visaUpdateDb;
+	}
+	public void setVisaUpdateDb(List<VisaUpdateDb> visaUpdateDb) {
+		this.visaUpdateDb = visaUpdateDb;
+	}
+	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -356,14 +399,34 @@ public class EndUserDB implements Serializable {
 		builder.append(docType);
 		builder.append(", docTypeInterp=");
 		builder.append(docTypeInterp);
+		builder.append(", documentInterp=");
+		builder.append(documentInterp);
 		builder.append(", nationality=");
 		builder.append(nationality);
 		builder.append(", onVisa=");
 		builder.append(onVisa);
+		builder.append(", visaDb=");
+		builder.append(visaDb);
 		builder.append(", isVip=");
 		builder.append(isVip);
+		builder.append(", userDepartment=");
+		builder.append(userDepartment);
 		builder.append(", passportFileName=");
 		builder.append(passportFileName);
+		builder.append(", creatorUserId=");
+		builder.append(creatorUserId);
+		builder.append(", status=");
+		builder.append(status);
+		builder.append(", remarks=");
+		builder.append(remarks);
+		builder.append(", origin=");
+		builder.append(origin);
+		builder.append(", entryDateInCountry=");
+		builder.append(entryDateInCountry);
+		builder.append(", rejectedRemark=");
+		builder.append(rejectedRemark);
+		builder.append(", toString()=");
+		builder.append(super.toString());
 		builder.append("]");
 		return builder.toString();
 	}

@@ -1,6 +1,4 @@
 package com.gl.ceir.entity;
-
-import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -13,19 +11,20 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
-
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.envers.Audited;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+
 @Entity
 @Audited
-public class VisaDb implements Serializable {
-
-	private static final long serialVersionUID = 1L;
+public class VisaUpdateDb {
+ 
+	private static long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,13 +33,14 @@ public class VisaDb implements Serializable {
 	@CreationTimestamp
 	@Column(nullable = false, updatable = false)
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime createdOn;
-
+	
 	@UpdateTimestamp
-	@Column(nullable = false, updatable = false)
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private LocalDateTime modifiedOn;
-
+	
 	@NotNull
 	private Integer visaType; 
 	
@@ -58,29 +58,78 @@ public class VisaDb implements Serializable {
 	
 	@Transient
 	private String visaTypeInterp;
+	
+	private Integer status;
+	
+	@Transient
+	private String stateInterp;
+	
+    @Transient  
+	private long userId;
+	
 	@ManyToOne
 	@JoinColumn(name = "userId")
 	@JsonIgnore
-	EndUserDB endUserDB;
-	
-	public VisaDb() {
-		// TODO Auto-generated constructor stub
-	}
-	
-	public VisaDb(Integer visaType, String visaNumber, String visaFileName, String entryDateInCountry, String visaExpiryDate) {
-		// TODO Auto-generated constructor stub
-	}
-	
+	EndUserDB endUserDBData;
 
-	public VisaDb(@NotNull Integer visaType, String visaNumber, @NotNull String visaFileName, String entryDateInCountry,
-			Date visaExpiryDate, EndUserDB endUserDB) {
+	
+	private String txnId;
+	
+	private String remark;
+	 
+	private String nid;
+	
+    private String approvedBy;
+	
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+
+	public VisaUpdateDb() {
+		super();
+	}
+
+	
+	public long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(long userId) {
+		this.userId = userId;
+	}
+
+	public VisaUpdateDb(@NotNull Integer visaType, String visaNumber, @NotNull String visaFileName,
+			String entryDateInCountry, Date visaExpiryDate, Integer status,EndUserDB userId,String txnId,String nid) {
 		super();
 		this.visaType = visaType;
 		this.visaNumber = visaNumber;
 		this.visaFileName = visaFileName;
 		this.entryDateInCountry = entryDateInCountry;
 		this.visaExpiryDate = visaExpiryDate;
-		this.endUserDB = endUserDB;
+		this.status = status;
+		this.endUserDBData=userId;
+		this.txnId=txnId;
+		this.nid=nid;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public static void setSerialversionuid(long serialversionuid) {
+		serialVersionUID = serialversionuid;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public LocalDateTime getCreatedOn() {
@@ -115,6 +164,14 @@ public class VisaDb implements Serializable {
 		this.visaNumber = visaNumber;
 	}
 
+	public String getVisaFileName() {
+		return visaFileName;
+	}
+
+	public void setVisaFileName(String visaFileName) {
+		this.visaFileName = visaFileName;
+	}
+
 	public String getEntryDateInCountry() {
 		return entryDateInCountry;
 	}
@@ -122,6 +179,8 @@ public class VisaDb implements Serializable {
 	public void setEntryDateInCountry(String entryDateInCountry) {
 		this.entryDateInCountry = entryDateInCountry;
 	}
+
+	
 
 	public Date getVisaExpiryDate() {
 		return visaExpiryDate;
@@ -131,35 +190,6 @@ public class VisaDb implements Serializable {
 		this.visaExpiryDate = visaExpiryDate;
 	}
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public EndUserDB getEndUserDB() {
-		return endUserDB;
-	}
-
-	public void setEndUserDB(EndUserDB endUserDB) {
-		this.endUserDB = endUserDB;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-	
-	public String getVisaFileName() {
-		return visaFileName;
-	}
-
-	public void setVisaFileName(String visaFileName) {
-		this.visaFileName = visaFileName;
-	}
-
-	
 	public String getVisaTypeInterp() {
 		return visaTypeInterp;
 	}
@@ -168,10 +198,62 @@ public class VisaDb implements Serializable {
 		this.visaTypeInterp = visaTypeInterp;
 	}
 
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
+
+
+
+	public EndUserDB getEndUserDBData() {
+		return endUserDBData;
+	}
+
+	public void setEndUserDBData(EndUserDB endUserDBData) {
+		this.endUserDBData = endUserDBData;
+	}
+
+	public String getStateInterp() {
+		return stateInterp;
+	}
+
+	public void setStateInterp(String stateInterp) {
+		this.stateInterp = stateInterp;
+	}
+
+	public String getTxnId() {
+		return txnId;
+	}
+
+	public void setTxnId(String txnId) {
+		this.txnId = txnId;
+	}
+
+
+	public String getNid() {
+		return nid;
+	}
+
+	public void setNid(String nid) {
+		this.nid = nid;
+	}
+
+	public String getApprovedBy() {
+		return approvedBy;
+	}
+
+	public void setApprovedBy(String approvedBy) {
+		this.approvedBy = approvedBy;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("VisaDb [id=");
+		builder.append("VisaUpdateDb [id=");
 		builder.append(id);
 		builder.append(", createdOn=");
 		builder.append(createdOn);
@@ -189,10 +271,20 @@ public class VisaDb implements Serializable {
 		builder.append(visaExpiryDate);
 		builder.append(", visaTypeInterp=");
 		builder.append(visaTypeInterp);
-		builder.append(", toString()=");
-		builder.append(super.toString());
+		builder.append(", status=");
+		builder.append(status);
+		builder.append(", stateInterp=");
+		builder.append(stateInterp);
+		builder.append(", txnId=");
+		builder.append(txnId);
+		builder.append(", remark=");
+		builder.append(remark);
+		builder.append(", nid=");
+		builder.append(nid);
+		builder.append(", approvedBy=");
+		builder.append(approvedBy);
 		builder.append("]");
 		return builder.toString();
 	}
-
+	
 }
