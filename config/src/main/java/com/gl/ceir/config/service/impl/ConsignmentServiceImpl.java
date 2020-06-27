@@ -453,7 +453,6 @@ public class ConsignmentServiceImpl {
 		}
 	} 
 
-	@Transactional
 	public GenricResponse deleteConsigmentInfo(ConsignmentUpdateRequest consignmentUpdateRequest) {
 		UserProfile userProfile = null;
 		Map<String, String> placeholderMap = new HashMap<>();
@@ -470,7 +469,6 @@ public class ConsignmentServiceImpl {
 		}
 
 		try {
-
 			ConsignmentMgmt consignmentMgmt = consignmentRepository.getByTxnId(consignmentUpdateRequest.getTxnId());
 			// Fetch user_profile to update user over mail/sms regarding the action.
 			userProfile = userProfileRepository.getByUserId(consignmentMgmt.getUserId());

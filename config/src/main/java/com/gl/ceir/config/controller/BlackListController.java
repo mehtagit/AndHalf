@@ -6,6 +6,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.json.MappingJacksonValue;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,7 +31,7 @@ public class BlackListController {
 	private BlackListService blackListService;
 
 	@ApiOperation(value = "View available Black List Device ", response = BlackList.class)
-	@RequestMapping(path = "/BlackList/", method = RequestMethod.GET)
+	@GetMapping("/BlackList/")
 	public MappingJacksonValue getByMsisdnAndImei(@RequestParam(required = false) Long msisdn,
 			@RequestParam(required = false) String imei) {
 		ImeiMsisdnIdentity imeiMsisdnIdentity = new ImeiMsisdnIdentity();
@@ -57,7 +60,7 @@ public class BlackListController {
 	}
 
 	@ApiOperation(value = "Save new Device in Black List ", response = BlackList.class)
-	@RequestMapping(path = "/BlackList/", method = RequestMethod.POST)
+	@PostMapping("/BlackList/")
 	public MappingJacksonValue save(@RequestBody BlackList blackList) {
 		logger.info("Post Logger BlackList Method Calling ");
 		BlackList savedWhiteList = blackListService.save(blackList);
@@ -66,9 +69,8 @@ public class BlackListController {
 	}
 
 	@ApiOperation(value = "Delete a Device from Black List ")
-	@RequestMapping(path = "/BlackList/", method = RequestMethod.DELETE)
+	@DeleteMapping(path = "/BlackList/")
 	public void deleteByMsisdnAndImei(@RequestBody ImeiMsisdnIdentity imeiMsisdnIdentity) {
 		blackListService.deleteByMsisdnAndImei(imeiMsisdnIdentity);
 	}
-
 }
