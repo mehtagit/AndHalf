@@ -46,17 +46,6 @@ public class VisaController {
 
 		return mapping;
 	}
-	@ApiOperation(value = "Accept/Reject Update Visa", response = GenricResponse.class)
-	@RequestMapping(path = "accept-reject/end-user-visa", method = RequestMethod.PUT)
-	public GenricResponse updateEndUSerVisa(@RequestBody CeirActionRequest ceirActionRequest) {
-
-		logger.info("Request to update the regularized devices = " + ceirActionRequest);
-
-		GenricResponse genricResponse = enduserServiceImpl.acceptReject(ceirActionRequest);
-
-		return genricResponse ;
-
-	}
 	
 	@ApiOperation(value = "View End User data by Id", response = GenricResponse.class)
 	@PostMapping("/visa/viewById")
@@ -90,5 +79,16 @@ public class VisaController {
 			mapping = new MappingJacksonValue(fileDetails);
 		}	
 		return mapping;
+	}
+	
+	@ApiOperation(value = "Accept/Reject Update Visa", response = GenricResponse.class)
+	@RequestMapping(path = "accept-reject/end-user-visa", method = RequestMethod.PUT)
+	public GenricResponse updateEndUSerVisa(@RequestBody CeirActionRequest ceirActionRequest) {
+
+		logger.info("Request to update the regularized devices = " + ceirActionRequest);
+
+		GenricResponse genricResponse = enduserServiceImpl.acceptReject(ceirActionRequest);
+
+		return genricResponse ;
 	}
 }

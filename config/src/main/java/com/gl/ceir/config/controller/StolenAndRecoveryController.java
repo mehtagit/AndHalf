@@ -1,7 +1,6 @@
 package com.gl.ceir.config.controller;
 
 import java.util.List;
-import java.util.Objects;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,12 +18,10 @@ import com.gl.ceir.config.model.ConsignmentUpdateRequest;
 import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
-import com.gl.ceir.config.model.StackholderPolicyMapping;
 import com.gl.ceir.config.model.StolenandRecoveryMgmt;
 import com.gl.ceir.config.repository.AuditTrailRepository;
 import com.gl.ceir.config.service.impl.StackholderPolicyMappingServiceImpl;
 import com.gl.ceir.config.service.impl.StolenAndRecoveryServiceImpl;
-import com.gl.ceir.config.util.Utility;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -38,9 +35,6 @@ public class StolenAndRecoveryController {
 
 	@Autowired
 	StackholderPolicyMappingServiceImpl stackholderPolicyMappingServiceImpl;
-
-	@Autowired
-	Utility utility;
 	
 	@Autowired
 	AuditTrailRepository auditTrailRepository;
@@ -49,61 +43,31 @@ public class StolenAndRecoveryController {
 	@RequestMapping(path = "/stakeholder/Recovery", method = RequestMethod.POST)
 	public GenricResponse uploadFileAction(@RequestBody StolenandRecoveryMgmt stolenandRecoveryRequest) {
 
-		logger.info("Upload Recovery Details="+stolenandRecoveryRequest);
+		logger.info("Upload Recovery Details = " + stolenandRecoveryRequest);
 
 		GenricResponse genricResponse =	stolenAndRecoveryServiceImpl.uploadDetails(stolenandRecoveryRequest);
-		logger.info("Upload recovery details response="+genricResponse);
+		logger.info("Upload recovery details response = " + genricResponse);
 
 		return genricResponse;
 	}
 
 	@ApiOperation(value = "Upload Stolen Details.", response = GenricResponse.class)
 	@RequestMapping(path = "/stakeholder/Stolen", method = RequestMethod.POST)
-	public GenricResponse uploadStolenDetails(@RequestBody StolenandRecoveryMgmt stolenandRecoveryDetails)
-	{
+	public GenricResponse uploadStolenDetails(@RequestBody StolenandRecoveryMgmt stolenandRecoveryDetails){
 		logger.info("Stolen upload Request = " + stolenandRecoveryDetails);
 
-		StackholderPolicyMapping mapping = new StackholderPolicyMapping();
-		mapping.setListType("BlackList");
-
-		if(stolenandRecoveryDetails.getBlockingType() == null || stolenandRecoveryDetails.getBlockingType().equalsIgnoreCase("Default") ||
-				stolenandRecoveryDetails.getBlockingType() == "") {
-
-			StackholderPolicyMapping config = stackholderPolicyMappingServiceImpl.getPocessListConfigDetails(mapping);
-			String newTime = utility.newDate(config.getGraceTimePeriod());
-
-			stolenandRecoveryDetails.setBlockingTimePeriod(newTime);
-			stolenandRecoveryDetails.setBlockingType("Default");
-		}
-
 		GenricResponse genricResponse =	stolenAndRecoveryServiceImpl.uploadDetails(stolenandRecoveryDetails);
-		logger.info("Stolen upload Response="+genricResponse);
+		logger.info("Stolen upload Response = " + genricResponse);
 
 		return genricResponse;
 	}
 
 	@ApiOperation(value = "Upload Stolen Details.", response = GenricResponse.class)
 	@RequestMapping(path = "v2/stakeholder/Stolen", method = RequestMethod.POST)
-	public GenricResponse v2uploadStolenDetails(@RequestBody StolenandRecoveryMgmt stolenandRecoveryDetails)
-	{
-		logger.info("Stolen upload Request="+stolenandRecoveryDetails);
-
-		StackholderPolicyMapping mapping = new StackholderPolicyMapping();
-		mapping.setListType("BlackList");
-
-
-		if(stolenandRecoveryDetails.getBlockingType() == null || stolenandRecoveryDetails.getBlockingType().equalsIgnoreCase("Default") ||
-				stolenandRecoveryDetails.getBlockingType() == "") {
-
-			StackholderPolicyMapping config = stackholderPolicyMappingServiceImpl.getPocessListConfigDetails(mapping);
-			String newTime = utility.newDate(config.getGraceTimePeriod());
-
-			stolenandRecoveryDetails.setBlockingTimePeriod(newTime);
-			stolenandRecoveryDetails.setBlockingType("Default");
-		}
-
+	public GenricResponse v2uploadStolenDetails(@RequestBody StolenandRecoveryMgmt stolenandRecoveryDetails){
+		logger.info("Stolen upload Request = " + stolenandRecoveryDetails);
 		GenricResponse genricResponse =	stolenAndRecoveryServiceImpl.v2uploadDetails(stolenandRecoveryDetails);
-		logger.info("Stolen upload Response="+genricResponse);
+		logger.info("Stolen upload Response = " + genricResponse);
 
 		return genricResponse;
 	}
@@ -115,7 +79,7 @@ public class StolenAndRecoveryController {
 		logger.info("Multiple Stolen Upload Request="+stolenandRecoveryDetails);
 
 		GenricResponse genricResponse =	stolenAndRecoveryServiceImpl.uploadMultipleStolen(stolenandRecoveryDetails);
-		logger.info("Muliple Stolen Upload Response ="+genricResponse);
+		logger.info("Muliple Stolen Upload Response = " + genricResponse);
 
 		return genricResponse;
 	}
@@ -129,14 +93,14 @@ public class StolenAndRecoveryController {
 			@RequestParam(value = "source", defaultValue = "menu") String source) {
 
 		MappingJacksonValue mapping = null;
-		logger.info("  source== "+source);
+		logger.info("source == "+source);
 		if(file == 0) {
 			logger.info("Record request to Stolen And Recovery Info = " +  stolenandRecoveryDetails);
 			Page<StolenandRecoveryMgmt>	stolenandRecoveryDetailsResponse = stolenAndRecoveryServiceImpl.getAllInfo(stolenandRecoveryDetails,pageNo,pageSize,source);
 			mapping = new MappingJacksonValue(stolenandRecoveryDetailsResponse);
 		}else {
 			logger.info("Request to export filtered Stolen And Recovery = " + stolenandRecoveryDetails);
-			FileDetails fileDetails = stolenAndRecoveryServiceImpl.getFilteredStolenAndRecoveryInFile(stolenandRecoveryDetails);
+			FileDetails fileDetails = stolenAndRecoveryServiceImpl.getFilteredStolenAndRecoveryInFile(stolenandRecoveryDetails, source);
 			mapping = new MappingJacksonValue(fileDetails);
 		}
 		
@@ -162,25 +126,10 @@ public class StolenAndRecoveryController {
 	public GenricResponse updateRecord(@RequestBody StolenandRecoveryMgmt stolenandRecoveryRequest) {
 		logger.info("Record update request = " + stolenandRecoveryRequest);
 
-		StackholderPolicyMapping mapping = new StackholderPolicyMapping();
-		mapping.setListType("BlackList");
-		if(Objects.isNull(stolenandRecoveryRequest.getBlockingType()) || 
-				stolenandRecoveryRequest.getBlockingType().equalsIgnoreCase("Default") ||
-				stolenandRecoveryRequest.getBlockingType().isEmpty()) {
-
-			StackholderPolicyMapping config = stackholderPolicyMappingServiceImpl.getPocessListConfigDetails(mapping);
-			String newTime = utility.newDate(config.getGraceTimePeriod());
-
-			stolenandRecoveryRequest.setBlockingTimePeriod(newTime);
-			stolenandRecoveryRequest.setBlockingType("Default");
-		}
-
 		GenricResponse genricResponse = stolenAndRecoveryServiceImpl.updateRecord(stolenandRecoveryRequest);
-
 		logger.info("Response send= " + genricResponse);
 
 		return genricResponse;
-
 	}
 
 	@ApiOperation(value = "View Stolen and Recovery Details.", response = StolenandRecoveryMgmt.class)
@@ -204,7 +153,7 @@ public class StolenAndRecoveryController {
 		logger.info("view Stolen and recovery request by txn id = " + stolenandRecoveryRequest);
 
 		StolenandRecoveryMgmt mgmt = stolenAndRecoveryServiceImpl.getByTxnId(stolenandRecoveryRequest);
-		logger.info("View details Response send =" + mgmt);
+		logger.info("View details Response send = " + mgmt);
 
 		MappingJacksonValue mapping = new MappingJacksonValue(mgmt);
 		return mapping;

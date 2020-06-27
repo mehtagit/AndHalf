@@ -3,35 +3,35 @@ package com.gl.ceir.config.model.file;
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvBindByPosition;
 
-public class StolenAndRecoveryFileModel {
-	
+public class StockRetailerFileModel {
+		
 	@CsvBindByName(column = "Created On")
 	@CsvBindByPosition(position = 0)
 	private String createdOn;
-
-	@CsvBindByName(column = "Modified On")
-	@CsvBindByPosition(position = 1)
-	private String modifiedOn;
 	
 	@CsvBindByName(column = "Txn Id")
-	@CsvBindByPosition(position = 2)
+	@CsvBindByPosition(position = 1)
 	private String txnId;
+
+	@CsvBindByName(column = "File Name")
+	@CsvBindByPosition(position = 2)
+	private String fileName;
 	
-	@CsvBindByName(column = "Request Type")
+	@CsvBindByName(column = "IMEI Quantity")
 	@CsvBindByPosition(position = 3)
-	private String requestType;
-	
-	@CsvBindByName(column = "Mode")
+	private Integer quantity;
+
+	@CsvBindByName(column = "Modified On")
 	@CsvBindByPosition(position = 4)
-	private String mode;
+	private String modifiedOn;
 	
 	@CsvBindByName(column = "Status")
 	@CsvBindByPosition(position = 5)
-	private String stolenStatus;
+	private String stockStatus;
 	
-	@CsvBindByName(column = "Filename")
+	@CsvBindByName(column = "Supplier Name")
 	@CsvBindByPosition(position = 6)
-	private String fileName;
+	private String supplierName;
 	
 	@CsvBindByName(column = "Device Quantity")
 	@CsvBindByPosition(position = 7)
@@ -45,12 +45,12 @@ public class StolenAndRecoveryFileModel {
 		this.deviceQuantity = deviceQuantity;
 	}
 
-	public String getStolenStatus() {
-		return stolenStatus;
+	public String getStockStatus() {
+		return stockStatus;
 	}
 
-	public void setStolenStatus(String stolenStatus) {
-		this.stolenStatus = stolenStatus;
+	public void setStockStatus(String stockStatus) {
+		this.stockStatus = stockStatus;
 	}
 
 	public String getTxnId() {
@@ -61,12 +61,28 @@ public class StolenAndRecoveryFileModel {
 		this.txnId = txnId;
 	}
 
+	public String getSupplierName() {
+		return supplierName;
+	}
+
+	public void setSupplierName(String supplierName) {
+		this.supplierName = supplierName;
+	}
+
 	public String getFileName() {
 		return fileName;
 	}
 
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
+	}
+	
+	public Integer getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
 	}
 
 	public String getCreatedOn() {
@@ -84,42 +100,27 @@ public class StolenAndRecoveryFileModel {
 	public void setModifiedOn(String modifiedOn) {
 		this.modifiedOn = modifiedOn;
 	}
-
-	public String getRequestType() {
-		return requestType;
-	}
-
-	public void setRequestType(String requestType) {
-		this.requestType = requestType;
-	}
-
-	public String getMode() {
-		return mode;
-	}
-
-	public void setMode(String mode) {
-		this.mode = mode;
-	}
-
+	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("StolenAndRecoveryFileModel [createdOn=");
+		builder.append("StockFileModel [createdOn=");
 		builder.append(createdOn);
-		builder.append(", modifiedOn=");
-		builder.append(modifiedOn);
 		builder.append(", txnId=");
 		builder.append(txnId);
-		builder.append(", requestType=");
-		builder.append(requestType);
-		builder.append(", mode=");
-		builder.append(mode);
-		builder.append(", stolenStatus=");
-		builder.append(stolenStatus);
 		builder.append(", fileName=");
 		builder.append(fileName);
+		builder.append(", quantity=");
+		builder.append(quantity);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
+		builder.append(", stockStatus=");
+		builder.append(stockStatus);
+		builder.append(", supplierName=");
+		builder.append(supplierName);
+		builder.append(", deviceQuantity=");
+		builder.append(deviceQuantity);
 		builder.append("]");
 		return builder.toString();
 	}
-
 }

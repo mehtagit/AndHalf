@@ -1,5 +1,7 @@
 package com.gl.ceir.config.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.CrudRepository;
@@ -11,7 +13,7 @@ JpaRepository<PendingTacApprovedDb, Long>, JpaSpecificationExecutor<PendingTacAp
 	
 	public PendingTacApprovedDb getById(long id);
 	
-	public PendingTacApprovedDb getByTxnId(String txnId);
+	public List<PendingTacApprovedDb> getByTxnId(String txnId);
 	
 	public long deleteByTxnId(String txnId);
 	

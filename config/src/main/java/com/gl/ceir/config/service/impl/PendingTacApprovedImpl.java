@@ -23,19 +23,15 @@ import org.springframework.transaction.annotation.Transactional;
 import com.gl.ceir.config.ConfigTags;
 import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
-import com.gl.ceir.config.model.AuditTrail;
 import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.PendingTacApprovedDb;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.SystemConfigurationDb;
-import com.gl.ceir.config.model.User;
 import com.gl.ceir.config.model.constants.Datatype;
-import com.gl.ceir.config.model.constants.Features;
 import com.gl.ceir.config.model.constants.GenericMessageTags;
 import com.gl.ceir.config.model.constants.SearchOperation;
-import com.gl.ceir.config.model.constants.SubFeatures;
 import com.gl.ceir.config.model.file.PendingTacApprovedFileModel;
 import com.gl.ceir.config.repository.AuditTrailRepository;
 import com.gl.ceir.config.repository.PendingTacApprovedRepository;
@@ -113,11 +109,13 @@ public class PendingTacApprovedImpl {
 						GenericMessageTags.NULL_REQ.getMessage(), null);
 			}
 
-			PendingTacApprovedDb pendingTacApprovedDb = pendingTacApprovedRepository.getByTxnId(filterRequest.getTxnId());
-			if(Objects.nonNull(pendingTacApprovedDb)) {
-				return new GenricResponse(0, "SUCCESS", "SUCCESS", pendingTacApprovedDb);
-			}else {
+			List<PendingTacApprovedDb> pendingTacApprovedDb = pendingTacApprovedRepository.getByTxnId(filterRequest.getTxnId());
+			if(pendingTacApprovedDb.isEmpty()) {
+				logger.info("No pending tacs found for consignment with txnId : " + filterRequest.getTxnId());
 				return new GenricResponse(1, "Not Found", "Not Found", "");
+			}else {
+				logger.info("Pending tacs available for consignment with txnId : " + filterRequest.getTxnId());
+				return new GenricResponse(0, "SUCCESS", "SUCCESS", pendingTacApprovedDb);
 			}
 
 		} catch (Exception e) {
@@ -130,20 +128,20 @@ public class PendingTacApprovedImpl {
 	@Transactional
 	public boolean updatePendingApproval(FilterRequest filterRequest){
 		try {
-			
-			PendingTacApprovedDb pendingTacApproveDb = pendingTacApprovedRepository.getByTxnId(filterRequest.getTxnId());
-			pendingTacApproveDb.setRemark(filterRequest.getRemark());
-			
-			logger.info("[Trying to update PendingTacApprovedDb] | Model ["+pendingTacApproveDb+"]");
-			pendingTacApprovedRepository.save(pendingTacApproveDb);
-			logger.info("[Updation of PendingTacApprovedDb is successful]  | Model ["+pendingTacApproveDb+"]");
-			return true;
+			List<PendingTacApprovedDb> pendingTacApproveDbs = pendingTacApprovedRepository.getByTxnId(filterRequest.getTxnId());
+
+			for(PendingTacApprovedDb pendingTacApproveDb : pendingTacApproveDbs) {
+				pendingTacApproveDb.setRemark(filterRequest.getRemark());
+			}
+			logger.info("[Trying to update PendingTacApprovedDb] | Model [" + pendingTacApproveDbs + "]");
+			pendingTacApprovedRepository.saveAll(pendingTacApproveDbs);
+			logger.info("[Updation of PendingTacApprovedDb is successful]  | Model [" + pendingTacApproveDbs + "]");
+			return Boolean.TRUE;
 		} catch (Exception e) {
 			logger.error("[Error while updating PendingTacApprovedDb] | Model ["+filterRequest+"] | Error ["+e+"]");
-			return false;
+			return Boolean.FALSE;
 		}
 	}
-
 
 	@Transactional
 	public GenricResponse deletePendingApproval(FilterRequest filterRequest){
@@ -152,20 +150,25 @@ public class PendingTacApprovedImpl {
 				return new GenricResponse(1, GenericMessageTags.NULL_REQ.getTag(), 
 						GenericMessageTags.NULL_REQ.getMessage(), null);
 			}
-			User user = userRepository.getById(filterRequest.getUserId());
-
-			auditTrailRepository.save(new AuditTrail(user.getId(), user.getUsername(), 0L, "System", 0L, 
-					Features.CONFIG_LIST, SubFeatures.DELETE, ""));
-			logger.info("AUDIT : Delete Tags list saved in audit_trail.");
 
 			if(Objects.nonNull(filterRequest.getTxnId())) {
-				//pendingTacApprovedRepository.save(pendingTacApproveDb);
-				pendingTacApprovedRepository.deleteByTxnId(filterRequest.getTxnId());
+				
+				if(pendingTacApprovedRepository.deleteByTxnId(filterRequest.getTxnId()) > 0) {
+					logger.info("Delete of tac is successful for txnId[" + filterRequest.getTxnId() + "] by only txnId.");
+				}else {
+					logger.info("Delete of tac is failed for txnId[" + filterRequest.getTxnId() + "] by only txnId.");
+				}
+				
 				return new GenricResponse(0, "Deleted Successully.", "", "");
 			}else if(Objects.nonNull(filterRequest.getTac()) && Objects.nonNull(filterRequest.getImporterId())){
-				pendingTacApprovedRepository.deleteByTacAndUserId(filterRequest.getTac(), filterRequest.getImporterId());
+				if(pendingTacApprovedRepository.deleteByTacAndUserId(filterRequest.getTac(), filterRequest.getImporterId()) > 0) {
+					logger.info("Delete of tac is successful for txnId[" + filterRequest.getTxnId() + "] by tac and importerid.");
+				}else {
+					logger.info("Delete of tac is failed for tac[" + filterRequest.getTac() + "] by tac and importerid.");
+				}
 				return new GenricResponse(0, "Deleted Successully.", "", "");
 			}else {
+				logger.info("No Deletion of tac is allowed for invalid request [" + filterRequest + "]");
 				return new GenricResponse(3, "No Deletion Allowed.", "", "");
 			}
 
@@ -181,10 +184,6 @@ public class PendingTacApprovedImpl {
 			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
 
 			Page<PendingTacApprovedDb> page = pendingTacApprovedRepository.findAll( buildSpecification(filterRequest).build(), pageable );
-
-			/*
-			 * for(AuditTrail auditTrail : page.getContent()) { setInterp(auditTrail); }
-			 */
 
 			return page;
 

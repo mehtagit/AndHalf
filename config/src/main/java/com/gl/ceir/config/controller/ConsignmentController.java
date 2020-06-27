@@ -104,7 +104,7 @@ public class ConsignmentController {
 			@RequestParam(value = "file", defaultValue = "0") Integer file,
 			@RequestParam(value = "source", defaultValue = "menu") String source) {
 		
-		logger.info("source::::"+source);
+		logger.info("source " + source);
 		MappingJacksonValue mapping = null;
 		if(file == 0) {
 			logger.info("Request to view filtered consignment = " + filterRequest);
@@ -112,7 +112,7 @@ public class ConsignmentController {
 			mapping = new MappingJacksonValue(consignment);
 		}else {
 			logger.info("Request to export filtered consignment = " + filterRequest);
-			FileDetails fileDetails = consignmentServiceImpl.getFilteredConsignmentInFileV2(filterRequest);
+			FileDetails fileDetails = consignmentServiceImpl.getFilteredConsignmentInFileV2(filterRequest, source);
 			mapping = new MappingJacksonValue(fileDetails);
 		}
 
@@ -122,12 +122,12 @@ public class ConsignmentController {
 	}
 
 	@ApiOperation(value = "View the Particular consignment info.", response = ConsignmentMgmt.class)
-	@RequestMapping(path = "/consignment/view", method = RequestMethod.GET)
-	public MappingJacksonValue getByTxnId(@RequestParam("txnId") String txnId) {
+	@PostMapping("/consignment/view")
+	public MappingJacksonValue getByTxnId(@RequestBody FilterRequest filterRequest) {
 
-		logger.info("View Request only Single Record="+txnId);
+		logger.info("View Request only Single Record = " + filterRequest);
 
-		ConsignmentMgmt consignmentRecordInfo = consignmentServiceImpl.getRecordInfo(txnId);
+		ConsignmentMgmt consignmentRecordInfo = consignmentServiceImpl.getRecordInfo(filterRequest);
 		MappingJacksonValue mapping = new MappingJacksonValue(consignmentRecordInfo);
 		logger.info("Response of View ="+mapping);
 
@@ -138,39 +138,27 @@ public class ConsignmentController {
 	@RequestMapping(path = "/consigment/delete", method = RequestMethod.DELETE)
 	public GenricResponse deleteConsigment(@RequestBody ConsignmentUpdateRequest consignmentUpdateRequest) {
 
-		logger.info("Consignment Withdraw Request ="+consignmentUpdateRequest);
-		GenricResponse genricResponse=null;
+		logger.info("Consignment Withdraw Request = " + consignmentUpdateRequest);
+		
+		GenricResponse genricResponse = null;
 		if(consignmentServiceImpl.updatePendingApproval(consignmentUpdateRequest)) {	
-			genricResponse =	consignmentServiceImpl.deleteConsigmentInfo(consignmentUpdateRequest);
-		logger.info("Response of Delete Request="+genricResponse);
-		}
-		else {
+			genricResponse = consignmentServiceImpl.deleteConsigmentInfo(consignmentUpdateRequest);
+		logger.info("Response of Delete Request = " + genricResponse);
+		}else {
 			new GenricResponse(1, "Error during update status before deleting", consignmentUpdateRequest.getTxnId());
 		}
-	
-
 		return genricResponse;
-
 	}
 
-	// for approve 
+	// For Approve 
 	@ApiOperation(value = "Update Consignment Status.", response = GenricResponse.class)
 	@RequestMapping(path = "update/consigmentStatus", method = RequestMethod.PUT)
 	public GenricResponse updateConsigmentStatus(@RequestBody ConsignmentUpdateRequest consignmentUpdateRequest) {
 
-		logger.info("Request to update the consignmentStatus="+consignmentUpdateRequest);
+		logger.info("Request to update the consignmentStatus = " + consignmentUpdateRequest);
 
 		GenricResponse genricResponse = consignmentServiceImpl.updateConsignmentStatus(consignmentUpdateRequest);
 
 		return genricResponse ;
-
 	}
-
-
-	/*@ApiOperation(value = "Get total count and quantity.", response = ResponseCountAndQuantity.class)
-	@RequestMapping(path = "/consignment/countAndQuantity", method = RequestMethod.POST)
-	public MappingJacksonValue getConsignmentCountAndQuantity( @RequestBody RequestCountAndQuantity request ) {
-		ResponseCountAndQuantity response = consignmentServiceImpl.getConsignmentCountAndQuantity(request);
-		return new MappingJacksonValue(response);
-	}*/
 }

@@ -58,20 +58,20 @@ public class VisaDb implements Serializable {
 	
 	@Transient
 	private String visaTypeInterp;
+	
 	@ManyToOne
 	@JoinColumn(name = "userId")
 	@JsonIgnore
 	EndUserDB endUserDB;
 	
 	public VisaDb() {
-		// TODO Auto-generated constructor stub
+
 	}
 	
 	public VisaDb(Integer visaType, String visaNumber, String visaFileName, String entryDateInCountry, String visaExpiryDate) {
-		// TODO Auto-generated constructor stub
+
 	}
 	
-
 	public VisaDb(@NotNull Integer visaType, String visaNumber, @NotNull String visaFileName, String entryDateInCountry,
 			Date visaExpiryDate, EndUserDB endUserDB) {
 		super();
