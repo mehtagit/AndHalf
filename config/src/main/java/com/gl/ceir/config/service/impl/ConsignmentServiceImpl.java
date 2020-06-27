@@ -342,6 +342,47 @@ public class ConsignmentServiceImpl {
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
+	
+	public ConsignmentMgmt getRecordInfo(FilterRequest filterRequest) {
+		String txnId = filterRequest.getTxnId();
+		try {
+			logger.info("Going to get Cosignment Record Info for txnId : " + txnId);
+
+			if(Objects.isNull(txnId)) {
+				throw new IllegalArgumentException();
+			}
+
+			ConsignmentMgmt consignmentMgmt = consignmentRepository.getByTxnId(txnId);
+
+			if(pendingTacApprovedImpl.findByTxnId(filterRequest).getErrorCode() == 0) {
+				logger.info("Tac related to the consignment with txn_id [" + consignmentMgmt.getTxnId() + "] found in pending_tac_approval_db");
+				consignmentMgmt.setPendingTacApprovedByCustom("Y");
+			}else {
+				logger.info("No tac for the consignment with txn_id [" + consignmentMgmt.getTxnId() + "] is pending.");
+				consignmentMgmt.setPendingTacApprovedByCustom("N");
+			}
+
+			setInterp(consignmentMgmt);
+			
+			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), filterRequest.getUserName(), 
+					Long.valueOf(filterRequest.getUserTypeId()), filterRequest.getUserType(), 
+					Long.valueOf(filterRequest.getFeatureId()),
+					Features.CONSIGNMENT, SubFeatures.VIEW, 
+					"", txnId, filterRequest.getRoleType()));
+			logger.info("AUDIT : Saved file export request in audit.");
+
+			return consignmentMgmt;
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", featureName);
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.VIEW);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, 0, bodyPlaceHolderMap);
+
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
+	}
 
 	public GenricResponse updateConsignment(ConsignmentMgmt consignmentFileRequest) {
 

@@ -122,12 +122,12 @@ public class ConsignmentController {
 	}
 
 	@ApiOperation(value = "View the Particular consignment info.", response = ConsignmentMgmt.class)
-	@RequestMapping(path = "/consignment/view", method = RequestMethod.GET)
-	public MappingJacksonValue getByTxnId(@RequestParam("txnId") String txnId) {
+	@PostMapping("/consignment/view")
+	public MappingJacksonValue getByTxnId(@RequestBody FilterRequest filterRequest) {
 
-		logger.info("View Request only Single Record="+txnId);
+		logger.info("View Request only Single Record = " + filterRequest);
 
-		ConsignmentMgmt consignmentRecordInfo = consignmentServiceImpl.getRecordInfo(txnId);
+		ConsignmentMgmt consignmentRecordInfo = consignmentServiceImpl.getRecordInfo(filterRequest);
 		MappingJacksonValue mapping = new MappingJacksonValue(consignmentRecordInfo);
 		logger.info("Response of View ="+mapping);
 
@@ -138,7 +138,7 @@ public class ConsignmentController {
 	@RequestMapping(path = "/consigment/delete", method = RequestMethod.DELETE)
 	public GenricResponse deleteConsigment(@RequestBody ConsignmentUpdateRequest consignmentUpdateRequest) {
 
-		logger.info("Consignment Withdraw Request ="+consignmentUpdateRequest);
+		logger.info("Consignment Withdraw Request = " + consignmentUpdateRequest);
 		
 		GenricResponse genricResponse = null;
 		if(consignmentServiceImpl.updatePendingApproval(consignmentUpdateRequest)) {	
