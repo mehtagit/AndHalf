@@ -715,11 +715,9 @@ public class StolenAndRecoveryServiceImpl {
 	public GenricResponse deleteRecord(FilterRequest filterRequest) {
 
 		UserProfile userProfile = null;
-		//String firstName = "";
 		User user = null;
 		Map<String, String> placeholderMap = new HashMap<>();
 		Map<String, String> placeholderMap1 = new HashMap<>();
-		//String mailTag = null;
 		String action = null;
 		String txnId = null;
 		String userMailTag = null;
@@ -753,14 +751,13 @@ public class StolenAndRecoveryServiceImpl {
 			txnId =  stolenandRecoveryMgmt.getTxnId();
 		}
 
-		/*placeholderMap.put("<First name>", userProfile_generic_Response_Notification.getFirstName());
-		placeholderMap.put("<Txn id>", consignmentMgmt.getTxnId());*/
-
-		placeholderMap.put("<First name>", userProfile.getFirstName());
-		placeholderMap.put("<Txn id>", filterRequest.getTxnId());
-
 		placeholderMap1.put("<First name>", userProfile.getFirstName());
 		placeholderMap1.put("<Txn id>", filterRequest.getTxnId());
+		
+		String payloadTxnId = filterRequest.getTxnId();
+		lock.lock();
+		logger.info("lock taken by thread for [Delete] - " + Thread.currentThread().getName());
+		
 		try {
 			StolenandRecoveryMgmt stolenandRecoveryMgmtInfo = stolenAndRecoveryRepository.getById(filterRequest.getId());
 			if(Objects.isNull(filterRequest.getRemark())) {
@@ -771,6 +768,14 @@ public class StolenAndRecoveryServiceImpl {
 			}else {
 				if("Lawful Agency".equalsIgnoreCase(filterRequest.getUserType()) 
 						|| "Operator".equalsIgnoreCase(filterRequest.getUserType())) {
+					// Check if someone else taken the same action on Stolen/Recovery/Block/Unblock.
+					StolenandRecoveryMgmt stolenandRecoveryMgmtTemp = stolenAndRecoveryRepository.getByTxnId(payloadTxnId);
+					if(stolenandRecoveryMgmtTemp.getFileStatus() == 7) {
+						String message = "Any other user have taken the same action on the Stolen/Recovery/Block/Unblock [" + payloadTxnId + "]";
+						logger.info(message);
+						return new GenricResponse(10, "", message, payloadTxnId);
+					}
+					
 					if(stolenandRecoveryMgmtInfo.getFileStatus()==0 
 							|| stolenandRecoveryMgmtInfo.getFileStatus()==3 
 							|| stolenandRecoveryMgmtInfo.getFileStatus()==4) {
@@ -782,6 +787,14 @@ public class StolenAndRecoveryServiceImpl {
 						return new GenricResponse(2,"State transaction not allowed", filterRequest.getTxnId());
 					}
 				}else if("CEIRAdmin".equalsIgnoreCase(filterRequest.getUserType())){
+					// Check if someone else taken the same action on Stolen/Recovery/Block/Unblock.
+					StolenandRecoveryMgmt stolenandRecoveryMgmtTemp = stolenAndRecoveryRepository.getByTxnId(payloadTxnId);
+					if(stolenandRecoveryMgmtTemp.getFileStatus() == 6) {
+						String message = "Any other user have taken the same action on the Stolen/Recovery/Block/Unblock [" + payloadTxnId + "]";
+						logger.info(message);
+						return new GenricResponse(10, "", message, payloadTxnId);
+					}
+					
 					//set file status =6
 					stolenandRecoveryMgmtInfo.setFileStatus(6);//withdrawn by CEIR Admin 
 					stolenandRecoveryMgmtInfo.setRemark(filterRequest.getRemark());
@@ -871,6 +884,11 @@ public class StolenAndRecoveryServiceImpl {
 			alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, filterRequest.getUserId(), bodyPlaceHolderMap);
 
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}finally {
+			if(lock.isLocked()) {
+				logger.info("lock released by thread [Delete] - " + Thread.currentThread().getName());
+				lock.unlock();
+			}
 		}
 	}
 

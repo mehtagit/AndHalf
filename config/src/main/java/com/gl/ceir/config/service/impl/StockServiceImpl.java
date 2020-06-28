@@ -503,22 +503,16 @@ public class StockServiceImpl {
 		String firstName = "";
 		User user = null;
 		Map<String, String> placeholderMap = new HashMap<>();
-		//String mailTag = null;
 		String action = null;
 		String txnId = null;
 		String userMailTag = null;
 		Boolean isUserCeirAdmin=false;
 		String receiverUserType = deleteObj.getUserType();
 		action = SubFeatures.DELETE;
-		//	mailTag = "STOCK_DELETE_BY_CEIR_ADMIN"; 
 		userMailTag = "STOCK_DELETE_BY_USER"; 
 		user = userRepository.getById(deleteObj.getUserId());				
 		userProfile = user.getUserProfile();
 		txnId = deleteObj.getTxnId();
-
-
-		/*placeholderMap.put("<First name>", userProfile_generic_Response_Notification.getFirstName());
-		placeholderMap.put("<Txn id>", consignmentMgmt.getTxnId());*/
 
 		placeholderMap.put("<First name>",userProfile.getFirstName());
 		placeholderMap.put("<Txn id>", deleteObj.getTxnId());
@@ -535,18 +529,36 @@ public class StockServiceImpl {
 			}
 
 			StockMgmt txnRecord	= stockManagementRepository.getByTxnId(deleteObj.getTxnId());
-
+			
+			String payloadTxnId = deleteObj.getTxnId();
+			lock.lock();
+			logger.info("lock taken by thread for [Delete] - " + Thread.currentThread().getName());
+			
 			if(Objects.isNull(txnRecord)) {
 				return new GenricResponse(1000, "No record found against this transactionId.", deleteObj.getTxnId());
 			}else {
 
 				if("CEIRADMIN".equalsIgnoreCase(deleteObj.getUserType())) {
+					// Check if someone else taken the same action on consignment.
+					StockMgmt stockMgmtTemp = stockManagementRepository.getByTxnId(payloadTxnId);
+					if(StockStatus.WITHDRAWN_BY_CEIR_ADMIN.getCode() == stockMgmtTemp.getStockStatus()) {
+						String message = "Any other user have taken the same action on the stock [" + payloadTxnId + "]";
+						logger.info(message);
+						return new GenricResponse(10, "", message, payloadTxnId);
+					}
+					
 					txnRecord.setStockStatus(StockStatus.WITHDRAWN_BY_CEIR_ADMIN.getCode());
-					isUserCeirAdmin=true;
-
+					isUserCeirAdmin = Boolean.TRUE;
 				}
-
 				else {
+					// Check if someone else taken the same action on consignment.
+					StockMgmt stockMgmtTemp = stockManagementRepository.getByTxnId(payloadTxnId);
+					if(StockStatus.WITHDRAWN_BY_USER.getCode() == stockMgmtTemp.getStockStatus()) {
+						String message = "Any other user have taken the same action on the stock [" + payloadTxnId + "]";
+						logger.info(message);
+						return new GenricResponse(10, "", message, payloadTxnId);
+					}
+					
 					txnRecord.setStockStatus(StockStatus.WITHDRAWN_BY_USER.getCode());
 				}
 				txnRecord.setRemarks(deleteObj.getRemarks());
@@ -635,6 +647,11 @@ public class StockServiceImpl {
 			alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, 0, bodyPlaceHolderMap);
 
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}finally {
+			if(lock.isLocked()) {
+				logger.info("lock released by thread [Delete] - " + Thread.currentThread().getName());
+				lock.unlock();
+			}
 		}
 	}
 

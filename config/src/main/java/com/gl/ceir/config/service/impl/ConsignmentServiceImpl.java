@@ -342,7 +342,7 @@ public class ConsignmentServiceImpl {
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
-	
+
 	public ConsignmentMgmt getRecordInfo(FilterRequest filterRequest) {
 		String txnId = filterRequest.getTxnId();
 		try {
@@ -363,7 +363,7 @@ public class ConsignmentServiceImpl {
 			}
 
 			setInterp(consignmentMgmt);
-			
+
 			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), filterRequest.getUserName(), 
 					Long.valueOf(filterRequest.getUserTypeId()), filterRequest.getUserType(), 
 					Long.valueOf(filterRequest.getFeatureId()),
@@ -468,14 +468,34 @@ public class ConsignmentServiceImpl {
 			return new GenricResponse(1002, "userType is null in the request.", consignmentUpdateRequest.getTxnId());
 		}
 
+		String payloadTxnId = consignmentUpdateRequest.getTxnId();
+		
+		lock.lock();
+		logger.info("lock taken by thread for [Delete] - " + Thread.currentThread().getName());
 		try {
 			ConsignmentMgmt consignmentMgmt = consignmentRepository.getByTxnId(consignmentUpdateRequest.getTxnId());
 			// Fetch user_profile to update user over mail/sms regarding the action.
 			userProfile = userProfileRepository.getByUserId(consignmentMgmt.getUserId());
 
 			if("CEIRADMIN".equalsIgnoreCase(consignmentUpdateRequest.getUserType())) {
+				// Check if someone else taken the same action on consignment.
+				ConsignmentMgmt consignmentMgmtTemp = consignmentRepository.getByTxnId(consignmentMgmt.getTxnId());
+				if(ConsignmentStatus.WITHDRAWN_BY_CEIR.getCode() == consignmentMgmtTemp.getConsignmentStatus()) {
+					String message = "Any other user have taken the same action on the consignment [" + payloadTxnId + "]";
+					logger.info(message);
+					return new GenricResponse(10, "", message, payloadTxnId);
+				}
+
 				consignmentMgmt.setConsignmentStatus(ConsignmentStatus.WITHDRAWN_BY_CEIR.getCode());
 			}else if("IMPORTER".equalsIgnoreCase(consignmentUpdateRequest.getUserType())) {
+				// Check if someone else taken the same action on consignment.
+				ConsignmentMgmt consignmentMgmtTemp = consignmentRepository.getByTxnId(consignmentMgmt.getTxnId());
+				if(ConsignmentStatus.WITHDRAWN_BY_IMPORTER.getCode() == consignmentMgmtTemp.getConsignmentStatus()) {
+					String message = "Any other user have taken the same action on the consignment [" + payloadTxnId + "]";
+					logger.info(message);
+					return new GenricResponse(10, "", message, payloadTxnId);
+				}
+
 				// Check status must be Init or Rejected by system.
 				if(consignmentMgmt.getConsignmentStatus() == ConsignmentStatus.INIT.getCode() || 
 						consignmentMgmt.getConsignmentStatus() == ConsignmentStatus.REJECTED_BY_SYSTEM.getCode()) {
@@ -568,6 +588,11 @@ public class ConsignmentServiceImpl {
 			alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, userId, bodyPlaceHolderMap);
 
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}finally {
+			if(lock.isLocked()) {
+				logger.info("lock released by thread [Delete] - " + Thread.currentThread().getName());
+				lock.unlock();
+			}
 		}
 	}
 
@@ -1306,7 +1331,7 @@ public class ConsignmentServiceImpl {
 			}else {
 				logger.info("Don't take any action for mail.");
 			}
-			
+
 			logger.info("Consignment status have Update SuccessFully." + payloadTxnId);
 			return new GenricResponse(0, "Consignment status have Update SuccessFully.", payloadTxnId);
 		}else {
