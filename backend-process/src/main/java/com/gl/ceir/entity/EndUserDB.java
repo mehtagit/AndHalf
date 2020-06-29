@@ -127,7 +127,8 @@ public class EndUserDB   {
 
 	@Transient
 	private String rejectedRemark;
-		
+	
+	
 	public String getRejectedRemark() {
 		return rejectedRemark;
 	}

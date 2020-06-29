@@ -110,7 +110,7 @@ public class RegularizeDeviceDb implements Serializable {
 	private long creatorUserId;
 	@Transient
 	private String multiSimStatusInterp;
-	
+
     private String approvedBy;
     
     
@@ -365,7 +365,7 @@ public class RegularizeDeviceDb implements Serializable {
 	public void setNationality(String nationality) {
 		this.nationality = nationality;
 	}
-
+	
 	public String getApprovedBy() {
 		return approvedBy;
 	}
