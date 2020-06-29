@@ -627,8 +627,8 @@ var path="${context}";
     <script type="text/javascript" src="${context}/resources/js/materialize-plugins/date_picker/picker.js"></script> --%>
 	<!--custom-script.js - Add your own theme custom JS-->
 	<script type="text/javascript" src="${context}/resources/js/plugins.js?version=<%= (int) (Math.random() * 10) %>"></script>
-	<script type="text/javascript"
-		src="${context}/resources/js/Validator.js?version=<%= (int) (Math.random() * 10) %>"></script>
+	<%-- <script type="text/javascript"
+		src="${context}/resources/js/Validator.js?version=<%= (int) (Math.random() * 10) %>"></script> --%>
 	<!--prism
     <script type="text/javascript" src="${context}/resources/resources/js/prism/prism.js?version=<%= (int) (Math.random() * 10) %>"></script>-->
 	<!--scrollbar-->

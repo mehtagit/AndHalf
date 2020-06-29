@@ -63,7 +63,12 @@
 		if(lang=='km'){
 					var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
 				}
-
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+			headers:
+			{ 'X-CSRF-TOKEN': token }
+		});
 		$.ajax({
 			url: 'headers?type=adminRegistration&lang='+lang,
 			type: 'POST',
@@ -117,6 +122,12 @@
 	//**************************************************Registration page buttons**********************************************
 
 	function pageRendering(){
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+			headers:
+			{ 'X-CSRF-TOKEN': token }
+		});
 		$.ajax({
 			url: 'registration/pageRendering',
 			type: 'POST',
@@ -194,7 +205,12 @@
 	
 	function setAllDropdown(){
 		
-		
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+			headers:
+			{ 'X-CSRF-TOKEN': token }
+		});
 		$.getJSON('./getDropdownList/'+featureId+'/'+$("body").attr("data-userTypeID"), function(data) {
 			for (i = 0; i < data.length; i++) {
 				$('<option>').val(data[i].state).text(data[i].interp)
@@ -315,7 +331,12 @@
 				"username" : $("#sessionUserName").val(),
 				"userId" : parseInt(userId)
 		}
-		
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+			headers:
+			{ 'X-CSRF-TOKEN': token }
+		});
 		$.ajax({
 			url : './adminApproval',
 			data : JSON.stringify(approveRequest),
@@ -366,7 +387,12 @@
 				"userId" : parseInt($("body").attr("data-userID"))
 				
 		}
-		
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+			headers:
+			{ 'X-CSRF-TOKEN': token }
+		});
 		$.ajax({
 			url : './adminApproval',
 			data : JSON.stringify(rejectRequest),
@@ -451,34 +477,6 @@ function roleStatusChange(Id,sessionUserName, userTypeId, tableId){
 	}
 	 	
 
-/*function usertypeData2(id) {
-	$.ajax({
-		type : 'GET',
-		url :  './getTypeDropdownList/ROLE_TYPE/' + id,
-		contentType : "application/json",
-		dataType : 'html',
-		async : false,
-		success : function(data) {
-		    $("#usertypes").empty();
-			var response = JSON.parse(data);
-			var usertypeDropdown = $("#usertypes");
-			for (var i = 0; i < response.length; i++) {
-				var data2 = '<option value="' + response[i].value + '">'
-						+ response[i].interp + '</option>';
-				usertypeDropdown.append(data2);
-
-			}
-			usertypeDropdown.val(id);
-			$('#usertypes option[value="' + id + '"]').attr('disabled', true);
-			setTimeout(function() {
-				$('.dropdown-trigger').dropdown();
-				$('select').formSelect();
-			}, 2000);
-		},
-		error : function(xhr, ajaxOptions, thrownError) {
-		}
-	});
-}*/
 
 
 
@@ -512,6 +510,12 @@ function userChangeStatus(entity){
 							"username" : $("body").attr("data-selected-username")
 						}
 			 		//console.log(JSON.stringify(request));	
+			 	var token = $("meta[name='_csrf']").attr("content");
+				var header = $("meta[name='_csrf_header']").attr("content");
+				$.ajaxSetup({
+					headers:
+					{ 'X-CSRF-TOKEN': token }
+				});
 			 		$.ajax({
 							url : './getAddDeleteRoles',
 							type : 'POST',
@@ -580,7 +584,12 @@ function userChangeStatus(entity){
 				
 		
 		//console.log("Request-->"+JSON.stringify(Request));
-		
+	 	var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+			headers:
+			{ 'X-CSRF-TOKEN': token }
+		});
 		$.ajax({
 			url : './adminChangeRequest',
 			data : JSON.stringify(Request),

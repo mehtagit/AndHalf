@@ -143,7 +143,7 @@ public class LoginService {
 		session.removeAttribute("usertype");
 		session.removeAttribute("name");
 		session.removeAttribute("userStatus");
-		session.invalidate(); 
+		//session.invalidate(); 
 	}
 	public ModelAndView logout(HttpSession session){
 		log.info("inside logout controller");

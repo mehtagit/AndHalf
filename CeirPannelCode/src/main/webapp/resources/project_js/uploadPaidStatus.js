@@ -39,7 +39,12 @@ $( document ).ready(function() {
 	var In = $("body").attr("session-value");
 	 var loggedUserType=$("body").attr("data-roleType");
 	if(loggedUserType=='Custom' || loggedUserType=='Immigration' ){
-		
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+		});
 		$.ajax({
 			url : "./paid-status/"+In,
 			dataType : 'json',
@@ -147,7 +152,13 @@ $( document ).ready(function() {
 var id=2;
 var x = 1;
 $(document).ready(function () {
-	 $.getJSON('./addMoreFile/add_more_device_count', function(data) {
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	}); 
+	$.getJSON('./addMoreFile/add_more_device_count', function(data) {
 			//console.log(data);
 			
 			localStorage.setItem("maxCount", data.value);
@@ -218,6 +229,12 @@ $(document).ready(function () {
 			populateCountries("country"+id);
 			
 			var allowed =localStorage.getItem("allowed");
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$.ajaxSetup({
+			headers:
+			{ 'X-CSRF-TOKEN': token }
+			});
 			$.getJSON('./getDropdownList/CUSTOMS_TAX_STATUS', function(data) {
 				var dropdownid=id-1;
 				if(dropdownid <= allowed){
@@ -350,6 +367,12 @@ function table(url,dataUrl){
 	if(lang=='km'){
 		var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
 	}
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		url: url,
 		type: 'POST',
@@ -409,7 +432,12 @@ function pageRendering(lang){
 
 
 function pageButtons(url){
-	
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		url: url,
 		type: 'POST',
@@ -478,7 +506,12 @@ function pageButtons(url){
 			}
 
 			//Tax paid status-----------dropdown
-			
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$.ajaxSetup({
+			headers:
+			{ 'X-CSRF-TOKEN': token }
+			});
 			$.getJSON('./getDropdownList/CUSTOMS_TAX_STATUS', function(data) {
 				for (i = 0; i < data.length; i++) {
 					////console.log(data[i].value);
@@ -534,7 +567,12 @@ function deleteByImei(imei,txnId){
 }
 
 function accept(){
-
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		url : "./delete/"+window.imei+"/"+window.txnId,
 		dataType : 'json',
@@ -611,7 +649,12 @@ function historytable(url,dataUrl){
 	if(lang=='km'){
 		var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
 	}
-	
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		url: url,
 		type: 'POST',
@@ -869,7 +912,12 @@ function submitDeviceInfo(){
 	formData.append("docType",docType);
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
-	
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		url: './registerEndUserDevice',
 		type: 'POST',
@@ -930,7 +978,12 @@ function taxPaidStatus(){
 	//console.log("--");
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
-	
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		url: './tax-paid/status',
 		type: 'PUT',
@@ -971,7 +1024,12 @@ populateCountries(
 		"country",	"state");
 
 $(document).ready(function () {
-	
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
 	$.getJSON('./getDropdownList/CUSTOMS_TAX_STATUS', function(data) {
 		var checkAllowedCount =localStorage.getItem("allowed");	
 		//alert("222222"+checkAllowedCount);
@@ -1041,7 +1099,12 @@ $(document).ready(function () {
 
 
 	$(document).ready(function(){
-		
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+		});
 		$.getJSON('./getSourceTypeDropdown/DOC_TYPE/'+featureId, function(data) {
 
 			for (i = 0; i < data.length; i++) {
@@ -1079,7 +1142,12 @@ function regularizedCount(nationType){
 		nationType=1;
 		var nid= '';
 	}
-
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		url: './countByNid?nid='+nationalID+"&nationType="+nationType,
 		type: 'GET',
@@ -1135,7 +1203,12 @@ function aprroveDevice(){
 			"userId":parseInt(userId),
 			"userType": $("body").attr("data-roleType")	  	
 	}
-	
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+    $.ajaxSetup({
+    headers:
+    { 'X-CSRF-TOKEN': token }
+    });
 	$.ajax({
 		url : './approveRejectDevice',
 		data : JSON.stringify(approveRequest),
@@ -1187,7 +1260,12 @@ function rejectUser(){
 			"userId":parseInt(userId),
 			"userType": $("body").attr("data-roleType")	  	
 	}
-	
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		url : './approveRejectDevice',
 		data : JSON.stringify(rejectRequest),
@@ -1561,6 +1639,12 @@ function deptImageValidation() {
 
  var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajaxSetup({
      headers:
      { 'X-CSRF-TOKEN': token }
@@ -1611,6 +1695,12 @@ function deptImageValidation() {
 		if(lang=='km'){
 			var langFile='../resources/i18n/khmer_datatable.json';
 		}
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+		});
 		$.ajax({
 			url: 'Consignment/consignment-history',
 			type: 'POST',

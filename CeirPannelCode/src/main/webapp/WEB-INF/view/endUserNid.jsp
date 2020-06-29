@@ -2,6 +2,10 @@
 	pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<!-- Security Tags -->
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<sec:csrfMetaTags />
+<!-- Security Tags -->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
@@ -16,6 +20,11 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta content="" name="description" />
 <meta content="" name="author" />
+	<!-- Security Tags -->
+<meta name="_csrf" content="${_csrf.token}"/>
+<!-- default header name is X-CSRF-TOKEN -->
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
+<!-- Security Tags -->
 	
 <!-- Favicons-->
 <link rel="icon" href="${context}/resources/images/DMC-Logo.png" sizes="32x32">
@@ -179,6 +188,7 @@ section {
 						
 						<form action="selfRegisterDevicePage" method="post">
 						<div class="input-field col s12 m3 l3">
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 							<input type="text" id="Search" name="Search"
 								pattern="[A-Za-z0-9]{1,12}" maxlength="12"
 								oninput="InvalidMsg(this,'input','<spring:message code="validation.12NID" />');" 

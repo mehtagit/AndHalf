@@ -63,6 +63,12 @@
 			if(lang=='km'){
 				var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
 			}
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$.ajaxSetup({
+				headers:
+				{ 'X-CSRF-TOKEN': token }
+			});
 			$.ajax({
 				url: 'headers?type=userTableHeaders&lang='+lang,
 				/*	headers: {"Accept-Language": "en"},*/
@@ -121,6 +127,12 @@
 
 
 		function pageRendering(){
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$.ajaxSetup({
+				headers:
+				{ 'X-CSRF-TOKEN': token }
+			});
 			$.ajax({
 				url: 'systemUser/pageRendering',
 				type: 'POST',
@@ -192,6 +204,12 @@
 
 		
 	function setDropdown(){
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+			headers:
+			{ 'X-CSRF-TOKEN': token }
+		});
 		$.getJSON('./registrationUserType?type=1', function(data) {
 			for (i = 0; i < data.length; i++) {
 				$('<option>').val(data[i].id).text(data[i].usertypeName)
@@ -211,6 +229,12 @@
 		"userType":$("body").attr("data-roleType"),
 		"username" : $("body").attr("data-selected-username")
 	}
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+	});
 	
 		$.ajax({
 			url: './viewUser',
@@ -270,7 +294,12 @@
 	
 	
 	function editPopupData(result){
-		
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+			headers:
+			{ 'X-CSRF-TOKEN': token }
+		});
 		$.getJSON('./registrationUserType?type=1', function(data) {
 			$('#edituserType').empty();
 			for (i = 0; i < data.length; i++) {
@@ -323,7 +352,13 @@
 				"remarks": $('#edituserRemark').val()
 		}
 		
-		console.log("request--->" +JSON.stringify(request))
+		//console.log("request--->" +JSON.stringify(request))
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+			headers:
+			{ 'X-CSRF-TOKEN': token }
+		});
 		$.ajax({
 			url: './updateUser',
 			type: 'POST',
@@ -389,7 +424,12 @@
 				"userType":$("body").attr("data-roleType"),
 				"username" : $("body").attr("data-selected-username")
 		}
-		
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+			headers:
+			{ 'X-CSRF-TOKEN': token }
+		});
 		$.ajax({
 			url: './deleteSystemUserType',
 			data : JSON.stringify(request),

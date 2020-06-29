@@ -404,6 +404,7 @@ public class BlockUnblock {
 			stolenRecoveryModel.setBlockCategory(blockCategory);
 			stolenRecoveryModel.setOperatorTypeId(operatorTypeId);
 			stolenRecoveryModel.setDeviceQuantity(deviceQuantity);
+			stolenRecoveryModel.setBlockingType("Immediate");
 			log.info("request sent to fileRecovery api ="+stolenRecoveryModel);
 			response=feignCleintImplementation.fileRecovery(stolenRecoveryModel);
 			log.info("request sent to file Recovery api ="+response);

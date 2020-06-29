@@ -52,6 +52,12 @@
 			if(lang=='km'){
 				var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
 			}
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$.ajaxSetup({
+				headers:
+				{ 'X-CSRF-TOKEN': token }
+			});
 			$.ajax({
 				url: 'headers?type=currencyHeaders&lang='+lang,
 				/*	headers: {"Accept-Language": "en"},*/
@@ -109,6 +115,12 @@
 
 
 		function pageRendering(){
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$.ajaxSetup({
+				headers:
+				{ 'X-CSRF-TOKEN': token }
+			});
 			$.ajax({
 				url: 'currencyManagement/pageRendering',
 				type: 'POST',
@@ -175,6 +187,12 @@
 
 		
 	function setDropdown(){
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+			headers:
+			{ 'X-CSRF-TOKEN': token }
+		});
 		$.getJSON('./getDropdownList/CURRENCY', function(data) {
 				/ $("#expectedArrivalPort").empty(); /
 				for (i = 0; i < data.length; i++) {
@@ -222,7 +240,13 @@
 				"username" : $("body").attr("data-selected-username")
 		}
 		
-		console.log("request------------->" +JSON.stringify(request))
+		//console.log("request------------->" +JSON.stringify(request))
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+			headers:
+			{ 'X-CSRF-TOKEN': token }
+		});
 		$.ajax({
 			url : './add-currency',
 			data : JSON.stringify(request),
@@ -282,7 +306,12 @@
 				"userType":$("body").attr("data-roleType"),
 				"username" : $("body").attr("data-selected-username")
 		}
-		
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+			headers:
+			{ 'X-CSRF-TOKEN': token }
+		});
 		$.ajax({
 				url: './currencyViewByID',
 				type: 'POST',
@@ -295,7 +324,7 @@
 					        dismissible:false
 					    });
 						currencyEditPopupData(result);
-						console.log(JSON.stringify(result));
+						//console.log(JSON.stringify(result));
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
 					console.log("error in ajax")
@@ -338,8 +367,13 @@
 				"userType":$("body").attr("data-roleType"),
 				"username" : $("body").attr("data-selected-username")
 		}
-		
-		console.log("request--->" +JSON.stringify(request))
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+			headers:
+			{ 'X-CSRF-TOKEN': token }
+		});
+		//console.log("request--->" +JSON.stringify(request))
 		$.ajax({
 			url: './updateCurrency',
 			type: 'POST',

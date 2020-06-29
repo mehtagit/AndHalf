@@ -2,6 +2,12 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+
+
+<!-- Security Tags -->
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<sec:csrfMetaTags />
+<!-- Security Tags -->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
@@ -19,6 +25,11 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta content="" name="description" />
 <meta content="" name="author" />
+<!-- Security Tags -->
+<meta name="_csrf" content="${_csrf.token}"/>
+<!-- default header name is X-CSRF-TOKEN -->
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
+<!-- Security Tags -->
 <jsp:include page="/WEB-INF/view/endUserHeader.jsp" ></jsp:include>
 <jsp:include page="/WEB-INF/view/endUserFooter.jsp" ></jsp:include>
 
@@ -332,6 +343,7 @@ input[type='search'] {
 								
 								<form action="selfRegisterDevicePage" method="post" id="cancelAddDeviceForm">
 								<input type="text" id="nationalIdForCancel" name="Search">
+								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 								</form>
 							</div>
 						</div>
@@ -369,8 +381,8 @@ input[type='search'] {
 		src="${context}/resources/custom_js/bootstrap.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 	<script type="text/javascript" src="${context}/resources/js/plugins.js?version=<%= (int) (Math.random() * 10) %>"></script>
-	<script type="text/javascript"
-		src="${context}/resources/js/Validator.js"></script>
+	<%-- <script type="text/javascript"
+		src="${context}/resources/js/Validator.js"></script> --%>
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript"

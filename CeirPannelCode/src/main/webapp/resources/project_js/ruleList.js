@@ -40,7 +40,12 @@
 			if(lang=='km'){
 				var langFile='./resources/i18n/khmer_datatable.json';
 			}
-
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$.ajaxSetup({
+				headers:
+				{ 'X-CSRF-TOKEN': token }
+			});
 			$.ajax({
 				url: url,
 				/*	headers: {"Accept-Language": "en"},*/
@@ -99,6 +104,12 @@
 
 
 		function pageButtons(Url){
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$.ajaxSetup({
+				headers:
+				{ 'X-CSRF-TOKEN': token }
+			});
 			$.ajax({
 				url: Url,
 				type: 'POST',
@@ -153,7 +164,12 @@
 							$('#'+button[i].id).text(button[i].buttonTitle);
 							$('#'+button[i].id).attr("onclick", button[i].buttonURL);
 						}
-
+						var token = $("meta[name='_csrf']").attr("content");
+						var header = $("meta[name='_csrf_header']").attr("content");
+						$.ajaxSetup({
+							headers:
+							{ 'X-CSRF-TOKEN': token }
+						});
 						$.getJSON('./getDropdownList/RULE_STATE', function(data) {
 							for (i = 0; i < data.length; i++) {
 								$('<option>').val(data[i].interp).text(data[i].interp)
@@ -177,6 +193,12 @@
 			
 				window.xid=id;
 				window.xoutput=output;
+				var token = $("meta[name='_csrf']").attr("content");
+				var header = $("meta[name='_csrf_header']").attr("content");
+				$.ajaxSetup({
+					headers:
+					{ 'X-CSRF-TOKEN': token }
+				});
 				$.ajax({
 					url : "./viewRuleListAPI/"+id,
 					dataType : 'json',
@@ -222,7 +244,12 @@
 						"roleType":$("body").attr("data-roleType")
 						
 				}
-	
+				var token = $("meta[name='_csrf']").attr("content");
+				var header = $("meta[name='_csrf_header']").attr("content");
+				$.ajaxSetup({
+					headers:
+					{ 'X-CSRF-TOKEN': token }
+				});
 				$.ajax({
 					
 					url : "./updateRuleList",

@@ -33,7 +33,12 @@ function configManagementDatatable(){
 			"roleType":$("body").attr("data-roleType")
 	}
 	 
-	
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		url: 'headers?type=adminConfigMessage',
 		type: 'POST',
@@ -92,6 +97,12 @@ function configManagementDatatable(){
 //**************************************************viewConfig page buttons**********************************************
 
 function pageRendering(){
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		url: 'configManagement/pageRendering',
 		type: 'POST',
@@ -185,6 +196,12 @@ function viewDetails(tag){
 			"userName" : $("body").attr("data-selected-username"),
 			"roleType":$("body").attr("data-roleType")
 	} 
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		url : "./system/viewTag",
 		data :	JSON.stringify(RequestData),
@@ -224,6 +241,12 @@ function updateDetails(tag){
 			"userName" : $("body").attr("data-selected-username"),
 			"roleType":$("body").attr("data-roleType")
 	} 
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		url : "./system/viewTag",
 		data :	JSON.stringify(RequestData),
@@ -266,7 +289,12 @@ var updateRequest = {
 		"userName" : $("body").attr("data-selected-username"),
 		"roleType":$("body").attr("data-roleType")
 }
-
+var token = $("meta[name='_csrf']").attr("content");
+var header = $("meta[name='_csrf_header']").attr("content");
+$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+});
 
 $.ajax({
 	url : "./system/update",
@@ -320,6 +348,12 @@ function exportData(){
 			
 	}
 	//console.log(JSON.stringify(filterRequest))
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		url: './exportSystemConfigData',
 		type: 'POST',

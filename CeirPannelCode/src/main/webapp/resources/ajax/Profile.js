@@ -16,6 +16,12 @@ function changePassword(){
 	});
 
 
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		type : 'POST',
 		url : contextpath + '/changePassword',
@@ -70,6 +76,13 @@ function updateUSerStatus(){
 			status:$("input[name='status']:checked").val()
 
 	};
+
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({ 
 		type : 'POST',
 		url : contextpath+'/updateUserStatus',
@@ -114,6 +127,13 @@ function updateUSerStatus(){
 }
 
 function questionDataByCategory2(){ 
+
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		type : 'GET',
 		url : contextpath + '/allSecurityQuestionList/',
@@ -168,6 +188,13 @@ function questionDataByCategory2(){
 }
 
 function questionDataByCategory(){ 
+
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		type : 'GET',
 		url : contextpath + '/allSecurityQuestionList/',
@@ -210,6 +237,13 @@ function questionDataByCategory(){
 
 
 function editProfile(){
+
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({ 
 		type : 'POST',
 		url : contextpath+'/editProfile',
@@ -297,6 +331,13 @@ function editProfile(){
 }	
 
 function editOtherProfile(){
+
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({ 
 		type : 'POST',
 		url : contextpath+'/editProfile',
@@ -439,6 +480,12 @@ function updateProfile(){
 		}  
 	});
 
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		type : 'POST',
 		url : contextpath + '/updateProfile',
@@ -541,6 +588,13 @@ function verifyOtp2(){
 					userid: val.find('#userid').val()
 			} 
 		}
+	});
+
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
 	});
 	$.ajax({     
 		type : 'POST',

@@ -48,7 +48,12 @@ function table(url,dataUrl){
 	if(lang=='km'){
 		var langFile='./resources/i18n/khmer_datatable.json';
 	}
-
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		url: url,
 		/*	headers: {"Accept-Language": "en"},*/
@@ -106,6 +111,12 @@ function pageRendering(){
 
 
 function pageButtons(Url){
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		url: Url,
 		type: 'POST',
@@ -172,7 +183,12 @@ function pageButtons(Url){
 					$('<option>').val(data[i].name).text(data[i].name).appendTo('#Feature,#editFeature');
 				}
 			});*/
-			
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$.ajaxSetup({
+				headers:
+				{ 'X-CSRF-TOKEN': token }
+			});	
 			$.getJSON('./Rule/DistinctName', function(data) {
 				for (i = 0; i < data.length; i++) {
 					$('<option>').val(data[i]).text(data[i]).appendTo('#Feature,#editFeature');
@@ -223,7 +239,12 @@ function pageButtons(Url){
 function getDetailBy(id){
 
 	window.xid=id;
-
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		url : "./getBy/"+id,
 		dataType : 'json',
@@ -285,7 +306,13 @@ function update(){
 			"userTypeId": parseInt($("body").attr("data-userTypeID")),
 			"userName":$("body").attr("data-username"),
 			"roleType":$("body").attr("data-roleType")
-	}
+	}	
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 
 		url : "./updateRuleMapping",
@@ -327,6 +354,12 @@ function deleteModal(){
 			"userName":$("body").attr("data-username"),
 			"roleType":$("body").attr("data-roleType")
 	}
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		url : "./deleteRuleMapping",
 		data : JSON.stringify(newRule),

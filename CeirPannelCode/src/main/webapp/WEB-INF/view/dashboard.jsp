@@ -25,6 +25,12 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+
+
+<!-- Security Tags -->
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<sec:csrfMetaTags />
+<!-- Security Tags -->
 <%@ taglib prefix='spring' uri='http://www.springframework.org/tags'%>
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
@@ -38,6 +44,13 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta content="" name="description" />
 <meta content="" name="author" />
+
+<!-- Security Tags -->
+<meta name="_csrf" content="${_csrf.token}"/>
+<!-- default header name is X-CSRF-TOKEN -->
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
+<!-- Security Tags -->
+
 
 <script type="text/javascript"
 	src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
@@ -640,10 +653,17 @@ data-dismiss="modal">&times;</button> -->
 			</div>
 			<div class="input-field col s12 center">
 				<div class="input-field col s12 center">
-					<a href="./logout" class="btn" type="submit" name="add_user"
-						id="add_user"><spring:message code="modal.yes" /></a> <a href="#"
-						class="modal-close btn" style="margin-left: 10px;"><spring:message
-							code="modal.no" /></a>
+					<%-- <a href="./logout" class="btn" type="submit" name="add_user"
+						id="add_user"><spring:message code="modal.yes" /></a> --%>
+						
+						
+					<form action="./logout" method="post">
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+					
+					    <button type="submit" class="btn"><spring:message code="modal.yes" /></button>
+					     <a href="#" class="modal-close btn" style="margin-left: 10px;"><spring:message code="modal.no" /></a>
+					</form>		
+							
 				</div>
 			</div>
 		</div>

@@ -58,6 +58,12 @@
 			if(lang=='km'){
 				var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
 			}
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$.ajaxSetup({
+				headers:
+				{ 'X-CSRF-TOKEN': token }
+			});
 			$.ajax({
 				url: 'headers?type=portManagement&lang='+lang,
 				/*	headers: {"Accept-Language": "en"},*/
@@ -115,6 +121,12 @@
 
 
 		function pageRendering(){
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$.ajaxSetup({
+				headers:
+				{ 'X-CSRF-TOKEN': token }
+			});
 			$.ajax({
 				url: 'portManagement/pageRendering',
 				type: 'POST',
@@ -182,6 +194,12 @@
 
 		
 	function setDropdown(){
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+			headers:
+			{ 'X-CSRF-TOKEN': token }
+		});
 		$.getJSON('./getDropdownList/CUSTOMS_PORT', function(data) {
 			for (i = 0; i < data.length; i++) {
 				$('<option>').val(data[i].value).text(data[i].interp)
@@ -214,7 +232,13 @@
 
 		}
 		
-		console.log("request------------->" +JSON.stringify(request))
+		//console.log("request------------->" +JSON.stringify(request))
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+			headers:
+			{ 'X-CSRF-TOKEN': token }
+		});
 		$.ajax({
 			url : './add-Port',
 			data : JSON.stringify(request),
@@ -250,6 +274,12 @@
 				"userType":$("body").attr("data-roleType"),
 				"username" : $("body").attr("data-selected-username")
 		}
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+			headers:
+			{ 'X-CSRF-TOKEN': token }
+		});
 		$.ajax({
 				url: './portViewByID',
 				type: 'POST',
@@ -262,7 +292,7 @@
 					        dismissible:false
 					    });
 						PortEditPopupData(result);
-						console.log(result)
+						//console.log(result)
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
 					console.log("error in ajax")
@@ -296,7 +326,13 @@
 				"username" : $("body").attr("data-selected-username")
 		}
 
-		console.log("request--->" +JSON.stringify(request))
+		//console.log("request--->" +JSON.stringify(request))
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+			headers:
+			{ 'X-CSRF-TOKEN': token }
+		});
 		$.ajax({
 			url: './updatePortAddress', 
 			type: 'POST',
@@ -346,7 +382,12 @@
 				"userType":$("body").attr("data-roleType"),
 				"username" : $("body").attr("data-selected-username")
 		}
-		
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+			headers:
+			{ 'X-CSRF-TOKEN': token }
+		});
 		
 		$.ajax({
 			url : './deletePort',

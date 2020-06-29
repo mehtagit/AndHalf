@@ -30,6 +30,15 @@
 	var request ={
 			  "userId" : parseInt($("body").attr("data-userID"))
 		}
+	
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+	});
+
+	
 	$.ajax({
 		url: './getSystemTags',
 		type: 'POST',
