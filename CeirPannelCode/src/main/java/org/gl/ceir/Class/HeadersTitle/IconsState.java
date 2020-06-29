@@ -1707,7 +1707,7 @@ public class IconsState {
 			error="<a onclick="+errorURL+" class="+disableIconClass+"><i class="
 					+disableErrorIcon+" aria-hidden=\"true\" title="
 					+errorIconTitle+" ></i></a>";
-		}else if((status.equals("1") || status.equals("3")) && "Approved".equals(userStatus)) {
+		}else if((status.equals("1") || status.equals("3") || "5".equals(status)) && "Approved".equals(userStatus)) {
 			error="<a onclick="+errorURL+" class="+disableIconClass+"><i class="+disableErrorIcon+" aria-hidden=\"true\" title="
 					+errorIconTitle+" ></i></a>";
 			edit="<a onclick="+editAction+" class="+disableIconClass+"><i class="

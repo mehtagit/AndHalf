@@ -1,25 +1,25 @@
-<%@ page import="java.util.Date" %>
+<%@ page import="java.util.Date"%>
 <%
-   response.setHeader("Cache-Control", "no-cache");
-	response.setHeader("Cache-Control", "no-store");
-	response.setDateHeader("Expires", 0);
-	response.setHeader("Pragma", "no-cache");
-	
-    /*   //200 secs
-	 session.setAttribute("usertype", null);  */
+	response.setHeader("Cache-Control", "no-cache");
+response.setHeader("Cache-Control", "no-store");
+response.setDateHeader("Expires", 0);
+response.setHeader("Pragma", "no-cache");
+
+/*   //200 secs
+ session.setAttribute("usertype", null);  */
 /* 	 session.setMaxInactiveInterval(10); */
-	 int timeout = session.getMaxInactiveInterval();
-	
-	 long accessTime = session.getLastAccessedTime();
-	 long currentTime= new Date().getTime(); 
-	 long dfd= accessTime +timeout;
-	 if( currentTime< dfd){
+int timeout = session.getMaxInactiveInterval();
+
+long accessTime = session.getLastAccessedTime();
+long currentTime = new Date().getTime();
+long dfd = accessTime + timeout;
+if (currentTime < dfd) {
 	/*  response.setHeader("Refresh", timeout + "; URL = ../login");
 	 System.out.println("timeout========"+timeout); 
 	if (session.getAttribute("usertype") != null) { */
 %>
 
-        <%@ page language="java" contentType="text/html; charset=utf-8"
+<%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
@@ -28,7 +28,8 @@
 
 
 <!-- Security Tags -->
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 <sec:csrfMetaTags />
 <!-- Security Tags -->
 <%@ taglib prefix='spring' uri='http://www.springframework.org/tags'%>
@@ -46,26 +47,28 @@
 <meta content="" name="author" />
 
 <!-- Security Tags -->
-<meta name="_csrf" content="${_csrf.token}"/>
+<meta name="_csrf" content="${_csrf.token}" />
 <!-- default header name is X-CSRF-TOKEN -->
-<meta name="_csrf_header" content="${_csrf.headerName}"/>
+<meta name="_csrf_header" content="${_csrf.headerName}" />
 <!-- Security Tags -->
 
 
 <script type="text/javascript"
 	src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
-	<link rel="shortcut icon" href="">
+	<script
+		src="${context}/resources/custom_js/bootstrap.min.js"></script>
+	
+<link rel="shortcut icon" href="">
 <!-- CORE CSS-->
 <link href="${context}/resources/css/materialize.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
 <link href="${context}/resources/css/style.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
 <!-- Custome CSS-->
-	
+
 <!-- Favicons-->
-<link rel="icon" href="${context}/resources/images/DMC-Logo.png" sizes="32x32">
-<link href="${context}/resources/css/custom/custom.css" type="text/css"
-	rel="stylesheet" media="screen,projection">
+<link rel="icon" href="${context}/resources/images/DMC-Logo.png"
+	sizes="32x32">
 <!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
 <link href="${context}/resources/js/plugins/prism/prism.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
@@ -73,46 +76,34 @@
 	href="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
 <link
-	href="${context}/resources/js/plugins/chartist-js/chartist.min.css"
-	type="text/css" rel="stylesheet" media="screen,projection">
-<link href="${context}/resources/font/font-awesome/css/font-awesome.css"
-	type="text/css" rel="stylesheet" media="screen,projection">
-<link
 	href="${context}/resources/font/font-awesome/css/font-awesome.min.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
 
 
-	<link rel="stylesheet"
+<link rel="stylesheet"
 	href="${context}/resources/custom_js/jquery-ui.css">
-<script src="${context}/resources/custom_js/1.11.2_jquery-ui.js"></script>
-
+<%-- <script src="${context}/resources/custom_js/1.11.2_jquery-ui.js"></script>
+ --%>
 <script src="${context}/resources/custom_js/jquery.blockUI.js"></script>
 
-
-
-
 <!------------------------------------------- Dragable Model---------------------------------->
-<script src="${context}/resources/custom_js/1.12.1_jquery-ui.js"></script>
-<script
-	src="${context}/resources/custom_js/1.12.1_jquery-ui.min.js"></script>
-	
-	
+<script src="${context}/resources/custom_js/1.12.1_jquery-ui.min.js"></script>
+
+
 <script>
-var contextpath = "${context}";
-<%
-String usertype = (String) session.getAttribute("usertype");
+	var contextpath = "${context}";
+<%String usertype = (String) session.getAttribute("usertype");
 String name = (String) session.getAttribute("name");
-Integer usertypeId=(Integer)session.getAttribute("usertypeId");
-if(usertypeId==null){
-	usertypeId=0;
+Integer usertypeId = (Integer) session.getAttribute("usertypeId");
+if (usertypeId == null) {
+	usertypeId = 0;
 }
 
-Integer selfRegister=(Integer)session.getAttribute("selfRegister");
-if(selfRegister==null){
-	selfRegister=0;
-}
-
-%>
+Integer selfRegister = (Integer) session.getAttribute("selfRegister");
+if (selfRegister == null) {
+	selfRegister = 0;
+}%>
+	
 </script>
 
 </head>
@@ -122,26 +113,29 @@ if(selfRegister==null){
 	right: 10px;
 	top: 10px;
 }
+
 div#modalMessageBody {
-    text-align: center;
-    margin-top: 12px;
+	text-align: center;
+	margin-top: 12px;
 }
+
 div#error_Modal {
-    width: 550px;
-    height: 50px;
-    margin-top: 14%;
+	width: 550px;
+	height: 50px;
+	margin-top: 14%;
 }
 </style>
 <body data-lang="${language}" data-usertype="${usertype}"
-data-roleType="${usertype}" data-userTypeID="${usertypeId}"
+	data-roleType="${usertype}" data-userTypeID="${usertypeId}"
 	data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}"
 	data-stolenselected-roleType="${stolenselectedUserTypeId}"
 	data-selected-consignmentTxnId="${consignmentTxnId}"
 	data-operatorTypeId="${operatorTypeId}"
-	data-selected-consignmentStatus="${consignmentStatus}" data-defaultLink="${defaultLink}">
+	data-selected-consignmentStatus="${consignmentStatus}"
+	data-defaultLink="${defaultLink}">
 	<!-- Start Page Loading -->
 	<div id="loader-wrapper">
-	<div id="initialloader"></div>
+		<div id="initialloader"></div>
 		<div class="loader-section section-left"></div>
 		<div class="loader-section section-right"></div>
 	</div>
@@ -155,54 +149,52 @@ data-roleType="${usertype}" data-userTypeID="${usertypeId}"
 				<div class="nav-wrapper">
 					<ul class="left">
 						<li>
-							<div
-								class="offset-md-1 text-right px-0 ml-3 my-auto">
+							<div class="offset-md-1 text-right px-0 ml-3 my-auto">
 								<a href="javascript:void(0)" rel="noopener noreferrer"
-									
 									title="DMC, external link that open in a new window"> <img
-									src="./resources/images/DMC-Logo.png" id="header-img" class="darken-1 my-2"
-									style="height: 56px;"></a>
+									src="./resources/images/DMC-Logo.png" id="header-img"
+									class="darken-1 my-2" style="height: 56px;"></a>
 							</div>
 						</li>
 						<li>
 							<h1 class="logo-wrapper">
-								<a href="#" class="brand-logo darken-1"><spring:message code="page.ceir" /> <span
-									id="cierRoletype">
-									<spring:message code="roletype.${fn:replace(sessionScope.usertype, ' ', '_')}" />
-									</span> <spring:message code="page.portal" /> <%
-									if ("Operator".equalsIgnoreCase(usertype)) {
-								%>
-									- <%=session.getAttribute("operatorTypeName")%> <%
+								<a href="#" class="brand-logo darken-1"><spring:message
+										code="page.ceir" /> <span id="cierRoletype"> <spring:message
+											code="roletype.${fn:replace(sessionScope.usertype, ' ', '_')}" />
+								</span> <spring:message code="page.portal" /> <%
+ 	if ("Operator".equalsIgnoreCase(usertype)) {
+ %> - <%=session.getAttribute("operatorTypeName")%> <%
  	} else {
- 	}
- %>
-
-								</a> <span class="logo-text"><spring:message
+ }
+ %> </a> <span class="logo-text"><spring:message
 										code="registration.materialize" /></span>
 							</h1>
 						</li>
 					</ul>
 					<ul id="chat-out" class="right hide-on-med-and-down"
 						style="overflow: inherit !important;">
-						<li><a  id="manualDownload" download="download"
-							 style="color: white; cursor: pointer;"><i class="fa fa-download download-icon" aria-hidden="true" 
-							 title="Download Manual"  style="color: #fff; line-height: 3;"></i></a></li>
+						<li><a id="manualDownload" download="download"
+							style="color: white; cursor: pointer;"><i
+								class="fa fa-download download-icon" aria-hidden="true"
+								title="Download Manual" style="color: #fff; line-height: 3;"></i></a></li>
 						<li>
 							<div id="divLang" style="display: flex; margin: 8px 6px;"
 								class="darken-1">
 								<div id="iconLable" class="darken-1">
-									<i class="fa fa-globe fa-6" aria-hidden="true" style="line-height:4"></i>
+									<i class="fa fa-globe fa-6" aria-hidden="true"
+										style="line-height: 4"></i>
 								</div>
 								<div style="width: 80px !important;">
 									<select class="darken-1" id="langlist"
-										style="border-bottom: none; height: 42px; background: #00bcd4; line-height:1; border: 1px solid #00bcd4 !important;">
-										<option value="en" style="color:#444;">English</option>
-										<option value="km" style="color:#444;"><spring:message code="lang.khmer" /></option>
+										style="border-bottom: none; height: 42px; background: #00bcd4; line-height: 1; border: 1px solid #00bcd4 !important;">
+										<option value="en" style="color: #444;">English</option>
+										<option value="km" style="color: #444;"><spring:message
+												code="lang.khmer" /></option>
 									</select>
 								</div>
 							</div>
 						</li>
-<%-- 						<li>
+						<%-- 						<li>
                              <a href="javascript:void(0)"  
 							 style="color:rgba(0, 0, 0, 0.3);; cursor: pointer;"><spring:message
 									code="registration.home" /></a></li> --%>
@@ -212,27 +204,34 @@ data-roleType="${usertype}" data-userTypeID="${usertypeId}"
 								class="mdi-action-account-circle"
 								style="color: #fff; font-size: 40px;"></i></a>
 							<ul id="profile-dropdown" class="dropdown-content">
-							   <%if(selfRegister!=0){ %>
-								<li><a id="editLink" href="javascript:void(0)" target="mainArea"><i
-										class="fa fa-pencil dropdownColor" style="float: left;"></i><span
-										style="float: left" class="dropdownColor"><spring:message
+								<%
+									if (selfRegister != 0) {
+								%>
+								<li><a id="editLink" href="javascript:void(0)"
+									target="mainArea"><i class="fa fa-pencil dropdownColor"
+										style="float: left;"></i><span style="float: left"
+										class="dropdownColor"><spring:message
 												code="registration.editinfo" /></span></a></li>
 								<li class="divider"></li>
-								<li><a onclick="manageAccountPopup();" href="javascript:void(0)"><i
+								<li><a onclick="manageAccountPopup();"
+									href="javascript:void(0)"><i
 										class="mdi-action-settings dropdownColor"></i> <span
 										class="dropdownColor"> <spring:message
 												code="registration.activate/deactivateaccount" /></span></a></li>
 								<li class="divider"></li>
-                            
-								 <%} %>
-								<li><a  href="javascript:void(0)" onclick="changePasswordPopup()"><i
+
+								<%
+									}
+								%>
+								<li><a href="javascript:void(0)"
+									onclick="changePasswordPopup()"><i
 										class="fa fa-key dropdownColor" style="float: left"></i><span
 										style="float: left" class="dropdownColor"><spring:message
 												code="registration.changepassword" /></span></a></li>
 								<li class="divider"></li>
-							   
-								<li><a href="javascript:void(0)" onclick="openLogout()" style="cursor: pointer;"  id=""><i
-										style="float: left;"
+
+								<li><a href="javascript:void(0)" onclick="openLogout()"
+									style="cursor: pointer;" id=""><i style="float: left;"
 										class="mdi-hardware-keyboard-tab dropdownColor"></i> <span
 										class="dropdownColor"> <spring:message
 												code="registration.logout" /></span></a></li>
@@ -264,7 +263,7 @@ data-roleType="${usertype}" data-userTypeID="${usertypeId}"
 								<p
 									style="width: 180px; text-align: center; color: #fff; font-size: 16px; margin-top: 2px;">
 									<spring:message code="page.welcome" />
-									<%=name %>
+									<%=name%>
 									(<%=(String) session.getAttribute("username")%>)
 								</p>
 							</div>
@@ -273,7 +272,8 @@ data-roleType="${usertype}" data-userTypeID="${usertypeId}"
 					<li>
 						<ul class="navData">
 							<c:forEach items="${features}" var="feature">
-							<li class="bold"><a href="${feature.link}?FeatureId=${feature.id}"
+								<li class="bold"><a
+									href="${feature.link}?FeatureId=${feature.id}"
 									target="mainArea" class="waves-effect waves-cyan"
 									data-featureID="${feature.id}"><i class="${feature.logo}"></i>
 										<spring:message
@@ -358,35 +358,36 @@ data-roleType="${usertype}" data-userTypeID="${usertypeId}"
 
 					<p>
 						<label style="margin-right: 50px"> <input type="radio"
-							name="status" value="Deactivate" 
-							oninput="InvalidMsg(this,'fileType','<spring:message code="validation.Options" />');" oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.Options" />');"
-							required > <span>
-								<spring:message code="registration.deactivate" />
+							name="status" value="Deactivate"
+							oninput="InvalidMsg(this,'fileType','<spring:message code="validation.Options" />');"
+							oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.Options" />');"
+							required> <span> <spring:message
+									code="registration.deactivate" />
 						</span></label>
 						<spring:message code="registration.permanentlydeleteportal" />
 					</p>
 				</div>
 				<%
 					//String status = (String) session.getAttribute("userStatus");
-				Integer statusValue=(Integer)session.getAttribute("userStatusValue");
+				Integer statusValue = (Integer) session.getAttribute("userStatusValue");
 				%>
 				<%
-					if (statusValue==3) {
-	
+					if (statusValue == 3) {
 				%>
 				<div class="row" style="height: 30px;">
 					<p>
 						<label style="margin-right: 67px"> <input type="radio"
-							value="Disable" name="status" 
-							oninput="InvalidMsg(this,'fileType','<spring:message code="validation.Options" />');" oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.Options" />');"
-							title= "" required  / > <span>
-								<spring:message code="registration.disable" />
+							value="Disable" name="status"
+							oninput="InvalidMsg(this,'fileType','<spring:message code="validation.Options" />');"
+							oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.Options" />');"
+							title=""required  / > <span> <spring:message
+									code="registration.disable" />
 						</span></label>
 						<spring:message code="registration.alltheactionwillbe" />
 					</p>
 				</div>
 				<%
-					} else if (statusValue==5) {
+					} else if (statusValue == 5) {
 				%>
 				<div class="row" style="height: 30px;">
 					<p>
@@ -400,7 +401,7 @@ data-roleType="${usertype}" data-userTypeID="${usertypeId}"
 
 				<%
 					} else {
-					}
+				}
 				%>
 				<div class="input-field col s12 center">
 					<button class="btn" id="updateStatusBtn">
@@ -430,7 +431,9 @@ data-roleType="${usertype}" data-userTypeID="${usertypeId}"
 			</h6>
 
 			<div class="input-field col s12 center">
-				<a href="${context}/logout" class="btn modal-close"> <spring:message code="modal.ok" /> </a>
+				<a href="${context}/logout" class="btn modal-close"> <spring:message
+						code="modal.ok" />
+				</a>
 			</div>
 		</div>
 	</div>
@@ -455,12 +458,11 @@ data-roleType="${usertype}" data-userTypeID="${usertypeId}"
 						<input type="password" id="oldPassword" class="password"
 							pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,10}$"
 							maxlength="10" min="8"
-oninput="InvalidMsg(this,'input','<spring:message code="validation.password" />');"
- oninvalid="InvalidMsg(this,'input','<spring:message code="validation.password" />');"	 required  />	
-							
-							 <label for="oldPassword"
-							class="center-align" style="color: #000; font-size: 12px;">
-							<spring:message code="registration.oldpassword" />
+							oninput="InvalidMsg(this,'input','<spring:message code="validation.password" />');"
+							oninvalid="InvalidMsg(this,'input','<spring:message code="validation.password" />');"
+							required /> <label for="oldPassword" class="center-align"
+							style="color: #000; font-size: 12px;"> <spring:message
+								code="registration.oldpassword" />
 						</label>
 						<div class="input-field-addon">
 							<i class="fa fa-eye-slash teal-text toggle-password"
@@ -480,11 +482,11 @@ oninput="InvalidMsg(this,'input','<spring:message code="validation.password" />'
 						<label for="newPassword" style="color: #000; font-size: 12px;"><spring:message
 								code="registration.newpassword" /></label> <input type="password"
 							pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
-							maxlength="10" min="8" 
-oninput="InvalidMsg(this,'input','<spring:message code="validation.password" />');" 
-oninvalid="InvalidMsg(this,'input','<spring:message code="validation.password" />');"		
-			 required  id="password" class="password2" />
-							<div class="input-field-addon">
+							maxlength="10" min="8"
+							oninput="InvalidMsg(this,'input','<spring:message code="validation.password" />');"
+							oninvalid="InvalidMsg(this,'input','<spring:message code="validation.password" />');"
+							required id="password" class="password2" />
+						<div class="input-field-addon">
 							<i class="fa fa-eye-slash teal-text toggle-password2"
 								aria-hidden="true"></i>
 						</div>
@@ -502,10 +504,11 @@ oninvalid="InvalidMsg(this,'input','<spring:message code="validation.password" /
 							class="password3" id="confirm_password"
 							pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
 							maxlength="10" min="8"
-oninput="InvalidMsg(this,'input','<spring:message code="validation.password" />');" 
-oninvalid="InvalidMsg(this,'input','<spring:message code="validation.password" />');"
-							title= "<spring:message code="validation.minumum8length" />" required >
-							<div class="input-field-addon">
+							oninput="InvalidMsg(this,'input','<spring:message code="validation.password" />');"
+							oninvalid="InvalidMsg(this,'input','<spring:message code="validation.password" />');"
+							title="<spring:message code="validation.minumum8length" />"
+							required>
+						<div class="input-field-addon">
 							<i class="fa fa-eye-slash teal-text toggle-password3"
 								aria-hidden="true"></i>
 						</div>
@@ -516,10 +519,10 @@ oninvalid="InvalidMsg(this,'input','<spring:message code="validation.password" /
 						<%-- <button class="btn" type="submit" id="changePassBtn">
 							<spring:message code="button.submit" />
 						</button> --%>
-							<button  class="btn" id="changePassBtn" 
-							type="submit" style="margin-left: 10px;">
-									<spring:message code="button.submit" />
-								</button>
+						<button class="btn" id="changePassBtn" type="submit"
+							style="margin-left: 10px;">
+							<spring:message code="button.submit" />
+						</button>
 						<button type="button" class="btn modal-close"
 							style="margin-left: 10px;">
 							<spring:message code="modal.cancel" />
@@ -602,13 +605,23 @@ oninvalid="InvalidMsg(this,'input','<spring:message code="validation.password" /
 			</div>
 			<div class="row">
 				<div class="center">
-					
-													<%String userLatestLang=(String)session.getAttribute("updatedLanguage"); %>
-								<%if(userLatestLang!=null){%>
-								<a href="./?lang=<%=userLatestLang%>" class="btn modal-close"><spring:message code="modal.ok" /></a>
-                                <%}else{ %>
-								<a href="./?lang=<%=session.getAttribute("language")%>" class="btn modal-close"><spring:message code="modal.ok" /></a>
-                                <%} %>
+
+					<%
+						String userLatestLang = (String) session.getAttribute("updatedLanguage");
+					%>
+					<%
+						if (userLatestLang != null) {
+					%>
+					<a href="./?lang=<%=userLatestLang%>" class="btn modal-close"><spring:message
+							code="modal.ok" /></a>
+					<%
+						} else {
+					%>
+					<a href="./?lang=<%=session.getAttribute("language")%>"
+						class="btn modal-close"><spring:message code="modal.ok" /></a>
+					<%
+						}
+					%>
 				</div>
 			</div>
 		</div>
@@ -629,16 +642,16 @@ data-dismiss="modal">&times;</button> -->
 			</div>
 			<div class="input-field col s12 center">
 				<div class="input-field col s12 center">
-					<a href="${context}/homePage" class="btn" type="submit" name="add_user"
-						id="home_Links"><spring:message code="modal.yes" /></a> <a href="#"
-						class="modal-close btn" style="margin-left: 10px;"><spring:message
-							code="modal.no" /></a>
+					<a href="${context}/homePage" class="btn" type="submit"
+						name="add_user" id="home_Links"><spring:message
+							code="modal.yes" /></a> <a href="#" class="modal-close btn"
+						style="margin-left: 10px;"><spring:message code="modal.no" /></a>
 				</div>
 			</div>
 		</div>
 	</div>
-	
-	
+
+
 	<div id="goToLogout" class="modal modal-small" style="width: 40%;">
 		<!-- <button type="button" class=" modal-action modal-close waves-effect waves-green btn-flat right"
 data-dismiss="modal">&times;</button> -->
@@ -655,38 +668,55 @@ data-dismiss="modal">&times;</button> -->
 				<div class="input-field col s12 center">
 					<%-- <a href="./logout" class="btn" type="submit" name="add_user"
 						id="add_user"><spring:message code="modal.yes" /></a> --%>
-						
-						
+
+
 					<form action="./logout" method="post">
-					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-					
-					    <button type="submit" class="btn"><spring:message code="modal.yes" /></button>
-					     <a href="#" class="modal-close btn" style="margin-left: 10px;"><spring:message code="modal.no" /></a>
-					</form>		
-							
+						<input type="hidden" name="${_csrf.parameterName}"
+							value="${_csrf.token}" />
+
+						<button type="submit" class="btn">
+							<spring:message code="modal.yes" />
+						</button>
+						<a href="#" class="modal-close btn" style="margin-left: 10px;"><spring:message
+								code="modal.no" /></a>
+					</form>
+
 				</div>
 			</div>
 		</div>
 	</div>
 
 	<!-- Modal End -->
-	
+
 	<!-- Modal End -->
 	<!-- Modal End -->
 
 	<!-- File Related Modal  -->
-<div id="fileFormateModal" class="modal">
-		<h6 class="modal-header"><spring:message code="fileValidationModalHeader" /></h6>
+	<div id="fileFormateModal" class="modal">
+		<h6 class="modal-header">
+			<spring:message code="fileValidationModalHeader" />
+		</h6>
 		<div class="modal-content">
 			<div class="row">
-				<h6 id="fileErrormessage"><spring:message code="fileValidationName" /><br> <br> <spring:message code="fileValidationFormate" /> <br><br> <spring:message code="fileValidationSize" /> </h6>
+				<h6 id="fileErrormessage">
+					<spring:message code="fileValidationName" />
+					<br> <br>
+					<spring:message code="fileValidationFormate" />
+					<br>
+					<br>
+					<spring:message code="fileValidationSize" />
+				</h6>
 			</div>
 			<div class="row">
 				<div class="input-field col s12 center">
 					<div class="input-field col s12 center">
-						<button class="modal-close waves-effect waves-light btn" onclick="document.getElementById('mainArea').contentWindow.clearFileName();"
-							style="margin-left: 10px;"><spring:message code="modal.ok" /></button>
-					</div>r
+						<button class="modal-close waves-effect waves-light btn"
+							onclick="document.getElementById('mainArea').contentWindow.clearFileName();"
+							style="margin-left: 10px;">
+							<spring:message code="modal.ok" />
+						</button>
+					</div>
+					r
 				</div>
 			</div>
 		</div>
@@ -695,12 +725,11 @@ data-dismiss="modal">&times;</button> -->
 	<!-- ================================================
     Scripts
     ================================================ -->
-<!-- 	Error Modal -->
+	<!-- 	Error Modal -->
 	<div class="modal" id="error_Modal" role="dialog">
 		<div class="modal-dialog">
-			<div class="row" id="modalMessageBody"
-					style="text-align: center;"></div>
-			
+			<div class="row" id="modalMessageBody" style="text-align: center;"></div>
+
 		</div>
 	</div>
 
@@ -708,97 +737,103 @@ data-dismiss="modal">&times;</button> -->
 
 	<!--materialize js-->
 	<script type="text/javascript"
-		src="${context}/resources/js/materialize.js?version=<%= (int) (Math.random() * 10) %>"></script>
-	<!--prism
-    <script type="text/javascript" src="${context}/resources/js/prism/prism.js"></script>-->
-	<!--scrollbar-->
+		src="${context}/resources/js/materialize.js"></script>
+	
 	<script type="text/javascript"
-		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
-	<!-- chartist -->
-	<!--   <script type="text/javascript" src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script>   
-     -->
-	<!--plugins.js - Some Specific JS codes for Plugin Settings-->
-	<!--custom-script.js - Add your own theme custom JS-->
-	<script type="text/javascript"
-		src="${context}/resources/js/custom-script.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+	
+		<script type="text/javascript"
+		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js?version=<%= (int) (Math.random() * 10) %>"></script>  
 
-			<!-- i18n library -->
+	
+	
 	<!-- i18n library -->
 	<script type="text/javascript"
-		src="${context}/resources/project_js/CLDRPluralRuleParser.js?version=<%= (int) (Math.random() * 10) %>"></script>
-	<script type="text/javascript"
-		src="${context}/resources/i18n_library/i18n.js?version=<%= (int) (Math.random() * 10) %>"></script>
-	<script type="text/javascript"
-		src="${context}/resources/i18n_library/messagestore.js?version=<%= (int) (Math.random() * 10) %>"></script>
-
-	<script type="text/javascript"
-		src="${context}/resources/i18n_library/fallbacks.js?version=<%= (int) (Math.random() * 10) %>"></script>
-
-	<script type="text/javascript"
-		src="${context}/resources/i18n_library/language.js?version=<%= (int) (Math.random() * 10) %>"></script>
-
-	<script type="text/javascript"
-		src="${context}/resources/i18n_library/parser.js?version=<%= (int) (Math.random() * 10) %>"></script>
-
-
-	<script type="text/javascript"
-		src="${context}/resources/i18n_library/emitter.js?version=<%= (int) (Math.random() * 10) %>"></script>
-
-
-	<script type="text/javascript"
-		src="${context}/resources/i18n_library/bidi.js?version=<%= (int) (Math.random() * 10) %>"></script>
-
-	<script type="text/javascript"
-		src="${context}/resources/i18n_library/history.js?version=<%= (int) (Math.random() * 10) %>"></script>
-
-	<script type="text/javascript"
-		src="${context}/resources/i18n_library/min.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
+	<%-- <script type="text/javascript"
+		src="${context}/resources/i18n_library/i18n.js"></script>
+	 --%>
 	
-	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js?version=<%= (int) (Math.random() * 10) %>"></script>
-<script type="text/javascript"
+	
+	
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/i18n.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/messagestore.js"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/fallbacks.js"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/language.js"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/parser.js"></script>
+
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/emitter.js"></script>
+
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/bidi.js"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/history.js"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/min.js"></script>
+	
+	
+	
+	<!-- Custom js -->
+
+	
+	<script type="text/javascript"
+		src="${context}/resources/project_js/globalVariables.js?version=<%= (int) (Math.random() * 10) %>"></script>
+	<script type="text/javascript"
 		src="${context}/resources/project_js/backbutton.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript"
-		src="${context}/resources/project_js/dragableModal.js?version=<%= (int) (Math.random() * 10) %>"></script>	
-			<script type="text/javascript"
+		src="${context}/resources/project_js/dragableModal.js?version=<%= (int) (Math.random() * 10) %>"></script>
+	<script type="text/javascript"
 		src="${context}/resources/project_js/enterKey.js?version=<%= (int) (Math.random() * 10) %>"></script>
-	
-	<!-- ajax js -->
-	
 
-		<script type="text/javascript" src="${context}/resources/ajax/Password.js?version=<%= (int) (Math.random() * 10) %>"></script>
-			<script type="text/javascript" src="${context}/resources/ajax/Login.js?version=<%= (int) (Math.random() * 10) %>"></script>
+	
+	<script type="text/javascript"
+		src="${context}/resources/ajax/Password.js?version=<%= (int) (Math.random() * 10) %>"></script>
+	<script type="text/javascript"
+		src="${context}/resources/ajax/Login.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<%-- 	<script type="text/javascript"
 		src="${context}/resources/project_js/disable_inspectElement.js"></script> --%>
-		</script>
+	</script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/dashboard.js?version=<%= (int) (Math.random() * 10) %>"></script>
-<script type="text/javascript"
+	<script type="text/javascript"
 		src="${context}/resources/ajax/Profile.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
-<script type="text/javascript"
-		src="${context}/resources/project_js/profileInfoTab.js?version=<%= (int) (Math.random() * 10) %>" async></script>	
+	<script type="text/javascript"
+		src="${context}/resources/project_js/profileInfoTab.js?version=<%= (int) (Math.random() * 10) %>"
+		async></script>
 
-<script type="text/javascript">
-$(document).ready(function () {
-	<%
-	if(usertypeId==13 || usertypeId==20){
-		%>
-	//	$("#langlist").val('en');
-		 $("#langlist").prop("disabled", true);
-$("#divLang").hide();
-		<%}%>
-	
-openEditPage(<%=usertypeId%>)
-});
-</script>
-	
+	<script type="text/javascript">
+		$(document).ready(function() {
+	<%if (usertypeId == 13 || usertypeId == 20) {%>
+		//	$("#langlist").val('en');
+			$("#langlist").prop("disabled", true);
+			$("#divLang").hide();
+	<%}%>
+		openEditPage(
+	<%=usertypeId%>
+		)
+		});
+	</script>
+
 </body>
 
 </html>
 <%
-        }
-        else{            
-        request.setAttribute("msg", "  *Session has been expired");
-        request.getRequestDispatcher("./login.jsp").forward(request, response);      	
-        }
+	} else {
+	request.setAttribute("msg", "  *Session has been expired");
+	request.getRequestDispatcher("./login.jsp").forward(request, response);
+}
 %>
