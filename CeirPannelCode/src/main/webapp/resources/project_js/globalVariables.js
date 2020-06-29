@@ -142,7 +142,7 @@ function isImageValid(id) {
 	if (uploadedFileName.length > 30) {
 		$('#fileFormateModal').openModal();
 		$('#fileErrormessage').text('');
-		$('#fileErrormessage').text($.i18n('imageMessage'));
+		$('#fileErrormessage').text($.i18n('imageValidationName'));
 	} 
 	else if(isInArray ==false)
 	{
@@ -183,7 +183,7 @@ function isPdfAndImageValid(id) {
 	if (uploadedFileName.length > 30) {
 		$('#fileFormateModal').openModal();
 		$('#fileErrormessage').text('');
-		$('#fileErrormessage').text($.i18n('imageAndPdfMsg'));
+		$('#fileErrormessage').text($.i18n('imageValidationName'));
 	} 
 	else if(isInArray ==false)
 	{

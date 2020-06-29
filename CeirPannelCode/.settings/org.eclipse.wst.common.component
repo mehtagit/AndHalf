@@ -33,7 +33,6 @@
         
         
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/webapp/resources"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/test/java"/>
                                                 
         
         

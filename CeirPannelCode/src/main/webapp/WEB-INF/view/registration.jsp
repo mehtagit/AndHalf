@@ -828,7 +828,7 @@ String usertypeId="${usertypeId}";
 				<div class="input-field col s12 center">
 					<div class="input-field col s12 center">
 					<input type="hidden" id="FilefieldId">
-						<button class="modal-close waves-effect waves-light btn" onclick="clearFilesName('FilefieldId')"
+						<button class="modal-close  btn" onclick="clearFilesName('FilefieldId')"
 							style="margin-left: 10px;"><spring:message code="modal.ok" /></button>
 					</div>
 				</div>
