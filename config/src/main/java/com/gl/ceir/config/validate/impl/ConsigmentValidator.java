@@ -10,10 +10,10 @@ import com.gl.ceir.config.exceptions.RequestInvalidException;
 import com.gl.ceir.config.model.ConsignmentMgmt;
 import com.gl.ceir.config.model.ConsignmentUpdateRequest;
 import com.gl.ceir.config.model.FilterRequest;
-import com.gl.ceir.config.validate.Validator;
+import com.gl.ceir.config.validate.BaseValidator;
 
 @Component
-public class ConsigmentValidator implements Validator<ConsignmentMgmt>{
+public class ConsigmentValidator extends BaseValidator<ConsignmentMgmt>{
 
 	private static final Logger logger = LogManager.getLogger(ConsigmentValidator.class);
 	
@@ -372,13 +372,5 @@ public class ConsigmentValidator implements Validator<ConsignmentMgmt>{
 		return Boolean.TRUE;
 	}
 
-	private boolean event(RequestInvalidException exception, String action, String txnId) {
-		if(Objects.isNull(exception)) {
-			logger.info("Validation of Consignment " + action + " request is successful for txnid[" + txnId + "]");
-			return Boolean.TRUE;
-		}else {
-			logger.info("Validation of Consignment " + action + " request is failed for txnid[" + txnId + "]");
-			throw exception;
-		}
-	}
+	
 }
