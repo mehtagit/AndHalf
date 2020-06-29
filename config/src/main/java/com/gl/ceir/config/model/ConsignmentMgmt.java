@@ -303,10 +303,6 @@ public class ConsignmentMgmt implements Serializable {
 		this.userId = userId;
 	}
 
-	public String getSupplierId() {
-		return supplierId;
-	}
-
 	public String getTxnId() {
 		return txnId;
 	}

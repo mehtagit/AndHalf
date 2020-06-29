@@ -43,8 +43,8 @@ public class ConsignmentTransaction {
 		logger.info("Consignment [" + consignmentMgmt.getTxnId() + "] saved in consigment_mgmt_db.");
 
 		auditTrailRepository.save(new AuditTrail(consignmentMgmt.getUser().getId(), consignmentMgmt.getUserName(), 
-				Long.valueOf(consignmentMgmt.getUserTypeId()), consignmentMgmt.getUserType(), Long.valueOf(consignmentMgmt.getFeatureId())
-				, Features.CONSIGNMENT, 
+				Long.valueOf(consignmentMgmt.getUserTypeId()), consignmentMgmt.getUserType(), 
+				Long.valueOf(consignmentMgmt.getFeatureId()), Features.CONSIGNMENT, 
 				SubFeatures.REGISTER, "", consignmentMgmt.getTxnId(),consignmentMgmt.getRoleType()));
 		logger.info("Consignment [" + consignmentMgmt.getTxnId() + "] saved in audit_trail.");
 

@@ -1,12 +1,19 @@
 package com.gl.ceir.config.validate;
 
-import java.util.List;
+import com.gl.ceir.config.exceptions.RequestInvalidException;
 
-public interface Validator {
+public interface Validator<T> {
 
-	public boolean contains(List<String> pool, String target);
+	public boolean validateRegister(T t) throws RequestInvalidException;
+
+	public boolean validateEdit(T t) throws RequestInvalidException;
+
+	public boolean validateViewById(Object t) throws RequestInvalidException;
 	
-	public boolean contains(List<Integer> pool, Integer target);
+	public boolean validateDelete(Object t) throws RequestInvalidException;
 	
-	public boolean matchLength();
+	public boolean validateFilter(Object t) throws RequestInvalidException;
+
+	public boolean validateAcceptReject(Object t) throws RequestInvalidException;
+
 }

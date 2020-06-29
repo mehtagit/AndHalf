@@ -24,6 +24,7 @@ import org.springframework.stereotype.Service;
 import com.gl.ceir.config.ConfigTags;
 import com.gl.ceir.config.EmailSender.EmailUtil;
 import com.gl.ceir.config.configuration.PropertiesReader;
+import com.gl.ceir.config.exceptions.RequestInvalidException;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.factory.ExportFileFactory;
 import com.gl.ceir.config.feign.UserFeignClient;
@@ -72,6 +73,7 @@ import com.gl.ceir.config.specificationsbuilder.GenericSpecificationBuilder;
 import com.gl.ceir.config.transaction.StockTransaction;
 import com.gl.ceir.config.util.HttpResponse;
 import com.gl.ceir.config.util.InterpSetter;
+import com.gl.ceir.config.validate.impl.StockValidator;
 
 @Service
 public class StockServiceImpl {
@@ -143,6 +145,9 @@ public class StockServiceImpl {
 	@Autowired
 	ExportFileFactory exportFileFactory;
 
+	@Autowired
+	StockValidator stockValidator;
+	
 	public GenricResponse uploadStock(StockMgmt stockMgmt) {
 		boolean isStockAssignRequest = Boolean.FALSE;
 		boolean isAnonymousUpload = Boolean.FALSE;
@@ -150,6 +155,7 @@ public class StockServiceImpl {
 		User user = null;
 
 		try {
+			stockValidator.validateRegister(stockMgmt);
 			stockMgmt.setStockStatus(StockStatus.NEW.getCode());
 
 			// Assign Stock is done by custom.
@@ -267,7 +273,10 @@ public class StockServiceImpl {
 					return new GenricResponse(1, "Stock registeration have been failed.", stockMgmt.getTxnId());
 				}
 			}
-		} catch (Exception e) {
+		} catch (RequestInvalidException e) {
+			logger.error("Request validation failed for txnId[" + stockMgmt.getTxnId() + "]" + e);
+			throw e;
+		}catch (Exception e) {
 			logger.error(e.getMessage(), e);
 
 			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
