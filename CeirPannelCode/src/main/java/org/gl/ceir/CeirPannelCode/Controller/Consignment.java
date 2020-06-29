@@ -414,22 +414,22 @@ if(reqType.equals("formPage"))
 log.info("open registration Consignment form");
 mv.setViewName("registerConsignment");
 }
-else if(reqType.equals("editPage")) {
-ConsignmentModel consignmentdetails=feignCleintImplementation.fetchConsignmentByTxnId(txnId);
-log.info("consignment details="+consignmentdetails);
-
-log.info("open Update registration Consignment form");
-mv.setViewName("editConsignment");
-mv.addObject("consignmentdetails", consignmentdetails);
-}
-else {
-ConsignmentModel consignmentdetails=feignCleintImplementation.fetchConsignmentByTxnId(txnId);
-log.info("consignment details="+consignmentdetails);
-log.info("open view registration Consignment form");
-mv.setViewName("viewConsignmentRecord");
-mv.addObject("consignmentdetails", consignmentdetails);
-
-}
+		/*
+		 * else if(reqType.equals("editPage")) { ConsignmentModel
+		 * consignmentdetails=feignCleintImplementation.fetchConsignmentByTxnId(txnId);
+		 * log.info("consignment details="+consignmentdetails);
+		 * 
+		 * log.info("open Update registration Consignment form");
+		 * mv.setViewName("editConsignment"); mv.addObject("consignmentdetails",
+		 * consignmentdetails); } else { ConsignmentModel
+		 * consignmentdetails=feignCleintImplementation.fetchConsignmentByTxnId(txnId);
+		 * log.info("consignment details="+consignmentdetails);
+		 * log.info("open view registration Consignment form");
+		 * mv.setViewName("viewConsignmentRecord"); mv.addObject("consignmentdetails",
+		 * consignmentdetails);
+		 * 
+		 * }
+		 */
 return mv;
 
 }
@@ -446,26 +446,26 @@ public @ResponseBody ConsignmentModel openRegisterConsignmentPopup(@RequestParam
 ConsignmentModel consignmentdetails= new ConsignmentModel();
 FilterRequest filterRequest= new  FilterRequest();
 filterRequest.setTxnId(txnId);
-filterRequest.setUserId(0);
-filterRequest.setUsername("");
-filterRequest.setUserTypeId(0);
-filterRequest.setUserType("");
-filterRequest.setFeatureId(0);
-filterRequest.setRoleType("");
+filterRequest.setUserId(userId);
+filterRequest.setUsername(userName);
+filterRequest.setUserTypeId(userTypeId);
+filterRequest.setUserType(roletype);
+filterRequest.setFeatureId(3);
+filterRequest.setRoleType(roletype);
 		/*
 		 * String txnId Long userId, String userName, Long userTypeId, String userType,
 		 * Long featureId, Long roleType
 		 */
 if(reqType.equals("editPage")) {
-log.info("transaction id passed to the fetch consignment api="+txnId);
-consignmentdetails=feignCleintImplementation.fetchConsignmentByTxnId(txnId);
+log.info("request  passed to the fetch consignment api="+filterRequest);
+consignmentdetails=feignCleintImplementation.fetchConsignmentByTxnId(filterRequest);
 log.info(" response from fetch consignment api ="+consignmentdetails);
 
 
 }
 else {
-log.info("transaction id passed to the fetch consignment api="+txnId);
-consignmentdetails=feignCleintImplementation.fetchConsignmentByTxnId(txnId);
+log.info("request  passed to the fetch consignment api="+filterRequest);
+consignmentdetails=feignCleintImplementation.fetchConsignmentByTxnId(filterRequest);
 log.info(" response from fetch consignment api ="+consignmentdetails);
 }
 return consignmentdetails;

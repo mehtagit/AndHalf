@@ -79,7 +79,7 @@ public interface FeignCleintImplementation {
 
 	//edit Consignment feign  controller
 	@RequestMapping(value="/consignment/view" ,method=RequestMethod.GET) 
-	public @ResponseBody ConsignmentModel fetchConsignmentByTxnId(@RequestParam("txnId") String txnId) ;
+	public @ResponseBody ConsignmentModel fetchConsignmentByTxnId(FilterRequest request) ;
 
 
 	//delete Consignment feign  controller
