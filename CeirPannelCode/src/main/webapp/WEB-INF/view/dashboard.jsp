@@ -55,6 +55,9 @@ if (currentTime < dfd) {
 
 <script type="text/javascript"
 	src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
+	<script
+		src="${context}/resources/custom_js/bootstrap.min.js"></script>
+	
 <link rel="shortcut icon" href="">
 <!-- CORE CSS-->
 <link href="${context}/resources/css/materialize.css" type="text/css"
@@ -66,18 +69,11 @@ if (currentTime < dfd) {
 <!-- Favicons-->
 <link rel="icon" href="${context}/resources/images/DMC-Logo.png"
 	sizes="32x32">
-<link href="${context}/resources/css/custom/custom.css" type="text/css"
-	rel="stylesheet" media="screen,projection">
 <!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
 <link href="${context}/resources/js/plugins/prism/prism.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
 <link
 	href="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.css"
-	type="text/css" rel="stylesheet" media="screen,projection">
-<link
-	href="${context}/resources/js/plugins/chartist-js/chartist.min.css"
-	type="text/css" rel="stylesheet" media="screen,projection">
-<link href="${context}/resources/font/font-awesome/css/font-awesome.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
 <link
 	href="${context}/resources/font/font-awesome/css/font-awesome.min.css"
@@ -86,15 +82,11 @@ if (currentTime < dfd) {
 
 <link rel="stylesheet"
 	href="${context}/resources/custom_js/jquery-ui.css">
-<script src="${context}/resources/custom_js/1.11.2_jquery-ui.js"></script>
-
+<%-- <script src="${context}/resources/custom_js/1.11.2_jquery-ui.js"></script>
+ --%>
 <script src="${context}/resources/custom_js/jquery.blockUI.js"></script>
 
-
-
-
 <!------------------------------------------- Dragable Model---------------------------------->
-<script src="${context}/resources/custom_js/1.12.1_jquery-ui.js"></script>
 <script src="${context}/resources/custom_js/1.12.1_jquery-ui.min.js"></script>
 
 
@@ -745,52 +737,58 @@ data-dismiss="modal">&times;</button> -->
 
 	<!--materialize js-->
 	<script type="text/javascript"
-		src="${context}/resources/js/materialize.js?version=<%= (int) (Math.random() * 10) %>"></script>
-	<!--prism
-    <script type="text/javascript" src="${context}/resources/js/prism/prism.js"></script>-->
-	<!--scrollbar-->
+		src="${context}/resources/js/materialize.js"></script>
+	
 	<script type="text/javascript"
-		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
-	<!-- chartist -->
-	<!--   <script type="text/javascript" src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script>   
-     -->
-	<!--plugins.js - Some Specific JS codes for Plugin Settings-->
-	<!--custom-script.js - Add your own theme custom JS-->
-	<script type="text/javascript"
-		src="${context}/resources/js/custom-script.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+	
+		<script type="text/javascript"
+		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js?version=<%= (int) (Math.random() * 10) %>"></script>  
 
-	<!-- i18n library -->
+	
+	
 	<!-- i18n library -->
 	<script type="text/javascript"
-		src="${context}/resources/project_js/CLDRPluralRuleParser.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
+	<%-- <script type="text/javascript"
+		src="${context}/resources/i18n_library/i18n.js"></script>
+	 --%>
+	
+	
+	
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/i18n.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/i18n_library/i18n.js"></script>
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/messagestore.js?version=<%= (int) (Math.random() * 10) %>"></script>
-
-	<script type="text/javascript"
-		src="${context}/resources/i18n_library/fallbacks.js?version=<%= (int) (Math.random() * 10) %>"></script>
-
-	<script type="text/javascript"
-		src="${context}/resources/i18n_library/language.js?version=<%= (int) (Math.random() * 10) %>"></script>
-
-	<script type="text/javascript"
-		src="${context}/resources/i18n_library/parser.js?version=<%= (int) (Math.random() * 10) %>"></script>
-
+		src="${context}/resources/i18n_library/messagestore.js"></script>
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/emitter.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/i18n_library/fallbacks.js"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/language.js"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/parser.js"></script>
 
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/bidi.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/i18n_library/emitter.js"></script>
+
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/history.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/i18n_library/bidi.js"></script>
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/min.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/i18n_library/history.js"></script>
 
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/min.js"></script>
+	
+	
+	
+	<!-- Custom js -->
+
+	
 	<script type="text/javascript"
 		src="${context}/resources/project_js/globalVariables.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript"
@@ -800,9 +798,7 @@ data-dismiss="modal">&times;</button> -->
 	<script type="text/javascript"
 		src="${context}/resources/project_js/enterKey.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
-	<!-- ajax js -->
-
-
+	
 	<script type="text/javascript"
 		src="${context}/resources/ajax/Password.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript"
