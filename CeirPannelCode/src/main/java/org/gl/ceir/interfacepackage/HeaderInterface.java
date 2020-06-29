@@ -4,5 +4,5 @@ import org.springframework.http.ResponseEntity;
 
 public interface HeaderInterface {
 	public ResponseEntity<?> headers(String role);
-
+	
 }

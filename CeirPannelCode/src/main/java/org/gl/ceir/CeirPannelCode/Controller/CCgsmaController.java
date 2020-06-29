@@ -27,41 +27,42 @@ public class CCgsmaController {
 	GsmaFeignClient gsmaFeignClient;
 	@Autowired
 	FeignCleintImplementation feignCleintImplementation;
+	
 
 	@PostMapping("getGsmaDetails")
 	public @ResponseBody GsmaDetail getDetails(@RequestParam(name = "msisdn", required = false) String msisdn,
 			@RequestParam(name = "imei", required = false) String imei,
 			@RequestParam(name = "identifierType", required = false) String identifierType, HttpSession session) {
-		log.info("request passed to the getGsmaDetails Api msisdn-->" + msisdn + " imei-->" + imei
-				+ " identifierType-->" + identifierType);
+		log.info("request passed to the getGsmaDetails Api msisdn-->"+msisdn+ " imei-->"+imei+" identifierType-->"+identifierType);
 		GsmaDetail response = gsmaFeignClient.viewGsmaFeign(msisdn, imei, identifierType);
 		log.info("response after getGsmaDetails." + response);
 		return response;
 
 	}
-
-	// ---------------------------- View Customer details
-	// -------------------------------
-
+	
+	
+	
+	//----------------------------  View Customer details ------------------------------- 
+	
 	@PostMapping("/customerRecord")
 	public @ResponseBody GenricResponse viewCustomerDetails(
 			@RequestParam(name = "listType", required = false) String listType,
 			@RequestBody CustomerCareRequest customerCareRequest) {
-		log.info("request send to the Customer details api=" + customerCareRequest + " listType-->" + listType);
+		log.info("request send to the Customer details api=" + customerCareRequest+" listType-->" +listType);
 		GenricResponse response = feignCleintImplementation.viewcustomerDetialsfeign(listType, customerCareRequest);
 		log.info("response from Customer details api " + response);
 		return response;
 
 	}
-
+	
 	@PostMapping("/customeCareByTxnId")
 	public @ResponseBody GenricResponse customeCareByTxnId(HttpServletRequest request) {
-
-		log.info("request......" + request);
+		
+		log.info("request......"+ request);
 		String filter = request.getParameter("customerCareRequest");
-		Gson gson = new Gson();
-		CustomerCareByTxnId customerCarebytxnId = gson.fromJson(filter, CustomerCareByTxnId.class);
-		log.info("request passed to the api==" + customerCarebytxnId);
+		Gson gson= new Gson(); 
+		CustomerCareByTxnId customerCarebytxnId  = gson.fromJson(filter,CustomerCareByTxnId.class);
+		log.info("request passed to the api=="+customerCarebytxnId);
 		GenricResponse response = feignCleintImplementation.customerCareViaTxnId(customerCarebytxnId);
 		log.info("response from Customer details api " + response);
 		return response;

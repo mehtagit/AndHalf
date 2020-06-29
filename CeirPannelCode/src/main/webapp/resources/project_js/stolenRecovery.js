@@ -61,6 +61,14 @@ function confirmantiondelete(){
 			
 
 	}
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
+
+
 	$.ajax({
 		url : "./stolenRecoveryDelete",
 		data : JSON.stringify(obj),
@@ -95,6 +103,14 @@ function EditConsignmentDetails(txnId){
 function viewConsignmentDetails(txnId){
 
 	$("#viewModal").openModal({dismissible:false});
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
+
+
 	$.ajax({
 		url : "./openRegisterConsignmentPopup?reqType=editPage&txnId="+txnId,
 		dataType : 'json',
@@ -183,6 +199,13 @@ function editRegisterConsignment(){
 
 	//console.log(JSON.stringify(formData));
 	//console.log("*********");
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
+
 
 	$.ajax({ 
 		url: './Consignment/updateRegisterConsignment',
@@ -270,8 +293,8 @@ var sourceType = localStorage.getItem("sourceType");
 function filterStolen(language,sourceTypeFilter,source){
 	var source__val;
 
-	if(source == 'filter' ) {
-		source__val= source;
+	if(sourceTypeFilter == 'filter' ) {
+		source__val= 'filter';
 	}
 	else{
 		source__val= $("body").attr("data-session-source");
@@ -335,6 +358,13 @@ function Datatable(url,dataUrl,sourceTypeFiler){
 	if(lang=='km'){
 		var langFile='../resources/i18n/khmer_datatable.json';
 			}
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
+
 
 	$.ajax({
 		url: url,
@@ -401,6 +431,14 @@ function pageRendering(){
 
 
 function pageElements(url){
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
+
+
 	$.ajax({
 		url: url,
 		type: 'POST',
@@ -531,6 +569,13 @@ function fileStolenReport(){
 	formData.append('qty',qty);
 	//console.log(JSON.stringify(formData));
 	//console.log("*********");
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
+
 
 	$.ajax({
 		url: './fileTypeStolen',
@@ -589,6 +634,14 @@ function fileRecoveryReport(){
 	formData.append('qty',qty);
 	//console.log(JSON.stringify(formData));
 	//console.log("*********");
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
+
+
 	$.ajax({
 		url: './fileTypeRecovery',
 		type: 'POST',
@@ -727,6 +780,13 @@ function updatefileStolenReport(){
 	formData.append('userId',userId);
 	//console.log(JSON.stringify(formData));
 	//console.log("*********");
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
+
 
 	$.ajax({
 		url: './updateFileTypeStolenRecovery',
@@ -854,6 +914,12 @@ function openMulipleStolenPopUp()
 
 	var stolenRecoverydata=JSON.stringify(valuesPush());
 	//console.log("release-------"+stolenRecoverydata);
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		url: './multipleStolenRecovery',
 		type: 'POST',
@@ -903,7 +969,14 @@ function redirectToViewStolenPage()
 
 
 function setAllDropdowns(){
-	
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
+
+
 	//Source Operator-----------dropdown
 	$.getJSON('./getDropdownList/OPERATORS', function(data) {
 			for (i = 0; i < data.length; i++) {
@@ -944,6 +1017,7 @@ $.getJSON('./getSourceTypeDropdown/SOURCE_TYPE/'+featureId+'', function(data) {
 //**********************************************************Export Excel file************************************************************************
 function exportStolenRecoveryData()
 {
+	var source__val;
 	var stolenRecoveryStartDate=$('#startDate').val();
 	var stolenRecoveryEndDate=$('#endDate').val();
 	var stolenRecoveryTxnId=$('#transactionID').val();
@@ -955,6 +1029,17 @@ function exportStolenRecoveryData()
 	var roleType = $("body").attr("data-roleType");
 	var currentRoleType = $("body").attr("data-stolenselected-roleType");
 	
+	var source__val = stolenRecoveryStartDate != ''|| stolenRecoveryEndDate != ''|| stolenRecoveryTxnId != ''|| stolenRecoveryFileStatus != "Status"|| stolenRecoverySourceStatus != "Mode"|| stolenRecoveryRequestType != "Request Type" ? 'filter' : $("body").attr("data-session-source");
+	var blockUnblcksource= $("body").attr("data-session-source");
+	if(blockUnblcksource=='noti')
+		{
+		//console.log("export noti data=="+$("body").attr("data-notificationTxnID"));
+		stolenRecoveryTxnId=$("body").attr("data-notificationTxnID");
+		source__val=$("body").attr("data-session-source");
+		}
+	else if(blockUnblcksource=='dashboard'){
+		source__val=$("body").attr("data-session-source");
+	}
 	var role = currentRoleType == null ? roleType : currentRoleType;
 	//console.log("roleType=="+roleType+" currentRoleType="+currentRoleType+" role="+role);
     
@@ -963,7 +1048,7 @@ function exportStolenRecoveryData()
 	   {
     	  stolenRecoveryFileStatus='';
     	  stolenRecoverySourceStatus='';
-    	  stolenRecoveryRequestType='';
+    	  stolenRecoveryRequestType=parseInt($("body").attr("data-requestType"));
     	  //console.log(" 11111111stolenRecoveryFileStatus && stolenRecoverySourceStatus && stolenRecoveryRequestType is empty =="+stolenRecoveryFileStatus+stolenRecoverySourceStatus);
 	   }
       else if(isNaN(stolenRecoveryFileStatus) && isNaN(stolenRecoverySourceStatus))
@@ -975,12 +1060,12 @@ function exportStolenRecoveryData()
       else if(isNaN(stolenRecoverySourceStatus) && isNaN(stolenRecoveryRequestType))
 	   {
     	  stolenRecoverySourceStatus='';
-    	  stolenRecoveryRequestType='';
+    	  stolenRecoveryRequestType=parseInt($("body").attr("data-requestType"));
     	  //console.log(" 333333stolenRecoverySourceStatus && stolenRecoveryRequestType is empty="+stolenRecoverySourceStatus+stolenRecoveryRequestType);
 	   }
       else if(isNaN(stolenRecoveryRequestType) && isNaN(stolenRecoveryFileStatus))
     	  {
-    	   stolenRecoveryRequestType='';
+    	   stolenRecoveryRequestType=parseInt($("body").attr("data-requestType"));
     	   stolenRecoveryFileStatus='';
     	   //console.log(" 44444stolenRecoveryRequestType && stolenRecoveryFileStatus is empty "+stolenRecoveryRequestType+stolenRecoveryFileStatus);
     	  }
@@ -996,7 +1081,7 @@ function exportStolenRecoveryData()
 	  }
       else if(isNaN(stolenRecoveryRequestType))
 	  {
-    	  stolenRecoveryRequestType='';
+    	  stolenRecoveryRequestType=parseInt($("body").attr("data-requestType"));
     	  //console.log("stolenRecoveryRequestType is blank="+stolenRecoveryRequestType);
 	  }
 
@@ -1025,13 +1110,22 @@ function exportStolenRecoveryData()
 			"pageSize":parseInt(pageSize),
 			"userTypeId": parseInt($("body").attr("data-userTypeID")),
 			"userType":$("body").attr("data-roleType"),
-			"userId" : $("body").attr("data-userID")
+			"userId" : $("body").attr("data-userID"),
+		
 			
 			
 	}
 	//console.log(JSON.stringify(filterRequest))
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
+
+
 	$.ajax({
-		url: './exportStolenRecovery',
+		url: './exportStolenRecovery?source='+source__val,
 		type: 'POST',
 		dataType : 'json',
 		contentType : 'application/json; charset=utf-8',
@@ -1065,6 +1159,13 @@ function aprroveDevice(){
 			"txnId": window.transactionId,
 			"userId":parseInt(userId)
 	}
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
+
 
 	$.ajax({
 		url : './blockUnblockApproveReject',
@@ -1111,6 +1212,13 @@ function rejectUser(){
 			"txnId": window.transactionId,
 			"userId":parseInt(userId)
 	}
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
+
 
 	$.ajax({
 		url : './blockUnblockApproveReject',
@@ -1158,13 +1266,13 @@ function historyRecord(txnID){
 	 var formData= new FormData();
 	 
 	 var userTypeValue=$("body").attr("data-roleType");
-	 if(userTypeValue=='CEIRAdmin')
+	 	 if(userTypeValue=='CEIRAdmin')
 	 {
 		 var filterRequest={
 				 
 				 "columns": [
-					    "created_on","modified_on","txn_id","role_type","operator_type_id","request_type","source_type","file_status","complaint_type","file_name","fir_file_name",
-					    "block_category","blocking_type","blocking_time_period","quantity","device_quantity","remark","rejected_remark","date_of_recovery","date_of_stolen",
+					    "created_on","modified_on","txn_id","role_type","operator_type_id","request_type","source_type","file_status","file_name",
+					    "block_category","blocking_type","blocking_time_period","quantity","device_quantity","remark","rejected_remark",
 					     "user_id","ceir_admin_id"
 					    ],
 				"tableName": "stolenand_recovery_mgmt_aud",
@@ -1176,8 +1284,8 @@ function historyRecord(txnID){
  var filterRequest={
 				 
 				 "columns": [
-					    "created_on","modified_on","txn_id","role_type","operator_type_id","request_type","source_type","file_status","complaint_type","file_name","fir_file_name",
-					    "block_category","blocking_type","blocking_time_period","quantity","device_quantity","remark","rejected_remark","date_of_recovery","date_of_stolen",
+					    "created_on","modified_on","txn_id","role_type","operator_type_id","request_type","source_type","file_status","file_name",
+					    "block_category","blocking_type","blocking_time_period","quantity","device_quantity","remark","rejected_remark",
 					     "user_id"
 					    ],
 				"tableName": "stolenand_recovery_mgmt_aud",
@@ -1191,6 +1299,14 @@ function historyRecord(txnID){
 		var langFile='../resources/i18n/khmer_datatable.json';
 	}
 	//console.log("22");
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
+
+
 	$.ajax({
 		url: 'Consignment/consignment-history',
 		type: 'POST',

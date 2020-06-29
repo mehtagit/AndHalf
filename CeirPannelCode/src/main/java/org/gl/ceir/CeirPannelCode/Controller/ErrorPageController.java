@@ -7,10 +7,10 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 
 @ControllerAdvice
 public class ErrorPageController {
-	@ExceptionHandler(NoHandlerFoundException.class)
-	public ModelAndView handle404() {
-		ModelAndView modelAndView = new ModelAndView("notFound");
-		return modelAndView;
-	}
-
+	    @ExceptionHandler(NoHandlerFoundException.class)
+	    public ModelAndView handle404() {
+	    	ModelAndView modelAndView= new ModelAndView("notFound");
+	        return modelAndView;
+	    }
+	
 }

@@ -47,44 +47,48 @@ import com.google.gson.Gson;
 
 import CeirPannelCode.Model.Register_UploadPaidStatus;
 
+
+
 @Controller
 public class TrcController {
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
-	@Value("${filePathforUploadFile}")
+	@Value ("${filePathforUploadFile}")
 	String filePathforUploadFile;
 
-	@Value("${filePathforMoveFile}")
+	@Value ("${filePathforMoveFile}")
 	String filePathforMoveFile;
-
+	
+	
 	@Autowired
 	TypeApprovedFeignImpl typeApprovedFeignImpl;
 	@Autowired
 	RegisterationImpl registerationImpl;
 	@Autowired
 	UtilDownload utildownload;
-
+	
 	@Autowired
-	AddMoreFileModel addMoreFileModel, urlToUpload;
+	AddMoreFileModel addMoreFileModel,urlToUpload;
 	@Autowired
 	FeignCleintImplementation feignCleintImplementation;
 
-	@Value("${serverId}")
+	@Value ("${serverId}")
 	Integer serverId;
 	@Autowired
 	GrievanceFeignClient grievanceFeignClient;
-
-	@RequestMapping(value = { "/manageTypeDevices" }, method = {
-			org.springframework.web.bind.annotation.RequestMethod.GET,
-			org.springframework.web.bind.annotation.RequestMethod.POST })
-	public ModelAndView viewManageType(HttpSession session,
-			@RequestParam(name = "txnID", required = false) String txnID) {
+	
+	@RequestMapping(value=
+		{"/manageTypeDevices"},method={org.springframework.web.bind.annotation.
+				RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}
+			)
+	public ModelAndView viewManageType(HttpSession session,@RequestParam(name="txnID",required = false) String txnID) {
 		ModelAndView mv = new ModelAndView();
-		log.info(" view TRC entry point.");
+		log.info(" view TRC entry point."); 
 		mv.setViewName("viewManageTypeApproved");
-		log.info(" view TRC  exit point.");
-		return mv;
+		log.info(" view TRC  exit point."); 
+		return mv; 
 	}
+
 
 	@GetMapping("register-form")
 	public ModelAndView regiserForm() {
@@ -92,78 +96,83 @@ public class TrcController {
 		return modelAndView;
 
 	}
+	
+	@RequestMapping(value= {"/register-approved-device"},method= RequestMethod.POST,consumes = "multipart/form-data") 
+	public @ResponseBody GenricResponse registerTypeApprove(@RequestParam(name="files[]") MultipartFile[] fileUpload,HttpServletRequest request,HttpSession session) {
+		
+		
 
-	@RequestMapping(value = {
-			"/register-approved-device" }, method = RequestMethod.POST, consumes = "multipart/form-data")
-	public @ResponseBody GenricResponse registerTypeApprove(@RequestParam(name = "files[]") MultipartFile[] fileUpload,
-			HttpServletRequest request, HttpSession session) {
-
-		Integer userId = (int) session.getAttribute("userid");
-		String roletype = (String) session.getAttribute("usertype");
-
-		log.info("-inside controller register-approved-device-------request---------"
-				+ request.getParameter("manufacturerId"));
+		Integer userId= (int) session.getAttribute("userid");
+		String roletype=(String) session.getAttribute("usertype");
+		
+		log.info("-inside controller register-approved-device-------request---------"+request.getParameter("manufacturerId"));
 		// log.info(""+request.getParameter("file"));
-		String userName = session.getAttribute("username").toString();
-		String name = session.getAttribute("name").toString();
+		String userName=session.getAttribute("username").toString();
+		String name=session.getAttribute("name").toString();
 		Map<String, String[]> parameterMap = request.getParameterMap();
-		log.info("************" + parameterMap.toString());
+		log.info("************"+parameterMap.toString());
 		log.info(" Register consignment entry point.");
-		String txnNumber = "T" + utildownload.getTxnId();
-		log.info("Random transaction id number=" + txnNumber);
+		String txnNumber="T" + utildownload.getTxnId();
+		log.info("Random transaction id number="+txnNumber);
 		request.getParameterValues("");
-
+		
+		
 		addMoreFileModel.setTag("system_upload_filepath");
-		urlToUpload = feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
-
-		FileCopyToOtherServer fileCopyRequest = new FileCopyToOtherServer();
-
-		Gson gson = new Gson();
-		String trcDetails = request.getParameter("multirequest");
-
+		urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
+		
+		
+		FileCopyToOtherServer fileCopyRequest= new FileCopyToOtherServer();
+		
+		
+		Gson gson= new Gson(); 
+		String trcDetails=request.getParameter("multirequest");
+		
 		TRCRegisteration trcRequest = gson.fromJson(trcDetails, TRCRegisteration.class);
 		trcRequest.setUserId(userId);
 		trcRequest.setUserType(roletype);
 		trcRequest.setTxnId(txnNumber);
-
-		for (int i = 0; i < trcRequest.getAttachedFiles().size(); i++) {
+		
+		for (int i=0;i<trcRequest.getAttachedFiles().size();i++) {
 			trcRequest.getAttachedFiles().get(i).setTxnId(txnNumber);
-			// grievanceRequest.getMultifile().get(i).getDocType();
+			//grievanceRequest.getMultifile().get(i).getDocType();
 		}
+		
+		log.info("Random  genrated transaction number ="+txnNumber);
+		int i=0;
+		for( MultipartFile file : fileUpload) {
 
-		log.info("Random  genrated transaction number =" + txnNumber);
-		int i = 0;
-		for (MultipartFile file : fileUpload) {
-
-			log.info("-----" + file.getOriginalFilename());
-			log.info("++++" + file);
-
-			String tagName = trcRequest.getAttachedFiles().get(i).getDocType();
-			log.info("doctype Name===" + tagName + "value of index=" + i);
+			log.info("-----"+ file.getOriginalFilename());
+			log.info("++++"+ file);
+		
+			String tagName=trcRequest.getAttachedFiles().get(i).getDocType();
+			log.info("doctype Name==="+tagName+"value of index="+i);
+			
 
 			try {
+				
+				
+				
 
-				byte[] bytes = file.getBytes();
-				String rootPath = urlToUpload.getValue() + txnNumber + "/" + tagName + "/";
-				File dir = new File(rootPath + File.separator);
-				if (!dir.exists())
-					dir.mkdirs(); // Create the file on server // Calendar now = Calendar.getInstance();
-				File serverFile = new File(rootPath + file.getOriginalFilename());
-				log.info("uploaded file path on server" + serverFile);
-				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
-				stream.write(bytes);
-				stream.close();
-				// grievanceRequest.setFileName(file.getOriginalFilename());
+				byte[] bytes =
+						file.getBytes(); String rootPath = urlToUpload.getValue()+txnNumber+"/"+tagName+"/"; 
+						File dir =   new File(rootPath + File.separator);
+						if (!dir.exists()) dir.mkdirs(); // Create the file on server // Calendar now = Calendar.getInstance();
+						File serverFile = new File(rootPath+file.getOriginalFilename());
+						log.info("uploaded file path on server" + serverFile); BufferedOutputStream
+						stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+						stream.write(bytes); stream.close(); 
+						//  grievanceRequest.setFileName(file.getOriginalFilename());
+						
+						fileCopyRequest.setFilePath(urlToUpload.getValue()+txnNumber+"/"+tagName+"/");
+						fileCopyRequest.setTxnId(txnNumber);
+						fileCopyRequest.setFileName(file.getOriginalFilename());
+						fileCopyRequest.setServerId(serverId);
+						log.info("request passed to move file to other server=="+fileCopyRequest);
+						GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
+						log.info("file move api response==="+fileRespnose);
 
-				fileCopyRequest.setFilePath(urlToUpload.getValue() + txnNumber + "/" + tagName + "/");
-				fileCopyRequest.setTxnId(txnNumber);
-				fileCopyRequest.setFileName(file.getOriginalFilename());
-				fileCopyRequest.setServerId(serverId);
-				log.info("request passed to move file to other server==" + fileCopyRequest);
-				GenricResponse fileRespnose = grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
-				log.info("file move api response===" + fileRespnose);
-
-			} catch (Exception e) { //
+			}
+			catch (Exception e) { //
 				// TODO: handle exception e.printStackTrace(); }
 
 				// set reaquest parameters into model class
@@ -171,142 +180,161 @@ public class TrcController {
 			}
 			i++;
 
+
 		}
-
-		log.info("TRC form parameters passed to save TRC api " + trcRequest);
+		
+		log.info("TRC form parameters passed to save TRC api "+trcRequest);
 		GenricResponse response = typeApprovedFeignImpl.register(trcRequest);
-		response.setTxnId(txnNumber);
+		 response.setTxnId(txnNumber);
+		
 
-		log.info("TRC from register TRC api" + response);
-		log.info("register TRC exit point.");
-		return response;
+		 log.info("TRC from register TRC api"+response);
+		 log.info("register TRC exit point.");
+		 return response;
+		
+		
+	
+		} 
 
-	}
+	
 
 	@ResponseBody
 	@PostMapping("viewByID/{id}")
 	public ResponseEntity<?> viewByID(@PathVariable("id") int id) {
 		TRCRegisteration result = typeApprovedFeignImpl.viewByID(id);
-		return new ResponseEntity<>(result, HttpStatus.OK);
+		return new ResponseEntity<>(result,HttpStatus.OK);
 	}
 
-	// ************************************************ update consignment record
-	// page********************************************************************************/
 
-	@RequestMapping(value = { "/update-register-approved-device" }, method = RequestMethod.POST)
-	public @ResponseBody GenricResponse updateRegister(@RequestParam(name = "files[]") MultipartFile[] fileUpload,
-			HttpServletRequest request, HttpSession session) {
-		log.info("---------request---------" + request.getParameter("manufacturerId"));
+
+	//************************************************ update consignment record page********************************************************************************/
+
+	@RequestMapping(value= {"/update-register-approved-device"},method= RequestMethod.POST) 
+	public @ResponseBody GenricResponse updateRegister(@RequestParam(name="files[]") MultipartFile[] fileUpload,HttpServletRequest request,HttpSession session) {
+		log.info("---------request---------"+request.getParameter("manufacturerId"));
 		// log.info(""+request.getParameter("file"));
 
-		Integer userId = (int) session.getAttribute("userid");
-		String roletype = (String) session.getAttribute("usertype");
+		Integer userId= (int) session.getAttribute("userid");
+		String roletype=(String) session.getAttribute("usertype");
 		log.info(" updateRegister consignment entry point.");
 
 		addMoreFileModel.setTag("system_upload_filepath");
-		urlToUpload = feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
-		Gson gson = new Gson();
-		String trcDetails = request.getParameter("multirequest");
+		urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
+		Gson gson= new Gson(); 
+		String trcDetails=request.getParameter("multirequest");
 		TRCRegisteration trcRequest = gson.fromJson(trcDetails, TRCRegisteration.class);
-		FileCopyToOtherServer fileCopyRequest = new FileCopyToOtherServer();
-
-		int i = 0;
-		for (MultipartFile file : fileUpload) {
-			String tagName = trcRequest.getAttachedFiles().get(i).getDocType();
-			try {
-				if (fileUpload == null) {
-					trcRequest.getAttachedFiles().get(i).setFileName("");
-				} else {
-
-					byte[] bytes = file.getBytes();
-					String rootPath = urlToUpload.getValue() + trcRequest.getTxnId() + "/" + tagName + "/";
-					File dir = new File(rootPath + File.separator);
-
-					if (!dir.exists())
-						dir.mkdirs();
-					// Create the file on server
-					// Calendar now = Calendar.getInstance();
-
-					File serverFile = new File(rootPath + file.getOriginalFilename());
-					log.info("uploaded file path on server" + serverFile);
-					BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
-					stream.write(bytes);
-					stream.close();
-					fileCopyRequest.setFilePath(urlToUpload.getValue() + trcRequest.getTxnId() + "/" + tagName + "/");
-					fileCopyRequest.setTxnId(trcRequest.getTxnId());
-					fileCopyRequest.setFileName(file.getOriginalFilename());
-					fileCopyRequest.setServerId(serverId);
-					log.info("request passed to move file to other server==" + fileCopyRequest);
-					GenricResponse fileRespnose = grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
-					log.info("file move api response===" + fileRespnose);
-				}
-
-			} catch (Exception e) {
-				// TODO: handle exception
-				e.printStackTrace();
+		FileCopyToOtherServer fileCopyRequest= new FileCopyToOtherServer();
+		
+		int i=0;
+		for( MultipartFile file : fileUpload) {
+			String tagName=trcRequest.getAttachedFiles().get(i).getDocType();
+		try {
+			if(fileUpload==null)
+			{
+				trcRequest.getAttachedFiles().get(i).setFileName("");
 			}
-			i++;
-		}
+			else {
+				
+				
+				
+			byte[] bytes = file.getBytes();
+			String rootPath = urlToUpload.getValue()+trcRequest.getTxnId()+"/"+tagName+"/";
+			File dir = new File(rootPath + File.separator);
 
-		log.info("request passed to the update method=" + trcRequest);
+			if (!dir.exists()) 
+				dir.mkdirs();
+			// Create the file on server
+			// Calendar now = Calendar.getInstance();
+
+			File serverFile = new File(rootPath+file.getOriginalFilename());
+			log.info("uploaded file path on server" + serverFile);
+			BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+			stream.write(bytes);
+			stream.close();
+			fileCopyRequest.setFilePath(urlToUpload.getValue()+trcRequest.getTxnId()+"/"+tagName+"/");
+			fileCopyRequest.setTxnId(trcRequest.getTxnId());
+			fileCopyRequest.setFileName(file.getOriginalFilename());
+			fileCopyRequest.setServerId(serverId);
+			log.info("request passed to move file to other server=="+fileCopyRequest);
+			GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
+			log.info("file move api response==="+fileRespnose);
+			}
+			
+			
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		i++;
+		}
+		
+		log.info("request passed to the update method="+trcRequest);
 		GenricResponse response = typeApprovedFeignImpl.updateApproved(trcRequest);
-		log.info("response  from   update method=" + response);
+		log.info("response  from   update method="+response);	
 		response.setTxnId(trcRequest.getTxnId());
 		return response;
 	}
+		
 
-	// ***************************************** Export Grievance controller
-	// *********************************
-	@RequestMapping(value = "/exportTac", method = { org.springframework.web.bind.annotation.RequestMethod.GET })
-	public String exportToExcel(@RequestParam(name = "tacStartDate", required = false) String tacStartDate,
-			@RequestParam(name = "tacStatus", required = false) Integer tacStatus,
-			@RequestParam(name = "txnId") String txnId, HttpSession session,
-			@RequestParam(name = "pageSize") Integer pageSize, @RequestParam(name = "pageNo") Integer pageNo,
-			@RequestParam(name = "tacNumber") String tacNumber,
-			@RequestParam(name = "tacEndDate", required = false) String tacEndDate,
-			@RequestParam(name = "featureId", required = false) Integer featureId,
-			@RequestParam(name = "userType", required = false) String userType,
-			@RequestParam(name = "userTypeId", required = false) Integer userTypeId,
-			@RequestParam(name = "userId", required = false) Integer userId) {
-		log.info("tacStartDate==" + tacStartDate + " tacStatus =" + tacStatus + " tacNumber=" + tacNumber
-				+ "tacEndDate=" + tacEndDate);
-		// int userId= (int) session.getAttribute("userid");
-		int file = 1;
+
+
+
+	//***************************************** Export Grievance controller *********************************
+	@RequestMapping(value="/exportTac",method ={org.springframework.web.bind.annotation.RequestMethod.GET})
+	public String exportToExcel(@RequestParam(name="tacStartDate",required = false) String tacStartDate,
+			@RequestParam(name="tacStatus",required = false) Integer tacStatus,
+			@RequestParam(name="txnId") String txnId,
+			HttpSession session,@RequestParam(name="pageSize") Integer pageSize,
+			@RequestParam(name="pageNo") Integer pageNo,
+			@RequestParam(name="tacNumber") String tacNumber,
+			@RequestParam(name="tacEndDate",required = false) String tacEndDate,
+			@RequestParam(name="featureId",required = false) Integer featureId,
+			@RequestParam(name="userType",required = false) String userType,
+			@RequestParam(name="userTypeId",required = false) Integer userTypeId,
+			@RequestParam(name="userId",required = false) Integer userId,
+			@RequestParam(name="source",defaultValue = "menu",required = false) String source
+			)
+	{
+		log.info("tacStartDate=="+tacStartDate+ " tacStatus ="+tacStatus+" tacNumber="+tacNumber+"tacEndDate="+tacEndDate);
+		//int userId= (int) session.getAttribute("userid"); 
+		log.info("source--->" +source);
+		int file=1;
 		FileExportResponse fileExportResponse;
 		TRCRequest trcRequest = new TRCRequest();
 		trcRequest.setStartDate(tacStartDate);
 		trcRequest.setEndDate(tacEndDate);
 		trcRequest.setTac(tacNumber);
 		trcRequest.setStatus(tacStatus);
-		// trcRequest.setUserId(userId);
+		//trcRequest.setUserId(userId);
 		trcRequest.setTxnId(txnId);
 		trcRequest.setFeatureId(featureId);
 		trcRequest.setUserType(userType);
 		trcRequest.setUserTypeId(userTypeId);
 		trcRequest.setUserId(userId);
 		trcRequest.setFile(file);
-		log.info(" request passed to the exportTo trcRequest Excel Api ==" + trcRequest + " *********** pageSize"
-				+ pageSize + "  pageNo  " + pageNo + " userId==" + userId);
-		Object response = typeApprovedFeignImpl.manageTypeFeign(trcRequest, pageNo, pageSize, file);
+		log.info(" request passed to the exportTo trcRequest Excel Api =="+trcRequest+" *********** pageSize"+pageSize+"  pageNo  "+pageNo+" userId==" +userId);
+		Object	response= typeApprovedFeignImpl.manageTypeFeign(trcRequest, pageNo, pageSize, file,source);
 
-		Gson gson = new Gson();
+		Gson gson= new Gson(); 
 		String apiResponse = gson.toJson(response);
 		fileExportResponse = gson.fromJson(apiResponse, FileExportResponse.class);
-		log.info("response  from   export trc  api =" + fileExportResponse);
+		log.info("response  from   export trc  api ="+fileExportResponse);
 
-		return "redirect:" + fileExportResponse.getUrl();
+		return "redirect:"+fileExportResponse.getUrl();
 	}
-
-	// ******************************************* TAC approved/Disapproved
-	// controller
-
+	
+	
+	//******************************************* TAC approved/Disapproved controller
+	
 	@ResponseBody
 	@PostMapping("TACAprroveDisapprove")
 	public GenricResponse TACAprroveDisapprove(@RequestBody TypeApprovedStatusModel model) {
-		log.info("request send to the typeApproved api=" + model);
+		log.info("request send to the typeApproved api="+model);
 		GenricResponse response = typeApprovedFeignImpl.TypeApproveReject(model);
-		log.info("response from tac Approved/Disapprove api" + response);
+		log.info("response from tac Approved/Disapprove api"+response);
 		return response;
 	}
+			
 
 }

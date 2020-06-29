@@ -52,7 +52,9 @@ public class ImporterManageTypeAdmin {
 	Button button;
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
+	
 
+	
 	@PostMapping("importerAdmintrc")
 	public ResponseEntity<?> viewImporterAdmin(
 			@RequestParam(name = "type", defaultValue = "consignment", required = false) String role,
@@ -87,122 +89,114 @@ public class ImporterManageTypeAdmin {
 			if (trcPaginationModel.getContent().isEmpty()) {
 				datatableResponseModel.setData(Collections.emptyList());
 			} else {
-				if ("Importer".equals(userType)) {
+				if("Importer".equals(userType)){
 					log.info("--------in Importal Controller");
-					for (TrcContentModel trcContentModelList : trcPaginationModel.getContent()) {
+					for(TrcContentModel trcContentModelList :trcPaginationModel.getContent()) {
 						String createdOn = trcContentModelList.getCreatedOn();
 						String trademark = trcContentModelList.getTrademark();
 						String productName = trcContentModelList.getProductNameInterp();
-						String txnId = trcContentModelList.getTxnId();
+						String txnId= trcContentModelList.getTxnId();
 						String modelNumber = trcContentModelList.getModelNumberInterp();
 						String manufacturerCountry = trcContentModelList.getManufacturerCountry();
 						String tac = trcContentModelList.getTac();
 						/* String status = trcContentModelList.getStateInterp(); */
 						String status = trcContentModelList.getStateInterp();
-						// String fileName1= trcContentModelList.getFileName();
+						//String fileName1= trcContentModelList.getFileName();
 						String fileName1 = null;
-						List<AttachedFile> list = trcContentModelList.getAttachedFiles();
-						for (AttachedFile fileList : list) {
-							fileName1 = fileList.getFileName();
-							log.info("fileName1 is ---> " + fileName1);
-							// if(fileName1.equals("") || fileName1.equals(null)) {
-							if (fileName1 != null && fileName1.equals("")) {
-								fileName1 = fileList.getFileName();
-								log.info("inside else filename =" + fileName1);
-							} else {
+						  List<AttachedFile> list = trcContentModelList.getAttachedFiles(); 
+						  for (AttachedFile fileList : list) {
+						  fileName1 = fileList.getFileName();
+						  log.info("fileName1 is ---> "+fileName1);
+						  //if(fileName1.equals("") || fileName1.equals(null)) {
+						  if(fileName1 != null  && fileName1.equals("")) {
+							  fileName1 = fileList.getFileName();
+							  log.info("inside else filename =" +fileName1);
+						  }else {
 
-								fileName1 = "0";
-								log.info("inside if filename =" + fileName1);
-							}
-						}
-						String approveState = String.valueOf(trcContentModelList.getApproveStatus());
-						log.info("status----->" + status + "--Id--------->" + trcContentModelList.getId()
-								+ "--fileName1------->" + fileName1 + "--txnId------>" + txnId);
-						String action = iconState.importalTrcManageIcons(approveState, trcContentModelList.getId(),
-								txnId, userStatus, fileName1);
-						Object[] data = { createdOn, trademark, productName, txnId, modelNumber, manufacturerCountry,
-								tac, status, action };
+							  fileName1 = "0";
+							  log.info("inside if filename =" +fileName1);
+						  }
+						  }
+						String approveState = String.valueOf(trcContentModelList.getApproveStatus());	
+						log.info("status----->" +status+"--Id--------->"+trcContentModelList.getId()+"--fileName1------->"+fileName1+"--txnId------>"+txnId);
+						String action = iconState.importalTrcManageIcons(approveState,trcContentModelList.getId(),txnId,userStatus,fileName1);
+						Object[] data = {createdOn,trademark,productName,txnId,modelNumber,manufacturerCountry,tac,status,action};
 						List<Object> datatableList = Arrays.asList(data);
 						finalList.add(datatableList);
 						datatableResponseModel.setData(finalList);
 					}
-				} else if ("TRC".equals(userType)) {
+				}else if("TRC".equals(userType)){
 					log.info("--------in TRC Controller");
-					for (TrcContentModel trcContentModelList : trcPaginationModel.getContent()) {
+					for(TrcContentModel trcContentModelList :trcPaginationModel.getContent()) {
 						String createdOn = trcContentModelList.getCreatedOn();
 						String trademark = trcContentModelList.getTrademark();
 						String productName = trcContentModelList.getProductNameInterp();
-						String txnId = trcContentModelList.getTxnId();
+						String txnId= trcContentModelList.getTxnId();
 						String modelNumber = trcContentModelList.getModelNumberInterp();
 						String manufacturerCountry = trcContentModelList.getManufacturerCountry();
 						String tac = trcContentModelList.getTac();
 						/* String status = trcContentModelList.getStateInterp(); */
 						String status = trcContentModelList.getStateInterp();
-						// String fileName1= trcContentModelList.getFileName();
+						//String fileName1= trcContentModelList.getFileName();
 						String fileName1 = null;
-						List<AttachedFile> list = trcContentModelList.getAttachedFiles();
-						for (AttachedFile fileList : list) {
-							fileName1 = fileList.getFileName();
-							log.info("fileName1 is ---> " + fileName1);
-							if (fileName1 != null && fileName1.equals("")) {
-								fileName1 = fileList.getFileName();
-								log.info("inside else filename =" + fileName1);
-							} else {
+						  List<AttachedFile> list = trcContentModelList.getAttachedFiles(); 
+						  for (AttachedFile fileList : list) {
+						  fileName1 = fileList.getFileName();
+						  log.info("fileName1 is ---> "+fileName1);
+						  if(fileName1 != null  && fileName1.equals("")) {
+							  fileName1 = fileList.getFileName();
+							  log.info("inside else filename =" +fileName1);
+						  }else {
 
-								fileName1 = "0";
-								log.info("inside if filename =" + fileName1);
-							}
-						}
-						String approveState = String.valueOf(trcContentModelList.getApproveStatus());
-						log.info("status----->" + status + "--Id--------->" + trcContentModelList.getId()
-								+ "--fileName1------->" + fileName1 + "--txnId------>" + txnId);
-						String action = iconState.importalTrcManageIcons(approveState, trcContentModelList.getId(),
-								txnId, userStatus, fileName1);
-						Object[] data = { createdOn, trademark, productName, txnId, modelNumber, manufacturerCountry,
-								tac, status, action };
+							  fileName1 = "0";
+							  log.info("inside if filename =" +fileName1);
+						  }
+						  }
+						String approveState = String.valueOf(trcContentModelList.getApproveStatus());	
+						log.info("status----->" +status+"--Id--------->"+trcContentModelList.getId()+"--fileName1------->"+fileName1+"--txnId------>"+txnId);
+						String action = iconState.importalTrcManageIcons(approveState,trcContentModelList.getId(),txnId,userStatus,fileName1);
+						Object[] data = {createdOn,trademark,productName,txnId,modelNumber,manufacturerCountry,tac,status,action};
 						List<Object> datatableList = Arrays.asList(data);
 						finalList.add(datatableList);
 						datatableResponseModel.setData(finalList);
 					}
-				} else {
+				}else {
 					for (TrcContentModel trcContentModelList : trcPaginationModel.getContent()) {
 						log.info("inside Trc File Name" + trcContentModelList.getAttachedFiles());
+						
+						
+						  String fileName1 = null;
+						  List<AttachedFile> list = trcContentModelList.getAttachedFiles(); 
+						  for (AttachedFile fileList : list) {
+						  fileName1 = fileList.getFileName();
+						  log.info("fileName1 is ---> "+fileName1);
+						  if(fileName1 != null  && fileName1.equals("")) {
+							  fileName1 = fileList.getFileName();
+							  log.info("inside else filename =" +fileName1);
+						  }else {
 
-						String fileName1 = null;
-						List<AttachedFile> list = trcContentModelList.getAttachedFiles();
-						for (AttachedFile fileList : list) {
-							fileName1 = fileList.getFileName();
-							log.info("fileName1 is ---> " + fileName1);
-							if (fileName1 != null && fileName1.equals("")) {
-								fileName1 = fileList.getFileName();
-								log.info("inside else filename =" + fileName1);
-							} else {
-
-								fileName1 = "0";
-								log.info("inside if filename =" + fileName1);
-							}
-						}
+							  fileName1 = "0";
+							  log.info("inside if filename =" +fileName1);
+						  }
+						  }
+						 
 
 						String createdOn = trcContentModelList.getCreatedOn();
 						String trademark = trcContentModelList.getTrademark();
 						String manufacturerCountry = trcContentModelList.getManufacturerCountry();
 						String tac = trcContentModelList.getTac();
 						String status = trcContentModelList.getStateInterp();
-						String approveState = String.valueOf(trcContentModelList.getApproveStatus());
+						String approveState = String.valueOf(trcContentModelList.getApproveStatus());	
 						String txnId = trcContentModelList.getTxnId();
 						String adminApproveStatus = String.valueOf(trcContentModelList.getAdminApproveStatus());
 						String userDisplayName = trcContentModelList.getUserDisplayName();
 						String productName = trcContentModelList.getProductNameInterp();
 						String modelNumber = trcContentModelList.getModelNumberInterp();
 						String userTypeName = trcContentModelList.getUserType();
-
-						log.info("approveState->" + approveState + " id-->" + trcContentModelList.getId() + " txnId-->"
-								+ txnId + " adminApproveStatus-->" + adminApproveStatus + " userStatus-->" + userStatus
-								+ " fileName1-->" + fileName1);
-						String action = iconState.trcAdminManageIcons(approveState, trcContentModelList.getId(), txnId,
-								userStatus, fileName1);
-						Object[] data = { createdOn, txnId, userTypeName, userDisplayName, productName, modelNumber,
-								manufacturerCountry, tac, status, action };
+							
+						log.info("approveState->"+approveState+" id-->"+trcContentModelList.getId()+" txnId-->"+txnId+" adminApproveStatus-->"+adminApproveStatus+" userStatus-->"+userStatus+" fileName1-->" +fileName1);
+						String action = iconState.trcAdminManageIcons(approveState, trcContentModelList.getId(),txnId,userStatus,fileName1);
+						Object[] data = { createdOn, txnId, userTypeName,userDisplayName,productName,modelNumber, manufacturerCountry, tac, status, action };
 						List<Object> datatableList = Arrays.asList(data);
 						finalList.add(datatableList);
 						datatableResponseModel.setData(finalList);
@@ -221,95 +215,110 @@ public class ImporterManageTypeAdmin {
 			return new ResponseEntity<>(datatableResponseModel, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-
+	
+	
 	@PostMapping("adminImprterTrc/pageRendering")
-	public ResponseEntity<?> directives(
-			@RequestParam(name = "type", defaultValue = "TRC", required = false) String role, HttpSession session) {
+	public ResponseEntity<?> directives(@RequestParam(name="type",defaultValue = "TRC",required = false) String role,HttpSession session){
 
 		String userType = (String) session.getAttribute("usertype");
 		String userStatus = (String) session.getAttribute("userStatus");
-
+		
 		InputFields inputFields = new InputFields();
 		InputFields dateRelatedFields;
-
+		
+		
 		pageElement.setPageTitle(Translator.toLocale("sidebar.Manage_Type-Approved"));
-
+		
 		List<Button> buttonList = new ArrayList<>();
 		List<InputFields> dropdownList = new ArrayList<>();
 		List<InputFields> inputTypeDateList = new ArrayList<>();
-
-		log.info("USER STATUS:::::::::" + userStatus);
-		log.info("session value user Type==" + session.getAttribute("usertype"));
-
-		String[] names = { "HeaderButton", Translator.toLocale("table.ReportTypeApprovedDevices"),
-				"./register-form-importer", "btnLink", "FilterButton", Translator.toLocale("button.filter"),
-				"typeApprovedDataTable(" + ConfigParameters.languageParam + ")", "submitFilter" };
-		for (int i = 0; i < names.length; i++) {
-			button = new Button();
-			button.setType(names[i]);
-			i++;
-			button.setButtonTitle(names[i]);
-			i++;
-			button.setButtonURL(names[i]);
-			i++;
-			button.setId(names[i]);
-			buttonList.add(button);
-		}
-		pageElement.setButtonList(buttonList);
-
-		if ("CEIRAdmin".equals(userType)) {
-			// Dropdown items
-			String[] selectParam = { "select", Translator.toLocale("table.status"), "Status", "", "select",
-					Translator.toLocale("table.userType"), "userType", "" };
-			for (int i = 0; i < selectParam.length; i++) {
-				inputFields = new InputFields();
-				inputFields.setType(selectParam[i]);
-				i++;
-				inputFields.setTitle(selectParam[i]);
-				i++;
-				inputFields.setId(selectParam[i]);
-				i++;
-				inputFields.setClassName(selectParam[i]);
-				dropdownList.add(inputFields);
-			}
-			pageElement.setDropdownList(dropdownList);
-		} else {
-			// Dropdown items
-			String[] selectParam = { "select", Translator.toLocale("table.status"), "Status", "" };
-			for (int i = 0; i < selectParam.length; i++) {
-				inputFields = new InputFields();
-				inputFields.setType(selectParam[i]);
-				i++;
-				inputFields.setTitle(selectParam[i]);
-				i++;
-				inputFields.setId(selectParam[i]);
-				i++;
-				inputFields.setClassName(selectParam[i]);
-				dropdownList.add(inputFields);
-			}
-			pageElement.setDropdownList(dropdownList);
-		}
-
-		// input type date list
-		String[] dateParam = { "date", Translator.toLocale("input.startDate"), "startDate", "", "date",
-				Translator.toLocale("input.endDate"), "endDate", "", "text", Translator.toLocale("input.transactionID"),
-				"transactionID", "", "text", Translator.toLocale("table.TAC"), "tac", "" };
-		for (int i = 0; i < dateParam.length; i++) {
-			dateRelatedFields = new InputFields();
-			dateRelatedFields.setType(dateParam[i]);
-			i++;
-			dateRelatedFields.setTitle(dateParam[i]);
-			i++;
-			dateRelatedFields.setId(dateParam[i]);
-			i++;
-			dateRelatedFields.setClassName(dateParam[i]);
-			inputTypeDateList.add(dateRelatedFields);
-		}
-
-		pageElement.setInputTypeDateList(inputTypeDateList);
-		pageElement.setUserStatus(userStatus);
-		return new ResponseEntity<>(pageElement, HttpStatus.OK);
-
+			
+			log.info("USER STATUS:::::::::"+userStatus);
+			log.info("session value user Type=="+session.getAttribute("usertype"));
+			
+			
+		
+			String[] names= {"HeaderButton",Translator.toLocale("table.ReportTypeApprovedDevices"),"./register-form-importer","btnLink","FilterButton",Translator.toLocale("button.filter"),"typeApprovedDataTable("+ConfigParameters.languageParam+")","submitFilter"};
+							for(int i=0; i< names.length ; i++) {
+					button = new Button();
+					button.setType(names[i]);
+					i++;
+					button.setButtonTitle(names[i]);
+					i++;
+					button.setButtonURL(names[i]);
+					i++;
+					button.setId(names[i]);
+					buttonList.add(button);
+				}			
+				pageElement.setButtonList(buttonList);
+				
+				
+				if("CEIRAdmin".equals(userType)){
+					//Dropdown items
+					String[] selectParam= {"select",Translator.toLocale("table.status"),"Status","","select",Translator.toLocale("table.userType"),"userType",""};
+					for(int i=0; i< selectParam.length; i++) {
+						inputFields= new InputFields();
+						inputFields.setType(selectParam[i]);
+						i++;
+						inputFields.setTitle(selectParam[i]);
+						i++;
+						inputFields.setId(selectParam[i]);
+						i++;
+						inputFields.setClassName(selectParam[i]);
+						dropdownList.add(inputFields);
+					}
+					pageElement.setDropdownList(dropdownList);
+				}else {
+					//Dropdown items
+					String[] selectParam= {"select",Translator.toLocale("table.status"),"Status",""};
+					for(int i=0; i< selectParam.length; i++) {
+						inputFields= new InputFields();
+						inputFields.setType(selectParam[i]);
+						i++;
+						inputFields.setTitle(selectParam[i]);
+						i++;
+						inputFields.setId(selectParam[i]);
+						i++;
+						inputFields.setClassName(selectParam[i]);
+						dropdownList.add(inputFields);
+					}
+					pageElement.setDropdownList(dropdownList);
+				}
+				
+					
+				//input type date list		
+				String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("input.transactionID"),"transactionID","","text",Translator.toLocale("table.TAC"),"tac",""};
+				for(int i=0; i< dateParam.length; i++) {
+					dateRelatedFields= new InputFields();
+					dateRelatedFields.setType(dateParam[i]);
+					i++;
+					dateRelatedFields.setTitle(dateParam[i]);
+					i++;
+					dateRelatedFields.setId(dateParam[i]);
+					i++;
+					dateRelatedFields.setClassName(dateParam[i]);
+					inputTypeDateList.add(dateRelatedFields);
+				}
+	
+			
+			
+			pageElement.setInputTypeDateList(inputTypeDateList);
+			pageElement.setUserStatus(userStatus);
+			return new ResponseEntity<>(pageElement, HttpStatus.OK); 
+		
+		
 	}
-
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

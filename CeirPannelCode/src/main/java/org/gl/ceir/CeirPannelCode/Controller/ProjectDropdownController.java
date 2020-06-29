@@ -33,100 +33,97 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class ProjectDropdownController {
 	@Autowired
 	FeignCleintImplementation feignCleintImplementation;
-
+	
 	@Autowired
 	GsmaFeignClient gsmaFeignClient;
-
+	
 	private final Logger log = LoggerFactory.getLogger(getClass());
-
 	@ResponseBody
 	@GetMapping("getDropdownList/{featureId}/{userTypeId}")
-	public List<Dropdown> getConsignmentStatus(@PathVariable("featureId") Integer featureId,
-			@PathVariable("userTypeId") Integer userTypeId) {
+	public List<Dropdown> getConsignmentStatus(@PathVariable("featureId") Integer featureId,@PathVariable("userTypeId") Integer userTypeId) {
 		List<Dropdown> dropdown = feignCleintImplementation.consignmentStatusList(featureId, userTypeId);
 		return dropdown;
 	}
-
+	
 	@ResponseBody
 	@GetMapping("getDropdownList/{tag}")
 	public List<Dropdown> getTaxPaidStatus(@PathVariable("tag") String tag) {
 		List<Dropdown> dropdown = feignCleintImplementation.taxPaidStatusList(tag);
 		return dropdown;
 	}
-
+	
+	
 	@ResponseBody
 	@GetMapping("getTypeDropdownList/{tagId}/{userTypeId}")
-	public List<Dropdown> asTypeDropdown(@PathVariable("tagId") String tag,
-			@PathVariable("userTypeId") Integer userTypeId) {
+	public List<Dropdown> asTypeDropdown(@PathVariable("tagId") String tag, @PathVariable("userTypeId") Integer userTypeId ) {
 		List<Dropdown> dropdown = feignCleintImplementation.asTypeList(tag, userTypeId);
 		return dropdown;
 	}
-
+	
 	@ResponseBody
 	@GetMapping("dataByTag/{tag}/")
 	public Dropdown dataByTag(@PathVariable("tag") String tag) {
-		Tag tagData = new Tag(tag);
+		Tag tagData=new Tag(tag);
 		Dropdown dropdown = feignCleintImplementation.dataByTag(tagData);
 		return dropdown;
 	}
-
+	
 	@ResponseBody
 	@GetMapping("getSourceTypeDropdown/{tagId}/{featureId}")
-	public List<Dropdown> asRequestType(@PathVariable("tagId") String tagId,
-			@PathVariable("featureId") Integer featureId) {
+	public List<Dropdown> asRequestType(@PathVariable("tagId") String tagId, @PathVariable("featureId") Integer featureId ) {
 		List<Dropdown> dropdown = feignCleintImplementation.modeType(tagId, featureId);
 		return dropdown;
 	}
-
 	@ResponseBody
 	@GetMapping("productList")
 	public List<Dropdown> productList() {
 		List<Dropdown> dropdown = gsmaFeignClient.viewAllProductList();
 		return dropdown;
 	}
-
-	@RequestMapping(value = "/productModelList", method = { org.springframework.web.bind.annotation.RequestMethod.GET })
-	public @ResponseBody List<Dropdown> productModelList(@RequestParam(name = "brand_id") Integer brand_id) {
+	
+	@RequestMapping(value="/productModelList",method ={org.springframework.web.bind.annotation.RequestMethod.GET})
+	public @ResponseBody List<Dropdown> productModelList(@RequestParam(name="brand_id") Integer brand_id){
 		List<Dropdown> productModelList = gsmaFeignClient.viewAllmodel(brand_id);
-
+		
 		return productModelList;
-
+		
 	}
-
-	@PostMapping("/get/tags-mapping")
-	public @ResponseBody List<GrievanceDropdown> catagoryDropdownList(@RequestBody FilterRequest filterRequest) {
-		log.info("request send to the catagoryDropdownList api=" + filterRequest);
-		List<GrievanceDropdown> response = feignCleintImplementation.catagoryDropdownListFeign(filterRequest);
-		log.info("response from catagoryDropdownList api " + response);
+	
+	@PostMapping("/get/tags-mapping") 
+	public @ResponseBody List<GrievanceDropdown> catagoryDropdownList (@RequestBody FilterRequest filterRequest)  {
+		log.info("request send to the catagoryDropdownList api="+filterRequest);
+		List<GrievanceDropdown> response= feignCleintImplementation.catagoryDropdownListFeign(filterRequest);
+		log.info("response from catagoryDropdownList api "+response);
 		return response;
 
-	}
-
-	@PostMapping("/getSystemTags")
-	public @ResponseBody GenricResponse getAllTagsDropdown(@RequestBody FilterRequest filterRequest) {
-		log.info("request send to the getAllTagsDropdown api=" + filterRequest);
-		GenricResponse response = feignCleintImplementation.getAllTagsDropdowntFeign(filterRequest);
-		log.info("response from getAllTagsDropdown api " + response);
+		}
+	
+	@PostMapping("/getSystemTags") 
+	public @ResponseBody GenricResponse getAllTagsDropdown (@RequestBody FilterRequest filterRequest)  {
+		log.info("request send to the getAllTagsDropdown api="+filterRequest);
+		GenricResponse response= feignCleintImplementation.getAllTagsDropdowntFeign(filterRequest);
+		log.info("response from getAllTagsDropdown api "+response);
 		return response;
 
-	}
+		}
 
-	@GetMapping("/addMoreFile/{tag}")
-	public @ResponseBody AddMoreFileModel addMoreFileControler(@PathVariable("tag") String tag) {
-		log.info("request send to the addMore Count api=" + tag);
+	
+	@GetMapping("/addMoreFile/{tag}") 
+	public @ResponseBody AddMoreFileModel addMoreFileControler (@PathVariable("tag") String tag)  {
+		log.info("request send to the addMore Count api="+tag);
 		AddMoreFileModel addmore = new AddMoreFileModel();
 		addmore.setTag(tag);
-		AddMoreFileModel response = feignCleintImplementation.addMoreBuutonCount(addmore);
-		log.info("response from addMore Count api " + response);
+		AddMoreFileModel response= feignCleintImplementation.addMoreBuutonCount(addmore);
+		log.info("response from addMore Count api "+response);
 		return response;
 
-	}
-
+		}
+	
 	@ResponseBody
 	@GetMapping("Rule/DistinctName")
 	public List<String> getFeatureName() {
 		List<String> dropdown = gsmaFeignClient.getFeatureName();
 		return dropdown;
 	}
-
+	
 }

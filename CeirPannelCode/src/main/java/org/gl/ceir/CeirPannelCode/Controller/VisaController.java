@@ -22,40 +22,40 @@ import com.google.gson.Gson;
 @Controller
 public class VisaController {
 	private final Logger log = LoggerFactory.getLogger(getClass());
-
+	
 	@Autowired
 	UserProfileFeignImpl userProfileFeignImpl;
-
+	
 	@Autowired
 	FeignCleintImplementation feignCleintImplementation;
-
+	
 	@GetMapping("updateVisa")
-	public ModelAndView view(@RequestParam(name = "source", defaultValue = "menu", required = false) String source,
-			HttpSession session) {
-
-		log.info("source type--=" + source);
+	public ModelAndView view(@RequestParam(name="source",defaultValue ="menu" ,required = false) String source,HttpSession session) {
+		
+		log.info("source type--="+source);
 		session.setAttribute("filterSource", source);
 		return new ModelAndView("visaUpdate");
 	}
 
-	// ------------------------------------- Export Pending TAC
-	// ----------------------------------------
+	//------------------------------------- Export Pending TAC ----------------------------------------
 	@PostMapping("exportVisaData")
 	@ResponseBody
-	public FileExportResponse exportToExcel(@RequestBody FilterRequest filterRequest, HttpSession session) {
-		Gson gsonObject = new Gson();
+	public FileExportResponse exportToExcel(@RequestBody FilterRequest filterRequest,HttpSession session)
+	{
+		Gson gsonObject=new Gson();
 		Object response;
-		Integer file = 1;
-		log.info("filterRequest:::::::::" + filterRequest);
-		response = feignCleintImplementation.viewVisaRequest(filterRequest, filterRequest.getPageNo(),
-				filterRequest.getPageSize(), file, "filter");
+		Integer file = 1;	
+		log.info("filterRequest:::::::::"+filterRequest);
+		response= feignCleintImplementation.viewVisaRequest(filterRequest, filterRequest.getPageNo(), filterRequest.getPageSize(), file,"filter");
 		FileExportResponse fileExportResponse;
-		Gson gson = new Gson();
+		Gson gson= new Gson(); 
 		String apiResponse = gson.toJson(response);
 		fileExportResponse = gson.fromJson(apiResponse, FileExportResponse.class);
-		log.info("response  from Pending Tac Export  api=" + fileExportResponse);
+		log.info("response  from Pending Tac Export  api="+fileExportResponse);
 
 		return fileExportResponse;
-	}
+	}		
+
+
 
 }

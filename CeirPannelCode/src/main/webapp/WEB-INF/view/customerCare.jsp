@@ -23,6 +23,10 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<!-- Security Tags -->
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<sec:csrfMetaTags />
+<!-- Security Tags -->
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en" class="no-js">
@@ -40,6 +44,11 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta content="" name="description" />
 <meta content="" name="author" />
+<!-- Security Tags -->
+<meta name="_csrf" content="${_csrf.token}"/>
+<!-- default header name is X-CSRF-TOKEN -->
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
+<!-- Security Tags -->
 
 <script type="text/javascript"
 	src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
@@ -126,7 +135,7 @@ data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeI
                       <form action="">
                         <div class="col s12 m12 l12">
                           <h4 class="header2 device-info">
-                            Device Information <i class="fa fa-eye teal-text view-icon" aria-hidden="true" title="View"></i> </h4>
+                            Device Information</h4>
                           <div class="row">
                             <div class="input-field col s12 m4 l4">
                               <input type="text" id="MSISDN" name="MSISDN" value="" disabled>
@@ -378,11 +387,20 @@ data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeI
 							id="SupplierNameLabel" class="center-align"><spring:message
 								code="input.supllierName" /></label>
 					</div>
-
+					 
+					  <div class="col s12 m6" id="endUserEmailDiv">
+                           <label for="endUseremail" style="color: #000;"><spring:message code="input.EmailID" /> </label>
+                           <input type="text" id="endUseremail"  disabled name="endUseremail"/>
+                      </div>
 					<div class="input-field col s12 m6">
 						<input type="text" name="Quantity" id="StockQuantity" placeholder=""
 							disabled /> <label for="StockQuantity" class="center-align"><spring:message
 								code="input.quantity" /></label>
+					</div>
+					<div class="input-field col s12 m6">
+						<input type="text" name="StockDeviceQuantity" id="StockDeviceQuantity" placeholder=""
+							disabled /> <label for="StockDeviceQuantity" class="center-align"><spring:message
+								code="input.devicequantity" /></label>
 					</div>
 
 					<div class="input-field col s12 m6" id="invoiceNumberDiv">

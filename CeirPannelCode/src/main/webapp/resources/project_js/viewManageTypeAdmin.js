@@ -65,6 +65,20 @@ function Datatable(Url, dataUrl) {
 			"status" : parseInt($('#Status').val()),
 			"FilterUserType" : FilterUserType
 		}
+	}else if(userType == "TRC"){
+		var userId = 0;
+		var filterRequest = {
+			"endDate" : $('#endDate').val(),
+			"startDate" : $('#startDate').val(),
+			"tac" : $('#tac').val(),
+			"txnId" : txn,
+			"userId" : userId,
+			"featureId" : parseInt(featureId),
+			"userTypeId" : parseInt($("body").attr("data-userTypeID")),
+			"userType" : $("body").attr("data-roleType"),
+			"status" : parseInt($('#Status').val()),
+		}
+		
 	} else {
 		var userId = parseInt($("body").attr("data-userID"))
 		var filterRequest = {
@@ -84,7 +98,14 @@ function Datatable(Url, dataUrl) {
 	}
 
 	$("#submitFilter").prop('disabled', true);
-
+	
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+	});
+	
 	$.ajax({
 		url : Url,
 		type : 'POST',
@@ -158,6 +179,14 @@ function Datatable(Url, dataUrl) {
 // buttons**********************************************
 
 function pageRendering() {
+	
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
+	
 	$
 			.ajax({
 				url : 'adminImprterTrc/pageRendering',
@@ -250,7 +279,14 @@ function pageRendering() {
 									button[i].buttonURL);
 						}
 					}
-
+					
+					var token = $("meta[name='_csrf']").attr("content");
+					var header = $("meta[name='_csrf_header']").attr("content");
+					$.ajaxSetup({
+					headers:
+					{ 'X-CSRF-TOKEN': token }
+					});
+					
 					$
 							.getJSON('./getDropdownList/' + featureId + '/'
 									+ $("body").attr("data-userTypeID"),
@@ -298,8 +334,8 @@ function exportTacData() {
 	} else {
 		var userId = parseInt($("body").attr("data-userID"));
 	}
-	var txn = (txnIdValue == 'null' && transactionIDValue == undefined) ? $(
-			'#transactionID').val() : transactionIDValue;
+	var txn = (txnIdValue == 'null' && transactionIDValue == undefined) ? $('#transactionID').val() : transactionIDValue;
+	
 	var tacStartDate = $('#startDate').val();
 	var tacEndDate = $('#endDate').val();
 	var tacStatus = parseInt($('#Status').val());
@@ -314,7 +350,18 @@ function exportTacData() {
 	if (isNaN(tacStatus)) {
 		tacStatus = '';
 	}
-
+	//console.log("transactionIDValue-->" +transactionIDValue);
+	//console.log("tacStartDate---" +tacStartDate+  "tacEndDate---" +tacEndDate +  "tacStatus---" +tacStatus+  "tacNumber---" +tacNumber+  "txnId---" +txnId);
+	
+	var source__val;
+	if(transactionIDValue != undefined){
+		source__val = 'noti'
+	}else{
+		source__val = tacStartDate != ''|| tacEndDate != ''|| tacStatus != '-1'|| tacNumber != ''|| txnId != '' ? 'filter' : $("body").attr("data-session-source");
+	}
+	
+	//console.log("source__val-->" +source__val);
+	
 	var table = $('#ImporterAdmintypeAprroveTable').DataTable();
 	var info = table.page.info();
 	var pageNo = info.page;
@@ -328,7 +375,7 @@ function exportTacData() {
 			+ "&tacStartDate=" + tacStartDate + "&tacEndDate=" + tacEndDate
 			+ "&tacStatus=" + tacStatus + "&txnId=" + txnId + "&featureId="
 			+ featureId + "&userType" + userType + "&userTypeId=" + userTypeId
-			+ "&userId=" + userId + "&pageSize=" + pageSize + "&pageNo="
+			+ "&userId=" + userId +"&source=" +source__val+ "&pageSize=" + pageSize + "&pageNo="
 			+ pageNo;
 
 }
@@ -338,7 +385,14 @@ function ImporterviewByID(id, actionType, projectPath, modalID) {
 		dismissible : false
 	});
 	window.projectPath = projectPath;
-
+	
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
+	
 	$.ajax({
 		url : "./viewByID/" + id + "?lang=" + lang, // controller haven'nt made
 													// yet for this url. this is
@@ -433,6 +487,14 @@ function setImporterEditPopupData(data) {
 	$("#productname").val(data.productName);
 
 	var brand_id = $('#productname').val();
+	
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
+	
 	$.getJSON('./productModelList?brand_id=' + brand_id, function(data) {
 		$("#modelNumber").empty();
 		for (i = 0; i < data.length; i++) {
@@ -632,7 +694,14 @@ function updateImporterTypeDevice() {
 	// console.log("multirequest------------->" +JSON.stringify(multirequest))
 	formData.append('fileInfo[]', JSON.stringify(fileInfo));
 	formData.append('multirequest', JSON.stringify(multirequest));
-
+	
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
+	
 	$.ajax({
 		url : './update-register-approved-device',
 		type : 'POST',
@@ -642,21 +711,24 @@ function updateImporterTypeDevice() {
 		success : function(data, textStatus, jqXHR) {
 			$('div#initialloader').delay(300).fadeOut('slow');
 			// console.log(data);
-
-			if (data.errorCode == 0) {
-				// $('#updateManageTypeDevice').openModal();
-				$('#updateManageTypeDevice').openModal({
-					dismissible : false
-				});
-			} else {
-
-				// $('#updateManageTypeDevice').openModal();
-				$('#updateManageTypeDevice').openModal({
-					dismissible : false
-				});
+			$('#updateManageTypeDevice').openModal({
+				dismissible : false
+			});
+			if (data.errorCode == 200) {
 				$('#updateTacMessage').text('');
-				$('#updateTacMessage').text(
-						$.i18n('TYPE_APPROVE_UPDATE_SUCCESS'));
+				$('#updateTacMessage').text($.i18n('TYPE_APPROVE_UPDATE_SUCCESS'));
+			} else if(data.errorCode == 201) {
+				$('#updateTacMessage').text('');
+				$('#updateTacMessage').text($.i18n('REGISTER_TYPE_APPROVE_REJECTED'));
+			}else if(data.errorCode == 204) {
+				$('#updateTacMessage').text('');
+				$('#updateTacMessage').text($.i18n('TYPE_APPROVE_WRONG_ID'));
+			}else if(data.errorCode == 500) {
+				$('#updateTacMessage').text('');
+				$('#updateTacMessage').text($.i18n('TYPE_APPROVE_UPDATE_FAIL'));
+			}else if(data.errorCode == 409) {
+				$('#updateTacMessage').text('');
+				$('#updateTacMessage').text($.i18n('UPDATE_ERROR'));
 			}
 
 		},
@@ -668,6 +740,14 @@ function updateImporterTypeDevice() {
 }
 
 function setAllDropdown() {
+	
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
+	
 	$.getJSON('./productList', function(data) {
 		for (i = 0; i < data.length; i++) {
 			$('<option>').val(data[i].id).text(data[i].brand_name).appendTo(
@@ -797,6 +877,14 @@ function approveSubmit(actiontype) {
 		"adminUserType" : userType
 
 	}
+	
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
+	
 	$.ajax({
 		url : "./TACAprroveDisapprove",
 		data : JSON.stringify(approveRequest),
@@ -853,6 +941,14 @@ function rejectSubmit(actiontype) {
 		"remark" : $("#rejectTrcRemark").val()
 
 	}
+	
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
+	
 	$.ajax({
 		url : "./TACAprroveDisapprove",
 		data : JSON.stringify(approveRequest),
@@ -891,8 +987,9 @@ function DeleteTacRecord(txnId, id) {
 
 function confirmantiondelete() {
 	var txnId = $("#tacdeleteTxnId").text();
-	var tacRemark = $("#deleteTacRemark").val();
+	var remark = $("#deleteTacRemark").val();
 	var id = $("#deleteTacId").val();
+	
 
 	// console.log("userType=="+userType+" ==id=="+id+"===userId===" +userId);
 
@@ -900,10 +997,17 @@ function confirmantiondelete() {
 	 * var obj ={ "txnId" : txnId, "userType": $("body").attr("data-roleType"),
 	 * "remark" : tacRemark }
 	 */
-
+	
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
+	
 	$.ajax({
 		url : "./importerTacDelete?id=" + id + "&userType=" + userType
-				+ "&userId=" + userId,
+				+ "&userId=" + userId+ "&remark=" +remark,
 		// data : JSON.stringify(obj),
 		dataType : 'json',
 		contentType : 'application/json; charset=utf-8',
@@ -965,24 +1069,45 @@ function historyRecord(txnID) {
 	});
 	var filter = [];
 	var formData = new FormData();
-	var filterRequest = {
+	
+	
+	if (userType == "CEIRAdmin"){
+		var filterRequest = {
 
 		"columns" : [ "created_on", "modified_on", "txn_id", "user_type",
 				"approve_status", "trademark", "product_name", "model_number",
-				"manufacturer_country", "frequency_range", "tac", "file_name",
-				"remark", "admin_approve_status", "admin_remark",
-				"approve_disapprove_date", "feature_id", "country",
-				"manufacturer_id", "manufacturer_name", "request_date",
-				"user_id" ],
+				"manufacturer_country", "frequency_range", "tac",
+				"remark","admin_user_id","user_id" ],
 		"tableName" : "type_approved_db_aud",
 		"dbName" : "ceirconfig",
 		"txnId" : txnID
 	}
+	}else{
+		var filterRequest = {
+
+				"columns" : [ "created_on", "modified_on", "txn_id", "user_type",
+						"approve_status", "trademark", "product_name", "model_number",
+						"manufacturer_country", "frequency_range", "tac",
+						"remark","user_id" ],
+				"tableName" : "type_approved_db_aud",
+				"dbName" : "ceirconfig",
+				"txnId" : txnID
+			}
+	}
+	
 	formData.append("filter", JSON.stringify(filterRequest));
 	if (lang == 'km') {
 		var langFile = '../resources/i18n/khmer_datatable.json';
 	}
 	// console.log("22");
+	
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
+	
 	$.ajax({
 		url : './Consignment/consignment-history',
 		type : 'POST',

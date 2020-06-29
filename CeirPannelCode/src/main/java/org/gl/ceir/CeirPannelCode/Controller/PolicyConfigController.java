@@ -18,39 +18,44 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class PolicyConfigController {
-
+		
 	@Autowired
 	FeignCleintImplementation feignCleintImplementation;
-
+	
 	private final Logger log = LoggerFactory.getLogger(getClass());
-
-	@RequestMapping(value = { "/policyManagement" }, method = {
-			org.springframework.web.bind.annotation.RequestMethod.GET,
-			org.springframework.web.bind.annotation.RequestMethod.POST })
-	public ModelAndView viewPolicyManagement(HttpSession session) {
+	@RequestMapping(value=
+		{"/policyManagement"},method={org.springframework.web.bind.annotation.
+				RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}
+			)
+	    public ModelAndView viewPolicyManagement(HttpSession session) {
 		ModelAndView mv = new ModelAndView();
-		log.info(" view PolicyManagement entry point.");
-		mv.setViewName("policyConfig");
-		log.info(" view PolicyManagement exit point.");
-		return mv;
+		 log.info(" view PolicyManagement entry point."); 
+		 mv.setViewName("policyConfig");
+		log.info(" view PolicyManagement exit point."); 
+		return mv; 
 	}
 
-	@PostMapping("/policy/viewTag")
-	public @ResponseBody PolicyConfigContent policyViewTag(@RequestBody FilterRequest filterRequest) {
-		log.info("request send to the policyViewTag api=" + filterRequest);
-		PolicyConfigContent response = feignCleintImplementation.viewPolicyConfigFeign(filterRequest);
+	
+	
+	
+	@PostMapping("/policy/viewTag") 
+	public @ResponseBody PolicyConfigContent policyViewTag (@RequestBody FilterRequest filterRequest)  {
+		log.info("request send to the policyViewTag api="+filterRequest);
+		PolicyConfigContent response= feignCleintImplementation.viewPolicyConfigFeign(filterRequest);
 
-		log.info("response from currency api " + response);
+		log.info("response from currency api "+response);
 		return response;
 
-	}
+		}
+	
 
+	
 	@PutMapping("/policy/update")
-	public @ResponseBody PolicyConfigContent updatePolicy(@RequestBody PolicyConfigContent policyConfigContent) {
-		log.info("request send to Edit policy api=" + policyConfigContent);
+	public @ResponseBody PolicyConfigContent updatePolicy (@RequestBody PolicyConfigContent policyConfigContent) {
+		log.info("request send to Edit policy api="+policyConfigContent);
 		policyConfigContent = feignCleintImplementation.updatePolicy(policyConfigContent);
-		log.info("response from Edit api " + policyConfigContent);
+		log.info("response from Edit api "+policyConfigContent);
 		return policyConfigContent;
-
+		
 	}
 }

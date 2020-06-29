@@ -31,7 +31,7 @@ import com.google.gson.Gson;
 
 @RestController
 public class PolicyConfigDatatable {
-
+	
 	private final Logger log = LoggerFactory.getLogger(getClass());
 	@Autowired
 	IconsState iconState;
@@ -47,127 +47,129 @@ public class PolicyConfigDatatable {
 	PolicyConfigContent policyConfigContent;
 	@Autowired
 	PolicyConfigPagination policyConfigPagination;
-
+	
+	
 	@PostMapping("policyConfigData")
-	public ResponseEntity<?> viewPolicyConfig(
-			@RequestParam(name = "type", defaultValue = "PolicyConfig", required = false) String role,
-			HttpServletRequest request, HttpSession session) {
-		// String userType = (String) session.getAttribute("usertype");
-		// int userId= (int) session.getAttribute("userid");
+	public ResponseEntity<?> viewPolicyConfig(@RequestParam(name="type",defaultValue = "PolicyConfig",required = false) String role, HttpServletRequest request,HttpSession session) {
+		//String userType = (String) session.getAttribute("usertype");
+		//int userId=	(int) session.getAttribute("userid");
 		// Data set on this List
-		List<List<Object>> finalList = new ArrayList<List<Object>>();
-		String filter = request.getParameter("filter");
-		Gson gsonObject = new Gson();
-		FilterRequest filterrequest = gsonObject.fromJson(filter, FilterRequest.class);
-		Integer file = 0;
-		Integer pageSize = Integer.parseInt(request.getParameter("length"));
-		Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize;
-		filterrequest.setSearchString(request.getParameter("search[value]"));
-		log.info("pageSize" + pageSize + "-----------pageNo---" + pageNo);
-
-		try {
-			log.info("request send to the filter api =" + filterrequest);
-			Object response = feignCleintImplementation.policyManagementFeign(filterrequest, pageNo, pageSize, file);
-			log.info("response in datatable" + response);
-			Gson gson = new Gson();
-			String apiResponse = gson.toJson(response);
-
-			policyConfigPagination = gson.fromJson(apiResponse, PolicyConfigPagination.class);
-			List<PolicyConfigContent> paginationContentList = policyConfigPagination.getContent();
-			if (paginationContentList.isEmpty()) {
-				datatableResponseModel.setData(Collections.emptyList());
-			} else {
-				for (PolicyConfigContent dataInsideList : paginationContentList) {
-					String createdOn = (String) dataInsideList.getCreatedOn();
-					String modifiedOn = (String) dataInsideList.getModifiedOn();
-					String description = dataInsideList.getDescription();
-					String value = dataInsideList.getValue();
-					String tag = dataInsideList.getTag();
-					Object period = dataInsideList.getPeriod();
-					Object statusInterp = dataInsideList.getStatusInterp();
-					String Status = String.valueOf(dataInsideList.getStatus());
-					String type = String.valueOf(dataInsideList.getType());
-					String typeInterp = dataInsideList.getTypeInterp();
-					String policyOrder = String.valueOf(dataInsideList.getPolicyOrder());
-					String userStatus = (String) session.getAttribute("userStatus");
-					String action = iconState.policyConfigIcons(userStatus, tag, Status, type);
-					Object[] finalData = { createdOn, modifiedOn, description, value, tag, period, statusInterp,
-							action };
-					List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
-					finalList.add(finalDataList);
-					datatableResponseModel.setData(finalList);
+				List<List<Object>> finalList=new ArrayList<List<Object>>();
+				String filter = request.getParameter("filter");
+				Gson gsonObject=new Gson();
+				FilterRequest filterrequest = gsonObject.fromJson(filter, FilterRequest.class);
+				Integer file = 0;
+				Integer pageSize = Integer.parseInt(request.getParameter("length"));
+				Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize ;
+				filterrequest.setSearchString(request.getParameter("search[value]"));
+				log.info("pageSize"+pageSize+"-----------pageNo---"+pageNo);
+				
+			try {
+				log.info("request send to the filter api ="+filterrequest);
+				Object response = feignCleintImplementation.policyManagementFeign(filterrequest, pageNo, pageSize, file);
+				log.info("response in datatable"+response);
+				Gson gson= new Gson(); 
+				String apiResponse = gson.toJson(response);
+				
+				policyConfigPagination = gson.fromJson(apiResponse, PolicyConfigPagination.class);
+				List<PolicyConfigContent> paginationContentList = policyConfigPagination.getContent();
+				if(paginationContentList.isEmpty()) {
+					datatableResponseModel.setData(Collections.emptyList());
+				}else {
+					for(PolicyConfigContent dataInsideList : paginationContentList) 
+					{
+					   String createdOn = (String) dataInsideList.getCreatedOn();
+					   String modifiedOn = (String) dataInsideList.getModifiedOn();
+					   String description = dataInsideList.getDescription();
+					   String value = dataInsideList.getValue();
+					   String tag = dataInsideList.getTag();
+					   Object period = dataInsideList.getPeriod();
+					   Object statusInterp = dataInsideList.getStatusInterp();
+					   String Status = String.valueOf(dataInsideList.getStatus());
+					   String type = String.valueOf(dataInsideList.getType());
+					   String typeInterp = dataInsideList.getTypeInterp();
+					   String policyOrder =String.valueOf(dataInsideList.getPolicyOrder());
+					   String userStatus = (String) session.getAttribute("userStatus");
+					   String action=iconState.policyConfigIcons(userStatus,tag,Status,type);			   
+					   Object[] finalData={createdOn,modifiedOn,description,value,tag ,period,statusInterp,action}; 
+						List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
+						finalList.add(finalDataList);
+						datatableResponseModel.setData(finalList);	
 				}
 			}
-
-			// data set on ModelClass
-			datatableResponseModel.setRecordsTotal(policyConfigPagination.getNumberOfElements());
-			datatableResponseModel.setRecordsFiltered(policyConfigPagination.getTotalElements());
-			return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK);
-
-		} catch (Exception e) {
-
-			datatableResponseModel.setRecordsTotal(null);
-			datatableResponseModel.setRecordsFiltered(null);
-			datatableResponseModel.setData(Collections.emptyList());
-			log.error(e.getMessage(), e);
-			return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK);
+				
+				//data set on ModelClass
+				datatableResponseModel.setRecordsTotal(policyConfigPagination.getNumberOfElements());
+				datatableResponseModel.setRecordsFiltered(policyConfigPagination.getTotalElements());
+				return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK); 
+			
+			}catch(Exception e) {
+				
+				datatableResponseModel.setRecordsTotal(null);
+				datatableResponseModel.setRecordsFiltered(null);
+				datatableResponseModel.setData(Collections.emptyList());
+				log.error(e.getMessage(),e);
+				return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK); 
+			}		
+			
 		}
-
-	}
-
+		
+	
 	@PostMapping("policyConfig/pageRendering")
-	public ResponseEntity<?> pageRendering(
-			@RequestParam(name = "type", defaultValue = "Config", required = false) String role, HttpSession session) {
+	public ResponseEntity<?> pageRendering(@RequestParam(name="type",defaultValue = "Config",required = false) String role,HttpSession session){
 
 		String userType = (String) session.getAttribute("usertype");
 		String userStatus = (String) session.getAttribute("userStatus");
-
+		
 		InputFields inputFields = new InputFields();
 		InputFields dateRelatedFields;
-
+		
 		pageElement.setPageTitle("Policy Management");
-
+		
 		List<Button> buttonList = new ArrayList<>();
 		List<InputFields> dropdownList = new ArrayList<>();
 		List<InputFields> inputTypeDateList = new ArrayList<>();
-
-		log.info("USER STATUS:::::::::" + userStatus);
-		log.info("session value user Type==" + session.getAttribute("usertype"));
-
-		String[] names = { "FilterButton", "filter",
-				"configManagementDatatable(" + ConfigParameters.languageParam + ")", "submitFilter" };
-		for (int i = 0; i < names.length; i++) {
-			button = new Button();
-			button.setType(names[i]);
-			i++;
-			button.setButtonTitle(names[i]);
-			i++;
-			button.setButtonURL(names[i]);
-			i++;
-			button.setId(names[i]);
-			buttonList.add(button);
-		}
-		pageElement.setButtonList(buttonList);
-
-		// Dropdown items
-		String[] selectParam = { "select", "Type", "type", "", "select", "Status", "status", "" };
-		for (int i = 0; i < selectParam.length; i++) {
-			inputFields = new InputFields();
-			inputFields.setType(selectParam[i]);
-			i++;
-			inputFields.setTitle(selectParam[i]);
-			i++;
-			inputFields.setId(selectParam[i]);
-			i++;
-			inputFields.setClassName(selectParam[i]);
-			dropdownList.add(inputFields);
-		}
-		pageElement.setDropdownList(dropdownList);
-
-		pageElement.setInputTypeDateList(inputTypeDateList);
-		pageElement.setUserStatus(userStatus);
-		return new ResponseEntity<>(pageElement, HttpStatus.OK);
-
+			
+			log.info("USER STATUS:::::::::"+userStatus);
+			log.info("session value user Type=="+session.getAttribute("usertype"));
+			
+			String[] names= {"FilterButton", "filter","configManagementDatatable("+ConfigParameters.languageParam+")","submitFilter"};
+			for(int i=0; i< names.length ; i++) {
+				button = new Button();
+				button.setType(names[i]);
+				i++;
+				button.setButtonTitle(names[i]);
+				i++;
+				button.setButtonURL(names[i]);
+				i++;
+				button.setId(names[i]);
+				buttonList.add(button);
+			}			
+			pageElement.setButtonList(buttonList);
+		
+			
+			//Dropdown items			
+			String[] selectParam= {"select","Type","type","","select","Status","status",""};
+			for(int i=0; i< selectParam.length; i++) {
+				inputFields= new InputFields();
+				inputFields.setType(selectParam[i]);
+				i++;
+				inputFields.setTitle(selectParam[i]);
+				i++;
+				inputFields.setId(selectParam[i]);
+				i++;
+				inputFields.setClassName(selectParam[i]);
+				dropdownList.add(inputFields);
+			}
+			pageElement.setDropdownList(dropdownList);
+			
+		
+			
+			pageElement.setInputTypeDateList(inputTypeDateList);
+			pageElement.setUserStatus(userStatus);
+			return new ResponseEntity<>(pageElement, HttpStatus.OK); 
+		
+		
 	}
-
+	
 }

@@ -22,10 +22,17 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<!-- Security Tags -->
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<sec:csrfMetaTags />
+<!-- Security Tags -->
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en" class="no-js">
 <head>
+
+
+
 <title>Grievance</title>
 <meta http-equiv='cache-control' content='no-cache'>
 <meta http-equiv='expires' content='-1'>
@@ -38,6 +45,12 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta content="" name="description" />
 <meta content="" name="author" />
+
+<!-- Security Tags -->
+<meta name="_csrf" content="${_csrf.token}"/>
+<!-- default header name is X-CSRF-TOKEN -->
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
+<!-- Security Tags -->
 
 <script type="text/javascript"
 src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
@@ -152,7 +165,7 @@ style="display: none;">
 
 </select>
 </div>
-<div class="file-field col s12 m6">
+<div class="file-field col s12 m6" id="removestar">
 <h6 id="supportingdocumentFile" style="color: #000;"> <spring:message code="input.supportingdocument" /></h6>
 <div class="btn">
 <span><spring:message code="input.selectfile" /></span>
@@ -161,7 +174,7 @@ oninput="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" 
 oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');" >
 </div>
 <div class="file-path-wrapper">
-<input class="file-path validate" type="text"  
+<input class="file-path validate" type="text"  id="filetextField"
 placeholder="<spring:message code="grievanceFileMessage" />">
 <div>
 <p id="myFiles"></p>
@@ -367,7 +380,7 @@ $.i18n().load( {
 				
 				if($("body").attr("data-roleType")=="Customer Care"){
 					raisedBy = "Customer Care"; 
-				    name = sessionStorage.getItem("userName");
+				    name = sessionStorage.getItem("primaryRole");
 				    userId = sessionStorage.getItem("userId");
 				}else{
 					raisedBy = "Self";
@@ -474,6 +487,14 @@ $.i18n().load( {
 				/*formData.append('categoryId',category);
 				formData.append('remarks',remark);
 				 */
+				
+					var token = $("meta[name='_csrf']").attr("content");
+					var header = $("meta[name='_csrf_header']").attr("content");
+					$.ajaxSetup({
+						headers:
+						{ 'X-CSRF-TOKEN': token }
+					}); 
+				 
 				$.ajax({
 					url : './saveGrievance',
 					type : 'POST',
@@ -518,7 +539,14 @@ $.i18n().load( {
 				return false;
 
 			}
-
+			
+ 	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+	});
+     
 			$.ajax({
 				url : './getTypeDropdownList/GRIEVANCE_CATEGORY/'
 						+ $("body").attr("data-userTypeID"),
@@ -562,7 +590,14 @@ $.i18n().load( {
 			}
 
 			// Integreation with add more field api
-
+			
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+	});
+			
 			$.getJSON('./addMoreFile/grievance_supporting_doc_count', function(data) {
 				//console.log(data);
 
@@ -644,7 +679,14 @@ $.i18n().load( {
 									"userTypeId" : parseInt($("body").attr(
 											"data-userTypeID")),
 								}
-
+								
+									var token = $("meta[name='_csrf']").attr("content");
+									var header = $("meta[name='_csrf_header']").attr("content");
+									$.ajaxSetup({
+										headers:
+										{ 'X-CSRF-TOKEN': token }
+									});
+									
 								$.ajax({
 											url : './get/tags-mapping',
 											type : 'POST',
@@ -721,7 +763,14 @@ $.i18n().load( {
 							"userTypeId" : parseInt($("body").attr(
 									"data-userTypeID")),
 						}
-
+						
+						var token = $("meta[name='_csrf']").attr("content");
+						var header = $("meta[name='_csrf_header']").attr("content");
+						$.ajaxSetup({
+							headers:
+							{ 'X-CSRF-TOKEN': token }
+						});
+						
 						$.ajax({
 							url : './get/tags-mapping',
 							type : 'POST',
@@ -756,12 +805,19 @@ $.i18n().load( {
 				$(".add_field_button").attr("disabled", false);
 			}
 			function enableSelectFile() {
-				$("#docTypeFile1").attr("disabled", false);
-				$("#docTypeFile1").attr("required", true);
-
-				$("#supportingdocumentFile").append(
-						'<span class="star">*</span>');
+				if($('#docTypetag1').val() != ''){
+					$("#docTypeFile1").attr("disabled", false);
+					$("#docTypeFile1").attr("required", true);
+					$("#removestar").find(".star").remove();
+					$("#supportingdocumentFile").append('<span class="star">*</span>');
+				}else{
+					$("#docTypeFile1").attr("required", false);
+					$('#filetextField').val('');
+					$("#removestar").find(".star").remove();
+				}
 			}
+			
+		
 
 			$("input[type=file]").keypress(function(ev) {
 				return false;

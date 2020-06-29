@@ -23,10 +23,19 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<!-- Security Tags -->
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<sec:csrfMetaTags />
+<!-- Security Tags -->
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html class="no-js" lang="en" dir="ltr">
 <head>
+<!-- Security Tags -->
+<meta name="_csrf" content="${_csrf.token}"/>
+<!-- default header name is X-CSRF-TOKEN -->
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
+<!-- Security Tags -->
 <title>Manage Type Admin</title>
 <metas http-equiv='cache-control' content='no-cache'>
 <meta http-equiv='expires' content='-1'>
@@ -123,7 +132,8 @@ position: fixed;
 	data-selected-consignmentTxnId="${consignmentTxnId}"
 	data-selected-consignmentStatus="${consignmentStatus}"
 	session-value="en"
-	session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}">
+    session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}"
+	data-session-source="${not empty param.source ? param.source : 'menu'}">
 
 	<!-- START CONTENT -->
 	<!-- START CONTENT -->

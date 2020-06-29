@@ -54,6 +54,7 @@ public class UploadPaidStatus {
 	@Autowired
 	IconsState iconState;
 
+	
 	@Autowired
 	PageElement pageElement;
 
@@ -63,51 +64,50 @@ public class UploadPaidStatus {
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
 	@GetMapping("/paid-status/{nid}")
-	public ResponseEntity<?> respone(@PathVariable("nid") String nid, HttpSession session) {
-		AllRequest request = new AllRequest();
-		log.info("ssfsfsdfsdf" + nid);
-		String userType = (String) session.getAttribute("usertype");
-		String userName = session.getAttribute("username").toString();
-		int userId = (int) session.getAttribute("userid");
-		int userTypeid = (int) session.getAttribute("usertypeId");
-
-		request.setFeatureId(12);
-		request.setUserId(userId);
-		request.setNid(nid);
-		request.setUsername(userName);
-		request.setUserTypeId(userTypeid);
-		request.setUserType(userType);
-
+	public ResponseEntity<?> respone(@PathVariable("nid") String nid,HttpSession session) {
+		AllRequest request= new AllRequest();
+		log.info("ssfsfsdfsdf"+nid);
+		  String userType=(String) session.getAttribute("usertype"); 
+		  String  userName=session.getAttribute("username").toString(); 
+		  int userId= (int) session.getAttribute("userid"); 
+		  int userTypeid=(int)  session.getAttribute("usertypeId");
+		  
+		  request.setFeatureId(12);
+		  request.setUserId(userId);
+		  request.setNid(nid);
+		  request.setUsername(userName);
+		  request.setUserTypeId(userTypeid);
+		  request.setUserType(userType);
+		  
 		GenricResponse response = uploadPaidStatusFeignClient.respone(request);
-		return new ResponseEntity<>(response, HttpStatus.OK);
+		return new ResponseEntity<>(response,HttpStatus.OK);
 	}
-
+	
 	@GetMapping("/endUserpaid-status/{nid}")
-	public ResponseEntity<?> endUserpaid(@PathVariable("nid") String nid, HttpSession session) {
-		AllRequest request = new AllRequest();
-		log.info("ssfsfsdfsdf" + nid);
-		request.setFeatureId(12);
-		request.setNid(nid);
-		request.setUserTypeId(17);
-		request.setUserType("End User");
-
+	public ResponseEntity<?> endUserpaid(@PathVariable("nid") String nid,HttpSession session) {
+		AllRequest request= new AllRequest();
+		log.info("ssfsfsdfsdf"+nid);
+		  request.setFeatureId(12);
+		  request.setNid(nid);
+		 request.setUserTypeId(17);
+		  request.setUserType("End User");
+		  
 		GenricResponse response = uploadPaidStatusFeignClient.respone(request);
-		return new ResponseEntity<>(response, HttpStatus.OK);
+		return new ResponseEntity<>(response,HttpStatus.OK);
 	}
 
 	@ResponseBody
 	@PostMapping("/user-paid-status-data")
 	public ResponseEntity<?> view(@RequestParam(name = "file", defaultValue = "0", required = false) Integer file,
-			HttpServletRequest request, HttpSession session,
-			@RequestParam(name = "source", required = false) String source) {
+			HttpServletRequest request,HttpSession session,@RequestParam(name="source",required = false) String source) {	
 		// TODO Auto-generated method stub
 		String filter = request.getParameter("filter");
 		Object response = null;
-		Gson gsonObject = new Gson();
-		Gson gson = new Gson();
+		Gson gsonObject=new Gson();
+		Gson gson=new Gson();
 		FilterRequest_UserPaidStatus filterrequest = gsonObject.fromJson(filter, FilterRequest_UserPaidStatus.class);
-		String userType = filterrequest.getUserType();
-
+		String userType =filterrequest.getUserType();
+				 
 		List<List<Object>> finalList = new ArrayList<List<Object>>();
 
 		Integer pageSize = Integer.parseInt(request.getParameter("length"));
@@ -115,143 +115,139 @@ public class UploadPaidStatus {
 		Integer userId = (Integer) session.getAttribute("userid");
 		Integer userTypeId = (Integer) session.getAttribute("usertypeId");
 		String userStatus = (String) session.getAttribute("userStatus");
-		log.info("userId===" + userId);
-
-		log.info("userType in uploadPaidStatus" + userType + "  source==" + source);
+		log.info("userId==="+userId);
+		
+		log.info("userType in uploadPaidStatus" +userType+"  source=="+source);
 
 		/*
-		 * filterrequest.setUserId(userId); filterrequest.setUserTypeId(userTypeId);
+		 * filterrequest.setUserId(userId); 
+		 * filterrequest.setUserTypeId(userTypeId);
 		 */
 		filterrequest.setSearchString(request.getParameter("search[value]"));
-		log.info("filterrequest--->" + filterrequest);
-		response = uploadPaidStatusFeignClient.view(filterrequest, pageNo, pageSize, file, source);
-		log.info("request passed to the filter api  =" + filterrequest);
+		log.info("filterrequest--->"+filterrequest);
+		response = uploadPaidStatusFeignClient.view(filterrequest, pageNo, pageSize, file,source);
+		log.info("request passed to the filter api  ="+filterrequest);
 		String apiResponse = gson.toJson(response);
-		log.info("response filter api  =" + apiResponse);
-		// filterrequest.setSearchString(request.getParameter("search[value]"));
+		log.info("response filter api  ="+apiResponse);
+		//	filterrequest.setSearchString(request.getParameter("search[value]"));
 		try {
-			UserPaidStatusPaginationModel upsPaginationModel = gson.fromJson(apiResponse,
-					UserPaidStatusPaginationModel.class);
+			UserPaidStatusPaginationModel upsPaginationModel = gson.fromJson(apiResponse, UserPaidStatusPaginationModel.class);
 			List<UserPaidStatusContent> contentList = upsPaginationModel.getContent();
-			if (contentList.isEmpty()) {
+			if(contentList.isEmpty()) {
 				datatableResponseModel.setData(Collections.emptyList());
-			} else if ("Custom".equals(userType) || "DRT".equals(userType)) {
-				log.info("in Custom Userpaid Status---" + userType);
+			}
+			else if("Custom".equals(userType) || "DRT".equals(userType)) {
+				log.info("in Custom Userpaid Status---" +userType);
 				log.info("~~~~~~~~~~~~~~~ 1 ~~~~~~~~~~~~~~~~~~~");
-
-				for (UserPaidStatusContent contentModelList : contentList) {
+				
+				for(UserPaidStatusContent contentModelList : contentList) {
 					String nid = contentModelList.getNid();
 					String txnId = contentModelList.getTxnId();
-					// Integer sno = contentModelList.getId();
+					//Integer sno = contentModelList.getId();
 					String createdOn = contentModelList.getCreatedOn();
 					String deviceIDInterp = contentModelList.getDeviceIdTypeInterp();
-					// String deviceTypeInterp = contentModelList.getDeviceTypeInterp();
-					String currency = contentModelList.getCurrencyInterp() == null ? ""
-							: contentModelList.getCurrencyInterp();
+					//String deviceTypeInterp = contentModelList.getDeviceTypeInterp();
+					String currency = contentModelList.getCurrencyInterp() == null ? "" : contentModelList.getCurrencyInterp();
 					String price = currency.concat(String.valueOf(contentModelList.getPrice()));
 					String country = contentModelList.getCountry();
 					String taxStatus = String.valueOf(contentModelList.getTaxPaidStatus());
 					String taxStatusInterp = contentModelList.getTaxPaidStatusInterp();
 					String origin = contentModelList.getOrigin();
-					String nationality = contentModelList.getNationality();
+					String nationality=contentModelList.getNationality();
 					String statusInterp = contentModelList.getStateInterp();
 					String status = String.valueOf(contentModelList.getStatus());
-					// params for action
+					//params for action 
 					String imei1 = contentModelList.getFirstImei();
-					String action = iconState.userPaidStatusIcon(imei1, taxStatus, status, userStatus, txnId);
+					String action = iconState.userPaidStatusIcon(imei1,taxStatus,status,userStatus,txnId);
 
-					Object[] data = { createdOn, nid, txnId, nationality, taxStatusInterp, origin, statusInterp,
-							action };
+					
+					Object[] data = {createdOn,nid,txnId,nationality,taxStatusInterp,origin,statusInterp,action};
 
 					List<Object> datatableList = Arrays.asList(data);
 					finalList.add(datatableList);
 					datatableResponseModel.setData(finalList);
 				}
-			} else if ("CEIRAdmin".equals(userType)) {
+			}
+			else if("CEIRAdmin".equals(userType)) {
 				log.info("~~~~~~~~~~~~~~~ 2 ~~~~~~~~~~~~~~~~~~~");
-				for (UserPaidStatusContent contentModelList : contentList) {
-					// Integer sno = contentModelList.getId();
+				for(UserPaidStatusContent contentModelList : contentList) {
+					//Integer sno = contentModelList.getId();
 					String createdOn = contentModelList.getCreatedOn();
 					String nid = contentModelList.getNid();
-					String txnId = contentModelList.getTxnId();
+					String txnId = contentModelList.getTxnId(); 
 					String deviceIDInterp = contentModelList.getDeviceIdTypeInterp();
-					// String deviceTypeInterp = contentModelList.getDeviceTypeInterp();
-					String currency = contentModelList.getCurrencyInterp() == null ? ""
-							: contentModelList.getCurrencyInterp();
+					//String deviceTypeInterp = contentModelList.getDeviceTypeInterp();
+					String currency = contentModelList.getCurrencyInterp() == null ? "" : contentModelList.getCurrencyInterp();
 					String price = currency.concat(String.valueOf(contentModelList.getPrice()));
 					String country = contentModelList.getCountry();
 					String taxStatus = contentModelList.getTaxPaidStatusInterp();
 					String status = contentModelList.getStateInterp();
 					String origin = contentModelList.getOrigin();
-					String nationality = contentModelList.getNationality();
-					// params for action
+					String nationality=contentModelList.getNationality();
+					//params for action 
 					String imei1 = contentModelList.getFirstImei();
 					String deviceState = String.valueOf(contentModelList.getStatus());
-					String action = iconState.adminUserPaidStatusIcon(imei1, createdOn, contentModelList.getTxnId(),
-							deviceState, userStatus);
+					String action = iconState.adminUserPaidStatusIcon(imei1,createdOn,contentModelList.getTxnId(),deviceState,userStatus);
 
-					Object[] data = { createdOn, nid, txnId, nationality, taxStatus, origin, status, action };
+					Object[] data = {createdOn,nid,txnId,nationality,taxStatus,origin,status,action};
 
 					List<Object> datatableList = Arrays.asList(data);
 					finalList.add(datatableList);
 					datatableResponseModel.setData(finalList);
 				}
-			} else if ("Immigration".equals(userType)) {
+			}else if("Immigration".equals(userType)) {
 				log.info("~~~~~~~~~~~~~~~~~ 3 ~~~~~~~~~~~~~~~~~~~~~~");
-				for (UserPaidStatusContent contentModelList : contentList) {
-					log.info("in Immigration -----> " + userType);
-					// Integer sno = contentModelList.getId();
+				for(UserPaidStatusContent contentModelList : contentList) {
+					log.info("in Immigration -----> "+userType);
+					//Integer sno = contentModelList.getId();
 					String createdOn = contentModelList.getCreatedOn();
 					String nid = contentModelList.getNid();
-					String txnId = contentModelList.getTxnId();
+					String txnId = contentModelList.getTxnId(); 
 					String deviceIDInterp = contentModelList.getDeviceIdTypeInterp();
-					// String deviceTypeInterp = contentModelList.getDeviceTypeInterp();
-					String currency = contentModelList.getCurrencyInterp() == null ? ""
-							: contentModelList.getCurrencyInterp();
+					//String deviceTypeInterp = contentModelList.getDeviceTypeInterp();
+					String currency = contentModelList.getCurrencyInterp() == null ? "" : contentModelList.getCurrencyInterp();
 					String price = currency.concat(String.valueOf(contentModelList.getPrice()));
 					String country = contentModelList.getCountry();
 					String taxStatus = contentModelList.getTaxPaidStatusInterp();
 					String status = contentModelList.getStateInterp();
 					String origin = contentModelList.getOrigin();
-					String nationality = contentModelList.getNationality();
+					String nationality=contentModelList.getNationality();
 					String statusInterp = contentModelList.getStateInterp();
-					// params for action
+					//params for action 
 					String imei1 = contentModelList.getFirstImei();
 					String deviceState = String.valueOf(contentModelList.getStatus());
-					String action = iconState.deviceActivationIcon(imei1, createdOn, contentModelList.getTxnId(),
-							deviceState, userStatus);
+					String action = iconState.deviceActivationIcon(imei1,createdOn,contentModelList.getTxnId(),deviceState,userStatus);
 
-					Object[] data = { createdOn, nid, txnId, nationality, taxStatus, origin, status, action };
+					Object[] data = {createdOn,nid,txnId,nationality,taxStatus,origin,status,action};
 
 					List<Object> datatableList = Arrays.asList(data);
 					finalList.add(datatableList);
 					datatableResponseModel.setData(finalList);
 				}
-			} else if (userType.equals("End User")) {
+			}else if(userType.equals("End User")) {
 				log.info("when user type is null");
 				log.info("~~~~~~~~~~~~~ 4 ~~~~~~~~~~~~~~~~~~~");
-				for (UserPaidStatusContent contentModelList : contentList) {
+				for(UserPaidStatusContent contentModelList : contentList) {
 					String nid = contentModelList.getNid();
 					String txnId = contentModelList.getTxnId();
-					// Integer sno = contentModelList.getId();
+					//Integer sno = contentModelList.getId();
 					String createdOn = contentModelList.getCreatedOn();
 					String deviceIDInterp = contentModelList.getDeviceIdTypeInterp();
-					// String deviceTypeInterp = contentModelList.getDeviceTypeInterp();
-					String currency = contentModelList.getCurrencyInterp() == null ? ""
-							: contentModelList.getCurrencyInterp();
+					//String deviceTypeInterp = contentModelList.getDeviceTypeInterp();
+					String currency = contentModelList.getCurrencyInterp() == null ? "" : contentModelList.getCurrencyInterp();
 					String price = currency.concat(String.valueOf(contentModelList.getPrice()));
 					String country = contentModelList.getCountry();
 					String status = contentModelList.getTaxPaidStatusInterp();
 					String origin = contentModelList.getOrigin();
-					String nationality = contentModelList.getNationality();
+					String nationality=contentModelList.getNationality();
 					String statusInterp = contentModelList.getStateInterp();
-					// params for action
+					//params for action 
 					String imei1 = contentModelList.getFirstImei();
 					String deviceState = String.valueOf(contentModelList.getStatus());
-					String action = iconState.endUserPaidStatusIcon(imei1, userStatus, deviceState, txnId);
+					String action = iconState.endUserPaidStatusIcon(imei1,userStatus,deviceState,txnId);
 					log.info("in end user data table controller  Status---");
-
-					Object[] data = { createdOn, nid, txnId, nationality, status, origin, statusInterp, action };
+					
+					Object[] data = {createdOn,nid,txnId,nationality,status,origin,statusInterp,action};
 
 					List<Object> datatableList = Arrays.asList(data);
 					finalList.add(datatableList);
@@ -260,9 +256,10 @@ public class UploadPaidStatus {
 			}
 			datatableResponseModel.setRecordsTotal(upsPaginationModel.getNumberOfElements());
 			datatableResponseModel.setRecordsFiltered(upsPaginationModel.getTotalElements());
-			log.info(":::::datatableResponseModel:::::" + datatableResponseModel);
-			return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK);
-		} catch (Exception e) {
+			log.info(":::::datatableResponseModel:::::"+datatableResponseModel);
+			return new ResponseEntity<>(datatableResponseModel,HttpStatus.OK);	
+		}
+		catch(Exception e) {
 			datatableResponseModel.setRecordsTotal(null);
 			datatableResponseModel.setRecordsFiltered(null);
 			datatableResponseModel.setData(Collections.emptyList());
@@ -271,32 +268,34 @@ public class UploadPaidStatus {
 		}
 	}
 
+
+
+
+
 	@PostMapping("upload-paid-status/pageRendering")
-	public ResponseEntity<?> directives(
-			@RequestParam(name = "type", defaultValue = "userPaidStatus", required = false) String role,
-			HttpSession session) {
+	public ResponseEntity<?> directives(@RequestParam(name="type",defaultValue = "userPaidStatus",required = false) String role,HttpSession session){
 
 		String userType = (String) session.getAttribute("usertype");
 		String userStatus = (String) session.getAttribute("userStatus");
 
 		InputFields inputFields = new InputFields();
 		InputFields dateRelatedFields;
-
-		if ("Immigration".equals(userType)) {
-			pageElement.setPageTitle(Translator.toLocale("Device Activation"));
-		} else {
-			pageElement.setPageTitle(Translator.toLocale("customRegisterDevice"));
+		
+		if("Immigration".equals(userType)){
+			pageElement.setPageTitle(Translator.toLocale("Device Activation"));	
+		}else {
+		pageElement.setPageTitle(Translator.toLocale("customRegisterDevice"));
 		}
-
+		
 		List<Button> buttonList = new ArrayList<>();
 		List<InputFields> dropdownList = new ArrayList<>();
 		List<InputFields> inputTypeDateList = new ArrayList<>();
-
-		if ("Immigration".equals(userType)) {
-			String[] names = { "HeaderButton", Translator.toLocale("button.register"), "JavaScript:void(0);", "btnLink",
-					"FilterButton", Translator.toLocale("button.filter"),
-					"filter(" + ConfigParameters.languageParam + ",'filter')", "submitFilter" };
-			for (int i = 0; i < names.length; i++) {
+		
+		
+		
+		if("Immigration".equals(userType)){
+			String[] names= {"HeaderButton",Translator.toLocale("button.register"),"JavaScript:void(0);","btnLink","FilterButton", Translator.toLocale("button.filter"),"filter("+ConfigParameters.languageParam+",'filter')","submitFilter"};
+			for(int i=0; i< names.length ; i++) {
 				button = new Button();
 				button.setType(names[i]);
 				i++;
@@ -306,14 +305,12 @@ public class UploadPaidStatus {
 				i++;
 				button.setId(names[i]);
 				buttonList.add(button);
-			}
+			}			
 			pageElement.setButtonList(buttonList);
-
-		} else {
-			String[] names = { "HeaderButton", Translator.toLocale("button.register"), "./add-device-information",
-					"btnLink", "FilterButton", Translator.toLocale("button.filter"),
-					"filter(" + ConfigParameters.languageParam + ",'filter')", "submitFilter" };
-			for (int i = 0; i < names.length; i++) {
+			
+		}else {
+			String[] names= {"HeaderButton",Translator.toLocale("button.register"),"./add-device-information","btnLink","FilterButton", Translator.toLocale("button.filter"),"filter("+ConfigParameters.languageParam+",'filter')","submitFilter"};
+			for(int i=0; i< names.length ; i++) {
 				button = new Button();
 				button.setType(names[i]);
 				i++;
@@ -323,15 +320,16 @@ public class UploadPaidStatus {
 				i++;
 				button.setId(names[i]);
 				buttonList.add(button);
-			}
+			}			
 			pageElement.setButtonList(buttonList);
 		}
+		
+		
 
-		// Dropdown items
-		String[] selectParam = { "select", Translator.toLocale("input.Status"), "recordStatus", "", "select",
-				Translator.toLocale("select.taxPaidStatus"), "taxPaidStatus", "" };
-		for (int i = 0; i < selectParam.length; i++) {
-			inputFields = new InputFields();
+		//Dropdown items			
+		String[] selectParam= {"select",Translator.toLocale("input.Status"),"recordStatus","","select",Translator.toLocale("select.taxPaidStatus"),"taxPaidStatus",""};
+		for(int i=0; i< selectParam.length; i++) {
+			inputFields= new InputFields();
 			inputFields.setType(selectParam[i]);
 			i++;
 			inputFields.setTitle(selectParam[i]);
@@ -343,13 +341,24 @@ public class UploadPaidStatus {
 		}
 		pageElement.setDropdownList(dropdownList);
 
-		if ("Custom".equals(userType)) {
-			// input type date list
-			String[] dateParam = { "date", Translator.toLocale("input.startDate"), "startDate", "", "date",
-					Translator.toLocale("input.endDate"), "endDate", "", "text",
-					Translator.toLocale("input.transactionID"), "transactionID", "" };
-			for (int i = 0; i < dateParam.length; i++) {
-				dateRelatedFields = new InputFields();
+		if("Custom".equals(userType)) {
+			//input type date list
+			String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("input.transactionID"),"transactionID",""};
+			for(int i=0; i< dateParam.length; i++) {
+			dateRelatedFields= new InputFields();
+			dateRelatedFields.setType(dateParam[i]);
+			i++;
+			dateRelatedFields.setTitle(dateParam[i]);
+			i++;
+			dateRelatedFields.setId(dateParam[i]);
+			i++;
+			dateRelatedFields.setClassName(dateParam[i]);
+			inputTypeDateList.add(dateRelatedFields);
+			}
+			}else if("Immigration".equals(userType)){
+				String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("input.transactionID"),"transactionID","","text",Translator.toLocale("input.passportNo"),"nId",""};
+				for(int i=0; i< dateParam.length; i++) {
+				dateRelatedFields= new InputFields();
 				dateRelatedFields.setType(dateParam[i]);
 				i++;
 				dateRelatedFields.setTitle(dateParam[i]);
@@ -358,91 +367,76 @@ public class UploadPaidStatus {
 				i++;
 				dateRelatedFields.setClassName(dateParam[i]);
 				inputTypeDateList.add(dateRelatedFields);
+				}
+			}else {
+			//input type date list
+			String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("input.nidInput"),"nId","","text",Translator.toLocale("input.transactionID"),"transactionID",""};
+			for(int i=0; i< dateParam.length; i++) {
+			dateRelatedFields= new InputFields();
+			dateRelatedFields.setType(dateParam[i]);
+			i++;
+			dateRelatedFields.setTitle(dateParam[i]);
+			i++;
+			dateRelatedFields.setId(dateParam[i]);
+			i++;
+			dateRelatedFields.setClassName(dateParam[i]);
+			inputTypeDateList.add(dateRelatedFields);
 			}
-		} else if ("Immigration".equals(userType)) {
-			String[] dateParam = { "date", Translator.toLocale("input.startDate"), "startDate", "", "date",
-					Translator.toLocale("input.endDate"), "endDate", "", "text",
-					Translator.toLocale("input.transactionID"), "transactionID", "", "text",
-					Translator.toLocale("input.passportNo"), "nId", "" };
-			for (int i = 0; i < dateParam.length; i++) {
-				dateRelatedFields = new InputFields();
-				dateRelatedFields.setType(dateParam[i]);
-				i++;
-				dateRelatedFields.setTitle(dateParam[i]);
-				i++;
-				dateRelatedFields.setId(dateParam[i]);
-				i++;
-				dateRelatedFields.setClassName(dateParam[i]);
-				inputTypeDateList.add(dateRelatedFields);
-			}
-		} else {
-			// input type date list
-			String[] dateParam = { "date", Translator.toLocale("input.startDate"), "startDate", "", "date",
-					Translator.toLocale("input.endDate"), "endDate", "", "text", Translator.toLocale("input.nidInput"),
-					"nId", "", "text", Translator.toLocale("input.transactionID"), "transactionID", "" };
-			for (int i = 0; i < dateParam.length; i++) {
-				dateRelatedFields = new InputFields();
-				dateRelatedFields.setType(dateParam[i]);
-				i++;
-				dateRelatedFields.setTitle(dateParam[i]);
-				i++;
-				dateRelatedFields.setId(dateParam[i]);
-				i++;
-				dateRelatedFields.setClassName(dateParam[i]);
-				inputTypeDateList.add(dateRelatedFields);
-			}
-		}
+			}	
 		pageElement.setInputTypeDateList(inputTypeDateList);
 		pageElement.setUserStatus(userStatus);
-		return new ResponseEntity<>(pageElement, HttpStatus.OK);
-	}
+		return new ResponseEntity<>(pageElement, HttpStatus.OK); 		
+	}	
 
-	// ************************************************ delete consignment record
-	// page********************************************************************************/
+
+
+	//************************************************ delete consignment record page********************************************************************************/
+
 
 	@DeleteMapping("/delete/{imei}/{txnId}")
-	public @ResponseBody GenricResponse deleteConsignment(@PathVariable("imei") String imei,
-			@PathVariable("txnId") String txnId, HttpSession session) {
-
-		String userType = (String) session.getAttribute("usertype");
-		String userName = session.getAttribute("username").toString();
-		int userId = (int) session.getAttribute("userid");
-		int userTypeid = (int) session.getAttribute("usertypeId");
-		AllRequest request = new AllRequest();
-
-		request.setFeatureId(12);
-		request.setUsername(userName);
-		request.setImei(imei);
-		request.setUserTypeId(userTypeid);
-		request.setUserType(userType);
-		request.setUserId(userId);
-		request.setTxnId(txnId);
-		log.info(" request==" + request);
-		GenricResponse response = uploadPaidStatusFeignClient.delete(request);
-		log.info("response after delete consignment." + response);
+	public @ResponseBody GenricResponse deleteConsignment(@PathVariable("imei") String imei,@PathVariable("txnId") String txnId,HttpSession session) {
+		
+		  String userType=(String) session.getAttribute("usertype"); 
+		  String  userName=session.getAttribute("username").toString();
+		  int userId= (int)  session.getAttribute("userid");
+		  int userTypeid=(int)  session.getAttribute("usertypeId");
+		  AllRequest request= new AllRequest();
+		 
+		  request.setFeatureId(12);
+		  request.setUsername(userName);
+		  request.setImei(imei);
+	      request.setUserTypeId(userTypeid);
+		  request.setUserType(userType);
+		  request.setUserId(userId);
+		  request.setTxnId(txnId);
+		  log.info(" request=="+request);
+		  GenricResponse response=uploadPaidStatusFeignClient.delete(request);
+		log.info("response after delete consignment."+response);
 		return response;
 	}
-
+	
 	@DeleteMapping("/endUserdelete/{imei}/{txnId}")
-	public @ResponseBody GenricResponse endUserdeleteConsignment(@PathVariable("imei") String imei,
-			@PathVariable("imei") String txnId) {
-		AllRequest request = new AllRequest();
-		request.setFeatureId(12);
+	public @ResponseBody GenricResponse endUserdeleteConsignment(@PathVariable("imei") String  imei,@PathVariable("imei") String txnId  ) {
+		  AllRequest request= new AllRequest();
+		  request.setFeatureId(12);
 
-		request.setImei(imei);
-		request.setUserTypeId(17);
-		request.setUserType("End User");
-		request.setTxnId(txnId);
-		log.info(" request==" + request);
-		GenricResponse response = uploadPaidStatusFeignClient.delete(request);
-		log.info("response after delete consignment." + response);
+		  request.setImei(imei);
+	      request.setUserTypeId(17);
+		  request.setUserType("End User");
+		  request.setTxnId(txnId);
+		  log.info(" request=="+request);
+		GenricResponse response=uploadPaidStatusFeignClient.delete(request);
+		log.info("response after delete consignment."+response);
 		return response;
 	}
 
+
+	
 	/*
 	 * @GetMapping("/deviceInfo/{imei}") public @ResponseBody UserPaidStatusContent
 	 * viewByImei(@PathVariable("imei") Long imei) { UserPaidStatusContent content=
 	 * uploadPaidStatusFeignClient.viewByImei(imei); return content; }
 	 */
-
+	
+	
 }

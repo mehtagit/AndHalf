@@ -86,18 +86,16 @@ public class AssigneeStockDatatableController {
 				datatableResponseModel.setData(Collections.emptyList());
 			} else {
 				for (RegistrationContentModel dataInsideList : paginationContentList) {
-					// String sNO = "";
+					//String sNO = "";
 					String username = dataInsideList.getUser().getUsername();
 					String firstName = dataInsideList.getDisplayName();
 					String phoneNo = dataInsideList.getPhoneNo();
 					String email = dataInsideList.getEmail();
-					log.info("username=" + username + "firstName=" + firstName + " phoneNo==" + phoneNo + " email =="
-							+ email);
-
-					String selectAction = "saveAssigneDetails('" + username + "','" + firstName.replaceAll("\\s", "+20")
-							+ "')";
+					log.info("username="+username+ "firstName="+firstName+" phoneNo=="+phoneNo+" email =="+email);
+					
+					String selectAction="saveAssigneDetails('"+username+"','"+firstName.replaceAll( "\\s", "+20")+"')";
 					// log.info("Id-->"+Id+"--userStatus--->"+userStatus+"--StatusName---->"+StatusName+"--createdOn---->"+createdOn+"--id--->"+id+"--userName-->"+username);
-					String action = "<a onclick=" + selectAction + ">SELECT</a>";
+					String action = "<a onclick="+selectAction+">SELECT</a>";
 					Object[] finalData = { username, firstName, phoneNo, email, action };
 					List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
 					finalList.add(finalDataList);

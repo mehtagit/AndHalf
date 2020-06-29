@@ -32,7 +32,7 @@
 		//var TagId = sessionStorage.getItem("tagId");
 		
 		var reportnameId = sessionStorage.getItem("reportname");
-		
+		var reportNameInterp = sessionStorage.getItem("reportInterp");
 		
 		
 		//**************************************************filter table**********************************************
@@ -59,7 +59,12 @@
 				var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
 			}				
 			
-			
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$.ajaxSetup({
+				headers:
+				{ 'X-CSRF-TOKEN': token }
+			});	
 
 		$.ajax({
 				url: 'tableHeaders?reportnameId='+parseInt(reportnameId),
@@ -116,8 +121,14 @@
 		
 		
 		function pageRendering(){
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$.ajaxSetup({
+				headers:
+				{ 'X-CSRF-TOKEN': token }
+			});
 			$.ajax({
-				url: 'dbReportTable/pageRendering',
+				url: 'dbReportTable/pageRendering?reportName='+reportNameInterp,
 				type: 'POST',
 				dataType: "json",
 				success: function(data){
@@ -176,6 +187,7 @@
 					});
 				}
 			}); 
+			//alert("reportNameInterp--->" +reportNameInterp)
 			
 }
 

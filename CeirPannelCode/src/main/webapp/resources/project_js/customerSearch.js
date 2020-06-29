@@ -23,7 +23,12 @@
 		window.location.replace("./search?via=other&msisdn="+msisdn+"&imei="+imei+"&deviceIdType="+deviceIdType+"&deviceIdvalue="+deviceIdvalue);
 		return false;
 	}
-	
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+	});
 	$.getJSON('./getDropdownList/DEVICE_ID_TYPE', function(data) {
 		for (i = 0; i < data.length; i++) {
 			$('<option>').val(data[i].value).text(data[i].interp)

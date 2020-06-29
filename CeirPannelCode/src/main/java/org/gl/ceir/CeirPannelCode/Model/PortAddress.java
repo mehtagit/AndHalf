@@ -1,15 +1,16 @@
 package org.gl.ceir.CeirPannelCode.Model;
 
+
 public class PortAddress {
 
 	private long id;
-
+	
 	private String createdOn;
-
+	
 	private String modifiedOn;
-
+	
 	private String address;
-
+	
 	private Integer port;
 
 	public long getId() {
@@ -57,5 +58,7 @@ public class PortAddress {
 		return "PortAddress [id=" + id + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", address="
 				+ address + ", port=" + port + "]";
 	}
-
+	
+	
+	
 }

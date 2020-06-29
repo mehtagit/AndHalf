@@ -55,7 +55,8 @@ public class GrievanceDatatableController {
 	public ResponseEntity<?> viewStockList(
 			@RequestParam(name = "type", defaultValue = "grievance", required = false) String role,
 			HttpServletRequest request, HttpSession session,
-			@RequestParam(name = "grievanceSessionUsesFlag", required = false) Integer grievanceSessionUsesFlag) {
+			@RequestParam(name = "grievanceSessionUsesFlag", required = false) Integer grievanceSessionUsesFlag,
+			@RequestParam(name="source",defaultValue = "menu",required = false) String source) {
 
 		// Data set on this List
 		List<List<Object>> finalList = new ArrayList<List<Object>>();
@@ -70,19 +71,19 @@ public class GrievanceDatatableController {
 		log.info("session value user Type==" + session.getAttribute("usertype") + " grievanceSessionUsesFlag=="
 				+ grievanceSessionUsesFlag);
 		String userType = (String) session.getAttribute("usertype");
-		if (userType != null) {
-			log.info("inside if----->" + userType);
+		if(userType!=null){
+			log.info("inside if----->" +userType);
 			userType = (String) session.getAttribute("usertype");
-		} else {
-			log.info("inside else----->" + userType);
+		}else {
+			log.info("inside else----->" +userType);
 			userType = "End User";
 		}
-		log.info("user type is ______________" + userType);
+		log.info("user type is ______________" +userType);
 		filterrequest.setUserType(userType);
 		Integer userId = (Integer) session.getAttribute("userid");
-
+		
 		log.info("request parameters send to view grievance api=" + filterrequest);
-		response = grievanceFeignClient.grievanceFilter(filterrequest, pageNo, pageSize, file);
+		response = grievanceFeignClient.grievanceFilter(filterrequest,pageNo,pageSize,file,source);
 		log.info("response::::::::::::::" + response);
 		try {
 			Gson gson = new Gson();
@@ -133,7 +134,7 @@ public class GrievanceDatatableController {
 						String createdOn = dataInsideList.getCreatedOn();
 						String modifiedOn = dataInsideList.getModifiedOn();
 						String txnId = dataInsideList.getTxnId();
-						// String userDisplayName = dataInsideList.getUserDisplayName();
+						//String userDisplayName = dataInsideList.getUserDisplayName();
 						String userName = dataInsideList.getUserDisplayName();
 						String userTypeName = dataInsideList.getUserType();
 						String grievanceId = String.valueOf(dataInsideList.getGrievanceId());
@@ -142,9 +143,8 @@ public class GrievanceDatatableController {
 						String raisedBy = dataInsideList.getRaisedBy();
 						String userStatus = (String) session.getAttribute("userStatus");
 						String action = iconState.adminGrievanceState(dataInsideList.getFileName(), txnId, grievanceId,
-								StatusofGrievance, userStatus, userId);
-						Object[] finalData = { createdOn, modifiedOn, txnId, userName, userTypeName, grievanceId,
-								raisedBy, grievanceStatus, action };
+						StatusofGrievance, userStatus, userId);
+						Object[] finalData = { createdOn, modifiedOn, txnId, userName, userTypeName, grievanceId, raisedBy, grievanceStatus, action };
 						List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);
@@ -167,7 +167,7 @@ public class GrievanceDatatableController {
 						datatableResponseModel.setData(finalList);
 					}
 				}
-
+				
 				else if ("Distributor".equals(userType)) {
 					log.info("<><>Distributor<><> in Greivance Controller");
 					for (GrievanceContentModel dataInsideList : paginationContentList) {
@@ -186,25 +186,26 @@ public class GrievanceDatatableController {
 						datatableResponseModel.setData(finalList);
 					}
 				}
-
+				
 				else if ("Operator".equals(userType)) {
 					log.info("<><><><> in Operator Greivance Controller");
 					for (GrievanceContentModel dataInsideList : paginationContentList) {
-						String createdOn = dataInsideList.getCreatedOn();
-						String modifiedOn = dataInsideList.getModifiedOn();
-						String txnId = dataInsideList.getTxnId();
-						String grievanceId = String.valueOf(dataInsideList.getGrievanceId());
-						String StatusofGrievance = String.valueOf(dataInsideList.getGrievanceStatus());
-						String grievanceStatus = dataInsideList.getStateInterp();
-						String userStatus = (String) session.getAttribute("userStatus");
-						String action = iconState.grievanceState(dataInsideList.getFileName(), txnId, grievanceId,
-								StatusofGrievance, userStatus, userId);
-						Object[] finalData = { createdOn, modifiedOn, txnId, grievanceId, grievanceStatus, action };
-						List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
-						finalList.add(finalDataList);
-						datatableResponseModel.setData(finalList);
+					String createdOn = dataInsideList.getCreatedOn();
+					String modifiedOn = dataInsideList.getModifiedOn();
+					String txnId = dataInsideList.getTxnId();
+					String grievanceId = String.valueOf(dataInsideList.getGrievanceId());
+					String StatusofGrievance = String.valueOf(dataInsideList.getGrievanceStatus());
+					String grievanceStatus = dataInsideList.getStateInterp();
+					String userStatus = (String) session.getAttribute("userStatus");
+					String action = iconState.grievanceState(dataInsideList.getFileName(), txnId, grievanceId,
+					StatusofGrievance, userStatus, userId);
+					Object[] finalData = { createdOn, modifiedOn, txnId, grievanceId, grievanceStatus, action };
+					List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
+					finalList.add(finalDataList);
+					datatableResponseModel.setData(finalList);
 					}
-				} else if ("Manufacturer".equals(userType)) {
+					}
+				else if ("Manufacturer".equals(userType)) { 
 					log.info("<><><><> in Manufacturer CONTROLLER");
 					for (GrievanceContentModel dataInsideList : paginationContentList) {
 						String createdOn = dataInsideList.getCreatedOn();
@@ -221,7 +222,7 @@ public class GrievanceDatatableController {
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);
 					}
-				} else if (userType.equals("Lawful Agency")) {
+				} else if (userType.equals("Lawful Agency")) { 
 					log.info("<><><><> in Lawful Agency CONTROLLER");
 					for (GrievanceContentModel dataInsideList : paginationContentList) {
 						String createdOn = dataInsideList.getCreatedOn();
@@ -239,8 +240,8 @@ public class GrievanceDatatableController {
 						datatableResponseModel.setData(finalList);
 					}
 				}
-
-				else if (userType.equals("End User")) {
+				
+				else if (userType.equals("End User")) { 
 					log.info("End User request send to view api&&&&&&&&&&&&");
 					for (GrievanceContentModel dataInsideList : paginationContentList) {
 						String createdOn = dataInsideList.getCreatedOn();
@@ -249,24 +250,22 @@ public class GrievanceDatatableController {
 						String grievanceId = String.valueOf(dataInsideList.getGrievanceId());
 						String StatusofGrievance = String.valueOf(dataInsideList.getGrievanceStatus());
 						String grievanceStatus = dataInsideList.getStateInterp();
-						Integer endUserId = dataInsideList.getUserId();
-						log.info("**********createdOn==" + createdOn + "  modifiedOn==" + modifiedOn + " txnId=="
-								+ txnId + "grievanceId==" + grievanceId + "StatusofGrievance==" + StatusofGrievance);
-						String action = iconState.endUserGrievanceState(dataInsideList.getFileName(), txnId,
-								grievanceId, endUserId, StatusofGrievance);
-						log.info("--------------response*******" + action);
+						Integer endUserId=dataInsideList.getUserId();
+						log.info("**********createdOn=="+createdOn+"  modifiedOn=="+modifiedOn+" txnId=="+txnId+"grievanceId=="+grievanceId+"StatusofGrievance=="+StatusofGrievance);
+						String action = iconState.endUserGrievanceState(dataInsideList.getFileName(), txnId, grievanceId,endUserId,StatusofGrievance);
+						log.info("--------------response*******"+action);
 						Object[] finalData = { createdOn, modifiedOn, txnId, grievanceId, grievanceStatus, action };
 						List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);
 					}
-				} else if (userType.equals("Customer Care")) {
+				}else if (userType.equals("Customer Care")) {
 					log.info("<><><><> in Customer Care Controller");
 					for (GrievanceContentModel dataInsideList : paginationContentList) {
 						String createdOn = dataInsideList.getCreatedOn();
 						String modifiedOn = dataInsideList.getModifiedOn();
 						String txnId = dataInsideList.getTxnId();
-						// String userDisplayName = dataInsideList.getUserDisplayName();
+						//String userDisplayName = dataInsideList.getUserDisplayName();
 						String userName = dataInsideList.getUserDisplayName();
 						String userTypeName = dataInsideList.getUserType();
 						String grievanceId = String.valueOf(dataInsideList.getGrievanceId());
@@ -274,30 +273,29 @@ public class GrievanceDatatableController {
 						String StatusofGrievance = String.valueOf(dataInsideList.getGrievanceStatus());
 						String grievanceStatus = dataInsideList.getStateInterp();
 						String userStatus = (String) session.getAttribute("userStatus");
-						String action = iconState.customerCareGrievanceState(dataInsideList.getFileName(), txnId,
-								grievanceId, StatusofGrievance, userStatus, userId);
-						Object[] finalData = { createdOn, modifiedOn, txnId, userName, userTypeName, grievanceId,
-								raisedBy, grievanceStatus, action };
+						String action = iconState.customerCareGrievanceState(dataInsideList.getFileName(), txnId, grievanceId,
+						StatusofGrievance, userStatus, userId);
+						Object[] finalData = { createdOn, modifiedOn, txnId, userName, userTypeName, grievanceId, raisedBy, grievanceStatus, action };
 						List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);
 					}
-				} else if ("Immigration".equals(userType)) {
+				}else if("Immigration".equals(userType)) {
 					log.info("<><><><> in Immigration Greivance Controller");
 					for (GrievanceContentModel dataInsideList : paginationContentList) {
-						String createdOn = dataInsideList.getCreatedOn();
-						String modifiedOn = dataInsideList.getModifiedOn();
-						String txnId = dataInsideList.getTxnId();
-						String grievanceId = String.valueOf(dataInsideList.getGrievanceId());
-						String StatusofGrievance = String.valueOf(dataInsideList.getGrievanceStatus());
-						String grievanceStatus = dataInsideList.getStateInterp();
-						String userStatus = (String) session.getAttribute("userStatus");
-						String action = iconState.grievanceState(dataInsideList.getFileName(), txnId, grievanceId,
-								StatusofGrievance, userStatus, userId);
-						Object[] finalData = { createdOn, modifiedOn, txnId, grievanceId, grievanceStatus, action };
-						List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
-						finalList.add(finalDataList);
-						datatableResponseModel.setData(finalList);
+					String createdOn = dataInsideList.getCreatedOn();
+					String modifiedOn = dataInsideList.getModifiedOn();
+					String txnId = dataInsideList.getTxnId();
+					String grievanceId = String.valueOf(dataInsideList.getGrievanceId());
+					String StatusofGrievance = String.valueOf(dataInsideList.getGrievanceStatus());
+					String grievanceStatus = dataInsideList.getStateInterp();
+					String userStatus = (String) session.getAttribute("userStatus");	
+					String action = iconState.grievanceState(dataInsideList.getFileName(), txnId, grievanceId,
+					StatusofGrievance, userStatus, userId);
+					Object[] finalData = { createdOn, modifiedOn, txnId, grievanceId, grievanceStatus, action };
+					List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
+					finalList.add(finalDataList);
+					datatableResponseModel.setData(finalList);
 					}
 				}
 			}
@@ -335,10 +333,10 @@ public class GrievanceDatatableController {
 		log.info("USER STATUS:::::::::" + userStatus);
 		log.info("session value user Type==" + session.getAttribute("usertype"));
 
-		if (userType.equals("Customer Care")) {
-			String[] names = { "HeaderButton", Translator.toLocale("button.reportGriev"), "./searchUserNameForm",
-					"btnLink", "FilterButton", Translator.toLocale("button.filter"),
-					"grievanceDataTable(" + ConfigParameters.languageParam + ")", "submitFilter" };
+		
+		if(userType.equals("Customer Care")) {
+			String[] names = { "HeaderButton", Translator.toLocale("button.reportGriev"), "./searchUserNameForm", "btnLink",
+					"FilterButton", Translator.toLocale("button.filter"), "grievanceDataTable("+ConfigParameters.languageParam+",'filter')", "submitFilter" };
 			for (int i = 0; i < names.length; i++) {
 				button = new Button();
 				button.setType(names[i]);
@@ -351,12 +349,10 @@ public class GrievanceDatatableController {
 				buttonList.add(button);
 			}
 			pageElement.setButtonList(buttonList);
-
-		} else {
-			String[] names = { "HeaderButton", Translator.toLocale("button.reportGriev"),
-					"./openGrievanceForm?reqType=formPage", "btnLink", "FilterButton",
-					Translator.toLocale("button.filter"), "grievanceDataTable(" + ConfigParameters.languageParam + ")",
-					"submitFilter" };
+			
+		}else {
+			String[] names = { "HeaderButton", Translator.toLocale("button.reportGriev"), "./openGrievanceForm?reqType=formPage", "btnLink",
+					"FilterButton", Translator.toLocale("button.filter"), "grievanceDataTable("+ConfigParameters.languageParam+")", "submitFilter" };
 			for (int i = 0; i < names.length; i++) {
 				button = new Button();
 				button.setType(names[i]);
@@ -369,13 +365,12 @@ public class GrievanceDatatableController {
 				buttonList.add(button);
 			}
 			pageElement.setButtonList(buttonList);
-
-		}
-
-		if ("CEIRAdmin".equals(userType) || userType.equals("Customer Care")) {
+			
+		} 
+		
+		if("CEIRAdmin".equals(userType) || userType.equals("Customer Care")) {
 			// Dropdown items
-			String[] selectParam = { "select", Translator.toLocale("table.userType"), "userType", "", "select",
-					Translator.toLocale("button.grievStatus"), "recentStatus", "" };
+			String[] selectParam = {"select", Translator.toLocale("table.userType"), "userType", "","select", Translator.toLocale("button.grievStatus"), "recentStatus", "" };
 			for (int i = 0; i < selectParam.length; i++) {
 				inputFields = new InputFields();
 				inputFields.setType(selectParam[i]);
@@ -390,11 +385,8 @@ public class GrievanceDatatableController {
 			pageElement.setDropdownList(dropdownList);
 
 			// input type date list
-			String[] dateParam = { "date", Translator.toLocale("input.startDate"), "startDate", "", "date",
-					Translator.toLocale("input.endDate"), "endDate", "", "text",
-					Translator.toLocale("input.transactionID"), "transactionID", "", "text",
-					Translator.toLocale("table.grievanceID"), "grievanceID", "", "text",
-					Translator.toLocale("table.UserName"), "userName", "" };
+			String[] dateParam = { "date", Translator.toLocale("input.startDate"), "startDate", "", "date", Translator.toLocale("input.endDate"), "endDate", "", "text",
+					Translator.toLocale("input.transactionID"), "transactionID", "", "text",Translator.toLocale("table.grievanceID"), "grievanceID", "","text",Translator.toLocale("table.UserName"), "userName", "" };
 			for (int i = 0; i < dateParam.length; i++) {
 				dateRelatedFields = new InputFields();
 				dateRelatedFields.setType(dateParam[i]);
@@ -406,8 +398,10 @@ public class GrievanceDatatableController {
 				dateRelatedFields.setClassName(dateParam[i]);
 				inputTypeDateList.add(dateRelatedFields);
 			}
-
-		} else {
+			
+		
+		
+		}else {
 			// Dropdown items
 			String[] selectParam = { "select", Translator.toLocale("button.grievStatus"), "recentStatus", "" };
 			for (int i = 0; i < selectParam.length; i++) {
@@ -424,10 +418,8 @@ public class GrievanceDatatableController {
 			pageElement.setDropdownList(dropdownList);
 
 			// input type date list
-			String[] dateParam = { "date", Translator.toLocale("input.startDate"), "startDate", "", "date",
-					Translator.toLocale("input.endDate"), "endDate", "", "text",
-					Translator.toLocale("input.transactionID"), "transactionID", "", "text",
-					Translator.toLocale("table.grievanceID"), "grievanceID", "" };
+			String[] dateParam = { "date", Translator.toLocale("input.startDate"), "startDate", "", "date", Translator.toLocale("input.endDate"), "endDate", "", "text",
+					Translator.toLocale("input.transactionID"), "transactionID", "", "text",Translator.toLocale("table.grievanceID"), "grievanceID", "" };
 			for (int i = 0; i < dateParam.length; i++) {
 				dateRelatedFields = new InputFields();
 				dateRelatedFields.setType(dateParam[i]);
@@ -439,8 +431,10 @@ public class GrievanceDatatableController {
 				dateRelatedFields.setClassName(dateParam[i]);
 				inputTypeDateList.add(dateRelatedFields);
 			}
-
+			
 		}
+		
+		
 
 		pageElement.setInputTypeDateList(inputTypeDateList);
 		pageElement.setUserStatus(userStatus);

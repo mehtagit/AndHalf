@@ -16,31 +16,38 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Component
 @Service
-@FeignClient(url = "${dashBoardfeignClientPath}", value = "profileUrls")
+@FeignClient(url="${dashBoardfeignClientPath}",value = "profileUrls")
 public interface TypeApprovedFeignImpl {
 
-	// View Manage Type-Approved Feign*****************************************
-	@RequestMapping(value = "/TypeApproved/view", method = RequestMethod.POST)
+	
+	//View Manage Type-Approved Feign*****************************************
+	@RequestMapping(value="/TypeApproved/view" ,method=RequestMethod.POST) 
 	public Object manageTypeFeign(@RequestBody TRCRequest filterRequest,
-			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
-			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
-			@RequestParam(value = "file", defaultValue = "0") Integer file);
+	@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
+	@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+	@RequestParam(value = "file", defaultValue = "0") Integer file,
+	@RequestParam(name="source",defaultValue = "menu",required = false) String source) ;
+	
+	
+	@RequestMapping(value="/TypeApproved/add" ,method=RequestMethod.POST) 
+	public GenricResponse register(@RequestBody TRCRegisteration filterRequest) ;
+	
+	
+	@PostMapping("/TypeApproved/viewById/{id}") 
+	public TRCRegisteration viewByID(@PathVariable("id") int id) ;
+	
+	
+	@PostMapping("/TypeApproved/update") 
+	public GenricResponse updateApproved(@RequestBody TRCRegisteration model) ;
+	
 
-	@RequestMapping(value = "/TypeApproved/add", method = RequestMethod.POST)
-	public GenricResponse register(@RequestBody TRCRegisteration filterRequest);
+	@PostMapping("/TypeApproved/approveReject") 
+	public GenricResponse TypeApproveReject(@RequestBody TypeApprovedStatusModel model) ;
 
-	@PostMapping("/TypeApproved/viewById/{id}")
-	public TRCRegisteration viewByID(@PathVariable("id") int id);
-
-	@PostMapping("/TypeApproved/update")
-	public GenricResponse updateApproved(@RequestBody TRCRegisteration model);
-
-	@PostMapping("/TypeApproved/approveReject")
-	public GenricResponse TypeApproveReject(@RequestBody TypeApprovedStatusModel model);
-
-	@PostMapping("/TypeApproved/delete")
-	public GenricResponse TypeApproveDelete(@RequestParam(name = "id", required = false) Integer id,
-			@RequestParam(name = "userType", required = false) String userType,
-			@RequestParam(name = "userId", required = false) Integer userId);
-
+	@PostMapping("/TypeApproved/delete") 
+	public GenricResponse TypeApproveDelete(@RequestParam(name="id",required = false ) Integer id,
+											@RequestParam(name="userType",required = false ) String userType, 
+											@RequestParam(name="userId",required = false ) Integer userId,
+											@RequestParam(name="remark",required = false ) String remark
+											 );
 }

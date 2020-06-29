@@ -4,7 +4,7 @@
 function saveIndivisualRecoveryRequest()
 {
 var formData= new FormData();
-	
+$("#singleDeviceRecovery").prop('disabled', true);
 
 	var sigleRecoverydeviceBrandName=$('#sigleRecoverydeviceBrandName').val();
 	var sigleRecoveryimeiNumber1=$('#sigleRecoveryimeiNumber1').val();
@@ -72,7 +72,13 @@ var formData= new FormData();
 	}
 
 	formData.append("request",JSON.stringify(request));
-
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
+	
 	$.ajax({
 		url: './lawfulIndivisualRecovery',
 		type: 'POST',
@@ -109,7 +115,7 @@ var formData= new FormData();
 
 function saveCompanyRecoveryRequest(){
 	$('div#initialloader').fadeIn('fast');
-	$("#indivisualStolenButton").prop('disabled', true);
+	$("#bulkRecoverySubmit").prop('disabled', true);
 	var formData= new FormData();
 	var bulkRecoveryquantity=$('#bulkRecoveryquantity').val();
 	var bulkRecoveryRemark=$('#bulkRecoveryRemark').val();
@@ -157,6 +163,12 @@ function saveCompanyRecoveryRequest(){
 
 	formData.append('file', $('#bulkRecoveryFile')[0].files[0]);
 	formData.append("request",JSON.stringify(request));
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
 
 	$.ajax({
 		url: './lawfulIndivisualRecovery',

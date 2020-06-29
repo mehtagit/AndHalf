@@ -12,7 +12,9 @@
 	
 	 long accessTime = session.getLastAccessedTime();
 	 long currentTime= new Date().getTime(); 
+	
 	 long dfd= accessTime +timeout;
+	 
 	 if( currentTime< dfd){
 	/*  response.setHeader("Refresh", timeout + "; URL = ../login");
 	 System.out.println("timeout========"+timeout); 
@@ -21,6 +23,10 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<!-- Security Tags -->
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<sec:csrfMetaTags />
+<!-- Security Tags -->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
@@ -39,7 +45,11 @@
 <meta content="" name="description" />
 <meta content="" name="author" />
 
-
+<!-- Security Tags -->
+<meta name="_csrf" content="${_csrf.token}"/>
+<!-- default header name is X-CSRF-TOKEN -->
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
+<!-- Security Tags -->
 
 <script type="text/javascript"
 	src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
@@ -461,7 +471,7 @@ position: fixed;
 
 											<div class="col s12 m12" style="margin-top: 10px;">
 												<div class="input-field col s12 m6 l6">
-														<input type="email" name="email" id="email" 
+														<input type="email" name="email" id="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,63}$"
 														oninput="InvalidMsg(this,'input','<spring:message code="validation.emial" />');"
 											            oninvalid="InvalidMsg(this,'input','<spring:message code="validation.emial" />');"
 														title= "<spring:message code="validation.emial" />" maxlength="280"> <label for="email"><spring:message code="input.email" /><span
@@ -1241,6 +1251,34 @@ position: fixed;
 			</div>
 		</div>
 	</div>
+	
+	<div id="customRegisterDeviceDuplicateImei" class="modal">
+			<h6 class="modal-header">
+				<spring:message code="modal.header.registerdevice" />
+			</h6>
+			<div class="modal-content">
+
+				<div class="row">
+					<!-- <h6>Your request to upload device details has been accepted. The Transaction ID is ___________. Please
+                    save this for future reference.
+                    Kindly check the status of file upload by clicking on the check upload status button on the previous
+                    page and providing the Transaction ID. -->
+					<h6 id="dupliCateImeiMsg">
+						<%-- <spring:message code="modal.message.futureRef" />
+						<span id="endUsertXnId"></span> --%>
+					</h6>
+					<!--    </h6> -->
+				</div>
+				<div class="row">
+					<div class="input-field col s12 center">
+						<div class="input-field col s12 center">
+							<button  class="modal-close  btn"><spring:message
+									code="modal.ok" /></button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js?version=<%= (int) (Math.random() * 10) %>"></script>

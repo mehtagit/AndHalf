@@ -34,74 +34,77 @@ public class UserManagementController {
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
-	@RequestMapping(value = { "/userManagement" }, method = { org.springframework.web.bind.annotation.RequestMethod.GET,
-			org.springframework.web.bind.annotation.RequestMethod.POST })
+	@RequestMapping(value=
+		{"/userManagement"},method={org.springframework.web.bind.annotation.
+				RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}
+			)
 	public ModelAndView viewUserManagement(HttpSession session) {
 		ModelAndView mv = new ModelAndView();
-		log.info(" view viewUserManagement entry point.");
+		log.info(" view viewUserManagement entry point."); 
 		mv.setViewName("userManagement");
-		log.info(" view viewUserManagement exit point.");
-		return mv;
+		log.info(" view viewUserManagement exit point."); 
+		return mv; 
 	}
 
+	
 	@GetMapping("register-user-form")
 	public ModelAndView save() {
 		return new ModelAndView("addSystemUser");
 
 	}
+	
 
-	@RequestMapping(value = { "/saveNewSystemUser" }, method = {
-			org.springframework.web.bind.annotation.RequestMethod.GET,
-			org.springframework.web.bind.annotation.RequestMethod.POST })
-	public @ResponseBody GenricResponse saveRecord(@RequestBody NewSystemUser newSystemUser) {
-
-		if (newSystemUser.getRePassword().equals(newSystemUser.getPassword())) {
+	@RequestMapping(value= {"/saveNewSystemUser"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}) 
+	public @ResponseBody GenricResponse saveRecord(@RequestBody NewSystemUser newSystemUser) 
+	{
+		
+		if(newSystemUser.getRePassword().equals(newSystemUser.getPassword())) {
 			log.info("if password and confirm password match");
-			String username = randomDigits.getAlphaNumericString(4) + randomDigits.getNumericString(4)
-					+ randomDigits.getAlphaNumericString(1);
+			String username=randomDigits.getAlphaNumericString(4)+randomDigits.getNumericString(4)+randomDigits.getAlphaNumericString(1);
 			newSystemUser.setUserName(username);
-			log.info("request::::::" + newSystemUser);
+			log.info("request::::::"+newSystemUser);
 			GenricResponse response = userProfileFeignImpl.saveSystemUser(newSystemUser);
-			log.info("response::::::" + response);
+			log.info("response::::::"+response);
 			return response;
-		} else {
-			GenricResponse response = new GenricResponse();
+		}else {
+			GenricResponse response=new GenricResponse();
 			log.info("confirm password is not same as password");
 			response.setTag("password_mismatch");
 			response.setResponse("Password and Confirm password must be same");
 			return response;
 		}
 
+
 	}
 
-	// ------------------------------------- view User
-	// ----------------------------------------
-
-	@PostMapping("viewUser")
-	public @ResponseBody GenricResponse viewUser(@RequestBody NewSystemUser newSystemUser) {
-		log.info("request send to the viewUser api=" + newSystemUser);
-		GenricResponse response = userProfileFeignImpl.viewUserFeign(newSystemUser);
-		log.info("response from viewUser api " + response);
+	
+	
+	//------------------------------------- view User ----------------------------------------							
+	
+	@PostMapping("viewUser") 
+	public @ResponseBody GenricResponse viewUser (@RequestBody NewSystemUser newSystemUser)  {
+		log.info("request send to the viewUser api="+newSystemUser);
+		GenricResponse response= userProfileFeignImpl.viewUserFeign(newSystemUser);
+		log.info("response from viewUser api "+response);
 		return response;
 	}
-
-	// ------------------------------------- update user type
-	// ----------------------------------------
-
-	@PostMapping("updateUser")
-	public @ResponseBody GenricResponse updateUserDetail(@RequestBody NewSystemUser newSystemUser) {
-		log.info("request send to the Update user api=" + newSystemUser);
-		GenricResponse response = userProfileFeignImpl.updateUserFeign(newSystemUser);
-		log.info("response from update api " + response);
+			
+	
+	//------------------------------------- update user type ----------------------------------------							
+			
+	@PostMapping("updateUser") 
+	public @ResponseBody GenricResponse updateUserDetail(@RequestBody NewSystemUser newSystemUser)  {
+		log.info("request send to the Update user api="+newSystemUser);
+		GenricResponse response= userProfileFeignImpl.updateUserFeign(newSystemUser);
+		log.info("response from update api "+response);
 		return response;
-	}
+	}			
 
-	// ------------------------------------- Delete User
-	// ----------------------------------------
-
+	//------------------------------------- Delete User ----------------------------------------			
+			
 	@PostMapping("deleteSystemUserType")
 	public @ResponseBody GenricResponse delete(@RequestBody NewSystemUser newSystemUser) {
-		GenricResponse response = userProfileFeignImpl.deleteUserFeign(newSystemUser);
+		GenricResponse response=userProfileFeignImpl.deleteUserFeign(newSystemUser);
 		return response;
 
 	}

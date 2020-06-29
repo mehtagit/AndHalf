@@ -59,6 +59,12 @@ function confirmantiondelete(){
 			"roleType":$("body").attr("data-roleType")
 
 	}
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		url : "./deleteConsignment",
 		data : JSON.stringify(obj),
@@ -88,6 +94,12 @@ function confirmantiondelete(){
 	});
 	return false;
 }
+var token = $("meta[name='_csrf']").attr("content");
+var header = $("meta[name='_csrf_header']").attr("content");
+$.ajaxSetup({
+headers:
+{ 'X-CSRF-TOKEN': token }
+});
 $.getJSON('./getDropdownList/CUSTOMS_PORT', function(data) {
 	$("#expectedArrivalPortEdit").empty();
 	for (i = 0; i < data.length; i++) {
@@ -101,6 +113,12 @@ $.getJSON('./getDropdownList/CUSTOMS_PORT', function(data) {
 
 
 function EditConsignmentDetails(txnId){ 
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		url : "./openRegisterConsignmentPopup?reqType=editPage&txnId="+txnId,
 		dataType : 'json',
@@ -126,6 +144,12 @@ function EditConsignmentDetails(txnId){
 function ConsignmentCurrency()
 {
 	var currency="CURRENCY";
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		url: './consignmentCurency?CURRENCY='+currency,
 		type: 'GET',
@@ -152,6 +176,12 @@ function ConsignmentCurrency()
 function viewConsignmentCurrency()
 {
 	var currency="CURRENCY";
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		url: './consignmentCurency?CURRENCY='+currency,
 		type: 'GET',
@@ -183,7 +213,12 @@ function viewConsignmentDetails(txnId){
 		dismissible:false
 	});
 
-
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		url : "./openRegisterConsignmentPopup?reqType=editPage&txnId="+txnId,
 		dataType : 'json',
@@ -341,7 +376,12 @@ function table(url,dataUrl){
 	if(lang=='km'){
 		var langFile='./resources/i18n/khmer_datatable.json';
 	}
-
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		url: url,
 		/*	headers: {"Accept-Language": "en"},*/
@@ -360,6 +400,7 @@ function table(url,dataUrl){
 				"oLanguage": {  
 					"sUrl": langFile  
 				},
+				
 				ajax: {
 					url : dataUrl,
 					type: 'POST',
@@ -438,6 +479,12 @@ function editRegisterConsignment(){
 	formData.append('portAddress', parseInt($('#editPortAddress').val()));
 	formData.append('deviceQuantity', parseInt($('#editDeviceQuantity').val()));
 	formData.append('roleType', $("body").attr("data-roleType"));
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		url: './updateRegisterConsignment',
 		type: 'POST',
@@ -538,6 +585,12 @@ function pageRendering(){
 
 
 function pageButtons(url){
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		url: url,
 		type: 'POST',
@@ -637,6 +690,12 @@ function pageButtons(url){
 				$("#btnLink").css({display: "none"}); 
 			}
 			//Consignment status-----------dropdown
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$.ajaxSetup({
+			headers:
+			{ 'X-CSRF-TOKEN': token }
+			});
 			$.getJSON('./getDropdownList/'+featureId+'/'+$("body").attr("data-userTypeID"), function(data) {
 
 				for (i = 0; i < data.length; i++) {
@@ -701,7 +760,12 @@ function openApprovePopUp(txnId,displayName)
 	displayName=displayName.replace("+20"," " );
 	$('#ApproveConsignment').openModal({dismissible:false});
 	if(userType=='Custom'){
-
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+		});
 		$.ajax({
 			url : "./openRegisterConsignmentPopup?reqType=editPage&txnId="+txnId,
 			dataType : 'json',
@@ -762,6 +826,12 @@ function approveSubmit(actiontype){
 			"userName":$("body").attr("data-username"),
 			"roleType":$("body").attr("data-roleType")
 	}
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		url : "./updateConsignmentStatus",
 		data : JSON.stringify(approveRequest),
@@ -816,6 +886,12 @@ function disapproveSubmit(actiontype){
 			"userName":$("body").attr("data-username"),
 			"roleType":$("body").attr("data-roleType")
 	}
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		url : "./updateConsignmentStatus",
 		data : JSON.stringify(approveRequest),
@@ -877,6 +953,12 @@ function openMulipleStolenPopUp()
 {
 
 	var stolenRecoverydata=JSON.stringify(valuesPush());
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		url: './multipleStolenRecovery',
 		type: 'POST',
@@ -912,6 +994,9 @@ function exportConsignmentData()
 	var consignmentTxnId=$('#transactionID').val();
 	var filterConsignmentStatus=parseInt($('#filterConsignmentStatus').val());
 	var consignmentTaxPaidStatus=parseInt($('#taxPaidStatus').val());
+	//var source__val = consignmentStartDate != ''|| consignmentEndDate != ''|| consignmentTxnId != ''|| filterConsignmentStatus != 'NaN'|| consignmentTaxPaidStatus != 'NaN'|| consignmentName != undefined ? 'filter' : $("body").attr("data-session-source");
+	
+	var source__val;
 	if(isNaN(consignmentTaxPaidStatus) && isNaN(filterConsignmentStatus) )
 	{
 		consignmentTaxPaidStatus="";
@@ -928,12 +1013,25 @@ function exportConsignmentData()
 		filterConsignmentStatus='';
 
 	}
-
+	var consignmentSource= $("body").attr("data-session-source");
+	if(consignmentSource=='noti')
+	{
+		consignmentTxnId=$("body").attr("session-valueTxnID");
+		//console.log("  consignmentTxnId  ==="+consignmentTxnId);
+	}
+	
+	console.log("2------>"+"consignmentStartDate---" +consignmentStartDate+  "consignmentEndDate---" +consignmentEndDate +  "consignmentTxnId---" +consignmentTxnId+  "filterConsignmentStatus---" +filterConsignmentStatus+  "consignmentTaxPaidStatus---" +consignmentTaxPaidStatus);
+	if(consignmentStartDate != '' || consignmentEndDate != '' || consignmentTxnId != '' || filterConsignmentStatus != '' || consignmentTaxPaidStatus != '' ){
+		source__val = 'filter'
+	}else{
+		source__val = $("body").attr("data-session-source")
+	}
+	//console.log("source__val-->"+ source__val);
 	var table = $('#consignmentLibraryTable').DataTable();
 	var info = table.page.info(); 
 	var pageNo=info.page;
 	var pageSize =info.length;
-	window.location.href="./exportConsignmnet?consignmentStartDate="+consignmentStartDate+"&consignmentEndDate="+consignmentEndDate+"&consignmentTxnId="+consignmentTxnId+"&filterConsignmentStatus="+filterConsignmentStatus+"&consignmentTaxPaidStatus="+consignmentTaxPaidStatus+"&pageSize="+pageSize+"&pageNo="+pageNo;
+	window.location.href="./exportConsignmnet?consignmentStartDate="+consignmentStartDate+"&consignmentEndDate="+consignmentEndDate+"&consignmentTxnId="+consignmentTxnId+"&filterConsignmentStatus="+filterConsignmentStatus+"&consignmentTaxPaidStatus="+consignmentTaxPaidStatus+"&source="+source__val+"&pageSize="+pageSize+"&pageNo="+pageNo;
 }
 
 
@@ -1021,6 +1119,12 @@ function consignmentFileDownload(fileName,fileType,txnId,doc_TypeTag)
 {
 	fileName=fileName.split("%20").join(" ");
 	//console.log(" fileName "+fileName+" fileType  "+fileType+" txnId "+txnId+"  doc_TypeTag "+doc_TypeTag)
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		url : "./Consignment/dowloadFiles/"+fileType+'/'+fileName+'/'+txnId+'/'+doc_TypeTag,
 		dataType : 'json',
@@ -1073,6 +1177,12 @@ function payTaxDRT(){
 	}
 
 	//console.log("request--->" +JSON.stringify(request))
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		url: './payTax',
 		type: 'POST',
@@ -1102,8 +1212,13 @@ function payTaxDRT(){
 
 
 function getByPort(port) {
-	$
-	.ajax({
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
+	$.ajax({
 		type : 'GET',
 		url : './byArrivalPort/' + port,
 		contentType : "application/json",
@@ -1138,56 +1253,61 @@ function historyRecord(txnID){
 	var formData= new FormData();
 	var ceirAdmin='';
 	var userTypeValue=$("body").attr("data-roleType");
-
 	if(userTypeValue=='CEIRAdmin')
 	{
 
-		var filterRequest={
+	var filterRequest={
 
-				"columns": [
-					"created_on","modified_on","txn_id","consignment_status","supplier_id","supplier_name","consignment_number","expected_dispatche_date","expected_arrivaldate","organisation_country",
-					"expected_arrival_port","port_address","quantity","device_quantity","remarks","total_price","currency",
-					"file_name","tax_paid_status","user_id","ceir_admin_id","custom_id"
-					],
-					"tableName": "consignment_mgmt_aud",
-					"dbName" : "ceirconfig",
-					"txnId":txnID
-		}
+	"columns": [
+	"created_on","modified_on","txn_id","consignment_status","supplier_id","supplier_name","consignment_number","expected_dispatche_date","expected_arrivaldate","organisation_country",
+	"expected_arrival_port","port_address","quantity","device_quantity","remarks","total_price","currency",
+	"tax_paid_status","user_id","ceir_admin_id","custom_id"
+	],
+	"tableName": "consignment_mgmt_aud",
+	"dbName" : "ceirconfig",
+	"txnId":txnID
+	}
 
 	}
 	else if(userTypeValue=='Custom'){
-		ceirAdmin="custom_id";
-		var filterRequest={
+	ceirAdmin="custom_id";
+	var filterRequest={
 
-				"columns": [
-					"created_on","modified_on","txn_id","consignment_status","supplier_id","supplier_name","consignment_number","expected_dispatche_date","expected_arrivaldate","organisation_country",
-					"expected_arrival_port","port_address","quantity","device_quantity","remarks","total_price","currency",
-					"file_name","tax_paid_status","user_id","custom_id"
-					],
-					"tableName": "consignment_mgmt_aud",
-					"dbName" : "ceirconfig",
-					"txnId":txnID
-		}
+	"columns": [
+	"created_on","modified_on","txn_id","consignment_status","supplier_id","supplier_name","consignment_number","expected_dispatche_date","expected_arrivaldate","organisation_country",
+	"expected_arrival_port","port_address","quantity","device_quantity","remarks","total_price","currency",
+	"tax_paid_status","user_id","custom_id"
+	],
+	"tableName": "consignment_mgmt_aud",
+	"dbName" : "ceirconfig",
+	"txnId":txnID
+	}
 	}
 	else{
-		ceirAdmin="'ceir_admin_id'"+','+"'custom_id'";
-		var filterRequest={
+	ceirAdmin="'ceir_admin_id'"+','+"'custom_id'";
+	var filterRequest={
 
-				"columns": [
-					"created_on","modified_on","txn_id","consignment_status","supplier_id","supplier_name","consignment_number","expected_dispatche_date","expected_arrivaldate","organisation_country",
-					"expected_arrival_port","port_address","quantity","device_quantity","remarks","total_price","currency",
-					"file_name","tax_paid_status","user_id"
-					],
-					"tableName": "consignment_mgmt_aud",
-					"dbName" : "ceirconfig",
-					"txnId":txnID
-		}
+	"columns": [
+	"created_on","modified_on","txn_id","consignment_status","supplier_id","supplier_name","consignment_number","expected_dispatche_date","expected_arrivaldate","organisation_country",
+	"expected_arrival_port","port_address","quantity","device_quantity","remarks","total_price","currency",
+	"tax_paid_status","user_id"
+	],
+	"tableName": "consignment_mgmt_aud",
+	"dbName" : "ceirconfig",
+	"txnId":txnID
+	}
 	}
 
 	formData.append("filter",JSON.stringify(filterRequest));	
 	if(lang=='km'){
 		var langFile='./resources/i18n/khmer_datatable.json';
 	}
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		url: './Consignment/consignment-history',
 		type: 'POST',

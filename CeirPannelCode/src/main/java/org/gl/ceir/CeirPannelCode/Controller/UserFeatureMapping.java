@@ -17,28 +17,29 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class UserFeatureMapping {
-
+	
 	@Autowired
 	ProfileService profileService;
-
-	private final Logger log = LoggerFactory.getLogger(getClass());
-
-	@RequestMapping(value = { "/usertypeFeatureMapping" }, method = {
-			org.springframework.web.bind.annotation.RequestMethod.GET,
-			org.springframework.web.bind.annotation.RequestMethod.POST })
-	public ModelAndView viewMessageManagement(HttpSession session) {
+	
+private final Logger log = LoggerFactory.getLogger(getClass());
+	
+	@RequestMapping(value=
+		{"/usertypeFeatureMapping"},method={org.springframework.web.bind.annotation.
+				RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}
+			)
+	    public ModelAndView viewMessageManagement(HttpSession session) {
 		ModelAndView mv = new ModelAndView();
-		log.info(" view usertypeFeatureMapping entry point.");
-		mv.setViewName("userFeatureMapping");
-		log.info(" view usertypeFeatureMapping exit point.");
-		return mv;
+		 log.info(" view usertypeFeatureMapping entry point."); 
+		 mv.setViewName("userFeatureMapping");
+		log.info(" view usertypeFeatureMapping exit point."); 
+		return mv; 
 	}
-
-	@RequestMapping(value = "/updateSystemUserPeriod", method = RequestMethod.POST)
+	
+	
+	@RequestMapping(value ="/updateSystemUserPeriod",method = RequestMethod.POST)
 	@ResponseBody
-	public HttpResponse changeUserPeriodStatus(@RequestBody UserManagementContent userManagementContent,
-			HttpSession session) {
-		return profileService.changeSystemUserPeriodService(userManagementContent, session);
-
+	public  HttpResponse changeUserPeriodStatus(@RequestBody UserManagementContent userManagementContent,HttpSession session) {
+		return profileService.changeSystemUserPeriodService(userManagementContent,session);
+		
 	}
 }

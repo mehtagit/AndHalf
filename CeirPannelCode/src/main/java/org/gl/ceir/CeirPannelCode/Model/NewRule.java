@@ -18,43 +18,33 @@ public class NewRule {
 	public String getUserName() {
 		return userName;
 	}
-
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-
 	public Long getUserId() {
 		return userId;
 	}
-
 	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
-
 	public Integer getFeatureId() {
 		return featureId;
 	}
-
 	public void setFeatureId(Integer featureId) {
 		this.featureId = featureId;
 	}
-
 	public Integer getUserTypeId() {
 		return userTypeId;
 	}
-
 	public void setUserTypeId(Integer userTypeId) {
 		this.userTypeId = userTypeId;
 	}
-
 	public String getRoleType() {
 		return roleType;
 	}
-
 	public void setRoleType(String roleType) {
 		this.roleType = roleType;
 	}
-
 	private Long userId;
 	private Integer featureId;
 
@@ -65,23 +55,18 @@ public class NewRule {
 	public String getOutput() {
 		return output;
 	}
-
 	public void setOutput(String output) {
 		this.output = output;
 	}
-
 	public String getFailedRuleActionGrace() {
 		return failedRuleActionGrace;
 	}
-
 	public void setFailedRuleActionGrace(String failedRuleActionGrace) {
 		this.failedRuleActionGrace = failedRuleActionGrace;
 	}
-
 	public String getFailedRuleActionPostGrace() {
 		return failedRuleActionPostGrace;
 	}
-
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -118,65 +103,51 @@ public class NewRule {
 		builder.append("]");
 		return builder.toString();
 	}
-
 	public void setFailedRuleActionPostGrace(String failedRuleActionPostGrace) {
 		this.failedRuleActionPostGrace = failedRuleActionPostGrace;
 	}
-
 	public String getFeature() {
 		return feature;
 	}
-
 	public void setFeature(String feature) {
 		this.feature = feature;
 	}
-
 	public String getGraceAction() {
 		return graceAction;
 	}
-
 	public void setGraceAction(String graceAction) {
 		this.graceAction = graceAction;
 	}
-
 	public Integer getId() {
 		return id;
 	}
-
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
 	public String getName() {
 		return name;
 	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
-
 	public String getPostGraceAction() {
 		return postGraceAction;
 	}
-
 	public void setPostGraceAction(String postGraceAction) {
 		this.postGraceAction = postGraceAction;
 	}
-
 	public Integer getRuleOrder() {
 		return ruleOrder;
 	}
-
 	public void setRuleOrder(Integer ruleOrder) {
 		this.ruleOrder = ruleOrder;
 	}
-
 	public String getUserType() {
 		return userType;
 	}
-
 	public void setUserType(String userType) {
 		this.userType = userType;
 	}
 
 }
+

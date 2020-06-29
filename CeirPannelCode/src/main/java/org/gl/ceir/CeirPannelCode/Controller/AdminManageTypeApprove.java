@@ -19,43 +19,47 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class AdminManageTypeApprove {
 	private final Logger log = LoggerFactory.getLogger(getClass());
-
+	
 	@Autowired
 	TypeApprovedFeignImpl typeApprovedFeignImpl;
 	@Autowired
 	UtilDownload utildownload;
-
-	@RequestMapping(value = { "/manageTypeDevices2" }, method = {
-			org.springframework.web.bind.annotation.RequestMethod.GET,
-			org.springframework.web.bind.annotation.RequestMethod.POST })
-	public ModelAndView viewManageTypeAdmin(HttpSession session,
-			@RequestParam(name = "txnID", required = false) String txnID) {
+	
+	@RequestMapping(value=
+		{"/manageTypeDevices2"},method={org.springframework.web.bind.annotation.
+				RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}
+			)
+	public ModelAndView viewManageTypeAdmin(HttpSession session,@RequestParam(name="txnID",required = false) String txnID) {
 		ModelAndView mv = new ModelAndView();
-		log.info(" view ManageType entry point.");
+		log.info(" view ManageType entry point."); 
 		mv.setViewName("viewManageTypeAdmin");
-		log.info(" view ManageType  exit point.");
-		return mv;
+		log.info(" view ManageType  exit point."); 
+		return mv; 
 	}
-
+	
 	@GetMapping("register-form-importer")
 	public ModelAndView regiserImporterForm() {
 		ModelAndView modelAndView = new ModelAndView("importerTypeApproved");
 		return modelAndView;
 
 	}
-
+	
 	@PostMapping("importerTacDelete")
-	public @ResponseBody GenricResponse deleteTac(@RequestParam(name = "id", required = false) Integer id,
-			@RequestParam(name = "userType", required = false) String userType,
-			@RequestParam(name = "userId", required = false) Integer userId, HttpSession session) {
+	public @ResponseBody GenricResponse deleteTac(@RequestParam(name="id",required = false ) Integer id,
+			  									  @RequestParam(name="userType",required = false ) String userType, 
+												  @RequestParam(name="userId",required = false ) Integer userId,
+												  @RequestParam(name="remark",required = false ) String remark,
+												  HttpSession session) {
 
 		log.info("enter in  delete TAC.");
-		log.info("request passed to the deleteTAC Api=" + id + " userType=" + userType + " userId=" + userId);
-		GenricResponse response = typeApprovedFeignImpl.TypeApproveDelete(id, userType, userId);
-		log.info("response after delete Stock." + response);
+		log.info("request passed to the deleteTAC Api="+id+" userType="+userType+" userId="+userId+" remark="+remark);
+		GenricResponse response=typeApprovedFeignImpl.TypeApproveDelete(id, userType, userId, remark);
+		log.info("response after delete Stock."+response);
 		log.info("exit point of delete stock.");
 		return response;
+		
 
 	}
-
+	
+	
 }

@@ -22,56 +22,63 @@ import com.google.gson.Gson;
 @Controller
 public class SystemAdminController {
 	private final Logger log = LoggerFactory.getLogger(getClass());
-
+	
 	@Autowired
 	FeignCleintImplementation feignCleintImplementation;
-
-	@RequestMapping(value = { "/messageManagement" }, method = {
-			org.springframework.web.bind.annotation.RequestMethod.GET,
-			org.springframework.web.bind.annotation.RequestMethod.POST })
-	public ModelAndView viewMessageManagement(HttpSession session) {
+	@RequestMapping(value=
+		{"/messageManagement"},method={org.springframework.web.bind.annotation.
+				RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}
+			)
+	    public ModelAndView viewMessageManagement(HttpSession session) {
 		ModelAndView mv = new ModelAndView();
-		log.info(" view viewMessageManagement entry point.");
-		mv.setViewName("viewMessageManagement");
-		log.info(" view viewMessageManagement exit point.");
-		return mv;
+		 log.info(" view viewMessageManagement entry point."); 
+		 mv.setViewName("viewMessageManagement");
+		log.info(" view viewMessageManagement exit point."); 
+		return mv; 
 	}
+	
+	
 
-	@PostMapping("/message/viewTag")
-	public @ResponseBody MessageContentModel policyViewTag(@RequestBody FilterRequest filterRequest) {
-		log.info("request send to the policyViewTag api=" + filterRequest);
-		MessageContentModel response = feignCleintImplementation.viewMessageFeign(filterRequest);
+	
+	
+	@PostMapping("/message/viewTag") 
+	public @ResponseBody MessageContentModel policyViewTag (@RequestBody FilterRequest filterRequest)  {
+		log.info("request send to the policyViewTag api="+filterRequest);
+		MessageContentModel response= feignCleintImplementation.viewMessageFeign(filterRequest);
 
-		log.info("response from currency api " + response);
+		log.info("response from currency api "+response);
 		return response;
 
-	}
-
+		}
+	
+	
+	
 	@PutMapping("/message/update")
-	public @ResponseBody MessageContentModel updateMessage(@RequestBody MessageContentModel messageContentModel) {
-		log.info("request send update Messsage api=" + messageContentModel);
+	public @ResponseBody MessageContentModel updateMessage (@RequestBody MessageContentModel messageContentModel) {
+		log.info("request send update Messsage api="+messageContentModel);
 		messageContentModel = feignCleintImplementation.updateMessages(messageContentModel);
-		log.info("response from update Message api " + messageContentModel);
+		log.info("response from update Message api "+messageContentModel);
 		return messageContentModel;
-
+		
 	}
-
+	
 	@PostMapping("exportMessageConfigData")
 	@ResponseBody
-	public FileExportResponse exportToExcel(@RequestBody FilterRequest filterRequest, HttpSession session) {
-		Gson gsonObject = new Gson();
+	public FileExportResponse exportToExcel(@RequestBody FilterRequest filterRequest,HttpSession session)
+	{
+		Gson gsonObject=new Gson();
 		Object response;
-		Integer file = 1;
-		log.info("filterRequest:::::::::" + filterRequest);
-		response = feignCleintImplementation.adminMessageFeign(filterRequest, filterRequest.getPageNo(),
-				filterRequest.getPageSize(), file);
+		Integer file = 1;	
+		log.info("filterRequest:::::::::"+filterRequest);
+		response= feignCleintImplementation.adminMessageFeign(filterRequest, filterRequest.getPageNo(), filterRequest.getPageSize(), file);
 		FileExportResponse fileExportResponse;
-		Gson gson = new Gson();
+		Gson gson= new Gson(); 
 		String apiResponse = gson.toJson(response);
 		fileExportResponse = gson.fromJson(apiResponse, FileExportResponse.class);
-		log.info("response from Message Management Export  api=" + fileExportResponse);
+		log.info("response from Message Management Export  api="+fileExportResponse);
 
 		return fileExportResponse;
-	}
-
+	}	
+	
+	
 }

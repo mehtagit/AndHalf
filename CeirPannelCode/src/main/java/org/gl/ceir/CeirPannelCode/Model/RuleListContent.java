@@ -1,5 +1,6 @@
 package org.gl.ceir.CeirPannelCode.Model;
 
+
 import org.springframework.stereotype.Component;
 
 @Component
@@ -12,7 +13,8 @@ public class RuleListContent {
 	private String state;
 	private String output;
 
-	// parameters
+
+	// parameters 	
 
 	public String userName;
 	private Integer featureId;
@@ -23,59 +25,45 @@ public class RuleListContent {
 	public Integer getId() {
 		return id;
 	}
-
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
 	public String getCreatedOn() {
 		return createdOn;
 	}
-
 	public void setCreatedOn(String createdOn) {
 		this.createdOn = createdOn;
 	}
-
 	public String getModifiedOn() {
 		return modifiedOn;
 	}
-
 	public void setModifiedOn(String modifiedOn) {
 		this.modifiedOn = modifiedOn;
 	}
-
 	public String getName() {
 		return name;
 	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
-
 	public String getDescription() {
 		return description;
 	}
-
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
 	public String getState() {
 		return state;
 	}
-
 	public void setState(String state) {
 		this.state = state;
 	}
-
 	public String getOutput() {
 		return output;
 	}
-
 	public void setOutput(String output) {
 		this.output = output;
 	}
-
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -106,43 +94,33 @@ public class RuleListContent {
 		builder.append("]");
 		return builder.toString();
 	}
-
 	public String getUserName() {
 		return userName;
 	}
-
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-
 	public Integer getFeatureId() {
 		return featureId;
 	}
-
 	public void setFeatureId(Integer featureId) {
 		this.featureId = featureId;
 	}
-
 	public Integer getUserTypeId() {
 		return userTypeId;
 	}
-
 	public void setUserTypeId(Integer userTypeId) {
 		this.userTypeId = userTypeId;
 	}
-
 	public String getRoleType() {
 		return roleType;
 	}
-
 	public void setRoleType(String roleType) {
 		this.roleType = roleType;
 	}
-
 	public Integer getUserId() {
 		return userId;
 	}
-
 	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}

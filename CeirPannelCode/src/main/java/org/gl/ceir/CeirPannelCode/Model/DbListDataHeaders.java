@@ -4,7 +4,7 @@ public class DbListDataHeaders {
 
 	private String data;
 	private String title;
-
+	
 	public String getTitle() {
 		return title;
 	}
@@ -20,7 +20,7 @@ public class DbListDataHeaders {
 	public void setData(String data) {
 		this.data = data;
 	}
-
+	
 	public DbListDataHeaders(String data, String title) {
 		super();
 		this.data = data;
@@ -37,5 +37,8 @@ public class DbListDataHeaders {
 		builder.append("]");
 		return builder.toString();
 	}
-
+	
+	
+	
+	
 }

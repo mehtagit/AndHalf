@@ -39,7 +39,12 @@ $( document ).ready(function() {
 	var In = $("body").attr("session-value");
 	 var loggedUserType=$("body").attr("data-roleType");
 	if(loggedUserType=='Custom' || loggedUserType=='Immigration' ){
-		
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+		});
 		$.ajax({
 			url : "./paid-status/"+In,
 			dataType : 'json',
@@ -147,7 +152,13 @@ $( document ).ready(function() {
 var id=2;
 var x = 1;
 $(document).ready(function () {
-	 $.getJSON('./addMoreFile/add_more_device_count', function(data) {
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	}); 
+	$.getJSON('./addMoreFile/add_more_device_count', function(data) {
 			//console.log(data);
 			
 			localStorage.setItem("maxCount", data.value);
@@ -218,6 +229,12 @@ $(document).ready(function () {
 			populateCountries("country"+id);
 			
 			var allowed =localStorage.getItem("allowed");
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$.ajaxSetup({
+			headers:
+			{ 'X-CSRF-TOKEN': token }
+			});
 			$.getJSON('./getDropdownList/CUSTOMS_TAX_STATUS', function(data) {
 				var dropdownid=id-1;
 				if(dropdownid <= allowed){
@@ -350,6 +367,12 @@ function table(url,dataUrl){
 	if(lang=='km'){
 		var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
 	}
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		url: url,
 		type: 'POST',
@@ -409,7 +432,12 @@ function pageRendering(lang){
 
 
 function pageButtons(url){
-	
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		url: url,
 		type: 'POST',
@@ -478,7 +506,12 @@ function pageButtons(url){
 			}
 
 			//Tax paid status-----------dropdown
-			
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$.ajaxSetup({
+			headers:
+			{ 'X-CSRF-TOKEN': token }
+			});
 			$.getJSON('./getDropdownList/CUSTOMS_TAX_STATUS', function(data) {
 				for (i = 0; i < data.length; i++) {
 					////console.log(data[i].value);
@@ -534,7 +567,12 @@ function deleteByImei(imei,txnId){
 }
 
 function accept(){
-
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		url : "./delete/"+window.imei+"/"+window.txnId,
 		dataType : 'json',
@@ -611,7 +649,12 @@ function historytable(url,dataUrl){
 	if(lang=='km'){
 		var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
 	}
-	
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		url: url,
 		type: 'POST',
@@ -681,6 +724,7 @@ function exportpaidStatus(){
 
 function submitDeviceInfo(){
 	$('div#initialloader').fadeIn('fast');
+	$("#uploadPaidStatusbutton").prop('disabled', true);
 	var formData= new FormData();
 
 
@@ -868,7 +912,12 @@ function submitDeviceInfo(){
 	formData.append("docType",docType);
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
-	
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		url: './registerEndUserDevice',
 		type: 'POST',
@@ -892,11 +941,8 @@ function submitDeviceInfo(){
 				$('#sucessMessage').text($.i18n('duplicateImei'));
 				}*/
 			else{
-				//console.log("error code"+data.errorCode);
-//				$('#sucessMessage').text('');
-				$('#regularisedDevice').openModal({dismissible:false});
-				$('#sucessMessage').text('');
-				$('#sucessMessage').text($.i18n(data.tag));
+				$('#customRegisterDeviceDuplicateImei').openModal({dismissible:false});;
+				$('#dupliCateImeiMsg').text($.i18n(data.tag));
 			}
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
@@ -932,7 +978,12 @@ function taxPaidStatus(){
 	//console.log("--");
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
-	
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		url: './tax-paid/status',
 		type: 'PUT',
@@ -973,7 +1024,12 @@ populateCountries(
 		"country",	"state");
 
 $(document).ready(function () {
-	
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
 	$.getJSON('./getDropdownList/CUSTOMS_TAX_STATUS', function(data) {
 		var checkAllowedCount =localStorage.getItem("allowed");	
 		//alert("222222"+checkAllowedCount);
@@ -1043,7 +1099,12 @@ $(document).ready(function () {
 
 
 	$(document).ready(function(){
-		
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+		});
 		$.getJSON('./getSourceTypeDropdown/DOC_TYPE/'+featureId, function(data) {
 
 			for (i = 0; i < data.length; i++) {
@@ -1081,7 +1142,12 @@ function regularizedCount(nationType){
 		nationType=1;
 		var nid= '';
 	}
-
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		url: './countByNid?nid='+nationalID+"&nationType="+nationType,
 		type: 'GET',
@@ -1137,7 +1203,12 @@ function aprroveDevice(){
 			"userId":parseInt(userId),
 			"userType": $("body").attr("data-roleType")	  	
 	}
-	
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+    $.ajaxSetup({
+    headers:
+    { 'X-CSRF-TOKEN': token }
+    });
 	$.ajax({
 		url : './approveRejectDevice',
 		data : JSON.stringify(approveRequest),
@@ -1189,7 +1260,12 @@ function rejectUser(){
 			"userId":parseInt(userId),
 			"userType": $("body").attr("data-roleType")	  	
 	}
-	
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		url : './approveRejectDevice',
 		data : JSON.stringify(rejectRequest),
@@ -1229,25 +1305,20 @@ function isImageValid(id) {
 	/*fileSize = (Math.round((fileSize / 100000) * 100) / 100)
 	alert("----"+fileSize);*/
 	fileSize = Math.floor(fileSize/1000);
-   
+	//$('#FilefieldId').val(id);
 	//alert(uploadedFileName+"----------"+ext+"----"+fileSize)
-	var areEqual =ext.toLowerCase()=='png';
-	//alert(areEqual);
-	if(areEqual==true)
-		{
-		ext='PNG';
-		}
-	
+	var fileExtension =ext.toLowerCase();
+	//console.log("file type: "+fileExtension);
+	var extArray = ["png", "jpg","jpeg","gif","bmp","gif"];
+	var isInArray =extArray.includes(fileExtension);
+	//console.log("isInArray: "+isInArray)
 	if (uploadedFileName.length > 30) {
-		$('#fileFormateModal').openModal({
-			dismissible:false
-		});
+		$('#fileFormateModal').openModal();
 		$('#fileErrormessage').text('');
 		$('#fileErrormessage').text($.i18n('imageMessage'));
-	} 
-	else if(ext !='PNG')
+	}
+	else if(isInArray ==false)
 	{
-		
 		$('#fileFormateModal').openModal({
 			dismissible:false
 		});
@@ -1255,14 +1326,15 @@ function isImageValid(id) {
 		$('#fileErrormessage').text($.i18n('imageMessage'));
 
 	}
-	else if(fileSize>=100){
+	else if(fileSize>=5000){
 		$('#fileFormateModal').openModal({
 			dismissible:false
 		});
 		$('#fileErrormessage').text('');
-		$('#fileErrormessage').text($.i18n('imageSize'));	
+		$('#fileErrormessage').text($.i18n('imageSize'));
 	}
 }
+
 
 
 function clearFileName() {
@@ -1487,95 +1559,92 @@ $(document).on("keyup", "#Price1", function(e) {
 
  }
  
- function deptImageValidation() {
+function deptImageValidation() {
 		var uploadedFileName = $("#endUserDepartmentId").val();
 		uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
 		//alert("file extension=="+uploadedFileName)
 		var ext = uploadedFileName.split('.').pop();
 
-		var fileSize = ($("#endUserDepartmentId")[0].files[0].size);
+		var fileSize = ($("#"+id)[0].files[0].size);
 		/*fileSize = (Math.round((fileSize / 100000) * 100) / 100)
 		alert("----"+fileSize);*/
 		fileSize = Math.floor(fileSize/1000);
-		
-		var areEqual =ext.toLowerCase()=='png';
-		//alert(areEqual);
-		if(areEqual==true)
-			{
-			ext='PNG';
-			}
-
+		//$('#FilefieldId').val(id);
+		//alert(uploadedFileName+"----------"+ext+"----"+fileSize)
+		var fileExtension =ext.toLowerCase();
+		console.log("file type: "+fileExtension);
+		var extArray = ["png", "jpg","jpeg","gif","bmp","gif"];
+		var isInArray =extArray.includes(fileExtension);
+		console.log("isInArray: "+isInArray)
 		if (uploadedFileName.length > 30) {
-			$('#DeptfileFormateModal').openModal({dismissible:false});
-			$('#DeptfileErrormessage').text('');
-			$('#DeptfileErrormessage').text($.i18n('imageMessage'));
-		} 
-		else if(ext!='PNG')
+			$('#fileFormateModal').openModal();
+			$('#fileErrormessage').text('');
+			$('#fileErrormessage').text($.i18n('imageMessage'));
+		}
+		else if(isInArray ==false)
 		{
-			$('#DeptfileFormateModal').openModal({
+			$('#fileFormateModal').openModal({
 				dismissible:false
 			});
-			$('#DeptfileErrormessage').text('');
-			$('#DeptfileErrormessage').text($.i18n('imageMessage'));
+			$('#fileErrormessage').text('');
+			$('#fileErrormessage').text($.i18n('imageMessage'));
 
 		}
-		
-		else if(fileSize>='100'){
-			$('#DeptfileFormateModal').openModal({
+		else if(fileSize>=5000){
+			$('#fileFormateModal').openModal({
 				dismissible:false
 			});
-			$('#DeptfileErrormessage').text('');
-			$('#DeptfileErrormessage').text($.i18n('imageSize'));	
+			$('#fileErrormessage').text('');
+			$('#fileErrormessage').text($.i18n('imageSize'));
 		}
-
-
-
-	}
- function visaImageValidation() {
+	}function visaImageValidation() {
 		var uploadedFileName = $("#visaImage").val();
 		uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
 		//alert("file extension=="+uploadedFileName)
 		var ext = uploadedFileName.split('.').pop();
 
-		var fileSize = ($("#visaImage")[0].files[0].size);
+		var fileSize = ($("#"+id)[0].files[0].size);
 		/*fileSize = (Math.round((fileSize / 100000) * 100) / 100)
 		alert("----"+fileSize);*/
 		fileSize = Math.floor(fileSize/1000);
-
-		var areEqual =ext.toLowerCase()=='png';
-		//alert(areEqual);
-		if(areEqual==true)
-			{
-			ext='PNG';
-			}
-
+		//$('#FilefieldId').val(id);
+		//alert(uploadedFileName+"----------"+ext+"----"+fileSize)
+		var fileExtension =ext.toLowerCase();
+		console.log("file type: "+fileExtension);
+		var extArray = ["png", "jpg","jpeg","gif","bmp","gif"];
+		var isInArray =extArray.includes(fileExtension);
+		console.log("isInArray: "+isInArray)
 		if (uploadedFileName.length > 30) {
-			$('#visafileFormateModal').openModal({dismissible:false});
-			$('#visafileErrormessage').text('');
-			$('#visafileErrormessage').text($.i18n('imageMessage'));
-		} 
-		else if(ext!='PNG')
+			$('#fileFormateModal').openModal();
+			$('#fileErrormessage').text('');
+			$('#fileErrormessage').text($.i18n('imageMessage'));
+		}
+		else if(isInArray ==false)
 		{
-			$('#visafileFormateModal').openModal({
+			$('#fileFormateModal').openModal({
 				dismissible:false
 			});
-			$('#visafileErrormessage').text('');
-			$('#visafileErrormessage').text($.i18n('imageMessage'));
+			$('#fileErrormessage').text('');
+			$('#fileErrormessage').text($.i18n('imageMessage'));
 
 		}
-		else if(fileSize>='100'){
-			$('#visafileFormateModal').openModal({
+		else if(fileSize>=5000){
+			$('#fileFormateModal').openModal({
 				dismissible:false
 			});
-			$('#visafileErrormessage').text('');
-			$('#visafileErrormessage').text($.i18n('imageSize'));	
+			$('#fileErrormessage').text('');
+			$('#fileErrormessage').text($.i18n('imageSize'));
 		}
-
-
-
 	}
+
  var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajaxSetup({
      headers:
      { 'X-CSRF-TOKEN': token }
@@ -1614,7 +1683,7 @@ $(document).on("keyup", "#Price1", function(e) {
 					 "columns": [
 						    "created_on","modified_on","txn_id","status","nid","device_type","device_id_type","multi_sim_status","country","device_serial_number","tax_paid_status","device_status","price",
 						    "currency","first_imei","second_imei","third_imei","fourth_imei","origin","remark",
-						     "user_id","approved_by","tax_collected_by","custom_id","ceir_admin_id"
+						     "user_id","approved_by","tax_collected_by",
 						    ],
 					"tableName": "regularize_device_db_aud",
 					"dbName" : "ceirconfig",
@@ -1626,6 +1695,12 @@ $(document).on("keyup", "#Price1", function(e) {
 		if(lang=='km'){
 			var langFile='../resources/i18n/khmer_datatable.json';
 		}
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+		});
 		$.ajax({
 			url: 'Consignment/consignment-history',
 			type: 'POST',

@@ -1,5 +1,4 @@
 package org.gl.ceir.configuration;
-
 import java.util.Locale;
 
 import org.springframework.context.annotation.Bean;
@@ -16,34 +15,33 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 @Configuration
 public class InternationalizationConfig extends AcceptHeaderLocaleResolver implements WebMvcConfigurer {
-
-	@Bean
-	public LocaleResolver localeResolver() {
-		SessionLocaleResolver localeResolver = new SessionLocaleResolver();
-		localeResolver.setDefaultLocale(Locale.US);
-		return localeResolver;
-	}
-
-	@Bean
-	public LocaleChangeInterceptor localeChangeInterceptor() {
-		LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
-		localeChangeInterceptor.setParamName("lang");
-		return localeChangeInterceptor;
-	}
-
-	@Override
-	public void addInterceptors(InterceptorRegistry registry) {
-
-		registry.addInterceptor(localeChangeInterceptor());
-	}
-
-	@Bean
-	public ResourceBundleMessageSource messageSource() {
-		ResourceBundleMessageSource rs = new ResourceBundleMessageSource();
-		rs.setBasename("messages");
-		rs.setDefaultEncoding("UTF-8");
-		rs.setUseCodeAsDefaultMessage(true);
-		return rs;
-	}
+	
+	  @Bean public LocaleResolver localeResolver() { SessionLocaleResolver
+	  localeResolver = new SessionLocaleResolver();
+	  localeResolver.setDefaultLocale(Locale.US); return localeResolver; }
+	 
+	  
+	  @Bean 
+	  public LocaleChangeInterceptor localeChangeInterceptor() {
+	  LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor(); 
+	  localeChangeInterceptor.setParamName("lang");
+	  return localeChangeInterceptor; 
+	  }
+	  
+	  @Override
+	  public void addInterceptors(InterceptorRegistry registry) {
+		 
+	  registry.addInterceptor(localeChangeInterceptor());
+	  }
+		
+	  @Bean
+	  public ResourceBundleMessageSource messageSource() {
+	  ResourceBundleMessageSource rs = new ResourceBundleMessageSource();
+	  rs.setBasename("messages");
+	  rs.setDefaultEncoding("UTF-8");
+	  rs.setUseCodeAsDefaultMessage(true);
+	  return rs;
+	  }
+	  
 
 }

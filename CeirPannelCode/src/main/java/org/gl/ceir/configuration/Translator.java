@@ -18,8 +18,8 @@ public class Translator {
 		this.messageSource = messageSource;
 	}
 
-	public String toLocale(String msgCode) {
-		Locale locale = LocaleContextHolder.getLocale();
+	public  String toLocale(String msgCode) {
+		Locale locale = LocaleContextHolder.getLocale(); 
 		return messageSource.getMessage(msgCode, null, locale);
 	}
 }

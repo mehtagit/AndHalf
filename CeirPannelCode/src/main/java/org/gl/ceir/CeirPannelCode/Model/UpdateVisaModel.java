@@ -8,7 +8,7 @@ public class UpdateVisaModel {
 	private String message;
 	private String txnId;
 	private EndUserVisaInfo data;
-
+	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -25,45 +25,37 @@ public class UpdateVisaModel {
 		builder.append("]");
 		return builder.toString();
 	}
-
 	public Integer getErrorCode() {
 		return errorCode;
 	}
-
 	public void setErrorCode(Integer errorCode) {
 		this.errorCode = errorCode;
 	}
-
 	public String getTag() {
 		return tag;
 	}
-
 	public void setTag(String tag) {
 		this.tag = tag;
 	}
-
 	public String getMessage() {
 		return message;
 	}
-
 	public void setMessage(String message) {
 		this.message = message;
 	}
-
 	public String getTxnId() {
 		return txnId;
 	}
-
 	public void setTxnId(String txnId) {
 		this.txnId = txnId;
 	}
-
 	public EndUserVisaInfo getData() {
 		return data;
 	}
-
 	public void setData(EndUserVisaInfo data) {
 		this.data = data;
 	}
+
+
 
 }

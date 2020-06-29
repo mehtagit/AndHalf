@@ -1,7 +1,7 @@
 package org.gl.ceir.CeirPannelCode.Model;
 
 public class ConsignmentUpdateRequest {
-
+	
 	private int action;
 	private String roleType;
 	private int roleTypeUserId;
@@ -9,90 +9,71 @@ public class ConsignmentUpdateRequest {
 	private int userId;
 	private String remarks;
 	private Integer featureId;
-
+	
 	public String getUserName() {
 		return userName;
 	}
-
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-
 	public String getUserType() {
 		return userType;
 	}
-
 	public void setUserType(String userType) {
 		this.userType = userType;
 	}
-
 	public int getUserTypeId() {
 		return userTypeId;
 	}
-
 	public void setUserTypeId(int userTypeId) {
 		this.userTypeId = userTypeId;
 	}
-
-	private String userName, userType;
+	private String userName,userType;
 	private int userTypeId;
 
+	
 	public int getAction() {
 		return action;
 	}
-
 	public void setAction(int action) {
 		this.action = action;
 	}
-
 	public String getRoleType() {
 		return roleType;
 	}
-
 	public void setRoleType(String roleType) {
 		this.roleType = roleType;
 	}
-
 	public int getRoleTypeUserId() {
 		return roleTypeUserId;
 	}
-
 	public void setRoleTypeUserId(int roleTypeUserId) {
 		this.roleTypeUserId = roleTypeUserId;
 	}
-
 	public String getTxnId() {
 		return txnId;
 	}
-
 	public void setTxnId(String txnId) {
 		this.txnId = txnId;
 	}
-
 	public int getUserId() {
 		return userId;
 	}
-
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}
-
 	public String getRemarks() {
 		return remarks;
 	}
-
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
 	}
-
 	public Integer getFeatureId() {
 		return featureId;
 	}
-
 	public void setFeatureId(Integer featureId) {
 		this.featureId = featureId;
 	}
-
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -119,5 +100,5 @@ public class ConsignmentUpdateRequest {
 		builder.append("]");
 		return builder.toString();
 	}
-
+	
 }

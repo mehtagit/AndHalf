@@ -17,29 +17,32 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class CheckDeviceController {
-	private final Logger log = LoggerFactory.getLogger(getClass());
+		private final Logger log = LoggerFactory.getLogger(getClass());
+		
+		@Autowired
+		FeignCleintImplementation feignCleintImplementation;
+		
+		@RequestMapping(value=
+			{"/checkDeviceslogin"},method={org.springframework.web.bind.annotation.
+					RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}
+				)
+		    public ModelAndView viewConsignment(HttpSession session) {
+			ModelAndView mv = new ModelAndView();
+			 log.info("view Check Device entry point."); 
+			 mv.setViewName("checkDevices");
+			log.info(" view Check Device  exit point."); 
+			return mv; 
+		}
+		
+		
+		
+		@PostMapping("/checkDevice") 
+		public @ResponseBody GenricResponse checkImei(@RequestBody FilterRequest filterRequest)  {
+			log.info("request send to the checkImei api="+filterRequest);
+			GenricResponse response= feignCleintImplementation.viewDetails(filterRequest);
+			log.info("response from currency api "+response);
+			return response;
 
-	@Autowired
-	FeignCleintImplementation feignCleintImplementation;
-
-	@RequestMapping(value = { "/checkDeviceslogin" }, method = {
-			org.springframework.web.bind.annotation.RequestMethod.GET,
-			org.springframework.web.bind.annotation.RequestMethod.POST })
-	public ModelAndView viewConsignment(HttpSession session) {
-		ModelAndView mv = new ModelAndView();
-		log.info("view Check Device entry point.");
-		mv.setViewName("checkDevices");
-		log.info(" view Check Device  exit point.");
-		return mv;
-	}
-
-	@PostMapping("/checkDevice")
-	public @ResponseBody GenricResponse checkImei(@RequestBody FilterRequest filterRequest) {
-		log.info("request send to the checkImei api=" + filterRequest);
-		GenricResponse response = feignCleintImplementation.viewDetails(filterRequest);
-		log.info("response from currency api " + response);
-		return response;
-
-	}
-
+			}
+		
 }

@@ -10,17 +10,18 @@ import org.springframework.web.servlet.ModelAndView;
 public class ImmigrationController {
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
-
-	@GetMapping(value = "immigration_register")
-	public ModelAndView register() {
-		ModelAndView mv = new ModelAndView();
+	@GetMapping(value="immigration_register")
+	public ModelAndView register()
+	{
+		ModelAndView mv= new ModelAndView();
 		mv.setViewName("immigration_foreign");
 		return mv;
 	}
 
-	@GetMapping(value = "edit_immigration")
-	public ModelAndView update() {
-		ModelAndView mv = new ModelAndView();
+	@GetMapping(value="edit_immigration")
+	public ModelAndView update()
+	{
+		ModelAndView mv= new ModelAndView();
 		mv.setViewName("editImmigration");
 		return mv;
 	}

@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class TacContentModel {
-
+  
 	private Integer id;
 	private String createdOn;
 	private String modifiedOn;
@@ -15,87 +15,66 @@ public class TacContentModel {
 	private Integer userTypeId;
 	private String userType;
 	private Integer userId;
-
 	public Integer getId() {
 		return id;
 	}
-
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
 	public String getCreatedOn() {
 		return createdOn;
 	}
-
 	public void setCreatedOn(String createdOn) {
 		this.createdOn = createdOn;
 	}
-
 	public String getModifiedOn() {
 		return modifiedOn;
 	}
-
 	public void setModifiedOn(String modifiedOn) {
 		this.modifiedOn = modifiedOn;
 	}
-
 	public String getTxnId() {
 		return txnId;
 	}
-
 	public void setTxnId(String txnId) {
 		this.txnId = txnId;
 	}
-
 	public String getTac() {
 		return tac;
 	}
-
 	public void setTac(String tac) {
 		this.tac = tac;
 	}
-
 	public Integer getFeatureId() {
 		return featureId;
 	}
-
 	public void setFeatureId(Integer featureId) {
 		this.featureId = featureId;
 	}
-
 	public String getFeatureName() {
 		return featureName;
 	}
-
 	public void setFeatureName(String featureName) {
 		this.featureName = featureName;
 	}
-
 	public Integer getUserTypeId() {
 		return userTypeId;
 	}
-
 	public void setUserTypeId(Integer userTypeId) {
 		this.userTypeId = userTypeId;
 	}
-
 	public String getUserType() {
 		return userType;
 	}
-
 	public void setUserType(String userType) {
 		this.userType = userType;
 	}
-
 	public Integer getUserId() {
 		return userId;
 	}
-
 	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
-
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -122,5 +101,7 @@ public class TacContentModel {
 		builder.append("]");
 		return builder.toString();
 	}
-
+	
+	
+	
 }

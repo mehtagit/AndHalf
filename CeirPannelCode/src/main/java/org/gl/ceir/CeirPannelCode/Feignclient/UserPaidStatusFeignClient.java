@@ -16,20 +16,23 @@ import CeirPannelCode.Model.Register_UploadPaidStatus;
 
 @Component
 @Service
-@FeignClient(url = "${feignClientPath}", value = "dsj")
+@FeignClient(url = "${feignClientPath}",value = "dsj" )
 public interface UserPaidStatusFeignClient {
 
-	@RequestMapping(value = "/filter/end-user-device-info", method = RequestMethod.POST)
+	@RequestMapping(value="/filter/end-user-device-info" ,method=RequestMethod.POST) 
 	public Object consignmentFilter(@RequestBody FilterRequest_UserPaidStatus filterRequest,
 			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
 			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
 			@RequestParam(value = "file", defaultValue = "0") Integer file,
-			@RequestParam(value = "source", defaultValue = "menu") String source);
+			@RequestParam(value="source",defaultValue ="menu") String source) ;
 
-	@PostMapping("/end-user-device-info")
-	public GenricResponse uploadPaidUser(@RequestBody Register_UploadPaidStatus model);
 
+
+	@PostMapping("/end-user-device-info") 
+	public GenricResponse uploadPaidUser(@RequestBody Register_UploadPaidStatus model) ;
+	
 	@PutMapping("/update-tax-paid-status/end-user-device-info")
 	public GenricResponse tax(@RequestBody Register_UploadPaidStatus model);
-
+	
 }
+

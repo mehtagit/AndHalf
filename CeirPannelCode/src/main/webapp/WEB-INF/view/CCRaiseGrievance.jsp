@@ -22,6 +22,10 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<!-- Security Tags -->
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<sec:csrfMetaTags />
+<!-- Security Tags -->
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>  
@@ -46,9 +50,14 @@
     <!-- For iPhone -->
     <meta name="msapplication-TileColor" content="#00bcd4">
     <meta name="msapplication-TileImage" content="images/favicon/mstile-144x144.png">
+    <!-- Security Tags -->
+<meta name="_csrf" content="${_csrf.token}"/>
+<!-- default header name is X-CSRF-TOKEN -->
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
+<!-- Security Tags -->
     <!-- For Windows Phone -->
     <link rel="stylesheet" href="${context}/resources/font/font-awesome/css/font-awesome.min.css">
-
+	
     <!-- CORE CSS-->
     <link href="${context}/resources/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection">
     <link href="${context}/resources/css/style.css" type="text/css" rel="stylesheet" media="screen,projection">
@@ -279,7 +288,7 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}" data-u
                                         </div>
 
                                         
-                                        <div class="file-field col s12 m6">
+                                        <div class="file-field col s12 m6" id="removestar">
                                             <h6 class="upload-file-label" id="endUserFileLabel"><spring:message code="modal.UploadSupporting" />
                                             </h6>
                                             <div class="btn">
@@ -292,7 +301,7 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}" data-u
                                                     multiple="multiple" />
                                             </div>
                                             <div class="file-path-wrapper">
-                                                <input class="file-path validate" type="text"
+                                                <input class="file-path validate" type="text" id="filetextField"
                                                     placeholder="<spring:message code="input.selectfile" />">
                                             </div>
                                         </div>

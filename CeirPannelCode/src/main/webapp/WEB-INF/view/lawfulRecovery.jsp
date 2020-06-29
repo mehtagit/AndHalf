@@ -21,6 +21,10 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<!-- Security Tags -->
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<sec:csrfMetaTags />
+<!-- Security Tags -->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
@@ -37,6 +41,11 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta content="" name="description" />
 <meta content="" name="author" />
+<!-- Security Tags -->
+<meta name="_csrf" content="${_csrf.token}"/>
+<!-- default header name is X-CSRF-TOKEN -->
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
+<!-- Security Tags -->
 
 <script type="text/javascript"
 	src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
@@ -445,7 +454,7 @@ onclick="_Services._selectstartDate()"></i></span>
 
 
                                                     <div class="input-field col s12 center">
-                                                        <button class="btn" type="submit"><spring:message code="button.submit" /></button>
+                                                        <button class="btn" type="submit" id="singleDeviceRecovery"><spring:message code="button.submit" /></button>
                                                         <a href="./stolenRecovery" class="btn modal-trigger"
                                                             style="margin-left: 10px;"><spring:message code="modal.cancel" /></a>
                                                     </div>
@@ -649,7 +658,7 @@ onclick="_Services._selectstartDate()"></i></span>
                                                     </div>
 
                                                     <div class="input-field col s12 center">
-                                                        <button class="btn" type="submit"><spring:message code="button.submit" /></button>
+                                                        <button class="btn" type="submit" id="bulkRecoverySubmit"><spring:message code="button.submit" /></button>
                                                         <a href="./stolenRecovery?FeatureId=5" class="btn modal-trigger"
                                                             style="margin-left: 10px;"><spring:message code="modal.cancel" /></a>
                                                     </div>
@@ -760,7 +769,8 @@ onclick="_Services._selectstartDate()"></i></span>
 	
 		<script>
 		$('.datepick').datepicker({
-			dateFormat : "yy-mm-dd"
+             dateFormat: "yy-mm-dd",
+             maxDate: new Date()
 		});
 		
     populateCountries(
@@ -798,6 +808,12 @@ onclick="_Services._selectstartDate()"></i></span>
         	$('#fileFormateModal').closeModal();
         	
         }
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
+        $.ajaxSetup({
+        headers:
+        { 'X-CSRF-TOKEN': token }
+        });
         
         $.getJSON('./productList', function(data) {
         	for (i = 0; i < data.length; i++) {
@@ -812,6 +828,13 @@ onclick="_Services._selectstartDate()"></i></span>
         			$("#singleRecoverymodalNumber").attr("required", false);
         			$("#modalNumerSpan").css("display", "none");
         			var brand_id = $('#sigleRecoverydeviceBrandName').val();
+        			var token = $("meta[name='_csrf']").attr("content");
+        			var header = $("meta[name='_csrf_header']").attr("content");
+        			$.ajaxSetup({
+        			headers:
+        			{ 'X-CSRF-TOKEN': token }
+        			});
+
         			$.getJSON('./productModelList?brand_id=' + brand_id,
         					function(data) {
         						$("#singleRecoverymodalNumber").empty();

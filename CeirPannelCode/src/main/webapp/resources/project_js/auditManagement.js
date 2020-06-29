@@ -40,7 +40,13 @@ function auditManagementDatatable(){
 			
 			
 	}
-	
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+	});
+
 	//console.log("filterRequest-->" +JSON.stringify(filterRequest));
 	$.ajax({
 		url: 'headers?type=auditManagement',
@@ -98,6 +104,13 @@ function auditManagementDatatable(){
 //**************************************************viewAudit page buttons**********************************************
 
 function pageRendering(){
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+	});
+
 	$.ajax({
 		url: 'audit/pageRendering',
 		type: 'POST',
@@ -166,6 +179,13 @@ function pageRendering(){
 
 
 function setAllDropdown(){
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+	});
+
 	$.getJSON('./registrationUserType?type=2', function(data) {
 		for (i = 0; i < data.length; i++) {
 			$('<option>').val(data[i].id).text(data[i].usertypeName)
@@ -209,6 +229,13 @@ function viewDetails(Id){
         dismissible:false
     });
 	 var Id = parseInt(Id);
+	 var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+			headers:
+			{ 'X-CSRF-TOKEN': token }
+		});
+
 	$.ajax({
 		url : './audit/view/'+Id,
 		dataType : 'json',

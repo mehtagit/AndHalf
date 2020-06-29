@@ -17,7 +17,14 @@
 		
 
 		$(document).ready(function () {
-			
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$.ajaxSetup({
+			headers:
+			{ 'X-CSRF-TOKEN': token }
+			});
+
+
 			$.getJSON('./getDropdownList/DEVICE_TYPE', function(data) {
 				
 				for (i = 0; i < data.length; i++) {
@@ -49,6 +56,14 @@
 		var RequestData = {
 				"tag" : "GREY_TO_BLACK_MOVE_PERIOD_IN_DAY"
 		}
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+		});
+
+
 		$.ajax({
 			url : "./system/viewTag",
 			data :	JSON.stringify(RequestData),
@@ -194,7 +209,14 @@ function submitBlockImei()
 		formData.append('blockingType',bulkBlocktype);
 		formData.append('deviceQuantity',deviceQuantity);
 		
-			
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+		});
+
+
 
 		$.ajax({
 			url: './reportblockBulkFile',
@@ -247,6 +269,13 @@ function submitUnBlockImei()
 		formData.append('roleType',roleType);
 		formData.append('deviceQuantity',deviceQuantity);
 		
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+		});
+
 
 $.ajax({
 			url: './reportUnblockBulkFile',
@@ -318,7 +347,14 @@ var singleImeiBlockDetail={
 		
 		//console.log(JSON.stringify(singleImeiBlockDetail));
 		//console.log("*********");
-	 	
+var token = $("meta[name='_csrf']").attr("content");
+var header = $("meta[name='_csrf_header']").attr("content");
+$.ajaxSetup({
+headers:
+{ 'X-CSRF-TOKEN': token }
+});
+
+	
 	 $.ajax({
 		url: './blockUnBlockSingleDevices',
 		data : JSON.stringify(singleImeiBlockDetail),
@@ -387,9 +423,16 @@ var singleImeiBlockDetail={
 	
 }
 		
-		//console.log(JSON.stringify(singleImeiBlockDetail));
-		//console.log("*********");
-	 	
+//console.log(JSON.stringify(singleImeiBlockDetail));
+//console.log("*********");
+var token = $("meta[name='_csrf']").attr("content");
+var header = $("meta[name='_csrf_header']").attr("content");
+$.ajaxSetup({
+headers:
+{ 'X-CSRF-TOKEN': token }
+});
+
+
 	 $.ajax({
 		url: './blockUnBlockSingleDevices',
 		data : JSON.stringify(singleImeiBlockDetail),
@@ -424,6 +467,14 @@ function viewDeviceDetails(txnId,popUpType,requestType){
 	
 	var role = currentRoleType == null ? roleType : currentRoleType;
 	//console.log("popUpType=="+popUpType);
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
+
+
 	$.ajax({
 		url : "./openbulkView?reqType="+requestType+"&txnId="+txnId+'&modeType=singleDeivce',
 		dataType : 'json',
@@ -439,6 +490,13 @@ function viewDeviceDetails(txnId,popUpType,requestType){
 		}
 	});
 }
+var token = $("meta[name='_csrf']").attr("content");
+var header = $("meta[name='_csrf_header']").attr("content");
+$.ajaxSetup({
+headers:
+{ 'X-CSRF-TOKEN': token }
+});
+
 
 $.getJSON('./getTypeDropdownList/BLOCK_CATEGORY/'+$("body").attr("data-userTypeID"), function(data) {
 	$('#editBulkBlockCategory').empty();
@@ -549,6 +607,13 @@ formData.append('txnId',txnId);
 formData.append('fileName',fileName);
 formData.append('blockingTimePeriod',editbulkBlockingTimePeriod);
 formData.append('blockingType',editbulkBlocktype);
+var token = $("meta[name='_csrf']").attr("content");
+var header = $("meta[name='_csrf_header']").attr("content");
+$.ajaxSetup({
+headers:
+{ 'X-CSRF-TOKEN': token }
+});
+
 
 $.ajax({
 	url: './updateFileTypeStolenRecovery',
@@ -588,6 +653,13 @@ return false;
 function viewblockImeiDevice(txnId,popUpType,requestType)
 {
 
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
+
 
 	
 	$.ajax({
@@ -610,6 +682,13 @@ function viewblockImeiDevice(txnId,popUpType,requestType)
 }
 
 
+
+var token = $("meta[name='_csrf']").attr("content");
+var header = $("meta[name='_csrf_header']").attr("content");
+$.ajaxSetup({
+headers:
+{ 'X-CSRF-TOKEN': token }
+});
 
 
 $.getJSON('./getDropdownList/DEVICE_TYPE', function(data) {
@@ -850,7 +929,14 @@ var singleImeiBlockDetail={
 		
 		//console.log(JSON.stringify(singleImeiBlockDetail));
 		//console.log("*********");
-	 	
+var token = $("meta[name='_csrf']").attr("content");
+var header = $("meta[name='_csrf_header']").attr("content");
+$.ajaxSetup({
+headers:
+{ 'X-CSRF-TOKEN': token }
+});
+
+
 	 $.ajax({
 		url: './updateBlockUnBlockSingleDevices',
 		data : JSON.stringify(singleImeiBlockDetail),

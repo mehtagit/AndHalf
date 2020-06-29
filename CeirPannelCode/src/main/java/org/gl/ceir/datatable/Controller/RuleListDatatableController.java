@@ -66,114 +66,116 @@ public class RuleListDatatableController {
 	DatatableResponseModel datatableResponseModel;
 	@Autowired
 	RuleListPaginationModel ruleListPaginationModel;
-
 	@PostMapping("ruleListData")
-	public ResponseEntity<?> getData(@RequestParam(name = "type", required = false) String role,
-			HttpServletRequest request, HttpSession session) {
+	public ResponseEntity<?> getData(@RequestParam(name="type",required = false) String role, HttpServletRequest request,HttpSession session) {
 
-		// String userType = (String) session.getAttribute("usertype");
-		// int userId= (int) session.getAttribute("userid");
-		int file = 0;
+		//String userType = (String) session.getAttribute("usertype");
+		//int userId=	(int) session.getAttribute("userid");
+		int file=0;
 		// Data set on this List
-		List<List<Object>> finalList = new ArrayList<List<Object>>();
+		List<List<Object>> finalList=new ArrayList<List<Object>>();
 		String filter = request.getParameter("filter");
-		Gson gsonObject = new Gson();
+		Gson gsonObject=new Gson();
 		FilterRequest filterRequest = gsonObject.fromJson(filter, FilterRequest.class);
 		Integer pageSize = Integer.parseInt(request.getParameter("length"));
-		Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize;
+		Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize ;
 		filterRequest.setSearchString(request.getParameter("search[value]"));
-		log.info("pageSize" + pageSize + "-----------pageNo---" + pageNo);
+		log.info("pageSize"+pageSize+"-----------pageNo---"+pageNo);
 		try {
-			log.info("request send to the filter api =" + filterRequest);
+			log.info("request send to the filter api ="+filterRequest);
 			Object response = feignCleintImplementation.ruleListFeign(filterRequest, pageNo, pageSize, file);
-			log.info("response in datatable" + response);
-			Gson gson = new Gson();
+			log.info("response in datatable"+response);
+			Gson gson= new Gson(); 
 			String apiResponse = gson.toJson(response);
 			ruleListPaginationModel = gson.fromJson(apiResponse, RuleListPaginationModel.class);
 			List<RuleListContent> ruleListContent = ruleListPaginationModel.getContent();
-			if (ruleListContent.isEmpty()) {
+			if(ruleListContent.isEmpty()) {
 				datatableResponseModel.setData(Collections.emptyList());
-			} else {
-				for (RuleListContent dataInsideList : ruleListContent) {
-					String id = String.valueOf(dataInsideList.getId());
-					String createdOn = dataInsideList.getCreatedOn();
-					String modifiedOn = dataInsideList.getModifiedOn();
-					String name = dataInsideList.getName();
-					String description = dataInsideList.getDescription();
-					String state = dataInsideList.getState();
-					String output = dataInsideList.getOutput();
-					// log.info("Id-->"+Id+"--userStatus--->"+userStatus+"--StatusName---->"+StatusName+"--createdOn---->"+createdOn+"--id--->"+id+"--userName-->"+username);
-					String action = iconState.ruleListIcons(id, output);
-					Object[] finalData = { createdOn, modifiedOn, state, name, description, action };
-					List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
-					finalList.add(finalDataList);
-					datatableResponseModel.setData(finalList);
-
-				}
 			}
-			// data set on ModelClass
+			else {
+			for(RuleListContent dataInsideList : ruleListContent) 
+				{
+				   String id =  String.valueOf(dataInsideList.getId());	
+				   String createdOn = dataInsideList.getCreatedOn();
+				   String modifiedOn = dataInsideList.getModifiedOn();
+				   String name = dataInsideList.getName();
+				   String description = dataInsideList.getDescription();
+				   String state=dataInsideList.getState();
+				   String output=dataInsideList.getOutput();
+				   //log.info("Id-->"+Id+"--userStatus--->"+userStatus+"--StatusName---->"+StatusName+"--createdOn---->"+createdOn+"--id--->"+id+"--userName-->"+username);
+				   String action=iconState.ruleListIcons(id,output);			   
+				   Object[] finalData={createdOn,modifiedOn,state,name,description,action}; 
+				   List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
+					finalList.add(finalDataList);
+					datatableResponseModel.setData(finalList);	
+					
+			}
+		}
+			//data set on ModelClass
 			datatableResponseModel.setRecordsTotal(ruleListPaginationModel.getNumberOfElements());
 			datatableResponseModel.setRecordsFiltered(ruleListPaginationModel.getTotalElements());
-			return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK);
-		} catch (Exception e) {
-			datatableResponseModel.setRecordsTotal(null);
-			datatableResponseModel.setRecordsFiltered(null);
-			datatableResponseModel.setData(Collections.emptyList());
-			log.error(e.getMessage(), e);
-			return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK);
+			return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK); 
+	}catch(Exception e) {
+		datatableResponseModel.setRecordsTotal(null);
+		datatableResponseModel.setRecordsFiltered(null);
+		datatableResponseModel.setData(Collections.emptyList());
+		log.error(e.getMessage(),e);
+		return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK); 
 		}
 
 	}
 
+
 	@PostMapping("ruleList/pageRendering")
-	public ResponseEntity<?> pageRendering(HttpSession session) {
+	public ResponseEntity<?> pageRendering(HttpSession session){
 
 		String userType = (String) session.getAttribute("usertype");
 		String userStatus = (String) session.getAttribute("userStatus");
-
+		
 		InputFields inputFields = new InputFields();
 		InputFields dateRelatedFields;
-
+		
 		pageElement.setPageTitle(Translator.toLocale("title.ruleList"));
-
+		
 		List<Button> buttonList = new ArrayList<>();
 		List<InputFields> dropdownList = new ArrayList<>();
 		List<InputFields> inputTypeDateList = new ArrayList<>();
-
-		log.info("USER STATUS:::::::::" + userStatus);
-		log.info("session value user Type==" + session.getAttribute("usertype"));
-
-		String[] names = { "HeaderButton", Translator.toLocale("button.addCurrency"), "AddCurrencyAddress()", "btnLink",
-				"FilterButton", Translator.toLocale("button.filter"), "filter(" + ConfigParameters.languageParam + ")",
-				"submitFilter" };
-		for (int i = 0; i < names.length; i++) {
-			button = new Button();
-			button.setType(names[i]);
-			i++;
-			button.setButtonTitle(names[i]);
-			i++;
-			button.setButtonURL(names[i]);
-			i++;
-			button.setId(names[i]);
-			buttonList.add(button);
-		}
-		pageElement.setButtonList(buttonList);
-
-		// Dropdown items
-		String[] selectParam = { "select", Translator.toLocale("table.state"), "State", "" };
-		for (int i = 0; i < selectParam.length; i++) {
-			inputFields = new InputFields();
-			inputFields.setType(selectParam[i]);
-			i++;
-			inputFields.setTitle(selectParam[i]);
-			i++;
-			inputFields.setId(selectParam[i]);
-			i++;
-			inputFields.setClassName(selectParam[i]);
-			dropdownList.add(inputFields);
-		}
+			
+			log.info("USER STATUS:::::::::"+userStatus);
+			log.info("session value user Type=="+session.getAttribute("usertype"));
+			
+			String[] names = { "HeaderButton", Translator.toLocale("button.addCurrency"), "AddCurrencyAddress()", "btnLink",
+					"FilterButton", Translator.toLocale("button.filter"),"filter(" + ConfigParameters.languageParam + ")", "submitFilter" };
+			for(int i=0; i< names.length ; i++) {
+				button = new Button();
+				button.setType(names[i]);
+				i++;
+				button.setButtonTitle(names[i]);
+				i++;
+				button.setButtonURL(names[i]);
+				i++;
+				button.setId(names[i]);
+				buttonList.add(button);
+			}			
+			pageElement.setButtonList(buttonList);
+			
+		
+		  //Dropdown items 
+			String[] selectParam= {"select",Translator.toLocale("table.state"),"State",""};
+		  for(int i=0; i<selectParam.length; i++) { 
+				inputFields= new InputFields();
+		  inputFields.setType(selectParam[i]); 
+		  i++;
+		  inputFields.setTitle(selectParam[i]);
+		  i++; 
+		  inputFields.setId(selectParam[i]);
+		  i++; 
+		  inputFields.setClassName(selectParam[i]);
+		  dropdownList.add(inputFields);
+		  } 
 		pageElement.setDropdownList(dropdownList);
-
+		 
+			
 		/*
 		 * //input type date list String[] dateParam=
 		 * {"date",Translator.toLocale("input.startDate"),"startDate","","date",
@@ -185,34 +187,54 @@ public class RuleListDatatableController {
 		 * dateRelatedFields.setClassName(dateParam[i]);
 		 * inputTypeDateList.add(dateRelatedFields); }
 		 */
-
-		pageElement.setInputTypeDateList(inputTypeDateList);
-		pageElement.setUserStatus(userStatus);
-		return new ResponseEntity<>(pageElement, HttpStatus.OK);
-
+			
+			pageElement.setInputTypeDateList(inputTypeDateList);
+			pageElement.setUserStatus(userStatus);
+			return new ResponseEntity<>(pageElement, HttpStatus.OK); 
+		
+		
 	}
+
+
+
+
+
+
+
+
+
+
+
+
 
 //********************************************** open register page or edit popup *****************************
-	@GetMapping("/viewRuleListAPI/{id}")
-	public @ResponseBody RuleListContent view(@PathVariable("id") Integer id) {
-		RuleListContent ruleListContent = new RuleListContent();
-		ruleListContent = feignCleintImplementation.fetchData(id);
-		log.info(" response::::" + ruleListContent);
+@GetMapping("/viewRuleListAPI/{id}")
+public @ResponseBody RuleListContent view(@PathVariable("id") Integer id)
+{
+	RuleListContent ruleListContent= new RuleListContent();
+ruleListContent=feignCleintImplementation.fetchData(id);
+log.info(" response::::"+ruleListContent);
 
-		return ruleListContent;
-	}
+return ruleListContent;
+}
+
+
+
+
+
+
 
 //************************************************ update consignment record page********************************************************************************/
 
-	@RequestMapping(value = { "/updateRuleList" }, method = { org.springframework.web.bind.annotation.RequestMethod.GET,
-			org.springframework.web.bind.annotation.RequestMethod.POST })
-	public @ResponseBody GenricResponse updateRecord(@RequestBody RuleListContent ruleListContent) {
-		log.info("request::::::" + ruleListContent);
-		// RuleListContent ruleList = new RuleListContent();
-		GenricResponse response = feignCleintImplementation.update(ruleListContent);
-		log.info(" response from update Consignment api=" + response);
-		return response;
+@RequestMapping(value= {"/updateRuleList"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}) 
+public @ResponseBody GenricResponse updateRecord(@RequestBody RuleListContent ruleListContent) 
+{
+	log.info("request::::::"+ruleListContent);
+	//RuleListContent ruleList = new RuleListContent();
+GenricResponse response = feignCleintImplementation.update(ruleListContent);
+log.info(" response from update Consignment api="+response);
+return response;
 
-	}
+}
 
 }

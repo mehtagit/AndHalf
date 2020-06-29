@@ -5,7 +5,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class AddMoreFileModel {
 
-	private String tag, value, description, type, remark, typeInterp, createdOn, modifiedOn;
+
+	private String tag,value,description,type,remark,typeInterp,createdOn,modifiedOn;
 
 	public String getTag() {
 		return tag;
@@ -93,5 +94,6 @@ public class AddMoreFileModel {
 		builder.append("]");
 		return builder.toString();
 	}
-
+	
+	
 }

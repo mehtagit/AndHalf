@@ -124,6 +124,12 @@ function saveaAonymousGrievance(){
 	/*formData.append('categoryId',category);
 	formData.append('remarks',remark);
 */
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		url: './saveEndUserGrievance',
 		type: 'POST',
@@ -151,7 +157,12 @@ function saveaAonymousGrievance(){
 return false;
 
 }
-
+var token = $("meta[name='_csrf']").attr("content");
+var header = $("meta[name='_csrf_header']").attr("content");
+$.ajaxSetup({
+headers:
+{ 'X-CSRF-TOKEN': token }
+});
 $.getJSON('./addMoreFile/grievance_supporting_doc_count', function(data) {
 	//console.log(data);
 	
@@ -203,7 +214,13 @@ $(".endUser_add_field_button").click(function (e) { //on add input button click
 		}
 
 //console.log("request --->" +JSON.stringify(request));	
- $.ajax({
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
+	$.ajax({
 		url: './get/tags-mapping',
 		type: 'POST',
 		data : JSON.stringify(request),
@@ -249,6 +266,12 @@ for (i = 0; i < data.length; i++) {
 	
 }
 }); */
+var token = $("meta[name='_csrf']").attr("content");
+var header = $("meta[name='_csrf_header']").attr("content");
+$.ajaxSetup({
+headers:
+{ 'X-CSRF-TOKEN': token }
+});
 $.getJSON('./getTypeDropdownList/GRIEVANCE_CATEGORY/17', function(data) {
 for (i = 0; i < data.length; i++) {
 	//console.log(data[i].interp);
@@ -316,7 +339,12 @@ function enableReplySelectFile(){
 						$('#trackGrievanctableDiv').css("display", "block");
 						$('#trackGrievanceHeader').css("display", "none");
 						
-				
+						var token = $("meta[name='_csrf']").attr("content");
+						var header = $("meta[name='_csrf_header']").attr("content");
+						$.ajaxSetup({
+						headers:
+						{ 'X-CSRF-TOKEN': token }
+						});
 				$.ajax({
 					url: 'headers?type=grievanceHeaders',
 					type: 'POST',
@@ -375,7 +403,12 @@ function enableReplySelectFile(){
 
 
 
-
+				var token = $("meta[name='_csrf']").attr("content");
+				var header = $("meta[name='_csrf_header']").attr("content");
+				$.ajaxSetup({
+				headers:
+				{ 'X-CSRF-TOKEN': token }
+				});
 				//console.log(projectPath+path);
 				$.ajax({
 					url: './endUserViewGrievance?recordLimit=2&grievanceId='+grievanceId+"&userId="+userId,
@@ -434,7 +467,12 @@ function enableReplySelectFile(){
 			function endUserGrievanceReply(userId,grievanceId,txnId)
 			{
 				
-
+				var token = $("meta[name='_csrf']").attr("content");
+				var header = $("meta[name='_csrf_header']").attr("content");
+				$.ajaxSetup({
+				headers:
+				{ 'X-CSRF-TOKEN': token }
+				});
 				$.ajax({
 					url: './endUserViewGrievance?recordLimit=2&grievanceId='+grievanceId+"&userId="+userId,
 					type: 'GET',
@@ -577,7 +615,12 @@ function enableReplySelectFile(){
 				formData.append('grievanceId',grievanceIdToSave);
 				formData.append('txnId',grievanceTxnId);
 				formData.append('grievanceStatus',grievanceTicketStatus);
-			
+				var token = $("meta[name='_csrf']").attr("content");
+				var header = $("meta[name='_csrf_header']").attr("content");
+				$.ajaxSetup({
+				headers:
+				{ 'X-CSRF-TOKEN': token }
+				});
 				$.ajax({
 					url: './saveEndUserGrievanceReply',
 					type: 'POST',
@@ -648,7 +691,13 @@ function enableReplySelectFile(){
 			}
 	
 	//console.log("request --->" +JSON.stringify(request));	
-	 $.ajax({
+	          var token = $("meta[name='_csrf']").attr("content");
+	          var header = $("meta[name='_csrf_header']").attr("content");
+	          $.ajaxSetup({
+	          headers:
+	          { 'X-CSRF-TOKEN': token }
+	          });
+	          $.ajax({
 			url: './get/tags-mapping',
 			type: 'POST',
 			data : JSON.stringify(request),
@@ -685,7 +734,13 @@ function enableReplySelectFile(){
 				}
 		
 		//console.log("request --->" +JSON.stringify(request));	
-		 $.ajax({
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+		}); 
+		$.ajax({
 				url: './get/tags-mapping',
 				type: 'POST',
 				data : JSON.stringify(request),
@@ -714,9 +769,21 @@ function enableReplySelectFile(){
 	
 	
 	function enableSelectFile(){
-		$("#endUserdocTypeFile1").attr("disabled", false);
-		$("#endUserdocTypeFile1").attr("required", true);
-		$("#endUserFileLabel").append('<span class="star">*</span>');
+		//$("#endUserdocTypeFile1").attr("disabled", false);
+		//$("#endUserdocTypeFile1").attr("required", true);
+		//$("#endUserFileLabel").append('<span class="star">*</span>');
+		
+		if($('#endUserdocTypetag1').val() != ''){
+			$("#endUserdocTypeFile1").attr("disabled", false);
+			$("#endUserdocTypeFile1").attr("required", true);
+			$("#removestar").find(".star").remove();
+			$("#endUserFileLabel").append('<span class="star">*</span>');
+		}else{
+			$("#endUserdocTypeFile1").attr("required", false);
+			$('#filetextField').val('');
+			$("#removestar").find(".star").remove();
+		}
+		
 	}
 	$("input[type=file]").keypress(function(ev) {
 	    return false;

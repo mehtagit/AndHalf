@@ -13,6 +13,13 @@ $(document).ready(function() {
  // executes when HTML-Document is loaded and DOM is ready
 	
 	//alert("ready");
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
+
 	$.ajaxSetup({
 		async: false
 		});
@@ -42,7 +49,13 @@ function viewIndivisualStolen()
 
 	
 var txnid=$('#existingStolenTxnId').val();
-	
+var token = $("meta[name='_csrf']").attr("content");
+var header = $("meta[name='_csrf_header']").attr("content");
+$.ajaxSetup({
+headers:
+{ 'X-CSRF-TOKEN': token }
+});
+
 	$.ajax({
 		url: './openStolenAndRecoveryPage?txnId='+txnid+"&requestType=1",
 		type: 'POST',
@@ -167,6 +180,12 @@ function updateIndivisualRecovery()
 	}
 
 	formData.append("request",JSON.stringify(request));
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
 
 	$.ajax({
 		url: './lawfulIndivisualStolenUpdate',
@@ -221,6 +240,13 @@ $('#editsigleRecoverydeviceBrandName').on(
 			$.ajaxSetup({
 				async: false
 				});
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$.ajaxSetup({
+			headers:
+			{ 'X-CSRF-TOKEN': token }
+			});
+
 			$.getJSON('./productModelList?brand_id=' + brand_id,
 					function(data) {
 						$("#editsingleRecoverymodalNumber").empty();

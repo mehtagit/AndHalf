@@ -2,6 +2,10 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<!-- Security Tags -->
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<sec:csrfMetaTags />
+<!-- Security Tags -->
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>  
@@ -15,17 +19,21 @@
         content="Materialize is a Material Design Admin Template,It's modern, responsive and based on Material Design by Google. ">
     <meta name="keywords"
         content="materialize, admin template, dashboard template, flat admin template, responsive admin template,">
-    <title>End User Stock</title>
+        <!-- Security Tags -->
+<meta name="_csrf" content="${_csrf.token}"/>
+<!-- default header name is X-CSRF-TOKEN -->
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
+<!-- Security Tags -->
+    <title>CEIR | Importer Portal</title>
 
     <link href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.min.css" type="text/css" rel="stylesheet"
         media="screen,projection">
 <jsp:include page="/WEB-INF/view/endUserHeader.jsp" ></jsp:include>
 <jsp:include page="/WEB-INF/view/endUserFooter.jsp" ></jsp:include>
 
-   	
-<!-- Favicons-->
-<link rel="icon" href="${context}/resources/images/DMC-Logo.png" sizes="32x32">
-<!-- Favicons-->
+    <!-- Favicons-->
+    <!--<link rel="icon" href="images/favicon/favicon-32x32.png" sizes="32x32">-->
+    <!-- Favicons-->
     <link rel="apple-touch-icon-precomposed" href="images/favicon/apple-touch-icon-152x152.png">
     <!-- For iPhone -->
     <meta name="msapplication-TileColor" content="#00bcd4">
@@ -46,6 +54,7 @@
     <link href="${context}/resources/js/plugins/chartist-js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection">
 
     <style>
+   
    /*      ul li {
             display: inline-flex;
         }
@@ -148,7 +157,19 @@
         	width: 50%;
         }
         
- */    </style>
+ */    
+
+div#initialloader {
+position: absolute;
+left: 0px;
+top: 58px !important;
+width: 100%;
+height: 86% !important;
+z-index: 9999;
+background: url(resources/images/loader.gif) 50% 50% no-repeat white;
+}
+
+ </style>
 <script>
 var contextpath = "${context}";
 </script>
@@ -172,10 +193,10 @@ var contextpath = "${context}";
                                         <div class="row myRow">
                                             <div class="input-field col s12 m6">
                                                 <label for="endUser" style="color: #000;"><spring:message code="input.EmailID" /> </label>
-                                                <input type="email" id="endUseremail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" 
+                                                <input type="email" id="endUseremail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,63}$" 
 											    oninput="InvalidMsg(this,'input','<spring:message code="validation.Matchformat" />');"
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.Matchformat" />');" 
-												   maxlength="30" name="email"/>
+												   maxlength="280" name="email"/>
                                             </div>
 
                                             <div class="input-field col s12 m6 quantity" style="margin-top: 19px;">
@@ -292,6 +313,31 @@ var contextpath = "${context}";
                                                     placeholder="" readonly="readonly">
                                             </div>
                                             
+                                            <div class="input-field col s6 m5">
+                                                <label for="endUser" style="color: #000;"><spring:message code="input.EmailID" /> </label>
+                                            </div>
+                                            <div class="input-field col s6 m7">
+                                                <input type="text" id="viewEndUserEmail" name="viewEndUserEmail"
+                                                    placeholder="" readonly="readonly">
+                                            </div>
+                                            
+                                            <div class="input-field col s6 m5">
+                                                <label for="endUserquantity" style="color: #000;"><spring:message code="input.quantity" />  <span class="star">*</span></label>
+                                            </div>
+                                            <div class="input-field col s6 m7">
+                                                <input type="text" id="viewEndUserquantity" name="viewEndUserquantity"
+                                                    placeholder="" readonly="readonly">
+                                            </div>
+                                            
+                                            <div class="input-field col s6 m5">
+                                               <label for="endUserDevicequantity" style="color: #000;"><spring:message code="input.devicequantity" />  <span class="star">*</span></label>
+                                            </div>
+                                            <div class="input-field col s6 m7">
+                                                <input type="text" id="viewEdUserDevicequantity" name="viewEdUserDevicequantity"
+                                                    placeholder="" readonly="readonly">
+                                            </div>
+                                            
+                                            
                                             <div id="stockRemarkDivId" style="display: none">
                                             <div class="input-field col s6 m5">
                                                 <label for="stockRemark"><spring:message code="input.Remark" /></label>
@@ -333,7 +379,7 @@ var contextpath = "${context}";
                                                     placeholder="" readonly="readonly">
                                             </div>
 
-                                            <div class="input-field col s6 m5">
+                                            <%-- <div class="input-field col s6 m5">
                                                 <label for="viewUploadFile"><spring:message code="input.freshfile" /></label>
                                             </div>
                                             <div class="input-field col s6 m7">
@@ -342,7 +388,7 @@ var contextpath = "${context}";
                                                         onclick="document.getElementById('uploadFile').style.display = 'block';">
                                                     <spring:message code="modal.yes" />
                                                 </div>
-                                            </div>
+                                            </div> --%>
 
 													
                                             <div id="uploadFile" style="display: none;">
@@ -367,7 +413,7 @@ var contextpath = "${context}";
                                             <div class="input-field col s12 center">
                                                 <!-- <a href="homePage" class="btn" style="width: 100%;">ok</a> -->
                                                  <a href="./redirectToHomePage" class=" btn" id="updateEndUserStockOK" type=""><spring:message code="modal.close" /></a>
-                                                <button class=" btn" id="updateEndUserStock" type="submit"><spring:message code="button.submit" /></button>
+                                                <%-- <button class=" btn" id="updateEndUserStock" type="submit"><spring:message code="button.submit" /></button> --%>
                                             </div>
                                         </div>
                                          </form>
@@ -519,37 +565,37 @@ var contextpath = "${context}";
     <!-- data-tables -->
     <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
     <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/data-tables-script.js?version=<%= (int) (Math.random() * 10) %>"></script>
-    	<!-- i18n library -->
+    <!-- i18n library -->
 	<script type="text/javascript"
 		src="${context}/resources/project_js/CLDRPluralRuleParser.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/i18n.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/messagestore.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.messagestore.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/fallbacks.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.fallbacks.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/language.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.language.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/parser.js?version=<%= (int) (Math.random() * 10) %>"></script>
-
-
-	<script type="text/javascript"
-		src="${context}/resources/i18n_library/emitter.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.parser.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/bidi.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.js?version=<%= (int) (Math.random() * 10) %>"></script>
+
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/history.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.bidi.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/min.js?version=<%= (int) (Math.random() * 10) %>"></script>
-		<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/jquery.history.js?version=<%= (int) (Math.random() * 10) %>"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
+	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	
 	
     <!--plugins.js - Some Specific JS codes for Plugin Settings-->

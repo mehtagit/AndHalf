@@ -21,117 +21,116 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class ProfileService {
 	@Autowired
 	UserProfileFeignImpl userProfileFeignImpl;
-
+	
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
-	private Integer id;
-
-	public HttpResponse changePassword(Password password, HttpSession session) {
+	private Integer id;	
+	
+	public HttpResponse changePassword(Password password,HttpSession session) {
 		log.info("inside change password controller");
-		log.info("password data is :  " + password);
-		Integer userid = (Integer) session.getAttribute("userid");
-		log.info("userid from session:  " + userid);
-		password.setUserid(userid);
-		if (password.getPassword().equals(password.getConfirmPassword())) {
-			HttpResponse response = new HttpResponse();
-			response = userProfileFeignImpl.changePassword(password);
-			log.info("response got:  " + response);
-			return response;
-		} else {
-			HttpResponse response = new HttpResponse("Both Passwords do the match", 500, "password_mismatch");
-			return response;
+		log.info("password data is :  "+password);                 
+		Integer userid=(Integer)session.getAttribute("userid");
+		log.info("userid from session:  "+userid);
+		password.setUserid(userid);      
+		if(password.getPassword().equals(password.getConfirmPassword())) {
+			HttpResponse response=new HttpResponse();             
+			response=userProfileFeignImpl.changePassword(password);
+			log.info("response got:  "+response);
+			return response; 	
 		}
-
-	}
-
-	public HttpResponse updateUSerStatus(UserStatus userStatus, HttpSession session) {
+		else {    
+			HttpResponse response=new HttpResponse("Both Passwords do the match",500,"password_mismatch");   
+			return response; 
+		}
+		  
+	} 
+	
+	public HttpResponse updateUSerStatus(UserStatus userStatus,HttpSession session) {
 		log.info("inside update userStatus controller");
-		Integer userid = (Integer) session.getAttribute("userid");
-		log.info("userid from session:  " + userid);
-		String username = (String) session.getAttribute("username");
-		log.info("username fom session: " + username);
-		userStatus.setUserId(userid);
-		log.info("userStatus data is :  " + userStatus);
-		HttpResponse response = new HttpResponse();
-		response = userProfileFeignImpl.updateUserStatus(userStatus);
-		return response;
-	}
-
+		Integer userid=(Integer)session.getAttribute("userid");
+		log.info("userid from session:  "+userid);
+		String username=(String)session.getAttribute("username");
+		log.info("username fom session: "+username);
+		userStatus.setUserId(userid); 
+		log.info("userStatus data is :  "+userStatus);
+		HttpResponse response=new HttpResponse();             
+		response=userProfileFeignImpl.updateUserStatus(userStatus);
+		return response;  
+	}               
+	   
 	public Registration editUserProfile(HttpSession session) {
 		log.info("inside edit User Profile  controller");
-		Integer userid = (Integer) session.getAttribute("userid");
-		log.info("userid from session:  " + userid);
-		Registration response = new Registration();
-		response = userProfileFeignImpl.editUserProfile(userid);
+		Integer userid=(Integer)session.getAttribute("userid");
+		log.info("userid from session:  "+userid);
+		Registration response=new Registration();             
+		response=userProfileFeignImpl.editUserProfile(userid);
 		session.removeAttribute("mainRole");
-		session.setAttribute("mainRole", response.getUserTypeId());
+		session.setAttribute("mainRole",response.getUserTypeId());
 		return response;
 	}
-
-	public UpdateProfileResponse updateProfile(Registration registration, HttpSession session) {
+	
+	public UpdateProfileResponse updateProfile(Registration registration,HttpSession session) {
 		log.info("inside update profile controller");
-		log.info("profile data=  " + registration);
-		UpdateProfileResponse response = new UpdateProfileResponse();
-		response = userProfileFeignImpl.updateUserProfile(registration);
+		log.info("profile data=  "+registration);
+		UpdateProfileResponse response=new UpdateProfileResponse();   
+		response=userProfileFeignImpl.updateUserProfile(registration);
 		log.info("exit from update profile controller");
-		return response;
+		return response;    
 	}
-
-	public HttpResponse adminApprovalService(UserStatus userStatus, HttpSession session) {
+	
+	public HttpResponse adminApprovalService(UserStatus userStatus,HttpSession session) {
 		log.info("inside update userStatus controller");
-		Integer userid = userStatus.getUserId();
-		Integer id = userStatus.getId();
-		log.info("userid from session:  " + userid);
+		Integer userid= userStatus.getUserId();
+		Integer id= userStatus.getId();
+		log.info("userid from session:  "+userid);
 		userStatus.setId(id);
-		userStatus.setUserId(userid);
-		log.info("userStatus data is :  " + userStatus);
-		HttpResponse response = new HttpResponse();
-		response = userProfileFeignImpl.adminUserApproval(userStatus);
-		return response;
+		userStatus.setUserId(userid); 
+		log.info("userStatus data is :  "+userStatus);
+		HttpResponse response=new HttpResponse();             
+		response=userProfileFeignImpl.adminUserApproval(userStatus);
+		return response;  
+	} 
+	
+	public Registration ViewAdminUserService(HttpSession session, long id,Integer userId) {
+		log.info("inside View AdminStatus controller---------"+userId+"----->"+id);
+		Integer userid=(Integer)session.getAttribute("userid");
+		Registration response=new Registration();             
+		response=userProfileFeignImpl.ViewAdminUser(id, userId);
+		return response; 
 	}
-
-	public Registration ViewAdminUserService(HttpSession session, long id, Integer userId) {
-		log.info("inside View AdminStatus controller---------" + userId + "----->" + id);
-		Integer userid = (Integer) session.getAttribute("userid");
-		Registration response = new Registration();
-		response = userProfileFeignImpl.ViewAdminUser(id, userId);
-		return response;
-	}
-
-	public HttpResponse changeUserStatusService(UserStatus userStatus, HttpSession session) {
+	
+	public HttpResponse changeUserStatusService(UserStatus userStatus,HttpSession session) {
 		log.info("inside changeUserStatus Service");
-		// Integer userid= userStatus.getUserId();
-		// Integer id= userStatus.getId();
-		// log.info("userid from session: "+userid);
-		// userStatus.setUserId(userid);
-		// userStatus.setId(id);
-		log.info("userStatus data is :  " + userStatus);
-		HttpResponse response = new HttpResponse();
-		response = userProfileFeignImpl.changeUserStatusFeign(userStatus);
-		return response;
-	}
-
-	public HttpResponse changeSystemUserStatusService(UserManagementContent userManagementContent,
-			HttpSession session) {
+		//Integer userid= userStatus.getUserId();
+		//Integer id= userStatus.getId();
+		//log.info("userid from session:  "+userid);
+		//userStatus.setUserId(userid); 
+		//userStatus.setId(id);
+		log.info("userStatus data is :  "+userStatus);
+		HttpResponse response=new HttpResponse();             
+		response=userProfileFeignImpl.changeUserStatusFeign(userStatus);
+		return response;  
+	} 
+	
+	public HttpResponse changeSystemUserStatusService(UserManagementContent userManagementContent,HttpSession session) {
 		log.info("inside changeSystemUserStatus controller");
-		// Integer userid= userManagementContent.getId();
-		// log.info("userid from session: "+userid);
-		// userManagementContent.setId(id);
-		// log.info("userStatus data is : "+userManagementContent);
-		HttpResponse response = new HttpResponse();
-		response = userProfileFeignImpl.changeSystemUserStatusFeign(userManagementContent);
-		return response;
-	}
-
-	public HttpResponse changeSystemUserPeriodService(UserManagementContent userManagementContent,
-			HttpSession session) {
+		//Integer userid= userManagementContent.getId();
+		//log.info("userid from session:  "+userid);
+		//userManagementContent.setId(id);
+		//log.info("userStatus data is :  "+userManagementContent);
+		HttpResponse response=new HttpResponse();             
+		response=userProfileFeignImpl.changeSystemUserStatusFeign(userManagementContent);
+		return response;  
+	} 
+	
+	public HttpResponse changeSystemUserPeriodService(UserManagementContent userManagementContent,HttpSession session) {
 		log.info("inside changeSystemUserPeriodService controller");
-		// Integer userid= userManagementContent.getId();
-		// log.info("userid from session: "+userid);
-		// userManagementContent.setId(id);
-		// log.info("userStatus data is : "+userManagementContent);
-		HttpResponse response = new HttpResponse();
-		response = userProfileFeignImpl.changeSystemUserPeriodFeign(userManagementContent);
-		return response;
-	}
+		//Integer userid= userManagementContent.getId();
+		//log.info("userid from session:  "+userid);
+		//userManagementContent.setId(id);
+		//log.info("userStatus data is :  "+userManagementContent);
+		HttpResponse response=new HttpResponse();             
+		response=userProfileFeignImpl.changeSystemUserPeriodFeign(userManagementContent);
+		return response;  
+	} 
 }

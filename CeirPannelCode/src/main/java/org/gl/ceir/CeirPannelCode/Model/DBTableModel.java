@@ -5,23 +5,18 @@ import java.util.List;
 public class DBTableModel {
 	private String dbName;
 	private List<String> tableNames;
-
 	public String getDbName() {
 		return dbName;
 	}
-
 	public void setDbName(String dbName) {
 		this.dbName = dbName;
 	}
-
 	public List<String> getTableNames() {
 		return tableNames;
 	}
-
 	public void setTableNames(List<String> tableNames) {
 		this.tableNames = tableNames;
 	}
-
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -32,5 +27,8 @@ public class DBTableModel {
 		builder.append("]");
 		return builder.toString();
 	}
-
+	
+	
+	
+	
 }

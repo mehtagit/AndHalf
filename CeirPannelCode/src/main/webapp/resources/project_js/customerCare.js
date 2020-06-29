@@ -33,6 +33,12 @@ $(document).ready(function(){
 
 function getGsmaDetails(){
 	//console.log("msisdn-->"+msisdn+" imei-->"+imei+" deviceIdType-->"+deviceIdType);
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		url: './getGsmaDetails?imei='+imei+'&msisdn='+msisdn+'&identifierType='+deviceIdType+'',
 		type: 'POST',
@@ -71,6 +77,12 @@ function stateTable(){
 			"deviceIdType" : $("body").attr("data-deviceIdType")	
 	}
 	 //console.log(JSON.stringify(customerCareRequest));
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+	});
 	$('#DeviceStateTable').DataTable({
 		destroy:true,
 		searching: false,
@@ -125,7 +137,12 @@ function deviceTable(){
 			"msisdn" : $("body").attr("data-msisdn"),
 			"deviceIdType" : $("body").attr("data-deviceIdType")	
 	}
-	
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+	});
 	$('#DeviceTable').DataTable({
 		destroy:true,
 		searching : false,
@@ -189,6 +206,12 @@ function notificationTable(){
 if(lang=='km'){
 var langFile='./resources/i18n/khmer_datatable.json';
 }
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+	});	
 $.ajax({
 url: './headers?type=ccdashboardNotification',
 type: 'POST',
@@ -262,6 +285,12 @@ function setStakeHolderData(name,date,featureId,status,txnId,imei)
 	
 	//alert(JSON.stringify(customerCareRequest))
 	formData.append("customerCareRequest",JSON.stringify(customerCareRequest));
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		url: './customeCareByTxnId',
 		type: 'POST',
@@ -312,6 +341,7 @@ function setStakeHolderData(name,date,featureId,status,txnId,imei)
 		        $("#supplierIdDiv").css("display", "block"); 
 				$("#supplierNameDiv").css("display", "block");
 				$("#invoiceNumberDiv").css("display", "block");
+				$("#endUserEmailDiv").css("display", "none");
 				$("#SupplierId").val(data.data.supplierId);
 				$("#SupplierName").val(data.data.suplierName);
 				$("#InvoiceNumber").val(data.data.invoiceNumber);
@@ -336,6 +366,7 @@ function setStakeHolderData(name,date,featureId,status,txnId,imei)
 		$("#editSupplierIdDiv").css("display", "block"); 
 		$("#editSupplierNameDiv").css("display", "block");
 		$("#editSupplierNameDiv").css("display", "block");
+		$("#endUserEmailDiv").css("display", "none");
 			$("#SupplierId").val(data.data.supplierId);
 			$("#SupplierName").val(data.data.suplierName);
 			$("#InvoiceNumber").val(data.data.invoiceNumber);
@@ -373,10 +404,12 @@ function setStakeHolderData(name,date,featureId,status,txnId,imei)
 		        $("#supplierIdDiv").css("display", "block"); 
 				$("#supplierNameDiv").css("display", "block");
 				$("#invoiceNumberDiv").css("display", "block");
+				$("#endUserEmailDiv").css("display", "none");
 				$("#SupplierId").val(data.data.supplierId);
 				$("#SupplierName").val(data.data.suplierName);
 				$("#InvoiceNumber").val(data.data.invoiceNumber);
 				$("#StockQuantity").val(data.data.quantity);
+				$('#StockDeviceQuantity').val(data.data.deviceQuantity);
 				$("#StockTransactionId").val(data.data.txnId);
 				$("#csvUploadFileName").val(data.data.fileName);
 				$("#withdrawnRemark").val(data.data.remarks);
@@ -390,15 +423,39 @@ function setStakeHolderData(name,date,featureId,status,txnId,imei)
 			$("#supplierIdDiv").css("display", "none"); 
 			$("#supplierNameDiv").css("display", "none");
 			$("#invoiceNumberDiv").css("display", "none");
-			
-				$("#SupplierId").val(data.data.supplierId);
+			$("#endUserEmailDiv").css("display", "none");
+				
+			    $("#SupplierId").val(data.data.supplierId);
 				$("#SupplierName").val(data.data.suplierName);
 				$("#InvoiceNumber").val(data.data.invoiceNumber);
 				$("#StockQuantity").val(data.data.quantity);
+				$('#StockDeviceQuantity').val(data.data.deviceQuantity);
 				$("#StockTransactionId").val(data.data.txnId);
 				$("#csvUploadFileName").val(data.data.fileName);
 				$("#withdrawnRemark").val(data.data.remarks);
 			}
+         else if(name=="End User") {
+ 			
+ 			$('#viewStockModal').openModal({
+ 		    	   dismissible:false
+ 		       });
+ 			$("#supplierIdDiv").css("display", "none"); 
+ 			$("#supplierNameDiv").css("display", "none");
+ 			$("#invoiceNumberDiv").css("display", "none");
+ 			$("#endUserEmailDiv").css("display", "block");
+ 				$("#SupplierId").val(data.data.supplierId);
+ 				$("#SupplierName").val(data.data.suplierName);
+ 				$("#InvoiceNumber").val(data.data.invoiceNumber);
+ 				$("#StockQuantity").val(data.data.quantity);
+ 				$('#StockDeviceQuantity').val(data.data.deviceQuantity);
+ 				$("#StockTransactionId").val(data.data.txnId);
+ 				$("#csvUploadFileName").val(data.data.fileName);
+ 				$("#withdrawnRemark").val(data.data.remarks);
+ 				$("#endUseremail").val(data.data.user.userProfile.email);
+ 				$("label[for='endUseremail']").addClass('active');
+ 			
+ 			}
+	    
          else if(name=='Type Approve')
         	 {
         	 $('#viewImporterModal').openModal({
@@ -414,7 +471,7 @@ function setStakeHolderData(name,date,featureId,status,txnId,imei)
      		$("#viewImportertac").val(data.data.tac);
      		$("#viewtxnId").val(data.data.txnId);
         	 }
-         else if(name=='End User')
+         else if(name=='Regularize device')
     	 {
     	 $('#viewDeviceInfo').openModal({
 	    	   dismissible:false
@@ -484,7 +541,16 @@ function setStakeHolderData(name,date,featureId,status,txnId,imei)
       		$("#blockedDate").val(data.data.createdOn);
       		$("#blockExpiryDate").val(data.data.expiryDate);
        		$("#blockeModeType").val(data.data.modeType);
-       		$("#complaintType").val(data.data.complainType);
+       		if(data.data.complainType=="null")
+       			{
+       			console.log("if");
+       			$("#complaintType").val("NA");	
+       			}
+       		else{
+       			console.log("else");
+       			$("#complaintType").val(data.data.complainType);
+       		    } 
+       		
          }
 	    
 	    

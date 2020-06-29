@@ -1,12 +1,11 @@
 package org.gl.ceir.CeirPannelCode.Service;
-
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
+import java.io.FileOutputStream; 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.HashMap;
@@ -41,8 +40,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
-
-@Service
+@Service 
 public class RegistrationService {
 
 //	@Value("${FilePath1}") 
@@ -59,10 +57,10 @@ public class RegistrationService {
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
-	public String registrationView(String usertype, Model model, HttpSession session) {
+	public String registrationView(String usertype,Model model,HttpSession session) {
 		log.info("inside registration view controller");
-		log.info("usertype given: " + usertype);
-		HashMap<String, String> map = new HashMap<String, String>();
+		log.info("usertype given: "+usertype);
+		HashMap<String, String> map=new HashMap<String,String>();
 		map.put("Importer", "registration");
 		map.put("Distributor", "registration");
 		map.put("Retailer", "registration");
@@ -73,332 +71,321 @@ public class RegistrationService {
 		map.put("Operator", "operatorRegistration");
 		map.put("Immigration", "customRegistration");
 		map.put("DRT", "customRegistration");
-		if (usertype != null) {
-			String output = map.get(usertype);
-			log.info("value for key: " + output);
-			if (output == null || ("").equals(output)) {
-				output = "index";
-			} else {
-				Usertype usertypeData = userRegistrationFeignImpl.userypeDataByName(usertype);
-				log.info("usertypeData by usertypeName" + usertypeData);
+		if(usertype!=null) {
+			String output= map.get(usertype);
+			log.info("value for key: "+output);
+			if(output==null || ("").equals(output)) {
+				output="index";
+			}
+			else {
+				Usertype usertypeData=userRegistrationFeignImpl.userypeDataByName(usertype);
+				log.info("usertypeData by usertypeName"+usertypeData);
 				model.addAttribute("usertypeId", usertypeData.getId());
-				log.info("now check registration available or not");
-				;
-				HttpResponse response = userRegistrationFeignImpl.checkRegistration(usertypeData.getId());
-				log.info("response got: " + response);
-				session.removeAttribute("response");
-				session.removeAttribute("statusCode");
-				session.removeAttribute("usertypeId");
-				session.setAttribute("tag", response.getTag());
-				session.setAttribute("statusCode", response.getStatusCode());
-				session.setAttribute("usertypeId", usertypeData.getId());
+				log.info("now check registration available or not");;
+                HttpResponse response=userRegistrationFeignImpl.checkRegistration(usertypeData.getId());
+                log.info("response got: "+response);
+                session.removeAttribute("response");
+                session.removeAttribute("statusCode");
+                session.removeAttribute("usertypeId");
+                session.setAttribute("tag",response.getTag());
+                session.setAttribute("statusCode",response.getStatusCode());
+                session.setAttribute("usertypeId",usertypeData.getId());
 			}
 			return output;
 
-		} else {
+		}
+		else {
 			log.info("if usertype is null");
 			return "index";
 		}
 	}
-
 	public ModelAndView ImporterRegistrationView(Integer usertypeId) {
 		log.info("view registration page starting point");
-		log.info("usertypeId from registration page:  " + usertypeId);
-		ModelAndView mv = new ModelAndView();
+		log.info("usertypeId from registration page:  "+usertypeId);
+		ModelAndView mv=new ModelAndView();   
 		mv.setViewName("registration");
 		log.info("view registration page ending point");
-		return mv;
+		return mv;                
 	}
 
 	public ModelAndView customRegistrationView(Integer usertypeId) {
 		log.info("view registration page starting point");
-		log.info("usertypeId from registration page:  " + usertypeId);
-		ModelAndView mv = new ModelAndView();
+		log.info("usertypeId from registration page:  "+usertypeId);
+		ModelAndView mv=new ModelAndView();       
 		mv.setViewName("customRegistration");
 		log.info("view registration page ending point");
-		return mv;
-	}
+		return mv;                
+	}                                                 
 
 	public ModelAndView operatorRegistrationView(Integer usertypeId) {
 		log.info("view registration page starting point");
-		log.info("usertypeId from registration page:  " + usertypeId);
-		ModelAndView mv = new ModelAndView();
+		log.info("usertypeId from registration page:  "+usertypeId);
+		ModelAndView mv=new ModelAndView();    
 		mv.setViewName("operatorRegistration");
 		log.info("view registration page ending point");
-		return mv;
-	}
+		return mv;                
+	}                    
 
-	public OtpResponse saveOtherRegistration(String data, MultipartFile photo, MultipartFile nationalIdImage,
-			MultipartFile idCard, HttpSession session, HttpServletRequest request, MultipartFile vatFile)
-			throws IOException {
-		Gson gson = new Gson();
-		Registration registration = gson.fromJson(data, Registration.class);
-		UserHeader header = getUserHeaders(request);
+	public OtpResponse saveOtherRegistration(String data,MultipartFile photo,MultipartFile nationalIdImage,MultipartFile idCard,HttpSession session,HttpServletRequest request,MultipartFile vatFile) throws IOException {
+		Gson gson=new Gson();                       
+		Registration registration=gson.fromJson(data, Registration.class);
+		UserHeader header=getUserHeaders(request);
 		registration.setUserAgent(header.getUserAgent());
 		registration.setPublicIp(header.getPublicIp());
 		log.info("save registration page starting point");
-		log.info("registration data:  " + registration);
-		String validCaptcha = (String) session.getAttribute("captcha_security");
-		log.info("captcha from session:  " + validCaptcha);
-		if (registration.getCaptcha().equals(validCaptcha)) {
-			log.info("if captcha match");
-			if (registration.getRePassword().equals(registration.getPassword())) {
-
+		log.info("registration data:  "+registration);        
+		String validCaptcha=(String)session.getAttribute("captcha_security");      
+		log.info("captcha from session:  "+validCaptcha); 
+		if(registration.getCaptcha().equals(validCaptcha)) {
+			log.info("if captcha match");  
+			if(registration.getRePassword().equals(registration.getPassword())) {
+				
 				log.info("if password and confirm password match");
-				String username = randomDigits.getAlphaNumericString(4) + randomDigits.getNumericString(4)
-						+ randomDigits.getAlphaNumericString(1);
+				String username=randomDigits.getAlphaNumericString(4)+randomDigits.getNumericString(4)+randomDigits.getAlphaNumericString(1);
 				registration.setUsername(username);
-				Tag tagData = new Tag("user_upload_filepath");
+				Tag tagData=new Tag("user_upload_filepath");
 				Dropdown dropdown = feignCleintImplementation.dataByTag(tagData);
-				log.info("user upload file path value from db: " + dropdown.getValue());
-				StringBuilder combinedPath = new StringBuilder(dropdown.getValue()).append("/" + username);
-				String nationalIdPath = new String(combinedPath + "/NID");
-				String photoPath = new String(combinedPath + "/photo");
-				String idCardPath = new String(combinedPath + "/IDCard");
-				String vatFilePath = new String(combinedPath + "/Vat");
-				if (nationalIdImage.isEmpty() == false) {
+				log.info("user upload file path value from db: "+dropdown.getValue());
+				StringBuilder combinedPath=new StringBuilder(dropdown.getValue()).append("/"+username);
+				String nationalIdPath=new String(combinedPath+"/NID");  
+				String photoPath=new String(combinedPath+"/photo");
+				String idCardPath=new String(combinedPath+"/IDCard");  
+				String vatFilePath=new String(combinedPath+"/Vat");
+				if(nationalIdImage.isEmpty()==false) {
 					log.info("going to save user NationalId file");
-					log.info("file name: " + nationalIdImage.getOriginalFilename());
-					log.info("finalPath:   " + nationalIdPath);
+					log.info("file name: " +nationalIdImage.getOriginalFilename());
+					log.info("finalPath:   "+nationalIdPath);  
 					File dir = new File(nationalIdPath);
-					if (!dir.exists())
-						dir.mkdirs();
-					byte barr[] = nationalIdImage.getBytes();
-					BufferedOutputStream bout = new BufferedOutputStream(
-							new FileOutputStream(nationalIdPath + "/" + nationalIdImage.getOriginalFilename()));
+					if (!dir.exists()) dir.mkdirs();
+					byte barr[]=nationalIdImage.getBytes();
+					BufferedOutputStream bout=new BufferedOutputStream(new FileOutputStream(nationalIdPath + "/" + nationalIdImage.getOriginalFilename()));
 					bout.write(barr);
 					bout.flush();
-					bout.close();
+					bout.close(); 
 					registration.setNidFilename(nationalIdImage.getOriginalFilename());
-				}
+				} 
 
-				if (photo.isEmpty() == false) {
+				if(photo.isEmpty()==false) {
 					log.info("going to save user photo file");
-					log.info("file name: " + photo.getOriginalFilename());
-					log.info("finalPath:   " + photoPath);
+					log.info("file name: " +photo.getOriginalFilename());
+					log.info("finalPath:   "+photoPath);  
 					File dir = new File(photoPath);
-					if (!dir.exists())
-						dir.mkdirs();
-					byte barr[] = photo.getBytes();
-					BufferedOutputStream bout = new BufferedOutputStream(
-							new FileOutputStream(photoPath + "/" + photo.getOriginalFilename()));
+					if (!dir.exists()) dir.mkdirs();
+					byte barr[]=photo.getBytes();
+					BufferedOutputStream bout=new BufferedOutputStream(new FileOutputStream(photoPath + "/" + photo.getOriginalFilename()));
 					bout.write(barr);
 					bout.flush();
-					bout.close();
+					bout.close();  
 					registration.setPhotoFilename(photo.getOriginalFilename());
-				}
+				} 
 
-				if (idCard.isEmpty() == false) {
+				if(idCard.isEmpty()==false) {
 					log.info("going to save user id card file");
-					log.info("file name: " + idCard.getOriginalFilename());
-					log.info("finalPath:   " + idCardPath);
+					log.info("file name: " +idCard.getOriginalFilename());
+					log.info("finalPath:   "+idCardPath);  
 					log.info("going to save id card file in server");
-					File dir = new File(idCardPath);
-					if (!dir.exists())
-						dir.mkdirs();
-					byte barr[] = idCard.getBytes();
-					BufferedOutputStream bout = new BufferedOutputStream(
-							new FileOutputStream(idCardPath + "/" + idCard.getOriginalFilename()));
+					File dir = new File(idCardPath);   
+					if (!dir.exists()) dir.mkdirs();
+					byte barr[]=idCard.getBytes();
+					BufferedOutputStream bout=new BufferedOutputStream(new FileOutputStream(idCardPath + "/" + idCard.getOriginalFilename()));
 					bout.write(barr);
 					bout.flush();
-					bout.close();
+					bout.close(); 
 					registration.setIdCardFilename(idCard.getOriginalFilename());
 					log.info("id card file save in server");
+				} 
+				if(registration.getUserTypeId()==12) {
+					log.info("vat file "+vatFile.getOriginalFilename());
+				if(vatFile.isEmpty()==false) {
+					log.info("file name: " +vatFile.getOriginalFilename());
+					log.info("finalPath:   "+vatFilePath);
+					log.info("path plus filename: "+vatFilePath+vatFile.getOriginalFilename());
+					File dir = new File(vatFilePath);
+					if (!dir.exists()) dir.mkdirs();
+					byte barr[]=vatFile.getBytes();
+					BufferedOutputStream bout=new BufferedOutputStream(new FileOutputStream(vatFilePath + "/" + vatFile.getOriginalFilename()));
+					bout.write(barr);
+					bout.flush();
+					bout.close();
+					registration.setVatFilename(vatFile.getOriginalFilename());
 				}
-				if (registration.getUserTypeId() == 12) {
-					log.info("vat file " + vatFile.getOriginalFilename());
-					if (vatFile.isEmpty() == false) {
-						log.info("file name: " + vatFile.getOriginalFilename());
-						log.info("finalPath:   " + vatFilePath);
-						log.info("path plus filename: " + vatFilePath + vatFile.getOriginalFilename());
-						File dir = new File(vatFilePath);
-						if (!dir.exists())
-							dir.mkdirs();
-						byte barr[] = vatFile.getBytes();
-						BufferedOutputStream bout = new BufferedOutputStream(
-								new FileOutputStream(vatFilePath + "/" + vatFile.getOriginalFilename()));
-						bout.write(barr);
-						bout.flush();
-						bout.close();
-						registration.setVatFilename(vatFile.getOriginalFilename());
-					}
 				}
 
 				log.info("now going to call registration api");
-				OtpResponse response = userRegistrationFeignImpl.registration(registration);
-				log.info("registration response:  " + response);
+				OtpResponse response=userRegistrationFeignImpl.registration(registration);
+				log.info("registration response:  "+response);
 				return response;
 
-			} else {
+			}  
+			else {
 
-				OtpResponse response = new OtpResponse();
+				OtpResponse response=new OtpResponse();
 				log.info("confirm password is not same as password");
 				response.setTag("password_mismatch");
 				response.setResponse("Password and Confirm password must be same");
 				return response;
 			}
-		} else {
+		}
+		else {
 			log.info("if captcha not match");
-			OtpResponse response = new OtpResponse();
+			OtpResponse response=new OtpResponse();
 			response.setTag("Wrong_captcha");
 			response.setResponse("You have entered the wrong Captcha. Please enter the correct value");
 			return response;
 		}
 
+
 	}
 
-	public OtpResponse saveRegistration(String data, MultipartFile file, MultipartFile vatFile, HttpSession session,
-			HttpServletRequest request) throws IOException {
-		Gson gson = new Gson();
-		Registration registration = gson.fromJson(data, Registration.class);
-		UserHeader header = getUserHeaders(request);
+	public OtpResponse saveRegistration(String data, MultipartFile file,MultipartFile vatFile,HttpSession session,HttpServletRequest request) throws IOException {
+		Gson gson=new Gson();                       
+		Registration registration=gson.fromJson(data, Registration.class);
+		UserHeader header=getUserHeaders(request);
 		registration.setUserAgent(header.getUserAgent());
 		registration.setPublicIp(header.getPublicIp());
 		log.info("save registration page starting point");
-		log.info("registration data:  " + registration);
-		String validCaptcha = (String) session.getAttribute("captcha_security");
-		log.info("captcha from session:  " + validCaptcha);
-		if (registration.getCaptcha().equals(validCaptcha)) {
-			log.info("if captcha match");
-			if (registration.getRePassword().equals(registration.getPassword())) {
+		log.info("registration data:  "+registration);        
+		String validCaptcha=(String)session.getAttribute("captcha_security");      
+		log.info("captcha from session:  "+validCaptcha); 
+		if(registration.getCaptcha().equals(validCaptcha)) {
+			log.info("if captcha match");  
+			if(registration.getRePassword().equals(registration.getPassword())) {
 				log.info("if password and confirm password match");
-				String username = randomDigits.getAlphaNumericString(4) + randomDigits.getNumericString(4)
-						+ randomDigits.getAlphaNumericString(1);
+				String username=randomDigits.getAlphaNumericString(4)+randomDigits.getNumericString(4)+randomDigits.getAlphaNumericString(1);
 				registration.setUsername(username);
-				Tag tagData = new Tag("user_upload_filepath");
-				Dropdown dropdown = feignCleintImplementation.dataByTag(tagData);
-				log.info("user upload file path value from db: " + dropdown.getValue());
-				StringBuilder combinedPath = new StringBuilder(dropdown.getValue()).append("/" + username);
-				String nationalIdPath = new String(combinedPath + "/NID");
-				String vatFilePath = new String(combinedPath + "/Vat");
-				if (registration.getVatStatus() == 1) {
-					if (vatFile.isEmpty() == false) {
-						log.info("file name: " + vatFile.getOriginalFilename());
-						log.info("finalPath:   " + vatFilePath);
-						log.info("path plus filename: " + vatFilePath + vatFile.getOriginalFilename());
+				Tag tagData=new Tag("user_upload_filepath");
+				Dropdown dropdown = feignCleintImplementation.dataByTag(tagData);	
+				log.info("user upload file path value from db: "+dropdown.getValue());
+				StringBuilder combinedPath=new StringBuilder(dropdown.getValue()).append("/"+username);
+				String nationalIdPath=new String(combinedPath+"/NID");  
+				String vatFilePath=new String(combinedPath+"/Vat");
+				if(registration.getVatStatus()==1) {
+					if(vatFile.isEmpty()==false) {
+						log.info("file name: " +vatFile.getOriginalFilename());
+						log.info("finalPath:   "+vatFilePath);
+						log.info("path plus filename: "+vatFilePath+vatFile.getOriginalFilename());
 						File dir = new File(vatFilePath);
-						if (!dir.exists())
-							dir.mkdirs();
-						byte barr[] = vatFile.getBytes();
-						BufferedOutputStream bout = new BufferedOutputStream(
-								new FileOutputStream(vatFilePath + "/" + vatFile.getOriginalFilename()));
+						if (!dir.exists()) dir.mkdirs();
+						byte barr[]=vatFile.getBytes();
+						BufferedOutputStream bout=new BufferedOutputStream(new FileOutputStream(vatFilePath + "/" + vatFile.getOriginalFilename()));
 						bout.write(barr);
 						bout.flush();
 						bout.close();
 						registration.setVatFilename(vatFile.getOriginalFilename());
 					}
-				} else {
 				}
-				if (registration.getType() == 0) {
-					log.info("if user is individual");
-					if (file.isEmpty() == true) {
+				else {}
+				if(registration.getType()==0){
+					log.info("if user is individual");       
+					if(file.isEmpty()==true) { 
 						log.info("if file is empty");
-						OtpResponse response = new OtpResponse();
+						OtpResponse response=new OtpResponse();
 						response.setResponse("please upload national information");
 						return response;
-					} else {
-						log.info("if user is individual  ");
-						log.info("file name: " + file.getOriginalFilename());
-						log.info("finalPath:   " + nationalIdPath);
+					}     
+					else{ 
+						log.info("if user is individual  "); 
+						log.info("file name: " +file.getOriginalFilename());
+						log.info("finalPath:   "+nationalIdPath);  
 						File dir = new File(nationalIdPath);
-						if (!dir.exists())
-							dir.mkdirs();
-						byte barr[] = file.getBytes();
-						BufferedOutputStream bout = new BufferedOutputStream(
-								new FileOutputStream(nationalIdPath + "/" + file.getOriginalFilename()));
+						if (!dir.exists()) dir.mkdirs();
+						byte barr[]=file.getBytes();
+						BufferedOutputStream bout=new BufferedOutputStream(new FileOutputStream(nationalIdPath + "/" + file.getOriginalFilename()));
 						bout.write(barr);
 						bout.flush();
-						bout.close();
+						bout.close();   
 						registration.setNidFilename(file.getOriginalFilename());
-						OtpResponse response = userRegistrationFeignImpl.registration(registration);
-						log.info("registration response:  " + response);
+						OtpResponse response=userRegistrationFeignImpl.registration(registration);
+						log.info("registration response:  "+response);
 						return response;
 
-					}
-				} else {
-					log.info("if user either company , organization or government");
+					}  
+				}  
+				else { 
+					log.info("if user either company , organization or government");  
 
-					OtpResponse response = userRegistrationFeignImpl.registration(registration);
-					log.info("response from server:  " + response);
+					OtpResponse response=userRegistrationFeignImpl.registration(registration);
+					log.info("response from server:  "+response);
 					return response;
 
 				}
 
-			} else {
 
-				OtpResponse response = new OtpResponse();
+			}  
+			else {
+
+				OtpResponse response=new OtpResponse();
 				response.setTag("password_mismatch");
 				log.info("confirm password is not same as password");
 				response.setResponse("Password and Confirm password must be same");
 				return response;
 			}
-		} else {
+		}
+		else {
 			log.info("if captcha not match");
-			OtpResponse response = new OtpResponse();
+			OtpResponse response=new OtpResponse();
 			response.setTag("Wrong_captcha");
 			response.setResponse("You have entered the wrong Captcha. Please enter the correct value");
 			return response;
 		}
-	}
+	}  
 
 	public String otpPage() {
 		log.info("inside verify otp page");
-		return "verifyOtp";
-	}
+		return "verifyOtp";  
+	} 
 
-	public HttpResponse verifyOtp(Otp otp, HttpServletRequest request) {
+	public HttpResponse verifyOtp(Otp otp,HttpServletRequest request) {
 		log.info("inside verify otp controller");
-		log.info("otp data:  " + otp);
-		UserHeader header = getUserHeaders(request);
+		log.info("otp data:  "+otp);    
+		UserHeader header=getUserHeaders(request);
 		otp.setUserAgent(header.getUserAgent());
 		otp.setPublicIp(header.getPublicIp());
-		HttpResponse response = userRegistrationFeignImpl.otpValidate(otp);
-		log.info("verify otp api response:  " + response);
+		HttpResponse response=userRegistrationFeignImpl.otpValidate(otp);
+		log.info("verify otp api response:  "+response);
 		log.info("exit from verify otp controller");
 		return response;
 	}
 
-	public GenricResponse securityQuestionList(String username) {
-		log.info("inside security question controller and username: " + username);
-		GenricResponse response = userRegistrationFeignImpl.securityQuestionList(username);
-		return response;
+	public GenricResponse securityQuestionList(String username){
+		log.info("inside security question controller and username: "+username);
+		GenricResponse response =userRegistrationFeignImpl.securityQuestionList(username);
+		return response; 
 	}
-
-	public List<SecurityQuestion> allSecurityQuestionList() {
+	
+	public List<SecurityQuestion> allSecurityQuestionList(){
 		log.info("inside security question controller");
-		List<SecurityQuestion> response = userRegistrationFeignImpl.getAllSecurityQuestion();
+		List<SecurityQuestion> response =userRegistrationFeignImpl.getAllSecurityQuestion();
+		return response; 
+	}
+	public HttpResponse resendOtp(Integer id,HttpServletRequest request) {
+		log.info("inside resend otp controller");
+		log.info("id:   "+id);     
+		UserHeader header=getUserHeaders(request);
+		ResendOtp otp=new ResendOtp(header.getUserAgent(),header.getPublicIp(),id);
+		HttpResponse response=userRegistrationFeignImpl.otpResend(otp); 
+		log.info("resend otp api response:  "+response);
+		log.info("exit from resend otp controller");
 		return response;
 	}
-
-	public HttpResponse resendOtp(Integer id, HttpServletRequest request) {
+	
+	public HttpResponse profileResendOtp(Integer id,HttpServletRequest request) {
 		log.info("inside resend otp controller");
-		log.info("id:   " + id);
-		UserHeader header = getUserHeaders(request);
-		ResendOtp otp = new ResendOtp(header.getUserAgent(), header.getPublicIp(), id);
-		HttpResponse response = userRegistrationFeignImpl.otpResend(otp);
-		log.info("resend otp api response:  " + response);
+		log.info("id:   "+id);     
+		UserHeader header=getUserHeaders(request);
+		ResendOtp otp=new ResendOtp(header.getUserAgent(),header.getPublicIp(),id);
+		HttpResponse response=userRegistrationFeignImpl.profileResendOtp(otp); 
+		log.info("resend otp api response:  "+response);
 		log.info("exit from resend otp controller");
 		return response;
 	}
 
-	public HttpResponse profileResendOtp(Integer id, HttpServletRequest request) {
-		log.info("inside resend otp controller");
-		log.info("id:   " + id);
-		UserHeader header = getUserHeaders(request);
-		ResendOtp otp = new ResendOtp(header.getUserAgent(), header.getPublicIp(), id);
-		HttpResponse response = userRegistrationFeignImpl.profileResendOtp(otp);
-		log.info("resend otp api response:  " + response);
-		log.info("exit from resend otp controller");
-		return response;
-	}
-
-	public void captcha(HttpServletRequest request, HttpServletResponse response, HttpSession session)
-			throws IOException {
+	public void captcha(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException{
 		log.info("inside captcha controller");
 		response.setContentType("image/jpg");
 		int iTotalChars = 6;
 		int iHeight = 40;
-		int iWidth = 150;
+		int iWidth = 150; 
 		Font fntStyle1 = new Font("Arial", Font.BOLD, 30);
 		Random randChars = new Random();
 		String sImageCode = (Long.toString(Math.abs(randChars.nextLong()), 36)).substring(0, iTotalChars);
@@ -426,20 +413,21 @@ public class RegistrationService {
 
 	public UserHeader getUserHeaders(HttpServletRequest request) {
 		String userIp = request.getHeader("HTTP_CLIENT_IP");
-		if (userIp == null) {
+		if(userIp == null) {
 			userIp = request.getHeader("X-FORWARDED-FOR");
-			if (userIp == null) {
+			if(userIp == null) {
 				userIp = request.getRemoteAddr();
 			}
 		}
-		log.info("client Ip:  " + userIp);
+		log.info("client Ip:  "+userIp);
 		String userAgent = request.getHeader("User-Agent");
-		if (userAgent != null) {
-			log.info("user agent: " + userAgent);
-		} else {
+		if(userAgent!=null) {
+			log.info("user agent: "+userAgent);
+		}
+		else {
 			log.info("user-agent not available");
 		}
-		UserHeader headers = new UserHeader(userAgent, userIp);
+		UserHeader headers=new UserHeader(userAgent,userIp);
 		return headers;
 	}
 }

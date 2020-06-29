@@ -26,13 +26,13 @@ var featureId = 6;
 				var userId = $("body").attr("data-userID");
 			$(document).ready(function(){
 				$('div#initialloader').fadeIn('fast');
-				grievanceDataTable(lang);
+				grievanceDataTable(lang,null);
 				
 				
 				if(isNaN(userId))
 				{
-				console.log("11"+userId)					}
-			
+					//
+				}
 			else{
 				pageRendering();
 				
@@ -50,11 +50,21 @@ var featureId = 6;
 			
 			/*localStorage.setItem("grievancePageSource", "viaGriebva");*/
 
-			function grievanceDataTable(lang){
+			function grievanceDataTable(lang,source){
+			var source__val;
+
+				if(source == 'filter' ) {
+					source__val= source;
+				}
+				else{
+					source__val= $("body").attr("data-session-source");
+
+				}
+				
 				if(cierRoletype=="CEIRAdmin" || cierRoletype=="Customer Care"){
-					DataTable('headers?type=adminGrievanceHeaders&lang='+lang ,'grievanceData');
+					DataTable('headers?type=adminGrievanceHeaders&lang='+lang ,'grievanceData?source='+source__val);
 				}else{
-					DataTable('headers?type=grievanceHeaders&lang='+lang,'grievanceData');
+					DataTable('headers?type=grievanceHeaders&lang='+lang,'grievanceData?source='+source__val);
 				}
 				
 			}	
@@ -118,7 +128,14 @@ var featureId = 6;
 				if(lang=='km'){
 						var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
 					}
-
+				
+				var token = $("meta[name='_csrf']").attr("content");
+				var header = $("meta[name='_csrf_header']").attr("content");
+				$.ajaxSetup({
+				headers:
+				{ 'X-CSRF-TOKEN': token }
+				});
+				
 				$.ajax({
 					url: Url,
 					type: 'POST',
@@ -171,6 +188,14 @@ var featureId = 6;
 			//**************************************************Grievance page buttons**********************************************
 
 			function pageRendering(){
+				
+				var token = $("meta[name='_csrf']").attr("content");
+				var header = $("meta[name='_csrf_header']").attr("content");
+				$.ajaxSetup({
+				headers:
+				{ 'X-CSRF-TOKEN': token }
+				});
+				
 				$.ajax({
 					url: 'grievance/pageRendering',
 					type: 'POST',
@@ -238,7 +263,14 @@ var featureId = 6;
 						if(cierRoletype=="CEIRAdmin"){
 							$("#btnLink").css({display: "none"});
 						}
-
+						
+						var token = $("meta[name='_csrf']").attr("content");
+						var header = $("meta[name='_csrf_header']").attr("content");
+						$.ajaxSetup({
+						headers:
+						{ 'X-CSRF-TOKEN': token }
+						});
+						
 						$.getJSON('./getDropdownList/'+featureId+'/'+$("body").attr("data-userTypeID"), function(data) {
 							for (i = 0; i < data.length; i++) {
 								$('<option>').val(data[i].state).text(data[i].interp)
@@ -287,6 +319,14 @@ var featureId = 6;
 			
 			
 		function setAllDropdown(){
+			
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$.ajaxSetup({
+			headers:
+			{ 'X-CSRF-TOKEN': token }
+			});
+			
 			$.getJSON('./registrationUserType', function(data) {
 				for (i = 0; i < data.length; i++) {
 					$('<option>').val(data[i].id).text(data[i].usertypeName)
@@ -356,7 +396,14 @@ var featureId = 6;
 
 			function grievanceReply(userId,grievanceId,txnId)
 			{
-   
+				
+				var token = $("meta[name='_csrf']").attr("content");
+				var header = $("meta[name='_csrf_header']").attr("content");
+				$.ajaxSetup({
+				headers:
+				{ 'X-CSRF-TOKEN': token }
+				});
+				
 
 				$.ajax({
 					url: './viewGrievance?recordLimit=2&grievanceId='+grievanceId,
@@ -542,7 +589,14 @@ var featureId = 6;
 				formData.append('grievanceId',grievanceIdToSave);
 				formData.append('txnId',grievanceTxnId);
 				formData.append('grievanceStatus',grievanceTicketStatus);*/
-
+				
+				var token = $("meta[name='_csrf']").attr("content");
+				var header = $("meta[name='_csrf_header']").attr("content");
+				$.ajaxSetup({
+				headers:
+				{ 'X-CSRF-TOKEN': token }
+				});
+				
 				$.ajax({
 					url: './saveGrievanceMessage',
 					type: 'POST',
@@ -578,7 +632,13 @@ var featureId = 6;
 
 			function viewGrievanceHistory(grievanceId,projectPath)
 			{
-
+			
+				var token = $("meta[name='_csrf']").attr("content");
+				var header = $("meta[name='_csrf_header']").attr("content");
+				$.ajaxSetup({
+				headers:
+				{ 'X-CSRF-TOKEN': token }
+				});	
 
 			$.ajax({
 					url: './viewGrievance?recordLimit=-1&grievanceId='+grievanceId,
@@ -648,24 +708,46 @@ var featureId = 6;
 
 
 			//**********************************************************Export Excel file************************************************************************
-			function exportData()
+						function exportData()
 			{
 				var grievanceStartDate=$('#startDate').val();
 				var grievanceEndDate=$('#endDate').val();
 				var grievancetxnId=$('#transactionID').val();
-				var grievanceId=$('#grievanceID').val();
+				//var grievanceId=$('#grievanceID').val();
 				var grievanceStatus=$('#recentStatus').val();
-
+				
+				var grievanceId = (txnIdValue == 'null' && transactionIDValue == undefined) ? $('#grievanceID').val() : transactionIDValue;
+				
+				//console.log("grievanceId-->" +grievanceId);
+				//console.log("grievanceStartDate---" +grievanceStartDate+  "grievanceEndDate---" +grievanceEndDate +  "grievancetxnId---" +grievancetxnId+  "grievanceId---" +grievanceId+  "grievanceStatus---" +grievanceStatus);
+				//var source__val = tacStartDate != ''|| tacEndDate != ''|| tacStatus != '-1'|| tacNumber != ''|| txnId != '' ? 'filter' : $("body").attr("data-session-source");	
+				
+				if(grievanceId != ''){
+					source__val = 'noti'
+				}else{
+					source__val = grievanceStartDate != ''|| grievanceEndDate != ''|| grievancetxnId != ''|| grievanceId != ''|| grievanceStatus != '-1' ? 'filter' : $("body").attr("data-session-source");
+				}
+				
+				//console.log("source__val-->" +source__val);
+				
 				var table = $('#grivanceLibraryTable').DataTable();
 				var info = table.page.info(); 
 				var pageNo=info.page;
 				var pageSize =info.length;
-				window.location.href="./exportGrievance?grievanceStartDate="+grievanceStartDate+"&grievanceEndDate="+grievanceEndDate+"&grievancetxnId="+grievancetxnId+"&grievanceId="+grievanceId+"&grievanceStatus="+grievanceStatus+"&pageSize="+pageSize+"&pageNo="+pageNo;
+				window.location.href="./exportGrievance?grievanceStartDate="+grievanceStartDate+"&grievanceEndDate="+grievanceEndDate+"&grievancetxnId="+grievancetxnId+"&grievanceId="+grievanceId+"&grievanceStatus="+grievanceStatus+"&source="+source__val+"&pageSize="+pageSize+"&pageNo="+pageNo;
 			}
 
 			//************************************************ category dropdown function ******************************************************************
 			
 			$(document).ready(function(){
+				
+				var token = $("meta[name='_csrf']").attr("content");
+				var header = $("meta[name='_csrf_header']").attr("content");
+				$.ajaxSetup({
+				headers:
+				{ 'X-CSRF-TOKEN': token }
+				});
+				
 				$.getJSON('./getDropdownList/DOC_TYPE', function(data) {
 					for (i = 0; i < data.length; i++) {
 						$('<option>').val(data[i].tagId).text(data[i].interp).appendTo('#docTypetag1');
@@ -684,8 +766,13 @@ var featureId = 6;
 			}
 
 
-
-
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$.ajaxSetup({
+			headers:
+			{ 'X-CSRF-TOKEN': token }
+			});
+			
 			$.getJSON('./addMoreFile/grievance_supporting_doc_count', function(data) {
 				//console.log(data);
 				
@@ -743,6 +830,14 @@ var featureId = 6;
 					}
 			
 			//console.log("request --->" +JSON.stringify(request));	
+				
+				var token = $("meta[name='_csrf']").attr("content");
+				var header = $("meta[name='_csrf_header']").attr("content");
+				$.ajaxSetup({
+					headers:
+					{ 'X-CSRF-TOKEN': token }
+				});
+				
 			 $.ajax({
 					url: './get/tags-mapping',
 					type: 'POST',
@@ -800,6 +895,14 @@ var featureId = 6;
 					}
 			
 			//console.log("request --->" +JSON.stringify(request));	
+			
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$.ajaxSetup({
+				headers:
+				{ 'X-CSRF-TOKEN': token }
+			});
+			
 			 $.ajax({
 					url: './get/tags-mapping',
 					type: 'POST',

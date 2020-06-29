@@ -10,7 +10,7 @@
 	"updateMsg": "Your update on the form for transaction ID",
 	"hasBeenUpdated": "has been successfully updated",
 	"consignmentDeleted": "Consignment Deleted Successfully",
-	"deleteInProgress": "Delete In Progress",
+	"deleteInProgress": "your request for deletion has been accepted",
 	"stockRejected": "Stock Rejected SuccessFully",
 	"stockUploadSuccess": "Stock Approved SuccessFully",
 	"stockhaveTxn": "Do you want to approve the stock having Transaction ID:",
@@ -104,8 +104,8 @@
 	"stockResponseMessage": "User is not a distributer or retailer to assign a stock.",
 	"documentTypeName": "Document type should not be same.",
 	"tacStatucMessage": "By clicking on the checkbox, it is understood that type approval document has been checked and verified as provided by the importer.  If they are not provided, kindly reject the request",
-	"imageMessage": "Image type should  be png extension.",
-	"imageSize": "Image name size should be less than 100 kb.",
+    "imageMessage": "Kindly upload a valid image",
+	
 	"imageValidationName": "File name should not be more than 30 characters",
 	"expectedArrivaldateEdit": "Expected Dispatch Date should be less than Expected Arrival Date",
 	"validationIMEI": "Please enter numbers upto 16 characters only",
@@ -127,7 +127,7 @@
 	"Stolen/Recovery Requests": "Stolen/Recovery Requests",
 	"country": "Country",
 	"PRO_OldPass_Error": "Kindly enter the correct password",
-	"Deletion of consignment is in Progress.": "Deletion of consignment is in Progress.",
+	"Deletion of consignment is in Progress.": "your request for deletion has been accepted",
 	"currentDateError": "End Date or Start Date should not be greater than today Date",
 	"stolenIndivisual": "View Indivisual Report Stolen",
 	"stolenCompany": "View Company Report Stolen",
@@ -186,7 +186,7 @@
 	"EXIST_IN_GSMABLACKLIST_DB":"The device with IMEI/ESN/MEID  is marked as stolen/blocked globally",
 	"EXIST_IN_DISTRIBUTOR_DB":"IMEI/ESN/MEID is already present in the system",
 	"EXIST_IN_IMPORTER_DB":"This device is not importer",
-	"TRCRegister_futureRef": "Your request to register device has been received successfully. The Transaction ID for future reference is",
+	"TRCRegister_futureRef": "Your request for TAC upload has been received successfully. The Transaction ID for the same is",
 	"REGISTER_TYPE_APPROVE_REJECTED":"Type Approved for TAC already exists.",
 	"User_Success_Save" : "User has been sucessfully saved",
 	"User_Fail_Save":"User failed to saved",
@@ -200,6 +200,15 @@
 	"Add_Role_Not_Allowed" : "Add Role feature for this usertype is not available",
 	"Del_Role_Not_Allowed" : "Delete Role feature for this usertype is not available",
 	"Invalid_Action" : "Action is invalid",
+	"imageSize": "Image size should be less than 5 mb.",
+	"imageAndPdfMsg": "Kindly upload a valid image or pdf file",
 	"End User Pending Device Count" : "End User Pending Device Count",
-	"End User Pending Device Quantity":"End User Pending Device Quantity"
+	"End User Pending Device Quantity":"End User Pending Device Quantity",
+	"Update Visa Request":"Update Visa Request",
+	"TYPE_APPROVE_WRONG_ID" : "please enter correct transaction Id.",
+	"TYPE_APPROVE_UPDATE_FAIL" : "Type Approved status failed to update.",
+	"UPDATE_ERROR" : "Oops something wrong happened" 
+	
+	
+	
 }

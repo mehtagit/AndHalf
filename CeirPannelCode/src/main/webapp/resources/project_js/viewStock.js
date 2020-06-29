@@ -1,5 +1,6 @@
 var period= $("body").attr("data-period");	
 var sourceParam="";
+var selectedUserTypeId='';
 var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 
 		$.i18n().locale = lang;
@@ -48,7 +49,12 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 	       });
 		
 		var role = currentRoleType == null ? roleType : currentRoleType;
-
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+		});
 		$.ajax({
 			url : "./openStockPopup?reqType=editPage&txnId="+txnId+'&role='+role+'&userType='+userType+"&userId="+userId,
 			dataType : 'json',
@@ -113,6 +119,12 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 	function EditUploadedStockDetails(txnId){ 
 		var role = currentRoleType == null ? roleType : currentRoleType;
 		var userType=$("body").attr("data-roleType");
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+		});
 		$.ajax({
 			url : "./openStockPopup?reqType=editPage&txnId="+txnId+'&role='+role+'&userType='+userType+"&userId="+userId,
 			dataType : 'json',
@@ -200,7 +212,12 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 		
 		////console.log(JSON.stringify(formData));
 		////console.log("*********");
-
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+		});
 		$.ajax({
 			url: 'updateUploadedStock',
 			type: 'POST',
@@ -270,7 +287,12 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 				"userType":$("body").attr("data-roleType"),
 				"userName":$("body").attr("data-username")
 		}
-
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+		});
 		$.ajax({
 			url : "./stockDelete",
 			data : JSON.stringify(obj),
@@ -333,19 +355,27 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 	
 	function filter(lang,sourceParam){
 		var filterSource= $("body").attr("data-filterSource");
-		////console.log("filterSource<><><><>"+filterSource);
-	if(sourceParam==undefined)
-		{
-		sourceParam="menu";
+	    if(filterSource=='noti')
+			{
+			//console.log('1');
+			selectedUserTypeId=null;
+			}
+		else{
+			//console.log('2');
+			selectedUserTypeId=$("body").attr("data-selectedRoleTypeId");
 		}
-	if(filterSource==null)
-		{
-		sourceParam="menu";
+		
+		if(sourceParam == 'filter' ) {
+			sourceParam= 'filter';
+			if(selectedUserTypeId=="" || selectedUserTypeId==null){
+				selectedUserTypeId=$("body").attr("data-userTypeID");
+			}
 		}
-	else{
-		sourceParam=filterSource;
-	}
-	////console.log("sourceParam= "+sourceParam);
+		else{
+			sourceParam= $("body").attr("data-filterSource");
+
+		}
+	//console.log("sourceParam= "+sourceParam);
 		if((currentRoleType=="Importer" || currentRoleType=="Retailer" || currentRoleType=="Distributor" || currentRoleType=="Manufacturer") && sourceType !="viaStock" ){
 		Datatable('headers?lang='+lang+'&type=stockHeaders','stockData?source='+sourceParam);
 		}else if(currentRoleType=="Custom" && sourceType !="viaStock"){
@@ -371,6 +401,17 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 		var txn= (txnIdValue == 'null' && transactionIDValue == undefined)? $('#transactionID').val() : transactionIDValue;
 		
 		var filereduserType =  $('#userType').val() =='null' || $('#userType').val()==undefined ? null : $("#userType option:selected").text();
+		/*var filterRedirect=$("body").attr("data-filterSource");
+		var selectedUserTypeId='';
+		if(filterRedirect=='noti')
+			{
+			//console.log('1');
+			selectedUserTypeId=null;
+			}
+		else{
+			//console.log('2');
+			selectedUserTypeId=$("body").attr("data-selectedRoleTypeId");
+		}*/
 		
 		var jsonObj = {
 				"endDate":$('#endDate').val(),
@@ -379,7 +420,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 				"userId": userId,
 				"userType" : $("body").attr("data-roleType"),
 				"featureId":featureId,
-				"userTypeId":$("body").attr("data-userTypeID"),
+				"userTypeId":selectedUserTypeId,
 				"txnId":txn,
 				"consignmentStatus":parseInt($('#StockStatus').val()),
 				"displayName" : $('#name').val(),
@@ -389,7 +430,12 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 		if(lang=='km'){
 			var langFile='./resources/i18n/khmer_datatable.json';
 		}
-
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+		});
 		$.ajax({
 			url: url,
 			type: 'POST',
@@ -455,6 +501,12 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 
 
 	function pageButtons(url){ 
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+		});
 		$.ajax({
 			url: url,
 			type: 'POST',
@@ -593,6 +645,12 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 
 		var stolenRecoverydata=JSON.stringify(valuesPush());
 		////console.log("release-------"+stolenRecoverydata);
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+		});
 		$.ajax({
 			url: './multipleStolenRecovery',
 			type: 'POST',
@@ -626,6 +684,12 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 	}
 
 	function setAllDropdowns(){
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+		});
 		$.getJSON('./getDropdownList/'+featureId+'/'+$("body").attr("data-userTypeID"), function(data) {
 			for (i = 0; i < data.length; i++) {
 				$('<option>').val(data[i].state).text(data[i].interp)
@@ -679,6 +743,12 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 				"featureId":4
 		}
 		////console.log(JSON.stringify(approveRequest))
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+		});
 		$.ajax({
 			url : "./acceptRejectStockController",
 			data : JSON.stringify(approveRequest),
@@ -731,6 +801,12 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 				"remarks":Remark,
 				"featureId":4
 		}
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+		});
 		$.ajax({
 			url : "./acceptRejectStockController",
 			data : JSON.stringify(approveRequest),
@@ -794,6 +870,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 		var info = table.page.info(); 
 		var pageNo=info.page;
 		var pageSize =info.length;
+		console.log(selectedRoleTypeId);
 		////console.log("--------"+pageSize+"---------"+pageNo);
 		////console.log("stockStartDate  ="+stockStartDate+"  stockEndDate=="+stockEndDate+"  stockTxnId="+stockTxnId+" StockStatus ="+StockStatus+" roleType="+$("body").attr("data-roleType")+"  userType="+role);
 		window.location.href="./exportStock?stockStartDate="+stockStartDate+"&stockEndDate="+stockEndDate+"&stockTxnId="+stockTxnId+"&StockStatus="+StockStatus+"&userType="+userType+"&userTypeId="+selectedRoleTypeId+"&pageSize="+pageSize+"&pageNo="+pageNo+"&roleType="+roleType+'&source='+sourceParam;
@@ -855,26 +932,26 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 			 var userTypeValue=$("body").attr("data-roleType");
 			 if(userTypeValue=='CEIRAdmin')
 			 {
-				 var filterRequest={
-						 "columns":["created_on","modified_on","txn_id","user_type","role_type","stock_status","supplier_id","suplier_name",
-							 "quantity","device_quantity","invoice_number","file_name","remarks","previous_stock_status","id","assigner_id",
-							 "total_price","currency","user_id","ceir_admin_id"
-							 ],
-						"tableName": "stock_mgmt_aud",
-						"dbName" : "ceirconfig",
-						"txnId":txnID
-				}
+			 var filterRequest={
+			 "columns":["created_on","modified_on","txn_id","user_type","role_type","stock_status","supplier_id","suplier_name",
+			 "quantity","device_quantity","invoice_number","remarks","assigner_id",
+			 "user_id","ceir_admin_id" 
+			 ],
+			 "tableName": "stock_mgmt_aud",
+			 "dbName" : "ceirconfig",
+			 "txnId":txnID
+			 }
 			 }
 			 else{
-				 var filterRequest={
-						 "columns":["created_on","modified_on","txn_id","user_type","role_type","stock_status","supplier_id","suplier_name",
-							 "quantity","device_quantity","invoice_number","file_name","remarks","previous_stock_status","id","assigner_id",
-							 "total_price","currency","user_id"
-							 ],
-						"tableName": "stock_mgmt_aud",
-						"dbName" : "ceirconfig",
-						"txnId":txnID
-				}
+			 var filterRequest={
+			 "columns":["created_on","modified_on","txn_id","user_type","role_type","stock_status","supplier_id","suplier_name",
+			 "quantity","device_quantity","invoice_number","remarks","assigner_id",
+			 "user_id"
+			 ],
+			 "tableName": "stock_mgmt_aud",
+			 "dbName" : "ceirconfig",
+			 "txnId":txnID
+			 }
 			 }
 			 
 			
@@ -882,7 +959,12 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 			if(lang=='km'){
 				var langFile='../resources/i18n/khmer_datatable.json';
 			}
-
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$.ajaxSetup({
+			headers:
+			{ 'X-CSRF-TOKEN': token }
+			});
 			$.ajax({
 				url: 'Consignment/consignment-history',
 				type: 'POST',

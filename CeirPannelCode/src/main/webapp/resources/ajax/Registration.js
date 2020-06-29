@@ -2,6 +2,12 @@ function openRegistrationPage(usertype) {
 	window.location.href = contextpath + "/registration?type=" + usertype;
 }
 function portDropDownData() {
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		type : 'GET',
 		url : contextpath + '/getDropdownList/CUSTOMS_PORT',
@@ -33,6 +39,12 @@ function verifyOtp() {
 				userid : val.find('#userid').val()
 			}
 		}
+	});
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
 	});
 	$.ajax({
 		type : 'POST',
@@ -97,6 +109,12 @@ function verifyOtp2() {
 			}
 		}
 	});
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		type : 'POST',
 		url : contextpath + '/verifyOtp',
@@ -146,6 +164,12 @@ function verifyOtp2() {
 
 function resendOtp() {
 	var id = document.getElementById("userid").value;
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		type : 'POST',
 		url : contextpath + '/resendOtp/' + id,
@@ -170,6 +194,12 @@ function resendOtp() {
 
 function resendOtp2(){
 	var id=document.getElementById("userid").value;
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		type : 'POST',
 		url : contextpath + '/profileResendOtp/'+id,
@@ -209,6 +239,12 @@ function reg() {
 }
 
 function asTypeData() {
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		type : 'GET',
 		url : contextpath + '/getSourceTypeDropdown/AS_TYPE/22',
@@ -229,6 +265,12 @@ function asTypeData() {
 	});
 }
 function usertypeData() {
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		type : 'GET',
 		url : contextpath + '/usertypeList/',
@@ -254,6 +296,12 @@ function usertypeData() {
 }
 
 function usertypeData2(id) {
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		type : 'GET',
 		url : contextpath + '/getTypeDropdownList/ROLE_TYPE/' + id,
@@ -282,6 +330,12 @@ function usertypeData2(id) {
 }
 
 function usertypeDropDownData() {
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		type : 'GET',
 		url : contextpath + '/usertypeList/',
@@ -302,6 +356,12 @@ function usertypeDropDownData() {
 }
 
 function systemConfigList(id, tag) {
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		type : 'GET',
 		url : contextpath + '/operatorList/' + tag,
@@ -322,8 +382,13 @@ function systemConfigList(id, tag) {
 }
 
 function questionData(username) {
-	$
-			.ajax({
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
+	$.ajax({
 				type : 'GET',
 				url : contextpath + '/securityQuestionList/' + username,
 				contentType : "application/json",
@@ -577,6 +642,12 @@ function saveOperatorRegistration() {
 	return false;
 }
 function registrationAjax(obj) {
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		type : 'POST',
 		url : contextpath + '/saveRegistration',
@@ -620,6 +691,12 @@ function registrationAjax(obj) {
 }
 
 function otherRegistrationAjax(obj) {
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		type : 'POST',
 		url : contextpath + '/saveOtherRegistration',
@@ -691,8 +768,13 @@ function updateVisaValidity() {
 }
 
 function getByPort(port) {
-	$
-			.ajax({
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
+	$.ajax({
 				type : 'GET',
 				url : contextpath + '/byArrivalPort/' + port,
 				contentType : "application/json",

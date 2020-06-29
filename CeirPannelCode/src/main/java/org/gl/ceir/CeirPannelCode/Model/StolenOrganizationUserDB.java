@@ -2,6 +2,7 @@ package org.gl.ceir.CeirPannelCode.Model;
 
 public class StolenOrganizationUserDB {
 
+	
 	private String commune;
 	private String companyName;
 	private String country;
@@ -28,222 +29,222 @@ public class StolenOrganizationUserDB {
 	private String province;
 	private String street;
 	private String username;
-	private String village, incidentPropertyLocation;
+	private String village,incidentPropertyLocation;
 
 	public String getCommune() {
-		return commune;
+	return commune;
 	}
 
 	public void setCommune(String commune) {
-		this.commune = commune;
+	this.commune = commune;
 	}
 
 	public String getCompanyName() {
-		return companyName;
+	return companyName;
 	}
 
 	public void setCompanyName(String companyName) {
-		this.companyName = companyName;
+	this.companyName = companyName;
 	}
 
 	public String getCountry() {
-		return country;
+	return country;
 	}
 
 	public void setCountry(String country) {
-		this.country = country;
+	this.country = country;
 	}
 
 	public String getCreatedOn() {
-		return createdOn;
+	return createdOn;
 	}
 
 	public void setCreatedOn(String createdOn) {
-		this.createdOn = createdOn;
+	this.createdOn = createdOn;
 	}
 
 	public String getDistrict() {
-		return district;
+	return district;
 	}
 
 	public void setDistrict(String district) {
-		this.district = district;
+	this.district = district;
 	}
 
 	public String getEmail() {
-		return email;
+	return email;
 	}
 
 	public void setEmail(String email) {
-		this.email = email;
+	this.email = email;
 	}
 
 	public Integer getId() {
-		return id;
+	return id;
 	}
 
 	public void setId(Integer id) {
-		this.id = id;
+	this.id = id;
 	}
 
 	public String getIncidentCommune() {
-		return incidentCommune;
+	return incidentCommune;
 	}
 
 	public void setIncidentCommune(String incidentCommune) {
-		this.incidentCommune = incidentCommune;
+	this.incidentCommune = incidentCommune;
 	}
 
 	public String getIncidentCountry() {
-		return incidentCountry;
+	return incidentCountry;
 	}
 
 	public void setIncidentCountry(String incidentCountry) {
-		this.incidentCountry = incidentCountry;
+	this.incidentCountry = incidentCountry;
 	}
 
 	public String getIncidentDistrict() {
-		return incidentDistrict;
+	return incidentDistrict;
 	}
 
 	public void setIncidentDistrict(String incidentDistrict) {
-		this.incidentDistrict = incidentDistrict;
+	this.incidentDistrict = incidentDistrict;
 	}
 
 	public String getIncidentLocality() {
-		return incidentLocality;
+	return incidentLocality;
 	}
 
 	public void setIncidentLocality(String incidentLocality) {
-		this.incidentLocality = incidentLocality;
+	this.incidentLocality = incidentLocality;
 	}
 
 	public Integer getIncidentPostalCode() {
-		return incidentPostalCode;
+	return incidentPostalCode;
 	}
 
 	public void setIncidentPostalCode(Integer incidentPostalCode) {
-		this.incidentPostalCode = incidentPostalCode;
+	this.incidentPostalCode = incidentPostalCode;
 	}
 
 	public String getIncidentProvince() {
-		return incidentProvince;
+	return incidentProvince;
 	}
 
 	public void setIncidentProvince(String incidentProvince) {
-		this.incidentProvince = incidentProvince;
+	this.incidentProvince = incidentProvince;
 	}
 
 	public String getIncidentStreet() {
-		return incidentStreet;
+	return incidentStreet;
 	}
 
 	public void setIncidentStreet(String incidentStreet) {
-		this.incidentStreet = incidentStreet;
+	this.incidentStreet = incidentStreet;
 	}
 
 	public String getIncidentVillage() {
-		return incidentVillage;
+	return incidentVillage;
 	}
 
 	public void setIncidentVillage(String incidentVillage) {
-		this.incidentVillage = incidentVillage;
+	this.incidentVillage = incidentVillage;
 	}
 
 	public String getLocality() {
-		return locality;
+	return locality;
 	}
 
 	public void setLocality(String locality) {
-		this.locality = locality;
+	this.locality = locality;
 	}
 
 	public String getModifiedOn() {
-		return modifiedOn;
+	return modifiedOn;
 	}
 
 	public void setModifiedOn(String modifiedOn) {
-		this.modifiedOn = modifiedOn;
+	this.modifiedOn = modifiedOn;
 	}
 
 	public String getPersonnelFirstName() {
-		return personnelFirstName;
+	return personnelFirstName;
 	}
 
 	public void setPersonnelFirstName(String personnelFirstName) {
-		this.personnelFirstName = personnelFirstName;
+	this.personnelFirstName = personnelFirstName;
 	}
 
 	public String getPersonnelLastName() {
-		return personnelLastName;
+	return personnelLastName;
 	}
 
 	public void setPersonnelLastName(String personnelLastName) {
-		this.personnelLastName = personnelLastName;
+	this.personnelLastName = personnelLastName;
 	}
 
 	public String getPersonnelMiddleName() {
-		return personnelMiddleName;
+	return personnelMiddleName;
 	}
 
 	public void setPersonnelMiddleName(String personnelMiddleName) {
-		this.personnelMiddleName = personnelMiddleName;
+	this.personnelMiddleName = personnelMiddleName;
 	}
 
 	public String getPhoneNo() {
-		return phoneNo;
+	return phoneNo;
 	}
 
 	public void setPhoneNo(String phoneNo) {
-		this.phoneNo = phoneNo;
+	this.phoneNo = phoneNo;
 	}
 
 	public Integer getPostalCode() {
-		return postalCode;
+	return postalCode;
 	}
 
 	public void setPostalCode(Integer postalCode) {
-		this.postalCode = postalCode;
+	this.postalCode = postalCode;
 	}
 
 	public String getPropertyLocation() {
-		return propertyLocation;
+	return propertyLocation;
 	}
 
 	public void setPropertyLocation(String propertyLocation) {
-		this.propertyLocation = propertyLocation;
+	this.propertyLocation = propertyLocation;
 	}
 
 	public String getProvince() {
-		return province;
+	return province;
 	}
 
 	public void setProvince(String province) {
-		this.province = province;
+	this.province = province;
 	}
 
 	public String getStreet() {
-		return street;
+	return street;
 	}
 
 	public void setStreet(String street) {
-		this.street = street;
+	this.street = street;
 	}
 
 	public String getUsername() {
-		return username;
+	return username;
 	}
 
 	public void setUsername(String username) {
-		this.username = username;
+	this.username = username;
 	}
 
 	public String getVillage() {
-		return village;
+	return village;
 	}
 
 	public void setVillage(String village) {
-		this.village = village;
+	this.village = village;
 	}
 
 	public String getIncidentPropertyLocation() {
@@ -269,4 +270,7 @@ public class StolenOrganizationUserDB {
 				+ ", incidentPropertyLocation=" + incidentPropertyLocation + "]";
 	}
 
+
+
+	
 }

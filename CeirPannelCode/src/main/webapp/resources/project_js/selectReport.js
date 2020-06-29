@@ -15,19 +15,23 @@
 	
 	function hide() {
 		var reportname = $('#tableId').val();
+		var reportInterp = $("#tableId option:selected").text();
 		
 		if(reportname.length == 0){
 			//console.log("please field input");
 		}else{
 			//sessionStorage.setItem("roleType",roleType);
 		sessionStorage.setItem("reportname", reportname);
+		sessionStorage.setItem("reportInterp", reportInterp);
 		window.location.replace("./report?via=other&tableName="+reportname);
 		}
-	}
-	
-	
-	;
-	
+	};
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		url: './getallreports',
 		type: 'POST',

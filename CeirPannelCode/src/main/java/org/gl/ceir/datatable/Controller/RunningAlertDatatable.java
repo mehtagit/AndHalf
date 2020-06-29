@@ -52,130 +52,131 @@ public class RunningAlertDatatable {
 	RunningAlertContent runningAlertContent;
 	@Autowired
 	RunningAlertPagination runningAlertPagination;
-
+	
 	@PostMapping("runningAlertManagementData")
-	public ResponseEntity<?> viewRunningAlertsRecord(
-			@RequestParam(name = "type", defaultValue = "runningAlertManagement", required = false) String role,
-			HttpServletRequest request, HttpSession session) {
-		// String userType = (String) session.getAttribute("usertype");
-		// int userId= (int) session.getAttribute("userid");
-		int file = 0;
+	public ResponseEntity<?> viewRunningAlertsRecord(@RequestParam(name="type",defaultValue = "runningAlertManagement",required = false) String role, HttpServletRequest request,HttpSession session) {
+		//String userType = (String) session.getAttribute("usertype");
+		//int userId=	(int) session.getAttribute("userid");
+		int file=0;
 		// Data set on this List
-		List<List<Object>> finalList = new ArrayList<List<Object>>();
+		List<List<Object>> finalList=new ArrayList<List<Object>>();
 		String filter = request.getParameter("filter");
-		Gson gsonObject = new Gson();
+		Gson gsonObject=new Gson();
 		FilterRequest filterrequest = gsonObject.fromJson(filter, FilterRequest.class);
 		Integer pageSize = Integer.parseInt(request.getParameter("length"));
-		Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize;
+		Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize ;
 		filterrequest.setSearchString(request.getParameter("search[value]"));
-		log.info("pageSize" + pageSize + "-----------pageNo---" + pageNo);
+		log.info("pageSize"+pageSize+"-----------pageNo---"+pageNo);
 		try {
-			log.info("request send to the filter api =" + filterrequest);
-			Object response = userProfileFeignImpl.viewRunningAlertRequest(filterrequest, pageNo, pageSize, file);
-			log.info("response in datatable" + response);
-			Gson gson = new Gson();
+			log.info("request send to the filter api ="+filterrequest);
+			Object response = userProfileFeignImpl.viewRunningAlertRequest(filterrequest,pageNo,pageSize,file);
+			log.info("response in datatable"+response);
+			Gson gson= new Gson(); 
 			String apiResponse = gson.toJson(response);
 			runningAlertPagination = gson.fromJson(apiResponse, RunningAlertPagination.class);
 			List<RunningAlertContent> paginationContentList = runningAlertPagination.getContent();
-			if (paginationContentList.isEmpty()) {
+			if(paginationContentList.isEmpty()) {
 				datatableResponseModel.setData(Collections.emptyList());
-			} else {
-				for (RunningAlertContent dataInsideList : paginationContentList) {
-					String id = String.valueOf(dataInsideList.getId());
-					String createdOn = dataInsideList.getCreatedOn();
-					String modifiedOn = (String) dataInsideList.getModifiedOn();
-					String alertId = dataInsideList.getAlertId();
-					String statusInterp = dataInsideList.getStatusInterp();
-					String description = dataInsideList.getDescription();
-					// String userStatus = (String) session.getAttribute("userStatus");
-					Object[] finalData = { createdOn, alertId, description, statusInterp };
-					List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
+			}else {
+				for(RunningAlertContent dataInsideList : paginationContentList) 
+				{
+				   String id= String.valueOf(dataInsideList.getId());	
+				   String createdOn= dataInsideList.getCreatedOn();
+				   String modifiedOn = (String) dataInsideList.getModifiedOn();
+				   String alertId = dataInsideList.getAlertId();
+				   String statusInterp= dataInsideList.getStatusInterp();
+				   String description = dataInsideList.getDescription();
+				   //String userStatus = (String) session.getAttribute("userStatus");	  
+				   Object[] finalData={createdOn,alertId,description,statusInterp}; 
+				   List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 					finalList.add(finalDataList);
-					datatableResponseModel.setData(finalList);
-				}
+					datatableResponseModel.setData(finalList);	
 			}
-			// data set on ModelClass
+		}
+			//data set on ModelClass
 			datatableResponseModel.setRecordsTotal(runningAlertPagination.getNumberOfElements());
 			datatableResponseModel.setRecordsFiltered(runningAlertPagination.getTotalElements());
-			return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK);
-		} catch (Exception e) {
+			return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK); 
+		}catch(Exception e) {
 			datatableResponseModel.setRecordsTotal(null);
 			datatableResponseModel.setRecordsFiltered(null);
 			datatableResponseModel.setData(Collections.emptyList());
-			log.error(e.getMessage(), e);
-			return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK);
-
+			log.error(e.getMessage(),e);
+			return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK); 
+			
 		}
 	}
-
+	
+	
 	@PostMapping("runningAlertManagement/pageRendering")
-	public ResponseEntity<?> pageRendering(HttpSession session) {
+	public ResponseEntity<?> pageRendering(HttpSession session){
 
 		String userType = (String) session.getAttribute("usertype");
 		String userStatus = (String) session.getAttribute("userStatus");
-
+		
 		InputFields inputFields = new InputFields();
 		InputFields dateRelatedFields;
-
+		
 		pageElement.setPageTitle(Translator.toLocale("sidebar.running_Alert_Management"));
-
+		
 		List<Button> buttonList = new ArrayList<>();
 		List<InputFields> dropdownList = new ArrayList<>();
 		List<InputFields> inputTypeDateList = new ArrayList<>();
-
-		log.info("USER STATUS:::::::::" + userStatus);
-		log.info("session value user Type==" + session.getAttribute("usertype"));
-
-		String[] names = { "HeaderButton", Translator.toLocale("button.addCurrency"), "AddCurrencyAddress()", "btnLink",
-				"FilterButton", Translator.toLocale("button.filter"),
-				"alertFieldTable(" + ConfigParameters.languageParam + ")", "submitFilter" };
-		for (int i = 0; i < names.length; i++) {
-			button = new Button();
-			button.setType(names[i]);
-			i++;
-			button.setButtonTitle(names[i]);
-			i++;
-			button.setButtonURL(names[i]);
-			i++;
-			button.setId(names[i]);
-			buttonList.add(button);
-		}
-		pageElement.setButtonList(buttonList);
-
-		// Dropdown items
-		String[] selectParam = { "select", Translator.toLocale("table.alertId"), "alertId", "", };
-		for (int i = 0; i < selectParam.length; i++) {
-			inputFields = new InputFields();
-			inputFields.setType(selectParam[i]);
-			i++;
-			inputFields.setTitle(selectParam[i]);
-			i++;
-			inputFields.setId(selectParam[i]);
-			i++;
-			inputFields.setClassName(selectParam[i]);
-			dropdownList.add(inputFields);
-		}
-		pageElement.setDropdownList(dropdownList);
-
-		// input type date list
-		String[] dateParam = { "date", Translator.toLocale("input.startDate"), "startDate", "", "date",
-				Translator.toLocale("input.endDate"), "endDate", "" };
-		for (int i = 0; i < dateParam.length; i++) {
-			dateRelatedFields = new InputFields();
-			dateRelatedFields.setType(dateParam[i]);
-			i++;
-			dateRelatedFields.setTitle(dateParam[i]);
-			i++;
-			dateRelatedFields.setId(dateParam[i]);
-			i++;
-			dateRelatedFields.setClassName(dateParam[i]);
-			inputTypeDateList.add(dateRelatedFields);
-		}
-
-		pageElement.setInputTypeDateList(inputTypeDateList);
-		pageElement.setUserStatus(userStatus);
-		return new ResponseEntity<>(pageElement, HttpStatus.OK);
-
+			
+			log.info("USER STATUS:::::::::"+userStatus);
+			log.info("session value user Type=="+session.getAttribute("usertype"));
+			
+			String[] names = { "HeaderButton", Translator.toLocale("button.addCurrency"), "AddCurrencyAddress()", "btnLink",
+					"FilterButton", Translator.toLocale("button.filter"),"alertFieldTable(" + ConfigParameters.languageParam + ")", "submitFilter" };
+			for(int i=0; i< names.length ; i++) {
+				button = new Button();
+				button.setType(names[i]);
+				i++;
+				button.setButtonTitle(names[i]);
+				i++;
+				button.setButtonURL(names[i]);
+				i++;
+				button.setId(names[i]);
+				buttonList.add(button);
+			}			
+			pageElement.setButtonList(buttonList);
+			
+		
+			  //Dropdown items 
+			  String[] selectParam={"select",Translator.toLocale("table.alertId"),"alertId","",}; 
+			  for(int i=0; i<selectParam.length; i++) { 
+					inputFields= new InputFields();
+			  inputFields.setType(selectParam[i]); 
+			  i++;
+			  inputFields.setTitle(selectParam[i]);
+			  i++; 
+			  inputFields.setId(selectParam[i]);
+			  i++; 
+			  inputFields.setClassName(selectParam[i]);
+			  dropdownList.add(inputFields);
+			  } 
+			pageElement.setDropdownList(dropdownList);
+		 
+			
+			//input type date list		
+			String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate",""};
+			for(int i=0; i< dateParam.length; i++) {
+				dateRelatedFields= new InputFields();
+				dateRelatedFields.setType(dateParam[i]);
+				i++;
+				dateRelatedFields.setTitle(dateParam[i]);
+				i++;
+				dateRelatedFields.setId(dateParam[i]);
+				i++;
+				dateRelatedFields.setClassName(dateParam[i]);
+				inputTypeDateList.add(dateRelatedFields);
+			}
+			
+			pageElement.setInputTypeDateList(inputTypeDateList);
+			pageElement.setUserStatus(userStatus);
+			return new ResponseEntity<>(pageElement, HttpStatus.OK); 
+		
+		
 	}
-
+	
 }

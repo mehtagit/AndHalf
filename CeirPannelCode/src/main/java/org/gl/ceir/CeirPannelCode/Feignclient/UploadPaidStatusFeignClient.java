@@ -22,57 +22,67 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Service
-@FeignClient(url = "${feignClientPath}", value = "dsj")
+@FeignClient(url = "${feignClientPath}",value = "dsj" )
 public interface UploadPaidStatusFeignClient {
 
 	@PostMapping("/end-user/searchByNid")
 	public GenricResponse respone(@RequestBody AllRequest request);
-
+	
+	
 	@PostMapping("/filter/end-user-device-info")
 	public Object view(@RequestBody FilterRequest_UserPaidStatus filterRequest,
 			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
 			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
 			@RequestParam(value = "file", defaultValue = "0") Integer file,
-			@RequestParam(value = "source", defaultValue = "menu") String source);
+			@RequestParam(value="source",defaultValue ="menu") String source);
+	
+	
+	
 
 	@DeleteMapping("/end-user-device-info")
 	public @ResponseBody GenricResponse delete(@RequestBody AllRequest request);
-
-	// ********************************************** open register page or edit
-	// popup *****************************
+	
+	
+	
+	
+	
+	// ********************************************** open register page or edit popup *****************************
 	@PostMapping("/end-user-device-info/view")
 	public @ResponseBody UserPaidStatusContent viewByImei(@RequestBody AllRequest imei);
+	
 
 	@PostMapping("/end-user-device-info/count-by-nid/{nid}/{type}")
-	public @ResponseBody GenricResponse countByNid(@PathVariable("nid") String nid,
-			@PathVariable("type") int nationType);
-
+	public @ResponseBody GenricResponse countByNid(@PathVariable("nid") String  nid,@PathVariable("type") int nationType);
+	
+	
 	@PutMapping("/accept-reject/end-user-device")
 	public @ResponseBody GenricResponse approveRejectFeign(FilterRequest_UserPaidStatus filterRequest);
-
+	
 	@PostMapping("/end-user/searchByNid")
 	public @ResponseBody GenricResponse fetchVisaDetailsbyPassport(@RequestBody AllRequest nid);
-
+	
 	@PutMapping("visa/end-user")
 	public @ResponseBody GenricResponse updateEndUSerVisaDetailsby(EndUserVisaInfo visaInfo);
-
+	
 	@PostMapping("/end-user")
 	public @ResponseBody GenricResponse RegisterEndUserDevice(EndUserVisaInfo visaInfo);
-
+	
 	@PostMapping("/stakeholder/Stolen")
 	public @ResponseBody GenricResponse lawfulIndivisualStolen(LawfulStolenRecovey lawfulStolen);
-
+	
 	@PostMapping("/stakeholder/Recovery")
 	public @ResponseBody GenricResponse lawfulIndivisualAndOraganisationRecovery(LawfulStolenRecovey lawfulStolen);
 
-	@RequestMapping(value = "/stolen-and-recovery/by-txnId", method = RequestMethod.POST)
-	public LawfulStolenRecovey fetchSingleDevicebyTxnId(LawfulStolenRecovey txnId);
+	@RequestMapping(value="/stolen-and-recovery/by-txnId" ,method=RequestMethod.POST) 
+	public LawfulStolenRecovey fetchSingleDevicebyTxnId(LawfulStolenRecovey txnId );
 
-	@RequestMapping(value = "/stakeholder/update", method = RequestMethod.PUT)
-	public GenricResponse updateIndivisualStolen(LawfulStolenRecovey lawfulStolen);
+	@RequestMapping(value="/stakeholder/update",method=RequestMethod.PUT) 
+	public GenricResponse updateIndivisualStolen(LawfulStolenRecovey lawfulStolen );
 
+	
 	@PutMapping("/accept-reject/end-user-visa")
 	public @ResponseBody GenricResponse updateVisaRequest(FilterRequest_UserPaidStatus filterRequest);
+	
 
 	@PostMapping("/visa/viewById")
 	public @ResponseBody UpdateVisaModel viewVisaDetails(FilterRequest filterRequest);

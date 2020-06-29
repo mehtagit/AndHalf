@@ -17,7 +17,13 @@
 			var searchRequest={
 					"username" : $('#Search').val()
 			}
-			console.log("searchRequest--->" +JSON.stringify(searchRequest));
+			//console.log("searchRequest--->" +JSON.stringify(searchRequest));
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$.ajaxSetup({
+				headers:
+				{ 'X-CSRF-TOKEN': token }
+			}); 	
 				$.ajax({
 					url: './searchUser',
 					type: 'POST',
@@ -26,9 +32,9 @@
 					contentType : 'application/json; charset=utf-8',
 					success: function (data, textStatus, jqXHR) {
 						if(data.statusCode==200){
-							var name = data.name;
+							var primaryRole = data.primaryRole;
 							var userId = data.userId;
-							sessionStorage.setItem("userName", name);
+							sessionStorage.setItem("primaryRole", primaryRole);
 							sessionStorage.setItem("userId", userId);
 							window.location.href = "./openGrievanceForm?reqType=formPage";
 						}else{

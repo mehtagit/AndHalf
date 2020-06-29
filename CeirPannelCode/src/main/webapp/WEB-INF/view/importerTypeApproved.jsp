@@ -23,10 +23,19 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<!-- Security Tags -->
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<sec:csrfMetaTags />
+<!-- Security Tags -->
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en" class="no-js">
 <head>
+<!-- Security Tags -->
+<meta name="_csrf" content="${_csrf.token}"/>
+<!-- default header name is X-CSRF-TOKEN -->
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
+<!-- Security Tags -->
 <title>Importer</title>
 <meta http-equiv='cache-control' content='no-cache'>
 <meta http-equiv='expires' content='-1'>
@@ -188,19 +197,19 @@
 														code="input.documenttype" /></label> <select
 													class="browser-default" id="docTypetag1"
 													onchange="enableSelectFile()">
-													<option value="" disabled selected><spring:message
+													<option value=""  selected><spring:message
 															code="select.documenttype" />
 													</option>
 
 												</select> <select class="browser-default" id="docTypetagValue1"
 													style="display: none;">
-													<option value="" disabled selected><spring:message
+													<option value=""  selected><spring:message
 															code="select.documenttype" /></option>
 
 												</select>
 											</div>
 
-											<div class="file-field col s12 m6">
+											<div class="file-field col s12 m6" id="removestar">
 												<h6 id="supportingdocumentFile" class="file-upload-heading">
 													<spring:message code="input.supportingdocument" />
 												</h6>
@@ -212,7 +221,7 @@
 														oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');">
 												</div>
 												<div class="file-path-wrapper">
-													<input class="file-path validate" type="text"
+													<input class="file-path validate" type="text" id="filetextField"
 														placeholder="<spring:message code="grievanceFileMessage" />">
 													<div>
 														<p id="myFiles"></p>
@@ -266,8 +275,7 @@
 		</h6>
 		<div class="modal-content">
 			<div class="row">
-				<h6 id="sucessMessage">
-				</h6><span id="transactionId"> </span>
+				<h6 id="sucessMessage"><spring:message code="TRCRegister_futureRef"/>  <span id="txnId"></span></h6>
 				<input type="text" style="display: none" id="errorCode">
 			</div>
 			<div class="row">
