@@ -99,7 +99,13 @@ var lang_param =window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 					}
 			 formData.append("request",JSON.stringify(request));
 			 formData.append("sourceType",roleType);
-			$.ajax({
+			 var token = $("meta[name='_csrf']").attr("content");
+			 var header = $("meta[name='_csrf_header']").attr("content");
+			 $.ajaxSetup({
+			 headers:
+			 { 'X-CSRF-TOKEN': token }
+			 });
+			 $.ajax({
 				url: './uploadPaidStatusForm',
 				type: 'POST',
 				data: formData,
@@ -149,6 +155,12 @@ function defaultDeviceForm(){
 		console.log("allowed="+allowed+"& current="+current)
 	
 		var incrementedCurrent='';
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+		});
 		$.getJSON('./getDropdownList/CUSTOMS_TAX_STATUS', function(data) {
 			/* for (i = 0; i < data.length; i++) {
 				$('<option>').val(data[i].value).text(data[i].interp)
@@ -313,7 +325,12 @@ function defaultDeviceForm(){
 
 
           
-
+                var token = $("meta[name='_csrf']").attr("content");
+                var header = $("meta[name='_csrf_header']").attr("content");
+                $.ajaxSetup({
+                headers:
+                { 'X-CSRF-TOKEN': token }
+                });
             	$.getJSON('./getDropdownList/DEVICE_TYPE', function(data) {
             		var dropdownid=id-1;
             		for (i = 0; i < data.length; i++) {

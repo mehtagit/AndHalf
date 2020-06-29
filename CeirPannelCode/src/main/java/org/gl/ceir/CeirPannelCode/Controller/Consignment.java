@@ -436,9 +436,26 @@ return mv;
 
 // ********************************************** open register page or edit popup *****************************
 @RequestMapping(value="/openRegisterConsignmentPopup",method ={org.springframework.web.bind.annotation.RequestMethod.GET})
-public @ResponseBody ConsignmentModel openRegisterConsignmentPopup(@RequestParam(name="reqType") String reqType,@RequestParam(name="txnId",required = false) String txnId)
+public @ResponseBody ConsignmentModel openRegisterConsignmentPopup(@RequestParam(name="reqType") String reqType,@RequestParam(name="txnId",required = false) String txnId,HttpSession session)
 {
+	String userName=session.getAttribute("username").toString();
+	int userId= (int) session.getAttribute("userid");
+	String roletype=session.getAttribute("usertype").toString();
+	int userTypeId =(int) session.getAttribute("usertypeId");
+	
 ConsignmentModel consignmentdetails= new ConsignmentModel();
+FilterRequest filterRequest= new  FilterRequest();
+filterRequest.setTxnId(txnId);
+filterRequest.setUserId(0);
+filterRequest.setUsername("");
+filterRequest.setUserTypeId(0);
+filterRequest.setUserType("");
+filterRequest.setFeatureId(0);
+filterRequest.setRoleType("");
+		/*
+		 * String txnId Long userId, String userName, Long userTypeId, String userType,
+		 * Long featureId, Long roleType
+		 */
 if(reqType.equals("editPage")) {
 log.info("transaction id passed to the fetch consignment api="+txnId);
 consignmentdetails=feignCleintImplementation.fetchConsignmentByTxnId(txnId);

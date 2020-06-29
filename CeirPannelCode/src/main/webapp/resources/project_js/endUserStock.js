@@ -52,6 +52,12 @@ function uploadEndUserStock()
 	 };
 	    formData.append('file', $('#endUsercsvUploadFile')[0].files[0]);
 		formData.append("request",JSON.stringify(request));
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+		});
 		$.ajax({
 			url: './ednUserStockUpload',
 			type: 'POST',
@@ -86,6 +92,12 @@ function uploadEndUserStock()
 function validateTxnId()
 {
 	var txnId=$('#checktransactionID').val();
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		url : "./fetchUploadAstock?txnId="+txnId,
 		dataType : 'json',
@@ -172,7 +184,12 @@ function updateFile()
 	var formData= new FormData();
 	formData.append('file', $('#csvUploadFile')[0].files[0]);
 	formData.append('txnId',txnId);
-	
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		url: 'updateUploadedAstock',
 		type: 'POST',

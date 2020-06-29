@@ -39,6 +39,13 @@ setTimeout(function(){
 
 $(document).ready(function() {
 	// executes when HTML-Document is loaded and DOM is ready
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
+
 	$.ajax({
 		url: './productList',
 		type: 'GET',
@@ -97,6 +104,12 @@ function viewIndivisualStolen()
 
 
 	var txnid=$('#existingStolenTxnId').val();
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
 
 	$.ajax({
 		url: './openStolenAndRecoveryPage?txnId='+txnid+"&requestType=0",
@@ -373,6 +386,13 @@ function updateIndivisualStolen()
 	formData.append('file', $('#singleStolenFile')[0].files[0]);
 	formData.append('firFileName', $('#uploadFirSingle')[0].files[0]);
 	formData.append("request",JSON.stringify(request));
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
+
 	$.ajax({
 		url: './lawfulIndivisualStolenUpdate',
 		type: 'POST',
@@ -570,6 +590,13 @@ setTimeout(function(){
 function changeBrandValue(brand_id){
 	//alert("ss"+brand_id);
 	//var brand_id = $('#editsingleStolendeviceBrandName').val();
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
+
 	$.ajaxSetup({
 		async: false
 		});

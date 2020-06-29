@@ -22,6 +22,11 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+
+<!-- Security Tags -->
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<sec:csrfMetaTags />
+<!-- Security Tags -->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <c:set var="context" value="${pageContext.request.contextPath}" />
@@ -39,6 +44,12 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta content="" name="description" />
 <meta content="" name="author" />
+<!-- Security Tags -->
+<meta name="_csrf" content="${_csrf.token}"/>
+<!-- default header name is X-CSRF-TOKEN -->
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
+<!-- Security Tags -->
+
 
 <style type="text/css">
  .checkboxFont {
@@ -441,18 +452,17 @@ src="${context}/resources/project_js/enterKey.js?version=<%= (int) (Math.random(
 		src="${context}/resources/project_js/_dateFunction.js?version=<%= (int) (Math.random() * 10) %>" async></script>
 		<script type="text/javascript"
 		src="${context}/resources/project_js/profileInfoTab.js?version=<%= (int) (Math.random() * 10) %>" async></script>
-		<script>
+		
 
-		<!--plugins.js - Some Specific JS codes for Plugin Settings-->
-		<script
-		src="${context}/resources/custom_js/bootstrap.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		
+		<script type="text/javascript" src="${context}/resources/custom_js/bootstrap.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 		<%--   <script type="text/javascript" src="${context}/resources/js/materialize-plugins/date_picker/picker.date.js"></script>
 	    <script type="text/javascript" src="${context}/resources/js/materialize-plugins/date_picker/picker.js"></script> --%>
 		<!--custom-script.js - Add your own theme custom JS-->
 		<script type="text/javascript" src="${context}/resources/js/plugins.js?version=<%= (int) (Math.random() * 10) %>"></script>
-		<script type="text/javascript"
-			src="${context}/resources/js/Validator.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		<%-- <script type="text/javascript"
+			src="${context}/resources/js/Validator.js?version=<%= (int) (Math.random() * 10) %>"></script> --%>
 		<!--prism
 	    <script type="text/javascript" src="${context}/resources/resources/js/prism/prism.js"></script>-->
 		<!--scrollbar-->
@@ -491,7 +501,14 @@ src="${context}/resources/project_js/enterKey.js?version=<%= (int) (Math.random(
 		
 		
 		$(document).ready(function () {
-			
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$.ajaxSetup({
+			headers:
+			{ 'X-CSRF-TOKEN': token }
+			});
+
+
 			$.getJSON('./getDropdownList/DEVICE_TYPE', function(data) {
 					
 					for (i = 0; i < data.length; i++) {

@@ -2,6 +2,10 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<!-- Security Tags -->
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<sec:csrfMetaTags />
+<!-- Security Tags -->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
@@ -19,6 +23,12 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta content="" name="description" />
 <meta content="" name="author" />
+<!-- Security Tags -->
+<meta name="_csrf" content="${_csrf.token}"/>
+<!-- default header name is X-CSRF-TOKEN -->
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
+<!-- Security Tags -->
+
 <jsp:include page="/WEB-INF/view/endUserHeader.jsp" ></jsp:include>
 <jsp:include page="/WEB-INF/view/endUserFooter.jsp" ></jsp:include>
 
@@ -1003,12 +1013,13 @@ position: fixed;
 	<form action="viewDeviceInformation" method="post" id="viewDeviceForm">
 	<input type="text" id="viewbyImei" name="viewbyImei" style="display: none">
 	<input type="text" id="viewbytxnId" name="viewbytxnId" style="display: none">
+	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 	</form>
 	
 	<div id="tableOnModal" class="modal">
 	<div class="header-fixed header-fixed-style">
 		<button type="button"
-			class=" modal-action modal-close waves-effect waves-green btn-flat right"
+			class=" modal-action modal-close  btn-flat right"
 			data-dismiss="modal">&times;</button>
 		<h6 class="modal-header"><spring:message code="modal.header.viewHistory" /></h6>
 		</div>

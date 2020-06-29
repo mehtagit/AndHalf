@@ -55,7 +55,12 @@ function operatorDatatable(lang){
 		if(lang=='km'){
 				var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
 			}
-
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		url: 'headers?type=greyBlackList&lang='+lang,
 		type: 'POST',
@@ -113,6 +118,12 @@ pageRendering("operator/pageRendering?featureType="+type+"&lang="+lang);
 //**************************************************Registration page buttons**********************************************
 
 function pageRendering(URL){
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		url: URL,
 		type: 'POST',

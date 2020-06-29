@@ -67,6 +67,13 @@
 			if(lang=='km'){
 				var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
 			}
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$.ajaxSetup({
+				headers:
+				{ 'X-CSRF-TOKEN': token }
+			});
+			
 			$.ajax({
 				url: 'headers?type=fieldManagement&lang='+lang,
 				/*	headers: {"Accept-Language": "en"},*/
@@ -124,6 +131,12 @@
 
 
 		function pageRendering(){
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$.ajaxSetup({
+				headers:
+				{ 'X-CSRF-TOKEN': token }
+			});
 			$.ajax({
 				url: 'fieldManagement/pageRendering',
 				type: 'POST',
@@ -218,6 +231,13 @@
 		var request ={
 				  "userId" : parseInt($("body").attr("data-userID"))
 			}
+		
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+			headers:
+			{ 'X-CSRF-TOKEN': token }
+		});
 		$.ajax({
 			url: './getSystemTags',
 			type: 'POST',
@@ -266,7 +286,13 @@
 					  "username" : $("body").attr("data-selected-username")
 				}
 		
-		console.log("request------------->" +JSON.stringify(request))
+		//console.log("request------------->" +JSON.stringify(request))
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+			headers:
+			{ 'X-CSRF-TOKEN': token }
+		});
 		$.ajax({
 			url : './add-Field',
 			data : JSON.stringify(request),
@@ -304,6 +330,12 @@
 					  "userType":$("body").attr("data-roleType"),
 					  "username" : $("body").attr("data-selected-username")
 				}
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$.ajaxSetup({
+				headers:
+				{ 'X-CSRF-TOKEN': token }
+			});
 			$.ajax({
 				url: './fieldViewByID',
 				type: 'POST',
@@ -360,7 +392,14 @@
 		  //"value":$("#editValue").val()
 		}
 		
-		console.log("request--->" +JSON.stringify(request))
+		//console.log("request--->" +JSON.stringify(request))
+		
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+			headers:
+			{ 'X-CSRF-TOKEN': token }
+		});
 		$.ajax({
 			url: './updateSystemTags',
 			type: 'PUT',
@@ -409,7 +448,14 @@
 				"userType":$("body").attr("data-roleType"),
 				"username" : $("body").attr("data-selected-username")
 		}
-		console.log(JSON.stringify(request));
+		//console.log(JSON.stringify(request));
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+			headers:
+			{ 'X-CSRF-TOKEN': token }
+		});
+		
 		$.ajax({
 			url : './deleteField',
 			data : JSON.stringify(request),

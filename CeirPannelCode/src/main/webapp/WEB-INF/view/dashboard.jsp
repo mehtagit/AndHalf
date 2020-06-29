@@ -653,10 +653,17 @@ data-dismiss="modal">&times;</button> -->
 			</div>
 			<div class="input-field col s12 center">
 				<div class="input-field col s12 center">
-					<a href="./logout" class="btn" type="submit" name="add_user"
-						id="add_user"><spring:message code="modal.yes" /></a> <a href="#"
-						class="modal-close btn" style="margin-left: 10px;"><spring:message
-							code="modal.no" /></a>
+					<%-- <a href="./logout" class="btn" type="submit" name="add_user"
+						id="add_user"><spring:message code="modal.yes" /></a> --%>
+						
+						
+					<form action="./logout" method="post">
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+					
+					    <button type="submit" class="btn"><spring:message code="modal.yes" /></button>
+					     <a href="#" class="modal-close btn" style="margin-left: 10px;"><spring:message code="modal.no" /></a>
+					</form>		
+							
 				</div>
 			</div>
 		</div>

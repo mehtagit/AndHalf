@@ -35,7 +35,12 @@ function hide() {
  
  function   findEndUserByNid(){
 	 var passport=$('#nidForEndUser').val();
-	
+	 var token = $("meta[name='_csrf']").attr("content");
+	 var header = $("meta[name='_csrf_header']").attr("content");
+	 $.ajaxSetup({
+	 headers:
+	 { 'X-CSRF-TOKEN': token }
+	 });
 		$.ajax({
 			url: './findEndUserByNid?findEndUserByNid='+passport,
 			type: 'POST',
@@ -150,7 +155,12 @@ function hide() {
 		var commune=$('#commune').val();
 		var postalcode=$('#postalcode').val();
 
-	 
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+		});
 		$.ajax({
 			url: './findEndUserByNid?Nid='+grievanceId,
 			type: 'GET',
@@ -210,7 +220,12 @@ function hide() {
            "state"
        );
        
-       
+       var token = $("meta[name='_csrf']").attr("content");
+       var header = $("meta[name='_csrf_header']").attr("content");
+       $.ajaxSetup({
+       headers:
+       { 'X-CSRF-TOKEN': token }
+       });
    	$.getJSON('./getDropdownList/VISA_TYPE', function(data) {
 		for (i = 0; i < data.length; i++) {
 			$('<option>').val(data[i].value).text(data[i].interp)
@@ -289,7 +304,12 @@ function hide() {
         
         formData.append('visaImage', $('#endUseruploadnationalID')[0].files[0]);
     	formData.append("request",JSON.stringify(request));
-    	
+    	var token = $("meta[name='_csrf']").attr("content");
+    	var header = $("meta[name='_csrf_header']").attr("content");
+    	$.ajaxSetup({
+    	headers:
+    	{ 'X-CSRF-TOKEN': token }
+    	});
         $.ajax({
 			url: './updateEndUSerVisaValidity',
 			type: 'POST',

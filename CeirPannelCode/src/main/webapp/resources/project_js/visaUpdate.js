@@ -27,6 +27,12 @@
 				$('div#initialloader').fadeIn('fast');
 				DataTable(lang,null);
 				pageRendering();
+				var token = $("meta[name='_csrf']").attr("content");
+				var header = $("meta[name='_csrf_header']").attr("content");
+				$.ajaxSetup({
+				headers:
+				{ 'X-CSRF-TOKEN': token }
+				});
 				$.getJSON('./getDropdownList/'+featureId+'/'+$("body").attr("data-userTypeID"), function(data) {
 					for (i = 0; i < data.length; i++) {
 						$('<option>').val(data[i].state).text(data[i].interp)
@@ -77,7 +83,12 @@
 				if(lang=='km'){
 						var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
 					}
-
+				var token = $("meta[name='_csrf']").attr("content");
+				var header = $("meta[name='_csrf_header']").attr("content");
+				$.ajaxSetup({
+				headers:
+				{ 'X-CSRF-TOKEN': token }
+				});
 				$.ajax({
 					url: 'headers?type=adminVisaHeaders&lang='+lang,
 					type: 'POST',
@@ -139,6 +150,12 @@
 			//**************************************************Grievance page buttons**********************************************
 
 			function pageRendering(){
+				var token = $("meta[name='_csrf']").attr("content");
+				var header = $("meta[name='_csrf_header']").attr("content");
+				$.ajaxSetup({
+				headers:
+				{ 'X-CSRF-TOKEN': token }
+				});
 				$.ajax({
 					url: 'visaUpdatedata/pageRendering',
 					type: 'POST',
@@ -249,7 +266,12 @@
 						"userId" : parseInt($("body").attr("data-userID"))
 				}
 				//console.log(JSON.stringify(deleteRequest));
-				
+				var token = $("meta[name='_csrf']").attr("content");
+				var header = $("meta[name='_csrf_header']").attr("content");
+				$.ajaxSetup({
+				headers:
+				{ 'X-CSRF-TOKEN': token }
+				});
 				$.ajax({
 					url : './pending-tac-approved',
 					data : JSON.stringify(deleteRequest),
@@ -298,6 +320,12 @@
 						"pageSize":parseInt(pageSize)
 				}
 				//console.log(JSON.stringify(filterRequest))
+				var token = $("meta[name='_csrf']").attr("content");
+				var header = $("meta[name='_csrf_header']").attr("content");
+				$.ajaxSetup({
+				headers:
+				{ 'X-CSRF-TOKEN': token }
+				});
 				$.ajax({
 					url: './exportVisaData',
 					type: 'POST',
@@ -334,7 +362,12 @@
 						"userId":window.endUserId,
 						"userType": $("body").attr("data-roleType")	  	
 				}
-
+				var token = $("meta[name='_csrf']").attr("content");
+				var header = $("meta[name='_csrf_header']").attr("content");
+				$.ajaxSetup({
+				headers:
+				{ 'X-CSRF-TOKEN': token }
+				});
 				$.ajax({
 					url : './approveVisaUpdateRequest',
 					data : JSON.stringify(approveRequest),
@@ -382,6 +415,12 @@
 						"userId":parseInt(endUserId),
 						"userType": $("body").attr("data-roleType")	  	
 				}
+				var token = $("meta[name='_csrf']").attr("content");
+				var header = $("meta[name='_csrf_header']").attr("content");
+				$.ajaxSetup({
+				headers:
+				{ 'X-CSRF-TOKEN': token }
+				});
 				$.ajax({
 					url : './approveVisaUpdateRequest',
 					data : JSON.stringify(rejectRequest),
@@ -443,7 +482,12 @@
 				if(lang=='km'){
 					var langFile='../resources/i18n/khmer_datatable.json';
 				}
-
+				var token = $("meta[name='_csrf']").attr("content");
+				var header = $("meta[name='_csrf_header']").attr("content");
+				$.ajaxSetup({
+				headers:
+				{ 'X-CSRF-TOKEN': token }
+				});
 				$.ajax({
 					url: 'Consignment/consignment-history',
 					type: 'POST',

@@ -31,7 +31,12 @@ function messageManagementDatatable(){
 			"username" : $("body").attr("data-selected-username"),
 			"roleType":$("body").attr("data-roleType")
 	}
-	
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		url: 'headers?type=adminSystemMessage',
 		type: 'POST',
@@ -89,6 +94,12 @@ function messageManagementDatatable(){
 //**************************************************MessageManagement page buttons**********************************************
 
 function pageRendering(){
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		url: 'messageManagement/pageRendering',
 		type: 'POST',
@@ -138,6 +149,12 @@ function pageRendering(){
 		}
 
 	}); 
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+	});
 	//status-----------dropdown
 	$.getJSON('./getDropdownList/CHANNEL', function(data) {
 		for (i = 0; i < data.length; i++) {
@@ -167,6 +184,12 @@ function viewDetails(tag){
 			"userName" : $("body").attr("data-selected-username"),
 			"username" : $("body").attr("data-selected-username")
 	} 
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		url : "./message/viewTag",
 		data :	JSON.stringify(RequestData),
@@ -211,6 +234,12 @@ function updateDetails(tag){
 			"userName" : $("body").attr("data-selected-username"),
 			"username" : $("body").attr("data-selected-username")
 	} 
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		url : "./message/viewTag",
 		data :	JSON.stringify(RequestData),
@@ -251,7 +280,12 @@ function updateMessage(){
 			"roleType":$("body").attr("data-roleType"),
 			"username" : $("body").attr("data-selected-username")
 	}
-	 
+	 var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+			headers:
+			{ 'X-CSRF-TOKEN': token }
+		});
 	 $.ajax({
 			url : "./message/update",
 			data :	JSON.stringify(updateRequest),
@@ -300,6 +334,12 @@ function exportData(){
 			
 	}
 	//console.log(JSON.stringify(filterRequest))
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		url: './exportMessageConfigData',
 		type: 'POST',

@@ -13,7 +13,13 @@ function viewIndivisualStolen()
 
 
 var txnid=$('#existingStolenTxnId').val();
-	
+var token = $("meta[name='_csrf']").attr("content");
+var header = $("meta[name='_csrf_header']").attr("content");
+$.ajaxSetup({
+headers:
+{ 'X-CSRF-TOKEN': token }
+});
+
 	$.ajax({
 		url: './openStolenAndRecoveryPage?txnId='+txnid+"&requestType=1",
 		type: 'POST',
@@ -106,6 +112,12 @@ function updateCompanyRecoveryRequest(){
 
 	formData.append('file', $('#bulkRecoveryFile')[0].files[0]);
 	formData.append("request",JSON.stringify(request));
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
 
 	$.ajax({
 		url: './lawfulIndivisualStolenUpdate',

@@ -61,6 +61,14 @@ function confirmantiondelete(){
 			
 
 	}
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
+
+
 	$.ajax({
 		url : "./stolenRecoveryDelete",
 		data : JSON.stringify(obj),
@@ -95,6 +103,14 @@ function EditConsignmentDetails(txnId){
 function viewConsignmentDetails(txnId){
 
 	$("#viewModal").openModal({dismissible:false});
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
+
+
 	$.ajax({
 		url : "./openRegisterConsignmentPopup?reqType=editPage&txnId="+txnId,
 		dataType : 'json',
@@ -183,6 +199,13 @@ function editRegisterConsignment(){
 
 	//console.log(JSON.stringify(formData));
 	//console.log("*********");
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
+
 
 	$.ajax({ 
 		url: './Consignment/updateRegisterConsignment',
@@ -335,6 +358,13 @@ function Datatable(url,dataUrl,sourceTypeFiler){
 	if(lang=='km'){
 		var langFile='../resources/i18n/khmer_datatable.json';
 			}
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
+
 
 	$.ajax({
 		url: url,
@@ -401,6 +431,14 @@ function pageRendering(){
 
 
 function pageElements(url){
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
+
+
 	$.ajax({
 		url: url,
 		type: 'POST',
@@ -531,6 +569,13 @@ function fileStolenReport(){
 	formData.append('qty',qty);
 	//console.log(JSON.stringify(formData));
 	//console.log("*********");
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
+
 
 	$.ajax({
 		url: './fileTypeStolen',
@@ -589,6 +634,14 @@ function fileRecoveryReport(){
 	formData.append('qty',qty);
 	//console.log(JSON.stringify(formData));
 	//console.log("*********");
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
+
+
 	$.ajax({
 		url: './fileTypeRecovery',
 		type: 'POST',
@@ -727,6 +780,13 @@ function updatefileStolenReport(){
 	formData.append('userId',userId);
 	//console.log(JSON.stringify(formData));
 	//console.log("*********");
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
+
 
 	$.ajax({
 		url: './updateFileTypeStolenRecovery',
@@ -854,6 +914,12 @@ function openMulipleStolenPopUp()
 
 	var stolenRecoverydata=JSON.stringify(valuesPush());
 	//console.log("release-------"+stolenRecoverydata);
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		url: './multipleStolenRecovery',
 		type: 'POST',
@@ -903,7 +969,14 @@ function redirectToViewStolenPage()
 
 
 function setAllDropdowns(){
-	
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
+
+
 	//Source Operator-----------dropdown
 	$.getJSON('./getDropdownList/OPERATORS', function(data) {
 			for (i = 0; i < data.length; i++) {
@@ -1043,6 +1116,14 @@ function exportStolenRecoveryData()
 			
 	}
 	//console.log(JSON.stringify(filterRequest))
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
+
+
 	$.ajax({
 		url: './exportStolenRecovery?source='+source__val,
 		type: 'POST',
@@ -1078,6 +1159,13 @@ function aprroveDevice(){
 			"txnId": window.transactionId,
 			"userId":parseInt(userId)
 	}
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
+
 
 	$.ajax({
 		url : './blockUnblockApproveReject',
@@ -1124,6 +1212,13 @@ function rejectUser(){
 			"txnId": window.transactionId,
 			"userId":parseInt(userId)
 	}
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
+
 
 	$.ajax({
 		url : './blockUnblockApproveReject',
@@ -1204,6 +1299,14 @@ function historyRecord(txnID){
 		var langFile='../resources/i18n/khmer_datatable.json';
 	}
 	//console.log("22");
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
+
+
 	$.ajax({
 		url: 'Consignment/consignment-history',
 		type: 'POST',
