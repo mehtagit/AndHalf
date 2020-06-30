@@ -743,7 +743,7 @@ data-dismiss="modal">&times;</button> -->
 		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 	
 		<script type="text/javascript"
-		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js?version=<%= (int) (Math.random() * 10) %>"></script>  
+		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>  
 
 	
 	

@@ -54,9 +54,6 @@ if(statusCode==200){
 	rel="stylesheet" media="screen,projection">
 <link href="${context}/resources/css/style.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
-<!-- Custome CSS-->
-<link href="${context}/resources/css/custom/custom.css" type="text/css"
-	rel="stylesheet" media="screen,projection">
 
 <!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
 <link href="${context}/resources/js/plugins/prism/prism.css"
@@ -149,7 +146,6 @@ var contextpath = "${context}";
 	<!--  Scripts
     ================================================ -->
 	<!-- jQuery Library -->
-	<!-- <script type="text/javascript" src="js/plugins/jquery-1.11.2.min.js"></script>-->
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
 	<!-- ajax js -->
@@ -157,33 +153,25 @@ var contextpath = "${context}";
 		src="${context}/resources/ajax/Registration.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/ajax/Profile.js"></script>
-	<!--materialize js-->
-	<!--<script type="text/javascript" src="js/materialize.js"></script>-->
-	<!-- Compiled and minified JavaScript -->
-
+	
 	<script
-		src="${context}/resources/custom_js/materialize.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/custom_js/materialize.min.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
-	<script type="text/javascript" src="${context}/resources/js/country.js?version=<%= (int) (Math.random() * 10) %>"></script>
+	<script type="text/javascript" src="${context}/resources/js/country.js"></script>
 	<!--prism
     <script type="text/javascript" src="js/prism/prism.js"></script>-->
 	<!--scrollbar-->
 	<script type="text/javascript"
-		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
-	<!-- chartist -->
-	<!--<script type="text/javascript" src="js/plugins/chartist-js/chartist.min.js"></script>-->
-
+		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+	
 	<!-- data-tables -->
 	<script type="text/javascript"
-		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
 	<script type="text/javascript"
-		src="${context}/resources/js/plugins/data-tables/data-tables-script.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/js/plugins/data-tables/data-tables-script.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/ajax/Password.js?version=<%= (int) (Math.random() * 10) %>"></script>
-	<!--plugins.js - Some Specific JS codes for Plugin Settings-->
-	<!--<script type="text/javascript" src="js/plugins.js"></script>-->
-	<!--custom-script.js - Add your own theme custom JS-->
 	<script type="text/javascript"
 		src="${context}/resources/js/custom-script.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
@@ -682,38 +670,38 @@ var contextpath = "${context}";
 	<!-- ================================================
     Scripts
     ================================================ -->
+    <!-- i18n library -->
+	<script type="text/javascript"
+		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/i18n.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/messagestore.js"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/fallbacks.js"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/language.js"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/parser.js"></script>
+
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/emitter.js"></script>
+
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/bidi.js"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/history.js"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/min.js"></script>
     
-		<!-- i18n library -->
-	<script type="text/javascript"
-		src="${context}/resources/project_js/CLDRPluralRuleParser.js?version=<%= (int) (Math.random() * 10) %>"></script>
-	<script type="text/javascript"
-		src="${context}/resources/i18n_library/i18n.js?version=<%= (int) (Math.random() * 10) %>"></script>
-	<script type="text/javascript"
-		src="${context}/resources/i18n_library/messagestore.js?version=<%= (int) (Math.random() * 10) %>"></script>
-
-	<script type="text/javascript"
-		src="${context}/resources/i18n_library/fallbacks.js?version=<%= (int) (Math.random() * 10) %>"></script>
-
-	<script type="text/javascript"
-		src="${context}/resources/i18n_library/language.js?version=<%= (int) (Math.random() * 10) %>"></script>
-
-	<script type="text/javascript"
-		src="${context}/resources/i18n_library/parser.js?version=<%= (int) (Math.random() * 10) %>"></script>
-
-
-	<script type="text/javascript"
-		src="${context}/resources/i18n_library/emitter.js?version=<%= (int) (Math.random() * 10) %>"></script>
-
-
-	<script type="text/javascript"
-		src="${context}/resources/i18n_library/bidi.js?version=<%= (int) (Math.random() * 10) %>"></script>
-
-	<script type="text/javascript"
-		src="${context}/resources/i18n_library/history.js?version=<%= (int) (Math.random() * 10) %>"></script>
-
-	<script type="text/javascript"
-		src="${context}/resources/i18n_library/min.js?version=<%= (int) (Math.random() * 10) %>"></script>
-		<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js?version=<%= (int) (Math.random() * 10) %>"></script>
+    		<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js?version=<%= (int) (Math.random() * 10) %>"></script>
 <script type="text/javascript"
 		src="${context}/resources/project_js/backbutton.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	
