@@ -28,6 +28,7 @@ import org.springframework.stereotype.Service;
 import com.gl.ceir.config.ConfigTags;
 import com.gl.ceir.config.EmailSender.EmailUtil;
 import com.gl.ceir.config.configuration.PropertiesReader;
+import com.gl.ceir.config.exceptions.RequestInvalidException;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.feign.UserFeignClient;
 import com.gl.ceir.config.model.AuditTrail;
@@ -85,6 +86,7 @@ import com.gl.ceir.config.util.CustomMappingStrategy;
 import com.gl.ceir.config.util.DateUtil;
 import com.gl.ceir.config.util.InterpSetter;
 import com.gl.ceir.config.util.Utility;
+import com.gl.ceir.config.validate.impl.StolenValidator;
 import com.opencsv.CSVWriter;
 import com.opencsv.bean.StatefulBeanToCsv;
 import com.opencsv.bean.StatefulBeanToCsvBuilder;
@@ -162,9 +164,14 @@ public class StolenAndRecoveryServiceImpl {
 	@Autowired
 	Utility utility;
 
+	@Autowired
+	StolenValidator stolenValidator;
+
 	public GenricResponse uploadDetails(StolenandRecoveryMgmt stolenandRecoveryMgmt) {
 
 		try {
+			stolenValidator.validateRegister(stolenandRecoveryMgmt);
+
 			WebActionDb webActionDb = new WebActionDb(decideFeature(stolenandRecoveryMgmt.getRequestType()), 
 					SubFeatures.REGISTER, 
 					WebActionStatus.INIT.getCode(), stolenandRecoveryMgmt.getTxnId());
@@ -204,6 +211,9 @@ public class StolenAndRecoveryServiceImpl {
 				return new GenricResponse(1, "Upload have been failed.", stolenandRecoveryMgmt.getTxnId());
 			}
 
+		}catch (RequestInvalidException e) {
+			logger.error("Request validation failed for txnId[" + stolenandRecoveryMgmt.getTxnId() + "]" + e);
+			throw e;
 		}catch (Exception e) {
 			logger.error(e.getMessage(), e);
 
@@ -220,6 +230,7 @@ public class StolenAndRecoveryServiceImpl {
 	public GenricResponse v2uploadDetails(StolenandRecoveryMgmt stolenandRecoveryDetails) {
 
 		try {
+			stolenValidator.validateRegister(stolenandRecoveryDetails);
 
 			// Only for logs purpose.
 			if(stolenandRecoveryDetails.getRequestType() == 1) {
@@ -252,6 +263,9 @@ public class StolenAndRecoveryServiceImpl {
 			addInAuditTrail(stolenandRecoveryDetails.getUserId(), stolenandRecoveryDetails.getTxnId(), SubFeatures.UPLOAD, stolenandRecoveryDetails.getRoleType(),stolenandRecoveryDetails.getRequestType(),0);
 			return new GenricResponse(0, "Upload Successfully.", stolenandRecoveryDetails.getTxnId());
 
+		}catch (RequestInvalidException e) {
+			logger.error("Request validation failed for txnId[" + stolenandRecoveryDetails.getTxnId() + "]" + e);
+			throw e;
 		}catch (Exception e) {
 			logger.error(e.getMessage(), e);
 
@@ -270,6 +284,7 @@ public class StolenAndRecoveryServiceImpl {
 		List<StateMgmtDb> statusList = null;
 
 		try {
+			stolenValidator.validateFilter(filterRequest);
 			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
 
 			statusList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
@@ -307,7 +322,10 @@ public class StolenAndRecoveryServiceImpl {
 			}
 			return stolenandRecoveryMgmtPage;
 
-		} catch (Exception e) {
+		} catch (RequestInvalidException e) {
+			logger.error("Request validation failed for txnId[" + filterRequest.getTxnId() + "]" + e);
+			throw e;
+		}catch (Exception e) {
 			logger.error(e.getMessage(), e);
 
 			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
@@ -370,7 +388,7 @@ public class StolenAndRecoveryServiceImpl {
 		GenericSpecificationBuilder<StolenandRecoveryMgmt> srsb = new GenericSpecificationBuilder<>(propertiesReader.dialect);
 		String ceirAdmin = "CEIRADMIN";
 		String fileStatus = "fileStatus";
-		logger.info("  source== "+source);
+		logger.info("source == " + source);
 		if(Objects.nonNull(filterRequest.getStartDate()) && !filterRequest.getStartDate().isEmpty())
 			srsb.with(new SearchCriteria("createdOn", filterRequest.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
 
@@ -379,12 +397,6 @@ public class StolenAndRecoveryServiceImpl {
 
 		if(Objects.nonNull(filterRequest.getTxnId()) && !filterRequest.getTxnId().isEmpty())
 			srsb.with(new SearchCriteria("txnId", filterRequest.getTxnId(), SearchOperation.EQUALITY, Datatype.STRING));
-
-		/*
-		 * if(Objects.nonNull(filterRequest.getRoleType())) srsb.with(new
-		 * SearchCriteria("roleType", filterRequest.getRoleType(),
-		 * SearchOperation.EQUALITY, Datatype.STRING));
-		 */
 
 		if(Objects.nonNull(filterRequest.getSourceType())) {
 			srsb.with(new SearchCriteria("sourceType", filterRequest.getSourceType(), SearchOperation.EQUALITY, Datatype.STRING));
@@ -489,20 +501,30 @@ public class StolenAndRecoveryServiceImpl {
 
 	public FileDetails getFilteredStolenAndRecoveryInFile(FilterRequest filterRequest, String source) {
 
-		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-		DateTimeFormatter dtf2  = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
+		try {
+			stolenValidator.validateFilter(filterRequest);
 
-		SystemConfigurationDb filepath = configurationManagementServiceImpl.findByTag(ConfigTags.file_download_dir);
-		logger.info("CONFIG : file_consignment_download_dir [" + filepath + "]");
-		SystemConfigurationDb link = configurationManagementServiceImpl.findByTag(ConfigTags.file_download_link);
-		logger.info("CONFIG : file_consignment_download_link [" + link + "]");
+			DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+			DateTimeFormatter dtf2  = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
 
-		String filePath = filepath.getValue();
+			SystemConfigurationDb filepath = configurationManagementServiceImpl.findByTag(ConfigTags.file_download_dir);
+			logger.info("CONFIG : file_consignment_download_dir [" + filepath + "]");
+			SystemConfigurationDb link = configurationManagementServiceImpl.findByTag(ConfigTags.file_download_link);
+			logger.info("CONFIG : file_consignment_download_link [" + link + "]");
 
-		if(filterRequest.getFeatureId() == 5) {
-			return exportStolenRecoveryData(filterRequest, source, dtf, dtf2, filePath, link);
-		}else {
-			return exportBlockData(filterRequest, source, dtf, dtf2, filePath, link);
+			String filePath = filepath.getValue();
+
+			if(filterRequest.getFeatureId() == 5) {
+				return exportStolenRecoveryData(filterRequest, source, dtf, dtf2, filePath, link);
+			}else {
+				return exportBlockData(filterRequest, source, dtf, dtf2, filePath, link);
+			}
+		}catch (RequestInvalidException e) {
+			logger.error("Request validation failed for txnId[" + filterRequest.getTxnId() + "]" + e);
+			throw e;
+		}catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
 
@@ -557,7 +579,7 @@ public class StolenAndRecoveryServiceImpl {
 			addInAuditTrail(Long.valueOf(filterRequest.getUserId()), "NA", SubFeatures.EXPORT, filterRequest.getRoleType(),filterRequest.getRequestType(),filterRequest.getFeatureId());
 			return new FileDetails( fileName, filePath, link.getValue() + fileName ); 
 
-		} catch (Exception e) {
+		}catch (Exception e) {
 			logger.error(e.getMessage(), e);
 
 			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
@@ -713,6 +735,12 @@ public class StolenAndRecoveryServiceImpl {
 
 	@Transactional
 	public GenricResponse deleteRecord(FilterRequest filterRequest) {
+		try {
+			stolenValidator.validateDelete(filterRequest);
+		}catch (RequestInvalidException e) {
+			logger.error("Request validation failed for txnId[" + filterRequest.getTxnId() + "]" + e);
+			throw e;
+		}
 
 		UserProfile userProfile = null;
 		User user = null;
@@ -753,11 +781,11 @@ public class StolenAndRecoveryServiceImpl {
 
 		placeholderMap1.put("<First name>", userProfile.getFirstName());
 		placeholderMap1.put("<Txn id>", filterRequest.getTxnId());
-		
+
 		String payloadTxnId = filterRequest.getTxnId();
 		lock.lock();
 		logger.info("lock taken by thread for [Delete] - " + Thread.currentThread().getName());
-		
+
 		try {
 			StolenandRecoveryMgmt stolenandRecoveryMgmtInfo = stolenAndRecoveryRepository.getById(filterRequest.getId());
 			if(Objects.isNull(filterRequest.getRemark())) {
@@ -775,7 +803,7 @@ public class StolenAndRecoveryServiceImpl {
 						logger.info(message);
 						return new GenricResponse(10, "", message, payloadTxnId);
 					}
-					
+
 					if(stolenandRecoveryMgmtInfo.getFileStatus()==0 
 							|| stolenandRecoveryMgmtInfo.getFileStatus()==3 
 							|| stolenandRecoveryMgmtInfo.getFileStatus()==4) {
@@ -794,7 +822,7 @@ public class StolenAndRecoveryServiceImpl {
 						logger.info(message);
 						return new GenricResponse(10, "", message, payloadTxnId);
 					}
-					
+
 					//set file status =6
 					stolenandRecoveryMgmtInfo.setFileStatus(6);//withdrawn by CEIR Admin 
 					stolenandRecoveryMgmtInfo.setRemark(filterRequest.getRemark());
@@ -896,6 +924,8 @@ public class StolenAndRecoveryServiceImpl {
 	public GenricResponse updateRecord(StolenandRecoveryMgmt stolenandRecoveryMgmt) {
 
 		try {
+			stolenValidator.validateEdit(stolenandRecoveryMgmt);
+			
 			StolenandRecoveryMgmt stolenandRecoveryMgmtInfo = stolenAndRecoveryRepository.getByTxnId(stolenandRecoveryMgmt.getTxnId());
 			logger.info(stolenandRecoveryMgmtInfo);
 			if(Objects.isNull(stolenandRecoveryMgmtInfo)) {
@@ -914,7 +944,7 @@ public class StolenAndRecoveryServiceImpl {
 				}
 
 				setBlockingType(stolenandRecoveryMgmt);
-				
+
 				// 0 = Stolen
 				if (stolenandRecoveryMgmt.getRequestType() == 0){
 					stolenandRecoveryMgmtInfo.setBlockingTimePeriod(stolenandRecoveryMgmt.getBlockingTimePeriod());
@@ -969,6 +999,9 @@ public class StolenAndRecoveryServiceImpl {
 				addInAuditTrail(Long.valueOf(stolenandRecoveryMgmt.getUserId()), stolenandRecoveryMgmt.getTxnId(), SubFeatures.UPDATE, stolenandRecoveryMgmt.getRoleType(),stolenandRecoveryMgmt.getRequestType(),0);
 				return new GenricResponse(0, "Record update sucessfully", stolenandRecoveryMgmt.getTxnId());
 			}
+		}catch (RequestInvalidException e) {
+			logger.error("Request validation failed for txnId[" + stolenandRecoveryMgmt.getTxnId() + "]" + e);
+			throw e;
 		}catch (Exception e) {
 
 			logger.error(e.getMessage(), e);
@@ -993,6 +1026,8 @@ public class StolenAndRecoveryServiceImpl {
 
 	public StolenandRecoveryMgmt getByTxnId(StolenandRecoveryMgmt stolenandRecoveryMgmt) {
 		try {
+			stolenValidator.validateViewById(stolenandRecoveryMgmt);
+			
 			logger.info("Going to get Stolen and recovery Info for txnId : " + stolenandRecoveryMgmt.getTxnId());
 
 			if(Objects.isNull(stolenandRecoveryMgmt.getTxnId())) {
@@ -1004,7 +1039,10 @@ public class StolenAndRecoveryServiceImpl {
 
 			addInAuditTrail(Long.valueOf(stolenandRecoveryMgmt.getUserId()), stolenandRecoveryMgmt.getTxnId(), SubFeatures.VIEW, stolenandRecoveryMgmt.getRoleType(),stolenandRecoveryMgmt.getRequestType(),0);
 			return stolenandRecoveryMgmt2;
-		} catch (Exception e) {
+		} catch (RequestInvalidException e) {
+			logger.error("Request validation failed for txnId[" + stolenandRecoveryMgmt.getTxnId() + "]" + e);
+			throw e;
+		}catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
@@ -1034,6 +1072,7 @@ public class StolenAndRecoveryServiceImpl {
 
 	public GenricResponse acceptReject(ConsignmentUpdateRequest consignmentUpdateRequest) {
 		try {
+			stolenValidator.validateAcceptReject(consignmentUpdateRequest);
 			UserProfile userProfile = null;
 			Map<String, String> placeholderMap1 = null;
 			StolenandRecoveryMgmt stolenandRecoveryMgmt = stolenAndRecoveryRepository.getByTxnId(consignmentUpdateRequest.getTxnId());
@@ -1360,7 +1399,10 @@ public class StolenAndRecoveryServiceImpl {
 
 			return new GenricResponse(0, "Stolen/Block request Updated SuccessFully.", consignmentUpdateRequest.getTxnId());
 
-		} catch (Exception e) {
+		} catch (RequestInvalidException e) {
+			logger.error("Request validation failed for txnId[" + consignmentUpdateRequest.getTxnId() + "]" + e);
+			throw e;
+		}catch (Exception e) {
 			logger.error(e.getMessage(), e);
 
 			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
