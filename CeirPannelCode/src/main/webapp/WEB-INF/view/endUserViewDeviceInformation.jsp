@@ -1054,9 +1054,6 @@ input[type='search'] {
 
 	<script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
 	<script type="text/javascript"
-	src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
-	
-	<script type="text/javascript"
 		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 
 	<script type="text/javascript"

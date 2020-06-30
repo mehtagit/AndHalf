@@ -338,10 +338,6 @@ a#newUserLink {
 <script
 		src="${context}/resources/custom_js/bootstrap.min.js"></script>
 	
-<script type="text/javascript"
-	src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
-
-
 
 <script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
 
@@ -349,10 +345,10 @@ a#newUserLink {
 		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 	
 	
-	<script type="text/javascript"
+	<%-- <script type="text/javascript"
 		src="${context}/resources/js/plugins/data-tables/data-tables-script.js"></script>
 
-				<!-- i18n library -->
+ --%>				<!-- i18n library -->
 	<script type="text/javascript"
 		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
 	<script type="text/javascript"

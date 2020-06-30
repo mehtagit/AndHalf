@@ -621,10 +621,7 @@ style="font-size: 20px;">+</span> <spring:message code="input.addmorefile" /></b
 
     <!--plugins.js - Some Specific JS codes for Plugin Settings-->
     <script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
-    <!--custom-script.js - Add your own theme custom JS-->
-    <script type="text/javascript" src="${context}/resources/js/custom-script.js"></script>
-    
-    
+   
 <!-- i18n library -->
 	<script type="text/javascript">
 var path="${context}";

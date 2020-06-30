@@ -804,10 +804,6 @@ onclick="_Services._selectstartDate()"></i></span>
 		src="${context}/resources/js/materialize.js"></script>
 	<script src="${context}/resources/custom_js/bootstrap.min.js"></script>
 
-	<script type="text/javascript"
-		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
-
-
 
 	<script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
 

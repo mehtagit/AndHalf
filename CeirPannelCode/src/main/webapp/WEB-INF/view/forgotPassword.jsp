@@ -353,12 +353,7 @@ oninput="InvalidMsg(this,'input','<spring:message code="validation.50alphanumeri
 	<!-- chartist -->
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script>
-	<!-- data-tables -->
 	<script type="text/javascript"
-		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
-	<script type="text/javascript"
-		src="${context}/resources/js/plugins/data-tables/data-tables-script.js"></script>
-<script type="text/javascript"
 		src="${context}/resources/ajax/Registration.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<!-- i18n library -->
 	<script type="text/javascript"
