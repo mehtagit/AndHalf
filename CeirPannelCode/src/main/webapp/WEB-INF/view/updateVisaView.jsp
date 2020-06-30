@@ -28,8 +28,7 @@
 
 <script type="text/javascript"
 	src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
-<!--   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"></script>  
- -->
+
 
 <!-- Favicons-->
 <link rel="icon" href="${context}/resources/images/DMC-Logo.png" sizes="32x32">
@@ -43,9 +42,7 @@
 <link
 	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.min.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
-<link
-	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.css"
-	type="text/css" rel="stylesheet" media="screen,projection">
+
 <link href="${context}/resources/css/jquery-datepicker2.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
 <!-- Custome CSS-->
@@ -61,7 +58,7 @@
 <link
 	href="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
-<%--  <link href="${context}/resources/js/plugins/chartist-js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection"> --%>
+
 <link rel="stylesheet"
 	href="${context}/resources/project_css/stolenRecovery.css">
 <link rel="stylesheet"
@@ -69,8 +66,8 @@
 <link rel="stylesheet"
 	href="${context}/resources/project_css/intlTelInput.css">
 <link rel="stylesheet"
-	href="${context}/resources/custom_js/jquery-ui.css?version=<%= (int) (Math.random() * 10) %>">
-<script src="${context}/resources/custom_js/1.11.2_jquery-ui.js?version=<%= (int) (Math.random() * 10) %>"></script>
+	href="${context}/resources/custom_js/jquery-ui.css">
+<script src="${context}/resources/custom_js/1.11.2_jquery-ui.js"></script>
 
 <style>
 .checkboxFont {

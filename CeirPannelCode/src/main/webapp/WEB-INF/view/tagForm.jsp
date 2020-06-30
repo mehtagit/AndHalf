@@ -48,8 +48,7 @@
 
 <script type="text/javascript"
 	src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
-<!--   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"></script>  
- -->
+
 <!-- Favicons-->
 <link rel="icon" href="${context}/resources/images/DMC-Logo.png" sizes="32x32">
 <!-- CORE CSS-->
@@ -85,10 +84,10 @@
 	href="${context}/resources/project_css/iconStates.css">
 
 <link rel="stylesheet"
-	href="${context}/resources/custom_js/jquery-ui.css?version=<%= (int) (Math.random() * 10) %>">
-<script src="${context}/resources/custom_js/1.11.2_jquery-ui.js?version=<%= (int) (Math.random() * 10) %>"></script>
+	href="${context}/resources/custom_js/jquery-ui.css">
+<script src="${context}/resources/custom_js/1.11.2_jquery-ui.js"></script>
 
-<script src="${context}/resources/custom_js/jquery.blockUI.js?version=<%= (int) (Math.random() * 10) %>"></script>
+<script src="${context}/resources/custom_js/jquery.blockUI.js"></script>
 
 
 <style>
@@ -215,18 +214,16 @@ section {
 		</div>
 	</section>
 	<script type="text/javascript"
-		src="${context}/resources/js/materialize.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/js/materialize.js"></script>
 	<script type="text/javascript"
-		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.js?version=<%= (int) (Math.random() * 10) %>"></script>
-	<script type="text/javascript"
-		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
 	<script
-		src="${context}/resources/custom_js/bootstrap.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
-<script type="text/javascript" src="${context}/resources/js/plugins.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/custom_js/bootstrap.min.js"></script>
+<script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
 		<script type="text/javascript"
-		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 	<script type="text/javascript"
-		src="${context}/resources/js/countries.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/js/countries.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/enterKey.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript"

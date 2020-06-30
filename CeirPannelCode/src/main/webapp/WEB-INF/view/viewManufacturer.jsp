@@ -27,8 +27,7 @@
 
 <script type="text/javascript"
 	src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
-<!--   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"></script>  
- -->
+
 <!-- Favicons-->
 <link rel="icon" href="${context}/resources/images/DMC-Logo.png" sizes="32x32">
 <!-- CORE CSS-->
@@ -41,9 +40,7 @@
 <link
 	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.min.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
-<link
-	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.css"
-	type="text/css" rel="stylesheet" media="screen,projection">
+
 <link href="${context}/resources/css/jquery-datepicker2.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
 <!-- Custome CSS-->
@@ -59,7 +56,7 @@
 <link
 	href="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
-<%--  <link href="${context}/resources/js/plugins/chartist-js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection"> --%>
+
 <link rel="stylesheet"
 	href="${context}/resources/project_css/viewConsignment.css">
 <link rel="stylesheet"
@@ -311,40 +308,31 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
 
 	<!--materialize js-->
 	<script type="text/javascript"
-		src="${context}/resources/custom_js/materialize.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/custom_js/materialize.min.js"></script>
 	<script type="text/javascript"
-		src="${context}/resources/js/materialize.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/js/materialize.js"></script>
 
-
-	<script type="text/javascript"
-		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.js?version=<%= (int) (Math.random() * 10) %>"></script>
-	<script type="text/javascript"
-		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
+	
 	<script
-		src="${context}/resources/custom_js/moment.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/custom_js/moment.min.js"></script>
 	<script type="text/javascript"
-		src="${context}/resources/js/jquery-datepicker2.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/js/jquery-datepicker2.js"></script>
 
 
 	<!--plugins.js - Some Specific JS codes for Plugin Settings-->
 	<script
-		src="${context}/resources/custom_js/bootstrap.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/custom_js/bootstrap.min.js"></script>
 
-	<%--   <script type="text/javascript" src="${context}/resources/js/materialize-plugins/date_picker/picker.date.js"></script>
-    <script type="text/javascript" src="${context}/resources/js/materialize-plugins/date_picker/picker.js"></script> --%>
+	
 	<!--custom-script.js - Add your own theme custom JS-->
-	<script type="text/javascript" src="${context}/resources/js/plugins.js?version=<%= (int) (Math.random() * 10) %>"></script>
-	<%-- <script type="text/javascript"
-		src="${context}/resources/js/Validator.js?version=<%= (int) (Math.random() * 10) %>"></script> --%>
-	<!--prism
-    <script type="text/javascript" src="${context}/resources/resources/js/prism/prism.js"></script>-->
+	<script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
+	
 	<!--scrollbar-->
 	<script type="text/javascript"
-		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
-	<!-- chartist -->
-	<%-- <script type="text/javascript" src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script> --%>
+		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+	
 	<script type="text/javascript"
-		src="${context}/resources/js/countries.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/js/countries.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/AdminRegistrationRequest.js?version=<%= (int) (Math.random() * 10) %>"></script>
 		
