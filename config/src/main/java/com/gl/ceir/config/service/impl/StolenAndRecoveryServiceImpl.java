@@ -20,6 +20,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -282,10 +283,10 @@ public class StolenAndRecoveryServiceImpl {
 	public Page<StolenandRecoveryMgmt> getAllInfo(FilterRequest filterRequest, Integer pageNo, Integer pageSize,String source){
 		List<StateMgmtDb> stateInterpList = null;
 		List<StateMgmtDb> statusList = null;
-
+		Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
+		
 		try {
 			stolenValidator.validateFilter(filterRequest);
-			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
 
 			statusList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
 			logger.info("  source== "+source);
@@ -311,7 +312,6 @@ public class StolenAndRecoveryServiceImpl {
 					stolenandRecoveryMgmt.setOperatorTypeIdInterp("");
 					logger.info("WARN : OperatorTypeId is null for [" + stolenandRecoveryMgmt + "]");
 				}
-
 			}
 
 			logger.info(stolenandRecoveryMgmtPage.getContent());
@@ -324,7 +324,7 @@ public class StolenAndRecoveryServiceImpl {
 
 		} catch (RequestInvalidException e) {
 			logger.error("Request validation failed for txnId[" + filterRequest.getTxnId() + "]" + e);
-			throw e;
+			return new PageImpl<StolenandRecoveryMgmt>(new ArrayList<StolenandRecoveryMgmt>(1), pageable, 0);
 		}catch (Exception e) {
 			logger.error(e.getMessage(), e);
 

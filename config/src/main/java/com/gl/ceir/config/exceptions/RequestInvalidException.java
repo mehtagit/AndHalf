@@ -35,4 +35,20 @@ public class RequestInvalidException extends RuntimeException {
 	public String getMessage() {
 		return message;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("RequestInvalidException [resourceName=");
+		builder.append(resourceName);
+		builder.append(", fieldName=");
+		builder.append(fieldName);
+		builder.append(", fieldValue=");
+		builder.append(fieldValue);
+		builder.append(", message=");
+		builder.append(message);
+		builder.append("]");
+		return builder.toString();
+	}
+	
 }

@@ -16,6 +16,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -309,11 +310,10 @@ public class StockServiceImpl {
 			String source){
 
 		List<StateMgmtDb> statusList = null;
-
+		Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
+		
 		try {
 			stockValidator.validateFilter(filterRequest);
-			
-			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
 
 			if("noti".equalsIgnoreCase(source)) {
 				StockMgmt stockMgmtTemp = stockManagementRepository.getByTxnId(filterRequest.getTxnId());
@@ -347,7 +347,7 @@ public class StockServiceImpl {
 
 		}catch (RequestInvalidException e) {
 			logger.error("Request validation failed for txnId[" + filterRequest.getTxnId() + "]" + e);
-			throw e;
+			return new PageImpl<StockMgmt>(new ArrayList<StockMgmt>(1), pageable, 0);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 

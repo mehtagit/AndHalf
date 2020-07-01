@@ -4,6 +4,7 @@ import java.util.Objects;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.stereotype.Component;
 
 import com.gl.ceir.config.exceptions.RequestInvalidException;
 import com.gl.ceir.config.model.ConsignmentUpdateRequest;
@@ -11,6 +12,7 @@ import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.StockMgmt;
 import com.gl.ceir.config.validate.BaseValidator;
 
+@Component
 public class StockValidator extends BaseValidator<StockMgmt>{
 	private static final Logger logger = LogManager.getLogger(StockValidator.class);
 
@@ -154,11 +156,6 @@ public class StockValidator extends BaseValidator<StockMgmt>{
 		FilterRequest c = (FilterRequest) t;
 		if(Objects.isNull(c.getUserId())) {
 			exception =  new RequestInvalidException(target, "userId", c.getUserId());
-			return event(exception, action, c.getTxnId());
-		}
-		
-		if(Objects.isNull(c.getTxnId())) {
-			exception =  new RequestInvalidException(target, "txnId", c.getTxnId());
 			return event(exception, action, c.getTxnId());
 		}
 		

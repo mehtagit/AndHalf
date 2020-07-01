@@ -129,11 +129,6 @@ public class StolenValidator extends BaseValidator<StolenandRecoveryMgmt>{
 			return event(exception, action, c.getTxnId());
 		}
 		
-		if(Objects.isNull(c.getTxnId())) {
-			exception =  new RequestInvalidException(target, "txnId", c.getTxnId());
-			return event(exception, action, c.getTxnId());
-		}
-		
 		if(Objects.isNull(c.getUserName())) {
 			exception =  new RequestInvalidException(target, "userName", c.getUserName());
 			return event(exception, action, c.getTxnId());

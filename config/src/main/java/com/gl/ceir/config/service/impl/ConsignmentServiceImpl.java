@@ -20,6 +20,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -187,6 +188,12 @@ public class ConsignmentServiceImpl {
 
 		}catch (RequestInvalidException e) {
 			logger.error("Request validation failed for txnId[" + consignmentFileRequest.getTxnId() + "]" + e);
+			
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", featureName);
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.REGISTER);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_013, consignmentFileRequest.getUserId(), bodyPlaceHolderMap);
+			
 			throw e;
 		}catch (Exception e) {
 			logger.error(e.getMessage(), e);
@@ -276,11 +283,13 @@ public class ConsignmentServiceImpl {
 
 	public Page<ConsignmentMgmt> getFilterPaginationConsignments(FilterRequest consignmentMgmt, Integer pageNo, 
 			Integer pageSize, String source) {
+		Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
+		
 		try {
 			consigmentValidator.validateFilter(consignmentMgmt);
 
 			List<StateMgmtDb> statusList = null;
-			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
+			
 
 			statusList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(consignmentMgmt.getFeatureId(), consignmentMgmt.getUserTypeId());
 
@@ -306,7 +315,13 @@ public class ConsignmentServiceImpl {
 
 		} catch (RequestInvalidException e){
 			logger.error("Request validation failed for txnId[" + consignmentMgmt.getTxnId() + "]" + e);
-			throw e;
+			
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", featureName);
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.VIEW_ALL);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_013, consignmentMgmt.getUserId(), bodyPlaceHolderMap);
+			
+			return new PageImpl<ConsignmentMgmt>(new ArrayList<ConsignmentMgmt>(1), pageable, 0);
 		}catch (Exception e) {
 			logger.error(e.getMessage(), e);
 
@@ -389,6 +404,12 @@ public class ConsignmentServiceImpl {
 			return consignmentMgmt;
 		}catch (RequestInvalidException e){
 			logger.error("Request validation failed for txnId[" + filterRequest.getTxnId() + "]" + e);
+			
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", featureName);
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.VIEW);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_013, 0, bodyPlaceHolderMap);
+
 			throw e;
 		}catch (Exception e) {
 			logger.error(e.getMessage(), e);
@@ -462,6 +483,12 @@ public class ConsignmentServiceImpl {
 			}				
 		}catch (RequestInvalidException e){
 			logger.error("Request validation failed for txnId[" + consignmentFileRequest.getTxnId() + "]" + e);
+			
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", featureName);
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.UPDATE);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_013, consignmentFileRequest.getUserId(), bodyPlaceHolderMap);
+
 			throw e;
 		}catch (Exception e) {
 			logger.error(e.getMessage(), e);
@@ -480,6 +507,12 @@ public class ConsignmentServiceImpl {
 			consigmentValidator.validateDelete(consignmentUpdateRequest);
 		}catch (RequestInvalidException e) {
 			logger.error("Request validation failed for txnId[" + consignmentUpdateRequest.getTxnId() + "]" +  e);
+
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", featureName);
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.DELETE);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_013, consignmentUpdateRequest.getUserId().intValue(), bodyPlaceHolderMap);
+
 			throw e;
 		}
 		UserProfile userProfile = null;
@@ -667,6 +700,12 @@ public class ConsignmentServiceImpl {
 			}
 		}catch (RequestInvalidException e) {
 			logger.error("Request validation failed for txnId[" + consignmentUpdateRequest.getTxnId() + "]" + e);
+
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", featureName);
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.DELETE);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_013, consignmentUpdateRequest.getUserId().intValue(), bodyPlaceHolderMap);
+
 			throw e;
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
@@ -690,6 +729,12 @@ public class ConsignmentServiceImpl {
 			consigmentValidator.validateFilter(filterRequest);
 		}catch (RequestInvalidException e) {
 			logger.error("Request validation failed for txnId[" + filterRequest.getTxnId() + "]" + e);
+			
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", featureName);
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.EXPORT);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_013, filterRequest.getUserId(), bodyPlaceHolderMap);
+
 			throw e;
 		}
 		String fileName = null;
