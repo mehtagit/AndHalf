@@ -391,7 +391,7 @@ String usertypeId="${usertypeId}";
 								</div>
 
 								<div class="input-field col s12 m6 l6" style="margin-top: 22px;">
-									<input type="text" name="phoneNo" maxlength="15" id="phoneNo" pattern="[0-9]{7,15}"
+									<input type="text" name="phoneNo" maxlength="10" id="phoneNo" pattern="[0-9]"
 									oninput="InvalidMsg(this,'input','<spring:message code="validation.contact" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.contact" />');" 
 										required/> <label for="phoneNo"><spring:message
 											code="registration.phone" /> <span class="star">*</span> </label>

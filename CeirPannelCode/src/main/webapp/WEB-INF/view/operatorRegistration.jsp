@@ -476,7 +476,7 @@ var contextpath = "${context}";
 										<label for="authorityEmail"><spring:message code="registration.ReportingAuthorityEmailid" /><span class="star">*</span></label>
 								</div>
 								<div class="input-field col s12 m6 l6">
-									<input type="tel" name="authorityPhoneNo" required="required" id="authorityPhoneNo" maxlength="15" pattern="[0-9]{7,15}"
+									<input type="tel" name="authorityPhoneNo" required="required" id="authorityPhoneNo" maxlength="10" pattern="[0-9]"
 										oninput="InvalidMsg(this,'input','<spring:message code="validation.contact" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.contact" />');" title="">
 									<label for="authorityPhoneNo"><spring:message code="registration.reportingauthoritycontactnumber" /><span class="star">*</span></label>
 								</div>
