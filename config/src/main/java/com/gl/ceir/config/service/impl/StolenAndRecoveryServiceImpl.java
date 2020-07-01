@@ -214,6 +214,12 @@ public class StolenAndRecoveryServiceImpl {
 
 		}catch (RequestInvalidException e) {
 			logger.error("Request validation failed for txnId[" + stolenandRecoveryMgmt.getTxnId() + "]" + e);
+			
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", decideFeature(5L));
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.REGISTER);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_013, stolenandRecoveryMgmt.getUserId().intValue(), bodyPlaceHolderMap);
+			
 			throw e;
 		}catch (Exception e) {
 			logger.error(e.getMessage(), e);
@@ -266,6 +272,12 @@ public class StolenAndRecoveryServiceImpl {
 
 		}catch (RequestInvalidException e) {
 			logger.error("Request validation failed for txnId[" + stolenandRecoveryDetails.getTxnId() + "]" + e);
+			
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", decideFeature(5L));
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.REGISTER);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_013, stolenandRecoveryDetails.getUserId().intValue(), bodyPlaceHolderMap);
+
 			throw e;
 		}catch (Exception e) {
 			logger.error(e.getMessage(), e);
@@ -289,7 +301,7 @@ public class StolenAndRecoveryServiceImpl {
 			stolenValidator.validateFilter(filterRequest);
 
 			statusList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
-			logger.info("  source== "+source);
+			logger.info("source== "+source);
 			Page<StolenandRecoveryMgmt> stolenandRecoveryMgmtPage = stolenAndRecoveryRepository.findAll(buildSpecification(filterRequest, statusList, source).build(), pageable);
 			stateInterpList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
 			logger.info(stateInterpList);
@@ -316,7 +328,7 @@ public class StolenAndRecoveryServiceImpl {
 
 			logger.info(stolenandRecoveryMgmtPage.getContent());
 			if(Objects.nonNull(filterRequest.getTxnId())) {
-				addInAuditTrail(Long.valueOf(filterRequest.getUserId()), filterRequest.getTxnId(), SubFeatures.FILTER, filterRequest.getRoleType(),filterRequest.getRequestType(),filterRequest.getFeatureId());
+				addInAuditTrail(Long.valueOf(filterRequest.getUserId()), filterRequest.getTxnId(), SubFeatures.FILTER, filterRequest.getRoleType(), filterRequest.getRequestType(),filterRequest.getFeatureId());
 			}else {
 				addInAuditTrail(Long.valueOf(filterRequest.getUserId()), "NA", SubFeatures.VIEW_ALL, filterRequest.getRoleType(),filterRequest.getRequestType(),filterRequest.getFeatureId());
 			}
@@ -1499,15 +1511,15 @@ public class StolenAndRecoveryServiceImpl {
 		if(Objects.nonNull(imei4))
 			count++;
 
-		return count==0? 1:count;
+		return count == 0? 1 : count;
 	}
 
-	private void addInAuditTrail(Long userId, String txnId, String subFeatureName, String roleType, Integer requestType,Integer featureId) {
+	private void addInAuditTrail(Long userId, String txnId, String subFeatureName, String roleType, Integer requestType, Integer featureId) {
 
 		User requestUser = null;
 		String fearure = null;
 		try {
-			logger.info("Fetching user Info User ID"+userId);	
+			logger.info("Fetching user Info User ID " + userId);	
 			requestUser = userRepository.getById(userId);
 			if(Objects.nonNull(featureId) && featureId!=0) {
 				if(featureId==5) {
@@ -1527,9 +1539,8 @@ public class StolenAndRecoveryServiceImpl {
 						fearure = "Block/unblock Devices";
 					}
 				}else {
-					logger.error("Error while fetching user info requestType: "+requestType+" featureId : "+featureId);
+					logger.error("Error while fetching user info requestType: " + requestType + " featureId : " + featureId);
 				}
-
 			}
 
 			logger.info("User Details"+requestUser);

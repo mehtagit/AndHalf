@@ -347,6 +347,12 @@ public class StockServiceImpl {
 
 		}catch (RequestInvalidException e) {
 			logger.error("Request validation failed for txnId[" + filterRequest.getTxnId() + "]" + e);
+			
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", featureName);
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.VIEW_ALL);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_013, filterRequest.getUserId(), bodyPlaceHolderMap);
+			
 			return new PageImpl<StockMgmt>(new ArrayList<StockMgmt>(1), pageable, 0);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
@@ -503,6 +509,12 @@ public class StockServiceImpl {
 
 		} catch (RequestInvalidException e) {
 			logger.error("Request validation failed for txnId[" + filterRequest.getTxnId() + "]" + e);
+			
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", featureName);
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.VIEW);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_013, filterRequest.getUserId(), bodyPlaceHolderMap);
+			
 			throw e;
 		}catch (Exception e) {
 			logger.error(e.getMessage(), e);
@@ -521,6 +533,12 @@ public class StockServiceImpl {
 			stockValidator.validateDelete(deleteObj);
 		}catch (RequestInvalidException e) {
 			logger.error("Request validation failed for txnId[" + deleteObj.getTxnId() + "]" + e);
+			
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", featureName);
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.DELETE);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, deleteObj.getUserId().intValue(), bodyPlaceHolderMap);
+			
 			throw e;
 		}
 		
@@ -727,13 +745,19 @@ public class StockServiceImpl {
 			}
 		}catch (RequestInvalidException e) {
 			logger.error("Request validation failed for txnId[" + distributerManagement.getTxnId() + "]" + e);
+			
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", featureName);
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.UPDATE);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_013, 0, bodyPlaceHolderMap);
+			
 			throw e;
 		}catch (Exception e) {
 			logger.error(e.getMessage(), e);
 
 			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
 			bodyPlaceHolderMap.put("<feature>", featureName);
-			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.DELETE);
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.UPDATE);
 			alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, 0, bodyPlaceHolderMap);
 
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
@@ -760,6 +784,12 @@ public class StockServiceImpl {
 
 		}catch (RequestInvalidException e) {
 			logger.error("Request validation failed for txnId[" + filterRequest.getTxnId() + "]" + e);
+			
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", featureName);
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.EXPORT);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_013, 0, bodyPlaceHolderMap);
+			
 			throw e;
 		}catch (Exception e) {
 			logger.error(e.getMessage(), e);
@@ -792,8 +822,8 @@ public class StockServiceImpl {
 			userProfile = user.getUserProfile();
 
 			if(Objects.isNull(stockMgmt)) {
-				String message = "TxnId Does not Exist";
-				logger.info(message + " " + consignmentUpdateRequest.getTxnId());
+				String message = "TxnId Does not Exist ";
+				logger.info(message + consignmentUpdateRequest.getTxnId());
 				return new GenricResponse(4, message, consignmentUpdateRequest.getTxnId());
 			}
 
@@ -1032,6 +1062,12 @@ public class StockServiceImpl {
 
 		} catch (RequestInvalidException e) {
 			logger.error("Request validation failed for txnId[" + consignmentUpdateRequest.getTxnId() + "]" + e);
+			
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", featureName);
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.ACCEPT_REJECT);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_013, 0, bodyPlaceHolderMap);
+			
 			throw e;
 		}catch (Exception e) {
 			logger.error(e.getMessage(), e);
