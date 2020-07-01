@@ -1104,12 +1104,13 @@ public class StockServiceImpl {
 			if(requestUser.getUsertype().getId() == 17) {
 				requestUser.getUsertype().setUsertypeName("End User");
 			}
-			logger.info("User Details"+requestUser);
+			logger.info("User Details " + requestUser);
 		} catch (Exception e) {
-			logger.error("Error while fetching user information for user id = "+userId);
+			logger.error("Error while fetching user information for user id = " + userId);
 		}
+		
 		if(Objects.nonNull(requestUser)) {
-			logger.info("Inserting in audit table for feature = "+Features.STOCK+"and Subfeature"+subFeatureName);
+			logger.info("Inserting in audit table for feature = " + Features.STOCK + "and Subfeature" + subFeatureName);
 			auditTrailRepository.save(new AuditTrail(
 					requestUser.getId(),
 					requestUser.getUsername(), 
@@ -1124,7 +1125,6 @@ public class StockServiceImpl {
 		}else {
 			logger.error("Could not find the user information");
 		}
-
 	}
 
 	public boolean nothingInFilter(FilterRequest filterRequest) {

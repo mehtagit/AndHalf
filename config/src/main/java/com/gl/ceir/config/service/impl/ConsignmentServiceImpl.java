@@ -393,8 +393,11 @@ public class ConsignmentServiceImpl {
 			}
 
 			setInterp(consignmentMgmt);
+			
+			User loggedUser = userRepository.getById(filterRequest.getUserId());
+			String username = loggedUser.getUsername();
 
-			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), filterRequest.getUserName(), 
+			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), username, 
 					Long.valueOf(filterRequest.getUserTypeId()), filterRequest.getUserType(), 
 					Long.valueOf(filterRequest.getFeatureId()),
 					Features.CONSIGNMENT, SubFeatures.VIEW, 
@@ -786,7 +789,10 @@ public class ConsignmentServiceImpl {
 				csvWriter.write( new ConsignmentFileModel());
 			}
 
-			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), filterRequest.getUserName(), 
+			User loggedUser = userRepository.getById(filterRequest.getUserId());
+			String username = loggedUser.getUsername();
+			
+			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), username, 
 					Long.valueOf(filterRequest.getUserTypeId()), filterRequest.getUserType(), 
 					Long.valueOf(filterRequest.getFeatureId()),
 					Features.CONSIGNMENT, SubFeatures.EXPORT, "", "NA",filterRequest.getRoleType()));
