@@ -35,14 +35,9 @@
 	rel="stylesheet" media="screen,projection">
 <link href="${context}/resources/css/style.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
-<script type="text/javascript"
-	src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
-<link
-	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.min.css"
-	type="text/css" rel="stylesheet" media="screen,projection">
 
-<link href="${context}/resources/css/jquery-datepicker2.css"
-	type="text/css" rel="stylesheet" media="screen,projection">
+
+
 <!-- Custome CSS-->
 <link href="${context}/resources/css/custom/custom.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
@@ -258,12 +253,10 @@
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
 
-	<script type="text/javascript"
-		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
+
 	<script
 		src="${context}/resources/custom_js/moment.min.js"></script>
-	<script type="text/javascript"
-		src="${context}/resources/js/jquery-datepicker2.js"s></script>
+
 
 
 	<!--plugins.js - Some Specific JS codes for Plugin Settings-->

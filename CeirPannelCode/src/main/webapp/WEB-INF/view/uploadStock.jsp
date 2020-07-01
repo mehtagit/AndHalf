@@ -80,10 +80,10 @@
 
 
 <link rel="stylesheet"
-	href="${context}/resources/custom_js/jquery-ui.css?version=<%= (int) (Math.random() * 10) %>">
-<script src="${context}/resources/custom_js/1.11.2_jquery-ui.js?version=<%= (int) (Math.random() * 10) %>"></script>
+	href="${context}/resources/custom_js/jquery-ui.css">
+<script src="${context}/resources/custom_js/1.11.2_jquery-ui.js"></script>
 
-<script src="${context}/resources/custom_js/jquery.blockUI.js?version=<%= (int) (Math.random() * 10) %>"></script>
+<script src="${context}/resources/custom_js/jquery.blockUI.js"></script>
 
 			<script type="text/javascript"
 		src="${context}/resources/project_js/enterKey.js"></script>

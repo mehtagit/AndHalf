@@ -1671,7 +1671,7 @@ type="submit" ><spring:message code="button.update" /></button>
 	<!--custom-script.js - Add your own theme custom JS-->
 	<script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
 	
-	<script type="text/javascript" src="${context}/resources/resources/js/prism/prism.js"></script>-->
+	
 	<!--scrollbar-->
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>

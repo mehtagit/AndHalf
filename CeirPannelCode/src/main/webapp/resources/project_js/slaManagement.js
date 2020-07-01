@@ -194,11 +194,6 @@
 							$("#btnLink").css({display: "none"});
 						}
 
-						
-						
-						$('.datepicker').datepicker({
-							dateFormat: "yy-mm-dd"
-						});
 					}
 
 				}); 
