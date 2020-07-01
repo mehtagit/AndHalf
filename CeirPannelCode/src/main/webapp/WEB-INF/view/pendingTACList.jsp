@@ -23,6 +23,9 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<!-- Security Tags -->
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en" class="no-js">
@@ -33,6 +36,10 @@
 <meta http-equiv='expires' content='-1'>
 <meta http-equiv='pragma' content='no-cache'>
 
+<!-- Security Tags -->
+<meta name="_csrf" content="${_csrf.token}" />
+<!-- default header name is X-CSRF-TOKEN -->
+<meta name="_csrf_header" content="${_csrf.headerName}" />
 
 <meta charset="utf-8" />
 <meta name="viewport"
@@ -241,7 +248,6 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}"
 	<script type="text/javascript"
 		src="${context}/resources/i18n_library/min.js"></script>
 		<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js?version=<%= (int) (Math.random() * 10) %>"></script>
-	<script type="text/javascript" src="${context}/resources/project_js/pendingTACList.js?version=<%= (int) (Math.random() * 10) %>"></script>
 		<script type="text/javascript"
 		src="${context}/resources/project_js/dragableModal.js?version=<%= (int) (Math.random() * 10) %>"></script>	
 			<script type="text/javascript"
@@ -253,6 +259,8 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}"
 		
 	<script type="text/javascript"
 		src="${context}/resources/project_js/validationMsg.js?version=<%= (int) (Math.random() * 10) %>"></script>
+<script type="text/javascript" src="${context}/resources/project_js/pendingTACList.js?version=<%= (int) (Math.random() * 10) %>"></script>
+	
 </body>
 </html>
 <%

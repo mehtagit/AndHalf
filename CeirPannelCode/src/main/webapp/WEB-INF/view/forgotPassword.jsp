@@ -350,9 +350,7 @@ oninput="InvalidMsg(this,'input','<spring:message code="validation.50alphanumeri
 
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-	<!-- chartist -->
-	<script type="text/javascript"
-		src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script>
+
 	<script type="text/javascript"
 		src="${context}/resources/ajax/Registration.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<!-- i18n library -->

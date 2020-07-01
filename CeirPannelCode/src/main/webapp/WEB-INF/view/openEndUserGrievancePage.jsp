@@ -615,11 +615,7 @@ style="font-size: 20px;">+</span> <spring:message code="input.addmorefile" /></b
 		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 	
 	  
-    <!-- data-tables -->
-    <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/data-tables-script.js"></script>
-
-    <!--plugins.js - Some Specific JS codes for Plugin Settings-->
+   <!--plugins.js - Some Specific JS codes for Plugin Settings-->
     <script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
    
 <!-- i18n library -->
