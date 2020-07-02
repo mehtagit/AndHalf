@@ -16,6 +16,7 @@ public interface ConfigTags {
 	
 	String new_year_date_register_device = "new_year_date_register_device";
 	String grace_period_for_rgister_device = "grace_period_for_rgister_device";
+	String GREY_TO_BLACK_MOVE_PERIOD_IN_DAY = "GREY_TO_BLACK_MOVE_PERIOD_IN_DAY";
 
 	//----------------
 	String file_download_dir = "file.download-dir";
@@ -27,4 +28,5 @@ public interface ConfigTags {
 	// Policy
 	String max_end_user_device_count = "max_end_user_device_count";
     String max_foreigner_end_user_device_count="max_foreigner_end_user_device_count";
+   
 }

@@ -70,7 +70,7 @@ public class RuleEngineMappingServiceImpl {
 			RuleEngineMapping ruleEngineMappingOld =  ruleEngineMappingRepository.getById(ruleEngineMapping.getId());
 			logger.info("ruleEngineMappingOld : " + ruleEngineMappingOld);
 			ruleEngineMapping.setId(ruleEngineMappingOld.getId());
-			
+			ruleEngineMapping.setCreatedOn(ruleEngineMappingOld.getCreatedOn());			
 			ruleEngineMappingRepository.save(ruleEngineMapping);
 			
 			return new GenricResponse(0);

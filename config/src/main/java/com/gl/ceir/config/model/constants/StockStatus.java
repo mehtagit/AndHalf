@@ -1,10 +1,10 @@
 package com.gl.ceir.config.model.constants;
 
 public enum StockStatus {
-	UPLOADING(0), 
+	NEW(0), 
 	PROCESSING(1), 
-	ERROR(2), 
-	SUCCESS(3), 
+	REJECTED_BY_SYSTEM(2), 
+	PENDING_APPROVAL_FROM_CEIR_ADMIN(3), 
 	WITHDRAWN_BY_USER(4), 
 	RECOVERY(5), 
 	APPROVED_BY_CEIR_ADMIN(6),

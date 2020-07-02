@@ -1,15 +1,14 @@
 package com.gl.ceir.config.model.constants;
 
 public enum RegularizeDeviceStatus {
-	New(0, "New"), 
-	Processing(1, "Processing"), 
-	Rejected_By_System(2, "Rejected By System"), 
+	NEW(0, "New"), 
+	PROCESSING(1, "Processing"), 
+	REJECTED_BY_SYSTEM(2, "Rejected By System"), 
 	PENDING_APPROVAL_FROM_CEIR_ADMIN(3, "Pending Approval From CEIR Admin"), 
-	Withdrawn_By_User(4, "Withdrawn By User"), 
+	WITHDRAWN_BY_USER(4, "Withdrawn By User"), 
 	APPROVED(6, "Approved"),
 	REJECTED_BY_CEIR_ADMIN(7, "Rejected by CEIR Admin"), 
-	WithDrawn_BY_CEIR_ADMIN(8, "Withdrawn By CEIR Admin")
-	;
+	WITHDRAWN_BY_CEIR_ADMIN(8, "Withdrawn By CEIR Admin");
 
 	private int code;
 	private String desc;
