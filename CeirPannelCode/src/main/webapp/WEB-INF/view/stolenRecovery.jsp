@@ -125,6 +125,7 @@ position: fixed;
 		data-notificationTxnID="${txnID}"
 	data-OperatorTypeId="${operatorTypeId}" data-requestType="${requestType}"		
 	session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}"
+	data-selected-username="${username}"
 	data-session-source="${not empty param.source ? param.source : 'menu'}">
 	
 	

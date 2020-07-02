@@ -4,16 +4,22 @@ import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.DBTablesFeignClient;
 import org.gl.ceir.CeirPannelCode.Model.DBTableModel;
+import org.gl.ceir.CeirPannelCode.Model.DBrowDataModel;
+import org.gl.ceir.CeirPannelCode.Model.FileExportResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.google.gson.Gson;
 
 @Controller
 public class DBTablesController {
@@ -50,5 +56,27 @@ public class DBTablesController {
 		DBTableModel dbTableList = dBTablesFeignClient.getAlltables(dbName);
 		return dbTableList;
 	}
-
+	
+	//***************************************** Export DB Tables  controller *********************************
+	
+	
+	@PostMapping("exportDbTablesData")
+	@ResponseBody
+	public FileExportResponse exportToExcel(@RequestBody DBrowDataModel filterRequest,HttpSession session)
+	{
+		Gson gsonObject=new Gson();
+		Object response;
+		Integer file = 1;	
+		log.info("DBrowDataModel:::::::::"+filterRequest);
+		response=  dBTablesFeignClient.DBRowDetailsFeign(filterRequest, filterRequest.getPageNo(), filterRequest.getPageSize(), file);
+		FileExportResponse fileExportResponse;
+		Gson gson= new Gson(); 
+		String apiResponse = gson.toJson(response);
+		fileExportResponse = gson.fromJson(apiResponse, FileExportResponse.class);
+	   log.info("response  from  DB Export  api="+fileExportResponse);
+		
+		return fileExportResponse;
+	}
 }
+
+

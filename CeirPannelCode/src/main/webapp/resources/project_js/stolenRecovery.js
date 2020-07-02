@@ -351,7 +351,8 @@ function Datatable(url,dataUrl,sourceTypeFiler){
 			"featureId":featureId,
 			"userTypeId": parseInt($("body").attr("data-userTypeID")),
 			"userType":userType,
-			"operatorTypeId" : parseInt($('#operator').val())
+			"operatorTypeId" : parseInt($('#operator').val()),
+			"userName" : $("body").attr("data-selected-username")
 	}
 
 

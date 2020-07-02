@@ -116,7 +116,8 @@ padding: 0 !important;
 <script src="${context}/resources/custom_js/jquery.blockUI.js?version=<%= (int) (Math.random() * 10) %>"></script>
 </head>
 <body data-roleType="${usertype}" data-userID="${userid}" data-id="7"
-	data-selected-roleType="${selectedUserTypeId}" data-userTypeID="${usertypeId}">
+	data-selected-roleType="${selectedUserTypeId}" data-userTypeID="${usertypeId}"
+	data-username="${username}">
 
 
 

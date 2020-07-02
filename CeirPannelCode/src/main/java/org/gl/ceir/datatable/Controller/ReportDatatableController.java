@@ -63,14 +63,14 @@ public class ReportDatatableController {
 		MapDatatableResponse map = new MapDatatableResponse();
 		Gson gsonObject = new Gson();
 		DBrowDataModel filterrequest = gsonObject.fromJson(filter, DBrowDataModel.class);
-		
+		Integer file = 0;
 		Integer pageSize = Integer.parseInt(request.getParameter("length"));
 		Integer pageNumber = Integer.parseInt(request.getParameter("start")) / pageSize ;
 		
 		log.info("pageSize"+pageSize+"-----------pageNumber---"+pageNumber);
 		
 		log.info("request passed to API:::::::::" + filterrequest);
-		Object response = dBTablesFeignClient.ReportDetailsFeign(filterrequest, pageNumber, pageSize);
+		Object response = dBTablesFeignClient.ReportDetailsFeign(filterrequest, pageNumber, pageSize, file);
 		log.info("request passed filterrequest::::::::" + filterrequest);
 		Gson gson = new Gson();
 		String apiResponse = gson.toJson(response);

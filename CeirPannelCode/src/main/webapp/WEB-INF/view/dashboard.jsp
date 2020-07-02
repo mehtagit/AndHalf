@@ -132,6 +132,7 @@ div#error_Modal {
 	data-selected-consignmentTxnId="${consignmentTxnId}"
 	data-operatorTypeId="${operatorTypeId}"
 	data-selected-consignmentStatus="${consignmentStatus}"
+	data-selected-username="${username}"
 	data-defaultLink="${defaultLink}">
 	<!-- Start Page Loading -->
 	<div id="loader-wrapper">

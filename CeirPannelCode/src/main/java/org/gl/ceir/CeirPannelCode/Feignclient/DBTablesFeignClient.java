@@ -34,7 +34,8 @@ public interface DBTablesFeignClient {
 	@RequestMapping(value= "/report/data" , method=RequestMethod.POST) 
 	public Object ReportDetailsFeign(@RequestBody DBrowDataModel filterRequest,
 			@RequestParam(value = "pageNumber", defaultValue = "0") Integer pageNumber,
-			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize);
+			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+			@RequestParam(value = "file", defaultValue = "0") Integer file);
 	
 	//----------------------------Report headers Feign------------------------------
 	
@@ -47,7 +48,8 @@ public interface DBTablesFeignClient {
 	  @RequestMapping(value= "/db/table/data/V3" , method=RequestMethod.POST)
 	  public Object DBRowDetailsFeign(@RequestBody DBrowDataModel filterRequest,
 			  @RequestParam(value = "pageNumber", defaultValue = "0") Integer pageNumber,
-			  @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize);
+			  @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+			  @RequestParam(value = "file", defaultValue = "0") Integer file);
 	
 	//----------------------------DB headers Feign----------------------------------
 	
