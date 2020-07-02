@@ -52,4 +52,19 @@ public class ApiResponse {
 		this.data = data;
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("ApiResponse [responseCode=");
+		builder.append(responseCode);
+		builder.append(", responseStatus=");
+		builder.append(responseStatus);
+		builder.append(", message=");
+		builder.append(message);
+		builder.append(", data=");
+		builder.append(data);
+		builder.append("]");
+		return builder.toString();
+	}
+
 }

@@ -120,7 +120,7 @@ public class StockController {
 		logger.info("Stock Withdraw Request Of Txn_ID = " + deleteObj.getTxnId() + " for usertype : " + deleteObj.getUserType());
 		GenricResponse genricResponse =	stackholderServiceImpl.deleteStockDetailes(deleteObj);
 
-		logger.info("Response to Delete ="+genricResponse.toString());
+		logger.info("Response to Delete = " + genricResponse);
 		return genricResponse;
 
 	}

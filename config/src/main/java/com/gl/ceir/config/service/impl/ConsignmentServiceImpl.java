@@ -20,6 +20,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -29,6 +30,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.gl.ceir.config.ConfigTags;
 import com.gl.ceir.config.EmailSender.EmailUtil;
 import com.gl.ceir.config.configuration.PropertiesReader;
+import com.gl.ceir.config.exceptions.RequestInvalidException;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.feign.UserFeignClient;
 import com.gl.ceir.config.genericresponse.DataClass;
@@ -79,6 +81,7 @@ import com.gl.ceir.config.transaction.ConsignmentTransaction;
 import com.gl.ceir.config.util.CustomMappingStrategy;
 import com.gl.ceir.config.util.InterpSetter;
 import com.gl.ceir.config.util.Utility;
+import com.gl.ceir.config.validate.impl.ConsigmentValidator;
 import com.google.gson.Gson;
 import com.opencsv.CSVWriter;
 import com.opencsv.bean.StatefulBeanToCsv;
@@ -156,14 +159,17 @@ public class ConsignmentServiceImpl {
 	@Autowired
 	AlertServiceImpl alertServiceImpl;
 
+	@Autowired
+	ConsigmentValidator consigmentValidator;
+
 	public GenricResponse registerConsignment(ConsignmentMgmt consignmentFileRequest) {
 
 		try {
+			consigmentValidator.validateRegister(consignmentFileRequest);
 			Long importerId = Long.valueOf(consignmentFileRequest.getUserId());
 
 			WebActionDb webActionDb = new WebActionDb();
 			webActionDb.setFeature(WebActionDbFeature.CONSIGNMENT.getName());
-			// webActionDb.setFeature(stakeholderfeatureServiceImpl.getFeatureNameById(3L));
 			webActionDb.setSubFeature(WebActionDbSubFeature.CONSIGNMENT_REGISTER.getName());
 			webActionDb.setState(WebActionDbState.INIT.getCode());
 			webActionDb.setTxnId(consignmentFileRequest.getTxnId());
@@ -180,6 +186,15 @@ public class ConsignmentServiceImpl {
 				return new GenricResponse(1, "Consignment Registeration failed.", consignmentFileRequest.getTxnId());
 			}
 
+		}catch (RequestInvalidException e) {
+			logger.error("Request validation failed for txnId[" + consignmentFileRequest.getTxnId() + "]" + e);
+			
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", featureName);
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.REGISTER);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_013, consignmentFileRequest.getUserId(), bodyPlaceHolderMap);
+			
+			throw e;
 		}catch (Exception e) {
 			logger.error(e.getMessage(), e);
 
@@ -268,11 +283,13 @@ public class ConsignmentServiceImpl {
 
 	public Page<ConsignmentMgmt> getFilterPaginationConsignments(FilterRequest consignmentMgmt, Integer pageNo, 
 			Integer pageSize, String source) {
-
-		List<StateMgmtDb> statusList = null;
-
+		Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
+		
 		try {
-			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
+			consigmentValidator.validateFilter(consignmentMgmt);
+
+			List<StateMgmtDb> statusList = null;
+			
 
 			statusList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(consignmentMgmt.getFeatureId(), consignmentMgmt.getUserTypeId());
 
@@ -296,7 +313,16 @@ public class ConsignmentServiceImpl {
 			logger.info("AUDIT : Saved view request in audit.");
 			return page;
 
-		} catch (Exception e) {
+		} catch (RequestInvalidException e){
+			logger.error("Request validation failed for txnId[" + consignmentMgmt.getTxnId() + "]" + e);
+			
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", featureName);
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.VIEW_ALL);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_013, consignmentMgmt.getUserId(), bodyPlaceHolderMap);
+			
+			return new PageImpl<ConsignmentMgmt>(new ArrayList<ConsignmentMgmt>(1), pageable, 0);
+		}catch (Exception e) {
 			logger.error(e.getMessage(), e);
 
 			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
@@ -342,10 +368,14 @@ public class ConsignmentServiceImpl {
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
-	
+
 	public ConsignmentMgmt getRecordInfo(FilterRequest filterRequest) {
-		String txnId = filterRequest.getTxnId();
+
 		try {
+			consigmentValidator.validateViewById(filterRequest);
+
+			String txnId = filterRequest.getTxnId();
+
 			logger.info("Going to get Cosignment Record Info for txnId : " + txnId);
 
 			if(Objects.isNull(txnId)) {
@@ -364,7 +394,10 @@ public class ConsignmentServiceImpl {
 
 			setInterp(consignmentMgmt);
 			
-			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), filterRequest.getUserName(), 
+			User loggedUser = userRepository.getById(filterRequest.getUserId());
+			String username = loggedUser.getUsername();
+
+			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), username, 
 					Long.valueOf(filterRequest.getUserTypeId()), filterRequest.getUserType(), 
 					Long.valueOf(filterRequest.getFeatureId()),
 					Features.CONSIGNMENT, SubFeatures.VIEW, 
@@ -372,7 +405,16 @@ public class ConsignmentServiceImpl {
 			logger.info("AUDIT : Saved file export request in audit.");
 
 			return consignmentMgmt;
-		} catch (Exception e) {
+		}catch (RequestInvalidException e){
+			logger.error("Request validation failed for txnId[" + filterRequest.getTxnId() + "]" + e);
+			
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", featureName);
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.VIEW);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_013, 0, bodyPlaceHolderMap);
+
+			throw e;
+		}catch (Exception e) {
 			logger.error(e.getMessage(), e);
 
 			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
@@ -385,8 +427,9 @@ public class ConsignmentServiceImpl {
 	}
 
 	public GenricResponse updateConsignment(ConsignmentMgmt consignmentFileRequest) {
-
 		try {
+			consigmentValidator.validateEdit(consignmentFileRequest);
+
 			ConsignmentMgmt consignmentInfo = consignmentRepository.getByTxnId(consignmentFileRequest.getTxnId());
 
 			logger.info("ConsignmentInfo = " + consignmentInfo.toString());
@@ -441,6 +484,15 @@ public class ConsignmentServiceImpl {
 					return new GenricResponse(1, "Consignment Update have been failed.", consignmentFileRequest.getTxnId());
 				}
 			}				
+		}catch (RequestInvalidException e){
+			logger.error("Request validation failed for txnId[" + consignmentFileRequest.getTxnId() + "]" + e);
+			
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", featureName);
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.UPDATE);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_013, consignmentFileRequest.getUserId(), bodyPlaceHolderMap);
+
+			throw e;
 		}catch (Exception e) {
 			logger.error(e.getMessage(), e);
 
@@ -453,8 +505,19 @@ public class ConsignmentServiceImpl {
 		}
 	} 
 
-	@Transactional
 	public GenricResponse deleteConsigmentInfo(ConsignmentUpdateRequest consignmentUpdateRequest) {
+		try {
+			consigmentValidator.validateDelete(consignmentUpdateRequest);
+		}catch (RequestInvalidException e) {
+			logger.error("Request validation failed for txnId[" + consignmentUpdateRequest.getTxnId() + "]" +  e);
+
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", featureName);
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.DELETE);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_013, consignmentUpdateRequest.getUserId().intValue(), bodyPlaceHolderMap);
+
+			throw e;
+		}
 		UserProfile userProfile = null;
 		Map<String, String> placeholderMap = new HashMap<>();
 		Integer userId = consignmentUpdateRequest.getUserId().intValue();
@@ -469,15 +532,34 @@ public class ConsignmentServiceImpl {
 			return new GenricResponse(1002, "userType is null in the request.", consignmentUpdateRequest.getTxnId());
 		}
 
-		try {
+		String payloadTxnId = consignmentUpdateRequest.getTxnId();
 
+		lock.lock();
+		logger.info("lock taken by thread for [Delete] - " + Thread.currentThread().getName());
+		try {
 			ConsignmentMgmt consignmentMgmt = consignmentRepository.getByTxnId(consignmentUpdateRequest.getTxnId());
 			// Fetch user_profile to update user over mail/sms regarding the action.
 			userProfile = userProfileRepository.getByUserId(consignmentMgmt.getUserId());
 
 			if("CEIRADMIN".equalsIgnoreCase(consignmentUpdateRequest.getUserType())) {
+				// Check if someone else taken the same action on consignment.
+				ConsignmentMgmt consignmentMgmtTemp = consignmentRepository.getByTxnId(consignmentMgmt.getTxnId());
+				if(ConsignmentStatus.WITHDRAWN_BY_CEIR.getCode() == consignmentMgmtTemp.getConsignmentStatus()) {
+					String message = "Any other user have taken the same action on the consignment [" + payloadTxnId + "]";
+					logger.info(message);
+					return new GenricResponse(10, "", message, payloadTxnId);
+				}
+
 				consignmentMgmt.setConsignmentStatus(ConsignmentStatus.WITHDRAWN_BY_CEIR.getCode());
 			}else if("IMPORTER".equalsIgnoreCase(consignmentUpdateRequest.getUserType())) {
+				// Check if someone else taken the same action on consignment.
+				ConsignmentMgmt consignmentMgmtTemp = consignmentRepository.getByTxnId(consignmentMgmt.getTxnId());
+				if(ConsignmentStatus.WITHDRAWN_BY_IMPORTER.getCode() == consignmentMgmtTemp.getConsignmentStatus()) {
+					String message = "Any other user have taken the same action on the consignment [" + payloadTxnId + "]";
+					logger.info(message);
+					return new GenricResponse(10, "", message, payloadTxnId);
+				}
+
 				// Check status must be Init or Rejected by system.
 				if(consignmentMgmt.getConsignmentStatus() == ConsignmentStatus.INIT.getCode() || 
 						consignmentMgmt.getConsignmentStatus() == ConsignmentStatus.REJECTED_BY_SYSTEM.getCode()) {
@@ -570,15 +652,23 @@ public class ConsignmentServiceImpl {
 			alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, userId, bodyPlaceHolderMap);
 
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}finally {
+			if(lock.isLocked()) {
+				logger.info("lock released by thread [Delete] - " + Thread.currentThread().getName());
+				lock.unlock();
+			}
 		}
 	}
 
 	public GenricResponse updateConsignmentStatus(ConsignmentUpdateRequest consignmentUpdateRequest) {
-		String roleType = consignmentUpdateRequest.getRoleType();
-		int action= consignmentUpdateRequest.getAction();
-		String payloadTxnID = consignmentUpdateRequest.getTxnId();
-		UserProfile ceirUserProfile = new UserProfile();
 		try {
+			consigmentValidator.validateAcceptReject(consignmentUpdateRequest);
+
+			String roleType = consignmentUpdateRequest.getRoleType();
+			int action= consignmentUpdateRequest.getAction();
+			String payloadTxnID = consignmentUpdateRequest.getTxnId();
+			UserProfile ceirUserProfile = new UserProfile();
+
 			UserProfile userProfile = null;
 			ConsignmentMgmt consignmentMgmt = consignmentRepository.getByTxnId(payloadTxnID);
 			logger.debug("Accept/Reject Consignment : " + consignmentMgmt);
@@ -611,6 +701,15 @@ public class ConsignmentServiceImpl {
 				return new GenricResponse(1, "Nothing to update for request.", payloadTxnID);
 
 			}
+		}catch (RequestInvalidException e) {
+			logger.error("Request validation failed for txnId[" + consignmentUpdateRequest.getTxnId() + "]" + e);
+
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", featureName);
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.DELETE);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_013, consignmentUpdateRequest.getUserId().intValue(), bodyPlaceHolderMap);
+
+			throw e;
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 
@@ -629,6 +728,18 @@ public class ConsignmentServiceImpl {
 	}
 
 	public FileDetails getFilteredConsignmentInFileV2(FilterRequest filterRequest, String source) {
+		try {
+			consigmentValidator.validateFilter(filterRequest);
+		}catch (RequestInvalidException e) {
+			logger.error("Request validation failed for txnId[" + filterRequest.getTxnId() + "]" + e);
+			
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", featureName);
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.EXPORT);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_013, filterRequest.getUserId(), bodyPlaceHolderMap);
+
+			throw e;
+		}
 		String fileName = null;
 		Writer writer   = null;
 
@@ -678,7 +789,10 @@ public class ConsignmentServiceImpl {
 				csvWriter.write( new ConsignmentFileModel());
 			}
 
-			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), filterRequest.getUserName(), 
+			User loggedUser = userRepository.getById(filterRequest.getUserId());
+			String username = loggedUser.getUsername();
+			
+			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), username, 
 					Long.valueOf(filterRequest.getUserTypeId()), filterRequest.getUserType(), 
 					Long.valueOf(filterRequest.getFeatureId()),
 					Features.CONSIGNMENT, SubFeatures.EXPORT, "", "NA",filterRequest.getRoleType()));
@@ -1308,7 +1422,7 @@ public class ConsignmentServiceImpl {
 			}else {
 				logger.info("Don't take any action for mail.");
 			}
-			
+
 			logger.info("Consignment status have Update SuccessFully." + payloadTxnId);
 			return new GenricResponse(0, "Consignment status have Update SuccessFully.", payloadTxnId);
 		}else {
@@ -1488,5 +1602,4 @@ public class ConsignmentServiceImpl {
 
 		return Boolean.TRUE;
 	}
-
 }

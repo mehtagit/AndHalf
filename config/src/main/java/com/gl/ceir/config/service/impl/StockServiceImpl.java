@@ -16,6 +16,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -24,11 +25,11 @@ import org.springframework.stereotype.Service;
 import com.gl.ceir.config.ConfigTags;
 import com.gl.ceir.config.EmailSender.EmailUtil;
 import com.gl.ceir.config.configuration.PropertiesReader;
+import com.gl.ceir.config.exceptions.RequestInvalidException;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.factory.ExportFileFactory;
 import com.gl.ceir.config.feign.UserFeignClient;
 import com.gl.ceir.config.model.AuditTrail;
-import com.gl.ceir.config.model.ConsignmentMgmt;
 import com.gl.ceir.config.model.ConsignmentUpdateRequest;
 import com.gl.ceir.config.model.DashboardUsersFeatureStateMap;
 import com.gl.ceir.config.model.FeatureValidateReq;
@@ -46,7 +47,6 @@ import com.gl.ceir.config.model.Userrole;
 import com.gl.ceir.config.model.Usertype;
 import com.gl.ceir.config.model.WebActionDb;
 import com.gl.ceir.config.model.constants.Alerts;
-import com.gl.ceir.config.model.constants.ConsignmentStatus;
 import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.Features;
 import com.gl.ceir.config.model.constants.GenericMessageTags;
@@ -72,6 +72,7 @@ import com.gl.ceir.config.specificationsbuilder.GenericSpecificationBuilder;
 import com.gl.ceir.config.transaction.StockTransaction;
 import com.gl.ceir.config.util.HttpResponse;
 import com.gl.ceir.config.util.InterpSetter;
+import com.gl.ceir.config.validate.impl.StockValidator;
 
 @Service
 public class StockServiceImpl {
@@ -143,6 +144,9 @@ public class StockServiceImpl {
 	@Autowired
 	ExportFileFactory exportFileFactory;
 
+	@Autowired
+	StockValidator stockValidator;
+
 	public GenricResponse uploadStock(StockMgmt stockMgmt) {
 		boolean isStockAssignRequest = Boolean.FALSE;
 		boolean isAnonymousUpload = Boolean.FALSE;
@@ -150,6 +154,7 @@ public class StockServiceImpl {
 		User user = null;
 
 		try {
+			stockValidator.validateRegister(stockMgmt);
 			stockMgmt.setStockStatus(StockStatus.NEW.getCode());
 
 			// Assign Stock is done by custom.
@@ -267,7 +272,10 @@ public class StockServiceImpl {
 					return new GenricResponse(1, "Stock registeration have been failed.", stockMgmt.getTxnId());
 				}
 			}
-		} catch (Exception e) {
+		} catch (RequestInvalidException e) {
+			logger.error("Request validation failed for txnId[" + stockMgmt.getTxnId() + "]" + e);
+			throw e;
+		}catch (Exception e) {
 			logger.error(e.getMessage(), e);
 
 			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
@@ -300,9 +308,10 @@ public class StockServiceImpl {
 			String source){
 
 		List<StateMgmtDb> statusList = null;
-
+		Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
+		
 		try {
-			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
+			stockValidator.validateFilter(filterRequest);
 
 			if("noti".equalsIgnoreCase(source)) {
 				StockMgmt stockMgmtTemp = stockManagementRepository.getByTxnId(filterRequest.getTxnId());
@@ -334,6 +343,15 @@ public class StockServiceImpl {
 
 			return page;
 
+		}catch (RequestInvalidException e) {
+			logger.error("Request validation failed for txnId[" + filterRequest.getTxnId() + "]" + e);
+			
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", featureName);
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.VIEW_ALL);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_013, filterRequest.getUserId(), bodyPlaceHolderMap);
+			
+			return new PageImpl<StockMgmt>(new ArrayList<StockMgmt>(1), pageable, 0);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 
@@ -468,6 +486,7 @@ public class StockServiceImpl {
 
 	public StockMgmt view(FilterRequest filterRequest) {
 		try {
+			stockValidator.validateViewById(filterRequest);
 			logger.info("Going to get Stock Record Info for txnId : " + filterRequest.getTxnId());
 
 			if(Objects.isNull(filterRequest.getTxnId())) {
@@ -486,7 +505,16 @@ public class StockServiceImpl {
 			addInAuditTrail(Long.valueOf(filterRequest.getUserId()), filterRequest.getTxnId(), SubFeatures.VIEW,filterRequest.getRoleType());
 			return stockMgmt2;
 
-		} catch (Exception e) {
+		} catch (RequestInvalidException e) {
+			logger.error("Request validation failed for txnId[" + filterRequest.getTxnId() + "]" + e);
+			
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", featureName);
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.VIEW);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_013, filterRequest.getUserId(), bodyPlaceHolderMap);
+			
+			throw e;
+		}catch (Exception e) {
 			logger.error(e.getMessage(), e);
 
 			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
@@ -499,28 +527,35 @@ public class StockServiceImpl {
 	}
 
 	public GenricResponse deleteStockDetailes(ConsignmentUpdateRequest deleteObj) {
+		try {
+			stockValidator.validateDelete(deleteObj);
+		}catch (RequestInvalidException e) {
+			logger.error("Request validation failed for txnId[" + deleteObj.getTxnId() + "]" + e);
+			
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", featureName);
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.DELETE);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, deleteObj.getUserId().intValue(), bodyPlaceHolderMap);
+			
+			throw e;
+		}
+		
 		UserProfile userProfile = null;
 		String firstName = "";
 		User user = null;
 		Map<String, String> placeholderMap = new HashMap<>();
-		//String mailTag = null;
 		String action = null;
 		String txnId = null;
 		String userMailTag = null;
-		Boolean isUserCeirAdmin=false;
+		Boolean isUserCeirAdmin = false;
 		String receiverUserType = deleteObj.getUserType();
 		action = SubFeatures.DELETE;
-		//	mailTag = "STOCK_DELETE_BY_CEIR_ADMIN"; 
 		userMailTag = "STOCK_DELETE_BY_USER"; 
 		user = userRepository.getById(deleteObj.getUserId());				
 		userProfile = user.getUserProfile();
 		txnId = deleteObj.getTxnId();
 
-
-		/*placeholderMap.put("<First name>", userProfile_generic_Response_Notification.getFirstName());
-		placeholderMap.put("<Txn id>", consignmentMgmt.getTxnId());*/
-
-		placeholderMap.put("<First name>",userProfile.getFirstName());
+		placeholderMap.put("<First name>", userProfile.getFirstName());
 		placeholderMap.put("<Txn id>", deleteObj.getTxnId());
 		try {
 
@@ -536,17 +571,35 @@ public class StockServiceImpl {
 
 			StockMgmt txnRecord	= stockManagementRepository.getByTxnId(deleteObj.getTxnId());
 
+			String payloadTxnId = deleteObj.getTxnId();
+			lock.lock();
+			logger.info("lock taken by thread for [Delete] - " + Thread.currentThread().getName());
+
 			if(Objects.isNull(txnRecord)) {
 				return new GenricResponse(1000, "No record found against this transactionId.", deleteObj.getTxnId());
 			}else {
 
 				if("CEIRADMIN".equalsIgnoreCase(deleteObj.getUserType())) {
+					// Check if someone else taken the same action on consignment.
+					StockMgmt stockMgmtTemp = stockManagementRepository.getByTxnId(payloadTxnId);
+					if(StockStatus.WITHDRAWN_BY_CEIR_ADMIN.getCode() == stockMgmtTemp.getStockStatus()) {
+						String message = "Any other user have taken the same action on the stock [" + payloadTxnId + "]";
+						logger.info(message);
+						return new GenricResponse(10, "", message, payloadTxnId);
+					}
+
 					txnRecord.setStockStatus(StockStatus.WITHDRAWN_BY_CEIR_ADMIN.getCode());
-					isUserCeirAdmin=true;
-
+					isUserCeirAdmin = Boolean.TRUE;
 				}
-
 				else {
+					// Check if someone else taken the same action on consignment.
+					StockMgmt stockMgmtTemp = stockManagementRepository.getByTxnId(payloadTxnId);
+					if(StockStatus.WITHDRAWN_BY_USER.getCode() == stockMgmtTemp.getStockStatus()) {
+						String message = "Any other user have taken the same action on the stock [" + payloadTxnId + "]";
+						logger.info(message);
+						return new GenricResponse(10, "", message, payloadTxnId);
+					}
+
 					txnRecord.setStockStatus(StockStatus.WITHDRAWN_BY_USER.getCode());
 				}
 				txnRecord.setRemarks(deleteObj.getRemarks());
@@ -635,56 +688,84 @@ public class StockServiceImpl {
 			alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, 0, bodyPlaceHolderMap);
 
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}finally {
+			if(lock.isLocked()) {
+				logger.info("lock released by thread [Delete] - " + Thread.currentThread().getName());
+				lock.unlock();
+			}
 		}
 	}
 
 	public GenricResponse updateStockInfo(StockMgmt distributerManagement) {
 		StockMgmt stockMgmt = null;
 
-		if("End User".equalsIgnoreCase(distributerManagement.getUserType())){
-			distributerManagement.setRoleType("End User");
-		}
-		stockMgmt = stockManagementRepository.findByRoleTypeAndTxnId(distributerManagement.getRoleType(), 
-				distributerManagement.getTxnId());
-		logger.info(stockMgmt);
-
-		if(Objects.isNull(stockMgmt)) {
-			return new GenricResponse(1000, "No record found against this transactionId.",distributerManagement.getTxnId());
-
-		}else {
-
-			stockMgmt.setInvoiceNumber(distributerManagement.getInvoiceNumber());
-			stockMgmt.setQuantity(distributerManagement.getQuantity());
-			stockMgmt.setSuplierName(distributerManagement.getSuplierName());
-			stockMgmt.setSupplierId(distributerManagement.getSupplierId());
-			stockMgmt.setTotalPrice(distributerManagement.getTotalPrice());
-			stockMgmt.setDeviceQuantity(distributerManagement.getDeviceQuantity());
-			if(Objects.nonNull(distributerManagement.getFileName()) && !distributerManagement.getFileName().isEmpty()) {
-				stockMgmt.setStockStatus(StockStatus.NEW.getCode());
-				stockMgmt.setFileName(distributerManagement.getFileName());
+		try {
+			stockValidator.validateEdit(distributerManagement);
+			
+			if("End User".equalsIgnoreCase(distributerManagement.getUserType())){
+				distributerManagement.setRoleType("End User");
 			}
+			stockMgmt = stockManagementRepository.findByRoleTypeAndTxnId(distributerManagement.getRoleType(), 
+					distributerManagement.getTxnId());
+			logger.info(stockMgmt);
 
-			WebActionDb webActionDb = new WebActionDb();
-			webActionDb.setFeature(WebActionDbFeature.STOCK.getName());
-			// webActionDb.setFeature(stakeholderfeatureServiceImpl.getFeatureNameById(4L));
-			webActionDb.setSubFeature(WebActionDbSubFeature.UPDATE.getName());
-			webActionDb.setState(WebActionDbState.INIT.getCode());
-			webActionDb.setTxnId(distributerManagement.getTxnId());
+			if(Objects.isNull(stockMgmt)) {
+				return new GenricResponse(1000, "No record found against this transactionId.", distributerManagement.getTxnId());
 
-			addInAuditTrail(stockMgmt.getUserId(), stockMgmt.getTxnId(), SubFeatures.UPDATE, stockMgmt.getRoleType());
-
-			if(stockTransaction.executeUpdateStock(stockMgmt, webActionDb)) {
-				logger.info("Stock Update have been Successful." + stockMgmt.getTxnId());
-				return new GenricResponse(0, "Stock Update have been Successful.", distributerManagement.getTxnId());
 			}else {
-				logger.info("Stock Update have been failed." + stockMgmt.getTxnId());
-				return new GenricResponse(1, "Stock Update have been failed.",stockMgmt.getTxnId());
+
+				stockMgmt.setInvoiceNumber(distributerManagement.getInvoiceNumber());
+				stockMgmt.setQuantity(distributerManagement.getQuantity());
+				stockMgmt.setSuplierName(distributerManagement.getSuplierName());
+				stockMgmt.setSupplierId(distributerManagement.getSupplierId());
+				stockMgmt.setTotalPrice(distributerManagement.getTotalPrice());
+				stockMgmt.setDeviceQuantity(distributerManagement.getDeviceQuantity());
+				if(Objects.nonNull(distributerManagement.getFileName()) && !distributerManagement.getFileName().isEmpty()) {
+					stockMgmt.setStockStatus(StockStatus.NEW.getCode());
+					stockMgmt.setFileName(distributerManagement.getFileName());
+				}
+
+				WebActionDb webActionDb = new WebActionDb();
+				webActionDb.setFeature(WebActionDbFeature.STOCK.getName());
+				webActionDb.setSubFeature(WebActionDbSubFeature.UPDATE.getName());
+				webActionDb.setState(WebActionDbState.INIT.getCode());
+				webActionDb.setTxnId(distributerManagement.getTxnId());
+
+				addInAuditTrail(stockMgmt.getUserId(), stockMgmt.getTxnId(), SubFeatures.UPDATE, stockMgmt.getRoleType());
+
+				if(stockTransaction.executeUpdateStock(stockMgmt, webActionDb)) {
+					logger.info("Stock Update have been Successful." + stockMgmt.getTxnId());
+					return new GenricResponse(0, "Stock Update have been Successful.", distributerManagement.getTxnId());
+				}else {
+					logger.info("Stock Update have been failed." + stockMgmt.getTxnId());
+					return new GenricResponse(1, "Stock Update have been failed.",stockMgmt.getTxnId());
+				}
 			}
+		}catch (RequestInvalidException e) {
+			logger.error("Request validation failed for txnId[" + distributerManagement.getTxnId() + "]" + e);
+			
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", featureName);
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.UPDATE);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_013, 0, bodyPlaceHolderMap);
+			
+			throw e;
+		}catch (Exception e) {
+			logger.error(e.getMessage(), e);
+
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", featureName);
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.UPDATE);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, 0, bodyPlaceHolderMap);
+
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
 
 	public FileDetails getFilteredStockInFile(FilterRequest filterRequest, String source) {
 		try {
+			stockValidator.validateFilter(filterRequest);
+			
 			DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 			DateTimeFormatter dtf2  = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
 
@@ -699,6 +780,15 @@ public class StockServiceImpl {
 					.getObject(filterRequest.getUserType().toUpperCase(), 4)
 					.export(filterRequest, source, dtf, dtf2, filePath, link);
 
+		}catch (RequestInvalidException e) {
+			logger.error("Request validation failed for txnId[" + filterRequest.getTxnId() + "]" + e);
+			
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", featureName);
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.EXPORT);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_013, 0, bodyPlaceHolderMap);
+			
+			throw e;
 		}catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
@@ -707,6 +797,8 @@ public class StockServiceImpl {
 
 	public GenricResponse acceptReject(ConsignmentUpdateRequest consignmentUpdateRequest) {
 		try {
+			stockValidator.validateAcceptReject(consignmentUpdateRequest);
+			
 			UserProfile userProfile = null;
 			String firstName = "";
 			User user = null;
@@ -728,8 +820,8 @@ public class StockServiceImpl {
 			userProfile = user.getUserProfile();
 
 			if(Objects.isNull(stockMgmt)) {
-				String message = "TxnId Does not Exist";
-				logger.info(message + " " + consignmentUpdateRequest.getTxnId());
+				String message = "TxnId Does not Exist ";
+				logger.info(message + consignmentUpdateRequest.getTxnId());
 				return new GenricResponse(4, message, consignmentUpdateRequest.getTxnId());
 			}
 
@@ -776,7 +868,7 @@ public class StockServiceImpl {
 						logger.info(message);
 						return new GenricResponse(10, "", message, txnId);
 					}
-					
+
 					action = SubFeatures.REJECT;
 					mailTag = "STOCK_REJECT_BY_CEIR_ADMIN";
 					txnId =  stockMgmt.getTxnId();
@@ -850,7 +942,7 @@ public class StockServiceImpl {
 						logger.info(message);
 						return new GenricResponse(10, "", message, txnId);
 					}
-					
+
 					action = SubFeatures.ACCEPT;
 					mailTag = "STOCK_PROCESS_SUCCESS_TO_USER_MAIL"; 
 					adminMailTag = "STOCK_PROCESS_SUCCESS_TO_CEIR_MAIL";
@@ -868,7 +960,7 @@ public class StockServiceImpl {
 						logger.info(message);
 						return new GenricResponse(10, "", message, txnId);
 					}
-					
+
 					action = SubFeatures.REJECT;
 					mailTag = "STOCK_PROCESS_FAILED_TO_USER_MAIL";
 					txnId = stockMgmt.getTxnId();
@@ -885,7 +977,7 @@ public class StockServiceImpl {
 						logger.info(message);
 						return new GenricResponse(10, "", message, txnId);
 					}
-					
+
 					action = SubFeatures.ACCEPT;
 					mailTag = "STOCK_PROCESS_SUCCESS_TO_USER_MAIL"; 
 					adminMailTag = "STOCK_PROCESS_SUCCESS_TO_CEIR_MAIL";
@@ -966,7 +1058,16 @@ public class StockServiceImpl {
 
 			return new GenricResponse(0, "Consignment Update SuccessFully.", consignmentUpdateRequest.getTxnId());
 
-		} catch (Exception e) {
+		} catch (RequestInvalidException e) {
+			logger.error("Request validation failed for txnId[" + consignmentUpdateRequest.getTxnId() + "]" + e);
+			
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", featureName);
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.ACCEPT_REJECT);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_013, 0, bodyPlaceHolderMap);
+			
+			throw e;
+		}catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}finally {
@@ -1003,12 +1104,13 @@ public class StockServiceImpl {
 			if(requestUser.getUsertype().getId() == 17) {
 				requestUser.getUsertype().setUsertypeName("End User");
 			}
-			logger.info("User Details"+requestUser);
+			logger.info("User Details " + requestUser);
 		} catch (Exception e) {
-			logger.error("Error while fetching user information for user id = "+userId);
+			logger.error("Error while fetching user information for user id = " + userId);
 		}
+		
 		if(Objects.nonNull(requestUser)) {
-			logger.info("Inserting in audit table for feature = "+Features.STOCK+"and Subfeature"+subFeatureName);
+			logger.info("Inserting in audit table for feature = " + Features.STOCK + "and Subfeature" + subFeatureName);
 			auditTrailRepository.save(new AuditTrail(
 					requestUser.getId(),
 					requestUser.getUsername(), 
@@ -1023,7 +1125,6 @@ public class StockServiceImpl {
 		}else {
 			logger.error("Could not find the user information");
 		}
-
 	}
 
 	public boolean nothingInFilter(FilterRequest filterRequest) {

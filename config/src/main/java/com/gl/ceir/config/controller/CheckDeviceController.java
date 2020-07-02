@@ -22,8 +22,8 @@ public class CheckDeviceController {
 	@ApiOperation(value = "check device", response = GenricResponse.class)
 	@PostMapping("checkDevice")
 	public MappingJacksonValue checkDevice(@RequestBody CheckDevice checkDevice) {
-		GenricResponse genricResponse=checkDeviceImpl.checkDevices(checkDevice);
-        MappingJacksonValue mapping=new MappingJacksonValue(genricResponse);
+		GenricResponse genricResponse = checkDeviceImpl.checkDevices(checkDevice);
+        MappingJacksonValue mapping = new MappingJacksonValue(genricResponse);
 		return mapping;
 	}
 }

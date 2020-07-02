@@ -13,14 +13,16 @@ public class ConsignmentUpdateRequest {
 	private Integer requestType;
 	private String nid;
 	private String userName;
+	private Integer userTypeId;
+	
 	public Integer getUserTypeId() {
 		return userTypeId;
 	}
+	
 	public void setUserTypeId(Integer userTypeId) {
 		this.userTypeId = userTypeId;
 	}
-
-	private Integer userTypeId;
+	
 	public String getUserName() {
 		return userName;
 	}
@@ -118,5 +120,4 @@ public class ConsignmentUpdateRequest {
 		builder.append("]");
 		return builder.toString();
 	}
-
 }
