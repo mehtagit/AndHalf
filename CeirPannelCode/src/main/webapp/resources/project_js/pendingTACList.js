@@ -61,15 +61,8 @@
 						var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
 					}
 
-				var token = $("meta[name='_csrf']").attr("content");
-				var header = $("meta[name='_csrf_header']").attr("content");
-				$.ajaxSetup({
-					headers:
-					{ 'X-CSRF-TOKEN': token }
-				});
-				
 				$.ajax({
-					url: './headers?type=pendingTACHeaders&lang='+lang,
+					url: 'headers?type=pendingTACHeaders&lang='+lang,
 					type: 'POST',
 					dataType: "json",
 					success: function(result){
@@ -87,7 +80,7 @@
 									"sUrl": langFile  
 								},
 							ajax: {
-								url : './pendingTACdata',
+								url : 'pendingTACdata',
 								type: 'POST',
 								dataType: "json",
 								data : function(d) {
@@ -121,12 +114,6 @@
 			//**************************************************Grievance page buttons**********************************************
 
 			function pageRendering(){
-				var token = $("meta[name='_csrf']").attr("content");
-				var header = $("meta[name='_csrf_header']").attr("content");
-				$.ajaxSetup({
-					headers:
-					{ 'X-CSRF-TOKEN': token }
-				});
 				$.ajax({
 					url: 'pendingTAC/pageRendering',
 					type: 'POST',
@@ -237,12 +224,7 @@
 						"userId" : parseInt($("body").attr("data-userID"))
 				}
 				//console.log(JSON.stringify(deleteRequest));
-				var token = $("meta[name='_csrf']").attr("content");
-				var header = $("meta[name='_csrf_header']").attr("content");
-				$.ajaxSetup({
-					headers:
-					{ 'X-CSRF-TOKEN': token }
-				});
+				
 				$.ajax({
 					url : './pending-tac-approved',
 					data : JSON.stringify(deleteRequest),
@@ -290,12 +272,6 @@
 						"pageSize":parseInt(pageSize)
 				}
 				//console.log(JSON.stringify(filterRequest))
-				var token = $("meta[name='_csrf']").attr("content");
-				var header = $("meta[name='_csrf_header']").attr("content");
-				$.ajaxSetup({
-					headers:
-					{ 'X-CSRF-TOKEN': token }
-				});
 				$.ajax({
 					url: './exportPendingTacData',
 					type: 'POST',

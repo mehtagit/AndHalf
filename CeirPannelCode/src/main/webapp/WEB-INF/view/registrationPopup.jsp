@@ -4,8 +4,7 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!-- Security Tags -->
-<%@ taglib prefix="sec"
-	uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <sec:csrfMetaTags />
 <!-- Security Tags -->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
@@ -22,31 +21,31 @@
 	content="Materialize is a Material Design Admin Template,It's modern, responsive and based on Material Design by Google. ">
 <meta name="keywords"
 	content="materialize, admin template, dashboard template, flat admin template, responsive admin template,">
-<meta http-equiv='cache-control' content='no-cache'>
+	<meta http-equiv='cache-control' content='no-cache'>
 <meta http-equiv='expires' content='-1'>
 <meta http-equiv='pragma' content='no-cache'>
-
 <!-- Security Tags -->
-<meta name="_csrf" content="${_csrf.token}" />
+<meta name="_csrf" content="${_csrf.token}"/>
 <!-- default header name is X-CSRF-TOKEN -->
-<meta name="_csrf_header" content="${_csrf.headerName}" />
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
 <!-- Security Tags -->
 <title>CEIR | Registration</title>
-
 <link
 	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.min.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
-
+<link rel="apple-touch-icon-precomposed"
+	href="${context}/resources/images/favicon/apple-touch-icon-152x152.png">
 <!-- For iPhone -->
-
+<meta name="msapplication-TileColor" content="#00bcd4">
+<meta name="msapplication-TileImage"
+	content="${context}/resources/images/favicon/mstile-144x144.png">
 <!-- For Windows Phone -->
 <link rel="stylesheet"
 	href="${context}/resources/font/font-awesome/css/font-awesome.min.css">
 <!-- CORE CSS-->
-
+	
 <!-- Favicons-->
-<link rel="icon" href="${context}/resources/images/DMC-Logo.png"
-	sizes="32x32">
+<link rel="icon" href="${context}/resources/images/DMC-Logo.png" sizes="32x32">
 
 <!--<link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection">-->
 <!-- Compiled and minified CSS -->
@@ -66,9 +65,10 @@
 <link
 	href="${context}/resources/js/plugins/chartist-js/chartist.min.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
-<link href="${context}/resources/project_css/leanOverlay.css"
-	type="text/css" rel="stylesheet" media="screen,projection">
+	<link href="${context}/resources/project_css/leanOverlay.css" type="text/css"
+	rel="stylesheet" media="screen,projection">
 <!-- Country -->
+<!-- <script type="text/javascript" src="js/country.js"></script> -->
 <style>
 input[type="checkbox"] {
 	display: none;
@@ -119,79 +119,51 @@ input[type=text], input[type=password], input[type=email], input[type=url],
 }
 
 input
-
-
 [
 type
 =
 text
 ]
-
-
 :focus
-
-
 :not
-
  
-
 (
 [
 readonly
 ]
-
  
-
 )
 {
-border-bottom
-:
-1px
-
+border-bottom:1px
  
-
 1
 px
-
  
-
 solid
-
  
-
 #ff4081
-
  
-
 !
 important
-
-
 ;
+
+	
 box-shadow
-
-
 :
-
  
-
 0
 1
 px
-
  
-
 0
 0
 #ff4081
-
  
-
 !
 important
-
-
 ;
+
+
 }
 input[type=text]:focus:not ([readonly] )+label {
 	color: #ff4081 !important;
@@ -242,7 +214,6 @@ input[type="checkbox"] {
 	float: left;
 	margin-top: 5px;
 }
-
 .fa-eye-slash, .fa-eye {
 	position: absolute;
 	right: 10px;
@@ -251,63 +222,81 @@ input[type="checkbox"] {
 
 .upload-file-label {
 	margin: 0;
+	
 }
 
 .file-field .btn {
 	line-height: 2.4rem;
 	height: 2.4rem;
 }
-
 .section .registration-form {
-	padding-top: 1rem;
-	padding-bottom: 1rem;
-	width: 90%;
-	margin: auto;
-	/* border: solid 2px #444; */
+padding-top: 1rem;
+padding-bottom: 1rem;
+width: 90%;
+margin: auto;
+/* border: solid 2px #444; */
 }
+
+
 </style>
 <script>
-	var contextpath = "${context}";
+var contextpath = "${context}";
 </script>
 </head>
 </head>
 <body>
 
 
-	<!--   Scripts
+   <!--   Scripts
     ================================================ -->
 	<!-- jQuery Library -->
+	<!-- <script type="text/javascript" src="js/plugins/jquery-1.11.2.min.js"></script>-->
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
+	<!-- ajax js -->
+	<script type="text/javascript"
+		src="${context}/resources/ajax/Registration.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/ajax/Profile.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/ajax/Password.js"></script>
+			<script type="text/javascript"
+		src="${context}/resources/ajax/Login.js"></script>
+	<!--materialize js-->
+	<!--<script type="text/javascript" src="js/materialize.js"></script>-->
+	<!-- Compiled and minified JavaScript -->
 
-	<script src="${context}/resources/custom_js/materialize.min.js"></script>
-	<%-- <script type="text/javascript"
-		src="${context}/resources/js/materialize.js"></script> --%>
+	<script
+		src="${context}/resources/custom_js/materialize.min.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/js/materialize.js"></script>
 	<script type="text/javascript" src="${context}/resources/js/country.js"></script>
+	<!--prism
+    <script type="text/javascript" src="js/prism/prism.js"></script>-->
+	<!--scrollbar-->
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+	<!-- chartist -->
+	<!--<script type="text/javascript" src="js/plugins/chartist-js/chartist.min.js"></script>-->
+
 	<!-- data-tables -->
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/data-tables/data-tables-script.js"></script>
 
+	<!--plugins.js - Some Specific JS codes for Plugin Settings-->
+	<!--<script type="text/javascript" src="js/plugins.js"></script>-->
+	<!--custom-script.js - Add your own theme custom JS-->
+	<script type="text/javascript"
+		src="${context}/resources/js/custom-script.js"></script>
+
 	<!-- //////////////////////////////////////////////////////////////////////////// -->
 	<!-- //////////////////////////////////////////////////////////////////////////// -->
-
-
-	<!-- ajax js -->
-	<script type="text/javascript"
-		src="${context}/resources/ajax/Registration.js?version=<%= (int) (Math.random() * 10) %>"></script>
-	<script type="text/javascript"
-		src="${context}/resources/ajax/Profile.js?version=<%= (int) (Math.random() * 10) %>"></script>
-	<script type="text/javascript"
-		src="${context}/resources/ajax/Password.js?version=<%= (int) (Math.random() * 10) %>"></script>
-	<script type="text/javascript"
-		src="${context}/resources/ajax/Login.js?version=<%= (int) (Math.random() * 10) %>"></script>
-
-	<div id="ErrorPopup" class="modal modal-small"
-		style="width: 40%; display: block;">
+	
+	
+	
+	<div id="ErrorPopup" class="modal modal-small" style="width: 40%;display: block;">
 		<h6 class="modal-header">
 			<spring:message code="registration.homepage" />
 
@@ -316,64 +305,66 @@ input[type="checkbox"] {
 			<div class="row">
 				<h6>
 					<spring:message code="${sessionScope.tag}" />
-					<%-- 	<spring:message code="Reg_flag_off" /> --%>
+					<%-- 	<spring:message code="Reg_flag_off" /> --%> 
 				</h6>
 			</div>
 			<div class="input-field col s12 center">
 				<div class="input-field col s12 center">
-					<a href="JavaScript:Void(0);" class="btn" type="submit"
-						name="add_user" id="add_user"><spring:message code="modal.ok" /></a>
-					<%-- <a href="#"
+					<a href="JavaScript:Void(0);" class="btn" type="submit" name="add_user"
+						id="add_user"><spring:message code="modal.ok" /></a>
+						 <%-- <a href="#"
 						class="modal-close btn" style="margin-left: 10px;"><spring:message
 							code="modal.no" /></a> --%>
 				</div>
 			</div>
 		</div>
 	</div>
-	<!-- i18n library -->
+		<!-- i18n library -->
 	<script type="text/javascript"
-		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
+		src="${context}/resources/project_js/CLDRPluralRuleParser.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/i18n.js"></script>
+		src="${context}/resources/i18n_library/i18n.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/messagestore.js"></script>
+		src="${context}/resources/i18n_library/messagestore.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/fallbacks.js"></script>
+		src="${context}/resources/i18n_library/fallbacks.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/language.js"></script>
+		src="${context}/resources/i18n_library/language.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/parser.js"></script>
-
-
-	<script type="text/javascript"
-		src="${context}/resources/i18n_library/emitter.js"></script>
+		src="${context}/resources/i18n_library/parser.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/bidi.js"></script>
+		src="${context}/resources/i18n_library/emitter.js?version=<%= (int) (Math.random() * 10) %>"></script>
+
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/history.js"></script>
+		src="${context}/resources/i18n_library/bidi.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/min.js"></script>
+		src="${context}/resources/i18n_library/history.js?version=<%= (int) (Math.random() * 10) %>"></script>
+
 	<script type="text/javascript"
-		src="${context}/resources/project_js/globalVariables.js?version=<%= (int) (Math.random() * 10) %>"></script>
-	<script type="text/javascript"
+		src="${context}/resources/i18n_library/min.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js?version=<%= (int) (Math.random() * 10) %>"></script>
+<script type="text/javascript"
 		src="${context}/resources/project_js/backbutton.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript"
-		src="${context}/resources/project_js/dragableModal.js?version=<%= (int) (Math.random() * 10) %>"></script>
-	<script type="text/javascript"
+		src="${context}/resources/project_js/dragableModal.js?version=<%= (int) (Math.random() * 10) %>"></script>	
+			<script type="text/javascript"
 		src="${context}/resources/project_js/enterKey.js?version=<%= (int) (Math.random() * 10) %>"></script>
-	<script type="text/javascript"
+	    	<script type="text/javascript"
 		src="${context}/resources/project_js/ValidationFileOutsidePortal.js?version=<%= (int) (Math.random() * 10) %>"></script>
-	<script type="text/javascript">
+		<script type="text/javascript">
+		
+		
 		$(document).ready(function() {
 			dataByTag("link_dmc_portal", "add_user", 1);
-		});
-	</script>
+});
+
+		</script>
 </body>
 </html>

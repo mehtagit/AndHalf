@@ -7,13 +7,12 @@ if(statusCode==200){
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
-
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!-- Security Tags -->
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <sec:csrfMetaTags />
 <!-- Security Tags -->
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
@@ -27,7 +26,7 @@ if(statusCode==200){
 	content="Materialize is a Material Design Admin Template,It's modern, responsive and based on Material Design by Google. ">
 <meta name="keywords"
 	content="materialize, admin template, dashboard template, flat admin template, responsive admin template,">
-	<meta http-equiv='cache-control' content='no-cache'>
+<meta http-equiv='cache-control' content='no-cache'>
 <meta http-equiv='expires' content='-1'>
 <meta http-equiv='pragma' content='no-cache'>
 <!-- Security Tags -->
@@ -35,8 +34,7 @@ if(statusCode==200){
 <!-- default header name is X-CSRF-TOKEN -->
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
 <!-- Security Tags -->
-
-<title>CEIR | Importer Portal</title>
+<title>CEIR | Operator Portal</title>
 <link
 	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.min.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
@@ -44,17 +42,20 @@ if(statusCode==200){
 	href="${context}/resources/images/favicon/apple-touch-icon-152x152.png">
 <!-- For iPhone -->
 <meta name="msapplication-TileColor" content="#00bcd4">
+	
+<!-- Favicons-->
+<link rel="icon" href="${context}/resources/images/DMC-Logo.png" sizes="32x32">
 <!-- For Windows Phone -->
 <link rel="stylesheet"
 	href="${context}/resources/font/font-awesome/css/font-awesome.min.css">
+
 <!-- CORE CSS-->
-<!-- Favicons-->
-<link rel="icon" href="${context}/resources/images/DMC-Logo.png" sizes="32x32">
-
-
-<link rel="stylesheet"
-	href="${context}/resources/custom_js/materialize.min.css">
+<link href="${context}/resources/css/materialize.css" type="text/css"
+	rel="stylesheet" media="screen,projection">
 <link href="${context}/resources/css/style.css" type="text/css"
+	rel="stylesheet" media="screen,projection">
+<!-- Custome CSS-->
+<link href="${context}/resources/css/custom/custom.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
 
 <!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
@@ -69,10 +70,17 @@ if(statusCode==200){
 	<link href="${context}/resources/project_css/leanOverlay.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
 <!-- Country -->
+<script type="text/javascript" src="${context}/resources/js/country.js"></script>
 
 <style>
 input[type="checkbox"] {
-	display: none;
+	background-color: initial;
+	cursor: default;
+	-webkit-appearance: checkbox;
+	box-sizing: border-box;
+	margin: 3px 3px 3px 4px;
+	padding: initial;
+	border: initial;
 }
 
 footer {
@@ -83,162 +91,52 @@ footer {
 	height: auto;
 }
 
-.star {
-	color: red;
-}
-
 .dropdown-content li>a, .dropdown-content li>span {
 	color: #444;
 }
 
-.input-field>label {
-	color: #444 !important;
+h6 {
+	font-size: 1rem;
+	line-height: 110%;
+	margin: 0rem 0 0.4rem 0;
+	/* margin-top: -20px !important; */
 }
 
-[type="radio"]:not (:checked ), [type="radio"]:checked {
-	opacity: 0;
-}
-
-input[type=text], input[type=password], input[type=email], input[type=url],
-	input[type=time], input[type=date], input[type=datetime-local], input[type=tel],
-	input[type=number], input[type=search], textarea.materialize-textarea {
-	background-color: transparent !important;
-	border: none !important;
-	border-bottom: 1px solid #9e9e9e !important;
-	border-radius: 0 !important;
-	outline: none !important;
-	height: 2.6rem !important;
-	width: 100% !important;
-	font-size: 1rem !important;
-	margin: 0 0 5px 0 !important;
-	padding: 0 !important;
-	box-shadow: none !important;
-	-webkit-box-sizing: content-box !important;
-	-moz-box-sizing: content-box !important;
-	box-sizing: content-box !important;
-	transition: all .3s !important;
-}
-
-input
-[
-type
-=
-text
-]
-:focus
-:not
- 
-(
-[
-readonly
-]
- 
-)
-{
-border-bottom:1px
- 
-1
-px
- 
-solid
- 
-#ff4081
- 
-!
-important
-;
-
-	
-box-shadow
-:
- 
-0
-1
-px
- 
-0
-0
-#ff4081
- 
-!
-important
-;
-
-
-}
-input[type=text]:focus:not ([readonly] )+label {
-	color: #ff4081 !important;
-	background-color: transparent !important;
-}
-
-.input-field {
-	position: relative;
-	margin-top: 1rem;
-	margin-bottom: 0;
-}
-
-.row {
-	margin-left: auto;
-	margin-right: auto;
-	margin-bottom: 0;
-}
-
-.btn {
-	background-color: #ff4081 !important;
+.file-upload-heading {
+	margin-left: 0;
 }
 
 select {
-	background-color: transparent;
-	border: none;
-	border-bottom: 1px solid #9e9e9e;
-	padding: 0;
-	margin-top: 0;
-	height: 2.6rem;
+	height: 2.2rem !important;
 }
 
-[type="checkbox"]:not (:checked ), [type="checkbox"]:checked {
-	position: inherit;
-	opacity: 1;
-	pointer-events: none;
+label {
+	/*           font-size: 0.8rem; */
+	
 }
 
-[type="checkbox"]+span:not (.lever ):before, [type="checkbox"]:not (.filled-in
-	 )+span:not (.lever ):after {
-	display: none;
+.select-lang-drpdwn {
+	width: 75px;
+	margin-top: -17px;
+	border-bottom: none;
 }
 
-input[type="checkbox"] {
-	display: block;
-}
-
-[type="checkbox"]:not (:checked ), [type="checkbox"]:checked {
-	float: left;
-	margin-top: 5px;
-}
 .fa-eye-slash, .fa-eye {
 	position: absolute;
 	right: 10px;
 	top: 10px;
 }
 
-.upload-file-label {
-	margin: 0;
-	
-}
-
-.file-field .btn {
-	line-height: 2.4rem;
-	height: 2.4rem;
-}
 .section .registration-form {
-padding-top: 1rem;
-padding-bottom: 1rem;
-width: 90%;
-margin: auto;
-/* border: solid 2px #444; */
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+	width: 90%;
+	margin: auto;
+	/* border: solid 2px #444; */
 }
-
-
+p label span {
+font-size: 1rem;
+}
 </style>
 <script>
 var contextpath = "${context}";
@@ -251,6 +149,7 @@ var contextpath = "${context}";
 	<!--  Scripts
     ================================================ -->
 	<!-- jQuery Library -->
+	<!-- <script type="text/javascript" src="js/plugins/jquery-1.11.2.min.js"></script>-->
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
 	<!-- ajax js -->
@@ -258,19 +157,33 @@ var contextpath = "${context}";
 		src="${context}/resources/ajax/Registration.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/ajax/Profile.js"></script>
+	<!--materialize js-->
+	<!--<script type="text/javascript" src="js/materialize.js"></script>-->
+	<!-- Compiled and minified JavaScript -->
 
+	<script
+		src="${context}/resources/custom_js/materialize.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
-	<script type="text/javascript" src="${context}/resources/js/country.js"></script>
+	<script type="text/javascript" src="${context}/resources/js/country.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<!--prism
     <script type="text/javascript" src="js/prism/prism.js"></script>-->
 	<!--scrollbar-->
 	<script type="text/javascript"
-		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-	
+		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
+	<!-- chartist -->
+	<!--<script type="text/javascript" src="js/plugins/chartist-js/chartist.min.js"></script>-->
 
+	<!-- data-tables -->
+	<script type="text/javascript"
+		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
+	<script type="text/javascript"
+		src="${context}/resources/js/plugins/data-tables/data-tables-script.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript"
 		src="${context}/resources/ajax/Password.js?version=<%= (int) (Math.random() * 10) %>"></script>
+	<!--plugins.js - Some Specific JS codes for Plugin Settings-->
+	<!--<script type="text/javascript" src="js/plugins.js"></script>-->
+	<!--custom-script.js - Add your own theme custom JS-->
 	<script type="text/javascript"
 		src="${context}/resources/js/custom-script.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
@@ -476,7 +389,7 @@ var contextpath = "${context}";
 										<label for="authorityEmail"><spring:message code="registration.ReportingAuthorityEmailid" /><span class="star">*</span></label>
 								</div>
 								<div class="input-field col s12 m6 l6">
-									<input type="tel" name="authorityPhoneNo" required="required" id="authorityPhoneNo" maxlength="10" pattern="[0-9]"
+									<input type="tel" name="authorityPhoneNo" required="required" id="authorityPhoneNo" maxlength="15" pattern="[0-9]{7,15}"
 										oninput="InvalidMsg(this,'input','<spring:message code="validation.contact" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.contact" />');" title="">
 									<label for="authorityPhoneNo"><spring:message code="registration.reportingauthoritycontactnumber" /><span class="star">*</span></label>
 								</div>
@@ -769,38 +682,38 @@ var contextpath = "${context}";
 	<!-- ================================================
     Scripts
     ================================================ -->
-    <!-- i18n library -->
-	<script type="text/javascript"
-		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
-	<script type="text/javascript"
-		src="${context}/resources/i18n_library/i18n.js"></script>
-	<script type="text/javascript"
-		src="${context}/resources/i18n_library/messagestore.js"></script>
-
-	<script type="text/javascript"
-		src="${context}/resources/i18n_library/fallbacks.js"></script>
-
-	<script type="text/javascript"
-		src="${context}/resources/i18n_library/language.js"></script>
-
-	<script type="text/javascript"
-		src="${context}/resources/i18n_library/parser.js"></script>
-
-
-	<script type="text/javascript"
-		src="${context}/resources/i18n_library/emitter.js"></script>
-
-
-	<script type="text/javascript"
-		src="${context}/resources/i18n_library/bidi.js"></script>
-
-	<script type="text/javascript"
-		src="${context}/resources/i18n_library/history.js"></script>
-
-	<script type="text/javascript"
-		src="${context}/resources/i18n_library/min.js"></script>
     
-    		<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		<!-- i18n library -->
+	<script type="text/javascript"
+		src="${context}/resources/project_js/CLDRPluralRuleParser.js?version=<%= (int) (Math.random() * 10) %>"></script>
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/i18n.js?version=<%= (int) (Math.random() * 10) %>"></script>
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/messagestore.js?version=<%= (int) (Math.random() * 10) %>"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/fallbacks.js?version=<%= (int) (Math.random() * 10) %>"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/language.js?version=<%= (int) (Math.random() * 10) %>"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/parser.js?version=<%= (int) (Math.random() * 10) %>"></script>
+
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/emitter.js?version=<%= (int) (Math.random() * 10) %>"></script>
+
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/bidi.js?version=<%= (int) (Math.random() * 10) %>"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/history.js?version=<%= (int) (Math.random() * 10) %>"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/min.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js?version=<%= (int) (Math.random() * 10) %>"></script>
 <script type="text/javascript"
 		src="${context}/resources/project_js/backbutton.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	
@@ -855,7 +768,8 @@ var contextpath = "${context}";
 	            				'km': './resources/i18n/km.json'
 	            			} ).done( function() { 
 	            			});
-	        
+	            			
+            $('.modal').modal();
             questionDataByCategory();
             //operatorList();
             systemConfigList('operatorType','OPERATORS');

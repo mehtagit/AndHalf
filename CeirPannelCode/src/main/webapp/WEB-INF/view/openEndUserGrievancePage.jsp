@@ -32,12 +32,19 @@
     <!-- Favicons-->
     <!--<link rel="icon" href="images/favicon/favicon-32x32.png" sizes="32x32">-->
     <!-- Favicons-->
-  <link rel="stylesheet" href="${context}/resources/font/font-awesome/css/font-awesome.min.css">
+    <link rel="apple-touch-icon-precomposed" href="images/favicon/apple-touch-icon-152x152.png">
+    <!-- For iPhone -->
+    <meta name="msapplication-TileColor" content="#00bcd4">
+    <meta name="msapplication-TileImage" content="images/favicon/mstile-144x144.png">
+    <!-- For Windows Phone -->
+    <link rel="stylesheet" href="${context}/resources/font/font-awesome/css/font-awesome.min.css">
 
     <!-- CORE CSS-->
     <link href="${context}/resources/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection">
     <link href="${context}/resources/css/style.css" type="text/css" rel="stylesheet" media="screen,projection">
-   
+    <!-- Custome CSS-->
+    <link href="${context}/resources/css/custom/custom.css" type="text/css" rel="stylesheet" media="screen,projection">
+
     <!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
     <link href="${context}/resources/js/plugins/prism/prism.css" type="text/css" rel="stylesheet" media="screen,projection">
     <link href="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.css" type="text/css" rel="stylesheet"
@@ -605,56 +612,62 @@ style="font-size: 20px;">+</span> <spring:message code="input.addmorefile" /></b
     <!-- ================================================
     Scripts
     ================================================ -->
- <script type="text/javascript"
-	src="${context}/resources/custom_js/2.2.1_jquery.min.js"></script>
-	   <!-- ajax js -->
-   <script type="text/javascript"
-		src="${context}/resources/js/materialize.js"></script>
-  
-    <script type="text/javascript"
-		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-	
-	  
-   <!--plugins.js - Some Specific JS codes for Plugin Settings-->
-    <script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
-   
+ <!-- jQuery Library -->
+    <%-- <script type="text/javascript" src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script> --%>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
+       <!-- ajax js -->
+    <script type="text/javascript" src="${context}/resources/ajax/Registration.js?version=<%= (int) (Math.random() * 10) %>"></script>
+    <!--materialize js-->
+    <script type="text/javascript" src="${context}/resources/js/materialize.js?version=<%= (int) (Math.random() * 10) %>"></script>
+    <!--prism
+    <script type="text/javascript" src="${context}/resources/js/prism/prism.js"></script>-->
+    <!--scrollbar-->
+    <script type="text/javascript" src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
+    <!-- chartist -->
 <!-- i18n library -->
 	<script type="text/javascript">
 var path="${context}";
 </script>
-	<!-- i18n library -->
-	<script type="text/javascript"
-		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
-	<script type="text/javascript"
-		src="${context}/resources/i18n_library/i18n.js"></script>
-	<script type="text/javascript"
-		src="${context}/resources/i18n_library/messagestore.js"></script>
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/fallbacks.js"></script>
+		src="${context}/resources/project_js/CLDRPluralRuleParser.js?version=<%= (int) (Math.random() * 10) %>"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.js?version=<%= (int) (Math.random() * 10) %>"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.messagestore.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/language.js"></script>
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.fallbacks.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/parser.js"></script>
-
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.language.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/emitter.js"></script>
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.parser.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/bidi.js"></script>
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.js?version=<%= (int) (Math.random() * 10) %>"></script>
+
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/history.js"></script>
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.bidi.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/min.js"></script>
-<script type="text/javascript" src="${context}/resources/ajax/Registration.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/jquery.history.js?version=<%= (int) (Math.random() * 10) %>"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
+
+    <!-- data-tables -->
+    <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
+    <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/data-tables-script.js?version=<%= (int) (Math.random() * 10) %>"></script>
+
+    <!--plugins.js - Some Specific JS codes for Plugin Settings-->
+    <script type="text/javascript" src="${context}/resources/js/plugins.js?version=<%= (int) (Math.random() * 10) %>"></script>
+    <!--custom-script.js - Add your own theme custom JS-->
+    <script type="text/javascript" src="${context}/resources/js/custom-script.js?version=<%= (int) (Math.random() * 10) %>"></script>
     
-
     <script type="text/javascript"
 		src="${context}/resources/project_js/grievanceManagement.js?version=<%= (int) (Math.random() * 10) %>"></script>
     <script type="text/javascript"

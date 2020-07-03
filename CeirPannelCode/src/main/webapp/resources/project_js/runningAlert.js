@@ -15,8 +15,8 @@
 		$.i18n().locale = lang;	
 		
 		$.i18n().load( {
-			'en': './resources/i18n/en.json',
-			'km': './resources/i18n/km.json'
+			'en': '../resources/i18n/en.json',
+			'km': '../resources/i18n/km.json'
 		} ).done( function() { 
 			rejectedMsg=$.i18n('rejectedMsg');
 			consignmentApproved=$.i18n('consignmentApproved');

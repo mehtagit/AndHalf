@@ -23,9 +23,6 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<!-- Security Tags -->
-<%@ taglib prefix="sec"
-	uri="http://www.springframework.org/security/tags"%>
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en" class="no-js">
@@ -36,10 +33,6 @@
 <meta http-equiv='expires' content='-1'>
 <meta http-equiv='pragma' content='no-cache'>
 
-<!-- Security Tags -->
-<meta name="_csrf" content="${_csrf.token}" />
-<!-- default header name is X-CSRF-TOKEN -->
-<meta name="_csrf_header" content="${_csrf.headerName}" />
 
 <meta charset="utf-8" />
 <meta name="viewport"
@@ -64,10 +57,18 @@ var path="${context}";
 	rel="stylesheet" media="screen,projection">
 <link href="${context}/resources/css/style.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
+<script type="text/javascript"
+	src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
 <link
 	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.min.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
+<link
+	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.css"
+	type="text/css" rel="stylesheet" media="screen,projection">
 
+<!-- Custome CSS-->
+<link href="${context}/resources/css/custom/custom.css" type="text/css"
+	rel="stylesheet" media="screen,projection">
 <link
 	href="${context}/resources/font/font-awesome/css/font-awesome.min.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
@@ -78,6 +79,7 @@ var path="${context}";
 <link
 	href="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
+<%--  <link href="${context}/resources/js/plugins/chartist-js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection"> --%>
 <link rel="stylesheet"
 	href="${context}/resources/project_css/viewConsignment.css">
 <link rel="stylesheet"
@@ -85,10 +87,13 @@ var path="${context}";
 	<link rel="stylesheet"
 	href="${context}/resources/css/grievance.css">
 <link rel="stylesheet"
-	href="${context}/resources/custom_js/jquery-ui.css">
+	href="${context}/resources/custom_js/jquery-ui.css?version=<%= (int) (Math.random() * 10) %>">
+<script src="${context}/resources/custom_js/1.11.2_jquery-ui.js?version=<%= (int) (Math.random() * 10) %>"></script>
+
 <!------------------------------------------- Dragable Model---------------------------------->
+<script src="${context}/resources/custom_js/1.12.1_jquery-ui.js?version=<%= (int) (Math.random() * 10) %>"></script>
 <script
-	src="${context}/resources/custom_js/1.12.1_jquery-ui.min.js"></script>
+	src="${context}/resources/custom_js/1.12.1_jquery-ui.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	 
  
 
@@ -202,52 +207,66 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}"
 
 	<!--materialize js-->
 	<script type="text/javascript"
-		src="${context}/resources/js/materialize.js"></script>
-<script
-		src="${context}/resources/custom_js/bootstrap.min.js"></script>
+		src="${context}/resources/js/materialize.js?version=<%= (int) (Math.random() * 10) %>"></script>
+
+
+	<script type="text/javascript"
+		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.js?version=<%= (int) (Math.random() * 10) %>"></script>
+	<script type="text/javascript"
+		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
+
 	
-<script type="text/javascript"
-	src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
 
+	<!--plugins.js - Some Specific JS codes for Plugin Settings-->
+		<script
+		src="${context}/resources/custom_js/bootstrap.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
-
-<script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
-
+	<%--   <script type="text/javascript" src="${context}/resources/js/materialize-plugins/date_picker/picker.date.js"></script>
+    <script type="text/javascript" src="${context}/resources/js/materialize-plugins/date_picker/picker.js"></script> --%>
+	<!--custom-script.js - Add your own theme custom JS-->
+	<script type="text/javascript" src="${context}/resources/js/plugins.js?version=<%= (int) (Math.random() * 10) %>"></script>
+	
+	<!--prism
+    <script type="text/javascript" src="${context}/resources/resources/js/prism/prism.js"></script>-->
+	<!--scrollbar-->
 	<script type="text/javascript"
-		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
+	<!-- chartist -->
+	<%-- <script type="text/javascript" src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script> --%>
 	<script type="text/javascript"
-		src="${context}/resources/js/countries.js"></script>
+		src="${context}/resources/js/countries.js?version=<%= (int) (Math.random() * 10) %>"></script>
 		<!-- i18n library -->
 	<script type="text/javascript"
-		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
+		src="${context}/resources/project_js/CLDRPluralRuleParser.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/i18n.js"></script>
+		src="${context}/resources/i18n_library/i18n.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/messagestore.js"></script>
+		src="${context}/resources/i18n_library/messagestore.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/fallbacks.js"></script>
+		src="${context}/resources/i18n_library/fallbacks.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/language.js"></script>
+		src="${context}/resources/i18n_library/language.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/parser.js"></script>
-
-
-	<script type="text/javascript"
-		src="${context}/resources/i18n_library/emitter.js"></script>
+		src="${context}/resources/i18n_library/parser.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/bidi.js"></script>
+		src="${context}/resources/i18n_library/emitter.js?version=<%= (int) (Math.random() * 10) %>"></script>
+
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/history.js"></script>
+		src="${context}/resources/i18n_library/bidi.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/min.js"></script>
+		src="${context}/resources/i18n_library/history.js?version=<%= (int) (Math.random() * 10) %>"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/min.js?version=<%= (int) (Math.random() * 10) %>"></script>
 		<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js?version=<%= (int) (Math.random() * 10) %>"></script>
+	<script type="text/javascript" src="${context}/resources/project_js/pendingTACList.js?version=<%= (int) (Math.random() * 10) %>"></script>
 		<script type="text/javascript"
 		src="${context}/resources/project_js/dragableModal.js?version=<%= (int) (Math.random() * 10) %>"></script>	
 			<script type="text/javascript"
@@ -259,8 +278,6 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}"
 		
 	<script type="text/javascript"
 		src="${context}/resources/project_js/validationMsg.js?version=<%= (int) (Math.random() * 10) %>"></script>
-<script type="text/javascript" src="${context}/resources/project_js/pendingTACList.js?version=<%= (int) (Math.random() * 10) %>"></script>
-	
 </body>
 </html>
 <%

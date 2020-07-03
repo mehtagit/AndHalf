@@ -4,14 +4,19 @@
 	response.setHeader("Cache-Control", "no-store");
 	response.setDateHeader("Expires", 0);
 	response.setHeader("Pragma", "no-cache");
-
+	
+    /*   //200 secs
+	 session.setAttribute("usertype", null);  */
+/* 	 session.setMaxInactiveInterval(10); */
 	 int timeout = session.getMaxInactiveInterval();
 	
 	 long accessTime = session.getLastAccessedTime();
 	 long currentTime= new Date().getTime(); 
 	 long dfd= accessTime +timeout;
 	 if( currentTime< dfd){
-
+	/*  response.setHeader("Refresh", timeout + "; URL = ../login");
+	 System.out.println("timeout========"+timeout); 
+	if (session.getAttribute("usertype") != null) { */
 %>
 
 <%@ page language="java" contentType="text/html; charset=utf-8"
@@ -56,9 +61,17 @@
 	rel="stylesheet" media="screen,projection">
 <link href="${context}/resources/css/style.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
+<script type="text/javascript"
+	src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
 <link
 	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.min.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
+<link
+	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.css"
+	type="text/css" rel="stylesheet" media="screen,projection">
+<!-- Custome CSS-->
+<link href="${context}/resources/css/custom/custom.css" type="text/css"
+	rel="stylesheet" media="screen,projection">
 <link
 	href="${context}/resources/font/font-awesome/css/font-awesome.min.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
@@ -77,9 +90,12 @@
 
 <link rel="stylesheet"
 	href="${context}/resources/custom_js/jquery-ui.css">
+<script src="${context}/resources/custom_js/1.11.2_jquery-ui.js"></script>
+
 <script src="${context}/resources/custom_js/jquery.blockUI.js"></script>
 
 <!------------------------------------------- Dragable Model---------------------------------->
+<script src="${context}/resources/custom_js/1.12.1_jquery-ui.js"></script>
 <script
 	src="${context}/resources/custom_js/1.12.1_jquery-ui.min.js"></script>
 <style type="text/css">
@@ -349,54 +365,63 @@ width: inherit;
 			</div>
 		</div>
 	</div>
-<!--materialize js-->
-	<script type="text/javascript"
-		src="${context}/resources/js/materialize.js"></script>
-<script
-		src="${context}/resources/custom_js/bootstrap.min.js"></script>
-	
 <script type="text/javascript"
-	src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
+		src="${context}/resources/js/materialize.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
-
-
-<script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
 
 	<script type="text/javascript"
-		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.js?version=<%= (int) (Math.random() * 10) %>"></script>
+	<script type="text/javascript"
+		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
+
 	
+
+	<!--plugins.js - Some Specific JS codes for Plugin Settings-->
+<script
+		src="${context}/resources/custom_js/bootstrap.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
+
+	<%--   <script type="text/javascript" src="${context}/resources/js/materialize-plugins/date_picker/picker.date.js"></script>
+    <script type="text/javascript" src="${context}/resources/js/materialize-plugins/date_picker/picker.js"></script> --%>
+	<!--custom-script.js - Add your own theme custom JS-->
+	<script type="text/javascript" src="${context}/resources/js/plugins.js?version=<%= (int) (Math.random() * 10) %>"></script>
+	<!--prism
+    <script type="text/javascript" src="${context}/resources/resources/js/prism/prism.js"></script>-->
+	<!--scrollbar-->
+	<script type="text/javascript"
+		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
+	<!-- chartist -->
+	<%-- <script type="text/javascript" src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script> --%>
 		<!-- i18n library -->
 	<script type="text/javascript"
-		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
+		src="${context}/resources/project_js/CLDRPluralRuleParser.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/i18n.js"></script>
+		src="${context}/resources/i18n_library/i18n.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/messagestore.js"></script>
+		src="${context}/resources/i18n_library/messagestore.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/fallbacks.js"></script>
+		src="${context}/resources/i18n_library/fallbacks.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/language.js"></script>
+		src="${context}/resources/i18n_library/language.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/parser.js"></script>
-
-
-	<script type="text/javascript"
-		src="${context}/resources/i18n_library/emitter.js"></script>
+		src="${context}/resources/i18n_library/parser.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/bidi.js"></script>
+		src="${context}/resources/i18n_library/emitter.js?version=<%= (int) (Math.random() * 10) %>"></script>
+
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/history.js"></script>
+		src="${context}/resources/i18n_library/bidi.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/min.js"></script>
-	
-		<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/i18n_library/history.js?version=<%= (int) (Math.random() * 10) %>"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/min.js?version=<%= (int) (Math.random() * 10) %>"></script>
+	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js?version=<%= (int) (Math.random() * 10) %>"></script>
 <script type="text/javascript"
 		src="${context}/resources/project_js/_dateFunction.js?version=<%= (int) (Math.random() * 10) %>" async></script>
 <script type="text/javascript"
@@ -407,12 +432,12 @@ width: inherit;
 		src="${context}/resources/project_js/validationMsg.js?version=<%= (int) (Math.random() * 10) %>"></script>
 					<script type="text/javascript"
 		src="${context}/resources/project_js/profileInfoTab.js?version=<%= (int) (Math.random() * 10) %>" async></script>			
-
 </body>
 </html>
 <%
 	}else{
-		
+		/*  request.setAttribute("msg", "  *Please login first");
+		request.getRequestDispatcher("./index.jsp").forward(request, response); */
 %>
 <script language="JavaScript">
 	sessionStorage.setItem("loginMsg",
