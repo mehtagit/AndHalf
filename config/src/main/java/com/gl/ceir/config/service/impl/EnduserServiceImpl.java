@@ -1180,7 +1180,8 @@ public class EnduserServiceImpl {
 			return new FileDetails( fileName, filePath,userProfileDowlonadLink.getValue()+fileName ); 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+			throw new ResourceServicesException(this.getClass().getName().replace("$LOCAL_IP",
+					propertiesReader.localIp), e.getMessage());
 		}finally {
 			try {
 

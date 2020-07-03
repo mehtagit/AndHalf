@@ -173,7 +173,8 @@ public class AuditTrailServiceImpl {
 				csvWriter.write( new AuditTrailFileModel());	
 			}
 			
-			return new FileDetails( fileName, filePath, link.getValue() + fileName ); 
+			return new FileDetails( fileName, filePath, link.getValue().replace("$LOCAL_IP",
+					propertiesReader.localIp)  + fileName ); 
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);

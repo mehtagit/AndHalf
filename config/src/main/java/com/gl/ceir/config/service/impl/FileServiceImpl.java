@@ -58,7 +58,8 @@ public class FileServiceImpl {
 			break;
 		}
 
-		return new FileDetails("", "", systemConfigurationDb.getValue() + fileName);
+		return new FileDetails("", "", systemConfigurationDb.getValue().replace("$LOCAL_IP",
+				propertiesReader.localIp) + fileName);
 	}
 
 	public FileDetails getManuals(int userTypeId) {
@@ -116,7 +117,8 @@ public class FileServiceImpl {
 		}
 
 
-		return new FileDetails("", "", systemConfigurationDb.getValue() + fileName);
+		return new FileDetails("", "", systemConfigurationDb.getValue().replace("$LOCAL_IP",
+				propertiesReader.localIp) + fileName);
 	}
 
 	public FileDetails downloadUploadedFile(String fileName, String txnId, String fileType, String tag) {

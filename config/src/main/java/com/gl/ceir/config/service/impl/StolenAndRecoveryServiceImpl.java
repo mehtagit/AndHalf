@@ -589,7 +589,7 @@ public class StolenAndRecoveryServiceImpl {
 				csvWriter.write(fileRecords);
 			}
 			addInAuditTrail(Long.valueOf(filterRequest.getUserId()), "NA", SubFeatures.EXPORT, filterRequest.getRoleType(),filterRequest.getRequestType(),filterRequest.getFeatureId());
-			return new FileDetails( fileName, filePath, link.getValue() + fileName ); 
+			return new FileDetails( fileName, filePath, link.getValue().replace("$LOCAL_IP", propertiesReader.localIp) + fileName ); 
 
 		}catch (Exception e) {
 			logger.error(e.getMessage(), e);
@@ -666,7 +666,7 @@ public class StolenAndRecoveryServiceImpl {
 				csvWriter.write(fileRecords);
 			}
 			addInAuditTrail(Long.valueOf(filterRequest.getUserId()), "NA", SubFeatures.EXPORT, filterRequest.getRoleType(),filterRequest.getRequestType(),filterRequest.getFeatureId());
-			return new FileDetails( fileName, filePath, link.getValue() + fileName ); 
+			return new FileDetails( fileName, filePath, link.getValue().replace("$LOCAL_IP", propertiesReader.localIp) + fileName ); 
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
@@ -765,7 +765,14 @@ public class StolenAndRecoveryServiceImpl {
 		String receiverUserType = filterRequest.getUserType();
 		action = SubFeatures.DELETE;
 		StolenandRecoveryMgmt stolenandRecoveryMgmt = stolenAndRecoveryRepository.getByTxnId(filterRequest.getTxnId());
-		user = userRepository.getById(stolenandRecoveryMgmt.getUserId());				
+		//Check if it's already accepted/rejected
+		if(StolenStatus.APPROVED_BY_CEIR_ADMIN.getCode() == stolenandRecoveryMgmt.getFileStatus() 
+				|| StolenStatus.REJECTED_BY_CEIR_ADMIN.getCode() == stolenandRecoveryMgmt.getFileStatus() ) {
+			String message = "Any other user have taken the same action on the Stolen/Recovery/Block/Unblock [" + stolenandRecoveryMgmt.getTxnId() + "]";
+			logger.info(message);
+			return new GenricResponse(10, "", message, stolenandRecoveryMgmt.getTxnId());
+		}
+		user = userRepository.getById(stolenandRecoveryMgmt.getUserId());
 		userProfile = user.getUserProfile();
 		txnId = filterRequest.getTxnId();
 		String featureName = null;
@@ -1110,7 +1117,13 @@ public class StolenAndRecoveryServiceImpl {
 				String mailTag = null;
 				String action = null;
 				String txnId = null;
-
+				//Check if it's already accepted/rejected
+				if(StolenStatus.APPROVED_BY_CEIR_ADMIN.getCode() == stolenandRecoveryMgmt.getFileStatus() 
+						|| StolenStatus.REJECTED_BY_CEIR_ADMIN.getCode() == stolenandRecoveryMgmt.getFileStatus() ) {
+					String message = "Any other user have taken the same action on the Stolen/Recovery/Block/Unblock [" + stolenandRecoveryMgmt.getTxnId() + "]";
+					logger.info(message);
+					return new GenricResponse(10, "", message, stolenandRecoveryMgmt.getTxnId());
+				}
 				if(consignmentUpdateRequest.getAction() == 0) {
 					action = SubFeatures.ACCEPT;
 

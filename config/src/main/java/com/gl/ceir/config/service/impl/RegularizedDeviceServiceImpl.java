@@ -340,7 +340,8 @@ public class RegularizedDeviceServiceImpl {
 			auditTrailRepository.save(auditTrail);
 			logger.info("AUDIT : export in audit_trail. ");
 
-			return new FileDetails(fileName, filePath, link.getValue() + fileName ); 
+			return new FileDetails(fileName, filePath, link.getValue().replace("$LOCAL_IP",
+					propertiesReader.localIp) + fileName ); 
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);

@@ -17,6 +17,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.factory.ExportFile;
 import com.gl.ceir.config.model.FileDetails;
@@ -43,6 +44,9 @@ public class ExportFileStockManufacturer implements ExportFile{
 
 	@Autowired
 	AlertServiceImpl alertServiceImpl;
+	
+	@Autowired
+	PropertiesReader propertiesReader;
 
 	@Override
 	public FileDetails export(FilterRequest filterRequest, String source, DateTimeFormatter dtf, DateTimeFormatter dtf2,
@@ -89,7 +93,7 @@ public class ExportFileStockManufacturer implements ExportFile{
 
 			stockServiceImpl.addInAuditTrail(Long.valueOf(filterRequest.getUserId()), "NA", SubFeatures.EXPORT,filterRequest.getRoleType());
 
-			return new FileDetails( fileName, filePath, link.getValue() + fileName ); 
+			return new FileDetails( fileName, filePath, link.getValue().replace("$LOCAL_IP", propertiesReader.localIp) + fileName ); 
 		}catch (Exception e) {
 			logger.error(e.getMessage(), e);
 

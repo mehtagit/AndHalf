@@ -798,7 +798,8 @@ public class ConsignmentServiceImpl {
 					Features.CONSIGNMENT, SubFeatures.EXPORT, "", "NA",filterRequest.getRoleType()));
 			logger.info("AUDIT : Saved file export request in audit.");
 
-			FileDetails fileDetails = new FileDetails( fileName, filepath.getValue(), link.getValue() + fileName );
+			FileDetails fileDetails = new FileDetails( fileName, filepath.getValue(), link.getValue().replace("$LOCAL_IP",
+					propertiesReader.localIp) + fileName );
 			logger.info(fileDetails);
 			return fileDetails;
 
