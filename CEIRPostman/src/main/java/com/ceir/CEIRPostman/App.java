@@ -18,7 +18,5 @@ public class App
 		ConfigurableApplicationContext ctx =SpringApplication.run(App.class, args);
 		EmailService fetch=ctx.getBean(EmailService.class);
 		new Thread(fetch).start();
-//		SmsService fetch1=ctx.getBean(SmsService.class);
-//		new Thread(fetch1).start(); 
 	}
 }
