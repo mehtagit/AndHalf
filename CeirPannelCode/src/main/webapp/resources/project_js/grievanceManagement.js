@@ -159,7 +159,7 @@ var featureId = 6;
 								dataType: "json",
 								data : function(d) {
 									d.filter = JSON.stringify(filterRequest); 
-									//console.log(JSON.stringify(filterRequest));
+									console.log(JSON.stringify(filterRequest));
 								}
 
 							},
@@ -720,6 +720,7 @@ var featureId = 6;
 				
 				//console.log("grievanceId-->" +grievanceId);
 				//console.log("grievanceStartDate---" +grievanceStartDate+  "grievanceEndDate---" +grievanceEndDate +  "grievancetxnId---" +grievancetxnId+  "grievanceId---" +grievanceId+  "grievanceStatus---" +grievanceStatus);
+				console.log("window.userId--->" +window.userId)
 				//var source__val = tacStartDate != ''|| tacEndDate != ''|| tacStatus != '-1'|| tacNumber != ''|| txnId != '' ? 'filter' : $("body").attr("data-session-source");	
 				
 				if(grievanceId != ''){
@@ -734,7 +735,7 @@ var featureId = 6;
 				var info = table.page.info(); 
 				var pageNo=info.page;
 				var pageSize =info.length;
-				window.location.href="./exportGrievance?grievanceStartDate="+grievanceStartDate+"&grievanceEndDate="+grievanceEndDate+"&grievancetxnId="+grievancetxnId+"&grievanceId="+grievanceId+"&grievanceStatus="+grievanceStatus+"&source="+source__val+"&pageSize="+pageSize+"&pageNo="+pageNo;
+				window.location.href="./exportGrievance?grievanceStartDate="+grievanceStartDate+"&grievanceEndDate="+grievanceEndDate+"&grievancetxnId="+grievancetxnId+"&grievanceId="+grievanceId+"&grievanceStatus="+grievanceStatus+"&source="+source__val+"&pageSize="+pageSize+"&pageNo="+pageNo+"&userId="+window.userId;
 			}
 
 			//************************************************ category dropdown function ******************************************************************

@@ -383,11 +383,12 @@ public class GrievanceController {
 						public String exportToExcel(@RequestParam(name="grievanceStartDate",required = false) String grievanceStartDate,@RequestParam(name="grievanceEndDate",required = false) String grievanceEndDate,
 								@RequestParam(name="grievancetxnId",required = false) String grievancetxnId,@RequestParam(name="grievanceId") String grievanceId,HttpServletRequest request,
 								HttpSession session,@RequestParam(name="pageSize") Integer pageSize,@RequestParam(name="pageNo") Integer pageNo,@RequestParam(name="grievanceStatus") Integer grievanceStatus,
-								@RequestParam(name="source",defaultValue = "menu",required = false) String source)
+								@RequestParam(name="source",defaultValue = "menu",required = false) String source,
+								@RequestParam(name="userId",required = false) Integer userId)
 						{
 							log.info("grievanceStartDate=="+grievanceStartDate+ " grievanceEndDate ="+grievanceEndDate+" grievancetxnId="+grievancetxnId+"grievanceId="+grievanceId);
 							log.info("source--->" +source);
-							int userId= (int) session.getAttribute("userid"); 
+							//int userId= (int) session.getAttribute("userid"); 
 							int file=1;
 							String userType=(String) session.getAttribute("usertype");
 						    Integer usertypeId=(int) session.getAttribute("usertypeId");
