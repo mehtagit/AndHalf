@@ -284,7 +284,7 @@ width: inherit;
 				
 				<div class="input-field col s12 m6">
 					<input type="text" name="totalPrice" placeholder=""
-						disabled="disabled" id="viewtotalPrice" maxlength="7" />
+						disabled="disabled" id="viewtotalPrice" maxlength="12" />
 					<label for="totalPrice" class="center-align"><spring:message
 							code="input.totalprice" /></label>
 				</div>
@@ -844,10 +844,10 @@ width: inherit;
 
 
 					<div class="input-field col s12 m6">
-						<input type="text" name="totalPrice" id="totalPrice" maxlength="7"
-							pattern="[0-9]{0,7}"
-							placeholder=""  oninput="InvalidMsg(this,'input','<spring:message code="validation.7character" />');"
-					 oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7character" />');"/> <label for="totalPrice" class="center-align"><spring:message
+						<input type="text" name="totalPrice" id="totalPrice" maxlength="12"
+							pattern="[0-9]{0,12}"
+							placeholder=""  oninput="InvalidMsg(this,'input','<spring:message code="validation.12Char" />');"
+					 oninvalid="InvalidMsg(this,'input','<spring:message code="validation.12Char" />');"/> <label for="totalPrice" class="center-align"><spring:message
 								code="input.totalprice" /></label>
 					</div>
 					

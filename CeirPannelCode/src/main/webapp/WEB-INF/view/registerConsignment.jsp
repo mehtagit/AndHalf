@@ -310,9 +310,9 @@ input#quantity {
 										
 										
 									<div class="input-field col s12 m6">
-										<input type="text" name="totalPrice" id="totalPrice" pattern="[0-9]{0,7}"
-												maxlength="7" oninput="InvalidMsg(this,'input','<spring:message code="validation.7character" />');"
-												 oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7character" />');"> 
+										<input type="text" name="totalPrice" id="totalPrice" pattern="[0-9]{0,12}"
+												maxlength="12" oninput="InvalidMsg(this,'input','<spring:message code="validation.12Char" />');"
+												 oninvalid="InvalidMsg(this,'input','<spring:message code="validation.12Char" />');"> 
 												 <label for="totalPrice" class="center-align"><spring:message code="input.totalprice" /></label>
 										</div>
 										
