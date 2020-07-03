@@ -12,7 +12,7 @@ import com.ceir.CEIRPostman.model.Notification;
 
 public interface NotificationRepository extends JpaRepository<Notification, Long>, JpaSpecificationExecutor<Notification>{
 
-	//@Query("select noti from Notification noti where noti.status=?1 and upper(noti.channelType)=upper(?2)")
+	@Query("select noti from Notification noti where noti.status=?1 and upper(noti.channelType)=upper(?2)")
 	public List<Notification> findByStatusAndChannelType(int status,String channelType);
 	public List<Notification> findByStatus(int status);
 }
