@@ -974,11 +974,14 @@ headers:
 
 
 $('#stolenDatePeriod').datepicker({
-	dateFormat: "yy-mm-dd"
+	dateFormat: "yy-mm-dd",
+	minDate: "0"
+	
 	});
 
 $('#stolenDatePeriodedit').datepicker({
-	dateFormat: "yy-mm-dd"
+	dateFormat: "yy-mm-dd",
+	minDate: "0"
 	});
 
 $('#stolenDatePeriodUnblock').datepicker({

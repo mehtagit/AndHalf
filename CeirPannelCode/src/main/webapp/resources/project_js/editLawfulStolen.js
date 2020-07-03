@@ -25,7 +25,8 @@ setTimeout(function(){
 	});
 
 	$('#stolenDatePeriodedit').datepicker({
-		dateFormat : "yy-mm-dd"
+		dateFormat : "yy-mm-dd",
+		minDate: "0"
 	});
 
 	/*var input = document.querySelector("#singleStolenphone1");
@@ -575,7 +576,8 @@ setTimeout(function(){
 	});
 
 	$('#stolenDatePeriodedit').datepicker({
-		dateFormat : "yy-mm-dd"
+		dateFormat : "yy-mm-dd",
+		minDate: "0"
 	});
 
 	

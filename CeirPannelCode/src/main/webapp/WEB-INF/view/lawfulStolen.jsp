@@ -1461,7 +1461,8 @@ select {
 	 */
 
 		$('#stolenDatePeriod').datepicker({
-			dateFormat : "yy-mm-dd"
+			dateFormat : "yy-mm-dd",
+			minDate: "0"
 		});
 
 		$('#stolenDatePeriodedit').datepicker({
@@ -1473,7 +1474,8 @@ select {
 		});
 
 		$('#stolenBulkDatePeriod').datepicker({
-			dateFormat : "yy-mm-dd"
+			dateFormat : "yy-mm-dd",
+			minDate: "0"
 		});
 
 		$('#stolenDatePeriodedit').datepicker({

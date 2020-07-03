@@ -520,7 +520,8 @@ onclick="_Services._selectstartDate()"></i></span>
 		src="${context}/resources/project_js/reportBlock.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript">
 	$('#stolenBulkDatePeriod').datepicker({
-		dateFormat : "yy-mm-dd"
+		dateFormat : "yy-mm-dd",
+		minDate: "0"
 	});
 	
 	$('div#initialloader').delay(300).fadeOut('slow');

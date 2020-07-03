@@ -1730,7 +1730,9 @@ type="submit" ><spring:message code="button.update" /></button>
 		src="${context}/resources/project_js/validationMsg.js?version=<%= (int) (Math.random() * 10) %>"></script>
 		<script type="text/javascript">
 		$('#editstolenBulkDatePeriod').datepicker({
-			dateFormat : "yy-mm-dd"
+			dateFormat : "yy-mm-dd",
+			minDate: "0"
+			
 		});
 		</script>
 </body>
