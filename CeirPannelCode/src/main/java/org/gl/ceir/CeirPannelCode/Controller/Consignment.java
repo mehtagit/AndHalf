@@ -447,6 +447,7 @@ ConsignmentModel consignmentdetails= new ConsignmentModel();
 FilterRequest filterRequest= new  FilterRequest();
 filterRequest.setTxnId(txnId);
 filterRequest.setUserId(userId);
+filterRequest.setUserName(userName);
 filterRequest.setUsername(userName);
 filterRequest.setUserTypeId(userTypeId);
 filterRequest.setUserType(roletype);

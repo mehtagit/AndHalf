@@ -62,7 +62,7 @@ public class DBDatatableController {
 		MapDatatableResponse map = new MapDatatableResponse();
 		Gson gsonObject = new Gson();
 		DBrowDataModel filterrequest = gsonObject.fromJson(filter, DBrowDataModel.class);
-
+		Integer file = 0;
 		Integer pageSize = Integer.parseInt(request.getParameter("length"));
 		Integer pageNumber = Integer.parseInt(request.getParameter("start")) / pageSize ;
 
@@ -72,7 +72,7 @@ public class DBDatatableController {
 		DBrowDataModel paginationContentList = null;
 		try {
 			log.info("request passed to API:::::::::" + filterrequest);
-			Object response = dBTablesFeignClient.DBRowDetailsFeign(filterrequest, pageNumber, pageSize);
+			Object response = dBTablesFeignClient.DBRowDetailsFeign(filterrequest, pageNumber, pageSize,file);
 			Gson gson = new Gson();
 			String apiResponse = gson.toJson(response);
 			log.info("apiResponse ::::::::::::::" + apiResponse);

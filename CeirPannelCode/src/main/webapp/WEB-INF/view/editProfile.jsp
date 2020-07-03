@@ -44,9 +44,6 @@
 <!-- Security Tags -->
     <title>Profile</title>
 
-    <link href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.min.css" type="text/css" rel="stylesheet"
-        media="screen,projection">
-
     <!-- Favicons-->
     <!--<link rel="icon" href="images/favicon/favicon-32x32.png" sizes="32x32">-->
     <!-- Favicons-->
@@ -57,10 +54,11 @@
     <!-- For Windows Phone -->
     <link rel="stylesheet" href="${context}/resources/font/font-awesome/css/font-awesome.min.css">
 
-    <!-- CORE CSS-->
-    <!--<link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection">-->
+   
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+   <%--  <link href="${context}/resources/css/materialize.css" type="text/css"
+	rel="stylesheet" media="screen,projection"> --%>
     <link href="${context}/resources/css/style.css" type="text/css" rel="stylesheet" media="screen,projection">
     <!-- Custome CSS-->
     <link href="${context}/resources/css/custom/custom.css" type="text/css" rel="stylesheet" media="screen,projection">
@@ -747,10 +745,9 @@ onchange="InvalidMsg(this,'select','<spring:message code="validation.selectField
     Scripts
     ================================================ -->
 	 <!-- jQuery Library -->
-    <!-- <script type="text/javascript" src="js/plugins/jquery-1.11.2.min.js"></script>-->
-  <script type="text/javascript" src="${context}/resources/js/plugins/jquery-1.11.2.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
-  <script
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
+  
+  <script type="text/javascript" src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
+  
        <!-- ajax js -->
   
        	
@@ -763,29 +760,17 @@ onchange="InvalidMsg(this,'select','<spring:message code="validation.selectField
       <script type="text/javascript" src="${context}/resources/ajax/Profile.js?version=<%= (int) (Math.random() * 10) %>"></script>
        	<script type="text/javascript" src="${context}/resources/ajax/Password.js?version=<%= (int) (Math.random() * 10) %>"></script>   
     		
-    <!--materialize js-->
-    <!--<script type="text/javascript" src="js/materialize.js"></script>-->
     <!-- Compiled and minified JavaScript -->
     
-    <script src="${context}/resources/custom_js/materialize.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
-    <script type="text/javascript" src="${context}/resources/js/materialize.js?version=<%= (int) (Math.random() * 10) %>"></script>
+    <script src="${context}/resources/custom_js/materialize.min.js"></script>
+    <script type="text/javascript" src="${context}/resources/js/materialize.js"></script>
     <script type="text/javascript" src="${context}/resources/js/country.js?version=<%= (int) (Math.random() * 10) %>"></script>
-    <!--prism
-    <script type="text/javascript" src="js/prism/prism.js"></script>-->
     <!--scrollbar-->
-    <script type="text/javascript" src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
-    <!-- chartist -->
-    <!--<script type="text/javascript" src="js/plugins/chartist-js/chartist.min.js"></script>-->
-
-
-    <!-- data-tables -->
-    <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
-    <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/data-tables-script.js?version=<%= (int) (Math.random() * 10) %>"></script>
-
+    <script type="text/javascript" src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
     <!--plugins.js - Some Specific JS codes for Plugin Settings-->
     <!--<script type="text/javascript" src="js/plugins.js"></script>-->
     <!--custom-script.js - Add your own theme custom JS-->
-    <script type="text/javascript" src="${context}/resources/js/custom-script.js?version=<%= (int) (Math.random() * 10) %>"></script>
+    <script type="text/javascript" src="${context}/resources/js/custom-script.js"></script>
 <script type="text/javascript"
 		src="${context}/resources/project_js/profileInfoTab.js?version=<%= (int) (Math.random() * 10) %>" async></script>
 	<!-- //////////////////////////////////////////////////////////////////////////// -->
@@ -793,42 +778,42 @@ onchange="InvalidMsg(this,'select','<spring:message code="validation.selectField
 	
 	<!-- i18n library -->
 	<script type="text/javascript"
-		src="${context}/resources/project_js/CLDRPluralRuleParser.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/i18n.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/i18n_library/i18n.js"></script>
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/messagestore.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/i18n_library/messagestore.js"></script>
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/fallbacks.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/i18n_library/fallbacks.js"></script>
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/language.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/i18n_library/language.js"></script>
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/parser.js?version=<%= (int) (Math.random() * 10) %>"></script>
-
-
-	<script type="text/javascript"
-		src="${context}/resources/i18n_library/emitter.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/i18n_library/parser.js"></script>
 
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/bidi.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/i18n_library/emitter.js"></script>
+
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/history.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/i18n_library/bidi.js"></script>
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/min.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/i18n_library/history.js"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/min.js"></script>
 	
 	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js?version=<%= (int) (Math.random() * 10) %>"></script>
 <script type="text/javascript"
-		src="${context}/resources/project_js/backbutton.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/project_js/backbutton.js"></script>
 	<script type="text/javascript"
-		src="${context}/resources/project_js/dragableModal.js?version=<%= (int) (Math.random() * 10) %>"></script>	
+		src="${context}/resources/project_js/dragableModal.js"></script>	
 			<script type="text/javascript"
-		src="${context}/resources/project_js/enterKey.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/project_js/enterKey.js"></script>
 	 	<script type="text/javascript"
 		src="${context}/resources/project_js/validationMsg.js?version=<%= (int) (Math.random() * 10) %>"></script>
 		    <script type="text/javascript"

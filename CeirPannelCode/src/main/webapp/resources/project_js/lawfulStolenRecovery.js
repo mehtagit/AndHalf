@@ -103,6 +103,7 @@ function Datatable(url,DataUrl,sourceTypeFiler){
 			"featureId":featureId,
 			"userTypeId": parseInt($("body").attr("data-userTypeID")),
 			"userType":userType ,
+			"userName" : $("body").attr("data-username")
 	}
 
 	
@@ -951,7 +952,8 @@ function aprroveDevice(){
 			"roleType": roleType,
 			"roleTypeUserId": parseInt($("body").attr("data-userTypeID")),
 			"txnId": window.transactionId,
-			"userId":parseInt(userId)
+			"userId":parseInt(userId),
+			"userName" : $("body").attr("data-username")
 	}
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
@@ -1005,7 +1007,8 @@ function rejectUser(){
 			"roleType": roleType,
 			"roleTypeUserId": parseInt($("body").attr("data-userTypeID")),
 			"txnId": window.transactionId,
-			"userId":parseInt(userId)
+			"userId":parseInt(userId),
+			"userName" : $("body").attr("data-username")
 	}
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");

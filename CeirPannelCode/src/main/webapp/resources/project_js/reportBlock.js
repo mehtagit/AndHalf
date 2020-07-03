@@ -924,7 +924,8 @@ var singleImeiBlockDetail={
 		'sourceType': 4,
 		'blockingTimePeriod':blockingTimePeriod,
 		'blockingType':blockingType,
-		'category':category
+		'category':category,
+		'deviceQuantity':1
 }
 		
 		//console.log(JSON.stringify(singleImeiBlockDetail));

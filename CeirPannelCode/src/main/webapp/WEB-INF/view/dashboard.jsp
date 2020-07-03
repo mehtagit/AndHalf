@@ -132,6 +132,7 @@ div#error_Modal {
 	data-selected-consignmentTxnId="${consignmentTxnId}"
 	data-operatorTypeId="${operatorTypeId}"
 	data-selected-consignmentStatus="${consignmentStatus}"
+	data-selected-username="${username}"
 	data-defaultLink="${defaultLink}">
 	<!-- Start Page Loading -->
 	<div id="loader-wrapper">
@@ -743,7 +744,7 @@ data-dismiss="modal">&times;</button> -->
 		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 	
 		<script type="text/javascript"
-		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js?version=<%= (int) (Math.random() * 10) %>"></script>  
+		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>  
 
 	
 	

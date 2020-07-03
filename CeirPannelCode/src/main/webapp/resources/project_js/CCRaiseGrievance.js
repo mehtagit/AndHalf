@@ -22,7 +22,7 @@
 			} ).done( function() { 
 			});
 
-		 $('.modal').modal();
+		// $('.modal').modal();
 	});
 
 	/*if(sessionStorage.getItem("cierRoletype")=="Customer Care"){

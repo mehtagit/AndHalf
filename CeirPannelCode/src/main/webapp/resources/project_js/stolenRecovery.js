@@ -1,10 +1,10 @@
-var roleType = $("body").attr("data-roleType");
-var userId = $("body").attr("data-userID");
-var currentRoleType = $("body").attr("data-stolenselected-roleType");  
+var roleType = $("body").attr("data-roletype");
+var userId = $("body").attr("data-userid");
+var currentRoleType = $("body").attr("data-stolenselected-roletype");  
 var role = currentRoleType == null ? roleType : currentRoleType;
 
 var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
-var userType = $("body").attr("data-roleType");
+var userType = $("body").attr("data-roletype");
 
 
 /*window.parent.$('#langlist').on('change', function() {
@@ -43,9 +43,9 @@ function DeleteConsignmentRecord(txnId,id,reqType){
 function confirmantiondelete(){
 	var txnId = $("#transID").text();
 	var id= $("#setStolenRecoveyRowId").text();
-	var roleType = $("body").attr("data-roleType");
-	var userId = $("body").attr("data-userID");
-	var currentRoleType = $("body").attr("data-stolenselected-roleType"); 
+	var roleType = $("body").attr("data-roletype");
+	var userId = $("body").attr("data-userid");
+	var currentRoleType = $("body").attr("data-stolenselected-roletype"); 
 	var role = currentRoleType == null ? roleType : currentRoleType;
 	var remarks = $("#textarea1").val();
 	//console.log("txnId===**"+txnId+" userId="+userId+" roleType== "+roleType+ " currentRoleType=="+currentRoleType);
@@ -288,7 +288,7 @@ populateCountries
 
 
 
-var userType = $("body").attr("data-roleType");
+var userType = $("body").attr("data-roletype");
 var sourceType = localStorage.getItem("sourceType");
 function filterStolen(language,sourceTypeFilter,source){
 	var source__val;
@@ -310,7 +310,7 @@ function filterStolen(language,sourceTypeFilter,source){
 		sessionFlag=1;
 
 	}
-	var userTypeId = $("body").attr("data-userTypeID");
+	var userTypeId = $("body").attr("data-usertypeid");
 	if(userType=="Operator" || userType=="Operation" ){
 		Datatable('./headers?type=blockUnblock','stolenData?featureId='+featureId+'&userTypeId='+userTypeId+'&source='+source__val,sourceTypeFilter)
 	}else if(userType =="CEIRAdmin"){
@@ -328,17 +328,26 @@ function Datatable(url,dataUrl,sourceTypeFiler){
 	
 	//console.log(" == sourceType ="+sourceTypeFiler);
 	var requestType='';
-	var userType=$("body").attr("data-roleType");
+	var userType=$("body").attr("data-roletype");
 	if (sourceTypeFiler=="filter")
 		{
 		
 		requestType = parseInt($('#requestType').val())
 		}
 	else{
-		requestType = parseInt($("body").attr("data-requestType"));
+		requestType = parseInt($("body").attr("data-requesttype"));
 	  }
 	//console.log("=== requestType======"+requestType)
+	//console.log($("body").attr("data-operatorTypeId"))	
 	var txn= (txnIdValue == 'null' && transactionIDValue == undefined)? $('#transactionID').val() : transactionIDValue;
+	
+	var operatorTypeId;
+	if(userType !="Operator"){
+		operatorTypeId = $('#operator').val();
+	}else{
+		operatorTypeId = $('#operator').val() == undefined || $('#operator').val() == null ? $("body").attr("data-operatorTypeId"):$("body").attr("data-operatorTypeId")
+	}
+			//console.log("sent operatorTypeId is ---->" +operatorTypeId)		
 	var filterRequest={
 			"endDate":$('#endDate').val(),
 			"startDate":$('#startDate').val(),
@@ -349,9 +358,10 @@ function Datatable(url,dataUrl,sourceTypeFiler){
 			"roleType": role,
 			"userId": userId,
 			"featureId":featureId,
-			"userTypeId": parseInt($("body").attr("data-userTypeID")),
+			"userTypeId": parseInt($("body").attr("data-usertypeid")),
 			"userType":userType,
-			"operatorTypeId" : parseInt($('#operator').val())
+			"operatorTypeId" : parseInt(operatorTypeId),
+			"userName" : $("body").attr("data-selected-username")
 	}
 
 
@@ -534,7 +544,7 @@ function pageElements(url){
 	//$("#filterBtnDiv").append();
 	}); 
 	
-	if($("body").attr("data-roleType")=="CEIRAdmin"){
+	if($("body").attr("data-roletype")=="CEIRAdmin"){
 		$("#btnLink").css({display: "none"});
 	}
 	
@@ -547,9 +557,9 @@ function pageElements(url){
 
 function fileStolenReport(){
 
-	var roleType = $("body").attr("data-roleType");
-	var userId = $("body").attr("data-userID");
-	var currentRoleType = $("body").attr("data-stolenselected-roleType"); 
+	var roleType = $("body").attr("data-roletype");
+	var userId = $("body").attr("data-userid");
+	var currentRoleType = $("body").attr("data-stolenselected-roletype"); 
 	var sourceType='2';
 	var requestType='0';
 	var role = currentRoleType == null ? roleType : currentRoleType;
@@ -612,9 +622,9 @@ function fileStolenReport(){
 
 function fileRecoveryReport(){
 
-	var roleType = $("body").attr("data-roleType");
-	var userId = $("body").attr("data-userID");
-	var currentRoleType = $("body").attr("data-stolenselected-roleType"); 
+	var roleType = $("body").attr("data-roletype");
+	var userId = $("body").attr("data-userid");
+	var currentRoleType = $("body").attr("data-stolenselected-roletype"); 
 
 
 	var sourceType='2';
@@ -747,9 +757,9 @@ function openFileStolenUpdate(txnId,requestType,id,qty)
 
 function updatefileStolenReport(){
 
-	var roleType = $("body").attr("data-roleType");
-	var userId = $("body").attr("data-userID");
-	var currentRoleType = $("body").attr("data-stolenselected-roleType"); 
+	var roleType = $("body").attr("data-roletype");
+	var userId = $("body").attr("data-userid");
+	var currentRoleType = $("body").attr("data-stolenselected-roletype"); 
 	var sourceType=2;
 	var requestType=$('#editFileStolenRequestType').val();
 	var role = currentRoleType == null ? roleType : currentRoleType;
@@ -848,7 +858,7 @@ function pickConsignment(){
 }
 
 
-var roleType = $("body").attr("data-stolenselected-roleType");
+var roleType = $("body").attr("data-stolenselected-roletype");
 function pickstock(){
 	localStorage.setItem("sourceType", "viaStock");
 	var url="./assignDistributor?userTypeId="+roleType;
@@ -865,8 +875,8 @@ function pickExistingRecovery(){
 
 function valuesPush(){
 	var multipleMarkedRequest=[];
-	var roleType = $("body").attr("data-roleType");
-	var currentRoleType = $("body").attr("data-stolenselected-roleType"); 
+	var roleType = $("body").attr("data-roletype");
+	var currentRoleType = $("body").attr("data-stolenselected-roletype"); 
 	var role = currentRoleType == null ? roleType : currentRoleType;
 	var requestType="1";
 	//console.log("role++++"+role+"requestType++"+requestType+"currentRoleType="+currentRoleType);
@@ -956,9 +966,9 @@ function openMulipleStolenPopUp()
 function redirectToViewStolenPage()
 {
 
-	var roleType = $("body").attr("data-roleType");
-	var userId = $("body").attr("data-userID");
-	var currentRoleType = $("body").attr("data-stolenselected-roleType"); 
+	var roleType = $("body").attr("data-roletype");
+	var userId = $("body").attr("data-userid");
+	var currentRoleType = $("body").attr("data-stolenselected-roletype"); 
 	var role = currentRoleType == null ? roleType : currentRoleType;
 	//console.log(" userId="+userId+" role="+role);
 	//console.log("./stolenRecovery?userTypeId="+role);
@@ -1003,7 +1013,7 @@ $.getJSON('./getSourceTypeDropdown/SOURCE_TYPE/'+featureId+'', function(data) {
 
 
 	//Stolen Status-----------dropdown
-	$.getJSON('./getDropdownList/'+featureId+'/'+$("body").attr("data-userTypeID"), function(data) {
+	$.getJSON('./getDropdownList/'+featureId+'/'+$("body").attr("data-usertypeid"), function(data) {
 		for (i = 0; i < data.length; i++) {
 			$('<option>').val(data[i].state).text(data[i].interp)
 			.appendTo('#status'); 
@@ -1026,15 +1036,15 @@ function exportStolenRecoveryData()
 	var stolenRecoveryRequestType=parseInt($('#requestType').val());
 
 	
-	var roleType = $("body").attr("data-roleType");
-	var currentRoleType = $("body").attr("data-stolenselected-roleType");
+	var roleType = $("body").attr("data-roletype");
+	var currentRoleType = $("body").attr("data-stolenselected-roletype");
 	
 	var source__val = stolenRecoveryStartDate != ''|| stolenRecoveryEndDate != ''|| stolenRecoveryTxnId != ''|| stolenRecoveryFileStatus != "Status"|| stolenRecoverySourceStatus != "Mode"|| stolenRecoveryRequestType != "Request Type" ? 'filter' : $("body").attr("data-session-source");
 	var blockUnblcksource= $("body").attr("data-session-source");
 	if(blockUnblcksource=='noti')
 		{
 		//console.log("export noti data=="+$("body").attr("data-notificationTxnID"));
-		stolenRecoveryTxnId=$("body").attr("data-notificationTxnID");
+		stolenRecoveryTxnId=$("body").attr("data-notificationtxnid");
 		source__val=$("body").attr("data-session-source");
 		}
 	else if(blockUnblcksource=='dashboard'){
@@ -1048,7 +1058,7 @@ function exportStolenRecoveryData()
 	   {
     	  stolenRecoveryFileStatus='';
     	  stolenRecoverySourceStatus='';
-    	  stolenRecoveryRequestType=parseInt($("body").attr("data-requestType"));
+    	  stolenRecoveryRequestType=parseInt($("body").attr("data-requesttype"));
     	  //console.log(" 11111111stolenRecoveryFileStatus && stolenRecoverySourceStatus && stolenRecoveryRequestType is empty =="+stolenRecoveryFileStatus+stolenRecoverySourceStatus);
 	   }
       else if(isNaN(stolenRecoveryFileStatus) && isNaN(stolenRecoverySourceStatus))
@@ -1060,12 +1070,12 @@ function exportStolenRecoveryData()
       else if(isNaN(stolenRecoverySourceStatus) && isNaN(stolenRecoveryRequestType))
 	   {
     	  stolenRecoverySourceStatus='';
-    	  stolenRecoveryRequestType=parseInt($("body").attr("data-requestType"));
+    	  stolenRecoveryRequestType=parseInt($("body").attr("data-requesttype"));
     	  //console.log(" 333333stolenRecoverySourceStatus && stolenRecoveryRequestType is empty="+stolenRecoverySourceStatus+stolenRecoveryRequestType);
 	   }
       else if(isNaN(stolenRecoveryRequestType) && isNaN(stolenRecoveryFileStatus))
     	  {
-    	   stolenRecoveryRequestType=parseInt($("body").attr("data-requestType"));
+    	   stolenRecoveryRequestType=parseInt($("body").attr("data-requesttype"));
     	   stolenRecoveryFileStatus='';
     	   //console.log(" 44444stolenRecoveryRequestType && stolenRecoveryFileStatus is empty "+stolenRecoveryRequestType+stolenRecoveryFileStatus);
     	  }
@@ -1081,7 +1091,7 @@ function exportStolenRecoveryData()
 	  }
       else if(isNaN(stolenRecoveryRequestType))
 	  {
-    	  stolenRecoveryRequestType=parseInt($("body").attr("data-requestType"));
+    	  stolenRecoveryRequestType=parseInt($("body").attr("data-requesttype"));
     	  //console.log("stolenRecoveryRequestType is blank="+stolenRecoveryRequestType);
 	  }
 
@@ -1091,7 +1101,7 @@ function exportStolenRecoveryData()
 	var pageSize =info.length;
 
 	if(userType=="Operator"){
-		var operatorId = parseInt($("body").attr("data-OperatorTypeId"));
+		var operatorId = parseInt($("body").attr("data-operatortypeI-id"));
 	}else{
 		var operatorId = parseInt($('#operator').val());
 	}
@@ -1108,9 +1118,9 @@ function exportStolenRecoveryData()
 			"operatorTypeId" : operatorId,
 			"pageNo":parseInt(pageNo),
 			"pageSize":parseInt(pageSize),
-			"userTypeId": parseInt($("body").attr("data-userTypeID")),
-			"userType":$("body").attr("data-roleType"),
-			"userId" : $("body").attr("data-userID"),
+			"userTypeId": parseInt($("body").attr("data-usertypeid")),
+			"userType":$("body").attr("data-roletype"),
+			"userId" : $("body").attr("data-userid"),
 		
 			
 			
@@ -1154,10 +1164,14 @@ function aprroveDevice(){
 			"action" : 0,
 			"featureId":parseInt(featureId),
 			"requestType":parseInt(window.requestType),
-			"roleType": roleType,
-			"roleTypeUserId": parseInt($("body").attr("data-userTypeID")),
+			"roleType": $("body").attr("data-roletype"),
+			"roleTypeUserId": parseInt($("body").attr("data-usertypeid")),
 			"txnId": window.transactionId,
-			"userId":parseInt(userId)
+			"userId":parseInt($("body").attr("data-userid")),
+			"userName" : $("body").attr("data-selected-username"),
+			"userTypeId": parseInt($("body").attr("data-usertypeid")),
+			"userType":$("body").attr("data-roletype")
+			
 	}
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
@@ -1198,7 +1212,7 @@ function userRejectPopup(transactionId,requestType){
 	$('#rejectTxnId').text(transactionId);
 	window.transactionId=transactionId;
 	window.requestType=requestType;
-}
+} 	
 
 
 function rejectUser(){
@@ -1207,10 +1221,14 @@ function rejectUser(){
 			"featureId":parseInt(featureId),
 			"remarks": $("#Reason").val(),
 			"requestType":parseInt(window.requestType),
-			"roleType": roleType,
-			"roleTypeUserId": parseInt($("body").attr("data-userTypeID")),
+			"roleType": $("body").attr("data-roletype"),
+			"roleTypeUserId": parseInt($("body").attr("data-usertypeid")),
 			"txnId": window.transactionId,
-			"userId":parseInt(userId)
+			"userId":parseInt($("body").attr("data-userid")),
+			"userName" : $("body").attr("data-selected-username"),
+			"userTypeId": parseInt($("body").attr("data-usertypeid")),
+			"userType":$("body").attr("data-roletype")
+			
 	}
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
@@ -1265,7 +1283,7 @@ function historyRecord(txnID){
 	 var filter =[];
 	 var formData= new FormData();
 	 
-	 var userTypeValue=$("body").attr("data-roleType");
+	 var userTypeValue=$("body").attr("data-roletype");
 	 	 if(userTypeValue=='CEIRAdmin')
 	 {
 		 var filterRequest={
