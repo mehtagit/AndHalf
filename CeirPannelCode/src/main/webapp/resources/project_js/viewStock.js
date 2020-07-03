@@ -934,7 +934,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 			 {
 			 var filterRequest={
 			 "columns":["created_on","modified_on","txn_id","user_type","role_type","stock_status","supplier_id","suplier_name",
-			 "quantity","device_quantity","invoice_number","remarks","assigner_id",
+			 "quantity","device_quantity","remarks","assigner_id",
 			 "user_id","ceir_admin_id" 
 			 ],
 			 "tableName": "stock_mgmt_aud",
@@ -945,7 +945,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 			 else{
 			 var filterRequest={
 			 "columns":["created_on","modified_on","txn_id","user_type","role_type","stock_status","supplier_id","suplier_name",
-			 "quantity","device_quantity","invoice_number","remarks","assigner_id",
+			 "quantity","device_quantity","remarks","assigner_id",
 			 "user_id"
 			 ],
 			 "tableName": "stock_mgmt_aud",

@@ -52,7 +52,7 @@
 <link rel="icon" href="${context}/resources/images/DMC-Logo.png" sizes="32x32">
 <script type="text/javascript"
 	src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>  
- --> <!-- CORE CSS-->
+ <!-- CORE CSS-->
 <link href="${context}/resources/css/materialize.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
 <link href="${context}/resources/css/style.css" type="text/css"
@@ -148,8 +148,7 @@ position: fixed;
 								<div class="col s12 m12 l12" id="typeAprroveTableDiv"
 									style="padding-bottom: 5px; background-color: #e2edef52;">
 									<div id="filterBtnDiv">
-										<!-- 							<div class='col s12 m2 l2'><button type='submit' class='btn primary botton' id='submitFilter'></button></div>
-		 -->
+										
 									</div>
 								</div>
 							</form>
