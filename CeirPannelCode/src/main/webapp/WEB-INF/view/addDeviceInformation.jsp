@@ -56,16 +56,15 @@
 	rel="stylesheet" media="screen,projection">
 <link href="${context}/resources/css/style.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
-<script type="text/javascript"
-	src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
+
 <link
 	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.min.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
 <link
 	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
-<link href="${context}/resources/css/jquery-datepicker2.css"
-	type="text/css" rel="stylesheet" media="screen,projection">
+<%-- <link href="${context}/resources/css/jquery-datepicker2.css"
+	type="text/css" rel="stylesheet" media="screen,projection"> --%>
 <!-- Custome CSS-->
 <link href="${context}/resources/css/custom/custom.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
@@ -85,8 +84,8 @@
 <link rel="stylesheet"
 	href="${context}/resources/project_css/iconStates.css">
 
-<link rel="stylesheet"
-	href="${context}/resources/project_css/jquery-ui.css">
+<%-- <link rel="stylesheet"
+	href="${context}/resources/project_css/jquery-ui.css"> --%>
 <script src="${context}/resources/js/jquery-ui.js"></script>
 
 <script src="${context}/resources/js/jquery.blockUI.js"></script>
@@ -753,51 +752,47 @@ input[type='search'] {
 
 
 	<script type="text/javascript"
-		src="${context}/resources/js/materialize.js?version=<%= (int) (Math.random() * 10) %>"></script>
-	<script type="text/javascript"
-		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.js?version=<%= (int) (Math.random() * 10) %>"></script>
-	<script type="text/javascript"
-		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/js/materialize.js"></script>
+	
 	<script
-		src="${context}/resources/custom_js/bootstrap.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
-	<script type="text/javascript" src="${context}/resources/js/plugins.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/custom_js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
 	
 	<script type="text/javascript"
-		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 
-	<script type="text/javascript"
-		src="${context}/resources/js/countries.js?version=<%= (int) (Math.random() * 10) %>"></script>
-		
+		<script type="text/javascript"
+		src="${context}/resources/js/countries.js"></script>
 	<!-- i18n library -->
 	<script type="text/javascript"
-		src="${context}/resources/project_js/CLDRPluralRuleParser.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/i18n.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/i18n_library/i18n.js"></script>
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/messagestore.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/i18n_library/messagestore.js"></script>
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/fallbacks.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/i18n_library/fallbacks.js"></script>
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/language.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/i18n_library/language.js"></script>
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/parser.js?version=<%= (int) (Math.random() * 10) %>"></script>
-
-
-	<script type="text/javascript"
-		src="${context}/resources/i18n_library/emitter.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/i18n_library/parser.js"></script>
 
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/bidi.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/i18n_library/emitter.js"></script>
+
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/history.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/i18n_library/bidi.js"></script>
 
 	<script type="text/javascript"
-		src="${context}/resources/i18n_library/min.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/i18n_library/history.js"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/min.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/addDeviceInfo.js?version=<%= (int) (Math.random() * 10) %>"></script>
 		<script type="text/javascript"

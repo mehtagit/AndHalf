@@ -168,6 +168,7 @@
 		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 	<!-- chartist -->
 	
+	
 		<!-- i18n library -->
 	<script type="text/javascript"
 		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>

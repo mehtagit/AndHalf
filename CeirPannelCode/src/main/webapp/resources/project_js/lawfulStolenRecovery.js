@@ -96,7 +96,7 @@ function Datatable(url,DataUrl,sourceTypeFiler){
 			"startDate":$('#startDate').val(),
 			"txnId":txn,
 			"consignmentStatus":parseInt($('#status').val()),
-			"requestType":requestType,
+			"requestType":requestType ,
 			"sourceType":parseInt($('#sourceStatus').val()),
 			"roleType": roleType,
 			"userId": userId,

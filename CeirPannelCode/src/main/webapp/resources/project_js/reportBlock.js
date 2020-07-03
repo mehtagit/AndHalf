@@ -924,7 +924,8 @@ var singleImeiBlockDetail={
 		'sourceType': 4,
 		'blockingTimePeriod':blockingTimePeriod,
 		'blockingType':blockingType,
-		'category':category
+		'category':category,
+		'deviceQuantity':1
 }
 		
 		//console.log(JSON.stringify(singleImeiBlockDetail));
@@ -973,11 +974,14 @@ headers:
 
 
 $('#stolenDatePeriod').datepicker({
-	dateFormat: "yy-mm-dd"
+	dateFormat: "yy-mm-dd",
+	minDate: "0"
+	
 	});
 
 $('#stolenDatePeriodedit').datepicker({
-	dateFormat: "yy-mm-dd"
+	dateFormat: "yy-mm-dd",
+	minDate: "0"
 	});
 
 $('#stolenDatePeriodUnblock').datepicker({

@@ -27,14 +27,7 @@
 	rel="stylesheet" media="screen,projection">
 <link href="${context}/resources/css/style.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
-<script type="text/javascript"
-	src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
-<link
-	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.min.css"
-	type="text/css" rel="stylesheet" media="screen,projection">
-<link
-	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.css"
-	type="text/css" rel="stylesheet" media="screen,projection">
+
 <!-- Custome CSS-->
 <link href="${context}/resources/css/custom/custom.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
@@ -48,15 +41,13 @@
 <link
 	href="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
-<%--  <link href="${context}/resources/js/plugins/chartist-js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection"> --%>
-<link rel="stylesheet"
-	href="${context}/resources/project_css/viewConsignment.css">
+
 <link rel="stylesheet"
 	href="${context}/resources/project_css/iconStates.css">
 
 <link rel="stylesheet"
 	href="${context}/resources/custom_js/jquery-ui.css">
-<script src="${context}/resources/custom_js/1.11.2_jquery-ui.js"></script>
+
 
 <script src="${context}/resources/custom_js/jquery.blockUI.js"></script>
 
@@ -156,16 +147,12 @@ style="margin-left: 10px;"><spring:message code="modal.no" /></a>
 
 
 	<script type="text/javascript"
-		src="${context}/resources/js/materialize.js?version=<%= (int) (Math.random() * 10) %>"></script>
-	<script type="text/javascript"
-		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.js?version=<%= (int) (Math.random() * 10) %>"></script>
-	<script type="text/javascript"
-		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
-		<script
-		src="${context}/resources/custom_js/bootstrap.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
-<script type="text/javascript" src="${context}/resources/js/plugins.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/js/materialize.js"></script>
+	<script
+		src="${context}/resources/custom_js/bootstrap.min.js"></script>
+<script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
 
 	<script type="text/javascript"
-		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 
 	
