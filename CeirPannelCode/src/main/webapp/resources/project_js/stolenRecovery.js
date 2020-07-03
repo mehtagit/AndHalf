@@ -340,8 +340,14 @@ function Datatable(url,dataUrl,sourceTypeFiler){
 	//console.log("=== requestType======"+requestType)
 	//console.log($("body").attr("data-operatorTypeId"))	
 	var txn= (txnIdValue == 'null' && transactionIDValue == undefined)? $('#transactionID').val() : transactionIDValue;
-	var operatorTypeId = $('#operator').val() == undefined || $('#operator').val() == null ? $("body").attr("data-operatorTypeId"):$("body").attr("data-operatorTypeId")
-	//console.log("sent operatorTypeId is ---->" +operatorTypeId)		
+	
+	var operatorTypeId;
+	if(userType !="Operator"){
+		operatorTypeId = $('#operator').val();
+	}else{
+		operatorTypeId = $('#operator').val() == undefined || $('#operator').val() == null ? $("body").attr("data-operatorTypeId"):$("body").attr("data-operatorTypeId")
+	}
+			//console.log("sent operatorTypeId is ---->" +operatorTypeId)		
 	var filterRequest={
 			"endDate":$('#endDate').val(),
 			"startDate":$('#startDate').val(),
