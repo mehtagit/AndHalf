@@ -384,10 +384,12 @@ public class GrievanceController {
 								@RequestParam(name="grievancetxnId",required = false) String grievancetxnId,@RequestParam(name="grievanceId") String grievanceId,HttpServletRequest request,
 								HttpSession session,@RequestParam(name="pageSize") Integer pageSize,@RequestParam(name="pageNo") Integer pageNo,@RequestParam(name="grievanceStatus") Integer grievanceStatus,
 								@RequestParam(name="source",defaultValue = "menu",required = false) String source,
-								@RequestParam(name="userId",required = false) Integer userId)
+								@RequestParam(name="userId",required = false) Integer userId,
+								@RequestParam(name="filterUserName",required = false) String filterUserName,
+								@RequestParam(name="FilterUserType",required = false) String FilterUserType)
 						{
 							log.info("grievanceStartDate=="+grievanceStartDate+ " grievanceEndDate ="+grievanceEndDate+" grievancetxnId="+grievancetxnId+"grievanceId="+grievanceId);
-							log.info("source--->" +source);
+							log.info("source--->" +source+" filterUserName--->"+filterUserName+"  FilterUserType--->" +FilterUserType);
 							//int userId= (int) session.getAttribute("userid"); 
 							int file=1;
 							String userType=(String) session.getAttribute("usertype");
@@ -403,6 +405,10 @@ public class GrievanceController {
 							filterRequest.setUserType(userType);
 							filterRequest.setUserTypeId(usertypeId);
 							filterRequest.setFeatureId(6);
+							filterRequest.setFilterUserName(filterUserName);
+							filterRequest.setFilterUserType(FilterUserType);
+							
+							
 							log.info(" request passed to the exportTo Excel Api =="+filterRequest+" *********** pageSize"+pageSize+"  pageNo  "+pageNo);
 						Object	response= grievanceFeignClient.grievanceFilter(filterRequest,pageNo,pageSize,file,source);
 						
