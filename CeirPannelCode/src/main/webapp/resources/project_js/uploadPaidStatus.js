@@ -1678,11 +1678,10 @@ function deptImageValidation() {
 		 var filter =[];
 		 var formData= new FormData();
 		 
-			 var filterRequest={
+			var filterRequest={
 					 
 					 "columns": [
-						    "created_on","modified_on","txn_id","status","nid","device_type","device_id_type","multi_sim_status","country","device_serial_number","tax_paid_status","device_status","price",
-						    "currency","first_imei","second_imei","third_imei","fourth_imei","origin","remark",
+						    "created_on","modified_on","txn_id","status","nid","device_type","device_id_type","multi_sim_status","country","device_serial_number","tax_paid_status","device_status","first_imei","second_imei","third_imei","fourth_imei","origin","remark",
 						     "user_id","approved_by","tax_collected_by",
 						    ],
 					"tableName": "regularize_device_db_aud",

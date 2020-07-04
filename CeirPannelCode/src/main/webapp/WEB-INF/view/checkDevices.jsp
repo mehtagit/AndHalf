@@ -53,7 +53,7 @@
 <link href="${context}/resources/css/style.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
 <!-- Custome CSS-->
-<link href="${context}/resources/css/custom/custom.css" type="text/css"
+<link href="" type="text/css"
 	rel="stylesheet" media="screen,projection">
 
 <!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
@@ -404,7 +404,7 @@ i.fa.fa-times-circle-o.red-text {
 
 	>
 	<script
-		src="${context}/resources/custom_js/jquery.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/custom_js/jquery.min.js"></script>
 	<!-- ajax js -->
 	<script type="text/javascript"
 		src="${context}/resources/ajax/Registration.js?version=<%= (int) (Math.random() * 10) %>"></script>

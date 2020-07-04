@@ -49,7 +49,7 @@
 	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
 <!-- Custome CSS-->
-<link href="${context}/resources/css/custom/custom.css" type="text/css"
+<link href="" type="text/css"
 	rel="stylesheet" media="screen,projection">
 <link
 	href="${context}/resources/font/font-awesome/css/font-awesome.min.css"
@@ -151,7 +151,7 @@
 		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 	
 	<script type="text/javascript"
-		src="${context}/resources/js/countries.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/js/countries.js"></script>
 	
 	<!-- i18n library -->
 	<script type="text/javascript"
@@ -199,7 +199,7 @@
 	<script type="text/javascript"
 		src="${context}/resources/project_js/_dateFunction.js?version=<%= (int) (Math.random() * 10) %>" async></script>
 			<script type="text/javascript"
-		src="${context}/resources/project_js/profileInfoTab.js?version=<%= (int) (Math.random() * 10) %>" async></script>
+		src="" async></script>
 </body>
 </html>
 <%

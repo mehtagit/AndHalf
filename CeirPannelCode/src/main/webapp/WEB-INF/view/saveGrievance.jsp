@@ -322,11 +322,11 @@ class="btn"
 	
 
 <script type="text/javascript"
-		src="${context}/resources/project_js/profileInfoTab.js?version=<%= (int) (Math.random() * 10) %>" async></script>
+		src="" async></script>
 <script type="text/javascript" src="${context}/resources/project_js/globalVariables.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 		<script type="text/javascript"
-		src="${context}/resources/project_js/profileInfoTab.js?version=<%= (int) (Math.random() * 10) %>" async></script>
+		src="" async></script>
 		<script type="text/javascript">
 window.parent.$('#langlist').on('change', function() {
 	var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
@@ -425,6 +425,7 @@ $.i18n().load( {
 					});
 					$('#fileErrormessage').text('')
 					$('#fileErrormessage').text($.i18n('duplicateFileName'));
+$('div#initialloader').delay(300).fadeOut('slow');
 					return false;
 
 				}
@@ -436,6 +437,7 @@ $.i18n().load( {
 					});
 					$('#fileErrormessage').text('')
 					$('#fileErrormessage').text($.i18n('documentTypeName'));
+$('div#initialloader').delay(300).fadeOut('slow');
 					return false;
 
 				}
@@ -477,7 +479,7 @@ $.i18n().load( {
 					async : false,
 					/*	method: 'POST',*/
 					success : function(data, textStatus, jqXHR) {
-						$('div#initialloader').delay(300).fadeOut('slow');
+					
 						$("#saveGrievancesubmitButton").prop('disabled', true);
 						var x = data;
 						var y = JSON.parse(x);
@@ -503,6 +505,8 @@ $.i18n().load( {
 						}*/
 						// $('#updateConsignment').modal('open'); 
 						//alert("success");
+$('div#initialloader').delay(300).fadeOut('slow');
+	
 					},
 					error : function(jqXHR, textStatus, errorThrown) {
 						//console.log("error in ajax")
@@ -810,6 +814,11 @@ $.i18n().load( {
 			 var ccc=addMoreFileCount();
 			 alert(ccc);
 			 }); */
+
+function clearFileName() {
+$('#fileFormateModal').closeModal();
+
+}
 		</script>
 <script type="text/javascript"
 		src="${context}/resources/project_js/validationMsg.js"></script>
