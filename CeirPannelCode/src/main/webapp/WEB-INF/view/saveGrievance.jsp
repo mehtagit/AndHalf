@@ -329,6 +329,13 @@ class="btn"
 		src="" async></script>
 		<script type="text/javascript">
 window.parent.$('#langlist').on('change', function() {
+	
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+	}); 
 	var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 	window.location.assign("./openGrievanceForm?reqType=formPage&lang="+lang);
 }); 
@@ -352,8 +359,10 @@ $.i18n().load( {
 				
 				if($("body").attr("data-roleType")=="Customer Care"){
 					raisedBy = "Customer Care"; 
-				    name = sessionStorage.getItem("primaryRole");
-				    userId = sessionStorage.getItem("userId");
+				    //name = sessionStorage.getItem("primaryRole");
+				    //userId = sessionStorage.getItem("userId");
+				    name = $("body").attr("data-roleType");
+				    userId = $("body").attr("data-userID");
 				}else{
 					raisedBy = "Self";
 					name = $("body").attr("data-roleType");

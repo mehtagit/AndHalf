@@ -1,5 +1,5 @@
 var featureId = 21;
-var userId = $("body").attr("data-userID");
+var userId = parseInt($("body").attr("data-userID"));
 var cierRoletype = sessionStorage.getItem("cierRoletype");
 var lang = window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 
@@ -52,7 +52,7 @@ function Datatable(Url, dataUrl) {
 			|| $('#userType').val() == undefined ? null : $(
 			"#userType option:selected").text();
 	if (userType == "CEIRAdmin") {
-		var userId = 0;
+		
 		var filterRequest = {
 			"endDate" : $('#endDate').val(),
 			"startDate" : $('#startDate').val(),
@@ -66,7 +66,7 @@ function Datatable(Url, dataUrl) {
 			"FilterUserType" : FilterUserType
 		}
 	}else if(userType == "TRC"){
-		var userId = 0;
+		
 		var filterRequest = {
 			"endDate" : $('#endDate').val(),
 			"startDate" : $('#startDate').val(),
@@ -80,7 +80,7 @@ function Datatable(Url, dataUrl) {
 		}
 		
 	} else {
-		var userId = parseInt($("body").attr("data-userID"))
+		
 		var filterRequest = {
 			"endDate" : $('#endDate').val(),
 			"startDate" : $('#startDate').val(),
@@ -229,7 +229,7 @@ function pageRendering() {
 									"<div class='input-field col s6 m2' ><input type="
 											+ date[i].type + " id="
 											+ date[i].id
-											+ " maxlength='19' /><label for="
+											+ " maxlength='8' /><label for="
 											+ date[i].id
 											+ " class='center-align'>"
 											+ date[i].title + "</label></div>");
@@ -329,11 +329,6 @@ if (userType == "CEIRAdmin") {
 // **********************************************************Export Excel
 // file************************************************************************
 function exportTacData() {
-	if ($("body").attr("data-roleType") == "CEIRAdmin") {
-		var userId = 0;
-	} else {
-		var userId = parseInt($("body").attr("data-userID"));
-	}
 	var txn = (txnIdValue == 'null' && transactionIDValue == undefined) ? $('#transactionID').val() : transactionIDValue;
 	
 	var tacStartDate = $('#startDate').val();
@@ -344,7 +339,7 @@ function exportTacData() {
 	var featureId = 21;
 	var userType = userType;
 	var userTypeId = parseInt($("body").attr("data-userTypeID"));
-	var userId = userId
+	var userId = parseInt($("body").attr("data-userID"));
 
 	// console.log("tacStatus=="+tacStatus);
 	if (isNaN(tacStatus)) {

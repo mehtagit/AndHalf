@@ -52,7 +52,7 @@
 <link rel="icon" href="${context}/resources/images/DMC-Logo.png" sizes="32x32">
 <script type="text/javascript"
 	src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>  
- --> <!-- CORE CSS-->
+  <!-- CORE CSS-->
 <link href="${context}/resources/css/materialize.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
 <link href="${context}/resources/css/style.css" type="text/css"

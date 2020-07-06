@@ -255,6 +255,7 @@ window.parent
 				.click(
 						function(e) { //on add input button click
 							e.preventDefault();
+							alert("0")
 							if (x < max_fields) { //max input box allowed
 								x++; //text box increment
 								$(wrapper)
@@ -272,7 +273,7 @@ window.parent
 														+ $.i18n('selectfile')
 														+ '</span><input id="docTypeFile'+id+'" type="file"  name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" type="text"></div></div><div style="cursor:pointer;background-color:red;margin-right: 1.7%;" class="remove_field btn right btn-info">-</div></div></div>'); //add input box
 							}
-
+							
 							$.getJSON('./getSourceTypeDropdown/DOC_TYPE/21', function(
 									data) {
 
@@ -290,7 +291,7 @@ window.parent
 								}
 							});
 							id++;
-
+							alert("1")
 						});
 		/* $(wrapper).on("click", ".remove_field", function (e) { //user click on remove text
 			e.preventDefault();

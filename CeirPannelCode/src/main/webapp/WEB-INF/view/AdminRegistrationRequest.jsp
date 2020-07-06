@@ -67,8 +67,6 @@
 <link
 	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
-<%-- <link href="${context}/resources/css/jquery-datepicker2.css"
-	type="text/css" rel="stylesheet" media="screen,projection"> --%>
 <!-- Custome CSS-->
 <link href="" type="text/css"
 	rel="stylesheet" media="screen,projection">
@@ -102,7 +100,6 @@ var contextpath = "${context}";
 </script>
 
 </head>
-<%-- <body data-roleType="${usertype}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}"> --%>
 <body data-id="8" data-roleType="${usertype}" data-userTypeID="${usertypeId}" data-userID="${userid}" 	
 data-selected-username="${username}"
 data-selected-roleType="${selectedUserTypeId}" 
@@ -133,8 +130,7 @@ data-session-source="${not empty param.source ? param.source : 'menu'}">
 								<div class="col s12 m12 l12" id="registrationTableDiv"
 									style="padding-bottom: 5px; background-color: #e2edef52;">
 									<div id="filterBtnDiv">
-										<!-- 							<div class='col s12 m2 l2'><button type='submit' class='btn primary botton' id='submitFilter'></button></div>
-		 -->
+										
 									</div>
 								</div>
 							</form>
@@ -420,7 +416,7 @@ data-session-source="${not empty param.source ? param.source : 'menu'}">
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
-                    <a href="" class="modal-close btn"><spring:message code="modal.ok" /></a>
+                    <button class="btn modal-close" style="margin-left: 10px;" title="" data-original-title=" "><spring:message code="modal.ok" /></button>
                 </div>
             </div>
         </div>
@@ -442,7 +438,7 @@ data-session-source="${not empty param.source ? param.source : 'menu'}">
 
 
 	
-    <script type="text/javascript" src="${context}/resources/js/materialize-plugins/date_picker/picker.js"></script> --%>
+    <script type="text/javascript" src="${context}/resources/js/materialize-plugins/date_picker/picker.js"></script> 
 	<!--custom-script.js - Add your own theme custom JS-->
 	<script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
 
