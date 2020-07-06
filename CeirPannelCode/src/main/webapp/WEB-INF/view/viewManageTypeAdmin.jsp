@@ -4,7 +4,7 @@
 	response.setHeader("Cache-Control", "no-store");
 	response.setDateHeader("Expires", 0);
 	response.setHeader("Pragma", "no-cache");
-	
+	 
     /*   //200 secs
 	 session.setAttribute("usertype", null);  */
 /* 	 session.setMaxInactiveInterval(10); */

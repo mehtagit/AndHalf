@@ -229,11 +229,12 @@ function pageRendering() {
 									"<div class='input-field col s6 m2' ><input type="
 											+ date[i].type + " id="
 											+ date[i].id
-											+ " maxlength='8' /><label for="
+											+ " maxlength='16' /><label for="
 											+ date[i].id
 											+ " class='center-align'>"
 											+ date[i].title + "</label></div>");
 						}
+						$("#tac").prop("maxLength", 8);
 
 					}
 
@@ -280,6 +281,8 @@ function pageRendering() {
 						}
 					}
 					
+					
+					
 					var token = $("meta[name='_csrf']").attr("content");
 					var header = $("meta[name='_csrf_header']").attr("content");
 					$.ajaxSetup({
@@ -309,6 +312,7 @@ function pageRendering() {
 							});
 
 				}
+				
 
 			});
 
