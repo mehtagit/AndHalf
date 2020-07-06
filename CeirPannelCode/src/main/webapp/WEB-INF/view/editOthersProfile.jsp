@@ -69,7 +69,7 @@
 <link href="${context}/resources/css/style.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
 <!-- Custome CSS-->
-<link href="${context}/resources/css/custom/custom.css" type="text/css"
+<link href="" type="text/css"
 	rel="stylesheet" media="screen,projection">
 
 <!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
@@ -203,7 +203,7 @@ var contextpath = "${context}";
 
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
-	<script type="text/javascript" src="${context}/resources/js/country.js?version=<%= (int) (Math.random() * 10) %>"></script>
+	<script type="text/javascript" src="${context}/resources/js/country.js"></script>
 	
 	<!--scrollbar-->
 	<script type="text/javascript"

@@ -60,7 +60,7 @@
 	rel="stylesheet" media="screen,projection">
 
 <!-- Custome CSS-->
-<link href="${context}/resources/css/custom/custom.css" type="text/css"
+<link href="" type="text/css"
 	rel="stylesheet" media="screen,projection">
 <link
 	href="${context}/resources/font/font-awesome/css/font-awesome.min.css"
@@ -540,9 +540,9 @@ onclick="_Services._selectstartDate()"></i></span>
 
 
 	<script type="text/javascript"
-		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.js"></script>
 	<script type="text/javascript"
-		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
 
 
 
@@ -589,7 +589,7 @@ onclick="_Services._selectstartDate()"></i></span>
 		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 	
 	<script type="text/javascript"
-		src="${context}/resources/js/countries.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/js/countries.js"></script>
 
 
 		<script type="text/javascript"

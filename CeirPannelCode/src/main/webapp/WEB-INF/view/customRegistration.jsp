@@ -35,12 +35,12 @@ if(statusCode==200){
 <!-- default header name is X-CSRF-TOKEN -->
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
 <!-- Security Tags -->
-<title>CEIR | Custom Portal</title>
+<title>CEIR | Registration panel</title>
 <link
 	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.min.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
-<link rel="apple-touch-icon-precomposed"
-	href="${context}/resources/images/favicon/apple-touch-icon-152x152.png">
+<link rel="icon" href="${context}/resources/images/DMC-Logo.png" sizes="32x32">
+
 <!-- For iPhone -->
 <meta name="msapplication-TileColor" content="#00bcd4">
 
@@ -49,13 +49,9 @@ if(statusCode==200){
 	href="${context}/resources/font/font-awesome/css/font-awesome.min.css">
 
 <!-- CORE CSS-->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-<%-- <link href="${context}/resources/css/materialize.css" type="text/css"
-	rel="stylesheet" media="screen,projection"> --%>
+<link rel="stylesheet"
+	href="${context}/resources/custom_js/materialize.min.css">
 <link href="${context}/resources/css/style.css" type="text/css"
-	rel="stylesheet" media="screen,projection">
-<!-- Custome CSS-->
-<link href="${context}/resources/css/custom/custom.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
 
 <!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
@@ -71,44 +67,10 @@ if(statusCode==200){
 	rel="stylesheet" media="screen,projection">
 
 <style>
- input[type="checkbox"] {
-	background-color: initial;
-    cursor: default;
-    -webkit-appearance: checkbox;
-    box-sizing: border-box;
-    margin: 3px 3px 3px 4px;
-    padding: initial;
-    border: initial;
-} 
-/* input[type="checkbox"]+span:not(.lever) {
-    position: relative;
-    padding-left: 35px;
-    cursor: pointer;
-    display: inline-block;
-    height: 25px;
-    line-height: 25px;
-    font-size: 1rem;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}    
+input[type="checkbox"] {
+	display: none;
+}
 
-input[type="checkbox"]+span:not(.lever):before, [type="checkbox"]:not(.filled-in)+span:not(.lever):after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 18px;
-    height: 18px;
-    z-index: 0;
-    border: 2px solid #5a5a5a;
-    border-radius: 1px;
-    margin-top: 3px;
-    -webkit-transition: .2s;
-    transition: .2s;
-
-} */
 footer {
 	padding-left: 0;
 }
@@ -117,37 +79,152 @@ footer {
 	height: auto;
 }
 
+.star {
+	color: red;
+}
+
 .dropdown-content li>a, .dropdown-content li>span {
 	color: #444;
 }
 
- h6 {
-font-size: 0.9rem;
-line-height: 110%;
-margin: 0rem 0 0.2rem 0;
-margin-top: 1px !important;
-} 
+.input-field>label {
+	color: #444 !important;
+}
 
-.file-upload-heading {
-	margin-left: 0;
+[type="radio"]:not (:checked ), [type="radio"]:checked {
+	opacity: 0;
+}
+
+input[type=text], input[type=password], input[type=email], input[type=url],
+	input[type=time], input[type=date], input[type=datetime-local], input[type=tel],
+	input[type=number], input[type=search], textarea.materialize-textarea {
+	background-color: transparent !important;
+	border: none !important;
+	border-bottom: 1px solid #9e9e9e !important;
+	border-radius: 0 !important;
+	outline: none !important;
+	height: 2.6rem !important;
+	width: 100% !important;
+	font-size: 1rem !important;
+	margin: 0 0 5px 0 !important;
+	padding: 0 !important;
+	box-shadow: none !important;
+	-webkit-box-sizing: content-box !important;
+	-moz-box-sizing: content-box !important;
+	box-sizing: content-box !important;
+	transition: all .3s !important;
+}
+
+input
+[
+type
+=
+text
+]
+:focus
+:not
+ 
+(
+[
+readonly
+]
+ 
+)
+{
+border-bottom:1px
+ 
+1
+px
+ 
+solid
+ 
+#ff4081
+ 
+!
+important
+;
+
+	
+box-shadow
+:
+ 
+0
+1
+px
+ 
+0
+0
+#ff4081
+ 
+!
+important
+;
+
+
+}
+input[type=text]:focus:not ([readonly] )+label {
+	color: #ff4081 !important;
+	background-color: transparent !important;
+}
+
+.input-field {
+	position: relative;
+	margin-top: 1rem;
+	margin-bottom: 0;
+}
+
+.row {
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 0;
+}
+
+.btn {
+	background-color: #ff4081 !important;
 }
 
 select {
-	height: 2.2rem !important;
+	background-color: transparent;
+	border: none;
+	border-bottom: 1px solid #9e9e9e;
+	padding: 0;
+	margin-top: 0;
+	height: 2.6rem;
 }
 
-label {
-/* 	font-size: 0.8rem; */
+[type="checkbox"]:not (:checked ), [type="checkbox"]:checked {
+	position: inherit;
+	opacity: 1;
+	pointer-events: none;
 }
-.select-lang-drpdwn {
-    width: 75px;
-    margin-top: -17px;
-    border-bottom: none;
+
+[type="checkbox"]+span:not (.lever ):before, [type="checkbox"]:not (.filled-in
+	 )+span:not (.lever ):after {
+	display: none;
+}
+
+input[type="checkbox"] {
+	display: block;
+}
+
+[type="checkbox"]:not (:checked ), [type="checkbox"]:checked {
+	float: left;
+	margin-top: 5px;
 }
 .fa-eye-slash, .fa-eye {
 	position: absolute;
 	right: 10px;
 	top: 10px;
+}
+
+.upload-file-label {
+	margin: 0;
+	
+}
+
+.file-field .btn {
+	line-height: 2.4rem;
+	height: 2.4rem;
 }
 .section .registration-form {
 padding-top: 1rem;
@@ -156,9 +233,8 @@ width: 90%;
 margin: auto;
 /* border: solid 2px #444; */
 }
-p label span {
-font-size: 1rem;
-}
+
+
 </style>
 <script>
 var contextpath = "${context}";
@@ -187,7 +263,7 @@ var contextpath = "${context}";
 	
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
-	<script type="text/javascript" src="${context}/resources/js/country.js?version=<%= (int) (Math.random() * 10) %>"></script>
+	<script type="text/javascript" src="${context}/resources/js/country.js"></script>
 	
 	<!--scrollbar-->
 	<script type="text/javascript"
@@ -833,10 +909,10 @@ var contextpath = "${context}";
 	
 		<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js?version=<%= (int) (Math.random() * 10) %>"></script>
 <script type="text/javascript"
-		src="${context}/resources/project_js/backbutton.js"></script>
+		src="${context}/resources/project_js/backbutton.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 			<script type="text/javascript"
-		src="${context}/resources/project_js/enterKey.js"></script>
+		src="${context}/resources/project_js/enterKey.js?version=<%= (int) (Math.random() * 10) %>"></script>
 		<script type="text/javascript"
 		src="${context}/resources/project_js/ValidationFileOutsidePortal.js?version=<%= (int) (Math.random() * 10) %>"></script>
 		

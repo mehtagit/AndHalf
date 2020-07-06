@@ -715,6 +715,8 @@ var featureId = 6;
 				var grievancetxnId=$('#transactionID').val();
 				//var grievanceId=$('#grievanceID').val();
 				var grievanceStatus=$('#recentStatus').val();
+				var filterUserName = $('#userName').val();
+				var FilterUserType = $('#userType').val()=='-1' || $('#userType').val()==undefined ? null : $("#userType option:selected").text();
 				
 				var grievanceId = (txnIdValue == 'null' && transactionIDValue == undefined) ? $('#grievanceID').val() : transactionIDValue;
 				
@@ -734,7 +736,7 @@ var featureId = 6;
 				var info = table.page.info(); 
 				var pageNo=info.page;
 				var pageSize =info.length;
-				window.location.href="./exportGrievance?grievanceStartDate="+grievanceStartDate+"&grievanceEndDate="+grievanceEndDate+"&grievancetxnId="+grievancetxnId+"&grievanceId="+grievanceId+"&grievanceStatus="+grievanceStatus+"&source="+source__val+"&pageSize="+pageSize+"&pageNo="+pageNo;
+				window.location.href="./exportGrievance?grievanceStartDate="+grievanceStartDate+"&grievanceEndDate="+grievanceEndDate+"&grievancetxnId="+grievancetxnId+"&grievanceId="+grievanceId+"&grievanceStatus="+grievanceStatus+"&source="+source__val+"&pageSize="+pageSize+"&pageNo="+pageNo+"&userId="+window.userId+"&filterUserName="+filterUserName+"&FilterUserType="+FilterUserType;
 			}
 
 			//************************************************ category dropdown function ******************************************************************

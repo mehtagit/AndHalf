@@ -843,9 +843,9 @@ onclick="_Services._selectstartDate()"></i></span>
 		src="${context}/resources/i18n_library/min.js"></script>
 
 	<script type="text/javascript"
-		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.js"></script>
 	<script type="text/javascript"
-		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
 
 
 
@@ -862,7 +862,7 @@ onclick="_Services._selectstartDate()"></i></span>
 		src="${context}/resources/project_js/_dateFunction.js?version=<%= (int) (Math.random() * 10) %>"
 		async></script>
 	<script type="text/javascript"
-		src="${context}/resources/project_js/profileInfoTab.js?version=<%= (int) (Math.random() * 10) %>"
+		src=""
 		async></script>
 
 	<script>

@@ -432,9 +432,17 @@ div#error_Modal {
 			</h6>
 
 			<div class="input-field col s12 center">
-				<a href="${context}/logout" class="btn modal-close"> <spring:message
-						code="modal.ok" />
-				</a>
+			
+				<form action="./logout" method="post">
+						<input type="hidden" name="${_csrf.parameterName}"
+							value="${_csrf.token}" />
+
+						<button type="submit" class="btn">
+							<spring:message code="modal.ok" />
+						</button>
+				
+					</form>
+				
 			</div>
 		</div>
 	</div>
@@ -813,7 +821,7 @@ data-dismiss="modal">&times;</button> -->
 		src="${context}/resources/ajax/Profile.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 	<script type="text/javascript"
-		src="${context}/resources/project_js/profileInfoTab.js?version=<%= (int) (Math.random() * 10) %>"
+		src=""
 		async></script>
 
 	<script type="text/javascript">

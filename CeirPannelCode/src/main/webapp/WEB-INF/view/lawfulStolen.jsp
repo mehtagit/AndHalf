@@ -1409,9 +1409,9 @@ select {
 
 
 	<script type="text/javascript"
-		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.js"></script>
 	<script type="text/javascript"
-		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
 
 
 	
@@ -1428,7 +1428,7 @@ select {
 		src="${context}/resources/project_js/validationMsg.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 	<script type="text/javascript"
-		src="${context}/resources/project_js/profileInfoTab.js?version=<%= (int) (Math.random() * 10) %>" async></script>
+		src="" async></script>
 		
 		<script type="text/javascript" src="${context}/resources/js/intlTelInput.js?version=<%= (int) (Math.random() * 10) %>"></script>
 		<script type="text/javascript" src="${context}/resources/js/utils.js?version=<%= (int) (Math.random() * 10) %>"></script>
