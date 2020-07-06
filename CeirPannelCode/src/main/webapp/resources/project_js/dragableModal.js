@@ -2,4 +2,4 @@ $("#goToHome,#viewAuditModel,#viewPolicyConfigModel,#editPolicyConfigModel,#conf
 		.draggable({
 			/*,.modal-content*/
 			handle : ".modal-header"
-		});
+		});[]

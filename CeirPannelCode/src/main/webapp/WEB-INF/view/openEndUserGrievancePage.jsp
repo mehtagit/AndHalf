@@ -24,7 +24,7 @@
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
 <!-- Security Tags -->
     <title>CEIR | Importer Portal</title>
-	
+
     <link href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.min.css" type="text/css" rel="stylesheet"
         media="screen,projection">
 <jsp:include page="/WEB-INF/view/endUserHeader.jsp" ></jsp:include>
@@ -614,8 +614,9 @@ style="font-size: 20px;">+</span> <spring:message code="input.addmorefile" /></b
     <script type="text/javascript"
 		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 	
-	 <script type="text/javascript"
+	<script type="text/javascript"
 		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
+    
    <!--plugins.js - Some Specific JS codes for Plugin Settings-->
     <script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
    
@@ -662,11 +663,11 @@ var path="${context}";
 		src="${context}/resources/project_js/endUserGrievance.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	
 		<script type="text/javascript"
-		src="${context}/resources/project_js/profileInfoTab.js?version=<%= (int) (Math.random() * 10) %>" async></script>
+		src="" async></script>
 	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js?version=<%= (int) (Math.random() * 10) %>"></script>
-	<script type="text/javascript"
+<script type="text/javascript"
 		src="${context}/resources/project_js/ValidationFileOutsidePortal.js?version=<%= (int) (Math.random() * 10) %>"></script>
-   
+    
 
   <script type="text/javascript">
 /*   $('div#initialloader').delay(300).fadeOut('slow'); */

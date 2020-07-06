@@ -300,13 +300,15 @@ input#quantity {
 												<label for="deviceQuantity" class="center-align" style="margin-top: 5px;"><spring:message code="input.deviceQty" /> <span class="star">*</span></label>
 										</div>
 										
-										
-									<div class="input-field col s12 m6">
-										<input type="text" name="totalPrice" id="totalPrice" pattern="[0-9]{0,7}"
-												maxlength="7" oninput="InvalidMsg(this,'input','<spring:message code="validation.7character" />');"
-												 oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7character" />');"> 
+									
+										<div class="input-field col s12 m6">
+										<input type="text" name="totalPrice" id="totalPrice" pattern="[0-9]{0,12}"
+												maxlength="12" oninput="InvalidMsg(this,'input','<spring:message code="validation.12Char" />');"
+												 oninvalid="InvalidMsg(this,'input','<spring:message code="validation.12Char" />');"> 
 												 <label for="totalPrice" class="center-align"><spring:message code="input.totalprice" /></label>
 										</div>
+										
+										
 										
 										<div class="col s12 m6" id="currencyDiv" style="display: none;" >
 											<label for="currency"><spring:message code="input.currency" /> <span class="star">*</span></label>
@@ -459,7 +461,7 @@ input#quantity {
 		<script type="text/javascript"
 		src="${context}/resources/project_js/globalVariables.js?version=<%= (int) (Math.random() * 10) %>"></script>
 					<script type="text/javascript"
-		src="${context}/resources/project_js/profileInfoTab.js?version=<%= (int) (Math.random() * 10) %>" async></script>
+		src="" async></script>
 </body>
 </html>
 

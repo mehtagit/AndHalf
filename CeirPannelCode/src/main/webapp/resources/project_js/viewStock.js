@@ -351,9 +351,8 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 /*	var sourceParam=$("body").attr("data-Source");*/
 	var sourceType =localStorage.getItem("sourceType");
 	var currentRoleType = $("body").attr("data-selected-roleType"); 
+	//alert("sourceType<><><><>"+sourceType);
 	var userRole = $("body").attr("data-roleType");
-	
-	console.log("currentRoleType >>>>>>>>>"+currentRoleType+"   data-roleType >>>>>>>>>"+$("body").attr("data-roleType"));  
 	
 	function filter(lang,sourceParam){
 		var filterSource= $("body").attr("data-filterSource");
@@ -378,7 +377,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 
 		}
 	//console.log("sourceParam= "+sourceParam);
-		if((userRole=="Importer" || userRole=="Retailer" || userRole=="Distributor" || userRole=="Manufacturer") && sourceType !="viaStock" ){
+	if((userRole=="Importer" || userRole=="Retailer" || userRole=="Distributor" || userRole=="Manufacturer") && sourceType !="viaStock" ){
 		Datatable('headers?lang='+lang+'&type=stockHeaders','stockData?source='+sourceParam);
 		}else if(userRole=="Custom" && sourceType !="viaStock"){
 		Datatable('./headers?lang='+lang+'&type=customStockHeaders','stockData?source='+sourceParam)
@@ -925,7 +924,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 	});
 
 	
-	function historyRecord(txnID){
+function historyRecord(txnID){
 			////console.log("txn id=="+txnID)
 			$("#tableOnModal").openModal({dismissible:false});
 			 var filter =[];
@@ -965,7 +964,6 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 			 "txnId":txnID
 			 }
 			 }
-			 
 			
 			formData.append("filter",JSON.stringify(filterRequest));	
 			if(lang=='km'){
