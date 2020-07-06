@@ -426,14 +426,16 @@
 		var userRoleTypeId =  $("#role").val();
 		var status =  $('#recentStatus').val();
 		var featureId = 8;
-		
+		var usertypeId= parseInt($("body").attr("data-usertypeid"));
 		var table = $('#registrationLibraryTable').DataTable();
 		var info = table.page.info(); 
 		var pageNo=info.page;
 		var pageSize =info.length;
 		//console.log("--------"+pageSize+"---------"+pageNo);
 		//console.log("RegistrationStartDate  ="+startdate+"  RegistrationEndDate=="+endDate+"  asType="+asType+" userRoleTypeId ="+userRoleTypeId+"status  "+status+" featureId---->" +featureId)
-		window.location.href="./exportAdminRegistration?RegistrationStartDate="+startdate+"&RegistrationEndDate="+endDate+"&asType="+asType+"&userRoleTypeId="+userRoleTypeId+"&featureId="+featureId+"&status="+status+"&pageSize="+pageSize+"&pageNo="+pageNo;
+		
+	
+		window.location.href="./exportAdminRegistration?RegistrationStartDate="+startdate+"&RegistrationEndDate="+endDate+"&asType="+asType+"&userRoleTypeId="+userRoleTypeId+"&featureId="+featureId+"&status="+status+"&pageSize="+pageSize+"&pageNo="+pageNo+"&userTypeId="+usertypeId+"";
 	}
 
 
