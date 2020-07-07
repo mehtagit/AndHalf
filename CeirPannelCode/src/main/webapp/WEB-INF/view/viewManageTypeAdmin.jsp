@@ -392,7 +392,7 @@ position: fixed;
 									</select>
 								</div>
 
-								<div class="file-field col s12 m6">
+								<div class="file-field col s12 m6" id="removestar">
 									<h6 id="supportingdocumentFile" class="file-upload-heading">
 										<spring:message code="input.supportingdocument" />
 									</h6>

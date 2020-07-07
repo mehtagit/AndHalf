@@ -550,10 +550,10 @@ function setUploadedFiles(data) {
 	for (var i = 0; i < importerViewResponse.length; i++) {
 		for (var j = 0; j < importerViewResponse[i]["attachedFiles"].length; j++) {
 
-			alert("Document Type----->"
+		/*	alert("Document Type----->"
 					+ importerViewResponse[i].attachedFiles[j].docType.length
 					+ " File Name--->"
-					+ importerViewResponse[i].attachedFiles[j].fileName.length)
+					+ importerViewResponse[i].attachedFiles[j].fileName.length)*/
 			if ((importerViewResponse[i].attachedFiles[j].docType.length == 2)
 					|| (importerViewResponse[i].attachedFiles[j].fileName.length == 2)) {
 				var placeholderValue = $.i18n('selectFilePlaceHolder');
@@ -579,7 +579,7 @@ function setUploadedFiles(data) {
 											+ id
 											+ '" type="file"  name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" placeholder="'
 											+ placeholderValue
-											+ '" type="text"></div></div>  <div style="cursor:pointer;background-color:red;margin-right: 1.7%;" class="remove_field btn right btn-info">-</div></div></div>');
+											+ '" type="text"></div></div>  <div style="cursor:pointer;background-color:red;margin-right: 1.7%;" onclick="remove_field('+id+')" class="remove_field btn right btn-info">-</div></div></div>');
 				}
 			} else {
 
@@ -619,8 +619,8 @@ function updateImporterTypeDevice() {
 	var docTypeTag = '';
 	var documentFileNameArray = [];
 
-	$('.fileDiv').each(
-			function() {
+	for (var k=1; k<id; k++){
+		if($('#docTypetag'+fieldId).val() != undefined && $('#docTypetag'+fieldId).val() != false ){
 				var x = {
 					"docType" : $('#docTypetag' + fieldId).val(),
 					"fileName" : $('#docTypeFile' + fieldId).val().replace(
@@ -649,9 +649,10 @@ function updateImporterTypeDevice() {
 				documentFileNameArray.push(docTypeTag);
 
 				fileInfo.push(x);
+		}
 				fieldId++;
 				i++;
-			});
+	};
 
 	if (filesameStatus == true) {
 
@@ -819,7 +820,7 @@ $(".add_field_button")
 												+ id
 												+ '" type="file"  name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" placeholder="'
 												+ placeholderValue
-												+ '" type="text"></div></div>  <div style="cursor:pointer;background-color:red;margin-right: 1.7%;" class="remove_field btn right btn-info">-</div></div></div>');
+												+ '" type="text"></div></div>  <div style="cursor:pointer;background-color:red;margin-right: 1.7%;" onclick="remove_field('+id+')" class="remove_field btn right btn-info">-</div></div></div>');
 					}
 					$.getJSON('./getSourceTypeDropdown/DOC_TYPE/21', function(
 							data) {
@@ -841,17 +842,23 @@ $(".add_field_button")
 
 				});
 
-$(wrapper).on("click", ".remove_field", function(e) { // user click on remove
+/*$(wrapper).on("click", ".remove_field", function(e) { // user click on remove
 														// text
 	e.preventDefault();
 	var Iid = id - 1;
-	/* alert("@@@"+Iid) */
+	 alert("@@@"+Iid) 
 	$('#filediv' + Iid).remove();
 	$(this).parent('div').remove();
 	x--;
 	id--;
 
-})
+})*/
+
+function remove_field(fieldId ){
+	$('#filediv' + fieldId).remove();
+	$(this).parent('div').remove();
+	x--;
+}
 
 function openApproveTACPopUp(txnId, manufacturerName) {
 	manufacturerName = manufacturerName.replace("+20", " ");
@@ -1050,10 +1057,24 @@ function clearFileName() {
 function enableAddMore() {
 	$(".add_field_button").attr("disabled", false);
 }
-function enableSelectFile() {
+/*function enableSelectFile() {
 	$("#docTypeFile1").attr("disabled", false);
 	$("#docTypeFile1").attr("required", true);
 	$("#supportingdocumentFile").append('<span class="star">*</span>');
+}*/
+
+function enableSelectFile(){
+	if($('#docTypetag1').val() != ''){
+		$("#docTypeFile1").attr("disabled", false);
+		$("#docTypeFile1").attr("required", true);
+		$("#removestar").find(".star").remove();
+		$("#supportingdocumentFile").append('<span class="star">*</span>');
+	}else{
+		$("#docTypeFile1").attr("required", false);
+		$('#filetextField').val('');
+		$("#removestar").find(".star").remove();
+	}
+	
 }
 
 $("input[type=file]").keypress(function(ev) {
