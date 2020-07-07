@@ -232,7 +232,7 @@ var contextpath = "${context}";
                                         </div>
                                        
                                        
-                                        <div class="input-field col s12 m6">
+                                        <div class="input-field col s12 m12">
                                             <textarea id="endUserRemark" 
 										  oninput="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
@@ -286,7 +286,7 @@ var contextpath = "${context}";
 									</div>	
 
                                       <div class="col s12 m6 right">
-                                            <button class="btn right endUser_add_field_button" disabled="disabled"><span
+                                            <button class="btn right endUser_add_field_button"><span
                                                     style="font-size: 20px;">+</span><spring:message code="input.addmorefile" /></button>
                                         </div>
                                          <p><spring:message code="input.requiredfields" /> <span class="star">*</span></p>
@@ -527,7 +527,7 @@ style="font-size: 20px;">+</span> <spring:message code="input.addmorefile" /></b
                             <input type="checkbox" id="closeTicketCheck" />
                         </label>
                     </p>
-                    <button class="right btn" type="submit"><spring:message code="input.reply" /></button>
+                    <button class="right btn" type="submit" id="grievanceReplyButton"><spring:message code="input.reply" /></button>
                 </div>
             </div>
             </form>

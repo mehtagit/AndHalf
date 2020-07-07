@@ -35,7 +35,7 @@ public class LoginController {
 
 	@RequestMapping(value = "/login",method = {RequestMethod.GET,RequestMethod.POST})
 	public ModelAndView login(HttpSession session){
-			return loginService.loginPage();	
+			return loginService.loginPage(session);	
 	} 
 	
 	@ResponseBody
