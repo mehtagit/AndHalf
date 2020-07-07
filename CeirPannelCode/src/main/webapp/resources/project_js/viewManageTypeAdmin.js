@@ -333,6 +333,7 @@ if (userType == "CEIRAdmin") {
 // **********************************************************Export Excel
 // file************************************************************************
 function exportTacData() {
+	
 	var txn = (txnIdValue == 'null' && transactionIDValue == undefined) ? $('#transactionID').val() : transactionIDValue;
 	
 	var tacStartDate = $('#startDate').val();
@@ -341,7 +342,7 @@ function exportTacData() {
 	var tacNumber = $('#tac').val();
 	var txnId = txn;
 	var featureId = 21;
-	var userType = userType;
+	var userType = $("body").attr("data-roleType");
 	var userTypeId = parseInt($("body").attr("data-userTypeID"));
 	var userId = parseInt($("body").attr("data-userID"));
 
@@ -369,11 +370,11 @@ function exportTacData() {
 	// tacStartDate=="+tacStartDate+" tacEndDate=="+tacEndDate+"
 	// tacStatus=="+tacStatus+" txnId=="+txnId+" userId=="+userId+"
 	// pageSize=="+pageSize+" pageNo=="+pageNo);
-
+	
 	window.location.href = "./exportTac?tacNumber=" + tacNumber
 			+ "&tacStartDate=" + tacStartDate + "&tacEndDate=" + tacEndDate
 			+ "&tacStatus=" + tacStatus + "&txnId=" + txnId + "&featureId="
-			+ featureId + "&userType" + userType + "&userTypeId=" + userTypeId
+			+ featureId + "&userType=" + userType + "&userTypeId=" + userTypeId
 			+ "&userId=" + userId +"&source=" +source__val+ "&pageSize=" + pageSize + "&pageNo="
 			+ pageNo;
 
