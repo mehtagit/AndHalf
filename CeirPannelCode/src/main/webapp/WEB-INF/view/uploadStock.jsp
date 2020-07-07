@@ -1,4 +1,4 @@
-<%@ page import="java.util.Date" %>
+<%@ page import="java.util.Date"%>
 <%
    response.setHeader("Cache-Control", "no-cache");
 	response.setHeader("Cache-Control", "no-store");
@@ -23,7 +23,8 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <!-- Security Tags -->
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 <sec:csrfMetaTags />
 <!-- Security Tags -->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -46,15 +47,16 @@
 <meta content="" name="description" />
 <meta content="" name="author" />
 <!-- Security Tags -->
-<meta name="_csrf" content="${_csrf.token}"/>
+<meta name="_csrf" content="${_csrf.token}" />
 <!-- default header name is X-CSRF-TOKEN -->
-<meta name="_csrf_header" content="${_csrf.headerName}"/>
+<meta name="_csrf_header" content="${_csrf.headerName}" />
 <!-- Security Tags -->
 <script type="text/javascript"
 	src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
 
 <!-- Favicons-->
-<link rel="icon" href="${context}/resources/images/DMC-Logo.png" sizes="32x32">
+<link rel="icon" href="${context}/resources/images/DMC-Logo.png"
+	sizes="32x32">
 <!-- CORE CSS-->
 <link href="${context}/resources/css/materialize.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
@@ -67,8 +69,7 @@
 	type="text/css" rel="stylesheet" media="screen,projection">
 
 <!-- Custome CSS-->
-<link href="" type="text/css"
-	rel="stylesheet" media="screen,projection">
+<link href="" type="text/css" rel="stylesheet" media="screen,projection">
 <link
 	href="${context}/resources/font/font-awesome/css/font-awesome.min.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
@@ -85,8 +86,8 @@
 
 <script src="${context}/resources/custom_js/jquery.blockUI.js"></script>
 
-			<script type="text/javascript"
-		src="${context}/resources/project_js/enterKey.js"></script>
+<script type="text/javascript"
+	src="${context}/resources/project_js/enterKey.js"></script>
 <style>
 #snackbar {
 	visibility: hidden;
@@ -217,7 +218,8 @@ to {
 </head>
 <body data-id="4" data-roleType="${usertype}" data-userID="${userid}"
 	data-userTypeID="${usertypeId}"
-	data-selected-roleType="${selectedUserTypeId}" data-selectedRoleTypeId="${selectedRoleTypeId}">
+	data-selected-roleType="${selectedUserTypeId}"
+	data-selectedRoleTypeId="${selectedRoleTypeId}">
 
 
 	<section id="content">
@@ -274,12 +276,13 @@ to {
 												code="input.quantity" /> <span class="star">*</span></label>
 									</div>
 									<div class="input-field col s12 m6">
-											<input type="text" name="devicequantity" id="devicequantity"
-												pattern="[0-9]{0,7}"
-												
-												maxlength="7"  oninput="InvalidMsg(this,'input','<spring:message code="validation.7character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7character" />');"  required/> <label for="devicequantity"
-												class="center-align"><spring:message code="input.devicequantity" /> <span class="star">*</span></label>
-										</div>
+										<input type="text" name="devicequantity" id="devicequantity"
+											pattern="[0-9]{0,7}" maxlength="7"
+											oninput="InvalidMsg(this,'input','<spring:message code="validation.7character" />');"
+											oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7character" />');"
+											required /> <label for="devicequantity" class="center-align"><spring:message
+												code="input.devicequantity" /> <span class="star">*</span></label>
+									</div>
 									<div class="input-field col s12 m6" id="invoiceNumberDiv"
 										style="display: none">
 										<input type="text" name="invoiceNumber" id="invoiceNumber"
@@ -428,42 +431,44 @@ to {
 		</h6>
 		<div class="modal-content">
 
-				<div class="row">
+			<div class="row">
 
-					<h5 class="center">
-						<label> <input name="group1" type="radio" value="1"
-							onclick="document.getElementById('submitbtn').style.display ='block';" />
-							<span class="checkboxFont"> <spring:message
-									code="AssigneeName" /></span></label> <label> <input name="group1"
-							type="radio" value="2"
-							onclick="document.getElementById('submitbtn').style.display ='block';" />
-							<span class="checkboxFont"> <spring:message
-									code="AssigneContactNumber" /></span>
-						</label> <label> <input name="group1" type="radio" value="3"
-							onclick="document.getElementById('submitbtn').style.display ='block';    " />
-							<span class="checkboxFont"><spring:message
-									code="AssigneEmailID" /> </span>
-						</label>
-					</h5>
+				<h5 class="center">
+					<label> <input name="group1" type="radio" value="1"
+						onclick="document.getElementById('submitbtn').style.display ='block';" />
+						<span class="checkboxFont"> <spring:message
+								code="AssigneeName" /></span></label> <label> <input name="group1"
+						type="radio" value="2"
+						onclick="document.getElementById('submitbtn').style.display ='block';" />
+						<span class="checkboxFont"> <spring:message
+								code="AssigneContactNumber" /></span>
+					</label> <label> <input name="group1" type="radio" value="3"
+						onclick="document.getElementById('submitbtn').style.display ='block';    " />
+						<span class="checkboxFont"><spring:message
+								code="AssigneEmailID" /> </span>
+					</label>
+				</h5>
 
+			</div>
+
+			<div class="row" id="submitbtn" style="display: none;">
+				<div class="input-field col s12 m2">
+					<label for="Search" class="center-align ml-10"> <spring:message
+							code="searchField" /></label>
 				</div>
-
-				<div class="row" id="submitbtn" style="display: none;">
-					<div class="input-field col s12 m2">
-						<label for="Search" class="center-align ml-10"> <spring:message
-								code="searchField" /></label>
-					</div>
-					<div class="input-field col s12 m5">
-						<input type="text" id="assigneDetails" name="assigneDetails"
-							placeholder="<spring:message code="AssigneSearch" />" />
-					</div>
-					<div class="input-field col s12 m2">
-						<button type="button" onclick="viewAssigneeHistory()" id="viewAssigneeHistoryBtn" class="btn"><spring:message
-								code="button.submit" /></button>
-					</div>
+				<div class="input-field col s12 m5">
+					<input type="text" id="assigneDetails" name="assigneDetails"
+						placeholder="<spring:message code="AssigneSearch" />" />
 				</div>
-		
-			
+				<div class="input-field col s12 m2">
+					<button type="button" onclick="viewAssigneeHistory()"
+						id="viewAssigneeHistoryBtn" class="btn">
+						<spring:message code="button.submit" />
+					</button>
+				</div>
+			</div>
+
+
 			<div class="row" id="assigneDetailsDiv" style="display: none">
 				<table class="responsive-table striped display"
 					id="assignee-data-table" cellspacing="0">
@@ -483,16 +488,16 @@ to {
 
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
-	
+
 
 	<!--plugins.js - Some Specific JS codes for Plugin Settings-->
 	<script src="${context}/resources/custom_js/bootstrap.min.js"></script>
-	
+
 
 	<!--custom-script.js - Add your own theme custom JS-->
 	<script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
 
-	
+
 	<!--scrollbar-->
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
@@ -501,8 +506,8 @@ to {
 	<script type="text/javascript"
 		src="${context}/resources/js/countries.js"></script>
 
-	
-		<!-- i18n library -->
+
+	<!-- i18n library -->
 	<script type="text/javascript"
 		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
 	<script type="text/javascript"
@@ -533,8 +538,7 @@ to {
 	<script type="text/javascript"
 		src="${context}/resources/i18n_library/min.js"></script>
 
-	<script type="text/javascript"
-		src="" async></script>
+	<script type="text/javascript" src="" async></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/validationMsg.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
