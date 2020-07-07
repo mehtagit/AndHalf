@@ -4,7 +4,7 @@
 	response.setHeader("Cache-Control", "no-store");
 	response.setDateHeader("Expires", 0);
 	response.setHeader("Pragma", "no-cache");
-	
+	 
     /*   //200 secs
 	 session.setAttribute("usertype", null);  */
 /* 	 session.setMaxInactiveInterval(10); */
@@ -329,6 +329,13 @@ class="btn"
 		src="" async></script>
 		<script type="text/javascript">
 window.parent.$('#langlist').on('change', function() {
+	
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+	}); 
 	var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 	window.location.assign("./openGrievanceForm?reqType=formPage&lang="+lang);
 }); 
@@ -338,7 +345,7 @@ $.i18n().load( {
 	'en': './resources/i18n/en.json',
 	'km': './resources/i18n/km.json'
 } ).done( function() { 
-	//console.log("done")
+	console.log("done")
 	});
 
 
@@ -352,14 +359,16 @@ $.i18n().load( {
 				
 				if($("body").attr("data-roleType")=="Customer Care"){
 					raisedBy = "Customer Care"; 
-				    name = sessionStorage.getItem("primaryRole");
-				    userId = sessionStorage.getItem("userId");
+				    //name = sessionStorage.getItem("primaryRole");
+				    //userId = sessionStorage.getItem("userId");
+				    name = $("body").attr("data-roleType");
+				    userId = $("body").attr("data-userID");
 				}else{
 					raisedBy = "Self";
 					name = $("body").attr("data-roleType");
 				 	userId = $("body").attr("data-userID");
 				}  
-				//console.log("raisedBy=="+raisedBy + " name=="+ name+ " userId==="+ userId)
+				console.log("raisedBy=="+raisedBy + " name=="+ name+ " userId==="+ userId)
 				
 				var category = $('#category').val();
 				var txnId = $('#TransactionId').val();
@@ -509,7 +518,7 @@ $('div#initialloader').delay(300).fadeOut('slow');
 	
 					},
 					error : function(jqXHR, textStatus, errorThrown) {
-						//console.log("error in ajax")
+						console.log("error in ajax")
 					}
 				});
 				return false;
@@ -530,7 +539,7 @@ $('div#initialloader').delay(300).fadeOut('slow');
 				processData : false,
 				contentType : false,
 				success : function(data, textStatus, jqXHR) {
-					//console.log(data);
+					console.log(data);
 
 					//$('#category').empty();
 					//$('#category').append('<option value="">'+$.i18n('selectCategory')+' *</option>');
@@ -546,7 +555,7 @@ $('div#initialloader').delay(300).fadeOut('slow');
 
 				},
 				error : function(jqXHR, textStatus, errorThrown) {
-					//console.log("error in ajax")
+					console.log("error in ajax")
 				}
 			});
 			/* $.getJSON('./getDropdownList/DOC_TYPE', function(data) {
@@ -561,7 +570,7 @@ $('div#initialloader').delay(300).fadeOut('slow');
 			 */
 
 			function cleanReplyPopUp() {
-				//console.log("reset form function");
+				console.log("reset form function");
 				$('#replymessageForm').trigger("reset");
 			}
 
@@ -575,7 +584,7 @@ $('div#initialloader').delay(300).fadeOut('slow');
 	});
 			
 			$.getJSON('./addMoreFile/grievance_supporting_doc_count', function(data) {
-				//console.log(data);
+				console.log(data);
 
 				localStorage.setItem("maxCount", data.value);
 
@@ -584,7 +593,7 @@ $('div#initialloader').delay(300).fadeOut('slow');
 			//var max_fields = 2; //maximum input boxes allowed
 			var max_fields = localStorage.getItem("maxCount");
 			if (max_fields==0){
-				 //console.log("1111");
+				 console.log("1111");
 				 $(".add_field_button").prop('disabled', true);
 			 }
 			var wrapper = $(".mainDiv"); //Fields wrapper
@@ -672,7 +681,7 @@ $('div#initialloader').delay(300).fadeOut('slow');
 											success : function(data,
 													textStatus, jqXHR) {
 
-												//console.log(data);
+												console.log(data);
 
 												for (i = 0; i < data.length; i++) {
 													var optionId = id - 1;
@@ -698,7 +707,7 @@ $('div#initialloader').delay(300).fadeOut('slow');
 											},
 											error : function(jqXHR, textStatus,
 													errorThrown) {
-												//console.log("error in ajax")
+												console.log("error in ajax")
 											}
 										});
 
@@ -771,7 +780,7 @@ $('div#initialloader').delay(300).fadeOut('slow');
 
 							},
 							error : function(jqXHR, textStatus, errorThrown) {
-								//console.log("error in ajax")
+								console.log("error in ajax")
 							}
 						});
 

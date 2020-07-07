@@ -1,3 +1,9 @@
+	var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+			headers:
+			{ 'X-CSRF-TOKEN': token }
+		});
 $.getJSON('./Rule/DistinctName', function(data) {
 	for (i = 0; i < data.length; i++) {
 		$('<option>').val(data[i]).text(data[i]).appendTo('#Feature,#editFeature');
@@ -53,6 +59,12 @@ function save(){
 			"userName":$("body").attr("data-username"),
 			"roleType":$("body").attr("data-roleType")
 	}
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 
 		url : "./save",

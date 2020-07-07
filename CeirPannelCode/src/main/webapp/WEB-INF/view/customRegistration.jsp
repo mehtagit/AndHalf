@@ -270,7 +270,7 @@ var contextpath = "${context}";
 		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 	<!--custom-script.js - Add your own theme custom JS-->
 	<script type="text/javascript"
-		src="${context}/resources/js/custom-script.js"></script>
+		src=""></script>
 
 	<!-- //////////////////////////////////////////////////////////////////////////// -->
     <%String name=request.getParameter("type");

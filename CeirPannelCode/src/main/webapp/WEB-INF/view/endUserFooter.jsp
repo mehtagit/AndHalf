@@ -52,7 +52,7 @@
 <script src="${context}/resources/custom_js/jquery.blockUI.js"></script>
 
 <!------------------------------------------- Dragable Model---------------------------------->
-<script src="${context}/resources/custom_js/1.12.1_jquery-ui.js"></script>
+
 <script
 	src="${context}/resources/custom_js/1.12.1_jquery-ui.min.js"></script>
 	

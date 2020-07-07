@@ -458,7 +458,7 @@ i.fa.fa-times-circle-o.red-text {
 	<script type="text/javascript"
 		src="${context}/resources/project_js/ValidationFileOutsidePortal.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript"
-		src="${context}/resources/js/custom-script.js"></script>
+		src=""></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/checkDevice.js?version=<%= (int) (Math.random() * 10) %>"></script>
 

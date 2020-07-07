@@ -108,13 +108,20 @@ public class AdminRegistrationRequest {
 			@RequestParam(name="usertypeId", required = false) Integer usertypeId, 
 			@RequestParam(name="userTypeId") Integer userTypeId, 
 			@RequestParam(name="status",required = false) Integer status,
+			
+			@RequestParam(name="email",required = false) String email,
+			@RequestParam(name="phoneNo",required = false) String phoneNo,
+			@RequestParam(name="username",required = false) String username,
+			
+			@RequestParam(name="source",defaultValue = "menu",required = false) String source,
+			
 			@RequestParam(name="pageSize") Integer pageSize,
 			@RequestParam(name="pageNo") Integer pageNo,
 			HttpServletRequest request,
 			HttpSession session)
 	{
 				
-		log.info("usertypeId::::"+usertypeId+"-----userTypeId:"+userTypeId);
+		log.info("usertypeId::::"+usertypeId+"-----userTypeId:"+userTypeId+"email-->"+email+" phoneNo--->"+phoneNo+"username-->" +username+" source-->" +source);
 		
 		log.info("RegistrationStartDate=="+RegistrationStartDate+ " RegistrationEndDate ="+RegistrationEndDate+" asType="+asType+"userRoleTypeId="+userRoleTypeId);
 		int userId= (int) session.getAttribute("userid");
@@ -132,8 +139,11 @@ public class AdminRegistrationRequest {
 		filterRequest.setFeatureId(featureId);
 		filterRequest.setUsertypeId(userTypeId);
 		filterRequest.setUserTypeId(userTypeId);
+		filterRequest.setEmail(email);
+		filterRequest.setPhoneNo(phoneNo);
+		filterRequest.setUsername(username);
 		log.info(" request passed to the exportTo Excel Api =="+filterRequest+" *********** pageSize"+pageSize+"  pageNo  "+pageNo);
-		Object response = userProfileFeignImpl.registrationRequest(filterRequest, pageNo, pageSize,file,"filter");
+		Object response = userProfileFeignImpl.registrationRequest(filterRequest, pageNo, pageSize,file,source);
 		Gson gson= new Gson(); 
 		String apiResponse = gson.toJson(response);
 		fileExportResponse = gson.fromJson(apiResponse, FileExportResponse.class);
