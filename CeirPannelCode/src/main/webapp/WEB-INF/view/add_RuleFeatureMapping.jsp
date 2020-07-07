@@ -63,7 +63,7 @@
 	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.min.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
 <link
-	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.css"
+	href=""
 	type="text/css" rel="stylesheet" media="screen,projection">
 <!-- Custome CSS-->
 <link href="" type="text/css"

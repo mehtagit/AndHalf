@@ -65,8 +65,9 @@
 	href="${context}/resources/font/font-awesome/css/font-awesome.min.css">
 
 <!-- CORE CSS-->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-<link href="${context}/resources/css/style.css" type="text/css"
+    <link rel="stylesheet"
+	href="${context}/resources/custom_js/materialize.min.css">
+	<link href="${context}/resources/css/style.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
 <!-- Custome CSS-->
 <link href="" type="text/css"
@@ -213,7 +214,7 @@ var contextpath = "${context}";
 
 	
 	<script type="text/javascript"
-		src="${context}/resources/js/custom-script.js"></script>
+		src=""></script>
 
 	<!-- //////////////////////////////////////////////////////////////////////////// -->
     <%//String name=request.getParameter("type");
@@ -902,15 +903,11 @@ var contextpath = "${context}";
 	
 		<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js?version=<%= (int) (Math.random() * 10) %>"></script>
 <script type="text/javascript"
-		src="${context}/resources/project_js/backbutton.js"></script>
-	<script type="text/javascript"
-		src="${context}/resources/project_js/dragableModal.js"></script>	
+		src="${context}/resources/project_js/backbutton.js"></script>	
 			<script type="text/javascript"
 		src="${context}/resources/project_js/enterKey.js"></script>
 	 	<script type="text/javascript"
 		src="${context}/resources/project_js/validationMsg.js?version=<%= (int) (Math.random() * 10) %>"></script>
-					    <script type="text/javascript"
-		src="${context}/resources/project_js/messageWindow.js?version=<%= (int) (Math.random() * 10) %>"></script>  
 <script> 
     var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 	window.parent.$('#langlist').on('change', function() {
@@ -927,12 +924,7 @@ var contextpath = "${context}";
        editOtherProfile();
    	
       
-   $('.modal').modal();
-            /* $('.dropdown-trigger').dropdown();
-            $('select').formSelect(); */
-        }); 
-       
-      
+        });
        	
     </script>
 

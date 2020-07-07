@@ -272,7 +272,7 @@ var contextpath = "${context}";
 	<script type="text/javascript"
 		src="${context}/resources/ajax/Password.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript"
-		src="${context}/resources/js/custom-script.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="?version=<%= (int) (Math.random() * 10) %>"></script>
 
 	<!-- //////////////////////////////////////////////////////////////////////////// -->
 

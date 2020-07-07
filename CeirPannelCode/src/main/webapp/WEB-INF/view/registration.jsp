@@ -258,8 +258,11 @@ String usertypeId="${usertypeId}";
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
 	
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+	<!-- <script
+		src="${context}/resources/custom_js/materialize.min.js"></script>
+	 -->
+	 <script
+		src="${context}/resources/custom_js/materialize.min.js"></script>
 	
 		<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>

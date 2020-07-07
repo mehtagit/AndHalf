@@ -1409,7 +1409,7 @@ select {
 
 
 	<script type="text/javascript"
-		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.js"></script>
+		src=""></script>
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
 
@@ -1501,10 +1501,10 @@ select {
 			//$('#FilefieldId').val(id);
 			//alert(uploadedFileName+"----------"+ext+"----"+fileSize)
 			var fileExtension =ext.toLowerCase();
-			//console.log("file type: "+fileExtension);
+			console.log("file type: "+fileExtension);
 			var extArray = ["png", "jpg","jpeg","gif","bmp","gif"];
 			var isInArray =extArray.includes(fileExtension);
-			//console.log("isInArray: "+isInArray)
+			console.log("isInArray: "+isInArray)
 			if (uploadedFileName.length > 30) {
 				$('#fileFormateModal').openModal();
 				$('#fileErrormessage').text('');
