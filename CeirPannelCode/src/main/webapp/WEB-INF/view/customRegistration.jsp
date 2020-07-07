@@ -333,7 +333,7 @@ var contextpath = "${context}";
 							</div>
                                 <%if(usertypeId==12){%>
 								<div class="input-field col s12 m6 l6" id="companyNames" style="margin-top: 22px;">
-									<input type="text" name="companyName" id="companyName" pattern="[A-Za-z\s]+{10,50}" maxlength="50"
+									<input type="text" name="companyName" id="companyName" pattern="[A-Za-z\s]{10,50}" maxlength="50"
 									oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" required="required"
 									/>
 									<label for="companyName"><spring:message code="registration.companyName" /> <span class="star">*</span></label>
@@ -348,7 +348,7 @@ var contextpath = "${context}";
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="street" maxlength="20" id="street" pattern="[A-Za-z0-9._%+-$@,/]+\.+{1,20}"
+									<input type="text" name="street" maxlength="20" id="street" pattern="[A-Za-z0-9._%-+$@,/]{1,20}"
 									oninput="InvalidMsg(this,'input','<spring:message code="validation.address20characters" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address20characters" />');"
 										 required />
 									<label for="street"><spring:message code="input.streetNumber" /> <span class="star">*</span>
