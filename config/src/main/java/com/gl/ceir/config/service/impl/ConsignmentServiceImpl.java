@@ -94,7 +94,7 @@ public class ConsignmentServiceImpl {
 
 	private final String CEIRSYSTEM = "CEIRSYSTEM";
 
-	private ReentrantLock lock = new ReentrantLock();
+	//private ReentrantLock lock = new ReentrantLock();
 
 	// This is set with @postconstruct
 	private String featureName;
@@ -534,7 +534,7 @@ public class ConsignmentServiceImpl {
 
 		String payloadTxnId = consignmentUpdateRequest.getTxnId();
 
-		lock.lock();
+	//	lock.lock();
 		logger.info("lock taken by thread for [Delete] - " + Thread.currentThread().getName());
 		try {
 			ConsignmentMgmt consignmentMgmt = consignmentRepository.getByTxnId(consignmentUpdateRequest.getTxnId());
@@ -653,10 +653,10 @@ public class ConsignmentServiceImpl {
 
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}finally {
-			if(lock.isLocked()) {
-				logger.info("lock released by thread [Delete] - " + Thread.currentThread().getName());
-				lock.unlock();
-			}
+			/*
+			 * if(lock.isLocked()) { logger.info("lock released by thread [Delete] - " +
+			 * Thread.currentThread().getName()); lock.unlock(); }
+			 */
 		}
 	}
 
@@ -719,12 +719,10 @@ public class ConsignmentServiceImpl {
 			alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, consignmentUpdateRequest.getUserId().intValue(), bodyPlaceHolderMap);
 
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
-		}finally {
-			if(lock.isLocked()) {
-				logger.info("lock released by thread : " + Thread.currentThread().getName());
-				lock.unlock();
-			}
-		}
+		} /*
+			 * finally { if(lock.isLocked()) { logger.info("lock released by thread : " +
+			 * Thread.currentThread().getName()); lock.unlock(); } }
+			 */
 	}
 
 	public FileDetails getFilteredConsignmentInFileV2(FilterRequest filterRequest, String source) {
@@ -986,8 +984,10 @@ public class ConsignmentServiceImpl {
 		Map<String, String> placeholderMap = new HashMap<>();
 		Port port = new Port();
 
-		lock.lock();
-		logger.info("lock taken by thread : " + Thread.currentThread().getName());
+		/*
+		 * lock.lock(); logger.info("lock taken by thread : " +
+		 * Thread.currentThread().getName());
+		 */
 		if(action == 0) {
 			// Check if someone else taken the same action on consignment.
 			ConsignmentMgmt consignmentMgmtTemp = consignmentRepository.getByTxnId(consignmentMgmt.getTxnId());
@@ -1166,9 +1166,10 @@ public class ConsignmentServiceImpl {
 		webActionDb.setState(WebActionDbState.INIT.getCode());
 		webActionDb.setTxnId(payloadTxnId);
 
-		lock.lock();
-		logger.info("lock taken by thread : " + Thread.currentThread().getName());
-
+		/*
+		 * lock.lock(); logger.info("lock taken by thread : " +
+		 * Thread.currentThread().getName());
+		 */
 		if(action == 0) {
 			// Check if someone else taken the same action on consignment.
 			ConsignmentMgmt consignmentMgmtTemp = consignmentRepository.getByTxnId(consignmentMgmt.getTxnId());
@@ -1301,9 +1302,10 @@ public class ConsignmentServiceImpl {
 
 		Map<String, String> placeholderMap = new HashMap<>();
 
-		lock.lock();
-		logger.info("lock taken by thread : " + Thread.currentThread().getName());
-
+		/*
+		 * lock.lock(); logger.info("lock taken by thread : " +
+		 * Thread.currentThread().getName());
+		 */
 		// 0 - approve 1-Reject
 		if(action == 0) {
 			// Check if someone else taken the same action on consignment.
@@ -1443,9 +1445,10 @@ public class ConsignmentServiceImpl {
 		GenricResponse_Class response = null;
 		Map<String, String> placeholderMap = new HashMap<>();
 
-		lock.lock();
-		logger.info("lock taken by thread : " + Thread.currentThread().getName());
-
+		/*
+		 * lock.lock(); logger.info("lock taken by thread : " +
+		 * Thread.currentThread().getName());
+		 */
 		if (action == 0) {
 			// Check if someone else taken the same action on consignment.
 			ConsignmentMgmt consignmentMgmtTemp = consignmentRepository.getByTxnId(consignmentMgmt.getTxnId());
