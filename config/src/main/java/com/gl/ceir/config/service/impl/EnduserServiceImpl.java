@@ -9,9 +9,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.locks.ReentrantLock;
 
 import javax.transaction.Transactional;
 
@@ -32,6 +34,7 @@ import com.gl.ceir.config.model.AllRequest;
 import com.gl.ceir.config.model.AuditTrail;
 import com.gl.ceir.config.model.CeirActionRequest;
 import com.gl.ceir.config.model.ConsignmentUpdateRequest;
+import com.gl.ceir.config.model.DashboardUsersFeatureStateMap;
 import com.gl.ceir.config.model.EndUserDB;
 import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.FilterRequest;
@@ -40,7 +43,6 @@ import com.gl.ceir.config.model.RawMail;
 import com.gl.ceir.config.model.RegularizeDeviceDb;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.StateMgmtDb;
-import com.gl.ceir.config.model.SystemConfigListDb;
 import com.gl.ceir.config.model.SystemConfigurationDb;
 import com.gl.ceir.config.model.User;
 import com.gl.ceir.config.model.UserDepartment;
@@ -59,9 +61,9 @@ import com.gl.ceir.config.model.constants.SearchOperation;
 import com.gl.ceir.config.model.constants.SubFeatures;
 import com.gl.ceir.config.model.constants.Tags;
 import com.gl.ceir.config.model.constants.TaxStatus;
-import com.gl.ceir.config.model.file.EndUserFileModel;
 import com.gl.ceir.config.model.file.UpdateVisaFileModel;
 import com.gl.ceir.config.repository.AuditTrailRepository;
+import com.gl.ceir.config.repository.DashboardUsersFeatureStateMapRepository;
 import com.gl.ceir.config.repository.EndUserDbRepository;
 import com.gl.ceir.config.repository.SystemConfigurationDbRepository;
 import com.gl.ceir.config.repository.UpdateVisaRepository;
@@ -71,7 +73,6 @@ import com.gl.ceir.config.specificationsbuilder.GenericSpecificationBuilder;
 import com.gl.ceir.config.specificationsbuilder.SpecificationBuilder;
 import com.gl.ceir.config.transaction.EndUserTransaction;
 import com.gl.ceir.config.util.CommonFunction;
-import com.gl.ceir.config.util.CustomMappingStrategy;
 import com.gl.ceir.config.util.DateUtil;
 import com.gl.ceir.config.util.InterpSetter;
 import com.gl.ceir.config.util.Utility;
@@ -84,6 +85,8 @@ import com.opencsv.bean.StatefulBeanToCsvBuilder;
 public class EnduserServiceImpl {
 
 	private static final Logger logger = LogManager.getLogger(EnduserServiceImpl.class);
+	
+	private ReentrantLock lock = new ReentrantLock();
 
 	@Autowired
 	EndUserDbRepository endUserDbRepository;
@@ -139,6 +142,12 @@ public class EnduserServiceImpl {
 	@Autowired
 	Utility utility;
 
+	@Autowired
+	RegularizedDeviceServiceImpl regularizeDevice;
+
+	@Autowired
+	DashboardUsersFeatureStateMapRepository dashboardUsersFeatureStateMapRepository; 
+
 
 	public GenricResponse endUserByNid(AllRequest data) {
 		try {
@@ -149,7 +158,7 @@ public class EnduserServiceImpl {
 				username=data.getUsername();
 				userId=data.getUserId();
 			}
-			auditTrailRepository.save(new AuditTrail(userId, username, 17L,
+			auditTrailRepository.save(new AuditTrail(userId, username, data.getUserTypeId(),
 					data.getUserType(), 12,Features.REGISTER_DEVICE, SubFeatures.Search_NID, "", data.getNid(),data.getUserType()));
 			logger.info("AUDIT : Saved request in audit.");
 
@@ -187,7 +196,7 @@ public class EnduserServiceImpl {
 				userId=endUserDB.getAuditParameters().getUserId();
 				endUserDB.setCreatorUserId(endUserDB.getAuditParameters().getUserId());
 			}
-			auditTrailRepository.save(new AuditTrail(userId, username, 17L,
+			auditTrailRepository.save(new AuditTrail(userId, username, endUserDB.getAuditParameters().getUserTypeId(),
 					endUserDB.getAuditParameters().getUserType(), 12,Features.REGISTER_DEVICE, SubFeatures.REGISTER, "", endUserDB.getTxnId(),endUserDB.getAuditParameters().getUserType()));
 			logger.info("AUDIT : Saved request in audit.");
 
@@ -236,7 +245,7 @@ public class EnduserServiceImpl {
 				}	
 			}
 
-			
+
 			// Validate end user devices.
 			if(!endUserDB.getRegularizeDeviceDbs().isEmpty()){
 
@@ -261,6 +270,7 @@ public class EnduserServiceImpl {
 						if(type==1)
 						{
 							regularizeDb.setTaxPaidStatus(TaxStatus.TAX_NOT_PAID.getCode());
+							regularizeDb.setTaxCollectedBy(username);
 						}
 						else {
 							regularizeDb.setTaxPaidStatus(TaxStatus.REGULARIZED.getCode());				
@@ -284,7 +294,7 @@ public class EnduserServiceImpl {
 						}
 
 						if(Objects.isNull(regularizeDeviceDb.getStatus())) {
-							regularizeDeviceDb.setStatus(RegularizeDeviceStatus.New.getCode());
+							regularizeDeviceDb.setStatus(RegularizeDeviceStatus.NEW.getCode());
 						}
 
 						if(Objects.isNull(endUserDB.getOrigin())) {
@@ -458,10 +468,10 @@ public class EnduserServiceImpl {
 					List<RawMail> rawMails = new ArrayList<>();
 					Map<String, String> placeholderMap = new HashMap<String, String>();
 					placeholderMap.put("<First name>", endUserDB1.getFirstName());
-					placeholderMap.put("<txn_id>", endUserDB1.getTxnId());
+					placeholderMap.put("<txn_id>", endUserDB.getTxnId());
 					rawMails.add(new RawMail(mailTag, endUserDB1.getId(), Long.valueOf(43), 
-							Features.UPDATE_VISA, SubFeatures.REQUEST, endUserDB1.getTxnId(), 
-							endUserDB1.getTxnId(), placeholderMap, ReferTable.END_USER, null, "End User"));
+							Features.UPDATE_VISA, SubFeatures.REQUEST, endUserDB.getTxnId(), 
+							endUserDB.getTxnId(), placeholderMap, ReferTable.END_USER, null, "End User"));
 					VisaUpdateDb visaDb=updateVisaRepository.findByEndUserDBData_Id(endUserDB1.getId());
 					if(visaDb!=null) { 
 						visaUpdateDb.setId(visaDb.getId());
@@ -485,154 +495,15 @@ public class EnduserServiceImpl {
 								GenericMessageTags.VISA_UPDATE_REQUEST_FAIL.getMessage(), endUserDB.getNid());
 					}
 				}
-
-
 			}
-
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException("End user Service", e.getMessage());
 		}
 	}
 
-	public Page<EndUserDB> filter(FilterRequest filterRequest, Integer pageNo, 
-			Integer pageSize) {
-
-		List<StateMgmtDb> statusList = null;
-
-		try {
-			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
-
-			Page<EndUserDB> page = endUserDbRepository.findAll(buildSpecification(filterRequest, statusList).build(), pageable);
-
-			for(EndUserDB endUserDB : page.getContent()) {
-				setInterp(endUserDB);
-				if(Objects.nonNull(endUserDB.getRegularizeDeviceDbs())) {
-					List<RegularizeDeviceDb> regulaizedList=new ArrayList<RegularizeDeviceDb>();
-					if(Objects.nonNull(endUserDB.getRegularizeDeviceDbs()))
-						for(RegularizeDeviceDb regularizeData:endUserDB.getRegularizeDeviceDbs()) {
-							regularizeData.setEndUserDB(new EndUserDB());
-							regulaizedList.add(regularizeData);
-						}
-					endUserDB.setRegularizeDeviceDbs(regulaizedList);
-				}
-			}
-
-			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), "", 
-					Long.valueOf(filterRequest.getUserTypeId()), filterRequest.getUserType(), 
-					Long.valueOf(filterRequest.getFeatureId()),
-					Features.MANAGE_USER, SubFeatures.VIEW, "",filterRequest.getUserType()));
-			logger.info("AUDIT : Saved view request in audit.");
-			return page;
-
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
-		}
-	}
-
-	private List<EndUserDB> getAll(FilterRequest filterRequest){
-		try {
-
-			List<EndUserDB> endUserDBs = endUserDbRepository.findAll(buildSpecification(filterRequest, null).build(), new Sort(Sort.Direction.DESC, "modifiedOn"));
-			logger.info("endUserDBs " + endUserDBs);
-
-			for(EndUserDB endUserDB : endUserDBs) {
-				setInterp(endUserDB);
-			}
-
-			logger.info("endUserDBs : " + endUserDBs);
-			return endUserDBs;
-
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
-		}
-	}
-
-	public FileDetails getFilteredEndUserInFileV2(FilterRequest filterRequest) {
-		String fileName = null;
-		Writer writer   = null;
-		//String[] columns = new String[]{"grievanceId","userId","userType","grievanceStatus","txnId","categoryId","fileName","createdOn","modifiedOn","remarks"};
-		EndUserFileModel fm = null;
-
-		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-		DateTimeFormatter dtf2  = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
-
-		SystemConfigurationDb filepath = configurationManagementServiceImpl.findByTag(ConfigTags.file_download_dir);
-		logger.info("CONFIG : file_consignment_download_dir [" + filepath + "]");
-		SystemConfigurationDb link = configurationManagementServiceImpl.findByTag(ConfigTags.file_download_link);
-		logger.info("CONFIG : file_consignment_download_link [" + link + "]");
-
-		StatefulBeanToCsvBuilder<EndUserFileModel> builder = null;
-		StatefulBeanToCsv<EndUserFileModel> csvWriter      = null;
-		List< EndUserFileModel> fileRecords                = null;
-		CustomMappingStrategy<EndUserFileModel> mappingStrategy = new CustomMappingStrategy<>();
-
-		try {
-			List<EndUserDB> endUserDBs = getAll(filterRequest);
-
-			fileName = LocalDateTime.now().format(dtf2).replace(" ", "_")+"_User.csv";
-			writer = Files.newBufferedWriter(Paths.get(filepath.getValue() + fileName));
-			mappingStrategy.setType(EndUserFileModel.class);
-
-			builder = new StatefulBeanToCsvBuilder<EndUserFileModel>(writer);
-			csvWriter = builder.withMappingStrategy(mappingStrategy).withSeparator(',').withQuotechar(CSVWriter.NO_QUOTE_CHARACTER).build();
-
-			if( endUserDBs.size() > 0 ) {
-				fileRecords = new ArrayList<>();
-
-				for( EndUserDB endUserDB : endUserDBs ) { 
-					String visaExpiryDate = "";
-					if(Objects.nonNull(endUserDB.getVisaDb())) {
-						if(!endUserDB.getVisaDb().isEmpty()) {
-							VisaDb visaDb = endUserDB.getVisaDb().get(endUserDB.getVisaDb().size()-1);
-							visaExpiryDate = DateUtil.dateToString(visaDb.getVisaExpiryDate());
-						}
-					}
-
-					fm = new EndUserFileModel(endUserDB.getTxnId(), 
-							endUserDB.getCreatedOn().toString(), 
-							endUserDB.getNid(), 
-							endUserDB.getFirstName() +" "+ endUserDB.getLastName(), 
-							endUserDB.getNationality(), 
-							visaExpiryDate, 
-							endUserDB.getPhoneNo());
-
-					/*consignmentMgmt.getCreatedOn().format(dtf),
-							consignmentMgmt.getModifiedOn().format(dtf)*/
-
-					fileRecords.add(fm); 
-				}
-
-
-				csvWriter.write(fileRecords);
-			}else {
-				csvWriter.write( new EndUserFileModel());
-			}
-
-			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), "", 
-					Long.valueOf(filterRequest.getUserTypeId()), filterRequest.getUserType(), 
-					Long.valueOf(filterRequest.getFeatureId()),
-					Features.CONSIGNMENT, SubFeatures.VIEW, "",filterRequest.getUserType()));
-			logger.info("AUDIT : Saved file export request in audit.");
-
-			return new FileDetails( fileName, filepath.getValue(), link.getValue() + fileName );
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
-		}finally {
-			try {
-
-				if( writer != null )
-					writer.close();
-			} catch (IOException e) {}
-		}
-	}
-
-	private SpecificationBuilder<EndUserDB> buildSpecification(FilterRequest filterRequest, List<StateMgmtDb> statusList){
+	private SpecificationBuilder<EndUserDB> buildSpecification(FilterRequest filterRequest){
 		SpecificationBuilder<EndUserDB> specificationBuilder = new SpecificationBuilder<>(propertiesReader.dialect);
-
 
 		if(Objects.nonNull(filterRequest.getNid()))
 			specificationBuilder.with(new SearchCriteria("nid", filterRequest.getNid(), SearchOperation.EQUALITY, Datatype.STRING));
@@ -685,7 +556,7 @@ public class EnduserServiceImpl {
 					else {
 						date = DateUtil.addDaysInDate(day, new Date());						
 					}
-                    logger.info("expiry date: "+date);
+					logger.info("expiry date: "+date);
 					visaDbs.get(0).setVisaExpiryDate(date);
 					visaDbs.get(0).setEndUserDB(endUserDB);
 					return new GenricResponse(0);
@@ -716,11 +587,11 @@ public class EnduserServiceImpl {
 			else {
 				date = DateUtil.addDaysInDate(day, new Date());						
 			}
-            logger.info("expiry date: "+date);
-            List<VisaDb> visaDbs =new ArrayList<VisaDb>();
-            VisaDb visaDb=new VisaDb( 1,"NA","NA",entryDate,date,endUserDB);
-		    visaDbs.add(visaDb);
-		    endUserDB.setVisaDb(visaDbs);
+			logger.info("expiry date: "+date);
+			List<VisaDb> visaDbs =new ArrayList<VisaDb>();
+			VisaDb visaDb=new VisaDb( 1,"NA","NA",entryDate,date,endUserDB);
+			visaDbs.add(visaDb);
+			endUserDB.setVisaDb(visaDbs);
 			return new GenricResponse(0);
 		}
 
@@ -829,7 +700,6 @@ public class EnduserServiceImpl {
 		}
 	}
 
-
 	@Transactional
 	public GenricResponse acceptReject(CeirActionRequest ceirActionRequest) {
 		try {
@@ -839,14 +709,18 @@ public class EnduserServiceImpl {
 			EndUserDB endUserDB = null;
 			List<RawMail> rawMails = new ArrayList<>();
 			Map<String, String> placeholders = new HashMap<>();
-			long userTypeId=0;
-			long userId=0;
-			String username="";
+			long userTypeId = 0;
+			long userId = 0;
+			String username = "";
 			VisaDb latestVisa = null;            
-			VisaUpdateDb visaDb =new VisaUpdateDb();
+			VisaUpdateDb visaDb = new VisaUpdateDb();
 			String sufeature="";
+
+			lock.lock();
+			logger.info("lock taken by thread : " + Thread.currentThread().getName());
+			
 			if("CEIRADMIN".equalsIgnoreCase(ceirActionRequest.getUserType())){
-				visaDb=visaUpdateRepo.getById(ceirActionRequest.getId());
+				visaDb = visaUpdateRepo.getById(ceirActionRequest.getId());
 				if(Objects.isNull(visaDb)) {
 					return new GenricResponse(1, "Visa Db is incorrect", "");				
 				}
@@ -868,18 +742,26 @@ public class EnduserServiceImpl {
 				}else {
 					latestVisa = endUserDB.getVisaDb().get(0);
 				}
-				placeholders.put("<Txn id>", endUserDB.getTxnId());
+				placeholders.put("<Txn id>", visaDb.getTxnId());
 				placeholders.put("<First name>", endUserDB.getFirstName());
 
-				userTypeId=8;
+				userTypeId = 8;
 				if(Objects.nonNull(ceirActionRequest.getUsername())) {
 					username=ceirActionRequest.getUsername();		
 				}
 				visaDb.setApprovedBy(username);
 				if(ceirActionRequest.getAction() == 0) {
+					String payloadTxnId = visaDb.getTxnId();
+					// Check if someone else taken the same action on visa update.
+					VisaUpdateDb visaUpdateTemp = visaUpdateRepo.getByTxnId(payloadTxnId);
+					if(RegularizeDeviceStatus.APPROVED.getCode() == visaUpdateTemp.getStatus()) {
+						String message = "Any other user have taken the same action on the visaUpdate [" + payloadTxnId + "]";
+						logger.info(message);
+						return new GenricResponse(10, "", message, payloadTxnId);
+					}
+					
 					visaDb.setStatus(RegularizeDeviceStatus.APPROVED.getCode());
 					List<VisaDb> visaDbs = endUserDB.getVisaDb();
-					//					 Update expiry date of latest Visa
 					VisaDb visaDbUpdate = visaDbs.get(visaDbs.size() - 1);
 					visaDbUpdate.setVisaExpiryDate(visaDb.getVisaExpiryDate());	
 					visaDbUpdate.setVisaFileName(visaDb.getVisaFileName());
@@ -888,6 +770,7 @@ public class EnduserServiceImpl {
 						return new GenricResponse(6, GenericMessageTags.VISA_UPDATE_NOT_ALLOWED.getTag(), 
 								GenericMessageTags.VISA_UPDATE_NOT_ALLOWED.getMessage(), endUserDB.getNid());
 					}else {}
+
 					if(!endUserTransaction.executeUpdateVisa(endUserDB)) {
 						return new GenricResponse(1, GenericMessageTags.VISA_UPDATE_FAIL.getTag(), 
 								GenericMessageTags.VISA_UPDATE_FAIL.getMessage(), endUserDB.getNid());
@@ -896,14 +779,23 @@ public class EnduserServiceImpl {
 					receiverUserType = "End User";
 					sufeature=SubFeatures.Approve;
 					//feature= 
-					txnId = endUserDB.getTxnId();
+					txnId = visaDb.getTxnId();
 					userId=ceirActionRequest.getUserId();
 				}else if(ceirActionRequest.getAction() == 1){
+					String payloadTxnId = ceirActionRequest.getTxnId();
+					// Check if someone else taken the same action on visa update.
+					VisaUpdateDb visaUpdateTemp = visaUpdateRepo.getByTxnId(payloadTxnId);
+					if(RegularizeDeviceStatus.REJECTED_BY_CEIR_ADMIN.getCode() == visaUpdateTemp.getStatus()) {
+						String message = "Any other user have taken the same action on the visaUpdate [" + payloadTxnId + "]";
+						logger.info(message);
+						return new GenricResponse(10, "", message, payloadTxnId);
+					}
+					
 					visaDb.setStatus(RegularizeDeviceStatus.REJECTED_BY_CEIR_ADMIN.getCode());
 					visaDb.setRemark(ceirActionRequest.getRemarks()); 
 					tag = "Update_Visa_Reject_CEIRAdmin";	
 					receiverUserType = "End User";
-					txnId = endUserDB.getTxnId();
+					txnId = visaDb.getTxnId();
 					sufeature=SubFeatures.REJECT;
 				}else {
 					return new GenricResponse(2, "unknown operation", "");
@@ -916,8 +808,8 @@ public class EnduserServiceImpl {
 								43, 
 								Features.UPDATE_VISA, 
 								sufeature, 
-								endUserDB.getTxnId(), 
-								endUserDB.getTxnId(), 
+								visaDb.getTxnId(), 
+								visaDb.getTxnId(), 
 								placeholders,
 								ReferTable.END_USER,
 								null,
@@ -934,12 +826,12 @@ public class EnduserServiceImpl {
 						emailUtil.saveNotification(rawMails);	
 					}
 				}
+				
 				auditTrailRepository.save(new AuditTrail(userId, username, userTypeId,
 						ceirActionRequest.getUserType(), 43,Features.UPDATE_VISA, sufeature, "", txnId,ceirActionRequest.getUserType()));
 
-			}
-			else if("CEIRSYSTEM".equalsIgnoreCase(ceirActionRequest.getUserType())){
-				visaDb=visaUpdateRepo.getByTxnId(ceirActionRequest.getTxnId());
+			}else if("CEIRSYSTEM".equalsIgnoreCase(ceirActionRequest.getUserType())){
+				visaDb = visaUpdateRepo.getByTxnId(ceirActionRequest.getTxnId());
 				if(Objects.isNull(visaDb)) {
 					return new GenricResponse(1, "transaction id is incorrect", "");				
 				}
@@ -956,77 +848,50 @@ public class EnduserServiceImpl {
 				}else {
 					latestVisa = endUserDB.getVisaDb().get(0);
 				}
-				placeholders.put("<Txn id>", endUserDB.getTxnId());
+				placeholders.put("<Txn id>", visaDb.getTxnId());
 				placeholders.put("<First name>", endUserDB.getFirstName());
 
-				userTypeId=0;
+				userTypeId = 0;
 				if(ceirActionRequest.getAction() == 0) {
-			    	if(visaDb.getStatus() == RegularizeDeviceStatus.New.getCode()) {
-			    		visaDb.setStatus(RegularizeDeviceStatus.Processing.getCode());
-					}else {
-						visaDb.setStatus(RegularizeDeviceStatus.PENDING_APPROVAL_FROM_CEIR_ADMIN.getCode());
+					String payloadTxnId = ceirActionRequest.getTxnId();
+					// Check if someone else taken the same action on visa update.
+					VisaUpdateDb visaUpdateTemp = visaUpdateRepo.getByTxnId(payloadTxnId);
+					if(RegularizeDeviceStatus.PROCESSING.getCode() == visaUpdateTemp.getStatus()) {
+						String message = "Any other user have taken the same action on the visaUpdate [" + payloadTxnId + "]";
+						logger.info(message);
+						return new GenricResponse(10, "", message, payloadTxnId);
 					}
 
+					visaDb.setStatus(RegularizeDeviceStatus.PROCESSING.getCode());
 					tag = "MAIL_TO_USER_ON_CEIR_DEVICE_APPROVAL";
-					txnId = endUserDB.getTxnId();
-					List<User> user= new ArrayList<User>();
-					user=userStaticServiceImpl.getUserbyUsertypeId(8);
-					UserProfile ceirUserProfile = new UserProfile();
-					ceirUserProfile.setUser(userStaticServiceImpl.getCeirAdmin());
+					txnId = visaDb.getTxnId();
 					sufeature="SYSTEM_ACCEPT";
-					if(Objects.nonNull(endUserDB.getEmail()) && !endUserDB.getEmail().isEmpty() && !"NA".equalsIgnoreCase(endUserDB.getEmail())) {
-							rawMails.add(new RawMail("Update_Visa_Approved_System", 
-									endUserDB.getId(), 
-									43, 
-									Features.UPDATE_VISA, 
-									SubFeatures.SYSTEM_ACCEPT, 
-									endUserDB.getTxnId(), 
-									endUserDB.getTxnId(), 
-									placeholders,
-									ReferTable.END_USER,
-									null,
-									"End User"));
-					
-					}	
-					for(User userData:user) {
-
-						rawMails.add(new RawMail("Update_Visa_Request_CEIRAdmin", 
-								userData.getId(), 
-								43, 
-								Features.UPDATE_VISA, 
-								SubFeatures.SYSTEM_ACCEPT, 
-								endUserDB.getTxnId(), 
-								endUserDB.getTxnId(), 
-								placeholders,
-								ReferTable.USERS,
-								null,
-								"CEIRAdmin"));
-					}
-
-
-					VisaUpdateDb visaOutput=updateVisaRepo.save(visaDb);
-					if(Objects.nonNull(visaOutput)) {
-						if(Objects.nonNull(rawMails) && !rawMails.isEmpty()) {
-							if(visaOutput.getStatus()==RegularizeDeviceStatus.Processing.getCode()) {
-								emailUtil.saveNotification(rawMails);				
-							}
-						}						}
-					txnId = endUserDB.getTxnId();
+					updateVisaRepo.save(visaDb);
+					txnId = visaDb.getTxnId();
 
 				}else if(ceirActionRequest.getAction() == 1){
+					String payloadTxnId = ceirActionRequest.getTxnId();
+					// Check if someone else taken the same action on visa update.
+					VisaUpdateDb visaUpdateTemp = visaUpdateRepo.getByTxnId(payloadTxnId);
+					if(RegularizeDeviceStatus.REJECTED_BY_SYSTEM.getCode() == visaUpdateTemp.getStatus()) {
+						String message = "Any other user have taken the same action on the visaUpdate [" + payloadTxnId + "]";
+						logger.info(message);
+						return new GenricResponse(10, "", message, payloadTxnId);
+					}
+					
 					sufeature="SYSTEM_REJECT";
-					visaDb.setStatus(RegularizeDeviceStatus.Rejected_By_System.getCode());
+					visaDb.setStatus(RegularizeDeviceStatus.REJECTED_BY_SYSTEM.getCode());
 					tag = "MAIL_TO_USER_ON_CEIR_DEVICE_DISAPPROVAL";	
 					receiverUserType = "End User";
-					txnId = endUserDB.getTxnId();
+					txnId = visaDb.getTxnId();
 					if(Objects.nonNull(endUserDB.getEmail()) && !endUserDB.getEmail().isEmpty() && !"NA".equalsIgnoreCase(endUserDB.getEmail())) {
 						rawMails.add(new RawMail("Update_Visa_Reject_System", 
 								endUserDB.getId(), 
 								43, 
 								Features.UPDATE_VISA, 
 								SubFeatures.SYSTEM_REJECT, 
-								endUserDB.getTxnId(), 
-								endUserDB.getTxnId(), 
+								visaDb.getTxnId(), 
+								visaDb.getTxnId(), 
 								placeholders,
 								ReferTable.END_USER,
 								null,
@@ -1037,9 +902,66 @@ public class EnduserServiceImpl {
 								emailUtil.saveNotification(rawMails);	
 							}
 						}
-						txnId = endUserDB.getTxnId();
+						txnId = visaDb.getTxnId();
 
 					}
+				}else if(ceirActionRequest.getAction() == 2) {
+					String payloadTxnId = ceirActionRequest.getTxnId();
+					// Check if someone else taken the same action on visa update.
+					VisaUpdateDb visaUpdateTemp = visaUpdateRepo.getByTxnId(payloadTxnId);
+					if(RegularizeDeviceStatus.PENDING_APPROVAL_FROM_CEIR_ADMIN.getCode() == visaUpdateTemp.getStatus()) {
+						String message = "Any other user have taken the same action on the visaUpdate [" + payloadTxnId + "]";
+						logger.info(message);
+						return new GenricResponse(10, "", message, payloadTxnId);
+					}
+					
+					visaDb.setStatus(RegularizeDeviceStatus.PENDING_APPROVAL_FROM_CEIR_ADMIN.getCode());
+					tag = "MAIL_TO_USER_ON_CEIR_DEVICE_APPROVAL";
+					txnId = visaDb.getTxnId();
+					List<User> user= new ArrayList<User>();
+					user=userStaticServiceImpl.getUserbyUsertypeId(8);
+					UserProfile ceirUserProfile = new UserProfile();
+					ceirUserProfile.setUser(userStaticServiceImpl.getCeirAdmin());
+					sufeature="SYSTEM_ACCEPT";
+					if(Objects.nonNull(endUserDB.getEmail()) && !endUserDB.getEmail().isEmpty() && !"NA".equalsIgnoreCase(endUserDB.getEmail())) {
+						rawMails.add(new RawMail("Update_Visa_Approved_System", 
+								endUserDB.getId(), 
+								43, 
+								Features.UPDATE_VISA, 
+								SubFeatures.SYSTEM_ACCEPT, 
+								visaDb.getTxnId(), 
+								visaDb.getTxnId(), 
+								placeholders,
+								ReferTable.END_USER,
+								null,
+								"End User"));
+
+					}	
+					for(User userData : user) {
+
+						rawMails.add(new RawMail("Update_Visa_Request_CEIRAdmin", 
+								userData.getId(), 
+								43, 
+								Features.UPDATE_VISA, 
+								SubFeatures.SYSTEM_ACCEPT, 
+								visaDb.getTxnId(), 
+								visaDb.getTxnId(), 
+								placeholders,
+								ReferTable.USERS,
+								null,
+								"CEIRAdmin"));
+					}
+
+
+					VisaUpdateDb visaOutput = updateVisaRepo.save(visaDb);
+					if(Objects.nonNull(visaOutput)) {
+						if(Objects.nonNull(rawMails) && !rawMails.isEmpty()) {
+							if(visaOutput.getStatus()==RegularizeDeviceStatus.PROCESSING.getCode()) {
+								emailUtil.saveNotification(rawMails);				
+							}
+						}						}
+					txnId = visaDb.getTxnId();
+
 				}else {
 					return new GenricResponse(2, "unknown operation", "");
 				}
@@ -1048,17 +970,20 @@ public class EnduserServiceImpl {
 				return new GenricResponse(1, "You are not allowed to do this operation.", "");
 			}
 
-
 			return new GenricResponse(0, "Visa Update SuccessFully.", ceirActionRequest.getTxnId());
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}finally {
+			if(lock.isLocked()) {
+				logger.info("lock released by thread : " + Thread.currentThread().getName());
+				lock.unlock();
+			}
 		}
 	}
 
-
-	private GenericSpecificationBuilder<VisaUpdateDb> buildSpecification(FilterRequest filterRequest){
+	private GenericSpecificationBuilder<VisaUpdateDb> buildSpecification(FilterRequest filterRequest,List<StateMgmtDb> statusList, String source){
 
 		GenericSpecificationBuilder<VisaUpdateDb> uPSB = new GenericSpecificationBuilder<VisaUpdateDb>(propertiesReader.dialect);	
 		if(Objects.nonNull(filterRequest.getStartDate()) && filterRequest.getStartDate()!="")
@@ -1072,7 +997,42 @@ public class EnduserServiceImpl {
 			uPSB.with(new SearchCriteria("status",filterRequest.getStatus(), SearchOperation.EQUALITY, Datatype.INT));
 		}
 		else {
-			uPSB.with(new SearchCriteria("status",3, SearchOperation.EQUALITY, Datatype.INT));
+			//uPSB.with(new SearchCriteria("status",3, SearchOperation.EQUALITY, Datatype.INT));
+
+			if(Objects.nonNull(filterRequest.getFeatureId()) && Objects.nonNull(filterRequest.getUserTypeId())) {
+
+				List<DashboardUsersFeatureStateMap> dashboardUsersFeatureStateMap = dashboardUsersFeatureStateMapRepository.findByUserTypeIdAndFeatureId(filterRequest.getUserTypeId(), filterRequest.getFeatureId());
+				logger.debug(dashboardUsersFeatureStateMap);
+
+				List<Integer> deviceStatus = new LinkedList<>();
+
+				if(Objects.nonNull(dashboardUsersFeatureStateMap)) {
+					if("dashboard".equalsIgnoreCase(source) || "menu".equalsIgnoreCase(source)) {
+						for(DashboardUsersFeatureStateMap dashboardUsersFeatureStateMap2 : dashboardUsersFeatureStateMap ) {
+							deviceStatus.add(dashboardUsersFeatureStateMap2.getState());
+						}
+					}else if("filter".equalsIgnoreCase(source)) {
+						if(regularizeDevice.nothingInFilter(filterRequest)) {
+							for(DashboardUsersFeatureStateMap dashboardUsersFeatureStateMap2 : dashboardUsersFeatureStateMap ) {
+								deviceStatus.add(dashboardUsersFeatureStateMap2.getState());
+							}
+						}else {
+							for(StateMgmtDb stateMgmtDb : statusList ) {
+								deviceStatus.add(stateMgmtDb.getState());
+							}
+						}
+					}else if("noti".equalsIgnoreCase(source)) {
+						logger.info("Skip status check, because source is noti.");
+					}
+
+					logger.info("Array list to add is = " + deviceStatus);
+					if(!deviceStatus.isEmpty()) {
+						uPSB.addSpecification(uPSB.in("status", deviceStatus));
+					}else {
+						logger.warn("no predefined status are available.");
+					}
+				}
+			}
 		}
 
 		if(Objects.nonNull(filterRequest.getTxnId()) && !filterRequest.getTxnId().isEmpty()) {
@@ -1092,11 +1052,12 @@ public class EnduserServiceImpl {
 	}
 
 
-	public Page<VisaUpdateDb>  viewAllUpdateVisaRecord(FilterRequest filterRequest, Integer pageNo, Integer pageSize){
+	public Page<VisaUpdateDb>  viewAllUpdateVisaRecord(FilterRequest filterRequest, Integer pageNo, Integer pageSize,String source){
 		try { 
 			logger.info("filter data:  "+filterRequest);
+			List<StateMgmtDb> statusList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
 			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
-			Page<VisaUpdateDb> page = updateVisaRepository.findAll( buildSpecification(filterRequest).build(), pageable );
+			Page<VisaUpdateDb> page = updateVisaRepository.findAll( buildSpecification(filterRequest,statusList, source).build(), pageable );
 
 
 			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), filterRequest.getUserName(), 8L,
@@ -1104,7 +1065,6 @@ public class EnduserServiceImpl {
 
 
 			for(VisaUpdateDb visa : page.getContent()) {
-				List<StateMgmtDb> statusList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
 				logger.info("after fetching state mgmt data");
 
 				for(StateMgmtDb stateMgmtDb : statusList) {
@@ -1135,7 +1095,11 @@ public class EnduserServiceImpl {
 	public List<VisaUpdateDb> getAllVisaUpdate(FilterRequest filterRequest) {
 
 		try {
-			List<VisaUpdateDb> visaData = updateVisaRepository.findAll( buildSpecification(filterRequest).build());
+			List<StateMgmtDb> stateList = null;
+
+			stateList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
+
+			List<VisaUpdateDb> visaData = updateVisaRepository.findAll( buildSpecification(filterRequest,stateList,null).build());
 
 			return visaData;
 

@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.gl.ceir.config.model.AllRequest;
 import com.gl.ceir.config.model.CeirActionRequest;
 import com.gl.ceir.config.model.EndUserDB;
 import com.gl.ceir.config.model.FileDetails;
@@ -53,17 +51,18 @@ public class RegularizedDeviceController {
 	public MappingJacksonValue getDeviceByNid( @RequestBody FilterRequest filterRequest,
 			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
 			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+			@RequestParam(value = "source", defaultValue = "menu") String source,
 			@RequestParam(value = "file", defaultValue = "0") Integer file) {
 
 		MappingJacksonValue mapping = null;
-		
+		logger.info("source value is : "+source);
 		if(file == 0) {
 			logger.info("Regularize Device view info request " + filterRequest);
-			Page<RegularizeDeviceDb> customInfo = regularizedDeviceServiceImpl.filter(filterRequest, pageNo, pageSize);
+			Page<RegularizeDeviceDb> customInfo = regularizedDeviceServiceImpl.filter(filterRequest, pageNo, pageSize, source);
 			mapping = new MappingJacksonValue(customInfo);
 		}else {
 			logger.info("Regularized Device Export request " + filterRequest);
-			FileDetails fileDetails = regularizedDeviceServiceImpl.getFilteredDeviceInFile(filterRequest);
+			FileDetails fileDetails = regularizedDeviceServiceImpl.getFilteredDeviceInFile(filterRequest, source);
 			mapping = new MappingJacksonValue(fileDetails);
 		}
 		
@@ -74,7 +73,7 @@ public class RegularizedDeviceController {
 	@PostMapping("/end-user-device-info")
 	public GenricResponse saveEndUserInfo(@RequestBody EndUserDB endUserDB) {
 		logger.info(" register device request end user data= " + endUserDB);
-		logger.info("regularze data: "+endUserDB.getRegularizeDeviceDbs().toString());
+		logger.info("regularze data: " + endUserDB.getRegularizeDeviceDbs().toString());
 		GenricResponse genricResponse = regularizedDeviceServiceImpl.saveDevices(endUserDB);
 		//logger.info("Resonse send = " + genricResponse);
 		return genricResponse;
@@ -89,7 +88,7 @@ public class RegularizedDeviceController {
 
 		GenricResponse response = regularizedDeviceServiceImpl.updateTaxStatus(userCustomDb);
 
-		//logger.info("Response send to user = " + response);
+		logger.info("Response send to user = " + response);
 		return response;
 
 	}
@@ -102,7 +101,7 @@ public class RegularizedDeviceController {
 		
 		GenricResponse response = regularizedDeviceServiceImpl.deleteCustomInfo(data);
 		
-		//logger.info("Response send to user="+response);
+		logger.info("Response send to user="+response);
 		return response;
 	}
 
@@ -112,7 +111,6 @@ public class RegularizedDeviceController {
 		logger.info("Request to get the count of regularized devices for end user = " + nid);
 
 		GenricResponse genricResponse = regularizedDeviceServiceImpl.getCountOfRegularizedDevicesByNid(nid,type);
-		//logger.info("Resonse send = " + genricResponse);
 		return genricResponse;
 	}
 	

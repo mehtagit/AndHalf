@@ -29,16 +29,12 @@ public class StolenAndRecoveryFileModel {
 	@CsvBindByPosition(position = 5)
 	private String stolenStatus;
 	
-	@CsvBindByName(column = "Source")
-	@CsvBindByPosition(position = 6)
-	private String source;
-	
 	@CsvBindByName(column = "Filename")
-	@CsvBindByPosition(position = 7)
+	@CsvBindByPosition(position = 6)
 	private String fileName;
 	
 	@CsvBindByName(column = "Device Quantity")
-	@CsvBindByPosition(position = 8)
+	@CsvBindByPosition(position = 7)
 	private Integer deviceQuantity;
 	
 	public Integer getDeviceQuantity() {
@@ -47,14 +43,6 @@ public class StolenAndRecoveryFileModel {
 
 	public void setDeviceQuantity(Integer deviceQuantity) {
 		this.deviceQuantity = deviceQuantity;
-	}
-
-	public String getSource() {
-		return source;
-	}
-
-	public void setSource(String source) {
-		this.source = source;
 	}
 
 	public String getStolenStatus() {

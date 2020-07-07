@@ -206,7 +206,7 @@ public class ConfigurationManagementServiceImpl {
 
 			
 //audit trail entry
-			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), filterRequest.getUserName(), 
+			auditTrailRepository.save(new AuditTrail(Long.valueOf(filterRequest.getUserId()), filterRequest.getUserName(), 
 					Long.valueOf(filterRequest.getUserTypeId()), filterRequest.getUserType(), Long.valueOf(filterRequest.getFeatureId()),
 					Features.MESSAGE_MANAGEMENT, SubFeatures.VIEW, "", "NA",filterRequest.getRoleType()));
 			logger.info("MESSAGE_MANAGEMENT : successfully inserted in Audit trail.");
@@ -323,7 +323,7 @@ public class ConfigurationManagementServiceImpl {
 				getInterp(policyConfigurationDb);
 
 				
-				auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), filterRequest.getUserName(), 
+				auditTrailRepository.save(new AuditTrail(Long.valueOf(filterRequest.getUserId()), filterRequest.getUserName(), 
 						Long.valueOf(filterRequest.getUserTypeId()), filterRequest.getUserType(), Long.valueOf(filterRequest.getFeatureId()),
 						Features.POLICY_MANAGEMENT, SubFeatures.VIEW, "", "NA",filterRequest.getRoleType()));
 				logger.info("POLICY_MANAGEMENT : successfully inserted in Audit trail ");
@@ -700,7 +700,8 @@ public class ConfigurationManagementServiceImpl {
 			}
 
 			
-			FileDetails fileDetails = new FileDetails( fileName, filepath.getValue(), link.getValue() + fileName );
+			FileDetails fileDetails = new FileDetails( fileName, filepath.getValue(), link.getValue().replace("$LOCAL_IP",
+					propertiesReader.localIp) + fileName );
 			logger.info(fileDetails);
 			return fileDetails;
 
@@ -722,9 +723,117 @@ public class ConfigurationManagementServiceImpl {
 	
 	
 	/*************************************** Export File for Message Mgt ********************************
-	 *************************************************************************************************/
+	 *********************************************************************Ranjeet****************************/
 	
 	public FileDetails exportFile_Message(FilterRequest filterRequest) {
+		
+
+		String fileName = null;
+		
+		Writer writer   = null;
+
+		MessageMgtFileModel fileModel = null;
+		
+
+		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		DateTimeFormatter dtf2  = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
+
+
+		SystemConfigurationDb filepath =configurationManagementServiceImpl.findByTag(ConfigTags.file_download_dir);
+		logger.info("CONFIG : file_messageMgt_download_dir [" + filepath + "]");
+		SystemConfigurationDb link =configurationManagementServiceImpl.findByTag(ConfigTags.file_download_link);
+		logger.info("CONFIG : file_messageMgt_download_link [" + link + "]");
+
+		StatefulBeanToCsvBuilder<MessageMgtFileModel> builder = null;
+		StatefulBeanToCsv<MessageMgtFileModel> csvWriter      = null;
+		List< MessageMgtFileModel> fileRecords                = null;
+		CustomMappingStrategy<MessageMgtFileModel> mappingStrategy = new CustomMappingStrategy<>();
+
+		try {
+			List<MessageConfigurationDb> messageConfigurationDbList = getAll(filterRequest);
+			fileName = LocalDateTime.now().format(dtf2).replace(" ", "_") + "_MessageMgt.csv";
+			writer = Files.newBufferedWriter(Paths.get(filepath.getValue() + fileName));
+			mappingStrategy.setType(MessageMgtFileModel.class);
+
+			builder = new StatefulBeanToCsvBuilder<>(writer);
+			csvWriter = builder.withMappingStrategy(mappingStrategy).withSeparator(',').withQuotechar(CSVWriter.DEFAULT_QUOTE_CHARACTER).build();
+			
+			//csvWriter = builder.withMappingStrategy(mappingStrategy).withSeparator(',').withQuotechar(CSVWriter.NO_QUOTE_CHARACTER).build();
+
+/*			if( !messageConfigurationDbList.isEmpty() ) {
+				fileRecords = new ArrayList<>();
+				for( MessageConfigurationDb messageConfigurationDb : messageConfigurationDbList ) {
+
+					
+					LocalDateTime creation = messageConfigurationDb.getCreatedOn() == null ? LocalDateTime.now() : messageConfigurationDb.getCreatedOn();
+					LocalDateTime modified = messageConfigurationDb.getModifiedOn() == null ? LocalDateTime.now() : messageConfigurationDb.getModifiedOn();
+					
+					fileModel = new MessageMgtFileModel(creation.format(dtf), 
+							modified.format(dtf), 
+							messageConfigurationDb.getDescription() == null ? "NA" : messageConfigurationDb.getDescription(),
+							messageConfigurationDb.getValue() == null ? "NA" : messageConfigurationDb.getValue(),
+							messageConfigurationDb.getChannelInterp() == null ? "NA" : messageConfigurationDb.getChannelInterp());
+					fileRecords.add(fileModel);
+				}
+
+			
+				
+				csvWriter.write(fileRecords);
+			}*/
+			if( !messageConfigurationDbList.isEmpty() ) {
+				fileRecords = new ArrayList<>();
+				for( MessageConfigurationDb messageConfigurationDb : messageConfigurationDbList ) {
+					fileModel= new MessageMgtFileModel();
+					LocalDateTime creation = messageConfigurationDb.getCreatedOn() == null ? LocalDateTime.now() : messageConfigurationDb.getCreatedOn();
+					LocalDateTime modified = messageConfigurationDb.getModifiedOn() == null ? LocalDateTime.now() : messageConfigurationDb.getModifiedOn();
+					fileModel.setCreatedOn(creation.format(dtf));
+					fileModel.setModifiedOn(modified.format(dtf)); 
+					fileModel.setDescription(messageConfigurationDb.getDescription() == null ? "NA" : messageConfigurationDb.getDescription());
+					fileModel.setValue(messageConfigurationDb.getValue() == null ? "NA" : messageConfigurationDb.getValue());
+				
+					 fileModel.setUserType(messageConfigurationDb.getChannelInterp());
+						
+					
+					
+					/*fileModel.setUserType(messageConfigurationDb.getChannelInterp());	*/			
+					logger.debug(fileModel);					
+					fileRecords.add(fileModel);					
+				}			
+				
+				csvWriter.write(fileRecords);
+			}
+			
+			else {
+				csvWriter.write( new MessageMgtFileModel());
+			}
+
+			/*
+			 * auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), "",
+			 * Long.valueOf(filterRequest.getUserTypeId()), filterRequest.getUserType(),
+			 * Long.valueOf(filterRequest.getFeatureId()), Features.CONSIGNMENT,
+			 * SubFeatures.VIEW, "", "NA",filterRequest.getRoleType()));
+			 * logger.info("AUDIT : Saved file export request in audit.");
+			 */
+			FileDetails fileDetails = new FileDetails( fileName, filepath.getValue(), link.getValue().replace("$LOCAL_IP",
+					propertiesReader.localIp) + fileName );
+			logger.info(fileDetails);
+			return fileDetails;
+
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}finally {
+			try {
+
+				if( writer != null )
+					writer.close();
+			} catch (IOException e) {}
+		}
+
+	
+		
+		
+		/*
 		String fileName = null;
 		Writer writer   = null;
 
@@ -751,7 +860,8 @@ public class ConfigurationManagementServiceImpl {
 			mappingStrategy.setType(MessageMgtFileModel.class);
 
 			builder = new StatefulBeanToCsvBuilder<>(writer);
-			csvWriter = builder.withMappingStrategy(mappingStrategy).withSeparator(',').withQuotechar(CSVWriter.NO_QUOTE_CHARACTER).build();
+			//csvWriter = builder.withMappingStrategy(mappingStrategy).withSeparator(',').withQuotechar(CSVWriter.NO_QUOTE_CHARACTER).build();
+			csvWriter = builder.withMappingStrategy(mappingStrategy).withSeparator(',').withQuotechar(CSVWriter.DEFAULT_QUOTE_CHARACTER).build();
 
 			if( !messageConfigurationDbList.isEmpty() ) {
 				fileRecords = new ArrayList<>();
@@ -776,13 +886,13 @@ public class ConfigurationManagementServiceImpl {
 				csvWriter.write( new MessageMgtFileModel());
 			}
 
-			/*
+			
 			 * auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), "",
 			 * Long.valueOf(filterRequest.getUserTypeId()), filterRequest.getUserType(),
 			 * Long.valueOf(filterRequest.getFeatureId()), Features.CONSIGNMENT,
 			 * SubFeatures.VIEW, "", "NA",filterRequest.getRoleType()));
 			 * logger.info("AUDIT : Saved file export request in audit.");
-			 */
+			 
 			FileDetails fileDetails = new FileDetails( fileName, filepath.getValue(), link.getValue() + fileName );
 			logger.info(fileDetails);
 			return fileDetails;
@@ -798,7 +908,7 @@ public class ConfigurationManagementServiceImpl {
 			} catch (IOException e) {}
 		}
 
-	}
+	*/}
 	
 	
 	public void getInterp(PolicyConfigurationDb policyConfigurationDb) {
@@ -808,3 +918,4 @@ public class ConfigurationManagementServiceImpl {
 			}
 
 }
+

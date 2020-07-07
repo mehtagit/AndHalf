@@ -12,4 +12,6 @@ public interface Alerts {
 	String ALERT_009 = "alert009";
 	String ALERT_010 = "alert010";
 	String ALERT_011 = "alert011";
+	String ALERT_012 = "alert012";
+	String ALERT_013 = "alert013";
 }

@@ -69,41 +69,37 @@ public class PendingTacApprovedController {
 		logger.info("Delete pending-tac-approved " + filterRequest);
 		GenricResponse uniqueTags = null;
 		if(pendingTacApprovedImpl.updatePendingApproval(filterRequest)) {
-
 			uniqueTags = pendingTacApprovedImpl.deletePendingApproval(filterRequest);
-		
 		}else{
-		
 			uniqueTags = new GenricResponse(2, "Error while updating.", "", "");
-		
 		}
-		
-	//	GenricResponse uniqueTags = pendingTacApprovedImpl.deletePendingApproval(filterRequest);
 
 		MappingJacksonValue mapping = new MappingJacksonValue(uniqueTags);
-
 		logger.info("Delete of pending-tac-approved [ " + mapping + "] for " + filterRequest);
 
 		return mapping;
 	}
-	
-	
-	
-	  @ApiOperation(value = "pagination View filtered PendingTacApprovedDb", response = ConsignmentMgmt.class)
-	  @PostMapping("/filter/pending-tac-approveddb") public MappingJacksonValue withPaginationConsignments(@RequestBody FilterRequest filterRequest,
-	  @RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo, @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
-	  @RequestParam(value = "file", defaultValue = "0") Integer file) {
-	  
-	  MappingJacksonValue mapping = null; if(file == 0) {
-	  logger.info("Request to view filtered PendingTacApprovedDb = " + filterRequest);
-	  Page<PendingTacApprovedDb> auditTrail = pendingTacApprovedImpl.filterPendingTacApprovedDb(filterRequest, pageNo, pageSize);
-	  mapping = new MappingJacksonValue(auditTrail); }else {
-	  logger.info("Request to export filtered PendingTacApprovedDb = " + filterRequest);
-	  FileDetails fileDetails = pendingTacApprovedImpl.getFilteredPendingTacApprovedDbInFile(filterRequest);
-	  mapping = new MappingJacksonValue(fileDetails); }
-	  
-	  logger.info("Response of view Request = " + mapping);
-	  
-	  return mapping; }
-	 
+
+	@ApiOperation(value = "pagination View filtered PendingTacApprovedDb", response = ConsignmentMgmt.class)
+	@PostMapping("/filter/pending-tac-approveddb") 
+	public MappingJacksonValue withPaginationConsignments(@RequestBody FilterRequest filterRequest,
+			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo, 
+			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+			@RequestParam(value = "file", defaultValue = "0") Integer file) {
+
+		MappingJacksonValue mapping = null; 
+		if(file == 0) {
+			logger.info("Request to view filtered PendingTacApprovedDb = " + filterRequest);
+			Page<PendingTacApprovedDb> auditTrail = pendingTacApprovedImpl.filterPendingTacApprovedDb(filterRequest, pageNo, pageSize);
+			mapping = new MappingJacksonValue(auditTrail); 
+		}else {
+			logger.info("Request to export filtered PendingTacApprovedDb = " + filterRequest);
+			FileDetails fileDetails = pendingTacApprovedImpl.getFilteredPendingTacApprovedDbInFile(filterRequest);
+			mapping = new MappingJacksonValue(fileDetails); 
+		}
+
+		logger.info("Response of view Request = " + mapping);
+
+		return mapping; 
+	}
 }

@@ -17,8 +17,10 @@ public class CustomerCareImporter implements CustomerCareTarget{
 	
 	@Autowired
 	DeviceImporterDbRepository deviceImporterDbRepository;
+	
 	@Autowired
 	CommonFunction commonFunction;
+	
 	@Override
 	public CustomerCareDeviceState fetchDetailsByImei(String imei, CustomerCareDeviceState customerCareDeviceState) {
 		
@@ -30,17 +32,16 @@ public class CustomerCareImporter implements CustomerCareTarget{
 			customerCareDeviceState.setStatus(Constants.available);
 			customerCareDeviceState.setFeatureId(commonFunction.getFeatureIdByTxnId(deviceDb.getTxnId()));
 		}else {
-			//customerCareDeviceState.setDate("");
 			customerCareDeviceState.setStatus(Constants.non_available);
-			//customerCareDeviceState.setFeatureId(commonFunction.getFeatureIdByTxnId(deviceDb.getTxnId()));
 		}
+		
 		customerCareDeviceState.setImei(imei);
 		setName(customerCareDeviceState);
 		return customerCareDeviceState;
 	}
+	
 	@Override
 	public void setName(CustomerCareDeviceState customerCareDeviceState) {
 		customerCareDeviceState.setName("Importer");
 	}
-
 }

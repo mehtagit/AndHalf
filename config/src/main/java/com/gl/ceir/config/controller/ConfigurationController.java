@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.model.AuditTrail;
 import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.FilterRequest;
@@ -43,6 +44,9 @@ public class ConfigurationController {
 
 	@Autowired
 	AuditTrailRepository auditTrailRepository;
+	
+	@Autowired
+	PropertiesReader propertiesReader;
 
 	@ApiOperation(value = "System Config view All Data", response = SystemConfigurationDb.class)
 	@PostMapping("/system/viewAll")
@@ -71,15 +75,10 @@ public class ConfigurationController {
 			Page<SystemConfigurationDb> page = configurationManagementServiceImpl.filterSystemConfiguration(filterRequest, pageNo, pageSize);
 			mapping = new MappingJacksonValue(page);
 			logger.info("Response to send = " + page);
-
-		}
-		else {
+		}else {
 			FileDetails fileDetails = configurationManagementServiceImpl.exportFile_System(filterRequest);
 			mapping = new MappingJacksonValue(fileDetails);
 		}
-
-
-
 		return mapping;
 	}
 
@@ -90,7 +89,8 @@ public class ConfigurationController {
 		logger.info("Details Get by system config Tag="+systemConfigurationDb);
 
 		SystemConfigurationDb  pocessDetails = configurationManagementServiceImpl.findByTag(systemConfigurationDb);
-
+		pocessDetails.setValue(pocessDetails.getValue().replace("$LOCAL_IP",
+				propertiesReader.localIp) );
 		MappingJacksonValue mapping = new MappingJacksonValue(pocessDetails);
 
 		logger.info("Response to send="+pocessDetails);
@@ -106,12 +106,12 @@ public class ConfigurationController {
 
 
 		GenricResponse GenricResponse =	configurationManagementServiceImpl.updateSystemInfo(systemConfigurationDb);
-if(GenricResponse.getErrorCode()==0) {
-	auditTrailRepository.save(new AuditTrail(systemConfigurationDb.getUserId(), systemConfigurationDb.getUserName(), 
-			Long.valueOf(systemConfigurationDb.getUserTypeId()), systemConfigurationDb.getUserType(), Long.valueOf(systemConfigurationDb.getFeatureId()),
-			Features.SYSTEM_MANAGEMENT, SubFeatures.UPDATE, "", "NA",systemConfigurationDb.getRoleType()));
-	logger.info("SYSTEM_MANAGEMENT : successully inserted in audit trail ");
-}
+		if(GenricResponse.getErrorCode()==0) {
+			auditTrailRepository.save(new AuditTrail(systemConfigurationDb.getUserId(), systemConfigurationDb.getUserName(), 
+					Long.valueOf(systemConfigurationDb.getUserTypeId()), systemConfigurationDb.getUserType(), Long.valueOf(systemConfigurationDb.getFeatureId()),
+					Features.SYSTEM_MANAGEMENT, SubFeatures.UPDATE, "", "NA",systemConfigurationDb.getRoleType()));
+			logger.info("SYSTEM_MANAGEMENT : successully inserted in audit trail ");
+		}
 		logger.info("Update sytem config response="+GenricResponse);
 
 		return GenricResponse;
@@ -151,7 +151,6 @@ if(GenricResponse.getErrorCode()==0) {
 			FileDetails fileDetails = configurationManagementServiceImpl.exportFile_Message(filterRequest);
 			mapping = new MappingJacksonValue(fileDetails);
 			logger.info("Response to send fileDetails:::::::::::" + fileDetails);
-
 		}
 
 		return mapping;
@@ -176,7 +175,7 @@ if(GenricResponse.getErrorCode()==0) {
 	@PutMapping("/message/update")
 	public GenricResponse updateMessage(@RequestBody MessageConfigurationDb messageConfigurationDb) {
 
-		logger.info("Update message config request="+messageConfigurationDb);
+		logger.info("Update message config request = "+messageConfigurationDb);
 
 		GenricResponse GenricResponse =	configurationManagementServiceImpl.updateMessageInfo(messageConfigurationDb);
 
@@ -186,8 +185,8 @@ if(GenricResponse.getErrorCode()==0) {
 					Features.MESSAGE_MANAGEMENT, SubFeatures.UPDATE, "", "NA",messageConfigurationDb.getRoleType()));
 			logger.info("MESSAGE_MANAGEMENT : successully inserted in audit trail ");
 		}
-		
-		logger.info("Update sytem config response="+GenricResponse);
+
+		logger.info("Update sytem config response = "+GenricResponse);
 
 		return GenricResponse;
 	}
@@ -196,7 +195,7 @@ if(GenricResponse.getErrorCode()==0) {
 	@PostMapping("/policy/viewTag")
 	public MappingJacksonValue findPolicyDetailsByTag(@RequestBody PolicyConfigurationDb messageConfigurationDb) {
 
-		logger.info("Details Get by Message config="+messageConfigurationDb);
+		logger.info("Details Get by Message config = " + messageConfigurationDb);
 
 		PolicyConfigurationDb  pocessDetails = configurationManagementServiceImpl.getPolicyConfigDetailsByTag(messageConfigurationDb);
 		MappingJacksonValue mapping = new MappingJacksonValue(pocessDetails);
@@ -211,7 +210,6 @@ if(GenricResponse.getErrorCode()==0) {
 			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
 			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
 			@RequestParam(value = "file", defaultValue = "0") Integer file) {
-
 		logger.info("Paginated view of Message Config " + filterRequest);
 
 		Page<PolicyConfigurationDb>  page = configurationManagementServiceImpl.filterPolicyConfiguration(filterRequest, pageNo, pageSize);
@@ -247,13 +245,12 @@ if(GenricResponse.getErrorCode()==0) {
 		GenricResponse GenricResponse =	configurationManagementServiceImpl.updatePolicyInfo(policyConfigurationDb);
 
 		if(GenricResponse.getErrorCode() == 0) {
-			auditTrailRepository.save(new AuditTrail(policyConfigurationDb.getUserId(), policyConfigurationDb.getUserName(), 
+			auditTrailRepository.save(new AuditTrail(Long.valueOf(policyConfigurationDb.getUserId()), policyConfigurationDb.getUserName(), 
 					Long.valueOf(policyConfigurationDb.getUserTypeId()), policyConfigurationDb.getUserType(), Long.valueOf(policyConfigurationDb.getFeatureId()),
 					Features.POLICY_MANAGEMENT, SubFeatures.UPDATE, "", "NA",policyConfigurationDb.getRoleType()));
 			logger.info("POLICY_MANAGEMENT : successfully inserted in Audit trail ");
-
 		}
-		
+
 		logger.info("Update sytem config response="+GenricResponse);
 
 		return GenricResponse;

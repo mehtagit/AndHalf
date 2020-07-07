@@ -1,9 +1,7 @@
 package com.gl.ceir.config.transaction;
 
-import java.util.List;
 import java.util.Objects;
 
-import javax.persistence.Transient;
 import javax.transaction.Transactional;
 
 import org.apache.logging.log4j.LogManager;
@@ -13,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 import com.gl.ceir.config.model.AuditTrail;
 import com.gl.ceir.config.model.ConsignmentMgmt;
-import com.gl.ceir.config.model.Userrole;
+import com.gl.ceir.config.model.ConsignmentUpdateRequest;
 import com.gl.ceir.config.model.WebActionDb;
 import com.gl.ceir.config.model.constants.Features;
 import com.gl.ceir.config.model.constants.SubFeatures;
@@ -45,8 +43,8 @@ public class ConsignmentTransaction {
 		logger.info("Consignment [" + consignmentMgmt.getTxnId() + "] saved in consigment_mgmt_db.");
 
 		auditTrailRepository.save(new AuditTrail(consignmentMgmt.getUser().getId(), consignmentMgmt.getUserName(), 
-				Long.valueOf(consignmentMgmt.getUserTypeId()), consignmentMgmt.getUserType(), Long.valueOf(consignmentMgmt.getFeatureId())
-				, Features.CONSIGNMENT, 
+				Long.valueOf(consignmentMgmt.getUserTypeId()), consignmentMgmt.getUserType(), 
+				Long.valueOf(consignmentMgmt.getFeatureId()), Features.CONSIGNMENT, 
 				SubFeatures.REGISTER, "", consignmentMgmt.getTxnId(),consignmentMgmt.getRoleType()));
 		logger.info("Consignment [" + consignmentMgmt.getTxnId() + "] saved in audit_trail.");
 
@@ -89,9 +87,10 @@ public class ConsignmentTransaction {
 		return queryStatus;
 	}
 
-	public boolean executeUpdateStatusConsignment(ConsignmentMgmt consignmentMgmt, WebActionDb webActionDb) {
+	public boolean executeUpdateStatusConsignmentForCeirSystem(ConsignmentMgmt consignmentMgmt, WebActionDb webActionDb) {
+		// NOTE : This function is used only for CEIR SYSTEM.
 		boolean queryStatus = Boolean.FALSE;
-		logger.info("consignmentMgmt:::::"+consignmentMgmt);
+
 		if(Objects.nonNull(webActionDb)) {
 			webActionDbRepository.save(webActionDb);
 			logger.info("Consignment [" + consignmentMgmt.getTxnId() + "] saved in webaction_db.");	
@@ -100,27 +99,38 @@ public class ConsignmentTransaction {
 		consignmentRepository.save(consignmentMgmt);
 		logger.info("Consignment [" + consignmentMgmt.getTxnId() + "] saved in consigment_mgmt_db.");
 
-		
-//Record insertion in  Audit trail  table
-		
-		if("CEIRSYSTEM".equalsIgnoreCase(consignmentMgmt.getRoleType())) {
-			logger.info("No record insertion in audit trail [CEIRSYSTEM]");
+		queryStatus = Boolean.TRUE;
+		return queryStatus;
+	}
+
+	public boolean executeUpdateStatus(ConsignmentUpdateRequest consignmentUpdateRequest, ConsignmentMgmt consignmentMgmt, 
+			WebActionDb webActionDb) {
+		boolean queryStatus = Boolean.FALSE;
+		String action = consignmentUpdateRequest.getAction() == 0 ? "Approve" : "Reject";
+
+		if(Objects.nonNull(webActionDb)) {
+			webActionDbRepository.save(webActionDb);
+			logger.info("Consignment [" + consignmentMgmt.getTxnId() + "] saved in webaction_db.");	
 		}
-		else {
-					auditTrailRepository.save(new AuditTrail(
-					consignmentMgmt.getUser().getId(),
-					consignmentMgmt.getUser().getUsername(),
-					Long.valueOf(Long.valueOf(consignmentMgmt.getUser().getUsertype().getId())),
-					consignmentMgmt.getUser().getUsertype().getUsertypeName(),
-					Long.valueOf(consignmentMgmt.getFeatureId()),
-					Features.CONSIGNMENT, SubFeatures.UPDATE, "",
-					consignmentMgmt.getTxnId(),consignmentMgmt.getRoleType()));
-					//auditTrailRepository.save(new AuditTrail(consignmentMgmt.getUser().getId(), "", 0L, "", 0L,Features.CONSIGNMENT, SubFeatures.UPDATE, "", consignmentMgmt.getTxnId()));
-					logger.info("Consignment [" + consignmentMgmt.getTxnId() + "] saved in audit_trail.");
-			
-		}
-				
-	queryStatus = Boolean.TRUE;
+
+		consignmentRepository.save(consignmentMgmt);
+		logger.info("Consignment [" + consignmentMgmt.getTxnId() + "] saved in consigment_mgmt_db.");
+
+		auditTrailRepository.save(new AuditTrail(
+				consignmentUpdateRequest.getUserId(), 
+				consignmentUpdateRequest.getUserName(), 
+				Long.valueOf(consignmentUpdateRequest.getUserTypeId()), 
+				consignmentUpdateRequest.getUserType(), 
+				Long.valueOf(consignmentUpdateRequest.getFeatureId())
+				, Features.CONSIGNMENT, 
+				action, "", 
+				consignmentMgmt.getTxnId(),
+				consignmentUpdateRequest.getRoleType()));
+		logger.info("Consignment [" + consignmentMgmt.getTxnId() + "] saved in audit_trail for "
+				+ "action[" + action 
+				+ "] usertype[" + consignmentUpdateRequest.getUserType() + "].");
+
+		queryStatus = Boolean.TRUE;
 		return queryStatus;
 	}
 }

@@ -2,12 +2,17 @@ package com.gl.ceir.config.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.converter.json.MappingJacksonValue;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,9 +25,6 @@ import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.service.impl.ConsignmentServiceImpl;
-import com.gl.ceir.config.service.impl.StackholderPolicyMappingServiceImpl;
-import com.gl.ceir.config.service.impl.StolenAndRecoveryServiceImpl;
-import com.gl.ceir.config.util.Utility;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -33,15 +35,6 @@ public class ConsignmentController {
 
 	@Autowired
 	ConsignmentServiceImpl consignmentServiceImpl;
-
-	@Autowired
-	StolenAndRecoveryServiceImpl stolenAndRecoveryServiceImpl;
-
-	@Autowired
-	StackholderPolicyMappingServiceImpl stackholderPolicyMappingServiceImpl;
-
-	@Autowired
-	Utility utility;
 
 	@ApiOperation(value = "Add new consignment.", response = GenricResponse.class)
 	@RequestMapping(path = "/consignment/register", method = RequestMethod.POST)
@@ -69,7 +62,7 @@ public class ConsignmentController {
 	}
 
 	@ApiOperation(value = "View all the list of consignment", response = ConsignmentMgmt.class)
-	@RequestMapping(path = "/consignment/Record", method = RequestMethod.GET)
+	@GetMapping("/consignment/Record")
 	public MappingJacksonValue getByImporterId(@RequestParam("userId") Long userId) {
 
 		logger.info("Request TO view TO all record of user="+userId);
@@ -101,16 +94,18 @@ public class ConsignmentController {
 	public MappingJacksonValue withPaginationConsignments(@RequestBody FilterRequest filterRequest,
 			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
 			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
-			@RequestParam(value = "file", defaultValue = "0") Integer file) {
+			@RequestParam(value = "file", defaultValue = "0") Integer file,
+			@RequestParam(value = "source", defaultValue = "menu") String source) {
 
+		logger.info("source " + source);
 		MappingJacksonValue mapping = null;
 		if(file == 0) {
 			logger.info("Request to view filtered consignment = " + filterRequest);
-			Page<ConsignmentMgmt> consignment =  consignmentServiceImpl.getFilterPaginationConsignments(filterRequest, pageNo, pageSize);
+			Page<ConsignmentMgmt> consignment =  consignmentServiceImpl.getFilterPaginationConsignments(filterRequest, pageNo, pageSize,source);
 			mapping = new MappingJacksonValue(consignment);
 		}else {
 			logger.info("Request to export filtered consignment = " + filterRequest);
-			FileDetails fileDetails = consignmentServiceImpl.getFilteredConsignmentInFileV2(filterRequest);
+			FileDetails fileDetails = consignmentServiceImpl.getFilteredConsignmentInFileV2(filterRequest, source);
 			mapping = new MappingJacksonValue(fileDetails);
 		}
 
@@ -120,12 +115,12 @@ public class ConsignmentController {
 	}
 
 	@ApiOperation(value = "View the Particular consignment info.", response = ConsignmentMgmt.class)
-	@RequestMapping(path = "/consignment/view", method = RequestMethod.GET)
-	public MappingJacksonValue getByTxnId(@RequestParam("txnId") String txnId) {
+	@PostMapping("/consignment/view")
+	public MappingJacksonValue getByTxnId(@RequestBody FilterRequest filterRequest) {
 
-		logger.info("View Request only Single Record="+txnId);
+		logger.info("View Request only Single Record = " + filterRequest);
 
-		ConsignmentMgmt consignmentRecordInfo = consignmentServiceImpl.getRecordInfo(txnId);
+		ConsignmentMgmt consignmentRecordInfo = consignmentServiceImpl.getRecordInfo(filterRequest);
 		MappingJacksonValue mapping = new MappingJacksonValue(consignmentRecordInfo);
 		logger.info("Response of View ="+mapping);
 
@@ -133,42 +128,30 @@ public class ConsignmentController {
 	}
 
 	@ApiOperation(value = "Delete Consignment.", response = GenricResponse.class)
-	@RequestMapping(path = "/consigment/delete", method = RequestMethod.DELETE)
+	@DeleteMapping("/consigment/delete")
 	public GenricResponse deleteConsigment(@RequestBody ConsignmentUpdateRequest consignmentUpdateRequest) {
 
-		logger.info("Consignment Withdraw Request ="+consignmentUpdateRequest);
-		GenricResponse genricResponse=null;
+		logger.info("Consignment Withdraw Request = " + consignmentUpdateRequest);
+
+		GenricResponse genricResponse = null;
 		if(consignmentServiceImpl.updatePendingApproval(consignmentUpdateRequest)) {	
-			genricResponse =	consignmentServiceImpl.deleteConsigmentInfo(consignmentUpdateRequest);
-		logger.info("Response of Delete Request="+genricResponse);
-		}
-		else {
+			genricResponse = consignmentServiceImpl.deleteConsigmentInfo(consignmentUpdateRequest);
+			logger.info("Response of Delete Request = " + genricResponse);
+		}else {
 			new GenricResponse(1, "Error during update status before deleting", consignmentUpdateRequest.getTxnId());
 		}
-	
-
 		return genricResponse;
-
 	}
 
-	// for approve 
+	// For Approve 
 	@ApiOperation(value = "Update Consignment Status.", response = GenricResponse.class)
-	@RequestMapping(path = "update/consigmentStatus", method = RequestMethod.PUT)
+	@PutMapping("update/consigmentStatus")
 	public GenricResponse updateConsigmentStatus(@RequestBody ConsignmentUpdateRequest consignmentUpdateRequest) {
 
-		logger.info("Request to update the consignmentStatus="+consignmentUpdateRequest);
+		logger.info("Request to update the consignmentStatus = " + consignmentUpdateRequest);
 
 		GenricResponse genricResponse = consignmentServiceImpl.updateConsignmentStatus(consignmentUpdateRequest);
 
 		return genricResponse ;
-
 	}
-
-
-	/*@ApiOperation(value = "Get total count and quantity.", response = ResponseCountAndQuantity.class)
-	@RequestMapping(path = "/consignment/countAndQuantity", method = RequestMethod.POST)
-	public MappingJacksonValue getConsignmentCountAndQuantity( @RequestBody RequestCountAndQuantity request ) {
-		ResponseCountAndQuantity response = consignmentServiceImpl.getConsignmentCountAndQuantity(request);
-		return new MappingJacksonValue(response);
-	}*/
 }

@@ -46,17 +46,6 @@ public class VisaController {
 
 		return mapping;
 	}
-	@ApiOperation(value = "Accept/Reject Update Visa", response = GenricResponse.class)
-	@RequestMapping(path = "accept-reject/end-user-visa", method = RequestMethod.PUT)
-	public GenricResponse updateEndUSerVisa(@RequestBody CeirActionRequest ceirActionRequest) {
-
-		logger.info("Request to update the regularized devices = " + ceirActionRequest);
-
-		GenricResponse genricResponse = enduserServiceImpl.acceptReject(ceirActionRequest);
-
-		return genricResponse ;
-
-	}
 	
 	@ApiOperation(value = "View End User data by Id", response = GenricResponse.class)
 	@PostMapping("/visa/viewById")
@@ -75,20 +64,31 @@ public class VisaController {
 	public MappingJacksonValue getDeviceByNid( @RequestBody FilterRequest filterRequest,
 			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
 			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
-			@RequestParam(value = "file", defaultValue = "0") Integer file) {
+			@RequestParam(value = "file", defaultValue = "0") Integer file,
+			@RequestParam(value = "source", defaultValue = "menu") String source) {
 
 		MappingJacksonValue mapping = null;
-		
+		logger.info("source value is : "+source);
 		if(file == 0) {
 			logger.info("Visa update view request " + filterRequest);
-			Page<VisaUpdateDb> customInfo = enduserServiceImpl.viewAllUpdateVisaRecord(filterRequest, pageNo, pageSize);
+			Page<VisaUpdateDb> customInfo = enduserServiceImpl.viewAllUpdateVisaRecord(filterRequest, pageNo, pageSize,source);
 			mapping = new MappingJacksonValue(customInfo);
 		}else {
 			logger.info("visa update Export request " + filterRequest);
 			FileDetails fileDetails = enduserServiceImpl.getFilterDataInFile(filterRequest);
 			mapping = new MappingJacksonValue(fileDetails);
-		}
-		
+		}	
 		return mapping;
+	}
+	
+	@ApiOperation(value = "Accept/Reject Update Visa", response = GenricResponse.class)
+	@RequestMapping(path = "accept-reject/end-user-visa", method = RequestMethod.PUT)
+	public GenricResponse updateEndUSerVisa(@RequestBody CeirActionRequest ceirActionRequest) {
+
+		logger.info("Request to update the regularized devices = " + ceirActionRequest);
+
+		GenricResponse genricResponse = enduserServiceImpl.acceptReject(ceirActionRequest);
+
+		return genricResponse ;
 	}
 }

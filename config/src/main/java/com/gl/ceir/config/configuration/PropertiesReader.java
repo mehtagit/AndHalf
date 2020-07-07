@@ -9,4 +9,6 @@ public class PropertiesReader {
 	@Value("${spring.jpa.properties.hibernate.dialect}")
 	public String dialect;
 	
+	@Value("${local-ip}")
+	public String localIp;
 }

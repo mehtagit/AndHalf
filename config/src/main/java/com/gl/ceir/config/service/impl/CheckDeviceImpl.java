@@ -1,4 +1,5 @@
 package com.gl.ceir.config.service.impl;
+
 import java.util.Objects;
 
 import org.apache.logging.log4j.LogManager;
@@ -17,6 +18,7 @@ import com.gl.ceir.config.model.constants.Features;
 import com.gl.ceir.config.model.constants.GenericMessageTags;
 import com.gl.ceir.config.model.constants.SubFeatures;
 import com.gl.ceir.config.repository.AuditTrailRepository;
+
 @Service
 public class CheckDeviceImpl {
 
@@ -47,8 +49,7 @@ public class CheckDeviceImpl {
 		        CheckImeiResponse resp=checkDeviceFeign.checkImei(imeiValidate);
 		        if(Objects.nonNull(resp)) {
 		        	logger.info("response got : "+resp);
-		        	if("Pass".equalsIgnoreCase(resp.getStatus()))
-		        	{
+		        	if("Pass".equalsIgnoreCase(resp.getStatus())){
 		        		logger.info("imei found so calling imei data api");
 		        		CheckDeviceReponse data=checkDeviceFeign.imeiValues(checkDevice.getDeviceId());
 		        		logger.info("imei data api called");
@@ -57,26 +58,19 @@ public class CheckDeviceImpl {
 		        	}
 		        	else {
 				        GenricResponse response=new GenricResponse(409,resp.getErrorMessage(),"","");
-				        
 				        return response;
-		        		
 		        	}
 		        }
 		        else {
-			        GenricResponse response=new GenricResponse(500,GenericMessageTags.COMMAN_FAIL_MSG.getTag(),"Oops Somthing wrong happened","");
-			        
+			        GenricResponse response = new GenricResponse(500, GenericMessageTags.COMMAN_FAIL_MSG.getTag(), "Oops Somthing wrong happened","");
 			        return response;
-		        	
 		        }
 	        }
-	        catch(Exception e)
-	        {
-	        	logger.info("error occurs");
-	        	logger.info(e.toString());
-		        GenricResponse response=new GenricResponse(500,GenericMessageTags.COMMAN_FAIL_MSG.getTag(),"Oops Somthing wrong happened","");
+	        catch(Exception e){
+	        	logger.info(e.getMessage(), e);
+		        GenricResponse response=new GenricResponse(500, GenericMessageTags.COMMAN_FAIL_MSG.getTag(), "Oops Somthing wrong happened","");
 		        return response;
 
 	        }
-
 	}
 }

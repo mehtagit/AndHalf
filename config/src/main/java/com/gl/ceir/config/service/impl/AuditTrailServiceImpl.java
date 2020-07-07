@@ -29,7 +29,9 @@ import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.SystemConfigurationDb;
 import com.gl.ceir.config.model.constants.Datatype;
+import com.gl.ceir.config.model.constants.Features;
 import com.gl.ceir.config.model.constants.SearchOperation;
+import com.gl.ceir.config.model.constants.SubFeatures;
 import com.gl.ceir.config.model.file.AuditTrailFileModel;
 import com.gl.ceir.config.model.file.ConsignmentFileModel;
 import com.gl.ceir.config.repository.AuditTrailRepository;
@@ -171,7 +173,8 @@ public class AuditTrailServiceImpl {
 				csvWriter.write( new AuditTrailFileModel());	
 			}
 			
-			return new FileDetails( fileName, filePath, link.getValue() + fileName ); 
+			return new FileDetails( fileName, filePath, link.getValue().replace("$LOCAL_IP",
+					propertiesReader.localIp)  + fileName ); 
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);

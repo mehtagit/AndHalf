@@ -15,12 +15,16 @@ import org.springframework.stereotype.Service;
 import com.gl.ceir.config.EmailSender.EmailUtil;
 import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
+import com.gl.ceir.config.model.AuditTrail;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.RuleEngine;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.constants.Datatype;
+import com.gl.ceir.config.model.constants.Features;
 import com.gl.ceir.config.model.constants.SearchOperation;
+import com.gl.ceir.config.model.constants.SubFeatures;
+import com.gl.ceir.config.repository.AuditTrailRepository;
 import com.gl.ceir.config.repository.RuleEngineRepository;
 import com.gl.ceir.config.specificationsbuilder.GenericSpecificationBuilder;
 import com.gl.ceir.config.util.InterpSetter;
@@ -49,6 +53,8 @@ public class RuleEngineServiceImpl {
 	@Autowired
 	ConfigurationManagementServiceImpl configurationManagementServiceImpl;
 
+	@Autowired
+	AuditTrailRepository auditTrailRepository;
 	public RuleEngine findById(long id){
 		try {
 			return ruleEngineRepository.getById(id);
@@ -80,6 +86,13 @@ public class RuleEngineServiceImpl {
 
 			Page<RuleEngine> page = ruleEngineRepository.findAll( buildSpecification(filterRequest).build(), pageable );
 
+			auditTrailRepository.save( new AuditTrail(Long.valueOf(filterRequest.getUserId()),
+					  filterRequest.getUserName(), Long.valueOf(filterRequest.getUserTypeId()),
+					   "SystemAdmin", Long.valueOf(filterRequest.getFeatureId()),
+					  Features.RULE_LIST, SubFeatures.VIEW, "","NA",
+					  filterRequest.getRoleType()));
+					
+			
 			return page;
 
 		} catch (Exception e) {
@@ -103,13 +116,47 @@ public class RuleEngineServiceImpl {
 	}
 
 	private GenericSpecificationBuilder<RuleEngine> buildSpecification(FilterRequest filterRequest){
+		//ranjeet
+
+		GenericSpecificationBuilder<RuleEngine> cmsb = new GenericSpecificationBuilder<>(propertiesReader.dialect);
+		
+		
+		if(Objects.nonNull(filterRequest.getState()))
+			cmsb.with(new SearchCriteria("state", filterRequest.getState(), SearchOperation.EQUALITY, Datatype.STRING));
+		
+		 if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
+			 
+		     cmsb.orSearch(new SearchCriteria("name", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+			 cmsb.orSearch(new SearchCriteria("state", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+			 cmsb.orSearch(new SearchCriteria("description", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+			 
+	
+
+		 }
+		
+
+		return cmsb;
+	
+		
+		/*
 		GenericSpecificationBuilder<RuleEngine> cmsb = new GenericSpecificationBuilder<>(propertiesReader.dialect);
 		
 		if(Objects.nonNull(filterRequest.getState()))
 			cmsb.with(new SearchCriteria("state", filterRequest.getState(), SearchOperation.EQUALITY, Datatype.STRING));
+		
+		 if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
+			 
+		     cmsb.orSearch(new SearchCriteria("name", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+			 cmsb.orSearch(new SearchCriteria("state", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+			 cmsb.orSearch(new SearchCriteria("description", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+			 
+	
+
+		 }
+		
 
 		return cmsb;
-	}
+	*/}
 
 	private void setInterp(RuleEngine ruleEngine) {
 		/*if(Objects.nonNull(consignmentMgmt.getExpectedArrivalPort()))

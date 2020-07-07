@@ -22,4 +22,5 @@ public interface Features {
 	String RULE_FEATURE_MAPPING = "Rule Feature Mapping";
 	String POLICY_MANAGEMENT = "Policy Management";
 	String MESSAGE_MANAGEMENT = "Message Management";
+	String RULE_LIST = "Rule List";
 }

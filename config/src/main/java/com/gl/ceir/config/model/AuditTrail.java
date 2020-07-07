@@ -73,7 +73,7 @@ public class AuditTrail implements Serializable {
 	}
 	
 	public AuditTrail(long userId, String userName, Long userTypeId, String userType, long featureId, 
-			String featureName, String subFeature, String jSessionId, String txnId,String roleType) {
+			String featureName, String subFeature, String jSessionId, String txnId, String roleType) {
 		this.userId = userId;
 		this.userName = userName;
 		this.userTypeId = userTypeId;

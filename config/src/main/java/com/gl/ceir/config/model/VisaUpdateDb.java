@@ -71,7 +71,6 @@ public class VisaUpdateDb {
 	@JoinColumn(name = "userId")
 	@JsonIgnore
 	EndUserDB endUserDBData;
-
 	
 	private String txnId;
 	
