@@ -339,7 +339,7 @@ select {
 
 													<div class="input-field col s12 m6 l6">
 														<input type="text" name="commune" id="singleStolencommune"
-															pattern="[A-Za-z0-9._%+-$@,/]+\.{0,30}"
+															pattern="[A-Za-z0-9._%-+$@,/]{0,30}"
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
 															required maxlength="30"> <label
@@ -715,7 +715,7 @@ select {
 														<div class="input-field col s12 m6 l6">
 															<input type="text" name="district"
 																id="singleDevicedistrict"
-																pattern="[A-Za-z0-9._%+-$@,/]+\.{0,30}"
+																pattern="[A-Za-z0-9._%-+$@,/]{0,30}"
 																oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
 																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
 																required maxlength="30"> <label for="singleDevicedistrict">
@@ -727,7 +727,7 @@ select {
 														<div class="input-field col s12 m6 l6">
 															<input type="text" name="commune"
 																id="singleDevicecommune"
-																pattern="[A-Za-z0-9._%+-$@,/]+\.{0,30}"
+																pattern="[A-Za-z0-9._%-+$@,/]{0,30}"
 																oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
 																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
 																required maxlength="30"> <label for="singleDevicecommune">
@@ -898,7 +898,7 @@ select {
 
 											<div class="input-field col s12 m6 l6">
 												<input type="text" name="district" id="bulkStolendistrict"
-													pattern="[A-Za-z0-9._%+-$@,/]+\.{0,30}"
+													pattern="[A-Za-z0-9._%-+$@,/]{0,30}"
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 													required maxlength="30"> <label for="bulkStolendistrict">
@@ -909,7 +909,7 @@ select {
 
 											<div class="input-field col s12 m6 l6">
 												<input type="text" name="commune" id="bulkStolencommune"
-													pattern="[A-Za-z0-9._%+-$@,/]+\.{0,30}"
+													pattern="[A-Za-z0-9._%-+$@,/]{0,30}"
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 													required maxlength="30"> <label for="bulkStolencommune">
@@ -1092,7 +1092,7 @@ select {
 											<div class="input-field col s12 m6 l6">
 												<input type="text" name="commune"
 													id="deviceBulkStolencommune"
-													pattern="[A-Za-z0-9._%+-$@,/]+\.{0,30}"
+													pattern="[A-Za-z0-9._%-+$@,/]{0,30}"
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 													required maxlength="30"> <label for="deviceBulkStolencommune">

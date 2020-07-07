@@ -284,7 +284,6 @@ function usertypeData() {
 	{ 'X-CSRF-TOKEN': token }
 	});
 	
-	alert("oks")
 	$.ajax({
 		type : 'GET',
 		url : contextpath + '/usertypeList/',

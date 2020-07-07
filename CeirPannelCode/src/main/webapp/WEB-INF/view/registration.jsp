@@ -338,7 +338,7 @@ String usertypeId="${usertypeId}";
 								</div>
 
 								<div class="input-field col s12 m6 l6" id="companyNames" style="display: none; margin-top: 22px;">
-									<input type="text" name="companyName" id="companyName" pattern="[A-Za-z\s]{10,50}" maxlength="50"
+									<input type="text" name="companyName" id="companyName" pattern="[A-Za-z\s]+{10,50}" maxlength="50"
 									oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
 									/>
 									<label for="companyName"><spring:message code="registration.companyName" /> <span class="star">*</span></label>
@@ -416,7 +416,7 @@ String usertypeId="${usertypeId}";
 									<label for="district"><spring:message code="input.district" /> <span class="star">*</span> </label>
 								</div>
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="commune" maxlength="30" id="commune" pattern="[A-Za-z0-9._%+-$@,/]+\.{0,30}"
+									<input type="text" name="commune" maxlength="30" id="commune" pattern="[A-Za-z0-9._%-+$@,/]{0,30}"
 									oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');" 
 									 required/>
 									<label for="commune"><spring:message code="input.commune" /> <span class="star">*</span> </label>
@@ -874,7 +874,7 @@ String usertypeId="${usertypeId}";
          	defer(asTypeData());
          //	asTypeData();       	
              questionDataByCategory();
-         
+             defer(usertypeData2("${usertypeId}"));
              var password = document.getElementById("password")
              , confirm_password = document.getElementById("confirm_password");       
              

@@ -84,7 +84,7 @@
 
 <link rel="stylesheet"
 	href="${context}/resources/custom_js/jquery-ui.css">
-<script src="${context}/resources/custom_js/1.12.1_jquery-ui.min.js"></script>
+<script src="${context}/resources/custom_js/1.11.2_jquery-ui.js"></script>
 
 <script src="${context}/resources/custom_js/jquery.blockUI.js"></script>
 
@@ -392,7 +392,7 @@ position: fixed;
 									</select>
 								</div>
 
-								<div class="file-field col s12 m6">
+								<div class="file-field col s12 m6" id="removestar">
 									<h6 id="supportingdocumentFile" class="file-upload-heading">
 										<spring:message code="input.supportingdocument" />
 									</h6>

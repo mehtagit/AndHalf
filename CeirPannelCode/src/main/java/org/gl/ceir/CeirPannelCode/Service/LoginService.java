@@ -52,8 +52,9 @@ public class LoginService {
 	@Value ("${sessionLogOutTime}")
 	int sessionLogOutTime;
 	
-	public  ModelAndView loginPage(){
+	public  ModelAndView loginPage(HttpSession session){
 		log.info("inside login controller");
+		this.sessionRemoveCode(null, session);
 		ModelAndView mv=new ModelAndView();
 		mv.setViewName("login");
 		log.info("exit from login controller");
@@ -143,7 +144,8 @@ public class LoginService {
 		session.removeAttribute("usertype");
 		session.removeAttribute("name");
 		session.removeAttribute("userStatus");
-		//session.invalidate(); 
+		session.removeAttribute("currentPageLocation");
+		session.invalidate(); 
 	}
 	public ModelAndView logout(HttpSession session){
 		log.info("inside logout controller");

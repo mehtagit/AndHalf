@@ -99,7 +99,7 @@ private final Logger log = LoggerFactory.getLogger(getClass());
 	String extension = fileName.substring(fileName.lastIndexOf("."));
 	log.info("fileExtension==="+extension);
 
-					if(extension.equalsIgnoreCase(".png") || extension.equalsIgnoreCase(".jpeg") || extension.equalsIgnoreCase(".gif") || extension.equalsIgnoreCase("jpg"))		
+					if(extension.equalsIgnoreCase(".png") || extension.equalsIgnoreCase(".jpeg") || extension.equalsIgnoreCase(".gif") || extension.equalsIgnoreCase(".jpg"))		
 					{
 						response=feignCleintImplementation.downloadFile(txnid,filetype,fileName.replace("%20", " "),doc_TypeTag);
 						response.setFilePath("imageType");

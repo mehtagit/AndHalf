@@ -1,3 +1,5 @@
+sessionStorage.clear();
+
 function forgotPassword(){
 	$("#forgotPasswordBtn").prop('disabled', true);
 	var obj="";
