@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.model.AuditTrail;
 import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.FilterRequest;
@@ -43,6 +44,9 @@ public class ConfigurationController {
 
 	@Autowired
 	AuditTrailRepository auditTrailRepository;
+	
+	@Autowired
+	PropertiesReader propertiesReader;
 
 	@ApiOperation(value = "System Config view All Data", response = SystemConfigurationDb.class)
 	@PostMapping("/system/viewAll")
@@ -85,7 +89,8 @@ public class ConfigurationController {
 		logger.info("Details Get by system config Tag="+systemConfigurationDb);
 
 		SystemConfigurationDb  pocessDetails = configurationManagementServiceImpl.findByTag(systemConfigurationDb);
-
+		pocessDetails.setValue(pocessDetails.getValue().replace("$LOCAL_IP",
+				propertiesReader.localIp) );
 		MappingJacksonValue mapping = new MappingJacksonValue(pocessDetails);
 
 		logger.info("Response to send="+pocessDetails);

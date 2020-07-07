@@ -154,7 +154,7 @@ public class StockServiceImpl {
 		User user = null;
 
 		try {
-			stockValidator.validateRegister(stockMgmt);
+		//	stockValidator.validateRegister(stockMgmt);
 			stockMgmt.setStockStatus(StockStatus.NEW.getCode());
 
 			// Assign Stock is done by custom.
@@ -311,7 +311,7 @@ public class StockServiceImpl {
 		Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
 		
 		try {
-			stockValidator.validateFilter(filterRequest);
+		//	stockValidator.validateFilter(filterRequest);
 
 			if("noti".equalsIgnoreCase(source)) {
 				StockMgmt stockMgmtTemp = stockManagementRepository.getByTxnId(filterRequest.getTxnId());
@@ -486,7 +486,7 @@ public class StockServiceImpl {
 
 	public StockMgmt view(FilterRequest filterRequest) {
 		try {
-			stockValidator.validateViewById(filterRequest);
+			//stockValidator.validateViewById(filterRequest);
 			logger.info("Going to get Stock Record Info for txnId : " + filterRequest.getTxnId());
 
 			if(Objects.isNull(filterRequest.getTxnId())) {
@@ -528,7 +528,7 @@ public class StockServiceImpl {
 
 	public GenricResponse deleteStockDetailes(ConsignmentUpdateRequest deleteObj) {
 		try {
-			stockValidator.validateDelete(deleteObj);
+			//stockValidator.validateDelete(deleteObj);
 		}catch (RequestInvalidException e) {
 			logger.error("Request validation failed for txnId[" + deleteObj.getTxnId() + "]" + e);
 			
@@ -700,7 +700,7 @@ public class StockServiceImpl {
 		StockMgmt stockMgmt = null;
 
 		try {
-			stockValidator.validateEdit(distributerManagement);
+			//stockValidator.validateEdit(distributerManagement);
 			
 			if("End User".equalsIgnoreCase(distributerManagement.getUserType())){
 				distributerManagement.setRoleType("End User");
@@ -764,7 +764,7 @@ public class StockServiceImpl {
 
 	public FileDetails getFilteredStockInFile(FilterRequest filterRequest, String source) {
 		try {
-			stockValidator.validateFilter(filterRequest);
+			//stockValidator.validateFilter(filterRequest);
 			
 			DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 			DateTimeFormatter dtf2  = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
@@ -797,7 +797,7 @@ public class StockServiceImpl {
 
 	public GenricResponse acceptReject(ConsignmentUpdateRequest consignmentUpdateRequest) {
 		try {
-			stockValidator.validateAcceptReject(consignmentUpdateRequest);
+			//stockValidator.validateAcceptReject(consignmentUpdateRequest);
 			
 			UserProfile userProfile = null;
 			String firstName = "";

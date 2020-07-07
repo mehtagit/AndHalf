@@ -128,13 +128,16 @@ public class FileServiceImpl {
 
 		if("actual".equalsIgnoreCase(fileType)) {
 			if("DEFAULT".equalsIgnoreCase(tag)) {
-				fileLink = systemConfigurationDb.getValue() + txnId + "/" + fileName;
+				fileLink = systemConfigurationDb.getValue().replace("$LOCAL_IP",
+						propertiesReader.localIp) + txnId + "/" + fileName;
 			}else {	
-				fileLink = systemConfigurationDb.getValue() + txnId + "/" + tag + "/" + fileName;
+				fileLink = systemConfigurationDb.getValue().replace("$LOCAL_IP",
+						propertiesReader.localIp) + txnId + "/" + tag + "/" + fileName;
 			}
 		}else if("error".equalsIgnoreCase(fileType)) {
 			systemConfigurationDb  = configurationManagementServiceImpl.findByTag(ConfigTags.system_error_file_link);
-			fileLink = systemConfigurationDb.getValue() + txnId + "/" + txnId + "_error.csv";
+			fileLink = systemConfigurationDb.getValue().replace("$LOCAL_IP",
+					propertiesReader.localIp) + txnId + "/" + txnId + "_error.csv";
 		}
 
 		return new FileDetails("", "", fileLink);

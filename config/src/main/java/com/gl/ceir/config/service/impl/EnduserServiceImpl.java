@@ -158,7 +158,7 @@ public class EnduserServiceImpl {
 				username=data.getUsername();
 				userId=data.getUserId();
 			}
-			auditTrailRepository.save(new AuditTrail(userId, username, 17L,
+			auditTrailRepository.save(new AuditTrail(userId, username, data.getUserTypeId(),
 					data.getUserType(), 12,Features.REGISTER_DEVICE, SubFeatures.Search_NID, "", data.getNid(),data.getUserType()));
 			logger.info("AUDIT : Saved request in audit.");
 
@@ -196,7 +196,7 @@ public class EnduserServiceImpl {
 				userId=endUserDB.getAuditParameters().getUserId();
 				endUserDB.setCreatorUserId(endUserDB.getAuditParameters().getUserId());
 			}
-			auditTrailRepository.save(new AuditTrail(userId, username, 17L,
+			auditTrailRepository.save(new AuditTrail(userId, username, endUserDB.getAuditParameters().getUserTypeId(),
 					endUserDB.getAuditParameters().getUserType(), 12,Features.REGISTER_DEVICE, SubFeatures.REGISTER, "", endUserDB.getTxnId(),endUserDB.getAuditParameters().getUserType()));
 			logger.info("AUDIT : Saved request in audit.");
 
@@ -751,7 +751,7 @@ public class EnduserServiceImpl {
 				}
 				visaDb.setApprovedBy(username);
 				if(ceirActionRequest.getAction() == 0) {
-					String payloadTxnId = ceirActionRequest.getTxnId();
+					String payloadTxnId = visaDb.getTxnId();
 					// Check if someone else taken the same action on visa update.
 					VisaUpdateDb visaUpdateTemp = visaUpdateRepo.getByTxnId(payloadTxnId);
 					if(RegularizeDeviceStatus.APPROVED.getCode() == visaUpdateTemp.getStatus()) {
@@ -1180,8 +1180,7 @@ public class EnduserServiceImpl {
 			return new FileDetails( fileName, filePath,userProfileDowlonadLink.getValue()+fileName ); 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			throw new ResourceServicesException(this.getClass().getName().replace("$LOCAL_IP",
-					propertiesReader.localIp), e.getMessage());
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}finally {
 			try {
 

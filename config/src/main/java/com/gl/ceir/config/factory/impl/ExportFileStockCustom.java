@@ -44,10 +44,10 @@ public class ExportFileStockCustom implements ExportFile{
 
 	@Autowired
 	AlertServiceImpl alertServiceImpl;
-	
+
 	@Autowired
 	PropertiesReader propertiesReader;
-
+	
 	@Override
 	public FileDetails export(FilterRequest filterRequest, String source, DateTimeFormatter dtf, DateTimeFormatter dtf2,
 			String filePath, SystemConfigurationDb link) {
