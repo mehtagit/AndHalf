@@ -37,9 +37,26 @@ if(statusCode==200){
 <!-- Security Tags -->
 
 <title>CEIR | Importer Portal</title>
-<link
-	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.min.css"
-	type="text/css" rel="stylesheet" media="screen,projection">
+<script type="text/javascript"
+		src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
+	
+	<!-- <script
+		src="${context}/resources/custom_js/materialize.min.js"></script>
+	 -->
+	 <script
+		src="${context}/resources/custom_js/materialize.min.js"></script>
+	
+		<script type="text/javascript"
+		src="${context}/resources/js/materialize.js"></script>
+	<script type="text/javascript" src="${context}/resources/js/country.js"></script>
+	
+	     	
+		<!-- ajax js -->
+	<script type="text/javascript"
+		src="${context}/resources/ajax/Profile.js?version=<%= (int) (Math.random() * 10) %>"></script>
+	<script type="text/javascript"
+		src="${context}/resources/ajax/Password.js?version=<%= (int) (Math.random() * 10) %>"></script>
+	
 <link rel="apple-touch-icon-precomposed"
 	href="${context}/resources/images/favicon/apple-touch-icon-152x152.png">
 <!-- For iPhone -->
@@ -56,17 +73,7 @@ if(statusCode==200){
 	href="${context}/resources/custom_js/materialize.min.css">
 <link href="${context}/resources/css/style.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
-
-<!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
-<link href="${context}/resources/js/plugins/prism/prism.css"
-	type="text/css" rel="stylesheet" media="screen,projection">
-<link
-	href="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.css"
-	type="text/css" rel="stylesheet" media="screen,projection">
-<link
-	href="${context}/resources/js/plugins/chartist-js/chartist.min.css"
-	type="text/css" rel="stylesheet" media="screen,projection">
-	<link href="${context}/resources/project_css/leanOverlay.css" type="text/css"
+<link href="${context}/resources/project_css/leanOverlay.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
 <!-- Country -->
 
@@ -255,37 +262,8 @@ String usertypeId="${usertypeId}";
     Scripts
     ================================================ -->
 	<!-- jQuery Library -->
-	<script type="text/javascript"
-		src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
-	
-	<!-- <script
-		src="${context}/resources/custom_js/materialize.min.js"></script>
-	 -->
-	 <script
-		src="${context}/resources/custom_js/materialize.min.js"></script>
-	
-		<script type="text/javascript"
-		src="${context}/resources/js/materialize.js"></script>
-	<script type="text/javascript" src="${context}/resources/js/country.js"></script>
 	<!--prism
    <!--scrollbar-->
-	<script type="text/javascript"
-		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-	<!-- chartist -->
-	<!-- data-tables -->
-	<script type="text/javascript"
-		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
-	<script type="text/javascript"
-		src="${context}/resources/js/plugins/data-tables/data-tables-script.js"></script>
-
-		<!-- ajax js -->
-	<script type="text/javascript"
-		src="${context}/resources/ajax/Registration.js?version=<%= (int) (Math.random() * 10) %>"></script>
-	<script type="text/javascript"
-		src="${context}/resources/ajax/Profile.js?version=<%= (int) (Math.random() * 10) %>"></script>
-	<script type="text/javascript"
-		src="${context}/resources/ajax/Password.js?version=<%= (int) (Math.random() * 10) %>"></script>
-	
 
 	<!-- //////////////////////////////////////////////////////////////////////////// -->
 	<!-- //////////////////////////////////////////////////////////////////////////// -->
@@ -489,7 +467,8 @@ String usertypeId="${usertypeId}";
 										<input type="text" name="vatNo" maxlength="12" id="vatNo" pattern="[A-Za-z0-9]{9,12}"
 										oninput="InvalidMsg(this,'input','<spring:message code="validation.12Character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.12Character" />');" 
 										>
-										<label for="vatNo"><spring:message code="registration.vatnumber" /> <span class="star">*</span></label>
+							<%-- 			<label for="vatNo"><spring:message code="registration.vatnumber" /> <span class="star">*</span></label> --%>
+									<label for="vatNo"><spring:message code="registration.vatnumber" /></label>
 									</div>
 
 									<div id="vatFileDiv" style="display: none;">
@@ -891,9 +870,11 @@ String usertypeId="${usertypeId}";
          		dismissible: false
          	});
          	
-         	asTypeData();       	
+         	
+         	defer(asTypeData());
+         //	asTypeData();       	
              questionDataByCategory();
-             usertypeData2("${usertypeId}");
+         
              var password = document.getElementById("password")
              , confirm_password = document.getElementById("confirm_password");       
              
@@ -920,7 +901,7 @@ String usertypeId="${usertypeId}";
       function myFunction() {
           var x = document.getElementById("type").value;
           if (x == '0') {
-          	$("input[name='vatStatus']").prop('checked',true);
+          	//$("input[name='vatStatus']").prop('checked',true);
           	vatShowHide();
           	$("input[name='vatStatus']").attr('disabled', false);
               document.getElementById("uploadFile").style.display = "block";
@@ -931,9 +912,9 @@ String usertypeId="${usertypeId}";
               $("#companyName").val("");
               $("#file").prop('required',true);
           } else {
-          	$("#vatYes").prop('checked',true);
+          	//$("#vatYes").prop('checked',true);
           	vatShowHide();
-          	$("input[name='vatStatus']").attr('disabled', true);
+          	//$("input[name='vatStatus']").attr('disabled', true);
               document.getElementById("uploadFile").style.display = "none";
               document.getElementById("passportNumberDiv").style.display = "none";
               document.getElementById("companyNames").style.display = "block";
@@ -950,11 +931,11 @@ String usertypeId="${usertypeId}";
          function vatChecked(){
          	var radioValue = $("input[name='vatStatus']:checked").val();
          	if(radioValue==1){
-         		$("#vatNo").prop('required',true);
+         		//$("#vatNo").prop('required',true);
          		$("#vatFile").prop('required',true);
          	}
          	else{
-         		$("#vatNo").prop('required',false);
+         		//$("#vatNo").prop('required',false);
          		$("#vatFile").prop('required',false);
          		$("#vatNo").val("");
          		$("#vatFile").val("");
@@ -965,7 +946,7 @@ String usertypeId="${usertypeId}";
          function vatShowHide(){
          	var radioValue = $("input[name='vatStatus']:checked").val();
          	if(radioValue==1){
-            		$("#vatNo").prop('required',true);
+            		//$("#vatNo").prop('required',true);
          		$("#vatFile").prop('required',true);
          		document.getElementById("vatNumberField").style.display = "block";
          		document.getElementById("vatFileDiv").style.display = "block";
@@ -974,7 +955,7 @@ String usertypeId="${usertypeId}";
           		$("#vatNo").val("");
          		$("#vatFile").val("");
          		$("input[name='vatFile']").val("");
-         		$("#vatNo").prop('required',false);
+         		//$("#vatNo").prop('required',false);
          		$("#vatFile").prop('required',false);
          		document.getElementById("vatNumberField").style.display = "none";
          		document.getElementById("vatFileDiv").style.display = "none";
@@ -996,6 +977,11 @@ String usertypeId="${usertypeId}";
         		else{}
          }
          </script>
+         
+         
+    <script type="text/javascript"
+		src="${context}/resources/ajax/Registration.js?version=<%= (int) (Math.random() * 10) %>"></script>
+	
 </body>
 </html>
 <%}

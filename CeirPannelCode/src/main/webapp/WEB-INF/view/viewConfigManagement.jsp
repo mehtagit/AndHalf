@@ -82,7 +82,7 @@
 	
 <link rel="stylesheet"
 	href="${context}/resources/custom_js/jquery-ui.css">
-<script src="${context}/resources/custom_js/1.11.2_jquery-ui.js"></script>
+<script src="${context}/resources/custom_js/1.12.1_jquery-ui.min.js"></script>
 
 	
 

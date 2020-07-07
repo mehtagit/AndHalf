@@ -43,7 +43,8 @@ if(statusCode==200){
 
 <!-- For iPhone -->
 <meta name="msapplication-TileColor" content="#00bcd4">
-
+	<script type="text/javascript"
+		src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
 <!-- For Windows Phone -->
 <link rel="stylesheet"
 	href="${context}/resources/font/font-awesome/css/font-awesome.min.css">
@@ -250,8 +251,7 @@ var contextpath = "${context}";
     ================================================ -->
 	<!-- jQuery Library -->
 
-	<script type="text/javascript"
-		src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
+
 	<!-- ajax js -->
 	<script type="text/javascript"
 		src="${context}/resources/ajax/Registration.js?version=<%= (int) (Math.random() * 10) %>"></script>
