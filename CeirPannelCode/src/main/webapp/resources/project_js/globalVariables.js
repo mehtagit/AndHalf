@@ -261,7 +261,6 @@ function errorMessageReg(message){
 	setTimeout(function() {
 		window.parent.$('#error_Modal_reg').closeModal();
 	}, fadetime);
-
 }
 
 
