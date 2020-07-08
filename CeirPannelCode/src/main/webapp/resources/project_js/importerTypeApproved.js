@@ -81,7 +81,14 @@ window.parent
 			var docTypeTag='';
 			var documentFileNameArray=[];
 			
-			$('.fileDiv').each(function() {	
+			//$('.fileDiv').each(function() {
+			
+			for (var k=1; k<id; k++){
+				
+			
+			if($('#docTypetag'+fieldId).val() != undefined && $('#docTypetag'+fieldId).val() != false ){
+				
+				
 			var x={
 				"docType":$('#docTypetag'+fieldId).val(),
 				"fileName":$('#docTypeFile'+fieldId).val().replace('C:\\fakepath\\','')
@@ -106,9 +113,12 @@ window.parent
 			documentFileNameArray.push(docTypeTag);
 			
 				fileInfo.push(x);
+			}
 				fieldId++;
 				i++;
-			});
+				
+			//}); 
+			};
 			
 			if(filesameStatus==true)
 			{	
@@ -270,11 +280,11 @@ window.parent
 																.i18n('selectDocumentType')
 														+ ' </option></select></div> <div class="file-field col s12 m6" style="margin-top: 23px;"><div class="btn"><span>'
 														+ $.i18n('selectfile')
-														+ '</span><input id="docTypeFile'+id+'" type="file"  name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" type="text"></div></div><div style="cursor:pointer;background-color:red;margin-right: 1.7%;" class="remove_field btn right btn-info">-</div></div></div>'); //add input box
+														+ '</span><input id="docTypeFile'+id+'" type="file"  name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" type="text"></div></div><div style="cursor:pointer;background-color:red;margin-right: 1.7%;" onclick="remove_field('+id+')" class="remove_field btn right btn-info">-</div></div></div>'); //add input box
 							}
 
 							$.getJSON('./getSourceTypeDropdown/DOC_TYPE/21', function(
-									data) {
+									data) { 	
 
 								for (i = 0; i < data.length; i++) {
 									//console.log(data[i].interp);
@@ -299,16 +309,23 @@ window.parent
 			id--;
 		})
 		 */
-		$(wrapper).on("click", ".remove_field", function(e) { //user click on remove text
+		function remove_field(fieldId ){
+			$('#filediv' + fieldId).remove();
+			$(this).parent('div').remove();
+			x--;
+		}
+		
+		/*$(wrapper).on("click", ".remove_field", function(e) { //user click on remove text
 			e.preventDefault();
 			var Iid = id - 1;
-			/*alert("@@@"+Iid)*/
+			alert("@@@"+Iid)
 			$('#filediv' + Iid).remove();
 			$(this).parent('div').remove();
 			x--;
 			id--;
 
-		})
+		})*/
+		
 		function saveDocTypeValue() {
 			$('#docTypetagValue').val(data[i].value).change();
 			$('#docTypetagValue').val(data[i].value).change();

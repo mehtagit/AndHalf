@@ -4,7 +4,7 @@
 	response.setHeader("Cache-Control", "no-store");
 	response.setDateHeader("Expires", 0);
 	response.setHeader("Pragma", "no-cache");
-	
+	 
     /*   //200 secs
 	 session.setAttribute("usertype", null);  */
 /* 	 session.setMaxInactiveInterval(10); */
@@ -52,7 +52,7 @@
 <link rel="icon" href="${context}/resources/images/DMC-Logo.png" sizes="32x32">
 <script type="text/javascript"
 	src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>  
- --> <!-- CORE CSS-->
+  <!-- CORE CSS-->
 <link href="${context}/resources/css/materialize.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
 <link href="${context}/resources/css/style.css" type="text/css"
@@ -84,7 +84,7 @@
 
 <link rel="stylesheet"
 	href="${context}/resources/custom_js/jquery-ui.css">
-<script src="${context}/resources/custom_js/1.11.2_jquery-ui.js"></script>
+<script src="${context}/resources/custom_js/1.12.1_jquery-ui.min.js"></script>
 
 <script src="${context}/resources/custom_js/jquery.blockUI.js"></script>
 
@@ -392,7 +392,7 @@ position: fixed;
 									</select>
 								</div>
 
-								<div class="file-field col s12 m6">
+								<div class="file-field col s12 m6" id="removestar">
 									<h6 id="supportingdocumentFile" class="file-upload-heading">
 										<spring:message code="input.supportingdocument" />
 									</h6>

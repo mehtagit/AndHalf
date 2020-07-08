@@ -158,9 +158,9 @@
 		src="${context}/resources/project_js/enterKey.js"></script>
     <script>
     function StockController(selectedUserTypeRole,selectedRoleTypeId){
-    	//console.log("selectedUserTypeRole=="+selectedUserTypeRole);
+    	console.log("selectedUserTypeRole=="+selectedUserTypeRole);
     	var url="${context}/assignDistributor?userTypeId="+selectedUserTypeRole+"&selectedRoleTypeId="+selectedRoleTypeId;
-    	//console.log(url);
+    	console.log(url);
     	window.location.href=url;
    
     }   

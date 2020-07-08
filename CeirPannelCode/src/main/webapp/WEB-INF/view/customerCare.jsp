@@ -65,7 +65,7 @@
 	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.min.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
 <link
-	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.css"
+	href=""
 	type="text/css" rel="stylesheet" media="screen,projection">
 <!-- Custome CSS-->
 <link href="" type="text/css"
@@ -93,7 +93,7 @@
 
 
 <!------------------------------------------- Dragable Model---------------------------------->
-<script src="${context}/resources/custom_js/1.12.1_jquery-ui.js"></script>
+
 <script
 	src="${context}/resources/custom_js/1.12.1_jquery-ui.min.js"></script>
 
@@ -915,7 +915,7 @@ data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeI
 
 
 	<script type="text/javascript"
-		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.js"></script>
+		src=""></script>
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
 

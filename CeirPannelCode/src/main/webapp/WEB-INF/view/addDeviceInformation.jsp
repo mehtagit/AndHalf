@@ -61,7 +61,7 @@
 	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.min.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
 <link
-	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.css"
+	href=""
 	type="text/css" rel="stylesheet" media="screen,projection">
 <%-- <link href="${context}/resources/css/jquery-datepicker2.css"
 	type="text/css" rel="stylesheet" media="screen,projection"> --%>
@@ -86,7 +86,7 @@
 
 <%-- <link rel="stylesheet"
 	href="${context}/resources/project_css/jquery-ui.css"> --%>
-<script src="${context}/resources/js/jquery-ui.js"></script>
+<script src="${context}/resources/custom_js/1.12.1_jquery-ui.min.js"></script>
 
 <script src="${context}/resources/js/jquery.blockUI.js"></script>
 <style>

@@ -506,5 +506,3 @@ function isLengthValid(val){
 
 	}
 }
-
-

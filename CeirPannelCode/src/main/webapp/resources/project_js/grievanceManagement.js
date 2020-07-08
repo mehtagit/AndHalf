@@ -126,7 +126,7 @@ var featureId = 6;
 				}
 				
 				if(lang=='km'){
-					var langFile='./resources/i18n/khmer_datatable.json';
+				var langFile='./resources/i18n/khmer_datatable.json';
 					}
 				
 				var token = $("meta[name='_csrf']").attr("content");

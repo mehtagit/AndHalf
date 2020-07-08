@@ -603,7 +603,7 @@ var path="${context}";
 
 
 	<script type="text/javascript"
-		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.js"></script>
+		src=""></script>
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
 
@@ -643,7 +643,7 @@ var path="${context}";
     <!--plugins.js - Some Specific JS codes for Plugin Settings-->
    <%--  <script type="text/javascript" src="${context}/resources/js/plugins.js"></script> --%>
     <!--custom-script.js - Add your own theme custom JS-->
-    <script type="text/javascript" src="${context}/resources/js/custom-script.js"></script>
+    <script type="text/javascript" src=""></script>
     
     <script type="text/javascript"
 		src="${context}/resources/project_js/grievanceManagement.js?version=<%= (int) (Math.random() * 10) %>"></script>

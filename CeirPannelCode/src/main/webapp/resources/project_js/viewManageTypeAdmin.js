@@ -1,5 +1,5 @@
 var featureId = 21;
-var userId = $("body").attr("data-userID");
+var userId = parseInt($("body").attr("data-userID"));
 var cierRoletype = sessionStorage.getItem("cierRoletype");
 var lang = window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 
@@ -52,7 +52,7 @@ function Datatable(Url, dataUrl) {
 			|| $('#userType').val() == undefined ? null : $(
 			"#userType option:selected").text();
 	if (userType == "CEIRAdmin") {
-		var userId = 0;
+		
 		var filterRequest = {
 			"endDate" : $('#endDate').val(),
 			"startDate" : $('#startDate').val(),
@@ -66,7 +66,7 @@ function Datatable(Url, dataUrl) {
 			"FilterUserType" : FilterUserType
 		}
 	}else if(userType == "TRC"){
-		var userId = 0;
+		
 		var filterRequest = {
 			"endDate" : $('#endDate').val(),
 			"startDate" : $('#startDate').val(),
@@ -80,7 +80,7 @@ function Datatable(Url, dataUrl) {
 		}
 		
 	} else {
-		var userId = parseInt($("body").attr("data-userID"))
+		
 		var filterRequest = {
 			"endDate" : $('#endDate').val(),
 			"startDate" : $('#startDate').val(),
@@ -94,7 +94,7 @@ function Datatable(Url, dataUrl) {
 		}
 	}
 	if (lang == 'km') {
-		var langFile = "//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
+		var langFile = "./resources/i18n/khmer_datatable.json";
 	}
 
 	$("#submitFilter").prop('disabled', true);
@@ -229,11 +229,12 @@ function pageRendering() {
 									"<div class='input-field col s6 m2' ><input type="
 											+ date[i].type + " id="
 											+ date[i].id
-											+ " maxlength='19' /><label for="
+											+ " maxlength='18' /><label for="
 											+ date[i].id
 											+ " class='center-align'>"
 											+ date[i].title + "</label></div>");
 						}
+						$("#tac").prop("maxLength", 8);
 
 					}
 
@@ -280,6 +281,8 @@ function pageRendering() {
 						}
 					}
 					
+					
+					
 					var token = $("meta[name='_csrf']").attr("content");
 					var header = $("meta[name='_csrf_header']").attr("content");
 					$.ajaxSetup({
@@ -309,6 +312,7 @@ function pageRendering() {
 							});
 
 				}
+				
 
 			});
 
@@ -329,11 +333,7 @@ if (userType == "CEIRAdmin") {
 // **********************************************************Export Excel
 // file************************************************************************
 function exportTacData() {
-	if ($("body").attr("data-roleType") == "CEIRAdmin") {
-		var userId = 0;
-	} else {
-		var userId = parseInt($("body").attr("data-userID"));
-	}
+	
 	var txn = (txnIdValue == 'null' && transactionIDValue == undefined) ? $('#transactionID').val() : transactionIDValue;
 	
 	var tacStartDate = $('#startDate').val();
@@ -342,9 +342,9 @@ function exportTacData() {
 	var tacNumber = $('#tac').val();
 	var txnId = txn;
 	var featureId = 21;
-	var userType = userType;
+	var userType = $("body").attr("data-roleType");
 	var userTypeId = parseInt($("body").attr("data-userTypeID"));
-	var userId = userId
+	var userId = parseInt($("body").attr("data-userID"));
 
 	// console.log("tacStatus=="+tacStatus);
 	if (isNaN(tacStatus)) {
@@ -370,11 +370,11 @@ function exportTacData() {
 	// tacStartDate=="+tacStartDate+" tacEndDate=="+tacEndDate+"
 	// tacStatus=="+tacStatus+" txnId=="+txnId+" userId=="+userId+"
 	// pageSize=="+pageSize+" pageNo=="+pageNo);
-
+	
 	window.location.href = "./exportTac?tacNumber=" + tacNumber
 			+ "&tacStartDate=" + tacStartDate + "&tacEndDate=" + tacEndDate
 			+ "&tacStatus=" + tacStatus + "&txnId=" + txnId + "&featureId="
-			+ featureId + "&userType" + userType + "&userTypeId=" + userTypeId
+			+ featureId + "&userType=" + userType + "&userTypeId=" + userTypeId
 			+ "&userId=" + userId +"&source=" +source__val+ "&pageSize=" + pageSize + "&pageNo="
 			+ pageNo;
 
@@ -550,10 +550,10 @@ function setUploadedFiles(data) {
 	for (var i = 0; i < importerViewResponse.length; i++) {
 		for (var j = 0; j < importerViewResponse[i]["attachedFiles"].length; j++) {
 
-			alert("Document Type----->"
+		/*	alert("Document Type----->"
 					+ importerViewResponse[i].attachedFiles[j].docType.length
 					+ " File Name--->"
-					+ importerViewResponse[i].attachedFiles[j].fileName.length)
+					+ importerViewResponse[i].attachedFiles[j].fileName.length)*/
 			if ((importerViewResponse[i].attachedFiles[j].docType.length == 2)
 					|| (importerViewResponse[i].attachedFiles[j].fileName.length == 2)) {
 				var placeholderValue = $.i18n('selectFilePlaceHolder');
@@ -579,7 +579,7 @@ function setUploadedFiles(data) {
 											+ id
 											+ '" type="file"  name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" placeholder="'
 											+ placeholderValue
-											+ '" type="text"></div></div>  <div style="cursor:pointer;background-color:red;margin-right: 1.7%;" class="remove_field btn right btn-info">-</div></div></div>');
+											+ '" type="text"></div></div>  <div style="cursor:pointer;background-color:red;margin-right: 1.7%;" onclick="remove_field('+id+')" class="remove_field btn right btn-info">-</div></div></div>');
 				}
 			} else {
 
@@ -619,8 +619,8 @@ function updateImporterTypeDevice() {
 	var docTypeTag = '';
 	var documentFileNameArray = [];
 
-	$('.fileDiv').each(
-			function() {
+	for (var k=1; k<id; k++){
+		if($('#docTypetag'+fieldId).val() != undefined && $('#docTypetag'+fieldId).val() != false ){
 				var x = {
 					"docType" : $('#docTypetag' + fieldId).val(),
 					"fileName" : $('#docTypeFile' + fieldId).val().replace(
@@ -649,9 +649,10 @@ function updateImporterTypeDevice() {
 				documentFileNameArray.push(docTypeTag);
 
 				fileInfo.push(x);
+		}
 				fieldId++;
 				i++;
-			});
+	};
 
 	if (filesameStatus == true) {
 
@@ -819,7 +820,7 @@ $(".add_field_button")
 												+ id
 												+ '" type="file"  name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" placeholder="'
 												+ placeholderValue
-												+ '" type="text"></div></div>  <div style="cursor:pointer;background-color:red;margin-right: 1.7%;" class="remove_field btn right btn-info">-</div></div></div>');
+												+ '" type="text"></div></div>  <div style="cursor:pointer;background-color:red;margin-right: 1.7%;" onclick="remove_field('+id+')" class="remove_field btn right btn-info">-</div></div></div>');
 					}
 					$.getJSON('./getSourceTypeDropdown/DOC_TYPE/21', function(
 							data) {
@@ -841,17 +842,23 @@ $(".add_field_button")
 
 				});
 
-$(wrapper).on("click", ".remove_field", function(e) { // user click on remove
+/*$(wrapper).on("click", ".remove_field", function(e) { // user click on remove
 														// text
 	e.preventDefault();
 	var Iid = id - 1;
-	/* alert("@@@"+Iid) */
+	 alert("@@@"+Iid) 
 	$('#filediv' + Iid).remove();
 	$(this).parent('div').remove();
 	x--;
 	id--;
 
-})
+})*/
+
+function remove_field(fieldId ){
+	$('#filediv' + fieldId).remove();
+	$(this).parent('div').remove();
+	x--;
+}
 
 function openApproveTACPopUp(txnId, manufacturerName) {
 	manufacturerName = manufacturerName.replace("+20", " ");
@@ -1050,10 +1057,24 @@ function clearFileName() {
 function enableAddMore() {
 	$(".add_field_button").attr("disabled", false);
 }
-function enableSelectFile() {
+/*function enableSelectFile() {
 	$("#docTypeFile1").attr("disabled", false);
 	$("#docTypeFile1").attr("required", true);
 	$("#supportingdocumentFile").append('<span class="star">*</span>');
+}*/
+
+function enableSelectFile(){
+	if($('#docTypetag1').val() != ''){
+		$("#docTypeFile1").attr("disabled", false);
+		$("#docTypeFile1").attr("required", true);
+		$("#removestar").find(".star").remove();
+		$("#supportingdocumentFile").append('<span class="star">*</span>');
+	}else{
+		$("#docTypeFile1").attr("required", false);
+		$('#filetextField').val('');
+		$("#removestar").find(".star").remove();
+	}
+	
 }
 
 $("input[type=file]").keypress(function(ev) {

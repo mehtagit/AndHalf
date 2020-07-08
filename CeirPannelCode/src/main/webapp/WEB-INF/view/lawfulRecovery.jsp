@@ -80,7 +80,7 @@
 	href="${context}/resources/project_css/iconStates.css">
 <link rel="stylesheet"
 	href="${context}/resources/custom_js/jquery-ui.css">
-<script src="${context}/resources/custom_js/1.11.2_jquery-ui.js"></script>
+<script src="${context}/resources/custom_js/1.12.1_jquery-ui.min.js"></script>
 <link rel="stylesheet"
 	href="${context}/resources/project_css/intlTelInput.css">
 
@@ -843,7 +843,7 @@ onclick="_Services._selectstartDate()"></i></span>
 		src="${context}/resources/i18n_library/min.js"></script>
 
 	<script type="text/javascript"
-		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.js"></script>
+		src=""></script>
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
 

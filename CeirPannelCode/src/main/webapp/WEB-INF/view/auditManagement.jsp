@@ -65,7 +65,7 @@
 	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.min.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
 <link
-	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.css"
+	href=""
 	type="text/css" rel="stylesheet" media="screen,projection">
 <!-- Custome CSS-->
 <link href="${context}/resources/css/custom/custom.css" type="text/css"
@@ -92,7 +92,7 @@
 
 
 <!------------------------------------------- Dragable Model---------------------------------->
-<script src="${context}/resources/custom_js/1.12.1_jquery-ui.js"></script>
+
 <script
 	src="${context}/resources/custom_js/1.12.1_jquery-ui.min.js"></script>
 	

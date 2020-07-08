@@ -37,9 +37,26 @@ if(statusCode==200){
 <!-- Security Tags -->
 
 <title>CEIR | Importer Portal</title>
-<link
-	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.min.css"
-	type="text/css" rel="stylesheet" media="screen,projection">
+<script type="text/javascript"
+		src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
+	
+	<!-- <script
+		src="${context}/resources/custom_js/materialize.min.js"></script>
+	 -->
+	 <script
+		src="${context}/resources/custom_js/materialize.min.js"></script>
+	
+		<script type="text/javascript"
+		src="${context}/resources/js/materialize.js"></script>
+	<script type="text/javascript" src="${context}/resources/js/country.js"></script>
+	
+	     	
+		<!-- ajax js -->
+	<script type="text/javascript"
+		src="${context}/resources/ajax/Profile.js?version=<%= (int) (Math.random() * 10) %>"></script>
+	<script type="text/javascript"
+		src="${context}/resources/ajax/Password.js?version=<%= (int) (Math.random() * 10) %>"></script>
+	
 <link rel="apple-touch-icon-precomposed"
 	href="${context}/resources/images/favicon/apple-touch-icon-152x152.png">
 <!-- For iPhone -->
@@ -56,17 +73,7 @@ if(statusCode==200){
 	href="${context}/resources/custom_js/materialize.min.css">
 <link href="${context}/resources/css/style.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
-
-<!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
-<link href="${context}/resources/js/plugins/prism/prism.css"
-	type="text/css" rel="stylesheet" media="screen,projection">
-<link
-	href="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.css"
-	type="text/css" rel="stylesheet" media="screen,projection">
-<link
-	href="${context}/resources/js/plugins/chartist-js/chartist.min.css"
-	type="text/css" rel="stylesheet" media="screen,projection">
-	<link href="${context}/resources/project_css/leanOverlay.css" type="text/css"
+<link href="${context}/resources/project_css/leanOverlay.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
 <!-- Country -->
 
@@ -255,34 +262,8 @@ String usertypeId="${usertypeId}";
     Scripts
     ================================================ -->
 	<!-- jQuery Library -->
-	<script type="text/javascript"
-		src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
-	
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-	
-		<script type="text/javascript"
-		src="${context}/resources/js/materialize.js"></script>
-	<script type="text/javascript" src="${context}/resources/js/country.js"></script>
 	<!--prism
    <!--scrollbar-->
-	<script type="text/javascript"
-		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-	<!-- chartist -->
-	<!-- data-tables -->
-	<script type="text/javascript"
-		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
-	<script type="text/javascript"
-		src="${context}/resources/js/plugins/data-tables/data-tables-script.js"></script>
-
-		<!-- ajax js -->
-	<script type="text/javascript"
-		src="${context}/resources/ajax/Registration.js?version=<%= (int) (Math.random() * 10) %>"></script>
-	<script type="text/javascript"
-		src="${context}/resources/ajax/Profile.js?version=<%= (int) (Math.random() * 10) %>"></script>
-	<script type="text/javascript"
-		src="${context}/resources/ajax/Password.js?version=<%= (int) (Math.random() * 10) %>"></script>
-	
 
 	<!-- //////////////////////////////////////////////////////////////////////////// -->
 	<!-- //////////////////////////////////////////////////////////////////////////// -->
@@ -403,39 +384,39 @@ String usertypeId="${usertypeId}";
 
 							<div class="row">
 								<div class="input-field col s12 m12 l12">
-									<input type="text" maxlength="200" pattern="[A-Za-z0-9._%+-$@,/]+\.+{0,200}" name="propertyLocation" id="propertyLocation" 
+									<input type="text" maxlength="200" pattern="[A-Za-z0-9._%-+$@,/]{0,200}" name="propertyLocation" id="propertyLocation" 
 									oninput="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');" 
 									required> 
 									<label for="propertyLocation"> <spring:message code="input.address" /> <span class="star">*</span></label>
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="street" maxlength="20" id="street" pattern="[A-Za-z0-9._%+-$@,/]+\.+{1,20}"
+									<input type="text" name="street" maxlength="20" id="street" pattern="[A-Za-z0-9._%-+$@,/]{1,20}"
 									 oninput="InvalidMsg(this,'input','<spring:message code="validation.address20characters" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address20characters" />');" 
 									 required/>
 									<label for="street"><spring:message code="input.streetNumber" /> <span class="star">*</span> </label>
 								</div>
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="village" maxlength="30" id="village" pattern="[A-Za-z0-9._%+-$@,/]+\.{3,30}"
+									<input type="text" name="village" maxlength="30" id="village" pattern="[A-Za-z0-9._%-+$@,/]{3,30}"
 									oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');" 
 									required/>
 									<label for="village"><spring:message code="input.village" /> <span class="star">*</span> </label>
 								</div>
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="locality" maxlength="30" id="locality" pattern="[A-Za-z0-9._%+-$@,/]+\.{3,30}"
+									<input type="text" name="locality" maxlength="30" id="locality" pattern="[A-Za-z0-9._%-+$@,/]{3,30}"
 									oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');" 
 									 required/>
 									<label for="locality"><spring:message code="input.locality" /> <span class="star">*</span> </label>
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="district" maxlength="30" id="district" pattern="[A-Za-z0-9._%+-$@,/]+\.{3,30}"
+									<input type="text" name="district" maxlength="30" id="district" pattern="[A-Za-z0-9._%-+$@,/]{3,30}"
 									oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');" 
 									 required/>
 									<label for="district"><spring:message code="input.district" /> <span class="star">*</span> </label>
 								</div>
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="commune" maxlength="30" id="commune" pattern="[A-Za-z0-9._%+-$@,/]+\.{0,30}"
+									<input type="text" name="commune" maxlength="30" id="commune" pattern="[A-Za-z0-9._%-+$@,/]{0,30}"
 									oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');" 
 									 required/>
 									<label for="commune"><spring:message code="input.commune" /> <span class="star">*</span> </label>
@@ -486,7 +467,8 @@ String usertypeId="${usertypeId}";
 										<input type="text" name="vatNo" maxlength="12" id="vatNo" pattern="[A-Za-z0-9]{9,12}"
 										oninput="InvalidMsg(this,'input','<spring:message code="validation.12Character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.12Character" />');" 
 										>
-										<label for="vatNo"><spring:message code="registration.vatnumber" /> <span class="star">*</span></label>
+							<%-- 			<label for="vatNo"><spring:message code="registration.vatnumber" /> <span class="star">*</span></label> --%>
+									<label for="vatNo"><spring:message code="registration.vatnumber" /></label>
 									</div>
 
 									<div id="vatFileDiv" style="display: none;">
@@ -888,9 +870,11 @@ String usertypeId="${usertypeId}";
          		dismissible: false
          	});
          	
-         	asTypeData();       	
+         	
+         	defer(asTypeData());
+         //	asTypeData();       	
              questionDataByCategory();
-             usertypeData2("${usertypeId}");
+             defer(usertypeData2("${usertypeId}"));
              var password = document.getElementById("password")
              , confirm_password = document.getElementById("confirm_password");       
              
@@ -917,7 +901,7 @@ String usertypeId="${usertypeId}";
       function myFunction() {
           var x = document.getElementById("type").value;
           if (x == '0') {
-          	$("input[name='vatStatus']").prop('checked',true);
+          	//$("input[name='vatStatus']").prop('checked',true);
           	vatShowHide();
           	$("input[name='vatStatus']").attr('disabled', false);
               document.getElementById("uploadFile").style.display = "block";
@@ -928,9 +912,9 @@ String usertypeId="${usertypeId}";
               $("#companyName").val("");
               $("#file").prop('required',true);
           } else {
-          	$("#vatYes").prop('checked',true);
+          	//$("#vatYes").prop('checked',true);
           	vatShowHide();
-          	$("input[name='vatStatus']").attr('disabled', true);
+          	//$("input[name='vatStatus']").attr('disabled', true);
               document.getElementById("uploadFile").style.display = "none";
               document.getElementById("passportNumberDiv").style.display = "none";
               document.getElementById("companyNames").style.display = "block";
@@ -947,11 +931,11 @@ String usertypeId="${usertypeId}";
          function vatChecked(){
          	var radioValue = $("input[name='vatStatus']:checked").val();
          	if(radioValue==1){
-         		$("#vatNo").prop('required',true);
+         		//$("#vatNo").prop('required',true);
          		$("#vatFile").prop('required',true);
          	}
          	else{
-         		$("#vatNo").prop('required',false);
+         		//$("#vatNo").prop('required',false);
          		$("#vatFile").prop('required',false);
          		$("#vatNo").val("");
          		$("#vatFile").val("");
@@ -962,7 +946,7 @@ String usertypeId="${usertypeId}";
          function vatShowHide(){
          	var radioValue = $("input[name='vatStatus']:checked").val();
          	if(radioValue==1){
-            		$("#vatNo").prop('required',true);
+            		//$("#vatNo").prop('required',true);
          		$("#vatFile").prop('required',true);
          		document.getElementById("vatNumberField").style.display = "block";
          		document.getElementById("vatFileDiv").style.display = "block";
@@ -971,7 +955,7 @@ String usertypeId="${usertypeId}";
           		$("#vatNo").val("");
          		$("#vatFile").val("");
          		$("input[name='vatFile']").val("");
-         		$("#vatNo").prop('required',false);
+         		//$("#vatNo").prop('required',false);
          		$("#vatFile").prop('required',false);
          		document.getElementById("vatNumberField").style.display = "none";
          		document.getElementById("vatFileDiv").style.display = "none";
@@ -993,6 +977,11 @@ String usertypeId="${usertypeId}";
         		else{}
          }
          </script>
+         
+         
+    <script type="text/javascript"
+		src="${context}/resources/ajax/Registration.js?version=<%= (int) (Math.random() * 10) %>"></script>
+	
 </body>
 </html>
 <%}

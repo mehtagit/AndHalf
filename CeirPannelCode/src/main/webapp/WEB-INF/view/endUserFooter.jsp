@@ -52,7 +52,7 @@
 <script src="${context}/resources/custom_js/jquery.blockUI.js"></script>
 
 <!------------------------------------------- Dragable Model---------------------------------->
-<script src="${context}/resources/custom_js/1.12.1_jquery-ui.js"></script>
+
 <script
 	src="${context}/resources/custom_js/1.12.1_jquery-ui.min.js"></script>
 	
@@ -78,7 +78,7 @@
 		src="${context}/resources/js/materialize.js"></script>
 	
 	<script
-		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		src="${context}/resources/custom_js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
 
 	<script type="text/javascript"

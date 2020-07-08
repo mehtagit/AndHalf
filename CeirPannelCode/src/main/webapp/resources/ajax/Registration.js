@@ -238,7 +238,19 @@ function reg() {
 	return false;
 }
 
+
+function defer(method) {
+    if (window.jQuery) {
+       //console.log("jquery loaded");
+    } else {
+    	console.log("jquery not loaded ");
+        setTimeout(function() { defer(method) }, 50);
+    }
+}
+
+
 function asTypeData() {
+	
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
 	$.ajaxSetup({
@@ -271,6 +283,7 @@ function usertypeData() {
 	headers:
 	{ 'X-CSRF-TOKEN': token }
 	});
+	
 	$.ajax({
 		type : 'GET',
 		url : contextpath + '/usertypeList/',

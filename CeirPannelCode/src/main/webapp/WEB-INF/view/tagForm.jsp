@@ -62,7 +62,7 @@
 	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.min.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
 <link
-	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.css"
+	href=""
 	type="text/css" rel="stylesheet" media="screen,projection">
 <!-- Custome CSS-->
 <link href="" type="text/css"
@@ -85,7 +85,7 @@
 
 <link rel="stylesheet"
 	href="${context}/resources/custom_js/jquery-ui.css">
-<script src="${context}/resources/custom_js/1.11.2_jquery-ui.js"></script>
+<script src="${context}/resources/custom_js/1.12.1_jquery-ui.min.js"></script>
 
 <script src="${context}/resources/custom_js/jquery.blockUI.js"></script>
 

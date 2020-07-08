@@ -610,7 +610,7 @@ function table(url,dataUrl){
 
 
 	if(data_lang_param=='km'){
-		var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
+		var langFile="./resources/i18n/khmer_datatable.json";
 	}
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
@@ -1219,7 +1219,7 @@ function viewDeviceHistory() {
 function historytable(url,dataUrl){
 
 	if(data_lang_param=='km'){
-		var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
+		var langFile="./resources/i18n/khmer_datatable.json";
 	}
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");

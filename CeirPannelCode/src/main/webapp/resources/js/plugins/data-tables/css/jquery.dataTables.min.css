@@ -609,3 +609,13 @@ table.dataTable td {
         margin-top: 0.5em
     }
 }
+
+
+
+table.dataTable.no-footer {
+	border-bottom: 1px solid #9e9e9e;
+	width: 100% !important;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}

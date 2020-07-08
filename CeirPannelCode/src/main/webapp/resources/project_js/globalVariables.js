@@ -28,7 +28,7 @@ function fileDownload(fileName,fileType,txnId,doc_TypeTag)
 	{
 		fileName='blankFile';
 	}
-//	console.log(" fileName "+fileName+" fileType  "+fileType+" txnId "+txnId+"  doc_TypeTag "+doc_TypeTag)
+	console.log(" fileName "+fileName+" fileType  "+fileType+" txnId "+txnId+"  doc_TypeTag "+doc_TypeTag)
 
 	$.ajax({
 		url : "Consignment/dowloadFiles/"+fileType+'/'+fileName+'/'+txnId+'/'+doc_TypeTag,
@@ -36,8 +36,8 @@ function fileDownload(fileName,fileType,txnId,doc_TypeTag)
 		contentType : 'application/json; charset=utf-8',
 		type : 'GET',
 		success : function(data) {
-			//console.log(data);
-		//	console.log(data.filePath);
+			console.log(data);
+			console.log(data.filePath);
 			if(data.url=='Not Found')
 			{
 
@@ -54,7 +54,7 @@ function fileDownload(fileName,fileType,txnId,doc_TypeTag)
 				$("#fileSource").attr("src",data.url);
 			}
 			else{
-				//console.log("file is found");
+				console.log("file is found");
 				window.location.href=data.url;
 
 			}
@@ -113,7 +113,7 @@ function isFileValid(id,hiddenVal,editInputID) {
 		});
 	}
 	else {
-		//console.log("file formate is correct")
+		console.log("file formate is correct")
 
 	}
 
@@ -135,10 +135,10 @@ function isImageValid(id) {
 	$('#FilefieldId').val(id);
 	//alert(uploadedFileName+"----------"+ext+"----"+fileSize)
 	var fileExtension =ext.toLowerCase();
-  //  console.log("file type: "+fileExtension);
-    var extArray = ["png", "jpg","jpeg","gif","bmp","gif"];
-    var isInArray =extArray.includes(fileExtension);
-   // console.log("isInArray: "+isInArray)
+	console.log("file type: "+fileExtension);
+	var extArray = ["png", "jpg","jpeg","gif","bmp","gif"];
+	var isInArray =extArray.includes(fileExtension);
+	console.log("isInArray: "+isInArray)
 	if (uploadedFileName.length > 30) {
 		$('#fileFormateModal').openModal();
 		$('#fileErrormessage').text('');
@@ -176,10 +176,10 @@ function isPdfAndImageValid(id) {
 	$('#FilefieldId').val(id);
 	//alert(uploadedFileName+"----------"+ext+"----"+fileSize)
 	var fileExtension =ext.toLowerCase();
-  //  console.log("file type: "+fileExtension);
-    var extArray = ["png","jpg","jpeg","gif","bmp","gif","pdf"];
-    var isInArray =extArray.includes(fileExtension);
-    console.log("isInArray: "+isInArray)
+	console.log("file type: "+fileExtension);
+	var extArray = ["png","jpg","jpeg","gif","bmp","gif","pdf"];
+	var isInArray =extArray.includes(fileExtension);
+	console.log("isInArray: "+isInArray)
 	if (uploadedFileName.length > 30) {
 		$('#fileFormateModal').openModal();
 		$('#fileErrormessage').text('');
@@ -261,5 +261,12 @@ function errorMessageReg(message){
 	setTimeout(function() {
 		window.parent.$('#error_Modal_reg').closeModal();
 	}, fadetime);
-
 }
+
+
+
+
+$('body').on('click', '#content', function() {
+	$('#profile-dropdown', window.parent.document).css("display", "none");
+	$('.profileInfo a', window.parent.document).removeClass("active");			
+});
