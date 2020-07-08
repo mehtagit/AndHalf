@@ -82,7 +82,7 @@ window.parent
 			var documentFileNameArray=[];
 			
 			//$('.fileDiv').each(function() {
-			console.log("id-->" +id);
+			
 			for (var k=1; k<id; k++){
 				
 			
@@ -116,7 +116,7 @@ window.parent
 			}
 				fieldId++;
 				i++;
-				console.log("fieldId-->" +fieldId);
+				
 			//}); 
 			};
 			

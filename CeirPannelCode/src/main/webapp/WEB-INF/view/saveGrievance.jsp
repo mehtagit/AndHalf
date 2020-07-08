@@ -4,7 +4,7 @@
 	response.setHeader("Cache-Control", "no-store");
 	response.setDateHeader("Expires", 0);
 	response.setHeader("Pragma", "no-cache");
-	 
+	
     /*   //200 secs
 	 session.setAttribute("usertype", null);  */
 /* 	 session.setMaxInactiveInterval(10); */
@@ -178,7 +178,7 @@ placeholder="<spring:message code="grievanceFileMessage" />">
 
 </div>
 <div class="col s12 m6 right">
-<button class="btn right add_field_button" type="button" disabled="disabled"><span
+<button class="btn right add_field_button" type="button" ><span
 style="font-size: 20px;">+</span><spring:message code="input.addmorefile" /></button>
 </div>
 
@@ -329,13 +329,6 @@ class="btn"
 		src="" async></script>
 		<script type="text/javascript">
 window.parent.$('#langlist').on('change', function() {
-	
-	var token = $("meta[name='_csrf']").attr("content");
-	var header = $("meta[name='_csrf_header']").attr("content");
-	$.ajaxSetup({
-		headers:
-		{ 'X-CSRF-TOKEN': token }
-	}); 
 	var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 	window.location.assign("./openGrievanceForm?reqType=formPage&lang="+lang);
 }); 
@@ -345,7 +338,7 @@ $.i18n().load( {
 	'en': './resources/i18n/en.json',
 	'km': './resources/i18n/km.json'
 } ).done( function() { 
-	console.log("done")
+	//console.log("done")
 	});
 
 
@@ -353,22 +346,21 @@ $.i18n().load( {
 
      function saveGrievance() {
     	 $('div#initialloader').fadeIn('fast');
+    	 $("#saveGrievancesubmitButton").prop('disabled', true);
     	 		var raisedBy;
 				var name;
 				var userId;
 				
 				if($("body").attr("data-roleType")=="Customer Care"){
 					raisedBy = "Customer Care"; 
-				    //name = sessionStorage.getItem("primaryRole");
-				    //userId = sessionStorage.getItem("userId");
-				    name = $("body").attr("data-roleType");
-				    userId = $("body").attr("data-userID");
+				    name = sessionStorage.getItem("primaryRole");
+				    userId = sessionStorage.getItem("userId");
 				}else{
 					raisedBy = "Self";
 					name = $("body").attr("data-roleType");
 				 	userId = $("body").attr("data-userID");
 				}  
-				console.log("raisedBy=="+raisedBy + " name=="+ name+ " userId==="+ userId)
+				//console.log("raisedBy=="+raisedBy + " name=="+ name+ " userId==="+ userId)
 				
 				var category = $('#category').val();
 				var txnId = $('#TransactionId').val();
@@ -390,10 +382,12 @@ $.i18n().load( {
 				var documenttype = false;
 				var docTypeTag = '';
 
-				$('.fileDiv').each(
-						function() {
-
-							var x = {
+				/* $('.fileDiv').each( */
+						for(var j=1;j<id;j++){
+						
+							
+							if(typeof  $('#docTypetag' + fieldId).val()!== "undefined"){
+								var x = {
 								"docType" : $('#docTypetag' + fieldId).val(),
 								"fileName" : $('#docTypeFile' + fieldId).val()
 										.replace('C:\\fakepath\\', '')
@@ -423,9 +417,11 @@ $.i18n().load( {
 							documentFileNameArray.push(docTypeTag);
 
 							fileInfo.push(x);
+							}
 							fieldId++;
 							i++;
-						});
+							
+						}
 
 				if (filesameStatus == true) {
 
@@ -434,6 +430,7 @@ $.i18n().load( {
 					});
 					$('#fileErrormessage').text('')
 					$('#fileErrormessage').text($.i18n('duplicateFileName'));
+					 $("#saveGrievancesubmitButton").prop('disabled', false);
 $('div#initialloader').delay(300).fadeOut('slow');
 					return false;
 
@@ -447,6 +444,7 @@ $('div#initialloader').delay(300).fadeOut('slow');
 					$('#fileErrormessage').text('')
 					$('#fileErrormessage').text($.i18n('documentTypeName'));
 $('div#initialloader').delay(300).fadeOut('slow');
+$("#saveGrievancesubmitButton").prop('disabled', false);
 					return false;
 
 				}
@@ -489,7 +487,7 @@ $('div#initialloader').delay(300).fadeOut('slow');
 					/*	method: 'POST',*/
 					success : function(data, textStatus, jqXHR) {
 					
-						$("#saveGrievancesubmitButton").prop('disabled', true);
+						
 						var x = data;
 						var y = JSON.parse(x);
 
@@ -518,7 +516,7 @@ $('div#initialloader').delay(300).fadeOut('slow');
 	
 					},
 					error : function(jqXHR, textStatus, errorThrown) {
-						console.log("error in ajax")
+						//console.log("error in ajax")
 					}
 				});
 				return false;
@@ -539,7 +537,7 @@ $('div#initialloader').delay(300).fadeOut('slow');
 				processData : false,
 				contentType : false,
 				success : function(data, textStatus, jqXHR) {
-					console.log(data);
+					//console.log(data);
 
 					//$('#category').empty();
 					//$('#category').append('<option value="">'+$.i18n('selectCategory')+' *</option>');
@@ -555,7 +553,7 @@ $('div#initialloader').delay(300).fadeOut('slow');
 
 				},
 				error : function(jqXHR, textStatus, errorThrown) {
-					console.log("error in ajax")
+					//console.log("error in ajax")
 				}
 			});
 			/* $.getJSON('./getDropdownList/DOC_TYPE', function(data) {
@@ -570,7 +568,7 @@ $('div#initialloader').delay(300).fadeOut('slow');
 			 */
 
 			function cleanReplyPopUp() {
-				console.log("reset form function");
+				//console.log("reset form function");
 				$('#replymessageForm').trigger("reset");
 			}
 
@@ -584,7 +582,7 @@ $('div#initialloader').delay(300).fadeOut('slow');
 	});
 			
 			$.getJSON('./addMoreFile/grievance_supporting_doc_count', function(data) {
-				console.log(data);
+				//console.log(data);
 
 				localStorage.setItem("maxCount", data.value);
 
@@ -592,8 +590,8 @@ $('div#initialloader').delay(300).fadeOut('slow');
 
 			//var max_fields = 2; //maximum input boxes allowed
 			var max_fields = localStorage.getItem("maxCount");
-			if (max_fields==0){
-				 console.log("1111");
+			if (max_fields==0 || max_fields==1){
+				 //console.log("1111");
 				 $(".add_field_button").prop('disabled', true);
 			 }
 			var wrapper = $(".mainDiv"); //Fields wrapper
@@ -639,21 +637,9 @@ $('div#initialloader').delay(300).fadeOut('slow');
 															+ '\');"  oninvalid="InvalidMsg(this,\'file\',\''
 															+ $
 																	.i18n('selectfile')
-															+ '\');" name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" placeholder="'+placeholderValue+'" type="text"></div></div><div style="cursor:pointer;background-color:red;margin-right: 1.7%;" class="remove_field btn right btn-info">-</div></div></div>'); //add input box
+															+ '\');" name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" placeholder="'+placeholderValue+'" type="text"></div></div><div style="cursor:pointer;background-color:red;margin-right: 1.7%;" id="remove_field_icon'+id+'" class="remove_field btn right btn-info" onclick="remove_field('+id+')">-</div></div></div>'); //add input box
 								}
 
-								/* 	$.getJSON('./getDropdownList/DOC_TYPE', function(data) {
-
-
-										for (i = 0; i < data.length; i++) {
-											console.log(data[i].interp);
-											var optionId=id-1;
-											$('<option>').val(data[i].tagId).text(data[i].interp).appendTo('#docTypetag'+optionId);
-											$('<option>').val(data[i].value).text(data[i].tagId).appendTo('#docTypetagValue'+optionId);
-											console.log('#docTypetag'+optionId);
-
-										}
-									}); */
 
 								var request = {
 									"childTag" : "DOC_TYPE",
@@ -681,7 +667,7 @@ $('div#initialloader').delay(300).fadeOut('slow');
 											success : function(data,
 													textStatus, jqXHR) {
 
-												console.log(data);
+												//console.log(data);
 
 												for (i = 0; i < data.length; i++) {
 													var optionId = id - 1;
@@ -707,30 +693,30 @@ $('div#initialloader').delay(300).fadeOut('slow');
 											},
 											error : function(jqXHR, textStatus,
 													errorThrown) {
-												console.log("error in ajax")
+												//console.log("error in ajax")
 											}
 										});
 
 								id++;
 
 							});
-			/* $(wrapper).on("click", ".remove_field", function (e) { //user click on remove text
+			
+			/* $(wrapper).on("click", ".remove_field", function(e) { //user click on remove text
 				e.preventDefault();
-				$(this).parent('div').remove();
-				x--;
-				id--;
-			})
-			 */
-			$(wrapper).on("click", ".remove_field", function(e) { //user click on remove text
-				e.preventDefault();
-				var Iid = id - 1;
-				/*alert("@@@"+Iid)*/
+				var  Iid = id - 1;
+				alert(Iid);
 				$('#filediv' + Iid).remove();
 				$(this).parent('div').remove();
 				x--;
 				id--;
 
-			})
+			}) */
+			
+			function remove_field(fieldId ){
+				$('#filediv' + fieldId).remove();
+				$(this).parent('div').remove();
+				x--;
+				}
 			function saveDocTypeValue() {
 				$('#docTypetagValue').val(data[i].value).change();
 				$('#docTypetagValue').val(data[i].value).change();
@@ -780,14 +766,14 @@ $('div#initialloader').delay(300).fadeOut('slow');
 
 							},
 							error : function(jqXHR, textStatus, errorThrown) {
-								console.log("error in ajax")
+								//console.log("error in ajax")
 							}
 						});
 
 					});
 
 			function enableAddMore() {
-				$(".add_field_button").attr("disabled", false);
+			//	$(".add_field_button").attr("disabled", false);
 			}
 			function enableSelectFile() {
 				if($('#docTypetag1').val() != ''){
@@ -841,7 +827,10 @@ $('#fileFormateModal').closeModal();
 <script language="JavaScript">
 sessionStorage.setItem("loginMsg",
 "*Session has been expired");
+sessionStorage.setItem("currentPageLocation", currentPageLocation);
 window.top.location.href = "./login";
+
+
 </script>
 <%
 }

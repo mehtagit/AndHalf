@@ -126,7 +126,7 @@ var featureId = 6;
 				}
 				
 				if(lang=='km'){
-						var langFile="./resources/i18n/khmer_datatable.json";
+				var langFile='./resources/i18n/khmer_datatable.json';
 					}
 				
 				var token = $("meta[name='_csrf']").attr("content");
@@ -473,7 +473,7 @@ var featureId = 6;
 
 			function saveGrievanceReply()
 			{
-			
+				 $("#grievanceReplyButton").prop('disabled', true);
 				var grievanceTicketStatus;
 				if ($('#closeTicketCheck').is(":checked"))
 				{
@@ -516,7 +516,8 @@ var featureId = 6;
 				var filesameStatus=false;
 				var documenttype=false;
 				var docTypeTag='';
-				$('.fileDiv').each(function() {	
+				for(var j=1;j<id;j++){
+					if(typeof  $('#docTypetag' + fieldId).val()!== "undefined"){
 					var x={
 					"docType":$('#docTypetag'+fieldId).val(),
 					"fileName":$('#docTypeFile'+fieldId).val().replace('C:\\fakepath\\',''),
@@ -541,10 +542,10 @@ var featureId = 6;
 			         }
 					documentFileNameArray.push(documentFileName);
 					documentFileNameArray.push(docTypeTag);
-					
+					}
 					fieldId++;
 					i++;
-				});
+				}
 				if(filesameStatus==true)
 				{	
 				
@@ -554,6 +555,7 @@ var featureId = 6;
 				    });
 					$('#fileErrormessage').text('')
 					$('#fileErrormessage').text($.i18n('duplicateFileName'));
+					 $("#grievanceReplyButton").prop('disabled', false);
 				return false;
 				
 				}
@@ -564,6 +566,7 @@ var featureId = 6;
 					    });
 					$('#fileErrormessage').text('')
 					$('#fileErrormessage').text($.i18n('documentTypeName'));
+					 $("#grievanceReplyButton").prop('disabled', false);
 				return false;
 				
 				}
@@ -715,13 +718,12 @@ var featureId = 6;
 				var grievancetxnId=$('#transactionID').val();
 				//var grievanceId=$('#grievanceID').val();
 				var grievanceStatus=$('#recentStatus').val();
-				var filterUserName = $('#userName').val();
-				var FilterUserType = $('#userType').val()=='-1' || $('#userType').val()==undefined ? null : $("#userType option:selected").text();
 				
 				var grievanceId = (txnIdValue == 'null' && transactionIDValue == undefined) ? $('#grievanceID').val() : transactionIDValue;
 				
 				//console.log("grievanceId-->" +grievanceId);
 				//console.log("grievanceStartDate---" +grievanceStartDate+  "grievanceEndDate---" +grievanceEndDate +  "grievancetxnId---" +grievancetxnId+  "grievanceId---" +grievanceId+  "grievanceStatus---" +grievanceStatus);
+				console.log("window.userId--->" +window.userId)
 				//var source__val = tacStartDate != ''|| tacEndDate != ''|| tacStatus != '-1'|| tacNumber != ''|| txnId != '' ? 'filter' : $("body").attr("data-session-source");	
 				
 				if(grievanceId != ''){
@@ -736,7 +738,7 @@ var featureId = 6;
 				var info = table.page.info(); 
 				var pageNo=info.page;
 				var pageSize =info.length;
-				window.location.href="./exportGrievance?grievanceStartDate="+grievanceStartDate+"&grievanceEndDate="+grievanceEndDate+"&grievancetxnId="+grievancetxnId+"&grievanceId="+grievanceId+"&grievanceStatus="+grievanceStatus+"&source="+source__val+"&pageSize="+pageSize+"&pageNo="+pageNo+"&userId="+window.userId+"&filterUserName="+filterUserName+"&FilterUserType="+FilterUserType;
+				window.location.href="./exportGrievance?grievanceStartDate="+grievanceStartDate+"&grievanceEndDate="+grievanceEndDate+"&grievancetxnId="+grievancetxnId+"&grievanceId="+grievanceId+"&grievanceStatus="+grievanceStatus+"&source="+source__val+"&pageSize="+pageSize+"&pageNo="+pageNo+"&userId="+window.userId;
 			}
 
 			//************************************************ category dropdown function ******************************************************************
@@ -784,7 +786,7 @@ var featureId = 6;
 		 
 				//var max_fields = 2; //maximum input boxes allowed
 				var max_fields =localStorage.getItem("maxCount");
-				if (max_fields==0){
+				if (max_fields==0 || max_fields==1){
 					 //console.log("1111");
 					 $(".add_field_button").prop('disabled', true);
 				 }
@@ -800,7 +802,7 @@ var featureId = 6;
 				if (x < max_fields) { //max input box allowed
 					x++; //text box increment
 					$(wrapper).append(
-							'<div id="filediv'+id+'" class="fileDiv"><div class="row"><div class="file-field col s12 m6"><label for="Category">'+documenttype+'</label><select id="docTypetag'+id+'" oninput="InvalidMsg(this,\'select\',\''+$.i18n('selectDocumentType')+'\');"  oninvalid="InvalidMsg(this,\'select\',\''+$.i18n('selectDocumentType')+'\');"  class="browser-default"> <option value="" disabled selected>'+selectDocumentType+' </option></select><select id="docTypetagValue'+id+'" style="display:none" class="browser-default"> <option value="" disabled selected>'+selectDocumentType+' </option></select></div><div class="file-field col s12 m6" style="margin-top: 23px;"><div class="btn"><span>'+selectfile+'</span><input id="docTypeFile'+id+'" type="file" oninput="InvalidMsg(this,\'file\',\''+$.i18n('selectfile')+'\');"  oninvalid="InvalidMsg(this,\'file\',\''+$.i18n('selectfile')+'\');"  name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" placeholder="'+$.i18n('selectFilePlaceHolder')+'" type="text"></div></div><div style="cursor:pointer;background-color:red;margin-right: 1.7%;" class="remove_field btn right btn-info">-</div></div></div>'
+							'<div id="filediv'+id+'" class="fileDiv"><div class="row"><div class="file-field col s12 m6"><label for="Category">'+documenttype+'</label><select id="docTypetag'+id+'" oninput="InvalidMsg(this,\'select\',\''+$.i18n('selectDocumentType')+'\');"  oninvalid="InvalidMsg(this,\'select\',\''+$.i18n('selectDocumentType')+'\');"  class="browser-default"> <option value="" disabled selected>'+selectDocumentType+' </option></select><select id="docTypetagValue'+id+'" style="display:none" class="browser-default"> <option value="" disabled selected>'+selectDocumentType+' </option></select></div><div class="file-field col s12 m6" style="margin-top: 23px;"><div class="btn"><span>'+selectfile+'</span><input id="docTypeFile'+id+'" type="file" oninput="InvalidMsg(this,\'file\',\''+$.i18n('selectfile')+'\');"  oninvalid="InvalidMsg(this,\'file\',\''+$.i18n('selectfile')+'\');"  name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" placeholder="'+$.i18n('selectFilePlaceHolder')+'" type="text"></div></div><div style="cursor:pointer;background-color:red;margin-right: 1.7%;" class="remove_field btn right btn-info" onclick="remove_field('+id+')">-</div></div></div>'
 					); //add input box
 				}
 	               /*$.getJSON('./getDropdownList/DOC_TYPE', function(data) {
@@ -869,16 +871,22 @@ var featureId = 6;
 				id++;
 				/*alert("$$$$"+id)*/
 			});
-			$(wrapper).on("click", ".remove_field", function (e) { //user click on remove text
+			/*$(wrapper).on("click", ".remove_field", function (e) { //user click on remove text
 				e.preventDefault();
 				var Iid=id-1;
-				/*alert("@@@"+Iid)*/
+				alert("@@@"+Iid)
 				$('#filediv'+Iid).remove();
 				$(this).parent('div').remove();
 				x--;
 				id--;
 			
-			})
+			})*/
+			
+			function remove_field(fieldId ){
+				$('#filediv' + fieldId).remove();
+				$(this).parent('div').remove();
+				x--;
+				}
 
 			function saveDocTypeValue(){
 				$('#docTypetagValue').val(data[i].value).change();
@@ -936,7 +944,7 @@ var featureId = 6;
 				$('#fileFormateModal').closeModal();
 			}
 			function enableAddMore(){
-				$(".add_field_button").attr("disabled", false);
+				//$(".add_field_button").attr("disabled", false);
 			}
 			function enableSelectFile(){
 				$("#docTypeFile1").attr("disabled", false);

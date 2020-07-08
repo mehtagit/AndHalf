@@ -379,7 +379,7 @@ var contextpath = "${context}";
 									<div class="input-field col s12 m6 l6">
 									<input type="text" name="village" maxlength="30"
 										class="form-control boxBorder boxHeight" id="village"
-										pattern="[A-Za-z0-9._%+-$@,/]+\.{3,30}" placeholder="" 
+										pattern="[A-Za-z0-9._%-+$@,/]{3,30}" placeholder="" 
 										oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');" 
 										oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 									required >
@@ -389,7 +389,7 @@ var contextpath = "${context}";
 								<div class="input-field col s12 m6 l6">
 									<input type="text" name="locality" maxlength="30"
 										class="form-control boxBorder boxHeight" id="locality"
-										pattern="[A-Za-z0-9._%+-$@,/]+\.{3,30}" placeholder="" 
+										pattern="[A-Za-z0-9._%-+$@,/]{3,30}" placeholder="" 
 									
 										oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');" 
 										oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');" required  >
@@ -400,7 +400,7 @@ var contextpath = "${context}";
 								<div class="input-field col s12 m6 l6">
 									<input type="text" name="district" placeholder="" maxlength="30"
 										class="form-control boxBorder boxHeight" id="district"
-										pattern="[A-Za-z0-9._%+-$@,/]+\.{3,30}" 
+										pattern="[A-Za-z0-9._%-+$@,/]{3,30}" 
 										
 										oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');" 
 										oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
@@ -411,7 +411,7 @@ var contextpath = "${context}";
 								<div class="input-field col s12 m6 l6">
 									<input type="text" placeholder="" name="commune" maxlength="30"
 										class="form-control boxBorder boxHeight" id="commune"
-										pattern="[A-Za-z0-9._%+-$@,/]+\.{0,30}" 
+										pattern="[A-Za-z0-9._%-+$@,/]{0,30}" 
 										oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');" 
 										oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');" required  >
 									<label for="commune"><spring:message code="input.commune" /> <span class="star">*</span>

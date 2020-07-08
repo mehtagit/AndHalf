@@ -259,7 +259,7 @@ button.modal-action.modal-close.waves-effect.waves-green.btn-flat.right
 
 					</div>
 					<div class="col s12 m6 right">
-						<button class="btn right add_field_button" disabled="disabled">
+						<button class="btn right add_field_button" >
 							<span style="font-size: 20px;">+</span>
 							<spring:message code="input.addmorefile" />
 						</button>
@@ -277,13 +277,13 @@ button.modal-action.modal-close.waves-effect.waves-green.btn-flat.right
 						<!-- <a href="./Consignment/sampleFileDownload/filetype=sample">Download Sample Format</a><br> -->
 					</div>
 					<div class="col s12 m12 center">
-						<p id="closeTicketCheckbox" style="float: left; display: none;">
+						<%-- <p id="closeTicketCheckbox" style="float: left; display: none;">
 							<label> <span><spring:message
 										code="modal.message.griev.closeticket" /></span> <input
 								type="checkbox" id="closeTicketCheck" />
 							</label>
-						</p>
-						<button class="right btn" type="submit">
+						</p> --%>
+						<button class="right btn" type="submit" id="grievanceReplyButton">
 							<spring:message code="input.reply" />
 						</button>
 					</div>

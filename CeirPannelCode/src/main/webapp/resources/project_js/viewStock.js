@@ -47,7 +47,7 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 		$('#viewStockModal').openModal({
 	    	   dismissible:false
 	       });
-		
+		var userTypeId = $("body").attr("data-selectedRoleTypeId");
 		var role = currentRoleType == null ? roleType : currentRoleType;
 		var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
@@ -56,7 +56,7 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 		{ 'X-CSRF-TOKEN': token }
 		});
 		$.ajax({
-			url : "./openStockPopup?reqType=editPage&txnId="+txnId+'&role='+role+'&userType='+userType+"&userId="+userId,
+			url : "./openStockPopup?reqType=editPage&txnId="+txnId+'&role='+role+'&userType='+userType+"&userId="+userId+'&userTypeId='+userTypeId,
 			dataType : 'json',
 			contentType : 'application/json; charset=utf-8',
 			type : 'GET',
@@ -352,7 +352,6 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 	var sourceType =localStorage.getItem("sourceType");
 	var currentRoleType = $("body").attr("data-selected-roleType"); 
 	//alert("sourceType<><><><>"+sourceType);
-	var userRole = $("body").attr("data-roleType");
 	
 	function filter(lang,sourceParam){
 		var filterSource= $("body").attr("data-filterSource");
@@ -377,13 +376,13 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 
 		}
 	//console.log("sourceParam= "+sourceParam);
-	if((userRole=="Importer" || userRole=="Retailer" || userRole=="Distributor" || userRole=="Manufacturer") && sourceType !="viaStock" ){
+		if((currentRoleType=="Importer" || currentRoleType=="Retailer" || currentRoleType=="Distributor" || currentRoleType=="Manufacturer") && sourceType !="viaStock" ){
 		Datatable('headers?lang='+lang+'&type=stockHeaders','stockData?source='+sourceParam);
-		}else if(userRole=="Custom" && sourceType !="viaStock"){
+		}else if(currentRoleType=="Custom" && sourceType !="viaStock"){
 		Datatable('./headers?lang='+lang+'&type=customStockHeaders','stockData?source='+sourceParam)
-		}else if(userRole=="CEIRAdmin" && sourceType !="viaStock"){
+		}else if(currentRoleType=="CEIRAdmin" && sourceType !="viaStock"){
 		Datatable('./headers?lang='+lang+'&type=adminStockHeaders','stockData?source='+sourceParam)
-		}else if((userRole=="Importer"|| userRole=="Retailer" || userRole=="Distributor" || userRole=="Custom") && sourceType =="viaStock"){
+		}else if((currentRoleType=="Importer"|| currentRoleType=="Retailer" || currentRoleType=="Distributor" || currentRoleType=="Custom") && sourceType =="viaStock"){
 		Datatable('./headers?lang='+lang+'&type=stockcheckHeaders','stockData?sourceType=viaStock&source='+sourceParam)
 		}
 		localStorage.removeItem('sourceType');
@@ -924,7 +923,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 	});
 
 	
-function historyRecord(txnID){
+	function historyRecord(txnID){
 			////console.log("txn id=="+txnID)
 			$("#tableOnModal").openModal({dismissible:false});
 			 var filter =[];
@@ -942,16 +941,6 @@ function historyRecord(txnID){
 			 "dbName" : "ceirconfig",
 			 "txnId":txnID
 			 }
-			 }else if(userTypeValue=='Manufacturer'){
-				 var filterRequest={
-						 "columns":["created_on","modified_on","txn_id","user_type","role_type","stock_status",
-						 "quantity","device_quantity","remarks","assigner_id",
-						 "user_id"
-						 ],
-						 "tableName": "stock_mgmt_aud",
-						 "dbName" : "ceirconfig",
-						 "txnId":txnID
-				} 
 			 }
 			 else{
 			 var filterRequest={
@@ -964,6 +953,7 @@ function historyRecord(txnID){
 			 "txnId":txnID
 			 }
 			 }
+			 
 			
 			formData.append("filter",JSON.stringify(filterRequest));	
 			if(lang=='km'){
@@ -1006,4 +996,4 @@ function historyRecord(txnID){
 			$('.datepicker').on('mousedown',function(event){
 			event.preventDefault();
 		});
-	}
+}

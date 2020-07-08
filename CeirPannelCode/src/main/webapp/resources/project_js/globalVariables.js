@@ -135,10 +135,10 @@ function isImageValid(id) {
 	$('#FilefieldId').val(id);
 	//alert(uploadedFileName+"----------"+ext+"----"+fileSize)
 	var fileExtension =ext.toLowerCase();
-    console.log("file type: "+fileExtension);
-    var extArray = ["png", "jpg","jpeg","gif","bmp","gif"];
-    var isInArray =extArray.includes(fileExtension);
-    console.log("isInArray: "+isInArray)
+	console.log("file type: "+fileExtension);
+	var extArray = ["png", "jpg","jpeg","gif","bmp","gif"];
+	var isInArray =extArray.includes(fileExtension);
+	console.log("isInArray: "+isInArray)
 	if (uploadedFileName.length > 30) {
 		$('#fileFormateModal').openModal();
 		$('#fileErrormessage').text('');
@@ -176,10 +176,10 @@ function isPdfAndImageValid(id) {
 	$('#FilefieldId').val(id);
 	//alert(uploadedFileName+"----------"+ext+"----"+fileSize)
 	var fileExtension =ext.toLowerCase();
-    console.log("file type: "+fileExtension);
-    var extArray = ["png","jpg","jpeg","gif","bmp","gif","pdf"];
-    var isInArray =extArray.includes(fileExtension);
-    console.log("isInArray: "+isInArray)
+	console.log("file type: "+fileExtension);
+	var extArray = ["png","jpg","jpeg","gif","bmp","gif","pdf"];
+	var isInArray =extArray.includes(fileExtension);
+	console.log("isInArray: "+isInArray)
 	if (uploadedFileName.length > 30) {
 		$('#fileFormateModal').openModal();
 		$('#fileErrormessage').text('');
@@ -261,5 +261,12 @@ function errorMessageReg(message){
 	setTimeout(function() {
 		window.parent.$('#error_Modal_reg').closeModal();
 	}, fadetime);
-
 }
+
+
+
+
+$('body').on('click', '#content', function() {
+	$('#profile-dropdown', window.parent.document).css("display", "none");
+	$('.profileInfo a', window.parent.document).removeClass("active");			
+});

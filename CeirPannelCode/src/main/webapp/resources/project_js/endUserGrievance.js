@@ -25,6 +25,7 @@
 	});
 
 function saveaAonymousGrievance(){
+	$("#saveAnonymousGrieavance").prop('disabled', true);
 	$('div#initialloader').fadeIn('fast');
 	var firstName=$('#firstName').val();
 	var middleName=$('#middleName').val();
@@ -52,10 +53,8 @@ function saveaAonymousGrievance(){
 	var documenttype=false;
 	var docTypeTag='';
 	var documentFileNameArray=[];
-	$('.endUserfileDiv').each(function() {	
-
-		
-		var x={
+	for(var j=1;j<id;j++){
+		if(typeof  $('#endUserdocTypetag' + fieldId).val()!== "undefined"){var x={
 		"docType":$('#endUserdocTypetag'+fieldId).val(),
 		"fileName":$('#endUserdocTypeFile'+fieldId).val().replace('C:\\fakepath\\','')
 		}
@@ -80,9 +79,11 @@ function saveaAonymousGrievance(){
 		documentFileNameArray.push(docTypeTag);
 		
 		fileInfo.push(x);
+		}
 		fieldId++;
 		i++;
-	});
+		
+	}
 	
 	if(filesameStatus==true)
 	{	
@@ -90,6 +91,7 @@ function saveaAonymousGrievance(){
 	$('#fileFormateModal').openModal();
 		$('#fileErrormessage').text('')
 		$('#fileErrormessage').text($.i18n('duplicateFileName'));
+		$("#saveAnonymousGrieavance").prop('disabled', false);
 	return false;
 	
 	}
@@ -100,6 +102,7 @@ function saveaAonymousGrievance(){
 	$('#fileFormateModal').openModal();
 		$('#fileErrormessage').text('')
 		$('#fileErrormessage').text($.i18n('documentTypeName'));
+		$("#saveAnonymousGrieavance").prop('disabled', false);
 	return false;
 	
 	}
@@ -141,7 +144,7 @@ function saveaAonymousGrievance(){
 		success: function (data, textStatus, jqXHR) {
 			$('div#initialloader').delay(300).fadeOut('slow');
 			//console.log(data);
-			 $("#saveAnonymousGrieavance").prop('disabled', true);
+			 
 			var x=data;
 			var y= JSON.parse(x);
 			 $('#GrievanceMsg').openModal(); 
@@ -163,18 +166,18 @@ $.ajaxSetup({
 headers:
 { 'X-CSRF-TOKEN': token }
 });
-$.getJSON('./addMoreFile/grievance_supporting_doc_count', function(data) {
+/*$.getJSON('./addMoreFile/grievance_supporting_doc_count', function(data) {
 	//console.log(data);
 	
 	localStorage.setItem("maxCount", data.value);
 	
-});
+});*/
 
 	//var max_fields = 2; //maximum input boxes allowed
 	var max_fields =localStorage.getItem("maxCount");
 	//console.log("max_fields from api="+max_fields);
 
-	if (max_fields==0){
+	if (max_fields==0 || max_fields==1){
 		 //console.log("1111");
 		 $(".endUser_add_field_button").prop('disabled', true);
 	 }
@@ -188,7 +191,7 @@ $(".endUser_add_field_button").click(function (e) { //on add input button click
 	if (x < max_fields) { //max input box allowed
 		x++; //text box increment
 		$(endUserwrapper).append(
-				'<div id="endUserfilediv'+id+'" class="endUserfileDiv"><div class="row"><div class="file-field col s12 m6"><label for="">'+$.i18n('documenttype')+' <span class="star">*</span></label><select id="endUserdocTypetag'+id+'" required class="browser-default"> <option value="" disabled selected>'+$.i18n('selectDocumentType')+' </option></select></div> <div class="file-field col s12 m6" style="margin-top: 23px;"><div class="btn"><span>'+$.i18n('selectfile')+'</span><input id="endUserdocTypeFile'+id+'" type="file" required name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" placeholder="Upload file" type="text"></div></div><div  class="endUser_remove_field btn right btn-info">-Remove</div></div></div>'
+				'<div id="endUserfilediv'+id+'" class="endUserfileDiv"><div class="row"><div class="file-field col s12 m6"><label for="">'+$.i18n('documenttype')+' <span class="star">*</span></label><select id="endUserdocTypetag'+id+'" required class="browser-default"> <option value="" disabled selected>'+$.i18n('selectDocumentType')+' </option></select></div> <div class="file-field col s12 m6" style="margin-top: 23px;"><div class="btn"><span>'+$.i18n('selectfile')+'</span><input id="endUserdocTypeFile'+id+'" type="file" required name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" placeholder="Upload file" type="text"></div></div><div  class="endUser_remove_field btn right btn-info" onclick="remove_field_endUser('+id+')">-Remove</div></div></div>'
 				/* '<div id="filediv'+id+'" class="fileDiv"><div class="row"><div class="file-field col s12 m6" style="margin-top: 23px;"><div class="btn"><span>'+$.i18n('selectfile')+'</span><input id="docTypeFile'+id+'" type="file" required name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" type="text"></div></div><div class="file-field col s12 m6"><label for="Category">'+$.i18n('documenttype')+' <span class="star">*</span></label><select id="docTypetag'+id+'" required class="browser-default"> <option value="" disabled selected>'+$.i18n('selectDocumentType')+' </option></select><select id="docTypetagValue'+id+'" style="display:none" class="browser-default"> <option value="" disabled selected>'+$.i18n('selectDocumentType')+' </option></select></div><div style="cursor:pointer;background-color:red;margin-right: 1.7%;" class="remove_field btn right btn-info">-</div></div></div>' */
 		); //add input box
 	}
@@ -247,17 +250,23 @@ $(".endUser_add_field_button").click(function (e) { //on add input button click
 
 });
 
-$(endUserwrapper).on("click", ".endUser_remove_field", function (e) { //user click on remove text
+/*$(endUserwrapper).on("click", ".endUser_remove_field", function (e) { //user click on remove text
 e.preventDefault();
 var Iid=id-1;
-/*//alert("@@@"+Iid)*/
+//alert("@@@"+Iid)
 $('#endUserfilediv'+Iid).remove();
 $(this).parent('div').remove();
 x--;
 id--;
 
 })
+*/
 
+function remove_field_endUser(fieldId ){
+				$('#endUserfilediv' + fieldId).remove();
+				$(this).parent('div').remove();
+				x--;
+	}
 
 /* $.getJSON('./getDropdownList/DOC_TYPE', function(data) {
 for (i = 0; i < data.length; i++) {
@@ -311,11 +320,11 @@ function  closeCancelPopUp()
 }
 
 function enableEndUserAddMore(){
-$(".endUser_add_field_button").attr("disabled", false);
+//$(".endUser_add_field_button").attr("disabled", false);
 }
 
 function enableEndUserReplyAddMore(){
-$(".add_field_button").attr("disabled", false);
+//$(".add_field_button").attr("disabled", false);
 }
 
 
@@ -345,6 +354,9 @@ function enableReplySelectFile(){
 						headers:
 						{ 'X-CSRF-TOKEN': token }
 						});
+						if(lang=='km'){
+							var langFile='./resources/i18n/khmer_datatable.json';
+							}
 				$.ajax({
 					url: 'headers?type=grievanceHeaders',
 					type: 'POST',
@@ -362,6 +374,9 @@ function enableReplySelectFile(){
 							"bFilter" : false,
 							"bInfo" : true,
 							"bSearchable" : true,
+							"oLanguage": {  
+								"sUrl": langFile  
+							},
 					
 							ajax: {
 								url : 'grievanceData',
