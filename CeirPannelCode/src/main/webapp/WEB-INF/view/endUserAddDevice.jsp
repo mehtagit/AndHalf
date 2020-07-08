@@ -360,6 +360,23 @@ input[type='search'] {
 			</div>
 		</div>
 	</div>
+	
+	<div id="endUserAddDeviceDuplicateImei" class="modal">
+		<h6 class="modal-header"><spring:message code="modal.header.registerdevice" /></h6>
+		<div class="modal-content">
+			<div class="row">
+				<h6 id="dupliCateImeiMsg"><spring:message code="modal.message.futureRef" />
+				</h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<div class="input-field col s12 center">
+						<a  class="modal-close btn" ><spring:message code="modal.ok" /></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 	<!-- Modal End -->
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>

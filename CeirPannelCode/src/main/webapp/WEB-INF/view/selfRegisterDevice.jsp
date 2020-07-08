@@ -68,14 +68,13 @@
 	href="${context}/resources/project_css/intlTelInput.css">
 
 <link rel="stylesheet"
-	href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
-<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+	href="${context}/resources/custom_js/jquery-ui.css">
+<script src="${context}/resources/custom_js/1.12.1_jquery-ui.min.js"></script>
 
-<script src="http://malsup.github.io/jquery.blockUI.js"></script>
-
-
+<script src="${context}/resources/custom_js/jquery.blockUI.js"></script>
 
 
+	
 <style>
 .row {
 	margin-bottom: 0;

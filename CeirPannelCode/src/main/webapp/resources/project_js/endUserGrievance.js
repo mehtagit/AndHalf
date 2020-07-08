@@ -166,12 +166,12 @@ $.ajaxSetup({
 headers:
 { 'X-CSRF-TOKEN': token }
 });
-$.getJSON('./addMoreFile/grievance_supporting_doc_count', function(data) {
+/*$.getJSON('./addMoreFile/grievance_supporting_doc_count', function(data) {
 	//console.log(data);
 	
 	localStorage.setItem("maxCount", data.value);
 	
-});
+});*/
 
 	//var max_fields = 2; //maximum input boxes allowed
 	var max_fields =localStorage.getItem("maxCount");
@@ -354,6 +354,9 @@ function enableReplySelectFile(){
 						headers:
 						{ 'X-CSRF-TOKEN': token }
 						});
+						if(lang=='km'){
+							var langFile='./resources/i18n/khmer_datatable.json';
+							}
 				$.ajax({
 					url: 'headers?type=grievanceHeaders',
 					type: 'POST',
@@ -371,6 +374,9 @@ function enableReplySelectFile(){
 							"bFilter" : false,
 							"bInfo" : true,
 							"bSearchable" : true,
+							"oLanguage": {  
+								"sUrl": langFile  
+							},
 					
 							ajax: {
 								url : 'grievanceData',

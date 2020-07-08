@@ -229,7 +229,7 @@ function pageRendering() {
 									"<div class='input-field col s6 m2' ><input type="
 											+ date[i].type + " id="
 											+ date[i].id
-											+ " maxlength='16' /><label for="
+											+ " maxlength='18' /><label for="
 											+ date[i].id
 											+ " class='center-align'>"
 											+ date[i].title + "</label></div>");

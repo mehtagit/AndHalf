@@ -10,18 +10,17 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-@Override
-protected void configure(HttpSecurity http){
-try {
-http
-.authorizeRequests().antMatchers(HttpMethod.OPTIONS,"/**").permitAll()
-.and()
-.formLogin().disable()
-.logout().disable().
-headers().frameOptions().sameOrigin().cacheControl().disable();
-}catch( Exception ex) {
-ex.printStackTrace();
-}
-}
-
+	@Override
+	protected void configure(HttpSecurity http){
+	try {
+	http
+	.authorizeRequests().antMatchers(HttpMethod.OPTIONS,"/**").permitAll()
+	.and()
+	.formLogin().disable()
+	.logout().logoutUrl("/logout").invalidateHttpSession(true).deleteCookies("JSESSIONID").and().
+	headers().frameOptions().sameOrigin().cacheControl().disable();
+	}catch( Exception ex) {
+	ex.printStackTrace();
+	}
+	}
 }

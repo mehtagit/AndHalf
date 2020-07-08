@@ -29,6 +29,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -146,11 +147,13 @@ public class LoginService {
 		session.removeAttribute("userStatus");
 		session.removeAttribute("currentPageLocation");
 		session.invalidate(); 
+		SecurityContextHolder.clearContext();
 	}
 	public ModelAndView logout(HttpSession session){
 		log.info("inside logout controller");
 		Integer userid=(Integer)session.getAttribute("userid");
 		sessionRemoveCode( userid, session);
+		
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("msg","you have been logged out successfully");
 		mv.setViewName("login");
