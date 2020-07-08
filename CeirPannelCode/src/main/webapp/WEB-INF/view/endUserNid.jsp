@@ -252,7 +252,7 @@ section {
 			<script type="text/javascript"
 		src="${context}/resources/project_js/validationMsg.js?version=<%= (int) (Math.random() * 10) %>"></script>
 <script type="text/javascript"
-		src="${context}/resources/project_js/profileInfoTab.js" async></script>
+		src="" async></script>
 		<script type="text/javascript"
 		src="${context}/resources/project_js/ValidationFileOutsidePortal.js?version=<%= (int) (Math.random() * 10) %>"></script>
 </body>

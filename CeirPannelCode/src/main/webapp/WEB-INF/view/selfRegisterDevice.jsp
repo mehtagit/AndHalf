@@ -1078,8 +1078,6 @@ position: fixed;
 	<script type="text/javascript"
 		src="${context}/resources/project_js/globalVariables.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript"
-		src="${context}/resources/project_js/selfRegisterDevice.js?version=<%= (int) (Math.random() * 10) %>"></script>
-	<script type="text/javascript"
 		src="${context}/resources/project_js/dragableModal.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 	<script type="text/javascript"
@@ -1091,7 +1089,9 @@ position: fixed;
 	<script type="text/javascript"
 		src="${context}/resources/project_js/ValidationFileOutsidePortal.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
-
+<script type="text/javascript"
+		src="${context}/resources/project_js/selfRegisterDevice.js?version=<%= (int) (Math.random() * 10) %>"></script>
+	
 <script type="text/javascript">
 /*  var input2 = document.querySelector("#phone");
 window.intlTelInput(input2, {

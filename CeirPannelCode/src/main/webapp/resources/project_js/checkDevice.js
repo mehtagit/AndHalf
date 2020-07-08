@@ -18,8 +18,10 @@ $(document).ready(function () {
 
 });
 
+$('div#initialloader').fadeIn('fast');
 function DeviceDetails(){
-
+	$('div#initialloader').fadeIn('fast');
+	
 	var RequestData={
 			"deviceIdType":parseInt($("#deviceIdType").val()),
 			"deviceId":$("#DeviceID").val()
@@ -50,9 +52,10 @@ function DeviceDetails(){
 				$("#invalidDetails").css("display", "block");
 				setInvalidData(response)
 			}
-
+			$('div#initialloader').delay(300).fadeOut('slow');
 		},
 		error : function() {
+			$('div#initialloader').delay(300).fadeOut('slow');
 			$('#errorModal').openModal();
 		}
 	});
@@ -89,6 +92,7 @@ $.getJSON('./getDropdownList/DEVICE_ID_TYPE', function(data) {
 		$('<option>').val(data[i].value).text(data[i].interp)
 		.appendTo('#deviceIdType');
 	}
+	$('div#initialloader').delay(300).fadeOut('slow');
 });
 
 
@@ -102,7 +106,7 @@ $('#deviceIdType').on('change', function() {
 		$("#DeviceID").removeAttr("onkeyup");
 		$("#DeviceID").attr("oninput","InvalidMsg(this,'input','"+$.i18n('validationIMEI')+"')");
 		$("#DeviceID").attr("oninvalid","InvalidMsg(this,'input','"+$.i18n('validationIMEI')+"')");
-		$('#errorMsgOnModal').text($.i18n('IMEIMsg'));
+		$('div p#errorMsgOnModal').text($.i18n('IMEIMsg'));
 		break;
 	case 1:
 		$("#DeviceID").attr("pattern","[A-F0-9]{15,16}");
@@ -110,7 +114,7 @@ $('#deviceIdType').on('change', function() {
 		$("#DeviceID").removeAttr("onkeyup");
 		$("#DeviceID").attr("oninput","InvalidMsg(this,'input','"+$.i18n('validationMEID')+"')");
 		$("#DeviceID").attr("oninvalid","InvalidMsg(this,'input','"+$.i18n('validationMEID')+"')");
-		$('#errorMsgOnModal').text($.i18n('MEIDMsg'));
+		$('div p#errorMsgOnModal').text($.i18n('MEIDMsg'));
 		break;
 	case 2:
 		$('#DeviceID').val('');
@@ -119,7 +123,7 @@ $('#deviceIdType').on('change', function() {
 		$("#DeviceID").attr("maxlength","11");	
 		$("#DeviceID").attr("oninput","InvalidMsg(this,'input','"+$.i18n('validationESN11')+"')");
 		$("#DeviceID").attr("oninvalid","InvalidMsg(this,'input','"+$.i18n('validationESN11')+"')");
-		$('#errorMsgOnModal').text($.i18n('ESNMsg'));
+		$('div p#errorMsgOnModal').text($.i18n('ESNMsg'));
 		break;
 	}
 
