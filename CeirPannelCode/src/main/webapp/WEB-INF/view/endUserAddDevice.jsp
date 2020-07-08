@@ -73,7 +73,7 @@
 
 
 <!------------------------------------------- Dragable Model---------------------------------->
-<script src="${context}/resources/custom_js/1.12.1_jquery-ui.js"></script>
+
 <script
 	src="${context}/resources/custom_js/1.12.1_jquery-ui.min.js"></script>
 	
@@ -355,6 +355,23 @@ input[type='search'] {
 				<div class="input-field col s12 center">
 					<div class="input-field col s12 center">
 						<button class="btn" id="ok"><spring:message code="modal.ok" /></button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div id="endUserAddDeviceDuplicateImei" class="modal">
+		<h6 class="modal-header"><spring:message code="modal.header.registerdevice" /></h6>
+		<div class="modal-content">
+			<div class="row">
+				<h6 id="dupliCateImeiMsg"><spring:message code="modal.message.futureRef" />
+				</h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<div class="input-field col s12 center">
+						<a  class="modal-close btn" ><spring:message code="modal.ok" /></a>
 					</div>
 				</div>
 			</div>
