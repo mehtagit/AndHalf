@@ -504,7 +504,7 @@ placeholder="<spring:message code="input.selectfile" />">
 
 </div>
 <div class="col s12 m6 right">
-<button class="btn right add_field_button" disabled="disabled"><span
+<button class="btn right add_field_button"><span
 style="font-size: 20px;">+</span> <spring:message code="input.addmorefile" /></button>
 </div>
               <div class="col s12 m12">  <p>
@@ -599,6 +599,14 @@ style="font-size: 20px;">+</span> <spring:message code="input.addmorefile" /></b
 							style="margin-left: 10px;"><spring:message code="modal.ok" /></button>
 					</div>
 				</div>
+			</div>
+		</div>
+	</div>
+	<div id="viewuplodedModel" class="modal" style="overflow: hidden">
+		<a href="#!" class="modal-close waves-effect waves-green btn-flat">&times;</a>
+		<div class="modal-content">
+			<div class="row">
+				<img src="" id="fileSource" width="400" height="400">
 			</div>
 		</div>
 	</div>
