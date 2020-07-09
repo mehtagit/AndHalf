@@ -4,7 +4,8 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!-- Security Tags -->
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 <sec:csrfMetaTags />
 <!-- Security Tags -->
 <c:set var="context" value="${pageContext.request.contextPath}" />
@@ -19,10 +20,10 @@
 	content="Materialize is a Material Design Admin Template,It's modern, responsive and based on Material Design by Google. ">
 <meta name="keywords"
 	content="materialize, admin template, dashboard template, flat admin template, responsive admin template,">
-	<!-- Security Tags -->
-<meta name="_csrf" content="${_csrf.token}"/>
+<!-- Security Tags -->
+<meta name="_csrf" content="${_csrf.token}" />
 <!-- default header name is X-CSRF-TOKEN -->
-<meta name="_csrf_header" content="${_csrf.headerName}"/>
+<meta name="_csrf_header" content="${_csrf.headerName}" />
 <!-- Security Tags -->
 <title>Check Devices</title>
 
@@ -35,7 +36,8 @@
 <jsp:include page="/WEB-INF/view/endUserFooter.jsp"></jsp:include>
 
 <!-- Favicons-->
-<link rel="icon" href="${context}/resources/images/DMC-Logo.png" sizes="32x32">
+<link rel="icon" href="${context}/resources/images/DMC-Logo.png"
+	sizes="32x32">
 <!-- Favicons-->
 <link rel="apple-touch-icon-precomposed"
 	href="images/favicon/apple-touch-icon-152x152.png">
@@ -53,8 +55,7 @@
 <link href="${context}/resources/css/style.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
 <!-- Custome CSS-->
-<link href="" type="text/css"
-	rel="stylesheet" media="screen,projection">
+<link href="" type="text/css" rel="stylesheet" media="screen,projection">
 
 <!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
 <link href="${context}/resources/js/plugins/prism/prism.css"
@@ -121,8 +122,9 @@ footer {
 		margin-top: 0;
 	}
 }
+
 i.fa.fa-times-circle-o.red-text {
-    font-size: 32px !important;
+	font-size: 32px !important;
 }
 </style>
 
@@ -131,6 +133,7 @@ i.fa.fa-times-circle-o.red-text {
 <body data-lang-param="${pageContext.response.locale}">
 
 
+	<div id="initialloader"></div>
 
 	<!-- START MAIN -->
 	<div id="">
@@ -170,15 +173,18 @@ i.fa.fa-times-circle-o.red-text {
 												<label for="DeviceID"><spring:message
 														code="registration.pleaseenterdeviceid" /> <span
 													class="star">*</span> :</label>
-												<p id="errorMsgOnModal" class="deviceErrorTitle"></p>
+
 											</div>
 											<div class="input-field col s6 m7">
-												<input type="text" id="DeviceID" required  >
+												<input type="text" id="DeviceID" required>
 
 											</div>
-										</div>
 
-										<div class="row" style="margin-top: 20px;">
+										</div>
+										<div class="row" style="margin-top: 10px; color: red;">
+											<p id="errorMsgOnModal" class=""></p>
+										</div>
+										<div class="row">
 											<div class="input-field col s12 center">
 												<!-- <a href="#submitIMEI" class="btn modal-trigger">Submit</a>  -->
 												<button class=" btn" type="submit">
@@ -205,7 +211,9 @@ i.fa.fa-times-circle-o.red-text {
 									<p style="margin-left: 50px;">
 										<spring:message code="registration.theimeinumber" />
 										<span id="validImeiNumber"> </span>
-										<spring:message code="registration.valid" /> <i class="fa fa-check-circle-o green-text" style="    margin-left: -43px;float: left;" title="Approved"></i>
+										<spring:message code="registration.valid" />
+										<i class="fa fa-check-circle-o green-text"
+											style="margin-left: -43px; float: left;" title="Approved"></i>
 									</p>
 									<div class="input-field col s6 m4">
 										<label for="validTac"><spring:message
@@ -258,10 +266,12 @@ i.fa.fa-times-circle-o.red-text {
 									</p> -->
 									<p style="margin-left: 50px;">
 										<spring:message code="registration.theimeinumber" />
-										<span id="InvalidImeiNumber"> </span> 
-										<spring:message code="registration.invalid" /><i class="fa fa-times-circle-o red-text" style="margin-left: -43px; float: left;" title="Rejected"></i>
+										<span id="InvalidImeiNumber"> </span>
+										<spring:message code="registration.invalid" />
+										<i class="fa fa-times-circle-o red-text"
+											style="margin-left: -43px; float: left;" title="Rejected"></i>
 									</p>
-									
+
 									<!-- <i class="fa fa-times-circle-o red-text" style="margin-top: -40px; float: left;" title="Rejected"></i> -->
 									<div class="input-field col s6 m4">
 										<label for="invalidTac"><spring:message
@@ -388,23 +398,22 @@ i.fa.fa-times-circle-o.red-text {
 
 
 	<script>
-       /*  function hide() {
-            var In = $('#DeviceID').val()
-            if (In == "black") {
+		/*  function hide() {
+		     var In = $('#DeviceID').val()
+		     if (In == "black") {
 
-                $("#inputDetails").css("display", "block");
-                $("#singleInput").css("display", "none");
+		         $("#inputDetails").css("display", "block");
+		         $("#singleInput").css("display", "none");
 
-            } else if (In == "blue") {
-                $("#inputDetails").css("display", "none");
-                $("#singleInput").css("display", "block");
-            }
-        } */
-    </script>
+		     } else if (In == "blue") {
+		         $("#inputDetails").css("display", "none");
+		         $("#singleInput").css("display", "block");
+		     }
+		 } */
+	</script>
 
 	>
-	<script
-		src="${context}/resources/custom_js/jquery.min.js"></script>
+	<script src="${context}/resources/custom_js/jquery.min.js"></script>
 	<!-- ajax js -->
 	<script type="text/javascript"
 		src="${context}/resources/ajax/Registration.js?version=<%= (int) (Math.random() * 10) %>"></script>
@@ -415,7 +424,7 @@ i.fa.fa-times-circle-o.red-text {
 	<!--scrollbar-->
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-<!--plugins.js - Some Specific JS codes for Plugin Settings-->
+	<!--plugins.js - Some Specific JS codes for Plugin Settings-->
 	<script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
 	<!--custom-script.js - Add your own theme custom JS-->
 	<!-- i18n library -->
@@ -449,7 +458,7 @@ i.fa.fa-times-circle-o.red-text {
 
 	<script type="text/javascript"
 		src="${context}/resources/i18n_library/min.js"></script>
-	
+
 	<script type="text/javascript"
 		src="${context}/resources/project_js/globalVariables.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript"
@@ -457,8 +466,7 @@ i.fa.fa-times-circle-o.red-text {
 	<script type="ces/project_js/enterKey.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/ValidationFileOutsidePortal.js?version=<%= (int) (Math.random() * 10) %>"></script>
-	<script type="text/javascript"
-		src=""></script>
+	<script type="text/javascript" src=""></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/checkDevice.js?version=<%= (int) (Math.random() * 10) %>"></script>
 

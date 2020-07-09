@@ -16,7 +16,7 @@ $('#langlist').on('change', function() {
 		var feature=$(this).contents().find("body").attr('data-id');
 		sessionStorage.setItem("data-feature", feature);
 		changeLanguage(lang);
-		console.log(currentPageLocation);
+		
 		sessionStorage.setItem("currentPageLocation", currentPageLocation);
 	});    
 	window.location.replace("?lang="+lang);
@@ -38,7 +38,7 @@ $('.navData li:nth-child(1)').addClass("active");
 var featurID=sessionStorage.getItem("data-feature") == null ? $('.navData li a').attr("data-featureid") : sessionStorage.getItem("data-feature");
 var intialController=sessionStorage.getItem("currentPageLocation") == null ?  urlController : sessionStorage.getItem("currentPageLocation");
 $(document).ready(function () {
-	console.log("_______________"+intialController);
+	
 	//var DB_LANG_VALUE= sessionStorage.getItem("sessionLang") == null ? window.parent.$("body").attr("data-lang") :  sessionStorage.getItem("sessionLang");
 	$("#section").append(" <iframe name='mainArea' class='embed-responsive-item' id='mainArea' frameBorder='0' src="+intialController+" width='100%' onLoad='self.scrollTo(0,0)'></iframe>");
 	//window.parent.$("body").attr("data-lang", DB_LANG_VALUE);
@@ -53,7 +53,7 @@ $(document).ready(function () {
 	$('div#initialloader').delay(300).fadeOut('slow'); 
 	isActive(featurID);
 	sessionStorage.removeItem("data-feature");
-	console.log(sessionStorage.getItem("data-feature"));
+	
 	 $("#manualDownload").attr("href", "./Consignment/ManualFileDownload?userTypeId="+userTypeID);
 	
 $(window).scrollTop(0); 

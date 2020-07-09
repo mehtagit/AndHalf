@@ -590,7 +590,7 @@ String usertypeId="${usertypeId}";
 								<button disabled="disabled" class="btn" id="btnSave" type="submit" style="margin-left: 10px;">
 									<spring:message code="button.submit" />
 								</button>
-								<a href="${context}/" class="btn" style="margin-left: 10px;"><spring:message code="registration.cancel" /></a>
+								<a href="${context}/DMC" class="btn" style="margin-left: 10px;"><spring:message code="registration.cancel" /></a>
 							</div>
 						</div>
 					</div>

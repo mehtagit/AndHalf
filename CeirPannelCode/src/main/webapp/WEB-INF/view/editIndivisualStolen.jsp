@@ -1311,7 +1311,7 @@ onclick="_Services._selectstartDate()"></i></span>
 		src="${context}/resources/project_js/validationMsg.js"></script>
 
 	<script type="text/javascript"
-		src="${context}/resources/project_js/profileInfoTab.js" async></script>
+		src="" async></script>
 		
 		<script type="text/javascript" src="${context}/resources/js/intlTelInput.js"></script>
 		<script type="text/javascript" src="${context}/resources/js/utils.js"></script>

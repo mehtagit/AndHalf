@@ -610,7 +610,7 @@ var contextpath = "${context}";
 							<span><spring:message code="input.requiredfields" /> <span class="star">*</span></span>
 							<div class="input-field col s12 center">
 								<button disabled="disabled" class="btn" id="btnSave" type="submit" style="margin-left: 10px;"> <spring:message code="button.submit" /> </button>
-								<a href="${context}/" class="btn" style="margin-left: 10px;"><spring:message code="button.cancel" /></a>
+								<a href="${context}/DMC" class="btn" style="margin-left: 10px;"><spring:message code="button.cancel" /></a>
 							</div>
 						</div>
 					</div>
@@ -880,8 +880,14 @@ var contextpath = "${context}";
            password.onchange = validatePassword;
            confirm_password.onkeyup = validatePassword;
         
-             populateCountries("country","state");
-             populateStates("country","state");
+           populateCountries( "country",    "state");
+           
+           $("#country").val("Cambodia");
+           
+           populateStates( "country",
+                   "state" );
+
+      
         });   
 
 	         function clearFilesName(id)

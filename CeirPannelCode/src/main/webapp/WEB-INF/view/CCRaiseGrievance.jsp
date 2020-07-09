@@ -193,7 +193,7 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}" data-u
                 <div class="container" style="padding-bottom: 70px;" >
                     <div class="section">
                         <div class="row card-panel  responsive-page" id="endUserRaiseGrievance" style="display: none">
-                            <h6 class="fixPage-modal-header "><spring:message code="modal.header.reportGrievance" /></h6>
+                            <h6 class="fixPage-modal-header"><spring:message code="modal.header.reportGrievance" /></h6>
                             <form onsubmit="return saveaAonymousGrievance()" method="POST" enctype="multipart/form-data" id="saveGrievance">
                              <input type="text" id="pageTypeValue" value="${reportType}" style="display: none;">
                                 <div class="col s12 m12 l12">
@@ -586,9 +586,11 @@ style="font-size: 20px;">+</span> <spring:message code="input.addmorefile" /></b
     Scripts
     ================================================ -->
  <!-- jQuery Library -->
-    
+  	
     <script src="${context}/resources/custom_js/jquery.min.js"></script>
        <!-- ajax js -->
+     <script type="text/javascript"
+		src="${context}/resources/js/materialize.js"></script>	
     <script type="text/javascript" src="${context}/resources/ajax/Registration.js?version=<%= (int) (Math.random() * 10) %>"></script>
     <!--materialize js-->
     
@@ -645,10 +647,8 @@ var path="${context}";
     <!--custom-script.js - Add your own theme custom JS-->
     <script type="text/javascript" src=""></script>
     
-    <script type="text/javascript"
-		src="${context}/resources/project_js/grievanceManagement.js?version=<%= (int) (Math.random() * 10) %>"></script>
-    <script type="text/javascript"
-		src="${context}/resources/project_js/CCRaiseGrievance.js?version=<%= (int) (Math.random() * 10) %>"></script>
+   
+   
 	
 			<%-- <script type="text/javascript"
 		src="${context}/resources/project_js/_dateFunction.js?version=<%= (int) (Math.random() * 10) %>" async></script> --%>
@@ -657,7 +657,16 @@ var path="${context}";
 	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js?version=<%= (int) (Math.random() * 10) %>"></script>
 <script type="text/javascript"
 		src="${context}/resources/project_js/ValidationFileOutsidePortal.js?version=<%= (int) (Math.random() * 10) %>"></script>
-    
+	
+	<script type="text/javascript">
+$(function() {
+	
+	$('html, body').animate({scrollTop: document.documentElement.scrollTop + 100}, 0);
+});
+</script>	
+   
+  <script type="text/javascript"
+		src="${context}/resources/project_js/CCRaiseGrievance.js?version=<%= (int) (Math.random() * 10) %>"></script>   
 
    
 </body>
@@ -672,6 +681,7 @@ sessionStorage.setItem("loginMsg",
 "*Session has been expired");
 window.top.location.href = "./login";
 </script>
+
 <%
 }
 %>

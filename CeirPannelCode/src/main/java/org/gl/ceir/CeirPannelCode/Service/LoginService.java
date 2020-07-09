@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.http.HttpRequest;
 import org.gl.ceir.CeirPannelCode.Feignclient.FeatureFeignImpl;
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Feignclient.UserLoginFeignImpl;
@@ -55,7 +54,7 @@ public class LoginService {
 	
 	public  ModelAndView loginPage(HttpSession session){
 		log.info("inside login controller");
-		this.sessionRemoveCode(null, session);
+		//this.sessionRemoveCode(null, session);
 		ModelAndView mv=new ModelAndView();
 		mv.setViewName("login");
 		log.info("exit from login controller");
@@ -145,9 +144,9 @@ public class LoginService {
 		session.removeAttribute("usertype");
 		session.removeAttribute("name");
 		session.removeAttribute("userStatus");
-		session.removeAttribute("currentPageLocation");
+		//session.removeAttribute("currentPageLocation");
 		session.invalidate(); 
-		SecurityContextHolder.clearContext();
+		//SecurityContextHolder.clearContext();
 	}
 	public ModelAndView logout(HttpSession session){
 		log.info("inside logout controller");
