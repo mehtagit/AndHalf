@@ -185,7 +185,7 @@ var contextpath = "${context}";
                         <div class="row card-panel upload-stock-responsive-page">
                             <h6 class="fixPage-modal-header "><spring:message code="modal.UploadStock" /></h6>
                            	<form action="" onsubmit="return uploadEndUserStock()" method="POST"
-								enctype="multipart/form-data" id="uploadStock">
+								enctype="multipart/form-data" >
                                 <div class="col s12 m12 l12">
                                     <div class="row">
                                         
@@ -269,7 +269,7 @@ var contextpath = "${context}";
                                  	
                                 <div class="col s12 m12 l12">
                                 <form action="" onsubmit="return validateTxnId()" method="POST"
-								enctype="multipart/form-data" id="uploadStock">
+								enctype="multipart/form-data" >
                                     <div class="row" id="singleInput">
                                         <div class="row">
                                             <div class="input-field col s6 m5">

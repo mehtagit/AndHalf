@@ -60,11 +60,15 @@
 <link
 	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.min.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
-<%-- <link href="${context}/resources/css/jquery-datepicker2.css"
-	type="text/css" rel="stylesheet" media="screen,projection"> --%>
+	<link
+	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.css"
+	type="text/css" rel="stylesheet" media="screen,projection">
+<link href="${context}/resources/css/jquery-datepicker2.css"
+	type="text/css" rel="stylesheet" media="screen,projection">
 <link
 	href="${context}/resources/font/font-awesome/css/font-awesome.min.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
+	
 
 <!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
 <link href="${context}/resources/js/plugins/prism/prism.css"
@@ -81,7 +85,8 @@
 	href="${context}/resources/project_css/intlTelInput.css">
 <link rel="stylesheet"
 	href="${context}/resources/custom_js/jquery-ui.css">
-<script src="${context}/resources/custom_js/1.12.1_jquery-ui.min.js"></script>
+<%-- <script src="${context}/resources/custom_js/1.12.1_jquery-ui.min.js"></script> --%>
+<script src="${context}/resources/custom_js/1.11.2_jquery-ui.js"></script>
 
 <style>
 .checkboxFont {
@@ -1434,7 +1439,8 @@ select {
 		<script type="text/javascript" src="${context}/resources/js/utils.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script>
 		$('.datepick').datepicker({
-			dateFormat : "yy-mm-dd"
+			dateFormat : "yy-mm-dd",
+			maxDate: "0"
 		});
 
 		populateCountries("singleDevicecountry", "singleDevicestate");
