@@ -880,8 +880,14 @@ var contextpath = "${context}";
            password.onchange = validatePassword;
            confirm_password.onkeyup = validatePassword;
         
-             populateCountries("country","state");
-             populateStates("country","state");
+           populateCountries( "country",    "state");
+           
+           $("#country").val("Cambodia");
+           
+           populateStates( "country",
+                   "state" );
+
+      
         });   
 
 	         function clearFilesName(id)

@@ -991,15 +991,15 @@ var contextpath = "${context}";
   </script>
 
 	<script>
-        populateCountries(
-            "country",
-            "state"
-        );
-       
-        populateStates(
-            "country",
-            "state"
-        );
+ 
+        populateCountries( "country",    "state");
+        
+        $("#country").val("Cambodia");
+        
+        populateStates( "country",
+                "state" );
+
+        
     </script>
 </body>
 </html>
