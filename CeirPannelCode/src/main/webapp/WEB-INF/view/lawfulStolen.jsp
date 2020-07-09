@@ -78,8 +78,6 @@
 <link rel="stylesheet"
 	href="${context}/resources/project_css/iconStates.css">
 <link rel="stylesheet"
-	href="${context}/resources/project_css/intlTelInput.css">
-<link rel="stylesheet"
 	href="${context}/resources/custom_js/jquery-ui.css">
 <script src="${context}/resources/custom_js/1.12.1_jquery-ui.min.js"></script>
 
@@ -108,11 +106,10 @@ section#content {
 }
 
 .contact-label {
-	margin-top: -17px;
-	margin-bottom: 0;
-	font-size: 0.8rem;
+    margin-top: -7px;
+    margin-bottom: 0;
+    font-size: 0.8rem;
 }
-
 .blockingType {
 	height: 4.6rem;
 	margin-bottom: 5px;
@@ -793,8 +790,7 @@ select {
 															</div>
 															<div class="file-path-wrapper">
 																<input class="file-path validate" type="text"
-																	placeholder="<spring:message code="
-																	input.UploadFIR" />"
+																	placeholder="<spring:message code="input.UploadFIR" />"
 																	id="uploadFirSingleName"
 																	title="Please upload national
 																ID image">
@@ -1434,7 +1430,8 @@ select {
 		<script type="text/javascript" src="${context}/resources/js/utils.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script>
 		$('.datepick').datepicker({
-			dateFormat : "yy-mm-dd"
+			dateFormat : "yy-mm-dd",
+			minDate:"0"
 		});
 
 		populateCountries("singleDevicecountry", "singleDevicestate");

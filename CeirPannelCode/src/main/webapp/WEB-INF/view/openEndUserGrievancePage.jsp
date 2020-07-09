@@ -167,7 +167,7 @@ var contextpath = "${context}";
                     <div class="section">
                         <div class="row card-panel responsive-page" id="endUserRaiseGrievance" style="display: none">
                             <h6 class="fixPage-modal-header "><spring:message code="modal.Grievance" /></h6>
-                            <form onsubmit="return saveaAonymousGrievance()" method="POST" enctype="multipart/form-data" id="saveGrievance">
+                            <form onsubmit="return saveaAonymousGrievance()" method="POST" enctype="multipart/form-data" >
                              <input type="text" id="pageTypeValue" value="${reportType}" style="display: none;">
                                 <div class="col s12 m12 l12">
                                     <div class="row">
@@ -309,7 +309,7 @@ var contextpath = "${context}";
                             <h6 class="fixPage-modal-header "><spring:message code="modal.TrackGrievance" /></h6>
                            <div id="trackGrievanceDiv" style="display: none;">
                             <div class="col s12 m12 l12">
-                                <form action="" onsubmit="return endUsergrivanceLibraryTable()" method="POST" enctype="multipart/form-data" id="saveGrievance">
+                                <form action="" onsubmit="return endUsergrivanceLibraryTable()" method="POST" enctype="multipart/form-data">
                                     <div class="row" id="singleInput">
                                         <!-- <h6>Track Grievance</h6>
                                         <hr> -->

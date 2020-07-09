@@ -327,7 +327,7 @@ $.getJSON('./getDropdownList/CURRENCY', function(data) {
 $(document).ready(function () {
 
 	$( document ).ready(function() {
-		
+		$("#user123").css("display", "none");
 		var In = $("body").attr("session-value");
 		if(In.length > 0 && In !='null' ){
 			var token = $("meta[name='_csrf']").attr("content");
@@ -343,8 +343,8 @@ $(document).ready(function () {
 				contentType : 'application/json; charset=utf-8',
 				type : 'GET',
 				success : function(data) {
-                   
-                    sessionStorage.setItem("nationalId", In);
+					
+                   sessionStorage.setItem("nationalId", In);
                     localStorage.setItem("nationalId", In);
 					if (data.errorCode == 1) {
 					
@@ -400,7 +400,6 @@ $(document).ready(function () {
 				success : function(data) {
 
 					//	sessionStorage.removeItem('nationalId');
-
 					if (data.errorCode == 1) {
 						$("#user123").css("display", "none");
 						$("#user456").css("display", "block");

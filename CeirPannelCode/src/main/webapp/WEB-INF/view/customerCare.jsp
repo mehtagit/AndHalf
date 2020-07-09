@@ -973,7 +973,7 @@ data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeI
 	<script type="text/javascript"
 		src="${context}/resources/project_js/dragableModal.js"></script>
 	<script type="text/javascript"
-		src="${context}/resources/project_js/profileInfoTab.js" async></script>	
+		src="" async></script>	
 	
 
 </body>

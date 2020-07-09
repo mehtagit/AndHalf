@@ -16,12 +16,10 @@
 	 System.out.println("timeout========"+timeout); 
 	if (session.getAttribute("usertype") != null) { */
 %>
-<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
 <!-- Security Tags -->
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
@@ -29,102 +27,56 @@
 <!-- Security Tags -->
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="msapplication-tap-highlight" content="no">
-<meta name="description"
-	content="Materialize is a Material Design Admin Template,It's modern, responsive and based on Material Design by Google. ">
-<meta name="keywords"
-	content="materialize, admin template, dashboard template, flat admin template, responsive admin template,">
-	<meta http-equiv='cache-control' content='no-cache'>
-<meta http-equiv='expires' content='-1'>
-<meta http-equiv='pragma' content='no-cache'>
-<title>Profile</title>
-
-<link rel="apple-touch-icon-precomposed"
-	href="${context}/resources/images/favicon/apple-touch-icon-152x152.png">
-<!-- For iPhone -->
-<meta name="msapplication-TileColor" content="#00bcd4">
-<meta name="msapplication-TileImage"
-	content="images/favicon/mstile-144x144.png">
-<!-- Security Tags -->
+<html>          
+<head>  
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="description"
+        content="Materialize is a Material Design Admin Template,It's modern, responsive and based on Material Design by Google. ">
+    <meta name="keywords"
+        content="materialize, admin template, dashboard template, flat admin template, responsive admin template,">
+        <!-- Security Tags -->
 <meta name="_csrf" content="${_csrf.token}"/>
 <!-- default header name is X-CSRF-TOKEN -->
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
 <!-- Security Tags -->
+    <title>Profile</title>
 
-		
-<!-- Favicons-->
-<link rel="icon" href="${context}/resources/images/DMC-Logo.png" sizes="32x32">
-<!-- For Windows Phone -->
-<link rel="stylesheet"
-	href="${context}/resources/font/font-awesome/css/font-awesome.min.css">
+    <!-- Favicons-->
+    <!--<link rel="icon" href="images/favicon/favicon-32x32.png" sizes="32x32">-->
+    <!-- Favicons-->
+    <link rel="apple-touch-icon-precomposed" href="${context}/resources/images/favicon/apple-touch-icon-152x152.png">
+    <!-- For iPhone -->
+    <meta name="msapplication-TileColor" content="#00bcd4">
+    <meta name="msapplication-TileImage" content="${context}/resources/images/favicon/mstile-144x144.png">
+    <!-- For Windows Phone -->
+    <link rel="stylesheet" href="${context}/resources/font/font-awesome/css/font-awesome.min.css">
 
-<!-- CORE CSS-->
+   
+    <!-- Compiled and minified CSS -->
     <link rel="stylesheet"
 	href="${context}/resources/custom_js/materialize.min.css">
-	<link href="${context}/resources/css/style.css" type="text/css"
-	rel="stylesheet" media="screen,projection">
-<!-- Custome CSS-->
-<link href="" type="text/css"
-	rel="stylesheet" media="screen,projection">
-
-<!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
-<link href="${context}/resources/js/plugins/prism/prism.css"
-	type="text/css" rel="stylesheet" media="screen,projection">
-<link
-	href="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.css"
-	type="text/css" rel="stylesheet" media="screen,projection">
-<link
-	href="${context}/resources/js/plugins/chartist-js/chartist.min.css"
-	type="text/css" rel="stylesheet" media="screen,projection">
+	 <%--  <link href="${context}/resources/css/materialize.css" type="text/css"
+	rel="stylesheet" media="screen,projection"> --%>
+    <link href="${context}/resources/css/style.css" type="text/css" rel="stylesheet" media="screen,projection">
+  <!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
+    <link href="${context}/resources/js/plugins/prism/prism.css" type="text/css" rel="stylesheet" media="screen,projection">
+    <link href="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.css" type="text/css" rel="stylesheet"
+        media="screen,projection">
+    <link href="${context}/resources/js/plugins/chartist-js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection">
 	<link href="${context}/resources/project_css/leanOverlay.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
+    <!-- Country -->
+    <!-- <script type="text/javascript" src="js/country.js"></script> -->
 
-
+    
 <style>
- input[type="checkbox"] {
-	background-color: initial;
-    cursor: default;
-    -webkit-appearance: checkbox;
-    box-sizing: border-box;
-    margin: 3px 3px 3px 4px;
-    padding: initial;
-    border: initial;
-} 
-/* input[type="checkbox"]+span:not(.lever) {
-    position: relative;
-    padding-left: 35px;
-    cursor: pointer;
-    display: inline-block;
-    height: 25px;
-    line-height: 25px;
-    font-size: 1rem;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}    
+input[type="checkbox"] {
+	display: none;
+}
 
-input[type="checkbox"]+span:not(.lever):before, [type="checkbox"]:not(.filled-in)+span:not(.lever):after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 18px;
-    height: 18px;
-    z-index: 0;
-    border: 2px solid #5a5a5a;
-    border-radius: 1px;
-    margin-top: 3px;
-    -webkit-transition: .2s;
-    transition: .2s;
-
-} */
 footer {
 	padding-left: 0;
 }
@@ -133,37 +85,152 @@ footer {
 	height: auto;
 }
 
+.star {
+	color: red;
+}
+
 .dropdown-content li>a, .dropdown-content li>span {
 	color: #444;
 }
 
- h6 {
-font-size: 1.15rem;
-line-height: 110%;
-margin: 0rem 0 0.2rem 0;
-/* margin-top: 1px !important; */
-} 
+.input-field>label {
+	color: #444 !important;
+}
 
-.file-upload-heading {
-	margin-left: 0;
+[type="radio"]:not (:checked ), [type="radio"]:checked {
+	opacity: 0;
+}
+
+input[type=text], input[type=password], input[type=email], input[type=url],
+	input[type=time], input[type=date], input[type=datetime-local], input[type=tel],
+	input[type=number], input[type=search], textarea.materialize-textarea {
+	background-color: transparent !important;
+	border: none !important;
+	border-bottom: 1px solid #9e9e9e !important;
+	border-radius: 0 !important;
+	outline: none !important;
+	height: 2.6rem !important;
+	width: 100% !important;
+	font-size: 1rem !important;
+	margin: 0 0 5px 0 !important;
+	padding: 0 !important;
+	box-shadow: none !important;
+	-webkit-box-sizing: content-box !important;
+	-moz-box-sizing: content-box !important;
+	box-sizing: content-box !important;
+	transition: all .3s !important;
+}
+
+input
+[
+type
+=
+text
+]
+:focus
+:not
+ 
+(
+[
+readonly
+]
+ 
+)
+{
+border-bottom:1px
+ 
+1
+px
+ 
+solid
+ 
+#ff4081
+ 
+!
+important
+;
+
+	
+box-shadow
+:
+ 
+0
+1
+px
+ 
+0
+0
+#ff4081
+ 
+!
+important
+;
+
+
+}
+input[type=text]:focus:not ([readonly] )+label {
+	color: #ff4081 !important;
+	background-color: transparent !important;
+}
+
+.input-field {
+	position: relative;
+	margin-top: 1rem;
+	margin-bottom: 0;
+}
+
+.row {
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 0;
+}
+
+.btn {
+	background-color: #ff4081 !important;
 }
 
 select {
-	height: 2.2rem !important;
+	background-color: transparent;
+	border: none;
+	border-bottom: 1px solid #9e9e9e;
+	padding: 0;
+	margin-top: 0;
+	height: 2.6rem;
 }
 
-label {
-/* 	font-size: 0.8rem; */
+[type="checkbox"]:not (:checked ), [type="checkbox"]:checked {
+	position: inherit;
+	opacity: 1;
+	pointer-events: none;
 }
-.select-lang-drpdwn {
-    width: 75px;
-    margin-top: -17px;
-    border-bottom: none;
+
+[type="checkbox"]+span:not (.lever ):before, [type="checkbox"]:not (.filled-in
+	 )+span:not (.lever ):after {
+	display: none;
+}
+
+input[type="checkbox"] {
+	display: block;
+}
+
+[type="checkbox"]:not (:checked ), [type="checkbox"]:checked {
+	float: left;
+	margin-top: 5px;
 }
 .fa-eye-slash, .fa-eye {
 	position: absolute;
 	right: 10px;
 	top: 10px;
+}
+
+.upload-file-label {
+	margin: 0;
+	
+}
+
+.file-field .btn {
+	line-height: 2.4rem;
+	height: 2.4rem;
 }
 .section .registration-form {
 padding-top: 1rem;
@@ -172,13 +239,13 @@ width: 90%;
 margin: auto;
 /* border: solid 2px #444; */
 }
-p label span {
-font-size: 1rem;
-}
+
+
 </style>
 <script>
 var contextpath = "${context}";
 </script>
+
 </head>
 
 <body data-lang-param="${pageContext.response.locale}">
