@@ -89,7 +89,7 @@
 					<div class="col s12 m12 l12">
 						<div class="row">
 							<div class="row">
-								<form id="" onsubmit="return findEndUserByNid()" method="POST"
+								<form  onsubmit="return findEndUserByNid()" method="POST"
 									enctype="multipart/form-data">
 									<div id="submitbtn">
 										<div class="input-field col s12 m1 l1">
@@ -114,7 +114,7 @@
 								</form>
 							</div>
 							<div id="EndUserInfoForm" style="display: none;">
-								<form id="" onsubmit="return updateVisaDetails()" method="POST"
+								<form onsubmit="return updateVisaDetails()" method="POST"
 									enctype="multipart/form-data">
 									<div class="row">
 										<div class="input-field col s12 m6">

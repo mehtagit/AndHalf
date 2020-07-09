@@ -21,7 +21,8 @@ populateCountries("singleDevicecountry", "singleDevicestate");
 setTimeout(function(){
 
 	$('.datepick').datepicker({
-		dateFormat : "yy-mm-dd"
+		dateFormat : "yy-mm-dd",
+		maxDate:"0"
 	});
 
 	$('#stolenDatePeriodedit').datepicker({
