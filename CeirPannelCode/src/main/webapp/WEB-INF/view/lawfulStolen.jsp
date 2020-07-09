@@ -63,8 +63,8 @@
 	<link
 	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
-<link href="${context}/resources/css/jquery-datepicker2.css"
-	type="text/css" rel="stylesheet" media="screen,projection">
+<%-- <link href="${context}/resources/css/jquery-datepicker2.css"
+	type="text/css" rel="stylesheet" media="screen,projection"> --%>
 <link
 	href="${context}/resources/font/font-awesome/css/font-awesome.min.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
@@ -85,8 +85,8 @@
 	href="${context}/resources/project_css/intlTelInput.css">
 <link rel="stylesheet"
 	href="${context}/resources/custom_js/jquery-ui.css">
-<%-- <script src="${context}/resources/custom_js/1.12.1_jquery-ui.min.js"></script> --%>
-<script src="${context}/resources/custom_js/1.11.2_jquery-ui.js"></script>
+<script src="${context}/resources/custom_js/1.12.1_jquery-ui.min.js"></script>
+
 
 <style>
 .checkboxFont {
@@ -113,11 +113,13 @@ section#content {
 }
 
 .contact-label {
-	margin-top: -17px;
-	margin-bottom: 0;
-	font-size: 0.8rem;
+margin-top: -7px;
+margin-bottom: 0;
+font-size: 0.8rem;
 }
 
+
+remove intelinput.css
 .blockingType {
 	height: 4.6rem;
 	margin-bottom: 5px;
@@ -136,6 +138,7 @@ select {
 .iti--allow-dropdown input, .iti--allow-dropdown input[type=text] {
 	margin-bottom: 5px !important;
 }
+
 </style>
 
 
