@@ -1119,7 +1119,7 @@ uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
 //alert("file extension=="+uploadedFileName)
 var ext = uploadedFileName.split('.').pop();
 
-var fileSize = ($("#"+id)[0].files[0].size);
+var fileSize = ($("#visaImage")[0].files[0].size);
 /*fileSize = (Math.round((fileSize / 100000) * 100) / 100)
 alert("----"+fileSize);*/
 fileSize = Math.floor(fileSize/1000);
@@ -1161,13 +1161,13 @@ function clearVisaName() {
 
 
 
-function deptImageValidation() {
+function deptImageValidation(id) {
 	var uploadedFileName = $("#endUserDepartmentId").val();
 	uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
 	//alert("file extension=="+uploadedFileName)
 	var ext = uploadedFileName.split('.').pop();
 
-	var fileSize = ($("#"+id)[0].files[0].size);
+	var fileSize = ($("#endUserDepartmentId")[0].files[0].size);
 	/*fileSize = (Math.round((fileSize / 100000) * 100) / 100)
 	alert("----"+fileSize);*/
 	fileSize = Math.floor(fileSize/1000);
