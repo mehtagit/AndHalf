@@ -359,25 +359,27 @@ input[type='search'] {
 											</div>
 											
 											<div class="col s12 m12" style="height: 4rem;">
-											<label for="nationality"><spring:message
-													code="input.VIP" /> </label>
+											
 											<div class=" boxHeight">
 												 <c:choose>
+												 
 												<c:when test = "${viewInformation.endUserDB.isVip=='Y'}">
+												<label for="nationality"><spring:message
+													code="input.VIP" /> </label>
 												<label>
 												 
-												<input class="with-gap" type="radio" name="selectvip" value="Y" readonly="readonly" checked="checked">
+												<input class="with-gap" type="radio" name="selectvip" value="Y" disabled="disabled" checked="checked">
 												 <span><spring:message code="modal.yes" /></span>
 												
 												  </label>
 												  
 												  <label> 
-												  <input class="with-gap" value="N" type="radio" name="selectvip" readonly="readonly" style="margin-left: 20px;" /> 
+												  <input class="with-gap" value="N" type="radio" name="selectvip" disabled="disabled" style="margin-left: 20px;" /> 
 												  <span><spring:message code="modal.no" /></span>
 												</label>
 												  </c:when>
 												 <c:otherwise>
-												 <label>
+												<%--  <label>
 												 
 												<input class="with-gap" type="radio" name="selectvip" readonly="readonly" value="Y"  >
 												 <span><spring:message code="modal.yes" /></span>
@@ -386,7 +388,7 @@ input[type='search'] {
 												  <label> 
 												  <input class="with-gap" value="N" type="radio" readonly="readonly" checked="checked"
 													name="selectvip" style="margin-left: 20px;" /> <span><spring:message code="modal.no" /></span>
-												</label>
+												</label> --%>
 												</c:otherwise>
 												</c:choose>
 											</div>
@@ -395,19 +397,19 @@ input[type='search'] {
 											<div class="input-field col s12 m6">
 												<input type="text" id="departmentName" readonly="readonly" value="${viewInformation.endUserDB.userDepartment.name}"/> 
 												<label for="departmentName"><spring:message
-														code="input.DepartmentName" /> <span class="star">*</span></label>
+														code="input.DepartmentName" /> <span class="star"></span></label>
 											</div>
 
 											<div class="input-field col s12 m6">
 												<input type="text" id="endUserdepartmentID" readonly="readonly" value="${viewInformation.endUserDB.userDepartment.departmentId}" />
 												 <label for="endUserdepartmentID"><spring:message
-														code="input.DepartmentID" /><span class="star">*</span> </label>
+														code="input.DepartmentID" /><span class="star"></span> </label>
 											</div>
 
 											<div class="file-field input-field col s12 m6 l6">
 												 <h6 style="color: #000;">
 													<spring:message code="input.UploadIDImage" />
-													<span class="star">*</span>
+													<span class="star"></span>
 												</h6>
 											<%--	<div class="btn">
 													<span><spring:message code="operator.file" /></span> <input
@@ -427,30 +429,31 @@ input[type='search'] {
 										</div>
 										
 								<div class="col s12 m12" style="height: 4rem; display: block "id="askVisaDetails">
-											<label for="nationality"><spring:message
-													code="input.AddVisa" /> <span class="star">*</span></label>
+										
 											<div class=" boxHeight">
 												<c:choose>
 												<c:when test = "${viewInformation.endUserDB.onVisa=='Y'}">
+													<label for="nationality"><spring:message
+													code="input.AddVisa" /> <span class="star"></span></label>
 												<label><input class="with-gap" type="radio"
-													name="onVisa" value="Y" checked="checked">
+													name="onVisa" value="Y" checked="checked" disabled="disabled">
 													<span><spring:message code="modal.yes" /></span> </label> <label>
-													<input class="with-gap" type="radio" id="onVisaNo" 
+													<input class="with-gap" type="radio" id="onVisaNo" disabled="disabled"
 													 name="onVisa" value="N"
 													style="margin-left: 20px;" />
 													<span><spring:message code="modal.no" /></span>
 												</label>
 												</c:when>
 												<c:otherwise>
-												<label><input class="with-gap" type="radio"
-													name="onVisa" value="Y">
+												<%-- <label><input class="with-gap" type="radio"
+													name="onVisa" value="Y" disabled="disabled">
 													<span><spring:message code="modal.yes" /></span> </label>
 													 <label>
 													<input class="with-gap" type="radio" id="onVisaNo"
 													checked="checked" name="onVisa" value="N"
 													style="margin-left: 20px;"  />
 													<span><spring:message code="modal.no" /></span>
-												</label>
+												</label> --%>
 												</c:otherwise>
 												</c:choose>
 											</div>
@@ -539,18 +542,32 @@ input[type='search'] {
 															<input type="text" value="${viewInformation.country}" readonly="readonly">
 													</div>
 
-													<div class="input-field col s12 m6"
+													<div class=" col s12 m6"
 														style="margin-top: 28px;">
-														<input type="text" value="${viewInformation.deviceSerialNumber}" readonly="readonly">
-														 <label for="serialNumber1"> <spring:message code="input.deviceSerialNumber" /><span class="star"></span>
+														<label for="serialNumber1"> <spring:message code="input.deviceSerialNumber" /><span class="star"></span>
 														</label>
+														<input type="text" value="${viewInformation.deviceSerialNumber}" readonly="readonly">
+														 
 													</div>
-
+													
+													 <c:choose>
+												<c:when test = "${viewInformation.endUserDB.nationality=='Cambodian'}">
+													
+													<%-- <div class="col s12 m6">
+														<label for="taxStatus1"><spring:message code="select.taxPaidStatus" /><span
+															class="star"></span></label> <input type="text" readonly="readonly" value="${viewInformation.taxPaidStatusInterp}">
+															
+													</div> --%>
+													</c:when>
+													<c:otherwise>
 													<div class="col s12 m6">
 														<label for="taxStatus1"><spring:message code="select.taxPaidStatus" /><span
 															class="star"></span></label> <input type="text" readonly="readonly" value="${viewInformation.taxPaidStatusInterp}">
 															
 													</div>
+													
+													</c:otherwise>
+													</c:choose>
 												</div>
 											</div>
 											<div class="row">
@@ -560,7 +577,7 @@ input[type='search'] {
 															class="star"></span></label> 
 														<input type="text" readonly="readonly" value="${viewInformation.deviceStatusInterp}">	
 													</div>
-                                                      <c:choose>
+                                                     <%--  <c:choose>
 												<c:when test = "${viewInformation.endUserDB.nationality=='Cambodian'}">
 													<div class="input-field col s12 m6 l6">
 														<input type="text" value="${viewInformation.price}" readonly="readonly">
@@ -583,10 +600,10 @@ input[type='search'] {
 														<input type="text" value="${viewInformation.currencyInterp}" readonly="readonly">
 													</div>													
 													</c:otherwise>
-													</c:choose>
+													</c:choose> --%>
 												</div>
 												
-												 <c:choose>
+												<%--  <c:choose>
 												<c:when test = "${viewInformation.price==null}">
 												<div class="col s12 m6" style="display: none">
 														<label for="Currency1"><spring:message code="input.currency" /><span class="star"></span></label>
@@ -599,7 +616,7 @@ input[type='search'] {
 														<input type="text" value="${viewInformation.currencyInterp}" readonly="readonly">
 													</div>	
 													</c:otherwise>
-													</c:choose>
+													</c:choose> --%>
 											</div>
 											<div class="row">
 												<div class="col s12 m12">

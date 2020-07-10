@@ -408,7 +408,7 @@ select {
 												oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 												oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 												required>
-												<option value="" disabled selected><spring:message
+												<option value=""  selected><spring:message
 														code="registration.selectproduct" />
 												</option>
 												</select>		
@@ -429,7 +429,7 @@ select {
 																oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 																oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 																id="singleStolendeviceIDType" class="browser-default">
-																<option value="" disabled selected>
+																<option value=""  selected>
 																	<spring:message code="select.deviceIDType" /></option>
 															</select>
 														</div>
@@ -440,7 +440,7 @@ select {
 																oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 																oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 																class="browser-default" id="singleStolendeviceType">
-																<option value="" disabled selected><spring:message
+																<option value=""  selected><spring:message
 																		code="select.deviceType" /></option>
 															</select>
 														</div>
@@ -469,7 +469,7 @@ select {
 												<select id="editsingleStolenmodalNumber" class="browser-default"
 													onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 													oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');">
-													<option value="" disabled selected>
+													<option value=""  selected>
 														<spring:message code="registration.selectmodelnumber" /></option>
 
 												</select>		
@@ -500,7 +500,7 @@ select {
 																oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 																oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 																id="singleStolenOperator">
-																<option value="" disabled selected>
+																<option value=""  selected>
 																	<spring:message code="registration.selectoperator" /></option>
 
 															</select>
@@ -523,7 +523,7 @@ select {
 																<select class="browser-default" id="singleStolenOperator3"
 																oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 																oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');">
-																<option value="" disabled selected>
+																<option value=""  selected>
 																	<spring:message code="registration.selectoperator" />
 																</option>
 															</select>
@@ -545,7 +545,7 @@ select {
 																class="browser-default" id="singleStolenOperator4"
 																oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 																oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');">
-																<option value="" disabled selected>
+																<option value=""  selected>
 																	<spring:message code="registration.selectoperator" />
 																</option>
 															</select>
@@ -567,7 +567,7 @@ select {
 																class="browser-default" id="singleStolenOperator5"
 																oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 																oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');">
-																<option value="" disabled selected>
+																<option value=""  selected>
 																	<spring:message code="registration.selectoperator" />
 																</option>
 															</select>
@@ -582,7 +582,7 @@ select {
 																oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 																oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 																id="singleStolenSimStatus">
-																<option value="" disabled selected>
+																<option value=""  selected>
 																	<spring:message code="select.multiSimStatus" />
 																</option>
 
@@ -596,7 +596,7 @@ select {
 																oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 																oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 																required="required" id="singleStolenComplaintType">
-																<option value="" disabled selected>
+																<option value=""  selected>
 																	<spring:message code="registration.selectcomplainttype" /></option>
 
 															</select>
@@ -1152,8 +1152,7 @@ onclick="_Services._selectstartDate()"></i></span>
 											<div class="input-field col s12 m6" style="margin-top: 22px;">
 												<textarea id="deviceBulkStolenRemark"
 													class="materialize-textarea"></textarea>
-												<label for="textarea1"><spring:message
-														code="input.remarks" /></label>
+												<label for="textarea1"><spring:message code="input.remarks" /></label>
 											</div>
 
 											<div class="col s12 m12">

@@ -78,7 +78,13 @@ function saveaAonymousGrievance(){
 		documentFileNameArray.push(documentFileName);
 		documentFileNameArray.push(docTypeTag);
 		
+		if(!x['docType']=='')
+		{
+		//console.log("if");
 		fileInfo.push(x);
+		}
+	
+		
 		}
 		fieldId++;
 		i++;

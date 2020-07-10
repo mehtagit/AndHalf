@@ -314,13 +314,13 @@ input[type='search'] {
 										</div>
 									</div>
 									<div class="col s12 m12">
-										<button class="btn right add_field_button"
+										<%-- <button class="btn right add_field_button"
 											style="margin-top: 5px;">
 											<span style="font-size: 20px;">+</span><spring:message code="button.addMoreDevice" />
 										</button>
 										<p>
 											<spring:message code="input.requiredfields" /> <span class="star">*</span>
-										</p>
+										</p> --%>
 									</div>
 
 									<div class="col s12 m12 center" style="margin-top: 30px; padding-bottom: 50px;">
@@ -377,6 +377,8 @@ input[type='search'] {
 			</div>
 		</div>
 	</div>
+	
+	
 	<!-- Modal End -->
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>

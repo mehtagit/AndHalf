@@ -285,7 +285,7 @@ div#error_Modal {
 				</ul>
 				<a href="#" data-activates="slide-out"
 					class="sidebar-collapse btn-floating btn-medium waves-effect waves-light hide-on-large-only cyan"><i
-					class="mdi-navigation-menu"></i></a>
+					class="mdi-navigation-menu" id="rightSideToggle"></i></a>
 			</aside>
 			<!-- END LEFT SIDEBAR NAV-->
 

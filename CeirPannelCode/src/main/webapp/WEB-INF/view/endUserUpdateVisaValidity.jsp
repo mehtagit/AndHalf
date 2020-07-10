@@ -93,18 +93,18 @@
 									enctype="multipart/form-data">
 									<div id="submitbtn">
 										<div class="input-field col s12 m1 l1">
-											<label for="Search" class="center-align ml-10"><spring:message code="input.pportnumber" /></label>
+											<label for="Search" class="center-align ml-10" style="width: max-content;"><spring:message code="input.pportnumber" /></label>
 										</div>
 										<div class="input-field col s12 m3 l3">
 											<input type="text" id="nidForEndUser"
-												pattern="[A-Za-z0-9]{0,12}"
+												pattern="[A-Za-z0-9]{0,12}" style="margin-left: 78px;"
 												oninput="InvalidMsg(this,'select','<spring:message code="validation.12NID" />');"
 															oninvalid="InvalidMsg(this,'select','<spring:message code="validation.12NID" />');"
 												title="<spring:message code="validation.12NID" />"
 												required  maxlength="12" name="Search" />
 
 										</div>
-										<div class="input-field col s12 m6">
+										<div class="input-field col s12 m6"style="margin-left: 90px;" >
 											<button  class="btn" type="submit" id="passPortBtnId">
 												<spring:message code="button.submit" />
 											</button>

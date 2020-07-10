@@ -416,7 +416,19 @@ $.i18n().load( {
 							documentFileNameArray.push(documentFileName);
 							documentFileNameArray.push(docTypeTag);
 
-							fileInfo.push(x);
+							
+							
+							if(!x['docType']=='')
+								{
+								//console.log("if");
+								fileInfo.push(x);
+								}
+							else{
+								//console.log("else");
+								
+							}
+							
+							
 							}
 							fieldId++;
 							i++;
@@ -431,7 +443,7 @@ $.i18n().load( {
 					$('#fileErrormessage').text('')
 					$('#fileErrormessage').text($.i18n('duplicateFileName'));
 					 $("#saveGrievancesubmitButton").prop('disabled', false);
-$('div#initialloader').delay(300).fadeOut('slow');
+                    $('div#initialloader').delay(300).fadeOut('slow');
 					return false;
 
 				}
@@ -612,7 +624,7 @@ $('div#initialloader').delay(300).fadeOut('slow');
 													'<div id="filediv'+id+'" class="fileDiv"><div class="row"><div class="file-field col s12 m6"><label for="Category">'
 															+ $
 																	.i18n('documenttype')
-															+ '</label><select id="docTypetag'
+															+ '<span class="star">*</span> </label><select required id="docTypetag'
 															+ id
 															+ '" oninput="InvalidMsg(this,\'select\',\''
 															+ $
@@ -629,7 +641,7 @@ $('div#initialloader').delay(300).fadeOut('slow');
 															+ ' </option></select></div><div class="file-field col s12 m6" style="margin-top: 23px;"><div class="btn"><span>'
 															+ $
 																	.i18n('selectfile')
-															+ '</span><input id="docTypeFile'
+															+ '</span><input required id="docTypeFile'
 															+ id
 															+ '" type="file" oninput="InvalidMsg(this,\'file\',\''
 															+ $

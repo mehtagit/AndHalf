@@ -192,7 +192,7 @@ section {
 	<!-- START CONTENT -->
 	<section id="content">
 
- <div class="card-panel" style="    height: 156px;">
+ <div class="card-panel" style="    height: 200px;">
                 <div class="container-fluid pageHeader">
                   <p class="PageHeading">Search</p>
                   <!-- <a href="createConsignment.html" class="boton right">Register Consignment</a> -->

@@ -3,7 +3,7 @@ $('#langlist').on('change', function() {
 	var url_string = window.location.href;
 	var url = new URL(url_string);
 	var type = url.searchParams.get("type");
-	window.location.assign("selfRegisterDevice?lang="+window.lang);			
+	window.location.assign("selfRegisterDevicePage?lang="+window.lang);			
 }); 
 
 
@@ -1119,7 +1119,7 @@ uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
 //alert("file extension=="+uploadedFileName)
 var ext = uploadedFileName.split('.').pop();
 
-var fileSize = ($("#"+id)[0].files[0].size);
+var fileSize = ($("#visaImage")[0].files[0].size);
 /*fileSize = (Math.round((fileSize / 100000) * 100) / 100)
 alert("----"+fileSize);*/
 fileSize = Math.floor(fileSize/1000);
@@ -1161,13 +1161,13 @@ function clearVisaName() {
 
 
 
-function deptImageValidation() {
+function deptImageValidation(id) {
 	var uploadedFileName = $("#endUserDepartmentId").val();
 	uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
 	//alert("file extension=="+uploadedFileName)
 	var ext = uploadedFileName.split('.').pop();
 
-	var fileSize = ($("#"+id)[0].files[0].size);
+	var fileSize = ($("#endUserDepartmentId")[0].files[0].size);
 	/*fileSize = (Math.round((fileSize / 100000) * 100) / 100)
 	alert("----"+fileSize);*/
 	fileSize = Math.floor(fileSize/1000);
@@ -1428,9 +1428,9 @@ function historyRecord(txnID){
 	 var filterRequest={
 			 
 			 "columns": [
-				    "created_on","modified_on","txn_id","status","nid","device_type","device_id_type","multi_sim_status","country","device_serial_number","tax_paid_status","device_status","price",
-				    "currency","first_imei","second_imei","third_imei","fourth_imei","origin","remark",
-				     "user_id"
+				    "created_on","modified_on","txn_id","status","nid","device_type","device_id_type","multi_sim_status","country","device_serial_number","tax_paid_status","device_status",
+				    "first_imei","second_imei","third_imei","fourth_imei","origin","remark"
+				     
 				    ],
 			"tableName": "regularize_device_db_aud",
 			"dbName" : "ceirconfig",

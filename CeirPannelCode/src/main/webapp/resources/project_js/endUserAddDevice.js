@@ -1,9 +1,10 @@
+var nationalID = sessionStorage.getItem("nationalId");
 $('#langlist').on('change', function() {
 	window.lang=$('#langlist').val() == 'km' ? 'km' : 'en';
 	var url_string = window.location.href;
 	var url = new URL(url_string);
 	var type = url.searchParams.get("type");
-	window.location.assign("selfRegisterDevice?lang="+window.lang);			
+	window.location.assign("selfRegisterDevicePage?lang="+window.lang);			
 }); 
 
 
@@ -15,7 +16,7 @@ $.i18n().load( {
 	'km': './resources/i18n/km.json'
 } ).done( function() { 
 });
-var nationalID = sessionStorage.getItem("nationalId");
+
 
 
 $('#ok,#redirectToPage').click(function(){
