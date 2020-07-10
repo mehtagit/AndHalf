@@ -4,7 +4,7 @@ var userId = $("body").attr("data-userID");
 var currentRoleType = $("body").attr("data-selected-roleType"); 
 var startdate=$('#startDate').val(); 
 var endDate=$('#endDate').val();
-
+var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 $(document).ready(function(){
 	configManagementDatatable();
 	pageRendering();
@@ -303,8 +303,33 @@ $.ajax({
 	contentType : 'application/json; charset=utf-8',
 	type : 'PUT',
 	success : function(data) {
+			//console.log("Updated data---->" +JSON.stringify(data));
+			
+			$("#editAdminSystemModel").closeModal();	
+			$("#confirmedUpdatedSystem").openModal({
+		        dismissible:false
+		    });
+			$.i18n().locale = window.parent.$('#langlist').val();
+			
+			$.i18n().load({
+				'en' : './resources/i18n/en.json',
+				'km' : './resources/i18n/km.json'
+			}).done(function() {
+				//$('#updateFieldMessage').text($.i18n(data.tag));
+				if(data.errorCode==200){
+					//alert($.i18n('System_configuration_update'));
+					$('#updateFieldMessage').text('');
+					$('#updateFieldMessage').text($.i18n('System_configuration_update'));
+				}else if(data.errorCode==201){
+					$('#updateFieldMessage').text('');
+					$('#updateFieldMessage').text($.i18n('System_configuration_failed'));
+				}
+			});
+			
+		
+		
 		//console.log("updateRequest---------->" +JSON.stringify(updateRequest));
-		confirmModel()
+		
 	},
 	error : function() {
 		//alert("Failed");

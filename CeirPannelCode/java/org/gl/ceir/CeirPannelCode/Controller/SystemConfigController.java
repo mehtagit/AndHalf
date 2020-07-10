@@ -52,7 +52,7 @@ public class SystemConfigController {
 	
 	
 	@PutMapping("/system/update")
-	public @ResponseBody ConfigContentModel updateSystem (@RequestBody ConfigContentModel configContentModel) {
+	public @ResponseBody GenricResponse updateSystem (@RequestBody ConfigContentModel configContentModel) {
 		log.info("request send update Messsage api="+configContentModel);
 		configContentModel = feignCleintImplementation.updateSystem(configContentModel);
 		log.info("response from update Message api "+configContentModel);

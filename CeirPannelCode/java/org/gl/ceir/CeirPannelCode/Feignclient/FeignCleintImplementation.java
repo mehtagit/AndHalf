@@ -317,7 +317,7 @@ public @ResponseBody ConfigContentModel viewAdminFeign(FilterRequest filterReque
 				//************************************ System update Feign  *************************************************
 				
 				@PutMapping(value="/system/update")
-				public @ResponseBody ConfigContentModel updateSystem(ConfigContentModel configContentModel);
+				public @ResponseBody GenricResponse updateSystem(ConfigContentModel configContentModel);
 				//***************************************************Audit Management Feign********************************
 
 				@RequestMapping(value="/filter/audit-trail" ,method=RequestMethod.POST) 
