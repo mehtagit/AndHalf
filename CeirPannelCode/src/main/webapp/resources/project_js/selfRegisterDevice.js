@@ -3,7 +3,7 @@ $('#langlist').on('change', function() {
 	var url_string = window.location.href;
 	var url = new URL(url_string);
 	var type = url.searchParams.get("type");
-	window.location.assign("selfRegisterDevice?lang="+window.lang);			
+	window.location.assign("selfRegisterDevicePage?lang="+window.lang);			
 }); 
 
 
@@ -1428,9 +1428,9 @@ function historyRecord(txnID){
 	 var filterRequest={
 			 
 			 "columns": [
-				    "created_on","modified_on","txn_id","status","nid","device_type","device_id_type","multi_sim_status","country","device_serial_number","tax_paid_status","device_status","price",
-				    "currency","first_imei","second_imei","third_imei","fourth_imei","origin","remark",
-				     "user_id"
+				    "created_on","modified_on","txn_id","status","nid","device_type","device_id_type","multi_sim_status","country","device_serial_number","tax_paid_status","device_status",
+				    "first_imei","second_imei","third_imei","fourth_imei","origin","remark"
+				     
 				    ],
 			"tableName": "regularize_device_db_aud",
 			"dbName" : "ceirconfig",

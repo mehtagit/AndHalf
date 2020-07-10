@@ -123,7 +123,7 @@
 
 </head>
 
-<body data-roleType="${usertype}" data-userTypeID="${usertypeId}"
+<body data-roleType="${usertype}" data-id="5" data-userTypeID="${usertypeId}"
 	data-userID="${userid}" data-operatorTypeId="${operatorTypeId}"
 	data-selected-roleType="${stolenselectedUserTypeId}"
 	data-stolenselected-roleType="${stolenselectedUserTypeId}"	>
@@ -172,7 +172,7 @@
 												
 												oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 												oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');">
-												<option value="" disabled selected><spring:message
+												<option value=""  selected><spring:message
 														code="registration.selectproduct" />
 												</option></select>  
                                                      <input type="text" id="selectedBrandName" style="display: none;">           
@@ -223,7 +223,7 @@
                                                                  oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" 
                                                                  oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
                                                                  id="sigleRecoverydeviceType">
-                                                                    <option value="" disabled selected><spring:message code="select.deviceType" /></option>
+                                                                    <option value=""  selected><spring:message code="select.deviceType" /></option>
                                                                 </select>
                                                               </div> 
                                                               
@@ -233,7 +233,7 @@
                                                                  oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" 
                                                                  oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
                                                                  class="browser-default">
-                                                                  <option value="" disabled selected><spring:message code="select.multiSimStatus" /></option>
+                                                                  <option value=""  selected><spring:message code="select.multiSimStatus" /></option>
                                                                 </select>
                                                               </div>
 

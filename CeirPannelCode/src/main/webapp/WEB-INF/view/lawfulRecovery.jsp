@@ -184,7 +184,7 @@ select.browser-default {
 															id="sigleRecoverydeviceBrandName" class="browser-default"
 															onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 															oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');">
-															<option value="" disabled selected><spring:message
+															<option value=""  selected><spring:message
 																	code="registration.selectproduct" />
 															</option>
 														</select>
@@ -203,7 +203,7 @@ select.browser-default {
 															class="browser-default"
 															onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 															oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');">
-															<option value="" disabled selected>
+															<option value=""  selected>
 																<spring:message code="registration.selectmodelnumber" /></option>
 
 														</select>
@@ -225,7 +225,7 @@ select.browser-default {
 															oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 															oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 															required>
-															<option value="" disabled selected><spring:message
+															<option value=""  selected><spring:message
 																	code="select.deviceIDType" /></option>
 														</select>
 													</div>
@@ -236,7 +236,7 @@ select.browser-default {
 															class="browser-default" id="sigleRecoverydeviceType"
 															oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 															oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');">
-															<option value="" disabled selected><spring:message
+															<option value=""  selected><spring:message
 																	code="select.deviceType" /></option>
 														</select>
 													</div>
@@ -247,7 +247,7 @@ select.browser-default {
 															id="sigleRecoverydeviceSimStatus" class="browser-default"
 															oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 															oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');">
-															<option value="" disabled selected><spring:message
+															<option value=""  selected><spring:message
 																	code="select.multiSimStatus" /></option>
 														</select>
 													</div>

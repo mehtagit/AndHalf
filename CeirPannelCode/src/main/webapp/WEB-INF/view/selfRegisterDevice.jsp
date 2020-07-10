@@ -738,11 +738,11 @@ position: fixed;
 
 											<div class="row">
 												<div class="col s12 m12">
-													<button class="btn right add_field_button"
+													<%-- <button class="btn right add_field_button"
 														style="margin-top: 5px;">
 														<span style="font-size: 20px;">+</span>
 														<spring:message code="button.addMoreDevice" />
-													</button>
+													</button> --%>
 												</div>
 											</div>
 										</div>
