@@ -400,6 +400,12 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 	function Datatable(url,dataUrl) {
 		var txn= (txnIdValue == 'null' && transactionIDValue == undefined)? $('#transactionID').val() : transactionIDValue;
 		
+		if($("body").attr("data-filterSource")=='filter' && $('#transactionID').val()=='' )
+			{
+			alert("if");
+			txn='';
+			}
+		
 		var filereduserType =  $('#userType').val() =='null' || $('#userType').val()==undefined ? null : $("#userType option:selected").text();
 		/*var filterRedirect=$("body").attr("data-filterSource");
 		var selectedUserTypeId='';
