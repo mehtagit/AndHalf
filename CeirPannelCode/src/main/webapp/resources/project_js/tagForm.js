@@ -17,7 +17,7 @@
 		var tagId = $('#tagId').val();
 		
 		if(tagId.length == 0){
-			//console.log("please field input");
+			////console.log("please field input");
 		}else{
 			//sessionStorage.setItem("roleType",roleType);
 		sessionStorage.setItem("tagId", tagId);
@@ -53,6 +53,6 @@
 			
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			//console.log("error in ajax")
+			////console.log("error in ajax")
 		}
 	});

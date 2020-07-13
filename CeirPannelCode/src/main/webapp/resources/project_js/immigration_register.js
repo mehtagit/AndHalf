@@ -382,7 +382,7 @@ function submitImmigrationForm(){
 		contentType: false,
 		success: function (data, textStatus, jqXHR) {
 
-			console.log(data);
+			//console.log(data);
 
 
 			if(data.errorCode==0){
@@ -400,7 +400,7 @@ function submitImmigrationForm(){
 			}
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			console.log("error in ajax")
+			//console.log("error in ajax")
 
 		}
 	});

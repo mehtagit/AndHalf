@@ -36,9 +36,7 @@ if(statusCode==200){
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
 <!-- Security Tags -->
 <title>CEIR | Registration panel</title>
-<link
-	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.min.css"
-	type="text/css" rel="stylesheet" media="screen,projection">
+
 <link rel="icon" href="${context}/resources/images/DMC-Logo.png" sizes="32x32">
 
 <!-- For iPhone -->

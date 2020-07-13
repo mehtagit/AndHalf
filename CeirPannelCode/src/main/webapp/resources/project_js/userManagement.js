@@ -256,10 +256,10 @@
 						editPopupData(result);
 					}
 					
-					console.log(JSON.stringify(result));
+					//console.log(JSON.stringify(result));
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
-				console.log("error in ajax")
+				//console.log("error in ajax")
 			}
 		});	
 	}
@@ -352,7 +352,7 @@
 				"remarks": $('#edituserRemark').val()
 		}
 		
-		//console.log("request--->" +JSON.stringify(request))
+		////console.log("request--->" +JSON.stringify(request))
 		var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
 		$.ajaxSetup({
@@ -367,7 +367,7 @@
 			contentType : 'application/json; charset=utf-8',
 			success: function (data, textStatus, jqXHR) {
 				if(data.errorCode == 200){
-				console.log("Updated data---->" +data)
+				//console.log("Updated data---->" +data)
 				
 				$("#editCurrencyModal").closeModal();	
 				$("#updateFieldsSuccess").openModal({

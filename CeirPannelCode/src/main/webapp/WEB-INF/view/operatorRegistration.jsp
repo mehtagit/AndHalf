@@ -37,9 +37,7 @@ if(statusCode==200){
 <!-- Security Tags -->
 
 <title>CEIR | Importer Portal</title>
-<link
-	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.min.css"
-	type="text/css" rel="stylesheet" media="screen,projection">
+
 <link rel="apple-touch-icon-precomposed"
 	href="${context}/resources/images/favicon/apple-touch-icon-152x152.png">
 <!-- For iPhone -->
@@ -271,8 +269,7 @@ var contextpath = "${context}";
 
 	<script type="text/javascript"
 		src="${context}/resources/ajax/Password.js?version=<%= (int) (Math.random() * 10) %>"></script>
-	<script type="text/javascript"
-		src="?version=<%= (int) (Math.random() * 10) %>"></script>
+	
 
 	<!-- //////////////////////////////////////////////////////////////////////////// -->
 

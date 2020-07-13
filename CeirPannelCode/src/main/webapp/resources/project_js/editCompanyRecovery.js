@@ -26,7 +26,7 @@ headers:
 		processData: false,
 		contentType: false,
 		success: function (response, textStatus, jqXHR) {
-		//console.log(response)
+		////console.log(response)
 		$('#bulkRecoveryquantity').val(response.qty);
 		$('#devicequantity').val(response.deviceQuantity);
 		$('#bulkRecoveryRemark').val(response.remark);
@@ -47,7 +47,7 @@ headers:
 		
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			console.log("error in ajax")
+			//console.log("error in ajax")
 
 		}
 	});
@@ -126,10 +126,10 @@ function updateCompanyRecoveryRequest(){
 		processData: false,
 		contentType: false,
 		success: function (response, textStatus, jqXHR) {
-		//console.log(JSON.stringify(response));
+		////console.log(JSON.stringify(response));
 		var resp= JSON.stringify(response);
-		//console.log(resp.errorCode);
-		//console.log(response.errorCode);
+		////console.log(resp.errorCode);
+		////console.log(response.errorCode);
 
 		if(response.errorCode==0){
 			$("#IndivisualUpdateStolen").prop('disabled', true);
@@ -142,7 +142,7 @@ function updateCompanyRecoveryRequest(){
 		}
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			console.log("error in ajax")
+			//console.log("error in ajax")
 
 		}
 	});

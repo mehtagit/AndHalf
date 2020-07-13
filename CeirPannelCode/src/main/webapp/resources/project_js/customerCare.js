@@ -32,7 +32,7 @@ $(document).ready(function(){
 
 
 function getGsmaDetails(){
-	//console.log("msisdn-->"+msisdn+" imei-->"+imei+" deviceIdType-->"+deviceIdType);
+	////console.log("msisdn-->"+msisdn+" imei-->"+imei+" deviceIdType-->"+deviceIdType);
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
 	$.ajaxSetup({
@@ -76,7 +76,7 @@ function stateTable(){
 			"msisdn" : $("body").attr("data-msisdn"),
 			"deviceIdType" : $("body").attr("data-deviceIdType")	
 	}
-	 //console.log(JSON.stringify(customerCareRequest));
+	 ////console.log(JSON.stringify(customerCareRequest));
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
 	$.ajaxSetup({
@@ -96,7 +96,7 @@ function stateTable(){
 			'type' : 'POST',
 			"contentType" : "application/json",
 			 data : function(data) {
-				//console.log(JSON.stringify(customerCareRequest));
+				////console.log(JSON.stringify(customerCareRequest));
 				 return JSON.stringify(customerCareRequest);
 			},
 			
@@ -156,7 +156,7 @@ function deviceTable(){
 			'type' : 'POST',
 			"contentType" : "application/json",
 			 data : function(data) {
-				//console.log(JSON.stringify(customerCareRequest));
+				////console.log(JSON.stringify(customerCareRequest));
 				 return JSON.stringify(customerCareRequest);
 			},
 			
@@ -236,7 +236,7 @@ success: function(result){
 			dataType: "json",
 			data : function(d) {
 				d.filter = JSON.stringify(filterRequest); 
-				//console.log(JSON.stringify(filterRequest));
+				////console.log(JSON.stringify(filterRequest));
 			}
 
 		},
@@ -257,7 +257,7 @@ success: function(result){
     $('div#initialloader').delay(300).fadeOut('slow');
 },
 error: function (jqXHR, textStatus, errorThrown) {
-	//console.log("error in ajax");
+	////console.log("error in ajax");
 }
 });
 	
@@ -271,7 +271,7 @@ error: function (jqXHR, textStatus, errorThrown) {
 function setStakeHolderData(name,date,featureId,status,txnId,imei)
 {
 	var formData= new FormData();	
-	//console.log("name=="+name+"  date=="+date+" featureId= "+featureId+"  status="+status+ "  txnId="+txnId);
+	////console.log("name=="+name+"  date=="+date+" featureId= "+featureId+"  status="+status+ "  txnId="+txnId);
 	var customerCareRequest={
 			 "date": date,
 			  "featureId": featureId,
@@ -304,7 +304,7 @@ function setStakeHolderData(name,date,featureId,status,txnId,imei)
 			 var assigneNameLabel=$.i18n('assigneNameLabel');
 	    if(data.errorCode==3)
 	    	{
-	    	//console.log("invalid txn id");
+	    	////console.log("invalid txn id");
 	    	$("#InvalidTxnModal").openModal({
 		        dismissible:false
 		    });
@@ -543,11 +543,11 @@ function setStakeHolderData(name,date,featureId,status,txnId,imei)
        		$("#blockeModeType").val(data.data.modeType);
        		if(data.data.complainType=="null")
        			{
-       			console.log("if");
+       			//console.log("if");
        			$("#complaintType").val("NA");	
        			}
        		else{
-       			console.log("else");
+       			//console.log("else");
        			$("#complaintType").val(data.data.complainType);
        		    } 
        		
