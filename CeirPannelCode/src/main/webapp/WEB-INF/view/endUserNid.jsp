@@ -156,7 +156,7 @@ section {
 	data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}"
 	data-stolenselected-roleType="${stolenselectedUserTypeId}"
 	data-selected-consignmentTxnId="${consignmentTxnId}"
-	data-selected-consignmentStatus="${consignmentStatus}">
+	data-selected-consignmentStatus="${consignmentStatus}" data-lang-param="${pageContext.response.locale}">
 
 
 	<!-- //////////////////////////////////////////////////////////////////////////// -->
@@ -255,5 +255,20 @@ section {
 		src="" async></script>
 		<script type="text/javascript"
 		src="${context}/resources/project_js/ValidationFileOutsidePortal.js?version=<%= (int) (Math.random() * 10) %>"></script>
+<script type="text/javascript"
+		src="${context}/resources/project_js/globalVariables.js?version=<%= (int) (Math.random() * 10) %>"></script>
+	
+<script>
+
+$('#langlist').on('change', function() {
+	lang=$('#langlist').val() == 'km' ? 'km' : 'en';
+	var url_string = window.location.href;
+	var url = new URL(url_string);
+	var type = url.searchParams.get("type");
+	window.location.assign("selfRegisterDevice?lang="+lang);			
+});  
+
+$('#langlist').val(data_lang_param);
+</script>
 </body>
 </html>

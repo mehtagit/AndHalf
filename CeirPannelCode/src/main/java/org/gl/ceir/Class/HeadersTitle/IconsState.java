@@ -1774,7 +1774,24 @@ public class IconsState {
 					+downloadIconTitle+" ></i></a>";
 		}
 
-
+		if("Disable".equals(userStatus)) {
+			log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
+			error="<a onclick="+errorURL+" class="+disableIconClass+"><i class="+disableErrorIcon+" aria-hidden=\"true\" title="
+					+errorIconTitle+" ></i></a>";
+			download="<a onclick="+downloadURL+"  class="+disableIconClass+"><i class="
+					+disableDownloadIcon+" aria-hidden=\"true\"  title="
+					+downloadIconTitle+" ></i></a>"; 
+			delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\" ><i class="
+					+disableDeletionIcon+" aria-hidden=\"true\" title="
+					+deleteIconTitle+"></i></a>";
+			view="<a onclick="+viewAction+" class="+disableIconClass+"><i class="+disableViewIcon+" aria-hidden=\"true\" title="
+					+viewIconTitle+" ></i></a>";
+			edit="<a onclick="+editAction+" class="+disableIconClass+"><i class="
+					+disableEditIcon+" aria-hidden=\"true\"  title="
+					+editIconTitle+"></i></a>"; 
+			history="<a onclick="+historyAction+" class="+disableIconClass+"><i class="+disableHistoryIcon+" aria-hidden=\"true\"  title="
+					+historyTitle+"></i></a>";
+		}	
 
 
 		/*

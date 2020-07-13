@@ -375,9 +375,10 @@ GrievanceFeignClient grievanceFeignClient;
 	}
 	
 	@PostMapping("selfRegisterDevicePage")
-	public ModelAndView selfRegisterDevicePage(@RequestParam(name="Search",required = false) String Search,@RequestParam(name="sourceType",required = false) String sourceType) {
+	public ModelAndView selfRegisterDevicePage(@RequestParam(name="Search",required = false) String Search,@RequestParam(name="sourceType",required = false) String sourceType,
+			@RequestParam(name="lang",required = false) String lang) {
 		ModelAndView modelAndView = new ModelAndView();
-		log.info("---entry point in self register page=="+Search+"  sourceType   =="+sourceType);
+		log.info("---entry point in self register page=="+Search+"  sourceType   =="+sourceType+"  --lang--"+lang);
 		modelAndView.addObject("nid", Search);
 		if(sourceType!=null)
 		{

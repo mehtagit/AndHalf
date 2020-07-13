@@ -163,7 +163,8 @@ input[type='search'] {
 }
 </style>
 </head>
-<body data-id="12" session-value="${not empty param.NID ? param.NID : 'null'}" data-roleType="${usertype}">
+<body data-id="12" session-value="${not empty param.NID ? param.NID : 'null'}" data-roleType="${usertype}"
+data-lang-param="${pageContext.response.locale}">
 
 	<!-- START CONTENT -->
 	<section id="content">

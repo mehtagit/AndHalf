@@ -1152,8 +1152,7 @@ onclick="_Services._selectstartDate()"></i></span>
 											<div class="input-field col s12 m6" style="margin-top: 22px;">
 												<textarea id="deviceBulkStolenRemark"
 													class="materialize-textarea"></textarea>
-												<label for="textarea1"><spring:message
-														code="input.remarks" /></label>
+												<label for="textarea1"><spring:message code="input.remarks" /></label>
 											</div>
 
 											<div class="col s12 m12">

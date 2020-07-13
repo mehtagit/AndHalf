@@ -402,7 +402,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 		
 		if($("body").attr("data-filterSource")=='filter' && $('#transactionID').val()=='' )
 			{
-			alert("if");
+	
 			txn='';
 			}
 		
