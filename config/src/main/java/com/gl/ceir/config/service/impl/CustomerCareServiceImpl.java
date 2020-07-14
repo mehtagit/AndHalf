@@ -28,6 +28,7 @@ import com.gl.ceir.config.model.DeviceNullDb;
 import com.gl.ceir.config.model.DeviceUsageDb;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
+import com.gl.ceir.config.model.GreylistDb;
 import com.gl.ceir.config.model.PolicyBreachNotification;
 import com.gl.ceir.config.model.RegularizeDeviceDb;
 import com.gl.ceir.config.model.TypeApprovedDb;
@@ -41,6 +42,7 @@ import com.gl.ceir.config.repository.GsmaBlacklistRepository;
 import com.gl.ceir.config.repository.PolicyBreachNotificationRepository;
 import com.gl.ceir.config.repository.TypeApproveRepository;
 import com.gl.ceir.config.repository.VipListRepository;
+import com.gl.ceir.config.util.DateUtil;
 import com.gl.ceir.config.util.Utility;
 
 @Service
@@ -56,6 +58,9 @@ public class CustomerCareServiceImpl {
 
 	@Autowired	
 	EmailUtil emailUtil;
+	
+	@Autowired
+	DateUtil dateUtil;
 
 	@Autowired
 	UserStaticServiceImpl userStaticServiceImpl;
@@ -86,6 +91,9 @@ public class CustomerCareServiceImpl {
 
 	@Autowired
 	TypeApprovedDbServiceImpl typeApprovedDbServiceImpl;
+	
+	@Autowired
+	GreylistServiceImpl greylistServiceImpl;
 
 	public GenricResponse getAll(CustomerCareRequest customerCareRequest, String listType) {
 		String imei = customerCareRequest.getImei();
@@ -171,6 +179,7 @@ public class CustomerCareServiceImpl {
 			if(repository instanceof CustomerCareRepo) {
 				CustomerCareRepo customerCareRepo = (CustomerCareRepo)repository;
 				objectBytxnId = customerCareRepo.getByTxnId(customerCareDeviceState.getTxnId());
+				
 				if(objectBytxnId instanceof ConsignmentMgmt) {
 					ConsignmentMgmt consignmentObj = (ConsignmentMgmt)objectBytxnId;
 					consignmentServiceImpl.setInterp(consignmentObj);
@@ -191,6 +200,10 @@ public class CustomerCareServiceImpl {
 				else if(repository instanceof GreyListRepository) {
 					GreyListRepository greyListRepository = (GreyListRepository)repository;
 					objectBytxnId = greyListRepository.findByImei(customerCareDeviceState.getImei());
+					GreylistDb greylistDb = (GreylistDb)objectBytxnId;
+					greylistServiceImpl.setInterp(greylistDb);
+					greylistDb.setCreatedOn(dateUtil.formatChangerLocaldateTime(greylistDb.getCreatedOn(), "yyyy-MM-dd HH:mm"));
+					logger.info(greylistDb);
 				}
 				else if(repository instanceof DeviceDuplicateDbRepository) {
 					DeviceDuplicateDbRepository deviceDuplicateDbRepository = (DeviceDuplicateDbRepository)repository;

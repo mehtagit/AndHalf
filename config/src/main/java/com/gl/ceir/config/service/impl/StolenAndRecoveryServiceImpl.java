@@ -12,6 +12,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.locks.ReentrantLock;
 
 import javax.transaction.Transactional;
 
@@ -19,6 +20,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -27,6 +29,7 @@ import org.springframework.stereotype.Service;
 import com.gl.ceir.config.ConfigTags;
 import com.gl.ceir.config.EmailSender.EmailUtil;
 import com.gl.ceir.config.configuration.PropertiesReader;
+import com.gl.ceir.config.exceptions.RequestInvalidException;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.feign.UserFeignClient;
 import com.gl.ceir.config.model.AuditTrail;
@@ -62,6 +65,7 @@ import com.gl.ceir.config.model.constants.Tags;
 import com.gl.ceir.config.model.constants.WebActionDbState;
 import com.gl.ceir.config.model.constants.WebActionDbSubFeature;
 import com.gl.ceir.config.model.constants.WebActionStatus;
+import com.gl.ceir.config.model.file.BlockUnblockFileModel;
 import com.gl.ceir.config.model.file.StolenAndRecoveryFileModel;
 import com.gl.ceir.config.repository.AuditTrailRepository;
 import com.gl.ceir.config.repository.ConsignmentRepository;
@@ -80,7 +84,10 @@ import com.gl.ceir.config.service.businesslogic.StateMachine;
 import com.gl.ceir.config.specificationsbuilder.GenericSpecificationBuilder;
 import com.gl.ceir.config.transaction.StolenAndRecoveryTransaction;
 import com.gl.ceir.config.util.CustomMappingStrategy;
+import com.gl.ceir.config.util.DateUtil;
 import com.gl.ceir.config.util.InterpSetter;
+import com.gl.ceir.config.util.Utility;
+import com.gl.ceir.config.validate.impl.StolenValidator;
 import com.opencsv.CSVWriter;
 import com.opencsv.bean.StatefulBeanToCsv;
 import com.opencsv.bean.StatefulBeanToCsvBuilder;
@@ -89,6 +96,8 @@ import com.opencsv.bean.StatefulBeanToCsvBuilder;
 public class StolenAndRecoveryServiceImpl {
 
 	private static final Logger logger = LogManager.getLogger(StolenAndRecoveryServiceImpl.class);
+
+	private ReentrantLock lock = new ReentrantLock();
 
 	@Autowired
 	WebActionDbRepository webActionDbRepository;
@@ -150,18 +159,35 @@ public class StolenAndRecoveryServiceImpl {
 	@Autowired
 	UserStaticServiceImpl userStaticServiceImpl;
 
-	
-
 	@Autowired 
 	UserFeignClient userFeignClient;
-	
+
+	@Autowired
+	Utility utility;
+
+	@Autowired
+	StolenValidator stolenValidator;
+
 	public GenricResponse uploadDetails(StolenandRecoveryMgmt stolenandRecoveryMgmt) {
 
 		try {
-			WebActionDb webActionDb = new WebActionDb(decideFeature(stolenandRecoveryMgmt.getRequestType()), SubFeatures.REGISTER, 
+			stolenValidator.validateRegister(stolenandRecoveryMgmt);
+
+			WebActionDb webActionDb = new WebActionDb(decideFeature(stolenandRecoveryMgmt.getRequestType()), 
+					SubFeatures.REGISTER, 
 					WebActionStatus.INIT.getCode(), stolenandRecoveryMgmt.getTxnId());
 
 			stolenandRecoveryMgmt.setFileStatus(StolenStatus.INIT.getCode());
+
+			// Only for logs purpose.
+			if(stolenandRecoveryMgmt.getRequestType() == 1) {
+				logger.info("Recovery request for txn_id["+stolenandRecoveryMgmt.getTxnId()+"]");
+			}else if(stolenandRecoveryMgmt.getRequestType() == 3) {
+				logger.info("Unblock request for txn_id["+stolenandRecoveryMgmt.getTxnId()+"]");
+			}
+
+			setBlockingType(stolenandRecoveryMgmt);
+
 			if(Objects.nonNull(stolenandRecoveryMgmt.getStolenIndividualUserDB())) {
 				StolenIndividualUserDB stolenIndividualUserDB = stolenandRecoveryMgmt.getStolenIndividualUserDB();
 				stolenandRecoveryMgmt.setQty(countImeiForIndividual(stolenIndividualUserDB.getImeiEsnMeid1(), 
@@ -176,13 +202,25 @@ public class StolenAndRecoveryServiceImpl {
 
 			if(stolenAndRecoveryTransaction.executeUploadDetails(stolenandRecoveryMgmt, webActionDb)) {
 				logger.info("Upload Successfully." +  stolenandRecoveryMgmt.getTxnId());
-				addInAuditTrail(stolenandRecoveryMgmt.getUserId(), stolenandRecoveryMgmt.getTxnId(), SubFeatures.UPLOAD, stolenandRecoveryMgmt.getRoleType(),stolenandRecoveryMgmt.getRequestType(),0);
+				addInAuditTrail(stolenandRecoveryMgmt.getUserId(), stolenandRecoveryMgmt.getTxnId(), 
+						SubFeatures.UPLOAD, stolenandRecoveryMgmt.getRoleType(), 
+						stolenandRecoveryMgmt.getRequestType(), 0);
+
 				return new GenricResponse(0, "Upload Successfully.", stolenandRecoveryMgmt.getTxnId());
 			}else {
 				logger.info("Upload have been failed." + stolenandRecoveryMgmt.getTxnId());
 				return new GenricResponse(1, "Upload have been failed.", stolenandRecoveryMgmt.getTxnId());
 			}
 
+		}catch (RequestInvalidException e) {
+			logger.error("Request validation failed for txnId[" + stolenandRecoveryMgmt.getTxnId() + "]" + e);
+			
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", decideFeature(5L));
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.REGISTER);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_013, stolenandRecoveryMgmt.getUserId().intValue(), bodyPlaceHolderMap);
+			
+			throw e;
 		}catch (Exception e) {
 			logger.error(e.getMessage(), e);
 
@@ -199,6 +237,17 @@ public class StolenAndRecoveryServiceImpl {
 	public GenricResponse v2uploadDetails(StolenandRecoveryMgmt stolenandRecoveryDetails) {
 
 		try {
+			stolenValidator.validateRegister(stolenandRecoveryDetails);
+
+			// Only for logs purpose.
+			if(stolenandRecoveryDetails.getRequestType() == 1) {
+				logger.info("Recovery request for txn_id["+stolenandRecoveryDetails.getTxnId()+"]");
+			}else if(stolenandRecoveryDetails.getRequestType() == 3) {
+				logger.info("Unblock request for txn_id["+stolenandRecoveryDetails.getTxnId()+"]");
+			}
+
+			setBlockingType(stolenandRecoveryDetails);
+
 			// Single = 4
 			if(stolenandRecoveryDetails.getSourceType() == 4){
 				SingleImeiDetails singleImeiDetails = new SingleImeiDetails();	
@@ -219,8 +268,17 @@ public class StolenAndRecoveryServiceImpl {
 
 			webActionDbRepository.save(webActionDb);
 			addInAuditTrail(stolenandRecoveryDetails.getUserId(), stolenandRecoveryDetails.getTxnId(), SubFeatures.UPLOAD, stolenandRecoveryDetails.getRoleType(),stolenandRecoveryDetails.getRequestType(),0);
-			return new GenricResponse(0,"Upload Successfully.",stolenandRecoveryDetails.getTxnId());
+			return new GenricResponse(0, "Upload Successfully.", stolenandRecoveryDetails.getTxnId());
 
+		}catch (RequestInvalidException e) {
+			logger.error("Request validation failed for txnId[" + stolenandRecoveryDetails.getTxnId() + "]" + e);
+			
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", decideFeature(5L));
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.REGISTER);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_013, stolenandRecoveryDetails.getUserId().intValue(), bodyPlaceHolderMap);
+
+			throw e;
 		}catch (Exception e) {
 			logger.error(e.getMessage(), e);
 
@@ -237,12 +295,13 @@ public class StolenAndRecoveryServiceImpl {
 	public Page<StolenandRecoveryMgmt> getAllInfo(FilterRequest filterRequest, Integer pageNo, Integer pageSize,String source){
 		List<StateMgmtDb> stateInterpList = null;
 		List<StateMgmtDb> statusList = null;
-
+		Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
+		
 		try {
-			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
+			stolenValidator.validateFilter(filterRequest);
 
 			statusList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
-			logger.info("  source== "+source);
+			logger.info("source== "+source);
 			Page<StolenandRecoveryMgmt> stolenandRecoveryMgmtPage = stolenAndRecoveryRepository.findAll(buildSpecification(filterRequest, statusList, source).build(), pageable);
 			stateInterpList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
 			logger.info(stateInterpList);
@@ -265,18 +324,20 @@ public class StolenAndRecoveryServiceImpl {
 					stolenandRecoveryMgmt.setOperatorTypeIdInterp("");
 					logger.info("WARN : OperatorTypeId is null for [" + stolenandRecoveryMgmt + "]");
 				}
-
 			}
-			
+
 			logger.info(stolenandRecoveryMgmtPage.getContent());
 			if(Objects.nonNull(filterRequest.getTxnId())) {
-				addInAuditTrail(Long.valueOf(filterRequest.getUserId()), filterRequest.getTxnId(), SubFeatures.FILTER, filterRequest.getRoleType(),filterRequest.getRequestType(),filterRequest.getFeatureId());
+				addInAuditTrail(Long.valueOf(filterRequest.getUserId()), filterRequest.getTxnId(), SubFeatures.FILTER, filterRequest.getRoleType(), filterRequest.getRequestType(),filterRequest.getFeatureId());
 			}else {
 				addInAuditTrail(Long.valueOf(filterRequest.getUserId()), "NA", SubFeatures.VIEW_ALL, filterRequest.getRoleType(),filterRequest.getRequestType(),filterRequest.getFeatureId());
 			}
 			return stolenandRecoveryMgmtPage;
 
-		} catch (Exception e) {
+		} catch (RequestInvalidException e) {
+			logger.error("Request validation failed for txnId[" + filterRequest.getTxnId() + "]" + e);
+			return new PageImpl<StolenandRecoveryMgmt>(new ArrayList<StolenandRecoveryMgmt>(1), pageable, 0);
+		}catch (Exception e) {
 			logger.error(e.getMessage(), e);
 
 			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
@@ -288,7 +349,7 @@ public class StolenAndRecoveryServiceImpl {
 		}	
 	}
 
-	public List<StolenandRecoveryMgmt> getAll(FilterRequest filterRequest){
+	public List<StolenandRecoveryMgmt> getAll(FilterRequest filterRequest, String source){
 
 		List<StateMgmtDb> stateInterpList = null;
 		List<StateMgmtDb> statusList = null;
@@ -296,7 +357,7 @@ public class StolenAndRecoveryServiceImpl {
 		try {
 			statusList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
 
-			List<StolenandRecoveryMgmt> stolenandRecoveryMgmts = stolenAndRecoveryRepository.findAll(buildSpecification(filterRequest, statusList, null).build());
+			List<StolenandRecoveryMgmt> stolenandRecoveryMgmts = stolenAndRecoveryRepository.findAll(buildSpecification(filterRequest, statusList, source).build());
 			stateInterpList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
 			logger.info(stateInterpList);
 
@@ -339,7 +400,7 @@ public class StolenAndRecoveryServiceImpl {
 		GenericSpecificationBuilder<StolenandRecoveryMgmt> srsb = new GenericSpecificationBuilder<>(propertiesReader.dialect);
 		String ceirAdmin = "CEIRADMIN";
 		String fileStatus = "fileStatus";
-		logger.info("  source== "+source);
+		logger.info("source == " + source);
 		if(Objects.nonNull(filterRequest.getStartDate()) && !filterRequest.getStartDate().isEmpty())
 			srsb.with(new SearchCriteria("createdOn", filterRequest.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
 
@@ -348,12 +409,6 @@ public class StolenAndRecoveryServiceImpl {
 
 		if(Objects.nonNull(filterRequest.getTxnId()) && !filterRequest.getTxnId().isEmpty())
 			srsb.with(new SearchCriteria("txnId", filterRequest.getTxnId(), SearchOperation.EQUALITY, Datatype.STRING));
-
-		/*
-		 * if(Objects.nonNull(filterRequest.getRoleType())) srsb.with(new
-		 * SearchCriteria("roleType", filterRequest.getRoleType(),
-		 * SearchOperation.EQUALITY, Datatype.STRING));
-		 */
 
 		if(Objects.nonNull(filterRequest.getSourceType())) {
 			srsb.with(new SearchCriteria("sourceType", filterRequest.getSourceType(), SearchOperation.EQUALITY, Datatype.STRING));
@@ -395,7 +450,7 @@ public class StolenAndRecoveryServiceImpl {
 
 				List<DashboardUsersFeatureStateMap> dashboardUsersFeatureStateMap = dashboardUsersFeatureStateMapRepository.findByUserTypeIdAndFeatureId(filterRequest.getUserTypeId(), filterRequest.getFeatureId());
 				logger.debug(dashboardUsersFeatureStateMap);
-				
+
 				//Code written by Sonu
 				logger.info("  source== "+source);
 				if(Objects.nonNull(dashboardUsersFeatureStateMap)) {
@@ -454,23 +509,42 @@ public class StolenAndRecoveryServiceImpl {
 
 		return srsb;
 	}
-	
-	
-	public FileDetails getFilteredStolenAndRecoveryInFile(FilterRequest filterRequest) {
-		String fileName = null;
-		Writer writer   = null;
 
+
+	public FileDetails getFilteredStolenAndRecoveryInFile(FilterRequest filterRequest, String source) {
+
+		try {
+			stolenValidator.validateFilter(filterRequest);
+
+			DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+			DateTimeFormatter dtf2  = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
+
+			SystemConfigurationDb filepath = configurationManagementServiceImpl.findByTag(ConfigTags.file_download_dir);
+			logger.info("CONFIG : file_consignment_download_dir [" + filepath + "]");
+			SystemConfigurationDb link = configurationManagementServiceImpl.findByTag(ConfigTags.file_download_link);
+			logger.info("CONFIG : file_consignment_download_link [" + link + "]");
+
+			String filePath = filepath.getValue();
+
+			if(filterRequest.getFeatureId() == 5) {
+				return exportStolenRecoveryData(filterRequest, source, dtf, dtf2, filePath, link);
+			}else {
+				return exportBlockData(filterRequest, source, dtf, dtf2, filePath, link);
+			}
+		}catch (RequestInvalidException e) {
+			logger.error("Request validation failed for txnId[" + filterRequest.getTxnId() + "]" + e);
+			throw e;
+		}catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
+	}
+
+	private FileDetails exportStolenRecoveryData(FilterRequest filterRequest, String source, DateTimeFormatter dtf, DateTimeFormatter dtf2,
+			String filePath, SystemConfigurationDb link) {
 		StolenAndRecoveryFileModel srfm = null;
-
-		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-		DateTimeFormatter dtf2  = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
-
-		SystemConfigurationDb filepath = configurationManagementServiceImpl.findByTag(ConfigTags.file_download_dir);
-		logger.info("CONFIG : file_consignment_download_dir [" + filepath + "]");
-		SystemConfigurationDb link = configurationManagementServiceImpl.findByTag(ConfigTags.file_download_link);
-		logger.info("CONFIG : file_consignment_download_link [" + link + "]");
-
-		String filePath = filepath.getValue();
+		Writer writer   = null;
+		String fileName = null;
 
 		StatefulBeanToCsvBuilder<StolenAndRecoveryFileModel> builder = null;
 		StatefulBeanToCsv<StolenAndRecoveryFileModel> csvWriter = null;
@@ -478,12 +552,9 @@ public class StolenAndRecoveryServiceImpl {
 		CustomMappingStrategy<StolenAndRecoveryFileModel> mappingStrategy = new CustomMappingStrategy<>();
 
 		try {
-			List<StolenandRecoveryMgmt> stolenandRecoveryMgmts = getAll(filterRequest);
-			if(filterRequest.getFeatureId() == 5) {
-				fileName = LocalDateTime.now().format(dtf2).replace(" ", "_") + "_StolenAndRecovery.csv";
-			}else {
-				fileName = LocalDateTime.now().format(dtf2).replace(" ", "_") + "_Block_Unblock.csv";
-			}
+			List<StolenandRecoveryMgmt> stolenandRecoveryMgmts = getAll(filterRequest, source);
+
+			fileName = LocalDateTime.now().format(dtf2).replace(" ", "_") + "_Stolen_Recovery.csv";
 
 			writer = Files.newBufferedWriter(Paths.get(filePath+fileName));
 			mappingStrategy.setType(StolenAndRecoveryFileModel.class);
@@ -498,6 +569,74 @@ public class StolenAndRecoveryServiceImpl {
 				fileRecords = new ArrayList<>();
 				for( StolenandRecoveryMgmt stolenandRecoveryMgmt : stolenandRecoveryMgmts ) {
 					srfm = new StolenAndRecoveryFileModel();
+					if(Objects.isNull(stolenandRecoveryMgmt)) {
+						continue;
+					}
+
+					srfm.setCreatedOn(stolenandRecoveryMgmt.getCreatedOn().format(dtf));
+					srfm.setModifiedOn( stolenandRecoveryMgmt.getModifiedOn().format(dtf));
+					srfm.setTxnId( stolenandRecoveryMgmt.getTxnId());
+					srfm.setRequestType(stolenandRecoveryMgmt.getRequestTypeInterp());
+					srfm.setMode(stolenandRecoveryMgmt.getSourceTypeInterp());
+					logger.info("Status : "+stolenandRecoveryMgmt.getStateInterp());
+					srfm.setStolenStatus(stolenandRecoveryMgmt.getStateInterp());
+					srfm.setFileName( stolenandRecoveryMgmt.getFileName());
+					srfm.setDeviceQuantity(stolenandRecoveryMgmt.getDeviceQuantity());
+
+					logger.debug(srfm);
+					fileRecords.add(srfm);
+				}
+				csvWriter.write(fileRecords);
+			}
+			addInAuditTrail(Long.valueOf(filterRequest.getUserId()), "NA", SubFeatures.EXPORT, filterRequest.getRoleType(),filterRequest.getRequestType(),filterRequest.getFeatureId());
+			return new FileDetails( fileName, filePath, link.getValue().replace("$LOCAL_IP", propertiesReader.localIp) + fileName ); 
+
+		}catch (Exception e) {
+			logger.error(e.getMessage(), e);
+
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", decideFeature(5L));
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.EXPORT);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, filterRequest.getUserId(), bodyPlaceHolderMap);
+
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}finally {
+			try {
+				if( Objects.nonNull(writer) )
+					writer.close();
+			} catch (IOException e) {}
+		}
+	}
+
+	private FileDetails exportBlockData(FilterRequest filterRequest, String source, DateTimeFormatter dtf, 
+			DateTimeFormatter dtf2, String filePath, SystemConfigurationDb link) {
+		BlockUnblockFileModel srfm = null;
+		Writer writer   = null;
+		String fileName = null;
+
+		StatefulBeanToCsvBuilder<BlockUnblockFileModel> builder = null;
+		StatefulBeanToCsv<BlockUnblockFileModel> csvWriter = null;
+		List< BlockUnblockFileModel > fileRecords = null;
+		CustomMappingStrategy<BlockUnblockFileModel> mappingStrategy = new CustomMappingStrategy<>();
+
+		try {
+			List<StolenandRecoveryMgmt> stolenandRecoveryMgmts = getAll(filterRequest, source);
+
+			fileName = LocalDateTime.now().format(dtf2).replace(" ", "_") + "_Block_Unblock.csv";
+
+			writer = Files.newBufferedWriter(Paths.get(filePath+fileName));
+			mappingStrategy.setType(BlockUnblockFileModel.class);
+
+			builder = new StatefulBeanToCsvBuilder<>(writer);
+			csvWriter = builder.withMappingStrategy(mappingStrategy).withSeparator(',').withQuotechar(CSVWriter.NO_QUOTE_CHARACTER).build();
+
+			if( stolenandRecoveryMgmts.isEmpty() ) {
+				csvWriter.write(new BlockUnblockFileModel());
+			}else {
+
+				fileRecords = new ArrayList<>();
+				for( StolenandRecoveryMgmt stolenandRecoveryMgmt : stolenandRecoveryMgmts ) {
+					srfm = new BlockUnblockFileModel();
 					if(Objects.isNull(stolenandRecoveryMgmt)) {
 						continue;
 					}
@@ -527,7 +666,7 @@ public class StolenAndRecoveryServiceImpl {
 				csvWriter.write(fileRecords);
 			}
 			addInAuditTrail(Long.valueOf(filterRequest.getUserId()), "NA", SubFeatures.EXPORT, filterRequest.getRoleType(),filterRequest.getRequestType(),filterRequest.getFeatureId());
-			return new FileDetails( fileName, filePath, link.getValue() + fileName ); 
+			return new FileDetails( fileName, filePath, link.getValue().replace("$LOCAL_IP", propertiesReader.localIp) + fileName ); 
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
@@ -608,33 +747,43 @@ public class StolenAndRecoveryServiceImpl {
 
 	@Transactional
 	public GenricResponse deleteRecord(FilterRequest filterRequest) {
-		
+		try {
+			stolenValidator.validateDelete(filterRequest);
+		}catch (RequestInvalidException e) {
+			logger.error("Request validation failed for txnId[" + filterRequest.getTxnId() + "]" + e);
+			throw e;
+		}
+
 		UserProfile userProfile = null;
-		//String firstName = "";
 		User user = null;
 		Map<String, String> placeholderMap = new HashMap<>();
 		Map<String, String> placeholderMap1 = new HashMap<>();
-		//String mailTag = null;
 		String action = null;
 		String txnId = null;
 		String userMailTag = null;
-		Boolean isUserCeirAdmin=false;
+		Boolean isUserCeirAdmin = false;
 		String receiverUserType = filterRequest.getUserType();
 		action = SubFeatures.DELETE;
 		StolenandRecoveryMgmt stolenandRecoveryMgmt = stolenAndRecoveryRepository.getByTxnId(filterRequest.getTxnId());
-		user = userRepository.getById(stolenandRecoveryMgmt.getUserId());				
+		//Check if it's already accepted/rejected
+		if(StolenStatus.APPROVED_BY_CEIR_ADMIN.getCode() == stolenandRecoveryMgmt.getFileStatus() 
+				|| StolenStatus.REJECTED_BY_CEIR_ADMIN.getCode() == stolenandRecoveryMgmt.getFileStatus() ) {
+			String message = "Any other user have taken the same action on the Stolen/Recovery/Block/Unblock [" + stolenandRecoveryMgmt.getTxnId() + "]";
+			logger.info(message);
+			return new GenricResponse(10, "", message, stolenandRecoveryMgmt.getTxnId());
+		}
+		user = userRepository.getById(stolenandRecoveryMgmt.getUserId());
 		userProfile = user.getUserProfile();
 		txnId = filterRequest.getTxnId();
-		String featureName=null;
-		
+		String featureName = null;
+
 		// set feature name for notification  & mail 
-		if(filterRequest.getFeatureId().equals(5))
-		{
-			featureName =Features.STOLEN_RECOVERY;
+		if(filterRequest.getFeatureId().equals(5)){
+			featureName = Features.STOLEN_RECOVERY;
 		}else {
-			featureName =Features.BLOCK_UNBLOCK;
+			featureName = Features.BLOCK_UNBLOCK;
 		}
-		
+
 		if(filterRequest.getRequestType() == 0) {
 			userMailTag = "STOLEN_WITHDRAWN";
 			txnId = stolenandRecoveryMgmt.getTxnId();
@@ -648,15 +797,14 @@ public class StolenAndRecoveryServiceImpl {
 			userMailTag = "UNBLOCK_WITHDRAWN";
 			txnId =  stolenandRecoveryMgmt.getTxnId();
 		}
-		
-		/*placeholderMap.put("<First name>", userProfile_generic_Response_Notification.getFirstName());
-		placeholderMap.put("<Txn id>", consignmentMgmt.getTxnId());*/
-		
-		placeholderMap.put("<First name>", userProfile.getFirstName());
-		placeholderMap.put("<Txn id>", filterRequest.getTxnId());
-		
+
 		placeholderMap1.put("<First name>", userProfile.getFirstName());
 		placeholderMap1.put("<Txn id>", filterRequest.getTxnId());
+
+		String payloadTxnId = filterRequest.getTxnId();
+		lock.lock();
+		logger.info("lock taken by thread for [Delete] - " + Thread.currentThread().getName());
+
 		try {
 			StolenandRecoveryMgmt stolenandRecoveryMgmtInfo = stolenAndRecoveryRepository.getById(filterRequest.getId());
 			if(Objects.isNull(filterRequest.getRemark())) {
@@ -667,6 +815,14 @@ public class StolenAndRecoveryServiceImpl {
 			}else {
 				if("Lawful Agency".equalsIgnoreCase(filterRequest.getUserType()) 
 						|| "Operator".equalsIgnoreCase(filterRequest.getUserType())) {
+					// Check if someone else taken the same action on Stolen/Recovery/Block/Unblock.
+					StolenandRecoveryMgmt stolenandRecoveryMgmtTemp = stolenAndRecoveryRepository.getByTxnId(payloadTxnId);
+					if(stolenandRecoveryMgmtTemp.getFileStatus() == 7) {
+						String message = "Any other user have taken the same action on the Stolen/Recovery/Block/Unblock [" + payloadTxnId + "]";
+						logger.info(message);
+						return new GenricResponse(10, "", message, payloadTxnId);
+					}
+
 					if(stolenandRecoveryMgmtInfo.getFileStatus()==0 
 							|| stolenandRecoveryMgmtInfo.getFileStatus()==3 
 							|| stolenandRecoveryMgmtInfo.getFileStatus()==4) {
@@ -678,24 +834,37 @@ public class StolenAndRecoveryServiceImpl {
 						return new GenricResponse(2,"State transaction not allowed", filterRequest.getTxnId());
 					}
 				}else if("CEIRAdmin".equalsIgnoreCase(filterRequest.getUserType())){
+					// Check if someone else taken the same action on Stolen/Recovery/Block/Unblock.
+					StolenandRecoveryMgmt stolenandRecoveryMgmtTemp = stolenAndRecoveryRepository.getByTxnId(payloadTxnId);
+					if(stolenandRecoveryMgmtTemp.getFileStatus() == 6) {
+						String message = "Any other user have taken the same action on the Stolen/Recovery/Block/Unblock [" + payloadTxnId + "]";
+						logger.info(message);
+						return new GenricResponse(10, "", message, payloadTxnId);
+					}
+
 					//set file status =6
 					stolenandRecoveryMgmtInfo.setFileStatus(6);//withdrawn by CEIR Admin 
 					stolenandRecoveryMgmtInfo.setRemark(filterRequest.getRemark());
-					isUserCeirAdmin=true;
+					isUserCeirAdmin = Boolean.TRUE;
 				}else {
 					return new GenricResponse(3,"Operation not allowed", filterRequest.getTxnId());
 				}
+
 				stolenandRecoveryMgmtInfo.setDeleteFlag(0);
 				stolenandRecoveryMgmtInfo.setRemark(filterRequest.getRemark());
+
 				logger.info("going to delete record.");
 				stolenAndRecoveryRepository.save(stolenandRecoveryMgmtInfo);
-				
+
+				// Add an entry in web_action_db.
+				WebActionDb webActionDb = new WebActionDb(decideFeature(stolenandRecoveryMgmt.getRequestType()), 
+						action, 
+						WebActionStatus.INIT.getCode(), stolenandRecoveryMgmt.getTxnId());
+				webActionDbRepository.save(webActionDb);
+				logger.info("Entry in web action of action [Delete] for txnid [" + stolenandRecoveryMgmt.getTxnId() + "]");
+
+
 				if(isUserCeirAdmin) {
-					
-					/*
-					 * user = userRepository.getById(filterRequest.getUserId()); userProfile =
-					 * user.getUserProfile();
-					 */
 					logger.info("user profile details-");
 					logger.info(userProfile);
 					Generic_Response_Notification generic_Response_Notification = userFeignClient.ceirInfoByUserTypeId(8);
@@ -705,24 +874,24 @@ public class StolenAndRecoveryServiceImpl {
 					List<RegisterationUser> registerationUserList = generic_Response_Notification.getData();
 
 					for(RegisterationUser registerationUser :registerationUserList) {
-					UserProfile userProfile_generic_Response_Notification = new UserProfile();
-					userProfile_generic_Response_Notification = userProfileRepository.getByUserId(registerationUser.getId());
-					placeholderMap.put("<First name>", userProfile_generic_Response_Notification.getFirstName());
-					placeholderMap.put("<Txn id>", filterRequest.getTxnId());
-					
-					emailUtil.saveNotification(userMailTag, 
-							userProfile_generic_Response_Notification,
-							filterRequest.getFeatureId(),
-							featureName,
-							action,
-							filterRequest.getTxnId(),
-							txnId,
-							placeholderMap,
-							filterRequest.getRoleType(),
-							receiverUserType,
-							"Users");
-					logger.info("Record delete by CEIRAdmin , Notfication for CEIRAdmin have been saved.");
-				}
+						UserProfile userProfile_generic_Response_Notification = new UserProfile();
+						userProfile_generic_Response_Notification = userProfileRepository.getByUserId(registerationUser.getId());
+						placeholderMap.put("<First name>", userProfile_generic_Response_Notification.getFirstName());
+						placeholderMap.put("<Txn id>", filterRequest.getTxnId());
+
+						emailUtil.saveNotification(userMailTag, 
+								userProfile_generic_Response_Notification,
+								filterRequest.getFeatureId(),
+								featureName,
+								action,
+								filterRequest.getTxnId(),
+								txnId,
+								placeholderMap,
+								filterRequest.getRoleType(),
+								receiverUserType,
+								"Users");
+						logger.info("Record delete by CEIRAdmin , Notfication for CEIRAdmin have been saved.");
+					}
 					emailUtil.saveNotification(userMailTag, 
 							userProfile, 
 							filterRequest.getFeatureId(),
@@ -762,6 +931,11 @@ public class StolenAndRecoveryServiceImpl {
 			alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, filterRequest.getUserId(), bodyPlaceHolderMap);
 
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}finally {
+			if(lock.isLocked()) {
+				logger.info("lock released by thread [Delete] - " + Thread.currentThread().getName());
+				lock.unlock();
+			}
 		}
 	}
 
@@ -769,6 +943,8 @@ public class StolenAndRecoveryServiceImpl {
 	public GenricResponse updateRecord(StolenandRecoveryMgmt stolenandRecoveryMgmt) {
 
 		try {
+			stolenValidator.validateEdit(stolenandRecoveryMgmt);
+			
 			StolenandRecoveryMgmt stolenandRecoveryMgmtInfo = stolenAndRecoveryRepository.getByTxnId(stolenandRecoveryMgmt.getTxnId());
 			logger.info(stolenandRecoveryMgmtInfo);
 			if(Objects.isNull(stolenandRecoveryMgmtInfo)) {
@@ -778,6 +954,15 @@ public class StolenAndRecoveryServiceImpl {
 				WebActionDb webActionDb = new WebActionDb(decideFeature(stolenandRecoveryMgmt.getRequestType()), 
 						SubFeatures.UPDATE, 
 						WebActionStatus.INIT.getCode(), stolenandRecoveryMgmt.getTxnId());
+
+				// Only for logs purpose.
+				if(stolenandRecoveryMgmt.getRequestType() == 1) {
+					logger.info("Recovery request for txn_id[" + stolenandRecoveryMgmt.getTxnId() + "]");
+				}else if(stolenandRecoveryMgmt.getRequestType() == 3) {
+					logger.info("Unblock request for txn_id[" + stolenandRecoveryMgmt.getTxnId() + "]");
+				}
+
+				setBlockingType(stolenandRecoveryMgmt);
 
 				// 0 = Stolen
 				if (stolenandRecoveryMgmt.getRequestType() == 0){
@@ -833,6 +1018,9 @@ public class StolenAndRecoveryServiceImpl {
 				addInAuditTrail(Long.valueOf(stolenandRecoveryMgmt.getUserId()), stolenandRecoveryMgmt.getTxnId(), SubFeatures.UPDATE, stolenandRecoveryMgmt.getRoleType(),stolenandRecoveryMgmt.getRequestType(),0);
 				return new GenricResponse(0, "Record update sucessfully", stolenandRecoveryMgmt.getTxnId());
 			}
+		}catch (RequestInvalidException e) {
+			logger.error("Request validation failed for txnId[" + stolenandRecoveryMgmt.getTxnId() + "]" + e);
+			throw e;
 		}catch (Exception e) {
 
 			logger.error(e.getMessage(), e);
@@ -857,6 +1045,8 @@ public class StolenAndRecoveryServiceImpl {
 
 	public StolenandRecoveryMgmt getByTxnId(StolenandRecoveryMgmt stolenandRecoveryMgmt) {
 		try {
+			stolenValidator.validateViewById(stolenandRecoveryMgmt);
+			
 			logger.info("Going to get Stolen and recovery Info for txnId : " + stolenandRecoveryMgmt.getTxnId());
 
 			if(Objects.isNull(stolenandRecoveryMgmt.getTxnId())) {
@@ -868,7 +1058,10 @@ public class StolenAndRecoveryServiceImpl {
 
 			addInAuditTrail(Long.valueOf(stolenandRecoveryMgmt.getUserId()), stolenandRecoveryMgmt.getTxnId(), SubFeatures.VIEW, stolenandRecoveryMgmt.getRoleType(),stolenandRecoveryMgmt.getRequestType(),0);
 			return stolenandRecoveryMgmt2;
-		} catch (Exception e) {
+		} catch (RequestInvalidException e) {
+			logger.error("Request validation failed for txnId[" + stolenandRecoveryMgmt.getTxnId() + "]" + e);
+			throw e;
+		}catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
@@ -898,6 +1091,7 @@ public class StolenAndRecoveryServiceImpl {
 
 	public GenricResponse acceptReject(ConsignmentUpdateRequest consignmentUpdateRequest) {
 		try {
+			stolenValidator.validateAcceptReject(consignmentUpdateRequest);
 			UserProfile userProfile = null;
 			Map<String, String> placeholderMap1 = null;
 			StolenandRecoveryMgmt stolenandRecoveryMgmt = stolenAndRecoveryRepository.getByTxnId(consignmentUpdateRequest.getTxnId());
@@ -915,14 +1109,32 @@ public class StolenAndRecoveryServiceImpl {
 				return new GenricResponse(4, message, consignmentUpdateRequest.getTxnId());
 			}
 
-			// 0 - Accept, 1 - Reject
+			lock.lock();
+			logger.info("lock taken by thread : " + Thread.currentThread().getName());
+
+			// 0 - Processing, 1 - Reject, 2 - Pending Approval
 			if("CEIRADMIN".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())){
 				String mailTag = null;
 				String action = null;
 				String txnId = null;
-
+				//Check if it's already accepted/rejected
+				if(StolenStatus.APPROVED_BY_CEIR_ADMIN.getCode() == stolenandRecoveryMgmt.getFileStatus() 
+						|| StolenStatus.REJECTED_BY_CEIR_ADMIN.getCode() == stolenandRecoveryMgmt.getFileStatus() ) {
+					String message = "Any other user have taken the same action on the Stolen/Recovery/Block/Unblock [" + stolenandRecoveryMgmt.getTxnId() + "]";
+					logger.info(message);
+					return new GenricResponse(10, "", message, stolenandRecoveryMgmt.getTxnId());
+				}
 				if(consignmentUpdateRequest.getAction() == 0) {
 					action = SubFeatures.ACCEPT;
+
+					String payloadTxnId = stolenandRecoveryMgmt.getTxnId();
+					// Check if someone else taken the same action on Stolen/Recovery/Block/Unblock.
+					StolenandRecoveryMgmt stolenandRecoveryMgmtTemp = stolenAndRecoveryRepository.getByTxnId(payloadTxnId);
+					if(StolenStatus.APPROVED_BY_CEIR_ADMIN.getCode() == stolenandRecoveryMgmtTemp.getFileStatus()) {
+						String message = "Any other user have taken the same action on the Stolen/Recovery/Block/Unblock [" + payloadTxnId + "]";
+						logger.info(message);
+						return new GenricResponse(10, "", message, payloadTxnId);
+					}
 
 					if(consignmentUpdateRequest.getRequestType() == 0) {
 						mailTag = "STOLEN_APPROVED_BY_CEIR_ADMIN";
@@ -946,6 +1158,15 @@ public class StolenAndRecoveryServiceImpl {
 				}else {
 					action = SubFeatures.REJECT;
 
+					String payloadTxnId = stolenandRecoveryMgmt.getTxnId();
+					// Check if someone else taken the same action on Stolen/Recovery/Block/Unblock.
+					StolenandRecoveryMgmt stolenandRecoveryMgmtTemp = stolenAndRecoveryRepository.getByTxnId(payloadTxnId);
+					if(StolenStatus.REJECTED_BY_CEIR_ADMIN.getCode() == stolenandRecoveryMgmtTemp.getFileStatus()) {
+						String message = "Any other user have taken the same action on the Stolen/Recovery/Block/Unblock [" + payloadTxnId + "]";
+						logger.info(message);
+						return new GenricResponse(10, "", message, payloadTxnId);
+					}
+
 					if(consignmentUpdateRequest.getRequestType() == 0) {
 						mailTag = "STOLEN_REJECT_BY_CEIR_ADMIN";
 						txnId =  stolenandRecoveryMgmt.getTxnId();
@@ -965,34 +1186,19 @@ public class StolenAndRecoveryServiceImpl {
 
 					stolenandRecoveryMgmt.setFileStatus(StolenStatus.REJECTED_BY_CEIR_ADMIN.getCode());
 					stolenandRecoveryMgmt.setRejectedRemark(consignmentUpdateRequest.getRemarks());
-					stolenandRecoveryMgmt.setCeirAdminId(consignmentUpdateRequest.getUserId());
-
 				}
+
+				stolenandRecoveryMgmt.setCeirAdminId(consignmentUpdateRequest.getUserId());
 
 				if(!stolenAndRecoveryTransaction.updateStatusWithHistory(stolenandRecoveryMgmt)) {
 					logger.warn("Unable to update Stolen and recovery entity.");
 					return new GenricResponse(3, "Unable to update Stolen and recovery entity.", consignmentUpdateRequest.getTxnId());
 				}else {
 					placeholderMap1 = new HashMap<>();
-					
+
 					placeholderMap1.put("<First name>", userProfile.getFirstName());
 					placeholderMap1.put("<Txn id>", txnId);
-					
-					//Added Code for multiple CEIR ADmin 				
-					/*userProfile = user.getUserProfile();
-					logger.info("user profile details-");
-					logger.info(userProfile);
-					Generic_Response_Notification generic_Response_Notification = userFeignClient.ceirInfoByUserTypeId(8);
 
-					logger.info("generic_Response_Notification::::::::"+generic_Response_Notification);
-
-					List<RegisterationUser> registerationUserList = generic_Response_Notification.getData();
-					for(RegisterationUser registerationUser :registerationUserList) {
-						UserProfile userProfile_generic_Response_Notification = new UserProfile();
-						userProfile_generic_Response_Notification = userProfileRepository.getByUserId(registerationUser.getId());
-					
-					
-					}*/
 					emailUtil.saveNotification(mailTag, 
 							userProfile, 
 							consignmentUpdateRequest.getFeatureId(),
@@ -1005,39 +1211,47 @@ public class StolenAndRecoveryServiceImpl {
 							user.getUsertype().getUsertypeName(),
 							ReferTable.USERS);
 					logger.info("Notfication have been saved for User.");
-					
+
 					if(consignmentUpdateRequest.getAction() == 0) {
-						 Generic_Response_Notification generic_Response_Notification =
-								  userFeignClient.ceirInfoByUserTypeId(8);
-								  
-								  logger.info("generic_Response_Notification::::::::"+
-								  generic_Response_Notification);
-								  
-								  List<RegisterationUser> registerationUserList =
-								  generic_Response_Notification.getData();
-								  
-								  for(RegisterationUser registerationUser :registerationUserList) { UserProfile
-								  userProfile_generic_Response_Notification = new UserProfile();
-								  userProfile_generic_Response_Notification =
-								  userProfileRepository.getByUserId(registerationUser.getId());
-								  placeholderMap1.put("<First name>",userProfile_generic_Response_Notification.getFirstName());
-								  
-								  emailUtil.saveNotification(mailTag,
-								  userProfile_generic_Response_Notification,
-								  consignmentUpdateRequest.getFeatureId(),
-								  decideFeature(consignmentUpdateRequest.getRequestType()),
-								  action,
-								  consignmentUpdateRequest.getTxnId(), 
-								  txnId,
-								  placeholderMap1,
-								  stolenandRecoveryMgmt.getRoleType(),
-								  consignmentUpdateRequest.getUserType(),
-								  "Users");
-								  logger.info("Notfication have been saved for CEIR Admin."); }	
+						Generic_Response_Notification generic_Response_Notification =
+								userFeignClient.ceirInfoByUserTypeId(8);
+
+						logger.info("generic_Response_Notification::::::::"+
+								generic_Response_Notification);
+
+						List<RegisterationUser> registerationUserList =
+								generic_Response_Notification.getData();
+
+						for(RegisterationUser registerationUser :registerationUserList) { UserProfile
+							userProfile_generic_Response_Notification = new UserProfile();
+						userProfile_generic_Response_Notification =
+								userProfileRepository.getByUserId(registerationUser.getId());
+						placeholderMap1.put("<First name>",userProfile_generic_Response_Notification.getFirstName());
+
+						emailUtil.saveNotification(mailTag,
+								userProfile_generic_Response_Notification,
+								consignmentUpdateRequest.getFeatureId(),
+								decideFeature(consignmentUpdateRequest.getRequestType()),
+								action,
+								consignmentUpdateRequest.getTxnId(), 
+								txnId,
+								placeholderMap1,
+								stolenandRecoveryMgmt.getRoleType(),
+								consignmentUpdateRequest.getUserType(),
+								"Users");
+						logger.info("Notfication have been saved for CEIR Admin."); }	
 					}
-					
-					
 				}
+
+				// Add an entry in web_action_db.
+				WebActionDb webActionDb = new WebActionDb(decideFeature(stolenandRecoveryMgmt.getRequestType()), 
+						action, 
+						WebActionStatus.INIT.getCode(), stolenandRecoveryMgmt.getTxnId());
+				webActionDbRepository.save(webActionDb);
+				logger.info("Entry in web action of action[" + action + "] for txnid [" + stolenandRecoveryMgmt.getTxnId() + "]");
+
+				//}
+
 				addInAuditTrail(Long.valueOf(stolenandRecoveryMgmt.getUserId()), stolenandRecoveryMgmt.getTxnId(), action, stolenandRecoveryMgmt.getRoleType(),stolenandRecoveryMgmt.getRequestType(),0);
 			}else if("CEIRSYSTEM".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())){
 				String mailTag = null;
@@ -1051,6 +1265,15 @@ public class StolenAndRecoveryServiceImpl {
 
 				if(consignmentUpdateRequest.getAction() == 0) {
 					action = SubFeatures.ACCEPT;
+
+					String payloadTxnId = stolenandRecoveryMgmt.getTxnId();
+					// Check if someone else taken the same action on Stolen/Recovery/Block/Unblock.
+					StolenandRecoveryMgmt stolenandRecoveryMgmtTemp = stolenAndRecoveryRepository.getByTxnId(payloadTxnId);
+					if(StolenStatus.PROCESSING.getCode() == stolenandRecoveryMgmtTemp.getFileStatus()) {
+						String message = "Any other user have taken the same action on the Stolen/Recovery/Block/Unblock [" + payloadTxnId + "]";
+						logger.info(message);
+						return new GenricResponse(10, "", message, payloadTxnId);
+					}
 
 					if(consignmentUpdateRequest.getRequestType() == 0) {
 						mailTag = "STOLEN_PROCESSED_SUCESSFULLY";
@@ -1072,14 +1295,19 @@ public class StolenAndRecoveryServiceImpl {
 						logger.warn("unknown request type received for stolen and recovery.");
 					}
 
-					if(stolenandRecoveryMgmt.getFileStatus() == StolenStatus.INIT.getCode()) {
-						stolenandRecoveryMgmt.setFileStatus(StolenStatus.PROCESSING.getCode());
-					}else {
-						stolenandRecoveryMgmt.setFileStatus(StolenStatus.PENDING_APPROVAL_FROM_CEIR_ADMIN.getCode());
-					}					
+					stolenandRecoveryMgmt.setFileStatus(StolenStatus.PROCESSING.getCode());
 
-				}else {
+				}else if(consignmentUpdateRequest.getAction() == 1) {
 					action = SubFeatures.REJECT;
+
+					String payloadTxnId = stolenandRecoveryMgmt.getTxnId();
+					// Check if someone else taken the same action on Stolen/Recovery/Block/Unblock.
+					StolenandRecoveryMgmt stolenandRecoveryMgmtTemp = stolenAndRecoveryRepository.getByTxnId(payloadTxnId);
+					if(StolenStatus.REJECTED_BY_SYSTEM.getCode() == stolenandRecoveryMgmtTemp.getFileStatus()) {
+						String message = "Any other user have taken the same action on the Stolen/Recovery/Block/Unblock [" + payloadTxnId + "]";
+						logger.info(message);
+						return new GenricResponse(10, "", message, payloadTxnId);
+					}
 
 					if(consignmentUpdateRequest.getRequestType() == 0){
 						mailTag = "STOLEN_PROCESSED_FAILED";
@@ -1101,6 +1329,41 @@ public class StolenAndRecoveryServiceImpl {
 					stolenandRecoveryMgmt.setFileStatus(StolenStatus.REJECTED_BY_SYSTEM.getCode());
 					stolenandRecoveryMgmt.setRejectedRemark(consignmentUpdateRequest.getRemarks());
 
+				}else if(consignmentUpdateRequest.getAction() == 2) {
+					action = SubFeatures.ACCEPT;
+
+					String payloadTxnId = stolenandRecoveryMgmt.getTxnId();
+					// Check if someone else taken the same action on Stolen/Recovery/Block/Unblock.
+					StolenandRecoveryMgmt stolenandRecoveryMgmtTemp = stolenAndRecoveryRepository.getByTxnId(payloadTxnId);
+					if(StolenStatus.PENDING_APPROVAL_FROM_CEIR_ADMIN.getCode() == stolenandRecoveryMgmtTemp.getFileStatus()) {
+						String message = "Any other user have taken the same action on the Stolen/Recovery/Block/Unblock [" + payloadTxnId + "]";
+						logger.info(message);
+						return new GenricResponse(10, "", message, payloadTxnId);
+					}
+
+					if(consignmentUpdateRequest.getRequestType() == 0) {
+						mailTag = "STOLEN_PROCESSED_SUCESSFULLY";
+						ceirMailTag = "STOLEN_PROCESSED_SUCESSFULLY_TO_CEIR_ADMIN";
+						txnId = stolenandRecoveryMgmt.getTxnId();
+					}else if(consignmentUpdateRequest.getRequestType() == 1){
+						mailTag = "RECOVERY_PROCESSED_SUCESSFULLY";
+						ceirMailTag = "RECOVERY_PROCESSED_SUCESSFULLY_TO_CEIR_ADMIN";
+						txnId =  stolenandRecoveryMgmt.getTxnId();
+					}else if(consignmentUpdateRequest.getRequestType() == 2){
+						mailTag = "BLOCK_PROCESSED_SUCESSFULLY";
+						ceirMailTag = "BLOCK_PROCESSED_SUCESSFULLY_TO_CEIR_ADMIN";
+						txnId = stolenandRecoveryMgmt.getTxnId();
+					}else if(consignmentUpdateRequest.getRequestType() == 3){
+						mailTag = "UNBLOCK_PROCESSED_SUCESSFULLY";
+						ceirMailTag = "UNBLOCK_PROCESSED_SUCESSFULLY_TO_CEIR_ADMIN";
+						txnId = stolenandRecoveryMgmt.getTxnId();
+					}else {
+						logger.warn("unknown request type received for stolen and recovery.");
+					}
+					stolenandRecoveryMgmt.setFileStatus(StolenStatus.PENDING_APPROVAL_FROM_CEIR_ADMIN.getCode());
+				}else {
+					logger.info("You are not allowed to do this operation.[" + stolenandRecoveryMgmt.getTxnId() + "]");
+					return new GenricResponse(1, "You are not allowed to do this operation.", "");
 				}
 
 				if(!stolenAndRecoveryTransaction.updateStatusWithHistory(stolenandRecoveryMgmt)) {
@@ -1123,47 +1386,34 @@ public class StolenAndRecoveryServiceImpl {
 								"CEIRSYSTEM",
 								user.getUsertype().getUsertypeName(),
 								ReferTable.USERS);
-						 logger.info("proceed by system,Notfication  have been saved for User.");
-						
-						if(consignmentUpdateRequest.getAction() == 0) {
-							 Generic_Response_Notification generic_Response_Notification =
-									  userFeignClient.ceirInfoByUserTypeId(8);
-									  
-									  logger.info("generic_Response_Notification::::::::"+
-									  generic_Response_Notification);
-									  
-									  List<RegisterationUser> registerationUserList =
-									  generic_Response_Notification.getData();
-									  
-									  for(RegisterationUser registerationUser :registerationUserList) { UserProfile
-									  userProfile_generic_Response_Notification = new UserProfile();
-									  userProfile_generic_Response_Notification = userProfileRepository.getByUserId(registerationUser.getId());
-									  emailUtil.saveNotification(ceirMailTag,
-											  userProfile_generic_Response_Notification,
-											  consignmentUpdateRequest.getFeatureId(),
-											  decideFeature(consignmentUpdateRequest.getRequestType()),
-											  action,
-											  consignmentUpdateRequest.getTxnId(), 
-											  txnId,
-											  placeholderMap1,
-											  "CEIRSYSTEM",
-											  "CEIRADMIN", 
-											  ReferTable.USERS);
-									  logger.info(" proceed by system , Notfication have been saved for CEIR Admin.");
-									  }
-										
+						logger.info("proceed by system,Notfication  have been saved for User.");
+
+						if(consignmentUpdateRequest.getAction() == 2) {
+							Generic_Response_Notification generic_Response_Notification =
+									userFeignClient.ceirInfoByUserTypeId(8);
+
+							logger.info("generic_Response_Notification::::::::" + generic_Response_Notification);
+
+							List<RegisterationUser> registerationUserList =
+									generic_Response_Notification.getData();
+
+							for(RegisterationUser registerationUser :registerationUserList) { UserProfile
+								userProfile_generic_Response_Notification = new UserProfile();
+							userProfile_generic_Response_Notification = userProfileRepository.getByUserId(registerationUser.getId());
+							emailUtil.saveNotification(ceirMailTag,
+									userProfile_generic_Response_Notification,
+									consignmentUpdateRequest.getFeatureId(),
+									decideFeature(consignmentUpdateRequest.getRequestType()),
+									action,
+									consignmentUpdateRequest.getTxnId(), 
+									txnId,
+									placeholderMap1,
+									"CEIRSYSTEM",
+									"CEIRADMIN", 
+									ReferTable.USERS);
+							logger.info(" proceed by system , Notfication have been saved for CEIR Admin.");
+							}
 						}
-						
-						/*
-						 * if(Objects.nonNull(ceirMailTag)) { emailUtil.saveNotification(ceirMailTag,
-						 * userStaticServiceImpl.getCeirAdmin().getUserProfile(),
-						 * consignmentUpdateRequest.getFeatureId(),
-						 * decideFeature(consignmentUpdateRequest.getRequestType()), action,
-						 * consignmentUpdateRequest.getTxnId(), txnId, placeholderMap1, "CEIRSYSTEM",
-						 * "CEIRADMIN", ReferTable.USERS); }
-						 * logger.info("Notfication have been saved.");
-						 */
-						 
 					}
 				}
 
@@ -1174,7 +1424,10 @@ public class StolenAndRecoveryServiceImpl {
 
 			return new GenricResponse(0, "Stolen/Block request Updated SuccessFully.", consignmentUpdateRequest.getTxnId());
 
-		} catch (Exception e) {
+		} catch (RequestInvalidException e) {
+			logger.error("Request validation failed for txnId[" + consignmentUpdateRequest.getTxnId() + "]" + e);
+			throw e;
+		}catch (Exception e) {
 			logger.error(e.getMessage(), e);
 
 			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
@@ -1183,6 +1436,11 @@ public class StolenAndRecoveryServiceImpl {
 			alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, 0, bodyPlaceHolderMap);
 
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}finally {
+			if(lock.isLocked()) {
+				logger.info("lock released by thread : " + Thread.currentThread().getName());
+				lock.unlock();
+			}
 		}
 	}
 
@@ -1266,15 +1524,15 @@ public class StolenAndRecoveryServiceImpl {
 		if(Objects.nonNull(imei4))
 			count++;
 
-		return count==0? 1:count;
+		return count == 0? 1 : count;
 	}
 
-	private void addInAuditTrail(Long userId, String txnId, String subFeatureName, String roleType,Integer requestType,Integer featureId) {
+	private void addInAuditTrail(Long userId, String txnId, String subFeatureName, String roleType, Integer requestType, Integer featureId) {
 
 		User requestUser = null;
 		String fearure = null;
 		try {
-			logger.info("Fetching user Info User ID"+userId);	
+			logger.info("Fetching user Info User ID " + userId);	
 			requestUser = userRepository.getById(userId);
 			if(Objects.nonNull(featureId) && featureId!=0) {
 				if(featureId==5) {
@@ -1294,9 +1552,8 @@ public class StolenAndRecoveryServiceImpl {
 						fearure = "Block/unblock Devices";
 					}
 				}else {
-					logger.error("Error while fetching user info requestType: "+requestType+" featureId : "+featureId);
+					logger.error("Error while fetching user info requestType: " + requestType + " featureId : " + featureId);
 				}
-
 			}
 
 			logger.info("User Details"+requestUser);
@@ -1322,28 +1579,65 @@ public class StolenAndRecoveryServiceImpl {
 			logger.error("Could not find the user information");
 		}
 	}
-	
+
+	private void setBlockingType(StolenandRecoveryMgmt stolenandRecoveryMgmt) {
+		if(Objects.isNull(stolenandRecoveryMgmt.getBlockingType())
+				|| stolenandRecoveryMgmt.getBlockingType().equalsIgnoreCase("Default") 
+				|| stolenandRecoveryMgmt.getBlockingType().isEmpty()) {
+			SystemConfigurationDb systemConfigurationDb = configurationManagementServiceImpl.findByTag(ConfigTags.GREY_TO_BLACK_MOVE_PERIOD_IN_DAY);
+			String date = DateUtil.nextDate(Integer.parseInt(systemConfigurationDb.getValue()), "yyyy-MM-dd");
+			stolenandRecoveryMgmt.setBlockingTimePeriod(date); 
+			stolenandRecoveryMgmt.setBlockingType("Default");
+			logger.info("Set Default Blocking time period for txn_id [" + stolenandRecoveryMgmt.getTxnId() + "] Blockingtimeperiod [" + date + "]");
+		}else if(stolenandRecoveryMgmt.getBlockingType().equalsIgnoreCase("Immediate")) {
+			String date = DateUtil.nextDate(0, "yyyy-MM-dd");
+			stolenandRecoveryMgmt.setBlockingTimePeriod(date); 
+			stolenandRecoveryMgmt.setBlockingType("Immediate");
+			logger.info("Set Immediate Blocking time period for txn_id [" + stolenandRecoveryMgmt.getTxnId() + "] Blockingtimeperiod [" + date + "]");
+		}else {
+			logger.info("Unable to set Blocking time period for txn_id " + stolenandRecoveryMgmt.getTxnId());
+		}
+	}
+
 	public boolean nothingInFilter(FilterRequest filterRequest) {
-		if(Objects.nonNull(filterRequest.getStartDate()) || !filterRequest.getStartDate().isEmpty()) {
-			return Boolean.FALSE;
+		// Clean
+		if(filterRequest.getStartDate().isEmpty()) {
+			filterRequest.setStartDate(null);
 		}
-		if(Objects.nonNull(filterRequest.getEndDate()) || !filterRequest.getEndDate().isEmpty()) {
+
+		if(filterRequest.getEndDate().isEmpty()) {
+			filterRequest.setEndDate(null);
+		}
+
+		if(filterRequest.getTxnId().isEmpty()) {
+			filterRequest.setTxnId(null);
+		}
+
+		// Logic
+		if(Objects.nonNull(filterRequest.getStartDate())) {
 			return Boolean.FALSE;
 		}
 
-		if(Objects.nonNull(filterRequest.getTxnId()) || !filterRequest.getTxnId().isEmpty()) {
+		if(Objects.nonNull(filterRequest.getEndDate())) {
 			return Boolean.FALSE;
 		}
 
-		if(Objects.nonNull(filterRequest.getDisplayName()) || !filterRequest.getDisplayName().isEmpty()) {
+		if(Objects.nonNull(filterRequest.getTxnId())) {
 			return Boolean.FALSE;
 		}
+
+		if(Objects.nonNull(filterRequest.getDisplayName())) {
+			return Boolean.FALSE;
+		}
+
+		if(Objects.nonNull(filterRequest.getFilteredUserType())) {
+			return Boolean.FALSE;
+		}
+
 		if(Objects.nonNull(filterRequest.getConsignmentStatus()) ) {
 			return Boolean.FALSE;
 		}
-		if(Objects.nonNull(filterRequest.getUserType()) || !filterRequest.getEndDate().isEmpty()) {
-			return Boolean.FALSE;
-		}
+
 		return Boolean.TRUE;
 	}
 }

@@ -127,6 +127,9 @@ public class ConsignmentMgmt implements Serializable {
 
 	@Column(length = 1)
 	private String pendingTacApprovedByCustom; // Expected values Y or N
+	
+	@Transient
+	private String pendingTacApprovedByCustomInterp;
 
 	private Integer deleteFlag;
 
@@ -303,10 +306,6 @@ public class ConsignmentMgmt implements Serializable {
 		this.userId = userId;
 	}
 
-	public String getSupplierId() {
-		return supplierId;
-	}
-
 	public String getTxnId() {
 		return txnId;
 	}
@@ -457,6 +456,14 @@ public class ConsignmentMgmt implements Serializable {
 
 	public void setPendingTacApprovedByCustom(String pendingTacApprovedByCustom) {
 		this.pendingTacApprovedByCustom = pendingTacApprovedByCustom;
+	}
+
+	public String getPendingTacApprovedByCustomInterp() {
+		return pendingTacApprovedByCustomInterp;
+	}
+
+	public void setPendingTacApprovedByCustomInterp(String pendingTacApprovedByCustomInterp) {
+		this.pendingTacApprovedByCustomInterp = pendingTacApprovedByCustomInterp;
 	}
 
 	@Override

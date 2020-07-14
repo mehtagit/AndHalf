@@ -15,6 +15,7 @@ import com.gl.ceir.config.factory.impl.CustomerCareGreylist;
 import com.gl.ceir.config.factory.impl.CustomerCareGsmaBlacklist;
 import com.gl.ceir.config.factory.impl.CustomerCareImporter;
 import com.gl.ceir.config.factory.impl.CustomerCareManufacturer;
+import com.gl.ceir.config.factory.impl.CustomerCareRegularizeDevice;
 import com.gl.ceir.config.factory.impl.CustomerCareRetailer;
 import com.gl.ceir.config.factory.impl.CustomerCareStolen;
 import com.gl.ceir.config.factory.impl.CustomerCareTypeApprove;
@@ -35,14 +36,12 @@ import com.gl.ceir.config.repository.VipListRepository;
 public class CustomerCareFactory {
 
 	public final List<String> deviceList = Arrays.asList("IMPORTER", "DISTRIBUTOR", "RETAILER", "CUSTOM", 
-			"MANUFACTURER", "REGULARIZE");
+			"MANUFACTURER", "REGULARIZE", "END_USER");
 	
-	/*
-	 * public final List<String> stateList = Arrays.asList("BLACKLIST", "GREYLIST",
-	 * "DUPLICATE", "STOLEN", "GLOBAL_BLACKIST", "TYPE_APPROVED");
-	 */
-	public final List<String> stateList = Arrays.asList("BLACKLIST", "GREYLIST", "DUPLICATE", "GLOBAL_BLACKIST", 
-			"TYPE_APPROVED", "VIP");
+//	public final List<String> stateList = Arrays.asList("BLACKLIST", "GREYLIST", "DUPLICATE", "GLOBAL_BLACKIST", 
+//			"TYPE_APPROVED", "VIP");
+	
+	public final List<String> stateList = Arrays.asList("BLACKLIST", "GREYLIST", "DUPLICATE", "GLOBAL_BLACKIST", "VIP");
 
 	@Autowired
 	CustomerCareImporter customerCareImporter;
@@ -61,6 +60,9 @@ public class CustomerCareFactory {
 
 	@Autowired
 	CustomerCareEndUser customerCareEndUser;
+	
+	@Autowired
+	CustomerCareRegularizeDevice customerCareRegularizeDevice;
 	
 	@Autowired
 	CustomerCareBlacklist customerCareBlacklist;
@@ -129,7 +131,7 @@ public class CustomerCareFactory {
 		case "MANUFACTURER":
 			return customerCareManufacturer;
 		case "REGULARIZE":
-			return customerCareEndUser;
+			return customerCareRegularizeDevice;
 		case "BLACKLIST":
 			return customerCareBlacklist;
 		case "GREYLIST":
@@ -144,7 +146,8 @@ public class CustomerCareFactory {
 			return customerCareDuplicate;
 		case "TYPE_APPROVED":
 			return customerCareTypeApprove;
-			
+		case "END_USER" :
+			return customerCareEndUser;
 		default:
 			break;
 		}
