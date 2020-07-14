@@ -77,6 +77,7 @@ import com.gl.ceir.config.repository.WebActionDbRepository;
 import com.gl.ceir.config.specificationsbuilder.GenericSpecificationBuilder;
 import com.gl.ceir.config.transaction.RegularizeDeviceTransaction;
 import com.gl.ceir.config.util.CommonFunction;
+import com.gl.ceir.config.util.CustomMappingStrategy;
 import com.gl.ceir.config.util.DateUtil;
 import com.gl.ceir.config.util.InterpSetter;
 import com.gl.ceir.config.util.StatusSetter;
@@ -257,7 +258,8 @@ public class RegularizedDeviceServiceImpl {
 		String fileName = null;
 		Writer writer   = null;
 		RegularizeDeviceFileModel rdfm = null;
-
+		
+		CustomMappingStrategy<RegularizeDeviceFileModel> mappingStrategy = new CustomMappingStrategy<RegularizeDeviceFileModel>();
 		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		DateTimeFormatter dtf2  = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
 
@@ -273,13 +275,13 @@ public class RegularizedDeviceServiceImpl {
 
 		try {
 			List<RegularizeDeviceDb> regularizeDevices = getAll(filterRequest, source);
-
+			logger.info("Data to be exported -----------"+regularizeDevices);	
 			fileName = LocalDateTime.now().format(dtf2).replace(" ", "_") + "_RegularizeDevice.csv";
-
+			mappingStrategy.setType(RegularizeDeviceFileModel.class);
 			writer = Files.newBufferedWriter(Paths.get(filePath+fileName));
 			builder = new StatefulBeanToCsvBuilder<RegularizeDeviceFileModel>(writer);
-			csvWriter = builder.withQuotechar(CSVWriter.NO_QUOTE_CHARACTER).build();
-
+			//csvWriter = builder.withQuotechar(CSVWriter.NO_QUOTE_CHARACTER).build();
+			csvWriter = builder.withMappingStrategy(mappingStrategy).withSeparator(',').withQuotechar(CSVWriter.DEFAULT_QUOTE_CHARACTER).build();
 			if( !regularizeDevices.isEmpty() ) {
 
 				List<SystemConfigListDb> currencyList = configurationManagementServiceImpl.getSystemConfigListByTag(Tags.CURRENCY);
@@ -287,20 +289,54 @@ public class RegularizedDeviceServiceImpl {
 				fileRecords = new ArrayList<>(); 
 
 				for(RegularizeDeviceDb regularizeDeviceDb : regularizeDevices ) {
+
 					rdfm = new RegularizeDeviceFileModel();
-
+					/*
+					 * if(!Objects.nonNull(regularizeDeviceDb.getDeviceIdTypeInterp())) {
+					 * rdfm.setDeviceIdTypeInterp("NA"); }
+					 * if(!Objects.nonNull(regularizeDeviceDb.getDeviceTypeInterp())) {
+					 * rdfm.setDeviceTypeInterp("NA"); }
+					 */
+					
+					if(!Objects.nonNull(regularizeDeviceDb.getSecondImei())) {
+						rdfm.setSecondImei("NA");
+					}
+					if(!Objects.nonNull(regularizeDeviceDb.getThirdImei())) {
+						rdfm.setThirdImei("NA");	
+					}
+					if(!Objects.nonNull(regularizeDeviceDb.getFourthImei())) {
+						rdfm.setFourthImei("NA");	
+					}
+					/*
+					 * if(!Objects.nonNull(regularizeDeviceDb.getCountry())) {
+					 * rdfm.setCountry("NA");
+					 * 
+					 * } if(!Objects.nonNull(regularizeDeviceDb.getDeviceStatus())) {
+					 * rdfm.setDeviceStatus("NA"); }
+					 */
 					rdfm.setCreatedOn(regularizeDeviceDb.getCreatedOn().format(dtf));
-					rdfm.setDeviceIdTypeInterp(regularizeDeviceDb.getDeviceIdTypeInterp());
-					rdfm.setDeviceTypeInterp(regularizeDeviceDb.getDeviceTypeInterp());
-					rdfm.setPrice( regularizeDeviceDb.getPrice());
-
+					rdfm.setModifiedOn(regularizeDeviceDb.getModifiedOn().format(dtf));
+					//rdfm.setDeviceIdTypeInterp(regularizeDeviceDb.getDeviceIdTypeInterp());
+					//rdfm.setDeviceTypeInterp(regularizeDeviceDb.getDeviceTypeInterp());
+					//rdfm.setPrice( regularizeDeviceDb.getPrice());
+					rdfm.setTaxPaidStatus(regularizeDeviceDb.getTaxPaidStatusInterp());
+					rdfm.setFirstImei(regularizeDeviceDb.getFirstImei());
+					rdfm.setSecondImei(regularizeDeviceDb.getSecondImei());
+					rdfm.setThirdImei(regularizeDeviceDb.getThirdImei());
+					rdfm.setFourthImei(regularizeDeviceDb.getFourthImei());
+					rdfm.setTxnId(regularizeDeviceDb.getTxnId());
+					rdfm.setOrigin(regularizeDeviceDb.getOrigin());
+					rdfm.setNid(regularizeDeviceDb.getNid());
 					for(SystemConfigListDb systemConfigListDb : currencyList) {
 						if(regularizeDeviceDb.getCurrency() == systemConfigListDb.getValue()) {
-							rdfm.setCurrency(systemConfigListDb.getInterp()); 
+							if(!Objects.nonNull(systemConfigListDb.getInterp())) {
+								//rdfm.setCurrency("NA"); 	
+							}
+							//rdfm.setCurrency(systemConfigListDb.getInterp()); 
 							break;
 						} 
 					}
-					rdfm.setCountry(regularizeDeviceDb.getCountry());
+					//rdfm.setCountry(regularizeDeviceDb.getCountry());
 					rdfm.setTaxPaidStatus(regularizeDeviceDb.getTaxPaidStatusInterp());
 
 					logger.debug(rdfm);
