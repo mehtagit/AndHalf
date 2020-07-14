@@ -1004,6 +1004,14 @@ position: fixed;
 			</div>
 		</div>
 	</div>
+	
+	<div style="display: none;">
+	<form action="selfRegisterDevicePage" method="post" id="changedLangForm">
+	<input type="text" id="changedLangValue" name="lang" style="display: none;">
+	<input type="text" id="changedLangNid"  name="Search" style="display: none;">
+	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+	</form>
+	</div>
 	<form action="viewDeviceInformation" method="post" id="viewDeviceForm">
 	<input type="text" id="viewbyImei" name="viewbyImei" style="display: none">
 	<input type="text" id="viewbytxnId" name="viewbytxnId" style="display: none">
@@ -1027,7 +1035,12 @@ position: fixed;
 			</div>
 		</div>
 	</div>
-	
+	<div style="display: none;">
+	<form action="EndUser_AddDevices" method="post" id="openEndUserAddDeviceForm">
+	<!-- <input type="text" id="changedEndUserAddDeviceLangValue" name="lang" style="display: none;"> -->
+	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+	</form>
+	</div>
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
 	

@@ -67,6 +67,10 @@ function registerConsignment() {
 				"consignment number already exist");
 				$('#errorCode').val(data.errorCode);
 			}
+			else if(data.errorCode == 5){
+				$('#sucessMessage').text('');
+				$('#sucessMessage').text($.i18n(data.tag));
+			}
 
 		},
 		error : function(jqXHR, textStatus, errorThrown) {

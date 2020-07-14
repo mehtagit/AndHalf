@@ -348,10 +348,10 @@ input[type='search'] {
 										</div>
 									</div>
 									<div class="col s12 m12">
-										<button class="btn right add_field_button"
+										<%-- <button class="btn right add_field_button"
 											style="margin-top: 5px;">
 											<span style="font-size: 20px;">+</span><spring:message code="button.addMoreDevice" />
-										</button>
+										</button> --%>
 										<p>
 											<spring:message code="input.requiredfields" /> <span class="star">*</span>
 										</p>
@@ -749,7 +749,22 @@ input[type='search'] {
 	<!-- Modal End -->
 
 
-
+<div id="AddDeviceDuplicateImei" class="modal">
+		<h6 class="modal-header"><spring:message code="modal.header.registerdevice" /></h6>
+		<div class="modal-content">
+			<div class="row">
+				<h6 id="deviceDupliCateImeiMsg"><spring:message code="modal.message.futureRef" />
+				</h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<div class="input-field col s12 center">
+						<a  class="modal-close btn" ><spring:message code="modal.ok" /></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>

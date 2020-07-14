@@ -240,6 +240,10 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 					$('#stockSucessMessage').text('');
 					$('#stockSucessMessage').text(updateMsg+' '+(data.txnId)+' '+hasBeenUpdated);
 				}
+				else if(data.errorCode==5){
+					$('#stockSucessMessage').text('');
+					$('#stockSucessMessage').text($.i18n(data.tag));
+				}
 				else{
 					$('#stockSucessMessage').text('');
 					$('#stockSucessMessage').text(errorOccured);
@@ -311,6 +315,11 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 				if(data.errorCode == 0){
 					$("#stockModalText").text(stockDeleted);
 				}
+				else if(data.errorCode==5){
+					$('#stockModalText').text('');
+					$('#stockModalText').text($.i18n(data.tag));
+				}
+				
 				else{	$("#stockModalText").text(data.message);}
 				$("#materialize-lean-overlay-3").css("display","none");
 			},
@@ -773,6 +782,10 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 					$('#stockApproveSucessMessage').text('');
 					$('#stockApproveSucessMessage').text(stockApproved);
 				}
+				else if(data.errorCode==5){
+					$('#stockApproveSucessMessage').text('');
+					$('#stockApproveSucessMessage').text($.i18n(data.tag));
+				}
 				else{
 					$('#stockApproveSucessMessage').text('');
 					$('#stockApproveSucessMessage').text(data.message);
@@ -831,6 +844,10 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 
 					$('#stockDisapproveSucessMessage').text('');
 					$('#stockDisapproveSucessMessage').text(stockRejected);
+				}
+				else if(data.errorCode==5){
+					$('#stockDisapproveSucessMessage').text('');
+					$('#stockDisapproveSucessMessage').text($.i18n(data.tag));
 				}
 				else{
 					$('#stockDisapproveSucessMessage').text('');

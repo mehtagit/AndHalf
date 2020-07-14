@@ -4,12 +4,15 @@ $('#langlist').on('change', function() {
 	var url_string = window.location.href;
 	var url = new URL(url_string);
 	var type = url.searchParams.get("type");
-	window.location.assign("selfRegisterDevicePage?lang="+window.lang);			
+	$('#changedAddDeviceLangValue').val(window.lang);
+	document.getElementById("changedLangAddDeviceForm").submit();
+	//window.location.assign("selfRegisterDevicePage?lang="+window.lang);			
 }); 
 
+$('#langlist').val(data_lang_param);
 
-/*$('#langlist').val(data_lang_param);
-$.i18n().locale = data_lang_param;*/
+//$('#langlist').val(data_lang_param);
+$.i18n().locale = data_lang_param;
 var successMsg;
 $.i18n().load( {
 	'en': './resources/i18n/en.json',

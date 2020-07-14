@@ -80,6 +80,10 @@ function confirmantiondelete(){
 				$("#consignmentText").text('');
 				$("#consignmentText").text(deleteInProgress);
 			}
+			else if(data.errorCode==5){
+				$('#consignmentText').text('');
+				$('#consignmentText').text($.i18n(data.tag));
+			}
 			else{
 				$("#consignmentText").text(errorMsg);
 			}
@@ -509,6 +513,10 @@ function editRegisterConsignment(){
 				$('#sucessMessage').text('');
 				$('#sucessMessage').text(updateMsg+" "+ (data.txnId) +" "+hasBeenUpdated);
 			}
+			else if(data.errorCode==5){
+				$('#sucessMessage').text('');
+				$('#sucessMessage').text($.i18n(data.tag));
+			}
 			else 
 			{
 				$('#sucessMessage').text('');
@@ -775,12 +783,13 @@ function openApprovePopUp(txnId,displayName)
 				//console.log(data.pendingTacApprovedByCustom);
 				//console.log(data.pendingTacApprovedByCustom);
 
-				if(data.pendingTacApprovedByCustom=='N')
+				if(data.pendingTacApprovedByCustomInterp=='N')
 				{
 					$('#tacSatusForCustom').css("display", "none");
 					$('#approveButton').prop('disabled', false);
 
 				}
+				
 				else{
 					$('#tacSatusForCustom').css("display", "block"); 
 					$('#tacStatucMessage').text('');
@@ -847,6 +856,10 @@ function approveSubmit(actiontype){
 				$('#approveSuccessMessage').text('');
 				$('#approveSuccessMessage').text(consignmentApproved);
 			}
+			else if(data.errorCode==5){
+				$('#approveSuccessMessage').text('');
+				$('#approveSuccessMessage').text($.i18n(data.tag));
+			}
 			else{
 				$('#approveSuccessMessage').text('');
 				$('#approveSuccessMessage').text(errorMsg);
@@ -907,6 +920,10 @@ function disapproveSubmit(actiontype){
 
 				$('#disapproveSuccessMessage').text('');
 				$('#disapproveSuccessMessage').text(rejectedMsg);
+			}
+			else if(data.errorCode==5){
+				$('#disapproveSuccessMessage').text('');
+				$('#disapproveSuccessMessage').text($.i18n(data.tag));
 			}
 			else{
 				$('#disapproveSuccessMessage').text('');

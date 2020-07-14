@@ -3,7 +3,9 @@ $('#langlist').on('change', function() {
 	var url_string = window.location.href;
 	var url = new URL(url_string);
 	var type = url.searchParams.get("type");
-	window.location.assign("selfRegisterDevicePage?lang="+window.lang);			
+	$('#changedLangValue').val(window.lang);
+	document.getElementById("changedLangForm").submit();
+	//window.location.assign("selfRegisterDevicePage?lang="+window.lang);			
 }); 
 
 
@@ -520,7 +522,8 @@ function pageButtons(url){
 				$('#'+button[i].id).text(button[i].buttonTitle);
 				if(button[i].type === "HeaderButton"){
 					//$('#'+button[i].id).attr("href", button[i].buttonURL);
-					$('#'+button[i].id).attr("href", "./EndUser_AddDevices");
+					$('#'+button[i].id).attr("onclick", "openEndUserAddDevice()");
+					$('#'+button[i].id).removeAttr("href");
 				}
 				else{
 					$('#'+button[i].id).attr("onclick", button[i].buttonURL);
@@ -1288,14 +1291,24 @@ function accept(){
 		contentType : 'application/json; charset=utf-8',
 		type : 'DELETE',
 		success : function(data, textStatus, xhr) {
-
-			$('#confirmDeleteMsg').openModal({dismissible:false});
-			$('#deleteMsg').closeModal();
-			/*if(data.errorCode == 200){
-					$("#responseMsg").text(data.message);
-				}else if(data.errorCode == 0){
-					$("#responseMsg").text(data.message);
-				}*/
+			
+			
+			if(data.errorCode == 0){
+				$('#confirmDeleteMsg').openModal({dismissible:false});
+				$('#deleteMsg').closeModal();
+				}
+			else if(data.errorCode == 5){
+				    $('#confirmDeleteMsg').openModal({dismissible:false});
+					$("#responseMsg").text('');
+					$("#responseMsg").text($.i18n(data.tag));
+					$('#deleteMsg').closeModal();
+			}
+			else{
+				     $('#confirmDeleteMsg').openModal({dismissible:false});
+					$("#responseMsg").text('');
+					$("#responseMsg").text($.i18n('errorMsg'));
+					$('#deleteMsg').closeModal();
+			}
 		},
 		error : function() {
 			//console.log("Error");
@@ -1539,4 +1552,14 @@ function isLengthValid(val){
 		$("#IMEIA1,#IMEIB1,#IMEIC1,#IMEID1").attr("oninvalid","InvalidMsg(this,'input','"+$.i18n('validationESN8')+"')");
 
 	}
+}
+
+
+
+$('#changedLangNid').val(nationalId);
+
+
+function openEndUserAddDevice(){
+	
+	document.getElementById("openEndUserAddDeviceForm").submit();	
 }

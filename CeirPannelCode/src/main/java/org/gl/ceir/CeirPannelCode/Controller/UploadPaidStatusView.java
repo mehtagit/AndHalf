@@ -789,9 +789,9 @@ stream.close();
 		}
 
 
-@GetMapping("EndUser_AddDevices")
-public ModelAndView  endUserdeviceInformationView() {
-	log.info("enter end user add device page.");
+@PostMapping("EndUser_AddDevices")
+public ModelAndView  endUserdeviceInformationView(@RequestParam(name="lang",required = false) String lang) {
+	log.info("enter end user add device page. lang="+lang);
 	ModelAndView modelAndView = new ModelAndView();
 	modelAndView.setViewName("endUserAddDevice");
 	
@@ -799,8 +799,9 @@ public ModelAndView  endUserdeviceInformationView() {
 	return modelAndView;
 }		
 @PostMapping("viewDeviceInformation")
-public ModelAndView viewDeviceInformation(@RequestParam(name="viewbyImei",required = true) String imei,@RequestParam(name="viewbytxnId",required = true) String viewbytxnId) {
-	log.info(" imei in end user  =="+imei);
+public ModelAndView viewDeviceInformation(@RequestParam(name="viewbyImei",required = true) String imei,@RequestParam(name="viewbytxnId",required = true) String viewbytxnId,
+		@RequestParam(name="lang",required = false) String lang) {
+	log.info(" imei in end user  =="+imei+"==lang=="+lang);
 	ModelAndView modelAndView = new ModelAndView("viewAdddeviceInformation");
 	
 	  AllRequest request= new AllRequest();

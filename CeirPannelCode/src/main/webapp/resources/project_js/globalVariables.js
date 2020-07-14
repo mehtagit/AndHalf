@@ -28,7 +28,7 @@ function fileDownload(fileName,fileType,txnId,doc_TypeTag)
 	{
 		fileName='blankFile';
 	}
-	console.log(" fileName "+fileName+" fileType  "+fileType+" txnId "+txnId+"  doc_TypeTag "+doc_TypeTag)
+
 
 	$.ajax({
 		url : "Consignment/dowloadFiles/"+fileType+'/'+fileName+'/'+txnId+'/'+doc_TypeTag,
@@ -36,8 +36,6 @@ function fileDownload(fileName,fileType,txnId,doc_TypeTag)
 		contentType : 'application/json; charset=utf-8',
 		type : 'GET',
 		success : function(data) {
-			console.log(data);
-			console.log(data.filePath);
 			if(data.url=='Not Found')
 			{
 
@@ -54,7 +52,7 @@ function fileDownload(fileName,fileType,txnId,doc_TypeTag)
 				$("#fileSource").attr("src",data.url);
 			}
 			else{
-				console.log("file is found");
+			
 				window.location.href=data.url;
 
 			}
@@ -113,7 +111,7 @@ function isFileValid(id,hiddenVal,editInputID) {
 		});
 	}
 	else {
-		console.log("file formate is correct")
+		//console.log("file formate is correct")
 
 	}
 
@@ -221,7 +219,7 @@ function previewFile(srcFilePath,srcFileName,txnId,doctype){
 		window.FinalLink = filePath.concat(txnId).concat('/'+doctype).concat('/'+fileName);
 	}
 
-	console.log(FinalLink);
+	//console.log(FinalLink);
 	if(filePath == null || filePath == "" || filePath == undefined && fileName == null || fileName == "" || fileName == undefined ){
 		console.log("File is not Avialable")
 	}else if(fileExtension=="jpg" || fileExtension=="jpeg" || fileExtension=="png" || fileExtension=="gif" || fileExtension=="PNG" ){

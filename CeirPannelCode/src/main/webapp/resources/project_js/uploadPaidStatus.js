@@ -580,8 +580,24 @@ function accept(){
 		type : 'DELETE',
 		success : function(data, textStatus, xhr) {
 
-			$('#confirmDeleteMsg').openModal({dismissible:false});
-			$('#deleteMsg').closeModal();
+			//$('#confirmDeleteMsg').openModal({dismissible:false});
+			//$('#deleteMsg').closeModal();
+			if(data.errorCode == 0){
+				$('#confirmDeleteMsg').openModal({dismissible:false});
+				$('#deleteMsg').closeModal();
+				}
+			else if(data.errorCode == 5){
+				    $('#confirmDeleteMsg').openModal({dismissible:false});
+					$("#responseMsg").text('');
+					$("#responseMsg").text($.i18n(data.tag));
+					$('#deleteMsg').closeModal();
+			}
+			else{
+				     $('#confirmDeleteMsg').openModal({dismissible:false});
+					$("#responseMsg").text('');
+					$("#responseMsg").text($.i18n('errorMsg'));
+					$('#deleteMsg').closeModal();
+			}
 			/*if(data.errorCode == 200){
 					$("#responseMsg").text(data.message);
 				}else if(data.errorCode == 0){
@@ -976,8 +992,7 @@ function taxPaidStatus(){
 			"txnId":	window.taxTxnId
 	}
 	//console.log("--");
-	var token = $("meta[name='_csrf']").attr("content");
-	var header = $("meta[name='_csrf_header']").attr("content");
+	
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
 	$.ajaxSetup({
@@ -994,14 +1009,21 @@ function taxPaidStatus(){
 
 			var msg="The device status has been successfully updated";
 			$('#payTaxModal').closeModal();
-			$('#payNowTaxPayment').openModal({dismissible:false});
-			/*if(data.errorCode==200){
-					$('#taxPaidMsg').text(msg);
+			
+			if(data.errorCode==0){
+				$('#payNowTaxPayment').openModal({dismissible:false});
 
 				}
+			else if(data.errorCode == 5){
+				$('#payNowTaxPayment').openModal({dismissible:false});
+				$("#taxPaidMsg").text('');
+				$("#taxPaidMsg").text($.i18n(data.tag));
+				
+		}
 				else{
-					$('#taxPaidMsg').text(msg);
-				}*/
+					$("#taxPaidMsg").text('');
+					$("#taxPaidMsg").text($.i18n('errorMsg'));
+				}
 
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
@@ -1222,6 +1244,17 @@ function aprroveDevice(){
 				confirmApproveInformation(window.imei,window.date);
 
 			}
+			else if(data.errorCode == 5){
+				$('#confirmApproveInformation').openModal({dismissible:false});
+				$("#approveSucessMessage").text('');
+				$("#approveSucessMessage").text($.i18n(data.tag));
+				
+		}
+			else{
+				$('#confirmApproveInformation').openModal({dismissible:false});
+				$("#approveSucessMessage").text('');
+				$("#approveSucessMessage").text($.i18n('errorMsg'));
+			}
 
 		},
 		error : function() {
@@ -1279,7 +1312,17 @@ function rejectUser(){
 				confirmRejectInformation();
 
 			}
-
+			else if(data.errorCode == 5){
+				$('#confirmRejectInformation').openModal({dismissible:false});
+				$("#deviceRejectPopUp").text('');
+				$("#deviceRejectPopUp").text($.i18n(data.tag));
+				
+		}
+			else{
+				$('#confirmRejectInformation').openModal({dismissible:false});
+				$("#deviceRejectPopUp").text('');
+				$("#deviceRejectPopUp").text($.i18n('errorMsg'));
+			}
 		},
 		error : function() {
 			//console.log("Failed");

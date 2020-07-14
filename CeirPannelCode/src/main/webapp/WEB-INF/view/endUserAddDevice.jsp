@@ -379,6 +379,14 @@ data-lang-param="${pageContext.response.locale}">
 		</div>
 	</div>
 	
+	<div style="display: none;">
+	<form action="EndUser_AddDevices" method="post" id="changedLangAddDeviceForm">
+	<input type="text" id="changedAddDeviceLangValue" name="lang" style="display: none;">
+	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+	</form>
+	</div>
+	
+	
 	
 	<!-- Modal End -->
 	<script type="text/javascript"
@@ -425,11 +433,12 @@ data-lang-param="${pageContext.response.locale}">
 		src="${context}/resources/i18n_library/min.js"></script>
 	
 			<script type="text/javascript" src="${context}/resources/js/intlTelInput.js"></script> --%>
+		<script type="text/javascript"
+		src="${context}/resources/project_js/globalVariables.js?version=<%= (int) (Math.random() * 10) %>"></script>
 		
 	<script type="text/javascript"
 		src="${context}/resources/project_js/endUserAddDevice.js?version=<%= (int) (Math.random() * 10) %>"></script>
-	<script type="text/javascript"
-		src="${context}/resources/project_js/globalVariables.js?version=<%= (int) (Math.random() * 10) %>"></script>
+	
 	
 	<script type="text/javascript"
 		src="${context}/resources/project_js/dragableModal.js?version=<%= (int) (Math.random() * 10) %>"></script>
