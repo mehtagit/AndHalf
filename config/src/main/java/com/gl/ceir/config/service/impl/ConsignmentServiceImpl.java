@@ -12,7 +12,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.concurrent.locks.ReentrantLock;
+//import java.util.concurrent.locks.ReentrantLock;
 
 import javax.annotation.PostConstruct;
 
@@ -161,10 +161,14 @@ public class ConsignmentServiceImpl {
 
 	@Autowired
 	ConsigmentValidator consigmentValidator;
+	
 
 	public GenricResponse registerConsignment(ConsignmentMgmt consignmentFileRequest) {
 
 		try {
+			if( userStaticServiceImpl.checkIfUserIsDisabled( consignmentFileRequest.getUserId() ))
+				return new GenricResponse(5, "USER_IS_DISABLED","This account is disabled. Please enable the account to perform the operation.",
+						consignmentFileRequest.getTxnId());
 			consigmentValidator.validateRegister(consignmentFileRequest);
 			Long importerId = Long.valueOf(consignmentFileRequest.getUserId());
 
@@ -348,10 +352,12 @@ public class ConsignmentServiceImpl {
 			FilterRequest filterRequest = new FilterRequest().setTxnId(consignmentMgmt.getTxnId());
 			if(pendingTacApprovedImpl.findByTxnId(filterRequest).getErrorCode() == 0) {
 				logger.info("Tac related to the consignment with txn_id [" + consignmentMgmt.getTxnId() + "] found in pending_tac_approval_db");
-				consignmentMgmt.setPendingTacApprovedByCustom("Y");
+//				consignmentMgmt.setPendingTacApprovedByCustom("Y");
+				consignmentMgmt.setPendingTacApprovedByCustomInterp("Y");
 			}else {
 				logger.info("No tac for the consignment with txn_id [" + consignmentMgmt.getTxnId() + "] is pending.");
-				consignmentMgmt.setPendingTacApprovedByCustom("N");
+//				consignmentMgmt.setPendingTacApprovedByCustom("N");
+				consignmentMgmt.setPendingTacApprovedByCustomInterp("N");
 			}
 
 			setInterp(consignmentMgmt);
@@ -370,7 +376,6 @@ public class ConsignmentServiceImpl {
 	}
 
 	public ConsignmentMgmt getRecordInfo(FilterRequest filterRequest) {
-
 		try {
 			consigmentValidator.validateViewById(filterRequest);
 
@@ -381,15 +386,17 @@ public class ConsignmentServiceImpl {
 			if(Objects.isNull(txnId)) {
 				throw new IllegalArgumentException();
 			}
-
+			/**There is object related misbehave by JPA so we changed this**/
 			ConsignmentMgmt consignmentMgmt = consignmentRepository.getByTxnId(txnId);
 
+			/**for testing**/
 			if(pendingTacApprovedImpl.findByTxnId(filterRequest).getErrorCode() == 0) {
 				logger.info("Tac related to the consignment with txn_id [" + consignmentMgmt.getTxnId() + "] found in pending_tac_approval_db");
-				consignmentMgmt.setPendingTacApprovedByCustom("Y");
+				consignmentMgmt.setPendingTacApprovedByCustomInterp("Y");
 			}else {
 				logger.info("No tac for the consignment with txn_id [" + consignmentMgmt.getTxnId() + "] is pending.");
-				consignmentMgmt.setPendingTacApprovedByCustom("N");
+//				consignmentMgmt.setPendingTacApprovedByCustom("N");
+				consignmentMgmt.setPendingTacApprovedByCustomInterp("N");
 			}
 
 			setInterp(consignmentMgmt);
@@ -428,6 +435,9 @@ public class ConsignmentServiceImpl {
 
 	public GenricResponse updateConsignment(ConsignmentMgmt consignmentFileRequest) {
 		try {
+			if( userStaticServiceImpl.checkIfUserIsDisabled( consignmentFileRequest.getUserId() ))
+				return new GenricResponse(5, "USER_IS_DISABLED","This account is disabled. Please enable the account to perform the operation.",
+						consignmentFileRequest.getTxnId());
 			consigmentValidator.validateEdit(consignmentFileRequest);
 
 			ConsignmentMgmt consignmentInfo = consignmentRepository.getByTxnId(consignmentFileRequest.getTxnId());
@@ -507,6 +517,9 @@ public class ConsignmentServiceImpl {
 
 	public GenricResponse deleteConsigmentInfo(ConsignmentUpdateRequest consignmentUpdateRequest) {
 		try {
+			if( userStaticServiceImpl.checkIfUserIsDisabled( consignmentUpdateRequest.getUserId() ))
+				return new GenricResponse(5, "USER_IS_DISABLED","This account is disabled. Please enable the account to perform the operation.",
+						consignmentUpdateRequest.getTxnId());
 			consigmentValidator.validateDelete(consignmentUpdateRequest);
 		}catch (RequestInvalidException e) {
 			logger.error("Request validation failed for txnId[" + consignmentUpdateRequest.getTxnId() + "]" +  e);
@@ -585,12 +598,19 @@ public class ConsignmentServiceImpl {
 			webActionDb.setSubFeature(WebActionDbSubFeature.DELETE.getName());
 			webActionDb.setState(WebActionDbState.INIT.getCode());
 			webActionDb.setTxnId(consignmentUpdateRequest.getTxnId());
-
+			if("CEIRADMIN".equalsIgnoreCase(consignmentUpdateRequest.getUserType())) {
+				// Delete Tac if available in pending_tac_approval_db.
+				if( cleanFromPendingTacApprovalDb(consignmentMgmt.getTxnId(),consignmentMgmt.getUserId()))
+					consignmentMgmt.setPendingTacApprovedByCustom("Y");
+				else
+					consignmentMgmt.setPendingTacApprovedByCustom("N");
+			}
 			if(consignmentTransaction.executeDeleteConsignment(consignmentMgmt, webActionDb)) {
-				if("CEIRADMIN".equalsIgnoreCase(consignmentUpdateRequest.getUserType())) {
-					// Delete Tac if available in pending_tac_approval_db.
-					cleanFromPendingTacApprovalDb(consignmentMgmt);
-				}
+				/*
+				 * if("CEIRADMIN".equalsIgnoreCase(consignmentUpdateRequest.getUserType())) { //
+				 * Delete Tac if available in pending_tac_approval_db.
+				 * cleanFromPendingTacApprovalDb(consignmentMgmt); }
+				 */
 
 				if(consignmentMgmt.getConsignmentStatus() == 9) {
 					Generic_Response_Notification generic_Response_Notification = userFeignClient.ceirInfoByUserTypeId(8);
@@ -662,6 +682,11 @@ public class ConsignmentServiceImpl {
 
 	public GenricResponse updateConsignmentStatus(ConsignmentUpdateRequest consignmentUpdateRequest) {
 		try {
+			if( !CEIRSYSTEM.equalsIgnoreCase(consignmentUpdateRequest.getRoleType())
+					&& userStaticServiceImpl.checkIfUserIsDisabled( consignmentUpdateRequest.getUserId() )) {
+				return new GenricResponse(5, "USER_IS_DISABLED","This account is disabled. Please enable the account to perform the operation.",
+						consignmentUpdateRequest.getTxnId());
+			}
 			consigmentValidator.validateAcceptReject(consignmentUpdateRequest);
 
 			String roleType = consignmentUpdateRequest.getRoleType();
@@ -844,6 +869,15 @@ public class ConsignmentServiceImpl {
 			List<StateMgmtDb> statusList, String source){
 
 		GenericSpecificationBuilder<ConsignmentMgmt> cmsb = new GenericSpecificationBuilder<>(propertiesReader.dialect);
+		
+		/**This condition is added by Ravi on requirement that custom will only see their registered port address consignment**/
+		if( Objects.nonNull(consignmentMgmt.getUserType()) && consignmentMgmt.getUserType().equalsIgnoreCase("custom")) {
+			UserProfile userProfile = userRepository.getById(consignmentMgmt.getUserId()).getUserProfile();
+			if( Objects.nonNull(userProfile))
+				cmsb.with(new SearchCriteria("portAddress", userProfile.getPortAddress(), SearchOperation.EQUALITY, Datatype.INT));
+				
+		}
+		
 		if("IMPORTER".equalsIgnoreCase(consignmentMgmt.getUserType()) 
 				&& Objects.nonNull(consignmentMgmt.getUserId())) {
 
@@ -908,7 +942,7 @@ public class ConsignmentServiceImpl {
 				}
 			}
 		}
-
+		
 		if(Objects.nonNull(consignmentMgmt.getSearchString()) && !consignmentMgmt.getSearchString().isEmpty()){
 			cmsb.orSearch(new SearchCriteria("txnId", consignmentMgmt.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 			cmsb.orSearch(new SearchCriteria("supplierName", consignmentMgmt.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
@@ -1029,6 +1063,11 @@ public class ConsignmentServiceImpl {
 			webActionDb.setState(WebActionDbState.INIT.getCode());
 			webActionDb.setTxnId(consignmentMgmt.getTxnId());
 			webActionDb.setSubFeature(WebActionDbSubFeature.REJECT.getName());
+			// Delete Tac if available in pending_tac_approval_db.
+			if( cleanFromPendingTacApprovalDb(consignmentMgmt.getTxnId(),consignmentMgmt.getUserId()))
+				consignmentMgmt.setPendingTacApprovedByCustom("Y");
+			else
+				consignmentMgmt.setPendingTacApprovedByCustom("N");
 		}
 		consignmentMgmt.setCeirAdminID(consignmentUpdateRequest.getUserId());
 		consignmentMgmt.setFeatureId(consignmentUpdateRequest.getFeatureId());
@@ -1140,7 +1179,7 @@ public class ConsignmentServiceImpl {
 						ReferTable.USERS);
 
 				// Delete Tac if available in pending_tac_approval_db.
-				cleanFromPendingTacApprovalDb(consignmentMgmt);
+//				cleanFromPendingTacApprovalDb(consignmentMgmt);//Commented by Ravi and action moved before consignment save
 			}
 
 
@@ -1183,7 +1222,7 @@ public class ConsignmentServiceImpl {
 			consignmentMgmt.setTaxPaidStatus(TaxStatus.TAX_PAID.getCode());
 
 			// Delete Tac if available in pending_tac_approval_db.
-			cleanFromPendingTacApprovalDb(consignmentMgmt);
+//			cleanFromPendingTacApprovalDb(consignmentMgmt);
 
 			webActionDb.setSubFeature(WebActionDbSubFeature.APPROVE.getName());
 
@@ -1204,7 +1243,12 @@ public class ConsignmentServiceImpl {
 		consignmentMgmt.setCustomID(consignmentUpdateRequest.getUserId());
 		consignmentMgmt.setFeatureId(consignmentUpdateRequest.getFeatureId());
 		consignmentMgmt.setRoleType(consignmentUpdateRequest.getRoleType());
-
+		// Delete Tac if available in pending_tac_approval_db.
+		if( cleanFromPendingTacApprovalDb(consignmentMgmt.getTxnId(),consignmentMgmt.getUserId()))
+			consignmentMgmt.setPendingTacApprovedByCustom("Y");
+		else
+			consignmentMgmt.setPendingTacApprovedByCustom("N");
+		
 		if(consignmentTransaction.executeUpdateStatus(consignmentUpdateRequest, consignmentMgmt, webActionDb)) {
 			ConsignmentMgmt current_consignment_response = consignmentRepository.getByTxnId(payloadTxnId);
 
@@ -1280,7 +1324,7 @@ public class ConsignmentServiceImpl {
 						ReferTable.USERS);
 
 				// Delete Tac if available in pending_tac_approval_db.
-				cleanFromPendingTacApprovalDb(consignmentMgmt);
+//				cleanFromPendingTacApprovalDb(consignmentMgmt);//comment by Ravi and move before operation consignment save
 			}
 
 			logger.info("Consignment status have Update SuccessFully." +payloadTxnId);
@@ -1497,6 +1541,11 @@ public class ConsignmentServiceImpl {
 			webActionDb.setState(WebActionDbState.INIT.getCode());
 			webActionDb.setTxnId(consignmentMgmt.getTxnId());
 			webActionDb.setSubFeature(WebActionDbSubFeature.REJECT.getName());
+			// Delete Tac if available in pending_tac_approval_db.
+			if( cleanFromPendingTacApprovalDb(consignmentMgmt.getTxnId(),consignmentMgmt.getUserId()))
+				consignmentMgmt.setPendingTacApprovedByCustom("Y");
+			else
+				consignmentMgmt.setPendingTacApprovedByCustom("N");
 		}
 
 		consignmentMgmt.setFeatureId(consignmentUpdateRequest.getFeatureId());
@@ -1541,7 +1590,7 @@ public class ConsignmentServiceImpl {
 						ReferTable.USERS);
 
 				// Delete Tac if available in pending_tac_approval_db.
-				cleanFromPendingTacApprovalDb(consignmentMgmt);
+//				cleanFromPendingTacApprovalDb(consignmentMgmt);//commented by Ravi and moved up before consignment save
 			}
 
 			logger.info("Consignment status have Update SuccessFully." + payloadTxnId);
@@ -1598,12 +1647,26 @@ public class ConsignmentServiceImpl {
 		if(pendingTacApprovedImpl.findByTxnId(filterRequest).getErrorCode() == 0) {
 			logger.info("Tac related to the consignment with txn_id [" + consignmentMgmt.getTxnId() + "] found in pending_tac_approval_db");
 			pendingTacApprovedImpl.deletePendingApproval(filterRequest);
-			consignmentMgmt.setPendingTacApprovedByCustom("Y");
+//			consignmentMgmt.setPendingTacApprovedByCustom("Y");
 		}else {
 			logger.info("No tac for the consignment with txn_id [" + consignmentMgmt.getTxnId() + "] is pending.");
-			consignmentMgmt.setPendingTacApprovedByCustom("N");
+//			consignmentMgmt.setPendingTacApprovedByCustom("N");
 		}
 
 		return Boolean.TRUE;
+	}
+	
+	public boolean cleanFromPendingTacApprovalDb(String txnId, Integer userId ) {
+		// Delete Tac if available in pending_tac_approval_db.
+		FilterRequest filterRequest = new FilterRequest().setTxnId(txnId);
+		filterRequest.setUserId(userId);
+		if(pendingTacApprovedImpl.findByTxnId(filterRequest).getErrorCode() == 0) {
+			logger.info("Tac related to the consignment with txn_id [" + txnId + "] found in pending_tac_approval_db");
+			pendingTacApprovedImpl.deletePendingApproval(filterRequest);
+			return Boolean.TRUE;
+		}else {
+			logger.info("No tac for the consignment with txn_id [" + txnId + "] is pending.");
+			return Boolean.FALSE;
+		}
 	}
 }

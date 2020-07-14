@@ -38,8 +38,10 @@ public class CustomerCareFactory {
 	public final List<String> deviceList = Arrays.asList("IMPORTER", "DISTRIBUTOR", "RETAILER", "CUSTOM", 
 			"MANUFACTURER", "REGULARIZE", "END_USER");
 	
-	public final List<String> stateList = Arrays.asList("BLACKLIST", "GREYLIST", "DUPLICATE", "GLOBAL_BLACKIST", 
-			"TYPE_APPROVED", "VIP");
+//	public final List<String> stateList = Arrays.asList("BLACKLIST", "GREYLIST", "DUPLICATE", "GLOBAL_BLACKIST", 
+//			"TYPE_APPROVED", "VIP");
+	
+	public final List<String> stateList = Arrays.asList("BLACKLIST", "GREYLIST", "DUPLICATE", "GLOBAL_BLACKIST", "VIP");
 
 	@Autowired
 	CustomerCareImporter customerCareImporter;

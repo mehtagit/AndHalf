@@ -22,6 +22,8 @@ JpaSpecificationExecutor<StockMgmt>, CustomerCareRepo<StockMgmt>{
 	public List<StockMgmt> findByRoleTypeAndUserId(String moduleType, Long userId);
 
 	public StockMgmt findByRoleTypeAndTxnId(String moduleType, String txnId);
+	
+	public StockMgmt findByUserTypeAndTxnId(String userType, String txnId);
 
 	public void deleteByTxnId(String txnId);
 

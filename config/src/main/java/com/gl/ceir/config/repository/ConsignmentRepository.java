@@ -5,16 +5,16 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import com.gl.ceir.config.factory.CustomerCareRepo;
 import com.gl.ceir.config.model.ConsignmentMgmt;
-import com.gl.ceir.config.model.ConsignmentUpdateRequest;
-import com.gl.ceir.config.model.PendingTacApprovedDb;
 import com.gl.ceir.config.model.ResponseCountAndQuantity;
 import com.gl.ceir.config.model.Usertype;
 
 import io.lettuce.core.dynamic.annotation.Param;
 
+@Repository
 public interface ConsignmentRepository extends JpaRepository<ConsignmentMgmt, Long>, 
 JpaSpecificationExecutor<ConsignmentMgmt>, CustomerCareRepo<ConsignmentMgmt>{
 

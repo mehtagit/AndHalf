@@ -25,4 +25,11 @@ public class UserStaticServiceImpl {
 	public List<User> getUserbyUsertypeId(long usertypeId) {
 		return userRepository.getByUsertype_Id(usertypeId);
 	}
+	
+	public boolean checkIfUserIsDisabled(long userId) {
+		User user = userRepository.getById(userId);
+		if( user.getCurrentStatus().equals(5))
+			return Boolean.TRUE;
+		return Boolean.FALSE;
+	}
 }
