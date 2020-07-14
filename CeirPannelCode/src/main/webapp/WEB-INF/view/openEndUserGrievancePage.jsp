@@ -319,7 +319,8 @@ var contextpath = "${context}";
                                             </div>
                                             <div class="input-field col s6 m6 l6">
                                                 <input type="text" id="trackGrievanceId"  name="trackGrievanceId" pattern="[A-Za-z0-9]{18,18}" 
-													oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
+													oninput="InvalidMsg(this,'input','<spring:message code="validation.18digitGrievanceId" />');"
+												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.18digitGrievanceId" />');"
 												 title= "<spring:message code="validation.18characters" />" required    maxlength="18">
                                             </div>
                                         </div>

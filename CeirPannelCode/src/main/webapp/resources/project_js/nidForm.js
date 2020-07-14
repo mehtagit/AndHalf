@@ -34,7 +34,7 @@
 	
 			
 			if(In.length == 0){
-				////console.log("please field input");
+				//////console.log("please field input");
 			}else{
 				
 				/*$.ajax({
@@ -43,10 +43,10 @@
 					processData: false,
 					contentType: false,
 					success: function (data, textStatus, jqXHR) {
-						//console.log("111111111");
+						////console.log("111111111");
 					},
 					error: function (jqXHR, textStatus, errorThrown) {
-						//console.log("error in ajax")
+						////console.log("error in ajax")
 
 					}
 				});*/
@@ -58,7 +58,7 @@
 	    	
 	    	//alert("2");
 			if(In.length == 0){
-				//console.log("please field input");
+				////console.log("please field input");
 			}else{
 				
 			window.location.replace("./uploadPaidStatus?via=other&NID="+In);
@@ -68,7 +68,7 @@
 		 else if(roleType=='Immigration')
 			 {
 			 if(In.length == 0){
-					//console.log("please field input");
+					////console.log("please field input");
 				}else{
 					
 				window.location.replace("./uploadPaidStatus?via=other&NID="+In);

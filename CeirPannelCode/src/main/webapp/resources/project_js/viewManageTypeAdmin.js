@@ -130,7 +130,7 @@ function Datatable(Url, dataUrl) {
 							dataType : "json",
 							data : function(d) {
 								d.filter = JSON.stringify(filterRequest);
-								// console.log(JSON.stringify(filterRequest));
+								// //console.log(JSON.stringify(filterRequest));
 
 							}
 
@@ -169,7 +169,7 @@ function Datatable(Url, dataUrl) {
 		},
 
 		error : function(jqXHR, textStatus, errorThrown) {
-			// console.log("error in ajax");
+			// //console.log("error in ajax");
 		}
 	});
 
@@ -346,12 +346,12 @@ function exportTacData() {
 	var userTypeId = parseInt($("body").attr("data-userTypeID"));
 	var userId = parseInt($("body").attr("data-userID"));
 
-	// console.log("tacStatus=="+tacStatus);
+	// //console.log("tacStatus=="+tacStatus);
 	if (isNaN(tacStatus)) {
 		tacStatus = '';
 	}
-	//console.log("transactionIDValue-->" +transactionIDValue);
-	//console.log("tacStartDate---" +tacStartDate+  "tacEndDate---" +tacEndDate +  "tacStatus---" +tacStatus+  "tacNumber---" +tacNumber+  "txnId---" +txnId);
+	////console.log("transactionIDValue-->" +transactionIDValue);
+	////console.log("tacStartDate---" +tacStartDate+  "tacEndDate---" +tacEndDate +  "tacStatus---" +tacStatus+  "tacNumber---" +tacNumber+  "txnId---" +txnId);
 	
 	var source__val;
 	if(transactionIDValue != undefined){
@@ -360,13 +360,13 @@ function exportTacData() {
 		source__val = tacStartDate != ''|| tacEndDate != ''|| tacStatus != '-1'|| tacNumber != ''|| txnId != '' ? 'filter' : $("body").attr("data-session-source");
 	}
 	
-	//console.log("source__val-->" +source__val);
+	////console.log("source__val-->" +source__val);
 	
 	var table = $('#ImporterAdmintypeAprroveTable').DataTable();
 	var info = table.page.info();
 	var pageNo = info.page;
 	var pageSize = info.length;
-	// console.log("pageSize=="+pageSize+" tacNumber=="+tacNumber+"
+	// //console.log("pageSize=="+pageSize+" tacNumber=="+tacNumber+"
 	// tacStartDate=="+tacStartDate+" tacEndDate=="+tacEndDate+"
 	// tacStatus=="+tacStatus+" txnId=="+txnId+" userId=="+userId+"
 	// pageSize=="+pageSize+" pageNo=="+pageNo);
@@ -401,7 +401,7 @@ function ImporterviewByID(id, actionType, projectPath, modalID) {
 		contentType : 'application/json; charset=utf-8',
 		type : 'POST',
 		success : function(data) {
-			// console.log(+data);
+			// //console.log(+data);
 			if (actionType == 'view') {
 				// $("#viewImporterModal").openModal();
 
@@ -416,7 +416,7 @@ function ImporterviewByID(id, actionType, projectPath, modalID) {
 
 		},
 		error : function() {
-			// console.log("failed");
+			// //console.log("failed");
 		}
 	});
 
@@ -521,7 +521,7 @@ function setImporterEditPopupData(data) {
 				'<option value="">' + $.i18n('selectDocumentType')
 						+ '</option>');
 		for (i = 0; i < data.length; i++) {
-			// console.log(data[i].interp);
+			// //console.log(data[i].interp);
 			$('<option>').val(data[i].tagId).text(data[i].interp).appendTo(
 					'#docTypetag1');
 		}
@@ -535,7 +535,7 @@ function setImporterEditPopupData(data) {
 function setUploadedFiles(data) {
 	var max_fields = localStorage.getItem("maxCount");
 	if (max_fields == 0) {
-		// console.log("1111");
+		// //console.log("1111");
 		$(".add_field_button").prop('disabled', true);
 	}
 
@@ -692,7 +692,7 @@ function updateImporterTypeDevice() {
 		"userType" : $("body").attr("data-roleType")
 	}
 
-	// console.log("multirequest------------->" +JSON.stringify(multirequest))
+	// //console.log("multirequest------------->" +JSON.stringify(multirequest))
 	formData.append('fileInfo[]', JSON.stringify(fileInfo));
 	formData.append('multirequest', JSON.stringify(multirequest));
 	
@@ -711,7 +711,7 @@ function updateImporterTypeDevice() {
 		contentType : false,
 		success : function(data, textStatus, jqXHR) {
 			$('div#initialloader').delay(300).fadeOut('slow');
-			// console.log(data);
+			// //console.log(data);
 			$('#updateManageTypeDevice').openModal({
 				dismissible : false
 			});
@@ -734,7 +734,7 @@ function updateImporterTypeDevice() {
 
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
-			// console.log("error in ajax")
+			// //console.log("error in ajax")
 		}
 	});
 	return false;
@@ -773,7 +773,7 @@ function setAllDropdown() {
 	$.getJSON('./getSourceTypeDropdown/DOC_TYPE/' + featureId + '', function(
 			data) {
 		for (i = 0; i < data.length; i++) {
-			// console.log(data[i].interp);
+			// //console.log(data[i].interp);
 			$('<option>').val(data[i].tagId).text(data[i].interp).appendTo(
 					'#docTypetag1');
 		}
@@ -782,7 +782,7 @@ function setAllDropdown() {
 }
 
 $.getJSON('./addMoreFile/more_files_count', function(data) {
-	// console.log(data);
+	// //console.log(data);
 	localStorage.setItem("maxCount", data.value);
 });
 
@@ -826,7 +826,7 @@ $(".add_field_button")
 							data) {
 
 						for (i = 0; i < data.length; i++) {
-							// console.log(data[i].interp);
+							// //console.log(data[i].interp);
 							var optionId = id - 1;
 							$('<option>').val(data[i].tagId).text(
 									data[i].interp).appendTo(
@@ -834,7 +834,7 @@ $(".add_field_button")
 							$('<option>').val(data[i].value)
 									.text(data[i].tagId).appendTo(
 											'#docTypetagValue' + optionId);
-							// console.log('#docTypetag' + optionId);
+							// //console.log('#docTypetag' + optionId);
 
 						}
 					});
@@ -998,7 +998,7 @@ function confirmantiondelete() {
 	var id = $("#deleteTacId").val();
 	
 
-	// console.log("userType=="+userType+" ==id=="+id+"===userId===" +userId);
+	// //console.log("userType=="+userType+" ==id=="+id+"===userId===" +userId);
 
 	/*
 	 * var obj ={ "txnId" : txnId, "userType": $("body").attr("data-roleType"),
@@ -1020,7 +1020,7 @@ function confirmantiondelete() {
 		contentType : 'application/json; charset=utf-8',
 		type : 'POST',
 		success : function(data, textStatus, xhr) {
-			// console.log(data);
+			// //console.log(data);
 
 			// $("#stockModalText").text(data.message);
 			$("#DeleteTacConfirmationModal").closeModal();
@@ -1037,7 +1037,7 @@ function confirmantiondelete() {
 			$("#materialize-lean-overlay-3").css("display", "none");
 		},
 		error : function() {
-			// console.log("Error");
+			// //console.log("Error");
 		}
 	});
 
@@ -1084,7 +1084,7 @@ $("input[type=file]").keypress(function(ev) {
 });
 
 function historyRecord(txnID) {
-	// console.log("txn id=="+txnID)
+	// //console.log("txn id=="+txnID)
 	$("#tableOnModal").openModal({
 		dismissible : false
 	});
@@ -1120,7 +1120,7 @@ function historyRecord(txnID) {
 	if (lang == 'km') {
 		var langFile = '../resources/i18n/khmer_datatable.json';
 	}
-	// console.log("22");
+	// //console.log("22");
 	
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");

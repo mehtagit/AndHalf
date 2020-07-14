@@ -351,7 +351,7 @@ function updateImmigrationForm(){
 		contentType: false,
 		success: function (data, textStatus, jqXHR) {
 
-			console.log(data);
+			//console.log(data);
 
 
 			if(data.errorCode==0){
@@ -369,7 +369,7 @@ function updateImmigrationForm(){
 			}
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			console.log("error in ajax")
+			//console.log("error in ajax")
 
 		}
 	});
@@ -550,7 +550,7 @@ $.ajax({
 	contentType: false,
 	success: function (data, textStatus, jqXHR) {
 
-		console.log("response:"+JSON.stringify(data.data));
+		//console.log("response:"+JSON.stringify(data.data));
 
 		$('#endUserfirstName').val(data.data.firstName);
 		$('#endUsermiddleName').val(data.data.middleName);
@@ -592,7 +592,7 @@ $.ajax({
 		
 	},
 	error: function (jqXHR, textStatus, errorThrown) {
-		console.log("error in ajax")
+		//console.log("error in ajax")
 
 	}
 });

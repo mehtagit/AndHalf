@@ -63,7 +63,7 @@ function filterStolen(sourceTypeFiler,source){
 		sessionFlag=1;
 
 	}
-	//console.log(" ****** sourceType ="+sourceTypeFiler);
+	////console.log(" ****** sourceType ="+sourceTypeFiler);
 	var userTypeId = $("body").attr("data-userTypeID");
 	if(userType=="Lawful Agency"){
 		Datatable('./headers?type=lawfulStolenHeaders','./stolenData?featureId='+featureId+'&userTypeId='+userTypeId+'&source='+source__val,source__val)
@@ -77,7 +77,7 @@ function filterStolen(sourceTypeFiler,source){
 
 
 function Datatable(url,DataUrl,sourceTypeFiler){
-	//console.log(" == sourceType ="+sourceTypeFiler);
+	////console.log(" == sourceType ="+sourceTypeFiler);
 	var requestType='';
 	var userType=$("body").attr("data-roleType");
 	if (sourceTypeFiler=="filter")
@@ -88,7 +88,7 @@ function Datatable(url,DataUrl,sourceTypeFiler){
 	else{
 		requestType = parseInt($("body").attr("data-requestType"));
 	  }
-	//console.log("=== requestType======"+requestType)
+	////console.log("=== requestType======"+requestType)
 	var txn= (txnIdValue == 'null' && transactionIDValue == undefined)? $('#transactionID').val() : transactionIDValue;
 	
 	var filterRequest={
@@ -142,7 +142,7 @@ function Datatable(url,DataUrl,sourceTypeFiler){
 					type: 'POST',
 					data : function(d) {
 						d.filter =JSON.stringify(filterRequest); 
-						//console.log(JSON.stringify(filterRequest));
+						////console.log(JSON.stringify(filterRequest));
 					}
 				},
 				"columns": result,
@@ -281,7 +281,7 @@ function setAllDropdowns(){
 }
 
 function openStolenRecoveryModal(){
-	//console.log("openStolenRecoveryModal===");
+	////console.log("openStolenRecoveryModal===");
 	$('#stoleRecoveryModal').openModal({
 		dismissible:false
 	});
@@ -301,8 +301,8 @@ function exportStolenRecoveryData()
 	 
 	var source__val = startDate != ''|| endDate != ''|| transactionId != ''|| status != "Status"|| mode != "Mode"|| requestType != "Request Type" ? 'filter' : $("body").attr("data-session-source");
 	
-	//console.log("startDate---" +startDate+  "endDate---" +endDate +  "transactionId---" +transactionId+  "status---" +status+  "mode---" +mode+  "requestType---" +requestType); 
-	//console.log("source__val--->" +source__val);
+	////console.log("startDate---" +startDate+  "endDate---" +endDate +  "transactionId---" +transactionId+  "status---" +status+  "mode---" +mode+  "requestType---" +requestType); 
+	////console.log("source__val--->" +source__val);
 	var stolenRecoveryStartDate=$('#startDate').val();
 	var stolenRecoveryEndDate=$('#endDate').val();
 	var stolenRecoveryTxnId=$('#transactionID').val();
@@ -315,54 +315,54 @@ function exportStolenRecoveryData()
 	var currentRoleType = $("body").attr("data-stolenselected-roleType");
 
 	var role = currentRoleType == null ? roleType : currentRoleType;
-	//console.log("roleType=="+roleType+" currentRoleType="+currentRoleType+" role="+role);
+	////console.log("roleType=="+roleType+" currentRoleType="+currentRoleType+" role="+role);
 	var blockUnblcksource= $("body").attr("data-session-source");
 	if(blockUnblcksource=='noti')
 		{
-		//console.log("export noti data=="+$("body").attr("data-notificationTxnID"));
+		////console.log("export noti data=="+$("body").attr("data-notificationTxnID"));
 		stolenRecoveryTxnId=$("body").attr("data-notificationTxnID");
 		source__val=$("body").attr("data-session-source");
 		}
-	//console.log("stolenRecoveryFileStatus=="+stolenRecoveryFileStatus+" stolenRecoverySourceStatus=="+stolenRecoverySourceStatus+" stolenRecoveryRequestType="+stolenRecoveryRequestType)
+	////console.log("stolenRecoveryFileStatus=="+stolenRecoveryFileStatus+" stolenRecoverySourceStatus=="+stolenRecoverySourceStatus+" stolenRecoveryRequestType="+stolenRecoveryRequestType)
 	if(isNaN(stolenRecoveryFileStatus) && isNaN(stolenRecoverySourceStatus) && isNaN(stolenRecoveryRequestType))
 	{
 		stolenRecoveryFileStatus='';
 		stolenRecoverySourceStatus='';
 		stolenRecoveryRequestType=parseInt($("body").attr("data-requestType"));
-		//console.log(" 11111111stolenRecoveryFileStatus && stolenRecoverySourceStatus && stolenRecoveryRequestType is empty =="+stolenRecoveryFileStatus+stolenRecoverySourceStatus);
+		////console.log(" 11111111stolenRecoveryFileStatus && stolenRecoverySourceStatus && stolenRecoveryRequestType is empty =="+stolenRecoveryFileStatus+stolenRecoverySourceStatus);
 	}
 	else if(isNaN(stolenRecoveryFileStatus) && isNaN(stolenRecoverySourceStatus))
 	{
 		stolenRecoveryFileStatus='';
 		stolenRecoverySourceStatus='';
-		//console.log(" 2222stolenRecoveryFileStatus && stolenRecoverySourceStatus is empty=="+stolenRecoveryFileStatus+stolenRecoverySourceStatus);
+		////console.log(" 2222stolenRecoveryFileStatus && stolenRecoverySourceStatus is empty=="+stolenRecoveryFileStatus+stolenRecoverySourceStatus);
 	}
 	else if(isNaN(stolenRecoverySourceStatus) && isNaN(stolenRecoveryRequestType))
 	{
 		stolenRecoverySourceStatus='';
 		stolenRecoveryRequestType=parseInt($("body").attr("data-requestType"));
-		//console.log(" 333333stolenRecoverySourceStatus && stolenRecoveryRequestType is empty="+stolenRecoverySourceStatus+stolenRecoveryRequestType);
+		////console.log(" 333333stolenRecoverySourceStatus && stolenRecoveryRequestType is empty="+stolenRecoverySourceStatus+stolenRecoveryRequestType);
 	}
 	else if(isNaN(stolenRecoveryRequestType) && isNaN(stolenRecoveryFileStatus))
 	{
 		stolenRecoveryRequestType=parseInt($("body").attr("data-requestType"));
 		stolenRecoveryFileStatus='';
-		//console.log(" 44444stolenRecoveryRequestType && stolenRecoveryFileStatus is empty "+stolenRecoveryRequestType+stolenRecoveryFileStatus);
+		////console.log(" 44444stolenRecoveryRequestType && stolenRecoveryFileStatus is empty "+stolenRecoveryRequestType+stolenRecoveryFileStatus);
 	}
 	else if(isNaN(stolenRecoveryFileStatus))
 	{
 		stolenRecoveryFileStatus='';
-		//console.log("stolenRecoveryFileStatus is blank="+stolenRecoveryFileStatus);
+		////console.log("stolenRecoveryFileStatus is blank="+stolenRecoveryFileStatus);
 	}
 	else if(isNaN(stolenRecoverySourceStatus))
 	{
 		stolenRecoverySourceStatus='';
-		//console.log("stolenRecoverySourceStatus is blank="+stolenRecoverySourceStatus);
+		////console.log("stolenRecoverySourceStatus is blank="+stolenRecoverySourceStatus);
 	}
 	else if(isNaN(stolenRecoveryRequestType))
 	{
 		stolenRecoveryRequestType=parseInt($("body").attr("data-requestType"));
-		//console.log("stolenRecoveryRequestType is blank="+stolenRecoveryRequestType);
+		////console.log("stolenRecoveryRequestType is blank="+stolenRecoveryRequestType);
 	}
 
 	var table = $('#stolenLibraryTable').DataTable();
@@ -385,7 +385,7 @@ function exportStolenRecoveryData()
 			"pageSize":parseInt(pageSize)
 			
 	}
-	//console.log(JSON.stringify(filterRequest))
+	////console.log(JSON.stringify(filterRequest))
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
 	$.ajaxSetup({
@@ -539,11 +539,11 @@ $.ajax({
 	contentType : 'application/json; charset=utf-8',
 	type : 'POST',
 	success : function(data) {
-		//console.log(data.value);
+		////console.log(data.value);
 		$('#defaultDatePeriod,#bulkDefaultPeiod,#editIndivisualDefaultPeriod,#editBulkDefaultPeriod').attr('title', data.value+' Days');
 	},
 	error : function() {
-		//console.log("Failed");
+		////console.log("Failed");
 	}
 });
 
@@ -617,7 +617,7 @@ function saveIndivisualStolenRequest(){
 
 	var uploadedFileName = $("#singleStolenFile").val();
 	uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
-	//console.log("**** file name"+uploadedFileName)
+	////console.log("**** file name"+uploadedFileName)
 
 	var fileFileDetails=$('#uploadFirSingle').val();
 	fileFileDetails=fileFileDetails.replace(/^.*[\\\/]/, '');
@@ -699,7 +699,7 @@ function saveIndivisualStolenRequest(){
 		processData: false,
 		contentType: false,
 		success: function (response, textStatus, jqXHR) {
-			//console.log(response)
+			////console.log(response)
 
 			if(response.errorCode==0){
 				$("#indivisualStolenButton").prop('disabled', true);
@@ -717,7 +717,7 @@ function saveIndivisualStolenRequest(){
 			}
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			//console.log("error in ajax")
+			////console.log("error in ajax")
 
 		}
 	});
@@ -843,7 +843,7 @@ function saveCompanyStolenRequest(){
 			
 			$('#initialloader2').remove();
 			$('div#initialloader').delay(300).fadeOut('slow');
-			//console.log(response)
+			////console.log(response)
 
 			if(response.errorCode==0){
 				$("#bulkStolenButton").prop('disabled', true);
@@ -861,7 +861,7 @@ function saveCompanyStolenRequest(){
 			}
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			//console.log("error in ajax")
+			////console.log("error in ajax")
 			$('div#initialloader').delay(300).fadeOut('slow');
 
 		}
@@ -878,7 +878,7 @@ function DeleteConsignmentRecord(txnId,id,reqType){
 	});
 	$("#transID").text(txnId);
 	$("#setStolenRecoveyRowId").text(id);
-	//console.log("  reqType  ="+reqType)
+	////console.log("  reqType  ="+reqType)
 	window.reqType=reqType;
 }
 
@@ -891,8 +891,8 @@ function confirmantiondelete(){
 	var currentRoleType = $("body").attr("data-stolenselected-roleType"); 
 	var remarks = $("#textarea1").val();
 	var role = currentRoleType == null ? roleType : currentRoleType;
-	//console.log("txnId===**"+txnId+" userId="+userId+" roleType== "+roleType+ " currentRoleType=="+currentRoleType);
-	//console.log("  reqType========"+window.reqType)
+	////console.log("txnId===**"+txnId+" userId="+userId+" roleType== "+roleType+ " currentRoleType=="+currentRoleType);
+	////console.log("  reqType========"+window.reqType)
 	var obj ={
 			"txnId" : txnId,
 			"roleType":roleType,
@@ -917,7 +917,7 @@ function confirmantiondelete(){
 		contentType : 'application/json; charset=utf-8',
 		type : 'POST',
 		success : function(data, textStatus, xhr) {
-			//console.log(data);
+			////console.log(data);
 			if(data.errorCode == 200){
 				$("#consignmentText").text(data.message);
 			}else if(data.errorCode == 0){
@@ -925,7 +925,7 @@ function confirmantiondelete(){
 			}
 		},
 		error : function() {
-			//console.log("Error");
+			////console.log("Error");
 		}
 	});
 	$("#DeleteConsignment").closeModal();
@@ -970,10 +970,10 @@ function aprroveDevice(){
 		contentType : 'application/json; charset=utf-8',
 		type : 'POST',
 		success : function(data) {
-			//console.log("approveRequest----->"+JSON.stringify(approveRequest));
+			////console.log("approveRequest----->"+JSON.stringify(approveRequest));
 			if(data.errorCode==0){
 				confirmApproveInformation();
-				//console.log("inside Approve Success")
+				////console.log("inside Approve Success")
 			}
 
 		},
@@ -1025,10 +1025,10 @@ function rejectUser(){
 		contentType : 'application/json; charset=utf-8',
 		type : 'POST',
 		success : function(data) {
-			//console.log("approveRequest----->"+JSON.stringify(rejectRequest));
+			////console.log("approveRequest----->"+JSON.stringify(rejectRequest));
 			if(data.errorCode==0){
 				confirmRejectInformation();
-				//console.log("inside Reject Success")
+				////console.log("inside Reject Success")
 			}
 
 		},
@@ -1117,7 +1117,7 @@ $('#singleStolendeviceBrandName').on(
 
 $(document).on("keyup", "#singleStolenphone3", function(e) {
 	var mobilenumber=$('#singleStolenphone3').val();
-	//console.log(" 2 mobilenumber=="+mobilenumber);
+	////console.log(" 2 mobilenumber=="+mobilenumber);
 	if(mobilenumber.length<'1' )
 	{$("#singleStolenOperator3").attr("required", false);  
 	$("#operator3span").css("display", "none");
@@ -1133,7 +1133,7 @@ $(document).on("keyup", "#singleStolenphone3", function(e) {
 
 $(document).on("keyup", "#singleStolenphone4", function(e) {
 	var mobilenumber=$('#singleStolenphone4').val();
-	//console.log(" 3  mobilenumber=="+mobilenumber);
+	////console.log(" 3  mobilenumber=="+mobilenumber);
 	if(mobilenumber.length<'1' )
 	{$("#singleStolenOperator4").attr("required", false);  	$("#operator4span").css("display", "none"); 
 	}
@@ -1148,7 +1148,7 @@ $(document).on("keyup", "#singleStolenphone4", function(e) {
 
 $(document).on("keyup", "#singleStolenphone5", function(e) {
 	var mobilenumber=$('#singleStolenphone5').val();
-	//console.log(" 4 mobilenumber=="+mobilenumber);
+	////console.log(" 4 mobilenumber=="+mobilenumber);
 	if(mobilenumber.length<'1' )
 	{$("#singleStolenOperator5").attr("required", false);   	$("#operator5span").css("display", "none");
 	}
@@ -1160,13 +1160,13 @@ $(document).on("keyup", "#singleStolenphone5", function(e) {
 });
 
 function historyRecord(txnID, requestType){
-	//console.log("txn id=="+txnID)
+	////console.log("txn id=="+txnID)
 	var requestType = requestType;
 	$("#tableOnModal").openModal({dismissible:false});
 	 var filter =[];
 	 var formData= new FormData();
 	 var userTypeValue=$("body").attr("data-roleType");
-	 console.log("requestType--->" +requestType);
+	 //console.log("requestType--->" +requestType);
 	 if(userTypeValue=='CEIRAdmin' && requestType == 0)
 	 {
 		 var filterRequest={
@@ -1220,7 +1220,7 @@ function historyRecord(txnID, requestType){
 	if(lang=='km'){
 		var langFile='../resources/i18n/khmer_datatable.json';
 	}
-	//console.log("22");
+	////console.log("22");
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
 	$.ajaxSetup({

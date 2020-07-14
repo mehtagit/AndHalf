@@ -240,7 +240,7 @@
 				"username" : $("body").attr("data-selected-username")
 		}
 		
-		//console.log("request------------->" +JSON.stringify(request))
+		////console.log("request------------->" +JSON.stringify(request))
 		var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
 		$.ajaxSetup({
@@ -283,7 +283,7 @@
 				
 			},
 			error : function(jqXHR, textStatus, errorThrown) {
-				console.log("error in ajax")
+				//console.log("error in ajax")
 			}
 		});
 			
@@ -324,10 +324,10 @@
 					        dismissible:false
 					    });
 						currencyEditPopupData(result);
-						//console.log(JSON.stringify(result));
+						////console.log(JSON.stringify(result));
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
-					console.log("error in ajax")
+					//console.log("error in ajax")
 				}
 			});	
 		}
@@ -373,7 +373,7 @@
 			headers:
 			{ 'X-CSRF-TOKEN': token }
 		});
-		//console.log("request--->" +JSON.stringify(request))
+		////console.log("request--->" +JSON.stringify(request))
 		$.ajax({
 			url: './updateCurrency',
 			type: 'POST',
@@ -410,7 +410,7 @@
 				});
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
-				console.log("error in ajax")
+				//console.log("error in ajax")
 			}
 		});	
 		

@@ -159,7 +159,7 @@ var featureId = 6;
 								dataType: "json",
 								data : function(d) {
 									d.filter = JSON.stringify(filterRequest); 
-									//console.log(JSON.stringify(filterRequest));
+									////console.log(JSON.stringify(filterRequest));
 								}
 
 							},
@@ -178,7 +178,7 @@ var featureId = 6;
 					       });
 					},
 					error: function (jqXHR, textStatus, errorThrown) {
-						//console.log("error in ajax");
+						////console.log("error in ajax");
 					}
 				});
 			}
@@ -415,7 +415,7 @@ var featureId = 6;
 						$('#replyModal').openModal({
 						 	   dismissible:false
 						    });
-						//console.log(data.grievance.categoryId)
+						////console.log(data.grievance.categoryId)
 						//alert("11"+data.categoryId)
 						setDocTypeValue(data[0].grievance.categoryId);
 						$('#existingGrievanceID').val(data[0].grievance.categoryId);
@@ -466,7 +466,7 @@ var featureId = 6;
 
 					},
 					error: function (jqXHR, textStatus, errorThrown) {
-						//console.log("error in ajax")
+						////console.log("error in ajax")
 					}
 				});
 			}
@@ -527,11 +527,11 @@ var featureId = 6;
 					
 					if(!x['docType']=='')
 					{
-					//console.log("if");
+					////console.log("if");
 					fileInfo.push(x);
 					}
 				else{
-					//console.log("else");
+					////console.log("else");
 					
 				}
 					
@@ -636,7 +636,7 @@ var featureId = 6;
 						
 					},
 					error: function (jqXHR, textStatus, errorThrown) {
-						//console.log("error in ajax")
+						////console.log("error in ajax")
 					}
 				});
 				return false;
@@ -671,7 +671,7 @@ var featureId = 6;
 						{
 								$('#viewGrievanceId').text('');	
 							$('#viewGrievanceId').text(grievanceId);	
-							//console.log("view Data--->" +JSON.stringify(data));
+							////console.log("view Data--->" +JSON.stringify(data));
 							if($("body").attr("data-roleType")!="CEIRAdmin"){
 								$("#chatMsg").append("<div class='chat-message-content clearfix'><span class='chat-time' id='timeHistory'>"+data[i].modifiedOn+"</span><h5 id='userTypehistory'>"+data[i].userDisplayName+"</h5><textarea class='materialize-textarea' style='min-height: 8rem' readonly id='messageHistory'>"+data[i].reply+"</textarea></div>");
 							}else{
@@ -710,7 +710,7 @@ var featureId = 6;
 						}
 					},
 					error: function (jqXHR, textStatus, errorThrown) {
-						//console.log("error in ajax")
+						////console.log("error in ajax")
 					}
 				});
 			}
@@ -731,9 +731,9 @@ var featureId = 6;
 				
 				var grievanceId = (txnIdValue == 'null' && transactionIDValue == undefined) ? $('#grievanceID').val() : transactionIDValue;
 				
-				//console.log("grievanceId-->" +grievanceId);
-				//console.log("grievanceStartDate---" +grievanceStartDate+  "grievanceEndDate---" +grievanceEndDate +  "grievancetxnId---" +grievancetxnId+  "grievanceId---" +grievanceId+  "grievanceStatus---" +grievanceStatus);
-				console.log("window.userId--->" +window.userId)
+				////console.log("grievanceId-->" +grievanceId);
+				////console.log("grievanceStartDate---" +grievanceStartDate+  "grievanceEndDate---" +grievanceEndDate +  "grievancetxnId---" +grievancetxnId+  "grievanceId---" +grievanceId+  "grievanceStatus---" +grievanceStatus);
+				//console.log("window.userId--->" +window.userId)
 				//var source__val = tacStartDate != ''|| tacEndDate != ''|| tacStatus != '-1'|| tacNumber != ''|| txnId != '' ? 'filter' : $("body").attr("data-session-source");	
 				
 				if(grievanceId != ''){
@@ -742,7 +742,7 @@ var featureId = 6;
 					source__val = grievanceStartDate != ''|| grievanceEndDate != ''|| grievancetxnId != ''|| grievanceId != ''|| grievanceStatus != '-1' ? 'filter' : $("body").attr("data-session-source");
 				}
 				
-				//console.log("source__val-->" +source__val);
+				////console.log("source__val-->" +source__val);
 				
 				var table = $('#grivanceLibraryTable').DataTable();
 				var info = table.page.info(); 
@@ -788,7 +788,7 @@ var featureId = 6;
 			});
 			
 			$.getJSON('./addMoreFile/grievance_supporting_doc_count', function(data) {
-				//console.log(data);
+				////console.log(data);
 				
 				localStorage.setItem("maxCount", data.value);
 				
@@ -797,7 +797,7 @@ var featureId = 6;
 				//var max_fields = 2; //maximum input boxes allowed
 				var max_fields =localStorage.getItem("maxCount");
 				if (max_fields==0 || max_fields==1){
-					 //console.log("1111");
+					 ////console.log("1111");
 					 $(".add_field_button").prop('disabled', true);
 				 }
 
@@ -843,7 +843,7 @@ var featureId = 6;
 						  "userTypeId":grievanceUserTypeId,
 					}
 			
-			//console.log("request --->" +JSON.stringify(request));	
+			////console.log("request --->" +JSON.stringify(request));	
 				
 				var token = $("meta[name='_csrf']").attr("content");
 				var header = $("meta[name='_csrf_header']").attr("content");
@@ -861,7 +861,7 @@ var featureId = 6;
 					success: function (data, textStatus, jqXHR) {
 						/*$("#docTypetag1").empty();
 						$('#docTypetag1').append('<option value="">'+$.i18n('selectDocumentType')+'</option>');*/
-						//console.log(data);
+						////console.log(data);
 						for (i = 0; i < data.length; i++){
 							var optionId=id-1;
 								//var html='<option value="'+data[i].value+'">'+data[i].interp+'</option>';
@@ -873,7 +873,7 @@ var featureId = 6;
 						
 					},
 					error: function (jqXHR, textStatus, errorThrown) {
-						//console.log("error in ajax")
+						////console.log("error in ajax")
 					}
 				});
 				
@@ -914,7 +914,7 @@ var featureId = 6;
 						  "userTypeId": parseInt($("body").attr("data-userTypeID")),
 					}
 			
-			//console.log("request --->" +JSON.stringify(request));	
+			////console.log("request --->" +JSON.stringify(request));	
 			
 			var token = $("meta[name='_csrf']").attr("content");
 			var header = $("meta[name='_csrf_header']").attr("content");
@@ -932,7 +932,7 @@ var featureId = 6;
 					success: function (data, textStatus, jqXHR) {
 						$("#docTypetag1").empty();
 						$('#docTypetag1').append('<option value="">'+$.i18n('selectDocumentType')+'</option>');
-						//console.log(data);
+						////console.log(data);
 						for (i = 0; i < data.length; i++){
 								//var html='<option value="'+data[i].value+'">'+data[i].interp+'</option>';
 								//$('#docTypetag1').append(html);	
@@ -943,7 +943,7 @@ var featureId = 6;
 						
 					},
 					error: function (jqXHR, textStatus, errorThrown) {
-						//console.log("error in ajax")
+						////console.log("error in ajax")
 					}
 				});
 			}

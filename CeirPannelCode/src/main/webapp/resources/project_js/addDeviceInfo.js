@@ -131,7 +131,7 @@ var lang_param =window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 						$('#AddDeviceDuplicateImei').openModal({dismissible:false});
 						$('#deviceDupliCateImeiMsg').text('');
 						$('#deviceDupliCateImeiMsg').text($.i18n(data.tag));
-						
+					
 					}
 					//sessionStorage.removeItem("nationalId");
 				},

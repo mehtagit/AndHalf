@@ -82,7 +82,7 @@ if(lang=='km'){
 					dataType: "json",
 					data : function(d) {
 						d.filter = JSON.stringify(filterRequest); 
-						console.log(JSON.stringify(filterRequest));
+						//console.log(JSON.stringify(filterRequest));
 					}
 
 				},
@@ -104,7 +104,7 @@ if(lang=='km'){
 		    $('div#initialloader').delay(300).fadeOut('slow');
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			console.log("error in ajax");
+			//console.log("error in ajax");
 		}
 	});
 }
@@ -147,7 +147,7 @@ function pageRendering(){
 			} 
 			
 			if(userType=="TRC"){
-				console.log("userType is----->"+userType)
+				//console.log("userType is----->"+userType)
 			}else{
 				// dynamic drop down portion
 				var dropdown=data.dropdownList;
@@ -213,7 +213,7 @@ function viewByID(id,actionType,projectPath){
 		contentType : 'application/json; charset=utf-8',
 		type : 'POST',
 		success : function(data) {
-			console.log(+data);
+			//console.log(+data);
 			if(actionType=='view')
 				{
 				$("#viewModal").openModal();
@@ -228,7 +228,7 @@ function viewByID(id,actionType,projectPath){
 				}
 		},
 		error : function() {
-			console.log("failed");
+			//console.log("failed");
 		}
 	});
 	
@@ -246,7 +246,7 @@ function ImporterviewByID(id,actionType,projectPath){
 		contentType : 'application/json; charset=utf-8',
 		type : 'POST',
 		success : function(data) {
-			console.log(+data);
+			//console.log(+data);
 			if(actionType=='view')
 				{
 				$("#viewImporterModal").openModal();
@@ -262,7 +262,7 @@ function ImporterviewByID(id,actionType,projectPath){
 			
 		},
 		error : function() {
-			console.log("failed");
+			//console.log("failed");
 		}
 	});
 	
@@ -433,7 +433,7 @@ function updateReportTypeDevice()
 		
 		
 		
-		console.log("multirequest------------->" +JSON.stringify(multirequest))
+		//console.log("multirequest------------->" +JSON.stringify(multirequest))
 		formData.append('fileInfo[]',JSON.stringify(fileInfo));
 		formData.append('multirequest',JSON.stringify(multirequest));
 	 
@@ -448,7 +448,7 @@ function updateReportTypeDevice()
 			async:false,
 			success : function(data, textStatus, jqXHR) {
 			
-				console.log(data);
+				//console.log(data);
 				
 			
 					
@@ -464,7 +464,7 @@ function updateReportTypeDevice()
 					 
 			},
 			error : function(jqXHR, textStatus, errorThrown) {
-				console.log("error in ajax")
+				//console.log("error in ajax")
 			}
 		});
 		return false;
@@ -494,7 +494,7 @@ function exportTacData()
 	var userTypeId = parseInt($("body").attr("data-userTypeID"));
 	
 	
-	console.log("tacStatus=="+tacStatus);
+	//console.log("tacStatus=="+tacStatus);
      if(isNaN(tacStatus))
 	   {
     	 tacStatus='';
@@ -504,7 +504,7 @@ function exportTacData()
 	var info = table.page.info(); 
  var pageNo=info.page;
   var pageSize =info.length;
-	console.log("pageSize=="+pageSize+" tacNumber=="+tacNumber+" tacStartDate=="+tacStartDate+" tacEndDate=="+tacEndDate+" tacStatus=="+tacStatus+" txnId=="+txnId+" pageSize=="+pageSize+" pageNo=="+pageNo);
+	//console.log("pageSize=="+pageSize+" tacNumber=="+tacNumber+" tacStartDate=="+tacStartDate+" tacEndDate=="+tacEndDate+" tacStatus=="+tacStatus+" txnId=="+txnId+" pageSize=="+pageSize+" pageNo=="+pageNo);
 	
 	window.location.href="./exportTac?tacNumber="+tacNumber+"&tacStartDate="+tacStartDate+"&tacEndDate="+tacEndDate+"&tacStatus="+tacStatus+"&txnId="+txnId+"&featureId="+featureId+"&userType"+userType+"&userTypeId="+userTypeId+"&pageSize="+pageSize+"&pageNo="+pageNo;
 
@@ -622,7 +622,7 @@ return true;
 function setAllDropdown(){
 $.getJSON('./getSourceTypeDropdown/DOC_TYPE/'+featureId, function(data) {
 	for (i = 0; i < data.length; i++) {
-		console.log(data[i].interp);
+		//console.log(data[i].interp);
 		$('<option>').val(data[i].tagId).text(data[i].interp).appendTo(
 				'#docTypetag1');
 	}
@@ -663,7 +663,7 @@ $(".add_field_button")
 							data) {
 
 						for (i = 0; i < data.length; i++) {
-							console.log(data[i].interp);
+							//console.log(data[i].interp);
 							var optionId = id - 1;
 							$('<option>').val(data[i].tagId).text(
 									data[i].interp).appendTo(
@@ -671,7 +671,7 @@ $(".add_field_button")
 							$('<option>').val(data[i].value).text(
 									data[i].tagId).appendTo(
 									'#docTypetagValue' + optionId);
-							console.log('#docTypetag' + optionId);
+							//console.log('#docTypetag' + optionId);
 
 						}
 					});

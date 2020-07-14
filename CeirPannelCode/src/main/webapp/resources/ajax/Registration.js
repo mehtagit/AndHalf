@@ -241,9 +241,9 @@ function reg() {
 
 function defer(method) {
     if (window.jQuery) {
-       //console.log("jquery loaded");
+       ////console.log("jquery loaded");
     } else {
-    	console.log("jquery not loaded ");
+    	//console.log("jquery not loaded ");
         setTimeout(function() { defer(method) }, 50);
     }
 }
@@ -401,6 +401,15 @@ function questionData(username) {
 	headers:
 	{ 'X-CSRF-TOKEN': token }
 	});
+	
+	$.i18n().locale = $('#langlist').val();
+	$.i18n().load({
+		'en' : './resources/i18n/en.json',
+		'km' : './resources/i18n/km.json'
+	}).done(function() {
+		
+		});
+
 	$.ajax({
 				type : 'GET',
 				url : contextpath + '/securityQuestionList/' + username,
@@ -410,7 +419,7 @@ function questionData(username) {
 					var resp = JSON.parse(data);
 					var usertypeDropdown = $("#questionId");
 					usertypeDropdown.empty();
-					var data1 = '<option value="" disabled selected>Security Question</option>';
+					var data1 = '<option value="" disabled selected>'+$.i18n('Security_Question')+'</option>';
 					usertypeDropdown.append(data1);
 					var response=resp.data;
 					if(resp.errorCode==200){
@@ -763,7 +772,7 @@ function openEndUserStockPage(reportType) {
 	 * $.ajax({ type : 'POST', url : contextpath +
 	 * '/openEndUserStockPage?reportType='+reportType.value, processData :
 	 * false, contentType : false, success : function(response) {
-	 * respData=JSON.parse(JSON.stringify(response)); console.log("response from
+	 * respData=JSON.parse(JSON.stringify(response)); //console.log("response from
 	 * server: "+JSON.stringify(respData)); if(respData.statusCode==200){
 	 * //window.location.href='./verifyOtpPage/?userid='+respData.userId;
 	 * $("#userid").val(response.userId); //window.location.href='#otpMsgModal';

@@ -250,7 +250,7 @@
 			contentType : 'application/json; charset=utf-8',
 			type : 'POST',
 			success : function(data) {
-				console.log("Request----->"+JSON.stringify(Request));
+				//console.log("Request----->"+JSON.stringify(Request));
 				$("#confirmUserStatus").openModal({
 				 	   dismissible:false
 			    });

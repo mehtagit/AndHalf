@@ -472,7 +472,8 @@ var path="${context}";
     
     	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js?version=<%= (int) (Math.random() * 10) %>"></script>
    <script type="text/javascript" src="${context}/resources/ajax/Password.js?version=<%= (int) (Math.random() * 10) %>"></script>
-	
+	<script type="text/javascript"
+		src="${context}/resources/project_js/validationMsg.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 		<script type="text/javascript"
 		src="" async></script>

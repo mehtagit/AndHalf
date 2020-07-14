@@ -40,7 +40,7 @@ function DeviceDetails(){
 		contentType : 'application/json; charset=utf-8',
 		type : 'POST',
 		success : function(response) {
-			//console.log(response);
+			////console.log(response);
 
 			if (response.errorCode == 200) {
 				$("#singleInput").css("display", "none");
