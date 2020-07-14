@@ -1,46 +1,88 @@
 package com.gl.ceir.config.model.file;
 
+
+
+import com.opencsv.bean.CsvBindByName;
+import com.opencsv.bean.CsvBindByPosition;
+
 public class RegularizeDeviceFileModel {
 	
-	private String deviceIdTypeInterp;
-	private String deviceTypeInterp;
-	private Double price;
-	private String currency;
-	private String country;
+	/*
+	 * @CsvBindByName(column = "device_Id_Type")
+	 * 
+	 * @CsvBindByPosition(position = 6) private String deviceIdTypeInterp;
+	 */
+	
+	/*
+	 * @CsvBindByName(column = "Device Id Type")
+	 * 
+	 * @CsvBindByPosition(position = 5) private String deviceStatus;
+	 */
+	
+	/*
+	 * @CsvBindByName(column = "Device Type")
+	 * 
+	 * @CsvBindByPosition(position = 9)
+	 * 
+	 * private String deviceTypeInterp;
+	 */
+	
+	/*
+	 * @CsvBindByName(column = "Price")
+	 * 
+	 * @CsvBindByPosition(position = 8) private Double price;
+	 */
+	/*
+	 * @CsvBindByName(column = "Currency")
+	 * 
+	 * @CsvBindByPosition(position = 10) private String currency;
+	 */
+	/*
+	 * @CsvBindByName(column = "Country")
+	 * 
+	 * @CsvBindByPosition(position = 11) private String country;
+	 */
+	@CsvBindByName(column = "Tax Paid Status")
+	@CsvBindByPosition(position = 5)
 	private String TaxPaidStatus;
+	
+	@CsvBindByName(column = "CreatedOn")
+	@CsvBindByPosition(position = 0)
 	private String createdOn;
+	
+	@CsvBindByName(column = "ModifiedOn")
+	@CsvBindByPosition(position = 1)
 	private String modifiedOn;
 	
-	public String getDeviceIdTypeInterp() {
-		return deviceIdTypeInterp;
-	}
-	public void setDeviceIdTypeInterp(String deviceIdTypeInterp) {
-		this.deviceIdTypeInterp = deviceIdTypeInterp;
-	}
-	public String getDeviceTypeInterp() {
-		return deviceTypeInterp;
-	}
-	public void setDeviceTypeInterp(String deviceTypeInterp) {
-		this.deviceTypeInterp = deviceTypeInterp;
-	}
-	public Double getPrice() {
-		return price;
-	}
-	public void setPrice(Double price) {
-		this.price = price;
-	}
-	public String getCurrency() {
-		return currency;
-	}
-	public void setCurrency(String currency) {
-		this.currency = currency;
-	}
-	public String getCountry() {
-		return country;
-	}
-	public void setCountry(String country) {
-		this.country = country;
-	}
+	@CsvBindByName(column = "Txn id")
+	@CsvBindByPosition(position = 2)
+	private String txnId;
+	
+	@CsvBindByName(column = "First IMEI")
+	@CsvBindByPosition(position = 6)
+	private String firstImei;
+	
+	@CsvBindByName(column = "Second IMEI")
+	@CsvBindByPosition(position = 7)
+	private String secondImei;
+	
+	@CsvBindByName(column = "Third IMEI")
+	@CsvBindByPosition(position = 8)
+	private String thirdImei;
+	
+	@CsvBindByName(column = "Fourth IMEI")
+	@CsvBindByPosition(position = 9)
+	private String fourthImei;
+	
+	@CsvBindByName(column = "Origin")
+	@CsvBindByPosition(position = 4)
+	private String origin;
+	
+	@CsvBindByName(column = "Nid")
+	@CsvBindByPosition(position = 3)
+	private String nid;
+	
+	
 	public String getTaxPaidStatus() {
 		return TaxPaidStatus;
 	}
@@ -59,26 +101,75 @@ public class RegularizeDeviceFileModel {
 	public void setModifiedOn(String modifiedOn) {
 		this.modifiedOn = modifiedOn;
 	}
-	
+	public String getTxnId() {
+		return txnId;
+	}
+	public void setTxnId(String txnId) {
+		this.txnId = txnId;
+	}
+	public String getFirstImei() {
+		return firstImei;
+	}
+	public void setFirstImei(String firstImei) {
+		this.firstImei = firstImei;
+	}
+	public String getSecondImei() {
+		return secondImei;
+	}
+	public void setSecondImei(String secondImei) {
+		this.secondImei = secondImei;
+	}
+	public String getThirdImei() {
+		return thirdImei;
+	}
+	public void setThirdImei(String thirdImei) {
+		this.thirdImei = thirdImei;
+	}
+	public String getFourthImei() {
+		return fourthImei;
+	}
+	public void setFourthImei(String fourthImei) {
+		this.fourthImei = fourthImei;
+	}
+	public String getOrigin() {
+		return origin;
+	}
+	public void setOrigin(String origin) {
+		this.origin = origin;
+	}
+	public String getNid() {
+		return nid;
+	}
+	public void setNid(String nid) {
+		this.nid = nid;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("RegularizeDeviceFileModel [deviceIdTypeInterp=");
-		builder.append(deviceIdTypeInterp);
-		builder.append(", deviceTypeInterp=");
-		builder.append(deviceTypeInterp);
-		builder.append(", price=");
-		builder.append(price);
-		builder.append(", currency=");
-		builder.append(currency);
-		builder.append(", TaxPaidStatus=");
+		builder.append("RegularizeDeviceFileModel [TaxPaidStatus=");
 		builder.append(TaxPaidStatus);
 		builder.append(", createdOn=");
 		builder.append(createdOn);
 		builder.append(", modifiedOn=");
 		builder.append(modifiedOn);
+		builder.append(", txnId=");
+		builder.append(txnId);
+		builder.append(", firstImei=");
+		builder.append(firstImei);
+		builder.append(", secondImei=");
+		builder.append(secondImei);
+		builder.append(", thirdImei=");
+		builder.append(thirdImei);
+		builder.append(", fourthImei=");
+		builder.append(fourthImei);
+		builder.append(", origin=");
+		builder.append(origin);
+		builder.append(", nid=");
+		builder.append(nid);
 		builder.append("]");
 		return builder.toString();
 	}
+	
 
+	
 }
