@@ -23,7 +23,7 @@ var featureId = 6;
 				});
 
 
-				var userId = $("body").attr("data-userID");
+				var userId = parseInt($("body").attr("data-userID"));
 			$(document).ready(function(){
 				$('div#initialloader').fadeIn('fast');
 				grievanceDataTable(lang,null);
@@ -71,10 +71,12 @@ var featureId = 6;
 
 			if($("body").attr("data-roleType")=="Customer Care"){
 				window.raisedBy = "Customer Care";
-				window.userId = null;
+				//userId = null;
+				
 			}else{
 				window.raisedBy = null;
-				window.userId = parseInt($("body").attr("data-userID"));
+				userId = parseInt($("body").attr("data-userID"));
+				
 			}
 			
 			
@@ -104,7 +106,7 @@ var featureId = 6;
 				localStorage.removeItem('grievancePageSource');
 				
 				var FilterUserType = $('#userType').val()=='-1' || $('#userType').val()==undefined ? null : $("#userType option:selected").text();
-				
+				userId = $("body").attr("data-roleType")=="Customer Care" ? null : parseInt($("body").attr("data-userID"));
 				
 				
 				var filterRequest={
@@ -120,11 +122,11 @@ var featureId = 6;
 						"userType" : $("body").attr("data-roleType"),
 						"filterUserName" : $('#userName').val(),
 						"FilterUserType" : FilterUserType,
-						"userId": window.userId,
+						"userId": userId,
 						"raisedBy" : window.raisedBy
 								 
 				}
-				
+				console.log(JSON.stringify(filterRequest));
 				if(lang=='km'){
 				var langFile='./resources/i18n/khmer_datatable.json';
 					}
@@ -718,39 +720,6 @@ var featureId = 6;
 
 
 
-
-
-			//**********************************************************Export Excel file************************************************************************
-						function exportData()
-			{
-				var grievanceStartDate=$('#startDate').val();
-				var grievanceEndDate=$('#endDate').val();
-				var grievancetxnId=$('#transactionID').val();
-				//var grievanceId=$('#grievanceID').val();
-				var grievanceStatus=$('#recentStatus').val();
-				
-				var grievanceId = (txnIdValue == 'null' && transactionIDValue == undefined) ? $('#grievanceID').val() : transactionIDValue;
-				
-				////console.log("grievanceId-->" +grievanceId);
-				////console.log("grievanceStartDate---" +grievanceStartDate+  "grievanceEndDate---" +grievanceEndDate +  "grievancetxnId---" +grievancetxnId+  "grievanceId---" +grievanceId+  "grievanceStatus---" +grievanceStatus);
-				//console.log("window.userId--->" +window.userId)
-				//var source__val = tacStartDate != ''|| tacEndDate != ''|| tacStatus != '-1'|| tacNumber != ''|| txnId != '' ? 'filter' : $("body").attr("data-session-source");	
-				
-				if(grievanceId != ''){
-					source__val = 'noti'
-				}else{
-					source__val = grievanceStartDate != ''|| grievanceEndDate != ''|| grievancetxnId != ''|| grievanceId != ''|| grievanceStatus != '-1' ? 'filter' : $("body").attr("data-session-source");
-				}
-				
-				////console.log("source__val-->" +source__val);
-				
-				var table = $('#grivanceLibraryTable').DataTable();
-				var info = table.page.info(); 
-				var pageNo=info.page;
-				var pageSize =info.length;
-				window.location.href="./exportGrievance?grievanceStartDate="+grievanceStartDate+"&grievanceEndDate="+grievanceEndDate+"&grievancetxnId="+grievancetxnId+"&grievanceId="+grievanceId+"&grievanceStatus="+grievanceStatus+"&source="+source__val+"&pageSize="+pageSize+"&pageNo="+pageNo+"&userId="+window.userId;
-			}
-
 			//************************************************ category dropdown function ******************************************************************
 			
 			$(document).ready(function(){
@@ -966,3 +935,78 @@ var featureId = 6;
 			    //ev.preventDefault(); //works as well
 
 			});
+			
+
+
+
+
+			//**********************************************************Export Excel file************************************************************************
+			function exportData()
+			{
+								
+				var grievanceStartDate=$('#startDate').val();
+				var grievanceEndDate=$('#endDate').val();
+				var grievancetxnId=$('#transactionID').val();
+				//var grievanceId=$('#grievanceID').val();
+				var grievanceStatus=$('#recentStatus').val();
+				var grievanceId = (txnIdValue == 'null' && transactionIDValue == undefined) ? $('#grievanceID').val() : transactionIDValue;
+				if(grievanceId != ''){
+					source__val = 'noti'
+				}else{
+					source__val = grievanceStartDate != ''|| grievanceEndDate != ''|| grievancetxnId != ''|| grievanceId != ''|| grievanceStatus != '-1' ? 'filter' : $("body").attr("data-session-source");
+				}
+				userId = $("body").attr("data-roleType")=="Customer Care" ? '': parseInt($("body").attr("data-userID"));
+				var FilterUserType = $('#userType').val()=='-1' || $('#userType').val()==undefined ? null : $("#userType option:selected").text();
+				var table = $('#grivanceLibraryTable').DataTable();
+				var info = table.page.info(); 
+				var pageNo=info.page;
+				var pageSize =info.length;
+				
+				var filterRequest={
+						"grievanceStatus":grievanceStatus,
+						"endDate":grievanceEndDate,
+						"startDate":grievanceStartDate,
+						//"recentStatus":parseInt($('#recentStatus').val()),
+						/*"userId": parseInt($("body").attr("data-userTypeID") == 8 ? 0 : parseInt(userId)),*/
+						"featureId":parseInt(featureId),
+						"userTypeId": parseInt($("body").attr("data-userTypeID")),
+						"txnId": grievancetxnId,
+						"grievanceId":grievanceId,
+						//"userType" : $("body").attr("data-roleType"),
+						"filterUserName" : $('#userName').val(),
+						"FilterUserType" : FilterUserType,
+						"userId": userId,
+						"raisedBy" : window.raisedBy,
+						"source" : source__val,
+						"pageNo":parseInt(pageNo),
+						"pageSize":parseInt(pageSize)
+				}
+				
+				//console.log(JSON.stringify(filterRequest))
+				var token = $("meta[name='_csrf']").attr("content");
+				var header = $("meta[name='_csrf_header']").attr("content");
+				$.ajaxSetup({
+					headers:
+					{ 'X-CSRF-TOKEN': token }
+				});
+				
+				$.ajax({
+					url: './exportGrievance',
+					type: 'POST',
+					dataType : 'json',
+					contentType : 'application/json; charset=utf-8',
+					data : JSON.stringify(filterRequest),
+					success: function (data, textStatus, jqXHR) {
+						  window.location.href = data.url;
+
+					},
+					error: function (jqXHR, textStatus, errorThrown) {
+						
+					}
+				});
+			
+			}
+				
+
+				
+		
