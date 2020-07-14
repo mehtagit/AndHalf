@@ -26,8 +26,7 @@
 		//**************************************************filter table**********************************************
 
 		function table(url,dataUrl){
-		var state= $("#State").val();
-
+		var state= $("#State").val() =='null' ? undefined : $("#State").val();
 			var filterRequest={
 					  "state": state,
 						"userId":parseInt($("body").attr("data-userID")),
