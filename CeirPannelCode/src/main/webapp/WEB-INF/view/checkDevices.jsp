@@ -147,7 +147,7 @@ i.fa.fa-times-circle-o.red-text {
 						<div class="row card-panel login-card-panel">
 
 							<form action="" onsubmit="return DeviceDetails()" method="POST"
-								enctype="multipart/form-data" id="">
+								enctype="multipart/form-data" >
 								<div class="row" id="singleInput">
 									<h6 class="fixPage-modal-header ">
 										<spring:message code="registration.checkdevice" />
@@ -371,7 +371,7 @@ i.fa.fa-times-circle-o.red-text {
 								code="registration.modaltype" /></label>
 					</div>
 					<div class="input-field col s6 m8">
-						<input type="text" id="" name=""
+						<input type="text"  name=""
 							placeholder="ABC Modal" disabled>
 					</div>
 				</form>

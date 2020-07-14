@@ -128,8 +128,9 @@ var lang_param =window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 						$('#dynamicTxnId').text('');
 						$('#sucessMessage').text('');
 						$('#sucessMessage').text(data.message);*/
-						$('#AddDeviceDuplicateImei').openModal({dismissible:false});;
-						$('#dupliCateImeiMsg').text($.i18n(data.tag));
+						$('#AddDeviceDuplicateImei').openModal({dismissible:false});
+						$('#deviceDupliCateImeiMsg').text('');
+						$('#deviceDupliCateImeiMsg').text($.i18n(data.tag));
 						
 					}
 					//sessionStorage.removeItem("nationalId");
