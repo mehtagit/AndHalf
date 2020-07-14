@@ -180,6 +180,11 @@
 .backdrop {
 	display: none !important;
 }
+.fa-eye-slash {
+position: absolute;
+top: 0;
+right: 10px;
+}
     </style>
 <script>
 var contextpath = "${context}";
