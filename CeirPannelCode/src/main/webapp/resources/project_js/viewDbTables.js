@@ -185,7 +185,7 @@
 					}*/
 
 						$("#dbTableDiv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
-						$("#dbTableDiv").append("<div class=' col s3 m2 l7'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportDBTabletData'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+						$("#dbTableDiv").append("<div class=' col s3 m2 l7'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportDBTabletData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 						for(i=0; i<button.length; i++){
 							$('#'+button[i].id).text(button[i].buttonTitle);
 							$('#'+button[i].id).attr("onclick", button[i].buttonURL);
@@ -219,10 +219,13 @@
 					"userTypeId": parseInt($("body").attr("data-userTypeID")),
 					"userType":$("body").attr("data-roleType"),
 					"username" : $("body").attr("data-selected-username"),
-					"userId" : parseInt($("body").attr("data-userID")) 
-					
+					"userId" : parseInt($("body").attr("data-userID")), 
+					"pageNo":parseInt(pageNo),
+					"pageSize":parseInt(pageSize)
 			}
-			////console.log(JSON.stringify(filterRequest))
+			
+			
+			//console.log(JSON.stringify(filterRequest))
 			var token = $("meta[name='_csrf']").attr("content");
 			var header = $("meta[name='_csrf_header']").attr("content");
 			$.ajaxSetup({

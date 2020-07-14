@@ -187,6 +187,7 @@ section {
 			</div>
 			<div class="row">
 				<div class="col s12 m12" style="margin-top: 20px;">
+					<form action="" onsubmit="return hide()" method="post" >
 					<div id="submitbtn">
 						<div class="input-field col s12 m2">
 							<label for="Search" class="center-align ml-10"><spring:message code="input.userName" /></label>
@@ -202,10 +203,12 @@ section {
 						</div>
 							
 						<div class="input-field col s12 m2 l2">
-							<button type="button" class="btn"  id="submit" onclick="hide();"><spring:message code="button.submit" /></button>
+						 <button class="btn" type="submit"><spring:message code="button.submit" /></button>
+							<%-- <button type="button" class="btn"  id="submit" onclick="hide();"><spring:message code="button.submit" /></button> --%>
 						</div>
 						<%-- <div class="col s12 m12"><p id="errorMsgOnModal" class="nidValidationMsg"><spring:message code="validation.12NID" /></p></div> --%>
 					</div>
+					</form>
 				</div>
 			</div>
 			
