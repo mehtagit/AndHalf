@@ -61,7 +61,7 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 			contentType : 'application/json; charset=utf-8',
 			type : 'GET',
 			success : function(data) {
-				//////console.log(data)
+				////console.log(data)
 				setViewPopupData(data);
 			},
 			error : function() {
@@ -131,9 +131,9 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 			contentType : 'application/json; charset=utf-8',
 			type : 'GET',
 			success : function(data) {
-				//////console.log(data)
+				////console.log(data)
 				setEditPopupData(data) 
-				//////console.log(url)
+				////console.log(url)
 			},
 			error : function() {
 				//alert("Failed");
@@ -150,7 +150,7 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 		var  assigneIdLabel=$.i18n('assigneIdLabel');
 		 var assigneNameLabel=$.i18n('assigneNameLabel');
 
-		//////console.log()
+		////console.log()
 var currentRoleTypeAssignei = $("body").attr("data-selected-roleType"); 		
 		if(currentRoleTypeAssignei=='Manufacturer')
 			{
@@ -197,7 +197,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 		var InvoiceNumber=$('#editInvoiceNumber').val();
 		var editdevicequantity=$('#editdevicequantity').val();
 		
-		//////console.log(supplierName,supplierName,filename,txnId,quantity,InvoiceNumber);
+		////console.log(supplierName,supplierName,filename,txnId,quantity,InvoiceNumber);
 
 		var formData= new FormData();
 		formData.append('file', $('#editcsvUploadFile')[0].files[0]);
@@ -210,8 +210,8 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 		formData.append('invoiceNumber',InvoiceNumber);
 		formData.append('deviceQuantity',editdevicequantity);
 		
-		//////console.log(JSON.stringify(formData));
-		//////console.log("*********");
+		////console.log(JSON.stringify(formData));
+		////console.log("*********");
 		var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
 		$.ajaxSetup({
@@ -226,7 +226,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 			contentType: false,
 			success: function (data, textStatus, jqXHR) {
 				$('div#initialloader').delay(300).fadeOut('slow');
-				//////console.log(data);
+				////console.log(data);
 				$('#editStockModal').closeModal();
 				 $('#successUpdateStockModal').openModal({
 			    	   dismissible:false
@@ -240,6 +240,10 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 					$('#stockSucessMessage').text('');
 					$('#stockSucessMessage').text(updateMsg+' '+(data.txnId)+' '+hasBeenUpdated);
 				}
+				else if(data.errorCode==5){
+					$('#stockSucessMessage').text('');
+					$('#stockSucessMessage').text($.i18n(data.tag));
+				}
 				else{
 					$('#stockSucessMessage').text('');
 					$('#stockSucessMessage').text(errorOccured);
@@ -249,7 +253,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
-				//////console.log("error in ajax")
+				////console.log("error in ajax")
 			}
 		});
 	return false;
@@ -275,7 +279,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 		var role = currentRoleType == null ? roleType : currentRoleType;
 		var txnId= $("#stockdeleteTxnId").text();
 		var stockRemark= $("#deleteStockremark").val();
-		//////console.log("roleType=="+role+" ==stockRemark=="+stockRemark);
+		////console.log("roleType=="+role+" ==stockRemark=="+stockRemark);
 		var obj ={
 				"roleType":role,
 				"txnId" : txnId,
@@ -300,7 +304,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 			contentType : 'application/json; charset=utf-8',
 			type : 'POST',
 			success : function(data, textStatus, xhr) {
-				//////console.log(data);
+				////console.log(data);
 
 				//$("#stockModalText").text(data.message);
 				$("#DeleteStockconfirmationModal").closeModal();
@@ -311,11 +315,16 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 				if(data.errorCode == 0){
 					$("#stockModalText").text(stockDeleted);
 				}
+				else if(data.errorCode==5){
+					$('#stockModalText').text('');
+					$('#stockModalText').text($.i18n(data.tag));
+				}
+				
 				else{	$("#stockModalText").text(data.message);}
 				$("#materialize-lean-overlay-3").css("display","none");
 			},
 			error : function() {
-				//////console.log("Error");
+				////console.log("Error");
 			}
 		});
 		return false;
@@ -357,11 +366,11 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 		var filterSource= $("body").attr("data-filterSource");
 	    if(filterSource=='noti')
 			{
-			////console.log('1');
+			//console.log('1');
 			selectedUserTypeId=null;
 			}
 		else{
-			////console.log('2');
+			//console.log('2');
 			selectedUserTypeId=$("body").attr("data-selectedRoleTypeId");
 		}
 		
@@ -375,7 +384,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 			sourceParam= $("body").attr("data-filterSource");
 
 		}
-	////console.log("sourceParam= "+sourceParam);
+	//console.log("sourceParam= "+sourceParam);
 		if((currentRoleType=="Importer" || currentRoleType=="Retailer" || currentRoleType=="Distributor" || currentRoleType=="Manufacturer") && sourceType !="viaStock" ){
 		Datatable('headers?lang='+lang+'&type=stockHeaders','stockData?source='+sourceParam);
 		}else if(currentRoleType=="Custom" && sourceType !="viaStock"){
@@ -411,11 +420,11 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 		var selectedUserTypeId='';
 		if(filterRedirect=='noti')
 			{
-			////console.log('1');
+			//console.log('1');
 			selectedUserTypeId=null;
 			}
 		else{
-			////console.log('2');
+			//console.log('2');
 			selectedUserTypeId=$("body").attr("data-selectedRoleTypeId");
 		}*/
 		
@@ -466,7 +475,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 						url: dataUrl, 
 						data : function(d) {
 							d.filter = JSON.stringify(jsonObj); 
-							//////console.log(JSON.stringify(jsonObj));
+							////console.log(JSON.stringify(jsonObj));
 						}
 					},
 					"columns": result,
@@ -494,7 +503,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 
 
 	function pageRendering(){
-		//////console.log("sourceType in render check" +sourceType);
+		////console.log("sourceType in render check" +sourceType);
 		if(sourceType !="viaStock" ){
 			pageButtons('./stock/pageRendering');
 
@@ -620,7 +629,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 		var currentRoleType = $("body").attr("data-stolenselected-roleType"); 
 		var role = currentRoleType == null ? roleType : currentRoleType;
 		var requestType="0";
-		//////console.log("role++++"+role+"requestType++"+requestType+"currentRoleType="+currentRoleType);
+		////console.log("role++++"+role+"requestType++"+requestType+"currentRoleType="+currentRoleType);
 		$('#stockTable tr td input:checkbox:checked').each(function() {
 
 			var json={"txnId":$(this).closest('tr').find('td:eq(2)').text(),
@@ -632,7 +641,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 
 			multipleMarkedRequest.push(json);
 		});
-		//////console.log(multipleMarkedRequest)
+		////console.log(multipleMarkedRequest)
 		return multipleMarkedRequest;
 	}
 
@@ -650,7 +659,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 	{
 
 		var stolenRecoverydata=JSON.stringify(valuesPush());
-		//////console.log("release-------"+stolenRecoverydata);
+		////console.log("release-------"+stolenRecoverydata);
 		var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
 		$.ajaxSetup({
@@ -665,11 +674,11 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 			contentType : 'application/json; charset=utf-8',
 			success: function (data, textStatus, jqXHR) {
 
-				//////console.log(data);
+				////console.log(data);
 				$('#markAsStolenDone').openModal();
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
-				//////console.log("error in ajax");
+				////console.log("error in ajax");
 			}
 		});
 
@@ -682,8 +691,8 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 		var userId = $("body").attr("data-userID");
 		var currentRoleType = $("body").attr("data-selected-roleType"); 
 		var role = currentRoleType == null ? roleType : currentRoleType;
-		//////console.log(" userId="+userId+" role="+role);
-		//////console.log("./stolenRecovery?userTypeId=="+role);
+		////console.log(" userId="+userId+" role="+role);
+		////console.log("./stolenRecovery?userTypeId=="+role);
 		window.location.href = "./stolenRecovery?userTypeId="+role;
 
 
@@ -742,13 +751,13 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 
 	function approveStockSubmit(actiontype){
 		var txnId=$('#approveStockTransactionId').val();
-		//////console.log("txnId==="+txnId);
+		////console.log("txnId==="+txnId);
 		var approveRequest={
 				"action": actiontype,
 				"txnId":txnId,
 				"featureId":4
 		}
-		//////console.log(JSON.stringify(approveRequest))
+		////console.log(JSON.stringify(approveRequest))
 		var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
 		$.ajaxSetup({
@@ -767,11 +776,15 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 				$('#confirmApproveStockModal').openModal({
 			    	   dismissible:false
 			       });
-				//////console.log(data);
+				////console.log(data);
 				if(data.errorCode==0){
 
 					$('#stockApproveSucessMessage').text('');
 					$('#stockApproveSucessMessage').text(stockApproved);
+				}
+				else if(data.errorCode==5){
+					$('#stockApproveSucessMessage').text('');
+					$('#stockApproveSucessMessage').text($.i18n(data.tag));
 				}
 				else{
 					$('#stockApproveSucessMessage').text('');
@@ -800,7 +813,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 	function disApproveStockSubmit(actiontype){
 		var txnId=$('#disaproveTxnId').text();
 		var Remark=$('#stockDispproveRemarks').val();
-	//////console.log("txnId =="+txnId+" Remark="+Remark );
+	////console.log("txnId =="+txnId+" Remark="+Remark );
 		var approveRequest={
 				"action": actiontype,
 				"txnId":txnId,
@@ -831,6 +844,10 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 
 					$('#stockDisapproveSucessMessage').text('');
 					$('#stockDisapproveSucessMessage').text(stockRejected);
+				}
+				else if(data.errorCode==5){
+					$('#stockDisapproveSucessMessage').text('');
+					$('#stockDisapproveSucessMessage').text($.i18n(data.tag));
 				}
 				else{
 					$('#stockDisapproveSucessMessage').text('');
@@ -863,22 +880,22 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 		//alert("selectedRoleTypeId="+selectedRoleTypeId);
 		//var currentSelectedRoleType=selectedRoleTypeId == null ? selectedRoleTypeId : userTypeId;
 		
-		////////console.log("userType--->"+userType+"-------------userTypeId------------>"+userTypeId);
-		////////console.log("roleType=="+roleType+" currentRoleType="+currentRoleType+" role="+role);
+		//////console.log("userType--->"+userType+"-------------userTypeId------------>"+userTypeId);
+		//////console.log("roleType=="+roleType+" currentRoleType="+currentRoleType+" role="+role);
 	
 		if(isNaN(StockStatus))
 		{
 		StockStatus='';
-		//////console.log(" StockStatus=="+StockStatus);
+		////console.log(" StockStatus=="+StockStatus);
 		}
 	
 		var table = $('#stockTable').DataTable();
 		var info = table.page.info(); 
 		var pageNo=info.page;
 		var pageSize =info.length;
-		//console.log(selectedRoleTypeId);
-		//////console.log("--------"+pageSize+"---------"+pageNo);
-		//////console.log("stockStartDate  ="+stockStartDate+"  stockEndDate=="+stockEndDate+"  stockTxnId="+stockTxnId+" StockStatus ="+StockStatus+" roleType="+$("body").attr("data-roleType")+"  userType="+role);
+		console.log(selectedRoleTypeId);
+		////console.log("--------"+pageSize+"---------"+pageNo);
+		////console.log("stockStartDate  ="+stockStartDate+"  stockEndDate=="+stockEndDate+"  stockTxnId="+stockTxnId+" StockStatus ="+StockStatus+" roleType="+$("body").attr("data-roleType")+"  userType="+role);
 		window.location.href="./exportStock?stockStartDate="+stockStartDate+"&stockEndDate="+stockEndDate+"&stockTxnId="+stockTxnId+"&StockStatus="+StockStatus+"&userType="+userType+"&userTypeId="+selectedRoleTypeId+"&pageSize="+pageSize+"&pageNo="+pageNo+"&roleType="+roleType+'&source='+sourceParam;
 	}
 	
@@ -908,7 +925,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 		       });
 		}
 		else {
-			//////console.log("file formate is correct")
+			////console.log("file formate is correct")
 			
 		}
 	}
@@ -930,7 +947,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 
 	
 	function historyRecord(txnID){
-			//////console.log("txn id=="+txnID)
+			////console.log("txn id=="+txnID)
 			$("#tableOnModal").openModal({dismissible:false});
 			 var filter =[];
 			 var formData= new FormData();

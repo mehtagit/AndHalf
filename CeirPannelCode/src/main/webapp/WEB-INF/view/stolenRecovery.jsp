@@ -1522,7 +1522,7 @@ type="submit" ><spring:message code="button.update" /></button>
         <div class="modal-content">
            
             <div class="row">
-                <h6><spring:message code="input.Theupdated" /></h6>
+                <h6 id="stockupdateSucessMessage"><spring:message code="input.Theupdated" /></h6>
             </div>
             <div class="row">
                 <div class="input-field col s12 center">

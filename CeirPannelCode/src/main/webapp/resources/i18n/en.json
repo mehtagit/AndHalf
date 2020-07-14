@@ -209,7 +209,9 @@
 	"UPDATE_ERROR" : "Oops something wrong happened",
 	"System_configuration_failed" : "System configuration update failed. value regex not matched.",
 	"System_configuration_update" : "System configuration update Sucessfully.",
-	"Security_Question":"Security Question"
+	"Security_Question":"Security Question",
+	"USER_IS_DISABLED":"This account is disabled. Please enable the account to perform the operation."
+	
 	
 	
 	

@@ -16,7 +16,7 @@ private String expectedArrivalDate;
 private String expectedArrivaldate;
 private String expectedDispatcheDate;
 private Integer expectedArrivalPort;
-private String organisationcountry,expectedArrivalPortInterp,pendingTacApprovedByCustom;
+private String organisationcountry,expectedArrivalPortInterp,pendingTacApprovedByCustom,pendingTacApprovedByCustomInterp;
 private String organisationCountry;
 private MultipartFile file;
 private String txnId;
@@ -262,6 +262,12 @@ public Long getRoleTypeUserId() {
 public void setRoleTypeUserId(Long roleTypeUserId) {
 	this.roleTypeUserId = roleTypeUserId;
 }
+public String getPendingTacApprovedByCustomInterp() {
+	return pendingTacApprovedByCustomInterp;
+}
+public void setPendingTacApprovedByCustomInterp(String pendingTacApprovedByCustomInterp) {
+	this.pendingTacApprovedByCustomInterp = pendingTacApprovedByCustomInterp;
+}
 @Override
 public String toString() {
 	StringBuilder builder = new StringBuilder();
@@ -295,6 +301,8 @@ public String toString() {
 	builder.append(expectedArrivalPortInterp);
 	builder.append(", pendingTacApprovedByCustom=");
 	builder.append(pendingTacApprovedByCustom);
+	builder.append(", pendingTacApprovedByCustomInterp=");
+	builder.append(pendingTacApprovedByCustomInterp);
 	builder.append(", organisationCountry=");
 	builder.append(organisationCountry);
 	builder.append(", file=");
@@ -342,5 +350,8 @@ public String toString() {
 	builder.append("]");
 	return builder.toString();
 }
+
+
+
 
 }

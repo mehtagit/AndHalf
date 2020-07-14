@@ -83,7 +83,7 @@ $( document ).ready(function() {
 				regularizedCount();
 			},
 			error : function() {
-				////console.log("Failed");
+				//console.log("Failed");
 			}
 		}); 
 		
@@ -127,7 +127,7 @@ $( document ).ready(function() {
 				regularizedCount();
 			},
 			error : function() {
-				////console.log("Failed");
+				//console.log("Failed");
 			}
 		}); */
 		/*pageRendering(lang);
@@ -159,7 +159,7 @@ $(document).ready(function () {
 	{ 'X-CSRF-TOKEN': token }
 	}); 
 	$.getJSON('./addMoreFile/add_more_device_count', function(data) {
-			////console.log(data);
+			//console.log(data);
 			
 			localStorage.setItem("maxCount", data.value);
 			
@@ -167,10 +167,10 @@ $(document).ready(function () {
 	 
 	 var max_fields =localStorage.getItem("maxCount");
 	 if (max_fields==0){
-		 ////console.log("1111");
+		 //console.log("1111");
 		 $(".add_field_button").prop('disabled', true);
 	 }		
-			////console.log("maximum fields for add more  from api="+max_fields);
+			//console.log("maximum fields for add more  from api="+max_fields);
 	//var max_fields = 15; //maximum input boxes allowed
 	var wrapper = $(".mainDeviceInformation"); //Fields wrapper
 	var add_button = $(".add_field_button"); //Add button ID
@@ -181,7 +181,7 @@ $(document).ready(function () {
 		var nationType= localStorage.getItem("nationType");
 		if (x < max_fields) { //max input box allowed
 			x++; //text box increment
-////console.log("nationType=="+nationType);
+//console.log("nationType=="+nationType);
 			if (nationType=='1')
 			{
 				
@@ -417,7 +417,7 @@ function table(url,dataUrl){
 		       });
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			////console.log("error in ajax");
+			//console.log("error in ajax");
 		}
 	});
 }
@@ -514,7 +514,7 @@ function pageButtons(url){
 			});
 			$.getJSON('./getDropdownList/CUSTOMS_TAX_STATUS', function(data) {
 				for (i = 0; i < data.length; i++) {
-					//////console.log(data[i].value);
+					////console.log(data[i].value);
 					$('<option>').val(data[i].value).text(data[i].interp)
 					.appendTo('#taxPaidStatus');
 				}
@@ -580,8 +580,24 @@ function accept(){
 		type : 'DELETE',
 		success : function(data, textStatus, xhr) {
 
-			$('#confirmDeleteMsg').openModal({dismissible:false});
-			$('#deleteMsg').closeModal();
+			//$('#confirmDeleteMsg').openModal({dismissible:false});
+			//$('#deleteMsg').closeModal();
+			if(data.errorCode == 0){
+				$('#confirmDeleteMsg').openModal({dismissible:false});
+				$('#deleteMsg').closeModal();
+				}
+			else if(data.errorCode == 5){
+				    $('#confirmDeleteMsg').openModal({dismissible:false});
+					$("#responseMsg").text('');
+					$("#responseMsg").text($.i18n(data.tag));
+					$('#deleteMsg').closeModal();
+			}
+			else{
+				     $('#confirmDeleteMsg').openModal({dismissible:false});
+					$("#responseMsg").text('');
+					$("#responseMsg").text($.i18n('errorMsg'));
+					$('#deleteMsg').closeModal();
+			}
 			/*if(data.errorCode == 200){
 					$("#responseMsg").text(data.message);
 				}else if(data.errorCode == 0){
@@ -589,7 +605,7 @@ function accept(){
 				}*/
 		},
 		error : function() {
-			////console.log("Error");
+			//console.log("Error");
 		}
 	});
 }
@@ -606,7 +622,7 @@ function accept(){
 			setViewPopupData(data);
 		},
 		error : function() {
-			////console.log("Failed");
+			//console.log("Failed");
 		}
 	});*/
 		
@@ -693,7 +709,7 @@ function historytable(url,dataUrl){
 			
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			////console.log("error in ajax");
+			//console.log("error in ajax");
 		}
 	});
 }
@@ -929,7 +945,7 @@ function submitDeviceInfo(){
 			$("#uploadPaidStatusbutton").prop('disabled', true);
 //			$('#updateConsignment').modal();
 			if(data.errorCode==0){
-					////console.log("error code"+data.errorCode)
+					//console.log("error code"+data.errorCode)
 //				$('#sucessMessage').text('');
 				$('#regularisedDevice').openModal({dismissible:false});
 				$('#dynamicTxnId').text(data.txnId);
@@ -946,7 +962,7 @@ function submitDeviceInfo(){
 			}
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			////console.log("error in ajax")
+			//console.log("error in ajax")
 
 		}
 	});
@@ -975,9 +991,8 @@ function taxPaidStatus(){
 			"taxPaidStatus":0,
 			"txnId":	window.taxTxnId
 	}
-	////console.log("--");
-	var token = $("meta[name='_csrf']").attr("content");
-	var header = $("meta[name='_csrf_header']").attr("content");
+	//console.log("--");
+	
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
 	$.ajaxSetup({
@@ -994,18 +1009,25 @@ function taxPaidStatus(){
 
 			var msg="The device status has been successfully updated";
 			$('#payTaxModal').closeModal();
-			$('#payNowTaxPayment').openModal({dismissible:false});
-			/*if(data.errorCode==200){
-					$('#taxPaidMsg').text(msg);
+			
+			if(data.errorCode==0){
+				$('#payNowTaxPayment').openModal({dismissible:false});
 
 				}
+			else if(data.errorCode == 5){
+				$('#payNowTaxPayment').openModal({dismissible:false});
+				$("#taxPaidMsg").text('');
+				$("#taxPaidMsg").text($.i18n(data.tag));
+				
+		}
 				else{
-					$('#taxPaidMsg').text(msg);
-				}*/
+					$("#taxPaidMsg").text('');
+					$("#taxPaidMsg").text($.i18n('errorMsg'));
+				}
 
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			////console.log("error in ajax")
+			//console.log("error in ajax")
 		}
 	});
 }
@@ -1119,26 +1141,26 @@ $(document).ready(function () {
 
 
 function regularizedCount(nationType){
-	////console.log("----"+nationType+"  roleType=="+roleType)
+	//console.log("----"+nationType+"  roleType=="+roleType)
 	var allowed='';
 	if(nationType==undefined && roleType=='Custom')
 		{
-		////console.log("if condition for regulaised");
+		//console.log("if condition for regulaised");
 		nationType=1;
 		var nid= nationalId == 'null' ? null : nationalId;
 		}
 	else if(nationType==undefined && roleType=='Immigration'){
-		////console.log("else  condition for regulaised");
+		//console.log("else  condition for regulaised");
 		nationType=2;
 		var nid= nationalId == 'null' ? null : nationalId;
 	}
 	else if(nationType==2)
 		{
-		////console.log("hit for foreigner.");
+		//console.log("hit for foreigner.");
 		nationType==2;
 		}
 	else{
-		////console.log("else  condition for CEIR admin");
+		//console.log("else  condition for CEIR admin");
 		nationType=1;
 		var nid= '';
 	}
@@ -1166,7 +1188,7 @@ function regularizedCount(nationType){
 			
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			////console.log("error in ajax")
+			//console.log("error in ajax")
 
 		}
 	});
@@ -1222,10 +1244,21 @@ function aprroveDevice(){
 				confirmApproveInformation(window.imei,window.date);
 
 			}
+			else if(data.errorCode == 5){
+				$('#confirmApproveInformation').openModal({dismissible:false});
+				$("#approveSucessMessage").text('');
+				$("#approveSucessMessage").text($.i18n(data.tag));
+				
+		}
+			else{
+				$('#confirmApproveInformation').openModal({dismissible:false});
+				$("#approveSucessMessage").text('');
+				$("#approveSucessMessage").text($.i18n('errorMsg'));
+			}
 
 		},
 		error : function() {
-			////console.log("Failed");
+			//console.log("Failed");
 
 		}
 	});
@@ -1279,10 +1312,20 @@ function rejectUser(){
 				confirmRejectInformation();
 
 			}
-
+			else if(data.errorCode == 5){
+				$('#confirmRejectInformation').openModal({dismissible:false});
+				$("#deviceRejectPopUp").text('');
+				$("#deviceRejectPopUp").text($.i18n(data.tag));
+				
+		}
+			else{
+				$('#confirmRejectInformation').openModal({dismissible:false});
+				$("#deviceRejectPopUp").text('');
+				$("#deviceRejectPopUp").text($.i18n('errorMsg'));
+			}
 		},
 		error : function() {
-			////console.log("Failed");
+			//console.log("Failed");
 		}
 	});
 	return false;
@@ -1308,10 +1351,10 @@ function isImageValid(id) {
 	//$('#FilefieldId').val(id);
 	//alert(uploadedFileName+"----------"+ext+"----"+fileSize)
 	var fileExtension =ext.toLowerCase();
-	////console.log("file type: "+fileExtension);
+	//console.log("file type: "+fileExtension);
 	var extArray = ["png", "jpg","jpeg","gif","bmp","gif"];
 	var isInArray =extArray.includes(fileExtension);
-	////console.log("isInArray: "+isInArray)
+	//console.log("isInArray: "+isInArray)
 	if (uploadedFileName.length > 30) {
 		$('#fileFormateModal').openModal();
 		$('#fileErrormessage').text('');
@@ -1572,10 +1615,10 @@ function deptImageValidation() {
 		//$('#FilefieldId').val(id);
 		//alert(uploadedFileName+"----------"+ext+"----"+fileSize)
 		var fileExtension =ext.toLowerCase();
-		//console.log("file type: "+fileExtension);
+		console.log("file type: "+fileExtension);
 		var extArray = ["png", "jpg","jpeg","gif","bmp","gif"];
 		var isInArray =extArray.includes(fileExtension);
-		//console.log("isInArray: "+isInArray)
+		console.log("isInArray: "+isInArray)
 		if (uploadedFileName.length > 30) {
 			$('#fileFormateModal').openModal();
 			$('#fileErrormessage').text('');
@@ -1610,10 +1653,10 @@ function deptImageValidation() {
 		//$('#FilefieldId').val(id);
 		//alert(uploadedFileName+"----------"+ext+"----"+fileSize)
 		var fileExtension =ext.toLowerCase();
-		//console.log("file type: "+fileExtension);
+		console.log("file type: "+fileExtension);
 		var extArray = ["png", "jpg","jpeg","gif","bmp","gif"];
 		var isInArray =extArray.includes(fileExtension);
-		//console.log("isInArray: "+isInArray)
+		console.log("isInArray: "+isInArray)
 		if (uploadedFileName.length > 30) {
 			$('#fileFormateModal').openModal();
 			$('#fileErrormessage').text('');
@@ -1673,7 +1716,7 @@ function deptImageValidation() {
 	}
  
  function historyRecord(txnID){
-		////console.log("txn id=="+txnID)
+		//console.log("txn id=="+txnID)
 		$("#tableOnModal").openModal({dismissible:false});
 		 var filter =[];
 		 var formData= new FormData();

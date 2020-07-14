@@ -220,6 +220,7 @@ input[type='search'] {
 													<input type="text" readonly="readonly" value="${viewInformation.endUserDB.firstName}"	>
 													<label for="firstName" class="center-align"><spring:message code="input.firstName" /> <span class="star"></span>
 													</label>
+													<input type="text" id="endUserViewTxnId" style="display: none;" value="${viewInformation.endUserDB.txnId}">
 												</div>
 
 												<div class="input-field col s12 m4 l4">
@@ -624,7 +625,7 @@ input[type='search'] {
 														<p><spring:message code="title.imeiMeidEsn" /></p>
 														<div class='row'>
 															<div class="input-field col s12 m6">
-																<input type="text" value="${viewInformation.firstImei}" readonly="readonly">
+																<input type="text" value="${viewInformation.firstImei}" readonly="readonly" id="endUserFirstIMEI">
 																 <label for="IMEIA1"><spring:message code="title.one" /><span
 																	class="star"></span></label>
 															</div>
@@ -1063,6 +1064,15 @@ input[type='search'] {
 								<input type="text" id="nationalIdForCancel" name="Search">
 								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 							</form>
+							
+							<div style="display: none;">
+	<form action="viewDeviceInformation" method="post" id="endUserViewDevicePage">
+	<input type="text" id="endUserLangviewbyImei" name="viewbyImei" style="display: none">
+	<input type="text" id="endUserLangviewbytxnId" name="viewbytxnId" style="display: none">
+	<input type="text" id="changedViewDeviceLang"  name="lang" style="display: none;">
+	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+	</form>
+	</div>
 
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
@@ -1145,6 +1155,20 @@ $("label[for='middleName']").addClass('active');
 $("label[for='datepicker']").addClass('active');
 $("label[for='email']").addClass('active');
 $("label[for='Price1']").addClass('active');
+
+
+$('#langlist').on('change', function() {
+	window.lang=$('#langlist').val() == 'km' ? 'km' : 'en';
+	var url_string = window.location.href;
+	var url = new URL(url_string);
+	var type = url.searchParams.get("type");
+	$('#endUserLangviewbyImei').val($('#endUserFirstIMEI').val());
+	$('#endUserLangviewbytxnId').val($('#endUserViewTxnId').val());
+	$('#changedViewDeviceLang').val(window.lang);
+	document.getElementById("endUserViewDevicePage").submit();
+	//window.location.assign("selfRegisterDevicePage?lang="+window.lang);			
+}); 
+$('#langlist').val(data_lang_param);
 
 </script>
 </body>

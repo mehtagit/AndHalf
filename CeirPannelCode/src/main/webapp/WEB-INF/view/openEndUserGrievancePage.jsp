@@ -326,7 +326,7 @@ var contextpath = "${context}";
                                         <div class="row">
                                             <div class="input-field col s12 center">
                                                 <button class="btn" type="submit" ><spring:message code="button.submit" /></button>
-                                                <a href="./redirectToHomePage" class="btn modal-trigger" style="margin-left: 10px;"><spring:message code="button.cancel" /></a>
+                                                <a href="./redirectToHomePage" class="btn" style="margin-left: 10px;"><spring:message code="button.cancel" /></a>
                                             </div>
                                         </div>
                                     </div>

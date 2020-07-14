@@ -255,9 +255,9 @@ to {
 											pattern="[A-Za-z ]{0,50}"
 											oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
 											oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
-											maxlength="50" required /> <label for="supplierName"
+											maxlength="50" > <label for="supplierName"
 											id="SupplierIdAssignieName" class="center-align"><spring:message
-												code="input.supllierName" /> <span class="star">*</span></label>
+												code="input.supllierName" /></label>
 									</div>
 								</div>
 								<div class="col s12 m12">

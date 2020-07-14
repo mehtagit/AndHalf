@@ -163,7 +163,8 @@ input[type='search'] {
 }
 </style>
 </head>
-<body data-id="12" session-value="${not empty param.NID ? param.NID : 'null'}" data-roleType="${usertype}">
+<body data-id="12" session-value="${not empty param.NID ? param.NID : 'null'}" data-roleType="${usertype}"
+data-lang-param="${pageContext.response.locale}">
 
 	<!-- START CONTENT -->
 	<section id="content">
@@ -378,6 +379,14 @@ input[type='search'] {
 		</div>
 	</div>
 	
+	<div style="display: none;">
+	<form action="EndUser_AddDevices" method="post" id="changedLangAddDeviceForm">
+	<input type="text" id="changedAddDeviceLangValue" name="lang" style="display: none;">
+	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+	</form>
+	</div>
+	
+	
 	
 	<!-- Modal End -->
 	<script type="text/javascript"
@@ -424,11 +433,12 @@ input[type='search'] {
 		src="${context}/resources/i18n_library/min.js"></script>
 	
 			<script type="text/javascript" src="${context}/resources/js/intlTelInput.js"></script> --%>
+		<script type="text/javascript"
+		src="${context}/resources/project_js/globalVariables.js?version=<%= (int) (Math.random() * 10) %>"></script>
 		
 	<script type="text/javascript"
 		src="${context}/resources/project_js/endUserAddDevice.js?version=<%= (int) (Math.random() * 10) %>"></script>
-	<script type="text/javascript"
-		src="${context}/resources/project_js/globalVariables.js?version=<%= (int) (Math.random() * 10) %>"></script>
+	
 	
 	<script type="text/javascript"
 		src="${context}/resources/project_js/dragableModal.js?version=<%= (int) (Math.random() * 10) %>"></script>
