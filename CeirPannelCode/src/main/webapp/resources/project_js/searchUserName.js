@@ -12,12 +12,12 @@
 	function hide() {
 		var In = $('#Search').val();
 		if(In.length == 0){
-				console.log("please field input");
+				//////console.log("please field input");
 		}else{
 			var searchRequest={
 					"username" : $('#Search').val()
 			}
-			//console.log("searchRequest--->" +JSON.stringify(searchRequest));
+			//////console.log("searchRequest--->" +JSON.stringify(searchRequest));
 			var token = $("meta[name='_csrf']").attr("content");
 			var header = $("meta[name='_csrf_header']").attr("content");
 			$.ajaxSetup({
@@ -42,7 +42,7 @@
 						}
 					},
 					error: function (jqXHR, textStatus, errorThrown) {
-						console.log("error in ajax")
+						////console.log("error in ajax")
 
 					}
 				});

@@ -285,7 +285,7 @@ div#error_Modal {
 				</ul>
 				<a href="#" data-activates="slide-out"
 					class="sidebar-collapse btn-floating btn-medium waves-effect waves-light hide-on-large-only cyan"><i
-					class="mdi-navigation-menu"></i></a>
+					class="mdi-navigation-menu" id="rightSideToggle"></i></a>
 			</aside>
 			<!-- END LEFT SIDEBAR NAV-->
 
@@ -360,8 +360,6 @@ div#error_Modal {
 					<p>
 						<label style="margin-right: 50px"> <input type="radio"
 							name="status" value="Deactivate"
-							oninput="InvalidMsg(this,'fileType','<spring:message code="validation.Options" />');"
-							oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.Options" />');"
 							required> <span> <spring:message
 									code="registration.deactivate" />
 						</span></label>
@@ -379,9 +377,7 @@ div#error_Modal {
 					<p>
 						<label style="margin-right: 67px"> <input type="radio"
 							value="Disable" name="status"
-							oninput="InvalidMsg(this,'fileType','<spring:message code="validation.Options" />');"
-							oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.Options" />');"
-							title=""required  / > <span> <spring:message
+							title=""required  > <span> <spring:message
 									code="registration.disable" />
 						</span></label>
 						<spring:message code="registration.alltheactionwillbe" />

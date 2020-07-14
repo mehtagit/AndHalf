@@ -55,14 +55,14 @@ $(document).ready(function() {
 		contentType: false,
 		async:false,
 		success: function (data, textStatus, jqXHR) {
-			console.log(data)
+			//console.log(data)
 			for (i = 0; i < data.length; i++) {
 				$('<option>').val(data[i].id).text(data[i].brand_name)
 						.appendTo('#editsingleStolendeviceBrandName');
 			}
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			console.log("error in ajax")
+			//console.log("error in ajax")
 
 		}
 	});
@@ -78,7 +78,7 @@ $(document).ready(function() {
 		/*var promise = new Promise(function(resolve, reject) {
 			alert("promise");
 			$.getJSON('./productList', function(data) {
-				console.log(data)
+				//console.log(data)
 				
 				for (i = 0; i < data.length; i++) {
 					$('<option>').val(data[i].id).text(data[i].brand_name)
@@ -119,7 +119,7 @@ function viewIndivisualStolen()
 		processData: false,
 		contentType: false,
 		success: function (response, textStatus, jqXHR) {
-			console.log(response)
+			//console.log(response)
 
 			$('#singleStolenfirstName').val(response.stolenIndividualUserDB.firstName);
 			$('#singleStolenmiddleName').val(response.stolenIndividualUserDB.middleName);
@@ -244,7 +244,7 @@ $("#calender").css("display", "none");
 				
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			console.log("error in ajax")
+			//console.log("error in ajax")
 
 		}
 	});
@@ -402,7 +402,7 @@ function updateIndivisualStolen()
 		processData: false,
 		contentType: false,
 		success: function (response, textStatus, jqXHR) {
-			console.log(response);
+			//console.log(response);
 
 			if(response.errorCode==0){
 				$("#IndivisualUpdateStolen").prop('disabled', true);
@@ -415,7 +415,7 @@ function updateIndivisualStolen()
 			}
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			console.log("error in ajax")
+			//console.log("error in ajax")
 
 		}
 	});

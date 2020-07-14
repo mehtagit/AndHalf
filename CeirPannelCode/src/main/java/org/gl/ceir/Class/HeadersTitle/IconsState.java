@@ -825,10 +825,10 @@ public class IconsState {
 		//String downloadURL = "./dowloadFiles/actual/"+fileName.replace(" ", "%20")+"/"+txnId+"/"+defaultTagName+"";
 		String downloadURL = "fileDownload('"+fileName.replace(" ", "%20")+"','actual','"+txnId+"','"+defaultTagName+"')";
 		String viewAction="viewConsignmentDetails('"+txnId+"')"; 
-		String approveAction = "openApprovePopUp('" + txnId + "','"+displayName.replaceAll( " ", "+20")+ "')";
+		String approveAction = "openApprovePopUp('" + txnId + "','"+displayName.trim().replaceAll("\\s{2,}", "+20")+"')";
 
 		/* String escapedString = queryParser.escape(approveAction); */
-		String rejectAction = "openDisapprovePopup('"+txnId+"','"+displayName.replaceAll( " ", "+20")+"')";
+		String rejectAction = "openDisapprovePopup('"+txnId+"','"+displayName.trim().replaceAll("\\s{2,}", "+20")+"')";
 		String historyAction ="historyRecord('"+txnId+"')";
 
 		// state related Code 
@@ -1358,7 +1358,7 @@ public class IconsState {
 	/********************************* Icons for DashBoard Notification *********************************/
 
 
-	public String dashboardIcon(String userStatus, Integer featureID, String txnID, Integer userID, String roleType) {
+	public String dashboardIcon(String userStatus, Integer featureID, String txnID, Integer userID, String roleType,String reciverUserType) {
 		executePostConstruct();
 		// URL link
 		String viewAction = featureID == 3 ? "./viewConsignment?source=noti&txnID=" + txnID + ""
@@ -1386,7 +1386,7 @@ public class IconsState {
 		String view = null;
 		String functionName = "isActive(" + featureID + ")";
 		if (featureID == 3 || featureID == 4 || featureID == 6 || featureID == 7 || featureID == 21 || featureID == 43
-				|| featureID == 12 || featureID == 5 || featureID == 8) {
+				|| featureID == 12 || featureID == 5 || (featureID == 8 && reciverUserType.equalsIgnoreCase("CEIRAdmin"))) {
 			view = "<a href=" + viewAction + " onclick=" + functionName + "><i class=" + viewIcon
 					+ " aria-hidden=\"true\" title=" + viewIconTitle + " ></i></a>";
 		} else {

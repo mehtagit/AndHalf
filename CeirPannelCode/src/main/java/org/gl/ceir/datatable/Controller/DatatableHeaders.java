@@ -168,7 +168,7 @@ public class DatatableHeaders {
 
 			//DEFAULT PORTION  
 			else if("userPaidStatus".equals(role)) {
-				String[] headers = {"table.date","table.nid","table.transactionID","input.Nationality","table.deviceStatus","table.origin","table.status","table.action"};		
+				String[] headers = {"table.date","table.nid","table.transactionID","input.Nationality","table.taxPaidStatus","table.origin","table.status","table.action"};		
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
@@ -190,7 +190,7 @@ public class DatatableHeaders {
 			//adminUserPaidStatus Headers 
 			else if("adminUserPaidStatus".equals(role)) {
 
-				String[] headers = {"table.date","table.nid","table.transactionID","input.Nationality","table.deviceStatus","table.origin","table.status","table.action"};		
+				String[] headers = {"table.date","table.nid","table.transactionID","input.Nationality","table.taxPaidStatus","table.origin","table.status","table.action"};		
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}

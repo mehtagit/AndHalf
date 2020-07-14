@@ -23,6 +23,13 @@ public class NotificationContent {
 	 private Integer retryCount;
 	 private String referTable;
 	 private String roleType;
+	 private String receiverUserType;
+	public String getReceiverUserType() {
+		return receiverUserType;
+	}
+	public void setReceiverUserType(String receiverUserType) {
+		this.receiverUserType = receiverUserType;
+	}
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 	public Integer getId() {
 		return id;
@@ -126,8 +133,8 @@ public class NotificationContent {
 				+ ", channelType=" + channelType + ", message=" + message + ", userId=" + userId + ", featureId="
 				+ featureId + ", featureTxnId=" + featureTxnId + ", featureName=" + featureName + ", subFeature="
 				+ subFeature + ", status=" + status + ", subject=" + subject + ", retryCount=" + retryCount
-				+ ", referTable=" + referTable + ", roleType=" + roleType + ", additionalProperties="
-				+ additionalProperties + "]";
+				+ ", referTable=" + referTable + ", roleType=" + roleType + ", receiverUserType=" + receiverUserType
+				+ ", additionalProperties=" + additionalProperties + "]";
 	}
 	
 }

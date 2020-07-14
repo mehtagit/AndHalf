@@ -41,7 +41,7 @@ function configManagementDatatable(){
 		type: 'POST',
 		dataType: "json",
 		success: function(result){
-			/*console.log("Url-------" +url+"--------"+ "dataUrl-------" +dataUrl);*/
+			/*//console.log("Url-------" +url+"--------"+ "dataUrl-------" +dataUrl);*/
 			var table=	$("#configLibraryTable").removeAttr('width').DataTable({
 				destroy:true,
 				"serverSide": true,
@@ -57,7 +57,7 @@ function configManagementDatatable(){
 					dataType: "json",
 					data : function(d) {
 						d.filter = JSON.stringify(filterRequest); 
-						//console.log(JSON.stringify(filterRequest));
+						////console.log(JSON.stringify(filterRequest));
 					}
 
 				},
@@ -83,7 +83,7 @@ function configManagementDatatable(){
 			
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			//console.log("error in ajax");
+			////console.log("error in ajax");
 		}
 	});
 }
@@ -225,7 +225,7 @@ function viewDetails(tag){
 		contentType : 'application/json; charset=utf-8',
 		type : 'POST',
 		success : function(data) {
-			//console.log(data);
+			////console.log(data);
 			setViewPopupData(data);
 		},
 		error : function() {
@@ -274,7 +274,7 @@ function updateDetails(tag,status){
 		contentType : 'application/json; charset=utf-8',
 		type : 'POST',
 		success : function(data) {
-			//console.log(data);
+			////console.log(data);
 			setEditPopupData(data);
 		},
 		error : function() {
@@ -329,7 +329,7 @@ function updatePolicy(){
 			headers:
 			{ 'X-CSRF-TOKEN': token }
 		});
-	//console.log("updateRequest-->" +updateRequest);
+	////console.log("updateRequest-->" +updateRequest);
 	$.ajax({
 		url : "./policy/update",
 		data :	JSON.stringify(updateRequest),
@@ -337,7 +337,7 @@ function updatePolicy(){
 		contentType : 'application/json; charset=utf-8',
 		type : 'PUT',
 		success : function(data) {
-			//console.log(data);
+			////console.log(data);
 			confirmModel()
 			/* window.location = "./policyManagement";*/
 		},

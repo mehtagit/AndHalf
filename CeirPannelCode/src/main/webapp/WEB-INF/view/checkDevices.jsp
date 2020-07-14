@@ -203,7 +203,7 @@ i.fa.fa-times-circle-o.red-text {
 
 							<div class="row" id="validDetails" style="display: none;">
 								<h6 class="fixPage-modal-header ">
-									<spring:message code="registration.checkimeistatus" />
+									<spring:message code="title.imeiMeidEsn" />
 								</h6>
 								<div class="col s12 m12 l12">
 
@@ -254,7 +254,7 @@ i.fa.fa-times-circle-o.red-text {
 							</div>
 							<div class="row" id="invalidDetails" style="display: none;">
 								<h6 class="fixPage-modal-header ">
-									<spring:message code="registration.checkimeistatus" />
+									<spring:message code="title.imeiMeidEsn" />
 								</h6>
 								<div class="col s12 m12 l12">
 
@@ -367,11 +367,11 @@ i.fa.fa-times-circle-o.red-text {
 					</div>
 
 					<div class="input-field col s6 m4">
-						<label for="transactionID"><spring:message
+						<label for=""><spring:message
 								code="registration.modaltype" /></label>
 					</div>
 					<div class="input-field col s6 m8">
-						<input type="text" id="transactionID" name="transactionID"
+						<input type="text" id="" name=""
 							placeholder="ABC Modal" disabled>
 					</div>
 				</form>

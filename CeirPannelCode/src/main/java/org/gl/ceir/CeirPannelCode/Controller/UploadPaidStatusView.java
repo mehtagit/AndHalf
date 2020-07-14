@@ -375,9 +375,10 @@ GrievanceFeignClient grievanceFeignClient;
 	}
 	
 	@PostMapping("selfRegisterDevicePage")
-	public ModelAndView selfRegisterDevicePage(@RequestParam(name="Search",required = false) String Search,@RequestParam(name="sourceType",required = false) String sourceType) {
+	public ModelAndView selfRegisterDevicePage(@RequestParam(name="Search",required = false) String Search,@RequestParam(name="sourceType",required = false) String sourceType,
+			@RequestParam(name="lang",required = false) String lang) {
 		ModelAndView modelAndView = new ModelAndView();
-		log.info("---entry point in self register page=="+Search+"  sourceType   =="+sourceType);
+		log.info("---entry point in self register page=="+Search+"  sourceType   =="+sourceType+"  --lang--"+lang);
 		modelAndView.addObject("nid", Search);
 		if(sourceType!=null)
 		{
@@ -788,9 +789,9 @@ stream.close();
 		}
 
 
-@GetMapping("EndUser_AddDevices")
-public ModelAndView  endUserdeviceInformationView() {
-	log.info("enter end user add device page.");
+@PostMapping("EndUser_AddDevices")
+public ModelAndView  endUserdeviceInformationView(@RequestParam(name="lang",required = false) String lang) {
+	log.info("enter end user add device page. lang="+lang);
 	ModelAndView modelAndView = new ModelAndView();
 	modelAndView.setViewName("endUserAddDevice");
 	
@@ -798,8 +799,9 @@ public ModelAndView  endUserdeviceInformationView() {
 	return modelAndView;
 }		
 @PostMapping("viewDeviceInformation")
-public ModelAndView viewDeviceInformation(@RequestParam(name="viewbyImei",required = true) String imei,@RequestParam(name="viewbytxnId",required = true) String viewbytxnId) {
-	log.info(" imei in end user  =="+imei);
+public ModelAndView viewDeviceInformation(@RequestParam(name="viewbyImei",required = true) String imei,@RequestParam(name="viewbytxnId",required = true) String viewbytxnId,
+		@RequestParam(name="lang",required = false) String lang) {
+	log.info(" imei in end user  =="+imei+"==lang=="+lang);
 	ModelAndView modelAndView = new ModelAndView("viewAdddeviceInformation");
 	
 	  AllRequest request= new AllRequest();

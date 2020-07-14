@@ -80,6 +80,10 @@ function confirmantiondelete(){
 				$("#consignmentText").text('');
 				$("#consignmentText").text(deleteInProgress);
 			}
+			else if(data.errorCode==5){
+				$('#consignmentText').text('');
+				$('#consignmentText').text($.i18n(data.tag));
+			}
 			else{
 				$("#consignmentText").text(errorMsg);
 			}
@@ -237,7 +241,7 @@ function viewConsignmentDetails(txnId){
 
 function setViewPopupData(data){
 	var totalPrice='';
-	////console.log(data.totalPrice);
+	//////console.log(data.totalPrice);
 	if(data.totalPrice==null){
 		totalPrice="";
 		$("#viewCurrencyDiv").css("display", "none");
@@ -270,7 +274,7 @@ function setViewPopupData(data){
 function setEditPopupData(data){
 
 	var totalPrice='';
-	////console.log(data.totalPrice);
+	//////console.log(data.totalPrice);
 	if(data.totalPrice==null){
 		totalPrice="";
 		$("#currencyDiv").css("display", "none"); 
@@ -508,6 +512,10 @@ function editRegisterConsignment(){
 
 				$('#sucessMessage').text('');
 				$('#sucessMessage').text(updateMsg+" "+ (data.txnId) +" "+hasBeenUpdated);
+			}
+			else if(data.errorCode==5){
+				$('#sucessMessage').text('');
+				$('#sucessMessage').text($.i18n(data.tag));
 			}
 			else 
 			{
@@ -772,15 +780,16 @@ function openApprovePopUp(txnId,displayName)
 			contentType : 'application/json; charset=utf-8',
 			type : 'GET',
 			success : function(data) {
-				//console.log(data.pendingTacApprovedByCustom);
-				//console.log(data.pendingTacApprovedByCustom);
+				////console.log(data.pendingTacApprovedByCustom);
+				////console.log(data.pendingTacApprovedByCustom);
 
-				if(data.pendingTacApprovedByCustom=='N')
+				if(data.pendingTacApprovedByCustomInterp=='N')
 				{
 					$('#tacSatusForCustom').css("display", "none");
 					$('#approveButton').prop('disabled', false);
 
 				}
+				
 				else{
 					$('#tacSatusForCustom').css("display", "block"); 
 					$('#tacStatucMessage').text('');
@@ -847,6 +856,10 @@ function approveSubmit(actiontype){
 				$('#approveSuccessMessage').text('');
 				$('#approveSuccessMessage').text(consignmentApproved);
 			}
+			else if(data.errorCode==5){
+				$('#approveSuccessMessage').text('');
+				$('#approveSuccessMessage').text($.i18n(data.tag));
+			}
 			else{
 				$('#approveSuccessMessage').text('');
 				$('#approveSuccessMessage').text(errorMsg);
@@ -907,6 +920,10 @@ function disapproveSubmit(actiontype){
 
 				$('#disapproveSuccessMessage').text('');
 				$('#disapproveSuccessMessage').text(rejectedMsg);
+			}
+			else if(data.errorCode==5){
+				$('#disapproveSuccessMessage').text('');
+				$('#disapproveSuccessMessage').text($.i18n(data.tag));
 			}
 			else{
 				$('#disapproveSuccessMessage').text('');
@@ -1017,16 +1034,16 @@ function exportConsignmentData()
 	if(consignmentSource=='noti')
 	{
 		consignmentTxnId=$("body").attr("session-valueTxnID");
-		//console.log("  consignmentTxnId  ==="+consignmentTxnId);
+		////console.log("  consignmentTxnId  ==="+consignmentTxnId);
 	}
 	
-	console.log("2------>"+"consignmentStartDate---" +consignmentStartDate+  "consignmentEndDate---" +consignmentEndDate +  "consignmentTxnId---" +consignmentTxnId+  "filterConsignmentStatus---" +filterConsignmentStatus+  "consignmentTaxPaidStatus---" +consignmentTaxPaidStatus);
+	//console.log("2------>"+"consignmentStartDate---" +consignmentStartDate+  "consignmentEndDate---" +consignmentEndDate +  "consignmentTxnId---" +consignmentTxnId+  "filterConsignmentStatus---" +filterConsignmentStatus+  "consignmentTaxPaidStatus---" +consignmentTaxPaidStatus);
 	if(consignmentStartDate != '' || consignmentEndDate != '' || consignmentTxnId != '' || filterConsignmentStatus != '' || consignmentTaxPaidStatus != '' ){
 		source__val = 'filter'
 	}else{
 		source__val = $("body").attr("data-session-source")
 	}
-	//console.log("source__val-->"+ source__val);
+	////console.log("source__val-->"+ source__val);
 	var table = $('#consignmentLibraryTable').DataTable();
 	var info = table.page.info(); 
 	var pageNo=info.page;
@@ -1118,7 +1135,7 @@ $('#tacStatusChecKbox').click(function () {
 function consignmentFileDownload(fileName,fileType,txnId,doc_TypeTag)
 {
 	fileName=fileName.split("%20").join(" ");
-	//console.log(" fileName "+fileName+" fileType  "+fileType+" txnId "+txnId+"  doc_TypeTag "+doc_TypeTag)
+	////console.log(" fileName "+fileName+" fileType  "+fileType+" txnId "+txnId+"  doc_TypeTag "+doc_TypeTag)
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
 	$.ajaxSetup({
@@ -1131,7 +1148,7 @@ function consignmentFileDownload(fileName,fileType,txnId,doc_TypeTag)
 		contentType : 'application/json; charset=utf-8',
 		type : 'GET',
 		success : function(data) {
-			//console.log(data);
+			////console.log(data);
 			if(data.url=='Not Found')
 			{
 
@@ -1142,7 +1159,7 @@ function consignmentFileDownload(fileName,fileType,txnId,doc_TypeTag)
 				$('#fileErrormessage').text($.i18n('fileNotFound'));
 			}
 			else{
-				//console.log("file is found");
+				////console.log("file is found");
 				window.location.href=data.url;
 
 			}
@@ -1176,7 +1193,7 @@ function payTaxDRT(){
 
 	}
 
-	//console.log("request--->" +JSON.stringify(request))
+	////console.log("request--->" +JSON.stringify(request))
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
 	$.ajaxSetup({
@@ -1190,14 +1207,14 @@ function payTaxDRT(){
 		dataType : 'json',
 		contentType : 'application/json; charset=utf-8',
 		success: function (data, textStatus, jqXHR) {
-			//console.log("Updated data---->" +data)
+			////console.log("Updated data---->" +data)
 			$("#PayDRTtaxPopup").closeModal();	
 			if(data.errorCode == 200){
 				window.open(data.data.url);
 			}
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			//console.log("error in ajax")
+			////console.log("error in ajax")
 		}
 	});	
 

@@ -128,7 +128,7 @@ var lang_param =window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 						$('#dynamicTxnId').text('');
 						$('#sucessMessage').text('');
 						$('#sucessMessage').text(data.message);*/
-						$('#customAddDeviceDuplicateImei').openModal({dismissible:false});;
+						$('#AddDeviceDuplicateImei').openModal({dismissible:false});;
 						$('#dupliCateImeiMsg').text($.i18n(data.tag));
 						
 					}

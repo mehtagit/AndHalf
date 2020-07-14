@@ -948,8 +948,21 @@ headers:
 			
 			 $('div#initialloader').delay(300).fadeOut('slow');
 			 //console.log(data);
-			 $('#confirmEditBlockUnblock').openModal({dismissible:false});
-	/*		 if(data.errorCode==200){
+			 
+			 if(data.errorCode==5){
+				 $('#confirmEditBlockUnblock').openModal({dismissible:false});
+				 $("#stockupdateSucessMessage").text('');
+				 $("#stockupdateSucessMessage").text($.i18n(data.tag));
+			 }
+			 else if(data.errorCode==1){
+				 $('#confirmEditBlockUnblock').openModal({dismissible:false});
+			 }
+			 else{
+				 $('#confirmEditBlockUnblock').openModal({dismissible:false});
+				 $("#stockupdateSucessMessage").text('');
+				 $("#stockupdateSucessMessage").text($.i18n('errorMsg'));
+			 }
+			 /*		 if(data.errorCode==200){
 			
 		     $('#singleDeviceBlockMessage').text('');
 			 $('#singleDeviceBlockMessage').text(data.message);

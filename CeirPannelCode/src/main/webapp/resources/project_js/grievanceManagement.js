@@ -159,7 +159,7 @@ var featureId = 6;
 								dataType: "json",
 								data : function(d) {
 									d.filter = JSON.stringify(filterRequest); 
-									//console.log(JSON.stringify(filterRequest));
+									////console.log(JSON.stringify(filterRequest));
 								}
 
 							},
@@ -178,7 +178,7 @@ var featureId = 6;
 					       });
 					},
 					error: function (jqXHR, textStatus, errorThrown) {
-						//console.log("error in ajax");
+						////console.log("error in ajax");
 					}
 				});
 			}
@@ -415,7 +415,7 @@ var featureId = 6;
 						$('#replyModal').openModal({
 						 	   dismissible:false
 						    });
-						//console.log(data.grievance.categoryId)
+						////console.log(data.grievance.categoryId)
 						//alert("11"+data.categoryId)
 						setDocTypeValue(data[0].grievance.categoryId);
 						$('#existingGrievanceID').val(data[0].grievance.categoryId);
@@ -466,7 +466,7 @@ var featureId = 6;
 
 					},
 					error: function (jqXHR, textStatus, errorThrown) {
-						//console.log("error in ajax")
+						////console.log("error in ajax")
 					}
 				});
 			}
@@ -524,7 +524,17 @@ var featureId = 6;
 					"grievanceId":$('#grievanceIdToSave').text()
 					}
 					formData.append('files[]',$('#docTypeFile'+fieldId)[0].files[0]);
+					
+					if(!x['docType']=='')
+					{
+					////console.log("if");
 					fileInfo.push(x);
+					}
+				else{
+					////console.log("else");
+					
+				}
+					
 					
 					documentFileName=$('#docTypeFile'+fieldId).val().replace('C:\\fakepath\\','')
 					docTypeTag=$('#docTypetag'+fieldId).val();
@@ -626,7 +636,7 @@ var featureId = 6;
 						
 					},
 					error: function (jqXHR, textStatus, errorThrown) {
-						//console.log("error in ajax")
+						////console.log("error in ajax")
 					}
 				});
 				return false;
@@ -661,7 +671,7 @@ var featureId = 6;
 						{
 								$('#viewGrievanceId').text('');	
 							$('#viewGrievanceId').text(grievanceId);	
-							//console.log("view Data--->" +JSON.stringify(data));
+							////console.log("view Data--->" +JSON.stringify(data));
 							if($("body").attr("data-roleType")!="CEIRAdmin"){
 								$("#chatMsg").append("<div class='chat-message-content clearfix'><span class='chat-time' id='timeHistory'>"+data[i].modifiedOn+"</span><h5 id='userTypehistory'>"+data[i].userDisplayName+"</h5><textarea class='materialize-textarea' style='min-height: 8rem' readonly id='messageHistory'>"+data[i].reply+"</textarea></div>");
 							}else{
@@ -700,7 +710,7 @@ var featureId = 6;
 						}
 					},
 					error: function (jqXHR, textStatus, errorThrown) {
-						//console.log("error in ajax")
+						////console.log("error in ajax")
 					}
 				});
 			}
@@ -721,9 +731,9 @@ var featureId = 6;
 				
 				var grievanceId = (txnIdValue == 'null' && transactionIDValue == undefined) ? $('#grievanceID').val() : transactionIDValue;
 				
-				//console.log("grievanceId-->" +grievanceId);
-				//console.log("grievanceStartDate---" +grievanceStartDate+  "grievanceEndDate---" +grievanceEndDate +  "grievancetxnId---" +grievancetxnId+  "grievanceId---" +grievanceId+  "grievanceStatus---" +grievanceStatus);
-				console.log("window.userId--->" +window.userId)
+				////console.log("grievanceId-->" +grievanceId);
+				////console.log("grievanceStartDate---" +grievanceStartDate+  "grievanceEndDate---" +grievanceEndDate +  "grievancetxnId---" +grievancetxnId+  "grievanceId---" +grievanceId+  "grievanceStatus---" +grievanceStatus);
+				//console.log("window.userId--->" +window.userId)
 				//var source__val = tacStartDate != ''|| tacEndDate != ''|| tacStatus != '-1'|| tacNumber != ''|| txnId != '' ? 'filter' : $("body").attr("data-session-source");	
 				
 				if(grievanceId != ''){
@@ -732,7 +742,7 @@ var featureId = 6;
 					source__val = grievanceStartDate != ''|| grievanceEndDate != ''|| grievancetxnId != ''|| grievanceId != ''|| grievanceStatus != '-1' ? 'filter' : $("body").attr("data-session-source");
 				}
 				
-				//console.log("source__val-->" +source__val);
+				////console.log("source__val-->" +source__val);
 				
 				var table = $('#grivanceLibraryTable').DataTable();
 				var info = table.page.info(); 
@@ -778,7 +788,7 @@ var featureId = 6;
 			});
 			
 			$.getJSON('./addMoreFile/grievance_supporting_doc_count', function(data) {
-				//console.log(data);
+				////console.log(data);
 				
 				localStorage.setItem("maxCount", data.value);
 				
@@ -787,7 +797,7 @@ var featureId = 6;
 				//var max_fields = 2; //maximum input boxes allowed
 				var max_fields =localStorage.getItem("maxCount");
 				if (max_fields==0 || max_fields==1){
-					 //console.log("1111");
+					 ////console.log("1111");
 					 $(".add_field_button").prop('disabled', true);
 				 }
 
@@ -802,7 +812,7 @@ var featureId = 6;
 				if (x < max_fields) { //max input box allowed
 					x++; //text box increment
 					$(wrapper).append(
-							'<div id="filediv'+id+'" class="fileDiv"><div class="row"><div class="file-field col s12 m6"><label for="Category">'+documenttype+'</label><select id="docTypetag'+id+'" oninput="InvalidMsg(this,\'select\',\''+$.i18n('selectDocumentType')+'\');"  oninvalid="InvalidMsg(this,\'select\',\''+$.i18n('selectDocumentType')+'\');"  class="browser-default"> <option value="" disabled selected>'+selectDocumentType+' </option></select><select id="docTypetagValue'+id+'" style="display:none" class="browser-default"> <option value="" disabled selected>'+selectDocumentType+' </option></select></div><div class="file-field col s12 m6" style="margin-top: 23px;"><div class="btn"><span>'+selectfile+'</span><input id="docTypeFile'+id+'" type="file" oninput="InvalidMsg(this,\'file\',\''+$.i18n('selectfile')+'\');"  oninvalid="InvalidMsg(this,\'file\',\''+$.i18n('selectfile')+'\');"  name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" placeholder="'+$.i18n('selectFilePlaceHolder')+'" type="text"></div></div><div style="cursor:pointer;background-color:red;margin-right: 1.7%;" class="remove_field btn right btn-info" onclick="remove_field('+id+')">-</div></div></div>'
+							'<div id="filediv'+id+'" class="fileDiv"><div class="row"><div class="file-field col s12 m6"><label for="Category">'+documenttype+' <span class="star">*</span></label><select id="docTypetag'+id+'" oninput="InvalidMsg(this,\'select\',\''+$.i18n('selectDocumentType')+'\');"  oninvalid="InvalidMsg(this,\'select\',\''+$.i18n('selectDocumentType')+'\');" required class="browser-default"> <option value="" disabled selected>'+selectDocumentType+' </option></select><select id="docTypetagValue'+id+'" style="display:none" class="browser-default"> <option value="" disabled selected>'+selectDocumentType+' </option></select></div><div class="file-field col s12 m6" style="margin-top: 23px;"><div class="btn"><span>'+selectfile+'</span><input id="docTypeFile'+id+'" type="file" required oninput="InvalidMsg(this,\'file\',\''+$.i18n('selectfile')+'\');"  oninvalid="InvalidMsg(this,\'file\',\''+$.i18n('selectfile')+'\');"  name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" placeholder="'+$.i18n('selectFilePlaceHolder')+'" type="text"></div></div><div style="cursor:pointer;background-color:red;margin-right: 1.7%;" class="remove_field btn right btn-info" onclick="remove_field('+id+')">-</div></div></div>'
 					); //add input box
 				}
 	               /*$.getJSON('./getDropdownList/DOC_TYPE', function(data) {
@@ -833,7 +843,7 @@ var featureId = 6;
 						  "userTypeId":grievanceUserTypeId,
 					}
 			
-			//console.log("request --->" +JSON.stringify(request));	
+			////console.log("request --->" +JSON.stringify(request));	
 				
 				var token = $("meta[name='_csrf']").attr("content");
 				var header = $("meta[name='_csrf_header']").attr("content");
@@ -851,7 +861,7 @@ var featureId = 6;
 					success: function (data, textStatus, jqXHR) {
 						/*$("#docTypetag1").empty();
 						$('#docTypetag1').append('<option value="">'+$.i18n('selectDocumentType')+'</option>');*/
-						//console.log(data);
+						////console.log(data);
 						for (i = 0; i < data.length; i++){
 							var optionId=id-1;
 								//var html='<option value="'+data[i].value+'">'+data[i].interp+'</option>';
@@ -863,7 +873,7 @@ var featureId = 6;
 						
 					},
 					error: function (jqXHR, textStatus, errorThrown) {
-						//console.log("error in ajax")
+						////console.log("error in ajax")
 					}
 				});
 				
@@ -904,7 +914,7 @@ var featureId = 6;
 						  "userTypeId": parseInt($("body").attr("data-userTypeID")),
 					}
 			
-			//console.log("request --->" +JSON.stringify(request));	
+			////console.log("request --->" +JSON.stringify(request));	
 			
 			var token = $("meta[name='_csrf']").attr("content");
 			var header = $("meta[name='_csrf_header']").attr("content");
@@ -922,7 +932,7 @@ var featureId = 6;
 					success: function (data, textStatus, jqXHR) {
 						$("#docTypetag1").empty();
 						$('#docTypetag1').append('<option value="">'+$.i18n('selectDocumentType')+'</option>');
-						//console.log(data);
+						////console.log(data);
 						for (i = 0; i < data.length; i++){
 								//var html='<option value="'+data[i].value+'">'+data[i].interp+'</option>';
 								//$('#docTypetag1').append(html);	
@@ -933,7 +943,7 @@ var featureId = 6;
 						
 					},
 					error: function (jqXHR, textStatus, errorThrown) {
-						//console.log("error in ajax")
+						////console.log("error in ajax")
 					}
 				});
 			}

@@ -67,6 +67,10 @@ function registerConsignment() {
 				"consignment number already exist");
 				$('#errorCode').val(data.errorCode);
 			}
+			else if(data.errorCode == 5){
+				$('#sucessMessage').text('');
+				$('#sucessMessage').text($.i18n(data.tag));
+			}
 
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
@@ -108,9 +112,9 @@ function dispatchDateValidation() {
 	var today = now.getFullYear() + '-' + (now.getMonth() + 1) + '-'
 	+ currentDate;
 	//alert("today"+today);
-	console.log("dispatche=" + dispatcDate);
-	console.log("todays parse date" + Date.parse(today));
-	console.log("dispatche parse date" + Date.parse(dispatcDate));
+	//console.log("dispatche=" + dispatcDate);
+	//console.log("todays parse date" + Date.parse(today));
+	//console.log("dispatche parse date" + Date.parse(dispatcDate));
 
 	if (Date.parse(today) > Date.parse(dispatcDate)) {
 		myFunction("dispatche date should be greater then or equals to today");
@@ -134,9 +138,9 @@ function arrivalDateValidation() {
 	var today = now.getFullYear() + '-' + (now.getMonth() + 1) + '-'
 	+ currentDate;
 	//alert("today"+today);
-	console.log("dispatche=" + dispatcDate);
-	console.log("todays parse date" + Date.parse(today));
-	console.log("dispatche parse date" + Date.parse(dispatcDate));
+	//console.log("dispatche=" + dispatcDate);
+	//console.log("todays parse date" + Date.parse(today));
+	//console.log("dispatche parse date" + Date.parse(dispatcDate));
 
 	if (Date.parse(today) > Date.parse(dispatcDate)) {
 		myFunction("Arrival date should be greater then or equals to today");
