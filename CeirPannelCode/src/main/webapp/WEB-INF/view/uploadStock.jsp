@@ -255,9 +255,9 @@ to {
 											pattern="[A-Za-z ]{0,50}"
 											oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
 											oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
-											maxlength="50" > <label for="supplierName"
+											maxlength="50" required /> <label for="supplierName"
 											id="SupplierIdAssignieName" class="center-align"><spring:message
-												code="input.supllierName" /></label>
+												code="input.supllierName" /> <span class="star">*</span></label>
 									</div>
 								</div>
 								<div class="col s12 m12">
@@ -650,21 +650,21 @@ function uploadStock(){
 		contentType: false,
 		success: function (data, textStatus, jqXHR) {
 			$('div#initialloader').delay(300).fadeOut('slow');
-			 console.log(data);
+			 //console.log(data);
 			 $("#stockSubmitButton").prop('disabled', true);
 			   $('#submitStock').openModal({
 		    	   dismissible:false
 		       });
 			 if(data.errorCode=="0")
 				 {
-				 console.log("status code = 0");
+				 //console.log("status code = 0");
 				$('#stockSuccessMessage').text(successMsg);
 			 $('#stockSuccessMessage').append(data.txnId);
 			 //$('#errorCode').val(data.errorCode);
 				 }
 			 else if(data.errorCode=="3")
 				 {
-				console.log("status code = 3"); 
+				//console.log("status code = 3"); 
 				$('#sucessMessage').text('');
 				$('#sucessMessage').text(invoiceNumberExist);
 				 $('#errorCode').val(data.errorCode);
@@ -677,7 +677,7 @@ function uploadStock(){
 			 else if(data.errorCode=="5")
 				 {
 				 $('#stockSuccessMessage').text('');
-					$('#stockSuccessMessage').text($.i18n('stockResponseMessage'));
+					$('#stockSuccessMessage').text($.i18n(data.tag));
 				 }
 			 
 			 else{
@@ -706,8 +706,8 @@ function redirectToViewPage()
 	 var userId = $("body").attr("data-userID");
 	 var currentRoleType = $("body").attr("data-selected-roleType"); 
 	 var role = currentRoleType == null ? roleType : currentRoleType;
-	 console.log(" userId="+userId+" role="+role);
-	console.log("./assignDistributor?userTypeId="+role);
+	 //console.log(" userId="+userId+" role="+role);
+	//console.log("./assignDistributor?userTypeId="+role);
 	var selectedRoleTypeId = $("body").attr("data-selectedRoleTypeId");
 	
 	
@@ -822,7 +822,7 @@ function assigneeTable(URL,dataUrl){
 			$('div#initialloader').delay(300).fadeOut('slow');
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			console.log("error in ajax");
+			//console.log("error in ajax");
 		}
 	});
 
