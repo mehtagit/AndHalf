@@ -950,12 +950,12 @@ function submitDeviceInfo(){
 				$('#regularisedDevice').openModal({dismissible:false});
 				$('#dynamicTxnId').text(data.txnId);
 			}
-			/*else if(data.errorCode==5)
+			else if(data.errorCode==5)
 				{
 				$('#regularisedDevice').openModal({dismissible:false});
 				$('#sucessMessage').text('');
-				$('#sucessMessage').text($.i18n('duplicateImei'));
-				}*/
+				$('#sucessMessage').text($.i18n(data.tag));
+				}
 			else{
 				$('#customRegisterDeviceDuplicateImei').openModal({dismissible:false});;
 				$('#dupliCateImeiMsg').text($.i18n(data.tag));

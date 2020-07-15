@@ -1431,7 +1431,7 @@ select {
 	<script>
 		$('.datepick').datepicker({
 			dateFormat : "yy-mm-dd",
-			minDate:"0"
+			maxDate:"0"
 		});
 
 		populateCountries("singleDevicecountry", "singleDevicestate");

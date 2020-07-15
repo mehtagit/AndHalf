@@ -1613,7 +1613,7 @@ type="submit" ><spring:message code="button.update" /></button>
             <div class="row">
                 <form action="">
                   
-                    <h6><spring:message code="modal.deviceRejected" /></h6>
+                    <h6 id="deviceRejectedMessage"><spring:message code="modal.deviceRejected" /></h6>
                 </form>
             </div>
             <div class="row">

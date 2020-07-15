@@ -25,7 +25,7 @@ $.i18n().load( {
 
 $(document).ready(function(){
 	$('div#initialloader').fadeIn('fast');
-	//////console.log("featureId is---->" +featureId);
+	////////console.log("featureId is---->" +featureId);
 	filterStolen(lang,null,null);
 	pageRendering();
 });
@@ -48,7 +48,7 @@ function confirmantiondelete(){
 	var currentRoleType = $("body").attr("data-stolenselected-roletype"); 
 	var role = currentRoleType == null ? roleType : currentRoleType;
 	var remarks = $("#textarea1").val();
-	////console.log("txnId===**"+txnId+" userId="+userId+" roleType== "+roleType+ " currentRoleType=="+currentRoleType);
+	//////console.log("txnId===**"+txnId+" userId="+userId+" roleType== "+roleType+ " currentRoleType=="+currentRoleType);
 	var obj ={
 			"txnId" : txnId,
 			"userType":role,
@@ -57,6 +57,7 @@ function confirmantiondelete(){
 			"featureId":featureId,
 			"id":id,
 			"remark":remarks,
+			"userTypeId": parseInt($("body").attr("data-usertypeid")),
 			"requestType":window.reqType
 			
 
@@ -76,15 +77,23 @@ function confirmantiondelete(){
 		contentType : 'application/json; charset=utf-8',
 		type : 'POST',
 		success : function(data, textStatus, xhr) {
-			//////console.log(data);
+			////////console.log(data);
 			if(data.errorCode == 200){
 				$("#consignmentText").text(data.message);
 			}else if(data.errorCode == 0){
 				$("#consignmentText").text(data.message);
 			}
+			else if(data.errorCode == 5){
+				$("#consignmentText").text('');
+				$("#consignmentText").text(data.tag);
+			}
+			else{
+				$("#consignmentText").text('');
+				$("#consignmentText").text($.i18n('errorMsg'));
+			}
 		},
 		error : function() {
-			////console.log("Error");
+			//////console.log("Error");
 		}
 	});
 	$("#DeleteConsignment").closeModal();
@@ -117,7 +126,7 @@ function viewConsignmentDetails(txnId){
 		contentType : 'application/json; charset=utf-8',
 		type : 'GET',
 		success : function(data) {
-			////console.log(data)
+			//////console.log(data)
 			setViewPopupData(data);
 		},
 		error : function() {
@@ -128,7 +137,7 @@ function viewConsignmentDetails(txnId){
 
 
 function setViewPopupData(data){
-	////console.log("_________________++++++++++"+data.organisationCountry)
+	//////console.log("_________________++++++++++"+data.organisationCountry)
 
 	$("#supplierId").val(data.supplierId);
 	$("#supplierName").val(data.supplierName);
@@ -146,7 +155,7 @@ function setViewPopupData(data){
 }
 
 function setEditPopupData(data){
-	////console.log()
+	//////console.log()
 	$("#supplierIdEdit").val(data.supplierId);
 	$("#supplierNameEdit").val(data.supplierName);
 	$("#consignmentNumberEdit").val(data.consignmentNumber);
@@ -181,7 +190,7 @@ function editRegisterConsignment(){
 	var txnId=$('#TransactionIdEdit').val();
 
 	var quantity=$('#QuantityEdit').val();
-	////console.log(supplierName,consignmentNumber,expectedArrivalDate,txnId,filename)
+	//////console.log(supplierName,consignmentNumber,expectedArrivalDate,txnId,filename)
 
 
 	var formData= new FormData();
@@ -197,8 +206,8 @@ function editRegisterConsignment(){
 	formData.append('txnId',txnId);
 	formData.append('filename',filename);
 
-	////console.log(JSON.stringify(formData));
-	////console.log("*********");
+	//////console.log(JSON.stringify(formData));
+	//////console.log("*********");
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
 	$.ajaxSetup({
@@ -215,7 +224,7 @@ function editRegisterConsignment(){
 		contentType: false,
 		success: function (data, textStatus, jqXHR) {
 
-			////console.log(data);
+			//////console.log(data);
 			$('#updateModal').closeModal();
 			$('#updateConsignment').modal();
 			if(data.errorCode==200){
@@ -232,7 +241,7 @@ function editRegisterConsignment(){
 
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			////console.log("error in ajax")
+			//////console.log("error in ajax")
 		}
 	});
 
@@ -245,7 +254,7 @@ function openDeleteModal(transactionId)
 	/*   $('#deletemodal').modal('open');
         	  backdrop: 'static' */
 	$('#deletemodal').openModal({dismissible:false});
-	////console.log("transactionId value="+transactionId);
+	//////console.log("transactionId value="+transactionId);
 	$('#deleteTransactionId').val(transactionId);
 }
 
@@ -326,7 +335,7 @@ function filterStolen(language,sourceTypeFilter,source){
 
 function Datatable(url,dataUrl,sourceTypeFiler){
 	
-	////console.log(" == sourceType ="+sourceTypeFiler);
+	//////console.log(" == sourceType ="+sourceTypeFiler);
 	var requestType='';
 	var userType=$("body").attr("data-roletype");
 	if (sourceTypeFiler=="filter")
@@ -337,8 +346,8 @@ function Datatable(url,dataUrl,sourceTypeFiler){
 	else{
 		requestType = parseInt($("body").attr("data-requesttype"));
 	  }
-	////console.log("=== requestType======"+requestType)
-	////console.log($("body").attr("data-operatorTypeId"))	
+	//////console.log("=== requestType======"+requestType)
+	//////console.log($("body").attr("data-operatorTypeId"))	
 	var txn= (txnIdValue == 'null' && transactionIDValue == undefined)? $('#transactionID').val() : transactionIDValue;
 	
 	var operatorTypeId;
@@ -347,7 +356,7 @@ function Datatable(url,dataUrl,sourceTypeFiler){
 	}else{
 		operatorTypeId = $('#operator').val() == undefined || $('#operator').val() == null ? $("body").attr("data-operatorTypeId"):$("body").attr("data-operatorTypeId")
 	}
-			////console.log("sent operatorTypeId is ---->" +operatorTypeId)		
+			//////console.log("sent operatorTypeId is ---->" +operatorTypeId)		
 	var filterRequest={
 			"endDate":$('#endDate').val(),
 			"startDate":$('#startDate').val(),
@@ -400,7 +409,7 @@ function Datatable(url,dataUrl,sourceTypeFiler){
 					type: 'POST',
 					data : function(d) {
 						d.filter =JSON.stringify(filterRequest); 
-						////console.log(JSON.stringify(filterRequest));
+						//////console.log(JSON.stringify(filterRequest));
 					}
 				},
 				"columns": result,
@@ -427,7 +436,7 @@ function Datatable(url,dataUrl,sourceTypeFiler){
 }				
 
 function pageRendering(){
-	////console.log("sourceType in render check" +sourceType);
+	//////console.log("sourceType in render check" +sourceType);
 	if(sourceType !="viaExistingRecovery" ){
 		pageElements('./stolen/pageRendering');
 
@@ -567,7 +576,7 @@ function fileStolenReport(){
 	var blockType=$('input[name=stolenBlockPeriod]:checked').val();
 	var blockingTimePeriod=$('#stolenDatePeriod').val();
 	var qty = $('#stolenQuantity').val();
-	////console.log("roleType=="+roleType+" userId="+userId+" currentRoleType =="+currentRoleType+"  blockType=="+blockType);
+	//////console.log("roleType=="+roleType+" userId="+userId+" currentRoleType =="+currentRoleType+"  blockType=="+blockType);
 	var formData= new FormData();
 
 	formData.append('file', $('#stolenCsvUploadFile')[0].files[0]);
@@ -578,8 +587,8 @@ function fileStolenReport(){
 	formData.append('sourceType',sourceType);
 	formData.append('userId',userId);
 	formData.append('qty',qty);
-	////console.log(JSON.stringify(formData));
-	////console.log("*********");
+	//////console.log(JSON.stringify(formData));
+	//////console.log("*********");
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
 	$.ajaxSetup({
@@ -596,7 +605,7 @@ function fileStolenReport(){
 		contentType: false,
 		success: function (data, textStatus, jqXHR) {
 
-			////console.log(data);
+			//////console.log(data);
 			$('#fileStolenModal').closeModal();
 			$('#markAsStolen').openModal({dismissible:false});
 			//if(data.errorCode==200){
@@ -613,7 +622,7 @@ function fileStolenReport(){
 
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			////console.log("error in ajax")
+			//////console.log("error in ajax")
 		}
 	});
 
@@ -633,7 +642,7 @@ function fileRecoveryReport(){
 	var role = currentRoleType == null ? roleType : currentRoleType;
 	var qty = $('#recoverQuantity').val();
 	var blockType=$('input[name=stolenBlockPeriod]:checked').val();
-	////console.log("roleType=="+roleType+" userId="+userId+" currentRoleType =="+currentRoleType);
+	//////console.log("roleType=="+roleType+" userId="+userId+" currentRoleType =="+currentRoleType);
 
 	var formData= new FormData();
 
@@ -643,8 +652,8 @@ function fileRecoveryReport(){
 	formData.append('sourceType',sourceType);
 	formData.append('userId',userId);
 	formData.append('qty',qty);
-	////console.log(JSON.stringify(formData));
-	////console.log("*********");
+	//////console.log(JSON.stringify(formData));
+	//////console.log("*********");
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
 	$.ajaxSetup({
@@ -660,7 +669,7 @@ function fileRecoveryReport(){
 		processData: false,
 		contentType: false,
 		success: function (data, textStatus, jqXHR) {
-			////console.log(data);
+			//////console.log(data);
 			$('#recoveryFileModal').closeModal();
 			$('#markAsRecoverDone').openModal({dismissible:false});
 			/*  $('#editStockModal').closeModal();
@@ -679,7 +688,7 @@ function fileRecoveryReport(){
 
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			////console.log("error in ajax")
+			//////console.log("error in ajax")
 		}
 	});
 
@@ -690,12 +699,12 @@ function fileRecoveryReport(){
 
 
 function openStolenRecoveryModal(){
-	////console.log("openStolenRecoveryModal===");
+	//////console.log("openStolenRecoveryModal===");
 	$('#stoleRecoveryModal').openModal({dismissible:false});
 }
 
 function openFileStolenModal(){
-	////console.log("openfileStolenModal===");
+	//////console.log("openfileStolenModal===");
 	//  $("#materialize-lean-overlay-3").css("display","none");
 
 	$('#stoleRecoveryModal').closeModal();
@@ -709,7 +718,7 @@ function openFileStolenModal(){
 
 
 function openRecoveryModal(){
-	////console.log("openfileStolenModal===");
+	//////console.log("openfileStolenModal===");
 	//  $("#materialize-lean-overlay-3").css("display","none");
 
 	$('#editRecoveryFileModal').closeModal();
@@ -734,7 +743,7 @@ function closeRecoveryModalModal()
 
 function openFileStolenUpdate(txnId,requestType,id,qty)
 {
-	////console.log("requestType="+requestType+" txnId="+txnId+" id= "+id);
+	//////console.log("requestType="+requestType+" txnId="+txnId+" id= "+id);
 	if(requestType=='1'){
 		$('#editRecoveryFileModal').openModal({dismissible:false}); 
 		$('#editFileRecoveryTxnId').text(txnId)
@@ -767,7 +776,7 @@ function updatefileStolenReport(){
 	var blockType=$('input[name=editStolenBlockPeriod]:checked').val();
 	var blockingTimePeriod=$('#editStolenDatePeriod').val();
 	var txnId=$('#editFileStolenTxnId').text();
-	////console.log("roleType=="+roleType+" userId="+userId+" currentRoleType =="+currentRoleType+"  blockType=="+blockType+" txnId ="+txnId);
+	//////console.log("roleType=="+roleType+" userId="+userId+" currentRoleType =="+currentRoleType+"  blockType=="+blockType+" txnId ="+txnId);
 	var formData= new FormData();
 	if(requestType=='1'){
 		formData.append('file', $('#editRecoveryCsvUploadFile')[0].files[0]);
@@ -789,8 +798,8 @@ function updatefileStolenReport(){
 	formData.append('roleType',role);
 	formData.append('sourceType',sourceType);
 	formData.append('userId',userId);
-	////console.log(JSON.stringify(formData));
-	////console.log("*********");
+	//////console.log(JSON.stringify(formData));
+	//////console.log("*********");
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
 	$.ajaxSetup({
@@ -807,13 +816,13 @@ function updatefileStolenReport(){
 		contentType: false,
 		success: function (data, textStatus, jqXHR) {
 
-			////console.log(data);
+			//////console.log(data);
 			if(requestType=='1'){
-				////console.log("close recovery model.");
+				//////console.log("close recovery model.");
 				$('#editFileStolenModal').closeModal();
 			}
 			else{
-				////console.log("close stolen model.");
+				//////console.log("close stolen model.");
 				$('#editRecoveryFileModal').closeModal();
 			}
 			$('#updateMarkAsStolen').openModal({dismissible:false});
@@ -831,7 +840,7 @@ function updatefileStolenReport(){
 
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			////console.log("error in ajax")
+			//////console.log("error in ajax")
 		}
 	});
 
@@ -852,7 +861,7 @@ function pickConsignment(){
 	if($("input[name='chooseconsignment']:checked")){
 		var url="./Consignment/viewConsignment";
 		localStorage.setItem("sourceType", "viaStolen");
-		////console.log(url);
+		//////console.log(url);
 		window.location.href=url;
 
 	}
@@ -864,14 +873,14 @@ function pickstock(){
 	localStorage.setItem("sourceType", "viaStock");
 	var url="./assignDistributor?userTypeId="+roleType;
 	window.location.href = url;
-	////console.log(url);
+	//////console.log(url);
 }
 
 function pickExistingRecovery(){
 	localStorage.setItem("sourceType", "viaExistingRecovery");
 	var url =  "./stolenRecovery?userTypeId="+roleType;
 	window.location.href = url;
-	////console.log(url);
+	//////console.log(url);
 }
 
 function valuesPush(){
@@ -880,10 +889,10 @@ function valuesPush(){
 	var currentRoleType = $("body").attr("data-stolenselected-roletype"); 
 	var role = currentRoleType == null ? roleType : currentRoleType;
 	var requestType="1";
-	////console.log("role++++"+role+"requestType++"+requestType+"currentRoleType="+currentRoleType);
+	//////console.log("role++++"+role+"requestType++"+requestType+"currentRoleType="+currentRoleType);
 	
 	 
-	////console.log("role++++"+role+"requestType++"+requestType+"currentRoleType="+currentRoleType);
+	//////console.log("role++++"+role+"requestType++"+requestType+"currentRoleType="+currentRoleType);
 	$('#stolenLibraryTable tr td input:checkbox:checked').each(function() {
 		var sourceInterp=$(this).closest('tr').find('td:eq(5)').text();
 		 var sourceType;
@@ -909,7 +918,7 @@ function valuesPush(){
 
 		multipleMarkedRequest.push(json);
 	});
-	////console.log(multipleMarkedRequest)
+	//////console.log(multipleMarkedRequest)
 	return multipleMarkedRequest;
 }
 
@@ -924,7 +933,7 @@ function openMulipleStolenPopUp()
 {
 
 	var stolenRecoverydata=JSON.stringify(valuesPush());
-	////console.log("release-------"+stolenRecoverydata);
+	//////console.log("release-------"+stolenRecoverydata);
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
 	$.ajaxSetup({
@@ -939,7 +948,7 @@ function openMulipleStolenPopUp()
 		contentType : 'application/json; charset=utf-8',
 		success: function (data, textStatus, jqXHR) {
 
-			////console.log(data);
+			//////console.log(data);
 			$('#markAsRecoveryDone').openModal({dismissible:false});
 			/*  $('#editStockModal').closeModal();
 					 $('#successUpdateStockModal').modal();
@@ -957,7 +966,7 @@ function openMulipleStolenPopUp()
 
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			////console.log("error in ajax")
+			//////console.log("error in ajax")
 		}
 	});
 
@@ -971,8 +980,8 @@ function redirectToViewStolenPage()
 	var userId = $("body").attr("data-userid");
 	var currentRoleType = $("body").attr("data-stolenselected-roletype"); 
 	var role = currentRoleType == null ? roleType : currentRoleType;
-	////console.log(" userId="+userId+" role="+role);
-	////console.log("./stolenRecovery?userTypeId="+role);
+	//////console.log(" userId="+userId+" role="+role);
+	//////console.log("./stolenRecovery?userTypeId="+role);
 	window.location.href = "./stolenRecovery?userTypeId="+role;
 
 
@@ -1044,7 +1053,7 @@ function exportStolenRecoveryData()
 	var blockUnblcksource= $("body").attr("data-session-source");
 	if(blockUnblcksource=='noti')
 		{
-		////console.log("export noti data=="+$("body").attr("data-notificationTxnID"));
+		//////console.log("export noti data=="+$("body").attr("data-notificationTxnID"));
 		stolenRecoveryTxnId=$("body").attr("data-notificationtxnid");
 		source__val=$("body").attr("data-session-source");
 		}
@@ -1052,48 +1061,48 @@ function exportStolenRecoveryData()
 		source__val=$("body").attr("data-session-source");
 	}
 	var role = currentRoleType == null ? roleType : currentRoleType;
-	////console.log("roleType=="+roleType+" currentRoleType="+currentRoleType+" role="+role);
+	//////console.log("roleType=="+roleType+" currentRoleType="+currentRoleType+" role="+role);
     
-	////console.log("stolenRecoveryFileStatus=="+stolenRecoveryFileStatus+" stolenRecoverySourceStatus=="+stolenRecoverySourceStatus+" stolenRecoveryRequestType="+stolenRecoveryRequestType)
+	//////console.log("stolenRecoveryFileStatus=="+stolenRecoveryFileStatus+" stolenRecoverySourceStatus=="+stolenRecoverySourceStatus+" stolenRecoveryRequestType="+stolenRecoveryRequestType)
       if(isNaN(stolenRecoveryFileStatus) && isNaN(stolenRecoverySourceStatus) && isNaN(stolenRecoveryRequestType))
 	   {
     	  stolenRecoveryFileStatus='';
     	  stolenRecoverySourceStatus='';
     	  stolenRecoveryRequestType=parseInt($("body").attr("data-requesttype"));
-    	  ////console.log(" 11111111stolenRecoveryFileStatus && stolenRecoverySourceStatus && stolenRecoveryRequestType is empty =="+stolenRecoveryFileStatus+stolenRecoverySourceStatus);
+    	  //////console.log(" 11111111stolenRecoveryFileStatus && stolenRecoverySourceStatus && stolenRecoveryRequestType is empty =="+stolenRecoveryFileStatus+stolenRecoverySourceStatus);
 	   }
       else if(isNaN(stolenRecoveryFileStatus) && isNaN(stolenRecoverySourceStatus))
 	   {
     	  stolenRecoveryFileStatus='';
     	  stolenRecoverySourceStatus='';
-    	  ////console.log(" 2222stolenRecoveryFileStatus && stolenRecoverySourceStatus is empty=="+stolenRecoveryFileStatus+stolenRecoverySourceStatus);
+    	  //////console.log(" 2222stolenRecoveryFileStatus && stolenRecoverySourceStatus is empty=="+stolenRecoveryFileStatus+stolenRecoverySourceStatus);
 	   }
       else if(isNaN(stolenRecoverySourceStatus) && isNaN(stolenRecoveryRequestType))
 	   {
     	  stolenRecoverySourceStatus='';
     	  stolenRecoveryRequestType=parseInt($("body").attr("data-requesttype"));
-    	  ////console.log(" 333333stolenRecoverySourceStatus && stolenRecoveryRequestType is empty="+stolenRecoverySourceStatus+stolenRecoveryRequestType);
+    	  //////console.log(" 333333stolenRecoverySourceStatus && stolenRecoveryRequestType is empty="+stolenRecoverySourceStatus+stolenRecoveryRequestType);
 	   }
       else if(isNaN(stolenRecoveryRequestType) && isNaN(stolenRecoveryFileStatus))
     	  {
     	   stolenRecoveryRequestType=parseInt($("body").attr("data-requesttype"));
     	   stolenRecoveryFileStatus='';
-    	   ////console.log(" 44444stolenRecoveryRequestType && stolenRecoveryFileStatus is empty "+stolenRecoveryRequestType+stolenRecoveryFileStatus);
+    	   //////console.log(" 44444stolenRecoveryRequestType && stolenRecoveryFileStatus is empty "+stolenRecoveryRequestType+stolenRecoveryFileStatus);
     	  }
       else if(isNaN(stolenRecoveryFileStatus))
     	  {
     	  stolenRecoveryFileStatus='';
-    	  ////console.log("stolenRecoveryFileStatus is blank="+stolenRecoveryFileStatus);
+    	  //////console.log("stolenRecoveryFileStatus is blank="+stolenRecoveryFileStatus);
     	  }
       else if(isNaN(stolenRecoverySourceStatus))
 	  {
     	  stolenRecoverySourceStatus='';
-    	  ////console.log("stolenRecoverySourceStatus is blank="+stolenRecoverySourceStatus);
+    	  //////console.log("stolenRecoverySourceStatus is blank="+stolenRecoverySourceStatus);
 	  }
       else if(isNaN(stolenRecoveryRequestType))
 	  {
     	  stolenRecoveryRequestType=parseInt($("body").attr("data-requesttype"));
-    	  ////console.log("stolenRecoveryRequestType is blank="+stolenRecoveryRequestType);
+    	  //////console.log("stolenRecoveryRequestType is blank="+stolenRecoveryRequestType);
 	  }
 
 	var table = $('#stolenLibraryTable').DataTable();
@@ -1126,7 +1135,7 @@ function exportStolenRecoveryData()
 			
 			
 	}
-	////console.log(JSON.stringify(filterRequest))
+	//////console.log(JSON.stringify(filterRequest))
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
 	$.ajaxSetup({
@@ -1190,10 +1199,23 @@ function aprroveDevice(){
 		contentType : 'application/json; charset=utf-8',
 		type : 'POST',
 		success : function(data) {
-			////console.log("approveRequest----->"+JSON.stringify(approveRequest));
+			//////console.log("approveRequest----->"+JSON.stringify(approveRequest));
 			if(data.errorCode==0){
 				confirmApproveInformation();
-				////console.log("inside Approve Success")
+				//////console.log("inside Approve Success")
+			}
+			else if(data.errorCode==5){
+				$('#approveInformation').closeModal(); 
+				$('#confirmApproveInformation').openModal({dismissible:false});
+				$('#"lawfulStolenDeleteSucessMsg"').text('');
+				$('#"lawfulStolenDeleteSucessMsg"').text($.i18n(data.tag));
+				
+			}
+			else{
+				$('#approveInformation').closeModal(); 
+				$('#confirmApproveInformation').openModal({dismissible:false});
+				$('#"lawfulStolenDeleteSucessMsg"').text('');
+				$('#"lawfulStolenDeleteSucessMsg"').text($.i18n('errorMsg'));
 			}
 
 		},
@@ -1247,15 +1269,27 @@ function rejectUser(){
 		contentType : 'application/json; charset=utf-8',
 		type : 'POST',
 		success : function(data) {
-			////console.log("approveRequest----->"+JSON.stringify(rejectRequest));
+			//////console.log("approveRequest----->"+JSON.stringify(rejectRequest));
 			if(data.errorCode==0){
 				confirmRejectInformation();
-				////console.log("inside Reject Success")
+				//////console.log("inside Reject Success")
+			}
+			else if(data.errorCode==5){
+				$('#rejectInformation').closeModal(); 
+				$('#confirmRejectInformation').openModal({dismissible:false});
+				$('#"deviceRejectedMessage"').text('');
+				$('#"deviceRejectedMessage"').text($.i18n(data.tag));
+			}
+			else{
+				$('#rejectInformation').closeModal(); 
+				$('#confirmRejectInformation').openModal({dismissible:false});
+				$('#"deviceRejectedMessage"').text('');
+				$('#"deviceRejectedMessage"').text($.i18n('error'));
 			}
 
 		},
 		error : function() {
-			alert("Failed");
+			//alert("Failed");
 		}
 	});
 	return false;
@@ -1279,7 +1313,7 @@ $("input[type=file]").keypress(function(ev) {
 
 
 function historyRecord(txnID){
-	////console.log("txn id=="+txnID)
+	//////console.log("txn id=="+txnID)
 	$("#tableOnModal").openModal({dismissible:false});
 	 var filter =[];
 	 var formData= new FormData();
@@ -1317,7 +1351,7 @@ function historyRecord(txnID){
 	if(lang=='km'){
 		var langFile='../resources/i18n/khmer_datatable.json';
 	}
-	////console.log("22");
+	//////console.log("22");
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
 	$.ajaxSetup({
