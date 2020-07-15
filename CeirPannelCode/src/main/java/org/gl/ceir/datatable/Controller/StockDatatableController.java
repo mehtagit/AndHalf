@@ -352,9 +352,16 @@ public class StockDatatableController {
 			}
 			
 		
-		
-		String userTypeRole=(String)session.getAttribute("selectedUserTypeId");
-		pageElement.setPageTitle(Translator.toLocale("view.stockMgt")+" "+Translator.toLocale("roletype."+userTypeRole));
+		if("CEIRAdmin".equals(userType)) {
+			pageElement.setPageTitle(Translator.toLocale("view.stockMgt")+" "+Translator.toLocale("roletype."+userType));
+			log.info("if userType-->" +userType);
+		}else {
+			String userTypeRole=(String)session.getAttribute("selectedUserTypeId");
+			pageElement.setPageTitle(Translator.toLocale("view.stockMgt")+" "+Translator.toLocale("roletype."+userTypeRole));
+			log.info("Else userType-->" +userType+" userTypeRole-->" +userTypeRole);
+		}
+		//String userTypeRole=(String)session.getAttribute("selectedUserTypeId");
+		//pageElement.setPageTitle(Translator.toLocale("view.stockMgt")+" "+Translator.toLocale("roletype."+userTypeRole));
 		pageElement.setButtonList(buttonList);
 		pageElement.setDropdownList(dropdownList);
 		pageElement.setInputTypeDateList(inputTypeDateList);

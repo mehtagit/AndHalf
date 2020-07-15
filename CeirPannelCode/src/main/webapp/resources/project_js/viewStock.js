@@ -385,14 +385,18 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 
 		}
 	////console.log("sourceParam= "+sourceParam);
-		if((currentRoleType=="Importer" || currentRoleType=="Retailer" || currentRoleType=="Distributor" || currentRoleType=="Manufacturer") && sourceType !="viaStock" ){
+		if((roleType=="Importer" || roleType=="Retailer" || roleType=="Distributor" || roleType=="Manufacturer") && sourceType !="viaStock" ){
 		Datatable('headers?lang='+lang+'&type=stockHeaders','stockData?source='+sourceParam);
-		}else if(currentRoleType=="Custom" && sourceType !="viaStock"){
+		//alert("roleType 1-->" +roleType);
+		}else if(roleType=="Custom" && sourceType !="viaStock"){
 		Datatable('./headers?lang='+lang+'&type=customStockHeaders','stockData?source='+sourceParam)
-		}else if(currentRoleType=="CEIRAdmin" && sourceType !="viaStock"){
+		//alert("roleType 2-->" +roleType);
+		}else if(roleType=="CEIRAdmin" && sourceType !="viaStock"){
 		Datatable('./headers?lang='+lang+'&type=adminStockHeaders','stockData?source='+sourceParam)
-		}else if((currentRoleType=="Importer"|| currentRoleType=="Retailer" || currentRoleType=="Distributor" || currentRoleType=="Custom") && sourceType =="viaStock"){
+		//alert("roleType 3-->" +roleType);
+		}else if((roleType=="Importer"|| roleType=="Retailer" || roleType=="Distributor" || roleType=="Custom") && sourceType =="viaStock"){
 		Datatable('./headers?lang='+lang+'&type=stockcheckHeaders','stockData?sourceType=viaStock&source='+sourceParam)
+		//alert("roleType 4-->" +roleType);
 		}
 		localStorage.removeItem('sourceType');
 	}
@@ -609,7 +613,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 
 				sourceType=="viaStock"? $("#btnLink").css({display: "none"}) : $("#btnLink").css({display: "block"});
 			
-				if(currentRoleType=="CEIRAdmin" || (period == 'POST_GRACE' && role=='Importer')){
+				if(roleType=="CEIRAdmin" || (period == 'POST_GRACE' && role=='Importer')){
 					$("#btnLink").css({display: "none"});
 				}
 				
@@ -964,7 +968,17 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 			 "dbName" : "ceirconfig",
 			 "txnId":txnID
 			 }
-			 }
+			 }else if(userTypeValue=='Manufacturer'){
+				 var filterRequest={
+						 "columns":["created_on","modified_on","txn_id","user_type","role_type","stock_status",
+						 "quantity","device_quantity","remarks","assigner_id",
+						 "user_id"
+						 ],
+						 "tableName": "stock_mgmt_aud",
+						 "dbName" : "ceirconfig",
+						 "txnId":txnID
+						 }
+			}
 			 else{
 			 var filterRequest={
 			 "columns":["created_on","modified_on","txn_id","user_type","role_type","stock_status","supplier_id","suplier_name",
