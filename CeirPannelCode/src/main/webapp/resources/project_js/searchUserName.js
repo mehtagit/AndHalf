@@ -50,5 +50,6 @@
 				//$("#submitbtn").css("display", "none");
 				//$("#endUserRaiseGrievance").css("display", "block");
 			}
+		return false;
 	    	
 	}
