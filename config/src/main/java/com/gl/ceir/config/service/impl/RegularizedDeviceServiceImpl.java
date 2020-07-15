@@ -298,13 +298,13 @@ public class RegularizedDeviceServiceImpl {
 					 * rdfm.setDeviceTypeInterp("NA"); }
 					 */
 					
-					if(!Objects.nonNull(regularizeDeviceDb.getSecondImei())) {
+					if(!Objects.nonNull(regularizeDeviceDb.getSecondImei()) || regularizeDeviceDb.getSecondImei().equals("")) {
 						rdfm.setSecondImei("NA");
 					}
-					if(!Objects.nonNull(regularizeDeviceDb.getThirdImei())) {
+					if(!Objects.nonNull(regularizeDeviceDb.getThirdImei()) || regularizeDeviceDb.getThirdImei().equals("")) {
 						rdfm.setThirdImei("NA");	
 					}
-					if(!Objects.nonNull(regularizeDeviceDb.getFourthImei())) {
+					if(!Objects.nonNull(regularizeDeviceDb.getFourthImei()) || regularizeDeviceDb.getFourthImei().equals("")) {
 						rdfm.setFourthImei("NA");	
 					}
 					/*
@@ -327,6 +327,7 @@ public class RegularizedDeviceServiceImpl {
 					rdfm.setTxnId(regularizeDeviceDb.getTxnId());
 					rdfm.setOrigin(regularizeDeviceDb.getOrigin());
 					rdfm.setNid(regularizeDeviceDb.getNid());
+					rdfm.setStatus(regularizeDeviceDb.getStateInterp());
 					for(SystemConfigListDb systemConfigListDb : currencyList) {
 						if(regularizeDeviceDb.getCurrency() == systemConfigListDb.getValue()) {
 							if(!Objects.nonNull(systemConfigListDb.getInterp())) {
