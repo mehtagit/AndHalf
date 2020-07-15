@@ -17,7 +17,7 @@
 			var searchRequest={
 					"username" : $('#Search').val()
 			}
-			//////console.log("searchRequest--->" +JSON.stringify(searchRequest));
+			//console.log("searchRequest--->" +JSON.stringify(searchRequest));
 			var token = $("meta[name='_csrf']").attr("content");
 			var header = $("meta[name='_csrf_header']").attr("content");
 			$.ajaxSetup({
