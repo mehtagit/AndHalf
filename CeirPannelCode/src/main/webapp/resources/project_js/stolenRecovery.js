@@ -1276,17 +1276,14 @@ $("input[type=file]").keypress(function(ev) {
 });
 
 
-
-
-function historyRecord(txnID){
+function historyRecord(txnID,sourceType){
 	//////console.log("txn id=="+txnID)
 	$("#tableOnModal").openModal({dismissible:false});
 	 var filter =[];
 	 var formData= new FormData();
 	 
 	 var userTypeValue=$("body").attr("data-roletype");
-	 	 if(userTypeValue=='CEIRAdmin')
-	 {
+	 if(userTypeValue=='CEIRAdmin' && sourceType=='3'){
 		 var filterRequest={
 				 
 				 "columns": [
@@ -1298,9 +1295,36 @@ function historyRecord(txnID){
 				"dbName" : "ceirconfig",
 				"txnId":txnID
 		} 
+		 
 	 }
-	 else{
- var filterRequest={
+	 else if(userTypeValue=='CEIRAdmin' && sourceType=='4'){
+		 var filterRequest={
+				 
+				 "columns": [
+					    "created_on","modified_on","txn_id","role_type","operator_type_id","request_type","source_type","file_status",
+					    "block_category","blocking_type","blocking_time_period","quantity","device_quantity","remark","rejected_remark",
+					     "user_id","ceir_admin_id"
+					    ],
+				"tableName": "stolenand_recovery_mgmt_aud",
+				"dbName" : "ceirconfig",
+				"txnId":txnID
+		} 
+		
+	 }
+	 else if ((userTypeValue=='Operator' || userTypeValue=='Operation') && (sourceType=='4')){
+		 var filterRequest={
+				 "columns": [
+					    "created_on","modified_on","txn_id","role_type","operator_type_id","request_type","source_type","file_status",
+					    "block_category","blocking_type","blocking_time_period","quantity","device_quantity","remark","rejected_remark",
+					     "user_id"
+					    ],
+				"tableName": "stolenand_recovery_mgmt_aud",
+				"dbName" : "ceirconfig",
+				"txnId":txnID
+		}
+		 
+	 }else{
+		 var filterRequest={
 				 
 				 "columns": [
 					    "created_on","modified_on","txn_id","role_type","operator_type_id","request_type","source_type","file_status","file_name",
@@ -1310,7 +1334,8 @@ function historyRecord(txnID){
 				"tableName": "stolenand_recovery_mgmt_aud",
 				"dbName" : "ceirconfig",
 				"txnId":txnID
-		} 
+		}
+		 
 	 }
 	
 	formData.append("filter",JSON.stringify(filterRequest));	
