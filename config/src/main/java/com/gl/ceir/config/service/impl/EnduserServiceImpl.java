@@ -599,6 +599,9 @@ public class EnduserServiceImpl {
 
 	public GenricResponse acceptReject(ConsignmentUpdateRequest updateRequest) {
 		try {
+			if( !("End User".equalsIgnoreCase(updateRequest.getUserType())) && userStaticServiceImpl.checkIfUserIsDisabled( updateRequest.getUserId() ))
+				return new GenricResponse(5, "USER_IS_DISABLED","This account is disabled. Please enable the account to perform the operation.",
+						null);
 			UserProfile userProfile = null;
 			String nid = updateRequest.getNid();
 			Map<String, String> placeholderMap = new HashMap<String, String>();
@@ -703,6 +706,10 @@ public class EnduserServiceImpl {
 	@Transactional
 	public GenricResponse acceptReject(CeirActionRequest ceirActionRequest) {
 		try {
+			if( !("End User".equalsIgnoreCase(ceirActionRequest.getUserType()) || "CEIRSYSTEM".equalsIgnoreCase(ceirActionRequest.getUserType())) 
+					&& userStaticServiceImpl.checkIfUserIsDisabled( ceirActionRequest.getUserId() ))
+				return new GenricResponse(5, "USER_IS_DISABLED","This account is disabled. Please enable the account to perform the operation.",
+						ceirActionRequest.getId());
 			String tag = null;
 			String receiverUserType = null;
 			String txnId = null;

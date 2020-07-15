@@ -345,6 +345,8 @@ public class RegularizedDeviceServiceImpl {
 				}
 
 				csvWriter.write(fileRecords);
+			}else {
+				csvWriter.write( new RegularizeDeviceFileModel());
 			}
 
 			// Save in audit.
@@ -559,6 +561,9 @@ public class RegularizedDeviceServiceImpl {
 
 	public GenricResponse updateTaxStatus( RegularizeDeviceDb regularizeDeviceDb) {
 		try {
+			if( userStaticServiceImpl.checkIfUserIsDisabled( regularizeDeviceDb.getCreatorUserId() ))
+				return new GenricResponse(5, "USER_IS_DISABLED","This account is disabled. Please enable the account to perform the operation.",
+						null);
 			String tag = null;
 			String receiverUserType = null;
 			String mailSubject = null;
@@ -696,6 +701,9 @@ public class RegularizedDeviceServiceImpl {
 			String username="";
 			long userId=0;
 			if(data.getUserTypeId()!=17) {
+				if( userStaticServiceImpl.checkIfUserIsDisabled( data.getUserId() ))
+					return new GenricResponse(5, "USER_IS_DISABLED","This account is disabled. Please enable the account to perform the operation.",
+							null);
 				username=data.getUsername();
 				userId=data.getUserId();
 			}
@@ -732,7 +740,9 @@ public class RegularizedDeviceServiceImpl {
 			String subFeature="";
 			String username="";
 			RegularizeDeviceDb regularizeDeviceDb = null;
-
+			if( !"CEIRSYSTEM".equalsIgnoreCase(ceirActionRequest.getUserType()) && userStaticServiceImpl.checkIfUserIsDisabled( ceirActionRequest.getUserId() ))
+				return new GenricResponse(5, "USER_IS_DISABLED","This account is disabled. Please enable the account to perform the operation.",
+						null);
 			lock.lock();
 			logger.info("lock taken by thread : " + Thread.currentThread().getName());
 

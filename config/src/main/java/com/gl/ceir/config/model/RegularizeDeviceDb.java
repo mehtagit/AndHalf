@@ -19,6 +19,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.envers.Audited;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -98,6 +99,7 @@ public class RegularizeDeviceDb implements Serializable {
 	
 	@ManyToOne
 	//@JsonManagedReference
+	@JsonBackReference
 	@JoinColumn(name = "userId") 
 	private EndUserDB endUserDB;
 	
