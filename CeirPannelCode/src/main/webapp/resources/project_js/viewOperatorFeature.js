@@ -66,7 +66,7 @@ function operatorDatatable(lang){
 		type: 'POST',
 		dataType: "json",
 		success: function(result){
-			/*//console.log("Url-------" +url+"--------"+ "dataUrl-------" +dataUrl);*/
+			/*////console.log("Url-------" +url+"--------"+ "dataUrl-------" +dataUrl);*/
 			var table=	$("#operatorLibraryTable").DataTable({
 				destroy:true,
 				"serverSide": true,
@@ -85,7 +85,7 @@ function operatorDatatable(lang){
 					dataType: "json",
 					data : function(d) {
 						d.filter = JSON.stringify(filterRequest); 
-						////console.log(JSON.stringify(filterRequest));
+						//////console.log(JSON.stringify(filterRequest));
 					}
 
 				},
@@ -101,7 +101,7 @@ function operatorDatatable(lang){
 		    });
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			////console.log("error in ajax");
+			//////console.log("error in ajax");
 		}
 	});
 }
@@ -224,9 +224,9 @@ function dispatchDateValidation(){
 	}
 	var today = now.getFullYear()+ '-' + (now.getMonth()+1)+ '-' +currentDate ;
 	//alert("today"+today);
-	////console.log("dispatche="+dispatcDate);
-	////console.log("todays parse date"+Date.parse(today));
-	////console.log("dispatche parse date"+Date.parse(dispatcDate));
+	//////console.log("dispatche="+dispatcDate);
+	//////console.log("todays parse date"+Date.parse(today));
+	//////console.log("dispatche parse date"+Date.parse(dispatcDate));
 
 
 	if(Date.parse(today)>Date.parse(dispatcDate))
@@ -252,9 +252,9 @@ function arrivalDateValidation(){
 	}
 	var today = now.getFullYear()+ '-' + (now.getMonth()+1)+ '-' +currentDate ;
 	//alert("today"+today);
-	//console.log("dispatche="+dispatcDate);
-	////console.log("todays parse date"+Date.parse(today));
-	////console.log("dispatche parse date"+Date.parse(dispatcDate));
+	////console.log("dispatche="+dispatcDate);
+	//////console.log("todays parse date"+Date.parse(today));
+	//////console.log("dispatche parse date"+Date.parse(dispatcDate));
 
 
 	if(Date.parse(today)>Date.parse(dispatcDate))
@@ -286,8 +286,8 @@ function exportButton(){
 	var info = table.page.info(); 
     var pageNo=info.page;
     var pageSize =info.length;
-	////console.log("--------"+pageSize+"---------"+pageNo);
-	////console.log("startdate ="+startDate+"  endDate=="+endDate+"userTypeId ="+userTypeId+"userType ="+userType+"serviceDump ="+serviceDump+"fileType ="+fileType+"status  "+status)
+	//////console.log("--------"+pageSize+"---------"+pageNo);
+	//////console.log("startdate ="+startDate+"  endDate=="+endDate+"userTypeId ="+userTypeId+"userType ="+userType+"serviceDump ="+serviceDump+"fileType ="+fileType+"status  "+status)
 	window.location.href="./exportOperatorDetails?startDate="+startDate+"&endDate="+endDate+"&userTypeId="+userTypeId+"&userType="+userType+"&serviceDump="+serviceDump+"&fileType="+fileType+"&pageSize="+pageSize+"&pageNo="+pageNo;
 }
 

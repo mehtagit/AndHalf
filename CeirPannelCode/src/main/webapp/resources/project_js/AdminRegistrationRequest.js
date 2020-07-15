@@ -70,13 +70,13 @@
 			{ 'X-CSRF-TOKEN': token }
 		});
 		
-		//console.log("source__val in filter request------>" +source__val);
+		////console.log("source__val in filter request------>" +source__val);
 		$.ajax({
 			url: 'headers?type=adminRegistration&lang='+lang,
 			type: 'POST',
 			dataType: "json",
 			success: function(result){
-				/*//console.log("Url-------" +url+"--------"+ "dataUrl-------" +dataUrl);*/
+				/*////console.log("Url-------" +url+"--------"+ "dataUrl-------" +dataUrl);*/
 				var table=	$("#registrationLibraryTable").DataTable({
 					destroy:true,
 					"serverSide": true,
@@ -95,7 +95,7 @@
 						dataType: "json",
 						data : function(d) {
 							d.filter = JSON.stringify(filterRequest); 
-							////console.log(JSON.stringify(filterRequest));
+							//////console.log(JSON.stringify(filterRequest));
 						}
 
 					},
@@ -114,7 +114,7 @@
 			       });
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
-				////console.log("error in ajax");
+				//////console.log("error in ajax");
 			}
 		});
 	}
@@ -260,9 +260,9 @@
 		}
 		var today = now.getFullYear()+ '-' + (now.getMonth()+1)+ '-' +currentDate ;
 		//alert("today"+today);
-		////console.log("dispatche="+dispatcDate);
-		////console.log("todays parse date"+Date.parse(today));
-		////console.log("dispatche parse date"+Date.parse(dispatcDate));
+		//////console.log("dispatche="+dispatcDate);
+		//////console.log("todays parse date"+Date.parse(today));
+		//////console.log("dispatche parse date"+Date.parse(dispatcDate));
 
 
 		if(Date.parse(today)>Date.parse(dispatcDate))
@@ -288,9 +288,9 @@
 		}
 		var today = now.getFullYear()+ '-' + (now.getMonth()+1)+ '-' +currentDate ;
 		//alert("today"+today);
-		////console.log("dispatche="+dispatcDate);
-		////console.log("todays parse date"+Date.parse(today));
-		////console.log("dispatche parse date"+Date.parse(dispatcDate));
+		//////console.log("dispatche="+dispatcDate);
+		//////console.log("todays parse date"+Date.parse(today));
+		//////console.log("dispatche parse date"+Date.parse(dispatcDate));
 
 
 		if(Date.parse(today)>Date.parse(dispatcDate))
@@ -347,7 +347,7 @@
 			contentType : 'application/json; charset=utf-8',
 			type : 'POST',
 			success : function(data) {
-				////console.log("approveRequest----->"+JSON.stringify(approveRequest));
+				//////console.log("approveRequest----->"+JSON.stringify(approveRequest));
 				confirmApproveInformation(window.ID,window.date);
 			},
 			error : function() {
@@ -369,7 +369,7 @@
 		$('#rejectInformation').openModal({
 		 	   dismissible:false
 	    });
-		////console.log("Reject userId is---->"+Id);
+		//////console.log("Reject userId is---->"+Id);
 		$("#userId").text(Id)
 		$("#rejectUserName").val(sessionUserName);
 		
@@ -402,7 +402,7 @@
 			contentType : 'application/json; charset=utf-8',
 			type : 'POST',
 			success : function(data) {
-			   ////console.log("rejectRequest----->"+JSON.stringify(rejectRequest));
+			   //////console.log("rejectRequest----->"+JSON.stringify(rejectRequest));
 				confirmRejectInformation();
 			},
 			error : function() {
@@ -447,7 +447,7 @@
 			source = source__val= $("body").attr("data-session-source");
 		}
 		
-		//console.log ("source--->" +source);
+		////console.log ("source--->" +source);
 		
 		window.location.href="./exportAdminRegistration?RegistrationStartDate="+startdate+"&RegistrationEndDate="+endDate+"&email="+emailId+"&phoneNo="+phone+"&username="+username+"&asType="+asType+"&userRoleTypeId="+userRoleTypeId+"&featureId="+featureId+"&status="+status+"&source="+source+"&pageSize="+pageSize+"&pageNo="+pageNo+"&userTypeId="+usertypeId+"";
 	}
@@ -461,7 +461,7 @@
 		window.FinalLink = filePath.concat(fileName);
 
 		if(filePath == null || filePath == "" || filePath == undefined && fileName == null || fileName == "" || fileName == undefined ){
-			////console.log("File is not Avialable")
+			//////console.log("File is not Avialable")
 		}else if(fileExtension=="jpg" || fileExtension=="jpeg" || fileExtension=="png" || fileExtension=="gif" ){
 			$("#fileSource").attr("src",FinalLink);
 			$("#viewuplodedModel").openModal();
@@ -525,7 +525,7 @@ function userChangeStatus(entity){
 							"userTypeId" : parseInt($("body").attr("data-userTypeID")),
 							"username" : $("body").attr("data-selected-username")
 						}
-			 		////console.log(JSON.stringify(request));	
+			 		//////console.log(JSON.stringify(request));	
 			 	var token = $("meta[name='_csrf']").attr("content");
 				var header = $("meta[name='_csrf_header']").attr("content");
 				$.ajaxSetup({
@@ -546,7 +546,7 @@ function userChangeStatus(entity){
 									'km': './resources/i18n/km.json'
 								}).done( function() {
 									var result = data.data;
-									//console.log("result---> " + JSON.stringify(result));
+									////console.log("result---> " + JSON.stringify(result));
 									$("#usertypes").empty();
 									for (i = 0; i < result.length; i++) {
 										$('<option>').val(result[i].id).text(
@@ -564,7 +564,7 @@ function userChangeStatus(entity){
 
 							},
 							error : function(jqXHR, textStatus, errorThrown) {
-								////console.log("error in ajax")
+								//////console.log("error in ajax")
 							}
 						});
 		});
@@ -599,7 +599,7 @@ function userChangeStatus(entity){
 	 		}
 				
 		
-		////console.log("Request-->"+JSON.stringify(Request));
+		//////console.log("Request-->"+JSON.stringify(Request));
 	 	var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
 		$.ajaxSetup({

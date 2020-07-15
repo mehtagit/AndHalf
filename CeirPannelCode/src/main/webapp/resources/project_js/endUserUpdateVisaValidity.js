@@ -48,7 +48,7 @@ function hide() {
 			contentType: false,
 			success: function (data, textStatus, jqXHR) {
 
-				////console.log(JSON.stringify(data));
+				//////console.log(JSON.stringify(data));
 				$('#passPortBtnId').prop('disabled', true);
 				if(data.errorCode==1)
 					{
@@ -94,7 +94,7 @@ function hide() {
 		                             $('#endUserdatepicker1').val(data.data.entryDateInCountry).prop('readonly', true); 
 		                             $('#endUservisaType').val(data.data.visaDb[0].visaType).attr("disabled", true);
 		                             // $('#endUserdatepickerDiv').attr("disabled", true);
-		                             ////console.log(data.data.visaDb[0].visaType);
+		                             //////console.log(data.data.visaDb[0].visaType);
 		                             $("#endUserdatepickerDiv").css("pointer-events","none");
 		                               
 		                                 $('#endUserdatepicker1').prop('readonly', true);
@@ -121,7 +121,7 @@ function hide() {
 		      }
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
-				////console.log("error in ajax")
+				//////console.log("error in ajax")
 			}
 		});
 		return false;
@@ -168,10 +168,10 @@ function hide() {
 			contentType: false,
 			success: function (data, textStatus, jqXHR) {
 
-				////console.log(JSON.stringify(data));
+				//////console.log(JSON.stringify(data));
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
-				////console.log("error in ajax")
+				//////console.log("error in ajax")
 			}
 		});
 		return false;
@@ -318,7 +318,7 @@ function hide() {
 			data: formData,
 			success: function (data, textStatus, jqXHR) {
 				
-				////console.log(JSON.stringify(data));
+				//////console.log(JSON.stringify(data));
 				if(data.errorCode==5){
 					$('#successMsg').openModal();
 					$('#messageResponse').text($.i18n('VISA_UPDATE_SUCCESS'));
@@ -346,7 +346,7 @@ function hide() {
 				}
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
-				////console.log("error in ajax")
+				//////console.log("error in ajax")
 			}
 		});
 		return false;
@@ -367,10 +367,10 @@ function hide() {
     	//$('#FilefieldId').val(id);
     	//alert(uploadedFileName+"----------"+ext+"----"+fileSize)
     	var fileExtension =ext.toLowerCase();
-    	//console.log("file type: "+fileExtension);
+    	////console.log("file type: "+fileExtension);
     	var extArray = ["png", "jpg","jpeg","gif","bmp","gif"];
     	var isInArray =extArray.includes(fileExtension);
-    	//console.log("isInArray: "+isInArray)
+    	////console.log("isInArray: "+isInArray)
     	if (uploadedFileName.length > 30) {
     		$('#fileFormateModal').openModal();
     		$('#fileErrormessage').text('');

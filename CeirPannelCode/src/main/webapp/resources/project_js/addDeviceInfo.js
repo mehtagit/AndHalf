@@ -112,8 +112,8 @@ var lang_param =window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 				processData: false,
 				contentType: false,
 				success: function (data, textStatus, jqXHR) {
-					//console.log("in suucess method");
-					//console.log(data);
+					////console.log("in suucess method");
+					////console.log(data);
 				   
 					// $('#updateConsignment').modal();
 					if(data.errorCode==0){
@@ -128,14 +128,15 @@ var lang_param =window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 						$('#dynamicTxnId').text('');
 						$('#sucessMessage').text('');
 						$('#sucessMessage').text(data.message);*/
-						$('#AddDeviceDuplicateImei').openModal({dismissible:false});;
-						$('#dupliCateImeiMsg').text($.i18n(data.tag));
-						
+						$('#AddDeviceDuplicateImei').openModal({dismissible:false});
+						$('#deviceDupliCateImeiMsg').text('');
+						$('#deviceDupliCateImeiMsg').text($.i18n(data.tag));
+					
 					}
 					//sessionStorage.removeItem("nationalId");
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
-					//console.log("error in ajax")
+					////console.log("error in ajax")
 				
 				}
 			});
@@ -152,7 +153,7 @@ var lang_param =window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 function defaultDeviceForm(){
 		var allowed =parseInt(localStorage.getItem("allowed"));
 		var current =parseInt(localStorage.getItem("current"));
-		//console.log("allowed="+allowed+"& current="+current)
+		////console.log("allowed="+allowed+"& current="+current)
 	
 		var incrementedCurrent='';
 		var token = $("meta[name='_csrf']").attr("content");
@@ -165,24 +166,24 @@ function defaultDeviceForm(){
 			/* for (i = 0; i < data.length; i++) {
 				$('<option>').val(data[i].value).text(data[i].interp)
 				.appendTo('#taxStatus1');
-				//console.log("...........");} */
+				////console.log("...........");} */
 							if(allowed>current)
 					{
-					////console.log("-------------------");
+					//////console.log("-------------------");
 		                $('#taxStatus1').prop('disabled', 'disabled');
 		                $('<option  selected>').val("2").text("Regularized").appendTo('#taxStatus1');
 					}
 				else{
-					////console.log("++++++++++++=");
+					//////console.log("++++++++++++=");
 					 for (i = 0; i < data.length; i++) {
 					$('<option>').val(data[i].value).text(data[i].interp)
 					.appendTo('#taxStatus1');
-					////console.log("...........");} 
+					//////console.log("...........");} 
 				    }
 				
 			}
 				 incrementedCurrent=current+1;
-					//console.log("set increment cuurent value="+incrementedCurrent);
+					////console.log("set increment cuurent value="+incrementedCurrent);
 					localStorage.removeItem('incrementedCurrent');
 					localStorage.setItem("incrementedCurrent", incrementedCurrent);
 				var www =parseInt(localStorage.getItem("incrementedCurrent"));
@@ -194,7 +195,7 @@ function defaultDeviceForm(){
 			for (i = 0; i < data.length; i++) {
 				$('<option>').val(data[i].value).text(data[i].interp)
 				.appendTo('#deviceType1');
-				////console.log("...........");
+				//////console.log("...........");
 			}
 		});
 
@@ -204,7 +205,7 @@ function defaultDeviceForm(){
 			for (i = 0; i < data.length; i++) {
 				$('<option>').val(data[i].value).text(data[i].interp)
 				.appendTo('#deviceIdType1');
-				////console.log("...........");
+				//////console.log("...........");
 			}
 		});
 		
@@ -212,7 +213,7 @@ function defaultDeviceForm(){
 			for (i = 0; i < data.length; i++) {
 				$('<option>').val(data[i].value).text(data[i].interp)
 				.appendTo('#Currency1');
-				////console.log("...........");
+				//////console.log("...........");
 			}
 		});
 		
@@ -220,7 +221,7 @@ function defaultDeviceForm(){
 			for (i = 0; i < data.length; i++) {
 				$('<option>').val(data[i].value).text(data[i].interp)
 				.appendTo('#multipleSimStatus1');
-				////console.log("...........");
+				//////console.log("...........");
 			}
 		});
 		
@@ -228,7 +229,7 @@ function defaultDeviceForm(){
 			for (i = 0; i < data.length; i++) {
 				$('<option>').val(data[i].value).text(data[i].interp)
 				.appendTo('#deviceStatus1');
-				////console.log("...........");
+				//////console.log("...........");
 			}
 		});
 		
@@ -242,7 +243,7 @@ function defaultDeviceForm(){
            var id=2;
 	 	  function RegularisedDeviceForm(){
 	 		 $.getJSON('./addMoreFile/add_more_device_count', function(data) {
-	 			//console.log(data);
+	 			////console.log(data);
 	 			
 	 			localStorage.setItem("maxCount", data.value);
 	 			
@@ -251,10 +252,10 @@ function defaultDeviceForm(){
 	 			//var max_fields = 2; //maximum input boxes allowed
 	 			var max_fields =localStorage.getItem("maxCount");
 	 			if (max_fields==0){
-	 				 //console.log("1111");
+	 				 ////console.log("1111");
 	 				 $(".add_field_button").prop('disabled', true);
 	 			 }
-	 			//console.log("max_fields from api="+max_fields);
+	 			////console.log("max_fields from api="+max_fields);
 	 		  
        // var max_fields = 15; //maximum input boxes allowed
         var wrapper = $(".mainDeviceInformation"); //Fields wrapper
@@ -269,12 +270,12 @@ function defaultDeviceForm(){
             e.preventDefault();
             var incrementedCurrent =parseInt(localStorage.getItem("incrementedCurrent"));
             
-            //console.log("&&&&&&&&&&&"+incrementedCurrent);
+            ////console.log("&&&&&&&&&&&"+incrementedCurrent);
            
             if (x < max_fields) { //max input box allowed
                 x++; //text box increment
                
-                //console.log("incremented value="+id)
+                ////console.log("incremented value="+id)
                 if(roleType=="Immigration")
 		 {
                 	 $(wrapper).append(
@@ -299,15 +300,15 @@ function defaultDeviceForm(){
                 var regularised=incrementedCurrent+1;
                 incrementedCurrent=regularised;
                
-                //console.log("regularised"+regularised);
-                //console.log("allowed current value=="+incrementedCurrent)
+                ////console.log("regularised"+regularised);
+                ////console.log("allowed current value=="+incrementedCurrent)
                 $.getJSON('./getDropdownList/CUSTOMS_TAX_STATUS', function(data) {
                 	var dropdownid=id-1;
                 	if(regularised <= allowed){
                 		
                	$('#taxStatus'+dropdownid).prop('disabled', 'disabled');
            		$('<option  selected>').val("2").text("Regularized").appendTo('#taxStatus'+dropdownid);
-           			////console.log("+++++taxStatus"+dropdownid);
+           			//////console.log("+++++taxStatus"+dropdownid);
            		//alert("Regularised");
            		}
                	else{
@@ -316,7 +317,7 @@ function defaultDeviceForm(){
                			.appendTo('#taxStatus'+dropdownid);
                			//alert("NonRegularised");
                			// $('#taxStatus'+dropdownid).prop('disabled', 'false');
-               			//console.log("+++++taxStatus"+dropdownid);
+               			////console.log("+++++taxStatus"+dropdownid);
                		}
                	}
             	});
@@ -336,7 +337,7 @@ function defaultDeviceForm(){
             		for (i = 0; i < data.length; i++) {
             			$('<option>').val(data[i].value).text(data[i].interp)
             			.appendTo('#deviceType'+dropdownid);
-            			//console.log('#deviceType'+dropdownid)
+            			////console.log('#deviceType'+dropdownid)
             		}
             	});
 
@@ -347,7 +348,7 @@ function defaultDeviceForm(){
             		for (i = 0; i < data.length; i++) {
             			$('<option>').val(data[i].value).text(data[i].interp)
             			.appendTo('#deviceIdType'+dropdownid);
-            			//console.log('#deviceIdType'+dropdownid);
+            			////console.log('#deviceIdType'+dropdownid);
             		}
             	});
             	
@@ -356,7 +357,7 @@ function defaultDeviceForm(){
             		for (i = 0; i < data.length; i++) {
             			$('<option>').val(data[i].value).text(data[i].interp)
             			.appendTo('#Currency'+dropdownid);
-            			//console.log('#Currency'+dropdownid);
+            			////console.log('#Currency'+dropdownid);
             		}
             	});
             	
@@ -365,7 +366,7 @@ function defaultDeviceForm(){
             		for (i = 0; i < data.length; i++) {
             			$('<option>').val(data[i].value).text(data[i].interp)
             			.appendTo('#multipleSimStatus'+dropdownid);
-            			//console.log('#multipleSimStatus'+dropdownid);
+            			////console.log('#multipleSimStatus'+dropdownid);
             		}
             	});
             	
@@ -374,13 +375,13 @@ function defaultDeviceForm(){
             		for (i = 0; i < data.length; i++) {
             			$('<option>').val(data[i].value).text(data[i].interp)
             			.appendTo('#deviceStatus'+dropdownid);
-            			//console.log('#deviceStatus'+dropdownid);
+            			////console.log('#deviceStatus'+dropdownid);
             		}
             	});
                 
             	
             	id++;
-            	 //console.log("regularised before set session=="+regularised);
+            	 ////console.log("regularised before set session=="+regularised);
                  localStorage.removeItem('incrementedCurrent');
              	localStorage.setItem("incrementedCurrent", regularised);
             }

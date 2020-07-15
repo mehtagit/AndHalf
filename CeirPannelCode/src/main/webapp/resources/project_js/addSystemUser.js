@@ -63,7 +63,7 @@ function SaveSystemUser(){
 					$("#successModal").openModal({
 				        dismissible:false
 				    });
-					//////console.log(JSON.stringify(data))
+					////////console.log(JSON.stringify(data))
 					$.i18n().locale = window.parent.$('#langlist').val();
 					$.i18n().load({
 						'en' : './resources/i18n/en.json',
@@ -108,7 +108,7 @@ $.getJSON('./registrationUserType?type=1', function(data) {
 
 if($('#pageTypeValue').val()==0)
 {
-////console.log("if condition ++++++++");
+//////console.log("if condition ++++++++");
 $('#endUserRaiseGrievance').css("display", "block");
 $('#trackGrievanceDiv').css("display", "none");
 $('#trackGrievanceHeader').css("display", "none");
@@ -116,7 +116,7 @@ $('#trackGrievanctableDiv').css("display", "none");
 }
 else
 {
-////console.log("else condition ++++++++");
+//////console.log("else condition ++++++++");
 $('#endUserRaiseGrievance').css("display", "none");
 $('#trackGrievanceDiv').css("display", "block");
 $('#trackGrievanctableDiv').css("display", "none");

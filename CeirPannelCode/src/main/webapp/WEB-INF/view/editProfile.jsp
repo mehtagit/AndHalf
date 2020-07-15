@@ -344,11 +344,11 @@ var contextpath = "${context}";
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input   placeholder="" type="text"  maxlength="20"
+									<input   placeholder="" type="text"  maxlength="15"
 										class="form-control boxBorder boxHeight" id="phoneNo"
-										pattern="[0-9]{8,20}" 
-								oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');" 
-								oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');" required  > <label>
+										pattern="[0-9]{7,15}" 
+								oninput="InvalidMsg(this,'input','<spring:message code="validation.contact" />');" 
+								oninvalid="InvalidMsg(this,'input','<spring:message code="validation.contact" />');" required  > <label>
 										<spring:message code="registration.phonenumber" /> <span class="star">*</span> 
 									</label>
 								</div>
@@ -356,7 +356,7 @@ var contextpath = "${context}";
 															<div class="row">
 							<div class="input-field col s12 m12 l12">
 									<input type="text" maxlength="200"
-										pattern="[A-Za-z0-9._%+-$@,/]+\.{0,200}" placeholder="" name="propertyLocation"
+										pattern="[A-Za-z0-9._%-+$@,/]{0,200}" placeholder="" name="propertyLocation"
 										class="form-control boxBorder boxHeight"
 										
 								oninput="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');" 
@@ -369,7 +369,7 @@ var contextpath = "${context}";
 								<div class="input-field col s12 m6 l6">
 									<input type="text" name="street" maxlength="20"
 										class="form-control boxBorder boxHeight" id="street"
-										pattern="[A-Za-z0-9._%+-$@,/]+\.{1,20}" placeholder="" 
+										pattern="[A-Za-z0-9._%-+$@,/]{1,20}" placeholder="" 
 								oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');" 
 								oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 								required >
