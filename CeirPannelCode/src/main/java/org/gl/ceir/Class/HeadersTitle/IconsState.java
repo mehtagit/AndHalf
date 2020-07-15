@@ -915,9 +915,9 @@ public class IconsState {
 		if(companyName == null) {
 			companyName= " ";
 		}
-		String approveAction = "openApprovePopUp('" + txnId+ "','"+companyName.replaceAll( " ", "+20")+ "')";
+		String approveAction = "openApprovePopUp('" + txnId+ "','"+companyName.trim().replaceAll("\\s{2,}", "+20")+ "')";
 		//String approveAction = "openApprovePopUp('"+txnId+"')";
-		String rejectAction = "openDisapprovePopup('"+txnId+"','"+companyName.replaceAll( " ", "+20")+"')";
+		String rejectAction = "openDisapprovePopup('"+txnId+"','"+companyName.trim().replaceAll("\\s{2,}", "+20")+"')";
 
 		String deleteAction ="DeleteConsignmentRecord('"+txnId+"')";
 		String historyAction ="historyRecord('"+txnId+"')";

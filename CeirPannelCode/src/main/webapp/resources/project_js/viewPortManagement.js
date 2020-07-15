@@ -232,7 +232,7 @@
 
 		}
 		
-		////console.log("request------------->" +JSON.stringify(request))
+		//////console.log("request------------->" +JSON.stringify(request))
 		var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
 		$.ajaxSetup({
@@ -246,13 +246,13 @@
 			contentType : 'application/json; charset=utf-8',
 			type : 'POST',
 			success : function(data, textStatus, jqXHR) {
-					//console.log(JSON.stringify(data));
+					////console.log(JSON.stringify(data));
 					$("#confirmField").openModal({
 				        dismissible:false
 				    });
 			},
 			error : function(jqXHR, textStatus, errorThrown) {
-				//console.log("error in ajax")
+				////console.log("error in ajax")
 			}
 		});
 			
@@ -292,10 +292,10 @@
 					        dismissible:false
 					    });
 						PortEditPopupData(result);
-						////console.log(result)
+						//////console.log(result)
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
-					//console.log("error in ajax")
+					////console.log("error in ajax")
 				}
 			});	
 		}
@@ -326,7 +326,7 @@
 				"username" : $("body").attr("data-selected-username")
 		}
 
-		////console.log("request--->" +JSON.stringify(request))
+		//////console.log("request--->" +JSON.stringify(request))
 		var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
 		$.ajaxSetup({
@@ -341,7 +341,7 @@
 			contentType : 'application/json; charset=utf-8',
 			success: function (data, textStatus, jqXHR) {
 
-				//console.log("Updated data---->" +data)
+				////console.log("Updated data---->" +data)
 				$("#editPortAddressModal").closeModal();	
 				$("#updateFieldsSuccess").openModal({
 					dismissible:false
@@ -349,7 +349,7 @@
 
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
-				//console.log("error in ajax")
+				////console.log("error in ajax")
 			}
 		});	
 		
@@ -396,7 +396,7 @@
 			contentType : 'application/json; charset=utf-8',
 			type : 'POST',
 			success : function(data, textStatus, xhr) {
-				//console.log(data);
+				////console.log(data);
 				$("#DeleteFieldModal").closeModal();
 				$("#closeDeleteModal").openModal({
 					dismissible:false
@@ -405,7 +405,7 @@
 				$("#materialize-lean-overlay-3").css("display","none");
 			},
 			error : function() {
-				//console.log("Error");
+				////console.log("Error");
 			}
 		});
 	}

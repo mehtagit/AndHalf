@@ -98,7 +98,7 @@
 							dataType: "json",
 							data : function(d) {
 								d.filter = JSON.stringify(filterRequest); 
-								////console.log(JSON.stringify(filterRequest));
+								//////console.log(JSON.stringify(filterRequest));
 							}
 						},
 						
@@ -120,7 +120,7 @@
 				       });
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
-					////console.log("error in ajax");
+					//////console.log("error in ajax");
 				}
 			});
 		}
@@ -225,7 +225,7 @@
 			}
 			
 			
-			//console.log(JSON.stringify(filterRequest))
+			////console.log(JSON.stringify(filterRequest))
 			var token = $("meta[name='_csrf']").attr("content");
 			var header = $("meta[name='_csrf_header']").attr("content");
 			$.ajaxSetup({

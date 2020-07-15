@@ -211,7 +211,7 @@
 						setData(JSON.parse(result));
 					},
 					error : function() {
-						//console.log("Failed");
+						////console.log("Failed");
 					}
 				});	
 			}

@@ -561,7 +561,7 @@ var contextpath = "${context}";
 
 								<div class="input-field col s12 m6 l6">
 									<input placeholder="" type="tel" name="phoneNo" maxlength="15" id="phoneNo" pattern="[0-9]{7,15}"
-									oninput="InvalidMsg(this,'input','<spring:message code="validation.requiredMsg" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.requiredMsg" />');"
+									oninput="InvalidMsg(this,'input','<spring:message code="validation.contact" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.contact" />');"
 									
 										title="<spring:message code="validation.contact" />" required /> 
 										<label for="phoneNo"><spring:message code="input.contactNum" /> <span class="star">*</span>

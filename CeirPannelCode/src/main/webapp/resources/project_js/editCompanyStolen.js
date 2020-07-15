@@ -25,7 +25,7 @@ headers:
 		processData: false,
 		contentType: false,
 		success: function (response, textStatus, jqXHR) {
-		////console.log(response)
+		//////console.log(response)
 		
 		$('#bulkStolencompanyName').val(response.stolenOrganizationUserDB.companyName);
 		$('#bulkStolenaddress').val(response.stolenOrganizationUserDB.propertyLocation);
@@ -83,7 +83,7 @@ headers:
 		//$('#deviceListlink').attr("onclick",'previewFile("'+response.fileLink+'","'+response.fileName+'","'+response.txnId+'")');
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			//console.log("error in ajax")
+			////console.log("error in ajax")
 
 		}
 	});
@@ -195,7 +195,7 @@ function updateCompanyStolenDetails(){
 		processData: false,
 		contentType: false,
 		success: function (response, textStatus, jqXHR) {
-		////console.log(response)
+		//////console.log(response)
 		
 		if(response.errorCode==0){
 			$("#companyStolenButton").prop('disabled', true);
@@ -218,7 +218,7 @@ function updateCompanyStolenDetails(){
 			}*/
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			//console.log("error in ajax");
+			////console.log("error in ajax");
 
 		}
 	});

@@ -549,7 +549,7 @@ width: inherit;
 
 
 
-	<div id="ApproveConsignment" class="modal">
+	<%-- <div id="ApproveConsignment" class="modal">
 		<h6 class="modal-header">
 			<spring:message code="modal.message.approveConsignment" />
 		</h6>
@@ -584,7 +584,7 @@ width: inherit;
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> --%>
 
 	<div id="confirmApproveConsignment" class="modal">
 		<h6 class="modal-header">
@@ -610,7 +610,7 @@ width: inherit;
 	</div>
 
 
-	<div id="RejectConsignment" class="modal">
+	<%-- <div id="RejectConsignment" class="modal">
 		<h6 class="modal-header">
 			<spring:message code="modal.header.rejectConsignment" />
 		</h6>
@@ -653,7 +653,7 @@ width: inherit;
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> --%>
 
 
 	<div id="confirmRejectConsignment" class="modal">

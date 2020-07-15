@@ -34,7 +34,7 @@ var userId = parseInt($("body").attr("data-userID"))
 				"status" : parseInt($('#Status').val()),
 				"nid": window.passportNo 
 				}
-	//console.log("filterRequest" +filterRequest)
+	////console.log("filterRequest" +filterRequest)
 	
 	$.ajax({
 		url: './headers?type=deviceActivation',
@@ -56,7 +56,7 @@ var userId = parseInt($("body").attr("data-userID"))
 					dataType: "json",
 					data : function(d) {
 						d.filter = JSON.stringify(filterRequest); 
-						//console.log(JSON.stringify(filterRequest));
+						////console.log(JSON.stringify(filterRequest));
 					}
 
 				},
@@ -77,7 +77,7 @@ var userId = parseInt($("body").attr("data-userID"))
 		    $('div#initialloader').delay(300).fadeOut('slow');
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			//console.log("error in ajax");
+			////console.log("error in ajax");
 		}
 	});
 }

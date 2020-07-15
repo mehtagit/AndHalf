@@ -104,7 +104,7 @@ $("#singleDeviceRecovery").prop('disabled', true);
 			}
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			//console.log("error in ajax")
+			////console.log("error in ajax")
 
 		}
 	});
@@ -179,10 +179,10 @@ function saveCompanyRecoveryRequest(){
 		success: function (response, textStatus, jqXHR) {
 			
 			$('div#initialloader').delay(300).fadeOut('slow');
-		//console.log(JSON.stringify(response));
+		////console.log(JSON.stringify(response));
 		var resp= JSON.stringify(response);
-		//console.log(resp.errorCode);
-		//console.log(response.errorCode);
+		////console.log(resp.errorCode);
+		////console.log(response.errorCode);
 		if(response.errorCode=='0'){
 				$("#indivisualStolenButton").prop('disabled', true);
 				$('#IndivisualStolenSucessPopup').openModal({
@@ -200,7 +200,7 @@ function saveCompanyRecoveryRequest(){
 			}
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			//console.log("error in ajax")
+			////console.log("error in ajax")
 			$('div#initialloader').delay(300).fadeOut('slow');
 
 		}

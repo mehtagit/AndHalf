@@ -44,7 +44,7 @@ function configManagementDatatable(){
 		type: 'POST',
 		dataType: "json",
 		success: function(result){
-			/*//console.log("Url-------" +url+"--------"+ "dataUrl-------" +dataUrl);*/
+			/*////console.log("Url-------" +url+"--------"+ "dataUrl-------" +dataUrl);*/
 			var table=	$("#configLibraryTable").removeAttr('width').DataTable({
 				destroy:true,
 				"serverSide": true,
@@ -60,7 +60,7 @@ function configManagementDatatable(){
 					dataType: "json",
 					data : function(d) {
 						d.filter = JSON.stringify(filterRequest); 
-						////console.log(JSON.stringify(filterRequest));
+						//////console.log(JSON.stringify(filterRequest));
 					}
 
 				},
@@ -85,7 +85,7 @@ function configManagementDatatable(){
 		       });
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			////console.log("error in ajax");
+			//////console.log("error in ajax");
 		}
 	});
 	
@@ -209,7 +209,7 @@ function viewDetails(tag){
 		contentType : 'application/json; charset=utf-8',
 		type : 'POST',
 		success : function(data) {
-			////console.log(data);
+			//////console.log(data);
 			setViewPopupData(data);
 		},
 		error : function() {
@@ -254,7 +254,7 @@ function updateDetails(tag){
 		contentType : 'application/json; charset=utf-8',
 		type : 'POST',
 		success : function(data) {
-			////console.log(data);
+			//////console.log(data);
 			setEditPopupData(data);
 		},
 		error : function() {
@@ -303,7 +303,7 @@ $.ajax({
 	contentType : 'application/json; charset=utf-8',
 	type : 'PUT',
 	success : function(data) {
-		////console.log("updateRequest---------->" +JSON.stringify(updateRequest));
+		//////console.log("updateRequest---------->" +JSON.stringify(updateRequest));
 		confirmModel()
 	},
 	error : function() {
@@ -347,7 +347,7 @@ function exportData(){
 			"roleType":$("body").attr("data-roleType")
 			
 	}
-	////console.log(JSON.stringify(filterRequest))
+	//////console.log(JSON.stringify(filterRequest))
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
 	$.ajaxSetup({

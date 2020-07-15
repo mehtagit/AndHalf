@@ -212,9 +212,9 @@ button.modal-action.modal-close.waves-effect.waves-green.btn-flat.right {
 							placeholder="" pattern="[A-Za-z ]{0,50}" maxlength="50"
 							oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
 							oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
-							required> <label for="editSupplierName"
+							> <label for="editSupplierName"
 							id="editSupplierNameLabel" class="center-align"><spring:message
-								code="input.supllierName" /> <span class="star">*</span></label></label>
+								code="input.supllierName" /></label>
 					</div>
 
 					<div class="input-field col s12 m6">

@@ -35,7 +35,7 @@ function aprroveDevice(){
 
 		},
 		error : function() {
-			//console.log("Failed");
+			////console.log("Failed");
 
 		}
 	});
@@ -84,7 +84,7 @@ function rejectUser(){
 
 		},
 		error : function() {
-			//console.log("Failed");
+			////console.log("Failed");
 		}
 	});
 	return false;
