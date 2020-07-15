@@ -69,7 +69,7 @@ if(lang=='km'){
 					dataType: "json",
 					data : function(d) {
 						d.filter = JSON.stringify(filterRequest); 
-						//console.log(JSON.stringify(filterRequest));
+						////console.log(JSON.stringify(filterRequest));
 					}
 
 				},
@@ -90,7 +90,7 @@ if(lang=='km'){
 		    $('div#initialloader').delay(300).fadeOut('slow');
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			//console.log("error in ajax");
+			////console.log("error in ajax");
 		}
 	});
 }

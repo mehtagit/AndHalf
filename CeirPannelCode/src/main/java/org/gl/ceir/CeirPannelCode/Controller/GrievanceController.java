@@ -24,6 +24,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -378,47 +380,7 @@ public class GrievanceController {
 						response.setTxnId(grievanceRequest.getGrievanceId());
 						return response;
 					}
-				//***************************************** Export Grievance controller *********************************
-						@RequestMapping(value="/exportGrievance",method ={org.springframework.web.bind.annotation.RequestMethod.GET})
-						public String exportToExcel(@RequestParam(name="grievanceStartDate",required = false) String grievanceStartDate,@RequestParam(name="grievanceEndDate",required = false) String grievanceEndDate,
-								@RequestParam(name="grievancetxnId",required = false) String grievancetxnId,@RequestParam(name="grievanceId") String grievanceId,HttpServletRequest request,
-								HttpSession session,@RequestParam(name="pageSize") Integer pageSize,@RequestParam(name="pageNo") Integer pageNo,@RequestParam(name="grievanceStatus") Integer grievanceStatus,
-								@RequestParam(name="source",defaultValue = "menu",required = false) String source,
-								@RequestParam(name="userId",required = false) Integer userId,
-								@RequestParam(name="filterUserName",required = false) String filterUserName,
-								@RequestParam(name="FilterUserType",required = false) String FilterUserType)
-						{
-							log.info("grievanceStartDate=="+grievanceStartDate+ " grievanceEndDate ="+grievanceEndDate+" grievancetxnId="+grievancetxnId+"grievanceId="+grievanceId);
-							log.info("source--->" +source+" filterUserName--->"+filterUserName+"  FilterUserType--->" +FilterUserType);
-							//int userId= (int) session.getAttribute("userid"); 
-							int file=1;
-							String userType=(String) session.getAttribute("usertype");
-						    Integer usertypeId=(int) session.getAttribute("usertypeId");
-							FileExportResponse fileExportResponse;
-							FilterRequest filterRequest= new FilterRequest();
-							filterRequest.setStartDate(grievanceStartDate);
-							filterRequest.setEndDate(grievanceEndDate);
-							filterRequest.setTxnId(grievancetxnId);
-							filterRequest.setGrievanceStatus(grievanceStatus);
-							filterRequest.setGrievanceId(grievanceId);
-							filterRequest.setUserId(userId);
-							filterRequest.setUserType(userType);
-							filterRequest.setUserTypeId(usertypeId);
-							filterRequest.setFeatureId(6);
-							filterRequest.setFilterUserName(filterUserName);
-							filterRequest.setFilterUserType(FilterUserType);
-							
-							
-							log.info(" request passed to the exportTo Excel Api =="+filterRequest+" *********** pageSize"+pageSize+"  pageNo  "+pageNo);
-						Object	response= grievanceFeignClient.grievanceFilter(filterRequest,pageNo,pageSize,file,source);
-						
-						Gson gson= new Gson(); 
-						String apiResponse = gson.toJson(response);
-						fileExportResponse = gson.fromJson(apiResponse, FileExportResponse.class);
-							log.info("response  from   export grievance  api="+fileExportResponse);
-							
-							return "redirect:"+fileExportResponse.getUrl();
-					}
+				
 
 						@RequestMapping(value={"/raiseAgrievance"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST})
 					    public  ModelAndView openEndUserGrievancePage(@RequestParam(name="reportType") Integer reportType) 
@@ -539,5 +501,86 @@ public class GrievanceController {
 					log.info(" view CC user Grievance exit point."); 
 					return mv; 
 				}
+					
+	/*
+	 * //***************************************** Export Grievance controller
+	 * *********************************
+	 * 
+	 * @RequestMapping(value="/exportGrievance",method
+	 * ={org.springframework.web.bind.annotation.RequestMethod.GET}) public String
+	 * exportToExcel(@RequestParam(name="grievanceStartDate",required = false)
+	 * String grievanceStartDate,@RequestParam(name="grievanceEndDate",required =
+	 * false) String grievanceEndDate,
+	 * 
+	 * @RequestParam(name="grievancetxnId",required = false) String
+	 * grievancetxnId,@RequestParam(name="grievanceId") String
+	 * grievanceId,HttpServletRequest request, HttpSession
+	 * session,@RequestParam(name="pageSize") Integer
+	 * pageSize,@RequestParam(name="pageNo") Integer
+	 * pageNo,@RequestParam(name="grievanceStatus") Integer grievanceStatus,
+	 * 
+	 * @RequestParam(name="source",defaultValue = "menu",required = false) String
+	 * source,
+	 * 
+	 * @RequestParam(name="userId",required = false) Integer userId,
+	 * 
+	 * @RequestParam(name="filterUserName",required = false) String filterUserName,
+	 * 
+	 * @RequestParam(name="FilterUserType",required = false) String FilterUserType)
+	 * { log.info("grievanceStartDate=="+grievanceStartDate+
+	 * " grievanceEndDate ="+grievanceEndDate+" grievancetxnId="+grievancetxnId+
+	 * "grievanceId="+grievanceId); log.info("source--->"
+	 * +source+" filterUserName--->"+filterUserName+"  FilterUserType--->"
+	 * +FilterUserType); //int userId= (int) session.getAttribute("userid"); int
+	 * file=1; String userType=(String) session.getAttribute("usertype"); Integer
+	 * usertypeId=(int) session.getAttribute("usertypeId"); FileExportResponse
+	 * fileExportResponse; FilterRequest filterRequest= new FilterRequest();
+	 * filterRequest.setStartDate(grievanceStartDate);
+	 * filterRequest.setEndDate(grievanceEndDate);
+	 * filterRequest.setTxnId(grievancetxnId);
+	 * filterRequest.setGrievanceStatus(grievanceStatus);
+	 * filterRequest.setGrievanceId(grievanceId); filterRequest.setUserId(userId);
+	 * filterRequest.setUserType(userType); filterRequest.setUserTypeId(usertypeId);
+	 * filterRequest.setFeatureId(6);
+	 * filterRequest.setFilterUserName(filterUserName);
+	 * filterRequest.setFilterUserType(FilterUserType);
+	 * 
+	 * 
+	 * log.info(" request passed to the exportTo Excel Api =="
+	 * +filterRequest+" *********** pageSize"+pageSize+"  pageNo  "+pageNo); Object
+	 * response=
+	 * grievanceFeignClient.grievanceFilter(filterRequest,pageNo,pageSize,file,
+	 * source);
+	 * 
+	 * Gson gson= new Gson(); String apiResponse = gson.toJson(response);
+	 * fileExportResponse = gson.fromJson(apiResponse, FileExportResponse.class);
+	 * log.info("response  from   export grievance  api="+fileExportResponse);
+	 * 
+	 * return "redirect:"+fileExportResponse.getUrl(); }
+	 */
+					
+					//***************************************** Export Grievance controller *********************************
+					@PostMapping("exportGrievance")
+					@ResponseBody
+					public FileExportResponse exportToExcel(@RequestBody FilterRequest filterRequest,HttpSession session)
+					{
+						Gson gsonObject=new Gson();
+						Object response;
+						Integer file = 1;	
+						String userType=(String) session.getAttribute("usertype");
+					    Integer usertypeId=(int) session.getAttribute("usertypeId");
+						filterRequest.setUserType(userType);
+						filterRequest.setUserTypeId(usertypeId);
+					log.info("filterRequest:::::::::"+filterRequest);
+					response= grievanceFeignClient.grievanceFilter(filterRequest, filterRequest.getPageNo(), filterRequest.getPageSize(), file,filterRequest.getSource());
+					FileExportResponse fileExportResponse;
+					   Gson gson= new Gson(); 
+					   String apiResponse = gson.toJson(response);
+					   fileExportResponse = gson.fromJson(apiResponse, FileExportResponse.class);
+					   log.info("response  from  Alert Export  api="+fileExportResponse);
+						
+						return fileExportResponse;
+					}		
+					
 }
 

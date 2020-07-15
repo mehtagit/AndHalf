@@ -91,7 +91,7 @@
 								dataType: "json",
 								data : function(d) {
 									d.filter = JSON.stringify(filterRequest); 
-									////console.log(JSON.stringify(filterRequest));
+									//////console.log(JSON.stringify(filterRequest));
 								}
 
 							},
@@ -110,7 +110,7 @@
 					       });
 					},
 					error: function (jqXHR, textStatus, errorThrown) {
-						////console.log("error in ajax");
+						//////console.log("error in ajax");
 					}
 				});
 			}
@@ -241,7 +241,7 @@
 						"remark" : $("#deleteTacRemark").val(),
 						"userId" : parseInt($("body").attr("data-userID"))
 				}
-				////console.log(JSON.stringify(deleteRequest));
+				//////console.log(JSON.stringify(deleteRequest));
 				var token = $("meta[name='_csrf']").attr("content");
 				var header = $("meta[name='_csrf_header']").attr("content");
 				$.ajaxSetup({
@@ -255,7 +255,7 @@
 					contentType : 'application/json; charset=utf-8',
 					type : 'DELETE',
 					success : function(data, textStatus, xhr) {
-						////console.log(data);
+						//////console.log(data);
 						$("#DeleteTacConfirmationModal").closeModal();
 						$("#closeDeleteModal").openModal({
 					        dismissible:false
@@ -264,7 +264,7 @@
 						$("#materialize-lean-overlay-3").css("display","none");
 					},
 					error : function() {
-						////console.log("Error");
+						//////console.log("Error");
 					}
 				});
 				
@@ -294,7 +294,7 @@
 						"pageNo":parseInt(pageNo),
 						"pageSize":parseInt(pageSize)
 				}
-				////console.log(JSON.stringify(filterRequest))
+				//////console.log(JSON.stringify(filterRequest))
 				$.ajax({
 					url: './exportPendingTacData',
 					type: 'POST',

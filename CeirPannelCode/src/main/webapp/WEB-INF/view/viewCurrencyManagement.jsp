@@ -164,7 +164,7 @@
                                 <option value="" selected >Select Month</option>
                           </select>
                         
-                         <input type="text" id="id" hidden>
+                        
                     </div>
 					
 					<div class="col s12 m6">
@@ -173,7 +173,7 @@
                                 <option value="" selected>Select Year</option>
                           </select>
                         
-                         <input type="text" id="id" hidden>
+                        
                     </div>
 					
 					<div class="col s12 m6">
@@ -182,7 +182,7 @@
                                 <option value=""  selected>Select Currency</option>
                           </select>
                         
-                         <input type="text" id="id" hidden>
+                        
                     </div>
 					
 					<div class="input-field col s12 m6" style="margin-top: 22px;">
@@ -233,7 +233,7 @@
                                 <option value=""  selected>Select Currency</option>
                           </select>
                         
-                         <input type="text" id="id" hidden>
+                        
                     </div>
 					
 					<div class="input-field col s12 m6" style="margin-top: 23px;">

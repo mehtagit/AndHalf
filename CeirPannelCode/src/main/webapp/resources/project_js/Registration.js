@@ -18,7 +18,7 @@ function verifyOtp(){
 		dataType : 'html',
 		data : JSON.stringify(obj),
 		success : function(data) {
-		//console.log(data);	
+		////console.log(data);	
          var resp=JSON.parse(data);
          if(resp.statusCode==200){
 //        	window.location.href='#otpMessage';

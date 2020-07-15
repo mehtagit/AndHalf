@@ -111,7 +111,7 @@ function isFileValid(id,hiddenVal,editInputID) {
 		});
 	}
 	else {
-		////console.log("file formate is correct")
+		//////console.log("file formate is correct")
 
 	}
 
@@ -133,10 +133,10 @@ function isImageValid(id) {
 	$('#FilefieldId').val(id);
 	//alert(uploadedFileName+"----------"+ext+"----"+fileSize)
 	var fileExtension =ext.toLowerCase();
-	//console.log("file type: "+fileExtension);
+	////console.log("file type: "+fileExtension);
 	var extArray = ["png", "jpg","jpeg","gif","bmp","gif"];
 	var isInArray =extArray.includes(fileExtension);
-	//console.log("isInArray: "+isInArray)
+	////console.log("isInArray: "+isInArray)
 	if (uploadedFileName.length > 30) {
 		$('#fileFormateModal').openModal();
 		$('#fileErrormessage').text('');
@@ -174,10 +174,10 @@ function isPdfAndImageValid(id) {
 	$('#FilefieldId').val(id);
 	//alert(uploadedFileName+"----------"+ext+"----"+fileSize)
 	var fileExtension =ext.toLowerCase();
-	//console.log("file type: "+fileExtension);
+	////console.log("file type: "+fileExtension);
 	var extArray = ["png","jpg","jpeg","gif","bmp","gif","pdf"];
 	var isInArray =extArray.includes(fileExtension);
-	//console.log("isInArray: "+isInArray)
+	////console.log("isInArray: "+isInArray)
 	if (uploadedFileName.length > 30) {
 		$('#fileFormateModal').openModal();
 		$('#fileErrormessage').text('');
@@ -204,7 +204,7 @@ function isPdfAndImageValid(id) {
 
 
 function previewFile(srcFilePath,srcFileName,txnId,doctype){
-	//console.log("doctype=="+doctype)
+	////console.log("doctype=="+doctype)
 	window.filePath = srcFilePath;
 	window.fileName = srcFileName;
 	window.fileExtension = fileName.replace(/^.*\./, '');
@@ -219,9 +219,9 @@ function previewFile(srcFilePath,srcFileName,txnId,doctype){
 		window.FinalLink = filePath.concat(txnId).concat('/'+doctype).concat('/'+fileName);
 	}
 
-	////console.log(FinalLink);
+	//////console.log(FinalLink);
 	if(filePath == null || filePath == "" || filePath == undefined && fileName == null || fileName == "" || fileName == undefined ){
-		//console.log("File is not Avialable")
+		////console.log("File is not Avialable")
 	}else if(fileExtension=="jpg" || fileExtension=="jpeg" || fileExtension=="png" || fileExtension=="gif" || fileExtension=="PNG" ){
 		$("#fileSource").attr("src",FinalLink);
 		$("#viewuplodedModel").openModal();
