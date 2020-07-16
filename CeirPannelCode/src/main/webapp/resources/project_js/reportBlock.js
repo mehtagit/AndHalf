@@ -313,7 +313,7 @@ function submitUnBlockImei()
 				{
 				$('#markBulkAsUnblock').openModal({dismissible:false});
 				$('#bulkSaveSucessMsg').text('');
-				$('#blockBulkDeviceMsg').text($.i18n(data.tag));
+				$('#bulkSaveSucessMsg').text($.i18n(data.tag));
 				}
 			
 			else{

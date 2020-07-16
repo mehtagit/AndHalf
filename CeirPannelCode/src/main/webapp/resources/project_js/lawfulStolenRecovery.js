@@ -581,6 +581,13 @@ function saveIndivisualStolenRequest(){
 
 	var singleStolendeviceIDType=$('#singleStolendeviceIDType').val();
 	var singleStolendeviceType=$('#singleStolendeviceType').val();
+	
+	if(singleStolendeviceIDType==''){
+		singleStolendeviceIDType=null;
+	}
+	if(singleStolendeviceType==''){
+		singleStolendeviceType=null;
+	}
 	var singleStolenOperator=parseInt($('#singleStolenOperator').val());
 	var singleStolenOperator2=parseInt($('#singleStolenOperator3').val());
 	var singleStolenOperator3=parseInt($('#singleStolenOperator4').val());
@@ -714,7 +721,7 @@ function saveIndivisualStolenRequest(){
 				$('#IndivisualStolenSucessPopup').openModal({
 					dismissible:false
 				});
-				$('#sucessMessage').text(response.tag);
+				$('#sucessMessage').text($.i18n(response.tag));
 				}
 			else{
 				$('#sucessMessage').text('');
@@ -865,7 +872,7 @@ function saveCompanyStolenRequest(){
 				$('#IndivisualStolenSucessPopup').openModal({
 					dismissible:false
 				});
-				$('#sucessMessage').text(response.tag);
+				$('#sucessMessage').text($.i18n(response.tag));
 			}
 			
 			else{
@@ -942,7 +949,7 @@ function confirmantiondelete(){
 			}
 			else if(data.errorCode == 5){
 				$("#consignmentText").text('');
-				$("#consignmentText").text(data.tag);
+				$("#consignmentText").text($.i18n(data.tag));
 			}
 			else{
 				$("#consignmentText").text('');
@@ -1000,10 +1007,25 @@ function aprroveDevice(){
 				confirmApproveInformation();
 				//////console.log("inside Approve Success")
 			}
+			else if(data.errorCode==5){
+				$('#approveInformation').closeModal(); 
+				$('#confirmApproveInformation').openModal({dismissible:false});
+				$('#lawfulStolenDeleteSucessMsg').text('');
+				$('#lawfulStolenDeleteSucessMsg').text($.i18n(data.tag));
+			}
+			else{
+				$('#approveInformation').closeModal(); 
+				$('#confirmApproveInformation').openModal({dismissible:false});
+				$('#lawfulStolenDeleteSucessMsg').text('');
+				$('#lawfulStolenDeleteSucessMsg').text($.i18n('errorMsg'));
+			}
 
 		},
 		error : function() {
-			alert("Failed");
+			$('#approveInformation').closeModal(); 
+			$('#confirmApproveInformation').openModal({dismissible:false});
+			$('#lawfulStolenDeleteSucessMsg').text('');
+			$('#lawfulStolenDeleteSucessMsg').text($.i18n('errorMsg'));	
 		}
 	});
 }
@@ -1055,10 +1077,26 @@ function rejectUser(){
 				confirmRejectInformation();
 				//////console.log("inside Reject Success")
 			}
-
+			else if(data.errorCode==5){
+				$('#rejectInformation').closeModal(); 
+				$('#confirmRejectInformation').openModal({dismissible:false});
+				$('#rejectRequestMsg').text('');
+				$('#rejectRequestMsg').text($.i18n(data.tag));
+				
+				
+			}
+			else{
+				$('#rejectInformation').closeModal(); 
+				$('#confirmRejectInformation').openModal({dismissible:false});
+				$('#rejectRequestMsg').text('');
+				$('#rejectRequestMsg').text($.i18n('errorMsg'));
+			}
 		},
 		error : function() {
-			alert("Failed");
+			$('#rejectInformation').closeModal(); 
+			$('#confirmRejectInformation').openModal({dismissible:false});
+			$('#rejectRequestMsg').text('');
+			$('#rejectRequestMsg').text($.i18n('errorMsg'));
 		}
 	});
 	

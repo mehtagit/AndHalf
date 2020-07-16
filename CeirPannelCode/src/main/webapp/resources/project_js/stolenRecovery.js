@@ -1219,7 +1219,10 @@ else if(data.errorCode==5){
 			}
 		},
 		error : function() {
-			alert("Failed");
+			$('#approveInformation').closeModal(); 
+			$('#confirmApproveInformation').openModal({dismissible:false});
+			$('#"lawfulStolenDeleteSucessMsg"').text('');
+			$('#"lawfulStolenDeleteSucessMsg"').text($.i18n('errorMsg'));
 		}
 	});
 }
@@ -1288,7 +1291,10 @@ else if(data.errorCode==5){
 			}
 		},
 		error : function() {
-			//alert("Failed");
+			$('#rejectInformation').closeModal(); 
+			$('#confirmRejectInformation').openModal({dismissible:false});
+			$('#"deviceRejectedMessage"').text('');
+			$('#"deviceRejectedMessage"').text($.i18n('error'));
 		}
 	});
 	return false;

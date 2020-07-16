@@ -145,6 +145,13 @@ function updateIndivisualRecovery()
 	var IndivisualRecoveryDevice=$('#bulkRecoveryDate').val();
 	var txnid=$('#existingStolenTxnId').val();
 	
+	if(sigleRecoverydeviceIDType==''){
+		sigleRecoverydeviceIDType=null;
+	}
+	if(sigleRecoverydeviceType==''){
+		sigleRecoverydeviceType=null;
+	}
+	
 	var stolenIndividualUserDB={
 			"deviceBrandName": sigleRecoverydeviceBrandName,
 			"modelNumber":$('#editsingleRecoverymodalNumber').val(),
@@ -200,6 +207,13 @@ function updateIndivisualRecovery()
 			if(response.errorCode=='0'){
 				$("#indivisualStolenButton").prop('disabled', true);
 				$('#stolenSucessPopUp').openModal({dismissible:false});
+			
+			}
+			else if(response.errorCode=='5'){
+				
+				$('#stolenSucessPopUp').openModal({dismissible:false});
+				$('#dynamicMessage').text('');
+				$('#dynamicMessage').text($.i18n(response.tag));
 			
 			}
 			else{

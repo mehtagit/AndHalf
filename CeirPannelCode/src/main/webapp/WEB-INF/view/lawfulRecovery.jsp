@@ -368,7 +368,7 @@ select {
 														<input type="text" id="sigleRecoveryaddress"
 															name="sigleRecoveryaddress"
 															class="form-control boxBorder boxHeight"
-															pattern="[^[a-zA-Z0-9\s,'-]*$]{0,200}"
+															pattern="[a-zA-Z0-9\s,'*$-]{0,200}"
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');"
 															maxlength="200" required /> <label
@@ -380,7 +380,7 @@ select {
 														<input type="text" name="sigleRecoverystreetNumber"
 															class="form-control boxBorder boxHeight"
 															id="sigleRecoverystreetNumber" maxlength="20"
-															pattern="[^[a-zA-Z0-9\s,'-]*$]{0,20}"
+															pattern="[a-zA-Z0-9\s,'*$-]{0,20}"
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 															required /> <label for="sigleRecoverystreetNumber">
@@ -392,7 +392,7 @@ select {
 													<div class="input-field col s12 m6 l6">
 														<input type="text" name="sigleRecoveryvillage"
 															id="sigleRecoveryvillage" maxlength="30"
-															pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}"
+															pattern="[a-zA-Z0-9\s,'*$-]{0,30}"
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 															required /> <label for="sigleRecoveryvillage"> <spring:message
@@ -403,7 +403,7 @@ select {
 														<input type="text" name="sigleRecoverylocality"
 															class="form-control boxBorder boxHeight"
 															id="sigleRecoverylocality" maxlength="30"
-															pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}"
+															pattern="[a-zA-Z0-9\s,'*$-]{0,30}"
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 															required /> <label for="sigleRecoverylocality"><spring:message
@@ -413,7 +413,7 @@ select {
 													<div class="input-field col s12 m6 l6">
 														<input type="text" name="sigleRecoverydistrict"
 															id="sigleRecoverydistrict"
-															pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}"
+															pattern="[a-zA-Z0-9\s,'*$-]{0,30}"
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 															required /> <label for="sigleRecoverydistrict"><spring:message
@@ -423,7 +423,7 @@ select {
 													<div class="input-field col s12 m6 l6">
 														<input type="text" name="sigleRecoverycommune"
 															id="sigleRecoverycommune" maxlength="30"
-															pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}"
+															pattern="[a-zA-Z0-9\s,'*$-]{0,30}"
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 															required /> <label for="sigleRecoverycommune"> <spring:message
@@ -687,7 +687,7 @@ onclick="_Services._selectstartDate()"></i></span>
 											<input type="text" name="bulkRecoveryaddress"
 												class="form-control boxBorder boxHeight"
 												id="bulkRecoveryaddress"
-												pattern="[^[a-zA-Z0-9\s,'-]*$]{0,200}"
+												pattern="[a-zA-Z0-9\s,'*$-]{0,200}"
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
 												required maxlength="200"> <label
@@ -699,7 +699,7 @@ onclick="_Services._selectstartDate()"></i></span>
 											<input type="text" name="bulkRecoverystreetNumber"
 												class="form-control boxBorder boxHeight"
 												id="bulkRecoverystreetNumber"
-												pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}"
+												pattern="[a-zA-Z0-9\s,'*$-]{0,30}"
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
 												required maxlength="30"> <label
@@ -710,7 +710,7 @@ onclick="_Services._selectstartDate()"></i></span>
 										<div class="input-field col s12 m6 l6">
 											<input type="text" name="bulkRecoveryvillage"
 												id="bulkRecoveryvillage"
-												pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}"
+												pattern="[a-zA-Z0-9\s,'*$-]{0,30}"
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
 												required maxlength="30"> <label
@@ -722,7 +722,7 @@ onclick="_Services._selectstartDate()"></i></span>
 											<input type="text" name="bulkRecoverylocality"
 												class="form-control boxBorder boxHeight"
 												id="bulkRecoverylocality" maxlength="50"
-												pattern="[^[a-zA-Z0-9\s,'-]*$]{0,50}"
+												pattern="[a-zA-Z0-9\s,'*$-]{0,50}"
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
 												required maxlength="30"> <label
@@ -733,7 +733,7 @@ onclick="_Services._selectstartDate()"></i></span>
 										<div class="input-field col s12 m6 l6">
 											<input type="text" name="bulkRecoverydistrict"
 												id="bulkRecoverydistrict"
-												pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}"
+												pattern="[a-zA-Z0-9\s,'*$-]{0,30}"
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
 												required maxlength="30"> <label
@@ -744,7 +744,7 @@ onclick="_Services._selectstartDate()"></i></span>
 										<div class="input-field col s12 m6 l6">
 											<input type="text" name="bulkRecoverycommune"
 												id="bulkRecoverycommune"
-												pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}"
+												pattern="[a-zA-Z0-9\s,'*$-]{0,30}"
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
 												required maxlength="30"> <label

@@ -324,6 +324,14 @@ function updateIndivisualStolen()
 	var trimContactNumber5 = $('#singleStolenphone5').val();
 	var singleStolenphone5 =trimContactNumber5.replace(/[^A-Z0-9]/ig, "");
 	
+	if(singleStolendeviceIDType==""){
+		singleStolendeviceIDType=null;
+	}
+	
+	if(singleStolendeviceType==""){
+		singleStolendeviceType=null;
+	}
+	
 	var stolenIndividualUserDB={
 			"alternateContactNumber": singleStolenphone1,
 			"commune": singleStolencommune,
@@ -407,6 +415,12 @@ function updateIndivisualStolen()
 			if(response.errorCode==0){
 				$("#IndivisualUpdateStolen").prop('disabled', true);
 				$('#stolenSucessPopUp').openModal({dismissible:false});
+			}
+			else if(response.errorCode==5){
+				
+				$('#stolenSucessPopUp').openModal({dismissible:false});
+				$('#dynamicMessage').text('');
+				$('#dynamicMessage').text($.i18n(response.tag));
 			}
 			else{
 				$('#stolenSucessPopUp').openModal({dismissible:false});
