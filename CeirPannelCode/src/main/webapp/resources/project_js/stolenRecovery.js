@@ -57,6 +57,7 @@ function confirmantiondelete(){
 			"featureId":featureId,
 			"id":id,
 			"remark":remarks,
+			"userTypeId": parseInt($("body").attr("data-usertypeid")),
 			"requestType":window.reqType
 			
 
@@ -81,6 +82,14 @@ function confirmantiondelete(){
 				$("#consignmentText").text(data.message);
 			}else if(data.errorCode == 0){
 				$("#consignmentText").text(data.message);
+			}
+			else if(data.errorCode == 5){
+				$("#consignmentText").text('');
+				$("#consignmentText").text($.i18n(data.tag));
+			}
+			else{
+				$("#consignmentText").text('');
+				$("#consignmentText").text($.i18n('errorMsg'));
 			}
 		},
 		error : function() {
@@ -1195,7 +1204,19 @@ function aprroveDevice(){
 				confirmApproveInformation();
 				//////console.log("inside Approve Success")
 			}
-
+else if(data.errorCode==5){
+				$('#approveInformation').closeModal(); 
+				$('#confirmApproveInformation').openModal({dismissible:false});
+				$('#"lawfulStolenDeleteSucessMsg"').text('');
+				$('#"lawfulStolenDeleteSucessMsg"').text($.i18n(data.tag));
+				
+			}
+			else{
+				$('#approveInformation').closeModal(); 
+				$('#confirmApproveInformation').openModal({dismissible:false});
+				$('#"lawfulStolenDeleteSucessMsg"').text('');
+				$('#"lawfulStolenDeleteSucessMsg"').text($.i18n('errorMsg'));
+			}
 		},
 		error : function() {
 			alert("Failed");
@@ -1253,9 +1274,21 @@ function rejectUser(){
 				//////console.log("inside Reject Success")
 			}
 
+else if(data.errorCode==5){
+				$('#rejectInformation').closeModal(); 
+				$('#confirmRejectInformation').openModal({dismissible:false});
+				$('#"deviceRejectedMessage"').text('');
+				$('#"deviceRejectedMessage"').text($.i18n(data.tag));
+			}
+			else{
+				$('#rejectInformation').closeModal(); 
+				$('#confirmRejectInformation').openModal({dismissible:false});
+				$('#"deviceRejectedMessage"').text('');
+				$('#"deviceRejectedMessage"').text($.i18n('error'));
+			}
 		},
 		error : function() {
-			alert("Failed");
+			//alert("Failed");
 		}
 	});
 	return false;
@@ -1275,7 +1308,7 @@ $("input[type=file]").keypress(function(ev) {
 
 });
 
-
+var stolenHistoryTable;
 function historyRecord(txnID,sourceType){
 	//////console.log("txn id=="+txnID)
 	$("#tableOnModal").openModal({dismissible:false});
@@ -1342,6 +1375,7 @@ function historyRecord(txnID,sourceType){
 	if(lang=='km'){
 		var langFile='../resources/i18n/khmer_datatable.json';
 	}
+	
 	//////console.log("22");
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
@@ -1349,20 +1383,26 @@ function historyRecord(txnID,sourceType){
 	headers:
 	{ 'X-CSRF-TOKEN': token }
 	});
-
-
+	if( stolenHistoryTable !== null && stolenHistoryTable !== undefined ){
+		//console.log('Going to destroy history table');
+		stolenHistoryTable.destroy();
+		$('#data-table-history2').empty();
+	}
+	
 	$.ajax({
 		url: 'Consignment/consignment-history',
 		type: 'POST',
 		data: formData,
+		async : false,
 		processData: false,
 		contentType: false,
 		success: function(result){
+			
 			var dataObject = eval(result);
-			//alert(JSON.stringify(dataObject.data))
-			$('#data-table-history2').dataTable({
-				 "order" : [[1, "asc"]],
-				 destroy:true,
+			//console.log(JSON.stringify(dataObject.data))
+			stolenHistoryTable = $('#data-table-history2').DataTable({
+				"destroy":true,
+				"order" : [[1, "asc"]],
 				"serverSide": false,
 				 orderCellsTop : true,
 				"ordering" : false,
@@ -1376,9 +1416,9 @@ function historyRecord(txnID,sourceType){
 			
 		    });
 			$('div#initialloader').delay(300).fadeOut('slow');
-	}
+		}
 		
-});
+	});
 
 	$('.datepicker').on('mousedown',function(event){
 	event.preventDefault();
@@ -1448,3 +1488,10 @@ function isLengthValid(val){
 
 	}
 }
+
+
+/*function resetDatatable(){
+	alert('called');
+	$('#data-table-history2').DataTable().state.clear();
+	//$('#data-table-history2').DataTable().clear().draw();
+}*/

@@ -925,11 +925,26 @@ var featureId = 6;
 			function enableAddMore(){
 				//$(".add_field_button").attr("disabled", false);
 			}
-			function enableSelectFile(){
+			/*function enableSelectFile(){
 				$("#docTypeFile1").attr("disabled", false);
 				$("#docTypeFile1").attr("required", true);
 				$("#supportingdocumentFile").append('<span class="star">*</span>');
+			}*/
+			
+			function enableSelectFile() {
+				if($('#docTypetag1').val() != ''){
+					$("#docTypeFile1").attr("disabled", false);
+					$("#docTypeFile1").attr("required", true);
+					$("#removestar").find(".star").remove();
+					$("#supportingdocumentFile").append('<span class="star">*</span>');
+				}else{
+					$("#docTypeFile1").attr("required", false);
+					$('#filetextField').val('');
+					$("#removestar").find(".star").remove();
+				}
 			}
+			
+			
 			$("input[type=file]").keypress(function(ev) {
 			    return false;
 			    //ev.preventDefault(); //works as well

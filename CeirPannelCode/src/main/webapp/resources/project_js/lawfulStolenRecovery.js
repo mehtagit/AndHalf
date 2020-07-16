@@ -581,6 +581,16 @@ function saveIndivisualStolenRequest(){
 
 	var singleStolendeviceIDType=$('#singleStolendeviceIDType').val();
 	var singleStolendeviceType=$('#singleStolendeviceType').val();
+
+	if(singleStolendeviceIDType=="")
+		{
+		singleStolendeviceIDType=null;
+		}
+	if(singleStolendeviceType=="")
+	{
+		singleStolendeviceType=null;
+	}
+
 	var singleStolenOperator=parseInt($('#singleStolenOperator').val());
 	var singleStolenOperator2=parseInt($('#singleStolenOperator3').val());
 	var singleStolenOperator3=parseInt($('#singleStolenOperator4').val());
@@ -708,6 +718,14 @@ function saveIndivisualStolenRequest(){
 				});
 				$('#IndivisualStolenTxnId').text(response.txnId)
 			}
+			else if(response.errorCode==5)
+				{
+				$('#sucessMessage').text('');
+				$('#IndivisualStolenSucessPopup').openModal({
+					dismissible:false
+				});
+				$('#sucessMessage').text($.i18n(response.tag));
+				}
 			else{
 				$('#sucessMessage').text('');
 				$('#IndivisualStolenSucessPopup').openModal({
@@ -852,9 +870,17 @@ function saveCompanyStolenRequest(){
 				});
 				$('#IndivisualStolenTxnId').text(response.txnId)
 			}
+			else if(response.errorCode==5){
+				$('#sucessMessage').text('');
+				$('#IndivisualStolenSucessPopup').openModal({
+					dismissible:false
+				});
+				$('#sucessMessage').text(response.tag);
+			}
+			
 			else{
 				$('#sucessMessage').text('');
-				$('#regularisedDevice').openModal({
+				$('#IndivisualStolenSucessPopup').openModal({
 					dismissible:false
 				});
 				$('#sucessMessage').text(response.message);
@@ -900,6 +926,7 @@ function confirmantiondelete(){
 			"featureId":featureId,
 			"id":id,
 			"remark":remarks,
+			"userTypeId": parseInt($("body").attr("data-usertypeid")),
 			"requestType":window.reqType
 
 	}
@@ -922,6 +949,14 @@ function confirmantiondelete(){
 				$("#consignmentText").text(data.message);
 			}else if(data.errorCode == 0){
 				$("#consignmentText").text(data.message);
+			}
+			else if(data.errorCode == 5){
+				$("#consignmentText").text('');
+				$("#consignmentText").text(data.tag);
+			}
+			else{
+				$("#consignmentText").text('');
+				$("#consignmentText").text($.i18n('errorMsg'));
 			}
 		},
 		error : function() {
@@ -1159,6 +1194,7 @@ $(document).on("keyup", "#singleStolenphone5", function(e) {
 	}
 });
 
+var lawfulStolenHistoryTable;
 function historyRecord(txnID, requestType, source){
 	//////console.log("txn id=="+txnID)
 	var requestType = requestType;
@@ -1277,7 +1313,13 @@ function historyRecord(txnID, requestType, source){
 	headers:
 	{ 'X-CSRF-TOKEN': token }
 	});
-
+	
+	if( lawfulStolenHistoryTable !== null && lawfulStolenHistoryTable !== undefined ){
+		//console.log('Going to destroy history table');
+		lawfulStolenHistoryTable.destroy();
+		$('#data-table-history').empty();
+	}
+	
 	$.ajax({
 		url: 'Consignment/consignment-history',
 		type: 'POST',
@@ -1287,7 +1329,7 @@ function historyRecord(txnID, requestType, source){
 		success: function(result){
 			var dataObject = eval(result);
 			//alert(JSON.stringify(dataObject.data))
-			$('#data-table-history').dataTable({
+			lawfulStolenHistoryTable = $('#data-table-history').DataTable({
 				 "order" : [[1, "asc"]],
 				 destroy:true,
 				"serverSide": false,
