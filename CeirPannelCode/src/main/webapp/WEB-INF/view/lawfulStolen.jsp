@@ -1430,8 +1430,8 @@ select {
 		<script type="text/javascript" src="${context}/resources/js/utils.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script>
 		$('.datepick').datepicker({
-			dateFormat : "yy-mm-dd",
-			minDate:"0"
+				dateFormat : "yy-mm-dd",
+			maxDate:"0"
 		});
 
 		populateCountries("singleDevicecountry", "singleDevicestate");

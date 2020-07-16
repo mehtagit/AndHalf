@@ -1033,6 +1033,15 @@ function submitEndUserDeviceInfo(){
 				$('#endUsertXnId').text(data.txnId);
 				$("#endUserRegisterButton").prop('disabled', true);
 			}
+			else if(data.errorCode==5){
+
+//				$('#sucessMessage').text('');
+				$('#endUserRegisterDeviceModal').openModal({dismissible:false});;
+				$('#sucessMessageId').text('');
+				$('#sucessMessageId').text(data.tag);
+				
+			}
+			
 			else{
            	
 				$('#endUserRegisterDeviceDuplicateImei').openModal({dismissible:false});;

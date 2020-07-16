@@ -348,7 +348,7 @@ aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
             <h6 class="modal-header"><spring:message code="operator.markunblock" /></h6>
         <div class="modal-content">
          <div class="row">
-                <h6><spring:message code="operator.markedwith" /> <span id="txnIdblocksingleDevice"></span></h6>
+                <h6 id="saveSingleMsg"><spring:message code="operator.markedwith" /> <span id="txnIdblocksingleDevice"></span></h6>
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
@@ -363,7 +363,7 @@ aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
         <h6 class="modal-header"><spring:message code="operator.markunblock" /></h6>
         <div class="modal-content">
          <div class="row">
-                <h6><spring:message code="operator.markedwith" /> <span id="txnIdUnblocksingleDevice"></span></h6>
+                <h6 id="bulkSaveSucessMsg"><spring:message code="operator.markedwith" /> <span id="txnIdUnblocksingleDevice"></span></h6>
             </div>
             <div class="row">
                 <div class="input-field col s12 center">

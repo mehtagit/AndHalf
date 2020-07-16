@@ -708,6 +708,14 @@ function saveIndivisualStolenRequest(){
 				});
 				$('#IndivisualStolenTxnId').text(response.txnId)
 			}
+			else if(response.errorCode==5)
+				{
+				$('#sucessMessage').text('');
+				$('#IndivisualStolenSucessPopup').openModal({
+					dismissible:false
+				});
+				$('#sucessMessage').text(response.tag);
+				}
 			else{
 				$('#sucessMessage').text('');
 				$('#IndivisualStolenSucessPopup').openModal({
@@ -852,9 +860,17 @@ function saveCompanyStolenRequest(){
 				});
 				$('#IndivisualStolenTxnId').text(response.txnId)
 			}
+			else if(response.errorCode==5){
+				$('#sucessMessage').text('');
+				$('#IndivisualStolenSucessPopup').openModal({
+					dismissible:false
+				});
+				$('#sucessMessage').text(response.tag);
+			}
+			
 			else{
 				$('#sucessMessage').text('');
-				$('#regularisedDevice').openModal({
+				$('#IndivisualStolenSucessPopup').openModal({
 					dismissible:false
 				});
 				$('#sucessMessage').text(response.message);
@@ -900,6 +916,7 @@ function confirmantiondelete(){
 			"featureId":featureId,
 			"id":id,
 			"remark":remarks,
+			"userTypeId": parseInt($("body").attr("data-usertypeid")),
 			"requestType":window.reqType
 
 	}
@@ -922,6 +939,14 @@ function confirmantiondelete(){
 				$("#consignmentText").text(data.message);
 			}else if(data.errorCode == 0){
 				$("#consignmentText").text(data.message);
+			}
+			else if(data.errorCode == 5){
+				$("#consignmentText").text('');
+				$("#consignmentText").text(data.tag);
+			}
+			else{
+				$("#consignmentText").text('');
+				$("#consignmentText").text($.i18n('errorMsg'));
 			}
 		},
 		error : function() {
@@ -1159,7 +1184,7 @@ $(document).on("keyup", "#singleStolenphone5", function(e) {
 	}
 });
 
-function historyRecord(txnID, requestType){
+function historyRecord(txnID, requestType, source){
 	//////console.log("txn id=="+txnID)
 	var requestType = requestType;
 	$("#tableOnModal").openModal({dismissible:false});
@@ -1167,8 +1192,19 @@ function historyRecord(txnID, requestType){
 	 var formData= new FormData();
 	 var userTypeValue=$("body").attr("data-roleType");
 	 ////console.log("requestType--->" +requestType);
-	 if(userTypeValue=='CEIRAdmin' && requestType == 0)
-	 {
+	 if(userTypeValue=='CEIRAdmin'&& requestType == 0 && source=='5'){
+		 var filterRequest={
+				 "columns": [
+					    "created_on","modified_on","txn_id","role_type","request_type","source_type","file_status","complaint_type","fir_file_name",
+					    "blocking_type","blocking_time_period","quantity","device_quantity","remark","rejected_remark","date_of_stolen",
+					     "user_id","ceir_admin_id"
+					    ],
+				"tableName": "stolenand_recovery_mgmt_aud",
+				"dbName" : "ceirconfig",
+				"txnId":txnID
+		} 
+		 //alert("requestType1-->" +requestType+" source1-->" +source);
+	 }else if(userTypeValue=='CEIRAdmin'&& requestType == 0 && source=='6'){
 		 var filterRequest={
 				 "columns": [
 					    "created_on","modified_on","txn_id","role_type","request_type","source_type","file_status","complaint_type","file_name","fir_file_name",
@@ -1179,7 +1215,20 @@ function historyRecord(txnID, requestType){
 				"dbName" : "ceirconfig",
 				"txnId":txnID
 		} 
-	 }else if(userTypeValue=='CEIRAdmin' && requestType == 1){
+		 //alert("requestType2-->" +requestType+" source2-->" +source);
+	 }else if(userTypeValue=='CEIRAdmin' && requestType == 1 && source=='5'){
+		 var filterRequest={
+				 "columns": [
+					    "created_on","modified_on","txn_id","role_type","request_type","source_type","file_status","complaint_type","fir_file_name",
+					    "blocking_type","blocking_time_period","quantity","device_quantity","remark","rejected_remark","date_of_recovery",
+					     "user_id","ceir_admin_id"
+					    ],
+				"tableName": "stolenand_recovery_mgmt_aud",
+				"dbName" : "ceirconfig",
+				"txnId":txnID
+		} 
+		 //alert("requestType3-->" +requestType+" source3-->" +source);
+	 }else if(userTypeValue=='CEIRAdmin' && requestType == 1 && source=='6'){
 		 var filterRequest={
 				 "columns": [
 					    "created_on","modified_on","txn_id","role_type","request_type","source_type","file_status","complaint_type","file_name","fir_file_name",
@@ -1190,9 +1239,21 @@ function historyRecord(txnID, requestType){
 				"dbName" : "ceirconfig",
 				"txnId":txnID
 		} 
-		 
+		 //alert("requestType4-->" +requestType+" source4-->" +source); 
 	 }
-	 else if(userTypeValue !='CEIRAdmin' && requestType == 0){
+	 else if(userTypeValue !='CEIRAdmin' && requestType == 0 && source=='5'){
+		 var filterRequest={
+				 "columns": [
+					    "created_on","modified_on","txn_id","role_type","request_type","source_type","file_status","complaint_type","fir_file_name",
+					    "blocking_type","blocking_time_period","quantity","device_quantity","remark","rejected_remark","date_of_stolen",
+					     "user_id"
+					    ],
+				"tableName": "stolenand_recovery_mgmt_aud",
+				"dbName" : "ceirconfig",
+				"txnId":txnID
+		}
+		 //alert("requestType5-->" +requestType+" source5-->" +source);
+	 } else if(userTypeValue !='CEIRAdmin' && requestType == 0 && source=='6'){
 		 var filterRequest={
 				 "columns": [
 					    "created_on","modified_on","txn_id","role_type","request_type","source_type","file_status","complaint_type","file_name","fir_file_name",
@@ -1203,7 +1264,20 @@ function historyRecord(txnID, requestType){
 				"dbName" : "ceirconfig",
 				"txnId":txnID
 		}
-	 } else if(userTypeValue !='CEIRAdmin' && requestType == 1){
+		 //alert("requestType6-->" +requestType+" source6-->" +source);
+	 } else if(userTypeValue !='CEIRAdmin' && requestType == 1 && source=='5'){
+		 var filterRequest={
+				 "columns": [
+					    "created_on","modified_on","txn_id","role_type","request_type","source_type","file_status","complaint_type","fir_file_name",
+					    "blocking_type","blocking_time_period","quantity","device_quantity","remark","rejected_remark","date_of_recovery",
+					     "user_id"
+					    ],
+				"tableName": "stolenand_recovery_mgmt_aud",
+				"dbName" : "ceirconfig",
+				"txnId":txnID
+		}
+		 //alert("requestType7-->" +requestType+" source7-->" +source);
+	 }else if(userTypeValue !='CEIRAdmin' && requestType == 1 && source=='6'){
 		 var filterRequest={
 				 "columns": [
 					    "created_on","modified_on","txn_id","role_type","request_type","source_type","file_status","complaint_type","file_name","fir_file_name",
@@ -1214,6 +1288,7 @@ function historyRecord(txnID, requestType){
 				"dbName" : "ceirconfig",
 				"txnId":txnID
 		}
+		 //alert("requestType8-->" +requestType+" source8-->" +source);
 	 }
 
 	formData.append("filter",JSON.stringify(filterRequest));	

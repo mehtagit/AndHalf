@@ -348,7 +348,7 @@ var contextpath = "${context}";
 								<%}%>
 											<div class="row">
 								<div class="input-field col s12 m12 l12">
-									<input placeholder="" type="text" maxlength="200" pattern="[A-Za-z0-9._%-+$@,/]{1,200}" name="propertyLocation"
+									<input placeholder="" type="text" maxlength="200" pattern="[a-zA-Z0-9\s,'*$-]{5,200}" name="propertyLocation"
 										id="propertyLocation" oninput="InvalidMsg(this,'input','<spring:message code="validation.200character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
 									 required /> 
 										<label for="propertyLocation"><spring:message code="input.address" /> <span class="star">*</span></label>
@@ -880,7 +880,8 @@ var contextpath = "${context}";
                            <div class="input-field col s12">
 
                                 <label for="confirmPassword" style="color: #000; font-size: 12px;"><spring:message code="registration.password" /></label>
-                                <input required="required"  type="password" class="password" id="confirmPassword" maxlength="10">
+                                <input required="required"  type="password" class="password" id="confirmPassword"  pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{10,10}$" maxlength="10"
+										oninput="InvalidMsg(this,'input','<spring:message code="validation.password" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.password" />');" >
                                 	<div class="input-field-addon">
 							<i class="fa fa-eye-slash teal-text toggle-password"
 								aria-hidden="true"></i>

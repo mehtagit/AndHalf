@@ -124,7 +124,9 @@ div#error_Modal {
 	height: 50px;
 	margin-top: 14%;
 }
+
 </style>
+
 <body data-lang="${language}" data-usertype="${usertype}"
 	data-roleType="${usertype}" data-userTypeID="${usertypeId}"
 	data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}"
@@ -133,7 +135,9 @@ div#error_Modal {
 	data-operatorTypeId="${operatorTypeId}"
 	data-selected-consignmentStatus="${consignmentStatus}"
 	data-selected-username="${username}"
-	data-defaultLink="${defaultLink}">
+	data-defaultLink="${defaultLink}"
+	data-currentTime=" <%=currentTime%>"
+	data-dfd=" <%=dfd%>">
 	<!-- Start Page Loading -->
 	<div id="loader-wrapper">
 		<div id="initialloader"></div>
@@ -657,7 +661,11 @@ data-dismiss="modal">&times;</button> -->
 	</div>
 
 
+
+
+
 	<div id="goToLogout" class="modal modal-small" style="width: 40%;">
+
 		<!-- <button type="button" class=" modal-action modal-close waves-effect waves-green btn-flat right"
 data-dismiss="modal">&times;</button> -->
 		<h6 class="modal-header">
@@ -669,17 +677,18 @@ data-dismiss="modal">&times;</button> -->
 					<spring:message code="logout.msg" />
 				</h6>
 			</div>
+			
 			<div class="input-field col s12 center">
 				<div class="input-field col s12 center">
 					<%-- <a href="./logout" class="btn" type="submit" name="add_user"
 						id="add_user"><spring:message code="modal.yes" /></a> --%>
 
 
-					<form action="./logout" method="post">
+					<form action="./logout" method="post" id="logoutForm">
 						<input type="hidden" name="${_csrf.parameterName}"
 							value="${_csrf.token}" />
 
-						<button type="submit" class="btn">
+						<button type="button" onclick="sessionLogOut(<%=session.getLastAccessedTime()+timeout %>, <%=new Date().getTime()  %>)" class="btn">
 							<spring:message code="modal.yes" />
 						</button>
 						<a href="#" class="modal-close btn" style="margin-left: 10px;"><spring:message
@@ -721,7 +730,7 @@ data-dismiss="modal">&times;</button> -->
 							<spring:message code="modal.ok" />
 						</button>
 					</div>
-					r
+					
 				</div>
 			</div>
 		</div>
@@ -755,13 +764,7 @@ data-dismiss="modal">&times;</button> -->
 	<!-- i18n library -->
 	<script type="text/javascript"
 		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
-	<%-- <script type="text/javascript"
-		src="${context}/resources/i18n_library/i18n.js"></script>
-	 --%>
-	
-	
-	
-	<script type="text/javascript"
+<script type="text/javascript"
 		src="${context}/resources/i18n_library/i18n.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/i18n_library/messagestore.js"></script>
@@ -812,17 +815,17 @@ data-dismiss="modal">&times;</button> -->
 		src="${context}/resources/project_js/disable_inspectElement.js"></script> --%>
 	</script>
 	<script type="text/javascript"
-		src="${context}/resources/project_js/dashboard.js?version=<%= (int) (Math.random() * 10) %>"></script>
-	<script type="text/javascript"
 		src="${context}/resources/ajax/Profile.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 	<script type="text/javascript"
-		src=""
-		async></script>
+		src="${context}/resources/project_js/dashboard.js?version=<%= (int) (Math.random() * 10) %>"></script>
+	
 
 	<script type="text/javascript">
+
 		$(document).ready(function() {
-	<%if (usertypeId == 13 || usertypeId == 20) {%>
+			
+			<%if (usertypeId == 13 || usertypeId == 20) {%>
 		//	$("#langlist").val('en');
 			$("#langlist").prop("disabled", true);
 			$("#divLang").hide();
@@ -831,6 +834,18 @@ data-dismiss="modal">&times;</button> -->
 	<%=usertypeId%>
 		)
 		});
+		
+		
+	</script>
+	<script type="text/javascript">
+		function sessionLogOut(timeOut,currentTime){
+                if(currentTime > timeOut){
+					$('#logoutForm').submit();
+				}
+				else{
+					 window.location.href = "./login";
+				}
+	}
 	</script>
 
 </body>

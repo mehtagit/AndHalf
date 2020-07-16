@@ -1676,7 +1676,7 @@ public class IconsState {
 		//String downloadURL = "./Consignment/dowloadFiles/actual/"+file+"/"+txnId+"/"+defaultTagName+"";
 		String downloadURL = "fileDownload('"+file+"','actual','"+txnId+"','"+defaultTagName+"')";
 		String deleteAction ="DeleteConsignmentRecord('"+txnId+"','"+id+"','"+requestType+"')";
-		String historyAction ="historyRecord('"+txnId+"')";
+		String historyAction ="historyRecord('"+txnId+"','"+source+"')";
        
 		if(source.equals("3")) {
 			editAction="viewDeviceDetails('"+txnId+"','edit','"+requestType+"')";
@@ -2019,7 +2019,7 @@ public class IconsState {
 		String deleteAction ="DeleteConsignmentRecord('"+txnId+"','"+id+"','"+requestType+"')";
 
 
-        String historyAction ="historyRecord('"+txnId+"')";
+        String historyAction ="historyRecord('"+txnId+"','"+source+"')";
         String history="<a onclick="+historyAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+historyIcon+" aria-hidden=\"true\"  title="
 				+historyTitle+"></i></a>";
 		log.info("============actionResponse=======" + status);
@@ -2165,7 +2165,7 @@ public class IconsState {
 		//String downloadURL = "./Consignment/dowloadFiles/actual/"+file+"/"+txnId+"/"+defaultTagName+"";
 		String downloadURL = "fileDownload('"+file+"','actual','"+txnId+"','"+defaultTagName+"')";
 		String deleteAction ="DeleteConsignmentRecord('"+txnId+"','"+id+"','"+requestTypeValue+"')";
-		String historyAction ="historyRecord('"+txnId+"','"+requestTypeValue+"')";
+		String historyAction ="historyRecord('"+txnId+"','"+requestTypeValue+"','"+source+"')";
 		
 		
 		if(source.equals("5") && requestTypeValue.equals("0")) {
@@ -2757,7 +2757,7 @@ public class IconsState {
 		String downloadURL = "fileDownload('"+file+"','actual','"+txnId+"','"+defaultTagName+"')";
 		String deleteAction ="DeleteConsignmentRecord('"+txnId+"','"+id+"','"+requestTypeValue+"')";
 
-		String historyAction ="historyRecord('"+txnId+"','"+requestTypeValue+"')";
+		String historyAction ="historyRecord('"+txnId+"','"+requestTypeValue+"','"+source+"')";
        String history="<a onclick="+historyAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+historyIcon+" aria-hidden=\"true\"  title="
 				+historyTitle+"></i></a>";
 		if(source.equals("5") && requestTypeValue.equals("0")) {
