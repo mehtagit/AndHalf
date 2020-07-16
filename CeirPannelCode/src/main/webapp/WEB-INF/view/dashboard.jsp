@@ -764,13 +764,7 @@ data-dismiss="modal">&times;</button> -->
 	<!-- i18n library -->
 	<script type="text/javascript"
 		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
-	<%-- <script type="text/javascript"
-		src="${context}/resources/i18n_library/i18n.js"></script>
-	 --%>
-	
-	
-	
-	<script type="text/javascript"
+<script type="text/javascript"
 		src="${context}/resources/i18n_library/i18n.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/i18n_library/messagestore.js"></script>
@@ -821,13 +815,11 @@ data-dismiss="modal">&times;</button> -->
 		src="${context}/resources/project_js/disable_inspectElement.js"></script> --%>
 	</script>
 	<script type="text/javascript"
-		src="${context}/resources/project_js/dashboard.js?version=<%= (int) (Math.random() * 10) %>"></script>
-	<script type="text/javascript"
 		src="${context}/resources/ajax/Profile.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 	<script type="text/javascript"
-		src=""
-		async></script>
+		src="${context}/resources/project_js/dashboard.js?version=<%= (int) (Math.random() * 10) %>"></script>
+	
 
 	<script type="text/javascript">
 

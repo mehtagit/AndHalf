@@ -339,7 +339,7 @@ var contextpath = "${context}";
 								<%}%>
 											<div class="row">
 								<div class="input-field col s12 m12 l12">
-									<input type="text" maxlength="200" pattern="[A-Za-z0-9._%-+$@,/]{5,200}" name="propertyLocation"
+									<input type="text" maxlength="200" pattern="[a-zA-Z0-9\s,'*$-]{5,200}" name="propertyLocation"
 										id="propertyLocation" oninput="InvalidMsg(this,'input','<spring:message code="validation.200character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
 									 required /> 
 										<label for="propertyLocation"><spring:message code="input.address" /> <span class="star">*</span></label>
@@ -831,7 +831,7 @@ var contextpath = "${context}";
 							title="" required />
                             </div>
                         </div>
-                        <a href="javascript:void(0)" onclick="resendOtp(); document.getElementById('resendOtp').style.display ='block';" class="right"><spring:message code="registration.resendotp" /></a>
+                        <a href="javascript:void(0)" onclick="resendOtp();" class="right"><spring:message code="registration.resendotp" /></a>
                         <button type="submit" id="otpVerifyBtn"  class="btn" style="width: 100%; margin-top: 20px; margin-bottom: 20px;"><spring:message code="registration.done" /></button>
                     </form>
         </div>
