@@ -562,15 +562,15 @@ public class RegularizedDeviceServiceImpl {
 
 	public GenricResponse updateTaxStatus( RegularizeDeviceDb regularizeDeviceDb) {
 		try {
-			if( userStaticServiceImpl.checkIfUserIsDisabled( regularizeDeviceDb.getCreatorUserId() ))
-				return new GenricResponse(5, "USER_IS_DISABLED","This account is disabled. Please enable the account to perform the operation.",
-						null);
 			String tag = null;
 			String receiverUserType = null;
 			String mailSubject = null;
 			List<RawMail> rawMails = new ArrayList<>(1);
 			Map<String, String> placeholders = new HashMap<>();
 			AllRequest audit=regularizeDeviceDb.getAuditParameters();
+			if( userStaticServiceImpl.checkIfUserIsDisabled( audit.getUserId() ))
+				return new GenricResponse(5, "USER_IS_DISABLED","This account is disabled. Please enable the account to perform the operation.",
+						null);
 			logger.info("txn_id is : "+regularizeDeviceDb.getTxnId());
 			AuditTrail auditTrail = new AuditTrail(audit.getUserId(), audit.getUsername(), audit.getUserTypeId(), 
 					audit.getUserType(), 12, Features.REGISTER_DEVICE, 

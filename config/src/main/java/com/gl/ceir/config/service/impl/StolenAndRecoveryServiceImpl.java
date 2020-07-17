@@ -1419,6 +1419,7 @@ public class StolenAndRecoveryServiceImpl {
 							for(RegisterationUser registerationUser :registerationUserList) { UserProfile
 								userProfile_generic_Response_Notification = new UserProfile();
 							userProfile_generic_Response_Notification = userProfileRepository.getByUserId(registerationUser.getId());
+							placeholderMap1.put("<First name>", userProfile_generic_Response_Notification.getFirstName());
 							emailUtil.saveNotification(ceirMailTag,
 									userProfile_generic_Response_Notification,
 									consignmentUpdateRequest.getFeatureId(),
