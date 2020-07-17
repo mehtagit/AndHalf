@@ -6,6 +6,12 @@ function userloginGraph() {
 			"startDate":"",
 			"endDate":""
 	}
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+	});
 	$.ajax({
 		type : 'POST',
 		url : './userLoginGraph',
@@ -92,9 +98,9 @@ function graph(response,id,chartType,chartTitle)
 	   	 date.push(response[i].createdOn);
 	   	uniqueUsers.push(response[i].uniqueUserLogged);
 	    }
-	console.log("date: "+date);
-	   console.log("noOfUsers: "+noOfUsers);
-	    console.log("uniqueUserLogged: "+uniqueUsers);	
+	//console.log("date: "+date);
+	   //console.log("noOfUsers: "+noOfUsers);
+	    //console.log("uniqueUserLogged: "+uniqueUsers);	
 	  var title = {
               text: chartTitle   
            };

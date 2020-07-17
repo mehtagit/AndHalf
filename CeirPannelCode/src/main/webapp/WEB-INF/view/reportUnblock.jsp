@@ -497,7 +497,7 @@ src="${context}/resources/project_js/enterKey.js?version=<%= (int) (Math.random(
 					for (i = 0; i < data.length; i++) {
 						$('<option>').val(data[i].value).text(data[i].interp)
 						.appendTo('#unbockSingledeviceType');
-						//console.log('#unbockSingledeviceType')
+						////console.log.log('#unbockSingledeviceType')
 					}
 				});
 

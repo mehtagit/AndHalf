@@ -1505,7 +1505,7 @@ select {
 			//console.log("file type: "+fileExtension);
 			var extArray = ["png", "jpg","jpeg","gif","bmp","gif"];
 			var isInArray =extArray.includes(fileExtension);
-			//console.log("isInArray: "+isInArray)
+			////console.log.log("isInArray: "+isInArray)
 			if (uploadedFileName.length > 30) {
 				$('#fileFormateModal').openModal();
 				$('#fileErrormessage').text('');

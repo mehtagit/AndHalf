@@ -253,13 +253,13 @@
 		if(now.getDate().toString().charAt(0) != '0'){
 			currentDate='0'+now.getDate();
 
-			/* alert("only date="+currentDate); */
+			/* //alert("only date="+currentDate); */
 		}
 		else{
 			currentDate=now.getDate();
 		}
 		var today = now.getFullYear()+ '-' + (now.getMonth()+1)+ '-' +currentDate ;
-		//alert("today"+today);
+		////alert("today"+today);
 		//////console.log("dispatche="+dispatcDate);
 		//////console.log("todays parse date"+Date.parse(today));
 		//////console.log("dispatche parse date"+Date.parse(dispatcDate));
@@ -271,7 +271,7 @@
 			$('#expectedDispatcheDate').val("");
 		}
 
-		//alert("current date="+today+" dispatche date="+dispatcDate)
+		////alert("current date="+today+" dispatche date="+dispatcDate)
 	}
 
 	function arrivalDateValidation(){
@@ -281,13 +281,13 @@
 		if(now.getDate().toString().charAt(0) != '0'){
 			currentDate='0'+now.getDate();
 
-			/* alert("only date="+currentDate); */
+			/* //alert("only date="+currentDate); */
 		}
 		else{
 			currentDate=now.getDate();
 		}
 		var today = now.getFullYear()+ '-' + (now.getMonth()+1)+ '-' +currentDate ;
-		//alert("today"+today);
+		////alert("today"+today);
 		//////console.log("dispatche="+dispatcDate);
 		//////console.log("todays parse date"+Date.parse(today));
 		//////console.log("dispatche parse date"+Date.parse(dispatcDate));
@@ -298,7 +298,7 @@
 			myFunction("Arrival date should be greater then or equals to today");
 			$('#expectedArrivalDate').val("");
 		}
-		//alert("current date="+today+" dispatche date="+dispatcDate)
+		////alert("current date="+today+" dispatche date="+dispatcDate)
 	}
 
 	$('.datepicker').on('mousedown',function(event){
@@ -351,7 +351,7 @@
 				confirmApproveInformation(window.ID,window.date);
 			},
 			error : function() {
-				alert("Failed");
+				////alert("Failed");
 			}
 		});
 	}
@@ -406,7 +406,7 @@
 				confirmRejectInformation();
 			},
 			error : function() {
-				alert("Failed");
+				//alert("Failed");
 			}
 		});
 		
@@ -631,7 +631,7 @@ function userChangeStatus(entity){
 				
 			},
 			error : function() {
-				alert("Failed");
+				//alert("Failed");
 			}
 		});
 	 return false

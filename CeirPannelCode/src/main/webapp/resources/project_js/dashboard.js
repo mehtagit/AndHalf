@@ -26,7 +26,7 @@ $('#langlist').on('change', function() {
 	 }*/
 }); 
 var urlController;
-if($('.navData li a').attr("data-featureid") == 16 || $('.navData li a').attr("data-featureid") ==31 || $('.navData li a').attr("data-featureid") == 26){
+if($('.navData li a').attr("data-featureid") == 16 || $('.navData li a').attr("data-featureid") ==31 || $('.navData li a').attr("data-featureid") == 26 ||  $('.navData li a').attr("data-featureid") == 45){
 
 	urlController=$("body").attr("data-defaultLink");
 }

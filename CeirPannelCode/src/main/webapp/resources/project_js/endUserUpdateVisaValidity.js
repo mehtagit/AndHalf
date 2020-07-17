@@ -182,7 +182,7 @@ function hide() {
 	   $('#langlist').val(data_lang_param);
 	 //  var langParam=$('#langlist').val() == 'km' ? 'km' : 'en';
 		$.i18n().locale = data_lang_param;
-		////alert($.i18n('imageSize')+"  langParam  "+langParam);
+		//////alert($.i18n('imageSize')+"  langParam  "+langParam);
 		
 		$.i18n().load( {
 			'en': './resources/i18n/en.json',
@@ -357,15 +357,15 @@ function hide() {
     function visaImageValidation(id) {
     	var uploadedFileName = $("#endUseruploadnationalID").val();
     	uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
-    	//alert("file extension=="+uploadedFileName)
+    	////alert("file extension=="+uploadedFileName)
     	var ext = uploadedFileName.split('.').pop();
 
     	var fileSize = ($("#"+id)[0].files[0].size);
     	/*fileSize = (Math.round((fileSize / 100000) * 100) / 100)
-    	alert("----"+fileSize);*/
+    	//alert("----"+fileSize);*/
     	fileSize = Math.floor(fileSize/1000);
     	//$('#FilefieldId').val(id);
-    	//alert(uploadedFileName+"----------"+ext+"----"+fileSize)
+    	////alert(uploadedFileName+"----------"+ext+"----"+fileSize)
     	var fileExtension =ext.toLowerCase();
     	////console.log("file type: "+fileExtension);
     	var extArray = ["png", "jpg","jpeg","gif","bmp","gif"];

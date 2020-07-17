@@ -1,19 +1,19 @@
-<%@ page import="java.util.Date" %>
+<%@ page import="java.util.Date"%>
 <%
-   response.setHeader("Cache-Control", "no-cache");
-	response.setHeader("Cache-Control", "no-store");
-	response.setDateHeader("Expires", 0);
-	response.setHeader("Pragma", "no-cache");
-	
-    /*   //200 secs
-	 session.setAttribute("usertype", null);  */
+	response.setHeader("Cache-Control", "no-cache");
+response.setHeader("Cache-Control", "no-store");
+response.setDateHeader("Expires", 0);
+response.setHeader("Pragma", "no-cache");
+
+/*   //200 secs
+ session.setAttribute("usertype", null);  */
 /* 	 session.setMaxInactiveInterval(10); */
-	 int timeout = session.getMaxInactiveInterval();
-	
-	 long accessTime = session.getLastAccessedTime();
-	 long currentTime= new Date().getTime(); 
-	long dfd= accessTime +timeout;
-	 if( currentTime< dfd){
+int timeout = session.getMaxInactiveInterval();
+
+long accessTime = session.getLastAccessedTime();
+long currentTime = new Date().getTime();
+long dfd = accessTime + timeout;
+if (currentTime < dfd) {
 	/*  response.setHeader("Refresh", timeout + "; URL = ../login");
 	 System.out.println("timeout========"+timeout); 
 	if (session.getAttribute("usertype") != null) { */
@@ -24,7 +24,8 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!-- Security Tags -->
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 <sec:csrfMetaTags />
 <!-- Security Tags -->
 <c:set var="context" value="${pageContext.request.contextPath}" />
@@ -41,9 +42,9 @@
 <meta content="" name="description" />
 <meta content="" name="author" />
 <!-- Security Tags -->
-<meta name="_csrf" content="${_csrf.token}"/>
+<meta name="_csrf" content="${_csrf.token}" />
 <!-- default header name is X-CSRF-TOKEN -->
-<meta name="_csrf_header" content="${_csrf.headerName}"/>
+<meta name="_csrf_header" content="${_csrf.headerName}" />
 <!-- Security Tags -->
 
 <script type="text/javascript"
@@ -52,7 +53,8 @@
  -->
 
 <!-- Favicons-->
-<link rel="icon" href="${context}/resources/images/DMC-Logo.png" sizes="32x32">
+<link rel="icon" href="${context}/resources/images/DMC-Logo.png"
+	sizes="32x32">
 <!-- CORE CSS-->
 <link href="${context}/resources/css/materialize.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
@@ -62,12 +64,9 @@
 <link
 	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.min.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
-<link
-	href=""
-	type="text/css" rel="stylesheet" media="screen,projection">
+<link href="" type="text/css" rel="stylesheet" media="screen,projection">
 <!-- Custome CSS-->
-<link href="" type="text/css"
-	rel="stylesheet" media="screen,projection">
+<link href="" type="text/css" rel="stylesheet" media="screen,projection">
 <link
 	href="${context}/resources/font/font-awesome/css/font-awesome.min.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
@@ -95,13 +94,15 @@
 .row {
 	margin-bottom: 0;
 	margin-top: 0;
-}	
-	
+}
+
 /* input[type=text] {
       height: 35px; 
       margin: 0 0 5px 0;
     } */
 input
+
+
 
 
 
@@ -119,11 +120,15 @@ text
 
 
 
+
+
 :not
 
 
 
+
  
+
 
 
 
@@ -132,7 +137,9 @@ text
 
 
 
+
  
+
 
 
 
@@ -145,7 +152,10 @@ font-size
 
 
 
+
+
 :
+
 
 
 
@@ -153,8 +163,11 @@ font-size
 
 
 
+
 13
 px
+
+
 
 
 
@@ -459,7 +472,7 @@ section {
 	<!--materialize js-->
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
-	
+
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
 
@@ -468,16 +481,16 @@ section {
 	<!--plugins.js - Some Specific JS codes for Plugin Settings-->
 	<script src="${context}/resources/custom_js/bootstrap.min.js"></script>
 
-	
+
 	<!--custom-script.js - Add your own theme custom JS-->
 	<script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
-	
-	
+
+
 	<!--scrollbar-->
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 	<!-- chartist -->
-	
+
 	<script type="text/javascript"
 		src="${context}/resources/js/countries.js"></script>
 	<!-- i18n library -->
@@ -516,21 +529,19 @@ section {
 		src="${context}/resources/project_js/newRule.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/validationMsg.js?version=<%= (int) (Math.random() * 10) %>"></script>
-	
+
 	<script type="text/javascript"
 		src="${context}/resources/project_js/globalVariables.js?version=<%= (int) (Math.random() * 10) %>"></script>
-	<script type="text/javascript"
-		src="" async></script>
+	<script type="text/javascript" src="" async></script>
 </body>
 </html>
 <%
 	} else {
-		/*  request.setAttribute("msg", "  *Please login first");
-		request.getRequestDispatcher("./index.jsp").forward(request, response); */
+	/*  request.setAttribute("msg", "  *Please login first");
+	request.getRequestDispatcher("./index.jsp").forward(request, response); */
 %>
 <script language="JavaScript">
-	sessionStorage.setItem("loginMsg",
-			"*Session has been expired");
+	sessionStorage.setItem("loginMsg", "*Session has been expired");
 	window.top.location.href = "./login";
 </script>
 <%
