@@ -277,7 +277,7 @@ position: fixed;
 														code="input.EntryCountry" /> <span class="star">*</span></label>
 									</div>
 										<div class="input-field col s12 m12 l12">
-											<input type="text" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,200}"
+											<input type="text" pattern="[a-zA-Z0-9\s,'*$-]{0,200}"
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');"
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');"
 												required maxlength="200"
@@ -288,7 +288,7 @@ position: fixed;
 
 										<div class="input-field col s12 m6 l6">
 											<input type="text" class="form-control boxBorder boxHeight"
-												id="streetNumber" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,20}"
+												id="streetNumber" pattern="[a-zA-Z0-9\s,'*$-]{0,20}"
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 												required maxlength="20"> <label for="streetNumber"><spring:message
@@ -297,7 +297,7 @@ position: fixed;
 
 										<div class="input-field col s12 m6 l6">
 											<input type="text" class="form-control boxBorder boxHeight"
-												pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}"
+												pattern="[a-zA-Z0-9\s,'*$-]{0,30}"
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 												required class="form-control boxBorder boxHeight"
@@ -308,7 +308,7 @@ position: fixed;
 
 										<div class="input-field col s12 m6 l6">
 											<input type="text" id="village"
-												pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}"
+												pattern="[a-zA-Z0-9\s,'*$-]{0,30}"
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 												title=""
@@ -317,7 +317,7 @@ position: fixed;
 										</div>
 
 										<div class="input-field col s12 m6 l6">
-											<input type="text" id="commune" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}"
+											<input type="text" id="commune" pattern="[a-zA-Z0-9\s,'*$-]{0,30}"
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 												required maxlength="30"> <label for="commune"><spring:message
@@ -326,7 +326,7 @@ position: fixed;
 
 										<div class="input-field col s12 m6 l6">
 											<input type="text" id="endUserdistrict"
-												pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}"
+												pattern="[a-zA-Z0-9\s,'*$-]{0,30}"
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 												required maxlength="30"> <label for="endUserdistrict"><spring:message
