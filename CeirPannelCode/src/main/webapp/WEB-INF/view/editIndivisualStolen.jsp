@@ -291,7 +291,7 @@ select {
 														<input type="text" name="address" placeholder=""
 															class="form-control boxBorder boxHeight"
 															id="singleStolenaddress"
-															pattern="[^[a-zA-Z0-9\s,'-]*$]{0,200}" title=""
+															pattern="[a-zA-Z0-9\s,'*$-]{0,200}" title=""
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');"
 															maxlength="200" required="required"> <label
@@ -303,7 +303,7 @@ select {
 														<input type="text" name="streetNumber" placeholder=""
 															class="form-control boxBorder boxHeight"
 															id="singleStolenstreetNumber"
-															pattern="[^[a-zA-Z0-9\s,'-]*$]{0,20}" required="required"
+															pattern="[a-zA-Z0-9\s,'*$-]{0,20}" required="required"
 															title=""
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
@@ -313,7 +313,7 @@ select {
 
 													<div class="input-field col s12 m6 l6">
 														<input type="text" name="village" id="singleStolenvillage"
-															placeholder="" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}"
+															placeholder="" pattern="[a-zA-Z0-9\s,'*$-]{0,30}"
 															required="required" title=""
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
@@ -325,7 +325,7 @@ select {
 														<input type="text" name="locality" placeholder=""
 															class="form-control boxBorder boxHeight"
 															id="singleStolenlocality"
-															pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}" required="required"
+															pattern="[a-zA-Z0-9\s,'*$-]{0,30}" required="required"
 															title=""
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
@@ -336,7 +336,7 @@ select {
 													<div class="input-field col s12 m6 l6">
 														<input type="text" name="district" placeholder=""
 															id="singleStolendistrict"
-															pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}" required="required"
+															pattern="[a-zA-Z0-9\s,'*$-]{0,30}" required="required"
 															title=""
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
@@ -346,7 +346,7 @@ select {
 
 													<div class="input-field col s12 m6 l6">
 														<input type="text" name="commune" id="singleStolencommune"
-															placeholder="" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}"
+															placeholder="" pattern="[a-zA-Z0-9\s,'*$-]{0,30}"
 															required="required" title=""
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
@@ -725,7 +725,7 @@ onclick="_Services._selectstartDate()"></i></span>
 															<input type="text" name="address" placeholder=""
 																class="form-control boxBorder boxHeight"
 																id="singleDeviceAddress"
-																pattern="[^[a-zA-Z0-9\s,'-]*$]{0,200}" title=""
+																pattern="[a-zA-Z0-9\s,'*$-]{0,200}" title=""
 																oninput="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');"
 																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');"
 																maxlength="200" required="required"> <label
@@ -737,7 +737,7 @@ onclick="_Services._selectstartDate()"></i></span>
 															<input type="text" name="streetNumber" placeholder=""
 																class="form-control boxBorder boxHeight"
 																id="singleDevicestreetNumber"
-																pattern="[^[a-zA-Z0-9\s,'-]*$]{0,20}"
+																pattern="[a-zA-Z0-9\s,'*$-]{0,20}"
 																required="required" title=""
 																oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
@@ -748,7 +748,7 @@ onclick="_Services._selectstartDate()"></i></span>
 														<div class="input-field col s12 m6 l6">
 															<input type="text" name="village" placeholder=""
 																id="singleDevicevillage"
-																pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}"
+																pattern="[a-zA-Z0-9\s,'*$-]{0,30}"
 																required="required" title=""
 																oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
@@ -760,7 +760,7 @@ onclick="_Services._selectstartDate()"></i></span>
 															<input type="text" name="locality" placeholder=""
 																class="form-control boxBorder boxHeight"
 																id="singleDevicelocality"
-																pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}"
+																pattern="[a-zA-Z0-9\s,'*$-]{0,30}"
 																required="required" title=""
 																oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
@@ -771,7 +771,7 @@ onclick="_Services._selectstartDate()"></i></span>
 														<div class="input-field col s12 m6 l6">
 															<input type="text" name="district" placeholder=""
 																id="singleDevicedistrict"
-																pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}"
+																pattern="[a-zA-Z0-9\s,'*$-]{0,30}"
 																required="required" title=""
 																oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
@@ -781,7 +781,7 @@ onclick="_Services._selectstartDate()"></i></span>
 
 														<div class="input-field col s12 m6 l6">
 															<input type="text" name="commune" placeholder=""
-																id="singleDevicecommune" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}"
+																id="singleDevicecommune" pattern="[a-zA-Z0-9\s,'*$-]{0,30}"
 																required="required" title=""
 																oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"

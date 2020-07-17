@@ -123,6 +123,15 @@ function submitDeviceInfo(){
 				    $('#regularisedDevice').openModal({dismissible:false});
 					$('#dynamicTxnId').text(data.txnId);
 				}
+				
+				else if(data.errorCode==5){
+
+//					$('#sucessMessage').text('');
+					$('#regularisedDevice').openModal({dismissible:false});;
+					$('#sucessMessage').text('');
+					$('#sucessMessage').text($.i18n(data.tag));
+					
+				}
 				else{
 					//$('#sucessMessage').text('');
 					/*$('#regularisedDevice').openModal({dismissible:false});

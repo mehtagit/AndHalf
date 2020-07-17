@@ -130,7 +130,7 @@ function viewConsignmentDetails(txnId){
 			setViewPopupData(data);
 		},
 		error : function() {
-			alert("Failed");
+			////alert("Failed");
 		}
 	});
 }
@@ -237,7 +237,7 @@ function editRegisterConsignment(){
 				$('#sucessMessage').text('Your update on the form for transaction ID ('+data.txnId+') has been successfully updated.');
 			}
 			// $('#updateConsignment').modal('open'); 
-			//alert("success");
+			////alert("success");
 
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
@@ -618,7 +618,7 @@ function fileStolenReport(){
    			 				 $('#stockSucessMessage').text('Your update on the form for transaction ID ('+data.txnId+') has been successfully updated.');
    						 } */ 
 			// $('#updateConsignment').modal('open'); 
-			//alert("success");
+			////alert("success");
 
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
@@ -684,7 +684,7 @@ function fileRecoveryReport(){
    			 				 $('#stockSucessMessage').text('Your update on the form for transaction ID ('+data.txnId+') has been successfully updated.');
    						 } */
 			// $('#updateConsignment').modal('open'); 
-			//alert("success");
+			////alert("success");
 
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
@@ -836,7 +836,7 @@ function updatefileStolenReport(){
 				$('#editMessageTextStoleRecovery').text(data.message);
 			}  
 			// $('#updateConsignment').modal('open'); 
-			//alert("success");
+			////alert("success");
 
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
@@ -962,7 +962,7 @@ function openMulipleStolenPopUp()
 		 				 $('#stockSucessMessage').text('Your update on the form for transaction ID ('+data.txnId+') has been successfully updated.');
 					 } */
 			// $('#updateConsignment').modal('open'); 
-			//alert("success");
+			////alert("success");
 
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
@@ -1219,7 +1219,10 @@ else if(data.errorCode==5){
 			}
 		},
 		error : function() {
-			alert("Failed");
+			$('#approveInformation').closeModal(); 
+			$('#confirmApproveInformation').openModal({dismissible:false});
+			$('#"lawfulStolenDeleteSucessMsg"').text('');
+			$('#"lawfulStolenDeleteSucessMsg"').text($.i18n('errorMsg'));
 		}
 	});
 }
@@ -1288,7 +1291,10 @@ else if(data.errorCode==5){
 			}
 		},
 		error : function() {
-			//alert("Failed");
+			$('#rejectInformation').closeModal(); 
+			$('#confirmRejectInformation').openModal({dismissible:false});
+			$('#"deviceRejectedMessage"').text('');
+			$('#"deviceRejectedMessage"').text($.i18n('error'));
 		}
 	});
 	return false;
@@ -1491,7 +1497,7 @@ function isLengthValid(val){
 
 
 /*function resetDatatable(){
-	alert('called');
+	//alert('called');
 	$('#data-table-history2').DataTable().state.clear();
 	//$('#data-table-history2').DataTable().clear().draw();
 }*/

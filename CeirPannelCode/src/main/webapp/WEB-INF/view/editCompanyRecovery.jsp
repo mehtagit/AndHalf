@@ -383,7 +383,7 @@ onclick="_Services._selectstartDate()"></i></span>
                                                     </div> -->
                                                     <div class="input-field col s12 m12">
                                                         <input type="text" name="bulkRecoveryaddress" class="form-control boxBorder boxHeight" placeholder=""
-                                                            id="bulkRecoveryaddress" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,200}" 
+                                                            id="bulkRecoveryaddress" pattern="[a-zA-Z0-9\s,'*$-]{0,200}" 
                                                             title="" oninput="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
                                                            oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
                                                              maxlength="200" required="required">
@@ -392,7 +392,7 @@ onclick="_Services._selectstartDate()"></i></span>
                     
                                                     <div class="input-field col s12 m6 l6">
                                                         <input type="text" name="bulkRecoverystreetNumber" class="form-control boxBorder boxHeight" placeholder=""
-                                                            id="bulkRecoverystreetNumber" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}" title=""
+                                                            id="bulkRecoverystreetNumber" pattern="[a-zA-Z0-9\s,'*$-]{0,30}" title=""
                                                              oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
                                                        oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
                                                              maxlength="30" required="required">
@@ -400,7 +400,7 @@ onclick="_Services._selectstartDate()"></i></span>
                                                     </div>
 
                                                     <div class="input-field col s12 m6 l6">
-                                                        <input type="text" name="bulkRecoveryvillage" id="bulkRecoveryvillage" placeholder="" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}" title=""
+                                                        <input type="text" name="bulkRecoveryvillage" id="bulkRecoveryvillage" placeholder="" pattern="[a-zA-Z0-9\s,'*$-]{0,30}" title=""
                                                              oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
                                                        oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
                                                              maxlength="30" required="required">
@@ -409,7 +409,7 @@ onclick="_Services._selectstartDate()"></i></span>
                     
                                                     <div class="input-field col s12 m6 l6">
                                                         <input type="text" name="bulkRecoverylocality" class="form-control boxBorder boxHeight" placeholder=""
-                                                            id="bulkRecoverylocality" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}" title=""
+                                                            id="bulkRecoverylocality" pattern="[a-zA-Z0-9\s,'*$-]{0,30}" title=""
                                                              oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
                                                        oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
                                                              maxlength="30" required="required">
@@ -417,7 +417,7 @@ onclick="_Services._selectstartDate()"></i></span>
                                                     </div>
                         
                                                     <div class="input-field col s12 m6 l6">
-                                                        <input type="text" name="bulkRecoverydistrict" id="bulkRecoverydistrict" placeholder="" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}" title=""
+                                                        <input type="text" name="bulkRecoverydistrict" id="bulkRecoverydistrict" placeholder="" pattern="[a-zA-Z0-9\s,'*$-]{0,30}" title=""
                                                              oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
                                                        oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
                                                              maxlength="30" required="required">
@@ -425,7 +425,7 @@ onclick="_Services._selectstartDate()"></i></span>
                                                     </div>
                         
                                                     <div class="input-field col s12 m6 l6">
-                                                        <input type="text" name="bulkRecoverycommune" id="bulkRecoverycommune" placeholder="" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}" title=""
+                                                        <input type="text" name="bulkRecoverycommune" id="bulkRecoverycommune" placeholder="" pattern="[a-zA-Z0-9\s,'*$-]{0,30}" title=""
                                                          oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
                                                        oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
                                                              maxlength="30" required="required">

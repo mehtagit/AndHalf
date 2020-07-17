@@ -272,7 +272,7 @@ width: inherit;
             <div class="row">
                 <form action="">
                     
-                    <h6><spring:message code="modal.deviceApproved" /></h6>
+                    <h6 id="lawfulStolenDeleteSucessMsg"><spring:message code="modal.deviceApproved" /></h6>
                    
                 </form>
             </div>
@@ -322,7 +322,7 @@ width: inherit;
             <div class="row">
                 <form action="">
                   
-                    <h6><spring:message code="modal.deviceRejected" /></h6>
+                    <h6 id="rejectRequestMsg"><spring:message code="modal.deviceRejected" /></h6>
                 </form>
             </div>
             <div class="row">

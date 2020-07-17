@@ -8,11 +8,6 @@ var featureId="3";
 var sessionLang=window.parent.$('#langlist').val() == 'en' ? 'en' : 'km';
 $.i18n().locale = sessionLang;	
 
-$.i18n().load( {
-	'en': './resources/i18n/en.json',
-	'km': './resources/i18n/km.json'
-} ).done( function() { 
-});
 
 
 $(document).ready(function(){
@@ -30,6 +25,11 @@ $(document).ready(function(){
 		type: 'GET',
 		success: function(data){
 
+			$.i18n().load( {
+				'en': './resources/i18n/en.json',
+				'km': './resources/i18n/km.json'
+			} ).done( function() { 
+				
 			for (i = 0; i < data.length; i++) {
 				var id=data[i].name;
 				/*var finalID=id.replace (/\//g, "");*/
@@ -84,7 +84,7 @@ $(document).ready(function(){
 
 
 			}
-
+			});
 		}
 	});
 	notificationDatatable(sessionLang);

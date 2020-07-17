@@ -552,7 +552,7 @@ function approveSubmit(actiontype){
 			}
 		},
 		error : function() {
-			alert("Failed");
+			//alert("Failed");
 		}
 	});
 }
@@ -601,7 +601,7 @@ function rejectSubmit(actiontype){
 			}
 		},
 		error : function() {
-			alert("Failed");
+			//alert("Failed");
 		}
 	});
 }
@@ -682,7 +682,7 @@ $(".add_field_button")
 $(wrapper).on("click", ".remove_field", function(e) { //user click on remove text
 	e.preventDefault();
 	var Iid = id - 1;
-	/*alert("@@@"+Iid)*/
+	/*//alert("@@@"+Iid)*/
 	$('#filediv' + Iid).remove();
 	$(this).parent('div').remove();
 	x--;

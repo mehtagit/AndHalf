@@ -1,4 +1,4 @@
-<%@ page import="java.util.Date"%>
+<%@ page import="java.util.Date" %>
 <%
    response.setHeader("Cache-Control", "no-cache");
 	response.setHeader("Cache-Control", "no-store");
@@ -12,19 +12,17 @@
 	
 	 long accessTime = session.getLastAccessedTime();
 	 long currentTime= new Date().getTime(); 
-	 long dfd= accessTime +timeout;
-	if( currentTime< dfd){
+     long dfd= accessTime +timeout;
+	 if( currentTime< dfd){
 	/*  response.setHeader("Refresh", timeout + "; URL = ../login");
 	 System.out.println("timeout========"+timeout); 
 	if (session.getAttribute("usertype") != null) { */
 %>
-<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <!-- Security Tags -->
-<%@ taglib prefix="sec"
-	uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <sec:csrfMetaTags />
 <!-- Security Tags -->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -32,10 +30,8 @@
 <!DOCTYPE html>
 <html lang="en" class="no-js">
 <head>
-<title>Lawful</title>
-<meta http-equiv='cache-control' content='no-cache'>
-<meta http-equiv='expires' content='-1'>
-<meta http-equiv='pragma' content='no-cache'>
+<title>Stolen</title>
+
 <meta charset="utf-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
@@ -43,18 +39,19 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta content="" name="description" />
 <meta content="" name="author" />
-<!-- Security Tags -->
-<meta name="_csrf" content="${_csrf.token}" />
-<!-- default header name is X-CSRF-TOKEN -->
-<meta name="_csrf_header" content="${_csrf.headerName}" />
-<!-- Security Tags -->
 
+		<!-- Security Tags -->
+<meta name="_csrf" content="${_csrf.token}"/>
+<!-- default header name is X-CSRF-TOKEN -->
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
+<!-- Security Tags -->
+		
 <script type="text/javascript"
 	src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
-
+<!--   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"></script>  
+ -->
 <!-- Favicons-->
-<link rel="icon" href="${context}/resources/images/DMC-Logo.png"
-	sizes="32x32">
+<link rel="icon" href="${context}/resources/images/DMC-Logo.png" sizes="32x32">
 <!-- CORE CSS-->
 <link href="${context}/resources/css/materialize.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
@@ -63,7 +60,8 @@
 <link
 	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.min.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
-
+<%-- <link href="${context}/resources/css/jquery-datepicker2.css"
+	type="text/css" rel="stylesheet" media="screen,projection"> --%>
 <link
 	href="${context}/resources/font/font-awesome/css/font-awesome.min.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
@@ -74,6 +72,7 @@
 <link
 	href="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
+<%--  <link href="${context}/resources/js/plugins/chartist-js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection"> --%>
 <link rel="stylesheet"
 	href="${context}/resources/project_css/stolenRecovery.css">
 <link rel="stylesheet"
@@ -81,8 +80,6 @@
 <link rel="stylesheet"
 	href="${context}/resources/custom_js/jquery-ui.css">
 <script src="${context}/resources/custom_js/1.12.1_jquery-ui.min.js"></script>
-<link rel="stylesheet"
-	href="${context}/resources/project_css/intlTelInput.css">
 
 <style>
 .checkboxFont {
@@ -126,8 +123,54 @@ select.browser-default {
 	height: 34px;
 	margin-bottom: 4px;
 }
-</style>
 
+.checkboxFont {
+	color: #444;
+	font-size: 16px;
+	margin-right: 10px;
+}
+section#content {
+
+    position: absolute;
+}
+.section {
+	padding-top: 0.5rem;
+}
+
+.welcomeMsg {
+	padding-bottom: 50px !important;
+	line-height: 1.5 !important;
+	text-align: center;
+}
+
+.file-label {
+	font-size: 0.9rem;
+}
+
+.contact-label {
+    margin-top: -7px;
+    margin-bottom: 0;
+    font-size: 0.8rem;
+}
+.blockingType {
+	height: 4.6rem;
+	margin-bottom: 5px;
+}
+
+textarea.materialize-textarea {
+	height: unset !important;
+	max-height: 300px !important;
+}
+
+select {
+	margin-bottom: 5px;
+	height: 2.2rem;
+}
+
+.iti--allow-dropdown input, .iti--allow-dropdown input[type=text] {
+	margin-bottom: 5px !important;
+}
+</style>
 
 
 </head>
@@ -325,7 +368,7 @@ select.browser-default {
 														<input type="text" id="sigleRecoveryaddress"
 															name="sigleRecoveryaddress"
 															class="form-control boxBorder boxHeight"
-															pattern="[^[a-zA-Z0-9\s,'-]*$]{0,200}"
+															pattern="[a-zA-Z0-9\s,'*$-]{0,200}"
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');"
 															maxlength="200" required /> <label
@@ -337,7 +380,7 @@ select.browser-default {
 														<input type="text" name="sigleRecoverystreetNumber"
 															class="form-control boxBorder boxHeight"
 															id="sigleRecoverystreetNumber" maxlength="20"
-															pattern="[^[a-zA-Z0-9\s,'-]*$]{0,20}"
+															pattern="[a-zA-Z0-9\s,'*$-]{0,20}"
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 															required /> <label for="sigleRecoverystreetNumber">
@@ -349,7 +392,7 @@ select.browser-default {
 													<div class="input-field col s12 m6 l6">
 														<input type="text" name="sigleRecoveryvillage"
 															id="sigleRecoveryvillage" maxlength="30"
-															pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}"
+															pattern="[a-zA-Z0-9\s,'*$-]{0,30}"
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 															required /> <label for="sigleRecoveryvillage"> <spring:message
@@ -360,7 +403,7 @@ select.browser-default {
 														<input type="text" name="sigleRecoverylocality"
 															class="form-control boxBorder boxHeight"
 															id="sigleRecoverylocality" maxlength="30"
-															pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}"
+															pattern="[a-zA-Z0-9\s,'*$-]{0,30}"
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 															required /> <label for="sigleRecoverylocality"><spring:message
@@ -370,7 +413,7 @@ select.browser-default {
 													<div class="input-field col s12 m6 l6">
 														<input type="text" name="sigleRecoverydistrict"
 															id="sigleRecoverydistrict"
-															pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}"
+															pattern="[a-zA-Z0-9\s,'*$-]{0,30}"
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 															required /> <label for="sigleRecoverydistrict"><spring:message
@@ -380,7 +423,7 @@ select.browser-default {
 													<div class="input-field col s12 m6 l6">
 														<input type="text" name="sigleRecoverycommune"
 															id="sigleRecoverycommune" maxlength="30"
-															pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}"
+															pattern="[a-zA-Z0-9\s,'*$-]{0,30}"
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 															required /> <label for="sigleRecoverycommune"> <spring:message
@@ -644,7 +687,7 @@ onclick="_Services._selectstartDate()"></i></span>
 											<input type="text" name="bulkRecoveryaddress"
 												class="form-control boxBorder boxHeight"
 												id="bulkRecoveryaddress"
-												pattern="[^[a-zA-Z0-9\s,'-]*$]{0,200}"
+												pattern="[a-zA-Z0-9\s,'*$-]{0,200}"
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
 												required maxlength="200"> <label
@@ -656,7 +699,7 @@ onclick="_Services._selectstartDate()"></i></span>
 											<input type="text" name="bulkRecoverystreetNumber"
 												class="form-control boxBorder boxHeight"
 												id="bulkRecoverystreetNumber"
-												pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}"
+												pattern="[a-zA-Z0-9\s,'*$-]{0,30}"
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
 												required maxlength="30"> <label
@@ -667,7 +710,7 @@ onclick="_Services._selectstartDate()"></i></span>
 										<div class="input-field col s12 m6 l6">
 											<input type="text" name="bulkRecoveryvillage"
 												id="bulkRecoveryvillage"
-												pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}"
+												pattern="[a-zA-Z0-9\s,'*$-]{0,30}"
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
 												required maxlength="30"> <label
@@ -679,7 +722,7 @@ onclick="_Services._selectstartDate()"></i></span>
 											<input type="text" name="bulkRecoverylocality"
 												class="form-control boxBorder boxHeight"
 												id="bulkRecoverylocality" maxlength="50"
-												pattern="[^[a-zA-Z0-9\s,'-]*$]{0,50}"
+												pattern="[a-zA-Z0-9\s,'*$-]{0,50}"
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
 												required maxlength="30"> <label
@@ -690,7 +733,7 @@ onclick="_Services._selectstartDate()"></i></span>
 										<div class="input-field col s12 m6 l6">
 											<input type="text" name="bulkRecoverydistrict"
 												id="bulkRecoverydistrict"
-												pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}"
+												pattern="[a-zA-Z0-9\s,'*$-]{0,30}"
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
 												required maxlength="30"> <label
@@ -701,7 +744,7 @@ onclick="_Services._selectstartDate()"></i></span>
 										<div class="input-field col s12 m6 l6">
 											<input type="text" name="bulkRecoverycommune"
 												id="bulkRecoverycommune"
-												pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}"
+												pattern="[a-zA-Z0-9\s,'*$-]{0,30}"
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
 												required maxlength="30"> <label

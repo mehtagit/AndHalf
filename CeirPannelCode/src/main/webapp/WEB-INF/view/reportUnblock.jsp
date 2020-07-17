@@ -348,7 +348,7 @@ aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
             <h6 class="modal-header"><spring:message code="operator.markunblock" /></h6>
         <div class="modal-content">
          <div class="row">
-                <h6><spring:message code="operator.markedwith" /> <span id="txnIdblocksingleDevice"></span></h6>
+                <h6 id="saveSingleMsg"><spring:message code="operator.markedwith" /> <span id="txnIdblocksingleDevice"></span></h6>
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
@@ -363,7 +363,7 @@ aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
         <h6 class="modal-header"><spring:message code="operator.markunblock" /></h6>
         <div class="modal-content">
          <div class="row">
-                <h6><spring:message code="operator.markedwith" /> <span id="txnIdUnblocksingleDevice"></span></h6>
+                <h6 id="bulkSaveSucessMsg"><spring:message code="operator.markedwith" /> <span id="txnIdUnblocksingleDevice"></span></h6>
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
@@ -497,7 +497,7 @@ src="${context}/resources/project_js/enterKey.js?version=<%= (int) (Math.random(
 					for (i = 0; i < data.length; i++) {
 						$('<option>').val(data[i].value).text(data[i].interp)
 						.appendTo('#unbockSingledeviceType');
-						console.log('#unbockSingledeviceType')
+						////console.log.log('#unbockSingledeviceType')
 					}
 				});
 
@@ -506,7 +506,7 @@ src="${context}/resources/project_js/enterKey.js?version=<%= (int) (Math.random(
 					for (i = 0; i < data.length; i++) {
 						$('<option>').val(data[i].value).text(data[i].interp)
 						.appendTo('#unbockSingleMultipleSimStatus');
-						console.log('#unbockSingleMultipleSimStatus');
+						//console.log('#unbockSingleMultipleSimStatus');
 					}
 				});
 				
@@ -515,7 +515,7 @@ src="${context}/resources/project_js/enterKey.js?version=<%= (int) (Math.random(
 					for (i = 0; i < data.length; i++) {
 						$('<option>').val(data[i].value).text(data[i].interp)
 						.appendTo('#UnblockdeviceIdType');
-						console.log('#UnblockdeviceIdType');
+						//console.log('#UnblockdeviceIdType');
 					}
 				});
 				
@@ -524,10 +524,10 @@ src="${context}/resources/project_js/enterKey.js?version=<%= (int) (Math.random(
 					for (i = 0; i < data.length; i++) {
 						$('<option>').val(data[i].value).text(data[i].interp)
 						.appendTo('#bulkunBlockdeviceCategory');
-						console.log('#bulkunBlockdeviceCategory');
+						//console.log('#bulkunBlockdeviceCategory');
 						$('<option>').val(data[i].value).text(data[i].interp)
 						.appendTo('#singleDeviceUnblock');
-						console.log('#singleDeviceUnblock');
+						//console.log('#singleDeviceUnblock');
 						
 					}
 				});

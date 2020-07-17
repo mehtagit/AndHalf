@@ -134,7 +134,6 @@ input#quantity {
     position: relative;
     width: 100%;
     padding-right: .75rem;
-    padding-left: .75rem;
 }
 .card {
     position: relative;

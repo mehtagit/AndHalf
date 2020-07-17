@@ -628,7 +628,7 @@ function uploadStock(){
 	var quantity=$('#Quantity').val();
 	var deviceQuantity=$('#devicequantity').val();
 	 
-	 console.log("supplierId="+supplierId+" supplierName="+supplierName+" InvoiceNumber="+invoiceNumber+" quantity="+quantity)
+	 ////console.log.log.log("supplierId="+supplierId+" supplierName="+supplierName+" InvoiceNumber="+invoiceNumber+" quantity="+quantity)
 	 var formData= new FormData();
 		formData.append('file', $('#file')[0].files[0]);
 	 	 formData.append('supplierId',supplierId);
@@ -650,21 +650,21 @@ function uploadStock(){
 		contentType: false,
 		success: function (data, textStatus, jqXHR) {
 			$('div#initialloader').delay(300).fadeOut('slow');
-			 //console.log(data);
+			 ////console.log.log(data);
 			 $("#stockSubmitButton").prop('disabled', true);
 			   $('#submitStock').openModal({
 		    	   dismissible:false
 		       });
 			 if(data.errorCode=="0")
 				 {
-				 //console.log("status code = 0");
+				 ////console.log.log("status code = 0");
 				$('#stockSuccessMessage').text(successMsg);
 			 $('#stockSuccessMessage').append(data.txnId);
 			 //$('#errorCode').val(data.errorCode);
 				 }
 			 else if(data.errorCode=="3")
 				 {
-				//console.log("status code = 3"); 
+				////console.log.log("status code = 3"); 
 				$('#sucessMessage').text('');
 				$('#sucessMessage').text(invoiceNumberExist);
 				 $('#errorCode').val(data.errorCode);
@@ -691,7 +691,7 @@ function uploadStock(){
 			
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-		console.log("error in ajax")
+		//console.log.log("error in ajax")
 		}
 	});
 	
@@ -706,8 +706,8 @@ function redirectToViewPage()
 	 var userId = $("body").attr("data-userID");
 	 var currentRoleType = $("body").attr("data-selected-roleType"); 
 	 var role = currentRoleType == null ? roleType : currentRoleType;
-	 //console.log(" userId="+userId+" role="+role);
-	//console.log("./assignDistributor?userTypeId="+role);
+	 ////console.log.log(" userId="+userId+" role="+role);
+	////console.log.log("./assignDistributor?userTypeId="+role);
 	var selectedRoleTypeId = $("body").attr("data-selectedRoleTypeId");
 	
 	
@@ -813,7 +813,7 @@ function assigneeTable(URL,dataUrl){
 					dataType: "json",
 					data : function(d) {
 						d.filter = JSON.stringify(request); 
-					   console.log(JSON.stringify(request));
+					   //console.log.log(JSON.stringify(request));
 					}
 
 				},
@@ -822,7 +822,7 @@ function assigneeTable(URL,dataUrl){
 			$('div#initialloader').delay(300).fadeOut('slow');
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			//console.log("error in ajax");
+			////console.log.log("error in ajax");
 		}
 	});
 

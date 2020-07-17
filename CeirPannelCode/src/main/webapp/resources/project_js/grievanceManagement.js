@@ -353,7 +353,7 @@ var featureId = 6;
 				if(now.getDate().toString().charAt(0) != '0'){
 					currentDate='0'+now.getDate();
 
-					/* alert("only date="+currentDate); */
+					/* //alert("only date="+currentDate); */
 				}
 				else{
 					currentDate=now.getDate();
@@ -418,10 +418,10 @@ var featureId = 6;
 						 	   dismissible:false
 						    });
 						//////console.log(data.grievance.categoryId)
-						//alert("11"+data.categoryId)
+						////alert("11"+data.categoryId)
 						setDocTypeValue(data[0].grievance.categoryId);
 						$('#existingGrievanceID').val(data[0].grievance.categoryId);
-					/*	alert("22");*/
+					/*	//alert("22");*/
 						$('#grievanceIdToSave').text(grievanceId);
 						$('#grievanceTxnId').text(txnId);
 						$('#grievanceUserid').val(userId);
@@ -440,7 +440,7 @@ var featureId = 6;
 									//$("#viewPreviousMessage").append("<div class='chat-message-content clearfix'><a href='"+projectpath+"/"+data[i].attachedFiles[j].fileName+"/"+data[i].attachedFiles[j].grievanceId+"/"+data[i].attachedFiles[j].docType+"'>"+data[i].attachedFiles[j].fileName+"</a></div>");
 									}
 								else{
-								//alert(data[i].attachedFiles[j].docType);
+								////alert(data[i].attachedFiles[j].docType);
 								if(data[i].attachedFiles[j].docType=="")
 									{
 									//$("#chatMsg").append("<div class='chat-message-content clearfix'> <span class='document-Type' ><b>Document Type : </b>"+data[i].attachedFiles[j].docType+"</span> <a href='"+projectpath+"/"+data[i].attachedFiles[j].fileName+"/"+data[i].attachedFiles[j].grievanceId+"/"+data[i].attachedFiles[j].docType+"'>"+data[i].attachedFiles[j].fileName+"</a></div>");
@@ -534,10 +534,7 @@ var featureId = 6;
 					}
 				else{
 					//////console.log("else");
-					
-				}
-					
-					
+					}
 					documentFileName=$('#docTypeFile'+fieldId).val().replace('C:\\fakepath\\','')
 					docTypeTag=$('#docTypetag'+fieldId).val();
 					
@@ -693,7 +690,7 @@ var featureId = 6;
 										//$("#chatMsg").append("<div class='chat-message-content clearfix'><a href='"+projectpath+"/"+data[i].attachedFiles[j].fileName+"/"+data[i].attachedFiles[j].grievanceId+"/"+data[i].attachedFiles[j].docType+"'>"+data[i].attachedFiles[j].fileName+"</a></div>");
 										}
 									else{
-									//alert(data[i].attachedFiles[j].docType);
+									////alert(data[i].attachedFiles[j].docType);
 									if(data[i].attachedFiles[j].docType=="")
 										{
 										//$("#chatMsg").append("<div class='chat-message-content clearfix'> <span class='document-Type' ><b>Document Type : </b>"+data[i].attachedFiles[j].docType+"</span> <a href='"+projectpath+"/"+data[i].attachedFiles[j].fileName+"/"+data[i].attachedFiles[j].grievanceId+"/"+data[i].attachedFiles[j].docType+"'>"+data[i].attachedFiles[j].fileName+"</a></div>");
@@ -848,12 +845,12 @@ var featureId = 6;
 				
 				
 				id++;
-				/*alert("$$$$"+id)*/
+				/*//alert("$$$$"+id)*/
 			});
 			/*$(wrapper).on("click", ".remove_field", function (e) { //user click on remove text
 				e.preventDefault();
 				var Iid=id-1;
-				alert("@@@"+Iid)
+				//alert("@@@"+Iid)
 				$('#filediv'+Iid).remove();
 				$(this).parent('div').remove();
 				x--;

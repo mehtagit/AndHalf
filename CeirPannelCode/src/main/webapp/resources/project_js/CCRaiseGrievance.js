@@ -27,14 +27,14 @@
 
 	/*if(sessionStorage.getItem("cierRoletype")=="Customer Care"){
 		window.raisedBy = "Customer Care";  
-		alert("window.raisedBy1------->" +window.raisedBy);
+		//alert("window.raisedBy1------->" +window.raisedBy);
 	}else{
 		window.raisedBy = "Self";
-		alert("window.raisedBy2------->" +window.raisedBy);
+		//alert("window.raisedBy2------->" +window.raisedBy);
 	}*/
 	
-	/*alert("userId-->" +$("body").attr("data-userID"));
-	alert("usertype-->" +$("body").attr("data-roleType"));*/
+	/*//alert("userId-->" +$("body").attr("data-userID"));
+	//alert("usertype-->" +$("body").attr("data-roleType"));*/
 	
 function saveaAonymousGrievance(){
 
@@ -267,7 +267,7 @@ $(".endUser_add_field_button").click(function (e) { //on add input button click
 $(endUserwrapper).on("click", ".endUser_remove_field", function (e) { //user click on remove text
 e.preventDefault();
 var Iid=id-1;
-/*alert("@@@"+Iid)*/
+/*//alert("@@@"+Iid)*/
 $('#endUserfilediv'+Iid).remove();
 $(this).parent('div').remove();
 x--;
@@ -450,7 +450,7 @@ function enableReplySelectFile(){
 									//$("#viewPreviousMessage").append("<div class='chat-message-content clearfix'><a href='"+projectpath+"/"+data[i].attachedFiles[j].fileName+"/"+data[i].attachedFiles[j].grievanceId+"/"+data[i].attachedFiles[j].docType+"'>"+data[i].attachedFiles[j].fileName+"</a></div>");
 									}
 								else{
-								//alert(data[i].attachedFiles[j].docType);
+								////alert(data[i].attachedFiles[j].docType);
 								if(data[i].attachedFiles[j].docType=="")
 									{
 									//$("#chatMsg").append("<div class='chat-message-content clearfix'> <span class='document-Type' ><b>Document Type : </b>"+data[i].attachedFiles[j].docType+"</span> <a href='"+projectpath+"/"+data[i].attachedFiles[j].fileName+"/"+data[i].attachedFiles[j].grievanceId+"/"+data[i].attachedFiles[j].docType+"'>"+data[i].attachedFiles[j].fileName+"</a></div>");
@@ -604,13 +604,13 @@ function enableReplySelectFile(){
 				if (now.getDate().toString().charAt(0) != '0') {
 					currentDate = '0' + now.getDate();
 
-					/* alert("only date="+currentDate); */
+					/* //alert("only date="+currentDate); */
 				} else {
 					currentDate = now.getDate();
 				}
 				var today = now.getFullYear() + '-' + (now.getMonth() + 1) + '-'
 						+ currentDate;
-				//alert("today"+today);
+				////alert("today"+today);
 				//////console.log("dispatche=" + dispatcDate);
 				//////console.log("todays parse date" + Date.parse(today));
 				//////console.log("dispatche parse date" + Date.parse(dispatcDate));
@@ -620,7 +620,7 @@ function enableReplySelectFile(){
 					$('#expectedDispatcheDate').val("");
 				}
 
-				//alert("current date="+today+" dispatche date="+dispatcDate)
+				////alert("current date="+today+" dispatche date="+dispatcDate)
 			}
 			
 	$('#endUsercategory').on('change',function() {

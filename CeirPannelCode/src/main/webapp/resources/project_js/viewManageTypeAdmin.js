@@ -550,7 +550,7 @@ function setUploadedFiles(data) {
 	for (var i = 0; i < importerViewResponse.length; i++) {
 		for (var j = 0; j < importerViewResponse[i]["attachedFiles"].length; j++) {
 
-		/*	alert("Document Type----->"
+		/*	//alert("Document Type----->"
 					+ importerViewResponse[i].attachedFiles[j].docType.length
 					+ " File Name--->"
 					+ importerViewResponse[i].attachedFiles[j].fileName.length)*/
@@ -583,7 +583,7 @@ function setUploadedFiles(data) {
 				}
 			} else {
 
-				alert("in else part")
+				//alert("in else part")
 			}
 
 			$("#docTypetag1").val(
@@ -846,7 +846,7 @@ $(".add_field_button")
 														// text
 	e.preventDefault();
 	var Iid = id - 1;
-	 alert("@@@"+Iid) 
+	 //alert("@@@"+Iid) 
 	$('#filediv' + Iid).remove();
 	$(this).parent('div').remove();
 	x--;
@@ -916,7 +916,7 @@ function approveSubmit(actiontype) {
 			}
 		},
 		error : function() {
-			alert("Failed");
+			//alert("Failed");
 		}
 	});
 }
@@ -976,7 +976,7 @@ function rejectSubmit(actiontype) {
 			}
 		},
 		error : function() {
-			alert("Failed");
+			//alert("Failed");
 		}
 	});
 
@@ -1137,7 +1137,7 @@ function historyRecord(txnID) {
 		contentType : false,
 		success : function(result) {
 			var dataObject = eval(result);
-			// alert(JSON.stringify(dataObject.data))
+			// //alert(JSON.stringify(dataObject.data))
 			$('#data-table-history').dataTable({
 				"order" : [ [ 1, "asc" ] ],
 				destroy : true,

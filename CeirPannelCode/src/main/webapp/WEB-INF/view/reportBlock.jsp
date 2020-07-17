@@ -421,7 +421,7 @@ onclick="_Services._selectstartDate()"></i></span>
             
 
             <div class="row">
-                <h6><spring:message code="operator.thisfileblock" /><span id="txnIdsingleImei"></span></h6>
+                <h6 id="blockBulkDeviceMsg"><spring:message code="operator.thisfileblock" /><span id="txnIdsingleImei"></span></h6>
             </div>
             <div class="row">
                 <div class="input-field col s12 center">

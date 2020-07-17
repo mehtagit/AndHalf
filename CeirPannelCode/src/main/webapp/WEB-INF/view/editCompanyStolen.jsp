@@ -496,7 +496,7 @@
 											<div class="input-field col s12 m6">
 												<input type="text" name="address" placeholder=""
 													class="form-control boxBorder boxHeight"
-													id="bulkStolenaddress" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,200}" 
+													id="bulkStolenaddress" pattern="[a-zA-Z0-9\s,'*$-]{0,200}" 
 													title=""
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');" 
@@ -508,7 +508,7 @@
 											<div class="input-field col s12 m6 l6">
 												<input type="text" name="streetNumber" placeholder=""
 													class="form-control boxBorder boxHeight"
-													id="bulkStolenstreetNumber" pattern="[^[a-zA-Z0-9\s,'50" title=""
+													id="bulkStolenstreetNumber" pattern="[a-zA-Z0-9\s,'*$-]{0,20}" title=""
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 													 maxlength="20" required="required" >
@@ -518,7 +518,7 @@
 
 											<div class="input-field col s12 m6 l6">
 												<input type="text" name="village" id="bulkStolenvillage" placeholder=""
-													pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}" title=""
+													pattern="[a-zA-Z0-9\s,'*$-]{0,30}" title=""
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 												 maxlength="30" required="required">
@@ -530,7 +530,7 @@
 											<div class="input-field col s12 m6 l6">
 												<input type="text" name="locality" placeholder=""
 													class="form-control boxBorder boxHeight"
-													id="bulkStolenlocality"  pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}"
+													id="bulkStolenlocality"  pattern="[a-zA-Z0-9\s,'*$-]{0,30}"
 													 title="" oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 													 maxlength="30" required="required"
@@ -540,7 +540,7 @@
 
 											<div class="input-field col s12 m6 l6">
 												<input type="text" name="district" id="bulkStolendistrict" placeholder=""
-													pattern="[a-zA-Z ]{0,30}" title=""
+													pattern="[a-zA-Z0-9\s,'*$-]{0,30}" title=""
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 												 maxlength="30" required="required"> <label for="district"><spring:message code="input.district" />
@@ -550,7 +550,7 @@
 
 											<div class="input-field col s12 m6 l6">
 												<input type="text" name="commune" id="bulkStolencommune" placeholder=""
-													pattern="[a-zA-Z ]{0,30}" title=""
+													pattern="[a-zA-Z0-9\s,'*$-]{0,30}" title=""
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 												 maxlength="30" required="required"> <label for="commune"><spring:message code="input.commune" />
@@ -656,7 +656,7 @@
 											<div class="input-field col s12 m12">
 												<input type="text" name="address" placeholder=""
 													class="form-control boxBorder boxHeight"
-													id="deviceBulkStolenaddress" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,200}" title="" 
+													id="deviceBulkStolenaddress" pattern="[a-zA-Z0-9\s,'*$-]{0,200}" title="" 
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');"
 													maxlength="200" required="required"> <label
@@ -667,7 +667,7 @@
 											<div class="input-field col s12 m6 l6">
 												<input type="text" name="streetNumber" placeholder=""
 													class="form-control boxBorder boxHeight"
-													id="deviceBulkStolenstreetNumber"  pattern="[^[a-zA-Z0-9\s,'-]*$]{0,20}" title=""
+													id="deviceBulkStolenstreetNumber"  pattern="[a-zA-Z0-9\s,'*$-]{0,20}" title=""
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 													 maxlength="20" required="required">
@@ -677,7 +677,7 @@
 
 											<div class="input-field col s12 m6 l6">
 												<input type="text" name="village" placeholder="" id="deviceBulkStolenvillage"
-													pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}" title="" maxlength="30"
+													pattern="[a-zA-Z0-9\s,'*$-]{0,30}" title="" maxlength="30"
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');" required="required"> <label
 													for="village"><spring:message code="input.village" /> <span class="star">*</span></label>
@@ -686,7 +686,7 @@
 											<div class="input-field col s12 m6 l6">
 												<input type="text" name="locality" placeholder=""
 													class="form-control boxBorder boxHeight"
-													id="deviceBulkStolenlocality" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}" title="" 
+													id="deviceBulkStolenlocality" pattern="[a-zA-Z0-9\s,'*$-]{0,30}" title="" 
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 													maxlength="30" required="required">
@@ -695,7 +695,7 @@
 
 											<div class="input-field col s12 m6 l6">
 												<input type="text" name="district" placeholder=""
-													id="deviceBulkStolendistrict"pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}" title="" maxlength="30" 
+													id="deviceBulkStolendistrict"pattern="[a-zA-Z0-9\s,'*$-]{0,30}" title="" maxlength="30" 
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 													required="required"> <label
@@ -704,7 +704,7 @@
 
 											<div class="input-field col s12 m6 l6">
 												<input type="text" name="commune" placeholder=""
-													id="deviceBulkStolencommune" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}" title="" maxlength="30"
+													id="deviceBulkStolencommune" pattern="[a-zA-Z0-9\s,'*$-]{0,30}" title="" maxlength="30"
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 													 required="required"> <label

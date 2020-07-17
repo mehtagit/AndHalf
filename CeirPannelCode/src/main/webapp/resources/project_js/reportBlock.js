@@ -1,108 +1,108 @@
 /*	window.parent.$('#langlist').on('change', function() {
 			var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
-		
+
 			window.location.assign("openBlockUnblockPage?pageType=block&lang="+lang);
 		}); */
-		
-		var langParam=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
-		$.i18n().locale = langParam;
-		var successMsg;
-		$.i18n().load( {
-			'en': './resources/i18n/en.json',
-			'km': './resources/i18n/km.json'
-		} ).done( function() { 
-			editUnblock=$.i18n('editStolenDevice');
-			
-		});
-		
 
-		$(document).ready(function () {
-			var token = $("meta[name='_csrf']").attr("content");
-			var header = $("meta[name='_csrf_header']").attr("content");
-			$.ajaxSetup({
-			headers:
-			{ 'X-CSRF-TOKEN': token }
-			});
+var langParam=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
+$.i18n().locale = langParam;
+var successMsg;
+$.i18n().load( {
+	'en': './resources/i18n/en.json',
+	'km': './resources/i18n/km.json'
+} ).done( function() { 
+	editUnblock=$.i18n('editStolenDevice');
+
+});
 
 
-			$.getJSON('./getDropdownList/DEVICE_TYPE', function(data) {
-				
-				for (i = 0; i < data.length; i++) {
-					$('<option>').val(data[i].value).text(data[i].interp)
-					.appendTo('#blockdeviceType');
-					//////console.log('#blockdeviceType')
-				}
-			});
-
-			$.getJSON('./getDropdownList/MULTI_SIM_STATUS', function(data) {
-				
-				for (i = 0; i < data.length; i++) {
-					$('<option>').val(data[i].value).text(data[i].interp)
-					.appendTo('#blockmultipleSimStatus');
-					////console.log('#blockmultipleSimStatus');
-				}
-			});
-		});
-		
-		$.getJSON('./getDropdownList/DEVICE_ID_TYPE', function(data) {
-			
-			for (i = 0; i < data.length; i++) {
-				$('<option>').val(data[i].value).text(data[i].interp)
-				.appendTo('#blockdeviceIdType');
-				////console.log('#blockdeviceIdType');
-			}
-		});
-		
-		var RequestData = {
-				"tag" : "GREY_TO_BLACK_MOVE_PERIOD_IN_DAY"
-		}
-		var token = $("meta[name='_csrf']").attr("content");
-		var header = $("meta[name='_csrf_header']").attr("content");
-		$.ajaxSetup({
+$(document).ready(function () {
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
 		headers:
 		{ 'X-CSRF-TOKEN': token }
-		});
+	});
 
 
-		$.ajax({
-			url : "./system/viewTag",
-			data :	JSON.stringify(RequestData),
-			dataType : 'json',
-			contentType : 'application/json; charset=utf-8',
-			type : 'POST',
-			success : function(data) {
-				////console.log(data.value);
-				$('#defaultPeriodId,#bulkblocktypeRadioId,#editbulkblocktypeRadioId').attr('title', data.value+' Days');
-			},
-			error : function() {
-				////console.log("Failed");
-			}
-		});
-	
-		$.getJSON('./getTypeDropdownList/BLOCK_CATEGORY/'+$("body").attr("data-userTypeID"), function(data) {
-			
-			for (i = 0; i < data.length; i++) {
-				$('<option>').val(data[i].value).text(data[i].interp)
-				.appendTo('#bulkBlockdeviceCategory');
-				////console.log('#bulkBlockdeviceCategory');
-				$('<option>').val(data[i].value).text(data[i].interp)
-				.appendTo('#singleDeviceCategory');
-				////console.log('#singleDeviceCategory');
-			}
-		});
-		
+	$.getJSON('./getDropdownList/DEVICE_TYPE', function(data) {
+
+		for (i = 0; i < data.length; i++) {
+			$('<option>').val(data[i].value).text(data[i].interp)
+			.appendTo('#blockdeviceType');
+			//////console.log('#blockdeviceType')
+		}
+	});
+
+	$.getJSON('./getDropdownList/MULTI_SIM_STATUS', function(data) {
+
+		for (i = 0; i < data.length; i++) {
+			$('<option>').val(data[i].value).text(data[i].interp)
+			.appendTo('#blockmultipleSimStatus');
+			////console.log('#blockmultipleSimStatus');
+		}
+	});
+});
+
+$.getJSON('./getDropdownList/DEVICE_ID_TYPE', function(data) {
+
+	for (i = 0; i < data.length; i++) {
+		$('<option>').val(data[i].value).text(data[i].interp)
+		.appendTo('#blockdeviceIdType');
+		////console.log('#blockdeviceIdType');
+	}
+});
+
+var RequestData = {
+		"tag" : "GREY_TO_BLACK_MOVE_PERIOD_IN_DAY"
+}
+var token = $("meta[name='_csrf']").attr("content");
+var header = $("meta[name='_csrf_header']").attr("content");
+$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+});
+
+
+$.ajax({
+	url : "./system/viewTag",
+	data :	JSON.stringify(RequestData),
+	dataType : 'json',
+	contentType : 'application/json; charset=utf-8',
+	type : 'POST',
+	success : function(data) {
+		////console.log(data.value);
+		$('#defaultPeriodId,#bulkblocktypeRadioId,#editbulkblocktypeRadioId').attr('title', data.value+' Days');
+	},
+	error : function() {
+		////console.log("Failed");
+	}
+});
+
+$.getJSON('./getTypeDropdownList/BLOCK_CATEGORY/'+$("body").attr("data-userTypeID"), function(data) {
+
+	for (i = 0; i < data.length; i++) {
+		$('<option>').val(data[i].value).text(data[i].interp)
+		.appendTo('#bulkBlockdeviceCategory');
+		////console.log('#bulkBlockdeviceCategory');
+		$('<option>').val(data[i].value).text(data[i].interp)
+		.appendTo('#singleDeviceCategory');
+		////console.log('#singleDeviceCategory');
+	}
+});
+
 
 function showSingleImeiBlock()
 {
 	$("#SingleImeiBlock").css("display", "block");
 	$("#multipleImeiBlock").css("display", "none");
-	
+
 	$('#multipleImeiBlockform').trigger("reset");
 	$('#SingleImeiBlockform').trigger("reset");
-	
+
 
 	/*$.getJSON('./getDropdownList/DEVICE_TYPE', function(data) {
-		
+
 		for (i = 0; i < data.length; i++) {
 			$('<option>').val(data[i].value).text(data[i].interp)
 			.appendTo('#blockdeviceType');
@@ -111,25 +111,25 @@ function showSingleImeiBlock()
 	});
 
 	$.getJSON('./getDropdownList/MULTI_SIM_STATUS', function(data) {
-		
+
 		for (i = 0; i < data.length; i++) {
 			$('<option>').val(data[i].value).text(data[i].interp)
 			.appendTo('#blockmultipleSimStatus');
 			////console.log('#blockmultipleSimStatus');
 		}
 	});
-	
+
 	$.getJSON('./getDropdownList/DEVICE_ID_TYPE', function(data) {
-		
+
 		for (i = 0; i < data.length; i++) {
 			$('<option>').val(data[i].value).text(data[i].interp)
 			.appendTo('#blockdeviceIdType');
 			////console.log('#blockdeviceIdType');
 		}
 	});
-	
-	
-*/
+
+
+	 */
 }
 
 
@@ -140,9 +140,9 @@ function showMultipleImeiBlock()
 	$("#SingleImeiBlock").css("display", "none");
 	$('#multipleImeiBlockform').trigger("reset");
 	$('#SingleImeiBlockform').trigger("reset");
-	
-/*	$.getJSON('./getDropdownList/GRIEVANCE_CATEGORY', function(data) {
-		
+
+	/*	$.getJSON('./getDropdownList/GRIEVANCE_CATEGORY', function(data) {
+
 		for (i = 0; i < data.length; i++) {
 			$('<option>').val(data[i].value).text(data[i].interp)
 			.appendTo('#bulkBlockdeviceCategory');
@@ -155,10 +155,10 @@ function showSingleImeiUnBlock()
 {
 	$("#SingleImeiUnBlock").css("display", "block");
 	$("#multipleImeiUnBlock").css("display", "none");
-	
+
 	$('#multipleImeiUnBlockform').trigger("reset");
 	$('#SingleImeiUnBlockform').trigger("reset");
-	
+
 
 }
 
@@ -168,10 +168,10 @@ function showMultipleImeiUnBlock()
 {
 	$("#multipleImeiUnBlock").css("display", "block");
 	$("#SingleImeiUnBlock").css("display", "none");
-	
+
 	$('#multipleImeiUnBlockform').trigger("reset");
 	$('#SingleImeiUnBlockform').trigger("reset");
-	
+
 }
 
 
@@ -179,133 +179,165 @@ function showMultipleImeiUnBlock()
 function submitBlockImei()
 {
 	$('div#initialloader').fadeIn('fast');
-	 //$('div#initialloader').delay(300).fadeOut('slow');
-		var bulkBlockdeviceCategory = $('#bulkBlockdeviceCategory').val();
-		var blockbulkquantity = $('#blockbulkquantity').val();
-		//var blockBulkFile = $('#blockBulkFile').val();
-		var blockbulkRemark = $('#blockbulkRemark').val();
-		var ModeType='3';
-		var requestType='2';
-		var roleType = $("body").attr("data-roleType");
-		var userId = $("body").attr("data-userID");
-		var bulkBlockingTimePeriod=$('#stolenBulkDatePeriod').val();
-		var bulkBlocktype =$('.bulkblocktypeRadio:checked').val();
-		 var deviceQuantity=$('#blockbulkDeviceQuantity').val();
-		var bulkBlockingTimePeriod=$('#stolenBulkDatePeriod').val();
-		var bulkBlocktype =$('.bulkblocktypeRadio:checked').val();
-		 var deviceQuantity=$('#blockbulkDeviceQuantity').val();
-		//////console.log("bulkBlockdeviceCategory="+bulkBlockdeviceCategory+" blockbulkquantity=="+blockbulkquantity+" blockUnblockRemark="+blockbulkRemark)
-		
-		var formData = new FormData();
-		formData.append('file', $('#blockBulkFile')[0].files[0]);
-		formData.append('blockCategory', bulkBlockdeviceCategory);
-		formData.append('qty', blockbulkquantity);
-		formData.append('remark', blockbulkRemark);
-		formData.append('sourceType', ModeType);
-		formData.append('requestType', requestType);
-		formData.append('userId',userId);
-		formData.append('roleType',roleType);
-		formData.append('blockingTimePeriod',bulkBlockingTimePeriod);
-		formData.append('blockingType',bulkBlocktype);
-		formData.append('deviceQuantity',deviceQuantity);
-		
-		var token = $("meta[name='_csrf']").attr("content");
-		var header = $("meta[name='_csrf_header']").attr("content");
-		$.ajaxSetup({
+	//$('div#initialloader').delay(300).fadeOut('slow');
+	var bulkBlockdeviceCategory = $('#bulkBlockdeviceCategory').val();
+	var blockbulkquantity = $('#blockbulkquantity').val();
+	//var blockBulkFile = $('#blockBulkFile').val();
+	var blockbulkRemark = $('#blockbulkRemark').val();
+	var ModeType='3';
+	var requestType='2';
+	var roleType = $("body").attr("data-roleType");
+	var userId = $("body").attr("data-userID");
+	var bulkBlockingTimePeriod=$('#stolenBulkDatePeriod').val();
+	var bulkBlocktype =$('.bulkblocktypeRadio:checked').val();
+	var deviceQuantity=$('#blockbulkDeviceQuantity').val();
+	var bulkBlockingTimePeriod=$('#stolenBulkDatePeriod').val();
+	var bulkBlocktype =$('.bulkblocktypeRadio:checked').val();
+	var deviceQuantity=$('#blockbulkDeviceQuantity').val();
+	//////console.log("bulkBlockdeviceCategory="+bulkBlockdeviceCategory+" blockbulkquantity=="+blockbulkquantity+" blockUnblockRemark="+blockbulkRemark)
+
+	var formData = new FormData();
+	formData.append('file', $('#blockBulkFile')[0].files[0]);
+	formData.append('blockCategory', bulkBlockdeviceCategory);
+	formData.append('qty', blockbulkquantity);
+	formData.append('remark', blockbulkRemark);
+	formData.append('sourceType', ModeType);
+	formData.append('requestType', requestType);
+	formData.append('userId',userId);
+	formData.append('roleType',roleType);
+	formData.append('blockingTimePeriod',bulkBlockingTimePeriod);
+	formData.append('blockingType',bulkBlocktype);
+	formData.append('deviceQuantity',deviceQuantity);
+
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
 		headers:
 		{ 'X-CSRF-TOKEN': token }
-		});
+	});
 
 
 
-		$.ajax({
-			url: './reportblockBulkFile',
-			type: 'POST',
-			data: formData,
-			processData: false,
-			contentType: false,
-			success: function (data, textStatus, jqXHR) {
-				 $('div#initialloader').delay(300).fadeOut('slow');
-				$("#blockBulkSubmitButton").prop('disabled', true);
-				////console.log(data);
-				//$('#fileStolenModal').closeModal();
+	$.ajax({
+		url: './reportblockBulkFile',
+		type: 'POST',
+		data: formData,
+		processData: false,
+		contentType: false,
+		success: function (data, textStatus, jqXHR) {
+			$('div#initialloader').delay(300).fadeOut('slow');
+			$("#blockBulkSubmitButton").prop('disabled', true);
+			////console.log(data);
+			//$('#fileStolenModal').closeModal();
+			
+			if(data.errorCode==0){
 				$('#markBulkAsBlock').openModal({dismissible:false});
 				$('#txnIdsingleImei').text(data.txnId);
-
-			},
-			error: function (jqXHR, textStatus, errorThrown) {
-				 $('div#initialloader').delay(300).fadeOut('slow');
-				////console.log("error in ajax")
 			}
-		});
+			else if(data.errorCode==5)
+				{
+				$('#markBulkAsBlock').openModal({dismissible:false});
+				$('#blockBulkDeviceMsg').text('');
+				$('#blockBulkDeviceMsg').text($.i18n(data.tag));
+				}
+			
+			else{
+				
+				$('#markBulkAsBlock').openModal({dismissible:false});
+				$('#blockBulkDeviceMsg').text('');
+				$('#blockBulkDeviceMsg').text($.i18n('errorMsg'));
+			}
 
-		return false;
+		},
+		error: function (jqXHR, textStatus, errorThrown) {
+			$('div#initialloader').delay(300).fadeOut('slow');
+			////console.log("error in ajax")
+		}
+	});
 
-	
+	return false;
+
+
 }
 
 function submitUnBlockImei()
 {
-	 $('div#initialloader').fadeIn('fast');
-	    var unblockbulkquantity = $('#unblockbulkquantity').val();
-		//var blockBulkFile = $('#blockBulkFile').val();
-	    var bulkunBlockdeviceCategory=$('#bulkunBlockdeviceCategory').val();
-		var unblockbulkRemark = $('#unblockbulkRemark').val();
-		var ModeType='3';
-		var requestType='3';
-		var roleType = $("body").attr("data-roleType");
-		var userId = $("body").attr("data-userID");
-		var deviceQuantity=$('#unblockbulkDevicequantity').val();
+	$('div#initialloader').fadeIn('fast');
+	var unblockbulkquantity = $('#unblockbulkquantity').val();
+	//var blockBulkFile = $('#blockBulkFile').val();
+	var bulkunBlockdeviceCategory=$('#bulkunBlockdeviceCategory').val();
+	var unblockbulkRemark = $('#unblockbulkRemark').val();
+	var ModeType='3';
+	var requestType='3';
+	var roleType = $("body").attr("data-roleType");
+	var userId = $("body").attr("data-userID");
+	var deviceQuantity=$('#unblockbulkDevicequantity').val();
 
-		//////console.log("bulkBlockdeviceCategory="+bulkBlockdeviceCategory+" blockbulkquantity=="+blockbulkquantity+" blockUnblockRemark="+blockUnblockRemark)
-		var formData = new FormData();
-		formData.append('file', $('#unblockBulkFile')[0].files[0]);
-		formData.append('qty', unblockbulkquantity);
-		formData.append('blockCategory', bulkunBlockdeviceCategory);
-		formData.append('remark', unblockbulkRemark);
-		formData.append('sourceType', ModeType);
-		formData.append('requestType', requestType);
-		formData.append('userId',userId);
-		formData.append('roleType',roleType);
-		formData.append('deviceQuantity',deviceQuantity);
-		
-		var token = $("meta[name='_csrf']").attr("content");
-		var header = $("meta[name='_csrf_header']").attr("content");
-		$.ajaxSetup({
+	//////console.log("bulkBlockdeviceCategory="+bulkBlockdeviceCategory+" blockbulkquantity=="+blockbulkquantity+" blockUnblockRemark="+blockUnblockRemark)
+	var formData = new FormData();
+	formData.append('file', $('#unblockBulkFile')[0].files[0]);
+	formData.append('qty', unblockbulkquantity);
+	formData.append('blockCategory', bulkunBlockdeviceCategory);
+	formData.append('remark', unblockbulkRemark);
+	formData.append('sourceType', ModeType);
+	formData.append('requestType', requestType);
+	formData.append('userId',userId);
+	formData.append('roleType',roleType);
+	formData.append('deviceQuantity',deviceQuantity);
+
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
 		headers:
 		{ 'X-CSRF-TOKEN': token }
-		});
+	});
 
 
-$.ajax({
-			url: './reportUnblockBulkFile',
-			type: 'POST',
-			data: formData,
-			processData: false,
-			contentType: false,
-			success: function (data, textStatus, jqXHR) {
+	$.ajax({
+		url: './reportUnblockBulkFile',
+		type: 'POST',
+		data: formData,
+		processData: false,
+		contentType: false,
+		success: function (data, textStatus, jqXHR) {
 			//////console.log(data);
-			 $('div#initialloader').delay(300).fadeOut('slow');
+			$('div#initialloader').delay(300).fadeOut('slow');
 			$("#bulkUnblockSubmitButton").prop('disabled', true);
-//		 ////console.log(data);
-			$('#markBulkAsUnblock').openModal({dismissible:false});
-			 $('#txnIdUnblocksingleDevice').text(data.txnId);
-
-			},
-			error: function (jqXHR, textStatus, errorThrown) {
-				////console.log("error in ajax")
-				 $('div#initialloader').delay(300).fadeOut('slow');
+//			////console.log(data);
+			
+			if(data.errorCode==0){
+				$('#markBulkAsUnblock').openModal({dismissible:false});
+				$('#txnIdUnblocksingleDevice').text(data.txnId);
 			}
-		});
+			else if(data.errorCode==5)
+				{
+				$('#markBulkAsUnblock').openModal({dismissible:false});
+				$('#bulkSaveSucessMsg').text('');
+				$('#bulkSaveSucessMsg').text($.i18n(data.tag));
+				}
+			
+			else{
+				
+				$('#markBulkAsBlock').openModal({dismissible:false});
+				$('#bulkSaveSucessMsg').text('');
+				$('#bulkSaveSucessMsg').text($.i18n('errorMsg'));
+			}
 
-		return false;
+		},
+		error: function (jqXHR, textStatus, errorThrown) {
+			////console.log("error in ajax")
+			$('div#initialloader').delay(300).fadeOut('slow');
+		}
+	});
 
-	
+	return false;
+
+
 }
 
 function submitSingleBlockDevicesRequest()
 {
-	 $('div#initialloader').fadeIn('fast');
+	$('div#initialloader').fadeIn('fast');
 	var deviceType=$('#blockdeviceType').val();
 	var blockdeviceIdType=$('#blockdeviceIdType').val();
 	var multipleSimStatus=$('#blockmultipleSimStatus').val();
@@ -318,70 +350,84 @@ function submitSingleBlockDevicesRequest()
 	var blockingTimePeriod=$('#stolenDatePeriod').val();
 	var blockingType =$('.blocktypeRadio:checked').val();
 	var category= $('#singleDeviceCategory').val();
-	
+
 	var requestType=2;
-	
+
 	////console.log("****"+blockingTimePeriod+"**"+blockingType);
 	////console.log("sucess include deviceType="+deviceType+" multipleSimStatus="+multipleSimStatus+" serialNumber="+serialNumber+" remark="+remark+" IMEI1="+IMEI1 );
 
-var singleImeiBlockDetail={
-	 	
-		'deviceType':deviceType,
-		'deviceIdType':blockdeviceIdType,
-	 	'multipleSimStatus':multipleSimStatus,
-	 	'deviceSerialNumber':serialNumber,
-	 	'firstImei':IMEI1,
-		'secondImei':IMEI2,
-		'thirdImei':IMEI3,
-		'fourthImei':IMEI4,
-		'requestType':requestType,
-		'remark':remark,
-		'sourceType':4,
-		'blockingTimePeriod':blockingTimePeriod,
-		'blockingType':blockingType,
-		'category':category,
-		'deviceQuantity':1
-		
-		
-}
-		
-		////console.log(JSON.stringify(singleImeiBlockDetail));
-		////console.log("*********");
-var token = $("meta[name='_csrf']").attr("content");
-var header = $("meta[name='_csrf_header']").attr("content");
-$.ajaxSetup({
-headers:
-{ 'X-CSRF-TOKEN': token }
-});
+	var singleImeiBlockDetail={
 
-	
-	 $.ajax({
+			'deviceType':deviceType,
+			'deviceIdType':blockdeviceIdType,
+			'multipleSimStatus':multipleSimStatus,
+			'deviceSerialNumber':serialNumber,
+			'firstImei':IMEI1,
+			'secondImei':IMEI2,
+			'thirdImei':IMEI3,
+			'fourthImei':IMEI4,
+			'requestType':requestType,
+			'remark':remark,
+			'sourceType':4,
+			'blockingTimePeriod':blockingTimePeriod,
+			'blockingType':blockingType,
+			'category':category,
+			'deviceQuantity':1
+
+
+	}
+
+	////console.log(JSON.stringify(singleImeiBlockDetail));
+	////console.log("*********");
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+	});
+
+
+	$.ajax({
 		url: './blockUnBlockSingleDevices',
 		data : JSON.stringify(singleImeiBlockDetail),
 		dataType : 'json',
 		contentType : 'application/json; charset=utf-8',
 		type : 'POST',
 		success: function (data, textStatus, jqXHR) {
-			 $('div#initialloader').delay(300).fadeOut('slow');
+			$('div#initialloader').delay(300).fadeOut('slow');
 			$("#singleblockSubmit").prop('disabled', true);
-			 ////console.log(data);
-			 $('#markAsBlock').openModal({dismissible:false});
-			 $('#txnIdblockBulkDevice').text(data.txnId);
+			////console.log(data);
+			if(data.errorCode==0){
+				$('#markAsBlock').openModal({dismissible:false});
+				$('#txnIdblockBulkDevice').text(data.txnId);
+			}
+			else if(data.errorCode==5)
+				{
+				$('#markAsBlock').openModal({dismissible:false});
+				$('#singleDeviceBlockMessage').text('');
+				$('#singleDeviceBlockMessage').text($.i18n(data.tag));
+				}
+			else{
+				$('#markAsBlock').openModal({dismissible:false});
+				$('#singleDeviceBlockMessage').text('');
+				$('#singleDeviceBlockMessage').text($.i18n('errorMsg'));
+			}
 			
+
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			 $('div#initialloader').delay(300).fadeOut('slow');
-		////console.log("error in ajax")
+			$('div#initialloader').delay(300).fadeOut('slow');
+			////console.log("error in ajax")
 		}
 	});
-		return false;
+	return false;
 }
 
 
 
 function submitSingleUnBlockDevicesRequest()
 {
-	 $('div#initialloader').fadeIn('fast');
+	$('div#initialloader').fadeIn('fast');
 	var deviceType=$('#unbockSingledeviceType').val();
 	var blockdeviceIdType=$('#UnblockdeviceIdType').val();
 	var multipleSimStatus=$('#unbockSingleMultipleSimStatus').val();
@@ -398,42 +444,42 @@ function submitSingleUnBlockDevicesRequest()
 	var category= $('#singleDeviceUnblock').val();
 
 
-	
-	
-	
+
+
+
 	////console.log("sucess include deviceType="+deviceType+" multipleSimStatus="+multipleSimStatus+" serialNumber="+serialNumber+" remark="+remark+" IMEI1="+IMEI1 );
 
-var singleImeiBlockDetail={
-	 	
-		'deviceType':deviceType,
-		'deviceIdType':blockdeviceIdType,
-	 	'multipleSimStatus':multipleSimStatus,
-	 	'deviceSerialNumber':serialNumber,
-	 	'firstImei':IMEI1,
-		'secondImei':IMEI2,
-		'thirdImei':IMEI3,
-		'fourthImei':IMEI4,
-		'requestType':requestType,
-		'remark':remark,
-		'sourceType':4,
-		'blockingTimePeriod':blockingTimePeriod,
-		'blockingType':blockingType,
-		'category':category,
-		'deviceQuantity':1
-	
-}
-		
-////console.log(JSON.stringify(singleImeiBlockDetail));
-////console.log("*********");
-var token = $("meta[name='_csrf']").attr("content");
-var header = $("meta[name='_csrf_header']").attr("content");
-$.ajaxSetup({
-headers:
-{ 'X-CSRF-TOKEN': token }
-});
+	var singleImeiBlockDetail={
+
+			'deviceType':deviceType,
+			'deviceIdType':blockdeviceIdType,
+			'multipleSimStatus':multipleSimStatus,
+			'deviceSerialNumber':serialNumber,
+			'firstImei':IMEI1,
+			'secondImei':IMEI2,
+			'thirdImei':IMEI3,
+			'fourthImei':IMEI4,
+			'requestType':requestType,
+			'remark':remark,
+			'sourceType':4,
+			'blockingTimePeriod':blockingTimePeriod,
+			'blockingType':blockingType,
+			'category':category,
+			'deviceQuantity':1
+
+	}
+
+////	console.log(JSON.stringify(singleImeiBlockDetail));
+////	console.log("*********");
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+	});
 
 
-	 $.ajax({
+	$.ajax({
 		url: './blockUnBlockSingleDevices',
 		data : JSON.stringify(singleImeiBlockDetail),
 		dataType : 'json',
@@ -442,16 +488,32 @@ headers:
 		success: function (data, textStatus, jqXHR) {
 			$('div#initialloader').delay(300).fadeOut('slow');
 			$("#singleUnblockSubmitButton").prop('disabled', true);
-			 ////console.log(data);
-			 $('#markAsUnblock').openModal({dismissible:false});
-			 $('#txnIdblocksingleDevice').text(data.txnId);
+			////console.log(data);
+			
+			if(data.errorCode==0){
+				$('#markAsUnblock').openModal({dismissible:false});
+				$('#txnIdblocksingleDevice').text(data.txnId);
+			}
+			else if(data.errorCode==5)
+				{
+				$('#markAsUnblock').openModal({dismissible:false});
+				$('#saveSingleMsg').text('');
+				$('#saveSingleMsg').text($.i18n(data.tag));
+				}
+			
+			else{
+				
+				$('#markAsUnblock').openModal({dismissible:false});
+				$('#saveSingleMsg').text('');
+				$('#saveSingleMsg').text($.i18n('errorMsg'));
+			}
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-		////console.log("error in ajax")
-		$('div#initialloader').delay(300).fadeOut('slow');
+			////console.log("error in ajax")
+			$('div#initialloader').delay(300).fadeOut('slow');
 		}
 	});
-		return false;
+	return false;
 }
 
 
@@ -463,15 +525,15 @@ headers:
 
 //*******************************************View Pop up data *************************************************************************************************
 function viewDeviceDetails(txnId,popUpType,requestType){
-////console.log("requestType=="+requestType)
-	
+////	console.log("requestType=="+requestType)
+
 	var role = currentRoleType == null ? roleType : currentRoleType;
 	////console.log("popUpType=="+popUpType);
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
 	$.ajaxSetup({
-	headers:
-	{ 'X-CSRF-TOKEN': token }
+		headers:
+		{ 'X-CSRF-TOKEN': token }
 	});
 
 
@@ -486,15 +548,15 @@ function viewDeviceDetails(txnId,popUpType,requestType){
 			setViewBulkPopUp(data,popUpType,requestType);
 		},
 		error : function() {
-			
+
 		}
 	});
 }
 var token = $("meta[name='_csrf']").attr("content");
 var header = $("meta[name='_csrf_header']").attr("content");
 $.ajaxSetup({
-headers:
-{ 'X-CSRF-TOKEN': token }
+	headers:
+	{ 'X-CSRF-TOKEN': token }
 });
 
 
@@ -503,148 +565,155 @@ $.getJSON('./getTypeDropdownList/BLOCK_CATEGORY/'+$("body").attr("data-userTypeI
 	for (i = 0; i < data.length; i++) {
 		$('<option>').val(data[i].value).text(data[i].interp)
 		.appendTo('#editBulkBlockCategory');
-		
+
 	}
 });
 function setViewBulkPopUp(data,popUpType,requestType){
-	
+
 
 
 
 	if(popUpType=='view'){	
 		////console.log("++++++++++"+popUpType+"requestType="+requestType);
-	
+
 		if(requestType=="3")
 		{
-			
+
 			$("#bulkblockingTypeId").css("display", "none");
-		$('#viewModalHeader').text($.i18n('viewBulkUnblock'));
+			$('#viewModalHeader').text($.i18n('viewBulkUnblock'));
 		}
 		else{
 			$("#bulkblockingTypeId").css("display", "block");
-		$('#viewModalHeader').text($.i18n('viewBlockDevice'));
+			$('#viewModalHeader').text($.i18n('viewBlockDevice'));
 		}
-			
-	$("#viewBulkBlockDeviceModal").openModal({dismissible:false});
-	$("#viewBulkBlockCategory").val(data.blockCategoryInterp);
-	$("#viewBulkBlockRemark").val(data.remark);
-	$("#viewBulkBlockuploadFile").val(data.fileName);
-	$("#viewBulkBlockquantity").val(data.qty);
-	$("#viewBulkBlockDevicequantity").val(data.deviceQuantity);
-	$("#viewBulkBlockTxnId").val(data.txnId);
-	$("#viewBulkBlockRemarkReject").val(data.rejectedRemark);
-	$("#viewBulkBlockRemarkRejectDiv").css("display", "block");
-	if(data.blockingType=='tilldate')
-	{
-	
-	$("#viewbulkblockingType").val("Later ( Block time period : " +data.blockingTimePeriod+" )");
-	}
-else{
-$("#viewbulkblockingType").val(data.blockingType);
-}
+
+		$("#viewBulkBlockDeviceModal").openModal({dismissible:false});
+		$("#viewBulkBlockCategory").val(data.blockCategoryInterp);
+		$("#viewBulkBlockRemark").val(data.remark);
+		$("#viewBulkBlockuploadFile").val(data.fileName);
+		$("#viewBulkBlockquantity").val(data.qty);
+		$("#viewBulkBlockDevicequantity").val(data.deviceQuantity);
+		$("#viewBulkBlockTxnId").val(data.txnId);
+		$("#viewBulkBlockRemarkReject").val(data.rejectedRemark);
+		$("#viewBulkBlockRemarkRejectDiv").css("display", "block");
+		if(data.blockingType=='tilldate')
+		{
+
+			$("#viewbulkblockingType").val("Later ( Block time period : " +data.blockingTimePeriod+" )");
+		}
+		else{
+			$("#viewbulkblockingType").val(data.blockingType);
+		}
 	}
 	else
 	{
 		if(requestType=="3")
 		{
 			$("#editBulkBlockDiv").css("display", "none"); 
-		$('#editblockHeading').text(editUnblock);
+			$('#editblockHeading').text(editUnblock);
 		}
 		else{
 			$("#editBulkBlockDiv").css("display", "block"); 
-		$('#editblockHeading').text($.i18n('editBlockDevice'));
+			$('#editblockHeading').text($.i18n('editBlockDevice'));
 		}
-		
+
 		////console.log("++++++++++"+popUpType+" requestType="+requestType);
-	$("#editBulkBlockDeviceModal").openModal({dismissible:false});
-	$("#editBulkBlockRemark").val(data.remark);
-	$("#editBulkBlockuploadFile").val(data.fileName);
-	$("#editBulkBlockquantity").val(data.qty);
-	$("#editBulkBlockDevicequantity").val(data.deviceQuantity);
-	$("#editBulkBlockTxnId").val(data.txnId);
-	$("#editBulkBlockrequestType").val(data.requestType);
-	$("#editBulkBlockCategory").val(data.blockCategory);
-	$('input[name=editbulkblocktypeName][value='+data.blockingType+']').attr('checked', true);
-	if(data.blockingType=='tilldate')
-	{
-	$("#bulkeditcalender").css("display", "block"); 
-	
-	$("#editstolenBulkDatePeriod").val(data.blockingTimePeriod);
-	}
-else{
-	$("#bulkeditcalender").css("display", "none"); 
-}
-	
+		$("#editBulkBlockDeviceModal").openModal({dismissible:false});
+		$("#editBulkBlockRemark").val(data.remark);
+		$("#editBulkBlockuploadFile").val(data.fileName);
+		$("#editBulkBlockquantity").val(data.qty);
+		$("#editBulkBlockDevicequantity").val(data.deviceQuantity);
+		$("#editBulkBlockTxnId").val(data.txnId);
+		$("#editBulkBlockrequestType").val(data.requestType);
+		$("#editBulkBlockCategory").val(data.blockCategory);
+		$('input[name=editbulkblocktypeName][value='+data.blockingType+']').attr('checked', true);
+		if(data.blockingType=='tilldate')
+		{
+			$("#bulkeditcalender").css("display", "block"); 
+
+			$("#editstolenBulkDatePeriod").val(data.blockingTimePeriod);
+		}
+		else{
+			$("#bulkeditcalender").css("display", "none"); 
+		}
+
 	}
 }
 
 
 function updateBulkDevice(){
 	$('div#initialloader').fadeIn('fast');
-var categoryInterp=	$("#editBulkBlockCategory").val();
-var remark=	$("#editBulkBlockRemark").val();
-var fileName=$("#editBulkBlockuploadFile").val();
-var qty=$("#editBulkBlockquantity").val();
-var txnId=$("#editBulkBlockTxnId").val();
-var requestType=$("#editBulkBlockrequestType").val();
-var ModeType=3
-var roleType = $("body").attr("data-roleType");
-var userId = $("body").attr("data-userID");
-var formData = new FormData();
-var editbulkBlockingTimePeriod=$('#editstolenBulkDatePeriod').val();
-var editbulkBlocktype =$('.editbulkblocktypeRadio:checked').val();
-var devicequantity = $("#editBulkBlockDevicequantity").val();
-formData.append('file', $('#editselectBulkBlockuploadFile')[0].files[0]);
-formData.append('qty', qty);
-formData.append('deviceQuantity',devicequantity);
-formData.append('blockCategory', categoryInterp);
-formData.append('remark', remark);
-formData.append('sourceType', ModeType);
-formData.append('requestType', requestType);
-formData.append('userId',userId);
-formData.append('roleType',roleType);
-formData.append('txnId',txnId);
-formData.append('fileName',fileName);
-formData.append('blockingTimePeriod',editbulkBlockingTimePeriod);
-formData.append('blockingType',editbulkBlocktype);
-var token = $("meta[name='_csrf']").attr("content");
-var header = $("meta[name='_csrf_header']").attr("content");
-$.ajaxSetup({
-headers:
-{ 'X-CSRF-TOKEN': token }
-});
+	var categoryInterp=	$("#editBulkBlockCategory").val();
+	var remark=	$("#editBulkBlockRemark").val();
+	var fileName=$("#editBulkBlockuploadFile").val();
+	var qty=$("#editBulkBlockquantity").val();
+	var txnId=$("#editBulkBlockTxnId").val();
+	var requestType=$("#editBulkBlockrequestType").val();
+	var ModeType=3
+	var roleType = $("body").attr("data-roleType");
+	var userId = $("body").attr("data-userID");
+	var formData = new FormData();
+	var editbulkBlockingTimePeriod=$('#editstolenBulkDatePeriod').val();
+	var editbulkBlocktype =$('.editbulkblocktypeRadio:checked').val();
+	var devicequantity = $("#editBulkBlockDevicequantity").val();
+	formData.append('file', $('#editselectBulkBlockuploadFile')[0].files[0]);
+	formData.append('qty', qty);
+	formData.append('deviceQuantity',devicequantity);
+	formData.append('blockCategory', categoryInterp);
+	formData.append('remark', remark);
+	formData.append('sourceType', ModeType);
+	formData.append('requestType', requestType);
+	formData.append('userId',userId);
+	formData.append('roleType',roleType);
+	formData.append('txnId',txnId);
+	formData.append('fileName',fileName);
+	formData.append('blockingTimePeriod',editbulkBlockingTimePeriod);
+	formData.append('blockingType',editbulkBlocktype);
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+	});
 
 
-$.ajax({
-	url: './updateFileTypeStolenRecovery',
-	type: 'POST',
-	data: formData,
-	processData: false,
-	contentType: false,
-	success: function (data, textStatus, jqXHR) {
-	////console.log(data);
-// ////console.log(data);
-	$('div#initialloader').delay(300).fadeOut('slow');
-	$('#confirmEditBlockUnblock').openModal({dismissible:false});
-		//if(data.errorCode==200){
-		/* 
-						 $('#stockSucessMessage').text('');
-						 $('#stockSucessMessage').text('Operation is not allowed');
-							 }
-						 else{
-							 $('#stockSucessMessage').text('');
-			 				 $('#stockSucessMessage').text('Your update on the form for transaction ID ('+data.txnId+') has been successfully updated.');
-						 } */ 
-		// $('#updateConsignment').modal('open'); 
-		//alert("success");
+	$.ajax({
+		url: './updateFileTypeStolenRecovery',
+		type: 'POST',
+		data: formData,
+		processData: false,
+		contentType: false,
+		success: function (data, textStatus, jqXHR) {
+			////console.log(data);
+//			////console.log(data);
+			$('div#initialloader').delay(300).fadeOut('slow');
 
-	},
-	error: function (jqXHR, textStatus, errorThrown) {
-		////console.log("error in ajax")
-		$('div#initialloader').delay(300).fadeOut('slow');
-	}
-});
-return false;
+
+			if(data.errorCode==0){
+
+				$('#confirmEditBlockUnblock').openModal({dismissible:false});
+			}
+			else if(data.errorCode==5){
+				$('#confirmEditBlockUnblock').openModal({dismissible:false});
+				$('#stockupdateSucessMessage').text('');
+				$('#stockupdateSucessMessage').text($.i18n(data.tag));
+
+			}
+			else{
+				$('#confirmEditBlockUnblock').openModal({dismissible:false});
+				$('#stockupdateSucessMessage').text('');
+				$('#stockupdateSucessMessage').text($.i18n('errorMsg'));
+			}
+			// $('#updateConsignment').modal('open'); 
+			//alert("success");
+
+		},
+		error: function (jqXHR, textStatus, errorThrown) {
+			////console.log("error in ajax")
+			$('div#initialloader').delay(300).fadeOut('slow');
+		}
+	});
+	return false;
 
 }
 
@@ -656,12 +725,12 @@ function viewblockImeiDevice(txnId,popUpType,requestType)
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
 	$.ajaxSetup({
-	headers:
-	{ 'X-CSRF-TOKEN': token }
+		headers:
+		{ 'X-CSRF-TOKEN': token }
 	});
 
 
-	
+
 	$.ajax({
 		/*url : "./openSingleImeiForm?reqType=editPage&txnId="+txnId+'&modeType=singleDeivce',*/
 		url : "./openbulkView?reqType="+requestType+"&txnId="+txnId+'&modeType=singleDeivce',
@@ -674,11 +743,11 @@ function viewblockImeiDevice(txnId,popUpType,requestType)
 			setSingleDeviceViewPopUp(data,popUpType,requestType);
 		},
 		error : function() {
-		
+
 		}
 	});
-	
-	
+
+
 }
 
 
@@ -686,8 +755,8 @@ function viewblockImeiDevice(txnId,popUpType,requestType)
 var token = $("meta[name='_csrf']").attr("content");
 var header = $("meta[name='_csrf_header']").attr("content");
 $.ajaxSetup({
-headers:
-{ 'X-CSRF-TOKEN': token }
+	headers:
+	{ 'X-CSRF-TOKEN': token }
 });
 
 
@@ -696,7 +765,7 @@ $.getJSON('./getDropdownList/DEVICE_TYPE', function(data) {
 	for (i = 0; i < data.length; i++) {
 		$('<option>').val(data[i].value).text(data[i].interp)
 		.appendTo('#editblockdeviceType');
-	
+
 	}
 });
 
@@ -714,7 +783,7 @@ $.getJSON('./getDropdownList/MULTI_SIM_STATUS', function(data) {
 	for (i = 0; i < data.length; i++) {
 		$('<option>').val(data[i].value).text(data[i].interp)
 		.appendTo('#editblockmultipleSimStatus');
-	
+
 	}
 });
 
@@ -723,7 +792,7 @@ $.getJSON('./getDropdownList/DEVICE_ID_TYPE', function(data) {
 	for (i = 0; i < data.length; i++) {
 		$('<option>').val(data[i].value).text(data[i].interp)
 		.appendTo('#editblockdeviceIdType');
-		
+
 	}
 });
 
@@ -731,128 +800,128 @@ $.getJSON('./getDropdownList/DEVICE_ID_TYPE', function(data) {
 
 
 function setSingleDeviceViewPopUp(data,popUpType,requestType){
-////console.log(data.rejectedRemark);
-////console.log(data.singleImeiDetails.firstImei);
+////	console.log(data.rejectedRemark);
+////	console.log(data.singleImeiDetails.firstImei);
 
 	if(popUpType=='view'){
 		$("#viewsingleblockremarkDiv").css("display", "block"); 
 		if(requestType=="3")
 		{
-			
+
 			$("#blockingTypeId").css("display", "none"); 
 			$("#editBlockTimePeriod").css("display", "none"); 
-		$('#singleBlockUnblockHeading').text($.i18n('viewBulkUnblock'));
+			$('#singleBlockUnblockHeading').text($.i18n('viewBulkUnblock'));
 		}
 		else{
 			$("#blockingTypeId").css("display", "block"); 
 			$("#editBlockTimePeriod").css("display", "block"); 
-			
-		$('#singleBlockUnblockHeading').text($.i18n('viewBlockDevice'));
+
+			$('#singleBlockUnblockHeading').text($.i18n('viewBlockDevice'));
 		}
 		$('#viewblockImeiDevice').openModal({dismissible:false});
 		////console.log("++++++++++"+popUpType+"requestType="+requestType);
-		
-			
 
-	
-			if(data.singleImeiDetails.secondImei==0 && data.singleImeiDetails.thirdImei==0 && data.singleImeiDetails.fourthImei==0  )
-			{
+
+
+
+		if(data.singleImeiDetails.secondImei==0 && data.singleImeiDetails.thirdImei==0 && data.singleImeiDetails.fourthImei==0  )
+		{
 			$("#viewsingleblockIMEI2").val("");
 			$("#viewsingleblockIMEI3").val("");
 			$("#viewsingleblockIMEI4").val("");
-			}
+		}
 		else if(data.singleImeiDetails.secondImei==0 && data.singleImeiDetails.thirdImei==0 && data.singleImeiDetails.fourthImei!=0 )
-			{
+		{
 			$("#viewsingleblockIMEI2").val("");
 			$("#viewsingleblockIMEI3").val("");
 			$("#viewsingleblockIMEI4").val(data.singleImeiDetails.fourthImei);
-			}
+		}
 		else if(data.singleImeiDetails.secondImei!=0 && data.singleImeiDetails.thirdImei==0 && data.singleImeiDetails.fourthImei==0)
-			{
+		{
 			$("#viewsingleblockIMEI2").val(data.singleImeiDetails.secondImei);
 			$("#viewsingleblockIMEI3").val("");
 			$("#viewsingleblockIMEI4").val("");
-			}
+		}
 		else if(data.singleImeiDetails.secondImei==0 && data.singleImeiDetails.thirdImei!=0 && data.singleImeiDetails.fourthImei==0)
-			{
+		{
 			$("#viewsingleblockIMEI2").val("");
 			$("#viewsingleblockIMEI3").val(data.singleImeiDetails.thirdImei);
 			$("#viewsingleblockIMEI4").val("");
-			}
+		}
 		else{
 			////console.log("else############")
 		}
-			
-	$("#viewblockdeviceType").val(data.singleImeiDetails.deviceTypeInterp);
-	$("#viewblockdeviceIdType").val(data.singleImeiDetails.deviceIdTypeInterp);
-	$("#viewblockmultipleSimStatus").val(data.singleImeiDetails.multipleSimStatusInterp);
-	$("#viewsingleblockserialNumber").val(data.singleImeiDetails.deviceSerialNumber);
-	$("#viewsingleblockremark").val(data.singleImeiDetails.remark);
-	$("#viewsingleblockIMEI1").val(data.singleImeiDetails.firstImei);
-	$("#viewsingleblocTxnid").val(data.singleImeiDetails.txnId);
-	$("#viewsingleblockCategory").val(data.singleImeiDetails.categoryInterp);
-	$("#viewsingleblockremark").val(data.singleImeiDetails.remark);
-	$("#viewsingleblockremarkReject").val(data.rejectedRemark);
-	
-	
-	if(data.blockingType=='tilldate')
+
+		$("#viewblockdeviceType").val(data.singleImeiDetails.deviceTypeInterp);
+		$("#viewblockdeviceIdType").val(data.singleImeiDetails.deviceIdTypeInterp);
+		$("#viewblockmultipleSimStatus").val(data.singleImeiDetails.multipleSimStatusInterp);
+		$("#viewsingleblockserialNumber").val(data.singleImeiDetails.deviceSerialNumber);
+		$("#viewsingleblockremark").val(data.singleImeiDetails.remark);
+		$("#viewsingleblockIMEI1").val(data.singleImeiDetails.firstImei);
+		$("#viewsingleblocTxnid").val(data.singleImeiDetails.txnId);
+		$("#viewsingleblockCategory").val(data.singleImeiDetails.categoryInterp);
+		$("#viewsingleblockremark").val(data.singleImeiDetails.remark);
+		$("#viewsingleblockremarkReject").val(data.rejectedRemark);
+
+
+		if(data.blockingType=='tilldate')
 		{
-		
-		$("#viewsingleblockingType").val("Later ( Block time period : " +data.blockingTimePeriod+" )");
+
+			$("#viewsingleblockingType").val("Later ( Block time period : " +data.blockingTimePeriod+" )");
 		}
-	else{
-	$("#viewsingleblockingType").val(data.blockingType);
-	}
-	
+		else{
+			$("#viewsingleblockingType").val(data.blockingType);
+		}
+
 	}
 	else
 	{
-/*		 $("#editblockdeviceType option").remove();
+		/*		 $("#editblockdeviceType option").remove();
 		 $("#editblockmultipleSimStatus option").remove();
 		 $("#editblockdeviceIdType option").remove();
 		 $("#editbulkBlockdeviceCategory option").remove();*/
 		if(requestType=="3")
 		{
-			  
-		$('#singleBlockDeviceHeading').text(editUnblock);
+
+			$('#singleBlockDeviceHeading').text(editUnblock);
 		}
 		else{
-			   
-		$('#singleBlockDeviceHeading').text($.i18n('editBlockDevice'));
+
+			$('#singleBlockDeviceHeading').text($.i18n('editBlockDevice'));
 		}
-		
-		
+
+
 		////console.log("++++++++++"+popUpType+" requestType="+requestType);
-	$("#editblockImeiDevice").openModal({dismissible:false});
-	 
-		
-		
-		
-		
+		$("#editblockImeiDevice").openModal({dismissible:false});
+
+
+
+
+
 		if(data.singleImeiDetails.secondImei==0 && data.singleImeiDetails.thirdImei==0 && data.singleImeiDetails.fourthImei==0  )
-			{
+		{
 			$("#editsingleblockIMEI2").val("");
 			$("#editsingleblockIMEI3").val("");
 			$("#editsingleblockIMEI4").val("");
-			}
+		}
 		else if(data.singleImeiDetails.secondImei==0 && data.singleImeiDetails.thirdImei==0 && data.singleImeiDetails.fourthImei!=0 )
-			{
+		{
 			$("#editsingleblockIMEI2").val("");
 			$("#editsingleblockIMEI3").val("");
 			$("#editsingleblockIMEI4").val(data.singleImeiDetails.fourthImei);
-			}
+		}
 		else if(data.singleImeiDetails.secondImei!=0 && data.singleImeiDetails.thirdImei==0 && data.singleImeiDetails.fourthImei==0)
-			{
+		{
 			$("#editsingleblockIMEI2").val(data.singleImeiDetails.secondImei);
 			$("#editsingleblockIMEI3").val("");
 			$("#editsingleblockIMEI4").val("");
-			}
+		}
 		else if(data.singleImeiDetails.secondImei==0 && data.singleImeiDetails.thirdImei!=0 && data.singleImeiDetails.fourthImei==0)
-			{
+		{
 			$("#editsingleblockIMEI2").val("");
 			$("#editsingleblockIMEI3").val(data.singleImeiDetails.thirdImei);
 			$("#editsingleblockIMEI4").val("");
-			}
+		}
 		else{
 			////console.log("else############");
 		}
@@ -865,22 +934,22 @@ function setSingleDeviceViewPopUp(data,popUpType,requestType){
 		$("#editsingleblockIMEI1").val(data.singleImeiDetails.firstImei);
 		$("#editsingleblockTxnid").val(data.singleImeiDetails.txnId);
 		$("#editbulkBlockdeviceCategory").val(data.singleImeiDetails.category);
-		
+
 		$('input[name=editbulkBlockdeviceradio][value='+data.blockingType+']').attr('checked', true); 
-		
+
 		if(data.blockingType=='tilldate')
-			{
+		{
 			$("#calender").css("display", "block"); 
-			
+
 			$("#stolenDatePeriodedit").val(data.blockingTimePeriod);
-			}
+		}
 		else{
 			$("#calender").css("display", "none"); 
 		}
 		//$('input[name=editbulkBlockdeviceradio][value='+data[i].blockingTimePeriod+']').attr('checked', true); 
 		$("#editsingleblocRequestType").val(requestType);
-		}
-	
+	}
+
 }
 
 
@@ -888,7 +957,7 @@ function setSingleDeviceViewPopUp(data,popUpType,requestType){
 
 function updateSingleBlockDevicesRequest()
 {
-	 $('div#initialloader').fadeIn('fast');
+	$('div#initialloader').fadeIn('fast');
 	var deviceType=$('#editblockdeviceType').val();
 	var blockdeviceIdType=$('#editblockdeviceIdType').val();
 	var multipleSimStatus=$('#editblockmultipleSimStatus').val();
@@ -903,67 +972,70 @@ function updateSingleBlockDevicesRequest()
 	var blockingTimePeriod=$('#stolenDatePeriodedit').val();
 	var blockingType =$('.blocktypeRadio:checked').val();
 	var category=$('#editbulkBlockdeviceCategory').val();
-	
-	
+
+
 	////console.log("****");
 	//////console.log("sucess include deviceType="+deviceType+" multipleSimStatus="+multipleSimStatus+" serialNumber="+serialNumber+" remark="+remark+" IMEI1="+IMEI1 );
 
-var singleImeiBlockDetail={
-	 	
-		'deviceType':deviceType,
-		'deviceIdType':blockdeviceIdType,
-	 	'multipleSimStatus':multipleSimStatus,
-	 	'deviceSerialNumber':serialNumber,
-		'firstImei':IMEI1,
-		'secondImei':IMEI2,
-		'thirdImei':IMEI3,
-		'fourthImei':IMEI4,
-		'requestType':requestType,
-		'remark':remark,
-		'txnId':txnId,
-		'sourceType': 4,
-		'blockingTimePeriod':blockingTimePeriod,
-		'blockingType':blockingType,
-		'category':category,
-		'deviceQuantity':1
-}
-		
-		////console.log(JSON.stringify(singleImeiBlockDetail));
-		////console.log("*********");
-var token = $("meta[name='_csrf']").attr("content");
-var header = $("meta[name='_csrf_header']").attr("content");
-$.ajaxSetup({
-headers:
-{ 'X-CSRF-TOKEN': token }
-});
+	var singleImeiBlockDetail={
+
+			'deviceType':deviceType,
+			'deviceIdType':blockdeviceIdType,
+			'multipleSimStatus':multipleSimStatus,
+			'deviceSerialNumber':serialNumber,
+			'firstImei':IMEI1,
+			'secondImei':IMEI2,
+			'thirdImei':IMEI3,
+			'fourthImei':IMEI4,
+			'requestType':requestType,
+			'remark':remark,
+			'txnId':txnId,
+			'sourceType': 4,
+			'blockingTimePeriod':blockingTimePeriod,
+			'blockingType':blockingType,
+			'category':category,
+			'deviceQuantity':1
+	}
+
+	////console.log(JSON.stringify(singleImeiBlockDetail));
+	////console.log("*********");
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+	});
 
 
-	 $.ajax({
+	$.ajax({
 		url: './updateBlockUnBlockSingleDevices',
 		data : JSON.stringify(singleImeiBlockDetail),
 		dataType : 'json',
 		contentType : 'application/json; charset=utf-8',
 		type : 'POST',
 		success: function (data, textStatus, jqXHR) {
-			
-			 $('div#initialloader').delay(300).fadeOut('slow');
-			 ////console.log(data);
-			 
-			 if(data.errorCode==5){
-				 $('#confirmEditBlockUnblock').openModal({dismissible:false});
-				 $("#stockupdateSucessMessage").text('');
-				 $("#stockupdateSucessMessage").text($.i18n(data.tag));
-			 }
-			 else if(data.errorCode==1){
-				 $('#confirmEditBlockUnblock').openModal({dismissible:false});
-			 }
-			 else{
-				 $('#confirmEditBlockUnblock').openModal({dismissible:false});
-				 $("#stockupdateSucessMessage").text('');
-				 $("#stockupdateSucessMessage").text($.i18n('errorMsg'));
-			 }
-			 /*		 if(data.errorCode==200){
-			
+
+			$('div#initialloader').delay(300).fadeOut('slow');
+			////console.log(data);
+
+			if(data.errorCode==5){
+				$('#confirmEditBlockUnblock').openModal({dismissible:false});
+				$("#stockupdateSucessMessage").text('');
+				$("#stockupdateSucessMessage").text($.i18n(data.tag));
+			}
+			else if(data.errorCode==1){
+				$('#confirmEditBlockUnblock').openModal({dismissible:false});
+			}
+			else if(data.errorCode==0){
+				$('#confirmEditBlockUnblock').openModal({dismissible:false});
+			}
+			else{
+				$('#confirmEditBlockUnblock').openModal({dismissible:false});
+				$("#stockupdateSucessMessage").text('');
+				$("#stockupdateSucessMessage").text($.i18n('errorMsg'));
+			}
+			/*		 if(data.errorCode==200){
+
 		     $('#singleDeviceBlockMessage').text('');
 			 $('#singleDeviceBlockMessage').text(data.message);
 				 }
@@ -971,16 +1043,16 @@ headers:
 				 $('#singleDeviceBlockMessage').text('');
  				 $('#singleDeviceBlockMessage').text(data.message);
 			 }*/
-		   // $('#updateConsignment').modal('open'); 
+			// $('#updateConsignment').modal('open'); 
 			//alert("success");
-			
+
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			 $('div#initialloader').delay(300).fadeOut('slow');
-		////console.log("error in ajax")
+			$('div#initialloader').delay(300).fadeOut('slow');
+			////console.log("error in ajax")
 		}
 	});
-		return false;
+	return false;
 }
 
 
@@ -989,17 +1061,17 @@ headers:
 $('#stolenDatePeriod').datepicker({
 	dateFormat: "yy-mm-dd",
 	minDate: "0"
-	
-	});
+
+});
 
 $('#stolenDatePeriodedit').datepicker({
 	dateFormat: "yy-mm-dd",
 	minDate: "0"
-	});
+});
 
 $('#stolenDatePeriodUnblock').datepicker({
 	dateFormat: "yy-mm-dd"
-	});
+});
 
 
 function singleImeiFormClear(){
@@ -1011,8 +1083,8 @@ function singleImeiFormClear(){
 
 function fileTypeValueChanges(formType) {
 
-	 if(formType=='2')
-    {
+	if(formType=='2')
+	{
 		var uploadedFileName = $("#editselectBulkBlockuploadFile").val();
 		uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
 		var ext = uploadedFileName.split('.').pop();
@@ -1038,8 +1110,8 @@ function fileTypeValueChanges(formType) {
 		}
 	}
 	else 
-		{
-		
+	{
+
 		var uploadedFileName = $("#blockBulkFile").val();
 		uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
 		var ext = uploadedFileName.split('.').pop();
@@ -1063,7 +1135,7 @@ function fileTypeValueChanges(formType) {
 			});
 
 		}
-		}
+	}
 
 
 }
@@ -1080,8 +1152,8 @@ function clearFileName() {
 
 
 $("input[type=file]").keypress(function(ev) {
-    return false;
-    //ev.preventDefault(); //works as well
+	return false;
+	//ev.preventDefault(); //works as well
 
 });
 
@@ -1093,18 +1165,18 @@ $('#blockdeviceIdType').on('change', function() {
 	case 0:
 		$("#singleblockIMEI1,#singleblockIMEI2,#singleblockIMEI3,#singleblockIMEI4").attr("pattern","[0-9]{15,16}");
 		$("#singleblockIMEI1,#singleblockIMEI2,#singleblockIMEI3,#singleblockIMEI4").attr("maxlength","16");
-		
+
 		$("#singleblockIMEI1,#singleblockIMEI2,#singleblockIMEI3,#singleblockIMEI4").removeAttr("onkeyup");
 		$("#singleblockIMEI1,#singleblockIMEI2,#singleblockIMEI3,#singleblockIMEI4").attr("oninput","InvalidMsg(this,'input','"+$.i18n('validationIMEI')+"')");
 		$("#singleblockIMEI1,#singleblockIMEI2,#singleblockIMEI3,#singleblockIMEI4").attr("oninvalid","InvalidMsg(this,'input','"+$.i18n('validationIMEI')+"')");
-		
+
 		$('#errorMsgOnModal').text($.i18n('IMEIMsg'));
-		
+
 		break;
 	case 1:
 		$("#singleblockIMEI1,#singleblockIMEI2,#singleblockIMEI3,#singleblockIMEI4").attr("pattern","[A-F0-9]{15,16}");
 		$("#singleblockIMEI1,#singleblockIMEI2,#singleblockIMEI3,#singleblockIMEI4").attr("maxlength","16");
-		
+
 		$("#singleblockIMEI1,#singleblockIMEI2,#singleblockIMEI3,#singleblockIMEI4").removeAttr("onkeyup");
 		$("#singleblockIMEI1,#singleblockIMEI2,#singleblockIMEI3,#singleblockIMEI4").attr("oninput","InvalidMsg(this,'input','"+$.i18n('validationMEID')+"')");
 		$("#singleblockIMEI1,#singleblockIMEI2,#singleblockIMEI3,#singleblockIMEI4").attr("oninvalid","InvalidMsg(this,'input','"+$.i18n('validationMEID')+"')");
@@ -1152,18 +1224,18 @@ $('#UnblockdeviceIdType').on('change', function() {
 	case 0:
 		$("#unbockSingleIMEI1,#unbockSingleIMEI2,#unbockSingleIMEI3,#unbockSingleIMEI4").attr("pattern","[0-9]{15,16}");
 		$("#unbockSingleIMEI1,#unbockSingleIMEI2,#unbockSingleIMEI3,#unbockSingleIMEI4").attr("maxlength","16");
-		
+
 		$("#unbockSingleIMEI1,#unbockSingleIMEI2,#unbockSingleIMEI3,#unbockSingleIMEI4").removeAttr("onkeyup");
 		$("#unbockSingleIMEI1,#unbockSingleIMEI2,#unbockSingleIMEI3,#unbockSingleIMEI4").attr("oninput","InvalidMsg(this,'input','"+$.i18n('validationIMEI')+"')");
 		$("#unbockSingleIMEI1,#unbockSingleIMEI2,#unbockSingleIMEI3,#unbockSingleIMEI4").attr("oninvalid","InvalidMsg(this,'input','"+$.i18n('validationIMEI')+"')");
-		
+
 		$('#errorMsgOnModal').text($.i18n('IMEIMsg'));
-		
+
 		break;
 	case 1:
 		$("#unbockSingleIMEI1,#unbockSingleIMEI2,#unbockSingleIMEI3,#unbockSingleIMEI4").attr("pattern","[A-F0-9]{15,16}");
 		$("#unbockSingleIMEI1,#unbockSingleIMEI2,#unbockSingleIMEI3,#unbockSingleIMEI4").attr("maxlength","16");
-		
+
 		$("#unbockSingleIMEI1,#unbockSingleIMEI2,#unbockSingleIMEI3,#unbockSingleIMEI4").removeAttr("onkeyup");
 		$("#unbockSingleIMEI1,#unbockSingleIMEI2,#unbockSingleIMEI3,#unbockSingleIMEI4").attr("oninput","InvalidMsg(this,'input','"+$.i18n('validationMEID')+"')");
 		$("#unbockSingleIMEI1,#unbockSingleIMEI2,#unbockSingleIMEI3,#unbockSingleIMEI4").attr("oninvalid","InvalidMsg(this,'input','"+$.i18n('validationMEID')+"')");

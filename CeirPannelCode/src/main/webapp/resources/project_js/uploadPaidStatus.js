@@ -91,7 +91,7 @@ $( document ).ready(function() {
 
 	}
 	else{
-		//alert("a")
+		////alert("a")
 		/*$.ajax({
 			url : "./paid-status/"+In,
 			dataType : 'json',
@@ -102,14 +102,14 @@ $( document ).ready(function() {
 				//	sessionStorage.removeItem('nationalId');
 
 				if (data.errorCode == 1) {
-					alert("1");
+					//alert("1");
 					$("#user123").css("display", "none");
 					$("#user456").css("display", "block");
 					$("#addbutton").css("display", "block");
 					$("#submitbtn").css("display", "none");
 				} 
 				else if (data.errorCode == 0 && In == 'null') {
-					alert("2");
+					//alert("2");
 					$("#user123").css("display", "none");
 					$("#user456").css("display", "block");
 					$("#addbutton").css("display", "block");
@@ -117,7 +117,7 @@ $( document ).ready(function() {
 				} 
 				else
 				{
-					alert("3");
+					//alert("3");
 					$("#user123").css("display", "block");
 					$("#user456").css("display", "none");
 					$("#addbutton").css("display", "none");
@@ -306,9 +306,9 @@ $(document).ready(function () {
 		}
 	});
 	$(wrapper).on("click", ".remove_field", function (e) { //user click on remove text
-		//alert(id);
+		////alert(id);
 		var Iid=id-1;
-		 /*alert("@@@"+Iid)*/
+		 /*//alert("@@@"+Iid)*/
 		 $('#deviceInformation'+Iid).remove();
 		e.preventDefault();
 		$(this).parent('div').remove();
@@ -950,12 +950,12 @@ function submitDeviceInfo(){
 				$('#regularisedDevice').openModal({dismissible:false});
 				$('#dynamicTxnId').text(data.txnId);
 			}
-			/*else if(data.errorCode==5)
+			else if(data.errorCode==5)
 				{
 				$('#regularisedDevice').openModal({dismissible:false});
 				$('#sucessMessage').text('');
-				$('#sucessMessage').text($.i18n('duplicateImei'));
-				}*/
+				$('#sucessMessage').text($.i18n(data.tag));
+				}
 			else{
 				$('#customRegisterDeviceDuplicateImei').openModal({dismissible:false});;
 				$('#dupliCateImeiMsg').text($.i18n(data.tag));
@@ -1054,7 +1054,7 @@ $(document).ready(function () {
 	});
 	$.getJSON('./getDropdownList/CUSTOMS_TAX_STATUS', function(data) {
 		var checkAllowedCount =localStorage.getItem("allowed");	
-		//alert("222222"+checkAllowedCount);
+		////alert("222222"+checkAllowedCount);
 		if(checkAllowedCount==0)
 			{
 		
@@ -1341,15 +1341,15 @@ function confirmRejectInformation(){
 function isImageValid(id) {
 	var uploadedFileName = $("#"+id).val();
 	uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
-	//alert("file extension=="+uploadedFileName)
+	////alert("file extension=="+uploadedFileName)
 	var ext = uploadedFileName.split('.').pop();
 
 	var fileSize = ($("#"+id)[0].files[0].size);
 	/*fileSize = (Math.round((fileSize / 100000) * 100) / 100)
-	alert("----"+fileSize);*/
+	//alert("----"+fileSize);*/
 	fileSize = Math.floor(fileSize/1000);
 	//$('#FilefieldId').val(id);
-	//alert(uploadedFileName+"----------"+ext+"----"+fileSize)
+	////alert(uploadedFileName+"----------"+ext+"----"+fileSize)
 	var fileExtension =ext.toLowerCase();
 	//////console.log("file type: "+fileExtension);
 	var extArray = ["png", "jpg","jpeg","gif","bmp","gif"];
@@ -1408,12 +1408,12 @@ $(document).on("keyup", "#Price1", function(e) {
 });
 
  function showHideCurrency() {
-	//alert(id-1);
+	////alert(id-1);
 	 var cuurecyId=id-1;
-	 //alert(ssss);
+	 ////alert(ssss);
 	var totalPriceaaa=$('#Price'+cuurecyId).val();
 	/*$('#country'+fieldId).val();*/
-	//alert(totalPriceaaa)
+	////alert(totalPriceaaa)
 	if(totalPriceaaa.length<'1' )
 	{
 		$("#Currency"+cuurecyId).attr("required", false);
@@ -1605,15 +1605,15 @@ $(document).on("keyup", "#Price1", function(e) {
 function deptImageValidation() {
 		var uploadedFileName = $("#endUserDepartmentId").val();
 		uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
-		//alert("file extension=="+uploadedFileName)
+		////alert("file extension=="+uploadedFileName)
 		var ext = uploadedFileName.split('.').pop();
 
 		var fileSize = ($("#"+id)[0].files[0].size);
 		/*fileSize = (Math.round((fileSize / 100000) * 100) / 100)
-		alert("----"+fileSize);*/
+		//alert("----"+fileSize);*/
 		fileSize = Math.floor(fileSize/1000);
 		//$('#FilefieldId').val(id);
-		//alert(uploadedFileName+"----------"+ext+"----"+fileSize)
+		////alert(uploadedFileName+"----------"+ext+"----"+fileSize)
 		var fileExtension =ext.toLowerCase();
 		////console.log("file type: "+fileExtension);
 		var extArray = ["png", "jpg","jpeg","gif","bmp","gif"];
@@ -1643,15 +1643,15 @@ function deptImageValidation() {
 	}function visaImageValidation() {
 		var uploadedFileName = $("#visaImage").val();
 		uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
-		//alert("file extension=="+uploadedFileName)
+		////alert("file extension=="+uploadedFileName)
 		var ext = uploadedFileName.split('.').pop();
 
 		var fileSize = ($("#"+id)[0].files[0].size);
 		/*fileSize = (Math.round((fileSize / 100000) * 100) / 100)
-		alert("----"+fileSize);*/
+		//alert("----"+fileSize);*/
 		fileSize = Math.floor(fileSize/1000);
 		//$('#FilefieldId').val(id);
-		//alert(uploadedFileName+"----------"+ext+"----"+fileSize)
+		////alert(uploadedFileName+"----------"+ext+"----"+fileSize)
 		var fileExtension =ext.toLowerCase();
 		////console.log("file type: "+fileExtension);
 		var extArray = ["png", "jpg","jpeg","gif","bmp","gif"];
