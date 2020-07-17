@@ -268,7 +268,7 @@
 			    });
 			},
 			error : function() {
-				alert("Failed");
+				////alert("Failed");
 			}
 		});
 		return false;

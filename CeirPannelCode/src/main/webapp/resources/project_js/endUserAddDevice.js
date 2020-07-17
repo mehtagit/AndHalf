@@ -129,7 +129,7 @@ function submitDeviceInfo(){
 //					$('#sucessMessage').text('');
 					$('#regularisedDevice').openModal({dismissible:false});;
 					$('#sucessMessage').text('');
-					$('#sucessMessage').text(data.tag);
+					$('#sucessMessage').text($.i18n(data.tag));
 					
 				}
 				else{

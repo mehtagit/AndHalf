@@ -1038,7 +1038,7 @@ function submitEndUserDeviceInfo(){
 //				$('#sucessMessage').text('');
 				$('#endUserRegisterDeviceModal').openModal({dismissible:false});;
 				$('#sucessMessageId').text('');
-				$('#sucessMessageId').text(data.tag);
+				$('#sucessMessageId').text($.i18n(data.tag));
 				
 			}
 			

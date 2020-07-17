@@ -292,7 +292,7 @@
                                                             </div> -->
                                                             <div class="input-field col s12 m12">
                                                                 <input type="text" name="sigleRecoveryaddress" id="sigleRecoveryaddress" class="form-control boxBorder boxHeight" placeholder=""
-                                                                     pattern="[^[a-zA-Z0-9\s,'-]*$]{0,200}" title="" 
+                                                                     pattern="[a-zA-Z0-9\s,'*$-]{0,200}" title="" 
                                                                       oninput="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');" 
                                                        oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');"
                                                                      maxlength="200" required="required">
@@ -301,7 +301,7 @@
                             
                                                             <div class="input-field col s12 m6 l6">
                                                                 <input type="text" name="sigleRecoverystreetNumber" class="form-control boxBorder boxHeight" placeholder=""
-                                                                    id="sigleRecoverystreetNumber"  maxlength="20" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,20}" required="required"
+                                                                    id="sigleRecoverystreetNumber"  maxlength="20" pattern="[a-zA-Z0-9\s,'*$-]{0,20}" required="required"
                                                                     title=""
                                                                      oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');" 
                                                                 oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');">
@@ -309,7 +309,7 @@
                                                             </div>
         
                                                             <div class="input-field col s12 m6 l6">
-                                                                <input type="text" name="sigleRecoveryvillage" id="sigleRecoveryvillage" placeholder="" maxlength="30" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}" required="required"
+                                                                <input type="text" name="sigleRecoveryvillage" id="sigleRecoveryvillage" placeholder="" maxlength="30" pattern="[a-zA-Z0-9\s,'*$-]{0,30}" required="required"
                                                                     title=""
                                                                     oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
                                                                    oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
@@ -319,7 +319,7 @@
                             
                                                             <div class="input-field col s12 m6 l6">
                                                                 <input type="text" name="sigleRecoverylocality" class="form-control boxBorder boxHeight" placeholder=""
-                                                                    id="sigleRecoverylocality" maxlength="30" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}" required="required"
+                                                                    id="sigleRecoverylocality" maxlength="30" pattern="[a-zA-Z0-9\s,'*$-]{0,30}" required="required"
                                                                     title=""
                                                                     oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
                                                                    oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');">
@@ -327,7 +327,7 @@
                                                             </div>
                                 
                                                             <div class="input-field col s12 m6 l6">
-                                                                <input type="text" name="sigleRecoverydistrict" id="sigleRecoverydistrict" placeholder="" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}" required="required"
+                                                                <input type="text" name="sigleRecoverydistrict" id="sigleRecoverydistrict" placeholder="" pattern="[a-zA-Z0-9\s,'*$-]{0,30}" required="required"
                                                                     title="" required="required"
                                                                     oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
                                                                    oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');">
@@ -335,7 +335,7 @@
                                                             </div>
                                 
                                                             <div class="input-field col s12 m6 l6">
-                                                                <input type="text" name="sigleRecoverycommune" id="sigleRecoverycommune" placeholder="" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}" required="required"
+                                                                <input type="text" name="sigleRecoverycommune" id="sigleRecoverycommune" placeholder="" pattern="[a-zA-Z0-9\s,'*$-]{0,30}" required="required"
                                                                     title="" required="required"
                                                                     oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
                                                                    oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');">

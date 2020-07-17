@@ -233,7 +233,7 @@ button.modal-action.modal-close.waves-effect.waves-green.btn-flat.right
 									</select>
 
 								</div>
-								<div class="file-field col s12 m6">
+								<div class="file-field col s12 m6"  id="removestar">
 									<h6 id="supportingdocumentFile" style="color: #000;">
 										<spring:message code="input.supportingdocument" />
 									</h6>
@@ -245,7 +245,7 @@ button.modal-action.modal-close.waves-effect.waves-green.btn-flat.right
 											oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');">
 									</div>
 									<div class="file-path-wrapper">
-										<input class="file-path validate" type="text"
+										<input class="file-path validate" type="text" id="filetextField"
 											placeholder="<spring:message code="grievanceFileMessage" />">
 										<div>
 											<p id="myFiles"></p>

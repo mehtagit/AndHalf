@@ -431,15 +431,15 @@ function fileTypeValueChanges(id) {
 
 	var uploadedFileName = $("#"+id).val();
 	uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
-	//alert("file extension=="+uploadedFileName)
+	////alert("file extension=="+uploadedFileName)
 	var ext = uploadedFileName.split('.').pop();
 
 	var fileSize = ($("#"+id)[0].files[0].size);
 	/*fileSize = (Math.round((fileSize / 100000) * 100) / 100)
-	alert("----"+fileSize);*/
+	//alert("----"+fileSize);*/
 	fileSize = Math.floor(fileSize/1000) + 'KB';
 
-	//alert(uploadedFileName+"----------"+ext+"----"+fileSize)
+	////alert(uploadedFileName+"----------"+ext+"----"+fileSize)
 
 	if (uploadedFileName.length > 30) {
 		$('#fileFormateModal').openModal();
@@ -478,12 +478,12 @@ function clearFileName() {
 function visaImageValidation() {
 	var uploadedFileName = $("#visaImage").val();
 	uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
-	//alert("file extension=="+uploadedFileName)
+	////alert("file extension=="+uploadedFileName)
 	var ext = uploadedFileName.split('.').pop();
 
 	var fileSize = ($("#visaImage")[0].files[0].size);
 	/*fileSize = (Math.round((fileSize / 100000) * 100) / 100)
-	alert("----"+fileSize);*/
+	//alert("----"+fileSize);*/
 	fileSize = Math.floor(fileSize/1000);
 
 
@@ -526,12 +526,12 @@ function clearVisaName() {
 function deptImageValidation() {
 	var uploadedFileName = $("#endUserDepartmentId").val();
 	uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
-	//alert("file extension=="+uploadedFileName)
+	////alert("file extension=="+uploadedFileName)
 	var ext = uploadedFileName.split('.').pop();
 
 	var fileSize = ($("#endUserDepartmentId")[0].files[0].size);
 	/*fileSize = (Math.round((fileSize / 100000) * 100) / 100)
-	alert("----"+fileSize);*/
+	//alert("----"+fileSize);*/
 	fileSize = Math.floor(fileSize/1000);
 
 

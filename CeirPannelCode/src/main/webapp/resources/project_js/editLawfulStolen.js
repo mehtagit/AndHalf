@@ -76,7 +76,7 @@ $(document).ready(function() {
 	  
 	  
 		/*var promise = new Promise(function(resolve, reject) {
-			alert("promise");
+			//alert("promise");
 			$.getJSON('./productList', function(data) {
 				////console.log(data)
 				
@@ -89,7 +89,7 @@ $(document).ready(function() {
 		});
 
 		promise.then(function() {
-			alert("then");
+			//alert("then");
 			$('div#initialloader').fadeIn('fast');
 			 setTimeout(function(){ viewIndivisualStolen(); }, 5000);
 			viewIndivisualStolen();
@@ -160,12 +160,12 @@ function viewIndivisualStolen()
 			setInterval(InputChangeListener2, 300);
 
 
-			//	alert(response.stolenIndividualUserDB.country);
+			//	//alert(response.stolenIndividualUserDB.country);
 			window.xop=response.stolenIndividualUserDB.alternateContactNumber;
 			$('#singleStolenphone1').val(response.stolenIndividualUserDB.alternateContactNumber);
 
 			$('#singleStolenaddress').val(response.stolenIndividualUserDB.propertyLocation);
-			//alert(response.stolenIndividualUserDB.street+"-----"+response.stolenIndividualUserDB.alternateContactNumber)
+			////alert(response.stolenIndividualUserDB.street+"-----"+response.stolenIndividualUserDB.alternateContactNumber)
 			$('#singleStolenstreetNumber').val(response.stolenIndividualUserDB.street);
 			$('#singleStolenvillage').val(response.stolenIndividualUserDB.village);
 			$('#singleStolenlocality').val(response.stolenIndividualUserDB.locality);
@@ -175,7 +175,7 @@ function viewIndivisualStolen()
 			$('#country').val(response.stolenIndividualUserDB.country).change();
 			$('#state').val(response.stolenIndividualUserDB.province);
 			$('#editsingleStolendeviceBrandName').val(response.stolenIndividualUserDB.deviceBrandName).change();
-			//alert(response.stolenIndividualUserDB.deviceBrandName);
+			////alert(response.stolenIndividualUserDB.deviceBrandName);
 			$('#editsingleStolenmodalNumber').val(response.stolenIndividualUserDB.modelNumber);
 			$('#singleStolenFileName').val(response.stolenIndividualUserDB.nidFileName);
 			$('#updatesingleStolenimei1').val(response.stolenIndividualUserDB.imeiEsnMeid1);
@@ -324,6 +324,14 @@ function updateIndivisualStolen()
 	var trimContactNumber5 = $('#singleStolenphone5').val();
 	var singleStolenphone5 =trimContactNumber5.replace(/[^A-Z0-9]/ig, "");
 	
+	if(singleStolendeviceIDType==""){
+		singleStolendeviceIDType=null;
+	}
+	
+	if(singleStolendeviceType==""){
+		singleStolendeviceType=null;
+	}
+	
 	var stolenIndividualUserDB={
 			"alternateContactNumber": singleStolenphone1,
 			"commune": singleStolencommune,
@@ -408,6 +416,12 @@ function updateIndivisualStolen()
 				$("#IndivisualUpdateStolen").prop('disabled', true);
 				$('#stolenSucessPopUp').openModal({dismissible:false});
 			}
+			else if(response.errorCode==5){
+				
+				$('#stolenSucessPopUp').openModal({dismissible:false});
+				$('#dynamicMessage').text('');
+				$('#dynamicMessage').text($.i18n(response.tag));
+			}
 			else{
 				$('#stolenSucessPopUp').openModal({dismissible:false});
 				$('#dynamicMessage').text('');
@@ -429,17 +443,17 @@ function updateIndivisualStolen()
 function isImageValid(id) {
 	var uploadedFileName = $("#"+id).val();
 	uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
-	//alert("file extension=="+uploadedFileName)
+	////alert("file extension=="+uploadedFileName)
 	var ext = uploadedFileName.split('.').pop();
 
 	var fileSize = ($("#"+id)[0].files[0].size);
 	/*fileSize = (Math.round((fileSize / 100000) * 100) / 100)
-	alert("----"+fileSize);*/
+	//alert("----"+fileSize);*/
 	fileSize = Math.floor(fileSize/1000) + 'KB';
 
-	//alert(uploadedFileName+"----------"+ext+"----"+fileSize)
+	////alert(uploadedFileName+"----------"+ext+"----"+fileSize)
 	var areEqual =ext.toLowerCase()=='png';
-	//alert(areEqual);
+	////alert(areEqual);
 	if(areEqual==true)
 	{
 		ext='PNG';
@@ -474,8 +488,8 @@ function clearFileName() {
 
 	var fieldId=$('#FilefieldId').val();
 	//var existingFileName=$('#existingFileName').val();
-	//alert("existingFileName=="+existingFileName);
-	//alert(fieldId);
+	////alert("existingFileName=="+existingFileName);
+	////alert(fieldId);
 	if(fieldId=='singleStolenFile')
 	{
 	$('#'+fieldId).val('');
@@ -503,7 +517,7 @@ else if(fieldId=='uploadFirSingle')
 var lang = window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 
 $.i18n().locale = lang;
-//alert(lang)
+////alert(lang)
 var successMsg, stolenIndivisual;
 
 $.i18n().load({
@@ -532,7 +546,7 @@ function viewPageType() {
 		$("#firImageLink").css("display", "block");
 		$("#uploadFirSingle").css("display", "none");
 		$("#sampleFileLink").css("display", "none");
-		// alert(stolenIndivisual);
+		// //alert(stolenIndivisual);
 		$("#IndivisualUpdateStolen").css("display", "none");
    		$(".star").css("display", "none");
 		
@@ -591,7 +605,7 @@ setTimeout(function(){
 
 
 function changeBrandValue(brand_id){
-	//alert("ss"+brand_id);
+	////alert("ss"+brand_id);
 	//var brand_id = $('#editsingleStolendeviceBrandName').val();
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");

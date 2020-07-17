@@ -130,7 +130,7 @@ function viewConsignmentDetails(txnId){
 			setViewPopupData(data);
 		},
 		error : function() {
-			alert("Failed");
+			////alert("Failed");
 		}
 	});
 }
@@ -237,7 +237,7 @@ function editRegisterConsignment(){
 				$('#sucessMessage').text('Your update on the form for transaction ID ('+data.txnId+') has been successfully updated.');
 			}
 			// $('#updateConsignment').modal('open'); 
-			//alert("success");
+			////alert("success");
 
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
@@ -618,7 +618,7 @@ function fileStolenReport(){
    			 				 $('#stockSucessMessage').text('Your update on the form for transaction ID ('+data.txnId+') has been successfully updated.');
    						 } */ 
 			// $('#updateConsignment').modal('open'); 
-			//alert("success");
+			////alert("success");
 
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
@@ -684,7 +684,7 @@ function fileRecoveryReport(){
    			 				 $('#stockSucessMessage').text('Your update on the form for transaction ID ('+data.txnId+') has been successfully updated.');
    						 } */
 			// $('#updateConsignment').modal('open'); 
-			//alert("success");
+			////alert("success");
 
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
@@ -836,7 +836,7 @@ function updatefileStolenReport(){
 				$('#editMessageTextStoleRecovery').text(data.message);
 			}  
 			// $('#updateConsignment').modal('open'); 
-			//alert("success");
+			////alert("success");
 
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
@@ -962,7 +962,7 @@ function openMulipleStolenPopUp()
 		 				 $('#stockSucessMessage').text('Your update on the form for transaction ID ('+data.txnId+') has been successfully updated.');
 					 } */
 			// $('#updateConsignment').modal('open'); 
-			//alert("success");
+			////alert("success");
 
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
@@ -1219,7 +1219,10 @@ else if(data.errorCode==5){
 			}
 		},
 		error : function() {
-			alert("Failed");
+			$('#approveInformation').closeModal(); 
+			$('#confirmApproveInformation').openModal({dismissible:false});
+			$('#"lawfulStolenDeleteSucessMsg"').text('');
+			$('#"lawfulStolenDeleteSucessMsg"').text($.i18n('errorMsg'));
 		}
 	});
 }
@@ -1288,7 +1291,10 @@ else if(data.errorCode==5){
 			}
 		},
 		error : function() {
-			//alert("Failed");
+			$('#rejectInformation').closeModal(); 
+			$('#confirmRejectInformation').openModal({dismissible:false});
+			$('#"deviceRejectedMessage"').text('');
+			$('#"deviceRejectedMessage"').text($.i18n('error'));
 		}
 	});
 	return false;
@@ -1308,7 +1314,7 @@ $("input[type=file]").keypress(function(ev) {
 
 });
 
-
+var stolenHistoryTable;
 function historyRecord(txnID,sourceType){
 	//////console.log("txn id=="+txnID)
 	$("#tableOnModal").openModal({dismissible:false});
@@ -1375,6 +1381,7 @@ function historyRecord(txnID,sourceType){
 	if(lang=='km'){
 		var langFile='../resources/i18n/khmer_datatable.json';
 	}
+	
 	//////console.log("22");
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
@@ -1382,21 +1389,26 @@ function historyRecord(txnID,sourceType){
 	headers:
 	{ 'X-CSRF-TOKEN': token }
 	});
-
-
+	if( stolenHistoryTable !== null && stolenHistoryTable !== undefined ){
+		//console.log('Going to destroy history table');
+		stolenHistoryTable.destroy();
+		$('#data-table-history2').empty();
+	}
+	
 	$.ajax({
 		url: 'Consignment/consignment-history',
 		type: 'POST',
 		data: formData,
+		async : false,
 		processData: false,
 		contentType: false,
 		success: function(result){
-			$('#data-table-history2').dataTable().clear().draw();
+			
 			var dataObject = eval(result);
-			alert(JSON.stringify(dataObject.data))
-			$('#data-table-history2').dataTable({
-				 "order" : [[1, "asc"]],
-				 destroy:true,
+			//console.log(JSON.stringify(dataObject.data))
+			stolenHistoryTable = $('#data-table-history2').DataTable({
+				"destroy":true,
+				"order" : [[1, "asc"]],
 				"serverSide": false,
 				 orderCellsTop : true,
 				"ordering" : false,
@@ -1410,9 +1422,9 @@ function historyRecord(txnID,sourceType){
 			
 		    });
 			$('div#initialloader').delay(300).fadeOut('slow');
-	}
+		}
 		
-});
+	});
 
 	$('.datepicker').on('mousedown',function(event){
 	event.preventDefault();
@@ -1482,3 +1494,10 @@ function isLengthValid(val){
 
 	}
 }
+
+
+/*function resetDatatable(){
+	//alert('called');
+	$('#data-table-history2').DataTable().state.clear();
+	//$('#data-table-history2').DataTable().clear().draw();
+}*/

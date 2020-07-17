@@ -13,6 +13,15 @@ $("#singleDeviceRecovery").prop('disabled', true);
 	var sigleRecoveryimeiNumber4=$('#sigleRecoveryimeiNumber4').val();
 	var sigleRecoverydeviceIDType=$('#sigleRecoverydeviceIDType').val();
 	var sigleRecoverydeviceType=$('#sigleRecoverydeviceType').val();
+	
+	if(sigleRecoverydeviceIDType==''){
+		sigleRecoverydeviceIDType=null;
+	}
+	
+	if(sigleRecoverydeviceType==''){
+		sigleRecoverydeviceType=null;
+	}
+	
 	var sigleRecoverydeviceSimStatus=$('#sigleRecoverydeviceSimStatus').val();
     var sigleRecoveryserialNumber=$('#sigleRecoveryserialNumber').val();
 	
@@ -93,6 +102,14 @@ $("#singleDeviceRecovery").prop('disabled', true);
 					dismissible:false
 				});
 				$('#IndivisualStolenTxnId').text(response.txnId)
+			}
+			if(response.errorCode=='5'){
+				
+				$('#IndivisualStolenSucessPopup').openModal({
+					dismissible:false
+				});
+				$('#sucessMessage').text('');
+				$('#sucessMessage').text($.i18n(response.tag));
 			}
 			else{
 //				$('#sucessMessage').text('');
@@ -190,6 +207,14 @@ function saveCompanyRecoveryRequest(){
 				});
 				$('#IndivisualStolenTxnId').text(response.txnId)
 			}
+		else if(response.errorCode=='5'){
+		
+			$('#IndivisualStolenSucessPopup').openModal({
+				dismissible:false
+			});
+			$('#sucessMessage').text('');
+			$('#sucessMessage').text($.i18n(response.tag));
+		}
 			else{
 //				$('#sucessMessage').text('');
 				$('#IndivisualStolenSucessPopup').openModal({

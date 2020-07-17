@@ -14,7 +14,7 @@ window.onload = function exampleFunction() {
 $(document).ready(function() {
  // executes when HTML-Document is loaded and DOM is ready
 	
-	//alert("ready");
+	////alert("ready");
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
 	$.ajaxSetup({
@@ -68,7 +68,7 @@ headers:
 		//////console.log("1=="+response.stolenIndividualUserDB.deviceBrandName);
 
 		
-		 //	alert(response.stolenIndividualUserDB.deviceBrandName);
+		 //	//alert(response.stolenIndividualUserDB.deviceBrandName);
 		$('#editsigleRecoverydeviceBrandName').val(response.stolenIndividualUserDB.deviceBrandName).change();
 		$('#selectedBrandName').val(response.stolenIndividualUserDB.deviceBrandName);
 		$('#editsingleRecoverymodalNumber').val(response.stolenIndividualUserDB.modelNumber);
@@ -145,6 +145,13 @@ function updateIndivisualRecovery()
 	var IndivisualRecoveryDevice=$('#bulkRecoveryDate').val();
 	var txnid=$('#existingStolenTxnId').val();
 	
+	if(sigleRecoverydeviceIDType==''){
+		sigleRecoverydeviceIDType=null;
+	}
+	if(sigleRecoverydeviceType==''){
+		sigleRecoverydeviceType=null;
+	}
+	
 	var stolenIndividualUserDB={
 			"deviceBrandName": sigleRecoverydeviceBrandName,
 			"modelNumber":$('#editsingleRecoverymodalNumber').val(),
@@ -202,6 +209,13 @@ function updateIndivisualRecovery()
 				$('#stolenSucessPopUp').openModal({dismissible:false});
 			
 			}
+			else if(response.errorCode=='5'){
+				
+				$('#stolenSucessPopUp').openModal({dismissible:false});
+				$('#dynamicMessage').text('');
+				$('#dynamicMessage').text($.i18n(response.tag));
+			
+			}
 			else{
 //				$('#sucessMessage').text('');
 				$('#indivisualStolenButton').openModal({dismissible:false});
@@ -220,7 +234,7 @@ function updateIndivisualRecovery()
 
 
 /*function changeBrandValue(brand_id){
- 	alert("ss"+brand_id);
+ 	//alert("ss"+brand_id);
  	var brand_id = $('#editsingleStolendeviceBrandName').val();
  	$.getJSON('./productModelList?brand_id=' + brand_id,
  			function(data) {
@@ -237,7 +251,7 @@ $('#editsigleRecoverydeviceBrandName').on(
 		'change',
 		function() {
 			var brand_id = $('#editsigleRecoverydeviceBrandName').val();
-		//	alert("ss"+brand_id);
+		//	//alert("ss"+brand_id);
 			//////console.log("ss"+brand_id);
 			$.ajaxSetup({
 				async: false

@@ -497,7 +497,7 @@ src="${context}/resources/project_js/enterKey.js?version=<%= (int) (Math.random(
 					for (i = 0; i < data.length; i++) {
 						$('<option>').val(data[i].value).text(data[i].interp)
 						.appendTo('#unbockSingledeviceType');
-						console.log('#unbockSingledeviceType')
+						////console.log.log('#unbockSingledeviceType')
 					}
 				});
 
@@ -506,7 +506,7 @@ src="${context}/resources/project_js/enterKey.js?version=<%= (int) (Math.random(
 					for (i = 0; i < data.length; i++) {
 						$('<option>').val(data[i].value).text(data[i].interp)
 						.appendTo('#unbockSingleMultipleSimStatus');
-						console.log('#unbockSingleMultipleSimStatus');
+						//console.log('#unbockSingleMultipleSimStatus');
 					}
 				});
 				
@@ -515,7 +515,7 @@ src="${context}/resources/project_js/enterKey.js?version=<%= (int) (Math.random(
 					for (i = 0; i < data.length; i++) {
 						$('<option>').val(data[i].value).text(data[i].interp)
 						.appendTo('#UnblockdeviceIdType');
-						console.log('#UnblockdeviceIdType');
+						//console.log('#UnblockdeviceIdType');
 					}
 				});
 				
@@ -524,10 +524,10 @@ src="${context}/resources/project_js/enterKey.js?version=<%= (int) (Math.random(
 					for (i = 0; i < data.length; i++) {
 						$('<option>').val(data[i].value).text(data[i].interp)
 						.appendTo('#bulkunBlockdeviceCategory');
-						console.log('#bulkunBlockdeviceCategory');
+						//console.log('#bulkunBlockdeviceCategory');
 						$('<option>').val(data[i].value).text(data[i].interp)
 						.appendTo('#singleDeviceUnblock');
-						console.log('#singleDeviceUnblock');
+						//console.log('#singleDeviceUnblock');
 						
 					}
 				});
