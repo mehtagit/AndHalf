@@ -259,7 +259,7 @@ button.modal-action.modal-close.waves-effect.waves-green.btn-flat.right
 
 					</div>
 					<div class="col s12 m6 right">
-						<button class="btn right add_field_button" >
+						<button class="btn right add_field_button" disabled="disabled" >
 							<span style="font-size: 20px;">+</span>
 							<spring:message code="input.addmorefile" />
 						</button>

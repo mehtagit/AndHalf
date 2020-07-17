@@ -178,7 +178,7 @@ placeholder="<spring:message code="grievanceFileMessage" />">
 
 </div>
 <div class="col s12 m6 right">
-<button class="btn right add_field_button" type="button" ><span
+<button class="btn right add_field_button" type="button" disabled="disabled"><span
 style="font-size: 20px;">+</span><spring:message code="input.addmorefile" /></button>
 </div>
 
@@ -785,7 +785,7 @@ $('div#initialloader').delay(300).fadeOut('slow');
 					});
 
 			function enableAddMore() {
-			//	$(".add_field_button").attr("disabled", false);
+				$(".add_field_button").attr("disabled", false);
 			}
 			function enableSelectFile() {
 				if($('#docTypetag1').val() != ''){
