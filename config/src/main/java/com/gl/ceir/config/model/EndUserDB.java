@@ -25,6 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Audited
@@ -86,6 +87,7 @@ public class EndUserDB   {
 
 	@NotAudited
 	//@JsonBackReference
+	@JsonManagedReference
 	@OneToMany(mappedBy = "endUserDB",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	private List<RegularizeDeviceDb> regularizeDeviceDbs ;
 	

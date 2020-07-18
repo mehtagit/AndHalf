@@ -43,7 +43,7 @@ public class RegularizeDeviceFileModel {
 	 * @CsvBindByPosition(position = 11) private String country;
 	 */
 	@CsvBindByName(column = "Tax Paid Status")
-	@CsvBindByPosition(position = 5)
+	@CsvBindByPosition(position = 6)
 	private String TaxPaidStatus;
 	
 	@CsvBindByName(column = "CreatedOn")
@@ -59,26 +59,30 @@ public class RegularizeDeviceFileModel {
 	private String txnId;
 	
 	@CsvBindByName(column = "First IMEI")
-	@CsvBindByPosition(position = 6)
+	@CsvBindByPosition(position = 7)
 	private String firstImei;
 	
 	@CsvBindByName(column = "Second IMEI")
-	@CsvBindByPosition(position = 7)
+	@CsvBindByPosition(position = 8)
 	private String secondImei;
 	
 	@CsvBindByName(column = "Third IMEI")
-	@CsvBindByPosition(position = 8)
+	@CsvBindByPosition(position = 9)
 	private String thirdImei;
 	
 	@CsvBindByName(column = "Fourth IMEI")
-	@CsvBindByPosition(position = 9)
+	@CsvBindByPosition(position = 10)
 	private String fourthImei;
+	
+	@CsvBindByName(column = "Status")
+	@CsvBindByPosition(position = 5)
+	private String status;
 	
 	@CsvBindByName(column = "Origin")
 	@CsvBindByPosition(position = 4)
 	private String origin;
 	
-	@CsvBindByName(column = "Nid")
+	@CsvBindByName(column = "NID")
 	@CsvBindByPosition(position = 3)
 	private String nid;
 	
@@ -143,33 +147,17 @@ public class RegularizeDeviceFileModel {
 	public void setNid(String nid) {
 		this.nid = nid;
 	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("RegularizeDeviceFileModel [TaxPaidStatus=");
-		builder.append(TaxPaidStatus);
-		builder.append(", createdOn=");
-		builder.append(createdOn);
-		builder.append(", modifiedOn=");
-		builder.append(modifiedOn);
-		builder.append(", txnId=");
-		builder.append(txnId);
-		builder.append(", firstImei=");
-		builder.append(firstImei);
-		builder.append(", secondImei=");
-		builder.append(secondImei);
-		builder.append(", thirdImei=");
-		builder.append(thirdImei);
-		builder.append(", fourthImei=");
-		builder.append(fourthImei);
-		builder.append(", origin=");
-		builder.append(origin);
-		builder.append(", nid=");
-		builder.append(nid);
-		builder.append("]");
-		return builder.toString();
-	}
-	
-
-	
+		return "RegularizeDeviceFileModel [TaxPaidStatus=" + TaxPaidStatus + ", createdOn=" + createdOn
+				+ ", modifiedOn=" + modifiedOn + ", txnId=" + txnId + ", firstImei=" + firstImei + ", secondImei="
+				+ secondImei + ", thirdImei=" + thirdImei + ", fourthImei=" + fourthImei + ", status=" + status
+				+ ", origin=" + origin + ", nid=" + nid + "]";
+	}	
 }

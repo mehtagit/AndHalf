@@ -69,6 +69,17 @@ public class UserProfile {
 	private String nidFilename;
 	private String photoFilename;
 	private String idCardFilename;
+	
+	//port address for custom user
+	private Integer portAddress;
+
+	public Integer getPortAddress() {
+		return portAddress;
+	}
+
+	public void setPortAddress(Integer portAddress) {
+		this.portAddress = portAddress;
+	}
 
 	@JsonIgnore
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)

@@ -39,6 +39,7 @@ public class StolenandRecoveryMgmt implements Serializable {
 	private String firFileName;
 
 	private Integer fileStatus;
+	
 	@NotNull
 	private String txnId;
 

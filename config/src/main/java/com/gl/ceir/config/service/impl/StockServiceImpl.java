@@ -154,6 +154,9 @@ public class StockServiceImpl {
 		User user = null;
 
 		try {
+			if( !("End User".equalsIgnoreCase(stockMgmt.getUserType())) && userStaticServiceImpl.checkIfUserIsDisabled( stockMgmt.getUserId() ))
+				return new GenricResponse(5, "USER_IS_DISABLED","This account is disabled. Please enable the account to perform the operation.",
+						stockMgmt.getTxnId());
 		//	stockValidator.validateRegister(stockMgmt);
 			stockMgmt.setStockStatus(StockStatus.NEW.getCode());
 
@@ -527,6 +530,9 @@ public class StockServiceImpl {
 	}
 
 	public GenricResponse deleteStockDetailes(ConsignmentUpdateRequest deleteObj) {
+		if( userStaticServiceImpl.checkIfUserIsDisabled( deleteObj.getUserId() ))
+			return new GenricResponse(5, "USER_IS_DISABLED","This account is disabled. Please enable the account to perform the operation.",
+					deleteObj.getTxnId());
 		try {
 			//stockValidator.validateDelete(deleteObj);
 		}catch (RequestInvalidException e) {
@@ -540,9 +546,8 @@ public class StockServiceImpl {
 			throw e;
 		}
 		
-		UserProfile userProfile = null;
-		String firstName = "";
 		User user = null;
+		User customUser = null;
 		Map<String, String> placeholderMap = new HashMap<>();
 		String action = null;
 		String txnId = null;
@@ -552,10 +557,8 @@ public class StockServiceImpl {
 		action = SubFeatures.DELETE;
 		userMailTag = "STOCK_DELETE_BY_USER"; 
 		user = userRepository.getById(deleteObj.getUserId());				
-		userProfile = user.getUserProfile();
 		txnId = deleteObj.getTxnId();
 
-		placeholderMap.put("<First name>", userProfile.getFirstName());
 		placeholderMap.put("<Txn id>", deleteObj.getTxnId());
 		try {
 
@@ -570,6 +573,11 @@ public class StockServiceImpl {
 			}
 
 			StockMgmt txnRecord	= stockManagementRepository.getByTxnId(deleteObj.getTxnId());
+			
+			if("Custom".equals(txnRecord.getUserType())) {
+				customUser = userRepository.getById(txnRecord.getAssignerId());				
+			}
+			user = userRepository.getById(txnRecord.getUserId());
 
 			String payloadTxnId = deleteObj.getTxnId();
 			lock.lock();
@@ -617,10 +625,6 @@ public class StockServiceImpl {
 					logger.info("Deletion of Stock is in Progress." + deleteObj.getTxnId());
 					if(isUserCeirAdmin) {
 
-						user = userRepository.getById(txnRecord.getUserId());				
-						userProfile = user.getUserProfile();
-						logger.info("user profile details-");
-						logger.info(userProfile);
 						Generic_Response_Notification generic_Response_Notification = userFeignClient.ceirInfoByUserTypeId(8);
 
 						logger.info("generic_Response_Notification::::::::"+generic_Response_Notification);
@@ -631,7 +635,7 @@ public class StockServiceImpl {
 							UserProfile userProfile_generic_Response_Notification = new UserProfile();
 							userProfile_generic_Response_Notification = userProfileRepository.getByUserId(registerationUser.getId());
 
-
+							placeholderMap.put("<First name>", userProfile_generic_Response_Notification.getFirstName());
 							emailUtil.saveNotification(userMailTag, 
 									userProfile_generic_Response_Notification,
 									deleteObj.getFeatureId(),
@@ -641,12 +645,28 @@ public class StockServiceImpl {
 									txnId,
 									placeholderMap,
 									deleteObj.getRoleType(),
-									receiverUserType,
+									"CEIRAdmin",
 									"Users");
 							logger.info("Notfication for CEIRAdmin have been saved.");
 						}
+						if( customUser != null ) {
+							placeholderMap.put("<First name>", customUser.getUserProfile().getFirstName());
+							emailUtil.saveNotification(userMailTag, 
+									customUser.getUserProfile(), 
+									deleteObj.getFeatureId(),
+									Features.STOCK,
+									action,
+									deleteObj.getTxnId(),
+									txnId,
+									placeholderMap,
+									deleteObj.getUserType(),
+									deleteObj.getUserType(),
+									"Users");
+							logger.info("Notfication for custom user have been saved.");
+						}
+						placeholderMap.put("<First name>", user.getUserProfile().getFirstName());
 						emailUtil.saveNotification(userMailTag, 
-								userProfile, 
+								user.getUserProfile(), 
 								deleteObj.getFeatureId(),
 								Features.STOCK,
 								action,
@@ -654,13 +674,29 @@ public class StockServiceImpl {
 								txnId,
 								placeholderMap,
 								deleteObj.getRoleType(),
-								receiverUserType,
+								deleteObj.getRoleType(),
 								"Users");
 						logger.info("Notfication for user have been saved.");
 					}
 					else {
+						if( customUser != null ) {
+							placeholderMap.put("<First name>", customUser.getUserProfile().getFirstName());
+							emailUtil.saveNotification(userMailTag, 
+									customUser.getUserProfile(), 
+									deleteObj.getFeatureId(),
+									Features.STOCK,
+									action,
+									deleteObj.getTxnId(),
+									txnId,
+									placeholderMap,
+									deleteObj.getUserType(),
+									deleteObj.getUserType(),
+									"Users");
+							logger.info("Notfication for custom user have been saved.");
+						}
+						placeholderMap.put("<First name>", user.getUserProfile().getFirstName());
 						emailUtil.saveNotification(userMailTag, 
-								userProfile, 
+								user.getUserProfile(), 
 								deleteObj.getFeatureId(),
 								Features.STOCK,
 								action,
@@ -668,7 +704,7 @@ public class StockServiceImpl {
 								txnId,
 								placeholderMap,
 								deleteObj.getRoleType(),
-								receiverUserType,
+								deleteObj.getUserType(),
 								"Users");
 						logger.info("Notfication have been saved.");	
 					}
@@ -700,13 +736,20 @@ public class StockServiceImpl {
 		StockMgmt stockMgmt = null;
 
 		try {
+			if( userStaticServiceImpl.checkIfUserIsDisabled( distributerManagement.getUserId() ))
+				return new GenricResponse(5, "USER_IS_DISABLED","This account is disabled. Please enable the account to perform the operation.",
+						distributerManagement.getTxnId());
 			//stockValidator.validateEdit(distributerManagement);
 			
 			if("End User".equalsIgnoreCase(distributerManagement.getUserType())){
 				distributerManagement.setRoleType("End User");
 			}
-			stockMgmt = stockManagementRepository.findByRoleTypeAndTxnId(distributerManagement.getRoleType(), 
-					distributerManagement.getTxnId());
+			if( distributerManagement.getRoleType().equalsIgnoreCase("custom") )
+				stockMgmt = stockManagementRepository.findByUserTypeAndTxnId(distributerManagement.getRoleType(), 
+						distributerManagement.getTxnId());
+			else
+				stockMgmt = stockManagementRepository.findByRoleTypeAndTxnId(distributerManagement.getRoleType(), 
+						distributerManagement.getTxnId());
 			logger.info(stockMgmt);
 
 			if(Objects.isNull(stockMgmt)) {
@@ -798,11 +841,15 @@ public class StockServiceImpl {
 	public GenricResponse acceptReject(ConsignmentUpdateRequest consignmentUpdateRequest) {
 		try {
 			//stockValidator.validateAcceptReject(consignmentUpdateRequest);
-			
-			UserProfile userProfile = null;
-			String firstName = "";
+			if(!"CEIRSYSTEM".equalsIgnoreCase(consignmentUpdateRequest.getRoleType()) 
+					&& userStaticServiceImpl.checkIfUserIsDisabled( consignmentUpdateRequest.getUserId() )) {
+				return new GenricResponse(5, "USER_IS_DISABLED","This account is disabled. Please enable the account to perform the operation.",
+						consignmentUpdateRequest.getTxnId());
+				
+			}
 			User user = null;
-			Map<String, String> placeholderMap = new HashMap<>();
+			User customUser = null;
+			Map<String, String> placeholderMap = new HashMap<String, String>();
 			Integer currentStatus = null;
 			String adminMailTag = null;
 			adminMailTag = "STOCK_PROCESS_SUCCESS_TO_CEIR_MAIL";
@@ -812,24 +859,23 @@ public class StockServiceImpl {
 			currentStatus = stockMgmt.getStockStatus();
 
 			// Fetch user_profile to update user over mail/sms regarding the action.
-			if("Custom".equals(stockMgmt.getRoleType())) {
-				user = userRepository.getById(stockMgmt.getAssignerId());				
-			}else {
-				user = userRepository.getById(stockMgmt.getUserId());
+			if("Custom".equals(stockMgmt.getUserType())) {
+				customUser = userRepository.getById(stockMgmt.getAssignerId());				
 			}
-			userProfile = user.getUserProfile();
-
+			user = userRepository.getById(stockMgmt.getUserId());
+			placeholderMap.put("<Txn id>", stockMgmt.getTxnId());
+			
 			if(Objects.isNull(stockMgmt)) {
 				String message = "TxnId Does not Exist ";
 				logger.info(message + consignmentUpdateRequest.getTxnId());
 				return new GenricResponse(4, message, consignmentUpdateRequest.getTxnId());
 			}
 
-			logger.info(user);
-
-			if(Objects.nonNull(user)) {
-				firstName = user.getUserProfile().getFirstName();
-			}
+//			logger.info(user);
+//
+//			if(Objects.nonNull(user)) {
+//				firstName = user.getUserProfile().getFirstName();
+//			}
 
 			lock.lock();
 			logger.info("lock taken by thread : " + Thread.currentThread().getName());
@@ -856,7 +902,7 @@ public class StockServiceImpl {
 
 					txnId = stockMgmt.getTxnId();
 
-					placeholderMap.put("<First name>", firstName);
+//					placeholderMap.put("<First name>", firstName);
 					placeholderMap.put("<Txn id>", stockMgmt.getTxnId());
 
 					stockMgmt.setStockStatus(StockStatus.APPROVED_BY_CEIR_ADMIN.getCode());
@@ -873,9 +919,6 @@ public class StockServiceImpl {
 					mailTag = "STOCK_REJECT_BY_CEIR_ADMIN";
 					txnId =  stockMgmt.getTxnId();
 
-					placeholderMap.put("<First name>", firstName);
-					placeholderMap.put("<Txn id>", stockMgmt.getTxnId());
-
 					stockMgmt.setStockStatus(StockStatus.REJECTED_BY_CEIR_ADMIN.getCode());
 					stockMgmt.setRemarks(consignmentUpdateRequest.getRemarks());
 					stockMgmt.setCeirAdminId(consignmentUpdateRequest.getUserId());
@@ -887,8 +930,24 @@ public class StockServiceImpl {
 					return new GenricResponse(3, "Unable to update stock entity.", consignmentUpdateRequest.getTxnId()); 
 				}else {
 					addInAuditTrail(Long.valueOf(consignmentUpdateRequest.getUserId()), consignmentUpdateRequest.getTxnId(), action, consignmentUpdateRequest.getRoleType());
+					if( customUser != null ) {
+						placeholderMap.put("<First name>", customUser.getUserProfile().getFirstName() );
+						emailUtil.saveNotification(mailTag, 
+								customUser.getUserProfile(), 
+								consignmentUpdateRequest.getFeatureId(),
+								Features.STOCK,
+								action,
+								consignmentUpdateRequest.getTxnId(),
+								txnId,
+								placeholderMap,
+								receiverUserType,
+								receiverUserType,
+								"Users");
+						logger.info("Notfication have been saved for custom user.");
+					}
+					placeholderMap.put("<First name>", user.getUserProfile().getFirstName() );
 					emailUtil.saveNotification(mailTag, 
-							userProfile, 
+							user.getUserProfile(), 
 							consignmentUpdateRequest.getFeatureId(),
 							Features.STOCK,
 							action,
@@ -896,7 +955,7 @@ public class StockServiceImpl {
 							txnId,
 							placeholderMap,
 							stockMgmt.getRoleType(),
-							receiverUserType,
+							stockMgmt.getUserType(),
 							"Users");
 					logger.info("Notfication have been saved for user.");
 					if(consignmentUpdateRequest.getAction() == 0) {
@@ -909,16 +968,17 @@ public class StockServiceImpl {
 						List<RegisterationUser> registerationUserList =
 								generic_Response_Notification.getData();
 
-						for(RegisterationUser registerationUser :registerationUserList) { UserProfile
-							userProfile_generic_Response_Notification = new UserProfile();
-						userProfile_generic_Response_Notification =
-								userProfileRepository.getByUserId(registerationUser.getId());
-						emailUtil.saveNotification(adminMailTag,
-								userProfile_generic_Response_Notification,
-								consignmentUpdateRequest.getFeatureId(), Features.STOCK, action,
-								consignmentUpdateRequest.getTxnId(), txnId, placeholderMap,
-								stockMgmt.getRoleType(), receiverUserType, "Users");
-						logger.info("Notfication have been saved for CEIR Admin."); }	
+						for(RegisterationUser registerationUser :registerationUserList) { 
+							UserProfile userProfile_generic_Response_Notification = new UserProfile();
+							userProfile_generic_Response_Notification = userProfileRepository.getByUserId(registerationUser.getId());
+							placeholderMap.put("<First name>", userProfile_generic_Response_Notification.getFirstName() );
+							emailUtil.saveNotification(adminMailTag,
+									userProfile_generic_Response_Notification,
+									consignmentUpdateRequest.getFeatureId(), Features.STOCK, action,
+									consignmentUpdateRequest.getTxnId(), txnId, placeholderMap,
+									"CEIRAdmin", "CEIRAdmin", "Users");
+						logger.info("Notfication have been saved for CEIR Admin."); 
+						}	
 					}
 				}
 
@@ -947,9 +1007,6 @@ public class StockServiceImpl {
 					mailTag = "STOCK_PROCESS_SUCCESS_TO_USER_MAIL"; 
 					adminMailTag = "STOCK_PROCESS_SUCCESS_TO_CEIR_MAIL";
 					txnId = stockMgmt.getTxnId();
-
-					placeholderMap.put("<First name>", firstName);
-					placeholderMap.put("<Txn id>", stockMgmt.getTxnId());
 					stockMgmt.setStockStatus(StockStatus.PROCESSING.getCode());
 
 				}else if(consignmentUpdateRequest.getAction() == 1){
@@ -965,9 +1022,6 @@ public class StockServiceImpl {
 					mailTag = "STOCK_PROCESS_FAILED_TO_USER_MAIL";
 					txnId = stockMgmt.getTxnId();
 
-					placeholderMap.put("<First name>", firstName);
-					placeholderMap.put("<Txn id>", stockMgmt.getTxnId());
-
 					stockMgmt.setStockStatus(StockStatus.REJECTED_BY_SYSTEM.getCode());
 				}else if(consignmentUpdateRequest.getAction() == 2) {
 					// Check if someone else taken the same action on consignment.
@@ -982,10 +1036,6 @@ public class StockServiceImpl {
 					mailTag = "STOCK_PROCESS_SUCCESS_TO_USER_MAIL"; 
 					adminMailTag = "STOCK_PROCESS_SUCCESS_TO_CEIR_MAIL";
 					txnId = stockMgmt.getTxnId();
-
-					placeholderMap.put("<First name>", firstName);
-					placeholderMap.put("<Txn id>", stockMgmt.getTxnId());
-
 					stockMgmt.setStockStatus(StockStatus.PENDING_APPROVAL_FROM_CEIR_ADMIN.getCode());
 				}else {
 					String message = "Not a valid action to take on the Stock [" + stockMgmt.getTxnId() + "]";
@@ -999,10 +1049,25 @@ public class StockServiceImpl {
 					return new GenricResponse(3, "Unable to update stock entity.", consignmentUpdateRequest.getTxnId()); 
 				}else {
 					logger.info("enter in mail sending   method..");
-
 					if(currentStatus == StockStatus.PROCESSING.getCode()) {
+						if( customUser != null ) {
+							placeholderMap.put("<First name>", customUser.getUserProfile().getFirstName() );
+							emailUtil.saveNotification(mailTag, 
+									customUser.getUserProfile(), 
+									consignmentUpdateRequest.getFeatureId(),
+									Features.STOCK,
+									action,
+									consignmentUpdateRequest.getTxnId(),
+									txnId,
+									placeholderMap,
+									receiverUserType,
+									receiverUserType,
+									"Users");
+							logger.info("Notfication have been saved for custom user.");
+						}
+						placeholderMap.put("<First name>", user.getUserProfile().getFirstName() );
 						emailUtil.saveNotification(mailTag, 
-								userProfile, 
+								user.getUserProfile(), 
 								consignmentUpdateRequest.getFeatureId(),
 								Features.STOCK,
 								action,
@@ -1010,7 +1075,7 @@ public class StockServiceImpl {
 								txnId,
 								placeholderMap,
 								stockMgmt.getRoleType(),
-								receiverUserType,
+								stockMgmt.getUserType(),
 								"Users");
 
 						logger.info("Notfication have been saved for user.");
@@ -1025,7 +1090,7 @@ public class StockServiceImpl {
 							for(RegisterationUser registerationUser :registerationUserList) {
 								UserProfile userProfile_generic_Response_Notification = new UserProfile();
 								userProfile_generic_Response_Notification = userProfileRepository.getByUserId(registerationUser.getId());
-
+								placeholderMap.put("<First name>", userProfile_generic_Response_Notification.getFirstName() );
 								emailUtil.saveNotification(adminMailTag, 
 										userProfile_generic_Response_Notification,
 										consignmentUpdateRequest.getFeatureId(),
@@ -1035,7 +1100,7 @@ public class StockServiceImpl {
 										txnId,
 										placeholderMap,
 										stockMgmt.getRoleType(),
-										receiverUserType,
+										"CEIRAdmin",
 										"Users");
 								logger.info("Notfication have been saved for CEIR Admin.");
 							}

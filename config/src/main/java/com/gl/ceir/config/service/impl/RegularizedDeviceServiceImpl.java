@@ -298,13 +298,13 @@ public class RegularizedDeviceServiceImpl {
 					 * rdfm.setDeviceTypeInterp("NA"); }
 					 */
 					
-					if(!Objects.nonNull(regularizeDeviceDb.getSecondImei())) {
+					if(!Objects.nonNull(regularizeDeviceDb.getSecondImei()) || regularizeDeviceDb.getSecondImei().equals("")) {
 						rdfm.setSecondImei("NA");
 					}
-					if(!Objects.nonNull(regularizeDeviceDb.getThirdImei())) {
+					if(!Objects.nonNull(regularizeDeviceDb.getThirdImei()) || regularizeDeviceDb.getThirdImei().equals("")) {
 						rdfm.setThirdImei("NA");	
 					}
-					if(!Objects.nonNull(regularizeDeviceDb.getFourthImei())) {
+					if(!Objects.nonNull(regularizeDeviceDb.getFourthImei()) || regularizeDeviceDb.getFourthImei().equals("")) {
 						rdfm.setFourthImei("NA");	
 					}
 					/*
@@ -327,6 +327,7 @@ public class RegularizedDeviceServiceImpl {
 					rdfm.setTxnId(regularizeDeviceDb.getTxnId());
 					rdfm.setOrigin(regularizeDeviceDb.getOrigin());
 					rdfm.setNid(regularizeDeviceDb.getNid());
+					rdfm.setStatus(regularizeDeviceDb.getStateInterp());
 					for(SystemConfigListDb systemConfigListDb : currencyList) {
 						if(regularizeDeviceDb.getCurrency() == systemConfigListDb.getValue()) {
 							if(!Objects.nonNull(systemConfigListDb.getInterp())) {
@@ -345,6 +346,8 @@ public class RegularizedDeviceServiceImpl {
 				}
 
 				csvWriter.write(fileRecords);
+			}else {
+				csvWriter.write( new RegularizeDeviceFileModel());
 			}
 
 			// Save in audit.
@@ -565,6 +568,9 @@ public class RegularizedDeviceServiceImpl {
 			List<RawMail> rawMails = new ArrayList<>(1);
 			Map<String, String> placeholders = new HashMap<>();
 			AllRequest audit=regularizeDeviceDb.getAuditParameters();
+			if( userStaticServiceImpl.checkIfUserIsDisabled( audit.getUserId() ))
+				return new GenricResponse(5, "USER_IS_DISABLED","This account is disabled. Please enable the account to perform the operation.",
+						null);
 			logger.info("txn_id is : "+regularizeDeviceDb.getTxnId());
 			AuditTrail auditTrail = new AuditTrail(audit.getUserId(), audit.getUsername(), audit.getUserTypeId(), 
 					audit.getUserType(), 12, Features.REGISTER_DEVICE, 
@@ -696,6 +702,9 @@ public class RegularizedDeviceServiceImpl {
 			String username="";
 			long userId=0;
 			if(data.getUserTypeId()!=17) {
+				if( userStaticServiceImpl.checkIfUserIsDisabled( data.getUserId() ))
+					return new GenricResponse(5, "USER_IS_DISABLED","This account is disabled. Please enable the account to perform the operation.",
+							null);
 				username=data.getUsername();
 				userId=data.getUserId();
 			}
@@ -732,7 +741,9 @@ public class RegularizedDeviceServiceImpl {
 			String subFeature="";
 			String username="";
 			RegularizeDeviceDb regularizeDeviceDb = null;
-
+			if( !"CEIRSYSTEM".equalsIgnoreCase(ceirActionRequest.getUserType()) && userStaticServiceImpl.checkIfUserIsDisabled( ceirActionRequest.getUserId() ))
+				return new GenricResponse(5, "USER_IS_DISABLED","This account is disabled. Please enable the account to perform the operation.",
+						null);
 			lock.lock();
 			logger.info("lock taken by thread : " + Thread.currentThread().getName());
 
