@@ -30,6 +30,7 @@ import com.gl.ceir.config.ConfigTags;
 import com.gl.ceir.config.EmailSender.EmailUtil;
 import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
+import com.gl.ceir.config.feign.UserFeignClient;
 import com.gl.ceir.config.model.AllRequest;
 import com.gl.ceir.config.model.AuditTrail;
 import com.gl.ceir.config.model.CeirActionRequest;
@@ -67,8 +68,11 @@ import com.gl.ceir.config.repository.DashboardUsersFeatureStateMapRepository;
 import com.gl.ceir.config.repository.EndUserDbRepository;
 import com.gl.ceir.config.repository.SystemConfigurationDbRepository;
 import com.gl.ceir.config.repository.UpdateVisaRepository;
+import com.gl.ceir.config.repository.UserProfileRepository;
 import com.gl.ceir.config.repository.VipListRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
+import com.gl.ceir.config.request.model.Generic_Response_Notification;
+import com.gl.ceir.config.request.model.RegisterationUser;
 import com.gl.ceir.config.specificationsbuilder.GenericSpecificationBuilder;
 import com.gl.ceir.config.specificationsbuilder.SpecificationBuilder;
 import com.gl.ceir.config.transaction.EndUserTransaction;
@@ -148,7 +152,12 @@ public class EnduserServiceImpl {
 	@Autowired
 	DashboardUsersFeatureStateMapRepository dashboardUsersFeatureStateMapRepository; 
 
-
+	@Autowired 
+	UserFeignClient userFeignClient;
+	
+	@Autowired
+	UserProfileRepository userProfileRepository;
+	
 	public GenricResponse endUserByNid(AllRequest data) {
 		try {
 			logger.info("data given: "+data);
@@ -943,11 +952,25 @@ public class EnduserServiceImpl {
 								null,
 								"End User"));
 
-					}	
-					for(User userData : user) {
+					}
+					
+					Generic_Response_Notification generic_Response_Notification = userFeignClient.ceirInfoByUserTypeId(8);
 
+					logger.info("generic_Response_Notification::::::::"+generic_Response_Notification);
+
+					List<RegisterationUser> registerationUserList = generic_Response_Notification.getData();
+					
+					
+					for(RegisterationUser registerationUser :registerationUserList) {
+						UserProfile userProfile_generic_Response_Notification = new UserProfile();
+						userProfile_generic_Response_Notification = userProfileRepository.getByUserId(registerationUser.getId());
+						placeholders= new HashMap<String, String>();
+						placeholders.put("<Txn id>", visaDb.getTxnId());
+						placeholders.put("<First name>", userProfile_generic_Response_Notification.getFirstName());
+						
+						logger.info("sending  mail for multiple CEIR Admin , first name of ceir admin..."+userProfile_generic_Response_Notification.getFirstName());
 						rawMails.add(new RawMail("Update_Visa_Request_CEIRAdmin", 
-								userData.getId(), 
+								registerationUser.getId(), 
 								43, 
 								Features.UPDATE_VISA, 
 								SubFeatures.SYSTEM_ACCEPT, 
@@ -963,8 +986,9 @@ public class EnduserServiceImpl {
 					VisaUpdateDb visaOutput = updateVisaRepo.save(visaDb);
 					if(Objects.nonNull(visaOutput)) {
 						if(Objects.nonNull(rawMails) && !rawMails.isEmpty()) {
-							if(visaOutput.getStatus()==RegularizeDeviceStatus.PROCESSING.getCode()) {
-								emailUtil.saveNotification(rawMails);				
+							//if(visaOutput.getStatus()==RegularizeDeviceStatus.PROCESSING.getCode()) {
+							if(visaOutput.getStatus()==RegularizeDeviceStatus.PENDING_APPROVAL_FROM_CEIR_ADMIN.getCode()) {	
+							emailUtil.saveNotification(rawMails);				
 							}
 						}						}
 					txnId = visaDb.getTxnId();
@@ -1184,7 +1208,8 @@ public class EnduserServiceImpl {
 				}
 				csvWriter.write(fileRecords);
 			}
-			return new FileDetails( fileName, filePath,userProfileDowlonadLink.getValue()+fileName ); 
+			return new FileDetails( fileName, filePath,userProfileDowlonadLink.getValue().replace("$LOCAL_IP",
+					propertiesReader.localIp) +fileName ); 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());

@@ -1370,6 +1370,10 @@ public class ConsignmentServiceImpl {
 			}
 
 			consignmentMgmt.setConsignmentStatus(ConsignmentStatus.REJECTED_BY_SYSTEM.getCode());
+			if( cleanFromPendingTacApprovalDb(consignmentMgmt.getTxnId(),consignmentMgmt.getUserId()))
+				consignmentMgmt.setPendingTacApprovedByCustom("Y");
+			else
+				consignmentMgmt.setPendingTacApprovedByCustom("N");
 		}else if(action == 2) {
 			// Check if someone else taken the same action on consignment.
 			ConsignmentMgmt consignmentMgmtTemp = consignmentRepository.getByTxnId(consignmentMgmt.getTxnId());
