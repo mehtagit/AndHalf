@@ -227,6 +227,4 @@ Scripts
 <script type="text/javascript" src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 <script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
 
-</body>
-
-</html>
+</body></html>

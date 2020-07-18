@@ -1,12 +1,4 @@
-$('input').on('invalid', function(e) {
-	setTimeout(function(){
-		$('html, body').animate({scrollTop: document.documentElement.scrollTop}, 0);
-		// $('html, body').animate({scrollTop: document.documentElement.scrollDown}, 0);
-	}, 0);
-});
-
 $(function() {
-
 	$('html, body').animate({scrollTop: document.documentElement.scrollTop + 200}, 0);
 });
 

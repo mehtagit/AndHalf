@@ -611,5 +611,4 @@ var contextpath = "${context}";
    <script type="text/javascript">
    $('div#initialloader').delay(300).fadeOut('slow');
    </script>
-</body>
-</html>
+</body></html>

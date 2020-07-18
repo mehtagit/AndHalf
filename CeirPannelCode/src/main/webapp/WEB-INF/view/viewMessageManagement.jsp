@@ -211,7 +211,7 @@
 				
 					
 					<div class="input-field col s12 m6">
-					<textarea id="editValue" class="materialize-textarea" placeholder="" title="Please enter alphabets and numbers upto 200 characters only" maxlength="200" required="required" style="min-height:8rem"></textarea>
+					<textarea id="editValue" class="materialize-textarea" placeholder="" title="Please enter alphabets and numbers upto 500 characters only" maxlength="500" required="required" style="min-height:8rem"></textarea>
 					<label for="editValue" class=""><spring:message code="registration.value" /> <span class="star">*</span></label>
 
 					</div>
@@ -286,8 +286,8 @@
 	<script type="text/javascript"
 		src="${context}/resources/project_js/dragableModal.js?version=<%= (int) (Math.random() * 10) %>"></script>	
 		
-</body>
-</html>
+<script type="text/javascript">$( document ).ready(function() {var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login";}else{timeoutTime += timeout;}});});</script>
+</body></html>
 <%
 	} else {
 		/*  request.setAttribute("msg", "  *Please login first");

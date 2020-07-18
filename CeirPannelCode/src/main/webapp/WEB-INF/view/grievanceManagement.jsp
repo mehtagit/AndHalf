@@ -259,7 +259,7 @@ button.modal-action.modal-close.waves-effect.waves-green.btn-flat.right
 
 					</div>
 					<div class="col s12 m6 right">
-						<button class="btn right add_field_button" >
+						<button class="btn right add_field_button" disabled="disabled" >
 							<span style="font-size: 20px;">+</span>
 							<spring:message code="input.addmorefile" />
 						</button>
@@ -440,8 +440,8 @@ button.modal-action.modal-close.waves-effect.waves-green.btn-flat.right
 
 	<script type="text/javascript"
 		src="${context}/resources/project_js/validationMsg.js?version=<%= (int) (Math.random() * 10) %>"></script>
-</body>
-</html>
+<script type="text/javascript">$( document ).ready(function() {var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login";}else{timeoutTime += timeout;}});});</script>
+</body></html>
 <%
 	} else {
 %>

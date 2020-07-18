@@ -920,7 +920,7 @@ var featureId = 6;
 				$('#fileFormateModal').closeModal();
 			}
 			function enableAddMore(){
-				//$(".add_field_button").attr("disabled", false);
+				$(".add_field_button").attr("disabled", false);
 			}
 			/*function enableSelectFile(){
 				$("#docTypeFile1").attr("disabled", false);

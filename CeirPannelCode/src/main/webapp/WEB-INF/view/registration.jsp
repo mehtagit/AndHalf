@@ -856,6 +856,8 @@ String usertypeId="${usertypeId}";
  	}); 
  	
          $(document).ready(function () {
+        	 
+        	
         	 checkBoxClick();
          	$('#langlist').val(data_lang_param);
              	$.i18n().locale = data_lang_param;	
@@ -981,9 +983,7 @@ String usertypeId="${usertypeId}";
          
     <script type="text/javascript"
 		src="${context}/resources/ajax/Registration.js?version=<%= (int) (Math.random() * 10) %>"></script>
-	
-</body>
-</html>
+</body></html>
 <%}
 else{
 %>

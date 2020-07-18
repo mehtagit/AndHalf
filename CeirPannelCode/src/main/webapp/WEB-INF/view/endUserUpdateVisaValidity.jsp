@@ -662,6 +662,5 @@
 	<script type="text/javascript"
 		src="${context}/resources/project_js/ValidationFileOutsidePortal.js?version=<%= (int) (Math.random() * 10) %>"></script>
 		
-</body>
-</html>
+</body></html>
 

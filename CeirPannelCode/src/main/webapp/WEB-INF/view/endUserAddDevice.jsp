@@ -460,6 +460,5 @@ window.intlTelInput(input2, {
 $('div#initialloader').delay(300).fadeOut('slow');
 </script>
 
-</body>
-</html>
+</body></html>
 	

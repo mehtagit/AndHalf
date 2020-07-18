@@ -882,7 +882,7 @@ var contextpath = "${context}";
            populateStates( "country",
                    "state" );
 
-      
+          
         });   
 
 	         function clearFilesName(id)
@@ -907,9 +907,7 @@ var contextpath = "${context}";
     		    else{}
 	        }
     </script>
-</body>
-
-</html>
+</body></html>
 <%}
 else{
 %>
