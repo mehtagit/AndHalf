@@ -333,21 +333,31 @@ function filter(lang , filterSource)
 	
 	var sessionFlag=0;
 	if(roleType=="Custom" || roleType=="Immigration"){
-		table('./headers?type=userPaidStatus&lang='+lang,'./user-paid-status-data?sessionFlag='+sessionFlag+'&source='+source__val);
+		table('./headers?type=userPaidStatus&lang='+lang,'./user-paid-status-data?sessionFlag='+sessionFlag+'&source='+source__val,filterSource);
 	}else if(roleType=="DRT"){
-		table('./headers?type=userPaidStatus&lang='+lang,'./user-paid-status-data?sessionFlag='+sessionFlag+'&source='+source__val);
+		table('./headers?type=userPaidStatus&lang='+lang,'./user-paid-status-data?sessionFlag='+sessionFlag+'&source='+source__val,filterSource);
 	}
 	else if(roleType == "CEIRAdmin"){
-		table('./headers?type=adminUserPaidStatus&lang='+lang,'./user-paid-status-data?sessionFlag='+sessionFlag+'&source='+source__val);
+		table('./headers?type=adminUserPaidStatus&lang='+lang,'./user-paid-status-data?sessionFlag='+sessionFlag+'&source='+source__val,filterSource);
 
 	}
 }
 
 
 var nationalId =$("body").attr("session-value") =='null' ? null : $("body").attr("session-value");
-function table(url,dataUrl){
+function table(url,dataUrl,filterSource){
 	var txnIdValue = $("body").attr("session-valueTxnID");
 	var txn= (txnIdValue == 'null' && transactionIDValue == undefined)? $('#transactionID').val() : transactionIDValue;
+	
+	if (filterSource=="filter")
+	{
+		if($("body").attr("data-filterSource")=='noti'){
+			
+			txn=$('#transactionID').val();
+			
+		}
+	}
+	
 	var request={
 			"origin":$("body").attr("data-roleType"),
 			"endDate":$('#endDate').val(),
@@ -1608,7 +1618,7 @@ function deptImageValidation() {
 		////alert("file extension=="+uploadedFileName)
 		var ext = uploadedFileName.split('.').pop();
 
-		var fileSize = ($("#"+id)[0].files[0].size);
+		var fileSize = ($("#endUserDepartmentId")[0].files[0].size);
 		/*fileSize = (Math.round((fileSize / 100000) * 100) / 100)
 		//alert("----"+fileSize);*/
 		fileSize = Math.floor(fileSize/1000);
@@ -1646,7 +1656,7 @@ function deptImageValidation() {
 		////alert("file extension=="+uploadedFileName)
 		var ext = uploadedFileName.split('.').pop();
 
-		var fileSize = ($("#"+id)[0].files[0].size);
+		var fileSize = ($("#visaImage")[0].files[0].size);
 		/*fileSize = (Math.round((fileSize / 100000) * 100) / 100)
 		//alert("----"+fileSize);*/
 		fileSize = Math.floor(fileSize/1000);

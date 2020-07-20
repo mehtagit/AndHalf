@@ -340,7 +340,7 @@ button.modal-action.modal-close.waves-effect.waves-green.btn-flat.right {
 												disabled
 												maxlength="7"  oninput="InvalidMsg(this,'input','<spring:message code="validation.7character" />');"
 												 oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7character" />');"  required/> <label for="viewdevicequantity"
-												class="center-align"><spring:message code="input.devicequantity" /> <span class="star">*</span></label>
+												class="center-align"><spring:message code="input.devicequantity" /> <span class="star"></span></label>
 										</div>
 					<div class="input-field col s12 m6" id="invoiceNumberDiv">
 						<input type="text" name="InvoiceNumber" id="InvoiceNumber"

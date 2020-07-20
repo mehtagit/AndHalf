@@ -65,7 +65,16 @@
 				//////console.log("2=="+source__val);
 
 				//var featureName = $('#feature').val() == null ? null : $("#feature option:selected").text();
+				var txn= (txnIdValue == 'null' && transactionIDValue == undefined)? $('#visaTxnId').val() : transactionIDValue;
 				
+				if (source=="filter")
+				{
+				if($("body").attr("data-session-source")=='noti'){
+					alert($("body").attr("data-session-source"));
+					txn=$('#visaTxnId').val();
+				}
+				}
+				alert("----"+txn)
 				var filterRequest={
 						"endDate":$('#endDate').val(),
 						"startDate":$('#startDate').val(),

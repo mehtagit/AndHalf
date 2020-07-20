@@ -91,6 +91,14 @@ function Datatable(url,DataUrl,sourceTypeFiler){
 	//////console.log("=== requestType======"+requestType)
 	var txn= (txnIdValue == 'null' && transactionIDValue == undefined)? $('#transactionID').val() : transactionIDValue;
 	
+	if (sourceTypeFiler=="filter")
+	{
+		if($("body").attr("data-session-source")=='noti'){
+			
+			txn=$('#transactionID').val();
+		}
+	}
+	
 	var filterRequest={
 			"endDate":$('#endDate').val(),
 			"startDate":$('#startDate').val(),

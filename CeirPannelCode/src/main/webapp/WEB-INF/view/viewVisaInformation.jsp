@@ -439,7 +439,7 @@ input[type='search'] {
 										
 								<div class="col s12 m12" style="height: 4rem; display: block "id="askVisaDetails">
 											<label for="nationality"><spring:message
-													code="input.AddVisa" /> <span class="star">*</span></label>
+													code="input.AddVisa" /> <span class="star"></span></label>
 											<div class=" boxHeight">
 												<c:choose>
 												<c:when test = "${viewInformation.data.onVisa=='Y'}">
