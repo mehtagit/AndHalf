@@ -1013,7 +1013,7 @@ width: inherit;
 			class=" modal-action modal-close waves-effect waves-green btn-flat right"
 			data-dismiss="modal">&times;</button>
 			<h6 class="modal-header">
-			<spring:message code="modal.header.viewConsignment" />
+			<spring:message code="modal.header.viewHistory" />
 		</h6>
 		</div>
 
