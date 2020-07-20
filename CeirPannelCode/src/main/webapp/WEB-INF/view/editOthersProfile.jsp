@@ -364,14 +364,14 @@ var contextpath = "${context}";
 									<div class="input-field col s12 m6 l6">
 									<input placeholder="" type="text" name="village" maxlength="30" id="village" pattern="[A-Za-z0-9._%-+$@,/]{3,30}"
 									oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
-									required />
-									<label for="village"> <spring:message code="input.village" /> <span class="star">*</span></label>
+									 />
+									<label for="village"> <spring:message code="input.village" /></label>
 								</div>
 								<div class="input-field col s12 m6 l6">
 									<input placeholder="" type="text" name="locality" maxlength="30" id="locality" pattern="[A-Za-z0-9._%-+$@,/]{3,30}"
 										oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
-										required />
-									<label for="locality"><spring:message code="input.locality" /> <span class="star">*</span></label>
+										 />
+									<label for="locality"><spring:message code="input.locality" /></label>
 								</div>
 
 								<div class="input-field col s12 m6 l6">
@@ -1013,7 +1013,7 @@ var contextpath = "${context}";
        if( currentTime > timeoutTime ){
        window.top.location.href = "./login";
        }else{
-       timeoutTime += timeout;
+       timeoutTime = currentTime + timeout;
        }
        });
       
