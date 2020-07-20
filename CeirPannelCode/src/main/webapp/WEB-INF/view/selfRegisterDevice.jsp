@@ -1118,7 +1118,5 @@ $('input').on('invalid', function(e) {
 });
 
 </script>
-
-</body>
-</html>
+</body></html>
 	

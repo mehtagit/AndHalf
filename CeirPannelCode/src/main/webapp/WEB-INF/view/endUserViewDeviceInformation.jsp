@@ -1171,5 +1171,4 @@ $('#langlist').on('change', function() {
 $('#langlist').val(data_lang_param);
 
 </script>
-</body>
-</html>
+</body></html>

@@ -88,8 +88,8 @@ public class DBDatatableController {
 		}
 
 		try {
-			if(paginationContentList != null) {
-				if(dbTablesPaginationModel.getContent().getRowData() != null) {
+			if(paginationContentList != null ) {
+				if(dbTablesPaginationModel.getContent().getRowData() != null && dbTablesPaginationModel.getContent().getRowData().size()>0) {
 					log.info("in if paginationContentList isnt null");
 					for(Map<String, String> dataModel : dbTablesPaginationModel.getContent().getRowData()) {
 						List<Object> datatableList = new ArrayList<Object>();
@@ -101,6 +101,7 @@ public class DBDatatableController {
 					}
 				}else {
 					datatableResponseModel.setData(Collections.emptyList());
+					log.info("else paginationContentList is null");
 				}
 
 			}else {

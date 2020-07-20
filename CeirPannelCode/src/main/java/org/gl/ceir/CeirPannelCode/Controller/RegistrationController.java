@@ -1,5 +1,6 @@
 package org.gl.ceir.CeirPannelCode.Controller;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -215,6 +216,13 @@ public class RegistrationController {
 		registrationService.captcha(request, response, session);
 	} 
 
+	@RequestMapping(method = RequestMethod.GET,value = "/serverTime")
+	@ResponseBody
+	public long getServerTime(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException{
+
+	return new Date().getTime();
+	}
+	
 	@RequestMapping(value = "/registrationUserType",method = {RequestMethod.POST,RequestMethod.GET})
 	@ResponseBody  
 	public List<Usertype> userTypeDropdown(@RequestParam(name="type",required = false) Integer type){ 
