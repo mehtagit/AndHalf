@@ -84,8 +84,9 @@ var featureId = 6;
 
 			function DataTable(Url,dataUrl){
 				$('div#initialloader').fadeIn('fast');
+				
 				var txn= (txnIdValue == 'null' && transactionIDValue == undefined)? $('#grievanceID').val() : transactionIDValue;
-	
+				
 				var grievancePageSource =localStorage.getItem("grievancePageSource");
 				var grievanceSessionUsesFlag;
 				var grievanceStatus=$('#recentStatus').val();
@@ -118,7 +119,7 @@ var featureId = 6;
 						"featureId":parseInt(featureId),
 						"userTypeId": parseInt($("body").attr("data-userTypeID")),
 						"txnId":  $('#transactionID').val(),
-						"grievanceId":txn,
+						"grievanceId": $('#grievanceID').val()== null ? txn : $('#grievanceID').val(),
 						"userType" : $("body").attr("data-roleType"),
 						"filterUserName" : $('#userName').val(),
 						"FilterUserType" : FilterUserType,
