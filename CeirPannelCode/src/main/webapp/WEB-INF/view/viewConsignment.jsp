@@ -1013,7 +1013,7 @@ width: inherit;
 			class=" modal-action modal-close waves-effect waves-green btn-flat right"
 			data-dismiss="modal">&times;</button>
 			<h6 class="modal-header">
-			<spring:message code="modal.header.viewConsignment" />
+			<spring:message code="modal.header.viewHistory" />
 		</h6>
 		</div>
 
@@ -1101,8 +1101,8 @@ width: inherit;
 		src="${context}/resources/project_js/_dateFunction.js?version=<%= (int) (Math.random() * 10) %>" async></script>
 			<script type="text/javascript"
 		src="" async></script>
-</body>
-</html>
+<script type="text/javascript">$( document ).ready(function() {var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login";}else{timeoutTime += timeout;}});});</script>
+</body></html>
 <%
 	} else {
 		/*  request.setAttribute("msg", "  *Please login first");

@@ -785,7 +785,7 @@ $('div#initialloader').delay(300).fadeOut('slow');
 					});
 
 			function enableAddMore() {
-				$(".add_field_button").attr("disabled", false);
+			//	$(".add_field_button").attr("disabled", false);
 			}
 			function enableSelectFile() {
 				if($('#docTypetag1').val() != ''){
@@ -829,8 +829,8 @@ $('#fileFormateModal').closeModal();
 		</script>
 <script type="text/javascript"
 		src="${context}/resources/project_js/validationMsg.js"></script>
-</body>
-</html>
+<script type="text/javascript">$( document ).ready(function() {var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login";}else{timeoutTime += timeout;}});});</script>
+</body></html>
 
 <%
 } else {

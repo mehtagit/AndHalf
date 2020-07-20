@@ -880,7 +880,7 @@ var contextpath = "${context}";
                            <div class="input-field col s12">
 
                                 <label for="confirmPassword" style="color: #000; font-size: 12px;"><spring:message code="registration.password" /></label>
-                                <input required="required"  type="password" class="password" id="confirmPassword"  pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{10,10}$" maxlength="10"
+                                <input required="required"  type="password" class="password" id="confirmPassword"  pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,10}$" maxlength="10"
 										oninput="InvalidMsg(this,'input','<spring:message code="validation.password" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.password" />');" >
                                 	<div class="input-field-addon">
 							<i class="fa fa-eye-slash teal-text toggle-password"
@@ -991,6 +991,31 @@ var contextpath = "${context}";
      
        editOtherProfile();
    	
+       
+       var timeoutTime = <%=session.getLastAccessedTime()%>;
+       var timeout = <%=session.getMaxInactiveInterval()%>;
+       timeoutTime += timeout;
+       var currentTime;
+       $("body").click(function(e) {
+       $.ajaxSetup({
+       headers:
+       { 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }
+       });
+       $.ajax({
+       url: './serverTime',
+       type: 'GET',
+       async: false,
+       success: function (data, textStatus, jqXHR) {
+       currentTime = data;
+       },
+       error: function (jqXHR, textStatus, errorThrown) {}
+       });
+       if( currentTime > timeoutTime ){
+       window.top.location.href = "./login";
+       }else{
+       timeoutTime += timeout;
+       }
+       });
       
         });
        	
@@ -1008,8 +1033,7 @@ var contextpath = "${context}";
             "state"
         );
     </script>
-</body>
-</html>
+</body></html>
 <%
 	} else {
 		/*  request.setAttribute("msg", "  *Please login first");

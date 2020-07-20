@@ -956,6 +956,8 @@ var contextpath = "${context}";
               $('form').on('submit', function() {
             	  $('html, body').animate({scrollTop:0}, 'slow');
             	});
+              
+              
         });   
 
         function clearFilesName(id)
@@ -997,8 +999,7 @@ var contextpath = "${context}";
 
         
     </script>
-</body>
-</html>
+</body></html>
 <%}
 else{
 %>

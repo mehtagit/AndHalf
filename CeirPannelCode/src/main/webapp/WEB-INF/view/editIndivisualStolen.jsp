@@ -1320,8 +1320,8 @@ onclick="_Services._selectstartDate()"></i></span>
 		src="${context}/resources/project_js/editLawfulStolen.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	
 
-</body>
-</html>
+<script type="text/javascript">$( document ).ready(function() {var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login";}else{timeoutTime += timeout;}});});</script>
+</body></html>
 <%
 } else {
 
