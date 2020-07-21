@@ -70,15 +70,15 @@
 				if (source=="filter")
 				{
 				if($("body").attr("data-session-source")=='noti'){
-					alert($("body").attr("data-session-source"));
+					
 					txn=$('#visaTxnId').val();
 				}
 				}
-				alert("----"+txn)
+				
 				var filterRequest={
 						"endDate":$('#endDate').val(),
 						"startDate":$('#startDate').val(),
-						"txnId":$('#visaTxnId').val(),
+						"txnId":txn,
 						"status":$('#statusvisa').val(),
 						"startDate":$('#startDate').val(),
 						"userId": parseInt($("body").attr("data-userID")),

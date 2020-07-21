@@ -377,25 +377,25 @@ input[type='search'] {
 												<c:when test = "${viewInformation.data.isVip=='Y'}">
 												<label>
 												 
-												<input class="with-gap" type="radio" name="selectvip" value="Y" readonly="readonly" checked="checked">
+												<input class="with-gap" type="radio" name="selectvip" value="Y" disabled="disabled" checked="checked">
 												 <span><spring:message code="modal.yes" /></span>
 												
 												  </label>
 												  
 												  <label> 
-												  <input class="with-gap" value="N" type="radio" name="selectvip" readonly="readonly" style="margin-left: 20px;" /> 
+												  <input class="with-gap" value="N" type="radio" name="selectvip" disabled="disabled" style="margin-left: 20px;" /> 
 												  <span><spring:message code="modal.no" /></span>
 												</label>
 												  </c:when>
 												 <c:otherwise>
 												 <label>
 												 
-												<input class="with-gap" type="radio" name="selectvip" readonly="readonly" value="Y"  >
+												<input class="with-gap" type="radio" name="selectvip" readonly="readonly" value="Y"  disabled="disabled" >
 												 <span><spring:message code="modal.yes" /></span>
 												
 												  </label>
 												  <label> 
-												  <input class="with-gap" value="N" type="radio" readonly="readonly" checked="checked"
+												  <input class="with-gap" value="N" type="radio" readonly="readonly" checked="checked" disabled="disabled"
 													name="selectvip" style="margin-left: 20px;" /> <span><spring:message code="modal.no" /></span>
 												</label>
 												</c:otherwise>
@@ -443,21 +443,21 @@ input[type='search'] {
 											<div class=" boxHeight">
 												<c:choose>
 												<c:when test = "${viewInformation.data.onVisa=='Y'}">
-												<label><input class="with-gap" type="radio"
+												<label><input class="with-gap" type="radio" disabled="disabled"
 													name="onVisa" value="Y" checked="checked">
 													<span><spring:message code="modal.yes" /></span> </label> <label>
 													<input class="with-gap" type="radio" id="onVisaNo" 
-													 name="onVisa" value="N"
+													 name="onVisa" value="N" disabled="disabled"
 													style="margin-left: 20px;" />
 													<span><spring:message code="modal.no" /></span>
 												</label>
 												</c:when>
 												<c:otherwise>
-												<label><input class="with-gap" type="radio"
+												<label><input class="with-gap" type="radio" disabled="disabled"
 													name="onVisa" value="Y">
 													<span><spring:message code="modal.yes" /></span> </label>
 													 <label>
-													<input class="with-gap" type="radio" id="onVisaNo"
+													<input class="with-gap" type="radio" id="onVisaNo" disabled="disabled"
 													checked="checked" name="onVisa" value="N"
 													style="margin-left: 20px;"  />
 													<span><spring:message code="modal.no" /></span>

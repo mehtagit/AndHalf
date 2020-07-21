@@ -305,7 +305,7 @@ var contextpath = "${context}";
                         
                            <div class="row card-panel track-grievance-responsive-page" id="trackGrievanceHeader" >
                               
-                     <!--        <a href="./redirectToHomePage" class="modal-close btn-flat modal-btn right" data-dismiss="modal">&times;</a> -->
+               
                             <h6 class="fixPage-modal-header "><spring:message code="modal.TrackGrievance" /></h6>
                            <div id="trackGrievanceDiv" style="display: none;">
                             <div class="col s12 m12 l12">
@@ -562,7 +562,7 @@ style="font-size: 20px;">+</span> <spring:message code="input.addmorefile" /></b
             <div class="row">
                 <div class="input-field col s12 center">
                     <div class="input-field col s12 center">
-                        <!-- <a href="homePage" class="btn">Yes</a> -->
+                      
                         <button class="modal-close btn" style="margin-left: 10px;"><spring:message code="modal.ok" /></button>
                     </div>
                 </div>
