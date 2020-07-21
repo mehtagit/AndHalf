@@ -98,9 +98,8 @@ public class RegularizeDeviceDb implements Serializable {
 	
 	
 	@ManyToOne
-	//@JsonManagedReference
-	@JsonBackReference
-	@JoinColumn(name = "userId") 
+	@JoinColumn(name = "userId")
+	@JsonManagedReference("device-info")
 	private EndUserDB endUserDB;
 	
 	@NotNull

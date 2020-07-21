@@ -86,9 +86,8 @@ public class EndUserDB   {
 	
 
 	@NotAudited
-	//@JsonBackReference
-	@JsonManagedReference
 	@OneToMany(mappedBy = "endUserDB",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	@JsonBackReference("device-info")
 	private List<RegularizeDeviceDb> regularizeDeviceDbs ;
 	
 	@Column(length = 50)
