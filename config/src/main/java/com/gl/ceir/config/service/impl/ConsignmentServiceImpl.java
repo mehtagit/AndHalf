@@ -657,7 +657,7 @@ public class ConsignmentServiceImpl {
 
 
 				logger.info("Deletion of consignment is in Progress."+ consignmentUpdateRequest.getTxnId());
-				return new GenricResponse(200, "Deletion of consignment is in Progress.", consignmentUpdateRequest.getTxnId());
+				return new GenricResponse(200, "Consignment deletion is in Progress.", consignmentUpdateRequest.getTxnId());
 			}else {
 				logger.info("Deletion of consignment have been failed." + consignmentUpdateRequest.getTxnId());
 				return new GenricResponse(2, "Deletion of consignment have been failed.", consignmentUpdateRequest.getTxnId());
@@ -984,7 +984,7 @@ public class ConsignmentServiceImpl {
 
 	}
 
-	@Transactional
+//	@Transactional
 	public boolean updatePendingApproval(ConsignmentUpdateRequest consignmentUpdateRequest){
 		try {
 			ConsignmentMgmt consignmentInfo = consignmentRepository.getByTxnId(consignmentUpdateRequest.getTxnId());
