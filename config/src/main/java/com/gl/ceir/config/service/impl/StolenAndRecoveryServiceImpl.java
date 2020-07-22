@@ -171,6 +171,9 @@ public class StolenAndRecoveryServiceImpl {
 	public GenricResponse uploadDetails(StolenandRecoveryMgmt stolenandRecoveryMgmt) {
 
 		try {
+			if( userStaticServiceImpl.checkIfUserIsDisabled( stolenandRecoveryMgmt.getUserId() ))
+				return new GenricResponse(5, "USER_IS_DISABLED","This account is disabled. Please enable the account to perform the operation.",
+						stolenandRecoveryMgmt.getTxnId());
 			stolenValidator.validateRegister(stolenandRecoveryMgmt);
 
 			WebActionDb webActionDb = new WebActionDb(decideFeature(stolenandRecoveryMgmt.getRequestType()), 
@@ -237,6 +240,9 @@ public class StolenAndRecoveryServiceImpl {
 	public GenricResponse v2uploadDetails(StolenandRecoveryMgmt stolenandRecoveryDetails) {
 
 		try {
+			if( userStaticServiceImpl.checkIfUserIsDisabled( stolenandRecoveryDetails.getUserId() ))
+				return new GenricResponse(5, "USER_IS_DISABLED","This account is disabled. Please enable the account to perform the operation.",
+						stolenandRecoveryDetails.getTxnId());
 			stolenValidator.validateRegister(stolenandRecoveryDetails);
 
 			// Only for logs purpose.
@@ -689,8 +695,11 @@ public class StolenAndRecoveryServiceImpl {
 	public GenricResponse uploadMultipleStolen(List<StolenandRecoveryMgmt> stolenandRecoveryMgmt) {
 		try {
 			Boolean bool = true;	
+			if( stolenandRecoveryMgmt != null && stolenandRecoveryMgmt.size() > 0 
+					&& userStaticServiceImpl.checkIfUserIsDisabled( stolenandRecoveryMgmt.get(0).getUserId() ))
+				return new GenricResponse(5, "USER_IS_DISABLED","This account is disabled. Please enable the account to perform the operation.",
+						stolenandRecoveryMgmt.get(0).getTxnId());
 			for(StolenandRecoveryMgmt  request : stolenandRecoveryMgmt) {
-
 				// Consignment = 0
 				// Stock = 1
 				if(request.getSourceType() == 0){
@@ -748,6 +757,9 @@ public class StolenAndRecoveryServiceImpl {
 	@Transactional
 	public GenricResponse deleteRecord(FilterRequest filterRequest) {
 		try {
+			if( userStaticServiceImpl.checkIfUserIsDisabled( filterRequest.getUserId() ))
+				return new GenricResponse(5, "USER_IS_DISABLED","This account is disabled. Please enable the account to perform the operation.",
+						filterRequest.getTxnId());
 			stolenValidator.validateDelete(filterRequest);
 		}catch (RequestInvalidException e) {
 			logger.error("Request validation failed for txnId[" + filterRequest.getTxnId() + "]" + e);
@@ -943,6 +955,9 @@ public class StolenAndRecoveryServiceImpl {
 	public GenricResponse updateRecord(StolenandRecoveryMgmt stolenandRecoveryMgmt) {
 
 		try {
+			if( userStaticServiceImpl.checkIfUserIsDisabled( stolenandRecoveryMgmt.getUserId() ))
+				return new GenricResponse(5, "USER_IS_DISABLED","This account is disabled. Please enable the account to perform the operation.",
+						stolenandRecoveryMgmt.getTxnId());
 			stolenValidator.validateEdit(stolenandRecoveryMgmt);
 			
 			StolenandRecoveryMgmt stolenandRecoveryMgmtInfo = stolenAndRecoveryRepository.getByTxnId(stolenandRecoveryMgmt.getTxnId());
@@ -1091,6 +1106,10 @@ public class StolenAndRecoveryServiceImpl {
 
 	public GenricResponse acceptReject(ConsignmentUpdateRequest consignmentUpdateRequest) {
 		try {
+			if( !"CEIRSYSTEM".equalsIgnoreCase(consignmentUpdateRequest.getRoleType()) 
+					&& userStaticServiceImpl.checkIfUserIsDisabled( consignmentUpdateRequest.getUserId() ))
+				return new GenricResponse(5, "USER_IS_DISABLED","This account is disabled. Please enable the account to perform the operation.",
+						consignmentUpdateRequest.getTxnId());
 			stolenValidator.validateAcceptReject(consignmentUpdateRequest);
 			UserProfile userProfile = null;
 			Map<String, String> placeholderMap1 = null;
@@ -1400,6 +1419,7 @@ public class StolenAndRecoveryServiceImpl {
 							for(RegisterationUser registerationUser :registerationUserList) { UserProfile
 								userProfile_generic_Response_Notification = new UserProfile();
 							userProfile_generic_Response_Notification = userProfileRepository.getByUserId(registerationUser.getId());
+							placeholderMap1.put("<First name>", userProfile_generic_Response_Notification.getFirstName());
 							emailUtil.saveNotification(ceirMailTag,
 									userProfile_generic_Response_Notification,
 									consignmentUpdateRequest.getFeatureId(),

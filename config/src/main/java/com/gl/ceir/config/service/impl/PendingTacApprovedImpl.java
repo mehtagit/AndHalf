@@ -125,7 +125,7 @@ public class PendingTacApprovedImpl {
 	}
 
 
-	@Transactional
+//	@Transactional
 	public boolean updatePendingApproval(FilterRequest filterRequest){
 		try {
 			List<PendingTacApprovedDb> pendingTacApproveDbs = pendingTacApprovedRepository.getByTxnId(filterRequest.getTxnId());
@@ -143,7 +143,7 @@ public class PendingTacApprovedImpl {
 		}
 	}
 
-	@Transactional
+//	@Transactional
 	public GenricResponse deletePendingApproval(FilterRequest filterRequest){
 		try {
 			if(Objects.isNull(filterRequest.getUserId())) {

@@ -31,6 +31,7 @@ import com.gl.ceir.config.EmailSender.EmailUtil;
 import com.gl.ceir.config.EmailSender.MailSubject;
 import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
+import com.gl.ceir.config.feign.UserFeignClient;
 import com.gl.ceir.config.model.AllRequest;
 import com.gl.ceir.config.model.AuditTrail;
 import com.gl.ceir.config.model.CeirActionRequest;
@@ -74,6 +75,8 @@ import com.gl.ceir.config.repository.SystemConfigurationDbRepository;
 import com.gl.ceir.config.repository.UserProfileRepository;
 import com.gl.ceir.config.repository.UserRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
+import com.gl.ceir.config.request.model.Generic_Response_Notification;
+import com.gl.ceir.config.request.model.RegisterationUser;
 import com.gl.ceir.config.specificationsbuilder.GenericSpecificationBuilder;
 import com.gl.ceir.config.transaction.RegularizeDeviceTransaction;
 import com.gl.ceir.config.util.CommonFunction;
@@ -144,6 +147,8 @@ public class RegularizedDeviceServiceImpl {
 	UserRepository userRepository;
 	@Autowired
 	CommonFunction commonFunction;
+	@Autowired
+	UserFeignClient userFeignClient;
 
 	@Autowired
 	DashboardUsersFeatureStateMapRepository dashboardUsersFeatureStateMapRepository; 
@@ -298,13 +303,13 @@ public class RegularizedDeviceServiceImpl {
 					 * rdfm.setDeviceTypeInterp("NA"); }
 					 */
 					
-					if(!Objects.nonNull(regularizeDeviceDb.getSecondImei())) {
+					if(!Objects.nonNull(regularizeDeviceDb.getSecondImei()) || regularizeDeviceDb.getSecondImei().equals("")) {
 						rdfm.setSecondImei("NA");
 					}
-					if(!Objects.nonNull(regularizeDeviceDb.getThirdImei())) {
+					if(!Objects.nonNull(regularizeDeviceDb.getThirdImei()) || regularizeDeviceDb.getThirdImei().equals("")) {
 						rdfm.setThirdImei("NA");	
 					}
-					if(!Objects.nonNull(regularizeDeviceDb.getFourthImei())) {
+					if(!Objects.nonNull(regularizeDeviceDb.getFourthImei()) || regularizeDeviceDb.getFourthImei().equals("")) {
 						rdfm.setFourthImei("NA");	
 					}
 					/*
@@ -327,6 +332,7 @@ public class RegularizedDeviceServiceImpl {
 					rdfm.setTxnId(regularizeDeviceDb.getTxnId());
 					rdfm.setOrigin(regularizeDeviceDb.getOrigin());
 					rdfm.setNid(regularizeDeviceDb.getNid());
+					rdfm.setStatus(regularizeDeviceDb.getStateInterp());
 					for(SystemConfigListDb systemConfigListDb : currencyList) {
 						if(regularizeDeviceDb.getCurrency() == systemConfigListDb.getValue()) {
 							if(!Objects.nonNull(systemConfigListDb.getInterp())) {
@@ -345,6 +351,8 @@ public class RegularizedDeviceServiceImpl {
 				}
 
 				csvWriter.write(fileRecords);
+			}else {
+				csvWriter.write( new RegularizeDeviceFileModel());
 			}
 
 			// Save in audit.
@@ -565,6 +573,9 @@ public class RegularizedDeviceServiceImpl {
 			List<RawMail> rawMails = new ArrayList<>(1);
 			Map<String, String> placeholders = new HashMap<>();
 			AllRequest audit=regularizeDeviceDb.getAuditParameters();
+			if( userStaticServiceImpl.checkIfUserIsDisabled( audit.getUserId() ))
+				return new GenricResponse(5, "USER_IS_DISABLED","This account is disabled. Please enable the account to perform the operation.",
+						null);
 			logger.info("txn_id is : "+regularizeDeviceDb.getTxnId());
 			AuditTrail auditTrail = new AuditTrail(audit.getUserId(), audit.getUsername(), audit.getUserTypeId(), 
 					audit.getUserType(), 12, Features.REGISTER_DEVICE, 
@@ -696,6 +707,9 @@ public class RegularizedDeviceServiceImpl {
 			String username="";
 			long userId=0;
 			if(data.getUserTypeId()!=17) {
+				if( userStaticServiceImpl.checkIfUserIsDisabled( data.getUserId() ))
+					return new GenricResponse(5, "USER_IS_DISABLED","This account is disabled. Please enable the account to perform the operation.",
+							null);
 				username=data.getUsername();
 				userId=data.getUserId();
 			}
@@ -732,7 +746,9 @@ public class RegularizedDeviceServiceImpl {
 			String subFeature="";
 			String username="";
 			RegularizeDeviceDb regularizeDeviceDb = null;
-
+			if( !"CEIRSYSTEM".equalsIgnoreCase(ceirActionRequest.getUserType()) && userStaticServiceImpl.checkIfUserIsDisabled( ceirActionRequest.getUserId() ))
+				return new GenricResponse(5, "USER_IS_DISABLED","This account is disabled. Please enable the account to perform the operation.",
+						null);
 			lock.lock();
 			logger.info("lock taken by thread : " + Thread.currentThread().getName());
 
@@ -909,8 +925,8 @@ public class RegularizedDeviceServiceImpl {
 					regularizeDeviceDb = regularizeList.get(0);
 					tag = "MAIL_TO_USER_ON_CEIR_DEVICE_APPROVAL";
 					txnId = regularizeDeviceDb.getTxnId();
-					List<User> user= new ArrayList<User>();
-					user = userStaticServiceImpl.getUserbyUsertypeId(8);
+//					List<User> user= new ArrayList<User>();
+//					user = userStaticServiceImpl.getUserbyUsertypeId(8);
 					UserProfile ceirUserProfile = new UserProfile();
 					ceirUserProfile.setUser(userStaticServiceImpl.getCeirAdmin());
 
@@ -931,10 +947,23 @@ public class RegularizedDeviceServiceImpl {
 								"End User"));
 					}
 
-					for(User userData : user) {
+					Generic_Response_Notification generic_Response_Notification = userFeignClient.ceirInfoByUserTypeId(8);
+
+					logger.info("generic_Response_Notification::::::::"+generic_Response_Notification);
+
+					List<RegisterationUser> registerationUserList = generic_Response_Notification.getData();
+					
+					
+					for(RegisterationUser registerationUser :registerationUserList) {
+						UserProfile userProfile_generic_Response_Notification = new UserProfile();
+						userProfile_generic_Response_Notification = userProfileRepository.getByUserId(registerationUser.getId());
+						placeholders= new HashMap<String, String>();
+						placeholders.put("<Txn id>", regularizeDeviceDb.getTxnId());
+						placeholders.put("<First name>", userProfile_generic_Response_Notification.getFirstName());
+//					for(User userData : user) {
 
 						rawMails.add(new RawMail("Reg_Device_Process_success_mail_To_CEIRAdmin", 
-								userData.getId(), 
+								registerationUser.getId(), 
 								12, 
 								Features.REGISTER_DEVICE, 
 								SubFeatures.SYSTEM_ACCEPT, 
@@ -950,7 +979,7 @@ public class RegularizedDeviceServiceImpl {
 
 					if(Objects.nonNull(regularizeOutput)){
 						if(Objects.nonNull(rawMails) && !rawMails.isEmpty()) {
-							if(regularizeDeviceDb.getStatus()==RegularizeDeviceStatus.PROCESSING.getCode()) {
+							if(regularizeDeviceDb.getStatus()==RegularizeDeviceStatus.PENDING_APPROVAL_FROM_CEIR_ADMIN.getCode()) {
 								emailUtil.saveNotification(rawMails);				
 							}
 						}

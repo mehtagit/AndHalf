@@ -657,7 +657,7 @@ public class ConsignmentServiceImpl {
 
 
 				logger.info("Deletion of consignment is in Progress."+ consignmentUpdateRequest.getTxnId());
-				return new GenricResponse(200, "Deletion of consignment is in Progress.", consignmentUpdateRequest.getTxnId());
+				return new GenricResponse(200, "Consignment deletion is in Progress.", consignmentUpdateRequest.getTxnId());
 			}else {
 				logger.info("Deletion of consignment have been failed." + consignmentUpdateRequest.getTxnId());
 				return new GenricResponse(2, "Deletion of consignment have been failed.", consignmentUpdateRequest.getTxnId());
@@ -984,7 +984,7 @@ public class ConsignmentServiceImpl {
 
 	}
 
-	@Transactional
+//	@Transactional
 	public boolean updatePendingApproval(ConsignmentUpdateRequest consignmentUpdateRequest){
 		try {
 			ConsignmentMgmt consignmentInfo = consignmentRepository.getByTxnId(consignmentUpdateRequest.getTxnId());
@@ -1370,6 +1370,10 @@ public class ConsignmentServiceImpl {
 			}
 
 			consignmentMgmt.setConsignmentStatus(ConsignmentStatus.REJECTED_BY_SYSTEM.getCode());
+			if( cleanFromPendingTacApprovalDb(consignmentMgmt.getTxnId(),consignmentMgmt.getUserId()))
+				consignmentMgmt.setPendingTacApprovedByCustom("Y");
+			else
+				consignmentMgmt.setPendingTacApprovedByCustom("N");
 		}else if(action == 2) {
 			// Check if someone else taken the same action on consignment.
 			ConsignmentMgmt consignmentMgmtTemp = consignmentRepository.getByTxnId(consignmentMgmt.getTxnId());
