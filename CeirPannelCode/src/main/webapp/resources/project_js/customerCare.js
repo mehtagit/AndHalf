@@ -462,7 +462,7 @@ function setStakeHolderData(name,date,featureId,status,txnId,imei)
 		    	   dismissible:false
 		       });
         	
-        	 $("#viewtradmark").val(data.data.trademark);
+        	$("#viewtradmark").val(data.data.trademark);
      		$("#viewmodelName").val(data.data.productNameInterp);
      		$("#viewModelnumber").val(data.data.modelNumberInterp);
      		$("#viewManufacturercountry").val(data.data.manufacturerCountry);

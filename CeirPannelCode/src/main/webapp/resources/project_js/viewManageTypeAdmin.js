@@ -57,7 +57,7 @@ function Datatable(Url, dataUrl) {
 			"endDate" : $('#endDate').val(),
 			"startDate" : $('#startDate').val(),
 			"tac" : $('#tac').val(),
-			"txnId" : txn,
+			"txnId" : $('#transactionID').val() == null ? txn : $('#transactionID').val(),
 			"userId" : userId,
 			"featureId" : parseInt(featureId),
 			"userTypeId" : parseInt($("body").attr("data-userTypeID")),
@@ -71,7 +71,7 @@ function Datatable(Url, dataUrl) {
 			"endDate" : $('#endDate').val(),
 			"startDate" : $('#startDate').val(),
 			"tac" : $('#tac').val(),
-			"txnId" : txn,
+			"txnId" :$('#transactionID').val() == null ? txn : $('#transactionID').val(),
 			"userId" : userId,
 			"featureId" : parseInt(featureId),
 			"userTypeId" : parseInt($("body").attr("data-userTypeID")),
@@ -85,7 +85,7 @@ function Datatable(Url, dataUrl) {
 			"endDate" : $('#endDate').val(),
 			"startDate" : $('#startDate').val(),
 			"tac" : $('#tac').val(),
-			"txnId" : txn,
+			"txnId" : $('#transactionID').val() == null ? txn : $('#transactionID').val(),
 			"userId" : userId,
 			"featureId" : parseInt(featureId),
 			"userTypeId" : parseInt($("body").attr("data-userTypeID")),
@@ -96,7 +96,7 @@ function Datatable(Url, dataUrl) {
 	if (lang == 'km') {
 		var langFile = "./resources/i18n/khmer_datatable.json";
 	}
-
+	console.log(JSON.stringify(filterRequest));
 	$("#submitFilter").prop('disabled', true);
 	
 	var token = $("meta[name='_csrf']").attr("content");

@@ -51,7 +51,7 @@
 				"userRoleTypeId" : parseInt(userRoleTypeId),
 				"status" : parseInt(status),
 				"userId":parseInt(userId),
-				"txnId":txn,
+				"txnId":$('#transactionID').val() == null ? txn : $('#transactionID').val(),
 				"featureId":parseInt(featureId),
 				"userTypeId": parseInt($("body").attr("data-userTypeID")),
 				"userType":$("body").attr("data-roleType"),

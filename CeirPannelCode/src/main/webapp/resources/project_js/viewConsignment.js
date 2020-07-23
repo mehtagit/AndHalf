@@ -372,7 +372,7 @@ function table(url,dataUrl){
 			"userTypeId": parseInt($("body").attr("data-userTypeID")),
 			"userType":$("body").attr("data-roleType"),
 			"userName":$("body").attr("data-username"),
-			"txnId":txn,
+			"txnId": $('#transactionID').val() == null ? txn : $('#transactionID').val(),
 			"roleType":$("body").attr("data-roleType")
 
 

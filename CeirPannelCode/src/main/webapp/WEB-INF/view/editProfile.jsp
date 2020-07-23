@@ -382,8 +382,8 @@ var contextpath = "${context}";
 										pattern="[A-Za-z0-9._%-+$@,/]{3,30}" placeholder="" 
 										oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');" 
 										oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-									required >
-									<label for="village"><spring:message code="input.village" /> <span class="star">*</span>
+									 >
+									<label for="village"><spring:message code="input.village" />
 									</label>
 								</div>
 								<div class="input-field col s12 m6 l6">
@@ -392,8 +392,8 @@ var contextpath = "${context}";
 										pattern="[A-Za-z0-9._%-+$@,/]{3,30}" placeholder="" 
 									
 										oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');" 
-										oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');" required  >
-									<label for="locality"><spring:message code="input.locality" /> <span class="star">*</span>
+										oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');" >
+									<label for="locality"><spring:message code="input.locality" />
 									</label>
 								</div>
 
@@ -951,7 +951,7 @@ onchange="InvalidMsg(this,'select','<spring:message code="validation.selectField
        if( currentTime > timeoutTime ){
        window.top.location.href = "./login";
        }else{
-       timeoutTime += timeout;
+    	      timeoutTime = currentTime + timeout;
        }
        });
        
