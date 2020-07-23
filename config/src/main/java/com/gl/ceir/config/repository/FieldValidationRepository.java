@@ -10,5 +10,6 @@ import com.gl.ceir.config.model.FieldValidation;
 public interface FieldValidationRepository extends JpaRepository<FieldValidation,Integer>,  JpaSpecificationExecutor<FieldValidation>{
 	
 	public FieldValidation findByFieldName(String fieldName);
+	public FieldValidation findByFieldNameAndUsertypeAndFeatureId(String fieldName,String usertype,Integer featureId);
 
 }

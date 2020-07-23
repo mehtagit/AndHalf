@@ -3,6 +3,7 @@ package com.gl.ceir.config.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
+import javax.transaction.Transactional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -144,6 +145,7 @@ public class ConsignmentController {
 	}
 
 	// For Approve 
+	@Transactional
 	@ApiOperation(value = "Update Consignment Status.", response = GenricResponse.class)
 	@PutMapping("update/consigmentStatus")
 	public GenricResponse updateConsigmentStatus(@RequestBody ConsignmentUpdateRequest consignmentUpdateRequest) {

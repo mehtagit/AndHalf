@@ -110,12 +110,12 @@ public class PendingTacApprovedImpl {
 			}
 
 			List<PendingTacApprovedDb> pendingTacApprovedDb = pendingTacApprovedRepository.getByTxnId(filterRequest.getTxnId());
-			if(pendingTacApprovedDb.isEmpty()) {
-				logger.info("No pending tacs found for consignment with txnId : " + filterRequest.getTxnId());
-				return new GenricResponse(1, "Not Found", "Not Found", "");
-			}else {
+			if( pendingTacApprovedDb != null && !pendingTacApprovedDb.isEmpty()) {
 				logger.info("Pending tacs available for consignment with txnId : " + filterRequest.getTxnId());
 				return new GenricResponse(0, "SUCCESS", "SUCCESS", pendingTacApprovedDb);
+			}else {
+				logger.info("No pending tacs found for consignment with txnId : " + filterRequest.getTxnId());
+				return new GenricResponse(1, "Not Found", "Not Found", "");
 			}
 
 		} catch (Exception e) {
