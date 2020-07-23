@@ -173,7 +173,7 @@ select {
 									</div>
 									<div id="SingleForm" class="col s12"
 										style="margin-top: 30px; display: block">
-										<form action="" id="SingleImeiBlockform"
+										<form action="" id="SingleImeiBlockform"  style="position: relative;"
 											onsubmit="return saveIndivisualStolenRequest()" method="POST"
 											enctype="multipart/form-data">
 											<div class="row">
@@ -307,9 +307,8 @@ select {
 															pattern="[a-zA-Z0-9\s,'*$-]{0,30}"
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
-															required maxlength="30"> <label for="singleStolenvillage">
-															<spring:message code="input.village" /> <span
-															class="star"> *</span>
+															 maxlength="30"> <label for="singleStolenvillage">
+															<spring:message code="input.village" /> 
 														</label>
 													</div>
 
@@ -320,9 +319,8 @@ select {
 															pattern="[a-zA-Z0-9\s,'*$-]{0,30}"
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
-															required maxlength="30"> <label for="singleStolenlocality">
-															<spring:message code="input.locality" /><span
-															class="star"> *</span>
+															 maxlength="30"> <label for="singleStolenlocality">
+															<spring:message code="input.locality" />
 														</label>
 													</div>
 
@@ -878,9 +876,8 @@ select {
 													pattern="[a-zA-Z0-9\s,'*$-]{0,30}"
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-													required maxlength="30"> <label for="bulkStolenvillage">
-													<spring:message code="input.village" /> <span class="star">
-														*</span>
+													 maxlength="30"> <label for="bulkStolenvillage">
+													<spring:message code="input.village" /> 
 												</label>
 											</div>
 
@@ -891,9 +888,9 @@ select {
 													pattern="[a-zA-Z0-9\s,'*$-]{0,30}"
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-													required maxlength="30" title="Please enter your locality">
+													 maxlength="30" title="Please enter your locality">
 												<label for="bulkStolenlocality"> <spring:message
-														code="input.locality" /> <span class="star"> *</span></label>
+														code="input.locality" /> </label>
 											</div>
 
 											<div class="input-field col s12 m6 l6">
@@ -1058,9 +1055,8 @@ select {
 													pattern="[a-zA-Z0-9\s,'*$-]{0,30}"
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-													required maxlength="30"> <label for="deviceBulkStolenvillage">
-													<spring:message code="input.village" /> <span class="star">
-														*</span>
+													 maxlength="30"> <label for="deviceBulkStolenvillage">
+													<spring:message code="input.village" />
 												</label>
 											</div>
 
@@ -1071,9 +1067,8 @@ select {
 													pattern="[a-zA-Z0-9\s,'*$-]{0,30}"
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-													required maxlength="30"> <label for="deviceBulkStolenlocality">
-													<spring:message code="input.locality" /> <span
-													class="star"> *</span>
+													 maxlength="30"> <label for="deviceBulkStolenlocality">
+													<spring:message code="input.locality" /> 
 												</label>
 											</div>
 
@@ -1555,7 +1550,7 @@ select {
 <script type="text/javascript">
 /* $('div#initialloader').delay(300).fadeOut('slow'); */
 </script>
-<script type="text/javascript">$( document ).ready(function() {var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login";}else{timeoutTime += timeout;}});});</script>
+<script type="text/javascript">$( document ).ready(function() {var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login";}else{timeoutTime = currentTime + timeout;}});});</script>
 
 </body></html>
 <%

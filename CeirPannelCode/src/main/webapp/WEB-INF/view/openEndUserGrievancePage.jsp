@@ -340,15 +340,13 @@ var contextpath = "${context}";
                         </div>
                             <div class="row card-panel track-grievance-responsive-page" id="trackGrievanctableDiv" style="display: none" >
                               
-                           <!--  <a href="./redirectToHomePage" class="modal-close btn-flat modal-btn right" data-dismiss="modal">&times;</a> -->
                             <h6 class="fixPage-modal-header "><spring:message code="modal.TrackGrievance" /></h6>
                           
                         <table id="endUsergrivanceLibraryTable" style="display: none"
 								class="responsive-table striped display"></table>
 								  <div class="input-field col s12 m12 l12 center">
                                            
-                                            <a href="./redirectToHomePage" class="btn modal-trigger"
-                                                style="margin-left: 10px;"><spring:message code="modal.close" /></a>
+                                            <a href="./redirectToHomePage" class="btn" style="margin-left: 10px;"><spring:message code="modal.close" /></a>
                                         </div>
                     
                 </div>

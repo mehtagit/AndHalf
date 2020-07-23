@@ -560,7 +560,7 @@ data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeI
 	</div>
 	
 	
-	<div id="viewImporterModal" class="modal" >
+	<%-- <div id="viewImporterModal" class="modal" >
 			<h6 class="modal-header">
 				<spring:message code="input.ViewType" />
 			</h6>
@@ -662,7 +662,7 @@ data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeI
 
 			</div>
 		</div>
-	
+ --%>	
 	
 	
 	<div id="viewDeviceInfo" class="modal">
