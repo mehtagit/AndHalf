@@ -250,7 +250,7 @@
 
 
 			<div class="row">
-				<h6 id="sucessMessage"><spring:message code="modal.Systemupdated" /></h6>
+				<h6 id="updateFieldMessage"></h6>
 			</div>
 			<div class="row">
 				<div class="input-field col s12 center">
@@ -271,7 +271,7 @@
 		src="${context}/resources/js/materialize.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
-
+	
 	
 
 	<!--plugins.js - Some Specific JS codes for Plugin Settings-->
@@ -287,6 +287,36 @@
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 	
+			<!-- i18n library -->
+	<script type="text/javascript"
+		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/i18n.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/messagestore.js"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/fallbacks.js"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/language.js"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/parser.js"></script>
+
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/emitter.js"></script>
+
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/bidi.js"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/history.js"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/min.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/js/countries.js"></script>
 	<script type="text/javascript"
@@ -294,8 +324,8 @@
 	<script type="text/javascript"
 		src="${context}/resources/project_js/dragableModal.js?version=<%= (int) (Math.random() * 10) %>"></script>
 		
-<script type="text/javascript">$( document ).ready(function() {var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login";}else{timeoutTime = currentTime + timeout;}});});</script>
-</body></html>
+</body>
+</html>
 
 <%
 	} else {

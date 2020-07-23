@@ -197,9 +197,13 @@ $(".endUser_add_field_button").click(function (e) { //on add input button click
 	if (x < max_fields) { //max input box allowed
 		x++; //text box increment
 		$(endUserwrapper).append(
-				'<div id="endUserfilediv'+id+'" class="endUserfileDiv"><div class="row"><div class="file-field col s12 m6"><label for="">'+$.i18n('documenttype')+' <span class="star">*</span></label><select id="endUserdocTypetag'+id+'" required class="browser-default"> <option value="" disabled selected>'+$.i18n('selectDocumentType')+' </option></select></div> <div class="file-field col s12 m6" style="margin-top: 23px;"><div class="btn"><span>'+$.i18n('selectfile')+'</span><input id="endUserdocTypeFile'+id+'" type="file" required name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" placeholder="Upload file" type="text"></div></div><div  class="endUser_remove_field btn right btn-info" onclick="remove_field_endUser('+id+')">-</div></div></div>'
+				'<div id="endUserfilediv'+id+'" class="endUserfileDiv"><div class="row"><div class="file-field col s12 m6"><label for="">'+$.i18n('documenttype')+' <span class="star">*</span></label><select id="endUserdocTypetag'+id+'" required class="browser-default"> <option value="" disabled selected>'+$.i18n('selectDocumentType')+' </option></select></div> <div class="file-field col s12 m6" style="margin-top: 23px;"><div class="btn"><span>'+$.i18n('selectfile')+'</span><input id="endUserdocTypeFile'+id+'" type="file" onchange=enableEndUserAddMore("endUserdocTypeFile'+id+'","endUserfilediv'+id+'") required name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" placeholder="Upload file" type="text"></div></div><div  class="endUser_remove_field btn right btn-info" onclick="remove_field_endUser('+id+')">-</div></div></div>'
 				/* '<div id="filediv'+id+'" class="fileDiv"><div class="row"><div class="file-field col s12 m6" style="margin-top: 23px;"><div class="btn"><span>'+$.i18n('selectfile')+'</span><input id="docTypeFile'+id+'" type="file" required name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" type="text"></div></div><div class="file-field col s12 m6"><label for="Category">'+$.i18n('documenttype')+' <span class="star">*</span></label><select id="docTypetag'+id+'" required class="browser-default"> <option value="" disabled selected>'+$.i18n('selectDocumentType')+' </option></select><select id="docTypetagValue'+id+'" style="display:none" class="browser-default"> <option value="" disabled selected>'+$.i18n('selectDocumentType')+' </option></select></div><div style="cursor:pointer;background-color:red;margin-right: 1.7%;" class="remove_field btn right btn-info">-</div></div></div>' */
 		); //add input box
+	}
+	if(x==max_fields){
+			
+		 $(".endUser_add_field_button").prop('disabled', true);
 	}
 	
 	
@@ -271,6 +275,7 @@ id--;
 function remove_field_endUser(fieldId ){
 				$('#endUserfilediv' + fieldId).remove();
 				$(this).parent('div').remove();
+				$(".endUser_add_field_button").prop('disabled', false);
 				x--;
 	}
 
@@ -325,12 +330,123 @@ function  closeCancelPopUp()
  $('#cancelMessage').closeModal();
 }
 
-function enableEndUserAddMore(){
-//$(".endUser_add_field_button").attr("disabled", false);
+function enableEndUserAddMore(id,removeFileDivId){
+	var uploadedFileName = $("#"+id).val();
+	uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
+	////alert("file extension=="+uploadedFileName)
+	var ext = uploadedFileName.split('.').pop();
+
+	var fileSize = ($("#"+id)[0].files[0].size);
+	/*fileSize = (Math.round((fileSize / 100000) * 100) / 100)
+		//alert("----"+fileSize);*/
+	fileSize = Math.floor(fileSize/1000);
+	$('#FilefieldId').val(id);
+	////alert(uploadedFileName+"----------"+ext+"----"+fileSize)
+	var fileExtension =ext.toLowerCase();
+	////console.log("file type: "+fileExtension);
+	var extArray = ["png","jpg","jpeg","gif","bmp","gif","csv"];
+	var isInArray =extArray.includes(fileExtension);
+	
+	$('#removeFileInput').val(id);
+	$('#removeFileId').val(removeFileDivId);
+	////console.log("isInArray: "+isInArray)
+	if (uploadedFileName.length > 30) {
+		$('#fileFormateModal').openModal();
+		$('#fileErrormessage').text('');
+		$('#fileErrormessage').text($.i18n('imageValidationName'));
+	} 
+	else if(isInArray ==false)
+	{
+		$('#fileFormateModal').openModal({
+			dismissible:false
+		});
+		$(".endUser_add_field_button").attr("disabled", true);
+		$('#fileErrormessage').text('');
+		$('#fileErrormessage').text($.i18n('imageMessage'));
+
+	}
+	else if(ext=='csv')
+	{
+		
+		if(fileSize>='10000'){
+			$(".endUser_add_field_button").attr("disabled", true);
+			window.parent.$('#fileFormateModal').openModal({
+				dismissible:false
+			});
+			
+		}
+		
+	}
+	else if(fileSize>=5000){
+		$('#fileFormateModal').openModal({
+			dismissible:false
+		});
+		$('#fileErrormessage').text('');
+		$('#fileErrormessage').text($.i18n('imageSize'));	
+		$(".endUser_add_field_button").attr("disabled", true);
+	}
+
+
+	$(".endUser_add_field_button").attr("disabled", false);
+
 }
 
-function enableEndUserReplyAddMore(){
-//$(".add_field_button").attr("disabled", false);
+function enableEndUserReplyAddMore(id,removeFileDivId){
+	var uploadedFileName = $("#"+id).val();
+	uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
+	////alert("file extension=="+uploadedFileName)
+	var ext = uploadedFileName.split('.').pop();
+
+	var fileSize = ($("#"+id)[0].files[0].size);
+	/*fileSize = (Math.round((fileSize / 100000) * 100) / 100)
+		//alert("----"+fileSize);*/
+	fileSize = Math.floor(fileSize/1000);
+	$('#FilefieldId').val(id);
+	////alert(uploadedFileName+"----------"+ext+"----"+fileSize)
+	var fileExtension =ext.toLowerCase();
+	////console.log("file type: "+fileExtension);
+	var extArray = ["png","jpg","jpeg","gif","bmp","gif","csv"];
+	var isInArray =extArray.includes(fileExtension);
+	
+	$('#removeFileInput').val(id);
+	$('#removeFileId').val(removeFileDivId);
+	////console.log("isInArray: "+isInArray)
+	if (uploadedFileName.length > 30) {
+		$('#fileFormateModal').openModal();
+		$('#fileErrormessage').text('');
+		$('#fileErrormessage').text($.i18n('imageValidationName'));
+	} 
+	else if(isInArray ==false)
+	{
+		$('#fileFormateModal').openModal({
+			dismissible:false
+		});
+		$(".add_field_button").attr("disabled", true);
+		$('#fileErrormessage').text('');
+		$('#fileErrormessage').text($.i18n('imageMessage'));
+
+	}
+	else if(ext=='csv')
+	{
+		
+		if(fileSize>='10000'){
+			$(".add_field_button").attr("disabled", true);
+			window.parent.$('#fileFormateModal').openModal({
+				dismissible:false
+			});
+			
+		}
+		
+	}
+	else if(fileSize>=5000){
+		$('#fileFormateModal').openModal({
+			dismissible:false
+		});
+		$('#fileErrormessage').text('');
+		$('#fileErrormessage').text($.i18n('imageSize'));	
+		$(".add_field_button").attr("disabled", true);
+	}
+$(".add_field_button").attr("disabled", false);
 }
 
 
@@ -811,3 +927,16 @@ function enableReplySelectFile(){
 	    //ev.preventDefault(); //works as well
 
 	});
+	
+	function clearFileName() {
+		/*$('#fileName').val('');
+		$("#file").val('');
+		$('#fileFormateModal').closeModal();*/
+		
+		$('#fileFormateModal').closeModal();
+		var fieldInput=$('#removeFileInput').val();
+		$('#'+fieldInput).val('');
+		var inputPlaceHolder=$('#removeFileId').val();
+		$('#'+inputPlaceHolder).find('input:text').val(''); 
+
+	}
