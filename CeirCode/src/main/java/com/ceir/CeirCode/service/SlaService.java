@@ -209,8 +209,10 @@ public class SlaService {
 					fileRecords.add(slFm);
 				}
 				csvWriter.write(fileRecords);
+				
 			}
-			return new FileDetails( fileName, filePath,alertDbDowlonadLink.getValue()+fileName ); 
+			
+			return new FileDetails( fileName, filePath,alertDbDowlonadLink.getValue().replace("$LOCAL_IP",propertiesReader.localIp)+fileName ); 
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());

@@ -1,6 +1,7 @@
 package com.ceir.CeirCode.util;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.mail.MessagingException;
@@ -22,6 +23,7 @@ import com.ceir.CeirCode.model.UserProfile;
 import com.ceir.CeirCode.model.constants.ChannelType;
 import com.ceir.CeirCode.repo.MessageConfigurationDbRepository;
 import com.ceir.CeirCode.repo.NotificationRepository;
+import com.ceir.CeirCode.response.GenricResponse;
 import com.ceir.CeirCode.service.ConfigurationManagementServiceImpl;
 import com.ceir.CeirCode.service.UserService;
 
@@ -47,7 +49,6 @@ public class NotificationUtil {
 	@Autowired
 	NotificationRepository notificationRepo;
 
-
     public boolean saveNoti(Notification noti)
     {
     	try {
@@ -69,7 +70,7 @@ public class NotificationUtil {
 			String emailBody="";
 			MessageConfigurationDb messageDB = new MessageConfigurationDb();
 		
-			messageDB = messageConfigurationDbRepository.getByTag(tag);
+			messageDB = messageConfigurationDbRepository.getByTagAndActive(tag, 0);
 				logger.info("messageDB data by tag: "+messageDB);
 				emailBody=userService.emailContent(messageDB, userProfileData, otp);		
 		String subject=userService.getsubject(messageDB, userProfileData, otp);
@@ -117,6 +118,49 @@ public class NotificationUtil {
 
 
 
+	
+
+	
+	public boolean saveNotification(@NonNull String tag, UserProfile userProfile, long featureId,
+			String featureName, String subFeature, String featureTxnId, String txnId,
+			Map<String, String> placeholders, String roleType, String receiverUserType, String referTable) {
+			try {
+			MessageConfigurationDb messageDB = messageConfigurationDbRepository.getByTagAndActive(tag, 0);
+			logger.info("Message for tag [" + tag + "] " + messageDB);
+
+			if(Objects.isNull(messageDB)) {
+			return Boolean.TRUE;
+			}
+
+			String message = messageDB.getValue();
+			String subject=messageDB.getSubject();
+			subject=subject.replace("<XXX>", txnId);
+			logger.info("after replace subject value ::"+subject);
+			// Replace Placeholders from message.
+			if(Objects.nonNull(placeholders)) {
+			for (Map.Entry<String, String> entry : placeholders.entrySet()) {
+			logger.info("Placeholder key : " + entry.getKey() + " value : " + entry.getValue());
+			message = message.replaceAll(entry.getKey(), entry.getValue());
+			subject = subject.replaceAll(entry.getKey(), entry.getValue());
+			}
+			}
+			
+			logger.info("final subject value ::"+subject);
+			
+			// Save email in notification table.
+			GenricResponse genricResponse = configurationManagementServiceImpl.saveNotification(ChannelType.EMAIL, message,
+			userProfile.getUser().getId(), featureId, featureName, subFeature, featureTxnId,
+			subject, 0, referTable, roleType, receiverUserType);
+
+			logger.info("A new notification with id [" + genricResponse.getTxnId() + "] is saved.");
+
+			return Boolean.TRUE;
+			}catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			return Boolean.FALSE;
+			}
+	}
+	
 
 }
 

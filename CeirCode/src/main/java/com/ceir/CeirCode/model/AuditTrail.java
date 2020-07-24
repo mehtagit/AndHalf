@@ -41,12 +41,12 @@ public class AuditTrail implements Serializable {
 	private String subFeature;
 	private String jSessionId;
 	private String  txnId;
-	
+	private String roleType;
 	public AuditTrail() {
 
 	}
 	
-	public AuditTrail(long userId, String userName, long userTypeId, String userType, long featureId, String featureName, String subFeature, String jSessionId,String txnId) {
+	public AuditTrail(long userId, String userName, long userTypeId, String userType, long featureId, String featureName, String subFeature, String jSessionId,String txnId,String roleType) {
 		this.userId = userId;
 		this.userName = userName;
 		this.userTypeId = userTypeId;
@@ -56,8 +56,25 @@ public class AuditTrail implements Serializable {
 		this.subFeature = subFeature;
 		this.jSessionId = jSessionId;
 		this.txnId=txnId;
+		this.roleType=roleType;
 	}
 	
+	public static long getSerialVersionUID() {
+		return serialVersionUID;
+	}
+
+	public static void setSerialVersionUID(long serialVersionUID) {
+		AuditTrail.serialVersionUID = serialVersionUID;
+	}
+
+	public String getRoleType() {
+		return roleType;
+	}
+
+	public void setRoleType(String roleType) {
+		this.roleType = roleType;
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -141,49 +158,14 @@ public class AuditTrail implements Serializable {
 		serialVersionUID = serialversionuid;
 	}
 
-	public AuditTrail(Long userId, String userName, Long userTypeId, String userType, Long featureId,
-			String featureName, String subFeature, String jSessionId,String txnId) {
-		super();
-		this.userId = userId;
-		this.userName = userName;
-		this.userTypeId = userTypeId;
-		this.userType = userType;
-		this.featureId = featureId;
-		this.featureName = featureName;
-		this.subFeature = subFeature;
-		this.jSessionId = jSessionId;
-		this.txnId=txnId;
-	}
+	
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("AuditTrail [id=");
-		builder.append(id);
-		builder.append(", createdOn=");
-		builder.append(createdOn);
-		builder.append(", modifiedOn=");
-		builder.append(modifiedOn);
-		builder.append(", userId=");
-		builder.append(userId);
-		builder.append(", userName=");
-		builder.append(userName);
-		builder.append(", userTypeId=");
-		builder.append(userTypeId);
-		builder.append(", userType=");
-		builder.append(userType);
-		builder.append(", featureId=");
-		builder.append(featureId);
-		builder.append(", featureName=");
-		builder.append(featureName);
-		builder.append(", subFeature=");
-		builder.append(subFeature);
-		builder.append(", jSessionId=");
-		builder.append(jSessionId);
-		builder.append(", txnId=");
-		builder.append(txnId);
-		builder.append("]");
-		return builder.toString();
+		return "AuditTrail [id=" + id + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", userId=" + userId
+				+ ", userName=" + userName + ", userTypeId=" + userTypeId + ", userType=" + userType + ", featureId="
+				+ featureId + ", featureName=" + featureName + ", subFeature=" + subFeature + ", jSessionId="
+				+ jSessionId + ", txnId=" + txnId + ", roleType=" + roleType + "]";
 	}
 	
 }

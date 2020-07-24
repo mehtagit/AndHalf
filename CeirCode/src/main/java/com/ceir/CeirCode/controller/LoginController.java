@@ -59,6 +59,7 @@ public class LoginController{
 	public ResponseEntity<?> sessionTracking(@PathVariable("userid") long userid  ){
 		log.info("inside sessionTracking controller and userId is: "+userid);
 		User output=userRepoService.findByUSerId(userid);
+		// 0 -for logout 1-for login
 		LoginTracking loginTracking=new LoginTracking(0,output);
 		return loginService.sessionTracking(loginTracking);  
 	}

@@ -13,26 +13,31 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+
+import com.ceir.CeirCode.model.constants.NotificationStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 @Entity
 public class Notification  implements Serializable{
-	private static long serialVersionUID = 1L;
+
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
-	@Column(nullable =false)
+	private Long id;
+
 	@CreationTimestamp
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private LocalDateTime createdOn;
-	@Column(nullable =false)
+
 	@UpdateTimestamp
 	private LocalDateTime modifiedOn;
 
 	private String channelType;
+
 	@Column(length = 1000)
 	private String message;
 
-	private long userId;
+	private Long userId;
 
 	private Long featureId;
 
@@ -46,28 +51,29 @@ public class Notification  implements Serializable{
 
 	private String subject;
 
-	private Integer retryCount; 
-    
-	private String referTable="users";
-
+	private Integer retryCount;
+	
+	@Column(length = 10)
+	private String referTable;
+	
+	@Column(length = 20)
+	private String roleType;
+	
 	@Column(length = 50)
 	private String receiverUserType;
-	
+
 	private Integer authorityStatus;
-	
-	
-
-
-      
 	public Integer getAuthorityStatus() {
 		return authorityStatus;
 	}
-
 
 	public void setAuthorityStatus(Integer authorityStatus) {
 		this.authorityStatus = authorityStatus;
 	}
 
+	public Notification() {
+
+	}
 
 	public Notification(String channelType, String message, long userId, Long featureId, String featureTxnId,
 			String featureName, String subFeature, Integer status, String subject, Integer retryCount,
@@ -88,11 +94,32 @@ public class Notification  implements Serializable{
 		this.authorityStatus = authorityStatus;
 	}
 
-
-	public Notification() {
-
+	
+	public Notification(String channelType, String message, Long userId, Long featureId, String featureName, 
+			String subFeature, String featureTxnId, String subject, Integer retryCount, String referTable,
+			String roleType, String receiverUserType) {
+		this.channelType = channelType;
+		this.message = message;
+		this.userId = userId;
+		this.featureId = featureId;
+		this.featureName = featureName;
+		this.subFeature = subFeature;
+		this.featureTxnId = featureTxnId;
+		status = NotificationStatus.INIT.getCode();
+		this.subject = subject;
+		this.retryCount = retryCount;
+		this.referTable = referTable;
+		this.roleType = roleType;
+		this.receiverUserType = receiverUserType;
 	}
 
+	public String getReceiverUserType() {
+		return receiverUserType;
+	}
+
+	public void setReceiverUserType(String receiverUserType) {
+		this.receiverUserType = receiverUserType;
+	}
 
 	public Long getId() {
 		return id;
@@ -124,7 +151,12 @@ public class Notification  implements Serializable{
 	public void setMessage(String message) {
 		this.message = message;
 	}
-
+	public Long getUserId() {
+		return userId;
+	}
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
 	public Long getFeatureId() {
 		return featureId;
 	}
@@ -155,7 +187,11 @@ public class Notification  implements Serializable{
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
-		public String getSubject() {
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public String getSubject() {
 		return subject;
 	}
 
@@ -170,46 +206,22 @@ public class Notification  implements Serializable{
 	public void setRetryCount(Integer retryCount) {
 		this.retryCount = retryCount;
 	}
-
-	public long getUserId() {
-		return userId;
-	}
-
-
-	public void setUserId(long userId) {
-		this.userId = userId;
-	}
-
-
-	public void setId(long id) {
-		this.id = id;
-	}
 	
 	public String getReferTable() {
 		return referTable;
 	}
+
 	public void setReferTable(String referTable) {
 		this.referTable = referTable;
 	}
 
-	public static long getSerialVersionUID() {
-		return serialVersionUID;
+	public String getRoleType() {
+		return roleType;
 	}
 
-	public static void setSerialVersionUID(long serialVersionUID) {
-		Notification.serialVersionUID = serialVersionUID;
+	public void setRoleType(String roleType) {
+		this.roleType = roleType;
 	}
-
-
-	public String getReceiverUserType() {
-		return receiverUserType;
-	}
-
-
-	public void setReceiverUserType(String receiverUserType) {
-		this.receiverUserType = receiverUserType;
-	}
-
 
 	@Override
 	public String toString() {
@@ -242,11 +254,12 @@ public class Notification  implements Serializable{
 		builder.append(retryCount);
 		builder.append(", referTable=");
 		builder.append(referTable);
+		builder.append(", roleType=");
+		builder.append(roleType);
 		builder.append(", receiverUserType=");
 		builder.append(receiverUserType);
-		builder.append(", authorityStatus=");
-		builder.append(authorityStatus);
 		builder.append("]");
 		return builder.toString();
 	}
+
 }

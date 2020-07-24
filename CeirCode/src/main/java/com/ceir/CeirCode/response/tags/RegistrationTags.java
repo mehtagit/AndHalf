@@ -26,7 +26,9 @@ public enum RegistrationTags {
     User_Success_Save("User_Success_Save","User has been sucessfully saved"),
     User_Fail_Save("User_Fail_Save","User failed to saved"),
     User_Success_Update("User_Success_Update","User has been sucessfully update"),
-    User_Fail_Update("User_Fail_Update","User has been failed to update");
+    User_Fail_Update("User_Fail_Update","User has been failed to update"),
+	User_Delete("User_Delete","User has been Deleted Successfully"),
+	User_Fail("User_Fail","Unable to delete user");
 	
 	private String tag;
 	private String message;

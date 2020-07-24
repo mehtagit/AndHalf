@@ -202,7 +202,7 @@ public class UserProfileService {
 		if(Objects.nonNull(filterRequest.getAsType()) && filterRequest.getAsType()!=-1) {
 			return Boolean.FALSE;
 		}
-		if(Objects.nonNull(filterRequest.getUserRoleTypeId()) && filterRequest.getAsType()!=-1) {
+		if(Objects.nonNull(filterRequest.getUserRoleTypeId()) && filterRequest.getUserRoleTypeId()!=-1) {
 			return Boolean.FALSE;
 		}
 
@@ -220,13 +220,13 @@ public class UserProfileService {
        return Boolean.TRUE;
 	}
 	
-	public List<UserProfile> getAll(FilterRequest filterRequest) {
+	public List<UserProfile> getAll(FilterRequest filterRequest,String source) {
 		List<StateMgmtDb> statusList = null;
 		try {
 			
 			statusList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
 
-			List<UserProfile> systemConfigListDbs = userProfileRepo.findAll( buildSpecification(filterRequest,statusList,null).build(), new Sort(Sort.Direction.DESC, "modifiedOn"));
+			List<UserProfile> systemConfigListDbs = userProfileRepo.findAll( buildSpecification(filterRequest,statusList,source).build(), new Sort(Sort.Direction.DESC, "modifiedOn"));
 
 			return systemConfigListDbs;
 
@@ -393,7 +393,7 @@ public class UserProfileService {
 	}
 
 
-	public FileDetails getFilterUSerPRofileInFile(FilterRequest profileFilter) {
+	public FileDetails getFilterUSerPRofileInFile(FilterRequest profileFilter,String source) {
 		log.info("inside export user profile data into file service");
 		log.info("filter data:  "+profileFilter);
 		String fileName = null;
@@ -413,7 +413,7 @@ public class UserProfileService {
 		List<UserProfileFileModel> fileRecords       = null;
 		HeaderColumnNameTranslateMappingStrategy<UserProfileFileModel> mapStrategy = null;
 		try {
-			List<UserProfile> userProfileData = this.getAll(profileFilter);
+			List<UserProfile> userProfileData = this.getAll(profileFilter,source);
 
 			List<SystemConfigListDb> asTypeList=systemConfigRepo.getByTag("AS_TYPE");
 
@@ -452,7 +452,7 @@ public class UserProfileService {
 				}
 				csvWriter.write(fileRecords);
 			}
-			return new FileDetails( fileName, filePath,userProfileDowlonadLink.getValue()+fileName ); 
+			return new FileDetails( fileName, filePath,userProfileDowlonadLink.getValue().replace("$LOCAL_IP",propertiesReader.localIp)+fileName ); 
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());

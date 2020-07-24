@@ -1,7 +1,7 @@
 package com.ceir.CeirCode.model.constants;
 
 public enum SelfRegistration {
-	YES(1), NO(0);	
+	EXTERNAL(1), INTERNAL(0),OTHER(2);	
 	private int code;
 
 	SelfRegistration(int code) {

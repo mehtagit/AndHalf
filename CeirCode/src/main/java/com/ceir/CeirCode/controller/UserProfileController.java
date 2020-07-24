@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -28,8 +29,12 @@ import com.ceir.CeirCode.model.User;
 import com.ceir.CeirCode.model.UserProfile;
 import com.ceir.CeirCode.model.UserStatusRequest;
 import com.ceir.CeirCode.model.Userrole;
+import com.ceir.CeirCode.model.constants.Features;
+import com.ceir.CeirCode.model.constants.SubFeatures;
 import com.ceir.CeirCode.repo.SystemConfigDbListRepository;
 import com.ceir.CeirCode.repoService.UserRoleRepoService;
+import com.ceir.CeirCode.response.GenricResponse;
+import com.ceir.CeirCode.response.tags.RegistrationTags;
 import com.ceir.CeirCode.service.UserProfileService;
 import com.ceir.CeirCode.service.UserService;
 import com.ceir.CeirCode.util.HttpResponse;
@@ -93,7 +98,7 @@ public class UserProfileController {
 			@RequestParam(value = "file", defaultValue = "0") Integer file,
 			@RequestParam(value = "source", defaultValue = "menu") String source){
 		MappingJacksonValue mapping = null;
-		log.info("source is:  "+source);
+		log.info("source is:  "+source + "request::::"+filterRequest);
 		if( file == 0) {
 			Page<UserProfile> userProfileResponse  = userProService.viewAllRecord(filterRequest, pageNo, pageSize,source);
 			List<SystemConfigListDb> asTypeList=systemConfigRepo.getByTag("AS_TYPE");
@@ -122,7 +127,7 @@ public class UserProfileController {
 			mapping = new MappingJacksonValue(userProfileResponse);
 			
 		}else {
-			FileDetails fileDetails = userProService.getFilterUSerPRofileInFile(filterRequest);
+			FileDetails fileDetails = userProService.getFilterUSerPRofileInFile(filterRequest,source);
 			mapping = new MappingJacksonValue(fileDetails);
 		}
 		return mapping;
@@ -168,4 +173,31 @@ public class UserProfileController {
 	public ResponseEntity<?> addOrDeleteRoles(@RequestBody AllRequest request){
 		return userService.addDeleteroles(request);  
 	} 
+	
+	
+	@ApiOperation(value = "Delete User.", response = HttpResponse.class)
+	@DeleteMapping("/delete")
+	public MappingJacksonValue  delete(@RequestBody AllRequest request) {
+		log.info("Request:::::::::::::::"+request);
+		GenricResponse genricResponse=null;
+		if(userService.delete(request.getDataId())) {
+	
+			//audit
+			/*
+			 * log.info("currently no entry in audit_trail");
+			 * userService.saveUserTrail(request.getUserId(),request.getUsername(),
+			 * request.getUserType(),request.getUserTypeId(),Features.Registration_Request,
+			 * SubFeatures.DELETE,request.getFeatureId());
+			 */
+			genricResponse	= new GenricResponse(200, RegistrationTags.User_Delete.getTag(),RegistrationTags.User_Delete.getMessage(), null);
+		}
+		else {
+			
+			genricResponse	= new GenricResponse(200, RegistrationTags.User_Fail.getTag(),RegistrationTags.User_Fail.getMessage(), null);
+		}
+		return  new MappingJacksonValue(genricResponse);
+
+	}
+	
+	
 }

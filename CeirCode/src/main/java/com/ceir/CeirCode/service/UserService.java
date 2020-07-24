@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import javax.transaction.Transactional;
 import org.slf4j.Logger;
@@ -14,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.ceir.CeirCode.configuration.PropertiesReaders;
 import com.ceir.CeirCode.model.AllRequest;
 import com.ceir.CeirCode.model.AuditTrail;
 import com.ceir.CeirCode.model.ChangePassword;
@@ -147,26 +149,40 @@ public class UserService {
 	@Autowired
 	Utility utility;
 
+	@Autowired
+	PropertiesReaders propertiesReader;
 	public ResponseEntity<?> getUsertypeData(int type){
 		try {
+			
 			log.info("type= "+type);
 			List<Usertype> usertypeData=new ArrayList<Usertype>();
 			if(type==0) {
-				usertypeData=usertypeRepo.findBySelfRegister(SelfRegistration.YES.getCode());
+				usertypeData=usertypeRepo.findBySelfRegister(SelfRegistration.INTERNAL.getCode());
+				usertypeData.sort((u1,u2)->u1.getUsertypeName().compareTo(u2.getUsertypeName()));
+
+			
 			}
 			else if(type==1)
 			{
-				usertypeData=usertypeRepo.findBySelfRegister(SelfRegistration.NO.getCode());
+				usertypeData=usertypeRepo.findBySelfRegister(SelfRegistration.EXTERNAL.getCode());
+				log.info("usertypeData::::::::::::: "+usertypeData);
+			
 				usertypeData.sort((u1,u2)->u1.getUsertypeName().compareTo(u2.getUsertypeName()));
-
+				
 			}
 			else if(type==2)
 			{
 				usertypeData=usertypeRepo.findAll();
 				usertypeData.sort((u1,u2)->u1.getUsertypeName().compareTo(u2.getUsertypeName()));
 			}
-			else
-			{}
+			else if(type == 3)
+			{
+				usertypeData=usertypeRepo.findBySelfRegisterOrSelfRegister(SelfRegistration.EXTERNAL.getCode(),SelfRegistration.OTHER.getCode());
+				log.info("usertypeData::::::::::::: "+usertypeData);
+			
+				usertypeData.sort((u1,u2)->u1.getUsertypeName().compareTo(u2.getUsertypeName()));
+				
+			}
 			return new ResponseEntity<>(usertypeData, HttpStatus.OK);
 		}
 		catch(Exception e){
@@ -180,7 +196,7 @@ public class UserService {
 	public ResponseEntity<?> getInternalUsertype(){
 		try {
 
-			List<Usertype> usertypeData=usertypeRepo.findBySelfRegister(SelfRegistration.NO.getCode());
+			List<Usertype> usertypeData=usertypeRepo.findBySelfRegister(SelfRegistration.INTERNAL.getCode());
 			usertypeData.sort((u1,u2)->u1.getUsertypeName().compareTo(u2.getUsertypeName()));
 			return new ResponseEntity<>(usertypeData, HttpStatus.OK);
 		}
@@ -696,6 +712,7 @@ public class UserService {
 	}
 
 	public ResponseEntity<?> validateNewUser(User output, Otp otp){
+		Map<String,String>  mapEmail = new HashMap<String, String>();
 		log.info("user profile data from db:  "+output); 
 		long diffInMinutes=utitlity.timeDifferenceInMinutes(output.getUserProfile().getModifiedOn());
 		log.info("differnce in minuted between two times: "+diffInMinutes);
@@ -707,7 +724,10 @@ public class UserService {
 				HttpResponse response=new HttpResponse(RegistrationTags.OTP_SUCESS_RESP.getMessage(),200,RegistrationTags.OTP_SUCESS_RESP.getTag()); 
 				User user=userRepo.findById(output.getId());
 				user.setPreviousStatus(UserStatus.OTP_VERIFICATION_PENDING.getCode());
-
+				log.info(":::::::::username::::::::"+ user.getUsername());
+				mapEmail.put("<userID>", user.getUsername());
+				
+				
 				if(otp.getForgotPassword()==1) {
 					user.setCurrentStatus(UserStatus.APPROVED.getCode());     					
 				}
@@ -727,21 +747,41 @@ public class UserService {
 					{
 						for(User adminUser:adminUsers) 
 						{ 
-
+						
+							log.info(":::::::::::<First name>:::::"+adminUser.getUserProfile().getFirstName());
+							mapEmail.put("<First name>", adminUser.getUserProfile().getFirstName());
 							//String username=user.getUsername();
 							//adminUser.setUsername(username);
-							MessageConfigurationDb messageDB = new MessageConfigurationDb();
-
-							messageDB = messageConfigurationDbRepository.getByTag("REG_NOTIFY_CEIR_ADMIN_TO_VERIFY_USER");
-							log.info("messageDB data by tag: "+messageDB);
-							String	emailBody=emailContent(messageDB, user.getUserProfile(), "");		
-							String subject=getsubject(messageDB, user.getUserProfile(), "");
-							Notification noti=new Notification(ChannelType.EMAIL,emailBody,adminUser.getId(),
-									41l,adminUser.getUsername(),"User Management", "user phone and email details validated",
-									1,subject,0,"users","CEIRAdmin",0);
-							boolean adminNotification= emailUtils.saveNoti(noti); 						
-							log.info("notification save:  "+adminNotification);
-						}	
+							
+							/*
+							 * MessageConfigurationDb messageDB = new MessageConfigurationDb();
+							 * 
+							 * messageDB = messageConfigurationDbRepository.getByTag(
+							 * "REG_NOTIFY_CEIR_ADMIN_TO_VERIFY_USER");
+							 * log.info("messageDB data by tag: "+messageDB); String
+							 * emailBody=emailContent(messageDB, user.getUserProfile(), ""); String
+							 * subject=getsubject(messageDB, user.getUserProfile(), "");
+							 * 
+							 * log.info(":::::::::::emailBody:::::"+emailBody);
+							 * 
+							 * log.info(":::::::::::subject:::::"+subject);
+							 * 
+							 * Notification noti=new
+							 * Notification(ChannelType.EMAIL,emailBody,adminUser.getId(),
+							 * 41l,adminUser.getUsername(),"User Management",
+							 * "user phone and email details validated", 1,subject,0,"users","CEIRAdmin",0);
+							 * boolean adminNotification= emailUtils.saveNoti(noti);
+							 * 
+							 * log.info("notification save:  "+adminNotification);
+							 */
+							 	
+							
+							  emailUtils.saveNotification("REG_NOTIFY_CEIR_ADMIN_TO_VERIFY_USER",
+							  adminUser.getUserProfile(), 8, "Registration Request",
+							  "user phone and email details validated", "NA", "NA", mapEmail, "CEIRAdmin",
+							  "CEIRAdmin", "Users");
+							 
+					}	
 					}
 
 					boolean notificationStatus2=emailUtils.saveNotification("REG_WAIT_USER_FOR_APPROV_STATUS", user.getUserProfile(),
@@ -1636,16 +1676,17 @@ public class UserService {
 				SystemConfigurationDb filePath=systemConfigurationRepo.getDataByTag("USER_FILE_DOWNLOAD_PATH");	
 				if(filePath!=null) {
 					if(user.getNidFilename()!=null || !"null".equalsIgnoreCase(user.getNidFilename())) {
-						user.setNidFilePath(filePath.getValue()+"/"+user.getUser().getUsername()+"/NID/");				
+						user.setNidFilePath(filePath.getValue().replace("$LOCAL_IP",propertiesReader.localIp)+"/"+user.getUser().getUsername()+"/NID/");				
 					}
+
 					if(user.getPhotoFilename()!=null || !"null".equalsIgnoreCase(user.getPhotoFilename())) {
-						user.setPhotoFilePath(filePath.getValue()+"/"+user.getUser().getUsername()+"/photo/");	
+						user.setPhotoFilePath(filePath.getValue().replace("$LOCAL_IP",propertiesReader.localIp)+"/"+user.getUser().getUsername()+"/photo/");	
 					}
 					if(user.getIdCardFilename()!=null || !"null".equalsIgnoreCase(user.getIdCardFilename())) {
-						user.setIdCardFilePath(filePath.getValue()+"/"+user.getUser().getUsername()+"/IDCard/");	
+						user.setIdCardFilePath(filePath.getValue().replace("$LOCAL_IP",propertiesReader.localIp)+"/"+user.getUser().getUsername()+"/IDCard/");	
 					}
 					if(user.getVatFilename()!=null || !"null".equalsIgnoreCase(user.getVatFilename())) {
-						user.setVatFilePath(filePath.getValue()+"/"+user.getUser().getUsername()+"/Vat/");					
+						user.setVatFilePath(filePath.getValue().replace("$LOCAL_IP",propertiesReader.localIp)+"/"+user.getUser().getUsername()+"/Vat/");					
 					}
 				}
 				log.info("All data now fetched");
@@ -1801,7 +1842,7 @@ public class UserService {
 				}*/
 			}
 			else { 
-				log.info("user profile to update");
+				log.info("user profile failed to update");
 				HttpResponse response=new HttpResponse(ProfileTags.PRO_CORRECT_PASS.getMessage(),401,ProfileTags.PRO_CORRECT_PASS.getTag());
 				log.info("response send to user:  "+response);
 				return new ResponseEntity<>(response,HttpStatus.OK);	
@@ -1919,16 +1960,16 @@ public class UserService {
 				SystemConfigurationDb filePath=systemConfigurationRepo.getDataByTag("USER_FILE_DOWNLOAD_PATH");	
 				if(filePath!=null) {
 					if(user.getNidFilename()!=null || !"null".equalsIgnoreCase(user.getNidFilename())) {
-						user.setNidFilePath(filePath.getValue()+"/"+user.getUser().getUsername()+"/NID/");				
+						user.setNidFilePath(filePath.getValue().replace("$LOCAL_IP",propertiesReader.localIp)+"/"+user.getUser().getUsername()+"/NID/");				
 					}
 					if(user.getPhotoFilename()!=null || !"null".equalsIgnoreCase(user.getPhotoFilename())) {
-						user.setPhotoFilePath(filePath.getValue()+"/"+user.getUser().getUsername()+"/photo/");	
+						user.setPhotoFilePath(filePath.getValue().replace("$LOCAL_IP",propertiesReader.localIp)+"/"+user.getUser().getUsername()+"/photo/");	
 					}
 					if(user.getIdCardFilename()!=null || !"null".equalsIgnoreCase(user.getIdCardFilename())) {
-						user.setIdCardFilePath(filePath.getValue()+"/"+user.getUser().getUsername()+"/IDCard/");	
+						user.setIdCardFilePath(filePath.getValue().replace("$LOCAL_IP",propertiesReader.localIp)+"/"+user.getUser().getUsername()+"/IDCard/");	
 					}
 					if(user.getVatFilename()!=null || !"null".equalsIgnoreCase(user.getVatFilename())) {
-						user.setVatFilePath(filePath.getValue()+"/"+user.getUser().getUsername()+"/Vat/");					
+						user.setVatFilePath(filePath.getValue().replace("$LOCAL_IP",propertiesReader.localIp)+"/"+user.getUser().getUsername()+"/Vat/");					
 					}
 				}
 				return new ResponseEntity<>(user,HttpStatus.OK);	
@@ -2084,7 +2125,7 @@ public class UserService {
 		try {
 			AuditTrail auditTrail=new AuditTrail(user.getId(), user.getUsername(),
 					user.getUsertype().getId(),user.getUsertype().getUsertypeName(), featureId,
-					feature, subFeature,"0","NA");
+					feature, subFeature,"0","NA",user.getUsertype().getUsertypeName());
 			log.info("going to save audit trail");
 			AuditTrail output=audiTrailRepoService.saveAuditTrail(auditTrail);
 			if(output!=null) {
@@ -2105,7 +2146,7 @@ public class UserService {
 		try {
 			AuditTrail auditTrail=new AuditTrail(userId, username,
 					userTypeId,userType, featureId,
-					feature, subFeature,"0","NA");
+					feature, subFeature,"0","NA",userType);
 			log.info("going to save audit trail");
 			AuditTrail output=audiTrailRepoService.saveAuditTrail(auditTrail);
 			if(output!=null) {
@@ -2121,4 +2162,19 @@ public class UserService {
 			return 0;
 		}
 	}
+
+	public boolean delete(long userId) {
+		// TODO Auto-generated method stub
+		try {
+			userRepo.deleteById(userId);
+			return true;
+		}
+		catch(Exception e) {
+			log.info(e.toString());
+			return false;
+		}
+		
+	}
+	
+			
 } 

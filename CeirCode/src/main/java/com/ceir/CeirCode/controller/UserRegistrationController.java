@@ -47,7 +47,7 @@ public class UserRegistrationController {
 	@ApiOperation(value = "usertypes data", response = HttpResponse.class)
 	@CrossOrigin
 	@PostMapping("/getUsertypes") 
-	public ResponseEntity<?> getUsertypes(@RequestParam(defaultValue ="0",required = false,name = "type")int type){
+	public ResponseEntity<?> getUsertypes(@RequestParam(defaultValue ="3",required = false,name = "type")int type){
 		return userService.getUsertypeData(type);
 	}
 
@@ -63,9 +63,7 @@ public class UserRegistrationController {
 	@PostMapping("/usertypeIdByName/{usertype}") 
 	public ResponseEntity<?> usertypeIdByName(@PathVariable("usertype")String usertype){
 		return userService.usertypeIdByName(usertype);
-	}
-	
-	
+	}	
 
 	@ApiOperation(value = "security questions list", response = HttpResponse.class)
 	@CrossOrigin

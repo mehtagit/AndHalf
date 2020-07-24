@@ -11,7 +11,6 @@ public interface MessageConfigurationDbRepository extends JpaRepository<MessageC
 
 	public MessageConfigurationDb getById(Long id);
 
-
-
+	public MessageConfigurationDb getByTagAndActive(String tagValue, int active);
 }
 
