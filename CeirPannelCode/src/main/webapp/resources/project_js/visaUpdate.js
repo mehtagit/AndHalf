@@ -65,11 +65,20 @@
 				//////console.log("2=="+source__val);
 
 				//var featureName = $('#feature').val() == null ? null : $("#feature option:selected").text();
+				var txn= (txnIdValue == 'null' && transactionIDValue == undefined)? $('#visaTxnId').val() : transactionIDValue;
+				
+				if (source=="filter")
+				{
+				if($("body").attr("data-session-source")=='noti'){
+					
+					txn=$('#visaTxnId').val();
+				}
+				}
 				
 				var filterRequest={
 						"endDate":$('#endDate').val(),
 						"startDate":$('#startDate').val(),
-						"txnId":$('#visaTxnId').val(),
+						"txnId":txn,
 						"status":$('#statusvisa').val(),
 						"startDate":$('#startDate').val(),
 						"userId": parseInt($("body").attr("data-userID")),

@@ -57,7 +57,7 @@ function Datatable(Url, dataUrl) {
 			"endDate" : $('#endDate').val(),
 			"startDate" : $('#startDate').val(),
 			"tac" : $('#tac').val(),
-			"txnId" : txn,
+			"txnId" : $('#transactionID').val() == null ? txn : $('#transactionID').val(),
 			"userId" : userId,
 			"featureId" : parseInt(featureId),
 			"userTypeId" : parseInt($("body").attr("data-userTypeID")),
@@ -71,7 +71,7 @@ function Datatable(Url, dataUrl) {
 			"endDate" : $('#endDate').val(),
 			"startDate" : $('#startDate').val(),
 			"tac" : $('#tac').val(),
-			"txnId" : txn,
+			"txnId" :$('#transactionID').val() == null ? txn : $('#transactionID').val(),
 			"userId" : userId,
 			"featureId" : parseInt(featureId),
 			"userTypeId" : parseInt($("body").attr("data-userTypeID")),
@@ -85,7 +85,7 @@ function Datatable(Url, dataUrl) {
 			"endDate" : $('#endDate').val(),
 			"startDate" : $('#startDate').val(),
 			"tac" : $('#tac').val(),
-			"txnId" : txn,
+			"txnId" : $('#transactionID').val() == null ? txn : $('#transactionID').val(),
 			"userId" : userId,
 			"featureId" : parseInt(featureId),
 			"userTypeId" : parseInt($("body").attr("data-userTypeID")),
@@ -96,7 +96,7 @@ function Datatable(Url, dataUrl) {
 	if (lang == 'km') {
 		var langFile = "./resources/i18n/khmer_datatable.json";
 	}
-
+	console.log(JSON.stringify(filterRequest));
 	$("#submitFilter").prop('disabled', true);
 	
 	var token = $("meta[name='_csrf']").attr("content");
@@ -581,6 +581,13 @@ function setUploadedFiles(data) {
 											+ placeholderValue
 											+ '" type="text"></div></div>  <div style="cursor:pointer;background-color:red;margin-right: 1.7%;" onclick="remove_field('+id+')" class="remove_field btn right btn-info">-</div></div></div>');
 				}
+				if(x==max_fields){
+					
+					 $(".add_field_button").prop('disabled', true);
+				}
+				
+				
+				
 			} else {
 
 				//alert("in else part")
@@ -818,9 +825,13 @@ $(".add_field_button")
 												+ $.i18n('selectfile')
 												+ '</span><input id="docTypeFile'
 												+ id
-												+ '" type="file"  name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" placeholder="'
+												+ '" type="file" onchange=enableAddMore("docTypeFile'+id+'","filediv'+id+'")  name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" placeholder="'
 												+ placeholderValue
 												+ '" type="text"></div></div>  <div style="cursor:pointer;background-color:red;margin-right: 1.7%;" onclick="remove_field('+id+')" class="remove_field btn right btn-info">-</div></div></div>');
+					}
+					if(x==max_fields){
+						
+						 $(".add_field_button").prop('disabled', true);
 					}
 					$.getJSON('./getSourceTypeDropdown/DOC_TYPE/21', function(
 							data) {
@@ -858,6 +869,7 @@ function remove_field(fieldId ){
 	$('#filediv' + fieldId).remove();
 	$(this).parent('div').remove();
 	x--;
+	$(".add_field_button").prop('disabled', false);
 }
 
 function openApproveTACPopUp(txnId, manufacturerName) {
@@ -1049,12 +1061,73 @@ function confirmantiondelete() {
 }
 
 function clearFileName() {
-	$('#fileName').val('');
+	/*$('#fileName').val('');
 	$("#file").val('');
+	$('#fileFormateModal').closeModal();*/
+	
 	$('#fileFormateModal').closeModal();
+	var fieldInput=$('#removeFileInput').val();
+	$('#'+fieldInput).val('');
+	var inputPlaceHolder=$('#removeFileId').val();
+	$('#'+inputPlaceHolder).find('input:text').val(''); 
 }
 
-function enableAddMore() {
+function enableAddMore(id,removeFileDivId) {
+	var uploadedFileName = $("#"+id).val();
+	uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
+	////alert("file extension=="+uploadedFileName)
+	var ext = uploadedFileName.split('.').pop();
+
+	var fileSize = ($("#"+id)[0].files[0].size);
+	/*fileSize = (Math.round((fileSize / 100000) * 100) / 100)
+		//alert("----"+fileSize);*/
+	fileSize = Math.floor(fileSize/1000);
+	$('#FilefieldId').val(id);
+	////alert(uploadedFileName+"----------"+ext+"----"+fileSize)
+	var fileExtension =ext.toLowerCase();
+	////console.log("file type: "+fileExtension);
+	var extArray = ["png","jpg","jpeg","gif","bmp","gif","csv"];
+	var isInArray =extArray.includes(fileExtension);
+	
+	$('#removeFileInput').val(id);
+	$('#removeFileId').val(removeFileDivId);
+	////console.log("isInArray: "+isInArray)
+	if (uploadedFileName.length > 30) {
+		$('#fileFormateModal').openModal();
+		$('#fileErrormessage').text('');
+		$('#fileErrormessage').text($.i18n('imageValidationName'));
+	} 
+	else if(isInArray ==false)
+	{
+		$('#fileFormateModal').openModal({
+			dismissible:false
+		});
+		$(".add_field_button").attr("disabled", true);
+		$('#fileErrormessage').text('');
+		$('#fileErrormessage').text($.i18n('imageMessage'));
+
+	}
+	else if(ext=='csv')
+	{
+		
+		if(fileSize>='10000'){
+			$(".add_field_button").attr("disabled", true);
+			window.parent.$('#fileFormateModal').openModal({
+				dismissible:false
+			});
+			
+		}
+		
+	}
+	else if(fileSize>=5000){
+		$('#fileFormateModal').openModal({
+			dismissible:false
+		});
+		$('#fileErrormessage').text('');
+		$('#fileErrormessage').text($.i18n('imageSize'));	
+		$(".add_field_button").attr("disabled", true);
+	}
+	
 	$(".add_field_button").attr("disabled", false);
 }
 /*function enableSelectFile() {

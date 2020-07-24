@@ -338,9 +338,14 @@ function Datatable(url,dataUrl,sourceTypeFiler){
 	//////console.log(" == sourceType ="+sourceTypeFiler);
 	var requestType='';
 	var userType=$("body").attr("data-roletype");
+	var txn= (txnIdValue == 'null' && transactionIDValue == undefined)? $('#transactionID').val() : transactionIDValue;
 	if (sourceTypeFiler=="filter")
 		{
 		
+		if($("body").attr("data-session-source")=='noti'){
+			alert("yy " + $("body").attr("data-session-source"))
+			txn=$('#transactionID').val();
+		}
 		requestType = parseInt($('#requestType').val())
 		}
 	else{
@@ -348,7 +353,7 @@ function Datatable(url,dataUrl,sourceTypeFiler){
 	  }
 	//////console.log("=== requestType======"+requestType)
 	//////console.log($("body").attr("data-operatorTypeId"))	
-	var txn= (txnIdValue == 'null' && transactionIDValue == undefined)? $('#transactionID').val() : transactionIDValue;
+	
 	
 	var operatorTypeId;
 	if(userType !="Operator"){
@@ -356,7 +361,14 @@ function Datatable(url,dataUrl,sourceTypeFiler){
 	}else{
 		operatorTypeId = $('#operator').val() == undefined || $('#operator').val() == null ? $("body").attr("data-operatorTypeId"):$("body").attr("data-operatorTypeId")
 	}
-			//////console.log("sent operatorTypeId is ---->" +operatorTypeId)		
+	
+	if (sourceTypeFiler=="filter")
+	{
+	if($("body").attr("data-session-source")=='noti'){
+		txn=$('#transactionID').val();
+	}
+	}
+	//////console.log("sent operatorTypeId is ---->" +operatorTypeId)		
 	var filterRequest={
 			"endDate":$('#endDate').val(),
 			"startDate":$('#startDate').val(),

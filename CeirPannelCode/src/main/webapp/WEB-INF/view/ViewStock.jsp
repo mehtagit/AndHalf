@@ -340,7 +340,7 @@ button.modal-action.modal-close.waves-effect.waves-green.btn-flat.right {
 												disabled
 												maxlength="7"  oninput="InvalidMsg(this,'input','<spring:message code="validation.7character" />');"
 												 oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7character" />');"  required/> <label for="viewdevicequantity"
-												class="center-align"><spring:message code="input.devicequantity" /> <span class="star">*</span></label>
+												class="center-align"><spring:message code="input.devicequantity" /> <span class="star"></span></label>
 										</div>
 					<div class="input-field col s12 m6" id="invoiceNumberDiv">
 						<input type="text" name="InvoiceNumber" id="InvoiceNumber"
@@ -729,7 +729,7 @@ button.modal-action.modal-close.waves-effect.waves-green.btn-flat.right {
 	<script type="text/javascript"
 		src="${context}/resources/project_js/validationMsg.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
-<script type="text/javascript">$( document ).ready(function() {var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login";}else{timeoutTime += timeout;}});});</script>
+<script type="text/javascript">$( document ).ready(function() {var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login";}else{timeoutTime = currentTime + timeout;}});});</script>
 </body></html>
 
 <%

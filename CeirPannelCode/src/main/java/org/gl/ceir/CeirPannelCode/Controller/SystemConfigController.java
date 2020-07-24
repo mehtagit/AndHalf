@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Model.FileExportResponse;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
+import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.pagination.model.ConfigContentModel;
 import org.gl.ceir.pagination.model.MessageContentModel;
 import org.gl.ceir.pagination.model.PolicyConfigContent;
@@ -52,11 +53,11 @@ public class SystemConfigController {
 	
 	
 	@PutMapping("/system/update")
-	public @ResponseBody ConfigContentModel updateSystem (@RequestBody ConfigContentModel configContentModel) {
+	public @ResponseBody GenricResponse updateSystem (@RequestBody ConfigContentModel configContentModel) {
 		log.info("request send update Messsage api="+configContentModel);
-		configContentModel = feignCleintImplementation.updateSystem(configContentModel);
-		log.info("response from update Message api "+configContentModel);
-		return configContentModel;
+		GenricResponse Response = feignCleintImplementation.updateSystem(configContentModel);
+		log.info("response from update Message api "+Response);
+		return Response;
 		
 	}
 	

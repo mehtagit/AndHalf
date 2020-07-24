@@ -395,8 +395,8 @@ select {
 															pattern="[a-zA-Z0-9\s,'*$-]{0,30}"
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-															required /> <label for="sigleRecoveryvillage"> <spring:message
-																code="input.village" /><span class="star"> *</span></label>
+															 /> <label for="sigleRecoveryvillage"> <spring:message
+																code="input.village" /></label>
 													</div>
 
 													<div class="input-field col s12 m6 l6">
@@ -406,8 +406,8 @@ select {
 															pattern="[a-zA-Z0-9\s,'*$-]{0,30}"
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-															required /> <label for="sigleRecoverylocality"><spring:message
-																code="input.locality" /> <span class="star"> *</span></label>
+															 /> <label for="sigleRecoverylocality"><spring:message
+																code="input.locality" /> </label>
 													</div>
 
 													<div class="input-field col s12 m6 l6">
@@ -713,9 +713,9 @@ onclick="_Services._selectstartDate()"></i></span>
 												pattern="[a-zA-Z0-9\s,'*$-]{0,30}"
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
-												required maxlength="30"> <label
+												 maxlength="30"> <label
 												for="bulkRecoveryvillage"><spring:message
-													code="input.village" /> <span class="star"> *</span></label>
+													code="input.village" /></label>
 										</div>
 
 										<div class="input-field col s12 m6 l6">
@@ -725,9 +725,9 @@ onclick="_Services._selectstartDate()"></i></span>
 												pattern="[a-zA-Z0-9\s,'*$-]{0,50}"
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
-												required maxlength="30"> <label
+												 maxlength="30"> <label
 												for="bulkRecoverylocality"><spring:message
-													code="input.locality" /><span class="star"> *</span></label>
+													code="input.locality" /></label>
 										</div>
 
 										<div class="input-field col s12 m6 l6">
@@ -991,7 +991,7 @@ onclick="_Services._selectstartDate()"></i></span>
 </script>
 
 
-<script type="text/javascript">$( document ).ready(function() {var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login";}else{timeoutTime += timeout;}});});</script>
+<script type="text/javascript">$( document ).ready(function() {var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login";}else{timeoutTime = currentTime + timeout;}});});</script>
 </body></html>
 <%
 	}else{

@@ -4,7 +4,7 @@ var userId = $("body").attr("data-userID");
 var currentRoleType = $("body").attr("data-selected-roleType"); 
 var startdate=$('#startDate').val(); 
 var endDate=$('#endDate').val();
-
+var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 $(document).ready(function(){
 	configManagementDatatable();
 	pageRendering();
@@ -44,7 +44,7 @@ function configManagementDatatable(){
 		type: 'POST',
 		dataType: "json",
 		success: function(result){
-			/*////console.log("Url-------" +url+"--------"+ "dataUrl-------" +dataUrl);*/
+			/*console.log("Url-------" +url+"--------"+ "dataUrl-------" +dataUrl);*/
 			var table=	$("#configLibraryTable").removeAttr('width').DataTable({
 				destroy:true,
 				"serverSide": true,
@@ -60,7 +60,7 @@ function configManagementDatatable(){
 					dataType: "json",
 					data : function(d) {
 						d.filter = JSON.stringify(filterRequest); 
-						//////console.log(JSON.stringify(filterRequest));
+						//console.log(JSON.stringify(filterRequest));
 					}
 
 				},
@@ -85,7 +85,7 @@ function configManagementDatatable(){
 		       });
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			//////console.log("error in ajax");
+			//console.log("error in ajax");
 		}
 	});
 	
@@ -209,7 +209,7 @@ function viewDetails(tag){
 		contentType : 'application/json; charset=utf-8',
 		type : 'POST',
 		success : function(data) {
-			//////console.log(data);
+			//console.log(data);
 			setViewPopupData(data);
 		},
 		error : function() {
@@ -254,7 +254,7 @@ function updateDetails(tag){
 		contentType : 'application/json; charset=utf-8',
 		type : 'POST',
 		success : function(data) {
-			//////console.log(data);
+			//console.log(data);
 			setEditPopupData(data);
 		},
 		error : function() {
@@ -287,7 +287,8 @@ var updateRequest = {
 		"userType":$("body").attr("data-roleType"),
 		"username" : $("body").attr("data-selected-username"),
 		"userName" : $("body").attr("data-selected-username"),
-		"roleType":$("body").attr("data-roleType")
+		"roleType":$("body").attr("data-roleType"),
+		
 }
 var token = $("meta[name='_csrf']").attr("content");
 var header = $("meta[name='_csrf_header']").attr("content");
@@ -303,8 +304,33 @@ $.ajax({
 	contentType : 'application/json; charset=utf-8',
 	type : 'PUT',
 	success : function(data) {
-		//////console.log("updateRequest---------->" +JSON.stringify(updateRequest));
-		confirmModel()
+			//console.log("Updated data---->" +JSON.stringify(data));
+			
+			$("#editAdminSystemModel").closeModal();	
+			$("#confirmedUpdatedSystem").openModal({
+		        dismissible:false
+		    });
+			$.i18n().locale = window.parent.$('#langlist').val();
+			
+			$.i18n().load({
+				'en' : './resources/i18n/en.json',
+				'km' : './resources/i18n/km.json'
+			}).done(function() {
+				//$('#updateFieldMessage').text($.i18n(data.tag));
+				if(data.errorCode==200){
+					//alert($.i18n('System_configuration_update'));
+					$('#updateFieldMessage').text('');
+					$('#updateFieldMessage').text($.i18n('System_configuration_update'));
+				}else if(data.errorCode==201){
+					$('#updateFieldMessage').text('');
+					$('#updateFieldMessage').text($.i18n('System_configuration_failed'));
+				}
+			});
+			
+		
+		
+		//console.log("updateRequest---------->" +JSON.stringify(updateRequest));
+		
 	},
 	error : function() {
 		//alert("Failed");
@@ -347,7 +373,7 @@ function exportData(){
 			"roleType":$("body").attr("data-roleType")
 			
 	}
-	//////console.log(JSON.stringify(filterRequest))
+	//console.log(JSON.stringify(filterRequest))
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
 	$.ajaxSetup({

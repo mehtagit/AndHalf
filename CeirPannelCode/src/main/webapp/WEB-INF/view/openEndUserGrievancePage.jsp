@@ -264,7 +264,7 @@ var contextpath = "${context}";
                                             </h6>
                                             <div class="btn">
                                                 <span><spring:message code="input.selectfile" /></span>
-                                                <input id="endUserdocTypeFile1" type="file"   onchange="enableEndUserAddMore()" disabled="disabled"
+                                                <input id="endUserdocTypeFile1" type="file"   onchange="enableEndUserAddMore('endUserdocTypeFile1','endUserfilediv')"  disabled="disabled"
  												
 						oninput="InvalidMsg(this,'input','<spring:message code="validation.NoChosen" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.NoChosen" />');"
@@ -286,7 +286,7 @@ var contextpath = "${context}";
 									</div>	
 
                                       <div class="col s12 m6 right">
-                                            <button class="btn right endUser_add_field_button"><span
+                                            <button class="btn right endUser_add_field_button" disabled><span
                                                     style="font-size: 20px;">+</span><spring:message code="input.addmorefile" /></button>
                                         </div>
                                          <p><spring:message code="input.requiredfields" /> <span class="star">*</span></p>
@@ -340,15 +340,13 @@ var contextpath = "${context}";
                         </div>
                             <div class="row card-panel track-grievance-responsive-page" id="trackGrievanctableDiv" style="display: none" >
                               
-                           <!--  <a href="./redirectToHomePage" class="modal-close btn-flat modal-btn right" data-dismiss="modal">&times;</a> -->
                             <h6 class="fixPage-modal-header "><spring:message code="modal.TrackGrievance" /></h6>
                           
                         <table id="endUsergrivanceLibraryTable" style="display: none"
 								class="responsive-table striped display"></table>
 								  <div class="input-field col s12 m12 l12 center">
                                            
-                                            <a href="./redirectToHomePage" class="btn modal-trigger"
-                                                style="margin-left: 10px;"><spring:message code="modal.close" /></a>
+                                            <a href="./redirectToHomePage" class="btn" style="margin-left: 10px;"><spring:message code="modal.close" /></a>
                                         </div>
                     
                 </div>
@@ -483,7 +481,7 @@ var contextpath = "${context}";
 <h6 id="docTypeFile1Label" style="color: #000;"><spring:message code="input.supportingdocument" /></h6>
 <div class="btn">
 <span><spring:message code="input.selectfile" /></span>
-<input type="file" name="files[]" id="docTypeFile1" disabled="disabled" onchange="enableEndUserReplyAddMore()" 
+<input type="file" name="files[]" id="docTypeFile1" disabled="disabled" onchange="enableEndUserReplyAddMore('docTypeFile1','filediv')" 
 oninput="InvalidMsg(this,'input','<spring:message code="validation.NoChosen" />');"
 oninvalid="InvalidMsg(this,'input','<spring:message code="validation.NoChosen" />');"
  multiple>
@@ -505,7 +503,7 @@ placeholder="<spring:message code="input.selectfile" />">
 
 </div>
 <div class="col s12 m6 right">
-<button class="btn right add_field_button"><span
+<button class="btn right add_field_button" disabled="disabled"><span
 style="font-size: 20px;">+</span> <spring:message code="input.addmorefile" /></button>
 </div>
               <div class="col s12 m12">  <p>
@@ -592,6 +590,8 @@ style="font-size: 20px;">+</span> <spring:message code="input.addmorefile" /></b
 		<div class="modal-content">
 			<div class="row">
 				<h6 id="fileErrormessage"><spring:message code="fileValidationName" /><br> <br> <spring:message code="fileValidationFormate" /> <br><br> <spring:message code="fileValidationSize" /> </h6>
+			<input type="text" id='removeFileId' style="display: none;">
+			<input type="text" id='removeFileInput' style="display: none">
 			</div>
 			<div class="row">
 				<div class="input-field col s12 center">

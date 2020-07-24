@@ -206,7 +206,7 @@
 												<div class="btn">
 													<span><spring:message code="input.selectfile" /></span> <input
 														type="file" name="files[]" id="docTypeFile1"
-														disabled="disabled" onchange="enableAddMore()"
+														disabled="disabled" onchange="enableAddMore('docTypeFile1','filediv')"
 														onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 														oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');">
 												</div>
@@ -290,6 +290,8 @@
 					<br> <br>
 					<spring:message code="fileValidationSize" />
 				</h6>
+				<input type="text" id='removeFileId' style="display: none;">
+			<input type="text" id='removeFileInput' style="display: none">
 			</div>
 			<div class="row">
 				<div class="input-field col s12 center">
@@ -366,7 +368,7 @@
 	<script type="text/javascript">
 		populateCountries("country");
 	</script>
-<script type="text/javascript">$( document ).ready(function() {var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login";}else{timeoutTime += timeout;}});});</script>
+<script type="text/javascript">$( document ).ready(function() {var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login";}else{timeoutTime = currentTime + timeout;}});});</script>
 </body></html>
 <%
 	} else {
