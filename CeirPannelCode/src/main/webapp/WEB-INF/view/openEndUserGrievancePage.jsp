@@ -264,7 +264,7 @@ var contextpath = "${context}";
                                             </h6>
                                             <div class="btn">
                                                 <span><spring:message code="input.selectfile" /></span>
-                                                <input id="endUserdocTypeFile1" type="file"   onchange="enableEndUserAddMore()" disabled="disabled"
+                                                <input id="endUserdocTypeFile1" type="file"   onchange="enableEndUserAddMore('endUserdocTypeFile1','endUserfilediv')"  disabled="disabled"
  												
 						oninput="InvalidMsg(this,'input','<spring:message code="validation.NoChosen" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.NoChosen" />');"
@@ -481,7 +481,7 @@ var contextpath = "${context}";
 <h6 id="docTypeFile1Label" style="color: #000;"><spring:message code="input.supportingdocument" /></h6>
 <div class="btn">
 <span><spring:message code="input.selectfile" /></span>
-<input type="file" name="files[]" id="docTypeFile1" disabled="disabled" onchange="enableEndUserReplyAddMore()" 
+<input type="file" name="files[]" id="docTypeFile1" disabled="disabled" onchange="enableEndUserReplyAddMore('docTypeFile1','filediv')" 
 oninput="InvalidMsg(this,'input','<spring:message code="validation.NoChosen" />');"
 oninvalid="InvalidMsg(this,'input','<spring:message code="validation.NoChosen" />');"
  multiple>
@@ -590,6 +590,8 @@ style="font-size: 20px;">+</span> <spring:message code="input.addmorefile" /></b
 		<div class="modal-content">
 			<div class="row">
 				<h6 id="fileErrormessage"><spring:message code="fileValidationName" /><br> <br> <spring:message code="fileValidationFormate" /> <br><br> <spring:message code="fileValidationSize" /> </h6>
+			<input type="text" id='removeFileId' style="display: none;">
+			<input type="text" id='removeFileInput' style="display: none">
 			</div>
 			<div class="row">
 				<div class="input-field col s12 center">

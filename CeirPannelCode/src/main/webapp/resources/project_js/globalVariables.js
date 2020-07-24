@@ -78,7 +78,7 @@ var featureId = window.parent.$('.navData li.active a').attr('data-featureid')
 
 
 
-function isFileValid(id,hiddenVal,editInputID) {
+function isFileValid(id) {
 
 	var uploadedFileName = $("#"+id).val();
 	uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');

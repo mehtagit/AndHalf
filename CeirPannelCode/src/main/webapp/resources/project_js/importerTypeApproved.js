@@ -280,9 +280,14 @@ window.parent
 																.i18n('selectDocumentType')
 														+ ' </option></select></div> <div class="file-field col s12 m6" style="margin-top: 23px;"><div class="btn"><span>'
 														+ $.i18n('selectfile')
-														+ '</span><input id="docTypeFile'+id+'" type="file"  name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" type="text"></div></div><div style="cursor:pointer;background-color:red;margin-right: 1.7%;" onclick="remove_field('+id+')" class="remove_field btn right btn-info">-</div></div></div>'); //add input box
+														+ '</span><input id="docTypeFile'+id+'" type="file" onchange=enableAddMore("docTypeFile'+id+'","filediv'+id+'") name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" type="text"></div></div><div style="cursor:pointer;background-color:red;margin-right: 1.7%;" onclick="remove_field('+id+')" class="remove_field btn right btn-info">-</div></div></div>'); //add input box
 							}
 
+							if(x==max_fields){
+								
+								 $(".add_field_button").prop('disabled', true);
+							}
+							
 							$.getJSON('./getSourceTypeDropdown/DOC_TYPE/21', function(
 									data) { 	
 
@@ -313,6 +318,7 @@ window.parent
 			$('#filediv' + fieldId).remove();
 			$(this).parent('div').remove();
 			x--;
+			 $(".add_field_button").prop('disabled', false);
 		}
 		
 		/*$(wrapper).on("click", ".remove_field", function(e) { //user click on remove text
@@ -369,7 +375,63 @@ window.parent
 			$('#fileFormateModal').closeModal();
 		}*/
 
-		function enableAddMore(){
+		function enableAddMore(id,removeFileDivId){
+			 var uploadedFileName = $("#"+id).val();
+				uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
+				////alert("file extension=="+uploadedFileName)
+				var ext = uploadedFileName.split('.').pop();
+
+				var fileSize = ($("#"+id)[0].files[0].size);
+				/*fileSize = (Math.round((fileSize / 100000) * 100) / 100)
+					//alert("----"+fileSize);*/
+				fileSize = Math.floor(fileSize/1000);
+				$('#FilefieldId').val(id);
+				////alert(uploadedFileName+"----------"+ext+"----"+fileSize)
+				var fileExtension =ext.toLowerCase();
+				////console.log("file type: "+fileExtension);
+				var extArray = ["png","jpg","jpeg","gif","bmp","gif","csv"];
+				var isInArray =extArray.includes(fileExtension);
+				
+				$('#removeFileInput').val(id);
+				$('#removeFileId').val(removeFileDivId);
+				////console.log("isInArray: "+isInArray)
+				if (uploadedFileName.length > 30) {
+					$('#fileFormateModal').openModal();
+					$('#fileErrormessage').text('');
+					$('#fileErrormessage').text($.i18n('imageValidationName'));
+				} 
+				else if(isInArray ==false)
+				{
+					$('#fileFormateModal').openModal({
+						dismissible:false
+					});
+					$(".add_field_button").attr("disabled", true);
+					$('#fileErrormessage').text('');
+					$('#fileErrormessage').text($.i18n('imageMessage'));
+
+				}
+				else if(ext=='csv')
+				{
+					
+					if(fileSize>='10000'){
+						$(".add_field_button").attr("disabled", true);
+						window.parent.$('#fileFormateModal').openModal({
+							dismissible:false
+						});
+						
+					}
+					
+				}
+				else if(fileSize>=5000){
+					$('#fileFormateModal').openModal({
+						dismissible:false
+					});
+					$('#fileErrormessage').text('');
+					$('#fileErrormessage').text($.i18n('imageSize'));	
+					$(".add_field_button").attr("disabled", true);
+				}
+				
+
 			$(".add_field_button").attr("disabled", false);
 		}
 		function enableSelectFile(){
@@ -392,3 +454,17 @@ window.parent
 		    //ev.preventDefault(); //works as well
 
 		});
+		
+		
+		function clearFileName() {
+			/*$('#fileName').val('');
+			$("#file").val('');
+			$('#fileFormateModal').closeModal();*/
+			
+			$('#fileFormateModal').closeModal();
+			var fieldInput=$('#removeFileInput').val();
+			$('#'+fieldInput).val('');
+			var inputPlaceHolder=$('#removeFileId').val();
+			$('#'+inputPlaceHolder).find('input:text').val(''); 
+
+		}

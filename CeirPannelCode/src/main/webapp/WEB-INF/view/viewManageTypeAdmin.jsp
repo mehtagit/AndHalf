@@ -400,7 +400,7 @@ position: fixed;
 										<span><spring:message code="input.selectfile" /></span> <input
 											type="file" name="files[]" id="docTypeFile1"
 											
-											disabled="disabled" onchange="enableAddMore()"
+											disabled="disabled" onchange="enableAddMore('docTypeFile1','filediv')"
 											onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 												oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');">
 									</div>
@@ -674,7 +674,10 @@ position: fixed;
 						<br>
 						<br>
 						<spring:message code="fileValidationSize" />
+						
 					</h6>
+					<input type="text" id='removeFileId' style="display: none;">
+			<input type="text" id='removeFileInput' style="display: none">
 				</div>
 				<div class="row">
 					<div class="input-field col s12 center">

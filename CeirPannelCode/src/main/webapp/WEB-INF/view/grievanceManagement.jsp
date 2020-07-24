@@ -240,7 +240,7 @@ button.modal-action.modal-close.waves-effect.waves-green.btn-flat.right
 									<div class="btn">
 										<span><spring:message code="input.selectfile" /></span> <input
 											type="file" name="files[]" id="docTypeFile1"
-											onchange="enableAddMore()" disabled="disabled"
+											onchange="enableAddMore('docTypeFile1','filediv')" disabled="disabled"
 											oninput="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');"
 											oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');">
 									</div>
@@ -359,6 +359,8 @@ button.modal-action.modal-close.waves-effect.waves-green.btn-flat.right
 					<br>
 					<spring:message code="fileValidationSize" />
 				</h6>
+			<input type="text" id='removeFileId' style="display: none;">
+			<input type="text" id='removeFileInput' style="display: none">
 			</div>
 			<div class="row">
 				<div class="input-field col s12 center">
