@@ -382,9 +382,9 @@ position: fixed;
 											            oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 														name="streetNumber"
 														class="form-control boxBorder boxHeight" id="village"
-														maxlength="30" required/> <label
+														maxlength="30" /> <label
 														for="village"> <spring:message code="input.village" /> <span
-														class="star">*</span>
+														class="star"></span>
 													</label>
 												</div>
 												
@@ -396,8 +396,8 @@ position: fixed;
 											            oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 														
 														class="form-control boxBorder boxHeight" id="locality"
-														maxlength="30" required/> <label
-														for="locality"> <spring:message code="input.locality" /> <span class="star">*</span>
+														maxlength="30" /> <label
+														for="locality"> <spring:message code="input.locality" /> <span class="star"></span>
 													</label>
 												</div>
 

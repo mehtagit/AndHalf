@@ -32,8 +32,8 @@
 	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.min.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
 
-<jsp:include page="/WEB-INF/view/endUserHeader.jsp"></jsp:include>
-<jsp:include page="/WEB-INF/view/endUserFooter.jsp"></jsp:include>
+<%-- <jsp:include page="/WEB-INF/view/endUserHeader.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/view/endUserFooter.jsp"></jsp:include> --%>
 
 <!-- Favicons-->
 <link rel="icon" href="${context}/resources/images/DMC-Logo.png"
@@ -135,6 +135,20 @@ i.fa.fa-times-circle-o.red-text {
 
 	<div id="initialloader"></div>
 
+<div class="row card-panel">
+			<div class="languageDiv">
+			
+		<div class="col s10 m11 select-lang-lable">
+
+			<i class="fa fa-globe fa-6" aria-hidden="true"></i>
+		</div>
+		<div class="col s2 m1 right" style="padding: 0;">
+			<select class="browser-default select-lang-drpdwn" id="langlist">
+				<option value="en">English</option>
+				<option value="km"><spring:message code="lang.khmer" /></option>
+			</select>
+		</div>
+	</div></div>
 	<!-- START MAIN -->
 	<div id="">
 		<!-- START WRAPPER -->

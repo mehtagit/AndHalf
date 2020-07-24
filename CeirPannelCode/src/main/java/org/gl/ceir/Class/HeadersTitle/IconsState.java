@@ -1332,7 +1332,7 @@ public class IconsState {
 	/********************************* Icons for DashBoard Notification *********************************/
 
 
-	public String dashboardIcon(String userStatus, Integer featureID, String txnID, Integer userID, String roleType) {
+	public String dashboardIcon(String userStatus, Integer featureID, String txnID, Integer userID, String roleType,String reciverUserType) {
 		executePostConstruct();
 		// URL link
 		String viewAction = featureID == 3 ? "./viewConsignment?source=noti&txnID=" + txnID + ""
@@ -1360,7 +1360,7 @@ public class IconsState {
 		String view = null;
 		String functionName = "isActive(" + featureID + ")";
 		if (featureID == 3 || featureID == 4 || featureID == 6 || featureID == 7 || featureID == 21 || featureID == 43
-				|| featureID == 12 || featureID == 5 || featureID == 8 ) {
+				|| featureID == 12 || featureID == 5 || (featureID == 8 && reciverUserType.equalsIgnoreCase("CEIRAdmin"))) {
 			view = "<a href=" + viewAction + " onclick=" + functionName + "><i class=" + viewIcon
 					+ " aria-hidden=\"true\" title=" + viewIconTitle + " ></i></a>";
 		} else {

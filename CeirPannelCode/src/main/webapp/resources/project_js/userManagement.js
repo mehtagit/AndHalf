@@ -210,7 +210,7 @@
 			headers:
 			{ 'X-CSRF-TOKEN': token }
 		});
-		$.getJSON('./registrationUserType?type=1', function(data) {
+		$.getJSON('./registrationUserType?type=0', function(data) {
 			for (i = 0; i < data.length; i++) {
 				$('<option>').val(data[i].id).text(data[i].usertypeName)
 				.appendTo('#userType');
@@ -300,7 +300,7 @@
 			headers:
 			{ 'X-CSRF-TOKEN': token }
 		});
-		$.getJSON('./registrationUserType?type=1', function(data) {
+		$.getJSON('./registrationUserType?type=0', function(data) {
 			$('#edituserType').empty();
 			for (i = 0; i < data.length; i++) {
 				$('<option>').val(data[i].id).text(data[i].usertypeName)

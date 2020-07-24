@@ -302,7 +302,7 @@ function pageRendering() {
 										}
 									});
 
-					$.getJSON('./registrationUserType',
+					$.getJSON('./registrationUserType?type=1',
 							function(data) {
 								for (i = 0; i < data.length; i++) {
 									$('<option>').val(data[i].id).text(

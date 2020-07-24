@@ -261,7 +261,7 @@
 
                                                     <div class="input-field col s12 center">
                                                         <button class="btn modal-trigger" data-target="submitStolen"><spring:message code="button.submit" /></button>
-                                                        <a href="./stolenRecovery" class="btn modal-trigger"
+                                                        <a href="./stolenRecovery" class="btn"
                                                             style="margin-left: 10px;"><spring:message code="modal.cancel" /></a>
                                                     </div>
                                                 </form>
@@ -403,8 +403,8 @@ onclick="_Services._selectstartDate()"></i></span>
                                                         <input type="text" name="bulkRecoveryvillage" id="bulkRecoveryvillage" placeholder="" pattern="[a-zA-Z0-9\s,'*$-]{0,30}" title=""
                                                              oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
                                                        oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
-                                                             maxlength="30" required="required">
-                                                        <label for="bulkRecoveryvillage"><spring:message code="input.village" /> <span class="star">*</span></label>
+                                                             maxlength="30">
+                                                        <label for="bulkRecoveryvillage"><spring:message code="input.village" /> <span class="star"></span></label>
                                                     </div>
                     
                                                     <div class="input-field col s12 m6 l6">
@@ -412,8 +412,8 @@ onclick="_Services._selectstartDate()"></i></span>
                                                             id="bulkRecoverylocality" pattern="[a-zA-Z0-9\s,'*$-]{0,30}" title=""
                                                              oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
                                                        oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
-                                                             maxlength="30" required="required">
-                                                        <label for="bulkRecoverylocality"> <spring:message code="input.locality" /><span class="star">*</span></label>
+                                                             maxlength="30">
+                                                        <label for="bulkRecoverylocality"> <spring:message code="input.locality" /><span class="star"></span></label>
                                                     </div>
                         
                                                     <div class="input-field col s12 m6 l6">
@@ -475,7 +475,7 @@ onclick="_Services._selectstartDate()"></i></span>
 
                                                     <div class="input-field col s12 center">
                                                         <button class="btn" type="submit" id="editCompanyRecoveryButton"><spring:message code="button.submit" /></button>
-                                                        <a href="./stolenRecovery?FeatureId=5" class="btn modal-trigger"
+                                                        <a href="./stolenRecovery?FeatureId=5" class="btn"
                                                             style="margin-left: 10px;"><spring:message code="modal.cancel" /></a>
                                                     </div>
                                                 </form>

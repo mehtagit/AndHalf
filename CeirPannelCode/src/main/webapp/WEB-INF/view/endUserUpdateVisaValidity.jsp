@@ -30,9 +30,9 @@
 	src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
 <!--   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"></script>  
  -->
-<jsp:include page="/WEB-INF/view/endUserHeader.jsp"></jsp:include>
+<%-- <jsp:include page="/WEB-INF/view/endUserHeader.jsp"></jsp:include>
 <jsp:include page="/WEB-INF/view/endUserFooter.jsp"></jsp:include>
-
+ --%>
 <!-- CORE CSS-->
 <link href="${context}/resources/css/materialize.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
@@ -79,6 +79,21 @@
 
 	<section id="content">
 		<!--start container-->
+		<div class="row card-panel">
+			<div class="languageDiv">
+			
+		<div class="col s10 m11 select-lang-lable">
+
+			<i class="fa fa-globe fa-6" aria-hidden="true"></i>
+		</div>
+		<div class="col s2 m1 right" style="padding: 0;">
+			<select class="browser-default select-lang-drpdwn" id="langlist">
+				<option value="en">English</option>
+				<option value="km"><spring:message code="lang.khmer" /></option>
+			</select>
+		</div>
+	</div></div>
+		
 		<div class="container">
 			<div class="section">
 				<div class="row card-panel update-visa-responsive-page" onSubmit='self.scrollTo(0,0)'

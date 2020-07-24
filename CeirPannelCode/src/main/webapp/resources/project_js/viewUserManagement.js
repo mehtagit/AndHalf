@@ -206,7 +206,7 @@
 				headers:
 				{ 'X-CSRF-TOKEN': token }
 			});
-			$.getJSON('./registrationUserType', function(data) {
+			$.getJSON('./registrationUserType?type=2', function(data) {
 			for (i = 0; i < data.length; i++) {
 			$('<option>').val(data[i].id).text(data[i].usertypeName).appendTo('#userType');
 			}
