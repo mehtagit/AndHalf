@@ -829,6 +829,10 @@ $(".add_field_button")
 												+ placeholderValue
 												+ '" type="text"></div></div>  <div style="cursor:pointer;background-color:red;margin-right: 1.7%;" onclick="remove_field('+id+')" class="remove_field btn right btn-info">-</div></div></div>');
 					}
+					if(x==max_fields){
+						
+						 $(".add_field_button").prop('disabled', true);
+					}
 					$.getJSON('./getSourceTypeDropdown/DOC_TYPE/21', function(
 							data) {
 
@@ -1106,7 +1110,7 @@ function enableAddMore(id,removeFileDivId) {
 	else if(ext=='csv')
 	{
 		
-		if(fileSize>='4000'){
+		if(fileSize>='10000'){
 			$(".add_field_button").attr("disabled", true);
 			window.parent.$('#fileFormateModal').openModal({
 				dismissible:false

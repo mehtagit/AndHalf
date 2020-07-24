@@ -286,7 +286,7 @@ var contextpath = "${context}";
 									</div>	
 
                                       <div class="col s12 m6 right">
-                                            <button class="btn right endUser_add_field_button"><span
+                                            <button class="btn right endUser_add_field_button" disabled><span
                                                     style="font-size: 20px;">+</span><spring:message code="input.addmorefile" /></button>
                                         </div>
                                          <p><spring:message code="input.requiredfields" /> <span class="star">*</span></p>
@@ -503,7 +503,7 @@ placeholder="<spring:message code="input.selectfile" />">
 
 </div>
 <div class="col s12 m6 right">
-<button class="btn right add_field_button"><span
+<button class="btn right add_field_button" disabled="disabled"><span
 style="font-size: 20px;">+</span> <spring:message code="input.addmorefile" /></button>
 </div>
               <div class="col s12 m12">  <p>
