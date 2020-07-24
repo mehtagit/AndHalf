@@ -252,8 +252,8 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}" data-u
                                         <div class="input-field col s12 m6" style="margin-top: 23px;">
                                             <input type="text" id="endUsertransactionId" name="transactionId"
                                                 pattern="[A-Z0-9]{18,18}"
-      										 oninput="InvalidMsg(this,'input','<spring:message code="validation.18digit" />');"
-													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.18digit" />');"
+      										 oninput="InvalidMsg(this,'input','<spring:message code="validation.T18characters" />');" 
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.T18characters" />');"
 												maxlength="18" />
                                             <label for="endUsertransactionId"><spring:message code="input.TransactionID1" /></label>
                                         </div>

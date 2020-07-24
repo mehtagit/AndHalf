@@ -85,7 +85,7 @@
 						"bPaginate" : true,
 						"bFilter" : true,
 						"bInfo" : true,
-						"bSearchable" : true,
+						"bSearchable" : false,
 						"scrollX": true,
 						"scrolly": true,
 						"oLanguage": {  
@@ -108,7 +108,7 @@
 					});
 					
 					$('div#initialloader').delay(300).fadeOut('slow');
-					$('.dataTables_filter input')
+					/*$('.dataTables_filter input')
 				       .off().on('keyup', function(event) {
 				    	   if(event.keyCode == 8 && !textBox.val() || event.keyCode == 46 && !textBox.val() || event.keyCode == 83 && !textBox.val()) {
 					    
@@ -117,7 +117,8 @@
 				    			 table.search(this.value.trim(), false, false).draw();
 				    		}
 				          
-				       });
+				       });*/
+					$('.dataTables_filter').css("display", "none");	
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
 					//////console.log("error in ajax");
@@ -191,7 +192,7 @@
 							$('#'+button[i].id).attr("onclick", button[i].buttonURL);
 						}
 
-					
+						
 
 				
 					
