@@ -29,8 +29,8 @@
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
 <!-- Security Tags -->
 
-<jsp:include page="/WEB-INF/view/endUserHeader.jsp" ></jsp:include>
-<jsp:include page="/WEB-INF/view/endUserFooter.jsp" ></jsp:include>
+<%-- <jsp:include page="/WEB-INF/view/endUserHeader.jsp" ></jsp:include>
+<jsp:include page="/WEB-INF/view/endUserFooter.jsp" ></jsp:include> --%>
 
 <script type="text/javascript"
 	src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
@@ -125,7 +125,7 @@ select option {
 }
 
 .row {
-	margin-top: 5px;
+	margin-top: 0px;
 }
 
 .section {
@@ -187,6 +187,20 @@ position: fixed;
 	<!-- START CONTENT -->
 	<section id="content">
 			<div id="initialloader"></div>
+			<div class="row card-panel">
+			<div class="languageDiv">
+			
+		<div class="col s10 m11 select-lang-lable">
+
+			<i class="fa fa-globe fa-6" aria-hidden="true"></i>
+		</div>
+		<div class="col s2 m1 right" style="padding: 0;">
+			<select class="browser-default select-lang-drpdwn" id="langlist">
+				<option value="en">English</option>
+				<option value="km"><spring:message code="lang.khmer" /></option>
+			</select>
+		</div>
+	</div></div>
 		<!--start container-->
 		<div class="container">
 			<div class="section">
@@ -300,10 +314,10 @@ position: fixed;
 												pattern="[a-zA-Z0-9\s,'*$-]{0,30}"
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-												required class="form-control boxBorder boxHeight"
+												 class="form-control boxBorder boxHeight"
 												id="locality" id="endUserlocality" maxlength="30"> <label
 												for="locality"><spring:message code="input.locality" />
-												<span class="star">*</span></label>
+												<span class="star"></span></label>
 										</div>
 
 										<div class="input-field col s12 m6 l6">
@@ -311,9 +325,8 @@ position: fixed;
 												pattern="[a-zA-Z0-9\s,'*$-]{0,30}"
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-												title=""
-												required maxlength="30"> <label for="village"><spring:message
-													code="input.village" /> <span class="star">*</span> </label>
+												title="" maxlength="30"> <label for="village"><spring:message
+													code="input.village" /> <span class="star"></span> </label>
 										</div>
 
 										<div class="input-field col s12 m6 l6">

@@ -27,9 +27,9 @@
 
     <link href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.min.css" type="text/css" rel="stylesheet"
         media="screen,projection">
-<jsp:include page="/WEB-INF/view/endUserHeader.jsp" ></jsp:include>
+<%-- <jsp:include page="/WEB-INF/view/endUserHeader.jsp" ></jsp:include>
 <jsp:include page="/WEB-INF/view/endUserFooter.jsp" ></jsp:include>
-    <!-- Favicons-->
+ --%>    <!-- Favicons-->
     <!--<link rel="icon" href="images/favicon/favicon-32x32.png" sizes="32x32">-->
     <!-- Favicons-->
   <link rel="stylesheet" href="${context}/resources/font/font-awesome/css/font-awesome.min.css">
@@ -97,8 +97,8 @@
         }
 
         .card-panel {
-            width: 50%;
-            margin-top: 5vh;
+            width: 100%;
+            margin-top: 0vh;
         }
 
         @media only screen  and (max-width: 992px){
@@ -162,6 +162,20 @@ var contextpath = "${context}";
          <!-- START CONTENT -->
             <section id="content">
             <div id="initialloader"></div>
+            <div class="row card-panel">
+			<div class="languageDiv">
+			
+		<div class="col s10 m11 select-lang-lable">
+
+			<i class="fa fa-globe fa-6" aria-hidden="true"></i>
+		</div>
+		<div class="col s2 m1 right" style="padding: 0;">
+			<select class="browser-default select-lang-drpdwn" id="langlist">
+				<option value="en">English</option>
+				<option value="km"><spring:message code="lang.khmer" /></option>
+			</select>
+		</div>
+	</div></div>
                 <!--start container-->
                 <div class="container" style="padding-bottom: 70px; margin-top:5.5vh;" >
                     <div class="section">

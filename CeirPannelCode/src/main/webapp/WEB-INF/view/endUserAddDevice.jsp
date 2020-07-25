@@ -129,7 +129,7 @@ select option {
 }
 
 .row {
-	margin-top: 5px;
+	margin-top: 0px;
 }
 
 .section {
@@ -170,6 +170,20 @@ data-lang-param="${pageContext.response.locale}">
 	<section id="content">
 	<!-- <div id="initialloader"></div> -->
 		<!--start container-->
+		<div class="row card-panel">
+			<div class="languageDiv">
+			
+		<div class="col s10 m11 select-lang-lable">
+
+			<i class="fa fa-globe fa-6" aria-hidden="true"></i>
+		</div>
+		<div class="col s2 m1 right" style="padding: 0;">
+			<select class="browser-default select-lang-drpdwn" id="langlist">
+				<option value="en">English</option>
+				<option value="km"><spring:message code="lang.khmer" /></option>
+			</select>
+		</div>
+	</div></div>
 		<div class="container">
 			<div class="section">
 				<div class="row">

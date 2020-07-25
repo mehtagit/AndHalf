@@ -248,7 +248,7 @@
 													<div class="input-field col s12 m6 l6">
 														<input type="text" name="village" id="singleStolenvillage" placeholder=""
 															maxlength="20"> <label for="village"><spring:message code="input.village" />
-															<span class="star">*</span>
+															<span class="star"></span>
 														</label>
 													</div>
 
@@ -257,7 +257,7 @@
 															class="form-control boxBorder boxHeight"
 															id="singleStolenlocality" maxlength="20"
 															pattern=[A-Za-z0-9] title="Please enter your locality">
-														<label for="locality"><spring:message code="input.locality" /> <span class="star">*</span></label>
+														<label for="locality"><spring:message code="input.locality" /> <span class="star"></span></label>
 													</div>
 
 													<div class="input-field col s12 m6 l6">
@@ -414,7 +414,7 @@
 														<div class="input-field col s12 m6 l6">
 															<input type="text" name="village" placeholder=""
 																id="singleDevicevillage" maxlength="20"> <label
-																for="village"><spring:message code="input.village" /> <span class="star">*</span></label>
+																for="village"><spring:message code="input.village" /> <span class="star"></span></label>
 														</div>
 
 														<div class="input-field col s12 m6 l6">
@@ -422,7 +422,7 @@
 																class="form-control boxBorder boxHeight"
 																id="singleDevicelocality" maxlength="20"
 																pattern=[A-Za-z0-9] title="Please enter your locality">
-															<label for="locality"><spring:message code="input.locality" /> <span class="star">*</span></label>
+															<label for="locality"><spring:message code="input.locality" /> <span class="star"></span></label>
 														</div>
 
 														<div class="input-field col s12 m6 l6">
@@ -471,7 +471,7 @@
 												<div class="input-field col s12 center">
 													<button class="btn modal-trigger"
 														data-target="submitStolen"><spring:message code="button.submit" /></button>
-													<a href="./stolenRecovery" class="btn modal-trigger"
+													<a href="./stolenRecovery?FeatureId=5" class="btn"
 														style="margin-left: 10px;"><spring:message code="modal.cancel" /></a>
 												</div>
 												
@@ -521,9 +521,9 @@
 													pattern="[a-zA-Z0-9\s,'*$-]{0,30}" title=""
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-												 maxlength="30" required="required">
+												 maxlength="30" >
 												  <label for="village"><spring:message code="input.village" />
-													<span class="star">*</span>
+													<span class="star"></span>
 												</label>
 											</div>
 
@@ -533,9 +533,9 @@
 													id="bulkStolenlocality"  pattern="[a-zA-Z0-9\s,'*$-]{0,30}"
 													 title="" oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-													 maxlength="30" required="required"
+													 maxlength="30" 
 													title="Please enter your locality"> <label
-													for="locality"><spring:message code="input.locality" /> <span class="star">*</span></label>
+													for="locality"><spring:message code="input.locality" /> <span class="star"></span></label>
 											</div>
 
 											<div class="input-field col s12 m6 l6">
@@ -679,8 +679,8 @@
 												<input type="text" name="village" placeholder="" id="deviceBulkStolenvillage"
 													pattern="[a-zA-Z0-9\s,'*$-]{0,30}" title="" maxlength="30"
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');" required="required"> <label
-													for="village"><spring:message code="input.village" /> <span class="star">*</span></label>
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');" > <label
+													for="village"><spring:message code="input.village" /> <span class="star"></span></label>
 											</div>
 
 											<div class="input-field col s12 m6 l6">
@@ -689,8 +689,8 @@
 													id="deviceBulkStolenlocality" pattern="[a-zA-Z0-9\s,'*$-]{0,30}" title="" 
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-													maxlength="30" required="required">
-												<label for="locality"><spring:message code="input.locality" /> <span class="star">*</span></label>
+													maxlength="30">
+												<label for="locality"><spring:message code="input.locality" /> <span class="star"></span></label>
 											</div>
 
 											<div class="input-field col s12 m6 l6">
@@ -894,7 +894,7 @@
 
 											<div class="input-field col s12 center">
 												<button class="btn" id="companyStolenButton" type="submit"><spring:message code="button.submit" /></button>
-												<a href="./stolenRecovery?FeatureId=5" class="btn modal-trigger"
+												<a href="./stolenRecovery?FeatureId=5" class="btn"
 													style="margin-left: 10px;"><spring:message code="modal.cancel" /></a>
 											</div>
 										</form>
