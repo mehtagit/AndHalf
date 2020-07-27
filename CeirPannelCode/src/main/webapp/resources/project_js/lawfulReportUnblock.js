@@ -103,7 +103,7 @@ $("#singleDeviceRecovery").prop('disabled', true);
 				});
 				$('#IndivisualStolenTxnId').text(response.txnId)
 			}
-			if(response.errorCode=='5'){
+			else if(response.errorCode=='5'){
 				
 				$('#IndivisualStolenSucessPopup').openModal({
 					dismissible:false
