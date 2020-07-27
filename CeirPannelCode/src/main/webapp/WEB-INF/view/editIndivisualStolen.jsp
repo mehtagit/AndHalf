@@ -314,23 +314,23 @@ select {
 													<div class="input-field col s12 m6 l6">
 														<input type="text" name="village" id="singleStolenvillage"
 															placeholder="" pattern="[a-zA-Z0-9\s,'*$-]{0,30}"
-															required="required" title=""
+															 title=""
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 															maxlength="30"> <label for="village"><spring:message
-																code="input.village" /> <span class="star">*</span> </label>
+																code="input.village" /> <span class="star"></span> </label>
 													</div>
 
 													<div class="input-field col s12 m6 l6">
 														<input type="text" name="locality" placeholder=""
 															class="form-control boxBorder boxHeight"
 															id="singleStolenlocality"
-															pattern="[a-zA-Z0-9\s,'*$-]{0,30}" required="required"
+															pattern="[a-zA-Z0-9\s,'*$-]{0,30}" 
 															title=""
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 															maxlength="30"> <label for="locality"> <spring:message
-																code="input.locality" /><span class="star">*</span></label>
+																code="input.locality" /><span class="star"></span></label>
 													</div>
 
 													<div class="input-field col s12 m6 l6">
@@ -749,11 +749,11 @@ onclick="_Services._selectstartDate()"></i></span>
 															<input type="text" name="village" placeholder=""
 																id="singleDevicevillage"
 																pattern="[a-zA-Z0-9\s,'*$-]{0,30}"
-																required="required" title=""
+																 title=""
 																oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 																maxlength="30"> <label for="village"><spring:message
-																	code="input.village" /> <span class="star">*</span></label>
+																	code="input.village" /> <span class="star"></span></label>
 														</div>
 
 														<div class="input-field col s12 m6 l6">
@@ -761,11 +761,11 @@ onclick="_Services._selectstartDate()"></i></span>
 																class="form-control boxBorder boxHeight"
 																id="singleDevicelocality"
 																pattern="[a-zA-Z0-9\s,'*$-]{0,30}"
-																required="required" title=""
+																 title=""
 																oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 																maxlength="30"> <label for="locality"><spring:message
-																	code="input.locality" /> <span class="star">*</span></label>
+																	code="input.locality" /> <span class="star"></span></label>
 														</div>
 
 														<div class="input-field col s12 m6 l6">
@@ -938,7 +938,7 @@ onclick="_Services._selectstartDate()"></i></span>
 											<div class="input-field col s12 m6 l6">
 												<input type="text" name="village" id="bulkStolenvillage"
 													maxlength="20"> <label for="village"><spring:message
-														code="input.village" /> <span class="star">*</span> </label>
+														code="input.village" /> <span class="star"></span> </label>
 											</div>
 
 											<div class="input-field col s12 m6 l6">
@@ -947,7 +947,7 @@ onclick="_Services._selectstartDate()"></i></span>
 													id="bulkStolenlocality" maxlength="20" pattern=[A-Za-z0-9]
 													title="Please enter your locality"> <label
 													for="locality"><spring:message
-														code="input.locality" /> <span class="star">*</span></label>
+														code="input.locality" /> <span class="star"></span></label>
 											</div>
 
 											<div class="input-field col s12 m6 l6">
@@ -1072,7 +1072,7 @@ onclick="_Services._selectstartDate()"></i></span>
 													id="deviceBulkStolenlocality" maxlength="20"
 													pattern=[A-Za-z0-9] title="Please enter your locality">
 												<label for="locality"> <spring:message
-														code="input.locality" /><span class="star">*</span></label>
+														code="input.locality" /><span class="star"></span></label>
 											</div>
 
 											<div class="input-field col s12 m6 l6">
@@ -1164,7 +1164,7 @@ onclick="_Services._selectstartDate()"></i></span>
 													<spring:message code="button.submit" />
 												</button>
 												<a href="./stolenRecovery?FeatureId=5"
-													class="btn modal-trigger" style="margin-left: 10px;"><spring:message
+													class="btn" style="margin-left: 10px;"><spring:message
 														code="button.cancel" /></a>
 											</div>
 										</form>

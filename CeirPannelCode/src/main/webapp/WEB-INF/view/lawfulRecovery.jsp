@@ -549,7 +549,7 @@ onclick="_Services._selectstartDate()"></i></span>
 												<button class="btn" type="submit" id="singleDeviceRecovery">
 													<spring:message code="button.submit" />
 												</button>
-												<a href="./stolenRecovery" class="btn modal-trigger"
+												<a href="./stolenRecovery" class="btn"
 													style="margin-left: 10px;"><spring:message
 														code="modal.cancel" /></a>
 											</div>
@@ -807,7 +807,7 @@ onclick="_Services._selectstartDate()"></i></span>
 												<spring:message code="button.submit" />
 											</button>
 											<a href="./stolenRecovery?FeatureId=5"
-												class="btn modal-trigger" style="margin-left: 10px;"><spring:message
+												class="btn" style="margin-left: 10px;"><spring:message
 													code="modal.cancel" /></a>
 										</div>
 									</form>

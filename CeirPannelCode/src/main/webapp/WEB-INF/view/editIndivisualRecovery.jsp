@@ -309,21 +309,21 @@
                                                             </div>
         
                                                             <div class="input-field col s12 m6 l6">
-                                                                <input type="text" name="sigleRecoveryvillage" id="sigleRecoveryvillage" placeholder="" maxlength="30" pattern="[a-zA-Z0-9\s,'*$-]{0,30}" required="required"
+                                                                <input type="text" name="sigleRecoveryvillage" id="sigleRecoveryvillage" placeholder="" maxlength="30" pattern="[a-zA-Z0-9\s,'*$-]{0,30}" 
                                                                     title=""
                                                                     oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
                                                                    oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
                                                                     >
-                                                                <label for="sigleRecoveryvillage"><spring:message code="input.village" /> <span class="star">*</span></label>
+                                                                <label for="sigleRecoveryvillage"><spring:message code="input.village" /> <span class="star"></span></label>
                                                             </div>
                             
                                                             <div class="input-field col s12 m6 l6">
                                                                 <input type="text" name="sigleRecoverylocality" class="form-control boxBorder boxHeight" placeholder=""
-                                                                    id="sigleRecoverylocality" maxlength="30" pattern="[a-zA-Z0-9\s,'*$-]{0,30}" required="required"
+                                                                    id="sigleRecoverylocality" maxlength="30" pattern="[a-zA-Z0-9\s,'*$-]{0,30}" 
                                                                     title=""
                                                                     oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
                                                                    oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');">
-                                                                <label for="sigleRecoverylocality"><spring:message code="input.locality" /> <span class="star">*</span></label>
+                                                                <label for="sigleRecoverylocality"><spring:message code="input.locality" /> <span class="star"></span></label>
                                                             </div>
                                 
                                                             <div class="input-field col s12 m6 l6">
@@ -454,7 +454,7 @@ onclick="_Services._selectstartDate()"></i></span>
 
                                                     <div class="input-field col s12 center">
                                                         <button id="indivisualEditRecoveryButton"  class="btn" type="submit"><spring:message code="button.submit" /></button>
-                                                        <a href="./stolenRecovery?FeatureId=5" class="btn modal-trigger"
+                                                        <a href="./stolenRecovery?FeatureId=5" class="btn"
                                                             style="margin-left: 10px;"><spring:message code="modal.cancel" /></a>
                                                     </div>
                                                 </form>
@@ -515,13 +515,13 @@ onclick="_Services._selectstartDate()"></i></span>
 
                                                     <div class="input-field col s12 m6 l6">
                                                         <input type="text" name="bulkRecoveryvillage" id="bulkRecoveryvillage" maxlength="20">
-                                                        <label for="bulkRecoveryvillage"><spring:message code="input.village" /> <span class="star">*</span></label>
+                                                        <label for="bulkRecoveryvillage"><spring:message code="input.village" /> <span class="star"></span></label>
                                                     </div>
                     
                                                     <div class="input-field col s12 m6 l6">
                                                         <input type="text" name="bulkRecoverylocality" class="form-control boxBorder boxHeight"
                                                             id="bulkRecoverylocality" maxlength="20" pattern=[A-Za-z0-9] title="Please enter your locality">
-                                                        <label for="bulkRecoverylocality"><spring:message code="input.locality" /> <span class="star">*</span></label>
+                                                        <label for="bulkRecoverylocality"><spring:message code="input.locality" /> <span class="star"></span></label>
                                                     </div>
                         
                                                     <div class="input-field col s12 m6 l6">
@@ -558,7 +558,7 @@ onclick="_Services._selectstartDate()"></i></span>
 
                                                     <div class="input-field col s12 center">
                                                         <button class="btn" type="submit"><spring:message code="button.submit" /></button>
-                                                        <a href="./stolenRecovery?FeatureId=5" class="btn modal-trigger"
+                                                        <a href="./stolenRecovery?FeatureId=5" class="btn"
                                                             style="margin-left: 10px;"><spring:message code="modal.cancel" /></a>
                                                     </div>
                                                 </form>

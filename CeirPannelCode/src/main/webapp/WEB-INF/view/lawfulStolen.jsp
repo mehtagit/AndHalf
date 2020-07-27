@@ -692,9 +692,9 @@ select {
 																pattern="[a-zA-Z0-9\s,'*$-]{0,20}"
 																oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
 																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
-																required maxlength="30"> <label for="singleDevicevillage">
+																 maxlength="30"> <label for="singleDevicevillage">
 																<spring:message code="input.village" /> <span
-																class="star">*</span>
+																class="star"></span>
 															</label>
 														</div>
 
@@ -705,9 +705,9 @@ select {
 																pattern="[a-zA-Z0-9\s,'*$-]{0,30}"
 																oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
 																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
-																required maxlength="30"> <label for="singleDevicelocality">
+																 maxlength="30"> <label for="singleDevicelocality">
 																<spring:message code="input.locality" /> <span
-																class="star"> *</span>
+																class="star"> </span>
 															</label>
 														</div>
 
@@ -820,7 +820,7 @@ select {
 													id="indivisualStolenButton">
 													<spring:message code="button.submit" />
 												</button>
-												<a href="./stolenRecovery?FeatureId=5" class="btn modal-trigger"
+												<a href="./stolenRecovery?FeatureId=5" class="btn"
 													style="margin-left: 10px;"> <spring:message
 														code="button.cancel" /></a>
 											</div>
@@ -834,7 +834,7 @@ select {
 
 
 									<div id="Bulkform" class="col s12" style="display: none">
-										<form action="" id="SingleImeiBlockform"
+										<form action="" 
 											onsubmit="return saveCompanyStolenRequest()" method="POST"
 											enctype="multipart/form-data">
 											<div class="input-field col s12 m6">
@@ -1303,7 +1303,7 @@ select {
 												<button class="btn" type="submit" id="bulkStolenButton">
 													<spring:message code="button.submit" />
 												</button>
-												<a href="./stolenRecovery?FeatureId=5" class="btn modal-trigger"
+												<a href="./stolenRecovery?FeatureId=5" class="btn"
 													style="margin-left: 10px;"> <spring:message
 														code="button.cancel" /></a>
 											</div>
