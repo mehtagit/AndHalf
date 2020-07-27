@@ -373,7 +373,8 @@ function table(url,dataUrl){
 			"userType":$("body").attr("data-roleType"),
 			"userName":$("body").attr("data-username"),
 			"txnId": $('#transactionID').val() == null ? txn : $('#transactionID').val(),
-			"roleType":$("body").attr("data-roleType")
+			"roleType":$("body").attr("data-roleType"),
+			"displayName" : $('#name').val()
 
 
 	}
