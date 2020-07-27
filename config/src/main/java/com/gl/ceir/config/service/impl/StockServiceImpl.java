@@ -193,6 +193,7 @@ public class StockServiceImpl {
 				stockMgmt.setUserId(user.getId());
 				stockMgmt.setUser(user);
 				stockMgmt.setRoleType(secondaryRoleType);
+				stockMgmt.setPortAddress( userRepository.getById(stockMgmt.getAssignerId()).getUserProfile().getPortAddress() );
 				isStockAssignRequest = Boolean.TRUE;
 
 				addInAuditTrail(stockMgmt.getAssignerId(), stockMgmt.getTxnId(), SubFeatures.ASSIGN, "Custom");
@@ -427,8 +428,11 @@ public class StockServiceImpl {
 			specificationBuilder.with(new SearchCriteria("txnId", filterRequest.getTxnId(), SearchOperation.EQUALITY, Datatype.STRING));
 
 		if(Objects.nonNull(filterRequest.getUserType()) && "Custom".equalsIgnoreCase(filterRequest.getUserType())) {
-			logger.info("Inside custom block.");
-			specificationBuilder.with(new SearchCriteria("userType", filterRequest.getUserType(), SearchOperation.EQUALITY, Datatype.STRING));
+//			logger.info("Inside custom block.");
+//			specificationBuilder.with(new SearchCriteria("userType", filterRequest.getUserType(), SearchOperation.EQUALITY, Datatype.STRING));
+			UserProfile userProfile = userRepository.getById(filterRequest.getUserId()).getUserProfile();
+			if( Objects.nonNull(userProfile))
+				specificationBuilder.with(new SearchCriteria("portAddress", userProfile.getPortAddress(), SearchOperation.EQUALITY, Datatype.INT));
 		}
 
 		if(Objects.nonNull(filterRequest.getFilteredUserType()) && !filterRequest.getFilteredUserType().isEmpty()) {

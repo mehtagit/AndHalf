@@ -49,6 +49,7 @@ public class ConsignmentController {
 		return genricResponse;
 	}
 
+	@Transactional
 	@ApiOperation(value = "Update Consignment Info.", response = GenricResponse.class)
 	@RequestMapping(path = "/consignment/update", method = RequestMethod.POST)
 	public GenricResponse updateConsigmentInfo(@RequestBody ConsignmentMgmt consignmentUploadRequest) {
@@ -128,6 +129,7 @@ public class ConsignmentController {
 		return mapping;
 	}
 
+	@Transactional
 	@ApiOperation(value = "Delete Consignment.", response = GenricResponse.class)
 	@DeleteMapping("/consigment/delete")
 	public GenricResponse deleteConsigment(@RequestBody ConsignmentUpdateRequest consignmentUpdateRequest) {

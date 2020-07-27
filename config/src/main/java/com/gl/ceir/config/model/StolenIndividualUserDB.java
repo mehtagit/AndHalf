@@ -121,7 +121,7 @@ public class StolenIndividualUserDB implements Serializable {
 	@NotNull
 	@Column(length = 50)
 	private String deviceStolenCommune;
-	@NotNull
+//	@NotNull
 	@Column(length = 50)
 	private String deviceStolenVillage;
 	@NotNull
