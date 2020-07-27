@@ -85,6 +85,7 @@ function confirmantiondelete(){
 				$('#consignmentText').text($.i18n(data.tag));
 			}
 			else{
+				$('#consignmentText').text('');
 				$("#consignmentText").text(errorMsg);
 			}
 		},
@@ -373,10 +374,9 @@ function table(url,dataUrl){
 			"userType":$("body").attr("data-roleType"),
 			"userName":$("body").attr("data-username"),
 			"txnId": $('#transactionID').val() == null ? txn : $('#transactionID').val(),
-			"roleType":$("body").attr("data-roleType")
-
-
-	}
+			"roleType":$("body").attr("data-roleType"),
+			"displayName" : $('#name').val()
+}
 	if(lang=='km'){
 		var langFile='./resources/i18n/khmer_datatable.json';
 	}
