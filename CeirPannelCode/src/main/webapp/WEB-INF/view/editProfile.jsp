@@ -369,7 +369,7 @@ var contextpath = "${context}";
 								<div class="input-field col s12 m6 l6">
 									<input type="text" name="street" maxlength="20"
 										class="form-control boxBorder boxHeight" id="street"
-										pattern="[A-Za-z0-9._%-+$@,/]{1,20}" placeholder="" 
+										pattern="[A-Za-z0-9\s._%-+$@,/]{1,20}" placeholder="" 
 								oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');" 
 								oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 								required >
@@ -379,7 +379,7 @@ var contextpath = "${context}";
 									<div class="input-field col s12 m6 l6">
 									<input type="text" name="village" maxlength="30"
 										class="form-control boxBorder boxHeight" id="village"
-										pattern="[A-Za-z0-9._%-+$@,/]{3,30}" placeholder="" 
+										pattern="[A-Za-z0-9\s._%-+$@,/]{3,30}" placeholder="" 
 										oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');" 
 										oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 									 >
@@ -389,7 +389,7 @@ var contextpath = "${context}";
 								<div class="input-field col s12 m6 l6">
 									<input type="text" name="locality" maxlength="30"
 										class="form-control boxBorder boxHeight" id="locality"
-										pattern="[A-Za-z0-9._%-+$@,/]{3,30}" placeholder="" 
+										pattern="[A-Za-z0-9\s._%-+$@,/]{3,30}" placeholder="" 
 									
 										oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');" 
 										oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');" >
@@ -400,7 +400,7 @@ var contextpath = "${context}";
 								<div class="input-field col s12 m6 l6">
 									<input type="text" name="district" placeholder="" maxlength="30"
 										class="form-control boxBorder boxHeight" id="district"
-										pattern="[A-Za-z0-9._%-+$@,/]{3,30}" 
+										pattern="[A-Za-z0-9\s._%-+$@,/]{3,30}" 
 										
 										oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');" 
 										oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
@@ -411,7 +411,7 @@ var contextpath = "${context}";
 								<div class="input-field col s12 m6 l6">
 									<input type="text" placeholder="" name="commune" maxlength="30"
 										class="form-control boxBorder boxHeight" id="commune"
-										pattern="[A-Za-z0-9._%-+$@,/]{0,30}" 
+										pattern="[A-Za-z0-9\s._%-+$@,/]{0,30}" 
 										oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');" 
 										oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');" required  >
 									<label for="commune"><spring:message code="input.commune" /> <span class="star">*</span>
@@ -420,7 +420,7 @@ var contextpath = "${context}";
 								<div class="input-field col s12 m6 l6">
 									<input required="required" type="text" placeholder="" name="postalCode" maxlength="6"
 										class="form-control boxBorder boxHeight" id="postalCode"
-										pattern="[A-Za-z0-9\s]{0,6}"
+										pattern="[A-Za-z0-9]{0,6}"
 										oninput="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');" 
 										oninvalid="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');">
 									<label for="postalCode"><spring:message code="input.postalCode" /><span class="star">*</span></label>
