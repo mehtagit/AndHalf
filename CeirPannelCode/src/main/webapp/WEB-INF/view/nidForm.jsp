@@ -179,6 +179,22 @@ section {
 			<div class="row">
 				<div class="col s12 m12" style="margin-top: 20px;">
 					<div id="submitbtn">
+						<c:choose>
+						<c:when test="${usertype=='Immigration'}">
+						<div class="input-field col s12 m2">
+							<label for="Search" class="center-align ml-10"><spring:message code="input.passportNo" /> : </label>
+						
+						</div>
+						
+						<div class="input-field col s12 m3 l3">
+							<input type="text" id="Search" name="Search"
+								pattern="[A-Za-z0-9]{1,12}" maxlength="12"
+								oninput="InvalidMsg(this,'input','<spring:message code="validation.12NID" />');" 
+								  oninvalid="InvalidMsg(this,'input','<spring:message code="validation.12NID" />');"
+								placeholder="<spring:message code="input.passportNo" />" required>
+						</div>
+						</c:when>
+						<c:otherwise>
 						<div class="input-field col s12 m2">
 							<label for="Search" class="center-align ml-10"><spring:message code="input.nid" /></label>
 						
@@ -191,7 +207,9 @@ section {
 								  oninvalid="InvalidMsg(this,'input','<spring:message code="validation.12NID" />');"
 								placeholder="<spring:message code="input.nidInput" />" required>
 						</div>
-							
+						</c:otherwise>
+						
+							</c:choose>
 						<div class="input-field col s12 m2 l2">
 							<button type="button" class="btn"  id="submit" onclick="hide();"><spring:message code="button.submit" /></button>
 						</div>

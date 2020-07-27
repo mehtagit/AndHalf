@@ -230,7 +230,7 @@
                                 <div class="row">
                                     <div class="col s12 m12">
                                   	<div class="input-field col s12 center">
-                                         <a class="btn modal-close" href="./registrationRequest"><spring:message code="modal.close" /></a>
+                                         <a class="btn modal-close" href="./registrationRequest?txnID=${not empty param.txnID ? param.txnID : 'null'}&source=${not empty param.source ? param.source : 'null'}"><spring:message code="modal.close" /></a>
                                     </div>
                                 </div>
                                 </div>
