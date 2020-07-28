@@ -778,7 +778,7 @@ public class UserService {
 							
 							  emailUtils.saveNotification("REG_NOTIFY_CEIR_ADMIN_TO_VERIFY_USER",
 							  adminUser.getUserProfile(), 8, "Registration Request",
-							  "user phone and email details validated", "NA", "NA", mapEmail, "CEIRAdmin",
+							  "user phone and email details validated",  user.getUsername(), "NA", mapEmail, "CEIRAdmin",
 							  "CEIRAdmin", "Users");
 							 
 					}	

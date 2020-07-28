@@ -158,7 +158,10 @@ public class UserProfileService {
 							}
 						}
 					}else if("noti".equalsIgnoreCase(source)) {
-						log.info("Skip status check, because source is noti.");
+						
+						uPSB.addSpecification(uPSB.joinWithUser(new SearchCriteria("username",user.getUsername(), SearchOperation.EQUALITY, Datatype.STRING)));
+						
+						//log.info("Skip status check, because source is noti."+user.getUsername());
 					}
 
 					log.info("Array list to add is = " + stockStatus);
