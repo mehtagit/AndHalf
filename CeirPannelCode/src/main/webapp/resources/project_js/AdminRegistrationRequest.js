@@ -43,15 +43,14 @@
 		var asType = $('#asType').val();
 		var userRoleTypeId = $("#role").val();
 		var status =  $('#recentStatus').val();
-		var txn= (txnIdValue == 'null' && transactionIDValue == undefined)? $('#transactionID').val() : transactionIDValue;
+		var userID= (txnIdValue == 'null' && transactionIDValue == undefined)? transactionIDValue : transactionIDValue;
 		var filterRequest={
 				"endDate":$('#endDate').val(),
 				"startDate":$('#startDate').val(),
 				"asType": parseInt(asType),
 				"userRoleTypeId" : parseInt(userRoleTypeId),
 				"status" : parseInt(status),
-				"userId":parseInt(userId),
-				"txnId":$('#transactionID').val() == null ? txn : $('#transactionID').val(),
+				"userId":parseInt(userID),
 				"featureId":parseInt(featureId),
 				"userTypeId": parseInt($("body").attr("data-userTypeID")),
 				"userType":$("body").attr("data-roleType"),
@@ -440,16 +439,18 @@
 		
 		
 		
+		
 		var source;
 		if(startdate != "" || endDate != "" || emailId !="" || phone != '' || username != "" || asType != "-1" ||  userRoleTypeId != "-1" || status != "-1"  ){
 			source = "filter"
 		}else{
 			source = source__val= $("body").attr("data-session-source");
 		}
-		
+		var userID= (txnIdValue == 'null' && transactionIDValue == undefined)? -1 : transactionIDValue;
+	
 		////console.log ("source--->" +source);
 		
-		window.location.href="./exportAdminRegistration?RegistrationStartDate="+startdate+"&RegistrationEndDate="+endDate+"&email="+emailId+"&phoneNo="+phone+"&username="+username+"&asType="+asType+"&userRoleTypeId="+userRoleTypeId+"&featureId="+featureId+"&status="+status+"&source="+source+"&pageSize="+pageSize+"&pageNo="+pageNo+"&userTypeId="+usertypeId+"";
+		window.location.href="./exportAdminRegistration?RegistrationStartDate="+startdate+"&RegistrationEndDate="+endDate+"&email="+emailId+"&phoneNo="+phone+"&username="+username+"&asType="+asType+"&userRoleTypeId="+userRoleTypeId+"&featureId="+featureId+"&status="+status+"&source="+source+"&pageSize="+pageSize+"&pageNo="+pageNo+"&userTypeId="+usertypeId+"&userId="+userID+"";
 	}
 
 
@@ -636,3 +637,14 @@ function userChangeStatus(entity){
 		});
 	 return false
  }	
+ 
+ 
+ 
+ 
+ 
+ function chngeView(id,role,type,source){
+	
+	 var UserID=$("body").attr("session-valuetxnid");
+	 window.location.href="trcInformation?id="+id+"&roles="+role+"&type="+type+"&source="+source+"&txnID="+UserID+"";
+
+ }

@@ -1261,14 +1261,13 @@ public class IconsState {
 
 	/********************************** Icons for AdminRegistrationRequest **********************************/ 
 
-	public String adminRegistrationRequest(String Id ,String userStatus,String AdminCurrentStatus,String createdOn,String roles, String type,String id,String username,String status,String sessionUserName,String userTypeId) {
+	public String adminRegistrationRequest(String Id ,String userStatus,String AdminCurrentStatus,String createdOn,String roles, String type,String id,String username,String status,String sessionUserName,String userTypeId,String source) {
 		executePostConstruct();
 		log.info("username-->" +username+" sessionUserName--->" +sessionUserName);
 		// URL link 
 		String emptyURL="JavaScript:void(0);"; 
 		String approveAction = "userApprovalPopup("+Id+",'"+createdOn.replace(" ", "=")+"','"+username+"','"+sessionUserName+"')";
-
-		String viewAction="trcInformation?id="+id+"&roles="+roles.replace(" ", "=")+"&type="+type;
+		String viewAction="chngeView("+id+",'"+roles.replace(" ", "=")+"','"+type+"','"+source+"')";
 		String rejectAction = "userRejectPopup("+Id+",'"+sessionUserName+"')";
 		String editAction="roleStatusChange('"+Id+"','"+sessionUserName+"','"+userTypeId+"','"+id+"')";
 
@@ -1278,7 +1277,7 @@ public class IconsState {
 		// state related Code 
 
 
-		String view="<a href="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+		String view="<a onclick="+viewAction+" id='arlink'><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
 
 		String edit="<a onclick="+editAction+"><i class="+editIcon+" aria-hidden=\"true\"  title="

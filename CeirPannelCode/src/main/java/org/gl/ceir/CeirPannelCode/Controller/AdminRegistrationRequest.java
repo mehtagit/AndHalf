@@ -108,7 +108,7 @@ public class AdminRegistrationRequest {
 			@RequestParam(name="usertypeId", required = false) Integer usertypeId, 
 			@RequestParam(name="userTypeId") Integer userTypeId, 
 			@RequestParam(name="status",required = false) Integer status,
-			
+			@RequestParam(name="userId",required = false) Integer userId,
 			@RequestParam(name="email",required = false) String email,
 			@RequestParam(name="phoneNo",required = false) String phoneNo,
 			@RequestParam(name="username",required = false) String username,
@@ -124,7 +124,7 @@ public class AdminRegistrationRequest {
 		log.info("usertypeId::::"+usertypeId+"-----userTypeId:"+userTypeId+"email-->"+email+" phoneNo--->"+phoneNo+"username-->" +username+" source-->" +source);
 		
 		log.info("RegistrationStartDate=="+RegistrationStartDate+ " RegistrationEndDate ="+RegistrationEndDate+" asType="+asType+"userRoleTypeId="+userRoleTypeId);
-		int userId= (int) session.getAttribute("userid");
+		//int userId= (int) session.getAttribute("userid");
 		int file=1;
 		String userType=(String) session.getAttribute("usertype"); 	
 		FileExportResponse fileExportResponse;

@@ -355,7 +355,7 @@ var contextpath = "${context}";
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-								<input placeholder="" type="text" name="street" maxlength="20" id="street" pattern="[A-Za-z0-9\s._%-+$@,/]{1,20}"
+									<input placeholder="" type="text" name="street" maxlength="20" id="street" pattern="[A-Za-z0-9\s._%-+$@,/]{1,20}"
 									oninput="InvalidMsg(this,'input','<spring:message code="validation.address20characters" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address20characters" />');"
 										 required />
 									<label for="street"><spring:message code="input.streetNumber" /> <span class="star">*</span>
@@ -381,7 +381,7 @@ var contextpath = "${context}";
 									<label for="district"><spring:message code="input.district" /> <span class="star">*</span></label>
 								</div>
 								<div class="input-field col s12 m6 l6">
-								<input placeholder="" type="text" name="commune" maxlength="30" id="commune" pattern="[A-Za-z0-9\s._%-+$@,/]{0,30}"
+									<input placeholder="" type="text" name="commune" maxlength="30" id="commune" pattern="[A-Za-z0-9\s._%-+$@,/]{0,30}"
 									oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
 										 required />
 									<label for="commune"><spring:message code="input.commune" /> <span class="star">*</span></label>
