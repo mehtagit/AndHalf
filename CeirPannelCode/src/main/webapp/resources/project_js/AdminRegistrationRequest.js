@@ -439,16 +439,18 @@
 		
 		
 		
+		
 		var source;
 		if(startdate != "" || endDate != "" || emailId !="" || phone != '' || username != "" || asType != "-1" ||  userRoleTypeId != "-1" || status != "-1"  ){
 			source = "filter"
 		}else{
 			source = source__val= $("body").attr("data-session-source");
 		}
-		
+		var userID= (txnIdValue == 'null' && transactionIDValue == undefined)? -1 : transactionIDValue;
+	
 		////console.log ("source--->" +source);
 		
-		window.location.href="./exportAdminRegistration?RegistrationStartDate="+startdate+"&RegistrationEndDate="+endDate+"&email="+emailId+"&phoneNo="+phone+"&username="+username+"&asType="+asType+"&userRoleTypeId="+userRoleTypeId+"&featureId="+featureId+"&status="+status+"&source="+source+"&pageSize="+pageSize+"&pageNo="+pageNo+"&userTypeId="+usertypeId+"";
+		window.location.href="./exportAdminRegistration?RegistrationStartDate="+startdate+"&RegistrationEndDate="+endDate+"&email="+emailId+"&phoneNo="+phone+"&username="+username+"&asType="+asType+"&userRoleTypeId="+userRoleTypeId+"&featureId="+featureId+"&status="+status+"&source="+source+"&pageSize="+pageSize+"&pageNo="+pageNo+"&userTypeId="+usertypeId+"&userId="+userID+"";
 	}
 
 

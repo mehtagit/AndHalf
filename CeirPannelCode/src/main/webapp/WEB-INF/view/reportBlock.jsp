@@ -199,7 +199,7 @@
                                                         
                                                         <div class="col s12 m6">
 <p style="margin-top: 3px; margin-bottom: 5px"><spring:message code="operator.blocking" /></p>
-<label style="margin-right: 2%;"> <input type="radio" class="blocktypeRadio" id=""
+<label style="margin-right: 2%;"> <input type="radio" class="blocktypeRadio" 
 value="Immediate"
 onclick="document.getElementById('calender').style.display = 'none';"
 name="stolenBlockPeriod" checked><spring:message code="operator.immediate" />
@@ -343,7 +343,7 @@ onclick="_Services._selectstartDate()"></i></span>
 													<spring:message code="operator.blocking" />
 												</p>
 												<label style="margin-right: 2%;"> <input
-													type="radio" class="bulkblocktypeRadio" id="" value="Immediate"
+													type="radio" class="bulkblocktypeRadio"  value="Immediate"
 													onclick="document.getElementById('stolenCalender').style.display = 'none';"
 													name="stolenBulkBlockPeriod" checked> <spring:message
 														code="operator.immediate" />
