@@ -24,7 +24,7 @@ function userloginGraph() {
 		success : function(data) {
 			var response = JSON.parse(data);
 			graph(response,'lineGraph','line','User Login Line Graph')
-			graph(response,'barGraph','column','User Login Bar Graph')
+			graph(response,'barGraph','bar','User Login Bar Graph')
 		},
 		error : function() {
 		}
@@ -100,66 +100,49 @@ function graph(response,id,chartType,chartTitle)
 	    }
 	//console.log("date: "+date);
 	   //console.log("noOfUsers: "+noOfUsers);
-	    //console.log("uniqueUserLogged: "+uniqueUsers);	
-	  var title = {
-              text: chartTitle   
-           };
-	  var chart = {
-              type: chartType
-           };
-           var subtitle = {
-              text: ''
-           };
-           var xAxis = {
-              categories:date,
-            	type: 'datetime',
-           
-              formatter: function() {
-            	  const dateValue = Date.UTC(this.value);
-            	  return Highcharts.dateFormat('%d-%m-%Y', dateValue);
-            	}
-           };
-           var yAxis = {
-              title: {
-                 text: 'User login count'
-              },
-              plotLines: [{
-                 value: 0,
-                 width: 1,
-                 color: '#808080'
-              }]
-           };   
-           var tooltip = {
-              valueSuffix: '',
-           xDateFormat: '%A, %B %d, %Y UTC %Z'
-            	 
-           }
-           var legend = {
-              layout: 'vertical',
-              align: 'right',
-              verticalAlign: 'middle',
-              borderWidth: 0
-           };
-           var series =  [{
-                 name: 'Number Of Users',
-                 data: noOfUsers
-              }, 
-              {
-                 name: 'Unique Users',
-                 data: uniqueUsers
-              }, 
-           ];
+	    //console.log("uniqueUserLogged: "+);	
 
-           var json = {};
-           json.chart = chart; 
-           json.title = title;
-           json.subtitle = subtitle;
-           json.xAxis = xAxis;
-           json.yAxis = yAxis;
-           json.tooltip = tooltip;
-           json.legend = legend;
-           json.series = series;
-           
-           $('#'+id).highcharts(json);
+    
+    
+    var ctx = document.getElementById(''+id+'').getContext('2d');
+    var chart = new Chart(ctx, {
+      // The type of chart we want to create
+      type: ''+chartType+'',
 
+      // The data for our dataset
+      data: {
+        labels: date,
+        datasets: [ {
+            label: "Number Of Users",
+            backgroundColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(255, 99, 132)',
+            data: noOfUsers
+        },
+        {
+            label: "Unique Users",
+            backgroundColor: 'black',
+            borderColor: 'black',
+            data: uniqueUsers
+        }]
+      },
+
+      // Configuration options go here
+      options: {
+    	    responsive: false,
+    	    maintainAspectRatio: false,
+    	    scales: {
+                xAxes: [{
+                   gridLines: {
+                      display: false
+                   }
+                }],
+                yAxes: [{
+                   gridLines: {
+                      display: false
+                   }
+                }]
+             }
+    	}
+    });
+    
 }

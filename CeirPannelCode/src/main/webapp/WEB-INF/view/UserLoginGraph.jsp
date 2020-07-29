@@ -201,24 +201,13 @@ input#quantity {
     padding: 1.25rem;
 }
 
-@media (min-width: 768px)
-.chart-area {
-    height: 20rem;
-}
 
-.chart-area {
-    position: relative;
-    width: 100%;
-}
 .highcharts-credits {
 display: none !important;
 }
 </style>
-<script src="${context}/resources/graph_js/highcharts.js"></script>
-<script src="${context}/resources/graph_js/series-label.js"></script>
-<script src="${context}/resources/graph_js/exporting.js"></script>
-<script src="${context}/resources/graph_js/export-data.js"></script>
-<script src="${context}/resources/graph_js/accessibility.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 </head>
 <body>
 	<!-- START MAIN -->
@@ -248,9 +237,8 @@ display: none !important;
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
-                  <div class="chart-area" id="lineGraph" style = "width: 550px; height: 400px; margin: 0 auto">
-                  
-                  </div>
+                   <canvas class="chart-area" id="lineGraph" style = "width: 550px; height: 400px; margin: 0 auto">
+                  </canvas>
                 </div>
               </div>
             </div>
@@ -267,9 +255,9 @@ display: none !important;
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
-                  <div class="chart-area" id="barGraph" style="width: 550px; height: 400px; margin: 0 auto">
-                  
-                  </div>
+                 
+                    <canvas class="chart-area" id="barGraph" style = "width: 550px; height: 400px; margin: 0 auto">
+                  </canvas>
                 </div>
               </div>
             </div>               
