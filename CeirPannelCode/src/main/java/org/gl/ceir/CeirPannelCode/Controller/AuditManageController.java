@@ -61,19 +61,23 @@ public class AuditManageController {
 
 	//***************************************** Export Audit controller *********************************
 	
-	@RequestMapping(value="/exportAuditData",method ={org.springframework.web.bind.annotation.RequestMethod.GET})
-	public String exportToExcel(HttpSession session,@RequestParam(name="pageSize") Integer pageSize,@RequestParam(name="pageNo") Integer pageNo)
+	
+	
+	@PostMapping("exportAuditData")
+	@ResponseBody
+	public FileExportResponse exportToExcel(@RequestBody FilterRequest filterRequest,HttpSession session)
 	{
-		int userId= (int) session.getAttribute("userid"); 
-		int file=1;
+		Gson gsonObject=new Gson();
+		Object response;
+		Integer file = 1;	
+		
+		log.info("filterRequest:::::::::"+filterRequest);
+		response= feignCleintImplementation.auditManagementFeign(filterRequest, filterRequest.getPageNo(), filterRequest.getPageSize(), file);
 		FileExportResponse fileExportResponse;
-		FilterRequest filterRequest = new FilterRequest();	
-		log.info(" request passed to the  export Audit Excel Api =="+filterRequest+" *********** pageSize"+pageSize+"  pageNo  "+pageNo+"  file  "+file);
-		Object	response= feignCleintImplementation.auditManagementFeign(filterRequest, pageNo, pageSize, file);
 		Gson gson= new Gson(); 
 		String apiResponse = gson.toJson(response);
 		fileExportResponse = gson.fromJson(apiResponse, FileExportResponse.class);
-		log.info("response  from   export Audit  api ="+fileExportResponse);
-		return "redirect:"+fileExportResponse.getUrl();
-	}
+		log.info("response  from  Alert Export  api="+fileExportResponse);
+		return fileExportResponse;
+	}	
 }
