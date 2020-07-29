@@ -263,11 +263,68 @@ function setViewPopupData(data){
 }
 
 
-function exportAuditData(){
+/*function exportAuditData(){
 	var table = $('#auditLibraryTable').DataTable();
 	var info = table.page.info(); 
 	var pageNo=info.page;
 	var pageSize =info.length;
 	window.location.href="./exportAuditData?pageSize="+pageSize+"&pageNo="+pageNo;
 	
+}*/
+
+
+function exportAuditData()
+{	
+	var table = $('#auditLibraryTable').DataTable();
+	var info = table.page.info(); 
+	var pageNo=info.page;
+	var pageSize =info.length;
+	var userType = $('#userType').val() == 'null' ? null : $("#userType option:selected").text();
+	var featureName = $('#feature').val() == 'null' ? null : $("#feature option:selected").text();
+	var subFeature = $('#subFeature').val() == 'null' ? null : $("#subFeature option:selected").text();
+	var roleType = $('#roleType').val() == 'null' ? null : $("#roleType option:selected").text();
+	
+	var filterRequest={
+			
+			//"userId":parseInt(userId),
+			//"featureId":parseInt(featureId),
+			//"userTypeId": parseInt($("body").attr("data-userTypeID")),
+			"userType": userType,
+			"featureId": parseInt(featureId),
+			"startDate" : $("#startDate").val(),
+			"endDate" : $("#endDate").val(),
+			"txnId" : $("#transactionID").val(),
+			"featureName" : featureName,
+			"subFeatureName" : subFeature,
+			"userName" : $("#userName").val(),
+			"roleType" : roleType,
+			"pageNo":parseInt(pageNo),
+			"pageSize":parseInt(pageSize)
+			
+			
+	}
+	
+	
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+	});
+	
+	$.ajax({
+		url: './exportAuditData',
+		type: 'POST',
+		dataType : 'json',
+		contentType : 'application/json; charset=utf-8',
+		data : JSON.stringify(filterRequest),
+		success: function (data, textStatus, jqXHR) {
+			  window.location.href = data.url;
+
+		},
+		error: function (jqXHR, textStatus, errorThrown) {
+			
+		}
+	});
+
 }

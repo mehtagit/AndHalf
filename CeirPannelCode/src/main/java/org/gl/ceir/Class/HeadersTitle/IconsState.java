@@ -951,7 +951,7 @@ public class IconsState {
 			error="<a onclick="+errorURL+" class=\"eventNone\"><i class="+disableErrorIcon+" aria-hidden=\"true\" title="
 					+errorIconTitle+" ></i></a>";
 		}
-		else if(("6".equals(status) || "8".equals(status) || "9".equals(status)) && "Approved".equals(userStatus)) {
+		else if(("0".equals(status) || "2".equals(status) || "6".equals(status) || "7".equals(status) || "8".equals(status) || "9".equals(status)) && "Approved".equals(userStatus)) {
 			error="<a onclick="+errorURL+" class=\"eventNone\"><i class="+disableErrorIcon+" aria-hidden=\"true\" title="
 					+errorIconTitle+" ></i></a>";
 			approve = "<a onclick="+approveAction+" class=\"eventNone\"><i class="+disableApproveIcon+" aria-hidden=\"true\" title="
@@ -961,16 +961,6 @@ public class IconsState {
 			delete="<a onclick="+deleteAction+" class=\"eventNone\"><i class="
 					+disableDeletionIcon+" aria-hidden=\"true\" title="
 					+deleteIconTitle+"></i></a>"; 
-		}else if(("7".equals(status))   && "Approved".equals(userStatus)) {
-			approve = "<a onclick="+approveAction+" class=\"eventNone\"><i class="+disableApproveIcon+" aria-hidden=\"true\" title="
-					+approveIconTitle+" ></i></a>";
-			reject = "<a onclick="+rejectAction+" class=\"eventNone\"><i class="+disableRejectIcon+" aria-hidden=\"true\" title="
-					+rejectIconTitle+" ></i></a>";
-			delete="<a onclick="+deleteAction+" class=\"eventNone\"><i class="
-					+disableDeletionIcon+" aria-hidden=\"true\" title="
-					+deleteIconTitle+"></i></a>"; 
-			error="<a onclick="+errorURL+" class=\"eventNone\"><i class="+disableErrorIcon+" aria-hidden=\"true\" title="
-					+errorIconTitle+" ></i></a>";
 		}else if(("5".equals(status))   && "Approved".equals(userStatus)) {
 			error="<a onclick="+errorURL+" class=\"eventNone\"><i class="+disableErrorIcon+" aria-hidden=\"true\" title="
 					+errorIconTitle+" ></i></a>";
@@ -1171,7 +1161,7 @@ public class IconsState {
 
 
 
-		if(("1".equals(status) || "8".equals(status)) && "Approved".equals(userStatus)) {
+		if(("0".equals(status)  || "1".equals(status) || "2".equals(status) || "4".equals(status) || "8".equals(status)) && "Approved".equals(userStatus)) {
 			error="<a onclick="+errorURL+" class="+disableIconClass+"><i  class="
 					+disableErrorIcon+" aria-hidden=\"true\" title="
 					+errorIconTitle+"  ></i></a>"; 
@@ -1184,7 +1174,6 @@ public class IconsState {
 					+rejectIconTitle+" ></i></a>";
 
 		}
-
 		else if("7".equals(status)) {
 			reject = "<a onclick="+rejectAction+" class=\"eventNone\"><i class="+disableRejectIcon+" aria-hidden=\"true\" title="
 					+rejectIconTitle+" ></i></a>";
@@ -1194,12 +1183,7 @@ public class IconsState {
 
 		}
 
-		else if(("5".equals(status)  || "9".equals(status)) && "Approved".equals(userStatus)) {
-			delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\"><i class="
-					+disableDeletionIcon+" aria-hidden=\"true\" title="
-					+deleteIconTitle+"></i></a>";
-		}
-
+		
 		else if (("6".equals(status)) && "Approved".equals(userStatus)) {
 			error="<a onclick="+errorURL+" class="+disableIconClass+"><i  class="
 					+disableErrorIcon+" aria-hidden=\"true\" title="
@@ -1211,7 +1195,7 @@ public class IconsState {
 			error="<a onclick="+errorURL+" class="+disableIconClass+"><i  class="
 					+disableErrorIcon+" aria-hidden=\"true\" title="
 					+errorIconTitle+"  ></i></a>"; 
-		}else if(status!="1" || status != "8" || status !="7" || status !="5" || status !="9" || status !="6" || status !="3"  || status==null || status.equals("")){
+		}else if(status!="0" ||status!="1" || status!="2" || status !="4" || status != "8" || status !="7"  || status !="6" || status !="3"  || status==null || status.equals("")){
 			view="<a onclick="+viewAction+" class="+disableIconClass+"><i class="+disableViewIcon+" aria-hidden=\"true\" title="
 					+viewIconTitle+" ></i></a>";
 			history="<a onclick="+historyAction+" class="+disableIconClass+"><i class="+disableHistoryIcon+" aria-hidden=\"true\"  title="
@@ -1565,7 +1549,7 @@ public class IconsState {
 			reject = "<a onclick=" + rejectAction + " class=\"eventNone\"><i class=" + disableRejectIcon
 					+ " aria-hidden=\"true\" title=" + rejectIconTitle + " ></i></a>";
 		}
-		else if("8".equals(State) && "Approved".equals(userStatus)) {
+		else if(("0".equals(State) || "1".equals(State) || "2".equals(State)|| "4".equals(State) || "8".equals(State)) && ("Approved".equals(userStatus))) {
 			approve = "<a onclick=" + approveAction + " class=\"eventNone\"><i class=" + disableApproveIcon
 					+ " aria-hidden=\"true\" title=" + approveIconTitle + " ></i></a>";
 			reject = "<a onclick=" + rejectAction + " class=\"eventNone\"><i class=" + disableRejectIcon
@@ -1584,7 +1568,7 @@ public class IconsState {
 					+deletionIcon+" aria-hidden=\"true\" title="
 					+deleteIconTitle+"></i></a>";
 			
-		}else if(State!="3" || State !="6" || State !="7" ||State !="8" || State==null || State.equals("")){
+		}else if(State!="0" || State !="1" || State !="2" ||State !="3" ||State !="4"||State !="6"||State !="7"||State !="8" || State==null || State.equals("")){
 			delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\" ><i class="
 					+disableDeletionIcon+" aria-hidden=\"true\" title="
 					+deleteIconTitle+"></i></a>";
@@ -1936,7 +1920,7 @@ public class IconsState {
 			reject = "<a onclick=" + rejectAction + " class=\"eventNone\"><i class=" + disableRejectIcon
 					+ " aria-hidden=\"true\" title=" + rejectIconTitle + " ></i></a>";
 
-		}else if(("0".equals(status) || "1".equals(status) || "4".equals(status) ||"8".equals(status)) && "Approved".equals(userStatus)) {
+		}else if(("0".equals(status) || "1".equals(status) || "2".equals(status) || "4".equals(status) ||"8".equals(status)) && "Approved".equals(userStatus)) {
 			error="<a onclick="+errorURL+" class=\"eventNone\"><i class="+disableErrorIcon+" aria-hidden=\"true\" title="
 					+errorIconTitle+" ></i></a>";
 			approve = "<a onclick=" + approveAction + " class=\"eventNone\"><i class=" + disableApproveIcon
@@ -1949,14 +1933,6 @@ public class IconsState {
 		}else if(("3".equals(status)) && "Approved".equals(userStatus)) {
 			error="<a onclick="+errorURL+" class=\"eventNone\"><i class="+disableErrorIcon+" aria-hidden=\"true\" title="
 					+errorIconTitle+" ></i></a>";
-		}else if(("2".equals(status)) && "Approved".equals(userStatus)) {
-			approve = "<a onclick=" + approveAction + " class=\"eventNone\"><i class=" + disableApproveIcon
-					+ " aria-hidden=\"true\" title=" + approveIconTitle + " ></i></a>";
-			reject = "<a onclick=" + rejectAction + " class=\"eventNone\"><i class=" + disableRejectIcon
-					+ " aria-hidden=\"true\" title=" + rejectIconTitle + " ></i></a>";
-			delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\"><i class="
-					+disableDeletionIcon+" aria-hidden=\"true\"  title="
-					+deleteIconTitle+"></i></a>";
 		}else if(status !="0" || status!="1" || status !="2" ||  status !="3" || status !="4"  || status !="6" ||status !="7" ||  status !="8" || status==null || status.equals("")){
 			error="<a onclick="+errorURL+" class="+disableIconClass+"><i class="+disableErrorIcon+" aria-hidden=\"true\" title="
 					+errorIconTitle+" ></i></a>";
@@ -2028,7 +2004,7 @@ public class IconsState {
 		log.info("source->" +source+ "status-->" +status+" userStatus--->" +userStatus+"  operator-->"+operator);
 		
 		
-		if(("0".equals(status) || "1".equals(status)) && "Approved".equals(userStatus)) {
+		if(("0".equals(status) || "1".equals(status) || "2".equals(status) || "6".equals(status) || "7".equals(status)) && "Approved".equals(userStatus)) {
 			approve = "<a onclick="+approveAction+" class=\"eventNone\"><i class="+disableApproveIcon+" aria-hidden=\"true\" title="
 					+approveIconTitle+" ></i></a>";
 			reject = "<a onclick="+rejectAction+" class=\"eventNone\"><i class="+disableRejectIcon+" aria-hidden=\"true\" title="
@@ -2042,15 +2018,7 @@ public class IconsState {
 		}else if("3".equals(status)) {
 			error="<a onclick="+errorURL+" class=\"eventNone\"><i class="+disableErrorIcon+" aria-hidden=\"true\" title="
 					+errorIconTitle+" ></i></a>";
-		}else if("2".equals(status)) {
-			approve = "<a onclick="+approveAction+" class=\"eventNone\"><i class="+disableApproveIcon+" aria-hidden=\"true\" title="
-					+approveIconTitle+" ></i></a>";
-			reject = "<a onclick="+rejectAction+" class=\"eventNone\"><i class="+disableRejectIcon+" aria-hidden=\"true\" title="
-					+rejectIconTitle+" ></i></a>";
-			delete="<a onclick="+deleteAction+" class=\"eventNone\"><i class="+disableDeletionIcon+" aria-hidden=\"true\" title="
-					+deleteIconTitle+"></i></a>"; 
-		}  
-		else if(("4".equals(status)) && "Approved".equals(userStatus)){
+		}else if(("4".equals(status)) && "Approved".equals(userStatus)){
 			reject = "<a onclick="+rejectAction+" class=\"eventNone\"><i class="+disableRejectIcon+" aria-hidden=\"true\" title="
 					+rejectIconTitle+" ></i></a>";
 			error="<a onclick="+errorURL+" class="+disableIconClass+"><i class="
@@ -2063,16 +2031,7 @@ public class IconsState {
 			error="<a onclick="+errorURL+" class=\"eventNone\"><i class="+disableErrorIcon+" aria-hidden=\"true\" title="
 					+errorIconTitle+" ></i></a>";
 			
-		}else if(("6".equals(status) || "7".equals(status)) && "Approved".equals(userStatus)) {
-			delete="<a onclick="+deleteAction+" class=\"eventNone\"><i class="+disableDeletionIcon+" aria-hidden=\"true\" title="
-					+deleteIconTitle+"></i></a>"; 
-			approve = "<a onclick="+approveAction+" class=\"eventNone\"><i class="+disableApproveIcon+" aria-hidden=\"true\" title="
-					+approveIconTitle+" ></i></a>";
-			reject = "<a onclick="+rejectAction+" class=\"eventNone\"><i class="+disableRejectIcon+" aria-hidden=\"true\" title="
-					+rejectIconTitle+" ></i></a>";
-			error="<a onclick="+errorURL+" class=\"eventNone\"><i class="+disableErrorIcon+" aria-hidden=\"true\" title="
-					+errorIconTitle+" ></i></a>";
-		}else if(status !="0" || status!="1" || status !="2" || status !="3" ||status !="4" || status !="5" || status !="6" || status==null || status.equals("")){
+		}else if(status !="0" || status!="1" || status !="2" || status !="3" ||status !="4" || status !="5" || status !="6" || status !="7" || status==null || status.equals("")){
 			error="<a onclick="+errorURL+" class="+disableIconClass+"><i class="+disableErrorIcon+" aria-hidden=\"true\" title="
 					+errorIconTitle+" ></i></a>";
 			download="<a onclick="+downloadURL+"  class="+disableIconClass+"><i class="
@@ -2790,7 +2749,7 @@ public class IconsState {
 
 		log.info("source->" +source+ "status-->" +status);
 		
-		if(status.equals("0")) {
+		if(("0".equals(status) || "1".equals(status) || "2".equals(status) || "6".equals(status) || "7".equals(status)) && ("Approved".equals(userStatus))) {
 			error="<a onclick="+errorURL+" class="+disableIconClass+"><i class="
 					+disableErrorIcon+" aria-hidden=\"true\" title="
 					+errorIconTitle+" ></i></a>";
@@ -2800,27 +2759,6 @@ public class IconsState {
 					+rejectIconTitle+" ></i></a>";
 			delete="<a onclick="+deleteAction+" class=\"eventNone\"><i class="+disableDeletionIcon+" aria-hidden=\"true\" title="
 					+deleteIconTitle+"></i></a>";
-
-		}else if(("0".equals(status) || "1".equals(status)) && "Approved".equals(userStatus)){
-			approve = "<a onclick="+approveAction+" class=\"eventNone\"><i class="+disableApproveIcon+" aria-hidden=\"true\" title="
-					+approveIconTitle+" ></i></a>";
-			reject = "<a onclick="+rejectAction+" class=\"eventNone\"><i class="+disableRejectIcon+" aria-hidden=\"true\" title="
-					+rejectIconTitle+" ></i></a>";
-			delete="<a onclick="+deleteAction+" class=\"eventNone\"><i class="+disableDeletionIcon+" aria-hidden=\"true\" title="
-					+deleteIconTitle+"></i></a>"; 
-			error="<a onclick="+errorURL+" class=\"eventNone\"><i class="+disableErrorIcon+" aria-hidden=\"true\" title="
-					+errorIconTitle+" ></i></a>";
-
-		}else if(("1".equals(status) || "6".equals(status)) && "Approved".equals(userStatus)) {
-			approve = "<a onclick="+approveAction+" class=\"eventNone\"><i class="+disableApproveIcon+" aria-hidden=\"true\" title="
-					+approveIconTitle+" ></i></a>";
-			reject = "<a onclick="+rejectAction+" class=\"eventNone\"><i class="+disableRejectIcon+" aria-hidden=\"true\" title="
-					+rejectIconTitle+" ></i></a>";
-			delete="<a onclick="+deleteAction+" class=\"eventNone\"><i class="+disableDeletionIcon+" aria-hidden=\"true\" title="
-					+deleteIconTitle+"></i></a>"; 
-			error="<a onclick="+errorURL+" class=\"eventNone\"><i class="+disableErrorIcon+" aria-hidden=\"true\" title="
-					+errorIconTitle+" ></i></a>";
-
 
 		}else if("3".equals(status)) {
 			error="<a onclick="+errorURL+" class=\"eventNone\"><i class="+disableErrorIcon+" aria-hidden=\"true\" title="
@@ -2846,7 +2784,7 @@ public class IconsState {
 					+approveIconTitle+" ></i></a>";
 			error="<a onclick="+errorURL+" class=\"eventNone\"><i class="+disableErrorIcon+" aria-hidden=\"true\" title="
 					+errorIconTitle+" ></i></a>";
-		}else if(status !="0" || status!="1" || status !="2" || status !="3" ||status !="4" || status !="5" || status !="6" || status==null || status.equals("")){
+		}else if(status !="0" || status!="1" || status !="2" || status !="3" ||status !="4" || status !="5" || status !="6" || status !="7" || status==null || status.equals("")){
 			error="<a onclick="+errorURL+" class="+disableIconClass+"><i class="+disableErrorIcon+" aria-hidden=\"true\" title="
 					+errorIconTitle+" ></i></a>";
 			download="<a onclick="+downloadURL+"  class="+disableIconClass+"><i class="
