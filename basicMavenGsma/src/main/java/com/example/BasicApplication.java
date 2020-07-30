@@ -8,7 +8,6 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.HashSet;
-
 import java.util.Map;
 import java.util.Set;
 import javax.net.ssl.SSLContext;
