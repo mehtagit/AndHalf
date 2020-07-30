@@ -99,27 +99,21 @@
         </dependency>
         <dependency>
             <groupId>com.oracle</groupId>
-            <artifactId>ojdbc8</artifactId>
+            <artifactId>oracle8</artifactId>
             <version>19.3</version>
         </dependency>
+
+
     </dependencies>
 
-
-
-
-
-
-
-
+ 
 	
     <build>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-            
-             
+            </plugin>   
         </plugins>
     </build>
 

@@ -40,7 +40,7 @@ public class BasicApplication {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main1(String[] args) {
 
         BasicApplication bs = new BasicApplication();
         try {
@@ -87,15 +87,15 @@ public class BasicApplication {
             ResultSet rs1 = stmt.executeQuery("select   distinct tac  from device_usage_db  ");
             Set<String> hash_Set = new HashSet<String>();
             while (rs1.next()) {
-                hash_Set.add(rs1.getString("tac"));
+                hash_Set.add(rs1.getString(1));
             }
-            rs1 = stmt.executeQuery("select device_id from gsma_tac_db ");
+            rs1 = stmt.executeQuery("select  device_id from gsma_tac_db ");
             while (rs1.next()) {
-                hash_Set.remove(rs1.getString("device_id"));
+                hash_Set.remove(rs1.getString(1));
             }
             rs1 = stmt.executeQuery("select tac  from gsma_invalid_tac_db");
             while (rs1.next()) {
-                hash_Set.remove(rs1.getString("tac"));
+                hash_Set.remove(rs1.getString(1));
             }
             rs1.close();
 //          
