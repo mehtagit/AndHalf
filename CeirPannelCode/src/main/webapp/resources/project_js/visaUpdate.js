@@ -464,9 +464,9 @@
 			
 			
 			
-			function viewDetails(visaId,endUserId){ 
+			function viewDetails(visaId,endUserId,source,txnId){ 
 				
-					window.location.href="./view-visa-information/"+visaId+"/"+endUserId;
+				window.location.href="./view-visa-information/"+visaId+"/"+endUserId+"?source="+source+"&txnId="+txnId;
 
 
 			}
