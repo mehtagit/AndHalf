@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
 @ComponentScan(basePackages="com.ceir.SLAModule")
 public class App 
 {
-	
 	private final static Logger log =LoggerFactory.getLogger(App.class);
 	
 	public static void main(String[] args) {
@@ -25,3 +24,4 @@ public class App
 			new Thread(sLAService).start();	 
 			}
 	    }
+
