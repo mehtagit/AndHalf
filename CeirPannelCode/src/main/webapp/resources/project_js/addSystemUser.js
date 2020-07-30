@@ -38,12 +38,14 @@ function SaveSystemUser(){
 				"password": $('#password').val(),
 				"rePassword":$('#confirmPassword').val(),
 				"remarks": $('#userRemark').val(),
+				
 				"usertypeId" : parseInt($('#userType').val()),
 				"userTypeId": parseInt($("body").attr("data-userTypeID")),
 				"userId":  parseInt($("body").attr("data-userID")),
 				"featureId":41,
 				"userType":$("body").attr("data-roleType"),
-				"username" : $("body").attr("data-userName")
+				"usertype":$("body").attr("data-roleType"),
+				"username" : $("body").attr("data-selected-username"),
 		}
 		var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
@@ -51,6 +53,8 @@ function SaveSystemUser(){
 			headers:
 			{ 'X-CSRF-TOKEN': token }
 		});
+		
+		//console.log(JSON.stringify(newUser));
 		$.ajax({
 			url : "./saveNewSystemUser",
 			data : JSON.stringify(newUser),

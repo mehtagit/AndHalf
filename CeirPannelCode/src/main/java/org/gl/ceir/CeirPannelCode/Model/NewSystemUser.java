@@ -10,7 +10,7 @@ public class NewSystemUser {
 	private String  rePassword;
 	private String phoneNo;
 	private String remarks;
-	private String userType;
+	private String userType,usertype;
 	private Integer userTypeId,usertypeId;
 	private String username;
 	private String userName;
@@ -92,6 +92,12 @@ public class NewSystemUser {
 	public void setUserType(String userType) {
 		this.userType = userType;
 	}
+	public String getUsertype() {
+		return usertype;
+	}
+	public void setUsertype(String usertype) {
+		this.usertype = usertype;
+	}
 	public Integer getUserTypeId() {
 		return userTypeId;
 	}
@@ -145,6 +151,8 @@ public class NewSystemUser {
 		builder.append(remarks);
 		builder.append(", userType=");
 		builder.append(userType);
+		builder.append(", usertype=");
+		builder.append(usertype);
 		builder.append(", userTypeId=");
 		builder.append(userTypeId);
 		builder.append(", usertypeId=");

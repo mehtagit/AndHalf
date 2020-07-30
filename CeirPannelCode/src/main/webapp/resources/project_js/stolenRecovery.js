@@ -343,7 +343,7 @@ function Datatable(url,dataUrl,sourceTypeFiler){
 		{
 		
 		if($("body").attr("data-session-source")=='noti'){
-			alert("yy " + $("body").attr("data-session-source"))
+			
 			txn=$('#transactionID').val();
 		}
 		requestType = parseInt($('#requestType').val())

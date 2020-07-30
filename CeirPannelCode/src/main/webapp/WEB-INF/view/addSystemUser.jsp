@@ -192,7 +192,7 @@ var contextpath = "${context}";
 
 </head>
 <body data-lang-param="${pageContext.response.locale} " data-roleType="${usertype}" data-userTypeID="${usertypeId}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${stolenselectedUserTypeId}" 
-data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}" data-userName="${userName}"		
+data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}" data-selected-username="${username}"		
  data-grievanceStatus="${grievanceStatus}" session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}">
          <!-- START CONTENT -->
             <section id="content">

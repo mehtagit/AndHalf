@@ -6,6 +6,7 @@ import org.gl.ceir.CeirPannelCode.Model.LoginGraphFilter;
 import org.gl.ceir.CeirPannelCode.Model.UserLoginReport;
 import org.gl.ceir.CeirPannelCode.Service.GraphService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +22,7 @@ public class GraphController {
 
 	@ResponseBody
 	@RequestMapping(value = "/userLoginGraph",method = {RequestMethod.POST})
-	public List<UserLoginReport> userLoginGraph(@RequestBody LoginGraphFilter filter){
+	public ResponseEntity<?> userLoginGraph(@RequestBody LoginGraphFilter filter){
 		return graphService.userLoginGraph(filter);
 	}
 

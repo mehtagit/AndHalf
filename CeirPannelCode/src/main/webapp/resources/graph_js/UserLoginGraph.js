@@ -23,143 +23,186 @@ function userloginGraph() {
 		},*/
 		success : function(data) {
 			var response = JSON.parse(data);
+			console.log(response)
 			graph(response,'lineGraph','line','User Login Line Graph')
-			graph(response,'barGraph','column','User Login Bar Graph')
+			graph(response,'barGraph','bar','User Login Bar Graph')
+			graph(response,'pieGraph','pie','User Login Pie Graph')
+			graph(response,'donutGraph','doughnut','User Login Doughnut Graph')
+			graph(response,'gaugeGraph','gauge','User Login Doughnut Graph')
+			graph(response,'horizontalBarGraph','horizontalBar','User Login HorizontalBar Graph')	
+			
 		},
 		error : function() {
 		}
 	});
 }
 
-/*function areaGraph(response,gradientColor1, gradientColor2, opacity,id){
-    var timeduration=[];
-    var date=[];
-    var duration_name;
-    for(var i=0;i<response.length;i++){
-   	 timeduration.push(response[i].timeduration);
-   	 date.push(response[i].createdOn);
-   	 duration_name=response[0].duration_name;
-    }
-    var color1 = gradientColor1;
-	var color2 = gradientColor2;
-    if(gradientColor1.includes("#")){
-		color1 = hexToRgb(gradientColor1);
-	}
-	if(gradientColor2.includes("#")){
-		color2= hexToRgb(gradientColor2);
-	}
-
-    var ctx = document.getElementById(id).getContext("2d");
-    var gradientStroke = ctx.createLinearGradient(0, 500, 0, 100);
-    gradientStroke.addColorStop(0, color1.replace(')', ', '+opacity+')').replace('rgb', 'rgba'));
-    gradientStroke.addColorStop(1, color2.replace(')', ', '+opacity+')').replace('rgb', 'rgba')); //pink colors
-    
-    var lineGradientStroke = ctx.createLinearGradient(500, 0, 100, 0);
-    lineGradientStroke.addColorStop(0, gradientColor1);
-    lineGradientStroke.addColorStop(1, gradientColor2); //pink colors
-    
-    var data = {
-    		 labels: date,
-    	        datasets: [{
-    	          label:duration_name,
-    	          fill: true,
-    	         backgroundColor: gradientStroke,
-   	          borderColor:lineGradientStroke,
-   	          borderWidth: 2,
-   	          borderDash: [],
-   	          borderDashOffset: 0.0,
-   	          pointBackgroundColor: gradientColor1.replace(')', ', '+opacity+')').replace('rgb', 'rgba'),
-   	          pointBorderColor: 'rgba(255,255,255,0)',
-   	          pointHoverBackgroundColor:gradientColor1,
-   	          pointBorderWidth: 20,
-   	          pointHoverRadius: 4,
-   	          pointHoverBorderWidth: 15,
-   	          pointRadius: 4,
-   	          data: timeduration,
-      }]
-    };  
-    
- //   if(chart44) chart44.destroy();
-    chart44 = new Chart(ctx, {
-      type: 'line',
-      data: data,
-      options: gradientChartOptionsConfigurationWithTooltipPurple
-      
-    });
-}*/
 
 function graph(response,id,chartType,chartTitle)
 {
   var date=[];
   var noOfUsers=[];
   var uniqueUsers=[];
-	for(var i=0;i<response.length;i++){
-		noOfUsers.push(response[i].noUserLogged);
-	   	 date.push(response[i].createdOn);
-	   	uniqueUsers.push(response[i].uniqueUserLogged);
+  var pieLabelName;
+  var pieData=[];
+	for(var i=0;i<response['line'].length;i++){
+		noOfUsers.push(response['line'][i].noUserLogged);
+	   	 date.push(response['line'][i].createdOn);
+	   	uniqueUsers.push(response['line'][i].uniqueUserLogged);
 	    }
 	//console.log("date: "+date);
 	   //console.log("noOfUsers: "+noOfUsers);
-	    //console.log("uniqueUserLogged: "+uniqueUsers);	
-	  var title = {
-              text: chartTitle   
-           };
-	  var chart = {
-              type: chartType
-           };
-           var subtitle = {
-              text: ''
-           };
-           var xAxis = {
-              categories:date,
-            	type: 'datetime',
-           
-              formatter: function() {
-            	  const dateValue = Date.UTC(this.value);
-            	  return Highcharts.dateFormat('%d-%m-%Y', dateValue);
-            	}
-           };
-           var yAxis = {
-              title: {
-                 text: 'User login count'
-              },
-              plotLines: [{
-                 value: 0,
-                 width: 1,
-                 color: '#808080'
-              }]
-           };   
-           var tooltip = {
-              valueSuffix: '',
-           xDateFormat: '%A, %B %d, %Y UTC %Z'
-            	 
-           }
-           var legend = {
-              layout: 'vertical',
-              align: 'right',
-              verticalAlign: 'middle',
-              borderWidth: 0
-           };
-           var series =  [{
-                 name: 'Number Of Users',
-                 data: noOfUsers
-              }, 
-              {
-                 name: 'Unique Users',
-                 data: uniqueUsers
-              }, 
-           ];
+	    //console.log("uniqueUserLogged: "+);	
+// pie
+	for(var i=0;i<response['pie'].length;i++){
+		pieLabelName=response['pie'][i].labels;
+		pieData.push(response['pie'][i].noUserLogged);
+		pieData.push(response['pie'][i].uniqueUserLogged);
+	    }
+	
+    if(chartType=='pie' || chartType=='doughnut'){
+    
+        var ctx = document.getElementById(''+id+'').getContext('2d');
+        var chart = new Chart(ctx, {
+          // The type of chart we want to create
+          type: ''+chartType+'',
 
-           var json = {};
-           json.chart = chart; 
-           json.title = title;
-           json.subtitle = subtitle;
-           json.xAxis = xAxis;
-           json.yAxis = yAxis;
-           json.tooltip = tooltip;
-           json.legend = legend;
-           json.series = series;
-           
-           $('#'+id).highcharts(json);
+          // The data for our dataset
+          data: {
+            labels: pieLabelName,
+            datasets: [ {
+            	 backgroundColor: [
+            		 '#512DA8',
+                     '#D32F2F'],
+                data: pieData
+            }]
+          },
 
+          // Configuration options go here
+          options: {
+        	    responsive: false,
+        	    maintainAspectRatio: false,
+        	    
+        	}
+        });
+    	
+    }
+    else if(chartType=='gauge'){
+
+        
+        var ctx = document.getElementById(''+id+'').getContext('2d');
+        var chart = new Chart(ctx, {
+          // The type of chart we want to create
+          type: 'doughnut',
+
+          // The data for our dataset
+          data: {
+            labels: pieLabelName,
+            datasets: [ {
+            	 backgroundColor: [
+            		   'rgba(255, 99, 132, 0.2)',
+                       'rgba(54, 162, 235, 0.2)'],
+                data: pieData
+            }],
+            borderWidth: 0
+          },
+
+          // Configuration options go here
+          options: {
+        	    responsive: false,
+        	    maintainAspectRatio: false,
+        	    rotation: 1 * Math.PI,
+                circumference: 1 * Math.PI
+        	    
+        	}
+        });
+    	
+    
+    }
+    
+    else if(chartType == 'horizontalBar'){
+    	var bar_ctx = document.getElementById(''+id+'');
+    	var bar_chart = new Chart(bar_ctx, {
+    	    type: ''+chartType+'',
+    	    data: {
+    	        labels: date,
+    	        datasets: [
+    	        	{
+    	                label: "Number Of Users",
+    	                backgroundColor: "#512DA8",
+						hoverBackgroundColor: "#7E57C2",
+    	                data: noOfUsers
+    	            },
+    	            {
+    	                label: "Unique Users",
+    	            	backgroundColor: "#FFA000",
+						hoverBackgroundColor: "#FFCA28",
+    	                data: uniqueUsers
+    	            }]
+    	    },
+    	    options: {
+    	        responsive: false,
+        	    maintainAspectRatio: false,
+    	     		animation: {
+    	        	duration: 10,
+    	        },
+    	        scales: {
+    	          xAxes: [{ 
+    	          	stacked: true, 
+    	            gridLines: { display: false },
+    	            }],
+    	          yAxes: [{ 
+    	          	stacked: true
+    	           
+    	            }],
+    	        }, // scales
+    	        legend: {display: true}
+    	    } // options
+    	   }
+    	);
+    }
+    else{
+    var ctx = document.getElementById(''+id+'').getContext('2d');
+    var chart = new Chart(ctx, {
+      // The type of chart we want to create
+      type: ''+chartType+'',
+
+      // The data for our dataset
+      data: {
+        labels: date,
+        datasets: [ {
+            label: "Number Of Users",
+            backgroundColor:  'rgb(70, 191, 189)',
+            borderColor: 'rgb(70, 191, 189)',
+            data: noOfUsers
+        },
+        {
+            label: "Unique Users",
+          backgroundColor: 'rgb(235, 203, 138)',
+            borderColor:  'rgb(235, 203, 138)',
+            data: uniqueUsers
+        }]
+      },
+
+      // Configuration options go here
+      options: {
+    	    responsive: false,
+    	    maintainAspectRatio: false,
+    	    scales: {
+                xAxes: [{
+                   gridLines: {
+                      display: false
+                   }
+                }],
+                yAxes: [{
+                   gridLines: {
+                      display: false
+                   }
+                }]
+             }           
+             
+    	}
+    });
+    }   
 }
+

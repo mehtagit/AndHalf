@@ -132,7 +132,9 @@ select {
 	data-userTypeID="${usertypeId}" data-userID="${userid}"
 	data-operatorTypeId="${operatorTypeId}"
 	data-selected-roleType="${stolenselectedUserTypeId}"
-	data-stolenselected-roleType="${stolenselectedUserTypeId}">
+	data-stolenselected-roleType="${stolenselectedUserTypeId}"
+	data-txnID="${not empty param.txnId ? param.txnId : 'null'}"
+	data-source="${not empty param.reqSource ? param.reqSource : 'null'}">
 
 
 
@@ -896,9 +898,11 @@ onclick="_Services._selectstartDate()"></i></span>
 													type="submit">
 													<spring:message code="button.submit" />
 												</button>
-												<a href="./stolenRecovery?FeatureId=5"
+												<%-- <a href="./stolenRecovery?FeatureId=5"
 													class="btn modal-trigger" style="margin-left: 10px;"><spring:message
-														code="button.cancel" /></a>
+														code="button.cancel" /></a> --%>
+												<a class="btn modal-close" onclick="closeViewPage()">
+												<spring:message code="modal.close" /></a>		
 											</div>
 
 										</form>

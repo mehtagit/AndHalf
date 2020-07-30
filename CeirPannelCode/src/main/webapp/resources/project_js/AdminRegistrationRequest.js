@@ -34,11 +34,11 @@
 
 		if(source == 'filter' ) {
 			source__val= source;
+			$("body").attr("data-session-source","filter");
 		}
 		else{
 			source__val= $("body").attr("data-session-source");
-
-		}
+}
 		
 		var asType = $('#asType').val();
 		var userRoleTypeId = $("#role").val();
@@ -444,8 +444,9 @@
 		if(startdate != "" || endDate != "" || emailId !="" || phone != '' || username != "" || asType != "-1" ||  userRoleTypeId != "-1" || status != "-1"  ){
 			source = "filter"
 		}else{
-			source = source__val= $("body").attr("data-session-source");
+			source =$("body").attr("data-session-source");
 		}
+		
 		var userID= (txnIdValue == 'null' && transactionIDValue == undefined)? -1 : transactionIDValue;
 	
 		////console.log ("source--->" +source);
