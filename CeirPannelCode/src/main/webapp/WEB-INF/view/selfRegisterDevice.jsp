@@ -125,7 +125,7 @@ select option {
 }
 
 .row {
-	margin-top: 2vh;
+	margin-top: 0vh;
 }
 
 .section {
@@ -179,8 +179,11 @@ position: fixed;
 }
 
 .row.card-panel.tableView {
-    width: 65%;
-    margin-left: 18%;
+    width: 77%;
+    margin-left: 12%;
+    margin-top: 2vh;
+}
+.row.card-panel.tableFormHeader {
     margin-top: 2vh;
 }
 </style>
@@ -210,7 +213,7 @@ position: fixed;
 			<div class="section">
 				<div class="">
 					<div class="col s12 m12 l12" id="emptyTable">
-						<div class="row card-panel">
+						<div class="row card-panel tableFormHeader">
 
 							
 

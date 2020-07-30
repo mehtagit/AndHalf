@@ -1098,6 +1098,10 @@ var source= $("body").attr("data-source-value");
 if (source=='menu'){
 	txnID='';
 }
+else if(source=='filter'){
+	txnID='';
+	source='menu'
+}
 
 
    if(userType=="CEIRAdmin")

@@ -164,7 +164,7 @@ input[type='search'] {
 }
 </style>
 </head>
-<body data-id="12" session-value="${not empty param.NID ? param.NID : 'null'}">
+<body data-id="12" session-value="${not empty param.NID ? param.NID : 'null'}" data-source-value="${not empty param.source ? param.source : 'null'}">
 
 	<!-- START CONTENT -->
 	<section id="content">
@@ -218,6 +218,7 @@ input[type='search'] {
 														<input class="file-path validate responsive-file-div" id="csvUploadFileName" readonly="readonly" value="${viewInformation.data.passportFileName}"
 															type="text">
 														<a	class="imgPreviewLink" onclick="previewFile('${fileLink}','${viewInformation.data.passportFileName}','${viewInformation.data.txnId}','${viewInformation.data.docTypeInterp}')">Preview</a>
+													<input type="text" style="display: none" id="redirectionTxnid" value="${txnId}">
 													</div>
 												</div>
 											</div>
@@ -1082,7 +1083,18 @@ input[type='search'] {
 <script type="text/javascript">
 $('#redirectToPage').click(function(){
 	var nationalID=$('#nationalID').val();
-	 window.location.replace("${context}/updateVisa");
+	var txnID= $('#redirectionTxnid').val();
+	var source= $("body").attr("data-source-value");
+	
+	    if (source=='menu'){
+			txnID='';
+		}
+		else if(source=='filter'){
+			txnID='';
+			source='menu'
+		}
+
+	 window.location.replace("${context}/updateVisa?txnID="+txnID+"&source="+source);
 	});
 	
 var selectvip=$("input[name='selectvip']:checked").val()
