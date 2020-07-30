@@ -5,6 +5,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 
 @Configuration
 @EnableWebSecurity
@@ -16,6 +17,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	http
 	.authorizeRequests().antMatchers(HttpMethod.OPTIONS,"/**").permitAll()
 	.and()
+	.sessionManagement()
+	.sessionCreationPolicy(SessionCreationPolicy.NEVER).invalidSessionUrl("/login").and()
 	.formLogin().disable()
 	.logout().logoutUrl("/logout").invalidateHttpSession(true).deleteCookies("JSESSIONID").and().
 	headers().frameOptions().sameOrigin().cacheControl().disable();

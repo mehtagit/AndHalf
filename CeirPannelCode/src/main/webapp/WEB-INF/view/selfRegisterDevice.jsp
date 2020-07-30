@@ -125,7 +125,7 @@ select option {
 }
 
 .row {
-	margin-top: 0px;
+	margin-top: 2vh;
 }
 
 .section {
@@ -178,7 +178,11 @@ z-index: 1003;
 position: fixed;
 }
 
-
+.row.card-panel.tableView {
+    width: 65%;
+    margin-left: 18%;
+    margin-top: 2vh;
+}
 </style>
 </head>
 <body data-lang-param="${pageContext.response.locale}"
@@ -789,7 +793,7 @@ position: fixed;
 								
 							</div>
 							<div class="container" id="user456" style="display: none;">
-							<div class="row card-panel">
+							<div class="row card-panel tableView">
 							<%-- <h6 class="fixPage-modal-header ">
 						<spring:message code="modal.header.registerdevice" />
 					</h6> --%>

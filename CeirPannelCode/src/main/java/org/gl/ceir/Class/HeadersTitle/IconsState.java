@@ -1245,14 +1245,13 @@ public class IconsState {
 
 	/********************************** Icons for AdminRegistrationRequest **********************************/ 
 
-	public String adminRegistrationRequest(String Id ,String userStatus,String AdminCurrentStatus,String createdOn,String roles, String type,String id,String username,String status,String sessionUserName,String userTypeId) {
+	public String adminRegistrationRequest(String Id ,String userStatus,String AdminCurrentStatus,String createdOn,String roles, String type,String id,String username,String status,String sessionUserName,String userTypeId,String source) {
 		executePostConstruct();
 		log.info("username-->" +username+" sessionUserName--->" +sessionUserName);
 		// URL link 
 		String emptyURL="JavaScript:void(0);"; 
 		String approveAction = "userApprovalPopup("+Id+",'"+createdOn.replace(" ", "=")+"','"+username+"','"+sessionUserName+"')";
-
-		String viewAction="trcInformation?id="+id+"&roles="+roles.replace(" ", "=")+"&type="+type;
+		String viewAction="chngeView("+id+",'"+roles.replace(" ", "=")+"','"+type+"','"+source+"')";
 		String rejectAction = "userRejectPopup("+Id+",'"+sessionUserName+"')";
 		String editAction="roleStatusChange('"+Id+"','"+sessionUserName+"','"+userTypeId+"','"+id+"')";
 
@@ -1262,7 +1261,7 @@ public class IconsState {
 		// state related Code 
 
 
-		String view="<a href="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+		String view="<a onclick="+viewAction+" id='arlink'><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
 
 		String edit="<a onclick="+editAction+"><i class="+editIcon+" aria-hidden=\"true\"  title="
@@ -1402,11 +1401,11 @@ public class IconsState {
 
 
 	/********************************** Icons for UPS **********************************/ 	
-	public String userPaidStatusIcon(String imei1, String taxStatus, String status, String userStatus, String txnId) {
+	public String userPaidStatusIcon(String imei1, String taxStatus, String status, String userStatus, String txnId,String source) {
 		executePostConstruct();
 		String payTaxAction ="taxPaid('"+imei1+"','"+txnId+"')";
 		String errorURL = "fileDownload('','error','"+txnId+"','"+defaultTagName+"')";
-		String viewAction="viewDetails('"+imei1+"','"+txnId+"')";
+		String viewAction="viewDetails('"+imei1+"','"+txnId+"','"+source+"')";
 		String deleteAction= "deleteByImei('"+imei1+"','"+txnId+"')";
 		
 
@@ -1520,9 +1519,9 @@ public class IconsState {
 
 
 	/********************************** Icons for AdminUPS **********************************/ 	
-	public String adminUserPaidStatusIcon(String imei1,String createdOn,String txnId,String State,String userStatus) {
+	public String adminUserPaidStatusIcon(String imei1,String createdOn,String txnId,String State,String userStatus , String source) {
 		executePostConstruct();
-		String viewAction="viewDetails('"+imei1+"','"+txnId+"')";
+		String viewAction="viewDetails('"+imei1+"','"+txnId+"','"+source+"')";
 
 		String approveAction ="deviceApprovalPopup('"+imei1+"','"+createdOn.replace(" ", "=")+"','"+txnId+"')";
 		String rejectAction= "userRejectPopup('"+imei1+"','"+txnId+"')";
@@ -2090,7 +2089,7 @@ public class IconsState {
 
 	/********************************** Icons for StolenlawfulAgency **********************************/ 
 
-	public String StolenlawfulAgency(String fileName,String txnId ,String status,String userStatus, String requestType,int id,Integer qty,String source, String requestTypeValue) {
+	public String StolenlawfulAgency(String fileName,String txnId ,String status,String userStatus, String requestType,int id,Integer qty,String source, String requestTypeValue,String requestSource) {
 		executePostConstruct();
 		// URL link 
 		String file = fileName == null ? null : fileName.replace(" ", "%20");
@@ -2109,29 +2108,29 @@ public class IconsState {
 		if(source.equals("5") && requestTypeValue.equals("0")) {
 			//check for Stolen/Indvisual
 
-			editAction="openStolenRecoveryPage('editIndivisualsStolen','edit','"+txnId+"')";
-			viewAction="openStolenRecoveryPage('editIndivisualsStolen','view','"+txnId+"')";
+			editAction="openStolenRecoveryPage('editIndivisualsStolen','edit','"+txnId+"','"+requestSource+"')";
+			viewAction="openStolenRecoveryPage('editIndivisualsStolen','view','"+txnId+"','"+requestSource+"')";
 
 		}
 		else if(source.equals("6") && requestTypeValue.equals("0")) {
 			//check for Stolen/Company
 
-			editAction="openStolenRecoveryPage('editCompanyStolen','edit','"+txnId+"')";
-			viewAction="openStolenRecoveryPage('editCompanyStolen','view','"+txnId+"')";
+			editAction="openStolenRecoveryPage('editCompanyStolen','edit','"+txnId+"','"+requestSource+"')";
+			viewAction="openStolenRecoveryPage('editCompanyStolen','view','"+txnId+"','"+requestSource+"')";
 
 		}
 		else if(source.equals("5") && requestTypeValue.equals("1")) {
 			//check for Recovery/single
 
-			editAction="openStolenRecoveryPage('editIndivisualRecovery','edit','"+txnId+"')";
-			viewAction="openStolenRecoveryPage('editIndivisualRecovery','view','"+txnId+"')";
+			editAction="openStolenRecoveryPage('editIndivisualRecovery','edit','"+txnId+"','"+requestSource+"')";
+			viewAction="openStolenRecoveryPage('editIndivisualRecovery','view','"+txnId+"','"+requestSource+"')";
 
 		}
 		else if(source.equals("6") && requestTypeValue.equals("1")) {
 			//check for Recovery/company
 
-			editAction="openStolenRecoveryPage('editCompanyRecovery','edit','"+txnId+"')";
-			viewAction="openStolenRecoveryPage('editCompanyRecovery','view','"+txnId+"')";
+			editAction="openStolenRecoveryPage('editCompanyRecovery','edit','"+txnId+"','"+requestSource+"')";
+			viewAction="openStolenRecoveryPage('editCompanyRecovery','view','"+txnId+"','"+requestSource+"')";
 
 		}
 
@@ -2431,9 +2430,9 @@ public class IconsState {
 
 	/********************************** Icons for Device Activation **********************************/ 	
 
-	public String deviceActivationIcon(String imei1,String createdOn,String txnId,String status,String userStatus) {
+	public String deviceActivationIcon(String imei1,String createdOn,String txnId,String status,String userStatus,String source) {
 		executePostConstruct();
-		String viewAction="viewDetails('"+imei1+"','"+txnId+"')";
+		String viewAction="viewDetails('"+imei1+"','"+txnId+"','"+source+"')";
 		String deleteAction= "deleteByImei('"+imei1+"','"+txnId+"')";
 		String errorURL = "fileDownload('','error','"+txnId+"','"+defaultTagName+"')";
 
@@ -2681,7 +2680,7 @@ public class IconsState {
 
 	/********************************** Icons for AdminStolen **********************************/ 
 
-	public String AdminStolenlawfulAgency(String fileName,String txnId ,String status,String userStatus, String requestType,int id,Integer qty,String source, String requestTypeValue) {
+	public String AdminStolenlawfulAgency(String fileName,String txnId ,String status,String userStatus, String requestType,int id,Integer qty,String source, String requestTypeValue,String reqType) {
 		executePostConstruct();
 		// URL link 
 		String file = fileName == null ? null : fileName.replace(" ", "%20");
@@ -2703,22 +2702,22 @@ public class IconsState {
 				+historyTitle+"></i></a>";
 		if(source.equals("5") && requestTypeValue.equals("0")) {
 			//check for Stolen/Indvisual
-			viewAction="openStolenRecoveryPage('editIndivisualsStolen','view','"+txnId+"')";
+			viewAction="openStolenRecoveryPage('editIndivisualsStolen','view','"+txnId+"','"+reqType+"')";
 
 		}
 		else if(source.equals("6") && requestTypeValue.equals("0")) {
 			//check for Stolen/Company
-			viewAction="openStolenRecoveryPage('editCompanyStolen','view','"+txnId+"')";
+			viewAction="openStolenRecoveryPage('editCompanyStolen','view','"+txnId+"','"+reqType+"')";
 
 		}
 		else if(source.equals("5") && requestTypeValue.equals("1")) {
 			//check for Recovery/single
-			viewAction="openStolenRecoveryPage('editIndivisualRecovery','view','"+txnId+"')";
+			viewAction="openStolenRecoveryPage('editIndivisualRecovery','view','"+txnId+"','"+reqType+"')";
 
 		}
 		else if(source.equals("6") && requestTypeValue.equals("1")) {
 			//check for Recovery/company
-			viewAction="openStolenRecoveryPage('editCompanyRecovery','view','"+txnId+"')";
+			viewAction="openStolenRecoveryPage('editCompanyRecovery','view','"+txnId+"','"+reqType+"')";
 
 		}
 		/*

@@ -651,7 +651,7 @@ position: fixed;
 				</div>
 			</div>
 <!-- 			<div style="margin-left: 36%; margin-top: -25px;">
-				<label style="margin-right: 2%;"> <input type="radio" id=""
+				<label style="margin-right: 2%;"> <input type="radio" 
 					value="Immediate"
 					onclick="document.getElementById('calender').style.display = 'none';"
 					name="stolenBlockPeriod" checked> Immediate
@@ -765,7 +765,7 @@ position: fixed;
 				</div>
 			</div>
 			<div style="margin-left: 36%; margin-top: -25px;">
-				<label style="margin-right: 2%;"> <input type="radio" id=""
+				<label style="margin-right: 2%;"> <input type="radio" 
 					value="Immediate"
 					onclick="document.getElementById('calender').style.display = 'none';"
 					name="editStolenBlockPeriod" checked> Immediate<spring:message code="input.supplier" />
@@ -1257,7 +1257,7 @@ required="required"></textarea>
 <div class="row" id="editBlockTimePeriod">
 <div class="col s12 m6">
 <spring:message code="operator.blocking" /> <label style="margin-right: 2%;"> <input
-type="radio" name="editbulkBlockdeviceradio" class="blocktypeRadio" id=""
+type="radio" name="editbulkBlockdeviceradio" class="blocktypeRadio" 
 value="Immediate"
 onchange="document.getElementById('calender').style.display = 'none';"
 name="stolenBlockPeriod">
@@ -1459,7 +1459,7 @@ title="" maxlength="16" value="1500" disabled>
 													<spring:message code="operator.blocking" />
 												</p>
 												<label style="margin-right: 2%;"> <input
-													type="radio" class="editbulkblocktypeRadio" id="" value="Immediate"
+													type="radio" class="editbulkblocktypeRadio"  value="Immediate"
 													onclick="document.getElementById('bulkeditcalender').style.display = 'none';"
 													name="editbulkblocktypeName" checked> <spring:message
 														code="operator.immediate" />

@@ -621,7 +621,7 @@ function accept(){
 }
 
 
-	function viewDetails(imei,txnId){ 
+	function viewDetails(imei,txnId,source){ 
 	/*$('#viewDeviceInformation').openModal({dismissible:false});
 	$.ajax({
 		url : "./deviceInfo/"+imei,
@@ -636,7 +636,7 @@ function accept(){
 		}
 	});*/
 		
-		window.location.href="./view-device-information/"+imei+"/"+txnId;
+		window.location.href="./view-device-information/"+imei+"/"+txnId+"?source="+source+"&transactionID="+txnId;
 
 
 }

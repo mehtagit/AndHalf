@@ -1,11 +1,19 @@
 package org.gl.ceir.CeirPannelCode.Model;
 
+import java.util.Arrays;
+
 public class UserLoginReport {
 
 	private String createdOn;
 	private Integer noUserLogged;  
 	private Integer uniqueUserLogged;
-	
+	private String[] labels;
+	public String[] getLabels() {
+		return labels;
+	}
+	public void setLabels(String[] labels) {
+		this.labels = labels;
+	}
 	public String getCreatedOn() {
 		return createdOn;
 	}
@@ -26,14 +34,7 @@ public class UserLoginReport {
 	}
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append(", createdOn=");
-		builder.append(createdOn);
-		builder.append(", noUserLogged=");
-		builder.append(noUserLogged);
-		builder.append(", uniqueUserLogged=");
-		builder.append(uniqueUserLogged);
-		builder.append("]");
-		return builder.toString();
+		return "UserLoginReport [createdOn=" + createdOn + ", noUserLogged=" + noUserLogged + ", uniqueUserLogged="
+				+ uniqueUserLogged + ", labels=" + Arrays.toString(labels) + "]";
 	}  
 }

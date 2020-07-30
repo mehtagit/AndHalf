@@ -170,7 +170,8 @@ input[type='search'] {
 }
 </style>
 </head>
-<body data-id="12" session-value="${not empty param.NID ? param.NID : 'null'}" data-roleType="${usertype}">
+<body data-id="12" session-value="${not empty param.NID ? param.NID : 'null'}" data-roleType="${usertype}"
+data-txnid-value="${not empty param.transactionID ? param.transactionID : 'null'}" data-source-value="${not empty param.source ? param.source : 'null'}">
 
 	<!-- START CONTENT -->
 	<section id="content">
@@ -636,7 +637,7 @@ input[type='search'] {
 
 									<div class="col s12 m12 center" style="margin-top: 30px;">
 										<%-- <button class="btn " type="submit"> <spring:message code="button.submit" /></button> --%>
-										<button type='button' class="btn" id="redirectToPage" 
+										<button type='button' class="btn"  id="redirectToPage"
 												style="margin-left: 10px;"><spring:message code="button.cancel" /></button>
 									</div>
 
@@ -1092,17 +1093,23 @@ input[type='search'] {
 $('#redirectToPage').click(function(){
 	var nationalID=$('#nationalID').val();
 var userType= $("body").attr("data-roleType");
+var txnID= $("body").attr("data-txnid-value");
+var source= $("body").attr("data-source-value");
+if (source=='menu'){
+	txnID='';
+}
+
+
    if(userType=="CEIRAdmin")
 	   {
-	   window.location.replace("${context}/uploadPaidStatus");
+	   window.location.replace("${context}/uploadPaidStatus?txnID="+txnID+"&source="+source);
 	   }
    else{
-	   
-   window.location.replace("${context}/uploadPaidStatus?via=other&NID="+nationalID);  
+	window.location.replace("${context}/uploadPaidStatus?via=other&NID="+nationalID+"&txnID="+txnID+"&source="+source);  
        }
-	 
-
 	});
+	
+	
 	
 var selectvip=$("input[name='selectvip']:checked").val()
 var onVisa=$("input[name='onVisa']:checked").val()

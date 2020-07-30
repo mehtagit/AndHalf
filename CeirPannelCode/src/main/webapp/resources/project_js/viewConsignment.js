@@ -74,17 +74,18 @@ function confirmantiondelete(){
 		success : function(data, textStatus, xhr) {
 			if(data.errorCode == 200){
 				$("#consignmentText").text('');
-				$("#consignmentText").text($.i18n(data.message));
+				$("#consignmentText").text($.i18n(deleteInProgress ));
 
 			}else if(data.errorCode == 0){
 				$("#consignmentText").text('');
-				$("#consignmentText").text(deleteInProgress);
+				$("#consignmentText").text(consignmentDeleted);
 			}
 			else if(data.errorCode==5){
 				$('#consignmentText').text('');
 				$('#consignmentText').text($.i18n(data.tag));
 			}
 			else{
+				$('#consignmentText').text('');
 				$("#consignmentText").text(errorMsg);
 			}
 		},
@@ -375,9 +376,7 @@ function table(url,dataUrl){
 			"txnId": $('#transactionID').val() == null ? txn : $('#transactionID').val(),
 			"roleType":$("body").attr("data-roleType"),
 			"displayName" : $('#name').val()
-
-
-	}
+}
 	if(lang=='km'){
 		var langFile='./resources/i18n/khmer_datatable.json';
 	}

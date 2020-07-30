@@ -97,10 +97,12 @@
         }
 
         .card-panel {
-            width: 100%;
+            width: 50%;
             margin-top: 0vh;
         }
-
+        .row.card-panel.headerLang {
+          width: 100%;
+          }
         @media only screen  and (max-width: 992px){
             .card-panel {
             width: 100%;
@@ -162,7 +164,7 @@ var contextpath = "${context}";
          <!-- START CONTENT -->
             <section id="content">
             <div id="initialloader"></div>
-            <div class="row card-panel">
+            <div class="row card-panel headerLang">
 			<div class="languageDiv">
 			
 		<div class="col s10 m11 select-lang-lable">

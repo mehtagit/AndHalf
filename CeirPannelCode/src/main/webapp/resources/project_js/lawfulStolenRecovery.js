@@ -425,9 +425,9 @@ function openStolenRecoveryModal()
 	});
 }
 
-function openStolenRecoveryPage(pageType,pageView,txnId)
+function openStolenRecoveryPage(pageType,pageView,txnId,reqSource)
 {
-	window.location.href = "./openlawfulStolenRecoveryPage?pageType="+pageType+"&pageView="+pageView+"&txnId="+txnId;
+	window.location.href = "./openlawfulStolenRecoveryPage?pageType="+pageType+"&pageView="+pageView+"&txnId="+txnId+"&reqSource="+reqSource;
 }
 
 function showSingleFormDiv()

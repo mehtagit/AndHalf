@@ -134,8 +134,9 @@ GrievanceFeignClient grievanceFeignClient;
 	
 
 	@GetMapping("view-device-information/{imei}/{txnId}")
-	public ModelAndView viewDeviceInformationView(@PathVariable("imei") String imei,@PathVariable("txnId") String txnId,HttpSession session) {
-		log.info(" imei =="+imei+"  txnid=="+txnId);
+	public ModelAndView viewDeviceInformationView(@PathVariable("imei") String imei,@PathVariable("txnId") String txnId,HttpSession session,
+			@RequestParam( name="transactionID" , required = false) String transactionID,@RequestParam(name="source") String source) {
+		log.info(" imei =="+imei+"  txnid=="+txnId+"  source=="+source);
 		String userType=(String) session.getAttribute("usertype"); 
 		  String  userName= (String) session.getAttribute("username").toString(); 
 		  int userId= (int) session.getAttribute("userid"); 

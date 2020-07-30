@@ -204,7 +204,7 @@ i.fa.fa-times-circle-o.red-text {
 												<button class=" btn" type="submit">
 													<spring:message code="button.submit" />
 												</button>
-												<a href="./homePage" class="btn" style="margin-left: 10px;"><spring:message
+												<a href="./redirectToHomePage" class="btn" style="margin-left: 10px;"><spring:message
 														code="button.cancel" /></a>
 											</div>
 
@@ -259,7 +259,7 @@ i.fa.fa-times-circle-o.red-text {
 									<div class="row">
 										<div class="input-field col s12 center">
 											<div class="input-field col s12 center">
-												<a href="./homePage" class="btn" style="width: 100%;"><spring:message
+												<a href="./redirectToHomePage" class="btn" style="width: 100%;"><spring:message
 														code="modal.close" /></a>
 											</div>
 										</div>
@@ -308,7 +308,7 @@ i.fa.fa-times-circle-o.red-text {
 									<div class="row">
 										<div class="input-field col s12 center">
 											<div class="input-field col s12 center">
-												<a href="./homePage" class="btn" style="width: 100%;"><spring:message
+												<a href="./redirectToHomePage" class="btn" style="width: 100%;"><spring:message
 														code="modal.close" /></a>
 											</div>
 										</div>

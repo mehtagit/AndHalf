@@ -509,9 +509,9 @@ width: inherit;
 			<div class="row">
 				<h6>
 					<spring:message code="modal.message.markConsignment" />
-					(<span id="disapprovedDisplayname"></span>
+					<span id="disapprovedDisplayname"></span>
 					<spring:message code="modal.message.havingTxn" />
-					<span id="disaproveTxnId"></span>)
+					<span id="disaproveTxnId"></span>
 					<spring:message code="modal.message.asRejected" />
 				</h6>
 				<input type="text" id="setDisapproveConsignmentTxnId"
