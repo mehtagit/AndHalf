@@ -11,6 +11,7 @@ import com.ceir.BlackListFileProcess.service.BlackListService;
 @SpringBootApplication
 @EnableAutoConfiguration
 @ComponentScan(basePackages = "com.ceir.BlackListFileProcess")
+//App Start
 public class App 
 {
     public static void main( String[] args )
@@ -20,4 +21,5 @@ public class App
 		new Thread(blackListService).start();
     }
 }
+
 
