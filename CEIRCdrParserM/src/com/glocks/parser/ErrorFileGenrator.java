@@ -157,7 +157,8 @@ public class ErrorFileGenrator {
                     new CEIRFeatureFileFunctions().HttpApiConnecter(tag, responseBody);
                }
           } catch (Exception e) {
-               logger.error(" " + e);
+               logger.warn("No File Found " );
+//               logger.error(" " + e);
           }
 
      }

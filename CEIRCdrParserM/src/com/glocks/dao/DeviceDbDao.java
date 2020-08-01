@@ -65,64 +65,7 @@ public class DeviceDbDao {
           return deviceDbs;
      }
 
-     public void insertDeviceDbAud(Connection conn, List<DeviceDb> deviceDbs) {
-          boolean isOracle = conn.toString().contains("oracle");
-          String dateFunction = Util.defaultDate(isOracle);
 
-          PreparedStatement preparedStatement = null;
-
-          String query = "insert into device_db_aud (id, rev, revtype, created_on, modified_on, device_type, device_id_type, "
-                  + "multiple_sim_status, sn_of_device, imei_esn_meid, device_launch_date, device_status, "
-                  + "tac, period, txn_id, state) values(";
-
-          if (isOracle) {
-               query = query + "DEVICE_DB_AUD_seq.nextVal,";
-          } else {
-               query = query + (getMaxIdDeviceDbAud(conn) + 1) + ",";
-          }
-
-          query = query + "?,2, current_timestamp,current_timestamp,?,?,?,?,?,?,?,?,?,?,?)";
-
-          logger.info("Add device_db_aud [" + query + "]");
-
-          try {
-               // System.out.println("sop2.1");
-               preparedStatement = conn.prepareStatement(query);
-
-               for (DeviceDb deviceDb : deviceDbs) {
-                    preparedStatement.setLong(1, deviceDb.getRev());
-                    preparedStatement.setString(2, deviceDb.getDeviceType());
-                    preparedStatement.setString(3, deviceDb.getDeviceIdType());
-                    preparedStatement.setString(4, deviceDb.getMultipleSimStatus());
-                    preparedStatement.setString(5, deviceDb.getSnOfDevice());
-                    preparedStatement.setString(6, deviceDb.getImeiEsnMeid());
-                    preparedStatement.setString(7, deviceDb.getDeviceLaunchDate());
-                    preparedStatement.setString(8, deviceDb.getDeviceStatus());
-                    preparedStatement.setInt(9, deviceDb.getTac());
-                    preparedStatement.setString(10, deviceDb.getPeriod());
-                    preparedStatement.setString(11, deviceDb.getTxnId());
-                    preparedStatement.setLong(12, deviceDb.getState());
-
-                    // System.out.println("Query " + preparedStatement);
-                    preparedStatement.addBatch();
-               }
-
-               preparedStatement.executeBatch();
-
-          } catch (SQLException e) {
-               logger.error(e.getMessage(), e);
-               e.printStackTrace();
-          } finally {
-               try {
-                    if (Objects.nonNull(preparedStatement)) {
-                         preparedStatement.close();
-                    }
-               } catch (SQLException e) {
-                    logger.error(e.getMessage(), e);
-                    e.printStackTrace();
-               }
-          }
-     }
 
      public int deleteDevicesFromDeviceDb(Connection conn, String txnId) {
           String query = "";
@@ -169,47 +112,121 @@ public class DeviceDbDao {
           return executeStatus;
      }
 
-     public Long getMaxIdDeviceDbAud(Connection conn) {
-          Statement stmt = null;
-          ResultSet rs = null;
-          String query = null;
-          Long max = null;
+ 
 
-          try {
-               query = "select max(id) as max from device_db_aud";
+//     public void insertDeviceDbAud(Connection conn, List<DeviceDb> deviceDbs) {
+//          boolean isOracle = conn.toString().contains("oracle");
+//          String dateFunction = Util.defaultDate(isOracle);
+//
+//          PreparedStatement preparedStatement = null;
+//
+//          String query = "insert into device_db_aud (id, rev, revtype, created_on, modified_on, device_type, device_id_type, "
+//                  + "multiple_sim_status, sn_of_device, imei_esn_meid, device_launch_date, device_status, "
+//                  + "tac, period, txn_id, state) values(";
+//
+//          if (isOracle) {
+//               query = query + "DEVICE_DB_AUD_seq.nextVal,";
+//          } else {
+//               query = query + (getMaxIdDeviceDbAud(conn) + 1) + ",";
+//          }
+//
+//          query = query + "?,2, current_timestamp,current_timestamp,?,?,?,?,?,?,?,?,?,?,?)";
+//
+//          logger.info("Add device_db_aud [" + query + "]");
+//
+//          try {
+//               // System.out.println("sop2.1");
+//               preparedStatement = conn.prepareStatement(query);
+//
+//               for (DeviceDb deviceDb : deviceDbs) {
+//                    preparedStatement.setLong(1, deviceDb.getRev());
+//                    preparedStatement.setString(2, deviceDb.getDeviceType());
+//                    preparedStatement.setString(3, deviceDb.getDeviceIdType());
+//                    preparedStatement.setString(4, deviceDb.getMultipleSimStatus());
+//                    preparedStatement.setString(5, deviceDb.getSnOfDevice());
+//                    preparedStatement.setString(6, deviceDb.getImeiEsnMeid());
+//                    preparedStatement.setString(7, deviceDb.getDeviceLaunchDate());
+//                    preparedStatement.setString(8, deviceDb.getDeviceStatus());
+//                    preparedStatement.setInt(9, deviceDb.getTac());
+//                    preparedStatement.setString(10, deviceDb.getPeriod());
+//                    preparedStatement.setString(11, deviceDb.getTxnId());
+//                    preparedStatement.setLong(12, deviceDb.getState());
+//
+//                    // System.out.println("Query " + preparedStatement);
+//                    preparedStatement.addBatch();
+//               }
+//
+//               preparedStatement.executeBatch();
+//
+//          } catch (SQLException e) {
+//               logger.error(e.getMessage(), e);
+//               e.printStackTrace();
+//          } finally {
+//               try {
+//                    if (Objects.nonNull(preparedStatement)) {
+//                         preparedStatement.close();
+//                    }
+//               } catch (SQLException e) {
+//                    logger.error(e.getMessage(), e);
+//                    e.printStackTrace();
+//               }
+//          }
+//     }
+//
+// 
+// public Long getMaxIdDeviceDbAud(Connection conn) {
+//          Statement stmt = null;
+//          ResultSet rs = null;
+//          String query = null;
+//          Long max = null;
+//
+//          try {
+//               query = "select max(id) as max from device_db_aud";
+//
+//               logger.info("Query [" + query + "]");
+//               stmt = conn.createStatement();
+//               rs = stmt.executeQuery(query);
+//
+//               if (rs.next()) {
+//                    max = rs.getLong("max");
+//               } else {
+//                    max = 0L;
+//               }
+//
+//               logger.info("Next Id in device_db_aud[" + max + "]");
+//               return max;
+//          } catch (Exception e) {
+//               logger.info("Exception in getMaxIdDeviceDbAud" + e);
+//               e.printStackTrace();
+//               return 0L;
+//          } finally {
+//               try {
+//                    if (rs != null) {
+//                         rs.close();
+//                    }
+//                    if (stmt != null) {
+//                         stmt.close();
+//                    }
+//               } catch (SQLException e) {
+//                    e.printStackTrace();
+//                    logger.error(e.getMessage(), e);
+//               }
+//          }
+//     }
+//
 
-               logger.info("Query [" + query + "]");
-//			 // System.out.println("Query ["+query+"]");
-               stmt = conn.createStatement();
-               rs = stmt.executeQuery(query);
-
-               if (rs.next()) {
-                    max = rs.getLong("max");
-               } else {
-                    max = 0L;
-               }
-
-               logger.info("Next Id in device_db_aud[" + max + "]");
-               return max;
-          } catch (Exception e) {
-               logger.info("Exception in getMaxIdDeviceDbAud" + e);
-               e.printStackTrace();
-               return 0L;
-          } finally {
-               try {
-                    if (rs != null) {
-                         rs.close();
-                    }
-                    if (stmt != null) {
-                         stmt.close();
-                    }
-               } catch (SQLException e) {
-                    e.printStackTrace();
-                    logger.error(e.getMessage(), e);
-               }
-          }
-     }
+     
+     
+     
+     
 }
+
+
+
+
+
+
+
 
 
 

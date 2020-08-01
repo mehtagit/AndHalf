@@ -25,7 +25,7 @@ public class ApproveConsignment {
 			logger.info(deviceImporterDbs);
 
 			deviceCustomDbDao.insertDeviceCustomDbWithImporterObject(conn, deviceImporterDbs);
-			deviceCustomDbDao.insertDeviceCustomDbAudWithImporterObject(conn, deviceImporterDbs, 0);
+//			deviceCustomDbDao.insertDeviceCustomDbAudWithImporterObject(conn, deviceImporterDbs, 0);
 			
          //
 		}catch(Exception e){
@@ -33,3 +33,4 @@ public class ApproveConsignment {
 		}
 	}
 }
+

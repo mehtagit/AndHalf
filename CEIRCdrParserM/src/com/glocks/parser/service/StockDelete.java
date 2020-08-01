@@ -27,7 +27,7 @@ public class StockDelete {
           logger.info("Delete will perform for usertypeName[" + usertypeName + "] and roleType [" + roleType + "].");
 
           ManagementTableDao managementTableDao = new ManagementTableDao();
-          ManagementAudTableDao managementAudTableDao = new ManagementAudTableDao();
+//          ManagementAudTableDao managementAudTableDao = new ManagementAudTableDao();
           StockMgmtDao stockMgmtDao = new StockMgmtDao();
 
           DeviceDbDao deviceDbDao = new DeviceDbDao();
@@ -37,23 +37,17 @@ public class StockDelete {
 
           try {
                List<ManagementTable> managementTables = getTableNameByUserType(stockMgmt.getUserType(), stockMgmt.getRoleType());
-               // System.out.println(managementTables);
                logger.debug(managementTables);
 
                if (managementTables.isEmpty()) {
-                    // System.out.println("No management table found for usertype[" + usertypeName + "]");
                     logger.info("No management table found for usertype[" + usertypeName + "]");
                     return;
                } else {
-
                     for (ManagementTable managementTable : managementTables) {
                          List<ManagementDb> managementDbs = managementTableDao.getManagementDbByTxnId(conn, txnId,
                                  managementTable.getName());
                          logger.debug(managementDbs);
-                         // System.out.println(managementDbs);
-
-                         managementAudTableDao.insertManagementDbAud(conn, managementDbs, managementTable.getAudName(), managementTable.getAudSequenceName());
-
+//                         managementAudTableDao.insertManagementDbAud(conn, managementDbs, managementTable.getAudName(), managementTable.getAudSequenceName());
                          managementTableDao.deleteDevicesFromManagementDb(conn, txnId, managementTable.getName());
                     }
                }
@@ -93,4 +87,9 @@ public class StockDelete {
           return managementTables;
      }
 }
+
+
+
+
+
 

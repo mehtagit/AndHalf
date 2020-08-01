@@ -121,7 +121,9 @@ public class CdrParserProcess {
           BufferedWriter bw1 = null;
           int counter = 1;
           int fileParseLimit = 1;
+          Statement stmt = null;
           try {
+               stmt = conn.createStatement();
                file = new File(filePath + fileName);
                int fileCount = 0;
                try (Stream<String> lines = Files.lines(file.toPath())) {
@@ -149,7 +151,7 @@ public class CdrParserProcess {
                logger.debug("fileParseLimit " + fileParseLimit);
                for (int i = 1; i <= fileParseLimit; i++) {
                     br.readLine();
-                     counter++;
+                    counter++;
                }
                while ((line = br.readLine()) != null) {
                     data = line.split(",", -1);
@@ -306,13 +308,17 @@ public class CdrParserProcess {
                               }
                          }
                     }
-                    bw1.write(my_query + ";");
-                    bw1.newLine();
-                    counter++;
                     logger.info("query : " + my_query);
+                    if (my_query.contains("insert")) {
+                         stmt.executeUpdate(my_query);
+                    } else {
+                         bw1.write(my_query + ";");
+                         bw1.newLine();
+                    }
+                    counter++;
+
                     logger.info("Remaining List : " + (fileCount - counter));
                }   //While End   
-
                Date p2Endtime = new Date();
                cdrFileDetailsUpdate(conn, operator, device_info.get("file_name"), usageInsert, usageUpdate, duplicateInsert, duplicateUpdate, nullInsert, nullUpdate, p2Starttime, p2Endtime, source, counter);
                try {
@@ -328,14 +334,10 @@ public class CdrParserProcess {
 
           } finally {
                try {
-//                    if (sqlFileCounter == 0) {
-//                         logger.error("Error happens   sql file delete");
-//                         renameSqlFile(conn, operator, source, fileName);
-//                    }
+                    stmt.close();
                     br.close();
                     bw1.close();
                     conn.commit();
-
                } catch (Exception e) {
                     logger.error(".. " + l.getClassName() + "/" + l.getMethodName() + ":" + l.getLineNumber() + e);
                }

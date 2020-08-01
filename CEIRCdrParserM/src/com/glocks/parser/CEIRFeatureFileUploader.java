@@ -56,7 +56,7 @@ public class CEIRFeatureFileUploader {
                          }
                     }
 
-                    if (file_details.getString("feature").equalsIgnoreCase("Stolen") && file_details.getString("sub_feature").equalsIgnoreCase("Approve")) {
+                    if (file_details.getString("feature").equalsIgnoreCase("Stolen") && (  file_details.getString("sub_feature").equalsIgnoreCase("Approve")    ||   file_details.getString("sub_feature").equalsIgnoreCase("Accept")      )) {
                          updateDeviceDetailsByTxnId(conn, file_details.getString("txn_id"), "device_lawful_db");
                          ceirfunction.updateFeatureFileStatus(conn, file_details.getString("txn_id"), 4, file_details.getString("feature"), file_details.getString("sub_feature")); // update web_action_db           
                          logger.debug("Web Action 4 done ");
@@ -69,7 +69,7 @@ public class CEIRFeatureFileUploader {
                          break;
                     }
 
-                    if (file_details.getString("feature").equalsIgnoreCase("Recovery") && file_details.getString("sub_feature").equalsIgnoreCase("Approve")) {
+                    if (file_details.getString("feature").equalsIgnoreCase("Recovery") &&   (  file_details.getString("sub_feature").equalsIgnoreCase("Approve")     ||   file_details.getString("sub_feature").equalsIgnoreCase("Accept")      )       ) {
                          removeDeviceDetailsByTxnId(conn, file_details.getString("txn_id"), "device_lawful_db");
                          ceirfunction.updateFeatureFileStatus(conn, file_details.getString("txn_id"), 4, file_details.getString("feature"), file_details.getString("sub_feature")); // update web_action_db           
                          logger.debug("Web Action 4 done ");
@@ -82,7 +82,7 @@ public class CEIRFeatureFileUploader {
                          logger.debug("Web Action 4 done ");
                          break;
                     }
-                    if (file_details.getString("feature").equalsIgnoreCase("Block") && file_details.getString("sub_feature").equalsIgnoreCase("Accept")) {
+                    if (file_details.getString("feature").equalsIgnoreCase("Block") && (file_details.getString("sub_feature").equalsIgnoreCase("Approve")     ||   file_details.getString("sub_feature").equalsIgnoreCase("Accept")   )  ) {
                          updateDeviceDetailsByTxnId(conn, file_details.getString("txn_id"), "device_operator_db");
                          ceirfunction.updateFeatureFileStatus(conn, file_details.getString("txn_id"), 4, file_details.getString("feature"), file_details.getString("sub_feature")); // update web_action_db           
                          logger.debug("Web Action 4 done ");
@@ -95,7 +95,7 @@ public class CEIRFeatureFileUploader {
                          break;
                     }
 
-                    if (file_details.getString("feature").equalsIgnoreCase("Unblock") && file_details.getString("sub_feature").equalsIgnoreCase("Accept")) {
+                    if (file_details.getString("feature").equalsIgnoreCase("Unblock") &&  ( file_details.getString("sub_feature").equalsIgnoreCase("Approve")    ||   file_details.getString("sub_feature").equalsIgnoreCase("Accept")        )   ) {
                          removeDeviceDetailsByTxnId(conn, file_details.getString("txn_id"), "device_operator_db");
                          ceirfunction.updateFeatureFileStatus(conn, file_details.getString("txn_id"), 4, file_details.getString("feature"), file_details.getString("sub_feature")); // update web_action_db           
                          logger.debug("Web Action 4 done ");
@@ -307,9 +307,9 @@ public class CEIRFeatureFileUploader {
           String dateFunction = Util.defaultDate(isOracle);
 
           String query = "select imei_esn_meid , user_id from  " + tableName + "  where SN_OF_DEVICE in ( "
-                  + "select SN_OF_DEVICE from device_operator_db where  TXN_ID = '" + txn_id + "'  "
+                  + "select SN_OF_DEVICE from  " + tableName + " where  TXN_ID = '" + txn_id + "'  "
                   + "and  SN_OF_DEVICE is not null)  union  select   imei_esn_meid   , user_id "
-                  + "from  device_operator_db where  TXN_ID = '" + txn_id + "'  "
+                  + "from   " + tableName + " where  TXN_ID = '" + txn_id + "'  "
                   + "and  SN_OF_DEVICE is null  ";
 
 //           query = "select imei_esn_meid , user_id  from  " + tableName + "  where txn_id =   ";
@@ -414,20 +414,20 @@ public class CEIRFeatureFileUploader {
                     try {
                          stmt1.executeUpdate(device_greylist_db_qry);
                     } catch (Exception e) {
-                         logger.error(" . " + e);
+//                         logger.error(" . " + e);
                     }
                     logger.info("" + device_greylist_History_db_qry);
                     try {
                          stmt2.executeUpdate(device_greylist_History_db_qry);
                     } catch (Exception e) {
-                         logger.error(" .history  " + e);
+                         logger.error(" .histry  " + e);
                     }
 
 //                    }
                }
                rs.close();
           } catch (Exception e) {
-               logger.error("Error" + e);
+               logger.error("Error:: " + e);
           } finally {
                try {
                     rs.close();
@@ -500,6 +500,16 @@ public class CEIRFeatureFileUploader {
 //                    logger.info("File not exists.... ");
 //                    hfr.readFeatureWithoutFile(conn, file_details.getString("feature"), raw_upload_set_no, file_details.getString("txn_id"), file_details.getString("sub_feature"), feature_file_mapping.get("mgnt_table_db"), user_type);
 //                }
+
+
+
+
+
+
+
+
+
+
 
 
 

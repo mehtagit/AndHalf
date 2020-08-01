@@ -111,122 +111,9 @@ public class DeviceCustomDbDao {
 			}
 		}
 	}
+
 	
-	public void insertDeviceCustomDbAud(Connection conn, List<DeviceCustomDb> deviceCustomDbs) {
-		boolean isOracle = conn.toString().contains("oracle");
-		String dateFunction = Util.defaultDate(isOracle);
-
-		String query = "insert into device_importer_db_aud (id, rev, revtype, created_on, device_id_type, "
-				+ "device_launch_date, device_status, device_type, imei_esn_meid, modified_on, multiple_sim_status," 
-				+ "sn_of_device, txn_id, user_id, feature_name) values(";
-
-		if (isOracle) {
-			query = query + "device_custom_db_aud_seq.nextVal,";
-		}else {
-			query = query + (getMaxIdDeviceCustomAud(conn) + 1) +",";
-		}
-
-		query = query + "?,?," + dateFunction + ",?,?,?,?,?,?," + dateFunction + ",?,?,?,?)";
-
-		PreparedStatement preparedStatement = null;
-
-		logger.info("Add device_custom_db_aud ["+query+"]");
-
-		try {
-			preparedStatement = conn.prepareStatement(query);
-
-			for (DeviceCustomDb deviceCustomDb : deviceCustomDbs) {
-				preparedStatement.setLong(1, deviceCustomDb.getRev());
-				preparedStatement.setInt(2, 2); 
-				preparedStatement.setString(3, deviceCustomDb.getDeviceIdType());
-				preparedStatement.setString(4, deviceCustomDb.getDeviceLaunchDate());
-				preparedStatement.setString(5, deviceCustomDb.getDeviceStatus());
-				preparedStatement.setString(6, deviceCustomDb.getDeviceType());
-				preparedStatement.setString(7, deviceCustomDb.getImeiEsnMeid()); 
-				preparedStatement.setString(8, deviceCustomDb.getMultipleSimStatus());
-				preparedStatement.setString(9, deviceCustomDb.getSnOfDevice());
-				preparedStatement.setString(10, deviceCustomDb.getTxnId());
-				preparedStatement.setLong(11, deviceCustomDb.getUserId());
-				preparedStatement.setString(12, deviceCustomDb.getFeatureName());
-				
-				 // System.out.println("Query " + preparedStatement);
-				preparedStatement.addBatch();
-			}
-
-			preparedStatement.executeBatch();
-
-			logger.info("Inserted in device_custom_db_aud succesfully.");
-
-		} catch (SQLException e) {
-			logger.error(e.getMessage(), e);
-		}
-		finally{
-			try {
-				if(Objects.nonNull(preparedStatement))
-					preparedStatement.close();
-			} catch (SQLException e) {
-				logger.error(e.getMessage(), e);
-			}
-		}
-	}
 	
-	public void insertDeviceCustomDbAudWithImporterObject(Connection conn, List<DeviceImporterDb> deviceImporterDbs, int revType) {
-		boolean isOracle = conn.toString().contains("oracle");
-		String dateFunction = Util.defaultDate(isOracle);
-
-		String query = "insert into device_custom_db_aud (id,rev, revtype, created_on, device_id_type, "
-				+ "device_launch_date, device_status, device_type, imei_esn_meid, modified_on, multiple_sim_status," 
-				+ "sn_of_device, txn_id, user_id, feature_name) values(";
-
-		if (isOracle) {
-			query = query + "device_custom_db_aud_seq.nextVal,";
-		}else {
-			query = query + (getMaxIdDeviceCustomAud(conn) + 1) +",";
-		}
-
-		query = query + "?,?," + dateFunction + ",?,?,?,?,?," + dateFunction + ",?,?,?,?,?)";
-
-		PreparedStatement preparedStatement = null;
-
-		logger.info("Add device_custom_db_aud ["+query+"]");
-
-		try {
-			preparedStatement = conn.prepareStatement(query);
-
-			for (DeviceImporterDb deviceCustomDb : deviceImporterDbs) {
-				preparedStatement.setLong(1, deviceCustomDb.getRev());
-				preparedStatement.setInt(2, revType);	 
-				preparedStatement.setString(3, deviceCustomDb.getDeviceIdType());
-				preparedStatement.setString(4, deviceCustomDb.getDeviceLaunchDate());
-				preparedStatement.setString(5, deviceCustomDb.getDeviceStatus());
-				preparedStatement.setString(6, deviceCustomDb.getDeviceType());
-				preparedStatement.setString(7, deviceCustomDb.getImeiEsnMeid()); 
-				preparedStatement.setString(8, deviceCustomDb.getMultipleSimStatus());
-				preparedStatement.setString(9, deviceCustomDb.getSnOfDevice());
-				preparedStatement.setString(10, deviceCustomDb.getTxnId());
-				preparedStatement.setLong(11, deviceCustomDb.getUserId());
-				preparedStatement.setString(12, deviceCustomDb.getFeatureName());
-				
-				 // System.out.println("Query " + preparedStatement);
-				preparedStatement.addBatch();
-			}
-
-			preparedStatement.executeBatch();
-
-			logger.info("Inserted in device_custom_db_aud succesfully.");
-
-		} catch (SQLException e) {
-			logger.error(e.getMessage(), e);
-		}
-		finally{
-			try {
-				if(Objects.nonNull(preparedStatement))
-					preparedStatement.close();
-			} catch (SQLException e) {
-				logger.error(e.getMessage(), e);
-			}
-		}
-	}
 	
 	public int deleteDevicesFromDeviceCustomDb(Connection conn, String txnId) {
 		String query = "";
@@ -253,41 +140,181 @@ public class DeviceCustomDbDao {
 		return executeStatus;
 	}
 	
-	public Long getMaxIdDeviceCustomAud(Connection conn) {
-		Statement stmt = null;
-		ResultSet rs = null;
-		String query = null;
-		Long max = null;
 
-		try{
-			query = "select max(id) as max from device_custom_db_aud";
+   
 
-			logger.info("Query ["+query+"]");
-			stmt  = conn.createStatement();
-			rs = stmt.executeQuery(query);
+//	public void insertDeviceCustomDbAud(Connection conn, List<DeviceCustomDb> deviceCustomDbs) {
+//		boolean isOracle = conn.toString().contains("oracle");
+//		String dateFunction = Util.defaultDate(isOracle);
+//
+//		String query = "insert into device_importer_db_aud (id, rev, revtype, created_on, device_id_type, "
+//				+ "device_launch_date, device_status, device_type, imei_esn_meid, modified_on, multiple_sim_status," 
+//				+ "sn_of_device, txn_id, user_id, feature_name) values(";
+//
+//		if (isOracle) {
+//			query = query + "device_custom_db_aud_seq.nextVal,";
+//		}else {
+//			query = query + (getMaxIdDeviceCustomAud(conn) + 1) +",";
+//		}
+//
+//		query = query + "?,?," + dateFunction + ",?,?,?,?,?,?," + dateFunction + ",?,?,?,?)";
+//
+//		PreparedStatement preparedStatement = null;
+//
+//		logger.info("Add device_custom_db_aud ["+query+"]");
+//
+//		try {
+//			preparedStatement = conn.prepareStatement(query);
+//
+//			for (DeviceCustomDb deviceCustomDb : deviceCustomDbs) {
+//				preparedStatement.setLong(1, deviceCustomDb.getRev());
+//				preparedStatement.setInt(2, 2); 
+//				preparedStatement.setString(3, deviceCustomDb.getDeviceIdType());
+//				preparedStatement.setString(4, deviceCustomDb.getDeviceLaunchDate());
+//				preparedStatement.setString(5, deviceCustomDb.getDeviceStatus());
+//				preparedStatement.setString(6, deviceCustomDb.getDeviceType());
+//				preparedStatement.setString(7, deviceCustomDb.getImeiEsnMeid()); 
+//				preparedStatement.setString(8, deviceCustomDb.getMultipleSimStatus());
+//				preparedStatement.setString(9, deviceCustomDb.getSnOfDevice());
+//				preparedStatement.setString(10, deviceCustomDb.getTxnId());
+//				preparedStatement.setLong(11, deviceCustomDb.getUserId());
+//				preparedStatement.setString(12, deviceCustomDb.getFeatureName());
+//				
+//				 // System.out.println("Query " + preparedStatement);
+//				preparedStatement.addBatch();
+//			}
+//
+//			preparedStatement.executeBatch();
+//
+//			logger.info("Inserted in device_custom_db_aud succesfully.");
+//
+//		} catch (SQLException e) {
+//			logger.error(e.getMessage(), e);
+//		}
+//		finally{
+//			try {
+//				if(Objects.nonNull(preparedStatement))
+//					preparedStatement.close();
+//			} catch (SQLException e) {
+//				logger.error(e.getMessage(), e);
+//			}
+//		}
+//	}
 
-			if(rs.next()){
-				max = rs.getLong("max");
-			}else {
-				max = 0L;
-			}
-			
-			logger.info("Next Id in device_custom_db_aud[" + max + "]");
-			return max;
-		}
-		catch(Exception e){
-			logger.info(e.getMessage(), e);
-			return 0L;
-		}
-		finally{
-			try {
-				if(rs!=null)
-					rs.close();
-				if(stmt!=null)
-					stmt.close();
-			} catch (SQLException e) {
-				logger.error(e.getMessage(), e);
-			}			
-		}
-	}
+ 
+
+//
+//public void insertDeviceCustomDbAudWithImporterObject(Connection conn, List<DeviceImporterDb> deviceImporterDbs, int revType) {
+//		boolean isOracle = conn.toString().contains("oracle");
+//		String dateFunction = Util.defaultDate(isOracle);
+//
+//		String query = "insert into device_custom_db_aud (id,rev, revtype, created_on, device_id_type, "
+//				+ "device_launch_date, device_status, device_type, imei_esn_meid, modified_on, multiple_sim_status," 
+//				+ "sn_of_device, txn_id, user_id, feature_name) values(";
+//
+//		if (isOracle) {
+//			query = query + "device_custom_db_aud_seq.nextVal,";
+//		}else {
+//			query = query + (getMaxIdDeviceCustomAud(conn) + 1) +",";
+//		}
+//
+//		query = query + "?,?," + dateFunction + ",?,?,?,?,?," + dateFunction + ",?,?,?,?,?)";
+//
+//		PreparedStatement preparedStatement = null;
+//
+//		logger.info("Add device_custom_db_aud ["+query+"]");
+//
+//		try {
+//			preparedStatement = conn.prepareStatement(query);
+//
+//			for (DeviceImporterDb deviceCustomDb : deviceImporterDbs) {
+//				preparedStatement.setLong(1, deviceCustomDb.getRev());
+//				preparedStatement.setInt(2, revType);	 
+//				preparedStatement.setString(3, deviceCustomDb.getDeviceIdType());
+//				preparedStatement.setString(4, deviceCustomDb.getDeviceLaunchDate());
+//				preparedStatement.setString(5, deviceCustomDb.getDeviceStatus());
+//				preparedStatement.setString(6, deviceCustomDb.getDeviceType());
+//				preparedStatement.setString(7, deviceCustomDb.getImeiEsnMeid()); 
+//				preparedStatement.setString(8, deviceCustomDb.getMultipleSimStatus());
+//				preparedStatement.setString(9, deviceCustomDb.getSnOfDevice());
+//				preparedStatement.setString(10, deviceCustomDb.getTxnId());
+//				preparedStatement.setLong(11, deviceCustomDb.getUserId());
+//				preparedStatement.setString(12, deviceCustomDb.getFeatureName());
+//				
+//				 // System.out.println("Query " + preparedStatement);
+//				preparedStatement.addBatch();
+//			}
+//
+//			preparedStatement.executeBatch();
+//
+//			logger.info("Inserted in device_custom_db_aud succesfully.");
+//
+//		} catch (SQLException e) {
+//			logger.error(e.getMessage(), e);
+//		}
+//		finally{
+//			try {
+//				if(Objects.nonNull(preparedStatement))
+//					preparedStatement.close();
+//			} catch (SQLException e) {
+//				logger.error(e.getMessage(), e);
+//			}
+//		}
+//	}
+//
+//
+//
+//
+//
+//
+//	public Long getMaxIdDeviceCustomAud(Connection conn) {
+//		Statement stmt = null;
+//		ResultSet rs = null;
+//		String query = null;
+//		Long max = null;
+//
+//		try{
+//			query = "select max(id) as max from device_custom_db_aud";
+//
+//			logger.info("Query ["+query+"]");
+//			stmt  = conn.createStatement();
+//			rs = stmt.executeQuery(query);
+//
+//			if(rs.next()){
+//				max = rs.getLong("max");
+//			}else {
+//				max = 0L;
+//			}
+//			
+//			logger.info("Next Id in device_custom_db_aud[" + max + "]");
+//			return max;
+//		}
+//		catch(Exception e){
+//			logger.info(e.getMessage(), e);
+//			return 0L;
+//		}
+//		finally{
+//			try {
+//				if(rs!=null)
+//					rs.close();
+//				if(stmt!=null)
+//					stmt.close();
+//			} catch (SQLException e) {
+//				logger.error(e.getMessage(), e);
+//			}			
+//		}
+//	}
+//	
+//
+//   
+   
+   
+   
+   
 }
+
+
+
+
+
+

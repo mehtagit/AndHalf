@@ -469,17 +469,17 @@ public class CEIRFeatureFileFunctions {
                     }
                     query = "select * from regularize_device_db where  txn_id = '" + txn_id + "'  where " + ValImei + " is not null  ";
 
-                    stmt = conn.createStatement();
-                    rs = stmt.executeQuery(query);
-                    while (rs.next()) {
-                         InsrtQry = "insert  into device_custom_db_aud(CREATED_ON , DEVICE_ID_TYPE, DEVICE_STATUS,DEVICE_TYPE,IMEI_ESN_MEID,MULTIPLE_SIM_STATUS,FEATURE_NAME ,TXN_ID) "
-                                 + "values (" + dateFunction + " , '" + rs.getString("DEVICE_ID_TYPE") + "' , '" + rs.getString("DEVICE_STATUS") + "', '" + rs.getString("DEVICE_TYPE") + "' , '" + rs.getString("" + ValImei + "") + "' , '" + rs.getString("MULTIPLE_SIM_STATUS") + "' , 'Register Device' , '" + rs.getString("TXN_ID") + "'     )";
-                         logger.info(" insert qury  [" + InsrtQry + "]");
-
-                         stmt1 = conn.createStatement();
-                         stmt1.executeQuery(query);
-
-                    }
+//                    stmt = conn.createStatement();
+//                    rs = stmt.executeQuery(query);
+//                    while (rs.next()) {
+//                         InsrtQry = "insert  into device_custom_db_au d(CREATED_ON , DEVICE_ID_TYPE, DEVICE_STATUS,DEVICE_TYPE,IMEI_ESN_MEID,MULTIPLE_SIM_STATUS,FEATURE_NAME ,TXN_ID) "
+//                                 + "values (" + dateFunction + " , '" + rs.getString("DEVICE_ID_TYPE") + "' , '" + rs.getString("DEVICE_STATUS") + "', '" + rs.getString("DEVICE_TYPE") + "' , '" + rs.getString("" + ValImei + "") + "' , '" + rs.getString("MULTIPLE_SIM_STATUS") + "' , 'Register Device' , '" + rs.getString("TXN_ID") + "'     )";
+//                         logger.info(" insert qury  [" + InsrtQry + "]");
+//
+//                         stmt1 = conn.createStatement();
+//                         stmt1.executeQuery(query);
+//
+//                    }
                }
                stmt3 = conn.createStatement();
                stmt3.executeQuery("delete from device_custom_db  where  txn_id = '" + txn_id + "' ");
@@ -546,6 +546,8 @@ public class CEIRFeatureFileFunctions {
 //		}
 //		
 //	}
+
+
 
 
 

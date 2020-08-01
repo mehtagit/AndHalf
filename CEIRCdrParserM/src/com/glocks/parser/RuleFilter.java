@@ -135,7 +135,6 @@ public class RuleFilter {
                logger.debug("Qury " + query);
                stmt = conn.createStatement();
                stmt.executeUpdate(query);
-
           } catch (Exception e) {
                logger.error(this.getClass().getName() + e);
           } finally {
@@ -1524,6 +1523,7 @@ public class RuleFilter {
 ////				 // System.out.println("Breaking the Rules");
 ////				break;
 ////			}
+
 
 
 
