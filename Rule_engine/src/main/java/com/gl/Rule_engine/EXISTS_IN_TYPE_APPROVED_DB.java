@@ -88,13 +88,11 @@ class EXISTS_IN_TYPE_APPROVED_DB {
                               String pending_tac_approved_db = " insert into pending_tac_approved_db (created_on,feature_name ,  tac , txn_id, user_id   ,modified_on   ) "
                                       + "   values  (current_timestamp  , '" + args[2] + "'  ,    '" + args[3].substring(0, 8) + "'  , '" + args[14] + "' , " + user_id_qury + "  ,  current_timestamp  ) ";
                               logger.debug("Qury is " + pending_tac_approved_db);
-
                               statementN = conn.prepareStatement(pending_tac_approved_db);
                               statementN.executeUpdate();
                               statementN.close();
-
                          } catch (Exception e) {
-                              logger.debug("Error" + e);
+//                              logger.debug("Error" + e);
                          } finally {
                               statementN.close();
                          }
@@ -114,7 +112,7 @@ class EXISTS_IN_TYPE_APPROVED_DB {
 
                return "Success";
           } catch (Exception e) {
-               logger.debug(" Error " + e);
+//               logger.debug(" Error " + e);
                return "Failure";
           }
      }
