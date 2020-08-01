@@ -836,7 +836,8 @@ public class StolenAndRecoveryServiceImpl {
 					}
 
 					if(stolenandRecoveryMgmtInfo.getFileStatus()==0 
-							|| stolenandRecoveryMgmtInfo.getFileStatus()==3 
+							|| stolenandRecoveryMgmtInfo.getFileStatus()==2 
+//							|| stolenandRecoveryMgmtInfo.getFileStatus()==3
 							|| stolenandRecoveryMgmtInfo.getFileStatus()==4) {
 						//set file status =7
 						stolenandRecoveryMgmtInfo.setFileStatus(7);//withdrawn by user 

@@ -628,7 +628,7 @@ public class StockServiceImpl {
 				if(stockTransaction.executeDeleteStock(txnRecord, webActionDb)) {
 					logger.info("Deletion of Stock is in Progress." + deleteObj.getTxnId());
 					if(isUserCeirAdmin) {
-
+						userMailTag = "STOCK_DELETE_BY_CEIR_ADMIN";
 						Generic_Response_Notification generic_Response_Notification = userFeignClient.ceirInfoByUserTypeId(8);
 
 						logger.info("generic_Response_Notification::::::::"+generic_Response_Notification);
@@ -962,7 +962,7 @@ public class StockServiceImpl {
 							stockMgmt.getUserType(),
 							"Users");
 					logger.info("Notfication have been saved for user.");
-					if(consignmentUpdateRequest.getAction() == 0) {
+					if((consignmentUpdateRequest.getAction() == 0) || ( customUser != null )) {
 						Generic_Response_Notification generic_Response_Notification =
 								userFeignClient.ceirInfoByUserTypeId(8);
 
@@ -976,7 +976,7 @@ public class StockServiceImpl {
 							UserProfile userProfile_generic_Response_Notification = new UserProfile();
 							userProfile_generic_Response_Notification = userProfileRepository.getByUserId(registerationUser.getId());
 							placeholderMap.put("<First name>", userProfile_generic_Response_Notification.getFirstName() );
-							emailUtil.saveNotification(adminMailTag,
+							emailUtil.saveNotification(mailTag,
 									userProfile_generic_Response_Notification,
 									consignmentUpdateRequest.getFeatureId(), Features.STOCK, action,
 									consignmentUpdateRequest.getTxnId(), txnId, placeholderMap,
