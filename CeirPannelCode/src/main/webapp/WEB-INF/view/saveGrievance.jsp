@@ -635,10 +635,10 @@ $('div#initialloader').delay(300).fadeOut('slow');
 															+ '\');"  oninvalid="InvalidMsg(this,\'select\',\''
 															+ $
 																	.i18n('selectDocumentType')
-															+ '\');"  class="browser-default"> <option value="" selected>'
+															+ '\');"  class="browser-default"> <option value="" disabled selected>'
 															+ $
 																	.i18n('selectDocumentType')
-															+ ' </option></select><select id="docTypetagValue'+id+'" style="display:none" class="browser-default"> <option value="" selected>'
+															+ ' </option></select><select id="docTypetagValue'+id+'" style="display:none" class="browser-default"> <option value="" disabled selected>'
 															+ $
 																	.i18n('selectDocumentType')
 															+ ' </option></select></div><div class="file-field col s12 m6" style="margin-top: 23px;"><div class="btn"><span>'

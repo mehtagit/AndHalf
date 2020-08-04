@@ -252,7 +252,6 @@ function setViewPopupData(data){
 		totalPrice=(parseInt(data.totalPrice));
 		$("#viewCurrencyDiv").css("display", "block");
 	}
-
 	$("#supplierId").val(data.supplierId);
 	$("#supplierName").val(data.supplierName);
 	$("#consignmentNumber").val(data.consignmentNumber);

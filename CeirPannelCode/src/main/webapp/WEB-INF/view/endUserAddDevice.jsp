@@ -211,7 +211,7 @@ data-lang-param="${pageContext.response.locale}">
 															oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 											                oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 															id="deviceType1">
-															<option value="" disabled selected><spring:message code="select.selectDeviceType" />
+															<option value=""  selected><spring:message code="select.selectDeviceType" />
 																</option>
 
 
@@ -235,7 +235,7 @@ data-lang-param="${pageContext.response.locale}">
 														oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 											        oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 															id="multipleSimStatus1">
-															<option value="" disabled selected><spring:message code="select.select" />
+															<option value=""  selected><spring:message code="select.select" />
 														</select>
 													</div>
 
@@ -246,7 +246,7 @@ data-lang-param="${pageContext.response.locale}">
 											        oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 															class="browser-default" class="mySelect"
 															style="padding-left: 0;" >
-															<option value="" disabled selected><spring:message code="select.countryBoughtFrom" />
+															<option value=""  selected><spring:message code="select.countryBoughtFrom" />
 														</select>
 													</div>
 
@@ -273,7 +273,7 @@ data-lang-param="${pageContext.response.locale}">
 															oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 											        oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 															id="deviceStatus1">
-															<option value="" disabled selected><spring:message code="select.selectDeviceStatus" /></option>
+															<option value=""  selected><spring:message code="select.selectDeviceStatus" /></option>
 
 														</select>
 													</div>

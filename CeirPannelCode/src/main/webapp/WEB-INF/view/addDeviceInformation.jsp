@@ -207,7 +207,7 @@ input[type='search'] {
 															oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 											                oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 															id="deviceType1">
-															<option value="" disabled selected><spring:message code="select.selectDeviceType" />
+															<option value=""  selected><spring:message code="select.selectDeviceType" />
 																</option>
 
 
@@ -220,7 +220,7 @@ input[type='search'] {
 															oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 											                oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 															class="browser-default" id="deviceIdType1">
-															<option value="" disabled selected><spring:message code="select.selectDeviceIDType" /></option>
+															<option value="" disabled="disabled" selected><spring:message code="select.selectDeviceIDType" /></option>
 
 														</select>
 													</div>
@@ -231,7 +231,7 @@ input[type='search'] {
 														oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 											        oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 															id="multipleSimStatus1">
-															<option value="" disabled selected><spring:message code="select.select" />
+															<option value=""  selected><spring:message code="select.select" />
 														</select>
 													</div>
 
@@ -242,7 +242,7 @@ input[type='search'] {
 											        oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 															class="browser-default" class="mySelect"
 															style="padding-left: 0;">
-															<option value="" disabled selected><spring:message code="select.countryBoughtFrom" />
+															<option value=""  selected><spring:message code="select.countryBoughtFrom" />
 														</select>
 													</div>
 

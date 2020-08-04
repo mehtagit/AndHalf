@@ -1378,6 +1378,7 @@ function historyRecord(txnID, requestType, source){
 				"bInfo" : true,
 				"scrollX": true,
 				"bSearchable" : true,
+				pageLength : 3,
 				 "data": dataObject.data,
 				 "columns": dataObject.columns
 			
