@@ -622,7 +622,7 @@ position: fixed;
 															oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 															oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 															 id="multipleSimStatus1">
-															<option value="" disabled selected><spring:message
+															<option value=""  selected><spring:message
 																	code="select.multiSimStatus" /></option>
 
 														</select>
@@ -636,7 +636,7 @@ position: fixed;
 															oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 															oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 															>
-															<option value="" disabled selected><spring:message
+															<option value=""  selected><spring:message
 																	code="select.deviceType" /></option>
 
 														</select>
@@ -672,7 +672,7 @@ position: fixed;
 															oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 															oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 															 id="deviceStatus1">
-															<option value="" disabled="disabled" selected><spring:message
+															<option value=""  selected><spring:message
 																	code="select.selectDeviceStatus" /></option>
 
 														</select>

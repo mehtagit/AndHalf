@@ -145,11 +145,11 @@ public class UploadPaidStatus {
 					String txnId = contentModelList.getTxnId();
 					//Integer sno = contentModelList.getId();
 					String createdOn = contentModelList.getCreatedOn();
-					String deviceIDInterp = contentModelList.getDeviceIdTypeInterp();
+					//String deviceIDInterp = contentModelList.getDeviceIdTypeInterp();
 					//String deviceTypeInterp = contentModelList.getDeviceTypeInterp();
-					String currency = contentModelList.getCurrencyInterp() == null ? "" : contentModelList.getCurrencyInterp();
-					String price = currency.concat(String.valueOf(contentModelList.getPrice()));
-					String country = contentModelList.getCountry();
+					//String currency = contentModelList.getCurrencyInterp() == null ? "" : contentModelList.getCurrencyInterp();
+					//String price = currency.concat(String.valueOf(contentModelList.getPrice()));
+					//String country = contentModelList.getCountry();
 					String taxStatus = String.valueOf(contentModelList.getTaxPaidStatus());
 					String taxStatusInterp = contentModelList.getTaxPaidStatusInterp();
 					String origin = contentModelList.getOrigin();

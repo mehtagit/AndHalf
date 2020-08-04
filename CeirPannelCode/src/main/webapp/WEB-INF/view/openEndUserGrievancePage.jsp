@@ -32,6 +32,7 @@
  --%>    <!-- Favicons-->
     <!--<link rel="icon" href="images/favicon/favicon-32x32.png" sizes="32x32">-->
     <!-- Favicons-->
+        <link rel="icon" href="${context}/resources/images/DMC-Logo.png" sizes="32x32">
   <link rel="stylesheet" href="${context}/resources/font/font-awesome/css/font-awesome.min.css">
 
     <!-- CORE CSS-->
@@ -233,7 +234,7 @@ var contextpath = "${context}";
 										            oninput="InvalidMsg(this,'input','<spring:message code="validation.selectFieldMsg" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.selectFieldMsg" />');"
 										  required   id="endUsercategory">
-                                                <option value="" disabled selected><spring:message code="input.SelectCategory" /></option>
+                                                <option value="" selected><spring:message code="input.SelectCategory" /></option>
                                             </select>
                                         </div>
 
@@ -270,7 +271,7 @@ var contextpath = "${context}";
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.18digit" />');"
                                              onchange="enableSelectFile()">
                                             
-                                                <option value="" disabled selected><spring:message code="select.documenttype" /></option>
+                                                <option value="" selected><spring:message code="select.documenttype" /></option>
                                             </select>
                                         </div>
 

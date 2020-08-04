@@ -895,20 +895,30 @@ public class IconsState {
 
 	public String adminState(String fileName,String txnId ,String status,String userStatus,String companyName) {
 		executePostConstruct();
+		log.info("companyName::::::::::"+companyName);
 		// URL link 
 		String errorURL = "consignmentFileDownload('"+fileName.replace(" ", "%20")+"','error','"+txnId+"','"+defaultTagName+"')";
 		String downloadURL = "consignmentFileDownload('"+fileName.replace(" ", "%20")+"','actual','"+txnId+"','"+defaultTagName+"')";
 		String viewAction="viewConsignmentDetails('"+txnId+"')";
+		
 		if(companyName == null) {
 			companyName= " ";
 		}
-		String approveAction = "openApprovePopUp('" + txnId+ "','"+companyName.trim().replaceAll("\\s{2,}", "+20")+ "')";
+		/*
+		 * String approveAction = "openApprovePopUp('" + txnId+
+		 * "','"+companyName.trim().replaceAll("\\s", "20")+ "')"; //String
+		 * approveAction = "openApprovePopUp('"+txnId+"')"; String rejectAction =
+		 * "openDisapprovePopup('"+txnId+"','"+companyName.trim().replaceAll("\\s",
+		 * "20")+"')";
+		 */
+		
+		String approveAction = "openApprovePopUp('" + txnId+ "')";
 		//String approveAction = "openApprovePopUp('"+txnId+"')";
-		String rejectAction = "openDisapprovePopup('"+txnId+"','"+companyName.trim().replaceAll("\\s{2,}", "+20")+"')";
+		String rejectAction = "openDisapprovePopup('"+txnId+"')";
 
 		String deleteAction ="DeleteConsignmentRecord('"+txnId+"')";
 		String historyAction ="historyRecord('"+txnId+"')";
-
+		log.info("companyName::::::::::"+companyName);
 		log.info("<><><><>status<><><><><>"+status+"<><><><><>userStatus<><><><><>"+userStatus);
 
 

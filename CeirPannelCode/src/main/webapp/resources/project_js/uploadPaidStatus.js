@@ -1773,6 +1773,7 @@ function deptImageValidation() {
 					"scrollX": true,
 					"bInfo" : true,
 					"bSearchable" : true,
+					pageLength : 3,
 					 "data": dataObject.data,
 					 "columns": dataObject.columns
 				

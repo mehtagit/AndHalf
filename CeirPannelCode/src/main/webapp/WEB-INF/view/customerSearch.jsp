@@ -218,7 +218,7 @@ section {
                             <div class="input-field col s12 m3 l3">
                               <input type="text" name="IMEI" id="imei" maxlength="16" pattern="[0-9\s]{15,16}" value="" required/>
                               <p id="errorMsgOnModal" class="deviceErrorTitle"></p>
-                              <label for="IMEI" >IMEI<span class="star">*</span></label>
+                              <label for="imei" >IMEI<span class="star">*</span></label>
                             </div>
                             
                              <div class="input-field col s12 m3 l3">
