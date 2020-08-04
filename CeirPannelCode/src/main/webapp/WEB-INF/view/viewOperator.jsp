@@ -243,7 +243,8 @@
 
 <!-- Preview Modal start   -->
 
-	<div id="viewuplodedModel" class="modal">
+	<div id="viewuplodedModel" class="modal" style="overflow: hidden">
+	<a href="#!" class="modal-close waves-effect waves-green btn-flat">&times;</a>
 		<div class="modal-content">
 			<div class="row">
 					<img src="" id="fileSource" width="400" height="400">
@@ -264,6 +265,8 @@
 	<!--materialize js-->
 	<script type="text/javascript"
 		src="${context}/resources/custom_js/materialize.min.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/js/materialize.js"></script>
 	
 
 

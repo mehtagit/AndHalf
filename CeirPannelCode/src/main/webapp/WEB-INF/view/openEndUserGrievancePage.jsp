@@ -233,7 +233,7 @@ var contextpath = "${context}";
 										            oninput="InvalidMsg(this,'input','<spring:message code="validation.selectFieldMsg" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.selectFieldMsg" />');"
 										  required   id="endUsercategory">
-                                                <option value="" disabled selected><spring:message code="input.SelectCategory" /></option>
+                                                <option value="" selected><spring:message code="input.SelectCategory" /></option>
                                             </select>
                                         </div>
 
@@ -270,7 +270,7 @@ var contextpath = "${context}";
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.18digit" />');"
                                              onchange="enableSelectFile()">
                                             
-                                                <option value="" disabled selected><spring:message code="select.documenttype" /></option>
+                                                <option value="" selected><spring:message code="select.documenttype" /></option>
                                             </select>
                                         </div>
 

@@ -607,7 +607,7 @@ populateCountries("editmanufacturercountry");
 function updateImporterTypeDevice() {
 	$('div#initialloader').fadeIn('fast');
 	var userId = $("body").attr("data-userID");
-	var id = $("#importerColumnid").val();
+	//var id = $("#importerColumnid").val();
 
 	var fieldId = 1;
 	var fileInfo = [];
