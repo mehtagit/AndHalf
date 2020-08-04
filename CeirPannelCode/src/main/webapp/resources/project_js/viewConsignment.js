@@ -252,7 +252,6 @@ function setViewPopupData(data){
 		totalPrice=(parseInt(data.totalPrice));
 		$("#viewCurrencyDiv").css("display", "block");
 	}
-
 	$("#supplierId").val(data.supplierId);
 	$("#supplierName").val(data.supplierName);
 	$("#consignmentNumber").val(data.consignmentNumber);
@@ -285,7 +284,6 @@ function setEditPopupData(data){
 		$("#currencyDiv").css("display", "block"); 
 
 	}
-
 	$("#supplierIdEdit").val(data.supplierId);
 	$("#supplierNameEdit").val(data.supplierName);
 	$("#consignmentNumberEdit").val(data.consignmentNumber);
@@ -461,7 +459,6 @@ function editRegisterConsignment(){
 	{
 		currency='';
 	}
-
 	var formData= new FormData();
 	formData.append('file', $('#csvUploadFile')[0].files[0]);
 	formData.append('supplierId',supplierId);
@@ -483,6 +480,7 @@ function editRegisterConsignment(){
 	formData.append('portAddress', parseInt($('#editPortAddress').val()));
 	formData.append('deviceQuantity', parseInt($('#editDeviceQuantity').val()));
 	formData.append('roleType', $("body").attr("data-roleType"));
+
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
 	$.ajaxSetup({

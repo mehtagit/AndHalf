@@ -62,7 +62,7 @@
 	"REOTP_SUCESS_RESP": "A text message and e-mail with one time password has been sent",
 	"REG_REOTP_FAIL": "One time password failed to resend",
 	"LOGIN_WRONG_DETAILS": "Please enter the correct credentials",
-	"LOGIN_UNAUTHORIZED": "This account is not active anymore. Please contact CEIR Admin",
+	"LOGIN_UNAUTHORIZED": "You are not allow to access this account",
 	"PRO_CPASS_LAST_3PASS_ERROR": "Password should not be last 3 password",
 	"PRO_CPASS_SUCESS": "User password  has been sucessfully changed",
 	"PRO_CPASS_FAIL": "User password failed to change",
