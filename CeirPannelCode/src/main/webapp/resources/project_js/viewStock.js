@@ -863,6 +863,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 				
 			}
 		});
+		return false;
 	}
 
 

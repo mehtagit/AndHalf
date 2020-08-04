@@ -531,24 +531,24 @@ var contextpath = "${context}";
 
 							<div class="row">
 								<div class="input-field col s12 m6 l6">
-									<input disabled="disabled" placeholder="" type="text" name="designation" id="designation" 
+									<input  placeholder="" type="text" name="designation" id="designation" 
 										title=""  /> 
 									<label for="designation"><spring:message code="registration.designationandtitle" /> <span class="star">*</span></label>
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input disabled="disabled" placeholder="" type="text" name="reportingAuthorityName" id="authorityName"  
+									<input  placeholder="" type="text" name="reportingAuthorityName" id="authorityName"  
 										/> 
 									<label for="authorityName"><spring:message code="registration.reportingauthorityname" /></label>
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input disabled="disabled"  placeholder="" type="text" name="authorityEmail"   id="authorityEmail" >
+									<input   placeholder="" type="text" name="authorityEmail"   id="authorityEmail" >
 									<label for="authorityEmail"> <spring:message code="registration.ReportingAuthorityEmailid" /><span class="star">*</span></label>
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input disabled="disabled"  placeholder="" type="tel" name="authorityPhoneNo" id="authorityPhoneNo" >
+									<input   placeholder="" type="tel" name="authorityPhoneNo" id="authorityPhoneNo" >
 									<label for="authorityPhoneNo"> <spring:message code="registration.reportingauthoritycontactnumber" /><span class="star">*</span></label>
 								</div>
 

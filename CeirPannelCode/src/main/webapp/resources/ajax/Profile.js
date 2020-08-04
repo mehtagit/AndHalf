@@ -310,7 +310,7 @@ function editProfile(){
 //				$('#registrationForm #usertypes option[value="'+arr[i]+'"]').attr('selected', true);
 //				$('#registrationForm #usertypes option[value="'+arr[i]+'"]').attr('disabled', true);
 //			}
-			loadByAsType(resp);
+			//loadByAsType(resp);
            
 			//$("#").val(resp[i].); 
 			var questionData=resp.questionList;
@@ -475,7 +475,12 @@ function updateProfile(){
 					passportNo:val.find('#passportNo').val(),
 					country:val.find('#country').val(),
 					questionList:questionData,
-					password:password
+					password:password,
+					designation : val.find("#designation").val(),
+					authorityName : val.find("#authorityName").val(),
+					authorityEmail : val.find("#authorityEmail").val(),
+					authorityPhoneNo : val.find("#authorityPhoneNo").val()
+					
 			}    
 		}  
 	});

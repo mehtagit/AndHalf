@@ -558,6 +558,7 @@ button.modal-action.modal-close.waves-effect.waves-green.btn-flat.right {
 		<h6 class="modal-header">
 			<spring:message code="modal.header.rejectStock" />
 		</h6>
+		<form onsubmit="return disApproveStockSubmit(1)" method="POST" >
 		<div class="modal-content">
 
 			<div class="row">
@@ -569,16 +570,15 @@ button.modal-action.modal-close.waves-effect.waves-green.btn-flat.right {
 			</div>
 			<div class="row">
 				<div class="input-field col s12 m12" style="margin-left: -10px;">
-					<textarea id="stockDispproveRemarks" class="materialize-textarea"
+					<textarea id="stockDispproveRemarks" class="materialize-textarea" required="required"
 						style="padding-left: 0;"></textarea>
-					<label for="textarea1"><spring:message code="input.remarks" /></label>
+					<label for="textarea1"><spring:message code="input.remarks" /><span class="star">*</span></label>
 				</div>
 			</div>
 			<div class="row">
 				<div class="input-field col s12 center">
 					<div class="input-field col s12 center">
-						<button class="modal-close modal-trigger btn"
-							onclick="disApproveStockSubmit(1)">
+						<button class="btn" type="submit">
 							<spring:message code="modal.yes" />
 						</button>
 						<button class="modal-close btn" style="margin-left: 10px;">
@@ -588,6 +588,7 @@ button.modal-action.modal-close.waves-effect.waves-green.btn-flat.right {
 				</div>
 			</div>
 		</div>
+		</form>
 	</div>
 	<div id="confirmRejectStock" class="modal">
 		<h6 class="modal-header">

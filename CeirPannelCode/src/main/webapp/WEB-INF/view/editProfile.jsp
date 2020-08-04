@@ -475,7 +475,7 @@ onchange="InvalidMsg(this,'select','<spring:message code="validation.selectField
 								<div class="row">
 									<div class="input-field col s12 m6 l6" style="display: none;" id="vatNumberField">
 										<input type="text" placeholder="" name="vatNo" disabled="disabled"  maxlength="12" id="vatNo" pattern="[A-Za-z0-9]{9,12}"
-										oninput="InvalidMsg(this,'input','<spring:message code="validation.12Character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.12Character" />');" 
+										oninput="InvalidMsg(this,'input','<spring:message code="validation9to12" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.12Character" />');" 
 										>
 										<label for="vatNo"><spring:message code="registration.vatnumber" /> <span class="star">*</span></label>
 									</div>

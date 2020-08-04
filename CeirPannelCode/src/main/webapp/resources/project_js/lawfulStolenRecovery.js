@@ -990,7 +990,8 @@ function aprroveDevice(){
 			"featureId":parseInt(featureId),
 			"requestType":parseInt(window.requestType),
 			"roleType": roleType,
-			"roleTypeUserId": parseInt($("body").attr("data-userTypeID")),
+			"userType":roleType,
+			"userTypeId": parseInt($("body").attr("data-userTypeID")),
 			"txnId": window.transactionId,
 			"userId":parseInt(userId),
 			"userName" : $("body").attr("data-username")
@@ -1060,7 +1061,8 @@ function rejectUser(){
 			"remarks": $("#Reason").val(),
 			"requestType":parseInt(window.requestType),
 			"roleType": roleType,
-			"roleTypeUserId": parseInt($("body").attr("data-userTypeID")),
+			"userType":roleType,
+			"userTypeId": parseInt($("body").attr("data-userTypeID")),
 			"txnId": window.transactionId,
 			"userId":parseInt(userId),
 			"userName" : $("body").attr("data-username")
