@@ -32,6 +32,7 @@
  --%>    <!-- Favicons-->
     <!--<link rel="icon" href="images/favicon/favicon-32x32.png" sizes="32x32">-->
     <!-- Favicons-->
+        <link rel="icon" href="${context}/resources/images/DMC-Logo.png" sizes="32x32">
   <link rel="stylesheet" href="${context}/resources/font/font-awesome/css/font-awesome.min.css">
 
     <!-- CORE CSS-->

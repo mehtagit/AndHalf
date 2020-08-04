@@ -760,10 +760,10 @@ function pageButtons(url){
 
 
 
-function openApprovePopUp(txnId,displayName)
+function openApprovePopUp(txnId)
 {
 	var userType=$("body").attr("data-roleType");
-	displayName=displayName.replace("+20"," " );
+	//displayName=displayName.replaceAll("+20"," " );
 	$('#ApproveConsignment').openModal({dismissible:false});
 	if(userType=='Custom'){
 		var token = $("meta[name='_csrf']").attr("content");
@@ -803,7 +803,7 @@ function openApprovePopUp(txnId,displayName)
 
 		$('#ApproveConsignmentTxnid').text(txnId);
 		$('#setApproveConsignmentTxnId').val(txnId);
-		$('#displayname').text(displayName);
+		//$('#displayname').text(displayName);
 
 	}
 	else{
@@ -811,7 +811,7 @@ function openApprovePopUp(txnId,displayName)
 		$('#approveConsignmnetHeading').text(havingTxnID+txnId+'?');
 		$('#confirmationMessage').text('');
 		$('#setApproveConsignmentTxnId').val(txnId);
-		$('#displayname').text(displayName);
+		//$('#displayname').text(displayName);
 		$('#approveButton').attr('disabled', false); 
 
 	}
@@ -869,15 +869,15 @@ function approveSubmit(actiontype){
 	});
 }
 
-function openDisapprovePopup(txnId,displayName)
+function openDisapprovePopup(txnId)
 {
-	displayName=displayName.replace("+20"," " );
+	//displayName=displayName.replace(/20/g," " );
 	$('#RejectConsignment').openModal({
 		dismissible:false
 	});
 	$('#disaproveTxnId').text(txnId);
 	$('#setDisapproveConsignmentTxnId').val(txnId);
-	$('#disapprovedDisplayname').text(displayName);
+	//$('#disapprovedDisplayname').text(displayName);
 
 
 }
