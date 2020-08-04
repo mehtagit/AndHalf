@@ -266,7 +266,7 @@ aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
 
                                                     <div class="input-field col s12 center">
                                                       <button class="btn" id="singleUnblockSubmitButton" type="submit"><spring:message code="button.submit" /></button>
-                                                        <a href="./blockUnblockDevices" class="btn" style="margin-left: 10px;"><spring:message code="button.cancel" /></a>
+                                                        <a href="./stolenRecovery" class="btn" style="margin-left: 10px;"><spring:message code="button.cancel" /></a>
                                                  
                                                                  </div>
                                                 </form>

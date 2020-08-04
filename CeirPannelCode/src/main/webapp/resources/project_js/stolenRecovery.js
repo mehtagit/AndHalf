@@ -1219,22 +1219,22 @@ function aprroveDevice(){
 else if(data.errorCode==5){
 				$('#approveInformation').closeModal(); 
 				$('#confirmApproveInformation').openModal({dismissible:false});
-				$('#"lawfulStolenDeleteSucessMsg"').text('');
-				$('#"lawfulStolenDeleteSucessMsg"').text($.i18n(data.tag));
+				$('#lawfulStolenDeleteSucessMsg').text('');
+				$('#lawfulStolenDeleteSucessMsg').text($.i18n(data.tag));
 				
 			}
 			else{
 				$('#approveInformation').closeModal(); 
 				$('#confirmApproveInformation').openModal({dismissible:false});
-				$('#"lawfulStolenDeleteSucessMsg"').text('');
-				$('#"lawfulStolenDeleteSucessMsg"').text($.i18n('errorMsg'));
+				$('#lawfulStolenDeleteSucessMsg').text('');
+				$('#lawfulStolenDeleteSucessMsg').text($.i18n('errorMsg'));
 			}
 		},
 		error : function() {
 			$('#approveInformation').closeModal(); 
 			$('#confirmApproveInformation').openModal({dismissible:false});
-			$('#"lawfulStolenDeleteSucessMsg"').text('');
-			$('#"lawfulStolenDeleteSucessMsg"').text($.i18n('errorMsg'));
+			$('#lawfulStolenDeleteSucessMsg').text('');
+			$('#lawfulStolenDeleteSucessMsg').text($.i18n('errorMsg'));
 		}
 	});
 }
@@ -1292,21 +1292,21 @@ function rejectUser(){
 else if(data.errorCode==5){
 				$('#rejectInformation').closeModal(); 
 				$('#confirmRejectInformation').openModal({dismissible:false});
-				$('#"deviceRejectedMessage"').text('');
-				$('#"deviceRejectedMessage"').text($.i18n(data.tag));
+				$('#deviceRejectedMessage').text('');
+				$('#deviceRejectedMessage').text($.i18n(data.tag));
 			}
 			else{
 				$('#rejectInformation').closeModal(); 
 				$('#confirmRejectInformation').openModal({dismissible:false});
-				$('#"deviceRejectedMessage"').text('');
-				$('#"deviceRejectedMessage"').text($.i18n('error'));
+				$('#deviceRejectedMessage').text('');
+				$('#deviceRejectedMessage').text($.i18n('error'));
 			}
 		},
 		error : function() {
 			$('#rejectInformation').closeModal(); 
 			$('#confirmRejectInformation').openModal({dismissible:false});
-			$('#"deviceRejectedMessage"').text('');
-			$('#"deviceRejectedMessage"').text($.i18n('error'));
+			$('#deviceRejectedMessage').text('');
+			$('#deviceRejectedMessage').text($.i18n('error'));
 		}
 	});
 	return false;
