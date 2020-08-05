@@ -348,7 +348,7 @@ var contextpath = "${context}";
 									<label for="street"><spring:message code="input.streetNumber" /> <span class="star">*</span> </label>
 								</div>
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="village" maxlength="30" id="village" pattern="[A-Za-z0-9\s._%-+$@,/]{3,30}"
+										<input type="text" name="village" maxlength="30" id="village" pattern="[A-Za-z0-9\s._%-+$@,/]{3,30}"
 									oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');" title="" >
 									<label for="village"><spring:message code="input.village" />  </label>
 								</div>

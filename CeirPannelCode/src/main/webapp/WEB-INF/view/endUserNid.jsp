@@ -147,6 +147,20 @@ input[type='search'] {
 section {
 	margin: 0 0.5rem;
 }
+.row.card-panel.form {
+    width: 50%;
+    margin-left: 28%;
+    margin-top: 2vh;
+}
+
+.input-field.col.s12.m2.l2.buttonDiv {
+    margin-left: 12px;
+    width: 40%;
+}
+
+.input-field.col.s12.m3.l3.placeholderDiv {
+    margin-left: 11px;
+}
 </style>
 </head>
 <body data-id="12" data-roleType="${usertype}" data-userTypeID="${usertypeId}"
@@ -175,7 +189,7 @@ section {
 		</div>
 	</div></div>
 	
-		<div class="row card-panel">
+		<div class="row card-panel form">
 			<div class="container-fluid pageHeader">
 				<p class="PageHeading"><spring:message code="modal.header.registerdevice" /></p>
 			</div>
@@ -183,12 +197,12 @@ section {
 				<div class="col s12 m12" style="margin-top: 20px;">
 					<div id="submitbtn">
 						<div class="input-field col s12 m2">
-							<label for="Search" class="center-align ml-10"><spring:message code="input.nid" /></label>
+							<label for="Search" class="center-align ml-10" style="width:100%"><spring:message code="input.nid" /></label>
 						
 						</div>
 						
 						<form action="selfRegisterDevicePage" method="post">
-						<div class="input-field col s12 m3 l3">
+						<div class="input-field col s12 m3 l3 placeholderDiv">
 						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 							<input type="text" id="Search" name="Search"
 								pattern="[A-Za-z0-9]{1,12}" maxlength="12"
@@ -197,7 +211,7 @@ section {
 								placeholder="<spring:message code="input.nidInput" />" required>
 						</div>
 							
-						<div class="input-field col s12 m2 l2">
+						<div class="input-field col s12 m2 l2 buttonDiv">
 						
 							<button type="submit" class="btn"  id="submit"><spring:message code="button.submit" /></button>
 							<a href="./redirectToHomePage" class="btn"><spring:message code="modal.close" /></a>

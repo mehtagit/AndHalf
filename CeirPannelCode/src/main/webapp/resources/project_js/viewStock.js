@@ -378,6 +378,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 			sourceParam= 'filter';
 			if(selectedUserTypeId=="" || selectedUserTypeId==null){
 				selectedUserTypeId=$("body").attr("data-userTypeID");
+				$("body").attr("data-filterSource","filter");
 			}
 		}
 		else{
@@ -386,16 +387,16 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 		}
 	////console.log("sourceParam= "+sourceParam);
 		if((roleType=="Importer" || roleType=="Retailer" || roleType=="Distributor" || roleType=="Manufacturer") && sourceType !="viaStock" ){
-		Datatable('headers?lang='+lang+'&type=stockHeaders','stockData?source='+sourceParam);
+		Datatable('headers?lang='+lang+'&type=stockHeaders','stockData?source='+sourceParam,sourceParam);
 		//alert("roleType 1-->" +roleType);
 		}else if(roleType=="Custom" && sourceType !="viaStock"){
-		Datatable('./headers?lang='+lang+'&type=customStockHeaders','stockData?source='+sourceParam)
+		Datatable('./headers?lang='+lang+'&type=customStockHeaders','stockData?source='+sourceParam,sourceParam)
 		//alert("roleType 2-->" +roleType);
 		}else if(roleType=="CEIRAdmin" && sourceType !="viaStock"){
-		Datatable('./headers?lang='+lang+'&type=adminStockHeaders','stockData?source='+sourceParam)
+		Datatable('./headers?lang='+lang+'&type=adminStockHeaders','stockData?source='+sourceParam,sourceParam)
 		//alert("roleType 3-->" +roleType);
 		}else if((roleType=="Importer"|| roleType=="Retailer" || roleType=="Distributor" || roleType=="Custom") && sourceType =="viaStock"){
-		Datatable('./headers?lang='+lang+'&type=stockcheckHeaders','stockData?sourceType=viaStock&source='+sourceParam)
+		Datatable('./headers?lang='+lang+'&type=stockcheckHeaders','stockData?sourceType=viaStock&source='+sourceParam,sourceParam)
 		//alert("roleType 4-->" +roleType);
 		}
 		localStorage.removeItem('sourceType');
@@ -410,10 +411,10 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 
 
 
-	function Datatable(url,dataUrl) {
+	function Datatable(url,dataUrl,sourceParam) {
 		var txn= (txnIdValue == 'null' && transactionIDValue == undefined)? $('#transactionID').val() : transactionIDValue;
 		
-		if($("body").attr("data-filterSource")=='filter' && $('#transactionID').val()=='' )
+		if(sourceParam=='filter' && $('#transactionID').val()=='' )
 			{
 	
 			txn='';
@@ -862,6 +863,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 				
 			}
 		});
+		return false;
 	}
 
 
@@ -871,9 +873,18 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 //**********************************************************Export Excel file************************************************************************
 	function exportStockData()
 	{
+		
 		var stockStartDate=$('#startDate').val();
 		var stockEndDate=$('#endDate').val();
-		var stockTxnId=$('#transactionID').val();
+		//var stockTxnId=$('#transactionID').val();
+		var stockTxnId="";
+		if($("body").attr("data-filterSource")=='noti'){
+			 stockTxnId= (txnIdValue == 'null' && transactionIDValue == undefined)? $('#transactionID').val() : transactionIDValue;	
+		}
+		else{
+			stockTxnId=$('#transactionID').val();
+		}
+		
 		var StockStatus=parseInt($('#StockStatus').val());
 		var roleType = role;
 		var currentRoleType = $("body").attr("data-stolenselected-roleType");	
@@ -897,6 +908,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 		var info = table.page.info(); 
 		var pageNo=info.page;
 		var pageSize =info.length;
+		
 		//console.log(selectedRoleTypeId);
 		//////console.log("--------"+pageSize+"---------"+pageNo);
 		//////console.log("stockStartDate  ="+stockStartDate+"  stockEndDate=="+stockEndDate+"  stockTxnId="+stockTxnId+" StockStatus ="+StockStatus+" roleType="+$("body").attr("data-roleType")+"  userType="+role);

@@ -72,7 +72,7 @@ GrievanceFeignClient grievanceFeignClient;
 
 	@RequestMapping(value="/openlawfulStolenRecoveryPage",method = {RequestMethod.GET,RequestMethod.POST} )
 	public ModelAndView openStolenRecoveryPage(@RequestParam(name="pageType") String pageType,@RequestParam(name="pageView") String pageView,
-			@RequestParam(name="txnId") String txnId)
+			@RequestParam(name="txnId") String txnId,@RequestParam(name="reqSource") String reqSource)
 	{
 		log.info("entry point in  open stolen and recovery  page."+pageType+"   txnId   ="+txnId);
 		if(pageType.equals("stolen"))

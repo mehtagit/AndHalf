@@ -641,7 +641,7 @@ position: fixed;
 																oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 											        oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 																title= "<spring:message code="validation.selectFieldMsg" />">
-																<option value="" disabled selected><spring:message code="select.selectDeviceType" /></option>
+																<option value=""  selected><spring:message code="select.selectDeviceType" /></option>
 
 
 															</select>
@@ -665,7 +665,7 @@ position: fixed;
 															oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 											        oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 																title= "<spring:message code="validation.selectFieldMsg" />" id="multipleSimStatus1">
-																<option value="" disabled selected><spring:message code="select.select" />
+																<option value=""  selected><spring:message code="select.select" />
 															</select>
 														</div>
 

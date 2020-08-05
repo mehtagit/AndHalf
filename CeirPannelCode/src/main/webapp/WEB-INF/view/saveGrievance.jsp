@@ -131,7 +131,7 @@ class="form-control boxBorder boxHeight"/>
 oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" 
 oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
  required>
-<option value="" selected disabled ><spring:message code="operator.category" /></option>
+<option value="" selected><spring:message code="operator.category" /></option>
 </select>
 </div>
 </div>
@@ -144,7 +144,7 @@ oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFiel
 <div class="col s12 m6 l6" style="margin-top: 8px;">
 <label for="Category"><spring:message code="input.documenttype" /></label>
 <select class="browser-default" id="docTypetag1" onchange="enableSelectFile()" >
-<option value="" disabled selected><spring:message code="select.documenttype" /> </option>
+<option value="" selected><spring:message code="select.documenttype" /> </option>
 
 </select>
 <select class="browser-default" id="docTypetagValue1" 

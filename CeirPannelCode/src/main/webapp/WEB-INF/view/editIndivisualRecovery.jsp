@@ -126,7 +126,9 @@
 <body data-roleType="${usertype}" data-id="5" data-userTypeID="${usertypeId}"
 	data-userID="${userid}" data-operatorTypeId="${operatorTypeId}"
 	data-selected-roleType="${stolenselectedUserTypeId}"
-	data-stolenselected-roleType="${stolenselectedUserTypeId}"	>
+	data-stolenselected-roleType="${stolenselectedUserTypeId}"
+	data-txnID="${not empty param.txnId ? param.txnId : 'null'}"
+	data-source="${not empty param.reqSource ? param.reqSource : 'null'}"	>
 
 
 
@@ -454,7 +456,7 @@ onclick="_Services._selectstartDate()"></i></span>
 
                                                     <div class="input-field col s12 center">
                                                         <button id="indivisualEditRecoveryButton"  class="btn" type="submit"><spring:message code="button.submit" /></button>
-                                                        <a href="./stolenRecovery?FeatureId=5" class="btn"
+                                                        <a onclick="closeViewPage()" class="btn"
                                                             style="margin-left: 10px;"><spring:message code="modal.cancel" /></a>
                                                     </div>
                                                 </form>

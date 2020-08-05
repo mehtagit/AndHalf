@@ -145,11 +145,11 @@ public class UploadPaidStatus {
 					String txnId = contentModelList.getTxnId();
 					//Integer sno = contentModelList.getId();
 					String createdOn = contentModelList.getCreatedOn();
-					String deviceIDInterp = contentModelList.getDeviceIdTypeInterp();
+					//String deviceIDInterp = contentModelList.getDeviceIdTypeInterp();
 					//String deviceTypeInterp = contentModelList.getDeviceTypeInterp();
-					String currency = contentModelList.getCurrencyInterp() == null ? "" : contentModelList.getCurrencyInterp();
-					String price = currency.concat(String.valueOf(contentModelList.getPrice()));
-					String country = contentModelList.getCountry();
+					//String currency = contentModelList.getCurrencyInterp() == null ? "" : contentModelList.getCurrencyInterp();
+					//String price = currency.concat(String.valueOf(contentModelList.getPrice()));
+					//String country = contentModelList.getCountry();
 					String taxStatus = String.valueOf(contentModelList.getTaxPaidStatus());
 					String taxStatusInterp = contentModelList.getTaxPaidStatusInterp();
 					String origin = contentModelList.getOrigin();
@@ -158,7 +158,7 @@ public class UploadPaidStatus {
 					String status = String.valueOf(contentModelList.getStatus());
 					//params for action 
 					String imei1 = contentModelList.getFirstImei();
-					String action = iconState.userPaidStatusIcon(imei1,taxStatus,status,userStatus,txnId);
+					String action = iconState.userPaidStatusIcon(imei1,taxStatus,status,userStatus,txnId,source);
 
 					
 					Object[] data = {createdOn,nid,txnId,nationality,taxStatusInterp,origin,statusInterp,action};
@@ -187,7 +187,7 @@ public class UploadPaidStatus {
 					//params for action 
 					String imei1 = contentModelList.getFirstImei();
 					String deviceState = String.valueOf(contentModelList.getStatus());
-					String action = iconState.adminUserPaidStatusIcon(imei1,createdOn,contentModelList.getTxnId(),deviceState,userStatus);
+					String action = iconState.adminUserPaidStatusIcon(imei1,createdOn,contentModelList.getTxnId(),deviceState,userStatus,source);
 
 					Object[] data = {createdOn,nid,txnId,nationality,taxStatus,origin,status,action};
 
@@ -216,7 +216,7 @@ public class UploadPaidStatus {
 					//params for action 
 					String imei1 = contentModelList.getFirstImei();
 					String deviceState = String.valueOf(contentModelList.getStatus());
-					String action = iconState.deviceActivationIcon(imei1,createdOn,contentModelList.getTxnId(),deviceState,userStatus);
+					String action = iconState.deviceActivationIcon(imei1,createdOn,contentModelList.getTxnId(),deviceState,userStatus,source);
 
 					Object[] data = {createdOn,nid,txnId,nationality,taxStatus,origin,status,action};
 

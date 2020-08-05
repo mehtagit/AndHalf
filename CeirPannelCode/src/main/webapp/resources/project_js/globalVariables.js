@@ -260,3 +260,20 @@ $('body').on('click', '#content', function() {
 	$('#profile-dropdown', window.parent.document).css("display", "none");
 	$('.profileInfo a', window.parent.document).removeClass("active");			
 });
+
+
+
+function closeViewPage(){
+	var txnId=$("body").attr("data-txnID");
+	var reqSource=$("body").attr("data-source");
+	if(reqSource=='menu'){
+	txnId='';	
+	}
+	else if(reqSource=='filter'){
+		reqSource="menu"
+			txnId='';
+	}
+//	alert(reqSource+"-"+txnId)
+	window.location.replace("./stolenRecovery?FeatureId=5&txnID="+txnId+"&source="+reqSource);
+
+}

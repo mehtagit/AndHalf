@@ -125,7 +125,7 @@ select option {
 }
 
 .row {
-	margin-top: 0px;
+	margin-top: 0vh;
 }
 
 .section {
@@ -178,7 +178,14 @@ z-index: 1003;
 position: fixed;
 }
 
-
+.row.card-panel.tableView {
+    width: 77%;
+    margin-left: 12%;
+    margin-top: 2vh;
+}
+.row.card-panel.tableFormHeader {
+    margin-top: 2vh;
+}
 </style>
 </head>
 <body data-lang-param="${pageContext.response.locale}"
@@ -206,7 +213,7 @@ position: fixed;
 			<div class="section">
 				<div class="">
 					<div class="col s12 m12 l12" id="emptyTable">
-						<div class="row card-panel">
+						<div class="row card-panel tableFormHeader">
 
 							
 
@@ -615,7 +622,7 @@ position: fixed;
 															oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 															oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 															 id="multipleSimStatus1">
-															<option value="" disabled selected><spring:message
+															<option value=""  selected><spring:message
 																	code="select.multiSimStatus" /></option>
 
 														</select>
@@ -629,7 +636,7 @@ position: fixed;
 															oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 															oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 															>
-															<option value="" disabled selected><spring:message
+															<option value=""  selected><spring:message
 																	code="select.deviceType" /></option>
 
 														</select>
@@ -665,7 +672,7 @@ position: fixed;
 															oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 															oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 															 id="deviceStatus1">
-															<option value="" disabled="disabled" selected><spring:message
+															<option value=""  selected><spring:message
 																	code="select.selectDeviceStatus" /></option>
 
 														</select>
@@ -789,7 +796,7 @@ position: fixed;
 								
 							</div>
 							<div class="container" id="user456" style="display: none;">
-							<div class="row card-panel">
+							<div class="row card-panel tableView">
 							<%-- <h6 class="fixPage-modal-header ">
 						<spring:message code="modal.header.registerdevice" />
 					</h6> --%>

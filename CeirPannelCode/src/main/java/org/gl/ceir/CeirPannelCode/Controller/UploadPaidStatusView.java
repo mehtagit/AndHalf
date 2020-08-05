@@ -134,8 +134,9 @@ GrievanceFeignClient grievanceFeignClient;
 	
 
 	@GetMapping("view-device-information/{imei}/{txnId}")
-	public ModelAndView viewDeviceInformationView(@PathVariable("imei") String imei,@PathVariable("txnId") String txnId,HttpSession session) {
-		log.info(" imei =="+imei+"  txnid=="+txnId);
+	public ModelAndView viewDeviceInformationView(@PathVariable("imei") String imei,@PathVariable("txnId") String txnId,HttpSession session,
+			@RequestParam( name="transactionID" , required = false) String transactionID,@RequestParam(name="source") String source) {
+		log.info(" imei =="+imei+"  txnid=="+txnId+"  source=="+source);
 		String userType=(String) session.getAttribute("usertype"); 
 		  String  userName= (String) session.getAttribute("username").toString(); 
 		  int userId= (int) session.getAttribute("userid"); 
@@ -852,7 +853,8 @@ public @ResponseBody GenricResponse approveVisaUpdateRequest (@RequestBody Filte
 
 	}
 @GetMapping("view-visa-information/{visaId}/{endUserId}")
-public ModelAndView viewVisaInformationView(@PathVariable("visaId") Integer visaId,@PathVariable("endUserId") Integer endUserId,HttpSession session) {
+public ModelAndView viewVisaInformationView(@PathVariable("visaId") Integer visaId,@PathVariable("endUserId") Integer endUserId,
+		HttpSession session,@RequestParam(name="source", required = false) String source,@RequestParam(name="txnId", required = false) String txnId) {
 	
 	ModelAndView modelAndView = new ModelAndView();
 	FilterRequest filter= new FilterRequest();
@@ -868,6 +870,7 @@ public ModelAndView viewVisaInformationView(@PathVariable("visaId") Integer visa
 	filter.setFeatureId(43);
 	filter.setUsername(userName);
 	filter.setUserName(userName);
+	log.info("source type=="+source);
 	log.info("request passed to the view visa details .."+filter);
 	UpdateVisaModel content= uploadPaidStatusFeignClient.viewVisaDetails(filter);
 	log.info(" reponse from view visa details api. =="+content);
@@ -879,6 +882,7 @@ public ModelAndView viewVisaInformationView(@PathVariable("visaId") Integer visa
 	String fileLink=urlToUpload.getValue();
 	modelAndView.addObject("fileLink", fileLink);
     modelAndView.addObject("viewInformation", content);
+    modelAndView.addObject("txnId",txnId);
     modelAndView.setViewName("viewVisaInformation");	
     
     	

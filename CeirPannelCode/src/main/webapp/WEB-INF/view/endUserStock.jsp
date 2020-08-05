@@ -374,7 +374,7 @@ var contextpath = "${context}";
                                                 <label for="viewUploadFile"><spring:message code="input.ViewUploadFile" /></label>
                                             </div>
                                             <div class="input-field col s6 m7">
-                                               <a href="JavaScript:void();"  id="endUserStockFileLink" > <i class="fa fa-download download-icon" aria-hidden="true"
+                                               <a   id="endUserStockFileLink" > <i class="fa fa-download download-icon" aria-hidden="true"
                                                     style="position: absolute; right: 0; margin: 10px 15px 0 0;"
                                                     title="download"></i></a>
                                                 <input type="text" id="viewUploadFile" name="viewUploadFile"
@@ -395,7 +395,7 @@ var contextpath = "${context}";
                                                 <label for="errorFileName"><spring:message code="input.ViewErrorReport" /></label>
                                             </div>
                                             <div class="input-field col s6 m7">
-                                                <a href="JavaScript:void();" id="errorFileStock"><i class="fa fa-download download-icon" aria-hidden="true"
+                                                <a  id="errorFileStock"><i class="fa fa-download download-icon" aria-hidden="true"
                                                     style="position: absolute; right: 0; margin: 10px 15px 0 0;"
                                                     title="download"></i></a>
                                                 <input type="text" id="errorFileName" name="errorFileName"
