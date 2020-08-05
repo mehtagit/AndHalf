@@ -284,7 +284,6 @@ function setEditPopupData(data){
 		$("#currencyDiv").css("display", "block"); 
 
 	}
-
 	$("#supplierIdEdit").val(data.supplierId);
 	$("#supplierNameEdit").val(data.supplierName);
 	$("#consignmentNumberEdit").val(data.consignmentNumber);
@@ -460,7 +459,6 @@ function editRegisterConsignment(){
 	{
 		currency='';
 	}
-
 	var formData= new FormData();
 	formData.append('file', $('#csvUploadFile')[0].files[0]);
 	formData.append('supplierId',supplierId);
@@ -482,6 +480,7 @@ function editRegisterConsignment(){
 	formData.append('portAddress', parseInt($('#editPortAddress').val()));
 	formData.append('deviceQuantity', parseInt($('#editDeviceQuantity').val()));
 	formData.append('roleType', $("body").attr("data-roleType"));
+
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
 	$.ajaxSetup({
@@ -761,10 +760,10 @@ function pageButtons(url){
 
 
 
-function openApprovePopUp(txnId,displayName)
+function openApprovePopUp(txnId)
 {
 	var userType=$("body").attr("data-roleType");
-	displayName=displayName.replace("+20"," " );
+	//displayName=displayName.replaceAll("+20"," " );
 	$('#ApproveConsignment').openModal({dismissible:false});
 	if(userType=='Custom'){
 		var token = $("meta[name='_csrf']").attr("content");
@@ -804,7 +803,7 @@ function openApprovePopUp(txnId,displayName)
 
 		$('#ApproveConsignmentTxnid').text(txnId);
 		$('#setApproveConsignmentTxnId').val(txnId);
-		$('#displayname').text(displayName);
+		//$('#displayname').text(displayName);
 
 	}
 	else{
@@ -812,7 +811,7 @@ function openApprovePopUp(txnId,displayName)
 		$('#approveConsignmnetHeading').text(havingTxnID+txnId+'?');
 		$('#confirmationMessage').text('');
 		$('#setApproveConsignmentTxnId').val(txnId);
-		$('#displayname').text(displayName);
+		//$('#displayname').text(displayName);
 		$('#approveButton').attr('disabled', false); 
 
 	}
@@ -870,15 +869,15 @@ function approveSubmit(actiontype){
 	});
 }
 
-function openDisapprovePopup(txnId,displayName)
+function openDisapprovePopup(txnId)
 {
-	displayName=displayName.replace("+20"," " );
+	//displayName=displayName.replace(/20/g," " );
 	$('#RejectConsignment').openModal({
 		dismissible:false
 	});
 	$('#disaproveTxnId').text(txnId);
 	$('#setDisapproveConsignmentTxnId').val(txnId);
-	$('#disapprovedDisplayname').text(displayName);
+	//$('#disapprovedDisplayname').text(displayName);
 
 
 }
