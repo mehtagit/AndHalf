@@ -59,9 +59,6 @@
 <link href="${context}/resources/css/style.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
 <link
-	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.min.css"
-	type="text/css" rel="stylesheet" media="screen,projection">
-<link
 	href="${context}/resources/font/font-awesome/css/font-awesome.min.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
 
@@ -355,14 +352,11 @@
 		src="${context}/resources/custom_js/moment.min.js"></script>
 	
 		
-	<script type="text/javascript"
-		src="${context}/resources/project_js/viewStock.js?version=<%= (int) (Math.random() * 10) %>"></script>
+	
 	<script type="text/javascript"
 		src="${context}/resources/project_js/importerTypeApproved.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/validationMsg.js?version=<%= (int) (Math.random() * 10) %>"></script>
-	<script type="text/javascript"
-		src="${context}/resources/project_js/_dateFunction.js?version=<%= (int) (Math.random() * 10) %>" async></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/globalVariables.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript">

@@ -233,8 +233,8 @@ data-session-source="${not empty param.source ? param.source : 'menu'}">
     </div>
     
     		<div id="statusChangemodal" class="modal">
-               <form action="" onsubmit="return chanegeUserStatus('status')" method="POST"
-								enctype="multipart/form-data" id="">
+               <form action="" onsubmit="return chanegeUserStatus()" method="POST"
+								enctype="multipart/form-data" >
 								  <div class="row" id="singleInput">
 								  <h6 class="modal-header "> <spring:message code="registration.changeUserStatus" /></h6>
                                 <div class="col s12 m12 l12">
@@ -256,7 +256,7 @@ data-session-source="${not empty param.source ? param.source : 'menu'}">
                                        
 										
 									<div class="input-field col s12 m6" style="margin-top: 22px;">
-										<input type="text" name="refererence" id="refererenceId"
+										<input type="text" name="refererence" id="statusrefererenceId"
 							placeholder="" oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
 							maxlength="50"/> <label for="refererenceId"
 							class="center-align"><spring:message
@@ -275,7 +275,7 @@ data-session-source="${not empty param.source ? param.source : 'menu'}">
 						
                                    
                                         </div>
-                                 		 <input type ="text" id="statusUserName" hidden="hidden" >
+                                 		 
                                         <div class="row">
                                             <div class="input-field col s12 center" style="padding: 20px 0;">
                                                 <!-- <a href="#submitIMEI" class="btn modal-trigger">Submit</a>  -->
@@ -334,8 +334,8 @@ data-session-source="${not empty param.source ? param.source : 'menu'}">
     
     
     <div id="roleTypeChangemodal" class="modal">
-               <form action="" onsubmit="return chanegeUserStatus('role')" method="POST"
-								enctype="multipart/form-data" id="">
+               <form action="" onsubmit="return chanegeRole()" method="POST"
+								enctype="multipart/form-data">
 								  <div class="row" id="singleInput">
 								  <h6 class="modal-header "> <spring:message code="changeRoleType" /></h6>
                                 <div class="col s12 m12 l12">
@@ -373,16 +373,16 @@ data-session-source="${not empty param.source ? param.source : 'menu'}">
                                        
 										
 									<div class="input-field col s12 m6" style="margin-top: 22px;">
-										<input type="text" name="refererence" id="refererenceId"
+										<input type="text" name="refererence" id="RoleRefererenceId"
 							placeholder="" oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
-							maxlength="50"/> <label for="refererenceId"
+							maxlength="50"/> <label for="RoleRefererenceId"
 							class="center-align"><spring:message
 								code="input.refId" /> </label>
 								</div>		
                                             
                    		  
 								<div class="input-field col s12 m6">
-							<textarea id="changeStatusRemark" style="min-height: 8rem;" 
+							<textarea id="changeRoleRemark" style="min-height: 8rem;" 
 								class="materialize-textarea" 
 							oninput="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
 							oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200character" />');" required></textarea>
@@ -392,7 +392,7 @@ data-session-source="${not empty param.source ? param.source : 'menu'}">
 						
                                    
                                         </div>
-                                 		 <input type ="text" id="statusUserName" hidden="hidden" >
+                                 		 
                                         <div class="row">
                                             <div class="input-field col s12 center" style="padding: 20px 0;">
                                                 <!-- <a href="#submitIMEI" class="btn modal-trigger">Submit</a>  -->

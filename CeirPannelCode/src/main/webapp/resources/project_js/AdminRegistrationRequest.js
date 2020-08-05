@@ -572,11 +572,8 @@ function userChangeStatus(entity){
 		});
 
 	
- function chanegeUserStatus(changeType){
-	 	var action;
-	 	if (changeType == "status" ){
-	 		action = 0; 
-	 	}else if($('#addDeleteRole').val() == 1){
+ function chanegeRole(){
+	 	if($('#addDeleteRole').val() == 1){
 	 		action = 1;
 	 	}else if($('#addDeleteRole').val() == 2){
 	 		action = 2;
@@ -590,11 +587,10 @@ function userChangeStatus(entity){
 	 	
 	 	var Request={
 				"action" : action,
-				"status" : parseInt(status),
 				"id": parseInt(window.Id),
 				"username" : $("body").attr("data-selected-username"),
-				"referenceId" : $("#refererenceId").val(),
-				"remark" : $("#changeStatusRemark").val(),
+				"referenceId" : $("#RoleRefererenceId").val(),
+				"remark" : $("#changeRoleRemark").val(),
 				"userId" : parseInt(userId),
 				"role"  : parseInt(RoleType),
 				"usertype": parseInt(window.userTypeId)
@@ -637,7 +633,67 @@ function userChangeStatus(entity){
 			}
 		});
 	 return false
- }	
+ }
+ 
+ function chanegeUserStatus(){
+	 	var action = 0;
+	 	
+	 	//var fileData = [];
+	 	//var selectedRoleType = $('#usertypes').val();
+	 	//var RoleType=fileData.push(selectedRoleType);
+	 	
+	 	var RoleType = $('#usertypes').val();
+	 	var status= $("#userStatus").val();
+	 	
+	 	var Request={
+				"action" : action,
+				"status" : parseInt(status),
+				"id": parseInt(window.Id),
+				"username" : $("body").attr("data-selected-username"),
+				"referenceId" : $("#statusrefererenceId").val(),
+				"remark" : $("#changeStatusRemark").val(),
+				"userId" : parseInt(userId),
+				"usertype": parseInt(window.userTypeId)
+	 		}
+				
+		
+		//////console.log("Request-->"+JSON.stringify(Request));
+	 	var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+			headers:
+			{ 'X-CSRF-TOKEN': token }
+		});
+		$.ajax({
+			url : './adminChangeRequest',
+			data : JSON.stringify(Request),
+			dataType : 'json',
+			contentType : 'application/json; charset=utf-8',
+			type : 'POST',
+			success : function(data) {
+				$("#confirmUserStatus").openModal({
+				 	   dismissible:false
+			    });
+				if(data.errorCode == 200){
+					$.i18n().locale = lang;	
+					$.i18n().load( {
+						'en': './resources/i18n/en.json',
+						'km': './resources/i18n/km.json'
+					}).done( function() {
+						$('#statusChangedMessage').text($.i18n(data.tag));
+					});
+					}else{
+						$('#statusChangedMessage').text($.i18n(data.tag));
+					}
+				
+				
+			},
+			error : function() {
+				//alert("Failed");
+			}
+		});
+	 return false
+}
  
  
  
