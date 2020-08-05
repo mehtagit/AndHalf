@@ -96,7 +96,7 @@ function Datatable(Url, dataUrl) {
 	if (lang == 'km') {
 		var langFile = "./resources/i18n/khmer_datatable.json";
 	}
-	console.log(JSON.stringify(filterRequest));
+	
 	$("#submitFilter").prop('disabled', true);
 	
 	var token = $("meta[name='_csrf']").attr("content");

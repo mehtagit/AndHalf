@@ -585,7 +585,7 @@
 		<!--end container-->
 	</section>
 
-	<div id="visafileFormateModal" class="modal">
+	<div id="fileFormateModal" class="modal">
 		<h6 class="modal-header"><spring:message code="fileValidationModalHeader" /></h6>
 		<div class="modal-content">
 			<div class="row">
