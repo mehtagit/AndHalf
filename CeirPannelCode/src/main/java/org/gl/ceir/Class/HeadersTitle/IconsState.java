@@ -814,10 +814,10 @@ public class IconsState {
 		//String downloadURL = "./dowloadFiles/actual/"+fileName.replace(" ", "%20")+"/"+txnId+"/"+defaultTagName+"";
 		String downloadURL = "fileDownload('"+fileName.replace(" ", "%20")+"','actual','"+txnId+"','"+defaultTagName+"')";
 		String viewAction="viewConsignmentDetails('"+txnId+"')"; 
-		String approveAction = "openApprovePopUp('" + txnId + "','"+displayName.trim().replaceAll("\\s{2,}", "+20")+"')";
+		String approveAction = "openApprovePopUp('" + txnId + "')";
 
 		/* String escapedString = queryParser.escape(approveAction); */
-		String rejectAction = "openDisapprovePopup('"+txnId+"','"+displayName.trim().replaceAll("\\s{2,}", "+20")+"')";
+		String rejectAction = "openDisapprovePopup('"+txnId+"')";
 		String historyAction ="historyRecord('"+txnId+"')";
 
 		// state related Code 
@@ -2957,7 +2957,7 @@ public class IconsState {
 		String approveAction = "openDRTPopUp('"+recordId+"')";
 
 		/* String escapedString = queryParser.escape(approveAction); */
-		String rejectAction = "openDisapprovePopup('"+txnId+"','"+displayName.replaceAll( " ", "+20")+"')";
+		String rejectAction = "openDisapprovePopup('"+txnId+"')";
 
 
 		// state related Code 
