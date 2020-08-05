@@ -1,20 +1,13 @@
 package com.glocks.dao;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
-
 import org.apache.log4j.Logger;
-
 import com.glocks.pojo.DeviceDb;
-import com.glocks.util.DateUtil;
-import com.glocks.util.Util;
-import java.util.logging.Level;
 
 public class DeviceDbDao {
 
@@ -65,54 +58,37 @@ public class DeviceDbDao {
           return deviceDbs;
      }
 
-
-
-     public int deleteDevicesFromDeviceDb(Connection conn, String txnId) {
+     public void deleteDevicesFromDeviceDb(Connection conn, String imei) {
           String query = "";
           Statement stmt = null;
-          int executeStatus = 0;
-          ResultSet rs = null;
-          String imei = null;
           try {
                stmt = conn.createStatement();
-               String qry = "select imei_esn_meid from device_db where txn_id  = '" + txnId + "' ";
-               logger.info("" + qry);
-               rs = stmt.executeQuery(qry);
-               while (rs.next()) {
-                     stmt = conn.createStatement();
-                    imei = rs.getString(1);
-                    int counter = new com.glocks.parser.service.ConsignmentInsertUpdate().getCounterFromDeviceDb(conn, imei);
-                    logger.debug("" + counter);
-                    
-                    try {
-                         if (counter == 0) {
-                              query = "delete from device_db where  imei_esn_meid = '" + imei + "'";
-                         } else {
-                              query = "update  device_db set counter = " + (counter - 1) + " where imei_esn_meid = '" + imei + "' ";
-                         }
-                         logger.info(" " + query);
-                         stmt.executeUpdate(query);
-                         logger.info("Imei in  device_db updated successfully.");
-                    } catch (Exception e) {
-                         logger.error("." + e.getMessage(), e);
-                    }
+               int counter = new com.glocks.parser.service.ConsignmentInsertUpdate().getCounterFromDeviceDb(conn, imei);
+               logger.debug("imei  " + imei + " ; C0unter  is" + counter);
+               if (counter <= 1) {
+                    query = "delete from device_db where  imei_esn_meid = '" + imei + "'";
                }
-               
-          } catch (SQLException e) {
+               if (counter > 1) {
+                    query = "update  device_db set counter = " + (counter - 1) + " where imei_esn_meid = '" + imei + "' ";
+               }
+               logger.info(" " + query);
+               try {
+                    stmt.executeUpdate(query);
+                    logger.info("Imei in  device_db updated successfully.");
+               } catch (Exception e) {
+                    logger.error("." + e.getMessage(), e);
+               }
+          } catch ( Exception e) {
                logger.error("...." + e.getMessage(), e);
           } finally {
                try {
-                    rs.close();
                     stmt.close();
-               } catch (SQLException ex) {
+               } catch ( Exception ex) {
                     logger.error("........." + ex.getMessage(), ex);
                }
           }
-
-          return executeStatus;
+           
      }
-
- 
 
 //     public void insertDeviceDbAud(Connection conn, List<DeviceDb> deviceDbs) {
 //          boolean isOracle = conn.toString().contains("oracle");
@@ -214,11 +190,6 @@ public class DeviceDbDao {
 //          }
 //     }
 //
-
-     
-     
-     
-     
 }
 
 

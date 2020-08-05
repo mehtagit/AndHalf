@@ -156,10 +156,11 @@ class tester {
 //          for (String a : arrOfStr) {
 //               System.out.println(a);
 //          }
-          int aa = 1;
-          for (int i = 1; i <= aa; i++) {
-               System.out.println("  " + i);
-          }
+          String line = ",IMEI,Yes,H5Y0J,787654123321451,31-07-2020,New";
+  String[] arrOfFile = line.trim().split(",", 8);
+          
+          System.out.println("" +arrOfFile.length);
+
      }
 
 }

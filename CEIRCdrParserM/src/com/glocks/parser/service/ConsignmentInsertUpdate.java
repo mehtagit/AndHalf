@@ -258,10 +258,11 @@ public class ConsignmentInsertUpdate {
                                  + period + "'," + "'" + rs1.getString("SNofDevice") + "'," + "'" + txn_id + "'," + ""
                                  + feature_file_management.get("user_id") + ", '" + operator + "'  )";    // "," + operator +  
 
+                         logger.info("Counnter si " + dvcDbCounter);
                          if (dvcDbCounter == 0) {
                               device_db_query = "insert into device_db (counter ,device_id_type,created_on,device_launch_date,device_status,"
                                       + "device_type,imei_esn_meid,modified_on,multiple_sim_status,period,sn_of_device, tac  ,txn_id , feature_name   ) " // feature_name
-                                      + "values(0 ,'" + rs1.getString("DeviceIdType") + "'," + "" + dateFunction + "," + "'"
+                                      + "values(1 ,'" + rs1.getString("DeviceIdType") + "'," + "" + dateFunction + "," + "'"
                                       + rs1.getString("Devicelaunchdate") + "'," + "'" + rs1.getString("DeviceStatus") + "',"
                                       + "'" + rs1.getString("DeviceType") + "'," + "'" + rs1.getString("IMEIESNMEID") + "',"
                                       + "" + dateFunction + "," + "'" + rs1.getString("MultipleSIMStatus") + "',"
@@ -527,7 +528,6 @@ public class ConsignmentInsertUpdate {
                while (rs.next()) {
                     counter = rs.getInt(1);
                }
-
           } catch (Exception e) {
                logger.error(e);
           } finally {
@@ -556,4 +556,12 @@ public class ConsignmentInsertUpdate {
      }
 
 }
+
+
+
+
+
+
+
+
 

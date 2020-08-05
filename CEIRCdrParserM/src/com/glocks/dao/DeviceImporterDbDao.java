@@ -48,7 +48,7 @@ public class DeviceImporterDbDao {
 		}
 		catch(Exception e){
 			logger.error(e.getMessage(), e);
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
 		finally{
 			try {
@@ -57,7 +57,7 @@ public class DeviceImporterDbDao {
 				if(stmt!=null)
 					stmt.close();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				logger.error(e.getMessage(), e);
 			}			
 		}
 
@@ -78,13 +78,13 @@ public class DeviceImporterDbDao {
 			stmt = conn.createStatement();
 			executeStatus = stmt.executeUpdate(query);
 		} catch (SQLException e) {
-			e.printStackTrace();
+		logger.error(e.getMessage(), e);
 		}
 		finally{
 			try {
 				stmt.close();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				logger.error(e.getMessage(), e);
 			}
 		}
 		return executeStatus;
@@ -117,7 +117,7 @@ public class DeviceImporterDbDao {
 //		}
 //		catch(Exception e){
 //			logger.info("Exception in getFeatureMapping"+e);
-//			e.printStackTrace();
+//			logger.error(e.getMessage(), e);
 //			return 0L;
 //		}
 //		finally{
@@ -127,7 +127,7 @@ public class DeviceImporterDbDao {
 //				if(stmt!=null)
 //					stmt.close();
 //			} catch (SQLException e) {
-//				e.printStackTrace();
+//				logger.error(e.getMessage(), e);
 //			}			
 //		}
 //	}
@@ -181,7 +181,7 @@ public class DeviceImporterDbDao {
 //
 //		} catch (SQLException e) {
 //			logger.error(e.getMessage(), e);
-//			e.printStackTrace();
+//			logger.error(e.getMessage(), e);
 //		}
 //		finally{
 //			try {
@@ -189,13 +189,14 @@ public class DeviceImporterDbDao {
 //					preparedStatement.close();
 //			} catch (SQLException e) {
 //				logger.error(e.getMessage(), e);
-//				e.printStackTrace();
+//				logger.error(e.getMessage(), e);
 //			}
 //		}
 //	}
 
    
 }
+
 
 
 

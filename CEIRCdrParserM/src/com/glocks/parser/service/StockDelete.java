@@ -44,15 +44,15 @@ public class StockDelete {
                     return;
                } else {
                     for (ManagementTable managementTable : managementTables) {
-                         List<ManagementDb> managementDbs = managementTableDao.getManagementDbByTxnId(conn, txnId,
-                                 managementTable.getName());
-                         logger.debug(managementDbs);
+//                         List<ManagementDb> managementDbs = managementTableDao.getManagementDbByTxnId(conn, txnId, managementTable.getName());
+//                         logger.debug(managementDbs);
 //                         managementAudTableDao.insertManagementDbAud(conn, managementDbs, managementTable.getAudName(), managementTable.getAudSequenceName());
                          managementTableDao.deleteDevicesFromManagementDb(conn, txnId, managementTable.getName());
+                  
+                    
                     }
                }
-               deviceDbDao.deleteDevicesFromDeviceDb(conn, txnId);
-
+            
                managementTableDao.updateMgmtDeleteFlag(conn, "stock_mgmt", txnId, 2);
 
           } catch (Exception e) {
@@ -67,7 +67,7 @@ public class StockDelete {
           if (Usertypes.IMPORTER.equalsIgnoreCase(userType)) {
                managementTables.add(new ManagementTable("device_importer_db", "device_importer_db_aud", "device_importer_db_aud_seq"));
           } else if (Usertypes.DISTRIBUTOR.equalsIgnoreCase(userType)) {
-               managementTables.add(new ManagementTable("device_distributer_db", "device_distributer_db_aud", ""));
+               managementTables.add(new ManagementTable("device_distributor_db", "device_distributor_db_aud", ""));
           } else if (Usertypes.RETAIILER.equalsIgnoreCase(userType)) {
                managementTables.add(new ManagementTable("device_retailer_db", "device_retailer_db_aud", ""));
           } else if (Usertypes.CUSTOM.equalsIgnoreCase(userType)) {
@@ -82,7 +82,7 @@ public class StockDelete {
           } else if (Usertypes.END_USER.equalsIgnoreCase(userType)) {
                managementTables.add(new ManagementTable("device_end_user_db", "device_end_user_db_aud", ""));
           }
-          managementTables.add(new ManagementTable("", "device_db_aud", "DEVICE_DB_AUD_seq"));
+//          managementTables.add(new ManagementTable("device_db", "device_db_aud", "DEVICE_DB_AUD_seq"));
 
           return managementTables;
      }

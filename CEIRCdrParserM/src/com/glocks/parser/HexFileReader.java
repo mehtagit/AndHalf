@@ -418,7 +418,7 @@ public class HexFileReader {
                Set<String> deviceType = new HashSet<String>();
                try {
                     while (result1.next()) {
-                         deviceType.add(result1.getString("interp"));
+                         deviceType.add(result1.getString("interp").toLowerCase());
                     }
                } catch (Exception e) {
                     logger.error("" + l.getClassName() + "/" + l.getMethodName() + ":" + l.getLineNumber() + e);
@@ -429,7 +429,7 @@ public class HexFileReader {
                Set<String> deviceType3 = new HashSet<String>();
                try {
                     while (result3.next()) {
-                         deviceType3.add(result3.getString("interp"));
+                         deviceType3.add(result3.getString("interp").toLowerCase());
                     }
                } catch (Exception e) {
                     logger.error("" + l.getClassName() + "/" + l.getMethodName() + ":" + l.getLineNumber() + e);
@@ -441,7 +441,7 @@ public class HexFileReader {
                Set<String> deviceType4 = new HashSet<String>();
                try {
                     while (result4.next()) {
-                         deviceType4.add(result4.getString("interp"));
+                         deviceType4.add(result4.getString("interp").toLowerCase());
                     }
                } catch (Exception e) {
                     logger.info("Error at MULTI_SIM_STATUS " + e);
@@ -452,7 +452,7 @@ public class HexFileReader {
                Set<String> deviceType5 = new HashSet<String>();
                try {
                     while (result5.next()) {
-                         deviceType5.add(result5.getString(1));
+                         deviceType5.add(result5.getString(1).toLowerCase());
                     }
                } catch (Exception e) {
                     logger.error("" + l.getClassName() + "/" + l.getMethodName() + ":" + l.getLineNumber() + e);
@@ -465,7 +465,11 @@ public class HexFileReader {
                while ((line = br.readLine()) != null) {
                     data = line.split(",", -1);
                     logger.info("line is " + line + "  line length " + line.trim().length());
+
                     if (line.replace(",", " ").trim().length() > 0) {
+
+                         
+
                          errorString = "";
                          if (k == 0) {
                               if (data.length == 1) {
@@ -542,6 +546,16 @@ public class HexFileReader {
                               String imeiV = arrOfFile[4];
                               hash_Set.add(arrOfFile[3].trim());
                               sourceTacList.add(arrOfFile[3].trim());
+                              
+                              if (arrOfFile.length != 7) {
+                              logger.info("errfor First Wrok set.." + imeiV);
+                                   errorString += "   Error Code :CON_FILE_0008, Error Message: The Rows contain more Column than allowed in the header.";
+                                   failed_flag = 0; /// added after
+                         }
+                              
+                              
+                              
+                              
                               for (int v = 0; v < data.length; v++) {
                                    if (data[v].length() > 25) {
                                         errorString += " Error Code :CON_FILE_0004, Error Message:   File Contain a Long Field  Record , ";
@@ -554,20 +568,20 @@ public class HexFileReader {
                                    failed_flag = 0; /// added after
                               }
 
-                              if (!(deviceType.contains(data[0].trim()))) {
+                              if (!(deviceType.contains(data[0].trim().toLowerCase()))) {
                                    errorString += "  Error Code :CON_FILE_0006, Error Message:  The field value(Device Type) is not as per the specifications,";
                                    failed_flag = 0;
                               }
 
-                              if (!(deviceType3.contains(data[1].trim()))) {
+                              if (!(deviceType3.contains(data[1].trim().toLowerCase()))) {
                                    errorString += "  Error Code :CON_FILE_0006, Error Message:  The field value(Device ID Type) is not as per the specifications,";
                                    failed_flag = 0;
                               }
-                              if (!(deviceType4.contains(data[2].trim()))) {
+                              if (!(deviceType4.contains(data[2].trim().toLowerCase()))) {
                                    errorString += "  Error Code :CON_FILE_0006, Error Message:  The field value(Multiple Sim Status) is not as per the specifications,";
                                    failed_flag = 0;
                               }
-                              if (!(deviceType5.contains(data[6].trim()))) {
+                              if (!(deviceType5.contains(data[6].trim().toLowerCase()))) {
                                    errorString += "  Error Code :CON_FILE_0006, Error Message:  The field value(Device Status) is not as per the specifications,";
                                    failed_flag = 0;
                               }
@@ -576,7 +590,6 @@ public class HexFileReader {
                                    errorString += "  Error Code :CON_FILE_0006, Error Message:  The field value(Device Launch Date) is not as per the specifications,";
                                    failed_flag = 0;
                               }
-                              logger.info("CON_FILE_0006 All done");
                               for (CDRColumn cdrColumn : myfilelist) {
                                    if (cdrColumn.graceType.equalsIgnoreCase("Mandatory")) {
                                         logger.info("DATA in field ... " + data[j - 1]);
@@ -971,12 +984,14 @@ public class HexFileReader {
                }
                conn.commit();
           } catch (Exception e) {
-               e.printStackTrace();  logger.error("e " + e);
+               e.printStackTrace();
+               logger.error("e " + e);
                try {
                     if (conn != null) {
                          conn.rollback();
                     }
-               } catch (Exception ex) { logger.error("e " + ex);
+               } catch (Exception ex) {
+                    logger.error("e " + ex);
                }
                result = null;
                // result = new String[]{ "0", "null", "null", "0", this.getTableSize( conn,
@@ -1046,7 +1061,8 @@ public class HexFileReader {
                while (rs0.next()) {
                     rs0Count = rs0.getInt(1);
                }
-          } catch (Exception e) { logger.error("e " + e);
+          } catch (Exception e) {
+               logger.error("e " + e);
           }
           logger.info("  ...... .." + rs0Count);
 
@@ -1070,7 +1086,8 @@ public class HexFileReader {
                     columnDetails.add(cdrColumn);
                }
           } catch (Exception ex) {
-               ex.printStackTrace(); logger.error("e " + ex);
+               ex.printStackTrace();
+               logger.error("e " + ex);
           } finally {
                if (conn != null) {
                     try {
@@ -1080,7 +1097,8 @@ public class HexFileReader {
                          if (stmt != null) {
                               stmt.close();
                          }
-                    } catch (Exception e) { logger.error("e " + e);
+                    } catch (Exception e) {
+                         logger.error("e " + e);
                     }
                }
           }
@@ -1120,7 +1138,7 @@ public class HexFileReader {
                     stmt.close();
                     rs1.close();
                } catch (SQLException e) {
-                   
+
                }
 
           }
@@ -1205,13 +1223,15 @@ public class HexFileReader {
                     logger.info("in function file path " + file_path);
                }
           } catch (Exception ex) {
-               ex.printStackTrace();  logger.error("e " + ex);
+               ex.printStackTrace();
+               logger.error("e " + ex);
           } finally {
                try {
                     rs.close();
                     stmt.close();
                } catch (SQLException ex) {
-           logger.error("e " + ex);     }
+                    logger.error("e " + ex);
+               }
 
           }
           return file_path;
