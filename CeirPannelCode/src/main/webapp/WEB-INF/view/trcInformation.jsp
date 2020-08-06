@@ -158,13 +158,13 @@ data-session-type="${not empty param.type ? param.type : 'null'}"
                                             <div class="input-field col s12 m6 l6">
                                                 <input type="text" name="uploadNationalId" id="uploadNationalId" maxlength="30" value="${registration.nidFilename}" disabled="">
                                                 <label for="uploadNationalId" class="active"><spring:message code="registration.uploadednationalid" /> </label>
-                                                 <span><a href="#" onclick="previewFile('${registration.nidFilePath}','${registration.nidFilename}')">Preview </a></span>  
+                                                 <span><a href="#" onclick="previewRegistrtionFile('${registration.nidFilePath}','${registration.nidFilename}')">Preview </a></span>  
                                             </div>
 
                                             <div class="input-field col s12 m6 l6">
                                                 <input type="text" name="uploadPhoto" id="uploadPhoto" maxlength="30" value="${registration.photoFilename}" disabled="">
                                                 <label for="uploadPhoto" class="active"><spring:message code="registration.uploadedphoto" /> </label>
-                                                <span> <a href="#" onclick="previewFile('${registration.photoFilePath}','${registration.photoFilename}')">Preview </a> </span> 
+                                                <span> <a href="#" onclick="previewRegistrtionFile('${registration.photoFilePath}','${registration.photoFilename}')">Preview </a> </span> 
                                             </div>
 
                                             <div class="input-field col s12 m6 l6">
@@ -175,7 +175,7 @@ data-session-type="${not empty param.type ? param.type : 'null'}"
                                             <div class="input-field col s12 m6 l6">
                                                 <input type="text" name="uploadIdCard" id="uploadIdCard" maxlength="30" value="${registration.idCardFilename}" disabled="">
                                                 <label for="uploadIdCard" class="active"><spring:message code="registration.uploadedidcard" /> </label>
-                                              <span>  <a href="#" onclick="previewFile('${registration.idCardFilePath}','${registration.idCardFilename}')">Preview </a>  </span>
+                                              <span>  <a href="#" onclick="previewRegistrtionFile('${registration.idCardFilePath}','${registration.idCardFilename}')">Preview </a>  </span>
                                             </div>
 
                                             <div class="input-field col s12 m6 l6">
@@ -274,11 +274,40 @@ data-session-type="${not empty param.type ? param.type : 'null'}"
 
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-	
+		
+		<!-- i18n library -->
+	<script type="text/javascript"
+		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/i18n.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/messagestore.js"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/fallbacks.js"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/language.js"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/parser.js"></script>
+
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/emitter.js"></script>
+
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/bidi.js"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/history.js"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/min.js"></script>	
 	<script type="text/javascript"
 		src="${context}/resources/js/countries.js"></script>
-	<script type="text/javascript"
-		src="${context}/resources/project_js/AdminRegistrationRequest.js?version=<%= (int) (Math.random() * 10) %>"></script>
+<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js?version=<%= (int) (Math.random() * 10) %>"></script>	
 		
 <script type="text/javascript">$( document ).ready(function() {var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login";}else{timeoutTime = currentTime + timeout;}});});</script>
 </body></html>

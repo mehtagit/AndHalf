@@ -35,14 +35,6 @@
 	rel="stylesheet" media="screen,projection">
 <link href="${context}/resources/css/style.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
-<script type="text/javascript"
-	src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
-<link
-	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.min.css"
-	type="text/css" rel="stylesheet" media="screen,projection">
-
-<link href="${context}/resources/css/jquery-datepicker2.css"
-	type="text/css" rel="stylesheet" media="screen,projection">
 <!-- Custome CSS-->
 <link href="" type="text/css"
 	rel="stylesheet" media="screen,projection">
@@ -55,18 +47,15 @@
 	type="text/css" rel="stylesheet" media="screen,projection">
 
 
-<link rel="stylesheet"
-	href="${context}/resources/project_css/viewConsignment.css">
-<link rel="stylesheet"
-	href="${context}/resources/project_css/iconStates.css">
-	<link rel="stylesheet"
-	href="${context}/resources/css/grievance.css">
 
 
 
 </head>
 
-<body data-roleType="${usertype}" data-userTypeID="${usertypeId}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${stolenselectedUserTypeId}">
+<body data-roleType="${usertype}" data-userTypeID="${usertypeId}"
+ data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}" 
+ data-stolenselected-roleType="${stolenselectedUserTypeId}"
+ session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}">
 
 <section id="content">
                 <!--start container-->
@@ -158,13 +147,13 @@
                                              <div class="input-field col s12 m6 l6">
                                                 <input type="text" name="uploadnationalId" id="uploadnationalId" value="${registration.nidFilename}" maxlength="30" download="download" disabled="">
                                                 <label for="uploadnationalId" class="active"><spring:message code="registration.uploadnationalid" /> </label>
-                                               <span></span>  <a href="#" onclick="previewFile('${registration.nidFilePath}','${registration.nidFilename}')">Preview </a> </span>
+                                               <span></span>  <a href="#" onclick="previewRegistrtionFile('${registration.nidFilePath}','${registration.nidFilename}')">Preview </a> </span>
                                             </div> 
 
                                             <div class="input-field col s12 m6 l6">
                                                 <input type="text" name="uploadPhoto" id="uploadPhoto" value="${registration.photoFilename}" maxlength="30" disabled="">
                                                 <label for="uploadPhoto" class="active"><spring:message code="input.UploadedPhoto" /> </label>
-                                               <span>  <a href="#" onclick="previewFile('${registration.photoFilePath}','${registration.photoFilename}')">Preview </a> </span>
+                                               <span>  <a href="#" onclick="previewRegistrtionFile('${registration.photoFilePath}','${registration.photoFilename}')">Preview </a> </span>
                                             </div>
 
                                             <div class="input-field col s12 m6 l6">
@@ -175,7 +164,7 @@
                                             <div class="input-field col s12 m6 l6">
                                                 <input type="text" name="uploadIDCard" id="uploadIDCard" value="${registration.idCardFilename}"  maxlength="30" disabled="">
                                                 <label for="uploadIDCard" class="active"><spring:message code="input.UploadedCard" /></label>
-                                                <span> <a href="#"  onclick="previewFile('${registration.idCardFilePath}','${registration.idCardFilename}')"> Preview </a> </span>
+                                                <span> <a href="#"  onclick="previewRegistrtionFile('${registration.idCardFilePath}','${registration.idCardFilename}')"> Preview </a> </span>
                                             </div>
 
                                             <div class="input-field col s12 m6 l6">
@@ -274,8 +263,7 @@
 	
 	<script
 		src="${context}/resources/custom_js/moment.min.js"></script>
-	<script type="text/javascript"
-		src="${context}/resources/js/jquery-datepicker2.js"></script>
+
 
 
 	<!--plugins.js - Some Specific JS codes for Plugin Settings-->
@@ -290,12 +278,40 @@
 	<!--scrollbar-->
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-	<!-- chartist -->
+		<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js?version=<%= (int) (Math.random() * 10) %>"></script>
+	<!-- i18n library -->
+	<script type="text/javascript"
+		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/i18n.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/messagestore.js"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/fallbacks.js"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/language.js"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/parser.js"></script>
+
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/emitter.js"></script>
+
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/bidi.js"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/history.js"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/min.js"></script>
 	
-	<script type="text/javascript"
-		src="${context}/resources/js/countries.js"></script>
-	<script type="text/javascript"
-		src="${context}/resources/project_js/AdminRegistrationRequest.js?version=<%= (int) (Math.random() * 10) %>"></script>
+
+	
 		
 <script type="text/javascript">$( document ).ready(function() {var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login";}else{timeoutTime = currentTime + timeout;}});});</script>
 </body></html>
