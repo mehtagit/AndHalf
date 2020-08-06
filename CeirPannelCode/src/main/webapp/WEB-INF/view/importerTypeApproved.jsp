@@ -30,13 +30,13 @@
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en" class="no-js">
-<head>
+<head><title>CEIR Portal</title>
 <!-- Security Tags -->
 <meta name="_csrf" content="${_csrf.token}"/>
 <!-- default header name is X-CSRF-TOKEN -->
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
 <!-- Security Tags -->
-<title>Importer</title>
+<!--<title>Importer</title>-->
 <meta http-equiv='cache-control' content='no-cache'>
 <meta http-equiv='expires' content='-1'>
 <meta http-equiv='pragma' content='no-cache'>
@@ -58,9 +58,6 @@
 	rel="stylesheet" media="screen,projection">
 <link href="${context}/resources/css/style.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
-<link
-	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.min.css"
-	type="text/css" rel="stylesheet" media="screen,projection">
 <link
 	href="${context}/resources/font/font-awesome/css/font-awesome.min.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
@@ -355,14 +352,11 @@
 		src="${context}/resources/custom_js/moment.min.js"></script>
 	
 		
-	<script type="text/javascript"
-		src="${context}/resources/project_js/viewStock.js?version=<%= (int) (Math.random() * 10) %>"></script>
+	
 	<script type="text/javascript"
 		src="${context}/resources/project_js/importerTypeApproved.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/validationMsg.js?version=<%= (int) (Math.random() * 10) %>"></script>
-	<script type="text/javascript"
-		src="${context}/resources/project_js/_dateFunction.js?version=<%= (int) (Math.random() * 10) %>" async></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/globalVariables.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript">

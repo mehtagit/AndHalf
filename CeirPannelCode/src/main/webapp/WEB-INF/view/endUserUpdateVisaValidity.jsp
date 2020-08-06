@@ -10,8 +10,8 @@
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en" class="no-js">
-<head>
-<title>Visa</title>
+<head><title>CEIR Portal</title>
+<!--<title>Visa</title>-->
 
 <meta charset="utf-8" />
 <meta name="viewport"
@@ -585,7 +585,7 @@
 		<!--end container-->
 	</section>
 
-	<div id="visafileFormateModal" class="modal">
+	<div id="fileFormateModal" class="modal">
 		<h6 class="modal-header"><spring:message code="fileValidationModalHeader" /></h6>
 		<div class="modal-content">
 			<div class="row">

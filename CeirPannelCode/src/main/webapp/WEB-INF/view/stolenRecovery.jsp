@@ -30,8 +30,8 @@
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en" class="no-js">
-<head>
-<title>Stolen Recovery</title>
+<head><title>CEIR Portal</title>
+<!--<title>Stolen Recovery</title>-->
 
 <meta charset="utf-8" />
 <meta name="viewport"
@@ -603,7 +603,7 @@ position: fixed;
 	</div>
 
 
-	<div id="fileStolenModal" class="modal">
+	<%-- <div id="fileStolenModal" class="modal">
 		<h6 class="modal-header"><spring:message code="button.markAsStolen" /></h6>
 		<div class="modal-content">
 			<div class="row">
@@ -707,8 +707,8 @@ position: fixed;
 			</div>
 		</div>
 	</div>
-
-	<div id="editFileStolenModal" class="modal">
+ --%>
+	<%-- <div id="editFileStolenModal" class="modal">
 		<h6 class="modal-header">
 						<spring:message code="input.UpdateStolenrequest" /> ( <span
 							id="editFileStolenTxnId"></span> ).
@@ -821,9 +821,9 @@ position: fixed;
 			</div>
 		</div>
 	</div>
+ --%>
 
-
-	<div id="recoveryFileModal" class="modal">
+<%-- 	<div id="recoveryFileModal" class="modal">
 		<div class="modal-content">
 			<div class="row">
 				<div class="col s12 m12">
@@ -854,7 +854,7 @@ position: fixed;
 							style="display: none">
 							<label for="SavedFileName" class="center-align"><spring:message code="input.UploadedFile" /></label> <input type="text" name=""
 								class="form-control boxBorder boxHeight" readonly
-								id="SavedFileName" />
+								id="" />
 						</div>
 					</div>
 					<a href="./Consignment/sampleFileDownload/filetype=sample"
@@ -883,8 +883,8 @@ position: fixed;
 				</div>
 			</div>
 		</div>
-	</div>
-	<div id="editRecoveryFileModal" class="modal">
+	</div> --%>
+	<%-- <div id="editRecoveryFileModal" class="modal">
 		<div class="modal-content">
 			<div class="row">
 				<div class="col s12 m12">
@@ -947,7 +947,7 @@ position: fixed;
 			</div>
 		</div>
 	</div>
-
+ --%>
 	<div id="markAsRecoverDone" class="modal">
 		<div class="modal-content">
 			<h6 class="modal-header"><spring:message code="button.MarkAsRecovered" /></h6>

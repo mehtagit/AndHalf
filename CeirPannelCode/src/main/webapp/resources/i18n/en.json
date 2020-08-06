@@ -7,7 +7,7 @@
 	"havingTxnID": "Do you want to approve the consignment having Transaction ID:",
 	"stockDeleted": "Stock Deleted Successfully",
 	"invoiceNumberExist": "Invoice number already exist",
-	"updateMsg": "Your update on the form for transaction ID",
+	"updateMsg": "Your request for transaction ID",
 	"hasBeenUpdated": "has been successfully updated",
 	"consignmentDeleted": "Consignment Deleted Successfully",
 	"deleteInProgress": "your request for deletion has been accepted",
@@ -214,5 +214,6 @@
 	"Unblock IMEI Count":"Unblock IMEI Count",
 	"Block IMEI Count":"Block IMEI Count",
 		"Stolen IMEI Count":"Stolen IMEI Count",
-	"Recovery IMEI Count":"Recovery IMEI Count"
+	"Recovery IMEI Count":"Recovery IMEI Count",
+	"EXISTS_IN_GSMA_TAC_DB":"TAC in IMEI is not approved TAC from GSMA ."
 	}

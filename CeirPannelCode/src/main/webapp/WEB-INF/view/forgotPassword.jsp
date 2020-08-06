@@ -12,7 +12,7 @@
 
 <html>
 
-<head>
+<head><title>CEIR Portal</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -26,7 +26,7 @@
 <!-- default header name is X-CSRF-TOKEN -->
 <meta name="_csrf_header" content="${_csrf.headerName}" />
 <!-- Security Tags --> 
-    <title>Forgot Password</title>
+    <!--<title>Forgot Password</title>-->
 
     <link href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.min.css" type="text/css" rel="stylesheet"
         media="screen,projection">
@@ -259,9 +259,9 @@ oninput="InvalidMsg(this,'input','<spring:message code="validation.50alphanumeri
 	</div>
 	
 	
-	<div id="submitBtnAction" class="modal">
+	<div id="submitBtnAction" class="modal" style="width:40% !important">
         <button type="button" class="modal-action modal-close waves-effect waves-green btn-flat right"
-            data-dismiss="modal">&times;</button>
+            data-dismiss="modal"></button>
         <h6 class="modal-header"><spring:message code="registration.forgotpassword" /></h6>
         <div class="modal-content">
                 <h6 id="responseMsg"></h6>

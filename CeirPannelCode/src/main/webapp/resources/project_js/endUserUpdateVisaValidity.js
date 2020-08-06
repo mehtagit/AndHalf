@@ -58,12 +58,12 @@ function hide() {
 							$('#errorMessage').text($.i18n(''));
 							$('#errorMessage').text($.i18n('featureNotSupportForCambodian'));
 							}
-						else if(data.data.onVisa=="N")
+						/*else if(data.data.onVisa=="N")
 						{
 						$('#errorModal').openModal();
 						$('#errorMessage').text($.i18n(''));
 						$('#errorMessage').text($.i18n('VISA_UPDATE_NOT_ALLOWED'));
-						}
+						}*/
 						else{
 					 $("#match-data").css("display", "block");
 		                $("#EndUserInfoForm").css("display", "block");
