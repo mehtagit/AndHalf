@@ -141,10 +141,7 @@ public class UserMgmtService {
 		log.info("data: "+details);
 //		RequestHeaders header=new RequestHeaders(details.getUserAgent(),details.getPublicIp(),details.getUsername());
 //		headerService.saveRequestHeader(header);
-		log.info("going to save audit trail");
-		userService.saveUserTrail(details.getUserId(),details.getUsername(),
-				details.getUserType(),details.getUserTypeId(),Features.User_Management,SubFeatures.SAVE,details.getFeatureId());
-
+		
 	    if(Objects.nonNull(details.getMiddleName())) {
 	    	 displayName=details.getFirstName()+" "+details.getMiddleName()+" "+details.getLastName();
 	    	    	
@@ -231,6 +228,10 @@ public class UserMgmtService {
            
 		}
 		if(output!=null) {
+			log.info("going to save audit trail");
+			userService.saveUserTrail(details.getUserId(),details.getUsername(),
+					details.getViewUserType(),details.getUsertypeId(),Features.User_Management,SubFeatures.SAVE,details.getFeatureId());
+
 			GenricResponse response=new GenricResponse(200,RegistrationTags.User_Success_Save.getTag(),RegistrationTags.User_Success_Save.getMessage(),"");
 			return  response;
 		}
@@ -246,9 +247,9 @@ public class UserMgmtService {
 //			RequestHeaders header=new RequestHeaders(details.getUserAgent(),details.getPublicIp(),details.getUsername());
 //			headerService.saveRequestHeader(header);
 			userService.saveUserTrail(details.getUserId(),details.getUsername(),
-					details.getUserType(),details.getUserTypeId(),Features.User_Management,SubFeatures.UPDATE,details.getFeatureId());
+					details.getViewUserType(),details.getUsertypeId(),Features.User_Management,SubFeatures.UPDATE,details.getFeatureId());
             
-
+		
 			Usertype userType=new Usertype(details.getUsertypeId());
 			List<Userrole> role=new ArrayList<Userrole>();
 			User userData=new User();
@@ -377,7 +378,7 @@ public class UserMgmtService {
 		
 			if(output!=null) {
 				Usertype usertype=usertypeRepo.findById(output.getUsertype().getId());
-			   UserDetails details=new UserDetails(output.getUserProfile().getFirstName(),
+			  UserDetails details=new UserDetails(output.getUserProfile().getFirstName(),
 					   output.getUserProfile().getMiddleName(), output.getUserProfile().getLastName(),
 					   output.getUserProfile().getPhoneNo(), output.getUserProfile().getEmail(),
 					   usertype.getUsertypeName(), output.getUsername(), request.getDataId(), output.getUsertype().getId(), output.getRemark());

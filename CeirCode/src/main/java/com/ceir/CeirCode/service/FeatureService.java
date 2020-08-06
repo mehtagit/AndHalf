@@ -106,11 +106,12 @@ public class FeatureService {
 		try {
 			Date GracePeriodEndDate=utility.stringToDate(systemConfigData.getValue());
 			log.info("GracePeriodEndDate: "+GracePeriodEndDate);
-			if(currentDate.after(GracePeriodEndDate)) {
-				period=Period.Post_Grace.getCode();
+			if(currentDate.before(GracePeriodEndDate)) {
+				period=Period.Grace.getCode();
+			
 			}
 			else {
-				period=Period.Grace.getCode();
+				period=Period.Post_Grace.getCode();
 			}
 			return period;
 		}
@@ -131,7 +132,11 @@ public class FeatureService {
 		if(userFeature!=null) 
 		{
 			log.info("period in feature"+userFeature.getPeriod());
-			if(Period.Both.getCode()==userFeature.getPeriod())
+			if(Period.None.getCode()==userFeature.getPeriod())
+			{
+				return new HttpResponse("this functinality is not supported ",420);									
+			}
+			else if(Period.Both.getCode()==userFeature.getPeriod())
 			{
 				return new HttpResponse("this functinality is supported ",200);									
 			}

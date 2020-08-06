@@ -1,5 +1,7 @@
 package com.ceir.CeirCode.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +23,7 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @CrossOrigin
 public class FeatureController{
-
+	private final Logger log = LoggerFactory.getLogger(getClass());
 	@Autowired
 	FeatureService featureService;
 
@@ -35,6 +37,7 @@ public class FeatureController{
 	@PostMapping("/periodValidate")     
 	public MappingJacksonValue  periodValidate(@RequestBody PeriodValidate periodValidate){
 		HttpResponse response =new HttpResponse();
+		log.info(" periodValidate Request:::::::::"+periodValidate);
 		response=featureService.periodValidation(periodValidate);
 		MappingJacksonValue mapping=new MappingJacksonValue(response);
 		return mapping;

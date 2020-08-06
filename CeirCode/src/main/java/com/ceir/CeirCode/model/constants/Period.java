@@ -2,7 +2,7 @@ package com.ceir.CeirCode.model.constants;
 
 public enum Period {
 
-	Grace(0, "Grace"), Post_Grace(1, "Post_Grace"), Both(2, "Both");
+	Grace(0, "Grace"), Post_Grace(1, "Post_Grace"), Both(2, "Both"), None(3, "None");
 	private Integer code;
 	private String description;
 

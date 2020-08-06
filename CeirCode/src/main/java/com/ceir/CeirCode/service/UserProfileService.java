@@ -46,6 +46,7 @@ import com.ceir.CeirCode.repo.UserProfileRepo;
 import com.ceir.CeirCode.repo.UserRoleRepo;
 import com.ceir.CeirCode.repoService.SystemConfigDbRepoService;
 import com.ceir.CeirCode.repoService.UserRepoService;
+import com.ceir.CeirCode.util.CustomMappingStrategy;
 import com.ceir.CeirCode.util.Utility;
 import com.opencsv.CSVWriter;
 import com.opencsv.bean.HeaderColumnNameTranslateMappingStrategy;
@@ -108,7 +109,7 @@ public class UserProfileService {
 			uPSB.with(new SearchCriteria("type",filterRequest.getAsType(), SearchOperation.EQUALITY, Datatype.INTEGER));
 
 		if(Objects.nonNull(filterRequest.getEmail()) && !filterRequest.getEmail().isEmpty())
-			uPSB.with(new SearchCriteria("email",filterRequest.getEmail(), SearchOperation.EQUALITY, Datatype.STRING));
+			uPSB.with(new SearchCriteria("email",filterRequest.getEmail(), SearchOperation.EQUALITY_CASE_INSENSITIVE, Datatype.STRING));
 
 		if(Objects.nonNull(filterRequest.getPhoneNo()) && !filterRequest.getPhoneNo().isEmpty())
 			uPSB.with(new SearchCriteria("phoneNo",filterRequest.getPhoneNo(), SearchOperation.EQUALITY, Datatype.STRING));
@@ -122,7 +123,7 @@ public class UserProfileService {
 			uPSB.addSpecification(uPSB.joinWithMultiple(new SearchCriteria("id",filterRequest.getUserRoleTypeId(), SearchOperation.EQUALITY, Datatype.LONG)));
 		
 		if(Objects.nonNull(filterRequest.getUsername()) && !filterRequest.getUsername().isEmpty()) 
-			uPSB.addSpecification(uPSB.joinWithUser(new SearchCriteria("username",filterRequest.getUsername(), SearchOperation.EQUALITY, Datatype.STRING)));
+			uPSB.addSpecification(uPSB.joinWithUser(new SearchCriteria("username",filterRequest.getUsername(), SearchOperation.EQUALITY_CASE_INSENSITIVE, Datatype.STRING)));
 		
 		else if(Objects.nonNull(filterRequest.getStatus()) && filterRequest.getStatus()!=-1) 
 		{
@@ -414,8 +415,14 @@ public class UserProfileService {
 		StatefulBeanToCsvBuilder<UserProfileFileModel> builder = null;
 		StatefulBeanToCsv<UserProfileFileModel> csvWriter      = null;
 		List<UserProfileFileModel> fileRecords       = null;
-		HeaderColumnNameTranslateMappingStrategy<UserProfileFileModel> mapStrategy = null;
+		CustomMappingStrategy<UserProfileFileModel> mapStrategy = new CustomMappingStrategy<>();
+		
+		
 		try {
+			mapStrategy.setType(UserProfileFileModel.class);
+
+		
+			
 			List<UserProfile> userProfileData = this.getAll(profileFilter,source);
 
 			List<SystemConfigListDb> asTypeList=systemConfigRepo.getByTag("AS_TYPE");
@@ -436,21 +443,25 @@ public class UserProfileService {
 			}
 			log.info(" file path plus filke name: "+Paths.get(filePath+fileName));
 			writer = Files.newBufferedWriter(Paths.get(filePath+fileName));
-			builder = new StatefulBeanToCsvBuilder<UserProfileFileModel>(writer);
-			csvWriter = builder.withQuotechar(CSVWriter.DEFAULT_QUOTE_CHARACTER).build();
+//			builder = new StatefulBeanToCsvBuilder<UserProfileFileModel>(writer);
+//			csvWriter = builder.withQuotechar(CSVWriter.DEFAULT_QUOTE_CHARACTER).build();
+//			
+			builder = new StatefulBeanToCsvBuilder<>(writer);
+			csvWriter = builder.withMappingStrategy(mapStrategy).withSeparator(',').withQuotechar(CSVWriter.NO_QUOTE_CHARACTER).build();
+
 			if( userProfileData.size() > 0 ) {
 				//List<SystemConfigListDb> systemConfigListDbs = configurationManagementServiceImpl.getSystemConfigListByTag("GRIEVANCE_CATEGORY");
 				fileRecords = new ArrayList<UserProfileFileModel>(); 
 				for( UserProfile userProfile : userProfileData ) {
 					uPFm = new UserProfileFileModel();
-					uPFm.setRequestedOn(utility.converedtlocalTime(userProfile.getUser().getCreatedOn()));
-					uPFm.setModifiedOn(utility.converedtlocalTime(userProfile.getUser().getModifiedOn()));
-					uPFm.setDisplayName(userProfile.getUser().getUsername());
+					uPFm.setRequestedOn(userProfile.getUser().getCreatedOn().format(dtf));
+					uPFm.setModifiedOn(userProfile.getUser().getModifiedOn().format(dtf));	
+					uPFm.setUserID(userProfile.getUser().getUsername());
+					uPFm.setStatus(UserStatus.getUserStatusByCode(userProfile.getUser().getCurrentStatus()).getDescription());
 					uPFm.setType(userProfile.getAsTypeName());
 					uPFm.setUserType(userProfile.getUser().getUsertype().getUsertypeName());
-					uPFm.setStatus(UserStatus.getUserStatusByCode(userProfile.getUser().getCurrentStatus()).getDescription());
 					uPFm.setApprovedBy(userProfile.getUser().getApprovedBy());
-					System.out.println(uPFm.toString());
+				
 					fileRecords.add(uPFm);
 				}
 				csvWriter.write(fileRecords);

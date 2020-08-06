@@ -197,6 +197,10 @@ public class GenericSpecificationBuilder<T> {
 							&& Datatype.STRING.equals(searchCriteria.getDatatype())) {
 						return cb.equal(root.get(searchCriteria.getKey()), searchCriteria.getValue().toString());
 					}
+					else if(SearchOperation.EQUALITY_CASE_INSENSITIVE.equals(searchCriteria.getSearchOperation())
+							&& Datatype.STRING.equals(searchCriteria.getDatatype())) {
+						return cb.equal(cb.lower(root.get(searchCriteria.getKey())), searchCriteria.getValue().toString().toLowerCase());
+					}
 					else if(SearchOperation.EQUALITY.equals(searchCriteria.getSearchOperation())
 							&& Datatype.INT.equals(searchCriteria.getDatatype())) {
 						return cb.equal(root.get(searchCriteria.getKey()), (int)searchCriteria.getValue());

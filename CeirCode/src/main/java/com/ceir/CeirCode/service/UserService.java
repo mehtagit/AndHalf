@@ -778,7 +778,7 @@ public class UserService {
 							
 							  emailUtils.saveNotification("REG_NOTIFY_CEIR_ADMIN_TO_VERIFY_USER",
 							  adminUser.getUserProfile(), 8, "Registration Request",
-							  "user phone and email details validated",  user.getUsername(), "NA", mapEmail, "CEIRAdmin",
+							  "user phone and email details validated",  String.valueOf(user.getId()), "NA", mapEmail, "CEIRAdmin",
 							  "CEIRAdmin", "Users");
 							 
 					}	
@@ -1873,6 +1873,10 @@ public class UserService {
 		userProfileData.setProvince(userProfile.getProvince());
 		userProfileData.setCountry(userProfile.getCountry());
 		userProfileData.setQuestionList(userProfile.getQuestionList());
+		userProfileData.setAuthorityName(userProfile.getAuthorityName());
+		userProfileData.setAuthorityEmail(userProfile.getAuthorityEmail());
+		userProfileData.setDesignation(userProfile.getDesignation());
+		userProfileData.setAuthorityPhoneNo(userProfile.getAuthorityPhoneNo());
 	}
 
 	public HttpResponse updateStatus(User user) {
@@ -2147,7 +2151,7 @@ public class UserService {
 			AuditTrail auditTrail=new AuditTrail(userId, username,
 					userTypeId,userType, featureId,
 					feature, subFeature,"0","NA",userType);
-			log.info("going to save audit trail");
+			log.info("going to save audit trail with request:::::"+auditTrail);
 			AuditTrail output=audiTrailRepoService.saveAuditTrail(auditTrail);
 			if(output!=null) {
 				log.info("audit trail sucessfully save");

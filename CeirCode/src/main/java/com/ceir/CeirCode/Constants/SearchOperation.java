@@ -1,7 +1,7 @@
 package com.ceir.CeirCode.Constants;
 
 public enum SearchOperation {
-	EQUALITY, NEGATION, GREATER_THAN, LESS_THAN, LIKE;
+	EQUALITY_CASE_INSENSITIVE,EQUALITY, NEGATION, GREATER_THAN, LESS_THAN, LIKE;
 
 	public static final String[] SIMPLE_OPERATION_SET = { ":", "!", ">", "<", "~" };
 

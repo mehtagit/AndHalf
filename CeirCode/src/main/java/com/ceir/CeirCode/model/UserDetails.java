@@ -11,10 +11,10 @@ public class UserDetails extends AllRequest{
 	private String userName;
 	private long id;
 	private long usertypeId;
-	
+
 	private String viewUserType;
-	
-	
+
+
 	private String remarks;
 	public String getFirstName() {
 		return firstName;
@@ -52,9 +52,9 @@ public class UserDetails extends AllRequest{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	
-	
+
+
+
 	public String getUserName() {
 		return userName;
 	}
@@ -86,20 +86,24 @@ public class UserDetails extends AllRequest{
 	public void setViewUserType(String viewUserType) {
 		this.viewUserType = viewUserType;
 	}
-	public UserDetails(String firstName, String middleName, String lastName, String phoneNo, String email,
-			String userType, String userName, long id, long userTypeId, String remarks) {
+
+
+	public UserDetails(String firstName, String middleName, String lastName,
+			String phoneNo, String email, String userType, String userName, long id, long
+			userTypeId, String remarks) {
 		super();
 		this.firstName = firstName;
-		this.middleName = middleName;
-		this.lastName = lastName;
-		this.phoneNo = phoneNo;
-		this.email = email;
-		this.userName = userName;
-		this.viewUserType=userType;
-		this.id = id;
-		this.usertypeId = userTypeId;
-		this.remarks = remarks;
-	}
+			this.middleName = middleName;
+			this.lastName = lastName; 
+			this.phoneNo =phoneNo; 
+			this.email = email; 
+			this.userName = userName;
+			this.viewUserType=userType; 
+			this.id = id; 
+			this.usertypeId = userTypeId;
+			this.remarks = remarks; 
+			}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -130,5 +134,5 @@ public class UserDetails extends AllRequest{
 		builder.append("]");
 		return builder.toString();
 	}
-	
+
 }
