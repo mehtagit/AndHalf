@@ -31,10 +31,10 @@ if (currentTime < dfd) {
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en" class="no-js">
-<head>
+<head><title>CEIR Portal</title>
 
 
-<title>Grievance</title>
+<!--<title>Grievance</title>-->
 
 <meta http-equiv='cache-control' content='no-cache'>
 <meta http-equiv='expires' content='-1'>

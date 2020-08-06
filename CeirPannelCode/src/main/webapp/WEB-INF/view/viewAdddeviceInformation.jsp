@@ -31,8 +31,8 @@
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en" class="no-js">
-<head>
-<title>View Add Device Information</title>
+<head><title>CEIR Portal</title>
+<!--<title>View Add Device Information</title>-->
 
 <meta charset="utf-8" />
 <meta name="viewport"

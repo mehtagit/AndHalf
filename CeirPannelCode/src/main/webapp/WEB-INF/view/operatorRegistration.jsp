@@ -17,7 +17,7 @@ if(statusCode==200){
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
-<head>
+<head><title>CEIR Portal</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
@@ -36,7 +36,7 @@ if(statusCode==200){
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
 <!-- Security Tags -->
 
-<title>CEIR | Importer Portal</title>
+<!--<title>CEIR | Importer Portal</title>-->
 
 <link rel="apple-touch-icon-precomposed"
 	href="${context}/resources/images/favicon/apple-touch-icon-152x152.png">

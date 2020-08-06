@@ -1959,13 +1959,13 @@ public class IconsState {
 			error="<a onclick="+errorURL+" class=\"eventNone\"><i class="+disableErrorIcon+" aria-hidden=\"true\" title="
 					+errorIconTitle+" ></i></a>";
 		}else if(("2".equals(status)) && "Approved".equals(userStatus)) {
-			approve = "<a onclick=" + approveAction + " class=\"eventNone\"><i class=" + disableApproveIcon
-					+ " aria-hidden=\"true\" title=" + approveIconTitle + " ></i></a>";
-			reject = "<a onclick=" + rejectAction + " class=\"eventNone\"><i class=" + disableRejectIcon
-					+ " aria-hidden=\"true\" title=" + rejectIconTitle + " ></i></a>";
-			delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\"><i class="
-					+disableDeletionIcon+" aria-hidden=\"true\"  title="
-					+deleteIconTitle+"></i></a>";
+				approve = "<a onclick=" + approveAction + " class=\"eventNone\"><i class=" + disableApproveIcon
+						+ " aria-hidden=\"true\" title=" + approveIconTitle + " ></i></a>";
+				reject = "<a onclick=" + rejectAction + " class=\"eventNone\"><i class=" + disableRejectIcon
+						+ " aria-hidden=\"true\" title=" + rejectIconTitle + " ></i></a>";
+				delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\"><i class="
+						+disableDeletionIcon+" aria-hidden=\"true\"  title="
+						+deleteIconTitle+"></i></a>";
 		}else if(status !="0" || status!="1" || status !="2" ||  status !="3" || status !="4"  || status !="6" ||status !="7" ||  status !="8" || status==null || status.equals("")){
 			error="<a onclick="+errorURL+" class="+disableIconClass+"><i class="+disableErrorIcon+" aria-hidden=\"true\" title="
 					+errorIconTitle+" ></i></a>";

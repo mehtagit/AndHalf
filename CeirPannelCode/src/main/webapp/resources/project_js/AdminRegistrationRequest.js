@@ -693,7 +693,7 @@ function userChangeStatus(entity){
 			}
 		});
 	 return false
-}
+ }	
  
  
  

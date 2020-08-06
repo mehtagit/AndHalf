@@ -17,7 +17,7 @@ if(statusCode==200){
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
-<head>
+<head><title>CEIR Portal</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
@@ -35,7 +35,7 @@ if(statusCode==200){
 <!-- default header name is X-CSRF-TOKEN -->
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
 <!-- Security Tags -->
-<title>CEIR | Registration panel</title>
+<!--<title>CEIR | Registration panel</title>-->
 
 <link rel="icon" href="${context}/resources/images/DMC-Logo.png" sizes="32x32">
 

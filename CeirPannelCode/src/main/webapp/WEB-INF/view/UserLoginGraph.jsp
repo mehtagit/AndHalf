@@ -31,8 +31,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html>
 <html lang="en" class="no-js">
-<head>
-<title>Graph</title>
+<head><title>CEIR Portal</title>
+<!--<title>Graph</title>-->
 
 <meta charset="utf-8" />
 <meta name="viewport"

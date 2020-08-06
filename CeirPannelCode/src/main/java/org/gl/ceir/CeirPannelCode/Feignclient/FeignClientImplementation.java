@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @FeignClient(url = "${feignClientPath}",value = "dsj" )
 public interface FeignClientImplementation {
 	 
-	
 	//View all Consignment  feign  controller
 	@RequestMapping(value="/consignment/Record" ,method=RequestMethod.GET) 
 	public List<ConsignmentModel> consignmentList(@RequestParam long userId) ;
