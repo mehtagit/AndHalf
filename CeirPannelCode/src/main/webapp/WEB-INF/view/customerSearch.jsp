@@ -32,8 +32,8 @@
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en" class="no-js">
-<head>
-<title>Customer Search</title>
+<head><title>CEIR Portal</title>
+<!--<title>Customer Search</title>-->
 
 <meta charset="utf-8" />
 <meta name="viewport"

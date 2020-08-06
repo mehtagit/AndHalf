@@ -31,8 +31,8 @@ if (currentTime < dfd) {
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en" class="no-js">
-<head>
-<title>Add</title>
+<head><title>CEIR Portal</title>
+<!--<title>Add</title>-->
 
 <meta charset="utf-8" />
 <meta name="viewport"

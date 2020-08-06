@@ -9,8 +9,8 @@
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en" class="no-js">
-<head>
-<title>Operator</title>
+<head><title>CEIR Portal</title>
+<!--<title>Operator</title>-->
 
 <meta charset="utf-8" />
 <meta name="viewport"

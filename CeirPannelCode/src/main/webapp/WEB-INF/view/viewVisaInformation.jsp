@@ -29,8 +29,8 @@
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en" class="no-js">
-<head>
-<title>Visa Information</title>
+<head><title>CEIR Portal</title>
+<!--<title>Visa Information</title>-->
 
 <meta charset="utf-8" />
 <meta name="viewport"

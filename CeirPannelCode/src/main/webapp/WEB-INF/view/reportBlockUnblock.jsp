@@ -10,8 +10,8 @@
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en" class="no-js">
-<head>
-<title>Block-Unblock</title>
+<head><title>CEIR Portal</title>
+<!--<title>Block-Unblock</title>-->
 
 <meta charset="utf-8" />
 <meta name="viewport"

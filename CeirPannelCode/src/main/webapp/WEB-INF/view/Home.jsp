@@ -14,8 +14,8 @@
 
 <!DOCTYPE html>
 <html lang="en" class="no-js">
-<head>
-<title>Home</title>
+<head><title>CEIR Portal</title>
+<!--<title>Home</title>-->
 <link
 	href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800&display=swap"
 	rel="stylesheet">
