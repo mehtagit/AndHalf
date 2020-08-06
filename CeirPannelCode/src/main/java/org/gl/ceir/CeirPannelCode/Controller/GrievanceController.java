@@ -12,12 +12,15 @@ import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Feignclient.GrievanceFeignClient;
+import org.gl.ceir.CeirPannelCode.Feignclient.UserRegistrationFeignImpl;
 import org.gl.ceir.CeirPannelCode.Model.AddMoreFileModel;
 import org.gl.ceir.CeirPannelCode.Model.FileCopyToOtherServer;
 import org.gl.ceir.CeirPannelCode.Model.FileExportResponse;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.GrievanceModel;
+import org.gl.ceir.CeirPannelCode.Model.PeriodValidate;
+import org.gl.ceir.CeirPannelCode.Util.HttpResponse;
 import org.gl.ceir.CeirPannelCode.Util.UtilDownload;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,8 +45,6 @@ public class GrievanceController {
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
 	@Autowired
-
-	
 	@Value ("${filePathforUploadFile}")
 	String filePathforUploadFile;
 
@@ -61,7 +62,8 @@ public class GrievanceController {
 	
 	@Value ("${serverId}")
 	Integer serverId;
-	
+	@Autowired
+	UserRegistrationFeignImpl userRegistrationFeignImpl;
 	
 	GrievanceModel grievance= new GrievanceModel();
 	GenricResponse response = new GenricResponse();
@@ -380,16 +382,22 @@ public class GrievanceController {
 						response.setTxnId(grievanceRequest.getGrievanceId());
 						return response;
 					}
-				
+			
 
 						@RequestMapping(value={"/raiseAgrievance"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST})
 					    public  ModelAndView openEndUserGrievancePage(@RequestParam(name="reportType") Integer reportType) 
 					{
+						HttpResponse httpResponse=userRegistrationFeignImpl.periodValidate(new PeriodValidate(17L, 6L));
 						ModelAndView mv = new ModelAndView();
 						log.info(" view End user Grievance entry point."+reportType);
+						if(httpResponse.getStatusCode() == 200) {
 						mv.addObject("reportType", reportType);
 					    mv.setViewName("openEndUserGrievancePage");
 						log.info(" view End user Grievance exit point."); 
+						}
+						else {
+							mv.setViewName("registrationPopup");
+						}
 						return mv; 
 					}
 

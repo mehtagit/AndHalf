@@ -6,6 +6,7 @@ import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.Otp;
 import org.gl.ceir.CeirPannelCode.Model.OtpResponse;
+import org.gl.ceir.CeirPannelCode.Model.PeriodValidate;
 import org.gl.ceir.CeirPannelCode.Model.Registration;
 import org.gl.ceir.CeirPannelCode.Model.ResendOtp;
 import org.gl.ceir.CeirPannelCode.Model.SecurityQuestion;
@@ -13,6 +14,7 @@ import org.gl.ceir.CeirPannelCode.Model.Usertype;
 import org.gl.ceir.CeirPannelCode.Util.HttpResponse;
 import org.gl.ceir.pagination.model.AlertContentModel;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -70,4 +72,6 @@ public interface UserRegistrationFeignImpl {
 	@PostMapping("/userProfile/getAddDeleteRoles")	
 	public @ResponseBody GenricResponse getAddDeleteRoleFeign(FilterRequest filterRequest);	
 	
+	@PostMapping("/periodValidate")
+	public HttpResponse periodValidate(@RequestBody PeriodValidate periodValidate);
 }

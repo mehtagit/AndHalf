@@ -1,10 +1,20 @@
 package org.gl.ceir.CeirPannelCode.Util;
 
+import org.gl.ceir.CeirPannelCode.Model.User;
+
 public class HttpResponse {   
 private String response;
 private Integer statusCode;
 private Object data;
 private String tag;
+private User user;
+
+public User getUser() {
+	return user;
+}
+public void setUser(User user) {
+	this.user = user;
+}
 public String getResponse() {
 	return response;
 }
@@ -31,8 +41,19 @@ public void setTag(String tag) {
 }
 @Override
 public String toString() {
-	return "HttpResponse [response=" + response + ", statusCode=" + statusCode + ", data=" + data + ", tag=" + tag
-			+ "]";
+	StringBuilder builder = new StringBuilder();
+	builder.append("HttpResponse [response=");
+	builder.append(response);
+	builder.append(", statusCode=");
+	builder.append(statusCode);
+	builder.append(", data=");
+	builder.append(data);
+	builder.append(", tag=");
+	builder.append(tag);
+	builder.append(", user=");
+	builder.append(user);
+	builder.append("]");
+	return builder.toString();
 }
 public HttpResponse(String response, Integer statusCode, String tag) {
 	super();
