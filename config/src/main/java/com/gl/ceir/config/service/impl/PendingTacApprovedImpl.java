@@ -203,10 +203,10 @@ public class PendingTacApprovedImpl {
 			cmsb.with(new SearchCriteria("createdOn", filterRequest.getEndDate() , SearchOperation.LESS_THAN, Datatype.DATE));
 
 		if(Objects.nonNull(filterRequest.getTxnId()) && !filterRequest.getTxnId().isEmpty())
-			cmsb.with(new SearchCriteria("txnId", filterRequest.getTxnId(), SearchOperation.EQUALITY, Datatype.STRING));
+			cmsb.with(new SearchCriteria("txnId", filterRequest.getTxnId(), SearchOperation.EQUALITY_CASE_INSENSITIVE, Datatype.STRING));
 
 		if(Objects.nonNull(filterRequest.getTac()) && !filterRequest.getTac().isEmpty())
-			cmsb.with(new SearchCriteria("tac", filterRequest.getTac(), SearchOperation.EQUALITY, Datatype.STRING));
+			cmsb.with(new SearchCriteria("tac", filterRequest.getTac(), SearchOperation.EQUALITY_CASE_INSENSITIVE, Datatype.STRING));
 
 		if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
 
@@ -273,7 +273,7 @@ public class PendingTacApprovedImpl {
 					atfm.setModifiedOn(pendingTacApprovedDb.getModifiedOn().format(dtf));
 					atfm.setTxnId(pendingTacApprovedDb.getTxnId()); 
 					atfm.setTac(pendingTacApprovedDb.getTac());
-					atfm.setUserType(pendingTacApprovedDb.getUserType());
+//					atfm.setUserType(pendingTacApprovedDb.getUserType());
 					atfm.setFeatureName(pendingTacApprovedDb.getFeatureName());
 
 					logger.debug(atfm);

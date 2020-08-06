@@ -249,7 +249,7 @@ public class ConsignmentMgmt implements Serializable {
 		this.id = id;
 	}
 
-	public String getSupplierld() {
+	public String getSupplierId() {
 		return supplierId;
 	}
 

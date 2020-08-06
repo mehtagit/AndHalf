@@ -466,7 +466,7 @@ public class RegularizeDeviceDb implements Serializable {
 		builder.append(creatorUserId);
 		builder.append(", multiSimStatusInterp=");
 		builder.append(multiSimStatusInterp);
-		builder.append(",taxCollectedBy");
+		builder.append(",taxCollectedBy=");
 		builder.append(taxCollectedBy);
 		builder.append(", approvedBy=");
 		builder.append(approvedBy);

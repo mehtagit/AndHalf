@@ -412,7 +412,7 @@ public class StockServiceImpl {
 				) {
 
 			if(Objects.nonNull(filterRequest.getUserId()) )
-				specificationBuilder.with(new SearchCriteria("userId", filterRequest.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));
+				specificationBuilder.with(new SearchCriteria("userId", filterRequest.getUserId(), SearchOperation.EQUALITY, Datatype.INT));
 
 			if(Objects.nonNull(filterRequest.getRoleType()))
 				specificationBuilder.with(new SearchCriteria("roleType", filterRequest.getRoleType(), SearchOperation.EQUALITY, Datatype.STRING));
@@ -425,7 +425,7 @@ public class StockServiceImpl {
 			specificationBuilder.with(new SearchCriteria("createdOn", filterRequest.getEndDate() , SearchOperation.LESS_THAN, Datatype.DATE));
 
 		if(Objects.nonNull(filterRequest.getTxnId()) && !filterRequest.getTxnId().isEmpty())
-			specificationBuilder.with(new SearchCriteria("txnId", filterRequest.getTxnId(), SearchOperation.EQUALITY, Datatype.STRING));
+			specificationBuilder.with(new SearchCriteria("txnId", filterRequest.getTxnId(), SearchOperation.EQUALITY_CASE_INSENSITIVE, Datatype.STRING));
 
 		if(Objects.nonNull(filterRequest.getUserType()) && "Custom".equalsIgnoreCase(filterRequest.getUserType())) {
 //			logger.info("Inside custom block.");
@@ -767,6 +767,7 @@ public class StockServiceImpl {
 				stockMgmt.setSupplierId(distributerManagement.getSupplierId());
 				stockMgmt.setTotalPrice(distributerManagement.getTotalPrice());
 				stockMgmt.setDeviceQuantity(distributerManagement.getDeviceQuantity());
+				stockMgmt.setRemarks(null);
 				if(Objects.nonNull(distributerManagement.getFileName()) && !distributerManagement.getFileName().isEmpty()) {
 					stockMgmt.setStockStatus(StockStatus.NEW.getCode());
 					stockMgmt.setFileName(distributerManagement.getFileName());
@@ -949,7 +950,10 @@ public class StockServiceImpl {
 								"Users");
 						logger.info("Notfication have been saved for custom user.");
 					}
-					placeholderMap.put("<First name>", user.getUserProfile().getFirstName() );
+					if( Objects.nonNull(user.getUserProfile().getFirstName()))
+						placeholderMap.put("<First name>", user.getUserProfile().getFirstName() );
+					else
+						placeholderMap.put("<First name>", "User" );
 					emailUtil.saveNotification(mailTag, 
 							user.getUserProfile(), 
 							consignmentUpdateRequest.getFeatureId(),
@@ -1069,7 +1073,10 @@ public class StockServiceImpl {
 									"Users");
 							logger.info("Notfication have been saved for custom user.");
 						}
-						placeholderMap.put("<First name>", user.getUserProfile().getFirstName() );
+						if( Objects.nonNull(user.getUserProfile().getFirstName()))
+							placeholderMap.put("<First name>", user.getUserProfile().getFirstName() );
+						else
+							placeholderMap.put("<First name>", "User" );
 						emailUtil.saveNotification(mailTag, 
 								user.getUserProfile(), 
 								consignmentUpdateRequest.getFeatureId(),
