@@ -88,6 +88,8 @@ public class StockMgmt implements Serializable {
 	
 	private Long ceirAdminId;
 	
+	public Integer portAddress;
+	
 	public Long getCeirAdminId() {
 		return ceirAdminId;
 	}
@@ -282,51 +284,24 @@ public class StockMgmt implements Serializable {
 		this.deviceQuantity = deviceQuantity;
 	}
 
+	public Integer getPortAddress() {
+		return portAddress;
+	}
+
+	public void setPortAddress(Integer portAddress) {
+		this.portAddress = portAddress;
+	}
+
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("StockMgmt [id=");
-		builder.append(id);
-		builder.append(", createdOn=");
-		builder.append(createdOn);
-		builder.append(", modifiedOn=");
-		builder.append(modifiedOn);
-		builder.append(", suplierName=");
-		builder.append(suplierName);
-		builder.append(", supplierId=");
-		builder.append(supplierId);
-		builder.append(", invoiceNumber=");
-		builder.append(invoiceNumber);
-		builder.append(", txnId=");
-		builder.append(txnId);
-		builder.append(", fileName=");
-		builder.append(fileName);
-		builder.append(", userId=");
-		builder.append(userId);
-		builder.append(", user=");
-		builder.append(user);
-		builder.append(", roleType=");
-		builder.append(roleType);
-		builder.append(", quantity=");
-		builder.append(quantity);
-		builder.append(", stockStatus=");
-		builder.append(stockStatus);
-		builder.append(", previousStockStatus=");
-		builder.append(previousStockStatus);
-		builder.append(", currency=");
-		builder.append(currency);
-		builder.append(", userType=");
-		builder.append(userType);
-		builder.append(", totalPrice=");
-		builder.append(totalPrice);
-		builder.append(", remarks=");
-		builder.append(remarks);
-		builder.append(", stateInterp=");
-		builder.append(stateInterp);
-		builder.append(", assignerId=");
-		builder.append(assignerId);
-		builder.append("]");
-		return builder.toString();
+		return "StockMgmt [id=" + id + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", suplierName="
+				+ suplierName + ", supplierId=" + supplierId + ", invoiceNumber=" + invoiceNumber + ", txnId=" + txnId
+				+ ", fileName=" + fileName + ", userId=" + userId + ", user=" + user + ", roleType=" + roleType
+				+ ", quantity=" + quantity + ", stockStatus=" + stockStatus + ", previousStockStatus="
+				+ previousStockStatus + ", currency=" + currency + ", userType=" + userType + ", totalPrice="
+				+ totalPrice + ", remarks=" + remarks + ", assignerId=" + assignerId + ", stateInterp=" + stateInterp
+				+ ", deleteFlag=" + deleteFlag + ", deleteFlagInterp=" + deleteFlagInterp + ", deviceQuantity="
+				+ deviceQuantity + ", ceirAdminId=" + ceirAdminId + ", portAddress=" + portAddress + "]";
 	}
 
 }

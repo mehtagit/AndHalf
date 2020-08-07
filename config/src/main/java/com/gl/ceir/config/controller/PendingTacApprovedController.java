@@ -1,5 +1,7 @@
 package com.gl.ceir.config.controller;
 
+import javax.transaction.Transactional;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,6 +64,7 @@ public class PendingTacApprovedController {
 		return mapping;
 	}
 
+	@Transactional
 	@ApiOperation(value = "All tags list || system-config-list", response = String.class)
 	@DeleteMapping("/pending-tac-approved")
 	public MappingJacksonValue deleteValue(@RequestBody FilterRequest filterRequest) {

@@ -171,7 +171,8 @@ public class EnduserServiceImpl {
 					data.getUserType(), 12,Features.REGISTER_DEVICE, SubFeatures.Search_NID, "", data.getNid(),data.getUserType()));
 			logger.info("AUDIT : Saved request in audit.");
 
-			EndUserDB endUserDB = endUserDbRepository.getByNid(data.getNid());
+//			EndUserDB endUserDB = endUserDbRepository.getByNid(data.getNid());
+			EndUserDB endUserDB = endUserDbRepository.findByNidIgnoreCase(data.getNid());
 
 			// End user is not registered with CEIR system.
 			if(Objects.nonNull(endUserDB)) {
@@ -798,10 +799,10 @@ public class EnduserServiceImpl {
 					txnId = visaDb.getTxnId();
 					userId=ceirActionRequest.getUserId();
 				}else if(ceirActionRequest.getAction() == 1){
-					String payloadTxnId = ceirActionRequest.getTxnId();
+					String payloadTxnId = visaDb.getTxnId();
 					// Check if someone else taken the same action on visa update.
 					VisaUpdateDb visaUpdateTemp = visaUpdateRepo.getByTxnId(payloadTxnId);
-					if(RegularizeDeviceStatus.REJECTED_BY_CEIR_ADMIN.getCode() == visaUpdateTemp.getStatus()) {
+					if(Objects.nonNull(visaUpdateTemp) && RegularizeDeviceStatus.REJECTED_BY_CEIR_ADMIN.getCode() == visaUpdateTemp.getStatus()) {
 						String message = "Any other user have taken the same action on the visaUpdate [" + payloadTxnId + "]";
 						logger.info(message);
 						return new GenricResponse(10, "", message, payloadTxnId);
@@ -936,8 +937,8 @@ public class EnduserServiceImpl {
 					txnId = visaDb.getTxnId();
 					List<User> user= new ArrayList<User>();
 					user=userStaticServiceImpl.getUserbyUsertypeId(8);
-					UserProfile ceirUserProfile = new UserProfile();
-					ceirUserProfile.setUser(userStaticServiceImpl.getCeirAdmin());
+//					UserProfile ceirUserProfile = new UserProfile();
+//					ceirUserProfile.setUser(userStaticServiceImpl.getCeirAdmin());
 					sufeature="SYSTEM_ACCEPT";
 					if(Objects.nonNull(endUserDB.getEmail()) && !endUserDB.getEmail().isEmpty() && !"NA".equalsIgnoreCase(endUserDB.getEmail())) {
 						rawMails.add(new RawMail("Update_Visa_Approved_System", 

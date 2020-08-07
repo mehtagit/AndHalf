@@ -24,11 +24,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Audited
+//@JsonIdentityInfo(
+//		  generator = ObjectIdGenerators.PropertyGenerator.class, 
+//		  property = "id"
+//)
 public class EndUserDB   {
 
 	private static final long serialVersionUID = 1L;
@@ -65,7 +71,7 @@ public class EndUserDB   {
 	@Column(length = 50)
 	private String commune;
 	
-	@NotNull
+//	@NotNull
 	@Column(length = 50)
 	private String village;
 	
@@ -87,7 +93,7 @@ public class EndUserDB   {
 
 	@NotAudited
 	@OneToMany(mappedBy = "endUserDB",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-	@JsonBackReference("device-info")
+//	@JsonManagedReference("device-info")
 	private List<RegularizeDeviceDb> regularizeDeviceDbs ;
 	
 	@Column(length = 50)

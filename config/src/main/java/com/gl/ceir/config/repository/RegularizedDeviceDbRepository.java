@@ -24,6 +24,8 @@ JpaSpecificationExecutor<RegularizeDeviceDb	>, CustomerCareRepo<RegularizeDevice
 	
 	public Long countByNidAndDeviceStatus(String nid,int status);
 	public Long countByNidAndTaxPaidStatus(String nid,int status);
+	
+	public Long countByNidIgnoreCaseAndTaxPaidStatus(String nid,int status);
 
 	public RegularizeDeviceDb getByTxnId(String txnid);
 

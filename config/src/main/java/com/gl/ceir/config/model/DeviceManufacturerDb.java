@@ -1,7 +1,8 @@
 package com.gl.ceir.config.model;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
+//import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,11 +31,11 @@ public class DeviceManufacturerDb implements Serializable{
 	@CreationTimestamp
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	@Column(nullable = false, updatable = false)
-	private Date createdOn;
+	private LocalDateTime createdOn;
 
 	@JsonIgnore
 	@UpdateTimestamp
-	private Date modifiedOn;
+	private LocalDateTime modifiedOn;
 
 	private String deviceType;
 	private String deviceIdType;
@@ -54,16 +55,16 @@ public class DeviceManufacturerDb implements Serializable{
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public Date getCreatedOn() {
+	public LocalDateTime getCreatedOn() {
 		return createdOn;
 	}
-	public void setCreatedOn(Date createdOn) {
+	public void setCreatedOn(LocalDateTime createdOn) {
 		this.createdOn = createdOn;
 	}
-	public Date getModifiedOn() {
+	public LocalDateTime getModifiedOn() {
 		return modifiedOn;
 	}
-	public void setModifiedOn(Date modifiedOn) {
+	public void setModifiedOn(LocalDateTime modifiedOn) {
 		this.modifiedOn = modifiedOn;
 	}
 	public String getDeviceType() {

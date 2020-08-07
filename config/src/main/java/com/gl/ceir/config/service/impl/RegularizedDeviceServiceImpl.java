@@ -202,9 +202,9 @@ public class RegularizedDeviceServiceImpl {
 			logger.info("dialect : " + propertiesReader.dialect);
 
 			Page<RegularizeDeviceDb> page = regularizedDeviceDbRepository.findAll(buildSpecification(filterRequest,stateList, source).build(), pageable);
-
+			logger.info(page.getContent().toString());
 			for(RegularizeDeviceDb regularizeDeviceDb : page.getContent()) {
-
+//				logger.info(regularizeDeviceDb.toString());
 				for(StateMgmtDb stateMgmtDb : stateList) {
 					if(regularizeDeviceDb.getStatus() == stateMgmtDb.getState()) {
 						regularizeDeviceDb.setStateInterp(stateMgmtDb.getInterp()); 
@@ -213,14 +213,12 @@ public class RegularizedDeviceServiceImpl {
 				}
 
 				if(Objects.nonNull(regularizeDeviceDb.getEndUserDB())) {
+					logger.info(regularizeDeviceDb.getEndUserDB().toString());
 					regularizeDeviceDb.setNationality(regularizeDeviceDb.getEndUserDB().getNationality());
-					EndUserDB endUser=regularizeDeviceDb.getEndUserDB();
-					endUser.setRegularizeDeviceDbs(new ArrayList<>(1));
-					//logger.info("nationality= "+regularizeDeviceDb.getEndUserDB().getNationality());
-					regularizeDeviceDb.setEndUserDB(endUser);
+//					EndUserDB endUser=regularizeDeviceDb.getEndUserDB();
+					regularizeDeviceDb.getEndUserDB().setRegularizeDeviceDbs(new ArrayList<>(1));
+//					logger.info(regularizeDeviceDb.getEndUserDB().toString());
 				}
-
-
 				setInterp(regularizeDeviceDb);
 			}
 
@@ -583,7 +581,7 @@ public class RegularizedDeviceServiceImpl {
 			auditTrailRepository.save(auditTrail);
 			logger.info("AUDIT : update in audit_trail. " + auditTrail);
 			RegularizeDeviceDb userCustomDbDetails = regularizedDeviceDbRepository.getByFirstImei(regularizeDeviceDb.getFirstImei());
-			UserProfile ceirAdminProfile = userStaticServiceImpl.getCeirAdmin().getUserProfile();
+//			UserProfile ceirAdminProfile = userStaticServiceImpl.getCeirAdmin().getUserProfile();
 
 			if(Objects.nonNull(userCustomDbDetails)) {
 				userCustomDbDetails.setTaxPaidStatus(regularizeDeviceDb.getTaxPaidStatus());
@@ -719,9 +717,10 @@ public class RegularizedDeviceServiceImpl {
 			RegularizeDeviceDb regularizeDeviceDb = regularizedDeviceDbRepository.getByFirstImei(data.getImei());
 
 			if(Objects.nonNull(regularizeDeviceDb)) {
-				regularizeDeviceDb.setStatus(RegularizeDeviceStatus.WITHDRAWN_BY_CEIR_ADMIN.getCode());
-				regularizeDeviceDb.setApprovedBy(username);
-				regularizedDeviceDbRepository.save(regularizeDeviceDb);
+//				regularizeDeviceDb.setStatus(RegularizeDeviceStatus.WITHDRAWN_BY_CEIR_ADMIN.getCode());
+//				regularizeDeviceDb.setApprovedBy(username);
+//				regularizedDeviceDbRepository.save(regularizeDeviceDb);
+				regularizedDeviceDbRepository.deleteById(regularizeDeviceDb.getId());
 				return new GenricResponse(0, "Device have been deleted sucessfully.", regularizeDeviceDb.getFirstImei());
 			}else {
 				return new GenricResponse(4, "This IMEI does not exist.", "");	
@@ -927,8 +926,8 @@ public class RegularizedDeviceServiceImpl {
 					txnId = regularizeDeviceDb.getTxnId();
 //					List<User> user= new ArrayList<User>();
 //					user = userStaticServiceImpl.getUserbyUsertypeId(8);
-					UserProfile ceirUserProfile = new UserProfile();
-					ceirUserProfile.setUser(userStaticServiceImpl.getCeirAdmin());
+//					UserProfile ceirUserProfile = new UserProfile();
+//					ceirUserProfile.setUser(userStaticServiceImpl.getCeirAdmin());
 
 					subFeature = SubFeatures.SYSTEM_ACCEPT;
 					if(Objects.nonNull(endUserDB.getEmail()) 
@@ -1026,8 +1025,9 @@ public class RegularizedDeviceServiceImpl {
 
 				PolicyConfigurationDb policyConfigurationDb = configurationManagementServiceImpl.getPolicyConfigDetailsByTag(tag);
 
-				return new GenricResponse(0, "", "", new Count(Long.parseLong(policyConfigurationDb.getValue()), regularizedDeviceDbRepository.countByNidAndTaxPaidStatus(nid,2)));	
-
+//				return new GenricResponse(0, "", "", new Count(Long.parseLong(policyConfigurationDb.getValue()), regularizedDeviceDbRepository.countByNidAndTaxPaidStatus(nid,2)));
+				return new GenricResponse(0, "", "", new Count(Long.parseLong(policyConfigurationDb.getValue()),
+						regularizedDeviceDbRepository.countByNidIgnoreCaseAndTaxPaidStatus(nid,2)));
 			}else {
 				return new GenricResponse(1,"Please enter correct type","");	
 
@@ -1091,7 +1091,7 @@ public class RegularizedDeviceServiceImpl {
 		GenericSpecificationBuilder<RegularizeDeviceDb> specificationBuilder = new GenericSpecificationBuilder<RegularizeDeviceDb>(propertiesReader.dialect);
 
 		if(Objects.nonNull(filterRequest.getNid()) && !filterRequest.getNid().isEmpty())
-			specificationBuilder.with(new SearchCriteria("nid", filterRequest.getNid(), SearchOperation.EQUALITY, Datatype.STRING));
+			specificationBuilder.with(new SearchCriteria("nid", filterRequest.getNid(), SearchOperation.EQUALITY_CASE_INSENSITIVE, Datatype.STRING));
 
 		if(Objects.nonNull(filterRequest.getStartDate()) && !filterRequest.getStartDate().isEmpty())
 			specificationBuilder.with(new SearchCriteria("createdOn", filterRequest.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
@@ -1177,7 +1177,7 @@ public class RegularizedDeviceServiceImpl {
 		}
 
 		if(Objects.nonNull(filterRequest.getTxnId()) && !filterRequest.getTxnId().isEmpty()) {
-			specificationBuilder.with(new SearchCriteria("txnId", filterRequest.getTxnId(), SearchOperation.EQUALITY, Datatype.STRING));
+			specificationBuilder.with(new SearchCriteria("txnId", filterRequest.getTxnId(), SearchOperation.EQUALITY_CASE_INSENSITIVE, Datatype.STRING));
 		}
 
 		if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){

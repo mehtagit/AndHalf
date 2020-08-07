@@ -18,9 +18,9 @@ public class UserStaticServiceImpl {
 	@Autowired
 	UserRepository userRepository;
 
-	public User getCeirAdmin() {
+	/*public User getCeirAdmin() {
 		return userRepository.getByUsername("CEIRAdmin");
-	}
+	}*/
 	
 	public List<User> getUserbyUsertypeId(long usertypeId) {
 		return userRepository.getByUsertype_Id(usertypeId);
