@@ -684,7 +684,7 @@ position: fixed;
 						data-date-format="yyyy-mm-dd" style="margin-top: 10px;">
 
 						<input class="form-control" name="inputsaves" type="text"
-							id="startDateFilter" readonly /> <span class="input-group-addon"
+							id="" readonly /> <span class="input-group-addon"
 							style="color: #ff4081"><i
 							class="glyphicon glyphicon-calendar"
 							onclick="_Services._selectstartDate()"></i></span>
@@ -793,12 +793,12 @@ position: fixed;
 				<div class="col s12 m2 l2" style="width: 40%; display: none"
 					id="stolenDate">
 
-					<label for="startDateFilter" class="center-align">Till date<spring:message code="input.supplier" /></label>
+					<label for="" class="center-align">Till date<spring:message code="input.supplier" /></label>
 					<div id="startdatepicker" class="input-group date"
 						data-date-format="yyyy-mm-dd" style="margin-top: 10px;">
 
 						<input class="form-control" name="inputsaves" type="text"
-							id="startDateFilter" readonly /> <span class="input-group-addon"
+							id="" readonly /> <span class="input-group-addon"
 							style="color: #ff4081"><i
 							class="glyphicon glyphicon-calendar"
 							onclick="_Services._selectstartDate()"></i></span>
@@ -1303,7 +1303,7 @@ aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
 <spring:message code="operator.tilldate" /></label>
 <div id="startdatepicker" class="input-group" style="margin-top: 10px;">
 
-<input class="form-control" placeholder="" name="inputsaves" type="text" id="startDateFilter"
+<input class="form-control" placeholder="" name="inputsaves" type="text" 
 readonly /> <span class="input-group-addon" style="color: #ff4081"><i
 class="glyphicon glyphicon-calendar"
 onclick="_Services._selectstartDate()"></i></span>

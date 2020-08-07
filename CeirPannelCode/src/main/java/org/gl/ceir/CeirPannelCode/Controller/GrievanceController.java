@@ -382,7 +382,7 @@ public class GrievanceController {
 						response.setTxnId(grievanceRequest.getGrievanceId());
 						return response;
 					}
-			
+				
 
 						@RequestMapping(value={"/raiseAgrievance"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST})
 					    public  ModelAndView openEndUserGrievancePage(@RequestParam(name="reportType") Integer reportType) 

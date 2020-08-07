@@ -171,13 +171,13 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
                                         <div class="input-field col s12 m6 l6">
                                             <input type="text" name="uploadNationalId" id="uploadNationalId" value="${registration.nidFilename}" maxlength="30" disabled="">
                                             <label for="uploadNationalId" class="active"><spring:message code="registration.uploadednationalid" /></label>
-                                           <span> <a href="#" onclick="previewFile('${registration.nidFilePath}','${registration.nidFilename}')">  <spring:message code="registration.preview" /></a> </span>   
+                                           <span> <a href="#" onclick="previewRegistrtionFile('${registration.nidFilePath}','${registration.nidFilename}')">  <spring:message code="registration.preview" /></a> </span>   
                                         </div>
 
                                         <div class="input-field col s12 m6 l6">
                                             <input type="text" name="uploadPhoto" id="uploadPhoto" value="${registration.photoFilename}" maxlength="30" disabled="">
                                             <label for="uploadPhoto" class="active"> <spring:message code="registration.uploadedphoto" /></label>
-                                             <span><a href="#" onclick="previewFile('${registration.photoFilePath}','${registration.photoFilename}')"><spring:message code="registration.preview" /> </a></span>  
+                                             <span><a href="#" onclick="previewRegistrtionFile('${registration.photoFilePath}','${registration.photoFilename}')"><spring:message code="registration.preview" /> </a></span>  
                                         </div>
 
                                         <div class="input-field col s12 m6 l6">
@@ -188,7 +188,7 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
                                         <div class="input-field col s12 m6 l6">
                                             <input type="text" name="uploadIdCard" id="uploadIdCard" value="${registration.idCardFilename}" maxlength="30" disabled="">
                                             <label for="uploadIdCard" class="active"><spring:message code="registration.uploadedidcard" /> </label>
-                                          	<span> <a href="#"  onclick="previewFile('${registration.idCardFilePath}','${registration.idCardFilename}')"> <spring:message code="registration.preview" /> </a></span>  
+                                          	<span> <a href="#"  onclick="previewRegistrtionFile('${registration.idCardFilePath}','${registration.idCardFilename}')"> <spring:message code="registration.preview" /> </a></span>  
                                         </div>
 
                                         <div class="input-field col s12 m6 l6">
@@ -260,7 +260,7 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
                                        
                                     <input type="text" name="vatFile" id="uploadedVatFile" value="${registration.vatFilename}" maxlength="20"  disabled="">
                                     <label for="ploadedVatFile" class="active"><spring:message code="registration.uploadedVatFile"/> </label>
-                                   <span> <a href="#" onclick="previewFile('${registration.vatFilePath}','${registration.vatFilename}')">Preview </a></span> 
+                                   <span> <a href="#" onclick="previewRegistrtionFile('${registration.vatFilePath}','${registration.vatFilename}')">Preview </a></span> 
                                 </div>
                                 
                                  <div class="input-field col s12 m6">
@@ -324,11 +324,43 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
 	<!--scrollbar-->
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js?version=<%= (int) (Math.random() * 10) %>"></script>	
+		<!-- i18n library -->
+	<script type="text/javascript"
+		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/i18n.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/messagestore.js"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/fallbacks.js"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/language.js"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/parser.js"></script>
+
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/emitter.js"></script>
+
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/bidi.js"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/history.js"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/min.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/js/countries.js"></script>
 	
 	<script type="text/javascript"
 		src="${context}/resources/js/countries.js"></script>
-	<script type="text/javascript"
-		src="${context}/resources/project_js/AdminRegistrationRequest.js?version=<%= (int) (Math.random() * 10) %>"></script>
+	
 		
 	<script type="text/javascript">
 		var vatStatus = $('#vat').val();

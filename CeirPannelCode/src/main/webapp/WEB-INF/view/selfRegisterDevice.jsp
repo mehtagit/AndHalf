@@ -35,7 +35,7 @@
 <script type="text/javascript"
 	src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
 
-
+        <link rel="icon" href="${context}/resources/images/DMC-Logo.png" sizes="32x32">
 <!-- CORE CSS-->
 <link href="${context}/resources/css/materialize.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
@@ -97,7 +97,9 @@ textarea.materialize-textarea {
 }
 
 .btn-flat {
-	height: auto;
+	
+	height: 36px;
+	 font-size: 31px
 }
 
 select option {
@@ -184,8 +186,10 @@ position: fixed;
     margin-top: 2vh;
 }
 .row.card-panel.tableFormHeader {
-    margin-top: 2vh;
+    margin-top: 0vh;
 }
+
+ 
 </style>
 </head>
 <body data-lang-param="${pageContext.response.locale}"
@@ -217,7 +221,7 @@ position: fixed;
 
 							
 
-							<div class="row card-panel register-device-responsive-page" style="margin: auto;margin-top: 5vh;" id="user123" class="section" style="display: none;">
+							<div class="row card-panel register-device-responsive-page" style="margin: auto;margin-top: -2vh;" id="user123" class="section" style="display: none;">
 								<h6 class="fixPage-modal-header ">
 						<spring:message code="modal.header.registerdevice" />
 					</h6>
@@ -418,7 +422,7 @@ position: fixed;
 												for="NID"><spring:message
 													code="registration.nationalid/passporartnumber" /> <span class="star">*</span></label>
 										</div>
-										<div class="col s12 m6" style="margin-top: -10px;">
+										<div class="col s12 m6" style="margin-top: -6px;">
 															<label for="deviceType"><spring:message code="input.documenttype" /> <span
 																class="star">*</span></label> <select class="browser-default"
 																id="doc_type" 
@@ -826,7 +830,7 @@ position: fixed;
 												</table>
 													<div class="input-field col s12 m12 l12 center">
                                            
-                                            <a href="./redirectToHomePage" class="btn modal-trigger"
+                                            <a href="./redirectToHomePage" class="btn"
                                                 style="margin-left: 10px;"><spring:message code="modal.close" /></a>
                                         </div>
 												<a href="Javascript:void(0);" onclick="viewDeviceHistory()" style="display: none"><spring:message code="modal.header.viewBlockDevices" /></a>

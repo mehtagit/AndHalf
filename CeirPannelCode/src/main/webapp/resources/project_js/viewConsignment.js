@@ -441,7 +441,7 @@ function table(url,dataUrl){
 //******************************************************************************************************************************************************************888888   
 
 function editRegisterConsignment(){
-
+	$('div#initialloader').fadeIn('fast');
 	var supplierId=$('#supplierIdEdit').val();
 	var supplierName=$('#supplierNameEdit').val();
 	var consignmentNumber=$('#consignmentNumberEdit').val();
@@ -494,6 +494,7 @@ function editRegisterConsignment(){
 		processData: false,
 		contentType: false,
 		success: function (data, textStatus, jqXHR) {
+			$('div#initialloader').delay(300).fadeOut('slow');
 			$('#updateModal').closeModal();
 
 			$('#updateConsignment').openModal({
