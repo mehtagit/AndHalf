@@ -355,11 +355,7 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
 
 	<script type="text/javascript"
 		src="${context}/resources/i18n_library/min.js"></script>
-	<script type="text/javascript"
-		src="${context}/resources/js/countries.js"></script>
 	
-	<script type="text/javascript"
-		src="${context}/resources/js/countries.js"></script>
 	
 		
 	<script type="text/javascript">

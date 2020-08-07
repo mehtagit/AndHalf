@@ -110,7 +110,9 @@
 				    		}
 				          
 				       });
+					$('.dataTables_filter').css("display", "none");	
 					sessionStorage.removeItem("reportname");
+					
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
 					//////console.log("error in ajax");

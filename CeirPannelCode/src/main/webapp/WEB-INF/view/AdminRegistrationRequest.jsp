@@ -99,6 +99,14 @@
 var contextpath = "${context}";
 </script>
 
+<style type="text/css">
+
+button.modal-action.modal-close.waves-effect.waves-green.btn-flat.right {
+    height: 36px;
+	 font-size: 31px
+}
+
+</style>
 </head>
 <body data-id="8" data-roleType="${usertype}" data-userTypeID="${usertypeId}" data-userID="${userid}" 	
 data-selected-username="${username}"
@@ -189,8 +197,9 @@ data-session-source="${not empty param.source ? param.source : 'menu'}">
     </div>
 	<div id="rejectInformation" class="modal">
            <h6 class="modal-header"><spring:message code="modal.header.reject" /></h6>
-            <div class="modal-content">
             <form action="" onsubmit="return rejectUser()">
+            <div class="modal-content">
+           
             <div class="row">
                 
                     <div class="input-field" style="margin-top: 30px;">
@@ -198,7 +207,7 @@ data-session-source="${not empty param.source ? param.source : 'menu'}">
                         oninput="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
 						oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200character" />');" 
                          class="materialize-textarea" required></textarea>
-                        <label for="textarea1" style="margin-left: -10px;"><spring:message code="lable.reason" /><span class="star">*</span></label>
+                        <label for="Reason" style="margin-left: -10px;"><spring:message code="lable.reason" /><span class="star">*</span></label>
                     </div>
                     <h6><spring:message code="registration.doreject" /></h6>
                     <input type ="text" id="rejectUserName" hidden="hidden">
@@ -212,8 +221,8 @@ data-session-source="${not empty param.source ? param.source : 'menu'}">
                     <button class="btn modal-close" style="margin-left: 10px;"><spring:message code="modal.no" /></button>
                 </div>
             </div>
-            </form>
         </div>
+        </form>
     </div>
 	<div id="confirmRejectInformation" class="modal">
          <h6 class="modal-header"><spring:message code="registration.reject" /></h6>
@@ -422,6 +431,33 @@ data-session-source="${not empty param.source ? param.source : 'menu'}">
         </div>
     </div>	
 	
+	<!-- Modal start   -->
+
+	<div id="tableOnModal" class="modal">
+		
+		
+				<div class="header-fixed header-fixed-style">
+				<button type="button"
+			class=" modal-action modal-close waves-effect waves-green btn-flat right"
+			data-dismiss="modal">&times;</button>
+			<h6 class="modal-header">
+			<spring:message code="modal.header.viewHistory" />
+		</h6>
+		</div>
+
+		<div class="scrollDivHeight"></div>
+
+		<div class="modal-content modal-content-style">
+		
+
+			<div class="row">
+				<table class="responsive-table striped display"
+					id="registration-data-table-history" cellspacing="0">
+				</table>
+			</div>
+		</div>
+	</div>
+	<!-- Modal End -->
 	<!--materialize js-->
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
@@ -446,8 +482,7 @@ data-session-source="${not empty param.source ? param.source : 'menu'}">
 		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 	<!-- chartist -->
  
-	<script type="text/javascript"
-		src="${context}/resources/js/countries.js"></script>
+
 		
 	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<!-- i18n library -->
