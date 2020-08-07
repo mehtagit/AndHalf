@@ -215,7 +215,7 @@
                                        
                                     <input type="text" name="vatFile" id="uploadedVatFile" value="${registration.vatFilename}" maxlength="20"  disabled="">
                                     <label for="ploadedVatFile" class="active"><spring:message code="registration.uploadedVatFile"/> </label>
-                                   <span> <a href="#" onclick="previewFile('${registration.vatFilePath}','${registration.vatFilename}')">Preview </a></span> 
+                                   <span> <a href="#" onclick="previewRegistrtionFile('${registration.vatFilePath}','${registration.vatFilename}')">Preview </a></span> 
                                 </div>
                                 
                            		<div class="input-field col s12 m6">
@@ -290,11 +290,40 @@
 	<!--scrollbar-->
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-	
+		<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js?version=<%= (int) (Math.random() * 10) %>"></script>	
+		<!-- i18n library -->
+	<script type="text/javascript"
+		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/i18n.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/messagestore.js"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/fallbacks.js"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/language.js"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/parser.js"></script>
+
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/emitter.js"></script>
+
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/bidi.js"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/history.js"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/min.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/js/countries.js"></script>
-	<script type="text/javascript"
-		src="${context}/resources/project_js/AdminRegistrationRequest.js"></script>
+
 		
 	<script type="text/javascript">
 		var vatStatus = $('#vat').val();

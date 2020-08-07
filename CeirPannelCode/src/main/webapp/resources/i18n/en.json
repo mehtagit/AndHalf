@@ -1,6 +1,6 @@
 {
 	"Export": "Export",
-	"successMsg": "Your form has been successfully submitted. The Transaction ID for future reference is ",
+	"successMsg": "Your request has been successfully submitted. The Transaction ID for future reference is ",
 	"rejectedMsg": "The consignment has been marked as rejected.",
 	"consignmentApproved": "The consignment has been successfully approved.",
 	"errorMsg": "something happend wrong.",
@@ -103,8 +103,7 @@
 	"assignStock": "Assign Stock",
 	"stockResponseMessage": "User is not a distributer or retailer to assign a stock.",
 	"documentTypeName": "Document type should not be same.",
-	"tacStatucMessage": "By clicking on the checkbox, it is understood that type approval document has been checked and verified as provided by the importer.  If they are not provided, kindly reject the request",
-    "imageMessage": "File name should not be more than 30 characters. / File should have extension as png,jpg,jpeg,gif and bmp. / File size should be less than 10 MB",
+	"tacStatucMessage": "By clicking on the checkbox, it is understood that type approval document has been checked and verified as provided by the importer.  If they are not provided, kindly reject the request", 
 	"imageValidationName": "File name should not be more than 30 characters",
 	"expectedArrivaldateEdit": "Expected Dispatch Date should be less than Expected Arrival Date",
 	"validationIMEI": "Please enter numbers upto 16 characters only",
@@ -136,7 +135,7 @@
 	"editstolenCompany": "Edit Company Report Stolen",
 	"editrecoveryIndivisual": "Edit Indivisual Report Recovery",
 	"editrecoveryCompany": "Edit Company Report Recovery",
-	"TYPE_APPROVE_UPDATE_SUCCESS": "Type Approved data has been sucessfully update.",
+	"TYPE_APPROVE_UPDATE_SUCCESS": "Type Approved data has been successfully updated.",
 	"VISA_UPDATE_SUCCESS": "Visa of user have been updated succesfully.",
 	"IMEIValidationMSg": "Please enter minimum 15 and maximum 16 digit only",
 	
@@ -215,5 +214,6 @@
 	"Block IMEI Count":"Block IMEI Count",
 		"Stolen IMEI Count":"Stolen IMEI Count",
 	"Recovery IMEI Count":"Recovery IMEI Count",
-	"EXISTS_IN_GSMA_TAC_DB":"TAC in IMEI is not approved TAC from GSMA ."
+	"EXISTS_IN_GSMA_TAC_DB":"TAC in IMEI is not approved TAC from GSMA .",
+	"imageMessage": "File name should not be more than 30 characters. / File should have extension as png,jpg,jpeg,gif,csv and bmp. / File size should be less than 10 MB"
 	}

@@ -217,7 +217,7 @@ i.fa.fa-times-circle-o.red-text {
 
 							<div class="row" id="validDetails" style="display: none;">
 								<h6 class="fixPage-modal-header ">
-									<spring:message code="title.imeiMeidEsn" />
+									<spring:message code="registration.checkdevice" />
 								</h6>
 								<div class="col s12 m12 l12">
 
@@ -268,7 +268,7 @@ i.fa.fa-times-circle-o.red-text {
 							</div>
 							<div class="row" id="invalidDetails" style="display: none;">
 								<h6 class="fixPage-modal-header ">
-									<spring:message code="title.imeiMeidEsn" />
+									<spring:message code="registration.checkdevice" />
 								</h6>
 								<div class="col s12 m12 l12">
 

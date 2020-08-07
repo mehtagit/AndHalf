@@ -832,7 +832,7 @@ $('div#initialloader').delay(300).fadeOut('slow');
 						else if(ext=='csv')
 						{
 							
-							if(fileSize>='4000'){
+							if(fileSize>='10000'){
 								$(".add_field_button").attr("disabled", true);
 								window.parent.$('#fileFormateModal').openModal({
 									dismissible:false

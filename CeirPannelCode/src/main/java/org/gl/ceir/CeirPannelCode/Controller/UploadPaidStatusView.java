@@ -16,6 +16,7 @@ import org.gl.ceir.CeirPannelCode.Feignclient.GrievanceFeignClient;
 import org.gl.ceir.CeirPannelCode.Feignclient.ImmigrationFeignImpl;
 import org.gl.ceir.CeirPannelCode.Feignclient.UploadPaidStatusFeignClient;
 import org.gl.ceir.CeirPannelCode.Feignclient.UserPaidStatusFeignClient;
+import org.gl.ceir.CeirPannelCode.Feignclient.UserRegistrationFeignImpl;
 import org.gl.ceir.CeirPannelCode.Model.AddMoreFileModel;
 import org.gl.ceir.CeirPannelCode.Model.AllRequest;
 import org.gl.ceir.CeirPannelCode.Model.EndUserVisaInfo;
@@ -24,8 +25,10 @@ import org.gl.ceir.CeirPannelCode.Model.FileExportResponse;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest_UserPaidStatus;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
+import org.gl.ceir.CeirPannelCode.Model.PeriodValidate;
 import org.gl.ceir.CeirPannelCode.Model.UpdateVisaModel;
 import org.gl.ceir.CeirPannelCode.Model.VisaDb;
+import org.gl.ceir.CeirPannelCode.Util.HttpResponse;
 import org.gl.ceir.CeirPannelCode.Util.UtilDownload;
 import org.gl.ceir.pagination.model.UserPaidStatusContent;
 import org.slf4j.Logger;
@@ -73,7 +76,8 @@ public class UploadPaidStatusView {
 	@Autowired
 	ImmigrationFeignImpl immigrationFeignImpl;
 
-	
+	@Autowired
+	UserRegistrationFeignImpl userRegistrationFeignImpl;
 @Autowired
 AddMoreFileModel addMoreFileModel,urlToUpload,urlToMove;
 
@@ -368,10 +372,16 @@ GrievanceFeignClient grievanceFeignClient;
 	
 	@GetMapping("selfRegisterDevice")
 	public ModelAndView selfRegisterDevice(HttpSession session) {
+		HttpResponse httpResponse=userRegistrationFeignImpl.periodValidate(new PeriodValidate(17L, 12L));
 		ModelAndView modelAndView = new ModelAndView();
+		if(httpResponse.getStatusCode() == 200) {
 		log.info("---entry point in enter nid page");
 		modelAndView.setViewName("endUserNid");
 		log.info("---exit  point in enter nid page");
+		}
+		else {
+			modelAndView.setViewName("registrationPopup");
+		}
 		return modelAndView;
 	}
 	
@@ -400,10 +410,16 @@ GrievanceFeignClient grievanceFeignClient;
 	
 	@GetMapping("updateVisavalidity")
 	public ModelAndView updateVisavalidity(HttpSession session) {
+		HttpResponse httpResponse=userRegistrationFeignImpl.periodValidate(new PeriodValidate(17L, 43L));
 		ModelAndView modelAndView = new ModelAndView();
+		if(httpResponse.getStatusCode() == 200) {
 		log.info("---entry point in update visa validity page");
 		modelAndView.setViewName("endUserUpdateVisaValidity");
 		log.info("---exit  point in update visa validity page");
+		}
+		else {
+			modelAndView.setViewName("registrationPopup");
+		}
 		return modelAndView;
 	}
 	

@@ -277,3 +277,20 @@ function closeViewPage(){
 	window.location.replace("./stolenRecovery?FeatureId=5&txnID="+txnId+"&source="+reqSource);
 
 }
+
+function previewRegistrtionFile(srcFilePath,srcFileName){
+
+	window.filePath = srcFilePath;
+	window.fileName = srcFileName;
+	window.fileExtension = fileName.replace(/^.*\./, '');
+	window.FinalLink = filePath.concat(fileName);
+
+	if(filePath == null || filePath == "" || filePath == undefined && fileName == null || fileName == "" || fileName == undefined ){
+		//////console.log("File is not Avialable")
+	}else if(fileExtension=="jpg" || fileExtension=="jpeg" || fileExtension=="png" || fileExtension=="gif" ){
+		$("#fileSource").attr("src",FinalLink);
+		$("#viewuplodedModel").openModal();
+	}else{
+		window.open(FinalLink);
+	}
+}
