@@ -1,19 +1,19 @@
-<%@ page import="java.util.Date" %>
+<%@ page import="java.util.Date"%>
 <%
-   response.setHeader("Cache-Control", "no-cache");
-	response.setHeader("Cache-Control", "no-store");
-	response.setDateHeader("Expires", 0);
-	response.setHeader("Pragma", "no-cache");
-	
-    /*   //200 secs
-	 session.setAttribute("usertype", null);  */
+	response.setHeader("Cache-Control", "no-cache");
+response.setHeader("Cache-Control", "no-store");
+response.setDateHeader("Expires", 0);
+response.setHeader("Pragma", "no-cache");
+
+/*   //200 secs
+ session.setAttribute("usertype", null);  */
 /* 	 session.setMaxInactiveInterval(10); */
-	 int timeout = session.getMaxInactiveInterval();
-	
-	 long accessTime = session.getLastAccessedTime();
-	 long currentTime= new Date().getTime(); 
-	 long dfd= accessTime +timeout;
-	 if( currentTime< dfd){
+int timeout = session.getMaxInactiveInterval();
+
+long accessTime = session.getLastAccessedTime();
+long currentTime = new Date().getTime();
+long dfd = accessTime + timeout;
+if (currentTime < dfd) {
 	/*  response.setHeader("Refresh", timeout + "; URL = ../login");
 	 System.out.println("timeout========"+timeout); 
 	if (session.getAttribute("usertype") != null) { */
@@ -24,13 +24,15 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!-- Security Tags -->
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 <sec:csrfMetaTags />
 <!-- Security Tags -->
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html class="no-js" lang="en" dir="ltr">
-<head><title>CEIR Portal</title>
+<head>
+<title>CEIR Portal</title>
 <!--<title>Rule List</title>-->
 <meta http-equiv='cache-control' content='no-cache'>
 <meta http-equiv='expires' content='-1'>
@@ -44,16 +46,17 @@
 <meta content="" name="description" />
 <meta content="" name="author" />
 <!-- Security Tags -->
-<meta name="_csrf" content="${_csrf.token}"/>
+<meta name="_csrf" content="${_csrf.token}" />
 <!-- default header name is X-CSRF-TOKEN -->
-<meta name="_csrf_header" content="${_csrf.headerName}"/>
+<meta name="_csrf_header" content="${_csrf.headerName}" />
 <!-- Security Tags -->
 
 <script type="text/javascript"
 	src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
 
 <!-- Favicons-->
-<link rel="icon" href="${context}/resources/images/DMC-Logo.png" sizes="32x32">
+<link rel="icon" href="${context}/resources/images/DMC-Logo.png"
+	sizes="32x32">
 <!-- CORE CSS-->
 <link href="${context}/resources/css/materialize.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
@@ -83,9 +86,8 @@
 <script src="${context}/resources/custom_js/jquery.blockUI.js"></script>
 
 <!------------------------------------------- Dragable Model---------------------------------->
-<script
-	src="${context}/resources/custom_js/1.12.1_jquery-ui.min.js"></script>
-	
+<script src="${context}/resources/custom_js/1.12.1_jquery-ui.min.js"></script>
+
 </head>
 <body data-id="30" data-roleType="${usertype}"
 	data-userTypeID="${usertypeId}" data-userID="${userid}"
@@ -134,10 +136,16 @@
 
 
 		<div id="editModel" class="modal">
-			<h6 class="modal-header">
-				<spring:message code="modal.EditRuleFeatureMapping" />
-			</h6>
-			<div class="modal-content">
+
+			<div class="header-fixed header-fixed-style">
+				<h6 class="modal-header">
+					<spring:message code="modal.EditRuleFeatureMapping" />
+				</h6>
+			</div>
+
+			<div class="scrollDivHeight"></div>
+
+			<div class="modal-content modal-content-style">
 				<form action="" onsubmit="return update()" method="POST"
 					enctype="multipart/form-data" id="register">
 
@@ -365,24 +373,23 @@
 		</div>
 	</div>
 
-<!--materialize js-->
+	<!--materialize js-->
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
-<script
-		src="${context}/resources/custom_js/bootstrap.min.js"></script>
-	
-<script type="text/javascript"
-	src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
+	<script src="${context}/resources/custom_js/bootstrap.min.js"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
 
 
 
-<script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
+	<script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
 
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/js/countries.js"></script>
-		<!-- i18n library -->
+	<!-- i18n library -->
 	<script type="text/javascript"
 		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
 	<script type="text/javascript"
@@ -424,21 +431,62 @@
 	<script type="text/javascript"
 		src="${context}/resources/project_js/validationMsg.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript"
-		src="${context}/resources/project_js/_dateFunction.js?version=<%= (int) (Math.random() * 10) %>" async></script>
-	<script type="text/javascript"
-		src="" async></script>
+		src="${context}/resources/project_js/_dateFunction.js?version=<%= (int) (Math.random() * 10) %>"
+		async></script>
+	<script type="text/javascript" src="" async></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/ruleFeatureMapping.js?version=<%= (int) (Math.random() * 10) %>"></script>
-<script type="text/javascript">$( document ).ready(function() {var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login";}else{timeoutTime = currentTime + timeout;}});});</script>
-</body></html>
+	<script type="text/javascript">
+		$(document).ready(
+				function() {
+					var timeoutTime =
+	<%=session.getLastAccessedTime()%>
+		;
+					var timeout =
+	<%=session.getMaxInactiveInterval()%>
+		;
+					timeoutTime += timeout;
+					var currentTime;
+					$("body").click(
+							function(e) {
+								$
+										.ajaxSetup({
+											headers : {
+												'X-CSRF-TOKEN' : $(
+														"meta[name='_csrf']")
+														.attr("content")
+											}
+										});
+								$
+										.ajax({
+											url : './serverTime',
+											type : 'GET',
+											async : false,
+											success : function(data,
+													textStatus, jqXHR) {
+												currentTime = data;
+											},
+											error : function(jqXHR, textStatus,
+													errorThrown) {
+											}
+										});
+								if (currentTime > timeoutTime) {
+									window.top.location.href = "./login";
+								} else {
+									timeoutTime = currentTime + timeout;
+								}
+							});
+				});
+	</script>
+</body>
+</html>
 <%
 	} else {
-		/*  request.setAttribute("msg", "  *Please login first");
-		request.getRequestDispatcher("./index.jsp").forward(request, response); */
+	/*  request.setAttribute("msg", "  *Please login first");
+	request.getRequestDispatcher("./index.jsp").forward(request, response); */
 %>
 <script language="JavaScript">
-	sessionStorage.setItem("loginMsg",
-			"*Session has been expired");
+	sessionStorage.setItem("loginMsg", "*Session has been expired");
 	window.top.location.href = "./login";
 </script>
 <%

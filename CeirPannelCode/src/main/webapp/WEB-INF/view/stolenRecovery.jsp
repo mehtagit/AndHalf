@@ -1074,9 +1074,19 @@ position: fixed;
 
 
 
-           <div id="viewblockImeiDevice" class="modal-form" style="overflow-y: hidden;">
-		<h6 id="singleBlockUnblockHeading"  class="modal-header"><spring:message code="modal.header.viewBlockDevices" /></h6>
-		<div class="modal-content" style="margin-top: 5px;">
+           <div id="viewblockImeiDevice" class="modal-form">
+           
+           	   
+		<div class="header-fixed header-fixed-style">
+			<h6 class="modal-header">
+		<spring:message code="modal.header.viewBlockDevices" />
+		</h6>
+		</div>
+
+		<div class="scrollDivHeight"></div>
+		
+	
+		<div class="modal-content modal-content-style" style="margin-top: 5px;">
 			   <form action=""  method="POST" enctype="multipart/form-data">
                                                     <div class="row">
                                                         <div class="row">
@@ -1176,7 +1186,7 @@ position: fixed;
 
                                                     <div class="input-field col s12 center popup-btn-div">
                                                        <!--  <button class="btn" type="submit">Submit</button> -->
-                                                         <button type="button" class="modal-close btn"><spring:message code="modal.cancel" /></button>
+                                                         <button type="button" class="modal-close btn"><spring:message code="modal.close" /></button>
                                                     </div>
                                                 </form>
                                            
