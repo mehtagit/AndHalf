@@ -205,6 +205,11 @@ public class EnduserServiceImpl {
 				username=endUserDB.getAuditParameters().getUsername();
 				userId=endUserDB.getAuditParameters().getUserId();
 				endUserDB.setCreatorUserId(endUserDB.getAuditParameters().getUserId());
+				for(RegularizeDeviceDb regularizeData:endUserDB.getRegularizeDeviceDbs())
+				{
+					if(Objects.isNull(regularizeData.getCreatorUserId()) || regularizeData.getCreatorUserId()==0)
+						regularizeData.setCreatorUserId(endUserDB.getCreatorUserId());
+				}
 			}
 			auditTrailRepository.save(new AuditTrail(userId, username, endUserDB.getAuditParameters().getUserTypeId(),
 					endUserDB.getAuditParameters().getUserType(), 12,Features.REGISTER_DEVICE, SubFeatures.REGISTER, "", endUserDB.getTxnId(),endUserDB.getAuditParameters().getUserType()));

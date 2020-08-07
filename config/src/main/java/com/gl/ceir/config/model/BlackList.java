@@ -66,6 +66,7 @@ public class BlackList {
 	private String requestType;
 	private String userType;
 	private String complainType;
+	
 	@Type(type="date")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date expiryDate;

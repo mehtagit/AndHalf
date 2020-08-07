@@ -405,6 +405,12 @@ public class RegularizedDeviceServiceImpl {
 			if(endUserDB.getAuditParameters().getUserTypeId()!=17) {
 				username=endUserDB.getAuditParameters().getUsername();
 				userId=endUserDB.getAuditParameters().getUserId();
+				endUserDB.setCreatorUserId(endUserDB.getAuditParameters().getUserId());
+				for(RegularizeDeviceDb regularizeData:endUserDB.getRegularizeDeviceDbs())
+				{
+					if(Objects.isNull(regularizeData.getCreatorUserId()) || regularizeData.getCreatorUserId()==0)
+						regularizeData.setCreatorUserId(endUserDB.getCreatorUserId());
+				}
 			}
 			String transactionId="";
 			for(RegularizeDeviceDb regularizeData:endUserDB.getRegularizeDeviceDbs())

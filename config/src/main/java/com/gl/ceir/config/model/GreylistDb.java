@@ -12,7 +12,9 @@ import javax.persistence.Id;
 import javax.persistence.Transient;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -49,6 +51,9 @@ public class GreylistDb implements Serializable {
 	private String multipleSimStatus;
 	private String  deviceId;
 	private String imeiEsnMeid;
+	
+	@Type(type="date")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date expiryDate;
 	
 	@Column(name = "mode2")
