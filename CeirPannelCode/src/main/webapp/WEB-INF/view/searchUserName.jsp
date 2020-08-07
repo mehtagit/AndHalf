@@ -349,6 +349,35 @@ section {
 	</section>
 	
 	
+	
+		<div id="ErrorPopup" class="modal modal-small"
+		style="width: 40%; display: none;">
+		<h6 class="modal-header">
+			<spring:message code="view.griev" />
+
+		</h6>
+		<div class="modal-content">
+			<div class="row">
+				<h6>
+					<spring:message code="tagOnlyForExternal" />
+					<%-- 	<spring:message code="Reg_flag_off" /> --%>
+				</h6>
+			</div>
+			<div class="input-field col s12 center">
+				<div class="input-field col s12 center">
+					
+									<a href="JavaScript:Void(0);"
+							class="modal-close btn"><spring:message code="modal.ok" /></a>
+					<%-- <a href="#"
+						class="modal-close btn" style="margin-left: 10px;"><spring:message
+							code="modal.no" /></a> --%>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	
 <!--materialize js-->
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>

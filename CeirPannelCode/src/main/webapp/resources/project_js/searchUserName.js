@@ -31,14 +31,18 @@
 					dataType : 'json',
 					contentType : 'application/json; charset=utf-8',
 					success: function (data, textStatus, jqXHR) {
-						if(data.statusCode==200){
+						if(data.statusCode==200 && data.selfRegister == 1){
 							var primaryRole = data.primaryRole;
 							var userId = data.userId;
 							sessionStorage.setItem("primaryRole", primaryRole);
 							sessionStorage.setItem("userId", userId);
 							window.location.href = "./openGrievanceForm?reqType=formPage";
 						}else{
-							window.location.href = "./raiseCCgrievance";
+							
+							$('#ErrorPopup').openModal({
+								dismissible:false
+							});
+							//window.location.href = "./raiseCCgrievance";
 						}
 					},
 					error: function (jqXHR, textStatus, errorThrown) {

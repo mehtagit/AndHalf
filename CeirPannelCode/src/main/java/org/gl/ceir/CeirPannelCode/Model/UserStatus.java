@@ -14,6 +14,13 @@ public class UserStatus {
 	private String action,role;
 	private List<Integer> roles ;
 	private String usertype;
+	private Integer selfRegister;
+	public Integer getSelfRegister() {
+		return selfRegister;
+	}
+	public void setSelfRegister(Integer selfRegister) {
+		this.selfRegister = selfRegister;
+	}
 	public Integer getId() {
 		return id;
 	}
@@ -113,6 +120,8 @@ public class UserStatus {
 		builder.append(roles);
 		builder.append(", usertype=");
 		builder.append(usertype);
+		builder.append(", selfRegister=");
+		builder.append(selfRegister);
 		builder.append("]");
 		return builder.toString();
 	}

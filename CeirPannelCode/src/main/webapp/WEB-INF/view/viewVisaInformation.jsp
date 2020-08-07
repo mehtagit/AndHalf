@@ -732,7 +732,7 @@ input[type='search'] {
 	
 	<!-- Modal 2 start   -->
 
-	<div id="addDevice" class="modal">
+	<%-- <div id="addDevice" class="modal">
 		<div class="modal-content">
 			<h6 class="modal-header"><spring:message code="button.adddevice" /></h6>
 			<div class="row">
@@ -837,7 +837,7 @@ input[type='search'] {
 			</div>
 		</div>
 	</div>
-	<!-- Modal End -->
+ --%>	<!-- Modal End -->
 
 	<!-- Modal 2 start   -->
 

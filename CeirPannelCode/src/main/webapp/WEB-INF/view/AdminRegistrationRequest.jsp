@@ -446,7 +446,8 @@ data-session-source="${not empty param.source ? param.source : 'menu'}">
 		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 	<!-- chartist -->
  
-	
+	<script type="text/javascript"
+		src="${context}/resources/js/countries.js"></script>
 		
 	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<!-- i18n library -->
