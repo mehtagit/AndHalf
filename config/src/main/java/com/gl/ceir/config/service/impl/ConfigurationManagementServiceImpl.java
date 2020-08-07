@@ -38,6 +38,7 @@ import com.gl.ceir.config.model.StateMgmtDb;
 import com.gl.ceir.config.model.SystemConfigListDb;
 import com.gl.ceir.config.model.SystemConfigUserwiseDb;
 import com.gl.ceir.config.model.SystemConfigurationDb;
+import com.gl.ceir.config.model.ValidationOutput;
 import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.Features;
 import com.gl.ceir.config.model.constants.SearchOperation;
@@ -53,6 +54,7 @@ import com.gl.ceir.config.repository.SystemConfigListRepository;
 import com.gl.ceir.config.repository.SystemConfigUserwiseRepository;
 import com.gl.ceir.config.repository.SystemConfigurationDbRepository;
 import com.gl.ceir.config.specificationsbuilder.GenericSpecificationBuilder;
+import com.gl.ceir.config.systemValidation.impl.SystemValidation;
 import com.gl.ceir.config.util.CustomMappingStrategy;
 import com.gl.ceir.config.util.InterpSetter;
 import com.opencsv.CSVWriter;
@@ -97,7 +99,9 @@ public class ConfigurationManagementServiceImpl {
 	@Autowired
 	StateMgmtServiceImpl stateMgmtServiceImpl;
 	
-
+	@Autowired
+	SystemValidation systemValidation;
+	
 	
 	
 	public List<SystemConfigurationDb> getAllInfo(){
@@ -156,29 +160,43 @@ public class ConfigurationManagementServiceImpl {
 	@Transactional
 	public GenricResponse updateSystemInfo(SystemConfigurationDb systemConfigurationDb) {
 		try {
-			GenricResponse genricResponse = validateUpdateRequest(systemConfigurationDb.getTag(), systemConfigurationDb.getValue());
-			if(genricResponse.getErrorCode() != 0) {
-				return genricResponse;
+			logger.info("UserType for validation :" +systemConfigurationDb.getUserType());
+			
+			GenricResponse response = systemValidation.validateFieldsByObject(systemConfigurationDb,systemConfigurationDb.getUserType(),5);
+			if(response.getErrorCode()==201) {
+				logger.info("validation failed with error Code : " +response.getErrorCode());
+				//return new  GenricResponse(0, "Validation Failed", "");
+				return new GenricResponse(201, "System_configuration_failed","System configuration update failed. value regex not matched", "");
+			}else{
+				logger.info("Everything is valid. Processed for Update");
+				GenricResponse genricResponse = validateUpdateRequest(systemConfigurationDb.getTag(), systemConfigurationDb.getValue());
+				if(genricResponse.getErrorCode() != 0) {
+					return genricResponse;
+				}
+
+				SystemConfigurationDb systemConfigurationDb2 = systemConfigurationDbRepository.getByTag(systemConfigurationDb.getTag());
+				logger.info("Persisted data " + systemConfigurationDb2);
+
+				if(Objects.isNull(systemConfigurationDb2)) {
+					return new GenricResponse(15, "This Id does not exist", "");
+				}
+
+				systemConfigurationDb2.setValue(systemConfigurationDb.getValue());
+				systemConfigurationDb2.setDescription(systemConfigurationDb.getDescription());
+				systemConfigurationDb2.setRemark(systemConfigurationDb.getRemark());
+				systemConfigurationDbRepository.save(systemConfigurationDb2);
+
+				return new GenricResponse(200, "System_configuration_update","System configuration update Sucessfully", "");
+
 			}
-
-			SystemConfigurationDb systemConfigurationDb2 = systemConfigurationDbRepository.getByTag(systemConfigurationDb.getTag());
-			logger.info("Persisted data " + systemConfigurationDb2);
-
-			if(Objects.isNull(systemConfigurationDb2)) {
-				return new GenricResponse(15, "This Id does not exist", "");
+		}catch (Exception e) {
+				logger.info(e.getMessage(), e);
+				throw new ResourceServicesException(this.getClass().getName(), e.getMessage());	
 			}
-
-			systemConfigurationDb2.setValue(systemConfigurationDb.getValue());
-			systemConfigurationDb2.setDescription(systemConfigurationDb.getDescription());
-			systemConfigurationDb2.setRemark(systemConfigurationDb.getRemark());
-			systemConfigurationDbRepository.save(systemConfigurationDb2);
-
-			return new GenricResponse(0, "System configuration update Sucessfully", "");
-
-		} catch (Exception e) {
-			logger.info(e.getMessage(), e);
-			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());	
-		}
+			
+			
+			
+			
 	}
 
 	public List<MessageConfigurationDb> getMessageConfigAllDetails(){
@@ -295,7 +313,7 @@ public class ConfigurationManagementServiceImpl {
 			GenericSpecificationBuilder<PolicyConfigurationDb> sb = new GenericSpecificationBuilder<>(propertiesReader.dialect);
 
 			if(Objects.nonNull(filterRequest.getTag()))
-				sb.with(new SearchCriteria("tag", filterRequest.getTag(), SearchOperation.EQUALITY, Datatype.STRING));
+				sb.with(new SearchCriteria("tag", filterRequest.getTag(), SearchOperation.EQUALITY_CASE_INSENSITIVE, Datatype.STRING));
 
 			if(Objects.nonNull(filterRequest.getStatus()))
 				sb.with(new SearchCriteria("status", filterRequest.getStatus(), SearchOperation.EQUALITY, Datatype.STRING));
@@ -304,6 +322,7 @@ public class ConfigurationManagementServiceImpl {
 				sb.with(new SearchCriteria("type", filterRequest.getType(), SearchOperation.EQUALITY, Datatype.STRING));
 
 			if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
+				sb.orSearch(new SearchCriteria("tag", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 				sb.orSearch(new SearchCriteria("description", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 				sb.orSearch(new SearchCriteria("value", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 			}
@@ -549,12 +568,13 @@ public class ConfigurationManagementServiceImpl {
 		GenericSpecificationBuilder<MessageConfigurationDb> sb = new GenericSpecificationBuilder<>(propertiesReader.dialect);
 
 		if(Objects.nonNull(filterRequest.getTag()))
-			sb.with(new SearchCriteria("tag", filterRequest.getTag(), SearchOperation.EQUALITY, Datatype.STRING));
+			sb.with(new SearchCriteria("tag", filterRequest.getTag(), SearchOperation.EQUALITY_CASE_INSENSITIVE, Datatype.STRING));
 
 		if(Objects.nonNull(filterRequest.getChannel()))
 			sb.with(new SearchCriteria("channel", filterRequest.getChannel(), SearchOperation.EQUALITY, Datatype.STRING));
 
 		if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
+			sb.orSearch(new SearchCriteria("tag", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 			sb.orSearch(new SearchCriteria("description", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 			sb.orSearch(new SearchCriteria("value", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 		}
@@ -569,7 +589,7 @@ public class ConfigurationManagementServiceImpl {
 	GenericSpecificationBuilder<SystemConfigurationDb> sb = new GenericSpecificationBuilder<SystemConfigurationDb>(propertiesReader.dialect);
 
 	if(Objects.nonNull(filterRequest.getTag()))
-		sb.with(new SearchCriteria("tag", filterRequest.getTag(), SearchOperation.EQUALITY, Datatype.STRING));
+		sb.with(new SearchCriteria("tag", filterRequest.getTag(), SearchOperation.EQUALITY_CASE_INSENSITIVE, Datatype.STRING));
 
 	if(Objects.nonNull(filterRequest.getType()))
 		sb.with(new SearchCriteria("type", filterRequest.getType(), SearchOperation.EQUALITY, Datatype.STRING));
@@ -579,6 +599,7 @@ public class ConfigurationManagementServiceImpl {
 
 
 	if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
+		sb.orSearch(new SearchCriteria("tag", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 		sb.orSearch(new SearchCriteria("description", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 		sb.orSearch(new SearchCriteria("value", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 	}

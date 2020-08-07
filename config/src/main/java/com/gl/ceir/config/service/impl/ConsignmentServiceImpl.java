@@ -380,7 +380,7 @@ public class ConsignmentServiceImpl {
 			consigmentValidator.validateViewById(filterRequest);
 
 			String txnId = filterRequest.getTxnId();
-
+			List<StateMgmtDb> statusList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
 			logger.info("Going to get Cosignment Record Info for txnId : " + txnId);
 
 			if(Objects.isNull(txnId)) {
@@ -398,7 +398,12 @@ public class ConsignmentServiceImpl {
 //				consignmentMgmt.setPendingTacApprovedByCustom("N");
 				consignmentMgmt.setPendingTacApprovedByCustomInterp("N");
 			}
-
+			for(StateMgmtDb stateMgmtDb : statusList) {
+				if(consignmentMgmt.getConsignmentStatus() == stateMgmtDb.getState()) {
+					consignmentMgmt.setStateInterp(stateMgmtDb.getInterp()); 
+					break; 
+				} 
+			}
 			setInterp(consignmentMgmt);
 			
 			User loggedUser = userRepository.getById(filterRequest.getUserId());
@@ -454,7 +459,7 @@ public class ConsignmentServiceImpl {
 				consignmentInfo.setExpectedDispatcheDate(consignmentFileRequest.getExpectedDispatcheDate());
 				consignmentInfo.setOrganisationCountry(consignmentFileRequest.getOrganisationCountry());
 				consignmentInfo.setQuantity(consignmentFileRequest.getQuantity());
-				consignmentInfo.setSupplierId(consignmentFileRequest.getSupplierld());
+				consignmentInfo.setSupplierId(consignmentFileRequest.getSupplierId());
 				consignmentInfo.setSupplierName(consignmentFileRequest.getSupplierName());
 				consignmentInfo.setTotalPrice(consignmentFileRequest.getTotalPrice());
 				consignmentInfo.setCurrency(consignmentFileRequest.getCurrency());
@@ -466,7 +471,7 @@ public class ConsignmentServiceImpl {
 				consignmentInfo.setUserTypeId(consignmentFileRequest.getUserTypeId());
 				consignmentInfo.setFeatureId(consignmentFileRequest.getFeatureId());
 				consignmentInfo.setRoleType(consignmentFileRequest.getRoleType());
-
+				consignmentInfo.setRemarks(null);
 				// Pending tac if available in pending_tac_approval_db.
 				FilterRequest filterRequest = new FilterRequest().setTxnId(consignmentFileRequest.getTxnId());
 				if(pendingTacApprovedImpl.findByTxnId(filterRequest).getErrorCode() == 0) {
@@ -638,23 +643,37 @@ public class ConsignmentServiceImpl {
 								"CEIRAdmin",
 								ReferTable.USERS);
 					}
+					placeholderMap.put("<First name>", userProfile.getFirstName());
+					placeholderMap.put("<Txn id>", consignmentMgmt.getTxnId());
+	
+					logger.info("consignmentMgmt.getTxnId() :: " + consignmentMgmt.getTxnId() + "-------> " + userProfile.getFirstName());
+					emailUtil.saveNotification("CONSIGNMENT_DELETED_BY_CEIR_MSG", 
+							userProfile, 
+							consignmentUpdateRequest.getFeatureId(), 
+							Features.CONSIGNMENT,
+							SubFeatures.DELETE,
+							consignmentUpdateRequest.getTxnId(), 
+							consignmentMgmt.getTxnId(), 
+							placeholderMap, ReferTable.USERS, 
+							consignmentUpdateRequest.getRoleType(),
+							"Importer");
+				}else {
+
+					placeholderMap.put("<First name>", userProfile.getFirstName());
+					placeholderMap.put("<Txn id>", consignmentMgmt.getTxnId());
+	
+					logger.info("consignmentMgmt.getTxnId() :: " + consignmentMgmt.getTxnId() + "-------> " + userProfile.getFirstName());
+					emailUtil.saveNotification("Consignment_Delete_Email_Message", 
+							userProfile, 
+							consignmentUpdateRequest.getFeatureId(), 
+							Features.CONSIGNMENT,
+							SubFeatures.DELETE,
+							consignmentUpdateRequest.getTxnId(), 
+							consignmentMgmt.getTxnId(), 
+							placeholderMap, ReferTable.USERS, 
+							consignmentUpdateRequest.getRoleType(),
+							"Importer");
 				}
-
-				placeholderMap.put("<First name>", userProfile.getFirstName());
-				placeholderMap.put("<Txn id>", consignmentMgmt.getTxnId());
-
-				logger.info("consignmentMgmt.getTxnId() :: " + consignmentMgmt.getTxnId() + "-------> " + userProfile.getFirstName());
-				emailUtil.saveNotification("Consignment_Delete_Email_Message", 
-						userProfile, 
-						consignmentUpdateRequest.getFeatureId(), 
-						Features.CONSIGNMENT,
-						SubFeatures.DELETE,
-						consignmentUpdateRequest.getTxnId(), 
-						consignmentMgmt.getTxnId(), 
-						placeholderMap, ReferTable.USERS, 
-						consignmentUpdateRequest.getRoleType(),
-						"Importer");
-
 
 				logger.info("Deletion of consignment is in Progress."+ consignmentUpdateRequest.getTxnId());
 				return new GenricResponse(200, "Consignment deletion is in Progress.", consignmentUpdateRequest.getTxnId());
@@ -885,7 +904,7 @@ public class ConsignmentServiceImpl {
 		}
 
 		if(Objects.nonNull(consignmentMgmt.getTxnId()) && !consignmentMgmt.getTxnId().isEmpty())
-			cmsb.with(new SearchCriteria("txnId", consignmentMgmt.getTxnId(), SearchOperation.EQUALITY, Datatype.STRING));
+			cmsb.with(new SearchCriteria("txnId", consignmentMgmt.getTxnId(), SearchOperation.EQUALITY_CASE_INSENSITIVE, Datatype.STRING));
 
 		if(Objects.nonNull(consignmentMgmt.getStartDate()) && !consignmentMgmt.getStartDate().isEmpty())
 			cmsb.with(new SearchCriteria("createdOn",consignmentMgmt.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
@@ -898,11 +917,12 @@ public class ConsignmentServiceImpl {
 			cmsb.with(new SearchCriteria("taxPaidStatus", consignmentMgmt.getTaxPaidStatus(), SearchOperation.EQUALITY, Datatype.STRING));
 
 		if(Objects.nonNull(consignmentMgmt.getDisplayName()) && !consignmentMgmt.getDisplayName().isEmpty())
-			cmsb.addSpecification(cmsb.joinWithMultiple(new SearchCriteria("displayName",consignmentMgmt.getDisplayName(), SearchOperation.EQUALITY, Datatype.STRING)));
+			cmsb.addSpecification(cmsb.joinWithMultiple(new SearchCriteria("displayName",consignmentMgmt.getDisplayName(), SearchOperation.EQUALITY_CASE_INSENSITIVE, Datatype.STRING)));
 
 		if(Objects.nonNull(consignmentMgmt.getConsignmentStatus())) {
 			cmsb.with(new SearchCriteria("consignmentStatus", consignmentMgmt.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
-		}else {
+		}else if( !(Objects.nonNull(consignmentMgmt.getTxnId()) && !consignmentMgmt.getTxnId().isEmpty()) && !Objects.nonNull(consignmentMgmt.getTaxPaidStatus())
+				&& !(Objects.nonNull(consignmentMgmt.getDisplayName()) && !consignmentMgmt.getDisplayName().isEmpty())){
 			if(Objects.nonNull(consignmentMgmt.getFeatureId()) && Objects.nonNull(consignmentMgmt.getUserTypeId())) {
 
 				List<DashboardUsersFeatureStateMap> dashboardUsersFeatureStateMaps = dashboardUsersFeatureStateMapRepository.findByUserTypeIdAndFeatureId(consignmentMgmt.getUserTypeId(), consignmentMgmt.getFeatureId());

@@ -21,12 +21,12 @@ public class PendingTacApprovedFileModel {
 	@CsvBindByPosition(position = 3)
 	private String tac;
 	
-	@CsvBindByName(column = "User Type")
-	@CsvBindByPosition(position = 4)
-	private String userType;
+//	@CsvBindByName(column = "User Type")
+//	@CsvBindByPosition(position = 4)
+//	private String userType;
 	
 	@CsvBindByName(column = "Feature")
-	@CsvBindByPosition(position = 5)
+	@CsvBindByPosition(position = 4)
 	private String featureName;
 	
 
@@ -65,14 +65,14 @@ public class PendingTacApprovedFileModel {
 	}
 
 
-	public String getUserType() {
-		return userType;
-	}
-
-
-	public void setUserType(String userType) {
-		this.userType = userType;
-	}
+//	public String getUserType() {
+//		return userType;
+//	}
+//
+//
+//	public void setUserType(String userType) {
+//		this.userType = userType;
+//	}
 
 
 	public String getFeatureName() {
@@ -93,6 +93,6 @@ public class PendingTacApprovedFileModel {
 	@Override
 	public String toString() {
 		return "PendingTacApprovedFileModel [createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", txnId=" + txnId
-				+ ", tac=" + tac + ", userType=" + userType + ", featureName=" + featureName + "]";
+				+ ", tac=" + tac + ", featureName=" + featureName + "]";
 	}
 }

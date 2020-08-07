@@ -1,7 +1,7 @@
 package com.gl.ceir.config.model.constants;
 
 public enum SearchOperation {
-	EQUALITY, NEGATION, GREATER_THAN, LESS_THAN, LIKE;
+	EQUALITY, EQUALITY_CASE_INSENSITIVE, NEGATION, GREATER_THAN, LESS_THAN, LIKE;
 
 	public static final String[] SIMPLE_OPERATION_SET = { ":", "!", ">", "<", "~" };
 

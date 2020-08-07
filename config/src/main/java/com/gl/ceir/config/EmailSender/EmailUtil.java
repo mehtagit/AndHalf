@@ -96,6 +96,7 @@ public class EmailUtil {
 	public boolean saveNotification(@NonNull String tag, UserProfile userProfile, long featureId, 
 			String featureName, String subFeature, String featureTxnId, String txnId, 
 			Map<String, String> placeholders, String roleType, String receiverUserType, String referTable) {
+		String subject = null;
 		try {
 			MessageConfigurationDb messageDB = messageConfigurationDbRepository.getByTagAndActive(tag, 0);
 			logger.info("Message for tag [" + tag + "] " + messageDB);
@@ -105,18 +106,19 @@ public class EmailUtil {
 			}
 
 			String message = messageDB.getValue();
-			
+			subject = messageDB.getSubject().replace("<XXX>", txnId);
 			// Replace Placeholders from message.
 			if(Objects.nonNull(placeholders)) {
 				for (Map.Entry<String, String> entry : placeholders.entrySet()) {
 					logger.info("Placeholder key : " + entry.getKey() + " value : " + entry.getValue());
 					message = message.replaceAll(entry.getKey(), entry.getValue());
+					subject = subject.replaceAll(entry.getKey(), entry.getValue());
 				}
 			}
 			// Save email in notification table.
 			GenricResponse genricResponse = configurationManagementServiceImpl.saveNotification(ChannelType.EMAIL, message, 
 					userProfile.getUser().getId(), featureId, featureName, subFeature, featureTxnId, 
-					messageDB.getSubject().replace("<XXX>", txnId), 0, referTable, roleType, receiverUserType);
+					subject, 0, referTable, roleType, receiverUserType);
 			
 			logger.info("A new notification with id [" + genricResponse.getTxnId() + "] is saved.");
 

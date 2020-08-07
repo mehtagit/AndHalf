@@ -18,7 +18,7 @@ public class DeviceDuplicateDb {
 	@EmbeddedId
 	private ImeiMsisdnIdentity imeiMsisdnIdentity;
 	
-	@JsonIgnore
+//	@JsonIgnore
 	@CreationTimestamp
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	@Column(nullable = false, updatable = false)
@@ -34,8 +34,9 @@ public class DeviceDuplicateDb {
 	private String failedRuleName; 
 	private Long imsi;   
 	
-	@JsonIgnore
+//	@JsonIgnore
 	@UpdateTimestamp
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private Date modifiedOn;    
 	
 	private Integer recordType; 

@@ -10,6 +10,6 @@ import com.gl.ceir.config.model.DeviceManufacturerDb;
 public interface DeviceManufacturerDbRepository extends JpaRepository<DeviceManufacturerDb, Long>, 
 JpaSpecificationExecutor<DeviceManufacturerDb> {
 
-	public DeviceManufacturerDb getByImeiEsnMeid(String imei);
+	public DeviceManufacturerDb findByImeiEsnMeid(String imei);
 
 }

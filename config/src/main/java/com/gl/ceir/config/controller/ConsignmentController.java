@@ -3,6 +3,7 @@ package com.gl.ceir.config.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
+import javax.transaction.Transactional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -48,6 +49,7 @@ public class ConsignmentController {
 		return genricResponse;
 	}
 
+	@Transactional
 	@ApiOperation(value = "Update Consignment Info.", response = GenricResponse.class)
 	@RequestMapping(path = "/consignment/update", method = RequestMethod.POST)
 	public GenricResponse updateConsigmentInfo(@RequestBody ConsignmentMgmt consignmentUploadRequest) {
@@ -127,6 +129,7 @@ public class ConsignmentController {
 		return mapping;
 	}
 
+	@Transactional
 	@ApiOperation(value = "Delete Consignment.", response = GenricResponse.class)
 	@DeleteMapping("/consigment/delete")
 	public GenricResponse deleteConsigment(@RequestBody ConsignmentUpdateRequest consignmentUpdateRequest) {
@@ -144,6 +147,7 @@ public class ConsignmentController {
 	}
 
 	// For Approve 
+	@Transactional
 	@ApiOperation(value = "Update Consignment Status.", response = GenricResponse.class)
 	@PutMapping("update/consigmentStatus")
 	public GenricResponse updateConsigmentStatus(@RequestBody ConsignmentUpdateRequest consignmentUpdateRequest) {
