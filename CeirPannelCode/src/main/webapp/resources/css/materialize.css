@@ -9315,9 +9315,9 @@ a.waves-effect .waves-ripple {
 }
 
 .lean-overlay {
-	position: fixed;
+	position: fixed !important;
 	z-index: 999;
-	top: -100px;
+	top: 0px;
 	left: 0;
 	bottom: 0;
 	right: 0;
@@ -13257,8 +13257,8 @@ textarea::-webkit-scrollbar-thumb:hover {
     /* font-size: 25px !important; */
 }
 body.modal {
-    overflow: hidden;
-    position: fixed;
+height: auto !important;
+  overflow: hidden !important;
 }
 .header-fixed-style {
     width: inherit;
