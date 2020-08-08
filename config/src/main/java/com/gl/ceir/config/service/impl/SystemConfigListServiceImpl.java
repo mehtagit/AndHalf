@@ -7,8 +7,10 @@ import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -120,10 +122,14 @@ public class SystemConfigListServiceImpl {
 			}
 			User user = userRepository.getById(filterRequest.getUserId());
 
-//			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), user.getUsername(), 0L, "System", 0L, 
-//					Features.CONFIG_LIST, SubFeatures.VIEW, ""));
 			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), user.getUsername(), 0L, "System", 0L, 
 					Features.FIELD_MANGEMENT, SubFeatures.VIEW, "","NA","System"));
+//				Features.CONFIG_LIST, SubFeatures.VIEW, ""));
+			/*
+			 * auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(),
+			 * user.getUsername(), 0L, "System", 0L, Features.FIELD_MANGEMENT,
+			 * SubFeatures.VIEW, "","NA","System"));
+			 */
 			logger.info("AUDIT : Unique Tags list saved in audit_trail.");
 
 			List<String> result = systemConfigListRepository.findDistinctTags();
@@ -144,12 +150,17 @@ public class SystemConfigListServiceImpl {
 			}
 			User user = userRepository.getById(filterRequest.getUserId());
 
-			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), user.getUsername(), 0L, "System", 0L, 
-					Features.CONFIG_LIST, SubFeatures.VIEW, ""));
+			//auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), user.getUsername(), 0L, "System", 0L, 
+			//		Features.CONFIG_LIST, SubFeatures.VIEW, ""));
+			
+			 auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(),
+			  user.getUsername(), 0L, "SystemAdmin", 0L, Features.FIELD_MANGEMENT,
+			  SubFeatures.VIEW, "","NA","SystemAdmin"));
+			 
 			logger.info("AUDIT : Unique Tags list saved in audit_trail.");
 
 			List<SystemConfigListDb> systemConfigListDbs = systemConfigListRepository.findDistinctTagsWithDescription();
-
+			systemConfigListDbs=systemConfigListDbs.stream().sorted(Comparator.comparing(SystemConfigListDb::getDisplayName)).collect(Collectors.toList());
 			return new GenricResponse(0, "Sucess", "", systemConfigListDbs);
 
 		} catch (Exception e) {
