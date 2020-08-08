@@ -740,7 +740,7 @@ data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeI
 								</div>
 								<div class="col s12 m6">
 												<label for="enduserNid"
-														class="center-align ml-10"><spring:message code="input.nidText" /></label>	
+														class="center-align ml-10"><spring:message code="registration.nid/passportnumber" /></label>	
 													<input type="text"   name="enduserTransactionId" id="enduserNid"
 							                        disabled placeholder="" maxlength="18" /> 
 								</div>
@@ -877,8 +877,8 @@ data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeI
 								code="input.quantity" /> --%>Date </label>
 					</div>
 
-					<div class="input-field col s12 m6" id="blockExpiryDate">
-						<input type="text" name="InvoiceNumber" id=""
+					<div class="input-field col s12 m6" >
+						<input type="text" name="InvoiceNumber" id="blockExpiryDate"
 							placeholder="" disabled /> <label for="blockExpiryDate"
 							class="center-align"><%-- <spring:message
 								code="input.invoiceNumber" /> --%> Expiry Date</label>

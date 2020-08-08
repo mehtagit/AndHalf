@@ -223,7 +223,7 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}" data-s
                         oninput="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
 						oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
                          required="required"></textarea>
-                        <label for="Reason" style="margin-left: -10px;"><spring:message code="lable.reason" /><span
+                        <label for="Reason" style="margin-left: -10px;"><spring:message code="input.remarks" /><span
 												class="star">*</span></label>
                     </div>
                    

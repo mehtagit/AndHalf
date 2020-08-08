@@ -707,6 +707,7 @@ function userChangeStatus(entity){
  }
  
  
+  
  var registraionHistoryTable;
  function historyRecord(txnID,userType){
 	 	

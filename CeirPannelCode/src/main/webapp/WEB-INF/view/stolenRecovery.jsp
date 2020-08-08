@@ -253,7 +253,7 @@ position: fixed;
 			<div class="row" style="padding: 20px 0 100px 0;">
 				<div class="input-field col s12 center">
 					<button class="btn" onclick="closeViewModal()"
-						class="modal-close btn" id="add_user"><spring:message code="modal.cancel" /></button>
+						class="modal-close btn" id="add_user"><spring:message code="modal.close" /></button>
 				</div>
 			</div>
 
@@ -1001,7 +1001,7 @@ position: fixed;
 
 
 
-           <div id="viewBulkBlockDeviceModal" class="modal-form" style="overflow-y: hidden;">
+           <div id="viewBulkBlockDeviceModal" class="modal-form">
 		<h6 id="viewModalHeader" class="modal-header"><spring:message code="modal.header.viewBlockDevices" /></h6>
 		<div class="modal-content" style="margin-top: 5px;">
 			
@@ -1074,9 +1074,19 @@ position: fixed;
 
 
 
-           <div id="viewblockImeiDevice" class="modal-form" style="overflow-y: hidden;">
-		<h6 id="singleBlockUnblockHeading"  class="modal-header"><spring:message code="modal.header.viewBlockDevices" /></h6>
-		<div class="modal-content" style="margin-top: 5px;">
+             <div id="viewblockImeiDevice" class="modal-form">
+           
+           	   
+		<div class="header-fixed header-fixed-style">
+			<h6 class="modal-header">
+		<spring:message code="modal.header.viewBlockDevices" />
+		</h6>
+		</div>
+
+		<div class="scrollDivHeight"></div>
+		
+	
+		<div class="modal-content modal-content-style" style="margin-top: 5px;">
 			   <form action=""  method="POST" enctype="multipart/form-data">
                                                     <div class="row">
                                                         <div class="row">
@@ -1176,7 +1186,7 @@ position: fixed;
 
                                                     <div class="input-field col s12 center popup-btn-div">
                                                        <!--  <button class="btn" type="submit">Submit</button> -->
-                                                         <button type="button" class="modal-close btn"><spring:message code="modal.cancel" /></button>
+                                                         <button type="button" class="modal-close btn"><spring:message code="modal.close" /></button>
                                                     </div>
                                                 </form>
                                            
@@ -1196,7 +1206,7 @@ enctype="multipart/form-data">
 <label for="editblockdeviceType">
 <spring:message code="table.devicetype" /> <span class="star"></span></label>
 <select class="browser-default" id="editblockdeviceType" >
-<option value="" disabled selected>
+<option value=""  selected>
 <spring:message code="table.devicetype" />
 </option>
 
@@ -1217,7 +1227,7 @@ enctype="multipart/form-data">
 <label for="editblockmultipleSimStatus">
 <spring:message code="select.multiSimStatus" /> <span class="star"></span></label>
 <select class="browser-default" id="editblockmultipleSimStatus" >
-<option value="" disabled selected>
+<option value=""  selected>
 <spring:message code="select.multiSimStatus" />
 </option>
 
@@ -1383,7 +1393,7 @@ maxlength="16">
 </div>
          
          
-            <div id="editBulkBlockDeviceModal" class="modal" style="overflow-y: hidden;">
+            <div id="editBulkBlockDeviceModal" class="modal">
 <h6 id="editblockHeading" class="modal-header"><spring:message code="modal.EditDevice" /></h6>
 <div class="modal-content" style="margin-top: 5px;">
 
@@ -1591,7 +1601,7 @@ type="submit" ><spring:message code="button.update" /></button>
                         <textarea id="Reason" class="materialize-textarea"oninput="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
 						oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
                         required="required"></textarea>
-                        <label for="textarea1" style="margin-left: -10px;"><spring:message code="lable.reason" /><span class="star">*</span></label>
+                        <label for="textarea1" style="margin-left: -10px;"><spring:message code="input.remarks" /><span class="star">*</span></label>
                     </div>
                    
                     
