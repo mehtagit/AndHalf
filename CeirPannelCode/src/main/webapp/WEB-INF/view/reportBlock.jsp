@@ -149,7 +149,7 @@
                                                                  oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" 
                                                                  oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
                                                               			required >
-                                                                    <option value=""  selected>
+                                                                    <option value="" disabled selected>
                                                                         <spring:message code="operator.selectdeviceidtype"/>
                                                                     </option>
                                                                    

@@ -1002,7 +1002,10 @@ position: fixed;
 
 
            <div id="viewBulkBlockDeviceModal" class="modal-form">
+	<div class="header-fixed header-fixed-style" data-original-title="" title="">
 		<h6 id="viewModalHeader" class="modal-header"><spring:message code="modal.header.viewBlockDevices" /></h6>
+		</div>
+		<div class="scrollDivHeight" data-original-title="" title=""></div>
 		<div class="modal-content" style="margin-top: 5px;">
 			
                                             <form action="#" style="margin-top: 30px;">
@@ -1193,9 +1196,11 @@ position: fixed;
             </div></div>
             
          <div id="editblockImeiDevice" class="modal-form">
+<div class="header-fixed header-fixed-style" data-original-title="" title="">
 <h6 id="singleBlockDeviceHeading" class="modal-header">
 <spring:message code="modal.UpdateBlock" />
-</h6>
+</h6></div>
+<div class="scrollDivHeight" data-original-title="" title=""></div>
 <div class="modal-content" style="margin-top: 5px;">
 <form action="" method="POST" onsubmit="return updateSingleBlockDevicesRequest()" id="editSingleImeiform"
 enctype="multipart/form-data">
@@ -1394,7 +1399,10 @@ maxlength="16">
          
          
             <div id="editBulkBlockDeviceModal" class="modal">
+            <div class="header-fixed header-fixed-style" data-original-title="" title="">
 <h6 id="editblockHeading" class="modal-header"><spring:message code="modal.EditDevice" /></h6>
+</div>
+<div class="scrollDivHeight" data-original-title="" title=""></div>
 <div class="modal-content" style="margin-top: 5px;">
 
 <form action="" onsubmit="return updateBulkDevice()" method="post" style="margin-top: 30px;">

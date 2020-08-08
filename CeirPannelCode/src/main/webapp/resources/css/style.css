@@ -41,10 +41,15 @@ select::-ms-expand {
 	}
 }
 
-body {
-	background-color: #f9f9f9;
-}
 
+body {
+ background-color: #f9f9f9;
+    margin: 0 !important;
+    padding: 0 !important;
+    position: fixed;
+    width: 100%;
+    height: 100% !important;
+}
 .modal {
 	background-color: #fff; &. modal-fixed-header { padding : 0;
 	height: 70%; . modal-header { border-top : 1px solid rgba( 0, 0, 0, 0.1
@@ -3291,6 +3296,8 @@ div#error_Modal_reg {
     margin-top: 0;
 }
 body.modal {
-    overflow: hidden;
-    position: fixed;
+height: 100vh !important;
+  overflow-y: hidden !important;
+
+    position: fixed !important;
 }
