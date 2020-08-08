@@ -16,6 +16,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.envers.Audited;
@@ -101,7 +102,8 @@ public class EndUserDB   {
 	private String nationality;
 	
 	@Column(length = 1)
-	private String onVisa="N";
+	@ColumnDefault("N")
+	private String onVisa;
 	
 	@NotAudited
 	@OneToMany(mappedBy = "endUserDB", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -113,7 +115,8 @@ public class EndUserDB   {
 	private List<VisaUpdateDb> visaUpdateDb;
 	
 	@Column(length = 1)
-	private String isVip="N";
+	@ColumnDefault("N")
+	private String isVip;
 	
 	@NotAudited
 	@OneToOne(mappedBy = "endUserDB", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = true)

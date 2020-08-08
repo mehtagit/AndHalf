@@ -691,13 +691,14 @@ public class EnduserServiceImpl {
 		}
 	}
 
-	private void updateImeiInVipList(EndUserDB endUserDB) {
+	public void updateImeiInVipList(EndUserDB endUserDB) {
 		if("Y".equals(endUserDB.getIsVip())) {
 			if(endUserDB.getRegularizeDeviceDbs().isEmpty()) {
 				logger.info("End User is VIP but no device is registered for him/her with NID/Passport. ["+endUserDB.getNid()+"]");
 			}else {
 				RegularizeDeviceDb regularizeDeviceDb = endUserDB.getRegularizeDeviceDbs().get(0);
 
+				logger.info("Update IMEI in VIP list for device:["+regularizeDeviceDb.toString()+"]");
 				List<VipList> vipsImeiList = new ArrayList<>(4);
 				if(Objects.nonNull(regularizeDeviceDb.getFirstImei())) 
 					vipsImeiList.add(new VipList(regularizeDeviceDb.getFirstImei(), Long.parseLong(endUserDB.getPhoneNo())));
@@ -710,11 +711,12 @@ public class EnduserServiceImpl {
 
 				if(Objects.nonNull(regularizeDeviceDb.getFourthImei()))
 					vipsImeiList.add(new VipList(regularizeDeviceDb.getFourthImei(), Long.parseLong(endUserDB.getPhoneNo())));
-
+				logger.info("Going to save VIP list.");
 				vipListRepository.saveAll(vipsImeiList);
 			}
 		}else {
 			// user is not VIP, so nothing to do with table vip_list table.
+			logger.info("User is not VIP, so nothing to do with table vip_list table.");
 		}
 	}
 

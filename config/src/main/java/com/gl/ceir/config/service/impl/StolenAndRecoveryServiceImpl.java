@@ -502,7 +502,7 @@ public class StolenAndRecoveryServiceImpl {
 
 			}
 		}else if(!"Lawful Agency".equalsIgnoreCase(filterRequest.getUserType()) 
-				&& !"Operator".equalsIgnoreCase(filterRequest.getUserType())) {
+				&& !"Operator".equalsIgnoreCase(filterRequest.getUserType()) && !"Operation".equalsIgnoreCase(filterRequest.getUserType()) ) {
 			if(Objects.nonNull(filterRequest.getUserId())) {
 				logger.info("Inside !Lawful Agency block.");
 				srsb.with(new SearchCriteria("userId", filterRequest.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));

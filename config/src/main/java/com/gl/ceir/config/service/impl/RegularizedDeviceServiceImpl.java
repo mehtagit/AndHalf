@@ -149,7 +149,10 @@ public class RegularizedDeviceServiceImpl {
 	CommonFunction commonFunction;
 	@Autowired
 	UserFeignClient userFeignClient;
-
+	@Autowired
+	EnduserServiceImpl enduserServiceImpl;
+	
+	
 	@Autowired
 	DashboardUsersFeatureStateMapRepository dashboardUsersFeatureStateMapRepository; 
 
@@ -228,10 +231,9 @@ public class RegularizedDeviceServiceImpl {
 			int userId=0;
 			if(Objects.nonNull(filterRequest.getUserType()))
 			{
-
 				if("End User".equalsIgnoreCase(filterRequest.getUserType())){
 					logger.info("usertype is end user so setting username is empty");
-					username="";
+					username="NA";
 				}	
 				else {
 
@@ -789,6 +791,7 @@ public class RegularizedDeviceServiceImpl {
 					receiverUserType = "End User";
 					subFeature = SubFeatures.Approve;
 					txnId = regularizeDeviceDb.getTxnId();
+					enduserServiceImpl.updateImeiInVipList(regularizeDeviceDb.getEndUserDB());
 				}else if(ceirActionRequest.getAction() == 1){
 					// Check if someone else taken the same action on consignment.
 					RegularizeDeviceDb regularizeDeviceDbTemp = regularizedDeviceDbRepository.getByTxnId(ceirActionRequest.getTxnId());
