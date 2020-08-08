@@ -282,7 +282,7 @@ public class UploadPaidStatus {
 		InputFields dateRelatedFields;
 		
 		if("Immigration".equals(userType)){
-			pageElement.setPageTitle(Translator.toLocale("Device Activation"));	
+			pageElement.setPageTitle(Translator.toLocale("customRegisterDevice"));	
 		}else {
 		pageElement.setPageTitle(Translator.toLocale("customRegisterDevice"));
 		}

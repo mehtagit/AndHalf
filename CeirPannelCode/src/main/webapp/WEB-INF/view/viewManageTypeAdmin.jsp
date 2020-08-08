@@ -164,16 +164,17 @@ position: fixed;
 			</div>
 		</div>
 
-		<div id="viewImporterModal" class="modal" style="overflow-y: hidden;">
+		<div id="viewImporterModal" class="modal">
+		<div class="header-fixed header-fixed-style">
 			<h6 class="modal-header">
 				<spring:message code="input.ViewType" />
-			</h6>
+			</h6></div>
 			<div class="modal-content">
 
 
 
 
-				<div class="row" style="margin-top: 10px;">
+				<div class="row" style="margin-top: 60px;">
 					<div class="input-field col s12 m6 l6">
 						<input type="text" id="viewtradmark" name="tradmark"
 							placeholder="" disabled=""> <label for="viewtradmark"

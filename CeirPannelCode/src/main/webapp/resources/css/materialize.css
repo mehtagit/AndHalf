@@ -13256,3 +13256,12 @@ textarea::-webkit-scrollbar-thumb:hover {
     color: #009688;
     /* font-size: 25px !important; */
 }
+body.modal {
+    overflow: hidden;
+    position: fixed;
+}
+.header-fixed-style {
+    width: inherit;
+    z-index: 1003;
+    position: fixed;
+}

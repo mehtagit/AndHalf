@@ -141,7 +141,7 @@ padding: 0 !important;
                                                                 <select class="browser-default" id="unbockSingledeviceType"
                                                                  oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" 
                                                                  oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');">
-                                                                    <option value="" disabled selected><spring:message code="operator.devicetype" /></option> 
+                                                                    <option value=""  selected><spring:message code="operator.devicetype" /></option> 
                                                                 </select>
                                                             </div>
                                                              <div class="col s12 m6"><label for="UnblockdeviceIdType">
@@ -150,7 +150,7 @@ padding: 0 !important;
                                                                 oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" 
                                                                 oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
                                                                 required>
-                                                                    <option value="" disabled selected>
+                                                                    <option value=""  selected>
                                                                         <spring:message code="operator.selectdeviceidtype" />
                                                                     </option>
                                                                    
@@ -162,7 +162,7 @@ padding: 0 !important;
                                                                 <select class="browser-default" id="unbockSingleMultipleSimStatus"
                                                                  oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" 
                                                                  oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');">
-                                                                    <option value="" disabled selected><spring:message code="operator.multiplesim" /></option>
+                                                                    <option value=""  selected><spring:message code="operator.multiplesim" /></option>
                                                                    
                                                                 </select>
                                                             </div>

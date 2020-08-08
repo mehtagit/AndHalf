@@ -54,13 +54,14 @@ populateCountries(
 
 function showCambodianUserForm()
 {
+
 	$("#askVisaDetails").css("display", "none"); 
 	$("#visaDetails").css("display", "none"); 
 	$("#nationalityDiv").css("display", "none"); 
 	$('#endUserLabelNID').text($.i18n('National ID'));
 	$('#nidType').text($.i18n('Upload ID Image'));
 	$("#datepicker").attr("required", false);
-	$("#nidPlaceHolder").attr("placeholder", $.i18n('Upload ID Image')).val("").focus().blur();
+	$("#nidPlaceHolder").attr("placeholder", $.i18n('Upload ID Image')).val("").blur();
 	$('#visaDetails').find('input:text').val('');
 	$('#visaDetails').find('input:file').val('');
 	$('input[name="onVisa"]').prop('checked', false);
@@ -97,7 +98,7 @@ function showCambodianUserForm()
  		$('#taxStatus1').val("1");
  	}
  	
- 	$("#priceDiv").css("display", "block");
+ 	$("#priceDiv").css("display", "block").blur();
  	$("#CurrencyDiv").css("display", "none");
  	
  	var removeBulkDiv;
@@ -113,6 +114,8 @@ function showCambodianUserForm()
  			
  		}
  	 });
+
+
 }
 
 function removeSelectVip()
@@ -139,17 +142,17 @@ function showOtherUserForm()
 {
 	$('#endUserLabelNID').text($.i18n('Passport Number'));
 	$('#nidType').text($.i18n('Upload Passport Image'));
-	$("#askVisaDetails").css("display", "block");
-	$("#nationalityDiv").css("display", "block");
+	$("#askVisaDetails").css("display", "block").blur();
+	$("#nationalityDiv").css("display", "block").blur();
 	$("#onVisaNo").prop("checked", true);
-	$("#nidPlaceHolder").attr("placeholder", $.i18n('Upload Passport Image')).val("").focus().blur();
+	$("#nidPlaceHolder").attr("placeholder", $.i18n('Upload Passport Image')).val("").blur();
 
 	$("#nationality").attr("required", true);
 	$("#endUserLabelNID").append('<span class="star">*</span>');
 	$("#nidType").append('<span class="star">*</span>');
 	$("#datepicker").attr("required", true);
 	
-	$("#entryCountryDiv").css("display", "block");
+	$("#entryCountryDiv").css("display", "block").blur();
 	/*$("#departmentName").attr("required", true);
 	 $("#endUserdepartmentID").attr("required", true);
 	 $("#endUserDepartmentId").attr("required", true);
@@ -186,7 +189,7 @@ function showOtherUserForm()
  			
  		}
  	  });
- 	
+	 
 }
 
 function showVisaDetails(){

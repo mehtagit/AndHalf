@@ -3290,3 +3290,7 @@ div#error_Modal_reg {
 .top-space {
     margin-top: 0;
 }
+body.modal {
+    overflow: hidden;
+    position: fixed;
+}

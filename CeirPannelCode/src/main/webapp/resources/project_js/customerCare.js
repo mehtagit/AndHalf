@@ -525,7 +525,10 @@ function setStakeHolderData(name,date,featureId,status,txnId,imei)
        		$("#blockedDate").val(data.data.createdOn);
        		$("#blockExpiryDate").val(data.data.expiryDate);
        		$("#blockeModeType").val(data.data.modeType);
-       		$("#complaintType").val(data.data.complainType);
+       		$("#complaintType").val(data.data.complainTypeInterp);
+       		if(data.data.complainType=="NA"){
+       			$("#complaintType").val("NA");
+       		}
        		
        		
 		}
@@ -541,14 +544,14 @@ function setStakeHolderData(name,date,featureId,status,txnId,imei)
       		$("#blockedDate").val(data.data.createdOn);
       		$("#blockExpiryDate").val(data.data.expiryDate);
        		$("#blockeModeType").val(data.data.modeType);
-       		if(data.data.complainType=="null")
+       		if(data.data.complainTypeInterp=="null" || data.data.complainTypeInterp=="")
        			{
        			////console.log("if");
        			$("#complaintType").val("NA");	
        			}
        		else{
        			////console.log("else");
-       			$("#complaintType").val(data.data.complainType);
+       			$("#complaintType").val(data.data.complainTypeInterp);
        		    } 
        		
          }
