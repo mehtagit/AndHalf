@@ -419,7 +419,8 @@ function table(url,dataUrl){
 
 			$('.dataTables_filter input')
 			.off().on('keyup', function(event) {
-				if(event.keyCode == 8 && !textBox.val() || event.keyCode == 46 && !textBox.val() || event.keyCode == 83 && !textBox.val()) {
+				var searchString=$('#search').val();
+			 	   if(event.keyCode == 8 && !searchString || event.keyCode == 46 && !searchString || event.keyCode == 83 && !searchString) {
 
 				}
 				if (event.keyCode === 13) {

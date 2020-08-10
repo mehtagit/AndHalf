@@ -103,9 +103,10 @@
 				$('div#initialloader').delay(300).fadeOut('slow');
 				$('.dataTables_filter input')
 			       .off().on('keyup', function(event) {
-			    	   if(event.keyCode == 8 && !textBox.val() || event.keyCode == 46 && !textBox.val() || event.keyCode == 83 && !textBox.val()) {
-				    
-				            }
+			    	   var searchString=$('#search').val();
+				 	   if(event.keyCode == 8 && !searchString || event.keyCode == 46 && !searchString || event.keyCode == 83 && !searchString) {
+
+				 	   	}
 			    		if (event.keyCode === 13) {
 			    			 table.search(this.value.trim(), false, false).draw();
 			    		}
@@ -791,6 +792,7 @@ function userChangeStatus(entity){
 			{ 'X-CSRF-TOKEN': token }
 		});
 		
+		console.log("registraionHistoryTable--->" +registraionHistoryTable);
 		if( registraionHistoryTable !== null && registraionHistoryTable !== undefined ){
 			//console.log('Going to destroy history table');
 			registraionHistoryTable.destroy();
@@ -805,7 +807,7 @@ function userChangeStatus(entity){
 			success: function(result){
 				var dataObject = eval(result);
 				////alert(JSON.stringify(dataObject.data))
-				registraionHistoryTable = $('#registration-data-table-history').dataTable({
+				registraionHistoryTable = $('#registration-data-table-history').DataTable({
 					"order" : [[1, "asc"]],
 					destroy:true,
 					"serverSide": false,

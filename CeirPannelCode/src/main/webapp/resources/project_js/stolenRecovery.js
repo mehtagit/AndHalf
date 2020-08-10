@@ -434,9 +434,9 @@ function Datatable(url,dataUrl,sourceTypeFiler){
 			$('.dataTables_filter input')
 		       .off().on('keyup', function(event) {
 		    	   var searchString=$('#search').val();
-		    	   if(event.keyCode == 8 && !searchString || event.keyCode == 46 && !searchString || event.keyCode == 83 && !searchString) {
-			    
-			            }
+			 	   if(event.keyCode == 8 && !searchString || event.keyCode == 46 && !searchString || event.keyCode == 83 && !searchString) {
+
+			 	   }
 		    		if (event.keyCode === 13) {
 		    			 table.search(this.value.trim(), false, false).draw();
 		    		}

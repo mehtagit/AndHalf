@@ -91,9 +91,10 @@
 					$('div#initialloader').delay(300).fadeOut('slow');
 					$('.dataTables_filter input')
 				       .off().on('keyup', function(event) {
-				    	   if(event.keyCode == 8 && !textBox.val() || event.keyCode == 46 && !textBox.val() || event.keyCode == 83 && !textBox.val()) {
-					    
-					            }
+				    	   var searchString=$('#search').val();
+					 	   if(event.keyCode == 8 && !searchString || event.keyCode == 46 && !searchString || event.keyCode == 83 && !searchString) {
+
+					 	   }
 				    		if (event.keyCode === 13) {
 				    			 table.search(this.value.trim(), false, false).draw();
 				    		}
@@ -417,7 +418,16 @@
 		return false
 	}
 
-	
+
+	function resetFields(){
+		$('#addMonth').val("");
+		$('#addYear').val("");
+		$('#currency').val("");
+		$('#cambodianRiel').val("");
+		$('#dollar').val("");
+		$("label[for='number']").removeClass('active');
+		$("label[for='cambodianRiel']").removeClass('active');
+	}
 	
 
 	
