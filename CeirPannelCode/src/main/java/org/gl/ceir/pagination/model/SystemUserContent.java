@@ -18,6 +18,7 @@ public class SystemUserContent {
 	private String approvedBy;
 	private Usertype usertype;
 	private String stateInterp;
+	private RegistrationContentModel userProfile;
 	public Integer getId() {
 		return id;
 	}
@@ -102,6 +103,12 @@ public class SystemUserContent {
 	public void setStateInterp(String stateInterp) {
 		this.stateInterp = stateInterp;
 	}
+	public RegistrationContentModel getUserProfile() {
+		return userProfile;
+	}
+	public void setUserProfile(RegistrationContentModel userProfile) {
+		this.userProfile = userProfile;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -133,9 +140,14 @@ public class SystemUserContent {
 		builder.append(usertype);
 		builder.append(", stateInterp=");
 		builder.append(stateInterp);
+		builder.append(", userProfile=");
+		builder.append(userProfile);
 		builder.append("]");
 		return builder.toString();
 	}
+	
+	
+	
 	
 	
 }
