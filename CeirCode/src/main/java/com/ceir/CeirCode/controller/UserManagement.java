@@ -28,59 +28,59 @@ import io.swagger.annotations.ApiOperation;
 @CrossOrigin
 public class UserManagement {
 
-	
+
 	@Autowired
 	UserMgmtService userService;
-	
-	
+
+
 	@ApiOperation(value = "get user by id", response = HttpResponse.class)
 	@PostMapping("/getById")
 	public GenricResponse findDataByPort(@RequestBody AllRequest request){
 		return userService.viewById(request);
 	}
-	
+
 	@ApiOperation(value="save user")
 	@PostMapping("/save")
 	public GenricResponse saveUser(@RequestBody UserDetails user){
 		return userService.saveUser(user);
 	}
-	
+
 	@ApiOperation(value="update user")
 	@PostMapping("/update")
 	public GenricResponse updateUser(@RequestBody UserDetails user){
 		return userService.updateUser(user);
 	}
 
-	
+
 	@ApiOperation(value="delete by id")
 	@PostMapping("/delete")
 	public GenricResponse deleteUserById(@RequestBody AllRequest request){
 		return userService.deleteById(request);
 	}
-	
+
 	@ApiOperation(value = "user data.", response = User.class)
 	@PostMapping("/view") 
 	public MappingJacksonValue view(@RequestBody UserMgmtFilter filter,
 			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
 			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize){
 		MappingJacksonValue mapping = null;
-			Page<User> userData  = userService.viewAllRecord(filter, pageNo, pageSize);
-			mapping = new MappingJacksonValue(userData);
-			return mapping;		
+		Page<User> userData  = userService.viewAllRecord(filter, pageNo, pageSize);
+		mapping = new MappingJacksonValue(userData);
+		return mapping;		
 	}
-	
+
 	@ApiOperation(value="user data by usertype Id")
 	@PostMapping("/databyUserTypeId/{usertypeId}")
 	public GenricResponse updateUser(@PathVariable("usertypeId")long userTypeId){
 		return userService.DataByUserTypeId(userTypeId);
 	}
-	
+
 	@ApiOperation(value="user data by usertype Id")
 	@PostMapping("/DataByPortAndUserType/")
 	public GenricResponse dataByPortAndUserType(@RequestBody UserPort port){
 		return userService.portData(port);
 	}
 
-	
-	
+
+
 }
