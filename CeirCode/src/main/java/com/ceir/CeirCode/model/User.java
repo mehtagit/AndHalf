@@ -53,7 +53,8 @@ public class User {
 	@UpdateTimestamp
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime modifiedOn;
-
+	@Transient
+	private String currentStatusInterp;
 	private Integer currentStatus;  
 	private Integer previousStatus; 
 	private String remark;
@@ -121,6 +122,12 @@ public class User {
     
 	@Transient
     private String stateInterp;
+	
+	@Transient
+    private Long contactNumber;
+	
+	@Transient
+    private String email;
 	public long getId() {      
 		return id;
 	}
