@@ -90,6 +90,7 @@ public class UploadPaidStatus {
 		  request.setFeatureId(12);
 		  request.setNid(nid);
 		 request.setUserTypeId(17);
+		 request.setUsername("NA");
 		  request.setUserType("End User");
 		  
 		GenricResponse response = uploadPaidStatusFeignClient.respone(request);
