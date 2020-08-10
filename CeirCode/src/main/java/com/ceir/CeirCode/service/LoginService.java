@@ -40,6 +40,7 @@ import com.ceir.CeirCode.repo.UserPasswordHistoryRepo;
 import com.ceir.CeirCode.repo.UserRepo;
 import com.ceir.CeirCode.repo.UserRoleRepo;
 import com.ceir.CeirCode.repo.UserSecurityQuestionRepo;
+import com.ceir.CeirCode.repo.UsertypeRepo;
 import com.ceir.CeirCode.repoService.ReqHeaderRepoService;
 import com.ceir.CeirCode.repoService.StateInterupRepoService;
 import com.ceir.CeirCode.repoService.SystemConfigDbRepoService;
@@ -108,6 +109,8 @@ public class LoginService
 	@Autowired
 	CurrentLoginRepo currentLoginRepo;
 
+	@Autowired
+	UsertypeRepo usertypeRepo;
 	public ResponseEntity<?> userLogin(UserLogin userLogin)
 	{
 		try 
@@ -248,7 +251,9 @@ public class LoginService
 			user.setCurrentStatus(UserStatus.APPROVED.getCode());
 			Integer status2=UserStatus.DISABLE.getCode();
 			User UserData=userRepo.findByUsername(user.getUsername());
-			if(UserData!= null) 
+			Usertype userTypeList=usertypeRepo.findById((int)UserData.getUsertype().getId());
+			log.info("got SelfRegister value is ::::::"+ userTypeList.getSelfRegister());
+			if(UserData!= null && (userTypeList.getSelfRegister()==1 || userTypeList.getSelfRegister()==2)) 
 			{ 
 				//RequestHeaders header=new RequestHeaders(userLogin.getUserAgent(),userLogin.getPublicIp(),UserData.getUsername());
 				//headerService.saveRequestHeader(header);
@@ -309,7 +314,7 @@ public class LoginService
 								UserData.getUsertype().getUsertypeName(), UserData.getUsertype().getId(), 
 								status,UserData.getUserProfile().getOperatorTypeName(),
 								UserData.getUserProfile().getOperatorTypeId(), UserData.getUserLanguage(),
-								periodInterp,UserData.getCurrentStatus(),UserData.getPassword());  
+								periodInterp,UserData.getCurrentStatus(),UserData.getPassword(),userTypeList.getSelfRegister());  
 						
 						log.info("login response:  "+response);
 						return new ResponseEntity<>(response,HttpStatus.OK);

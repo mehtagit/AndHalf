@@ -179,6 +179,29 @@ public class LoginResponse {
 		this.password = password;
 		this.period = period;
 	}
+	
+	
+	public LoginResponse(String response, Integer statusCode, List<Usertype> userRoles, String username, long userId,
+			String name, String primaryRole, long primaryRoleId, String status, String operatorTypeName,
+			Integer operatorTypeId, String userLanguage,String period,Integer statusValue,String password,Integer selfRegister) {
+		super();
+		this.response = response;
+		this.statusCode = statusCode;
+		this.userRoles = userRoles;
+		this.username = username;
+		this.userId = userId;
+		this.name = name;
+		this.primaryRole = primaryRole;
+		this.primaryRoleId = primaryRoleId;
+		this.status = status;
+		this.statusValue = statusValue;
+		this.operatorTypeName = operatorTypeName;
+		this.operatorTypeId = operatorTypeId;
+		this.userLanguage = userLanguage;
+		this.password = password;
+		this.period = period;
+		this.selfRegister=selfRegister;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();

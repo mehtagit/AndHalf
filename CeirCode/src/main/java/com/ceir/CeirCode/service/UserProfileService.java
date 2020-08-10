@@ -231,7 +231,17 @@ public class UserProfileService {
 			statusList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
 
 			List<UserProfile> systemConfigListDbs = userProfileRepo.findAll( buildSpecification(filterRequest,statusList,source).build(), new Sort(Sort.Direction.DESC, "modifiedOn"));
-
+			for(UserProfile userProfile : systemConfigListDbs) {
+				   log.info("after fetching systemConfigListDbs data"+systemConfigListDbs);
+		    for(StateMgmtDb stateMgmtDb : statusList) {
+				if(userProfile.getUser().getCurrentStatus() == stateMgmtDb.getState()) {
+					userProfile.getUser().setStateInterp(stateMgmtDb.getInterp());
+					   log.info("stateMgmtDb.getInterp() data"+stateMgmtDb.getInterp());
+					break;
+				}
+			}
+			}
+			 log.info("systemConfigListDbs:::::::::"+systemConfigListDbs);
 			return systemConfigListDbs;
 
 		} catch (Exception e) {
@@ -457,7 +467,9 @@ public class UserProfileService {
 					uPFm.setRequestedOn(userProfile.getUser().getCreatedOn().format(dtf));
 					uPFm.setModifiedOn(userProfile.getUser().getModifiedOn().format(dtf));	
 					uPFm.setUserID(userProfile.getUser().getUsername());
-					uPFm.setStatus(UserStatus.getUserStatusByCode(userProfile.getUser().getCurrentStatus()).getDescription());
+					uPFm.setStatus(userProfile.getUser().getStateInterp());
+					
+					//uPFm.setStatus(UserStatus.getUserStatusByCode(userProfile.getUser().getCurrentStatus()).getDescription());
 					uPFm.setType(userProfile.getAsTypeName());
 					uPFm.setUserType(userProfile.getUser().getUsertype().getUsertypeName());
 					uPFm.setApprovedBy(userProfile.getUser().getApprovedBy());

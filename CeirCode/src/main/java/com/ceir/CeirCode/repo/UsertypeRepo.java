@@ -13,4 +13,5 @@ public interface UsertypeRepo extends JpaRepository<Usertype, Long> ,JpaSpecific
 	public List<Usertype> findBySelfRegister(Integer id);
 	public Usertype findByUsertypeName(String usertype);
 	public List<Usertype> findBySelfRegisterOrSelfRegister(Integer id,Integer usertype);
+	
 }
