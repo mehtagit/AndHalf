@@ -1279,7 +1279,7 @@ public class IconsState {
 		String viewAction="chngeView("+id+",'"+roles.replace(" ", "=")+"','"+type+"','"+source+"')";
 		String rejectAction = "userRejectPopup("+Id+",'"+sessionUserName+"')";
 		String editAction="roleStatusChange('"+Id+"','"+sessionUserName+"','"+userTypeId+"','"+id+"')";
-
+		String historyAction ="historyRecord('"+username+"','"+roles+"')";
 
 		log.info("status---->"+status+"---------AdminCurrentStatus------>"+AdminCurrentStatus+" userStatus----------->" +userStatus);
 
@@ -1298,7 +1298,9 @@ public class IconsState {
 
 		String reject = "<a onclick="+rejectAction+"><i class="+rejectIcon+" aria-hidden=\"true\" title="
 				+rejectIconTitle+" ></i></a>";
-
+		
+		String history="<a onclick="+historyAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+historyIcon+" aria-hidden=\"true\"  title="
+				+historyTitle+"></i></a>";
 
 		if (("0".equals(status) || "1".equals(status)) && "Approved".equals(userStatus)) {
 			approve = "<a onclick="+approveAction+" class=\"eventNone\"><i class="+disableApproveIcon+" aria-hidden=\"true\" title="
@@ -1330,7 +1332,7 @@ public class IconsState {
 					+editIconTitle+"></i></a>"; 
 
 		}
-		String action=view.concat(edit).concat(approve).concat(reject);		  
+		String action=view.concat(edit).concat(approve).concat(reject).concat(history);		  
 		return action;
 
 	}

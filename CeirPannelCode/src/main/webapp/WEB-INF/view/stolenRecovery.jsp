@@ -253,7 +253,7 @@ position: fixed;
 			<div class="row" style="padding: 20px 0 100px 0;">
 				<div class="input-field col s12 center">
 					<button class="btn" onclick="closeViewModal()"
-						class="modal-close btn" id="add_user"><spring:message code="modal.cancel" /></button>
+						class="modal-close btn" id="add_user"><spring:message code="modal.close" /></button>
 				</div>
 			</div>
 
@@ -1001,8 +1001,11 @@ position: fixed;
 
 
 
-           <div id="viewBulkBlockDeviceModal" class="modal-form" style="overflow-y: hidden;">
+           <div id="viewBulkBlockDeviceModal" class="modal-form">
+	<div class="header-fixed header-fixed-style" data-original-title="" title="">
 		<h6 id="viewModalHeader" class="modal-header"><spring:message code="modal.header.viewBlockDevices" /></h6>
+		</div>
+		<div class="scrollDivHeight" data-original-title="" title=""></div>
 		<div class="modal-content" style="margin-top: 5px;">
 			
                                             <form action="#" style="margin-top: 30px;">
@@ -1074,7 +1077,7 @@ position: fixed;
 
 
 
-           <div id="viewblockImeiDevice" class="modal-form">
+             <div id="viewblockImeiDevice" class="modal-form">
            
            	   
 		<div class="header-fixed header-fixed-style">
@@ -1193,9 +1196,11 @@ position: fixed;
             </div></div>
             
          <div id="editblockImeiDevice" class="modal-form">
+<div class="header-fixed header-fixed-style" data-original-title="" title="">
 <h6 id="singleBlockDeviceHeading" class="modal-header">
 <spring:message code="modal.UpdateBlock" />
-</h6>
+</h6></div>
+<div class="scrollDivHeight" data-original-title="" title=""></div>
 <div class="modal-content" style="margin-top: 5px;">
 <form action="" method="POST" onsubmit="return updateSingleBlockDevicesRequest()" id="editSingleImeiform"
 enctype="multipart/form-data">
@@ -1206,7 +1211,7 @@ enctype="multipart/form-data">
 <label for="editblockdeviceType">
 <spring:message code="table.devicetype" /> <span class="star"></span></label>
 <select class="browser-default" id="editblockdeviceType" >
-<option value="" disabled selected>
+<option value=""  selected>
 <spring:message code="table.devicetype" />
 </option>
 
@@ -1227,7 +1232,7 @@ enctype="multipart/form-data">
 <label for="editblockmultipleSimStatus">
 <spring:message code="select.multiSimStatus" /> <span class="star"></span></label>
 <select class="browser-default" id="editblockmultipleSimStatus" >
-<option value="" disabled selected>
+<option value=""  selected>
 <spring:message code="select.multiSimStatus" />
 </option>
 
@@ -1393,8 +1398,11 @@ maxlength="16">
 </div>
          
          
-            <div id="editBulkBlockDeviceModal" class="modal" style="overflow-y: hidden;">
+            <div id="editBulkBlockDeviceModal" class="modal">
+            <div class="header-fixed header-fixed-style" data-original-title="" title="">
 <h6 id="editblockHeading" class="modal-header"><spring:message code="modal.EditDevice" /></h6>
+</div>
+<div class="scrollDivHeight" data-original-title="" title=""></div>
 <div class="modal-content" style="margin-top: 5px;">
 
 <form action="" onsubmit="return updateBulkDevice()" method="post" style="margin-top: 30px;">
@@ -1601,7 +1609,7 @@ type="submit" ><spring:message code="button.update" /></button>
                         <textarea id="Reason" class="materialize-textarea"oninput="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
 						oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
                         required="required"></textarea>
-                        <label for="textarea1" style="margin-left: -10px;"><spring:message code="lable.reason" /><span class="star">*</span></label>
+                        <label for="textarea1" style="margin-left: -10px;"><spring:message code="input.remarks" /><span class="star">*</span></label>
                     </div>
                    
                     

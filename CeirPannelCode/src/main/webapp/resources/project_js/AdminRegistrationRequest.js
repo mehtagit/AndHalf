@@ -103,9 +103,10 @@
 				$('div#initialloader').delay(300).fadeOut('slow');
 				$('.dataTables_filter input')
 			       .off().on('keyup', function(event) {
-			    	   if(event.keyCode == 8 && !textBox.val() || event.keyCode == 46 && !textBox.val() || event.keyCode == 83 && !textBox.val()) {
-				    
-				            }
+			    	   var searchString=$('#search').val();
+				 	   if(event.keyCode == 8 && !searchString || event.keyCode == 46 && !searchString || event.keyCode == 83 && !searchString) {
+
+				 	   	}
 			    		if (event.keyCode === 13) {
 			    			 table.search(this.value.trim(), false, false).draw();
 			    		}
@@ -705,3 +706,134 @@ function userChangeStatus(entity){
 	 window.location.href="trcInformation?id="+id+"&roles="+role+"&type="+type+"&source="+source+"&txnID="+UserID+"";
 
  }
+ 
+ 
+  
+ var registraionHistoryTable;
+ function historyRecord(txnID,userType){
+	 	
+		$("#tableOnModal").openModal({dismissible:false});
+		var filter =[];
+		var formData= new FormData();
+		var ceirAdmin='';
+		var userTypeValue=$("body").attr("data-roleType");
+		
+		
+		
+		if(userType=="Importer" ){
+			var filterRequest={
+
+					"columns": [
+						"CREATED_ON","MODIFIED_ON","FIRST_NAME","MIDDLE_NAME","LAST_NAME","TYPE","EMAIL","PHONE_NO","PROPERTY_LOCATION","STREET",
+						"VILLAGE","LOCALITY","DISTRICT","COMMUNE","POSTAL_CODE","COUNTRY","PROVINCE",
+						"VAT_NO","VAT_FILENAME","VAT_STATUS","COMPANY_NAME"
+						,"DISPLAY_NAME","USERID"
+						],
+						"tableName": "user_profile_aud",
+						"dbName" : "ceirconfig",
+						"userid":txnID
+			}
+			
+		}else if(userType=="Custom"){
+			var filterRequest={
+
+					"columns": [
+						"CREATED_ON","MODIFIED_ON","FIRST_NAME","MIDDLE_NAME","LAST_NAME","TYPE","EMAIL","PHONE_NO","PROPERTY_LOCATION","STREET",
+						"VILLAGE","LOCALITY","DISTRICT","COMMUNE","POSTAL_CODE","COUNTRY","PROVINCE",
+						"VAT_NO","VAT_FILENAME","VAT_STATUS","PORT_ADDRESS","ARRIVAL_PORT","PASSPORT_NO",
+						"NID_FILENAME","COMPANY_NAME","NATURE_OF_EMPLOYMENT","EMPLOYEE_ID","AUTHORITY_EMAIL","AUTHORITY_NAME","AUTHORITY_PHONE_NO"
+						,"DISPLAY_NAME","USERID"
+						],
+						"tableName": "user_profile_aud",
+						"dbName" : "ceirconfig",
+						"userid":txnID
+			}
+		
+		}else if(userType=="Operator"){
+			var filterRequest={
+
+					"columns": [
+						"CREATED_ON","MODIFIED_ON","FIRST_NAME","MIDDLE_NAME","LAST_NAME","TYPE","EMAIL","PHONE_NO","PROPERTY_LOCATION","STREET",
+						"VILLAGE","LOCALITY","DISTRICT","COMMUNE","POSTAL_CODE","COUNTRY","PROVINCE",
+						"VAT_NO","VAT_FILENAME","VAT_STATUS","PASSPORT_NO",
+						"NID_FILENAME","COMPANY_NAME","NATURE_OF_EMPLOYMENT","EMPLOYEE_ID","AUTHORITY_EMAIL","AUTHORITY_NAME","AUTHORITY_PHONE_NO",
+						"OPERATOR_TYPE_ID","OPERATOR_TYPE_NAME","DISPLAY_NAME","USERID"
+						],
+						"tableName": "user_profile_aud",
+						"dbName" : "ceirconfig",
+						"userid":txnID
+			} 
+		
+		}else{
+			var filterRequest={
+
+					"columns": [
+						"CREATED_ON","MODIFIED_ON","FIRST_NAME","MIDDLE_NAME","LAST_NAME","TYPE","EMAIL","PHONE_NO","PROPERTY_LOCATION","STREET",
+						"VILLAGE","LOCALITY","DISTRICT","COMMUNE","POSTAL_CODE","COUNTRY","PROVINCE",
+						"VAT_NO","VAT_FILENAME","VAT_STATUS","PORT_ADDRESS","ARRIVAL_PORT","PASSPORT_NO",
+						"NID_FILENAME","COMPANY_NAME","NATURE_OF_EMPLOYMENT","EMPLOYEE_ID","AUTHORITY_EMAIL","AUTHORITY_NAME","AUTHORITY_PHONE_NO",
+						"OPERATOR_TYPE_ID","OPERATOR_TYPE_NAME","DISPLAY_NAME","USERID"
+						],
+						"tableName": "user_profile_aud",
+						"dbName" : "ceirconfig",
+						"userid":txnID
+			}
+		} 
+			
+
+		formData.append("filter",JSON.stringify(filterRequest));	
+		if(lang=='km'){
+			var langFile='./resources/i18n/khmer_datatable.json';
+		}
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+			headers:
+			{ 'X-CSRF-TOKEN': token }
+		});
+		
+		console.log("registraionHistoryTable--->" +registraionHistoryTable);
+		if( registraionHistoryTable !== null && registraionHistoryTable !== undefined ){
+			//console.log('Going to destroy history table');
+			registraionHistoryTable.destroy();
+			$('#registration-data-table-history').empty();
+		}
+		$.ajax({
+			url: './Consignment/consignment-history',
+			type: 'POST',
+			data: formData,
+			processData: false,
+			contentType: false,
+			success: function(result){
+				var dataObject = eval(result);
+				////alert(JSON.stringify(dataObject.data))
+				registraionHistoryTable = $('#registration-data-table-history').DataTable({
+					"order" : [[1, "asc"]],
+					destroy:true,
+					"serverSide": false,
+					orderCellsTop : true,
+					"ordering" : false,
+					"bPaginate" : true,
+					"bFilter" : false,
+					"bInfo" : true,
+					"scrollX": true,
+					"scrolly": true,
+					pageLength : 3,
+					"data": dataObject.data,
+					"columns": dataObject.columns
+
+				});
+				$('div#initialloader').delay(300).fadeOut('slow');
+			}
+
+		});
+
+		$('.datepicker').on('mousedown',function(event){
+			event.preventDefault();
+		});
+
+
+
+
+
+	}

@@ -150,8 +150,7 @@
 				View User
 			</h6>
 			<div class="modal-content">
-				<form action="" onsubmit="return update()" method="POST"
-					enctype="multipart/form-data" id="register">
+				
 
 					<div class="row" style="margin-top: 10px;">
 						<div class="input-field col s12 m4">
@@ -254,7 +253,7 @@
 						</div>
 
 					</div>
-				</form>
+				
 			</div>
 		</div>
 		

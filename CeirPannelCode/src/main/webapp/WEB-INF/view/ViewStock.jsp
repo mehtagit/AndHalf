@@ -188,9 +188,12 @@ button.modal-action.modal-close.waves-effect.waves-green.btn-flat.right {
 	<!-- Modal End -->
 
 	<div id="editStockModal" class="modal">
+	<div class="header-fixed header-fixed-style" data-original-title="" title="">
+	
 		<h6 class="modal-header">
 			<spring:message code="modal.header.editStock" />
-		</h6>
+		</h6></div>
+		<div class="scrollDivHeight" data-original-title="" title=""></div>
 		<div class="modal-content">
 
 
@@ -305,9 +308,12 @@ button.modal-action.modal-close.waves-effect.waves-green.btn-flat.right {
 	<!-- View Stock Modal start   -->
 
 	<div id="viewStockModal" class="modal">
+	<div class="header-fixed header-fixed-style" data-original-title="" title="">
 		<h6 class="modal-header">
 			<spring:message code="modal.header.viewStock" />
 		</h6>
+		</div>
+		<div class="scrollDivHeight" data-original-title="" title=""></div>
 		<div class="modal-content">
 
 

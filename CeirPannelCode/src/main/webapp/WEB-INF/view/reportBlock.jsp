@@ -139,7 +139,7 @@
                                                                 <select class="browser-default" id="blockdeviceType" 
                                                                 oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" 
                                                                 oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" >
-                                                                    <option value="" disabled selected><spring:message code="operator.devicetype1"/></option> 
+                                                                    <option value=""  selected><spring:message code="operator.devicetype1"/></option> 
                                                                     
                                                                 </select>
                                                             </div>
@@ -161,7 +161,7 @@
                                                                 <select class="browser-default" id="blockmultipleSimStatus"
                                                                  oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" 
                                                                  oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');">
-                                                                    <option value="" disabled selected><spring:message code="operator.multiplestatus" /></option>
+                                                                    <option value=""  selected><spring:message code="operator.multiplestatus" /></option>
                                                                     
                                                                 </select>
                                                             </div>
@@ -303,7 +303,7 @@ onclick="_Services._selectstartDate()"></i></span>
                                                     </div>
 
                                                     <div class="input-field col s12 m6" style="margin-top: 22px;">
-                                                        <input type="text" id="blockbulkquantity" name="quantity" pattern="[0-9]{1-7}" 
+                                                        <input type="text" id="blockbulkquantity" name="quantity" pattern="[0-9]{1,7}" 
                                                         oninput="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');" 
                                                         oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
                                                       required   maxlength="7" >
