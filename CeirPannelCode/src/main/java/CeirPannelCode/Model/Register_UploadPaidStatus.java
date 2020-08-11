@@ -129,7 +129,7 @@ public class Register_UploadPaidStatus {
 	public void setRegularizeDeviceDbs(List<UplodPaidStatusModel> regularizeDeviceDbs) {
 		this.regularizeDeviceDbs = regularizeDeviceDbs;
 	}
-
+	
 	public Integer getTaxPaidStatus() {
 		return taxPaidStatus;
 	}
@@ -142,15 +142,15 @@ public class Register_UploadPaidStatus {
 	public void setPostalCode(Integer postalCode) {
 		this.postalCode = postalCode;
 	}
-
-
+	
+	
 	public AllRequest getAuditParameters() {
 		return auditParameters;
 	}
 	public void setAuditParameters(AllRequest auditParameters) {
 		this.auditParameters = auditParameters;
 	}
-
+	
 	public String getTxnId() {
 		return txnId;
 	}

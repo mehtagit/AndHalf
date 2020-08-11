@@ -288,9 +288,19 @@ data-txnid-value="${not empty param.transactionID ? param.transactionID : 'null'
 													</label>
 												</div>
 													<div class="input-field col s12 m6 l6">
+													<c:choose>
+												<c:when test = "${viewInformation.endUserDB.village=='' || viewInformation.endUserDB.village==null}">
+													<input type="text" readonly="readonly" value="NA"
+														class="form-control boxBorder boxHeight" 
+														maxlength="30" required/>
+													</c:when>
+													<c:otherwise>
 													<input type="text" readonly="readonly" value="${viewInformation.endUserDB.village}"
-														class="form-control boxBorder boxHeight" id="village"
-														maxlength="30" required/> <label
+														class="form-control boxBorder boxHeight" 
+														maxlength="30" required/>
+													</c:otherwise>	
+													</c:choose>
+														 <label
 														for="village"> <spring:message code="input.village" /> <span
 														class="star"></span>
 													</label>
@@ -298,9 +308,19 @@ data-txnid-value="${not empty param.transactionID ? param.transactionID : 'null'
 												
 
 												<div class="input-field col s12 m6 l6"> 
-													<input type="text" readonly="readonly" value="${viewInformation.endUserDB.locality}"
-														class="form-control boxBorder boxHeight" id="locality"
-														maxlength="30" required/> <label
+													<c:choose>
+												<c:when test = "${viewInformation.endUserDB.locality=='' || viewInformation.endUserDB.locality==null}">
+													<input type="text" readonly="readonly" value="NA"
+														class="form-control boxBorder boxHeight" 
+														maxlength="30" required/>
+														</c:when>
+														<c:otherwise>
+														<input type="text" readonly="readonly" value="${viewInformation.endUserDB.locality}"
+														class="form-control boxBorder boxHeight" 
+														maxlength="30" required/>
+														</c:otherwise>
+														</c:choose>
+														 <label
 														for="locality"> <spring:message code="input.locality" /> <span class="star"></span>
 													</label>
 												</div>
@@ -362,8 +382,16 @@ data-txnid-value="${not empty param.transactionID ? param.transactionID : 'null'
 												<div class="col s12 m6 l6">
 												 <label for="email"><spring:message code="input.email" /><span
 														class="star"></span></label>
-														<input type="email" readonly="readonly" id="email"
+														<c:choose>
+												<c:when test = "${viewInformation.endUserDB.email=='' || viewInformation.endUserDB.email==null}">
+														<input type="email" readonly="readonly" 
+														 value="NA">
+														 </c:when>
+														 <c:otherwise>
+														 <input type="email" readonly="readonly" 
 														 value="${viewInformation.endUserDB.email}">
+														 </c:otherwise>
+														 </c:choose>
 												</div>
 
 												<div class="input-field col s12 m6 l6" style="margin-top: 18px;">
@@ -534,7 +562,14 @@ data-txnid-value="${not empty param.transactionID ? param.transactionID : 'null'
 													<div class="col s12 m6">
 														<label for="deviceType1"><spring:message code="select.deviceType" /><span
 															class="star"></span></label>
-															<input type="text" value="${viewInformation.deviceTypeInterp}" readonly="readonly">
+															<c:choose>
+												<c:when test = "${viewInformation.deviceTypeInterp=='' || viewInformation.deviceTypeInterp==null}">
+															<input type="text" value="NA" readonly="readonly">
+												</c:when>
+												<c:otherwise>
+											<input type="text" value="${viewInformation.deviceTypeInterp}" readonly="readonly">
+												</c:otherwise>	
+											</c:choose>
 													</div>
 
 													<div class="col s12 m6">
@@ -545,26 +580,56 @@ data-txnid-value="${not empty param.transactionID ? param.transactionID : 'null'
 
 													<div class="col s12 m6">
 														<label for="multipleSimStatus1"><spring:message code="select.multiSimStatus" /><span class="star"></span>
-														</label> <input type="text" value="${viewInformation.multiSimStatusInterp}" readonly="readonly">
+														</label>
+														<c:choose>
+												<c:when test = "${viewInformation.multiSimStatusInterp=='' || viewInformation.multiSimStatusInterp==null}">
+														 <input type="text" value="NA" readonly="readonly">
+												</c:when>
+												<c:otherwise>
+												<input type="text" value="${viewInformation.multiSimStatusInterp}" readonly="readonly">
+												</c:otherwise>
+												</c:choose>
 													</div>
 
 													<div class="col s12 m6">
 														<label for="country1"><spring:message code="select.countryBoughtFrom" /><span
 															class="star"></span></label> 
-															<input type="text" value="${viewInformation.country}" readonly="readonly">
+														<c:choose>
+												<c:when test = "${viewInformation.country=='' || viewInformation.country==null}">
+															<input type="text" value="NA" readonly="readonly">
+												</c:when>
+												<c:otherwise>
+												<input type="text" value="${viewInformation.country}" readonly="readonly">
+												</c:otherwise>
+												</c:choose>
+												
 													</div>
 
 													<div class="col s12 m6"
 														style="">
 														<label for="serialNumber1"> <spring:message code="input.deviceSerialNumber" /><span class="star"></span>
 														</label>
-														<input type="text" value="${viewInformation.deviceSerialNumber}" readonly="readonly">
-														 
+														<c:choose>
+												<c:when test = "${viewInformation.deviceSerialNumber=='' || viewInformation.deviceSerialNumber==null}">
+														<input type="text" value="NA" readonly="readonly">
+												</c:when>
+												<c:otherwise>
+												<input type="text" value="${viewInformation.deviceSerialNumber}" readonly="readonly">
+												</c:otherwise>
+												</c:choose>		 
 													</div>
 
 													<div class="col s12 m6">
 														<label for="taxStatus1"><spring:message code="select.taxPaidStatus" /><span
-															class="star"></span></label> <input type="text" readonly="readonly" value="${viewInformation.taxPaidStatusInterp}">
+															class="star"></span></label> 
+															<c:choose>
+												<c:when test = "${viewInformation.taxPaidStatusInterp=='' || viewInformation.taxPaidStatusInterp==null}">
+															<input type="text" readonly="readonly" value="NA">
+															</c:when>
+															<c:otherwise>
+															<input type="text" readonly="readonly" value="${viewInformation.taxPaidStatusInterp}">
+															</c:otherwise>
+															</c:choose>
 															
 													</div>
 												</div>
@@ -574,19 +639,39 @@ data-txnid-value="${not empty param.transactionID ? param.transactionID : 'null'
 													<div class="col s12 m6">
 														<label for="deviceStatus1"><spring:message code="select.deviceStatus" /><span
 															class="star"></span></label> 
-														<input type="text" readonly="readonly" value="${viewInformation.deviceStatusInterp}">	
+														<c:choose>
+												<c:when test = "${viewInformation.deviceStatusInterp=='' || viewInformation.deviceStatusInterp==null}">
+														<input type="text" readonly="readonly" value="NA">	
+													</c:when>
+													<c:otherwise>
+													<input type="text" readonly="readonly" value="${viewInformation.deviceStatusInterp}">
+													</c:otherwise>
+													</c:choose>
 													</div>
                                                       <c:choose>
 												<c:when test = "${viewInformation.endUserDB.onVisa=='N'}">
 													<div class="col s12 m6 l6">
 														<label for="Price1"><spring:message code="select.price" /></label>
+														<c:choose>
+												<c:when test = "${viewInformation.price=='' || viewInformation.price==null}">
+														<input type="text" id="Price1" value="NA" readonly="readonly">
+														</c:when>
+														<c:otherwise>
 														<input type="text" id="Price1" value="${viewInformation.price}" readonly="readonly">
-														
+														</c:otherwise>
+														</c:choose>
 													</div>
 
 													<div class="col s12 m6">
 														<label for="Currency1" class="active"><spring:message code="input.currency" /><span class="star"></span></label>
+														<c:choose>
+												<c:when test = "${viewInformation.currencyInterp=='' || viewInformation.currencyInterp==null}">
+														<input type="text" value="NA" readonly="readonly">
+														</c:when>
+														<c:otherwise>
 														<input type="text" value="${viewInformation.currencyInterp}" readonly="readonly">
+														</c:otherwise>
+														</c:choose>
 													</div>
 													</c:when>
 													<c:otherwise>
@@ -606,17 +691,38 @@ data-txnid-value="${not empty param.transactionID ? param.transactionID : 'null'
 																	class="star"></span></label>
 															</div>
 															<div class="input-field col s12 m6">
+																<c:choose>
+												<c:when test = "${viewInformation.secondImei=='' || viewInformation.secondImei==null}">
+																<input type="text" value="NA" readonly="readonly">
+																</c:when>
+																<c:otherwise>
 																<input type="text" value="${viewInformation.secondImei}" readonly="readonly">
+																</c:otherwise>
+																</c:choose>
 																 <label for="IMEIB1" class="Active"><spring:message code="title.two" /></label>
 															</div>
 
 															<div class="input-field col s12 m6">
+															<c:choose>
+												                 <c:when test = "${viewInformation.thirdImei=='' || viewInformation.thirdImei==null}">
+																<input type="text" value="NA" readonly="readonly">
+																</c:when>
+																<c:otherwise>
 																<input type="text" value="${viewInformation.thirdImei}" readonly="readonly">
+																</c:otherwise>
+																</c:choose>
 																 <label for="IMEIC1" class="Active"><spring:message code="title.three" /></label>
 															</div>
 
 															<div class="input-field col s12 m6" id="field">
+																<c:choose>
+												                 <c:when test = "${viewInformation.fourthImei=='' || viewInformation.fourthImei==null}">
+																<input type="text" value="NA" readonly="readonly">
+																</c:when>
+																<c:otherwise>
 																<input type="text" value="${viewInformation.fourthImei}" readonly="readonly">
+																</c:otherwise>
+																</c:choose>
 																 <label for="IMEID1" class="Active"><spring:message code="title.four" /></label>
 															</div>
 														</div>

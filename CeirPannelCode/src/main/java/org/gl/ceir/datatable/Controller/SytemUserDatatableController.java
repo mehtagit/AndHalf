@@ -17,6 +17,7 @@ import org.gl.ceir.configuration.Translator;
 import org.gl.ceir.pageElement.model.Button;
 import org.gl.ceir.pageElement.model.InputFields;
 import org.gl.ceir.pageElement.model.PageElement;
+import org.gl.ceir.pagination.model.RegistrationContentModel;
 import org.gl.ceir.pagination.model.SystemUserContent;
 import org.gl.ceir.pagination.model.SystemUserPagination;
 import org.gl.ceir.pagination.model.Usertype;
@@ -52,6 +53,8 @@ public class SytemUserDatatableController {
 	SystemUserContent systemUserContent;
 	@Autowired
 	SystemUserPagination systemUserPagination;
+	@Autowired
+	RegistrationContentModel registrationcontentmodel;
 	
 
 	@PostMapping("UserManagementData")
@@ -86,8 +89,10 @@ public class SytemUserDatatableController {
 				   String modifiedOn = dataInsideList.getModifiedOn();
 				   String userName = dataInsideList.getUsername();
 				   String userTypeName = dataInsideList.getUsertype().getUsertypeName();
+				   String email = dataInsideList.getUserProfile().getEmail();
+				   String phoneNo = dataInsideList.getUserProfile().getPhoneNo();
 				   String action=iconState.userSystemManagementIcons(id);			   
-				   Object[] finalData={createdOn,modifiedOn,userName,userTypeName,action}; 
+				   Object[] finalData={createdOn,modifiedOn,userName,email,phoneNo,userTypeName,action}; 
 				   List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 				   finalList.add(finalDataList);
 				   datatableResponseModel.setData(finalList);	

@@ -235,7 +235,16 @@ input[type='search'] {
 												</div>
 
 												<div class="input-field col s12 m4 l4">
-													<input type="text" readonly="readonly" id="middleName"  value="${viewInformation.endUserDB.middleName}">
+												 <c:choose>
+												 
+												<c:when test = "${viewInformation.endUserDB.middleName=='' || viewInformation.endUserDB.middleName==null}">
+												<input type="text" readonly="readonly" id="middleName"  value="NA">
+												</c:when>
+												<c:otherwise>
+												<input type="text" readonly="readonly" id="middleName"  value="${viewInformation.endUserDB.middleName}">
+												</c:otherwise>
+												</c:choose>
+													
 													<label for="middleName" class="active"><spring:message code="input.middleName" /></label>
 												</div>
 
@@ -286,9 +295,19 @@ input[type='search'] {
 													</label>
 												</div>
 													<div class="input-field col s12 m6 l6">
+													<c:choose>
+													<c:when test = "${viewInformation.endUserDB.village=='' || viewInformation.endUserDB.village==null}">
+													<input type="text" readonly="readonly" value="NA"
+														class="form-control boxBorder boxHeight" 
+														maxlength="30" required/>
+													</c:when>
+													<c:otherwise>
 													<input type="text" readonly="readonly" value="${viewInformation.endUserDB.village}"
-														class="form-control boxBorder boxHeight" id="village"
-														maxlength="30" required/> <label
+														class="form-control boxBorder boxHeight" 
+														maxlength="30" required/>
+													</c:otherwise>
+													</c:choose>	
+														 <label
 														for="village"> <spring:message code="input.village" /> <span
 														class="star"></span>
 													</label>
@@ -296,9 +315,20 @@ input[type='search'] {
 												
 
 												<div class="input-field col s12 m6 l6"> 
-													<input type="text" readonly="readonly" value="${viewInformation.endUserDB.locality}"
-														class="form-control boxBorder boxHeight" id="locality"
-														maxlength="30" required/> <label
+												<c:choose>
+												<c:when test = "${viewInformation.endUserDB.locality=='' || viewInformation.endUserDB.locality==null}">
+													<input type="text" readonly="readonly" value="NA"
+														class="form-control boxBorder boxHeight" 
+														maxlength="30" required/>
+												</c:when>
+												<c:otherwise>
+												
+												<input type="text" readonly="readonly" value="${viewInformation.endUserDB.locality}"
+														class="form-control boxBorder boxHeight" 
+														maxlength="30" required/>
+												</c:otherwise>		
+												</c:choose>
+														 <label
 														for="locality"> <spring:message code="input.locality" /> <span class="star"></span>
 													</label>
 												</div>
@@ -358,8 +388,17 @@ input[type='search'] {
 
 											<div class="col s12 m12" style="margin-top: 10px;">
 												<div class="input-field col s12 m6 l6">
+												<c:choose>
+												<c:when test = "${viewInformation.endUserDB.email=='' || viewInformation.endUserDB.email==null}">
 														<input type="email" readonly="readonly"
-														 value="${viewInformation.endUserDB.email}"> <label for="email" class="active"><spring:message code="input.email" /><span
+														 value="NA"> 
+														 </c:when>
+														 <c:otherwise>
+														 	<input type="email" readonly="readonly"
+														 value="${viewInformation.endUserDB.email}">
+														 </c:otherwise>
+														 </c:choose>
+														 <label for="email" class="active"><spring:message code="input.email" /><span
 														class="star"></span></label>
 												</div>
 
@@ -534,7 +573,14 @@ input[type='search'] {
 													<div class="col s12 m6">
 														<label for="deviceType1"><spring:message code="select.deviceType" /><span
 															class="star"></span></label>
+															<c:choose>
+												<c:when test = "${viewInformation.deviceTypeInterp=='' || viewInformation.deviceTypeInterp==null}">
+															<input type="text" value="NA" readonly="readonly">
+															</c:when>
+															<c:otherwise>
 															<input type="text" value="${viewInformation.deviceTypeInterp}" readonly="readonly">
+															</c:otherwise>
+															</c:choose>
 													</div>
 
 													<div class="col s12 m6">
@@ -545,21 +591,42 @@ input[type='search'] {
 
 													<div class="col s12 m6">
 														<label for="multipleSimStatus1"><spring:message code="select.multiSimStatus" /><span class="star"></span>
-														</label> <input type="text" value="${viewInformation.deviceIdTypeInterp}" readonly="readonly">
+														</label> 
+														<c:choose>
+												<c:when test = "${viewInformation.multiSimStatusInterp=='' || viewInformation.multiSimStatusInterp==null}">
+														<input type="text" value="NA" readonly="readonly">
+														</c:when>
+														<c:otherwise>
+														<input type="text" value="${viewInformation.multiSimStatusInterp}" readonly="readonly">
+														</c:otherwise>
+														</c:choose>
 													</div>
 
 													<div class="col s12 m6">
 														<label for="country1"><spring:message code="select.countryBoughtFrom" /><span
 															class="star"></span></label> 
+															<c:choose>
+												<c:when test = "${viewInformation.country=='' || viewInformation.country==null}">
+															<input type="text" value="NA" readonly="readonly">
+															</c:when>
+															<c:otherwise>
 															<input type="text" value="${viewInformation.country}" readonly="readonly">
+															</c:otherwise>
+															</c:choose>
 													</div>
 
 													<div class=" col s12 m6"
 														style="margin-top: 28px;">
 														<label for="serialNumber1"> <spring:message code="input.deviceSerialNumber" /><span class="star"></span>
 														</label>
-														<input type="text" value="${viewInformation.deviceSerialNumber}" readonly="readonly">
-														 
+														<c:choose>
+												<c:when test = "${viewInformation.deviceSerialNumber=='' || viewInformation.deviceSerialNumber==null}">
+														<input type="text" value="NA" readonly="readonly">
+														 </c:when>
+														 <c:otherwise>
+														 <input type="text" value="${viewInformation.deviceSerialNumber}" readonly="readonly">
+														 </c:otherwise>
+														 </c:choose>
 													</div>
 													
 													 <c:choose>
@@ -587,7 +654,14 @@ input[type='search'] {
 													<div class="col s12 m6" style="margin-top: -10px;">
 														<label for="deviceStatus1"><spring:message code="select.deviceStatus" /><span
 															class="star"></span></label> 
-														<input type="text" readonly="readonly" value="${viewInformation.deviceStatusInterp}">	
+															<c:choose>
+												<c:when test = "${viewInformation.deviceStatusInterp=='' || viewInformation.deviceStatusInterp==null}">
+														<input type="text" readonly="readonly" value="NA">	
+														</c:when>
+														<c:otherwise>
+														<input type="text" readonly="readonly" value="${viewInformation.deviceStatusInterp}">
+														</c:otherwise>
+														</c:choose>
 													</div>
                                                      <%--  <c:choose>
 												<c:when test = "${viewInformation.endUserDB.nationality=='Cambodian'}">
@@ -641,17 +715,39 @@ input[type='search'] {
 																	class="star"></span></label>
 															</div>
 															<div class="input-field col s12 m6">
+															<c:choose>
+												<c:when test = "${viewInformation.secondImei=='' || viewInformation.secondImei==null}">
+																<input type="text" value="NA" readonly="readonly">
+																</c:when>
+																<c:otherwise>
 																<input type="text" value="${viewInformation.secondImei}" readonly="readonly">
+																</c:otherwise>
+																</c:choose>
 																 <label for="IMEIB1"><spring:message code="title.two" /></label>
 															</div>
 
 															<div class="input-field col s12 m6">
+																<c:choose>
+												                 <c:when test = "${viewInformation.thirdImei=='' || viewInformation.thirdImei==null}">
+																<input type="text" value="NA" readonly="readonly">
+																</c:when>
+																<c:otherwise>
 																<input type="text" value="${viewInformation.thirdImei}" readonly="readonly">
+																</c:otherwise>
+																</c:choose>
 																 <label for="IMEIC1"><spring:message code="title.three" /></label>
 															</div>
 
 															<div class="input-field col s12 m6" id="field">
-																<input type="text" value="${viewInformation.fourthImei}" readonly="readonly">
+															<c:choose>
+												                 <c:when test = "${viewInformation.fourthImei=='' || viewInformation.fourthImei==null}">
+												                <input type="text" value="NA" readonly="readonly">
+												                 </c:when>
+												                 <c:otherwise>
+												                 <input type="text" value="${viewInformation.fourthImei}" readonly="readonly">
+												                 </c:otherwise>
+												                 </c:choose>
+																
 																 <label for="IMEID1"><spring:message code="title.four" /></label>
 															</div>
 														</div>
