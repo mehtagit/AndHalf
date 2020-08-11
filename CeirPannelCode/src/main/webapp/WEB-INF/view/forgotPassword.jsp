@@ -103,7 +103,7 @@ var contextpath='${context}';
                 <!--start container-->
                 <div class="container">
                     <div class="section">
-                        <div class="row card-panel login-card-panel" style="margin: auto; margin-top: 10vh;">
+                        <div class="row card-panel login-card-panel" style="width:67%;    position: absolute; margin: 10vh 39vh;">
                             <div class="col s9 m10 select-lang-lable">
 										<i class="fa fa-globe fa-6" aria-hidden="true"></i>
 										</div>
@@ -126,8 +126,9 @@ var contextpath='${context}';
                             <div class="col s12 m12 l12">
                                 <form  id="forgotPassword" onsubmit="return forgotPassword()" >
                                 <div class="row">
-                       			
-                        <span style="text-align: center;color: red;" id="errorMsg"></span>                          
+                       			<span style="color: red;" id="errorMsg"></span>
+               
+                                           
                                  <!--     <hr style="margin-bottom: 30px;"> -->
 
                                     <div class="row myRow">
@@ -170,8 +171,8 @@ oninput="InvalidMsg(this,'input','<spring:message code="validation.50alphanumeri
 												 title= "<spring:message code="validation.requiredMsg" />" required id="answer" maxlength="50" />
                                         </div>
                                     </div>
-                                    
-                                </div>
+                                                                   </div>
+                         
                                 <div class="row" style="margin-top: 30px;">
                                     <div class="input-field col s12 m12 l12 center">
                                         <button id="forgotPasswordBtn"   type="submit" class="btn"><spring:message code="button.submit" /></button>

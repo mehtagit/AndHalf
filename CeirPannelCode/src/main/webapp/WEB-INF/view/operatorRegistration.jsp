@@ -280,21 +280,28 @@ var contextpath = "${context}";
 			<div class="section">
 				<form id="registrationForm" autocomplete="off"
 					onsubmit="return saveOperatorRegistration()">
-					<div class="card-panel registration-form">
-						<div class="row">
-							<div class="col s10 m10 select-lang-lable">
+	<div class="row card-panel registration-form">
+									<h5 class="fixPage-modal-header-reg ">
+									<spring:message code="operator.reg" />
+													<div class="col s10 m11 select-lang-lable-reg">
+								
 								<i class="fa fa-globe fa-6" aria-hidden="true"></i>
 							</div>
-							<div class="col s2 m2 right" style="padding: 0;">
-								<select class="browser-default select-lang-drpdwn" id="langlist">
-									<option value="en">English</option>
-									<option value="km"><spring:message code="lang.khmer" /></option>
+							<div class="col s2 m1 right" style="padding: 0;">
+								<select class="browser-default select-lang-drpdwn-reg" id="langlist">
+									<option value="en" class="fontBlack">English</option>
+									<option value="km" class="fontBlack"><spring:message code="lang.khmer" /></option>
 								</select>
-							</div>
+							</div> 
+								</h5>
+								
+								
+						<div class="row">
+						
 							<div class="col s12 m12">
-								<h5><spring:message code="operator.reg" /></h5>
+							
 								<span id="msg" style="color: red;">${msg}</span>
-								<hr>
+						
 							</div>
 
 							<input type="hidden" id="usertypeId" value="${usertypeId}">

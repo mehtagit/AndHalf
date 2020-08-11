@@ -307,7 +307,7 @@ input[type="checkbox"] {
 		src="${context}/resources/ajax/Login.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 	<div id="ErrorPopup" class="modal modal-small"
-		style="width: 40%; display: block;">
+		style="margin: 20vh 54vh; display: block;">
 		<h6 class="modal-header">
 			<spring:message code="registration.homepage" />
 
