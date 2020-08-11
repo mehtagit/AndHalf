@@ -3338,3 +3338,14 @@ div#error_Modal_reg {
     margin-top: -18px;
     text-align: right;
 }
+.select-lang-drpdwn-fp {
+    width: 75px;
+    margin-top: -32px;
+    border-bottom: none;
+    font-size: 16px;
+}
+.select-lang-lable-fp{
+    margin-top: -18px;
+    text-align: right;
+    font-size: 16px;
+}
