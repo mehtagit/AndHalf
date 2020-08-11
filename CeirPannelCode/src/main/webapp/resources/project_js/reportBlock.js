@@ -574,12 +574,9 @@ function setViewBulkPopUp(data,popUpType,requestType){
 
 
 	if(popUpType=='view'){	
-		////console.log("++++++++++"+popUpType+"requestType="+requestType);
-
-		if(requestType=="3")
+			if(requestType=="3")
 		{
-
-			$("#bulkblockingTypeId").css("display", "none");
+           $("#bulkblockingTypeId").css("display", "none");
 			$('#viewModalHeader').text($.i18n('viewBulkUnblock'));
 		}
 		else{
@@ -595,6 +592,10 @@ function setViewBulkPopUp(data,popUpType,requestType){
 		$("#viewBulkBlockDevicequantity").val(data.deviceQuantity);
 		$("#viewBulkBlockTxnId").val(data.txnId);
 		$("#viewBulkBlockRemarkReject").val(data.rejectedRemark);
+		if(data.rejectedRemark=="" || data.rejectedRemark==null)
+			{
+			$("#viewBulkBlockRemarkReject").val("NA");
+			}
 		$("#viewBulkBlockRemarkRejectDiv").css("display", "block");
 		if(data.blockingType=='tilldate')
 		{
@@ -826,43 +827,55 @@ function setSingleDeviceViewPopUp(data,popUpType,requestType){
 
 		if(data.singleImeiDetails.secondImei==0 && data.singleImeiDetails.thirdImei==0 && data.singleImeiDetails.fourthImei==0  )
 		{
-			$("#viewsingleblockIMEI2").val("");
-			$("#viewsingleblockIMEI3").val("");
-			$("#viewsingleblockIMEI4").val("");
+			$("#viewsingleblockIMEI2").val("NA");
+			$("#viewsingleblockIMEI3").val("NA");
+			$("#viewsingleblockIMEI4").val("NA");
 		}
 		else if(data.singleImeiDetails.secondImei==0 && data.singleImeiDetails.thirdImei==0 && data.singleImeiDetails.fourthImei!=0 )
 		{
-			$("#viewsingleblockIMEI2").val("");
-			$("#viewsingleblockIMEI3").val("");
+			$("#viewsingleblockIMEI2").val("NA");
+			$("#viewsingleblockIMEI3").val("NA");
 			$("#viewsingleblockIMEI4").val(data.singleImeiDetails.fourthImei);
 		}
 		else if(data.singleImeiDetails.secondImei!=0 && data.singleImeiDetails.thirdImei==0 && data.singleImeiDetails.fourthImei==0)
 		{
 			$("#viewsingleblockIMEI2").val(data.singleImeiDetails.secondImei);
-			$("#viewsingleblockIMEI3").val("");
-			$("#viewsingleblockIMEI4").val("");
+			$("#viewsingleblockIMEI3").val("NA");
+			$("#viewsingleblockIMEI4").val("NA");
 		}
 		else if(data.singleImeiDetails.secondImei==0 && data.singleImeiDetails.thirdImei!=0 && data.singleImeiDetails.fourthImei==0)
 		{
-			$("#viewsingleblockIMEI2").val("");
+			$("#viewsingleblockIMEI2").val("NA");
 			$("#viewsingleblockIMEI3").val(data.singleImeiDetails.thirdImei);
-			$("#viewsingleblockIMEI4").val("");
+			$("#viewsingleblockIMEI4").val("NA");
 		}
 		else{
 			////console.log("else############")
 		}
 
 		$("#viewblockdeviceType").val(data.singleImeiDetails.deviceTypeInterp);
+		if(data.singleImeiDetails.deviceTypeInterp=='' || data.singleImeiDetails.deviceTypeInterp==null){
+			$("#viewblockdeviceType").val('NA')
+		}
 		$("#viewblockdeviceIdType").val(data.singleImeiDetails.deviceIdTypeInterp);
+		
 		$("#viewblockmultipleSimStatus").val(data.singleImeiDetails.multipleSimStatusInterp);
+		if(data.singleImeiDetails.multipleSimStatusInterp=='' || data.singleImeiDetails.multipleSimStatusInterp==null){
+			$("#viewblockmultipleSimStatus").val('NA')
+		}
 		$("#viewsingleblockserialNumber").val(data.singleImeiDetails.deviceSerialNumber);
+		if(data.singleImeiDetails.multipleSimStatusInterp=='' || data.singleImeiDetails.multipleSimStatusInterp==null){
+			$("#viewsingleblockserialNumber").val('NA')
+		}
 		$("#viewsingleblockremark").val(data.singleImeiDetails.remark);
 		$("#viewsingleblockIMEI1").val(data.singleImeiDetails.firstImei);
 		$("#viewsingleblocTxnid").val(data.singleImeiDetails.txnId);
 		$("#viewsingleblockCategory").val(data.singleImeiDetails.categoryInterp);
 		$("#viewsingleblockremark").val(data.singleImeiDetails.remark);
 		$("#viewsingleblockremarkReject").val(data.rejectedRemark);
-
+		if(data.rejectedRemark=='' || data.rejectedRemark==null){
+			$("#viewsingleblockremarkReject").val('NA')
+		}	
 
 		if(data.blockingType=='tilldate')
 		{
@@ -875,28 +888,14 @@ function setSingleDeviceViewPopUp(data,popUpType,requestType){
 
 	}
 	else
-	{
-		/*		 $("#editblockdeviceType option").remove();
-		 $("#editblockmultipleSimStatus option").remove();
-		 $("#editblockdeviceIdType option").remove();
-		 $("#editbulkBlockdeviceCategory option").remove();*/
-		if(requestType=="3")
+	{if(requestType=="3")
 		{
-
-			$('#singleBlockDeviceHeading').text(editUnblock);
+         	$('#singleBlockDeviceHeading').text(editUnblock);
 		}
 		else{
-
-			$('#singleBlockDeviceHeading').text($.i18n('editBlockDevice'));
+           $('#singleBlockDeviceHeading').text($.i18n('editBlockDevice'));
 		}
-
-
-		////console.log("++++++++++"+popUpType+" requestType="+requestType);
-		$("#editblockImeiDevice").openModal({dismissible:false});
-
-
-
-
+ 		$("#editblockImeiDevice").openModal({dismissible:false});
 
 		if(data.singleImeiDetails.secondImei==0 && data.singleImeiDetails.thirdImei==0 && data.singleImeiDetails.fourthImei==0  )
 		{

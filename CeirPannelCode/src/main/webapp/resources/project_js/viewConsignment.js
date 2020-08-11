@@ -253,8 +253,20 @@ function setViewPopupData(data){
 		$("#viewCurrencyDiv").css("display", "block");
 	}
 	$("#supplierId").val(data.supplierId);
+	if(data.supplierId=="" || data.supplierId==null)
+		{
+		$("#supplierId").val('NA');
+		}
 	$("#supplierName").val(data.supplierName);
+	if(data.supplierName=="" || data.supplierName==null)
+	{
+	$("#supplierName").val('NA');
+	}
 	$("#consignmentNumber").val(data.consignmentNumber);
+	if(data.consignmentNumber=="" || data.consignmentNumber==null)
+	{
+	$("#consignmentNumber").val('NA');
+	}
 	$("#expectedDispatcheDate").val(data.expectedDispatcheDate);
 	$("#countryview").val(data.organisationCountry);
 	$("#expectedArrivaldate").val(data.expectedArrivaldate);
@@ -262,13 +274,38 @@ function setViewPopupData(data){
 	$("#Quantity").val(data.quantity);
 	$("#TransactionId").val(data.txnId);
 	$("#remark").val(data.remarks);
+	if(data.remarks=="" || data.remarks==null)
+	{
+	$("#remark").val('NA');
+	}
+	
 	$("#fileName").val(data.fileName); 
 	//$("#viewcurrency").val(data.currency);
 	$("#viewtotalPrice").val(totalPrice);
+	if(totalPrice=="" || totalPrice==null)
+	{
+	$("#viewtotalPrice").val('NA');
+	}
 	$("#viewhideCurrency").val(data.currency);
+	if(data.currency=="" || data.currency==null)
+	{
+	$("#viewhideCurrency").val('NA');
+	}
 	$("#portAddress").val(data.portAddressInterp);
+	if(data.portAddressInterp=="" || data.portAddressInterp==null)
+	{
+	$("#portAddress").val('NA');
+	}
 	$("#viewcurrency").val(data.currencyInterp);
+	if(data.currencyInterp=="" || data.currencyInterp==null)
+	{
+	$("#viewcurrency").val('NA');
+	}
 	$('#deviceQuantity').val(data.deviceQuantity);
+	if(data.deviceQuantity=="" || data.deviceQuantity==null)
+	{
+	$("#deviceQuantity").val('NA');
+	}
 }
 
 function setEditPopupData(data){

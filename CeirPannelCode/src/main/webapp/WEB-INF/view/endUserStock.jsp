@@ -345,7 +345,7 @@ var contextpath = "${context}";
                                             </div>
                                             
                                             <div class="input-field col s6 m5">
-                                                <label for="endUserquantity" style="color: #000;"><spring:message code="input.quantity" />  <span class="star">*</span></label>
+                                                <label for="endUserquantity" style="color: #000;"><spring:message code="input.quantity" /></label>
                                             </div>
                                             <div class="input-field col s6 m7">
                                                 <input type="text" id="viewEndUserquantity" name="viewEndUserquantity"
@@ -353,7 +353,7 @@ var contextpath = "${context}";
                                             </div>
                                             
                                             <div class="input-field col s6 m5">
-                                               <label for="endUserDevicequantity" style="color: #000;"><spring:message code="input.devicequantity" />  <span class="star">*</span></label>
+                                               <label for="endUserDevicequantity" style="color: #000;"><spring:message code="input.devicequantity" /></label>
                                             </div>
                                             <div class="input-field col s6 m7">
                                                 <input type="text" id="viewEdUserDevicequantity" name="viewEdUserDevicequantity"

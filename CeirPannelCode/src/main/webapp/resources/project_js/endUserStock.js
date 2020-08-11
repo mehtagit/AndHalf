@@ -126,6 +126,9 @@ function setViewPopupData(data){
 	$("#transactionID").val(data.txnId);
 	$("#uploadDate").val(data.createdOn);
 	$("#viewEndUserEmail").val(data.user.userProfile.email);
+	if(data.user.userProfile.email=="" || data.user.userProfile.email==null){
+		$("#viewEndUserEmail").val("NA");	
+	}
 	$("#viewEndUserquantity").val(data.quantity);
 	$("#viewEdUserDevicequantity").val(data.deviceQuantity);
 	$("#viewUploadFile").val(data.fileName);

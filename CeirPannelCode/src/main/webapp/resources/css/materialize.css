@@ -8710,6 +8710,29 @@ uppercase
 }
 
 .material-tooltip {
+    /* padding: 10px 8px; */
+    /* font-size: 1rem; */
+    /* z-index: 2000; */
+    background-color: transparent;
+    border-radius: 2px;
+    color: #fff;
+    /* min-height: 36px; */
+    /* line-height: 120%; */
+    opacity: 0;
+    display: none;
+    /* position: absolute; */
+    /* text-align: center; */
+    /* max-width: calc(100% - 4px); */
+    /* overflow: hidden; */
+    left: 0;
+    top: 0;
+    /* will-change: top, left; */
+}
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+/* .material-tooltip {
 	padding: 10px 8px;
 	font-size: 1rem;
 	z-index: 2000;
@@ -8728,7 +8751,7 @@ uppercase
 	top: 0;
 	will-change: top, left;
 }
-
+ */
 /* .backdrop {
 	position: absolute;
 	opacity: 0;
@@ -13256,10 +13279,7 @@ textarea::-webkit-scrollbar-thumb:hover {
     color: #009688;
     /* font-size: 25px !important; */
 }
-body.modal {
-height: auto !important;
-  overflow: hidden !important;
-}
+
 .header-fixed-style {
     width: inherit;
     z-index: 1003;
