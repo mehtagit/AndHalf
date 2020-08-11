@@ -236,7 +236,6 @@ input[type='search'] {
 
 												<div class="input-field col s12 m4 l4">
 												 <c:choose>
-												 
 												<c:when test = "${viewInformation.endUserDB.middleName=='' || viewInformation.endUserDB.middleName==null}">
 												<input type="text" readonly="readonly" id="middleName"  value="NA">
 												</c:when>
@@ -430,16 +429,16 @@ input[type='search'] {
 												</label>
 												  </c:when>
 												 <c:otherwise>
-												<%--  <label>
+												 <label>
 												 
-												<input class="with-gap" type="radio" name="selectvip" readonly="readonly" value="Y"  >
+												<input class="with-gap" type="radio" name="selectvip" disabled="disabled" value="Y"  >
 												 <span><spring:message code="modal.yes" /></span>
 												
 												  </label>
 												  <label> 
-												  <input class="with-gap" value="N" type="radio" readonly="readonly" checked="checked"
+												  <input class="with-gap" value="N" type="radio" disabled="disabled" checked="checked"
 													name="selectvip" style="margin-left: 20px;" /> <span><spring:message code="modal.no" /></span>
-												</label> --%>
+												</label>
 												</c:otherwise>
 												</c:choose>
 											</div>
@@ -496,7 +495,7 @@ input[type='search'] {
 												</label>
 												</c:when>
 												<c:otherwise>
-												<%-- <label><input class="with-gap" type="radio"
+												<label><input class="with-gap" type="radio"
 													name="onVisa" value="Y" disabled="disabled">
 													<span><spring:message code="modal.yes" /></span> </label>
 													 <label>
@@ -504,7 +503,7 @@ input[type='search'] {
 													checked="checked" name="onVisa" value="N"
 													style="margin-left: 20px;"  />
 													<span><spring:message code="modal.no" /></span>
-												</label> --%>
+												</label>
 												</c:otherwise>
 												</c:choose>
 											</div>

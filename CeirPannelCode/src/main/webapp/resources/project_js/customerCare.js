@@ -631,7 +631,14 @@ tableData.push(data);
 			"data" : "imeiMsisdnIdentity.imei","defaultContent": ""
 		}, {
 			"data" : "imeiEsnMeid","defaultContent": ""
-		}]
+		}],
+
+	"columnDefs": [
+	{
+	"targets": [4],
+	"visible": false,
+	"searchable": true
+	}],
 		
 	});
 }
@@ -651,10 +658,10 @@ function duplicateData(data){
 				"data" : "createdOn", "defaultContent": ""
 			},
 			{
-				"data" : "imeiMsisdnIdentity.msisdn","defaultContent": ""
+				"data" : "msisdn","defaultContent": ""
 			},
 			{
-				"data" : "imeiMsisdnIdentity.imei","defaultContent": ""
+				"data" : "imei","defaultContent": ""
 			}, {
 				"data" : "imsi","defaultContent": ""
 			}]

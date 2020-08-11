@@ -78,12 +78,21 @@ function hide() {
 		                $('#endUserpassportNumber').val(data.data.nid).prop('readonly', true);
 		                 $('#endUserfirstName').val(data.data.firstName).prop('readonly', true);
 		                  $('#endUsermiddleName').val(data.data.middleName).prop('readonly', true);
+		                  if(data.data.middleName=="" || data.data.middleName==null){
+		                	  $('#endUsermiddleName').val("NA").prop('readonly', true);  
+		                  }
 		                   $('#endUserlastName').val(data.data.lastName).prop('readonly', true);
 		                    $('#endUseraddress').val(data.data.propertyLocation).prop('readonly', true);
 		                     $('#endUserstreetNumber').val(data.data.street).prop('readonly', true);
 		                      $('#endUserlocality').val(data.data.locality).prop('readonly', true);
+		                      if(data.data.locality=="" || data.data.locality==null){
+			                	  $('#endUserlocality').val("NA").prop('readonly', true);  
+			                  }
 		                       $('#endUservillage').val(data.data.village).prop('readonly', true);
-		                        $('#endUsercommune').val(data.data.commune).prop('readonly', true);
+		                       if(data.data.village=="" || data.data.village==null){
+				                	  $('#endUservillage').val("NA").prop('readonly', true);  
+				                  }
+		                       $('#endUsercommune').val(data.data.commune).prop('readonly', true);
 		                         $('#endUserdistrict').val(data.data.district).prop('readonly', true);
 		                          $('#endUserpin').val(data.data.postalCode).prop('readonly', true);
 		                           $('#country').val(data.data.country).change().attr("disabled", true);

@@ -289,7 +289,7 @@ to {
 											pattern="[A-Za-z0-9]{0,15}"
 											oninput="InvalidMsg(this,'input','<spring:message code="validation.15numbers" />');"
 											oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15numbers" />');"
-											maxlength="15" /> <label for="InvoiceNumber"
+											maxlength="15" /> <label for="invoiceNumber"
 											class="center-align"><spring:message
 												code="input.invoiceNumber" /></label>
 									</div>

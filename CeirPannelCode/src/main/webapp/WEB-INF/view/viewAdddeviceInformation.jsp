@@ -237,7 +237,14 @@ data-txnid-value="${not empty param.transactionID ? param.transactionID : 'null'
 
 												<div class="col s12 m4 l4">
 													<label for="middleName" class="active"><spring:message code="input.middleName" /></label>
-													<input type="text" readonly="readonly" id="middleName" value="${viewInformation.endUserDB.middleName}">
+													<c:choose>
+												<c:when test = "${viewInformation.endUserDB.middleName=='' || viewInformation.endUserDB.middleName==null}">
+													<input type="text" readonly="readonly" id="middleName" value="NA">
+												</c:when>
+												<c:otherwise>
+												<input type="text" readonly="readonly" id="middleName" value="${viewInformation.endUserDB.middleName}">
+												</c:otherwise>
+												</c:choose>
 													
 												</div>
 

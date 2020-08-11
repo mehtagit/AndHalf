@@ -483,7 +483,7 @@ var contextpath = "${context}";
                     save this for future reference.
                     Kindly check the status of file upload by clicking on the check upload status button on the previous
                     page and providing the Transaction ID. -->
-                   <h6 id="sucessMessageId"> <spring:message code="modal.message.futureRef" /> <span id="endUsertXnId"></span></h6>
+                   <h6 id="sucessMessageId"> <spring:message code="modal.message.stock" /> <span id="endUsertXnId"></span></h6>
              <!--    </h6> -->
             </div>
             <div class="row">

@@ -230,7 +230,14 @@ input[type='search'] {
 												</div>
 
 												<div class="input-field col s12 m4 l4">
+												 <c:choose>
+												<c:when test = "${viewInformation.data.middleName=='' || viewInformation.data.middleName==null}">
+													<input type="text" readonly="readonly" id="middleName" value="NA">
+													</c:when>
+													<c:otherwise>
 													<input type="text" readonly="readonly" id="middleName" value="${viewInformation.data.middleName}">
+													</c:otherwise>
+													</c:choose>
 													<label for="middleName" class="active"><spring:message code="input.middleName" /></label>
 												</div>
 
@@ -281,9 +288,19 @@ input[type='search'] {
 													</label>
 												</div>
 													<div class="input-field col s12 m6 l6">
-													<input type="text" readonly="readonly" value="${viewInformation.data.village}"
-														class="form-control boxBorder boxHeight" id="village"
-														maxlength="30" required/> <label
+													 <c:choose>
+												<c:when test = "${viewInformation.data.village=='' || viewInformation.data.village==null}">
+													<input type="text" readonly="readonly" value="NA" class="form-control boxBorder boxHeight" id="village"
+														maxlength="30" required/>
+													</c:when>
+													<c:otherwise>
+													<input type="text" readonly="readonly" value="${viewInformation.data.village}" class="form-control boxBorder boxHeight" id="village"
+														maxlength="30" required/>
+													
+													</c:otherwise>
+													</c:choose>
+													
+														 <label
 														for="village"> <spring:message code="input.village" /> <span
 														class="star"></span>
 													</label>
@@ -291,9 +308,19 @@ input[type='search'] {
 												
 
 												<div class="input-field col s12 m6 l6"> 
-													<input type="text" readonly="readonly" value="${viewInformation.data.locality}"
+												 <c:choose>
+												<c:when test = "${viewInformation.data.locality=='' || viewInformation.data.locality==null}">
+													<input type="text" readonly="readonly" value="NA"
 														class="form-control boxBorder boxHeight" id="locality"
-														maxlength="30" required/> <label
+														maxlength="30" required/>
+														</c:when>
+														<c:otherwise>
+														<input type="text" readonly="readonly" value="${viewInformation.data.locality}"
+														class="form-control boxBorder boxHeight" id="locality"
+														maxlength="30" required/>
+														</c:otherwise>
+														</c:choose>
+														 <label
 														for="locality"> <spring:message code="input.locality" /> <span class="star"></span>
 													</label>
 												</div>
@@ -353,8 +380,17 @@ input[type='search'] {
 
 											<div class="col s12 m12" style="margin-top: 10px;">
 												<div class="input-field col s12 m6 l6">
+												 <c:choose>
+												<c:when test = "${viewInformation.data.email=='' || viewInformation.data.email==null}">
 														<input type="email" readonly="readonly" id="email"
-														 value="${viewInformation.data.email}"> <label for="email"><spring:message code="input.email" /><span
+														 value="NA">
+												</c:when>
+												<c:otherwise>
+												<input type="email" readonly="readonly" id="email"
+														 value="${viewInformation.data.email}">
+												</c:otherwise>
+												</c:choose>		 
+														  <label for="email"><spring:message code="input.email" /><span
 														class="star"></span></label>
 												</div>
 
@@ -364,8 +400,17 @@ input[type='search'] {
 													</label>
 												</div>
 												<div class="input-field col s12 m6 l6" style="margin-top: 18px;margin-right: 1px;">
+												<c:choose>
+												<c:when test = "${viewInformation.data.rejectedRemark=='' || viewInformation.data.rejectedRemark==null}">
 													<input type="text" readonly="readonly"
-														pattern="[0-9]{10,10}"  value="${viewInformation.data.rejectedRemark}" > <label for="textarea1" class="active"><spring:message
+														pattern="[0-9]{10,10}"  value="NA" >
+												</c:when>
+												<c:otherwise>
+												<input type="text" readonly="readonly"
+														pattern="[0-9]{10,10}"  value="${viewInformation.data.rejectedRemark}" >
+												</c:otherwise>
+												</c:choose>		
+														 <label for="textarea1" class="active"><spring:message
 																	code="input.remarksRejected" /> </label>
 												</div>
 											</div>
