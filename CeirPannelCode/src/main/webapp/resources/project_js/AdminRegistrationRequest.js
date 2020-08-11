@@ -796,7 +796,7 @@ function userChangeStatus(entity){
 			{ 'X-CSRF-TOKEN': token }
 		});
 		
-		console.log("registraionHistoryTable--->" +registraionHistoryTable);
+		
 		if( registraionHistoryTable !== null && registraionHistoryTable !== undefined ){
 			//console.log('Going to destroy history table');
 			registraionHistoryTable.destroy();
