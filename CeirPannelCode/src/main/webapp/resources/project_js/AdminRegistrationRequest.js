@@ -694,7 +694,7 @@ function userChangeStatus(entity){
 			}
 		});
 	 return false
- }	
+}	
  
  
  
@@ -731,7 +731,8 @@ function userChangeStatus(entity){
 						],
 						"tableName": "user_profile_aud",
 						"dbName" : "ceirconfig",
-						"userid":txnID
+						"userid":txnID,
+						"txnId":txnID
 			}
 			
 		}else if(userType=="Custom"){
@@ -746,7 +747,8 @@ function userChangeStatus(entity){
 						],
 						"tableName": "user_profile_aud",
 						"dbName" : "ceirconfig",
-						"userid":txnID
+						"userid":txnID,
+						"txnId":txnID
 			}
 		
 		}else if(userType=="Operator"){
@@ -761,7 +763,8 @@ function userChangeStatus(entity){
 						],
 						"tableName": "user_profile_aud",
 						"dbName" : "ceirconfig",
-						"userid":txnID
+						"userid":txnID,
+						"txnId":txnID			
 			} 
 		
 		}else{
@@ -776,7 +779,8 @@ function userChangeStatus(entity){
 						],
 						"tableName": "user_profile_aud",
 						"dbName" : "ceirconfig",
-						"userid":txnID
+						"userid":txnID,
+						"txnId":txnID
 			}
 		} 
 			

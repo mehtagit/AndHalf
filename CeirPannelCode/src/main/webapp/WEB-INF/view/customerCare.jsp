@@ -241,10 +241,13 @@ data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeI
 
 
 
-	<div id="viewModal" class="modal-form" style="overflow-y: hidden;">
+	<div id="viewModal" class="modal-form">
+	<div class="header-fixed header-fixed-style">
 		<h6 class="modal-header">
 			<spring:message code="modal.header.viewConsignment" />
 		</h6>
+		</div>
+		<div class="scrollDivHeight"></div>
 		<div class="modal-content" style="margin-top: 5px;">
 			<div class="row myRow">
 				<div class="input-field col s12 m6">
@@ -362,9 +365,12 @@ data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeI
 
  
  	<div id="viewStockModal" class="modal">
+ 	<div class="header-fixed header-fixed-style">
 		<h6 class="modal-header">
 			<spring:message code="modal.header.viewStock" />
 		</h6>
+		</div>
+		<div class="scrollDivHeight"></div>
 		<div class="modal-content">
 
 
@@ -439,10 +445,13 @@ data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeI
 		</div>
 	</div>
 	
-	<div id="viewImporterModal" class="modal" style="overflow-y: hidden;">
+	<div id="viewImporterModal" class="modal">
+			<div class="header-fixed header-fixed-style">
 			<h6 class="modal-header">
 				<spring:message code="input.ViewType" />
 			</h6>
+			</div>
+			<div class="scrollDivHeight"></div>
 			<div class="modal-content">
 
 
@@ -543,7 +552,10 @@ data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeI
 		</div>
 	
 <div id="InvalidTxnModal" class="modal">
+<div class="header-fixed header-fixed-style">
 		<h6 class="modal-header"></h6>
+		</div>
+		<div class="scrollDivHeight"></div>
 		<div class="modal-content">
 			<div class="row">
 				<h6 id="fileErrormessage"><spring:message code="invalidaTxnIdMsg" /> </h6>
@@ -666,9 +678,11 @@ data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeI
 	
 	
 	<div id="viewDeviceInfo" class="modal">
+	<div class="header-fixed header-fixed-style">
 	<h6 class="modal-header">
 				                                          <spring:message code="modal.deviceInfo" />
-			                                            </h6>
+			                                            </h6></div>
+			                                            <div class="scrollDivHeight"></div>
 										<div id="mainDeviceInformation" class="mainDeviceInformation">
 										<div id="deviceInformation" class="deviceInformation">
 											<div class="row">

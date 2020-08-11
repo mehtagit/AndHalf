@@ -46,9 +46,9 @@ body {
  background-color: #f9f9f9;
     margin: 0 !important;
     padding: 0 !important;
-    position: fixed;
     width: 100%;
     height: 100% !important;
+
 }
 .modal {
 	background-color: #fff; &. modal-fixed-header { padding : 0;
@@ -3294,10 +3294,4 @@ div#error_Modal_reg {
 
 .top-space {
     margin-top: 0;
-}
-body.modal {
-height: 100vh !important;
-  overflow-y: hidden !important;
-
-    position: fixed !important;
 }

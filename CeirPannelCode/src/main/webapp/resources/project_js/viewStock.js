@@ -100,12 +100,30 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 			$("#invoiceNumberDiv").css("display", "block");
 		}
 		$("#SupplierId").val(data.supplierId);
+		if(data.supplierId=="" || data.supplierId==null)
+			{
+			$("#SupplierId").val("NA");
+			}
+		
 		$("#SupplierName").val(data.suplierName);
+		if(data.suplierName=="" || data.suplierName==null)
+		{
+		$("#SupplierName").val("NA");
+		}
+		
 		$("#InvoiceNumber").val(data.invoiceNumber);
+		if(data.invoiceNumber=="" || data.invoiceNumber==null)
+		{
+		$("#InvoiceNumber").val("NA");
+		}
 		$("#Quantity").val(data.quantity);
 		$("#TransactionId").val(data.txnId);
 		$("#csvUploadFileName").val(data.fileName);
 		$("#withdrawnRemark").val(data.remarks);
+		if(data.remarks=="" || data.remarks==null)
+		{
+		$("#withdrawnRemark").val("NA");
+		}
 		$("#viewdevicequantity").val(data.deviceQuantity);
 		$("label[for='viewdevicequantity']").addClass('active');
 

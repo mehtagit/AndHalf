@@ -1279,7 +1279,7 @@ public class IconsState {
 		String viewAction="chngeView("+id+",'"+roles.replace(" ", "=")+"','"+type+"','"+source+"')";
 		String rejectAction = "userRejectPopup("+Id+",'"+sessionUserName+"')";
 		String editAction="roleStatusChange('"+Id+"','"+sessionUserName+"','"+userTypeId+"','"+id+"')";
-		String historyAction ="historyRecord('"+username+"','"+roles+"')";
+		String historyAction ="historyRecord('"+Id+"','"+roles+"')";
 
 		log.info("status---->"+status+"---------AdminCurrentStatus------>"+AdminCurrentStatus+" userStatus----------->" +userStatus);
 

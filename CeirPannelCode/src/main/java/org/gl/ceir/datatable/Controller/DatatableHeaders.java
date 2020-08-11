@@ -476,7 +476,7 @@ public class DatatableHeaders {
 			//User Management
 			
 			else if("userTableHeaders".equals(role)) {
-				String[] headers = {"table.creationDate","table.lastupdatedate","table.UserName","table.userType","table.action"};
+				String[] headers = {"table.creationDate","table.lastupdatedate","table.UserName","table.email","table.phone","table.userType","table.action"};
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
