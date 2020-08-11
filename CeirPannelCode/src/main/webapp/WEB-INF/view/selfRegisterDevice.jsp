@@ -198,20 +198,7 @@ position: fixed;
 	<!-- START CONTENT -->
 	<section id="content">
 			<div id="initialloader"></div>
-			<div class="row card-panel">
-			<div class="languageDiv">
 			
-		<div class="col s10 m11 select-lang-lable">
-
-			<i class="fa fa-globe fa-6" aria-hidden="true"></i>
-		</div>
-		<div class="col s2 m1 right" style="padding: 0;">
-			<select class="browser-default select-lang-drpdwn" id="langlist">
-				<option value="en">English</option>
-				<option value="km"><spring:message code="lang.khmer" /></option>
-			</select>
-		</div>
-	</div></div>
 		<!--start container-->
 		<div class="container">
 			<div class="section">
@@ -224,9 +211,19 @@ position: fixed;
 							<div class="row card-panel register-device-responsive-page" style="margin: auto;margin-top: -2vh;" id="user123" class="section" style="display: none;">
 								<h6 class="fixPage-modal-header ">
 						<spring:message code="modal.header.registerdevice" />
+						<div class="col s10 m11 select-lang-lable-all">
+
+			<i class="fa fa-globe fa-6" aria-hidden="true"></i>
+		</div>
+		<div class="col s2 m1 right" style="padding: 0;">
+			<select class="browser-default select-lang-drpdwn-all" id="langlist">
+				<option value="en" class="fontBlack">English</option>
+				<option value="km" class="fontBlack"><spring:message code="lang.khmer" /></option>
+			</select>
+		</div>
 					</h6>
 
-								<div >
+								<div>
 									<form action="" onsubmit="return submitEndUserDeviceInfo()"
 						method="POST" enctype="multipart/form-data" >
 						<div class="col s12 m12 l12">

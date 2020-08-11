@@ -3328,3 +3328,13 @@ div#error_Modal_reg {
     margin-top: 6px;
     text-align: right;
 }
+
+.select-lang-drpdwn-all {
+    width: 75px;
+    margin-top: -30px;
+    border-bottom: none;
+}
+.select-lang-lable-all {
+    margin-top: -18px;
+    text-align: right;
+}

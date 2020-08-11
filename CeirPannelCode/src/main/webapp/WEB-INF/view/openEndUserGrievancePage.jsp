@@ -324,12 +324,12 @@ var contextpath = "${context}";
                               
                      <!--        <a href="./redirectToHomePage" class="modal-close btn-flat modal-btn right" data-dismiss="modal">&times;</a> -->
                             <h6 class="fixPage-modal-header "><spring:message code="modal.TrackGrievance" />
-                            					<div class="col s10 m11 select-lang-lable">
+                            					<div class="col s10 m11 select-lang-lable-all">
 
 			<i class="fa fa-globe fa-6" aria-hidden="true"></i>
 		</div>
 		<div class="col s2 m1 right" style="padding: 0;">
-			<select class="browser-default select-lang-drpdwn" id="langlist">
+			<select class="browser-default select-lang-drpdwn-all" id="langlist">
 				<option value="en" class="fontBlack">English</option>
 				<option value="km" class="fontBlack"><spring:message code="lang.khmer" /></option>
 			</select>

@@ -351,7 +351,7 @@ section {
 	
 	
 		<div id="ErrorPopup" class="modal modal-small"
-		style="width: 40%; display: none;">
+		style=" display: none;">
 		<h6 class="modal-header">
 			<spring:message code="view.griev" />
 

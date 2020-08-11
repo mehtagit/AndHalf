@@ -161,6 +161,11 @@ input[type='search'] {
 	background-repeat: no-repeat;
 	color: #444;
 }
+.row.card-panel.form {
+    width: 50%;
+    margin-left: 28%;
+    margin-top: 10vh;
+}
 </style>
 </head>
 <body data-id="12" session-value="${not empty param.NID ? param.NID : 'null'}" data-roleType="${usertype}"
@@ -170,29 +175,29 @@ data-lang-param="${pageContext.response.locale}">
 	<section id="content">
 	<!-- <div id="initialloader"></div> -->
 		<!--start container-->
-		<div class="row card-panel">
-			<div class="languageDiv">
-			
-		<div class="col s10 m11 select-lang-lable">
+
+		<div class="container" style="margin-top: 10vh;">
+			<div class="section">
+				<div class="row">
+					<div class="col s12 m12 l12">
+						<div class="row card-panel register-device-responsive-page" style="display: block;" >
+									<h6 class="fixPage-modal-header ">
+					
+			<spring:message code="registerconsignment.header.addDeviceInformation" />
+						
+							<div class="col s10 m11 select-lang-lable-all">
 
 			<i class="fa fa-globe fa-6" aria-hidden="true"></i>
 		</div>
 		<div class="col s2 m1 right" style="padding: 0;">
-			<select class="browser-default select-lang-drpdwn" id="langlist">
-				<option value="en">English</option>
-				<option value="km"><spring:message code="lang.khmer" /></option>
+			<select class="browser-default select-lang-drpdwn-all" id="langlist">
+				<option value="en" class="fontBlack">English</option>
+				<option value="km" class="fontBlack"><spring:message code="lang.khmer" /></option>
 			</select>
 		</div>
-	</div></div>
-		<div class="container">
-			<div class="section">
-				<div class="row">
-					<div class="col s12 m12 l12">
-						<div class="row card-panel register-device-responsive-page" style="margin: 5vh auto auto; display: block;" >
-							<div class="container-fluid pageHeader">
-								<p class="PageHeading"><spring:message code="registerconsignment.header.addDeviceInformation" /></p>
-								<!-- <a href="#addDevice" class="boton right modal-trigger">Add Device</a> -->
-							</div>
+					</h6>
+					
+						
 							<div id="user123" class="section">
 								<form action="" onsubmit="return submitDeviceInfo()"
 									method="POST" enctype="multipart/form-data">

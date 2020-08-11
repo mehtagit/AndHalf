@@ -110,7 +110,7 @@
 
         .card-panel {
             width: 50%;
-            margin-top: 0vh;
+            
         }
 
         @media only screen  and (max-width: 992px){
@@ -175,6 +175,12 @@ z-index: 9999;
 background: url(resources/images/loader.gif) 50% 50% no-repeat white;
 }
 
+.container {
+      max-width: 100% !important;
+    width: 100%;
+    position: absolute;
+    margin: 10vh 0vh;
+}
  </style>
 <script>
 var contextpath = "${context}";
@@ -182,30 +188,27 @@ var contextpath = "${context}";
 
 </head>
 <body data-lang-param="${pageContext.response.locale}">
-<section id="content" style="margin-bottom: 100px;">
+<section id="content">
                 <!--start container-->
                 <div id="initialloader">
                 
                 </div>
-                <div class="row card-panel headerLang">
-			<div class="languageDiv">
-			
-		<div class="col s10 m11 select-lang-lable">
+            
+                <input type="text" id="pageTypeValue" value="${showPagetype}" style="display: none;">
+                <div class="container" id="uploadPaidStatusDiv" style="dispay:none">
+                    <div class="section">
+                        <div class="row card-panel upload-stock-responsive-page">
+                            <h6 class="fixPage-modal-header "><spring:message code="modal.UploadStock" />
+                            					<div class="col s10 m11 select-lang-lable-all">
 
 			<i class="fa fa-globe fa-6" aria-hidden="true"></i>
 		</div>
 		<div class="col s2 m1 right" style="padding: 0;">
-			<select class="browser-default select-lang-drpdwn" id="langlist">
-				<option value="en">English</option>
-				<option value="km"><spring:message code="lang.khmer" /></option>
+			<select class="browser-default select-lang-drpdwn-all" id="langlist">
+				<option value="en" class="fontBlack">English</option>
+				<option value="km" class="fontBlack"><spring:message code="lang.khmer" /></option>
 			</select>
-		</div>
-	</div></div>
-                <input type="text" id="pageTypeValue" value="${showPagetype}" style="display: none;">
-                <div class="container" style="margin-top:5vh;" id="uploadPaidStatusDiv" style="dispay:none">
-                    <div class="section">
-                        <div class="row card-panel upload-stock-responsive-page">
-                            <h6 class="fixPage-modal-header "><spring:message code="modal.UploadStock" /></h6>
+		</div></h6>
                            	<form action="" onsubmit="return uploadEndUserStock()" method="POST"
 								enctype="multipart/form-data" >
                                 <div class="col s12 m12 l12">
@@ -280,14 +283,25 @@ var contextpath = "${context}";
                     </div>
                 </div>
                 
-                                       <div class="container" style="margin-top:5vh;display: none" id="checkUploadStatusDiv" >
+                                       <div class="container" style="margin-top:10vh;display: none" id="checkUploadStatusDiv" >
                     <div class="section">
                         <div class="row card-panel upload-stock-responsive-page" >
                             <!-- <a href="index.html" class="modal-close btn-flat modal-btn right"
                             
                                 data-dismiss="modal">&times;</a> -->
                                
-                                <h6 class="fixPage-modal-header "><spring:message code="modal.CheckStatus" /></h6>
+                                <h6 class="fixPage-modal-header "><spring:message code="modal.CheckStatus" />
+                                            					<div class="col s10 m11 select-lang-lable-all">
+
+			<i class="fa fa-globe fa-6" aria-hidden="true"></i>
+		</div>
+		<div class="col s2 m1 right" style="padding: 0;">
+			<select class="browser-default select-lang-drpdwn-all" id="langlist">
+				<option value="en" class="fontBlack">English</option>
+				<option value="km" class="fontBlack"><spring:message code="lang.khmer" /></option>
+			</select>
+		</div>
+                                </h6>
                                  	
                                 <div class="col s12 m12 l12">
                                 <form action="" onsubmit="return validateTxnId()" method="POST"

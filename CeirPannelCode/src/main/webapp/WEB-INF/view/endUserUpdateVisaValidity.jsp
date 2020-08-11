@@ -70,36 +70,156 @@
 <!------------------------------------------- Dragable Model---------------------------------->
 <script
 	src="${context}/resources/custom_js/1.12.1_jquery-ui.min.js"></script>
-<style>
+ <style>
+   
+   /*      ul li {
+            display: inline-flex;
+        }
 
-</style>
+        li {
+            padding: 7px 15px;
+            border: solid 1px #c9c9c9;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+        select{
+            height: 1.5rem;
+            border: none;
+        }
+        footer {
+            padding-left: 0;
+        }
+        
+         /* body {
+            background-color: #00bcd4;
+        } */
+
+        .boton {
+            color: #2979a5;
+            float: right;
+            border: solid 1px rgba(33, 167, 201, 0.774);
+            padding: 4px 10px;
+            border-radius: 7px;
+            font-size: 14px;
+            background-color: #fff;
+        }
+
+        .row {
+            margin-bottom: 0;
+            margin-top: 0;
+        }
+
+        textarea.materialize-textarea {
+            padding: 0;
+        }
+
+        input[type=text] {
+            height: 35px;
+            margin: 0 0 5px 0;
+        }
+
+        footer {
+            padding-left: 0;
+        }
+
+        .card-panel {
+            width: 50%;
+            
+        }
+
+        @media only screen  and (max-width: 992px){
+            .card-panel {
+            width: 100%;
+        } 
+        }
+
+        #content .container .row {
+            margin: auto;
+        }
+
+        @media only screen and (max-width: 425px){
+            .selectDropdwn {
+                margin-top: 0px;
+            }
+
+            .selectDropdwn label {
+                margin-left: 2%;
+            }
+        }
+
+        @media only screen and (max-width: 425px) {
+            select {
+                width: 96%;
+                margin-left: 2%;
+            }
+        }
+
+        .small-modal {
+            width: 40%;
+        }
+
+        @media only screen and (max-width: 992px) {
+            .small-modal {
+            width: 70%;
+        }
+        }
+
+        @media only screen and (max-width: 600px) {
+            .small-modal {
+            width: 95%;
+        }
+        }
+        
+        .modal {
+        	width: 50%;
+        }
+        .row.card-panel.headerLang {
+          width: 100%;
+          }
+        
+ */    
+
+div#initialloader {
+position: absolute;
+left: 0px;
+top: 58px !important;
+width: 100%;
+height: 86% !important;
+z-index: 9999;
+background: url(resources/images/loader.gif) 50% 50% no-repeat white;
+}
+
+.container {
+      max-width: 100% !important;
+    width: 100%;
+    position: absolute;
+    margin: 10vh 0vh;
+}
+ </style>
 </head>
-<body onSubmit='window.scrollTo(60, 0)' data-lang-param="${pageContext.response.locale}">
+<body  data-lang-param="${pageContext.response.locale}">
 
 
 	<section id="content">
 		<!--start container-->
-		<div class="row card-panel">
-			<div class="languageDiv">
-			
-		<div class="col s10 m11 select-lang-lable">
+
+		
+		<div class="container">
+			<div class="section">
+				<div class="row card-panel login-card-panel">
+					<h6 class="fixPage-modal-header ">
+						<spring:message code="input.UpdateVisaValidity" />
+						
+							<div class="col s10 m11 select-lang-lable-all">
 
 			<i class="fa fa-globe fa-6" aria-hidden="true"></i>
 		</div>
 		<div class="col s2 m1 right" style="padding: 0;">
-			<select class="browser-default select-lang-drpdwn" id="langlist">
-				<option value="en">English</option>
-				<option value="km"><spring:message code="lang.khmer" /></option>
+			<select class="browser-default select-lang-drpdwn-all" id="langlist">
+				<option value="en" class="fontBlack">English</option>
+				<option value="km" class="fontBlack"><spring:message code="lang.khmer" /></option>
 			</select>
 		</div>
-	</div></div>
-		
-		<div class="container">
-			<div class="section">
-				<div class="row card-panel update-visa-responsive-page" onSubmit='self.scrollTo(0,0)'
-					style="width: 50%; margin: auto; margin-bottom: 50px; margin-top: 20px;">
-					<h6 class="fixPage-modal-header ">
-						<spring:message code="input.UpdateVisaValidity" />
 					</h6>
 					<div class="col s12 m12 l12">
 						<div class="row">
