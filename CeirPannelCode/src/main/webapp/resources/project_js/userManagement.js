@@ -84,9 +84,9 @@
 						"bFilter" : true,
 						"bInfo" : true,
 						"bSearchable" : true,
-						"oLanguage": {  
-							"sUrl": langFile  
-						},
+						"oLanguage": {
+					        "sEmptyTable": "My Custom Message On Empty Table"
+					    },
 						ajax: {
 							url : 'UserManagementData',
 							type: 'POST',
@@ -267,18 +267,16 @@
 	 
 	 
 	function viewPopupData(result){
-		$("#viewfirstName").val(result.firstName);
-		$("#viewmiddleName").val(result.middleName);
-		$("#viewlastName").val(result.lastName);
-		$("#viewcontactNumber").val(result.phoneNo);
-		$("#viewemailID").val(result.email);
-		$("#viewPassword").val(result.password);
-		$("#viewconfirmPassword").val(result.password);
-		$("#viewuserType").val(result.viewUserType);
-		$("#viewuserName").val(result.userName);
-		$("#viewuserRemark").val(result.remarks);
-		
-		
+		result.firstName=="" || result.firstName==null ? $("#viewfirstName").val('NA') : $("#viewfirstName").val(result.firstName);
+		result.middleName=="" || result.middleName==null ? $("#viewmiddleName").val('NA') : $("#viewmiddleName").val(result.middleName);
+		result.lastName=="" || result.lastName==null ? $("#viewlastName").val('NA') : $("#viewlastName").val(result.lastName);
+		result.phoneNo=="" || result.phoneNo==null ? $("#viewcontactNumber").val('NA') : $("#viewcontactNumber").val(result.phoneNo);
+		result.email=="" || result.email==null ? $("#viewemailID").val('NA') : $("#viewemailID").val(result.email);
+		result.password=="" || result.password==null ? $("#viewPassword").val('NA') : $("#viewPassword").val(result.password);
+		result.password=="" || result.password==null ? $("#viewconfirmPassword").val('NA') : $("#viewconfirmPassword").val(result.password);
+		result.viewUserType=="" || result.viewUserType==null ? $("#viewuserType").val('NA') : $("#viewuserType").val(result.viewUserType);
+		result.userName=="" || result.userName==null ? $("#viewuserName").val('NA') : $("#viewuserName").val(result.userName);
+		result.remarks=="" || result.remarks==null ? $("#viewuserRemark").val('NA') : $("#viewuserRemark").val(result.remarks);
 		$("label[for='viewfirstName']").addClass('active');
 		$("label[for='viewmiddleName']").addClass('active');
 		$("label[for='viewlastName']").addClass('active');

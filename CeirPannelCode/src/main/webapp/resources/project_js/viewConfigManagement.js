@@ -32,7 +32,10 @@ function configManagementDatatable(){
 			"userName" : $("body").attr("data-selected-username"),
 			"roleType":$("body").attr("data-roleType")
 	}
-	 
+	if(lang=='en'){
+		var langFile='./resources/i18n/english_datatable.json';
+	}
+	
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
 	$.ajaxSetup({
@@ -54,6 +57,9 @@ function configManagementDatatable(){
 				"bFilter" : true,
 				"bInfo" : true,
 				"bSearchable" : true,
+				"oLanguage": {
+			        "sEmptyTable": "My Custom Message On Empty Table"
+			    },
 				ajax: {
 					url : 'adminConfigData',
 					type: 'POST',

@@ -52,6 +52,9 @@ function messageManagementDatatable(){
 				"bFilter" : true,
 				"bInfo" : true,
 				"bSearchable" : true,
+				"oLanguage": {
+			        "sEmptyTable": "My Custom Message On Empty Table"
+			    },
 				ajax: {
 					url : 'adminMessageData',
 					type: 'POST',
@@ -208,10 +211,10 @@ function viewDetails(tag){
 }
 
 function setViewPopupData(data){
-	$("#viewTag").val(data.tag);
-	$("#viewValue").val(data.value);
-	$("#description").val(data.description);
-	$('#viewChannel').val(data.channelInterp);
+	data.tag=="" || data.tag==null ? $("#viewTag").val('NA') : $("#viewTag").val(data.tag);
+	data.value=="" || data.value==null ? $("#viewValue").val('NA') : $("#viewValue").val(data.value);
+	data.description=="" || data.description==null ? $("#description").val('NA') : $("#description").val(data.description);
+	data.channelInterp=="" || data.channelInterp==null ? $("#viewChannel").val('NA') : $('#viewChannel').val(data.channelInterp);
 	
 	$("label[for='viewTag']").addClass('active');
 	$("label[for='viewValue']").addClass('active');
