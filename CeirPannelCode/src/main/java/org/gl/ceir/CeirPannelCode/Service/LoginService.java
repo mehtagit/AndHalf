@@ -3,6 +3,7 @@ package org.gl.ceir.CeirPannelCode.Service;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -52,11 +53,26 @@ public class LoginService {
 	@Value ("${sessionLogOutTime}")
 	int sessionLogOutTime;
 	
+	/*
+	 * public ModelAndView loginPage(HttpSession session){
+	 * log.info("inside login controller"); //this.sessionRemoveCode(null, session);
+	 * ModelAndView mv=new ModelAndView(); mv.setViewName("login");
+	 * log.info("exit from login controller"); return mv; }
+	 */
 	public  ModelAndView loginPage(HttpSession session){
 		log.info("inside login controller");
 		//this.sessionRemoveCode(null, session);
 		ModelAndView mv=new ModelAndView();
-		mv.setViewName("login");
+		Integer userid = (Integer)session.getAttribute("userid");
+		String defaultLink = (String)session.getAttribute("defaultLink");
+		if( Objects.nonNull(userid) && !(userid.equals(0) || userid.equals(-1))) {
+			if( Objects.nonNull(defaultLink) )
+				//return new ModelAndView("redirect:"+defaultLink);
+				mv.setViewName("dashboard");
+			else {
+				mv.setViewName("login");
+			}
+		}
 		log.info("exit from login controller");
 		return mv;
 	}

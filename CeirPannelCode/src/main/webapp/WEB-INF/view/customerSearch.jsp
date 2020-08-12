@@ -222,8 +222,7 @@ section {
                             </div>
                             
                              <div class="input-field col s12 m3 l3">
-                              <input type="text" id="msisdn" name="MSISDN" maxlength="15" pattern="[0-9\s]{15}" value="">
-                              <input type="tel" name="phoneNo" maxlength="15" id="phoneNo" pattern="[0-9]{7,15}" 
+                              <input type="text" name="MSISDN" maxlength="15" id="msisdn" pattern="[0-9]{7,15}" 
                               oninput="InvalidMsg(this,'input','Please enter phone number between 7 to 15 characters only');" 
                               oninvalid="InvalidMsg(this,'input','Please enter phone number between 7 to 15 characters only');">
                               <label for="MSISDN" >MSISDN</label>
