@@ -68,10 +68,12 @@ public class LoginService {
 		if( Objects.nonNull(userid) && !(userid.equals(0) || userid.equals(-1))) {
 			if( Objects.nonNull(defaultLink) )
 				//return new ModelAndView("redirect:"+defaultLink);
-				mv.setViewName("dashboard");
+				return new ModelAndView("redirect:./?lang="+(String)session.getAttribute("language"));
 			else {
 				mv.setViewName("login");
 			}
+		}else {
+			mv.setViewName("login");
 		}
 		log.info("exit from login controller");
 		return mv;

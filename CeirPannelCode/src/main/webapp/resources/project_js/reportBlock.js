@@ -852,7 +852,17 @@ function setSingleDeviceViewPopUp(data,popUpType,requestType){
 		else{
 			////console.log("else############")
 		}
-
+		
+		if(data.singleImeiDetails.secondImei==null){
+			$("#viewsingleblockIMEI2").val("NA");
+		}
+		if(data.singleImeiDetails.thirdImei==null){
+			$("#viewsingleblockIMEI3").val("NA");
+		}
+		if(data.singleImeiDetails.fourthImei==null){
+			$("#viewsingleblockIMEI4").val("NA");
+		}
+		
 		$("#viewblockdeviceType").val(data.singleImeiDetails.deviceTypeInterp);
 		if(data.singleImeiDetails.deviceTypeInterp=='' || data.singleImeiDetails.deviceTypeInterp==null){
 			$("#viewblockdeviceType").val('NA')
@@ -864,7 +874,7 @@ function setSingleDeviceViewPopUp(data,popUpType,requestType){
 			$("#viewblockmultipleSimStatus").val('NA')
 		}
 		$("#viewsingleblockserialNumber").val(data.singleImeiDetails.deviceSerialNumber);
-		if(data.singleImeiDetails.multipleSimStatusInterp=='' || data.singleImeiDetails.multipleSimStatusInterp==null){
+		if(data.singleImeiDetails.deviceSerialNumber=='' || data.singleImeiDetails.deviceSerialNumber==null){
 			$("#viewsingleblockserialNumber").val('NA')
 		}
 		$("#viewsingleblockremark").val(data.singleImeiDetails.remark);

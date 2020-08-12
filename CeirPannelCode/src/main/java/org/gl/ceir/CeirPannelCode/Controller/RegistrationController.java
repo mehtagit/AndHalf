@@ -79,12 +79,15 @@ public class RegistrationController {
 		log.info("userid::::::::::"+userid);
 		if( Objects.nonNull(defaultLink) )
 			//return new ModelAndView("redirect:"+defaultLink);
-			mv.setViewName("dashboard");
+			return new ModelAndView("redirect:./?lang="+(String)session.getAttribute("language"));
 		else {
 			//mv.setViewName("login");
 			loginService.sessionRemoveCode(userid, session);
 			mv.setViewName("index");
 		}
+	}else {
+		loginService.sessionRemoveCode(userid, session);
+		mv.setViewName("index");
 	}
 	return mv;      
 } 
