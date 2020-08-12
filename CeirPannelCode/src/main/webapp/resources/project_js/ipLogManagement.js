@@ -62,6 +62,8 @@
 			}				
 			if(lang=='km'){
 				var langFile="./resources/i18n/khmer_datatable.json";
+			}else if(lang=='en'){
+				var langFile='./resources/i18n/english_datatable.json';
 			}
 			var token = $("meta[name='_csrf']").attr("content");
 			var header = $("meta[name='_csrf_header']").attr("content");

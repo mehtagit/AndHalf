@@ -123,10 +123,15 @@ function viewIndivisualStolen()
 
 			$('#singleStolenfirstName').val(response.stolenIndividualUserDB.firstName);
 			$('#singleStolenmiddleName').val(response.stolenIndividualUserDB.middleName);
+			if(response.stolenIndividualUserDB.middleName=="" || response.stolenIndividualUserDB.middleName==null){
+				$('#singleStolenmiddleName').val('NA');
+			}
 			$('#singleStolenlastName').val(response.stolenIndividualUserDB.lastName);
 			$('#singleStolennIDPassportNumber').val(response.stolenIndividualUserDB.nid);
 			$('#singleStolenemail').val(response.stolenIndividualUserDB.email);
-
+			if(response.stolenIndividualUserDB.email=="" || response.stolenIndividualUserDB.email==null){
+				$('#singleStolenemail').val('NA');
+			}
 
 			previousVal = "";
 			function InputChangeListener()
@@ -168,7 +173,13 @@ function viewIndivisualStolen()
 			////alert(response.stolenIndividualUserDB.street+"-----"+response.stolenIndividualUserDB.alternateContactNumber)
 			$('#singleStolenstreetNumber').val(response.stolenIndividualUserDB.street);
 			$('#singleStolenvillage').val(response.stolenIndividualUserDB.village);
+			if(response.stolenIndividualUserDB.village=="" || response.stolenIndividualUserDB.village==null){
+				$('#singleStolenvillage').val('NA');
+			}
 			$('#singleStolenlocality').val(response.stolenIndividualUserDB.locality);
+			if(response.stolenIndividualUserDB.locality=="" || response.stolenIndividualUserDB.locality==null){
+				$('#singleStolenlocality').val('NA');
+			}
 			$('#singleStolendistrict').val(response.stolenIndividualUserDB.district);
 			$('#singleStolencommune').val(response.stolenIndividualUserDB.commune);
 			$('#singleStolenpin').val(response.stolenIndividualUserDB.postalCode);
@@ -180,9 +191,18 @@ function viewIndivisualStolen()
 			$('#singleStolenFileName').val(response.stolenIndividualUserDB.nidFileName);
 			$('#updatesingleStolenimei1').val(response.stolenIndividualUserDB.imeiEsnMeid1);
 			$('#updatesingleStolenimei2').val(response.stolenIndividualUserDB.imeiEsnMeid2);
-			$('#updatesingleStolenimei3').val(response.stolenIndividualUserDB.imeiEsnMeid3);
-			$('#updatesingleStolenimei4').val(response.stolenIndividualUserDB.imeiEsnMeid4);
+			if(response.stolenIndividualUserDB.imeiEsnMeid2=="" || response.stolenIndividualUserDB.imeiEsnMeid2==null){
+				$('#updatesingleStolenimei2').val("NA");	
+			}
 
+			$('#updatesingleStolenimei3').val(response.stolenIndividualUserDB.imeiEsnMeid3);
+			if(response.stolenIndividualUserDB.imeiEsnMeid3=="" || response.stolenIndividualUserDB.imeiEsnMeid3==null){
+				$('#updatesingleStolenimei4').val("NA");	
+			}
+			$('#updatesingleStolenimei4').val(response.stolenIndividualUserDB.imeiEsnMeid4);
+			if(response.stolenIndividualUserDB.imeiEsnMeid4=="" || response.stolenIndividualUserDB.imeiEsnMeid4==null){
+				$('#updatesingleStolenimei4').val("NA");	
+			}
 			$('#singleStolendeviceIDType').val(response.stolenIndividualUserDB.deviceIdType);
 			$('#singleStolendeviceType').val(response.stolenIndividualUserDB.deviceType);
 			$('#editsingleStolenmodalNumber').val(response.stolenIndividualUserDB.modelNumber);
@@ -190,8 +210,17 @@ function viewIndivisualStolen()
 			window.xop2=response.stolenIndividualUserDB.contactNumber;
 			$('#singleStolenphone2').val(response.stolenIndividualUserDB.contactNumber);
 			$('#singleStolenphone3').val(response.stolenIndividualUserDB.contactNumber2);
+			if(response.stolenIndividualUserDB.contactNumber2=="" || response.stolenIndividualUserDB.contactNumber2==null){
+				$('#singleStolenphone3').val("NA");	
+			}
 			$('#singleStolenphone4').val(response.stolenIndividualUserDB.contactNumber3);
+			if(response.stolenIndividualUserDB.contactNumber3=="" || response.stolenIndividualUserDB.contactNumber3==null){
+				$('#singleStolenphone4').val("NA");	
+			}
 			$('#singleStolenphone5').val(response.stolenIndividualUserDB.contactNumber4);
+			if(response.stolenIndividualUserDB.contactNumber4=="" || response.stolenIndividualUserDB.contactNumber4==null){
+				$('#singleStolenphone5').val("NA");	
+			}
 			$('#singleStolenOperator').val(response.stolenIndividualUserDB.operator);
 			$('#singleStolenOperator3').val(response.stolenIndividualUserDB.operator2);
 			$('#singleStolenOperator4').val(response.stolenIndividualUserDB.operator3);
@@ -201,7 +230,13 @@ function viewIndivisualStolen()
 			$('#singleDeviceAddress').val(response.stolenIndividualUserDB.deviceStolenPropertyLocation);
 			$('#singleDevicestreetNumber').val(response.stolenIndividualUserDB.deviceStolenStreet);
 			$('#singleDevicevillage').val(response.stolenIndividualUserDB.deviceStolenVillage);
+			if(response.stolenIndividualUserDB.deviceStolenVillage=="" || response.stolenIndividualUserDB.deviceStolenVillage==null){
+				$('#singleDevicevillage').val("NA");	
+			}
 			$('#singleDevicelocality').val(response.stolenIndividualUserDB.deviceStolenLocality);
+			if(response.stolenIndividualUserDB.deviceStolenLocality=="" || response.stolenIndividualUserDB.deviceStolenLocality==null){
+				$('#singleDevicelocality').val("NA");	
+			}
 			$('#singleDevicedistrict').val(response.stolenIndividualUserDB.deviceStolenDistrict);
 			$('#singleDevicecommune').val(response.stolenIndividualUserDB.deviceStolenCommune);
 			$('#singleDevicepin').val(response.stolenIndividualUserDB.deviceStolenPostalCode);
@@ -209,9 +244,15 @@ function viewIndivisualStolen()
 			$('#singleDevicecountry').val(response.stolenIndividualUserDB.deviceStolenCountry).change();
 			$('#singleDevicestate').val(response.stolenIndividualUserDB.deviceStolenProvince);
 			$('#singleDeviceRemark').val(response.stolenIndividualUserDB.remark);
+			if(response.stolenIndividualUserDB.remark=="" || response.stolenIndividualUserDB.remark==null){
+				$('#singleDeviceRemark').val("NA");	
+			}
 			$('#IndivisualStolenDate').val(response.dateOfStolen);
-			$('#uploadFirSingleName').val(response.firFileName);
+			
 			$("#singleDeviceRejectRemark").val(response.rejectedRemark);
+			if(response.rejectedRemark=="" || response.rejectedRemark==null){
+				$('#singleDeviceRejectRemark').val("NA");	
+			}
 			//$('#singleStolenFileName').val(response.firFileName);
 			
 			
@@ -235,6 +276,12 @@ $("#calender").css("display", "none");
 
 			$('#PassportNidLink').attr("onclick",'previewFile("'+response.fileLink+'","'+response.stolenIndividualUserDB.nidFileName+'","'+response.txnId+'")');
 			$('#firImageLink').attr("onclick",'previewFile("'+response.fileLink+'","'+response.firFileName+'","'+response.txnId+'")');
+			$('#uploadFirSingleName').val(response.firFileName);
+			if(response.firFileName=="" || response.firFileName==null){
+				$('#uploadFirSingleName').val("NA");	
+				 $("#firImageLink").removeAttr('onclick');
+				 $("#firImageLink").removeAttr('href');
+			}
 			$('div#initialloader').delay(300).fadeOut('slow');
 			
 			if ($('#pageViewType').val() == 'edit') {

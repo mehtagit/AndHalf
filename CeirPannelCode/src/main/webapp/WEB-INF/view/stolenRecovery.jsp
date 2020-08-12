@@ -1057,9 +1057,10 @@ position: fixed;
                                                     </div>
                                                     
                                                       <div class="row">
-                                                     <div class="input-field col s12 m6" style="display: none" id="viewBulkBlockRemarkRejectDiv">
+                                                     <div class="col s12 m6" style="display: none" id="viewBulkBlockRemarkRejectDiv">
+                                                       <label for="viewBulkBlockRemarkReject"><spring:message code="input.remarksRejected" /></label>
                                                         <textarea id="viewBulkBlockRemarkReject" class="materialize-textarea"  disabled></textarea>
-                                                        <label for="viewBulkBlockRemarkReject"><spring:message code="input.remarksRejected" /></label>
+                                                       
                                                     </div>
                                                    	
                                                     </div>

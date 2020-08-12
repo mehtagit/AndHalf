@@ -229,9 +229,9 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}" data-s
 
                                         <div class="input-field col s12 m6">
                                             <input type="text" id="contactNumber" name="contactNumber" pattern="[0-9]{10,12}"
- 													oninput="InvalidMsg(this,'input','<spring:message code="validation.10digits" />');"
-													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10digits" />');"
-												  required   maxlength="10" />
+ 													oninput="InvalidMsg(this,'input','Please enter phone number between 7 to 15 characters only');" 
+                             						oninvalid="InvalidMsg(this,'input','Please enter phone number between 7 to 15 characters only');"
+												  required   maxlength="15" />
                                             <label for="contactNumber"><spring:message code="input.contact" /><span
                                                     class="star">*</span></label>
                                         </div>

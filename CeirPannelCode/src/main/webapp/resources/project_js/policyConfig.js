@@ -51,6 +51,9 @@ function configManagementDatatable(){
 				"bFilter" : true,
 				"bInfo" : true,
 				"bSearchable" : true,
+				"oLanguage": {
+			        "sEmptyTable": "My Custom Message On Empty Table"
+			    },
 				ajax: {
 					url : 'policyConfigData',
 					type: 'POST',
@@ -236,11 +239,11 @@ function viewDetails(tag){
 }
 
 function setViewPopupData(data){
+	data.period=="" || data.period==null ? $("#viewPeriod").val('NA') : $("#viewPeriod").val(data.period);
+	data.statusInterp=="" || data.statusInterp==null ? $("#viewstatus").val('NA') : $("#viewstatus").val(data.statusInterp);
+	data.description=="" || data.description==null ? $("#description").val('NA') : $("#description").val(data.description);
+	data.value=="" || data.value==null ? $("#viewValue").val('NA') : $("#viewValue").val(data.value);
 	$("#viewTag").val(data.tag);
-	$("#viewValue").val(data.value);
-	$("#viewPeriod").val(data.period);
-	$("#description").val(data.description);
-	$("#viewstatus").val(data.statusInterp);
 	$("#remarks").val(data.remark);
 	$("#viewpolicyOrder").val(data.policyOrder);
 }

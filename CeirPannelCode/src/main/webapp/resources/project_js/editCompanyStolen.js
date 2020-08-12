@@ -31,7 +31,13 @@ headers:
 		$('#bulkStolenaddress').val(response.stolenOrganizationUserDB.propertyLocation);
 		$('#bulkStolenstreetNumber').val(response.stolenOrganizationUserDB.street);
 		$('#bulkStolenvillage').val(response.stolenOrganizationUserDB.village);
+		if(response.stolenOrganizationUserDB.village=="" || response.stolenOrganizationUserDB.village==null){
+			$('#bulkStolenvillage').val("NA");
+		}
 		$('#bulkStolenlocality').val(response.stolenOrganizationUserDB.locality);
+		if(response.stolenOrganizationUserDB.locality=="" || response.stolenOrganizationUserDB.locality==null){
+			$('#bulkStolenlocality').val("NA");
+		}
 		$('#bulkStolendistrict').val(response.stolenOrganizationUserDB.district);
 		$('#bulkStolencommune').val(response.stolenOrganizationUserDB.commune);
 		$('#bulkStolenpin').val(response.stolenOrganizationUserDB.postalCode);
@@ -40,11 +46,20 @@ headers:
 		
 		$('#firstName').val(response.stolenOrganizationUserDB.personnelFirstName);
 		$('#bulkStolenmiddleName').val(response.stolenOrganizationUserDB.personnelMiddleName);
+		if(response.stolenOrganizationUserDB.personnelMiddleName=="" || response.stolenOrganizationUserDB.personnelMiddleName==null){
+			$('#bulkStolenmiddleName').val("NA");
+		}
 		$('#bulkStolenlastName').val(response.stolenOrganizationUserDB.personnelLastName);
 		$('#deviceBulkStolenaddress').val(response.stolenOrganizationUserDB.incidentPropertyLocation);
 		$('#deviceBulkStolenstreetNumber').val(response.stolenOrganizationUserDB.incidentStreet);
 		$('#deviceBulkStolenvillage').val(response.stolenOrganizationUserDB.incidentVillage);
+		if(response.stolenOrganizationUserDB.incidentVillage=="" || response.stolenOrganizationUserDB.incidentVillage==null){
+			$('#deviceBulkStolenvillage').val("NA");
+		}
 		$('#deviceBulkStolenlocality').val(response.stolenOrganizationUserDB.incidentLocality);
+		if(response.stolenOrganizationUserDB.incidentLocality=="" || response.stolenOrganizationUserDB.incidentLocality==null){
+			$('#deviceBulkStolenlocality').val("NA");
+		}
 		$('#deviceBulkStolendistrict').val(response.stolenOrganizationUserDB.incidentDistrict);
 		$('#deviceBulkStolencommune').val(response.stolenOrganizationUserDB.incidentCommune);
 		$('#deviceBulkStolenpin').val(response.stolenOrganizationUserDB.incidentPostalCode);
@@ -52,19 +67,37 @@ headers:
 		
 		$('#deviceBulkStolenComplaint').val(response.complaintType);
 		$('#bulkStolenofficeEmail').val(response.stolenOrganizationUserDB.email);
+		if(response.stolenOrganizationUserDB.email=="" || response.stolenOrganizationUserDB.email==null){
+			$('#bulkStolenofficeEmail').val("NA");
+		}
 		$('#bulkStolenContact').val(response.stolenOrganizationUserDB.phoneNo);
-		
+		if(response.stolenOrganizationUserDB.phoneNo=="" || response.stolenOrganizationUserDB.phoneNo==null){
+			$('#bulkStolenContact').val("NA");
+		}
 		$('#state3').val(response.stolenOrganizationUserDB.incidentProvince);
 		$('#singleStolenComplaintType').val(response.complaintType);
 		$('#deviceBulkStolenquantity').val(response.qty);
 		$('#devicequantity').val(response.deviceQuantity);
 		
 		$('#deviceBulkStolenRemark').val(response.remark);
+		if(response.remark=="" || response.remark==null){
+			$('#deviceBulkStolenRemark').val("NA");
+		}
 		$('#stolenFileName').val(response.fileName);
 		
 		$('#IndivisualStolenDate').val(response.dateOfStolen);
 		$('#uploadFirSingleName').val(response.firFileName);
+		
+		$('#firFilePreview').attr("onclick",'previewFile("'+response.fileLink+'","'+response.firFileName+'","'+response.txnId+'")');
+		if(response.firFileName=="" || response.firFileName==null){
+			$('#uploadFirSingleName').val("NA");
+			 $("#firFilePreview").removeAttr('onclick');
+			 $("#firFilePreview").removeAttr('href');
+		}
 		$('#bulkDeviceRejectRemark').val(response.rejectedRemark);
+		if(response.rejectedRemark=="" || response.rejectedRemark==null){
+			$('#bulkDeviceRejectRemark').val("NA");
+		}
 		$("label[for='IndivisualStolenDate']").addClass('active');
 		
 		$('input[name=stolenBulkBlockPeriod][value='+response.blockingType+']').attr('checked', true); 
@@ -79,7 +112,7 @@ headers:
 			$("#calender").css("display", "none"); 
 		}
 		
-		$('#firFilePreview').attr("onclick",'previewFile("'+response.fileLink+'","'+response.firFileName+'","'+response.txnId+'")');
+		
 		//$('#deviceListlink').attr("onclick",'previewFile("'+response.fileLink+'","'+response.fileName+'","'+response.txnId+'")');
 		},
 		error: function (jqXHR, textStatus, errorThrown) {

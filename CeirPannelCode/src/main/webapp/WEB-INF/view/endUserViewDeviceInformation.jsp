@@ -159,8 +159,8 @@ input[type='search'] {
  session-value="${not empty param.Search ? param.Search : 'null'}">
 
 	<!-- START CONTENT -->
-	<section id="content"><div class="row card-panel">
-			</div>
+	<section id="content">
+	</div>
 		<!--start container-->
 		<div class="container">
 			<div class="section">
@@ -238,7 +238,6 @@ input[type='search'] {
 
 												<div class="input-field col s12 m4 l4">
 												 <c:choose>
-												 
 												<c:when test = "${viewInformation.endUserDB.middleName=='' || viewInformation.endUserDB.middleName==null}">
 												<input type="text" readonly="readonly" id="middleName"  value="NA">
 												</c:when>
@@ -434,12 +433,12 @@ input[type='search'] {
 												 <c:otherwise>
 												<%--  <label>
 												 
-												<input class="with-gap" type="radio" name="selectvip" readonly="readonly" value="Y"  >
+												<input class="with-gap" type="radio" name="selectvip" disabled="disabled" value="Y"  >
 												 <span><spring:message code="modal.yes" /></span>
 												
 												  </label>
 												  <label> 
-												  <input class="with-gap" value="N" type="radio" readonly="readonly" checked="checked"
+												  <input class="with-gap" value="N" type="radio" disabled="disabled" checked="checked"
 													name="selectvip" style="margin-left: 20px;" /> <span><spring:message code="modal.no" /></span>
 												</label> --%>
 												</c:otherwise>
@@ -498,15 +497,15 @@ input[type='search'] {
 												</label>
 												</c:when>
 												<c:otherwise>
-												<%-- <label><input class="with-gap" type="radio"
+												<label><input class="with-gap" type="radio"
 													name="onVisa" value="Y" disabled="disabled">
 													<span><spring:message code="modal.yes" /></span> </label>
 													 <label>
-													<input class="with-gap" type="radio" id="onVisaNo"
+													<input class="with-gap" type="radio" id="onVisaNo" disabled="disabled"
 													checked="checked" name="onVisa" value="N"
 													style="margin-left: 20px;"  />
 													<span><spring:message code="modal.no" /></span>
-												</label> --%>
+												</label> 
 												</c:otherwise>
 												</c:choose>
 											</div>

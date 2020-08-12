@@ -77,10 +77,19 @@ headers:
 		$('#sigleRecoverydeviceType').val(response.stolenIndividualUserDB.deviceType);
 		$('#sigleRecoverydeviceSimStatus').val(response.stolenIndividualUserDB.multiSimStatus);
 		$('#sigleRecoveryserialNumber').val(response.stolenIndividualUserDB.deviceSerialNumber);
+		if(response.stolenIndividualUserDB.deviceSerialNumber=="" || response.stolenIndividualUserDB.deviceSerialNumber==null){
+			$('#sigleRecoveryserialNumber').val('NA');	
+		}
 		$('#sigleRecoveryaddress').val(response.stolenIndividualUserDB.deviceStolenPropertyLocation);
 		$('#sigleRecoverystreetNumber').val(response.stolenIndividualUserDB.deviceStolenStreet);
 		$('#sigleRecoveryvillage').val(response.stolenIndividualUserDB.deviceStolenVillage);
+		if(response.stolenIndividualUserDB.deviceStolenVillage=="" || response.stolenIndividualUserDB.deviceStolenVillage==null){
+			$('#sigleRecoveryvillage').val('NA');	
+		}
 		$('#sigleRecoverylocality').val(response.stolenIndividualUserDB.deviceStolenLocality);
+		if(response.stolenIndividualUserDB.deviceStolenLocality=="" || response.stolenIndividualUserDB.deviceStolenLocality==null){
+			$('#sigleRecoverylocality').val('NA');	
+		}
 		$('#sigleRecoverydistrict').val(response.stolenIndividualUserDB.deviceStolenDistrict);
 		$('#sigleRecoverycommune').val(response.stolenIndividualUserDB.deviceStolenCommune);
 		$('#sigleRecoverypin').val(response.stolenIndividualUserDB.deviceStolenPostalCode);
@@ -88,12 +97,27 @@ headers:
 		$('#state1').val(response.stolenIndividualUserDB.deviceStolenProvince);
 		//$('#sigleRecoverydeviceStatus').val(response.stolenIndividualUserDB.deviceBrandName);
 		$('#sigleRecovery').val(response.remark);
+		if(response.remark=="" || response.remark==null){
+			$('#sigleRecovery').val('NA');	
+		}
 		$('#sigleRecoveryReject').val(response.rejectedRemark);
+		if(response.rejectedRemark=="" || response.rejectedRemark==null){
+			$('#sigleRecoveryReject').val('NA');	
+		}
 		$('#bulkRecoveryDate').val(response.dateOfRecovery);
 		$('#sigleRecoveryimeiNumber1').val(response.stolenIndividualUserDB.imeiEsnMeid1);
 		$('#sigleRecoveryimeiNumber2').val(response.stolenIndividualUserDB.imeiEsnMeid2);
+		if(response.stolenIndividualUserDB.imeiEsnMeid2=="" || response.stolenIndividualUserDB.imeiEsnMeid2==null){
+			$('#sigleRecoveryimeiNumber2').val('NA');	
+		}
 		$('#sigleRecoveryimeiNumber3').val(response.stolenIndividualUserDB.imeiEsnMeid3);
+		if(response.stolenIndividualUserDB.imeiEsnMeid3=="" || response.stolenIndividualUserDB.imeiEsnMeid3==null){
+			$('#sigleRecoveryimeiNumber3').val('NA');	
+		}
 		$('#sigleRecoveryimeiNumber4').val(response.stolenIndividualUserDB.imeiEsnMeid4);
+		if(response.stolenIndividualUserDB.imeiEsnMeid4=="" || response.stolenIndividualUserDB.imeiEsnMeid4==null){
+			$('#sigleRecoveryimeiNumber4').val('NA');	
+		}
 		$("label[for='sigleRecoveryimeiNumber1']").addClass('active');
 		$("label[for='sigleRecoveryimeiNumber2']").addClass('active');
 		$("label[for='sigleRecoveryimeiNumber3']").addClass('active');

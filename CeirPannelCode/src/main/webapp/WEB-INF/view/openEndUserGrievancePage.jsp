@@ -165,12 +165,12 @@ var contextpath = "${context}";
          <!-- START CONTENT -->
             <section id="content">
             <div id="initialloader"></div>
-            
+           
                 <!--start container-->
                 <div class="container" style="padding-bottom: 70px; margin-top: 10vh;" >
                     <div class="section">
                         <div class="row card-panel responsive-page" id="endUserRaiseGrievance" style="display: none">
-                            <h6 class="fixPage-modal-header">
+                           <h6 class="fixPage-modal-header">
                            
                             				
 													<div class="col s10 m11 select-lang-lable-griev">

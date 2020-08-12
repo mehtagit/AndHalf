@@ -617,6 +617,9 @@ function table(url,dataUrl){
 	if(data_lang_param=='km'){
 		var langFile="./resources/i18n/khmer_datatable.json";
 	}
+	else if(data_lang_param=='en'){
+		var langFile='./resources/i18n/english_datatable.json';
+	}
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
 	$.ajaxSetup({

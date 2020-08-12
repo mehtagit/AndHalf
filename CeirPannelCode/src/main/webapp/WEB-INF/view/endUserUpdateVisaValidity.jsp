@@ -204,7 +204,7 @@ background: url(resources/images/loader.gif) 50% 50% no-repeat white;
 		<!--start container-->
 
 		
-		<div class="container">
+
 			<div class="section">
 				<div class="row card-panel login-card-panel">
 					<h6 class="fixPage-modal-header ">

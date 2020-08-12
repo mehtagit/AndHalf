@@ -310,7 +310,7 @@ onclick="_Services._selectstartDate()"></i></span>
                                                         <label for="blockbulkquantity"><spring:message code="input.quantity" /> <span class="star">*</span></label>
                                                     </div>
                                                     <div class="input-field col s12 m6" style="margin-top: 22px;">
-                                                        <input type="text" id="blockbulkDeviceQuantity" name="blockbulkDeviceQuantity" pattern="[0-9]{1-7}" 
+                                                        <input type="text" id="blockbulkDeviceQuantity" name="blockbulkDeviceQuantity" pattern="[0-9]{1,7}" 
                                                         oninput="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');" 
                                                         oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
                                                       required   maxlength="7" >

@@ -804,12 +804,11 @@ data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeI
 				</div>
 										</div>
 									</div>
-									</div>
 </div>
 
 
 <div id="greyListTableModal" class="modal">
- <button type="button"
+ <button type="button" style="    font-size: 25px;"
 			class=" modal-action modal-close  btn-flat right"
 			data-dismiss="modal">&times;</button>
 		<h6 class="modal-header">Device Details</h6>
