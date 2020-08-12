@@ -510,7 +510,7 @@ background: url(resources/images/loader.gif) 50% 50% no-repeat white;
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
 													 maxlength="15" /> <label for=endUserVisaNumber><spring:message
-														code="input.VisaNumber" /> </label>
+														code="input.VisaNumber" /> <span class="star"></span></label>
 										</div>
 									</div>
 
