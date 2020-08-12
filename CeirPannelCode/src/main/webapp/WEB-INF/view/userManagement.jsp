@@ -298,10 +298,13 @@
 
 					<div class="row myRow">
 								 <div class="input-field col s12 m6">
-                                            <input type="text" id="editcontactNumber" name="contactNumber" pattern="[0-9]{10,12}" 
+                                          <%--   <input type="text" id="editcontactNumber" name="contactNumber" pattern="[0-9]{10,12}" 
  													oninput="InvalidMsg(this,'input','<spring:message code="validation.10digits" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10digits" />');"
-												  required   maxlength="10" />
+												  required   maxlength="10" /> --%>
+											<input type="text" name="contactNumber" maxlength="15" id="editcontactNumber" pattern="[0-9]{7,15}" 
+                              				 oninput="InvalidMsg(this,'input','Please enter phone number between 7 to 15 characters only');" 
+                              				 oninvalid="InvalidMsg(this,'input','Please enter phone number between 7 to 15 characters only');" required>	  
                                             <label for="editcontactNumber"><spring:message code="input.contact" /><span
                                                     class="star">*</span></label>
                                         </div>
