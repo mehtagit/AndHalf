@@ -297,7 +297,7 @@
 											
 <input type="text" id="pageViewType" value="${viewType}" style="display: none;">
 <input type="text" id="existingStolenTxnId" style="display:none" value="${stolenTxnId}" >
-                                                    <div class="input-field col s12 m6">
+                                                    <div class="input-field col s12">
                                                         <textarea id="bulkRecoveryRemark"oninput="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
                                                           oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
                                                           maxlength="10000"

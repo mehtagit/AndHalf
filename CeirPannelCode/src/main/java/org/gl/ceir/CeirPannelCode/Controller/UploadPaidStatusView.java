@@ -473,7 +473,17 @@ GrievanceFeignClient grievanceFeignClient;
 		  //regularizeDeviceDbs.getRegularizeDeviceDbs().get(i).setTxnId(txnNumber);
 		  endUservisaInfo.setTxnId(txnNumber);
 		 // endUservisaInfo.getRegularizeDeviceDbs().get(i).setTxnId(txnNumber);
-		  endUservisaInfo.getVisaDb().get(i).setVisaFileName((visaImage.getOriginalFilename()));
+		  if(visaImage==null)
+			{
+				log.info("visa image is null..");	
+				endUservisaInfo.getVisaDb().get(i).setVisaFileName(null);
+			}
+		  else {
+			  log.info("visa image is not null..");	
+			  endUservisaInfo.getVisaDb().get(i).setVisaFileName((visaImage.getOriginalFilename()));  
+		  }
+		  
+		  
 		  log.info("file name to be set in varivable="+endUservisaInfo.getVisaDb().get(i).getVisaFileName());
 		  
 		  }
@@ -554,7 +564,15 @@ stream.close();
 		}	
 		fileCopyRequest.setFilePath(urlToUpload.getValue()+txnNumber+"/");
 	  	fileCopyRequest.setTxnId(txnNumber);
-	  	fileCopyRequest.setFileName(visaImage.getOriginalFilename());
+	  
+	    if(visaImage==null)
+		{
+			log.info("visa image is null");	
+			fileCopyRequest.setFileName(null);
+		}
+	    else {
+	    	fileCopyRequest.setFileName(visaImage.getOriginalFilename());
+	    }
 	  	fileCopyRequest.setServerId(serverId);
 	  	log.info("request passed to move file to other server=="+fileCopyRequest);
 	  	GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
