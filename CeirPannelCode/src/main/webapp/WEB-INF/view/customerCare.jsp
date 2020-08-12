@@ -683,6 +683,7 @@ data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeI
 				                                          <spring:message code="modal.deviceInfo" />
 			                                            </h6></div>
 			                                            <div class="scrollDivHeight"></div>
+			                                   <div class="modal-content modal-content-style">         
 										<div id="mainDeviceInformation" class="mainDeviceInformation">
 										<div id="deviceInformation" class="deviceInformation">
 											<div class="row">
@@ -802,6 +803,7 @@ data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeI
 				</div>
 				</div>
 										</div>
+									</div>
 									</div>
 </div>
 
