@@ -103,31 +103,33 @@ var contextpath='${context}';
                 <!--start container-->
                 <div class="container">
                     <div class="section">
-                        <div class="row card-panel login-card-panel" style="margin: auto; margin-top: 10vh;">
-                            <div class="col s9 m10 select-lang-lable">
-										<i class="fa fa-globe fa-6" aria-hidden="true"></i>
-										</div>
-										<div class="col s3 m2 right" style="padding: 0;">
-											<select class="browser-default select-lang-drpdwn"
-												id="langlist">
-												<option value="en">English</option>
-												<option value="km"><spring:message code="lang.khmer" /></option>
-											</select>
-										</div>
+                        <div class="row card-panel login-card-panel" style="width:67%;    position: absolute; margin: 10vh 39vh;">
+                           
+                           		<h5 class="fixPage-modal-header ">
+							<spring:message code="registration.forgotpassword" />
+															<div class="col s10 m11 select-lang-lable-fp">
+
+			<i class="fa fa-globe fa-6" aria-hidden="true"></i>
+		</div>
+		<div class="col s2 m1 right" style="padding: 0;">
+			<select class="browser-default select-lang-drpdwn-fp" id="langlist">
+				<option value="en" class="fontBlack">English</option>
+				<option value="km" class="fontBlack"><spring:message code="lang.khmer" /></option>
+			</select>
+		</div>
+									</h5>
+					
 										<div class="col s12 m12">
-											<h5 style="text-align: -webkit-center;">
-												<spring:message code="registration.forgotpassword" />
-											</h5>
+											
 											<span id="errorMsg" style="color: red;"></span>
-											<hr>
-
-
+										
 										</div>
                             <div class="col s12 m12 l12">
                                 <form  id="forgotPassword" onsubmit="return forgotPassword()" >
                                 <div class="row">
-                       			
-                        <span style="text-align: center;color: red;" id="errorMsg"></span>                          
+                       			<span style="color: red;" id="errorMsg"></span>
+               
+                                           
                                  <!--     <hr style="margin-bottom: 30px;"> -->
 
                                     <div class="row myRow">
@@ -170,8 +172,8 @@ oninput="InvalidMsg(this,'input','<spring:message code="validation.50alphanumeri
 												 title= "<spring:message code="validation.requiredMsg" />" required id="answer" maxlength="50" />
                                         </div>
                                     </div>
-                                    
-                                </div>
+                                                                   </div>
+                         
                                 <div class="row" style="margin-top: 30px;">
                                     <div class="input-field col s12 m12 l12 center">
                                         <button id="forgotPasswordBtn"   type="submit" class="btn"><spring:message code="button.submit" /></button>

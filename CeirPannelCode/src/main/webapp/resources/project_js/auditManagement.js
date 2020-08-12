@@ -4,6 +4,7 @@ var userId = $("body").attr("data-userID");
 var currentRoleType = $("body").attr("data-selected-roleType"); 
 var startdate=$('#startDate').val(); 
 var endDate=$('#endDate').val();
+var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 
 $(document).ready(function(){
 	pageRendering();
@@ -40,6 +41,11 @@ function auditManagementDatatable(){
 			
 			
 	}
+	if(lang=='km'){
+		var langFile="./resources/i18n/khmer_datatable.json";
+	}else if(lang=='en'){
+		var langFile='./resources/i18n/english_datatable.json';
+	}	
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
 	$.ajaxSetup({
@@ -62,6 +68,9 @@ function auditManagementDatatable(){
 				"bFilter" : true,
 				"bInfo" : true,
 				"bSearchable" : true,
+				"oLanguage": {
+			        "sEmptyTable": "My Custom Message On Empty Table"
+			    },
 				ajax: {
 					url : 'auditManagementData',
 					type: 'POST',
@@ -253,14 +262,13 @@ function viewDetails(Id){
 
 
 function setViewPopupData(data){
-	$("#viewUserId").val(data.userId);
-	$("#viewTxnId").val(data.txnId);
-	$("#viewUserName").val(data.userName);
-	$("#viewUserType").val(data.userType);
-	$("#viewRoleType").val(data.roleType);
-	$("#viewFeature").val(data.featureName);
-	$("#viewSubFeature").val(data.subFeature);
-	
+	data.userId=="" || data.userId==null ? $("#viewUserId").val('NA') : $("#viewUserId").val(data.userId);
+	data.txnId=="" || data.txnId==null ? $("#viewTxnId").val('NA') : $("#viewTxnId").val(data.txnId);
+	data.userName=="" || data.userName==null ? $("#viewUserName").val('NA') : $("#viewUserName").val(data.userName);
+	data.userType=="" || data.userType==null ? $("#viewUserType").val('NA') : $("#viewUserType").val(data.userType);
+	data.roleType=="" || data.roleType==null ? $("#viewRoleType").val('NA') : $("#viewRoleType").val(data.roleType);
+	data.featureName=="" || data.featureName==null ? $("#viewFeature").val('NA') : $("#viewFeature").val(data.featureName);
+	data.subFeature=="" || data.subFeature==null ? $("#viewSubFeature").val('NA') : $("#viewSubFeature").val(data.subFeature);
 }
 
 

@@ -416,25 +416,25 @@ data-txnid-value="${not empty param.transactionID ? param.transactionID : 'null'
 												<c:when test = "${viewInformation.endUserDB.isVip=='Y'}">
 												<label>
 												 
-												<input class="with-gap" type="radio" name="selectvip" value="Y" readonly="readonly" checked="checked">
+												<input class="with-gap" type="radio" name="selectvip" value="Y" disabled="disabled" checked="checked">
 												 <span><spring:message code="modal.yes" /></span>
 												
 												  </label>
 												  
 												  <label> 
-												  <input class="with-gap" value="N" type="radio" name="selectvip" readonly="readonly" style="margin-left: 20px;" /> 
+												  <input class="with-gap" value="N" type="radio" name="selectvip" disabled="disabled" style="margin-left: 20px;" /> 
 												  <span><spring:message code="modal.no" /></span>
 												</label>
 												  </c:when>
 												 <c:otherwise>
 												 <label>
 												 
-												<input class="with-gap" type="radio" name="selectvip" readonly="readonly" value="Y"  >
+												<input class="with-gap" type="radio" name="selectvip" disabled value="Y"  >
 												 <span><spring:message code="modal.yes" /></span>
 												
 												  </label>
 												  <label> 
-												  <input class="with-gap" value="N" type="radio" readonly="readonly" checked="checked"
+												  <input class="with-gap" value="N" type="radio" disabled="disabled" readonly="readonly" checked="checked"
 													name="selectvip" style="margin-left: 20px;" /> <span><spring:message code="modal.no" /></span>
 												</label>
 												</c:otherwise>
@@ -482,21 +482,21 @@ data-txnid-value="${not empty param.transactionID ? param.transactionID : 'null'
 											<div class=" boxHeight">
 												<c:choose>
 												<c:when test = "${viewInformation.endUserDB.onVisa=='Y'}">
-												<label><input class="with-gap" type="radio"
+												<label><input class="with-gap" type="radio" disabled="disabled"
 													name="onVisa" value="Y" checked="checked">
 													<span><spring:message code="modal.yes" /></span> </label> <label>
-													<input class="with-gap" type="radio" id="onVisaNo" 
+													<input class="with-gap" type="radio" id="onVisaNo" disabled="disabled"
 													 name="onVisa" value="N"
 													style="margin-left: 20px;" />
 													<span><spring:message code="modal.no" /></span>
 												</label>
 												</c:when>
 												<c:otherwise>
-												<label><input class="with-gap" type="radio"
+												<label><input class="with-gap" type="radio" disabled="disabled"
 													name="onVisa" value="Y">
 													<span><spring:message code="modal.yes" /></span> </label>
 													 <label>
-													<input class="with-gap" type="radio" id="onVisaNo"
+													<input class="with-gap" type="radio" id="onVisaNo" disabled="disabled"
 													checked="checked" name="onVisa" value="N"
 													style="margin-left: 20px;"  />
 													<span><spring:message code="modal.no" /></span>

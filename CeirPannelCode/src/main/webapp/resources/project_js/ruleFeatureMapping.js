@@ -69,9 +69,9 @@ function table(url,dataUrl){
 				"bFilter" : true,
 				"bInfo" : true,
 				"bSearchable" : true,
-				"oLanguage": {  
-					"sUrl": langFile  
-				},
+				"oLanguage": {
+			        "sEmptyTable": "My Custom Message On Empty Table"
+			    },
 				ajax: {
 					url : dataUrl,
 					type: 'POST',

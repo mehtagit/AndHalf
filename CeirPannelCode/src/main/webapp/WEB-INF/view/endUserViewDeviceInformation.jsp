@@ -159,30 +159,32 @@ input[type='search'] {
  session-value="${not empty param.Search ? param.Search : 'null'}">
 
 	<!-- START CONTENT -->
-	<section id="content"><div class="row card-panel">
-			<div class="languageDiv">
-			
-		<div class="col s10 m11 select-lang-lable">
-
-			<i class="fa fa-globe fa-6" aria-hidden="true"></i>
-		</div>
-		<div class="col s2 m1 right" style="padding: 0;">
-			<select class="browser-default select-lang-drpdwn" id="langlist">
-				<option value="en">English</option>
-				<option value="km"><spring:message code="lang.khmer" /></option>
-			</select>
-		</div>
-	</div></div>
+	<section id="content">
+	</div>
 		<!--start container-->
 		<div class="container">
 			<div class="section">
 				<div class="row">
 					<div class="col s12 m12 l12">
 						<div class="row card-panel register-device-responsive-page" style="margin: auto;margin-top: 5vh;">
-							<div class="container-fluid pageHeader">
-								<p class="PageHeading"><spring:message code="registerconsignment.header.viewDeviceInformation" /></p>
-								<!-- <a href="#addDevice" class="boton right modal-trigger">Add Device</a> -->
-							</div>
+							
+									<h6 class="fixPage-modal-header ">
+					
+			<spring:message code="registerconsignment.header.viewDeviceInformation" />
+						
+							<div class="col s10 m11 select-lang-lable">
+
+			<i class="fa fa-globe fa-6" aria-hidden="true"></i>
+		</div>
+		<div class="col s2 m1 right" style="padding: 0;">
+			<select class="browser-default select-lang-drpdwn" id="langlist">
+				<option value="en" class="fontBlack">English</option>
+				<option value="km" class="fontBlack"><spring:message code="lang.khmer" /></option>
+			</select>
+		</div>
+					</h6>
+					
+							
 							<div id="user123" class="section"> 
 								<form action="" onsubmit="return submitDeviceInfo()" id="viewDeviceForm"
 									method="POST" enctype="multipart/form-data">
@@ -429,7 +431,7 @@ input[type='search'] {
 												</label>
 												  </c:when>
 												 <c:otherwise>
-												 <label>
+												<%--  <label>
 												 
 												<input class="with-gap" type="radio" name="selectvip" disabled="disabled" value="Y"  >
 												 <span><spring:message code="modal.yes" /></span>
@@ -438,7 +440,7 @@ input[type='search'] {
 												  <label> 
 												  <input class="with-gap" value="N" type="radio" disabled="disabled" checked="checked"
 													name="selectvip" style="margin-left: 20px;" /> <span><spring:message code="modal.no" /></span>
-												</label>
+												</label> --%>
 												</c:otherwise>
 												</c:choose>
 											</div>
@@ -499,11 +501,11 @@ input[type='search'] {
 													name="onVisa" value="Y" disabled="disabled">
 													<span><spring:message code="modal.yes" /></span> </label>
 													 <label>
-													<input class="with-gap" type="radio" id="onVisaNo"
+													<input class="with-gap" type="radio" id="onVisaNo" disabled="disabled"
 													checked="checked" name="onVisa" value="N"
 													style="margin-left: 20px;"  />
 													<span><spring:message code="modal.no" /></span>
-												</label>
+												</label> 
 												</c:otherwise>
 												</c:choose>
 											</div>

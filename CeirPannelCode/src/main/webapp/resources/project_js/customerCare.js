@@ -477,16 +477,16 @@ function setStakeHolderData(name,date,featureId,status,txnId,imei)
 	    	   dismissible:false
 	       });
     	$("#endUserdeviceType").val(data.data.deviceTypeInterp);
-    	if(data.data.deviceTypeInterp==''){
+    	if(data.data.deviceTypeInterp=='' ||data.data.deviceTypeInterp==null ){
     		$("#endUserdeviceType").val('NA')
     	}
  		$("#endUserdeviceIdType").val(data.data.deviceIdTypeInterp);
  		$("#endUserMultiSimStatus").val(data.data.multiSimStatusInterp);
- 		if(data.data.multiSimStatusInterp==''){
+ 		if(data.data.multiSimStatusInterp=='' || data.data.multiSimStatusInterp==null){
     		$("#endUserMultiSimStatus").val('NA')
     	}
  		$("#endUserCountry").val(data.data.country);
- 		if(data.data.country==''){
+ 		if(data.data.country=='' || data.data.country==null){
     		$("#endUserCountry").val('NA')
     	}
  		$('#endUserSerialNumer').val(data.data.deviceSerialNumber);
@@ -494,19 +494,19 @@ function setStakeHolderData(name,date,featureId,status,txnId,imei)
     		$("#endUserSerialNumer").val('NA')
     	}
  		$('#endUserTaxPaid').val(data.data.taxPaidStatusInterp);
- 		if(data.data.taxPaidStatusInterp==''){
+ 		if(data.data.taxPaidStatusInterp=='' || data.data.taxPaidStatusInterp==null){
     		$("#endUserTaxPaid").val('NA')
     	}
  		$("#endUserDeviceStatus").val(data.data.deviceStatusInterp);
- 		if(data.data.deviceStatusInterp==''){
+ 		if(data.data.deviceStatusInterp=='' || data.data.deviceStatusInterp==null){
     		$("#endUserDeviceStatus").val('NA')
     	}
  		$("#endUserPrice").val(data.data.price);
- 		if(data.data.price==''){
+ 		if(data.data.price=='' || data.data.price==null){
     		$("#endUserPrice").val('NA')
     	}
  		$('#endUserCurrency').val(data.data.currencyInterp);
- 		if(data.data.currencyInterp==''){
+ 		if(data.data.currencyInterp=='' || data.data.currencyInterp==null){
     		$("#endUserCurrency").val('NA')
     	}
  		$('#endUserImei1').val(data.data.firstImei);

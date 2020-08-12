@@ -95,6 +95,8 @@ function Datatable(Url, dataUrl) {
 	}
 	if (lang == 'km') {
 		var langFile = "./resources/i18n/khmer_datatable.json";
+	}else if(lang=='en'){
+		var langFile='./resources/i18n/english_datatable.json';
 	}
 	
 	$("#submitFilter").prop('disabled', true);

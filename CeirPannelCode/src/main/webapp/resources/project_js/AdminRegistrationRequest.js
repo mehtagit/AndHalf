@@ -61,7 +61,9 @@
 		
 		if(lang=='km'){
 			var langFile="./resources/i18n/khmer_datatable.json";
-				}
+			}else if(lang=='en'){
+				var langFile='./resources/i18n/english_datatable.json';
+			}
 		var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
 		$.ajaxSetup({
@@ -720,14 +722,11 @@ function userChangeStatus(entity){
 		
 		
 		
-		if(userType=="Importer" ){
+		
 			var filterRequest={
 
 					"columns": [
-						"CREATED_ON","MODIFIED_ON","FIRST_NAME","MIDDLE_NAME","LAST_NAME","TYPE","EMAIL","PHONE_NO","PROPERTY_LOCATION","STREET",
-						"VILLAGE","LOCALITY","DISTRICT","COMMUNE","POSTAL_CODE","COUNTRY","PROVINCE",
-						"VAT_NO","VAT_FILENAME","VAT_STATUS","COMPANY_NAME"
-						,"DISPLAY_NAME","USERID"
+						"CREATED_ON","MODIFIED_ON","FIRST_NAME","MIDDLE_NAME","LAST_NAME","EMAIL","PHONE_NO"						,"DISPLAY_NAME"
 						],
 						"tableName": "user_profile_aud",
 						"dbName" : "ceirconfig",
@@ -735,54 +734,22 @@ function userChangeStatus(entity){
 						"txnId":txnID
 			}
 			
-		}else if(userType=="Custom"){
-			var filterRequest={
-
-					"columns": [
-						"CREATED_ON","MODIFIED_ON","FIRST_NAME","MIDDLE_NAME","LAST_NAME","TYPE","EMAIL","PHONE_NO","PROPERTY_LOCATION","STREET",
-						"VILLAGE","LOCALITY","DISTRICT","COMMUNE","POSTAL_CODE","COUNTRY","PROVINCE",
-						"VAT_NO","VAT_FILENAME","VAT_STATUS","PORT_ADDRESS","ARRIVAL_PORT","PASSPORT_NO",
-						"NID_FILENAME","COMPANY_NAME","NATURE_OF_EMPLOYMENT","EMPLOYEE_ID","AUTHORITY_EMAIL","AUTHORITY_NAME","AUTHORITY_PHONE_NO"
-						,"DISPLAY_NAME","USERID"
-						],
-						"tableName": "user_profile_aud",
-						"dbName" : "ceirconfig",
-						"userid":txnID,
-						"txnId":txnID
-			}
 		
-		}else if(userType=="Operator"){
-			var filterRequest={
-
-					"columns": [
-						"CREATED_ON","MODIFIED_ON","FIRST_NAME","MIDDLE_NAME","LAST_NAME","TYPE","EMAIL","PHONE_NO","PROPERTY_LOCATION","STREET",
-						"VILLAGE","LOCALITY","DISTRICT","COMMUNE","POSTAL_CODE","COUNTRY","PROVINCE",
-						"VAT_NO","VAT_FILENAME","VAT_STATUS","PASSPORT_NO",
-						"NID_FILENAME","COMPANY_NAME","NATURE_OF_EMPLOYMENT","EMPLOYEE_ID","AUTHORITY_EMAIL","AUTHORITY_NAME","AUTHORITY_PHONE_NO",
-						"OPERATOR_TYPE_ID","OPERATOR_TYPE_NAME","DISPLAY_NAME","USERID"
-						],
-						"tableName": "user_profile_aud",
-						"dbName" : "ceirconfig",
-						"userid":txnID,
-						"txnId":txnID			
-			} 
-		
-		}else{
-			var filterRequest={
+			/*var filterRequest={
 
 					"columns": [
 						"CREATED_ON","MODIFIED_ON","FIRST_NAME","MIDDLE_NAME","LAST_NAME","TYPE","EMAIL","PHONE_NO","PROPERTY_LOCATION","STREET",
 						"VILLAGE","LOCALITY","DISTRICT","COMMUNE","POSTAL_CODE","COUNTRY","PROVINCE",
 						"VAT_NO","VAT_FILENAME","VAT_STATUS","PORT_ADDRESS","ARRIVAL_PORT","PASSPORT_NO",
 						"NID_FILENAME","COMPANY_NAME","NATURE_OF_EMPLOYMENT","EMPLOYEE_ID","AUTHORITY_EMAIL","AUTHORITY_NAME","AUTHORITY_PHONE_NO",
-						"OPERATOR_TYPE_ID","OPERATOR_TYPE_NAME","DISPLAY_NAME","USERID"
+						"OPERATOR_TYPE_ID","OPERATOR_TYPE_NAME","DISPLAY_NAME"
 						],
 						"tableName": "user_profile_aud",
 						"dbName" : "ceirconfig",
 						"userid":txnID,
 						"txnId":txnID
-			}
-		} 
+			}*/
+		
 			
 
 		formData.append("filter",JSON.stringify(filterRequest));	

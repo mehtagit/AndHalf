@@ -90,7 +90,7 @@ data-session-type="${not empty param.type ? param.type : 'null'}"
                                             </div>
 
                                             <div class="input-field col s12 m4 l4">
-                                                <input type="text" name="middleName" id="middleName" maxlength="20" value="${registration.middleName}"  disabled="" placeholder="">	
+                                                <input type="text" name="middleName" id="middleName" maxlength="20" value="${not empty registration.middleName ? registration.middleName : 'NA'}"  disabled="" placeholder="">	
                                                 <label for="middleName" class="active"><spring:message code="input.middleName" /></label>
                                             </div>
 

@@ -79,7 +79,7 @@
                                 </div>
 
                                 <div class="input-field col s12 m4 l4">
-                                    <input type="text" name="middleName" id="middleName" value="${registration.middleName}"  maxlength="20" placeholder="" disabled="">
+                                    <input type="text" name="middleName" id="middleName" value="${not empty registration.middleName ? registration.middleName : 'NA'}"  maxlength="20" placeholder="" disabled="">
                                     <label for="middleName" class="active"><spring:message code="input.middleName" /></label>
                                 </div>
 
@@ -132,7 +132,7 @@
                                 </div>
                                 
                                 <div class="input-field col s12 m6 l6">
-									<input type="text" name="village" id="village" maxlength="20" value="${registration.village}" disabled="" placeholder="">
+									<input type="text" name="village" id="village" maxlength="20" value="${not empty registration.village ? registration.village : 'NA'}" disabled="" placeholder="">
 									<label for="village"><spring:message code="input.village" /></label>
 								</div>
 
