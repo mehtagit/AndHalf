@@ -226,12 +226,11 @@ function viewDetails(tag){
 }
 
 function setViewPopupData(data){
-	data.tag=="" || data.tag==null ? $("#viewTag").val('NA') : $("#viewTag").val(data.tag);
-	data.value=="" || data.value==null ? $("#viewValue").val('NA') : $("#viewValue").val(data.value);
-	data.typeInterp=="" || data.typeInterp==null ? $("#viewtype").val('NA') : $("#viewtype").val(data.typeInterp);
-	data.description=="" || data.description==null ? $("#description").val('NA') : $("#description").val(data.description); 
-	data.remark=="" || data.remark==null ? $("#remarks").val('NA') : $("#remarks").val(data.remark); 
-	
+	$("#viewTag").val(data.tag);
+	$("#viewValue").val(data.value);
+	$("#viewtype").val(data.typeInterp);
+	$("#description").val(data.description);
+	$("#remarks").val(data.remark);
 }
 
 

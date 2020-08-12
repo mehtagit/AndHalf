@@ -367,6 +367,8 @@ function Datatable(url,dataUrl,sourceTypeFiler){
 	if($("body").attr("data-session-source")=='noti'){
 		txn=$('#transactionID').val();
 	}
+	$("body").attr("data-session-source","filter");
+	txn=$('#transactionID').val();
 	}
 	//////console.log("sent operatorTypeId is ---->" +operatorTypeId)		
 	var filterRequest={
@@ -389,6 +391,9 @@ function Datatable(url,dataUrl,sourceTypeFiler){
 	if(lang=='km'){
 		var langFile='../resources/i18n/khmer_datatable.json';
 			}
+	else if(lang=='en'){
+		var langFile='./resources/i18n/english_datatable.json';
+	}
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
 	$.ajaxSetup({
@@ -1122,11 +1127,11 @@ function exportStolenRecoveryData()
 	var info = table.page.info(); 
 	var pageNo=info.page;
 	var pageSize =info.length;
-
+	var operatorId;
 	if(userType=="Operator"){
-		var operatorId = parseInt($("body").attr("data-operatortypeI-id"));
+		 operatorId = parseInt($("body").attr("data-operatorTypeId"));
 	}else{
-		var operatorId = parseInt($('#operator').val());
+		 operatorId = parseInt($('#operator').val());
 	}
 	
 	var filterRequest={

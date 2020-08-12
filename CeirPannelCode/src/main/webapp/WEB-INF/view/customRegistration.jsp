@@ -285,17 +285,28 @@ var contextpath = "${context}";
 				<form id="registrationForm" autocomplete="off"
 					onsubmit="return saveCustomRegistration()">
 
-					<div class="card-panel registration-form">
-						<div class="row">
-							<div class="col s10 m10 select-lang-lable"><i class="fa fa-globe fa-6" aria-hidden="true"></i></div>
-							<div class="col s2 m2 right" style="padding: 0;">
-								<select class="browser-default select-lang-drpdwn" id="langlist">
-									<option value="en">English</option>
-									<option value="km"><spring:message code="lang.khmer" /></option>
-								</select>
+					<div class="row card-panel registration-form">
+									<h5 class="fixPage-modal-header-reg ">
+								<spring:message  code="roletype.${fn:replace(param.type, ' ', '_')}" /> <spring:message code="select.registration" />
+										
+										
+													<div class="col s10 m11 select-lang-lable-reg">
+								
+								<i class="fa fa-globe fa-6" aria-hidden="true"></i>
 							</div>
-							<div class="col s12 m12"><h5><spring:message  code="roletype.${fn:replace(param.type, ' ', '_')}" /> <spring:message code="select.registration" /></h5>
-							<span id="msg" style="color: red;">${msg}</span><hr>
+							<div class="col s2 m1 right" style="padding: 0;">
+								<select class="browser-default select-lang-drpdwn-reg" id="langlist">
+									<option value="en" class="fontBlack">English</option>
+									<option value="km" class="fontBlack"><spring:message code="lang.khmer" /></option>
+								</select>
+							</div> 
+								</h5>
+								
+								
+						<div class="row">
+							
+							<div class="col s12 m12">
+							<span id="msg" style="color: red;">${msg}</span>
 							</div>
 								<input type="hidden" id="usertypeId" value="${usertypeId}">
 								<input type="hidden" id="usertypeName" value="<%=name%>">

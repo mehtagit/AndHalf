@@ -173,26 +173,26 @@ section {
 	<!-- //////////////////////////////////////////////////////////////////////////// -->
 
 	<!-- START CONTENT -->
-	<section id="content">
-	<div class="row card-panel">
-			<div class="languageDiv">
-			
-		<div class="col s10 m11 select-lang-lable">
+	<section id="content" style="margin-top: 10vh;">
+	
+	
+		<div class="row card-panel form">
+			<h6 class="fixPage-modal-header ">
+					
+			<spring:message code="modal.header.registerdevice" />
+						
+							<div class="col s10 m11 select-lang-lable-all">
 
 			<i class="fa fa-globe fa-6" aria-hidden="true"></i>
 		</div>
 		<div class="col s2 m1 right" style="padding: 0;">
-			<select class="browser-default select-lang-drpdwn" id="langlist">
-				<option value="en">English</option>
-				<option value="km"><spring:message code="lang.khmer" /></option>
+			<select class="browser-default select-lang-drpdwn-all" id="langlist">
+				<option value="en" class="fontBlack">English</option>
+				<option value="km" class="fontBlack"><spring:message code="lang.khmer" /></option>
 			</select>
 		</div>
-	</div></div>
-	
-		<div class="row card-panel form">
-			<div class="container-fluid pageHeader">
-				<p class="PageHeading"><spring:message code="modal.header.registerdevice" /></p>
-			</div>
+					</h6>
+		
 			<div class="row">
 				<div class="col s12 m12" style="margin-top: 20px;">
 					<div id="submitbtn">

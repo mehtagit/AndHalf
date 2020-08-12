@@ -508,7 +508,7 @@ select {
 															</select>
 														</div>
 
-														<div class="col s12 m6">
+														<div class="col s12 m6" style="margin-right: 1px;">
 															<p class="contact-label">
 																<spring:message code="input.contactNum2" />
 																<span class="star"></span>
@@ -519,7 +519,7 @@ select {
 
 														
 
-														<div class="col s12 m6 l6">
+														<div class="col s12 m6 l6" style="margin-right: -1px;">
 															<label id="operatorLabel3"> <spring:message code="operator.Operator2" />
 																<span class="star" id="operator3span" style="display: none;margin-top: -18px;margin-left: 59px;">*</span></label> 
 																<select class="browser-default" id="singleStolenOperator3"
@@ -552,7 +552,7 @@ select {
 																</option>
 															</select>
 														</div>
-														<div class="col s12 m6">
+														<div class="col s12 m6" style="margin-right: 1px;">
 															<p class="contact-label">
 																<spring:message code="input.contactNum4" />
 																<span class="star"></span>
@@ -563,7 +563,7 @@ select {
 
 														
 
-														<div class="col s12 m6 l6">
+														<div class="col s12 m6 l6" style="margin-right: -1px;">
 															<label id="operatorLabel3"> <spring:message code="operator.Operator4" />
 																<span class="star" id="operator5span" style="display: none;margin-top: -18px;margin-left: 59px;"> *</span></label> <select
 																class="browser-default" id="singleStolenOperator5"

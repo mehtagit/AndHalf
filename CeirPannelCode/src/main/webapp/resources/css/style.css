@@ -3243,7 +3243,6 @@ td.dateDiv {
 	font-size: 12px;
 	position: absolute;
 	margin: 0;
-	top: 135px;
 }
 
 .imgPreviewLink {
@@ -3294,4 +3293,59 @@ div#error_Modal_reg {
 
 .top-space {
     margin-top: 0;
+}
+
+
+.fixPage-modal-header-reg {
+    background-color: #529dba;
+    padding: 15px 24px;
+    color: #fff;
+    margin: -15px -24px 1rem -25px;
+}
+
+.select-lang-drpdwn-reg {
+    width: 75px;
+    margin-top: -36px;
+    font-size: 16px;
+    color: #fff;
+    border-bottom: 0px;
+}
+
+.select-lang-lable-reg{
+    margin-top: -22px;
+    text-align: right;
+    font-size: 15px;
+}
+.fontBlack{
+	color:black;
+}
+.select-lang-drpdwn-griev {
+    width: 75px;
+    margin-top: -6px;
+    border-bottom: none;
+}
+.select-lang-lable-griev {
+    margin-top: 6px;
+    text-align: right;
+}
+
+.select-lang-drpdwn-all {
+    width: 75px;
+    margin-top: -30px;
+    border-bottom: none;
+}
+.select-lang-lable-all {
+    margin-top: -18px;
+    text-align: right;
+}
+.select-lang-drpdwn-fp {
+    width: 75px;
+    margin-top: -32px;
+    border-bottom: none;
+    font-size: 16px;
+}
+.select-lang-lable-fp{
+    margin-top: -18px;
+    text-align: right;
+    font-size: 16px;
 }

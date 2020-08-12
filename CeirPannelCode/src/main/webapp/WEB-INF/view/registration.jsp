@@ -270,31 +270,37 @@ String usertypeId="${usertypeId}";
 	<!-- START CONTENT -->
 	<section id="content" id="mainPage">
 		<!--start container-->
+		
+
 		<div class="container">
+			
 			<div class="section registration-form">
+
 				<form id="registrationForm" autocomplete="off" onsubmit="return saveRegistration()">
-					<div class="card-panel registration-form">
-						<%-- <a href="${context}/"
-							style="float: right; margin: -10px; margin-right: -20px;"><i
-							class="fa fa-times boton" aria-hidden="true"></i></a> --%>
-						<div class="row">
-							<div class="col s10 m11 select-lang-lable">
+					<div class="row card-panel registration-form">
+								<h5 class="fixPage-modal-header-reg ">
+								<spring:message code="roletype.${param.type}" />
+										<spring:message code="select.registration" />
+										
+										
+													<div class="col s10 m11 select-lang-lable-reg">
 								
 								<i class="fa fa-globe fa-6" aria-hidden="true"></i>
 							</div>
 							<div class="col s2 m1 right" style="padding: 0;">
-								<select class="browser-default select-lang-drpdwn" id="langlist">
-									<option value="en">English</option>
-									<option value="km"><spring:message code="lang.khmer" /></option>
+								<select class="browser-default select-lang-drpdwn-reg" id="langlist">
+									<option value="en" class="fontBlack">English</option>
+									<option value="km" class="fontBlack"><spring:message code="lang.khmer" /></option>
 								</select>
-							</div>
-							<div class="col s12 m12">
-								<h5>
-								<spring:message code="roletype.${param.type}" />
-										<spring:message code="select.registration" /> 
+							</div> 
 								</h5>
-
-								<hr>
+						<div class="row">
+					
+							
+							
+							<div class="col s12 m12">
+								
+								
 								<span id="msg" style="color: red;">${msg}</span>
 							</div>
 

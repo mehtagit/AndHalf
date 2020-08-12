@@ -165,25 +165,25 @@ var contextpath = "${context}";
          <!-- START CONTENT -->
             <section id="content">
             <div id="initialloader"></div>
-            <div class="row card-panel headerLang">
-			<div class="languageDiv">
-			
-		<div class="col s10 m11 select-lang-lable">
+           
+                <!--start container-->
+                <div class="container" style="padding-bottom: 70px; margin-top: 10vh;" >
+                    <div class="section">
+                        <div class="row card-panel responsive-page" id="endUserRaiseGrievance" style="display: none">
+                           <h6 class="fixPage-modal-header">
+                           
+                            				
+													<div class="col s10 m11 select-lang-lable-griev">
 
 			<i class="fa fa-globe fa-6" aria-hidden="true"></i>
 		</div>
 		<div class="col s2 m1 right" style="padding: 0;">
-			<select class="browser-default select-lang-drpdwn" id="langlist">
-				<option value="en">English</option>
-				<option value="km"><spring:message code="lang.khmer" /></option>
+			<select class="browser-default select-lang-drpdwn-griev " id="langlist">
+				<option value="en" class="fontBlack">English</option>
+				<option value="km" class="fontBlack"><spring:message code="lang.khmer" /></option>
 			</select>
 		</div>
-	</div></div>
-                <!--start container-->
-                <div class="container" style="padding-bottom: 70px; margin-top:5.5vh;" >
-                    <div class="section">
-                        <div class="row card-panel responsive-page" id="endUserRaiseGrievance" style="display: none">
-                            <h6 class="fixPage-modal-header "><spring:message code="modal.Grievance" /></h6>
+                            <spring:message code="modal.Grievance" /> </h6>
                             <form onsubmit="return saveaAonymousGrievance()" method="POST" enctype="multipart/form-data" >
                              <input type="text" id="pageTypeValue" value="${reportType}" style="display: none;">
                                 <div class="col s12 m12 l12">
@@ -323,7 +323,18 @@ var contextpath = "${context}";
                            <div class="row card-panel track-grievance-responsive-page" id="trackGrievanceHeader" >
                               
                      <!--        <a href="./redirectToHomePage" class="modal-close btn-flat modal-btn right" data-dismiss="modal">&times;</a> -->
-                            <h6 class="fixPage-modal-header "><spring:message code="modal.TrackGrievance" /></h6>
+                            <h6 class="fixPage-modal-header "><spring:message code="modal.TrackGrievance" />
+                            					<div class="col s10 m11 select-lang-lable-all">
+
+			<i class="fa fa-globe fa-6" aria-hidden="true"></i>
+		</div>
+		<div class="col s2 m1 right" style="padding: 0;">
+			<select class="browser-default select-lang-drpdwn-all" id="langlist">
+				<option value="en" class="fontBlack">English</option>
+				<option value="km" class="fontBlack"><spring:message code="lang.khmer" /></option>
+			</select>
+		</div>
+		</h6>
                            <div id="trackGrievanceDiv" style="display: none;">
                             <div class="col s12 m12 l12">
                                 <form action="" onsubmit="return endUsergrivanceLibraryTable()" method="POST" enctype="multipart/form-data">
