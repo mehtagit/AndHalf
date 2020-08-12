@@ -135,20 +135,7 @@ i.fa.fa-times-circle-o.red-text {
 
 	<div id="initialloader"></div>
 
-<div class="row card-panel">
-			<div class="languageDiv">
-			
-		<div class="col s10 m11 select-lang-lable">
 
-			<i class="fa fa-globe fa-6" aria-hidden="true"></i>
-		</div>
-		<div class="col s2 m1 right" style="padding: 0;">
-			<select class="browser-default select-lang-drpdwn" id="langlist">
-				<option value="en">English</option>
-				<option value="km"><spring:message code="lang.khmer" /></option>
-			</select>
-		</div>
-	</div></div>
 	<!-- START MAIN -->
 	<div id="">
 		<!-- START WRAPPER -->
@@ -159,13 +146,24 @@ i.fa.fa-times-circle-o.red-text {
 				<div class="container" style="margin-top: 10vh;">
 					<div class="section">
 						<div class="row card-panel login-card-panel">
+		<h6 class="fixPage-modal-header ">
+										<spring:message code="registration.checkdevice" />
+															<div class="col s10 m11 select-lang-lable-all">
 
+			<i class="fa fa-globe fa-6" aria-hidden="true"></i>
+		</div>
+		<div class="col s2 m1 right" style="padding: 0;">
+			<select class="browser-default select-lang-drpdwn-all" id="langlist">
+				<option value="en" class="fontBlack">English</option>
+				<option value="km" class="fontBlack"><spring:message code="lang.khmer" /></option>
+			</select>
+		</div>
+									</h6>
+									
 							<form action="" onsubmit="return DeviceDetails()" method="POST"
 								enctype="multipart/form-data" >
 								<div class="row" id="singleInput">
-									<h6 class="fixPage-modal-header ">
-										<spring:message code="registration.checkdevice" />
-									</h6>
+							
 									<div class="col s12 m12 l12">
 
 
@@ -218,6 +216,16 @@ i.fa.fa-times-circle-o.red-text {
 							<div class="row" id="validDetails" style="display: none;">
 								<h6 class="fixPage-modal-header ">
 									<spring:message code="registration.checkdevice" />
+												<div class="col s10 m11 select-lang-lable">
+
+			<i class="fa fa-globe fa-6" aria-hidden="true"></i>
+		</div>
+		<div class="col s2 m1 right" style="padding: 0;">
+			<select class="browser-default select-lang-drpdwn" id="langlist">
+				<option value="en" class="fontBlack">English</option>
+				<option value="km" class="fontBlack"><spring:message code="lang.khmer" /></option>
+			</select>
+		</div>
 								</h6>
 								<div class="col s12 m12 l12">
 
