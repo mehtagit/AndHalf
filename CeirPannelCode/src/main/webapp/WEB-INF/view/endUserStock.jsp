@@ -200,11 +200,11 @@ var contextpath = "${context}";
                     <div class="section">
                         <div class="row card-panel upload-stock-responsive-page">
                             <h6 class="fixPage-modal-header "><spring:message code="modal.UploadStock" />
-                            					<div class="col s10 m11 select-lang-lable-all">
+                            					<div class="col s10 m11 select-lang-lable-all width87">
 
 			<i class="fa fa-globe fa-6" aria-hidden="true"></i>
 		</div>
-		<div class="col s2 m1 right" style="padding: 0;">
+		<div class="col s2 m1 right width13" style="padding: 0;">
 			<select class="browser-default select-lang-drpdwn-all" id="langlist">
 				<option value="en" class="fontBlack">English</option>
 				<option value="km" class="fontBlack"><spring:message code="lang.khmer" /></option>
@@ -292,11 +292,11 @@ var contextpath = "${context}";
                                 data-dismiss="modal">&times;</a> -->
                                
                                 <h6 class="fixPage-modal-header "><spring:message code="modal.CheckStatus" />
-                                            					<div class="col s10 m11 select-lang-lable-all">
+                                            					<div class="col s10 m11 select-lang-lable-all width87">
 
 			<i class="fa fa-globe fa-6" aria-hidden="true"></i>
 		</div>
-		<div class="col s2 m1 right" style="padding: 0;">
+		<div class="col s2 m1 right width13" style="padding: 0;">
 			<select class="browser-default select-lang-drpdwn-all" id="langlist">
 				<option value="en" class="fontBlack">English</option>
 				<option value="km" class="fontBlack"><spring:message code="lang.khmer" /></option>

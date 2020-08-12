@@ -1,18 +1,21 @@
 
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
 
 <!-- Security Tags -->
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 <sec:csrfMetaTags />
 <!-- Security Tags -->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en" class="no-js">
-<head><title>CEIR Portal</title>
+<head>
+<title>CEIR Portal</title>
 <!--<title>Add Devices</title>-->
 <meta http-equiv='cache-control' content='no-cache'>
 <meta http-equiv='expires' content='-1'>
@@ -26,9 +29,9 @@
 <meta content="" name="description" />
 <meta content="" name="author" />
 <!-- Security Tags -->
-<meta name="_csrf" content="${_csrf.token}"/>
+<meta name="_csrf" content="${_csrf.token}" />
 <!-- default header name is X-CSRF-TOKEN -->
-<meta name="_csrf_header" content="${_csrf.headerName}"/>
+<meta name="_csrf_header" content="${_csrf.headerName}" />
 <!-- Security Tags -->
 <%-- <jsp:include page="/WEB-INF/view/endUserHeader.jsp" ></jsp:include>
 <jsp:include page="/WEB-INF/view/endUserFooter.jsp" ></jsp:include>
@@ -37,7 +40,8 @@
 	src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
 
 <!-- Favicons-->
-<link rel="icon" href="${context}/resources/images/DMC-Logo.png" sizes="32x32">
+<link rel="icon" href="${context}/resources/images/DMC-Logo.png"
+	sizes="32x32">
 <!-- CORE CSS-->
 <link href="${context}/resources/css/materialize.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
@@ -47,8 +51,7 @@
 <link href="${context}/resources/css/jquery-datepicker2.css"
 	type="text/css" rel="stylesheet" media="screen,projection"> --%>
 <!-- Custome CSS-->
-<link href="" type="text/css"
-	rel="stylesheet" media="screen,projection">
+<link href="" type="text/css" rel="stylesheet" media="screen,projection">
 <link
 	href="${context}/resources/font/font-awesome/css/font-awesome.min.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
@@ -62,7 +65,7 @@
 
 <link rel="stylesheet"
 	href="${context}/resources/project_css/iconStates.css">
-	<link rel="stylesheet"
+<link rel="stylesheet"
 	href="${context}/resources/project_css/intlTelInput.css">
 
 <link rel="stylesheet"
@@ -74,10 +77,9 @@
 
 <!------------------------------------------- Dragable Model---------------------------------->
 
-<script
-	src="${context}/resources/custom_js/1.12.1_jquery-ui.min.js"></script>
-	
-	
+<script src="${context}/resources/custom_js/1.12.1_jquery-ui.min.js"></script>
+
+
 
 <style>
 .row {
@@ -163,36 +165,40 @@ input[type='search'] {
 }
 </style>
 </head>
-<body data-id="12" session-value="${not empty param.NID ? param.NID : 'null'}" data-roleType="${usertype}"
-data-lang-param="${pageContext.response.locale}">
+<body data-id="12"
+	session-value="${not empty param.NID ? param.NID : 'null'}"
+	data-roleType="${usertype}"
+	data-lang-param="${pageContext.response.locale}" onLoad='self.scrollTo(0,0)'>
 
 	<!-- START CONTENT -->
 	<section id="content">
-	<!-- <div id="initialloader"></div> -->
+		<!-- <div id="initialloader"></div> -->
 		<!--start container-->
-		<div class="row card-panel">
-			<div class="languageDiv">
-			
-		<div class="col s10 m11 select-lang-lable">
 
-			<i class="fa fa-globe fa-6" aria-hidden="true"></i>
-		</div>
-		<div class="col s2 m1 right" style="padding: 0;">
-			<select class="browser-default select-lang-drpdwn" id="langlist">
-				<option value="en">English</option>
-				<option value="km"><spring:message code="lang.khmer" /></option>
-			</select>
-		</div>
-	</div></div>
 		<div class="container">
 			<div class="section">
 				<div class="row">
 					<div class="col s12 m12 l12">
-						<div class="row card-panel register-device-responsive-page" style="margin: 5vh auto auto; display: block;" >
-							<div class="container-fluid pageHeader">
-								<p class="PageHeading"><spring:message code="registerconsignment.header.addDeviceInformation" /></p>
-								<!-- <a href="#addDevice" class="boton right modal-trigger">Add Device</a> -->
-							</div>
+						<div class="row card-panel register-device-responsive-page"
+							style="margin: 5vh auto auto; display: block;">
+							<h6 class="fixPage-modal-header ">
+								<spring:message
+									code="registerconsignment.header.addDeviceInformation" />
+								<div class="col s10 m11 select-lang-lable-all width87">
+
+									<i class="fa fa-globe fa-6" aria-hidden="true"></i>
+								</div>
+								<div class="col s2 m1 right width13" style="padding: 0;">
+									<select class="browser-default select-lang-drpdwn-all"
+										id="langlist">
+										<option value="en" class="fontBlack">English</option>
+										<option value="km" class="fontBlack"><spring:message
+												code="lang.khmer" /></option>
+									</select>
+								</div>
+							</h6>
+
+
 							<div id="user123" class="section">
 								<form action="" onsubmit="return submitDeviceInfo()"
 									method="POST" enctype="multipart/form-data">
@@ -201,126 +207,141 @@ data-lang-param="${pageContext.response.locale}">
 											<div class="row">
 												<div class="col s12 m12">
 													<div class="col s12 m12" style="margin-top: 30px;">
-														<h5><spring:message code="modal.deviceInfo" /></h5>
+														<h5>
+															<spring:message code="modal.deviceInfo" />
+														</h5>
 														<hr>
 													</div>
 
 													<div class="col s12 m6">
-														<label for="deviceType1"><spring:message code="select.deviceType" /><span
-															class="star"></span></label> <select class="browser-default"
+														<label for="deviceType1"><spring:message
+																code="select.deviceType" /><span class="star"></span></label> <select
+															class="browser-default"
 															oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-											                oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+															oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 															id="deviceType1">
-															<option value=""  selected><spring:message code="select.selectDeviceType" />
-																</option>
+															<option value="" selected><spring:message
+																	code="select.selectDeviceType" />
+															</option>
 
 
 														</select>
 													</div>
 
 													<div class="col s12 m6">
-														<label for="deviceIdType1"><spring:message code="select.deviceIDType" /><span
-															class="star">*</span></label> <select required="required"
+														<label for="deviceIdType1"><spring:message
+																code="select.deviceIDType" /><span class="star">*</span></label>
+														<select required="required"
 															oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-											                oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+															oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 															class="browser-default" id="deviceIdType1">
-															<option value="" disabled selected><spring:message code="select.selectDeviceIDType" /></option>
+															<option value="" disabled selected><spring:message
+																	code="select.selectDeviceIDType" /></option>
 
 														</select>
 													</div>
 
 													<div class="col s12 m6">
-														<label for="multipleSimStatus1"><spring:message code="select.multiSimStatus" /><span class="star"></span>
+														<label for="multipleSimStatus1"><spring:message
+																code="select.multiSimStatus" /><span class="star"></span>
 														</label> <select class="browser-default"
-														oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-											        oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+															oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+															oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 															id="multipleSimStatus1">
-															<option value=""  selected><spring:message code="select.select" />
+															<option value="" selected><spring:message
+																	code="select.select" />
 														</select>
 													</div>
 
 													<div class="col s12 m6">
-														<label for="country1"><spring:message code="select.countryBoughtFrom" /><span
-															class="star"></span></label> <select id="country1"
+														<label for="country1"><spring:message
+																code="select.countryBoughtFrom" /><span class="star"></span></label>
+														<select id="country1"
 															oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-											        oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+															oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 															class="browser-default" class="mySelect"
-															style="padding-left: 0;" >
-															<option value=""  selected><spring:message code="select.countryBoughtFrom" />
+															style="padding-left: 0;">
+															<option value="" selected><spring:message
+																	code="select.countryBoughtFrom" />
 														</select>
 													</div>
 
 													<div class="input-field col s12 m6"
 														style="margin-top: 28px;">
 														<input type="text" id="serialNumber1" name="serialNumber"
-															 pattern="[A-Za-z0-9]{0,15}"
-															
+															pattern="[A-Za-z0-9]{0,15}"
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.15serialNo" />');"
-											        oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15serialNo" />');"
-															title=""
-															maxlength="15"> <label for="serialNumber1"> <spring:message code="input.deviceSerialNumber" /><span class="star"></span>
+															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15serialNo" />');"
+															title="" maxlength="15"> <label
+															for="serialNumber1"> <spring:message
+																code="input.deviceSerialNumber" /><span class="star"></span>
 														</label>
 													</div>
 
-													
+
 												</div>
 											</div>
 											<div class="row">
 												<div class="col s12 m12">
 													<div class="col s12 m6" style="margin-top: -10px;">
-														<label for="deviceStatus1"><spring:message code="select.deviceStatus" /><span
-															class="star"></span></label> <select class="browser-default"
+														<label for="deviceStatus1"><spring:message
+																code="select.deviceStatus" /><span class="star"></span></label>
+														<select class="browser-default"
 															oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-											        oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+															oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 															id="deviceStatus1">
-															<option value=""  selected><spring:message code="select.selectDeviceStatus" /></option>
+															<option value="" selected><spring:message
+																	code="select.selectDeviceStatus" /></option>
 
 														</select>
 													</div>
 
-												
+
 												</div>
 											</div>
 											<div class="row">
 												<div class="col s12 m12">
 													<div class='col s12 m12 input_fields_wrap'>
-														<p><spring:message code="title.imeiMeidEsn" /></p>
+														<p>
+															<spring:message code="title.imeiMeidEsn" />
+														</p>
 														<div class='row'>
 															<div class="input-field col s12 m6">
 																<input type="text" id="IMEIA1" name="IMEI1"
 																	pattern="[0-9]{15,16}" required
 																	oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
-											        oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
-																
-																	maxlength="16"> <label for="IMEIA1"><spring:message code="title.one" /><span
-																	class="star">*</span></label>
+																	oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
+																	maxlength="16"> <label for="IMEIA1"><spring:message
+																		code="title.one" /><span class="star">*</span></label>
 															</div>
 															<div class="input-field col s12 m6">
 																<input type="text" id="IMEIB1" name="IMEI2"
 																	pattern="[0-9]{15,16}"
 																	oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
-											        oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
-															
-																	maxlength="16"> <label for="IMEIB1"><spring:message code="title.two" /></label>
+																	oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
+																	maxlength="16"> <label for="IMEIB1"><spring:message
+																		code="title.two" /></label>
 															</div>
 
 															<div class="input-field col s12 m6">
 																<input type="text" id="IMEIC1" name="IMEIC3"
 																	pattern="[0-9]{15,16}"
 																	oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
-											        oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
-																
-																	maxlength="16"> <label for="IMEIC1"><spring:message code="title.three" /></label>
-															<p id="errorMsgOnModal" class="deviceErrorTitle" style="margin-top: -154px; margin-left: 104px;"></p>
+																	oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
+																	maxlength="16"> <label for="IMEIC1"><spring:message
+																		code="title.three" /></label>
+																<p id="errorMsgOnModal" class="deviceErrorTitle"
+																	style="margin-top: -154px; margin-left: 104px;"></p>
 															</div>
 
 															<div class="input-field col s12 m6" id="field">
 																<input type="text" id="IMEID1" name="IMEID4[]"
 																	pattern="[0-9]{15,16}"
 																	oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
-											        oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
+																	oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																	title="Please enter minimum 15 and maximum 16 digit only"
-																	maxlength="16" id="field0"> <label for="IMEID1"><spring:message code="title.four" /></label>
+																	maxlength="16" id="field0"> <label for="IMEID1"><spring:message
+																		code="title.four" /></label>
 															</div>
 														</div>
 													</div>
@@ -338,17 +359,24 @@ data-lang-param="${pageContext.response.locale}">
 										</p> --%>
 									</div>
 
-									<div class="col s12 m12 center" style="margin-top: 30px; padding-bottom: 50px;">
-										<button class="btn " type="submit"> <spring:message code="button.submit" /></button>
-										<button type='button' class="btn" id="redirectToPage" 
-												style="margin-left: 10px;"><spring:message code="button.cancel" /></button>
+									<div class="col s12 m12 center"
+										style="margin-top: 30px; padding-bottom: 50px;">
+										<button class="btn " type="submit">
+											<spring:message code="button.submit" />
+										</button>
+										<button type='button' class="btn" id="redirectToPage"
+											style="margin-left: 10px;">
+											<spring:message code="button.cancel" />
+										</button>
 									</div>
 
 								</form>
-								
-								<form action="selfRegisterDevicePage" method="post" id="cancelAddDeviceForm">
-								<input type="text" id="nationalIdForCancel" name="Search">
-								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
+								<form action="selfRegisterDevicePage" method="post"
+									id="cancelAddDeviceForm" style="display:none;">
+									<input type="text" id="nationalIdForCancel" name="Search">
+									<input type="hidden" name="${_csrf.parameterName}"
+										value="${_csrf.token}" />
 								</form>
 							</div>
 						</div>
@@ -358,64 +386,74 @@ data-lang-param="${pageContext.response.locale}">
 		</div>
 		<!--end container-->
 	</section>
-	
+
 	<div id="regularisedDevice" class="modal">
-		<h6 class="modal-header"><spring:message code="modal.header.registerdevice" /></h6>
+		<h6 class="modal-header">
+			<spring:message code="modal.header.registerdevice" />
+		</h6>
 		<div class="modal-content">
 			<div class="row">
-				<h6 id="sucessMessage"><spring:message code="modal.message.futureRef" />  <span id="dynamicTxnId"></span>
+				<h6 id="sucessMessage">
+					<spring:message code="modal.message.futureRef" />
+					<span id="dynamicTxnId"></span>
 				</h6>
 			</div>
 			<div class="row">
 				<div class="input-field col s12 center">
 					<div class="input-field col s12 center">
-						<button class="btn" id="ok"><spring:message code="modal.ok" /></button>
+						<button class="btn" id="ok">
+							<spring:message code="modal.ok" />
+						</button>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	
+
 	<div id="endUserAddDeviceDuplicateImei" class="modal">
-		<h6 class="modal-header"><spring:message code="modal.header.registerdevice" /></h6>
+		<h6 class="modal-header">
+			<spring:message code="modal.header.registerdevice" />
+		</h6>
 		<div class="modal-content">
 			<div class="row">
-				<h6 id="dupliCateImeiMsg"><spring:message code="modal.message.futureRef" />
+				<h6 id="dupliCateImeiMsg">
+					<spring:message code="modal.message.futureRef" />
 				</h6>
 			</div>
 			<div class="row">
 				<div class="input-field col s12 center">
 					<div class="input-field col s12 center">
-						<a  class="modal-close btn" ><spring:message code="modal.ok" /></a>
+						<a class="modal-close btn"><spring:message code="modal.ok" /></a>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	
+
 	<div style="display: none;">
-	<form action="EndUser_AddDevices" method="post" id="changedLangAddDeviceForm">
-	<input type="text" id="changedAddDeviceLangValue" name="lang" style="display: none;">
-	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-	</form>
+		<form action="EndUser_AddDevices" method="post"
+			id="changedLangAddDeviceForm">
+			<input type="text" id="changedAddDeviceLangValue" name="lang"
+				style="display: none;"> <input type="hidden"
+				name="${_csrf.parameterName}" value="${_csrf.token}" />
+		</form>
 	</div>
-	
-	
-	
+
+
+
 	<!-- Modal End -->
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
-	
-	<script
-		src="${context}/resources/custom_js/bootstrap.min.js"></script>
+
+	<script src="${context}/resources/custom_js/bootstrap.min.js"></script>
 
 	<script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
-	
+
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/js/countries.js"></script>
-		<!-- i18n library -->
+	<!-- i18n library -->
 	<script type="text/javascript"
 		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
 	<script type="text/javascript"
@@ -447,26 +485,26 @@ data-lang-param="${pageContext.response.locale}">
 		src="${context}/resources/i18n_library/min.js"></script>
 	
 			<script type="text/javascript" src="${context}/resources/js/intlTelInput.js"></script> --%>
-		<script type="text/javascript"
+	<script type="text/javascript"
 		src="${context}/resources/project_js/globalVariables.js?version=<%= (int) (Math.random() * 10) %>"></script>
-		
+
 	<script type="text/javascript"
 		src="${context}/resources/project_js/endUserAddDevice.js?version=<%= (int) (Math.random() * 10) %>"></script>
-	
-	
+
+
 	<script type="text/javascript"
 		src="${context}/resources/project_js/dragableModal.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 	<script type="text/javascript"
 		src="${context}/resources/project_js/enterKey.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
-	
+
 	<script type="text/javascript"
 		src="${context}/resources/project_js/ValidationFileOutsidePortal.js?version=<%= (int) (Math.random() * 10) %>"></script>
-		
 
 
-<script type="text/javascript">
+
+	<script type="text/javascript">
 /* var input2 = document.querySelector("#phone");
 window.intlTelInput(input2, {
 	utilsScript : "${context}/resources/js/utils.js",
@@ -474,5 +512,6 @@ window.intlTelInput(input2, {
 $('div#initialloader').delay(300).fadeOut('slow');
 </script>
 
-</body></html>
-	
+</body>
+</html>
+

@@ -147,10 +147,10 @@ input[type='search'] {
 section {
 	margin: 0 0.5rem;
 }
-.row.card-panel.form {
-    width: 50%;
-    margin-left: 28%;
-    margin-top: 2vh;
+ .container {
+       margin: 0 auto;
+    max-width: 100% !important;
+    position: absolute;
 }
 
 .input-field.col.s12.m2.l2.buttonDiv {
@@ -173,19 +173,21 @@ section {
 	<!-- //////////////////////////////////////////////////////////////////////////// -->
 
 	<!-- START CONTENT -->
-	<section id="content" style="margin-top: 10vh;">
+	<section id="content" >
 	
-	
-		<div class="row card-panel form">
+			<div class="container">
+
+			<div class="section">
+		<div class="row card-panel login-card-panel">
 			<h6 class="fixPage-modal-header ">
 					
 			<spring:message code="modal.header.registerdevice" />
 						
-							<div class="col s10 m11 select-lang-lable-all">
+							<div class="col s10 m11 select-lang-lable-all width87">
 
 			<i class="fa fa-globe fa-6" aria-hidden="true"></i>
 		</div>
-		<div class="col s2 m1 right" style="padding: 0;">
+		<div class="col s2 m1 right width13" style="padding: 0;">
 			<select class="browser-default select-lang-drpdwn-all" id="langlist">
 				<option value="en" class="fontBlack">English</option>
 				<option value="km" class="fontBlack"><spring:message code="lang.khmer" /></option>
@@ -194,9 +196,9 @@ section {
 					</h6>
 		
 			<div class="row">
-				<div class="col s12 m12" style="margin-top: 20px;">
+				<div class="col s12 m12">
 					<div id="submitbtn">
-						<div class="input-field col s12 m2">
+						<div class="input-field col s12 m2" style="width: 29.666667%;">
 							<label for="Search" class="center-align ml-10" style="width:100%"><spring:message code="input.nid" /></label>
 						
 						</div>
@@ -222,6 +224,7 @@ section {
 				</div>
 			</div>
 		</div>
+		</div></div>
 	</section>
 <!--materialize js-->
 	<script type="text/javascript"
