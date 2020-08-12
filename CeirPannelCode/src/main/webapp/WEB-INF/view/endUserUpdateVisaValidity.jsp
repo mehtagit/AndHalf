@@ -480,14 +480,13 @@ background: url(resources/images/loader.gif) 50% 50% no-repeat white;
 										<div class="file-field col s12 m6" style="margin-top: -8px;">
 											<h6>
 												<spring:message code="input.UploadVisa" />
-												<span class="star">*</span>
+												
 											</h6>
 											<div class="btn">
 												<span><spring:message code="input.selectfile" /></span> <input
 													type="file"
 													oninput="InvalidMsg(this,'fileType','<spring:message code="validation.file" />');" oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.file" />');"
-													
-													required   id="endUseruploadnationalID" onchange="visaImageValidation('endUseruploadnationalID')"
+													   id="endUseruploadnationalID" onchange="visaImageValidation('endUseruploadnationalID')"
 														placeholder="<spring:message code="validation.visaPlaceholder" />">
 											</div>
 											<div class="file-path-wrapper">
@@ -503,6 +502,15 @@ background: url(resources/images/loader.gif) 50% 50% no-repeat white;
 												title="<spring:message code="validation.date" />"
 												required  maxlength="15" /> <label for="datepicker"><spring:message
 													code="input.VisaExpiry" /> <span class="star">*</span></label>
+										</div>
+										
+										<div class="input-field col s12 m6" style="margin-top: 22px;">
+											<input type="text" id="endUserVisaNumber" 
+													pattern="[a-zA-Z0-9]{1,15}"
+													oninput="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
+													 maxlength="15" /> <label for=endUserVisaNumber><spring:message
+														code="input.VisaNumber" /> <span class="star"></span></label>
 										</div>
 									</div>
 

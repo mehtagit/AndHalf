@@ -411,13 +411,13 @@ input[type='search'] {
 											</div>
 											
 											<div class="col s12 m12" style="height: 4rem;">
-											
+											<label for="nationality"><spring:message
+													code="input.VIP" /> </label>
 											<div class=" boxHeight">
 												 <c:choose>
 												 
 												<c:when test = "${viewInformation.endUserDB.isVip=='Y'}">
-												<label for="nationality"><spring:message
-													code="input.VIP" /> </label>
+												
 												<label>
 												 
 												<input class="with-gap" type="radio" name="selectvip" value="Y" disabled="disabled" checked="checked">
@@ -431,7 +431,7 @@ input[type='search'] {
 												</label>
 												  </c:when>
 												 <c:otherwise>
-												<%--  <label>
+												<label>
 												 
 												<input class="with-gap" type="radio" name="selectvip" disabled="disabled" value="Y"  >
 												 <span><spring:message code="modal.yes" /></span>
@@ -440,7 +440,7 @@ input[type='search'] {
 												  <label> 
 												  <input class="with-gap" value="N" type="radio" disabled="disabled" checked="checked"
 													name="selectvip" style="margin-left: 20px;" /> <span><spring:message code="modal.no" /></span>
-												</label> --%>
+												</label>
 												</c:otherwise>
 												</c:choose>
 											</div>
@@ -482,11 +482,12 @@ input[type='search'] {
 										
 								<div class="col s12 m12" style="height: 4rem; display: block "id="askVisaDetails">
 										
+											<label for="nationality"><spring:message
+													code="input.AddVisa" /> <span class="star"></span></label>	
 											<div class=" boxHeight">
 												<c:choose>
 												<c:when test = "${viewInformation.endUserDB.onVisa=='Y'}">
-													<label for="nationality"><spring:message
-													code="input.AddVisa" /> <span class="star"></span></label>
+													
 												<label><input class="with-gap" type="radio"
 													name="onVisa" value="Y" checked="checked" disabled="disabled">
 													<span><spring:message code="modal.yes" /></span> </label> <label>
