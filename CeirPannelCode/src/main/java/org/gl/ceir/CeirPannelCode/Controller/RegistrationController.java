@@ -2,6 +2,7 @@ package org.gl.ceir.CeirPannelCode.Controller;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -61,16 +62,35 @@ public class RegistrationController {
 	private final Logger log = LoggerFactory.getLogger(getClass());	
 
 @RequestMapping("DMC")
+	/*
+	 * public ModelAndView index(HttpServletRequest request,HttpSession session){
+	 * 
+	 * log.info("inside index controller "); ModelAndView mv=new ModelAndView();
+	 * Integer userid=(Integer)session.getAttribute("userid");
+	 * log.info("userid::::::::::"+userid); loginService.sessionRemoveCode(userid,
+	 * session); mv.setViewName("index"); return mv; }
+	 */  
 	public ModelAndView index(HttpServletRequest request,HttpSession session){
-		
-		log.info("inside index controller ");
-		ModelAndView mv=new ModelAndView();
-		Integer userid=(Integer)session.getAttribute("userid");
+	log.info("inside index controller ");
+	ModelAndView mv=new ModelAndView();
+	Integer userid=(Integer)session.getAttribute("userid");
+	String defaultLink = (String)session.getAttribute("defaultLink");
+	if( Objects.nonNull(userid) && !(userid.equals(0) || userid.equals(-1))) {
 		log.info("userid::::::::::"+userid);
+		if( Objects.nonNull(defaultLink) )
+			//return new ModelAndView("redirect:"+defaultLink);
+			return new ModelAndView("redirect:./?lang="+(String)session.getAttribute("language"));
+		else {
+			//mv.setViewName("login");
+			loginService.sessionRemoveCode(userid, session);
+			mv.setViewName("index");
+		}
+	}else {
 		loginService.sessionRemoveCode(userid, session);
 		mv.setViewName("index");
-		return mv;      
-	}          
+	}
+	return mv;      
+} 
 
 	@ResponseBody
 	@GetMapping("asTypeData/{tagId}")

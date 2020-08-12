@@ -86,7 +86,7 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
                                         </div>
 
                                         <div class="input-field col s12 m4 l4">
-                                            <input type="text" name="middleName" id="middleName" value="${registration.middleName}" maxlength="20" disabled="" placeholder="">
+                                            <input type="text" name="middleName" id="middleName" value="${not empty registration.middleName ? registration.middleName : 'NA'}" maxlength="20" disabled="" placeholder="">
                                             <label for="middleName" class="active"><spring:message code="input.middleName" /></label>
                                         </div>
 
@@ -108,13 +108,13 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
                                         </div>
                                         
                                         <div class="input-field col s12 m6 l6">
-												<input type="text" name="village" id="village" maxlength="20" value="${registration.village}" disabled="" placeholder="">
+												<input type="text" name="village" id="village" maxlength="20" value="${not empty registration.village ? registration.village : 'NA'}" disabled="" placeholder="">
 												<label for="village"><spring:message code="input.village" /></label>
 										</div>
 											
 
                                         <div class="input-field col s12 m6 l6">
-                                            <input type="text" name="locality" id="locality" maxlength="20" value="${registration.locality}" disabled="" placeholder="">
+                                            <input type="text" name="locality" id="locality" maxlength="20" value="${not empty registration.locality ? registration.locality : 'NA'}" disabled="" placeholder="">
                                             <label for="locality" class="active"> <spring:message code="input.locality" /></label>
                                         </div>
                                         
@@ -199,7 +199,7 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
                                         </div>
 
                                         <div class="input-field col s12 m6 l6">
-                                            <input type="text" name="reportingAuthorityName" id="reportingAuthorityName" value="${registration.authorityName}" maxlength="30" disabled="" placeholder="">
+                                            <input type="text" name="reportingAuthorityName" id="reportingAuthorityName" value="${not empty registration.authorityName ? registration.authorityName : 'NA'}" maxlength="30" disabled="" placeholder="">
                                             <label for="reportingAuthorityName" class="active"><spring:message code="registration.reportingauthorityname" /></label>
                                         </div>
 

@@ -113,13 +113,13 @@ data-session-type="${not empty param.type ? param.type : 'null'}"
                                             </div>
                                             
                                             <div class="input-field col s12 m6 l6">
-												<input type="text" name="village" id="village" maxlength="20" value="${registration.village}" disabled="" placeholder="">
+												<input type="text" name="village" id="village" maxlength="20" value="${not empty registration.village ? registration.village : 'NA'}" disabled="" placeholder="">
 												<label for="village"><spring:message code="input.village" /></label>
 											</div>
 											
 
                                             <div class="input-field col s12 m6 l6">
-                                                <input type="text" name="locality" id="locality" maxlength="20" value="${registration.locality}" disabled="" placeholder="">
+                                                <input type="text" name="locality" id="locality" maxlength="20" value="${not empty registration.locality ? registration.locality : 'NA'}" disabled="" placeholder="">
                                                 <label for="locality" class="active"><spring:message code="input.locality" /> </label>
                                             </div>
 											
@@ -191,7 +191,7 @@ data-session-type="${not empty param.type ? param.type : 'null'}"
                                             </div>
 
                                             <div class="input-field col s12 m6 l6">
-                                                <input type="text" name="reportingAuthorityName" id="reportingAuthorityName" maxlength="30" value="${registration.authorityName}" disabled="" placeholder="">
+                                                <input type="text" name="reportingAuthorityName" id="reportingAuthorityName" maxlength="30" value="${not empty registration.authorityName ? registration.authorityName : 'NA'}" disabled="" placeholder="">
                                                 <label for="reportingAuthorityName" class="active"><spring:message code="registration.reportingauthorityname" /></label>
                                             </div>
 
