@@ -347,7 +347,7 @@ data-lang-param="${pageContext.response.locale}">
 								</form>
 								
 								<form action="selfRegisterDevicePage" method="post" id="cancelAddDeviceForm">
-								<input type="text" id="nationalIdForCancel" name="Search">
+								<input type="text" id="nationalIdForCancel" name="Search" style="display: none">
 								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 								</form>
 							</div>
