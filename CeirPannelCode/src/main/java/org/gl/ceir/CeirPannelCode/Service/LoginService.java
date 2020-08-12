@@ -90,34 +90,43 @@ public class LoginService {
 		String validCaptcha=(String)session.getAttribute("captcha_security");
 		log.info("captcha from session:  "+validCaptcha); 
 		if(user.getCaptcha().equals(validCaptcha)) {
-			log.info("if captcha match");
+			Integer userid = (Integer)session.getAttribute("userid");
 			LoginResponse response=new LoginResponse();
-			response=userLoginFeignImpl.checkUser(user);
-			log.info("login response:  "+response); 
-			log.info("language = "+response.getUserLanguage());
-			if(response.getStatusCode()==200) { 
-				session.setAttribute("username", response.getUsername());
-				session.setAttribute("userid", response.getUserId());
-				session.setAttribute("usertypeList", response.getUserRoles());
-				session.setAttribute("usertype", response.getPrimaryRole());
-				session.setAttribute("name", response.getName());   
-				session.setAttribute("userStatus", response.getStatus());
-				session.setAttribute("userStatusValue", response.getStatusValue());
-				session.setAttribute("usertypeId", response.getPrimaryRoleId());
-				session.setAttribute("operatorTypeId", response.getOperatorTypeId());
-				session.setAttribute("operatorTypeName", response.getOperatorTypeName());
-				session.setAttribute("language",response.getUserLanguage()); 
-				session.setAttribute("period", response.getPeriod());
-				session.setAttribute("selfRegister", response.getSelfRegister());
-				session.setAttribute("defaultLink", response.getDefaultLink());
-				session.setMaxInactiveInterval(sessionLogOutTime);
-			
-				return response;      
-			}       
-			else {
-				response.setResponse(response.getResponse());
+			if( Objects.isNull(userid) || userid.equals(0) || userid.equals(-1) ) {
+				log.info("if captcha match");
+				//LoginResponse response=new LoginResponse();
+				response=userLoginFeignImpl.checkUser(user);
+				log.info("login response:  "+response); 
+				log.info("language = "+response.getUserLanguage());
+				if(response.getStatusCode()==200) { 
+					session.setAttribute("username", response.getUsername());
+					session.setAttribute("userid", response.getUserId());
+					session.setAttribute("usertypeList", response.getUserRoles());
+					session.setAttribute("usertype", response.getPrimaryRole());
+					session.setAttribute("name", response.getName());   
+					session.setAttribute("userStatus", response.getStatus());
+					session.setAttribute("userStatusValue", response.getStatusValue());
+					session.setAttribute("usertypeId", response.getPrimaryRoleId());
+					session.setAttribute("operatorTypeId", response.getOperatorTypeId());
+					session.setAttribute("operatorTypeName", response.getOperatorTypeName());
+					session.setAttribute("language",response.getUserLanguage()); 
+					session.setAttribute("period", response.getPeriod());
+					session.setAttribute("selfRegister", response.getSelfRegister());
+					session.setAttribute("defaultLink", response.getDefaultLink());
+					session.setMaxInactiveInterval(sessionLogOutTime);
+
+					return response;      
+				}       
+				else {
+					response.setResponse(response.getResponse());
+					return response;
+				}
+			}else {
+				response.setStatusCode(200);
+				response.setDefaultLink( (String)session.getAttribute("defaultLink") );
+				response.setUserLanguage((String)session.getAttribute("language"));
 				return response;
-			}
+				}
 		}
 		else { 
 			log.info("if captcha not match");
