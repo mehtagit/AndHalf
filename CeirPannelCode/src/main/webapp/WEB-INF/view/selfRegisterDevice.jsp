@@ -189,7 +189,12 @@ position: fixed;
     margin-top: 0vh;
 }
 
- 
+ .container {
+       margin: 0 auto;
+    max-width: 100% !important;
+    position: absolute;
+}
+
 </style>
 </head>
 <body data-lang-param="${pageContext.response.locale}"
@@ -203,13 +208,11 @@ position: fixed;
 		<div class="container">
 			<div class="section">
 				<div class="">
-					<div class="col s12 m12 l12" id="emptyTable">
-						<div class="row card-panel tableFormHeader">
+					
 
-							
-
-							<div class="row card-panel register-device-responsive-page" style="margin: auto;margin-top: -2vh;" id="user123" class="section" style="display: none;">
-								<h6 class="fixPage-modal-header ">
+							<div class="row card-panel login-card-panel" id="user123" class="section" style="display: none;">
+								
+		<h6 class="fixPage-modal-header ">
 						<spring:message code="modal.header.registerdevice" />
 						<div class="col s10 m11 select-lang-lable-all">
 
@@ -223,7 +226,6 @@ position: fixed;
 		</div>
 					</h6>
 
-								<div>
 									<form action="" onsubmit="return submitEndUserDeviceInfo()"
 						method="POST" enctype="multipart/form-data" >
 						<div class="col s12 m12 l12">
@@ -797,16 +799,34 @@ position: fixed;
 								
 							</div>
 							<div class="container" id="user456" style="display: none;">
-							<div class="row card-panel tableView">
+				
 							<%-- <h6 class="fixPage-modal-header ">
 						<spring:message code="modal.header.registerdevice" />
 					</h6> --%>
-					<div class="container-fluid pageHeader" id="pageHeader">
+					<div class="row card-panel tableView" >
 							<%-- <h6 class="fixPage-modal-header ">
 						<spring:message code="modal.header.registerdevice" />
 					</h6> --%>
-								<a href="" class="boton right" id="btnLink"></a>
-							</div>
+					
+						<h6 class="fixPage-modal-header ">
+						<spring:message code="modal.header.registerdevice" />
+						<a href="" class="boton right" id="btnLink"></a>
+						<div class="col s10 m11 select-lang-lable-all" style="position: absolute;width: 60%;">
+
+			<i class="fa fa-globe fa-6" aria-hidden="true"></i>
+		</div>
+		<div class="col s2 m1 right" style="padding: 0;position: absolute;margin-left: 60%;">
+			<select class="browser-default select-lang-drpdwn-all" id="langlist">
+				<option value="en" class="fontBlack">English</option>
+				<option value="km" class="fontBlack"><spring:message code="lang.khmer" /></option>
+			</select>
+		</div>
+					
+					</h6>
+					
+					
+					
+							
 							<div id="profile-page" class="section">
 								
 									
@@ -834,7 +854,8 @@ position: fixed;
 											</div>
 										</div>
 									</div>
-								</div></div>
+									</div>
+								</div>
 						</div>
 					</div>
 				</div>

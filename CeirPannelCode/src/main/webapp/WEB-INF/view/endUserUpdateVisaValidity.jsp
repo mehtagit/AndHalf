@@ -203,18 +203,18 @@ background: url(resources/images/loader.gif) 50% 50% no-repeat white;
 	<section id="content">
 		<!--start container-->
 
-		
-
+					<div class="container" style="margin-top: 10vh;">
+	
 			<div class="section">
 				<div class="row card-panel login-card-panel">
 					<h6 class="fixPage-modal-header ">
 						<spring:message code="input.UpdateVisaValidity" />
 						
-							<div class="col s10 m11 select-lang-lable-all">
+							<div class="col s10 m11 select-lang-lable-all width87">
 
 			<i class="fa fa-globe fa-6" aria-hidden="true"></i>
 		</div>
-		<div class="col s2 m1 right" style="padding: 0;">
+		<div class="col s2 m1 right width13" style="padding: 0;">
 			<select class="browser-default select-lang-drpdwn-all" id="langlist">
 				<option value="en" class="fontBlack">English</option>
 				<option value="km" class="fontBlack"><spring:message code="lang.khmer" /></option>
