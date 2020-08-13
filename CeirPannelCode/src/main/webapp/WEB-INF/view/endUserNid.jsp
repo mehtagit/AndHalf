@@ -199,7 +199,7 @@ section {
 				<div class="col s12 m12">
 					<div id="submitbtn">
 						<div class="input-field col s12 m2" style="width: 29.666667%;">
-							<label for="Search" class="center-align ml-10" style="width:100%"><spring:message code="input.nid" /></label>
+							<label for="Search" class="center-align ml-10" style="width:100%"><spring:message code="input.nid" /><span class="star">*</span></label>
 						
 						</div>
 						
