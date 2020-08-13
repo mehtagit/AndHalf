@@ -109,6 +109,7 @@ function hide() {
 		                                 $('#endUserdatepicker1').prop('readonly', true);
 		                                 $('#endUseruploadnationalID').val(data.data.endUseruploadnationalID);
 		                                  $('#endUserdatepicker').val(data.data.visaDb[0].visaExpiryDate).prop('readonly', true);
+		                                 // $('#endUserVisaNumber').val(data.data.visaDb[0].visaNumber).prop('readonly', true);
 		                                   $('#endUseremailID').val(data.data.email).prop('readonly', true); 
 		               
 		                                   
@@ -384,24 +385,24 @@ function hide() {
     	////console.log("isInArray: "+isInArray)
     	if (uploadedFileName.length > 30) {
     		$('#fileFormateModal').openModal();
-    		$('#fileErrormessage').text('');
-    		$('#fileErrormessage').text($.i18n('imageMessage'));
+    		$('#visafileErrormessage').text('');
+    		$('#visafileErrormessage').text($.i18n('imageMessage'));
     	}
     	else if(isInArray ==false)
     	{
     		$('#fileFormateModal').openModal({
     			dismissible:false
     		});
-    		$('#fileErrormessage').text('');
-    		$('#fileErrormessage').text($.i18n('imageMessage'));
+    		$('#visafileErrormessage').text('');
+    		$('#visafileErrormessage').text($.i18n('imageMessage'));
 
     	}
     	else if(fileSize>=5000){
     		$('#fileFormateModal').openModal({
     			dismissible:false
     		});
-    		$('#fileErrormessage').text('');
-    		$('#fileErrormessage').text($.i18n('imageSize'));
+    		$('#visafileErrormessage').text('');
+    		$('#visafileErrormessage').text($.i18n('imageSize'));
     	}
 
     }

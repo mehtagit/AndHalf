@@ -568,7 +568,7 @@ stream.close();
 	    if(visaImage==null)
 		{
 			log.info("visa image is null");	
-			fileCopyRequest.setFileName(null);
+			fileCopyRequest.setFileName("NA");
 		}
 	    else {
 	    	fileCopyRequest.setFileName(visaImage.getOriginalFilename());
