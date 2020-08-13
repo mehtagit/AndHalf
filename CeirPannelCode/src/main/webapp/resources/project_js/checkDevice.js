@@ -56,7 +56,7 @@ function DeviceDetails(){
 		},
 		error : function() {
 			$('div#initialloader').delay(300).fadeOut('slow');
-			$('#errorModal').openModal();
+			$('#errorModal').openModal({dismissible:false});
 		}
 	});
 	return false;
