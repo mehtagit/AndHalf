@@ -1,4 +1,13 @@
 
+[
+	  './resources/graph_js/chart.min.js',
+	  './resources/js/materialize.js',
+	  './resources/custom_js/bootstrap.min.js',
+	  './resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js'
+	].forEach(function(src) {
+		$('body').append('<script type="text/javascript" src='+src+' async defer><\/script>');
+
+	});
 
 function userloginGraph() {
 

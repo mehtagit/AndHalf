@@ -206,7 +206,7 @@ input#quantity {
 display: none !important;
 }
 </style>
-
+	<script type="text/javascript" src="${context}/resources/graph_js/chart.min.js"></script>
 </head>
 <body>
 	<!-- START MAIN -->
@@ -231,12 +231,12 @@ display: none !important;
               <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">User Login Graph</h6>
+                  <h6 class="m-0 font-weight-bold text-primary">Active Device Graph</h6>
                  
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
-                   <canvas class="chart-area" id="lineGraph" style = "width: 550px; height: 400px; margin: 0 auto">
+                   <canvas class="chart-area" id="pieGraph" style = "width: 550px; height: 400px; margin: 0 auto">
                   </canvas>
                 </div>
               </div>
@@ -249,7 +249,7 @@ display: none !important;
               <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">User Login Graph</h6>
+                  <h6 class="m-0 font-weight-bold text-primary">Active Device Graph</h6>
               
                 </div>
                 <!-- Card Body -->
@@ -263,7 +263,7 @@ display: none !important;
              </div>               
                     
                     
-                    <div style="display:flex">
+<%--                     <div style="display:flex">
                             <div class="col-xl-8 col-lg-7">
               <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
@@ -295,10 +295,10 @@ display: none !important;
                     <canvas class="chart-area" id="donutGraph" style = "width: 550px; height: 400px; margin: 0 auto">
                   </canvas>
     </div></div></div></div>
+     --%>
     
     
-    
-    <div style="display:flex">
+<%--     <div style="display:flex">
                             <div class="col-xl-8 col-lg-7">
               <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
@@ -329,7 +329,7 @@ display: none !important;
                  
                     <canvas class="chart-area" id="horizontalBarGraph" style = "width: 550px; height: 400px; margin: 0 auto">
                   </canvas>
-    </div></div></div></div>
+    </div></div></div></div> --%>
     </div></div></div></div></div></div></section></div>
 
 
@@ -340,11 +340,12 @@ display: none !important;
 
 	<!-- END MAIN -->
 
+
 <script type="text/javascript"
-		src="${context}/resources/graph_js/UserLoginGraph.js?version=<%= (int) (Math.random() * 10) %>"></script>		
+		src="${context}/resources/graph_js/acitveUserGraph.js?version=<%= (int) (Math.random() * 10) %>"></script>		
 	<!-- chartist -->
-         
-<script type="text/javascript">$( document ).ready(function() { 	  userloginGraph();  var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login";}else{timeoutTime = currentTime + timeout;}});});</script>
+        
+<script type="text/javascript">$( document ).ready(function() { activeDeviceGraph(); var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login";}else{timeoutTime = currentTime + timeout;}});});</script>
 </body></html>
 
 <%
