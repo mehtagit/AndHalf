@@ -84,6 +84,7 @@
 						"bSearchable" : true,
 						"scrollX": true,
 						"scrolly": true,
+						"searching": false,
 						"oLanguage": {  
 							"sUrl": langFile  
 						},

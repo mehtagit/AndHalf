@@ -102,7 +102,7 @@
                                         </div>
 
                                         <div class="input-field col s12 m6 l6" id="companyName">
-                                            <input type="text" name="company" placeholder="" disabled="" id="company" value="${registration.companyName}" maxlength="30">
+                                            <input type="text" name="company" placeholder="" disabled="" id="company" value="${not empty registration.companyName ? registration.companyName : 'NA'}" maxlength="30">
                                             <label for="company" class="active"><spring:message code="input.companyName"/> </label>
                                         </div>
 
@@ -219,7 +219,7 @@
                                 </div>
                                 
                            		<div class="input-field col s12 m6">
-                                    			<input type="text" name="approvedBy" id="approvedBy" value="${registration.user.approvedBy}" maxlength="16" placeholder="" disabled="">
+                                    			<input type="text" name="approvedBy" id="approvedBy" value="${not empty registration.user.approvedBy ? registration.user.approvedBy : 'NA'}" maxlength="16" placeholder="" disabled="">
                                     			<label for="approvedBy" class="active"><spring:message code="registration.approedBy" /> </label>
                                 </div>
                                 
@@ -230,7 +230,7 @@
                                 <div class="row">
                                     <div class="col s12 m12">
                                   	<div class="input-field col s12 center">
-                                         <a class="btn modal-close" href="./registrationRequest?txnID=${not empty param.txnID ? param.txnID : 'null'}&source=${not empty param.source ? param.source : 'null'}"><spring:message code="modal.close" /></a>
+                                         <a class="btn modal-close" href="./registrationRequest?txnID=${not empty param.txnID ? param.txnID : 'null'}&source=${not empty param.source ? param.source : 'null'}"><spring:message code="modal.cancel" /></a>
                                     </div>
                                 </div>
                                 </div>

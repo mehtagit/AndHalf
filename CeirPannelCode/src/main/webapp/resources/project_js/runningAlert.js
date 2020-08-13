@@ -231,7 +231,7 @@
 			var info = table.page.info(); 
 			var pageNo=info.page;
 			var pageSize =info.length;
-			var alertId = $('#alertId').val() == null ? null : $("#alertId option:selected").text();
+			var alertId = $("#alertId").val() == 'null' ? null : $("#alertId option:selected").text();
 			
 			var filterRequest={
 					"endDate":$('#endDate').val(),
