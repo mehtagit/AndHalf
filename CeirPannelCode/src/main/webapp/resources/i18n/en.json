@@ -215,5 +215,6 @@
 		"Stolen IMEI Count":"Stolen IMEI Count",
 	"Recovery IMEI Count":"Recovery IMEI Count",
 	"EXISTS_IN_GSMA_TAC_DB":"TAC in IMEI is not approved TAC from GSMA .",
-	"imageMessage": "File name should not be more than 30 characters. / File should have extension as png,jpg,jpeg,gif,csv and bmp. / File size should be less than 10 MB"
+	"imageMessage": "File name should not be more than 30 characters. / File should have extension as png,jpg,jpeg,gif,csv and bmp. / File size should be less than 10 MB",
+	"No_Question_Mapped":"No question mapped for this user"
 	}
