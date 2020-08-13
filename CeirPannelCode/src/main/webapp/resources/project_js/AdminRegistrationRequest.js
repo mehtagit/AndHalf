@@ -726,9 +726,9 @@ function userChangeStatus(entity){
 			var filterRequest={
 
 					"columns": [
-						"CREATED_ON","MODIFIED_ON","FIRST_NAME","MIDDLE_NAME","LAST_NAME","EMAIL","PHONE_NO"						,"DISPLAY_NAME"
+						"created_on","modified_on","first_name","last_name","email","phone_no","username","current_status"
 						],
-						"tableName": "user_profile_aud",
+						"tableName": "users_aud_user_profile",
 						"dbName" : "ceirconfig",
 						"userid":txnID,
 						"txnId":txnID

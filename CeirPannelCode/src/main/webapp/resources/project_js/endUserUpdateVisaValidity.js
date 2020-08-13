@@ -270,6 +270,7 @@ function hide() {
         var province=$('#state').val();
         var phoneNo=$('#phone').val();
         var visaType=$('#endUservisaType').val(); 
+        var endUserVisaNumber=$('#endUserVisaNumber').val(); 
         var entryDate=$('#endUserdatepicker1').val();
         var expiryDate=$('#endUserdatepicker').val();
         var email=$('#endUseremailID').val();  
@@ -277,7 +278,8 @@ function hide() {
         var txnid=$('#endUserTxnId').val();
         var visa={
 				"visaType":visaType,
-				"visaExpiryDate":expiryDate
+				"visaExpiryDate":expiryDate,
+				"visaNumber": endUserVisaNumber,
 			}
         var passportFileName=$('#passportFileName').val();
         if(passportFileName=="")

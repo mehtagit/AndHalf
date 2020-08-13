@@ -805,7 +805,7 @@ data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeI
 										</div>
 									</div>
 </div>
-
+</div>
 
 <div id="greyListTableModal" class="modal">
  <button type="button" style="    font-size: 25px;"

@@ -3,6 +3,7 @@ package org.gl.ceir.CeirPannelCode.Service;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -52,11 +53,28 @@ public class LoginService {
 	@Value ("${sessionLogOutTime}")
 	int sessionLogOutTime;
 	
+	/*
+	 * public ModelAndView loginPage(HttpSession session){
+	 * log.info("inside login controller"); //this.sessionRemoveCode(null, session);
+	 * ModelAndView mv=new ModelAndView(); mv.setViewName("login");
+	 * log.info("exit from login controller"); return mv; }
+	 */
 	public  ModelAndView loginPage(HttpSession session){
 		log.info("inside login controller");
 		//this.sessionRemoveCode(null, session);
 		ModelAndView mv=new ModelAndView();
-		mv.setViewName("login");
+		Integer userid = (Integer)session.getAttribute("userid");
+		String defaultLink = (String)session.getAttribute("defaultLink");
+		if( Objects.nonNull(userid) && !(userid.equals(0) || userid.equals(-1))) {
+			if( Objects.nonNull(defaultLink) )
+				//return new ModelAndView("redirect:"+defaultLink);
+				return new ModelAndView("redirect:./?lang="+(String)session.getAttribute("language"));
+			else {
+				mv.setViewName("login");
+			}
+		}else {
+			mv.setViewName("login");
+		}
 		log.info("exit from login controller");
 		return mv;
 	}
@@ -72,34 +90,43 @@ public class LoginService {
 		String validCaptcha=(String)session.getAttribute("captcha_security");
 		log.info("captcha from session:  "+validCaptcha); 
 		if(user.getCaptcha().equals(validCaptcha)) {
-			log.info("if captcha match");
+			Integer userid = (Integer)session.getAttribute("userid");
 			LoginResponse response=new LoginResponse();
-			response=userLoginFeignImpl.checkUser(user);
-			log.info("login response:  "+response); 
-			log.info("language = "+response.getUserLanguage());
-			if(response.getStatusCode()==200) { 
-				session.setAttribute("username", response.getUsername());
-				session.setAttribute("userid", response.getUserId());
-				session.setAttribute("usertypeList", response.getUserRoles());
-				session.setAttribute("usertype", response.getPrimaryRole());
-				session.setAttribute("name", response.getName());   
-				session.setAttribute("userStatus", response.getStatus());
-				session.setAttribute("userStatusValue", response.getStatusValue());
-				session.setAttribute("usertypeId", response.getPrimaryRoleId());
-				session.setAttribute("operatorTypeId", response.getOperatorTypeId());
-				session.setAttribute("operatorTypeName", response.getOperatorTypeName());
-				session.setAttribute("language",response.getUserLanguage()); 
-				session.setAttribute("period", response.getPeriod());
-				session.setAttribute("selfRegister", response.getSelfRegister());
-				session.setAttribute("defaultLink", response.getDefaultLink());
-				session.setMaxInactiveInterval(sessionLogOutTime);
-			
-				return response;      
-			}       
-			else {
-				response.setResponse(response.getResponse());
+			if( Objects.isNull(userid) || userid.equals(0) || userid.equals(-1) ) {
+				log.info("if captcha match");
+				//LoginResponse response=new LoginResponse();
+				response=userLoginFeignImpl.checkUser(user);
+				log.info("login response:  "+response); 
+				log.info("language = "+response.getUserLanguage());
+				if(response.getStatusCode()==200) { 
+					session.setAttribute("username", response.getUsername());
+					session.setAttribute("userid", response.getUserId());
+					session.setAttribute("usertypeList", response.getUserRoles());
+					session.setAttribute("usertype", response.getPrimaryRole());
+					session.setAttribute("name", response.getName());   
+					session.setAttribute("userStatus", response.getStatus());
+					session.setAttribute("userStatusValue", response.getStatusValue());
+					session.setAttribute("usertypeId", response.getPrimaryRoleId());
+					session.setAttribute("operatorTypeId", response.getOperatorTypeId());
+					session.setAttribute("operatorTypeName", response.getOperatorTypeName());
+					session.setAttribute("language",response.getUserLanguage()); 
+					session.setAttribute("period", response.getPeriod());
+					session.setAttribute("selfRegister", response.getSelfRegister());
+					session.setAttribute("defaultLink", response.getDefaultLink());
+					session.setMaxInactiveInterval(sessionLogOutTime);
+
+					return response;      
+				}       
+				else {
+					response.setResponse(response.getResponse());
+					return response;
+				}
+			}else {
+				response.setStatusCode(200);
+				response.setDefaultLink( (String)session.getAttribute("defaultLink") );
+				response.setUserLanguage((String)session.getAttribute("language"));
 				return response;
-			}
+				}
 		}
 		else { 
 			log.info("if captcha not match");

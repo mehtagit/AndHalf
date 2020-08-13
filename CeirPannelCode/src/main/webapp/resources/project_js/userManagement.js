@@ -85,7 +85,7 @@
 						"bInfo" : true,
 						"bSearchable" : true,
 						"oLanguage": {
-					        "sEmptyTable": "My Custom Message On Empty Table"
+							"sEmptyTable": "No records found in the system"
 					    },
 						ajax: {
 							url : 'UserManagementData',

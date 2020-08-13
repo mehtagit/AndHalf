@@ -197,7 +197,7 @@ function viewIndivisualStolen()
 
 			$('#updatesingleStolenimei3').val(response.stolenIndividualUserDB.imeiEsnMeid3);
 			if(response.stolenIndividualUserDB.imeiEsnMeid3=="" || response.stolenIndividualUserDB.imeiEsnMeid3==null){
-				$('#updatesingleStolenimei4').val("NA");	
+				$('#updatesingleStolenimei3').val("NA");	
 			}
 			$('#updatesingleStolenimei4').val(response.stolenIndividualUserDB.imeiEsnMeid4);
 			if(response.stolenIndividualUserDB.imeiEsnMeid4=="" || response.stolenIndividualUserDB.imeiEsnMeid4==null){

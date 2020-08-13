@@ -839,12 +839,13 @@ data-dismiss="modal">&times;</button> -->
 	</script>
 	<script type="text/javascript">
 		function sessionLogOut(timeOut,currentTime){
-                if(currentTime > timeOut){
+			$('#logoutForm').submit();    
+			/* if(currentTime > timeOut){
 					$('#logoutForm').submit();
 				}
 				else{
 					 window.location.href = "./login";
-				}
+				} */
 	}
 	</script>
 

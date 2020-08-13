@@ -874,7 +874,7 @@ function setSingleDeviceViewPopUp(data,popUpType,requestType){
 			$("#viewblockmultipleSimStatus").val('NA')
 		}
 		$("#viewsingleblockserialNumber").val(data.singleImeiDetails.deviceSerialNumber);
-		if(data.singleImeiDetails.multipleSimStatusInterp=='' || data.singleImeiDetails.multipleSimStatusInterp==null){
+		if(data.singleImeiDetails.deviceSerialNumber=='' || data.singleImeiDetails.deviceSerialNumber==null){
 			$("#viewsingleblockserialNumber").val('NA')
 		}
 		$("#viewsingleblockremark").val(data.singleImeiDetails.remark);
