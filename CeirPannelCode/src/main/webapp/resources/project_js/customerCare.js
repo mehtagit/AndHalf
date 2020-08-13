@@ -703,7 +703,7 @@ function globalBlackListDataTable(data){
 			"columns" : [{
 				"data" : "createdOn","defaultContent": ""
 			}, {
-				"data" : "blackliststatus", "defaultContent": ""
+				"data" : "blacklistStatus", "defaultContent": ""
 			},
 			{
 				"data" : "greyliststatus","defaultContent": ""

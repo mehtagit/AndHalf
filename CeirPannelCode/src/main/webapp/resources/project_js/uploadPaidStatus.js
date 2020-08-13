@@ -356,6 +356,8 @@ function table(url,dataUrl,filterSource){
 			txn=$('#transactionID').val();
 			
 		}
+		$("body").attr("data-filterSource","filter");
+		txn=$('#transactionID').val();
 	}
 	
 	var request={
@@ -744,6 +746,12 @@ function exportpaidStatus(){
     var nid = nationalId == null ? $('#nId').val() : nationalId
 	var table = $('#data-table-simple').DataTable();
     var status=$('#recordStatus').val();
+    if( $("body").attr("data-filterSource")=='noti'){
+    	txnId= (txnIdValue == 'null' && transactionIDValue == undefined)? $('#transactionID').val() : transactionIDValue;	
+	}
+	else{
+		txnId=$('#transactionID').val();
+	}
 	var info = table.page.info(); 
 	var pageNo=info.page;
 	var pageSize =info.length;
