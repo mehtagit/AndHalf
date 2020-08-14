@@ -53,7 +53,7 @@ public class Util {
      // yyyy-MM-dd HH:mm:ss.SSS
      
      
-        public static String defaultNowDate(boolean isOracle) {
+        public static String defaultNowDate() {
        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");     //yyyy-MM-dd HH:mm:ss.SSS
                String val = sdf.format(new Date());
                String date = "TO_DATE('" + val + "','YYYY-MM-DD HH24:MI:SS')";
@@ -68,3 +68,4 @@ public class Util {
 
 
  
+

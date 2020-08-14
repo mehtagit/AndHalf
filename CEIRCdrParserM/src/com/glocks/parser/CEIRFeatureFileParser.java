@@ -110,7 +110,7 @@ public class CEIRFeatureFileParser {
           Date currentDate = new Date();
           Date graceDate = null;
           try {
-               query = "select value from system_configuration_db where tag='grace_period_end_date'";
+               query = "select value from system_configuration_db where tag='GRACE_PERIOD_END_DATE'";
                logger.info("Query(checkGraceStatus)is " + query);
                stmt = conn.createStatement();
                rs1 = stmt.executeQuery(query);
@@ -532,6 +532,7 @@ public class CEIRFeatureFileParser {
      }
 
 }
+
 
 
 

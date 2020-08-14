@@ -31,7 +31,7 @@ public class CEIRFeatureFileUploader {
           if (args.length == 1) {
                feature = args[0];
           }
-           new ErrorFileGenrator().apiConnectionErrorFileReader();
+          new ErrorFileGenrator().apiConnectionErrorFileReader();
           HashMap<String, String> feature_file_management = new HashMap<String, String>();
           CEIRFeatureFileFunctions ceirfunction = new CEIRFeatureFileFunctions();
           HashMap<String, String> feature_file_mapping = new HashMap<String, String>();
@@ -50,13 +50,18 @@ public class CEIRFeatureFileUploader {
                               ceirfunction.UpdateStatusViaApi(conn, file_details.getString("txn_id"), 0, file_details.getString("feature"));
                               ceirfunction.updateFeatureFileStatus(conn, file_details.getString("txn_id"), 2, file_details.getString("feature"), file_details.getString("sub_feature")); // update web_action_db           
                               break;
+                         } else if (file_details.getString("sub_feature").equalsIgnoreCase("Clear")) {
+                              new CEIRFeatureFileFunctions().getfromRegulizeEnterInCustom(conn, file_details.getString("txn_id"));
+                              ceirfunction.updateFeatureFileStatus(conn, file_details.getString("txn_id"), 4, file_details.getString("feature"), file_details.getString("sub_feature")); // update web_action_db           
+                              break;
+
                          } else {
                               ceirfunction.updateFeatureFileStatus(conn, file_details.getString("txn_id"), 2, file_details.getString("feature"), file_details.getString("sub_feature")); // update web_action_db           
                               break;
                          }
                     }
 
-                    if (file_details.getString("feature").equalsIgnoreCase("Stolen") && (  file_details.getString("sub_feature").equalsIgnoreCase("Approve")    ||   file_details.getString("sub_feature").equalsIgnoreCase("Accept")      )) {
+                    if (file_details.getString("feature").equalsIgnoreCase("Stolen") && (file_details.getString("sub_feature").equalsIgnoreCase("Approve") || file_details.getString("sub_feature").equalsIgnoreCase("Accept"))) {
                          updateDeviceDetailsByTxnId(conn, file_details.getString("txn_id"), "device_lawful_db");
                          ceirfunction.updateFeatureFileStatus(conn, file_details.getString("txn_id"), 4, file_details.getString("feature"), file_details.getString("sub_feature")); // update web_action_db           
                          logger.debug("Web Action 4 done ");
@@ -69,7 +74,7 @@ public class CEIRFeatureFileUploader {
                          break;
                     }
 
-                    if (file_details.getString("feature").equalsIgnoreCase("Recovery") &&   (  file_details.getString("sub_feature").equalsIgnoreCase("Approve")     ||   file_details.getString("sub_feature").equalsIgnoreCase("Accept")      )       ) {
+                    if (file_details.getString("feature").equalsIgnoreCase("Recovery") && (file_details.getString("sub_feature").equalsIgnoreCase("Approve") || file_details.getString("sub_feature").equalsIgnoreCase("Accept"))) {
                          removeDeviceDetailsByTxnId(conn, file_details.getString("txn_id"), "device_lawful_db");
                          ceirfunction.updateFeatureFileStatus(conn, file_details.getString("txn_id"), 4, file_details.getString("feature"), file_details.getString("sub_feature")); // update web_action_db           
                          logger.debug("Web Action 4 done ");
@@ -82,7 +87,7 @@ public class CEIRFeatureFileUploader {
                          logger.debug("Web Action 4 done ");
                          break;
                     }
-                    if (file_details.getString("feature").equalsIgnoreCase("Block") && (file_details.getString("sub_feature").equalsIgnoreCase("Approve")     ||   file_details.getString("sub_feature").equalsIgnoreCase("Accept")   )  ) {
+                    if (file_details.getString("feature").equalsIgnoreCase("Block") && (file_details.getString("sub_feature").equalsIgnoreCase("Approve") || file_details.getString("sub_feature").equalsIgnoreCase("Accept"))) {
                          updateDeviceDetailsByTxnId(conn, file_details.getString("txn_id"), "device_operator_db");
                          ceirfunction.updateFeatureFileStatus(conn, file_details.getString("txn_id"), 4, file_details.getString("feature"), file_details.getString("sub_feature")); // update web_action_db           
                          logger.debug("Web Action 4 done ");
@@ -95,7 +100,7 @@ public class CEIRFeatureFileUploader {
                          break;
                     }
 
-                    if (file_details.getString("feature").equalsIgnoreCase("Unblock") &&  ( file_details.getString("sub_feature").equalsIgnoreCase("Approve")    ||   file_details.getString("sub_feature").equalsIgnoreCase("Accept")        )   ) {
+                    if (file_details.getString("feature").equalsIgnoreCase("Unblock") && (file_details.getString("sub_feature").equalsIgnoreCase("Approve") || file_details.getString("sub_feature").equalsIgnoreCase("Accept"))) {
                          removeDeviceDetailsByTxnId(conn, file_details.getString("txn_id"), "device_operator_db");
                          ceirfunction.updateFeatureFileStatus(conn, file_details.getString("txn_id"), 4, file_details.getString("feature"), file_details.getString("sub_feature")); // update web_action_db           
                          logger.debug("Web Action 4 done ");
@@ -267,7 +272,7 @@ public class CEIRFeatureFileUploader {
 
           } catch (Exception e) {
                logger.error("" + l.getClassName() + "/" + l.getMethodName() + ":" + l.getLineNumber() + e);
-          
+
           }
 
      }
@@ -500,20 +505,5 @@ public class CEIRFeatureFileUploader {
 //                    logger.info("File not exists.... ");
 //                    hfr.readFeatureWithoutFile(conn, file_details.getString("feature"), raw_upload_set_no, file_details.getString("txn_id"), file_details.getString("sub_feature"), feature_file_mapping.get("mgnt_table_db"), user_type);
 //                }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

@@ -10,9 +10,11 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
 
 import org.apache.log4j.Logger;
 
@@ -208,7 +210,8 @@ public class CEIRFeatureFileFunctions {
                }
                logger.info("user_type.. +" + user_type);
 
-          } catch (Exception e) {logger.warn("NO users Found" );
+          } catch (Exception e) {
+               logger.warn("NO users Found");
 //               logger.error("" + l.getClassName() + "/" + l.getMethodName() + ":" + l.getLineNumber() + e);
           }
           try {
@@ -393,16 +396,15 @@ public class CEIRFeatureFileFunctions {
           return map;
      }
 
-     void getfromRegulizeEnterInCustom(Connection conn, String txn_id, String feature) {
+     void getfromRegulizeEnterInCustom(Connection conn, String txn_id) {
           Statement stmt = null;
-          ResultSet rs = null;
           Statement stmt1 = null;
-          ResultSet rs1 = null;
+          ResultSet rs = null;
           String query = null;
           String InsrtQry = null;
           boolean isOracle = conn.toString().contains("oracle");
           String dateFunction = Util.defaultDate(isOracle);
-
+          String period = new HexFileReader().checkGraceStatus(conn);
           try {
                String ValImei = "";
                for (int i = 1; i < 5; i++) {
@@ -418,26 +420,32 @@ public class CEIRFeatureFileFunctions {
                     if (i == 4) {
                          ValImei = "fourth_imei";
                     }
-                    query = "select * from regularize_device_db where  txn_id = '" + txn_id + "' where " + ValImei + " is not null   ";
+                    query = "select * from regularize_device_db where  txn_id = '" + txn_id + "' and  " + ValImei + " is not null   ";
+                    logger.info(" / " + query);
                     stmt = conn.createStatement();
+                    stmt1 = conn.createStatement();
                     rs = stmt.executeQuery(query);
                     try {
                          while (rs.next()) {
-                              InsrtQry = "insert  into device_custom_db(CREATED_ON , DEVICE_ID_TYPE, DEVICE_STATUS,DEVICE_TYPE,IMEI_ESN_MEID,MULTIPLE_SIM_STATUS,FEATURE_NAME ,TXN_ID) "
-                                      + "values (" + dateFunction + " , '" + rs.getString("DEVICE_ID_TYPE") + "' , '" + rs.getString("DEVICE_STATUS") + "', '" + rs.getString("DEVICE_TYPE") + "' , '" + rs.getString("" + ValImei + "") + "' , '" + rs.getString("MULTIPLE_SIM_STATUS") + "' , 'Register Device' , '" + rs.getString("TXN_ID") + "'     )";
+                              InsrtQry = "insert  into device_custom_db(CREATED_ON , modified_on , DEVICE_ID_TYPE, DEVICE_STATUS,DEVICE_TYPE,IMEI_ESN_MEID,MULTIPLE_SIM_STATUS,FEATURE_NAME ,TXN_ID,user_id , period ) "
+                                      + "values (" + dateFunction + " , " + dateFunction + " ,  '" + rs.getString("DEVICE_ID_TYPE") + "' , '" + rs.getString("DEVICE_STATUS") + "', '" + ((rs.getString("DEVICE_TYPE") == null) ? "NA" : rs.getString("DEVICE_TYPE")) + "' , '" + rs.getString("" + ValImei + "") + "' , '" + rs.getString("MULTI_SIM_STATUS") + "' , 'Register Device' , '" + rs.getString("TXN_ID") + "','" + rs.getString("TAX_COLLECTED_BY") + "' , '" + period + "'     )";
                               logger.info(" insert qury  [" + InsrtQry + "]");
-                              stmt1 = conn.createStatement();
-                              stmt1.executeQuery(query);
+                              stmt1.executeUpdate(InsrtQry);
                          }
                     } catch (Exception e) {
-                         logger.error("" + l.getClassName() + "/" + l.getMethodName() + ":" + l.getLineNumber() + e);
+                         logger.error(".. " + l.getClassName() + "/" + l.getMethodName() + ":" + l.getLineNumber() + e);
                     }
                }
-               stmt1.close();
           } catch (Exception e) {
-               logger.error("" + l.getClassName() + "/" + l.getMethodName() + ":" + l.getLineNumber() + e);
+               logger.error(".... " + l.getClassName() + "/" + l.getMethodName() + ":" + l.getLineNumber() + e);
+          } finally {
+               try {
+                    rs.close();
+                    stmt.close();
+               } catch (SQLException ex) {
+                    java.util.logging.Logger.getLogger(CEIRFeatureFileFunctions.class.getName()).log(Level.SEVERE, null, ex);
+               }
           }
-
      }
 
      void deleteFromCustom(Connection conn, String txn_id, String string0) {
@@ -546,18 +554,5 @@ public class CEIRFeatureFileFunctions {
 //		}
 //		
 //	}
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

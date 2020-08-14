@@ -5,6 +5,7 @@
  */
 package com.glocks.parser;
 
+import com.glocks.util.Util;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -516,12 +517,12 @@ public class FeatureForSingleStolenBlock {
                dateNow = new SimpleDateFormat("YYYY-MM-dd").format(new Date());
           }
 
+          String dateFunction = Util.defaultNowDate();
           if (feature.equalsIgnoreCase("Stolen") || feature.equalsIgnoreCase("Recovery")) {
                DeviceType = "( select interp from system_config_list_db where tag = 'DEVICE_TYPE' and value  =(select device_type from stolen_individual_userdb where stolen_id  =" + id + " ) )";
                DeviceIdType = "( select interp from system_config_list_db where tag = 'DEVICE_ID_TYPE' and value  =( select device_id_type from stolen_individual_userdb where stolen_id  =" + id + " ))";
                MultipleSIMStatus = " (select interp from system_config_list_db where tag = 'MULTI_SIM_STATUS' and value  = (select multi_sim_status  from stolen_individual_userdb where stolen_id  =" + id + " ) )";
-               DeviceSerial = " ( select  device_serial_number from stolen_individual_userdb where stolen_id  =" + id + " )";
-
+               DeviceSerial = " ( Select  device_serial_number from stolen_individual_userdb where stolen_id  =" + id + " ) ";
           } else {
                DeviceType = "( select interp from system_config_list_db where tag = 'DEVICE_TYPE'  and value  =(select device_type  from single_imei_details where txn_id ='" + txn_id + "' )) ";
                DeviceIdType = "( select interp from system_config_list_db where tag = 'DEVICE_ID_TYPE' and value  =(select device_id_type   from single_imei_details where txn_id ='" + txn_id + "') )";
@@ -530,10 +531,10 @@ public class FeatureForSingleStolenBlock {
           }
 
           String query = "insert into  " + feature + "_raw"
-                  + "   (   DeviceType,DeviceIdType ,MultipleSIMStatus,SNofDevice,IMEIESNMEID,Devicelaunchdate,DeviceStatus,status,file_name , txn_id , time ,feature_type)   values  "
+                  + "   (   DeviceType,DeviceIdType ,MultipleSIMStatus,SNofDevice,IMEIESNMEID,Devicelaunchdate,DeviceStatus,status,file_name , txn_id , time ,feature_type ,CREATED_ON , modified_on    )   values  "
                   + " (  " + DeviceType + "  , " + DeviceIdType + " ,  " + MultipleSIMStatus + " ,  " + DeviceSerial
                   + " ,  '" + imei_esn_meid + "' , '', '' , 'Init' ,  'NA' , '" + txn_id + "' ,  '" + dateNow + "'  , '"
-                  + feature + "' )   ";
+                  + feature + "'  ,  " + dateFunction + ", " + dateFunction + "      )   ";
 
           logger.info(" Query  for insertion... " + query);
 

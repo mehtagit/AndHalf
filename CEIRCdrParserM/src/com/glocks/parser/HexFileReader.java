@@ -181,12 +181,12 @@ public class HexFileReader {
                               logger.debug("Configured Column name and File Headers are matched");
                               int my_column_count = 0;
                               for (CDRColumn cdrColumn : myfilelist) {
-                                   if ((cdrColumn.columString).trim().equals(data[my_column_count].trim())) {
+                                   if ((cdrColumn.columName).trim().equals(data[my_column_count].trim())) {
                                         logger.debug("Column name matched");
                                         my_column_count++;
-                                        query = query + cdrColumn.columString + ",";
+                                        query = query + cdrColumn.columName + ",";
                                         values = values + "?,";
-                                        failquery = failquery + cdrColumn.columString + ",";   //
+                                        failquery = failquery + cdrColumn.columName + ",";   //
                                         failvalues = failvalues + " ?, ";                           //
                                    }
 
@@ -357,6 +357,7 @@ public class HexFileReader {
           HashMap<String, String> msgConfig = new HashMap<String, String>();
           ArrayList<String> fileLines = new ArrayList<String>();
           try {
+               String SNofDeviceValue = null;
                CEIRFeatureFileFunctions ceirfunction = new CEIRFeatureFileFunctions();
                List<String> sourceTacList = new ArrayList<String>();
                ArrayList<CDRColumn> myfilelist = getCDRFields(conn, main_type, usertype_name);
@@ -467,9 +468,6 @@ public class HexFileReader {
                     logger.info("line is " + line + "  line length " + line.trim().length());
 
                     if (line.replace(",", " ").trim().length() > 0) {
-
-                         
-
                          errorString = "";
                          if (k == 0) {
                               if (data.length == 1) {
@@ -498,7 +496,12 @@ public class HexFileReader {
                                    break;
                               }
                               logger.info(" Check for Configured Column name match with File Headers ");
+
+                              logger.info("data.length " + data.length);
+                              logger.info(" myfilelist.size()" + myfilelist.size());
+
                               if (data.length == myfilelist.size()) {
+
                                    logger.info("Configured Column name and File Headers are matched");
                                    int my_column_count = 0;
 
@@ -506,19 +509,30 @@ public class HexFileReader {
                                         my_column_name = data[my_column_count].trim();
                                         my_column_name = my_column_name.replaceAll(" ", "");
                                         my_column_name = my_column_name.replaceAll("_", "");
+                                        my_column_name = my_column_name.replaceAll(" ", "");
                                         my_column_name = my_column_name.replaceAll("/", "");
-                                        logger.info(cdrColumn.columString + " file column " + data[my_column_count].trim());
-                                        if ((cdrColumn.columString).trim().equalsIgnoreCase(my_column_name)) {
+                                        logger.info(cdrColumn.columName + " file column " + data[my_column_count].trim());
+
+                                        if (cdrColumn.columName.equalsIgnoreCase("SNofDevice")) {
+                                             SNofDeviceValue = cdrColumn.graceType;
+                                           logger.info(cdrColumn.columName + " //SNofDeviceValue...." + SNofDeviceValue);
+
+                                        }
+
+                                        if ((cdrColumn.columName).trim().equalsIgnoreCase(my_column_name)) {
                                              logger.info("column name matchedd...." + my_column_name);
                                              my_column_count++;
                                         } else {
-                                             if (!alst.contains(my_column_name)) {
-                                                  failed_flag = 0;
-                                                  logger.info("Column name not matched");
-                                                  errFile.gotoErrorFile(conn, txn_id, "  Error Code :CON_FILE_0001, Error Message: The header name in the file is not correct   "); /////////
-                                                  conVal = 1;
-                                                  break;
-                                             }
+                                             logger.info("column name  NOTT matchedd ");
+                                             logger.info(alst.toArray());
+
+//                                             if (!alst.contains(my_column_name)) {      //  aug5
+                                             failed_flag = 0;
+                                             logger.info("Column name not matched");
+                                             errFile.gotoErrorFile(conn, txn_id, "  Error Code :CON_FILE_0001, Error Message: The header name in the file is not correct   "); /////////
+                                             conVal = 1;
+                                             break;
+//                                             }
                                         }
                                    }
                                    logger.info("Total column mtch check ");
@@ -533,6 +547,7 @@ public class HexFileReader {
                                         break;
                                    }
                               } else {
+                                   errFile.gotoErrorFile(conn, txn_id, "  Error Code :CON_FILE_0024, Error Message: The Rows contain more Column than allowed in the header.    "); /////////
                                    failed_flag = 0;
                                    fr.close();
                                    break;
@@ -546,50 +561,56 @@ public class HexFileReader {
                               String imeiV = arrOfFile[4];
                               hash_Set.add(arrOfFile[3].trim());
                               sourceTacList.add(arrOfFile[3].trim());
-                              
+
                               if (arrOfFile.length != 7) {
-                              logger.info("errfor First Wrok set.." + imeiV);
+                                   logger.info("errfor   Wrok set.." + imeiV);
                                    errorString += "   Error Code :CON_FILE_0008, Error Message: The Rows contain more Column than allowed in the header.";
                                    failed_flag = 0; /// added after
-                         }
-                              
-                              
-                              
-                              
+                              }
+logger.debug("***");
                               for (int v = 0; v < data.length; v++) {
                                    if (data[v].length() > 25) {
                                         errorString += " Error Code :CON_FILE_0004, Error Message:   File Contain a Long Field  Record , ";
                                         failed_flag = 0;
                                    }
                               }
+                              logger.debug("!!!");
                               if (set.add(imeiV) == false) {
                                    logger.info("errfor First Wrok set.." + imeiV);
                                    errorString += "   Error Code :CON_FILE_0008, Error Message:   The record is duplicate in the file,";
                                    failed_flag = 0; /// added after
                               }
-
+ logger.debug("@@@");
                               if (!(deviceType.contains(data[0].trim().toLowerCase()))) {
                                    errorString += "  Error Code :CON_FILE_0006, Error Message:  The field value(Device Type) is not as per the specifications,";
                                    failed_flag = 0;
                               }
+ logger.debug("###");
 
                               if (!(deviceType3.contains(data[1].trim().toLowerCase()))) {
                                    errorString += "  Error Code :CON_FILE_0006, Error Message:  The field value(Device ID Type) is not as per the specifications,";
                                    failed_flag = 0;
-                              }
+                              }  
+ logger.debug("###");
                               if (!(deviceType4.contains(data[2].trim().toLowerCase()))) {
                                    errorString += "  Error Code :CON_FILE_0006, Error Message:  The field value(Multiple Sim Status) is not as per the specifications,";
                                    failed_flag = 0;
                               }
+                               logger.debug("$$$");
+
                               if (!(deviceType5.contains(data[6].trim().toLowerCase()))) {
                                    errorString += "  Error Code :CON_FILE_0006, Error Message:  The field value(Device Status) is not as per the specifications,";
                                    failed_flag = 0;
                               }
+                               logger.debug("^^^");
+
                               boolean val = validateJavaDate(data[5]);
                               if (!val) {
                                    errorString += "  Error Code :CON_FILE_0006, Error Message:  The field value(Device Launch Date) is not as per the specifications,";
                                    failed_flag = 0;
                               }
+                               logger.debug("&&&");
+
                               for (CDRColumn cdrColumn : myfilelist) {
                                    if (cdrColumn.graceType.equalsIgnoreCase("Mandatory")) {
                                         logger.info("DATA in field ... " + data[j - 1]);
@@ -635,18 +656,22 @@ public class HexFileReader {
                }
 
                try {
-                    Map<String, Integer> hm = new HashMap<String, Integer>();
-                    for (String ii : sourceTacList) {
-                         Integer j = hm.get(ii);
-                         hm.put(ii, (j == null) ? 1 : j + 1);
-                    }
-                    for (Map.Entry<String, Integer> val : hm.entrySet()) {
-                         // System.out.println("Element " + val.getKey() + " " + "occurs" + ": " + val.getValue() + " times");
-                         if (val.getValue() > 4) {
-                              logger.info("Error Code :CON_FILE_0014, Error Message: Serial number " + val.getKey() + "  is assigned to " + val.getValue() + "  imeis. Max(4 imeis to be linked)  ");
-                              fileLines.add("Error Code :CON_FILE_0014, Error Message: Serial number " + val.getKey() + "  is assigned to " + val.getValue() + "  imeis. Max(4 imeis to be linked)  ");
-                              failed_flag = 0;
+                   if (SNofDeviceValue.equalsIgnoreCase("Mandatory")) {
+
+                         Map<String, Integer> hm = new HashMap<String, Integer>();
+                         for (String ii : sourceTacList) {
+                              Integer j = hm.get(ii);
+                              hm.put(ii, (j == null) ? 1 : j + 1);
                          }
+                         for (Map.Entry<String, Integer> val : hm.entrySet()) {
+                              // System.out.println("Element " + val.getKey() + " " + "occurs" + ": " + val.getValue() + " times");
+                              if (val.getValue() > 4) {
+                                   logger.info("Error Code :CON_FILE_0014, Error Message: Serial number " + val.getKey() + "  is assigned to " + val.getValue() + "  imeis. Max(4 imeis to be linked)  ");
+                                   fileLines.add("Error Code :CON_FILE_0014, Error Message: Serial number " + val.getKey() + "  is assigned to " + val.getValue() + "  imeis. Max(4 imeis to be linked)  ");
+                                   failed_flag = 0;
+                              }
+                         }
+
                     }
 
                } catch (Exception e) {
@@ -677,7 +702,7 @@ public class HexFileReader {
                                         logger.info("Configured Column name and File Headers are matched");
                                         int my_column_count = 0;
                                         for (CDRColumn cdrColumn : myfilelist) {
-                                             query = query + cdrColumn.columString + ",";
+                                             query = query + cdrColumn.columName + ",";
                                              values = values + "?,";
                                              my_column_count++;
                                         }
@@ -1118,7 +1143,7 @@ public class HexFileReader {
           Date currentDate = new Date();
           Date graceDate = null;
           try {
-               query = "select value from system_configuration_db where tag='grace_period_end_date'";
+               query = "select value from system_configuration_db where tag='GRACE_PERIOD_END_DATE'";
                logger.info("Query is " + query);
                stmt = conn.createStatement();
                rs1 = stmt.executeQuery(query);
