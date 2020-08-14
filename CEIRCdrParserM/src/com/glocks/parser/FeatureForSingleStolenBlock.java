@@ -395,7 +395,7 @@ public class FeatureForSingleStolenBlock {
           }
 
           stmt8.close();
-          DateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd"); //
+          DateFormat dateFormat1 = new SimpleDateFormat("dd-MMM-yy"); //
           Calendar cal = Calendar.getInstance();
           cal.add(Calendar.DATE, -days);
           String date = dateFormat1.format(cal.getTime());
@@ -406,7 +406,7 @@ public class FeatureForSingleStolenBlock {
           String msisdn = map.get("contact_number");
           String strTacs = "Result......";
           String device_usage_db_qury = " select imei from  device_usage_db  where msisdn = '" + msisdn
-                  + "'  and created_on > '" + date + "' ";
+                  + "'  and modified_on > '" + date + "' ";
           logger.info(" ImeiWithMsisdn ,,,device_usage_db,,, " + device_usage_db_qury);
           Statement stmt = conn.createStatement();
           ResultSet resultmsdn = stmt.executeQuery(device_usage_db_qury);
@@ -419,7 +419,7 @@ public class FeatureForSingleStolenBlock {
           }
           logger.info("List size ..." + lst.size());
           String device_duplicate_db_qury = " select imei from  device_duplicate_db  where msisdn = '" + msisdn
-                  + "'  and created_on > '" + date + "' ";
+                  + "'  and modified_on > '" + date + "' ";
           logger.info(" getImeiSMsisdn ,,,device_duplicate_db,,, " + device_duplicate_db_qury);
           ResultSet result2 = stmt.executeQuery(device_duplicate_db_qury);
           try {

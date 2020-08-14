@@ -1,7 +1,9 @@
 package com.glocks.util;
 
-import com.glocks.parser.CEIRFeatureFileFunctions;
-import com.glocks.parser.ErrorFileGenrator;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import org.apache.commons.lang.StringUtils;
 
 class tester {
 
@@ -156,10 +158,18 @@ class tester {
 //          for (String a : arrOfStr) {
 //               System.out.println(a);
 //          }
-          String line = ",IMEI,Yes,H5Y0J,787654123321451,31-07-2020,New";
-  String[] arrOfFile = line.trim().split(",", 8);
-          
-          System.out.println("" +arrOfFile.length);
+//          String line = ",IMEI,Yes,H5Y0J,787654123321451,31-07-2020,New";
+//  String[] arrOfFile = line.trim().split(",", 8);
+//          
+//          System.out.println("" +arrOfFile.length);
+//          String MyString = "tHiS is SomE Statement";
+//          String MyString1 = StringUtils.capitalize(MyString);
+//          System.out.println("" + MyString1);
+          SimpleDateFormat dateFormat1 = new SimpleDateFormat("dd-MMM-yy"); //
+          Calendar cal = Calendar.getInstance();
+          cal.add(Calendar.DATE, -45);
+          String date = dateFormat1.format(cal.getTime());
+          System.out.println("Date from which Data is calculated" + date);
 
      }
 
