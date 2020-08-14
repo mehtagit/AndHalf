@@ -25,7 +25,6 @@ public class CheckImeiController {  //sam
     @ApiOperation(value = "Validate Imei", response = CheckImeiMess.class)
     @PostMapping(path = "cc/CheckImeI")
     public MappingJacksonValue CheckImeiValues(@RequestBody CheckImeiValuesEntity checkImeiValuesEntity) {
-
         String user_type = checkImeiValuesEntity.getUser_type().trim();
         String feature = checkImeiValuesEntity.getFeature().trim().replaceAll(" ", "");
         Long imei = checkImeiValuesEntity.getImei();
@@ -48,7 +47,6 @@ public class CheckImeiController {  //sam
         mapping = new MappingJacksonValue(cImsg);
         logger.info("Response of View =" + mapping);
         return mapping;
-
     }
 
 }

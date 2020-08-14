@@ -1,6 +1,5 @@
 package com.gl.ceir.config.controller;
 
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.json.MappingJacksonValue;
@@ -23,7 +22,6 @@ public class GsmaValueController {
 
      @ApiOperation(value = "View All list of Values of Gsma", response = GsmaValueModel.class)
      @PostMapping(path = "gsma/GsmaValues")
-
      public MappingJacksonValue getAllValues(String imei, String msisdn, String identifierType) {
 
           MappingJacksonValue mapping = null;
@@ -77,7 +75,7 @@ public class GsmaValueController {
                     getvals.setImei("NA");
                     getvals.setMsisdn("NA");
                     getvals.setImsi("NA");
-                    
+
                     getvals.setACTION("NA");
                     getvals.setCREATE_FILENAME("NA");
                     getvals.setFAILED_RULE_DATE("NA");
@@ -119,6 +117,15 @@ public class GsmaValueController {
 
           logger.info("Response of View =" + mapping);
           return mapping;
+     }
+
+     @ApiOperation(value = "Check Imei Msisdn Combination Present" )
+     @PostMapping(path = "gsma/CheckImeiMsisdnValues")
+     public String CheckImeiMsisdnValues(String imei, String msisdn) {
+          logger.info("Imei:   " + imei + " ;msisdn: " + msisdn);
+          String stats = GsmaValueServiceImpl.getimeiMsisdnDetail(imei, msisdn);
+          logger.info("Response =" + stats);
+          return stats;
      }
 
 }

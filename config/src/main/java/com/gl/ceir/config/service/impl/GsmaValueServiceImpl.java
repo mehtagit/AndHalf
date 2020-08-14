@@ -2,7 +2,6 @@ package com.gl.ceir.config.service.impl;
 
 import java.util.List;
 
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,32 +9,93 @@ import org.springframework.stereotype.Service;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.model.GsmaValueModel;
 import com.gl.ceir.config.model.UsagesValueModel;
+import com.gl.ceir.config.model.DuplicateValueModel;
 import com.gl.ceir.config.repository.GsmaValueRepository;
 import com.gl.ceir.config.repository.UsagesValueRepository;
+import com.gl.ceir.config.repository.DuplicateValueRepository;
 
 @Service
 public class GsmaValueServiceImpl {
 
-    private static final Logger logger = Logger.getLogger(GsmaValueServiceImpl.class);
+     private static final Logger logger = Logger.getLogger(GsmaValueServiceImpl.class);
 
-    @Autowired
-    GsmaValueRepository gsmaValueRepository;
+     @Autowired
+     GsmaValueRepository gsmaValueRepository;
 
-    @Autowired
-    UsagesValueRepository usagesValueRepository;
+     @Autowired
+     UsagesValueRepository usagesValueRepository;
 
-    public GsmaValueModel getAll(int device_id) {
-        try {
-            logger.info("Going to get All Values   for id;; " + device_id);
-            GsmaValueModel gmaValueModel = gsmaValueRepository.getByDeviceId(device_id);
-            System.out.println("result is " + gmaValueModel);
-            return gsmaValueRepository.getByDeviceId(device_id);
+     @Autowired
+     DuplicateValueRepository duplicateValueRepository;
+     
 
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
-        }
-    }
+     public GsmaValueModel getAll(int device_id) {
+          try {
+               logger.info("Going to get All Values   for id;; " + device_id);
+               GsmaValueModel gmaValueModel = gsmaValueRepository.getByDeviceId(device_id);
+               System.out.println("result is " + gmaValueModel);
+               return gsmaValueRepository.getByDeviceId(device_id);
+
+          } catch (Exception e) {
+               logger.error(e.getMessage(), e);
+               throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+          }
+     }
+
+     public UsagesValueModel getimeiValbymsisdn(String msisdn) {
+          UsagesValueModel usagesValueModel = null;
+          try {
+               logger.info(" imei is Null ");
+               usagesValueModel = usagesValueRepository.getByMsisdn(msisdn.toString());
+               logger.info(" result is  " + usagesValueModel);
+               return usagesValueModel;
+          } catch (Exception e) {
+               logger.error(e.getMessage(), e);
+               throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+          }
+     }
+
+     public UsagesValueModel getimeiValbyImei(String imei) {
+          UsagesValueModel usagesValueModel = null;
+          try {
+               logger.info("Get Values By Imei");
+               usagesValueModel = usagesValueRepository.getByImei(imei.toString());
+               logger.info(" Result by imei is  " + usagesValueModel);
+               return usagesValueModel;
+          } catch (Exception e) {
+               logger.error(e.getMessage(), e);
+               throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+          }
+
+     }
+
+     public String getimeiMsisdnDetail(String imei, String msisdn) {
+          UsagesValueModel usagesValueModel = null;
+          DuplicateValueModel duplicateValueModel = null;
+          try {
+               logger.info("Find if Combination Present");
+               usagesValueModel = usagesValueRepository.getByImeiAndMsisdn(imei, msisdn);
+               logger.info("Value From usagesValueModel Query : " + usagesValueModel);
+               if (usagesValueModel == null) {
+                    logger.info(":: ");
+                    duplicateValueModel = duplicateValueRepository.getByImeiAndMsisdn(imei, msisdn);
+                    logger.info("Value From duplicateValueModel Query : " + duplicateValueModel);
+                    if (duplicateValueModel == null) {
+                         logger.info(":::: ");
+                         return "No";
+                    } else {
+                         return "Yes";
+                    }
+               } else {
+                    return "Yes";
+               }
+          } catch (Exception e) {
+               logger.error(e.getMessage(), e);
+               throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+          }
+     }
+
+}
 
 //	public UsagesValueModel getimeiVal(Integer msisdn , Long  imei) {
 //				UsagesValueModel usagesValueModel  = new UsagesValueModel() ;
@@ -60,30 +120,3 @@ public class GsmaValueServiceImpl {
 //		
 //		
 //	}
-    public UsagesValueModel getimeiValbymsisdn(String msisdn) {
-        UsagesValueModel usagesValueModel = null;
-        try {
-            logger.info(" imei is Null ");
-            usagesValueModel = usagesValueRepository.getByMsisdn(msisdn.toString());
-            logger.info(" result is  " + usagesValueModel);
-            return usagesValueModel;
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
-        }
-    }
-
-    public UsagesValueModel getimeiValbyImei(String imei) {
-        UsagesValueModel usagesValueModel = null;
-        try {
-            logger.info("Get Values By Imei");
-            usagesValueModel = usagesValueRepository.getByImei(imei.toString());
-            logger.info(" Result by imei is  " + usagesValueModel);
-            return usagesValueModel;
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
-        }
-
-    }
-}
