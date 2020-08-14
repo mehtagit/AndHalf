@@ -159,7 +159,7 @@ a#newUserLink {
 										</div>
 
 										<div  class="input-field col s12" id="show_hide_password">
-											<input type="password"   class="password"
+											<input type="password"   class="password"autocomplete="off"
 												name="password" id="password" 
 												oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
 												title= "<spring:message code="validation.requiredMsg" />" required maxlength="10"
@@ -257,7 +257,7 @@ a#newUserLink {
 							style="font-size: 30px; margin-top: 12px; color: #ff4081;"></i>
 					</div>
 					<div class="input-field col s11">
-						<input type="password" id="oldPassword" class="password2"
+						<input type="password" id="oldPassword" class="password2" autocomplete="off"
 							pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
 							maxlength="10" min="8"
 							title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
@@ -279,7 +279,7 @@ a#newUserLink {
 					<div class="input-field col s11">
 
 						<label for="newPassword" style="color: #000; font-size: 12px;"><spring:message code="registration.newpassword" /></label> <input type="password"
-							pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
+							pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$" autocomplete="off"
 							maxlength="10" min="8"
 							title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
 							required="required" id="password2" class="password3" />
@@ -295,8 +295,8 @@ a#newUserLink {
 					<div class="input-field col s11">
 
 						<label for="confirm_password"
-							style="color: #000; font-size: 12px;"><spring:message code="registration.confirmpassword" /></label> <input
-							type="password" class="password4" id="confirm_password"
+							style="color: #000; font-size: 12px;"><spring:message code="registration.confirmpassword" /></label> <input 
+							type="password" class="password4" id="confirm_password" autocomplete="off"
 							pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
 							maxlength="10" min="8" 
 							title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"

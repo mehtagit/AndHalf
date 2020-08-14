@@ -228,7 +228,8 @@ background: url(resources/images/loader.gif) 50% 50% no-repeat white;
 									enctype="multipart/form-data">
 									<div id="submitbtn">
 										<div class="input-field col s12 m1 l1">
-											<label for="Search" class="center-align ml-10" style="width: max-content;"><spring:message code="input.pportnumber" /></label>
+											<label for="Search" class="center-align ml-10" style="width: max-content;"><spring:message code="input.pportnumber" />
+											<span class="star"> *</span></label>
 										</div>
 										<div class="input-field col s12 m3 l3">
 											<input type="text" id="nidForEndUser"
@@ -497,11 +498,12 @@ background: url(resources/images/loader.gif) 50% 50% no-repeat white;
 
 										<div class="input-field col s12 m6" style="margin-top: 22px;">
 											<input type="text" id="endUserdatepicker" placeholder=""
-												onchange="InvalidMsg(this,'date');"
+												onchange="InvalidMsg(this,'date'); checkDate(endUserdatepicker1,endUserdatepicker)"
 												oninvalid="InvalidMsg(this,'date');"
 												title="<spring:message code="validation.date" />"
 												required  maxlength="15" /> <label for="datepicker"><spring:message
 													code="input.VisaExpiry" /> <span class="star">*</span></label>
+													<span id="expiryMessage" style="color: red"></span>
 										</div>
 										
 										<div class="input-field col s12 m6" style="margin-top: 22px;">
@@ -804,6 +806,8 @@ background: url(resources/images/loader.gif) 50% 50% no-repeat white;
 		
 	<script type="text/javascript"
 		src="${context}/resources/project_js/ValidationFileOutsidePortal.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		<script type="text/javascript"
+		src="${context}/resources/project_js/_dateFunction.js?version=<%= (int) (Math.random() * 10) %>" async></script>
 		
 </body></html>
 

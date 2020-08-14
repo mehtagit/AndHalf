@@ -20,7 +20,38 @@
 		var deviceIdType =  deviceIdType;
 		//sessionStorage.setItem("roleType",roleType);
 		//sessionStorage.setItem("tagId", tagId);
-		window.location.replace("./search?via=other&msisdn="+msisdn+"&imei="+imei+"&deviceIdType="+deviceIdType+"&deviceIdvalue="+deviceIdvalue);
+		
+		if(!msisdn==null || !msisdn==''){
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$.ajaxSetup({
+				headers:
+				{ 'X-CSRF-TOKEN': token }
+			});
+			$.ajax({
+				url: './checkMsisdnExist?imei='+imei+'&msisdn='+msisdn,
+				type: 'POST',
+				processData: false,
+				'contentType': false,
+				success: function (data, textStatus, jqXHR) {
+					
+					if(data=="No"){
+						
+						$("#InvalidMsisdn").openModal({
+					        dismissible:false
+					    });
+					}
+					else{
+						window.location.replace("./search?via=other&msisdn="+msisdn+"&imei="+imei+"&deviceIdType="+deviceIdType+"&deviceIdvalue="+deviceIdvalue);	
+					}
+					
+				}
+			});
+		}
+		else{
+			window.location.replace("./search?via=other&msisdn="+msisdn+"&imei="+imei+"&deviceIdType="+deviceIdType+"&deviceIdvalue="+deviceIdvalue);	
+		}
+		
 		return false;
 	}
 	var token = $("meta[name='_csrf']").attr("content");

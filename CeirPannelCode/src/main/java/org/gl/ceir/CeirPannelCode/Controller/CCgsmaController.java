@@ -68,4 +68,16 @@ public class CCgsmaController {
 		return response;
 
 	}
+
+	//----------------------------  Check imei exist or not  ------------------------------- 
+	
+	@PostMapping("/checkMsisdnExist")
+	public @ResponseBody String checkMsisdnExist(
+			@RequestParam(name = "imei", required = false) String imei,@RequestParam(name = "msisdn", required = false) String msisdn) {
+		log.info("request send to the check msisdn exist or not  details api=" + msisdn+" imei-->" +imei);
+		String response  = gsmaFeignClient.checkImeiDetails(imei,msisdn);
+		log.info("response from check msisdn exist api-----------------++++++++&&&&&&&&& " + response);
+		return response;
+
+	}
 }
