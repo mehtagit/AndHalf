@@ -7,6 +7,15 @@ $('#langlist').on('change', function() {
 	document.getElementById("changedLangForm").submit();
 	//window.location.assign("selfRegisterDevicePage?lang="+window.lang);			
 }); 
+$('#langlistSave').on('change', function() {
+	window.lang=$('#langlist').val() == 'km' ? 'km' : 'en';
+	var url_string = window.location.href;
+	var url = new URL(url_string);
+	var type = url.searchParams.get("type");
+	$('#changedLangValue').val(window.lang);
+	document.getElementById("changedLangForm").submit();
+	//window.location.assign("selfRegisterDevicePage?lang="+window.lang);			
+}); 
 
 
 $('#langlist').val(data_lang_param);

@@ -90,6 +90,7 @@
 						"bSearchable" : false,
 						"scrollX": true,
 						"scrolly": true,
+						"searching": false,
 						"oLanguage": {  
 							"sUrl": langFile  
 						},
@@ -120,7 +121,7 @@
 				    		}
 				          
 				       });*/
-					$('.dataTables_filter').css("display", "none");	
+					
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
 					//////console.log("error in ajax");

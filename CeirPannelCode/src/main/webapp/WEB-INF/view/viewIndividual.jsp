@@ -206,7 +206,7 @@
                                 </div>
                                 
                                  <div class="input-field col s12 m6">
-                                    <input type="text" name="approvedBy" id="approvedBy" value="${registration.user.approvedBy}" maxlength="16" placeholder="" disabled="">
+                                    <input type="text" name="approvedBy" id="approvedBy" value="${not empty registration.user.approvedBy ? registration.user.approvedBy : 'NA'}" maxlength="16" placeholder="" disabled="">
                                     <label for="approvedBy" class="active"><spring:message code="registration.approedBy" /> </label>
                                 </div>
                             </div>
@@ -214,7 +214,7 @@
 
                         <div class="row">
                           	<div class="input-field col s12 center">
-                                  <a class="btn modal-close" href="./registrationRequest?txnID=${not empty param.txnID ? param.txnID : 'null'}&source=${not empty param.source ? param.source : 'null'}"><spring:message code="modal.close" /></a>
+                                  <a class="btn modal-close" href="./registrationRequest?txnID=${not empty param.txnID ? param.txnID : 'null'}&source=${not empty param.source ? param.source : 'null'}"><spring:message code="modal.cancel" /></a>
                             </div>
                         </div>
 
@@ -230,6 +230,7 @@
 	<!-- Preview Modal start   -->
 
 	<div id="viewuplodedModel" class="modal">
+	<a href="#!" class="modal-close waves-effect waves-green btn-flat">&times;</a>
 		<div class="modal-content">
 			<div class="row">
 					<img src="" id="fileSource" width="400" height="400">

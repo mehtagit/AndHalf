@@ -256,7 +256,7 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
                                 </div>
                                 
                                  <div class="input-field col s12 m6">
-                                    			<input type="text" name="approvedBy" id="approvedBy" value="${registration.user.approvedBy}" maxlength="16" placeholder="" disabled="">
+                                    			<input type="text" name="approvedBy" id="approvedBy" value="${not empty registration.user.approvedBy ? registration.user.approvedBy : 'NA'}" maxlength="16" placeholder="" disabled="">
                                     			<label for="approvedBy" class="active"><spring:message code="registration.approedBy" /> </label>
                                 </div>
                                     </div>
@@ -267,7 +267,7 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
                                     <div class="col s12 m12">
                                 	<div class="input-field col s12 center">
                                         <!-- <a href="index.html" class="btn" id="btnSave"> Submit</a> -->
-                                          <a class="btn modal-close" href="./registrationRequest?txnID=${not empty param.txnID ? param.txnID : 'null'}&source=${not empty param.source ? param.source : 'null'}"><spring:message code="modal.close" /></a>
+                                          <a class="btn modal-close" href="./registrationRequest?txnID=${not empty param.txnID ? param.txnID : 'null'}&source=${not empty param.source ? param.source : 'null'}"><spring:message code="modal.cancel" /></a>
                                     </div>
                                 </div>
                                 </div>

@@ -178,7 +178,7 @@ div#error_Modal {
 					</ul>
 					<ul id="chat-out" class="right hide-on-med-and-down"
 						style="overflow: inherit !important;">
-						<li><a id="manualDownload" download="download"
+						<li><a id="manualDownload" download
 							style="color: white; cursor: pointer;"><i
 								class="fa fa-download download-icon" aria-hidden="true"
 								title="Download Manual" style="color: #fff; line-height: 3;"></i></a></li>

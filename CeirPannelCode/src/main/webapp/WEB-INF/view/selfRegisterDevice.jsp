@@ -219,7 +219,7 @@ position: fixed;
 			<i class="fa fa-globe fa-6" aria-hidden="true"></i>
 		</div>
 		<div class="col s2 m1 right" style="padding: 0;">
-			<select class="browser-default select-lang-drpdwn-all" id="langlist">
+			<select class="browser-default select-lang-drpdwn-all" id="langlistSave">
 				<option value="en" class="fontBlack">English</option>
 				<option value="km" class="fontBlack"><spring:message code="lang.khmer" /></option>
 			</select>

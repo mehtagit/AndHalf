@@ -91,6 +91,9 @@ function stateTable(){
 		ordering : false,
 		bPaginate : true,
 		bInfo : true,
+		"oLanguage": {
+	        "sEmptyTable": "No records found in the system"
+	    },
 		'ajax' : {
 			'url' : "./customerRecord?listType=state",
 			'type' : 'POST',
@@ -151,6 +154,9 @@ function deviceTable(){
 		ordering : false,
 		bPaginate : true,
 		bInfo : true,
+		"oLanguage": {
+	        "sEmptyTable": "No records found in the system"
+	    },
 		'ajax' : {
 			'url' : "./customerRecord?listType=device",
 			'type' : 'POST',
@@ -205,6 +211,8 @@ function notificationTable(){
 
 if(lang=='km'){
 var langFile='./resources/i18n/khmer_datatable.json';
+}else if(lang=='en'){
+	var langFile='./resources/i18n/english_datatable.json';
 }
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
@@ -695,7 +703,7 @@ function globalBlackListDataTable(data){
 			"columns" : [{
 				"data" : "createdOn","defaultContent": ""
 			}, {
-				"data" : "blackliststatus", "defaultContent": ""
+				"data" : "blacklistStatus", "defaultContent": ""
 			},
 			{
 				"data" : "greyliststatus","defaultContent": ""

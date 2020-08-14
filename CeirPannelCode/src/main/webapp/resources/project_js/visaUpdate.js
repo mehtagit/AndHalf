@@ -73,6 +73,8 @@
 					
 					txn=$('#visaTxnId').val();
 				}
+				$("body").attr("data-session-source","filter")
+				txn=$('#visaTxnId').val();
 				}
 				
 				var filterRequest={
@@ -313,6 +315,7 @@
 			
 			function exportData()
 			{
+				var txn="";
 				var roleType = $("body").attr("data-roleType");
 				var currentRoleType = $("body").attr("data-stolenselected-roleType");
 				var table = $('#pendingTACLibraryTable').DataTable();
@@ -320,10 +323,17 @@
 				var featureName = $('#feature').val() == null ? null : $("#feature option:selected").text();
 				var pageNo=info.page;
 				var pageSize =info.length;
+				if( $("body").attr("data-session-source")=='noti'){
+					 txn= (txnIdValue == 'null' && transactionIDValue == undefined)? $('#visaTxnId').val() : transactionIDValue;	
+				}
+				else{
+					txn=$('#visaTxnId').val();
+				}
 				
 				var filterRequest={
 						"endDate":$('#endDate').val(),
 						"startDate":$('#startDate').val(),
+						"txnId":txn,
 						"userId": parseInt($("body").attr("data-userID")),
 						"featureId":parseInt(featureId),
 						"userTypeId": parseInt($("body").attr("data-userTypeID")),
