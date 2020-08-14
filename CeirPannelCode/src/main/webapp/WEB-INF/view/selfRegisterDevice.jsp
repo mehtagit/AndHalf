@@ -811,11 +811,11 @@ position: fixed;
 						<h6 class="fixPage-modal-header ">
 						<spring:message code="modal.header.registerdevice" />
 						<a href="" class="boton right" id="btnLink"></a>
-						<div class="col s10 m11 select-lang-lable-all" style="position: absolute;width: 60%;">
+						<div class="col s10 m11 select-lang-lable-all" style="position: fixed;width: 57%;">
 
 			<i class="fa fa-globe fa-6" aria-hidden="true"></i>
 		</div>
-		<div class="col s2 m1 right" style="padding: 0;position: absolute;margin-left: 60%;">
+		<div class="col s2 m1 right" style="padding: 0;position: fixed;margin-left: 57%;">
 			<select class="browser-default select-lang-drpdwn-all" id="langlist">
 				<option value="en" class="fontBlack">English</option>
 				<option value="km" class="fontBlack"><spring:message code="lang.khmer" /></option>

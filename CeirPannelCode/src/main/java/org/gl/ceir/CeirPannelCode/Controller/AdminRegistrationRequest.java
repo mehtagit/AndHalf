@@ -74,9 +74,13 @@ public class AdminRegistrationRequest {
 			log.info("-------------------->2");
 			mv.setViewName("viewOperator");
 		
-		}else if("Custom".equals(roles) || roles.equals("Lawful Agency")){
+		}else if("Custom".equals(roles)){
 			log.info("-------------------->3");
 			mv.setViewName("viewCustom"); 	
+			
+		}else if(roles.equals("Lawful Agency")){
+			log.info("-------------------->7");
+			mv.setViewName("viewLawful");
 			
 		}else if(("Importer".equals(roles) || "Distributor".equals(roles) || "Retailer".equals(roles)) && "Company".equals(asType) || "Organization".equals(asType)){
 			log.info("-------------------->4");
@@ -85,9 +89,11 @@ public class AdminRegistrationRequest {
 		}else if(("Importer".equals(roles) || "Distributor".equals(roles) || "Retailer".equals(roles)) && "Individual".equals(asType)){
 			log.info("-------------------->5");
 			mv.setViewName("viewIndividual");
+			
 		}else if(("Manufacturer".equals(roles))  && "Company".equals(asType)){
 			log.info("-------------------->6");
 			mv.setViewName("viewManufacturer");
+			
 		}
 		
 		log.info(" view trcInformation  exit point."); 

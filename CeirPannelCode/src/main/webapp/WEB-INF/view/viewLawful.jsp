@@ -77,7 +77,7 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
                             <div class="card-panel">
                                 <div class="row">
                                     <div class="col s12 m12">
-                                    <h5><spring:message code="registration.viewcustominformation" /></h5>
+                                    <h5><spring:message code="registration.viewLawfulInformation" /></h5>
                                     <hr>
                                     <div class="row" style="margin-top: 10px;">
                                         <div class="input-field col s12 m4 l4">
@@ -146,15 +146,6 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
                                             <label for="Province" class="active"> <spring:message code="input.province" /></label>
                                         </div>
                                         
-                                         <div class="input-field col s12 m6 l6">
-                                            <input type="text" name="arrivalPort" id="arrivalPort" maxlength="20"  value="${not empty registration.arrivalPortName ? registration.arrivalPortName : 'NA'}" disabled="" placeholder="">
-                                            <label for="arrivalPort" class="active"><spring:message code="input.arrivalport" /> </label>
-                                        </div>
-
-                                        <div class="input-field col s12 m6 l6">
-                                            <input type="text" name="portAddress" id="portAddress" value="${not empty registration.portAddressName ? registration.portAddressName : 'NA'}" maxlength="20" disabled="" placeholder="">
-                                            <label for="portAddress" class="active"> <spring:message code="input.portAddress" /></label>
-                                        </div>
                                     </div>
 
                                     <div class="row">

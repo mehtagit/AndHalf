@@ -17,20 +17,29 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class GraphController {
 
-	@Autowired
+	/*@Autowired
 	GraphService graphService;
 
-	@ResponseBody
-	@RequestMapping(value = "/userLoginGraph",method = {RequestMethod.POST})
-	public ResponseEntity<?> userLoginGraph(@RequestBody LoginGraphFilter filter){
-		return graphService.userLoginGraph(filter);
-	}
-
-
+	
+	 * @ResponseBody
+	 * 
+	 * @RequestMapping(value = "/userLoginGraph",method = {RequestMethod.POST})
+	 * public ResponseEntity<?> userLoginGraph(@RequestBody LoginGraphFilter
+	 * filter){ return graphService.userLoginGraph(filter); }
+	 * 
+	 */
 	@RequestMapping(value = "/userLoginReport",method = {RequestMethod.GET})
 	public ModelAndView userLoginReport(){
 		ModelAndView mv=new ModelAndView();
 		mv.setViewName("UserLoginGraph");
+		return  mv;
+	}
+
+
+	@RequestMapping(value = "/activeDeviceReport",method = {RequestMethod.GET})
+	public ModelAndView activeDevice(){
+		ModelAndView mv=new ModelAndView();
+		mv.setViewName("ActiveDeviceGraph");
 		return  mv;
 	}
 

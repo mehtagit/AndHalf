@@ -239,19 +239,22 @@
 				var pageSize =info.length;
 				
 				var filterRequest={
-						"endDate":$('#endDate').val(),
-						"startDate":$('#startDate').val(),
 						"feature" : parseInt($('#feature').val()),
 						"usertype" : $('#userType').val(),
+						"username" : $("body").attr("data-selected-username"),
+						"featureId":parseInt(featureId),
+						"userTypeId": parseInt($("body").attr("data-userTypeID")),
+						"userType":$("body").attr("data-roleType"),
+						"userId" : parseInt($("body").attr("data-userID")),
 						"pageNo":parseInt(pageNo),
-						"pageSize":parseInt(pageSize),
+						"pageSize":parseInt(pageSize)
 						
 						/*"userId":parseInt(userId),
 						"featureId":parseInt(featureId),
 						"userTypeId": parseInt($("body").attr("data-userTypeID")),
 						"userType":$("body").attr("data-roleType")*/
 				}
-				//////console.log(JSON.stringify(filterRequest))
+				console.log(JSON.stringify(filterRequest))
 				var token = $("meta[name='_csrf']").attr("content");
 				var header = $("meta[name='_csrf_header']").attr("content");
 				$.ajaxSetup({

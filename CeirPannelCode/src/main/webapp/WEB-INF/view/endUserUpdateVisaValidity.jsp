@@ -228,8 +228,7 @@ background: url(resources/images/loader.gif) 50% 50% no-repeat white;
 									enctype="multipart/form-data">
 									<div id="submitbtn">
 										<div class="input-field col s12 m1 l1">
-											<label for="Search" class="center-align ml-10" style="width: max-content;"><spring:message code="input.pportnumber" />
-											<span class="star"> *</span></label>
+											<label for="Search" class="center-align ml-10" style="width: max-content;"><spring:message code="input.pportnumber" /></label>
 										</div>
 										<div class="input-field col s12 m3 l3">
 											<input type="text" id="nidForEndUser"
