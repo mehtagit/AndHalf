@@ -811,7 +811,7 @@ position: fixed;
 						<h6 class="fixPage-modal-header ">
 						<spring:message code="modal.header.registerdevice" />
 						<a href="" class="boton right" id="btnLink"></a>
-						<div class="col s10 m11 select-lang-lable-all" style="position: absolute;width: 60%;">
+						<div class="col s10 m11 select-lang-lable-all" style="position: fixed;width: 57%;">
 
 			<i class="fa fa-globe fa-6" aria-hidden="true"></i>
 		</div>
