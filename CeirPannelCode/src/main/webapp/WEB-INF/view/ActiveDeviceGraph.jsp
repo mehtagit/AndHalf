@@ -49,7 +49,7 @@
 
 <script type="text/javascript"
 	src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
-
+	<script type="text/javascript" src="${context}/resources/graph_js/chart.min.js"></script>
 <!-- CORE CSS-->
 <link href="${context}/resources/css/materialize.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
@@ -199,6 +199,7 @@ input#quantity {
 .card-body {
     flex: 1 1 auto;
     padding: 1.25rem;
+    overflow-x: scroll;
 }
 
 
@@ -206,7 +207,6 @@ input#quantity {
 display: none !important;
 }
 </style>
-	<script type="text/javascript" src="${context}/resources/graph_js/chart.min.js"></script>
 </head>
 <body>
 	<!-- START MAIN -->
@@ -227,7 +227,7 @@ display: none !important;
                             <spring:message code="sidebar.User_Dashboard" />
                             				</h6>
                             <div style="display:flex">
-                            <div class="col-xl-8 col-lg-7">
+                            <div class="col-xl-8 col-lg-7"  style=" width: 50.5% !important;">
               <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -245,7 +245,7 @@ display: none !important;
              
              
              
-             <div class="col-xl-8 col-lg-7">
+             <div class="col-xl-8 col-lg-7"  style=" width: 50.5% !important;">
               <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -255,7 +255,7 @@ display: none !important;
                 <!-- Card Body -->
                 <div class="card-body">
                  
-                    <canvas class="chart-area" id="barGraph" style = "width: 550px; height: 400px; margin: 0 auto">
+                    <canvas class="chart-area" id="lineGraph" style = "width: 550px; height: 400px; margin: 0 auto">
                   </canvas>
                 </div>
               </div>
@@ -341,12 +341,20 @@ display: none !important;
 	<!-- END MAIN -->
 
 
+</body>
+<script type="text/javascript" src="${context}/resources/js/materialize.js"></script>		
+<script type="text/javascript" src="${context}/resources/custom_js/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+
 <script type="text/javascript"
 		src="${context}/resources/graph_js/acitveUserGraph.js?version=<%= (int) (Math.random() * 10) %>"></script>		
 	<!-- chartist -->
         
 <script type="text/javascript">$( document ).ready(function() { activeDeviceGraph(); var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login";}else{timeoutTime = currentTime + timeout;}});});</script>
-</body></html>
+
+
+</html>
 
 <%
 	} else {
