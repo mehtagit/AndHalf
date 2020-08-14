@@ -1,4 +1,4 @@
-[
+/*[
 
 	'./resources/js/materialize.js',
 	'./resources/custom_js/bootstrap.min.js',
@@ -8,7 +8,7 @@
 
 	});
 
-
+*/
 function activeDeviceGraph() {
 	[31,48].forEach(function(reportnameId) {
 		var graphRequest=null;
