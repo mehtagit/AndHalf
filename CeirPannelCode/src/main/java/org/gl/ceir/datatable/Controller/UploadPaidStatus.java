@@ -412,7 +412,7 @@ public class UploadPaidStatus {
 		  request.setTxnId(txnId);
 		  log.info(" request=="+request);
 		  GenricResponse response=uploadPaidStatusFeignClient.delete(request);
-		log.info("response after delete consignment."+response);
+		log.info("response after delete device."+response);
 		return response;
 	}
 	
