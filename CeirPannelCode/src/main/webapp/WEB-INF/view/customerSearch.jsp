@@ -238,6 +238,25 @@ section {
                     </div>
                   </div>
                 </div>
+                <div id="InvalidMsisdn" class="modal">
+<div class="header-fixed header-fixed-style">
+		<h6 class="modal-header"></h6>
+		</div>
+		<div class="scrollDivHeight"></div>
+		<div class="modal-content">
+			<div class="row">
+				<h6 id="InvalidMsisdn"><spring:message code="MobileNumberNotExist" /> </h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<div class="input-field col s12 center">
+						<button class="modal-close btn " 
+							style="margin-left: 10px;"><spring:message code="modal.ok" /></button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
         </div>
 	</section>
 	<script type="text/javascript"

@@ -425,7 +425,7 @@ to {
 
 	<div id="searchSupplierInformation" class="modal">
 		<!-- <button class="modal-close btn-flat right" data-dismiss="modal">&times;</button> -->
-		<a class="btn-flat right" onclick="closeAssigneTable()">&times;</a>
+		<a class="btn-flat right" onclick="closeAssigneTable()" style="font-size: 25px;">&times;</a>
 		<h6 class="modal-header">
 			<spring:message code="searchAssigneMessage" />
 		</h6>

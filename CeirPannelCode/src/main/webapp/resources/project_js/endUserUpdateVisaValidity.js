@@ -413,3 +413,11 @@ function hide() {
     	$("#endUseruploadnationalIDPlaceHolder").val('');
     	$('#visafileFormateModal').closeModal();
     }
+
+    
+    function checkExpiry(entryDate,expiryDate)
+    {
+    	var input1 = entryDate.value;
+    	var input2 = expiryDate.value;
+    	 
+    }

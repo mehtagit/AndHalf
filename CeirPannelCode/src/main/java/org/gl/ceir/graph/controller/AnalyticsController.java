@@ -1,4 +1,5 @@
 package org.gl.ceir.graph.controller;
+import java.util.Collections;
 import java.util.Optional;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.AnalyticsFeign;
@@ -41,13 +42,10 @@ public class AnalyticsController {
 	
 	@PostMapping("/report/data") 
 	public ResponseEntity<?> activeDeviceGraph(@RequestBody GraphRequest graphRequest) {
-		Integer file = 0;
-		Integer pageSize = 1;
-		Integer pageNo =0;
 		Object response= null;
-		 response = analyticsFeign.activeDeviceGraph(graphRequest, pageNo, pageSize, file);
+		response = analyticsFeign.activeDeviceGraph(graphRequest, graphRequest.getPageNo(),  graphRequest.getPageSize(),  graphRequest.getFile());
 		 
-		 log.info("::::::response:::::::"+response);
+		 log.info(":::::::::graphRequest::::::::"+graphRequest+"::::::response:::::::"+response);
 	
 			try {
 			Gson gson= new Gson(); 
@@ -62,13 +60,7 @@ public class AnalyticsController {
 			}
 			catch(Exception e) {
 				e.printStackTrace();
-				return new ResponseEntity<>(Optional.empty(), HttpStatus.SERVICE_UNAVAILABLE);
+				return new ResponseEntity<>(Collections.EMPTY_LIST, HttpStatus.SERVICE_UNAVAILABLE);
 			}
-		
 	}
-
-
-	
-
-
-}
+	}

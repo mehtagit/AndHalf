@@ -464,7 +464,7 @@ div#error_Modal {
 					</div>
 
 					<div class="input-field col s11">
-						<input type="password" id="oldPassword" class="password"
+						<input type="password" id="oldPassword" class="password" autocomplete="off"
 							pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,10}$"
 							maxlength="10" min="8"
 							oninput="InvalidMsg(this,'input','<spring:message code="validation.password" />');"
@@ -489,7 +489,7 @@ div#error_Modal {
 					<div class="input-field col s11">
 
 						<label for="newPassword" style="color: #000; font-size: 12px;"><spring:message
-								code="registration.newpassword" /></label> <input type="password"
+								code="registration.newpassword" /></label> <input type="password" autocomplete="off"
 							pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
 							maxlength="10" min="8"
 							oninput="InvalidMsg(this,'input','<spring:message code="validation.password" />');"
@@ -509,7 +509,7 @@ div#error_Modal {
 
 						<label for="confirm_password"
 							style="color: #000; font-size: 12px;"><spring:message
-								code="registration.confirmpassword" /></label> <input type="password"
+								code="registration.confirmpassword" /></label> <input type="password" autocomplete="off"
 							class="password3" id="confirm_password"
 							pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
 							maxlength="10" min="8"
