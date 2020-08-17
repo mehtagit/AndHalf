@@ -201,6 +201,7 @@ background: url(resources/images/loader.gif) 50% 50% no-repeat white;
 
 
 	<section id="content">
+	
 		<!--start container-->
 
 					<div class="container" style="margin-top: 10vh;">
@@ -234,8 +235,8 @@ background: url(resources/images/loader.gif) 50% 50% no-repeat white;
 										<div class="input-field col s12 m3 l3">
 											<input type="text" id="nidForEndUser"
 												pattern="[A-Za-z0-9]{0,12}" style="margin-left: 78px;"
-												oninput="InvalidMsg(this,'select','<spring:message code="validation.12NID" />');"
-															oninvalid="InvalidMsg(this,'select','<spring:message code="validation.12NID" />');"
+												oninput="InvalidMsg(this,'input','<spring:message code="validation.12NID" />');"
+															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.12NID" />');"
 												title="<spring:message code="validation.12NID" />"
 												required  maxlength="12" name="Search" />
 
