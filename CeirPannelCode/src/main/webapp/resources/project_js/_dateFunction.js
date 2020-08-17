@@ -23,6 +23,10 @@ $('#userFeatureTableDiv div:last').after('<p id="errorMsg" style="color: red;fon
 $('#userTableDiv div:last').after('<p id="errorMsg" style="color: red;font-size: 12px;position: absolute;left: 40px;margin: 0;top: 122px;"class="left"></p>')
 $('#dbTableDiv div:last').after('<p id="errorMsg" style="color: red;font-size: 12px;position: absolute;left: 40px;margin: 0;top: 122px;"class="left"></p>')
 
+$('#alertTableDiv div:last').after('<p id="errorMsg" style="color: red;font-size: 12px;position: absolute;left: 40px;margin: 0;top: 122px;"class="left"></p>')
+$('#ipLogTableDiv div:last').after('<p id="errorMsg" style="color: red;font-size: 12px;position: absolute;left: 40px;margin: 0;top: 122px;"class="left"></p>')
+
+
 
 function checkDate(startDate,endDate) {
 var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
@@ -86,6 +90,7 @@ $('#errorMsg').text($.i18n(endDate.id));
 $('#submitFilter,#consignmentSubbmitButton,#filterFieldTable').addClass( "eventNone" );
 $('#consignmentSubbmitButton').addClass( "eventNone" );
 }
+
 else{
 $('#errorMsg').text('');
 $('#'+endDate.id).css('border-color', '');
@@ -99,6 +104,25 @@ $('#submitFilter,#consignmentSubbmitButton,#filterFieldTable').addClass( "eventN
 $('#consignmentSubbmitButton').addClass( "eventNone" );
 }
 }
+
+ if(input2 == input1){
+	
+	$('#expiryMessage').hide()
+	$('#updateVisaButton').removeClass( "eventNone" );
+}
+ else if(input2 <= input1){
+	
+	 $('#expiryMessage').show();
+	 $('#expiryMessage').text($.i18n('visaExpiryCheck'));
+	 $('#updateVisaButton').addClass( "eventNone" );
+	 
+	
+ }
+ else if(input2 >= input1){
+	 $('#expiryMessage').hide();
+	 $('#updateVisaButton').removeClass( "eventNone" );
+	
+ }
 }
 
 

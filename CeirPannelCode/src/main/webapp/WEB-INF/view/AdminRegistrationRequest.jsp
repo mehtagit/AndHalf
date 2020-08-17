@@ -256,7 +256,7 @@ data-session-source="${not empty param.source ? param.source : 'menu'}">
 												onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 												oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 												required>
-												<option value="" disabled selected><spring:message
+												<option value="" selected><spring:message
 														code="select.selectUserStatus" />
 												</option>
 											</select>

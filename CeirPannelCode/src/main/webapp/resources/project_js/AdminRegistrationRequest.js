@@ -112,7 +112,7 @@
 					"columns": result
 				});
 				$('div#initialloader').delay(300).fadeOut('slow');
-		
+			
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
 				//////console.log("error in ajax");

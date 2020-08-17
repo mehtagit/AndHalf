@@ -366,7 +366,7 @@ public class StolenDatatableController {
 			}
 			
 		//This is for Operator Dropdown for CEIRadmin
-			if("CEIRAdmin".equals(userType)){
+			if(("CEIRAdmin".equals(userType)) && !"5".equals(featureId)){
 				String[] selectParam = { "select", Translator.toLocale("operator.Operator"), "operator", "","select",Translator.toLocale("table.requestType"), "requestType", "", "select",
 						Translator.toLocale("input.mode"), "sourceStatus", "","select", Translator.toLocale("table.status"), "status","" };	
 
@@ -383,7 +383,26 @@ public class StolenDatatableController {
 				}
 				pageElement.setDropdownList(dropdownList);
 				
-			}else {
+			}else if(("5".equals(featureId)) && "CEIRAdmin".equals(userType)) {
+				String[] selectParam = {"select",Translator.toLocale("table.requestType"), "requestType", "", "select",
+						Translator.toLocale("input.mode"), "sourceStatus", "","select", Translator.toLocale("table.status"), "status","" };	
+
+				for (int i = 0; i < selectParam.length; i++) {
+					inputFields = new InputFields();
+					inputFields.setType(selectParam[i]);
+					i++;
+					inputFields.setTitle(selectParam[i]);
+					i++;
+					inputFields.setId(selectParam[i]);
+					i++;
+					inputFields.setClassName(selectParam[i]);
+					dropdownList.add(inputFields);
+				}
+				pageElement.setDropdownList(dropdownList);
+				
+				
+			}
+			else {
 				String[] selectParam = { "select", Translator.toLocale("table.requestType"), "requestType", "", "select",
 						Translator.toLocale("input.mode"), "sourceStatus", "","select", Translator.toLocale("table.status"), "status",""};	
 				for (int i = 0; i < selectParam.length; i++) {

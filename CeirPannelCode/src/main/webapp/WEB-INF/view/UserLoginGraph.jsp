@@ -199,14 +199,12 @@ input#quantity {
 .card-body {
     flex: 1 1 auto;
     padding: 1.25rem;
-    overflow-x: scroll;
 }
 
 
 .highcharts-credits {
 display: none !important;
 }
-
 </style>
 
 </head>
@@ -229,7 +227,7 @@ display: none !important;
                             <spring:message code="sidebar.User_Dashboard" />
                             				</h6>
                             <div style="display:flex">
-                            <div class="col-xl-8 col-lg-7" style=" width: 50.5% !important;">
+                            <div class="col-xl-8 col-lg-7">
               <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -247,7 +245,7 @@ display: none !important;
              
              
              
-             <div class="col-xl-8 col-lg-7"  style=" width: 50.5% !important;">
+             <div class="col-xl-8 col-lg-7">
               <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -266,7 +264,7 @@ display: none !important;
                     
                     
                     <div style="display:flex">
-                            <div class="col-xl-8 col-lg-7" style=" width: 50.5% !important;">
+                            <div class="col-xl-8 col-lg-7">
               <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -284,7 +282,7 @@ display: none !important;
              
              
              
-             <div class="col-xl-8 col-lg-7" style=" width: 50.5% !important;">
+             <div class="col-xl-8 col-lg-7">
               <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -301,7 +299,7 @@ display: none !important;
     
     
     <div style="display:flex">
-                            <div class="col-xl-8 col-lg-7" style=" width: 50.5% !important;">
+                            <div class="col-xl-8 col-lg-7">
               <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -319,7 +317,7 @@ display: none !important;
              
              
              
-             <div class="col-xl-8 col-lg-7" style=" width: 50.5% !important;">
+             <div class="col-xl-8 col-lg-7">
               <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">

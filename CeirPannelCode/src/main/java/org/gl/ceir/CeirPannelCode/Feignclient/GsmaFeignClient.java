@@ -3,6 +3,7 @@ package org.gl.ceir.CeirPannelCode.Feignclient;
 import java.util.List;
 
 import org.gl.ceir.CeirPannelCode.Model.Dropdown;
+import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.GsmaDetail;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,7 +42,15 @@ public interface GsmaFeignClient {
 	
 	
 		
+		
 		@RequestMapping(value="/Rule/DistinctName" ,method=RequestMethod.GET) 
 		public List<String> getFeatureName();
 		
+		
+		//---------------------------------check Msisdn Exist or not ---------------------------------
+		
+		@PostMapping(path = "gsma/CheckImeiMsisdnValues")
+				public @ResponseBody String checkImeiDetails(@RequestParam(name = "imei", required = false) String imei,
+						@RequestParam(name = "msisdn", required = false) String msisdn);
+			
 }

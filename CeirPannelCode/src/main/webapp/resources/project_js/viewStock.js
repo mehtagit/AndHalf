@@ -1002,7 +1002,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 			 "dbName" : "ceirconfig",
 			 "txnId":txnID
 			 }
-			 }else if(userTypeValue=='Manufacturer'){
+			 }else if(userTypeValue=='Manufacturer' || userTypeValue=='Custom'){
 				 var filterRequest={
 						 "columns":["created_on","modified_on","txn_id","user_type","role_type","stock_status",
 						 "quantity","device_quantity","remarks","assigner_id",

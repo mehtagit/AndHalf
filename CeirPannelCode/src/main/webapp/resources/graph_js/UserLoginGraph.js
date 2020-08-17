@@ -32,6 +32,7 @@ function userloginGraph() {
 		},*/
 		success : function(data) {
 			var response = JSON.parse(data);
+			console.log(response)
 			graph(response,'lineGraph','line','User Login Line Graph')
 			graph(response,'barGraph','bar','User Login Bar Graph')
 			graph(response,'pieGraph','pie','User Login Pie Graph')
