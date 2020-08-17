@@ -92,6 +92,15 @@
 						"oLanguage": {
 							"sEmptyTable": "No records found in the system"
 					    },
+						initComplete: function() {
+					 		$('.dataTables_filter input')
+	       .off().on('keyup', function(event) {
+	    	   if (event.keyCode === 13) {
+	    			 table.search(this.value.trim(), false, false).draw();
+	    		}
+	          
+	       });
+		   },
 						ajax: {
 							url : 'fieldManagementData',
 							type: 'POST',
@@ -105,17 +114,7 @@
 					});
 
 					$('div#initialloader').delay(300).fadeOut('slow');
-					$('.dataTables_filter input')
-				       .off().on('keyup', function(event) {
-				    	   var searchString=$('#search').val();
-					 	   if(event.keyCode == 8 && !searchString || event.keyCode == 46 && !searchString || event.keyCode == 83 && !searchString) {
 
-					 	   }
-				    		if (event.keyCode === 13) {
-				    			 table.search(this.value.trim(), false, false).draw();
-				    		}
-				          
-				       });
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
 					
@@ -152,7 +151,7 @@
 					/*for(i=0; i<date.length; i++){
 						if(date[i].type === "date"){
 							$("#FieldTableDiv").append("<div class='input-field col s6 m2'>"+
-									"<div id='enddatepicker' class='input-group'>"+
+			[[						"<div id='enddatepicker' class='input-group'>"+
 									"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off' onchange='checkDate(startDate,endDate)'>"+
 									"<label for="+date[i].id+">"+date[i].title
 									+"</label>"+

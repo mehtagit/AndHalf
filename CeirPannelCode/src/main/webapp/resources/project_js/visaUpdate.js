@@ -121,6 +121,7 @@
 							"oLanguage": {  
 									"sUrl": langFile  
 								},
+								
 							ajax: {
 								url : 'visaUpdatedata?source='+source__val,
 								type: 'POST',

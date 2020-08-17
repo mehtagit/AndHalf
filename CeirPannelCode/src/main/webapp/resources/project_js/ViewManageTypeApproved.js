@@ -76,6 +76,7 @@ if(lang=='km'){
 				"oLanguage": {  
 					"sUrl": langFile  
 				},
+				
 				ajax: {
 					url : dataUrl,
 					type: 'POST',
