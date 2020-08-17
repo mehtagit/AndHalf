@@ -88,7 +88,7 @@
 									"sUrl": langFile  
 								},
 								initComplete: function() {
-							 		$('.[ input')
+							 		$('.dataTables_filter input')
 			       .off().on('keyup', function(event) {
 			    	   if (event.keyCode === 13) {
 			    			 table.search(this.value.trim(), false, false).draw();
