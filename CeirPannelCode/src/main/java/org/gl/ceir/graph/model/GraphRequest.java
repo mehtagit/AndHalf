@@ -42,6 +42,12 @@ public class GraphRequest {
 		builder.append(tableName);
 		builder.append(", txnId=");
 		builder.append(txnId);
+		builder.append(", file=");
+		builder.append(file);
+		builder.append(", pageSize=");
+		builder.append(pageSize);
+		builder.append(", pageNo=");
+		builder.append(pageNo);
 		builder.append("]");
 		return builder.toString();
 	}
@@ -85,5 +91,27 @@ public class GraphRequest {
 	private String startDate ;
 	private String tableName;
 	private String txnId ;
+	
+	private int file;
+	private int pageSize;
+	private int pageNo;
+	public int getFile() {
+		return file;
+	}
+	public void setFile(int file) {
+		this.file = file;
+	}
+	public int getPageSize() {
+		return pageSize;
+	}
+	public void setPageSize(int pageSize) {
+		this.pageSize = pageSize;
+	}
+	public int getPageNo() {
+		return pageNo;
+	}
+	public void setPageNo(int pageNo) {
+		this.pageNo = pageNo;
+	}
 
 }

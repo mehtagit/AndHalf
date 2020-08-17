@@ -206,7 +206,7 @@
 	"TYPE_APPROVE_WRONG_ID" : "please enter correct transaction Id.",
 	"TYPE_APPROVE_UPDATE_FAIL" : "Type Approved status failed to update.",
 	"UPDATE_ERROR" : "Oops something wrong happened",
-	"System_configuration_failed" : "System configuration update failed. value regex not matched.",
+	"System_configuration_failed" : "System configuration update failed. The message format is not valid.",
 	"System_configuration_update" : "System configuration update Sucessfully.",
 	"Security_Question":"Security Question",
 	"USER_IS_DISABLED":"This account is disabled. Please enable the account to perform the operation.",

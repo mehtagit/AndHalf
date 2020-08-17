@@ -12,6 +12,47 @@ public class RowData {
 	private String approvedTAC;
 	@SerializedName("Rejected TAC")
 	private String rejectedTAC;
+	
+	
+	@SerializedName("Created On")
+	private String createdOn;
+	@SerializedName("Modified On")
+	private String modifiedOn;
+	
+	
+	@SerializedName("IMEI Count")
+	private String imeiCount;
+	@SerializedName("MSISDN Frequency")
+	private String msisdnFrequency;
+	
+	
+
+    	 
+    	 
+	public String getCreatedOn() {
+		return createdOn;
+	}
+	public void setCreatedOn(String createdOn) {
+		this.createdOn = createdOn;
+	}
+	public String getModifiedOn() {
+		return modifiedOn;
+	}
+	public void setModifiedOn(String modifiedOn) {
+		this.modifiedOn = modifiedOn;
+	}
+	public String getImeiCount() {
+		return imeiCount;
+	}
+	public void setImeiCount(String imeiCount) {
+		this.imeiCount = imeiCount;
+	}
+	public String getMsisdnFrequency() {
+		return msisdnFrequency;
+	}
+	public void setMsisdnFrequency(String msisdnFrequency) {
+		this.msisdnFrequency = msisdnFrequency;
+	}
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 	public String getApprovedTAC() {
 		return approvedTAC;
@@ -38,6 +79,14 @@ public class RowData {
 		builder.append(approvedTAC);
 		builder.append(", rejectedTAC=");
 		builder.append(rejectedTAC);
+		builder.append(", createdOn=");
+		builder.append(createdOn);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
+		builder.append(", imeiCount=");
+		builder.append(imeiCount);
+		builder.append(", msisdnFrequency=");
+		builder.append(msisdnFrequency);
 		builder.append(", additionalProperties=");
 		builder.append(additionalProperties);
 		builder.append("]");

@@ -476,7 +476,7 @@ GrievanceFeignClient grievanceFeignClient;
 		  if(visaImage==null)
 			{
 				log.info("visa image is null..");	
-				endUservisaInfo.getVisaDb().get(i).setVisaFileName(null);
+				endUservisaInfo.getVisaDb().get(i).setVisaFileName("NA");
 			}
 		  else {
 			  log.info("visa image is not null..");	
