@@ -94,6 +94,7 @@
 						"oLanguage": {  
 							"sUrl": langFile  
 						},
+						
 						//dataSrc : result,
 						ajax: {
 							url : 'dbManagementData',
