@@ -81,6 +81,15 @@ function operatorDatatable(lang){
 				"oLanguage": {  
 							"sUrl": langFile  
 						},
+						initComplete: function() {
+					 		$('.dataTables_filter input')
+	       .off().on('keyup', function(event) {
+	    	   if (event.keyCode === 13) {
+	    			 table.search(this.value.trim(), false, false).draw();
+	    		}
+	          
+	       });
+		   },
 				ajax: {
 					url : 'operatorData',
 					type: 'POST',
@@ -95,12 +104,7 @@ function operatorDatatable(lang){
 			});
 			
 			$('#operatorLibraryTable input').unbind();
-		    $('#operatorLibraryTable input').bind('keyup', function (e) {
-		        if (e.keyCode == 13) {
-		            table.search(this.value).draw();
-		        }
-		        
-		    });
+		   
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
 			//////console.log("error in ajax");

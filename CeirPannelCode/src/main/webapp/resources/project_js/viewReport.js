@@ -88,6 +88,15 @@
 						"oLanguage": {  
 							"sUrl": langFile  
 						},
+						initComplete: function() {
+					 		$('.dataTables_filter input')
+	       .off().on('keyup', function(event) {
+	    	   if (event.keyCode === 13) {
+	    			 table.search(this.value.trim(), false, false).draw();
+	    		}
+	          
+	       });
+		   },
 						ajax: {
 							url : 'dbReportData',
 							type: 'POST',
@@ -103,16 +112,7 @@
 					});
 					
 					$('div#initialloader').delay(300).fadeOut('slow');
-					$('.dataTables_filter input')
-				       .off().on('keyup', function(event) {
-				    	   if(event.keyCode == 8 && !textBox.val() || event.keyCode == 46 && !textBox.val() || event.keyCode == 83 && !textBox.val()) {
-					    
-					            }
-				    		if (event.keyCode === 13) {
-				    			 table.search(this.value.trim(), false, false).draw();
-				    		}
-				          
-				       });
+					
 					$('.dataTables_filter').css("display", "none");	
 					sessionStorage.removeItem("reportname");
 					

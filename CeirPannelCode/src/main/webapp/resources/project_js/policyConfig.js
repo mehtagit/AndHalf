@@ -54,6 +54,15 @@ function configManagementDatatable(){
 				"oLanguage": {
 					"sEmptyTable": "No records found in the system"
 			    },
+				initComplete: function() {
+			 		$('.dataTables_filter input')
+   .off().on('keyup', function(event) {
+	   if (event.keyCode === 13) {
+			 table.search(this.value.trim(), false, false).draw();
+		}
+      
+   });
+   },
 				ajax: {
 					url : 'policyConfigData',
 					type: 'POST',
@@ -73,17 +82,7 @@ function configManagementDatatable(){
 		        ]
 			});
 			$('div#initialloader').delay(300).fadeOut('slow');
-			$('.dataTables_filter input')
-		       .off().on('keyup', function(event) {
-		    	   var searchString=$('#search').val();
-			 	   if(event.keyCode == 8 && !searchString || event.keyCode == 46 && !searchString || event.keyCode == 83 && !searchString) {
-
-			 	   }
-		    		if (event.keyCode === 13) {
-		    			 table.search(this.value.trim(), false, false).draw();
-		    		}
-		          
-		       });
+			
 			
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
