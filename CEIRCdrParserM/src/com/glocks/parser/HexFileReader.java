@@ -541,13 +541,13 @@ public class HexFileReader {
                                         failed_flag = 0;
                                         fr.close();
                                         if (conVal == 0) {
-                                             errFile.gotoErrorFile(conn, txn_id, "    Error Code :CON_FILE_0002, Error Message: The header in the file is not in correct order     "); /////////
+                                             errFile.gotoErrorFile(conn, txn_id, "    Error Code :CON_FILE_0002, Error Message: The header in the file is not in correct order.     "); /////////
                                              logger.info("Total column are not matched" + my_column_count);
                                         }
                                         break;
                                    }
                               } else {
-                                   errFile.gotoErrorFile(conn, txn_id, "  Error Code :CON_FILE_0024, Error Message: The Rows contain more Column than allowed in the header.    "); /////////
+                                   errFile.gotoErrorFile(conn, txn_id, "  Error Code :CON_FILE_0011, Error Message: The Rows contain more Column than allowed in the header.    "); /////////
                                    failed_flag = 0;
                                    fr.close();
                                    break;
@@ -564,7 +564,7 @@ public class HexFileReader {
 
                               if (arrOfFile.length != 7) {
                                    logger.info("errfor   Wrok set.." + imeiV);
-                                   errorString += "   Error Code :CON_FILE_0008, Error Message: The Rows contain more Column than allowed in the header.";
+                                   errorString += "   Error Code :CON_FILE_0011, Error Message: The Rows contain more Column than allowed in the header.";
                                    failed_flag = 0; /// added after
                               }
 logger.debug("***");
@@ -641,7 +641,7 @@ logger.debug("***");
                     if (failed_flag != 0) {
                          logger.info("  Quantity  provided doesnot matched with Data  in File  ");
                          //   errFile.gotoErrorFile(txn_id, "  Error Code :CON_FILE_0010, Error Message:  IMEI/ESN/MEID Quantity  does not match with the  count of data records in the uploaded file   ");
-                         fileLines.add(" Error Code :CON_FILE_0010, Error Message:  IMEI/ESN/MEID Quantity  does not match with the  count of data records in the uploaded file   ");
+                         fileLines.add(" Error Code :CON_FILE_0012, Error Message:  IMEI/ESN/MEID Quantity  does not match with the  count of data records in the uploaded file   ");
                          failed_flag = 0;
                     }
                }
@@ -650,7 +650,7 @@ logger.debug("***");
                     if (failed_flag != 0) {
                          logger.info(" Device Quantity   doesnot matched with unique serial number  in File  ");
                          //  errFile.gotoErrorFile(txn_id, "Error Code :CON_FILE_0011, Error Message: Device Quantity does not match with the  count of unique serial number in the uploaded file  ");
-                         fileLines.add("Error Code :CON_FILE_0011, Error Message: Device Quantity does not match with the  count of unique serial number in the uploaded file  ");
+                         fileLines.add("Error Code :CON_FILE_0013, Error Message: Device Quantity does not match with the  count of unique serial number in the uploaded file  ");
                          failed_flag = 0;
                     }
                }
@@ -769,7 +769,6 @@ logger.debug("***");
                     }
 //                    if (main_type.equalsIgnoreCase("Consignment")) {
 //                         ceirfunction.UpdateStatus ViaApi(conn, txn_id, 0, main_type);
-//             
 //                    } else {
 //                         ceirfunction.updateFeatureManagementStatus(conn, txn_id, 1, management_table, main_type);      // 1 for processing
 //                         logger.info("mgmt Db  1  done");

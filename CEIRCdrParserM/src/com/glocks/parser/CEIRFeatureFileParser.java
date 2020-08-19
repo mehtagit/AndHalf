@@ -11,7 +11,6 @@ import com.glocks.parser.service.ConsignmentInsertUpdate;
 import com.glocks.parser.service.RegisterTac;
 import com.glocks.parser.service.WithdrawnTac;
 import com.glocks.parser.service.StockDelete;
-import java.util.logging.Level;
 import org.apache.log4j.Logger;
 
 public class CEIRFeatureFileParser {
@@ -38,6 +37,7 @@ public class CEIRFeatureFileParser {
                     if (featurers.getString("feature").equalsIgnoreCase("Register Device")) {
                          logger.info("  Register Device" + featurers.getString("feature"));
                          if ((featurers.getString("sub_feature").equalsIgnoreCase("Register")) || (featurers.getString("sub_feature").equalsIgnoreCase("Add Device"))) {     //'Add Device'
+                            ceirfunction.updateStatusOfRegularisedDvc(conn,  featurers.getString("txn_id")); 
                               ceirfunction.UpdateStatusViaApi(conn, featurers.getString("txn_id"), 2, featurers.getString("feature"));
                               ceirfunction.updateFeatureFileStatus(conn, featurers.getString("txn_id"), 4, featurers.getString("feature"), featurers.getString("sub_feature")); // update web_action_db           
                               break;
@@ -123,7 +123,7 @@ public class CEIRFeatureFileParser {
                     }
                }
           } catch (Exception ex) {
-               ex.printStackTrace();
+                logger.error("Error.." + ex);
           } finally {
                try {
                     stmt.close();
@@ -532,6 +532,11 @@ public class CEIRFeatureFileParser {
      }
 
 }
+
+
+
+
+
 
 
 

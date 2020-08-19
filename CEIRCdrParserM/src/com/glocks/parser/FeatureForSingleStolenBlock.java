@@ -134,7 +134,7 @@ public class FeatureForSingleStolenBlock {
                               if (valz == "0") {
                                    logger.info("imei Null");
                                    logger.info("File error... IMEI which are provided,  mainSingle in present Database.");
-                                   errFile.gotoErrorFile(conn, txn_id, "IMEI which are provided,  not in present Database.");
+                                   errFile.gotoErrorFile(conn, txn_id, " IMEI/ESN/MEID is not present in the system  ");
                                    failPasstatusUpdator(conn, map, 1);
                               } else {
                                    insertinRawtable(conn, map);
@@ -435,7 +435,7 @@ public class FeatureForSingleStolenBlock {
 //            String fileString = "No device Found in device_duplicate_db and device_usage_db  with  msisdn = '" + msisdn
 //                    + "' and  Use date after " + date + "";
 
-               String fileString = "Error Code :CON_RULE_0025   , Error Description :  No Device Found associated with  msisdn " + msisdn;
+               String fileString = "Error Code :    , Error Description :  No Device Found associated with  msisdn " + msisdn;
 
                errFile.gotoErrorFile(conn, txn_id, fileString);
                map.put("failPassUpdator", "FAIL");
@@ -487,7 +487,8 @@ public class FeatureForSingleStolenBlock {
                          imei = (String) lstGsma.get(0);
                     } else {
                          logger.info(" List Size  in Gsma_tac_db is not valid");
-                         String fileString = strTacs + "...... NO SIMILAR  Model And Brand Name  FOUND IN Gsma_tac_Db SCHEMA ";
+//                         String fileString = strTacs + "...... NO SIMILAR  Model And Brand Name  FOUND IN Gsma_tac_Db SCHEMA ";
+                         String fileString =  " No Model / Brand Name Match with the Imei associated with Msisdn ";
                          errFile.gotoErrorFile(conn, txn_id, fileString);
                          map.put("failPassUpdator", "FAIL");
 //                    f ailPasstatusUpdator(conn, map, 1);

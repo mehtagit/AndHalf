@@ -88,13 +88,7 @@ public class ErrorFileGenrator {
                logger.error("Error + gotoErrorFilewithList " + e);
           }
      }
-
-//    public void gotoErrorFilewithList(String errorPath, String txn_id, ArrayList<String> fileLines) {
-//        try {
-//        } catch (Exception e) {
-//            logger.error("Error + gotoErrorFilewithList " + e);
-//        }
-//    }
+ 
      public void writeErrorMessageInFile(String errorPath, String txn_id, String errorString) {
 
           try {
