@@ -8,7 +8,7 @@ $.i18n().load( {
 }).done( function() { 
 });
 
-alert($.i18n('remove'));
+
  $(document).ready(function () {
 	 
 	 nationalitySelect();
@@ -36,7 +36,7 @@ var nationality = new Array("Afghan",  "Albanian", "Algerian", "American",  "And
  
  function nationalitySelect(){
 	
-	$('<option>').val("").text($.i18n('remove')).appendTo('#nationality');
+	$('<option>').val("").text($.i18n('nationality')).appendTo('#nationality');
 	 for (var i=0; i<nationality.length; i++) {
 			$('<option>').val(nationality[i]).text(nationality[i]).appendTo('#nationality');
 		}

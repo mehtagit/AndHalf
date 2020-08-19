@@ -7,6 +7,7 @@
 		$('body').append('<script type="text/javascript" src='+src+' async defer><\/script>');
 
 	});
+	
 
 */
 function activeDeviceGraph() {
@@ -61,8 +62,8 @@ function activeDeviceGraph() {
 				$("#loading-image").show();
 			},*/
 			success : function(data) {
+	
 				var response = JSON.parse(data);
-				console.log(response)
 				graph(response,chartID,type,title);
 
 			},
@@ -76,6 +77,8 @@ function activeDeviceGraph() {
 
 function graph(response,id,chartType,chartTitle)
 {
+
+
 	var imeiCount=[];
 	var msisdnFrequency=[];
 	var date=[];
@@ -88,17 +91,23 @@ function graph(response,id,chartType,chartTitle)
 		msisdnFrequency.push(response['rowData'][i].msisdnFrequency);
 		imeiCount.push(response['rowData'][i].imeiCount);
 	}
-
-
 	if(chartType=='pie'){
+/*
+
+		['./resources/graph_js/chartjs-plugin-datalabel.js'].forEach(function(src) {
+			$('body').append('<script type="text/javascript" id="pieJS" src='+src+' async defer><\/script>');
+
+		});
+		
+*/
 		var options = {
 				responsive: false,
 				maintainAspectRatio: false,
 				plugins: {
 				    datalabels: {
 				      formatter: (value, ctx) => {
-
 				        let sum = ctx.dataset._meta[0].total;
+				        
 				        let percentage = (value * 100 / sum).toFixed(2) + "%";
 				        return percentage;
 
@@ -132,6 +141,7 @@ function graph(response,id,chartType,chartTitle)
 			options: options
 		});
 
+	
 	}
 
 
@@ -158,11 +168,21 @@ function graph(response,id,chartType,chartTitle)
 					data: msisdnFrequency
 				}]
 			},
-
+			
 			// Configuration options go here
 			options: {
 				responsive: false,
 				maintainAspectRatio: false,
+				elements: {
+                    point:{
+                        radius: 0
+                    }
+                },
+                plugins: {
+    			    datalabels: {
+    			        display: false,
+    			    },
+    			},
 				scales: {
 					xAxes: [{
 						gridLines: {
@@ -178,8 +198,6 @@ function graph(response,id,chartType,chartTitle)
 
 			}
 		});
-
-	}
-
+		 	}
 
 }

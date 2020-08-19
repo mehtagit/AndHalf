@@ -201,15 +201,16 @@ data-session-source="${not empty param.source ? param.source : 'menu'}">
             <div class="modal-content">
            
             <div class="row">
-                
+                <h6><spring:message code="registration.doreject" /></h6>
                     <div class="input-field" style="margin-top: 30px;">
+                    
                         <textarea id="Reason"
                         oninput="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
 						oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200character" />');" 
-                         class="materialize-textarea" required></textarea>
-                        <label for="Reason" style="margin-left: -10px;"><spring:message code="lable.reason" /><span class="star">*</span></label>
+                         class="materialize-textarea" style="min-height: 8rem;" required></textarea>
+                        <label for="Reason" style="margin-left: -10px;"><spring:message code="input.remarks" /><span class="star">*</span></label>
                     </div>
-                    <h6><spring:message code="registration.doreject" /></h6>
+                    
                     <input type ="text" id="rejectUserName" hidden="hidden">
                
             </div>
