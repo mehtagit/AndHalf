@@ -1,14 +1,3 @@
-
-[
-	  './resources/graph_js/chart.min.js',
-	  './resources/js/materialize.js',
-	  './resources/custom_js/bootstrap.min.js',
-	  './resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js'
-	].forEach(function(src) {
-		$('body').append('<script type="text/javascript" src='+src+' async defer><\/script>');
-
-	});
-
 function userloginGraph() {
 
 	var obj={
@@ -91,6 +80,22 @@ function graph(response,id,chartType,chartTitle)
           options: {
         	    responsive: false,
         	    maintainAspectRatio: false,
+        	    plugins: {
+				    datalabels: {
+				      formatter: (value, ctx) => {
+				    	  let datasets = ctx.chart.data.datasets;
+
+				          if (datasets.indexOf(ctx.dataset) === datasets.length - 1) {
+				            let sum = datasets[0].data.reduce((a, b) => a + b, 0);
+				            let percentage = Math.round((value / sum) * 100) + '%';
+				            return percentage;
+				          } else {
+				            return percentage;
+				          }
+				          },
+				      color: '#fff',
+				    }
+				  }
         	    
         	}
         });
@@ -121,9 +126,24 @@ function graph(response,id,chartType,chartTitle)
         	    responsive: false,
         	    maintainAspectRatio: false,
         	    rotation: 1 * Math.PI,
-                circumference: 1 * Math.PI
-        	    
-        	}
+                circumference: 1 * Math.PI,
+         	    plugins: {
+				    datalabels: {
+				      formatter: (value, ctx) => {
+				    	  let datasets = ctx.chart.data.datasets;
+
+				          if (datasets.indexOf(ctx.dataset) === datasets.length - 1) {
+				            let sum = datasets[0].data.reduce((a, b) => a + b, 0);
+				            let percentage = Math.round((value / sum) * 100) + '%';
+				            return percentage;
+				          } else {
+				            return percentage;
+				          }
+				          },
+				      color: '#fff',
+				    }
+				  }
+             }
         });
     	
     
@@ -155,6 +175,17 @@ function graph(response,id,chartType,chartTitle)
     	     		animation: {
     	        	duration: 10,
     	        },
+    	        plugins: {
+    			    datalabels: {
+    			        display: false,
+    			    },
+    			    anchor :'end',
+    	            align :'top',
+    	            // and if you need to format how the value is displayed...
+    	            formatter: function(value, context) {
+    	                return GetValueFormatted(value);
+    	            }
+    			},
     	        scales: {
     	          xAxes: [{ 
     	          	stacked: true, 
@@ -197,6 +228,23 @@ function graph(response,id,chartType,chartTitle)
       options: {
     	    responsive: false,
     	    maintainAspectRatio: false,
+    	    elements: {
+                point:{
+                    radius: 0
+                }
+            },
+    	    plugins: {
+			    datalabels: {
+			        display: false,
+			    },
+			    anchor :'end',
+	            align :'top',
+	            // and if you need to format how the value is displayed...
+	            formatter: function(value, context) {
+	                return GetValueFormatted(value);
+	            }
+			},
+			
     	    scales: {
                 xAxes: [{
                    gridLines: {
