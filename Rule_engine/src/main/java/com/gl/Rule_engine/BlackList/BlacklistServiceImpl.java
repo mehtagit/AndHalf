@@ -58,8 +58,8 @@ public class BlacklistServiceImpl {
           boolean isOracle = conn.toString().contains("oracle");
           String dateFunction = Util.defaultDate(isOracle);
           Statement stmt = null;
-          String query = " insert into blacklist_imei_db (blacklist_status , ref_code , deviceid, created_on)"
-                  + "values ('" + blacklistTacDb.getBlacklistStatus() + "', '" + blacklistTacDb.getRefCode() + "' , '" + blacklistTacDb.getDeviceid() + "' ," + dateFunction + " )";
+          String query = " insert into blacklist_imei_db (blacklist_status , ref_code , deviceid, created_on , modified_on)"
+                  + "values ('" + blacklistTacDb.getBlacklistStatus() + "', '" + blacklistTacDb.getRefCode() + "' , '" + blacklistTacDb.getDeviceid() + "' , " + dateFunction + " , " + dateFunction + "  )";
           logger.debug("query .." + query);
           ResultSet resultmsdn = null;
 
@@ -145,8 +145,8 @@ public class BlacklistServiceImpl {
           boolean isOracle = conn.toString().contains("oracle");
           String dateFunction = Util.defaultDate(isOracle);
           Statement stmt = null;
-          String query = " insert into blacklist_imei_invalid_db ( tac ,created_on )" // gsma_blacklist_tac_invalid_db earlier
-                  + "values ( '" + blacklistTacDb.getDeviceid() + "' , " + dateFunction + "  )";
+          String query = " insert into blacklist_imei_invalid_db ( tac ,created_on , modified_on )" // gsma_blacklist_tac_invalid_db earlier
+                  + "values ( '" + blacklistTacDb.getDeviceid() + "' , " + dateFunction + "  , " + dateFunction + " )";
           logger.debug("query .." + query);
           try {
                stmt = conn.createStatement();

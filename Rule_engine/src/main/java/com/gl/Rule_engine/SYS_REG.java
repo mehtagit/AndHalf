@@ -89,8 +89,7 @@ class SYS_REG {
                     case "Reject": {
                          logger.debug("Action is Reject");
 
-                         String fileString = args[15] + " , Error Description : IMEI/ESN/MEID  is System Registered ";
-
+                         String fileString = args[15] + " , Error Description : IMEI/ESN/MEID is System Registered ";
                          bw.write(fileString);
                          bw.newLine();
                     }

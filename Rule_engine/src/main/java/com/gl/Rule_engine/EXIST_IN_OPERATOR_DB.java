@@ -68,10 +68,10 @@ public class EXIST_IN_OPERATOR_DB {
  
                          logger.debug("Operator  Action is Reject");
                          String errmsg = "IMEI is  not Present. (It is not marked as Block ) ";
-                         if (args[2].equalsIgnoreCase("stolen") || args[2].equalsIgnoreCase("block")) {
-                              errmsg = " IMEI/ESN/MEID is already in process of blocking. ";
+                         if ( args[2].equalsIgnoreCase("block")) {
+                              errmsg = " IMEI/ESN/MEID is already in process of Blocking. ";
                          }
-                         String fileString = args[15] + ",  Error Code : CON_RULE_0018,  Error Discription : " + errmsg;
+                         String fileString = args[15] + ",  Error Code : CON_RULE_0018,  Error Description : " + errmsg;
                          bw.write(fileString);
                          bw.newLine();
 

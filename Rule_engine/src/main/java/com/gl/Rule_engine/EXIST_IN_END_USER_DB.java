@@ -37,8 +37,6 @@ class EXIST_IN_END_USER_DB {
                 } else {
                     res = "No";
                 }
-                
-                 
             }
         } catch (Exception e) {
             logger.error("error.." + e);

@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package com.gl.Rule_engine;
- 
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -70,12 +70,12 @@ public class EXIST_IN_LAWFUL_DB {
                     }
                     break;
                     case "Reject": {
-     logger.debug("Lawful Db  Action is Reject");
-                         String errmsg = "IMEI is  not Present. (It is not marked as stolen ) ";
-                         if (args[2].equalsIgnoreCase("stolen") || args[2].equalsIgnoreCase("block")) {
+                         logger.debug("Lawful Db  Action is Reject");
+                         String errmsg = "IMEI is  not Present. (It is not marked as Stolen ) ";
+                         if (args[2].equalsIgnoreCase("stolen")) {
                               errmsg = " IMEI/ESN/MEID  is  already marked as Stolen ";
                          }
-                         String fileString = args[15] + ",  Error Code : CON_RULE_0002,  Error Discription : " + errmsg;
+                         String fileString = args[15] + ",  Error Code : CON_RULE_0002,  Error Description : " + errmsg;
                          bw.write(fileString);
                          bw.newLine();
 

@@ -12,11 +12,7 @@ import java.sql.Statement;
 import java.util.HashSet;
 import java.util.Set;
 import org.apache.log4j.Logger;
-
-/**
- *
- * @author user
- */
+ 
 class USER_REG {
 
      static final Logger logger = Logger.getLogger(USER_REG.class);
@@ -77,7 +73,6 @@ class USER_REG {
                     break;
                     case "Reject": {
                          logger.debug("Action is Reject");
-
                          String fileString = args[15] + " , Error Description : IMEI/ESN/MEID  is User Registered   ";
                          bw.write(fileString);
                          bw.newLine();

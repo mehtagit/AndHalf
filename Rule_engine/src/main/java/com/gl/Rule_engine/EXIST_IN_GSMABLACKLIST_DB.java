@@ -37,7 +37,7 @@ public class EXIST_IN_GSMABLACKLIST_DB {
             case "Reject": {
                 logger.debug("Action is Reject");
 
-                String fileString = args[15] + " , Error Description : IMEI/ESN/MEID is already present in the system  ";
+                String fileString = args[15] + " , Error Description : IMEI/ESN/MEID is already present in the System  ";
 
                  bw.write(fileString);
                 bw.newLine();
