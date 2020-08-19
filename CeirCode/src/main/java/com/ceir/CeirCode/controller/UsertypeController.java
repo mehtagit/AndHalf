@@ -27,24 +27,24 @@ import com.ceir.CeirCode.util.HttpResponse;
 import io.swagger.annotations.ApiOperation;
 @CrossOrigin
 @RestController
-public class UsertypeController {
+	public class UsertypeController {
 
 	@Autowired
 	UserTypeService usertypeService;
-	
+
 	@Autowired
 	SystemConfigDbListRepository systemConfigRepo;
 
-	
+
 	@ApiOperation(value = "user type  data.", response = Usertype.class)
 	@PostMapping("/usertypeData") 
 	public MappingJacksonValue viewRecord(@RequestBody UsertypeFilter filterRequest,
 			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
 			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize){
 		MappingJacksonValue mapping = null;
-			Page<Usertype> userTypeData  =usertypeService.viewAllUserytypes(filterRequest, pageNo, pageSize);
-			List<SystemConfigListDb> statusList=systemConfigRepo.getByTag("UserType_Status");
-			if(userTypeData!=null) {
+		Page<Usertype> userTypeData  =usertypeService.viewAllUserytypes(filterRequest, pageNo, pageSize);
+		List<SystemConfigListDb> statusList=systemConfigRepo.getByTag("UserType_Status");
+		if(userTypeData!=null) {
 			for(Usertype usertype:userTypeData.getContent()) {
 				for(SystemConfigListDb status:statusList) {
 					Integer value=status.getValue();
@@ -53,22 +53,22 @@ public class UsertypeController {
 					}
 				}
 			}
-			}
-			mapping = new MappingJacksonValue(userTypeData);
+		}
+		mapping = new MappingJacksonValue(userTypeData);
 		return mapping;
 	}
-	
+
 	@ApiOperation(value = "change usertype status", response = HttpResponse.class)
 	@PostMapping("/updateUserTypeStatus")
 	public ResponseEntity<?> updateUserTypeStatus(@RequestBody ChangeUsertypeStatus userTypeStatus){
 		return usertypeService.changeUserTypeStatus(userTypeStatus);  
 	}                                                                                                                                     
-	
+
 	@ApiOperation(value = "check usertype status", response = GenricResponse.class)
 	@CrossOrigin
 	@PostMapping("/usertypeStatus/{usertypeId}")
 	public ResponseEntity<?> checkStatus(@PathVariable("usertypeId")long usertypeId){
 		return usertypeService.checkUsertypeStatus(usertypeId);
 	} 
-	
+
 }
