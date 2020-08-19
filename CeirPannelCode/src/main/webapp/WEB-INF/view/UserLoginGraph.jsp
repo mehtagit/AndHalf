@@ -50,6 +50,7 @@
 <script type="text/javascript"
 	src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
 
+	<script type="text/javascript" src="${context}/resources/graph_js/chart.min.js"></script>
 <!-- CORE CSS-->
 <link href="${context}/resources/css/materialize.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
@@ -339,13 +340,18 @@ display: none !important;
 
 
 	<!-- END MAIN -->
+</body>
+<script type="text/javascript" src="${context}/resources/js/materialize.js"></script>		
+<script type="text/javascript" src="${context}/resources/custom_js/bootstrap.min.js"></script>
 
+<script type="text/javascript" src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+
+<script src="${context}/resources/graph_js/chartjs-plugin-datalabel.js"></script>
 <script type="text/javascript"
 		src="${context}/resources/graph_js/UserLoginGraph.js?version=<%= (int) (Math.random() * 10) %>"></script>		
-	<!-- chartist -->
-         
-<script type="text/javascript">$( document ).ready(function() { 	  userloginGraph();  var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login";}else{timeoutTime = currentTime + timeout;}});});</script>
-</body></html>
+
+<script type="text/javascript">$( document ).ready(function() {  userloginGraph();  var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login";}else{timeoutTime = currentTime + timeout;}});});</script>
+</html>
 
 <%
 	} else {

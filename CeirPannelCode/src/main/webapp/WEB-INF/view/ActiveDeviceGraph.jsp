@@ -346,7 +346,7 @@ display: none !important;
 <script type="text/javascript" src="${context}/resources/custom_js/bootstrap.min.js"></script>
 
 <script type="text/javascript" src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0"></script>
+<script src="${context}/resources/graph_js/chartjs-plugin-datalabel.js"></script>
 <script type="text/javascript"
 		src="${context}/resources/graph_js/acitveUserGraph.js?version=<%= (int) (Math.random() * 10) %>"></script>		
 	<!-- chartist -->

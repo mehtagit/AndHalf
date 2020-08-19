@@ -621,7 +621,7 @@ style="font-size: 20px;">+</span> <spring:message code="input.addmorefile" /></b
     </div>
     
     <div id="manageAccount" class=" full-screen-modal modal">
-<button class="modal-close btn-flat right" data-dismiss="modal">&times;</button>
+<button class="modal-close btn-flat right" data-dismiss="modal" style=" font-size: 25px;">&times;</button>
 <h6 class="modal-header"><spring:message code="modal.header.grievancehistory" /></h6>
 <div class="modal-content">
 <div id="live-chat">

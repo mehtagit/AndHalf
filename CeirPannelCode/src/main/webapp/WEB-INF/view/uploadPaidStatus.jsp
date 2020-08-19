@@ -335,12 +335,23 @@ position: fixed;
 												</div>
 												<div class="input-field col s12 m6" id="nationalityDiv"
 											style="display: none">
-											<input type="text" id="nationality" name="nationality"
+											<%-- <input type="text" id="nationality" name="nationality"
 												pattern="[a-zA-Z]{1,25}" oninput="InvalidMsg(this,'input');"
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
-												title="" maxlength="25"> <label for="nationality" class=""><spring:message
-													code="input.Nationality" /> <span class="star">*</span></label>
+												title="" maxlength="25"> --%>
+												<p
+														style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
+													<spring:message code="input.Nationality" /><span class="star">*</span>
+													</p>
+												<select id="nationality" class="browser-default"
+														class="mySelect"
+														oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+											            oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+														title= "<spring:message code="validation.selectFieldMsg" />"
+														 style="padding-left: 0;" required></select>
+												 <%-- <label for="nationality" class=""><spring:message
+													code="input.Nationality" /> <span class="star">*</span></label> --%>
 										</div>
 										<div class="input-field col s12 m6" id="entryCountryDiv" style="display: none;">
 												<input type="text" id="datepicker"
@@ -1323,6 +1334,8 @@ position: fixed;
 		<script type="text/javascript" src="${context}/resources/js/utils.js"></script>
 		
 	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js?version=<%= (int) (Math.random() * 10) %>"></script>
+	<script type="text/javascript"
+		src="${context}/resources/project_js/nationality.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/uploadPaidStatus.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript"
